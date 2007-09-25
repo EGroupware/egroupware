@@ -1,83 +1,102 @@
-accessories of	resources	hu	kiegÈszÌtıi
-accessories:	resources	hu	KiegÈszÌtık:
-actions	resources	hu	M˚veletek
-add accessory	resources	hu	KiegÈszÌtı hozz·ad·sa
-add resource	resources	hu	erıforr·s hozz·ad·sa
-add resources	resources	hu	Erıforr·sok hozz·ad·sa
-administrator	resources	hu	Adminisztr·tor
-all categories	resources	hu	ˆsszes kategÛria
-book	resources	hu	Kˆnyv
-buy this article	resources	hu	Cikk megv·s·rl·sa
-buy this resource	resources	hu	Erıforr·s megv·s·rl·sa
-buyable	resources	hu	Megv·s·rolhatÛ
-category:	resources	hu	KategÛria
-check all	resources	hu	÷sszes ellenırzÈse
-choose categories admin	resources	hu	kategÛriaadminisztr·tor kiv·laszt·sa
-clear selection	resources	hu	kijelˆlÈs elt·volÌt·sa
-configure access permissions	resources	hu	Hozz·fÈrÈsi jogosults·gok be·llÌt·sa
-create new accessory for this resource	resources	hu	⁄j kiegÈszÌtı hozz·ad·sa
-create new links	resources	hu	⁄j linkek lÈtrehoz·sa
-delete selected resources	resources	hu	kiv·lasztott erıforr·s tˆrlÈse
-delete this entry	resources	hu	BejegyzÈs tˆrlÈse
-description (short)	resources	hu	LeÌr·s (rˆvid)
-don't use vfs (this will need a symlink --> see readme)	resources	hu	Ne hasz·lja a vfs-t (a m˚kˆdÈshez egy symlink hozz·ad·sa sz¸ksÈges, l·sd. a README-t)
-edit this entry	resources	hu	BejegyzÈs szerkesztÈse
-existing links	resources	hu	MeglÈvı linkek
-general	resources	hu	¡ltal·nos
-general informations about resource	resources	hu	¡ltal·nos inform·ciÛk az erıforr·srÛl
-gernal resource	resources	hu	·ltal·nos erıforr·s
-how many of them are useable?	resources	hu	Mennyi kˆz¸l¸k a haszn·lhatÛ
-how many of this resource are usable	resources	hu	Mennyi haszn·lhatÛ ebbıl az erıforr·sbÛl
-how many of this resource exists	resources	hu	Mennyi van ebbıl az erıforr·sbÛl
-information about storage	resources	hu	Inform·ciÛ a t·rolÛeszkˆzrıl
-inventory number	resources	hu	Lelt·ri sz·m
-inventory number:	resources	hu	Lelt·ri sz·m:
-is resource buyable?	resources	hu	Ez az erıforr·s megv·s·rolhatÛ?
-is this resource buyable?	resources	hu	Megv·s·rolhatÛ ez az erıforr·s?
-links	resources	hu	Linkek
+accessories of	resources	hu	kieg√©sz√≠t≈ëi
+accessories:	resources	hu	Kieg√©sz√≠t≈ëk:
+actions	resources	hu	M≈±veletek
+add accessory	resources	hu	Kieg√©sz√≠t≈ë hozz√°ad√°sa
+add resource	resources	hu	er≈ëforr√°s hozz√°ad√°sa
+add resources	resources	hu	Er≈ëforr√°sok hozz√°ad√°sa
+administrator	resources	hu	Adminisztr√°tor
+all categories	resources	hu	√∂sszes kateg√≥ria
+book	resources	hu	Foglal√°s
+book selected resources	resources	hu	kiv√°lasztott er≈ëforr√°sok foglal√°sa
+book this resource	resources	hu	Az er≈ëforr√°s foglal√°sa
+bookable	resources	hu	Lefoglalhat√≥
+buy this article	resources	hu	Cikk megv√°s√°rl√°sa
+buy this resource	resources	hu	Er≈ëforr√°s megv√°s√°rl√°sa
+buyable	resources	hu	Megv√°s√°rolhat√≥
+categories admin	resources	hu	Kateg√≥ria adminisztr√°ci√≥
+category:	resources	hu	Kateg√≥ria
+check all	resources	hu	√ñsszes ellen≈ërz√©se
+choose categories admin	resources	hu	kateg√≥ria adminisztr√°tor kiv√°laszt√°sa
+clear selection	resources	hu	kijel√∂l√©s elt√°vol√≠t√°sa
+configure access permissions	resources	hu	Hozz√°f√©r√©si jogosults√°gok be√°ll√≠t√°sa
+create new accessory for this resource	resources	hu	√öj kieg√©sz√≠t≈ë hozz√°ad√°sa
+create new links	resources	hu	√öj hivatkoz√°sok l√©trehoz√°sa
+delete selected resources	resources	hu	kiv√°lasztott er≈ëforr√°s t√∂rl√©se
+delete this entry	resources	hu	Bejegyz√©s t√∂rl√©se
+description (short)	resources	hu	Le√≠r√°s (r√∂vid)
+direct booking permissions	resources	hu	K√∂zvetlen foglal√°si jogosults√°gok
+don't use vfs (this will need a symlink --> see readme)	resources	hu	Ne hasz√°lja a vfs-t (a m≈±k√∂d√©shez egy symlink hozz√°ad√°sa sz√ºks√©ges, l√°sd. a README-t)
+edit this entry	resources	hu	Bejegyz√©s szerkeszt√©se
+existing links	resources	hu	Megl√©v≈ë hivatkoz√°sok
+general	resources	hu	√Åltal√°nos
+general informations about resource	resources	hu	√Åltal√°nos inform√°ci√≥k az er≈ëforr√°sr√≥l
+gernal resource	resources	hu	√°ltal√°nos er≈ëforr√°s
+how many of the resources are useable?	resources	hu	H√°ny darab haszn√°lhat√≥ az er≈ëforr√°sok k√∂z√ºl?
+how many of them are useable?	resources	hu	H√°ny darab haszn√°lhat√≥ k√∂z√ºl√ºk?
+how many of this resource are usable	resources	hu	H√°ny darab haszn√°lhat√≥ ebb≈ël az er≈ëforr√°sb√≥l
+how many of this resource exists	resources	hu	H√°ny darab l√©tezik ebb≈ël az er≈ëforr√°sb√≥l
+implies booking permission	resources	hu	foglal√°si jogosults√°got felt√©telez
+implies read permission	resources	hu	olvas√°si jogosults√°got felt√©telez
+information about storage	resources	hu	Inform√°ci√≥ a rakt√°rr√≥l
+informations about the location of resource	resources	hu	Inform√°ci√≥ az er≈ëforr√°s hely√©r≈ël
+inventory number	resources	hu	Lelt√°ri sz√°m
+inventory number:	resources	hu	Lelt√°ri sz√°m:
+is resource bookable?	resources	hu	Az er≈ëforr√°s lefoglalhat√≥?
+is resource buyable?	resources	hu	Az er≈ëforr√°s megv√°s√°rolhat√≥?
+is this resource bookable?	resources	hu	Ez az er≈ëforr√°s lefoglalhat√≥?
+is this resource buyable?	resources	hu	Megv√°s√°rolhat√≥ ez az er≈ëforr√°s?
+links	resources	hu	Hivatkoz√°sok
 location	resources	hu	Hely
-location of resource	resources	hu	Az erıforr·s helye
+location of resource	resources	hu	Az er≈ëforr√°s helye
 location:	resources	hu	Hely:
-name of resource	resources	hu	Az erıforr·s neve
-name:	resources	hu	NÈv:
-no description available	resources	hu	nincs elÈrhetı leÌr·s
-no resources selected	resources	hu	Nem lett erıforr·s kiv·lasztva
-notify your administrator to correct this situation	resources	hu	Adminisztr·tor ÈrtesÌtÈse a kijavÌtandÛ hib·rÛl
-picture	resources	hu	KÈp
-picture source	resources	hu	kÈp forr·sa
-picture type is not supported, sorry!	resources	hu	A kÈp tÌpusa nem t·mogatott!
-pictures or resource	resources	hu	KÈpek vagy erıforr·sok
-quantity	resources	hu	MennyisÈg
-quantity of resource	resources	hu	Erıforr·s mennyisÈge:
-quantity:	resources	hu	MennyisÈg:
-read calendar permissions	resources	hu	Napt·r olvas·si jogosults·gai
-read permissions	resources	hu	Olvas·si jogosults·gok
-related links	resources	hu	KapcsolÛdÛ linkek
-resources	common	hu	erıforr·sok
-resources list	resources	hu	erıforr·sok list·ja
-responsible:	resources	hu	Felelıs:
-saves entry and exits	resources	hu	KilÈpÈs mentÈssel
-select a category	resources	hu	KategÛria kiv·laszt·sa
-select resource	resources	hu	erıforr·s kiv·laszt·sa
-select resources	resources	hu	Erıforr·sok kiv·laszt·sa
-select/deselect all	resources	hu	ˆsszes kijelˆlÈse/visszajelˆlÈse
-short description	resources	hu	Rˆvid leÌr·s
-short description of resource	resources	hu	Az erıforr·s rˆvid leÌr·sa
-something went wrong by deleting resource	resources	hu	Hiba tˆrtÈnt az erıforr·s tˆrlÈsekor
-something went wrong by saving resource	resources	hu	Hiba tˆrtÈnt az erıforr·s mentÈsekor
-storage inforation	resources	hu	Inform·ciÛ az adatt·rolÛrÛl
-storage information	resources	hu	Inform·ciÛ az adatt·rolÛrÛl
-storage information:	resources	hu	Inform·ciÛ az adatt·rolÛrÛl:
-use general resources icon	resources	hu	Haszn·lja az ·ltal·nos erıforr·sok ikonj·t
-use own picture	resources	hu	Saj·t kÈp haszn·lata
-use the category's icon	resources	hu	Haszn·lja a kategÛria ikonj·t
-view accessories for this resource	resources	hu	Az erıforr·s kiegÈszÌtıi
-view this entry	resources	hu	BejegyzÈs megtekintÈse
-web-page of resource	resources	hu	Az erıforr·s weboldala
-web-site for this resource	resources	hu	Az erıforr·s webhelye
-where to find this resource?	resources	hu	Hol tal·lhatÛ ez az erıforr·s?
-which category does this resource belong to?	resources	hu	Melyik kategÛri·ba tartozik ez az erıforr·s?
-write permissions	resources	hu	Õr·si jogosults·gok
-you are not permitted to edit this reource!	resources	hu	Nincs jogosults·g az erıforr·s szerkesztÈsÈhez!
-you are not permitted to get information about this resource!	resources	hu	Nincs jogosults·g az erıforr·s adatainak megtekintÈsÈhez!
-you chose more resources than available	resources	hu	Tˆbb erıforr·s lett kiv·lasztva, mint amennyi elÈrhetı
+name of resource	resources	hu	Az er≈ëforr√°s neve
+name:	resources	hu	N√©v:
+no description available	resources	hu	nincs el√©rhet≈ë le√≠r√°s
+no resources selected	resources	hu	Nincs kiv√°lasztva er≈ëforr√°s
+notify your administrator to correct this situation	resources	hu	Adminisztr√°tor √©rtes√≠t√©se a kijav√≠tand√≥ hib√°r√≥l
+picture	resources	hu	K√©p
+picture source	resources	hu	k√©p forr√°sa
+picture type is not supported, sorry!	resources	hu	A k√©p form√°tuma nem t√°mogatott!
+pictures or resource	resources	hu	K√©pek vagy er≈ëforr√°sok
+planer	resources	hu	tervez≈ë
+prizeing information for booking or buying	resources	hu	√Årinform√°ci√≥ a foglal√°shoz vagy v√°s√°rl√°shoz
+quantity	resources	hu	Mennyis√©g
+quantity of resource	resources	hu	Er≈ëforr√°s mennyis√©ge:
+quantity:	resources	hu	Mennyis√©g:
+read calendar permissions	resources	hu	Napt√°r olvas√°si jogosults√°gai
+read permissions	resources	hu	Olvas√°si jogosults√°gok
+related links	resources	hu	Kapcsol√≥d√≥ hivatkoz√°sok
+resources	common	hu	Er≈ëforr√°sok
+resources list	resources	hu	er≈ëforr√°sok list√°ja
+responsible:	resources	hu	Felel≈ës:
+saves entry and exits	resources	hu	Kil√©p√©s ment√©ssel
+select a category	resources	hu	Kateg√≥ria kiv√°laszt√°sa
+select resource	resources	hu	er≈ëforr√°s kiv√°laszt√°sa
+select resources	common	hu	Er≈ëforr√°sok kiv√°laszt√°sa
+select/deselect all	resources	hu	√∂sszes kijel√∂l√©se/jel√∂l√©s visszavon√°sa
+short description	resources	hu	R√∂vid le√≠r√°s
+short description of resource	resources	hu	Az er≈ëforr√°s r√∂vid le√≠r√°sa
+show calendar of resource	resources	hu	Az er≈ëforr√°s napt√°rj√°nak megjelen√≠t√©se
+something went wrong by deleting resource	resources	hu	Hiba t√∂rt√©nt az er≈ëforr√°s t√∂rl√©sekor
+something went wrong by saving resource	resources	hu	Hiba t√∂rt√©nt az er≈ëforr√°s ment√©sekor
+storage inforation	resources	hu	Inform√°ci√≥ a rakt√°roz√°sr√≥l
+storage information	resources	hu	Inform√°ci√≥ a rakt√°roz√°sr√≥l
+storage information:	resources	hu	Inform√°ci√≥ a rakt√°roz√°sr√≥l:
+the calendar of this resource	resources	hu	Ennek az er≈ëforr√°snak a Napt√°rja
+this module displays the resources app	resources	hu	Ez a modul megjelen√≠ti az Er≈ëforr√°sok alkalmaz√°sa
+use general resources icon	resources	hu	Haszn√°lja az '√Åltal√°nos er≈ëforr√°sok' ikonj√°t
+use own picture	resources	hu	Saj√°t k√©p haszn√°lata
+use the category's icon	resources	hu	Haszn√°lja a kateg√≥ria ikonj√°t
+useable	resources	hu	felhaszn√°lhat√≥
+useable:	resources	hu	Felhaszn√°lhat√≥:
+view accessories for this resource	resources	hu	Az er≈ëforr√°s kieg√©sz√≠t≈ëi
+view this entry	resources	hu	Bejegyz√©s megtekint√©se
+web-page of resource	resources	hu	Az er≈ëforr√°s weboldala
+web-site for this resource	resources	hu	Az er≈ëforr√°s webhelye
+where to find this resource?	resources	hu	Hol tal√°lhat√≥ ez az er≈ëforr√°s?
+which category does this resource belong to?	resources	hu	Melyik kateg√≥ri√°ba tartozik ez az er≈ëforr√°s?
+write permissions	resources	hu	√çr√°si jogosults√°gok
+you are not permitted to delete this reource!	resources	hu	Nincs jogosults√°ga az er≈ëforr√°s t√∂rl√©s√©hez!
+you are not permitted to edit this reource!	resources	hu	Nincs jogosults√°ga az er≈ëforr√°s szerkeszt√©s√©hez!
+you are not permitted to get information about this resource!	resources	hu	Nincs jogosults√°g az er≈ëforr√°s adatainak megtekint√©s√©hez!
+you chose more resources than available	resources	hu	T√∂bb er≈ëforr√°s lett kiv√°lasztva, mint amennyi el√©rhet≈ë

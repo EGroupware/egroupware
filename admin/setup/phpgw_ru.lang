@@ -13,7 +13,7 @@ account has been deleted	common	ru	Учетная запись удалена
 account has been updated	common	ru	Учетная запись изменена
 account list	admin	ru	Список учетных записей
 account permissions	admin	ru	Разрешения учетной записи
-account preferences	admin	ru	Прдпочтения учетной записи
+account preferences	admin	ru	Настройки учетной записи
 acl manager	admin	ru	Менеджер ACL
 acl rights	common	ru	Права ACL
 action	admin	ru	Действие
@@ -221,12 +221,14 @@ host information	admin	ru	Информация о хосте
 hour<br>(0-23)	admin	ru	Часы<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ru	Сколько дней должны храниться записи в журнале до их удаления (по  умолчанию 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	ru	На сколько минут блокировать учетную запись или IP (по умолчанию 30) ?
+how should email addresses for new users be constructed?	admin	ru	Как должен быть построен адрес Email для новых пользователей?
 icon	admin	ru	Пиктограмма
 idle	admin	ru	простой
 if no acl records for user or any group the user is a member of	admin	ru	Если нет записей ACL для пользователя или любой группы пользователь является членом
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ru	При использовании LDAP - хотите ли вы управлять свойствами "домашний каталог" и "оболочка входа"
 in mbyte	admin	ru	в Мбайтах
 inbound	admin	ru	входящий
+initial	admin	ru	Первоначальный
 install crontab	admin	ru	Установить crontab
 installed applications	common	ru	Установленные приложения
 installed crontab	admin	ru	Crontab установлен
@@ -309,7 +311,7 @@ please enter a name for that server !	admin	ru	Введите имя для этого сервера !
 please run setup to become current	admin	ru	Пожалуйста, запустите установку
 please select	admin	ru	Пожалуйста, выберите
 postfix with ldap	admin	ru	Postfix c LDAP
-preferences	admin	ru	Предпочтения
+preferences	admin	ru	Настройки
 primary group	admin	ru	первичная Группа
 qmaildotmode	admin	ru	режим qmaildot
 quota settings	admin	ru	установки квот
@@ -346,7 +348,7 @@ server password	admin	ru	Пароль Сервера
 server type(mode)	admin	ru	Тип (режим) Сервера
 server url	admin	ru	URL сервера
 server username	admin	ru	Имя пользователя сервера
-set preference values.	admin	ru	Установить предпочтительные значения.
+set preference values.	admin	ru	Установить значения настроек.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ru	Отображать на странице входа выбор языков (полезно для demo-сайта) ?
 show 'powered by' logo on	admin	ru	Показать логотип 'на основе'
 show access log	admin	ru	Показать журнал доступа
@@ -406,7 +408,7 @@ use cookies to pass sessionid	admin	ru	Использовать cookies для передачи идентиф
 use pure html compliant code (not fully working yet)	admin	ru	Использовать код, отвечающий чистому HTML (пока не полностью работоспособно)
 use theme	admin	ru	Использовать тему
 user accounts	admin	ru	Учетные записи пользователей
-user data	admin	ru	Данные Пользователя
+user data	common	ru	Данные Пользователя
 user for smtp-authentication (leave it empty if no auth required)	admin	ru	Пользователь для SMTP-идентификации (оставьте пустым, если идентификация не нужна)
 user groups	admin	ru	Группы пользователя
 userdata	admin	ru	Данные пользователя
@@ -436,5 +438,5 @@ you must enter an application name and title.	admin	ru	Вы должны ввести имя и за
 you must enter an application name.	admin	ru	Вы должны ввести имя приложения
 you must enter an application title.	admin	ru	Вы должны ввести заголовок приложения.
 you must select a file type	admin	ru	Вы должны выбрать тип файла
+you must select at least one group member	admin	ru	Вы должны выбрать минимум одного члена группы.
 you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
-your session could not be verified.	admin	ru	Ваш сеанс не может быть удостоверен

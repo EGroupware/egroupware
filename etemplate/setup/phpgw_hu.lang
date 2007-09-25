@@ -1,0 +1,83 @@
+add column	etemplate	hu	Oszlop hozzáadása
+add index	etemplate	hu	Index hozzáadása
+add new	etemplate	hu	Új hozzáadása
+add table	etemplate	hu	Táblázat hozzáadása
+advanced search	etemplate	hu	Kiterjesztett keresés
+align	etemplate	hu	Igazítás
+am	etemplate	hu	de
+application	etemplate	hu	Alkalmazás
+attach	etemplate	hu	Csatol
+attach file	etemplate	hu	Állomány csatolása
+baseline	etemplate	hu	Alapvonal
+border	etemplate	hu	Keret
+bottom	etemplate	hu	Alul
+cancel	etemplate	hu	Mégsem
+category	etemplate	hu	Kategória
+cells	etemplate	hu	Cellák
+center	etemplate	hu	Középre
+changed	etemplate	hu	Változott
+checkbox	etemplate	hu	Checkbox
+class	etemplate	hu	Osztály
+comment	etemplate	hu	Hozzászólás
+confirm	etemplate	hu	megerősít
+contact	etemplate	hu	Kapcsolat
+contains	etemplate	hu	tartalmaz
+custom	etemplate	hu	egyedi
+custom fields	etemplate	hu	egyedi mezők
+cut	etemplate	hu	Kivág
+day	etemplate	hu	Nap
+days	etemplate	hu	napok
+default	etemplate	hu	Alapértelmezett
+delete column	etemplate	hu	Oszlop törlés
+delete index	etemplate	hu	Index törlése
+documentation	etemplate	hu	Dokumentáció
+duration	etemplate	hu	Időtartam
+edit	etemplate	hu	Szerkeszt
+edit...	etemplate	hu	Szerkeszt...
+etemplate	common	hu	eTemplate
+file	etemplate	hu	Állomány
+first	etemplate	hu	Első
+height	etemplate	hu	Magasság
+help	etemplate	hu	Segítség
+hour	etemplate	hu	Óra
+hours	etemplate	hu	órák
+html	etemplate	hu	HTML
+image	etemplate	hu	Kép
+import	etemplate	hu	Import
+key	etemplate	hu	Kulcs
+lang	etemplate	hu	Nyelv
+last	etemplate	hu	Utolsó
+left	etemplate	hu	Balra
+link	etemplate	hu	Hivatkozás
+minute	etemplate	hu	Perc
+minutes	etemplate	hu	Percek
+month	etemplate	hu	Hónap
+name	etemplate	hu	Név
+new search	etemplate	hu	Új keresés
+not null	etemplate	hu	NOT NULL
+nothing	etemplate	hu	semmi
+options	etemplate	hu	Opciók
+padding	etemplate	hu	Helykitöltés
+paste	etemplate	hu	Beilleszt
+path	etemplate	hu	Útvonal
+pm	etemplate	hu	du
+read	etemplate	hu	Olvas
+right	etemplate	hu	Jobbra
+search	etemplate	hu	Keres
+select a category	etemplate	hu	Kategória kiválasztása
+show	etemplate	hu	Mutat
+spacing	etemplate	hu	Betűköz
+template	etemplate	hu	Sablon
+text	etemplate	hu	Szöveg
+textarea	etemplate	hu	Szövegterület
+time	etemplate	hu	Idő
+today	etemplate	hu	Mai nap
+top	etemplate	hu	Felül
+type	etemplate	hu	Típus
+unlink	etemplate	hu	Hivatkozás törlése
+upload	etemplate	hu	Feltölt
+version	etemplate	hu	Verzió
+weekend	etemplate	hu	hétvége
+width	etemplate	hu	Szélesség
+working days	etemplate	hu	munkanapok
+year	etemplate	hu	Év

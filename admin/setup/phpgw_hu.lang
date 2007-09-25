@@ -1,277 +1,475 @@
-%1 - %2 of %3 user accounts	admin	hu	%1 - %2 felhaszn�l�i azonos�t� a %3 fi�kb�l
-%1 - %2 of %3 user groups	admin	hu	%1 - %2 felhaszn�l�i csoport a %3 csoportb�l
-%1 acl records of not (longer) existing accounts deleted.	admin	hu	%1 ACL bejegyz�s t�r�lve a tov�bb m�r nem l�tez� fi�kokhoz.
-%1 not found or not executable !!!	admin	hu	%1 nem tal�lhat�, vagy nem futtathat�!
-(default no, leave it off if you dont use it)	admin	hu	(alap�rtelmez�sk�nt Nem, hagyja ki ha nem haszn�lja)
-(stored password will not be shown here)	admin	hu	(a t�rolt jelsz�  nem fog itt megjelenni)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(�j alkalmaz�s telep�t�s�hez haszn�lja a<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
--  type	admin	hu	- t�pus
-accesslog and bruteforce defense	admin	hu	Log el�r�se �s brute force v�delem
-account active	admin	hu	Hozz�f�r�s akt�v
-account has been created	common	hu	Az azonos�t� l�trehozva
-account has been deleted	common	hu	Az azonos�t� t�r�lve
-account has been updated	common	hu	Az azonos�t� friss�tve
-account list	admin	hu	Azonos�t�k list�ja
-account permissions	admin	hu	Azonos�t� jogosults�gai
-account preferences	admin	hu	Azonos�t� be�ll�t�sai
-acl manager	admin	hu	ACL kezel�
+%1 - %2 of %3 user accounts	admin	hu	%1 - %2 felhasználói hozzáférés a %3 hozzáférésből
+%1 - %2 of %3 user groups	admin	hu	%1 - %2 felhasználói csoport a %3 csoportból
+%1 acl records of not (longer) existing accounts deleted.	admin	hu	%1 ACL bejegyzés törölve a már nem létező felhasználói hozzáférésekből.
+%1 not found or not executable !!!	admin	hu	%1 nem található, vagy nem futtatható!
+(default no, leave it off if you dont use it)	admin	hu	(alapértelmezésként Nem, hagyja ki ha nem használja)
+(stored password will not be shown here)	admin	hu	(a tárolt jelszó  nem fog itt megjelenni)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(Új alkalmazás telepítéséhez használja a <br><a href="setup/" target="setup">Setup</a> felületet [Alkalmazások Kezelése].)
+-  type	admin	hu	- típus
+a group needs at least one member!	admin	hu	A csoportnak legalább egy taggal rendelkeznie kell!
+accesslog and bruteforce defense	admin	hu	Log elérése és brute force védelem
+account %1 %2	admin	hu	Felhasználói hozzáférés %1 %2
+account '%1' deleted.	admin	hu	'%1' felhasználói hozzáférés törölve.
+account active	admin	hu	Hozzáférés aktív
+account has been created	common	hu	Az azonosító létrehozva
+account has been deleted	common	hu	Az azonosító törölve
+account has been updated	common	hu	Az azonosító frissült
+account list	admin	hu	Azonosítók listája
+account permissions	admin	hu	Azonosító jogosultságai
+account preferences	admin	hu	Azonosító beállításai
+account-id's have to be integers!	admin	hu	Felhasználói azonosító egész szám kell legyen!
+acl manager	admin	hu	ACL kezelő
 acl rights	common	hu	ACL jogok
-action	admin	hu	M�velet
-activate wysiwyg-editor	admin	hu	WYSIWYG-szerkeszt� enged�lyez�se
-add a category	admin	hu	kateg�ria hozz�ad�sa
-add a group	admin	hu	csoport hozz�ad�sa
-add a new account.	admin	hu	�j azonos�t� hozz�ad�sa
-add a subcategory	admin	hu	alkateg�ria hozz�ad�sa
-add a user	admin	hu	felhaszn�l� hozz�ad�sa
-add account	admin	hu	Azonos�t� hozz�ad�sa
-add application	admin	hu	Alkalmaz�s hozz�ad�sa
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	hu	Automatikusan l�trehozott felhaszn�l�k ebbe a csoportba tartoznak ('Default' lesz az alap�rtelmezett, ha ez a mez� �resen van)
-add global category	admin	hu	Glob�lis kateg�ria hozz�ad�sa
-add global category for %1	admin	hu	Glob�lis kateg�ria hozz�ad�sa ehhez %1
-add group	admin	hu	Csoport hozz�ad�sa
-add new account	admin	hu	�j azonos�t� hozz�ad�sa
-add new application	admin	hu	Alkalmaz�s hozz�ad�sa
+action	admin	hu	Művelet
+activate wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő engedélyezése
+add a category	admin	hu	kategória hozzáadása
+add a group	admin	hu	csoport hozzáadása
+add a new account.	admin	hu	Új azonosító hozzáadása
+add a subcategory	admin	hu	alkategória hozzáadása
+add a user	admin	hu	felhasználó hozzáadása
+add account	admin	hu	Azonosító hozzáadása
+add application	admin	hu	Alkalmazás hozzáadása
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	hu	Az automatikusan létrehozott felhasználók alapértelmezett csoportja (ha üresen hagyja, akkor a 'Default' csoportba kerülnek!)
+add global category	admin	hu	Általános kategória hozzáadása
+add global category for %1	admin	hu	Globális kategória hozzáadása ehhez %1
+add group	admin	hu	Csoport hozzáadása
+add new account	admin	hu	Hozzáférést hozzáad
+add new application	admin	hu	Alkalmazás hozzáadása
 add peer server	admin	hu	Add Peer Server
-add sub-category	admin	hu	Alkateg�ria hozz�ad�sa
+add sub-category	admin	hu	Alkategória hozzáadása
 admin email	admin	hu	Admin email
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hu	Ezek az adminisztr�tori emailc�mek (vessz�vel elv�lasztva) lesznek �rtes�tve a blokkolt IP-c�mekr�l �s azonos�t�kr�l (�resen hagyva nem lesz �rtes�t�s)
-admin name	admin	hu	Adminisztr�tor neve
-administration	admin	hu	Adminisztr�ci�
-admins	admin	hu	Adminisztr�torok
-advanced options	admin	hu	Halad� be�ll�t�sok
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Mennyi sikertelen bel�p�si k�s�rlet ut�n legyen az azonos�t� blokkolt (alap�rtelmez�sben 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	hu	Mennyi sikertelen bel�p�si k�s�rlet ut�n legyen az IP-c�m blokkolt (alap�rtelmez�sben 3)?
-aliases	admin	hu	�lnevek
-all records and account information will be lost!	admin	hu	Minden bejegyz�s �s inform�ci� t�rl�sre ker�l a hozz�f�r�si joggal kapcsolatban!
-all users	admin	hu	�sszes felhaszn�l�
-allow anonymous access to this app	admin	hu	Enged�lyezi az anonim hozz�f�r�seket ehhez az alkalmaz�shoz
-alternate email address	admin	hu	alternat�v emailc�m
-anonymous user	admin	hu	N�v n�lk�li felhaszn�l�
-anonymous user (not shown in list sessions)	admin	hu	Anonim felhaszn�l� (nem jelenik meg a list�z�skor)
-anonymous user does not exist!	admin	hu	Anonymous felhaszn�l� nem l�tezik!
-anonymous user has no run-rights for the application!	admin	hu	Anonymous felhaszn�l�nak nincs futtat�si joga ehhez az alkalmaz�shoz!
-appearance	admin	hu	Megjelen�s
-application	admin	hu	Alkalmaz�s
-application name	admin	hu	Alkalmaz�s neve
-application title	admin	hu	Alkalmaz�s c�me
-applications	admin	hu	Alkalmaz�sok
-applications list	admin	hu	Alkalmaz�sok list�ja
-applies the changes	admin	hu	v�ltoz�sok v�grehajt�sa
-are you sure you want to delete the application %1 ?	admin	hu	Val�ban t�rl�sre ker�lj�n ez az alkalmaz�s: %1 ?
-are you sure you want to delete this account ?	admin	hu	Biztosan t�r�l�sre ker�lj�n ez az azonos�t�?
-are you sure you want to delete this application ?	admin	hu	Biztosan t�r�l�sre ker�lj�n ez az alkalmaz�s?
-are you sure you want to delete this category ?	common	hu	Biztosan t�r�l�sre ker�lj�n ez a kateg�ria?
-are you sure you want to delete this global category ?	admin	hu	Biztosan t�rl�sre ker�lj�n ez az �ltal�nos kateg�ria?
-are you sure you want to delete this group ?	admin	hu	Biztosan t�r�lni akarja ezt a csoportot?
-are you sure you want to delete this server?	admin	hu	Biztosan t�rl�sre ker�lj�n ez a szolg�ltat�s?
-are you sure you want to kill this session ?	admin	hu	Biztosan ki akarja tiltani ezt a hozz�f�r�st?
-authentication / accounts	admin	hu	Azonos�t�s / Azonos�t�k
-back to the list	admin	hu	vissza a list�hoz
-bi-directional	admin	hu	k�tir�ny�
-bottom	admin	hu	legals�
-can change password	admin	hu	Megv�ltoztathatja a jelszav�t
-categories list	admin	hu	Kateg�ri�k list�ja
-category %1 has been saved !	admin	hu	%1 kateg�ria elmentve
-category list	admin	hu	Kateg�rialista
-change acl rights	admin	hu	ACL jogok v�ltoztat�sa
-change config settings	admin	hu	Be�ll�t�sok megv�ltoztat�sa
-change main screen message	admin	hu	F� k�perny�n megjelen� �zenet v�ltoztat�sa
-check ip address of all sessions	admin	hu	�sszes session IP c�m ellen�rz�se
-click to select a color	admin	hu	Sz�nv�laszt�s
-color	admin	hu	Sz�n
-country selection	admin	hu	Orsz�g kiv�laszt�sa
-create group	admin	hu	Csoport l�trehoz�sa
-creates a new field	admin	hu	�j mez� l�trehoz�sa
-crontab only (recomended)	admin	hu	csak crontab (aj�nlott)
-custom fields	admin	hu	Egyedi mez�k
-cyrus imap server	admin	hu	Cyrus IMAP-kiszolg�l�
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hu	Ezek az adminisztrátori emailcímek (vesszével elválasztva) lesznek értesítve a blokkolt IP-címekről és azonosítókról (üresen hagyva nem lesz értesítés)
+admin name	admin	hu	Adminisztrátor neve
+administration	admin	hu	Adminisztráció
+admins	admin	hu	Adminisztrátorok
+advanced options	admin	hu	További beállítások
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az azonosító blokkolt (alapértelmezésben 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 3)?
+aliases	admin	hu	Álnevek
+all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
+all users	admin	hu	Összes felhasználó
+allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
+alternate email address	admin	hu	alternatív emailcím
+anonymous user	admin	hu	Név nélküli felhasználó
+anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor)
+anonymous user does not exist!	admin	hu	Anonymous felhasználó nem létezik!
+anonymous user has no run-rights for the application!	admin	hu	Az Anonymous felhasználónak nincs futtatási joga az alkalmazáshoz!
+appearance	admin	hu	Megjelenés
+application	admin	hu	Alkalmazás
+application '%1' not found (maybe not installed or misspelled)!	admin	hu	A(z) '%1' modul nem található (talán nincs telepítve vagy elírás történt)!
+application name	admin	hu	Alkalmazás neve
+application title	admin	hu	Alkalmazás címe
+applications	admin	hu	Alkalmazások
+applications list	admin	hu	Alkalmazások listája
+applications run rights updated.	admin	hu	Modul futási jogok modosítva.
+applies the changes	admin	hu	változások végrehajtása
+are you sure you want to delete the application %1 ?	admin	hu	Valóban törlésre kerüljön ez az alkalmazás: %1 ?
+are you sure you want to delete this account ?	admin	hu	Biztosan törölésre kerüljön ez az azonosító?
+are you sure you want to delete this application ?	admin	hu	Biztosan törölésre kerüljön ez az alkalmazás?
+are you sure you want to delete this category ?	common	hu	Biztosan törölésre kerüljön ez a kategória?
+are you sure you want to delete this global category ?	admin	hu	Biztosan törlésre kerüljön ez az általános kategória?
+are you sure you want to delete this group ?	admin	hu	Biztosan törölni akarja ezt a csoportot?
+are you sure you want to delete this server?	admin	hu	Biztosan törlésre kerüljön ez a szolgáltatás?
+are you sure you want to kill this session ?	admin	hu	Biztosan ki akarja tiltani ezt a hozzáférést?
+async services last executed	admin	hu	Feladat ütemező utolsó futása
+asynchronous timed services	admin	hu	Feladat ütemező szolgáltatás
+asyncservices not yet installed or other error (%1) !!!	admin	hu	Feladat ütemező szolgáltatás nincs még telepítve vagy egyéb hiba fordult elő (%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	hu	FTP esetén próbálja használni a megfelelő mime típust az alapértelmezett 'application/octet-stream' helyett.
+attribute accountstatus explained	admin	hu	A QMAIL séma <b><i>-accountStatus-</i></b> tulajdonságát kezeli le.
+attribute mail explained	admin	hu	A QMAIL séma <b><i>-mail-</i></b> tulajdonságát kezeli le, soha nem lehet üresen hagyni. Ez egyben ez eGW belső email mezője is.
+attribute mailalternateaddress explained	admin	hu	A QMAIL séma <b><i>-mailAlternateAddress-</i></b> tulajdonságát kezeli le és kezelheti úgy, mint virtuális leképezés, illetve aliast.
+attribute mailforwardingaddress explained	admin	hu	A QMAIL séma <b><i>-mailForwardingAddress-</i></b> tulajdonságát kezeli le, és nem lehet üresen hagyni, ha egyszer már hozzá lett rendelve (a 'ha' utáni rész sántít, de határozottan van ott valami).
+authentication / accounts	admin	hu	Azonosítás / Azonosítók
+auto create account records for authenticated users	admin	hu	Hitelesített felhasználóknak automatikus hozzáférés generálása.
+back to the list	admin	hu	vissza a listához
+bi-dir passthrough	admin	hu	kétirányú átjáró
+bi-directional	admin	hu	kétirányú
+bottom	admin	hu	legalsó
+calculate next run	admin	hu	Legközelebbi futás kiszámítása
+can change password	admin	hu	Megváltoztathatja a jelszavát
+cancel testjob!	admin	hu	Tesztfeladat leállítása/törlése!
+categories list	admin	hu	Kategóriák listája
+category %1 has been saved !	admin	hu	%1 kategória elmentve
+category list	admin	hu	Kategórialista
+change acl rights	admin	hu	ACL jogok változtatása
+change config settings	admin	hu	Beállítások megváltoztatása
+change main screen message	admin	hu	Főképernyőn megjelenő üzenet változtatása
+check ip address of all sessions	admin	hu	Összes session IP cím ellenőrzése
+check items to <b>%1</b> to %2 for %3	admin	hu	Tételek ellenőrzése <b>%1</b> to %2 for %3
+click to select a color	admin	hu	Színválasztás
+color	admin	hu	Szín
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	hu	Süti tartomány (az alapértelmezett üres jelentése a teljes domain, például a SiteManager esetében a ".domain.com" lehetővé teszi ugyanazon süti használatát az egw.domain.com és a www.domain.com számára is)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	hu	Süti útvonal (többszörös eGW munkamenetet külön könyvtárakba menti, problémákat okozhat a Sitemanager esetében)
+country selection	admin	hu	Ország kiválasztása
+create group	admin	hu	Csoport létrehozása
+created with id #%1	admin	hu	létrehozva a #%1 azonosítóval
+creates a new field	admin	hu	Új mező létrehozása
+crontab only (recomended)	admin	hu	csak crontab (ajánlott)
+custom fields	admin	hu	Egyedi mezők
+cyrus imap server	admin	hu	Cyrus IMAP-kiszolgáló
 data	admin	hu	Adat
 day	admin	hu	Nap
-day of week<br>(0-6, 0=sun)	admin	hu	A h�t napja<br />(0-6, 0=Vas�rnap)
-db backup and restore	admin	hu	Adatb�zis ment�s �s helyre�ll�t�s
-default	admin	hu	Alap�rtelmezett
-default file system space per user	admin	hu	Az alap�rtelmezett f�jlrendszerm�ret felhaszn�l�nk�nt
-default file system space per user/group ?	admin	hu	Az alap�rtelmezett f�jlrendszerm�ret felhaszn�l�nk�nt ?
-deinstall crontab	admin	hu	Crontab t�rl�se
-delete account	admin	hu	Azonos�t� t�rl�se
-delete all records	admin	hu	�sszes bejegyz�s t�rl�se
-delete application	admin	hu	Alkalmaz�s t�rl�se
-delete category	admin	hu	Kateg�ria t�rl�se
-delete group	admin	hu	Csoport t�rl�se
-delete the category	admin	hu	kateg�ria t�rl�se
-delete the group	admin	hu	csoport t�rl�se
-delete this category	admin	hu	kateg�ria t�rl�se
-delete this group	admin	hu	csoport t�rl�se
-delete this user	admin	hu	felhaszn�l� t�rl�se
-deletes this field	admin	hu	Aktu�lis mez� t�rl�se
-deny access to access log	admin	hu	A hozz�f�r�si napl�hoz t�rt�n� hozz�f�r�s letiltva
-deny access to applications	admin	hu	Az alkalmaz�sokhoz t�rt�n� hozz�f�r�s letiltva
-deny access to error log	admin	hu	A hibanapl�hoz t�rt�n� hozz�f�r�s letiltva
-deny access to global categories	admin	hu	Az �ltal�nos kateg�ri�khoz t�rt�n� hozz�f�r�s letiltva
-deny access to groups	admin	hu	A csoportokhoz t�rt�n� hozz�f�r�s letiltva
-deny access to phpinfo	admin	hu	A phpinfo()-hoz t�rt�n� hozz�f�r�s letiltva
-deny access to site configuration	admin	hu	A webhely be�ll�t�saihoz t�rt�n� hozz�f�r�s letiltva
-deny access to user accounts	admin	hu	A felhaszn�l�i azonos�t�khoz t�rt�n� hozz�f�r�s letiltva
-description can not exceed 255 characters in length !	admin	hu	A le�r�s nem haladhatja meg a 255 karaktert!
-determines the order the fields are displayed	admin	hu	megjelenitett mez�k rendez�s�nek meghat�roz�sa
-disable "auto completion" of the login form	admin	hu	Az automatikus kieg�sz�t�s tilt�sa a bejelentkez�k�perny�n
-disable wysiwyg-editor	admin	hu	WYSIWYG-szerkeszt� kikapcsol�sa
-disabled (not recomended)	admin	hu	tiltott (nem aj�nlott)
-display	admin	hu	Megjelen�t�s
-do not delete the category and return back to the list	admin	hu	A kateg�ria t�rl�se N�LK�L vissza a list�z�shoz
-do you also want to delete all global subcategories ?	admin	hu	Biztosan t�rl�sre ker�lj�n az �sszes �ltal�nos alkateg�ria?
-do you want to delete all global subcategories ?	admin	hu	Biztosan t�rl�sre ker�lj�n az �sszes alkateg�ria?
-edit account	admin	hu	Azonos�t� szerkeszt�se
-edit application	admin	hu	Alkalmaz�s m�dos�t�sa
-edit email settings	admin	hu	emailbe�ll�t�sok szerkeszt�se
-edit global category	admin	hu	�ltal�nos kateg�ria szerkeszt�se
-edit global category for %1	admin	hu	%1 �ltal�nos kateg�ria szerkeszt�se
-edit group	admin	hu	Csoport m�dos�t�sa
-edit group acl's	admin	hu	csoport ACL szerkeszt�se
-edit login screen message	admin	hu	Bejelentkez�si k�perny�n megjelen� �zenet szerkeszt�se
-edit main screen message	admin	hu	F�k�perny�n megjelen� �zenet szerkeszt�se
-edit table format	admin	hu	T�bl�zatos form�tum szerkeszt�se
-edit this category	admin	hu	kateg�ria szerkeszt�se
-edit this group	admin	hu	csoport szerkeszt�se
-edit this user	admin	hu	felhaszn�l� szerkeszt�se
-edit user	admin	hu	felhaszn�l� szerkeszt�se
-edit user account	admin	hu	Felhaszn�l�i azonos�t� szerkeszt�se
-email account active	admin	hu	email azonos�t� akt�v
-email address	admin	hu	email c�m
-enable debug-messages	admin	hu	Hibajelent� �zenetek enged�lyez�se
-enable the soap service	admin	hu	SOAP-szolg�ltat�s enged�lyez�se
-enable the xmlrpc service	admin	hu	XML-RPC-szolg�ltat�s enged�lyez�se
-enabled - hidden from navbar	admin	hu	Enged�lyezve - Navbar-ban rejtve
-enabled - popup window	admin	hu	Enged�lyezve - felugr� ablakok
-enter a description for the category	admin	hu	a kateg�ria le�r�s�nak megad�sa
-enter the background color for the login page	admin	hu	A bejelentkez�si oldal h�tt�rsz�ne
-enter the background color for the site title	admin	hu	A webhely c�m�nek h�tt�rsz�ne
-enter the title for your site	admin	hu	A webhely megnevez�se
-enter the title of your logo	admin	hu	A log� c�me
-enter your default ftp server	admin	hu	Az alap�rtelmezett FTP-kiszolg�l�
-enter your http proxy server	admin	hu	A HTTP-proxy kiszolg�l�
-enter your http proxy server port	admin	hu	A HTTP-proxy kiszolg�l� portsz�ma
-enter your smtp server hostname or ip address	admin	hu	Az SMTP-kiszolg�l� hosztneve vagy IP-c�me
-enter your smtp server port	admin	hu	Az SMTP-kiszolg�l� portsz�ma
-expires	admin	hu	Lej�r
-forward only	admin	hu	csak tov�bbk�ld�s
-global categories	common	hu	Glob�lis kateg�ri�k
-group has been added	common	hu	A csoport hozz�ad�sa megt�rt�nt
-group has been deleted	common	hu	A csoport t�rl�se megt�rt�nt
-group has been updated	common	hu	A csoport friss�t�se megt�rt�nt
+day of week<br>(0-6, 0=sun)	admin	hu	A hét napja<br />(0-6, 0=Vasárnap)
+db backup and restore	admin	hu	Adatbázis mentés és helyreállítás
+default	admin	hu	Alapértelmezett
+default file system space per user	admin	hu	Az alapértelmezett fájlrendszerméret felhasználónként
+default file system space per user/group ?	admin	hu	Az alapértelmezett fájlrendszerméret felhasználónként ?
+deinstall crontab	admin	hu	Crontab törlése
+delete account	admin	hu	Azonosító törlése
+delete all records	admin	hu	Összes bejegyzés törlése
+delete application	admin	hu	Alkalmazás törlése
+delete category	admin	hu	Kategória törlése
+delete group	admin	hu	Csoport törlése
+delete peer server	admin	hu	Peer szerver törlése
+delete the category	admin	hu	kategória törlése
+delete the group	admin	hu	csoport törlése
+delete this category	admin	hu	kategória törlése
+delete this group	admin	hu	csoport törlése
+delete this user	admin	hu	felhasználó törlése
+deletes this field	admin	hu	Aktuális mező törlése
+deliver extern	admin	hu	külső kézbesítés
+deny access to access log	admin	hu	A hozzáférési naplóhoz történő hozzáférés tiltása
+deny access to application registery	admin	hu	Alkalmazás nyilvántartáshoz történő hozzáfárás tiltása
+deny access to applications	admin	hu	Az alkalmazásokhoz történő hozzáférés tiltása
+deny access to asynchronous timed services	admin	hu	Feladat ütemezőhöz történő hozzáfárás tiltása
+deny access to current sessions	admin	hu	Aktuális session-ökhoz történő hozzáfárás tiltása
+deny access to db backup and restore	admin	hu	Adatbázis mentés/helyreállításhoz történő hozzáfárás tiltása
+deny access to error log	admin	hu	A hibanaplóhoz történő hozzáférés tiltása
+deny access to global categories	admin	hu	Az általános kategóriákhoz történő hozzáférés tiltása
+deny access to groups	admin	hu	A csoportokhoz történő hozzáférés tiltása
+deny access to mainscreen message	admin	hu	Kezdőképernyő üzenetéhez történő hozzáférés tiltása
+deny access to peer servers	admin	hu	Peer szerverhez  történő hozzáférés tiltása
+deny access to phpinfo	admin	hu	A phpinfo()-hoz történő hozzáférés tiltása
+deny access to site configuration	admin	hu	A webhely beállításaihoz történő hozzáférés tiltása
+deny access to user accounts	admin	hu	A felhasználói azonosítókhoz történő hozzáférés tiltása
+deny all users access to grant other users access to their entries ?	admin	hu	Minden felhasználó esetén tiltsa a más felhasználóknak kiadható jogosultság beállítást? Ez esetben pl. nem oszthatja meg a saját naptárát más felhasználóval (ez csak az egyedi engedélyezést befolyásolja, a csoport jogosultságra nincs hatással!)
+description can not exceed 255 characters in length !	admin	hu	A leírás nem haladhatja meg a 255 karaktert!
+determines the order the fields are displayed	admin	hu	megjelenített mezők rendezésének meghatározása
+disable "auto completion" of the login form	admin	hu	Az automatikus kiegészítés tiltása a bejelentkezőképernyőn
+disable wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő kikapcsolása
+disabled (not recomended)	admin	hu	tiltott (nem ajánlott)
+display	admin	hu	Megjelenítés
+do not delete the category and return back to the list	admin	hu	A kategória törlése NÉLKÜL vissza a listázáshoz
+do you also want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes általános alkategória?
+do you want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes alkategória?
+do you want to move all global subcategories one level down ?	admin	hu	Biztosan szeretné egy szinttel lejjebb vinni az összes globális alkategóriát?
+document root (default)	admin	hu	Dokumentum főkönyvtár (alapértelmezett)
+each value is a line like <id>[=<label>]	admin	hu	minden érték egy sor, ehhez hasonlóan: <id>[=<címke>]
+each value is a line like id[=label]	admin	hu	minden érték egy sor, ehhez hasonlóan: id[=címke]
+edit account	admin	hu	Azonosító szerkesztése
+edit application	admin	hu	Alkalmazás módosítása
+edit email settings	admin	hu	email beállítások szerkesztése
+edit global category	admin	hu	Általános kategória szerkesztése
+edit global category for %1	admin	hu	%1 általános kategória szerkesztése
+edit group	admin	hu	Csoport módosítása
+edit group acl's	admin	hu	csoport ACL szerkesztése
+edit login screen message	admin	hu	Bejelentkezési képernyőn megjelenő üzenet szerkesztése
+edit main screen message	admin	hu	Főképernyőn megjelenő üzenet szerkesztése
+edit peer server	admin	hu	Peer szerver szerkesztése
+edit table format	admin	hu	Táblázatos formátum szerkesztése
+edit this category	admin	hu	kategória szerkesztése
+edit this group	admin	hu	csoport szerkesztése
+edit this user	admin	hu	felhasználó szerkesztése
+edit user	admin	hu	felhasználó szerkesztése
+edit user account	admin	hu	Felhasználói azonosító szerkesztése
+egroupware directory	admin	hu	eGroupWare könyvtár
+email account active	admin	hu	email azonosító aktív
+email address	admin	hu	email cím
+enable debug-messages	admin	hu	Hibajelentő üzenetek engedélyezése
+enable the soap service	admin	hu	SOAP-szolgáltatás engedélyezése
+enable the xmlrpc service	admin	hu	XML-RPC-szolgáltatás engedélyezése
+enabled - hidden from navbar	admin	hu	Engedélyezve - Navbarban nem szerepel
+enabled - popup window	admin	hu	Engedélyezve - Felugró Ablak
+enter a description for the category	admin	hu	a kategória leírásának megadása
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	hu	Adjon meg néhány véletlenszerűen kiválasztott karaktert<br>az app_session titkosításhoz (mcrypt szükséges)
+enter the background color for the login page	admin	hu	A bejelentkezési oldal háttérszíne
+enter the background color for the site title	admin	hu	A webhely címének háttérszíne
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	hu	Adja  meg az ideiglenes fájlok teljes elérési útvonalát.<br>Például: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	hu	Adja  meg az ideiglenes fájlok teljes elérési útvonalát.<br>Például: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	hu	Adja meg a felhasználók és csoportok fájljainak teljes elérési útvonalát.<br>Például /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	hu	Adja meg a felhasználók és csoportok fájljainak teljes elérési útvonalát.<br>Például /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	hu	Adja meg a gazdagép nevét, ahol az egw szerver fut.
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Adja meg az eGroupWare elérhetőségének az URL-jét.<br>Például: http://www.domain.com/egroupware vagy /egroupware<br><b>Lezáró 'per' jel nélkül!!!</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	hu	Keresési szöveg megadása. Az összes bejegyzés megjelenítéséhez hagyja üreset és ismét nyomja meg az ELKÜLD gombot.
+enter the site password for peer servers	admin	hu	Adja meg a site jelszót a peer szerverhez
+enter the site username for peer servers	admin	hu	Adja meg a site felhasználót a peer szerverhez
+enter the title for your site	admin	hu	A webhely megnevezése
+enter the title of your logo	admin	hu	A logó címe
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	hu	Adja meg a céglogó URL-ét vagy a fájlnevét (phpgwapi/templates/default/images könyvtárból)
+enter the url where your logo should link to	admin	hu	Adja meg az internetes hivatkozást, hogy hová mutasson a céglogó
+enter your default ftp server	admin	hu	Az alapértelmezett FTP-kiszolgáló
+enter your default mail domain ( from: user@domain )	admin	hu	Adja meg az alapértelmezett email tartományt (felhasználó@tartomány alapján)
+enter your http proxy server	admin	hu	A HTTP-proxy kiszolgáló
+enter your http proxy server port	admin	hu	A HTTP-proxy kiszolgáló portszáma
+enter your smtp server hostname or ip address	admin	hu	Az SMTP-kiszolgáló hosztneve vagy IP-címe
+enter your smtp server port	admin	hu	Az SMTP-kiszolgáló portszáma
+error canceling timer, maybe there's none set !!!	admin	hu	Timer leállítási hiba, talán nincs még beállítva!!
+error saving account!	admin	hu	Felhasználói hozzáférés mentése sikertelen!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	hu	Timer beállítási hiba, rossz szintaxis vagy egy példány már fut!!
+error! no appname found	admin	hu	Hiba!! Alkalmazásnév nem található.
+error: %1 not found or other error !!!	admin	hu	Hiba: %1 nem található vagy egyéb hiba !!!
+expires	admin	hu	Lejár
+explanation of ldapman	admin	hu	Ez a modul eddig a következőkkel lett tesztelve: Postfix, Ldap, Courier-IMAP és a szükséges sémák: CORE és QMAIL (OID7914). További részleteket találhat a használatról és beállításról a README.ldapman fájlban az ADMIN dokumentum mappájában.
+fallback (after each pageview)	admin	hu	visszatérés (minden oldalnézet után)
+field '%1' already exists !!!	admin	hu	'%1' mező már létezik!
+file space	admin	hu	Fájl space
+file space must be an integer	admin	hu	Fájl space egész értékű kell legyen
+find and register all application hooks	admin	hu	Keresse meg és Regisztrálja az összes alkalmazás visszacsatolását
+for the times above	admin	hu	fent látható időpontokban
+for the times below (empty values count as '*', all empty = every minute)	admin	hu	lent látható időpontokban (az üres bejegyzés '*'-ként szerepel, ha minden üres, akkor az egyenértékű a 'minden percben'-el)
+force selectbox	admin	hu	Kényszerített selectbox
+forward also to	admin	hu	továbbítsd ide is
+forward emails to	admin	hu	email továbbítása ide
+forward only	admin	hu	csak továbbküldés
+global categories	common	hu	Globális kategóriák
+group ?	admin	hu	csoport?
+group has been added	common	hu	A csoport hozzáadása megtörtént
+group has been deleted	common	hu	A csoport törlése megtörtént
+group has been updated	common	hu	A csoport frissítése megtörtént
 group list	admin	hu	Csoportlista
 group manager	admin	hu	Csoportmenedzser
 group name	admin	hu	Csoport neve
-hour<br>(0-23)	admin	hu	�ra<br />(0-23)
+hide php information	admin	hu	php információ elrejtése
+home directory	admin	hu	Home könyvtár
+host information	admin	hu	Host információ
+hour<br>(0-23)	admin	hu	Óra<br />(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	hu	A hozzáférési listában hány napig legyenek megőrizve az adatok, mielőtt törlődnének (alapértelmezett 90 nap)?
+how many minutes should an account or ip be blocked (default 30) ?	admin	hu	Hány percig legyenek blokkolva a hozzáférések vagy IP címek (alapértelmezett 30 perc)?
+how should email addresses for new users be constructed?	admin	hu	Új felhasználók email címét hogyan készítsük el?
 icon	admin	hu	Ikon
-idle	admin	hu	inakt�v
-inbound	admin	hu	be�rkez�
-install crontab	admin	hu	Crontab telep�t�se
-installed applications	common	hu	Telep�tett alkalmaz�sok
-installed crontab	admin	hu	Telep�tett crontab
-interface	admin	hu	Fel�let
+idle	admin	hu	inaktív
+if no acl records for user or any group the user is a member of	admin	hu	Ha a felhasználónak vagy összes csoportjának nincs ACL meghatározva
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	hu	Ha LDAP-ot használ, kívánja kezelni a Saját könyvtárat és a bejelentkezési héj tulajdonságait?
+in mbyte	admin	hu	MBájtban
+inbound	admin	hu	beérkező
+initial	admin	hu	Kezdeti
+install crontab	admin	hu	Crontab telepítése
+installed applications	common	hu	Telepített alkalmazások
+installed crontab	admin	hu	Telepített crontab
+interface	admin	hu	Felület
+invalid date '%1' use yyyy-mm-dd!	admin	hu	Érvénytelen dátum: '%1'. Használja ezt a formátumot: YYYY-MM-DD
 ip	admin	hu	IP
-jobs	admin	hu	Munk�k
-kill	admin	hu	Kitilt�s
-last %1 logins	admin	hu	Utols� %1 bejelentkez�s
-last login	admin	hu	utols� bejelentkez�s
-last login from	admin	hu	utols� bejelentkez�s c�me
-last time read	admin	hu	Utols� olvas�s id�pontja
+jobs	admin	hu	Munkák
+kill	admin	hu	Kitiltás
+kill session	admin	hu	Munkamenet kilövése
+last %1 logins	admin	hu	Utolsó %1 bejelentkezés
+last %1 logins for %2	admin	hu	%2 utolsó %1 bejelentkezése
+last login	admin	hu	utolsó bejelentkezés
+last login from	admin	hu	utolsó bejelentkezés címe
+last time read	admin	hu	Utolsó olvasás időpontja
+ldap accounts context	admin	hu	LDAP fiók környezet
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	hu	LDAP Alapértelmezett Saját könyvtár előtagja (pl. /home a /home/felhasználó formához)
+ldap default shell (e.g. /bin/bash)	admin	hu	LDAP Alapértelmezett héj (pl. /bin/bash)
+ldap encryption type	admin	hu	LDAP titkosítás típusa
+ldap groups context	admin	hu	LDAP csoport környezet
 ldap host	admin	hu	LDAP hoszt
+ldap root password	admin	hu	LDAP root jelszava
 ldap rootdn	admin	hu	LDAP rootdn
-leaves without saveing	admin	hu	kil�p�s ment�s n�lk�l
+leave empty for no quota	admin	hu	hagyja üresen a kvóta figyelmen kívül hagyásához
+leave the category untouched and return back to the list	admin	hu	hagyja érintetlenül a kategóriát és térjen vissza a listához
+leave the group untouched and return back to the list	admin	hu	Hagyja érintetlenül a csoportot és térjen vissza a listához
+leaves without saveing	admin	hu	kilépés mentés nélkül
 length<br>rows	admin	hu	Sorok<br>Hossza
-list of current users	admin	hu	aktu�lis felhaszn�l�k list�ja
-login time	admin	hu	Bel�p�s ideje
+list config settings	admin	hu	Konfigurációs beállítások listája
+list current sessions	admin	hu	Jelenlegi session-ök listája
+list of current users	admin	hu	jelenlegi felhasználók listája
+login history	common	hu	Bejelentkezések története
+login message	admin	hu	Bejelentkezési üzenet
+login screen	admin	hu	Bejelentkezési képernyő
+login shell	admin	hu	Bejelentkezési héj
+login time	admin	hu	Belépés ideje
 loginid	admin	hu	LoginID
+mail settings	admin	hu	eMail beállítások
+main email-address	admin	hu	Fő emailcím
+main screen message	admin	hu	Főképernyőn megjelenő szöveg
 manager	admin	hu	Manager
-message has been updated	admin	hu	az �zenet friss�tve
-method	admin	hu	Met�dus
+max length of the input [, length of the inputfield (optional)]	admin	hu	a beviteli mező maximális hossza (opcionális)
+maximum account id (e.g. 65535 or 1000000)	admin	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
+maximum entries in click path history	admin	hu	Útvonal látogatottság bejegyzések maximális száma
+message has been updated	admin	hu	az üzenet frissítve
+method	admin	hu	Metódus
+minimum account id (e.g. 500 or 100, etc.)	admin	hu	Legkisebb felhasználói azonosító (pl. 500 vagy 100)
 minute	admin	hu	Perc
-mode	admin	hu	M�d
-month	admin	hu	H�nap
-name must not be empty !!!	admin	hu	N�v nem lehet �res!!!
-new group name	admin	hu	�j csoport neve
-new name	admin	hu	�j n�v
-new password [ leave blank for no change ]	admin	hu	�j jelsz� [ �resen hagyva nem lesz v�ltoz�s ]
-next run	admin	hu	K�vetkez� futtat�s
-no algorithms available	admin	hu	nincsenek el�rhet� algoritmusok
-no alternate email address	admin	hu	nincs alternat�v emailc�m
-no matches found	admin	hu	Nincs egyez�s
-no modes available	admin	hu	nincs el�rhet� m�d
-no permission to add groups	admin	hu	nincs jogosults�g csoportok hozz�ad�s�ra
-no permission to add users	admin	hu	nincs jogosults�g felhaszn�l�k hozz�ad�s�ra
-no permission to create groups	admin	hu	nincs jogosults�g csoportok l�trehoz�s�ra
-order	admin	hu	Rendez�s
-outbound	admin	hu	kimen�
-password for smtp-authentication	admin	hu	Jelsz� az SMTP-azonos�t�shoz
-path information	admin	hu	�tvonal-inform�ci�
-percent of users that logged out	admin	hu	Rendesen kijelentkezett felhaszn�l�k %-ban
-permission denied	admin	hu	Hozz�f�r�s megtagadva
+mode	admin	hu	Mód
+month	admin	hu	Hónap
+more secure	admin	hu	biztonságosabb
+name must not be empty !!!	admin	hu	Név nem lehet üres!!!
+new group name	admin	hu	Új csoport neve
+new name	admin	hu	új név
+new password [ leave blank for no change ]	admin	hu	Új jelszó [ üresen hagyva nem lesz változás ]
+next run	admin	hu	Következő futtatás
+no algorithms available	admin	hu	nincsenek elérhető algoritmusok
+no alternate email address	admin	hu	nincs alternatív emailcím
+no jobs in the database !!!	admin	hu	Nem található feladat az adatbázisban!!!
+no login history exists for this user	admin	hu	Ehhez a felhasználóhoz nem található belépési történet
+no matches found	admin	hu	Nincs egyezés
+no modes available	admin	hu	nincs elérhetó mód
+no permission to add groups	admin	hu	nincs jogosultság csoportok hozzáadására
+no permission to add users	admin	hu	nincs jogosultság felhasználók hozzáadására
+no permission to create groups	admin	hu	nincs jogosultság csoportok létrehozására
+note: ssl available only if php is compiled with curl support	admin	hu	Megjegyzés: SSL csak akkor érhető el, ha a PHP curl támogatással lett lefordítva
+number of row for a multiline inputfield or line of a multi-select-box	admin	hu	sorok száma a többsoros beviteli mező, vagy egy kiválasztó lista esetén (ilyen 'magas' lesz a doboz/szerkesztő mező)
+order	admin	hu	Rendezés
+outbound	admin	hu	kimenő
+passthrough	admin	hu	átmenő
+password for smtp-authentication	admin	hu	Jelszó az SMTP-azonosításhoz
+path information	admin	hu	Útvonal-információ
+peer server list	admin	hu	Peer szerver lista
+peer servers	admin	hu	Peer szerverek
+percent of users that logged out	admin	hu	Rendesen kijelentkezett felhasználók %-ban
+percent this user has logged out	admin	hu	Jelenlegi felhasználó rendes kijelentkezése %-ban
+permission denied	admin	hu	Hozzáférés megtagadva
+permission denied !!!	admin	hu	Hozzáférés megtagadva!!!
 permissions	admin	hu	Jogok
-permissions this group has	admin	hu	A csoport jogosults�gai
-phpinfo	admin	hu	PHP inform�ci�k
-please enter a name	admin	hu	K�rem adjon meg egy nevet!
-please run setup to become current	admin	hu	K�rem futtassa a setup-ot hogy a v�ltoz�s �rv�nyre jusson.
-please select	admin	hu	K�rem v�lasszon
+permissions this group has	admin	hu	A csoport jogosultságai
+phpinfo	admin	hu	PHP információk
+please enter a name	admin	hu	Kérem adjon meg egy nevet!
+please enter a name for that server !	admin	hu	Kérem adjon meg egy szerver nevet!
+please run setup to become current	admin	hu	Kérem futtassa a setup-ot hogy a változás érvényre jusson.
+please select	admin	hu	Kérem válasszon
 postfix with ldap	admin	hu	Postfix LDAP-vel
-preferences	admin	hu	Tulajdons�gok
-primary group	admin	hu	els�dleges csoport
-quota settings	admin	hu	kv�ta be�ll�t�sai
-quota size in mbyte	admin	hu	kv�ta Mb�jtokban
-re-enter password	admin	hu	Jelsz� �jra
-read this list of methods.	admin	hu	Elj�r�s lista olvas�sa.
-remove	admin	hu	elt�vol�t�s
-remove all users from this group	admin	hu	Csoport �sszes felhaszn�l�j�nak t�rl�se
-saves the changes made and leaves	admin	hu	V�ltoz�s ment�se �s kil�p�s
-security	admin	hu	Biztons�g
-select permissions this group will have	admin	hu	V�lassza ki milyen jogosults�gokkal rendelkezzen a csoport
-select users for inclusion	admin	hu	Felhaszn�l�k kiv�laszt�sa
-selectbox	admin	hu	Kiv�laszt� doboz
-show 'powered by' logo on	admin	hu	Powered by log� megjelen�t�se
-show access log	admin	hu	Hozz�f�r�si napl� megjelen�t�se
-show current action	admin	hu	Jelenlegi m�velet megjelen�t�se
-show error log	admin	hu	Hibanapl� megjelen�t�se
-show phpinfo()	admin	hu	phpinfo() megjelen�t�se
+preferences	admin	hu	Tulajdonságok
+primary group	admin	hu	elsődleges csoport
+qmaildotmode	admin	hu	qmaildotmode
+quota settings	admin	hu	kvóta beállításai
+quota size in mbyte	admin	hu	kvóta Mbájtokban
+re-enter password	admin	hu	Jelszó újra
+read this list of methods.	admin	hu	Eljárás lista olvasása.
+register application hooks	admin	hu	Regisztrálja az alkalmazás visszacsatolást
+remove	admin	hu	eltávolítás
+remove all users from this group	admin	hu	Csoport összes felhasználójának törlése
+remove all users from this group ?	admin	hu	Összes felhasználó eltávolítása ebből a csoportból?
+return to admin mainscreen	admin	hu	visszatérés az adminisztrációs főképernyőre
+return to view account	admin	hu	Visszatérés a hozzáférések megjelenítéséhez
+route all mails to	admin	hu	Összes email irányítása ide:
+run asynchronous services	admin	hu	Feladat ütemező futtatása
+save the category	admin	hu	Kategória mentése
+save the category and return back to the list	admin	hu	Kategória mentése és visszatérés a listához
+saves the changes made and leaves	admin	hu	Változások mentése és kilépés
+search accounts	admin	hu	Felhasználói hozzáférések keresése
+search categories	admin	hu	Kategóriák keresése
+search groups	admin	hu	Csoportok keresése
+search peer servers	admin	hu	Peer szerverek keresése
+security	admin	hu	Biztonság
+select group managers	admin	hu	Csoport menedzser kiválasztása
+select permissions this group will have	admin	hu	Válassza ki milyen jogosultságokkal rendelkezzen a csoport
+select the parent category. if this is a main category select no category	admin	hu	Szülő kategória kiválasztása. Ha ez a főkategória, akkor nincs kategória kiválasztva
+select users for inclusion	admin	hu	Felhasználók kiválasztása a  befoglaláshoz
+select where you want to store/retrieve filesystem information	admin	hu	Válassza ki, hol kívánja tárolni a fájlrendszer információkat
+select where you want to store/retrieve user accounts	admin	hu	Válassza ki, hol kívánja tárolni a felhasználói hozzáféréseket
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	hu	Válassza ki, hogy ez az alkalmazás hol jelenjen meg a tálcán, legkisebbtől (bal oldalon) a legnagyobbig (jobb oldal)
+selectbox	admin	hu	Kiválasztó doboz
+server %1 has been updated	admin	hu	%1 szerver frissítve
+server list	admin	hu	Szerver lista
+server password	admin	hu	Szerver jelszó
+server type(mode)	admin	hu	Szerver típus (mód)
+server url	admin	hu	Szerver URL
+server username	admin	hu	Szerver felhasználónév
+set preference values.	admin	hu	Set preference values.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	hu	A Bejelentkező képernyő tartalmazzon Nyelv választási lehetőséget (hasznos pl. a demo oldal esetén)?
+show 'powered by' logo on	admin	hu	'Powered by' logó megjelenítése
+show access log	admin	hu	Hozzáférési napló megjelenítése
+show an asterisk (*) to mark untranslated strings	admin	hu	Fordítással nem rendelkező szövegek megjelölése csillaggal (*)
+show current action	admin	hu	Jelenlegi művelet megjelenítése
+show error log	admin	hu	Hibanapló megjelenítése
+show phpinfo()	admin	hu	phpinfo() megjelenítése
+show session ip address	admin	hu	Session IP cím megjelenítése
 site	admin	hu	Oldal
-site configuration	common	hu	Webhely be�ll�t�sai
+site configuration	common	hu	Webhely beállításai
 soap	admin	hu	SOAP
-sorry, that group name has already been taken.	admin	hu	M�r l�tezik csoport ezen a n�ven
-sorry, the above users are still a member of the group %1	admin	hu	A fenti felhaszn�l�k m�r tagjai az al�bbi csoportnak: %1
-sorry, the follow users are still a member of the group %1	admin	hu	A k�vetkez� felhaszn�l�k m�r a(z) %1 csoport tagjai
-sort the entries	admin	hu	elemek rendez�se
+sorry, that group name has already been taken.	admin	hu	Már létezik csoport ezen a néven
+sorry, the above users are still a member of the group %1	admin	hu	A fenti felhasználók már tagjai az alábbi csoportnak: %1
+sorry, the follow users are still a member of the group %1	admin	hu	A következő felhasználók már a(z) %1 csoport tagjai
+sort the entries	admin	hu	elemek rendezése
 ssl	admin	hu	ssl
-standard	admin	hu	szabv�nyos
-standard imap server	admin	hu	szabv�nyos IMAP-kiszolg�l�
-standard pop3 server	admin	hu	szabv�nyos POP3-kiszolg�l�
-standard smtp-server	admin	hu	szabv�nyos SMTP-kiszolg�l�
-submit changes	admin	hu	V�ltoz�sok elk�ld�se
-text entry	admin	hu	Sz�veges bejegyz�s
-that loginid has already been taken	admin	hu	Ez a felhaszn�l�n�v m�r foglalt
-the api is current	admin	hu	Az API nem ig�nyel friss�t�st
-the api requires an upgrade	admin	hu	Az API friss�t�st ig�nyel
-the login and password can not be the same	admin	hu	A felhaszn�l�n�v �s a jelsz� nem egyezhet meg
-the text displayed to the user	admin	hu	a sz�veg megjelen�tve a felhaszn�l�nak
-the two passwords are not the same	admin	hu	A k�t jelsz� nem egyezik
-they must be removed before you can continue	admin	hu	El kell t�vol�tani �ket a folytat�shoz
-this application is current	admin	hu	Az alkalmaz�s nem ig�nyel friss�t�st
-this application requires an upgrade	admin	hu	Az alkalmaz�s friss�t�st ig�nyel
-times	admin	hu	Id�k
-top	admin	hu	Fel�l
-total records	admin	hu	�sszes rekord
+standard	admin	hu	szabványos
+standard imap server	admin	hu	szabványos IMAP-kiszolgáló
+standard pop3 server	admin	hu	szabványos POP3-kiszolgáló
+standard smtp-server	admin	hu	szabványos SMTP-kiszolgáló
+start testjob!	admin	hu	TesztFeladat indítása!
+submit changes	admin	hu	Változások elküldése
+submit the search string	admin	hu	Keresési szöveg elküldése
+subtype	admin	hu	Altípus
+switch it off, if users are randomly thrown out	admin	hu	kapcsolja ki, a felhasználókat véletlenszerűen kidobja a rendszer
+template selection	admin	hu	Sablon választás
+text entry	admin	hu	Szöveges bejegyzés
+that application name already exists.	admin	hu	Ez az alkalmazás név már létezik.
+that application order must be a number.	admin	hu	Az alkalmazás sorrend szám kell legyen.
+that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt
+that name has been used already	admin	hu	Ez a név már használatban van
+that server name has been used already !	admin	hu	Ez a szerver név már használatban van!
+the api is current	admin	hu	Az API nem igényel frissítést
+the api requires an upgrade	admin	hu	Az API frissítést igényel
+the groups must include the primary group	admin	hu	A csoportoknak az elsődleges csoportot tartalmaznia kell
+the login and password can not be the same	admin	hu	A felhasználónév és a jelszó nem egyezhet meg
+the loginid can not be more then 8 characters	admin	hu	A bejelentkezési név nem lehet több, mint 8 karakter
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	hu	a nevet a rendszer használja (<=20 karakter), megváltozása esetén a létező adatok elérhetetlenekké válnak
+the testjob sends you a mail everytime it is called.	admin	hu	A TesztFeladat levelet küld önnek, minden egyes lefutása alkalmával.
+the text displayed to the user	admin	hu	a szöveg megjelenítve a felhasználónak
+the two passwords are not the same	admin	hu	A két jelszó nem egyezik
+the users bellow are still members of group %1	admin	hu	az alábbi felhasználók még mindig tagjai a(z) %1 csoportnak
+there already is a group with this name. userid's can not have the same name as a groupid	admin	hu	Ezen a néven már egy csoport létezik. Felhasználói azonosító nem lehet ugyanolyan nevű, mint a csoport azonosító
+they must be removed before you can continue	admin	hu	El kell távolítani őket a folytatáshoz
+this application is current	admin	hu	Az alkalmazás nem igényel frissítést
+this application requires an upgrade	admin	hu	Az alkalmazás frissítést igényel
+this category is currently being used by applications as a parent category	admin	hu	Ez a kategória jelenleg valamelyik/összes alkalmazás használatában van mint szülő kategória.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	hu	Alkalmazás session-ök időtúllépése másodpercben (alapértelmezett 86400 = 1 nap)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	hu	Session-ök időtúllépése másodpercben (alapértelmezett = 4 óra)
+times	admin	hu	Időigény
+top	admin	hu	Felül
+total of %1 id's changed.	admin	hu	Összesen %1 azonosító megváltoztatva.
+total records	admin	hu	Összes rekord
 trust level	admin	hu	Bizalmi szint
 trust relationship	admin	hu	Bizalmi viszony
-use cookies to pass sessionid	admin	hu	Haszn�ljon s�tiket a viszonyazonos�t� �tad�s�hoz
-user accounts	admin	hu	Felhaszn�l�i hozz�f�r�sek
-user groups	admin	hu	Felhaszn�l�i csoportok
-users choice	admin	hu	Felhaszn�l� v�laszt�sa
-view access log	admin	hu	El�r�si napl� megtekint�se
-view account	admin	hu	Azonos�t� megtekint�se
-view category	admin	hu	Kateg�ria megtekint�se
-view error log	admin	hu	Hibanapl� megtekint�se
-view sessions	admin	hu	Kapcsolatok megtekint�se
-view this user	admin	hu	felhaszn�l� megtekint�se
+type '%1' already exists !!!	admin	hu	'%1' típus már létezik!!!
+type of customfield	admin	hu	Egyedi mező típusa
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	hu	Windows alatt a feladatütemezőt %1kézzel%2 kell telepíteni, vagy használni a Fallback módot. A Fallback azt jelenti, hogy minden egyes oldal letöltésnél/megjelenítésnél történik a feladatok végrehajtása, ha szükséges!!
+unknown account to delete: %1 !!!	admin	hu	Ismeretlen felhasználói hozzáférés törlése: %1!!!
+unknown account: %1 !!!	admin	hu	Ismeretlen felhasználói hozzáférés: %1!!!
+unknown group to edit: %1 !!!	admin	hu	Ismeretlen csoport szerkesztése: %1!!!
+unknown group: %1 !!!	admin	hu	Ismeretlen csoport: %1!!!
+unknown user to edit: %1 !!!	admin	hu	Ismeretlen felhasználó szerkesztése: %1!!!
+unknown user to move to: %1 !!!	admin	hu	Ismeretlen felhasználó mozgatása: %1!!!
+unknown user: %1 !!!	admin	hu	Ismeretlen felhasználó!!!
+updated	admin	hu	frissítve
+use cookies to pass sessionid	admin	hu	Használjon sütiket a session azonosító átadásához
+use pure html compliant code (not fully working yet)	admin	hu	Használjon tiszta HTML kódot (nem teljesen működik egyelőre)
+use theme	admin	hu	Téma használata
+user accounts	admin	hu	Felhasználói hozzáférések
+user data	common	hu	Felhasználó adatai
+user for smtp-authentication (leave it empty if no auth required)	admin	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni)
+user groups	admin	hu	Felhasználói csoportok
+userdata	admin	hu	felhasználó adatai
+users choice	admin	hu	Felhasználói választás
+view access log	admin	hu	Elérési napló megtekintése
+view account	admin	hu	Azonosító megtekintése
+view category	admin	hu	Kategória megtekintése
+view error log	admin	hu	Hibanapló megtekintése
+view sessions	admin	hu	Kapcsolatok megtekintése
+view this user	admin	hu	felhasználó megtekintése
+view user account	admin	hu	Felhasználói hozzáférés megjelenítése
+who would you like to transfer all records owned by the deleted user to?	admin	hu	Melyik felhasználónak másoljam át az Összes bejegyzést, ami a törölt felhasználóhoz tartozott?
+would you like egroupware to cache the egw info array ?	admin	hu	Akarja, hogy az eGW gyorsítótárat használjon a belső info adataihoz?
+would you like egroupware to check for a new version<br>when admins login ?	admin	hu	Akarja, hogy az eGW ellenőrizze az új verzió elérhetőségét,<br>amikor az adminisztrátor belép?
+would you like egroupware to check for new application versions when admins login ?	admin	hu	Akarja, hogy az eGW ellenőrizze az alkalmazások új verzióinak elérhetőségét, amikor az adminisztrátor bejelentkezik?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	hu	Akarja, hogy a nyelvi állományok automatikusan betöltődjenek (bejelentkezési képernynőn a bejelentkezéssel egy időben)?
+would you like to show each application's upgrade status ?	admin	hu	Akarja, hogy megjelenítésre kerüljön minden alkalmazás upgrade állapota?
+wrong admin-account or -password !!!	admin	hu	Érvénytelen adminisztrátor felhasználó vagy jelszó!!!
 xml-rpc	admin	hu	XML-RPC
-you must enter an application name and title.	admin	hu	K�telez� megadni az alkalmaz�s nev�t �s c�m�t!
-you must select a file type	admin	hu	K�telez� f�jlt�pust v�lasztani
-your session could not be verified.	admin	hu	A hozz�f�r�se nem ellen�rizhet�.
+you have entered an invalid expiration date	admin	hu	Érvénytelen lejárati időt adott meg
+you have to enter a name, to create a new field!!!	admin	hu	Meg kell adnia egy nevet, hogy az új mezőt létre lehessen hozni!!!
+you have to enter a name, to create a new type!!!	admin	hu	Meg kell adnia egy nevet, hogy az új típust létre lehessen hozni!!!
+you have to specify an non-empty account-name and lastname!	admin	hu	Meg kell adnia egy nem üres felhasználói nevet és keresztnevet!
+you have to specify an non-empty group-name!	admin	hu	Meg kell adnia egy nem üres csoport nevet!
+you have to specify at least a primary group!	admin	hu	Meg kell adni legalább az elsődleges csoportot!
+you must add at least 1 permission or group to this account	admin	hu	Legalább egy engedélyt vagy csoportot hozzá kell adni a felhasználói hozzáféréshez
+you must enter a group name.	admin	hu	Meg kell adnia egy csoportnevet.
+you must enter a lastname	admin	hu	Meg kell adnia egy keresztnevet.
+you must enter a loginid	admin	hu	Meg kell adnia egy bejelentkezési azonosítót.
+you must enter an application name and title.	admin	hu	Meg kell adnia az alkalmazás nevét és címét.
+you must enter an application name.	admin	hu	Meg kell adnia egy alkalmazás nevét.
+you must enter an application title.	admin	hu	Meg kell adnia egy alkalmazás címet.
+you must select a file type	admin	hu	Kötelező fájltípust választani
+you must select at least one group member.	admin	hu	Legalább egy csoport tagot ki kell jelölnie.
+you will need to remove the subcategories before you can delete this category	admin	hu	Mielőtt ezt a kategóriát törölné, el kell távolítania az összes alkategóriáját!
+your session could not be verified.	admin	hu	Az ön munkamenete nem ellenőrizhető.

@@ -1,0 +1,29 @@
+00 (disable)	setup	hu	00 (tiltva / ajánlott)
+13 (ntp)	setup	hu	13 (ntp)
+80 (http)	setup	hu	80 (http)
+actions	setup	hu	Műveletek
+admin password	setup	hu	Adminisztrátor jelszava
+admin username	setup	hu	Adminisztrátor felhasználóneve
+admins	setup	hu	Adminisztrátorok
+all users	setup	hu	Összes felhasználó
+application title	setup	hu	Alkalmazás címe
+authentication / accounts	setup	hu	Azonosítás / Azonosítók
+back to user login	setup	hu	Vissza a felhasználói bejelentkezéshez
+bottom	setup	hu	legalsó
+cancel	setup	hu	Mégsem
+check installation	setup	hu	Telepítés ellenőrzése
+check ip address of all sessions	setup	hu	Összes session IP cím ellenőrzése
+completed	setup	hu	Teljesítve
+configuration	setup	hu	Konfiguráció
+contain	setup	hu	tartalmaz
+continue	setup	hu	Folytat
+convert	setup	hu	Konvertál
+country selection	setup	hu	Ország kiválasztása
+create	setup	hu	Létrehoz
+created	setup	hu	Létrehozva
+current version	setup	hu	Aktuális verzió
+day	setup	hu	nap
+db backup and restore	setup	hu	Adatbázis mentés és helyreállítás
+delete	setup	hu	Törlés
+domain	setup	hu	Tartomány
+download	setup	hu	Letöltés
