@@ -42,7 +42,8 @@ SPECFILE="egroupware-1.4.spec"
 SOURCEFILES="egroupware_fedora.tar.bz2 egroupware_suse.tar.bz2 manageheader.php.patch class.uiasyncservice.inc.php.patch"
 
 #CONTRIB="jinn workflow messenger egwical icalsrv gallery"
-CONTRIB="icalsrv gallery"
+#CONTRIB="icalsrv gallery"
+CONTRIB="gallery"
 EXTRAPACKAGES="egw-pear $CONTRIB"
 for p in $EXTRAPACKAGES
 do

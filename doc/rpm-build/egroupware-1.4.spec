@@ -10,6 +10,7 @@
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
 	%define extra_requires apache2-mod_php5 
+	%define cron cron
 %endif
 %if 0%{?fedora_version}
 	%define httpdroot /var/www/html
@@ -18,7 +19,8 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Fedora Core %{?fedora_version}
 	%define php php
-	%define extra_requires httpd 
+	%define extra_requires httpd
+	%define cron crontabs
 %endif
 %if 0%{?mandriva_version}
 	%define httpdroot /var/www/html
@@ -28,6 +30,7 @@
 	%define distribution Mandriva %{?mandriva_version}
 	%define php php
 	%define extra_requires httpd 
+	%define cron crontabs
 %endif
 
 %define addressbook addressbook
@@ -41,10 +44,12 @@
 %define gallery gallery
 %define icalsrv icalsrv
 %define infolog infolog
+%define importexport importexport
 %define manual manual
 %define messenger messenger
 %define mydms mydms
 %define news_admin news_admin
+%define notifications notifications
 %define phpbrain phpbrain
 %define phpsysinfo phpsysinfo
 %define polls polls
@@ -71,15 +76,15 @@ URL: http://www.egroupware.org/
 Source0: %{packagename}-%{egwversion}.%{packaging}.tar.bz2
 Source1: %{packagename}-egw-pear-%{egwversion}.%{packaging}.tar.bz2
 Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
-#Source3: %{packagename}-egwical-%{egwversion}.%{packaging}.tar.bz2
 Source4: %{packagename}-gallery-%{egwversion}.%{packaging}.tar.bz2
 Source5: %{?source5}
-#Patch0: manageheader.php.patch
-#Patch1: class.uiasyncservice.inc.php.patch
+Patch0: manageheader.php.patch
+Patch1: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} cron %{packagename}-egw-pear = %{egwversion}.%{packaging}
+Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
-Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{infolog} %{packagename}-%{manual} %{packagename}-%{mydms} %{packagename}-%{news_admin} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
+Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{icalsrv} %{packagename}-%{infolog} %{packagename}-%{importexport} %{packagename}-%{manual} %{packagename}-%{mydms} %{packagename}-%{news_admin} %{packagename}-%{notifications} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
+Obsoletes: %{packagename}-%{icalsrv}
                                                                                                                              
 Prefix: /usr/share
 Buildarch: noarch
@@ -106,11 +111,14 @@ Further contributed applications are avalible in single packages.
 %package core
 Summary: The eGroupWare contrib package
 Group: Web/Database
-#Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} cron %{packagename}-egw-pear = %{egwversion}.%{packaging}
 Provides: egw-core
 Conflicts: %{packagename}
 %description core
 This package provides the eGroupWare contrib applications.
+%post core
+%if 0%{?fedora_version}
+	chcon "user_u:object_r:httpd_sys_content_t" /var/lib/egroupware -Rc
+%endif
 
 %package %{addressbook}
 Version: %{egwversion}.%{packaging}
@@ -178,15 +186,6 @@ Requires: egw-core = %{egwversion}.%{packaging}, %{packagename}-egw-pear = %{egw
 %description %{emailadmin}
 EmailAdmin allow to maintain User email accounts 
 
-#%package %{egwical}
-#Version: %{egwversion}.%{packaging}
-#Summary: The eGroupWare %{egwical} application
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core = %{egwversion}.%{packaging} 
-#%description %{egwical}
-#This is the %{egwical} app for eGroupWare.
-
 %package %{felamimail}
 Version: %{egwversion}.%{packaging}
 Summary: The eGroupWare %{felamimail} application
@@ -217,15 +216,6 @@ Requires: egw-core = %{egwversion}.%{packaging}, egw-pear = %{egwversion}.%{pack
 %description %{gallery}
 An embedded Gallery2 for eGroupWare.
 
-#%package %{headlines}
-#Version: %{egwversion}.%{packaging}
-#Summary: The eGroupWare %{headlines} application
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core = %{egwversion}.%{packaging} 
-#%description %{headlines}
-#This is the %{headlines} app for eGroupWare.
-
 %package %{icalsrv}
 Version: %{egwversion}.%{packaging}
 Summary: The eGroupWare %{icalsrv} application
@@ -244,6 +234,16 @@ AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}, egw-%{etemplate} = %{egwversion}.%{packaging}
 %description %{infolog}
 This is the %{infolog} app for eGroupWare (Notes, ToDo, Phonelogs, CRM).
+
+%package %{importexport}
+Version: %{egwversion}.%{packaging}
+Summary: The eGroupWare %{importexport} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{egwversion}.%{packaging}, egw-%{etemplate} = %{egwversion}.%{packaging}
+%description %{importexport}
+This is the %{importexport} app for eGroupWare. It includes a comandline client.
 
 #%package %{jinn}
 #Version: %{egwversion}.%{packaging}
@@ -264,15 +264,6 @@ Requires: egw-core = %{egwversion}.%{packaging}
 %description %{manual}
 This is the %{manual} app for eGroupWare: online help system.
 
-#%package %{messenger}
-#Version: %{egwversion}.%{packaging}
-#Summary: The eGroupWare %{messenger} application
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core = %{egwversion}.%{packaging} 
-#%description %{messenger}
-#This is the %{messenger} app for eGroupWare.
-
 %package %{mydms}
 Version: %{egwversion}.%{packaging}
 Summary: The eGroupWare %{mydms} application
@@ -292,6 +283,16 @@ AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging} 
 %description %{news_admin}
 This is the %{news_admin} app for eGroupWare.
+
+%package %{notifications}
+Version: %{egwversion}.%{packaging}
+Summary: The eGroupWare %{notifications} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{egwversion}.%{packaging} 
+%description %{notifications}
+This is the %{notifications} app for eGroupWare.
 
 %package %{phpbrain}
 Version: %{egwversion}.%{packaging}
@@ -432,8 +433,8 @@ This is the %{wiki} app for eGroupWare.
 #%setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
-#%patch0 -p 0
-#%patch1 -p 0
+%patch0 -p 0
+%patch1 -p 0
 
 %build
 
@@ -463,6 +464,9 @@ ln -s sitemgr/sitemgr-link
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %post
+%if 0%{?fedora_version}
+	chcon "user_u:object_r:httpd_sys_content_t" /var/lib/egroupware -Rc
+%endif
 %postun
 
 %files
@@ -501,10 +505,13 @@ ln -s sitemgr/sitemgr-link
 %{prefix}/%{egwdirname}/emailadmin
 %{prefix}/%{egwdirname}/felamimail
 %{prefix}/%{egwdirname}/filemanager
+%{prefix}/%{egwdirname}/icalsrv
 %{prefix}/%{egwdirname}/infolog
+%{prefix}/%{egwdirname}/importexport
 %{prefix}/%{egwdirname}/manual
 %{prefix}/%{egwdirname}/mydms
 %{prefix}/%{egwdirname}/news_admin
+%{prefix}/%{egwdirname}/notifications
 %{prefix}/%{egwdirname}/phpbrain
 %{prefix}/%{egwdirname}/phpsysinfo
 %{prefix}/%{egwdirname}/polls
@@ -528,6 +535,13 @@ ln -s sitemgr/sitemgr-link
 	%config %attr(0640,wwwrun,www) /var/lib/egroupware/header.inc.php
 %endif
 %if 0%{?fedora_version}
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
+	%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
+%endif
+%if 0%{?mandriva_version}
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
@@ -579,6 +593,13 @@ ln -s sitemgr/sitemgr-link
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
 	%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 %endif
+%if 0%{?mandriva_version}
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
+	%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
+	%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
+%endif
 
 %files %{addressbook}
 %defattr(-,root,root)
@@ -587,10 +608,6 @@ ln -s sitemgr/sitemgr-link
 %files %{calendar}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{calendar}
-
-#%files %{chatty}
-#%defattr(-,root,root)
-#%{prefix}/%{egwdirname}/%{chatty}
 
 %files %{developer_tools}
 %defattr(-,root,root)
@@ -604,10 +621,6 @@ ln -s sitemgr/sitemgr-link
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{emailadmin}
 
-#%files %{egwical}
-#%defattr(-,root,root)
-#%{prefix}/%{egwdirname}/%{egwical}
-
 %files %{felamimail}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{felamimail}
@@ -620,10 +633,6 @@ ln -s sitemgr/sitemgr-link
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{gallery}
 
-#%files %{headlines}
-#%defattr(-,root,root)
-#%{prefix}/%{egwdirname}/%{headlines}
-
 %files %{icalsrv}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{icalsrv}
@@ -631,6 +640,10 @@ ln -s sitemgr/sitemgr-link
 %files %{infolog}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{infolog}
+
+%files %{importexport}
+%defattr(-,root,root)
+%{prefix}/%{egwdirname}/%{importexport}
 
 #%files %{jinn}
 #%defattr(-,root,root)
@@ -640,10 +653,6 @@ ln -s sitemgr/sitemgr-link
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{manual}
 
-#%files %{messenger}
-#%defattr(-,root,root)
-#%{prefix}/%{egwdirname}/%{messenger}
-
 %files %{mydms}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{mydms}
@@ -651,6 +660,10 @@ ln -s sitemgr/sitemgr-link
 %files %{news_admin}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{news_admin}
+
+%files %{notifications}
+%defattr(-,root,root)
+%{prefix}/%{egwdirname}/%{notifications}
 
 %files %{phpbrain}
 %defattr(-,root,root)
