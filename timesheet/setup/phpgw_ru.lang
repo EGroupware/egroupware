@@ -2,8 +2,11 @@
 2 years ago	timesheet	ru	2 года назад
 3 years ago	timesheet	ru	3 года назад
 actions	timesheet	ru	Действия
+all projects	timesheet	ru	Все проекты
+both: allow to use projectmanager and free project-names	admin	ru	Оба: позволяет использовать Управление проектами и свободные названия проектов
 by	timesheet	ru	к
 create new links	timesheet	ru	Создать новые ссылки
+creating new entry	timesheet	ru	создание новой записи
 delete this entry	timesheet	ru	Удалить эту запись
 edit this entry	timesheet	ru	Редактировать эту запись
 empty if identical to duration	timesheet	ru	пусто, если идентично длительности
@@ -13,6 +16,7 @@ entry saved	timesheet	ru	Запись сохранена
 error deleting the entry!!!	timesheet	ru	Ошибка при удалении записи!!!
 error saving the entry!!!	timesheet	ru	Ошибка при сохранении записи!!!
 existing links	timesheet	ru	Существующие ссылки
+full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
 general	timesheet	ru	Общий
 last modified	timesheet	ru	Последнее изменение
 last month	timesheet	ru	Прошлый месяц
@@ -21,8 +25,12 @@ last year	timesheet	ru	Прошлый год
 leave it empty for a full week	timesheet	ru	Оставьте незаполненным для всей недели
 links	timesheet	ru	Ссылки
 no details	timesheet	ru	нет подробностей
+no project	timesheet	ru	Нет проекта
+none: use only free project-names	admin	ru	Пусто: использовать только свободные названия проектов
+or endtime	timesheet	ru	или Время окончания
 permission denied!!!	timesheet	ru	Доступ запрещен!!!
 price	timesheet	ru	Цена
+projectmanager integration	admin	ru	Интеграция Управления проектами
 quantity	timesheet	ru	Количество
 save & new	timesheet	ru	Сохранить и добавить новый
 saves the changes made	timesheet	ru	Сохраняет внесенные изменения
@@ -30,6 +38,8 @@ saves this entry and add a new one	timesheet	ru	Сохраняет эту запись и добавляет
 select a price	timesheet	ru	Выбрать цену
 select a project	timesheet	ru	Выбрать проект
 start	timesheet	ru	Старт
+starttime	timesheet	ru	Время начала
+starttime has to be before endtime !!!	timesheet	ru	Время начала должно быть перед временем окончания !!!
 sum %1:	timesheet	ru	Сумма %1:
 this month	timesheet	ru	Этот месяц
 this week	timesheet	ru	Эта неделя

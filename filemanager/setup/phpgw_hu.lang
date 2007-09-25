@@ -1,79 +1,115 @@
-application	filemanager	hu	Alkalmaz·s
-back to file manager	filemanager	hu	Vissza a F·jlkezelıbe
-comment	filemanager	hu	MegjegyzÈs
-comments cannot contain "%1"	filemanager	hu	MegjegyzÈs nem tartalmazhatja "%1"
-copied %1 to %2	filemanager	hu	%1 ·tm·solva ide: %2
-copy to	filemanager	hu	M·sold ide:
-copy to:	filemanager	hu	M·sold ide:
-could not copy %1 to %2	filemanager	hu	%1 nem m·solhatÛ ide: %2
-could not copy file because no destination directory is given	filemanager	hu	M·sol·s nem lehetsÈges mert nincs megadva cÈlkˆnyvt·r
-could not create %1	filemanager	hu	%1 nem hozhatÛ lÈtre
-could not create directory %1	filemanager	hu	%1 kˆnyvt·r nem hozhatÛ lÈtre
-could not delete %1	filemanager	hu	%1 nem tˆrˆlhetı
-could not move %1 to %2	filemanager	hu	%1 nem mozgathatÛ ·t ide: %2
-could not move file because no destination directory is given	filemanager	hu	Mozgat·s nem lehetsÈges mert nincs megadva cÈlkˆnyvt·r
-could not rename %1 to %2	filemanager	hu	%1 nem nevezhetı ·t erre: %2
-could not save %1	filemanager	hu	%1 nem menthetı el
-create file	filemanager	hu	F·jl lÈtrehoz·sa
-create folder	filemanager	hu	Mappa lÈtrehoz·sa
-created	filemanager	hu	LÈtrehozva
-created %1	filemanager	hu	LÈtrehozva %1
-created by	filemanager	hu	LÈtrehozta
-created directory %1	filemanager	hu	%1 kˆnyvt·r lÈtrehozva
-date	filemanager	hu	D·tum
-delete	filemanager	hu	TˆrlÈs
-deleted %1	filemanager	hu	%1 tˆrˆlve
-directory	filemanager	hu	Kˆnyvt·r
-directory %1 already exists	filemanager	hu	%1 kˆnyvt·r m·r lÈtezik
-directory %1 does not exist	filemanager	hu	%1 kˆnyvt·r nem lÈtezik
-directory names cannot contain "%1"	filemanager	hu	Kˆnyvt·rnÈv nem tartalmazhatja: "%1"
-display attributes	filemanager	hu	Tulajdons·gok mutat·sa
-download	filemanager	hu	Letˆlt
+%1 already exists as a file	filemanager	hu	%1 m√°r l√©tezik, mint √°llom√°ny
+application	filemanager	hu	Alkalmaz√°s
+back to file manager	filemanager	hu	Vissza a F√°jlkezel≈ëbe
+cancel editing %1 without saving	filemanager	hu	%1 szerkeszt√©s√©nek megszak√≠t√°sa, ment√©s n√©lk√ºl
+cannot create directory because it begins or ends in a space	filemanager	hu	K√∂nyvt√°r l√©trehoz√°sa nem lehets√©ges, mert a n√©v elej√©n/v√©g√©n 'feh√©r' karakter szerepel (space).
+cannot replace %1 because it is a directory	filemanager	hu	%1 nem cser√©lhet≈ë, mert k√∂nyvt√°r
+command sucessfully run	filemanager	hu	Parancs sikeresen futtatva
+comment	filemanager	hu	Megjegyz√©s
+comments cannot contain "%1"	filemanager	hu	Megjegyz√©s nem tartalmazhatja "%1"
+copied %1 to %2	filemanager	hu	%1 √°tm√°solva ide: %2
+copy to	filemanager	hu	M√°sold ide:
+copy to:	filemanager	hu	M√°sold ide:
+could not copy %1 to %2	filemanager	hu	%1 nem m√°solhat√≥ ide: %2
+could not copy file because no destination directory is given	filemanager	hu	M√°sol√°s nem lehets√©ges mert nincs megadva c√©lk√∂nyvt√°r
+could not create %1	filemanager	hu	%1 nem hozhat√≥ l√©tre
+could not create directory %1	filemanager	hu	%1 k√∂nyvt√°r nem hozhat√≥ l√©tre
+could not delete %1	filemanager	hu	%1 nem t√∂r√∂lhet≈ë
+could not move %1 to %2	filemanager	hu	%1 nem mozgathat√≥ √°t ide: %2
+could not move file because no destination directory is given	filemanager	hu	Mozgat√°s nem lehets√©ges mert nincs megadva c√©lk√∂nyvt√°r
+could not rename %1 to %2	filemanager	hu	%1 nem nevezhet≈ë √°t erre: %2
+could not save %1	filemanager	hu	%1 nem menthet≈ë el
+create file	filemanager	hu	F√°jl l√©trehoz√°sa
+create folder	filemanager	hu	Mappa l√©trehoz√°sa
+created	filemanager	hu	L√©trehozva
+created %1	filemanager	hu	L√©trehozva %1
+created %1,%2	filemanager	hu	%1,%2 l√©trehozva
+created by	filemanager	hu	L√©trehozta
+created directory %1	filemanager	hu	%1 k√∂nyvt√°r l√©trehozva
+date	filemanager	hu	D√°tum
+default number of upload fields to show	filemanager	hu	Felt√∂lt√©skor az alap√©rtelmezetten megjelen≈ë beviteli mez≈ëk sz√°ma
+delete	filemanager	hu	T√∂rl√©s
+deleted %1	filemanager	hu	%1 t√∂r√∂lve
+directory	filemanager	hu	K√∂nyvt√°r
+directory %1 already exists	filemanager	hu	%1 k√∂nyvt√°r m√°r l√©tezik
+directory %1 does not exist	filemanager	hu	%1 k√∂nyvt√°r nem l√©tezik
+directory names cannot contain "%1"	filemanager	hu	K√∂nyvt√°rn√©v nem tartalmazhatja: "%1"
+display attributes	filemanager	hu	Tulajdons√°gok mutat√°sa
+download	filemanager	hu	Let√∂lt
 edit	filemanager	hu	Szerkeszt
-edit comments	filemanager	hu	MegjegyzÈs szerkesztÈse
-execute	filemanager	hu	VÈgrehajt
-failed to create directory	filemanager	hu	Kˆnyvt·r lÈtrehoz·s sikertelen
-fake base dir did not exist, egroupware created a new one.	filemanager	hu	¡l-B·ziskˆnyvt·r nem lÈtezik, ˙j lÈtrehoz·sa megtˆrtÈnt. Nincs m·s teendı.
-file	filemanager	hu	F·jl
-file %1 could not be created.	filemanager	hu	%1 f·jl nem hozhatÛ lÈtre.
-file name	filemanager	hu	F·jlnÈv
-filemanager	common	hu	F·jlkezelı
-filemanager preferences	filemanager	hu	F·jlkezelı tulajdons·gok
-files	filemanager	hu	F·jlok
-files in this directory	filemanager	hu	A kˆnyvt·r f·jljai
+edit comments	filemanager	hu	Megjegyz√©s szerkeszt√©se
+error running command	filemanager	hu	Parancs futtat√°sa sor√°n hiba t√∂rt√©nt
+execute	filemanager	hu	V√©grehajt
+failed to create directory	filemanager	hu	K√∂nyvt√°r l√©trehoz√°s sikertelen
+fake base dir did not exist, egroupware created a new one.	filemanager	hu	√Ål-B√°zisk√∂nyvt√°r nem l√©tezik, √∫j l√©trehoz√°sa megt√∂rt√©nt. Nincs m√°s teend≈ë.
+file	filemanager	hu	F√°jl
+file %1 already exists. please edit it or delete it first.	filemanager	hu	%1 √°llom√°ny m√°r l√©tezik. K√©rem szerkessze azt, vagy t√∂r√∂lje el≈ëbb.
+file %1 could not be created.	filemanager	hu	%1 f√°jl nem hozhat√≥ l√©tre.
+file name	filemanager	hu	F√°jln√©v
+file names cannot contain "%1"	filemanager	hu	√Ållom√°nyn√©v nem tartalmazhatja: "%1"
+file names cannot contain \ or /	filemanager	hu	√Ållom√°nyn√©v nem tartalmazhatja a \ vagy / karaktereket.
+filemanager	common	hu	F√°jlkezel≈ë
+filemanager preferences	filemanager	hu	F√°jlkezel≈ë tulajdons√°gok
+files	filemanager	hu	F√°jlok
+files in this directory	filemanager	hu	A k√∂nyvt√°r f√°jljai
 folder	filemanager	hu	Mappa
-folder up	filemanager	hu	Felsı mappa
-go home	filemanager	hu	Saj·t mapp·ra ugr·s
+folder up	filemanager	hu	Fels≈ë mappa
+go home	filemanager	hu	Saj√°t mapp√°ra ugr√°s
 go to	filemanager	hu	Ugorj ide
 go to %1	filemanager	hu	Ugorj ide: %1
-go to your home directory	filemanager	hu	Saj·t mapp·ra ugr·s
+go to your home directory	filemanager	hu	Saj√°t mapp√°ra ugr√°s
 go to:	filemanager	hu	Ugorj ide:
 go up	filemanager	hu	Egy szinttel feljebb
-home	filemanager	hu	Saj·t mappa
+home	filemanager	hu	Saj√°t mappa
 location	filemanager	hu	Hely
-locked	filemanager	hu	Z·rolt
-mime type	filemanager	hu	MIME tÌpus
-modified	filemanager	hu	MÛdosÌtva
-modified by	filemanager	hu	MÛdosÌtotta:
-move to	filemanager	hu	Mozgat·s ide:
-move to:	filemanager	hu	Mozgat·s ide:
+locked	filemanager	hu	Z√°rolt
+mime type	filemanager	hu	MIME t√≠pus
+modified	filemanager	hu	M√≥dos√≠tva
+modified by	filemanager	hu	M√≥dos√≠totta:
+move to	filemanager	hu	Mozgat√°s ide:
+move to:	filemanager	hu	Mozgat√°s ide:
+moved %1 to %2	filemanager	hu	%1 mozgat√°sa ide: %2
+no files in this directory.	filemanager	hu	Nincs √°llom√°ny ebben a k√∂nyvt√°rban.
+no version history for this file/directory	filemanager	hu	Nincs el√©rhet≈ë verzi√≥ t√∂rt√©net ehhez az √°llom√°nyhoz/k√∂nyvt√°rhoz
+operation	filemanager	hu	M≈±velet
+other settings	filemanager	hu	Egy√©b be√°ll√≠t√°sok
 owner	filemanager	hu	Tulajdonos
-preview %1	filemanager	hu	ElınÈzet %1
-preview of %1	filemanager	hu	%1 elınÈzete
-quick jump to	filemanager	hu	Gyors ugr·s ide
-reload	filemanager	hu	⁄jratˆlt
-rename	filemanager	hu	¡tnevez
-save %1	filemanager	hu	MentÈs %1
+please select a file to delete.	filemanager	hu	K√©rem jel√∂lj√∂n ki egy √°llom√°nyt a t√∂rl√©shez.
+preview %1	filemanager	hu	El≈ën√©zet %1
+preview of %1	filemanager	hu	%1 el≈ën√©zete
+quick jump to	filemanager	hu	Gyors ugr√°s ide
+reload	filemanager	hu	√öjrat√∂lt
+rename	filemanager	hu	√Åtnevez
+renamed %1 to %2	filemanager	hu	%1 √°tnevezve erre: %2
+replaced %1	filemanager	hu	%1 cser√©lve
+save %1	filemanager	hu	Ment√©s %1
+save %1, and go back to file listing	filemanager	hu	%1 ment√©se √©s visszat√©r√©s az √°llom√°nylist√°hoz
+save all	filemanager	hu	√ñsszes ment√©se
+save changes	filemanager	hu	V√°ltoz√°sok ment√©se
+saved %1	filemanager	hu	%1 elmentve
 show	filemanager	hu	Mutat
 show ..	filemanager	hu	Mutat ..
 show .files	filemanager	hu	Mutat .files
-show command line (experimental. dangerous.)	filemanager	hu	Parancssor mutat·sa (VESZ…LYES! CSAK SAJ¡T FELEL’SS…GRE!)
-show help	filemanager	hu	SegÌtsÈg mutat·sa
-size	filemanager	hu	MÈret
-sort by:	filemanager	hu	RendezÈs
-total files	filemanager	hu	÷sszes f·jl
+show command line (experimental. dangerous.)	filemanager	hu	Parancssor mutat√°sa (VESZ√âLYES! CSAK SAJ√ÅT FELEL≈êSS√âGRE!)
+show help	filemanager	hu	Seg√≠ts√©g mutat√°sa
+size	filemanager	hu	M√©ret
+sort by:	filemanager	hu	Rendez√©s
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	hu	K√∂vetkez≈ë filekezel≈ë, most csak TESZTEL√âSI C√âLLAL, k√©rem k√ºldj√∂n hibajelent√©seket
+total files	filemanager	hu	√ñsszes f√°jl
+unknown mime-type defaults to text/plain when viewing	filemanager	hu	Ismeretlen MIME t√≠pus, az alap√©rtelmezett text/plain, ha megjelen√≠t√©s t√∂rt√©nik
+unused space	filemanager	hu	Szabad ter√ºlet
 up	filemanager	hu	Fel
-update	filemanager	hu	FrissÌt
-upload	filemanager	hu	Feltˆlt
-users	filemanager	hu	Felhaszn·lÛk
-version	filemanager	hu	VerziÛ
+update	filemanager	hu	Friss√≠t
+updated comment for %1	filemanager	hu	%1 megjegyz√©se friss√≠tve
+upload	filemanager	hu	Felt√∂lt
+upload fields	filemanager	hu	Felt√∂lt√©shez beviteli mez≈ëk
+upload files	filemanager	hu	√Ållom√°nyok felt√∂lt√©se
+use new experimental filemanager?	filemanager	hu	Haszn√°ld az √∫j FileKezel≈ët? (halad√≥knak)
+used space	filemanager	hu	Felhaszn√°lt ter√ºlet
+users	filemanager	hu	Felhaszn√°l√≥k
+version	filemanager	hu	Verzi√≥
+view documents in new window	filemanager	hu	Dokumentumok megtekint√©se √∫j ablakban
+view documents on server (if available)	filemanager	hu	Dokumentum megjelen√≠t√©se a szerveren (ha lehets√©ges)
+who	filemanager	hu	Who
+you do not have access to %1	filemanager	hu	Nincs jogosults√°ga %1 el√©r√©s√©hez
+your home dir did not exist, egroupware created a new one.	filemanager	hu	Megjegyz√©s: Az √ñn Home k√∂nyvt√°ra nem l√©tezett, ez√©rt l√©trehoztam. Nincs tov√°bbi teend≈ëje.
