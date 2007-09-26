@@ -176,7 +176,12 @@
 				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 			}
 			$options = $GLOBALS['egw']->js->convert_phparray_jsarray("options['$name']", $options, true);
-			$GLOBALS['egw']->js->set_onload("if(!options) { var options = new Object();}\n $options;\n ajax_select_widget_setup('$name', '$onchange', options['$name']); ");
+			$GLOBALS['egw']->js->set_onload("if(!options) { 
+					var options = new Object();
+				}\n 
+				$options;\n 
+				ajax_select_widget_setup('$name', '$onchange', options['$name'], '" . $GLOBALS['egw_info']['flags']['currentapp'] . "'); 
+			");
 			$GLOBALS['egw']->js->validate_file('', 'ajax_select', 'etemplate');
 
 			return True;	// no extra label
@@ -202,7 +207,7 @@
 					if(!is_object($get_rows_obj) || !method_exists($get_rows_obj, $get_rows_method)) {
 						echo "$get_rows_app.$get_rows_class.$get_rows_method is not a valid method for getting the rows";
 					} else {
-						$query = $extension_data + $value_in;
+						$query = array_merge($extension_data, $value_in);
 						$count = $get_rows_obj->$get_rows_method($query, $results);
 
 						if($count == 1) {
@@ -218,7 +223,8 @@
 						}
 					}
 				}
-			} elseif (!$value_in['value'] && !$value_in['search']) {
+			} elseif ($value_in['search'] == '') {
+				// They're trying to clear the form
 				$value = null;
 				$loop = $GLOBALS['egw_info']['etemplate']['loop'] || $extension_data['required'];
 				return !$extension_data['required'];

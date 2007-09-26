@@ -19,8 +19,10 @@
 -->
 
 //xajaxDebug = 1;
+var current_app = 'etemplate';
 
-function ajax_select_widget_setup(widget_id, onchange, options) {
+function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
+	current_app = currentapp;
 	if(onchange) {
 		if(onchange == 1) {
 			onchange = function() {submitit(this.form, this.value);};
@@ -117,7 +119,7 @@ function change(e, value) {
 			selects[i].style.visibility = 'hidden';
 		}
 	}
-	xajax_doXMLHTTP("etemplate.ajax_select_widget.ajax_search.etemplate", id, value, set_id, query);
+	xajax_doXMLHTTP(current_app + ".ajax_select_widget.ajax_search.etemplate", id, value, set_id, query);
 }
 
 
