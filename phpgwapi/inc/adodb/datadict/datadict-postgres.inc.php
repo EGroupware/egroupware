@@ -218,7 +218,13 @@ class ADODB2_postgres extends ADODB_DataDict {
 					$copyflds[] = "to_number($fld->name,'S9999999999999D99')";
 				} elseif (preg_match('/'.$fld->name.' ([\w]+)/i',$tableflds,$matches) &&
 					strtoupper($fld->type) != ($type = $this->ActualType($matches[1]))) {
-					$copyflds[] = "CAST($fld->name AS $type)";
+					if ($type == 'BYTEA' && $fld->type == 'text') {
+						$copyflds[] = "DECODE($fld->name, 'escape')";
+					} elseif ($fld->type == 'bytea' && $type == 'TEXT') {
+						$copyflds[] = "ENCODE($fld->name, 'escape')";
+					} else {
+						$copyflds[] = "CAST($fld->name AS $type)";
+					}
 				} else {
 					$copyflds[] = $fld->name;
 				}
