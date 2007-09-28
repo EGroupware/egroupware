@@ -615,7 +615,9 @@
 					if($structure->subParts[$tempID]->type == 'MESSAGE' && $structure->subParts[$tempID]->subType == 'RFC822' &&
 					   count($structure->subParts[$tempID]->subParts) == 1 &&
 					   $structure->subParts[$tempID]->subParts[$tempID]->type == 'MULTIPART' &&
-					   ($structure->subParts[$tempID]->subParts[$tempID]->subType == 'MIXED' || $structure->subParts[$tempID]->subParts[$tempID]->subType == 'REPORT')) {
+					   ($structure->subParts[$tempID]->subParts[$tempID]->subType == 'MIXED' || 
+					    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'ALTERNATIVE' ||
+					    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'REPORT')) {
 						$structure = $structure->subParts[$tempID]->subParts[$tempID];
 					} else {
 						$structure = $structure->subParts[$tempID];
