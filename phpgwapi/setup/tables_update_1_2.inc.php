@@ -403,7 +403,7 @@
 		{
 			$db2->update('egw_addressbook',array($old2new[$row['contact_name']] => $row['contact_value']),array(
 				'contact_id' => $row['contact_id'],
-				'('.$old2new[$row['contact_name']].'IS NULL OR '.$old2new[$row['contact_name']]."='')",
+				'('.$old2new[$row['contact_name']].' IS NULL OR '.$old2new[$row['contact_name']]."='')",
 			),__LINE__,__FILE__);
 		}
 		// delete the not longer used custom fields plus rubish from old bugs
