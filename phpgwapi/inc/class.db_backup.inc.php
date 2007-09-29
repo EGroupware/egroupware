@@ -438,7 +438,7 @@
 				{
 					$this->browser = CreateObject('phpgwapi.browser');
 				}
-				$this->browser->content_header('schema-backup-'.date('YmdHi').'.inc.php','text/plain',strlen($def));
+				$this->browser->content_header('schema-backup-'.date('YmdHi').'.inc.php','text/plain',bytes($def));
 				echo "<?php\n\t/* eGroupWare schema-backup from ".date('Y-m-d H:i:s')." */\n\n".$def;
 			}
 		}

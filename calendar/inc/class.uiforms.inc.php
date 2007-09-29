@@ -1220,7 +1220,7 @@ class uiforms extends uical
 			else
 			{
 				$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
-				$GLOBALS['egw']->browser->content_header('event.ics','text/calendar',strlen($ical));
+				$GLOBALS['egw']->browser->content_header('event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				$GLOBALS['egw']->common->egw_exit();
 			}
@@ -1243,7 +1243,7 @@ class uiforms extends uical
 			{
 				$ical =& ExecMethod2('calendar.boical.exportVCal',$events,'2.0'/*$content['version']*/);
 				$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
-				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',strlen($ical));
+				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				$GLOBALS['egw']->common->egw_exit();
 			}

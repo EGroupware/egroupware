@@ -29,6 +29,22 @@
 	 \***************************************************************************/
 
 	/**
+	 * Return the number of bytes of a string, independent of mbstring.func_overload
+	 * AND the availability of mbstring
+	 *
+	 * @param string $str
+	 * @return int
+	 */
+	function bytes($str)
+	{
+		static $func_overload;
+		
+		if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
+		
+		return $func_overload & 2 ? mb_strlen($str,'ascii') : strlen($str);
+	}
+
+	/**
 	 * @internal Not to be used directly. Should only be used by print_debug()
 	 */
 	function print_debug_subarray($array)

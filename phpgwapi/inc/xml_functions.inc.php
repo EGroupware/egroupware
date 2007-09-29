@@ -167,7 +167,7 @@
 		);
 		$payload = '<?xml version="1.0"?>' . "\n" . $r->serialize();
 		Header('Content-type: text/xml');
-		Header('Content-length: ' . strlen($payload));
+		Header('Content-length: ' . bytes($payload));
 		print $payload;
 		$GLOBALS['egw']->common->phpgw_exit(False);
 	}
