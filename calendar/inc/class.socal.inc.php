@@ -563,7 +563,7 @@ ORDER BY cal_user_type, cal_usre_id
 				$exceptions = $event['recur_exception'] ? explode(',',$event['recur_exception']) : array();
 				$set_recurrences = $event['recur_type'] != $old_recur['recur_type'] || $event['recur_data'] != $old_recur['recur_data'] ||
 					$event['recur_interval'] != $old_recur['recur_interval'] || $event['recur_enddate'] != $old_recur['recur_enddate'] ||
-					count(array_diff($old_exceptions,$exceptions));	// exception deleted
+					count(array_diff($old_exceptions,$exceptions)) || count(array_diff($exceptions, $old_exceptions));	// exception deleted or added
 			}
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{

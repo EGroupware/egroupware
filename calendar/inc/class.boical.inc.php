@@ -117,24 +117,38 @@
 		function &exportVCal($events,$version='1.0', $method='PUBLISH')
 		{
 			$egwSupportedFields = array(
-				'CLASS'		=> array('dbName' => 'public'),
-				'SUMMARY'	=> array('dbName' => 'title'),
+				'CLASS'			=> array('dbName' => 'public'),
+				'SUMMARY'		=> array('dbName' => 'title'),
 				'DESCRIPTION'	=> array('dbName' => 'description'),
-				'LOCATION'	=> array('dbName' => 'location'),
-				'DTSTART'	=> array('dbName' => 'start'),
-				'DTEND'		=> array('dbName' => 'end'),
-				'ORGANIZER'	=> array('dbName' => 'owner'),
-				'ATTENDEE'	=> array('dbName' => 'participants'),
-				'RRULE'		=> array('dbName' => 'recur_type'),
-				'EXDATE'	=> array('dbName' => 'recur_exception'),
- 				'PRIORITY'	=> array('dbName' => 'priority'),
- 				'TRANSP'	=> array('dbName' => 'non_blocking'),
+				'LOCATION'		=> array('dbName' => 'location'),
+				'DTSTART'		=> array('dbName' => 'start'),
+				'DTEND'			=> array('dbName' => 'end'),
+				'ORGANIZER'		=> array('dbName' => 'owner'),
+				'ATTENDEE'		=> array('dbName' => 'participants'),
+				'RRULE'			=> array('dbName' => 'recur_type'),
+				'EXDATE'		=> array('dbName' => 'recur_exception'),
+ 				'PRIORITY'		=> array('dbName' => 'priority'),
+ 				'TRANSP'		=> array('dbName' => 'non_blocking'),
 				'CATEGORIES'	=> array('dbName' => 'category'),
 			);
 			if(!is_array($this->supportedFields))
 			{
 				$this->setSupportedFields();
 			}
+			
+			if($this->productManufacturer == '' )
+			{	// syncevolution is broken
+				$version = "2.0";
+			}
+			
+			$palm_enddate_workaround=False;
+			if($this->productManufacturer == 'Synthesis AG'
+				&& strpos($this->productName, "PalmOS") )
+			{
+				// This workaround adds 1 day to the recur_enddate if it exists, to fix a palm bug
+				$palm_enddate_workaround=True;
+			}
+			
 			$vcal = &new Horde_iCalendar;
 			$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 				strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
@@ -186,7 +200,22 @@
 									// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
 									$status = $this->status_egw2ical[$status];
 									// CUTYPE={INDIVIDUAL|GROUP|RESOURCE|ROOM|UNKNOWN}
-									$cutype = $GLOBALS['egw']->accounts->get_type($uid) == 'g' ? 'GROUP' : 'INDIVIDUAL';
+									switch (is_nummeric($uid) ? $GLOBALS['egw']->accounts->get_type($uid) : $uid{0})
+									{
+										case 'g':
+											$cutype = 'GROUP';
+											break;
+										case 'r':
+											$cutype = 'RESOURCE';
+											break;
+										case 'u':
+											$cutype = 'INDIVIDUAL';
+											break;
+										default:
+											$cutype = 'UNKNOWN';
+											$cutype = 'INDIVIDUAL';
+											break;
+									};
 									$parameters['ATTENDEE'][] = array(
 										'CN'       => $cn, 
 										'ROLE'     => $role, 
@@ -242,7 +271,20 @@
 		            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
 											break;
 									}
-									$rrule['UNTIL'] = ($event['recur_enddate']) ? date('Ymd',$event['recur_enddate']).'T'.date('His',$event['start']) : '#0';
+
+									if ($event['recur_enddate'])
+									{
+										$recur_enddate = (int)$event['recur_enddate'];
+										if ($palm_enddate_workaround)
+										{
+											$recur_enddate += 86400;
+										}
+										$rrule['UNTIL'] = date('Ymd',$recur_enddate);
+									}
+									else
+									{
+										$rrule['UNTIL'] = '#0';
+									}
 
 									$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
 								} else {
@@ -289,7 +331,7 @@
 									{
 										$days[] = date('Ymd',$day);
 									}
-									$attributes['EXDATE'] = implode(';',$days);
+									$attributes['EXDATE'] = implode(',',$days);
 									$parameters['EXDATE']['VALUE'] = 'DATE';
 								}
 								break;
@@ -309,9 +351,10 @@
 							case 'CATEGORIES':
 								if ($event['category'])
 								{
-									$attributes['CATEGORIES'] = implode(',',$this->categories($event['category'],$nul));
+									$attributes['CATEGORIES'] = implode(',',$this->get_categories($event['category']));
 								}
 								break;
+
 							default:
 								if ($event[$egwFieldInfo['dbName']])	// dont write empty fields
 								{
@@ -394,6 +437,13 @@
 			}
 			//echo "supportedFields="; _debug_array($this->supportedFields);
 
+			$syncevo_enddate_fix = False;
+			if( $this->productManufacturer == '' && $this->productName == '' )
+			{
+				// syncevolution needs an adjusted recur_enddate
+				$syncevo_enddate_fix = True;
+			}
+
 			$Ok = false;	// returning false, if file contains no components
 			foreach($vcal->getComponents() as $component)
 			{
@@ -403,7 +453,10 @@
 					#$event = array('participants' => array());
 					$event		= array();
 					$alarms		= array();
-					$vcardData	= array('recur_type' => 0);
+					$vcardData	= array(
+						'recur_type'		=> MCAL_RECUR_NONE,
+						'recur_exception'	=> array(),
+					);
 					
 					// lets see what we can get from the vcard
 					foreach($component->_attributes as $attributes) 
@@ -429,6 +482,11 @@
 									$alarms[$alarmTime] = array(
 										'time' => $alarmTime
 									);
+								} elseif (preg_match('/(........T......)$/',$attributes['value'],$matches)) {
+									$alarmTime = $vcal->_parseDateTime($attributes['value']);
+									$alarms[$alarmTime] = array(
+										'time' => $alarmTime
+									);
 								}
 								break;
 							case 'CLASS':
@@ -440,7 +498,7 @@
 							case 'DTEND':
 								$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 								if(date('H:i:s',$dtend_ts) == '00:00:00') {
-									$dtend_ts--;
+									$dtend_ts -= 60;
 								}
 								$vcardData['end']		= $dtend_ts;
 								break;
@@ -458,9 +516,14 @@
 								{
 									$vcardData['recur_enddate'] = $vcal->_parseDateTime($matches[1]);
 								}
+								elseif (preg_match('/COUNT=([0-9]+)/',$recurence,$matches))
+								{
+									$vcardData['recur_count'] = (int)$matches[1];
+								}
 								if (preg_match('/INTERVAL=([0-9]+)/',$recurence,$matches))
 								{
-									$vcardData['recur_interval'] = (int) $matches[1];
+									// 1 is invalid,, egw uses 0 for interval
+									$vcardData['recur_interval'] = (int) $matches[1] != 0 ? (int) $matches[1] : 0;
 								}
 								$vcardData['recur_data'] = 0;
 								switch($type)
@@ -492,6 +555,14 @@
 		            								}
 											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
 										}
+
+										if (!empty($vcardData['recur_count']))
+										{
+											$vcardData['recur_enddate'] = mktime(0,0,0,
+												date('m',$vcardData['start']),
+												date('d',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)*7),
+												date('Y',$vcardData['start']));
+										}
 										break;
 									
 									case 'D':	// 1.0
@@ -518,6 +589,14 @@
 										// fall-through
 									case 'DAILY':	// 2.0
 										$vcardData['recur_type'] = MCAL_RECUR_DAILY;
+
+										if (!empty($vcardData['recur_count']))
+										{
+											$vcardData['recur_enddate'] = mktime(0,0,0,
+												date('m',$vcardData['start']),
+												date('d',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
+												date('Y',$vcardData['start']));
+										}
 										break;
 
 									case 'M':
@@ -551,6 +630,14 @@
 									case 'MONTHLY':
 										$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ? 
 											MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
+
+										if (!empty($vcardData['recur_count']))
+										{
+											$vcardData['recur_enddate'] = mktime(0,0,0,
+												date('m',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
+												date('d',$vcardData['start']),
+												date('Y',$vcardData['start']));
+										}
 										break;										
 
 									case 'Y':		// 1.0
@@ -577,11 +664,24 @@
 										// fall-through
 									case 'YEARLY':	// 2.0
 										$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
+
+										if (!empty($vcardData['recur_count']))
+										{
+											$vcardData['recur_enddate'] = mktime(0,0,0,
+												date('m',$vcardData['start']),
+												date('d',$vcardData['start']),
+												date('Y',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)));
+										}
 										break;
+								}
+								if( $syncevo_enddate_fix && $vcardData['recur_enddate'] )
+								{
+									// Does syncevolution need to adjust recur_enddate
+									$vcardData['recur_enddate'] = (int)$vcardData['recur_enddate'] + 86400;
 								}
 								break;
 							case 'EXDATE':
-								$vcardData['recur_exception']	= $attributes['value'];
+								$vcardData['recur_exception'] = array_merge($vcardData['recur_exception'],$attributes['value']);
 								break;
 							case 'SUMMARY':
 								$vcardData['title']		= $attributes['value'];
@@ -605,26 +705,14 @@
 	 							$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
 	 							break;
 	 						case 'CATEGORIES':
-	 							$vcardData['category'] = array();
 	 							if ($attributes['value'])
 	 							{
-									if (!is_object($this->cat))
-									{
-										if (!is_object($GLOBALS['egw']->categories))
-										{
-											$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$this->owner,'calendar');
-										}
-										$this->cat =& $GLOBALS['egw']->categories;
-									}
-	 								foreach(explode(',',$attributes['value']) as $cat_name)
-	 								{
-	 									if (!($cat_id = $this->cat->name2id($cat_name)))
-	 									{
-	 										$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
-	 									}
- 										$vcardData['category'][] = $cat_id;
-	 								}
+	 								$vcardData['category'] = $this->find_or_add_categorie(explode(',',$attributes['value']));
 	 							}
+								else
+								{
+	 								$vcardData['category'] = array();
+								}
 	 							break;	
 	 						case 'ATTENDEE':
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
@@ -734,6 +822,38 @@
 						$event['participants'] = array($GLOBALS['egw_info']['user']['account_id'] => 'A');
 	 				}
 
+					// If this is an updated meeting, and the client doesn't support
+					// participants, add them back
+					if( $cal_id >0 && !isset($this->supportedFields['participants']))
+					{
+						$egw_event = $this->read($cal_id);
+						if ($egw_event)
+						{
+							$event['participants'] = $egw_event['participants'];
+							$event['participant_types'] = $egw_event['participant_types'];
+						}
+					}
+
+					// Check for resources, and don't remove them
+					if( $cal_id > 0 )
+					{
+						// for each existing participant:
+						$egw_event = $this->read($cal_id);
+						if ( $egw_event )
+						{ 
+							foreach( $egw_event['participants'] as $uid => $status )
+							{
+								// Is it a resource?
+								if ( preg_match("/^r(.*)/", $uid, $matches) )
+								{
+									// Add it back in
+									$event['participants'][$uid] = 'A';
+									$event['participant_types']['r'][$matches[1]] = 'A';
+								}
+							}
+						}
+					}
+
 					#error_log('ALARMS');
 					#error_log(print_r($event, true));
 					
@@ -773,19 +893,47 @@
 			$this->productManufacturer = $_productManufacturer;
 			$this->productName = $_productName;
 
-			$defaultFields[0] = array('public' => 'public', 'description' => 'description', 'end' => 'end',
-				'start' => 'start', 'location' => 'location', 'recur_type' => 'recur_type',
-				'recur_interval' => 'recur_interval', 'recur_data' => 'recur_data', 'recur_enddate' => 'recur_enddate',
-				'title' => 'title',	'priority' => 'priority', 'alarms' => 'alarms', 
+			$defaultFields['minimal'] = array(
+				'public'			=> 'public',
+				'description'		=> 'description',
+				'end'				=> 'end',
+				'start'				=> 'start',
+				'location'			=> 'location',
+				'recur_type'		=> 'recur_type',
+				'recur_interval'	=> 'recur_interval',
+				'recur_data'		=> 'recur_data',
+				'recur_enddate'		=> 'recur_enddate',
+				'title'				=> 'title',
+				'alarms'			=> 'alarms', 
+			);
 
+			$defaultFields['basic'] = $defaultFields['minimal'] + array(
+				'recur_exception'	=> 'recur_exception',
+				'priority'			=> 'priority',
+			);
+
+			$defaultFields['nexthaus'] = $defaultFields['basic'] + array(
+				'participants'		=> 'participants',
 			);
 			
-			$defaultFields[1] = array('public' => 'public', 'description' => 'description', 'end' => 'end',
-				'start' => 'start', 'location' => 'location', 'recur_type' => 'recur_type',
-				'recur_interval' => 'recur_interval', 'recur_data' => 'recur_data', 'recur_enddate' => 'recur_enddate',
-				'title' => 'title', 'alarms' => 'alarms', 
-
+			$defaultFields['synthesis'] = $defaultFields['basic'] + array(
+				'non_blocking'		=> 'non_blocking',
+				'category'			=> 'category',
 			);
+			
+			$defaultFields['evolution'] = $defaultFields['basic'] + array(
+				'participants'		=> 'participants',
+				'owner'				=> 'owner',
+				'category'			=> 'category',
+			);
+
+			$defaultFields['full'] = $defaultFields['basic'] + array(
+				'participants'		=> 'participants',
+				'owner'				=> 'owner',
+				'category'			=> 'category',
+				'non_blocking'		=> 'non_blocking',
+			);
+			
 			
 			switch(strtolower($_productManufacturer))
 			{
@@ -793,8 +941,7 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields[0] + array('participants' => 'participants');
-							#$this->supportedFields = $defaultFields;
+							$this->supportedFields = $defaultFields['nexthaus'];
 							break;
 					}
 					break;
@@ -805,7 +952,7 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields[0];
+							$this->supportedFields = $defaultFields['basic'];
 							break;
 					}
 					break;
@@ -814,18 +961,26 @@
 					switch(strtolower($_productName))
 					{
 						case 'e61':
+							$this->supportedFields = $defaultFields['minimal'];
+							break;
 						default:
-							$this->supportedFields = $defaultFields[1];
+							error_log("Unknown Nokia phone '$_productName', assuming E61");
+							$this->supportedFields = $defaultFields['minimal'];
 							break;
 					}
 					break;
 
 				case 'sonyericsson':
+				case 'sony ericsson':
 					switch(strtolower($_productName))
 					{
 						case 'd750i':
+						case 'p910i':
+							$this->supportedFields = $defaultFields['basic'];
+							break;
 						default:
-							$this->supportedFields = $defaultFields[0];
+							error_log("Unknown Sony Ericsson phone '$_productName' assuming d750i");
+							$this->supportedFields = $defaultFields['basic'];
 							break;
 					}
 					break;
@@ -834,41 +989,35 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields[0] + array(
-								'recur_exception' => 'recur_exception',
-								'non_blocking' => 'non_blocking',
-							);
+							$this->supportedFields = $defaultFields['synthesis'];
 							break;
 					}
 					break;
 
 				//Syncevolution compatibility	
 				case 'patrick ohly':
-					$this->supportedFields = $defaultFields[1] + array(
-						'participants' => 'participants',
-						'owner'        => 'owner',
-						'category'     => 'category',
-					);
+					$this->supportedFields = $defaultFields['evolution'];
+					break;
+
+				case '': // seems syncevolution 0.5 doesn't send a manufacturer
+					error_log("No vendor name, assuming syncevolution 0.5");
+					$this->supportedFields = $defaultFields['evolution'];
 					break;
 					
 				case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
-					$this->supportedFields = $defaultFields[0] + array(
-						'participants' => 'participants',
-						'owner'        => 'owner',
-						'non_blocking' => 'non_blocking',
-						'category'     => 'category',
-					);
+					$this->supportedFields = $defaultFields['full'];
 					break;
 
 				// the fallback for SyncML
 				default:
-					error_log("Client not found: $_productManufacturer $_productName");
-					$this->supportedFields = $defaultFields[0];
+					error_log("Unknown calendar SyncML client: manufacturer='$_productManufacturer'  product='$_productName'");
+					$this->supportedFields = $defaultFields['full'];
 					break;
 			}
 		}
 		
-		function icaltoegw($_vcalData) {
+		function icaltoegw($_vcalData)
+		{
 			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
 			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
 
@@ -1043,26 +1192,14 @@
 								}
 	 							break;
 	 						case 'CATEGORIES':
-	 							$vcardData['category'] = array();
 	 							if ($attributes['value'])
 	 							{
-									if (!is_object($this->cat))
-									{
-										if (!is_object($GLOBALS['egw']->categories))
-										{
-											$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$this->owner,'calendar');
-										}
-										$this->cat =& $GLOBALS['egw']->categories;
-									}
-	 								foreach(explode(',',$attributes['value']) as $cat_name)
-	 								{
-	 									if (!($cat_id = $this->cat->name2id($cat_name)))
-	 									{
-	 										$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
-	 									}
- 										$vcardData['category'][] = $cat_id;
-	 								}
-	 							}
+									$vcardData['category'] = $this->find_or_add_categories(explode(',',$attributes['value']));
+								}
+								else
+								{
+	 								$vcardData['category'] = array();
+								}
 	 							break;	
 	 						case 'ATTENDEE':
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
@@ -1114,6 +1251,10 @@
 					{
 						switch($fieldName)
 						{
+							case 'recur_interval':
+							case 'recur_enddate':
+							case 'recur_data':
+							case 'recur_exception':
 							case 'alarms':
 								// not handled here
 								break;
@@ -1129,17 +1270,12 @@
 										}
 									}
 								}
-								unset($supportedFields['recur_type']);
-								unset($supportedFields['recur_interval']);
-								unset($supportedFields['recur_enddate']);
-								unset($supportedFields['recur_data']);
 								break;
 							default:
 								if (isset($vcardData[$fieldName]))
 								{
 									$event[$fieldName] = $vcardData[$fieldName];
 								}
-								unset($supportedFields[$fieldName]);
 								break;
 						}
 					}
@@ -1212,20 +1348,24 @@
 			{
 				$vfreebusy->setAttribute($attr, $value, $parameters[$name]);
 			}
-			foreach(parent::search(array(
-				'start' => $this->now_su,
-				'end'   => $end,
-				'users' => $user,
-				'date_format' => 'server',
-				'show_rejected' => false,
-			)) as $event)
+			$fbdata = parent::search(array(
+						'start' => $this->now_su,
+						'end'   => $end,
+						'users' => $user,
+						'date_format' => 'server',
+						'show_rejected' => false,
+					));
+			if (is_array($fbdata))
 			{
-				if ($event['non_blocking']) continue;
+				foreach ($fbdata as $event)
+				{
+					if ($event['non_blocking']) continue;
 
-				$vfreebusy->setAttribute('FREEBUSY',array(array(
-					'start' => $event['start'],
-					'end' => $event['end'],
-				)));
+					$vfreebusy->setAttribute('FREEBUSY',array(array(
+						'start' => $event['start'],
+						'end' => $event['end'],
+					)));
+				}
 			}
 			$vcal->addComponent($vfreebusy);
 

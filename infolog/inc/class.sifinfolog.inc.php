@@ -21,12 +21,24 @@
 		// array containing the current mappings(task or note)
 		var $_currentSIFMapping;
 		
+		var $_sifNoteMapping = array(
+			'Body'			=> 'info_des',
+			'Categories'	=> 'info_cat',
+			'Color'			=> '',
+			'Date'			=> 'info_startdate',
+			'Height'		=> '',
+			'Left'			=> '',
+			'Subject'		=> 'info_subject',
+			'Top'			=> '',
+			'Width'			=> '',
+		);
+
 		// mappings for SIFTask to InfologTask
 		var $_sifTaskMapping = array(
 			'ActualWork'		=> '',
 			'BillingInformation'	=> '',
 			'Body'			=> 'info_des',
-			'Categories'		=> '',
+			'Categories'		=> 'info_cat',
 			'Companies'		=> '',
 			'Complete'		=> '',
 			'DateCompleted'		=> 'info_datecompleted',
@@ -61,8 +73,9 @@
 		}
 
 		function endElement($_parser, $_tag) {
+			error_log("infolog: tag=$_tag data=".trim($this->sifData));
 			if(!empty($this->_currentSIFMapping[$_tag])) {
-				$this->_extractedSIFData[$this->_currentSIFMapping[$_tag]] = $this->sifData;
+				$this->_extractedSIFData[$this->_currentSIFMapping[$_tag]] = trim($this->sifData);
 			}
 			unset($this->sifData);
 		}
@@ -81,7 +94,18 @@
 			#fwrite($handle, $sifData);
 			#fclose($handle);
 
-			$this->_currentSIFMapping = $this->_sifTaskMapping;
+			switch ($_sifType)
+			{
+				case 'note':
+					$this->_currentSIFMapping = $this->_sifNoteMapping;
+					break;
+
+				case 'task':
+				default:
+					$this->_currentSIFMapping = $this->_sifTaskMapping;
+					break;
+			}
+
 			$this->xml_parser = xml_parser_create('UTF-8');
 			xml_set_object($this->xml_parser, $this);
 			xml_parser_set_option($this->xml_parser, XML_OPTION_CASE_FOLDING, false);
@@ -108,6 +132,8 @@
 					
 					foreach($this->_extractedSIFData as $key => $value) {
 						$value = $GLOBALS['egw']->translation->convert($value, 'utf-8', $sysCharSet);
+						error_log("infolog key=$key => value=$value");
+
 						switch($key) {
 							case 'info_access':
 								$taskData[$key] = ((int)$value > 0) ? 'private' : 'public';
@@ -126,6 +152,13 @@
 								}
 								break;
 								
+
+							case 'info_cat':
+								if (!empty($value)) {
+									$categories = $this->find_or_add_categories(explode(';', $value));
+									$taskData['info_cat'] = $categories[0];
+								}
+								break;
 
 							case 'info_priority':
 								$taskData[$key] = (int)$value;
@@ -156,11 +189,52 @@
 								$taskData[$key] = $value;
 								break;
 						}
+						error_log("infolog task key=$key => value=".$taskData[$key]);
 					}
 					
 					return $taskData;
 					break;
 
+				case 'note':
+					$noteData = array();
+					$noteData['info_type'] = 'note';
+					$vcal		= &new Horde_iCalendar;
+					
+					foreach($this->_extractedSIFData as $key => $value)
+					{
+						$value = $GLOBALS['egw']->translation->convert($value, 'utf-8', $sysCharSet);
+
+						error_log("infolog client key=$key => value=".$value);
+						switch ($key)
+						{
+							case 'info_startdate':
+								if(!empty($value)) {
+									$noteData[$key] = $vcal->_parseDateTime($value);
+									// somehow the client always deliver a timestamp about 3538 seconds, when no startdate set.
+									if($noteData[$key] < 10000)
+										$noteData[$key] = '';
+								} else {
+									$noteData[$key] = '';
+								}
+								break;
+
+							case 'info_cat':
+								if (!empty($value)) {
+									$categories = $this->find_or_add_categories(explode(';', $value));
+									$taskData['info_cat'] = $categories[0];
+								}
+								break;
+
+							default:
+								$noteData[$key] = $value;
+								break;
+						}
+						error_log("infolog note key=$key => value=".$noteData[$key]);
+					}
+					return $noteData;
+					break;
+					
+					
 				default:
 					return false;
 			}
@@ -251,6 +325,15 @@
 									$sifTask .= "<$sifField>$value</$sifField>";							
 									break;
 							
+								case 'Categories':
+									if (!empty($value)) 
+									{
+										$value = implode('; ', $this->get_categories(array($value)));
+										$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+									}
+									$sifTask .= "<$sifField>$value</$sifField>";							
+									break;
+
 								default:
 									$sifTask .= "<$sifField>$value</$sifField>";
 									break;
@@ -293,6 +376,52 @@
 						<Occurrences>10</Occurrences>
 						</task>
 						"); */
+					}
+					break;
+				
+				case 'note':
+					if($taskData = $this->read($_id)) {
+						$sysCharSet	= $GLOBALS['egw']->translation->charset();
+						$vcal		= &new Horde_iCalendar;
+
+						$sifNote = '<note>';
+
+						foreach($this->_sifNoteMapping as $sifField => $egwField)
+						{
+							if(empty($egwField)) continue;
+		
+							$value = $GLOBALS['egw']->translation->convert($taskData[$egwField], $sysCharSet, 'utf-8');
+
+							switch($sifField) {
+								case 'Date':
+									if(!empty($value)) {
+										$value = $vcal->_exportDateTime($value);
+									}
+									$sifNote .= "<$sifField>$value</$sifField>";							
+									break;
+							
+								case 'Body':
+									$value = $GLOBALS['egw']->translation->convert($taskData['info_subject'], $sysCharSet, 'utf-8') . "\n" . $value;
+									$sifNote .= "<$sifField>$value</$sifField>";
+									break;
+
+								case 'Categories':
+									if (!empty($value)) 
+									{
+										$value = implode('; ', $this->get_categories(array($value)));
+										$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+									}
+									$sifNote .= "<$sifField>$value</$sifField>";							
+									break;
+
+
+								default:
+									$sifNote .= "<$sifField>$value</$sifField>";
+									break;
+							}
+						}
+
+						return base64_encode($sifNote);
 					}
 					break;
 				

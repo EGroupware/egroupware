@@ -1270,7 +1270,75 @@ class boinfolog
 		}
 		return $icons;
 	}
-	
+
+	var $app_cat;
+	var $glob_cat;
+
+	function find_or_add_categories($catname_list)
+	{
+		if (!is_object($this->glob_cat))
+		{
+			if (!is_object($GLOBALS['egw']->categories))
+			{
+				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'phpgw');
+			}
+			$this->glob_cat =& $GLOBALS['egw']->categories;
+		}
+
+		if (!is_object($this->app_cat))
+		{
+			$this->app_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
+		}
+
+		$cat_id_list = array();
+		foreach($catname_list as $cat_name)
+		{
+			$cat_name = trim($cat_name);
+			if (!($cat_id = $this->glob_cat->name2id($cat_name))
+				&& !($cat_id = $this->app_cat->name2id($cat_name)))
+			{
+				$cat_id = $this->app_cat->add( array('name' => $cat_name,'descr' => $cat_name ));
+			}
+
+			$cat_id_list[] = $cat_id;
+		}
+
+		if (count($cat_id_list) > 1)
+		{
+			sort($cat_id_list, SORT_NUMERIC);
+		}
+		return $cat_id_list;
+	}
+
+	function get_categories($cat_id_list)
+	{
+		if (!is_object($this->glob_cat))
+		{
+			if (!is_object($GLOBALS['egw']->categories))
+			{
+				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'phpgw');
+			}
+			$this->glob_cat =& $GLOBALS['egw']->categories;
+		}
+
+		if (!is_object($this->app_cat))
+		{
+			$this->app_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
+		}
+
+		$cat_list = array();
+		foreach(explode(',',$cat_id_list) as $cat_id)
+		{
+			if ( ($cat_data = $this->glob_cat->return_single($cat_id))
+				|| ($cat_data = $this->app_cat->return_single($cat_id)) )
+			{
+				$cat_list[] = $cat_data[0]['name'];
+			}
+		}
+
+		return $cat_list;
+	}
+
 	/**
 	 * Send all async infolog notification
 	 *
@@ -1352,3 +1420,4 @@ class boinfolog
 		$GLOBALS['egw_info']['user']['preferences'] = $save_prefs;
 	}
 }
+

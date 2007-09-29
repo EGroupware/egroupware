@@ -134,6 +134,49 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 				switch($element) {
 					case 'CTType':
 						$this->_contentType = trim($this->_chars);
+						if (substr($this->_contentType, 0, 14) == "text/x-s4j-sif")
+						{
+							// workaround a little bug in sync4j for mobile v3.1.3 (and possibly others)
+							// where the content-type is set to just one value regardless of
+							// the source... this further leads to a failure to send updates
+							// by the server since it does not know how to convert say tasks to text/x-s4j-sifc
+							// (it should be text/x-s4j-sift).
+							switch ($this->_sourceReference)
+							{
+								case 'contact':
+									if ($this->_contentType != "text/x-s4j-sifc")
+									{
+										error_log("forcing 'contact' content type to 'text/x-s4j-sifc' instead of '".$this->_contentType."'");
+										$this->_contentType = "text/x-s4j-sifc";
+									}
+									break;
+								case 'calendar':
+								case 'appointment':
+									if ($this->_contentType != "text/x-s4j-sife")
+									{
+										error_log("forcing 'calendar' content type to 'text/x-s4j-sife' instead of '".$this->_contentType."'");
+										$this->_contentType = "text/x-s4j-sife";
+									}
+									break;
+								case 'task':
+									if ($this->_contentType != "text/x-s4j-sift")
+									{
+										error_log("forcing 'task' content type to 'text/x-s4j-sift' instead of '".$this->_contentType."'");
+										$this->_contentType = "text/x-s4j-sift";
+									}
+									break;
+								case 'note':
+									if ($this->_contentType != "text/x-s4j-sifn")
+									{
+										error_log("forcing 'note' content type to 'text/x-s4j-sifn' instead of '".$this->_contentType."'");
+										$this->_contentType = "text/x-s4j-sifn";
+									}
+									break;
+								default:
+									#error_log("Leaving ContentType='".$this->_contentType."' as is for source '".$this->_sourceReference."'");
+									break;
+							}
+						}
 						break;
 					
 					case 'SyncType':

@@ -71,7 +71,7 @@
 		}
 
 		function endElement($_parser, $_tag) {
-			#error_log($_tag .' => '. $this->sifData);
+			//error_log('endElem: ' . $_tag .' => '. trim($this->sifData));
 			if(!empty($this->sifMapping[$_tag])) {
 				$this->event[$this->sifMapping[$_tag]] = trim($this->sifData);
 			}
@@ -128,19 +128,7 @@
 						
 					case 'category':
 						if(!empty($value)) {
-							$egwCategories =& CreateObject('phpgwapi.categories', $GLOBALS['egw_info']['user']['account_id'], 'calendar');
-							$categories = explode(';',$value);
-							foreach($categories as $categorieName) {
-								$cat_id = false;
-								$categorieName = trim($categorieName);
-								if(!($cat_id = $egwCategories->name2id($categorieName))) {
-									$cat_id = $egwCategories->add(array('name' => $categorieName, 'descr' => lang('added by synchronisation')));
-								}
-								if($cat_id) {
-									if(!empty($finalEvent[$key])) $finalEvent[$key] .= ',';
-									 $finalEvent[$key] .= $cat_id;
-								}
-							}
+							$finalEvent[$key] = implode(',',$this->find_or_add_categories(explode(';', $value)));
 						}
 						break;
 						
@@ -148,6 +136,7 @@
 					case 'start':
 						if($this->event['alldayevent'] < 1) {
 							$finalEvent[$key] = $vcal->_parseDateTime($value);
+							error_log("event ".$key." val=".$value.", parsed=".$finalEvent[$key]);
 						}
 						break;
 					
@@ -348,15 +337,8 @@
 					{
 						case 'Categories':
 							if(!empty($value)) {
-								$egwCategories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
-								$categories = explode(',',$value);
-								$value = '';
-								foreach($categories as $cat_id) {
-									if($catData = $egwCategories->return_single($cat_id)) {
-										if(!empty($value)) $value .= '; ';
-										$value .= $GLOBALS['egw']->translation->convert($catData[0]['name'], $sysCharSet, 'utf-8');
-									}
-								}
+								$value = implode('; ', $this->get_categories(explode(',',$value)));
+								$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 							}
 							$sifEvent .= "<$sifField>$value</$sifField>";							
 							break;

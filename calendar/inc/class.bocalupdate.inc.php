@@ -121,6 +121,21 @@ class bocalupdate extends bocal
 			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) && 
 			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
+			// Just update the status, if the user is in the event already
+			// is user is in both original and updated event
+			$egw_event = $this->read($event['id']);
+
+			if ( isset($egw_event['participants'][$this->user])
+				&& isset($event['participants'][$this->user]))
+			{
+				// Update their status in the event and say we're done.
+				// Admittedly, this is false, it's dropping any changes on the floor,
+				// But this will work better than dropping -everything- silently on
+				// the floor
+				$this->set_status($event['id'],'u',$this->user,$event['participants'][$this->user],0);
+				unset($egw_event);
+				return $event['id'];
+			}
 			return false;
 		}
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
@@ -1017,4 +1032,65 @@ class bocalupdate extends bocal
 		}
 		return $this->so->delete_alarm($id);
 	}
+
+	var $app_cat;
+	var $glob_cat;
+
+	function find_or_add_categories($catname_list)
+	{
+		if (!is_object($this->glob_cat))
+		{
+			$this->glob_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'phpgw');
+		}
+
+		if (!is_object($this->app_cat))
+		{
+			$this->app_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
+		}
+
+		$cat_id_list = array();
+		foreach($catname_list as $cat_name)
+		{
+			$cat_name = trim($cat_name);
+			if (!($cat_id = $this->glob_cat->name2id($cat_name))
+				&& !($cat_id = $this->app_cat->name2id($cat_name)))
+			{
+				$cat_id = $this->app_cat->add( array('name' => $cat_name,'descr' => $cat_name ));
+			}
+
+			$cat_id_list[] = $cat_id;
+		}
+
+		if (count($cat_id_list) > 1)
+		{
+			sort($cat_id_list, SORT_NUMERIC);
+		}
+		return $cat_id_list;
+	}
+
+	function get_categories($cat_id_list)
+	{
+		if (!is_object($this->glob_cat))
+		{
+			$this->glob_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'phpgw');
+		}
+
+		if (!is_object($this->app_cat))
+		{
+			$this->app_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
+		}
+
+		$cat_list = array();
+		foreach(explode(',',$cat_id_list) as $cat_id)
+		{
+			if ( ($cat_data = $this->glob_cat->return_single($cat_id))
+				|| ($cat_data = $this->app_cat->return_single($cat_id)) )
+			{
+				$cat_list[] = $cat_data[0]['name'];
+			}
+		}
+
+		return $cat_list;
+	}
+
 }

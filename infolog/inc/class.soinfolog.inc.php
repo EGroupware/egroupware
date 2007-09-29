@@ -186,7 +186,7 @@ class soinfolog 				// DB-Layer
 	 */
 	function aclFilter($filter = False)
 	{
-		preg_match('/(my|responsible|delegated|own|privat|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|private|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
 		$filter = $vars[1];
 		$f_user   = intval($vars[2]);
 
@@ -230,7 +230,7 @@ class soinfolog 				// DB-Layer
 			$filtermethod .= " OR (".$this->responsible_filter($this->user)." AND info_access='public')";
 
 			// private: own entries plus the one user is responsible for
-			if ($filter == 'private' || $filter == 'own')
+			if ($filter == 'private' || $filter == 'privat' || $filter == 'own')
 			{
 				$filtermethod .= " OR (".$this->responsible_filter($this->user).
 					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access

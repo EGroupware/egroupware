@@ -40,17 +40,18 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 						break;
 						
 					case 'DevID':
-						switch(trim($this->_chars)) {
+						$devid = trim($this->_chars);
+						$this->_deviceInfo['deviceID'] = $devid;
+						switch ($devid)
+						{
 							case 'fmz-thunderbird-plugin':
-								$this->_deviceInfo['deviceID']		= trim($this->_chars);
-								$this->_deviceInfo['manufacturer']	= 'funambol';
-								$this->_deviceInfo['model']		= trim($this->_chars);
+								if (empty($this->_devinceInfo['manufacturer']))
+									$this->_deviceInfo['manufacturer'] = 'funambol';
+								if (empty($this->_devinceInfo['model']))
+									$this->_deviceInfo['model'] = 'thunderbird';
+								if (empty($this->_devinceInfo['softwareVersion']))
+									$this->_deviceInfo['softwareVersion']	= '0.3';
 								break;
-								
-							default:
-								$this->_deviceInfo['deviceID']		= trim($this->_chars);
-								break;
-							
 						}
 						break;
 						
