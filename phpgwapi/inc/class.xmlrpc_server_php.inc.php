@@ -95,7 +95,7 @@
 				$payload = $GLOBALS['egw']->translation->convert("<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize(),
 					$GLOBALS['egw']->translation->charset(),'utf-8');
 				header("Content-type: text/xml");
-				header("Content-length: " . $this->bytes($payload));
+				header("Content-length: " . bytes($payload));
 				echo $payload;
 			}
 
@@ -121,24 +121,6 @@
 			}
 		}
 		
-		/**
-		 * mbstring.func_overload save strlen version: counting the bytes not the chars
-		 *
-		 * @param string $str
-		 * @return int
-		 */
-		function bytes($str)
-		{
-			static $func_overload;
-
-			if (is_null($func_overload))
-			{
-				$func_overload = @extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
-			}
-			return $func_overload & 2 ? mb_strlen($str,'ascii') : strlen($str);
-		}
-		
-
 		/*
 		 * add a method to the dispatch map
 		 */

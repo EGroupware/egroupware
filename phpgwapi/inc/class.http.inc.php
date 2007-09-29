@@ -286,7 +286,7 @@
 			}
 			if(($success = $this->PutLine($this->request_method.' '.$request_uri.' HTTP/'.$this->protocol_version)))
 			{
-				if(($body_length = strlen($request_body)))
+				if(($body_length = bytes($request_body)))
 				{
 					$headers['Content-length'] = $body_length;
 				}

@@ -117,6 +117,6 @@ $out = $server->getResponse($input, $params);
 
 /* Return the response to the client. */
 header('Content-Type: ' . $server->getResponseContentType());
-header('Content-length: ' . strlen($out));
+header('Content-length: ' . bytes($out));
 header('Accept-Charset: UTF-8');
 echo $out;
