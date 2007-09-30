@@ -4,8 +4,8 @@
 	var displayFileSelectorURL	="{file_selector_url}";
 	var composeID			="{compose_id}";
 
-	var activityImagePath		= '{ajax-loader}';
-	var fm_compose_langNoAddressSet	= '{lang_no_address_set}';
+	var activityImagePath		= "{ajax-loader}";
+	var fm_compose_langNoAddressSet	= "{lang_no_address_set}";
 
 	self.focus();
   
@@ -26,7 +26,7 @@
 			if (tos[i].value != '') break;
 		}
 		if (i >= tos.length) {
-			alert('{lang_no_recipient}');
+			alert("{lang_no_recipient}");
 			return false;
 		}
 		return true;
