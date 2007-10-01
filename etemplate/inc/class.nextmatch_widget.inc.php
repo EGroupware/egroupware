@@ -956,3 +956,17 @@
 			return $fields;
 		}
 	}
+
+if (!function_exists('array_combine'))	// php5+
+{
+	function array_combine($keys,$values)
+	{
+		$combined = array();
+		$values = array_values($values);
+		foreach(array_values($keys) as $n => $key)
+		{
+			$combined[$key] = $values[$n];
+	    }
+		return $combined;
+	}
+}
