@@ -200,7 +200,7 @@
 									// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
 									$status = $this->status_egw2ical[$status];
 									// CUTYPE={INDIVIDUAL|GROUP|RESOURCE|ROOM|UNKNOWN}
-									switch (is_nummeric($uid) ? $GLOBALS['egw']->accounts->get_type($uid) : $uid{0})
+									switch (is_numeric($uid) ? $GLOBALS['egw']->accounts->get_type($uid) : $uid{0})
 									{
 										case 'g':
 											$cutype = 'GROUP';
