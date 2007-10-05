@@ -157,30 +157,36 @@
 			
 			$text = html_entity_decode($text, ENT_COMPAT, $this->displayCharset);
 
-			$indent = 0;
-			$indentString = '';
-			$asciiText = '';
+			$pos = strpos($text, 'blockquote');
 
-			$quoteParts = preg_split('/<blockquote type="cite">/', $text, -1, PREG_SPLIT_OFFSET_CAPTURE);
-
-			foreach($quoteParts as $quotePart) {
-				if($quotePart[1] > 0) {
-					$indent++;
-					$indentString .= '>';
-				}
-				$quoteParts2 = preg_split('/<\/blockquote>/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
+			if($pos === false) {
+				$asciiText = $text;
+			} else {
+				$indent = 0;
+				$indentString = '';
+				$asciiText = '';
 				
-				foreach($quoteParts2 as $quotePart2) {
-					if($quotePart2[1] > 0) {
-						$indent--;
-						$indentString = substr($indentString, 0, $indent);
+				$quoteParts = preg_split('/<blockquote type="cite">/', $text, -1, PREG_SPLIT_OFFSET_CAPTURE);
+
+				foreach($quoteParts as $quotePart) {
+					if($quotePart[1] > 0) {
+						$indent++;
+						$indentString .= '>';
 					}
+					$quoteParts2 = preg_split('/<\/blockquote>/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
+				
+					foreach($quoteParts2 as $quotePart2) {
+						if($quotePart2[1] > 0) {
+							$indent--;
+							$indentString = substr($indentString, 0, $indent);
+						}
 
-					$quoteParts3 = preg_split('/\r\n/', $quotePart2[0]);
+						$quoteParts3 = preg_split('/\r\n/', $quotePart2[0]);
 
-					foreach($quoteParts3 as $quotePart3) {
-						$quotePart3 = wordwrap($quotePart3, 75, "\r\n$indentString");
-						$asciiText .= $indentString . $quotePart3 . "\r\n";
+						foreach($quoteParts3 as $quotePart3) {
+							$quotePart3 = wordwrap($quotePart3, 75, "\r\n$indentString");
+							$asciiText .= $indentString . $quotePart3 . "\r\n";
+						}
 					}
 				}
 			}
