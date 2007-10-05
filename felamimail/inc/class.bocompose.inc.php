@@ -710,10 +710,11 @@
 						case 'MESSAGE/RFC822':
 							$bofelamimail->openConnection();
 							$bofelamimail->reopen($attachment['folder']);
+							$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
 							$rawBody	= $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
 							$bofelamimail->closeConnection();
 
-							$_mailObject->AddStringAttachment($rawBody, $attachment['name'], '7bit', 'message/rfc822');
+							$_mailObject->AddStringAttachment($rawHeader.$rawBody, $attachment['name'], '7bit', 'message/rfc822');
 			
 							break;
 							
