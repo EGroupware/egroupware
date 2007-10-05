@@ -26,6 +26,13 @@ include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.datasource.inc.php');
 class datasource_infolog extends datasource
 {
 	/**
+	 * Reference to boinfolog
+	 *
+	 * @var boinfolog
+	 */
+	var $boinfolog;
+
+	/**
 	 * Constructor
 	 */
 	function datasource_infolog()
@@ -33,6 +40,14 @@ class datasource_infolog extends datasource
 		$this->datasource('infolog');
 		
 		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_USED_TIME|PM_RESOURCES;
+
+		// we use $GLOBALS['boinfolog'] as an already running instance might be availible there
+		if (!is_object($GLOBALS['boinfolog']))
+		{
+			include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
+			$GLOBALS['boinfolog'] =& new boinfolog();
+		}
+		$this->boinfolog =& $GLOBALS['boinfolog'];
 	}
 	
 	/**
@@ -43,15 +58,9 @@ class datasource_infolog extends datasource
 	 */
 	function get($data_id)
 	{
-		// we use $GLOBALS['boinfolog'] as an already running instance might be availible there
-		if (!is_object($GLOBALS['boinfolog']))
-		{
-			include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
-			$GLOBALS['boinfolog'] =& new boinfolog();
-		}
 		if (!is_array($data_id))
 		{
-			$data =& $GLOBALS['boinfolog']->read((int) $data_id);
+			$data =& $this->boinfolog->read((int) $data_id);
 			
 			if (!is_array($data)) return false;
 		}
@@ -60,7 +69,7 @@ class datasource_infolog extends datasource
 			$data =& $data_id;
 		}
 		return array(
-			'pe_title'        => $GLOBALS['boinfolog']->link_title($data),
+			'pe_title'        => $this->boinfolog->link_title($data),
 			'pe_completion'   => $data['info_percent'],
 			'pe_planned_start'=> $data['info_startdate'] ? $data['info_startdate'] : null,
 			'pe_planned_end'  => $data['info_enddate'] ? $data['info_enddate'] : null,
@@ -88,19 +97,14 @@ class datasource_infolog extends datasource
 	 */
 	function copy($element,$target,$extra=null)
 	{
-		if (!is_object($GLOBALS['boinfolog']))
-		{
-			include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
-			$GLOBALS['boinfolog'] =& new boinfolog();
-		}
-		$info =& $GLOBALS['boinfolog']->read((int) $element['pe_app_id']);
+		$info =& $this->boinfolog->read((int) $element['pe_app_id']);
 		
 		if (!is_array($info)) return false;
 		
 		// unsetting info_link_id and evtl. info_from
 		if ($info['info_link_id'])
 		{
-			$GLOBALS['boinfolog']->link_id2from($info);		// unsets info_from and sets info_link_target
+			$this->boinfolog->link_id2from($info);		// unsets info_from and sets info_link_target
 			unset($info['info_link_id']);
 		}
 		// we need to unset a view fields, to get a new entry
@@ -108,26 +112,72 @@ class datasource_infolog extends datasource
 		{
 			unset($info[$key]);
 		}
-		if(!($info['info_id'] = $GLOBALS['boinfolog']->write($info))) return false;
+		if(!($info['info_id'] = $this->boinfolog->write($info))) return false;
 		
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
-		$info['info_link_id'] = $GLOBALS['boinfolog']->link->link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
+		$info['info_link_id'] = $this->boinfolog->link->link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
 		if (!$info['info_from'])
 		{
-			$info['info_from'] = $GLOBALS['boinfolog']->link->title('projectmanager',$target);
+			$info['info_from'] = $this->boinfolog->link->title('projectmanager',$target);
 		}
-		$GLOBALS['boinfolog']->write($info);
+		if ($info['info_status'] == 'template')
+		{
+			$info['info_status'] = $this->boinfolog->activate($info);
+		}
+		$this->boinfolog->write($info);
 		
 		// creating again all links, beside the one to the source-project
-		foreach($GLOBALS['boinfolog']->link->get_links('infolog',$element['pe_app_id']) as $link)
+		foreach($this->boinfolog->link->get_links('infolog',$element['pe_app_id']) as $link)
 		{
 			if ($link['app'] == 'projectmanager' && $link['id'] == $element['pm_id'] ||		// ignoring the source project
-				$link['app'] == $GLOBALS['boinfolog']->link->vfs_appname)					// ignoring files attachments for now
+				$link['app'] == $this->boinfolog->link->vfs_appname)					// ignoring files attachments for now
 			{
 				continue;
 			}
-			$GLOBALS['boinfolog']->link->link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
+			$this->boinfolog->link->link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
 		}
 		return array($info['info_id'],$info['info_link_id']);
+	}
+	
+	/**
+	 * Delete the datasource of a project element
+	 *
+	 * @param int $id
+	 * @return boolean true on success, false on error
+	 */
+	function delete($id)
+	{
+		if (!is_object($GLOBALS['boinfolog']))
+		{
+			include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
+			$GLOBALS['boinfolog'] =& new boinfolog();
+		}
+		return $this->boinfolog->delete($id);
+	}
+	
+	/**
+	 * Change the status of an infolog entry according to the project status
+	 *
+	 * @param int $id
+	 * @param string $status
+	 * @return boolean true if status changed, false otherwise
+	 */
+	function change_status($id,$status)
+	{
+		//error_log("datasource_infolog::change_status($id,$status)");
+		if (($info = $this->boinfolog->read($id)) && $this->boinfolog->check_access($info,EGW_ACL_EDIT))
+		{
+			if ($status == 'active' && in_array($info['info_status'],array('template','nonactive','archive')))
+			{
+				$status = $this->boinfolog->activate($info);
+			}
+			if($info['info_status'] != $status && isset($this->boinfolog->status[$info['info_type']][$status]))
+			{
+				//error_log("datasource_infolog::change_status($id,$status) setting status from ".$info['info_status']);
+				$info['info_status'] = $status;
+				return $this->boinfolog->write($info) !== false;
+			}
+		}
+		return false;
 	}
 }

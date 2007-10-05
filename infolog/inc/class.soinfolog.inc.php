@@ -274,10 +274,10 @@ class soinfolog 				// DB-Layer
 		switch ($filter)
 		{
 			case 'done':	$filter = "info_status IN ('done','billed','cancelled')"; break;
-			case 'open':	$filter = "NOT (info_status IN ('done','billed','cancelled','deleted'))"; break;
+			case 'open':	$filter = "NOT (info_status IN ('done','billed','cancelled','deleted','template','nonactive','archive'))"; break;
 			case 'offer':	$filter = "info_status = 'offer'";    break;
 			case 'deleted': $filter = "info_status = 'deleted'";  break;
-			default:        $filter = "info_status <> 'deleted'"; break;
+			default:        $filter = "NOT (info_status IN ('deleted','template','nonactive','archive'))"; break;
 		}
 		return ($prefix_and ? ' AND ' : '').$filter;
 	}
@@ -655,7 +655,7 @@ class soinfolog 				// DB-Layer
 			$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 		}
 		$acl_filter = $filtermethod = $this->aclFilter($query['filter']);
-		$filtermethod .= $this->statusFilter($query['filter']);
+		if (!$query['col_filter']['info_status'])  $filtermethod .= $this->statusFilter($query['filter']);
 		$filtermethod .= $this->dateFilter($query['filter']);
 
 		if (is_array($query['col_filter']))

@@ -20,6 +20,7 @@ define('EGW_ACL_UNDELETE',EGW_ACL_CUSTOM_1);	// undelete right
 class boinfolog
 {
 	var $enums;
+	var $status;
 	/**
 	 * Instance of our so class
 	 *
@@ -164,7 +165,10 @@ class boinfolog
 				'ongoing' => 'ongoing',			// iCal IN-PROCESS
 				'done' => 'done',				// iCal COMPLETED
 				'cancelled' => 'cancelled',		// iCal CANCELLED
-				'billed' => 'billed' ),			// -->  DONE
+				'billed' => 'billed',			// -->  DONE
+				'template' => 'template',		// -->  cancelled
+				'nonactive' => 'nonactive',		// -->  cancelled
+				'archive' => 'archive' ),		// -->  cancelled
 			'phone' => array(
 				'not-started' => 'call',		// iCal NEEDS-ACTION
 				'ongoing' => 'will-call',		// iCal IN-PROCESS
@@ -1418,6 +1422,85 @@ class boinfolog
 		}
 		$GLOBALS['egw_info']['user']['account_id']  = $save_account_id;
 		$GLOBALS['egw_info']['user']['preferences'] = $save_prefs;
+	}
+	
+	/** conversion of infolog status to vtodo status
+	 * @private
+	 * @var array
+	 */
+	var $_status2vtodo = array(
+		'offer'       => 'NEEDS-ACTION',
+		'not-started' => 'NEEDS-ACTION',
+		'ongoing'     => 'IN-PROCESS',
+		'done'        => 'COMPLETED',
+		'cancelled'   => 'CANCELLED',
+		'billed'      => 'COMPLETED',
+		'template'    => 'CANCELLED',
+		'nonactive'   => 'CANCELLED',
+		'archive'     => 'CANCELLED',
+	);
+
+	/** conversion of vtodo status to infolog status
+	 * @private
+	 * @var array 
+	 */
+	var $_vtodo2status = array(
+		'NEEDS-ACTION' => 'not-started',
+		'IN-PROCESS'   => 'ongoing',
+		'COMPLETED'    => 'done',
+		'CANCELLED'    => 'cancelled',
+	);
+		
+	/**
+	 * Converts an infolog status into a vtodo status
+	 *
+	 * @param string $status see $this->status
+	 * @return string {CANCELLED|NEEDS-ACTION|COMPLETED|IN-PROCESS}
+	 */
+	function status2vtodo($status)
+	{
+		return isset($this->_status2vtodo[$status]) ? $this->_status2vtodo[$status] : 'NEEDS-ACTION';
+	}
+	
+	/**
+	 * Converts a vtodo status into an infolog status using the optional X-INFOLOG-STATUS
+	 * 
+	 * X-INFOLOG-STATUS is only used, if translated to the vtodo-status gives the identical vtodo status
+	 * --> the user did not changed it
+	 *
+	 * @param string $vtodo_status {CANCELLED|NEEDS-ACTION|COMPLETED|IN-PROCESS}
+	 * @param string $x_infolog_status preserved original infolog status
+	 * @return string
+	 */
+	function vtodo2status($vtodo_status,$x_infolog_status=null)
+	{
+		$vtodo_status = strtoupper($vtodo_status);
+
+		if ($x_infolog_status && $this->status2vtodo($x_infolog_status) == $vtodo_status)
+		{
+			$status = $x_infolog_status;
+		}
+		else
+		{
+			$status = isset($this->_vtodo2status[$vtodo_status]) ? $this->_vtodo2status[$vtodo_status] : 'not-started';
+		}
+		return $status;
+	}
+	
+	/**
+	 * Activates an InfoLog entry (setting it's status from template or inactive depending on the completed percentage)
+	 *
+	 * @param array $info
+	 * @return string new status
+	 */
+	function activate($info)
+	{
+		switch((int)$info['info_percent'])
+		{
+			case 0:		return 'not-started';
+			case 100:	return 'done';
+		}
+		return 'ongoing';
 	}
 }
 

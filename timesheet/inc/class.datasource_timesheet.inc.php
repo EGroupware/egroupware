@@ -89,4 +89,19 @@ class datasource_timesheet extends datasource
 	{
 		return false;
 	}
+	
+	/**
+	 * Delete the datasource of a project element
+	 *
+	 * @param int $id
+	 * @return boolean true on success, false on error
+	 */
+	function delete($id)
+	{
+		if (!is_object($GLOBALS['botimesheet']))
+		{
+			$GLOBALS['botimesheet'] =& new botimesheet();
+		}
+		return $GLOBALS['botimesheet']->delete($id);
+	}
 }

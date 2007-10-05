@@ -15,30 +15,11 @@
 
 	class vcalinfolog extends boinfolog
 	{
-		var $status2vtodo = array(
-			'offer'       => 'NEEDS-ACTION',
-			'not-started' => 'NEEDS-ACTION',
-			'ongoing'     => 'IN-PROCESS',
-			'done'        => 'COMPLETED',
-			'cancelled'   => 'CANCELLED',
-			'billed'      => 'DONE',
-			'call'        => 'NEEDS-ACTION',
-			'will-call'   => 'IN-PROCESS',			
-		);
-		
-		var $vtodo2status = array(
-			'NEEDS-ACTION' => 'not-started',
-			'IN-PROCESS'   => 'ongoing',
-			'COMPLETED'    => 'done',
-			'CANCELLED'    => 'cancelled',
-		);
-		
 		var $egw_priority2vcal_priority = array(
 			0	=> 3,
 			1	=> 2,
 			2	=> 1,
 			3	=> 1,
-			
 		);
 
 		var $vcal_priority2egw_priority = array(
@@ -82,8 +63,9 @@
 			$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify'));
 			$vevent->setAttribute('UID',$taskGUID);
 			$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
-			$vevent->setAttribute('STATUS',isset($this->status2vtodo[$taskData['info_status']]) ?  
-				$this->status2vtodo[$taskData['info_status']] : 'NEEDS-ACTION');
+			$vevent->setAttribute('STATUS',$this->status2vtodo($taskData['info_status']));
+			// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
+			$vevent->setAttribute('X-INFOLOG-STATUS',$taskData['info_status']);
 			$vevent->setAttribute('PRIORITY',$this->egw_priority2vcal_priority[$taskData['info_priority']]);
 
 			if (!empty($taskData['info_cat']))
@@ -198,8 +180,13 @@
 								}
 								break;
 							case 'STATUS':
-								$taskData['info_status']		= isset($this->vtodo2status[strtoupper($attributes['value'])]) ?
-									$this->vtodo2status[strtoupper($attributes['value'])] : 'ongoing';
+								// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
+								foreach($component->_attributes as $attr)
+								{
+									if ($attr['name'] == 'X-INFOLOG-STATUS') break;
+								}
+								$taskData['info_status'] = $this->vtodo2status($attributes['value'],
+									$attr['name'] == 'X-INFOLOG-STATUS' ? $attr['value'] : null);
 								break;
 							case 'SUMMARY':
 								$taskData['info_subject']		= $attributes['value'];

@@ -142,10 +142,6 @@ class uiinfolog
 			$this->duration_format = str_replace(',','',$pm_config->config_data['duration_units']).','.$pm_config->config_data['hours_per_workday'];
 			unset($pm_config);
 		}
-		if ($this->bo->history)
-		{
-			$this->filters['deleted'] = 'deleted';
-		}
 		/* these are just for testing of the notifications
 		for($i = -1; $i <= 3; ++$i)
 		{
@@ -595,6 +591,10 @@ class uiinfolog
 		foreach($this->bo->status as $typ => $stati)
 		{
 			if ($typ != 'defaults') $all_stati += $stati;
+		}
+		if ($this->bo->history)
+		{
+			$all_stati['deleted'] = 'deleted';
 		}
 		if (!$called_as)
 		{
