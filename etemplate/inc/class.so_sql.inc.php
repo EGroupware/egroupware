@@ -838,7 +838,8 @@ class so_sql
 			}
 		}
 		$rows = (array) $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
-			'','%',false,'OR',(int)$query['start'],$query['col_filter'],$join,$need_full_no_count);
+			'','%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
+			$query['col_filter'],$join,$need_full_no_count);
 
 		return $this->total;
 	}
