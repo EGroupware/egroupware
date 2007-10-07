@@ -36,6 +36,9 @@
 	{
 		var $account_id;
 		var $app_name;
+		/**
+		 * @var egw_db
+		 */
 		var $db;
 		var $total_records;
 		var $grants;
@@ -590,7 +593,13 @@
 		}
 
 		/**
-		 * return category id for a given name, only application cat, which are global or owned by the user are returned!
+		 * return category id for a given name
+		 * 
+		 * Cat's with the given name are returned in this order:
+		 * - personal cats first
+		 * - then application global categories
+		 * - global categories
+		 * - cat's of other user
 		 *
 		 * @param string $cat_name cat-name
 		 * @return int cat-id or 0 if not found
@@ -603,9 +612,10 @@
 
 			$this->db->select($this->table,'cat_id',array(
 				'cat_name' => $cat_name,
-				'cat_appname' => $this->app_name,
-				'(cat_owner = '.(int)$this->account_id.' OR cat_owner = -1)',
-			),__LINE__,__FILE__);
+				'(cat_appname='.$this->db->quote($this->app_name)." OR cat_appname='phpgw')",
+			),__LINE__,__FILE__,0,
+			"ORDER BY (CASE cat_owner WHEN ".(int)$this->account_id." THEN 1 WHEN -1 THEN 2 ELSE 3 END),cat_appname='phpgw'",
+			false,1);
 
 			if (!$this->db->next_record()) return 0;	// cat not found, dont cache it, as it might be created in this request
 
