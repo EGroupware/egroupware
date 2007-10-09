@@ -49,7 +49,7 @@ define('ACCEPTED',3);
  * Tables used by socal:
  *	- egw_cal: general calendar data: cal_id, title, describtion, locations, ...
  *	- egw_cal_dates: start- and enddates (multiple entry per cal_id for recuring events!)
- *	- egw_cal_users: participant info including status (multiple entries per cal_id AND startdate for recuring events)
+ *	- egw_cal_user: participant info including status (multiple entries per cal_id AND startdate for recuring events)
  * 	- egw_cal_repeats: recur-data: type, optional enddate, etc.
  *  - egw_cal_extra: custom fields (multiple entries per cal_id possible)
  *
