@@ -107,13 +107,5 @@
 			
 			return false;
 		}
-		
-		function updateScript($_scriptName, $_rules) {
-			$script		=& CreateObject('felamimail.Script',$_scriptName);
-			$script->rules	= $_rules;
-			$result 	= $script->updateScript($this);
-
-			return $result;
-		}
 	}
 ?>

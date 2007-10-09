@@ -909,7 +909,7 @@
 
 		function updateScript()
 		{
-			if (!$this->bosieve->updateScript($this->scriptToEdit, $this->rules)) {
+			if (!$this->bosieve->setRules($this->scriptToEdit, $this->rules)) {
 				print "update failed<br>";exit;
 		#LK		print $script->errstr."<br>";
 			}
