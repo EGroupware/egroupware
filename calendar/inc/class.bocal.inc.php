@@ -362,6 +362,7 @@ class bocal
 			if ($remove_rejected_by_user && $event['participants'][$remove_rejected_by_user] == 'R')
 			{
 				unset($events[$id]);	// remove the rejected event
+				$this->total--;
 				continue;
 			}
 			if ($params['enum_groups'] && $this->enum_groups($event))
