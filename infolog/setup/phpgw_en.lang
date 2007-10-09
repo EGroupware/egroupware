@@ -51,6 +51,7 @@ back to main list	infolog	en	Back to main list
 billed	infolog	en	billed
 both	infolog	en	both
 call	infolog	en	call
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	en	Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.
 cancel	infolog	en	Cancel
 cancelled	infolog	en	cancelled
 categories	infolog	en	Categories
@@ -116,7 +117,6 @@ do you want a notification, if items you created get updated?	infolog	en	Do you 
 do you want a notification, if items you delegated are about to start?	infolog	en	Do you want a notification, if items you delegated are about to start?
 do you want a notification, if items you delegated are due?	infolog	en	Do you want a notification, if items you delegated are due?
 do you want to receive notifications as html-mails or plain text?	infolog	en	Do you want to receive notifications as html-mails or plain text?
-do you want to see custom infolog types in the calendar?	infolog	en	Do you want to see custom InfoLog types in the calendar?
 don't show infolog	infolog	en	DON'T show InfoLog
 done	infolog	en	done
 download	infolog	en	Download
@@ -281,7 +281,6 @@ should infolog show subtasks, -calls or -notes in the normal view or not. you ca
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog show up on the main screen and with which filter. Works only if you dont selected an application for the main screen (in your preferences).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
-should the calendar show custom types too	infolog	en	Should the calendar show custom types too
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	en	Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.
 should the infolog list show the column "last modified".	infolog	en	Should the Infolog list show the column "last modified".
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	en	Should the Infolog list show the percent done only for status ongoing or two separate icons.
@@ -341,6 +340,7 @@ view this linked entry in its application	infolog	en	view this linked entry in i
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	en	Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.
 which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get?
+which types should the calendar show	infolog	en	Which types should the calendar show
 will-call	infolog	en	will call
 write (add or update) a record by passing its fields.	infolog	en	Write (add or update) a record by passing its fields.
 yes - delete	infolog	en	Yes - Delete

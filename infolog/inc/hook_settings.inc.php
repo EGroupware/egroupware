@@ -17,8 +17,6 @@ foreach($ui->filters as $key => $label)
 {
 	$show_home[$key] = $filters[$key] = lang($label);
 }
-$have_custom_fields = count($ui->bo->customfields) > 0;
-unset($ui);
 
 // migrage old filter-pref 1,2 to the filter one 'own-open-today'
 if (isset($GLOBALS['type']) && in_array($GLOBALS['egw']->preferences->{$GLOBALS['type']}['homeShowEvents'],array('1','2')))
@@ -114,18 +112,17 @@ $GLOBALS['settings'] = array(
 		'xmlrpc' => True,
 		'admin'  => False
 	),
-);
-if ($have_custom_fields)
-{
-	$GLOBALS['settings']['cal_show_custom'] = array(
-		'type'   => 'check',
-		'label'  => 'Should the calendar show custom types too',
-		'name'   => 'cal_show_custom',
-		'help'   => 'Do you want to see custom InfoLog types in the calendar?',
+	'cal_show' => array(
+		'type'   => 'multiselect',
+		'label'  => 'Which types should the calendar show',
+		'name'   => 'cal_show',
+		'values' => $ui->bo->enums['type'],
+		'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
 		'xmlrpc' => True,
 		'admin'  => False
-	);
-}
+	),
+);
+unset($ui);
 unset($show_home);
 unset($show_details);
 unset($filters);

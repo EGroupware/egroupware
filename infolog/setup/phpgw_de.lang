@@ -51,6 +51,7 @@ back to main list	infolog	de	Zurück zur Gesamtliste
 billed	infolog	de	abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	anrufen
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	de	Kann dazu benutzt werden um weitere InfoLog Typen im Kalender anzuzeigen oder zu begrenzen dass z.B. nur noch Aufgaben angezeigt werden.
 cancel	infolog	de	Abbruch
 cancelled	infolog	de	abgesagt
 categories	infolog	de	Kategorien
@@ -116,7 +117,6 @@ do you want a notification, if items you created get updated?	infolog	de	Wollen 
 do you want a notification, if items you delegated are about to start?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben beginnen sollen?
 do you want a notification, if items you delegated are due?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben fällig werden?
 do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML Mail oder reinen Text empfangen?
-do you want to see custom infolog types in the calendar?	infolog	de	Wollen Sie benutzerdefinierte Typen auch im Kalender sehen?
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
 done	infolog	de	erledigt
 download	infolog	de	Datei laden
@@ -282,7 +282,6 @@ should infolog show subtasks, -calls or -notes in the normal view or not. you ca
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
-should the calendar show custom types too	infolog	de	Soll der Kalender auch benutzerdefinierte Typen anzeigen
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die zB. als Ticketnummer verwendet werden kann.
 should the infolog list show the column "last modified".	infolog	de	Soll die InfoLog Liste die Spalte "Zuletzt geändert" anzeigen.
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
@@ -333,7 +332,6 @@ urgent	infolog	de	Dringend
 used time	infolog	de	benötigte Zeit
 valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
@@ -344,6 +342,7 @@ view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag i
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
 which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
+which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
 will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
 yes - delete	infolog	de	Ja - Löschen

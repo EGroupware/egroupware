@@ -1054,7 +1054,11 @@ class boinfolog
 			'filter'=> "user$user".($do_events ? 'date' : 'opentoday').$date_wanted,
 			'start' => 0,
 		);
-		if ($this->customfields && !$GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show_custom'])
+		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show'])
+		{
+			$query['col_filter']['info_type'] = explode(',',$GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show']);
+		}
+		elseif ($this->customfields && !$GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show_custom'])
 		{
 			$query['col_filter']['info_type'] = array('task','phone','note','email');
 		}
