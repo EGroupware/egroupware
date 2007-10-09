@@ -250,13 +250,15 @@
 						);
 						break;
 					case 'select':
+					case 'multiselect':
 						$this->create_select_box(
 							$valarray['label'],
 							$valarray['name'],
 							$valarray['values'],
 							$valarray['help'],
 							$valarray['default'],
-							$valarray['run_lang']
+							$valarray['run_lang'],
+							$valarray['type'] == 'multiselect'
 						);
 						break;
 					case 'check':
@@ -499,7 +501,7 @@
 			$this->t->fp('rows',$this->process_help($help) ? 'help_row' : 'row',True);
 		}
 
-		function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True)
+		function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True,$multiple=false)
 		{
 			$_appname = $this->check_app();
 			if($this->is_forced_value($_appname,$name))
@@ -511,26 +513,45 @@
 			{
 				$default = $this->bo->prefs[$name];
 			}
+			//echo "<p>uisettings::create_select_box('$label','$name',".print_r($values,true).",,'$default',$run_lang,$multiple)</p>\n";
 
-			switch($GLOBALS['type'])
+			require_once(EGW_API_INC.'/class.html.inc.php');
+			$html = html::singleton();
+
+			if (!$multiple)
 			{
-				case 'user':
-					$s = '<option value="">' . lang('Use default') . '</option>';
-					break;
-				case 'default':
-					$s = '<option value="">' . lang('No default') . '</option>';
-					break;
-				case 'forced':
-					$s = '<option value="**NULL**">' . lang('Users choice') . '</option>';
-					break;
+				switch($GLOBALS['type'])
+				{
+					case 'user':
+						$extra = array('' => lang('Use default'));
+						break;
+					case 'default':
+						$extra = array('' => lang('No default'));
+						break;
+					case 'forced':
+						$extra = array('**NULL**' => lang('Users choice'));
+						break;
+				}
+				if ($extra) $values = array_merge($extra,$values);
+
+				$select = $html->select($GLOBALS['type'].'['.$name.']',$default,$values,true);
 			}
-			$s .= $this->create_option_string($default,$values);
-			if($GLOBALS['type'] == 'user')
+			else
 			{
-				$def_text = $GLOBALS['egw']->preferences->default[$_appname][$name];
-				$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$values[$def_text].'</font></i>' : '';
+				if (!is_array($default)) $default = explode(',',$default);
+				$select = $html->input_hidden($GLOBALS['type'].'['.$name.']','',false);	// causes bosettings not to ignore unsetting all
+				$select .= $html->checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',5);
 			}
-			$this->t->set_var('row_value',"<select name=\"${GLOBALS[type]}[$name]\">$s</select>$def_text");
+			if($GLOBALS['type'] == 'user' && $GLOBALS['egw']->preferences->default[$_appname][$name])
+			{
+				$defs = array();
+				foreach(explode(',',$GLOBALS['egw']->preferences->default[$_appname][$name]) as $def)
+				{
+					if ($values[$def]) $defs[] = $values[$def];
+				}
+				$def_text = ' <i><font size="-1">'.lang('default').':&nbsp;'.implode(', ',$defs).'</font></i>';
+			}
+			$this->t->set_var('row_value',$select.$def_text);
 			$this->t->set_var('row_name',$run_lang !== -1 ? lang($label) : $label);
 			$GLOBALS['egw']->nextmatchs->template_alternate_row_color($this->t);
 

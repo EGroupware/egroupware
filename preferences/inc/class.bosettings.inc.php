@@ -170,7 +170,11 @@
 			{
 				if(isset($value) && $value != '' && $value != '**NULL**')
 				{
-					if(is_array($value))
+					if(is_array($value) && !isset($value['pw']))
+					{
+						$value = implode(',',$value);	// multiselect
+					}
+					elseif(is_array($value))
 					{
 						$value = $value['pw'];
 						if(empty($value))
