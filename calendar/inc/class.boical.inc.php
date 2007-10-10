@@ -242,6 +242,7 @@
 								
 							case 'DTEND':
 								if(date('H:i:s',$event['end']) == '23:59:59') $event['end']++;
+								if(date('H:i:s',$event['end']) == '23:59:00') $event['end']+=60; // needed by old eGW whole-day events
 		            					$attributes[$icalFieldName]	= $event['end'];
 		            					break;
 		            					
