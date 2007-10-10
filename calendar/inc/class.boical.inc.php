@@ -166,12 +166,14 @@
 				//_debug_array($event);
 
 				// correct daylight saving time
+				/* causes times wrong by one hour, if exporting events with DST different from the current date,
+				which this fix is suppost to fix. Maybe the problem has been fixed in the horde code too.
 				$currentDST = date('I', mktime());
 				$eventDST = date('I', $event['start']);
 				$DSTCorrection = ($currentDST - $eventDST) * 3600;
 				$event['start']	= $event['start'] + $DSTCorrection;
 				$event['end']	= $event['end'] + $DSTCorrection;
-
+				*/
 				$eventGUID = $GLOBALS['egw']->common->generate_uid('calendar',$event['id']);
 				
 				$vevent = Horde_iCalendar::newComponent('VEVENT',$vcal);
