@@ -215,7 +215,7 @@ class accounts_backend
 			{
 				$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
 			}
-			$GLOBALS['egw']->contacts->delete($contact_id);
+			$GLOBALS['egw']->contacts->delete($contact_id,false);	// false = allow to delete accounts (!)
 		}
 		return true;
 	}

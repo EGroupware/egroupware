@@ -392,9 +392,10 @@ class bocontacts extends socontacts
 	* deletes contact in db
 	*
 	* @param mixed &$contact contact array with key id or (array of) id(s)
+	* @param boolean $deny_account_delete=true if true never allow to delete accounts
 	* @return boolean true on success or false on failiure
 	*/
-	function delete($contact)
+	function delete($contact,$deny_account_delete=true)
 	{
 		if (is_array($contact) && isset($contact['id']))
 		{
@@ -413,7 +414,7 @@ class bocontacts extends socontacts
 		{
 			$id = is_array($c) ? $c['id'] : $c;
 
-			if ($this->check_perms(EGW_ACL_DELETE,$c) && parent::delete($id))
+			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete) && parent::delete($id))
 			{
 				$GLOBALS['egw']->link->unlink(0,'addressbook',$id);
 				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
@@ -438,11 +439,14 @@ class bocontacts extends socontacts
 		// remember if we add or update a entry
 		if (($isUpdate = $contact['id']))
 		{
-			if (!isset($contact['owner']))	// owner not set on update, eg. SyncML
+			if (!isset($contact['owner']) || !isset($contact['private']))	// owner/private not set on update, eg. SyncML
 			{
 				if (($old = $this->read($contact['id'])))	// --> try reading the old entry and set it from there
 				{
-					$contact['owner'] = $old['owner'];
+					if(!isset($contact['owner']))
+					{
+						$contact['owner'] = $old['owner'];
+					}
 					if(!isset($contact['private']))
 					{
 						$contact['private'] = $old['private'];
@@ -544,14 +548,15 @@ class bocontacts extends socontacts
 	*
 	* @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
 	* @param mixed $contact contact as array or the contact-id
-	* @return boolean true permission granted or false for permission denied
+	* @param boolean $deny_account_delete=false if true never allow to delete accounts
+	* @return boolean true permission granted, false for permission denied, null for contact does not exist
 	*/
-	function check_perms($needed,$contact)
+	function check_perms($needed,$contact,$deny_account_delete=false)
 	{
 		if ((!is_array($contact) || !isset($contact['owner'])) && 
 			!($contact = parent::read(is_array($contact) ? $contact['id'] : $contact)))
 		{
-			return false;
+			return null;
 		}
 		$owner = $contact['owner'];
 		
@@ -561,7 +566,7 @@ class bocontacts extends socontacts
 			return true;
 		}
 		// dont allow to delete own account (as admin handels it too)
-		if (!$owner && $needed == EGW_ACL_DELETE && $contact['account_id'] == $this->user)
+		if (!$owner && $needed == EGW_ACL_DELETE && ($deny_account_delete || $contact['account_id'] == $this->user))
 		{
 			return false;
 		}
