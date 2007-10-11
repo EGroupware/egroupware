@@ -2307,14 +2307,7 @@ class Net_IMAPProtocol {
                 break;
             }
             if ($str_line[$pos] == '"') {
-                $pos++;
-                while ( $str_line[$pos] != '"' && $pos < $len ) {
-                    if ($str_line[$pos] == "\\" && $str_line[$pos + 1 ] == '"' )
-                        $pos++;
-                    if ($str_line[$pos] == "\\" && $str_line[$pos + 1 ] == "\\" )
-                        $pos++;
-                    $pos++;
-                }
+            	$this->_advanceOverStr($str_line,$pos,$len,$startDelim,$stopDelim);
             }
             if ( $str_line[$pos] == $startDelim ) {
                 #$str_line_aux = substr( $str_line , $pos );
@@ -2333,6 +2326,36 @@ class Net_IMAPProtocol {
     }
 
 
+	/**
+	 * Advances the position $pos in $str over an correcty escaped string
+	 *
+	 * Examples: $str='"\\\"First Last\\\""', $pos=0
+	 *	--> returns true and $pos=strlen($str)-1
+	 *
+	 * @param string $str
+	 * @param int &$pos current position in $str pointing to a double quote ("), on return pointing on the closing double quote
+	 * @param int $len length of $str in bytes(!)
+	 * @return boolean true if we advanced over a correct string, false otherwise
+	 */
+	function _advanceOverStr($str,&$pos,$len,$startDelim ='(', $stopDelim = ')' )
+	{
+		if ($str[$pos] !== '"') return false;	// start condition failed
+		
+		$pos++;	
+		
+		while($str[$pos] !== '"' && $pos < $len) {
+			// this is a fix to stop before the delimiter, in broken string messages containing an odd number of double quotes
+			// the idea is to check for a stopDelimited followed by eiter a new startDelimiter or an other stopDelimiter
+			// that allows to have something like '"Name (Nick)" <email>' containing one delimiter
+			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  $str[$pos+1] === $stopDelim)) {
+				$pos--;	// stopDelimited need to be parsed outside!
+				return false;
+			}
+			if ($str[$pos] === '\\') $pos++;	// all escaped chars are overread (eg. \\,  \", \x)
+			$pos++;
+		}
+		return $pos < $len && $str[$pos] === '"';
+	}
 
 
 
