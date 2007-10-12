@@ -395,7 +395,7 @@ class uical
 			// icons for single user, multiple users or group(s) and resources
 			foreach($event['participants'] as  $uid => $status)
 			{
-				if(is_numeric($uid))
+				if(is_numeric($uid) || $uid{0} == 'c')
 				{
 					if (isset($icons['single']) || $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 					{
