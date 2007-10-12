@@ -135,28 +135,18 @@ class sifaddressbook extends bocontacts
 			$value = $GLOBALS['egw']->translation->convert($value, 'utf-8');
 			switch($key) {
 				case 'cat_id':
-					if(!empty($value)) {
-						$isAdmin = $GLOBALS['egw']->acl->check('run',1,'admin');
-						$egwCategories =& CreateObject('phpgwapi.categories', $GLOBALS['egw_info']['user']['account_id'], 'addressbook');
-						$categories = explode(';',$value);
-						// add missing categories as personal categories as needed
-						foreach($categories as $categorieName) {
-							$cat_id = false;
-							$categorieName = trim($categorieName);
-							if(!($cat_id = $egwCategories->name2id($categorieName))) {
-								$cat_id = $egwCategories->add(array('name' => $categorieName, 'descr' => lang('added by synchronisation')));
-								error_log("added $cat_id => $categorieName");
-							}
-							if($cat_id) {
-								if(!empty($finalContact[$key])) $finalContact[$key] .= ',';
-								 $finalContact[$key] .= $cat_id;
-							}
-						}
+					if(!empty($value))
+					{
+						$finalContact[$key] = implode(",", $this->find_or_add_categories(explode(';', $value)));
+					}
+					else
+					{
+						$finalContact[$key] = '';
 					}
 					break;
 					
 				case 'private':
-					$finalContact[$key] = (int) $value > 0;	// eGW private is 0 (public) or 1 (private), SIF seems to use 0 and 2
+					$finalContact[$key] = (int) ($value > 0);	// eGW private is 0 (public) or 1 (private), SIF seems to use 0 and 2
 					break;
 
 				default:
@@ -164,6 +154,8 @@ class sifaddressbook extends bocontacts
 					break;
 			}
 		}
+
+		$this->fixup_contact($finalContact);
 		return $finalContact;
 	}
 	
@@ -179,6 +171,9 @@ class sifaddressbook extends bocontacts
 		{
 			return false;
 		}
+		// patch from Di Guest says: we need to ignore the n_fileas
+		unset($contact['n_fileas']);
+		// we probably need to ignore even more as we do in vcaladdressbook
 		
 		if(($foundContacts = bocontacts::search($contact)))
 		{
@@ -231,6 +226,9 @@ class sifaddressbook extends bocontacts
 		#error_log(print_r($entry,true));
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
+		// fillup some defaults such as n_fn and n_fileas is needed
+		$this->fixup_contact($entry);
+
 		foreach($this->sifMapping as $sifField => $egwField)
 		{
 			if(empty($egwField)) continue;
@@ -245,16 +243,8 @@ class sifaddressbook extends bocontacts
 				// TODO handle multiple categories
 				case 'Categories':
 					if(!empty($value)) {
-						$egwCategories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'addressbook');
-						$categories = explode(',',$value);
-						$value = '';
-						foreach($categories as $cat_id) {
-							if(($catData = $egwCategories->return_single($cat_id)))
-							{
-								if(!empty($value)) $value .= '; ';
-								$value .= $catData[0]['name'];
-							}
-						}
+						$value = implode("; ", $this->get_categories($value));
+						$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 					}
 					$sifContact .= "<$sifField>$value</$sifField>";							
 					break;
@@ -270,7 +260,7 @@ class sifaddressbook extends bocontacts
 					break;
 					
 				default:
-					$sifContact .= "<$sifField>$value</$sifField>";
+					$sifContact .= "<$sifField>".trim($value)."</$sifField>";
 					break;
 			}
 		}

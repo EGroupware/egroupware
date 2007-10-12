@@ -86,6 +86,12 @@
 				$this->status2vtodo[$taskData['info_status']] : 'NEEDS-ACTION');
 			$vevent->setAttribute('PRIORITY',$this->egw_priority2vcal_priority[$taskData['info_priority']]);
 
+			if (!empty($taskData['info_cat']))
+			{
+				$cats = $this->get_categories(array($taskData['info_cat']));
+				$vevent->setAttribute('CATEGORIES', $cats[0]);
+			}
+
 			#$vevent->setAttribute('TRANSP','OPAQUE');
 			# status
 			# ATTENDEE
@@ -122,7 +128,8 @@
 			return $this->write($taskData);
 		}
 		
-		function searchVTODO($_vcalData) {
+		function searchVTODO($_vcalData)
+		{
 			if(!$egwData = $this->vtodotoegw($_vcalData)) {
 				return false;
 			}
@@ -140,7 +147,8 @@
 			return false;
 		}
 		
-		function vtodotoegw($_vcalData) {
+		function vtodotoegw($_vcalData)
+		{
 			$vcal = &new Horde_iCalendar;
 			if(!$vcal->parsevCalendar($_vcalData)) {
 				return FALSE;
@@ -196,6 +204,13 @@
 							case 'SUMMARY':
 								$taskData['info_subject']		= $attributes['value'];
 								break;
+
+							case 'CATEGORIES':
+								{
+									$cats = $this->find_or_add_categories(explode(',', $attributes['value']));
+									$taskData['info_cat'] = $cats[0];
+								}
+								break;
 						}
 					}
 					# the horde ical class does already convert in parsevCalendar
@@ -207,4 +222,147 @@
 			}
 			return FALSE;
 		}
+
+		function exportVNOTE($_noteID, $_type)
+		{
+			$note = $this->read($_noteID);
+			$note = $GLOBALS['egw']->translation->convert($note, $GLOBALS['egw']->translation->charset(), 'UTF-8');
+
+			switch($_type)
+			{
+				case 'text/plain':
+					$txt = $note['info_subject']."\n\n".$note['info_des'];
+					return $txt;
+					break;
+
+				case 'text/x-vnote':
+					$noteGUID = $GLOBALS['egw']->common->generate_uid('infolog_note',$_noteID);
+					$vnote = &new Horde_iCalendar_vnote();
+					$vNote->setAttribute('VERSION', '1.1');
+					$vnote->setAttribute('SUMMARY',$note['info_subject']);
+					$vnote->setAttribute('BODY',$note['info_des']);
+					if($note['info_startdate'])
+						$vnote->setAttribute('DCREATED',$note['info_startdate']);
+					$vnote->setAttribute('DCREATED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add'));
+					$vnote->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify'));
+					if (!empty($note['info_cat']))
+					{
+						$cats = $this->get_categories(array($note['info_cat']));
+						$vnote->setAttribute('CATEGORIES', $cats[0]);
+					}
+
+					#$vnote->setAttribute('UID',$noteGUID);
+					#$vnote->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
+		
+					#$options = array('CHARSET' => 'UTF-8','ENCODING' => 'QUOTED-PRINTABLE');
+					#$vnote->setParameter('SUMMARY', $options);
+					#$vnote->setParameter('DESCRIPTION', $options);
+			
+					return $vnote->exportvCalendar();
+					break;
+			}
+			return false;
+		}
+		
+		function importVNOTE(&$_vcalData, $_type, $_noteID = -1)
+		{
+			if(!$note = $this->vnotetoegw($_vcalData, $_type))
+			{
+				return false;
+			}
+			
+			if($_noteID > 0)
+			{
+				$note['info_id'] = $_noteID;
+			}
+
+			if(empty($note['info_status'])) {
+				$note['info_status'] = 'done';
+			}
+						
+			#_debug_array($taskData);exit;
+			return $this->write($note);
+		}
+		
+		function searchVNOTE($_vcalData, $_type)
+		{
+			if(!$note = $this->vnotetoegw($_vcalData)) {
+				return false;
+			}
+
+			$filter = array('col_filter' => $egwData);
+			if($foundItems = $this->search($filter)) {
+				if(count($foundItems) > 0) {
+					$itemIDs = array_keys($foundItems);
+					return $itemIDs[0];
+				}
+			}
+			
+			return false;
+		}
+		
+		function vnotetoegw($_data, $_type)
+		{
+			switch($_type)
+			{
+				case 'text/plain':
+					$note = array();
+					$note['info_type'] = 'note';
+					$botranslation  =& CreateObject('phpgwapi.translation');
+					$txt = $botranslation->convert($_data, 'utf-8');
+					$txt = str_replace("\r\n", "\n", $txt);
+
+					if (preg_match("/^(^\n)\n\n(.*)$/", $txt, $match))
+					{
+						$note['info_subject'] = $match[0];
+						$note['info_des'] = $match[1];
+					}
+					else
+					{
+						$note['info_des'] = $txt;
+					}
+
+					return $note;
+					break;
+					
+				case 'text/x-vnote':
+					$vnote = &new Horde_iCalendar;
+					if (!$vcal->parsevCalendar($_data))
+					{
+						return FALSE;
+					}
+					$components = $vnote->getComponent();
+					if(count($components) > 0)
+					{
+						$component = $components[0];
+						if(is_a($component, 'Horde_iCalendar_vnote'))
+						{
+							$note = array();
+							$note['info_type'] = 'note';
+
+							foreach($component->_attributes as $attribute)
+							{
+								switch ($attribute['name'])
+								{
+									case 'BODY':
+										$note['info_des'] = $attribute['value'];
+										break;
+									case 'SUMMARY':
+										$note['info_subject'] = $attribute['value'];
+										break;
+									case 'CATEGORIES':
+										{
+											$cats = $this->find_or_add_categories(explode(',', $attribute['value']));
+											$note['info_cat'] = $cats[0];
+										}
+										break;
+								}
+							}
+						}
+						return $note;
+					}
+			}
+			return FALSE;
+		}
 	}
+

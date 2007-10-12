@@ -655,28 +655,82 @@ class Horde_SyncML_State {
 	/**
 	* This function should use DevINF information.
 	*/
-	function getPreferedContentType($type) {
-		switch($type) {
+	function adjustContentType($type, $target = null)
+	{
+		$ctype;
+		if (is_array($type))
+		{
+			$ctype = $type['ContentType'];
+			$res = $type;
+		}
+		else
+		{
+			$ctype = $type;
+			$res = array();
+			$res['ContentType'] = $ctype;
+		}
+
+		switch($ctype)
+		{
+			case 'text/x-vcard':
+			case 'text/x-vcalendar':
+			case 'text/x-vnote':
+			case 'text/calendar':
+			case 'text/plain':
+				$res['mayFragment'] = 1;
+				break;
+
+			case 'text/x-s4j-sifc':
+			case 'text/x-s4j-sife':
+			case 'text/x-s4j-sift':
+			case 'text/x-s4j-sifn':
+				$res['ContentFormat'] = 'b64';
+				$res['mayFragment'] = 0;
+				break;
+		}
+
+		if (!isset($res['mayFragment']))
+		{
+			$res['mayFragment'] = 0;
+		}
+
+		if ($target != null)
+		{
+			switch($target)
+			{
+				case 'calendar':
+				case 'tasks':
+				case 'notes':
+				case 'contacts':
+					$res['mayFragment'] = 1;
+					break;
+
+				case 'sifcalendar':
+				case 'siftasks':
+				case 'sifnotes':
+				case 'sifcontacts':
+				case 'scard':
+				case 'scalendar':
+				case 'stask':
+				case 'snote':
+				default:
+					$res['mayFragment'] = 0;
+					break;
+			}
+		}
+
+		return $res;
+	}
+
+	function getPreferedContentType($type)
+	{
+		$_type = str_replace('./','',$type);
+		switch($_type)
+		{
 			case 'contacts':
-			case './contacts':
 				return 'text/x-vcard';
 				break;
-				
-			case 'sifcalendar':
-			case './sifcalendar':
-				return 'text/x-s4j-sife';
-				break;
-				
-			case 'sifcontacts':
-			case './sifcontacts':
-				return 'text/x-s4j-sifc';
-				break;
-				
-			case 'siftasks':
-			case './siftasks':
-				return 'text/x-s4j-sift';
-				break;
-			
+
 			case 'notes':
 				return 'text/x-vnote';
 				break;
@@ -684,14 +738,84 @@ class Horde_SyncML_State {
 			case 'tasks':
 				return 'text/x-vcalendar';
 				break;
-			
+
 			case 'calendar':
-			case './calendar':
 				return 'text/x-vcalendar';
+				break;
+				
+			case 'sifcalendar':
+			case 'scal':
+				return 'text/x-s4j-sife';
+				break;
+				
+			case 'sifcontacts':
+			case 'scard':
+				return 'text/x-s4j-sifc';
+				break;
+				
+			case 'siftasks':
+			case 'stask':
+				return 'text/x-s4j-sift';
+				break;
+
+			case 'sifnotes':
+			case 'snote':
+				return 'text/x-s4j-sifn';
 				break;
 		}
 	}
 
+	function getHordeType($type)
+	{
+		$_type = str_replace('./','',$type);
+		switch($_type)
+		{
+			case 'contacts':
+				return 'contacts';
+				break;
+				
+			case 'notes':
+				return 'notes';
+				break;
+				
+			case 'tasks':
+				return 'tasks';
+				break;
+			
+			case 'calendar':
+				return 'calendar';
+				break;
+
+			# funambol related types
+
+			case 'sifcalendar':
+			case 'scal':
+				return 'sifcalendar';
+				break;
+				
+			case 'sifcontacts':
+			case 'scard':
+				return 'sifcontacts';
+				break;
+				
+			case 'siftasks':
+			case 'stask':
+				return 'siftasks';
+				break;
+
+			case 'sifnotes':
+			case 'snote':
+				return 'sifnotes';
+				break;
+
+			default:
+				Horde::logMessage("unknown hordeType for type=$type ($_type)", __FILE__, __LINE__, PEAR_LOG_INFO);
+				return $_type;
+				break;
+		}
+	}
+
+	/**
 	/**
 	* Returns the preferred contenttype of the client for the given
 	* sync data type (database).
@@ -699,15 +823,21 @@ class Horde_SyncML_State {
 	* This is passed as an option to the Horde API export functions.
 	*/
 	
-	function getPreferedContentTypeClient($_sourceLocURI) {
+	function getPreferedContentTypeClient($_sourceLocURI, $_targetLocURI = null) {
 		$deviceInfo = $this->getClientDeviceInfo();
 		
-		if(isset($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType'])) {
-			return array('ContentType' => $deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType']);
+		if(isset($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType']))
+		{
+			return $this->adjustContentType($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType'], $_targetLocURI);
 		}
 		
 		Horde::logMessage('SyncML: sourceLocURI ' . $_sourceLocURI .' not found', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		
+		if ($_targetLocURI != null)
+		{
+			return $this->adjustContentType($this->getPreferedContentType($_targetLocURI), $_targetLocURI);
+		}
+
 		return PEAR::raiseError(_('sourceLocURI not found'));
 	}
 
