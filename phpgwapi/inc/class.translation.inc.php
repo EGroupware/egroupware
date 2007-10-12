@@ -451,7 +451,7 @@
 			{
 				// iconv can not convert from/to utf7-imap
 				if ($to == 'utf7-imap' && function_exists(imap_utf7_encode)) {
-					$convertedData = iconv($from, 'iso-8859-1', $ata);
+					$convertedData = iconv($from, 'iso-8859-1', $data);
 					$convertedData = imap_utf7_encode($convertedData);
 					
 					return $convertedData;
