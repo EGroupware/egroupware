@@ -139,10 +139,14 @@ class sifaddressbook extends bocontacts
 					{
 						$finalContact[$key] = implode(",", $this->find_or_add_categories(explode(';', $value)));
 					}
+					else
+					{
+						$finalContact[$key] = '';
+					}
 					break;
 					
 				case 'private':
-					$finalContact[$key] = (int) $value > 0;	// eGW private is 0 (public) or 1 (private), SIF seems to use 0 and 2
+					$finalContact[$key] = (int) ($value > 0);	// eGW private is 0 (public) or 1 (private), SIF seems to use 0 and 2
 					break;
 
 				default:
@@ -167,6 +171,9 @@ class sifaddressbook extends bocontacts
 		{
 			return false;
 		}
+		// patch from Di Guest says: we need to ignore the n_fileas
+		unset($contact['n_fileas']);
+		// we probably need to ignore even more as we do in vcaladdressbook
 		
 		if(($foundContacts = bocontacts::search($contact)))
 		{
