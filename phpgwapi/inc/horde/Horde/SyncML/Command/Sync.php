@@ -109,12 +109,11 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
 
 		foreach($targets as $target)
 		{
-	        	$sync = $state->getSync($target);
-	        	$sync = $state->getSync($target);
-	        	
-	        	// make sure that the state reflects what is currently being done
-	        	$state->_currentSourceURI = $sync->_sourceLocURI;
-	        	$state->_currentTargetURI = $sync->_targetLocURI;
+			$sync = $state->getSync($target);
+			
+			// make sure that the state reflects what is currently being done
+			$state->_currentSourceURI = $sync->_sourceLocURI;
+			$state->_currentTargetURI = $sync->_targetLocURI;
         	
 			$output->startElement($state->getURI(), 'Sync', $attrs);
 			$output->startElement($state->getURI(), 'CmdID', $attrs);
