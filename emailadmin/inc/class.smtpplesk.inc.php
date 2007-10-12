@@ -8,7 +8,7 @@
 * - tested with Plesk7.5 under Linux, but should work with other plesk      *
 *   versions and Windows too as it uses plesks cli (command line interface) *
 * - this plugin ONLY works if you have root access to the webserver !!!     *
-* - configuration instructions are in the class.pliskimap.inc.php           *
+* - configuration instructions are in the class.pleskimap.inc.php           *
 * => as with the "LDAP, Postfix & Cyrus" plugin the plesk one creates mail  *
 *    users and manages passwords, aliases, forwards and quota from within   *
 *    eGroupWare - no need to additionally visit the plesk interface anymore *
@@ -29,11 +29,6 @@ class smtpplesk extends defaultsmtp
 	 * @var string/boolean $error string with last error-message or false
 	 */
 	var $error = false;
-
-	function smtpplesk($profileData)
-	{
-		$this->defaultsmtp($profileData);	// call the parent constructor
-	}
 
 	/**
 	 * call plesk's mail command line interface

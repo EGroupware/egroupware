@@ -51,11 +51,6 @@ class pleskimap extends defaultimap
 	 */
 	var $error = false;
 
-	function pleskimap($profileData)
-	{
-		$this->defaultimap($profileData);	// calling the parent constructor
-	}
-
 	/**
 	 * Create a full mailbox or just forward, depending on the given email address
 	 * If email matches the default domain, we create a full mailbox, otherwise we create a forward
