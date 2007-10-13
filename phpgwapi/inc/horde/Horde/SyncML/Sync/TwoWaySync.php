@@ -27,7 +27,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		
 		$syncType = $this->_targetLocURI;
 		
-		$hordeType = $state->getHordeType($syncType);
+		$hordeType = str_replace('./','',$syncType);
 		
 		$refts = $state->getServerAnchorLast($syncType);
 		$currentCmdID = $this->handleSync($currentCmdID,
@@ -79,7 +79,11 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				}
 			
 				// Create a replace request for client.
-				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
+				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
+				if(is_a($contentType, 'PEAR_Error')) {
+					// Client did not sent devinfo
+					$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
+				}
 				$c = $registry->call($hordeType. '/export',
 					array('guid' => $guid, 'contentType' => $contentType));
 				if (!is_a($c, 'PEAR_Error')) {
@@ -91,19 +95,14 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 					$cmd->setSourceURI($guid);
 					$cmd->setTargetURI($locid);
 					$cmd->setContentType($contentType['ContentType']);
-					if (isset($contentType['ContentFormat']))
-					{
-						$cmd->setContentFormat($contentType['ContentFormat']);
+					if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
+						$cmd->setContentFormat('b64');
 					}
-
 					$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Replace');
 					$state->log('Server-Replace');
 				
 					// return if we have to much data
-					if (++$counter >= MAX_ENTRIES
-						&& isset($contentType['mayFragment'])
-						&& $contentType['mayFragment'])
-					{
+					if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
 						$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 						return $currentCmdID;
 					}
@@ -140,12 +139,8 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				$state->log('Server-Delete');
 				$state->removeUID($syncType, $locid);
 				
-				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
 				// return if we have to much data
-				if(++$counter >= MAX_ENTRIES
-					&& isset($contentType['mayFragment'])
-					&& $contentType['mayFragment'])
-				{
+				if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalender' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
 					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 					return $currentCmdID;
 				}
@@ -185,7 +180,11 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				Horde::logMessage("SyncML: add: $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				
 				// Create an Add request for client.
-				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
+				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
+				if(is_a($contentType, 'PEAR_Error')) {
+					// Client did not sent devinfo
+					$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
+				}
 				
 				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
 				$c = $registry->call($hordeType . '/export',
@@ -198,20 +197,16 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				if (!is_a($c, 'PEAR_Error')) {
 					// Item in history but not in database. Strange, but can happen.
 					$cmd->setContent($c);
-					$cmd->setContentType($contentType['ContentType']);
-					if (isset($contentType['ContentFormat']))
-					{
-						$cmd->setContentFormat($contentType['ContentFormat']);
+					if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
+						$cmd->setContentFormat('b64');
 					}
+					$cmd->setContentType($contentType['ContentType']);
 					$cmd->setSourceURI($guid);
 					$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Add');
 					$state->log('Server-Add');
 					
 					// return if we have to much data
-					if(++$counter >= MAX_ENTRIES
-						&& isset($contentType['mayFragment'])
-						&& $contentType['mayFragment'])
-					{
+					if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
 						$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 						return $currentCmdID;
 					}
@@ -230,7 +225,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		
 		$state = &$_SESSION['SyncML.state'];
 		$syncType = $this->_targetLocURI;
-		$hordeType = $state->getHordeType($syncType);
+		$hordeType = str_replace('./','',$syncType);
 		$refts = $state->getServerAnchorLast($syncType);
 		
 		Horde::logMessage("SyncML: reading changed items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);

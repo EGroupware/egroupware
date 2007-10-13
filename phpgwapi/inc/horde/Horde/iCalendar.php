@@ -510,11 +510,18 @@ class Horde_iCalendar {
                 case 'CREATED':
                 case 'LAST-MODIFIED':
                 case 'BDAY':
+                    $this->setAttribute($tag, $this->_parseDateTime($value), $params);
+                    break;
+
                 case 'DTEND':
                 case 'DTSTART':
                 case 'DUE':
                 case 'RECURRENCE-ID':
-                    $this->setAttribute($tag, $this->_parseDateTime($value), $params);
+                    if (isset($params['VALUE']) && $params['VALUE'] == 'DATE') {
+                        $this->setAttribute($tag, $this->_parseDate($value), $params);
+                    } else {
+                        $this->setAttribute($tag, $this->_parseDateTime($value), $params);
+                    }
                     break;
 
                 case 'RDATE':
@@ -895,7 +902,7 @@ class Horde_iCalendar {
             if (!$date = $this->_parseDate($text)) {
                 return $date;
             }
-            return @mktime(0, 0, 0, $date['month'], $date['mday'], $date['year']);
+            return @gmmktime(0, 0, 0, $date['month'], $date['mday'], $date['year']);
         }
 
         if (!$date = $this->_parseDate($dateParts[0])) {
@@ -904,8 +911,6 @@ class Horde_iCalendar {
         if (!$time = $this->_parseTime($dateParts[1])) {
             return $time;
         }
-
-		error_log("parseDateTime: ".$text." => ".print_r($time, true));
 
         if ($time['zone'] == 'UTC') {
             return @gmmktime($time['hour'], $time['minute'], $time['second'],
@@ -1011,12 +1016,7 @@ class Horde_iCalendar {
      */
     function _parseDate($text)
     {
-		if (strlen($text) == 10)
-		{
-			$text = str_replace('-','',$text);
-		}
-        if (strlen($text) != 8)
-		{
+        if (strlen($text) != 8) {
             return false;
         }
 

@@ -141,14 +141,13 @@ class Horde_SyncML_Sync {
 		}
 		
 		$hordeType = $type = $this->_targetLocURI;
-		$hordeType = $state->getHordeType($hordeType);
+		// remove the './' from the beginning
+		$hordeType = str_replace('./','',$hordeType);
 		if(!$contentType = $command->getContentType()) {
 			$contentType = $state->getPreferedContentType($type);
 		}
 		
-		if (($contentType == 'text/x-vcalendar' || $contentType == 'text/calendar')
-			&& strpos($command->getContent(), 'BEGIN:VTODO') !== false)
-		{
+		if ($this->_targetLocURI == 'calendar' && strpos($command->getContent(), 'BEGIN:VTODO') !== false) {
 			$hordeType = 'tasks';
 		}
 
