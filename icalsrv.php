@@ -555,10 +555,12 @@
 
 		if($logdir) log_ical($logmsg,"export",$vcalstr);
 		// handle response ...
-		$content_type = icalsrv_resourcehandler::deviceType2contentType($icalvc->deviceType);
+		// using fixed text/calendar as content-type, as deviceType2contentType always returns '', which cause php to use text/html
+		//$content_type = icalsrv_resourcehandler::deviceType2contentType($icalvc->deviceType);
+		$content_type = 'text/calendar';
 		if($content_type)
 		{
-			header($content_type);
+			header('Content-Type: '.$content_type);
 		}
 		echo $vcalstr;
 		$GLOBALS['egw']->common->egw_exit();
