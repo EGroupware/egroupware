@@ -16,6 +16,9 @@
 		define('MAX_MESSAGE_ID_LENGTH',128);
 	}
 
+	// Define prefix for langfiles (historically 'phpgw_')
+	define('EGW_LANGFILE_PREFIX', 'egw_');
+
 	class setup_translation
 	{
 		var $langarray = array();
@@ -40,10 +43,10 @@
 				$lang = $ConfigLang;
 			}
 			
-			$fn = '.' . SEP . 'lang' . SEP . 'phpgw_' . $lang . '.lang';
+			$fn = '.' . SEP . 'lang' . SEP . EGW_LANGFILE_PREFIX . $lang . '.lang';
 			if (!file_exists($fn))
 			{
-				$fn = '.' . SEP . 'lang' . SEP . 'phpgw_en.lang';
+				$fn = '.' . SEP . 'lang' . SEP . EGW_LANGFILE_PREFIX .'en.lang';
 			}
 			if (file_exists($fn))
 			{
@@ -151,7 +154,7 @@
 				while(($line = fgets($f)) !== false)
 				{
 					list($lang,$language) = explode("\t",trim($line));
-					if ($lang && ($lf = @fopen("../phpgwapi/setup/phpgw_$lang.lang",'r')))
+					if ($lang && ($lf = @fopen("../phpgwapi/setup/" . EGW_LANGFILE_PREFIX . "$lang.lang",'r')))
 					{
 						while(($line = fgets($lf)) !== false)
 						{
