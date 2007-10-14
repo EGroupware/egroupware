@@ -64,7 +64,8 @@ calendar fields:	addressbook	sl	Polja koledarja:
 calendar uri	addressbook	sl	URI koledarja
 can be changed via setup >> configuration	admin	sl	Lahko spremenite preko Nastavitve >> Konfiguracija
 car phone	addressbook	sl	Telefon v avtu
-categories, notes, ...	addressbook	sl	Kategorije, Opombe ...
+categories, notes, ...	addressbook	sl	Kategorije, opombe ...
+category tree	admin	sl	Drevo kategorij
 cell phone	addressbook	sl	GSM
 change all organisation members	addressbook	sl	Spremeni vse člane organizacije
 charset for the csv export	addressbook	sl	Nabor znakov za izvoz CSV
@@ -107,7 +108,6 @@ custom	addressbook	sl	Lasten
 custom etemplate for the contactform	addressbook	sl	eTemplate po meri za obrazec za stike
 custom fields	addressbook	sl	Lastna polja
 debug output in browser	addressbook	sl	Preglej izpis v brskalniku
-default	addressbook	sl	Privzeto
 default address format	addressbook	sl	Privzeta oblika naslovov
 default addressbook for adding contacts	addressbook	sl	Privzeti adresar za dodajanje stikov
 default document to insert contacts	addressbook	sl	Privzeti dokument za vstavljanje stikov
@@ -211,6 +211,7 @@ insert in document	addressbook	sl	Vstavi v dokument
 insufficent rights to delete this list!	addressbook	sl	Nimate dovolj pravic za brisanje tega seznama!
 international	addressbook	sl	Mednarodni
 label	addressbook	sl	Značilnosti
+last date	addressbook	sl	Zadnji datum
 last modified	addressbook	sl	Nazadnje spremenjeno
 last modified by	addressbook	sl	Nazadnje spremenil
 ldap context for contacts	admin	sl	Kontekst LDAP za stike
@@ -248,6 +249,7 @@ name for the distribution list	addressbook	sl	Ime za distribucijski seznam
 name of current user, all other contact fields are valid too	addressbook	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 name, address	addressbook	sl	Ime, naslov
 new contact submitted by %1 at %2	addressbook	sl	Nov stik je dodal/-a %1 dne %2
+next date	addressbook	sl	Naslednji datum
 no vcard	addressbook	sl	Ni VCard zapisov
 number	addressbook	sl	Število
 number of records to read (%1)	addressbook	sl	Število zapisov za branje (%1)
@@ -354,7 +356,7 @@ which fields should be exported. all means every field stored in the addressbook
 whole query	addressbook	sl	Celotno povpraševanje
 work phone	addressbook	sl	Telefon
 write (update or add) a single entry by passing the fields.	addressbook	sl	Zapiši (posodobi ali dodaj) zapis s podanimi polji.
-wrong - try again ...	addressbook	sl	Napačno - poskusite znoova.
+wrong - try again ...	addressbook	sl	Napačno - poskusite znova.
 yes, for the next three days	addressbook	sl	Da, za naslednje tri dni
 yes, for the next two weeks	addressbook	sl	Da, za naslednja dva tedna
 yes, for the next week	addressbook	sl	Da, za naslednji teden

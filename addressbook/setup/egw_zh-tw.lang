@@ -65,6 +65,7 @@ calendar uri	addressbook	zh-tw	行事曆網址
 can be changed via setup >> configuration	admin	zh-tw	可以透過 安裝 >> 設定 調整
 car phone	addressbook	zh-tw	車用電話
 categories, notes, ...	addressbook	zh-tw	類別、記事、...
+category tree	admin	zh-tw	類別樹
 cell phone	addressbook	zh-tw	行動電話
 change all organisation members	addressbook	zh-tw	修改所有組織成員
 charset for the csv export	addressbook	zh-tw	CSV 檔案匯出編碼
@@ -107,7 +108,6 @@ custom	addressbook	zh-tw	自訂
 custom etemplate for the contactform	addressbook	zh-tw	自訂 eTemplate 的聯絡表單
 custom fields	addressbook	zh-tw	自訂欄位
 debug output in browser	addressbook	zh-tw	從瀏覽器輸入錯誤訊息
-default	addressbook	zh-tw	預設
 default address format	addressbook	zh-tw	預設住址格式
 default addressbook for adding contacts	addressbook	zh-tw	新增聯絡人時的預設通訊錄
 default document to insert contacts	addressbook	zh-tw	新增聯絡人的預設文件
@@ -211,6 +211,7 @@ insert in document	addressbook	zh-tw	插入文件
 insufficent rights to delete this list!	addressbook	zh-tw	沒有刪除這個清單的權限！
 international	addressbook	zh-tw	國際
 label	addressbook	zh-tw	概述
+last date	addressbook	zh-tw	最後日期
 last modified	addressbook	zh-tw	最後更新
 last modified by	addressbook	zh-tw	更新者
 ldap context for contacts	admin	zh-tw	聯絡人的 LDAP context
@@ -248,6 +249,7 @@ name for the distribution list	addressbook	zh-tw	分配清單的名稱
 name of current user, all other contact fields are valid too	addressbook	zh-tw	目前使用者的名稱，所有其他聯絡人欄位也是正確的
 name, address	addressbook	zh-tw	名稱,住址
 new contact submitted by %1 at %2	addressbook	zh-tw	%1 在 %2 新增了聯絡人
+next date	addressbook	zh-tw	下一個日期
 no vcard	addressbook	zh-tw	沒有VCard
 number	addressbook	zh-tw	數字
 number of records to read (%1)	addressbook	zh-tw	讀取記錄號碼(%1)

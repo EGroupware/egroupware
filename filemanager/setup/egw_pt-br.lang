@@ -4,6 +4,9 @@ back to file manager	filemanager	pt-br	Voltar ao Gerenciador de Arquivos
 cancel editing %1 without saving	filemanager	pt-br	Cancelar edição %1 sem salvar
 cannot create directory because it begins or ends in a space	filemanager	pt-br	Não é possível criar a pasta porque seu nome inicia ou termina em espaço em branco
 cannot replace %1 because it is a directory	filemanager	pt-br	Não é possível subtituir %1 porque é uma pasta
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	pt-br	Escolhendo datas onde "data até" é anterior a "data de", resultará em uma pesquisa que retornará todos os registros, exceto aqueles entre as duas datas informadas.
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	pt-br	Escolhando apenas uma data (de/até) resultará em uma pesquisa que retornará todos os registros anteriores/posteriores a data informada.
+clear search	filemanager	pt-br	limpar pesquisa
 command sucessfully run	filemanager	pt-br	Comando executado com sucesso
 comment	filemanager	pt-br	Comentário
 comments cannot contain "%1"	filemanager	pt-br	Comentários não podem conter "%1"
@@ -24,6 +27,7 @@ create folder	filemanager	pt-br	Criar Pasta
 created	filemanager	pt-br	Criado
 created %1	filemanager	pt-br	Criado %1
 created %1,%2	filemanager	pt-br	Criado %1, %2
+created between	filemanager	pt-br	criado entre
 created by	filemanager	pt-br	Criado por
 created directory %1	filemanager	pt-br	Criada pasta %1
 date	filemanager	pt-br	Data
@@ -45,7 +49,9 @@ fake base dir did not exist, egroupware created a new one.	filemanager	pt-br	Dir
 file	filemanager	pt-br	Arquivo
 file %1 already exists. please edit it or delete it first.	filemanager	pt-br	Arquivo %1 já existe. Por favor edite-o ou remova-o antes.
 file %1 could not be created.	filemanager	pt-br	Arquivo %1 não pôde ser criado.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	pt-br	arquivo %1 pode ser muito grande. Contacte seu administrador do sistema para maiores informações.
 file name	filemanager	pt-br	Nome do Arquivo
+file names cannot contain  or /	filemanager	pt-br	Nomes de arquivos não podem conter \ ou /
 file names cannot contain "%1"	filemanager	pt-br	Nomes de arquivos não podem conter "%1"
 file names cannot contain \ or /	filemanager	pt-br	Nomes de arquivos não podem conter \ ou /
 filemanager	common	pt-br	Gerenciador de Arquivos
@@ -61,10 +67,12 @@ go to your home directory	filemanager	pt-br	Ir para sua pasta Home
 go to:	filemanager	pt-br	Ir para:
 go up	filemanager	pt-br	subir
 home	filemanager	pt-br	Início
+id	filemanager	pt-br	ID
 location	filemanager	pt-br	Local
 locked	filemanager	pt-br	Travado
 mime type	filemanager	pt-br	Tipo MIME
 modified	filemanager	pt-br	Modificado
+modified between	filemanager	pt-br	moficiado entre
 modified by	filemanager	pt-br	Modificado por
 move to	filemanager	pt-br	Mover Para
 move to:	filemanager	pt-br	Mover para:
@@ -87,13 +95,15 @@ save %1, and go back to file listing	filemanager	pt-br	Salvar %1, e voltar para 
 save all	filemanager	pt-br	Salvar tudo
 save changes	filemanager	pt-br	Salvar modificações
 saved %1	filemanager	pt-br	Salvo %1
+searchstring	filemanager	pt-br	parâmetro de pesquisa
 show	filemanager	pt-br	Exibir
 show ..	filemanager	pt-br	Exibir ..
-show .files	filemanager	pt-br	Exibir arquivos cujos nomes iniciam por um ponto
+show .files	filemanager	pt-br	Exibir arquivos cujos nomes iniciem por um ponto
 show command line (experimental. dangerous.)	filemanager	pt-br	Exibir linha de comando (EXPERIMENTAL. PERIGOSO.)
 show help	filemanager	pt-br	Exibir ajuda
 size	filemanager	pt-br	Tamanho
 sort by:	filemanager	pt-br	Ordenar por:
+start search	filemanager	pt-br	iniciar procura
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	pt-br	Futuro gerenciador de arquivos, agora para PROPÓSITOS DE TESTES APENAS, por favor envie relatórios de erro.
 total files	filemanager	pt-br	Total de Arquivos
 unknown mime-type defaults to text/plain when viewing	filemanager	pt-br	Tipos MIME desconhecidos são visualizados como text/plain por padrão
