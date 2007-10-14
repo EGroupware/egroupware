@@ -1,0 +1,18 @@
+allowed users	importexport	sl	Dovoljeni uporabniki
+choose a name for this definition	importexport	sl	Izberite ime za to definicijo
+choose a plugin	importexport	sl	Izberite vtičnik
+choose an application	importexport	sl	Izberite aplikacijo
+delete all selected definitions	importexport	sl	Izbriši vse izbrane definicije
+export	importexport	sl	Izvozi
+export all selected definitions	importexport	sl	Izvozi vse izbrane definicije
+finish	importexport	sl	Končaj
+general	importexport	sl	Splošno
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	sl	Uvozi definicije (pozor: obstoječe definicije z enakim imenom bodo prepisane!)
+next	importexport	sl	Naslednji
+preview	importexport	sl	Predogled
+previous	importexport	sl	Prejšnji
+save as definition	importexport	sl	Shrani kot definicijo
+select definition	importexport	sl	Izberi definicijo
+select plugin	importexport	sl	Izberi vtičnik
+some nice text	importexport	sl	Nekaj ljubkega besedila
+which useres are allowed for this definition	importexport	sl	Kateri uporabniki so dovoljeni za to definicijo
