@@ -208,7 +208,7 @@
 		 */
 		function getInstalledLanguages()
 		{
-			$GLOBALS['egw']->db->query('SELECT DISTINCT lang FROM phpgw_lang');
+			$GLOBALS['egw']->db->query('SELECT DISTINCT lang FROM egw_lang');
 			while (@$GLOBALS['egw']->db->next_record())
 			{
 				$installedLanguages[$GLOBALS['egw']->db->f('lang')] = $GLOBALS['egw']->db->f('lang');

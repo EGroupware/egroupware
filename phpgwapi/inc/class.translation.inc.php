@@ -39,6 +39,9 @@
 	{
 		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
 	}
+	
+	// Define prefix for langfiles (historically 'phpgw_')
+	define('EGW_LANGFILE_PREFIX', 'egw_');
 
 	class translation
 	{
@@ -238,10 +241,10 @@
 		 */
 		function add_setup($lang)
 		{
-			$fn = EGW_SERVER_ROOT.'/setup/lang/phpgw_' . $lang . '.lang';
+			$fn = EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . $lang . '.lang';
 			if (!file_exists($fn))
 			{
-				$fn = EGW_SERVER_ROOT.'/setup/lang/phpgw_en.lang';
+				$fn = EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . 'en.lang';
 			}
 			if (file_exists($fn))
 			{
@@ -552,7 +555,7 @@
 					// Visit each app/setup dir, look for a egw_lang file
 					foreach($apps as $app)
 					{
-						$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
+						$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . EGW_LANGFILE_PREFIX . strtolower($lang) . '.lang';
 						//echo '<br>Checking in: ' . $app;
 						if($GLOBALS['egw_setup']->app_registered($app) && file_exists($appfile))
 						{
@@ -679,7 +682,7 @@
 			$apps['phpgwapi'] = True;	// check the api too
 			foreach($apps as $app => $data)
 			{
-				$fname = EGW_SERVER_ROOT . "/$app/setup/phpgw_$lang.lang";
+				$fname = EGW_SERVER_ROOT . "/$app/setup/" . EGW_LANGFILE_PREFIX . "$lang.lang";
 
 				if (file_exists($fname))
 				{
