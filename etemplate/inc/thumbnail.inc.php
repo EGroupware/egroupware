@@ -6,11 +6,22 @@
 	);
 	include ('../../header.inc.php');
 
-	$thumbnail = get_thumbnail($_GET['image'], true);
+	$file = $_GET['image'];
+	$g_srcfile = $GLOBALS['egw_info']['server']['files_dir'] . $file;
+	$g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . $file;
+
+	// Check for existing thumbnail
+	if(file_exists($g_dstfile) && filemtime($g_dstfile) >= filemtime($g_srcfile)) {
+		include $g_dstfile;
+		return;
+	}
+
+	$thumbnail = get_thumbnail($file, true);
 
 	if($thumbnail) {
 		header('Content-Type: image/png');
 		imagepng( $thumbnail );
+		imagedestroy($thumbnail);
 	}
 
 
@@ -62,11 +73,6 @@
 				return $return_data ? $im : false;
 			}
 
-			// Check for existing thumbnail
-			if(file_exists($g_dstfile) && filemtime($g_dstfile) == filemtime($g_srcfile)) {
-				return $return_data ? imagecreatefrompng($g_dstfile) : $g_dstfile;
-			}
-
 			$g_is=getimagesize($g_srcfile);
 			if($g_is[0] < $max_width && $g_is[1] < $max_height) {
 				$g_iw = $g_is[0];
@@ -115,6 +121,7 @@
 			}
 
 			imagecopyresampled($img_dst, $img_src, 0, 0, 0, 0, $g_iw, $g_ih, $g_is[0], $g_is[1]);
+			imagepng($img_dst, $g_dstfile);
 			return $return_data ? $img_dst : $g_dstfile;
 		} else {
 			if(file_exists($g_dstfile)) {
