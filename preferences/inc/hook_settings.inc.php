@@ -30,6 +30,12 @@
 		'text'           => lang('Text only')
 	);
 
+	$link_list_format = array(
+		'icons'          => lang('Icons only'),
+		'icons_and_text' => lang('Icons and text'),
+		'text'           => lang('Text only')
+	);
+
 	$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 	$format = ($format ? $format : 'Y/m/d') . ', ';
 	if($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
@@ -132,6 +138,23 @@
 			'help'   => 'You can show the applications as icons only, icons with app-name or both.',
 			'xmlrpc' => True,
 			'admin'  => False
+		),
+		'link_list_format' => array(
+			'type'		=>	'select',
+			'label'		=>	'Show links between eGroupWare aps as',
+			'name'		=>	'link_list_format',
+			'values'	=>	$link_list_format,
+			'help'		=>	'You can show the linked entries with icons only, icons with app-name or both.',
+			'xmlrpc'	=>	True,
+			'admin'		=>	False
+		),
+		'link_list_thumbnail' => array(
+			'type'		=>	'check',
+			'label'		=>	'Display thumbnails for linked images',
+			'name'		=>	'link_list_thumbnail',
+			'help'		=>	'Images linked to an entry can be displayed as thumbnails.  You can turn this off to speed up page display.',
+			'xmlrpc'	=>	True,
+			'admin'		=>	False
 		),
 		'tz_offset' => array(
 			'type'   => 'select',

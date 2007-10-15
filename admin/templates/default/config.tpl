@@ -109,6 +109,13 @@
     </td>
    </tr>
 
+   <tr class="row_off">
+    <td>{lang_How_big_should_thumbnails_for_linked_images_be_(maximum_in_pixels)_?}:</td>
+    <td>
+     <input name="newsettings[link_list_thumbnail]" value="{value_link_list_thumbnail}" size="5">
+    </td>
+   </tr>
+
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_security}</b></td>
    </tr>

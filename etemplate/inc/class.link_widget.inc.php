@@ -325,6 +325,7 @@
 				{
 					$value[$row] = $link;
 					$value[$row]['title'] = $this->link->title($link['app'],$link['id'],$link);
+					$value[$row]['mime_icon'] = '';
 					if (!is_array($link['id']))
 					{
 						$value[$row]['view']  = $this->link->view($link['app'],$link['id'],$link);
@@ -338,11 +339,35 @@
 					{
 						$value[$row]['label'] = 'Delete';
 						$value[$row]['help'] = lang('Delete this file');
+
+						// Get mimetype and thumbnail
+						if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') )) {
+							$value[$row]['mime_icon'] =  ExecMethod2('filemanager.uifilemanager.mime_icon', $value[$row]['type']);
+						}
+						if($GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] && $GLOBALS['egw_info']['server']['link_list_thumbnail'] > 0) {
+							list($image) = explode('/', $value[$row]['type']);
+							if($image == 'image') {
+								$value[$row]['thumbnail'] = '<img src="' . 
+									$GLOBALS['egw_info']['server']['webserver_url']. 
+									'/etemplate/inc/thumbnail.inc.php?image=' . 
+									$this->link->vfs_path(
+										$value[$row]['view']['app'], $value[$row]['view']['id'], $value[$row]['view']['filename']
+									) . '" />';
+							}
+						}
 					}
 					else
 					{
+						if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') )) {
+							// Hardcoded sizes to match the mimetype icons.  Uses the navbar image and CSS to resize.
+							$value[$row]['mime_icon'] = $tmpl->html->image($value[$row]['app'], 'navbar', $value[$row]['app'], 'style="width: 16px; height: 16px;"');
+						}
 						$value[$row]['label'] = 'Unlink';
 						$value[$row]['help'] = lang('Remove this link (not the entry itself)');
+					}
+					// Remove appname if they only want icons
+					if($value[$row]['mime_icon'] && $GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'] == 'icons') {
+						$value[$row]['app'] = '';
 					}
 				}
 				break;
