@@ -12,7 +12,7 @@
 
 	// Check for existing thumbnail
 	if(file_exists($g_dstfile) && filemtime($g_dstfile) >= filemtime($g_srcfile)) {
-		include $g_dstfile;
+		readfile($g_dstfile);
 		return;
 	}
 
