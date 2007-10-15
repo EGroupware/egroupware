@@ -58,7 +58,6 @@
 		$dest_dir = implode(DIRECTORY_SEPARATOR, $dir_array);
 		@mkdir($dest_dir, 0700, true);
 
-
 		if(file_exists($g_srcfile)) {
 			$bolink = CreateObject('phpgwapi.bolink');
 			$read = $bolink->vfs->acl_check(array(
@@ -93,12 +92,14 @@
 			if($type != 'image') {
 				return false;
 			}
+
 			switch ($image_type) {
 				case 'png':
 					$img_src = imagecreatefrompng($g_srcfile);
 					break;
 				case 'jpg':
-					$img_src = imagecreatefromjpg($g_srcfile);
+				case 'jpeg':
+					$img_src = imagecreatefromjpeg($g_srcfile);
 					break;
 				case 'gif':
 					$img_src = imagecreatefromgif($g_srcfile);
