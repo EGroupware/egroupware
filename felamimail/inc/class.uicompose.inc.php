@@ -459,7 +459,14 @@
 					"dir"	=> array("minlen" =>   1, 'maxlen' =>  10)
 				)
 			);
-
+			// strip comments out of the message completely
+                        while (stripos($_body,'<!--')!==FALSE) {
+                                $begin_comment=stripos($_body,'<!--');
+                                if (stripos($_body,'-->',$begin_comment+4)!== FALSE) {
+                                        $end_comment=stripos($_body,'-->',$begin_comment+4);
+                                        $_body=substr($_body,0,$begin_comment).substr($_body,$end_comment+3);
+                                }
+                        }
 			$body	= $kses->Parse($_body);
 
 			$body	= preg_replace($nonDisplayAbleCharacters, '', $body);
