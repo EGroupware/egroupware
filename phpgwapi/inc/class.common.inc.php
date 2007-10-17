@@ -172,7 +172,7 @@
 			array_shift($globalUidParts);	// remove the app name
 			array_pop($globalUidParts);		// remove the install_id
 			
-			return explode('-',$globalUidParts);	// return the rest, allowing to have dashs in the id, can happen with LDAP!
+			return implode('-',$globalUidParts);	// return the rest, allowing to have dashs in the id, can happen with LDAP!
 		}
 
 		// This is used for searching the access fields
