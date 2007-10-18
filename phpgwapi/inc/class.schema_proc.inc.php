@@ -867,27 +867,27 @@
 		function _index_name($sTableName,$aColumnNames)
 		{
 			// this code creates extrem short index-names, eg. for MaxDB
-			if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32)
-			{
-				static $existing_indexes=array();
-				
-				if (!isset($existing_indexes[$sTableName]) && method_exists($this->adodb,'MetaIndexes'))
-				{
-					$existing_indexes[$sTableName] = $this->adodb->MetaIndexes($sTableName);
-				}	
-				$i = 0; 
-				$firstCol = is_array($aColumnNames) ? $aColumnNames[0] : $aColumnNames;
-				do 
-				{
-					++$i;
-					$name = $firstCol . ($i > 1  ? '_'.$i : '');
-				}
-				while (isset($existing_indexes[$sTableName][$name]) || isset($existing_indexes[strtoupper($sTableName)][strtoupper($name)]));
-				
-				$existing_indexes[$sTableName][$name] = True;	// mark it as existing now
-				
-				return $name;
-			}
+//			if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32)
+//			{
+//				static $existing_indexes=array();
+//				
+//				if (!isset($existing_indexes[$sTableName]) && method_exists($this->adodb,'MetaIndexes'))
+//				{
+//					$existing_indexes[$sTableName] = $this->adodb->MetaIndexes($sTableName);
+//				}	
+//				$i = 0; 
+//				$firstCol = is_array($aColumnNames) ? $aColumnNames[0] : $aColumnNames;
+//				do 
+//				{
+//					++$i;
+//					$name = $firstCol . ($i > 1  ? '_'.$i : '');
+//				}
+//				while (isset($existing_indexes[$sTableName][$name]) || isset($existing_indexes[strtoupper($sTableName)][strtoupper($name)]));
+//				
+//				$existing_indexes[$sTableName][$name] = True;	// mark it as existing now
+//				
+//				return $name;
+//			}
 			// This code creates longer index-names incl. the table-names and the used columns
 			$table = str_replace(array('phpgw_','egw_'),'',$sTableName);
 			// if the table-name or a part of it is repeated in the column-name, remove it there
@@ -903,6 +903,12 @@
 			$aColumnNames = str_replace($remove,'',$aColumnNames);
 			
 			$name = $sTableName.'_'.(is_array($aColumnNames) ? implode('_',$aColumnNames) : $aColumnNames);
+
+			// this code creates a fixed short index-names (30 chars) from the long and unique name, eg. for MaxDB or Oracle
+			if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32 && strlen($name) > 30)
+			{
+				$name = "i".substr(hash ('md5', $name),0,29);
+			}
 			
 			return $name;			
 		}

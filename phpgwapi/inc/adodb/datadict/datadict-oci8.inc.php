@@ -197,12 +197,14 @@ end;
 			$trigname = $this->trigPrefix.$seqname;
 		}
 		
-		if (strlen($seqname) > 30) {
-			$seqname = $this->seqPrefix.uniqid('');
-		} // end if
-		if (strlen($trigname) > 30) {
-			$trigname = $this->trigPrefix.uniqid('');
-		} // end if
+		if (strlen($seqname) > 30) 
+		{
+			$seqname = "s".substr(hash('md5', $seqname),0,29);
+		}
+		if (strlen($trigname) > 30) 
+		{
+			$trigname = "t".substr(hash('md5', $trigname),0,29);
+		}
 		
 		if (isset($tableoptions['REPLACE'])) $sql[] = "DROP SEQUENCE $seqname";
 		$seqCache = '';
