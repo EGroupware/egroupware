@@ -61,11 +61,11 @@
 		 * @var array
 		 */
 		var $max_index_length=array(
-			'sapdb' => 32,
+			'maxdb' => 32,
 			'oracle' => 30,
 		);
 		/**
-		 * type of the database, set by the the constructor: 'mysql','pgsql','mssql','sapdb'
+		 * type of the database, set by the the constructor: 'mysql','pgsql','mssql','maxdb'
 		 * 
 		 * @var string
 		 */
@@ -98,7 +98,7 @@
 		/**
 		 * Constructor of schema-processor
 		 *
-		 * @param string $dbms type of the database: 'mysql','pgsql','mssql','sapdb'
+		 * @param string $dbms type of the database: 'mysql','pgsql','mssql','maxdb'
 		 * @param object $db=null database class, if null we use $GLOBALS['egw']->db
 		 * @return schema_proc
 		 */
@@ -129,7 +129,6 @@
 			
 			switch($this->sType)
 			{
-				case 'sapdb':
 				case 'maxdb':
 					$this->max_varchar_length = 8000;
 					break;
@@ -836,8 +835,21 @@
 		 */
 		function ExecuteSqlArray($aSql,$debug_level,$debug)
 		{
-			$retval = $this->dict->ExecuteSQLArray($aSql);
-			
+			if ($this->m_odb->query_log)	// we use egw_db::query to log the queries
+			{
+				$retval = 2;
+				foreach($aSql as $sql)
+				{
+					if (!$this->m_odb->query($sql,__LINE__,__FILE__))
+					{
+						$retval = 1;
+					}
+				}
+			}
+			else
+			{
+				$retval = $this->dict->ExecuteSQLArray($aSql);
+			}
 			if ($retval < 2 || $this->debug >= $debug_level || $this->debug > 3)
 			{
 				$debug_params = func_get_args();
