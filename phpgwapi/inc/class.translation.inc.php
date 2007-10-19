@@ -42,6 +42,7 @@
 	
 	// Define prefix for langfiles (historically 'phpgw_')
 	define('EGW_LANGFILE_PREFIX', 'egw_');
+	define('PHPGW_LANGFILE_PREFIX', 'phpgw_');
 
 	class translation
 	{
@@ -241,26 +242,30 @@
 		 */
 		function add_setup($lang)
 		{
-			$fn = EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . $lang . '.lang';
-			if (!file_exists($fn))
+			foreach(array(
+				EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . $lang . '.lang',
+				EGW_SERVER_ROOT.'/setup/lang/' . PHPGW_LANGFILE_PREFIX . $lang . '.lang',
+				EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . 'en.lang',
+				EGW_SERVER_ROOT.'/setup/lang/' . PHPGW_LANGFILE_PREFIX . 'en.lang',
+			) as $fn)
 			{
-				$fn = EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . 'en.lang';
-			}
-			if (file_exists($fn))
-			{
-				$fp = fopen($fn,'r');
-				while ($data = fgets($fp,8000))
+				if (file_exists($fn))
 				{
-					// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
-					list($message_id,,,$content) = explode("\t",$data);
-					$phrases[strtolower(trim($message_id))] = str_replace("\n",'',$content);
+					$fp = fopen($fn,'r');
+					while ($data = fgets($fp,8000))
+					{
+						// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
+						list($message_id,,,$content) = explode("\t",$data);
+						$phrases[strtolower(trim($message_id))] = str_replace("\n",'',$content);
+					}
+					fclose($fp);
+					
+					foreach($phrases as $message_id => $content)
+					{
+						$this->lang_arr[$message_id] = $this->convert($content,$phrases['charset']);
+					}
 				}
-				fclose($fp);
-				
-				foreach($phrases as $message_id => $content)
-				{
-					$this->lang_arr[$message_id] = $this->convert($content,$phrases['charset']);
-				}
+				break;
 			}
 			$this->loaded_apps['setup'] = $lang;
 		}
@@ -556,8 +561,9 @@
 					foreach($apps as $app)
 					{
 						$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . EGW_LANGFILE_PREFIX . strtolower($lang) . '.lang';
+						$old_appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . PHPGW_LANGFILE_PREFIX . strtolower($lang) . '.lang';
 						//echo '<br>Checking in: ' . $app;
-						if($GLOBALS['egw_setup']->app_registered($app) && file_exists($appfile))
+						if($GLOBALS['egw_setup']->app_registered($app) && (file_exists($appfile) || file_exists($appfile=$old_appfile)))
 						{
 							//echo '<br>Including: ' . $appfile;
 							$lines = file($appfile);
@@ -683,8 +689,9 @@
 			foreach($apps as $app => $data)
 			{
 				$fname = EGW_SERVER_ROOT . "/$app/setup/" . EGW_LANGFILE_PREFIX . "$lang.lang";
+				$old_fname = EGW_SERVER_ROOT . "/$app/setup/" . PHPGW_LANGFILE_PREFIX . "$lang.lang";
 
-				if (file_exists($fname))
+				if (file_exists($fname) || file_exists($fname = $old_fname))
 				{
 					$ctime = filectime($fname);
 					/* This is done to avoid string offset error at least in php5 */
