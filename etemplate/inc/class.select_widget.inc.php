@@ -222,7 +222,7 @@
 					$cell['no_lang'] = True;
 					break;
 
-				case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows)}
+				case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
 					//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
 					if($type == 'owngroups') 
 					{
@@ -247,6 +247,7 @@
 							require_once(EGW_API_INC.'/class.uiaccountsel.inc.php');
 							$GLOBALS['egw']->uiaccountsel =& new uiaccountsel;
 						}
+						$not = array_slice(explode(',',$cell['size']),4);
 						$help = (int)$cell['no_lang'] < 2 ? lang($cell['help']) : $cell['help'];
 						$onFocus = "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
 						$onBlur  = "self.status=''; return true;";
@@ -261,7 +262,7 @@
 						}
 						if (($rows > 0 || $type3) && substr($name,-2) != '[]') $name .= '[]';
 						$value = $GLOBALS['egw']->uiaccountsel->selection($name,'eT_accountsel_'.str_replace(array('[','][',']'),array('_','_',''),$name),
-							$value,$type,$rows > 0 ? $rows : ($type3 ? -$type3 : 0),False,' onfocus="'.$onFocus.'" onblur="'.$onBlur.'"'.$noPrint_class,
+							$value,$type,$rows > 0 ? $rows : ($type3 ? -$type3 : 0),$not,' onfocus="'.$onFocus.'" onblur="'.$onBlur.'"'.$noPrint_class,
 							$cell['onchange'] == '1' ? 'this.form.submit();' : $cell['onchange'],
 							!empty($rows) && 0+$rows <= 0 ? lang($rows < 0 ? 'all' : $rows) : False);
 						if ($cell['noprint'])
