@@ -1293,6 +1293,12 @@ class uicontacts extends bocontacts
 				}
 			}
 		}
+		if ($content['id'])
+		{
+			// last and next calendar date
+			list(,$dates) = each($this->read_calendar(array($content['id']),false));
+			if(is_array($dates)) $content += $dates;
+		}
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
@@ -1569,6 +1575,14 @@ $readonlys['button[vcard]'] = true;
 		{
 			$content['owner'] .= 'p';
 		}
+		// disable not needed tabs
+		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
+		$readonlys[$this->tabs]['custom'] = !$this->customfields;
+	
+		// last and next calendar date
+		list(,$dates) = each($this->read_calendar(array($content['id']),false));
+		if(is_array($dates)) $content += $dates;
+
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
 
@@ -1940,9 +1954,10 @@ $readonlys['button[vcard]'] = true;
 	 * Read the next and last event of given contacts
 	 *
 	 * @param array $ids contact_id's
+	 * @param boolean $extra_title=true if true, use a short date only title and put the full title as extra_title (tooltip)
 	 * @return array
 	 */
-	function read_calendar($ids)
+	function read_calendar($ids,$extra_title=true)
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return null;
 		
@@ -1978,12 +1993,17 @@ $readonlys['button[vcard]'] = true;
 					if (!isset($calendars[$id]['last_event']) || $event['start'] > $calendars[$id]['last_event'])
 					{
 						$calendars[$id]['last_event'] = $event['start'];
-						$calendars[$id]['last_link'] = array(
+						$link = array(
 							'id' => $event['id'],
 							'app' => 'calendar',
-							'title' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']),
-							'extra_title' => $bocal->link_title($event),
+							'title' => $bocal->link_title($event),
 						);
+						if ($extra_title)
+						{
+							$link['extra_title'] = $link['title'];
+							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
+						}
+						$calendars[$id]['last_link'] = $link;
 					}
 				}
 				else	// future event --> check for next event
@@ -1991,12 +2011,17 @@ $readonlys['button[vcard]'] = true;
 					if (!isset($calendars[$id]['next_event']) || $event['start'] < $calendars[$id]['next_event'])
 					{
 						$calendars[$id]['next_event'] = $event['start'];
-						$calendars[$id]['next_link'] = array(
+						$link = array(
 							'id' => $event['id'],
 							'app' => 'calendar',
-							'title' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']),
-							'extra_title' => $bocal->link_title($event),
+							'title' => $bocal->link_title($event),
 						);
+						if ($extra_title)
+						{
+							$link['extra_title'] = $link['title'];
+							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
+						}
+						$calendars[$id]['next_link'] = $link;
 					}					
 				}
 			}

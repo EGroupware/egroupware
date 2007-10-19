@@ -247,7 +247,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.3.004">
+	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" height="258" overflow="auto">
 			<columns>
 				<column/>
@@ -269,6 +269,16 @@
 					<image src="check"/>
 					<description/>
 					<checkbox label="change all organisation members" id="change_org" span="all" statustext="Apply changes to all members, whose fields have the same previous content"/>
+				</row>
+				<row>
+					<image src="home"/>
+					<description value="Last date"/>
+					<link id="last_link"/>
+				</row>
+				<row>
+					<description/>
+					<description value="Next date"/>
+					<link id="next_link"/>
 				</row>
 				<row class="row_off" valign="top">
 					<image src="gear"/>
