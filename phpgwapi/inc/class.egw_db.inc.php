@@ -108,11 +108,33 @@
 		*/
 		var $Error    = '';
 
+		/**
+		 * eGW's own query log, independent of the db-type, eg. /tmp/query.log
+		 *
+		 * @var string
+		 */
+		var $query_log = '/tmp/query.log';	//false;
+
 		//i am not documenting private vars - skwashd :)
         var $xmlrpc = False;
 		var $soap   = False;
+		/**
+		 * ADOdb connection
+		 *
+		 * @var ADOConnection
+		 */
 		var $Link_ID = 0;
+		/**
+		 * ADOdb connection
+		 *
+		 * @var ADOConnection
+		 */
 		var $privat_Link_ID = False;	// do we use a privat Link_ID or a reference to the global ADOdb object
+		/**
+		 * ADOdb record set of the current query
+		 *
+		 * @var ADORecordSet
+		 */
 		var $Query_ID = 0;
 
 		/**
@@ -358,7 +380,7 @@
 				case 'maxdb':	// if Lim ever changes it to maxdb ;-)
 				case 'sapdb':
 					$this->capabilities['distinct_on_text'] = false;
-					$this->capabilities['like_on_text'] = (float) $db_version >= 7.6;
+					$this->capabilities['like_on_text'] = $db_version >= 7.6;
 					$this->capabilities['order_on_text'] = false;
 					break;
 			}
@@ -496,7 +518,17 @@
 			$this->Errno  = $this->Link_ID->ErrorNo();
 			$this->Error  = $this->Link_ID->ErrorMsg();
 
-			if (! $this->Query_ID)
+			if ($this->query_log && ($f = @fopen($this->query_log,'a+')))
+			{
+				fwrite($f,'['.(isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->ConfigDomain : $GLOBALS['egw_info']['user']['domain']).'] ');
+				fwrite($f,date('Y-m-d H:i:s ').$Query_String.($inputarr ? "\n".print_r($inputarr,true) : '')."\n");
+				if (!$this->Query_ID)
+				{
+					fwrite($f,"*** Error $this->Errno: $this->Error\n".function_backtrace()."\n");
+				}
+				fclose($f);
+			}
+			if (!$this->Query_ID)
 			{
 				$this->halt("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
 					($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''),
@@ -1159,8 +1191,11 @@
 			switch($type)
 			{
 				case 'int':
-				case 'auto':
-					return (int) $value;
+				case 'auto':	
+					// atm. (php5.2) php has only 32bit integers, it converts everything else to float. 
+					// Casting it to int gives a negative number instead of the big 64bit integer!
+					// There for we have to keep it as float by using round instead the int cast.
+					return is_float($value) ? round($value) : (int) $value;
 				case 'bool':
 					if ($this->Type == 'mysql')		// maybe it's not longer necessary with mysql5
 					{
