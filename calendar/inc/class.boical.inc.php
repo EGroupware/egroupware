@@ -710,7 +710,7 @@
 	 						case 'CATEGORIES':
 	 							if ($attributes['value'])
 	 							{
-	 								$vcardData['category'] = $this->find_or_add_categorie(explode(',',$attributes['value']));
+	 								$vcardData['category'] = $this->find_or_add_categories(explode(',',$attributes['value']));
 	 							}
 								else
 								{
