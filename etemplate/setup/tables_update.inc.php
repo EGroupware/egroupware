@@ -106,4 +106,15 @@
 
 		return $GLOBALS['setup_info']['etemplate']['currentver'] = '1.4';
 	}
+	
+	$test[] = '1.4';
+	function etemplate_upgrade1_4()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_etemplate','et_data',array(
+			'type' => 'longtext',
+			'nullable' => True,
+		));
+
+		return $GLOBALS['setup_info']['etemplate']['currentver'] = '1.5.001';
+	}
 ?>

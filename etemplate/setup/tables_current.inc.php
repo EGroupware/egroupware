@@ -20,7 +20,7 @@
 				'et_lang' => array('type' => 'varchar','precision' => '5','nullable' => False,'default' => ''),
 				'et_group' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'et_version' => array('type' => 'varchar','precision' => '20','nullable' => False,'default' => ''),
-				'et_data' => array('type' => 'text','nullable' => True),
+				'et_data' => array('type' => 'longtext','nullable' => True),
 				'et_size' => array('type' => 'varchar','precision' => '128','nullable' => True),
 				'et_style' => array('type' => 'text','nullable' => True),
 				'et_modified' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
