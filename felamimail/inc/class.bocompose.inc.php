@@ -708,16 +708,16 @@
 				if(!empty($attachment['uid']) && !empty($attachment['folder'])) {
 					switch($attachment['type']) {
 						case 'MESSAGE/RFC822':
+							$rawHeader='';
 							$bofelamimail->openConnection();
 							$bofelamimail->reopen($attachment['folder']);
-							$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
-							$rawBody	= $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
+							if (isset($attachment['partID'])) {
+								$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
+							}
+							$rawBody        = $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
 							$bofelamimail->closeConnection();
-
 							$_mailObject->AddStringAttachment($rawHeader.$rawBody, $attachment['name'], '7bit', 'message/rfc822');
-			
 							break;
-							
 						default:
 							$bofelamimail->openConnection();
 							$bofelamimail->reopen($attachment['folder']);
