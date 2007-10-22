@@ -765,6 +765,19 @@
 		}
 
 		/**
+		* returns an array of references to widgets of the specified tipe
+		* @param type String
+		*/
+		function &get_widgets_by_type($type) {
+			$extra = array(
+				'type'		=>	$type,
+				'widgets'	=>	array()
+			);
+			$this->widget_tree_walk('get_widgets_by_type_helper', $extra);
+			return $extra['widgets'];
+		}
+
+		/**
 		 * generated a file-name from an eTemplates, name, template(-set) and lang
 		 *
 		 * @param string/array $name name of template or array('name'=>$name,'template'=>$template,'lang'=>$lang)
@@ -978,5 +991,13 @@
 		{
 			//echo "<p>path_searched='$extra', widget-path($widget[type]:$widget[name])='$path'</p>\n";
 			if ($path == $extra) return $widget;
+		}
+
+		function &get_widgets_by_type_helper(&$widget, &$extra) 
+		{
+			//echo '<br />get_widgets_by_type_helper(' . $widget['name'] . ',' . $extra['type'] . ')<br />';
+			if($widget['type'] == $extra['type']) {
+				$extra['widgets'][] =& $widget;
+			}
 		}
 	}

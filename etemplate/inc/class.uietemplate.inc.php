@@ -450,6 +450,28 @@ foreach($sess as $key => $val)
 			$GLOBALS['egw_info']['etemplate']['loop'] |= !$this->canceled && $this->button_pressed &&
 				$this->validation_errors($session_data['ignore_validation']);	// set by process_show
 
+			// If a tab has an error on it, change to that tab
+			foreach($GLOBALS['egw_info']['etemplate']['validation_errors'] as $form_name => $msg) 
+			{
+				$name = $this->template_name($form_name);
+				if (!$this->get_widget_by_name($name))
+				{
+					foreach($this->get_widgets_by_type('tab') as $widget)
+					{
+						foreach(explode('|',$widget['name']) as $tab)
+						{
+							if (strpos('.',$tab) === false) $tab = $this->name.'.'.$tab;
+							$tab_tpl = new etemplate($tab);
+							if ($tab_tpl->get_widget_by_name($name))
+							{
+								$content[$widget['name']] = $tab;
+								break 3;
+							}
+						}
+					}
+				}
+			}
+
 			//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
 			//echo "process_exec($this->name) session_data[changes] ="; _debug_array($session_data['changes']);
 			$content = $this->complete_array_merge($session_data['changes'],$content);
@@ -848,6 +870,27 @@ foreach($sess as $key => $val)
 				$form_name .= '['.implode('][',$name_parts).']';
 			}
 			return $form_name;
+		}
+
+		/**
+		* strip the prefix of a form-element from a form_name
+		* This function removes the prefix of form_name().  It takes a name like base[basesub1][basesub2][name][sub]
+		* and gives basesub1[basesub2][name][sub]
+		*
+		* @param string form_name 
+		* @return string name without prefix
+		*/
+		function template_name($form_name) 
+		{
+			$parts = explode('[',str_replace(']','',$form_name));
+
+			array_shift($parts);	// remove exec
+
+			$name = array_shift($parts);
+
+			if ($parts) $name .= '['.implode('][',$parts).']';
+
+			return $name;
 		}
 
 		/**
