@@ -593,12 +593,21 @@ function do_check($domain='',$stop=0)
 			
 			case 10:	// also check apps of updates
 				$apps_to_upgrade = array();
+				$apps_to_install = array();
 				foreach($setup_info as $app => $data)
 				{
 					if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
 					{
 						$apps_to_upgrade[] = $app;
 					}
+					if (!isset($data['enabled']))
+					{
+						$apps_to_install[] = $app;
+					}
+				}
+				if ($apps_to_install)
+				{
+					echo "\n".lang('The following applications are NOT installed:').' '.implode(', ',$apps_to_install)."\n";
 				}
 				if ($apps_to_upgrade)
 				{
