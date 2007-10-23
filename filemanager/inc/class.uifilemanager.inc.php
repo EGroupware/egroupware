@@ -2553,7 +2553,7 @@
 			$count_fld=0;
 			$or='';
 			$aclcondition=" ( ";
-			array_push($sessiondata['dirs_options_array'],$sessiondata['workingdir']);
+			array_push($sessiondata['dirs_options_array'],$this->homedir);
 			foreach ($sessiondata['dirs_options_array'] as $dir)
 			{
 				$splitteddir=explode('/',$dir);
