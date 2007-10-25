@@ -201,7 +201,7 @@ class vcaladdressbook extends bocontacts
 		 *   - modifier
 		 *   - jpegphoto
 		 */
-		$defaultFields[0] = array(
+		$defaultFields[0] = array(	// multisync
 			'ADR' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'CATEGORIES' 	=> array('cat_id'),
@@ -218,7 +218,7 @@ class vcaladdressbook extends bocontacts
 			'TITLE'		=> array('title'),
 		);
 
-		$defaultFields[1] = array(
+		$defaultFields[1] = array(	// all entries, nexthaus corporation, ...
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -232,16 +232,20 @@ class vcaladdressbook extends bocontacts
 			'NOTE'		=> array('note'),
 			'ORG'		=> array('org_name','org_unit'),
 			'TEL;CELL;WORK'	=> array('tel_cell'),
+			'TEL;CELL;HOME'	=> array('tel_cell_private'),
 			'TEL;FAX;WORK'	=> array('tel_fax'),
+			'TEL;FAX;HOME'	=> array('tel_fax_home'),
 			'TEL;HOME'	=> array('tel_home'),
 			'TEL;PAGER;WORK' => array('tel_pager'),
 			'TEL;WORK'	=> array('tel_work'),
 			'TITLE'		=> array('title'),
 			'URL;WORK'	=> array('url'),
 			'ROLE'		=> array('role'),
+			'URL;HOME'	=> array('url_home'),
+			'FBURL'		=> array('freebusy_uri'),
 		);
 
-		$defaultFields[2] = array(
+		$defaultFields[2] = array(	// sony ericson
 			'ADR;HOME' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'BDAY'		=> array('bday'),
@@ -260,7 +264,7 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'	=> array('url'),
 		);
 
-		$defaultFields[3] = array(
+		$defaultFields[3] = array(	// siemens
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -281,7 +285,7 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'	=> array('url'),
 		);
 
-		$defaultFields[4] = array(
+		$defaultFields[4] = array(	// nokia 6600
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -305,7 +309,7 @@ class vcaladdressbook extends bocontacts
 			'URL;HOME'	=> array('url_home'),
 		);
 
-		$defaultFields[5] = array(
+		$defaultFields[5] = array(	// nokia e61
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -329,7 +333,7 @@ class vcaladdressbook extends bocontacts
 			'URL;HOME'	=> array('url_home'),
 		);
 
-		$defaultFields[6] = array(
+		$defaultFields[6] = array(	// funambol: fmz-thunderbird-plugin
 			'ADR;WORK'      => array('','','adr_one_street','adr_one_locality','adr_one_region',
 									'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'      => array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -488,36 +492,38 @@ class vcaladdressbook extends bocontacts
 		#print "<pre>$_vcard</pre>";
 
 		#error_log(print_r($vcardValues, true));
-
+		
 		foreach($vcardValues as $key => $vcardRow)
 		{
 			$rowName  = $vcardRow['name'];
-
+			
 			if(isset($vcardRow['params']['INTERNET']))
 			{
 				$rowName .= ";INTERNET";
 			}
-			if(isset($vcardRow['params']['CELL']))
+			$type = strtoupper($vcardRow['params']['TYPE']);			// vCard3 sets TYPE={work|home|cell|fax}!
+
+			if(isset($vcardRow['params']['CELL']) || $type == 'CELL')
 			{
 				$rowName .= ';CELL';
 			}
-			if(isset($vcardRow['params']['FAX']))
+			if(isset($vcardRow['params']['FAX']) || $type == 'FAX')
 			{
 				$rowName .= ';FAX';
 			}
-			if(isset($vcardRow['params']['PAGER']))
+			if(isset($vcardRow['params']['PAGER']) || $type == 'PAGER')
 			{
 				$rowName .= ';PAGER';
 			}
-			if(isset($vcardRow['params']['WORK']))
+			if(isset($vcardRow['params']['WORK']) || $type == 'WORK')
 			{
 				$rowName .= ';WORK';
 			}
-			if(isset($vcardRow['params']['HOME']))
+			if(isset($vcardRow['params']['HOME']) || $type == 'HOME')
 			{
 				$rowName .= ';HOME';
 			}
-
+			//error_log("key: $key --> $rowName: name=$vcardRow[name], params=".print_r($vcardRow['params'],true));
 			$rowNames[$rowName] = $key;
 		}
 
@@ -581,6 +587,7 @@ class vcaladdressbook extends bocontacts
 					if(!empty($fieldName))
 					{
 						$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+						//error_log("$fieldName=$vcardKey[$fieldKey]='$value'");
 						switch($fieldName)
 						{
 							case 'bday':
@@ -590,11 +597,11 @@ class vcaladdressbook extends bocontacts
 								break;
 								
 							case 'private':
-								(int)$contact[$fieldName] = $value == 'PRIVATE';
+								$contact[$fieldName] = (int) ($value == 'PRIVATE');
 								break;
 								
 							case 'cat_id':
-								$contact[$fieldName] = implode(",",$this->find_or_add_categories(explode(',',$value)));
+								$contact[$fieldName] = implode(',',$this->find_or_add_categories(explode(',',$value)));
 								break;
 
 							case 'note':
