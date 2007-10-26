@@ -19,8 +19,9 @@
 		awin = window.open(url,"attach","width=500,height=400,toolbar=no,resizable=yes");
 	}
 	
-	function check_sender()
+	function check_data()
 	{
+		// check recipient(s)
 		var tos = document.getElementsByName('address[]');
 		for(i=0; i < tos.length; ++i) {
 			if (tos[i].value != '') break;
@@ -29,12 +30,18 @@
 			alert("{lang_no_recipient}");
 			return false;
 		}
+		// check subject
+		var subject = document.getElementById('fm_compose_subject');
+		if(subject.value == '') {
+			alert("{lang_no_subject}");
+			return false;
+		}
 		return true;
 	}
 </script>
 
 <center>
-<form method="post" name="doit" action="{link_action}" ENCTYPE="multipart/form-data" onsubmit="return check_sender();">
+<form method="post" name="doit" action="{link_action}" ENCTYPE="multipart/form-data" onsubmit="return check_data();">
 <input type="hidden" id="saveAsDraft" name="saveAsDraft" value="0">
 <TABLE WIDTH="100%" CELLPADDING="1" CELLSPACING="0" style="border: solid #aaaaaa 1px; border-right: solid black 1px; border-bottom: solid black 1px;">
 	<tr class="navbarBackground">
