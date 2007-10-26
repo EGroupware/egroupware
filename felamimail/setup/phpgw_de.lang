@@ -1,8 +1,10 @@
 (no subject)	felamimail	de	(kein Betreff)
 (only cc/bcc)	felamimail	de	(kein Kopie/Blindkopie)
+(separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
 (unknown sender)	felamimail	de	(unbekannter Absender)
 activate	felamimail	de	aktivieren
 activate script	felamimail	de	Script aktivieren
+activating by date requires a start- and end-date!	felamimail	de	Aktivieren nach Datum benötigt ein Start- UND Endedatum!
 add acl	felamimail	de	ACL zufügen
 add address	felamimail	de	Addresse zufügen
 add rule	felamimail	de	Regel hinzufügen
@@ -38,6 +40,8 @@ bcc	felamimail	de	Blindkopie
 before headers	felamimail	de	vor den Kopfzeilen
 between headers and message body	felamimail	de	zwischen Kopfzeilen und Editorfenster
 body part	felamimail	de	Hauptteil
+by date	felamimail	de	nach Datum
+can not send message. no recipient defined!	felamimail	de	Kann Nachricht nicht senden. Kein Empfänger angegeben!
 can't connect to inbox!!	felamimail	de	kann nicht mit ihrer INBOX verbinden!!!
 cc	felamimail	de	Kopie
 change folder	felamimail	de	Ordner wechseln
@@ -75,6 +79,7 @@ date(newest first)	felamimail	de	Datum (neue zuerst)
 date(oldest first)	felamimail	de	Datum (alte zuerst)
 days	felamimail	de	Tage
 deactivate script	felamimail	de	Script abschalten
+default	felamimail	de	Vorgabe
 default signature	felamimail	de	Standard Signatur
 default sorting order	felamimail	de	Standard Sortierreihenfolge
 delete all	felamimail	de	alle löschen
@@ -163,6 +168,7 @@ follow	felamimail	de	folgen
 for mail to be send - not functional yet	felamimail	de	Für zu sendende Mail - funktioniert noch nicht
 for received mail	felamimail	de	Für empfangene Mail
 forward	felamimail	de	Weiterleiten
+forward messages to	felamimail	de	Nachricht weiterleiten an
 forward to	felamimail	de	weiterleiten an
 forward to address	felamimail	de	weiterleiten an Adresse
 forwarding	felamimail	de	Weiterleitung
@@ -266,7 +272,9 @@ no messages found...	felamimail	de	keine Nachrichten gefunden...
 no messages were selected.	felamimail	de	Es wurde keine NAchricht ausgewählt
 no plain text part found	felamimail	de	Kein Text Teil gefunden.
 no previous message	felamimail	de	Keine vorherige Nachricht vorhanden
-no recipient address given!	felamimail	en	Keine Empfängeradresse angegeben!
+no recipient address given!	felamimail	de	Keine Empfängeradresse angegeben!
+no signature	felamimail	de	keine Signatur
+no subject given!	felamimail	de	Kein Betreff angegeben!
 no supported imap authentication method could be found.	felamimail	de	Keine unterstützte IMAP Authentifizierungsmethode gefunden.
 no valid emailprofile selected!!	felamimail	de	Sie haben kein gültiges E-Mail-Profil ausgewählt!
 none	felamimail	de	kein
@@ -337,6 +345,7 @@ send	felamimail	de	Senden
 send a reject message	felamimail	de	Ablehnungs-E-Mail senden
 sent folder	felamimail	de	Ordner für gesendete Nachrichten
 server supports mailfilter(sieve)	felamimail	de	Server unterstützt Mailfilter(Sieve)
+set as default	felamimail	de	Als Vorgabe setzen
 show header	felamimail	de	Kopfzeilen anzeigen
 show new messages on main screen	felamimail	de	neue Nachrichten auf der Startseite anzeigen
 sieve script name	felamimail	de	Sieve Skript Name
@@ -360,6 +369,7 @@ subscribe	felamimail	de	Bestellen
 subscribed	felamimail	de	abonniert
 subscribed successfully!	felamimail	de	Erfolgreich abonniert
 sun	felamimail	de	So
+system signature	felamimail	de	System Signatur
 table of contents	felamimail	de	Inhaltsverzeichnis
 text only	felamimail	de	Nur Text
 the connection to the imap server failed!!	felamimail	de	Die Verbindung zum IMAP Server ist fehlgeschlagen
@@ -406,6 +416,7 @@ use smtp auth	admin	de	SMTP Auth benutzen
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
 vacation notice	common	de	Abwesenheitsnotiz
 vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv
+vacation start-date must be before the end-date!	felamimail	de	Startdatum der Urlaubsbenachrichtigung muss VOR dem Endedatum liegen!
 validate certificate	felamimail	de	Zertifikat überprüfen
 view full header	felamimail	de	alle Kopfzeilen anzeigen
 view header lines	felamimail	de	Kopfzeilen anzeigen
@@ -420,3 +431,4 @@ with message "%1"	felamimail	de	mit der Nachricht "%1"
 wrap incoming text at	felamimail	de	Text umbrechen nach
 writing	felamimail	de	schreiben
 wrote	felamimail	de	schrieb
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	de	Sie können %1 für das obige Startdatum und %2 für das Endedatum verwenden.

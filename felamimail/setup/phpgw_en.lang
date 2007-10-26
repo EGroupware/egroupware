@@ -1,8 +1,10 @@
 (no subject)	felamimail	en	(no subject)
 (only cc/bcc)	felamimail	en	(only Cc/Bcc)
+(separate multiple addresses by comma)	felamimail	en	(separate multiple addresses by comma)
 (unknown sender)	felamimail	en	(unknown sender)
 activate	felamimail	en	Activate
 activate script	felamimail	en	activate script
+activating by date requires a start- and end-date!	felamimail	en	Activating by date requires a start- AND end-date!
 add acl	felamimail	en	add acl
 add address	felamimail	en	Add address
 add rule	felamimail	en	Add Rule
@@ -38,6 +40,8 @@ bcc	felamimail	en	BCC
 before headers	felamimail	en	Before headers
 between headers and message body	felamimail	en	Between headers and message body
 body part	felamimail	en	body part
+by date	felamimail	en	by date
+can not send message. no recipient defined!	felamimail	en	can not send message. no recipient defined!
 can't connect to inbox!!	felamimail	en	can't connect to INBOX!!
 cc	felamimail	en	CC
 change folder	felamimail	en	Change folder
@@ -75,6 +79,7 @@ date(newest first)	felamimail	en	Date (newest first)
 date(oldest first)	felamimail	en	Date (oldest first)
 days	felamimail	en	days
 deactivate script	felamimail	en	deactivate script
+default	felamimail	en	default
 default signature	felamimail	en	default signature
 default sorting order	felamimail	en	Default sorting order
 delete all	felamimail	en	delete all
@@ -163,6 +168,7 @@ follow	felamimail	en	follow
 for mail to be send - not functional yet	felamimail	en	For mail to be send - not functional yet
 for received mail	felamimail	en	For received mail
 forward	felamimail	en	Forward
+forward messages to	felamimail	en	Forward messages to
 forward to	felamimail	en	forward to
 forward to address	felamimail	en	forward to address
 forwarding	felamimail	en	Forwarding
@@ -267,6 +273,8 @@ no messages were selected.	felamimail	en	No messages were selected.
 no plain text part found	felamimail	en	no plain text part found
 no previous message	felamimail	en	no previous Message
 no recipient address given!	felamimail	en	No recipient address given!
+no signature	felamimail	en	no signature
+no subject given!	felamimail	en	No subject given!
 no supported imap authentication method could be found.	felamimail	en	No supported IMAP authentication method could be found.
 no valid emailprofile selected!!	felamimail	en	No Valid Email Profile Selected!!
 none	felamimail	en	none
@@ -337,6 +345,7 @@ send	felamimail	en	Send
 send a reject message	felamimail	en	send a reject message
 sent folder	felamimail	en	Sent Folder
 server supports mailfilter(sieve)	felamimail	en	server supports mailfilter(sieve)
+set as default	felamimail	en	Set as default
 show header	felamimail	en	show header
 show new messages on main screen	felamimail	en	Show new messages on main screen
 sieve script name	felamimail	en	sieve script name
@@ -360,6 +369,7 @@ subscribe	felamimail	en	Subscribe
 subscribed	felamimail	en	Subscribed
 subscribed successfully!	felamimail	en	Subscribed successfully!
 sun	felamimail	en	Sun
+system signature	felamimail	en	system signature
 table of contents	felamimail	en	Table of Contents
 text only	felamimail	en	Text only
 the connection to the imap server failed!!	felamimail	en	The connection to the IMAP Server failed!!
@@ -406,6 +416,7 @@ use smtp auth	admin	en	Use SMTP auth
 users can define their own emailaccounts	admin	en	Users can define their own emailaccounts
 vacation notice	common	en	vacation notice
 vacation notice is active	felamimail	en	Vacation notice is active
+vacation start-date must be before the end-date!	felamimail	en	Vacation start-date must be BEFORE the end-date!
 validate certificate	felamimail	en	validate certificate
 view full header	felamimail	en	View full header
 view header lines	felamimail	en	view header lines
@@ -420,3 +431,4 @@ with message "%1"	felamimail	en	with message "%1"
 wrap incoming text at	felamimail	en	Wrap incoming text at
 writing	felamimail	en	writing
 wrote	felamimail	en	wrote
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	en	You can use %1 for the above start-date and %2 for the end-date.
