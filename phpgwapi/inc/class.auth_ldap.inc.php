@@ -55,7 +55,7 @@
 				return False;
 			}
 			/* find the dn for this uid, the uid is not always in the dn */
-			$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','gidNumber','shadowExpire');
+			$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','shadowExpire');
 
 			$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 			$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),$filter);
@@ -101,8 +101,6 @@
 								$GLOBALS['auto_create_acct'][$acct_name] =
 									$GLOBALS['egw']->translation->convert($allValues[0][$ldap_name][0],'utf-8');
 							}
-							// our group-ids are negative
-							$GLOBALS['auto_create_acct']['primary_group'] = -$allValues[0]['gidnumber'][0];
 							return True;
 						}
 						return ($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')) &&
