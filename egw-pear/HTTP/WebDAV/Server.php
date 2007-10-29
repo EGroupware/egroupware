@@ -144,7 +144,7 @@ class HTTP_WebDAV_Server
 
         // default uri is the complete request uri
         $uri = (@$this->_SERVER["HTTPS"] === "on" ? "https:" : "http:");
-        $uri.= "//$this->_SERVER[HTTP_HOST]$this->_SERVER[SCRIPT_NAME]";
+        $uri.= '//'.$this->_SERVER['HTTP_HOST'].$this->_SERVER['SCRIPT_NAME'];
         
         $path_info = empty($this->_SERVER["PATH_INFO"]) ? "/" : $this->_SERVER["PATH_INFO"];
 
@@ -689,8 +689,10 @@ class HTTP_WebDAV_Server
             /* TODO right now the user implementation has to make sure
              collections end in a slash, this should be done in here
              by checking the resource attribute */
-            $href = $this->_mergePathes($this->_SERVER['SCRIPT_NAME'], $path);
-        
+            //$href = $this->_mergePathes($this->_SERVER['SCRIPT_NAME'], $path);
+			// href needs protocol and host too
+            $href = $this->_mergePathes($this->base_uri, $path);
+       
             echo "  <D:href>$href</D:href>\n";
         
             // report all found properties and their values (if any)
@@ -726,7 +728,34 @@ class HTTP_WebDAV_Server
                                 . "GMT</D:getlastmodified>\n";
                             break;
                         case "resourcetype":
-                            echo "     <D:resourcetype><D:$prop[val]/></D:resourcetype>\n";
+                        	if (!is_array($prop['val'])) {
+                            	echo "     <D:resourcetype><D:$prop[val]/></D:resourcetype>\n";
+                        	} else {	// multiple resourcetypes from different namespaces as required by GroupDAV
+                       			$vals = $extra_ns = '';
+                        		foreach($prop['val'] as $subprop)
+                        		{
+ 		                            if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
+										// register property namespace if not known yet
+	                            		if (!isset($ns_hash[$subprop['ns']])) {
+			                                $ns_name = "ns".(count($ns_hash) + 1);
+			                                $ns_hash[$subprop['ns']] = $ns_name;
+	                            		} else {
+	                            			$ns_name = $ns_hash[$subprop['ns']];
+	                            		}
+		                            	if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
+			                                $extra_ns .= $extra;
+		                            	}
+		                            	$ns_name .= ':';
+		                            } elseif ($subprop['ns'] == 'DAV:') {
+		                            	$ns_name = 'D:';
+		                            } else {
+		                            	$ns_name = '';
+		                            }
+		                            $vals .= "<$ns_name$subprop[val]/>";
+                        		}
+                        		echo "     <D:resourcetype$extra_ns>$vals</D:resourcetype>\n";
+								//error_log("resourcetype: <D:resourcetype$extra_ns>$vals</D:resourcetype>");
+                        	}
                             break;
                         case "supportedlock":
                             echo "     <D:supportedlock>$prop[val]</D:supportedlock>\n";
