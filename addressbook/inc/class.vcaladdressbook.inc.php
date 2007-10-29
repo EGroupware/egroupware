@@ -57,52 +57,83 @@ class vcaladdressbook extends bocontacts
 		if(!($entry = $this->read($_id))) {
 			return false;
 		}
-		
-		foreach($this->supportedFields as $vcardField => $databaseFields) {
-			$options = array();
-			$value = '';
-			foreach($databaseFields as $databaseField) {
-				$tempVal = ';';
-				if(!empty($databaseField)) {
-					$tempVal = trim($entry[$databaseField]).';';
-				}
-				$value .= $tempVal;
-			}
-			// remove the last ;
-			$value = substr($value, 0, -1);
 
-			switch($vcardField) {
-				// TODO handle multiple categories
-				case 'CATEGORIES':
-					$catData = ExecMethod('phpgwapi.categories.return_single',$value);
-					$value = $catData[0]['name'];
-					break;
-				case 'CLASS':
-					$value = $value ? 'PRIVATE' : 'PUBLIC';
-					break;
-				case 'BDAY':
-					if(!empty($value)) {
-						$value = str_replace('-','',$value).'T000000Z';
-					}
-					break;
+		$this->fixup_contact($entry);
+		
+		foreach($this->supportedFields as $vcardField => $databaseFields)
+		{
+			$values = array();
+			$options = array();
+			$hasdata = 0;
+			foreach($databaseFields as $databaseField)
+			{
+				$value = "";
+
+				if (!empty($databaseField))
+				{
+					$value = trim($entry[$databaseField]);
+				}
+
+				switch($databaseField)
+				{
+					case 'private':
+						$value = $value ? 'PRIVATE' : 'PUBLIC';
+						$hasdata++;
+						break;
+
+					case 'bday':
+						if (!empty($value))
+						{
+							$value = str_replace('-','',$value).'T000000Z';
+							$hasdata++;
+						}
+						break;
+
+					case 'jpegphoto':
+						if(!empty($value))
+						{
+							error_log("PHOTO='".$value."'");
+							$hasdata++;
+						}
+						break;
+
+					case 'cat_id':
+						if (!empty($value))
+						{
+							$value = implode(",", $this->get_categories($value));
+						}
+						// fall-through to the normal processing of string values
+					default:
+						if(!empty($value))
+						{
+							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet, 'utf-8');
+							$options['CHARSET'] = 'UTF-8';
+
+							if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
+							{
+								$options['ENCODING'] = 'QUOTED-PRINTABLE';
+							}
+
+							$hasdata++;
+						}
+						break;
+				}
+
+				if (empty($value))
+				{
+					$value = "";
+				}
+
+				$values[] = $value;
 			}
-			
-			if ($databaseField != 'jpegphoto') {
-				$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+
+			if ($hasdata <= 0)
+			{
+				// don't add the entry if there is no data for this field
+				continue;
 			}
-			
-			// don't add the entry if it contains only ';'
-			// exeptions for mendatory fields 
-			if( ( strlen(str_replace(';','',$value)) != 0 ) || in_array($vcardField,array('FN','ORG','N')) ) {
-				$vCard->setAttribute($vcardField, $value);
-			}
-			if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value)) {
-				$options['ENCODING'] = 'QUOTED-PRINTABLE';
-			}
-			if(preg_match('/([\177-\377])/',$value)) {
-				$options['CHARSET'] = 'UTF-8';
-			}
-			
+
+			$vCard->setAttribute($vcardField, implode(';', $values));
 			$vCard->setParameter($vcardField, $options);
 		}
 		
@@ -170,13 +201,14 @@ class vcaladdressbook extends bocontacts
 		 *   - modifier
 		 *   - jpegphoto
 		 */
-		$defaultFields[0] = array(
+		$defaultFields[0] = array(	// multisync
 			'ADR' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'CATEGORIES' 	=> array('cat_id'),
 			'CLASS'		=> array('private'),
 			'EMAIL'		=> array('email'),
 			'N'		=> array('n_family','n_given','','',''),
+			'FN'		=> array('n_fn'),
 			'NOTE'		=> array('note'),
 			'ORG'		=> array('org_name',''),
 			'TEL;CELL'	=> array('tel_cell'),
@@ -186,7 +218,7 @@ class vcaladdressbook extends bocontacts
 			'TITLE'		=> array('title'),
 		);
 
-		$defaultFields[1] = array(
+		$defaultFields[1] = array(	// all entries, nexthaus corporation, ...
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -196,19 +228,24 @@ class vcaladdressbook extends bocontacts
 			'EMAIL;INTERNET;WORK' => array('email'),
 			'EMAIL;INTERNET;HOME' => array('email_home'),
 			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+			'FN'		=> array('n_fn'),
 			'NOTE'		=> array('note'),
 			'ORG'		=> array('org_name','org_unit'),
 			'TEL;CELL;WORK'	=> array('tel_cell'),
+			'TEL;CELL;HOME'	=> array('tel_cell_private'),
 			'TEL;FAX;WORK'	=> array('tel_fax'),
+			'TEL;FAX;HOME'	=> array('tel_fax_home'),
 			'TEL;HOME'	=> array('tel_home'),
 			'TEL;PAGER;WORK' => array('tel_pager'),
 			'TEL;WORK'	=> array('tel_work'),
 			'TITLE'		=> array('title'),
 			'URL;WORK'	=> array('url'),
 			'ROLE'		=> array('role'),
+			'URL;HOME'	=> array('url_home'),
+			'FBURL'		=> array('freebusy_uri'),
 		);
 
-		$defaultFields[2] = array(
+		$defaultFields[2] = array(	// sony ericson
 			'ADR;HOME' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'BDAY'		=> array('bday'),
@@ -216,6 +253,7 @@ class vcaladdressbook extends bocontacts
 			'CLASS'		=> array('private'),
 			'EMAIL'		=> array('email'),
 			'N'		=> array('n_family','n_given','','',''),
+			'FN'		=> array('n_fn'),
 			'NOTE'		=> array('note'),
 			'ORG'		=> array('org_name',''),
 			'TEL;CELL;WORK'	=> array('tel_cell'),
@@ -226,7 +264,7 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'	=> array('url'),
 		);
 
-		$defaultFields[3] = array(
+		$defaultFields[3] = array(	// siemens
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -235,6 +273,7 @@ class vcaladdressbook extends bocontacts
 			'EMAIL;INTERNET;WORK' => array('email'),
 			'EMAIL;INTERNET;HOME' => array('email_home'),
 			'N'		=> array('n_family','n_given','','',''),
+			'FN'		=> array('n_fn'),
 			'NOTE'		=> array('note'),
 			'ORG'		=> array('org_name','org_unit'),
 			'TEL;CELL;WORK'	=> array('tel_cell'),
@@ -246,7 +285,7 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'	=> array('url'),
 		);
 
-		$defaultFields[4] = array(
+		$defaultFields[4] = array(	// nokia 6600
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -255,6 +294,7 @@ class vcaladdressbook extends bocontacts
 			'EMAIL;INTERNET;WORK' => array('email'),
 			'EMAIL;INTERNET;HOME' => array('email_home'),
 			'N'		=> array('n_family','n_given','','',''),
+			'FN'		=> array('n_fn'),
 			'NOTE'		=> array('note'),
 			'ORG'		=> array('org_name',''),
 			'TEL;CELL;WORK'	=> array('tel_cell'),
@@ -269,7 +309,7 @@ class vcaladdressbook extends bocontacts
 			'URL;HOME'	=> array('url_home'),
 		);
 
-		$defaultFields[5] = array(
+		$defaultFields[5] = array(	// nokia e61
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -278,6 +318,7 @@ class vcaladdressbook extends bocontacts
 			'EMAIL;INTERNET;WORK' => array('email'),
 			'EMAIL;INTERNET;HOME' => array('email_home'),
 			'N'		=> array('n_family','n_given','','n_prefix','n_suffix'),
+			'FN'		=> array('n_fn'),
 			'NOTE'		=> array('note'),
 			'ORG'		=> array('org_name',''),
 			'TEL;CELL;WORK'	=> array('tel_cell'),
@@ -292,33 +333,39 @@ class vcaladdressbook extends bocontacts
 			'URL;HOME'	=> array('url_home'),
 		);
 
-		$defaultFields[6] = array(
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'EMAIL' 	=> array('email'),
-			'EMAIL;HOME' 	=> array('email_home'),
-			'N'		=> array('n_family','n_given','','',''),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name','org_unit'),
-			'TEL;CELL'	=> array('tel_cell'),
-			'TEL;HOME;FAX'	=> array('tel_fax'),
+		$defaultFields[6] = array(	// funambol: fmz-thunderbird-plugin
+			'ADR;WORK'      => array('','','adr_one_street','adr_one_locality','adr_one_region',
+									'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'      => array('','','adr_two_street','adr_two_locality','adr_two_region',
+									'adr_two_postalcode','adr_two_countryname'),
+			'EMAIL'         => array('email'),
+			'EMAIL;HOME'    => array('email_home'),
+			'N'             => array('n_family','n_given','','',''),
+			'FN'			=> array('n_fn'),
+			'NOTE'          => array('note'),
+			'ORG'           => array('org_name','org_unit'),
+			'TEL;CELL'      => array('tel_cell'),
+			'TEL;HOME;FAX'  => array('tel_fax'),
 			'TEL;HOME;VOICE' => array('tel_home'),
-			'TEL;PAGER' 	=> array('tel_pager'),
+			'TEL;PAGER'     => array('tel_pager'),
 			'TEL;WORK;VOICE' => array('tel_work'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'URL'		=> array('url_home'),
+			'TITLE'         => array('title'),
+			'URL;WORK'      => array('url'),
+			'URL'           => array('url_home'),
 		);
+
 		//error_log("Client: $_productManufacturer $_productName");
 		switch(strtolower($_productManufacturer))
 		{
 			case 'funambol':
-				switch(strtolower($_productName))
+				switch (strtolower($_productName))
 				{
-					case 'fmz-thunderbird-plugin':
+					case 'thunderbird':
+						$this->supportedFields = $defaultFields[6];
+						break;
+
 					default:
+						error_log("Funambol product '$_productName', assuming same as thunderbird");
 						$this->supportedFields = $defaultFields[6];
 						break;
 				}
@@ -328,7 +375,10 @@ class vcaladdressbook extends bocontacts
 				switch(strtolower($_productName))
 				{
 					case 'syncje outlook edition':
+						$this->supportedFields = $defaultFields[1];
+						break;
 					default:
+						error_log("Nethaus product '$_productName', assuming same as 'syncje outlook'");
 						$this->supportedFields = $defaultFields[1];
 						break;
 				}
@@ -341,7 +391,10 @@ class vcaladdressbook extends bocontacts
 						$this->supportedFields = $defaultFields[5];
 						break;
 					case '6600':
+						$this->supportedFields = $defaultFields[4];
+						break;
 					default:
+						error_log("Unknown Nokia phone '$_productName', assuming same as '6600'");
 						$this->supportedFields = $defaultFields[4];
 						break;
 				}
@@ -363,17 +416,25 @@ class vcaladdressbook extends bocontacts
 				switch(strtolower($_productName))
 				{
 					case 'sx1':
+						$this->supportedFields = $defaultFields[3];
+						break;
 					default:
+						error_log("Unknown Siemens phone '$_productName', assuming same as 'sx1'");
 						$this->supportedFields = $defaultFields[3];
 						break;
 				}
 				break;
 				
 			case 'sonyericsson':
+			case 'sony ericsson':
 				switch(strtolower($_productName))
 				{
 					case 'd750i':
+						$this->supportedFields = $defaultFields[2];
+						break;
+					case 'p910i':
 					default:
+						error_log("unknown Sony Ericsson phone '$_productName', assuming same as 'd750i'");
 						$this->supportedFields = $defaultFields[2];
 						break;
 				}
@@ -387,6 +448,7 @@ class vcaladdressbook extends bocontacts
 						#$this->supportedFields['PHOTO'] = array('jpegphoto');
 						break;
 					default:
+						error_log("Synthesis connector '$_productName', using default fields");
 						$this->supportedFields = $defaultFields[0];
 						break;
 				}
@@ -398,7 +460,7 @@ class vcaladdressbook extends bocontacts
 
 			// the fallback for SyncML
 			default:
-				error_log("Client not found: $_productManufacturer $_productName");
+				error_log("Client not found: '$_productManufacturer' '$_productName'");
 				$this->supportedFields = $defaultFields[0];
 				break;
 		}
@@ -430,36 +492,38 @@ class vcaladdressbook extends bocontacts
 		#print "<pre>$_vcard</pre>";
 
 		#error_log(print_r($vcardValues, true));
-
+		
 		foreach($vcardValues as $key => $vcardRow)
 		{
 			$rowName  = $vcardRow['name'];
-
+			
 			if(isset($vcardRow['params']['INTERNET']))
 			{
 				$rowName .= ";INTERNET";
 			}
-			if(isset($vcardRow['params']['CELL']))
+			$type = strtoupper($vcardRow['params']['TYPE']);			// vCard3 sets TYPE={work|home|cell|fax}!
+
+			if(isset($vcardRow['params']['CELL']) || $type == 'CELL')
 			{
 				$rowName .= ';CELL';
 			}
-			if(isset($vcardRow['params']['FAX']))
+			if(isset($vcardRow['params']['FAX']) || $type == 'FAX')
 			{
 				$rowName .= ';FAX';
 			}
-			if(isset($vcardRow['params']['PAGER']))
+			if(isset($vcardRow['params']['PAGER']) || $type == 'PAGER')
 			{
 				$rowName .= ';PAGER';
 			}
-			if(isset($vcardRow['params']['WORK']))
+			if(isset($vcardRow['params']['WORK']) || $type == 'WORK')
 			{
 				$rowName .= ';WORK';
 			}
-			if(isset($vcardRow['params']['HOME']))
+			if(isset($vcardRow['params']['HOME']) || $type == 'HOME')
 			{
 				$rowName .= ';HOME';
 			}
-
+			//error_log("key: $key --> $rowName: name=$vcardRow[name], params=".print_r($vcardRow['params'],true));
 			$rowNames[$rowName] = $key;
 		}
 
@@ -500,30 +564,6 @@ class vcaladdressbook extends bocontacts
 					}
 					break;
 
-				case 'CATEGORIES':
-					#cat_id = 7,8
-					$vcardData['category'] = array();
-					if ($attributes['value'])
-					{
-						if (!is_object($this->cat))
-						{
-							if (!is_object($GLOBALS['egw']->categories))
-							{
-								$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$this->owner,'addressbook');
-							}
-							$this->cat =& $GLOBALS['egw']->categories;
-						}
-						foreach(explode(',',$attributes['value']) as $cat_name)
-						{
-							if (!($cat_id = $this->cat->name2id($cat_name)))
-							{
-								$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
-							}
-							$vcardData['category'][] = $cat_id;
-						}
-					}
-					break;	
-
 				case 'VERSION':
 					break;
 					
@@ -546,38 +586,31 @@ class vcaladdressbook extends bocontacts
 				{
 					if(!empty($fieldName))
 					{
+						$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+						//error_log("$fieldName=$vcardKey[$fieldKey]='$value'");
 						switch($fieldName)
 						{
 							case 'bday':
-								if(!empty($vcardValues[$vcardKey]['values'][$fieldKey])) {
-									$contact[$fieldName] = date('Y-m-d', $vcardValues[$vcardKey]['values'][$fieldKey]);
+								if(!empty($value)) {
+									$contact[$fieldName] = date('Y-m-d', $value);
 								}
 								break;
 								
 							case 'private':
-								(int)$contact[$fieldName] = $vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE';
+								$contact[$fieldName] = (int) ($value == 'PRIVATE');
 								break;
 								
 							case 'cat_id':
-								if (!is_object($this->cat)) {
-									if (!is_object($GLOBALS['egw']->categories)) {
-										$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'addressbook');
-									}
-									$this->cat =& $GLOBALS['egw']->categories;
-								}
-								foreach(explode(',',$vcardValues[$vcardKey]['values'][$fieldKey]) as $cat_name) {
-									if (!($cat_id = $this->cat->name2id($cat_name))) {
-										$cat_id = $this->cat->add( array('name' => $cat_name, 'descr' => $cat_name ));
-									}
-									$contact[$fieldName] = $cat_id;
-								}
+								$contact[$fieldName] = implode(',',$this->find_or_add_categories(explode(',',$value)));
 								break;
+
 							case 'note':
 								// note may contain ','s but maybe this needs to be fixed in vcard parser...
-								$contact[$fieldName] = trim($vcardValues[$vcardKey]['value']);
-								break;
+								//$contact[$fieldName] = trim($vcardValues[$vcardKey]['value']);
+								//break;
+
 							default:
-								$contact[$fieldName] = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+								$contact[$fieldName] = $value;
 								break;
 						}
 					}
@@ -585,7 +618,7 @@ class vcaladdressbook extends bocontacts
 			}
 		}
 		
-		$contact['n_fn']  = trim($contact['n_given'].' '.$contact['n_family']);
+		$this->fixup_contact($contact);
 		return $contact;
 	}
 	

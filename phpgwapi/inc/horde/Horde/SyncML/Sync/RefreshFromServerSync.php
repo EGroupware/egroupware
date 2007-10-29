@@ -36,28 +36,27 @@ class Horde_SyncML_Sync_RefreshFromServerSync extends Horde_SyncML_Sync_TwoWaySy
 					continue;
 				}
 				
-				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
-				if(is_a($contentType, 'PEAR_Error')) {
-					// Client did not sent devinfo
-					$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
-				}
-				
+				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
 				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
 				$c = $registry->call($hordeType . '/export', array('guid' => $guid, 'contentType' => $contentType));
 				Horde::logMessage("SyncML: slowsync add $guid to client ". print_r($c, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				if (!is_a($c, 'PEAR_Error')) {
 					$cmd->setContent($c);
-					if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
-						$cmd->setContentFormat('b64');
+					$cmd->setContentType($contentType['ContentType']);
+					if (isset($contentType['ContentFormat']))
+					{
+						$cmd->setContentFormat($contentType['ContentFormat']);
 					}
 					
-					$cmd->setContentType($contentType['ContentType']);
 					$cmd->setSourceURI($guid);
 					$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Add');
 					$state->log('Server-Add');
 					
 					// return if we have to much data
-					if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
+					if(++$counter >= MAX_ENTRIES
+						&& isset($contentType['mayFragment'])
+						&& $contentType['mayFragment'])
+					{
 						$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 						return $currentCmdID;
 					}
@@ -77,7 +76,7 @@ class Horde_SyncML_Sync_RefreshFromServerSync extends Horde_SyncML_Sync_TwoWaySy
 		
 		$state = &$_SESSION['SyncML.state'];
 		$syncType = $this->_targetLocURI;
-		$hordeType = str_replace('./','',$syncType);
+		$hordeType = $state->getHordeType($syncType);
 		
 		Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		$state->setAddedItems($hordeType, $registry->call($hordeType. '/list', array()));
