@@ -96,6 +96,7 @@ class datasource_timesheet extends datasource
 	 * @param int $id
 	 * @return boolean true on success, false on error
 	 */
+/* removed deleting, as it might not be always wanted, maybe we make it configurable later on
 	function delete($id)
 	{
 		if (!is_object($GLOBALS['botimesheet']))
@@ -104,4 +105,5 @@ class datasource_timesheet extends datasource
 		}
 		return $GLOBALS['botimesheet']->delete($id);
 	}
+*/
 }
