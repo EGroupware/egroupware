@@ -152,6 +152,11 @@ class datasource_infolog extends datasource
 			include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
 			$GLOBALS['boinfolog'] =& new boinfolog();
 		}
+		// dont delete infolog, which are linked to other elements, but their project
+		if (count($this->boinfolog->link->get_links('infolog',$id)) > 1)
+		{
+			return false;
+		}
 		return $this->boinfolog->delete($id);
 	}
 	
