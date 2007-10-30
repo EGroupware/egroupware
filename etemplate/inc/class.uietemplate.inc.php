@@ -1555,7 +1555,7 @@ foreach($sess as $key => $val)
 								$cell['width'],
 								$class,
 								$cell['name'] ? $form_name : '',
-							),'height,widht,class,id')). ($html ? '' : '</div>');
+							),'height,width,class,id')). ($html ? '' : '</div>');
 						$class = '';	// otherwise we create an extra div
 					}
 					if ($box_anz > 1)	// small docu in the html-source
