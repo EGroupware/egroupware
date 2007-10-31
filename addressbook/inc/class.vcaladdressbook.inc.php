@@ -127,9 +127,10 @@ class vcaladdressbook extends bocontacts
 				$values[] = $value;
 			}
 
-			if ($hasdata <= 0)
+			if ($hasdata <= 0 && !in_array($vcardField,array('FN','ORG','N')))
 			{
-				// don't add the entry if there is no data for this field
+				// don't add the entry if there is no data for this field,
+				// except it's a mendatory field
 				continue;
 			}
 
