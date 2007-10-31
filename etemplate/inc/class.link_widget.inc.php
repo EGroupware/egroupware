@@ -18,6 +18,7 @@
 	 *
 	 * The class contains the following widgets:
 	 * - link: Show a link to one linked entry specified by an array with keys app, id and optional title and help-message
+	 *         Optionally the application can be specified as option and the value can be just the id.
 	 * - link-to: Widget to create links to an other entries of link-aware apps
 	 *	If the variables $data['widget_id']['to_app'] = $app and $data['widget_id']['to_id'] = $entry_id
 	 *      are set, this widget creates the links without further interaction with the calling code.
@@ -145,6 +146,14 @@
 				$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
 				$cell['no_lang'] = 1;
 				$link = $target = $popup = '';
+				if (!is_array($value) && $value && isset($GLOBALS['egw_info']['apps'][$cell['size']]))
+				{
+					$value = array(
+						'id' => $value,
+						'app' => $cell['size'],
+					);
+					$cell['size'] = '';
+				}
 				if ($value['app'] && $value['id'])
 				{
 					$view = $this->link->view($value['app'],$value['id']);
