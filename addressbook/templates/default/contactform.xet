@@ -39,7 +39,7 @@
 				<row disabled="!@show[email]">
 					<image src="email.png"/>
 					<description value="Email"/>
-					<textbox size="64" maxlength="64" validator="/^[a-z0-9.-_]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/i" span="4" id="email" needed="1"/>
+					<textbox size="64" maxlength="64" validator="/^[a-z0-9._-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/i" span="4" id="email" needed="1"/>
 					<description class="redItalic" value="*"/>
 				</row>
 				<row disabled="!@show[tel_work]">
@@ -111,7 +111,7 @@
 					<textbox id="@customfield[1]" span="4" needed="1" size="64"/>
 					<description class="redItalic" value="*"/>
 				</row>
-				<row>
+				<row disabled="!@show[custom2]">
 					<description/>
 					<description value="@customlabel[2]"/>
 					<textbox id="@customfield[2]" span="4" size="64"/>

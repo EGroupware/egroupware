@@ -37,7 +37,7 @@ class addressbook_contactform
 
 		if (is_array($content))
 		{
-			if ($content['captcha'] != $content['captcha_result'])
+			if (isset($content['captcha_result']) && $content['captcha'] != $content['captcha_result'])
 			{
 				$tpl->set_validation_error('captcha',lang('Wrong - try again ...'));
 			}
@@ -134,9 +134,11 @@ class addressbook_contactform
 		{
 			$n = $num1; $num1 = $num2; $num2 = $n;
 		}
-		$content['captcha_task'] = sprintf('%d - %d =',$num1,$num2);
-		$preserv['captcha_result'] = $num1-$num2;
-		
+		if (in_array('captcha',$fields))
+		{
+			$content['captcha_task'] = sprintf('%d - %d =',$num1,$num2);
+			$preserv['captcha_result'] = $num1-$num2;
+		}
 		return $tpl->exec('addressbook.addressbook_contactform.display',$content,$sel_options,$readonlys,$preserv);
 	}
 }
