@@ -130,9 +130,9 @@
 		$d = dir('./lang');
 		while($file=$d->read())
 		{
-			if(preg_match('/^phpgw_([-a-z]+).lang$/i',$file,$matches))
+			if(preg_match('/^(php|e)gw_([-a-z]+).lang$/i',$file,$matches))
 			{
-				$languages[$matches[1]]['available'] = True;
+				$languages[$matches[2]]['available'] = True;
 			}
 		}
 		$d->close();
