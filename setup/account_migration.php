@@ -48,7 +48,14 @@ $setup_tpl->set_file(array(
 
 function hash_sql2ldap($hash)
 {
-	switch(strtolower($GLOBALS['egw_info']['server']['sql_encryption_type']))
+	$type = $GLOBALS['egw_info']['server']['sql_encryption_type'];
+	
+	if (preg_match('/^\\{(.*)\\}(.*)$/',$hash,$matches))
+	{
+		$type = $matches[1];
+		$hash = $matches[2];
+	}
+	switch(strtolower($type))
 	{
 		case '':	// not set sql_encryption_type
 		case 'md5':
@@ -56,6 +63,9 @@ function hash_sql2ldap($hash)
 			break;
 		case 'crypt':
 			$hash = '{crypt}' . $hash;
+			break;
+			
+		case 'plain':
 			break;
 	}
 	return $hash;
@@ -192,9 +202,14 @@ else	// do the migration
 			}
 			else
 			{
-				// ToDo migrate ldap password hashes to sql, not as easy as we dont store the hash-type in the password
-				// maybe we should change sql to store passwords identical to ldap prefixed with {hash}
-				$accounts[$account_id]['account_passwd'] = $accounts[$account_id]['account_pwd'];
+				if ($accounts[$account_id]['account_pwd'][0] != '{')	// plain has to be explicitly specified for sql, in ldap it's the default
+				{
+					$accounts[$account_id]['account_passwd'] = '{PLAIN}'.$accounts[$account_id]['account_pwd'];
+				}
+				else
+				{
+					$accounts[$account_id]['account_passwd'] = $accounts[$account_id]['account_pwd'];
+				}
 			}
 			unset($accounts[$account_id]['person_id']);
 

@@ -95,6 +95,7 @@
 					case 'md5':
 						$encrypted = implode('',unpack('H*',base64_decode($encrypted)));
 						break;
+					case 'plain':
 					case 'crypt':
 						// nothing to do
 						break;
@@ -105,6 +106,12 @@
 			}
 			switch($type)
 			{
+				case 'plain': 
+					if(strcmp($cleartext,$encrypted) == 0)
+					{
+						return True;
+					}
+					return False;
 				case 'smd5':
 					return $this->smd5_compare($cleartext,$encrypted);
 				case 'sha':
@@ -174,6 +181,10 @@
 					$hash = mhash(MHASH_SHA1, $password . $salt);
 					$e_password = '{SSHA}' . base64_encode($hash . $salt);
 					break;
+				case 'plain':
+					// if plain no type is prepended
+					$e_password =$password;
+					break;
 			}
 			return $e_password;
 		}
@@ -194,6 +205,15 @@
 				case 'crypt':
 					$hash = '{crypt}' . $hash;
 					break;
+				case 'plain':
+					$saved_h = $hash;
+					if (preg_match('/^\\{([a-z_5]+)\\}(.+)$/i',$hash,$matches))
+					{
+						$hash= $matches[2];
+					} else {
+						$hash = $saved_h;
+					}
+					break;
 			}
 			return $hash;
 		}
@@ -212,6 +232,9 @@
 				: 'md5';
 			switch($type)
 			{
+				case 'plain':
+					// since md5 is the default, type plain must be prepended, for eGroupware to understand
+					return '{PLAIN}'.$password;
 				case 'crypt':
 					if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
 					{

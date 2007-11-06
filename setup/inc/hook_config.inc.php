@@ -118,6 +118,9 @@
 				'ssha' => 'ssha'
 			);
 		}
+		$hashes += array(
+			'plain' => 'plain',
+		);
 
 		while(list($key, $value) = each($hashes))
 		{
@@ -168,6 +171,9 @@
 				'ssha' => 'ssha'
 			);
 		}
+		$hashes += array(
+			'plain' => 'plain',
+		);
 
 		while(list($key, $value) = each($hashes))
 		{
