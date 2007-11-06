@@ -199,7 +199,7 @@ class uicontacts extends bocontacts
 			if ($do_email)
 			{
 				$content['nm']['filter2_onchange'] = str_replace('this.form.submit();',
-					"{ if (this.value && confirm('Add business email of whole distribution list?')) add_whole_list(this.value); else this.form.submit(); }",
+					"{ if (this.value && confirm('".lang('Add emails of whole distribution list?')."')) add_whole_list(this.value); else this.form.submit(); }",
 					$content['nm']['filter2_onchange']);
 			}
 			// use the state of the last session stored in the user prefs
@@ -218,11 +218,13 @@ class uicontacts extends bocontacts
 			if (!$re_submit)
 			{
 				$content['nm']['to'] = 'to';
+				$content['nm']['email_type'] = $this->prefs['distributionListPreferredMail'] ? $this->prefs['distributionListPreferredMail'] : 'email';
 				$content['nm']['search'] = '@';
 			}
 			else
 			{
 				$content['nm']['to'] = $to;
+				$content['nm']['email_type'] = $this->prefs['distributionListPreferredMail'] ? $this->prefs['distributionListPreferredMail'] : 'email';
 			}
 			$content['nm']['header_left'] = 'addressbook.email.left';
 		}
@@ -394,12 +396,11 @@ class uicontacts extends bocontacts
 		));
 	}
 	
-	function ajax_add_whole_list($list)
+	function ajax_add_whole_list($list, $email_type = 'email')
 	{
 		$query = $GLOBALS['egw']->session->appsession('email','addressbook');
 		$query['filter2'] = (int)$list;
-		$action_msg = lang('%1 added',lang('Business email'));
-		$this->action('email',array(),true,$success,$failed,$action_msg,$query,$msg);
+		$this->action($email_type,array(),true,$success,$failed,$action_msg,$query,$msg);
 
 		$response =& new xajaxResponse();
 
@@ -417,6 +418,8 @@ class uicontacts extends bocontacts
 		}
 		else
 		{
+			if (!$msg) $msg = lang('%1 contact(s) %2',$success,$action_msg);
+			$response->addScript("alert('".addslashes($msg)."')");
 			$response->addScript('window.close();');
 		}
 		return $response->getXML();
@@ -591,13 +594,29 @@ class uicontacts extends bocontacts
 					
 				case 'email':
 				case 'email_home':
-					$action_msg = lang('%1 added',$action=='email'?lang('Business email') : lang('Home email'));
-					if (($Ok = !!($contact = $this->read($id)) && strpos($contact[$action],'@') !== false))
+					$action == 'email' ? $action_fallback = 'email_home' : $action_fallback = 'email';
+					$action_msg = lang('added');
+					if($contact = $this->read($id))
 					{
-						if(!@is_object($GLOBALS['egw']->js)) $GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-
-						$GLOBALS['egw']->js->set_onload("addEmail('".addslashes(
-							$contact['n_fn'] ? $contact['n_fn'].' <'.$contact[$action].'>' : $contact[$action])."');");
+						if(strpos($contact[$action],'@') !== false)
+						{
+							$email = $contact[$action];
+						}
+						elseif(strpos($contact[$action_fallback],'@') !== false)
+						{
+							$email = $contact[$action_fallback];
+						}
+						else
+						{
+							$Ok = $email = false;
+						}
+						if($email)
+						{
+							if(!@is_object($GLOBALS['egw']->js)) $GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+							$GLOBALS['egw']->js->set_onload("addEmail('".addslashes(
+								$contact['n_fn'] ? $contact['n_fn'].' <'.$email.'>' : $email)."');");
+							$Ok = true;
+						}
 					}
 					break;
 					
@@ -1824,7 +1843,15 @@ $readonlys['button[vcard]'] = true;
 		
 		function add_whole_list(list)
 		{
-			xajax_doXMLHTTP("addressbook.uicontacts.ajax_add_whole_list",list);
+			if (document.getElementById("exec[nm][email_type][email_home]").checked == true) 
+			{
+				email_type = "email_home";
+			}
+			else
+			{
+				email_type = "email";
+			}
+			xajax_doXMLHTTP("addressbook.uicontacts.ajax_add_whole_list",list,email_type);
 		}
 		
 		function setOptions(options_str)

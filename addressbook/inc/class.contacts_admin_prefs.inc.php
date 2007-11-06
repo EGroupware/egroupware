@@ -224,6 +224,18 @@ class contacts_admin_prefs
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
+		$GLOBALS['settings']['distributionListPreferredMail'] = array(
+			'type'   => 'select',
+			'label'  => 'Preferred email address to use in distribution lists',
+			'name'   => 'distributionListPreferredMail',
+			'values' => array(
+				'email'	=> lang("Work email if given, else home email"),
+				'email_home'	=> lang("Home email if given, else work email"),
+			),
+			'help'   => 'Defines which email address (business or home) to use as the preferred one for distribution lists in mail.',
+			'xmlrpc' => True,
+			'admin'  => False
+		);
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
 			$link = $GLOBALS['egw']->link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements');
