@@ -19,7 +19,9 @@ add a new list	addressbook	de	Neuen Verteiler hinzufügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add business email of whole distribution list?	addressbook	de	E-Mail geschäftl. der kompletten Liste hinzufügen?
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
+add emails of whole distribution list?	addressbook	de	E-Mails der gesamten Verteilerliste hinzufügen?
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
+added	addressbook	de	hinzugefügt
 added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation
 added to distribution list	addressbook	de	hinzugefügt zum Verteiler
 additional information about using ldap as contact repository	admin	de	Zusätzliche Information über die Nutzung von LDAP zum Speichern der Kontakte
@@ -108,10 +110,12 @@ custom	addressbook	de	Benutzerdefiniert
 custom etemplate for the contactform	addressbook	de	Eigenes eTemplate für das Kontaktformular
 custom fields	addressbook	de	Benutzerdefinierte Felder
 debug output in browser	addressbook	de	Debugausgaben in Browser
+default	addressbook	de	Standard
 default address format	addressbook	de	Vorgabe für Format der Adresse
 default addressbook for adding contacts	addressbook	de	Vorgabe Adressbuch beim Hinzufügen von Kontakten
 default document to insert contacts	addressbook	de	Standarddokument zum Einfügen von Kontakten
 default filter	addressbook	de	Standardfilter
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	de	Legt fest, welche E-Mailadresse (geschäftlich oder privat) für Verteilerlisten in Mail bevorzugt benutzt werden soll.
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 delete selected distribution list!	addressbook	de	Löscht die ausgewählten Verteilerliste!
 delete this contact	addressbook	de	Diesen Kontakt löschen
@@ -185,6 +189,7 @@ home address, birthday, ...	addressbook	de	Privatadresse, Geburtstag, ...
 home city	addressbook	de	Stadt privat
 home country	addressbook	de	Land privat
 home email	addressbook	de	E-Mail privat
+home email if given, else work email	addressbook	de	Private E-Mail wenn vorhanden, ansonsten geschäftliche E-Mail
 home phone	addressbook	de	Tel. privat
 home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straße privat
@@ -228,6 +233,7 @@ list created	addressbook	de	Verteiler erzeugt
 list creation failed, no rights!	addressbook	de	Verteiler erzeugen fehlgeschlagen, keine Rechte!
 load sample file	addressbook	de	Beispieldatei laden
 load vcard	addressbook	de	VCard laden
+location	addressbook	de	Standort
 locations	addressbook	de	Standorte
 manage mapping	addressbook	de	Zuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
@@ -263,6 +269,7 @@ other phone	addressbook	de	anderes Telefon
 own sorting	addressbook	de	eigene Sortierung
 pager	common	de	Pager
 parcel	addressbook	de	Lieferadresse
+participants	addressbook	de	Teilnehmer
 permission denied !!!	addressbook	de	Zugriff verweigert !!!
 phone number	common	de	Telefonnummer
 phone numbers	common	de	Telefonnummern
@@ -272,7 +279,9 @@ please select only one category	addressbook	de	Bitte nur eine Kategorie auswähle
 please update the templatename in your customfields section!	addressbook	de	Passen Sie bitte in der Sektion "Benutzerdefinierte Felder" Ihren Templatenamen an!
 postal	common	de	Postanschrift
 pref	addressbook	de	präf
+preferred email address to use in distribution lists	addressbook	de	Bevorzugte E-Mailadresse für Verteilerlisten
 preferred phone	addressbook	de	präferierte Telefonnummer
+preferred type of email address to add for distribution lists	addressbook	de	bevorzugter Typ der E-Mailadresse für Verteilerlisten
 prefix	addressbook	de	Anrede
 public key	addressbook	de	öffentlicher Schlüssel
 publish into groups:	addressbook	de	In folgende Gruppen veröffentlichen:
@@ -284,6 +293,7 @@ record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
 remove selected contacts from distribution list	addressbook	de	Ausgewählte Kontakte vom Verteiler löschen
 removed from distribution list	addressbook	de	vom Verteiler gelöscht
+repetition	addressbook	de	Wiederholung
 replacements for inserting contacts into documents	addressbook	de	Platzhalter für das Einfügen von Kontakten in Dokumente
 required fields *	addressbook	de	unbedingt auszufüllende Felder *
 role	addressbook	de	Funktion
@@ -333,6 +343,7 @@ tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 translation	addressbook	de	Übersetzung
 type	addressbook	de	Typ
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
+updated	addressbook	de	Aktualisiert
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (verwenden Sie %1 = anzurufende Nummer, %u = Benutzernamen, %t = Telefon des Benutzers)
 use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?
@@ -349,11 +360,13 @@ warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefund
 warning: template "%1" not found, using default template instead.	addressbook	de	WARNUNG: Template "%1" nicht gefunden, das Standard-Template wird stattdessen benutzt.
 weekday	addressbook	de	Wochentag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
+where to add the email address	addressbook	de	wo soll die E-Mailadresse hinzugefügt werden
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhängig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzufügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. Alle bedeutet jedes Feld das im Adressbuch gespeichert ist einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage
+work email if given, else home email	addressbook	de	Geschäftliche E-Mail wenn vorhanden, ansonsten private E-Mail
 work phone	addressbook	de	Tel dienstl.
 write (update or add) a single entry by passing the fields.	addressbook	de	Schreibt (aktualiseren oder zufügen) eines einzelnen Eintrags durch Übergabe der Felder
 wrong - try again ...	addressbook	de	Falsch - nochmal versuchen ...

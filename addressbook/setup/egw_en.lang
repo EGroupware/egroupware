@@ -19,7 +19,9 @@ add a new list	addressbook	en	Add a new list
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add business email of whole distribution list?	addressbook	en	Add business email of whole distribution list?
 add custom field	addressbook	en	Add Custom Field
+add emails of whole distribution list?	addressbook	en	Add emails of whole distribution list?
 add to distribution list:	addressbook	en	Add to distribution list:
+added	addressbook	en	added
 added by synchronisation	addressbook	en	added by synchronisation
 added to distribution list	addressbook	en	added to distribution list
 additional information about using ldap as contact repository	admin	en	Additional information about using LDAP as contact repository
@@ -108,10 +110,12 @@ custom	addressbook	en	Custom
 custom etemplate for the contactform	addressbook	en	Custom eTemplate for the contactform
 custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
+default	addressbook	en	default
 default address format	addressbook	en	Default address format
 default addressbook for adding contacts	addressbook	en	Default addressbook for adding contacts
 default document to insert contacts	addressbook	en	Default document to insert contacts
 default filter	addressbook	en	Default Filter
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	en	Defines which email address (business or home) to use as the preferred one for distribution lists in mail.
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 delete selected distribution list!	addressbook	en	Delete selected distribution list!
 delete this contact	addressbook	en	Delete this contact
@@ -185,6 +189,7 @@ home address, birthday, ...	addressbook	en	Home address, Birthday, ...
 home city	addressbook	en	Home City
 home country	addressbook	en	Home Country
 home email	addressbook	en	Home EMail
+home email if given, else work email	addressbook	en	Home email if given, else work email
 home phone	addressbook	en	Home Phone
 home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
@@ -228,6 +233,7 @@ list created	addressbook	en	List created
 list creation failed, no rights!	addressbook	en	List creation failed, no rights!
 load sample file	addressbook	en	Load Sample file
 load vcard	addressbook	en	Load VCard
+location	addressbook	en	Location
 locations	addressbook	en	locations
 manage mapping	addressbook	en	Manage mapping
 mark records as private	addressbook	en	Mark records as private
@@ -263,6 +269,7 @@ other phone	addressbook	en	Other Phone
 own sorting	addressbook	en	own sorting
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
+participants	addressbook	en	Participants
 permission denied !!!	addressbook	en	Permission denied !!!
 phone number	common	en	Phone Number
 phone numbers	common	en	Phone Numbers
@@ -272,7 +279,9 @@ please select only one category	addressbook	en	Please select only one category
 please update the templatename in your customfields section!	addressbook	en	Please update the templatename in your customfields section!
 postal	common	en	Postal
 pref	addressbook	en	pref
+preferred email address to use in distribution lists	addressbook	en	Preferred email address to use in distribution lists
 preferred phone	addressbook	en	preferred phone
+preferred type of email address to add for distribution lists	addressbook	en	preferred type of email address to add for distribution lists
 prefix	addressbook	en	Prefix
 public key	addressbook	en	Public Key
 publish into groups:	addressbook	en	Publish into groups:
@@ -284,6 +293,7 @@ record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list
 removed from distribution list	addressbook	en	removed from distribution list
+repetition	addressbook	en	Repetition
 replacements for inserting contacts into documents	addressbook	en	Replacements for inserting contacts into documents
 required fields *	addressbook	en	required fields *
 role	addressbook	en	Role
@@ -333,6 +343,7 @@ tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
 translation	addressbook	en	Translation
 type	addressbook	en	Type
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
+updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)
 use an extra category tab?	addressbook	en	Use an extra category tab?
@@ -349,11 +360,13 @@ warning: all contacts found will be deleted!	addressbook	en	WARNING: All contact
 warning: template "%1" not found, using default template instead.	addressbook	en	WARNING: Template "%1" not found, using default template instead.
 weekday	addressbook	en	Weekday
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
+where to add the email address	addressbook	en	where to add the email address
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Which address format should the addressbook use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	en	Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.
 whole query	addressbook	en	whole query
+work email if given, else home email	addressbook	en	Work email if given, else home email
 work phone	addressbook	en	Work Phone
 write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
 wrong - try again ...	addressbook	en	Wrong - try again ...
