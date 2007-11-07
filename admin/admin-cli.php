@@ -49,6 +49,9 @@ switch($action)
 	case '--edit-user':
 		return do_edit_user($arg0s);
 		
+	case '--change-pw':
+		return do_change_pw($arg0s);
+
 	case '--delete-user':
 		return do_delete_account($arg0s[2],$arg0s[3]);
 		
@@ -119,6 +122,8 @@ function usage($action=null,$ret=0)
 	
 	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...]\n";
 	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!\n";
+	echo "--change-pw admin-account[@domain],admin-password,account,password\n";
+	echo "  Change/set the password for a given user\n";
 	echo "--delete-user admin-account[@domain],admin-password,account-to-delete[,account-to-move-data]\n";
 	echo "	Deletes a user from eGroupWare. It's data can be moved to an other user or it get deleted too.\n";
 	echo "--edit-group admin-account[@domain],admin-password,group[=new-group-name],email[,members,...]\n";
@@ -244,6 +249,58 @@ function do_edit_group($args)
 	}
 	echo lang("Account %1 %2",$account,$account_exists ? lang('updated') : lang("created with id #%1",$data['account_id']))."\n\n";
 	return 0;
+}
+
+/**
+ * Change/Set Password for a given user
+ *                    1:                     2:             3:                         4: 
+ * @param array $args admin-account[@domain],admin-password,account,password
+ */
+function do_change_pw($args)
+{
+	array_shift($args);     // admin-account
+	array_shift($args);     // admin-pw
+	$account = array_shift($args);     // account
+
+	$account_exists = true;
+	if (!($data = $GLOBALS['egw']->accounts->read($account)) || $data['account_type'] != 'u')
+	{
+		$account_exists = false;
+		$data = array('account_type' => 'u');
+	}
+	if ($GLOBALS['egw']->acl->check('account_access',$account_exists?16:4,'admin')) // user is explicitly forbidden to edit or add users
+	{
+		fail(2,lang("Permission denied !!!"));
+	}
+	if (!$account_exists)
+	{
+		fail(5,lang("Unknown user to change pw: %1 !!!",$account));
+	}
+
+	foreach(array(
+		'account_lid' => $account,
+		'account_passwd' => !($arg=array_shift($args)) ? null : $arg,
+	) as $name => $value)
+	{
+		if ($value === false) return false;     // error in _parse_xyz()
+		//echo $name.': '.(is_array($value) ? implode(', ',$value) : $value)."\n";
+		if (!is_null($value)) $data[$name] = $value;
+	}
+	if($account_exists && $data['account_passwd'])
+	{
+		$auth =& CreateObject('phpgwapi.auth');
+		$auth->change_password(null, $data['account_passwd'], $data['account_id']);
+		$GLOBALS['hook_values']['account_id'] = $data['account_id'];
+		$GLOBALS['hook_values']['old_passwd'] = null;
+		$GLOBALS['hook_values']['new_passwd'] = $data['account_passwd'];
+		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+			'location' => 'changepassword'
+		),False,True);  // called for every app now, not only enabled ones)
+	}
+
+	echo lang("Account %1 %2 ",$account,$account_exists).  lang('updated')."\n\n";
+	return 0;
+
 }
 
 /**
