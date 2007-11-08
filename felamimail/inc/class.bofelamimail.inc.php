@@ -383,6 +383,7 @@
 						$fixedMatch = str_replace('_', ' ', $match);
 						$string = str_replace($match, $fixedMatch, $string);
 					}
+					$string = str_replace('=?ISO8859-','=?ISO-8859-',$string);
 				}
 				return mb_decode_mimeheader($string);
 			} elseif(function_exists(iconv_mime_decode)) {
