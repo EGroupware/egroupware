@@ -1,0 +1,421 @@
+(no subject)	felamimail	gl	(Sen asunto)
+(only cc/bcc)	felamimail	gl	(só Cc/Cco)
+(unknown sender)	felamimail	gl	(remitente descoñecido)
+activate	felamimail	gl	Activar
+activate script	felamimail	gl	Activar script
+add acl	felamimail	gl	
+add address	felamimail	gl	Engadir enderezo
+add rule	felamimail	gl	Engadir regra
+add script	felamimail	gl	Engadir script
+add to %1	felamimail	gl	Engadir a %1
+add to address book	felamimail	gl	Engadir á axenda de enderezos
+add to addressbook	felamimail	gl	Engadir á axenda de enderezos
+adding file to message. please wait!	felamimail	gl	
+additional info	felamimail	gl	Información adicional
+address book	felamimail	gl	Axenda de enderezos
+address book search	felamimail	gl	Buscar na axenda de enderezos
+after message body	felamimail	gl	Despois do corpo da mensaxe
+all address books	felamimail	gl	Todas as axendas de enderezos
+all folders	felamimail	gl	Todos os cartafoles
+all of	felamimail	gl	todos os
+allow images from external sources in html emails	felamimail	gl	
+allways a new window	felamimail	gl	Sempre unha ventá nova
+always show html emails	felamimail	gl	Mostrar sempre os correos HTML
+and	felamimail	gl	
+any of	felamimail	gl	calquera de
+any status	felamimail	gl	
+anyone	felamimail	gl	calquera
+as a subfolder of	felamimail	gl	como subcartafol de
+attachments	felamimail	gl	Adnexos
+authentication required	felamimail	gl	
+auto refresh folder list	felamimail	gl	Actualizar automaticamente a lista de cartafoles
+back to folder	felamimail	gl	Volver ao cartafol
+bad login name or password.	felamimail	gl	
+bad or malformed request. server responded: %s	felamimail	gl	
+bad request: %s	felamimail	gl	
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	gl	Baseadas nos criterios dados, as mensaxes que cheguen poden ter diferentes cores de fondo na lista de mensaxes. Isto axuda a diferenciar facilmente de quen son as mensaxes, especialmente nas listas de correo.
+bcc	felamimail	gl	CCO
+before headers	felamimail	gl	Antes das cabeceiras
+between headers and message body	felamimail	gl	Entre as cabeceiras e o corpo da mensaxe
+body part	felamimail	gl	Parte do corpo
+can't connect to inbox!!	felamimail	gl	Non é posible ler a Caixa de entrada!!
+cc	felamimail	gl	CC
+change folder	felamimail	gl	Mudar cartafol
+check message against next rule also	felamimail	gl	comprobar a mensaxe tamén coa regra seguiente
+checkbox	felamimail	gl	Caixa de verificación
+clear search	felamimail	gl	
+click here to log back in.	felamimail	gl	Prema aquí para iniciar sesión de novo.
+click here to return to %1	felamimail	gl	Prema aquí para volver a %1
+close all	felamimail	gl	Pechar todas
+close this page	felamimail	gl	Pechar esta páxina
+close window	felamimail	gl	Pechar ventá
+color	felamimail	gl	Cor
+compose	felamimail	gl	Redactar
+compress folder	felamimail	gl	Comprimir cartafol
+condition	felamimail	gl	
+configuration	felamimail	gl	Configuración
+connection dropped by imap server.	felamimail	gl	
+contains	felamimail	gl	contén
+could not complete request. reason given: %s	felamimail	gl	
+could not open secure connection to the imap server. %s : %s.	felamimail	gl	
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	gl	
+create	felamimail	gl	Crear
+create folder	felamimail	gl	Crear cartafol
+create sent	felamimail	gl	Crear cartafol Enviados
+create subfolder	felamimail	gl	Crear subcartafol
+create trash	felamimail	gl	Crear cartafol de Lixo
+created folder successfully!	felamimail	gl	O cartafol creouse correctamente
+dark blue	felamimail	gl	Azul escuro
+dark cyan	felamimail	gl	Cian escuro
+dark gray	felamimail	gl	Gris escuro
+dark green	felamimail	gl	Verde escuro
+dark magenta	felamimail	gl	Violeta escuro
+dark yellow	felamimail	gl	Amarelo escuro
+date(newest first)	felamimail	gl	Data (a máis recente primeiro)
+date(oldest first)	felamimail	gl	Data (a máis antiga primeiro)
+days	felamimail	gl	días
+deactivate script	felamimail	gl	desactivar script
+default signature	felamimail	gl	
+default sorting order	felamimail	gl	Modo de ordenar predeterminado
+delete all	felamimail	gl	Eliminar todos
+delete folder	felamimail	gl	Eliminar cartafol
+delete script	felamimail	gl	eliminar script
+delete selected	felamimail	gl	Eliminar a selección
+delete selected messages	felamimail	gl	Eliminar mensaxes seleccionadas
+deleted	felamimail	gl	Eliminar
+deleted folder successfully!	felamimail	gl	Cartafol eliminado correctamente
+deleting messages	felamimail	gl	
+disable	felamimail	gl	Desactivar
+discard	felamimail	gl	
+discard message	felamimail	gl	descartar mensaxe
+display message in new window	felamimail	gl	
+display messages in multiple windows	felamimail	gl	mostrar as mensaxes en múltiples ventás
+display of html emails	felamimail	gl	Mostrar as mensaxes HTML
+display only when no plain text is available	felamimail	gl	Mostrar só cando non hai texto simple dispoñible
+display preferences	felamimail	gl	Preferencias de visualización
+displaying html messages is disabled	felamimail	gl	
+do it!	felamimail	gl	Facelo
+do not use sent	felamimail	gl	Non utilizar Enviados
+do not use trash	felamimail	gl	Non utilizar Lixo
+do not validate certificate	felamimail	gl	
+do you really want to delete the '%1' folder?	felamimail	gl	Está seguro de que desexa eliminar o cartafol '%1'?
+do you really want to delete the selected signatures?	felamimail	gl	
+does not contain	felamimail	gl	Non contén
+does not match	felamimail	gl	Non coincide con
+does not match regexp	felamimail	gl	Non coincide coa expresión
+don't use draft folder	felamimail	gl	
+don't use sent	felamimail	gl	Non utilizar Enviados
+don't use trash	felamimail	gl	Non utilizar Lixo
+down	felamimail	gl	abaixo
+download	felamimail	gl	descargar
+download this as a file	felamimail	gl	Descargar isto como un ficheiro
+draft folder	felamimail	gl	
+e-mail	felamimail	gl	Correo electrónico
+e-mail address	felamimail	gl	Enderezo de correo electrónico
+e-mail folders	felamimail	gl	Cartafoles de correo electrónico
+edit email forwarding address	felamimail	gl	editar o enderezo de reenvío de correo electrónico
+edit filter	felamimail	gl	Editar filtro
+edit rule	felamimail	gl	Editar regra
+edit selected	felamimail	gl	Editar selección
+edit vacation settings	felamimail	gl	editar configuración de vacacións
+email address	felamimail	gl	Enderezo de correo electrónico
+email forwarding address	felamimail	gl	Enderezo de reenvío do correo electrónico
+email signature	felamimail	gl	Sinatura de correo electrónico
+emailaddress	felamimail	gl	
+empty trash	felamimail	gl	Baleirar lixo
+enable	felamimail	gl	Activar
+encrypted connection	felamimail	gl	
+enter your default mail domain ( from: user@domain )	admin	gl	Introduza o seu dominio de correo predefinido (From: usuario@dominio)
+enter your imap mail server hostname or ip address	admin	gl	Introduza o nome do servidor de correo IMAP ou o enderezo IP
+enter your sieve server hostname or ip address	admin	gl	Introduza o nome do servidor SIEVE ou o enderezo IP
+enter your sieve server port	admin	gl	Introduza o porto do servidor SIEVE
+enter your smtp server hostname or ip address	admin	gl	Introduza o nome do servidor SMTP ou a enderezo IP
+enter your smtp server port	admin	gl	Introduza o porto do servidor SMTP
+error	felamimail	gl	ERRO
+error connecting to imap serv	felamimail	gl	Erro ao conectar ao servidor IMAP
+error connecting to imap server. %s : %s.	felamimail	gl	
+error connecting to imap server: [%s] %s.	felamimail	gl	
+error opening	felamimail	gl	Erro ao abrir
+every	felamimail	gl	cada
+every %1 days	felamimail	gl	cada %1 días
+expunge	felamimail	gl	Suprimir
+extended	felamimail	gl	
+felamimail	common	gl	FelaMiMail
+file into	felamimail	gl	Información do ficheiro
+files	felamimail	gl	Ficheiros
+filter active	felamimail	gl	Filtro activo
+filter name	felamimail	gl	Nome do filtro
+filter rules	common	gl	Regras de filtrado
+first name	felamimail	gl	Nome
+flagged	felamimail	gl	marcado
+flags	felamimail	gl	Marcas
+folder acl	felamimail	gl	ACL do cartafol
+folder name	felamimail	gl	Nome do cartafol
+folder path	felamimail	gl	Camiño do cartafol
+folder preferences	felamimail	gl	Preferencias do cartafol
+folder settings	felamimail	gl	Opcións do cartafol
+folder status	felamimail	gl	Estado do cartafol
+folderlist	felamimail	gl	Lista de cartafoles
+foldername	felamimail	gl	Nome do cartafol
+folders	felamimail	gl	Cartafoles
+folders created successfully!	felamimail	gl	Os cartafoles creáronse correctamente
+follow	felamimail	gl	seguir
+for mail to be send - not functional yet	felamimail	gl	Para o correo pendente de enviar - aínda non funciona
+for received mail	felamimail	gl	Para o correo recibido
+forward	felamimail	gl	Reenviar
+forward to	felamimail	gl	
+forward to address	felamimail	gl	reenviar ao enderezo
+forwarding	felamimail	gl	Expedición
+found	felamimail	gl	Encontrado
+fri	felamimail	gl	Ven
+from	felamimail	gl	De
+from(a->z)	felamimail	gl	De (A-> Z)
+from(z->a)	felamimail	gl	De (Z-> A)
+full name	felamimail	gl	Nome completo
+greater than	felamimail	gl	maior que
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	gl	Bótelle unha ollada a <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> para saber máis acerca do Squirrelmail.<br>
+header lines	felamimail	gl	Liñas de cabeceira
+hide header	felamimail	gl	Ocultar cabeceira
+hostname / address	felamimail	gl	
+html	felamimail	gl	HTML
+icons and text	felamimail	gl	Iconas e texto
+icons only	felamimail	gl	Só iconas
+identifying name	felamimail	gl	Nome identificativo
+identity	felamimail	gl	
+if	felamimail	gl	SE
+if from contains	felamimail	gl	se o remitente contén
+if mail header	felamimail	gl	se a cabeceira do correo
+if message size	felamimail	gl	se o tamaño da mensaxe
+if subject contains	felamimail	gl	se o asunto contén
+if to contains	felamimail	gl	se o destinatario contén
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	gl	
+illegal folder name.  please select a different name.	felamimail	gl	Nome de cartafol ilegal. Por favor, seleccione un nome diferente
+imap	felamimail	gl	IMAP
+imap server	felamimail	gl	Servidor IMAP
+imap server address	felamimail	gl	Enderezo do servidor IMAP
+imap server closed the connection.	felamimail	gl	
+imap server closed the connection. server responded: %s	felamimail	gl	
+imap server password	felamimail	gl	
+imap server type	felamimail	gl	Tipo de servidor IMAP
+imap server username	felamimail	gl	
+imaps authentication	felamimail	gl	Autenticación de IMAPS
+imaps encryption only	felamimail	gl	Cifrado de IMAPS soamente
+in	felamimail	gl	en
+inbox	felamimail	gl	
+incoming mail server(imap)	felamimail	gl	
+index order	felamimail	gl	Orde do índice
+info	felamimail	gl	Información
+invalid user name or password	felamimail	gl	O nome de usuario ou o contrasinal non son válidos
+javascript	felamimail	gl	JavaScript
+jumping to end	felamimail	gl	
+jumping to start	felamimail	gl	
+keep a copy of the message in your inbox	felamimail	gl	gardar unha copia da mensaxe na caixa de entrada
+keep local copy of email	felamimail	gl	gardar copia local do correo
+kilobytes	felamimail	gl	quilobytes
+language	felamimail	gl	Idioma
+last name	felamimail	gl	Apelidos
+left	felamimail	gl	Esquerda
+less	felamimail	gl	menos
+less than	felamimail	gl	menor que
+light gray	felamimail	gl	Gris claro
+list all	felamimail	gl	Listar todo
+loading	felamimail	gl	
+location of buttons when composing	felamimail	gl	Ubicación dos botóns ao redactar
+mail server login type	admin	gl	Tipo de sesión do servidor de correo
+mail settings	felamimail	gl	Configuración do correo
+mainmessage	felamimail	gl	mensaxe principal
+manage emailaccounts	preferences	gl	
+manage emailfilter / vacation	preferences	gl	Administrar filtros de correo electrónico / Vacacións
+manage folders	common	gl	Administrar cartafoles
+manage sieve	common	gl	Administrar scripts Sieve
+manage signatures	felamimail	gl	
+mark as deleted	felamimail	gl	Marcar como eliminado
+mark messages as	felamimail	gl	Marcar mensaxes seleccionadas como
+mark selected as flagged	felamimail	gl	Marcar a selección como para descargar
+mark selected as read	felamimail	gl	Marcar a selección como lida
+mark selected as unflagged	felamimail	gl	Marcar a selección como para non descargar
+mark selected as unread	felamimail	gl	Marcar a selección como non lida
+match	felamimail	gl	Coincidencia
+matches	felamimail	gl	coincide
+matches regexp	felamimail	gl	coincide coa expresión
+max uploadsize	felamimail	gl	
+message highlighting	felamimail	gl	Realce da mensaxe
+message list	felamimail	gl	Lista de mensaxes
+messages	felamimail	gl	mensaxes
+mon	felamimail	gl	Lun
+move	felamimail	gl	mover
+move messages	felamimail	gl	mover mensaxes
+move selected to	felamimail	gl	Mover as seleccionadas a
+move to trash	felamimail	gl	Mover ao lixo
+moving messages to	felamimail	gl	Mover mensaxes a
+name	felamimail	gl	Nome
+never display html emails	felamimail	gl	Non mostrar nunca os correos en HTML
+new	common	gl	Novo
+new filter	felamimail	gl	Novo filtro
+next	felamimail	gl	Seguinte
+next message	felamimail	gl	Mensaxe seguinte
+no active imap server found!!	felamimail	gl	
+no encryption	felamimail	gl	
+no filter	felamimail	gl	Sen filtro
+no folders found	felamimail	gl	Non se encontraron cartafoles
+no folders were found to subscribe to!	felamimail	gl	Non se encontraron cartafoles aos que suscribirse
+no folders were found to unsubscribe from!	felamimail	gl	Non se encontraron cartafoles dos que darse de baixa
+no highlighting is defined	felamimail	gl	Non se definiu un realce
+no message returned.	felamimail	gl	
+no messages found...	felamimail	gl	Non se encontraron mensaxes...
+no messages were selected.	felamimail	gl	Non se seleccionaron mensaxes
+no plain text part found	felamimail	gl	
+no previous message	felamimail	gl	Non hai mensaxe anterior
+no supported imap authentication method could be found.	felamimail	gl	
+no valid emailprofile selected!!	felamimail	gl	Non se seleccionou un perfil de correo electrónico válido
+none	felamimail	gl	ningún
+on behalf of	felamimail	gl	en nome de
+one address is not valid	felamimail	gl	Un enderezo non é válido
+only inbox	felamimail	gl	Só a Caixa de entrada
+only one window	felamimail	gl	Só unha ventá
+only unseen	felamimail	gl	Só os non vistos
+open all	felamimail	gl	Abrir todas
+options	felamimail	gl	Opcións
+or	felamimail	gl	
+organisation	felamimail	gl	Organización
+organization	felamimail	gl	Organización
+organization name	admin	gl	Nome da organización
+outgoing mail server(smtp)	felamimail	gl	
+participants	felamimail	gl	Participantes
+personal information	felamimail	gl	Información persoal
+please select a address	felamimail	gl	Por favor, seleccione un enderezo
+please select the number of days to wait between responses	felamimail	gl	Por favor, seleccione o número de días a esperar entre as respostas
+please supply the message to send with auto-responses	felamimail	gl	Por favor, indique a mensaxe a enviar para respostas automáticas
+port	felamimail	gl	
+posting	felamimail	gl	enviar
+previous	felamimail	gl	Anterior
+previous message	felamimail	gl	Mensaxe anterior
+print it	felamimail	gl	Imprimilo
+print this page	felamimail	gl	Imprimir esta páxina
+quicksearch	felamimail	gl	Busca rápida
+read	felamimail	gl	lidos
+reading	felamimail	gl	lendo
+receive notification	felamimail	gl	
+recent	felamimail	gl	recente(s)
+refresh time in minutes	felamimail	gl	Tempo da actualización en minutos
+reject with	felamimail	gl	
+remove	felamimail	gl	eliminar
+remove immediately	felamimail	gl	Eliminar inmediatamente
+rename	felamimail	gl	Renomear
+rename a folder	felamimail	gl	Renomear un cartafol
+rename folder	felamimail	gl	Renomear cartafol
+renamed successfully!	felamimail	gl	Renomeado correctamente
+replied	felamimail	gl	respondido
+reply	felamimail	gl	Responder
+reply all	felamimail	gl	Responder a todos
+reply to	felamimail	gl	Responder a
+replyto	felamimail	gl	Responder a
+respond	felamimail	gl	Responder
+respond to mail sent to	felamimail	gl	Responder ao correo enviado a
+return	felamimail	gl	Volver
+return to options page	felamimail	gl	Volver á páxina de opcións
+right	felamimail	gl	Dereita
+row order style	felamimail	gl	
+rule	felamimail	gl	Regra
+sat	felamimail	gl	Sáb
+save	felamimail	gl	Gardar
+save as draft	felamimail	gl	
+save as infolog	felamimail	gl	
+save changes	felamimail	gl	Gardar modificacións
+save message to disk	felamimail	gl	
+script name	felamimail	gl	Nome do script
+script status	felamimail	gl	Estado do script
+search	felamimail	gl	Buscar
+search for	felamimail	gl	Buscar
+select	felamimail	gl	Seleccionar
+select all	felamimail	gl	Seleccionar todo
+select emailprofile	felamimail	gl	Seleccionar perfil de correo electrónico
+select folder	felamimail	gl	seleccionar cartafol
+select your mail server type	admin	gl	Seleccionar o tipo de servidor de correo
+send	felamimail	gl	Enviar
+send a reject message	felamimail	gl	Enviar unha mensaxe de rexeitamento
+sent folder	felamimail	gl	Cartafol de enviados
+server supports mailfilter(sieve)	felamimail	gl	
+show header	felamimail	gl	Mostrar cabeceira
+show new messages on main screen	felamimail	gl	Mostrar mensaxes novas na pantalla principal
+sieve script name	felamimail	gl	
+sieve settings	admin	gl	Configuración de Sieve
+signature	felamimail	gl	Sinatura
+simply click the target-folder	felamimail	gl	Simplemente prema no cartafol de destino
+site configuration	felamimail	gl	Configuración do sitio
+size	felamimail	gl	Tamaño
+size of editor window	felamimail	gl	Tamaño da ventá do editor
+size(...->0)	felamimail	gl	Tamaño (...->0)
+size(0->...)	felamimail	gl	Tamaño (0->...)
+skipping forward	felamimail	gl	
+skipping previous	felamimail	gl	
+small view	felamimail	gl	Vista reducida
+smtp settings	admin	gl	Opcións SMTP
+subject	felamimail	gl	Asunto
+subject(a->z)	felamimail	gl	Asunto (A->Z)
+subject(z->a)	felamimail	gl	Asunto (Z->A)
+submit	felamimail	gl	Enviar
+subscribe	felamimail	gl	Subscribirse
+subscribed	felamimail	gl	Subscrito
+subscribed successfully!	felamimail	gl	Subscrición correcta
+sun	felamimail	gl	Dom
+table of contents	felamimail	gl	Táboa de contido
+text only	felamimail	gl	Só texto
+the connection to the imap server failed!!	felamimail	gl	Fallou a conexión co servidor IMAP!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	gl	
+the mimeparser can not parse this message.	felamimail	gl	O intérprete non pode ler esta mensaxe
+then	felamimail	gl	entón
+this folder is empty	felamimail	gl	este cartafol está baleiro
+this php has no imap support compiled in!!	felamimail	gl	Esta instalación de PHP non ten soporte IMAP!
+thu	felamimail	gl	Xov
+to	felamimail	gl	Para
+to mail sent to	felamimail	gl	ao correo enviado a
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	gl	
+translation preferences	felamimail	gl	Preferencias da tradución
+translation server	felamimail	gl	Servidor de traducións
+trash fold	felamimail	gl	Cartafol Papeleira
+trash folder	felamimail	gl	Cartafol Papeleira
+tue	felamimail	gl	Mar
+type	felamimail	gl	tipo
+unexpected response from server to authenticate command.	felamimail	gl	
+unexpected response from server to digest-md5 response.	felamimail	gl	
+unexpected response from server to login command.	felamimail	gl	
+unflagged	felamimail	gl	Sen marcar
+unknown err	felamimail	gl	Erro descoñecido
+unknown error	felamimail	gl	Erro descoñecido
+unknown imap response from the server. server responded: %s	felamimail	gl	
+unknown sender	felamimail	gl	Remitente descoñecido
+unknown user or password incorrect.	felamimail	gl	Usuario descoñecido ou contrasinal incorrecto
+unread	common	gl	Non lido
+unseen	felamimail	gl	Non vistos
+unselect all	felamimail	gl	Deseleccionar todo
+unsubscribe	felamimail	gl	Darse de baixa
+unsubscribed	felamimail	gl	Non subscrito
+unsubscribed successfully!	felamimail	gl	Acción de darse de baixa correcta
+up	felamimail	gl	arriba
+updating message status	felamimail	gl	
+updating view	felamimail	gl	
+use <a href="%1">emailadmin</a> to create profiles	felamimail	gl	utilice <a href="%1">EmailAdmin</a> para crear perfís
+use a signature	felamimail	gl	Utilizar unha sinatura
+use a signature?	felamimail	gl	Utilizar unha sinatura?
+use addresses	felamimail	gl	Utilizar enderezos
+use custom settings	felamimail	gl	Utilizar configuraciçon personalizada
+use regular expressions	felamimail	gl	utilizar expresións regulares
+use smtp auth	admin	gl	Utilizar identificación SMTP
+users can define their own emailaccounts	admin	gl	Os usuarios poden definir as súas propias contas de correo electrónico
+vacation notice	common	gl	aviso de vacacións
+vacation notice is active	felamimail	gl	
+validate certificate	felamimail	gl	
+view full header	felamimail	gl	Ver a cabeceira completa
+view header lines	felamimail	gl	Ver mensaxe
+view message	felamimail	gl	Vendo a cabeceira completa
+viewing full header	felamimail	gl	Vendo mensaxe
+viewing message	felamimail	gl	Vendo mensaxes
+viewing messages	felamimail	gl	Mér
+wed	felamimail	gl	Benvido(a) ao sistema de WebMail %1
+when deleting messages	felamimail	gl	Ao eliminar mensaxes
+with message	felamimail	gl	coa mensaxe
+with message "%1"	felamimail	gl	coa mensaxe "%1"
+wrap incoming text at	felamimail	gl	Axustar o texto entrante a
+writing	felamimail	gl	escribindo
+wrote	felamimail	gl	escribiu

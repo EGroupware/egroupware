@@ -1,0 +1,102 @@
+accessories of	resources	gl	accesorios de
+accessories:	resources	gl	Accesorios:
+actions	resources	gl	Accións
+add accessory	resources	gl	Engadir accesorio
+add resource	resources	gl	engadir recurso
+add resources	resources	gl	Engadir recursos
+administrator	resources	gl	Administrador
+all categories	resources	gl	toda as categorías
+book	resources	gl	Reservar
+book selected resources	resources	gl	reservar os recursos seleccionados
+book this resource	resources	gl	Reservar este recurso
+bookable	resources	gl	Reservable
+buy this article	resources	gl	Comprar este artigo
+buy this resource	resources	gl	Comprar este recurso
+buyable	resources	gl	Adquirible
+categories admin	resources	gl	Administrador de categorías
+category:	resources	gl	Categoría:
+check all	resources	gl	Marcar todo
+choose categories admin	resources	gl	Escoller administrador de categorías
+clear selection	resources	gl	Limpar selección
+configure access permissions	admin	gl	Configurar permisos de acceso
+create new accessory for this resource	resources	gl	Crear novo accesorio para este recurso
+create new links	resources	gl	Crear novas ligazóns
+delete selected resources	resources	gl	Eliminar os recursos seleccionados
+delete this entry	resources	gl	Eliminar esta entrada
+description (short)	resources	gl	Descrición (curta)
+direct booking permissions	resources	gl	Permisos de reserva directa
+don't use vfs (this will need a symlink --> see readme)	resources	gl	Non utilizar vfs (isto precisaría unha ligazón simbólica --> consulte README)
+edit this entry	resources	gl	Editar esta entrada
+existing links	resources	gl	Ligazóns existentes
+general	resources	gl	Xeral
+general informations about resource	resources	gl	Información xeral acerca do recurso
+gernal resource	resources	gl	recurso xeral
+how many of the resources are useable?	resources	gl	Cantos recursos son utilizables?
+how many of them are useable?	resources	gl	Cantos son utilizables?
+how many of this resource are usable	resources	gl	Cantos destes recursos son utilizables
+how many of this resource exists	resources	gl	Cantos destes recursos existen
+implies booking permission	resources	gl	implica permiso de reserva
+implies read permission	resources	gl	implica permiso de lectura
+information about storage	resources	gl	Información acerca do almacenamento
+informations about the location of resource	resources	gl	Información acerca da localización do recurso
+inventory number	resources	gl	Número de inventario
+inventory number:	resources	gl	Número de inventario:
+is resource bookable?	resources	gl	É posible reservar o recurso?
+is resource buyable?	resources	gl	É posible comprar o recurso?
+is this resource bookable?	resources	gl	É posible reservar este recurso?
+is this resource buyable?	resources	gl	É posible comprar este recurso?
+links	resources	gl	Ligazóns
+location	resources	gl	Localización
+location of resource	resources	gl	Localización do recurso
+location:	resources	gl	Localización:
+name of resource	resources	gl	Nome do recurso
+name:	resources	gl	Nome:
+no description available	resources	gl	sen descrición dispoñible
+no resources selected	resources	gl	Sen recursos seleccionados
+notify your administrator to correct this situation	resources	gl	Consulte co administrador para resolver esta situación
+picture	resources	gl	Imaxe
+picture source	resources	gl	orixe da imaxe
+picture type is not supported, sorry!	resources	gl	O tipo de imaxe non é compatible
+pictures or resource	resources	gl	Imaxes ou recurso
+planer	resources	gl	planificador
+prizeing information for booking or buying	resources	gl	Información de prezos para reservar ou comprar
+quantity	resources	gl	Cantidade
+quantity of resource	resources	gl	Cantidade do recurso
+quantity:	resources	gl	Cantidade:
+read calendar permissions	resources	gl	Ler permisos do calendario
+read permissions	resources	gl	Permiso de lectura
+related links	resources	gl	Ligazóns relacionadas
+resources	common	gl	recursos
+resources list	resources	gl	lista de recursos
+responsible:	resources	gl	Responsable:
+saves entry and exits	resources	gl	Garda a entrada e sae
+select a category	resources	gl	Seleccionar unha categoría
+select resource	resources	gl	seleccionar recurso
+select resources	common	gl	Seleccionar recursos
+select/deselect all	resources	gl	seleccionar/desmarcar todo
+short description	resources	gl	Descrición curta
+short description of resource	resources	gl	Descrición curta do recurso
+show calendar of resource	resources	gl	Mostrar o calendario do recurso
+something went wrong by deleting resource	resources	gl	Ocorreu un erro ao eliminar o recurso
+something went wrong by saving resource	resources	gl	Ocorreu un erro ao gardar o recurso
+storage inforation	resources	gl	Información de almacenamento
+storage information	resources	gl	Información de almacenamento
+storage information:	resources	gl	Información de almacenamento:
+the calendar of this resource	resources	gl	O calendario deste recurso
+this module displays the resources app	resources	gl	Este módulo mostra a aplicación de recursos
+use general resources icon	resources	gl	Utilizar icona de recursos xerais
+use own picture	resources	gl	Utilizar imaxe propia
+use the category's icon	resources	gl	Utilizar a icona da categoría
+useable	resources	gl	utilizable
+useable:	resources	gl	Utilizable:
+view accessories for this resource	resources	gl	Ver accesorios para este recurso
+view this entry	resources	gl	Ver esta entrada
+web-page of resource	resources	gl	Páxina web do recurso
+web-site for this resource	resources	gl	Sitio web para este recurso
+where to find this resource?	resources	gl	Onde encontrar este recurso?
+which category does this resource belong to?	resources	gl	A que categoría pertence este recurso?
+write permissions	resources	gl	Permiso de escrita
+you are not permitted to delete this reource!	resources	gl	Non ten permiso para eliminar este recurso!
+you are not permitted to edit this reource!	resources	gl	Non ten permiso para editar este recurso!
+you are not permitted to get information about this resource!	resources	gl	Non ten permiso para obter información acerca deste recurso!
+you chose more resources than available	resources	gl	Escolleu máis recursos dos dispoñibles

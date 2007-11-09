@@ -1,0 +1,450 @@
+%1 - %2 of %3 user accounts	admin	gl	%1 - %2 de %3 contas de usuario
+%1 - %2 of %3 user groups	admin	gl	%1 - %2 de %3 grupos de usuario
+%1 acl records of not (longer) existing accounts deleted.	admin	gl	Elimináronse %1 rexistros ACL de contas inexistentes.
+%1 not found or not executable !!!	admin	gl	Non foi posible localizar %1 ou non é executable
+(default no, leave it off if you dont use it)	admin	gl	(Non por defecto, desactivar cando non se utilice)
+(stored password will not be shown here)	admin	gl	(non se mostrarán aquí as chaves gardadas)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	gl	(Para instalar novas aplicacións utilice<br><a href="setup/" target="setup">Setup</a> [Xestionar aplicacións] !!!)
+-  type	admin	gl	- tipo
+accesslog and bruteforce defense	admin	gl	Defensa de acceso ao rexistro e forza bruta
+account active	admin	gl	Conta activa
+account has been created	common	gl	A conta foi creada
+account has been deleted	common	gl	A conta foi eliminada
+account has been updated	common	gl	A conta foi actualizada
+account list	admin	gl	Lista de contas
+account permissions	admin	gl	Permisos da conta
+account preferences	admin	gl	Preferencias da conta
+acl manager	admin	gl	Xestión de ACL
+acl rights	common	gl	Permisos de ACL
+action	admin	gl	Acción
+activate wysiwyg-editor	admin	gl	Activar editor WYSIWYG
+add a category	admin	gl	Engadir categoría
+add a group	admin	gl	Engadir grupo
+add a new account.	admin	gl	Engadir nova conta.
+add a subcategory	admin	gl	Engadir subcategoría
+add a user	admin	gl	Engadir usuario
+add account	admin	gl	Engadir conta
+add application	admin	gl	Engadir aplicación
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	gl	Engadir usuarios, creados automaticamente, a este grupo (se non especifica ningún, utilizarase 'Predefinido').
+add global category	admin	gl	Engadir categoría global
+add global category for %1	admin	gl	Engadir categoría global para %1
+add group	admin	gl	Engadir grupo
+add new account	admin	gl	Engadir nova conta
+add new application	admin	gl	Engadir nova aplicación
+add peer server	admin	gl	Engadir servidor peer
+add sub-category	admin	gl	Engadir subcategoría
+admin email	admin	gl	Correo electrónico do administrador
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	gl	Enderezos de correo electrónico da administración (separados por comas) para a notificación de bloqueos (deixar en branco para non notificar)
+admin name	admin	gl	Nome do administrador
+administration	admin	gl	Administración
+admins	admin	gl	Administradores
+advanced options	admin	gl	Opcións avanzadas
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	gl	Despois de cantas tentativas de inicio de sesión falladas deben bloquearse as contas? (Por defecto, 3)
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	gl	Despois de cantas tentativas de inicio de sesión falladas deben bloquearse os IP? (Por defecto, 3)
+aliases	admin	gl	Alias
+all records and account information will be lost!	admin	gl	Perderanse todos os rexistros e a información das contas!
+all users	admin	gl	Todos os usuarios
+allow anonymous access to this app	admin	gl	Permitir acceso anónimo a esta aplicación
+alternate email address	admin	gl	Enderezo de correo electrónico alternativo
+anonymous user	admin	gl	Usuario anónimo
+anonymous user (not shown in list sessions)	admin	gl	Usuario anónimo (non mostrado na lista de sesións)
+anonymous user does not exist!	admin	gl	Usuario anónimo non existente
+anonymous user has no run-rights for the application!	admin	gl	O usuario anónimo non ten dereitos de execución para esta aplicación
+appearance	admin	gl	Aparencia
+application	admin	gl	Aplicación
+application name	admin	gl	Nome da aplicación
+application title	admin	gl	Título da aplicación
+applications	admin	gl	Aplicacións
+applications list	admin	gl	Lista de aplicacións
+applies the changes	admin	gl	Aplica as modificacións
+are you sure you want to delete the application %1 ?	admin	gl	Está certo de querer eliminar a aplicación %1?
+are you sure you want to delete this account ?	admin	gl	Está certo de querer eliminar esta conta?
+are you sure you want to delete this application ?	admin	gl	Está certo de querer eliminar esta aplicación?
+are you sure you want to delete this category ?	common	gl	Está certo de querer eliminar esta categoría?
+are you sure you want to delete this global category ?	admin	gl	Está certo de querer eliminar esta categoría global?
+are you sure you want to delete this group ?	admin	gl	Está certo de querer eliminar este grupo?
+are you sure you want to delete this server?	admin	gl	Está certo de querer eliminar este servidor?
+are you sure you want to kill this session ?	admin	gl	Está certo de querer terminar esta sesión?
+async services last executed	admin	gl	Servizos asíncronos máis recentemente executados
+asynchronous timed services	admin	gl	Servizos asíncronos programados
+asyncservices not yet installed or other error (%1) !!!	admin	gl	Servizos asíncronos aínda non instalados, ou erro doutro tipo (%1)
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	gl	Tentar utilizar o tipo MIME correcto para FTP en vez do application/octet-stream predefinido
+attribute accountstatus explained	admin	gl	Isto xestiona o atributo <b><i>-accountStatus-</i></b> do esquema de QMAIL.
+attribute mail explained	admin	gl	Isto xestiona o atributo <b><i>-mail-</i></b> do esquema de QMAIL e non debe permanecer en branco. Tamén é un campo para correo electrónico interno de eGW.
+attribute mailalternateaddress explained	admin	gl	Isto xestiona o atributo <b><i>-mailAlternateAddress-</i></b> do esquema de QMAIL e pode administrarse como mapas virtuais ou alias.
+attribute mailforwardingaddress explained	admin	gl	Isto xestiona o atributo <b><i>-mailForwardingAddress-</i></b> do esquema de QMAIL e non debe permanecer en branco se está atribuído.
+authentication / accounts	admin	gl	Autenticación / Contas
+auto create account records for authenticated users	admin	gl	Crear contas automaticamente para usuarios autenticados
+back to the list	admin	gl	Volver á lista
+bi-dir passthrough	admin	gl	Bidireccional passthrough
+bi-directional	admin	gl	Bidireccional
+bottom	admin	gl	Parte inferior
+calculate next run	admin	gl	Calcular a seguinte execución
+can change password	admin	gl	Pode modificar o contrasinal
+cancel testjob!	admin	gl	Cancelar traballo de proba
+categories list	admin	gl	Lista de categorías
+category %1 has been saved !	admin	gl	A categoría %1 foi gardada
+category list	admin	gl	Lista de categorías
+change acl rights	admin	gl	Modificar permisos de ACL
+change config settings	admin	gl	Modificar opcións de configuración
+change main screen message	admin	gl	Modificar mensaxe da pantalla principal
+check ip address of all sessions	admin	gl	Verificar o IP de todas as sesións
+check items to <b>%1</b> to %2 for %3	admin	gl	Verificar elementos a <b>%1</b> a %2 para %3
+click to select a color	admin	gl	Prema para seleccionar unha cor
+color	admin	gl	Cor
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	gl	Dominio da cookie (por defecto, baleiro significa utilizar o nome do dominio completo, para SiteMgr, por exemplo, ".domain.com" permite utilizar a mesma cookie para egw.dominio.com e para www.domain.com)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	gl	Camiño da cookie (permite múltiples sesión de eGroupWare con diferentes directorios, ten problemas con SiteMgr!)
+country selection	admin	gl	Selección de país
+create group	admin	gl	Crear grupo
+creates a new field	admin	gl	Crea un campo
+crontab only (recomended)	admin	gl	Só mediante crontab (recomendado)
+custom fields	admin	gl	Campos personalizados
+cyrus imap server	admin	gl	Servidor IMAP Cyrus
+data	admin	gl	Datos
+day	admin	gl	Día
+day of week<br>(0-6, 0=sun)	admin	gl	Día da semana<br>(0-6, 0=Dom)
+db backup and restore	admin	gl	Copia de seguranza e restauración da base de datos
+default	admin	gl	Predefinido
+default file system space per user	admin	gl	Espazo predefinido no sistema de ficheiros por usuario
+default file system space per user/group ?	admin	gl	Espazo predefinido no sistema de ficheiros por usuario/grupo
+deinstall crontab	admin	gl	Desinstalar crontab
+delete account	admin	gl	Eliminar conta
+delete all records	admin	gl	Eliminar todos os rexistros
+delete application	admin	gl	Eliminar aplicación
+delete category	admin	gl	Eliminar categoría
+delete group	admin	gl	Eliminar grupo
+delete peer server	admin	gl	Eliminar servidor peer
+delete the category	admin	gl	Eliminar categoría
+delete the group	admin	gl	Eliminar grupo
+delete this category	admin	gl	Eliminar esta categoría
+delete this group	admin	gl	Eliminar este grupo
+delete this user	admin	gl	Eliminar este usuario
+deletes this field	admin	gl	Elimina este campo
+deliver extern	admin	gl	Entrega externa
+deny access to access log	admin	gl	Negar acceso ao rexistro de accesos
+deny access to application registery	admin	gl	Negar acceso ao rexistro de aplicacións
+deny access to applications	admin	gl	Negar acceso a aplicacións
+deny access to asynchronous timed services	admin	gl	Negar acceso aos servizos asíncronos programados
+deny access to current sessions	admin	gl	Negar acceso ás sesións actuais
+deny access to db backup and restore	admin	gl	Negar acceso á copia de seguranza e restauración da base de datos
+deny access to error log	admin	gl	Negar acceso ao rexistro de erros
+deny access to global categories	admin	gl	Negar acceso ás categorías globais
+deny access to groups	admin	gl	Negar acceso aos grupos
+deny access to mainscreen message	admin	gl	Negar acceso á mensaxe da pantalla principal
+deny access to peer servers	admin	gl	Negar acceso a servidores peer
+deny access to phpinfo	admin	gl	Negar acceso a phpinfo
+deny access to site configuration	admin	gl	Negar acceso á configuración do sitio
+deny access to user accounts	admin	gl	Negar acceso ás contas de usuario
+deny all users access to grant other users access to their entries ?	admin	gl	Desexa negar acceso a todos os usuarios para así permitir a outros usuarios acceder aos seus rexistros?
+description can not exceed 255 characters in length !	admin	gl	A descrición non pode superar 255 caracteres de lonxitude
+determines the order the fields are displayed	admin	gl	Determina a orde de visualización dos campos
+disable "auto completion" of the login form	admin	gl	Desactivar "conclusión automática" do formulario de inicio e sesión
+disable wysiwyg-editor	admin	gl	Desactivar editor WYSIWYG
+disabled (not recomended)	admin	gl	Desactivado (non recomendado)
+display	admin	gl	Mostrar
+do not delete the category and return back to the list	admin	gl	Non eliminar a categoría e regresar á lista
+do you also want to delete all global subcategories ?	admin	gl	Desexa eliminar tamén todas as subcategorías globais?
+do you want to delete all global subcategories ?	admin	gl	Desexa eliminar todas as subcategorías globais?
+do you want to move all global subcategories one level down ?	admin	gl	Desexa mover todas as subcategorías globais un nivel cara a abaixo?
+document root (default)	admin	gl	Raíz do documento (predefinida)
+each value is a line like <id>[=<label>]	admin	gl	Cada valor é unha liña como <id>[=<etiqueta>]
+each value is a line like id[=label]	admin	gl	Cada valor é unha liña como id[=label]
+edit account	admin	gl	Editar conta
+edit application	admin	gl	Editar aplicación
+edit email settings	admin	gl	Editar configuración de correo electrónico
+edit global category	admin	gl	Editar categoría global
+edit global category for %1	admin	gl	Editar categoría global para %1
+edit group	admin	gl	Editar grupo
+edit group acl's	admin	gl	Editar ACL de grupo
+edit login screen message	admin	gl	Editar mensaxe da pantalla de inicio de sesión
+edit main screen message	admin	gl	Editar mensaxe da pantalla principal
+edit peer server	admin	gl	Editar servidor peer
+edit table format	admin	gl	Editar formato de táboa
+edit this category	admin	gl	Editar esta categoría
+edit this group	admin	gl	Editar este grupo
+edit this user	admin	gl	Editar este usuario
+edit user	admin	gl	Editar usuario
+edit user account	admin	gl	Editar conta de usuario
+egroupware directory	admin	gl	Directorio de eGroupWare
+email account active	admin	gl	Conta de correo electrónico activa
+email address	admin	gl	Enderezo de correo electrónico
+enable debug-messages	admin	gl	Activar mensaxes de depuración
+enable the soap service	admin	gl	Activar o servizo soap
+enable the xmlrpc service	admin	gl	Activar o servizo xmlrpc
+enabled - hidden from navbar	admin	gl	Activado - Oculto da barra de navegación
+enabled - popup window	admin	gl	Activado - Ventá emerxente
+enter a description for the category	admin	gl	Introduza unha descrición para esta categoría
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	gl	Introduza un texto aleatorio para a cifraxe <br>da sesión (require mcrypt)
+enter the background color for the login page	admin	gl	Introduza a cor de fondo para a páxina de inicio de sesión
+enter the background color for the site title	admin	gl	Introduza a cor de fondo para o título do sitio
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	gl	Introduza o camiño completo para os ficheiros temporais.<br>Exemplos: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	gl	Introduza o camiño completo para os ficheiros de usuarios<br>e de grupo. Exemplos: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	gl	Introduza o nome do equipo sobre o cal está a executarse este servidor
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	gl	Introduza a localización do URL  de eGroupWare.<br>Exemplo: http://www.dominio.com/egroupware ou /egroupware<br><b>Sen barra ao final</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	gl	Introduza a cadea de busca. Para mostrar todas as entradas, limpe este campo e prema de novo o botón ENVIAR.
+enter the site password for peer servers	admin	gl	Introduza o contrasinal do sitio para servidores peer
+enter the site username for peer servers	admin	gl	Introduza o usuario do sitio para servidores peer
+enter the title for your site	admin	gl	Introduza o título para o sitio
+enter the title of your logo	admin	gl	Introduza o título do logo
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	gl	Introduza o URL ou nome de ficheiro (en phpgwapi/templates/default/images) do logo
+enter the url where your logo should link to	admin	gl	Introduza o url da ligazón do logo
+enter your default ftp server	admin	gl	Introduza o servidor FTP predefinido
+enter your default mail domain ( from: user@domain )	admin	gl	Introduza o dominio de correo predefinido ( De: usuario@dominio )
+enter your http proxy server	admin	gl	Introduza o servidor proxy HTTP
+enter your http proxy server port	admin	gl	Introduza o porto do servidor proxy HTTP
+enter your smtp server hostname or ip address	admin	gl	Introduza o servidor SMTP (nome ou IP)
+enter your smtp server port	admin	gl	Introduza o porto do servidor SMTP
+error canceling timer, maybe there's none set !!!	admin	gl	Erro ao cancelar a programación. É posible que non exista ningunha.
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	gl	Erro ao configurar a programación. A sintaxe non é correcta ou xa hai algunha en execución.
+error! no appname found	admin	gl	Erro! Non foi posible localizar o nome da aplicación
+error: %1 not found or other error !!!	admin	gl	Erro: Non foi posible localizar %1 ou erro doutro tipo
+expires	admin	gl	Caduca
+explanation of ldapman	admin	gl	Este módulo foi probado en POSTFIX, LDAP, Courier-IMAP e precisa os esquemas CORE e QMAIL (OID7914). Máis detalles sobre a utilización e configuración deste sistema encóntranse no ficheiro README.ldapman no directorio doc de ADMIN.
+fallback (after each pageview)	admin	gl	Retardo (despois de ver cada páxina)
+field '%1' already exists !!!	admin	gl	O campo '%1' xa existe
+file space	admin	gl	Espazo do ficheiro
+file space must be an integer	admin	gl	O espazo do ficheiro debe ser un número enteiro
+find and register all application hooks	admin	gl	Localizar e rexistrar todos os ganchos das aplicacións
+for the times above	admin	gl	durante as horas arriba indicadas
+for the times below (empty values count as '*', all empty = every minute)	admin	gl	para as horas abaixo indicadas (os valores en branco contan como '*', todos en branco = cada minuto)
+force selectbox	admin	gl	Forzar caixa de selección
+forward also to	admin	gl	encamiñar tamén a
+forward emails to	admin	gl	encamiñar correos electrónicos a
+forward only	admin	gl	encamiñar só
+global categories	common	gl	Categorías globais
+group ?	admin	gl	Grupo?
+group has been added	common	gl	O grupo foi engadido
+group has been deleted	common	gl	O grupo foi eliminado
+group has been updated	common	gl	O grupo foi actualizado
+group list	admin	gl	Lista de grupos
+group manager	admin	gl	Xestor de grupos
+group name	admin	gl	Nome do grupo
+hide php information	admin	gl	Ocultar información de PHP
+home directory	admin	gl	Directorio persoal
+host information	admin	gl	Información do servidor
+hour<br>(0-23)	admin	gl	Hora<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	gl	Cantos días deben permanecer as entradas no rexistro de acceso, antes de as eliminar? (Por defecto, 90)
+how many minutes should an account or ip be blocked (default 30) ?	admin	gl	Cantos minutos deben permanecer bloqueadas as contas ou as IP? (Por defecto, 30)
+how should email addresses for new users be constructed?	admin	gl	Como crear novos enderezos de correo electrónico para novos usuarios?
+icon	admin	gl	Icona
+idle	admin	gl	inactivo
+if no acl records for user or any group the user is a member of	admin	gl	Se non se encontran rexistros ACL de usuario e grupo, o usuario é membro de
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	gl	Se utiliza LDAP, desexa xestionar os atributos do directorio de inicio e a conta?
+in mbyte	admin	gl	en Mbytes
+inbound	admin	gl	De entrada
+initial	admin	gl	Inicial
+install crontab	admin	gl	Instalar crontab
+installed applications	common	gl	Aplicacións instaladas
+installed crontab	admin	gl	Crontab instalado
+interface	admin	gl	Interface
+ip	admin	gl	IP
+jobs	admin	gl	Traballos
+kill	admin	gl	Terminar
+kill session	admin	gl	Terminar sesión
+last %1 logins	admin	gl	Últimos %1 inicios de sesión
+last %1 logins for %2	admin	gl	Últimos %1 inicios de sesión de %2
+last login	admin	gl	Último inicio de sesión
+last login from	admin	gl	Último inicio de sesión desde
+last time read	admin	gl	Última lectura
+ldap accounts context	admin	gl	Contexto das contas LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	gl	Prefixo do directorio de inicio LDAP predefinido (p. ex. /directorio para /directorio/usuario)
+ldap default shell (e.g. /bin/bash)	admin	gl	Shell LDAP por defecto (ex. /bin/bash)
+ldap encryption type	admin	gl	Tipo de cifraxe LDAP
+ldap groups context	admin	gl	Contexto de grupos LDAP
+ldap host	admin	gl	Servidor LDAP
+ldap root password	admin	gl	Chave de superusuario LDAP
+ldap rootdn	admin	gl	rootdn LDAP
+leave empty for no quota	admin	gl	Deixar en branco se non hai cota
+leave the category untouched and return back to the list	admin	gl	Deixar a categoría intacta e volver á lista
+leave the group untouched and return back to the list	admin	gl	Deixar o grupo intacto e volver á lista
+leaves without saveing	admin	gl	Sae sen gardar
+length<br>rows	admin	gl	Lonxitude<br>Filas
+list config settings	admin	gl	Lista das definicións de configuración
+list current sessions	admin	gl	Lista das sesións actuais
+list of current users	admin	gl	Lista de usuarios actuais
+login history	common	gl	Historial de inicios de sesión
+login message	admin	gl	Mensaxe de inicio de sesión
+login screen	admin	gl	Pantalla de inicio de sesión
+login shell	admin	gl	Shell de inicio de sesión
+login time	admin	gl	Hora de inicio de sesión
+loginid	admin	gl	LoginID
+mail settings	admin	gl	Configuración do correo electrónico
+main email-address	admin	gl	Enderezo de correo electrónico principal
+main screen message	admin	gl	Mensaxe da pantalla principal
+manager	admin	gl	Xestor
+max length of the input [, length of the inputfield (optional)]	admin	gl	Lonxitude máxima da entrada [, lonxitude do campo de entrada (opcional)]
+maximum account id (e.g. 65535 or 1000000)	admin	gl	Id máximo de conta (ex. 65535 o 1000000)
+maximum entries in click path history	admin	gl	Número máximo de entradas ao premer o camiño do historial co rato
+message has been updated	admin	gl	A mensaxe foi actualizada
+method	admin	gl	Método
+minimum account id (e.g. 500 or 100, etc.)	admin	gl	Id mínimo da conta (ex. 500 o 100, etc.)
+minute	admin	gl	Minuto
+mode	admin	gl	Modo
+month	admin	gl	Mes
+more secure	admin	gl	máis seguro
+name must not be empty !!!	admin	gl	O nome non pode permanecer en branco
+new group name	admin	gl	Novo nome do grupo
+new name	admin	gl	Novo nome
+new password [ leave blank for no change ]	admin	gl	Novo contrasinal [ Deixar en branco para non modificar ]
+next run	admin	gl	Seguinte execución
+no algorithms available	admin	gl	Non hai algoritmos dispoñibles
+no alternate email address	admin	gl	Non hai enderezo de correo electrónico alternativo
+no jobs in the database !!!	admin	gl	Non hai traballos na base de datos
+no login history exists for this user	admin	gl	Non hai rexistros de acceso para este usuario
+no matches found	admin	gl	Non se encontraron coincidencias
+no modes available	admin	gl	Non hai modos dispoñibles
+no permission to add groups	admin	gl	Non ten permiso para engadir grupos
+no permission to add users	admin	gl	Non ten permiso para engadir usuarios
+no permission to create groups	admin	gl	Non ten permiso para crear grupos
+note: ssl available only if php is compiled with curl support	admin	gl	Nota: SSL só está dispoñíble se PHP está compilado co soporte curl
+number of row for a multiline inputfield or line of a multi-select-box	admin	gl	Número de fila para un campo multiliña ou de liña nunha caixa de selección múltiple
+order	admin	gl	Orde
+outbound	admin	gl	De saída
+passthrough	admin	gl	Pasaxe
+password for smtp-authentication	admin	gl	Contrasinal para autenticación SMTP
+path information	admin	gl	Información de camiño
+peer server list	admin	gl	Lista de servidores peer
+peer servers	admin	gl	Servidores peer
+percent of users that logged out	admin	gl	Porcentaxe de usuarios que pecharon sesión
+percent this user has logged out	admin	gl	Porcentaxe do usuario que pechou sesión
+permission denied	admin	gl	Permiso negado
+permissions	admin	gl	Permisos
+permissions this group has	admin	gl	Permisos que ten este grupo
+phpinfo	admin	gl	Información de PHP
+please enter a name	admin	gl	Introduza un nome
+please enter a name for that server !	admin	gl	Introduza un nome para ese sevidor
+please run setup to become current	admin	gl	Execute setup para estar ao día
+please select	admin	gl	Seleccione
+postfix with ldap	admin	gl	Postfix con LDAP
+preferences	admin	gl	Preferencias
+primary group	admin	gl	Grupo principal
+qmaildotmode	admin	gl	qmaildotmode
+quota settings	admin	gl	Configuración da cota
+quota size in mbyte	admin	gl	Tamaño da cota en MBytes
+re-enter password	admin	gl	Confirmar contrasinal
+read this list of methods.	admin	gl	Ler esta lista de métodos
+register application hooks	admin	gl	Rexistrar ganchos da aplicación
+remove	admin	gl	Eliminar
+remove all users from this group	admin	gl	Eliminar todos os usuarios deste grupo
+remove all users from this group ?	admin	gl	Desexa eliminar todos os usuarios deste grupo?
+return to admin mainscreen	admin	gl	Volver á pantalla principal de administración
+return to view account	admin	gl	Volver ver a conta
+route all mails to	admin	gl	Reecamiñar todos os correos a
+run asynchronous services	admin	gl	Executar servizos asíncronos
+save the category	admin	gl	Gardar a categoría
+save the category and return back to the list	admin	gl	Gardar a categoría e volver á lista
+saves the changes made and leaves	admin	gl	Garda as modificacións e sae
+search accounts	admin	gl	Buscar nas contas
+search categories	admin	gl	Buscar nas categorías
+search groups	admin	gl	Buscar nos grupos
+search peer servers	admin	gl	Buscar nos servidores peer
+security	admin	gl	Seguranza
+select group managers	admin	gl	Seleccionar xestores de grupo
+select permissions this group will have	admin	gl	Seleccione os permisos que terá este grupo
+select the parent category. if this is a main category select no category	admin	gl	Seleccione a categoría superior. Se esta é unha categoría principal seleccione SEN CATEGORÍA
+select users for inclusion	admin	gl	Seleccionar usuarios para inclusión
+select where you want to store/retrieve filesystem information	admin	gl	Seleccione onde desexa almacenar a información do sistema de ficheiros
+select where you want to store/retrieve user accounts	admin	gl	Seleccione onde desexa almacenar a información das contas de usuario
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	gl	Seleccione o lugar da barra de navegación onde desexa que apareza a aplicación, de abaixo (esquerda) a arriba (dereita)
+selectbox	admin	gl	Caixa de selección
+server %1 has been updated	admin	gl	O servidor %1 foi actualizado
+server list	admin	gl	Lista de servidores
+server password	admin	gl	Contrasinal do servidor
+server type(mode)	admin	gl	Tipo (modo) do servidor
+server url	admin	gl	URL do servidor
+server username	admin	gl	Nome de usuario do servidor
+set preference values.	admin	gl	Definir valores para as preferencias.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	gl	Debe incluír a páxina de inicio de sesión unha caixa de selección de idioma (útil para sitios de demostración)?
+show 'powered by' logo on	admin	gl	Mostrar logotipo "Desenvolvido con" en
+show access log	admin	gl	Mostrar rexistro de accesos
+show an asterisk (*) to mark untranslated strings	admin	gl	Mostrar un asterisco (*) para marcar as cadeas sen traducir
+show current action	admin	gl	Mostrar acción actual
+show error log	admin	gl	Mostrar rexistro de erros
+show phpinfo()	admin	gl	Mostrar phpinfo()
+show session ip address	admin	gl	Mostrar o enderezo IP da sesión
+site	admin	gl	Sitio
+site configuration	common	gl	Configuración do sitio
+soap	admin	gl	SOAP
+sorry, that group name has already been taken.	admin	gl	Este nome de grupo xa está a ser utilizado.
+sorry, the above users are still a member of the group %1	admin	gl	Os usuarios indicados aínda son membros do grupo %1
+sorry, the follow users are still a member of the group %1	admin	gl	Os seguintes usuarios aínda son membros do grupo %1
+sort the entries	admin	gl	Ordenar as entradas
+ssl	admin	gl	ssl
+standard	admin	gl	Estándar
+standard imap server	admin	gl	Servidor IMAP estándar
+standard pop3 server	admin	gl	Servidor POP3 estándar
+standard smtp-server	admin	gl	Servidor SMTP estándar
+start testjob!	admin	gl	Iniciar traballo de proba
+submit changes	admin	gl	Enviar modificacións
+submit the search string	admin	gl	Enviar a cadea de busca
+subtype	admin	gl	Subtipo
+switch it off, if users are randomly thrown out	admin	gl	apagalo se os usuarios son eliminados ao azar
+template selection	admin	gl	Selección de modelo
+text entry	admin	gl	Entrada de texto
+that application name already exists.	admin	gl	Ese nome de aplicación xa existe.
+that application order must be a number.	admin	gl	A orde da aplicación debe ser un número.
+that loginid has already been taken	admin	gl	Ese nome de usuario xa está a ser utilizado
+that name has been used already	admin	gl	Ese nome xa foi utilizado
+that server name has been used already !	admin	gl	Ese nome de servidor xa foi utilizado!
+the api is current	admin	gl	A API está ao día
+the api requires an upgrade	admin	gl	A API precisa de actualización
+the groups must include the primary group	admin	gl	Os grupos deben incluír o grupo principal
+the login and password can not be the same	admin	gl	O usuario e o contrasinal non poden ser iguais
+the loginid can not be more then 8 characters	admin	gl	O nome de usuario non pode superar 8 caracteres
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	gl	Nome utilizado internamente (<= 20 caracteres). Se o modifica, os datos non estarán dispoñibles.
+the testjob sends you a mail everytime it is called.	admin	gl	O traballo de proba envíalle un correo cada vez que se executa
+the text displayed to the user	admin	gl	Texto mostrado ao usuario
+the two passwords are not the same	admin	gl	Os dous contrasinais non son iguais
+the users bellow are still members of group %1	admin	gl	Os seguintes usuarios aínda son membros do grupo %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	gl	Xa existe un grupo con este nome. O ID de usuario non pode ter o mesmo nome que o ID dun grupo.
+they must be removed before you can continue	admin	gl	Deben eliminarse para poder continuar
+this application is current	admin	gl	Esta aplicación está actualizada
+this application requires an upgrade	admin	gl	Esta aplicación precisa de actualización
+this category is currently being used by applications as a parent category	admin	gl	Esta categoría está a ser utilizada por aplicacións como categoría principal.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	gl	Tempo de espera para os datos da sesión da aplicación en segundos (por defecto 86400 = 1 día)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	gl	Tempo de espera para as sesións en segundos (por defecto 14400 = 4 horas)
+times	admin	gl	Horas
+top	admin	gl	Superior
+total records	admin	gl	Total de rexistros
+trust level	admin	gl	Nivel de confianza
+trust relationship	admin	gl	Relacións de confianza
+type '%1' already exists !!!	admin	gl	O tipo '%1' xa existe
+type of customfield	admin	gl	Tipo de campo personalizado
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	gl	En Windows, precisa de instalar asyncservice %1manualmente%2 ou utilizar o modo de erros.  Teña coidado, pois o modo de erros só verifica os traballos despois de ver cada páxina.
+use cookies to pass sessionid	admin	gl	Utilizar cookies para almacenar sesións
+use pure html compliant code (not fully working yet)	admin	gl	Utilizar código HTML puro (aínda non funciona completamente)
+use theme	admin	gl	Utilizar tema
+user accounts	admin	gl	Contas de usuario
+user data	common	gl	Datos do usuario
+user for smtp-authentication (leave it empty if no auth required)	admin	gl	Usuario para identificación SMTP (deixar en branco se non é preciso)
+user groups	admin	gl	Grupos de usuarios
+userdata	admin	gl	Datos do usuario
+users choice	admin	gl	Escolla do usuario
+view access log	admin	gl	Ver rexistro de acceso
+view account	admin	gl	Ver conta
+view category	admin	gl	Ver categoría
+view error log	admin	gl	Ver rexistro de erros
+view sessions	admin	gl	Ver sesións
+view this user	admin	gl	Ver este usuario
+view user account	admin	gl	Ver conta de usuario
+who would you like to transfer all records owned by the deleted user to?	admin	gl	A quen desexa transferir todos os rexistros do usuario eliminado?
+would you like egroupware to cache the egw info array ?	admin	gl	Desexa que eGroupWare almacene en memoria a matriz egw info?
+would you like egroupware to check for a new version<br>when admins login ?	admin	gl	Desexa que eGroupWare busque se hai novas versións<br>cando inicie sesión un administrador?
+would you like egroupware to check for new application versions when admins login ?	admin	gl	Desexa que eGroupWare busque novas versións das aplicacións cando inicie sesión un administrador?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	gl	Desexa cargar automaticamente novos ficheiros de idioma (ao iniciar sesión)?
+would you like to show each application's upgrade status ?	admin	gl	Desexa mostrar o estado de actualización de cada aplicación?
+xml-rpc	admin	gl	XML-RPC
+you have entered an invalid expiration date	admin	gl	Introduciu unha data de caducidade non válida
+you have to enter a name, to create a new field!!!	admin	gl	Debe introducir un nome para crear un campo
+you have to enter a name, to create a new type!!!	admin	gl	Debe introducir un nome para crear un tipo
+you must add at least 1 permission or group to this account	admin	gl	Debe engadir polo menos 1 permiso ou grupo para esta conta
+you must enter a group name.	admin	gl	Debe introducir un nome de grupo
+you must enter a lastname	admin	gl	Debe introducir un apelido
+you must enter a loginid	admin	gl	Debe introducir un nome de usuario
+you must enter an application name and title.	admin	gl	Debe introducir un nome e un título para a aplicación.
+you must enter an application name.	admin	gl	Debe introducir un nome para a aplicación
+you must enter an application title.	admin	gl	Debe introducir un título para a aplicación
+you must select a file type	admin	gl	Debe seleccionar un tipo de ficheiro
+you must select at least one group member.	admin	gl	Ten que seleccionar polo menos un membro do grupo
+you will need to remove the subcategories before you can delete this category	admin	gl	Debe eliminar as subcategorías antes de poder eliminar esta categoría
+your session could not be verified.	admin	gl	A súa sesión non puido ser verificada

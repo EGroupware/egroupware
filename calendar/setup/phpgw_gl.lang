@@ -1,0 +1,329 @@
+%1 %2 in %3	calendar	gl	%1 %2 en %3
+%1 records imported	calendar	gl	%1 rexistros importados
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	gl	%1 rexistros lidos (aínda sen importar, pode volver atrás e desmarcar Probar Importar)
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	gl	<b>Teña en conta o seguinte</b>: O calendario utiliza as festas do seu país, que é %1. Pode mudalo en %2.<br />As vacacións %3 instálanse automaticamente desde %4. É posible alteralo en %5.
+a non blocking event will not conflict with other events	calendar	gl	Un evento que non bloquea non entrará en conflito con outros eventos
+accept or reject an invitation	calendar	gl	Aceptar ou rexeitar un convite
+accepted	calendar	gl	Aceptado
+access denied to the calendar of %1 !!!	calendar	gl	Acceso negado ao calendario de %1
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	gl	Acción que causou a notificación: Engadido, Cancelado, Aceptado, Rexeitado...
+actions	calendar	gl	Accións
+actions...	calendar	gl	Accións...
+add alarm	calendar	gl	Engadir alarma
+added	calendar	gl	Engadido
+added by synchronisation	calendar	gl	Engadido pola sincronización
+after %1	calendar	gl	Despois de %1
+after current date	calendar	gl	Despois da data actual
+alarm	calendar	gl	Alarma
+alarm added	calendar	gl	Alarma engadida
+alarm deleted	calendar	gl	Alarma eliminada
+alarm for %1 at %2 in %3	calendar	gl	Alarma para %1 en %2 en %3
+alarm management	calendar	gl	Xestión de alarmas
+alarms	calendar	gl	Alarmas
+all categories	calendar	gl	Todas as categorías
+all day	calendar	gl	Todo o día
+all events	calendar	gl	Todos os eventos
+all future	calendar	gl	Todo o futuro
+all participants	calendar	gl	Todos os participantes
+allows to edit the event again	calendar	gl	Permite editar o evento de novo
+apply the changes	calendar	gl	Aplicar as modificacións
+are you sure you want to delete this country ?	calendar	gl	Está certo de querer eliminar este país?
+are you sure you want to delete this holiday ?	calendar	gl	Está certo de querer eliminar esta festa?
+back half a month	calendar	gl	Medio mes cara a atrás
+back one month	calendar	gl	Un mes cara a atrás
+before %1	calendar	gl	Antes de %1
+before current date	calendar	gl	Antes da data actual
+before the event	calendar	gl	Antes do evento
+birthday	calendar	gl	Aniversario
+busy	calendar	gl	Ocupado
+by	calendar	gl	por
+calendar event	calendar	gl	Evento de calendario
+calendar holiday management	admin	gl	Xestión de días festivos
+calendar menu	calendar	gl	Menú do calendario
+calendar preferences	calendar	gl	Preferencias do calendario
+calendar settings	admin	gl	Configuración do calendario
+calendar-fieldname	calendar	gl	Calendario - Nome do campo
+can't add alarms in the past !!!	calendar	gl	Non é posible engadir alarmas no pasado
+canceled	calendar	gl	Cancelado
+charset of file	calendar	gl	Conxunto de caracteres do ficheiro
+close the window	calendar	gl	Pechar a ventá
+compose a mail to all participants after the event is saved	calendar	gl	Escribir un correo para todos os participantes despois de gardar o evento
+copy of:	calendar	gl	Copia de:
+copy this event	calendar	gl	Copiar este evento
+countries	calendar	gl	Países
+country	calendar	gl	País
+create an exception for the given date	calendar	gl	Crear unha excepción á data fornecida
+create exception	calendar	gl	Crear excepción
+create new links	calendar	gl	Crear novas ligazóns
+csv	calendar	gl	CSV
+csv-fieldname	calendar	gl	CSV - Nome do campo
+csv-filename	calendar	gl	CSV - Nome do ficheiro
+custom fields	common	gl	Campos personalizados
+daily	calendar	gl	Diario
+days	calendar	gl	días
+days of the week for a weekly repeated event	calendar	gl	Días da semana para un evento de repetición semanal
+days repeated	calendar	gl	días repetidos
+dayview	calendar	gl	Visualización diaria
+default appointment length (in minutes)	calendar	gl	Duración por defecto das citas (en minutos)
+default calendar filter	calendar	gl	Filtro por defecto do calendario
+default calendar view	calendar	gl	Visualización por defecto do calendario
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	gl	Lonxitude predefinida dos eventos novos. A lonxitude é en minutos, ex. 60 = 1 hora.
+default week view	calendar	gl	Visualización semanal predefinida
+delete series	calendar	gl	Eliminar serie
+delete this alarm	calendar	gl	Eliminar esta alarma
+delete this event	calendar	gl	Eliminar este evento
+delete this exception	calendar	gl	Eliminar esta excepción
+delete this series of recuring events	calendar	gl	Eliminar esta serie de eventos recorrentes
+disinvited	calendar	gl	Desconvidado
+display status of events	calendar	gl	Mostrar estado dos eventos
+displayed view	calendar	gl	Visualización mostrada
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	gl	Mostra a visualización predefinida na páxina inicial (a páxina que aparece ao entrar en eGroupWare ou premer a icona de inicio)?
+do you want a weekview with or without weekend?	calendar	gl	Desexa unha visualización da semana con ou sen fin de semana?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	gl	Desexa ser notificado sobre novas citas ou modificadas? Notificaranse as modificacións feitas polo usuario.<br>Pode limitar as notificacións para só certas alteracións. Os elementos inclúen cada notificación arriba listada. Todas as modificacións inclúen modificacións de título, descrición, participantes, mais non as respostas dos participantes. Se o propietario dun evento solicitou notificacións, obterá sempre as respostas de aceptación ou rexeitamento do participante.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	gl	Desexa recibir regularmente por correo un resumo das citas?<br>O resumo envíase ao correo electrónico habitual o mesmo día pola mañá ou o luns para resumos semanais.<br>Só se envía se hai citas nese día ou nesa semana.
+do you wish to autoload calendar holidays files dynamically?	admin	gl	Desexa cargar automaticamente no calendario os ficheiros de festas?
+download	calendar	gl	Descargar
+download this event as ical	calendar	gl	Descargar este evento como iCal
+duration of the meeting	calendar	gl	Duración da reunión
+edit exception	calendar	gl	Editar excepción
+edit series	calendar	gl	Editar serie
+edit this event	calendar	gl	Editar este evento
+edit this series of recuring events	calendar	gl	Editar esta serie de eventos recorrentes
+empty for all	calendar	gl	en branco para todos
+end	calendar	gl	Fin
+end date/time	calendar	gl	Data/Hora final
+enddate	calendar	gl	Data final
+enddate / -time of the meeting, eg. for more then one day	calendar	gl	Data final / -hora da reunión, p. ex. para máis dun día
+enddate of the export	calendar	gl	Data de fin da exportación
+ends	calendar	gl	termina
+error adding the alarm	calendar	gl	Erro ao engadir a alarma
+error: importing the ical	calendar	gl	Erro ao importar o fichero iCal
+error: no participants selected !!!	calendar	gl	Erro: Sen participantes seleccionados
+error: saving the event !!!	calendar	gl	Erro ao gardar o evento
+error: starttime has to be before the endtime !!!	calendar	gl	Erro: A hora de inicio debe ser anterior á final
+event copied - the copy can now be edited	calendar	gl	Evento copiado. Agora pode editar a copia
+event deleted	calendar	gl	Evento eliminado
+event details follow	calendar	gl	A continuación, os detalles do evento
+event saved	calendar	gl	Evento gardado
+event will occupy the whole day	calendar	gl	O evento ocupará todo o día
+exception	calendar	gl	Excepción
+exception created - you can now edit or delete it	calendar	gl	Excepción creada - agora pode editalo ou borralo
+exceptions	calendar	gl	Excepcións
+execute a further action for this entry	calendar	gl	Executar unha acción máis para esta entrada
+existing links	calendar	gl	Ligazóns existentes
+export	calendar	gl	Exportar
+extended	calendar	gl	Estendido
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	gl	As actualizacións estendidas inclúen todos os detalles dos eventos. Os de tipo iCal poden importarse mediante outras aplicacións de tipo calendario.
+fieldseparator	calendar	gl	Separador de campos
+filename	calendar	gl	Nome do ficheiro
+filename of the download	calendar	gl	Nome do ficheiro da descarga
+find free timeslots where the selected participants are availible for the given timespan	calendar	gl	Localizar marxes de tempo libres  onde os participantes seleccionados se encontren dispoñibles para as horas indicadas
+firstname of person to notify	calendar	gl	Nome da persoa a que notificar
+for	calendar	gl	para
+for which views should calendar show distinct lines with a fixed time interval.	calendar	gl	Para que visualizacións debería mostrarse o calendario en diferentes liñas cun intervalo fixo de tempo?
+format of event updates	calendar	gl	Formato das actualizacións de eventos
+forward half a month	calendar	gl	Medio mes cara a adiante
+forward one month	calendar	gl	Un mes cara a adiante
+four days view	calendar	gl	Visualización de catro días
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	gl	Información de dispoñibilidade: Usuario "%1" descoñecido, contrasinal incorrecto ou non dispoñible
+freetime search	calendar	gl	Buscar no tempo libre
+fri	calendar	gl	Ven
+full description	calendar	gl	Descrición completa
+fullname of person to notify	calendar	gl	Nome completo da persoa a que notificar
+general	calendar	gl	Xeral
+global public and group public	calendar	gl	Público global e grupo público
+global public only	calendar	gl	Só público global
+group invitation	calendar	gl	Convite de grupo
+group planner	calendar	gl	Planificación de grupo
+group public only	calendar	gl	Só grupo público
+groupmember(s) %1 not included, because you have no access.	calendar	gl	Os membros do grupo %1 non están incluídos, porque non ten acceso.
+h	calendar	gl	h
+here is your requested alarm.	calendar	gl	Esta é a alarma solicitada
+hide private infos	calendar	gl	Ocultar informacións privadas
+high priority	calendar	gl	prioridade alta
+holiday	calendar	gl	Festivo
+holiday management	calendar	gl	Xestión de festivos
+holidays	calendar	gl	Festivos
+hours	calendar	gl	horas
+how far to search (from startdate)	calendar	gl	Até onde buscar (desde a data de inicio)
+how many minutes should each interval last?	calendar	gl	Cantos minutos debe durar cada intervalo?
+ical	calendar	gl	iCal
+ical / rfc2445	calendar	gl	iCal / rfc2445
+ical export	calendar	gl	Exportar iCal
+ical file	calendar	gl	Ficheiro iCal
+ical import	calendar	gl	Importar iCal
+ical successful imported	calendar	gl	O ficheiro iCal  importouse  con éxito
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	gl	Se os festivos marcados cadran en fin de semana, pásase ao luns seguinte.
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	gl	Se non define aquí un contrasinal, a información estará dispoñible para os que coñezan o URL!
+ignore conflict	calendar	gl	Ignorar conflito
+import	calendar	gl	Importar
+import csv-file	common	gl	Importar ficheiro CSV
+interval	calendar	gl	Intervalo
+invalid email-address "%1" for user %2	calendar	gl	Enderezo de correo electrónico "%1" non válido do usuario %2
+last	calendar	gl	último
+lastname of person to notify	calendar	gl	Apelido da persoa a que notificar
+length of the time interval	calendar	gl	Lonxitude do intervalo de tempo
+link to view the event	calendar	gl	Ligazón para ver o evento
+links	calendar	gl	Ligazóns
+links, attachments	calendar	gl	Ligazóns, anexos
+listview	calendar	gl	Visualización de lista
+location	calendar	gl	Lugar
+location to autoload from	admin	gl	Lugar desde onde cargar automaticamente
+location, start- and endtimes, ...	calendar	gl	Lugar, hora de inicio e final...
+mail all participants	calendar	gl	Enviar correo a todos os participantes
+make freebusy information available to not loged in persons?	calendar	gl	Desexa facer accesible a información de dispoñibilidade a persoas sen sesión iniciada?
+minutes	calendar	gl	minutos
+modified	calendar	gl	Modificado
+mon	calendar	gl	Lun
+monthly	calendar	gl	Mensualmente
+monthly (by date)	calendar	gl	Mensual (por data)
+monthly (by day)	calendar	gl	Mensual (por día)
+monthview	calendar	gl	Visualización mensual
+new search with the above parameters	calendar	gl	Nova busca cos parámetros de arriba
+no events found	calendar	gl	Sen eventos localizados
+no filter	calendar	gl	Sen filtro
+no matches found	calendar	gl	Sen resultados localizados
+no response	calendar	gl	Sen resposta
+non blocking	calendar	gl	Non bloquea
+notification messages for added events	calendar	gl	Mensaxes de notificación para eventos engadidos
+notification messages for canceled events	calendar	gl	Mensaxes de notificación para eventos cancelados
+notification messages for disinvited participants	calendar	gl	Mensaxes de notificación para participantes desconvidados
+notification messages for modified events	calendar	gl	Mensaxes de notificación para eventos modificados
+notification messages for your alarms	calendar	gl	Mensaxes de notificación para as súas alarmas
+notification messages for your responses	calendar	gl	Mensaxes de notificación para as súas respostas
+number of records to read (%1)	calendar	gl	Número de rexistros que ler (%1)
+observance rule	calendar	gl	Regra de observación
+occurence	calendar	gl	Ocorrencia
+old startdate	calendar	gl	Data de inicio antiga
+on %1 %2 %3 your meeting request for %4	calendar	gl	O %1 %2 %3 a súa solicitude de reunión para %4
+on all modification, but responses	calendar	gl	en todas as modificacións, excepto as respostas
+on any time change too	calendar	gl	tamén en calquera modificación de hora
+on invitation / cancelation only	calendar	gl	só en convite ou cancelación
+on participant responses too	calendar	gl	tamén nas respostas dos participantes
+on time change of more than 4 hours too	calendar	gl	tamén nunha modificación de hora superior a 4 horas
+one month	calendar	gl	un mes
+one week	calendar	gl	unha semana
+one year	calendar	gl	un ano
+only the initial date of that recuring event is checked!	calendar	gl	Só está marcada a data inicial do evento recorrente
+open todo's:	calendar	gl	Abrir tarefas pendentes
+overlap holiday	calendar	gl	solapar festivo
+participants	calendar	gl	Participantes
+participants disinvited from an event	calendar	gl	Participantes desconvidados dun evento
+participants, resources, ...	calendar	gl	Participantes, recursos
+password for not loged in users to your freebusy information?	calendar	gl	Desexa definir contrasinal para que usuarios sen sesión iniciada accedan á súa información de dispoñibilidade?
+people holiday	calendar	gl	festivo popular
+permission denied	calendar	gl	Permiso negado
+planner by category	calendar	gl	Planificador por categorías
+planner by user	calendar	gl	Planificador por usuario
+please note: you can configure the field assignments after you uploaded the file.	calendar	gl	Nota: pode configurar as asignacións dos campos DESPOIS de cargar o ficheiro.
+preselected group for entering the planner	calendar	gl	Grupo preseleccionado ao entrar no planificador
+previous	calendar	gl	anterior
+private and global public	calendar	gl	Privado e público global
+private and group public	calendar	gl	Privado e público de grupo
+private only	calendar	gl	Só privado
+quantity	calendar	gl	Cantidade
+re-edit event	calendar	gl	Volver a editar evento
+receive email updates	calendar	gl	Recibir actualizacións de correo electrónico
+receive summary of appointments	calendar	gl	Recibir resumo das citas
+recurrence	calendar	gl	Repeticións
+recurring event	calendar	gl	Evento recorrente
+rejected	calendar	gl	Rexeitado
+repeat days	calendar	gl	Días de repetición
+repeat the event until which date (empty means unlimited)	calendar	gl	Repetir o evento até as datas (en branco significa sen límite)
+repeat type	calendar	gl	Tipo de repetición
+repeating event information	calendar	gl	Repetir información de eventos
+repeating interval, eg. 2 to repeat every second week	calendar	gl	Intervalo de repetición, p. ex. 2 para repetir cada segunda semana
+repetition	calendar	gl	Repetición
+repetitiondetails (or empty)	calendar	gl	Detalles da repetición (ou en branco)
+reset	calendar	gl	Redefinir
+resources	calendar	gl	Recursos
+rule	calendar	gl	Regra
+sat	calendar	gl	Sáb
+saves the changes made	calendar	gl	Garda as modificacións realizadas
+saves the event ignoring the conflict	calendar	gl	Garda o evento ignorando o conflito
+scheduling conflict	calendar	gl	Conflito de calendario
+select a %1	calendar	gl	Seleccionar un %1
+select a time	calendar	gl	Seleccionar unha hora
+select resources	calendar	gl	Seleccionar recursos
+select who should get the alarm	calendar	gl	Seleccionar quen debe obter a alarma
+selected range	calendar	gl	Seleccionar intervalo
+set a year only for one-time / non-regular holidays.	calendar	gl	Definir un ano para os festivos únicos e non regulares.
+set new events to private	calendar	gl	Definir os novos eventos como privados
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	gl	Desexa mostrar os convites rexeitados polo usuario no calendario?<br>Pódense aceptar despois (por exemplo, cando elimine o conflito), se aínda se mostran no calendario.
+should new events created as private by default ?	calendar	gl	Crear novos eventos como privados?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	gl	Desexa permitir o acceso a persoas sen sesión iniciada á información de dispoñibilidade? Pode definir un contrasinal adicional, diferente ao normal, para protexer esta información. A información de dispoñibilidade está en formato iCal e só inclúe as horas en que está ocupado. Non inclúe o nome do evento, descrición ou lugares. O URL para a información de dispoñibilidade é %1.
+should the planner display an empty row for users or categories without any appointment.	calendar	gl	O planificador debería mostrar unha fila baleira para os usuarios ou categorías sen ningunha cita.
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	gl	Desexa mostrar o estado de cada evento (aceptar, rexeitar, etc) entre corchetes detrás do nome dos participantes?
+show default view on main screen	calendar	gl	Mostrar a visualización predefinida na pantalla principal
+show empty rows in planner	calendar	gl	Mostrar fila baleiras no Planificador
+show invitations you rejected	calendar	gl	Mostrar convites rexeitados polo usuario
+show list of upcoming events	calendar	gl	Mostrar a lista de próximos eventos
+show this month	calendar	gl	Mostrar este mes
+show this week	calendar	gl	Mostrar esta semana
+single event	calendar	gl	Evento único
+site configuration	calendar	gl	Configuración do sitio
+start	calendar	gl	Inicio
+start date/time	calendar	gl	Data/Hora de inicio
+startdate / -time	calendar	gl	Data de incio / -hora
+startdate and -time of the search	calendar	gl	Data de inicio e -hora da busca
+startdate of the export	calendar	gl	Data de inicio da exportación
+startrecord	calendar	gl	Rexistro inicial
+status changed	calendar	gl	Estado modificado
+submit to repository	calendar	gl	Enviar ao repositorio
+sun	calendar	gl	Dom
+tentative	calendar	gl	Provisional
+test import (show importable records <u>only</u> in browser)	calendar	gl	Probar Importar (mostrar <u>unicamente</u> rexistros importables no explorador)
+this day is shown as first day in the week or month view.	calendar	gl	Mostrarase como o primeiro día nas visualizacións semanais ou mensuais.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	gl	Define o final da visualización diaria. Os eventos posteriores a esta hora móstranse debaixo.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	gl	Define o inicio da visualización diaria. Os eventos anteriores a esta hora móstranse arriba.<br>Esta hora tamén se utiliza como hora predefinida para novos eventos.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	gl	Grupo predefinido ao entrar no planificador. Pode modificalo no planificador sempre que queira.
+this message is sent for canceled or deleted events.	calendar	gl	Esta mensaxe envíase ao eliminar ou cancelar eventos.
+this message is sent for modified or moved events.	calendar	gl	Esta mensaxe envíase ao modificar ou mover eventos.
+this message is sent to disinvited participants.	calendar	gl	Esta mensaxe envíase aos participantes desconvidados.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	gl	Esta mensaxe envíase aos participantes dos eventos da súa propiedade, se solicitaron notificacións.<br>Pode utilizar algunhas variables que sustitúen datos. A primeira liña é o asunto do correo electrónico.
+this message is sent when you accept, tentative accept or reject an event.	calendar	gl	Esta mensaxe envíase ao aceptar, aceptar temporalmente ou rexeitar eventos.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	gl	Esta mensaxe envíase ao definir unha alarma para un evento concreto. Inclúa toda a información precisa.
+this module displays the current month	calendar	gl	Este módulo mostra o mes actual
+three month	calendar	gl	tres meses
+thu	calendar	gl	Xov
+til	calendar	gl	Até
+timeframe	calendar	gl	Marxe de tempo
+timeframe to search	calendar	gl	Marxe de tempo para buscar
+title of the event	calendar	gl	Título do evento
+to many might exceed your execution-time-limit	calendar	gl	Moitos poden exceder o seu tempo límite de execución
+translation	calendar	gl	Tradución
+tue	calendar	gl	Mar
+two weeks	calendar	gl	dúas semanas
+updated	calendar	gl	Actualizado
+use end date	calendar	gl	Utilizar data final
+use the selected time and close the popup	calendar	gl	Utilizar a hora seleccionada e pechar a ventá
+user or group	calendar	gl	Usuario ou grupo
+view this event	calendar	gl	Ver este evento
+views with fixed time intervals	calendar	gl	Visualizacións con intervalos fixos de tempo
+wed	calendar	gl	Mér
+week	calendar	gl	Semana
+weekday starts on	calendar	gl	A semana comeza en
+weekdays	calendar	gl	Días laborais
+weekdays to use in search	calendar	gl	Días laborais que utilizar na busca
+weekly	calendar	gl	Semanal
+weekview	calendar	gl	Visualización semanal
+weekview with weekend	calendar	gl	Visualización semanal con fin de semana
+weekview without weekend	calendar	gl	Visualización semanal sen fin de semana
+which events do you want to see when you enter the calendar.	calendar	gl	Que eventos desexa mostrar ao entrar no calendario?
+which of calendar view do you want to see, when you start calendar ?	calendar	gl	Que visualización de calendario desexa mostrar ao entrar no calendario?
+whole day	calendar	gl	todo o día
+wk	calendar	gl	Sm
+work day ends on	calendar	gl	Os días laborais acaban ás
+work day starts on	calendar	gl	Os días laborais comezan ás
+yearly	calendar	gl	Anual
+yearview	calendar	gl	Visualización anual
+you can either set a year or a occurence, not both !!!	calendar	gl	Pode definir ora un ano ora unha ocorrencia, mais non ambos os dous.
+you can only set a year or a occurence !!!	calendar	gl	Só pode definir un ano ou unha ocorrencia
+you do not have permission to read this record!	calendar	gl	Non ten permiso de lectura para este rexistro
+you have a meeting scheduled for %1	calendar	gl	Ten unha reunión programada para %1
+you have been disinvited from the meeting at %1	calendar	gl	Foi desconvidado da reunión do %1
+you need to select an account, contact or resource first!	calendar	gl	Precisa seleccionar primeiro unha conta, un contacto ou un recurso!
+you need to select an ical file first	calendar	gl	Precisa seleccionar antes un ficheiro iCal
+you need to set either a day or a occurence !!!	calendar	gl	Debe indicar ora un día ora unha ocorrencia
+your meeting scheduled for %1 has been canceled	calendar	gl	A reunión programada para %1 foi cancelada
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	gl	A reunión programada para %1 foi finalmente marcada para %2

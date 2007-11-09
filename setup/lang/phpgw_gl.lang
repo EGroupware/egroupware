@@ -1,0 +1,646 @@
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	gl	%1 '%2' NON existe, non é lexible polo servidor web ou non ten a instalación de eGroupWare!
+%1 already exists in %2.	setup	gl	%1 xa existe en %2.
+%1 created in %2.	setup	gl	%1 creado en %2.
+%1 does not exist !!!	setup	gl	%1 non existe
+%1 is %2%3 !!!	setup	gl	%1 é %2%3
+%1, %2 or %3 the configuration file.	setup	gl	o ficheiro de configuración %1, %2, ou %3.
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	gl	'%1' non ten permisos como %2. argumentos da opción %3 !!!
+(searching accounts and changing passwords)	setup	gl	(buscando contas e modificando contrasinais)
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	gl	*** NON actualice a base de datos mediante esta instalación, visto que a actualización podería interromperse polo tempo máximo de execución permitido, deixando a base de datos nun estado irrecuperable (perderíanse os datos)
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	gl	*** Debe facer as modificacións manualmente no php.ini (en linux, normalmente en /etc) para que eGW funcione completamente ***
+00 (disable)	setup	gl	00 (desactivar / recomendado)
+13 (ntp)	setup	gl	13 (ntp)
+80 (http)	setup	gl	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	gl	<b>conxunto de caracteres que desexa utilizar</b> (utilice utf-8 se vai utilizar idiomas con conxuntos de caracteres diferentes):
+[header-password],[header-user],[new-password],[new-user]	setup	gl	[contrasinal da cabeceira],[usuario da cabeceira],[novo contrasinal],[novo usuario]
+access denied: wrong username or password for manage-header !!!	setup	gl	Acceso negado: nome de usuario ou contrasinal do xestor de cabeceiras incorrecto
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	gl	Acceso negado: nome de usuario ou contrasinal para configurar o dominio '%1(%2)'incorrecto
+account repository need to be set to the one you migrate to!	setup	gl	O repositorio da conta debe ser definido como aquel para o que se desexa realizar a migración!
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	gl	repositorio da contasql(predefinido) | ldap},[autenticación{sql | ldap | mail | ads | http | ...}],[sql cifraxe{md5 | blowfish_crypt | md5_crypt | crypt}],[marcar gardar contrasinal{ (predefinido)|True}],[permitir autenticación por cookie{ (predefinido)|True}]
+accounts existing	setup	gl	Contas existentes
+actions	setup	gl	Accións
+activate safe password check	setup	gl	Activar a verificación de contrasinal seguro
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	gl	Engadir usuarios creados automaticamente a este grupo (se está baleiro, atribuirase o grupo predefinido)
+add new database instance (egw domain)	setup	gl	Engadir nova instancia de base de datos (dominio eGW)
+add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	gl	engadir ou editar dominio: []nome de dominio(predefinido)],[nome da base de datos(egroupware)],contrasinal da base de datos,[tipo de base de datos(mysql)],[servidor da base de datos(localhost)],[porto da base de datos(dbspecific)],[usuario de configuración(como cabeceira)],[contrasinal de configuración(como cabeceira)]
+adding, editing or deleting an egroupware domain / database instance:	setup	gl	Engadir, editar ou eliminar un dominio o base de datos de eGroupWare:
+additional options and there defaults (in brackets)	setup	gl	Opcións adicionais e predefinidas (entre corchetes)
+additional settings	setup	gl	Configuración adicional
+admin account successful created.	setup	gl	Conta de administrador creada con éxito.
+admin email address	setup	gl	Enderezo de correo electrónico de administrador
+admin first name	setup	gl	Nome do administrador
+admin last name	setup	gl	Apelido do administrador
+admin password	setup	gl	Contrasinal do administrador
+admin password to header manager	setup	gl	Contrasinal do administrador para o xestor de cabeceiras
+admin user for header manager	setup	gl	Usuario de administración para o xestor de cabeceiras
+admin username	setup	gl	Nome de usuario do administrador
+admins	setup	gl	Administradores
+after backing up your tables first.	setup	gl	Despois de facer a copia de seguranza das táboas.
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	gl	Despois de recuperar o ficheiro colóqueo no seu lugar como header.inc.php. A seguir, prema Continuar.
+all applications	setup	gl	todas as aplicacións
+all core tables and the admin and preferences applications	setup	gl	todas as táboas principais e as aplicacións de preferencias e de administración
+all exit codes of the command line interface	setup	gl	todos os códigos de saída da interface da liña de comandos
+all languages (incl. not listed ones)	setup	gl	todos os idiomas (inclusive os non listados)
+all users	setup	gl	Todos os usuarios
+allow authentication via cookie	setup	gl	Permitir autenticación por cookies
+allow password migration	setup	gl	Permitir migración do contrasinal
+allowed migration types (comma-separated)	setup	gl	Permitir tipos de migración (separados por comas)
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	gl	Alternativamente pode acceder aos dominios iniciando sesión como <i>nomeusuario@dominio</i>
+analysis	setup	gl	Análise
+and is up to date	setup	gl	e está actualizada
+and reload your webserver, so the above changes take effect !!!	setup	gl	E cargar de novo o servidor web, para que as modificacións surtan efecto
+app details	setup	gl	Detalles da aplicación
+app install/remove/upgrade	setup	gl	Instalación/Eliminación/Actualización da aplicación
+app process	setup	gl	Proceso da aplicación
+application data	setup	gl	Datos da aplicación
+application list	setup	gl	Lista de aplicacións
+application management	setup	gl	Xestión de aplicacións
+application name and status	setup	gl	Nome e estado da aplicación
+application name and status information	setup	gl	Nome da aplicación e información de estado
+application title	setup	gl	Título da aplicación
+application: %1, file: %2, line: "%3"	setup	gl	Aplicación: %1, Ficheiro: %2, Liña: "%3"
+are you sure you want to delete your existing tables and data?	setup	gl	Está certo de querer eliminar as táboas e datos existentes?
+are you sure?	setup	gl	ESTÁ CERTO?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	gl	A petición do usuario, este script vai tentar crear a base de datos e atribuír permisos ao usuario da base de datos
+at your request, this script is going to attempt to install a previous backup	setup	gl	A petición do usuario, este script vai tentar instalar unha copia de seguranza anterior
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	gl	A petición do usuario, este script vai tentar instalar as táboas principais e as aplicacións de preferencias e de administración.
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	gl	A petición do usuario, este script vai tentar actualizar as aplicacións antigas para as versións actuais
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	gl	A petición do usuario, este script vai tentar actualizar as táboas antigas para o novo formato
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	gl	A petición do usuario, este script vai executar a acción de eliminar as táboas actuais e crealas no novo formato
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	gl	A petición do usuario, este script vai executar a acción de desinstalar todas as aplicacións, eliminando todas as táboas e datos actuais
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	gl	Tente utilizar o tipo MIME correcto para FTP en lugar do predefinido 'application/octet-stream'
+authentication / accounts	setup	gl	Autenticación / Contas
+auto create account records for authenticated users	setup	gl	Crear automaticamente rexistros de conta para usuarios autenticados
+auto login anonymous user	setup	gl	Inicio de sesión automático para usuario anónimo
+auto-created user accounts expire	setup	gl	As contas de usuario creadas automaticamente caducan
+available version	setup	gl	Versión dispoñible
+back to the previous screen	setup	gl	Volver ao menú anterior
+back to user login	setup	gl	Volver ao inicio de sesión do usuario
+back's up your db now, this might take a few minutes	setup	gl	realiza unha copia de seguranza da base de datos. Pode demorar uns minutos
+backup '%1' deleted	setup	gl	copia de seguranza '%1' eliminada
+backup '%1' renamed to '%2'	setup	gl	copia de seguranza '%1' renomeada a '%2'
+backup '%1' restored	setup	gl	copia de seguranza '%1' restaurada
+backup and restore	setup	gl	copiar e restaurar
+backup failed	setup	gl	Erro da copia de seguridade
+backup finished	setup	gl	concluíu a copia de seguranza
+backup now	setup	gl	facer copia de seguranza agora
+backup sets	setup	gl	conxuntos de copias de seguranza
+backup skipped!	setup	gl	Copia de seguranza ignorada!
+backup started, this might take a few minutes ...	setup	gl	copia de seguranza iniciada, pode demorar uns minutos...
+because an application it depends upon was upgraded	setup	gl	porque se actualizou unha aplicación de que depende
+because it depends upon	setup	gl	porque depende de
+because it is not a user application, or access is controlled via acl	setup	gl	porque non é unha aplicación de usuario, ou o acceso está controlado por ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	gl	porque precisa de instalación manual das táboas,<br /> ou a definición da táboa foi incorrecta
+because it was manually disabled	setup	gl	porque se desactivou manualmente
+because its sources are missing	setup	gl	porque faltan estas fontes
+because of a failed upgrade or install	setup	gl	por causa dun erro ao actualizar ou instalar
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	gl	porque fallou a actualización, ou a base de datos é máis recente que a versión instalada desta aplicación
+because the enable flag for this app is set to 0, or is undefined	setup	gl	porque a marca "activada" desta aplicación está a 0, ou non está definida
+bottom	setup	gl	parte inferior
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	gl	mais <u>recomendamos encarecidamente que faga copia de seguranza</u> das táboas en caso de o script causar danos na información.<br /><strong>Estes scripts automáticos poden facilmente destruír a información.</strong>
+cancel	setup	gl	Cancelar
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	gl	Non é posible crear o ficheiro header.inc.php debido ás restricións de permiso.<br/>No seu lugar pode crear o ficheiro %1 ou %2.
+change system-charset	setup	gl	Mudar de conxunto de caracteres do sistema
+charset	setup	gl	ISO-8859-1
+charset to convert to	setup	gl	Conxunto de caracteres a que converter
+charsets used by the different languages	setup	gl	conxuntos de caracteres utilizados por idiomas diferentes
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	gl	Só é posible realizar a verificación a través dun servidor web, mentres non sexa coñecido o ID de usuario ou nome do servidor web.
+check installation	setup	gl	Verificar instalación
+check ip address of all sessions	setup	gl	verificar os enderezos IP de todas as sesións
+checking extension %1 is loaded or loadable	setup	gl	Verificando se é posible cargar ou está cargada a extensión %1
+checking file-permissions of %1 for %2 %3: %4	setup	gl	Verificando se %1 ten permiso para %2 %3: %4
+checking for gd support...	setup	gl	Buscando o soporte GD...
+checking function %1 exists	setup	gl	Verificando se existe a función %1
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	gl	Verificando se session.save_path='%1' da definición php.ini está escrita polo servidor web
+checking pear%1 is installed	setup	gl	Verificando se PEAR%1 está instalado
+checking php.ini	setup	gl	Verificando php.ini
+checking required php version %1 (recommended %2)	setup	gl	Verificando a versión requirida de PHP: %1 (recomendada: %2)
+checking the egroupware installation	setup	gl	Verificando a instalación de eGroupWare
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	gl	verifica se está instalado eGroupWare, as súas versións e as actualizacións necesarias ()
+click <a href="index.php">here</a> to return to setup.	setup	gl	prema <a href="index.php">aquí</a> para volver á configuración.
+click here	setup	gl	Prema Aquí
+click here to re-run the installation tests	setup	gl	Prema aquí para executar de novo as probas de instalación
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	gl	nomes de servidor ou enderezos ip separados por comas. Acceso predefinido para configurar desde calquera lugar
+completed	setup	gl	Concluído
+config password	setup	gl	Contrasinal da configuración
+config username	setup	gl	Nome de usuario da configuración
+configuration	setup	gl	Configuración
+configuration changed.	setup	gl	Configuración modificada.
+configuration completed	setup	gl	Configuración concluída
+configuration errors:	setup	gl	Erros de configuración:
+configuration password	setup	gl	Contrasinal de configuración
+configuration user	setup	gl	Usuario da configuración
+configure now	setup	gl	Configurar agora
+confirm to delete this backup?	setup	gl	Confirmar eliminar esta copia de seguranza?
+contain	setup	gl	contén
+continue	setup	gl	Continuar
+continue to the header admin	setup	gl	Continuar a administrar cabeceiras
+convert	setup	gl	Converter
+convert backup to charset selected above	setup	gl	Converter a copia de seguranza ao conxunto de caracteres seleccionado
+could not open header.inc.php for writing!	setup	gl	Non foi posible abrir header.inc.php para escribir!
+country selection	setup	gl	Seleccionar país
+create	setup	gl	Crear
+create a backup before upgrading the db	setup	gl	crear unha copia de seguranza antes de actualizar a base de datos
+create admin account	setup	gl	Crear conta de administración
+create database	setup	gl	Crear base de datos
+create demo accounts	setup	gl	Crear contas de demostración
+create one now	setup	gl	Crear unha agora
+create or edit the egroupware configuration file: header.inc.php:	setup	gl	Crear ou editar o ficheiro de configuración de eGroupWare: header.inc.php:
+create the empty database -	setup	gl	Crear a base de datos en branco
+create the empty database and grant user permissions -	setup	gl	Crear a base de datos en branco e conceder permisos aos usuarios -
+create your header.inc.php	setup	gl	Crear un ficheiro header.inc.php propio
+created	setup	gl	creado
+created header.inc.php!	setup	gl	Ficheiro header.inc.php creado
+creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	gl	crea un usuario administrador: dominio(predefinido),[usuario de configuración(admin)],contrasinal,nome de usuario,contrasinal,[nome],[apelido],[correo electrónico]
+creating tables	setup	gl	Creando táboas
+creation of %1 in %2 failed !!!	setup	gl	Fallou a creación de %1 en %2 !!!
+current configuration:	setup	gl	Configuración actual:
+current system-charset	setup	gl	Conxunto de caracteres actual do sistema
+current system-charset is %1.	setup	gl	O conxunto de caracteres actual do sistema é %1.
+current version	setup	gl	Versión actual
+currently installed languages: %1 <br />	setup	gl	Idiomas actualmente instalados: %1 <br />
+cyrus imap: admin user,password	setup	gl	Cyrus IMAP: usuario administrador, contrasinal
+database	setup	gl	Base de datos
+database instance (egw domain)	setup	gl	Instancia da base de datos (dominio eGW)
+database is version %1 and up to date.	setup	gl	A versión da base de datos é %1 e está actualizada.
+database successfully converted from '%1' to '%2'	setup	gl	A base de datos converteuse correctamente de '%1' a '%2'
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	gl	Porto de hora.<br />Se utiliza o porto 13, configure as regras da barreira de protección adecuadamente antes de enviar esta páxina.<br />(Porto: 13 / Servidor: 129.6.15.28)
+day	setup	gl	día
+day of week<br />(0-6, 0=sunday)	setup	gl	día da semana<br />(0-6, 0=domingo)
+db backup and restore	setup	gl	Facer copia de seguranza e restaurar a base de datos
+db host	setup	gl	Servidor da base de datos
+db name	setup	gl	Nome da base de datos
+db password	setup	gl	Contrasinal da base de datos
+db port	setup	gl	Porto da base de datos
+db root password	setup	gl	Contrasinal do administrador da base de datos
+db root username	setup	gl	Nome de usuario administrador da base de datos
+db type	setup	gl	Tipo de base de datos
+db user	setup	gl	Usuario da base de datos
+default	setup	gl	predefinición recomendada
+default file system space per user/group ?	setup	gl	Espazo predefinido no sistema por usuario ou grupo?
+delete	setup	gl	Eliminar
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	gl	Eliminar todas as contas SQL existentes, grupos, ACL e preferencias? (normalmente non é preciso)
+delete all my tables and data	setup	gl	Eliminar todas as miñas táboas e datos
+delete all old languages and install new ones	setup	gl	Eliminar todos os idiomas antigos e instalar os novos
+deleting tables	setup	gl	Eliminando táboas
+demo server setup	setup	gl	Configuración do servidor de demostración
+deny access	setup	gl	Negar acceso
+deny all users access to grant other users access to their entries ?	setup	gl	Non permitir que os usuarios poidan conceder acceso ás súas propias entradas?
+dependency failure	setup	gl	Erro nas dependencias
+deregistered	setup	gl	eliminada do rexistro
+details for admin account	setup	gl	Detalles da conta de Administrador
+developers' table schema toy	setup	gl	Ferramenta para o esquema de táboas dos desenvolvedores
+did not find any valid db support!	setup	gl	Non foi posible encontrar ningún soporte válido para a base de datos
+do you want persistent connections (higher performance, but consumes more resources)	setup	gl	Desexa conexións persistentes? (maior desempeño, aínda que maior consumo de recursos)
+do you want to manage homedirectory and loginshell attributes?	setup	gl	Desexa xestionar o directorio de inicio e os atributos de inicio de sesión?
+does not exist	setup	gl	non existe
+domain	setup	gl	Dominio
+domain '%1' does not exist !!!	setup	gl	O dominio '%1' NON existe !!!
+domain name	setup	gl	Nome do dominio
+domain select box on login	setup	gl	Caixa de selección de dominio no inicio de sesión
+domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	gl	dominio(todos),[usuario de configuración(admin)],contrasinal,[nome do ficheiro(predefinido:directorio da copia de seguranza/copia de seguranza da base de datos-YYYYMMDDHHii)]
+domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	gl	dominio(predefinido),[usuario de configuración(admin)],contrasinal,[copia de seguranza para instalar],[conxunto de caracteres(predefinido depende do idioma)]
+domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	gl	dominio(predefinido),[usuario de configuración(admin)],contrasinal,[nome=valor,...]define os valores de configuración abaixo:
+domain-name	setup	gl	nome do dominio
+dont touch my data	setup	gl	Non alterar os meus datos
+download	setup	gl	Descargar
+edit current configuration	setup	gl	Editar configuración actual
+edit your existing header.inc.php	setup	gl	Editar o ficheiro header.inc.php existente
+edit your header.inc.php	setup	gl	Editar o ficheiro header.inc.php
+eg. /egroupware or http://domain.com/egroupware, default: %1	setup	gl	exemplo /egroupware ou http://dominio.com/egroupware, predefinido: %1
+egroupware administration manual	setup	gl	Manual de administración de eGroupWare
+egroupware api needs a database (schema) update from version %1 to %2!	setup	gl	O API de egroupware necesita unha actualización da base de datos (esquema) da versión %1 á %2!
+egroupware api version %1 found.	setup	gl	Non se encontrou a versión %1 da API de egroupware.
+egroupware configuration file (header.inc.php) does not exist.	setup	gl	o ficheiro de configuración de eGroupWare (header.inc.php) NON existe.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	gl	a versión %1 do ficheiro de configuración (header.inc.php)existe %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	gl	xa existe o ficheiro de configuración de eGroupWare header.inc.php, é necesario que utilice --editar cabeceira ou eliminala primeiro!
+egroupware domain/instance %1(%2):	setup	gl	instancia ou dominio de eGroupWare %1(%2):
+egroupware is already installed!	setup	gl	eGroupWare xa está instalado!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	gl	as fontes de eGroupWare en '%1' non están completas, falta o ficheiro '%2'!!!
+emailadmin profile updated:	setup	gl	Perfil de administrador de correo electrónico actualizado:
+enable for extra debug-messages	setup	gl	activar as mensaxes de depuración extra
+enable mcrypt	setup	gl	Activar MCrypt
+enter some random text for app session encryption	setup	gl	Introduza algún texto aleatorio para a cifraxe da sesión da aplicación
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	gl	Introduza algún texto aleatorio para a cifraxe da sesión da aplicación<br />cifraxe (precisa mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	gl	Introduza o camiño completo para os ficheiros temporais.<br />Exemplo: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	gl	Introduza o camiño completo para os ficheiros temporais.<br />Exemplo: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	gl	Introduza o camiño completo para os ficheiros de usuarios e grupos.<br />Exemplo: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	gl	Introduza o camiño completo para os ficheiros de usuarios e grupos.<br />Exemplo: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	gl	Introduza o camiño completo para o directorio da copia de seguranza.<br />Se está en branco: directorio dos ficheiros
+enter the hostname of the machine on which this server is running	setup	gl	Introduza o nome do servidor do equipo en que se está a executar esta instalación
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	gl	Introduza a localización do URL de eGroupWare.<br/>Exemplo: http://www.dominio.com/egroupware ou /egroupware<br/><b>Sen barra ao final</b>
+enter the site password for peer servers	setup	gl	Introduza o contrasinal do sitio para os servidores peer
+enter the site username for peer servers	setup	gl	Introduza o nome de usuario do sitio para servidores peer
+enter the title for your site	setup	gl	Introduza o título para o  sitio
+enter your default ftp server	setup	gl	Introduza o servidor FTP predefinido
+enter your http proxy server	setup	gl	Introduza o servidor proxy HTTP
+enter your http proxy server password	setup	gl	Introduza o contrasinal do servidor proxy HTTP
+enter your http proxy server port	setup	gl	Introduza o porto do servidor proxy HTTP
+enter your http proxy server username	setup	gl	Introduza o usuario do servidor proxy HTTP
+error in admin-creation !!!	setup	gl	Erro ao crear administrador
+error in group-creation !!!	setup	gl	Erro ao crear grupo
+export has been completed!	setup	gl	A exportación foi concluída!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	gl	Erro ao escribir o ficheiro de configuración header.inc.php, verifique os permisos !!!
+false	setup	gl	FALSO
+file	setup	gl	FICHEIRO
+file type, size, version, etc.	setup	gl	tipo de ficheiro, tamaño, versión, etc
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	gl	A transferencia de ficheiros ao servidor está desactivada: NON pode utilizar ningún xestor de ficheiros nin anexar ficheiros en varias aplicacións.
+filename	setup	gl	Nome do ficheiro
+filesystem	setup	gl	Sistema de ficheiros
+force selectbox	setup	gl	Forzar caixa de selección
+found existing configuration file. loading settings from the file...	setup	gl	Encontrouse un ficheiro de configuración existente. Cargando a configuración do ficheiro...
+give admin access to all installed apps	setup	gl	Dar acceso de administrador a todas as aplicacións instalados
+gives further options	setup	gl	ofrece máis opcións
+go back	setup	gl	Volver
+go to	setup	gl	Ir a
+grant access	setup	gl	Conceder acceso
+group	setup	gl	grupo
+group memberships will be migrated too.	setup	gl	Os membros do grupo tamén migrarán
+has a version mismatch	setup	gl	Non coinciden as versións
+header admin login	setup	gl	Usuario administrador da cabeceira
+header password	setup	gl	Contrasinal da cabeceira
+header username	setup	gl	Nome de usuario da cabeceira
+header-password[,header-user(admin)]	setup	gl	contrasinal de cabeceira[usuario de cabeceira(admin)]
+header.inc.php successful written.	setup	gl	header.inc.php escrito con éxito
+historylog removed	setup	gl	Rexistro do historial eliminado
+hooks deregistered	setup	gl	Hooks eliminados do rexistro
+hooks registered	setup	gl	Hooks rexistrados
+host information	setup	gl	Información do servidor
+host,[smtp port],[smtp user],[smtp password]	setup	gl	servidor,[porto de smtp],[usuario de smtp],[contrasinal de smtp]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	gl	servidor,{imap | pop3 | imaps | pop3s},[dominio],[{estándar(predefinido)|vmailmgr = engadir dominio de inicio de sesión do servidor de correo}]
+host/ip domain controler	setup	gl	Servidor/IP do controlador de dominio
+hostname/ip of database server	setup	gl	Nome do servidor ou enderezo IP do servidor da base de datos
+hour (0-24)	setup	gl	hora (0-24)
+however the tables are still in the database	setup	gl	No obstante, as táboas continúan na base de datos
+however, the application is otherwise installed	setup	gl	No entanto, a aplicación foi instalada
+however, the application may still work	setup	gl	No entanto, é posible que a aplicación aínda funcione
+if no acl records for user or any group the user is a member of	setup	gl	Se non hai rexistros ACL nin grupo para o usuario, entón é membro de
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	gl	Se safe_mode está activado, eGW non pode modificar certas definicións en modo de execución, nin pode cargar ningún módulo aínda non cargado.
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	gl	Se a aplicación non ten táboas definidas, seleccionando actualizar deberíanse resolver os problemas
+if using ads (active directory) authentication	setup	gl	Se utiliza autenticación ADS (Directorio Activo)
+if using ldap	setup	gl	Se utiliza LDAP
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	gl	Se utiliza LDAP, desexa xestionar os atributos do directorio inicial e da liña de comandos?
+if you did not receive any errors, your applications have been	setup	gl	Se non recibiu ningún erro, as súas aplicacións foron
+if you did not receive any errors, your tables have been	setup	gl	Se non recibiu ningún erro, as súas táboas foron
+if you running this the first time, don't forget to manualy %1 !!!	setup	gl	Se está a executar a aplicación por primeira vez, non esqueza %1 manualmente.
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	gl	Se só utiliza idiomas do mesmo conxunto de caracteres (por exemplo, os occidentais), non precisa un conxunto de caracteres para o sistema
+image type selection order	setup	gl	Orde de selección do tipo de imaxe
+import has been completed!	setup	gl	A importación concluíu
+importing old settings into the new format....	setup	gl	Importar configuración antiga ao novo formato...
+include root	setup	gl	Incluír raíz
+include_path need to contain "." - the current directory	setup	gl	include_path precisa conter "." - o directorio actual
+install	setup	gl	Instalar
+install all	setup	gl	Instalar todo
+install applications	setup	gl	Instalar aplicacións
+install backup	setup	gl	instalar copia de seguranza
+install language	setup	gl	Instalar idiomas
+install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	gl	Instalar ou actualizar traducións: dominio(todo),[usuario de configuración (admin)],contrasinal,[[+]idioma1[,idioma2,...]] + engade, ningún idioma actualiza os existentes
+installation finished	setup	gl	Instalación finalizada
+installation started, this might take a few minutes ...	setup	gl	Instalación iniciada, podería demorar uns minutos ...
+installed	setup	gl	instaladas
+instructions for creating the database in %1:	setup	gl	Instrucións para crear a base de datos en %1:
+invalid ip address	setup	gl	O enderezo IP non é válido
+invalid mcrypt algorithm/mode combination	setup	gl	A combinación do algoritmo mcrypt e o modo non é válida
+invalid password	setup	gl	O contrasinal non é válido
+is broken	setup	gl	está quebrado
+is disabled	setup	gl	está desactivado
+is in the webservers docroot	setup	gl	na raíz do servidor web
+is not writeable by the webserver	setup	gl	non é escribible polo servidor web
+it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	gl	É necesaria a actualización á versión %1! Utilizar a cabeceira de actualización<contrasinal>[,<usuario>]para facelo (--o uso ofrece máis opcións)
+languages updated.	setup	gl	Idiomas actualizados.
+ldap accounts configuration	setup	gl	Configuración de contas LDAP
+ldap accounts context	setup	gl	Contexto das contas LDAP
+ldap config	setup	gl	Configuración LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	gl	Prefixo do directorio inicial predefinido (p. ex. /home para /home/<nomeusuario>)
+ldap default shell (e.g. /bin/bash)	setup	gl	Shell LDAP predefinida (p. ex. /bin/bash)
+ldap encryption type	setup	gl	Tipo de cifraxe LDAP
+ldap groups context	setup	gl	Contexto de grupos LDAP
+ldap host	setup	gl	Servidor LDAP
+ldap import	setup	gl	Importar LDAP
+ldap root password	setup	gl	Contrasinal do administrador LDAP
+ldap rootdn	setup	gl	rootdn LDAP
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	gl	Filtro de busca LDAP das contas, predefinido: "(uid=%usuario)",%dominio=eGW-dominio
+leave empty to keep current.	setup	gl	Deixar baleiro para conservar o actual
+limit access	setup	gl	Limitar acceso
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	gl	Limitar o acceso á instalación aos seguintes enderezos, redes ou equipos (p. ex. 127.0.0.1,10.1.1,myhost.dnydns.org)
+list availible values	setup	gl	Valores dispoñible da lista
+list of availible translations	setup	gl	Lista de traducións dispoñibles
+login as user postgres, eg. by using su as root	setup	gl	Iniciar sesión como usuario postgres, p. ex. utilizando su como root
+login to mysql -	setup	gl	Iniciar sesión en mysql -
+loginname needed for domain configuration	setup	gl	Nome de inicio de sesión da configuración do dominio
+logout	setup	gl	Pechar sesión
+mail domain (for virtual mail manager)	setup	gl	Dominio de correo (para o xestor de correo virtual)
+mail server login type	setup	gl	Tipo de sesión no servidor de correo
+mail server protocol	setup	gl	Protocolo do servidor de correo
+make sure that your database is created and the account permissions are set	setup	gl	Verifique se a base de datos está creada e se os permisos están definidos
+manage applications	setup	gl	Xestión de aplicacións
+manage languages	setup	gl	Xestión de idiomas
+manual / help	setup	gl	Manual / Axuda
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	gl	max_execution_time está definido a menos de 30 (segundos): ás veces eGroupWare precisa dun valor maior para execution_time, así que pode haber erros ocasionais.
+maximum account id (e.g. 65535 or 1000000)	setup	gl	ID máximo de conta (p. ex. 65535 ou 1000000)
+may be broken	setup	gl	pode estar quebrado
+mcrypt algorithm (default tripledes)	setup	gl	Algoritmo mcrypt (predefinido TRIPLEDES)
+mcrypt initialization vector	setup	gl	Vector de inicio MCrypt
+mcrypt mode (default cbc)	setup	gl	Modo de MCrypt (predefinido CBC)
+mcrypt settings (requires mcrypt php extension)	setup	gl	Configuración de MCrypt (precisa a extensión PHP mcrypt)
+mcrypt version	setup	gl	Versión de MCrypt
+memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	gl	memory_limit está definido a menos de 16M. Algunhas aplicacións de eGroupWare precisan máis dos 8M recomendados, así que pode haber erros ocasionais
+migration between egroupware account repositories	setup	gl	Migación entre os repositorios de conta de eGroupWare
+minimum account id (e.g. 500 or 100, etc.)	setup	gl	ID mínimo para a  conta (p. ex. 500 ou 100, etc)
+minute	setup	gl	minuto
+missing or uncomplete mailserver configuration	setup	gl	Falta a configuración do servidor de correo ou está incompleta
+modifications have been completed!	setup	gl	Concluíronse as modificacións
+modify	setup	gl	Modificar
+month	setup	gl	mes
+multi-language support setup	setup	gl	Configuración do soporte multilingüe
+name of database	setup	gl	Nome da base de datos
+name of db user egroupware uses to connect	setup	gl	Nome do usuario da base de datos que utiliza eGroupWare para conectar
+never	setup	gl	nunca
+new	setup	gl	Nova
+next run	setup	gl	seguinte execución
+no	setup	gl	Non
+no %1 support found. disabling	setup	gl	Non foi posible encontrar soporte para %1. Desactivando
+no accounts existing	setup	gl	Sen contas existentes
+no algorithms available	setup	gl	sen algoritmos dispoñibles
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	gl	Non existen instancias da base de datos ou dos dominios de eGroupWare! Utilice --editar cabeceira --dominio para engadir un (--o uso ofrece máis opcións).
+no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	gl	Sen definir o contrasinal de administrador de cabeceira! Utilizar --editar cabeceira<contrasinal>[,<usuario>]para definir un (--usage ofrece máis opcións).
+no modes available	setup	gl	sen modos dispoñibles
+no update necessary, domain %1(%2) is up to date.	setup	gl	Non é necesaria a actualización, o dominio %1(%2) está actualizado.
+no xml support found. disabling	setup	gl	Non foi posible encontrar soporte para XML. Desactivando.
+not	setup	gl	non
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	gl	Non todos os algoritmos e modos de mcrypt funcionan con eGroupWare. Se ten problemas, tente desactivándoo.
+not complete	setup	gl	sen concluír
+not completed	setup	gl	Sen concluír
+not ready for this stage yet	setup	gl	Aínda non está pronto para esta fase
+not set	setup	gl	sen definir
+note: you will be able to customize this later	setup	gl	Nota: Terá que personalizalo despois
+now guessing better values for defaults...	setup	gl	Buscando valores óptimos predefinidos...
+odbc / maxdb: dsn (data source name) to use	setup	gl	ODBC / MaxDB: DSN (nome da fonte de datos) a utilizar
+ok	setup	gl	Aceptar
+once the database is setup correctly	setup	gl	Unha vez que a base de datos  estea configurada correctamente
+one month	setup	gl	un mes
+one week	setup	gl	unha semana
+only add languages that are not in the database already	setup	gl	Só engade os novos idiomas que non están na base de datos
+only add new phrases	setup	gl	Só engade novas frases
+or	setup	gl	ou
+or %1continue to the header admin%2	setup	gl	ou %1Continuar para administrar as cabeceiras%2
+or http://webdav.domain.com (webdav)	setup	gl	ou http://webdav.dominio.com (WebDAV)
+or we can attempt to create the database for you:	setup	gl	Ou podemos tentar crear a base de datos automaticamente:
+or you can install a previous backup.	setup	gl	Ou pode instalar una copia de seguranza anterior.
+password for smtp-authentication	setup	gl	Contrasinal para autenticación SMTP
+password needed for domain configuration.	setup	gl	Contrasinal necesario para a configuración do dominio
+password of db user	setup	gl	Contrasinal do usuario da base de datos
+passwords did not match, please re-enter	setup	gl	Os contrasinais non coinciden. Introduza de novo.
+path (not url!) to your egroupware installation.	setup	gl	Camiño (non URL!) da instalación de eGroupWare
+path information	setup	gl	Información do camiño
+path of egroupware install directory (default auto-detected)	setup	gl	camiño do directorio de instalación de eGroupWare (detección automática predefinida)
+path to user and group files has to be outside of the webservers document-root!!!	setup	gl	O camiño aos ficheiros de usuarios e grupos DEBERÁ ESTAR FÓRA da raíz do servidor web.
+path to various directories: have to exist and be writeable by the webserver	setup	gl	camiño a varios directorios: ten que existir e poder ser escrito polo servidor web
+pear (%1) is a php repository and is usually in a package called %2.	setup	gl	PEAR (%1) é un repositorio de PHP e, normalmente, está nun paquete chamado %2.
+pear%1 is needed by: %2.	setup	gl	PEAR%1 é necesario por: %2
+persistent connections	setup	gl	Conexións persistentes
+php plus restore	setup	gl	PHP máis restauración
+php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	gl	PHP máis restauración fornece de lonxe o mellor desempeño, visto que almacena o ambiente de eGW completamente na sesión.
+please check for sql scripts within the application's directory	setup	gl	Verifique os scripts SQL no directorio da aplicación
+please check read/write permissions on directories, or back up and use another option.	setup	gl	Verifique os permisos de lectura e escrita nos directorios, ou faga copia de seguranza e utilice outra opción
+please configure egroupware for your environment	setup	gl	Configure eGroupWare para o seu ambiente
+please consult the %1.	setup	gl	Consulte o %1
+please fix the above errors (%1) and warnings(%2)	setup	gl	Corrixa os erros indicados (%1) e avisos (%2)
+please install	setup	gl	Instale
+please login	setup	gl	Inicie sesión
+please login to egroupware and run the admin application for additional site configuration	setup	gl	Inicie sesión en eGroupWare e execute a aplicación de administración para configuración adicional do sitio
+please make the following change in your php.ini	setup	gl	Realice a seguinte modificación no seu php.ini
+please wait...	setup	gl	Agarde...
+pop/imap mail server hostname or ip address	setup	gl	Nome ou enderezo IP do servidor de correo POP/IMAP
+possible reasons	setup	gl	Posibles razóns
+possible solutions	setup	gl	Posibles solucións
+post-install dependency failure	setup	gl	Erro de dependencias no proceso de postinstalación
+postfix with ldap: [yes(user edit forwarding)]	setup	gl	Postfix con LDAP: [si()]
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	gl	Postgres: deixar en branco para utilzar sockets unix (preferido) en vez dunha conexión TCP/IP
+potential problem	setup	gl	Problema potencial
+preferences	setup	gl	Preferencias
+problem resolution	setup	gl	Resolución do problema
+process	setup	gl	Procesar
+re-check my database	setup	gl	Verificar de novo a miña base de datos
+re-check my installation	setup	gl	Verificar a miña instalación
+re-enter password	setup	gl	Confirme o contrasinal
+read translations from	setup	gl	Ler traducións de
+readable by the webserver	setup	gl	lexible polo servidor web
+really uninstall all applications	setup	gl	Desexa REALMENTE desinstalar todas as aplicacións
+recommended: filesystem	setup	gl	Recomendado: sistema de ficheiros
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	gl	register_globals está activado, e eGroupWare NON o precisa, por tanto, é máis seguro desactivalo.
+registered	setup	gl	rexistrado
+rejected lines	setup	gl	Liñas rexeitadas
+remove	setup	gl	Eliminar
+remove all	setup	gl	Eliminar todo
+rename	setup	gl	renomear
+requires reinstall or manual repair	setup	gl	Require reinstalación ou reparación manual
+requires upgrade	setup	gl	Require actualización
+resolve	setup	gl	Resolver
+restore	setup	gl	restaurar
+restore failed	setup	gl	Erro na restauración
+restore finished	setup	gl	Restauración concluída
+restore started, this might take a few minutes ...	setup	gl	Restauración iniciada. Isto pode demorar uns minutos...
+restoring a backup will delete/replace all content in your database. are you sure?	setup	gl	Se restaurar unha copia de seguranza eliminará/substituirá todo o contido da base de datos. Está certo?
+return to setup	setup	gl	Volver á instalación
+run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	gl	executar a actualización do esquema da base de datos (se é necesario):dominio(todos),[usuario de configuración(admin)],contrasinal
+run installation tests	setup	gl	Executar probas de instalación
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	gl	safe_mode está activado. Isto acostuma ser bo porque torna a súa instalación máis segura.
+sample configuration not found. using built in defaults	setup	gl	Configuración de exemplo non localizada. Utilizando valores predefinidos.
+save	setup	gl	Gardar
+save this text as contents of your header.inc.php	setup	gl	Gardar este texto como contido do header.inc.php
+schedule	setup	gl	programar
+scheduled backups	setup	gl	copias de seguranza programadas
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	gl	Seleccione unha aplicación, introduza unha versión de destino e, a seguir, prema Enviar.<br />Se non selecciona unha versión, só se instalarán as táboas da versión base da aplicación.<br /><blink>ISTO ELIMINARÁ PRIMEIRO TODAS AS TÁBOAS DAS APLICACIÓNS.</blink>
+select one...	setup	gl	seleccionar un...
+select the default applications to which your users will have access	setup	gl	Seleccione as aplicacións predefinidas ás cales  terán acceso os usuarios
+select the desired action(s) from the available choices	setup	gl	Seleccione as accións desexadas da lista de opcións dispoñibles
+select to download file	setup	gl	Seleccione para descargar o ficheiro
+select where you want to store/retrieve file contents	setup	gl	Seleccione onde desexa almacenar/recuperar contidos de ficheiros
+select where you want to store/retrieve filesystem information	setup	gl	Seleccione onde desexa almacenar/recuperar información do sistema de ficheiros
+select where you want to store/retrieve user accounts	setup	gl	Seleccione onde desexa almacenar/recuperar información das contas de usuario
+select which group(s) will be exported	setup	gl	Seleccionar que grupo(s) se exportarán
+select which group(s) will be imported (group membership will be maintained)	setup	gl	Seleccione que grupos se importarán (manteranse as pertenzas aos grupos)
+select which group(s) will be modified (group membership will be maintained)	setup	gl	Seleccione que grupos se modificarán (manteranse as pertenzas aos grupos)
+select which languages you would like to use	setup	gl	Seleccione que idiomas prefire utilizar
+select which method of upgrade you would like to do	setup	gl	Seleccione que método de actualización prefire utilizar
+select which type of authentication you are using	setup	gl	Seleccione o tipo de autenticación que está a utilizar
+select which user(s) will also have admin privileges	setup	gl	Seleccione que usuarios terán tamén privilexios de administrador
+select which user(s) will be exported	setup	gl	Seleccione que usuarios serán exportados
+select which user(s) will be imported	setup	gl	Seleccione que usuarios serán importados
+select which user(s) will be modified	setup	gl	Seleccione que usuarios serán modificados
+select which user(s) will have admin privileges	setup	gl	Seleccione que usuarios terán privilexios de administrador
+select your old version	setup	gl	Seleccione a versión anterior
+selectbox	setup	gl	Caixa de selección
+server root	setup	gl	Raíz do servidor
+sessions type	setup	gl	Tipo de sesións
+set	setup	gl	definir
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	gl	Defina como "antiga" as versións anteriores á 2.4, do contrario utilice a versión mcrypt exacta.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	gl	Definir o conxunto de caracteres do sistema en UTF-8 (unicode) permite a coexistencia de datos de conxuntos de caracteres diferentes.
+settings	setup	gl	Configuración
+setup	setup	gl	Instalación
+setup main menu	setup	gl	Menú principal da instalación
+setup the database	setup	gl	Instalar a base de datos
+setup/config admin login	setup	gl	Inicio de sesión do administrador para Instalación/Configuración
+should be the same as server root unless you know what you are doing.	setup	gl	Debe ser o mesmo que o Server Root a menos que saiba o que está a facer.
+show 'powered by' logo on	setup	gl	Mostrar o logotipo "realizado por" en
+sieve: host[,port(2000)]	setup	gl	Sieve: Servidor[,Porto(2000)]
+size	setup	gl	tamaño
+skip the installation tests (not recommended)	setup	gl	Ignorar as probas de instalación (non recomendado)
+smtp server hostname or ip address	setup	gl	Nome do servidor SMTP ou enderezo IP
+smtp server port	setup	gl	Porto do servidor SMTP
+some or all of its tables are missing	setup	gl	Faltan algunhas ou todas as táboas
+sources deleted/missing	setup	gl	Fontes eliminadas ou perdidas
+sql encryption type	setup	gl	Tipo de cifraxe SQL para contrasinais (predefinido - md5)
+standard (login-name identical to egroupware user-name)	setup	gl	estándar (o nome de usuario é idéntico ao de eGroupWare)
+standard mailserver settings (used for mail authentication too)	setup	gl	Configuración do servidor de correo estándar (tamén se utiliza para autenticación de correo)
+start the postmaster	setup	gl	Iniciar o postmaster
+start updating languages %1 ...	setup	gl	Iniciar a actualización de idiomas %1 ...
+start updating the database ...	setup	gl	Iniciar a actualización da base de datos ...
+status	setup	gl	Estado
+step %1 - admin account	setup	gl	Paso %1 - Conta de administrador
+step %1 - advanced application management	setup	gl	Paso %1 - Xestión avanzada de aplicacións
+step %1 - configuration	setup	gl	Paso %1 - Configuración
+step %1 - db backup and restore	setup	gl	Paso %1 - Copia de seguranza e restauración da base de datos
+step %1 - language management	setup	gl	Paso %1 - Xestión de idiomas
+step %1 - simple application management	setup	gl	Paso %1 - Xestión simple de aplicacións
+succesfully uploaded file %1	setup	gl	Ficheiro %1 cargado con éxito
+table change messages	setup	gl	Mensaxes de modificacións nas táboas
+tables dropped	setup	gl	táboas eliminadas
+tables installed, unless there are errors printed above	setup	gl	táboas instaladas, a non ser que se indiquen erros
+tables upgraded	setup	gl	táboas actualizadas
+target version	setup	gl	Versión de destino
+tcp port number of database server	setup	gl	Número do porto TCP do servidor da base de datos
+text entry	setup	gl	Entrada de texto
+the %1 extension is needed from: %2.	setup	gl	A extensión %1 é necesaria a partir de: %2.
+the %1 extension is needed, if you plan to use a %2 database.	setup	gl	A extensión %1 é obrigatoria se pretende utilizar unha base de datos %2.
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	gl	O tipo de base de datos en predefinidos (%1) non é compatible con este servidor. Utilizando o primeiro tipo compatible
+the file	setup	gl	o ficheiro
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	gl	O primeiro paso ao instalar eGroupWare é verificar se o ambiente ten a configuración precisa para executar a aplicación correctamente.
+the following applications need to be upgraded:	setup	gl	As seguintes aplicacións precisan unha actualización:
+the function %1 is needed from: %2.	setup	gl	A función %1 é necesaria a partir de: %2
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	gl	A función imagecreatefromjpeg é substituída pola extensión gd (compilada co soporte jpeg!). É necesaria para cargar as fotos dos contactos.
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	gl	A extensión mbstring é precisa para o soporte total de unicode (UTF-8) ou outros conxuntos de caracteres multibyte.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	gl	O valor mbstring.func_overload = 7 é preciso para o soporte total de unicode (utf-8) ou outros conxuntos de caracteres multibyte.
+the session extension is needed to use php sessions (db-sessions work without).	setup	gl	A extensión de sesión é precisa para utilizar sesións php (as sesións de base de datos funcionan sen ela).
+the table definition was correct, and the tables were installed	setup	gl	A definición de táboa era correcta, e foron instaladas
+the tables	setup	gl	as táboas
+the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	gl	O nome de usuario e o contrasinal son: demo/convidado, demo2/convidado e demo3/convidado.
+there was a problem trying to connect to your ldap server. <br />	setup	gl	Houbo un problema tentando conectar co servidor LDAP.<br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	gl	Houbo un problema tentando conectar co servidor LDAP.<br />Verifique a configuración do servidor LDAP
+this has to be outside the webservers document-root!!!	setup	gl	Debe estar fóra da raíz de documentos do servidor web.
+this might take a while, please wait ...	setup	gl	Isto pode demorar un pouco. Agarde...
+this program lets you backup your database, schedule a backup or restore it.	setup	gl	Este programa permite facer copias de seguranza da base de datos, programar unha copia ou restaurala.
+this program will convert your database to a new system-charset.	setup	gl	Este programa converte a base de datos para un novo conxunto de caracteres do sistema.
+this program will help you upgrade or install different languages for egroupware	setup	gl	Este programa axuda a actualizar ou instalar os distintos idiomas para eGroupWare
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	gl	Debe ser unha cadea duns 30 bytes.<br />Nota: a predefinida xerouse aleatoriamente.
+this stage is completed<br />	setup	gl	Esta fase está concluída<br />
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	gl	Isto creará un primeiro usuario en eGroupWare ou definirá de novo o contrasinal e os dereitos de administrador dun usuario xa existente
+to a version it does not know about	setup	gl	a unha versión que non coñece
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	gl	para permitir autenticación por contrasinal, engada a liña seguinte ao ficheiro pg_hba.conf (enriba das outras) E reiniciar postgres:
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	gl	Para modificar o conxunto de caracteres: faga unha copia de seguranza da base de datos, desinstale todas as aplicacións e instale de novo a copia de seguranza marcando a opción, Converter a copia de seguranza ao conxunto de caracteres seleccionado.
+to setup 1 admin account and 3 demo accounts.	setup	gl	Para instalar unha conta de administrador e 3 de demostración
+top	setup	gl	parte superior
+translations added	setup	gl	Traducións engadidas
+translations removed	setup	gl	Traducións eliminadas
+translations upgraded	setup	gl	Traducións actualizadas
+true	setup	gl	VERDADEIRO
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	gl	Tente configurar php para que admita un dos SXBD mencionados, ou instale eGroupWare manualmente.
+two weeks	setup	gl	dúas semanas
+unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	gl	Infelizmente, algúns paquetes de PHP/Apache teñen problemas con isto (Apache para e xa non é posible iniciar sesión).
+uninstall	setup	gl	desinstalar
+uninstall all applications	setup	gl	Desinstalar todas as aplicacións
+uninstalled	setup	gl	desinstalado
+unknown option '%1' !!!	setup	gl	Opción '%1' descoñecida !!!
+update finished.	setup	gl	Actualización finalizada.
+upgrade	setup	gl	Actualizar
+upgrade all	setup	gl	Actualizar todo
+upgraded	setup	gl	actualizado
+upgrading tables	setup	gl	Actualizando táboas
+upload backup	setup	gl	cargar copia de seguranza
+uploads a backup and installs it on your db	setup	gl	carga unha copia de seguranza e instálaa na base de datos
+uploads a backup to the backup-dir, from where you can restore it	setup	gl	carga unha copia de seguranza ao directorio de copias, desde onde pode restaurala
+usage: %1 command [additional options]	setup	gl	Uso: comando %1 [opcións opcionais]
+use --create-header to create the configuration file (--usage gives more options).	setup	gl	Utilizar --crear cabeceira para crear o ficheiro de configuración (--usage ofrece máis opcións).
+use --install to install egroupware.	setup	gl	Utilizar --install para instalar eGroupWare.
+use --update to do so.	setup	gl	Utilizar --update para facelo
+use cookies to pass sessionid	setup	gl	Utilizar cookies para pasar o ID de sesión
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	gl	utilizar mcrypt para cifrar os datos da sesión: {desconectado(predefinido) | activado},[vector de inicio de mcrypt(xerado aleatoriamente por defecto)],[versión de mcrypt]
+use persistent db connections: {on(default) | off}	setup	gl	utilizar conexións da base de datos persistentes: {activar(predefinido) | desactivar}
+use pure html compliant code (not fully working yet)	setup	gl	Utilizar código compatible HTML puro (aínda non funciona completamente)
+user	setup	gl	usuario
+user account prefix	setup	gl	Prefixo de contas de usuario
+user for smtp-authentication (leave it empty if no auth required)	setup	gl	Usuario para autenticación SMTP (deixar en branco se non é preciso)
+usernames are casesensitive	setup	gl	Os nomes de usuario diferencian maiúsculas
+users choice	setup	gl	A elixir polo usuario
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	gl	Normalmente é máis molesto.<br /> Os administradores poden utilizar a administración >>Xestionar contas para fornecer acceso a máis aplicacións.
+utf-8 (unicode)	setup	gl	UTF-8 (Unicode)
+validation errors	setup	gl	Erros de validación
+version	setup	gl	versión
+version mismatch	setup	gl	As versións non coinciden
+view	setup	gl	Ver
+virtual mail manager (login-name includes domain)	setup	gl	Xestor de correo virtual (o nome de usuario inclúe o dominio)
+warning!	setup	gl	Aviso
+we can proceed	setup	gl	Podemos proceder
+we could not determine the version of %1, please make sure it is at least %2	setup	gl	Non foi posible determinar a versión de %1, asegúrese de que é polo menos a %2
+we will automatically update your tables/records to %1	setup	gl	Actualizaremos automaticamente as táboas/rexistros a %1
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	gl	Agora executaranse unha serie de probas, que poden demorar uns poucos minutos. Prema a seguinte ligazón para proceder.
+welcome to the egroupware installation	setup	gl	Benvido(a) á instalación do eGroupWare
+what type of sessions management do you want to use (php session management may perform better)?	setup	gl	Que tipo de xestión de sesións desexa utilizar? (a xestión de sesións PHP pode ter mellor desempeño)
+which database type do you want to use with egroupware?	setup	gl	Sun tipo de base de datos desexa utilizar con eGroupWare?
+world readable	setup	gl	lectura universal
+world writable	setup	gl	escrita universal
+would you like egroupware to cache the phpgw info array ?	setup	gl	Desexa que eGroupWare garde na caché a matriz de phpgw info?
+would you like egroupware to check for a new version<br />when admins login ?	setup	gl	Desexa que eGroupWare busque unha nova versión<br />cando un administrador inicie sesión?
+would you like to show each application's upgrade status ?	setup	gl	Desexa mostrar o estado de actualización de cada aplicación?
+writable by the webserver	setup	gl	escrita polo servidor web
+write	setup	gl	Escribir
+year	setup	gl	ano
+yes	setup	gl	Si
+yes, with lowercase usernames	setup	gl	Si, cos nomes de usuario en minúsculas
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	gl	Parece que está a executar unha versión de eGroupWare anterior á beta.<br />Estas versións xa no son compatibles, e non hai camiño de actualización para elas na instalación.<br />É posible que queira actualizar primeiro á 0.9.10 (a última versión con soporte de actualizacións pre-beta)<br />e, a seguir, actualizar desde aí á versión actual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	gl	Parece que está a executar unha versión antiga de PHP<br />É recomendable actualizala para unha nova versión.<br />É posible que versións antigas de PHP non funcionen correctamente ou, simplemente, non funcionen en eGroupWare.<br /><br />Actualice polo menos á versión %1
+you appear to be running version %1 of egroupware	setup	gl	Parece que está a executar a versión %1 de eGroupWare
+you appear to have %1 support.	setup	gl	Parece que ten soporte para %1.
+you appear to have php session support. enabling php sessions.	setup	gl	Parece que ten soporte para sesións PHP. Activando sesións PHP.
+you appear to have xml support enabled	setup	gl	Parece que ten activado o soporte XML
+you are ready for this stage, but this stage is not yet written.<br />	setup	gl	Está pronto para esta fase, mais esta fase aínda non está escrita.<br />
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	gl	Está a utilizar a versión %1 de PHP. eGroupWare require, agora, a versión %2 ou posteriores, recoméndase a %3 de PHP.
+you can install it by running:	setup	gl	Pode instalalo executando:
+you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	gl	Tamén pode utilizar o contrasinal ou o usuario de cabeceira para todos os dominios. Se o contrasinal non está definido a través da liña de comandos lese desde a variable de entorno EGW_CLI_PASSWORD ou consúltase ao usuario.
+you didn't enter a config password for domain %1	setup	gl	Non inseriu un contrasinal de configuración para o dominio %1
+you didn't enter a config username for domain %1	setup	gl	Non inseriu un usuario de configuración para o dominio %1
+you didn't enter a header admin password	setup	gl	Non inseriu un contrasinal para administrar as cabeceiras
+you didn't enter a header admin username	setup	gl	Non inseriu un nome de usuario para administrar as cabeceiras
+you do not have any languages installed. please install one now <br />	setup	gl	Non ten ningún idioma instalado. Instale un agora <br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	gl	Aínda non creou o ficheiro header.inc.php.<br />Pode crealo agora.
+you have successfully logged out	setup	gl	Pechou a sesión con éxito
+you must enter a username for the admin	setup	gl	Debe introducir un nome de usuario para o administrador
+you need to add at least one egroupware domain / database instance.	setup	gl	É necesario que, como mínimo, engada unha instancia da base de datos ou do dominio de eGroupWare.
+you need to add some domains to your header.inc.php.	setup	gl	Precisa engadir algúns dominios ao ficheiro header.inc.php.
+you need to configure egroupware:	setup	gl	É necesario que configure eGroupWare:
+you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	gl	É necesario que corrixa os erros de arriba, antes de poder escribir no ficheiro de configuración header.inc.php!
+you need to save the settings you made here first!	setup	gl	Primeiro é necesario que garde as modificacións feitas aquí
+you need to select your current charset!	setup	gl	Precisa seleccionar o conxunto de caracteres
+you should either install the sources or uninstall it, to get rid of the tables	setup	gl	Pode instalar ou desinstalar as fontes para desfacerse da táboas
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	gl	Pode ora desinstalar e volver a instalala, ora tentar unha reparación manual
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	gl	NON poderá rexistrarse en eGroupWare utilizando sesións PHP: "non foi posible verificar a sesión" !!!
+you're using an old configuration file format...	setup	gl	Está a utilizar un ficheiro de configuración con formato antigo...
+you're using an old header.inc.php version...	setup	gl	Está a utilizar unha versión antiga do header.inc.php...
+your applications are current	setup	gl	As aplicacións están actualizadas
+your backup directory '%1' %2	setup	gl	O directorio de copias de seguranza '%1' %2
+your database does not exist	setup	gl	A base de datos non existe
+your database is not working!	setup	gl	A base de datos non está a funcionar
+your database is working, but you dont have any applications installed	setup	gl	A base de datos está a funcionar, mais non ten aplicacións instaladas
+your egroupware api is current	setup	gl	A API de eGroupWare está actualizada
+your files directory '%1' %2	setup	gl	O directorio de ficheiros '%1' %2
+your header admin password is not set. please set it now!	setup	gl	O contrasinal de administrador de cabeceiras non está configurado. Defínao agora.
+your header.inc.php needs upgrading.	setup	gl	header.inc.php precisa actualización
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	gl	O header.inc.php necesita ser actualizado.<br /><blink><b class="msg">AVISO!</b></blink><br /><b>FAGA COPIAS DE SEGURANZA!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	gl	A súa versión instalada de %1 é %2, requírese polo menos a %3, execútea:
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	gl	A instalación de PHP non ten o soporte apropiado de GD. Precisa a versión 1.8 da biblioteca GD ou superior para ver gráficas Gantt nos proxectos.
+your tables are current	setup	gl	As táboas están actualizadas
+your tables will be dropped and you will lose data	setup	gl	As táboas serán eliminadas e perderá toda a súa información
+your temporary directory '%1' %2	setup	gl	O directorio temporal '%1' %2
+{db | php(default) | php-restore}	setup	gl	{base de datos | php(predefinido) | restaurar php}
+{off(default) | on}	setup	gl	{desactivado(predefinido) | activado}

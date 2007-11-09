@@ -1,0 +1,409 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	gl	%1 mensaxes(%2 novos) escritas para a aplicación '%3' e idiomas '%4'
+%1 etemplates deleted	etemplate	gl	%1 modelos electrónicos eliminados
+%1 etemplates for application '%2' dumped to '%3'	etemplate	gl	%1 modelos electrónicos para a aplicación '%2' volcadas a '%3'
+%1 etemplates found	etemplate	gl	%1 modelos electrónicos encontrados
+%1 matches on search criteria	etemplate	gl	%1 coincidencias nos criterios de busca
+%1 more...	etemplate	gl	%1 máis...
+%1 new etemplates imported for application '%2'	etemplate	gl	%1 novos modelos electrónicos importados para a aplicación '%2'
+%s disabled	etemplate	gl	%s desactivado
+%s needed	etemplate	gl	%s é preciso
+%s notranslation	etemplate	gl	%s sen tradución
+%s onchange	etemplate	gl	%s ao modificar
+%s readonly	etemplate	gl	%s só de lectura
+'%1' has an invalid format !!!	etemplate	gl	'%1' ten un formato inválido !!!
+'%1' is not a valid date !!!	etemplate	gl	'%1' non é unha data válida !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	gl	'%1' non é un número en coma flotante válido !!!
+'%1' is not a valid integer !!!	etemplate	gl	'%1' non é unha enteiro válido !!!
+'%1' is not allowed ('%2')!	etemplate	gl	'%1' NON está permitido ('%2') !
+a pattern to be searched for	etemplate	gl	un patrón de busca
+accesskey	etemplate	gl	Tecla rápida
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	gl	As teclas rápidas tamén se poden especificar pondo & na etiqueta (p. ex. &Nome)
+account contactdata	etemplate	gl	Datos de contacto da conta
+add a new column (after the existing ones)	etemplate	gl	Engadir unha columna nova (detrás das existentes)
+add a new entry of the selected application	etemplate	gl	Engadir unha entrada nova da aplicación seleccionada
+add a new multi-column index	etemplate	gl	Engadir un novo índice multicolumna
+add column	etemplate	gl	Engadir columna
+add index	etemplate	gl	Engadir índice
+add new	etemplate	gl	Engadir nova
+add table	etemplate	gl	Engadir táboa
+advanced search	etemplate	gl	Busca avanzada
+align	etemplate	gl	Aliñar
+alignment of label and input-field in table-cell	etemplate	gl	aliñamento da etiqueta e do campo de entrada na cela da táboa
+alignment of the v/hbox containing table-cell	etemplate	gl	Aliñamento do recadro horizontal ou vertical que contén a cela da táboa
+all days	etemplate	gl	todos os días
+all operations save the template!	etemplate	gl	Todas as operacións gardan o modelo!
+am	etemplate	gl	am
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	gl	unha columna indexada acelera as consultas que utilice esa columna (a costa de espazo no disco)
+application	etemplate	gl	Aplicación
+application name needed to write a langfile or dump the etemplates !!!	etemplate	gl	Precísase o nome da aplicación para escribir un ficheiro de idioma ou volcar os modelos electrónicos
+applies the changes made	etemplate	gl	aplica as modificacións realizadas
+applies the changes to the given version of the template	etemplate	gl	aplica as modificacións á versión dada do modelo
+as default	etemplate	gl	como predefinido
+attach	etemplate	gl	Anexar
+attach file	etemplate	gl	Anexar ficheiro
+baseline	etemplate	gl	Liña base
+blurtext	etemplate	gl	Texto pouco claro
+border	etemplate	gl	Bordo
+border-line-thickness for the table-tag	etemplate	gl	Grosor da liña do bordo da etiqueta da táboa
+bottom	etemplate	gl	Parte inferior
+box	etemplate	gl	Caixa
+box...	etemplate	gl	Caixa...
+can not have special sql-value null	etemplate	gl	non pode ter o valor especial de SQL NULL
+cancel	etemplate	gl	Cancelar
+cant delete a single widget from a grid !!!	etemplate	gl	Non é posible eliminar un único control dunha grade!
+cant delete the only column of a grid !!!	etemplate	gl	No é posible eliminar a única columna dunha grade!
+cant delete the only row in a grid !!!	etemplate	gl	Non é posible eliminar a única fila duhna grade!
+category	etemplate	gl	Categoría
+cellpadding for the table-tag	etemplate	gl	Distancia da etiqueta da táboa á cela
+cells	etemplate	gl	Celas
+cellspacing for the table-tag	etemplate	gl	Espazamento na cela para a etiqueta da táboa
+center	etemplate	gl	Centrar
+changed	etemplate	gl	Modificado
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	gl	marcar se desexa mostrar o contido sen modificar (o contido non se devolve)
+check if field has to be filled by user	etemplate	gl	marcar se o campo ten que cubrilo o usuario
+checkbox	etemplate	gl	Caixa de verificación
+class	etemplate	gl	Clase
+class, valign	etemplate	gl	clase, aliñamento vertical
+click here to attach the file	etemplate	gl	Prema aquí para anexar o ficheiro
+click here to create the link	etemplate	gl	Prema aquí para crear a ligazón
+click here to start the search	etemplate	gl	Prema aquí para iniciar a busca
+click here to upload the file	etemplate	gl	Prema aquí para subir o ficheiro ao servidor
+click to order after that criteria	etemplate	gl	Prema para ordenar despois dese criterio
+clickable path	etemplate	gl	camiño premible
+closes the window without saving the changes	etemplate	gl	pecha a ventá sen gardar as modificacións
+column...	etemplate	gl	Columna...
+columnname	etemplate	gl	Nome da columna
+comment	etemplate	gl	Comentario
+confirm	etemplate	gl	confirmar
+confirmation message or custom javascript (returning true or false)	etemplate	gl	mensaxe de confirmación ou javascript personalizado (devolvendo 'verdadeiro' ou 'falso')
+confirmation necesary or custom java-script	etemplate	gl	confirmación necesaria ou javascript personalizado
+contact	etemplate	gl	Contacto
+contact field to show	etemplate	gl	Campo do contacto a mostrar
+contact fields	etemplate	gl	Campos do contacto
+contains	etemplate	gl	contén
+create a new table for the application	etemplate	gl	Crear unha táboa para a aplicación
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	gl	Crea un ficheiro de idioma en inglés ('en') a partir da etiqueta e textos de axuda (para a aplicación indicada en Nome)
+css class for the table-tag	etemplate	gl	clase CSS para a etiqueta da táboa
+css properties	etemplate	gl	Propiedades CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	gl	Nome da Clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	gl	O nome da clase CSS para esta fila, preestablecido: 'th' = cabeceira, 'row' = fila alternando filas 'row_off' e 'row_on'.
+css-styles	etemplate	gl	Estilos CSS
+custom	etemplate	gl	personalizado
+custom fields	etemplate	gl	campos personalizados
+custom javascript for onchange	etemplate	gl	javascript personalizado para onChange
+cut	etemplate	gl	Cortar
+date+time	etemplate	gl	Data + hora
+datum	etemplate	gl	Data
+day	etemplate	gl	Día
+days	etemplate	gl	días
+db ensures that every row has a unique value in that column	etemplate	gl	A base de datos asegúrase de que cada fila teña un valor único nesa columna
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	gl	Opcións de índice específicas da base de datos (separadas por comas), por ex. mysql(FULLTEXT) ou mysql(100) para a lonxitude indexada dunha columna
+db-tools	etemplate	gl	Ferramentas da base de datos
+deck	etemplate	gl	Cuberta (interna)
+default	etemplate	gl	Predefinido
+delete a single entry by passing the id.	etemplate	gl	Eliminar unha entrada simple pasando o id.
+delete all selected etemplates, without further inquiry	etemplate	gl	Borrar TODOS os modelos seleccionados, SEN preguntar
+delete and cut save the template!	etemplate	gl	Eliminar e cortar gardan o modelo!
+delete column	etemplate	gl	Eliminar columna
+delete index	etemplate	gl	Eliminar índice
+delete the spezified etemplate	etemplate	gl	Eliminar o modelo electrónico especificado
+delete this column	etemplate	gl	Eliminar esta columna
+delete this etemplate	etemplate	gl	Eliminar este modelo electrónico
+delete this file	etemplate	gl	Eliminar este ficheiro
+delete this row	etemplate	gl	Eliminar esta fila
+delete whole column (can not be undone!!!)	etemplate	gl	Eliminar a columna completa (NON se pode desfacer)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	gl	Elimina o modelo especificado da base de datos. NON se pode desfacer.
+deletes the etemplate spez. above	etemplate	gl	elimina o modelo electrónico especificado arriba
+deletes this column	etemplate	gl	Elimina esta columna
+deletes this index	etemplate	gl	Elimina este índice
+discard changes	etemplate	gl	Descartar modificacións
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	gl	Móstrase diante da entrada ou a entrada insírese para un '%s' na etiqueta (a do botón de enviar ou o nome do ficheiro da imaxe)
+displayed in statusline of browser if input-field gets focus	etemplate	gl	Móstrase na liña de estado do navegador cando o cadro de texto ten o foco
+displayed in the top line of the groupbox (legend)	etemplate	gl	Mostrada na liña superior do recadro do grupo (lenda)
+do you want to save the changes you made in table %s?	etemplate	gl	Desexa gardar as modificacións que realizou na táboa %s?
+documentation	etemplate	gl	Documentación
+doesn't matter	etemplate	gl	Non importa
+drop a table - this can not be undone	etemplate	gl	Eliminar unha táboa - NON se pode desfacer
+drop table	etemplate	gl	Eliminar táboa
+dump4setup	etemplate	gl	Volcar para instalación
+duration	etemplate	gl	Duración
+edit	etemplate	gl	Editar
+edit embeded css styles or of the applications app.css file	etemplate	gl	Editar estilos CSS incorporados ou o ficheiro app.css das aplicacións
+edit the etemplate spez. above	etemplate	gl	Editar as especificacións do modelo electrónico especificado arriba
+edit...	etemplate	gl	Editar...
+editable templates - db-tools	etemplate	gl	Modelos editables - Ferramentas da base de datos
+editable templates - delete template	etemplate	gl	Modelos editables - Eliminar modelo
+editable templates - editor	etemplate	gl	Modelos editables - Editor
+editable templates - search	etemplate	gl	Modelos editables - Buscar
+editable templates - show template	etemplate	gl	Modelos editables - Mostrar modelo
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	gl	estilos CSS incorporados, exemplo '.vermello { fondo: vermello; }' (vexa o '.' antes do nome da clase) ou '@import url(...)' (os nomes da clase son xerais para toda a páxina!)
+enable javascript onchange submit	etemplate	gl	activar enviar JavaScript onChange
+enter '' for an empty default, nothing mean no default	etemplate	gl	Introduza '' para un valor baleiro predefinido. Se o deixa en branco, non hai valor predefinido
+enter a search pattern	etemplate	gl	Introduza un patrón de busca
+enter filename to upload and attach, use [browse...] to search for it	etemplate	gl	Introduza o nome do ficheiro para subilo e anexalo. Utilice [Examinar...] Para buscalo
+enter the new version number here (> old_version), empty for no update-file	etemplate	gl	Introduza o número da nova versión aquí (maior que a versión anterior), baleiro para non utilizar ficheiro de actualización
+enter the new version number here (has to be > old_version)	etemplate	gl	Introduza o novo número de versión aquí (ten que ser maior que a versión anterior)
+entry saved	etemplate	gl	Entrada gardada
+error while notifying %1: %2	etemplate	gl	Erro ao notificar %1: %2
+error: template not found !!!	etemplate	gl	Erro: non se encontrou o modelo
+error: webserver is not allowed to write into '%1' !!!	etemplate	gl	Erro: O servidor non pode escribir en '%1'!
+error: while saving !!!	etemplate	gl	Erro ao gardar!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	gl	Erro: o servidor web non ten permiso de escrita
+etemplate	common	gl	Modelo electrónico
+etemplate '%1' imported, use save to put it in the database	etemplate	gl	Importouse o modelo electrónico '%1'. Utilice Gardar para gardalo na base de datos
+etemplate '%1' written to '%2'	etemplate	gl	O modelo electrónico '%1' gardouse en '%2'
+etemplate editor	etemplate	gl	Editor de modelos electrónicos
+etemplate reference	etemplate	gl	Referencia de modelos electrónicos
+etemplate tutorial	etemplate	gl	Titoría de modelos electrónicos
+exchange this row with the one above	etemplate	gl	Intercambiar esta fila coa de arriba
+exchange this two columns	etemplate	gl	Intercambiar estas dúas columnas
+export the loaded etemplate into a xml-file	etemplate	gl	Exportar o modelo electrónico cargado nun ficheiro xml
+export xml	etemplate	gl	Exportar XML
+extensions loaded:	etemplate	gl	Extensións cargadas:
+field	etemplate	gl	Campo
+field must not be empty !!!	etemplate	gl	Os campos non deben estar baleiros!!!
+file	etemplate	gl	Ficheiro
+file contains more than one etemplate, last one is shown !!!	etemplate	gl	O ficheiro contén máis dun modelo electrónico. Só se mostrará o último.
+file writen	etemplate	gl	Ficheiro escrito
+fileupload	etemplate	gl	Cargar ficheiro
+first	etemplate	gl	Primeiro
+floating point	etemplate	gl	Coma flotante
+foreign key	etemplate	gl	Chave externa
+formatted text (html)	etemplate	gl	Texto con formato (HTML)
+go to the first entry	etemplate	gl	Ir á primeira entrada
+go to the last entry	etemplate	gl	Ir á última entrada
+go to the next page of entries	etemplate	gl	Ir á páxina seguinte de entradas
+go to the previous page of entries	etemplate	gl	Ir á páxina anterior de entradas
+grid	etemplate	gl	Grade
+grid column attributes	etemplate	gl	Atributos da columna da grade
+grid row attributes	etemplate	gl	Atributos da fila da grade
+groupbox	etemplate	gl	Caixa de grupo
+hbox	etemplate	gl	Caixa horizontal
+height	etemplate	gl	Altura
+height of row (in % or pixel)	etemplate	gl	altura da fila (en % ou píxeles)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	gl	Altura da fila (en % ou píxeles), desactivar fila: [!= non]<valor>[=<check>]. Exemplo: '!@data' desactiva a fila se o contido dos datos está baleiro.
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	gl	Altura da táboa en % ou píxeles para a etiqueta da táboa e, opcionalmente, div.
+height, disabled	etemplate	gl	Altura, desactivada
+help	etemplate	gl	Axuda
+history log	etemplate	gl	Rexistro do historial
+horizontal rule	etemplate	gl	Regra horizontal
+hour	etemplate	gl	Hora
+hours	etemplate	gl	Horas
+how many entries should the list show	etemplate	gl	Cantas entradas se mostran na lista?
+html	etemplate	gl	Html
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	gl	Se o campo está desactivado, a cela da táboa estará baleira, para eliminar temporalmente un campo ou celda.
+image	etemplate	gl	Imaxe
+import	etemplate	gl	Importar
+import an etemplate from a xml-file	etemplate	gl	Importar un modelo electrónico dun ficheiro xml
+import table-definitions from existing db-table	etemplate	gl	Importar definicións de táboa dunha táboa da base de datos existente
+import xml	etemplate	gl	Importar XML
+increment version to not overwrite the existing template	etemplate	gl	Incrementar a versión para non sobrescribir o modelo electrónico existente
+index/name of returned content (name of the template, link / method for image)	etemplate	gl	Nome ou índice do contido devolvido (nome do modelo electrónico, ligazón ou método para unha imaxe)
+indexed	etemplate	gl	Indexado
+indexoptions	etemplate	gl	Opcións de indexar
+insert a column before	etemplate	gl	Inserir unha columna diante
+insert a column behind	etemplate	gl	Inserir unha columna detrás
+insert a row above	etemplate	gl	Inserir unha fila enriba
+insert a row below	etemplate	gl	Inserir unha fila debaixo
+insert a widget before	etemplate	gl	Inserir un control diante
+insert a widget behind	etemplate	gl	Inserir un control detrás
+insert new column behind this one	etemplate	gl	Inserir unha nova columna detrás desta
+insert new column in front of all	etemplate	gl	Inserir unha nova columna ao comezo de todas
+insert new row after this one	etemplate	gl	Inserir unha nova fila despois desta
+insert new row in front of first line	etemplate	gl	Inserir unha nova fila diante da primeira liña
+integer	etemplate	gl	Enteiro
+key	etemplate	gl	Chave
+label	etemplate	gl	Etiqueta
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	gl	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] BotónRadio:valor Liña hor.:[width] Modelo electrónico:[IndexInContent] Selec.:[multiselect] Data:[valores: ej. 'A-m-d']
+lang	etemplate	gl	Idioma
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	gl	Abreviatura do idioma (ex. 'gl' para galego) para modelos electrónicos que dependen do idioma ('' le as preferencias do idioma ou o predeterminado. Utilice 'default' para o modelo electrónico predefinido.
+last	etemplate	gl	Última
+left	etemplate	gl	Esquerda
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	gl	Lonxitude para char+varchar. Precisións int: 2, 4, e float: 4, 8
+link	etemplate	gl	Ligazón
+linkapps	etemplate	gl	Aplicacións de ligazón
+linkentry	etemplate	gl	Entrada de ligazón
+linklist	etemplate	gl	Lista de ligazóns
+linkstring	etemplate	gl	Cadea de ligazón
+linkto	etemplate	gl	Ligazón a
+load this template into the editor	etemplate	gl	Cargar este modelo no editor
+middle	etemplate	gl	Medio
+minute	etemplate	gl	Minuto
+minutes	etemplate	gl	Minutos
+month	etemplate	gl	Mes
+more than 1 match for '%1'	etemplate	gl	Máis dunha coincidencia para '%1'
+multicolumn indices	etemplate	gl	Índices multicolumna
+name	etemplate	gl	Nome
+name of other table where column is a key from	etemplate	gl	Nome da outra táboa onde a columna é unha chave
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	gl	Nome do conxunto de modelos (p. ex. verdiak): " = predefinida (lerá o modelo de preferencias. Utilice 'default' para ler o modelo predefinido ")
+name of table to add	etemplate	gl	Nome da táboa a engadir
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	gl	Nome do modelo electrónico. Debe estar no formato aplicación.función[,submodelo]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	gl	É necesario que sexa única na táboa e non ser palabra reservada de SQL. Tente poñer un prefixo común de dous caracteres para a aplicación, por exemplo 'et_'
+new search	etemplate	gl	Nova busca
+new table created	etemplate	gl	Creouse unha táboa
+newer version '%1' exists !!!	etemplate	gl	Existe unha versión '%1' máis recente!
+nextmatch	etemplate	gl	Seguinte coincidencia
+nextmatch accountfilter	etemplate	gl	Filtro para a seguinte coincidencia de conta
+nextmatch custom filterheader	etemplate	gl	Cabeceira para a seguinte coincidencia de filtro personalizado
+nextmatch filterheader	etemplate	gl	Filtro para a seguinte coincidencia de cabeceiras
+nextmatch header	etemplate	gl	Cabeceira da seguinte coincidencia
+nextmatch sortheader	etemplate	gl	Cabeceira de orde de seguinte coincidencia
+no column to swap with !!!	etemplate	gl	Non hai columna coa que intercambiar!
+no file	etemplate	gl	Sen ficheiro
+no filename given or selected via browse...	etemplate	gl	Non se indicou un nome de ficheiro nin se seleccionou mediante Examinar...
+no matches found	etemplate	gl	Non se atoparon coincidencias
+no row to swap with !!!	etemplate	gl	No hai fila coa que intercambiar!
+not null	etemplate	gl	NON NULO
+nothing	etemplate	gl	Nada
+nothing found - try again !!!	etemplate	gl	Non se encontrou nada. Ténteo de novo.
+nothing in clipboard to paste !!!	etemplate	gl	Non hai nada no portapapeis para pegar!!
+nothing matched search criteria !!!	etemplate	gl	Non se encontrou nada con ese criterio.
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	gl	Número de columnas polas que se deben distribuír o campo ou a cela, ou 'todas' para o resto de columnas, nome da clase CSS (para a etiqueta TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	gl	Número de filas ou columnas nunha caixa vertical ou horizontal, distancia do texto á cela e espazamento entre celas
+of	etemplate	gl	de
+onchange	etemplate	gl	onChange
+onclick	etemplate	gl	onClick
+only an other version found !!!	etemplate	gl	Só se encontrou outra versión
+open the online help.	etemplate	gl	Abrir a axuda en liña
+operator	etemplate	gl	Operador
+optional note about the link	etemplate	gl	Nota opcional sobre a ligazón
+options	etemplate	gl	Opcións
+order to navigating by tab key through the form	etemplate	gl	Para navegar pulsando o tabulador no formulario
+overflow	etemplate	gl	Desbordamento
+padding	etemplate	gl	Distancia do texto á cela
+parent is a '%1' !!!	etemplate	gl	Superior é un '%1'
+paste	etemplate	gl	Pegar
+path	etemplate	gl	Camiño
+please enter table-name first !!!	etemplate	gl	Por favor, introduza o nome da táboa primeiro
+pm	etemplate	gl	pm
+popup	etemplate	gl	Ventá emerxente
+precision	etemplate	gl	Precisión
+primary key	etemplate	gl	Chave primaria
+primary key for the table, gets automaticaly indexed	etemplate	gl	Chave primaria da táboa, indéxase automaticamente
+radiobutton	etemplate	gl	Botón tipo radio
+read	etemplate	gl	Ler
+read a list of entries.	etemplate	gl	Ler unha lista de entradas
+read a single entry by passing the id and fieldlist.	etemplate	gl	Ler unha soa entrada pasando o id e a lista de campos
+read etemplate from database (for the keys above)	etemplate	gl	Ler o modelo electrónico da base de datos (para as chaves de arriba)
+readonly	etemplate	gl	Só de lectura
+remove row (can not be undone!!!)	etemplate	gl	Eliminar fila (¡NON se pode desfacer!)
+remove this link (not the entry itself)	etemplate	gl	Eliminar esta ligazón (non a entrada en sí)
+returns savely, without deleting	etemplate	gl	Volve de forma segura, SEN eliminar
+right	etemplate	gl	Dereita
+row...	etemplate	gl	Fila...
+save selected columns as default preference for all users.	etemplate	gl	Gardar as columnas seleccionadas como preferencias predefinidas de todos os usuarios.
+save the changes made and close the window	etemplate	gl	Gardar as modificacións realizadas e pechar a ventá
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	gl	Gardar o modelo electrónico baixo as chaves de arriba (nome, etc). Modifíqueas para Gardar como.
+saves changes to tables_current.inc.php	etemplate	gl	Garda as modificacións de tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	gl	Garda o modelo co número de versión indicado e pecha a ventá
+scale	etemplate	gl	Escala
+scale for float	etemplate	gl	Escala para flotante
+search	etemplate	gl	Buscar
+select a category	etemplate	gl	Seleccionar unha categoría
+select a primary contact, to show in the list	etemplate	gl	Seleccionar un contacto primario para mostrar na lista
+select access	etemplate	gl	Seleccionar acceso
+select account	etemplate	gl	Seleccionar conta
+select an app first !!!	etemplate	gl	Seleccione unha aplicación primeiro
+select an app to search in	etemplate	gl	Seleccionar unha aplicación na cal buscar
+select an application	etemplate	gl	Seleccionar unha aplicación
+select an application, (*) = uninstalled	etemplate	gl	Seleccionar unha aplicación. (*) = sen instalar
+select an entry to link with	etemplate	gl	Seleccionar unha entrada para ligar
+select an table of the application	etemplate	gl	Seleccione unha táboa da aplicación
+select application	etemplate	gl	Seleccionar aplicación
+select application to search	etemplate	gl	Seleccionar unha aplicación para buscar
+select category	etemplate	gl	Seleccionar categoría
+select columns	etemplate	gl	Seleccionar columnas
+select country	etemplate	gl	Seleccionar estado
+select day	etemplate	gl	Seleccionar día
+select day of week	etemplate	gl	Seleccionar día da semana
+select entry	etemplate	gl	Seleccionar entrada
+select hour	etemplate	gl	Seleccionar hora
+select if content of field should not be translated (label gets always translated)	etemplate	gl	Seleccione se o contido do campo non debe traducirse (a etiqueta sempre se traduce)
+select language	etemplate	gl	Seleccionar idioma
+select month	etemplate	gl	Seleccionar mes
+select number	etemplate	gl	Seleccionar número
+select one ...	etemplate	gl	Seleccionar un...
+select percentage	etemplate	gl	Seleccionar porcentaxe
+select priority	etemplate	gl	Seleccionar prioridade
+select state	etemplate	gl	Seleccionar estado
+select the columns to display in the list	etemplate	gl	Seleccionara as columnas a mostrar na lista
+select the indexed columns in their desired order	etemplate	gl	Seleccionar as columnas indexadas na orde desexada
+select this etemplate to delete it	etemplate	gl	Seleccionar este modelo para eliminalo
+select which accounts to show	etemplate	gl	seleccionar as contas a mostrar
+select which values to show	etemplate	gl	Seleccionar que valores mostrar
+select year	etemplate	gl	Seleccionar ano
+selectbox	etemplate	gl	Caixa de selección
+sets today as date	etemplate	gl	Define hoxe como data
+should the form be submitted or any custom javascript be executed	etemplate	gl	Débese enviar o formulario ou executar calquera javascript personalizado
+show	etemplate	gl	Mostrar
+show (no save)	etemplate	gl	Mostrar (sen gardar)
+show values	etemplate	gl	Mostrar valores
+showing	etemplate	gl	Mostrando
+shows / allows you to enter values into the etemplate for testing	etemplate	gl	Mostra/Permite introducir valores no modelo electrónico para probar
+shows/displays etemplate for testing, does not save it before	etemplate	gl	Mostra o modelo electrónico para probas. NON o garda antes
+spacing	etemplate	gl	Espazamento
+span	etemplate	gl	Span
+span, class	etemplate	gl	Span, clase
+stack	etemplate	gl	Amontoar
+start a new search, cancel this link	etemplate	gl	Iniciar unha nova busca, cancelar esta ligazón
+start new search for the above pattern	etemplate	gl	Iniciar unha nova busca para o patrón de arriba
+submit form	etemplate	gl	Enviar formulario
+submitbutton	etemplate	gl	Botón de enviar
+swap	etemplate	gl	Intercambiar
+swap widget with next one	etemplate	gl	Intercambiar control co seguinte
+swap with next column	etemplate	gl	Intercambiar coa seguinte columna
+swap with next row	etemplate	gl	Intercambiar coa seguinte fila
+switch to a parent widget	etemplate	gl	Mudar a un control superior
+switch to an other widgets of that container	etemplate	gl	Mudar a outros controis dese contedor
+tabindex	etemplate	gl	Índice de tabulación
+table unchanged, no write necessary !!!	etemplate	gl	A táboa non se modificou, non é preciso gardala
+tablename	etemplate	gl	Nome da táboa
+tabs	etemplate	gl	Separadores
+template	etemplate	gl	Modelo
+template deleted	etemplate	gl	Modelo eliminado
+template saved	etemplate	gl	Modelo gardado
+text	etemplate	gl	Texto
+textarea	etemplate	gl	Área de texto
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	gl	Este texto móstrase se o campo de entrada está baleiro e non ten foco (borroso)
+time	etemplate	gl	Hora
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	gl	para desactivar: [! = no]<valor>[=<comprobar>] p.exemplo: '!@data' desactívase se o contido dos  datos está baleiro
+to start the db-tools	etemplate	gl	para iniciar as Ferramentas da base de datos
+to start the etemplate editor	etemplate	gl	para iniciar o editor de modelos electrónicos
+to start the search	etemplate	gl	para iniciar a busca
+today	etemplate	gl	Hoxe
+top	etemplate	gl	Superior
+type	etemplate	gl	Tipo
+type of the column	etemplate	gl	tipo da columna
+type of the field (select label if field should be empty)	etemplate	gl	Tipo do campo (seleccionar a etiqueta se o campo ten que estar baleiro)
+unique	etemplate	gl	Único
+unlink	etemplate	gl	Desligar
+update a single entry by passing the fields.	etemplate	gl	Actualizar unha única entrada pasando os campos
+update from version '%s' to	etemplate	gl	Actualizar da versión '%s' a
+upload	etemplate	gl	Cargar nun servidor
+valign	etemplate	gl	Aliñación vertical
+value	etemplate	gl	Valor
+value has to be at least '%1' !!!	etemplate	gl	O valor ten que ser como mínimo '%1'!!!
+value has to be at maximum '%1' !!!	etemplate	gl	O valor ten que ser como máximo '%1'!!!
+vbox	etemplate	gl	VBox
+version	etemplate	gl	Versión
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	gl	Número da versión, en formato maior.menor.revisión.número (por ex. 0.9.13.001, con todos os números cheos de ceros)
+vertical alignment of row	etemplate	gl	Aliñación vertical da fila
+view this etemplate	etemplate	gl	Ver este modelo electrónico
+view this linked entry in its application	etemplate	gl	Ver esta entrada ligada na súa aplicación
+weekend	etemplate	gl	Fin de semana
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	gl	Que facer co contido que se desborda: visible (predefinido), oculto, desprazar, automático (decide o navegador)
+widget copied into clipboard	etemplate	gl	Control copiado no portapapeis
+width	etemplate	gl	Largura
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	gl	Largura da columna (en % ou píxeles), desactivar columna: [!= no]<valor>[=<comprobar>] ex: '!@data' desactiva a columna se o contido dos datos está baleiro
+width of column (in % or pixel)	etemplate	gl	Largura da columna (en % o píxel)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	gl	Largura da táboa en % ou píxeles para a etiqueta e, opcionalmente, elemento div
+width, disabled	etemplate	gl	Largura desactivada
+working days	etemplate	gl	Días laborais
+write <app>/setup/tables_current.inc.php	etemplate	gl	Escribir <app>/setup/tables_current.inc.php
+write langfile	etemplate	gl	Escribir ficheiro de idioma
+write tables	etemplate	gl	Escribir táboas
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	gl	Escribe un ficheiro 'etemplates.inc.php' (para a aplicación en Nome) no directorio de instalación da aplicación
+xml-file to import	etemplate	gl	Ficheiro xml que se vai importar
+xslt template	etemplate	gl	Modelo XSLT
+year	etemplate	gl	Ano
+you can respond by visiting:	etemplate	gl	Pode responder visitando:

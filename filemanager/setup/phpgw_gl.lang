@@ -1,0 +1,115 @@
+%1 already exists as a file	filemanager	gl	%1 xa existe como ficheiro
+application	filemanager	gl	Aplicación
+back to file manager	filemanager	gl	Volver ao xestor de ficheiros
+cancel editing %1 without saving	filemanager	gl	Cancelar a edición de %1 sen gardar
+cannot create directory because it begins or ends in a space	filemanager	gl	Non é posible crear o directorio porque comeza ou acaba cun espazo
+cannot replace %1 because it is a directory	filemanager	gl	Non é posible substituír %1 porque é un directorio
+command sucessfully run	filemanager	gl	Comando executado con éxito
+comment	filemanager	gl	Comentario
+comments cannot contain "%1"	filemanager	gl	Os comentarios non poden conter "%1"
+copied %1 to %2	filemanager	gl	Copiado %1 en %2
+copy to	filemanager	gl	Copiar en
+copy to:	filemanager	gl	Copiar en:
+could not copy %1 to %2	filemanager	gl	Non foi posible copiar %1 en %2
+could not copy file because no destination directory is given	filemanager	gl	No foi posible copiar o ficheiro porque non se indicou o directorio de destino
+could not create %1	filemanager	gl	Non foi posible crear %1
+could not create directory %1	filemanager	gl	Non foi posible crear o directorio %1
+could not delete %1	filemanager	gl	Non foi posible eliminar %1
+could not move %1 to %2	filemanager	gl	Non foi posible mover %1 a %2
+could not move file because no destination directory is given	filemanager	gl	Non foi posible mover o ficheiro porque non se indicou o directorio de destino
+could not rename %1 to %2	filemanager	gl	Non foi posible renomear %1 a %2
+could not save %1	filemanager	gl	Non foi posible gardar %1
+create file	filemanager	gl	Crear ficheiro
+create folder	filemanager	gl	Crear cartafol
+created	filemanager	gl	Creado
+created %1	filemanager	gl	Creouse %1
+created %1,%2	filemanager	gl	Creouse %1,%2
+created by	filemanager	gl	Creado por
+created directory %1	filemanager	gl	Directorio %1 creado
+date	filemanager	gl	Data
+default number of upload fields to show	filemanager	gl	Número predefinido de campos para mostrar
+delete	filemanager	gl	Eliminar
+deleted %1	filemanager	gl	%1 eliminado
+directory	filemanager	gl	Directorio
+directory %1 already exists	filemanager	gl	O directorio %1 xa existe
+directory %1 does not exist	filemanager	gl	O directorio %1 non existe
+directory names cannot contain "%1"	filemanager	gl	Os nomes de directorio non poden conter "%1"
+display attributes	filemanager	gl	Mostrar atributos
+download	filemanager	gl	Descargar
+edit	filemanager	gl	Editar
+edit comments	filemanager	gl	Editar comentarios
+error running command	filemanager	gl	Erro ao executar o comando
+execute	filemanager	gl	Executar
+failed to create directory	filemanager	gl	Erro ao crear o directorio
+fake base dir did not exist, egroupware created a new one.	filemanager	gl	eGroupWare creou un novo directorio base ficticio porque non existía.
+file	filemanager	gl	Ficheiro
+file %1 already exists. please edit it or delete it first.	filemanager	gl	O ficheiro %1 xa existe. Edíteo ou elimíneo antes.
+file %1 could not be created.	filemanager	gl	Non foi posible crear o ficheiro %1.
+file name	filemanager	gl	Nome do ficheiro
+file names cannot contain "%1"	filemanager	gl	Os nomes de ficheiro non poden conter "%1"
+file names cannot contain \ or /	filemanager	gl	Os nomes de ficheiro non poden conter \ ou /
+filemanager	common	gl	Xestor de ficheiros
+filemanager preferences	filemanager	gl	Preferencias do xestor de ficheiros
+files	filemanager	gl	Ficheiros
+files in this directory	filemanager	gl	Ficheiros neste directorio
+folder	filemanager	gl	Cartafol
+folder up	filemanager	gl	Subir un cartafol
+go home	filemanager	gl	Ir ao inicio
+go to	filemanager	gl	Ir a
+go to %1	filemanager	gl	Ir a %1
+go to your home directory	filemanager	gl	Ir ao directorio persoal
+go to:	filemanager	gl	Ir a:
+go up	filemanager	gl	Subir
+home	filemanager	gl	Inicio
+location	filemanager	gl	Localización
+locked	filemanager	gl	Bloqueado
+mime type	filemanager	gl	Tipo MIME
+modified	filemanager	gl	Modificado
+modified by	filemanager	gl	Modificado por
+move to	filemanager	gl	Mover a:
+move to:	filemanager	gl	Mover a:
+moved %1 to %2	filemanager	gl	Moveuse %1 a %2
+no files in this directory.	filemanager	gl	Sen ficheiros neste directorio
+no version history for this file/directory	filemanager	gl	Sen historial de versión para este ficheiro ou directorio
+operation	filemanager	gl	Operación
+other settings	filemanager	gl	Outras definicións
+owner	filemanager	gl	Propietario
+please select a file to delete.	filemanager	gl	Seleccione un ficheiro para eliminar
+preview %1	filemanager	gl	Previsualización de %1
+preview of %1	filemanager	gl	Previsualización de %1
+quick jump to	filemanager	gl	Atallo a
+reload	filemanager	gl	Recargar
+rename	filemanager	gl	Renomear
+renamed %1 to %2	filemanager	gl	Renomeouse %1 a %2
+replaced %1	filemanager	gl	Substituído %1
+save %1	filemanager	gl	Gardar %1
+save %1, and go back to file listing	filemanager	gl	Gardar %1 e volver á listaxe de ficheiros
+save all	filemanager	gl	Gardar todo
+save changes	filemanager	gl	Gardar modificacións
+saved %1	filemanager	gl	Gardado %1
+show	filemanager	gl	Mostrar
+show ..	filemanager	gl	Mostrar ..
+show .files	filemanager	gl	Mostrar ficheiros ocultos
+show command line (experimental. dangerous.)	filemanager	gl	Mostrar liña de comandos (EXPERIMENTAL. PERIGOSO)
+show help	filemanager	gl	Mostrar axuda
+size	filemanager	gl	Tamaño
+sort by:	filemanager	gl	Ordenar por:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	gl	Futuro xestor de ficheiros, de momento en fase de probas. Envíe informes de erros.
+total files	filemanager	gl	Total de ficheiros
+unknown mime-type defaults to text/plain when viewing	filemanager	gl	O tipo MIME descoñecido móstrase como text/plain
+unused space	filemanager	gl	Espazo libre
+up	filemanager	gl	Arriba
+update	filemanager	gl	Actualizar
+updated comment for %1	filemanager	gl	Comentario actualizado para %1
+upload	filemanager	gl	Cargar
+upload fields	filemanager	gl	Campos para cargar
+upload files	filemanager	gl	Cargar ficheiros
+use new experimental filemanager?	filemanager	gl	Desexa utilizar o novo xestor de ficheiros (en fase experimental)?
+used space	filemanager	gl	Espazo utilizado
+users	filemanager	gl	Usuarios
+version	filemanager	gl	Versión
+view documents in new window	filemanager	gl	Ver documentos nunha nova ventá
+view documents on server (if available)	filemanager	gl	Ver documentos no servidor (se está dispoñible)
+who	filemanager	gl	Quen
+you do not have access to %1	filemanager	gl	Non ten acceso a %1
+your home dir did not exist, egroupware created a new one.	filemanager	gl	eGroupWare creou un novo directorio inicial porque non existía.

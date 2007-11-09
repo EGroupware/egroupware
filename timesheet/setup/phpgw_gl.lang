@@ -1,0 +1,59 @@
+2 month ago	timesheet	gl	2 meses atrás
+2 years ago	timesheet	gl	2 anos atrás
+3 years ago	timesheet	gl	3 anos atrás
+actions	timesheet	gl	Accións
+all projects	timesheet	gl	Todos os proxectos
+both: allow to use projectmanager and free project-names	admin	gl	Ambos: permitir a utilización do Xestor de proxectos e nomes de proxectos libres.
+by	timesheet	gl	por
+create new links	timesheet	gl	Crear ligazóns novas
+creating new entry	timesheet	gl	crear unha entrada nova
+custom fields	timesheet	gl	Eliminar esta entrada
+delete this entry	timesheet	gl	Editar esta entrada
+edit this entry	timesheet	gl	En branco se é idéntico á duración
+empty if identical to duration	timesheet	gl	Fin
+end	timesheet	gl	Entrada eliminada
+entry deleted	timesheet	gl	Entrada gardada
+entry saved	timesheet	gl	Erro ao eliminar a entrada
+error deleting the entry!!!	timesheet	gl	Houbo un erro ao gardar a entrada
+error saving the entry!!!	timesheet	gl	Ligazóns existentes
+existing links	timesheet	gl	Todo: utilizar só o Xestor de proxectos
+export to openoffice spreadsheet	timesheet	gl	Exportar á folla de cálculo de openoffice
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	gl	Exportar as entradas da súa folla de tempo a un ficheiro csv. Csv significa 'comma separated values' é dicir ficheiro separado por comas. No entanto nas opcións pode escoller outros separadores.
+field must not be empty !!!	timesheet	gl	O campo non pode estar baleiro !!!
+full: use only projectmanager	admin	gl	Completo: use só projectmanager
+general	timesheet	gl	Xeral
+last modified	timesheet	gl	Última modificación
+last month	timesheet	gl	Último mes
+last week	timesheet	gl	Última semana
+last year	timesheet	gl	Último ano
+leave it empty for a full week	timesheet	gl	Deixar en branco durante unha semana enteira
+links	timesheet	gl	Ligazóns
+name must not be empty !!!	timesheet	gl	O nome non pode estar baleiro !!!
+no details	timesheet	gl	Sen detalles
+no project	timesheet	gl	Sen proxecto
+none: use only free project-names	admin	gl	Ningún: utilizar só nomes de proxecto libres
+or endtime	timesheet	gl	ou Hora de finalización
+permission denied!!!	timesheet	gl	Permiso negado
+price	timesheet	gl	Prezo
+projectmanager integration	admin	gl	Integración do Xestor de proxectos
+quantity	timesheet	gl	Cantidade
+save & new	timesheet	gl	Gardar e crear
+saves the changes made	timesheet	gl	Gardar as modificacións realizadas
+saves this entry and add a new one	timesheet	gl	Garda esta entrada e engade unha nova
+select a price	timesheet	gl	Seleccionar un prezo
+select a project	timesheet	gl	Seleccionar un proxecto
+start	timesheet	gl	Inicio
+starttime	timesheet	gl	Hora de inicio
+starttime has to be before endtime !!!	timesheet	gl	A hora de inicio ten que ser anterior á hora de finalización
+sum %1:	timesheet	gl	Suma %1:
+this month	timesheet	gl	Este mes
+this week	timesheet	gl	Esta semana
+this year	timesheet	gl	Este ano
+timesheet	common	gl	Folla de tempo
+timesheet csv export	timesheet	gl	Exportar folla de tempo a csv
+timesheet openoffice export	timesheet	gl	Exportar folla de tempo a openoffice
+unitprice	timesheet	gl	Prezo por unidade
+view this entry	timesheet	gl	Ver esta entrada
+week	timesheet	gl	Semana
+yesterday	timesheet	gl	Onte
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	gl	A base de datos NON está actualizada (%1 vs. %2). Execute %3setup%4 para actualizar a base de datos.

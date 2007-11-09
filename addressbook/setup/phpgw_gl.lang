@@ -1,0 +1,329 @@
+%1 added	addressbook	gl	%1 engadido
+%1 contact(s) %2	addressbook	gl	%1 contacto(s) %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	gl	%1 contacto(s) %2, %3 erros por falta de dereitos suficientes!!!
+%1 fields in %2 other organisation member(s) changed	addressbook	gl	% 1 campos en outros %2 membro(s) da organización modificados
+%1 records imported	addressbook	gl	Importáronse %1 rexistros
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	gl	Léronse %1 rexistros, mais aínda non se importaron. Pode volver %2atrás%3 e desmarcar a proba de importación
+%1 starts with '%2'	addressbook	gl	%1 comeza con '%2'
+(e.g. 1969)	addressbook	gl	(p. ex. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	gl	<b>Non foi posible localizar <ningún> tipo de conversión.</b> Escolla un tipo de conversión da lista
+@-eval() is only availible to admins!!!	addressbook	gl	@-eval() só está dispoñible para administradores!
+account repository	admin	gl	Repositorio da conta
+accounts	addressbook	gl	Contas
+actions	addressbook	gl	Accións
+add %1	addressbook	gl	Engadir %1
+add a contact to this organisation	addressbook	gl	Engadir un contacto a esta organización
+add a new contact	addressbook	gl	Engadir un contacto novo
+add a new list	addressbook	gl	Engadir unha lista nova
+add a single entry by passing the fields.	addressbook	gl	Engadir unha entrada simple pasando os campos
+add business email of whole distribution list?	addressbook	gl	Engadir o correo electrónico da empresa a toda a lista de distribución?
+add custom field	addressbook	gl	Engadir un campo personalizado
+add to distribution list:	addressbook	gl	Engadir á lista de distribución:
+added by synchronisation	addressbook	gl	engadido por sincronización
+added to distribution list	addressbook	gl	engadido á lista de distribución
+additional information about using ldap as contact repository	admin	gl	Información adicional sobre como utilizar LDAP como repositorio de contacto
+address book	common	gl	Axenda de enderezos
+address book - vcard in	addressbook	gl	Axenda de enderezos - Entrada de cartón de visita
+address book - view	addressbook	gl	Axenda de enderezos - Ver
+address line 2	addressbook	gl	Liña 2 do enderezo
+address type	addressbook	gl	Tipo de enderezo
+addressbook	common	gl	Axenda de enderezos
+addressbook csv export	addressbook	gl	Exportación CSV da axenda de enderezos
+addressbook menu	addressbook	gl	Menú da axenda de enderezos
+addressbook preferences	addressbook	gl	Preferencias da axenda de enderezos
+addressbook the contact should be saved to	addressbook	gl	O contacto da axenda de enderezos debería ser engadido
+addressbook-fieldname	addressbook	gl	Campo - Axenda de enderezos
+addvcard	addressbook	gl	Engadir cartón de visita
+advanced search	addressbook	gl	Busca avanzada
+all contacts	addressbook	gl	Todos os contactos
+allow users to maintain their own account-data	admin	gl	Permitir aos usuarios manter os seus propios datos de conta
+alt. csv import	addressbook	gl	Importar CSV
+always	addressbook	gl	sempre
+apply changes to all members, whose fields have the same previous content	addressbook	gl	Aplicar modificacións a todos os membros cuxos campos conteñen o mesmo contido previo
+apply the action on the whole query, not only the shown contacts!!!	addressbook	gl	Aplicar a acción en toda a consulta NON só nos contactos mostrados!!!
+are you shure you want to delete this contact?	addressbook	gl	Está certo de que desexa eliminar este contacto?
+are you sure you want to delete this field?	addressbook	gl	Está certo de que desexa eliminar este campo?
+assistent	addressbook	gl	Asistente
+assistent phone	addressbook	gl	teléfono asistente
+birthday	common	gl	Aniversario
+birthdays	common	gl	Aniversarios
+blank	addressbook	gl	Baleiro
+business	common	gl	Empresa
+business address	addressbook	gl	Enderezo da empresa
+business city	addressbook	gl	Cidade
+business country	addressbook	gl	País
+business email	addressbook	gl	Correo electrónico
+business fax	addressbook	gl	Fax
+business phone	addressbook	gl	Teléfono
+business state	addressbook	gl	Provincia
+business street	addressbook	gl	Enderezo
+business zip code	addressbook	gl	Código postal
+calendar uri	addressbook	gl	URI do calendario
+can be changed via setup >> configuration	admin	gl	Pode modificarse mediante a configuración >> da instalación
+car phone	addressbook	gl	Teléfono do coche
+categories, notes, ...	addressbook	gl	Categorías, notas, ...
+cell phone	addressbook	gl	Teléfono móbil
+change all organisation members	addressbook	gl	modificar todos os membros da organización
+charset for the csv export	addressbook	gl	Conxunto de caracteres da exportación CSV
+charset of file	addressbook	gl	Conxunto de caracteres do ficheiro
+check all	addressbook	gl	Verificar todo
+choose an icon for this contact type	admin	gl	Escolla unha icona para este tipo de contacto
+chosse an etemplate for this contact type	admin	gl	Escolla un modelo para este tipo de contacto
+city	common	gl	Cidade
+company	common	gl	Empresa
+company name	addressbook	gl	Nome da empresa
+configuration	common	gl	Configuración
+contact	common	gl	Contacto
+contact application	admin	gl	Aplicación do contacto
+contact copied	addressbook	gl	Contacto copiado
+contact deleted	addressbook	gl	Contacto eliminado
+contact id	addressbook	gl	ID do contacto
+contact repository	admin	gl	Repositorio de contacto
+contact saved	addressbook	gl	Contacto gardado
+contact settings	admin	gl	Configuración dos contactos
+contacts and account contact-data to ldap	admin	gl	contactos e datos-contacto da conta para LDAP
+contacts to ldap	admin	gl	contacta con LDAP
+contacts to ldap, account contact-data to sql	admin	gl	contactos con LDAP e os datos-contacto da conta con SQL
+contains	addressbook	gl	contén
+copied by %1, from record #%2.	addressbook	gl	Copiado por %1, do rexistro %2
+copy a contact and edit the copy	addressbook	gl	Copiar un contacto e editar a copia
+country	common	gl	País
+create new links	addressbook	gl	Crear novas ligazóns
+created	addressbook	gl	Creado
+credit	addressbook	gl	Crédito
+csv-fieldname	addressbook	gl	Campo CSV
+csv-filename	addressbook	gl	Ficheiro CSV
+custom	addressbook	gl	Personalizado
+custom fields	addressbook	gl	Campos personalizados
+debug output in browser	addressbook	gl	Depurar saída no navegador
+default	addressbook	gl	predefinido
+default address format	addressbook	gl	Formato de enderezo predefinido
+default addressbook for adding contacts	addressbook	gl	Axenda de enderezos predefinida para engadir contactos
+default filter	addressbook	gl	Filtro predefinido
+delete a single entry by passing the id.	addressbook	gl	Eliminar unha entrada simple pasando o ID
+delete selected distribution list!	addressbook	gl	Eliminar a lista de distribución seleccionada!
+delete this contact	addressbook	gl	Eliminar este contacto
+delete this organisation including all its contacts	addressbook	gl	Eliminar esta organización incluíndo Todos os contactos
+deleted	addressbook	gl	eliminado
+deletes the photo	addressbook	gl	Elimina a foto
+department	common	gl	Departamento
+departments	addressbook	gl	departamentos
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	gl	Mostra un aviso de aniversarios na páxina de inicio (páxina que encontra cando entra en eGroupWare ou ao premer na icona da páxina principal)
+distribution list deleted	addressbook	gl	Lista de distribución eliminada
+distribution lists	addressbook	gl	Listas de distribución
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	gl	Desexa unha axenda de enderezos privada, que non poidan ver o resto dos usuarios, que lle conceda o acceso á súa axenda de enderezos persoal?
+do your really want to delete this contact?	addressbook	gl	Desexa realmente eliminar este contacto?
+doesn't matter	addressbook	gl	Tanto ten
+domestic	addressbook	gl	Doméstico
+don't hide empty columns	addressbook	gl	Non ocultar as columnas baleiras
+download	addressbook	gl	Descargar
+download export file (uncheck to debug output in browser)	addressbook	gl	Descargar ficheiro exportado (desmarcar para depurar a saída no navegador)
+download this contact as vcard file	addressbook	gl	Descargar este contacto como cartón de visita
+edit custom field	addressbook	gl	Editar campo personalizado
+edit custom fields	admin	gl	Editar campos personalizados
+edit extra account-data in the addressbook	admin	gl	Editar datos de conta adicionais na axenda de enderezos
+edit phonenumbers -	addressbook	gl	Editar números de teléfono -
+email & internet	addressbook	gl	Correo electrónico e Internet
+empty for all	addressbook	gl	Baleiro para todo
+enable an extra private addressbook	addressbook	gl	Activar unha axenda de enderezos privada adicional
+enter the path to the exported file here	addressbook	gl	Introduza aquí o camiño dos ficheiros exportados
+error deleting the contact !!!	addressbook	gl	Erro ao eliminar o contacto !!!
+error saving the contact !!!	addressbook	gl	Erro ao gardar o contacto !!!
+existing links	addressbook	gl	Ligazóns existentes
+export	addressbook	gl	Exportar
+export as csv	addressbook	gl	Exportar como CSV
+export as vcard	addressbook	gl	Exportar como VCard
+export contacts	addressbook	gl	Exportar contactos
+export file name	addressbook	gl	Nome do ficheiro a exportar
+export from addressbook	addressbook	gl	Exportar da axenda de enderezos
+export selection	addressbook	gl	Exportar selección
+exported	addressbook	gl	exportado
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	gl	Exportar contactos da súa axenda de enderezos a un ficheiro CSV. CSV significa 'Valores Separados por Comas'. No obstante, no separador Opcións tamén pode escoller outros separadores.
+extra	addressbook	gl	Extra
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	gl	Erro ao modificar %1 membro(s) da organización (dereitos insuficientes)!!!
+fax	addressbook	gl	Fax
+fax number	common	gl	Número de fax
+field %1 has been added !	addressbook	gl	O campo %1 foi engadido!
+field %1 has been updated !	addressbook	gl	O campo %1 foi actualizado!
+field name	addressbook	gl	Nome do campo
+fields for the csv export	addressbook	gl	Campos de exportación CSV
+fields the user is allowed to edit himself	admin	gl	Campos que o usuario pode editar el mesmo
+fields to show in address list	addressbook	gl	Campos a mostrar na lista de enderezos
+fieldseparator	addressbook	gl	Separador de campos
+for read only ldap	admin	gl	para ler só LDAP
+freebusy uri	addressbook	gl	URI libre e ocupado
+full name	addressbook	gl	Nome completo
+general	addressbook	gl	Xeral
+geo	addressbook	gl	GEO
+global categories	addressbook	gl	Categorías globais
+grant addressbook access	common	gl	Conceder acceso á axenda de enderezos
+group %1	addressbook	gl	Grupo %1
+hide accounts from addressbook	addressbook	gl	Ocultar contas da axenda de enderezos
+hides accounts completly from the adressbook.	addressbook	gl	Oculta completamente as contas da axenda de enderezos
+home address	addressbook	gl	Enderezo particular
+home address, birthday, ...	addressbook	gl	Enderezo particular, aniversario, ...
+home city	addressbook	gl	Cidade de residencia
+home country	addressbook	gl	País de residencia
+home email	addressbook	gl	Correo electrónico persoal
+home phone	addressbook	gl	Teléfono particular
+home state	addressbook	gl	Provincia de residencia
+home street	addressbook	gl	Enderezo persoal
+home zip code	addressbook	gl	Código postal
+how many contacts should non-admins be able to export (empty = no limit)	admin	gl	Cantos contactos deberían poder exportar os non administradores (baleiro = sen límite)
+icon	addressbook	gl	Icona
+if accounts are already in ldap	admin	gl	se as contas xa están en LDAP
+import	addressbook	gl	Importar
+import contacts	addressbook	gl	Importar contactos
+import csv-file into addressbook	addressbook	gl	Importar ficheiro CSV á axenda de enderezos
+import file	addressbook	gl	Importar ficheiro
+import from	addressbook	gl	Importar de
+import from ldif, csv, or vcard	addressbook	gl	Importar de LDIF, CSV ou VCard
+import from outlook	addressbook	gl	Importar de Outlook
+import multiple vcard	addressbook	gl	Importar múltiples VCards
+import next set	addressbook	gl	Importar seguinte conxunto
+import_instructions	addressbook	gl	Se usa Mozilla ou Netscape, abra a axenda de enderezos e seleccione <b>Exportar</b> desde o menú <b>Ficheiro</b>. O ficheiro exportado estará en formato LDIF.<p>Outra opción é seleccionar o seu cartafol de contactos en Outlook e no menú <b>Ficheiro</b>, seleccionar <b>Importar e Exportar</b> para gardalos nun ficheiro separado por comas (CSV).<p>En Palm Desktop 4.0 ou superior, visite a axenda de enderezos e seleccione <b>Exportar</b> desde o menú <b>Ficheiro</b>. O ficheiro exportado estará en formato VCard.
+in %1 days (%2) is %3's birthday.	addressbook	gl	En %1 días (%2) é o aniversario de %3.
+income	addressbook	gl	Ingresos
+insufficent rights to delete this list!	addressbook	gl	Dereitos insuficientes para eliminar esta lista!
+international	addressbook	gl	Internacional
+label	addressbook	gl	Etiqueta
+last modified	addressbook	gl	Última modificación
+last modified by	addressbook	gl	última modificación por
+ldap context for contacts	admin	gl	Contexto LDAP para contactos
+ldap host for contacts	admin	gl	Servidor LDAP para contactos
+ldap settings for contacts	admin	gl	configuración LDAP de contactos
+ldif	addressbook	gl	LDIF
+line 2	addressbook	gl	Liña 2
+link title for contacts show	addressbook	gl	Título da ligazón dos contactos mostrados
+links	addressbook	gl	Ligazóns
+list all categories	addressbook	gl	Lista de todas as categorías
+list all customfields	addressbook	gl	Lista de todos os campos personalizados
+list already exists!	addressbook	gl	A lista xa existe!
+list created	addressbook	gl	Lista creada
+list creation failed, no rights!	addressbook	gl	Erro na creación da lista, sen dereitos suficientes!
+load vcard	addressbook	gl	Cargar VCard
+locations	addressbook	gl	localizacións
+mark records as private	addressbook	gl	Marcar rexistros como privados
+merge into first or account, deletes all other!	addressbook	gl	Combinar na primeira ou na conta, elimina todas as outras!
+merged	addressbook	gl	combinado
+message phone	addressbook	gl	Teléfono de mensaxes
+middle name	addressbook	gl	Segundo nome
+migration finished	addressbook	gl	Migración finalizada
+migration to ldap	admin	gl	Migración a LDAP
+mobile	addressbook	gl	Móbil
+mobile phone	addressbook	gl	Teléfono móbil
+modem phone	addressbook	gl	Teléfono módem
+more ...	addressbook	gl	Máis...
+move to addressbook:	addressbook	gl	Mover á axenda de enderezos:
+moved	addressbook	gl	movido
+multiple vcard	addressbook	gl	VCard múltiple
+name for the distribution list	addressbook	gl	Nome da lista de distribución
+name, address	addressbook	gl	Nome, enderezo
+no vcard	addressbook	gl	Sen VCard
+number	addressbook	gl	Número
+number of records to read (%1)	addressbook	gl	Número de rexistros para ler (%1)
+options for type	admin	gl	Opcións para o tipo
+organisation	addressbook	gl	Organización
+organisations	addressbook	gl	Organizacións
+organisations by departments	addressbook	gl	Organizacións por departamentos
+organisations by location	addressbook	gl	Organizacións por localización
+other number	addressbook	gl	Outro número
+other phone	addressbook	gl	Outro teléfono
+own sorting	addressbook	gl	clasificación propia
+pager	common	gl	Busca
+parcel	addressbook	gl	Paquete
+permission denied !!!	addressbook	gl	Permiso negado !!!
+phone number	common	gl	Número de teléfono
+phone numbers	common	gl	Números de teléfono
+photo	addressbook	gl	Foto
+please enter a name for that field !	addressbook	gl	Introduza un nome para ese campo.
+please select only one category	addressbook	gl	Seleccione unicamente unha categoría
+postal	common	gl	Postal
+pref	addressbook	gl	pref.
+preferred phone	addressbook	gl	teléfono preferido
+prefix	addressbook	gl	Prefixo
+public key	addressbook	gl	Chave pública
+publish into groups:	addressbook	gl	Publicar nos grupos:
+read a list / search for entries.	addressbook	gl	Ler unha lista / Buscar entradas
+read a list of entries.	addressbook	gl	Ler unha lista de entradas
+read a single entry by passing the id and fieldlist.	addressbook	gl	Ler unha única entrada pasando o ID e a lista de campos
+read only	addressbook	gl	só de lectura
+record access	addressbook	gl	Acceso ao rexistro
+record owner	addressbook	gl	Propietario do rexistro
+remove selected contacts from distribution list	addressbook	gl	Eliminar os contactos seleccionados da lista de distribución
+removed from distribution list	addressbook	gl	eliminado da lista de distribución
+role	addressbook	gl	Papel
+room	addressbook	gl	Sala
+search for '%1'	addressbook	gl	Busca de '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	gl	Seleccionar unha foto vertical en formato jpeg. Esta redimensionarase até 60 píxeles de largura
+select a view	addressbook	gl	Seleccionar  unha visualización
+select addressbook type	addressbook	gl	Seleccionar un tipo de axenda de enderezos
+select all	addressbook	gl	Seleccionar todo
+select an action or addressbook to move to	addressbook	gl	Seleccionar unha acción ou axenda de enderezos para mover
+select migration type	admin	gl	Seleccionar un tipo de migración
+select multiple contacts for a further action	addressbook	gl	Seleccionar múltiples contactos para unha acción máis
+select phone number as prefered way of contact	addressbook	gl	seleccionar número de teléfono como modo de contacto preferido
+select the type of conversion	addressbook	gl	Seleccione o tipo de conversión
+select the type of conversion:	addressbook	gl	Seleccione o tipo de conversión:
+select where you want to store / retrieve contacts	admin	gl	Seleccione onde desexa almacenar / recuperar contactos
+selected contacts	addressbook	gl	contactos seleccionados
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	gl	As fotos da columna e os enderezos particulares deberían mostrarse sempre, inclusive cando están baleiros.
+show	addressbook	gl	Mostrar
+show birthday reminders on main screen	addressbook	gl	Mostrar recordatorios de aniversarios na pantalla principal
+show infolog entries for this organisation	addressbook	gl	Mostrar as entradas InfoLog desta organización
+show the contacts of this organisation	addressbook	gl	Mostrar os contactos desta organización
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	gl	Tamaño da ventá emerxente (LxA, por exemplo, 400x300, se houbese que utilizar unha ventá emerxente)
+start	admin	gl	Inicio
+startrecord	addressbook	gl	Rexistro inicial
+state	common	gl	Provincia
+street	common	gl	Rúa
+successfully imported %1 records into your addressbook.	addressbook	gl	Importáronse correctamente %1 rexistros á axenda de enderezos.
+suffix	addressbook	gl	Sufixo
+tel home	addressbook	gl	teléfono particular
+telephony integration	admin	gl	Integración telefónica
+test import (show importable records <u>only</u> in browser)	addressbook	gl	Proba de importación - (Mostrar os rexistros que se poden importar <b>só</b> no navegador)
+that field name has been used already !	addressbook	gl	Ese nome de campo xa foi usado.
+this person's first name was not in the address book.	addressbook	gl	O primeiro nome desta persoa non está na axenda de enderezos.
+this person's last name was not in the address book.	addressbook	gl	O apelido desta persoa non está na axenda de enderezos.
+timezone	addressbook	gl	Fuso horario
+to many might exceed your execution-time-limit	addressbook	gl	Moitos poden exceder o tempo límite de execución
+today is %1's birthday!	common	gl	Hoxe é o aniversario de %1!
+tomorrow is %1's birthday.	common	gl	Mañá é o aniversario de %1!
+translation	addressbook	gl	Tradución
+type	addressbook	gl	Tipo
+update a single entry by passing the fields.	addressbook	gl	Actualizar unha única entrada pasando os campos
+upload or delete the photo	addressbook	gl	Cargar ou eliminar a foto
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	gl	Url de ligazón para números de teléfono (utilizar %1 = número para chamar, %u = nome da conta, %t = teléfono de conta)
+use an extra category tab?	addressbook	gl	Utilizar un separador de categorías adicional?
+use country list	addressbook	gl	Utilizar lista de países
+use setup for a full account-migration	admin	gl	utilizar a configuración para unha migración de conta completa
+used for links and for the own sorting of the list	addressbook	gl	utilizado para ligazóns e para unha clasificación propia da lista
+vcard	common	gl	Cartón de visita
+vcards require a first name entry.	addressbook	gl	Os cartóns de visita requiren o nome.
+vcards require a last name entry.	addressbook	gl	Os cartóns de visita requiren o apelido.
+view linked infolog entries	addressbook	gl	Visualizar as entradas de InfoLog ligadas
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	gl	Atención! LDAP é valido só se non se están a utilizar contactos para almacenar as contas!
+warning: all contacts found will be deleted!	addressbook	gl	ATENCIÓN: Eliminaranse todos os contactos encontrados!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	gl	Que deberían mostrar as ligazóns á axenda de enderezos noutras aplicacións. Os valores baleiros estarán fóra. Se modifica esta configuración, é necesario que inicie sesión de novo.
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	gl	Que formato de enderezo debería utilizar a axenda de enderezos nos países que descoñecen o formato de enderezo. Se o formato de enderezo dun país é coñecido utilízao independentemente desta configuración.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	gl	Que axenda de enderezos debería seleccionarse cando engade un contacto E non ten os dereitos para engadir na actual axenda de enderezos.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	gl	Que conxunto de caracteres se debería utilizar nunha exportación CSV. O sistema predefinido é un conxunto de caracteres desta instalación de eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	gl	Que campos se deberían exportar. Todos, significa cada campo almacenado na axenda de enderezos, incluíndo tamén os campos personalizados. O enderezo particular ou da empresa só contén o nome, a empresa e o enderezo seleccionado
+whole query	addressbook	gl	toda a consulta
+work phone	addressbook	gl	Teléfono do traballo
+write (update or add) a single entry by passing the fields.	addressbook	gl	Escribir (actualizar ou engadir) unha única entrada pasando os campos.
+yes, for the next three days	addressbook	gl	Si, para os seguintes tres días
+yes, for the next two weeks	addressbook	gl	Si, para as seguintes dúas semanas
+yes, for the next week	addressbook	gl	Si, para a semana seguinte
+yes, for today and tomorrow	addressbook	gl	Si, para hoxe e mañá
+you are not permitted to delete contact %1	addressbook	gl	Non ten permiso para eliminar o contacto %1
+you are not permittet to delete this contact	addressbook	gl	Non ten permiso para eliminar este contacto
+you are not permittet to edit this contact	addressbook	gl	Non ten permiso para editar este contacto
+you are not permittet to view this contact	addressbook	gl	Non ten permiso para ver este contacto
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	gl	Só pode utilizar LDAP como repositorio de contacto se as contas tamén están almacendas en LDAP!
+you must select a vcard. (*.vcf)	addressbook	gl	Seleccione un cartón de visita (*.vcf)
+you must select at least 1 column to display	addressbook	gl	Seleccione polo menos unha columna para mostrar
+you need to select a distribution list	addressbook	gl	É necesario que seleccione unha lista de distribución
+you need to select some contacts first	addressbook	gl	É necesario que seleccione algúns contactos primeiro
+zip code	common	gl	Código postal
+zip_note	addressbook	gl	<p><b>Nota:</b> O ficheiro pode ser un .zip con ficheiros .csv, .vcf ou .ldif. Con todo, non mesture diferentes tipos cando importe.

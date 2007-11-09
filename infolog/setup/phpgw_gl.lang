@@ -1,0 +1,316 @@
+%1 records imported	infolog	gl	%1 rexistros importados
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	gl	%1 rexistros lidos (aínda sen importar, pode %2volver%3 e desmarcar Probar Importar)
+- subprojects from	infolog	gl	- Subproxectos de
+0%	infolog	gl	0%
+10%	infolog	gl	10%
+100%	infolog	gl	10%
+20%	infolog	gl	20%
+30%	infolog	gl	30%
+40%	infolog	gl	40%
+50%	infolog	gl	50%
+60%	infolog	gl	60%
+70%	infolog	gl	70%
+80%	infolog	gl	80%
+90%	infolog	gl	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	gl	<b>ficheiros anexos por ligazóns simbólicas</b> en vez de subir e recuperar con file:/camiño para clientes da rede local
+a short subject for the entry	infolog	gl	descripción curta para a entrada
+abort without deleting	infolog	gl	Cancelar sen eliminar
+accept	infolog	gl	aceptar
+action	infolog	gl	Acción
+actual date and time	infolog	gl	Data e hora actuais
+add	infolog	gl	Engadir
+add a file	infolog	gl	Engadir ficheiro
+add a new entry	infolog	gl	Engadir unha entrada
+add a new note	infolog	gl	Engadir unha nota
+add a new phonecall	infolog	gl	Engadir unha chamada
+add a new sub-task, -note, -call to this entry	infolog	gl	Engadir unha subtarefa, nota ou chamada a esta entrada
+add a new todo	infolog	gl	Engadir unha tarefa pendente
+add file	infolog	gl	Engadir ficheiro
+add sub	infolog	gl	Engadir Sub
+add timesheet entry	infolog	gl	Engadir entrada á folla de asistencia
+add:	infolog	gl	Engadir:
+all	infolog	gl	Todos
+all links and attachments	infolog	gl	Todos as ligazóns e ficheiros anexados
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	gl	Permite establecer o estado dunha entrada, p.e. pór unha tarefa pendente como finalizada si está concluída (os valores dependen do tipo de entrada)
+apply the changes	infolog	gl	Aplicar as modificacións
+are you shure you want to delete this entry ?	infolog	gl	Está certo de querer eliminar esta entrada?
+attach a file	infolog	gl	Anexar un ficheiro
+attach file	infolog	gl	Anexar ficheiro
+attension: no contact with address %1 found.	infolog	gl	Atención: Non foi localizado ningún contacto co enderezo %1
+back to main list	infolog	gl	Volver á lista principal
+billed	infolog	gl	facturado
+both	infolog	gl	ambos
+call	infolog	gl	chamar
+cancel	infolog	gl	Cancelar
+cancelled	infolog	gl	Cancelado
+categories	infolog	gl	Categorías
+category	infolog	gl	Categoría
+change the status of an entry, eg. close it	infolog	gl	Modificar o estado dunha entrada, p. ex. pechalo
+charset of file	infolog	gl	Xogo de caracteres do ficheiro
+check to set startday	infolog	gl	marcar para establecer data de inicio
+check to specify custom contact	infolog	gl	Marcar para especificar contacto personalizado
+click here to create the link	infolog	gl	marcar para crear unha ligazón
+click here to start the search	infolog	gl	marcar para iniciar a busca
+close	infolog	gl	Pechar
+comment	infolog	gl	Comentario
+completed	infolog	gl	Concluído
+configuration	infolog	gl	Configuración
+confirm	infolog	gl	confirmar
+contact	infolog	gl	Contacto
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	gl	Copiar as modificacións no portapapeis, %1cargar de novo a entrada%2 e incluílas.
+create new links	infolog	gl	Crear ligazóns
+creates a new field	infolog	gl	Crea un campo
+creates a new status with the given values	infolog	gl	Crea un estado cos valores dados
+creates a new typ with the given name	infolog	gl	Crea un tipo co nome dado
+creation	infolog	gl	Creación
+csv-fieldname	infolog	gl	CSV-NomedeCampo
+csv-filename	infolog	gl	CSV-NomedeFicheiro
+csv-import	common	gl	CSV-Importar
+custom	infolog	gl	Personalizar
+custom contact-address, leave empty to use information from most recent link	infolog	gl	Enderezo de contacto personalizado. Deixar en branco para utilizar a información da ligazón máis recente
+custom contact-information, leave emtpy to use information from most recent link	infolog	gl	Información de contacto personalizada. Deixar en branco para utilizar a información da ligazón máis recente
+custom fields	infolog	gl	Campos personalizados
+custom fields, typ and status	common	gl	Campos personalizados, tipo e estado
+custom regarding	infolog	gl	Recordos persoais
+custom status for typ	infolog	gl	Estado personalizado para o tipo
+customfields	infolog	gl	Campos personalizados
+date completed	infolog	gl	Data completa
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	gl	Data completa (deixar en branco para obtelo automaticamente se o estado é feito ou facturado)
+datecreated	infolog	gl	Data de creación
+dates, status, access	infolog	gl	Datas, estado, acceso
+days	infolog	gl	días
+default filter for infolog	infolog	gl	Filtro predefinido para o Rexistro
+default status for a new log entry	infolog	gl	Estado predefinido para entradas novas no rexistro
+delegation	infolog	gl	Delegación
+delete	infolog	gl	Eliminar
+delete one record by passing its id.	infolog	gl	Eliminar un rexistro pasando o seu id.
+delete the entry	infolog	gl	Eliminar a entrada
+delete this entry	infolog	gl	Eliminar esta entrada
+delete this entry and all listed sub-entries	infolog	gl	Eliminar esta entrada e todas as subentradas da lista
+deletes the selected typ	infolog	gl	Elimina o tipo seleccionado
+deletes this field	infolog	gl	Elimina este campo
+deletes this status	infolog	gl	Elimina este estado
+description	infolog	gl	Descrición
+determines the order the fields are displayed	infolog	gl	Determina a orde en que se mostran os campos
+disables a status without deleting it	infolog	gl	Desactiva un estado sen eliminalo
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	gl	Desexa unha confirmación do responsable ao aceptar, finalizar a tarefa, ou ambas as cousas?
+do you want to see custom infolog types in the calendar?	infolog	gl	Desexa ver os tipos de rexistro personalizados no calendario?
+don't show infolog	infolog	gl	Non mostrar InfoLog
+done	infolog	gl	feito
+download	infolog	gl	Descargar
+duration	infolog	gl	Duración
+each value is a line like <id>[=<label>]	infolog	gl	cada valor é unha liña como <id>[=<etiqueta>]
+edit	infolog	gl	Editar
+edit or create categories for ingolog	infolog	gl	Editar ou crear categorías para o Rexistro
+edit rights (full edit rights incl. making someone else responsible!)	infolog	gl	Editar dereitos (editar todos os dereitos, incluíndo facer a alguén responsable)
+edit status	infolog	gl	Editar estado
+edit the entry	infolog	gl	Editar a entrada
+edit this entry	infolog	gl	Editar esta entrada
+empty for all	infolog	gl	Limpar todo
+enddate	infolog	gl	Data de finalización
+enddate can not be before startdate	infolog	gl	A data de finalización non pode ser anterior á de inicio
+enter a custom contact, leave empty if linked entry should be used	infolog	gl	Introduza un contacto personalizado, ou déixeo baleiro se prefire utilizar unha ligazón
+enter a custom phone/email, leave empty if linked entry should be used	infolog	gl	Introduza un teléfono ou correo electrónico personalizado, ou déixeo baleiro se prefire utilizar unha ligazón
+enter a textual description of the log-entry	infolog	gl	Introduza un texto descritivo da entrada
+enter the query pattern	infolog	gl	Introduza o patrón de busca
+entry and all files	infolog	gl	Entrada e todos os ficheiros
+error: saving the entry	infolog	gl	Erro ao gardar a entrada
+error: the entry has been updated since you opened it for editing!	infolog	gl	Erro: A entrada foi actualizada desde que a abriu para editar.
+existing links	infolog	gl	Ligazóns existentes
+fax	infolog	gl	Fax
+fieldseparator	infolog	gl	Separador de campos
+finish	infolog	gl	finalizar
+for which types should this field be used	infolog	gl	para que tipos se utiliza este campo
+from	infolog	gl	De
+general	infolog	gl	Xeral
+group owner for	infolog	gl	Propietario do grupo para
+high	infolog	gl	alta
+id	infolog	gl	id
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	gl	Se un tipo ten un propietario de grupo, todas as entradas dese tipo serán da súa propiedade e non do usuario que as creou.
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	gl	Se non o define, a liña con busca e filtros ocúltase para menos entradas das "coincidencias máximas por páxina" (como é definido nas preferencias comúns).
+import	infolog	gl	Importar
+import next set	infolog	gl	importar xogo seguinte
+info log	common	gl	Rexistro de notas e tarefas
+infolog	common	gl	Rexistro de notas e tarefas
+infolog - delete	infolog	gl	Rexistro - Eliminar
+infolog - edit	infolog	gl	Rexistro - Editar
+infolog - import csv-file	infolog	gl	Rexistro - Importar ficheiro CSV
+infolog - new	infolog	gl	Rexistro - Novo
+infolog - new subproject	infolog	gl	Rexistro - Novo subproxecto
+infolog - subprojects from	infolog	gl	Rexistro - Subproxectos de
+infolog entry deleted	infolog	gl	Eliminouse a entrada do rexistro
+infolog entry saved	infolog	gl	Gardouse a entrada no rexistro
+infolog filter for the main screen	infolog	gl	Filtro de InfoLog para a pantalla principal
+infolog list	infolog	gl	Lista do rexistro
+infolog preferences	common	gl	Preferencias do rexistro
+infolog-fieldname	infolog	gl	Rexistro - Nome do Campo
+invalid filename	infolog	gl	O nome do ficheiro non é válido
+label<br>helptext	infolog	gl	Marca<br>Texto de axuda
+last changed	infolog	gl	Última modificación
+last modified	infolog	gl	Última modificación
+leave it empty	infolog	gl	Deixar en branco
+leave without saveing the entry	infolog	gl	Abandonar sen gardar a entrada
+leaves without saveing	infolog	gl	Abandonar sen gardar
+length<br>rows	infolog	gl	Lonxitude<br>Filas
+link	infolog	gl	Ligazón
+links	infolog	gl	Ligazóns
+links of this entry	infolog	gl	Ligazóns da entrada
+list all categories	infolog	gl	Lista de todas as categorías
+list no subs/childs	infolog	gl	Non listar subs/fillos
+location	infolog	gl	Localización
+longer textual description	infolog	gl	descrición longa da entrada
+low	infolog	gl	baixa
+max length of the input [, length of the inputfield (optional)]	infolog	gl	lonxitude máxima da entrada [lonxitude do campo de entrada (opcional)]
+name must not be empty !!!	infolog	gl	O nome non pode ficar baleiro!
+name of new type to create	infolog	gl	Nome do novo tipo para crear
+never hide search and filters	infolog	gl	Non ocultar buscas e filtros
+new name	infolog	gl	Novo nome
+new search	infolog	gl	Nova busca
+no - cancel	infolog	gl	Non - Cancelar
+no describtion, links or attachments	infolog	gl	non hai descrición, ligazóns nin anexos
+no details	infolog	gl	non hai detalles
+no entries found, try again ...	infolog	gl	non se encontraron rexistros, tente de novo ...
+no filter	infolog	gl	sen filtro
+no links or attachments	infolog	gl	sen ligazóns nin anexos
+none	infolog	gl	Ningún
+normal	infolog	gl	normal
+not	infolog	gl	non
+not assigned	infolog	gl	sen asignar
+not-started	infolog	gl	sen comezar
+note	infolog	gl	Nota
+number of records to read (%1)	infolog	gl	Número de rexistros a ler (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	gl	Número de filas para campos ou caixas de entrada multiliña
+offer	infolog	gl	oferta
+ongoing	infolog	gl	actuais
+only for details	infolog	gl	Só para os detalles
+only the attachments	infolog	gl	Só os anexos
+only the links	infolog	gl	Só as ligazóns
+open	infolog	gl	abrir
+optional note to the link	infolog	gl	nota opcional para a ligazón
+order	infolog	gl	Ordenar
+overdue	infolog	gl	vencido
+own	infolog	gl	propio
+own open	infolog	gl	propio aberto
+own overdue	infolog	gl	propio vencido
+own upcoming	infolog	gl	propio en camiño
+path on (web-)serverside<br>eg. /var/samba/share	infolog	gl	Camiño no servidor ex. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	gl	Camiño aos ficheiros de usuario e grupos. DEBE ESTAR FÓRA da estrutura do servidor web.
+pattern for search in addressbook	infolog	gl	expresión a buscar na axenda de enderezos
+pattern for search in projects	infolog	gl	expresión a buscar en Proxectos
+percent completed	infolog	gl	Porcentaxe completada
+permission denied	infolog	gl	Permiso denegado
+phone	infolog	gl	Chamada telefónica
+phone/email	infolog	gl	Teléfono ou correo electrónico
+phonecall	infolog	gl	Chamada telefónica
+planned	infolog	gl	prevista
+planned time	infolog	gl	hora planificada
+price	infolog	gl	Prezo
+priority	infolog	gl	Prioridade
+private	infolog	gl	Privado
+project	infolog	gl	Proxecto
+project settings: price, times	infolog	gl	Configuración do proxecto: prezo, tempos
+re:	infolog	gl	Re:
+read one record by passing its id.	infolog	gl	Ler un rexistro pasando o seu id.
+read rights (default)	infolog	gl	dereitos de lectura (predefinido)
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	gl	expresión regular para IPs locais <br>ex. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	gl	expresión regular para IPs locais <br>ex. ^192\.168\.1\.
+remark	infolog	gl	Comentario
+remove this link (not the entry itself)	infolog	gl	Eliminar esta ligazón (non a entrada en sí)
+responsible	infolog	gl	Responsable
+responsible open	infolog	gl	responsable aberto
+responsible overdue	infolog	gl	responsable vencido
+responsible upcoming	infolog	gl	responsable por chegar
+responsible user, priority	infolog	gl	usuario responsable, prioridade
+returns a list / search for records.	infolog	gl	Devolve unha lista ou busca rexistros
+rights for the responsible	infolog	gl	Dereitos para o responsable
+save	infolog	gl	Gardar
+saves the changes made and leaves	infolog	gl	garda as modificacións realizadas e sae
+saves this entry	infolog	gl	Garda esta entrada
+search	infolog	gl	Buscar
+search for:	infolog	gl	Buscar:
+select	infolog	gl	Seleccionar
+select a category for this entry	infolog	gl	Seleccionar unha categoría para esta entrada
+select a price	infolog	gl	Seleccionar un prezo
+select a priority for this task	infolog	gl	Seleccionar unha prioridade para esta tarefa
+select a project	infolog	gl	Seleccionar un proxecto
+select a responsible user: a person you want to delegate this task	infolog	gl	Seleccionar un responsable: unha persoa na cal se quere delegar a tarefa
+select a typ to edit it's status-values or delete it	infolog	gl	Seleccionar un tipo para editar os seus valores de estado ou eliminalo
+select an app to search in	infolog	gl	Seleccionar unha aplicación na que buscar
+select an entry to link with	infolog	gl	Seleccionar unha entrada como ligazón
+select to filter by owner	infolog	gl	Seleccionar para filtrar por propietario
+select to filter by responsible	infolog	gl	Seleccionar para filtrar por responsable
+sets the status of this entry and its subs to done	infolog	gl	Define o estado desta entrada e as inferiores como realizado
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	gl	Mostrar as Subtarefas (subchamadas ou subnotas) na vista normal? Pode ver sempre estes subtipos a través do seu tipo superior.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	gl	Deben mostrarse as ligazóns a outras aplicacións e/ou os ficheiros anexados na lista do Rexistro de información (a vista normal ao entrar no rexistro)?
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	gl	Debería mostrarse o Rexistro de información na parte superior da pantalla principal e con filtros?. Só funciona se non está seleccionada unha aplicación para a pantalla principal (nas súas preferencias)
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	gl	Utilizar nomes completos (apelido e nome da familia), ou só os nomes internos da aplicación?
+should the calendar show custom types too	infolog	gl	O calendario debe mostrar tamén os tipos personalizados
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	gl	A lista do Rexistro de información debería mostrar un id numérico único que se poida utilizar como id de ticket?
+should the infolog list show the column "last modified".	infolog	gl	A lista do Rexistro debe mostrar a columna "última modificación".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	gl	Debería mostrar a lista de rexistro de información a porcentaxe de finalización só para o estado de saída ou dúas iconas separadas?
+should this entry only be visible to you and people you grant privat access via the acl	infolog	gl	Debería estar esta entrada visible só para o usuario e a xente que indique?
+show a column for used and planned times in the list.	infolog	gl	Mostrar unha columna para horas usadas e previstas na lista
+show full usernames	infolog	gl	Mostrar nomes de usuario completos
+show in the infolog list	infolog	gl	Mostrar a lista do Rexistro de información
+show last modified	infolog	gl	Mostrar a última modificación
+show status and percent done separate	infolog	gl	Mostrar o estado e a porcentaxe de finalización por separado
+show ticket id	infolog	gl	Mosar o id do ticket?
+show times	infolog	gl	Mostrar horas
+small view	infolog	gl	vista reducida
+start a new search, cancel this link	infolog	gl	iniciar nova busca, cancelar esta ligazón
+startdate	infolog	gl	Data de inicio
+startdate enddate	infolog	gl	Datas de inicio e Fin
+startdate for new entries	infolog	gl	Data de inicio para entradas novas
+startrecord	infolog	gl	Iniciar gravación de rexistro
+status	infolog	gl	Estado
+status ...	infolog	gl	Estado...
+sub	infolog	gl	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	gl	As subentradas fican por debaixo das entradas do nivel superior ou do principal, se non hai nivel superior.
+subject	infolog	gl	Asunto
+task	infolog	gl	Tarefas pendentes
+test import (show importable records <u>only</u> in browser)	infolog	gl	Probar Importar (mostrar rexistros importables <u>só</u> no navegador)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	gl	se modificamos o nome utilizado internamente (menos de 10 caracteres), os datos existentes non se encontarán dispoñibles.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	gl	se modificamos o nome utilizado internamente (menos de 20 caracteres), os datos existentes non se encontrarán dispoñibles.
+the text displayed to the user	infolog	gl	o texto mostrado ao usuario
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	gl	Este é o filtro que utiliza o Rexistro de información cando introduce a aplicación. Os filtros limitan as entradas que se ven na visualización actual. Hai filtros para mostrar só as finalizadas, as aínda abertas ou as súas futuras entradas ou as de todos os usuarios.
+til when should the todo or phonecall be finished	infolog	gl	Até cando pode a tarefa ou chamada telefónica estar sen concluír?
+times	infolog	gl	Veces
+to many might exceed your execution-time-limit	infolog	gl	Canto pode exceder o límite de execución?
+to what should the startdate of new entries be set.	infolog	gl	A que valor establecer a data de inicio para as entradas novas.
+today	infolog	gl	Hoxe
+todays date	infolog	gl	Data de hoxe
+todo	infolog	gl	Tarefas pendentes
+translation	infolog	gl	Tradución
+typ	infolog	gl	Tipo
+typ '%1' already exists !!!	infolog	gl	O tipo '%1' xa existe!
+type	infolog	gl	Tipo
+type ...	infolog	gl	Tipo...
+type of customfield	infolog	gl	Tipo de campo personalizado
+type of the log-entry: note, phonecall or todo	infolog	gl	Tipo de entrada de Rexistro: Nota, chamada de teléfono ou tarefa pendente
+unlink	infolog	gl	Desligar
+upcoming	infolog	gl	próxima
+urgency	infolog	gl	Urxencia
+urgent	infolog	gl	urxente
+used time	infolog	gl	tempo ocupado
+valid path on clientside<br>eg. \\server\share or e:\	infolog	gl	Camiño válido no cliente<br>por ex. \\servidor\recurso ou e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	gl	Camiño válido no cliente<br>por ex. \\servidor\recurso ou e:\
+values for selectbox	infolog	gl	Valores para lista despregable
+view all subs of this entry	infolog	gl	Ver todos os subs desta entrada
+view other subs	infolog	gl	Ver outros subs
+view parent	infolog	gl	Ver principal
+view subs	infolog	gl	Ver subs
+view the parent of this entry and all his subs	infolog	gl	Ver o principal desta entrada e todos os seus subs
+view this linked entry in its application	infolog	gl	Ver esta entrada ligada na súa aplicación
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	gl	Ao iniciar as tarefas pendentes ou chamadas de teléfono deberán mostrarse primeiro no filtro aberto ou na súa páxina principal
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	gl	Que campos adicionais poden editar o responsable sen ter dereitos de edición?<br />O estado, porcentaxe e a data de finalización permítense sempre.
+which implicit acl rights should the responsible get?	infolog	gl	Que dereitos implícitos de ACL debe ter o responsable?
+will-call	infolog	gl	vai  chamar
+write (add or update) a record by passing its fields.	infolog	gl	Escribir (engadir ou actualizar) un rexistro pasando os seus campos.
+yes - delete	infolog	gl	Si - Eliminar
+yes - delete including sub-entries	infolog	gl	Si - Eliminar incluso as subentradas
+you can't delete one of the stock types !!!	infolog	gl	Non é posible eliminar un dos tipos almacenados!!
+you have entered an invalid ending date	infolog	gl	Inseriu unha data de finalización que non é válida
+you have entered an invalid starting date	infolog	gl	Inseriu unha data de inicio que non é válida
+you have to enter a name, to create a new typ!!!	infolog	gl	Debe introducir un nome para crear un tipo novo!
+you must enter a subject or a description	infolog	gl	Debe introducir un asunto ou descrición
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	gl	A súa base de datos NON se está actualizada (%1 vs. %2). Vaia a %3setup%4 para actualizala.

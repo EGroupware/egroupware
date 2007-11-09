@@ -1,0 +1,744 @@
+%1 email addresses inserted	common	gl	Inseríronse %1 enderezos de correo electrónico
+%1 is not executable by the webserver !!!	common	gl	%1 non ten permiso de execución para o servidor web
+%1 manual	common	gl	Manual de %1
+%1 start	common	gl	inicio de %1
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	gl	%1Escoller outro directorio%2<br />ou dar a %3 permiso de escrita para o servidor web
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	gl	%1eGroupWare%2 é unha ferramenta de traballo en grupo, multiusuario e baseada na web escrita en %3PHP%4
+(shift-)click or drag to change value	jscalendar	gl	Prema maiúsculas ou arrastre para modificar o valor
+- click on any of the time parts to increase it	jscalendar	gl	- Prema en calquera parte do horario para aumentalo
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	gl	- Manteña o botón do rato sobre calquera dos botóns de arriba para unha selección máis rápida
+- or click and drag for faster selection.	jscalendar	gl	- ou prema e arrastre para unha selección máis rápida
+- or shift-click to decrease it	jscalendar	gl	- ou prema Maiús. para diminuíla
+- use the %1, %2 buttons to select month	jscalendar	gl	- Utilice os botóns %1, %2 para seleccionar o mes
+- use the %1, %2 buttons to select year	jscalendar	gl	- Utilice os botóns %1, %2 para seleccionar o ano
+00 (disable)	admin	gl	00 (desactivar)
+1 day	common	gl	1 día
+1 hour	common	gl	1 hora
+1 month	common	gl	1 mes
+1 week	common	gl	1 semana
+13 (ntp)	admin	gl	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	gl	3 caracteres para a abreviatura do día
+3 number of chars for month-shortcut	jscalendar	gl	3 caracteres para a abreviatura do mes
+80 (http)	admin	gl	80 (http)
+about	common	gl	Acerca de
+about %1	common	gl	Acerca de %1
+about egroupware	common	gl	Acerca de eGroupware
+about the calendar	jscalendar	gl	Acerca do calendario
+access	common	gl	Acceso
+access not permitted	common	gl	Acceso non permitido
+account has been created	common	gl	Creouse a conta
+account has been deleted	common	gl	A conta foi eliminada
+account has been updated	common	gl	A conta foi actualizada
+account is expired	common	gl	A conta expirou
+acl	common	gl	LCA
+action	common	gl	Acción
+active	common	gl	Activo
+add	common	gl	Engadir
+add %1 category for	common	gl	Engadir %1 categoría para
+add category	common	gl	Engadir categoría
+add shortcut	common	gl	Engadir acceso directo
+add sub	common	gl	Engadir sub
+addressbook	common	gl	Axenda de enderezos
+admin	common	gl	Administración
+administration	common	gl	Administración
+afghanistan	common	gl	AFGANISTÁN
+albania	common	gl	ALBANIA
+algeria	common	gl	ALXERIA
+all	common	gl	Todos
+all fields	common	gl	Todos os campos
+alphabet	common	gl	a,b,c,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	gl	Folla de estilo alternativa:
+american samoa	common	gl	SAMOA AMERICANA
+an existing and by the webserver readable directory enables the image browser and upload.	common	gl	Un directorio existente e con permisos de lectura para o servidor web activa a subida de imaxes e a súa navegación.
+andorra	common	gl	ANDORRA
+angola	common	gl	ANGOLA
+anguilla	common	gl	ANGUILA
+antarctica	common	gl	ANTÁRTIDA
+antigua and barbuda	common	gl	ANTIGUA E BARBUDA
+application	common	gl	Aplicación
+apply	common	gl	Aplicar
+april	common	gl	Abril
+are you sure you want to delete these entries ?	common	gl	Está certo de que desexa eliminar estas entradas?
+are you sure you want to delete this entry ?	common	gl	Esta certo de que desexa eliminar esta entrada?
+argentina	common	gl	ARXENTINA
+armenia	common	gl	ARMENIA
+aruba	common	gl	ARUBA
+august	common	gl	Agosto
+australia	common	gl	AUSTRALIA
+austria	common	gl	AUSTRIA
+author	common	gl	Autor
+autohide sidebox menu's	common	gl	Ocultar automaticamente o menú lateral
+autohide sidebox menus	common	gl	Ocultar automaticamente os menús laterais
+automatically hide the sidebox menu's?	common	gl	Ocultar automaticamente o menú lateral?
+automatically hide the sidebox menus?	common	gl	Ocultar automaticamente os menús laterais?
+autosave default category	common	gl	Gravar a Categoria predefinida automaticamente
+azerbaijan	common	gl	ACERBAIXÁN
+back	common	gl	Atrás
+back to user login	common	gl	Volver ao inicio de sesión do usuario
+background color:	common	gl	Cor de fondo:
+backupdir '%1' is not writeable by the webserver	common	gl	O servidor web non ten permisos de escrita para o directorio da copia de seguranza '%1'
+bad login or password	common	gl	Nome de usuario ou contrasinal incorrectos
+bahamas	common	gl	BAHAMAS
+bahrain	common	gl	BAHRAIN
+bangladesh	common	gl	BANGLADESH
+barbados	common	gl	BARBADOS
+bcc	common	gl	Cco
+belarus	common	gl	BELARUS
+belgium	common	gl	BELXICA
+belize	common	gl	BELIZE
+benin	common	gl	BENIN
+bermuda	common	gl	BERMUDA
+bhutan	common	gl	BUTÁN
+blocked, too many attempts	common	gl	Bloqueado, demasiados tentativas
+bold	common	gl	Negra
+bolivia	common	gl	BOLIVIA
+border	common	gl	Bordo
+bosnia and herzegovina	common	gl	BOSNIA-HERCEGOVINA
+botswana	common	gl	BOTSWANA
+bottom	common	gl	Inferior
+bouvet island	common	gl	BOUVET ISLAND
+brazil	common	gl	BRASIL
+british indian ocean territory	common	gl	TERRITORIO DO OCÉANO ÍNDICO BRITÁNICO
+brunei darussalam	common	gl	BRUNEI DARUSSALAM
+bulgaria	common	gl	BULGARIA
+burkina faso	common	gl	BURKINA FASO
+burundi	common	gl	BURUNDI
+calendar	common	gl	Calendario
+cambodia	common	gl	CAMBODIA
+cameroon	common	gl	CAMERUN
+canada	common	gl	CANADA
+cancel	common	gl	Cancelar
+cannot replace %1 because it is a directory	common	gl	Non é posible substituir %1 porque é un directorio
+cant open '%1' for %2	common	gl	Non é posible abrir '%1' de '%2'
+cape verde	common	gl	CABO VERDE
+caption	common	gl	Lenda
+categories	common	gl	Categorías
+categories for	common	gl	Categorías para
+category	common	gl	Categoría
+category %1 has been added !	common	gl	Engadiuse a categoría %1!
+category %1 has been updated !	common	gl	Actualizouse a categoría %1!
+cayman islands	common	gl	ILLAS CAIMÁN
+cc	common	gl	CC
+centered	common	gl	centrado
+central african republic	common	gl	REPÚBLICA CENTRO AFRICANA
+chad	common	gl	CHAD
+change	common	gl	Modificar
+charset	common	gl	iso-8859-1
+check installation	common	gl	Verificar instalación
+check now	common	gl	Comprobar agora
+chile	common	gl	CHILE
+china	common	gl	CHINA
+choose a background color	common	gl	Escoller unha cor de fondo
+choose a background color for the icons	common	gl	Escoller unha cor de fondo para as iconas
+choose a background image.	common	gl	Escoller unha imaxe de fondo
+choose a background style.	common	gl	Escoller un estilo para o fondo
+choose a text color for the icons	common	gl	Escoller unha cor de texto para as iconas
+choose the category	common	gl	Escoller a categoría
+choose the parent category	common	gl	Escoller a categoría superior
+christmas island	common	gl	ILLA DE CHRISTMAS
+clear	common	gl	Limpar
+clear form	common	gl	Limpar formulario
+click	common	gl	Ao premer
+click or mouse over to show menus	common	gl	Mostrar os menús ao premer sobre eles ou ao mover o rato por riba
+click or mouse over to show menus?	common	gl	Mostrar os menús ao premer sobre eles ou a mover o rato por riba?
+click this image on the navbar: %1	common	gl	Prema nesta imaxe na barra de navegación: %1
+close	common	gl	Pechar
+close sidebox	common	gl	Pechar caixa lateral
+cocos (keeling) islands	common	gl	ILLAS COCOS (KEELING)
+colombia	common	gl	COLOMBIA
+common preferences	common	gl	Preferencias comúns
+comoros	common	gl	COMORES
+company	common	gl	Empresa
+congo	common	gl	CONGO
+congo, the democratic republic of the	common	gl	REPÚBLICA DEMOCRÁTICA DO CONGO
+contacting server...	common	gl	Conectando co servidor...
+cook islands	common	gl	ILLAS COOK
+copy	common	gl	Copiar
+costa rica	common	gl	COSTA RICA
+cote d ivoire	common	gl	COSTA DE MARFIL
+could not contact server. operation timed out!	common	gl	Non foi posible conectar co servidor. A operación superou o tempo límite de espera
+create	common	gl	Crear
+created by	common	gl	Creado por
+croatia	common	gl	CROACIA
+cuba	common	gl	CUBA
+currency	common	gl	Moeda
+current	common	gl	Actual
+current users	common	gl	Usuarios actuais
+cyprus	common	gl	CHIPRE
+czech republic	common	gl	REÚBLICA CHECA
+date	common	gl	Data
+date due	common	gl	Data límite
+date selection:	jscalendar	gl	Seleccionar data:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	gl	Porto de data.<br>Utilízase o porto 13, por favor, configure adecuadamente as regras da barreira de protección antes de enviar esta páxina.<br>
+december	common	gl	Decembro
+default category	common	gl	Categoría predefinida
+default height for the windows	common	gl	Altura predefinida para as ventás
+default width for the windows	common	gl	Largura predefinida para as ventás
+delete	common	gl	Eliminar
+delete row	common	gl	Eliminar fila
+denmark	common	gl	DINAMARCA
+description	common	gl	Descrición
+detail	common	gl	Detalle
+details	common	gl	Detalles
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	gl	Desexa desactivar a execución dos recursos de exhibición de transparencias de imaxes PNG, no Explorer 5.5 ou superior?
+direction left to right	common	gl	Dirección de esquerda a dereita
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	gl	O directorio non existe, non é lexible polo servidor web ou non está relacionado coa raíz do documento!
+disable internet explorer png-image-bugfix	common	gl	Desactivar o parche de IE para ver imaxes PNG
+disable slider effects	common	gl	Desactivar efectos de desprazamento
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	gl	Desexa desactivar os efectos de desprazamento animados ao mostrar ou ocultar menús na páxina? Os usuarios de Opera e Konqueror probablemente desexen isto.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	gl	Desexa desactivar a execución do parche para Internet Explorer 5.5 e superiores para mostrar transparencia en imaxes PNG?
+disabled	common	gl	Desactivado
+display %s first	jscalendar	gl	Mostrar %s primeiro
+djibouti	common	gl	DJIBUTI
+do you also want to delete all subcategories ?	common	gl	Tamén desexa eliminar todas as subcategorías?
+doctype:	common	gl	DOCTYPE:
+document properties	common	gl	Propiedades do documento
+document title:	common	gl	Título do documento
+domain	common	gl	Dominio
+domain name for mail-address, eg. "%1"	common	gl	nome de dominio para o enderezo de correo, por exemplo, "%1"
+domestic	common	gl	Doméstico
+dominica	common	gl	DOMINICA
+dominican republic	common	gl	REPUBLICA DOMINICANA
+done	common	gl	Feito
+drag to move	jscalendar	gl	Arrastre para mover
+e-mail	common	gl	Correo electrónico
+east timor	common	gl	TIMOR LESTE
+ecuador	common	gl	ECUADOR
+edit	common	gl	Editar
+edit %1 category for	common	gl	Editar %1 categoría para
+edit categories	common	gl	Editar categorías
+edit category	common	gl	Editar categoría
+egroupware api version	common	gl	versión da API eGroupWare
+egroupware api version %1	common	gl	versión da API eGroupWare%1
+egroupware: login blocked for user '%1', ip %2	common	gl	eGroupWare: inicio de sesión bloqueado para o usuario '%1', IP %2
+egypt	common	gl	EXIPTO
+el salvador	common	gl	O SALVADOR
+email	common	gl	Correo electrónico
+email-address of the user, eg. "%1"	common	gl	enderezo de correo electrónico do usuario, por exemplo, "%1"
+enabled	common	gl	Activado
+end date	common	gl	Data de finalización
+end time	common	gl	Hora de finalización
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	gl	Introduza a localización do URL de eGroupWare.<br>Exemplo: http://www.dominio.com/egroupware   ou /egroupware<br><b>Sen barra ao final</b>
+entry has been deleted sucessfully	common	gl	A entrada eliminouse correctamente
+entry updated sucessfully	common	gl	A entrada actualizouse correctamente
+equatorial guinea	common	gl	GUINEA ECUATORIAL
+eritrea	common	gl	ERITREA
+error	common	gl	Erro
+error creating %1 %2 directory	common	gl	Erro ao crear o directorio %1 %2
+error deleting %1 %2 directory	common	gl	Erro ao eliminar o directorio %1 %2
+error renaming %1 %2 directory	common	gl	Erro ao renomear o directorio %1 %2
+estonia	common	gl	ESTONIA
+ethiopia	common	gl	ETIOPIA
+everything	common	gl	Todo
+exact	common	gl	exacto
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	gl	Non foi posible conectar co servidor ou obtívose unha resposta non válida. Tente  iniciar a sesión de novo. Póñase en contacto co administrador en caso de erro.
+falkland islands (malvinas)	common	gl	MALVINAS
+faroe islands	common	gl	ILLAS FEROE
+fax number	common	gl	Fax
+features of the editor?	common	gl	Funcionalidades do editor?
+february	common	gl	Febreiro
+fields	common	gl	Campos
+fiji	common	gl	FIXI
+files	common	gl	Ficheiros:
+filter	common	gl	Filtro
+finland	common	gl	FINLANDIA
+first name	common	gl	Nome
+first name of the user, eg. "%1"	common	gl	nome do usuario, por exemplo, "%1"
+first page	common	gl	Primeira páxina
+firstname	common	gl	Nome
+fixme!	common	gl	Corríxame
+folder already exists.	common	gl	O cartafol xa existe
+force selectbox	common	gl	Forzar a caixa de selección
+forever	common	gl	Para sempre
+france	common	gl	FRANCIA
+french guiana	common	gl	GUAIANA FRANCESA
+french polynesia	common	gl	POLINESIA FRANCESA
+french southern territories	common	gl	TERRITORIOS FRANCESES DO SUL
+friday	common	gl	Venres
+ftp	common	gl	FTP
+fullname	common	gl	Nome completo
+fullscreen mode	common	gl	Modo de pantalla completa
+gabon	common	gl	GABÓN
+gambia	common	gl	GAMBIA
+general menu	common	gl	Menú xeral
+georgia	common	gl	XEORXIA
+german	common	gl	Alemán
+germany	common	gl	ALEMAÑA
+ghana	common	gl	GANA
+gibraltar	common	gl	XIBRALTAR
+global	common	gl	Global
+global public	common	gl	Público Global
+go today	jscalendar	gl	Ir hoxe
+grant access	common	gl	Conceder acceso
+greece	common	gl	GRECIA
+greenland	common	gl	GROENLANDIA
+grenada	common	gl	GRANADA
+group	common	gl	Grupo
+group access	common	gl	Acceso do grupo
+group has been added	common	gl	Engadiuse o grupo
+group has been deleted	common	gl	Eliminouse o grupo
+group has been updated	common	gl	Actualizouse o grupo
+group name	common	gl	nome do grupo
+group public	common	gl	Grupo público
+groups	common	gl	Grupos
+groups with permission for %1	common	gl	Grupos con permiso para %1
+groups without permission for %1	common	gl	Grupos sen permiso para %1
+guadeloupe	common	gl	GUADALUPE
+guam	common	gl	GUAM
+guatemala	common	gl	GUATEMALA
+guinea	common	gl	GUINEA
+guinea-bissau	common	gl	GUINEA-BISSAU
+guyana	common	gl	GÜIANA
+haiti	common	gl	HAITI
+heard island and mcdonald islands	common	gl	ILLAS HEARD E MCDONALD
+height	common	gl	Altura
+help	common	gl	Axuda
+high	common	gl	Alta
+highest	common	gl	A máis alta
+holy see (vatican city state)	common	gl	GALIZA
+home	common	gl	Inicio
+home email	common	gl	correo electrónico particular
+honduras	common	gl	HONDURAS
+hong kong	common	gl	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	gl	Cantas iconas se mostran na barra de navegación (na parte superior da páxina). As iconas adicionais van nunha especie de menú despregable que se activa premendo a icona que está no extremo dereito da barra.
+how to show the general egroupware menu ?	common	gl	Como mostrar o menú xeral de eGroupWare
+hungary	common	gl	HUNGRÍA
+iceland	common	gl	ISLANDIA
+iespell not detected. click ok to go to download page.	common	gl	Non se detectou ieSpell. Prema Aceptar para ir á páxina de descargas.
+if the clock is enabled would you like it to update it every second or every minute?	common	gl	Se o reloxo está activado, desexa actualizalo cada segundo ou cada minuto?
+if there are some images in the background folder you can choose the one you would like to see.	common	gl	Se hai algunhas imaxes no cartafol de fondo, pode escoller a que desexa ver.
+image directory relative to document root (use / !), example:	common	gl	Directorio de imaxe relacionado coa raíz do documento(utilice/!), exemplo:
+image url	common	gl	URL da imaxe
+india	common	gl	INDIA
+indonesia	common	gl	INDONESIA
+insert all %1 addresses of the %2 contacts in %3	common	gl	Insira todos os enderezos %1 dos contactos de %2 en %3
+insert column after	common	gl	Inserir columna despois
+insert column before	common	gl	Inserir unha columna antes
+insert row after	common	gl	Inserir unha fila despois
+insert row before	common	gl	Inserir unha fila antes
+international	common	gl	Internacional
+invalid filename	common	gl	O nome do ficheiro non é válido
+invalid ip address	common	gl	O enderezo IP non é válido
+invalid password	common	gl	O contrasinal non é válido
+iran, islamic republic of	common	gl	IRÁN
+iraq	common	gl	IRAQ
+ireland	common	gl	IRLANDA
+israel	common	gl	ISRAEL
+it has been more then %1 days since you changed your password	common	gl	Fai máis de %1 días que mudou o seu contrasinal
+it is recommended that you run setup to upgrade your tables to the current version	common	gl	Recoméndase que execute a instalación para actualizar as táboas á versión actual
+italic	common	gl	Cursiva
+italy	common	gl	ITALIA
+jamaica	common	gl	XAMAICA
+january	common	gl	Xaneiro
+japan	common	gl	XAPÓN
+jordan	common	gl	XORDANIA
+july	common	gl	Xullo
+jun	common	gl	Xuño
+june	common	gl	Xuño
+justify center	common	gl	Centrar
+justify full	common	gl	Xustificado
+justify left	common	gl	Aliñar á esquerda
+justify right	common	gl	Aliñar á dereita
+kazakstan	common	gl	KAZAKHISTÁN
+kenya	common	gl	KENYA
+keywords	common	gl	Palabras chave
+kiribati	common	gl	KIRIBATI
+korea, democratic peoples republic of	common	gl	COREA
+korea, republic of	common	gl	COREA
+kuwait	common	gl	KUWAIT
+kyrgyzstan	common	gl	KIRGIZISTÁN
+language	common	gl	Idioma
+language_direction_rtl	common	gl	Idioma de dereita a esquerda
+lao peoples democratic republic	common	gl	REPÚBLICA DEMOCRÁTICA DE LAO
+last name	common	gl	Apelido
+last name of the user, eg. "%1"	common	gl	apelido do usuario, por exemplo, "%1"
+last page	common	gl	Última páxina
+lastname	common	gl	Apelido
+latvia	common	gl	LATVIA
+ldap-mgr	common	gl	Administrador LDAP
+lebanon	common	gl	LÍBANO
+left	common	gl	Esquerda
+lesotho	common	gl	LESOTHO
+liberia	common	gl	LIBERIA
+libyan arab jamahiriya	common	gl	LIBYAN ARAB JAMAHIRIYA
+license	common	gl	Licenza
+liechtenstein	common	gl	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	gl	Liña %1: '%2'<br><b>os datos csv non coinciden co número de columnas da táboa %3 ==> ignorado</b>
+list	common	gl	Lista
+list members	common	gl	Lista de membros
+lithuania	common	gl	LITUANIA
+local	common	gl	Local
+login	common	gl	Inicio de sesión
+loginid	common	gl	ID de inicio de sesión
+logout	common	gl	Saír
+lost login id	common	gl	Inicio de sesión perdido
+lost password	common	gl	Contrasinal perdido
+low	common	gl	Baixa
+lowest	common	gl	A máis baixa
+luxembourg	common	gl	LUXEMBURGO
+macau	common	gl	MACAU
+macedonia, the former yugoslav republic of	common	gl	MACEDONIA
+madagascar	common	gl	MADAGASCAR
+mail domain, eg. "%1"	common	gl	dominio de correo, por exemplo, "%1"
+main category	common	gl	Categoría principal
+main screen	common	gl	Pantalla principal
+maintainer	common	gl	Mantido por
+malawi	common	gl	MALAWI
+malaysia	common	gl	MALASIA
+maldives	common	gl	MALDIVAS
+mali	common	gl	MALI
+malta	common	gl	MALTA
+march	common	gl	Marzo
+marshall islands	common	gl	ILLAS MARSHALL
+martinique	common	gl	MARTINICA
+mauritania	common	gl	MAURITANIA
+mauritius	common	gl	MAURICIO
+max number of icons in navbar	common	gl	Número máximo de iconas na barra de navegación
+may	common	gl	Maio
+mayotte	common	gl	MAYOTTE
+medium	common	gl	Medio
+menu	common	gl	Menú
+message	common	gl	Mensaxe
+mexico	common	gl	MÉXICO
+micronesia, federated states of	common	gl	MICRONESIA
+minute	common	gl	minuto
+moldova, republic of	common	gl	REPÚBLICA MOLDAVA
+monaco	common	gl	MÓNACO
+monday	common	gl	Luns
+mongolia	common	gl	MONGOLIA
+montenegro	common	gl	MONTENEGRO
+montserrat	common	gl	MONTSERRAT
+morocco	common	gl	MARROCOS
+mozambique	common	gl	MOZAMBIQUE
+multiple	common	gl	múltiple
+myanmar	common	gl	MYANMAR
+name	common	gl	Nome
+name of the user, eg. "%1"	common	gl	nome do usuario, por exemplo, "%1"
+namibia	common	gl	NAMIBIA
+nauru	common	gl	NAURU
+nepal	common	gl	NEPAL
+netherlands	common	gl	HOLANDA
+netherlands antilles	common	gl	ANTILLAS HOLANDESAS
+never	common	gl	Nunca
+new caledonia	common	gl	NOVA CALEDONIA
+new entry added sucessfully	common	gl	A entrada engadiuse correctamente
+new main category	common	gl	Nova categoría principal
+new value	common	gl	Novo valor
+new zealand	common	gl	NOVA ZELANDIA
+next	common	gl	Seguinte
+next month (hold for menu)	jscalendar	gl	Mes seguinte (manter para menú)
+next page	common	gl	Páxina seguinte
+next year (hold for menu)	jscalendar	gl	Ano seguinte (manter para menú)
+nicaragua	common	gl	NICARAGUA
+niger	common	gl	NIXER
+nigeria	common	gl	NIXERIA
+niue	common	gl	NIUE
+no	common	gl	Non
+no entries found, try again ...	common	gl	Non se encontraron entradas, tente de novo
+no history for this record	common	gl	Non hai historial para este rexistro
+no savant2 template directories were found in:	common	gl	Non se encontraron directorios para modelos Savant2 en:
+no subject	common	gl	Sen asunto
+none	common	gl	Ningún
+norfolk island	common	gl	ILLA DE NORFOLK
+normal	common	gl	Normal
+northern mariana islands	common	gl	ILLAS MARIANAS DO NORTE
+norway	common	gl	NORUEGA
+not	common	gl	non
+not a user yet? register now	common	gl	Aínda non é usuario rexistrado? Rexístrese agora
+not assigned	common	gl	sen asignar
+note	common	gl	Nota
+notes	common	gl	Notas
+notify window	common	gl	Ventá de notificación
+notify your administrator to correct this situation	common	gl	Notifíqueo ao administrador para corrixir esta situación
+november	common	gl	Novembro
+october	common	gl	Outubro
+ok	common	gl	Aceptar
+old value	common	gl	Valor anterior
+oman	common	gl	OMAN
+on *nix systems please type: %1	common	gl	En sistemas *nix, escriba: %1
+on mouse over	common	gl	Ao mover o rato por riba
+only private	common	gl	só os privados
+only yours	common	gl	só os  seus
+oops! you caught us in the middle of system maintainance.	common	gl	Oops! Pillounos na metade do mantemento do sistema.
+open notify window	common	gl	Abrir ventá de notificación
+open popup window	common	gl	Abrir ventá de menú emerxente
+open sidebox	common	gl	Abrir caixa lateral
+ordered list	common	gl	Lista ordenada
+original	common	gl	Orixinal
+other	common	gl	Outros
+overview	common	gl	Resumo
+owner	common	gl	Propietario
+page	common	gl	Páxina
+page was generated in %1 seconds	common	gl	A páxina xerouse en %1 segundos
+pakistan	common	gl	PAQUISTÁN
+palau	common	gl	PALAU
+palestinian territory, occupied	common	gl	PALESTINA
+panama	common	gl	PANAMÁ
+papua new guinea	common	gl	PAPUA NOVA GUINEA
+paraguay	common	gl	PARAGUAI
+parcel	common	gl	Paquete
+parent category	common	gl	Categoría superior
+password	common	gl	Contrasinal
+password could not be changed	common	gl	Non foi posible mudar o contrasinal
+password has been updated	common	gl	O seu contrasinal foi actualizado
+password must contain at least %1 lowercase letters	common	gl	O contrasinal debe conter polo menos %1 letras minúsculas
+password must contain at least %1 numbers	common	gl	O contrasinal debe conter polo menos %1 números
+password must contain at least %1 special characters	common	gl	O contrasinal debe conter polo menos %1 caracteres especiais
+password must contain at least %1 uppercase letters	common	gl	O contrasinal debe conter polo menos %1 letras maiúsculas
+password must have at least %1 characters	common	gl	O contrasinal debe conter polo menos %1 caracteres
+path to user and group files has to be outside of the webservers document-root!!!	common	gl	O camiño aos ficheiros do usuario e grupos DEBEN ESTAR FÓRA da raíz dos documentos do servidor web!!
+permissions to the files/users directory	common	gl	permiso para os directorios de arquivos/usuarios
+personal	common	gl	Persoal
+peru	common	gl	PERÚ
+philippines	common	gl	FILIPINAS
+phone number	common	gl	Número de teléfono
+phpgwapi	common	gl	API do eGroupWare
+pitcairn	common	gl	PITCAIRN
+please %1 by hand	common	gl	%1 manualmente
+please enter a name	common	gl	Introduza un nome
+please run setup to become current	common	gl	Execute a instalación para actualizala
+please select	common	gl	Seleccione
+please set your global preferences	common	gl	Defina as súas preferencias xerais
+please set your preferences for this application	common	gl	Escolla as súas preferencias para esta aplicación
+please wait...	common	gl	Espere...
+please, check back with us shortly.	common	gl	Volva pronto con nós.
+poland	common	gl	POLONIA
+portugal	common	gl	PORTUGAL
+postal	common	gl	Postal
+powered by	common	gl	Realizado por
+powered by egroupware version %1	common	gl	Proporcionado por <a href="http://www.egroupware.org">eGroupWare</a> versión %1
+preferences	common	gl	Preferencias
+preferences for the idots template set	common	gl	Preferencias para os modelos de idots
+prev. month (hold for menu)	jscalendar	gl	Mes anterior (manter para menú)
+prev. year (hold for menu)	jscalendar	gl	Ano anterior (manter para menú)
+previous page	common	gl	Páxina anterior
+primary style-sheet:	common	gl	Folla de estilo principal:
+print	common	gl	Imprimir
+priority	common	gl	Prioridade
+private	common	gl	Privado
+programs	common	gl	Programas
+project	common	gl	Proxecto
+public	common	gl	público
+puerto rico	common	gl	PORTO RICO
+qatar	common	gl	QATAR
+read	common	gl	Ler
+read this list of methods.	common	gl	Ler esta lista de métodos
+reading	common	gl	lendo
+register	common	gl	Rexistro
+regular	common	gl	Regular
+reject	common	gl	Rexeitar
+remember me	common	gl	Lembrarme
+remove selected accounts	common	gl	eliminar as contas seleccionadas
+remove shortcut	common	gl	Eliminar acceso directo
+rename	common	gl	Renomear
+replace	common	gl	Substituír
+replace with	common	gl	Substituír por
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	gl	Devolve unha lista completa das contas do sistema. Aviso: pode ser bastante longa
+returns an array of todo items	common	gl	Devolve unha matriz de elementos pendentes
+returns struct of users application access	common	gl	Devolve a estrutura de acceso dos usuarios á aplicación
+reunion	common	gl	REUNIÓN
+right	common	gl	Dereita
+romania	common	gl	RUMANIA
+russian federation	common	gl	FEDERACIÓN RUSA
+rwanda	common	gl	RUANDA
+saint helena	common	gl	SANTA ELENA
+saint kitts and nevis	common	gl	SAN CRISTOVO-NEVIS
+saint lucia	common	gl	SANTA LUCIA
+saint pierre and miquelon	common	gl	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	gl	SAN VINCENTE E AS GRANADINAS
+samoa	common	gl	SAMOA
+san marino	common	gl	SAN MARINO
+sao tome and principe	common	gl	SAN TOME E PRINCIPE
+saturday	common	gl	Sábado
+saudi arabia	common	gl	ARABIA SAUDÍ
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	gl	A versión de Savant2 difire do wrapper Savant2. <br/>Esta versión: %1 <br>Versión de Savant: %2
+save	common	gl	Gravar
+search	common	gl	Buscar
+search %1 '%2'	common	gl	Buscar %1 '%2'
+search accounts	common	gl	Buscar contas
+search or select accounts	common	gl	Buscar ou seleccionar contas
+second	common	gl	segundo
+section	common	gl	Sección
+select	common	gl	Seleccionar
+select all %1 %2 for %3	common	gl	Seleccionar todos os %1 %2 para %3
+select category	common	gl	Seleccionar categoría
+select date	common	gl	Seleccionar data
+select group	common	gl	Seleccionar grupo
+select home email address	common	gl	Seleccionar enderezo de correo electrónico inicial
+select multiple accounts	common	gl	seleccionar múltiples contas
+select one	common	gl	Seleccionar un
+select the default height for the application windows	common	gl	Seleccione a altura predefinida para as ventás da aplicación
+select the default width for the application windows	common	gl	Seleccione a largura predefinida para as ventás da aplicación
+select user	common	gl	Seleccionar usuario
+select work email address	common	gl	Seleccionar enderezo de correo electrónico do traballo
+selection	common	gl	Selección
+send	common	gl	Enviar
+senegal	common	gl	SENEGAL
+september	common	gl	Setembro
+serbia	common	gl	Serbia
+server %1 has been added	common	gl	Engadiuse o servidor %1
+server answered. processing response...	common	gl	O servidor respondeu. Procesando a respuesta...
+server contacted. waiting for response...	common	gl	Conectouse co servidor. Esperando a resposta...
+server name	common	gl	Nome do servidor
+session has been killed	common	gl	Eliminouse a sesión
+setup	common	gl	Instalación
+setup main menu	common	gl	Menú principal de instalación
+seychelles	common	gl	SEYCHELLES
+show all	common	gl	mostrar todo
+show all categorys	common	gl	Mostrar todas as categorías
+show as topmenu	common	gl	Mostrar como menú superior
+show clock?	common	gl	Desexa mostrar o reloxo?
+show home and logout button in main application bar?	common	gl	Desexa mostrar os botóns de inicio e saír na barra de aplicacións principal?
+show in sidebox	common	gl	Mostrar no menú lateral
+show logo's on the desktop.	common	gl	Mostrar logotipo no escritorio
+show menu	common	gl	Mostrar menú
+show page generation time	common	gl	Mostrar o tempo que demora en xerarse a páxina
+show page generation time on the bottom of the page?	common	gl	Desexa mostrar o tempo que demora en xerarse a páxina na parte inferior da páxina?
+show page generation time?	common	gl	Desexa mostrar o tempo que demora en xerarse a páxina?
+show the logo's of egroupware and x-desktop on the desktop.	common	gl	Mostrar o logotipo de eGroupware e x-desktop no escritorio.
+show_more_apps	common	gl	Mostrar máis aplicacións
+showing %1	common	gl	mostrando %1
+showing %1 - %2 of %3	common	gl	mostrando %1 - %2 de %3
+sierra leone	common	gl	SERRA LEOA
+simple	common	gl	Simple
+singapore	common	gl	SINGAPUR
+slovakia	common	gl	ESLOVAQUIA
+slovenia	common	gl	ESLOVENIA
+solomon islands	common	gl	ILLAS SALOMÓN
+somalia	common	gl	SOMALIA
+sorry, your login has expired	login	gl	A súa sesión caducou
+south africa	common	gl	SUDÁFRICA
+south georgia and the south sandwich islands	common	gl	XEORXIA E AS ILLAS SANDWICH  DO SUL
+spain	common	gl	ESPAÑA
+sri lanka	common	gl	SRI LANKA
+start date	common	gl	Data de inicio
+start time	common	gl	Hora de inicio
+start with	common	gl	comeza por
+starting up...	common	gl	Iniciando...
+status	common	gl	Estado
+stretched	common	gl	axustado
+subject	common	gl	Asunto
+submit	common	gl	Enviar
+substitutions and their meanings:	common	gl	Substitucións e os seus significados:
+sudan	common	gl	SUDÁN
+sunday	common	gl	Domingo
+suriname	common	gl	SURINAM
+svalbard and jan mayen	common	gl	SVALBARD E JAN MAYEN
+swaziland	common	gl	SUAZILANDIA
+sweden	common	gl	SUECIA
+switzerland	common	gl	SUIZA
+syrian arab republic	common	gl	SIRIA
+table properties	common	gl	Propiedades da táboa
+taiwan	common	gl	TAIWAN/TAIPEI
+tajikistan	common	gl	TAXIQUISTÁN
+tanzania, united republic of	common	gl	REPÚBLICA  DE TANZANIA
+text color:	common	gl	Cor do texto:
+thailand	common	gl	TAILANDIA
+the api is current	common	gl	A API esta ao dia
+the api requires an upgrade	common	gl	A API require unha actualización
+the following applications require upgrades	common	gl	As seguintes aplicacións requiren actualizacións
+the mail server returned	common	gl	O servidor de correo devolveu
+this application is current	common	gl	Esta aplicación está actualizada
+this application requires an upgrade	common	gl	Esta aplicación require unha actualización
+this name has been used already	common	gl	Este nome xa foi utilizado!
+thursday	common	gl	Xoves
+tiled	common	gl	mosaico
+time	common	gl	Hora
+time selection:	jscalendar	gl	Seleccionar hora:
+time zone	common	gl	Fuso horario
+time zone offset	common	gl	Diferenza de fuso horario
+title	common	gl	Título
+to	common	gl	Para
+to correct this error for the future you will need to properly set the	common	gl	Para corrixir este erro no futuro precisará configurar adecuadamente o
+to go back to the msg list, click <a href= %1 >here</a>	common	gl	Para volver á lista de mensaxes, prema <a href="%1">aquí</a>
+today	common	gl	Hoxe
+todays date, eg. "%1"	common	gl	data de hoxe, por exemplo, "%1"
+toggle first day of week	jscalendar	gl	Alternar o primeiro día da semana
+togo	common	gl	TOGO
+tokelau	common	gl	TOKELAU
+tonga	common	gl	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	gl	Demasiadas tentativas erradas para iniciar sesión: %1 para o usuario '%2', %3 para a IP %4
+top	common	gl	Superior
+total	common	gl	Total
+transparant bg for the icons?	common	gl	Desexa un fondo transparente para as iconas?
+trinidad and tobago	common	gl	TRINIDADE E TOBAGO
+tuesday	common	gl	Martes
+tunisia	common	gl	TÚNEZ
+turkey	common	gl	TURQUÍA
+turkmenistan	common	gl	TURKMENISTÁN
+turks and caicos islands	common	gl	ILLAS TURCAS E CAICOS
+tuvalu	common	gl	TUVALU
+type	common	gl	Tipo
+uganda	common	gl	UGANDA
+ukraine	common	gl	UCRANIA
+underline	common	gl	Subliñado
+united arab emirates	common	gl	EMIRATOS ARABES UNIDOS
+united kingdom	common	gl	REINO UNIDO
+united states	common	gl	ESTADOS UNIDOS
+united states minor outlying islands	common	gl	ILLAS EXTERIORES MENORES DOS EUA
+unknown	common	gl	Descoñecido
+update	common	gl	Actualizar
+update the clock per minute or per second	common	gl	Actualizar o reloxo por minuto ou por segundo
+upload	common	gl	Cargar
+upload directory does not exist, or is not writeable by webserver	common	gl	O directorio para subir arquivos non existe ou non ten permisos de escrita para o servidor web
+upload requires the directory to be writable by the webserver!	common	gl	A transferencia require o directorio para poder ser escrita polo servidor web!
+url	common	gl	URL
+uruguay	common	gl	URUGUAI
+use button to search for	common	gl	Utilice o botón para buscar
+use button to search for address	common	gl	Utilice o botón para buscar enderezos
+use button to search for calendarevent	common	gl	Utilice o botón para buscar eventos no calendario
+use button to search for project	common	gl	Utilice o botón para buscar proxectos
+user	common	gl	Usuario
+user accounts	common	gl	Contas de usuario
+user groups	common	gl	Grupos de usuario
+user openinstance	common	gl	Instancia de usuario aberta
+username	common	gl	Nome de usuario
+users	common	gl	usuarios
+users choice	common	gl	A escoller polo usuario
+uzbekistan	common	gl	UZBEKISTÁN
+vanuatu	common	gl	VANUATU
+venezuela	common	gl	VENEZUELA
+version	common	gl	Versión
+viet nam	common	gl	VIETNAM
+view	common	gl	Vista
+virgin islands, british	common	gl	ILLAS VIRXES BRITÁNICAS
+virgin islands, u.s.	common	gl	ILLAS VIRXES DOS EUA
+wallis and futuna	common	gl	WALLIS E FUTUNA
+wednesday	common	gl	Mércores
+welcome	common	gl	Benvido
+western sahara	common	gl	SÁHARA OCCIDENTAL
+what color should all the blank space on the desktop have	common	gl	Que cor debería ter o espazo en branco do escritorio?
+what style would you like the image to have?	common	gl	Que estilo desexa que teña a imaxe?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	gl	Ao dicir si, os botóns de Inicio e Saír preséntanse como aplicacións na barra principal de aplicacións
+where and how will the egroupware links like preferences, about and logout be displayed.	common	gl	Onde e como se mostrarán as ligazóns de egroupware como preferencias, acerca de ou saír.
+which groups	common	gl	Que grupos
+width	common	gl	Largura
+wk	jscalendar	gl	Sm.
+work email	common	gl	Correo electrónico do traballo
+would you like to display the page generation time at the bottom of every window?	common	gl	Desexa mostrar o tempo que demora en xerarse a páxina na parte inferior da cada ventá?
+writing	common	gl	Escribindo
+written by:	common	gl	Escrito por:
+year	common	gl	Ano
+yemen	common	gl	IEMEN
+yes	common	gl	Si
+you are required to change your password during your first login	common	gl	É necesario que mude o contrasinal a primeira vez que inicie sesión
+you can customize how many icons and toolbars the editor shows.	common	gl	Pode personalizar a maneira en que o editor mostra as iconas e a barra de ferramentas.
+you have been successfully logged out	login	gl	Desconectouse con éxito
+you have not entered a title	common	gl	Non introduciu un título
+you have not entered a valid date	common	gl	Non introduciu unha data válida
+you have not entered a valid time of day	common	gl	Non introduciu unha hora do día válida
+you have not entered participants	common	gl	Non introduciu participantes
+you have selected an invalid date	common	gl	A data seleccionada non é válida
+you have selected an invalid main category	common	gl	A categoría principal seleccionada non é válida
+you have successfully logged out	common	gl	Desconectouse con éxito
+you need to add the webserver user '%1' to the group '%2'.	common	gl	É necesario que engada o usuario do servidor web '%1' ao grupo '%2'
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	gl	Tentou abrir a aplicacións de eGroupWare: %1, pero non ten permiso para acceder a ela.
+your message could <b>not</b> be sent!<br>	common	gl	É posible que a súa mensaxe <b>non</b> fose enviada!<br>
+your message has been sent	common	gl	A súa mensaxe foi enviada
+your search returned %1 matchs	common	gl	A busca devolveu %1 coincidencias
+your search returned 1 match	common	gl	A busca devolveu 1 coincidencia
+your session could not be verified.	login	gl	Non foi posible verificar a súa sesión
+your settings have been updated	common	gl	A súa configuración foi actualizada
+zambia	common	gl	ZAMBIA
+zimbabwe	common	gl	CIMBABUE
+zoom	common	gl	Zoom
