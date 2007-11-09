@@ -1,115 +1,124 @@
-%1 already exists as a file	filemanager	cs	%1 ji¾ existuje jako soubor
+%1 already exists as a file	filemanager	cs	%1 jiÅ¾ existuje jako soubor
 application	filemanager	cs	Aplikace
-back to file manager	filemanager	cs	Zpìt na Správce souborù
-cancel editing %1 without saving	filemanager	cs	Ukonèit editaci %1 bez ulo¾ení
-cannot create directory because it begins or ends in a space	filemanager	cs	Nemohu vytvoøit adresáø, proto¾e zaèíná nebo konèí mezerou
-cannot replace %1 because it is a directory	filemanager	cs	Nemohu pøepsat %1 proto¾e je to adresáø
-command sucessfully run	filemanager	cs	Pøíkaz úspì¹nì spu¹tìn
-comment	filemanager	cs	Komentáø
-comments cannot contain "%1"	filemanager	cs	Komentáøe nemohou obsahovat "%1"
-copied %1 to %2	filemanager	cs	%1 zkopírováno do %2
-copy to	filemanager	cs	Kopírovat do
-copy to:	filemanager	cs	Kopírovat do:
-could not copy %1 to %2	filemanager	cs	Nepodaøilo se zkopírovat %1 do %2
-could not copy file because no destination directory is given	filemanager	cs	Nepodaøilo se zkopírovat soubor, proto¾e nebyl zadán cílovı adresáø
-could not create %1	filemanager	cs	Nepodaøilo se vytvoøit %1
-could not create directory %1	filemanager	cs	Nepodaøilo se vytvoøit adresáø %1
-could not delete %1	filemanager	cs	Nepodaøilo se smazat %1
-could not move %1 to %2	filemanager	cs	Nepodaøilo se pøesunout %1 do %2
-could not move file because no destination directory is given	filemanager	cs	Nepodaøilo se pøesunout soubor, proto¾e nebyl zadán cílovı adresáø
-could not rename %1 to %2	filemanager	cs	Nepodaøilo se pøejmenovat %1 na %2
-could not save %1	filemanager	cs	Nepodaøilo se ulo¾it %1
-create file	filemanager	cs	Vytvoøit soubor
-create folder	filemanager	cs	Vytvoøit slo¾ku
-created	filemanager	cs	Vytvoøeno
-created %1	filemanager	cs	Vytvoøeno %1
-created %1,%2	filemanager	cs	Vytvoøeno %1,%2
-created by	filemanager	cs	Vytvoøil(a)
-created directory %1	filemanager	cs	Vytvoøen adresáø %1
+back to file manager	filemanager	cs	ZpÄ›t na SprÃ¡vce souborÅ¯
+cancel editing %1 without saving	filemanager	cs	UkonÄit editaci %1 bez uloÅ¾enÃ­
+cannot create directory because it begins or ends in a space	filemanager	cs	Nemohu vytvoÅ™it adresÃ¡Å™, protoÅ¾e zaÄÃ­nÃ¡ nebo konÄÃ­ mezerou
+cannot replace %1 because it is a directory	filemanager	cs	Nemohu pÅ™epsat %1 protoÅ¾e je to adresÃ¡Å™
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	cs	ZvolÃ­te-li koncovÃ© datum menÅ¡Ã­ neÅ¾ poÄÃ¡teÄnÃ­ datum, vÃ½sledkem hledÃ¡nÃ­ budou vÅ¡echny zÃ¡znamy kromÄ› zÃ¡znamÅ¯ mezi uvedenÃ½mi daty.
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	cs	ZvolÃ­te-li jen jedno datum (od/do) vÃ½sledkem hledÃ¡nÃ­ budou vÅ¡echny zÃ¡znamy starÅ¡Ã­/mladÅ¡Ã­ neÅ¾ zadanÃ© datum
+clear search	filemanager	cs	NovÃ© hledÃ¡nÃ­
+command sucessfully run	filemanager	cs	PÅ™Ã­kaz ÃºspÄ›Å¡nÄ› spuÅ¡tÄ›n
+comment	filemanager	cs	KomentÃ¡Å™
+comments cannot contain "%1"	filemanager	cs	KomentÃ¡Å™e nemohou obsahovat "%1"
+copied %1 to %2	filemanager	cs	%1 zkopÃ­rovÃ¡no do %2
+copy to	filemanager	cs	KopÃ­rovat do
+copy to:	filemanager	cs	KopÃ­rovat do:
+could not copy %1 to %2	filemanager	cs	NepodaÅ™ilo se zkopÃ­rovat %1 do %2
+could not copy file because no destination directory is given	filemanager	cs	NepodaÅ™ilo se zkopÃ­rovat soubor, protoÅ¾e nebyl zadÃ¡n cÃ­lovÃ½ adresÃ¡Å™
+could not create %1	filemanager	cs	NepodaÅ™ilo se vytvoÅ™it %1
+could not create directory %1	filemanager	cs	NepodaÅ™ilo se vytvoÅ™it adresÃ¡Å™ %1
+could not delete %1	filemanager	cs	NepodaÅ™ilo se smazat %1
+could not move %1 to %2	filemanager	cs	NepodaÅ™ilo se pÅ™esunout %1 do %2
+could not move file because no destination directory is given	filemanager	cs	NepodaÅ™ilo se pÅ™esunout soubor, protoÅ¾e nebyl zadÃ¡n cÃ­lovÃ½ adresÃ¡Å™
+could not rename %1 to %2	filemanager	cs	NepodaÅ™ilo se pÅ™ejmenovat %1 na %2
+could not save %1	filemanager	cs	NepodaÅ™ilo se uloÅ¾it %1
+create file	filemanager	cs	VytvoÅ™it soubor
+create folder	filemanager	cs	VytvoÅ™it sloÅ¾ku
+created	filemanager	cs	VytvoÅ™eno
+created %1	filemanager	cs	VytvoÅ™eno %1
+created %1,%2	filemanager	cs	VytvoÅ™eno %1,%2
+created between	filemanager	cs	vytvoÅ™eno mezi
+created by	filemanager	cs	VytvoÅ™il(a)
+created directory %1	filemanager	cs	VytvoÅ™en adresÃ¡Å™ %1
 date	filemanager	cs	Datum
-default number of upload fields to show	filemanager	cs	Vıchozí poèet zobrazovanıch polo¾ek pro upload
+default number of upload fields to show	filemanager	cs	VÃ½chozÃ­ poÄet zobrazovanÃ½ch poloÅ¾ek pro upload
 delete	filemanager	cs	Smazat
-deleted %1	filemanager	cs	Smazáno %1
-directory	filemanager	cs	Adresáø
-directory %1 already exists	filemanager	cs	Adresáø %1 ji¾ existuje
-directory %1 does not exist	filemanager	cs	Adresáø %1 neexistuje
-directory names cannot contain "%1"	filemanager	cs	Jména adresáøù nesmí obsahovat "%1"
+deleted %1	filemanager	cs	SmazÃ¡no %1
+directory	filemanager	cs	AdresÃ¡Å™
+directory %1 already exists	filemanager	cs	AdresÃ¡Å™ %1 jiÅ¾ existuje
+directory %1 does not exist	filemanager	cs	AdresÃ¡Å™ %1 neexistuje
+directory names cannot contain "%1"	filemanager	cs	JmÃ©na adresÃ¡Å™Å¯ nesmÃ­ obsahovat "%1"
 display attributes	filemanager	cs	Zobrazit atributy
-download	filemanager	cs	Stáhnout
+download	filemanager	cs	StÃ¡hnout
 edit	filemanager	cs	Editovat
-edit comments	filemanager	cs	Editovat komentáøe
-error running command	filemanager	cs	Chyba pøi spu¹tìní pøíkazu
+edit comments	filemanager	cs	Editovat komentÃ¡Å™e
+error running command	filemanager	cs	Chyba pÅ™i spuÅ¡tÄ›nÃ­ pÅ™Ã­kazu
 execute	filemanager	cs	Spustit
-failed to create directory	filemanager	cs	nepodaøilo se vytvoøit adresáø
-fake base dir did not exist, egroupware created a new one.	filemanager	cs	Virtuální základní adresáø neexistoval, eGroupWare vytvoøil novı
+failed to create directory	filemanager	cs	nepodaÅ™ilo se vytvoÅ™it adresÃ¡Å™
+fake base dir did not exist, egroupware created a new one.	filemanager	cs	VirtuÃ¡lnÃ­ zÃ¡kladnÃ­ adresÃ¡Å™ neexistoval, eGroupWare vytvoÅ™il novÃ½
 file	filemanager	cs	Soubor
-file %1 already exists. please edit it or delete it first.	filemanager	cs	Soubor %1 ji¾ existuje. Buï ho nejprve sma¾te nebo ho zeditujte.
-file %1 could not be created.	filemanager	cs	Soubor %1 nemohl bıt vytvoøen.
-file name	filemanager	cs	Jméno souboru
-file names cannot contain  or /	filemanager	cs	Jména souborù nesmí obsahovat \ nebo /
-file names cannot contain "%1"	filemanager	cs	Jména souborù nesmí obsahovat "%1"
-filemanager	common	cs	Správce souborù
-filemanager preferences	filemanager	cs	Pøedvolby Správce souborù
+file %1 already exists. please edit it or delete it first.	filemanager	cs	Soubor %1 jiÅ¾ existuje. BuÄ ho nejprve smaÅ¾te nebo ho zeditujte.
+file %1 could not be created.	filemanager	cs	Soubor %1 nemohl bÃ½t vytvoÅ™en.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	cs	Soubor %1 je moÅ¾nÃ¡ pÅ™Ã­liÅ¡ velkÃ½. Kontaktujte VaÅ¡eho administrÃ¡tora pro dalÅ¡Ã­ informace.
+file name	filemanager	cs	JmÃ©no souboru
+file names cannot contain  or /	filemanager	cs	JmÃ©na souborÅ¯ nesmÃ­ obsahovat \ nebo /
+file names cannot contain "%1"	filemanager	cs	JmÃ©na souborÅ¯ nesmÃ­ obsahovat "%1"
+filemanager	common	cs	SprÃ¡vce souborÅ¯
+filemanager preferences	filemanager	cs	PÅ™edvolby SprÃ¡vce souborÅ¯
 files	filemanager	cs	Soubory
-files in this directory	filemanager	cs	Soubory v tomto adresáøi
-folder	filemanager	cs	Slo¾ka
-folder up	filemanager	cs	O slo¾ku vı¹e
-go home	filemanager	cs	zpìt domù
-go to	filemanager	cs	Jít na
-go to %1	filemanager	cs	Jít na %1
-go to your home directory	filemanager	cs	Jít do domovského adresáøe
-go to:	filemanager	cs	Jít na:
-go up	filemanager	cs	Jít vı¹e
+files in this directory	filemanager	cs	Soubory v tomto adresÃ¡Å™i
+folder	filemanager	cs	SloÅ¾ka
+folder up	filemanager	cs	O sloÅ¾ku vÃ½Å¡e
+go home	filemanager	cs	zpÄ›t domÅ¯
+go to	filemanager	cs	JÃ­t na
+go to %1	filemanager	cs	JÃ­t na %1
+go to your home directory	filemanager	cs	JÃ­t do domovskÃ©ho adresÃ¡Å™e
+go to:	filemanager	cs	JÃ­t na:
+go up	filemanager	cs	JÃ­t vÃ½Å¡e
 home	filemanager	cs	Domov
-location	filemanager	cs	Umístìní
-locked	filemanager	cs	Uzamèen
+id	filemanager	cs	ID
+location	filemanager	cs	UmÃ­stÄ›nÃ­
+locked	filemanager	cs	UzamÄen
 mime type	filemanager	cs	MIME typ
-modified	filemanager	cs	Zmìnìno
-modified by	filemanager	cs	Zmìnil(a)
-move to	filemanager	cs	Pøesunout do
-move to:	filemanager	cs	Pøesunout do:
-moved %1 to %2	filemanager	cs	%1pøesunuto do %2
-no files in this directory.	filemanager	cs	V tomto adresáøi nejsou soubory.
-no version history for this file/directory	filemanager	cs	Pro tento soubor/adresáø neexistuje historie verzí
+modified	filemanager	cs	ZmÄ›nÄ›no
+modified between	filemanager	cs	zmÄ›nÄ›no mezi
+modified by	filemanager	cs	ZmÄ›nil(a)
+move to	filemanager	cs	PÅ™esunout do
+move to:	filemanager	cs	PÅ™esunout do:
+moved %1 to %2	filemanager	cs	%1pÅ™esunuto do %2
+no files in this directory.	filemanager	cs	V tomto adresÃ¡Å™i nejsou soubory.
+no version history for this file/directory	filemanager	cs	Pro tento soubor/adresÃ¡Å™ neexistuje historie verzÃ­
 operation	filemanager	cs	Operace
-other settings	filemanager	cs	Ostatní nastavení
-owner	filemanager	cs	Vlastník
-please select a file to delete.	filemanager	cs	Vyberte prosím soubor ke smazání.
-preview %1	filemanager	cs	Náhled %1
-preview of %1	filemanager	cs	Náhled (èeho) %1
-quick jump to	filemanager	cs	Rychlı skok na
-reload	filemanager	cs	Naèíst znovu
-rename	filemanager	cs	Pøejmenovat
-renamed %1 to %2	filemanager	cs	%1 pøejmenováno na %2
+other settings	filemanager	cs	OstatnÃ­ nastavenÃ­
+owner	filemanager	cs	VlastnÃ­k
+please select a file to delete.	filemanager	cs	Vyberte prosÃ­m soubor ke smazÃ¡nÃ­.
+preview %1	filemanager	cs	NÃ¡hled %1
+preview of %1	filemanager	cs	NÃ¡hled (Äeho) %1
+quick jump to	filemanager	cs	RychlÃ½ skok na
+reload	filemanager	cs	NaÄÃ­st znovu
+rename	filemanager	cs	PÅ™ejmenovat
+renamed %1 to %2	filemanager	cs	%1 pÅ™ejmenovÃ¡no na %2
 replaced %1	filemanager	cs	%1nahrazeno
-save %1	filemanager	cs	Ulo¾it %1
-save %1, and go back to file listing	filemanager	cs	Ulo¾it %1 a vrátit se zpìt na seznam souborù
-save all	filemanager	cs	Ulo¾it v¹e
-save changes	filemanager	cs	Ulo¾it zmìny
-saved %1	filemanager	cs	%1 ulo¾eno
+save %1	filemanager	cs	UloÅ¾it %1
+save %1, and go back to file listing	filemanager	cs	UloÅ¾it %1 a vrÃ¡tit se zpÄ›t na seznam souborÅ¯
+save all	filemanager	cs	UloÅ¾it vÅ¡e
+save changes	filemanager	cs	UloÅ¾it zmÄ›ny
+saved %1	filemanager	cs	%1 uloÅ¾eno
+searchstring	filemanager	cs	hledanÃ½ Å™etÄ›zec
 show	filemanager	cs	Zobrazit
 show ..	filemanager	cs	Zobrazit ...
-show .files	filemanager	cs	Zobrazit skryté .soubory
-show command line (experimental. dangerous.)	filemanager	cs	Zobrazit pøíkazovou øádku (Experimentální, nebezpeèené)
-show help	filemanager	cs	Zobrazit nápovìdu
+show .files	filemanager	cs	Zobrazit skrytÃ© .soubory
+show command line (experimental. dangerous.)	filemanager	cs	Zobrazit pÅ™Ã­kazovou Å™Ã¡dku (ExperimentÃ¡lnÃ­, nebezpeÄenÃ©)
+show help	filemanager	cs	Zobrazit nÃ¡povÄ›du
 size	filemanager	cs	Velikost
-sort by:	filemanager	cs	Tøídit dle
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	cs	Budoucí správce souborù, zatím JEN PRO TESTOVACÍ ÚÈELY. Posílejte prosím hlá¹ení o chybách.
-total files	filemanager	cs	Celkem souborù
-unknown mime-type defaults to text/plain when viewing	filemanager	cs	Neznámé MIME typy jsou standardnì zobrazovány jako prostı text
-unused space	filemanager	cs	Nevyu¾ité místo
+sort by:	filemanager	cs	TÅ™Ã­dit dle
+start search	filemanager	cs	ZahÃ¡jit hledÃ¡nÃ­
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	cs	BudoucÃ­ sprÃ¡vce souborÅ¯, zatÃ­m JEN PRO TESTOVACÃ ÃšÄŒELY. PosÃ­lejte prosÃ­m hlÃ¡Å¡enÃ­ o chybÃ¡ch.
+total files	filemanager	cs	Celkem souborÅ¯
+unknown mime-type defaults to text/plain when viewing	filemanager	cs	NeznÃ¡mÃ© MIME typy jsou standardnÄ› zobrazovÃ¡ny jako prostÃ½ text
+unused space	filemanager	cs	NevyuÅ¾itÃ© mÃ­sto
 up	filemanager	cs	Nahoru
 update	filemanager	cs	Aktualizovat
-updated comment for %1	filemanager	cs	Aktualizovat komentáø pro %1
+updated comment for %1	filemanager	cs	Aktualizovat komentÃ¡Å™ pro %1
 upload	filemanager	cs	Uploadovat
-upload fields	filemanager	cs	polo¾ky pro upload
+upload fields	filemanager	cs	poloÅ¾ky pro upload
 upload files	filemanager	cs	Uploadovat soubory
-use new experimental filemanager?	filemanager	cs	Pou¾ívat novı experimentální správce souborù?
-used space	filemanager	cs	Vyu¾ité místo
-users	filemanager	cs	U¾ivatelé
+use new experimental filemanager?	filemanager	cs	PouÅ¾Ã­vat novÃ½ experimentÃ¡lnÃ­ sprÃ¡vce souborÅ¯?
+used space	filemanager	cs	VyuÅ¾itÃ© mÃ­sto
+users	filemanager	cs	UÅ¾ivatelÃ©
 version	filemanager	cs	Verze
-view documents in new window	filemanager	cs	Zobrazovat dokumenty v novém oknì
+view documents in new window	filemanager	cs	Zobrazovat dokumenty v novÃ©m oknÄ›
 view documents on server (if available)	filemanager	cs	Zobrazovat dokumenty na serveru (je-li k dispozici)
 who	filemanager	cs	Kdo
-you do not have access to %1	filemanager	cs	Nemáte pøístup k %1
-your home dir did not exist, egroupware created a new one.	filemanager	cs	Vá¹ domovskı adresáø neexistoval, eGroupWare vytvoøil novı.
+you do not have access to %1	filemanager	cs	NemÃ¡te pÅ™Ã­stup k %1
+your home dir did not exist, egroupware created a new one.	filemanager	cs	VÃ¡Å¡ domovskÃ½ adresÃ¡Å™ neexistoval, eGroupWare vytvoÅ™il novÃ½.

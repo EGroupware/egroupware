@@ -1,52 +1,53 @@
-2 month ago	timesheet	cs	Pøed 2 mìsíci
-2 years ago	timesheet	cs	Pøed 2 roky
-3 years ago	timesheet	cs	Pøed 3 roky
+2 month ago	timesheet	cs	PÅ™ed 2 mÄ›sÃ­ci
+2 years ago	timesheet	cs	PÅ™ed 2 roky
+3 years ago	timesheet	cs	PÅ™ed 3 roky
 actions	timesheet	cs	Akce
-all projects	timesheet	cs	V¹echny projekty
-both: allow to use projectmanager and free project-names	admin	cs	Obojí: povolit pou¾ití Správce projektù i libovolnıch názvù projektù
+all projects	timesheet	cs	VÅ¡echny projekty
+both: allow to use projectmanager and free project-names	admin	cs	ObojÃ­: povolit pouÅ¾itÃ­ SprÃ¡vce projektÅ¯ i libovolnÃ½ch nÃ¡zvÅ¯ projektÅ¯
 by	timesheet	cs	od
-create new links	timesheet	cs	Vytvoøit nové odkazy
-creating new entry	timesheet	cs	vytváøím novı záznam
-delete this entry	timesheet	cs	Smazat tento záznam
-edit this entry	timesheet	cs	Editovat tento záznam
-empty if identical to duration	timesheet	cs	prázdné pokud se shoduje s délkou trvání
+create new links	timesheet	cs	VytvoÅ™it novÃ© odkazy
+creating new entry	timesheet	cs	vytvÃ¡Å™Ã­m novÃ½ zÃ¡znam
+delete this entry	timesheet	cs	Smazat tento zÃ¡znam
+edit this entry	timesheet	cs	Editovat tento zÃ¡znam
+empty if identical to duration	timesheet	cs	prÃ¡zdnÃ© pokud se shoduje s dÃ©lkou trvÃ¡nÃ­
 end	timesheet	cs	Konec
-entry deleted	timesheet	cs	Záznam smazán
-entry saved	timesheet	cs	Záznam ulo¾en
-error deleting the entry!!!	timesheet	cs	Chyba pøi mazání záznamu!!!
-error saving the entry!!!	timesheet	cs	Chyba pøi ukládání záznamu!!!
-existing links	timesheet	cs	Stávající odkazy
-full: use only projectmanager	admin	cs	Plné: pou¾ít jen Správce projektù
-general	timesheet	cs	Obecné
-last modified	timesheet	cs	Naposledy zmìnìno
-last month	timesheet	cs	Minulı mìsíc
-last week	timesheet	cs	Minulı tıden
-last year	timesheet	cs	Minulı rok
-leave it empty for a full week	timesheet	cs	Ponechte prázdné pro celı tıden
+entry deleted	timesheet	cs	ZÃ¡znam smazÃ¡n
+entry saved	timesheet	cs	ZÃ¡znam uloÅ¾en
+error deleting the entry!!!	timesheet	cs	Chyba pÅ™i mazÃ¡nÃ­ zÃ¡znamu!!!
+error saving the entry!!!	timesheet	cs	Chyba pÅ™i uklÃ¡dÃ¡nÃ­ zÃ¡znamu!!!
+existing links	timesheet	cs	StÃ¡vajÃ­cÃ­ odkazy
+full: use only projectmanager	admin	cs	PlnÃ©: pouÅ¾Ã­t jen SprÃ¡vce projektÅ¯
+general	timesheet	cs	ObecnÃ©
+last modified	timesheet	cs	Naposledy zmÄ›nÄ›no
+last month	timesheet	cs	MinulÃ½ mÄ›sÃ­c
+last week	timesheet	cs	MinulÃ½ tÃ½den
+last year	timesheet	cs	MinulÃ½ rok
+leave it empty for a full week	timesheet	cs	Ponechte prÃ¡zdnÃ© pro celÃ½ tÃ½den
 links	timesheet	cs	Odkazy
-no details	timesheet	cs	Bez detailù
-no project	timesheet	cs	®ádnı projekt
-none: use only free project-names	admin	cs	®ádnı: pou¾ívat jen libovolné názvy projektù
-or endtime	timesheet	cs	nebo Koncovı èas
-permission denied!!!	timesheet	cs	Pøístup zamítnut!!!
+no details	timesheet	cs	Bez detailÅ¯
+no project	timesheet	cs	Å½Ã¡dnÃ½ projekt
+none: use only free project-names	admin	cs	Å½Ã¡dnÃ½: pouÅ¾Ã­vat jen libovolnÃ© nÃ¡zvy projektÅ¯
+or endtime	timesheet	cs	nebo KoncovÃ½ Äas
+permission denied!!!	timesheet	cs	PÅ™Ã­stup zamÃ­tnut!!!
 price	timesheet	cs	Cena
-projectmanager integration	admin	cs	Integrace se Správcem projektù
-quantity	timesheet	cs	Mno¾ství
-save & new	timesheet	cs	Ulo¾it a Novı
-saves the changes made	timesheet	cs	Ulo¾í provedené zmìny
-saves this entry and add a new one	timesheet	cs	Ulo¾í aktuální záznam a pøidá novı
+projectmanager integration	admin	cs	Integrace se SprÃ¡vcem projektÅ¯
+quantity	timesheet	cs	MnoÅ¾stvÃ­
+save & new	timesheet	cs	UloÅ¾it a NovÃ½
+saves the changes made	timesheet	cs	UloÅ¾Ã­ provedenÃ© zmÄ›ny
+saves this entry and add a new one	timesheet	cs	UloÅ¾Ã­ aktuÃ¡lnÃ­ zÃ¡znam a pÅ™idÃ¡ novÃ½
 select a price	timesheet	cs	Vybrat cenu
 select a project	timesheet	cs	Vybrat projekt
-start	timesheet	cs	Zaèátek
-starttime	timesheet	cs	Poèáteèní èas
-starttime has to be before endtime !!!	timesheet	cs	Poèáteèní èas musí pøedcházet èasu ukonèení !!!
-sum %1:	timesheet	cs	Souèet %1:
-this month	timesheet	cs	Tento mìsíc
-this week	timesheet	cs	Tento tıden
+show a quantity sum (eg. to sum up negative overtime)	admin	cs	Zobrazit souÄet mnoÅ¾stvÃ­ (napÅ™. pro seÄtenÃ­ zÃ¡pornÃ©ho pÅ™esÄasu)
+start	timesheet	cs	ZaÄÃ¡tek
+starttime	timesheet	cs	PoÄÃ¡teÄnÃ­ Äas
+starttime has to be before endtime !!!	timesheet	cs	PoÄÃ¡teÄnÃ­ Äas musÃ­ pÅ™edchÃ¡zet Äasu ukonÄenÃ­ !!!
+sum %1:	timesheet	cs	SouÄet %1:
+this month	timesheet	cs	Tento mÄ›sÃ­c
+this week	timesheet	cs	Tento tÃ½den
 this year	timesheet	cs	Tento rok
 timesheet	common	cs	Harmonogram
-unitprice	timesheet	cs	Jednotková cena
-view this entry	timesheet	cs	Zobrazit tento záznam
-week	timesheet	cs	Tıden
-yesterday	timesheet	cs	Vèera
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	cs	Va¹e databáze NENÍ aktuální (%1 vs. %2), spus»te prosím %3setup%4 a zaktualizujte Va¹í databázi.
+unitprice	timesheet	cs	JednotkovÃ¡ cena
+view this entry	timesheet	cs	Zobrazit tento zÃ¡znam
+week	timesheet	cs	TÃ½den
+yesterday	timesheet	cs	VÄera
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	cs	VaÅ¡e databÃ¡ze NENÃ aktuÃ¡lnÃ­ (%1 vs. %2), spusÅ¥te prosÃ­m %3setup%4 a zaktualizujte VaÅ¡Ã­ databÃ¡zi.

@@ -1,101 +1,101 @@
-accessories of	resources	cs	pøíslu¹enství (èeho)
-accessories:	resources	cs	Pøíslu¹enství:
+accessories of	resources	cs	pÅ™Ã­sluÅ¡enstvÃ­ (Äeho)
+accessories:	resources	cs	PÅ™Ã­sluÅ¡enstvÃ­:
 actions	resources	cs	Akce
-add accessory	resources	cs	Pøidat pøíslu¹enství
-add resource	resources	cs	pøidat zdroj
-add resources	resources	cs	Pøidat zdroje
-administrator	resources	cs	Srpávce
-all categories	resources	cs	v¹echny kategorie
+add accessory	resources	cs	PÅ™idat pÅ™Ã­sluÅ¡enstvÃ­
+add resource	resources	cs	pÅ™idat zdroj
+add resources	resources	cs	PÅ™idat zdroje
+administrator	resources	cs	SrpÃ¡vce
+all categories	resources	cs	vÅ¡echny kategorie
 book	resources	cs	Rezervovat
-book selected resources	resources	cs	Rezervovat vybrané zdroje
+book selected resources	resources	cs	Rezervovat vybranÃ© zdroje
 book this resource	resources	cs	Rezervovat tento zdroj
-bookable	resources	cs	Rezervovavtelnı
-buy this article	resources	cs	Koupit tuto polo¾ku
+bookable	resources	cs	RezervovavtelnÃ½
+buy this article	resources	cs	Koupit tuto poloÅ¾ku
 buy this resource	resources	cs	Koupit tento zdroj
 buyable	resources	cs	Ke koupi
-categories admin	resources	cs	Správce kategorií
+categories admin	resources	cs	SprÃ¡vce kategoriÃ­
 category:	resources	cs	Kategorie:
-check all	resources	cs	Oznaèit v¹echny
-choose categories admin	resources	cs	vybrat správce kategorií
-clear selection	resources	cs	zru¹it vıbìr
-configure access permissions	admin	cs	Konfigurovat pøístupová práva
-create new accessory for this resource	resources	cs	Vytvoøit nové pøíslu¹enství k tomtuto zdroji
-create new links	resources	cs	Vytvoøit nové odkazy
-delete selected resources	resources	cs	Smazat vybrané zdroje
-delete this entry	resources	cs	Smazat záznam
-description (short)	resources	cs	Popis (struènı)
-direct booking permissions	resources	cs	Pøímá rezervaèní práva
-don't use vfs (this will need a symlink --> see readme)	resources	cs	Nepou¾ívat vfs (bude zapotøebí symbolickı odkaz --> pøeètìte si README)
-edit this entry	resources	cs	Editovat tento záznam
-existing links	resources	cs	Stávající odkazy
-general	resources	cs	Obecné
-general informations about resource	resources	cs	Obecné informace o zdroji
-gernal resource	resources	cs	Obecnı zdroj
-how many of the resources are useable?	resources	cs	Kolik ze zdrojù je pou¾itelnıch?
-how many of them are useable?	resources	cs	Kolik z nich je pou¾itelnıch?
-how many of this resource are usable	resources	cs	Kolik z tohoto zdroje je pou¾itelnıch?
+check all	resources	cs	OznaÄit vÅ¡echny
+choose categories admin	resources	cs	vybrat sprÃ¡vce kategoriÃ­
+clear selection	resources	cs	zruÅ¡it vÃ½bÄ›r
+configure access permissions	admin	cs	Konfigurovat pÅ™Ã­stupovÃ¡ prÃ¡va
+create new accessory for this resource	resources	cs	VytvoÅ™it novÃ© pÅ™Ã­sluÅ¡enstvÃ­ k tomtuto zdroji
+create new links	resources	cs	VytvoÅ™it novÃ© odkazy
+delete selected resources	resources	cs	Smazat vybranÃ© zdroje
+delete this entry	resources	cs	Smazat zÃ¡znam
+description (short)	resources	cs	Popis (struÄnÃ½)
+direct booking permissions	resources	cs	PÅ™Ã­mÃ¡ rezervaÄnÃ­ prÃ¡va
+don't use vfs (this will need a symlink --> see readme)	resources	cs	NepouÅ¾Ã­vat vfs (bude zapotÅ™ebÃ­ symbolickÃ½ odkaz --> pÅ™eÄtÄ›te si README)
+edit this entry	resources	cs	Editovat tento zÃ¡znam
+existing links	resources	cs	StÃ¡vajÃ­cÃ­ odkazy
+general	resources	cs	ObecnÃ©
+general informations about resource	resources	cs	ObecnÃ© informace o zdroji
+gernal resource	resources	cs	ObecnÃ½ zdroj
+how many of the resources are useable?	resources	cs	Kolik ze zdrojÅ¯ je pouÅ¾itelnÃ½ch?
+how many of them are useable?	resources	cs	Kolik z nich je pouÅ¾itelnÃ½ch?
+how many of this resource are usable	resources	cs	Kolik z tohoto zdroje je pouÅ¾itelnÃ½ch?
 how many of this resource exists	resources	cs	Kolik z tohoto zdroje existuje?
-implies booking permission	resources	cs	z toho vyplıvají rezervaèní práva
-implies read permission	resources	cs	z toho vyplıvají práva pro ètení
-information about storage	resources	cs	Informace o uskladnìní
-informations about the location of resource	resources	cs	Informace o umístìní zdroje
-inventory number	resources	cs	Inventární èíslo
-inventory number:	resources	cs	Inventární èíslo:
-is resource bookable?	resources	cs	Je mo¾né zdroj rezervovat?
-is resource buyable?	resources	cs	Je mo¾né zdroj zakoupit?
-is this resource bookable?	resources	cs	Je mo¾né tento zdroj rezervovat?
-is this resource buyable?	resources	cs	Je mo¾né tento zdroj zakoupit?
+implies booking permission	resources	cs	z toho vyplÃ½vajÃ­ rezervaÄnÃ­ prÃ¡va
+implies read permission	resources	cs	z toho vyplÃ½vajÃ­ prÃ¡va pro ÄtenÃ­
+information about storage	resources	cs	Informace o uskladnÄ›nÃ­
+informations about the location of resource	resources	cs	Informace o umÃ­stÄ›nÃ­ zdroje
+inventory number	resources	cs	InventÃ¡rnÃ­ ÄÃ­slo
+inventory number:	resources	cs	InventÃ¡rnÃ­ ÄÃ­slo:
+is resource bookable?	resources	cs	Je moÅ¾nÃ© zdroj rezervovat?
+is resource buyable?	resources	cs	Je moÅ¾nÃ© zdroj zakoupit?
+is this resource bookable?	resources	cs	Je moÅ¾nÃ© tento zdroj rezervovat?
+is this resource buyable?	resources	cs	Je moÅ¾nÃ© tento zdroj zakoupit?
 links	resources	cs	Odkazy
-location	resources	cs	Umístìní
-location of resource	resources	cs	Umístìní zdroje
-location:	resources	cs	Umístìní:
-name of resource	resources	cs	Název zdroje
-name:	resources	cs	Název:
-no description available	resources	cs	popis není k dispozici
-no resources selected	resources	cs	®ádnı zdroj nebyl vybrán
-notify your administrator to correct this situation	resources	cs	Po¾ádejte prosím svého administrátora o nápravu situace
-picture	resources	cs	Obrázek
-picture source	resources	cs	Zdroj obrázku
-picture type is not supported, sorry!	resources	cs	Obrázek tohoto typu není podporován, litujeme !
-pictures or resource	resources	cs	Obrázky zdroje
-planer	resources	cs	Srovnávaè
-prizeing information for booking or buying	resources	cs	Informace o cenì pro rezervaci nebo nákup
-quantity	resources	cs	Mno¾ství
-quantity of resource	resources	cs	Mno¾ství zdroje
-quantity:	resources	cs	Mno¾ství:
-read calendar permissions	resources	cs	Práva ke ètení kalendáøe
-read permissions	resources	cs	Práva ke ètìní
-related links	resources	cs	Související odkazy
+location	resources	cs	UmÃ­stÄ›nÃ­
+location of resource	resources	cs	UmÃ­stÄ›nÃ­ zdroje
+location:	resources	cs	UmÃ­stÄ›nÃ­:
+name of resource	resources	cs	NÃ¡zev zdroje
+name:	resources	cs	NÃ¡zev:
+no description available	resources	cs	popis nenÃ­ k dispozici
+no resources selected	resources	cs	Å½Ã¡dnÃ½ zdroj nebyl vybrÃ¡n
+notify your administrator to correct this situation	resources	cs	PoÅ¾Ã¡dejte prosÃ­m svÃ©ho administrÃ¡tora o nÃ¡pravu situace
+picture	resources	cs	ObrÃ¡zek
+picture source	resources	cs	Zdroj obrÃ¡zku
+picture type is not supported, sorry!	resources	cs	ObrÃ¡zek tohoto typu nenÃ­ podporovÃ¡n, litujeme !
+pictures or resource	resources	cs	ObrÃ¡zky zdroje
+planer	resources	cs	SrovnÃ¡vaÄ
+prizeing information for booking or buying	resources	cs	Informace o cenÄ› pro rezervaci nebo nÃ¡kup
+quantity	resources	cs	MnoÅ¾stvÃ­
+quantity of resource	resources	cs	MnoÅ¾stvÃ­ zdroje
+quantity:	resources	cs	MnoÅ¾stvÃ­:
+read calendar permissions	resources	cs	PrÃ¡va ke ÄtenÃ­ kalendÃ¡Å™e
+read permissions	resources	cs	PrÃ¡va ke ÄtÄ›nÃ­
+related links	resources	cs	SouvisejÃ­cÃ­ odkazy
 resources	common	cs	Zdroje
-resources list	resources	cs	Seznam zdrojù
-responsible:	resources	cs	Odpovìdnı:
-saves entry and exits	resources	cs	Ulo¾í záznam a ukonèí
+resources list	resources	cs	Seznam zdrojÅ¯
+responsible:	resources	cs	OdpovÄ›dnÃ½:
+saves entry and exits	resources	cs	UloÅ¾Ã­ zÃ¡znam a ukonÄÃ­
 select a category	resources	cs	Vybrat kategorii
 select resource	resources	cs	vybrat zdroj
 select resources	common	cs	Vybrat zdroje
-select/deselect all	resources	cs	oznaèit v¹e/zru¹it oznaèení v¹ech
-short description	resources	cs	Struènı popis
-short description of resource	resources	cs	Struènı popis zdroje
-show calendar of resource	resources	cs	Zobrazit kalendáø zdroje
-something went wrong by deleting resource	resources	cs	Bìhem mazání zdroje se nìco nezdaøilo
-something went wrong by saving resource	resources	cs	Bìhem ukládání zdroje se nìco nezdaøilo
-storage inforation	resources	cs	Informace o uskladnìní
-storage information	resources	cs	Informace o uskladnìní
-storage information:	resources	cs	Informace o uskladnìní
-the calendar of this resource	resources	cs	Kalendáø tohoto zdroje
+select/deselect all	resources	cs	oznaÄit vÅ¡e/zruÅ¡it oznaÄenÃ­ vÅ¡ech
+short description	resources	cs	StruÄnÃ½ popis
+short description of resource	resources	cs	StruÄnÃ½ popis zdroje
+show calendar of resource	resources	cs	Zobrazit kalendÃ¡Å™ zdroje
+something went wrong by deleting resource	resources	cs	BÄ›hem mazÃ¡nÃ­ zdroje se nÄ›co nezdaÅ™ilo
+something went wrong by saving resource	resources	cs	BÄ›hem uklÃ¡dÃ¡nÃ­ zdroje se nÄ›co nezdaÅ™ilo
+storage inforation	resources	cs	Informace o uskladnÄ›nÃ­
+storage information	resources	cs	Informace o uskladnÄ›nÃ­
+storage information:	resources	cs	Informace o uskladnÄ›nÃ­
+the calendar of this resource	resources	cs	KalendÃ¡Å™ tohoto zdroje
 this module displays the resources app	resources	cs	Tento modul zobrazuje aplikaci Zdroje
-use general resources icon	resources	cs	Pou¾ít obecnou ikonu zdrojù
-use own picture	resources	cs	Pou¾ít vlastní obrázek
-use the category's icon	resources	cs	Pou¾ít ikonu kategorie
-useable	resources	cs	Pou¾itelné
-useable:	resources	cs	Pou¾itelné:
-view accessories for this resource	resources	cs	Zobrazit pøíslu¹enství k tomtuto zdroji
-view this entry	resources	cs	Zobrazit tento záznam
-web-page of resource	resources	cs	Webová stránka zdroje
+use general resources icon	resources	cs	PouÅ¾Ã­t obecnou ikonu zdrojÅ¯
+use own picture	resources	cs	PouÅ¾Ã­t vlastnÃ­ obrÃ¡zek
+use the category's icon	resources	cs	PouÅ¾Ã­t ikonu kategorie
+useable	resources	cs	PouÅ¾itelnÃ©
+useable:	resources	cs	PouÅ¾itelnÃ©:
+view accessories for this resource	resources	cs	Zobrazit pÅ™Ã­sluÅ¡enstvÃ­ k tomtuto zdroji
+view this entry	resources	cs	Zobrazit tento zÃ¡znam
+web-page of resource	resources	cs	WebovÃ¡ strÃ¡nka zdroje
 web-site for this resource	resources	cs	Web tohto zdroje
-where to find this resource?	resources	cs	Kde se dá najít tento zdroj?
-which category does this resource belong to?	resources	cs	Do které kategorie patøí tento zdroj?
-write permissions	resources	cs	Práva k zápisu
-you are not permitted to edit this reource!	resources	cs	Nemáte oprávnìní editovat tento zdroj!
-you are not permitted to get information about this resource!	resources	cs	Nemáte oprávnìní získávat informace o tomto zdroji!
-you chose more resources than available	resources	cs	Vybral(a) jste více zdrojù ne¾ je k dispozici
+where to find this resource?	resources	cs	Kde se dÃ¡ najÃ­t tento zdroj?
+which category does this resource belong to?	resources	cs	Do kterÃ© kategorie patÅ™Ã­ tento zdroj?
+write permissions	resources	cs	PrÃ¡va k zÃ¡pisu
+you are not permitted to edit this reource!	resources	cs	NemÃ¡te oprÃ¡vnÄ›nÃ­ editovat tento zdroj!
+you are not permitted to get information about this resource!	resources	cs	NemÃ¡te oprÃ¡vnÄ›nÃ­ zÃ­skÃ¡vat informace o tomto zdroji!
+you chose more resources than available	resources	cs	Vybral(a) jste vÃ­ce zdrojÅ¯ neÅ¾ je k dispozici

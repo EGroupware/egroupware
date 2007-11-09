@@ -1,5 +1,14 @@
-%1 records imported	infolog	cs	%1 záznamù importováno
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	cs	%1 záznamù pøeèteno (zatím nebyly importovány, mù¾ete se vrátit %2zpìt%3 a od¹krtnout Testovat import)
+%1 days in advance	infolog	cs	%1 dnÃ­ dopÅ™edu
+%1 deleted	infolog	cs	%1 smazÃ¡no
+%1 deleted by %2 at %3	infolog	cs	%1 smazal(a) %2 v %3
+%1 modified	infolog	cs	%1 zmÄ›nÄ›no
+%1 modified by %2 at %3	infolog	cs	%1 zmÄ›nil(a) %2 v %3
+%1 records imported	infolog	cs	%1 zÃ¡znamÅ¯ importovÃ¡no
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	cs	%1 zÃ¡znamÅ¯ pÅ™eÄteno (zatÃ­m nebyly importovÃ¡ny, mÅ¯Å¾ete se vrÃ¡tit %2zpÄ›t%3 a odÅ¡krtnout Testovat import)
+%1 you are responsible for is due at %2	infolog	cs	%1 za kterÃ½ jste odpovÄ›dnÃ½ mÃ¡ termÃ­n ukonÄenÃ­ k %2
+%1 you are responsible for is starting at %2	infolog	cs	%1 za kterÃ½ jste odpovÄ›dnÃ½  zaÄÃ­nÃ¡ k %2
+%1 you delegated is due at %2	infolog	cs	%1 kterÃ½ jste delegoval mÃ¡ termÃ­n ukonÄenÃ­ k %2
+%1 you delegated is starting at %2	infolog	cs	%1 kterÃ½ jste delegoval zaÄÃ­nÃ¡ k %2
 - subprojects from	infolog	cs	- Podprojekty od (z)
 0%	infolog	cs	0%
 10%	infolog	cs	10%
@@ -12,303 +21,338 @@
 70%	infolog	cs	70%
 80%	infolog	cs	80%
 90%	infolog	cs	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	cs	<b>soubory pøipojené pøes symbolické odkazy</b> místo uploadování a stahování pøes file:/cesta pro pøímé klienty LAN
-a short subject for the entry	infolog	cs	struènı pøedmìt záznamu
-abort without deleting	infolog	cs	Zru¹it bez smazání
-accept	infolog	cs	pøijmout
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	cs	<b>soubory pÅ™ipojenÃ© pÅ™es symbolickÃ© odkazy</b> mÃ­sto uploadovÃ¡nÃ­ a stahovÃ¡nÃ­ pÅ™es file:/cesta pro pÅ™Ã­mÃ© klienty LAN
+a short subject for the entry	infolog	cs	struÄnÃ½ pÅ™edmÄ›t zÃ¡znamu
+abort without deleting	infolog	cs	ZruÅ¡it bez smazÃ¡nÃ­
+accept	infolog	cs	pÅ™ijmout
 action	infolog	cs	Akce
-actual date and time	infolog	cs	aktuální datum a èas
-add	infolog	cs	Pøidat
-add a file	infolog	cs	Pøidat soubor
-add a new entry	infolog	cs	Pøidat novı záznam
-add a new note	infolog	cs	Pøidat novou poznámku
-add a new phonecall	infolog	cs	Pøidat novı telefonní hovor
-add a new sub-task, -note, -call to this entry	infolog	cs	Pøidat novou pod-úlohu, -poznámku, -hovor k tomuto záznamu
-add a new todo	infolog	cs	Pøidat novı úkol
-add file	infolog	cs	Pøidat soubor
-add sub	infolog	cs	pøidat podpolo¾ku
-add timesheet entry	infolog	cs	Pøidat záznam do harmonogramu
-add:	infolog	cs	Pøidat:
-all	infolog	cs	V¹e
-all links and attachments	infolog	cs	v¹echny odkazy a pøílohy
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	cs	umo¾òuje nastavit stav záznamu, napø. úkol jako dokonèenı, kdy¾ je doøe¹en (hodnota závisí na typu záznamu)
-apply the changes	infolog	cs	Pou¾ít zmìny
-are you shure you want to delete this entry ?	infolog	cs	Urèitì chcete smazat tento záznam?
-attach a file	infolog	cs	Pøipojit soubor
-attach file	infolog	cs	Pøipojit soubor
-attension: no contact with address %1 found.	infolog	cs	Varování: ¾ádnı kontakt s adresou %1 nebyl nalezen
-back to main list	infolog	cs	Zpìt na hlavní seznam
-billed	infolog	cs	vyúètováno
-both	infolog	cs	obojí
+actual date and time	infolog	cs	aktuÃ¡lnÃ­ datum a Äas
+add	infolog	cs	PÅ™idat
+add a file	infolog	cs	PÅ™idat soubor
+add a new entry	infolog	cs	PÅ™idat novÃ½ zÃ¡znam
+add a new note	infolog	cs	PÅ™idat novou poznÃ¡mku
+add a new phonecall	infolog	cs	PÅ™idat novÃ½ telefonnÃ­ hovor
+add a new sub-task, -note, -call to this entry	infolog	cs	PÅ™idat novou pod-Ãºlohu, -poznÃ¡mku, -hovor k tomuto zÃ¡znamu
+add a new todo	infolog	cs	PÅ™idat novÃ½ Ãºkol
+add file	infolog	cs	PÅ™idat soubor
+add sub	infolog	cs	pÅ™idat podpoloÅ¾ku
+add timesheet entry	infolog	cs	PÅ™idat zÃ¡znam do harmonogramu
+add:	infolog	cs	PÅ™idat:
+all	infolog	cs	VÅ¡e
+all links and attachments	infolog	cs	vÅ¡echny odkazy a pÅ™Ã­lohy
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	cs	umoÅ¾Åˆuje nastavit stav zÃ¡znamu, napÅ™. Ãºkol jako dokonÄenÃ½, kdyÅ¾ je doÅ™eÅ¡en (hodnota zÃ¡visÃ­ na typu zÃ¡znamu)
+apply the changes	infolog	cs	PouÅ¾Ã­t zmÄ›ny
+archive	infolog	cs	archiv
+are you shure you want to delete this entry ?	infolog	cs	UrÄitÄ› chcete smazat tento zÃ¡znam?
+attach a file	infolog	cs	PÅ™ipojit soubor
+attach file	infolog	cs	PÅ™ipojit soubor
+attention: no contact with address %1 found.	infolog	cs	UpozornÄ›nÃ­: Å½Ã¡dnÃ½ kontakt s adresou %1 nebyl nalezen.
+back to main list	infolog	cs	ZpÄ›t na hlavnÃ­ seznam
+billed	infolog	cs	vyÃºÄtovÃ¡no
+both	infolog	cs	obojÃ­
 call	infolog	cs	hovor
-cancel	infolog	cs	Zru¹it
-cancelled	infolog	cs	zru¹eno
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	cs	MÅ¯Å¾e bÃ½t pouÅ¾it pro zobrazenÃ­ dalÅ¡Ã­ch typÅ¯ poloÅ¾ek InfoLogu v kalendÃ¡Å™i nebo naopak k jejich omezenÃ­ napÅ™. jen na Ãºkoly.
+cancel	infolog	cs	ZruÅ¡it
+cancelled	infolog	cs	zruÅ¡eno
 categories	infolog	cs	Kategorie
 category	infolog	cs	Kategorie
-change the status of an entry, eg. close it	infolog	cs	Zmìnit stav záznamu, napø. jej uzavøít
-charset of file	infolog	cs	Znaková sada souboru
-check to set startday	infolog	cs	Za¹krtnìte pro nastavení poèáteèního dne
-check to specify custom contact	infolog	cs	Za¹krtnìte pro zadání u¾ivatelsky definovaného kontaktu
-click here to create the link	infolog	cs	kliknìte sem pro vytvoøení odkazu
-click here to start the search	infolog	cs	kliknìte sem pro zahájení hledání
-close	infolog	cs	Zavøít
-comment	infolog	cs	Komentáø
-completed	infolog	cs	Ukonèeno
+change the status of an entry, eg. close it	infolog	cs	ZmÄ›nit stav zÃ¡znamu, napÅ™. jej uzavÅ™Ã­t
+charset of file	infolog	cs	ZnakovÃ¡ sada souboru
+check to set startday	infolog	cs	ZaÅ¡krtnÄ›te pro nastavenÃ­ poÄÃ¡teÄnÃ­ho dne
+check to specify custom contact	infolog	cs	ZaÅ¡krtnÄ›te pro zadÃ¡nÃ­ uÅ¾ivatelsky definovanÃ©ho kontaktu
+click here to create the link	infolog	cs	kliknÄ›te sem pro vytvoÅ™enÃ­ odkazu
+click here to start the search	infolog	cs	kliknÄ›te sem pro zahÃ¡jenÃ­ hledÃ¡nÃ­
+close	infolog	cs	ZavÅ™Ã­t
+comment	infolog	cs	KomentÃ¡Å™
+completed	infolog	cs	UkonÄeno
 configuration	infolog	cs	Konfigurace
 confirm	infolog	cs	Potvrdit
 contact	infolog	cs	Kontakt
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	cs	Zkopírujte Va¹e úpravy do clipboardu, %1naètìte znovu záznam%2 a sluète je.
-create new links	infolog	cs	Vytvoøit nové odkazy
-creates a new field	infolog	cs	vytvoøí novou polo¾ku
-creates a new status with the given values	infolog	cs	vytvoøí novı stav se zadanımi hodnotami
-creates a new typ with the given name	infolog	cs	vytvoøí novı typ zadaného jména
-creation	infolog	cs	Vytvoøení
-csv-fieldname	infolog	cs	CSV-jméno polo¾ky
-csv-filename	infolog	cs	CSV-jméno souboru
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	cs	ZkopÃ­rujte VaÅ¡e Ãºpravy do clipboardu, %1naÄtÄ›te znovu zÃ¡znam%2 a sluÄte je.
+create new links	infolog	cs	VytvoÅ™it novÃ© odkazy
+creates a new field	infolog	cs	vytvoÅ™Ã­ novou poloÅ¾ku
+creates a new status with the given values	infolog	cs	vytvoÅ™Ã­ novÃ½ stav se zadanÃ½mi hodnotami
+creates a new typ with the given name	infolog	cs	vytvoÅ™Ã­ novÃ½ typ zadanÃ©ho jmÃ©na
+creation	infolog	cs	VytvoÅ™enÃ­
+csv-fieldname	infolog	cs	CSV-jmÃ©no poloÅ¾ky
+csv-filename	infolog	cs	CSV-jmÃ©no souboru
 csv-import	common	cs	CSV-import
-custom	infolog	cs	U¾ivatelsky definované
-custom contact-address, leave empty to use information from most recent link	infolog	cs	U¾ivatelsky definovaná kontaktní adresa, ponechte prázdné pokud chcete pou¾ít informace z posledního odkazu
-custom contact-information, leave emtpy to use information from most recent link	infolog	cs	U¾ivatelsky definované kontaktní údaje, ponechte prázdné pro pou¾ití informací z posledního odkazu
-custom fields	infolog	cs	U¾ivatelsky definované polo¾ky
-custom fields, typ and status	common	cs	U¾ivatelsky definované polo¾ky, typy a stavy
-custom regarding	infolog	cs	U¾ivatelsky definovanı ohled
-custom status for typ	infolog	cs	U¾ivatelsky definovanı stav pro typ
-customfields	infolog	cs	U¾ivatelsky definovaná pole
-date completed	infolog	cs	Datum ukoèení
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	cs	Datum ukonèení (ponechte prázdné, pokud chcete nastavit automaticky pøi dokonèení nebo vyúètování)
-datecreated	infolog	cs	Datum vytvoøení
-dates, status, access	infolog	cs	Datumy, Stavy, Pøístupy
-days	infolog	cs	dnù
-default filter for infolog	infolog	cs	Vıchozí filtr pro InfoLog
-default status for a new log entry	infolog	cs	vıchozí stav pro novı záznam
-delegation	infolog	cs	Povìøení
+custom	infolog	cs	UÅ¾ivatelsky definovanÃ©
+custom contact-address, leave empty to use information from most recent link	infolog	cs	UÅ¾ivatelsky definovanÃ¡ kontaktnÃ­ adresa, ponechte prÃ¡zdnÃ© pokud chcete pouÅ¾Ã­t informace z poslednÃ­ho odkazu
+custom contact-information, leave emtpy to use information from most recent link	infolog	cs	UÅ¾ivatelsky definovanÃ© kontaktnÃ­ Ãºdaje, ponechte prÃ¡zdnÃ© pro pouÅ¾itÃ­ informacÃ­ z poslednÃ­ho odkazu
+custom fields	infolog	cs	UÅ¾ivatelsky definovanÃ© poloÅ¾ky
+custom fields, typ and status	common	cs	UÅ¾ivatelsky definovanÃ© poloÅ¾ky, typy a stavy
+custom regarding	infolog	cs	UÅ¾ivatelsky definovanÃ½ ohled
+custom status for typ	infolog	cs	UÅ¾ivatelsky definovanÃ½ stav pro typ
+customfields	infolog	cs	UÅ¾ivatelsky definovanÃ¡ pole
+date completed	infolog	cs	Datum ukoÄenÃ­
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	cs	Datum ukonÄenÃ­ (ponechte prÃ¡zdnÃ©, pokud chcete nastavit automaticky pÅ™i dokonÄenÃ­ nebo vyÃºÄtovÃ¡nÃ­)
+datecreated	infolog	cs	Datum vytvoÅ™enÃ­
+dates, status, access	infolog	cs	Datumy, Stavy, PÅ™Ã­stupy
+days	infolog	cs	dnÅ¯
+default filter for infolog	infolog	cs	VÃ½chozÃ­ filtr pro InfoLog
+default status for a new log entry	infolog	cs	vÃ½chozÃ­ stav pro novÃ½ zÃ¡znam
+delegated	infolog	cs	delegovanÃ©
+delegated open	infolog	cs	delegovanÃ© otevÅ™enÃ©
+delegated overdue	infolog	cs	delegovanÃ© po termÃ­nu
+delegated upcomming	infolog	cs	delegovanÃ© nadchÃ¡zejÃ­cÃ­
+delegation	infolog	cs	PovÄ›Å™enÃ­
 delete	infolog	cs	Smazat
-delete one record by passing its id.	infolog	cs	Smazat jeden záznam zadáním jeho id.
-delete the entry	infolog	cs	Smazat záznam
-delete this entry	infolog	cs	smazat záznam
-delete this entry and all listed sub-entries	infolog	cs	Smazat tento záznam a v¹echny zobrazené podpolo¾ky
-deletes the selected typ	infolog	cs	sma¾e vybranı typ
-deletes this field	infolog	cs	sma¾e toto pole
-deletes this status	infolog	cs	sma¾e tento stav
+delete one record by passing its id.	infolog	cs	Smazat jeden zÃ¡znam zadÃ¡nÃ­m jeho id.
+delete the entry	infolog	cs	Smazat zÃ¡znam
+delete this entry	infolog	cs	smazat zÃ¡znam
+delete this entry and all listed sub-entries	infolog	cs	Smazat tento zÃ¡znam a vÅ¡echny zobrazenÃ© podpoloÅ¾ky
+deleted	infolog	cs	smazanÃ©
+deletes the selected typ	infolog	cs	smaÅ¾e vybranÃ½ typ
+deletes this field	infolog	cs	smaÅ¾e toto pole
+deletes this status	infolog	cs	smaÅ¾e tento stav
 description	infolog	cs	Popis
-determines the order the fields are displayed	infolog	cs	urèuje poøadí zobrazování polo¾ek
-disables a status without deleting it	infolog	cs	zaká¾e stav ani¾ by ho smazal
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	cs	chcete potvrzení od odpovìdné osoby pøi: pøijetí úkolu, jeho ukonèení nebo v obou pøípadech
-do you want to see custom infolog types in the calendar?	infolog	cs	Chcete zobrazovat u¾ivatelsky definované typy z InfoLogu v kalendáøi?
+determines the order the fields are displayed	infolog	cs	urÄuje poÅ™adÃ­ zobrazovÃ¡nÃ­ poloÅ¾ek
+disables a status without deleting it	infolog	cs	zakÃ¡Å¾e stav aniÅ¾ by ho smazal
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	cs	chcete potvrzenÃ­ od odpovÄ›dnÃ© osoby pÅ™i: pÅ™ijetÃ­ Ãºkolu, jeho ukonÄenÃ­ nebo v obou pÅ™Ã­padech
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	cs	Chcete dostÃ¡vat upozornÄ›nÃ­, pokud VÃ¡m jsou pÅ™idÄ›leny novÃ© poloÅ¾ky nebo jsou pÅ™idÄ›lenÃ© poloÅ¾ky zaktualizovÃ¡ny?
+do you want a notification, if items you are responsible for are about to start?	infolog	cs	Chcete dostÃ¡vat upozornÄ›nÃ­ na poÄÃ¡teÄnÃ­ termÃ­n poloÅ¾ek, za kterÃ© jste odpovÄ›dnÃ½/Ã¡?
+do you want a notification, if items you are responsible for are due?	infolog	cs	Chcete dostÃ¡vat upozornÄ›nÃ­ na koneÄnÃ½ termÃ­n poloÅ¾ek, za kterÃ© jste odpovÄ›dnÃ½/Ã¡?
+do you want a notification, if items you created get updated?	infolog	cs	Chcete dostÃ¡vat upozornÄ›nÃ­ pÅ™i aktualizaci poloÅ¾ek, kterÃ© jste vytvoÅ™il(a)?
+do you want a notification, if items you delegated are about to start?	infolog	cs	Chcete dostÃ¡vat upozornÄ›nÃ­ na poÄÃ¡teÄnÃ­ termÃ­n poloÅ¾ek, kterÃ© jste delegoval(a)?
+do you want a notification, if items you delegated are due?	infolog	cs	Chcete dostÃ¡vat upozornÄ›nÃ­ na koneÄnÃ½ termÃ­n poloÅ¾ek, kterÃ© jste delegoval(a)?
+do you want to receive notifications as html-mails or plain text?	infolog	cs	Chcete dostÃ¡vat upozornÄ›nÃ­ jako html e-maily nebo jako prostÃ½ text?
 don't show infolog	infolog	cs	NEzobrazovat InfoLog
 done	infolog	cs	hotovo
-download	infolog	cs	Stáhnout
-duration	infolog	cs	Trvání
-each value is a line like <id>[=<label>]	infolog	cs	ka¾dá hodnota je øadkem jako <id>[=<label>]
+download	infolog	cs	StÃ¡hnout
+duration	infolog	cs	TrvÃ¡nÃ­
+each value is a line like <id>[=<label>]	infolog	cs	kaÅ¾dÃ¡ hodnota je Å™Ã¡dkem jako <id>[=<label>]
 edit	infolog	cs	Editovat
-edit or create categories for ingolog	infolog	cs	Editovat nebo vytvoøit kategorie pro InfoLog
-edit rights (full edit rights incl. making someone else responsible!)	infolog	cs	editovat práva (plná práva na editaci vèetnì pøidìlení odpovìdnosti nìkomu jinému!)
+edit or create categories for ingolog	infolog	cs	Editovat nebo vytvoÅ™it kategorie pro InfoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	cs	editovat prÃ¡va (plnÃ¡ prÃ¡va na editaci vÄetnÄ› pÅ™idÄ›lenÃ­ odpovÄ›dnosti nÄ›komu jinÃ©mu!)
 edit status	infolog	cs	Editovat stav
-edit the entry	infolog	cs	Editovat záznam
-edit this entry	infolog	cs	Editovat tento záznam
-empty for all	infolog	cs	prázdné znamená v¹e
-enddate	infolog	cs	Koncové datum
-enddate can not be before startdate	infolog	cs	Koncové datum nemù¾e pøedcházet poèáteènímu datu
-enter a custom contact, leave empty if linked entry should be used	infolog	cs	zadejte u¾ivatelsky definovanı kontakt, ponechte prázdné pokud má bıt pou¾it odkazovanı záznam
-enter a custom phone/email, leave empty if linked entry should be used	infolog	cs	zadejte u¾ivatelsky definovanı telefon/e-mail, ponechte prázdné pokud má bıt pou¾it odkazovanı záznam
-enter a textual description of the log-entry	infolog	cs	zadejte textovı popis záznamu
-enter the query pattern	infolog	cs	Zadejte vıraz pro vyhledávání
-entry and all files	infolog	cs	Záznam a v¹echny soubory
-error: saving the entry	infolog	cs	Chyba pøi ukládání záznamu
-error: the entry has been updated since you opened it for editing!	infolog	cs	Chyba: záznam byl zaktualizován v dobì, kdy jste ho mìl(a) otevøenı pro editaci!
-existing links	infolog	cs	Stávající odkazy
+edit the entry	infolog	cs	Editovat zÃ¡znam
+edit this entry	infolog	cs	Editovat tento zÃ¡znam
+empty for all	infolog	cs	prÃ¡zdnÃ© znamenÃ¡ vÅ¡e
+enddate	infolog	cs	KoncovÃ© datum
+enddate can not be before startdate	infolog	cs	KoncovÃ© datum nemÅ¯Å¾e pÅ™edchÃ¡zet poÄÃ¡teÄnÃ­mu datu
+enter a custom contact, leave empty if linked entry should be used	infolog	cs	zadejte uÅ¾ivatelsky definovanÃ½ kontakt, ponechte prÃ¡zdnÃ© pokud mÃ¡ bÃ½t pouÅ¾it odkazovanÃ½ zÃ¡znam
+enter a custom phone/email, leave empty if linked entry should be used	infolog	cs	zadejte uÅ¾ivatelsky definovanÃ½ telefon/e-mail, ponechte prÃ¡zdnÃ© pokud mÃ¡ bÃ½t pouÅ¾it odkazovanÃ½ zÃ¡znam
+enter a textual description of the log-entry	infolog	cs	zadejte textovÃ½ popis zÃ¡znamu
+enter the query pattern	infolog	cs	Zadejte vÃ½raz pro vyhledÃ¡vÃ¡nÃ­
+entry and all files	infolog	cs	ZÃ¡znam a vÅ¡echny soubory
+error: saving the entry	infolog	cs	Chyba pÅ™i uklÃ¡dÃ¡nÃ­ zÃ¡znamu
+error: the entry has been updated since you opened it for editing!	infolog	cs	Chyba: zÃ¡znam byl zaktualizovÃ¡n v dobÄ›, kdy jste ho mÄ›l(a) otevÅ™enÃ½ pro editaci!
+existing links	infolog	cs	StÃ¡vajÃ­cÃ­ odkazy
 fax	infolog	cs	Fax
-fieldseparator	infolog	cs	Oddìlovaè polo¾ek
-finish	infolog	cs	dokonèit
-for which types should this field be used	infolog	cs	pro které typy má bıt tato polo¾ka pou¾ita
+fieldseparator	infolog	cs	OddÄ›lovaÄ poloÅ¾ek
+finish	infolog	cs	dokonÄit
+for which types should this field be used	infolog	cs	pro kterÃ© typy mÃ¡ bÃ½t tato poloÅ¾ka pouÅ¾ita
 from	infolog	cs	Od
-general	infolog	cs	Obecné
-group owner for	infolog	cs	Skupinovı vlastník pro
-high	infolog	cs	Vysoká
+general	infolog	cs	ObecnÃ©
+group owner for	infolog	cs	SkupinovÃ½ vlastnÃ­k pro
+high	infolog	cs	VysokÃ¡
+history logging	infolog	cs	ProtokolovÃ¡nÃ­ historie
+history logging and deleting of items	infolog	cs	ProtokolovÃ¡nÃ­ historie a mazÃ¡nÃ­ poloÅ¾ek
 id	infolog	cs	Id
-if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	cs	Pokud má typ skupinového vlastníka, v¹echny polo¾ky toho typu bude vlastnit daná skupina, nikoli u¾ivatel, kterı je vytvoøil!
-if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	cs	Pokud není nastaveno, je øádek s filtry a hledáním skryt, je-li záznamù ménì, ne¾ udává hodnota "maximum vısledkù na stránku" (definovaná ve spoleènıch pøedvolbách).
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	cs	Pokud mÃ¡ typ skupinovÃ©ho vlastnÃ­ka, vÅ¡echny poloÅ¾ky toho typu bude vlastnit danÃ¡ skupina, nikoli uÅ¾ivatel, kterÃ½ je vytvoÅ™il!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	cs	Pokud nenÃ­ nastaveno, je Å™Ã¡dek s filtry a hledÃ¡nÃ­m skryt, je-li zÃ¡znamÅ¯ mÃ©nÄ›, neÅ¾ udÃ¡vÃ¡ hodnota "maximum vÃ½sledkÅ¯ na strÃ¡nku" (definovanÃ¡ ve spoleÄnÃ½ch pÅ™edvolbÃ¡ch).
 import	infolog	cs	Importovat
-import next set	infolog	cs	importovat následující sadu
+import next set	infolog	cs	importovat nÃ¡sledujÃ­cÃ­ sadu
 info log	common	cs	InfoLog
 infolog	common	cs	InfoLog
 infolog - delete	infolog	cs	InfoLog - Smazat
 infolog - edit	infolog	cs	InfoLog - Editovat
 infolog - import csv-file	infolog	cs	InfoLog - Importovat CSV soubor
-infolog - new	infolog	cs	InfoLog - Novı
-infolog - new subproject	infolog	cs	InfoLog - Novı podprojekt
-infolog - subprojects from	infolog	cs	InfoLog - Podprojekty (èeho)
-infolog entry deleted	infolog	cs	Záznam InfoLogu smazán
-infolog entry saved	infolog	cs	Záznam InfoLogu ulo¾en
-infolog filter for the main screen	infolog	cs	Filtr InfoLogu pro hlavní obrazovku
+infolog - new	infolog	cs	InfoLog - NovÃ½
+infolog - new subproject	infolog	cs	InfoLog - NovÃ½ podprojekt
+infolog - subprojects from	infolog	cs	InfoLog - Podprojekty (Äeho)
+infolog entry deleted	infolog	cs	ZÃ¡znam InfoLogu smazÃ¡n
+infolog entry saved	infolog	cs	ZÃ¡znam InfoLogu uloÅ¾en
+infolog filter for the main screen	infolog	cs	Filtr InfoLogu pro hlavnÃ­ obrazovku
 infolog list	infolog	cs	Seznam InfoLogu
-infolog preferences	common	cs	Pøedvolby InfoLogu
-infolog-fieldname	infolog	cs	InfoLog - Název pole
-invalid filename	infolog	cs	Neplatné jméno souboru
-label<br>helptext	infolog	cs	Oznaèení<br>Text nápovìdy
-last changed	infolog	cs	Naposledy zmìnìno
-last modified	infolog	cs	Naposledy zmìnìno
-leave it empty	infolog	cs	ponechat prázdné
-leave without saveing the entry	infolog	cs	ukonèit bez ulo¾ení záznamu
-leaves without saveing	infolog	cs	ukonèí bez ukládání
-length<br>rows	infolog	cs	Délka<br>Øádky
+infolog preferences	common	cs	PÅ™edvolby InfoLogu
+infolog-fieldname	infolog	cs	InfoLog - NÃ¡zev pole
+invalid filename	infolog	cs	NeplatnÃ© jmÃ©no souboru
+label<br>helptext	infolog	cs	OznaÄenÃ­<br>Text nÃ¡povÄ›dy
+last changed	infolog	cs	Naposledy zmÄ›nÄ›no
+last modified	infolog	cs	Naposledy zmÄ›nÄ›no
+leave it empty	infolog	cs	ponechat prÃ¡zdnÃ©
+leave without saveing the entry	infolog	cs	ukonÄit bez uloÅ¾enÃ­ zÃ¡znamu
+leaves without saveing	infolog	cs	ukonÄÃ­ bez uklÃ¡dÃ¡nÃ­
+length<br>rows	infolog	cs	DÃ©lka<br>Å˜Ã¡dky
 link	infolog	cs	Odkaz
 links	infolog	cs	Odkazy
-links of this entry	infolog	cs	Odkazy tohoto záznamu
-list all categories	infolog	cs	Vypsat v¹echny kategorie
-list no subs/childs	infolog	cs	Vypsat bez Podpolo¾ek/Potomkù
-location	infolog	cs	Umístìní
-longer textual description	infolog	cs	del¹í textovı popis
-low	infolog	cs	Nízká
-max length of the input [, length of the inputfield (optional)]	infolog	cs	maximální délka vstupu (volitelné)
-name must not be empty !!!	infolog	cs	Název nemù¾e bıt prázdnı !!!
-name of new type to create	infolog	cs	název novì vytváøeného typu
-never hide search and filters	infolog	cs	Nikdy neskrıvat hledání a filtry
-new name	infolog	cs	novı název
-new search	infolog	cs	Nové hledání
-no - cancel	infolog	cs	Ne - Zru¹it
-no describtion, links or attachments	infolog	cs	¾ádnı popis, odkazy nebo pøílohy
-no details	infolog	cs	¾ádné detaily
-no entries found, try again ...	infolog	cs	¾ádné záznamy nebyly nalezeny, zkuste znovu...
-no filter	infolog	cs	¾ádnı filtr
-no links or attachments	infolog	cs	¾ádné odkazy nebo pøílohy
-none	infolog	cs	®ádné
-normal	infolog	cs	Normální
+links of this entry	infolog	cs	Odkazy tohoto zÃ¡znamu
+list all categories	infolog	cs	Vypsat vÅ¡echny kategorie
+list no subs/childs	infolog	cs	Vypsat bez PodpoloÅ¾ek/PotomkÅ¯
+location	infolog	cs	UmÃ­stÄ›nÃ­
+longer textual description	infolog	cs	delÅ¡Ã­ textovÃ½ popis
+low	infolog	cs	NÃ­zkÃ¡
+max length of the input [, length of the inputfield (optional)]	infolog	cs	maximÃ¡lnÃ­ dÃ©lka vstupu (volitelnÃ©)
+name must not be empty !!!	infolog	cs	NÃ¡zev nemÅ¯Å¾e bÃ½t prÃ¡zdnÃ½ !!!
+name of new type to create	infolog	cs	nÃ¡zev novÄ› vytvÃ¡Å™enÃ©ho typu
+never hide search and filters	infolog	cs	Nikdy neskrÃ½vat hledÃ¡nÃ­ a filtry
+new %1	infolog	cs	NovÃ½ %1
+new %1 created by %2 at %3	infolog	cs	NovÃ½ %1 vytvoÅ™il(a) %2 v %3
+new name	infolog	cs	novÃ½ nÃ¡zev
+new search	infolog	cs	NovÃ© hledÃ¡nÃ­
+no - cancel	infolog	cs	Ne - ZruÅ¡it
+no describtion, links or attachments	infolog	cs	Å¾Ã¡dnÃ½ popis, odkazy nebo pÅ™Ã­lohy
+no details	infolog	cs	Å¾Ã¡dnÃ© detaily
+no entries found, try again ...	infolog	cs	Å¾Ã¡dnÃ© zÃ¡znamy nebyly nalezeny, zkuste znovu...
+no filter	infolog	cs	Å¾Ã¡dnÃ½ filtr
+no links or attachments	infolog	cs	Å¾Ã¡dnÃ© odkazy nebo pÅ™Ã­lohy
+nonactive	infolog	cs	neaktivnÃ­
+none	infolog	cs	Å½Ã¡dnÃ©
+normal	infolog	cs	NormÃ¡lnÃ­
 not	infolog	cs	ne
-not assigned	infolog	cs	nepøidìlen
-not-started	infolog	cs	nezahájeno
-note	infolog	cs	Poznámka
-number of records to read (%1)	infolog	cs	Poèet záznamù k naètení (%1)
-number of row for a multiline inputfield or line of a multi-select-box	infolog	cs	poèet øádkù ve víceøádkovém vstupním poli nebo vıbìrovém oknì
-offer	infolog	cs	nabídka
-ongoing	infolog	cs	nadcházející
+not assigned	infolog	cs	nepÅ™idÄ›len
+not-started	infolog	cs	nezahÃ¡jeno
+note	infolog	cs	PoznÃ¡mka
+number of records to read (%1)	infolog	cs	PoÄet zÃ¡znamÅ¯ k naÄtenÃ­ (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	cs	poÄet Å™Ã¡dkÅ¯ ve vÃ­ceÅ™Ã¡dkovÃ©m vstupnÃ­m poli nebo vÃ½bÄ›rovÃ©m oknÄ›
+offer	infolog	cs	nabÃ­dka
+one day after	infolog	cs	jeden den po
+one day in advance	infolog	cs	jeden den dopÅ™edu
+ongoing	infolog	cs	nadchÃ¡zejÃ­cÃ­
 only for details	infolog	cs	Jen pro detaily
-only the attachments	infolog	cs	jen pøílohy
+only if i get assigned or removed	infolog	cs	Jen pokud budu pÅ™idÄ›len nebo odebrÃ¡n
+only the attachments	infolog	cs	jen pÅ™Ã­lohy
 only the links	infolog	cs	jen odkazy
-open	infolog	cs	otevøít
-optional note to the link	infolog	cs	volitelná poznámka k odkazu
-order	infolog	cs	Poøadí
-overdue	infolog	cs	zme¹kané
-own	infolog	cs	vlastní
-own open	infolog	cs	vlastní otevøené
-own overdue	infolog	cs	vlastní zme¹kané
-own upcoming	infolog	cs	vlastní zme¹kané
-path on (web-)serverside<br>eg. /var/samba/share	infolog	cs	cesta (umístìní) na WWW serveru<br>napø. /var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	cs	Cesta k souborùm u¾ivatelù a skupin MUSÍ BİT MIMO koøenovou slo¾ku dokumentù WWW serveru!!!
-pattern for search in addressbook	infolog	cs	Vıraz pro vyhledávání v Adresáøi
-pattern for search in projects	infolog	cs	Vıraz pro vyhledávání v Projektech
-percent completed	infolog	cs	Procent dokonèeno
-permission denied	infolog	cs	Pøístup zamítnut
-phone	infolog	cs	Telefonní hovor
+open	infolog	cs	otevÅ™Ã­t
+optional note to the link	infolog	cs	volitelnÃ¡ poznÃ¡mka k odkazu
+order	infolog	cs	PoÅ™adÃ­
+overdue	infolog	cs	po termÃ­nu
+own	infolog	cs	vlastnÃ­
+own open	infolog	cs	vlastnÃ­ otevÅ™enÃ©
+own overdue	infolog	cs	vlastnÃ­ po termÃ­nu
+own upcoming	infolog	cs	vlastnÃ­ nadchÃ¡zejÃ­cÃ­
+path on (web-)serverside<br>eg. /var/samba/share	infolog	cs	cesta (umÃ­stÄ›nÃ­) na WWW serveru<br>napÅ™. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	cs	Cesta k souborÅ¯m uÅ¾ivatelÅ¯ a skupin MUSÃ BÃT MIMO koÅ™enovou sloÅ¾ku dokumentÅ¯ WWW serveru!!!
+pattern for search in addressbook	infolog	cs	VÃ½raz pro vyhledÃ¡vÃ¡nÃ­ v AdresÃ¡Å™i
+pattern for search in projects	infolog	cs	VÃ½raz pro vyhledÃ¡vÃ¡nÃ­ v Projektech
+percent completed	infolog	cs	Procent dokonÄeno
+permission denied	infolog	cs	PÅ™Ã­stup zamÃ­tnut
+phone	infolog	cs	TelefonnÃ­ hovor
 phone/email	infolog	cs	Telefon/E-mail
-phonecall	infolog	cs	Telefonní hovor
-planned	infolog	cs	plánované
-planned time	infolog	cs	plánovanı èas
+phonecall	infolog	cs	TelefonnÃ­ hovor
+planned	infolog	cs	plÃ¡novanÃ©
+planned time	infolog	cs	plÃ¡novanÃ½ Äas
 price	infolog	cs	Cena
 priority	infolog	cs	Priorita
-private	infolog	cs	Soukromé
+private	infolog	cs	SoukromÃ©
 project	infolog	cs	Projekt
-project settings: price, times	infolog	cs	Nastavení projektu: cena, èas
+project settings: price, times	infolog	cs	NastavenÃ­ projektu: cena, Äas
 re:	infolog	cs	Re:
-read one record by passing its id.	infolog	cs	Naèíst jeden záznam zadáním jeho id.
-read rights (default)	infolog	cs	práva ke ètení (vıchozí)
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	cs	regulární vıraz pro lokální IP adresy,<br>napø. ^192\.168\.1\.
-remark	infolog	cs	Poznámka
-remove this link (not the entry itself)	infolog	cs	Odstranit tento odkaz (ne celı záznam)
-responsible	infolog	cs	odpovìdnı
-responsible open	infolog	cs	odpovìdnı - otevøené
-responsible overdue	infolog	cs	odpovìdnı - zme¹kané
-responsible upcoming	infolog	cs	odpovìdnı - nastávající
-responsible user, priority	infolog	cs	odpovìdnı u¾ivatel, priorita
-returns a list / search for records.	infolog	cs	Vrací seznam / vyhledání záznamù.
-rights for the responsible	infolog	cs	Práva pro odpovìdnou osobu
-save	infolog	cs	Ulo¾it
-saves the changes made and leaves	infolog	cs	ulo¾í provedené zmìny a ukonèí
-saves this entry	infolog	cs	Ulo¾í záznam
+read one record by passing its id.	infolog	cs	NaÄÃ­st jeden zÃ¡znam zadÃ¡nÃ­m jeho id.
+read rights (default)	infolog	cs	prÃ¡va ke ÄtenÃ­ (vÃ½chozÃ­)
+receive notifications about due entries you are responsible for	infolog	cs	PÅ™ijÃ­mat upozornÄ›nÃ­ na zÃ¡znamy po termÃ­nu, za kterÃ© jste odpovÄ›dnÃ½/Ã¡
+receive notifications about due entries you delegated	infolog	cs	PÅ™ijÃ­mat upozornÄ›nÃ­ na zÃ¡znamy po termÃ­nu, kterÃ© jste delegoval(a)
+receive notifications about items assigned to you	infolog	cs	PÅ™ijÃ­mat upozornÄ›nÃ­ na poloÅ¾ky, kterÃ© VÃ¡m byly pÅ™idÄ›leny
+receive notifications about own items	infolog	cs	PÅ™ijÃ­mat upozornÄ›nÃ­ na vlastnÃ­ poloÅ¾ky
+receive notifications about starting entries you are responsible for	infolog	cs	PÅ™ijÃ­mat upozornÄ›nÃ­ na zaÄÃ­najÃ­cÃ­ zÃ¡znamy, za kterÃ© jste odpovÄ›dnÃ½/Ã¡
+receive notifications about starting entries you delegated	infolog	cs	PÅ™ijÃ­mat upozornÄ›nÃ­ na zaÄÃ­najÃ­cÃ­ zÃ¡znamy, kterÃ© jste delegoval(a)
+receive notifications as html-mails	infolog	cs	PÅ™ijÃ­mat upozornÄ›nÃ­ jako html e-maily
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	cs	regulÃ¡rnÃ­ vÃ½raz pro lokÃ¡lnÃ­ IP adresy<br>napÅ™. ^192\.168\.1\.
+remark	infolog	cs	PoznÃ¡mka
+remove this link (not the entry itself)	infolog	cs	Odstranit tento odkaz (ne celÃ½ zÃ¡znam)
+responsible	infolog	cs	odpovÄ›dnÃ½
+responsible open	infolog	cs	odpovÄ›dnÃ½ - otevÅ™enÃ©
+responsible overdue	infolog	cs	odpovÄ›dnÃ½ - po termÃ­nu
+responsible upcoming	infolog	cs	odpovÄ›dnÃ½ - nastÃ¡vajÃ­cÃ­
+responsible user, priority	infolog	cs	odpovÄ›dnÃ½ uÅ¾ivatel, priorita
+returns a list / search for records.	infolog	cs	VracÃ­ seznam / vyhledÃ¡nÃ­ zÃ¡znamÅ¯.
+rights for the responsible	infolog	cs	PrÃ¡va pro odpovÄ›dnou osobu
+same day	infolog	cs	stejnÃ½ den
+save	infolog	cs	UloÅ¾it
+saves the changes made and leaves	infolog	cs	uloÅ¾Ã­ provedenÃ© zmÄ›ny a ukonÄÃ­
+saves this entry	infolog	cs	UloÅ¾Ã­ zÃ¡znam
 search	infolog	cs	Hledat
 search for:	infolog	cs	Hledat (co):
 select	infolog	cs	Vybrat
-select a category for this entry	infolog	cs	vybrat kategorii pro tento záznam
+select a category for this entry	infolog	cs	vybrat kategorii pro tento zÃ¡znam
 select a price	infolog	cs	Vybrat cenu
-select a priority for this task	infolog	cs	vybrat prioritu pro tento úkol
+select a priority for this task	infolog	cs	vybrat prioritu pro tento Ãºkol
 select a project	infolog	cs	Vybrat projekt
-select a responsible user: a person you want to delegate this task	infolog	cs	vybrat odpovìdného u¾ivatele: osobu, které chcete delegovat tento úkol
-select a typ to edit it's status-values or delete it	infolog	cs	vyberte typ pro editaci jeho stavu, hodnot nebo pro smazání
-select an app to search in	infolog	cs	Vybrat aplikaci k prohledání
-select an entry to link with	infolog	cs	Vybrat záznam, na kterı se má odkazovat
-select to filter by owner	infolog	cs	vybrat pro filtrování dle vlastníka
-select to filter by responsible	infolog	cs	vybrat pro filtrování dle odpovìdné osoby
-sets the status of this entry and its subs to done	infolog	cs	Nastavit stav záznamu a jeho podpolo¾ek na hotovı
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	cs	Má InfoLog zobrazovat Pod-úkoly, -hovory nebo -poznámky v normálním zobrazení nebo ne? Podpolo¾ky mù¾ete v¾dy zobrazit pøes jejich rodièe.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	cs	Má InfoLog zobrazovat odkazy na ostatní aplikace nebo pøipojené soubory v seznamu InfoLogu nebo ne (normální zobrazení pøi vstupu do InfoLogu)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	cs	Má se InfoLog zobrazovat na hlavní obrazovce a se kterım filtrem? Volba funguje jen v pøípadì, ¾e nevyberete v pøedvolbách pro hlavní obrazovku nìjakou aplikaci.
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	cs	Má InfoLog pou¾ívat jména a pøíjmení nebo jen pøihla¹ovací jména?
-should the calendar show custom types too	infolog	cs	Má kalendáø zobrazovat také u¾ivatelsky definované typy?
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	cs	Má seznam InfoLogu zobrazovat unikátní èíselná Id, která se dají po¾ívat napø. jako ticket Id?
-should the infolog list show the column "last modified".	infolog	cs	Má seznam InfoLogu zobrazovat sloupec "naposledy zmìnìno"?
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	cs	Má seznam InfoLogu zobrazovat procenta dokonèení jen pro stav nadcházející nebo dvì separátní ikony?
-should this entry only be visible to you and people you grant privat access via the acl	infolog	cs	Má bıt tento záznam viditelnı jen Vám a lidem, kterım pøidìlíte soukromı pøístup pøes ACL?
-show a column for used and planned times in the list.	infolog	cs	Zobrazit sloupec pro spotøebovanı a plánovanı èas v seznamu?
-show full usernames	infolog	cs	Zobrazit celá u¾ivatelská jména
+select a responsible user: a person you want to delegate this task	infolog	cs	vybrat odpovÄ›dnÃ©ho uÅ¾ivatele: osobu, kterÃ© chcete delegovat tento Ãºkol
+select a typ to edit it's status-values or delete it	infolog	cs	vyberte typ pro editaci jeho stavu, hodnot nebo pro smazÃ¡nÃ­
+select an app to search in	infolog	cs	Vybrat aplikaci k prohledÃ¡nÃ­
+select an entry to link with	infolog	cs	Vybrat zÃ¡znam, na kterÃ½ se mÃ¡ odkazovat
+select to filter by owner	infolog	cs	vybrat pro filtrovÃ¡nÃ­ dle vlastnÃ­ka
+select to filter by responsible	infolog	cs	vybrat pro filtrovÃ¡nÃ­ dle odpovÄ›dnÃ© osoby
+sets the status of this entry and its subs to done	infolog	cs	Nastavit stav zÃ¡znamu a jeho podpoloÅ¾ek na hotovÃ½
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	cs	MÃ¡ InfoLog zobrazovat Pod-Ãºkoly, -hovory nebo -poznÃ¡mky v normÃ¡lnÃ­m zobrazenÃ­ nebo ne? PodpoloÅ¾ky mÅ¯Å¾ete vÅ¾dy zobrazit pÅ™es jejich rodiÄe.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	cs	MÃ¡ InfoLog zobrazovat odkazy na ostatnÃ­ aplikace nebo pÅ™ipojenÃ© soubory v seznamu InfoLogu nebo ne (normÃ¡lnÃ­ zobrazenÃ­ pÅ™i vstupu do InfoLogu)?
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	cs	MÃ¡ se InfoLog zobrazovat na hlavnÃ­ obrazovce a se kterÃ½m filtrem? Volba funguje jen v pÅ™Ã­padÄ›, Å¾e nevyberete v pÅ™edvolbÃ¡ch pro hlavnÃ­ obrazovku nÄ›jakou aplikaci.
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	cs	MÃ¡ InfoLog pouÅ¾Ã­vat jmÃ©na a pÅ™Ã­jmenÃ­ nebo jen pÅ™ihlaÅ¡ovacÃ­ jmÃ©na?
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	cs	MÃ¡ seznam InfoLogu zobrazovat unikÃ¡tnÃ­ ÄÃ­selnÃ¡ Id, kterÃ¡ se dajÃ­ poÅ¾Ã­vat napÅ™. jako ticket Id?
+should the infolog list show the column "last modified".	infolog	cs	MÃ¡ seznam InfoLogu zobrazovat sloupec "naposledy zmÄ›nÄ›no"?
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	cs	MÃ¡ seznam InfoLogu zobrazovat procenta dokonÄenÃ­ jen pro stav nadchÃ¡zejÃ­cÃ­ nebo dvÄ› separÃ¡tnÃ­ ikony?
+should this entry only be visible to you and people you grant privat access via the acl	infolog	cs	MÃ¡ bÃ½t tento zÃ¡znam viditelnÃ½ jen VÃ¡m a lidem, kterÃ½m pÅ™idÄ›lÃ­te soukromÃ½ pÅ™Ã­stup pÅ™es ACL?
+show a column for used and planned times in the list.	infolog	cs	Zobrazit sloupec pro spotÅ™ebovanÃ½ a plÃ¡novanÃ½ Äas v seznamu?
+show full usernames	infolog	cs	Zobrazit celÃ¡ uÅ¾ivatelskÃ¡ jmÃ©na
 show in the infolog list	infolog	cs	Zobrazit v seznamu InfoLogu
-show last modified	infolog	cs	Zobrazit naposledy zmìnìné
-show status and percent done separate	infolog	cs	Zobrazit stav a procento dokonèení oddìlenì
+show last modified	infolog	cs	Zobrazit naposledy zmÄ›nÄ›nÃ©
+show status and percent done separate	infolog	cs	Zobrazit stav a procento dokonÄenÃ­ oddÄ›lenÄ›
 show ticket id	infolog	cs	Zobrazit ticket id
-show times	infolog	cs	Zobrazit èasy
-small view	infolog	cs	malé zobrazení
-start a new search, cancel this link	infolog	cs	zaèít nové hledání, zru¹it tento odkaz
-startdate	infolog	cs	Poèáteèní datum
-startdate enddate	infolog	cs	Poèáteèní datum Datum dokonèení
-startdate for new entries	infolog	cs	Poèáteèní datum pro nové záznamy
-startrecord	infolog	cs	První záznam
+show times	infolog	cs	Zobrazit Äasy
+small view	infolog	cs	malÃ© zobrazenÃ­
+start a new search, cancel this link	infolog	cs	zaÄÃ­t novÃ© hledÃ¡nÃ­, zruÅ¡it tento odkaz
+startdate	infolog	cs	PoÄÃ¡teÄnÃ­ datum
+startdate enddate	infolog	cs	PoÄÃ¡teÄnÃ­ datum Datum dokonÄenÃ­
+startdate for new entries	infolog	cs	PoÄÃ¡teÄnÃ­ datum pro novÃ© zÃ¡znamy
+startrecord	infolog	cs	PrvnÃ­ zÃ¡znam
 status	infolog	cs	Stav
 status ...	infolog	cs	Stav ...
-sub	infolog	cs	Podpolo¾ka
-sub-entries become subs of the parent or main entries, if there's no parent	infolog	cs	Podzáznamy se stanou podpolo¾kou rodièe nebo hlavních záznamù, pokud neexistuje rodiè
-subject	infolog	cs	Pøedmìt
-task	infolog	cs	Úkol
-test import (show importable records <u>only</u> in browser)	infolog	cs	Testovat import (zobrazit importovatelné záznamy <u>jen</u> v prohlí¾eèi)
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	cs	název pou¾ívanı internì (<= 10 znakù), jeho zmìna zpùsobí nedostupnost stávajících dat
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	cs	název pou¾ívanı internì (<= 20 znakù), jeho zmìna zpùsobí nedostupnost stávajících dat
-the text displayed to the user	infolog	cs	text zobrazenı u¾ivateli
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	cs	Tento filter InfoLog pou¾ívá pøi vstupu do aplikace. Filtry omezují zobrazení záznamù v aktuálním pohledu. Jsou filtry pro zobrazení jen ukonèenıch, stále otevøenıch nebo budoucích záznamù, Va¹ich nebo v¹ech u¾ivatelù.
-til when should the todo or phonecall be finished	infolog	cs	dokud se neukonèí úkol nebo telefonát
-times	infolog	cs	Èasy
-to many might exceed your execution-time-limit	infolog	cs	pøíli¹ mnoho mù¾e pøekroèit nastavenı èasovı limit spu¹tìní
-to what should the startdate of new entries be set.	infolog	cs	Na jakou hodnotu má bıt nastaveno poèáteèní datum novıch záznamù.
+sub	infolog	cs	PodpoloÅ¾ka
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	cs	PodzÃ¡znamy se stanou podpoloÅ¾kou rodiÄe nebo hlavnÃ­ch zÃ¡znamÅ¯, pokud neexistuje rodiÄ
+subject	infolog	cs	PÅ™edmÄ›t
+task	infolog	cs	Ãškol
+template	infolog	cs	Å ablona
+test import (show importable records <u>only</u> in browser)	infolog	cs	Testovat import (zobrazit importovatelnÃ© zÃ¡znamy <u>jen</u> v prohlÃ­Å¾eÄi)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	cs	nÃ¡zev pouÅ¾Ã­vanÃ½ internÄ› (<= 10 znakÅ¯), jeho zmÄ›na zpÅ¯sobÃ­ nedostupnost stÃ¡vajÃ­cÃ­ch dat
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	cs	nÃ¡zev pouÅ¾Ã­vanÃ½ internÄ› (<= 20 znakÅ¯), jeho zmÄ›na zpÅ¯sobÃ­ nedostupnost stÃ¡vajÃ­cÃ­ch dat
+the text displayed to the user	infolog	cs	text zobrazenÃ½ uÅ¾ivateli
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	cs	Tento filter InfoLog pouÅ¾Ã­vÃ¡ pÅ™i vstupu do aplikace. Filtry omezujÃ­ zobrazenÃ­ zÃ¡znamÅ¯ v aktuÃ¡lnÃ­m pohledu. Jsou filtry pro zobrazenÃ­ jen ukonÄenÃ½ch, stÃ¡le otevÅ™enÃ½ch nebo budoucÃ­ch zÃ¡znamÅ¯, VaÅ¡ich nebo vÅ¡ech uÅ¾ivatelÅ¯.
+til when should the todo or phonecall be finished	infolog	cs	dokud se neukonÄÃ­ Ãºkol nebo telefonÃ¡t
+times	infolog	cs	ÄŒasy
+to many might exceed your execution-time-limit	infolog	cs	pÅ™Ã­liÅ¡ mnoho mÅ¯Å¾e pÅ™ekroÄit nastavenÃ½ ÄasovÃ½ limit spuÅ¡tÄ›nÃ­
+to what should the startdate of new entries be set.	infolog	cs	Na jakou hodnotu mÃ¡ bÃ½t nastaveno poÄÃ¡teÄnÃ­ datum novÃ½ch zÃ¡znamÅ¯.
 today	infolog	cs	Dnes
-todays date	infolog	cs	dne¹ní datum
-todo	infolog	cs	Úkol
-translation	infolog	cs	Pøeklad
+todays date	infolog	cs	dneÅ¡nÃ­ datum
+todo	infolog	cs	Ãškol
+translation	infolog	cs	PÅ™eklad
 typ	infolog	cs	Typ
-typ '%1' already exists !!!	infolog	cs	Typ '%1' u¾ existuje !!!
+typ '%1' already exists !!!	infolog	cs	Typ '%1' uÅ¾ existuje !!!
 type	infolog	cs	Typ
 type ...	infolog	cs	Typ ...
-type of customfield	infolog	cs	Typ u¾ivatelsky definované polo¾ky
-type of the log-entry: note, phonecall or todo	infolog	cs	Typ záznamu: Poznámka, Telefonní hovor nebo Úkol
-unlink	infolog	cs	Zru¹it odkaz
-upcoming	infolog	cs	nadcházející
-urgency	infolog	cs	naléhavost
-urgent	infolog	cs	Naléhavé
-used time	infolog	cs	spotøebovanı èas
-valid path on clientside<br>eg. \servershare or e:	infolog	cs	platná cesta na klientské stranì<br>napø. \\Server\Sdílení nebo e:\
-values for selectbox	infolog	cs	Hodnoty pro rozbalovací nabídku
-view all subs of this entry	infolog	cs	Zobrazit v¹echny podpolo¾ky záznamu
-view other subs	infolog	cs	zobrazit ostatní podpolo¾ky
-view parent	infolog	cs	Zobrazit rodièe
-view subs	infolog	cs	zobrazit podpolo¾ky
-view the parent of this entry and all his subs	infolog	cs	Zobrazit rodièe tohoto záznamu a v¹echny jeho podpolo¾ky
-view this linked entry in its application	infolog	cs	zobrazit odkazovanı záznam v jeho aplikaci
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	cs	kdy má bıt úkol nebo telefonní hovor zapoèat (od tohoto data se ve filtru na úvodní stranì zobrazuje jako otevøenı nebo vlastní otevøenı)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	cs	Které dodateèné polo¾ky má mít odpovìdná osoba mo¾nost editovat bez toho, ¾e by mìla práva k editaci?<br>Stav, procento a datum dokonèení mù¾e v¾dy.
-which implicit acl rights should the responsible get?	infolog	cs	Jaká implicitní ACL práva má odpovìdná osoba dostat?
-will-call	infolog	cs	zavolá
-write (add or update) a record by passing its fields.	infolog	cs	Zapsat (pøidat nebo smazat) záznam zadáním jeho polo¾ek.
+type of customfield	infolog	cs	Typ uÅ¾ivatelsky definovanÃ© poloÅ¾ky
+type of the log-entry: note, phonecall or todo	infolog	cs	Typ zÃ¡znamu: PoznÃ¡mka, TelefonnÃ­ hovor nebo Ãškol
+unlink	infolog	cs	ZruÅ¡it odkaz
+upcoming	infolog	cs	nadchÃ¡zejÃ­cÃ­
+urgency	infolog	cs	nalÃ©havost
+urgent	infolog	cs	NalÃ©havÃ©
+used time	infolog	cs	spotÅ™ebovanÃ½ Äas
+valid path on clientside<br>eg. \servershare or e:	infolog	cs	platnÃ¡ cesta na klientskÃ© stranÄ›<br>napÅ™. \\Server\SdÃ­lenÃ­ nebo e:\
+valid path on clientside<br>eg. servershare or e:	infolog	cs	platnÃ¡ cesta na klientskÃ© stranÄ›<br>napÅ™. \\Server\SdÃ­lenÃ­ nebo e:\
+values for selectbox	infolog	cs	Hodnoty pro rozbalovacÃ­ nabÃ­dku
+view all subs of this entry	infolog	cs	Zobrazit vÅ¡echny podpoloÅ¾ky zÃ¡znamu
+view other subs	infolog	cs	zobrazit ostatnÃ­ podpoloÅ¾ky
+view parent	infolog	cs	Zobrazit rodiÄe
+view subs	infolog	cs	zobrazit podpoloÅ¾ky
+view the parent of this entry and all his subs	infolog	cs	Zobrazit rodiÄe tohoto zÃ¡znamu a vÅ¡echny jeho podpoloÅ¾ky
+view this linked entry in its application	infolog	cs	zobrazit odkazovanÃ½ zÃ¡znam v jeho aplikaci
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	cs	kdy mÃ¡ bÃ½t Ãºkol nebo telefonnÃ­ hovor zapoÄat (od tohoto data se ve filtru na ÃºvodnÃ­ stranÄ› zobrazuje jako otevÅ™enÃ½ nebo vlastnÃ­ otevÅ™enÃ½)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	cs	KterÃ© dodateÄnÃ© poloÅ¾ky mÃ¡ mÃ­t odpovÄ›dnÃ¡ osoba moÅ¾nost editovat bez toho, Å¾e by mÄ›la prÃ¡va k editaci?<br>Stav, procento a datum dokonÄenÃ­ mÅ¯Å¾e vÅ¾dy.
+which implicit acl rights should the responsible get?	infolog	cs	JakÃ¡ implicitnÃ­ ACL prÃ¡va mÃ¡ odpovÄ›dnÃ¡ osoba dostat?
+which types should the calendar show	infolog	cs	KterÃ© typy mÃ¡ kalendÃ¡Å™ zobrazovat
+will-call	infolog	cs	zavolÃ¡
+write (add or update) a record by passing its fields.	infolog	cs	Zapsat (pÅ™idat nebo smazat) zÃ¡znam zadÃ¡nÃ­m jeho poloÅ¾ek.
 yes - delete	infolog	cs	Ano - Smazat
-yes - delete including sub-entries	infolog	cs	Ano - Smazat vèetnì podpolo¾ek
-you can't delete one of the stock types !!!	infolog	cs	Nemù¾ete smazat jeden z kmenovıch typù !!!
-you have entered an invalid ending date	infolog	cs	Zadal(a) jste neplatné datum dokoèení
-you have entered an invalid starting date	infolog	cs	Zadal(a) jste neplatné poèáteèní datum
-you have to enter a name, to create a new typ!!!	infolog	cs	Pro vytvoøení nového typu musíte zadat jeho název!!!
-you must enter a subject or a description	infolog	cs	Musíte zadat pøedmìt nebo popis
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	cs	Va¹e databáze NENÍ aktuální (%1 vs. %2), spus»te prosím %3setup%4 pro aktualizaci Va¹í databáze.
+yes - delete including sub-entries	infolog	cs	Ano - Smazat vÄetnÄ› podpoloÅ¾ek
+yes, noone can purge deleted items	infolog	cs	Ano, nikdo nemÅ¯Å¾e odstraÅˆovat smazanÃ© poloÅ¾ky
+yes, only admins can purge deleted items	infolog	cs	Ano, jen administrÃ¡toÅ™i mohou odstraÅˆovat smazanÃ© poloÅ¾ky
+yes, with larger fontsize	infolog	cs	Ano, s vÄ›tÅ¡Ã­ velikostÃ­ pÃ­sma
+yes, with purging of deleted items possible	infolog	cs	Ano, s moÅ¾nostÃ­ odstraÅˆovÃ¡nÃ­ smazanÃ½ch poloÅ¾ek
+you can't delete one of the stock types !!!	infolog	cs	NemÅ¯Å¾ete smazat jeden z kmenovÃ½ch typÅ¯ !!!
+you have entered an invalid ending date	infolog	cs	Zadal(a) jste neplatnÃ© datum dokoÄenÃ­
+you have entered an invalid starting date	infolog	cs	Zadal(a) jste neplatnÃ© poÄÃ¡teÄnÃ­ datum
+you have to enter a name, to create a new typ!!!	infolog	cs	Pro vytvoÅ™enÃ­ novÃ©ho typu musÃ­te zadat jeho nÃ¡zev!!!
+you must enter a subject or a description	infolog	cs	MusÃ­te zadat pÅ™edmÄ›t nebo popis
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	cs	VaÅ¡e databÃ¡ze NENÃ aktuÃ¡lnÃ­ (%1 vs. %2), spusÅ¥te prosÃ­m %3setup%4 pro aktualizaci VaÅ¡Ã­ databÃ¡ze.
