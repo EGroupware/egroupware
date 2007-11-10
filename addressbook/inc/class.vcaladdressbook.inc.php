@@ -445,6 +445,7 @@ class vcaladdressbook extends bocontacts
 				switch(strtolower($_productName))
 				{
 					case 'sysync client pocketpc pro':
+					case 'sysync client pocketpc std':
 						$this->supportedFields = $defaultFields[1];
 						#$this->supportedFields['PHOTO'] = array('jpegphoto');
 						break;
