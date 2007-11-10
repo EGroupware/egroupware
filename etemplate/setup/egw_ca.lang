@@ -27,7 +27,6 @@ attach file	etemplate	ca	Adjuntar fichero
 blurtext	etemplate	ca	Texto poco claro
 border	etemplate	ca	Borde
 border-line-thickness for the table-tag	etemplate	ca	Grosor de la línea del borde de la etiqueta de la tabla
-calendar	etemplate	ca	Calendario
 can not have special sql-value null	etemplate	ca	no puede tener el valor especial de SQL NULL
 cancel	etemplate	ca	Cancelar
 category	etemplate	ca	Categoría
@@ -60,7 +59,6 @@ db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for th
 db-tools	etemplate	ca	Herramientas de la base de datos
 deck	etemplate	ca	Cubierta (interna)
 default	etemplate	ca	Predeterminado
-delete	etemplate	ca	Borrar
 delete a single entry by passing the id.	etemplate	ca	Borrar una entrada simple pasando el id.
 delete all selected etemplates, without further inquiry	etemplate	ca	Borrar TODAS las plantillas seleccionadas, SIN preguntar
 delete column	etemplate	ca	Borrar columna
@@ -71,7 +69,6 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	ca	Borra la plantilla especificada arriba
 deletes this column	etemplate	ca	Borra esta columna
 deletes this index	etemplate	ca	Borra este índice
-developer_tools	etemplate	ca	herrameintas de desarrollo
 discard changes	etemplate	ca	Descartar cambios
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	ca	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del botón de enviar o el nombre del fichero de la imagen)
 displayed in statusline of browser if input-field gets focus	etemplate	ca	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
@@ -97,8 +94,6 @@ enter the new version number here (has to be > old_version)	etemplate	ca	Introdu
 entry saved	etemplate	ca	Entrada guardada
 error: template not found !!!	etemplate	ca	Error: no se encontró la plantilla
 error: webserver is not allowed to write into '%1' !!!	etemplate	ca	Error: ¡El servidor no puede escribir en '%1'!
-error: while saveing !!!	etemplate	ca	Error: se produjo un error mientras se guardaba
-error: writeing !!!	etemplate	ca	Error: se produjo un error mientras se escribía
 error: writing file (no write-permission for the webserver) !!!	etemplate	ca	Error: el servidor web no tiene permiso de escritura para el fichero
 etemplate	common	ca	Plantilla
 etemplate '%1' imported, use save to put it in the database	etemplate	ca	Plantilla '%1' importada. Use Guardar para ponerla en la base de datos
@@ -198,7 +193,6 @@ remove row (can not be undone!!!)	etemplate	ca	eliminar fila (¡NO se puede desh
 remove this link (not the entry itself)	etemplate	ca	Borrar este enlace (no la entrada en sí)
 returns savely, without deleting	etemplate	ca	vuelve de forma segura, SIN borrar
 right	etemplate	ca	Derecha
-save	etemplate	ca	Guardar
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	ca	guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
 saves changes to tables_current.inc.php	etemplate	ca	guarda los cambios a tables_current.inc.php
 scale	etemplate	ca	Escala
@@ -282,4 +276,3 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	ca	fichero xml a importar
 xslt template	etemplate	ca	Plantilla XSLT
 year	etemplate	ca	Año
-1	etemplate	ca	1
