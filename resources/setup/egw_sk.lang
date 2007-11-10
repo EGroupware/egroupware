@@ -1,101 +1,101 @@
-accessories of	resources	sk	Príslu¹enstvo k
-accessories:	resources	sk	Príslu¹enstvo:
+accessories of	resources	sk	PrÃ­sluÅ¡enstvo k
+accessories:	resources	sk	PrÃ­sluÅ¡enstvo:
 actions	resources	sk	Akcie
-add accessory	resources	sk	Prida» kategóriu
-add resource	resources	sk	Prida» zdroj
-add resources	resources	sk	Prida» zdroje
-administrator	resources	sk	Správca
-all categories	resources	sk	V¹etky kategórie
-book	resources	sk	Rezervova»
-book selected resources	resources	sk	Rezervova» vybrané zdroje
-book this resource	resources	sk	Rezervova» tento zdroj
-bookable	resources	sk	Rezervovateµnı
-buy this article	resources	sk	Kúpi» tento èlánok
-buy this resource	resources	sk	Kúpi» tento zdroj
+add accessory	resources	sk	PridaÅ¥ kategÃ³riu
+add resource	resources	sk	PridaÅ¥ zdroj
+add resources	resources	sk	PridaÅ¥ zdroje
+administrator	resources	sk	SprÃ¡vca
+all categories	resources	sk	VÅ¡etky kategÃ³rie
+book	resources	sk	RezervovaÅ¥
+book selected resources	resources	sk	RezervovaÅ¥ vybranÃ© zdroje
+book this resource	resources	sk	RezervovaÅ¥ tento zdroj
+bookable	resources	sk	RezervovateÄ¾nÃ½
+buy this article	resources	sk	KÃºpiÅ¥ tento ÄlÃ¡nok
+buy this resource	resources	sk	KÃºpiÅ¥ tento zdroj
 buyable	resources	sk	Na predaj
-categories admin	resources	sk	Správca kategórií
-category:	resources	sk	Kategória:
-check all	resources	sk	Oznaè v¹etko
-choose categories admin	resources	sk	Vyberte správcu kategórií
-clear selection	resources	sk	Zru¹i» vıber
-configure access permissions	admin	sk	Nastavi» prístupové práva
-create new accessory for this resource	resources	sk	Vytvori» novú kategóriu pre tento zdroj
-create new links	resources	sk	Vytvori» nové odkazy
-delete selected resources	resources	sk	Odstráni» vybrané zdroje
-delete this entry	resources	sk	Odstráni» túto polo¾ku
-description (short)	resources	sk	Popis (struènı)
-direct booking permissions	resources	sk	Priame rezervaèné práva
-don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepou¾íva» vfs (bude potrebnı symlink --> preèítajte si README)
-edit this entry	resources	sk	Uprav tento záznam
-existing links	resources	sk	Existujúce odkazy
-general	resources	sk	Hlavné
-general informations about resource	resources	sk	Hlavné informácie o zdroji
-gernal resource	resources	sk	Hlavnı zdroj
-how many of the resources are useable?	resources	sk	Koµko zdrojov je pou¾íteµnıch?
-how many of them are useable?	resources	sk	Koµko z nich je pou¾iteµnıch?
-how many of this resource are usable	resources	sk	Koµko kusov tohto zdroja je pou¾iteµnıch
-how many of this resource exists	resources	sk	Koµko kusov tohto zdroja existuje
-implies booking permission	resources	sk	Z toho automaticky vyplıva aj rezervaèné právo
-implies read permission	resources	sk	Z toho automaticky vyplıva aj právo na èítanie
-information about storage	resources	sk	Informácie o sklade
-informations about the location of resource	resources	sk	Informácie o umiestnení zdroja
-inventory number	resources	sk	Inventárne èíslo
-inventory number:	resources	sk	Inventárne èíslo:
-is resource bookable?	resources	sk	Dá sa zdroj rezervova»?
-is resource buyable?	resources	sk	Dá sa zdroj kúpi»?
-is this resource bookable?	resources	sk	Dá sa zdroj rezervova»?
-is this resource buyable?	resources	sk	Dá sa zdroj kúpi»?
+categories admin	resources	sk	SprÃ¡vca kategÃ³riÃ­
+category:	resources	sk	KategÃ³ria:
+check all	resources	sk	OznaÄ vÅ¡etko
+choose categories admin	resources	sk	Vyberte sprÃ¡vcu kategÃ³riÃ­
+clear selection	resources	sk	ZruÅ¡iÅ¥ vÃ½ber
+configure access permissions	admin	sk	NastaviÅ¥ prÃ­stupovÃ© prÃ¡va
+create new accessory for this resource	resources	sk	VytvoriÅ¥ novÃº kategÃ³riu pre tento zdroj
+create new links	resources	sk	VytvoriÅ¥ novÃ© odkazy
+delete selected resources	resources	sk	OdstrÃ¡niÅ¥ vybranÃ© zdroje
+delete this entry	resources	sk	OdstrÃ¡niÅ¥ tÃºto poloÅ¾ku
+description (short)	resources	sk	Popis (struÄnÃ½)
+direct booking permissions	resources	sk	Priame rezervaÄnÃ© prÃ¡va
+don't use vfs (this will need a symlink --> see readme)	resources	sk	NepouÅ¾Ã­vaÅ¥ vfs (bude potrebnÃ½ symlink --> preÄÃ­tajte si README)
+edit this entry	resources	sk	Uprav tento zÃ¡znam
+existing links	resources	sk	ExistujÃºce odkazy
+general	resources	sk	HlavnÃ©
+general informations about resource	resources	sk	HlavnÃ© informÃ¡cie o zdroji
+gernal resource	resources	sk	HlavnÃ½ zdroj
+how many of the resources are useable?	resources	sk	KoÄ¾ko zdrojov je pouÅ¾Ã­teÄ¾nÃ½ch?
+how many of them are useable?	resources	sk	KoÄ¾ko z nich je pouÅ¾iteÄ¾nÃ½ch?
+how many of this resource are usable	resources	sk	KoÄ¾ko kusov tohto zdroja je pouÅ¾iteÄ¾nÃ½ch
+how many of this resource exists	resources	sk	KoÄ¾ko kusov tohto zdroja existuje
+implies booking permission	resources	sk	Z toho automaticky vyplÃ½va aj rezervaÄnÃ© prÃ¡vo
+implies read permission	resources	sk	Z toho automaticky vyplÃ½va aj prÃ¡vo na ÄÃ­tanie
+information about storage	resources	sk	InformÃ¡cie o sklade
+informations about the location of resource	resources	sk	InformÃ¡cie o umiestnenÃ­ zdroja
+inventory number	resources	sk	InventÃ¡rne ÄÃ­slo
+inventory number:	resources	sk	InventÃ¡rne ÄÃ­slo:
+is resource bookable?	resources	sk	DÃ¡ sa zdroj rezervovaÅ¥?
+is resource buyable?	resources	sk	DÃ¡ sa zdroj kÃºpiÅ¥?
+is this resource bookable?	resources	sk	DÃ¡ sa zdroj rezervovaÅ¥?
+is this resource buyable?	resources	sk	DÃ¡ sa zdroj kÃºpiÅ¥?
 links	resources	sk	Odkazy
 location	resources	sk	Umiestnenie
 location of resource	resources	sk	Umiestnenie zdroja
 location:	resources	sk	Umiestnenie:
-name of resource	resources	sk	Názov zdroja:
-name:	resources	sk	Názov:
-no description available	resources	sk	®iadny popis sa nena¹iel
-no resources selected	resources	sk	Nie sú vybrané ¾iadne zdroje
-notify your administrator to correct this situation	resources	sk	Upozornite svojho správcu, nech napraví vzniknutú situáciu
-picture	resources	sk	Obrázok
-picture source	resources	sk	Zdroj obrázka
-picture type is not supported, sorry!	resources	sk	Je mi µúto, tento typ obrázka nie je podporovanı!
-pictures or resource	resources	sk	Obrázky zdroja
-planer	resources	sk	Plánovaè
-prizeing information for booking or buying	resources	sk	Cenník rezervácií a nákupov
-quantity	resources	sk	Mno¾stvo
-quantity of resource	resources	sk	Poèet kusov zdroja
-quantity:	resources	sk	Mno¾stvo:
-read calendar permissions	resources	sk	Právo èíta» Kalendár
-read permissions	resources	sk	Právo na èítanie
-related links	resources	sk	Súvisiace odkazy
+name of resource	resources	sk	NÃ¡zov zdroja:
+name:	resources	sk	NÃ¡zov:
+no description available	resources	sk	Å½iadny popis sa nenaÅ¡iel
+no resources selected	resources	sk	Nie sÃº vybranÃ© Å¾iadne zdroje
+notify your administrator to correct this situation	resources	sk	Upozornite svojho sprÃ¡vcu, nech napravÃ­ vzniknutÃº situÃ¡ciu
+picture	resources	sk	ObrÃ¡zok
+picture source	resources	sk	Zdroj obrÃ¡zka
+picture type is not supported, sorry!	resources	sk	Je mi Ä¾Ãºto, tento typ obrÃ¡zka nie je podporovanÃ½!
+pictures or resource	resources	sk	ObrÃ¡zky zdroja
+planer	resources	sk	PlÃ¡novaÄ
+prizeing information for booking or buying	resources	sk	CennÃ­k rezervÃ¡ciÃ­ a nÃ¡kupov
+quantity	resources	sk	MnoÅ¾stvo
+quantity of resource	resources	sk	PoÄet kusov zdroja
+quantity:	resources	sk	MnoÅ¾stvo:
+read calendar permissions	resources	sk	PrÃ¡vo ÄÃ­taÅ¥ KalendÃ¡r
+read permissions	resources	sk	PrÃ¡vo na ÄÃ­tanie
+related links	resources	sk	SÃºvisiace odkazy
 resources	common	sk	Zdroje
 resources list	resources	sk	Zoznam zdrojov
-responsible:	resources	sk	Zodpovednı:
-saves entry and exits	resources	sk	Ulo¾í polo¾ku a skonèí
-select a category	resources	sk	Vyberte kategóriu
+responsible:	resources	sk	ZodpovednÃ½:
+saves entry and exits	resources	sk	UloÅ¾Ã­ poloÅ¾ku a skonÄÃ­
+select a category	resources	sk	Vyberte kategÃ³riu
 select resource	resources	sk	Vyberte zdroj
 select resources	common	sk	Vyberte zdroje
-select/deselect all	resources	sk	Vybra» v¹etko / zru¹i» vıber
-short description	resources	sk	Struènı popis
-short description of resource	resources	sk	Zobrazi» popis zdroja
-show calendar of resource	resources	sk	Zobrazi» kalendár zdroja
-something went wrong by deleting resource	resources	sk	Poèas odstraòovania zdroja sa nieèo nepodarilo
-something went wrong by saving resource	resources	sk	Poèas ukladania zdroja sa nieèo nepodarilo
-storage inforation	resources	sk	Informácie o sklade
-storage information	resources	sk	Informácie o sklade
-storage information:	resources	sk	Informácie o sklade:
-the calendar of this resource	resources	sk	Kalendár pre tento zdroj
-this module displays the resources app	resources	sk	Tento modul zobrazuje aplikáciu pre zdroje
-use general resources icon	resources	sk	Pou¾i» v¹eobecnú ikonu zdrojov
-use own picture	resources	sk	Pou¾i» vlastnı obrázok
-use the category's icon	resources	sk	Pou¾i» ikonu kategórie
-useable	resources	sk	Pou¾iteµné
-useable:	resources	sk	Pou¾iteµné:
-view accessories for this resource	resources	sk	Zobrazi» príslu¹enstvo k tomuto zdroju
-view this entry	resources	sk	Zobrazi» polo¾ku
-web-page of resource	resources	sk	Webstránka zdroja
-web-site for this resource	resources	sk	Webstránka tohto zdroja
-where to find this resource?	resources	sk	Kde sa dá nájs» tento zdroj
-which category does this resource belong to?	resources	sk	Do ktorej kategórie tento zdroj patrí?
-write permissions	resources	sk	Oprávnenia k zápisu
-you are not permitted to edit this reource!	resources	sk	Nemáte oprávnenie upravova» tento zdroj!
-you are not permitted to get information about this resource!	resources	sk	Nemáte oprávnenia èíta» informácie o tomto zdroji!
-you chose more resources than available	resources	sk	Vybrali ste si viacej zdrojov ne¾ je dostupnıch
+select/deselect all	resources	sk	VybraÅ¥ vÅ¡etko / zruÅ¡iÅ¥ vÃ½ber
+short description	resources	sk	StruÄnÃ½ popis
+short description of resource	resources	sk	ZobraziÅ¥ popis zdroja
+show calendar of resource	resources	sk	ZobraziÅ¥ kalendÃ¡r zdroja
+something went wrong by deleting resource	resources	sk	PoÄas odstraÅˆovania zdroja sa nieÄo nepodarilo
+something went wrong by saving resource	resources	sk	PoÄas ukladania zdroja sa nieÄo nepodarilo
+storage inforation	resources	sk	InformÃ¡cie o sklade
+storage information	resources	sk	InformÃ¡cie o sklade
+storage information:	resources	sk	InformÃ¡cie o sklade:
+the calendar of this resource	resources	sk	KalendÃ¡r pre tento zdroj
+this module displays the resources app	resources	sk	Tento modul zobrazuje aplikÃ¡ciu pre zdroje
+use general resources icon	resources	sk	PouÅ¾iÅ¥ vÅ¡eobecnÃº ikonu zdrojov
+use own picture	resources	sk	PouÅ¾iÅ¥ vlastnÃ½ obrÃ¡zok
+use the category's icon	resources	sk	PouÅ¾iÅ¥ ikonu kategÃ³rie
+useable	resources	sk	PouÅ¾iteÄ¾nÃ©
+useable:	resources	sk	PouÅ¾iteÄ¾nÃ©:
+view accessories for this resource	resources	sk	ZobraziÅ¥ prÃ­sluÅ¡enstvo k tomuto zdroju
+view this entry	resources	sk	ZobraziÅ¥ poloÅ¾ku
+web-page of resource	resources	sk	WebstrÃ¡nka zdroja
+web-site for this resource	resources	sk	WebstrÃ¡nka tohto zdroja
+where to find this resource?	resources	sk	Kde sa dÃ¡ nÃ¡jsÅ¥ tento zdroj
+which category does this resource belong to?	resources	sk	Do ktorej kategÃ³rie tento zdroj patrÃ­?
+write permissions	resources	sk	OprÃ¡vnenia k zÃ¡pisu
+you are not permitted to edit this reource!	resources	sk	NemÃ¡te oprÃ¡vnenie upravovaÅ¥ tento zdroj!
+you are not permitted to get information about this resource!	resources	sk	NemÃ¡te oprÃ¡vnenia ÄÃ­taÅ¥ informÃ¡cie o tomto zdroji!
+you chose more resources than available	resources	sk	Vybrali ste si viacej zdrojov neÅ¾ je dostupnÃ½ch

@@ -1,5 +1,5 @@
 %1 records imported	infolog	pt	%1 registos importados
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pt	%1 registos lidos (ainda por importar: pode voltar atr·s e desmarcar a opÁ„o ImportaÁ„o de Teste)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pt	%1 registos lidos (ainda por importar: pode voltar atr√°s e desmarcar a op√ß√£o Importa√ß√£o de Teste)
 - subprojects from	infolog	pt	- Sub-projectos de
 0%	infolog	pt	0%
 10%	infolog	pt	10%
@@ -12,17 +12,17 @@
 70%	infolog	pt	70%
 80%	infolog	pt	80%
 90%	infolog	pt	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	pt	<b>anexos de ficheiros atravÈs de symlinks</b> em vez de envio e recuperaÁ„o atravÈs de file:/path para clientes lan directos
-a short subject for the entry	infolog	pt	uma pequena descriÁ„o para o registo
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	pt	<b>anexos de ficheiros atrav√©s de symlinks</b> em vez de envio e recupera√ß√£o atrav√©s de file:/path para clientes lan directos
+a short subject for the entry	infolog	pt	uma pequena descri√ß√£o para o registo
 abort without deleting	infolog	pt	Cancelar sem eliminar
 accept	infolog	pt	aceitar
-action	infolog	pt	AcÁ„o
+action	infolog	pt	Ac√ß√£o
 actual date and time	infolog	pt	Data e hora actuais
 add	infolog	pt	Adicionar
 add a file	infolog	pt	Adicionar um ficheiro
 add a new entry	infolog	pt	Adicionar novo registo
 add a new note	infolog	pt	Adicionar nova nota
-add a new phonecall	infolog	pt	Adicionar nova chamada telefÛnica
+add a new phonecall	infolog	pt	Adicionar nova chamada telef√≥nica
 add a new sub-task, -note, -call to this entry	infolog	pt	Adicionar nova tarefa, nota ou chamada a este registo
 add a new todo	infolog	pt	Adicionar nova tarefa
 add file	infolog	pt	Adicionar ficheiro
@@ -30,13 +30,13 @@ add sub	infolog	pt	Adicionar sub-registo
 add timesheet entry	infolog	pt	Adicionar registo da folha de tempo
 add:	infolog	pt	Adicionar:
 all	infolog	pt	Tudo
-all links and attachments	infolog	pt	Todas as ligaÁıes e anexos
+all links and attachments	infolog	pt	Todas as liga√ß√µes e anexos
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pt	permite definir o estado de um registo, por exemplo: definir uma tarefa a executar quando acabar (valores dependentes do tipo de registo)
-apply the changes	infolog	pt	Aplicar alteraÁıes
+apply the changes	infolog	pt	Aplicar altera√ß√µes
 are you shure you want to delete this entry ?	infolog	pt	Tem a certeza de que deseja eliminar este registo ?
 attach a file	infolog	pt	Anexar  um ficheiro
 attach file	infolog	pt	Anexar ficheiro
-back to main list	infolog	pt	Voltar ‡ lista principal
+back to main list	infolog	pt	Voltar √† lista principal
 billed	infolog	pt	Facturado
 both	infolog	pt	ambos
 call	infolog	pt	A telefonar
@@ -44,42 +44,42 @@ cancel	infolog	pt	Cancelar
 cancelled	infolog	pt	Cancelado
 categories	infolog	pt	Categorias
 category	infolog	pt	Categoria
-change the status of an entry, eg. close it	infolog	pt	Alterar o estado de um registo, ex: fech·-lo
+change the status of an entry, eg. close it	infolog	pt	Alterar o estado de um registo, ex: fech√°-lo
 charset of file	infolog	pt	Charset do ficheiro
-check to set startday	infolog	pt	Marcar para configurar dia de inÌcio
-click here to create the link	infolog	pt	clique aqui para criar a LigaÁ„o
+check to set startday	infolog	pt	Marcar para configurar dia de in√≠cio
+click here to create the link	infolog	pt	clique aqui para criar a Liga√ß√£o
 click here to start the search	infolog	pt	clique aqui para iniciar a pesquisa
 close	infolog	pt	Fechar
-comment	infolog	pt	Coment·rio
-completed	infolog	pt	ConcluÌdo
-configuration	infolog	pt	ConfiguraÁ„o
+comment	infolog	pt	Coment√°rio
+completed	infolog	pt	Conclu√≠do
+configuration	infolog	pt	Configura√ß√£o
 confirm	infolog	pt	Confirmar
 contact	infolog	pt	Contacto
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	pt	Copia as suas alteraÁıes para a ·rea de transferÍncia, %recarrega o registo% e funde-os
-create new links	infolog	pt	Criar novas ligaÁıes
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	pt	Copia as suas altera√ß√µes para a √°rea de transfer√™ncia, %recarrega o registo% e funde-os
+create new links	infolog	pt	Criar novas liga√ß√µes
 creates a new field	infolog	pt	cria um novo campo
 creates a new status with the given values	infolog	pt	cria um novo estado com os valores fornecidos
 creates a new typ with the given name	infolog	pt	cria um novo tipo com o nome fornecido
-creation	infolog	pt	CriaÁ„o
+creation	infolog	pt	Cria√ß√£o
 csv-fieldname	infolog	pt	CSV - Nome do campo
 csv-filename	infolog	pt	CSV - Nome do ficheiro
 csv-import	common	pt	CSV - Importar
 custom	infolog	pt	Personalizar
-custom contact-address, leave empty to use information from most recent link	infolog	pt	Personalizar endereÁo de contacto, deixar vazio para utilizar informaÁ„o da ligaÁ„o mais recente
-custom contact-information, leave emtpy to use information from most recent link	infolog	pt	Personalizar informaÁ„o de contacto, deixar vazio para utilizar informaÁ„o da ligaÁ„o mais recente
+custom contact-address, leave empty to use information from most recent link	infolog	pt	Personalizar endere√ßo de contacto, deixar vazio para utilizar informa√ß√£o da liga√ß√£o mais recente
+custom contact-information, leave emtpy to use information from most recent link	infolog	pt	Personalizar informa√ß√£o de contacto, deixar vazio para utilizar informa√ß√£o da liga√ß√£o mais recente
 custom fields	infolog	pt	Personalizar campos
 custom fields, typ and status	common	pt	Personalizar campos, tipo e estado
 custom regarding	infolog	pt	Personalizar tendo em conta
 custom status for typ	infolog	pt	Personalizar estado do tipo
 customfields	infolog	pt	Campos personalizados
-date completed	infolog	pt	Data de conclus„o
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pt	Data de conclus„o (deixar vazio para definir automaticamente se o estado È concluÌdo ou facturado)
-datecreated	infolog	pt	Data de criaÁ„o
+date completed	infolog	pt	Data de conclus√£o
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pt	Data de conclus√£o (deixar vazio para definir automaticamente se o estado √© conclu√≠do ou facturado)
+datecreated	infolog	pt	Data de cria√ß√£o
 dates, status, access	infolog	pt	Datas, Estado, Acesso
 days	infolog	pt	dias
-default filter for infolog	infolog	pt	Filtro do acesso ‡ informaÁ„o por omiss„o
-default status for a new log entry	infolog	pt	estado de um novo registo de acesso por omiss„o
-delegation	infolog	pt	DelegaÁ„o
+default filter for infolog	infolog	pt	Filtro do acesso √† informa√ß√£o por omiss√£o
+default status for a new log entry	infolog	pt	estado de um novo registo de acesso por omiss√£o
+delegation	infolog	pt	Delega√ß√£o
 delete	infolog	pt	Eliminar
 delete one record by passing its id.	infolog	pt	Eliminar um registo ao passar a sua ID.
 delete the entry	infolog	pt	Eliminar o registo
@@ -88,32 +88,32 @@ delete this entry and all listed sub-entries	infolog	pt	Eliminar este registo e 
 deletes the selected typ	infolog	pt	elimina o tipo seleccionado
 deletes this field	infolog	pt	elimina este campo
 deletes this status	infolog	pt	elimina este estado
-description	infolog	pt	DescriÁ„o
+description	infolog	pt	Descri√ß√£o
 determines the order the fields are displayed	infolog	pt	determina a ordem dos campos
 disables a status without deleting it	infolog	pt	desactiva um estado sem o eliminar
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pt	Deseja obter a confirmaÁ„o do respons·vel ao: aceitar a tarefa, termin·-la ou ambas?
-don't show infolog	infolog	pt	N√O exibir acesso ‡ informaÁ„o
-done	infolog	pt	ConcluÌdo
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pt	Deseja obter a confirma√ß√£o do respons√°vel ao: aceitar a tarefa, termin√°-la ou ambas?
+don't show infolog	infolog	pt	N√ÉO exibir acesso √† informa√ß√£o
+done	infolog	pt	Conclu√≠do
 download	infolog	pt	Transferir
-duration	infolog	pt	DuraÁ„o
-each value is a line like <id>[=<label>]	infolog	pt	cada valor È uma linha como <id>[=<etiqueta>]
+duration	infolog	pt	Dura√ß√£o
+each value is a line like <id>[=<label>]	infolog	pt	cada valor √© uma linha como <id>[=<etiqueta>]
 edit	infolog	pt	Editar
-edit or create categories for ingolog	infolog	pt	Editar ou criar ctegorias para o acesso ‡ informaÁ„o
-edit rights (full edit rights incl. making someone else responsible!)	infolog	pt	Direitos de ediÁ„o (direitos de ediÁ„o totais incluem a responsabilizaÁ„o de outra pessoa!)
+edit or create categories for ingolog	infolog	pt	Editar ou criar ctegorias para o acesso √† informa√ß√£o
+edit rights (full edit rights incl. making someone else responsible!)	infolog	pt	Direitos de edi√ß√£o (direitos de edi√ß√£o totais incluem a responsabiliza√ß√£o de outra pessoa!)
 edit status	infolog	pt	Editar estado
 edit the entry	infolog	pt	Editar o registo
 edit this entry	infolog	pt	Editar este registo
 empty for all	infolog	pt	vazio para todos
 enddate	infolog	pt	Data limite
-enddate can not be before startdate	infolog	pt	Data limite n„o pode ser anterior ‡ data de inÌcio
+enddate can not be before startdate	infolog	pt	Data limite n√£o pode ser anterior √† data de in√≠cio
 enter a custom contact, leave empty if linked entry should be used	infolog	pt	Insira um contacto. Deixe vazio se utilizar o registo ligado.
-enter a custom phone/email, leave empty if linked entry should be used	infolog	pt	Insira um contacto telefÛnico/correio electrÛnico. Deixe vazio se utilizar o registo ligado.
-enter a textual description of the log-entry	infolog	pt	Insira uma descriÁ„o textual do registo de acesso
-enter the query pattern	infolog	pt	Insira o padr„o da query
+enter a custom phone/email, leave empty if linked entry should be used	infolog	pt	Insira um contacto telef√≥nico/correio electr√≥nico. Deixe vazio se utilizar o registo ligado.
+enter a textual description of the log-entry	infolog	pt	Insira uma descri√ß√£o textual do registo de acesso
+enter the query pattern	infolog	pt	Insira o padr√£o da query
 entry and all files	infolog	pt	Registo e todos os ficheiros
 error: saving the entry	infolog	pt	Erro ao guardar o registo
-error: the entry has been updated since you opened it for editing!	infolog	pt	Erro: o registo foi actualizado desde que comeÁou a editar!
-existing links	infolog	pt	LigaÁıes existentes
+error: the entry has been updated since you opened it for editing!	infolog	pt	Erro: o registo foi actualizado desde que come√ßou a editar!
+existing links	infolog	pt	Liga√ß√µes existentes
 fax	infolog	pt	Fax
 fieldseparator	infolog	pt	Separador de campos
 finish	infolog	pt	fim
@@ -122,66 +122,66 @@ from	infolog	pt	De
 general	infolog	pt	Geral
 high	infolog	pt	alta
 id	infolog	pt	ID
-if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	pt	Se n„o estiver configurada, a linha de pesquisa e filtros estar· escondida no caso de existirem menos registos do que "o m·ximo de resultados por p·gina" (como definiu nas suas preferÍncias).
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	pt	Se n√£o estiver configurada, a linha de pesquisa e filtros estar√° escondida no caso de existirem menos registos do que "o m√°ximo de resultados por p√°gina" (como definiu nas suas prefer√™ncias).
 import	infolog	pt	Importar
 import next set	infolog	pt	Importar o conjunto seguinte
-info log	common	pt	Acesso ‡ informaÁ„o
-infolog	common	pt	Acesso ‡ informaÁ„o
-infolog - delete	infolog	pt	Acesso ‡ informaÁ„o - Eliminar
-infolog - edit	infolog	pt	Acesso ‡ informaÁ„o - Editar
-infolog - import csv-file	infolog	pt	Acesso ‡ informaÁ„o - Importar ficheiro CSV
-infolog - new	infolog	pt	Acesso ‡ informaÁ„o - Novo
-infolog - new subproject	infolog	pt	Acesso ‡ informaÁ„o - Novo sub-projecto
-infolog - subprojects from	infolog	pt	Acesso ‡ informaÁ„o - Sub-projectos de
-infolog entry deleted	infolog	pt	Registo do acesso ‡ informaÁ„o eliminado
-infolog entry saved	infolog	pt	Registo do acesso ‡ informaÁ„o guardado
-infolog filter for the main screen	infolog	pt	Filtro do acesso ‡ informaÁ„o para o ecr„ principal
-infolog list	infolog	pt	Lista do acesso ‡ informaÁ„o
-infolog preferences	common	pt	PreferÍncias do acesso ‡ informaÁ„o
-infolog-fieldname	infolog	pt	Acesso ‡ informaÁ„o - Nome do campo
-invalid filename	infolog	pt	Nome de ficheiro inv·lido
+info log	common	pt	Acesso √† informa√ß√£o
+infolog	common	pt	Acesso √† informa√ß√£o
+infolog - delete	infolog	pt	Acesso √† informa√ß√£o - Eliminar
+infolog - edit	infolog	pt	Acesso √† informa√ß√£o - Editar
+infolog - import csv-file	infolog	pt	Acesso √† informa√ß√£o - Importar ficheiro CSV
+infolog - new	infolog	pt	Acesso √† informa√ß√£o - Novo
+infolog - new subproject	infolog	pt	Acesso √† informa√ß√£o - Novo sub-projecto
+infolog - subprojects from	infolog	pt	Acesso √† informa√ß√£o - Sub-projectos de
+infolog entry deleted	infolog	pt	Registo do acesso √† informa√ß√£o eliminado
+infolog entry saved	infolog	pt	Registo do acesso √† informa√ß√£o guardado
+infolog filter for the main screen	infolog	pt	Filtro do acesso √† informa√ß√£o para o ecr√£ principal
+infolog list	infolog	pt	Lista do acesso √† informa√ß√£o
+infolog preferences	common	pt	Prefer√™ncias do acesso √† informa√ß√£o
+infolog-fieldname	infolog	pt	Acesso √† informa√ß√£o - Nome do campo
+invalid filename	infolog	pt	Nome de ficheiro inv√°lido
 label<br>helptext	infolog	pt	Etiqueta<br>Texto de ajuda
-last changed	infolog	pt	⁄ltima alteraÁ„o
-last modified	infolog	pt	⁄ltima modificaÁ„o
+last changed	infolog	pt	√öltima altera√ß√£o
+last modified	infolog	pt	√öltima modifica√ß√£o
 leave it empty	infolog	pt	Deixar vazio
 leave without saveing the entry	infolog	pt	Continua sem guardar o registo
 leaves without saveing	infolog	pt	Continua sem guardar
 length<br>rows	infolog	pt	Comprimento<br>Linhas
-link	infolog	pt	LigaÁ„o
-links	infolog	pt	LigaÁıes
-links of this entry	infolog	pt	LigaÁıes para este registo
+link	infolog	pt	Liga√ß√£o
+links	infolog	pt	Liga√ß√µes
+links of this entry	infolog	pt	Liga√ß√µes para este registo
 list all categories	infolog	pt	Listar todas as categorias
-list no subs/childs	infolog	pt	N„o listar sub-elementos
+list no subs/childs	infolog	pt	N√£o listar sub-elementos
 location	infolog	pt	Local
-longer textual description	infolog	pt	DescriÁ„o textual mais desenvolvida
+longer textual description	infolog	pt	Descri√ß√£o textual mais desenvolvida
 low	infolog	pt	baixa
-max length of the input [, length of the inputfield (optional)]	infolog	pt	Comprimento m·ximo do campo [, comprimento do campo (opcional)]
-name must not be empty !!!	infolog	pt	O campo do nome n„o pode estar vazio !!!
+max length of the input [, length of the inputfield (optional)]	infolog	pt	Comprimento m√°ximo do campo [, comprimento do campo (opcional)]
+name must not be empty !!!	infolog	pt	O campo do nome n√£o pode estar vazio !!!
 name of new type to create	infolog	pt	Nome do novo tipo a criar
 never hide search and filters	infolog	pt	Nunca esconder a pesquisa e filtros
 new name	infolog	pt	Novo nome
 new search	infolog	pt	Nova pesquisa
-no - cancel	infolog	pt	N„o - Cancelar
-no describtion, links or attachments	infolog	pt	Sem descriÁ„o, ligaÁıes ou anexos
+no - cancel	infolog	pt	N√£o - Cancelar
+no describtion, links or attachments	infolog	pt	Sem descri√ß√£o, liga√ß√µes ou anexos
 no details	infolog	pt	Sem detalhes
 no entries found, try again ...	infolog	pt	Nenhum resgisto encontrado, tente novamente...
 no filter	infolog	pt	Sem filtro
-no links or attachments	infolog	pt	Sem ligaÁıes ou anexos
+no links or attachments	infolog	pt	Sem liga√ß√µes ou anexos
 none	infolog	pt	Nenhum(a)
 normal	infolog	pt	Normal
-not	infolog	pt	n„o
+not	infolog	pt	n√£o
 not assigned	infolog	pt	Por assinar
 not-started	infolog	pt	Por iniciar
 note	infolog	pt	Nota
-number of records to read (%1)	infolog	pt	N˙mero de registos por ler (%1)
-number of row for a multiline inputfield or line of a multi-select-box	infolog	pt	N˙mero de linhas para um campo multi-linha ou linha de uma caixa de selecÁ„o m˙ltipla
+number of records to read (%1)	infolog	pt	N√∫mero de registos por ler (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	pt	N√∫mero de linhas para um campo multi-linha ou linha de uma caixa de selec√ß√£o m√∫ltipla
 offer	infolog	pt	Oferta
 ongoing	infolog	pt	Em processamento
 only for details	infolog	pt	Apenas para detalhes
 only the attachments	infolog	pt	Apenas os anexos
-only the links	infolog	pt	Apenas as ligaÁıes
+only the links	infolog	pt	Apenas as liga√ß√µes
 open	infolog	pt	Abrir
-optional note to the link	infolog	pt	nota opcional da ligaÁ„o
+optional note to the link	infolog	pt	nota opcional da liga√ß√£o
 order	infolog	pt	Ordenar
 overdue	infolog	pt	Em atraso
 own	infolog	pt	Minhas
@@ -190,118 +190,118 @@ own overdue	infolog	pt	Minhas -- atrasadas
 own upcoming	infolog	pt	Minhas -- a chegar
 path on (web-)serverside<br>eg. /var/samba/share	infolog	pt	Caminho no lado do servidor (Web)<br>ex: /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	pt	O caminho para os ficheiros do utilizador ou grupo tem de ser externo ao root de documentos de servidores Web.
-pattern for search in addressbook	infolog	pt	Padr„o de pesquisa no livro de endereÁos
-pattern for search in projects	infolog	pt	Padr„o de pesquisa nos projectos
-percent completed	infolog	pt	Percentagem concluÌda
-permission denied	infolog	pt	Permiss„o negada
-phone	infolog	pt	Chamada telefÛnica
-phone/email	infolog	pt	Telefone/Correio electrÛnico
-phonecall	infolog	pt	Chamada telefÛnica
+pattern for search in addressbook	infolog	pt	Padr√£o de pesquisa no livro de endere√ßos
+pattern for search in projects	infolog	pt	Padr√£o de pesquisa nos projectos
+percent completed	infolog	pt	Percentagem conclu√≠da
+permission denied	infolog	pt	Permiss√£o negada
+phone	infolog	pt	Chamada telef√≥nica
+phone/email	infolog	pt	Telefone/Correio electr√≥nico
+phonecall	infolog	pt	Chamada telef√≥nica
 planned	infolog	pt	previsto
 planned time	infolog	pt	Tempo previsto
-price	infolog	pt	PreÁo
+price	infolog	pt	Pre√ßo
 priority	infolog	pt	Prioridade
 private	infolog	pt	Privado
 project	infolog	pt	Projecto
-project settings: price, times	infolog	pt	ConguraÁ„o do projecto: preÁos, previsıes
+project settings: price, times	infolog	pt	Congura√ß√£o do projecto: pre√ßos, previs√µes
 re:	infolog	pt	Re:
 read one record by passing its id.	infolog	pt	Ler um registo ao passar a sua ID
-read rights (default)	infolog	pt	Direitos de leitura (por omiss„o)
+read rights (default)	infolog	pt	Direitos de leitura (por omiss√£o)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pt	Para IPs locais<br>ex. ^192\.168\.1\.
 remark	infolog	pt	Remarcar
-remove this link (not the entry itself)	infolog	pt	Remover esta ligaÁ„o (n„o o registo em si)
-responsible	infolog	pt	Respons·vel
-responsible open	infolog	pt	Respons·vel -- abertas
-responsible overdue	infolog	pt	Respons·vel -- atrasadas
-responsible upcoming	infolog	pt	Respons·vel -- a chegar
-responsible user, priority	infolog	pt	utilizador respons·vel, prioridade
-returns a list / search for records.	infolog	pt	Volta ‡ lista / pesquisa por registos.
-rights for the responsible	infolog	pt	Direitos do respons·vel
+remove this link (not the entry itself)	infolog	pt	Remover esta liga√ß√£o (n√£o o registo em si)
+responsible	infolog	pt	Respons√°vel
+responsible open	infolog	pt	Respons√°vel -- abertas
+responsible overdue	infolog	pt	Respons√°vel -- atrasadas
+responsible upcoming	infolog	pt	Respons√°vel -- a chegar
+responsible user, priority	infolog	pt	utilizador respons√°vel, prioridade
+returns a list / search for records.	infolog	pt	Volta √† lista / pesquisa por registos.
+rights for the responsible	infolog	pt	Direitos do respons√°vel
 save	infolog	pt	Guardar
-saves the changes made and leaves	infolog	pt	guarda as alteraÁıes e deixa
+saves the changes made and leaves	infolog	pt	guarda as altera√ß√µes e deixa
 saves this entry	infolog	pt	Guarda este registo
 search	infolog	pt	Pesquisar
 search for:	infolog	pt	Pesquisar por:
 select	infolog	pt	Seleccionar
 select a category for this entry	infolog	pt	seleccionar uma categoria para este registo
-select a price	infolog	pt	Seleccione um preÁo
+select a price	infolog	pt	Seleccione um pre√ßo
 select a priority for this task	infolog	pt	Seleccionar uma prioridade para esta tarefa
 select a project	infolog	pt	Seleccionar um projecto
-select a responsible user: a person you want to delegate this task	infolog	pt	seleccionar um utilizador respons·vel: uma pessoa a quem deseja delegar esta tarefa
+select a responsible user: a person you want to delegate this task	infolog	pt	seleccionar um utilizador respons√°vel: uma pessoa a quem deseja delegar esta tarefa
 select a typ to edit it's status-values or delete it	infolog	pt	seleccionar um tipo para editar os seus valores de estado ou para o eliminar
-select an app to search in	infolog	pt	Seleccionar uma aplicaÁ„o para pesquisa
+select an app to search in	infolog	pt	Seleccionar uma aplica√ß√£o para pesquisa
 select an entry to link with	infolog	pt	Seleccionar um registo para ligar
 select to filter by owner	infolog	pt	Seleccionar para filtro (pelo dono)
-select to filter by responsible	infolog	pt	Seleccionar para filtro (pelo respons·vel)
-sets the status of this entry and its subs to done	infolog	pt	Configura o estado deste registo e sub-registos respectivos como concluÌdo(s)
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pt	O acesso ‡ informaÁ„o deve ou n„o exibir sub-tarefas, chamadas ou notas na visualizaÁ„o normal? Pode sempre vÍ-las atravÈs dos respectivos elementos principais.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt	O acesso ‡ informaÁ„o deve exibir as ligaÁıes a outras aplicaÁıes e/ou aos anexos de ficheiros na lista do acesso ‡ informaÁ„o (na visualizaÁ„o normal ao entrar no acesso ‡ informaÁ„o)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pt	O acesso ‡ informaÁ„o deve ser exibido no ecr„ principal? Com que filtro? Est· opÁ„o sÛ ser· possÌvel, se n„o seleccionar uma aplicaÁ„o para o ecr„ principal (nas suas preferÍncias).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt	O acesso ‡ informaÁ„o deve utilizar nomes completos (nome prÛprio e apelido) ou apenas nomes de utilizador?
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt	A lista de acesso ‡ informaÁ„o deve exibir uma ID numÈrica ˙nica, que possa ser utilizada, por exemplo, como uma ID de bilhete?
-should the infolog list show the column "last modified".	infolog	pt	A lista de acesso ‡ informaÁ„o deve ou n„o exibir a coluna "˙ltima modificaÁ„o"?
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pt	A lista de acesso ‡ informaÁ„o deve exibir a percentagem concluÌda apenas para estados em execuÁ„o ou dois Ìcones separados?
-should this entry only be visible to you and people you grant privat access via the acl	infolog	pt	Este registo deve ser apenas visÌvel por si e por pessoas a quem conceda acesso privado atravÈs do ACL?
+select to filter by responsible	infolog	pt	Seleccionar para filtro (pelo respons√°vel)
+sets the status of this entry and its subs to done	infolog	pt	Configura o estado deste registo e sub-registos respectivos como conclu√≠do(s)
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pt	O acesso √† informa√ß√£o deve ou n√£o exibir sub-tarefas, chamadas ou notas na visualiza√ß√£o normal? Pode sempre v√™-las atrav√©s dos respectivos elementos principais.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt	O acesso √† informa√ß√£o deve exibir as liga√ß√µes a outras aplica√ß√µes e/ou aos anexos de ficheiros na lista do acesso √† informa√ß√£o (na visualiza√ß√£o normal ao entrar no acesso √† informa√ß√£o)?
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pt	O acesso √† informa√ß√£o deve ser exibido no ecr√£ principal? Com que filtro? Est√° op√ß√£o s√≥ ser√° poss√≠vel, se n√£o seleccionar uma aplica√ß√£o para o ecr√£ principal (nas suas prefer√™ncias).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt	O acesso √† informa√ß√£o deve utilizar nomes completos (nome pr√≥prio e apelido) ou apenas nomes de utilizador?
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt	A lista de acesso √† informa√ß√£o deve exibir uma ID num√©rica √∫nica, que possa ser utilizada, por exemplo, como uma ID de bilhete?
+should the infolog list show the column "last modified".	infolog	pt	A lista de acesso √† informa√ß√£o deve ou n√£o exibir a coluna "√∫ltima modifica√ß√£o"?
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pt	A lista de acesso √† informa√ß√£o deve exibir a percentagem conclu√≠da apenas para estados em execu√ß√£o ou dois √≠cones separados?
+should this entry only be visible to you and people you grant privat access via the acl	infolog	pt	Este registo deve ser apenas vis√≠vel por si e por pessoas a quem conceda acesso privado atrav√©s do ACL?
 show a column for used and planned times in the list.	infolog	pt	Exibir uma coluna para o tempo utilizado e previsto na lista.
 show full usernames	infolog	pt	Exibir nomes completos de utilizadores
-show in the infolog list	infolog	pt	Exibir na lista de acesso ‡ informaÁ„o
-show last modified	infolog	pt	Exibir a ˙ltima modificaÁ„o
-show status and percent done separate	infolog	pt	Exibir estado e percentagem concluÌda separadamente
+show in the infolog list	infolog	pt	Exibir na lista de acesso √† informa√ß√£o
+show last modified	infolog	pt	Exibir a √∫ltima modifica√ß√£o
+show status and percent done separate	infolog	pt	Exibir estado e percentagem conclu√≠da separadamente
 show ticket id	infolog	pt	Exibir ID de bilhete
-show times	infolog	pt	Exibir previsıes
-small view	infolog	pt	Sum·rio
-start a new search, cancel this link	infolog	pt	Iniciar uma nova pesquisa. Cancelar esta ligaÁ„o.
-startdate	infolog	pt	Data de inÌcio
+show times	infolog	pt	Exibir previs√µes
+small view	infolog	pt	Sum√°rio
+start a new search, cancel this link	infolog	pt	Iniciar uma nova pesquisa. Cancelar esta liga√ß√£o.
+startdate	infolog	pt	Data de in√≠cio
 startdate enddate	infolog	pt	Data de inicio e de fim
-startdate for new entries	infolog	pt	Data de inÌcio para novos registos
+startdate for new entries	infolog	pt	Data de in√≠cio para novos registos
 startrecord	infolog	pt	Iniciar registo
 status	infolog	pt	Estado
 status ...	infolog	pt	Estado ...
 sub	infolog	pt	Sub-registo
-sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt	Os sub-registos tornam-se sub-registos de registos principais, ou registos principais se n„o existirem registos principais.
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt	Os sub-registos tornam-se sub-registos de registos principais, ou registos principais se n√£o existirem registos principais.
 subject	infolog	pt	Assunto
 task	infolog	pt	Tarefas
-test import (show importable records <u>only</u> in browser)	infolog	pt	ImportaÁ„o de Teste (exibir no navegador <u>apenas</u> os registos import·veis)
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pt	O nome utilizado internamente (<= 10 caracteres). Alter·-lo torna a informaÁ„o existente indisponÌvel.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pt	O nome utilizado internamente (<= 20 caracteres). Alter·-lo torna a informaÁ„o existente indisponÌvel.
+test import (show importable records <u>only</u> in browser)	infolog	pt	Importa√ß√£o de Teste (exibir no navegador <u>apenas</u> os registos import√°veis)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pt	O nome utilizado internamente (<= 10 caracteres). Alter√°-lo torna a informa√ß√£o existente indispon√≠vel.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pt	O nome utilizado internamente (<= 20 caracteres). Alter√°-lo torna a informa√ß√£o existente indispon√≠vel.
 the text displayed to the user	infolog	pt	o texto apresentado ao utilizador
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pt	Este È o filtro utilizado pelo acesso ‡ informaÁ„o ao entrar na aplicaÁ„o. Os filtros limitam o n˙mero de registos a exibir na visualizaÁ„o actual. Existem filtros para exibir os seus registos concluÌdos, em processamento ou futuros, ou dos outros utilizadores.
-til when should the todo or phonecall be finished	infolog	pt	Data limite de conclus„o da tarefa a executar ou da chamada telefÛnica
-times	infolog	pt	Previsıes
-to many might exceed your execution-time-limit	infolog	pt	Demasiados podem exceder o seu tempo limite de execuÁ„o
-to what should the startdate of new entries be set.	infolog	pt	DefiniÁ„o da data de inÌcio para novos registos.
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pt	Este √© o filtro utilizado pelo acesso √† informa√ß√£o ao entrar na aplica√ß√£o. Os filtros limitam o n√∫mero de registos a exibir na visualiza√ß√£o actual. Existem filtros para exibir os seus registos conclu√≠dos, em processamento ou futuros, ou dos outros utilizadores.
+til when should the todo or phonecall be finished	infolog	pt	Data limite de conclus√£o da tarefa a executar ou da chamada telef√≥nica
+times	infolog	pt	Previs√µes
+to many might exceed your execution-time-limit	infolog	pt	Demasiados podem exceder o seu tempo limite de execu√ß√£o
+to what should the startdate of new entries be set.	infolog	pt	Defini√ß√£o da data de in√≠cio para novos registos.
 today	infolog	pt	Hoje
 todays date	infolog	pt	Data de hoje
 todo	infolog	pt	Tarefas
-translation	infolog	pt	TraduÁ„o
+translation	infolog	pt	Tradu√ß√£o
 typ	infolog	pt	Tipo
-typ '%1' already exists !!!	infolog	pt	Tipo '%1' j· existe !!!
+typ '%1' already exists !!!	infolog	pt	Tipo '%1' j√° existe !!!
 type	infolog	pt	Tipo
 type ...	infolog	pt	Tipo ...
 type of the log-entry: note, phonecall or todo	infolog	pt	Tipo de registo de acesso: Nota, telefonema ou lista de tarefas
-unlink	infolog	pt	Remover ligaÁ„o
+unlink	infolog	pt	Remover liga√ß√£o
 upcoming	infolog	pt	A chegar
-urgency	infolog	pt	urgÍncia
+urgency	infolog	pt	urg√™ncia
 urgent	infolog	pt	urgente
 used time	infolog	pt	Tempo utilizado
-valid path on clientside<br>eg. \\server\share or e:\	infolog	pt	Caminho v·lido no lado do utilizador<br>ex: \\Server\Share ou e:\
-values for selectbox	infolog	pt	Valores para a caixa de selecÁ„o
+valid path on clientside<br>eg. \\server\share or e:\	infolog	pt	Caminho v√°lido no lado do utilizador<br>ex: \\Server\Share ou e:\
+values for selectbox	infolog	pt	Valores para a caixa de selec√ß√£o
 view all subs of this entry	infolog	pt	Ver todos os su-registos deste registo
 view other subs	infolog	pt	Ver outros sub
 view parent	infolog	pt	Ver principal
 view subs	infolog	pt	Ver sub-registo(s)
 view the parent of this entry and all his subs	infolog	pt	Ver o registo principal e os seus sub-registos
-view this linked entry in its application	infolog	pt	Ver este registo ligado na sua aplicaÁ„o
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt	Quando as tarefas ou chamadas telefÛnicas devem ser executadas. Surgem a partir dessa data no filtro--abertas ou no minhas--abertas (p·gina inicial)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pt	Sem ter direitos de ediÁ„o, o respons·vel deve estar autorizado a editar que campos adicionais?<br />A ediÁ„o do estado, percentagem e data de conclus„o È sempre autorizada.
-which implicit acl rights should the responsible get?	infolog	pt	O respons·vel deve ter que direitos ACL implÌcitos?
+view this linked entry in its application	infolog	pt	Ver este registo ligado na sua aplica√ß√£o
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt	Quando as tarefas ou chamadas telef√≥nicas devem ser executadas. Surgem a partir dessa data no filtro--abertas ou no minhas--abertas (p√°gina inicial)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pt	Sem ter direitos de edi√ß√£o, o respons√°vel deve estar autorizado a editar que campos adicionais?<br />A edi√ß√£o do estado, percentagem e data de conclus√£o √© sempre autorizada.
+which implicit acl rights should the responsible get?	infolog	pt	O respons√°vel deve ter que direitos ACL impl√≠citos?
 will-call	infolog	pt	Por telefonar
 write (add or update) a record by passing its fields.	infolog	pt	Editar (adicionar ou actualizar) um registo ao passar os seus campos.
 yes - delete	infolog	pt	Sim - Eliminar
 yes - delete including sub-entries	infolog	pt	Sim - Eliminar incluindo os sub-registos
-you can't delete one of the stock types !!!	infolog	pt	N„o pode eliminar um dos tipos de armazenamento !!!
-you have entered an invalid ending date	infolog	pt	Inseriu uma data de fim inv·lida
-you have entered an invalid starting date	infolog	pt	Inseriu uma data de inÌcio inv·lida
-you have to enter a name, to create a new typ!!!	infolog	pt	… necess·rio inserir um nome para criar um novo tipo!!!
-you must enter a subject or a description	infolog	pt	… necess·rio inserir um assunto ou uma descriÁ„o
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pt	A sua base de dados N√O est· actualizada (%1 vs. %2). Por favor, execute as %3configuraÁıes%4 para actualizar a sua base de dados.
+you can't delete one of the stock types !!!	infolog	pt	N√£o pode eliminar um dos tipos de armazenamento !!!
+you have entered an invalid ending date	infolog	pt	Inseriu uma data de fim inv√°lida
+you have entered an invalid starting date	infolog	pt	Inseriu uma data de in√≠cio inv√°lida
+you have to enter a name, to create a new typ!!!	infolog	pt	√â necess√°rio inserir um nome para criar um novo tipo!!!
+you must enter a subject or a description	infolog	pt	√â necess√°rio inserir um assunto ou uma descri√ß√£o
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pt	A sua base de dados N√ÉO est√° actualizada (%1 vs. %2). Por favor, execute as %3configura√ß√µes%4 para actualizar a sua base de dados.

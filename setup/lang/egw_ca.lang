@@ -1,121 +1,121 @@
 %1 does not exist !!!	setup	ca	%1 no existeix !!!
-%1 is %2%3 !!!	setup	ca	%1 Ès %2%3 !!!
+%1 is %2%3 !!!	setup	ca	%1 √©s %2%3 !!!
 (searching accounts and changing passwords)	setup	ca	(cercant comptes i canviant contrasenyes)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ca	*** NO actualitzeu la vostra base de dades a travÈs d'aquesta Instal∑laciÛ, perquË l'actualitzaciÛ pot ser interrompuda pel max_execution_time deixant la vostra base de dades en un estat irrecuperable (les vostres dades es perdran) !!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ca	*** NO actualitzeu la vostra base de dades a trav√©s d'aquesta Instal¬∑laci√≥, perqu√® l'actualitzaci√≥ pot ser interrompuda pel max_execution_time deixant la vostra base de dades en un estat irrecuperable (les vostres dades es perdran) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ca	*** Heu de fer els canvis manualment al vostre php.ini (normalment dins /etc a linux) a fi de fer que l'eGW sigui totalment funcional !!!
 00 (disable)	setup	ca	00 (desactivar / recomanat)
 13 (ntp)	setup	ca	13 (ntp)
 80 (http)	setup	ca	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	ca	<b>conjunt de car‡cters a utilitzar</b> (utilitzeu utf-8 si heu fer servir llenguatges amb diferents conjunts de car‡cters
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ca	<b>AixÚ crear‡ 1 compte admin i 3 comptes demo</b><br />Els nom d'usuari/contrasenya sÛn: demo/guest, demo2/guest i demo3/guest.
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	ca	<b>conjunt de car√†cters a utilitzar</b> (utilitzeu utf-8 si heu fer servir llenguatges amb diferents conjunts de car√†cters
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ca	<b>Aix√≤ crear√† 1 compte admin i 3 comptes demo</b><br />Els nom d'usuari/contrasenya s√≥n: demo/guest, demo2/guest i demo3/guest.
 accounts existing	setup	ca	Comptes existents
 actions	setup	ca	Accions
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ca	Afegir usuaris creats autom‡ticament a aquest grup (Si es buit, ser‡ assignat al grup 'Default')
-add new database instance (egw domain)	setup	ca	Afegeix una nova inst‡ncia a la base de dades (domini eGW)
-additional settings	setup	ca	ConfiguraciÛ addicional
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ca	Afegir usuaris creats autom√†ticament a aquest grup (Si es buit, ser√† assignat al grup 'Default')
+add new database instance (egw domain)	setup	ca	Afegeix una nova inst√†ncia a la base de dades (domini eGW)
+additional settings	setup	ca	Configuraci√≥ addicional
 admin first name	setup	ca	Nom de l'Administrador
 admin last name	setup	ca	Cognoms de l'Administrador
 admin password	setup	ca	Contrasenya de l'Administrador
-admin password to header manager	setup	ca	Contrasenya de l'Administrador per admnistrar els encapÁalaments
-admin user for header manager	setup	ca	Nom d'usuari per administrar els encapÁalaments
+admin password to header manager	setup	ca	Contrasenya de l'Administrador per admnistrar els encap√ßalaments
+admin user for header manager	setup	ca	Nom d'usuari per administrar els encap√ßalaments
 admin username	setup	ca	Nom d'usuari de l'Administrador
 admins	setup	ca	Admnistradors
-after backing up your tables first.	setup	ca	DesprÈs d'haver fet la cÚpia de seguretat de les taules.
-after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	ca	DesprÈs de recuperar l'arxiu, poseu-lo al seu lloc com a header.inc.php. DesprÈs, premeu "continuar".
+after backing up your tables first.	setup	ca	Despr√©s d'haver fet la c√≤pia de seguretat de les taules.
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	ca	Despr√©s de recuperar l'arxiu, poseu-lo al seu lloc com a header.inc.php. Despr√©s, premeu "continuar".
 all applications	setup	ca	Totes les aplicacions
-all core tables and the admin and preferences applications	setup	ca	Totes les taules principals i les aplicacions de preferËncies i administraciÛ
+all core tables and the admin and preferences applications	setup	ca	Totes les taules principals i les aplicacions de prefer√®ncies i administraci√≥
 all languages (incl. not listed ones)	setup	ca	tots els idiomes (inclosos els que no surten a la llista)
 all users	setup	ca	Tots els usuaris
-allow authentication via cookie	setup	ca	Permet autentificaciÛ amb galetes
-allow password migration	setup	ca	Permet migraciÛ de contrasenya
+allow authentication via cookie	setup	ca	Permet autentificaci√≥ amb galetes
+allow password migration	setup	ca	Permet migraci√≥ de contrasenya
 allowed migration types (comma-separated)	setup	ca	Tipus de migracions permeses (separades per comes)
-analysis	setup	ca	An‡lisi
+analysis	setup	ca	An√†lisi
 and reload your webserver, so the above changes take effect !!!	setup	ca	I recarrega el servidor web a fi de que els canvis tenguin efecte !!!
-app details	setup	ca	Detalls de l'AplicaciÛ
-app install/remove/upgrade	setup	ca	Instal∑laciÛ / Esborrat / ActualitzaciÛ de l'AplicaciÛ
-app process	setup	ca	ProcÈs de l'aplicaciÛ
-application data	setup	ca	Dades de l'AplicaciÛ
+app details	setup	ca	Detalls de l'Aplicaci√≥
+app install/remove/upgrade	setup	ca	Instal¬∑laci√≥ / Esborrat / Actualitzaci√≥ de l'Aplicaci√≥
+app process	setup	ca	Proc√©s de l'aplicaci√≥
+application data	setup	ca	Dades de l'Aplicaci√≥
 application list	setup	ca	Llista d'aplicacions
-application management	setup	ca	AdministraciÛ d'Aplicacions
-application name and status	setup	ca	Nom de l'AplicaciÛ i estat
-application name and status information	setup	ca	Nom de l'aplicaciÛ i InformaciÛ d'estat
-application title	setup	ca	TÌtol de l'AplicaciÛ
-application: %1, file: %2, line: "%3"	setup	ca	AplicaciÛ: %1, Fitxer: %2, LÌnia: "%3"
+application management	setup	ca	Administraci√≥ d'Aplicacions
+application name and status	setup	ca	Nom de l'Aplicaci√≥ i estat
+application name and status information	setup	ca	Nom de l'aplicaci√≥ i Informaci√≥ d'estat
+application title	setup	ca	T√≠tol de l'Aplicaci√≥
+application: %1, file: %2, line: "%3"	setup	ca	Aplicaci√≥: %1, Fitxer: %2, L√≠nia: "%3"
 are you sure you want to delete your existing tables and data?	setup	ca	Esteu segur de voler esborrar les taules i dades existents?
 are you sure?	setup	ca	ESTEU SEGUR?
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ca	Per indicaciÛ vostra, aquest script intentar‡ crear la base de dades i assignar permisos a l'usuari de la base de dades sobre ella
-at your request, this script is going to attempt to install a previous backup	setup	ca	Seguint la vostra peticiÛ, aquesta seq¸Ëncia intentar‡ instal∑lar una cÚpia de seguretat anterior
-at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	ca	Per indicaciÛ vostra, aquest script intentar‡ instal∑lar les taules principals i les aplicacions de preferËncies i administraciÛ.
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ca	Per indicaciÛ vostra, aquest script intentar‡ actualitzar les vostres antigues apliacions a les versions actuals
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ca	Per indicaciÛ vostra, aquest script intentar‡ actualitzar les vostres antigues taules al nou format
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ca	Per indicaciÛ vostra, aquest script far‡ la "diabÚlica" acciÛ d'esborrar les vostres taules actuals i tornar-les a crear amb el nou format
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ca	Per indicaciÛ vostra, aquest script far‡ la "diabÚlica" acciÛ de desinstal∑lar totes les  aplicacions, el que esborrar‡ totes les taules i dades actuals
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ca	Per indicaci√≥ vostra, aquest script intentar√† crear la base de dades i assignar permisos a l'usuari de la base de dades sobre ella
+at your request, this script is going to attempt to install a previous backup	setup	ca	Seguint la vostra petici√≥, aquesta seq√º√®ncia intentar√† instal¬∑lar una c√≤pia de seguretat anterior
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	ca	Per indicaci√≥ vostra, aquest script intentar√† instal¬∑lar les taules principals i les aplicacions de prefer√®ncies i administraci√≥.
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ca	Per indicaci√≥ vostra, aquest script intentar√† actualitzar les vostres antigues apliacions a les versions actuals
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ca	Per indicaci√≥ vostra, aquest script intentar√† actualitzar les vostres antigues taules al nou format
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ca	Per indicaci√≥ vostra, aquest script far√† la "diab√≤lica" acci√≥ d'esborrar les vostres taules actuals i tornar-les a crear amb el nou format
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ca	Per indicaci√≥ vostra, aquest script far√† la "diab√≤lica" acci√≥ de desinstal¬∑lar totes les  aplicacions, el que esborrar√† totes les taules i dades actuals
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ca	Intenteu fer servir el tipus MIME correcte per a FTP en lloc del predeterminat 'application/octet-stream'
-authentication / accounts	setup	ca	IdentificaciÛ / Comptes
-auto create account records for authenticated users	setup	ca	Crear autom‡ticament registres per als usuaris identificats
-auto-created user accounts expire	setup	ca	Els comptes creats autom‡ticament per als usuaris caduquen
-available version	setup	ca	VersiÛ disponible
+authentication / accounts	setup	ca	Identificaci√≥ / Comptes
+auto create account records for authenticated users	setup	ca	Crear autom√†ticament registres per als usuaris identificats
+auto-created user accounts expire	setup	ca	Els comptes creats autom√†ticament per als usuaris caduquen
+available version	setup	ca	Versi√≥ disponible
 back to the previous screen	setup	ca	Tornar a la pantalla anterior
-back to user login	setup	ca	Tornar a l'inici de sessiÛ d'usuari
-back's up your db now, this might take a few minutes	setup	ca	s'est‡ fent la cÚpia de seguretat de la vostra base de dades. AixÚ trigar‡ uns minuts
-backup '%1' deleted	setup	ca	cÚpia de seguretat '%1' esborrada
-backup '%1' renamed to '%2'	setup	ca	cÚpia de seguretat '%1' renomenada com a '%2'
-backup '%1' restored	setup	ca	cÚpia de seguretat '%1' restaurada
-backup and restore	setup	ca	cÚpia de seguretat i restauraciÛ
-backup failed	setup	ca	Ha fallat la cÚpia de seguretat
-backup finished	setup	ca	cÚpia de seguretat finalitzada
-backup now	setup	ca	fent la cÚpia de seguretat ara
-backup sets	setup	ca	configuraciÛ de la cÚpia de seguretat
-backup started, this might take a few minutes ...	setup	ca	cÚpia de seguretat iniciada, aixÚ pot trigar uns minuts...
-because an application it depends upon was upgraded	setup	ca	perquË una aplicaciÛ de la que en depËn s'ha actualitzat
-because it depends upon	setup	ca	perquË depËn de
-because it is not a user application, or access is controlled via acl	setup	ca	perquÈ no Ès una aplicaciÛ d'usuari, o bÈ l'accÈs est‡ controlat per ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	ca	perquË requereix instal∑laciÛ manual de les taules, <br />o la definiciÛ de les taules era incorrecta
-because it was manually disabled	setup	ca	perquË es desactiv‡ manualment
-because of a failed upgrade or install	setup	ca	perquË es va produir una errada en actualitzar o instal.lar
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	ca	perquÈ va fallar la actualitzaciÛ, o la base de dades Ès mÈs nova que la versiÛ instal.lada d'aquesta aplicaciÛ
-because the enable flag for this app is set to 0, or is undefined	setup	ca	perquÈ la senyal d' "activada" d'aquesta aplicaciÛ est‡ a 0, o no est‡ definida
+back to user login	setup	ca	Tornar a l'inici de sessi√≥ d'usuari
+back's up your db now, this might take a few minutes	setup	ca	s'est√† fent la c√≤pia de seguretat de la vostra base de dades. Aix√≤ trigar√† uns minuts
+backup '%1' deleted	setup	ca	c√≤pia de seguretat '%1' esborrada
+backup '%1' renamed to '%2'	setup	ca	c√≤pia de seguretat '%1' renomenada com a '%2'
+backup '%1' restored	setup	ca	c√≤pia de seguretat '%1' restaurada
+backup and restore	setup	ca	c√≤pia de seguretat i restauraci√≥
+backup failed	setup	ca	Ha fallat la c√≤pia de seguretat
+backup finished	setup	ca	c√≤pia de seguretat finalitzada
+backup now	setup	ca	fent la c√≤pia de seguretat ara
+backup sets	setup	ca	configuraci√≥ de la c√≤pia de seguretat
+backup started, this might take a few minutes ...	setup	ca	c√≤pia de seguretat iniciada, aix√≤ pot trigar uns minuts...
+because an application it depends upon was upgraded	setup	ca	perqu√® una aplicaci√≥ de la que en dep√®n s'ha actualitzat
+because it depends upon	setup	ca	perqu√® dep√®n de
+because it is not a user application, or access is controlled via acl	setup	ca	perqu√© no √©s una aplicaci√≥ d'usuari, o b√© l'acc√©s est√† controlat per ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	ca	perqu√® requereix instal¬∑laci√≥ manual de les taules, <br />o la definici√≥ de les taules era incorrecta
+because it was manually disabled	setup	ca	perqu√® es desactiv√† manualment
+because of a failed upgrade or install	setup	ca	perqu√® es va produir una errada en actualitzar o instal.lar
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	ca	perqu√© va fallar la actualitzaci√≥, o la base de dades √©s m√©s nova que la versi√≥ instal.lada d'aquesta aplicaci√≥
+because the enable flag for this app is set to 0, or is undefined	setup	ca	perqu√© la senyal d' "activada" d'aquesta aplicaci√≥ est√† a 0, o no est√† definida
 bottom	setup	ca	peu
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	ca	perÚ <u>recomenam fermament que faceu una cÚpia de seguretat</u> de les vostres taules pel cas en que la seq¸encia pugui fer mal a les vostres dades.<br /><strong>Aquestes seq¸Ëncies autom‡tiques poden destruir f‡cilment les vostres dades.</strong>
-cancel	setup	ca	Cancel∑lar
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	ca	No es pot crear el header.inc.php per mor de restriccions de permisos.<br /> En lloc d'aixÚ, pots %1 el fitxer.
-change system-charset	setup	ca	Canviar el joc de car‡cters del sistema
-charset	setup	ca	ISO-8859-1
-charset to convert to	setup	ca	Joc de car‡cters al que convertir
-check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ca	La comprovaciÛ nomÈs es pot dur a terme si es realitza a travÈs d'un servidor web, degut a que l'identificador o el nom de l'usuari del servidor web no es coneix.
-check installation	setup	ca	Comprovar instal∑laciÛ
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	ca	per√≤ <u>recomenam fermament que faceu una c√≤pia de seguretat</u> de les vostres taules pel cas en que la seq√ºencia pugui fer mal a les vostres dades.<br /><strong>Aquestes seq√º√®ncies autom√†tiques poden destruir f√†cilment les vostres dades.</strong>
+cancel	setup	ca	Cancel¬∑lar
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	ca	No es pot crear el header.inc.php per mor de restriccions de permisos.<br /> En lloc d'aix√≤, pots %1 el fitxer.
+change system-charset	setup	ca	Canviar el joc de car√†cters del sistema
+charset	setup	ca	utf-8
+charset to convert to	setup	ca	Joc de car√†cters al que convertir
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ca	La comprovaci√≥ nom√©s es pot dur a terme si es realitza a trav√©s d'un servidor web, degut a que l'identificador o el nom de l'usuari del servidor web no es coneix.
+check installation	setup	ca	Comprovar instal¬∑laci√≥
 check ip address of all sessions	setup	ca	Comprovar les adreces ip de totes les sessions
-checking extension %1 is loaded or loadable	setup	ca	Comprovant si l'extensiÛ %1 est‡ carregada o es pot carregar
+checking extension %1 is loaded or loadable	setup	ca	Comprovant si l'extensi√≥ %1 est√† carregada o es pot carregar
 checking file-permissions of %1 for %2 %3: %4	setup	ca	Comprovant permisos de fitxer de %1 per %2 %3: %4
 checking for gd support...	setup	ca	Comprovant suport GD...
-checking pear%1 is installed	setup	ca	Comprovant si s'ha instral∑lat PEAR%1
+checking pear%1 is installed	setup	ca	Comprovant si s'ha instral¬∑lat PEAR%1
 checking php.ini	setup	ca	Comprovant php.ini
-checking required php version %1 (recommended %2)	setup	ca	Comprovant si hi ha PHP versiÛ %1 (recomanat %2)
-checking the egroupware installation	setup	ca	Comprovant la instal∑laciÛ d'eGroupWare
-click <a href="index.php">here</a> to return to setup.	setup	ca	Premeu <a href="index.php">aquÌ</a> per a tornar a la instal∑laciÛ.
-click here	setup	ca	Premeu aquÌ
-click here to re-run the installation tests	setup	ca	Premeu aquÌ per a tornar a arrancar els tests d'instal∑laciÛ
+checking required php version %1 (recommended %2)	setup	ca	Comprovant si hi ha PHP versi√≥ %1 (recomanat %2)
+checking the egroupware installation	setup	ca	Comprovant la instal¬∑laci√≥ d'eGroupWare
+click <a href="index.php">here</a> to return to setup.	setup	ca	Premeu <a href="index.php">aqu√≠</a> per a tornar a la instal¬∑laci√≥.
+click here	setup	ca	Premeu aqu√≠
+click here to re-run the installation tests	setup	ca	Premeu aqu√≠ per a tornar a arrancar els tests d'instal¬∑laci√≥
 completed	setup	ca	Completat
-config password	setup	ca	Contrasenya de ConfiguraciÛ
-config username	setup	ca	Nom d'Usuari de ConfiguraciÛ
-configuration	setup	ca	ConfiguraciÛ
-configuration completed	setup	ca	ConfiguraciÛ acabada
-configuration password	setup	ca	Contrasenya de ConfiguraciÛ
-configuration user	setup	ca	Usuari de ConfiguraciÛ
+config password	setup	ca	Contrasenya de Configuraci√≥
+config username	setup	ca	Nom d'Usuari de Configuraci√≥
+configuration	setup	ca	Configuraci√≥
+configuration completed	setup	ca	Configuraci√≥ acabada
+configuration password	setup	ca	Contrasenya de Configuraci√≥
+configuration user	setup	ca	Usuari de Configuraci√≥
 configure now	setup	ca	Configurar ara
-confirm to delete this backup?	setup	ca	Confirmeu que voleu esborrar aquesta cÚpia de seguretat?
-contain	setup	ca	contÈ
+confirm to delete this backup?	setup	ca	Confirmeu que voleu esborrar aquesta c√≤pia de seguretat?
+contain	setup	ca	cont√©
 continue	setup	ca	Continuar
-continue to the header admin	setup	ca	Continuar en l'Administrador de capÁaleres
+continue to the header admin	setup	ca	Continuar en l'Administrador de cap√ßaleres
 convert	setup	ca	Convertir
-convert backup to charset selected above	setup	ca	Converteix la cÚpia de seguretat al joc de car‡cters triat mÈs amunt
+convert backup to charset selected above	setup	ca	Converteix la c√≤pia de seguretat al joc de car√†cters triat m√©s amunt
 could not open header.inc.php for writing!	setup	ca	No es pot obrir header.inc.php per a escriure!
-country selection	setup	ca	Seleccionar paÌs
+country selection	setup	ca	Seleccionar pa√≠s
 create	setup	ca	Crear
-create a backup before upgrading the db	setup	ca	crea una cÚpia de seguretat abans d'actualitzar la BBDD
+create a backup before upgrading the db	setup	ca	crea una c√≤pia de seguretat abans d'actualitzar la BBDD
 create admin account	setup	ca	Crear el compte d'administrador
 create database	setup	ca	Crear base de dades
-create demo accounts	setup	ca	Crear comptes de demostraciÛ
+create demo accounts	setup	ca	Crear comptes de demostraci√≥
 create one now	setup	ca	Crear-ne una ara
 create the empty database -	setup	ca	Crear la base de dades buida
 create the empty database and grant user permissions -	setup	ca	Crear la base de dades buida i establir permisos d'usuaris -
@@ -123,17 +123,17 @@ create your header.inc.php	setup	ca	Crear un header.inc.php propi
 created	setup	ca	creat
 created header.inc.php!	setup	ca	S'ha creat header.inc.php!
 creating tables	setup	ca	Creant Taules
-current system-charset	setup	ca	Joc de car‡cters actual del sistema
-current system-charset is %1.	setup	ca	El joc de car‡cters actual del sistema Ès %1.
-current version	setup	ca	VersiÛ Actual
-currently installed languages: %1 <br />	setup	ca	Idiomes instal∑lats actualment: %1 <br />
-database instance (egw domain)	setup	ca	Inst‡ncia de base de dades (domini eGW)
+current system-charset	setup	ca	Joc de car√†cters actual del sistema
+current system-charset is %1.	setup	ca	El joc de car√†cters actual del sistema √©s %1.
+current version	setup	ca	Versi√≥ Actual
+currently installed languages: %1 <br />	setup	ca	Idiomes instal¬∑lats actualment: %1 <br />
+database instance (egw domain)	setup	ca	Inst√†ncia de base de dades (domini eGW)
 database successfully converted from '%1' to '%2'	setup	ca	Base de dades convertida correctament de '%1' a '%2'
 datebase	setup	ca	Base de dades
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ca	Port data i hora.<br />Si utilitzes el port 13, per favor comprova les regles del firewall abans d'enviar aquesta p‡gina.<br />(Port: 13 / Host: 129.6.15.28)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ca	Port data i hora.<br />Si utilitzes el port 13, per favor comprova les regles del firewall abans d'enviar aquesta p√†gina.<br />(Port: 13 / Host: 129.6.15.28)
 day	setup	ca	dia
 day of week<br />(0-6, 0=sunday)	setup	ca	dia de la setmana<br />(0-6, 0=diumenge)
-db backup and restore	setup	ca	cÚpia de seguretat i restauraciÛ de la BBDD
+db backup and restore	setup	ca	c√≤pia de seguretat i restauraci√≥ de la BBDD
 db host	setup	ca	Servidor de la base de dades
 db name	setup	ca	Nom de la base de dades
 db password	setup	ca	Contrasenya de la base de dades
@@ -144,158 +144,158 @@ db type	setup	ca	Tipus de base de dades
 db user	setup	ca	Usuari de la base de dades
 default file system space per user/group ?	setup	ca	Espai predeterminat al sistema d'arxius per usuari/grup?
 delete	setup	ca	Esborrar
-delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	ca	Esborrar tots els comptes SQL existents, ACLs i preferËncies? (normalment no Ès necessari)
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	ca	Esborrar tots els comptes SQL existents, ACLs i prefer√®ncies? (normalment no √©s necessari)
 delete all my tables and data	setup	ca	Esborrar totes les meves taules i dades
-delete all old languages and install new ones	setup	ca	Esborrar tots els idiomes antics i instal∑lar els nous
+delete all old languages and install new ones	setup	ca	Esborrar tots els idiomes antics i instal¬∑lar els nous
 deleting tables	setup	ca	Esborrant Taules
-demo server setup	setup	ca	ConfiguraciÛ de Servidor de DemostraciÛ
-deny access	setup	ca	Denegar accÈs
-deny all users access to grant other users access to their entries ?	setup	ca	Denegar a tots els usuaris l'accÈs a que puguin concedir a altres accÈs a les seves prÚpies entrades?
-dependency failure	setup	ca	Errada en les dependËncies
+demo server setup	setup	ca	Configuraci√≥ de Servidor de Demostraci√≥
+deny access	setup	ca	Denegar acc√©s
+deny all users access to grant other users access to their entries ?	setup	ca	Denegar a tots els usuaris l'acc√©s a que puguin concedir a altres acc√©s a les seves pr√≤pies entrades?
+dependency failure	setup	ca	Errada en les depend√®ncies
 deregistered	setup	ca	desregistrada
 details for admin account	setup	ca	Detalls per al compte d'Administrador
 developers' table schema toy	setup	ca	Simulador per a l'esquema de taules de desenvolupament
-did not find any valid db support!	setup	ca	No es troba cap suport v‡lid per a la base de dades!
-do you want persistent connections (higher performance, but consumes more resources)	setup	ca	Connexions persistents? (major rendiment, perÚ consumeix mÈs recursos)
-do you want to manage homedirectory and loginshell attributes?	setup	ca	Voleu gestionar el directori personal i atributs d'inici de sessiÛ?
+did not find any valid db support!	setup	ca	No es troba cap suport v√†lid per a la base de dades!
+do you want persistent connections (higher performance, but consumes more resources)	setup	ca	Connexions persistents? (major rendiment, per√≤ consumeix m√©s recursos)
+do you want to manage homedirectory and loginshell attributes?	setup	ca	Voleu gestionar el directori personal i atributs d'inici de sessi√≥?
 does not exist	setup	ca	no existeix
 domain	setup	ca	Domini
 domain name	setup	ca	Nom del domini
-domain select box on login	setup	ca	Llista desplegable de selecciÛ de domini a l'inici de sessiÛ
+domain select box on login	setup	ca	Llista desplegable de selecci√≥ de domini a l'inici de sessi√≥
 dont touch my data	setup	ca	No toqueu les meves dades
 download	setup	ca	Descarregar
-edit current configuration	setup	ca	Editar configuraciÛ actual
+edit current configuration	setup	ca	Editar configuraci√≥ actual
 edit your existing header.inc.php	setup	ca	Editar l'arxiu header.inc.php existent
 edit your header.inc.php	setup	ca	Editar l'arxiu header.inc.php
-egroupware administration manual	setup	ca	Manual d'AdministraciÛ d'eGroupWare
-enable for extra debug-messages	setup	ca	activar els missatges de depuraciÛ extra
-enable ldap version 3	setup	ca	Activar LDAP versiÛ 3
+egroupware administration manual	setup	ca	Manual d'Administraci√≥ d'eGroupWare
+enable for extra debug-messages	setup	ca	activar els missatges de depuraci√≥ extra
+enable ldap version 3	setup	ca	Activar LDAP versi√≥ 3
 enable mcrypt	setup	ca	Activar MCrypt
-enter some random text for app session encryption	setup	ca	IntroduÔu qualsevol text aleatori per el xifrat de la sessiÛ de l'aplicaciÛ
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	ca	Introdueix text aleatori per app_session <br />encriptaciÛ (requereix mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ca	Introdueix el camÌ complet per fitxers temporals.<br />Exemples: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	ca	Introdueix el camÌ complet per a fitxers d'usuaris i grups.<br />Exemples: /fitxers, E:\FITXERS
-enter the full path to the backup directory.<br />if empty: files directory	setup	ca	Introdueix el camÌ complet del directori de cÚpies de seguretat.<br />si buit: directori de fitxers
-enter the hostname of the machine on which this server is running	setup	ca	IntroduÔu el nom de l'ordinador on s'executa aquest servidor
+enter some random text for app session encryption	setup	ca	Introdu√Øu qualsevol text aleatori per el xifrat de la sessi√≥ de l'aplicaci√≥
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	ca	Introdueix text aleatori per app_session <br />encriptaci√≥ (requereix mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ca	Introdueix el cam√≠ complet per fitxers temporals.<br />Exemples: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	ca	Introdueix el cam√≠ complet per a fitxers d'usuaris i grups.<br />Exemples: /fitxers, E:\FITXERS
+enter the full path to the backup directory.<br />if empty: files directory	setup	ca	Introdueix el cam√≠ complet del directori de c√≤pies de seguretat.<br />si buit: directori de fitxers
+enter the hostname of the machine on which this server is running	setup	ca	Introdu√Øu el nom de l'ordinador on s'executa aquest servidor
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ca	Introdueix la URL de eGroupware.<br />Exemple: http://www.domini.com/egroupware o /egroupware<br />
-enter the site password for peer servers	setup	ca	IntroduÔu la contrasenya del lloc per a servidors parells
-enter the site username for peer servers	setup	ca	IntroduÔu el nom d'usuari del lloc per a servidors parells
-enter the title for your site	setup	ca	IntroduÔu el tÌtol per al vostre lloc
-enter your default ftp server	setup	ca	IntroduÔu el vostre servidor FTP per defecte
-enter your http proxy server	setup	ca	IntroduÔu el vostre servidor proxy HTTP
-enter your http proxy server password	setup	ca	IntroduÔu la contrasenya del vostre servidor proxy HTTP
-enter your http proxy server port	setup	ca	IntroduÔu el port del vostre servidor proxy HTTP
-enter your http proxy server username	setup	ca	IntroduÔu el nom d'usuari del vostre servidor proxy HTTP
-error in admin-creation !!!	setup	ca	Error en la creaciÛ de l'administrador !!!
-error in group-creation !!!	setup	ca	Error en la creaciÛ de grups !!!
+enter the site password for peer servers	setup	ca	Introdu√Øu la contrasenya del lloc per a servidors parells
+enter the site username for peer servers	setup	ca	Introdu√Øu el nom d'usuari del lloc per a servidors parells
+enter the title for your site	setup	ca	Introdu√Øu el t√≠tol per al vostre lloc
+enter your default ftp server	setup	ca	Introdu√Øu el vostre servidor FTP per defecte
+enter your http proxy server	setup	ca	Introdu√Øu el vostre servidor proxy HTTP
+enter your http proxy server password	setup	ca	Introdu√Øu la contrasenya del vostre servidor proxy HTTP
+enter your http proxy server port	setup	ca	Introdu√Øu el port del vostre servidor proxy HTTP
+enter your http proxy server username	setup	ca	Introdu√Øu el nom d'usuari del vostre servidor proxy HTTP
+error in admin-creation !!!	setup	ca	Error en la creaci√≥ de l'administrador !!!
+error in group-creation !!!	setup	ca	Error en la creaci√≥ de grups !!!
 export egroupware accounts from sql to ldap	setup	ca	Exportar comptes d'eGroupWare de SQL a LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	ca	ExportaciÛ acabada. Necessitareu establir les contrasenyes dels usuaris manualment.
+export has been completed!  you will need to set the user passwords manually.	setup	ca	Exportaci√≥ acabada. Necessitareu establir les contrasenyes dels usuaris manualment.
 export sql users to ldap	setup	ca	Exportar usuaris SQL a LDAP
 false	setup	ca	Fals
 file	setup	ca	ARXIU
-file type, size, version, etc.	setup	ca	tipus d'arxiu, tamany, versiÛ, etc
-file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	ca	La c‡rrega de fitxers est‡ desactivada: NO pot utilitzar cap dels gestors de fitxers, ni pots adjuntar fitxers en algunes de les aplicacions!
+file type, size, version, etc.	setup	ca	tipus d'arxiu, tamany, versi√≥, etc
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	ca	La c√†rrega de fitxers est√† desactivada: NO pot utilitzar cap dels gestors de fitxers, ni pots adjuntar fitxers en algunes de les aplicacions!
 filename	setup	ca	nom del fitxer
 filesystem	setup	ca	Sistema de fitxers
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ca	Per a una nova instal∑laciÛ, seleccioneu importar. Per a convertir comptes SQL existents a LDAP, seleccioneu exportar
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ca	Per a una nova instal¬∑laci√≥, seleccioneu importar. Per a convertir comptes SQL existents a LDAP, seleccioneu exportar
 force selectbox	setup	ca	Obligar a llista desplegable
-found existing configuration file. loading settings from the file...	setup	ca	S'ha trobat un arxiu de configuraciÛ existent. Carregant els seus par‡metres...
+found existing configuration file. loading settings from the file...	setup	ca	S'ha trobat un arxiu de configuraci√≥ existent. Carregant els seus par√†metres...
 go back	setup	ca	Tornar
 go to	setup	ca	Anar a
-grant access	setup	ca	Establir AccÈs
+grant access	setup	ca	Establir Acc√©s
 has a version mismatch	setup	ca	No coincideixen les versions
-header admin login	setup	ca	ConnexiÛ d'AdministraciÛ Principal
-header password	setup	ca	Contrasenya d'AdministraciÛ Principal
-header username	setup	ca	Nom d'Usuari d'AdministraciÛ Principal
+header admin login	setup	ca	Connexi√≥ d'Administraci√≥ Principal
+header password	setup	ca	Contrasenya d'Administraci√≥ Principal
+header username	setup	ca	Nom d'Usuari d'Administraci√≥ Principal
 historylog removed	setup	ca	Registre de l'historial esborrat
 hooks deregistered	setup	ca	"Hooks" desregistrats
 hooks registered	setup	ca	"Hooks" registrats
-host information	setup	ca	InformaciÛ del servidor
+host information	setup	ca	Informaci√≥ del servidor
 host/ip domain controler	setup	ca	Controlador del servidor/domini IP
-hostname/ip of database server	setup	ca	Nom o adreÁa IP del servidor de la base de dades
+hostname/ip of database server	setup	ca	Nom o adre√ßa IP del servidor de la base de dades
 hour (0-24)	setup	ca	hora (0-24)
-however, the application is otherwise installed	setup	ca	Altrament, l'aplicaciÛ fou instal∑lada
-however, the application may still work	setup	ca	Altrament, l'aplicaciÛ encara pot funcionar
-if no acl records for user or any group the user is a member of	setup	ca	Si no hi han registres ACL ni grup per a l'usuari, aleshores Ès membre de
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ca	Si mode_segur est‡ activat, eGW no pot canviar determinades configuracions en temps d'execuciÛ ni tampoc podem carregar cap mÚdul que no estigui carregat.
-if the application has no defined tables, selecting upgrade should remedy the problem	setup	ca	Si l'aplicaciÛ no ha definit taules, seleccionant actualitzar hauria de resoldre el problema
-if using ads (active directory) authentication	setup	ca	Si feu servir autentificaciÛ ADS (Activer Directory)
+however, the application is otherwise installed	setup	ca	Altrament, l'aplicaci√≥ fou instal¬∑lada
+however, the application may still work	setup	ca	Altrament, l'aplicaci√≥ encara pot funcionar
+if no acl records for user or any group the user is a member of	setup	ca	Si no hi han registres ACL ni grup per a l'usuari, aleshores √©s membre de
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ca	Si mode_segur est√† activat, eGW no pot canviar determinades configuracions en temps d'execuci√≥ ni tampoc podem carregar cap m√≤dul que no estigui carregat.
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	ca	Si l'aplicaci√≥ no ha definit taules, seleccionant actualitzar hauria de resoldre el problema
+if using ads (active directory) authentication	setup	ca	Si feu servir autentificaci√≥ ADS (Activer Directory)
 if using ldap	setup	ca	Si feu servir LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ca	Si utilitzeu LDAP, voleu administrar els atributs del directori personal i l'interpret d'ordres?
 if you did not receive any errors, your applications have been	setup	ca	Si no heu rebut cap error, les aplicacions han estat
 if you did not receive any errors, your tables have been	setup	ca	Si no heu rebut cap error, les taules han estat
-if you running this the first time, don't forget to manualy %1 !!!	setup	ca	Si esteu executant l'aplicaciÛ per primera vegada, no oblideu %1 manualment!!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ca	Si nomÈs utilitzeu llenguatges del mateix joc de car‡cters (ex. els de l'Europa Occidental), no necessiteu indicar un joc de car‡cters pel sistema!
-image type selection order	setup	ca	Ordre de selecciÛ del tipus d'imatge
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	ca	Importar comptes de LDAP a la taula de comptes d'eGroupWare (per a una nova instal∑laciÛ fent servir comptes SQL)
-import has been completed!	setup	ca	ImportaciÛ acabada!
+if you running this the first time, don't forget to manualy %1 !!!	setup	ca	Si esteu executant l'aplicaci√≥ per primera vegada, no oblideu %1 manualment!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ca	Si nom√©s utilitzeu llenguatges del mateix joc de car√†cters (ex. els de l'Europa Occidental), no necessiteu indicar un joc de car√†cters pel sistema!
+image type selection order	setup	ca	Ordre de selecci√≥ del tipus d'imatge
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	ca	Importar comptes de LDAP a la taula de comptes d'eGroupWare (per a una nova instal¬∑laci√≥ fent servir comptes SQL)
+import has been completed!	setup	ca	Importaci√≥ acabada!
 import ldap users/groups	setup	ca	Importar usuaris/grups LDAP
-importing old settings into the new format....	setup	ca	Importar configuraciÛ antiga al nou format...
-include root (this should be the same as server root unless you know what you are doing)	setup	ca	Incloure Root (ha d'Èsser el mateix que Server Root a menys que sabeu el que esteu fent)
+importing old settings into the new format....	setup	ca	Importar configuraci√≥ antiga al nou format...
+include root (this should be the same as server root unless you know what you are doing)	setup	ca	Incloure Root (ha d'√©sser el mateix que Server Root a menys que sabeu el que esteu fent)
 include_path need to contain "." - the current directory	setup	ca	include_path necessita contenir "." - el directori actual
-install	setup	ca	Instal∑lar
-install all	setup	ca	Instal∑lar-ho tot
-install applications	setup	ca	Instal∑lar aplicacions
-install backup	setup	ca	instal∑lar cÚpia de seguretat
-install language	setup	ca	Instal∑lar idiomes
-installed	setup	ca	instal∑lat
+install	setup	ca	Instal¬∑lar
+install all	setup	ca	Instal¬∑lar-ho tot
+install applications	setup	ca	Instal¬∑lar aplicacions
+install backup	setup	ca	instal¬∑lar c√≤pia de seguretat
+install language	setup	ca	Instal¬∑lar idiomes
+installed	setup	ca	instal¬∑lat
 instructions for creating the database in %1:	setup	ca	Instruccions per a crear la base de dades en %1:
-invalid ip address	setup	ca	AdreÁa IP incorrecta
-invalid mcrypt algorithm/mode combination	setup	ca	CombinaciÛ inv‡lida Algoritme/Mode Mcrypt
+invalid ip address	setup	ca	Adre√ßa IP incorrecta
+invalid mcrypt algorithm/mode combination	setup	ca	Combinaci√≥ inv√†lida Algoritme/Mode Mcrypt
 invalid password	setup	ca	Contrasenya incorrecta
 is broken	setup	ca	trencat
 is disabled	setup	ca	desactivat
-is in the webservers docroot	setup	ca	Ès al docroot del servidor web
+is in the webservers docroot	setup	ca	√©s al docroot del servidor web
 is not writeable by the webserver	setup	ca	no pot ser modificat pel servidor web
-ldap account import/export	setup	ca	ImportaciÛ/ExportaciÛ de comptes LDAP
-ldap accounts configuration	setup	ca	ConfiguraciÛ de comptes LDAP
+ldap account import/export	setup	ca	Importaci√≥/Exportaci√≥ de comptes LDAP
+ldap accounts configuration	setup	ca	Configuraci√≥ de comptes LDAP
 ldap accounts context	setup	ca	Context de les comptes LDAP
-ldap config	setup	ca	ConfiguraciÛ LDAP
+ldap config	setup	ca	Configuraci√≥ LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ca	Prefix del directori personal predeterminat (p. ex. /home per a /home/<usuari>)
-ldap default shell (e.g. /bin/bash)	setup	ca	IntÈrpret d'ordres LDAP predeterminat (p. ex. /bin/bash)
+ldap default shell (e.g. /bin/bash)	setup	ca	Int√©rpret d'ordres LDAP predeterminat (p. ex. /bin/bash)
 ldap encryption type	setup	ca	Tipus de xifrat LDAP
-ldap export	setup	ca	ExportaciÛ LDAP
+ldap export	setup	ca	Exportaci√≥ LDAP
 ldap export users	setup	ca	Exportar usuaris LDAP
 ldap groups context	setup	ca	Context de grups LDAP
 ldap host	setup	ca	Servidor LDAP
-ldap import	setup	ca	ImportaciÛ LDAP
+ldap import	setup	ca	Importaci√≥ LDAP
 ldap import users	setup	ca	Importar usuaris LDAP
 ldap modify	setup	ca	Modificar LDAP
 ldap root password	setup	ca	Contrasenya de l'administrador LDAP
 ldap rootdn	setup	ca	rootdn LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ca	filtre de cerca LDAP per a comptes, per defecte: "(uid=%user)", %domain=eGW-domain
-limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ca	AccÈs limitat a la instal∑laciÛ a les seg¸ents adreces, xarxes o m‡quines (ex. 127.0.0.1,10.1.1,myhost.dnydns.org)
-login as user postgres, eg. by using su as root	setup	ca	Iniciar la sessiÛ com a usuari postgres, p.ex. com utilitzar su com a root
-login to mysql -	setup	ca	Iniciar sessiÛ en mysql -
-logout	setup	ca	Tancar sessiÛ
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ca	Acc√©s limitat a la instal¬∑laci√≥ a les seg√ºents adreces, xarxes o m√†quines (ex. 127.0.0.1,10.1.1,myhost.dnydns.org)
+login as user postgres, eg. by using su as root	setup	ca	Iniciar la sessi√≥ com a usuari postgres, p.ex. com utilitzar su com a root
+login to mysql -	setup	ca	Iniciar sessi√≥ en mysql -
+logout	setup	ca	Tancar sessi√≥
 mail domain (for virtual mail manager)	setup	ca	Domini de correu (per gestor de correus Virtual)
-mail server login type	setup	ca	Tipus de sessiÛ del servidor de correu
+mail server login type	setup	ca	Tipus de sessi√≥ del servidor de correu
 mail server protocol	setup	ca	Protocol del servidor de correu
-make sure that your database is created and the account permissions are set	setup	ca	Assegura't de que la teva base de dades est‡ creada i s'han establert els permisos dels comptes
+make sure that your database is created and the account permissions are set	setup	ca	Assegura't de que la teva base de dades est√† creada i s'han establert els permisos dels comptes
 manage applications	setup	ca	Administrar aplicacions
 manage languages	setup	ca	Administrar idiomes
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ca	max_execution_time te un valor menor de 30 (segons): eGroupWare a vegades necessita un temps d'execuciÛ major. Hi pot haver petades ocasionals
-maximum account id (e.g. 65535 or 1000000)	setup	ca	Id m‡xim de compte (ex. 65535 o 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ca	max_execution_time te un valor menor de 30 (segons): eGroupWare a vegades necessita un temps d'execuci√≥ major. Hi pot haver petades ocasionals
+maximum account id (e.g. 65535 or 1000000)	setup	ca	Id m√†xim de compte (ex. 65535 o 1000000)
 may be broken	setup	ca	pot estar trencat
 mcrypt algorithm (default tripledes)	setup	ca	Algorisme Mcrypt (predeterminat: TRIPLEDES)
-mcrypt initialization vector	setup	ca	Vector d' inicialitzaciÛ Mcrypt
+mcrypt initialization vector	setup	ca	Vector d' inicialitzaci√≥ Mcrypt
 mcrypt mode (default cbc)	setup	ca	Modus Mcrypt (predeterminat: CBC)
-mcrypt settings (requires mcrypt php extension)	setup	ca	ConfiguraciÛ Mcrypt (necessita la extensiÛ mcrypt de PHP)
-mcrypt version	setup	ca	VersiÛ Mcrypt
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ca	memory_limit te un valor menor de %1: algunes aplicacions d'eGroupWare necessiten mÈs dels recomanats 8M. Es poden produir petades ocasionals
-minimum account id (e.g. 500 or 100, etc.)	setup	ca	Id mÌnim de compte (ex. 500 o 100, etc)
+mcrypt settings (requires mcrypt php extension)	setup	ca	Configuraci√≥ Mcrypt (necessita la extensi√≥ mcrypt de PHP)
+mcrypt version	setup	ca	Versi√≥ Mcrypt
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ca	memory_limit te un valor menor de %1: algunes aplicacions d'eGroupWare necessiten m√©s dels recomanats 8M. Es poden produir petades ocasionals
+minimum account id (e.g. 500 or 100, etc.)	setup	ca	Id m√≠nim de compte (ex. 500 o 100, etc)
 minute	setup	ca	minut
-missing or uncomplete mailserver configuration	setup	ca	ConfiguraciÛ del servidor de correu desconeguda o incompleta
+missing or uncomplete mailserver configuration	setup	ca	Configuraci√≥ del servidor de correu desconeguda o incompleta
 modifications have been completed!	setup	ca	Modificacions acabades!
 modify	setup	ca	Modificar
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	ca	Modificar un compte existent LDAP emmagatzemada per a usar amb eGroupWare (per a una nova instal∑laciÛ usant comptes LDAP)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	ca	Modificar un compte existent LDAP emmagatzemada per a usar amb eGroupWare (per a una nova instal¬∑laci√≥ usant comptes LDAP)
 month	setup	ca	mes
-multi-language support setup	setup	ca	ConfiguraciÛ del suport Multi-Idioma
+multi-language support setup	setup	ca	Configuraci√≥ del suport Multi-Idioma
 name of database	setup	ca	Nom de la base de dades
 name of db user egroupware uses to connect	setup	ca	Nom de l'usuari de la base de dades que usa eGroupWare per a connectar
 never	setup	ca	mai
 new	setup	ca	Nou
-next run	setup	ca	prÚxima execuciÛ
+next run	setup	ca	pr√≤xima execuci√≥
 no	setup	ca	No
 no %1 support found. disabling	setup	ca	No s'ha trobat suport per a %1. Desactivant
 no accounts existing	setup	ca	No existeixen comptes
@@ -308,244 +308,244 @@ not complete	setup	ca	incomplet
 not completed	setup	ca	Incomplet
 not ready for this stage yet	setup	ca	No esteu preparats encara per aquesta fase
 not set	setup	ca	sense establir
-note: you will be able to customize this later	setup	ca	Nota: Podreu configurar aixÚ mÈs tard
+note: you will be able to customize this later	setup	ca	Nota: Podreu configurar aix√≤ m√©s tard
 now guessing better values for defaults...	setup	ca	Cercant els millors valors per als predeterminats...
 odbc / maxdb: dsn (data source name) to use	setup	ca	ODBC / MaxDB: DSN (nom de font de dades) per utilitzar
 ok	setup	ca	Acceptar
 once the database is setup correctly	setup	ca	Un cop la base de dades estigui configurada correctament
 one month	setup	ca	un mes
 one week	setup	ca	una setmana
-only add languages that are not in the database already	setup	ca	NomÈs afegeix idiomes que encara no estiguin a la base de dades
-only add new phrases	setup	ca	NomÈs afegeix noves frases
+only add languages that are not in the database already	setup	ca	Nom√©s afegeix idiomes que encara no estiguin a la base de dades
+only add new phrases	setup	ca	Nom√©s afegeix noves frases
 or	setup	ca	o
-or %1continue to the header admin%2	setup	ca	o %1Continuar a l'Administrador de CapÁaleres%2
+or %1continue to the header admin%2	setup	ca	o %1Continuar a l'Administrador de Cap√ßaleres%2
 or http://webdav.domain.com (webdav)	setup	ca	o http://webdav.domini.com (WebDAV)
-or we can attempt to create the database for you:	setup	ca	O bÈ podem intentar crear la base de dades autom‡ticament
-or you can install a previous backup.	setup	ca	O podeu instal∑lar una cÚpia de seguretat anterior.
-password for smtp-authentication	setup	ca	Contrasenya per l'autentificaciÛ SMTP
-password needed for configuration	setup	ca	Contrasenya necess‡ria per a la configuraciÛ
+or we can attempt to create the database for you:	setup	ca	O b√© podem intentar crear la base de dades autom√†ticament
+or you can install a previous backup.	setup	ca	O podeu instal¬∑lar una c√≤pia de seguretat anterior.
+password for smtp-authentication	setup	ca	Contrasenya per l'autentificaci√≥ SMTP
+password needed for configuration	setup	ca	Contrasenya necess√†ria per a la configuraci√≥
 password of db user	setup	ca	Contrasenya de l'usuari de la base de dades
 passwords did not match, please re-enter	setup	ca	Les contrasenyes no coincideixen, torneu a entrar-les
-path information	setup	ca	InformaciÛ del camÌ
-path to user and group files has to be outside of the webservers document-root!!!	setup	ca	El camÌ als arxius d'usuaris i grups HA D'ESTAR FORA de l'arrel del servidor web!!
-pear is needed by syncml or the ical import+export of calendar.	setup	ca	Se necessita PEAR per SyncML o la importaciÛ+exportaciÛ de calendari de iCal.
-pear::log is needed by syncml.	setup	ca	PEAR::Log Ès necessari per SyncML.
+path information	setup	ca	Informaci√≥ del cam√≠
+path to user and group files has to be outside of the webservers document-root!!!	setup	ca	El cam√≠ als arxius d'usuaris i grups HA D'ESTAR FORA de l'arrel del servidor web!!
+pear is needed by syncml or the ical import+export of calendar.	setup	ca	Se necessita PEAR per SyncML o la importaci√≥+exportaci√≥ de calendari de iCal.
+pear::log is needed by syncml.	setup	ca	PEAR::Log √©s necessari per SyncML.
 persistent connections	setup	ca	Connexions persistents
-php plus restore	setup	ca	restauraciÛ de PHP plus
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	ca	La restauraciÛ de PHP plus Ès, de molt, la millor actuaciÛ ja que guarda completament l'entorn d'eGW dins la sessiÛ.
-please check for sql scripts within the application's directory	setup	ca	Si us plau, comproveu els arxius d'ordres sql en el directori de l'aplicaciÛ
-please check read/write permissions on directories, or back up and use another option.	setup	ca	Si us plau, comproveu els permisos de lectura i escriptura als directoris, o torneu i feu servir una altra opciÛ
+php plus restore	setup	ca	restauraci√≥ de PHP plus
+php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	ca	La restauraci√≥ de PHP plus √©s, de molt, la millor actuaci√≥ ja que guarda completament l'entorn d'eGW dins la sessi√≥.
+please check for sql scripts within the application's directory	setup	ca	Si us plau, comproveu els arxius d'ordres sql en el directori de l'aplicaci√≥
+please check read/write permissions on directories, or back up and use another option.	setup	ca	Si us plau, comproveu els permisos de lectura i escriptura als directoris, o torneu i feu servir una altra opci√≥
 please configure egroupware for your environment	setup	ca	Configureu eGroupWare per al vostre entorn
 please consult the %1.	setup	ca	Consulteu el %1
 please fix the above errors (%1) and warnings(%2)	setup	ca	Si us plau, corregiu els errors (%1) i avisos(%2) citats a dalt
-please install	setup	ca	Instal∑leu
-please login	setup	ca	Inicieu la sessiÛ
-please login to egroupware and run the admin application for additional site configuration	setup	ca	Si us plau, inicieu la sessiÛ en eGroupWare i executeu l'aplicaciÛ d'administraciÛ per a la configuraciÛ addicional del lloc
-please make the following change in your php.ini	setup	ca	Si us plau, feu els canvis seg¸ents al vostre php.ini
+please install	setup	ca	Instal¬∑leu
+please login	setup	ca	Inicieu la sessi√≥
+please login to egroupware and run the admin application for additional site configuration	setup	ca	Si us plau, inicieu la sessi√≥ en eGroupWare i executeu l'aplicaci√≥ d'administraci√≥ per a la configuraci√≥ addicional del lloc
+please make the following change in your php.ini	setup	ca	Si us plau, feu els canvis seg√ºents al vostre php.ini
 please wait...	setup	ca	Si us plau, espereu...
-pop/imap mail server hostname or ip address	setup	ca	Nom del servidor de correus POP/IMAP o adreÁa IP
+pop/imap mail server hostname or ip address	setup	ca	Nom del servidor de correus POP/IMAP o adre√ßa IP
 possible reasons	setup	ca	Possibles raons
 possible solutions	setup	ca	Possibles solucions
-post-install dependency failure	setup	ca	Error de dependËncies a la post-instal∑laciÛ
-postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	ca	Postgres: Deixa-ho buit per utilitzar els sockets de domini unix, en lloc d'una connexiÛ tcp/ip
+post-install dependency failure	setup	ca	Error de depend√®ncies a la post-instal¬∑laci√≥
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	ca	Postgres: Deixa-ho buit per utilitzar els sockets de domini unix, en lloc d'una connexi√≥ tcp/ip
 potential problem	setup	ca	Problema potencial
-preferences	setup	ca	PreferËncies
-problem resolution	setup	ca	ResoluciÛ del problema
+preferences	setup	ca	Prefer√®ncies
+problem resolution	setup	ca	Resoluci√≥ del problema
 process	setup	ca	Processar
 re-check my database	setup	ca	Tornar a comprovar la meva base de dades
-re-check my installation	setup	ca	Comprovar la meva instal∑laciÛ
+re-check my installation	setup	ca	Comprovar la meva instal¬∑laci√≥
 re-enter password	setup	ca	Confirmeu la contrasenya
 read translations from	setup	ca	Llegir traduccions de
 readable by the webserver	setup	ca	pot ser llegit pel servidor web
-really uninstall all applications	setup	ca	REALMENT voleu desinstal∑lar totes les aplicacions
+really uninstall all applications	setup	ca	REALMENT voleu desinstal¬∑lar totes les aplicacions
 recommended: filesystem	setup	ca	Recomanat: sistema d' arxius
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ca	register_globals est‡ activat. eGroupWare NO ho necessita i generalment Ès mÈs segur tenir-ho desactivat.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ca	register_globals est√† activat. eGroupWare NO ho necessita i generalment √©s m√©s segur tenir-ho desactivat.
 registered	setup	ca	registrat
-rejected lines	setup	ca	LÌnies rebutjades
+rejected lines	setup	ca	L√≠nies rebutjades
 remove	setup	ca	Esborrar
 remove all	setup	ca	Esborrar tot
 rename	setup	ca	Renomenar
-requires reinstall or manual repair	setup	ca	Requereix reinstal∑laciÛ o reparaciÛ manual
-requires upgrade	setup	ca	Requereix actualitzaciÛ
+requires reinstall or manual repair	setup	ca	Requereix reinstal¬∑laci√≥ o reparaci√≥ manual
+requires upgrade	setup	ca	Requereix actualitzaci√≥
 resolve	setup	ca	Resoldre
 restore	setup	ca	restaurar
-restore failed	setup	ca	Ha fallat la restauraciÛ
-restore finished	setup	ca	restauraciÛ finalitzada
-restore started, this might take a few minutes ...	setup	ca	s'ha iniciat la restauraciÛ, aixÚ pot trigar uns minuts...
-restoring a backup will delete/replace all content in your database. are you sure?	setup	ca	Restaurar uns cÚpia de seguretat pot esborrar/reemplaÁar tot el vostre contingut de la base de dades. Esteu segurs?
-return to setup	setup	ca	Tornar a la instal∑laciÛ
-run installation tests	setup	ca	Arranca els test d'instal∑laciÛ
-safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ca	safe_mode est‡ activat, la qual cosa est‡ molt bÈ perquË fa que la vostra instal∑laciÛ sigui mÈs segura.
-sample configuration not found. using built in defaults	setup	ca	No s'ha trobat una configuraciÛ d'exemple. Usant valors predefinits.
+restore failed	setup	ca	Ha fallat la restauraci√≥
+restore finished	setup	ca	restauraci√≥ finalitzada
+restore started, this might take a few minutes ...	setup	ca	s'ha iniciat la restauraci√≥, aix√≤ pot trigar uns minuts...
+restoring a backup will delete/replace all content in your database. are you sure?	setup	ca	Restaurar uns c√≤pia de seguretat pot esborrar/reempla√ßar tot el vostre contingut de la base de dades. Esteu segurs?
+return to setup	setup	ca	Tornar a la instal¬∑laci√≥
+run installation tests	setup	ca	Arranca els test d'instal¬∑laci√≥
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ca	safe_mode est√† activat, la qual cosa est√† molt b√© perqu√® fa que la vostra instal¬∑laci√≥ sigui m√©s segura.
+sample configuration not found. using built in defaults	setup	ca	No s'ha trobat una configuraci√≥ d'exemple. Usant valors predefinits.
 save	setup	ca	Desar
 save this text as contents of your header.inc.php	setup	ca	Desar aquest text com a contingut del vostre header.inc.php
 schedule	setup	ca	programar
-scheduled backups	setup	ca	cÚpies de seguretat programades
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	ca	Tria una aplicaciÛ, introdueix una versiÛ destÌ, desprÈs envia el procÈs a aquella versiÛ.<br />Si no introdueixes una versiÛ, nomÈs s'instal∑laran les taules base de l'aplicaciÛ.<br /><blink>AIX“ ELIMINAR¿ PRIMER TOTES LES TAULES DE L'APLICACI”!</blink>
+scheduled backups	setup	ca	c√≤pies de seguretat programades
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	ca	Tria una aplicaci√≥, introdueix una versi√≥ dest√≠, despr√©s envia el proc√©s a aquella versi√≥.<br />Si no introdueixes una versi√≥, nom√©s s'instal¬∑laran les taules base de l'aplicaci√≥.<br /><blink>AIX√í ELIMINAR√Ä PRIMER TOTES LES TAULES DE L'APLICACI√ì!</blink>
 select one...	setup	ca	seleccionar un...
-select the default applications to which your users will have access	setup	ca	Seleccioneu les aplicacions predeterminades a les que tindran accÈs els usuaris
+select the default applications to which your users will have access	setup	ca	Seleccioneu les aplicacions predeterminades a les que tindran acc√©s els usuaris
 select the desired action(s) from the available choices	setup	ca	Seleccioneu les accion(s) desitjades de la llista d'opcions disponibles
 select to download file	setup	ca	Seleccioneu per a descarregar arxiu
 select where you want to store/retrieve file contents	setup	ca	Seleccioneu on voleu desar/recuperar continguts d'arxius
-select where you want to store/retrieve filesystem information	setup	ca	Seleccioneu on voleu desar/recuperar informaciÛ del sistema d'arxius
-select where you want to store/retrieve user accounts	setup	ca	Seleccioneu on voleu desar/recuperar informaciÛ dels comptes d'usuari
-select which group(s) will be exported (group membership will be maintained)	setup	ca	Seleccioneu quins grups s'exportaran (es mantindran les pertenËncies al grup)
-select which group(s) will be imported (group membership will be maintained)	setup	ca	Seleccioneu quins grups s'importaran (es mantindran les pertenËncies al grup)
-select which group(s) will be modified (group membership will be maintained)	setup	ca	Seleccioneu quins grups es modificaran (es mantindran les pertenËncies al grup)
+select where you want to store/retrieve filesystem information	setup	ca	Seleccioneu on voleu desar/recuperar informaci√≥ del sistema d'arxius
+select where you want to store/retrieve user accounts	setup	ca	Seleccioneu on voleu desar/recuperar informaci√≥ dels comptes d'usuari
+select which group(s) will be exported (group membership will be maintained)	setup	ca	Seleccioneu quins grups s'exportaran (es mantindran les perten√®ncies al grup)
+select which group(s) will be imported (group membership will be maintained)	setup	ca	Seleccioneu quins grups s'importaran (es mantindran les perten√®ncies al grup)
+select which group(s) will be modified (group membership will be maintained)	setup	ca	Seleccioneu quins grups es modificaran (es mantindran les perten√®ncies al grup)
 select which languages you would like to use	setup	ca	Seleccioneu els idiomes que voleu fer servir
-select which method of upgrade you would like to do	setup	ca	Seleccioneu quin mËtode d'actualitzaciÛ preferiu fer servir
-select which type of authentication you are using	setup	ca	Seleccioneu quin tipus d'identificaciÛ feu servir
+select which method of upgrade you would like to do	setup	ca	Seleccioneu quin m√®tode d'actualitzaci√≥ preferiu fer servir
+select which type of authentication you are using	setup	ca	Seleccioneu quin tipus d'identificaci√≥ feu servir
 select which user(s) will also have admin privileges	setup	ca	Seleccioneu quin(s) usuari(s) tindran privilegis d'administrador
 select which user(s) will be exported	setup	ca	Seleccioneu quin(s) usuari(s) s'exportaran
 select which user(s) will be imported	setup	ca	Seleccioneu quin(s) usuari(s) s'importaran
 select which user(s) will be modified	setup	ca	Seleccioneu quin(s) usuari(s) es modficaran
 select which user(s) will have admin privileges	setup	ca	Seleccioneu quin(s) usuari(s) tindran privilegis d'administrador
-select your old version	setup	ca	Seleccioneu la versiÛ anterior
-selectbox	setup	ca	Quadre de selecciÛ
+select your old version	setup	ca	Seleccioneu la versi√≥ anterior
+selectbox	setup	ca	Quadre de selecci√≥
 server root	setup	ca	Arrel del servidor
 sessions type	setup	ca	Tipus de sessions
 set	setup	ca	configura
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	ca	Establiu aixÚ a "old" per a versions < 2.4, altrament indiqueu la versiÛ exacta de mcrypt  que feu servir.
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ca	Fent que el conjunt de car‡cters del sistema sigui UTF-8 (unicode) Ès possible la coexistËncia de llenguatges amb conjunts de car‡cters diferents.
-settings	setup	ca	ConfiguraciÛ
-setup	setup	ca	Instal∑laciÛ
-setup demo accounts in ldap	setup	ca	Instal∑lar comptes de demostraciÛ en LDAP
-setup main menu	setup	ca	Men˙ principal de la instal∑laciÛ
-setup the database	setup	ca	Instal∑lar la base de dades
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	ca	Establiu aix√≤ a "old" per a versions < 2.4, altrament indiqueu la versi√≥ exacta de mcrypt  que feu servir.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ca	Fent que el conjunt de car√†cters del sistema sigui UTF-8 (unicode) √©s possible la coexist√®ncia de llenguatges amb conjunts de car√†cters diferents.
+settings	setup	ca	Configuraci√≥
+setup	setup	ca	Instal¬∑laci√≥
+setup demo accounts in ldap	setup	ca	Instal¬∑lar comptes de demostraci√≥ en LDAP
+setup main menu	setup	ca	Men√∫ principal de la instal¬∑laci√≥
+setup the database	setup	ca	Instal¬∑lar la base de dades
 setup/config admin login	setup	ca	Actualitza/Configura l'entrada de l'administrador
 show 'powered by' logo on	setup	ca	Mostrar el logo a
 size	setup	ca	mida
-skip the installation tests (not recommended)	setup	ca	BÛta les proves d'instal∑laciÛ (no recomanat)
-smtp server hostname or ip address	setup	ca	Nom del servidor de SMTP o adreÁa IP
+skip the installation tests (not recommended)	setup	ca	B√≥ta les proves d'instal¬∑laci√≥ (no recomanat)
+smtp server hostname or ip address	setup	ca	Nom del servidor de SMTP o adre√ßa IP
 smtp server port	setup	ca	Port del servidor SMTP
 some or all of its tables are missing	setup	ca	No es troben totes o unes quantes taules
 sql encryption type	setup	ca	Tipus de xifrat per contrasenyes SQL (predeterminat - md5)
-standard (login-name identical to egroupware user-name)	setup	ca	standard (nom d'entrada idËntic al nom d'usuari d'eGroupware)
-standard mailserver settings (used for mail authentication too)	setup	ca	PreferËncies del servidor de correu standard (usat tambÈ per atutentificaciÛ de Correu)
+standard (login-name identical to egroupware user-name)	setup	ca	standard (nom d'entrada id√®ntic al nom d'usuari d'eGroupware)
+standard mailserver settings (used for mail authentication too)	setup	ca	Prefer√®ncies del servidor de correu standard (usat tamb√© per atutentificaci√≥ de Correu)
 start the postmaster	setup	ca	Iniciar el postmaster
 status	setup	ca	Estat
 step %1 - admin account	setup	ca	Pas %1 - Compte d'Administrador
-step %1 - advanced application management	setup	ca	Pas %1 - AdministraciÛ avanÁada d'aplicacions
-step %1 - configuration	setup	ca	Pas %1 - ConfiguraciÛ
-step %1 - db backup and restore	setup	ca	Pas %1 - CÚpia de seguretat i restauraciÛ de BBDD
-step %1 - language management	setup	ca	Pas %1 - AdministraciÛ d'idiomes
-step %1 - simple application management	setup	ca	Pas %1 - AdministraciÛ simple d'aplicacions
+step %1 - advanced application management	setup	ca	Pas %1 - Administraci√≥ avan√ßada d'aplicacions
+step %1 - configuration	setup	ca	Pas %1 - Configuraci√≥
+step %1 - db backup and restore	setup	ca	Pas %1 - C√≤pia de seguretat i restauraci√≥ de BBDD
+step %1 - language management	setup	ca	Pas %1 - Administraci√≥ d'idiomes
+step %1 - simple application management	setup	ca	Pas %1 - Administraci√≥ simple d'aplicacions
 succesfully uploaded file %1	setup	ca	s'ha carregat correctament el fitxer %1
 table change messages	setup	ca	Missatges de canvis en taules
 tables dropped	setup	ca	taules esborrades
-tables installed, unless there are errors printed above	setup	ca	taules instal∑lades, a menys que hi hagi errors impresos a sobre
+tables installed, unless there are errors printed above	setup	ca	taules instal¬∑lades, a menys que hi hagi errors impresos a sobre
 tables upgraded	setup	ca	taules actualitzades
-target version	setup	ca	VersiÛ destÌ
-tcp port number of database server	setup	ca	N˙mero del pot TCP del servidor de la base de dades
+target version	setup	ca	Versi√≥ dest√≠
+tcp port number of database server	setup	ca	N√∫mero del pot TCP del servidor de la base de dades
 text entry	setup	ca	Entrada de text
-the %1 extension is needed, if you plan to use a %2 database.	setup	ca	L'extensiÛ %1 Ès necessaria si vols utilitzar una base de dades %2.
-the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ca	El tipus de base de dades en predeterminats (%1) no est‡ suportat en aquest servidor. Es fa servir el primer tipus suportat
+the %1 extension is needed, if you plan to use a %2 database.	setup	ca	L'extensi√≥ %1 √©s necessaria si vols utilitzar una base de dades %2.
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ca	El tipus de base de dades en predeterminats (%1) no est√† suportat en aquest servidor. Es fa servir el primer tipus suportat
 the file	setup	ca	l'arxiu
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ca	La primera passa per instal∑lar eGroupWare consisteix en assegurar-se de que el vostre entorn tÈ les configuracions necess‡ries per a poder executar correctament l'aplicaciÛ.
-the following applications need to be upgraded:	setup	ca	Les aplicacions seg¸ents necessiten actualitzar-se:
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	ca	L'extensiÛ imap Ès necess‡ria per a les dues aplicacions de correu (fins i tot si utilitzeu el protocol pop3).
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ca	L'extensiÛ mbstring Ès necess‡ria per a suportar completament l'unicode (utf-8) o altres conjunts de car‡cters de mÈs d'un byte.
-the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ca	mbstring.func_overload = 7 Ès necess‡ria per a suportar completament l'unicode (utf-8) o altres conjunts de car‡cters de mÈs d'un byte.
-the session extension is needed to use php sessions (db-sessions work without).	setup	ca	L'extensiÛ de sessiÛ se necessita per utilitzar sessions php (les sessions de bd funcionen sense).
-the table definition was correct, and the tables were installed	setup	ca	La definiciÛ de la taula ha estat correcta, i s'han instal∑lat les taules
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ca	La primera passa per instal¬∑lar eGroupWare consisteix en assegurar-se de que el vostre entorn t√© les configuracions necess√†ries per a poder executar correctament l'aplicaci√≥.
+the following applications need to be upgraded:	setup	ca	Les aplicacions seg√ºents necessiten actualitzar-se:
+the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	ca	L'extensi√≥ imap √©s necess√†ria per a les dues aplicacions de correu (fins i tot si utilitzeu el protocol pop3).
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ca	L'extensi√≥ mbstring √©s necess√†ria per a suportar completament l'unicode (utf-8) o altres conjunts de car√†cters de m√©s d'un byte.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ca	mbstring.func_overload = 7 √©s necess√†ria per a suportar completament l'unicode (utf-8) o altres conjunts de car√†cters de m√©s d'un byte.
+the session extension is needed to use php sessions (db-sessions work without).	setup	ca	L'extensi√≥ de sessi√≥ se necessita per utilitzar sessions php (les sessions de bd funcionen sense).
+the table definition was correct, and the tables were installed	setup	ca	La definici√≥ de la taula ha estat correcta, i s'han instal¬∑lat les taules
 the tables	setup	ca	les taules
 there was a problem trying to connect to your ldap server. <br />	setup	ca	Hi ha hagut un problema per connectar amb el teu servidor LDAP. <br />
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	ca	Hi ha hagut un problema per connectar amb el teu servidor de LDAP. <br />per favor, comprova la teva configuraciÛ de servidor LDAP
-this has to be outside the webservers document-root!!!	setup	ca	AixÚ ha d'estar fora de l'arrel de documents dels servidors web!!!
-this might take a while, please wait ...	setup	ca	AixÚ pot trigar una estona, espereu si us plau ...
-this program lets you backup your database, schedule a backup or restore it.	setup	ca	Aquest programa et permet fer cÚpies de seguretat de la teva base de dades, programar una cÚpia de seguretat o restaurar-la.
-this program will convert your database to a new system-charset.	setup	ca	Aquest programa convertir‡ la base de dades a un nou joc de car‡cters del sistema.
-this program will help you upgrade or install different languages for egroupware	setup	ca	Aquest programa us ajudar‡ a actualitzar o instal∑lar els diferents idiomes per a eGroupWare
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ca	Aquesta secciÛ intentar‡ exportar els usuaris i grups de les taules de comptes d'eGroupWare a l'arbre LDAP
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	ca	Aquesta secciÛ us ajudar‡ a importar usuaris i grups de l'arbre LDAP a les taules de comptes d'eGroupWare
-this section will help you setup your ldap accounts for use with egroupware	setup	ca	Aquesta secciÛ us ajudar‡ a configurar els comptes LDAP per a usar amb eGroupWare
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	ca	Hauria de tenir una longitud al voltant dels 30 bytes.<br />Nota: El valor per defecte ha estat generat de manera aleatÚria.
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	ca	Hi ha hagut un problema per connectar amb el teu servidor de LDAP. <br />per favor, comprova la teva configuraci√≥ de servidor LDAP
+this has to be outside the webservers document-root!!!	setup	ca	Aix√≤ ha d'estar fora de l'arrel de documents dels servidors web!!!
+this might take a while, please wait ...	setup	ca	Aix√≤ pot trigar una estona, espereu si us plau ...
+this program lets you backup your database, schedule a backup or restore it.	setup	ca	Aquest programa et permet fer c√≤pies de seguretat de la teva base de dades, programar una c√≤pia de seguretat o restaurar-la.
+this program will convert your database to a new system-charset.	setup	ca	Aquest programa convertir√† la base de dades a un nou joc de car√†cters del sistema.
+this program will help you upgrade or install different languages for egroupware	setup	ca	Aquest programa us ajudar√† a actualitzar o instal¬∑lar els diferents idiomes per a eGroupWare
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ca	Aquesta secci√≥ intentar√† exportar els usuaris i grups de les taules de comptes d'eGroupWare a l'arbre LDAP
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	ca	Aquesta secci√≥ us ajudar√† a importar usuaris i grups de l'arbre LDAP a les taules de comptes d'eGroupWare
+this section will help you setup your ldap accounts for use with egroupware	setup	ca	Aquesta secci√≥ us ajudar√† a configurar els comptes LDAP per a usar amb eGroupWare
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	ca	Hauria de tenir una longitud al voltant dels 30 bytes.<br />Nota: El valor per defecte ha estat generat de manera aleat√≤ria.
 this stage is completed<br />	setup	ca	Aquest nivell s'ha completat<br />
-to a version it does not know about	setup	ca	a una versiÛ que no coneix
-to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	ca	per permetre la contrasenya d'autentificaciÛ, afegeix la lÌnia seg¸ent al teu pg_hba.conf (per damunt les altres) I reinicia postgres:
-to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	ca	Per canviar el joc de car‡cters: fes una cÚpia de seguretat de la teva base de dades, desinstal∑la totes les aplicacions i reinstal∑la la cÚpia de seguretat amb l'opciÛ "converteix cÚpia de seguretat al joc de car‡cters triat" seleccionat.
+to a version it does not know about	setup	ca	a una versi√≥ que no coneix
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	ca	per permetre la contrasenya d'autentificaci√≥, afegeix la l√≠nia seg√ºent al teu pg_hba.conf (per damunt les altres) I reinicia postgres:
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	ca	Per canviar el joc de car√†cters: fes una c√≤pia de seguretat de la teva base de dades, desinstal¬∑la totes les aplicacions i reinstal¬∑la la c√≤pia de seguretat amb l'opci√≥ "converteix c√≤pia de seguretat al joc de car√†cters triat" seleccionat.
 to setup 1 admin account and 3 demo accounts.	setup	ca	per a configurar un compte d'administrador i 3 de convidat
-top	setup	ca	capÁalera
+top	setup	ca	cap√ßalera
 translations added	setup	ca	Traduccions afegides
 translations removed	setup	ca	Traduccions esborrades
 translations upgraded	setup	ca	Traduccions actualitzades
 true	setup	ca	Cert
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ca	Intenteu configurar php per a suportar un dels esmentats SGBD, o instal∑leu eGroupWare manualment.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ca	Intenteu configurar php per a suportar un dels esmentats SGBD, o instal¬∑leu eGroupWare manualment.
 two weeks	setup	ca	dues setmanes
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	ca	Desafortunadament alguns paquets PHP/Apache tenen problemes amb aixÚ (Apache mor i no pots tornar a entrar).
-uninstall	setup	ca	desinstal∑lar
-uninstall all applications	setup	ca	Desinstal∑lar totes les aplicacions
-uninstalled	setup	ca	desinstal∑lat
+unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	ca	Desafortunadament alguns paquets PHP/Apache tenen problemes amb aix√≤ (Apache mor i no pots tornar a entrar).
+uninstall	setup	ca	desinstal¬∑lar
+uninstall all applications	setup	ca	Desinstal¬∑lar totes les aplicacions
+uninstalled	setup	ca	desinstal¬∑lat
 upgrade	setup	ca	Actualitzar
 upgrade all	setup	ca	Actualitzar tot
 upgraded	setup	ca	actualitzat
 upgrading tables	setup	ca	Actualitzant taules
-upload backup	setup	ca	carrega cÚpia de seguretat
-uploads a backup and installs it on your db	setup	ca	carrega una cÚpia de seguretat i la instal∑la a la vostra BBDD
-uploads a backup to the backup-dir, from where you can restore it	setup	ca	carrega una cÚpia de seguretat al directori de cÚpies de seguretat, des d'on la podreu restaurar
-use cookies to pass sessionid	setup	ca	Usar galetes per a passar l'id de sessiÛ
+upload backup	setup	ca	carrega c√≤pia de seguretat
+uploads a backup and installs it on your db	setup	ca	carrega una c√≤pia de seguretat i la instal¬∑la a la vostra BBDD
+uploads a backup to the backup-dir, from where you can restore it	setup	ca	carrega una c√≤pia de seguretat al directori de c√≤pies de seguretat, des d'on la podreu restaurar
+use cookies to pass sessionid	setup	ca	Usar galetes per a passar l'id de sessi√≥
 use pure html compliant code (not fully working yet)	setup	ca	Usar codi compatible HTML pur (no funciona completament encara)
 user account prefix	setup	ca	Prefix de compte d'usuari
-user for smtp-authentication (leave it empty if no auth required)	setup	ca	Usuari per autentificaciÛ (deixa-ho buit si no requereix autentificaciÛ)
-usernames are casesensitive	setup	ca	Els noms d'usuari sÛn sensibles a maj˙scules
-users choice	setup	ca	ElecciÛ de l'usuari
+user for smtp-authentication (leave it empty if no auth required)	setup	ca	Usuari per autentificaci√≥ (deixa-ho buit si no requereix autentificaci√≥)
+usernames are casesensitive	setup	ca	Els noms d'usuari s√≥n sensibles a maj√∫scules
+users choice	setup	ca	Elecci√≥ de l'usuari
 utf-8 (unicode)	setup	ca	utf-8 (Unicode)
-version	setup	ca	versiÛ
+version	setup	ca	versi√≥
 version mismatch	setup	ca	Disparitat de versions
 view	setup	ca	Vista
 virtual mail manager (login-name includes domain)	setup	ca	Gestor de correu virtual (el nom d'entrada inclou el domini)
-warning!	setup	ca	AtenciÛ!!
+warning!	setup	ca	Atenci√≥!!
 we can proceed	setup	ca	Podem procedir
-we will automatically update your tables/records to %1	setup	ca	Actualitzarem autom‡ticament les vostres taules/registres a %1
-we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ca	Ara executarem una sËrie de proves que duraran uns pocs minuts. Pitjeu sobre l'enllaÁ d'abaix per continuar.
-welcome to the egroupware installation	setup	ca	Benvinguts a la Instal∑laciÛ de eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	ca	Quin tipus de gestor de sessions vols utilitzar (el gestor de sessions de PHP funcionar‡ millor)?
+we will automatically update your tables/records to %1	setup	ca	Actualitzarem autom√†ticament les vostres taules/registres a %1
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ca	Ara executarem una s√®rie de proves que duraran uns pocs minuts. Pitjeu sobre l'enlla√ß d'abaix per continuar.
+welcome to the egroupware installation	setup	ca	Benvinguts a la Instal¬∑laci√≥ de eGroupWare
+what type of sessions management do you want to use (php session management may perform better)?	setup	ca	Quin tipus de gestor de sessions vols utilitzar (el gestor de sessions de PHP funcionar√† millor)?
 which database type do you want to use with egroupware?	setup	ca	Quin tipus de base de dades voleu usar amb eGroupWare?
 world readable	setup	ca	pot ser llegit per tothom
 world writable	setup	ca	pot ser modificat per tothom
-would you like egroupware to cache the phpgw info array ?	setup	ca	Voleu que eGroupWare desi en memÚria cau la matriu d'informaciÛ phpgw?
-would you like egroupware to check for a new version<br />when admins login ?	setup	ca	Vols que eGroupware comprovi si hi ha una nova versiÛ<br />quan l'administrador entri?
-would you like to show each application's upgrade status ?	setup	ca	Voleu mostrar l'estat de l'actualitzaciÛ de cada aplicaciÛ?
+would you like egroupware to cache the phpgw info array ?	setup	ca	Voleu que eGroupWare desi en mem√≤ria cau la matriu d'informaci√≥ phpgw?
+would you like egroupware to check for a new version<br />when admins login ?	setup	ca	Vols que eGroupware comprovi si hi ha una nova versi√≥<br />quan l'administrador entri?
+would you like to show each application's upgrade status ?	setup	ca	Voleu mostrar l'estat de l'actualitzaci√≥ de cada aplicaci√≥?
 writable by the webserver	setup	ca	pot ser modificat pel servidor web
-write config	setup	ca	Escriure configuraciÛ
+write config	setup	ca	Escriure configuraci√≥
 year	setup	ca	any
-yes	setup	ca	SÌ
-yes, with lowercase usernames	setup	ca	SÌ, amb nom d'usuaris en min˙scules
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ca	Pareix que executes una versiÛ pre-beta d'eGroupware.<br />Aquestes versions ja no tenen suport i no hi ha cap ruta per actualitzar-les a la instal∑laciÛ.<br /> Potser t'estimes mÈs actualitzar primer a la versiÛ 0.9.10 (la darrera versiÛ que suporta actualitzacions pre-beta) <br /> i desprÈs actualitzar a partir de la versiÛ actual.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ca	Pareix que executes una versiÛ pre-beta d'eGroupware.<br />…s recomanable que actualitzis a una versiÛ nova. <br />Les versions antigues de PHP poden fer que eGroupware no funcioni correctament, o gens ni mica. <br /><br />Per favor, actualitza a la darrera versiÛ %1
-you appear to be running version %1 of egroupware	setup	ca	Sembla que esteu executant la versiÛ %1 d'eGroupWare
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	ca	Sembla que esteu usant una versiÛ de PHP anterior a la 4.1.0. Necessiteu tenir 4.1.0 o superior.
+yes	setup	ca	S√≠
+yes, with lowercase usernames	setup	ca	S√≠, amb nom d'usuaris en min√∫scules
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ca	Pareix que executes una versi√≥ pre-beta d'eGroupware.<br />Aquestes versions ja no tenen suport i no hi ha cap ruta per actualitzar-les a la instal¬∑laci√≥.<br /> Potser t'estimes m√©s actualitzar primer a la versi√≥ 0.9.10 (la darrera versi√≥ que suporta actualitzacions pre-beta) <br /> i despr√©s actualitzar a partir de la versi√≥ actual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ca	Pareix que executes una versi√≥ pre-beta d'eGroupware.<br />√âs recomanable que actualitzis a una versi√≥ nova. <br />Les versions antigues de PHP poden fer que eGroupware no funcioni correctament, o gens ni mica. <br /><br />Per favor, actualitza a la darrera versi√≥ %1
+you appear to be running version %1 of egroupware	setup	ca	Sembla que esteu executant la versi√≥ %1 d'eGroupWare
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	ca	Sembla que esteu usant una versi√≥ de PHP anterior a la 4.1.0. Necessiteu tenir 4.1.0 o superior.
 you appear to have %1 support.	setup	ca	Pareix que tens suport %1.
 you appear to have php session support. enabling php sessions.	setup	ca	Pareix que tens suport de sessions PHP. Habilitant sessions PHP.
 you appear to have xml support enabled	setup	ca	Sembla que teniu activat el suport de XML
-you are ready for this stage, but this stage is not yet written.<br />	setup	ca	Est‡s a punt per a aquest nivell, perÚ aquest nivell esncara no s'ha guardat.<br />
-you can install it by running:	setup	ca	Ho pots instal∑lar executant:
-you didn't enter a config password for domain %1	setup	ca	No heu entrat una contrasenya de configuraciÛ per al domini %1
-you didn't enter a config username for domain %1	setup	ca	No heu entrat un nom d'usuari de configuraciÛ per al domini %1
-you didn't enter a header admin password	setup	ca	No heu entrat una contrasenya per a l'administraciÛ de capceleres
-you didn't enter a header admin username	setup	ca	No heu entrat un nom d'usuari per a l'administraciÛ de capceleres
-you do not have any languages installed. please install one now <br />	setup	ca	No tens cap idioma instal∑lat. Per favor, instal∑la'n un ara <br />
+you are ready for this stage, but this stage is not yet written.<br />	setup	ca	Est√†s a punt per a aquest nivell, per√≤ aquest nivell esncara no s'ha guardat.<br />
+you can install it by running:	setup	ca	Ho pots instal¬∑lar executant:
+you didn't enter a config password for domain %1	setup	ca	No heu entrat una contrasenya de configuraci√≥ per al domini %1
+you didn't enter a config username for domain %1	setup	ca	No heu entrat un nom d'usuari de configuraci√≥ per al domini %1
+you didn't enter a header admin password	setup	ca	No heu entrat una contrasenya per a l'administraci√≥ de capceleres
+you didn't enter a header admin username	setup	ca	No heu entrat un nom d'usuari per a l'administraci√≥ de capceleres
+you do not have any languages installed. please install one now <br />	setup	ca	No tens cap idioma instal¬∑lat. Per favor, instal¬∑la'n un ara <br />
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	ca	Encara no has creat el teu header.inc.php!<br /> El pots crear ara.
 you have successfully logged out	setup	ca	Us heu desconnectat correctament.
 you must enter a username for the admin	setup	ca	Heu d'introduir un nom d'usuari per a l'administrador
 you need to add some domains to your header.inc.php.	setup	ca	Necessiteu afegir alguns dominis a l'arxiu header.inc.php.
-you need to select your current charset!	setup	ca	Heu de seleccionar el joc de car‡cters actual!
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	ca	Podeu desintalar-la i tornar-la a instal∑lar, o podeu intentar una reparaciÛ manual
+you need to select your current charset!	setup	ca	Heu de seleccionar el joc de car√†cters actual!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	ca	Podeu desintalar-la i tornar-la a instal¬∑lar, o podeu intentar una reparaci√≥ manual
 you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	ca	Necessitareu carregar l'esquema adient dins el vostre servidor ldap - veure <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
-you're using an old configuration file format...	setup	ca	Esteu usant un arxiu de configuraciÛ amb format antic
-you're using an old header.inc.php version...	setup	ca	Esteu usant una versiÛ antiga de l'arxiu header.inc.php
+you're using an old configuration file format...	setup	ca	Esteu usant un arxiu de configuraci√≥ amb format antic
+you're using an old header.inc.php version...	setup	ca	Esteu usant una versi√≥ antiga de l'arxiu header.inc.php
 your applications are current	setup	ca	Les vostres aplicacions estan actualitzades
-your backup directory '%1' %2	setup	ca	El vostre directori de cÚopies de seguretat '%1' %2
+your backup directory '%1' %2	setup	ca	El vostre directori de c√≤opies de seguretat '%1' %2
 your database does not exist	setup	ca	La vostra base de dades no existeix
 your database is not working!	setup	ca	La vostra base de dades no funciona!!
-your database is working, but you dont have any applications installed	setup	ca	La vostra base de dades est‡ funcionant, perÚ no tÈ aplicacions instal∑lades
-your egroupware api is current	setup	ca	La teva API eGroupware est‡ actualitzada
+your database is working, but you dont have any applications installed	setup	ca	La vostra base de dades est√† funcionant, per√≤ no t√© aplicacions instal¬∑lades
+your egroupware api is current	setup	ca	La teva API eGroupware est√† actualitzada
 your files directory '%1' %2	setup	ca	El vostre directori de fitxers '%1' %2
-your header admin password is not set. please set it now!	setup	ca	La contrasenya d'administrador de capceleres NO est‡ configurada. Si us plau, entreu-ne una ara.
-your header.inc.php needs upgrading.	setup	ca	El vostre header.inc.php necessita actualitzaciÛ
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ca	El teu header.inc.php necessita actualitzar-se.<br /><blink><b class="msg">ATENCI”!</b></blink><br /><b>FES C“PIES DE SEGURETAT!</b>
-your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	ca	La vostra instal∑laciÛ de PHP no te el suport GD adient. Necessiteu la llibreria gd versiÛ 1.8 o superior per a veure els diagrames de Gantt als projectes.
+your header admin password is not set. please set it now!	setup	ca	La contrasenya d'administrador de capceleres NO est√† configurada. Si us plau, entreu-ne una ara.
+your header.inc.php needs upgrading.	setup	ca	El vostre header.inc.php necessita actualitzaci√≥
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ca	El teu header.inc.php necessita actualitzar-se.<br /><blink><b class="msg">ATENCI√ì!</b></blink><br /><b>FES C√íPIES DE SEGURETAT!</b>
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	ca	La vostra instal¬∑laci√≥ de PHP no te el suport GD adient. Necessiteu la llibreria gd versi√≥ 1.8 o superior per a veure els diagrames de Gantt als projectes.
 your tables are current	setup	ca	Les vostres taules estan actualitzades
-your tables will be dropped and you will lose data	setup	ca	Les vostres taules s'esborraran i perdreu la informaciÛ que continguin!!
+your tables will be dropped and you will lose data	setup	ca	Les vostres taules s'esborraran i perdreu la informaci√≥ que continguin!!
 your temporary directory '%1' %2	setup	ca	El vostre directori temporal '%1' %2
 

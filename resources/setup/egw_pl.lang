@@ -2,100 +2,100 @@ accessories of	resources	pl	akcesoria
 accessories:	resources	pl	Akcesoria:
 actions	resources	pl	Polecenia
 add accessory	resources	pl	Dodaj akcesorium
-add resource	resources	pl	Dodaj zasób
+add resource	resources	pl	Dodaj zasÃ³b
 add resources	resources	pl	dodaj zasoby
 administrator	resources	pl	Administrator
 all categories	resources	pl	wszystkie kategorie
 book	resources	pl	Rezerwuj
-book selected resources	resources	pl	rezerwowaæ wybrane zasoby
-book this resource	resources	pl	Rezerwuj ten zasób
+book selected resources	resources	pl	rezerwowaÄ‡ wybrane zasoby
+book this resource	resources	pl	Rezerwuj ten zasÃ³b
 bookable	resources	pl	Do zarezerwowania
-buy this article	resources	pl	Kup ten artyku³
-buy this resource	resources	pl	Kup ten zasób
+buy this article	resources	pl	Kup ten artykuÅ‚
+buy this resource	resources	pl	Kup ten zasÃ³b
 buyable	resources	pl	Do kupienia
 categories admin	resources	pl	Kategorie administratora
 category:	resources	pl	Kategoria
 check all	resources	pl	Zaznacz wszysto
 choose categories admin	resources	pl	wybierz kategorie administratora
 clear selection	resources	pl	odhacz wybrane elementy
-configure access permissions	admin	pl	Konfiguruj Prawa Dostêpu
-create new accessory for this resource	resources	pl	Utwórz nowe akcesoriu dla tego zasobu
-create new links	resources	pl	Utwórz nowe odsy³acze
-delete selected resources	resources	pl	usuñ wybrane zasoby
-delete this entry	resources	pl	Usuñ ten wpis
-description (short)	resources	pl	Opis (krótki)
-direct booking permissions	resources	pl	Pozwolenie na bezpo¶redni± rezerwacje
-don't use vfs (this will need a symlink --> see readme)	resources	pl	Nie u¿ywaj 'VFS' (to bêdzie wymagaæ odno¶ników symbolicznych --> patrz README)
+configure access permissions	admin	pl	Konfiguruj Prawa DostÄ™pu
+create new accessory for this resource	resources	pl	UtwÃ³rz nowe akcesoriu dla tego zasobu
+create new links	resources	pl	UtwÃ³rz nowe odsyÅ‚acze
+delete selected resources	resources	pl	usuÅ„ wybrane zasoby
+delete this entry	resources	pl	UsuÅ„ ten wpis
+description (short)	resources	pl	Opis (krÃ³tki)
+direct booking permissions	resources	pl	Pozwolenie na bezpoÅ›redniÄ… rezerwacje
+don't use vfs (this will need a symlink --> see readme)	resources	pl	Nie uÅ¼ywaj 'VFS' (to bÄ™dzie wymagaÄ‡ odnoÅ›nikÃ³w symbolicznych --> patrz README)
 edit this entry	resources	pl	Edytuj ten wpis
-existing links	resources	pl	Istniej±ce odsy³acze
-general	resources	pl	Ogólnie
-general informations about resource	resources	pl	Ogólne informacje o zasobie
-gernal resource	resources	pl	ogólne zasony
-how many of the resources are useable?	resources	pl	jaka ilo¶æ zasobów jest do u¿ytku?
-how many of them are useable?	resources	pl	Ile z nich jest do u¿ytku?
-how many of this resource are usable	resources	pl	Jaka ilo¶æ tego zasobu jest do u¿ytku?
-how many of this resource exists	resources	pl	Jaka ilo¶æ tego zasobu istnieje
+existing links	resources	pl	IstniejÄ…ce odsyÅ‚acze
+general	resources	pl	OgÃ³lnie
+general informations about resource	resources	pl	OgÃ³lne informacje o zasobie
+gernal resource	resources	pl	ogÃ³lne zasony
+how many of the resources are useable?	resources	pl	jaka iloÅ›Ä‡ zasobÃ³w jest do uÅ¼ytku?
+how many of them are useable?	resources	pl	Ile z nich jest do uÅ¼ytku?
+how many of this resource are usable	resources	pl	Jaka iloÅ›Ä‡ tego zasobu jest do uÅ¼ytku?
+how many of this resource exists	resources	pl	Jaka iloÅ›Ä‡ tego zasobu istnieje
 implies booking permission	resources	pl	implikuje prawa rezerwacji
 implies read permission	resources	pl	implikuje prawa odczytu
 information about storage	resources	pl	Informacje o przechowywaniu
 informations about the location of resource	resources	pl	Informacje o lokalizacji zsobu
 inventory number	resources	pl	Numer inwentarza
 inventory number:	resources	pl	Numer inwentarza
-is resource bookable?	resources	pl	Czy zasób jest do zarezewowania?
-is resource buyable?	resources	pl	Czy zasób jest do kupienia?
-is this resource bookable?	resources	pl	Czy ten zasób jest do zarezerwowania?
-is this resource buyable?	resources	pl	Czy ten zasób jest do kupienia?
-links	resources	pl	Odsy³acze
+is resource bookable?	resources	pl	Czy zasÃ³b jest do zarezewowania?
+is resource buyable?	resources	pl	Czy zasÃ³b jest do kupienia?
+is this resource bookable?	resources	pl	Czy ten zasÃ³b jest do zarezerwowania?
+is this resource buyable?	resources	pl	Czy ten zasÃ³b jest do kupienia?
+links	resources	pl	OdsyÅ‚acze
 location	resources	pl	Lokalizacja
 location of resource	resources	pl	Lokalizacja zasobu
 location:	resources	pl	Lokalizacja:
 name of resource	resources	pl	Nazwa zasobu
 name:	resources	pl	Nazwa:
-no description available	resources	pl	opis niedostêpny
+no description available	resources	pl	opis niedostÄ™pny
 no resources selected	resources	pl	Nie wybrano zasobu
-notify your administrator to correct this situation	resources	pl	Powiadom administratora w celu poprawienia b³êdu
+notify your administrator to correct this situation	resources	pl	Powiadom administratora w celu poprawienia bÅ‚Ä™du
 picture	resources	pl	Obraz
-picture source	resources	pl	¼ród³o obrazu
+picture source	resources	pl	ÅºrÃ³dÅ‚o obrazu
 picture type is not supported, sorry!	resources	pl	Ten rodzaj obrazu nie jest wspierany, przykro nam!
 pictures or resource	resources	pl	Obrazy zasobu
 planer	resources	pl	planer
 prizeing information for booking or buying	resources	pl	Informacje na temat ceny wynajmu lub zakupu
-quantity	resources	pl	Ilo¶æ
-quantity of resource	resources	pl	Ilo¶æ zasobu
-quantity:	resources	pl	Ilo¶æ
+quantity	resources	pl	IloÅ›Ä‡
+quantity of resource	resources	pl	IloÅ›Ä‡ zasobu
+quantity:	resources	pl	IloÅ›Ä‡
 read calendar permissions	resources	pl	Czytaj pozwolenia Kalendarza
 read permissions	resources	pl	Pozwolenie odczytu
-related links	resources	pl	Powi±zane odsy³acze
+related links	resources	pl	PowiÄ…zane odsyÅ‚acze
 resources	common	pl	zasoby
-resources list	resources	pl	lista zasobów
+resources list	resources	pl	lista zasobÃ³w
 responsible:	resources	pl	Odpowiedzialny:
 saves entry and exits	resources	pl	Zachowuje wpis i wychodzi
-select a category	resources	pl	Wybierz kategoriê
-select resource	resources	pl	wybierz zasób
+select a category	resources	pl	Wybierz kategoriÄ™
+select resource	resources	pl	wybierz zasÃ³b
 select resources	common	pl	Wybierz zasoby
-select/deselect all	resources	pl	wybierz/cofnij wybór wszystkiego
-short description	resources	pl	Krótki opis
-short description of resource	resources	pl	Krótki opis zasobu
-show calendar of resource	resources	pl	Poka¿ kalendarz zasobu
-something went wrong by deleting resource	resources	pl	Co¶ posz³o nie tak przy usuwaniu zasobu
-something went wrong by saving resource	resources	pl	Co¶ poszlo nie tak przy zapisywaniu zasobu
+select/deselect all	resources	pl	wybierz/cofnij wybÃ³r wszystkiego
+short description	resources	pl	KrÃ³tki opis
+short description of resource	resources	pl	KrÃ³tki opis zasobu
+show calendar of resource	resources	pl	PokaÅ¼ kalendarz zasobu
+something went wrong by deleting resource	resources	pl	CoÅ› poszÅ‚o nie tak przy usuwaniu zasobu
+something went wrong by saving resource	resources	pl	CoÅ› poszlo nie tak przy zapisywaniu zasobu
 storage inforation	resources	pl	Informacje o przechowywaniu
 storage information	resources	pl	Informacje o przechowywaniu
 storage information:	resources	pl	Informacje o przechowywaniu:
 the calendar of this resource	resources	pl	Kolendarz tego zasobu
-this module displays the resources app	resources	pl	Ten modu³ pokazuje aplikacjê do zasobów
-use general resources icon	resources	pl	U¿yj domy¶lnej ikonki zasobów
-use own picture	resources	pl	U¿yj w³asnego obrazu
-use the category's icon	resources	pl	U¿yj ikonki kategorii
-useable	resources	pl	do u¿ytku
-useable:	resources	pl	Do u¿ytku:
-view accessories for this resource	resources	pl	Poka¿ akcesoria tego zasobu
-view this entry	resources	pl	Poka¿ ten wpis
+this module displays the resources app	resources	pl	Ten moduÅ‚ pokazuje aplikacjÄ™ do zasobÃ³w
+use general resources icon	resources	pl	UÅ¼yj domyÅ›lnej ikonki zasobÃ³w
+use own picture	resources	pl	UÅ¼yj wÅ‚asnego obrazu
+use the category's icon	resources	pl	UÅ¼yj ikonki kategorii
+useable	resources	pl	do uÅ¼ytku
+useable:	resources	pl	Do uÅ¼ytku:
+view accessories for this resource	resources	pl	PokaÅ¼ akcesoria tego zasobu
+view this entry	resources	pl	PokaÅ¼ ten wpis
 web-page of resource	resources	pl	Strona internetowa zasobu
 web-site for this resource	resources	pl	Serwis internetowy tego zasobu
-where to find this resource?	resources	pl	Gdzie znale¶æ ten zasób?
-which category does this resource belong to?	resources	pl	Do jakiej kategori nale¿y ten zasób?
+where to find this resource?	resources	pl	Gdzie znaleÅ›Ä‡ ten zasÃ³b?
+which category does this resource belong to?	resources	pl	Do jakiej kategori naleÅ¼y ten zasÃ³b?
 write permissions	resources	pl	Pozwolenie zapisu
-you are not permitted to edit this reource!	resources	pl	Nie masz zezwolenia na edycjê tego zasobu!
-you are not permitted to get information about this resource!	resources	pl	Nie masz zezwolenia by otrzymaæ informacjê na temat tego zasobu!
-you chose more resources than available	resources	pl	Wybra³e¶ wiêcej zasobów ni¿ jest dostêpnych
+you are not permitted to edit this reource!	resources	pl	Nie masz zezwolenia na edycjÄ™ tego zasobu!
+you are not permitted to get information about this resource!	resources	pl	Nie masz zezwolenia by otrzymaÄ‡ informacjÄ™ na temat tego zasobu!
+you chose more resources than available	resources	pl	WybraÅ‚eÅ› wiÄ™cej zasobÃ³w niÅ¼ jest dostÄ™pnych

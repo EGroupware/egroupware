@@ -1,83 +1,83 @@
-accessories of	resources	de	Zubehör von
-accessories:	resources	de	Zubehör:
+accessories of	resources	de	ZubehÃ¶r von
+accessories:	resources	de	ZubehÃ¶r:
 actions	resources	de	Aktionen
-add accessory	resources	de	Zubehör hinzufügen
-add resource	resources	de	Ressource hinzufügen
-add resources	resources	de	Ressourcen hinzufügen
+add accessory	resources	de	ZubehÃ¶r hinzufÃ¼gen
+add resource	resources	de	Ressource hinzufÃ¼gen
+add resources	resources	de	Ressourcen hinzufÃ¼gen
 administrator	resources	de	Verwalter
 all categories	resources	de	Alle Kategorien
 book	resources	de	Buchen
-book selected resources	resources	de	Ausgewählte Ressourcen buchen
+book selected resources	resources	de	AusgewÃ¤hlte Ressourcen buchen
 book this resource	resources	de	Ressource buchen
 bookable	resources	de	buchbar
 buy this article	resources	de	Diesen Artikel kaufen
 buy this resource	resources	de	Diese Ressource kaufen
-buyable	resources	de	käuflich
+buyable	resources	de	kÃ¤uflich
 categories admin	resources	de	Verwalter der Kategorie
 category:	resources	de	Kategorie
-check all	resources	de	Alle auswählen
-choose categories admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
-clear selection	resources	de	Auswahl löschen
+check all	resources	de	Alle auswÃ¤hlen
+choose categories admin	resources	de	WÃ¤hlen Sie einen Verwalter fÃ¼r diese Kategorie
+clear selection	resources	de	Auswahl lÃ¶schen
 configure access permissions	resources	de	Zugangseinstellungen konfigurieren
-create new accessory for this resource	resources	de	Neues Zubehör zu dieser Ressource hinzufügen
-create new links	resources	de	Neue Verknüpfung erstellen
-delete selected resources	resources	de	Ausgewählte Ressourcen löschen
-delete this entry	resources	de	Diesen Eintrag löschen
+create new accessory for this resource	resources	de	Neues ZubehÃ¶r zu dieser Ressource hinzufÃ¼gen
+create new links	resources	de	Neue VerknÃ¼pfung erstellen
+delete selected resources	resources	de	AusgewÃ¤hlte Ressourcen lÃ¶schen
+delete this entry	resources	de	Diesen Eintrag lÃ¶schen
 description (short)	resources	de	Kurzbeschreibung
 direct booking permissions	resources	de	Erlaubnis direkt zu buchen
 don't use vfs (this will need a symlink --> see readme)	resources	de	Vfs nicht benutzen. (Dies erfordert einen symlink --> siehe README)
 edit this entry	resources	de	Diesen Eintrag bearbeiten
-existing links	resources	de	Bestehende Verknüpfungen
+existing links	resources	de	Bestehende VerknÃ¼pfungen
 general	resources	de	Generell
-general informations about resource	resources	de	Generelle Informationen über diese Ressource
+general informations about resource	resources	de	Generelle Informationen Ã¼ber diese Ressource
 gernal resource	resources	de	Generelle Ressource
-how many of the resources are useable?	resources	de	Stückzahl der nutzbaren Ressourcen
-how many of them are useable?	resources	de	Stückzahl der nutzbaren Ressourcen
-how many of this resource are usable	resources	de	Stückzahl der nutzbaren Ressourcen
-how many of this resource exists	resources	de	Stückzahl der existierenden Ressourcen
+how many of the resources are useable?	resources	de	StÃ¼ckzahl der nutzbaren Ressourcen
+how many of them are useable?	resources	de	StÃ¼ckzahl der nutzbaren Ressourcen
+how many of this resource are usable	resources	de	StÃ¼ckzahl der nutzbaren Ressourcen
+how many of this resource exists	resources	de	StÃ¼ckzahl der existierenden Ressourcen
 implies booking permission	resources	de	Impliziert Buchungsberechtigung
 implies read permission	resources	de	Impliziert Leseberechtigung
 information about storage	resources	de	Informationen zur Lagerung
-informations about the location of resource	resources	de	Informationen über den Lagerort der Ressource
+informations about the location of resource	resources	de	Informationen Ã¼ber den Lagerort der Ressource
 inventory number	resources	de	Inventarnummer
 inventory number:	resources	de	Inventarnummer:
 is resource bookable?	resources	de	Ist diese Ressource buchbar?
-is resource buyable?	resources	de	Ist diese Ressource käuflich?
+is resource buyable?	resources	de	Ist diese Ressource kÃ¤uflich?
 is this resource bookable?	resources	de	Ist diese Ressource buchbar?
-is this resource buyable?	resources	de	Ist diese Ressource käuflich?
-links	resources	de	Verknüpfungen
+is this resource buyable?	resources	de	Ist diese Ressource kÃ¤uflich?
+links	resources	de	VerknÃ¼pfungen
 location	resources	de	Lagerort
 location of resource	resources	de	Lagerort der Ressource
 location:	resources	de	Lagerort:
 name of resource	resources	de	Name der Ressource
 name:	resources	de	Name:
 no description available	resources	de	Keine Beschreibung vorhanden
-no resources selected	resources	de	Keine Ressource ausgewählt
-notify your administrator to correct this situation	resources	de	Benachrichtigen Sie ihren Administrator um diese Situation zu lösen
+no resources selected	resources	de	Keine Ressource ausgewÃ¤hlt
+notify your administrator to correct this situation	resources	de	Benachrichtigen Sie ihren Administrator um diese Situation zu lÃ¶sen
 picture	resources	de	Bild
 picture source	resources	de	Quelle des Bildes
-picture type is not supported, sorry!	resources	de	Entschuldigung, dieser Bild-Datei-Typ wird nicht unterstützt
+picture type is not supported, sorry!	resources	de	Entschuldigung, dieser Bild-Datei-Typ wird nicht unterstÃ¼tzt
 pictures or resource	resources	de	Bild der Ressource
 planer	resources	de	Planer
-prizeing information for booking or buying	resources	de	Preisinformation für Buchung und Kauf
-quantity	resources	de	Stückzahl
-quantity of resource	resources	de	Stückzahl der Ressource
-quantity:	resources	de	Stückzahl:
+prizeing information for booking or buying	resources	de	Preisinformation fÃ¼r Buchung und Kauf
+quantity	resources	de	StÃ¼ckzahl
+quantity of resource	resources	de	StÃ¼ckzahl der Ressource
+quantity:	resources	de	StÃ¼ckzahl:
 read calendar permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 related links	resources	de	Siehe auch
 resources	common	de	Ressourcen
 resources list	resources	de	Ressourcen Liste
 responsible:	resources	de	Verantwortlich:
-saves entry and exits	resources	de	Speichern und Schließen
-select a category	resources	de	Wählen sie eine Kategorie
-select resource	resources	de	Ressource auswählen
-select resources	common	de	Ressourcen auswählen
-select/deselect all	resources	de	Alle auswählen / Auswahl aufheben
+saves entry and exits	resources	de	Speichern und SchlieÃŸen
+select a category	resources	de	WÃ¤hlen sie eine Kategorie
+select resource	resources	de	Ressource auswÃ¤hlen
+select resources	common	de	Ressourcen auswÃ¤hlen
+select/deselect all	resources	de	Alle auswÃ¤hlen / Auswahl aufheben
 short description	resources	de	Kurzbeschreibung
 short description of resource	resources	de	Kurzbeschreibung der Ressource
 show calendar of resource	resources	de	Kalender der Ressource anzeigen
-something went wrong by deleting resource	resources	de	Beim Löschen der Ressource gab es ein Problem
+something went wrong by deleting resource	resources	de	Beim LÃ¶schen der Ressource gab es ein Problem
 something went wrong by saving resource	resources	de	Beim Speichern der Ressource gab es ein Problem
 storage inforation	resources	de	Infos zur Lagerung
 storage information	resources	de	Informationen zur Lagerung
@@ -89,13 +89,13 @@ use own picture	resources	de	Eingenes Bild benutzen
 use the category's icon	resources	de	Bild der Kategorie benutzen
 useable	resources	de	Nutzbar
 useable:	resources	de	Nutzbar:
-view accessories for this resource	resources	de	Zeige das Zubehör der Ressource an
+view accessories for this resource	resources	de	Zeige das ZubehÃ¶r der Ressource an
 view this entry	resources	de	Diesen Eintrag anschauen
-web-page of resource	resources	de	Ausführliche Beschreibung der Ressource
-web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource
+web-page of resource	resources	de	AusfÃ¼hrliche Beschreibung der Ressource
+web-site for this resource	resources	de	AusfÃ¼hrliche Beschreibung der Ressource
 where to find this resource?	resources	de	Wo findet man diese Ressource?
-which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource?
+which category does this resource belong to?	resources	de	Zu welcher Kategorie gehÃ¶rt diese Ressource?
 write permissions	resources	de	Schreiberechtigung
 you are not permitted to edit this reource!	resources	de	Sie haben keine Erlaubnis diese Ressource zu bearbeiten
-you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich informationen über diese Ressource anzuschauen
-you chose more resources than available	resources	de	Sie haben mehr Ressourcen ausgewählt als verfügbar sind
+you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich informationen Ã¼ber diese Ressource anzuschauen
+you chose more resources than available	resources	de	Sie haben mehr Ressourcen ausgewÃ¤hlt als verfÃ¼gbar sind

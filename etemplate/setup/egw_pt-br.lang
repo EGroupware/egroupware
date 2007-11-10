@@ -1,42 +1,42 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	pt-br	%1 (%2 nova) Mensagens escritas para AplicaÁıes '%3' e Idiomas '%4'
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	pt-br	%1 (%2 nova) Mensagens escritas para Aplica√ß√µes '%3' e Idiomas '%4'
 %1 etemplates deleted	etemplate	pt-br	%1 eModelo(s) removido(s)
-%1 etemplates for application '%2' dumped to '%3'	etemplate	pt-br	%1 eModelo para a aplicaÁ„o '%2' copiado para '%3'
+%1 etemplates for application '%2' dumped to '%3'	etemplate	pt-br	%1 eModelo para a aplica√ß√£o '%2' copiado para '%3'
 %1 etemplates found	etemplate	pt-br	%1 eModelo encontrados
-%1 matches on search criteria	etemplate	pt-br	%1 encontrados para os critÈrios da busca
-%1 new etemplates imported for application '%2'	etemplate	pt-br	%1 novo eModelo importado para a aplicaÁ„o '%2'
+%1 matches on search criteria	etemplate	pt-br	%1 encontrados para os crit√©rios da busca
+%1 new etemplates imported for application '%2'	etemplate	pt-br	%1 novo eModelo importado para a aplica√ß√£o '%2'
 %s disabled	etemplate	pt-br	%s inativo
-%s needed	etemplate	pt-br	%s necess·rio
-%s notranslation	etemplate	pt-br	%s Sem traduÁ„o
-%s onchange	etemplate	pt-br	%s Sobre alteraÁ„o
+%s needed	etemplate	pt-br	%s necess√°rio
+%s notranslation	etemplate	pt-br	%s Sem tradu√ß√£o
+%s onchange	etemplate	pt-br	%s Sobre altera√ß√£o
 %s readonly	etemplate	pt-br	%s apenas leitura
-'%1' has an invalid format !!!	etemplate	pt-br	'%1' est· em um formato inv·lido !!!
-'%1' is not a valid date !!!	etemplate	pt-br	'%1' n„o È uma data v·lida !!!
-'%1' is not a valid floatingpoint number !!!	etemplate	pt-br	%1' n„o È um n˙mero v·lido para o ponto flutuante!!!
-'%1' is not a valid integer !!!	etemplate	pt-br	%1' n„o È um inteiro v·lido!!!
-a pattern to be searched for	etemplate	pt-br	um padr„o a ser procurado
+'%1' has an invalid format !!!	etemplate	pt-br	'%1' est√° em um formato inv√°lido !!!
+'%1' is not a valid date !!!	etemplate	pt-br	'%1' n√£o √© uma data v√°lida !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	pt-br	%1' n√£o √© um n√∫mero v√°lido para o ponto flutuante!!!
+'%1' is not a valid integer !!!	etemplate	pt-br	%1' n√£o √© um inteiro v√°lido!!!
+a pattern to be searched for	etemplate	pt-br	um padr√£o a ser procurado
 accesskey	etemplate	pt-br	Tecla de atalho
-accesskeys can also be specified with an & in the label (eg. &name)	etemplate	pt-br	Teclas de atalho tambÈm pode ser especificadas com um '&' no rÛtulo (exemplo: &Nome).
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	pt-br	Teclas de atalho tamb√©m pode ser especificadas com um '&' no r√≥tulo (exemplo: &Nome).
 account contactdata	etemplate	pt-br	Dados do contato
-add a new column (after the existing ones)	etemplate	pt-br	Adicionar uma nova coluna (apÛs as existentes)
+add a new column (after the existing ones)	etemplate	pt-br	Adicionar uma nova coluna (ap√≥s as existentes)
 add a new entry of the selected application	etemplate	pt-br	Adicionar um novo registro do aplicativo selecionado
 add a new multi-column index	etemplate	pt-br	Adicionar um index de novas multi-colunas
 add column	etemplate	pt-br	Adicionar Coluna
 add index	etemplate	pt-br	Adicionar Index
 add new	etemplate	pt-br	Adicionar novo
 add table	etemplate	pt-br	Adicionar Tabela
-advanced search	etemplate	pt-br	Pesquisa avanÁada
+advanced search	etemplate	pt-br	Pesquisa avan√ßada
 align	etemplate	pt-br	Alinhar
-alignment of label and input-field in table-cell	etemplate	pt-br	alinhamento da etiqueta e campo de entrada na cÈlula da tabela
-alignment of the v/hbox containing table-cell	etemplate	pt-br	Alinhamento da V/HBox contendo a cÈlula da tabela
+alignment of label and input-field in table-cell	etemplate	pt-br	alinhamento da etiqueta e campo de entrada na c√©lula da tabela
+alignment of the v/hbox containing table-cell	etemplate	pt-br	Alinhamento da V/HBox contendo a c√©lula da tabela
 all days	etemplate	pt-br	Todos os dias
-all operations save the template!	etemplate	pt-br	Todas as operaÁıes salvam o modelo!
+all operations save the template!	etemplate	pt-br	Todas as opera√ß√µes salvam o modelo!
 am	etemplate	pt-br	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pt-br	uma coluna indexada posicionada acima das querys (custa espaÁo no disco)
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pt-br	uma coluna indexada posicionada acima das querys (custa espa√ßo no disco)
 application	etemplate	pt-br	Aplicativo
-application name needed to write a langfile or dump the etemplates !!!	etemplate	pt-br	… preciso o nome da aplicaÁ„o para escrever um arquivo de idioma ou copiar o eModelo!!!
-applies the changes made	etemplate	pt-br	Aplicar as alteraÁıes realizadas
-applies the changes to the given version of the template	etemplate	pt-br	Aplicar as alteraÁıes para a vers„o do modelo informado
-as default	etemplate	pt-br	como padr„o
+application name needed to write a langfile or dump the etemplates !!!	etemplate	pt-br	√â preciso o nome da aplica√ß√£o para escrever um arquivo de idioma ou copiar o eModelo!!!
+applies the changes made	etemplate	pt-br	Aplicar as altera√ß√µes realizadas
+applies the changes to the given version of the template	etemplate	pt-br	Aplicar as altera√ß√µes para a vers√£o do modelo informado
+as default	etemplate	pt-br	como padr√£o
 attach	etemplate	pt-br	anexo
 attach file	etemplate	pt-br	arquivo anexo
 baseline	etemplate	pt-br	Linha base
@@ -46,62 +46,62 @@ border-line-thickness for the table-tag	etemplate	pt-br	Espessura da linha de bo
 bottom	etemplate	pt-br	Fundo
 box	etemplate	pt-br	Caixa
 box...	etemplate	pt-br	Caixa...
-can not have special sql-value null	etemplate	pt-br	n„o h· valor SQL especial NULL
+can not have special sql-value null	etemplate	pt-br	n√£o h√° valor SQL especial NULL
 cancel	etemplate	pt-br	Cancel
-cant delete a single widget from a grid !!!	etemplate	pt-br	N„o È possÌvel remover uma simples cÈlula de uma grade.
-cant delete the only column of a grid !!!	etemplate	pt-br	N„o È possÌvel remover a ˙nica coluna de uma grade.
-cant delete the only row in a grid !!!	etemplate	pt-br	N„o È possÌvel remover a ˙nica linha de uma grade.
+cant delete a single widget from a grid !!!	etemplate	pt-br	N√£o √© poss√≠vel remover uma simples c√©lula de uma grade.
+cant delete the only column of a grid !!!	etemplate	pt-br	N√£o √© poss√≠vel remover a √∫nica coluna de uma grade.
+cant delete the only row in a grid !!!	etemplate	pt-br	N√£o √© poss√≠vel remover a √∫nica linha de uma grade.
 category	etemplate	pt-br	Categoria
-category tree	etemplate	pt-br	¡rvore de categorias
-cellpadding for the table-tag	etemplate	pt-br	Estofamento da cÈlula para a tabela
-cells	etemplate	pt-br	CÈlulas
-cellspacing for the table-tag	etemplate	pt-br	EspaÁamento da cÈlula para a tabela
+category tree	etemplate	pt-br	√Årvore de categorias
+cellpadding for the table-tag	etemplate	pt-br	Estofamento da c√©lula para a tabela
+cells	etemplate	pt-br	C√©lulas
+cellspacing for the table-tag	etemplate	pt-br	Espa√ßamento da c√©lula para a tabela
 center	etemplate	pt-br	Centralizar
 changed	etemplate	pt-br	Alterado
-check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pt-br	marque se o conte˙do est· sÛmente sendo mostrado e n„o alterado (o conte˙do n„o pode ser desfeito!)
-check if field has to be filled by user	etemplate	pt-br	marque se o campo tiver que ser preenchido pelo usu·rio
-checkbox	etemplate	pt-br	Caixa de seleÁ„o
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pt-br	marque se o conte√∫do est√° s√≥mente sendo mostrado e n√£o alterado (o conte√∫do n√£o pode ser desfeito!)
+check if field has to be filled by user	etemplate	pt-br	marque se o campo tiver que ser preenchido pelo usu√°rio
+checkbox	etemplate	pt-br	Caixa de sele√ß√£o
 class	etemplate	pt-br	Classe
-class, valign	etemplate	pt-br	Classe, ValidaÁ„o
+class, valign	etemplate	pt-br	Classe, Valida√ß√£o
 click here to attach the file	etemplate	pt-br	clique aqui para anexar o arquivo
 click here to create the link	etemplate	pt-br	clique aqui para criar o link
 click here to start the search	etemplate	pt-br	Clique aqui para inicar uma pesquisa
 click here to upload the file	etemplate	pt-br	Clique aqui para enviar o arquivo
-click to order after that criteria	etemplate	pt-br	Clique para ordenar em seguida ao critÈrio
-clickable path	etemplate	pt-br	Caminho clic·vel
-closes the window without saving the changes	etemplate	pt-br	Fecha a janela sem salvar as alteraÁıes
+click to order after that criteria	etemplate	pt-br	Clique para ordenar em seguida ao crit√©rio
+clickable path	etemplate	pt-br	Caminho clic√°vel
+closes the window without saving the changes	etemplate	pt-br	Fecha a janela sem salvar as altera√ß√µes
 column...	etemplate	pt-br	Coluna...
 columnname	etemplate	pt-br	Nome da Coluna
-comment	etemplate	pt-br	Coment·rio
+comment	etemplate	pt-br	Coment√°rio
 confirm	etemplate	pt-br	Confirmar
-confirmation message or custom javascript (returning true or false)	etemplate	pt-br	Mensagem de confirmaÁ„o ou javascript personalizado (retornando verdadeiro ou falso).
-confirmation necesary or custom java-script	etemplate	pt-br	ConfirmaÁ„o necess·ria ou javascript personalizado.
+confirmation message or custom javascript (returning true or false)	etemplate	pt-br	Mensagem de confirma√ß√£o ou javascript personalizado (retornando verdadeiro ou falso).
+confirmation necesary or custom java-script	etemplate	pt-br	Confirma√ß√£o necess√°ria ou javascript personalizado.
 contact	etemplate	pt-br	Contato
 contact field to show	etemplate	pt-br	Campo do contato a ser exibido
 contact fields	etemplate	pt-br	Campos de contatos
-contains	etemplate	pt-br	contÈm
-create a new table for the application	etemplate	pt-br	Criar uma nova tabela para aplicaÁ„o
-creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pt-br	criados em um arquivo de idioma inglÍs ('en') da etiqueta e arquivos de ajuda (para a aplicaÁ„o em nome)
+contains	etemplate	pt-br	cont√©m
+create a new table for the application	etemplate	pt-br	Criar uma nova tabela para aplica√ß√£o
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pt-br	criados em um arquivo de idioma ingl√™s ('en') da etiqueta e arquivos de ajuda (para a aplica√ß√£o em nome)
 css class for the table-tag	etemplate	pt-br	Classe CSS para a tabela
 css properties	etemplate	pt-br	Propriedades CSS
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	pt-br	Nome da classe CSS para esta linha, prÈ-ajuste: 'nmh' = NextMatch cabeÁalho, 'nmr' = alternar NM linha, 'nmr0'+'nmr1' NM linhas
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	pt-br	Nome da classe CSS para esta linha, prÈ-ajuste: 'th' = cabeÁalho, 'row' = linha alternada 'row_off'+'row_on'
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	pt-br	Nome da classe CSS para esta linha, pr√©-ajuste: 'nmh' = NextMatch cabe√ßalho, 'nmr' = alternar NM linha, 'nmr0'+'nmr1' NM linhas
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	pt-br	Nome da classe CSS para esta linha, pr√©-ajuste: 'th' = cabe√ßalho, 'row' = linha alternada 'row_off'+'row_on'
 css-styles	etemplate	pt-br	Estilo-CSS
 custom	etemplate	pt-br	Personalizado
 custom fields	etemplate	pt-br	Campos personalizados
 custom javascript for onchange	etemplate	pt-br	Javascript personalizado para OnChange
 cut	etemplate	pt-br	Recortar
-date+time	etemplate	pt-br	Data+Hor·rio
-datum	etemplate	pt-br	ReferÍncia
+date+time	etemplate	pt-br	Data+Hor√°rio
+datum	etemplate	pt-br	Refer√™ncia
 day	etemplate	pt-br	Dia
 days	etemplate	pt-br	Dias
 db ensures that every row has a unique value in that column	etemplate	pt-br	O Bando de Dados assegura que cada linha tenha um valor original nessa coluna
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	pt-br	db-especÌfico opÁıes de index (separados-por-vÌrgula.), ex. mysql(FULLTEXT) or mysql(100) para o comprimento determinado de uma coluna
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	pt-br	db-espec√≠fico op√ß√µes de index (separados-por-v√≠rgula.), ex. mysql(FULLTEXT) or mysql(100) para o comprimento determinado de uma coluna
 db-tools	etemplate	pt-br	DB-Ferramentas
 deck	etemplate	pt-br	Plataforma (interna)
-default	etemplate	pt-br	Padr„o
-delete a single entry by passing the id.	etemplate	pt-br	Remover um registro simples atravÈs do ID.
-delete all selected etemplates, without further inquiry	etemplate	pt-br	remover TODOS eModelos selecionados, SEM requisiÁıes adicionais
+default	etemplate	pt-br	Padr√£o
+delete a single entry by passing the id.	etemplate	pt-br	Remover um registro simples atrav√©s do ID.
+delete all selected etemplates, without further inquiry	etemplate	pt-br	remover TODOS eModelos selecionados, SEM requisi√ß√µes adicionais
 delete and cut save the template!	etemplate	pt-br	Remover e recortar o modelo!
 delete column	etemplate	pt-br	Remover coluna
 delete index	etemplate	pt-br	Remover Index
@@ -110,114 +110,114 @@ delete this column	etemplate	pt-br	Remover esta coluna
 delete this etemplate	etemplate	pt-br	Remover este eModelo
 delete this file	etemplate	pt-br	Remover este arquivo.
 delete this row	etemplate	pt-br	Remover esta linha.
-delete whole column (can not be undone!!!)	etemplate	pt-br	remover coluna inteira (n„o pode ser desfeito!!!)
-deletes the above spez. etemplate from the database, can not be undone	etemplate	pt-br	Remover o eModelo informado acima da base de dados, N√O pode ser desfeito!
+delete whole column (can not be undone!!!)	etemplate	pt-br	remover coluna inteira (n√£o pode ser desfeito!!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	pt-br	Remover o eModelo informado acima da base de dados, N√ÉO pode ser desfeito!
 deletes the etemplate spez. above	etemplate	pt-br	remove o eModelo informado acima
 deletes this column	etemplate	pt-br	Remove estas colunas
 deletes this index	etemplate	pt-br	Remove estes index
-discard changes	etemplate	pt-br	descartar alteraÁıes
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	pt-br	indicado ‡ frente da entrada ou a entrada È inserida para um '%s' na etiqueta (a etiqueta da um Bot„o Submeter ou Arquivo-de-imagem)
-displayed in statusline of browser if input-field gets focus	etemplate	pt-br	indicado na linha de status do navegador se o campo de entrada comeÁar em foco
+discard changes	etemplate	pt-br	descartar altera√ß√µes
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	pt-br	indicado √† frente da entrada ou a entrada √© inserida para um '%s' na etiqueta (a etiqueta da um Bot√£o Submeter ou Arquivo-de-imagem)
+displayed in statusline of browser if input-field gets focus	etemplate	pt-br	indicado na linha de status do navegador se o campo de entrada come√ßar em foco
 displayed in the top line of the groupbox (legend)	etemplate	pt-br	Exibido acima do groupbox (legenda)
-do you want to save the changes you made in table %s?	etemplate	pt-br	Deseja salvar as alteraÁıes efetuadas na tabela %s?
-documentation	etemplate	pt-br	DocumentaÁ„o
-doesn't matter	etemplate	pt-br	n„o importa
-drop a table - this can not be undone	etemplate	pt-br	Apagar a tabela - isto N√O pode ser desfeito
+do you want to save the changes you made in table %s?	etemplate	pt-br	Deseja salvar as altera√ß√µes efetuadas na tabela %s?
+documentation	etemplate	pt-br	Documenta√ß√£o
+doesn't matter	etemplate	pt-br	n√£o importa
+drop a table - this can not be undone	etemplate	pt-br	Apagar a tabela - isto N√ÉO pode ser desfeito
 drop table	etemplate	pt-br	Apagar Tabela
-dump4setup	etemplate	pt-br	Copiar para instalaÁ„o
-duration	etemplate	pt-br	DuraÁ„o
+dump4setup	etemplate	pt-br	Copiar para instala√ß√£o
+duration	etemplate	pt-br	Dura√ß√£o
 edit	etemplate	pt-br	Editar
 edit embeded css styles or of the applications app.css file	etemplate	pt-br	Editar estilos CSS internos ou dos aplicativos em app.css
 edit the etemplate spez. above	etemplate	pt-br	Editar o eModelo informado acima
 edit...	etemplate	pt-br	Editar...
-editable templates - db-tools	etemplate	pt-br	Modelos edit·veis - Ferramentas de Base de Dados
-editable templates - delete template	etemplate	pt-br	Modelos edit·veis - Remover Modelo
-editable templates - editor	etemplate	pt-br	Modelos edit·veis - Editor
-editable templates - search	etemplate	pt-br	Modelos edit·veis - Localizar
-editable templates - show template	etemplate	pt-br	Modelos edit·veis - Visualizar Modelo
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	pt-br	encaixado estivo CSS, ex. '.red { background: red; }' (note o '.' antes do nome-da-classe) ou '@import url(...)' (nomes de classe s„o globais para a p·gina inteira!)
-enable javascript onchange submit	etemplate	pt-br	ativar JavaScript sobre as alteraÁıes submetidas
-enter '' for an empty default, nothing mean no default	etemplate	pt-br	informe '' para campos vazios, nada n„o significa padr„o algum
-enter a search pattern	etemplate	pt-br	Informe um teste padr„o para a busca
+editable templates - db-tools	etemplate	pt-br	Modelos edit√°veis - Ferramentas de Base de Dados
+editable templates - delete template	etemplate	pt-br	Modelos edit√°veis - Remover Modelo
+editable templates - editor	etemplate	pt-br	Modelos edit√°veis - Editor
+editable templates - search	etemplate	pt-br	Modelos edit√°veis - Localizar
+editable templates - show template	etemplate	pt-br	Modelos edit√°veis - Visualizar Modelo
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	pt-br	encaixado estivo CSS, ex. '.red { background: red; }' (note o '.' antes do nome-da-classe) ou '@import url(...)' (nomes de classe s√£o globais para a p√°gina inteira!)
+enable javascript onchange submit	etemplate	pt-br	ativar JavaScript sobre as altera√ß√µes submetidas
+enter '' for an empty default, nothing mean no default	etemplate	pt-br	informe '' para campos vazios, nada n√£o significa padr√£o algum
+enter a search pattern	etemplate	pt-br	Informe um teste padr√£o para a busca
 enter filename to upload and attach, use [browse...] to search for it	etemplate	pt-br	Informe o nome do arquivo para envio e anexe, use [Localizar...] para procurar por ele
-enter the new version number here (> old_version), empty for no update-file	etemplate	pt-br	informe o n˙mero da nova vers„o aqui (> old_version), deixe vazio para n„o atualizar o arquivo
-enter the new version number here (has to be > old_version)	etemplate	pt-br	informe o n˙mero da nova vers„o aqui (tem que ser > old_version)
+enter the new version number here (> old_version), empty for no update-file	etemplate	pt-br	informe o n√∫mero da nova vers√£o aqui (> old_version), deixe vazio para n√£o atualizar o arquivo
+enter the new version number here (has to be > old_version)	etemplate	pt-br	informe o n√∫mero da nova vers√£o aqui (tem que ser > old_version)
 entry saved	etemplate	pt-br	Registro salvo
-error: template not found !!!	etemplate	pt-br	Erro: Modelo n„o encontrado!!!
-error: webserver is not allowed to write into '%1' !!!	etemplate	pt-br	Erro: servidor web n„o possui permiss„o para escrever em '%1' !!!
+error: template not found !!!	etemplate	pt-br	Erro: Modelo n√£o encontrado!!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	pt-br	Erro: servidor web n√£o possui permiss√£o para escrever em '%1' !!!
 error: while saving !!!	etemplate	pt-br	Erro salvando !
-error: writing file (no write-permission for the webserver) !!!	etemplate	pt-br	Erro: Escrevendo o arquivo (n„o existe permiss„o para escrever no servidor) !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	pt-br	Erro: Escrevendo o arquivo (n√£o existe permiss√£o para escrever no servidor) !!!
 etemplate	common	pt-br	eModelo
-etemplate '%1' imported, use save to put it in the database	etemplate	pt-br	eModelo '%1' importado, use Salvar para coloc·-lo na base de dados
+etemplate '%1' imported, use save to put it in the database	etemplate	pt-br	eModelo '%1' importado, use Salvar para coloc√°-lo na base de dados
 etemplate '%1' written to '%2'	etemplate	pt-br	eModelo '%1' escrito para '%2'
 etemplate editor	etemplate	pt-br	Editor de eModelos
-etemplate reference	etemplate	pt-br	ReferÍncia do eModelo
+etemplate reference	etemplate	pt-br	Refer√™ncia do eModelo
 etemplate tutorial	etemplate	pt-br	Tutorial do eModelo
 exchange this row with the one above	etemplate	pt-br	troque esta linha com a acima
 exchange this two columns	etemplate	pt-br	troque estas duas colunas
 export the loaded etemplate into a xml-file	etemplate	pt-br	exportar o eModelo carregado para um arquivo xml
 export xml	etemplate	pt-br	Exportar XML
-extensions loaded:	etemplate	pt-br	Extensıes carregadas:
+extensions loaded:	etemplate	pt-br	Extens√µes carregadas:
 field	etemplate	pt-br	Campo
-field must not be empty !!!	etemplate	pt-br	O campo n„o pode estar vazio!!!
+field must not be empty !!!	etemplate	pt-br	O campo n√£o pode estar vazio!!!
 file	etemplate	pt-br	Arquivo
-file contains more than one etemplate, last one is shown !!!	etemplate	pt-br	O arquivo contÈm mais do que um eModelo, o ˙ltimo ser· mostrado!!!
+file contains more than one etemplate, last one is shown !!!	etemplate	pt-br	O arquivo cont√©m mais do que um eModelo, o √∫ltimo ser√° mostrado!!!
 file writen	etemplate	pt-br	Escrever no Arquivo
 fileupload	etemplate	pt-br	Enviar arquivo
 first	etemplate	pt-br	Primeiro
-floating point	etemplate	pt-br	Ponto de flutuaÁ„o
+floating point	etemplate	pt-br	Ponto de flutua√ß√£o
 foreign key	etemplate	pt-br	Chave externa
 formatted text (html)	etemplate	pt-br	Texto Formatado (HTML)
 go to the first entry	etemplate	pt-br	ir para o primeiro registro
-go to the last entry	etemplate	pt-br	ir para o ˙ltimo registro
-go to the next page of entries	etemplate	pt-br	prÛxima p·gina de registros
-go to the previous page of entries	etemplate	pt-br	p·gina anterior de registros
+go to the last entry	etemplate	pt-br	ir para o √∫ltimo registro
+go to the next page of entries	etemplate	pt-br	pr√≥xima p√°gina de registros
+go to the previous page of entries	etemplate	pt-br	p√°gina anterior de registros
 grid	etemplate	pt-br	Grade
 grid column attributes	etemplate	pt-br	Atributos das colunas da grade
 grid row attributes	etemplate	pt-br	Atributos das linhas da grade
-groupbox	etemplate	pt-br	Caixa de seleÁ„o
+groupbox	etemplate	pt-br	Caixa de sele√ß√£o
 hbox	etemplate	pt-br	HBox
 height	etemplate	pt-br	Altura
 height of row (in % or pixel)	etemplate	pt-br	Altura da linha (em % ou pixel)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	pt-br	altura da linha (em % ou pixel), desativar linha: [! = not]<value>[=<check>] ex.: '!@data' desativa a linha cujo conte˙do seja vazio
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	pt-br	altura da linha (em % ou pixel), desativar linha: [! = not]<value>[=<check>] ex.: '!@data' desativa a linha cujo conte√∫do seja vazio
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	pt-br	Altura da tabela em % ou pixels, para a tag de tabelas (opcional) div
 height, disabled	etemplate	pt-br	Altura, Desativada
 help	etemplate	pt-br	Ajuda
-history log	etemplate	pt-br	Registro do histÛrico
+history log	etemplate	pt-br	Registro do hist√≥rico
 horizontal rule	etemplate	pt-br	Filtro horizontal
 hour	etemplate	pt-br	Hora
 hours	etemplate	pt-br	Horas
-how many entries should the list show	etemplate	pt-br	Quantos items a lista dever· exibir
+how many entries should the list show	etemplate	pt-br	Quantos items a lista dever√° exibir
 html	etemplate	pt-br	Html
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	pt-br	se o campo for desativado uma cÈlula vazia na tabela ser· mostrada, para remoÁ„o (tempor·ria) de um campo/cÈlula
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	pt-br	se o campo for desativado uma c√©lula vazia na tabela ser√° mostrada, para remo√ß√£o (tempor√°ria) de um campo/c√©lula
 image	etemplate	pt-br	Imagem
 import	etemplate	pt-br	Importar
 import an etemplate from a xml-file	etemplate	pt-br	importar um eModelo a partir de um arquivo xml
-import table-definitions from existing db-table	etemplate	pt-br	Importar definiÁıes de tabela a partir de uma base de tabelas existente
+import table-definitions from existing db-table	etemplate	pt-br	Importar defini√ß√µes de tabela a partir de uma base de tabelas existente
 import xml	etemplate	pt-br	Importar XML
-increment version to not overwrite the existing template	etemplate	pt-br	Incrementar vers„o para n„o sobrescrever o modelo existente.
-index/name of returned content (name of the template, link / method for image)	etemplate	pt-br	nome/index do conte˙do recebido (nome do Modelo, Link / MÈtodo para imagem)
+increment version to not overwrite the existing template	etemplate	pt-br	Incrementar vers√£o para n√£o sobrescrever o modelo existente.
+index/name of returned content (name of the template, link / method for image)	etemplate	pt-br	nome/index do conte√∫do recebido (nome do Modelo, Link / M√©todo para imagem)
 indexed	etemplate	pt-br	Indexado
-indexoptions	etemplate	pt-br	OpÁıes de IndexaÁ„o
+indexoptions	etemplate	pt-br	Op√ß√µes de Indexa√ß√£o
 insert a column before	etemplate	pt-br	Inserir uma coluna antes
-insert a column behind	etemplate	pt-br	Inserir uma coluna atr·s
+insert a column behind	etemplate	pt-br	Inserir uma coluna atr√°s
 insert a row above	etemplate	pt-br	Inserir uma linha acima
 insert a row below	etemplate	pt-br	Inserir uma linha abaixo
 insert a widget before	etemplate	pt-br	Inserir widget antes
-insert a widget behind	etemplate	pt-br	Inserir widget atr·s
+insert a widget behind	etemplate	pt-br	Inserir widget atr√°s
 insert new column behind this one	etemplate	pt-br	inserir uma nova coluna antes desta
 insert new column in front of all	etemplate	pt-br	inserir uma nova coluna ao final de todas
-insert new row after this one	etemplate	pt-br	inserir uma nova linha apÛs esta
+insert new row after this one	etemplate	pt-br	inserir uma nova linha ap√≥s esta
 insert new row in front of first line	etemplate	pt-br	inserir uma nova linha antes da primeira linha
 integer	etemplate	pt-br	Inteiro
 key	etemplate	pt-br	Chave
 label	etemplate	pt-br	Etiqueta
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	pt-br	Etiqueta:[negrito][it·lico] Texto:[len][,max] N˙meros:[min][,[max][,len]] T.area:[linhas][,colunas] Botıes.:valor H.Rule:[largura] Templ.:[Indexar ao Conte˙do] Selecionar:[multi seleÁ„o] Data:[valores: ex. 'd-m-Y']
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	pt-br	Etiqueta:[negrito][it√°lico] Texto:[len][,max] N√∫meros:[min][,[max][,len]] T.area:[linhas][,colunas] Bot√µes.:valor H.Rule:[largura] Templ.:[Indexar ao Conte√∫do] Selecionar:[multi sele√ß√£o] Data:[valores: ex. 'd-m-Y']
 lang	etemplate	pt-br	Idioma
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	pt-br	abreviaÁ„o do idioma (exemplo: 'en' para inglÍs) para modelos com idioma especÌfico ("ler seus idiomas configurados ou o padr„o, use 'default' para ler o modelo padr„o")
-last	etemplate	pt-br	⁄ltima
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	pt-br	abrevia√ß√£o do idioma (exemplo: 'en' para ingl√™s) para modelos com idioma espec√≠fico ("ler seus idiomas configurados ou o padr√£o, use 'default' para ler o modelo padr√£o")
+last	etemplate	pt-br	√öltima
 left	etemplate	pt-br	Esquerda
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	pt-br	tamanho para char+varchar, precisıes em: 2, 4, 8 e flutuante: 4, 8
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	pt-br	tamanho para char+varchar, precis√µes em: 2, 4, 8 e flutuante: 4, 8
 link	etemplate	pt-br	Link
 linkapps	etemplate	pt-br	Link de aplicativos
 linkentry	etemplate	pt-br	Entradas de link
@@ -228,170 +228,170 @@ load this template into the editor	etemplate	pt-br	carregar este modelo para o e
 middle	etemplate	pt-br	Meio
 minute	etemplate	pt-br	Minuto
 minutes	etemplate	pt-br	Minutos
-month	etemplate	pt-br	MÍs
+month	etemplate	pt-br	M√™s
 multicolumn indices	etemplate	pt-br	Indices de multicolunas
 name	etemplate	pt-br	Nome
-name of other table where column is a key from	etemplate	pt-br	nome de outras tabelas onde a coluna È uma chave a partir de
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	pt-br	marcar o nome do phpgw-template (ex. verdilak): " = default (ir· ler as preferÍncias do modelo. Como 'default' ser· lido o modelo padr„o")
+name of other table where column is a key from	etemplate	pt-br	nome de outras tabelas onde a coluna √© uma chave a partir de
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	pt-br	marcar o nome do phpgw-template (ex. verdilak): " = default (ir√° ler as prefer√™ncias do modelo. Como 'default' ser√° lido o modelo padr√£o")
 name of table to add	etemplate	pt-br	Nome da tabela a adicionar
-name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pt-br	nome para o eModelo, se estiver na aplicaÁ„o de formul·rio. FunÁ„o[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	pt-br	precisa ser original na tabela e nenhuma palavra que seja reservada do SQL, os melhores prefixos recomendados s„o os atalhos com dois dÌgitos seguidos de traÁo-baixo, ex.: 'et_'
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pt-br	nome para o eModelo, se estiver na aplica√ß√£o de formul√°rio. Fun√ß√£o[.subTemplate]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	pt-br	precisa ser original na tabela e nenhuma palavra que seja reservada do SQL, os melhores prefixos recomendados s√£o os atalhos com dois d√≠gitos seguidos de tra√ßo-baixo, ex.: 'et_'
 new search	etemplate	pt-br	Nova pesquisa
 new table created	etemplate	pt-br	Nova tabela criada
-newer version '%1' exists !!!	etemplate	pt-br	Existe(m) '%1' vers„o(ıes) mais atual(ais) !!!
-nextmatch	etemplate	pt-br	PrÛximo campo
-nextmatch accountfilter	etemplate	pt-br	PrÛximo campo - Filtrar contas
-nextmatch custom filterheader	etemplate	pt-br	PrÛximo campo - CabeÁalho personalizado
-nextmatch filterheader	etemplate	pt-br	PrÛximo campo - Filtrar cabeÁalho
-nextmatch header	etemplate	pt-br	PrÛximo campo - CabeÁalho
-nextmatch sortheader	etemplate	pt-br	PrÛximo campo - Classificar cabeÁalho
+newer version '%1' exists !!!	etemplate	pt-br	Existe(m) '%1' vers√£o(√µes) mais atual(ais) !!!
+nextmatch	etemplate	pt-br	Pr√≥ximo campo
+nextmatch accountfilter	etemplate	pt-br	Pr√≥ximo campo - Filtrar contas
+nextmatch custom filterheader	etemplate	pt-br	Pr√≥ximo campo - Cabe√ßalho personalizado
+nextmatch filterheader	etemplate	pt-br	Pr√≥ximo campo - Filtrar cabe√ßalho
+nextmatch header	etemplate	pt-br	Pr√≥ximo campo - Cabe√ßalho
+nextmatch sortheader	etemplate	pt-br	Pr√≥ximo campo - Classificar cabe√ßalho
 no column to swap with !!!	etemplate	pt-br	sem coluna para trocar !!!
 no file	etemplate	pt-br	sem arquivo
-no filename given or selected via browse...	etemplate	pt-br	sem nome de arquivo atribuÌdo ou selecionado atravÈs do localizar...
+no filename given or selected via browse...	etemplate	pt-br	sem nome de arquivo atribu√≠do ou selecionado atrav√©s do localizar...
 no row to swap with !!!	etemplate	pt-br	sem linha para trocar !!!
-not null	etemplate	pt-br	N√O PODE SER VAZIO
+not null	etemplate	pt-br	N√ÉO PODE SER VAZIO
 nothing	etemplate	pt-br	nada
 nothing found - try again !!!	etemplate	pt-br	Nada encontrado - tente novamente !!!
-nothing in clipboard to paste !!!	etemplate	pt-br	nada na ·rea de transferÍncia para colar !!!
-nothing matched search criteria !!!	etemplate	pt-br	Nada encontrado de acordo com os critÈrios de pesquisa!!!
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	pt-br	n˙mero de colunas que deve medir a cÈlula/campo ou 'all' para as colunas restantes, nome da classe-CSS (para a tag TD)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	pt-br	n˙mero de linhas/colunas em um V/HBox, Estofamento de cÈlula, EspaÁamento de cÈlula
+nothing in clipboard to paste !!!	etemplate	pt-br	nada na √°rea de transfer√™ncia para colar !!!
+nothing matched search criteria !!!	etemplate	pt-br	Nada encontrado de acordo com os crit√©rios de pesquisa!!!
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	pt-br	n√∫mero de colunas que deve medir a c√©lula/campo ou 'all' para as colunas restantes, nome da classe-CSS (para a tag TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	pt-br	n√∫mero de linhas/colunas em um V/HBox, Estofamento de c√©lula, Espa√ßamento de c√©lula
 of	etemplate	pt-br	de
 onchange	etemplate	pt-br	quando Alterar
 onclick	etemplate	pt-br	quando Clicar
-only an other version found !!!	etemplate	pt-br	apenas um outra vers„o encontrada!!!
+only an other version found !!!	etemplate	pt-br	apenas um outra vers√£o encontrada!!!
 open the online help.	etemplate	pt-br	Abrir a ajuda online.
 operator	etemplate	pt-br	Operador
 optional note about the link	etemplate	pt-br	nota opcional para o Link
-options	etemplate	pt-br	OpÁıes
-order to navigating by tab key through the form	etemplate	pt-br	Ordenar para nevegaÁ„o por tecla TAB atravÈs do formul·rio
+options	etemplate	pt-br	Op√ß√µes
+order to navigating by tab key through the form	etemplate	pt-br	Ordenar para nevega√ß√£o por tecla TAB atrav√©s do formul√°rio
 overflow	etemplate	pt-br	Excesso
 padding	etemplate	pt-br	Estofamento
-parent is a '%1' !!!	etemplate	pt-br	ancestral È um '%1' !!!
+parent is a '%1' !!!	etemplate	pt-br	ancestral √© um '%1' !!!
 paste	etemplate	pt-br	Colar
 path	etemplate	pt-br	Caminho
 please enter table-name first !!!	etemplate	pt-br	Informe primeiro o nome da tabela!!!
 pm	etemplate	pt-br	pm
 popup	etemplate	pt-br	Popup
-precision	etemplate	pt-br	Precis„o
-primary key	etemplate	pt-br	Chave prim·ria
-primary key for the table, gets automaticaly indexed	etemplate	pt-br	A Chave prim·ria para a tabela, inicia na posiÁ„o autom·ticamente
-radiobutton	etemplate	pt-br	Bot„o de escolha
+precision	etemplate	pt-br	Precis√£o
+primary key	etemplate	pt-br	Chave prim√°ria
+primary key for the table, gets automaticaly indexed	etemplate	pt-br	A Chave prim√°ria para a tabela, inicia na posi√ß√£o autom√°ticamente
+radiobutton	etemplate	pt-br	Bot√£o de escolha
 read	etemplate	pt-br	Ler
 read a list of entries.	etemplate	pt-br	Ler uma lista de registro
-read a single entry by passing the id and fieldlist.	etemplate	pt-br	Ler uma entrada ˙nica passando o ID e a lista de campo.
+read a single entry by passing the id and fieldlist.	etemplate	pt-br	Ler uma entrada √∫nica passando o ID e a lista de campo.
 read etemplate from database (for the keys above)	etemplate	pt-br	Ler eModelo da base de dados (para as chaves acima)
 readonly	etemplate	pt-br	somente leitura
-remove row (can not be undone!!!)	etemplate	pt-br	remover Linha (N√O pode ser desfeito!!!)
-remove this link (not the entry itself)	etemplate	pt-br	Remover este link (n„o a prÛpria entrada)
+remove row (can not be undone!!!)	etemplate	pt-br	remover Linha (N√ÉO pode ser desfeito!!!)
+remove this link (not the entry itself)	etemplate	pt-br	Remover este link (n√£o a pr√≥pria entrada)
 returns savely, without deleting	etemplate	pt-br	retornar ao documento salvo, SEM apagar
 right	etemplate	pt-br	Direita
 row...	etemplate	pt-br	Linha...
-save selected columns as default preference for all users.	etemplate	pt-br	Salvar colunas selecionadas como padr„o para todos os usu·rios.
-save the changes made and close the window	etemplate	pt-br	Salvar as alteraÁıes feitas e fechar a janela
+save selected columns as default preference for all users.	etemplate	pt-br	Salvar colunas selecionadas como padr√£o para todos os usu√°rios.
+save the changes made and close the window	etemplate	pt-br	Salvar as altera√ß√µes feitas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	pt-br	salvar o eModelo sobre as chaves (nome, ...), alterando e salvando como
-saves changes to tables_current.inc.php	etemplate	pt-br	salvar alteraÁıes para o arquivo tables_current.inc.php
-saves the template with given version number and closes the window	etemplate	pt-br	salvar o modelo com o n˙mero de vers„o informado e fechar a janela.
+saves changes to tables_current.inc.php	etemplate	pt-br	salvar altera√ß√µes para o arquivo tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	pt-br	salvar o modelo com o n√∫mero de vers√£o informado e fechar a janela.
 scale	etemplate	pt-br	Escala
-scale for float	etemplate	pt-br	escala para flutuaÁ„o
+scale for float	etemplate	pt-br	escala para flutua√ß√£o
 search	etemplate	pt-br	Localizar
 select a category	etemplate	pt-br	selecione uma Categoria
-select a primary contact, to show in the list	etemplate	pt-br	Selecione um contato prim·rio, para ser visualizado na lista
+select a primary contact, to show in the list	etemplate	pt-br	Selecione um contato prim√°rio, para ser visualizado na lista
 select access	etemplate	pt-br	Selecione o Acesso
 select account	etemplate	pt-br	Selecione a Conta
 select an app first !!!	etemplate	pt-br	Selecione primeiro um aplicativo!!!
 select an app to search in	etemplate	pt-br	Selecione um aplicativo para pesquisar em
-select an application	etemplate	pt-br	Selecione uma aplicaÁ„o
-select an application, (*) = uninstalled	etemplate	pt-br	Selecione uma aplicaÁ„o, (*) = removida
+select an application	etemplate	pt-br	Selecione uma aplica√ß√£o
+select an application, (*) = uninstalled	etemplate	pt-br	Selecione uma aplica√ß√£o, (*) = removida
 select an entry to link with	etemplate	pt-br	Selecione um registro a ser linkado
-select an table of the application	etemplate	pt-br	Selecione uma tabela para a aplicaÁ„o
-select application	etemplate	pt-br	Selecione a AplicaÁ„o
-select application to search	etemplate	pt-br	Selecione uma aplicaÁ„o para pesquisar
+select an table of the application	etemplate	pt-br	Selecione uma tabela para a aplica√ß√£o
+select application	etemplate	pt-br	Selecione a Aplica√ß√£o
+select application to search	etemplate	pt-br	Selecione uma aplica√ß√£o para pesquisar
 select category	etemplate	pt-br	Selecione a Categoria
 select columns	etemplate	pt-br	Selecione colunas
-select country	etemplate	pt-br	Selecione o PaÌs
+select country	etemplate	pt-br	Selecione o Pa√≠s
 select day	etemplate	pt-br	Selecione o Dia
 select day of week	etemplate	pt-br	Selecione o dia da semana
 select entry	etemplate	pt-br	Selecionar entrada
 select hour	etemplate	pt-br	Selecionar hora
-select if content of field should not be translated (label gets always translated)	etemplate	pt-br	selecione o conte˙do do campo caso o Ìndice n„o seja traduzido (a etiqueta inicia sempre traduzida)
+select if content of field should not be translated (label gets always translated)	etemplate	pt-br	selecione o conte√∫do do campo caso o √≠ndice n√£o seja traduzido (a etiqueta inicia sempre traduzida)
 select language	etemplate	pt-br	Selecione idioma
-select month	etemplate	pt-br	Selecione o MÍs
-select number	etemplate	pt-br	Selecione o N˙mero
+select month	etemplate	pt-br	Selecione o M√™s
+select number	etemplate	pt-br	Selecione o N√∫mero
 select one ...	etemplate	pt-br	Selecione Um ...
 select percentage	etemplate	pt-br	Selecione a Porcentagem
 select priority	etemplate	pt-br	Selecione a Prioridade
 select state	etemplate	pt-br	Selecione o Estado
 select the columns to display in the list	etemplate	pt-br	Selecione as colunas a serem exibidas na lista
 select the indexed columns in their desired order	etemplate	pt-br	Selecione a coluna indexada na ordem desejada
-select this etemplate to delete it	etemplate	pt-br	selecione este eModelo para removÍ-lo
+select this etemplate to delete it	etemplate	pt-br	selecione este eModelo para remov√™-lo
 select which accounts to show	etemplate	pt-br	Selecione qual conta exibir
 select which values to show	etemplate	pt-br	selecione que valores devem ser visualizados
 select year	etemplate	pt-br	Selecione o Ano
-selectbox	etemplate	pt-br	Caixa de seleÁ„o
+selectbox	etemplate	pt-br	Caixa de sele√ß√£o
 sets today as date	etemplate	pt-br	marque hoje como a data
-should the form be submitted or any custom javascript be executed	etemplate	pt-br	Dever· o formul·rio ser submetido ou qualquer javascript personalizado ser executado
+should the form be submitted or any custom javascript be executed	etemplate	pt-br	Dever√° o formul√°rio ser submetido ou qualquer javascript personalizado ser executado
 show	etemplate	pt-br	Exibir
 show (no save)	etemplate	pt-br	Exibir (sem salvar)
 show values	etemplate	pt-br	Mostrar valores
 showing	etemplate	pt-br	Exibindo
-shows / allows you to enter values into the etemplate for testing	etemplate	pt-br	exibir / permite que vocÍ informe valores ao eModelo apenas para test·-los
+shows / allows you to enter values into the etemplate for testing	etemplate	pt-br	exibir / permite que voc√™ informe valores ao eModelo apenas para test√°-los
 shows/displays etemplate for testing, does not save it before	etemplate	pt-br	exibir eModelo para teste, SEM SALVAR antes
-spacing	etemplate	pt-br	EspaÁamento
+spacing	etemplate	pt-br	Espa√ßamento
 span	etemplate	pt-br	Alcance
 span, class	etemplate	pt-br	Alcance, Classe
 stack	etemplate	pt-br	Pilha
 start a new search, cancel this link	etemplate	pt-br	iniciar uma nova pesquisa, cancelar este link
-start new search for the above pattern	etemplate	pt-br	iniciar uma nova pesquisa conforme o padr„o acima
-submit form	etemplate	pt-br	Submeter formul·rio
-submitbutton	etemplate	pt-br	Bot„o Submeter
+start new search for the above pattern	etemplate	pt-br	iniciar uma nova pesquisa conforme o padr√£o acima
+submit form	etemplate	pt-br	Submeter formul√°rio
+submitbutton	etemplate	pt-br	Bot√£o Submeter
 swap	etemplate	pt-br	Trocar
-swap widget with next one	etemplate	pt-br	Trocar widget com o prÛximo
-swap with next column	etemplate	pt-br	Trocar com a prÛxima coluna
-swap with next row	etemplate	pt-br	Trocar com a prÛxima linha
-switch to a parent widget	etemplate	pt-br	Trocar por um widget de nÌvel superior
+swap widget with next one	etemplate	pt-br	Trocar widget com o pr√≥ximo
+swap with next column	etemplate	pt-br	Trocar com a pr√≥xima coluna
+swap with next row	etemplate	pt-br	Trocar com a pr√≥xima linha
+switch to a parent widget	etemplate	pt-br	Trocar por um widget de n√≠vel superior
 switch to an other widgets of that container	etemplate	pt-br	Trocar por um outro widget deste container
-tabindex	etemplate	pt-br	Õndice da tabela
-table unchanged, no write necessary !!!	etemplate	pt-br	Tabela n„o alterada, nenhuma escrita necess·ria!!!
+tabindex	etemplate	pt-br	√çndice da tabela
+table unchanged, no write necessary !!!	etemplate	pt-br	Tabela n√£o alterada, nenhuma escrita necess√°ria!!!
 tablename	etemplate	pt-br	Nome da tabela
 tabs	etemplate	pt-br	Tabs
 template	etemplate	pt-br	Modelo
 template deleted	etemplate	pt-br	Modelo removido
 template saved	etemplate	pt-br	Modelo salvo
 text	etemplate	pt-br	Texto
-textarea	etemplate	pt-br	¡rea para texto
-this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	pt-br	este texto ser· indicado quando um campo de entrada estiver vazio e sem foco (borr„o).
+textarea	etemplate	pt-br	√Årea para texto
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	pt-br	este texto ser√° indicado quando um campo de entrada estiver vazio e sem foco (borr√£o).
 time	etemplate	pt-br	Tempo
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	pt-br	para desabilitar: [! = n„o]<valor>[=<check>]. Exemplo: '!data' desabilita se o conte˙do de 'data' estiver vazio.
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	pt-br	para desabilitar: [! = n√£o]<valor>[=<check>]. Exemplo: '!data' desabilita se o conte√∫do de 'data' estiver vazio.
 to start the db-tools	etemplate	pt-br	iniciar as Ferramentas de DB
 to start the etemplate editor	etemplate	pt-br	iniciar o editor eModelo
-to start the search	etemplate	pt-br	iniciar a LocalizaÁ„oto start the search
+to start the search	etemplate	pt-br	iniciar a Localiza√ß√£oto start the search
 today	etemplate	pt-br	Hoje
 top	etemplate	pt-br	Topo
-tree	etemplate	pt-br	¡rvore
+tree	etemplate	pt-br	√Årvore
 type	etemplate	pt-br	Tipo
 type of the column	etemplate	pt-br	tipo de coluna
 type of the field (select label if field should be empty)	etemplate	pt-br	tipo de campo (selecione a Etiqueta se o campo estiver vazio)
 unique	etemplate	pt-br	Original
 unlink	etemplate	pt-br	Remover link
-update a single entry by passing the fields.	etemplate	pt-br	Atualizar uma entrada ˙nica passando pelos campos.
-update from version '%s' to	etemplate	pt-br	Atualizar a partir da Vers„o '%s' para
+update a single entry by passing the fields.	etemplate	pt-br	Atualizar uma entrada √∫nica passando pelos campos.
+update from version '%s' to	etemplate	pt-br	Atualizar a partir da Vers√£o '%s' para
 upload	etemplate	pt-br	Enviar
 valign	etemplate	pt-br	Alinhar
 value	etemplate	pt-br	Valor
 value has to be at least '%1' !!!	etemplate	pt-br	Valor tem que ser ao menos '%1' !!!
-value has to be at maximum '%1' !!!	etemplate	pt-br	Value tem que ser no m·ximo '%1' !!!
+value has to be at maximum '%1' !!!	etemplate	pt-br	Value tem que ser no m√°ximo '%1' !!!
 vbox	etemplate	pt-br	VBox
-version	etemplate	pt-br	Vers„o
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	pt-br	N˙mero da vers„o, mostrar no formul·rio: maior.menor.revis„o.n˙mero (ex.: 0.9.13.001 todos os n˙meros se auto-completam com zeros)
+version	etemplate	pt-br	Vers√£o
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	pt-br	N√∫mero da vers√£o, mostrar no formul√°rio: maior.menor.revis√£o.n√∫mero (ex.: 0.9.13.001 todos os n√∫meros se auto-completam com zeros)
 vertical alignment of row	etemplate	pt-br	Alinhamento vertical da linha
 view this etemplate	etemplate	pt-br	Exibir este eModelo
-view this linked entry in its application	etemplate	pt-br	visualizar esta entrada linkada ‡ sua aplicaÁ„o
+view this linked entry in its application	etemplate	pt-br	visualizar esta entrada linkada √† sua aplica√ß√£o
 weekend	etemplate	pt-br	final de semana
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	pt-br	o que acontece com o conte˙do excedente: vÌsivel (default), oculto, scroll, auto (o navegador decide)
-widget copied into clipboard	etemplate	pt-br	Widget copiado para a ·rea de transferÍncia
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	pt-br	o que acontece com o conte√∫do excedente: v√≠sivel (default), oculto, scroll, auto (o navegador decide)
+widget copied into clipboard	etemplate	pt-br	Widget copiado para a √°rea de transfer√™ncia
 width	etemplate	pt-br	Largura
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	pt-br	largura da coluna (em % ou pixel), desativar col: [! = not]<value>[=<check>] ex.: '!@data' desativa a coluna se o conte˙do for vazio
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	pt-br	largura da coluna (em % ou pixel), desativar col: [! = not]<value>[=<check>] ex.: '!@data' desativa a coluna se o conte√∫do for vazio
 width of column (in % or pixel)	etemplate	pt-br	Largura da coluna (em % ou pixels)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	pt-br	Largura da tabela em % ou pixels para a tab de tabela e (opcional) div
 width, disabled	etemplate	pt-br	Largura, Desabilitada
@@ -399,7 +399,7 @@ working days	etemplate	pt-br	Dias de trabalho
 write <app>/setup/tables_current.inc.php	etemplate	pt-br	Escrever <app>/setup/tables_current.inc.php
 write langfile	etemplate	pt-br	Escrever o arquivo de idioma
 write tables	etemplate	pt-br	Escrever as tabelas
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	pt-br	escrever um arquivo 'etemplates.inc.php' (para aplicaÁ„o de Nome) no diretÛrio de configuraÁ„o do aplicativo
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	pt-br	escrever um arquivo 'etemplates.inc.php' (para aplica√ß√£o de Nome) no diret√≥rio de configura√ß√£o do aplicativo
 xml-file to import	etemplate	pt-br	Importar arquivo xml
 xslt template	etemplate	pt-br	Modelo XSLT
 year	etemplate	pt-br	Ano

@@ -1,31 +1,31 @@
-%1 email addresses inserted	common	pt	%1 endereÁo(s) de correio electrÛnico inserido(s)
-%1 is not executable by the webserver !!!	common	pt	%1 n„o È execut·vel pelo servidor Web !!!
+%1 email addresses inserted	common	pt	%1 endere√ßo(s) de correio electr√≥nico inserido(s)
+%1 is not executable by the webserver !!!	common	pt	%1 n√£o √© execut√°vel pelo servidor Web !!!
 %1 manual	common	pt	%1 manual
-%1 start	common	pt	%1 inÌcio
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br />ou torne %3 edit·vel pelo servidor Web
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1eGroupWare%2 È uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por v·rios utilizadores em simult‚neo.
+%1 start	common	pt	%1 in√≠cio
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br />ou torne %3 edit√°vel pelo servidor Web
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1eGroupWare%2 √© uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por v√°rios utilizadores em simult√¢neo.
 (shift-)click or drag to change value	jscalendar	pt	Clique no Shift ou arraste para alterar o valor
-- click on any of the time parts to increase it	jscalendar	pt	- Clique em qualquer ·rea de tempo para a aumentar
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	pt	- Mantenha o bot„o do rato pressionado num dos seguintes botıes para uma selecÁ„o mais r·pida.
-- or click and drag for faster selection.	jscalendar	pt	- ou clique e arraste para uma selecÁ„o mais r·pida.
-- or shift-click to decrease it	jscalendar	pt	- ou prima Shift para diminuÌ-lo
-- use the %1, %2 buttons to select month	jscalendar	pt	- Utilize os botıes %1, %2 para seleccionar o mÍs
-- use the %1, %2 buttons to select year	jscalendar	pt	- Utilize os botıes %1, %2 para seleccionar o ano
+- click on any of the time parts to increase it	jscalendar	pt	- Clique em qualquer √°rea de tempo para a aumentar
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	pt	- Mantenha o bot√£o do rato pressionado num dos seguintes bot√µes para uma selec√ß√£o mais r√°pida.
+- or click and drag for faster selection.	jscalendar	pt	- ou clique e arraste para uma selec√ß√£o mais r√°pida.
+- or shift-click to decrease it	jscalendar	pt	- ou prima Shift para diminu√≠-lo
+- use the %1, %2 buttons to select month	jscalendar	pt	- Utilize os bot√µes %1, %2 para seleccionar o m√™s
+- use the %1, %2 buttons to select year	jscalendar	pt	- Utilize os bot√µes %1, %2 para seleccionar o ano
 00 (disable)	admin	pt	00 (desactivado)
 13 (ntp)	admin	pt	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	pt	3 caracteres para abreviatura do dia
-3 number of chars for month-shortcut	jscalendar	pt	3 caracteres para abreviatura do mÍs
+3 number of chars for month-shortcut	jscalendar	pt	3 caracteres para abreviatura do m√™s
 80 (http)	admin	pt	80 (http)
 \n tidying up the html source, please wait...	htmlarea-HtmlTidy	pt	\n A limpar a fonte HTML, por favor, aguarde...
 _delete row	htmlarea-ContextMenu	pt	Eliminar Linha (_D)
 _image properties...	htmlarea-ContextMenu	pt	Propriedades da _Imagem...
-_modify link...	htmlarea-ContextMenu	pt	_Modificar LigaÁ„o...
-_remove link...	htmlarea-ContextMenu	pt	_Eliminar LigaÁ„o...
+_modify link...	htmlarea-ContextMenu	pt	_Modificar Liga√ß√£o...
+_remove link...	htmlarea-ContextMenu	pt	_Eliminar Liga√ß√£o...
 _table properties...	htmlarea-ContextMenu	pt	Propriedades da _Tabela...
 about	common	pt	Sobre
-about %1	common	pt	Sobre a aplicaÁ„o %1
+about %1	common	pt	Sobre a aplica√ß√£o %1
 about egroupware	common	pt	Sobre o eGroupware
-about the calendar	jscalendar	pt	Sobre o calend·rio
+about the calendar	jscalendar	pt	Sobre o calend√°rio
 about this editor	htmlarea	pt	Sobre este editor
 access	common	pt	Acesso
 access not permitted	common	pt	Acesso negado
@@ -34,19 +34,19 @@ account has been deleted	common	pt	A conta foi eliminada
 account has been updated	common	pt	A conta foi actualizada
 account is expired	common	pt	A conta encontra-se expirada
 acl	common	pt	ACL
-action	common	pt	AcÁ„o
+action	common	pt	Ac√ß√£o
 active	common	pt	Activo
 add	common	pt	Adicionar
 add %1 category for	common	pt	Adicionar categoria %1 para
 add category	common	pt	Adicionar categorias
 add shortcut	common	pt	Adicionar atalho
 add sub	common	pt	Adicionar sub-tarefa
-addressbook	common	pt	Livro de endereÁos
+addressbook	common	pt	Livro de endere√ßos
 admin	common	pt	Administrador
-administration	common	pt	AdministraÁ„o
-afghanistan	common	pt	Afeganist„o
-albania	common	pt	Alb‚nia
-algeria	common	pt	AlgÈria
+administration	common	pt	Administra√ß√£o
+afghanistan	common	pt	Afeganist√£o
+albania	common	pt	Alb√¢nia
+algeria	common	pt	Alg√©ria
 align	htmlarea-TableOperations	pt	Alinhar
 all	common	pt	Tudo
 all fields	common	pt	Todos os campos
@@ -57,32 +57,32 @@ american samoa	common	pt	Samoa Americana
 andorra	common	pt	Andorra
 angola	common	pt	Angola
 anguilla	common	pt	Anguila
-antarctica	common	pt	Ant·rctida
-antigua and barbuda	common	pt	AntÌgua e Barduda
-application	common	pt	AplicaÁ„o
+antarctica	common	pt	Ant√°rctida
+antigua and barbuda	common	pt	Ant√≠gua e Barduda
+application	common	pt	Aplica√ß√£o
 apply	common	pt	Aplicar
 april	common	pt	Abril
 are you sure you want to delete these entries ?	common	pt	Tem a certeza de que deseja eliminar estes registos ?
 are you sure you want to delete this entry ?	common	pt	Tem a certeza de que deseja eliminar este registo ?
 argentina	common	pt	Argentina
-armenia	common	pt	ArmÈnia
+armenia	common	pt	Arm√©nia
 aruba	common	pt	Aruba
 august	common	pt	Agosto
-australia	common	pt	Austr·lia
-austria	common	pt	¡ustria
+australia	common	pt	Austr√°lia
+austria	common	pt	√Åustria
 author	common	pt	Autor
 autohide sidebox menu's	common	pt	Esconder automaticamente menus da caixa lateral
 autohide sidebox menus	common	pt	Esconder automaticamente menus da caixa lateral
 automatically hide the sidebox menu's?	common	pt	Esconder automaticamente os menus da caixa lateral?
 automatically hide the sidebox menus?	common	pt	Esconder automaticamente os menus da caixa lateral?
-autosave default category	common	pt	Guardar automaticamente categoria por omiss„o
-azerbaijan	common	pt	Azerbaij„o
+autosave default category	common	pt	Guardar automaticamente categoria por omiss√£o
+azerbaijan	common	pt	Azerbaij√£o
 back	common	pt	Voltar
 back to user login	common	pt	Voltar ao acesso do utilizador
 background	htmlarea-TableOperations	pt	Fundo
 background color	htmlarea	pt	Cor de Fundo
 background color:	common	pt	Cor de fundo
-backupdir '%1' is not writeable by the webserver	common	pt	O servidor Web n„o tem permissıes de escrita na cÛpia de seguranÁa a directoria '%1'
+backupdir '%1' is not writeable by the webserver	common	pt	O servidor Web n√£o tem permiss√µes de escrita na c√≥pia de seguran√ßa a directoria '%1'
 bad login or password	common	pt	Nome de utilizador ou senha incorrectos
 bahamas	common	pt	Bahamas
 bahrain	common	pt	Bahrein
@@ -90,69 +90,69 @@ bangladesh	common	pt	Bangladesh
 barbados	common	pt	Barbados
 baseline	htmlarea-TableOperations	pt	Linha de base
 bcc	common	pt	Bcc
-belarus	common	pt	Bielorr˙ssia
-belgium	common	pt	BÈlgica
+belarus	common	pt	Bielorr√∫ssia
+belgium	common	pt	B√©lgica
 belize	common	pt	Belize
 benin	common	pt	Benim
 bermuda	common	pt	Bermudas
-bhutan	common	pt	But„o
+bhutan	common	pt	But√£o
 blocked, too many attempts	common	pt	Bloqueado: demasiadas tentativas
 bold	common	pt	Negrito
 bold.gif	common	pt	negrito.gif
-bolivia	common	pt	BolÌvia
+bolivia	common	pt	Bol√≠via
 border	common	pt	Contorno
 borders	htmlarea-TableOperations	pt	Contornos
-bosnia and herzegovina	common	pt	BÛsnia-Herzegovina
+bosnia and herzegovina	common	pt	B√≥snia-Herzegovina
 botswana	common	pt	Botsuana
 bottom	common	pt	Fundo
 bouvet island	common	pt	Ilha Bouvet
 brazil	common	pt	Brasil
-british indian ocean territory	common	pt	TerritÛrio Brit‚nico do Oceano Õndico
+british indian ocean territory	common	pt	Territ√≥rio Brit√¢nico do Oceano √çndico
 brunei darussalam	common	pt	Brunei
-bulgaria	common	pt	Bulg·ria
-bulleted list	htmlarea	pt	Lista com marcaÁıes
+bulgaria	common	pt	Bulg√°ria
+bulleted list	htmlarea	pt	Lista com marca√ß√µes
 burkina faso	common	pt	Burkina Faso
 burundi	common	pt	Burundi
-c_ell properties...	htmlarea-ContextMenu	pt	Propriedades de C_Èlulas...
-calendar	common	pt	Calend·rio
+c_ell properties...	htmlarea-ContextMenu	pt	Propriedades de C_√©lulas...
+calendar	common	pt	Calend√°rio
 cambodia	common	pt	Camboja
-cameroon	common	pt	Camarıes
-canada	common	pt	Canad·
+cameroon	common	pt	Camar√µes
+canada	common	pt	Canad√°
 cancel	common	pt	Cancelar
-cannot replace %1 because it is a directory	common	pt	N„o È possÌvel substituir %1 porque È uma directoria
-cant open '%1' for %2	common	pt	N„o È possÌvel abrir '%1' para %2
+cannot replace %1 because it is a directory	common	pt	N√£o √© poss√≠vel substituir %1 porque √© uma directoria
+cant open '%1' for %2	common	pt	N√£o √© poss√≠vel abrir '%1' para %2
 cape verde	common	pt	Cabo Verde
-caption	common	pt	SubtÌtulo
+caption	common	pt	Subt√≠tulo
 categories	common	pt	Categorias
 categories for	common	pt	categorias para
 category	common	pt	Categoria
 category %1 has been added !	common	pt	Categoria %1 foi adicionada !
 category %1 has been updated !	common	pt	Categoria %1 foi actualizada !
-cayman islands	common	pt	Ilhas Caim„o
+cayman islands	common	pt	Ilhas Caim√£o
 cc	common	pt	Cc
-cell properties	htmlarea-TableOperations	pt	Propriedades das cÈlulas
+cell properties	htmlarea-TableOperations	pt	Propriedades das c√©lulas
 centered	common	pt	centrado
-central african republic	common	pt	Rep˙blica Centro-Africana
+central african republic	common	pt	Rep√∫blica Centro-Africana
 chad	common	pt	Chade
 change	common	pt	Alterar
 char	htmlarea-TableOperations	pt	Char
-charset	common	pt	iso-8859-1
-chec_k link...	htmlarea-ContextMenu	pt	Verificar LigaÁ„o... (_k)
-check installation	common	pt	Verificar instalaÁ„o
+charset	common	pt	utf-8
+chec_k link...	htmlarea-ContextMenu	pt	Verificar Liga√ß√£o... (_k)
+check installation	common	pt	Verificar instala√ß√£o
 check now	common	pt	Verificar agora
 chile	common	pt	Chile
 china	common	pt	China
 choose a background color	common	pt	Escolha uma cor de fundo
-choose a background color for the icons	common	pt	Escolha uma cor de fundo para os Ìcones
+choose a background color for the icons	common	pt	Escolha uma cor de fundo para os √≠cones
 choose a background image.	common	pt	Escolha uma imagem de fundo.
 choose a background style.	common	pt	Escolha um estilo de fundo.
-choose a text color for the icons	common	pt	Escolha uma cor de texto para os Ìcones
+choose a text color for the icons	common	pt	Escolha uma cor de texto para os √≠cones
 choose list style type (for ordered lists)	htmlarea-ListType	pt	Escolha o tipo de estilo de lista (para listas ordenadas)
 choose the category	common	pt	Escolha a categoria
 choose the parent category	common	pt	Escolha a categoria principal
 christmas island	common	pt	Ilha Natal
 clear	common	pt	Cancelar
-clear form	common	pt	Limpar Formul·rio
+clear form	common	pt	Limpar Formul√°rio
 click	common	pt	Clicar
 click or mouse over to show menus	common	pt	Clicar ou passar com o rato por cima para exibir menus
 click or mouse over to show menus?	common	pt	Clicar ou passar com o rato por cima para exibir menus?
@@ -160,151 +160,151 @@ close	common	pt	Fechar
 close sidebox	common	pt	Fechar caixa lateral
 cocos (keeling) islands	common	pt	Ilhas Cocos (Keeling)
 collapsed borders	htmlarea-TableOperations	pt	Contornos sobrepostos
-colombia	common	pt	ColÙmbia
+colombia	common	pt	Col√¥mbia
 color	htmlarea-TableOperations	pt	Cor
-common preferences	common	pt	PreferÍncias gerais
+common preferences	common	pt	Prefer√™ncias gerais
 comoros	common	pt	Comores
 company	common	pt	Empresa
 congo	common	pt	Congo
-congo, the democratic republic of the	common	pt	Congo, Rep˙blica Democr·tica do
+congo, the democratic republic of the	common	pt	Congo, Rep√∫blica Democr√°tica do
 contacting server...	common	pt	A ligar ao servidor...
 cook islands	common	pt	Ilhas Cook
 copy	common	pt	Copiar
-copy selection	htmlarea	pt	Copiar selecÁ„o
+copy selection	htmlarea	pt	Copiar selec√ß√£o
 costa rica	common	pt	Costa Rica
 cote d ivoire	common	pt	Costa do Marfim
-could not contact server. operation timed out!	common	pt	N„o foi possÌvel ligar ao servidor. Sess„o expirou!
+could not contact server. operation timed out!	common	pt	N√£o foi poss√≠vel ligar ao servidor. Sess√£o expirou!
 create	common	pt	Criar
-create a link	htmlarea-ContextMenu	pt	Criar uma ligaÁ„o
+create a link	htmlarea-ContextMenu	pt	Criar uma liga√ß√£o
 created by	common	pt	Criado por
-croatia	common	pt	Cro·cia
+croatia	common	pt	Cro√°cia
 cuba	common	pt	Cuba
 currency	common	pt	Moeda
 current	common	pt	Actual
 current style	htmlarea	pt	Estilo actual
-current url is	htmlarea-ContextMenu	pt	A URL actual È
+current url is	htmlarea-ContextMenu	pt	A URL actual √©
 current users	common	pt	Utilizadores actuais
 cut	htmlarea-ContextMenu	pt	Cortar
-cut selection	htmlarea	pt	Cortar selecÁ„o
+cut selection	htmlarea	pt	Cortar selec√ß√£o
 cyprus	common	pt	Chipre
-czech republic	common	pt	Rep˙blica Checa
+czech republic	common	pt	Rep√∫blica Checa
 date	common	pt	Data
-date due	common	pt	AtÈ
-date selection:	jscalendar	pt	SelecÁ„o de data:
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt	Porto Datetime.<br>Se utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta p·gina.<br>(Porto: 13 / Servidor: 129.6.15.28)
+date due	common	pt	At√©
+date selection:	jscalendar	pt	Selec√ß√£o de data:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt	Porto Datetime.<br>Se utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta p√°gina.<br>(Porto: 13 / Servidor: 129.6.15.28)
 de_lete column	htmlarea-ContextMenu	pt	E_liminar Coluna
 december	common	pt	Dezembro
-decimal numbers	htmlarea-ListType	pt	N˙meros decimais
-decrease indent	htmlarea	pt	Diminuir avanÁo
-default category	common	pt	Categoria por omiss„o
-default height for the windows	common	pt	Altura das janelas por omiss„o
-default width for the windows	common	pt	Largura das janelas por omiss„o
+decimal numbers	htmlarea-ListType	pt	N√∫meros decimais
+decrease indent	htmlarea	pt	Diminuir avan√ßo
+default category	common	pt	Categoria por omiss√£o
+default height for the windows	common	pt	Altura das janelas por omiss√£o
+default width for the windows	common	pt	Largura das janelas por omiss√£o
 delete	common	pt	Eliminar
-delete cell	htmlarea-TableOperations	pt	Eliminar cÈlula
+delete cell	htmlarea-TableOperations	pt	Eliminar c√©lula
 delete column	htmlarea-TableOperations	pt	Eliminar coluna
 delete row	common	pt	Eliminar linha
 delete the current column	htmlarea-ContextMenu	pt	Eliminar coluna actual
 delete the current row	htmlarea-ContextMenu	pt	Eliminar linha actual
 denmark	common	pt	Dinamarca
-description	common	pt	DescriÁ„o
+description	common	pt	Descri√ß√£o
 detail	common	pt	Detalhe
 details	common	pt	Detalhes
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt	Desactivar a execuÁ„o de um script de correcÁ„o de falhas do Internet Explorer 5.5 ou superior para exibir as transparÍncias nas imagens .png?
-dictionary	htmlarea-SpellChecker	pt	Dicion·rio
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt	Desactivar a execu√ß√£o de um script de correc√ß√£o de falhas do Internet Explorer 5.5 ou superior para exibir as transpar√™ncias nas imagens .png?
+dictionary	htmlarea-SpellChecker	pt	Dicion√°rio
 direction left to right	common	pt	Da esquerda para a direita
 disable internet explorer png-image-bugfix	common	pt	Desactivar o corrector de falhas de imagens .png do Internet Explorer
 disable slider effects	common	pt	Desactivar efeitos de deslizamento
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pt	Desactivar os efeitos de deslizamento animado ao exibir ou esconder os menus na p·gina? Os utilizadores de Opera e Konqueror dever„o achar esta opÁ„o ˙til.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt	Desactivar a execuÁ„o de um script de correcÁ„o de falhas do Internet Explorer 5.5 ou superior para exibir as transparÍncias nas imagens .png?
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pt	Desactivar os efeitos de deslizamento animado ao exibir ou esconder os menus na p√°gina? Os utilizadores de Opera e Konqueror dever√£o achar esta op√ß√£o √∫til.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt	Desactivar a execu√ß√£o de um script de correc√ß√£o de falhas do Internet Explorer 5.5 ou superior para exibir as transpar√™ncias nas imagens .png?
 disabled	common	pt	Desactivado
 display %s first	jscalendar	pt	Exibir %s primeiro
 djibouti	common	pt	Jibuti
-do you also want to delete all subcategories ?	common	pt	Deseja eliminar tambÈm todas subcategorias ?
+do you also want to delete all subcategories ?	common	pt	Deseja eliminar tamb√©m todas subcategorias ?
 doctype:	common	pt	Tipo de documento:
 document properties	common	pt	Propriedades do documento
-document title:	common	pt	TÌtulo do documento
-domain	common	pt	DomÌnio
-domain name for mail-address, eg. "%1"	common	pt	nome de domÌnio para endereÁo de correio electrÛnico. Ex: "%1"
-domestic	common	pt	DomÈstico
+document title:	common	pt	T√≠tulo do documento
+domain	common	pt	Dom√≠nio
+domain name for mail-address, eg. "%1"	common	pt	nome de dom√≠nio para endere√ßo de correio electr√≥nico. Ex: "%1"
+domestic	common	pt	Dom√©stico
 dominica	common	pt	Dominica
-dominican republic	common	pt	Rep˙blica Dominicana
-done	common	pt	ConcluÌdo
+dominican republic	common	pt	Rep√∫blica Dominicana
+done	common	pt	Conclu√≠do
 drag to move	jscalendar	pt	Arrastar para mover
-e-mail	common	pt	Correio ElectrÛnico
+e-mail	common	pt	Correio Electr√≥nico
 east timor	common	pt	Timor Leste
 ecuador	common	pt	Equador
 edit	common	pt	Editar
 edit %1 category for	common	pt	Editar categoria %1 para
 edit categories	common	pt	Editar categorias
 edit category	common	pt	Editar categorias
-egroupware api version %1	common	pt	vers„o %1 de eGroupWare API
+egroupware api version %1	common	pt	vers√£o %1 de eGroupWare API
 egroupware: login blocked for user '%1', ip %2	common	pt	eGroupWare: entrada bloqueada para o utilizador '%1', IP %2
 egypt	common	pt	Egipto
 el salvador	common	pt	Salvador
 element...	htmlarea-ContextMenu	pt	Elemento...
-email	common	pt	Correio ElectrÛnico
-email-address of the user, eg. "%1"	common	pt	endereÁo de correio electrÛnico para o utilizador. Ex: "%1"
+email	common	pt	Correio Electr√≥nico
+email-address of the user, eg. "%1"	common	pt	endere√ßo de correio electr√≥nico para o utilizador. Ex: "%1"
 en	common	pt	en
 enabled	common	pt	Activado
 end date	common	pt	Data de fim
 end time	common	pt	Hora de fim
 enlarge editor	htmlarea	pt	Aumentar editor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localizaÁ„o da URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localiza√ß√£o da URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
 entry has been deleted sucessfully	common	pt	O registo foi eliminado com sucesso
 entry updated sucessfully	common	pt	O registo foi actualizado com sucesso
-equatorial guinea	common	pt	GuinÈ Equatorial
+equatorial guinea	common	pt	Guin√© Equatorial
 eritrea	common	pt	Eritreia
 error	common	pt	Erro
 error creating %1 %2 directory	common	pt	Erro ao criar a directoria %1 %2
 error deleting %1 %2 directory	common	pt	Erro ao eliminar a directoria %1 %2
 error renaming %1 %2 directory	common	pt	Erro ao renomear a directoria %1 %2
-estonia	common	pt	EstÛnia
-ethiopia	common	pt	EtiÛpia
+estonia	common	pt	Est√≥nia
+ethiopia	common	pt	Eti√≥pia
 exact	common	pt	Exacto
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	pt	Falha ao contactar o servidor ou resposta inv·lida do servidor. Tente aceder novamente. Contacte o administrador em caso de falha.
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	pt	Falha ao contactar o servidor ou resposta inv√°lida do servidor. Tente aceder novamente. Contacte o administrador em caso de falha.
 falkland islands (malvinas)	common	pt	Ilhas Malvinas (Falkland)
 faroe islands	common	pt	Ilhas Faroe
-fax number	common	pt	n˙mero de fax
+fax number	common	pt	n√∫mero de fax
 february	common	pt	Fevereiro
 fg color	htmlarea-TableOperations	pt	Cor FG
 fields	common	pt	Campos
 fiji	common	pt	Fiji
 files	common	pt	Ficheiros
 filter	common	pt	Filtro
-finished list of mispelled words	htmlarea-SpellChecker	pt	Lista de palavras escritas incorrectamente concluÌda.
-finland	common	pt	Finl‚ndia
+finished list of mispelled words	htmlarea-SpellChecker	pt	Lista de palavras escritas incorrectamente conclu√≠da.
+finland	common	pt	Finl√¢ndia
 first name	common	pt	Nome
 first name of the user, eg. "%1"	common	pt	primeiro nome do utilizador. Ex:"%1"
-first page	common	pt	Primeira p·gina
+first page	common	pt	Primeira p√°gina
 firstname	common	pt	Primeiro nome
 fixme!	common	pt	Corrija-me!
 float	htmlarea-TableOperations	pt	Flutuar
-folder already exists.	common	pt	Pasta j· existente.
+folder already exists.	common	pt	Pasta j√° existente.
 font color	htmlarea	pt	Cor da Fonte
-force selectbox	common	pt	ForÁar caixa de selecÁ„o
+force selectbox	common	pt	For√ßar caixa de selec√ß√£o
 frames	htmlarea-TableOperations	pt	Frames
-france	common	pt	FranÁa
+france	common	pt	Fran√ßa
 french guiana	common	pt	Guiana Francesa
-french polynesia	common	pt	PolinÈsia Francesa
-french southern territories	common	pt	TerritÛrios Austrais e Ant·rticos Franceses
+french polynesia	common	pt	Polin√©sia Francesa
+french southern territories	common	pt	Territ√≥rios Austrais e Ant√°rticos Franceses
 friday	common	pt	Sexta
 ftp	common	pt	FTP
 fullname	common	pt	Nome completo
-fullscreen mode	common	pt	Modo ecr„ inteiro
-gabon	common	pt	Gab„o
-gambia	common	pt	G‚mbia
+fullscreen mode	common	pt	Modo ecr√£ inteiro
+gabon	common	pt	Gab√£o
+gambia	common	pt	G√¢mbia
 general menu	common	pt	Menu geral
-georgia	common	pt	GeÛrgia
-german	common	pt	Alem„(o)
+georgia	common	pt	Ge√≥rgia
+german	common	pt	Alem√£(o)
 germany	common	pt	Alemanha
 ghana	common	pt	Gana
 gibraltar	common	pt	Gibraltar
 global	common	pt	Geral
-global public	common	pt	Acesso p˙blico
+global public	common	pt	Acesso p√∫blico
 go today	jscalendar	pt	Ir para hoje
 grant access	common	pt	Permitir acesso
-greece	common	pt	GrÈcia
-greenland	common	pt	Gronel‚ndia
+greece	common	pt	Gr√©cia
+greenland	common	pt	Gronel√¢ndia
 grenada	common	pt	Granada
 group	common	pt	Grupo
 group access	common	pt	Acesso ao Grupo
@@ -312,198 +312,198 @@ group has been added	common	pt	O grupo foi adicionado
 group has been deleted	common	pt	O grupo foi eliminado
 group has been updated	common	pt	O grupo foi actualizado
 group name	common	pt	Nome do grupo
-group public	common	pt	Grupo p˙blico
+group public	common	pt	Grupo p√∫blico
 groups	common	pt	Grupos
-groups with permission for %1	common	pt	Grupos com permiss„o para %1
-groups without permission for %1	common	pt	Grupos sem permiss„o para %1
+groups with permission for %1	common	pt	Grupos com permiss√£o para %1
+groups without permission for %1	common	pt	Grupos sem permiss√£o para %1
 guadeloupe	common	pt	Guadalupe
 guam	common	pt	Guam
 guatemala	common	pt	Guatemala
-guinea	common	pt	GuinÈ
-guinea-bissau	common	pt	GuinÈ-Bissau
+guinea	common	pt	Guin√©
+guinea-bissau	common	pt	Guin√©-Bissau
 guyana	common	pt	Guiana
 haiti	common	pt	Haiti
 heard island and mcdonald islands	common	pt	Ilha Heard e Ilhas McDonald
 height	common	pt	Altura
 help	common	pt	Ajuda
-help using editor	htmlarea	pt	Ajuda na utilizaÁ„o do editor
+help using editor	htmlarea	pt	Ajuda na utiliza√ß√£o do editor
 high	common	pt	Alta
 highest	common	pt	Mais alta
-holy see (vatican city state)	common	pt	Santa SÈ (Cidade do Estado do Vaticano)
-home	common	pt	P·gina inicial
-home email	common	pt	endereÁo de correio electrÛnico principal
+holy see (vatican city state)	common	pt	Santa S√© (Cidade do Estado do Vaticano)
+home	common	pt	P√°gina inicial
+home email	common	pt	endere√ßo de correio electr√≥nico principal
 honduras	common	pt	Honduras
 hong kong	common	pt	Hong Kong
 horizontal rule	htmlarea	pt	Regra Horizontal
-how did you get here? (please report!)	htmlarea-ContextMenu	pt	Como chegou atÈ aqui? (Por favor, responda!)
+how did you get here? (please report!)	htmlarea-ContextMenu	pt	Como chegou at√© aqui? (Por favor, responda!)
 how many columns would you like to merge?	htmlarea-TableOperations	pt	Quantas colunas deseja unir?
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt	Quantos Ìcones devem ser exibidos na barra de navegaÁ„o (topo da p·gina). Os Ìcones adicionais ir„o para um outro menu. Para aceder a este menu basta clicar no Ìcone mais ‡ direita da barra de navegaÁ„o.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt	Quantos √≠cones devem ser exibidos na barra de navega√ß√£o (topo da p√°gina). Os √≠cones adicionais ir√£o para um outro menu. Para aceder a este menu basta clicar no √≠cone mais √† direita da barra de navega√ß√£o.
 how many rows would you like to merge?	htmlarea-TableOperations	pt	Quantas linhas deseja unir?
 html tidy	htmlarea-HtmlTidy	pt	HTML Tidy
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	pt	A ·rea HTML recusa-se a eliminar a ˙ltima cÈlula da linha.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	pt	A ·rea HTML recusa-se a eliminar a ˙ltima coluna da tabela.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	pt	A ·rea HTML recusa-se a eliminar a ˙ltima linha da tabela.
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	pt	A √°rea HTML recusa-se a eliminar a √∫ltima c√©lula da linha.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	pt	A √°rea HTML recusa-se a eliminar a √∫ltima coluna da tabela.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	pt	A √°rea HTML recusa-se a eliminar a √∫ltima linha da tabela.
 hungary	common	pt	Hungria
-i will open it in a new page.	htmlarea-SpellChecker	pt	Irei abri-la numa nova p·gina
+i will open it in a new page.	htmlarea-SpellChecker	pt	Irei abri-la numa nova p√°gina
 i_nsert row before	htmlarea-ContextMenu	pt	I_nserir Linha Antes
-iceland	common	pt	Isl‚ndia
-iespell not detected. click ok to go to download page.	common	pt	O ieSpell n„o foi detectado. Clique em OK para ir para a p·gina de transferÍncias.
-if the clock is enabled would you like it to update it every second or every minute?	common	pt	Se o relÛgio estiver activo, deseja actualiz·-lo ao segundo ou ao minuto?
+iceland	common	pt	Isl√¢ndia
+iespell not detected. click ok to go to download page.	common	pt	O ieSpell n√£o foi detectado. Clique em OK para ir para a p√°gina de transfer√™ncias.
+if the clock is enabled would you like it to update it every second or every minute?	common	pt	Se o rel√≥gio estiver activo, deseja actualiz√°-lo ao segundo ou ao minuto?
 if there are some images in the background folder you can choose the one you would like to see.	common	pt	Se existirem imagens na pasta de fundo, pode escolher a que gosta mais.
 ignore	htmlarea-SpellChecker	pt	Ignorar
 ignore all	htmlarea-SpellChecker	pt	Ignorar todas
 image url	common	pt	URL da imagem
 in_sert row after	htmlarea-ContextMenu	pt	In_serir Linha Depois
-increase indent	htmlarea	pt	Aumentar avanÁo
-india	common	pt	Õndia
-indonesia	common	pt	IndonÈsia
+increase indent	htmlarea	pt	Aumentar avan√ßo
+india	common	pt	√çndia
+indonesia	common	pt	Indon√©sia
 insert 'return false'	common	pt	Inserir 'return false'
 insert _column before	htmlarea-ContextMenu	pt	Inserir _Coluna Antes
 insert a new column after the current one	htmlarea-ContextMenu	pt	Inserir uma nova coluna depois da actual
 insert a new column before the current one	htmlarea-ContextMenu	pt	Inserir uma nova coluna antes da actual
 insert a new row after the current one	htmlarea-ContextMenu	pt	Inserir uma nova linha depois da actual
 insert a new row before the current one	htmlarea-ContextMenu	pt	Inserir uma nova linha antes da actual
-insert all %1 addresses of the %2 contacts in %3	common	pt	Inserir todos os endereÁos %1 dos contactos %2 no/a %3
+insert all %1 addresses of the %2 contacts in %3	common	pt	Inserir todos os endere√ßos %1 dos contactos %2 no/a %3
 insert c_olumn after	htmlarea-ContextMenu	pt	Inserir C_oluna Depois
-insert cell after	htmlarea-TableOperations	pt	Inserir cÈlula depois
-insert cell before	htmlarea-TableOperations	pt	Inserir cÈlula antes
+insert cell after	htmlarea-TableOperations	pt	Inserir c√©lula depois
+insert cell before	htmlarea-TableOperations	pt	Inserir c√©lula antes
 insert column after	common	pt	Inserir coluna depois
 insert column before	common	pt	Inserir coluna antes
 insert image	htmlarea	pt	Inserir Imagem
 insert row after	common	pt	Inserir linha depois
 insert row before	common	pt	Inserir linha antes
 insert table	htmlarea	pt	Inserir Tabela
-insert web link	htmlarea	pt	Inserir LigaÁ„o Web
+insert web link	htmlarea	pt	Inserir Liga√ß√£o Web
 international	common	pt	Internacional
-invalid filename	common	pt	Nome de ficheiro inv·lido
-invalid ip address	common	pt	EndereÁo IP inv·lido
-invalid password	common	pt	Senha inv·lida
-iran, islamic republic of	common	pt	Ir„o, Rep˙blica Isl‚mica do
+invalid filename	common	pt	Nome de ficheiro inv√°lido
+invalid ip address	common	pt	Endere√ßo IP inv√°lido
+invalid password	common	pt	Senha inv√°lida
+iran, islamic republic of	common	pt	Ir√£o, Rep√∫blica Isl√¢mica do
 iraq	common	pt	Iraque
 ireland	common	pt	Irlanda
 israel	common	pt	Israel
-it has been more then %1 days since you changed your password	common	pt	Passaram %1 dias desde a ˙ltima alteraÁ„o da sua senha
-it is recommended that you run setup to upgrade your tables to the current version	common	pt	… recomendado que seja executada a ConfiguraÁ„o para atualizar as tabelas para a vers„o atual.
-italic	common	pt	It·lico
+it has been more then %1 days since you changed your password	common	pt	Passaram %1 dias desde a √∫ltima altera√ß√£o da sua senha
+it is recommended that you run setup to upgrade your tables to the current version	common	pt	√â recomendado que seja executada a Configura√ß√£o para atualizar as tabelas para a vers√£o atual.
+italic	common	pt	It√°lico
 italic.gif	common	pt	italico.gif
-italy	common	pt	It·lia
+italy	common	pt	It√°lia
 jamaica	common	pt	Jamaica
 january	common	pt	Janeiro
-japan	common	pt	Jap„o
-jordan	common	pt	Jord‚nia
+japan	common	pt	Jap√£o
+jordan	common	pt	Jord√¢nia
 july	common	pt	Julho
 jun	common	pt	Jun
 june	common	pt	Junho
 justify	htmlarea-TableOperations	pt	Justificar
 justify center	common	pt	Alinhar ao Centro
 justify full	common	pt	Justificar
-justify left	common	pt	Alinhar ‡ Esquerda
-justify right	common	pt	Alinhar ‡ Direita
-kazakstan	common	pt	Cazaquist„o
-kenya	common	pt	QuÈnia
+justify left	common	pt	Alinhar √† Esquerda
+justify right	common	pt	Alinhar √† Direita
+kazakstan	common	pt	Cazaquist√£o
+kenya	common	pt	Qu√©nia
 keywords	common	pt	Palavras-chave
 kiribati	common	pt	Kiribati
-korea, democratic peoples republic of	common	pt	Coreia, Rep˙blica Popular Democr·tica da
-korea, republic of	common	pt	Coreia, Rep˙blica da
+korea, democratic peoples republic of	common	pt	Coreia, Rep√∫blica Popular Democr√°tica da
+korea, republic of	common	pt	Coreia, Rep√∫blica da
 kuwait	common	pt	Kuwait
-kyrgyzstan	common	pt	Quirguist„o
+kyrgyzstan	common	pt	Quirguist√£o
 language	common	pt	Idioma
-language_direction_rtl	common	pt	DirecÁ„o do idioma da direita para a esquerda
-lao peoples democratic republic	common	pt	Laos, Rep˙blica Popular Democr·tica de
+language_direction_rtl	common	pt	Direc√ß√£o do idioma da direita para a esquerda
+lao peoples democratic republic	common	pt	Laos, Rep√∫blica Popular Democr√°tica de
 last name	common	pt	Apelido
 last name of the user, eg. "%1"	common	pt	apelido do utilizador. Ex: "%1"
-last page	common	pt	⁄ltima p·gina
+last page	common	pt	√öltima p√°gina
 lastname	common	pt	Apelido
-latvia	common	pt	LetÛnia
-layout	htmlarea-TableOperations	pt	ApresentaÁ„o
+latvia	common	pt	Let√≥nia
+layout	htmlarea-TableOperations	pt	Apresenta√ß√£o
 ldap-mgr	common	pt	Gestor LDAP
-lebanon	common	pt	LÌbano
+lebanon	common	pt	L√≠bano
 left	common	pt	Esquerda
 lesotho	common	pt	Lesoto
-liberia	common	pt	LibÈria
-libyan arab jamahiriya	common	pt	LÌbia
-license	common	pt	LicenÁa
+liberia	common	pt	Lib√©ria
+libyan arab jamahiriya	common	pt	L√≠bia
+license	common	pt	Licen√ßa
 liechtenstein	common	pt	Liechtenstein
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt	Linha %1:'%2'<br><b>dados csv n„o coincidem com o n˙mero de colunas da tabela %3 ==> ignorado</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt	Linha %1:'%2'<br><b>dados csv n√£o coincidem com o n√∫mero de colunas da tabela %3 ==> ignorado</b>
 link points to:	htmlarea-ContextMenu	pt	Ligar pontos a:
 list	common	pt	Listar
 list members	common	pt	Listar membros
-lithuania	common	pt	Litu‚nia
+lithuania	common	pt	Litu√¢nia
 local	common	pt	Local
 login	common	pt	Entrar
-loginid	common	pt	ID de ligaÁ„o
+loginid	common	pt	ID de liga√ß√£o
 logout	common	pt	Sair
 low	common	pt	Baixa
-lower greek letters	htmlarea-ListType	pt	Letras gregas min˙sculas
-lower latin letters	htmlarea-ListType	pt	Letras latinas min˙sculas
-lower roman numbers	htmlarea-ListType	pt	N˙meros romanos min˙sculos
+lower greek letters	htmlarea-ListType	pt	Letras gregas min√∫sculas
+lower latin letters	htmlarea-ListType	pt	Letras latinas min√∫sculas
+lower roman numbers	htmlarea-ListType	pt	N√∫meros romanos min√∫sculos
 lowest	common	pt	Mais baixo
 luxembourg	common	pt	Luxemburgo
 macau	common	pt	Macau
-macedonia, the former yugoslav republic of	common	pt	MacedÛnia, Antiga Rep˙blica Jugoslava da
-madagascar	common	pt	Madag·scar
-mail domain, eg. "%1"	common	pt	domÌnio de correio electrÛnico. Ex: "%1"
+macedonia, the former yugoslav republic of	common	pt	Maced√≥nia, Antiga Rep√∫blica Jugoslava da
+madagascar	common	pt	Madag√°scar
+mail domain, eg. "%1"	common	pt	dom√≠nio de correio electr√≥nico. Ex: "%1"
 main category	common	pt	Cetegoria principal
-main screen	common	pt	Ecr„ principal
+main screen	common	pt	Ecr√£ principal
 maintainer	common	pt	Administrador
-make lin_k...	htmlarea-ContextMenu	pt	Criar ligaÁ„o... (_k)
+make lin_k...	htmlarea-ContextMenu	pt	Criar liga√ß√£o... (_k)
 malawi	common	pt	Malawi
-malaysia	common	pt	Mal·sia
+malaysia	common	pt	Mal√°sia
 maldives	common	pt	Maldivas
 mali	common	pt	Mali
 malta	common	pt	Malta
-march	common	pt	MarÁo
+march	common	pt	Mar√ßo
 margin	htmlarea-TableOperations	pt	Margem
 marshall islands	common	pt	Ilhas Marshall
 martinique	common	pt	Martinica
-mauritania	common	pt	Maurit‚nia
-mauritius	common	pt	MaurÌcias
-max number of icons in navbar	common	pt	N˙mero m·ximo de Ìcones na barra de navegaÁ„o
+mauritania	common	pt	Maurit√¢nia
+mauritius	common	pt	Maur√≠cias
+max number of icons in navbar	common	pt	N√∫mero m√°ximo de √≠cones na barra de navega√ß√£o
 may	common	pt	Maio
 mayotte	common	pt	Mayotte
-medium	common	pt	MÈdia
+medium	common	pt	M√©dia
 menu	common	pt	Menu
-merge cells	htmlarea-TableOperations	pt	Unir cÈlulas
+merge cells	htmlarea-TableOperations	pt	Unir c√©lulas
 message	common	pt	Mensagem
-mexico	common	pt	MÈxico
-micronesia, federated states of	common	pt	MicronÈsia, Estados Federados da
+mexico	common	pt	M√©xico
+micronesia, federated states of	common	pt	Micron√©sia, Estados Federados da
 middle	htmlarea-TableOperations	pt	Centro
 minute	common	pt	minuto
 modify url	htmlarea-ContextMenu	pt	Modificar URL
-moldova, republic of	common	pt	Mold·via, Rep˙blica da
-monaco	common	pt	MÛnaco
+moldova, republic of	common	pt	Mold√°via, Rep√∫blica da
+monaco	common	pt	M√≥naco
 monday	common	pt	Segunda
-mongolia	common	pt	MongÛlia
+mongolia	common	pt	Mong√≥lia
 montserrat	common	pt	Montserrate
 morocco	common	pt	Marrocos
-mozambique	common	pt	MoÁambique
-multiple	common	pt	v·rios/as
+mozambique	common	pt	Mo√ßambique
+multiple	common	pt	v√°rios/as
 myanmar	common	pt	Mianmar
 name	common	pt	Nome
 name of the user, eg. "%1"	common	pt	nome do utilizador, ex."%1"
-namibia	common	pt	NamÌbia
+namibia	common	pt	Nam√≠bia
 nauru	common	pt	Nauru
 nepal	common	pt	Nepal
 netherlands	common	pt	Holanda
 netherlands antilles	common	pt	Antilhas Holandesas
 never	common	pt	Nunca
-new caledonia	common	pt	Nova CaledÛnia
+new caledonia	common	pt	Nova Caled√≥nia
 new entry added sucessfully	common	pt	Registo adicionado com sucesso
 new main category	common	pt	Nova categoria principal
 new value	common	pt	Novo Valor
-new zealand	common	pt	Nova Zel‚ndia
+new zealand	common	pt	Nova Zel√¢ndia
 next	common	pt	Seguinte
-next month (hold for menu)	jscalendar	pt	MÍs seguinte (manter pressionado para ver menu)
-next page	common	pt	P·gina seguinte
+next month (hold for menu)	jscalendar	pt	M√™s seguinte (manter pressionado para ver menu)
+next page	common	pt	P√°gina seguinte
 next year (hold for menu)	jscalendar	pt	Ano seguinte (manter pressionado para ver menu)
-nicaragua	common	pt	Nicar·gua
-niger	common	pt	NÌger
-nigeria	common	pt	NigÈria
+nicaragua	common	pt	Nicar√°gua
+niger	common	pt	N√≠ger
+nigeria	common	pt	Nig√©ria
 niue	common	pt	Niue
-no	common	pt	N„o
+no	common	pt	N√£o
 no entries found, try again ...	common	pt	nenhum resgisto encontrado, tente novamente...
-no history for this record	common	pt	Nenhum histÛrico para este registro
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	pt	Nenhum erro ortogr·fico encontrado de acordo com o dicion·rio seleccionado.
+no history for this record	common	pt	Nenhum hist√≥rico para este registro
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	pt	Nenhum erro ortogr√°fico encontrado de acordo com o dicion√°rio seleccionado.
 no rules	htmlarea-TableOperations	pt	Nenhuma regra
 no savant2 template directories were found in:	common	pt	Nenhuma directoria do modelo Savant2 foi encontrada em:
 no sides	htmlarea-TableOperations	pt	Nenhum lado
@@ -513,16 +513,16 @@ norfolk island	common	pt	Ilha Norfolk
 normal	common	pt	Normal
 northern mariana islands	common	pt	Ilhas Marianas do Norte
 norway	common	pt	Noruega
-not assigned	common	pt	n„o assinado/a
+not assigned	common	pt	n√£o assinado/a
 note	common	pt	Nota
 notes	common	pt	Notas
 notify window	common	pt	Janela de Aviso
-notify your administrator to correct this situation	common	pt	Avisar o seu administrador para corrigir esta situaÁ„o
+notify your administrator to correct this situation	common	pt	Avisar o seu administrador para corrigir esta situa√ß√£o
 november	common	pt	Novembro
 october	common	pt	Outubro
 ok	common	pt	OK
 old value	common	pt	Antigo Valor
-oman	common	pt	Om„
+oman	common	pt	Om√£
 on *nix systems please type: %1	common	pt	Em sistemas *nix, por favor escreva: %1
 on mouse over	common	pt	Ao passar com o rato por cima
 only private	common	pt	Apenas privado
@@ -530,142 +530,142 @@ only yours	common	pt	Apenas as suas
 open notify window	common	pt	Abrir janela de aviso
 open popup window	common	pt	Abrir janela popup
 open sidebox	common	pt	Abrir caixa lateral
-opens this link in a new window	htmlarea-ContextMenu	pt	Abre esta ligaÁ„o numa nova janela
+opens this link in a new window	htmlarea-ContextMenu	pt	Abre esta liga√ß√£o numa nova janela
 ordered list	common	pt	Lista ordenada
 original	common	pt	Original
 original word	htmlarea-SpellChecker	pt	Palavra original
 other	common	pt	Outro
-overview	common	pt	Vis„o geral
+overview	common	pt	Vis√£o geral
 owner	common	pt	Dono
 padding	htmlarea-TableOperations	pt	Preenchimento
-page	common	pt	P·gina
-page was generated in %1 seconds	common	pt	A p·gina foi gerada em %1 segundos
-pakistan	common	pt	Paquist„o
+page	common	pt	P√°gina
+page was generated in %1 seconds	common	pt	A p√°gina foi gerada em %1 segundos
+pakistan	common	pt	Paquist√£o
 palau	common	pt	Palau
-palestinian territory, occupied	common	pt	TerritÛrio Palestiniano, Ocupado
-panama	common	pt	Panam·
-papua new guinea	common	pt	Papua Nova GuinÈ
+palestinian territory, occupied	common	pt	Territ√≥rio Palestiniano, Ocupado
+panama	common	pt	Panam√°
+papua new guinea	common	pt	Papua Nova Guin√©
 paraguay	common	pt	Paraguai
 parcel	common	pt	Parcela
 parent category	common	pt	Categoria principal
 password	common	pt	Senha
-password could not be changed	common	pt	N„o foi possÌvel alterar a senha
+password could not be changed	common	pt	N√£o foi poss√≠vel alterar a senha
 password has been updated	common	pt	A senha foi alterada
-password must contain at least %1 lowercase letters	common	pt	A senha tem de conter pelo menos %1 letras min˙sculas
+password must contain at least %1 lowercase letters	common	pt	A senha tem de conter pelo menos %1 letras min√∫sculas
 password must contain at least %1 numbers	common	pt	A senha tem de conter pelo menos %1 algarismos
 password must contain at least %1 special charactars	common	pt	A senha tem de conter pelo menos %1 caracteres especiais
-password must contain at least %1 uppercase letters	common	pt	A senha tem de conter pelo menos %1 letras mai˙sculas
+password must contain at least %1 uppercase letters	common	pt	A senha tem de conter pelo menos %1 letras mai√∫sculas
 password must have at least %1 characters	common	pt	A senha tem de conter pelo menos %1 caracteres
 paste	htmlarea-ContextMenu	pt	Colar
-paste from clipboard	htmlarea	pt	Colar da ·rea de transferÍncia
+paste from clipboard	htmlarea	pt	Colar da √°rea de transfer√™ncia
 path	htmlarea	pt	Caminho
-path to user and group files has to be outside of the webservers document-root!!!	common	pt	Caminho para ficheiros de utilizador ou de grupo tem de ser externo ‡ raiz-documento dos servidores Web
-pattern for search in addressbook	common	pt	Padr„o para pesquisar no livro de endereÁos
-pattern for search in calendar	common	pt	Padr„o para pesquisar no calend·rio
-pattern for search in projects	common	pt	Padr„o para pesquisar nos projectos
+path to user and group files has to be outside of the webservers document-root!!!	common	pt	Caminho para ficheiros de utilizador ou de grupo tem de ser externo √† raiz-documento dos servidores Web
+pattern for search in addressbook	common	pt	Padr√£o para pesquisar no livro de endere√ßos
+pattern for search in calendar	common	pt	Padr√£o para pesquisar no calend√°rio
+pattern for search in projects	common	pt	Padr√£o para pesquisar nos projectos
 percent	htmlarea-TableOperations	pt	por cento
-permissions to the files/users directory	common	pt	permissıes para as directorias de ficheiros/utilizadores
+permissions to the files/users directory	common	pt	permiss√µes para as directorias de ficheiros/utilizadores
 personal	common	pt	Pessoal
 peru	common	pt	Peru
 philippines	common	pt	Filipinas
-phone number	common	pt	n˙mero de telefone
+phone number	common	pt	n√∫mero de telefone
 phpgwapi	common	pt	API eGroupWare
 pitcairn	common	pt	Ilha Pitcairn
-pixels	htmlarea-TableOperations	pt	pÌxeis
+pixels	htmlarea-TableOperations	pt	p√≠xeis
 please %1 by hand	common	pt	Por favor, %1 manualmente
-please click into some cell	htmlarea-TableOperations	pt	Por favor, clique numa cÈlula
-please confirm that you want to open this link	htmlarea-SpellChecker	pt	Por favor, confirme que deseja abrir esta ligaÁ„o
+please click into some cell	htmlarea-TableOperations	pt	Por favor, clique numa c√©lula
+please confirm that you want to open this link	htmlarea-SpellChecker	pt	Por favor, confirme que deseja abrir esta liga√ß√£o
 please confirm that you want to remove this element:	htmlarea-ContextMenu	pt	Por favor, confirma que deseja eliminar este elemento:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	pt	Por favor, confirme que deseja remover a ligaÁ„o deste elemento.
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	pt	Por favor, confirme que deseja remover a liga√ß√£o deste elemento.
 please enter a name	common	pt	Por favor, insira um nome !
-please run setup to become current	common	pt	Por favor, execute a configuraÁ„o para actualizar o sistema
+please run setup to become current	common	pt	Por favor, execute a configura√ß√£o para actualizar o sistema
 please select	common	pt	Por favor, seleccione
-please set your global preferences	common	pt	Por favor, defina as suas preferÍncias gerais
-please set your preferences for this application	common	pt	Configure suas preferÍncias para esta aplicaÁ„o !
-please wait.  calling spell checker.	htmlarea-SpellChecker	pt	Por favor, aguarde. A carregar o verificador ortogr·fico.
+please set your global preferences	common	pt	Por favor, defina as suas prefer√™ncias gerais
+please set your preferences for this application	common	pt	Configure suas prefer√™ncias para esta aplica√ß√£o !
+please wait.  calling spell checker.	htmlarea-SpellChecker	pt	Por favor, aguarde. A carregar o verificador ortogr√°fico.
 please wait...	common	pt	Por favor, aguarde...
-please wait: changing dictionary to	htmlarea-SpellChecker	pt	Por favor, aguarde: a alterar dicion·rio para
+please wait: changing dictionary to	htmlarea-SpellChecker	pt	Por favor, aguarde: a alterar dicion√°rio para
 pliz weit ;-)	htmlarea-SpellChecker	pt	Por favor, aguarde
-poland	common	pt	PolÛnia
+poland	common	pt	Pol√≥nia
 portugal	common	pt	Portugal
-postal	common	pt	CÛdigo Postal
-powered by egroupware version %1	common	pt	Desenvolvido por <a href=http://www.egroupware.org>eGroupWare</a> vers„o %1
-powered by phpgroupware version %1	common	pt	Desenvolvido por phpGroupWare vers„o %1
-preferences	common	pt	PreferÍncias
-preferences for the idots template set	common	pt	PreferÍncias para o modelo Idots
-prev. month (hold for menu)	jscalendar	pt	MÍs anterior (manter pressionado para ver menu)
+postal	common	pt	C√≥digo Postal
+powered by egroupware version %1	common	pt	Desenvolvido por <a href=http://www.egroupware.org>eGroupWare</a> vers√£o %1
+powered by phpgroupware version %1	common	pt	Desenvolvido por phpGroupWare vers√£o %1
+preferences	common	pt	Prefer√™ncias
+preferences for the idots template set	common	pt	Prefer√™ncias para o modelo Idots
+prev. month (hold for menu)	jscalendar	pt	M√™s anterior (manter pressionado para ver menu)
 prev. year (hold for menu)	jscalendar	pt	Ano anterior (manter pressionado para ver menu)
-previous page	common	pt	P·gina anterior
-primary style-sheet:	common	pt	Folha de estilo prim·ria
+previous page	common	pt	P√°gina anterior
+primary style-sheet:	common	pt	Folha de estilo prim√°ria
 print	common	pt	Imprimir
 priority	common	pt	Prioridade
 private	common	pt	Privado
 programs	common	pt	Programas
 project	common	pt	Projecto
-public	common	pt	P˙blico
+public	common	pt	P√∫blico
 puerto rico	common	pt	Porto Rico
 qatar	common	pt	Qatar
 re-check	htmlarea-SpellChecker	pt	Verificar novamente
 read	common	pt	Ler
-read this list of methods.	common	pt	LÍ esta lista de mÈtodos.
+read this list of methods.	common	pt	L√™ esta lista de m√©todos.
 reading	common	pt	a ler
-redoes your last action	htmlarea	pt	Refaz a sua ˙ltima acÁ„o
+redoes your last action	htmlarea	pt	Refaz a sua √∫ltima ac√ß√£o
 register	common	pt	Registar
 reject	common	pt	Rejeitar
 remove selected accounts	common	pt	Eliminar contas seleccionadas
 remove shortcut	common	pt	Eliminar Atalho
 remove the	htmlarea-ContextMenu	pt	Eliminar o/a
-remove this node from the document	htmlarea-ContextMenu	pt	Remover este nÛ do documento
+remove this node from the document	htmlarea-ContextMenu	pt	Remover este n√≥ do documento
 rename	common	pt	Renomear
 replace	common	pt	Substituir
 replace all	htmlarea-SpellChecker	pt	Substituir tudo
 replace with	common	pt	Substituir por
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pt	Fornece a lista completa de contas no sistema. Aviso: Esta lista pode ser muito grande.
 returns an array of todo items	common	pt	Fornece a lista de tarefas a fazer
-returns struct of users application access	common	pt	Fornece a estrutura de acesso dos utilizadores ‡s aplicaÁıes
-reunion	common	pt	Reuni„o
+returns struct of users application access	common	pt	Fornece a estrutura de acesso dos utilizadores √†s aplica√ß√µes
+reunion	common	pt	Reuni√£o
 revert	htmlarea-SpellChecker	pt	Reverter
 right	common	pt	Direita
 ro_w properties...	htmlarea-ContextMenu	pt	Propriedades da Linha... (_w)
-romania	common	pt	RomÈnia
+romania	common	pt	Rom√©nia
 row properties	htmlarea-TableOperations	pt	Propriedades da Linha
 rules	htmlarea-TableOperations	pt	Regras
 rules will appear between all rows and columns	htmlarea-TableOperations	pt	As regras surgem entre todas as linhas e colunas
 rules will appear between columns only	htmlarea-TableOperations	pt	As regras surgem apenas entre as colunas
 rules will appear between rows only	htmlarea-TableOperations	pt	As regras surgem apenas entre as linhas
-russian federation	common	pt	FederaÁ„o Russa
+russian federation	common	pt	Federa√ß√£o Russa
 rwanda	common	pt	Ruanda
 saint helena	common	pt	Santa Helena
-saint kitts and nevis	common	pt	S„o CristÛv„o e Neves
-saint lucia	common	pt	Santa L˙cia
-saint pierre and miquelon	common	pt	S„o Pedro e Miquel„o
-saint vincent and the grenadines	common	pt	S„o Vicente e Granadinas
+saint kitts and nevis	common	pt	S√£o Crist√≥v√£o e Neves
+saint lucia	common	pt	Santa L√∫cia
+saint pierre and miquelon	common	pt	S√£o Pedro e Miquel√£o
+saint vincent and the grenadines	common	pt	S√£o Vicente e Granadinas
 samoa	common	pt	Samoa
 san marino	common	pt	San Marino
-sao tome and principe	common	pt	S„o TomÈ e PrÌncipe
-saturday	common	pt	S·bado
-saudi arabia	common	pt	Ar·bia Saudita
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt	A vers„o Savant2 È diferente da Savant2 wrapper.<br/>Esta vers„o: %1 <br/>Vers„o Savant2:%2
+sao tome and principe	common	pt	S√£o Tom√© e Pr√≠ncipe
+saturday	common	pt	S√°bado
+saudi arabia	common	pt	Ar√°bia Saudita
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt	A vers√£o Savant2 √© diferente da Savant2 wrapper.<br/>Esta vers√£o: %1 <br/>Vers√£o Savant2:%2
 save	common	pt	Guardar
 search	common	pt	Pesquisar
 search %1 '%2'	common	pt	Pesquisar %1 '%2'
 search or select accounts	common	pt	Pesquisar ou seleccionar contas
-search or select multiple accounts	common	pt	Pesquisar ou seleccionar v·rias contas
+search or select multiple accounts	common	pt	Pesquisar ou seleccionar v√°rias contas
 second	common	pt	segundo
-section	common	pt	SecÁ„o
+section	common	pt	Sec√ß√£o
 select	common	pt	Seleccionar
 select all %1 %2 for %3	common	pt	Seleccionar todos %1 %2 para %3
 select category	common	pt	Seleccionar Categoria
 select date	common	pt	Seleccionar data
 select group	common	pt	Seleccionar grupo
-select home email address	common	pt	Seleccionar endereÁo de correio electrÛnico pessoal
-select multiple accounts	common	pt	seleccionar v·rias contas
+select home email address	common	pt	Seleccionar endere√ßo de correio electr√≥nico pessoal
+select multiple accounts	common	pt	seleccionar v√°rias contas
 select one	common	pt	Seleccione um
-select the default height for the application windows	common	pt	Seleccione a altura por omiss„o das janelas de aplicaÁıes
-select the default width for the application windows	common	pt	Seleccione a largura por omiss„o das janelas de aplicaÁıes
+select the default height for the application windows	common	pt	Seleccione a altura por omiss√£o das janelas de aplica√ß√µes
+select the default width for the application windows	common	pt	Seleccione a largura por omiss√£o das janelas de aplica√ß√µes
 select user	common	pt	Seleccionar utilizador
-select work email address	common	pt	Seleccionar endereÁo de correio electrÛnico do trabalho
-selection	common	pt	SelecÁ„o
+select work email address	common	pt	Seleccionar endere√ßo de correio electr√≥nico do trabalho
+selection	common	pt	Selec√ß√£o
 send	common	pt	Enviar
 senegal	common	pt	Senegal
 september	common	pt	Setembro
@@ -673,47 +673,47 @@ server %1 has been added	common	pt	O servidor %1 foi adicionado
 server answered. processing response...	common	pt	O servidor respondeu. A processar resposta...
 server contacted. waiting for response...	common	pt	O servidor foi contactado. A aguardar resposta...
 server name	common	pt	Nome do Servidor
-session has been killed	common	pt	Sess„o foi terminada
+session has been killed	common	pt	Sess√£o foi terminada
 setup	common	pt	Configurar
 setup main menu	common	pt	Configurar Menu Principal
 seychelles	common	pt	Seicheles
 show all	common	pt	Exibir tudo
 show all categorys	common	pt	Exibir todas as categorias
-show clock?	common	pt	Exibir relÛgio?
-show home and logout button in main application bar?	common	pt	Deseja exibir os botıes "p·gina inicial" e "sair" na barra da aplicaÁ„o principal?
-show logo's on the desktop.	common	pt	Exibir logÛtipo no ambiente de trabalho.
+show clock?	common	pt	Exibir rel√≥gio?
+show home and logout button in main application bar?	common	pt	Deseja exibir os bot√µes "p√°gina inicial" e "sair" na barra da aplica√ß√£o principal?
+show logo's on the desktop.	common	pt	Exibir log√≥tipo no ambiente de trabalho.
 show menu	common	pt	exibir menu
-show page generation time	common	pt	Exibir tempo de geraÁ„o da p·gina
-show page generation time on the bottom of the page?	common	pt	Exibir tempo de geraÁ„o da p·gina no final da p·gina?
-show page generation time?	common	pt	Exibir tempo de geraÁ„o da p·gina?
-show the image properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di·logo das propriedades de imagem
-show the logo's of egroupware and x-desktop on the desktop.	common	pt	Exibir o logÛtipo da eGroupware e da x-desktop no ambiente de trabalho.
-show the table cell properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di·logo das Propriedades de CÈlulas da Tabela
-show the table properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di·logo das Propriedades da Tabela
-show the table row properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di·logo das Propriedades de Linhas da Tabela
-show_more_apps	common	pt	Exibir mais aplicaÁıes
+show page generation time	common	pt	Exibir tempo de gera√ß√£o da p√°gina
+show page generation time on the bottom of the page?	common	pt	Exibir tempo de gera√ß√£o da p√°gina no final da p√°gina?
+show page generation time?	common	pt	Exibir tempo de gera√ß√£o da p√°gina?
+show the image properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di√°logo das propriedades de imagem
+show the logo's of egroupware and x-desktop on the desktop.	common	pt	Exibir o log√≥tipo da eGroupware e da x-desktop no ambiente de trabalho.
+show the table cell properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di√°logo das Propriedades de C√©lulas da Tabela
+show the table properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di√°logo das Propriedades da Tabela
+show the table row properties dialog	htmlarea-ContextMenu	pt	Exibir a caixa de di√°logo das Propriedades de Linhas da Tabela
+show_more_apps	common	pt	Exibir mais aplica√ß√µes
 showing %1	common	pt	A exibir %1
 showing %1 - %2 of %3	common	pt	A exibir %1 - %2 de %3
 sierra leone	common	pt	Serra Leoa
 singapore	common	pt	Singapura
-slovakia	common	pt	Eslov·quia
-slovenia	common	pt	EslovÈnia
-solomon islands	common	pt	Ilhas Salom„o
-somalia	common	pt	Som·lia
+slovakia	common	pt	Eslov√°quia
+slovenia	common	pt	Eslov√©nia
+solomon islands	common	pt	Ilhas Salom√£o
+somalia	common	pt	Som√°lia
 sorry, your login has expired	login	pt	Desculpe, sua conta expirou
-south africa	common	pt	¡frica do Sul
-south georgia and the south sandwich islands	common	pt	Ilhas GeÛrgia do Sul e Sandwich do Sul
-spacing	htmlarea-TableOperations	pt	EspaÁamento
-spacing and padding	htmlarea-TableOperations	pt	EspaÁamento e preenchimento
+south africa	common	pt	√Åfrica do Sul
+south georgia and the south sandwich islands	common	pt	Ilhas Ge√≥rgia do Sul e Sandwich do Sul
+spacing	htmlarea-TableOperations	pt	Espa√ßamento
+spacing and padding	htmlarea-TableOperations	pt	Espa√ßamento e preenchimento
 spain	common	pt	Espanha
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	pt	VerificaÁ„o ortogr·fica concluÌda. N„o foram encontrados erros. A fechar...
-spell-check	htmlarea-SpellChecker	pt	VerificaÁ„o ortogr·fica
-split cell	htmlarea-TableOperations	pt	Dividir cÈlula
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	pt	Verifica√ß√£o ortogr√°fica conclu√≠da. N√£o foram encontrados erros. A fechar...
+spell-check	htmlarea-SpellChecker	pt	Verifica√ß√£o ortogr√°fica
+split cell	htmlarea-TableOperations	pt	Dividir c√©lula
 split column	htmlarea-TableOperations	pt	Dividir coluna
 split row	htmlarea-TableOperations	pt	Dividir linha
 sri lanka	common	pt	Sri Lanka
-start date	common	pt	Data de inÌcio
-start time	common	pt	Hora de inÌcio
+start date	common	pt	Data de in√≠cio
+start time	common	pt	Hora de in√≠cio
 start with	common	pt	Iniciar com
 starting up...	common	pt	A iniciar...
 status	common	pt	Estado
@@ -724,47 +724,47 @@ subject	common	pt	Assunto
 submit	common	pt	Enviar
 subscript	htmlarea	pt	Subscrito
 substitutions and their meanings:	common	pt	Legenda:
-sudan	common	pt	Sud„o
-suggestions	htmlarea-SpellChecker	pt	Sugestıes
+sudan	common	pt	Sud√£o
+suggestions	htmlarea-SpellChecker	pt	Sugest√µes
 summary	htmlarea-TableOperations	pt	Resumo
 sunday	common	pt	Domingo
 superscript	htmlarea	pt	Super escrito
 suriname	common	pt	Suriname
 svalbard and jan mayen	common	pt	Svalbard  e Jan Mayen
-swaziland	common	pt	Suazil‚ndia
-sweden	common	pt	SuÈcia
-switzerland	common	pt	SuÌÁa
-syrian arab republic	common	pt	SÌria, Rep˙blica ¡rabe
+swaziland	common	pt	Suazil√¢ndia
+sweden	common	pt	Su√©cia
+switzerland	common	pt	Su√≠√ßa
+syrian arab republic	common	pt	S√≠ria, Rep√∫blica √Årabe
 table properties	common	pt	Propriedades da tabela
-taiwan	common	pt	Taiwan (Formosa)/TaipÈ
-tajikistan	common	pt	Tajiquist„o
-tanzania, united republic of	common	pt	Tanz‚nia, Rep˙blica Unida da
+taiwan	common	pt	Taiwan (Formosa)/Taip√©
+tajikistan	common	pt	Tajiquist√£o
+tanzania, united republic of	common	pt	Tanz√¢nia, Rep√∫blica Unida da
 text align	htmlarea-TableOperations	pt	Alinhar texto
 text color:	common	pt	Cor do texto:
-thailand	common	pt	Tail‚ndia
-the api is current	common	pt	A API est· actualizada
-the api requires an upgrade	common	pt	A API requer actualizaÁ„o
+thailand	common	pt	Tail√¢ndia
+the api is current	common	pt	A API est√° actualizada
+the api requires an upgrade	common	pt	A API requer actualiza√ß√£o
 the bottom side only	htmlarea-TableOperations	pt	Apenas o lado inferior
-the following applications require upgrades	common	pt	As seguintes aplicaÁıes requerem actualizaÁ„o
+the following applications require upgrades	common	pt	As seguintes aplica√ß√µes requerem actualiza√ß√£o
 the left-hand side only	htmlarea-TableOperations	pt	Apenas o lado esquerdo
-the mail server returned	common	pt	O servidor de correio electrÛnico retornou
+the mail server returned	common	pt	O servidor de correio electr√≥nico retornou
 the right and left sides only	htmlarea-TableOperations	pt	Apenas os lados esquerdo e direito
 the right-hand side only	htmlarea-TableOperations	pt	Apenas o lado direito
 the top and bottom sides only	htmlarea-TableOperations	pt	Apenas os lados superior e inferior
 the top side only	htmlarea-TableOperations	pt	Apenas o lado superior
-this application is current	common	pt	A aplicaÁ„o encontra-se actualizada
-this application requires an upgrade	common	pt	Esta aplicaÁ„o requer actualizaÁ„o
-this name has been used already	common	pt	Este nome j· est· a ser utilizado !
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	pt	Esta acÁ„o ir· cancelar as alteraÁıes e abandonar o verificador ortogr·fico. Por favor, confirme.
+this application is current	common	pt	A aplica√ß√£o encontra-se actualizada
+this application requires an upgrade	common	pt	Esta aplica√ß√£o requer actualiza√ß√£o
+this name has been used already	common	pt	Este nome j√° est√° a ser utilizado !
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	pt	Esta ac√ß√£o ir√° cancelar as altera√ß√µes e abandonar o verificador ortogr√°fico. Por favor, confirme.
 thursday	common	pt	Quinta
 tiled	common	pt	Mosaico
 time	common	pt	Hora
-time selection:	jscalendar	pt	SelecÁ„o da hora:
-time zone	common	pt	Fuso hor·rio
-time zone offset	common	pt	Faixa de fuso hor·rio
-title	common	pt	TÌtulo
+time selection:	jscalendar	pt	Selec√ß√£o da hora:
+time zone	common	pt	Fuso hor√°rio
+time zone offset	common	pt	Faixa de fuso hor√°rio
+title	common	pt	T√≠tulo
 to	common	pt	Para
-to correct this error for the future you will need to properly set the	common	pt	Para corrigir este erro futuramente, ir· precisar de definir correctamente o
+to correct this error for the future you will need to properly set the	common	pt	Para corrigir este erro futuramente, ir√° precisar de definir correctamente o
 to go back to the msg list, click <a href= %1 >here</a>	common	pt	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
 today	common	pt	Hoje
 todays date, eg. "%1"	common	pt	data de hoje, ex: "%1"
@@ -776,91 +776,91 @@ tonga	common	pt	Tonga
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pt	Demasiadas tentativas de acesso sem sucesso: %1 para o utilizador '%2', %3 para o IP %4
 top	common	pt	Topo
 total	common	pt	Total
-transparant bg for the icons?	common	pt	Fundo transparente para os Ìcones?
+transparant bg for the icons?	common	pt	Fundo transparente para os √≠cones?
 trinidad and tobago	common	pt	Trindade e Tobago
-tuesday	common	pt	TerÁa
-tunisia	common	pt	TunÌsia
+tuesday	common	pt	Ter√ßa
+tunisia	common	pt	Tun√≠sia
 turkey	common	pt	Turquia
-turkmenistan	common	pt	Turquemenist„o
+turkmenistan	common	pt	Turquemenist√£o
 turks and caicos islands	common	pt	Ilhas Turcas e Caicos
 tuvalu	common	pt	Tuvalu
 type	common	pt	Tipo
 uganda	common	pt	Uganda
-ukraine	common	pt	Ucr‚nia
+ukraine	common	pt	Ucr√¢nia
 underline	common	pt	Sublinhado
 underline.gif	common	pt	sublinhado.gif
-undoes your last action	htmlarea	pt	Anula a ˙ltima acÁ„o
-united arab emirates	common	pt	Emiratos ¡rabes Unidos
+undoes your last action	htmlarea	pt	Anula a √∫ltima ac√ß√£o
+united arab emirates	common	pt	Emiratos √Årabes Unidos
 united kingdom	common	pt	Reino Unido
-united states	common	pt	Estados Unidos da AmÈrico
+united states	common	pt	Estados Unidos da Am√©rico
 united states minor outlying islands	common	pt	Ilhas Menores Distantes dos Estados Unidos
 unknown	common	pt	Desconhecido
-unlink the current element	htmlarea-ContextMenu	pt	Remover ligaÁao do elemento actual
+unlink the current element	htmlarea-ContextMenu	pt	Remover liga√ßao do elemento actual
 unset color	htmlarea-TableOperations	pt	Desconfigurar cor
 update	common	pt	Actualizar
-update the clock per minute or per second	common	pt	Actualizar o relÛgio ao minuto ou ao segundo
+update the clock per minute or per second	common	pt	Actualizar o rel√≥gio ao minuto ou ao segundo
 upload	common	pt	Enviar
-upload directory does not exist, or is not writeable by webserver	common	pt	A directoria de envio n„o existe, ou n„o È edit·vel pelo servidor Web
+upload directory does not exist, or is not writeable by webserver	common	pt	A directoria de envio n√£o existe, ou n√£o √© edit√°vel pelo servidor Web
 upload image	htmlarea-UploadImage	pt	Enviar Imagem
-upper latin letters	htmlarea-ListType	pt	Letras latinas mai˙sculas
-upper roman numbers	htmlarea-ListType	pt	N˙meros romanos mai˙sculos
+upper latin letters	htmlarea-ListType	pt	Letras latinas mai√∫sculas
+upper roman numbers	htmlarea-ListType	pt	N√∫meros romanos mai√∫sculos
 url	common	pt	URL
 uruguay	common	pt	Uruguai
-use button to search for	common	pt	utilizar Bot„o para pesquisar por
-use button to search for address	common	pt	utilizar Bot„o para pesquisar por EndereÁo
-use button to search for calendarevent	common	pt	utilizar Bot„o para pesquisar por Evento do Calend·rio
-use button to search for project	common	pt	utilizar Bot„o para pesquisar por Projecto
+use button to search for	common	pt	utilizar Bot√£o para pesquisar por
+use button to search for address	common	pt	utilizar Bot√£o para pesquisar por Endere√ßo
+use button to search for calendarevent	common	pt	utilizar Bot√£o para pesquisar por Evento do Calend√°rio
+use button to search for project	common	pt	utilizar Bot√£o para pesquisar por Projecto
 user	common	pt	Utilizador
 user accounts	common	pt	Contas do utilizador
 user groups	common	pt	Grupos do utilizador
-user openinstance	common	pt	Inst‚ncia livre do utilizador
+user openinstance	common	pt	Inst√¢ncia livre do utilizador
 username	common	pt	Nome de utilizador
 users	common	pt	Utilizadores
-users choice	common	pt	¿ escolha dos usu·rios
-uzbekistan	common	pt	Usbequist„o
+users choice	common	pt	√Ä escolha dos usu√°rios
+uzbekistan	common	pt	Usbequist√£o
 vanuatu	common	pt	Vanuatu
 venezuela	common	pt	Venezuela
-version	common	pt	Vers„o
+version	common	pt	Vers√£o
 vertical align	htmlarea-TableOperations	pt	Alinhar verticalmente
 viet nam	common	pt	Vietname
 view	common	pt	Ver
-virgin islands, british	common	pt	Ilhas Virgens Brit‚nicas
+virgin islands, british	common	pt	Ilhas Virgens Brit√¢nicas
 virgin islands, u.s.	common	pt	Ilhas Virgens Americanas
 wallis and futuna	common	pt	Ilhas Wallis e Futuna
 wednesday	common	pt	Quarta
 welcome	common	pt	Bem-vindo
 western sahara	common	pt	Saara Ocidental
-what color should all the blank space on the desktop have	common	pt	Que cor deve preencher todos os espaÁos em branco do ambiente de trabalho?
+what color should all the blank space on the desktop have	common	pt	Que cor deve preencher todos os espa√ßos em branco do ambiente de trabalho?
 what style would you like the image to have?	common	pt	Que estilo deseja que a imagem tenha?
-when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt	Se disser que sim, os botıes "p·gina inicial" e "sair" ser„o apresentados como aplicaÁıes na barra de aplicaÁıes.
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt	Se disser que sim, os bot√µes "p√°gina inicial" e "sair" ser√£o apresentados como aplica√ß√µes na barra de aplica√ß√µes.
 which groups	common	pt	Que grupo(s)
 width	common	pt	Largura
 wk	jscalendar	pt	Semana
-work email	common	pt	endereÁo de correio electrÛnico do trabalho
-would you like to display the page generation time at the bottom of every window?	common	pt	Deseja apresentar o tempo de geraÁ„o da p·gina no final de cada janela?
+work email	common	pt	endere√ßo de correio electr√≥nico do trabalho
+would you like to display the page generation time at the bottom of every window?	common	pt	Deseja apresentar o tempo de gera√ß√£o da p√°gina no final de cada janela?
 writing	common	pt	a escrever
 written by:	common	pt	Escrito por:
 year	common	pt	Ano
-yemen	common	pt	IÈmen
+yemen	common	pt	I√©men
 yes	common	pt	Sim
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	pt	Est· em Modo de Texto. Utilize o bot„o [<>] para voltar ao modo WYSIWIG.
-you are required to change your password during your first login	common	pt	… necess·rio alterar a sua senha no seu primeiro acesso
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	pt	Est√° em Modo de Texto. Utilize o bot√£o [<>] para voltar ao modo WYSIWIG.
+you are required to change your password during your first login	common	pt	√â necess√°rio alterar a sua senha no seu primeiro acesso
 you have been successfully logged out	login	pt	Saiu com sucesso
-you have not entered a title	common	pt	N„o inseriu um tÌtulo
-you have not entered a valid date	common	pt	N„o inseriu uma data v·lida
-you have not entered a valid time of day	common	pt	N„o inseriu uma hora do dia v·lida
-you have not entered participants	common	pt	N„o inseriu participantes
-you have selected an invalid date	common	pt	Seleccionou uma data inv·lida !
-you have selected an invalid main category	common	pt	Seleccionou uma categoria principal inv·lida !
+you have not entered a title	common	pt	N√£o inseriu um t√≠tulo
+you have not entered a valid date	common	pt	N√£o inseriu uma data v√°lida
+you have not entered a valid time of day	common	pt	N√£o inseriu uma hora do dia v√°lida
+you have not entered participants	common	pt	N√£o inseriu participantes
+you have selected an invalid date	common	pt	Seleccionou uma data inv√°lida !
+you have selected an invalid main category	common	pt	Seleccionou uma categoria principal inv√°lida !
 you have successfully logged out	common	pt	Saiu com sucesso
-you need to add the webserver user '%1' to the group '%2'.	common	pt	… necess·rio adicionar o utilizador '%1' do servidor Web ao grupo '%2'
-your message could <b>not</b> be sent!<br>	common	pt	<b>N„o</b> foi possÌvel enviar sua mensagem!<br>
+you need to add the webserver user '%1' to the group '%2'.	common	pt	√â necess√°rio adicionar o utilizador '%1' do servidor Web ao grupo '%2'
+your message could <b>not</b> be sent!<br>	common	pt	<b>N√£o</b> foi poss√≠vel enviar sua mensagem!<br>
 your message has been sent	common	pt	A sua mensagem foi enviada
-your search returned %1 matchs	common	pt	A sua pesquisa resultou em %1 ocorrÍncias
-your search returned 1 match	common	pt	A sua pesquisa resultou em 1 ocorrÍncia
-your session could not be verified.	login	pt	A sua sess„o expirou
-your settings have been updated	common	pt	As suas preferÍncias foram actualizadas
-yugoslavia	common	pt	Jugosl·via
-zambia	common	pt	Z‚mbia
+your search returned %1 matchs	common	pt	A sua pesquisa resultou em %1 ocorr√™ncias
+your search returned 1 match	common	pt	A sua pesquisa resultou em 1 ocorr√™ncia
+your session could not be verified.	login	pt	A sua sess√£o expirou
+your settings have been updated	common	pt	As suas prefer√™ncias foram actualizadas
+yugoslavia	common	pt	Jugosl√°via
+zambia	common	pt	Z√¢mbia
 zimbabwe	common	pt	Zimbabwe
 zoom	common	pt	Zoom

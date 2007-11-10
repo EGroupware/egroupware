@@ -1,5 +1,5 @@
-%1 records imported	infolog	nl	%1 records geïmporteerd
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	nl	%1 records gelezen (nog niet geïmporteerd, u kunt terug gaan naar %2back%3 en 'Test Import' uitvinken)
+%1 records imported	infolog	nl	%1 records geÃ¯mporteerd
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	nl	%1 records gelezen (nog niet geÃ¯mporteerd, u kunt terug gaan naar %2back%3 en 'Test Import' uitvinken)
 - subprojects from	infolog	nl	- Subprojecten van
 0%	infolog	nl	0%
 10%	infolog	nl	10%
@@ -43,7 +43,7 @@ both	infolog	nl	beiden
 call	infolog	nl	bellen
 cancel	infolog	nl	Annuleren
 cancelled	infolog	nl	geannuleerd
-categories	infolog	nl	Categorieën
+categories	infolog	nl	CategorieÃ«n
 category	infolog	nl	Categorie
 change the status of an entry, eg. close it	infolog	nl	Wijzig de status van een item, bijvoorbeeld afsluiten
 charset of file	infolog	nl	Karakterset van bestand
@@ -83,7 +83,7 @@ default filter for infolog	infolog	nl	Standaard filter voor InfoLog
 default status for a new log entry	infolog	nl	Standaard status voor een nieuwe infolog
 delegation	infolog	nl	Delegatie
 delete	infolog	nl	Verwijderen
-delete one record by passing its id.	infolog	nl	Verwijder één record door het id mee te geven.
+delete one record by passing its id.	infolog	nl	Verwijder Ã©Ã©n record door het id mee te geven.
 delete the entry	infolog	nl	Infolog verwijderen
 delete this entry	infolog	nl	dit infolog verwijderen
 delete this entry and all listed sub-entries	infolog	nl	Deze infolog en alle getoonde onderliggende infologs verwijderen
@@ -93,7 +93,7 @@ deletes this status	infolog	nl	verwijderd deze status
 description	infolog	nl	Beschrijving
 determines the order the fields are displayed	infolog	nl	bepaald hoe de volgorde van de velden wordt weergegeven
 disables a status without deleting it	infolog	nl	deactiveerd een status zonder het te verwijderen
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	nl	Wilt een een bevestiging van de verantwoordelijke voor accepteren, voor beëindigen, of voor beide
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	nl	Wilt een een bevestiging van de verantwoordelijke voor accepteren, voor beÃ«indigen, of voor beide
 do you want to see custom infolog types in the calendar?	infolog	nl	Wilt u aangepaste InfoLog types in de agenda weergeven?
 don't show infolog	infolog	nl	InfoLog NIET weergeven
 done	infolog	nl	gereed
@@ -101,7 +101,7 @@ download	infolog	nl	Downloaden
 duration	infolog	nl	Duur
 each value is a line like <id>[=<label>]	infolog	nl	elke waarde is een regel zoals <id>[=<label>]
 edit	infolog	nl	Wijzigen
-edit or create categories for ingolog	infolog	nl	Categorieën voor InfoLog aanmaken of wijzigen
+edit or create categories for ingolog	infolog	nl	CategorieÃ«n voor InfoLog aanmaken of wijzigen
 edit rights (full edit rights incl. making someone else responsible!)	infolog	nl	bewerk rechten (volledige rechten voor bewerking, inclusief anderen hiervoor verantwoordelijk maken!)
 edit status	infolog	nl	Wijzig status
 edit the entry	infolog	nl	Wijzig de infolog
@@ -153,14 +153,14 @@ length<br>rows	infolog	nl	Lengte<br/>Regels
 link	infolog	nl	Link
 links	infolog	nl	Links
 links of this entry	infolog	nl	Links van deze infolog
-list all categories	infolog	nl	Toon alle categorieën
+list all categories	infolog	nl	Toon alle categorieÃ«n
 list no subs/childs	infolog	nl	Sub's niet weergeven
 location	infolog	nl	Locatie
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
 max length of the input [, length of the inputfield (optional)]	infolog	nl	maximale lengte van de invoer [lengte van het invoerveld (optioneel)]
 name must not be empty !!!	infolog	nl	Naam mag niet leeg zijn !!!
-name of new type to create	infolog	nl	Naam van het nieuw te creëren type
+name of new type to create	infolog	nl	Naam van het nieuw te creÃ«ren type
 never hide search and filters	infolog	nl	Zoeken en filters niet verbergen
 new name	infolog	nl	nieuwe naam
 new search	infolog	nl	Nieuwe zoekopdracht
@@ -204,11 +204,11 @@ planned	infolog	nl	gepland
 planned time	infolog	nl	geplande tijd
 price	infolog	nl	Prijs
 priority	infolog	nl	Prioriteit
-private	infolog	nl	Privé
+private	infolog	nl	PrivÃ©
 project	infolog	nl	Project
 project settings: price, times	infolog	nl	Project instellingen: prijs, tijden
 re:	infolog	nl	Re:
-read one record by passing its id.	infolog	nl	Lees één record door het id mee te geven.
+read one record by passing its id.	infolog	nl	Lees Ã©Ã©n record door het id mee te geven.
 read rights (default)	infolog	nl	leesrechten (standaard)
 reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	nl	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	nl	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
@@ -290,8 +290,8 @@ upcoming	infolog	nl	aankomende
 urgency	infolog	nl	Prioriteit
 urgent	infolog	nl	dringend
 used time	infolog	nl	gebruikte tijd
-valid path on clientside<br>eg. \\server\share or e:\	infolog	nl	geldig pad op de computer van de cliënt<br/>. Bijv. \\Server\Share of D:\
-valid path on clientside<br>eg. \servershare or e:	infolog	nl	geldig pad op de computer van de cliënt<br/>. Bijv. \\Server\Share of D:\
+valid path on clientside<br>eg. \\server\share or e:\	infolog	nl	geldig pad op de computer van de cliÃ«nt<br/>. Bijv. \\Server\Share of D:\
+valid path on clientside<br>eg. \servershare or e:	infolog	nl	geldig pad op de computer van de cliÃ«nt<br/>. Bijv. \\Server\Share of D:\
 values for selectbox	infolog	nl	Waarden voor selectbox
 view all subs of this entry	infolog	nl	Alle sub's van deze infolog weergeven
 view other subs	infolog	nl	overige sub's weergeven

@@ -1,101 +1,101 @@
-accessories of	resources	ru	ÀœÕ–Ã≈À‘’¿›…≈ À
-accessories:	resources	ru	ÎœÕ–Ã≈À‘’¿›…≈:
-actions	resources	ru	‰≈ ”‘◊…—
-add accessory	resources	ru	‰œ¬¡◊…‘ÿ ÀœÕ–Ã≈À‘’¿›≈≈
-add resource	resources	ru	ƒœ¬¡◊…‘ÿ “≈”’“”
-add resources	resources	ru	‰œ¬¡◊…‘ÿ “≈”’“”Ÿ
-administrator	resources	ru	·ƒÕ…Œ…”‘“¡‘œ“
-all categories	resources	ru	◊”≈ À¡‘≈«œ“……
-book	resources	ru	‚“œŒÿ
-book selected resources	resources	ru	¬“œŒ…“œ◊¡‘ÿ ◊Ÿ¬“¡ŒŒŸ≈ “≈”’“”Ÿ
-book this resource	resources	ru	‚“œŒ…“œ◊¡‘ÿ ‹‘œ‘ “≈”’“”
-bookable	resources	ru	‚“œŒ…“’≈ÕŸ 
-buy this article	resources	ru	Î’–…‘ÿ ‹‘’ ”‘¡‘ÿ¿
-buy this resource	resources	ru	Î’–…‘ÿ ‹‘œ‘ “≈”’“”
-buyable	resources	ru	œÀ’–¡≈ÕŸ 
-categories admin	resources	ru	·ƒÕ…Œ…”‘“…“œ◊¡Œ…≈ À¡‘≈«œ“… 
-category:	resources	ru	Î¡‘≈«œ“…—:
-check all	resources	ru	Ô‘Õ≈‘…‘ÿ ◊”≈
-choose categories admin	resources	ru	◊Ÿ¬“¡‘ÿ ¡ƒÕ…Œ…”‘“¡‘œ“¡ À¡‘≈«œ“… 
-clear selection	resources	ru	œﬁ…”‘…‘ÿ ◊Ÿ¬œ“
-configure access permissions	resources	ru	Ó¡”‘“œ…‘ÿ “¡⁄“≈€≈Œ…— ƒœ”‘’–¡
-create new accessory for this resource	resources	ru	Ûœ⁄ƒ¡‘ÿ Œœ◊œ≈ ÀœÕ–Ã≈À‘’¿›≈≈ ƒÃ— ‹‘œ«œ “≈”’“”¡
-create new links	resources	ru	Ûœ⁄ƒ¡‘ÿ Œœ◊Ÿ≈ ””ŸÃÀ…
-delete selected resources	resources	ru	’ƒ¡Ã…‘ÿ ◊Ÿ¬“¡ŒŒŸ≈ “≈”’“”Ÿ
-delete this entry	resources	ru	ıƒ¡Ã…‘ÿ ‹‘’ ⁄¡–…”ÿ
-description (short)	resources	ru	Ô–…”¡Œ…≈ (À“¡‘Àœ≈)
-direct booking permissions	resources	ru	Ú¡⁄“≈€≈Œ…— –“—Õœ«œ ¬“œŒ…“œ◊¡Œ…—
-don't use vfs (this will need a symlink --> see readme)	resources	ru	Ó≈ …”–œÃÿ⁄œ◊¡‘ÿ vfs (‹‘œ ‘“≈¬’≈‘ –“…Õ≈Œ≈…— ”…Õ◊œÃ…ﬁ≈”À…» ””ŸÃœÀ --> ”Õ. README)
-edit this entry	resources	ru	Ú≈ƒ¡À‘…“œ◊¡‘ÿ ‹‘’ ⁄¡–…”ÿ
-existing links	resources	ru	Û’›≈”‘◊’¿›…≈ ””ŸÃÀ…
-general	resources	ru	Ô¬›… 
-general informations about resource	resources	ru	Ô¬›¡— …Œ∆œ“Õ¡√…— œ “≈”’“”≈
-gernal resource	resources	ru	œ¬›…  “≈”’“”
-how many of the resources are useable?	resources	ru	ÛÀœÃÿÀœ “≈”’“”œ◊ ƒœ”‘’–Œœ?
-how many of them are useable?	resources	ru	ÛÀœÃÿÀœ …⁄ Œ…» ƒœ”‘’–Œœ?
-how many of this resource are usable	resources	ru	ÛÀœÃÿÀœ ‹‘œ«œ “≈”’“”¡ ƒœ”‘’–Œœ?
-how many of this resource exists	resources	ru	ÛÀœÃÿÀœ ‹‘œ«œ “≈”’“”¡ ≈”‘ÿ?
-implies booking permission	resources	ru	–œƒ“¡⁄’Õ≈◊¡≈‘ –“¡◊¡ Œ¡ ¬“œŒ…“œ◊¡Œ…≈
-implies read permission	resources	ru	–œƒ“¡⁄’Õ≈◊¡≈‘ –“¡◊¡ Œ¡ ﬁ‘≈Œ…≈
-information about storage	resources	ru	ÈŒ∆œ“Õ¡√…— œ »“¡Œ…Ã…›≈
-informations about the location of resource	resources	ru	ÈŒ∆œ“Õ¡√…— œ Õ≈”‘œ–œÃœ÷≈Œ…… “≈”’“”¡
-inventory number	resources	ru	ÈŒ◊≈Œ‘¡“…⁄¡√…œŒŒŸ  ŒœÕ≈“
-inventory number:	resources	ru	ÈŒ◊≈Œ‘¡“…⁄¡√…œŒŒŸ  ŒœÕ≈“:
-is resource bookable?	resources	ru	Ú≈”’“” ¬“œŒ…“’≈ÕŸ ?
-is resource buyable?	resources	ru	Ú≈”’“” –œÀ’–¡≈ÕŸ ?
-is this resource bookable?	resources	ru	¸‘œ‘ “≈”’“” ¬“œŒ…“’≈ÕŸ ?
-is this resource buyable?	resources	ru	¸‘œ‘ “≈”’“” –œÀ’–¡≈ÕŸ ?
-links	resources	ru	Û”ŸÃÀ…
-location	resources	ru	Ì≈”‘œ–œÃœ÷≈Œ…≈
-location of resource	resources	ru	Ì≈”‘œ–œÃœ÷≈Œ…≈ “≈”’“”¡
-location:	resources	ru	Ì≈”‘œ–œÃœ÷≈Œ…≈:
-name of resource	resources	ru	ÈÕ— “≈”’“”¡
-name:	resources	ru	ÈÕ—:
-no description available	resources	ru	œ–…”¡Œ…≈ Œ≈ƒœ”‘’–Œœ
-no resources selected	resources	ru	Ú≈”’“”Ÿ Œ≈ ◊Ÿ¬“¡ŒŸ
-notify your administrator to correct this situation	resources	ru	Ûœœ¬›…‘≈ ˜¡€≈Õ’ ¡ƒÕ…Œ…”‘“¡‘œ“’ ƒÃ— …”–“¡◊Ã≈Œ…— ‹‘œ  ”…‘’¡√……
-picture	resources	ru	È⁄œ¬“¡÷≈Œ…≈
-picture source	resources	ru	…”‘œﬁŒ…À …⁄œ¬“¡÷≈Œ…—
-picture type is not supported, sorry!	resources	ru	∆œ“Õ¡‘ …⁄œ¬“¡÷≈Œ…— Œ≈ –œƒƒ≈“÷…◊¡≈‘”—, …⁄◊…Œ…‘≈!
-pictures or resource	resources	ru	È⁄œ¬“¡÷≈Œ…≈ …Ã… “≈”’“”
-planer	resources	ru	–Ã¡Œ…“œ◊›…À
-prizeing information for booking or buying	resources	ru	ÈŒ∆œ“Õ¡√…— ƒÃ— ¬“œŒ…“œ◊¡Œ…— …Ã… –œÀ’–À…
-quantity	resources	ru	ÎœÃ…ﬁ≈”‘◊œ
-quantity of resource	resources	ru	ÎœÃ…ﬁ≈”‘◊œ “≈”’“”¡
-quantity:	resources	ru	ÎœÃ…ﬁ≈”‘◊œ:
-read calendar permissions	resources	ru	˛…‘¡‘ÿ “¡⁄“≈€≈Œ…— ƒœ”‘’–¡ À Î¡Ã≈Œƒ¡“¿
-read permissions	resources	ru	“œﬁ…‘¡‘ÿ “¡⁄“≈€≈Œ…— ƒœ”‘’–¡
-related links	resources	ru	Û◊—⁄¡ŒŒŸ≈ ””ŸÃÀ…
-resources	common	ru	Ú≈”’“”Ÿ
-resources list	resources	ru	”–…”œÀ “≈”’“”œ◊
-responsible:	resources	ru	Ô‘◊≈‘”‘◊≈ŒŒŸ :
-saves entry and exits	resources	ru	Ûœ»“¡Œ—≈‘ ⁄¡–…”ÿ … ◊Ÿ»œƒ…‘
-select a category	resources	ru	˜Ÿ¬“¡‘ÿ À¡‘≈«œ“…¿
-select resource	resources	ru	◊Ÿ¬“¡‘ÿ “≈”’“”
-select resources	common	ru	˜Ÿ¬“¡‘ÿ “≈”’“”Ÿ
-select/deselect all	resources	ru	◊Ÿ¬“¡‘ÿ/œ‘Õ≈Œ…‘ÿ ◊Ÿ¬œ“ ◊”≈
-short description	resources	ru	Î“¡‘Àœ≈ œ–…”¡Œ…≈
-short description of resource	resources	ru	Î“¡‘Àœ≈ œ–…”¡Œ…≈ “’”’“”¡
-show calendar of resource	resources	ru	œÀ¡⁄¡‘ÿ À¡Ã≈Œƒ¡“ÿ “≈”’“”¡
-something went wrong by deleting resource	resources	ru	˛‘œ-‘œ –œ€Ãœ Œ≈ ‘¡À –“… ’ƒ¡Ã≈Œ…… “≈”’“”¡
-something went wrong by saving resource	resources	ru	˛‘œ-‘œ –œ€Ãœ Œ≈ ‘¡À –“… ”œ»“¡Œ≈Œ…… “≈”’“”¡
-storage inforation	resources	ru	ÈŒ∆œ“Õ¡√…— œ Ë“¡Œ…Ã…›≈
-storage information	resources	ru	ÈŒ∆œ“Õ¡√…— œ »“¡Œ…Ã…›≈:
-storage information:	resources	ru	ÈŒ∆œ“Õ¡√…— œ »“¡Œ…Ã…›≈:
-the calendar of this resource	resources	ru	Î¡Ã≈Œƒ¡“ÿ ‹‘œ«œ Ú≈”’“”¡
-this module displays the resources app	resources	ru	¸‘œ‘ Õœƒ’Ãÿ –œÀ¡⁄Ÿ◊¡≈‘ –“…Ãœ÷≈Œ…≈ “≈”’“”œ◊
-use general resources icon	resources	ru	È”–œÃÿ⁄œ◊¡‘ÿ œ¬›’¿ –…À‘œ«“¡ÕÕ’ “≈”’“”œ◊
-use own picture	resources	ru	È”–œÃÿ⁄œ◊¡‘ÿ ”◊œ£ …⁄œ¬“¡÷≈Œ…≈
-use the category's icon	resources	ru	È”–œÃÿ⁄œ◊¡‘ÿ –…À‘œ«“¡ÕÕ’ À¡‘≈«œ“……
-useable	resources	ru	ƒœ”‘’–ŒŸ 
-useable:	resources	ru	‰œ”‘’–ŒŸ :
-view accessories for this resource	resources	ru	œ”Õœ‘“≈‘ÿ ÀœÕ–Ã≈‘’¿›…≈ ‹‘œ«œ “≈”’“”¡
-view this entry	resources	ru	œÀ¡⁄¡‘ÿ ‹‘’ ⁄¡–…”ÿ
-web-page of resource	resources	ru	˜≈¬-Û‘“¡Œ…√¡ “≈”’“”¡
-web-site for this resource	resources	ru	˜≈¬-Û¡ ‘ ‹‘œ«œ “≈”’“”¡
-where to find this resource?	resources	ru	Áƒ≈ …”À¡‘ÿ ‹‘œ‘ “≈”’“”¡
-which category does this resource belong to?	resources	ru	Î À¡Àœ  À¡‘≈«œ“…… œ‘Œœ”…‘”— ‹‘œ‘ “≈”’“”
-write permissions	resources	ru	Ú¡⁄“≈€≈Œ…≈ Œ¡ ⁄¡–…”ÿ
-you are not permitted to edit this reource!	resources	ru	˜¡Õ Œ≈ “¡⁄“≈€≈Œœ “≈ƒ¡À‘…“œ◊¡‘ÿ ‹‘œ‘ “≈”’“”
-you are not permitted to get information about this resource!	resources	ru	˜¡Õ Œ≈ “¡⁄“≈€≈Œœ –œÃ’ﬁ¡‘ÿ …Œ∆œ“Õ¡√…¿ œ¬ ‹‘œÕ “≈”’“”≈!
-you chose more resources than available	resources	ru	˜Ÿ ◊Ÿ¬“¡Ã… ¬œÃÿ€≈ “≈”’“”œ◊, ﬁ≈Õ ◊œ⁄Õœ÷Œœ
+accessories of	resources	ru	–∫–æ–º–ø–ª–µ–∫—Ç—É—é—â–∏–µ –∫
+accessories:	resources	ru	–ö–æ–º–ø–ª–µ–∫—Ç—É—é—â–∏–µ:
+actions	resources	ru	–î–µ–π—Å—Ç–≤–∏—è
+add accessory	resources	ru	–î–æ–±–∞–≤–∏—Ç—å –∫–æ–º–ø–ª–µ–∫—Ç—É—é—â–µ–µ
+add resource	resources	ru	–¥–æ–±–∞–≤–∏—Ç—å —Ä–µ—Å—É—Ä—Å
+add resources	resources	ru	–î–æ–±–∞–≤–∏—Ç—å —Ä–µ—Å—É—Ä—Å—ã
+administrator	resources	ru	–ê–¥–º–∏–Ω–∏—Å—Ç—Ä–∞—Ç–æ—Ä
+all categories	resources	ru	–≤—Å–µ –∫–∞—Ç–µ–≥–æ—Ä–∏–∏
+book	resources	ru	–ë—Ä–æ–Ω—å
+book selected resources	resources	ru	–±—Ä–æ–Ω–∏—Ä–æ–≤–∞—Ç—å –≤—ã–±—Ä–∞–Ω–Ω—ã–µ —Ä–µ—Å—É—Ä—Å—ã
+book this resource	resources	ru	–ë—Ä–æ–Ω–∏—Ä–æ–≤–∞—Ç—å —ç—Ç–æ—Ç —Ä–µ—Å—É—Ä—Å
+bookable	resources	ru	–ë—Ä–æ–Ω–∏—Ä—É–µ–º—ã–π
+buy this article	resources	ru	–ö—É–ø–∏—Ç—å —ç—Ç—É —Å—Ç–∞—Ç—å—é
+buy this resource	resources	ru	–ö—É–ø–∏—Ç—å —ç—Ç–æ—Ç —Ä–µ—Å—É—Ä—Å
+buyable	resources	ru	–ü–æ–∫—É–ø–∞–µ–º—ã–π
+categories admin	resources	ru	–ê–¥–º–∏–Ω–∏—Å—Ç—Ä–∏—Ä–æ–≤–∞–Ω–∏–µ –∫–∞—Ç–µ–≥–æ—Ä–∏–π
+category:	resources	ru	–ö–∞—Ç–µ–≥–æ—Ä–∏—è:
+check all	resources	ru	–û—Ç–º–µ—Ç–∏—Ç—å –≤—Å–µ
+choose categories admin	resources	ru	–≤—ã–±—Ä–∞—Ç—å –∞–¥–º–∏–Ω–∏—Å—Ç—Ä–∞—Ç–æ—Ä–∞ –∫–∞—Ç–µ–≥–æ—Ä–∏–π
+clear selection	resources	ru	–æ—á–∏—Å—Ç–∏—Ç—å –≤—ã–±–æ—Ä
+configure access permissions	resources	ru	–ù–∞—Å—Ç—Ä–æ–∏—Ç—å —Ä–∞–∑—Ä–µ—à–µ–Ω–∏—è –¥–æ—Å—Ç—É–ø–∞
+create new accessory for this resource	resources	ru	–°–æ–∑–¥–∞—Ç—å –Ω–æ–≤–æ–µ –∫–æ–º–ø–ª–µ–∫—Ç—É—é—â–µ–µ –¥–ª—è —ç—Ç–æ–≥–æ —Ä–µ—Å—É—Ä—Å–∞
+create new links	resources	ru	–°–æ–∑–¥–∞—Ç—å –Ω–æ–≤—ã–µ —Å—Å—ã–ª–∫–∏
+delete selected resources	resources	ru	—É–¥–∞–ª–∏—Ç—å –≤—ã–±—Ä–∞–Ω–Ω—ã–µ —Ä–µ—Å—É—Ä—Å—ã
+delete this entry	resources	ru	–£–¥–∞–ª–∏—Ç—å —ç—Ç—É –∑–∞–ø–∏—Å—å
+description (short)	resources	ru	–û–ø–∏—Å–∞–Ω–∏–µ (–∫—Ä–∞—Ç–∫–æ–µ)
+direct booking permissions	resources	ru	–†–∞–∑—Ä–µ—à–µ–Ω–∏—è –ø—Ä—è–º–æ–≥–æ –±—Ä–æ–Ω–∏—Ä–æ–≤–∞–Ω–∏—è
+don't use vfs (this will need a symlink --> see readme)	resources	ru	–ù–µ –∏—Å–ø–æ–ª—å–∑–æ–≤–∞—Ç—å vfs (—ç—Ç–æ —Ç—Ä–µ–±—É–µ—Ç –ø—Ä–∏–º–µ–Ω–µ–∏—è —Å–∏–º–≤–æ–ª–∏—á–µ—Å–∫–∏—Ö —Å—Å—ã–ª–æ–∫ --> —Å–º. README)
+edit this entry	resources	ru	–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å —ç—Ç—É –∑–∞–ø–∏—Å—å
+existing links	resources	ru	–°—É—â–µ—Å—Ç–≤—É—é—â–∏–µ —Å—Å—ã–ª–∫–∏
+general	resources	ru	–û–±—â–∏–π
+general informations about resource	resources	ru	–û–±—â–∞—è –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –æ —Ä–µ—Å—É—Ä—Å–µ
+gernal resource	resources	ru	–æ–±—â–∏–π —Ä–µ—Å—É—Ä—Å
+how many of the resources are useable?	resources	ru	–°–∫–æ–ª—å–∫–æ —Ä–µ—Å—É—Ä—Å–æ–≤ –¥–æ—Å—Ç—É–ø–Ω–æ?
+how many of them are useable?	resources	ru	–°–∫–æ–ª—å–∫–æ –∏–∑ –Ω–∏—Ö –¥–æ—Å—Ç—É–ø–Ω–æ?
+how many of this resource are usable	resources	ru	–°–∫–æ–ª—å–∫–æ —ç—Ç–æ–≥–æ —Ä–µ—Å—É—Ä—Å–∞ –¥–æ—Å—Ç—É–ø–Ω–æ?
+how many of this resource exists	resources	ru	–°–∫–æ–ª—å–∫–æ —ç—Ç–æ–≥–æ —Ä–µ—Å—É—Ä—Å–∞ –µ—Å—Ç—å?
+implies booking permission	resources	ru	–ø–æ–¥—Ä–∞–∑—É–º–µ–≤–∞–µ—Ç –ø—Ä–∞–≤–∞ –Ω–∞ –±—Ä–æ–Ω–∏—Ä–æ–≤–∞–Ω–∏–µ
+implies read permission	resources	ru	–ø–æ–¥—Ä–∞–∑—É–º–µ–≤–∞–µ—Ç –ø—Ä–∞–≤–∞ –Ω–∞ —á—Ç–µ–Ω–∏–µ
+information about storage	resources	ru	–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –æ —Ö—Ä–∞–Ω–∏–ª–∏—â–µ
+informations about the location of resource	resources	ru	–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –æ –º–µ—Å—Ç–æ–ø–æ–ª–æ–∂–µ–Ω–∏–∏ —Ä–µ—Å—É—Ä—Å–∞
+inventory number	resources	ru	–ò–Ω–≤–µ–Ω—Ç–∞—Ä–∏–∑–∞—Ü–∏–æ–Ω–Ω—ã–π –Ω–æ–º–µ—Ä
+inventory number:	resources	ru	–ò–Ω–≤–µ–Ω—Ç–∞—Ä–∏–∑–∞—Ü–∏–æ–Ω–Ω—ã–π –Ω–æ–º–µ—Ä:
+is resource bookable?	resources	ru	–†–µ—Å—É—Ä—Å –±—Ä–æ–Ω–∏—Ä—É–µ–º—ã–π?
+is resource buyable?	resources	ru	–†–µ—Å—É—Ä—Å –ø–æ–∫—É–ø–∞–µ–º—ã–π?
+is this resource bookable?	resources	ru	–≠—Ç–æ—Ç —Ä–µ—Å—É—Ä—Å –±—Ä–æ–Ω–∏—Ä—É–µ–º—ã–π?
+is this resource buyable?	resources	ru	–≠—Ç–æ—Ç —Ä–µ—Å—É—Ä—Å –ø–æ–∫—É–ø–∞–µ–º—ã–π?
+links	resources	ru	–°—Å—ã–ª–∫–∏
+location	resources	ru	–ú–µ—Å—Ç–æ–ø–æ–ª–æ–∂–µ–Ω–∏–µ
+location of resource	resources	ru	–ú–µ—Å—Ç–æ–ø–æ–ª–æ–∂–µ–Ω–∏–µ —Ä–µ—Å—É—Ä—Å–∞
+location:	resources	ru	–ú–µ—Å—Ç–æ–ø–æ–ª–æ–∂–µ–Ω–∏–µ:
+name of resource	resources	ru	–ò–º—è —Ä–µ—Å—É—Ä—Å–∞
+name:	resources	ru	–ò–º—è:
+no description available	resources	ru	–æ–ø–∏—Å–∞–Ω–∏–µ –Ω–µ–¥–æ—Å—Ç—É–ø–Ω–æ
+no resources selected	resources	ru	–†–µ—Å—É—Ä—Å—ã –Ω–µ –≤—ã–±—Ä–∞–Ω—ã
+notify your administrator to correct this situation	resources	ru	–°–æ–æ–±—â–∏—Ç–µ –í–∞—à–µ–º—É –∞–¥–º–∏–Ω–∏—Å—Ç—Ä–∞—Ç–æ—Ä—É –¥–ª—è –∏—Å–ø—Ä–∞–≤–ª–µ–Ω–∏—è —ç—Ç–æ–π —Å–∏—Ç—É–∞—Ü–∏–∏
+picture	resources	ru	–ò–∑–æ–±—Ä–∞–∂–µ–Ω–∏–µ
+picture source	resources	ru	–∏—Å—Ç–æ—á–Ω–∏–∫ –∏–∑–æ–±—Ä–∞–∂–µ–Ω–∏—è
+picture type is not supported, sorry!	resources	ru	—Ñ–æ—Ä–º–∞—Ç –∏–∑–æ–±—Ä–∞–∂–µ–Ω–∏—è –Ω–µ –ø–æ–¥–¥–µ—Ä–∂–∏–≤–∞–µ—Ç—Å—è, –∏–∑–≤–∏–Ω–∏—Ç–µ!
+pictures or resource	resources	ru	–ò–∑–æ–±—Ä–∞–∂–µ–Ω–∏–µ –∏–ª–∏ —Ä–µ—Å—É—Ä—Å
+planer	resources	ru	–ø–ª–∞–Ω–∏—Ä–æ–≤—â–∏–∫
+prizeing information for booking or buying	resources	ru	–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –¥–ª—è –±—Ä–æ–Ω–∏—Ä–æ–≤–∞–Ω–∏—è –∏–ª–∏ –ø–æ–∫—É–ø–∫–∏
+quantity	resources	ru	–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ
+quantity of resource	resources	ru	–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —Ä–µ—Å—É—Ä—Å–∞
+quantity:	resources	ru	–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ:
+read calendar permissions	resources	ru	–ß–∏—Ç–∞—Ç—å —Ä–∞–∑—Ä–µ—à–µ–Ω–∏—è –¥–æ—Å—Ç—É–ø–∞ –∫ –ö–∞–ª–µ–Ω–¥–∞—Ä—é
+read permissions	resources	ru	–ü—Ä–æ—á–∏—Ç–∞—Ç—å —Ä–∞–∑—Ä–µ—à–µ–Ω–∏—è –¥–æ—Å—Ç—É–ø–∞
+related links	resources	ru	–°–≤—è–∑–∞–Ω–Ω—ã–µ —Å—Å—ã–ª–∫–∏
+resources	common	ru	–†–µ—Å—É—Ä—Å—ã
+resources list	resources	ru	—Å–ø–∏—Å–æ–∫ —Ä–µ—Å—É—Ä—Å–æ–≤
+responsible:	resources	ru	–û—Ç–≤–µ—Ç—Å—Ç–≤–µ–Ω–Ω—ã–π:
+saves entry and exits	resources	ru	–°–æ—Ö—Ä–∞–Ω—è–µ—Ç –∑–∞–ø–∏—Å—å –∏ –≤—ã—Ö–æ–¥–∏—Ç
+select a category	resources	ru	–í—ã–±—Ä–∞—Ç—å –∫–∞—Ç–µ–≥–æ—Ä–∏—é
+select resource	resources	ru	–≤—ã–±—Ä–∞—Ç—å —Ä–µ—Å—É—Ä—Å
+select resources	common	ru	–í—ã–±—Ä–∞—Ç—å —Ä–µ—Å—É—Ä—Å—ã
+select/deselect all	resources	ru	–≤—ã–±—Ä–∞—Ç—å/–æ—Ç–º–µ–Ω–∏—Ç—å –≤—ã–±–æ—Ä –≤—Å–µ
+short description	resources	ru	–ö—Ä–∞—Ç–∫–æ–µ –æ–ø–∏—Å–∞–Ω–∏–µ
+short description of resource	resources	ru	–ö—Ä–∞—Ç–∫–æ–µ –æ–ø–∏—Å–∞–Ω–∏–µ —Ä—É—Å—É—Ä—Å–∞
+show calendar of resource	resources	ru	–ü–æ–∫–∞–∑–∞—Ç—å –∫–∞–ª–µ–Ω–¥–∞—Ä—å —Ä–µ—Å—É—Ä—Å–∞
+something went wrong by deleting resource	resources	ru	–ß—Ç–æ-—Ç–æ –ø–æ—à–ª–æ –Ω–µ —Ç–∞–∫ –ø—Ä–∏ —É–¥–∞–ª–µ–Ω–∏–∏ —Ä–µ—Å—É—Ä—Å–∞
+something went wrong by saving resource	resources	ru	–ß—Ç–æ-—Ç–æ –ø–æ—à–ª–æ –Ω–µ —Ç–∞–∫ –ø—Ä–∏ —Å–æ—Ö—Ä–∞–Ω–µ–Ω–∏–∏ —Ä–µ—Å—É—Ä—Å–∞
+storage inforation	resources	ru	–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –æ –•—Ä–∞–Ω–∏–ª–∏—â–µ
+storage information	resources	ru	–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –æ —Ö—Ä–∞–Ω–∏–ª–∏—â–µ:
+storage information:	resources	ru	–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –æ —Ö—Ä–∞–Ω–∏–ª–∏—â–µ:
+the calendar of this resource	resources	ru	–ö–∞–ª–µ–Ω–¥–∞—Ä—å —ç—Ç–æ–≥–æ –†–µ—Å—É—Ä—Å–∞
+this module displays the resources app	resources	ru	–≠—Ç–æ—Ç –º–æ–¥—É–ª—å –ø–æ–∫–∞–∑—ã–≤–∞–µ—Ç –ø—Ä–∏–ª–æ–∂–µ–Ω–∏–µ —Ä–µ—Å—É—Ä—Å–æ–≤
+use general resources icon	resources	ru	–ò—Å–ø–æ–ª—å–∑–æ–≤–∞—Ç—å –æ–±—â—É—é –ø–∏–∫—Ç–æ–≥—Ä–∞–º–º—É —Ä–µ—Å—É—Ä—Å–æ–≤
+use own picture	resources	ru	–ò—Å–ø–æ–ª—å–∑–æ–≤–∞—Ç—å —Å–≤–æ—ë –∏–∑–æ–±—Ä–∞–∂–µ–Ω–∏–µ
+use the category's icon	resources	ru	–ò—Å–ø–æ–ª—å–∑–æ–≤–∞—Ç—å –ø–∏–∫—Ç–æ–≥—Ä–∞–º–º—É –∫–∞—Ç–µ–≥–æ—Ä–∏–∏
+useable	resources	ru	–¥–æ—Å—Ç—É–ø–Ω—ã–π
+useable:	resources	ru	–î–æ—Å—Ç—É–ø–Ω—ã–π:
+view accessories for this resource	resources	ru	–ü–æ—Å–º–æ—Ç—Ä–µ—Ç—å –∫–æ–º–ø–ª–µ—Ç—É—é—â–∏–µ —ç—Ç–æ–≥–æ —Ä–µ—Å—É—Ä—Å–∞
+view this entry	resources	ru	–ü–æ–∫–∞–∑–∞—Ç—å —ç—Ç—É –∑–∞–ø–∏—Å—å
+web-page of resource	resources	ru	–í–µ–±-–°—Ç—Ä–∞–Ω–∏—Ü–∞ —Ä–µ—Å—É—Ä—Å–∞
+web-site for this resource	resources	ru	–í–µ–±-–°–∞–π—Ç —ç—Ç–æ–≥–æ —Ä–µ—Å—É—Ä—Å–∞
+where to find this resource?	resources	ru	–ì–¥–µ –∏—Å–∫–∞—Ç—å —ç—Ç–æ—Ç —Ä–µ—Å—É—Ä—Å–∞
+which category does this resource belong to?	resources	ru	–ö –∫–∞–∫–æ–π –∫–∞—Ç–µ–≥–æ—Ä–∏–∏ –æ—Ç–Ω–æ—Å–∏—Ç—Å—è —ç—Ç–æ—Ç —Ä–µ—Å—É—Ä—Å
+write permissions	resources	ru	–†–∞–∑—Ä–µ—à–µ–Ω–∏–µ –Ω–∞ –∑–∞–ø–∏—Å—å
+you are not permitted to edit this reource!	resources	ru	–í–∞–º –Ω–µ —Ä–∞–∑—Ä–µ—à–µ–Ω–æ —Ä–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å —ç—Ç–æ—Ç —Ä–µ—Å—É—Ä—Å
+you are not permitted to get information about this resource!	resources	ru	–í–∞–º –Ω–µ —Ä–∞–∑—Ä–µ—à–µ–Ω–æ –ø–æ–ª—É—á–∞—Ç—å –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é –æ–± —ç—Ç–æ–º —Ä–µ—Å—É—Ä—Å–µ!
+you chose more resources than available	resources	ru	–í—ã –≤—ã–±—Ä–∞–ª–∏ –±–æ–ª—å—à–µ —Ä–µ—Å—É—Ä—Å–æ–≤, —á–µ–º –≤–æ–∑–º–æ–∂–Ω–æ

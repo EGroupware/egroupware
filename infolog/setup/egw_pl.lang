@@ -1,6 +1,6 @@
-%1 records imported	infolog	pl	Zaimportowano %1 rekordów
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pl	%1 rekordów wczytano (jeszcze nie zaimportowano, mo¿esz %2wróciæ%3 i odznaczyæ Test Import)
-- subprojects from	infolog	pl	- Projekty podrzêdne od
+%1 records imported	infolog	pl	Zaimportowano %1 rekordÃ³w
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pl	%1 rekordÃ³w wczytano (jeszcze nie zaimportowano, moÅ¼esz %2wrÃ³ciÄ‡%3 i odznaczyÄ‡ Test Import)
+- subprojects from	infolog	pl	- Projekty podrzÄ™dne od
 0%	infolog	pl	0%
 10%	infolog	pl	10%
 100%	infolog	pl	100%
@@ -12,32 +12,32 @@
 70%	infolog	pl	70%
 80%	infolog	pl	80%
 90%	infolog	pl	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	pl	<b>za³±czniki poprzez odno¶niki symboliczne (symlink)</b> zamiast ³adowania i pobierania poprzez file:/path dla bezpo¶rednich klientów w sieci
-a short subject for the entry	infolog	pl	krótki temat tego wpisu
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	pl	<b>zaÅ‚Ä…czniki poprzez odnoÅ›niki symboliczne (symlink)</b> zamiast Å‚adowania i pobierania poprzez file:/path dla bezpoÅ›rednich klientÃ³w w sieci
+a short subject for the entry	infolog	pl	krÃ³tki temat tego wpisu
 abort without deleting	infolog	pl	Anuluj bez kasowania
 accept	infolog	pl	Akceptuj
-action	infolog	pl	Czynno¶æ
+action	infolog	pl	CzynnoÅ›Ä‡
 actual date and time	infolog	pl	aktualna data i czas
 add	infolog	pl	Dodaj
 add a file	infolog	pl	Dodaj plik
 add a new entry	infolog	pl	Dodaj nowy wpis
-add a new note	infolog	pl	Dodaj now± Notatkê
-add a new phonecall	infolog	pl	Dodaj nowa Rozmowê telefoniczn±
-add a new sub-task, -note, -call to this entry	infolog	pl	Dodaj nowe zadanie podrzêdne, notatkê podrz. lub rozmowê do tego wpisu
+add a new note	infolog	pl	Dodaj nowÄ… NotatkÄ™
+add a new phonecall	infolog	pl	Dodaj nowa RozmowÄ™ telefonicznÄ…
+add a new sub-task, -note, -call to this entry	infolog	pl	Dodaj nowe zadanie podrzÄ™dne, notatkÄ™ podrz. lub rozmowÄ™ do tego wpisu
 add a new todo	infolog	pl	Dodaj nowe Do Zrobienia
 add file	infolog	pl	Dodaj plik
 add sub	infolog	pl	dodaj podrz.
 add timesheet entry	infolog	pl	Dodaj wpis czasu pracy
 add:	infolog	pl	Dodaj:
 all	infolog	pl	Wszystko
-all links and attachments	infolog	pl	wszystkie linki i za³±czniki
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pl	pozwala zmieniæ status wpisu, np. z Do Zrobienia na Wykonane (warto¶ci zale¿± od typu wpisu)
+all links and attachments	infolog	pl	wszystkie linki i zaÅ‚Ä…czniki
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pl	pozwala zmieniÄ‡ status wpisu, np. z Do Zrobienia na Wykonane (wartoÅ›ci zaleÅ¼Ä… od typu wpisu)
 apply the changes	infolog	pl	Zastosuj zmiany
-are you shure you want to delete this entry ?	infolog	pl	Na pewno usun±æ ten wpis?
-attach a file	infolog	pl	Do³±cz plik
-attach file	infolog	pl	Do³±cz plik
+are you shure you want to delete this entry ?	infolog	pl	Na pewno usunÄ…Ä‡ ten wpis?
+attach a file	infolog	pl	DoÅ‚Ä…cz plik
+attach file	infolog	pl	DoÅ‚Ä…cz plik
 attension: no contact with address %1 found.	infolog	pl	Uwaga: nie znaleziono kontaktu z adresem %1.
-back to main list	infolog	pl	Wróæ do g³ównej listy
+back to main list	infolog	pl	WrÃ³Ä‡ do gÅ‚Ã³wnej listy
 billed	infolog	pl	rozliczony
 both	infolog	pl	Oba
 call	infolog	pl	rozmowa
@@ -45,45 +45,45 @@ cancel	infolog	pl	Anuluj
 cancelled	infolog	pl	anulowany
 categories	infolog	pl	Kategorie
 category	infolog	pl	Kategoria
-change the status of an entry, eg. close it	infolog	pl	Zmieñ status wpisu, np. zakoñcz go
+change the status of an entry, eg. close it	infolog	pl	ZmieÅ„ status wpisu, np. zakoÅ„cz go
 charset of file	infolog	pl	Kodowanie pliku (charset)
 check to set startday	infolog	pl	check to set startday
-check to specify custom contact	infolog	pl	Zaznacz, aby okre¶liæ niestandardowy kontakt
-click here to create the link	infolog	pl	kliknij tutaj aby stworzyæ odno¶nik
-click here to start the search	infolog	pl	kliknij tutaj aby rozpocz±æ szukanie
+check to specify custom contact	infolog	pl	Zaznacz, aby okreÅ›liÄ‡ niestandardowy kontakt
+click here to create the link	infolog	pl	kliknij tutaj aby stworzyÄ‡ odnoÅ›nik
+click here to start the search	infolog	pl	kliknij tutaj aby rozpoczÄ…Ä‡ szukanie
 close	infolog	pl	Zamknij
 comment	infolog	pl	Komentarz
 completed	infolog	pl	Wykonany
 configuration	infolog	pl	Konfiguracja
 confirm	infolog	pl	Potwierdzenie
 contact	infolog	pl	Kontakt
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	pl	Kopiuje Twoje zmiany do schowka, %1od¶wie¿a zawarto¶æ wpisu%2 i ³±czy je ze sob±.
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	pl	Kopiuje Twoje zmiany do schowka, %1odÅ›wieÅ¼a zawartoÅ›Ä‡ wpisu%2 i Å‚Ä…czy je ze sobÄ….
 create new links	infolog	pl	Tworzy nowe linki
-creates a new field	infolog	pl	stwórz nowe pole
-creates a new status with the given values	infolog	pl	tworzy nowy status o podanej warto¶ci
+creates a new field	infolog	pl	stwÃ³rz nowe pole
+creates a new status with the given values	infolog	pl	tworzy nowy status o podanej wartoÅ›ci
 creates a new typ with the given name	infolog	pl	tworzy nowy typ o podanej nazwie
 creation	infolog	pl	Tworzenie
 csv-fieldname	infolog	pl	Nazwa pola CVS
 csv-filename	infolog	pl	Nazwa pliku CVS
 csv-import	common	pl	Import CVS
-custom	infolog	pl	W³asne
-custom contact-address, leave empty to use information from most recent link	infolog	pl	W³asne dane adresowe dla kontaktu, zostaw puste aby u¿yæ informacji z dodawanego linku
-custom contact-information, leave emtpy to use information from most recent link	infolog	pl	W³asna informacja dla kontaktu, zostaw puste aby u¿yæ informacji z dodawanego linku
-custom fields	infolog	pl	Pola w³asne
-custom fields, typ and status	common	pl	Typ i status pola w³asnego
+custom	infolog	pl	WÅ‚asne
+custom contact-address, leave empty to use information from most recent link	infolog	pl	WÅ‚asne dane adresowe dla kontaktu, zostaw puste aby uÅ¼yÄ‡ informacji z dodawanego linku
+custom contact-information, leave emtpy to use information from most recent link	infolog	pl	WÅ‚asna informacja dla kontaktu, zostaw puste aby uÅ¼yÄ‡ informacji z dodawanego linku
+custom fields	infolog	pl	Pola wÅ‚asne
+custom fields, typ and status	common	pl	Typ i status pola wÅ‚asnego
 custom regarding	infolog	pl	Custom regarding
-custom status for typ	infolog	pl	W³asny status dla typu
-customfields	infolog	pl	Polaw³asne
+custom status for typ	infolog	pl	WÅ‚asny status dla typu
+customfields	infolog	pl	PolawÅ‚asne
 date completed	infolog	pl	Data wykonania
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pl	Data wykonania (pozostaw puste aby zosta³o wype³nione automatycznie przy zmianie statusu na "zakoñczony"
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pl	Data wykonania (pozostaw puste aby zostaÅ‚o wypeÅ‚nione automatycznie przy zmianie statusu na "zakoÅ„czony"
 datecreated	infolog	pl	Data utworzenia
-dates, status, access	infolog	pl	daty, statusy i dostêp
+dates, status, access	infolog	pl	daty, statusy i dostÄ™p
 days	infolog	pl	dni
-default filter for infolog	infolog	pl	Domy¶lny filtr dziennika
-default status for a new log entry	infolog	pl	domy¶lny status dla nowego wpisu do logu
+default filter for infolog	infolog	pl	DomyÅ›lny filtr dziennika
+default status for a new log entry	infolog	pl	domyÅ›lny status dla nowego wpisu do logu
 delegation	infolog	pl	Delegacja
 delete	infolog	pl	Kasuj
-delete one record by passing its id.	infolog	pl	Skasuj jeden rekord przekazuj±c jego id.
+delete one record by passing its id.	infolog	pl	Skasuj jeden rekord przekazujÄ…c jego id.
 delete the entry	infolog	pl	Kasuj wpis
 delete this entry	infolog	pl	skasuj ten wpis
 delete this entry and all listed sub-entries	infolog	pl	Skasuj ten wpis oraz wszystkie podane podwpisy
@@ -91,43 +91,43 @@ deletes the selected typ	infolog	pl	kasuje wybrany typ
 deletes this field	infolog	pl	kasuje to pole
 deletes this status	infolog	pl	kasuje ten status
 description	infolog	pl	Opis
-determines the order the fields are displayed	infolog	pl	okre¶la kolejno¶æ wy¶wietlania pól
-disables a status without deleting it	infolog	pl	wy³±cza status bez kasowania go
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pl	czy chcesz potwierdzenia osoby odpowiedzialnej do: akceptacji, zakoñczenia zadania lub obydwu?
-do you want to see custom infolog types in the calendar?	infolog	pl	Czy chcesz ogl±daæ niestandardowe wpisy CRM Dziennik w kalendarzu?
+determines the order the fields are displayed	infolog	pl	okreÅ›la kolejnoÅ›Ä‡ wyÅ›wietlania pÃ³l
+disables a status without deleting it	infolog	pl	wyÅ‚Ä…cza status bez kasowania go
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pl	czy chcesz potwierdzenia osoby odpowiedzialnej do: akceptacji, zakoÅ„czenia zadania lub obydwu?
+do you want to see custom infolog types in the calendar?	infolog	pl	Czy chcesz oglÄ…daÄ‡ niestandardowe wpisy CRM Dziennik w kalendarzu?
 don't show infolog	infolog	pl	NIE pokazuj InfoLog
 done	infolog	pl	wykonano
 download	infolog	pl	Pobierz
 duration	infolog	pl	Czas trwania
-each value is a line like <id>[=<label>]	infolog	pl	ka¿da warto¶æ jest lini±, jak <id>[=<nazwa>]
+each value is a line like <id>[=<label>]	infolog	pl	kaÅ¼da wartoÅ›Ä‡ jest liniÄ…, jak <id>[=<nazwa>]
 edit	infolog	pl	Edycja
-edit or create categories for ingolog	infolog	pl	Edytuj lub twórzy kategorie dla CRM Dziennik
-edit rights (full edit rights incl. making someone else responsible!)	infolog	pl	edytuj uprawnienia (pe³ne prawa edycji zawieraj± m.in. prawo wyznaczenia innej osoby odpowiedzialnej!)
+edit or create categories for ingolog	infolog	pl	Edytuj lub twÃ³rzy kategorie dla CRM Dziennik
+edit rights (full edit rights incl. making someone else responsible!)	infolog	pl	edytuj uprawnienia (peÅ‚ne prawa edycji zawierajÄ… m.in. prawo wyznaczenia innej osoby odpowiedzialnej!)
 edit status	infolog	pl	Edytuj status
 edit the entry	infolog	pl	Edytuj wpis
 edit this entry	infolog	pl	Edytuj ten wpis
 empty for all	infolog	pl	puste dla wszystkich
 enddate	infolog	pl	Koniec
-enddate can not be before startdate	infolog	pl	Data zakoñczenia nie mo¿e byæ wcze¶niejsza od daty rozpoczêcia
-enter a custom contact, leave empty if linked entry should be used	infolog	pl	wprowad¼ kontakt; zostaw puste, je¿eli maj± byæ u¿yte dane podlinkowanego kontaktu
-enter a custom phone/email, leave empty if linked entry should be used	infolog	pl	wprowad¼ telefon/e-mail; zostaw puste, je¿eli maj± byæ u¿yte dane podlinkowanego kontaktu
-enter a textual description of the log-entry	infolog	pl	wprowad¼ tekstowy opis logu wpisu
-enter the query pattern	infolog	pl	Wprowad¼ wzorzec zapytania
-entry and all files	infolog	pl	Wej¶cie i wszystkie pliki
-error: saving the entry	infolog	pl	B³±d przy zapisywaniu zadania
-error: the entry has been updated since you opened it for editing!	infolog	pl	B³±d: zadanie zosta³o zaktualizowane odk±d otworzy³e¶ je do edycji!
-existing links	infolog	pl	Istniej±ce linki
+enddate can not be before startdate	infolog	pl	Data zakoÅ„czenia nie moÅ¼e byÄ‡ wczeÅ›niejsza od daty rozpoczÄ™cia
+enter a custom contact, leave empty if linked entry should be used	infolog	pl	wprowadÅº kontakt; zostaw puste, jeÅ¼eli majÄ… byÄ‡ uÅ¼yte dane podlinkowanego kontaktu
+enter a custom phone/email, leave empty if linked entry should be used	infolog	pl	wprowadÅº telefon/e-mail; zostaw puste, jeÅ¼eli majÄ… byÄ‡ uÅ¼yte dane podlinkowanego kontaktu
+enter a textual description of the log-entry	infolog	pl	wprowadÅº tekstowy opis logu wpisu
+enter the query pattern	infolog	pl	WprowadÅº wzorzec zapytania
+entry and all files	infolog	pl	WejÅ›cie i wszystkie pliki
+error: saving the entry	infolog	pl	BÅ‚Ä…d przy zapisywaniu zadania
+error: the entry has been updated since you opened it for editing!	infolog	pl	BÅ‚Ä…d: zadanie zostaÅ‚o zaktualizowane odkÄ…d otworzyÅ‚eÅ› je do edycji!
+existing links	infolog	pl	IstniejÄ…ce linki
 fax	infolog	pl	Fax
-fieldseparator	infolog	pl	Separator pól
+fieldseparator	infolog	pl	Separator pÃ³l
 finish	infolog	pl	Koniec
-for which types should this field be used	infolog	pl	dla jakich typów to pole bêdzie uzywane
+for which types should this field be used	infolog	pl	dla jakich typÃ³w to pole bÄ™dzie uzywane
 from	infolog	pl	Od
-general	infolog	pl	Ogólnie
-group owner for	infolog	pl	W³a¶ciciel grupowy dla
+general	infolog	pl	OgÃ³lnie
+group owner for	infolog	pl	WÅ‚aÅ›ciciel grupowy dla
 high	infolog	pl	wysoki
 id	infolog	pl	id
-if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pl	Je¿eli typ ma w³a¶ciciela grupowego, wszystkie zadania tego typu bêd± w³asno¶ci± okre¶lonej grupy ZAMIAST u¿ytkownika, który je utworzy³!
-if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	pl	Je¿eli nie zaznaczone, wiersz z opcjami wyszukiwania oraz filtrami jest ukrywany dla mniejszej liczby zadañ ni¿ "po ile wy¶wietlaæ na stronie" (zgodnie z warto¶ci± ze wspólnych ustawieñ aplikacji).
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pl	JeÅ¼eli typ ma wÅ‚aÅ›ciciela grupowego, wszystkie zadania tego typu bÄ™dÄ… wÅ‚asnoÅ›ciÄ… okreÅ›lonej grupy ZAMIAST uÅ¼ytkownika, ktÃ³ry je utworzyÅ‚!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	pl	JeÅ¼eli nie zaznaczone, wiersz z opcjami wyszukiwania oraz filtrami jest ukrywany dla mniejszej liczby zadaÅ„ niÅ¼ "po ile wyÅ›wietlaÄ‡ na stronie" (zgodnie z wartoÅ›ciÄ… ze wspÃ³lnych ustawieÅ„ aplikacji).
 import	infolog	pl	Import
 import next set	infolog	pl	importuj nastepny zestaw
 info log	common	pl	CRM Dziennik
@@ -140,7 +140,7 @@ infolog - new subproject	infolog	pl	CRM Dziennik - Nowy podprojekt
 infolog - subprojects from	infolog	pl	CRM Dziennik - Podprojekt z
 infolog entry deleted	infolog	pl	Wpis nfoLog skasowany
 infolog entry saved	infolog	pl	Wpis InfoLog zapisany
-infolog filter for the main screen	infolog	pl	Filtr dziennika na stronê g³ówn±
+infolog filter for the main screen	infolog	pl	Filtr dziennika na stronÄ™ gÅ‚Ã³wnÄ…
 infolog list	infolog	pl	CRM Dziennik lista
 infolog preferences	common	pl	CRM Dziennik preferencje
 infolog-fieldname	infolog	pl	CRM Dziennik - Nazwa pola
@@ -151,54 +151,54 @@ last modified	infolog	pl	Ostatnio modyfikowany
 leave it empty	infolog	pl	zostaw puste
 leave without saveing the entry	infolog	pl	cofnij bez zapisywania wpisu
 leaves without saveing	infolog	pl	cofnij bez zapisywania
-length<br>rows	infolog	pl	D³ugo¶æ<br>Linie
-link	infolog	pl	Pod³±cz
+length<br>rows	infolog	pl	DÅ‚ugoÅ›Ä‡<br>Linie
+link	infolog	pl	PodÅ‚Ä…cz
 links	infolog	pl	Linki
 links of this entry	infolog	pl	Linki do tego wpisu
 list all categories	infolog	pl	Lista wszystkich kategorii
-list no subs/childs	infolog	pl	Nie wy¶wietlaj podrzêdnych
+list no subs/childs	infolog	pl	Nie wyÅ›wietlaj podrzÄ™dnych
 location	infolog	pl	Lokalizacja
-longer textual description	infolog	pl	d³u¿szy opis tekstowy
+longer textual description	infolog	pl	dÅ‚uÅ¼szy opis tekstowy
 low	infolog	pl	niski
-max length of the input [, length of the inputfield (optional)]	infolog	pl	maksymalna d³ugo¶æ wprowadzanego tekstu [, d³ugo¶æ pola (opcjonalnie)]
-name must not be empty !!!	infolog	pl	Nazwa nie mo¿e byæ pusta!!!
+max length of the input [, length of the inputfield (optional)]	infolog	pl	maksymalna dÅ‚ugoÅ›Ä‡ wprowadzanego tekstu [, dÅ‚ugoÅ›Ä‡ pola (opcjonalnie)]
+name must not be empty !!!	infolog	pl	Nazwa nie moÅ¼e byÄ‡ pusta!!!
 name of new type to create	infolog	pl	nazwa nowego tworzonego typu
-never hide search and filters	infolog	pl	Nigdy nie ukrywaj pól wyszukiwania i filtrów
+never hide search and filters	infolog	pl	Nigdy nie ukrywaj pÃ³l wyszukiwania i filtrÃ³w
 new name	infolog	pl	nowa nazwa
 new search	infolog	pl	Nowe wyszukiwanie
 no - cancel	infolog	pl	Nie - Anuluj
-no describtion, links or attachments	infolog	pl	brak opisu, odno¶ników lub za³±czników
-no details	infolog	pl	bez szczegó³ów
-no entries found, try again ...	infolog	pl	nie znaleziono wpisów, spróbuj jeszcze raz
+no describtion, links or attachments	infolog	pl	brak opisu, odnoÅ›nikÃ³w lub zaÅ‚Ä…cznikÃ³w
+no details	infolog	pl	bez szczegÃ³Å‚Ã³w
+no entries found, try again ...	infolog	pl	nie znaleziono wpisÃ³w, sprÃ³buj jeszcze raz
 no filter	infolog	pl	Bez filtra
-no links or attachments	infolog	pl	brak linków lub za³±czników
+no links or attachments	infolog	pl	brak linkÃ³w lub zaÅ‚Ä…cznikÃ³w
 none	infolog	pl	Brak
 normal	infolog	pl	normalny
 not	infolog	pl	Nie
 not assigned	infolog	pl	Nie przypisano
-not-started	infolog	pl	nie rozpoczêty
+not-started	infolog	pl	nie rozpoczÄ™ty
 note	infolog	pl	Notatka
-number of records to read (%1)	infolog	pl	Liczba rekordów do wczytania (%1)
-number of row for a multiline inputfield or line of a multi-select-box	infolog	pl	ilo¶æ wierszy dla pól sk³adaj±cych siê z wielu linijek lub zespo³u boksów wielokrotnego wyboru
+number of records to read (%1)	infolog	pl	Liczba rekordÃ³w do wczytania (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	pl	iloÅ›Ä‡ wierszy dla pÃ³l skÅ‚adajÄ…cych siÄ™ z wielu linijek lub zespoÅ‚u boksÃ³w wielokrotnego wyboru
 offer	infolog	pl	oferta
 ongoing	infolog	pl	W toku
-only for details	infolog	pl	Tylko dla szczegó³ów
-only the attachments	infolog	pl	tylko za³±czniki
+only for details	infolog	pl	Tylko dla szczegÃ³Å‚Ã³w
+only the attachments	infolog	pl	tylko zaÅ‚Ä…czniki
 only the links	infolog	pl	tylko linki
 open	infolog	pl	otwarte
 optional note to the link	infolog	pl	opcjonalna notatka do linku
-order	infolog	pl	Kolejno¶æ
-overdue	infolog	pl	zaleg³e
+order	infolog	pl	KolejnoÅ›Ä‡
+overdue	infolog	pl	zalegÅ‚e
 own	infolog	pl	stworzone przez Ciebie - wszystkie
 own open	infolog	pl	stworzone przez Ciebie - otwarte
-own overdue	infolog	pl	stworzone przez Ciebie - zaleg³e
-own upcoming	infolog	pl	stworzone przez Ciebie - nadchodz±ce
-path on (web-)serverside<br>eg. /var/samba/share	infolog	pl	¶cie¿ka na (web-)serwerze<br>np. /var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	pl	¦cie¿ka do u¿ytkownika i grupy MUSI BYÆ POZA rootem dokumentów www (document-root)!!!
-pattern for search in addressbook	infolog	pl	wzorzec poszukiwania w ksi±¿ce adresowej
+own overdue	infolog	pl	stworzone przez Ciebie - zalegÅ‚e
+own upcoming	infolog	pl	stworzone przez Ciebie - nadchodzÄ…ce
+path on (web-)serverside<br>eg. /var/samba/share	infolog	pl	Å›cieÅ¼ka na (web-)serwerze<br>np. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	pl	ÅšcieÅ¼ka do uÅ¼ytkownika i grupy MUSI BYÄ† POZA rootem dokumentÃ³w www (document-root)!!!
+pattern for search in addressbook	infolog	pl	wzorzec poszukiwania w ksiÄ…Å¼ce adresowej
 pattern for search in projects	infolog	pl	wzorzec poszukiwania w projektach
-percent completed	infolog	pl	Stopieñ zaawansowania
-permission denied	infolog	pl	Dostêp zabroniony
+percent completed	infolog	pl	StopieÅ„ zaawansowania
+permission denied	infolog	pl	DostÄ™p zabroniony
 phone	infolog	pl	Rozmowa telefoniczna
 phone/email	infolog	pl	Telefon/Email
 phonecall	infolog	pl	Telefon
@@ -210,108 +210,108 @@ private	infolog	pl	Prywatne
 project	infolog	pl	Projekt
 project settings: price, times	infolog	pl	Ustawienia projektu: cena, terminy
 re:	infolog	pl	Odp:
-read one record by passing its id.	infolog	pl	Odczytaj jeden rekord przekazuj±c jego id.
-read rights (default)	infolog	pl	prawda odczytu (domy¶lne)
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	pl	wyra¿enie regularne dla lokalnych IP<br>np. ^192\.168\.1\.
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pl	wyra¿enie regularne dla lokalnych IP<br>np. ^192\.168\.1\.
+read one record by passing its id.	infolog	pl	Odczytaj jeden rekord przekazujÄ…c jego id.
+read rights (default)	infolog	pl	prawda odczytu (domyÅ›lne)
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	pl	wyraÅ¼enie regularne dla lokalnych IP<br>np. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pl	wyraÅ¼enie regularne dla lokalnych IP<br>np. ^192\.168\.1\.
 remark	infolog	pl	Przypomnienie
-remove this link (not the entry itself)	infolog	pl	Usuñ ten link (ale nie wpis)
+remove this link (not the entry itself)	infolog	pl	UsuÅ„ ten link (ale nie wpis)
 responsible	infolog	pl	oddelegowane na Ciebie - wszystkie
 responsible open	infolog	pl	oddelegowane na Ciebie - otwarte
-responsible overdue	infolog	pl	oddelegowane na Ciebie - zaleg³e
-responsible upcoming	infolog	pl	oddelegowane na Ciebie - nadchodz±ce
+responsible overdue	infolog	pl	oddelegowane na Ciebie - zalegÅ‚e
+responsible upcoming	infolog	pl	oddelegowane na Ciebie - nadchodzÄ…ce
 responsible user, priority	infolog	pl	osoba odpowiedzialna, priorytet
-returns a list / search for records.	infolog	pl	Pokazuje listê wyszukanych rekordów
+returns a list / search for records.	infolog	pl	Pokazuje listÄ™ wyszukanych rekordÃ³w
 rights for the responsible	infolog	pl	Uprawnienia do osoby odpowiedzialnej
 save	infolog	pl	Zapisz
 saves the changes made and leaves	infolog	pl	zapisuje zmiany i wychodzi
-saves this entry	infolog	pl	Zapisujê ten wpis
+saves this entry	infolog	pl	ZapisujÄ™ ten wpis
 search	infolog	pl	Szukaj
 search for:	infolog	pl	Szukaj dla
-select	infolog	pl	Wybór
-select a category for this entry	infolog	pl	wybierz kategoriê do tego wpisu
-select a price	infolog	pl	Wybierz cenê
+select	infolog	pl	WybÃ³r
+select a category for this entry	infolog	pl	wybierz kategoriÄ™ do tego wpisu
+select a price	infolog	pl	Wybierz cenÄ™
 select a priority for this task	infolog	pl	wybierz priorytet dla tego zadania
 select a project	infolog	pl	Wybierz projekt
-select a responsible user: a person you want to delegate this task	infolog	pl	wybierz osobê odpowiedzialn±: osobê, któr± delegujesz do tego zadania
-select a typ to edit it's status-values or delete it	infolog	pl	wybierz typ, którego statusy-warto¶ci chcesz edytowaæ lub skasowaæ.
-select an app to search in	infolog	pl	Wybierz Aplikacjê aby w niej szukaæ
-select an entry to link with	infolog	pl	Wybierz wpis z którym po³±czysz
-select to filter by owner	infolog	pl	wybierz aby sortowaæ po w³a¶cicielu
-select to filter by responsible	infolog	pl	wybierz aby sortowaæ po osobie odpowiedzialnej
-sets the status of this entry and its subs to done	infolog	pl	Ustaw stan wpisu i jego wpisów podrzêdnych na "gotowy".
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pl	Czy Dziennik CRM ma w domy¶lnym widoku wy¶wietlaæ wszystkie Zadania, Rozmowy i Notatki podrzêdne? Mo¿esz zawsze dotrzeæ do nich poprzez ich <i>rodzica</i>.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pl	Czy Dziennik CRM powinien pokazywaæ odno¶niki do innych aplikacji oraz/lub za³±czone pliki na li¶cie zadañ (domy¶lny widok gdy uruchamiany jest Dziennik CRM)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywaæ zadania na g³ównym ekranie a je¿eli tak, to z jakim filtrem. Dzia³a tylko, je¿eli nie wybrano aplikacji na g³ówny ekran (we wspólnych ustawieniach).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	pl	Czy CRM - Dziennik ma u¿ywaæ pe³nych danych osobowych (imiê, nazwisko), czy tylko loginów.
-should the calendar show custom types too	infolog	pl	Czy pokazywaæ osobiste typy w kalendarzu
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pl	Czy na li¶cie zadañ Dziennika CRM pokazywaæ unikalny identyfikator numeryczny, który mo¿e byæ u¿ywany np. jako numer kolejny zadania?
-should the infolog list show the column "last modified".	infolog	pl	Czy na li¶cie zadañ Dziennika CRM pokazywaæ kolumnê "ostatnio zmodyfikowany"?
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pl	Czy na li¶cie zadañ Dziennika CRM pokazywaæ stopieñ zaawansowania tylko dla zadañ "w toku", czy zawsze dwie osobne ikony?
-should this entry only be visible to you and people you grant privat access via the acl	infolog	pl	czy ten wpis ma byæ widoczny tylko przez Ciebie i innych, którym zapewnisz dostêp poprzez ACL
-show a column for used and planned times in the list.	infolog	pl	Czy pokazywaæ kolumnê z wykorzystanym oraz planowanym czasem na li¶cie zadañ?
-show full usernames	infolog	pl	Wy¶wietlaj pe³n± nazwê u¿ytkownika
-show in the infolog list	infolog	pl	Poka¿ listê CRM Dziennik
-show last modified	infolog	pl	Poka¿ ostatni zmodyfikowany
-show status and percent done separate	infolog	pl	Poka¿ osobno status i stopieñ zaawansowania
-show ticket id	infolog	pl	Poka¿ identyfikator
-show times	infolog	pl	Poka¿ terminy
+select a responsible user: a person you want to delegate this task	infolog	pl	wybierz osobÄ™ odpowiedzialnÄ…: osobÄ™, ktÃ³rÄ… delegujesz do tego zadania
+select a typ to edit it's status-values or delete it	infolog	pl	wybierz typ, ktÃ³rego statusy-wartoÅ›ci chcesz edytowaÄ‡ lub skasowaÄ‡.
+select an app to search in	infolog	pl	Wybierz AplikacjÄ™ aby w niej szukaÄ‡
+select an entry to link with	infolog	pl	Wybierz wpis z ktÃ³rym poÅ‚Ä…czysz
+select to filter by owner	infolog	pl	wybierz aby sortowaÄ‡ po wÅ‚aÅ›cicielu
+select to filter by responsible	infolog	pl	wybierz aby sortowaÄ‡ po osobie odpowiedzialnej
+sets the status of this entry and its subs to done	infolog	pl	Ustaw stan wpisu i jego wpisÃ³w podrzÄ™dnych na "gotowy".
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pl	Czy Dziennik CRM ma w domyÅ›lnym widoku wyÅ›wietlaÄ‡ wszystkie Zadania, Rozmowy i Notatki podrzÄ™dne? MoÅ¼esz zawsze dotrzeÄ‡ do nich poprzez ich <i>rodzica</i>.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pl	Czy Dziennik CRM powinien pokazywaÄ‡ odnoÅ›niki do innych aplikacji oraz/lub zaÅ‚Ä…czone pliki na liÅ›cie zadaÅ„ (domyÅ›lny widok gdy uruchamiany jest Dziennik CRM)?
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywaÄ‡ zadania na gÅ‚Ã³wnym ekranie a jeÅ¼eli tak, to z jakim filtrem. DziaÅ‚a tylko, jeÅ¼eli nie wybrano aplikacji na gÅ‚Ã³wny ekran (we wspÃ³lnych ustawieniach).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	pl	Czy CRM - Dziennik ma uÅ¼ywaÄ‡ peÅ‚nych danych osobowych (imiÄ™, nazwisko), czy tylko loginÃ³w.
+should the calendar show custom types too	infolog	pl	Czy pokazywaÄ‡ osobiste typy w kalendarzu
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pl	Czy na liÅ›cie zadaÅ„ Dziennika CRM pokazywaÄ‡ unikalny identyfikator numeryczny, ktÃ³ry moÅ¼e byÄ‡ uÅ¼ywany np. jako numer kolejny zadania?
+should the infolog list show the column "last modified".	infolog	pl	Czy na liÅ›cie zadaÅ„ Dziennika CRM pokazywaÄ‡ kolumnÄ™ "ostatnio zmodyfikowany"?
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pl	Czy na liÅ›cie zadaÅ„ Dziennika CRM pokazywaÄ‡ stopieÅ„ zaawansowania tylko dla zadaÅ„ "w toku", czy zawsze dwie osobne ikony?
+should this entry only be visible to you and people you grant privat access via the acl	infolog	pl	czy ten wpis ma byÄ‡ widoczny tylko przez Ciebie i innych, ktÃ³rym zapewnisz dostÄ™p poprzez ACL
+show a column for used and planned times in the list.	infolog	pl	Czy pokazywaÄ‡ kolumnÄ™ z wykorzystanym oraz planowanym czasem na liÅ›cie zadaÅ„?
+show full usernames	infolog	pl	WyÅ›wietlaj peÅ‚nÄ… nazwÄ™ uÅ¼ytkownika
+show in the infolog list	infolog	pl	PokaÅ¼ listÄ™ CRM Dziennik
+show last modified	infolog	pl	PokaÅ¼ ostatni zmodyfikowany
+show status and percent done separate	infolog	pl	PokaÅ¼ osobno status i stopieÅ„ zaawansowania
+show ticket id	infolog	pl	PokaÅ¼ identyfikator
+show times	infolog	pl	PokaÅ¼ terminy
 small view	infolog	pl	widok uproszczony
 start a new search, cancel this link	infolog	pl	zacznij nowe wyszukiwanie, anuluj ten link
-startdate	infolog	pl	Pocz±tek
-startdate enddate	infolog	pl	Data pocz±tku, data zakoñczenia
-startdate for new entries	infolog	pl	Data rozpoczêcia dla nowych zadañ
-startrecord	infolog	pl	Pocz±tkowy rekord
+startdate	infolog	pl	PoczÄ…tek
+startdate enddate	infolog	pl	Data poczÄ…tku, data zakoÅ„czenia
+startdate for new entries	infolog	pl	Data rozpoczÄ™cia dla nowych zadaÅ„
+startrecord	infolog	pl	PoczÄ…tkowy rekord
 status	infolog	pl	Status
 status ...	infolog	pl	Status ...
 sub	infolog	pl	Podrz.
-sub-entries become subs of the parent or main entries, if there's no parent	infolog	pl	Zadani s± podrzêdne wobec zadañ, z których je utworzono lub g³ównych zadañ, je¿eli zadania z których je utworzono nie istniej±.
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	pl	Zadani sÄ… podrzÄ™dne wobec zadaÅ„, z ktÃ³rych je utworzono lub gÅ‚Ã³wnych zadaÅ„, jeÅ¼eli zadania z ktÃ³rych je utworzono nie istniejÄ….
 subject	infolog	pl	Temat
 task	infolog	pl	Zadanie
-test import (show importable records <u>only</u> in browser)	infolog	pl	Import testowy (pokazuje importowane rekordy <u>tylko</u> w przegl±darce!)
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pl	nazwa u¿yta wewnêtrznie (<= 10 znaków), zmiana spowoduje niedostêpno¶æ istniej±cych danych
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pl	nazwa u¿yta wewnêtrznie (<= 20 znaków), zmiana spowoduje niedostêpno¶æ istniej±cych danych
-the text displayed to the user	infolog	pl	tekst wy¶wietlany u¿ytkownikowi
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pl	Ten filtr jest domy¶lnie u¿ywany przez CRM Dziennik po wej¶ciu do aplikacji. Filtry ograniczaj± ilo¶æ wpisów w bie¿±cym widoku. Dostêpne filtry pokazuj± tylko zakoñczone, wci±¿ otwarte lub nadchodz±ce wydarzenia, Twoje lub wszystkich u¿ytkowników.
-til when should the todo or phonecall be finished	infolog	pl	do kiedy powinno byæ zakoñczone Dadanie lub Rozmowa tel.
+test import (show importable records <u>only</u> in browser)	infolog	pl	Import testowy (pokazuje importowane rekordy <u>tylko</u> w przeglÄ…darce!)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pl	nazwa uÅ¼yta wewnÄ™trznie (<= 10 znakÃ³w), zmiana spowoduje niedostÄ™pnoÅ›Ä‡ istniejÄ…cych danych
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pl	nazwa uÅ¼yta wewnÄ™trznie (<= 20 znakÃ³w), zmiana spowoduje niedostÄ™pnoÅ›Ä‡ istniejÄ…cych danych
+the text displayed to the user	infolog	pl	tekst wyÅ›wietlany uÅ¼ytkownikowi
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pl	Ten filtr jest domyÅ›lnie uÅ¼ywany przez CRM Dziennik po wejÅ›ciu do aplikacji. Filtry ograniczajÄ… iloÅ›Ä‡ wpisÃ³w w bieÅ¼Ä…cym widoku. DostÄ™pne filtry pokazujÄ… tylko zakoÅ„czone, wciÄ…Å¼ otwarte lub nadchodzÄ…ce wydarzenia, Twoje lub wszystkich uÅ¼ytkownikÃ³w.
+til when should the todo or phonecall be finished	infolog	pl	do kiedy powinno byÄ‡ zakoÅ„czone Dadanie lub Rozmowa tel.
 times	infolog	pl	Terminy
-to many might exceed your execution-time-limit	infolog	pl	zbyt wiele mo¿e spowodowaæ przekroczenie czasu wykonywania
-to what should the startdate of new entries be set.	infolog	pl	Jak± warto¶æ ustawiæ jako datê pocz±tkow± dla nowych zadañ?
+to many might exceed your execution-time-limit	infolog	pl	zbyt wiele moÅ¼e spowodowaÄ‡ przekroczenie czasu wykonywania
+to what should the startdate of new entries be set.	infolog	pl	JakÄ… wartoÅ›Ä‡ ustawiÄ‡ jako datÄ™ poczÄ…tkowÄ… dla nowych zadaÅ„?
 today	infolog	pl	Dzisiaj
 todays date	infolog	pl	Dzisiejsza data
 todo	infolog	pl	Do zrobienia
-translation	infolog	pl	T³umaczenie
+translation	infolog	pl	TÅ‚umaczenie
 typ	infolog	pl	Typ
-typ '%1' already exists !!!	infolog	pl	Typ %1 ju¿ istnieje !!!
+typ '%1' already exists !!!	infolog	pl	Typ %1 juÅ¼ istnieje !!!
 type	infolog	pl	Typ
 type ...	infolog	pl	Typ ..
 type of customfield	infolog	pl	Typ pola dodatkowego
 type of the log-entry: note, phonecall or todo	infolog	pl	Typ wpisu: Notatka, Rozmowa tel. lub Zadanie
-unlink	infolog	pl	Od³±cz
-upcoming	infolog	pl	nadchodz±ce
-urgency	infolog	pl	pilno¶æ
+unlink	infolog	pl	OdÅ‚Ä…cz
+upcoming	infolog	pl	nadchodzÄ…ce
+urgency	infolog	pl	pilnoÅ›Ä‡
 urgent	infolog	pl	pilne
 used time	infolog	pl	wykorzystany czas
-valid path on clientside<br>eg. \\server\share or e:\	infolog	pl	poprawna ¶cie¿ka po stronie u¿ytkownika<br>np. \\Server\Share lub e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	pl	poprawna ¶cie¿ka po stronie u¿ytkownika<br>np. \\Server\Share lub e:\
-valid path on clientside<br>eg. servershare or e:	infolog	pl	poprawna ¶cie¿ka po stronie u¿ytkownika<br>np. \\Server\Share lub e:\
-values for selectbox	infolog	pl	Warto¶ci selectboxa
-view all subs of this entry	infolog	pl	Zoabcz wszystkie podrzêdne dla tego wpisu
-view other subs	infolog	pl	zobacz inne podrzêdne
+valid path on clientside<br>eg. \\server\share or e:\	infolog	pl	poprawna Å›cieÅ¼ka po stronie uÅ¼ytkownika<br>np. \\Server\Share lub e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	pl	poprawna Å›cieÅ¼ka po stronie uÅ¼ytkownika<br>np. \\Server\Share lub e:\
+valid path on clientside<br>eg. servershare or e:	infolog	pl	poprawna Å›cieÅ¼ka po stronie uÅ¼ytkownika<br>np. \\Server\Share lub e:\
+values for selectbox	infolog	pl	WartoÅ›ci selectboxa
+view all subs of this entry	infolog	pl	Zoabcz wszystkie podrzÄ™dne dla tego wpisu
+view other subs	infolog	pl	zobacz inne podrzÄ™dne
 view parent	infolog	pl	Zobacz rodzica
-view subs	infolog	pl	zobacz podrzêdne
-view the parent of this entry and all his subs	infolog	pl	Zoabcz rodzica tego wpisu i wszystkie wpisy podrzêdne
-view this linked entry in its application	infolog	pl	zoabcz podlinkowany wpis w jego aplikacji (np. w Ksi±¿ce Adresowej dla kontaktu)
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	kiedy zadanie lub telefon powinno wystartowaæ, to pokazuje z tej daty w filtrze otwartym lub  jego otwartym (strona startowa)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pl	Które dodatkowe pola powinna móc edytowaæ osoba odpowiedzialna nie posiadaj±c praw edycji? <br />Status, stopieñ zaawansowania oraz data wykonania s± zawsze mo¿liwe do edycji.
-which implicit acl rights should the responsible get?	infolog	pl	Które prawa ACL powinna otrzymaæ niejawnie osoba odpowiedzialna?
+view subs	infolog	pl	zobacz podrzÄ™dne
+view the parent of this entry and all his subs	infolog	pl	Zoabcz rodzica tego wpisu i wszystkie wpisy podrzÄ™dne
+view this linked entry in its application	infolog	pl	zoabcz podlinkowany wpis w jego aplikacji (np. w KsiÄ…Å¼ce Adresowej dla kontaktu)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	kiedy zadanie lub telefon powinno wystartowaÄ‡, to pokazuje z tej daty w filtrze otwartym lub  jego otwartym (strona startowa)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pl	KtÃ³re dodatkowe pola powinna mÃ³c edytowaÄ‡ osoba odpowiedzialna nie posiadajÄ…c praw edycji? <br />Status, stopieÅ„ zaawansowania oraz data wykonania sÄ… zawsze moÅ¼liwe do edycji.
+which implicit acl rights should the responsible get?	infolog	pl	KtÃ³re prawa ACL powinna otrzymaÄ‡ niejawnie osoba odpowiedzialna?
 will-call	infolog	pl	zadzwoni
 write (add or update) a record by passing its fields.	infolog	pl	Zapisz (dodaj lub uaktualnij) zapis przez przechodzenie po jego polach
-yes - delete	infolog	pl	Tak - Usuñ
-yes - delete including sub-entries	infolog	pl	Tak - Usuñ wraz z podrzêdnymi
-you can't delete one of the stock types !!!	infolog	pl	Nie mo¿esz usun±æ jesdnego z typów!!!
-you have entered an invalid ending date	infolog	pl	Poda³e¶ niepoprawn± datê zakoñczenia
-you have entered an invalid starting date	infolog	pl	Poda³e¶ niepoprawn± datê rozpoczêcia
-you have to enter a name, to create a new typ!!!	infolog	pl	Aby stworzyæ nowy typ, musisz podaæ nazwê!!!
-you must enter a subject or a description	infolog	pl	Musisz podaæ temat lub opis
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pl	Twoja baza jest NIEAKTUALNA (%1 vs. %2), uruchom %3setup%4 aby zaktualizowaæ bazê.
+yes - delete	infolog	pl	Tak - UsuÅ„
+yes - delete including sub-entries	infolog	pl	Tak - UsuÅ„ wraz z podrzÄ™dnymi
+you can't delete one of the stock types !!!	infolog	pl	Nie moÅ¼esz usunÄ…Ä‡ jesdnego z typÃ³w!!!
+you have entered an invalid ending date	infolog	pl	PodaÅ‚eÅ› niepoprawnÄ… datÄ™ zakoÅ„czenia
+you have entered an invalid starting date	infolog	pl	PodaÅ‚eÅ› niepoprawnÄ… datÄ™ rozpoczÄ™cia
+you have to enter a name, to create a new typ!!!	infolog	pl	Aby stworzyÄ‡ nowy typ, musisz podaÄ‡ nazwÄ™!!!
+you must enter a subject or a description	infolog	pl	Musisz podaÄ‡ temat lub opis
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pl	Twoja baza jest NIEAKTUALNA (%1 vs. %2), uruchom %3setup%4 aby zaktualizowaÄ‡ bazÄ™.

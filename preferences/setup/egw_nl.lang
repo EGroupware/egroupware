@@ -18,7 +18,7 @@ date format	preferences	nl	Datumweergave
 default	preferences	nl	standaard
 default application	preferences	nl	Standaard toepassing
 default preferences	preferences	nl	Standaard voorkeuren
-delete categories	preferences	nl	Verwijder categorieën
+delete categories	preferences	nl	Verwijder categorieÃ«n
 description can not exceed 255 characters in length !	preferences	nl	Beschrijving mag de 255 tekens niet overschrijden in lengte!
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	nl	Prefereert u de tijd in 24-uurs formaat, of in 12-uurs formaat met am/pm toegevoegd?
 edit custom fields	preferences	nl	wijzig aangepaste velden
@@ -31,7 +31,7 @@ help off	preferences	nl	Help uitgeschakeld
 hours	preferences	nl	uren
 how do you like to display accounts	preferences	nl	Hoe wilt u accounts weergeven?
 how do you like to select accounts	preferences	nl	Hoe wilt u accounts selecteren?
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	nl	Hoeveel uur bent vóór of achter op de tijdzone van de server? <br />Selecteer '0' als u zich in dezelfde tijdzone bevindt.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	nl	Hoeveel uur bent vÃ³Ã³r of achter op de tijdzone van de server? <br />Selecteer '0' als u zich in dezelfde tijdzone bevindt.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	nl	Hoeveel iconen moeten worden weergegeven in de navigatiebalk bovenaan de pagina? De Overige iconen van toepassingen staan in het uitklapmenu rechtsbovenaan de pagina. Dit uitklapmenu is standaard verborgen en kunt u uitklappen door op het blauwe pijltje naar beneden te klikken.
 how should egroupware display dates for you.	preferences	nl	Hoe moet eGroupWare datums weergeven.
 icon	preferences	nl	Icoon
@@ -51,7 +51,7 @@ popup with search	preferences	nl	Popupvenster met zoekfunctie
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in
 read prefs for the specified application.	preferences	nl	Lees voorkeuren voor de opgegeven toepassing
 select different theme	preferences	nl	Selecteer een ander thema
-select one	preferences	nl	Selecteer één
+select one	preferences	nl	Selecteer Ã©Ã©n
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	nl	Selecteer de taal teksten en berichten in eGroupWare. <br />Sommige talen zijn niet compleet.  In dat geval wordt teruggevallen op de Engelse taal.
 selectbox	preferences	nl	Keuzevenster
 selectbox with groupmembers	common	nl	Keuzevenster met groepsleden

@@ -10,9 +10,9 @@
 %s onchange	etemplate	it	%s onChange
 %s readonly	etemplate	it	%s sola lettura
 '%1' has an invalid format !!!	etemplate	it	'%1' ha un formato non valido !!!
-'%1' is not a valid date !!!	etemplate	it	'%1'  non è una data valida !!!
-'%1' is not a valid floatingpoint number !!!	etemplate	it	'%1' non è un numero in virgola mobile valido !!!
-'%1' is not a valid integer !!!	etemplate	it	'%1' non è un intero valido !!!
+'%1' is not a valid date !!!	etemplate	it	'%1'  non Ã¨ una data valida !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	it	'%1' non Ã¨ un numero in virgola mobile valido !!!
+'%1' is not a valid integer !!!	etemplate	it	'%1' non Ã¨ un intero valido !!!
 a pattern to be searched for	etemplate	it	un pattern da cercare
 accesskey	etemplate	it	Chiave d'accesso
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	it	Le chiavi d'accesso possono anche essere specificate con un & nell'etichetta (es. &Nome)
@@ -32,7 +32,7 @@ all operations save the template!	etemplate	it	tutte le operazioni salvano il te
 am	etemplate	it	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	it	una colonna indicizzata velocizza le ricerche che utilizzano quella colonna (costa spazio sul disco!!!)
 application	etemplate	it	Applicazione
-application name needed to write a langfile or dump the etemplates !!!	etemplate	it	Il nome applicazione è necessario per scrivere un file linguaggio o dump i eTemplate !!!
+application name needed to write a langfile or dump the etemplates !!!	etemplate	it	Il nome applicazione Ã¨ necessario per scrivere un file linguaggio o dump i eTemplate !!!
 applies the changes made	etemplate	it	applica le modifiche fatte
 applies the changes to the given version of the template	etemplate	it	applica le modifiche alla data versione del template
 attach	etemplate	it	Allega
@@ -44,11 +44,11 @@ border-line-thickness for the table-tag	etemplate	it	Spessore linea bordo per ta
 bottom	etemplate	it	In fondo
 box	etemplate	it	Box
 box...	etemplate	it	Box...
-can not have special sql-value null	etemplate	it	non può avere NULL come valore-SQL speciale
+can not have special sql-value null	etemplate	it	non puÃ² avere NULL come valore-SQL speciale
 cancel	etemplate	it	Annulla
-cant delete a single widget from a grid !!!	etemplate	it	non si può cancellare un singolo widget da una griglia !!!
-cant delete the only column of a grid !!!	etemplate	it	non si può cancellare l'unica colonna di una griglia !!!
-cant delete the only row in a grid !!!	etemplate	it	non si può cancellare l'unica riga di una griglia !!!
+cant delete a single widget from a grid !!!	etemplate	it	non si puÃ² cancellare un singolo widget da una griglia !!!
+cant delete the only column of a grid !!!	etemplate	it	non si puÃ² cancellare l'unica colonna di una griglia !!!
+cant delete the only row in a grid !!!	etemplate	it	non si puÃ² cancellare l'unica riga di una griglia !!!
 category	etemplate	it	Categoria
 cellpadding for the table-tag	etemplate	it	Cellpadding per table-tag
 cells	etemplate	it	Celle
@@ -78,7 +78,7 @@ contains	etemplate	it	contiene
 create a new table for the application	etemplate	it	Crea una nuova tabella per l'applicazione
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	it	creates an english ('en') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	it	classe CSS per table-tag
-css properties	etemplate	it	proprietà CSS
+css properties	etemplate	it	proprietÃ  CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	it	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	it	Nome classe CSS per questa riga, preset: 'th' = header, 'row' = riga alternativa, 'row_off'+'row_on' righe
 css-styles	etemplate	it	stili-CSS
@@ -105,19 +105,19 @@ delete this column	etemplate	it	cancella questa colonna
 delete this etemplate	etemplate	it	cancella questo eTemplate
 delete this file	etemplate	it	Cancella questo file
 delete this row	etemplate	it	cancella questa riga
-delete whole column (can not be undone!!!)	etemplate	it	cancella intera colonna  (NON si può annullare!!!)
-deletes the above spez. etemplate from the database, can not be undone	etemplate	it	cancella il suddetto eTemplate dal database, NON può essere annullato
+delete whole column (can not be undone!!!)	etemplate	it	cancella intera colonna  (NON si puÃ² annullare!!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	it	cancella il suddetto eTemplate dal database, NON puÃ² essere annullato
 deletes the etemplate spez. above	etemplate	it	cancella il suddetto eTemplate
 deletes this column	etemplate	it	Cancella questa colonna
 deletes this index	etemplate	it	Cancella questo index
 discard changes	etemplate	it	annulla i cambiamenti
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	it	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	it	displayed in statusline of browser if input-field gets focus
-displayed in the top line of the groupbox (legend)	etemplate	it	visualizzato nella riga più alta del groupbox (legenda)
+displayed in the top line of the groupbox (legend)	etemplate	it	visualizzato nella riga piÃ¹ alta del groupbox (legenda)
 do you want to save the changes you made in table %s?	etemplate	it	Vuoi salvare i cambiamenti fatti nella tabella %s?
 documentation	etemplate	it	Documentazione
 doesn't matter	etemplate	it	non importa
-drop a table - this can not be undone	etemplate	it	Drop di una tabella - questo NON può essere annullato
+drop a table - this can not be undone	etemplate	it	Drop di una tabella - questo NON puÃ² essere annullato
 drop table	etemplate	it	Drop Table
 dump4setup	etemplate	it	Dump4Setup
 duration	etemplate	it	Durata
@@ -139,7 +139,7 @@ enter the new version number here (> old_version), empty for no update-file	etem
 enter the new version number here (has to be > old_version)	etemplate	it	inserisci il numero della nuova versione qui (deve essere > old_version)
 entry saved	etemplate	it	Voce salvata
 error: template not found !!!	etemplate	it	Errore: Template non trovato !!!
-error: webserver is not allowed to write into '%1' !!!	etemplate	it	Errore: il webserver non può scrivere in '%1' !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	it	Errore: il webserver non puÃ² scrivere in '%1' !!!
 error: while saving !!!	etemplate	it	Errore: durante salvataggio !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	it	Error: writing file (no write-permission for the webserver) !!!
 etemplate	common	it	eTemplate
@@ -153,9 +153,9 @@ exchange this two columns	etemplate	it	scambia queste due colonne
 export the loaded etemplate into a xml-file	etemplate	it	esporta l'eTemplate caricato in un file xml
 export xml	etemplate	it	Esporta XML
 extensions loaded:	etemplate	it	Estensioni caricate:
-field must not be empty !!!	etemplate	it	Il campo non può essere vuoto !!!
+field must not be empty !!!	etemplate	it	Il campo non puÃ² essere vuoto !!!
 file	etemplate	it	File
-file contains more than one etemplate, last one is shown !!!	etemplate	it	Il file contiene più di un eTemplate, l'ultimo è visualizzato !!!
+file contains more than one etemplate, last one is shown !!!	etemplate	it	Il file contiene piÃ¹ di un eTemplate, l'ultimo Ã¨ visualizzato !!!
 file writen	etemplate	it	File scritto
 fileupload	etemplate	it	Caricamento file
 first	etemplate	it	Primo
@@ -242,7 +242,7 @@ no filename given or selected via browse...	etemplate	it	no filename given or se
 no row to swap with !!!	etemplate	it	nessuna riga con cui scambiare !!!
 not null	etemplate	it	NON VUOTO
 nothing	etemplate	it	niente
-nothing found - try again !!!	etemplate	it	Non è stato trovato niente - prova ancora !!!
+nothing found - try again !!!	etemplate	it	Non Ã¨ stato trovato niente - prova ancora !!!
 nothing in clipboard to paste !!!	etemplate	it	niente negli appunti da incollare !!!
 nothing matched search criteria !!!	etemplate	it	Nothing matched search criteria !!!
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	it	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
@@ -258,7 +258,7 @@ options	etemplate	it	Opzioni
 order to navigating by tab key through the form	etemplate	it	Ordine per spostarsi con tasto TAB attraverso modulo
 overflow	etemplate	it	Overflow
 padding	etemplate	it	Padding
-parent is a '%1' !!!	etemplate	it	superiore è un '%1' !!!
+parent is a '%1' !!!	etemplate	it	superiore Ã¨ un '%1' !!!
 paste	etemplate	it	Incolla
 path	etemplate	it	Percorso
 please enter table-name first !!!	etemplate	it	Please enter table-name first !!!
@@ -307,7 +307,7 @@ select month	etemplate	it	Seleziona Mese
 select number	etemplate	it	Seleziona Numero
 select one ...	etemplate	it	Seleziona Uno ...
 select percentage	etemplate	it	Seleziona Percentuale
-select priority	etemplate	it	Seleziona Priorità
+select priority	etemplate	it	Seleziona PrioritÃ 
 select state	etemplate	it	Seleziona Stato
 select the indexed columns in their desired order	etemplate	it	Seleziona le colonne indicizzate nel loro ordine desiderato
 select this etemplate to delete it	etemplate	it	seleziona questo eTemplate per cancellarlo

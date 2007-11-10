@@ -1,243 +1,243 @@
-%1 - %2 of %3 user accounts	admin	fi	%1 - %2 / %3 k‰ytt‰j‰tunnusta
-%1 - %2 of %3 user groups	admin	fi	%1 - %2 / %3 k‰ytt‰j‰ryhm‰‰
-%1 acl records of not (longer) existing accounts deleted.	admin	fi	%1 ACL tietuetta ei (en‰‰) lˆydy, k‰ytt‰j‰tili poistettu.
-%1 not found or not executable !!!	admin	fi	%1 ei lˆydy tai ei voida suorittaa !!!
-(default no, leave it off if you dont use it)	admin	fi	(Oletuksena ei, j‰t‰ tyhj‰ksi jollet halua k‰ytt‰‰ sit‰)
-(stored password will not be shown here)	admin	fi	(Tallennettua salasanaa ei n‰ytet‰)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fi	(K‰yt‰ <br><a href="setup/" target="setup">Setup</a> [Manage Applications] asentaaksesi uusia sovelluksia !!!)
+%1 - %2 of %3 user accounts	admin	fi	%1 - %2 / %3 k√§ytt√§j√§tunnusta
+%1 - %2 of %3 user groups	admin	fi	%1 - %2 / %3 k√§ytt√§j√§ryhm√§√§
+%1 acl records of not (longer) existing accounts deleted.	admin	fi	%1 ACL tietuetta ei (en√§√§) l√∂ydy, k√§ytt√§j√§tili poistettu.
+%1 not found or not executable !!!	admin	fi	%1 ei l√∂ydy tai ei voida suorittaa !!!
+(default no, leave it off if you dont use it)	admin	fi	(Oletuksena ei, j√§t√§ tyhj√§ksi jollet halua k√§ytt√§√§ sit√§)
+(stored password will not be shown here)	admin	fi	(Tallennettua salasanaa ei n√§ytet√§)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fi	(K√§yt√§ <br><a href="setup/" target="setup">Setup</a> [Manage Applications] asentaaksesi uusia sovelluksia !!!)
 -  type	admin	fi	- muoto
-accesslog and bruteforce defense	admin	fi	K‰yttˆloki ja suoja k‰ytt‰j‰tunnusten arvuuttelulle
+accesslog and bruteforce defense	admin	fi	K√§ytt√∂loki ja suoja k√§ytt√§j√§tunnusten arvuuttelulle
 account active	admin	fi	Tunnus aktiivinen
 account has been created	common	fi	Tunnus luotu
 account has been deleted	common	fi	Tunnus poistettu
-account has been updated	common	fi	Tunnus p‰ivitetty
+account has been updated	common	fi	Tunnus p√§ivitetty
 account list	admin	fi	Tunnukset
 account permissions	admin	fi	Tunnuksen oikeudet
 account preferences	admin	fi	Tunnuksen asetukset
 acl manager	admin	fi	ACL -hallinta
 acl rights	common	fi	ACL Oikeudet
 action	admin	fi	Toimenpide
-activate wysiwyg-editor	admin	fi	k‰yt‰ WYSIWYG-toimitinta
-add a category	admin	fi	lis‰‰ kategoria
-add a group	admin	fi	lis‰‰ ryhm‰
+activate wysiwyg-editor	admin	fi	k√§yt√§ WYSIWYG-toimitinta
+add a category	admin	fi	lis√§√§ kategoria
+add a group	admin	fi	lis√§√§ ryhm√§
 add a new account.	admin	fi	Uusi tunnus.
-add a subcategory	admin	fi	lis‰‰ alikategoria
-add a user	admin	fi	lis‰‰ k‰ytt‰j‰
-add account	admin	fi	Lis‰‰ tunnus
-add application	admin	fi	Lis‰‰ sovellus
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	fi	Lis‰‰ automaattisesti luodut k‰ytt‰j‰t ryhm‰‰n (k‰ytet‰‰n ryhm‰‰ 'Default' jollei t‰ss‰ toisi m‰‰ritell‰.)
-add global category	admin	fi	Lis‰‰ yleinen kategoria
-add global category for %1	admin	fi	Lis‰‰ yleinen kategoria %1:lle
-add group	admin	fi	Lis‰‰ ryhm‰
+add a subcategory	admin	fi	lis√§√§ alikategoria
+add a user	admin	fi	lis√§√§ k√§ytt√§j√§
+add account	admin	fi	Lis√§√§ tunnus
+add application	admin	fi	Lis√§√§ sovellus
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	fi	Lis√§√§ automaattisesti luodut k√§ytt√§j√§t ryhm√§√§n (k√§ytet√§√§n ryhm√§√§ 'Default' jollei t√§ss√§ toisi m√§√§ritell√§.)
+add global category	admin	fi	Lis√§√§ yleinen kategoria
+add global category for %1	admin	fi	Lis√§√§ yleinen kategoria %1:lle
+add group	admin	fi	Lis√§√§ ryhm√§
 add new account	admin	fi	Uusi tunnus
 add new application	admin	fi	Uusi sovellus
-add peer server	admin	fi	Lis‰‰ rinnakkaispalvelin
-add sub-category	admin	fi	Lis‰‰ alikaterogia
-admin email	admin	fi	S‰hkˆpostin hallinta
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fi	Yll‰pit‰j‰n s‰hkˆpostiosoitteet (pilkulla erotettu luettelo), joihin ilmoitetaan osoitteen lukitsemisesta (j‰t‰ tyhj‰ksi, jos ei ilmoiteta)
-admin name	admin	fi	Yll‰pit‰j‰n nimi
-administration	admin	fi	Yll‰pito
-admins	admin	fi	Yll‰pit‰j‰t
-advanced options	admin	fi	kehittyneemm‰t asetukset
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fi	Kuinka monen ep‰onnistuneen kirjautumisyrityksen j‰lkeen tunnus lukitaan (oletus: 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fi	Kuinka monen ep‰onnistuneen kirjautumisyrityksen j‰lkeen IP-osoite lukitaan (oletus: 3)?
+add peer server	admin	fi	Lis√§√§ rinnakkaispalvelin
+add sub-category	admin	fi	Lis√§√§ alikaterogia
+admin email	admin	fi	S√§hk√∂postin hallinta
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fi	Yll√§pit√§j√§n s√§hk√∂postiosoitteet (pilkulla erotettu luettelo), joihin ilmoitetaan osoitteen lukitsemisesta (j√§t√§ tyhj√§ksi, jos ei ilmoiteta)
+admin name	admin	fi	Yll√§pit√§j√§n nimi
+administration	admin	fi	Yll√§pito
+admins	admin	fi	Yll√§pit√§j√§t
+advanced options	admin	fi	kehittyneemm√§t asetukset
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fi	Kuinka monen ep√§onnistuneen kirjautumisyrityksen j√§lkeen tunnus lukitaan (oletus: 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fi	Kuinka monen ep√§onnistuneen kirjautumisyrityksen j√§lkeen IP-osoite lukitaan (oletus: 3)?
 aliases	admin	fi	Aliakset
 all records and account information will be lost!	admin	fi	Kaikki tietueet ja tunnuksen tiedot poistetaan!
-all users	admin	fi	Kaikki k‰ytt‰j‰t
-allow anonymous access to this app	admin	fi	Sovellusta voi k‰ytt‰‰ kirjautumatta j‰rjestelm‰‰n
-alternate email address	admin	fi	vaihtoehtoinen s‰hkˆpostiosoite
-anonymous user	admin	fi	Anonyymi k‰ytt‰j‰
-anonymous user (not shown in list sessions)	admin	fi	Anonyymi k‰ytt‰j‰ (ei n‰ytet‰ kirjautuneiden luettelossa)
-anonymous user does not exist!	admin	fi	Anonyymi‰ k‰ytt‰j‰‰ EI ole olemassa
-anonymous user has no run-rights for the application!	admin	fi	Anonyymill‰ k‰ytt‰j‰ll‰ EI ole suoritusoikeuksia t‰h‰n sovellukseen!
+all users	admin	fi	Kaikki k√§ytt√§j√§t
+allow anonymous access to this app	admin	fi	Sovellusta voi k√§ytt√§√§ kirjautumatta j√§rjestelm√§√§n
+alternate email address	admin	fi	vaihtoehtoinen s√§hk√∂postiosoite
+anonymous user	admin	fi	Anonyymi k√§ytt√§j√§
+anonymous user (not shown in list sessions)	admin	fi	Anonyymi k√§ytt√§j√§ (ei n√§ytet√§ kirjautuneiden luettelossa)
+anonymous user does not exist!	admin	fi	Anonyymi√§ k√§ytt√§j√§√§ EI ole olemassa
+anonymous user has no run-rights for the application!	admin	fi	Anonyymill√§ k√§ytt√§j√§ll√§ EI ole suoritusoikeuksia t√§h√§n sovellukseen!
 appearance	admin	fi	Ulkoasu
 application	admin	fi	Sovellus
 application name	admin	fi	Sovelluksen nimi
 application title	admin	fi	Sovelluksen otsikko
 applications	admin	fi	Sovellukset
 applications list	admin	fi	Sovellukset -luettelo
-applies the changes	admin	fi	hyv‰ksy muutokset
+applies the changes	admin	fi	hyv√§ksy muutokset
 are you sure you want to delete the application %1 ?	admin	fi	Haluatko varmasti poistaa sovelluksen %1 ?
 are you sure you want to delete this account ?	admin	fi	Haluatko poistaa tunnuksen ?
 are you sure you want to delete this application ?	admin	fi	Haluatko poistaa sovelluksen ?
 are you sure you want to delete this category ?	common	fi	Haluatko poistaa luokan ?
-are you sure you want to delete this global category ?	admin	fi	Haluatko varmasti poistaa t‰m‰n yleisen luokan ?
-are you sure you want to delete this group ?	admin	fi	Haluatko poistaa ryhm‰n ?
+are you sure you want to delete this global category ?	admin	fi	Haluatko varmasti poistaa t√§m√§n yleisen luokan ?
+are you sure you want to delete this group ?	admin	fi	Haluatko poistaa ryhm√§n ?
 are you sure you want to delete this server?	admin	fi	Haluatko poistaa palvelimen ?
-are you sure you want to kill this session ?	admin	fi	Haluatko keskeytt‰‰ t‰m‰n istunnon ?
+are you sure you want to kill this session ?	admin	fi	Haluatko keskeytt√§√§ t√§m√§n istunnon ?
 async services last executed	admin	fi	Ajastetut palvelut suoritettu viimeksi
 asynchronous timed services	admin	fi	Ajastetut palvelut
 asyncservices not yet installed or other error (%1) !!!	admin	fi	asyncservices ei ole asennettu tai muu virhe (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fi	Yrit‰ k‰yt‰ oikeaa mime-tyyppi‰ FTP siirrossa oletuksen 'application/octet-stream' sijasta
-authentication / accounts	admin	fi	K‰ytt‰j‰ntunnistus / K‰ytt‰j‰tunnukset
-auto create account records for authenticated users	admin	fi	Luo tunnus automaattisesti tunnistetuille k‰ytt‰jille
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fi	Yrit√§ k√§yt√§ oikeaa mime-tyyppi√§ FTP siirrossa oletuksen 'application/octet-stream' sijasta
+authentication / accounts	admin	fi	K√§ytt√§j√§ntunnistus / K√§ytt√§j√§tunnukset
+auto create account records for authenticated users	admin	fi	Luo tunnus automaattisesti tunnistetuille k√§ytt√§jille
 back to the list	admin	fi	takaisin luetteloon
-bi-dir passthrough	admin	fi	kaksisuuntainen l‰p‰isy
+bi-dir passthrough	admin	fi	kaksisuuntainen l√§p√§isy
 bi-directional	admin	fi	kaksisuuntainen
 bottom	admin	fi	alas
 calculate next run	admin	fi	Laske seuraava suoritusaika
 can change password	admin	fi	Voi vaihtaa salasanaa
-cancel testjob!	admin	fi	Peruuta TestiTyˆ!
+cancel testjob!	admin	fi	Peruuta TestiTy√∂!
 categories list	admin	fi	Luokat
 category %1 has been saved !	admin	fi	Kategoria %1 on tallennettu !
 category list	admin	fi	Luokat -luettelo
 change acl rights	admin	fi	muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
-change main screen message	admin	fi	Vaihda p‰‰n‰ytˆn viesti
+change main screen message	admin	fi	Vaihda p√§√§n√§yt√∂n viesti
 check ip address of all sessions	admin	fi	tarkista IP-osoite kaikille istunnoille
 check items to <b>%1</b> to %2 for %3	admin	fi	Tarkista kohteet <b>%1</b> %2 kohdasta %3
-click to select a color	admin	fi	Napsauta valitaksesi v‰rin
-color	admin	fi	V‰ri
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fi	Ev‰steiden polku (mahdollistaa useiden eGW ev‰steiden k‰ytˆn eri hakemistoista, voi aiheuttaa ongelmia Sivuston hallinta-modulissa)
+click to select a color	admin	fi	Napsauta valitaksesi v√§rin
+color	admin	fi	V√§ri
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fi	Ev√§steiden polku (mahdollistaa useiden eGW ev√§steiden k√§yt√∂n eri hakemistoista, voi aiheuttaa ongelmia Sivuston hallinta-modulissa)
 country selection	admin	fi	Maan valinta
-create group	admin	fi	Uusi ryhm‰
-creates a new field	admin	fi	Luodaan uusi kentt‰
+create group	admin	fi	Uusi ryhm√§
+creates a new field	admin	fi	Luodaan uusi kentt√§
 crontab only (recomended)	admin	fi	vain crontab (suositellaan)
-custom fields	admin	fi	Omat kent‰t
+custom fields	admin	fi	Omat kent√§t
 cyrus imap server	admin	fi	Cyrus IMAP palvelin
 data	admin	fi	Tieto
-day	admin	fi	P‰iv‰
-day of week<br>(0-6, 0=sun)	admin	fi	Viikonp‰iv‰
+day	admin	fi	P√§iv√§
+day of week<br>(0-6, 0=sun)	admin	fi	Viikonp√§iv√§
 db backup and restore	admin	fi	Tietokannan varmuuskopiointi ja palautus
 default	admin	fi	Oletus
-default file system space per user	admin	fi	Tallennustila per k‰ytt‰j‰
-default file system space per user/group ?	admin	fi	Tallennustila per k‰ytt‰j‰/ryhm‰ ?
+default file system space per user	admin	fi	Tallennustila per k√§ytt√§j√§
+default file system space per user/group ?	admin	fi	Tallennustila per k√§ytt√§j√§/ryhm√§ ?
 deinstall crontab	admin	fi	Poista crontab
 delete account	admin	fi	Poista tunnus
 delete all records	admin	fi	Poista kaikki tietueet
 delete application	admin	fi	Poista sovellus
 delete category	admin	fi	Poista kategoria
-delete group	admin	fi	Poista ryhm‰
+delete group	admin	fi	Poista ryhm√§
 delete peer server	admin	fi	Poista rinnakkaispalvelin
 delete the category	admin	fi	poista kategoria
-delete the group	admin	fi	poista ryhm‰
-delete this category	admin	fi	poista t‰m‰ kategoria
-delete this group	admin	fi	poista t‰m‰ ryhm‰
-delete this user	admin	fi	poista t‰m‰ k‰ytt‰j‰
-deletes this field	admin	fi	poistaa t‰m‰n kent‰n
-deny access to access log	admin	fi	Est‰ p‰‰sy k‰yttˆlokiin
-deny access to application registery	admin	fi	Est‰ p‰‰sy sovellusrekisteriin
-deny access to applications	admin	fi	Est‰ p‰‰sy sovelluksiin
-deny access to asynchronous timed services	admin	fi	Est‰ p‰‰sy ajastettuihin palveluihin
-deny access to current sessions	admin	fi	Est‰ p‰‰sy nykyisiin istuntoihin
-deny access to db backup and restore	admin	fi	Est‰ p‰‰sy tietokannan varmuuskopiointiin ja palautukseen
-deny access to error log	admin	fi	Est‰ p‰‰sy virhelokiin
-deny access to global categories	admin	fi	Est‰ p‰‰sy yleisiin kategorioihin
-deny access to groups	admin	fi	Est‰ p‰‰sy ryhmiin
-deny access to mainscreen message	admin	fi	Est‰ p‰‰sy p‰‰n‰ytˆn viestiin
-deny access to peer servers	admin	fi	Est‰ p‰‰sy rinnakkaispalvelimille
-deny access to phpinfo	admin	fi	Est‰ p‰‰sy phpsysinfoon
-deny access to site configuration	admin	fi	Est‰ p‰‰sy palvelun asetuksiin
-deny access to user accounts	admin	fi	Est‰ p‰‰sy k‰ytt‰j‰tunnuksiin
-deny all users access to grant other users access to their entries ?	admin	fi	Est‰ kaikilta k‰ytt‰jilt‰ tietojensa julkistaminen?
+delete the group	admin	fi	poista ryhm√§
+delete this category	admin	fi	poista t√§m√§ kategoria
+delete this group	admin	fi	poista t√§m√§ ryhm√§
+delete this user	admin	fi	poista t√§m√§ k√§ytt√§j√§
+deletes this field	admin	fi	poistaa t√§m√§n kent√§n
+deny access to access log	admin	fi	Est√§ p√§√§sy k√§ytt√∂lokiin
+deny access to application registery	admin	fi	Est√§ p√§√§sy sovellusrekisteriin
+deny access to applications	admin	fi	Est√§ p√§√§sy sovelluksiin
+deny access to asynchronous timed services	admin	fi	Est√§ p√§√§sy ajastettuihin palveluihin
+deny access to current sessions	admin	fi	Est√§ p√§√§sy nykyisiin istuntoihin
+deny access to db backup and restore	admin	fi	Est√§ p√§√§sy tietokannan varmuuskopiointiin ja palautukseen
+deny access to error log	admin	fi	Est√§ p√§√§sy virhelokiin
+deny access to global categories	admin	fi	Est√§ p√§√§sy yleisiin kategorioihin
+deny access to groups	admin	fi	Est√§ p√§√§sy ryhmiin
+deny access to mainscreen message	admin	fi	Est√§ p√§√§sy p√§√§n√§yt√∂n viestiin
+deny access to peer servers	admin	fi	Est√§ p√§√§sy rinnakkaispalvelimille
+deny access to phpinfo	admin	fi	Est√§ p√§√§sy phpsysinfoon
+deny access to site configuration	admin	fi	Est√§ p√§√§sy palvelun asetuksiin
+deny access to user accounts	admin	fi	Est√§ p√§√§sy k√§ytt√§j√§tunnuksiin
+deny all users access to grant other users access to their entries ?	admin	fi	Est√§ kaikilta k√§ytt√§jilt√§ tietojensa julkistaminen?
 description can not exceed 255 characters in length !	admin	fi	Kuvaus
-determines the order the fields are displayed	admin	fi	havannoi j‰rjestyksen jossa kent‰t n‰ytet‰‰n
-disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaattinen t‰yttˆ" ei k‰ytˆss‰
-disable wysiwyg-editor	admin	fi	‰l‰ k‰yt‰ WYSIWYG-toimitinta
-disabled (not recomended)	admin	fi	ei k‰ytˆss‰ (ei suositella)
-display	admin	fi	N‰yt‰
+determines the order the fields are displayed	admin	fi	havannoi j√§rjestyksen jossa kent√§t n√§ytet√§√§n
+disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaattinen t√§ytt√∂" ei k√§yt√∂ss√§
+disable wysiwyg-editor	admin	fi	√§l√§ k√§yt√§ WYSIWYG-toimitinta
+disabled (not recomended)	admin	fi	ei k√§yt√∂ss√§ (ei suositella)
+display	admin	fi	N√§yt√§
 do not delete the category and return back to the list	admin	fi	kategoriaa EI poisteta ja palataan luetteloon
-do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa myˆs yleiset alakategoriat?
+do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa my√∂s yleiset alakategoriat?
 do you want to delete all global subcategories ?	admin	fi	Haluatko poistaa kaikki yleiset alakategoriat?
-do you want to move all global subcategories one level down ?	admin	fi	Haluatko siirt‰‰ kaikkia yleisi‰ alakategorioita tason verran alemmas?
+do you want to move all global subcategories one level down ?	admin	fi	Haluatko siirt√§√§ kaikkia yleisi√§ alakategorioita tason verran alemmas?
 document root (default)	admin	fi	Tiedostojen juurihakemisto (oletus)
-each value is a line like <id>[=<label>]	admin	fi	jokainen arvo on rivill‰ kuten <id>[=<label>]
-each value is a line like id[=label]	admin	fi	jokainen arvo on rivill‰ kuten id[=label]
+each value is a line like <id>[=<label>]	admin	fi	jokainen arvo on rivill√§ kuten <id>[=<label>]
+each value is a line like id[=label]	admin	fi	jokainen arvo on rivill√§ kuten id[=label]
 edit account	admin	fi	Muokkaa tunnusta
 edit application	admin	fi	Muokkaa sovellusta
-edit email settings	admin	fi	muokka s‰hkˆpostin asetuksia
-edit global category	admin	fi	Muokkaa yleist‰ kategoriaa
-edit global category for %1	admin	fi	Muokkaa yleist‰ kategoriaa %1:lle
-edit group	admin	fi	Muokkaa ryhm‰‰
-edit group acl's	admin	fi	muokkaa ryhm‰n ACL:‰‰
-edit login screen message	admin	fi	Muokkaa kirjautumisn‰ytˆn viesti‰
-edit main screen message	admin	fi	Muokkaa p‰‰n‰ytˆn viesti‰
+edit email settings	admin	fi	muokka s√§hk√∂postin asetuksia
+edit global category	admin	fi	Muokkaa yleist√§ kategoriaa
+edit global category for %1	admin	fi	Muokkaa yleist√§ kategoriaa %1:lle
+edit group	admin	fi	Muokkaa ryhm√§√§
+edit group acl's	admin	fi	muokkaa ryhm√§n ACL:√§√§
+edit login screen message	admin	fi	Muokkaa kirjautumisn√§yt√∂n viesti√§
+edit main screen message	admin	fi	Muokkaa p√§√§n√§yt√∂n viesti√§
 edit peer server	admin	fi	Muokkaa rinnakkaispalvelinta
 edit table format	admin	fi	Muokkaa taulukon muotoa
-edit this category	admin	fi	muokkaa t‰t‰ kategoriaa
-edit this group	admin	fi	muokkaa t‰t‰ ryhm‰‰
-edit this user	admin	fi	muokkaa t‰t‰ k‰ytt‰j‰‰
-edit user	admin	fi	muokkaa k‰ytt‰j‰‰
-edit user account	admin	fi	Muokkaa k‰ytt‰j‰tunnusta
+edit this category	admin	fi	muokkaa t√§t√§ kategoriaa
+edit this group	admin	fi	muokkaa t√§t√§ ryhm√§√§
+edit this user	admin	fi	muokkaa t√§t√§ k√§ytt√§j√§√§
+edit user	admin	fi	muokkaa k√§ytt√§j√§√§
+edit user account	admin	fi	Muokkaa k√§ytt√§j√§tunnusta
 egroupware directory	admin	fi	eGroupWare hakemisto
-email account active	admin	fi	S‰hkˆpostilin aktivointi
-email address	admin	fi	S‰hkˆpostiosoite
-enable debug-messages	admin	fi	N‰yt‰ virheenj‰ljitysviestit
+email account active	admin	fi	S√§hk√∂postilin aktivointi
+email address	admin	fi	S√§hk√∂postiosoite
+enable debug-messages	admin	fi	N√§yt√§ virheenj√§ljitysviestit
 enable the soap service	admin	fi	Salli SOAP palvelut
 enable the xmlrpc service	admin	fi	Salli XMLRPC palvelut
-enabled - hidden from navbar	admin	fi	K‰ytˆss‰ - Ei n‰y tyˆkalupalkissa
-enabled - popup window	admin	fi	K‰ytˆss‰ - Ponnahdusikkuna
+enabled - hidden from navbar	admin	fi	K√§yt√∂ss√§ - Ei n√§y ty√∂kalupalkissa
+enabled - popup window	admin	fi	K√§yt√∂ss√§ - Ponnahdusikkuna
 enter a description for the category	admin	fi	anna kategorian kuvaus
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi	Anna hieman satunnaisia merkkej‰ alustaaksesi app_session <br>salauksen (vaatii mcrypt)
-enter the background color for the login page	admin	fi	Anna kirjautumisn‰ytˆn taustav‰ri
-enter the background color for the site title	admin	fi	Anna sivuston otsikon taustav‰ri
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fi	Anna absoluuttinen polku v‰liaikaistiedostoille.<br>Esimerkkej‰: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna absoluuttinen polku v‰liaikaistiedostoille.<br>Esimerkkej‰: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	fi	Anna absoluuttinen polku k‰ytt‰jien ja ryhmien tiedostoille.<br>Esimerkkej‰: /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:files	admin	fi	Anna absoluuttinen polku k‰ytt‰jien ja ryhmien tiedostoille.<br>Esimerkkej‰: /files, E:\FILES
-enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen is‰nt‰nimi (hostname)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi	Anna hieman satunnaisia merkkej√§ alustaaksesi app_session <br>salauksen (vaatii mcrypt)
+enter the background color for the login page	admin	fi	Anna kirjautumisn√§yt√∂n taustav√§ri
+enter the background color for the site title	admin	fi	Anna sivuston otsikon taustav√§ri
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fi	Anna absoluuttinen polku v√§liaikaistiedostoille.<br>Esimerkkej√§: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna absoluuttinen polku v√§liaikaistiedostoille.<br>Esimerkkej√§: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	fi	Anna absoluuttinen polku k√§ytt√§jien ja ryhmien tiedostoille.<br>Esimerkkej√§: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	fi	Anna absoluuttinen polku k√§ytt√§jien ja ryhmien tiedostoille.<br>Esimerkkej√§: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen is√§nt√§nimi (hostname)
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/egroupware   tai   /egroupware<br><b>Ei kauttaviivaa loppuun</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	fi	Anna haettava merkkijono. N‰hd‰ksesi kaikki kohteet, tyhjenn‰ kentt‰ ja napsauta hakupainiketta uudelleen
+enter the search string. to show all entries, empty this field and press the submit button again	admin	fi	Anna haettava merkkijono. N√§hd√§ksesi kaikki kohteet, tyhjenn√§ kentt√§ ja napsauta hakupainiketta uudelleen
 enter the site password for peer servers	admin	fi	Anna salasana rinnakkaispalvelimille
-enter the site username for peer servers	admin	fi	Anna k‰ytt‰j‰tunnus rinnakkaispalvelimille
+enter the site username for peer servers	admin	fi	Anna k√§ytt√§j√§tunnus rinnakkaispalvelimille
 enter the title for your site	admin	fi	Anna palvelun nimi
-enter the title of your logo	admin	fi	Anna logolle selite (n‰kyy kun hiirt‰ pit‰‰ hetken logon p‰‰ll‰)
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	fi	Anna logon URL tai tiedostonimi (pit‰‰ olla hakemistossa phpgwapi/templates/default/images)
+enter the title of your logo	admin	fi	Anna logolle selite (n√§kyy kun hiirt√§ pit√§√§ hetken logon p√§√§ll√§)
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	fi	Anna logon URL tai tiedostonimi (pit√§√§ olla hakemistossa phpgwapi/templates/default/images)
 enter the url where your logo should link to	admin	fi	Anna URL, johon logon napsauttaminen vie
-enter your default ftp server	admin	fi	Anna oletuksena k‰ytett‰v‰ FTP-palvelin
-enter your default mail domain ( from: user@domain )	admin	fi	Anna postin verkkotunnus (L‰hett‰j‰: mina@verkkotunnus.fi)
-enter your http proxy server	admin	fi	Anna HTTP-v‰lityspalvelin
-enter your http proxy server port	admin	fi	Anna HTTP-v‰lityspalvelimen portti
+enter your default ftp server	admin	fi	Anna oletuksena k√§ytett√§v√§ FTP-palvelin
+enter your default mail domain ( from: user@domain )	admin	fi	Anna postin verkkotunnus (L√§hett√§j√§: mina@verkkotunnus.fi)
+enter your http proxy server	admin	fi	Anna HTTP-v√§lityspalvelin
+enter your http proxy server port	admin	fi	Anna HTTP-v√§lityspalvelimen portti
 enter your smtp server hostname or ip address	admin	fi	Anna SMTP -palvelimen nimi tai IP-osoite
 enter your smtp server port	admin	fi	Anna SMTP -palvelimen portti
-error canceling timer, maybe there's none set !!!	admin	fi	Virhe poistettaessa ajastusta, ehk‰ sit‰ ei edes ole asetettu !!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	fi	Virhe teht‰ess‰ ajastusta, komento v‰‰rin muotoiltu tai ajastus on jo olemassa !!!
-error! no appname found	admin	fi	Virhe! Sovellusta ei lˆdy
-error: %1 not found or other error !!!	admin	fi	Virhe: %1 ei lˆydy tai muu virhe !!!
+error canceling timer, maybe there's none set !!!	admin	fi	Virhe poistettaessa ajastusta, ehk√§ sit√§ ei edes ole asetettu !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	fi	Virhe teht√§ess√§ ajastusta, komento v√§√§rin muotoiltu tai ajastus on jo olemassa !!!
+error! no appname found	admin	fi	Virhe! Sovellusta ei l√∂dy
+error: %1 not found or other error !!!	admin	fi	Virhe: %1 ei l√∂ydy tai muu virhe !!!
 expires	admin	fi	Vanhentuu
-explanation of ldapman	admin	fi	T‰m‰ moduuli on toistaiseksi testattu POSTFIX:lla, LDAP:lla, Courier-IMAP:lla ja se tarvitsee schemat Core ja QMAIL (OID7914). Jos haluat lis‰tietoja k‰ytˆst‰ ja s‰‰t‰misest‰ j‰rjestelm‰‰si varten, lue README.ldapman hakemistosta Admin/doc.
-fallback (after each pageview)	admin	fi	fallback (tarkista sivuhaun yhteydess‰)
-field '%1' already exists !!!	admin	fi	Kentt‰'%1' on jo olemassa !!!
+explanation of ldapman	admin	fi	T√§m√§ moduuli on toistaiseksi testattu POSTFIX:lla, LDAP:lla, Courier-IMAP:lla ja se tarvitsee schemat Core ja QMAIL (OID7914). Jos haluat lis√§tietoja k√§yt√∂st√§ ja s√§√§t√§misest√§ j√§rjestelm√§√§si varten, lue README.ldapman hakemistosta Admin/doc.
+fallback (after each pageview)	admin	fi	fallback (tarkista sivuhaun yhteydess√§)
+field '%1' already exists !!!	admin	fi	Kentt√§'%1' on jo olemassa !!!
 file space	admin	fi	Tallennustila
 file space must be an integer	admin	fi	Tallennustila on oltava kokonaisluku
-find and register all application hooks	admin	fi	Etsi ja rekisterˆi kaikki sovelluskoukut
-for the times above	admin	fi	n‰in‰ aikoina
-for the times below (empty values count as '*', all empty = every minute)	admin	fi	alla m‰‰ritettyin‰ aikoina (tyhj‰ tarkoittaa '*', kaikki tyhj‰‰ = joka minuutti)
+find and register all application hooks	admin	fi	Etsi ja rekister√∂i kaikki sovelluskoukut
+for the times above	admin	fi	n√§in√§ aikoina
+for the times below (empty values count as '*', all empty = every minute)	admin	fi	alla m√§√§ritettyin√§ aikoina (tyhj√§ tarkoittaa '*', kaikki tyhj√§√§ = joka minuutti)
 force selectbox	admin	fi	Pakota valitsemaan
-forward also to	admin	fi	V‰lit‰ eteenp‰in myˆs
-forward emails to	admin	fi	Eteenp‰in v‰litetyt s‰hkˆpostit
-forward only	admin	fi	V‰lit‰ vain eteenp‰in
+forward also to	admin	fi	V√§lit√§ eteenp√§in my√∂s
+forward emails to	admin	fi	Eteenp√§in v√§litetyt s√§hk√∂postit
+forward only	admin	fi	V√§lit√§ vain eteenp√§in
 global categories	common	fi	Yleiset kategoriat
-group ?	admin	fi	ryhm‰ ?
-group has been added	common	fi	Ryhm‰ lis‰tty
-group has been deleted	common	fi	Ryhm‰ poistettu
-group has been updated	common	fi	Ryhm‰ p‰ivitetty
-group list	admin	fi	Ryhm‰luettelo
+group ?	admin	fi	ryhm√§ ?
+group has been added	common	fi	Ryhm√§ lis√§tty
+group has been deleted	common	fi	Ryhm√§ poistettu
+group has been updated	common	fi	Ryhm√§ p√§ivitetty
+group list	admin	fi	Ryhm√§luettelo
 group manager	admin	fi	Ryhmien hallinta
-group name	admin	fi	Ryhm‰n nimi
+group name	admin	fi	Ryhm√§n nimi
 hide php information	admin	fi	piilota php-tiedot
 home directory	admin	fi	Kotihakemisto
 host information	admin	fi	Palvelimen tiedot
 hour<br>(0-23)	admin	fi	Tunti<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fi	Kuinka monta vuorokautta tietoja s‰ilytet‰‰n k‰yttˆlokissa (oletus: 90) ?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fi	Kuinka monta vuorokautta tietoja s√§ilytet√§√§n k√§ytt√∂lokissa (oletus: 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	fi	Kuinka moneksi minuutiksi tunnus tai IP-osoite lukitaan (oletus: 30) ?
-how should email addresses for new users be constructed?	admin	fi	Kuinka uusien k‰ytt‰jien s‰hkˆpostitunnus luodaan?
+how should email addresses for new users be constructed?	admin	fi	Kuinka uusien k√§ytt√§jien s√§hk√∂postitunnus luodaan?
 icon	admin	fi	Kuvake
 idle	admin	fi	vapaa
-if no acl records for user or any group the user is a member of	admin	fi	Jos k‰ytt‰j‰lle tai ryhm‰lle ei ole ACL -tietueita, kuuluu k‰ytt‰j‰ ryhm‰‰n
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fi	Jos k‰yt‰t LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellej‰?
+if no acl records for user or any group the user is a member of	admin	fi	Jos k√§ytt√§j√§lle tai ryhm√§lle ei ole ACL -tietueita, kuuluu k√§ytt√§j√§ ryhm√§√§n
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fi	Jos k√§yt√§t LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellej√§?
 in mbyte	admin	fi	Megoina
 inbound	admin	fi	tuleva
 install crontab	admin	fi	Asenna crontab
 installed applications	common	fi	Asennetut sovellukset
 installed crontab	admin	fi	Asennettu crontab
-interface	admin	fi	K‰yttˆliittym‰
+interface	admin	fi	K√§ytt√∂liittym√§
 ip	admin	fi	IP
-jobs	admin	fi	Tyˆt
-kill	admin	fi	Keskeyt‰
-kill session	admin	fi	Keskeyt‰ istunto
+jobs	admin	fi	Ty√∂t
+kill	admin	fi	Keskeyt√§
+kill session	admin	fi	Keskeyt√§ istunto
 last %1 logins	admin	fi	Viimeiset %1 kirjautumista
-last %1 logins for %2	admin	fi	Viimeiset %1 kirjautumista k‰ytt‰j‰lle %2
+last %1 logins for %2	admin	fi	Viimeiset %1 kirjautumista k√§ytt√§j√§lle %2
 last login	admin	fi	kirjautunut viimeksi
 last login from	admin	fi	kirjautunut viimeksi osoitteesta
 last time read	admin	fi	Luettu viimeksi
@@ -249,195 +249,195 @@ ldap groups context	admin	fi	LDAP -ryhmien konteksti
 ldap host	admin	fi	LDAP palvelin
 ldap root password	admin	fi	LDAP root salasana
 ldap rootdn	admin	fi	LDAP rootdn
-leave empty for no quota	admin	fi	j‰t‰ tyhj‰ksi jollei rajoituksia ole
+leave empty for no quota	admin	fi	j√§t√§ tyhj√§ksi jollei rajoituksia ole
 leave the category untouched and return back to the list	admin	fi	palaa luetteloon muuttamatta kategoriaa
-leave the group untouched and return back to the list	admin	fi	palaa luetteloon muuttamatta ryhm‰‰
+leave the group untouched and return back to the list	admin	fi	palaa luetteloon muuttamatta ryhm√§√§
 leaves without saveing	admin	fi	poistu tallentamatta
 length<br>rows	admin	fi	Pituus<br>Rivit
-list config settings	admin	fi	N‰yt‰ asetukset
-list current sessions	admin	fi	N‰yt‰ istunnot
-list of current users	admin	fi	nykyiset k‰ytt‰j‰t
+list config settings	admin	fi	N√§yt√§ asetukset
+list current sessions	admin	fi	N√§yt√§ istunnot
+list of current users	admin	fi	nykyiset k√§ytt√§j√§t
 login history	common	fi	Kirjautumisten historia
 login message	admin	fi	Kirjautumisviesti
-login screen	admin	fi	Kirjautumisn‰yttˆ
+login screen	admin	fi	Kirjautumisn√§ytt√∂
 login shell	admin	fi	Kirjautumis-shell
 login time	admin	fi	Kirjautumisaika
 loginid	admin	fi	LoginID
 mail settings	admin	fi	Asetukset
-main email-address	admin	fi	P‰‰s‰hkˆpostiosoite
-main screen message	admin	fi	P‰‰n‰ytˆn viesti
+main email-address	admin	fi	P√§√§s√§hk√∂postiosoite
+main screen message	admin	fi	P√§√§n√§yt√∂n viesti
 manager	admin	fi	Hallinnoija
-max length of the input [, length of the inputfield (optional)]	admin	fi	max sis‰llˆn pituus [,sis‰ltˆkentt‰ pituus (valinnainen)]
+max length of the input [, length of the inputfield (optional)]	admin	fi	max sis√§ll√∂n pituus [,sis√§lt√∂kentt√§ pituus (valinnainen)]
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
 maximum entries in click path history	admin	fi	Navigointihistorian koko
-message has been updated	admin	fi	viesti p‰ivitetty
+message has been updated	admin	fi	viesti p√§ivitetty
 method	admin	fi	Tapa
 minimum account id (e.g. 500 or 100, etc.)	admin	fi	Pienin tunnus-id (esim. 100 tai 500)
 minute	admin	fi	Minuutti
 mode	admin	fi	Tila
 month	admin	fi	Kuukausi
-more secure	admin	fi	lis‰‰ turvallisuutta
-name must not be empty !!!	admin	fi	Nimi ei saa olla tyhj‰ !!!
-new group name	admin	fi	Uuden ryhm‰n nimi
+more secure	admin	fi	lis√§√§ turvallisuutta
+name must not be empty !!!	admin	fi	Nimi ei saa olla tyhj√§ !!!
+new group name	admin	fi	Uuden ryhm√§n nimi
 new name	admin	fi	uusi nimi
-new password [ leave blank for no change ]	admin	fi	Uusi salasana [ Tyhj‰ = ei muutosta ]
+new password [ leave blank for no change ]	admin	fi	Uusi salasana [ Tyhj√§ = ei muutosta ]
 next run	admin	fi	Suoritettaan seuraavan kerran
-no algorithms available	admin	fi	ei k‰ytett‰viss‰
-no alternate email address	admin	fi	ei vaihtoehtoista s‰hkˆpostiosoitetta
-no jobs in the database !!!	admin	fi	Tietokannassa ei ole tˆit‰ !!!
-no login history exists for this user	admin	fi	K‰ytt‰j‰ll‰ ei ole kirjautumishistoriaa
-no matches found	admin	fi	Yht‰‰n kohdetta ei lˆytynyt
-no modes available	admin	fi	tiloja ei k‰ytett‰viss‰
-no permission to add groups	admin	fi	ei oikeutta lis‰t‰ ryhmi‰
-no permission to add users	admin	fi	ei oikeutta lis‰t‰ k‰ytt‰ji‰
-no permission to create groups	admin	fi	ei oikeutta luoda ryhmi‰
-note: ssl available only if php is compiled with curl support	admin	fi	Huomaa: SSL on k‰ytett‰viss‰ vain jos PHP on k‰‰nnetty curl-tuella
+no algorithms available	admin	fi	ei k√§ytett√§viss√§
+no alternate email address	admin	fi	ei vaihtoehtoista s√§hk√∂postiosoitetta
+no jobs in the database !!!	admin	fi	Tietokannassa ei ole t√∂it√§ !!!
+no login history exists for this user	admin	fi	K√§ytt√§j√§ll√§ ei ole kirjautumishistoriaa
+no matches found	admin	fi	Yht√§√§n kohdetta ei l√∂ytynyt
+no modes available	admin	fi	tiloja ei k√§ytett√§viss√§
+no permission to add groups	admin	fi	ei oikeutta lis√§t√§ ryhmi√§
+no permission to add users	admin	fi	ei oikeutta lis√§t√§ k√§ytt√§ji√§
+no permission to create groups	admin	fi	ei oikeutta luoda ryhmi√§
+note: ssl available only if php is compiled with curl support	admin	fi	Huomaa: SSL on k√§ytett√§viss√§ vain jos PHP on k√§√§nnetty curl-tuella
 order	admin	fi	Tilaa
-outbound	admin	fi	l‰htev‰
-passthrough	admin	fi	l‰pikulku
+outbound	admin	fi	l√§htev√§
+passthrough	admin	fi	l√§pikulku
 password for smtp-authentication	admin	fi	Salasana SMTP-tunnistukselle
 path information	admin	fi	Polut
 peer server list	admin	fi	Rinnakkaispalvelinluettelo
 peer servers	admin	fi	Rinnakkaispalvelimet
-percent of users that logged out	admin	fi	Uloskirjautuneiden k‰ytt‰jien osuus
-percent this user has logged out	admin	fi	T‰m‰ k‰ytt‰j‰ on lopettanut istunnon
-permission denied	admin	fi	P‰‰sy estetty
+percent of users that logged out	admin	fi	Uloskirjautuneiden k√§ytt√§jien osuus
+percent this user has logged out	admin	fi	T√§m√§ k√§ytt√§j√§ on lopettanut istunnon
+permission denied	admin	fi	P√§√§sy estetty
 permissions	admin	fi	Oikeudet
-permissions this group has	admin	fi	T‰m‰n ryhm‰n oikeudet
+permissions this group has	admin	fi	T√§m√§n ryhm√§n oikeudet
 phpinfo	admin	fi	PHP-tiedot
 please enter a name	admin	fi	Anna nimi
 please enter a name for that server !	admin	fi	Anna palvelimen nimi!
-please run setup to become current	admin	fi	Aja setup-sovellus p‰ivitt‰‰ksesi
+please run setup to become current	admin	fi	Aja setup-sovellus p√§ivitt√§√§ksesi
 please select	admin	fi	Valitse
 postfix with ldap	admin	fi	Postfix ja LDAP
 preferences	admin	fi	Asetukset
-primary group	admin	fi	ensisijainen ryhm‰
+primary group	admin	fi	ensisijainen ryhm√§
 qmaildotmode	admin	fi	qmaildotmode
 quota settings	admin	fi	Rajoituksen asetukset
-quota size in mbyte	admin	fi	Rajoituksen koko Mb:n‰
+quota size in mbyte	admin	fi	Rajoituksen koko Mb:n√§
 re-enter password	admin	fi	Salasana uudestaan
-read this list of methods.	admin	fi	Lue t‰m‰ metodien lista
-register application hooks	admin	fi	Rekisterˆi sovelluskoukut
+read this list of methods.	admin	fi	Lue t√§m√§ metodien lista
+register application hooks	admin	fi	Rekister√∂i sovelluskoukut
 remove	admin	fi	Poista
-remove all users from this group	admin	fi	Poista k‰ytt‰j‰t ryhm‰st‰
-remove all users from this group ?	admin	fi	Poista k‰ytt‰j‰t ryhm‰st‰ ?
-return to admin mainscreen	admin	fi	takaisin hallinnan p‰‰n‰yttˆˆn
+remove all users from this group	admin	fi	Poista k√§ytt√§j√§t ryhm√§st√§
+remove all users from this group ?	admin	fi	Poista k√§ytt√§j√§t ryhm√§st√§ ?
+return to admin mainscreen	admin	fi	takaisin hallinnan p√§√§n√§ytt√∂√∂n
 return to view account	admin	fi	Palaa tunnuksen tietoihin
-route all mails to	admin	fi	Reitit‰ kaikki viestit
+route all mails to	admin	fi	Reitit√§ kaikki viestit
 run asynchronous services	admin	fi	Suorita ajastetut palvelut
 save the category	admin	fi	tallenna kategoria
 save the category and return back to the list	admin	fi	tallenna kategoria ja palaa luetteloon
 saves the changes made and leaves	admin	fi	Tallenna muutokset ja poistu
 search accounts	admin	fi	Etsi tunnuksia
 search categories	admin	fi	Etsi kategoroita
-search groups	admin	fi	Etsi ryhmi‰
+search groups	admin	fi	Etsi ryhmi√§
 search peer servers	admin	fi	Etsi rinnakkaispalvelimia
 security	admin	fi	Tietoturva
-select group managers	admin	fi	Valitse ryhmien yll‰pit‰j‰t
-select permissions this group will have	admin	fi	Valitse ryhm‰lle oikeudet
-select the parent category. if this is a main category select no category	admin	fi	Valitse yl‰kategoria. Jos t‰m‰ on p‰‰kategoria, valitse EI KATEGORIAA
-select users for inclusion	admin	fi	Valitse mukaan otettavat k‰ytt‰j‰t
-select where you want to store/retrieve filesystem information	admin	fi	Valitse minne haluat tallentaa/noutaa tiedostoj‰rjestelm‰n tiedot
-select where you want to store/retrieve user accounts	admin	fi	Valitse minne haluat tallentaa/noutaa k‰ytt‰j‰tunnukset
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fi	Valitse miss‰ sovellus sijaitsee tyˆkalupalkissa, alimmaisesta (vasen) ylimm‰iseen (oikea)
+select group managers	admin	fi	Valitse ryhmien yll√§pit√§j√§t
+select permissions this group will have	admin	fi	Valitse ryhm√§lle oikeudet
+select the parent category. if this is a main category select no category	admin	fi	Valitse yl√§kategoria. Jos t√§m√§ on p√§√§kategoria, valitse EI KATEGORIAA
+select users for inclusion	admin	fi	Valitse mukaan otettavat k√§ytt√§j√§t
+select where you want to store/retrieve filesystem information	admin	fi	Valitse minne haluat tallentaa/noutaa tiedostoj√§rjestelm√§n tiedot
+select where you want to store/retrieve user accounts	admin	fi	Valitse minne haluat tallentaa/noutaa k√§ytt√§j√§tunnukset
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fi	Valitse miss√§ sovellus sijaitsee ty√∂kalupalkissa, alimmaisesta (vasen) ylimm√§iseen (oikea)
 selectbox	admin	fi	Valintalista
-server %1 has been updated	admin	fi	Palvelin %1 p‰ivitetty
+server %1 has been updated	admin	fi	Palvelin %1 p√§ivitetty
 server list	admin	fi	Palvelimet
 server password	admin	fi	Palvelimen salasana
 server type(mode)	admin	fi	Palvelimen tyyppi(moodi)
 server url	admin	fi	Palvelimen URL
-server username	admin	fi	Palvelimen k‰ytt‰j‰tunnus
+server username	admin	fi	Palvelimen k√§ytt√§j√§tunnus
 set preference values.	admin	fi	Tee asetukset.
-should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	N‰ytet‰‰nkˆ kirjautumisn‰ytˆll‰ kielien valintalista (k‰yt‰nnˆllinen esittelyj‰ varten) ?
-show 'powered by' logo on	admin	fi	'T‰m‰ on' -logon paikka
-show access log	admin	fi	N‰yt‰ k‰yttˆloki
-show an asterisk (*) to mark untranslated strings	admin	fi	N‰yt‰ t‰hti (*) merkki k‰‰nt‰m‰ttˆn osion kohdalla
-show current action	admin	fi	N‰yt‰ viimeisin toimi
-show error log	admin	fi	N‰yt‰ virheloki
-show phpinfo()	admin	fi	N‰yt‰ phpinfo()
-show session ip address	admin	fi	N‰yt‰ istunnon IP-osoite
+should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	N√§ytet√§√§nk√∂ kirjautumisn√§yt√∂ll√§ kielien valintalista (k√§yt√§nn√∂llinen esittelyj√§ varten) ?
+show 'powered by' logo on	admin	fi	'T√§m√§ on' -logon paikka
+show access log	admin	fi	N√§yt√§ k√§ytt√∂loki
+show an asterisk (*) to mark untranslated strings	admin	fi	N√§yt√§ t√§hti (*) merkki k√§√§nt√§m√§tt√∂n osion kohdalla
+show current action	admin	fi	N√§yt√§ viimeisin toimi
+show error log	admin	fi	N√§yt√§ virheloki
+show phpinfo()	admin	fi	N√§yt√§ phpinfo()
+show session ip address	admin	fi	N√§yt√§ istunnon IP-osoite
 site	admin	fi	Palvelu
 site configuration	common	fi	Palvelun asetukset
 soap	admin	fi	SOAP
-sorry, that group name has already been taken.	admin	fi	Valitan, ryhm‰n nimi on jo k‰ytˆss‰.
-sorry, the above users are still a member of the group %1	admin	fi	Valitan, n‰m‰ k‰ytt‰j‰t kuuluvat viel‰ ryhm‰‰n %1
-sorry, the follow users are still a member of the group %1	admin	fi	Valitan, n‰m‰ k‰ytt‰j‰t kuuluvat viel‰ ryhm‰‰n %1
+sorry, that group name has already been taken.	admin	fi	Valitan, ryhm√§n nimi on jo k√§yt√∂ss√§.
+sorry, the above users are still a member of the group %1	admin	fi	Valitan, n√§m√§ k√§ytt√§j√§t kuuluvat viel√§ ryhm√§√§n %1
+sorry, the follow users are still a member of the group %1	admin	fi	Valitan, n√§m√§ k√§ytt√§j√§t kuuluvat viel√§ ryhm√§√§n %1
 sort the entries	admin	fi	lajittele kohteet
 ssl	admin	fi	ssl
 standard	admin	fi	vakio
 standard imap server	admin	fi	standardi IMAP palvelin
 standard pop3 server	admin	fi	standardi POP3 palvelin
 standard smtp-server	admin	fi	standardi SMTP palvelin
-start testjob!	admin	fi	K‰ynnist‰ TestiTyˆ!
-submit changes	admin	fi	L‰het‰ muutokset
+start testjob!	admin	fi	K√§ynnist√§ TestiTy√∂!
+submit changes	admin	fi	L√§het√§ muutokset
 submit the search string	admin	fi	Hae merkkijonoa
 subtype	admin	fi	Alamuoto
 template selection	admin	fi	Pohjan valinta
 text entry	admin	fi	Tekstille
-that application name already exists.	admin	fi	Sovelluksen nimi on jo k‰ytˆss‰.
-that application order must be a number.	admin	fi	J‰rjestyksen pit‰‰ olla numero.
-that loginid has already been taken	admin	fi	K‰ytt‰j‰tunnus on jo k‰ytˆss‰
-that name has been used already	admin	fi	Nimi on jo k‰ytˆss‰
-that server name has been used already !	admin	fi	Palvelimen nimi on jo k‰ytˆss‰
+that application name already exists.	admin	fi	Sovelluksen nimi on jo k√§yt√∂ss√§.
+that application order must be a number.	admin	fi	J√§rjestyksen pit√§√§ olla numero.
+that loginid has already been taken	admin	fi	K√§ytt√§j√§tunnus on jo k√§yt√∂ss√§
+that name has been used already	admin	fi	Nimi on jo k√§yt√∂ss√§
+that server name has been used already !	admin	fi	Palvelimen nimi on jo k√§yt√∂ss√§
 the api is current	admin	fi	API on ajan tasalla
-the api requires an upgrade	admin	fi	API vaatii p‰ivityksen
-the groups must include the primary group	admin	fi	Ensisijainen ryhm‰ on valittava
-the login and password can not be the same	admin	fi	K‰ytt‰j‰tunnus ja salasana eiv‰t voi olla samat
-the loginid can not be more then 8 characters	admin	fi	K‰ytt‰j‰tunnus voi olla vain 8 merkki‰ pitk‰
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fi	nime‰ k‰ytet‰‰n sis‰isesti (<= 20 merkki‰), muuttaminen voi h‰vitt‰‰ olemassa olevia tietoja
-the testjob sends you a mail everytime it is called.	admin	fi	TestiTyˆ l‰hett‰‰ sinulle s‰hkˆpostiviestin aina kun se ajetaan.
-the text displayed to the user	admin	fi	teksti n‰ytet‰‰n k‰ytt‰j‰lle
-the two passwords are not the same	admin	fi	Salasanat eiv‰t t‰sm‰‰
-the users bellow are still members of group %1	admin	fi	n‰m‰ k‰ytt‰j‰t kuuluvat viel‰ ryhm‰‰n %1
-there already is a group with this name. userid's can not have the same name as a groupid	admin	fi	T‰m‰n niminen ryhm‰ on jo olemassa. Saman nimisi‰ ryhmi‰ ja k‰ytt‰ji‰ ei saa olla
+the api requires an upgrade	admin	fi	API vaatii p√§ivityksen
+the groups must include the primary group	admin	fi	Ensisijainen ryhm√§ on valittava
+the login and password can not be the same	admin	fi	K√§ytt√§j√§tunnus ja salasana eiv√§t voi olla samat
+the loginid can not be more then 8 characters	admin	fi	K√§ytt√§j√§tunnus voi olla vain 8 merkki√§ pitk√§
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fi	nime√§ k√§ytet√§√§n sis√§isesti (<= 20 merkki√§), muuttaminen voi h√§vitt√§√§ olemassa olevia tietoja
+the testjob sends you a mail everytime it is called.	admin	fi	TestiTy√∂ l√§hett√§√§ sinulle s√§hk√∂postiviestin aina kun se ajetaan.
+the text displayed to the user	admin	fi	teksti n√§ytet√§√§n k√§ytt√§j√§lle
+the two passwords are not the same	admin	fi	Salasanat eiv√§t t√§sm√§√§
+the users bellow are still members of group %1	admin	fi	n√§m√§ k√§ytt√§j√§t kuuluvat viel√§ ryhm√§√§n %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	fi	T√§m√§n niminen ryhm√§ on jo olemassa. Saman nimisi√§ ryhmi√§ ja k√§ytt√§ji√§ ei saa olla
 they must be removed before you can continue	admin	fi	Ne on poistettava ennen kuin voit jatkaa
 this application is current	admin	fi	Sovellus on ajan tasalla
-this application requires an upgrade	admin	fi	Sovellus vaatii p‰ivityksen
-this category is currently being used by applications as a parent category	admin	fi	Sovellus k‰ytt‰‰ t‰t‰ kategoriaa yl‰kategoriana.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	fi	Kuinka monta sekuntia sovelluksen tilatietoa s‰ilytet‰‰n (oletus: 86400 = 1 vrk)
+this application requires an upgrade	admin	fi	Sovellus vaatii p√§ivityksen
+this category is currently being used by applications as a parent category	admin	fi	Sovellus k√§ytt√§√§ t√§t√§ kategoriaa yl√§kategoriana.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	fi	Kuinka monta sekuntia sovelluksen tilatietoa s√§ilytet√§√§n (oletus: 86400 = 1 vrk)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fi	Kuinka monta sekuntia on istunnon aikakatkaisu (oletus: 14400 = 4 tuntia)
 times	admin	fi	Ajat
-top	admin	fi	ylˆs
+top	admin	fi	yl√∂s
 total records	admin	fi	Tietueita
 trust level	admin	fi	Luottamuksen taso
 trust relationship	admin	fi	Luottosuhde
-type '%1' already exists !!!	admin	fi	tyyppi '%1‰ on jo olemassa !!!
-type of customfield	admin	fi	Oman kent‰n tyyppi
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fi	Windows -ymp‰ristˆss‰ yll‰pit‰j‰n on asennettava asyncservice %1k‰sin%2 tai k‰ytett‰v‰ fallback -tilaa. T‰llˆin tˆiden suoritustarve tarkistetaan vain kun eGroupwarea k‰ytet‰‰n.
-use cookies to pass sessionid	admin	fi	K‰yt‰ ev‰steit‰ (cookie) istuntotunnuksen v‰litykseen
-use pure html compliant code (not fully working yet)	admin	fi	K‰yt‰ HTML yhteensopivuustilaa (ei toimi viel‰ t‰ysin)
-use theme	admin	fi	K‰yt‰ teemaa
-user accounts	admin	fi	K‰ytt‰j‰tunnukset
-user data	common	fi	K‰ytt‰j‰n data
-user for smtp-authentication (leave it empty if no auth required)	admin	fi	SMTP -k‰ytt‰j‰tunnus (tyhj‰, jos ei k‰ytet‰)
-user groups	admin	fi	K‰ytt‰j‰ryhm‰t
-userdata	admin	fi	k‰ytt‰j‰n data
-users choice	admin	fi	K‰ytt‰j‰ valitsee
-view access log	admin	fi	N‰yt‰ k‰yttˆloki
-view account	admin	fi	N‰yt‰ tunnus
-view category	admin	fi	N‰yt‰ kategoria
-view error log	admin	fi	N‰yt‰ virheloki
-view sessions	admin	fi	N‰yt‰ istunnot
-view this user	admin	fi	n‰yt‰ t‰m‰ k‰ytt‰j‰
-view user account	admin	fi	N‰yt‰ tunnus
-who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirret‰‰n KAIKKI poistetun k‰ytt‰j‰n tietueet?
-would you like egroupware to cache the egw info array ?	admin	fi	S‰ilytet‰‰nkˆ egw info -rakenne v‰limuistissa?
-would you like egroupware to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko eGroupWare:sta uutta versiota<br>kun p‰‰k‰ytt‰j‰ kirjautuu j‰rjestelm‰‰n?
-would you like egroupware to check for new application versions when admins login ?	admin	fi	Haluatko, ett‰ eGroupWare etsii uusia versioita sovelluksista p‰‰k‰ytt‰j‰n kirjautuessa ?
+type '%1' already exists !!!	admin	fi	tyyppi '%1√§ on jo olemassa !!!
+type of customfield	admin	fi	Oman kent√§n tyyppi
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fi	Windows -ymp√§rist√∂ss√§ yll√§pit√§j√§n on asennettava asyncservice %1k√§sin%2 tai k√§ytett√§v√§ fallback -tilaa. T√§ll√∂in t√∂iden suoritustarve tarkistetaan vain kun eGroupwarea k√§ytet√§√§n.
+use cookies to pass sessionid	admin	fi	K√§yt√§ ev√§steit√§ (cookie) istuntotunnuksen v√§litykseen
+use pure html compliant code (not fully working yet)	admin	fi	K√§yt√§ HTML yhteensopivuustilaa (ei toimi viel√§ t√§ysin)
+use theme	admin	fi	K√§yt√§ teemaa
+user accounts	admin	fi	K√§ytt√§j√§tunnukset
+user data	common	fi	K√§ytt√§j√§n data
+user for smtp-authentication (leave it empty if no auth required)	admin	fi	SMTP -k√§ytt√§j√§tunnus (tyhj√§, jos ei k√§ytet√§)
+user groups	admin	fi	K√§ytt√§j√§ryhm√§t
+userdata	admin	fi	k√§ytt√§j√§n data
+users choice	admin	fi	K√§ytt√§j√§ valitsee
+view access log	admin	fi	N√§yt√§ k√§ytt√∂loki
+view account	admin	fi	N√§yt√§ tunnus
+view category	admin	fi	N√§yt√§ kategoria
+view error log	admin	fi	N√§yt√§ virheloki
+view sessions	admin	fi	N√§yt√§ istunnot
+view this user	admin	fi	n√§yt√§ t√§m√§ k√§ytt√§j√§
+view user account	admin	fi	N√§yt√§ tunnus
+who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirret√§√§n KAIKKI poistetun k√§ytt√§j√§n tietueet?
+would you like egroupware to cache the egw info array ?	admin	fi	S√§ilytet√§√§nk√∂ egw info -rakenne v√§limuistissa?
+would you like egroupware to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko eGroupWare:sta uutta versiota<br>kun p√§√§k√§ytt√§j√§ kirjautuu j√§rjestelm√§√§n?
+would you like egroupware to check for new application versions when admins login ?	admin	fi	Haluatko, ett√§ eGroupWare etsii uusia versioita sovelluksista p√§√§k√§ytt√§j√§n kirjautuessa ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	fi	Ladataanko uudet kielitiedostot automaattisesti (kirjauduttaessa) ?
-would you like to show each application's upgrade status ?	admin	fi	N‰ytet‰‰nkˆ kunkin sovelluksen p‰ivitystilanne?
+would you like to show each application's upgrade status ?	admin	fi	N√§ytet√§√§nk√∂ kunkin sovelluksen p√§ivitystilanne?
 xml-rpc	admin	fi	XML-RPC
-you have entered an invalid expiration date	admin	fi	Vanhenemisp‰iv‰ ei kelpaa
-you have to enter a name, to create a new field!!!	admin	fi	Sinun pit‰‰ antaa nimi luodaksesi kentt‰!!!
-you have to enter a name, to create a new type!!!	admin	fi	Sinun pit‰‰ antaa nimi luodaksesi tyyppi!!!
-you must add at least 1 permission or group to this account	admin	fi	Lis‰‰ tunnukseen ainakin yksi oikeus tai ryhm‰
-you must enter a group name.	admin	fi	Anna ryhm‰n nimi.
+you have entered an invalid expiration date	admin	fi	Vanhenemisp√§iv√§ ei kelpaa
+you have to enter a name, to create a new field!!!	admin	fi	Sinun pit√§√§ antaa nimi luodaksesi kentt√§!!!
+you have to enter a name, to create a new type!!!	admin	fi	Sinun pit√§√§ antaa nimi luodaksesi tyyppi!!!
+you must add at least 1 permission or group to this account	admin	fi	Lis√§√§ tunnukseen ainakin yksi oikeus tai ryhm√§
+you must enter a group name.	admin	fi	Anna ryhm√§n nimi.
 you must enter a lastname	admin	fi	Anna sukunimi
-you must enter a loginid	admin	fi	Anna k‰ytt‰j‰tunnus
+you must enter a loginid	admin	fi	Anna k√§ytt√§j√§tunnus
 you must enter an application name and title.	admin	fi	Anna sovelluksen nimi ja otsikko.
 you must enter an application name.	admin	fi	Anna sovelluksen nimi.
 you must enter an application title.	admin	fi	Anna sovelluksen otsikko.
 you must select a file type	admin	fi	Anna tiedostotyyppi
-you must select at least one group member.	admin	fi	Valitse v‰hint‰‰ yksi ryhm‰n j‰sen.
+you must select at least one group member.	admin	fi	Valitse v√§hint√§√§ yksi ryhm√§n j√§sen.
 you will need to remove the subcategories before you can delete this category	admin	fi	Alikategoriat on poistettava ennen kuin voit poistaa luokan!
 your session could not be verified.	admin	fi	Istuntoasi ei voitu varmentaa.

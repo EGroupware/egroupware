@@ -1,17 +1,17 @@
 %1 does not exist !!!	setup	it	%1 non esiste !!!
-%1 is %2%3 !!!	setup	it	%1 Ë %2%3 !!!
+%1 is %2%3 !!!	setup	it	%1 √® %2%3 !!!
 (searching accounts and changing passwords)	setup	it	(ricerca di account e variazione password)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	it	*** NON aggiornare il tuo database tramite setup, perchÈ l'aggiornamento potrebbe essere interrotto dal max_execution_time, che lascerebbe il tuo DB in uno stato irrecuperabile (dati persi) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	it	*** Devi effettuare manualmente le modifiche al tuo php.ini (di solito in /etc su linux) perchÈ eGW sia completamente funzionante !!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	it	*** NON aggiornare il tuo database tramite setup, perch√© l'aggiornamento potrebbe essere interrotto dal max_execution_time, che lascerebbe il tuo DB in uno stato irrecuperabile (dati persi) !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	it	*** Devi effettuare manualmente le modifiche al tuo php.ini (di solito in /etc su linux) perch√© eGW sia completamente funzionante !!!
 00 (disable)	setup	it	00 (disabilitato/ consigliato)
 13 (ntp)	setup	it	13 (ntp)
 80 (http)	setup	it	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	it	<b>Questo creer‡ 1 account admin e 3 account demo</b>I nome utente/password sono: demo/guest, demo2/guest e demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	it	<b>Questo creer√† 1 account admin e 3 account demo</b>I nome utente/password sono: demo/guest, demo2/guest e demo3/guest.
 <br /><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	it	<br /><center>L'importazione &egrave; stata completata! Cliccare <a href="index.php">qui</a> per titornare al setup </center>
 accounts existing	setup	it	Esistono Account
 actions	setup	it	Azioni
 add a domain	setup	it	Aggiungi un dominio
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	it	Aggiungi gli utenti auto-creati a questo gruppo (sar‡ utilizzato 'Default'se il campo Ë vuoto)
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	it	Aggiungi gli utenti auto-creati a questo gruppo (sar√† utilizzato 'Default'se il campo √® vuoto)
 additional settings	setup	it	Impostazioni aggiuntive
 admin first name	setup	it	Nome amministratore
 admin last name	setup	it	Cognome amministratore
@@ -24,7 +24,7 @@ after retrieving the file, put it into place as the header.inc.php.  then, click
 all applications	setup	it	tutte le applicazioni
 all users	setup	it	Tutti gli utenti
 analysis	setup	it	Analisi
-and reload your webserver, so the above changes take effect !!!	setup	it	E riavvia il tuo webserver, cosÏ che le modifiche abbiano effetto !!!
+and reload your webserver, so the above changes take effect !!!	setup	it	E riavvia il tuo webserver, cos√¨ che le modifiche abbiano effetto !!!
 app details	setup	it	Dettagli applicazione
 app install/remove/upgrade	setup	it	installa/rimuovi/aggiorna applicazione
 app process	setup	it	processo Applicazione
@@ -47,18 +47,18 @@ available version	setup	it	Versione Disponibile
 back to the previous screen	setup	it	Indietro alla schermata precedente
 back to user login	setup	it	Indietro al Login Utente
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	it	ma noi <u>consigliamo vivamente di salvare</u> le tue tabelle nel caso in cui la procedura causidanni ai tuoi dati.<br /><strong>Queste procedure automatizzate possono distruggere molto facilmente i tuoi dati.</strong>
-because an application it depends upon was upgraded	setup	it	perchÈ un'applicazione da cui dipende Ë stata aggiornata
-because it depends upon	setup	it	perchÈ dipende da
-because it is not a user application, or access is controlled via acl	setup	it	perchÈ non si tratta di un'applicazione dell'utente, o l'accesso Ë controllato tramite ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	it	perrchÈ richiede un'installazione manuale delle tabelle, <br />o la definizione delle tabelle non Ë corretta
-because it was manually disabled	setup	it	perchÈ Ë stato disabilitato manualmente
+because an application it depends upon was upgraded	setup	it	perch√© un'applicazione da cui dipende √® stata aggiornata
+because it depends upon	setup	it	perch√© dipende da
+because it is not a user application, or access is controlled via acl	setup	it	perch√© non si tratta di un'applicazione dell'utente, o l'accesso √® controllato tramite ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	it	perrch√© richiede un'installazione manuale delle tabelle, <br />o la definizione delle tabelle non √® corretta
+because it was manually disabled	setup	it	perch√© √® stato disabilitato manualmente
 because of a failed upgrade or install	setup	it	a causa di un aggiornamento o installazione fallita
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	it	poich&eacute; &egrave; avvenuto un aggiornamento non corretto, o il database &egrave; pi&ugrave; recente della versione installata di questa applicazione
 because the enable flag for this app is set to 0, or is undefined	setup	it	poich&eacute; il valore di abilitazione di questa applicazione &egrave; impostato a 0, o &egrave; non definito
 bottom	setup	it	in fondo
 cancel	setup	it	Annulla
 change system-charset	setup	it	Cambia set di caratteri
-charset	setup	it	iso-8859-15
+charset	setup	it	utf-8
 check installation	setup	it	Controlla installazione
 check ip address of all sessions	setup	it	controlla l'indirizzo ip di tutte le sessioni
 checking php.ini	setup	it	Esecuzione controllo di php.ini
@@ -88,7 +88,7 @@ created	setup	it	creato
 created header.inc.php!	setup	it	Header.inc.php creato!
 creating tables	setup	it	Creazione Tabelle
 current system-charset	setup	it	Set di caratteri attuale
-current system-charset is %1, click %2here%3 to change it.	setup	it	Il set di caratteri attuale Ë %1, clicca %2qui%3 per cambiarlo.
+current system-charset is %1, click %2here%3 to change it.	setup	it	Il set di caratteri attuale √® %1, clicca %2qui%3 per cambiarlo.
 current version	setup	it	Versione attuale
 currently installed languages: %1 <br />	setup	it	Lingue attualmente installate: %1 <br />
 database successfully converted from '%1' to '%2'	setup	it	Database convertito con successo da '%1' a '%2'
@@ -168,7 +168,7 @@ new	setup	it	Nuovo
 no	setup	it	No
 no accounts existing	setup	it	Nessun account esistente
 no algorithms available	setup	it	nessun algoritmo disponibile
-no modes available	setup	it	nessuna modalit‡ disponibile
+no modes available	setup	it	nessuna modalit√† disponibile
 not	setup	it	non
 not complete	setup	it	non completo
 not completed	setup	it	Non Completato
@@ -179,7 +179,7 @@ ok	setup	it	OK
 once the database is setup correctly	setup	it	Una volta che il database sar&agrave; impostato correttamente
 one month	setup	it	un mese
 one week	setup	it	una settimana
-only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono gi‡ presenti nel database
+only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono gi√† presenti nel database
 only add new phrases	setup	it	Aggiungi solo le nuove frasi
 or	setup	it	o
 password of db user	setup	it	Password dell'utente del DB
@@ -239,7 +239,7 @@ sessions type	setup	it	Tipo sessione
 set	setup	it	imposta
 settings	setup	it	Impostazioni
 setup	setup	it	Setup
-setup main menu	setup	it	Men˘ Principale Setup
+setup main menu	setup	it	Men√π Principale Setup
 some or all of its tables are missing	setup	it	Alcune o tutte delle sue tabelle sono mancanti
 status	setup	it	Stato
 step %1 - admin account	setup	it	Passaggio %1 - Gestione Account
@@ -257,7 +257,7 @@ text entry	setup	it	Voce di testo
 the file	setup	it	il file
 the tables	setup	it	le tabelle
 there was a problem tring to connect to your ldap server. <br />please check your ldap server configuration	setup	it	Si &egrave; verificato un problema nel contattare il tuo server LDAP. <br />Per favore controlla la configurazione del tuo server LDAP
-this might take a while, please wait ...	setup	it	Questa operazione puÚ richiedere del tempo, prego attendere...
+this might take a while, please wait ...	setup	it	Questa operazione pu√≤ richiedere del tempo, prego attendere...
 this program will help you upgrade or install different languages for egroupware	setup	it	Questo programma ti aiuter&agrave; ad aggiornare o ad installare lingue differenti per eGroupWare
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	it	Questa sezione ti aiuter&agrave; ad esportare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	it	Questa sezione ti aiuter&agrave; ad importare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
@@ -274,12 +274,12 @@ upgraded	setup	it	aggiornato
 upgrading tables	setup	it	Aggiornamento Tabelle
 use cookies to pass sessionid	setup	it	utilizza i cookie per passare l'id di sessione
 version	setup	it	versione
-version mismatch	setup	it	Incompatibilit‡ versione
+version mismatch	setup	it	Incompatibilit√† versione
 view	setup	it	Vedi
 warning!	setup	it	Attenzione!
 we will automatically update your tables/records to %1	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
 write config	setup	it	Scrivi configurazione
-yes	setup	it	SÏ
+yes	setup	it	S√¨
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di eGroupWare.<br />Queste versioni non sono pi&ugrave; supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br /> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br />e poi aggiornare da l&igrave; usando questa versione.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version 4.1.0	setup	it	Sembra che tu stia usando una vecchia versione di PHP <br />&Egrave raccomandabile che tu esegua un aggiornamento ad una versione recente. <br />Vecchie versioni di PHP potrebbero non far funzionare correttamenterun eGroupWare, o potrebbero non farlo funzionare per nulla. <br /><br />Per favore aggiorna almeno alla versione 4.1.0
 you appear to be running version %1 of egroupware	setup	it	Sembra che tu sta utilizzando la versione %1 di eGroupWare

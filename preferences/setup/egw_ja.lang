@@ -1,30 +1,30 @@
-change password	preferences	ja	¥Ñ¥¹¥ï¡¼¥ÉÊÑ¹¹
-change your password	preferences	ja	¥Ñ¥¹¥ï¡¼¥ÉÊÑ¹¹
-change your profile	preferences	ja	¥×¥í¥Õ¥£¡¼¥ëÊÑ¹¹
-change your settings	preferences	ja	ÀßÄêÊÑ¹¹
-country selection	preferences	ja	¹ñ¤ÎÁªÂò
-currency	preferences	ja	ÄÌ²ß
-date format	preferences	ja	ÆüÉÕ½ñ¼°
-default application	preferences	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¡Ê´ûÄê¡Ë
-edit custom fields	preferences	ja	¥«¥¹¥¿¥à¹àÌÜÄûÀµ
-enter your new password	preferences	ja	¿·¤·¤¤¥Ñ¥¹¥ï¡¼¥É¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
-icons and text	preferences	ja	¥¢¥¤¥³¥ó¤È¥Æ¥­¥¹¥È
-icons only	preferences	ja	¥¢¥¤¥³¥ó¤Î¤ß
-interface/template selection	preferences	ja	¥Æ¥ó¥×¥ì¡¼¥ÈÁªÂò
-language	preferences	ja	¸À¸ì
-max matches per page	preferences	ja	£±¥Ú¡¼¥¸ºÇÂç¹Ô¿ô
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	ja	¢¨Ãí°Õ¡§ÅÅ»Ò¥á¡¼¥ë¤Î¥Ñ¥¹¥ï¡¼¥É¤ÏÊÑ¹¹¤·¤Ş¤»¤ó¡£ÅÅ»Ò¥á¡¼¥ë¤Î¥Ñ¥¹¥ï¡¼¥É¤Ï¡¢¼êÆ°¤ÇÊÑ¹¹¤·¤Æ¤¯¤À¤µ¤¤¡£
+change password	preferences	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å¤‰æ›´
+change your password	preferences	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å¤‰æ›´
+change your profile	preferences	ja	ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«å¤‰æ›´
+change your settings	preferences	ja	è¨­å®šå¤‰æ›´
+country selection	preferences	ja	å›½ã®é¸æŠ
+currency	preferences	ja	é€šè²¨
+date format	preferences	ja	æ—¥ä»˜æ›¸å¼
+default application	preferences	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ï¼ˆæ—¢å®šï¼‰
+edit custom fields	preferences	ja	ã‚«ã‚¹ã‚¿ãƒ é …ç›®è¨‚æ­£
+enter your new password	preferences	ja	æ–°ã—ã„ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ä¸‹ã•ã„ã€‚
+icons and text	preferences	ja	ã‚¢ã‚¤ã‚³ãƒ³ã¨ãƒ†ã‚­ã‚¹ãƒˆ
+icons only	preferences	ja	ã‚¢ã‚¤ã‚³ãƒ³ã®ã¿
+interface/template selection	preferences	ja	ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆé¸æŠ
+language	preferences	ja	è¨€èª
+max matches per page	preferences	ja	ï¼‘ãƒšãƒ¼ã‚¸æœ€å¤§è¡Œæ•°
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	ja	â€»æ³¨æ„ï¼šé›»å­ãƒ¡ãƒ¼ãƒ«ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¯å¤‰æ›´ã—ã¾ã›ã‚“ã€‚é›»å­ãƒ¡ãƒ¼ãƒ«ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¯ã€æ‰‹å‹•ã§å¤‰æ›´ã—ã¦ãã ã•ã„ã€‚
 please, select a new theme	preferences	ja	Please, select a new theme
-re-enter your password	preferences	ja	¥Ñ¥¹¥ï¡¼¥É¤òºÆÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
-select different theme	preferences	ja	°Û¤Ê¤ë¥Æ¡¼¥Ş¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
-select one	preferences	ja	ÁªÂò¤·¤Æ²¼¤µ¤¤
-show current users on navigation bar	preferences	ja	¸½ºß¤Î¥æ¡¼¥¶¿ô¤òÉ½¼¨¤¹¤ë¡£
-show navigation bar as	preferences	ja	¥Ê¥Ó¥²¡¼¥·¥ç¥ó
-show text on navigation icons	preferences	ja	¥Ê¥Ó¥²¡¼¥·¥ç¥ó¥¢¥¤¥³¥ó¤Ë¥Æ¥­¥¹¥ÈÉ½¼¨
-text only	preferences	ja	¥Æ¥­¥¹¥È¤Î¤ß
-theme (colors/fonts) selection	preferences	ja	¥Æ¡¼¥Ş¡Ê¿§¡¦¥Õ¥©¥ó¥È¡ËÁªÂò
-this server is located in the %1 timezone	preferences	ja	 ¥¿¥¤¥à¥¾¡¼¥ó
-time format	preferences	ja	»ş´Ö½ñ¼°
-use selectbox	preferences	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
-use text entry	preferences	ja	¥Æ¥­¥¹¥ÈÆşÎÏ
+re-enter your password	preferences	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å†å…¥åŠ›ã—ã¦ä¸‹ã•ã„ã€‚
+select different theme	preferences	ja	ç•°ãªã‚‹ãƒ†ãƒ¼ãƒã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚
+select one	preferences	ja	é¸æŠã—ã¦ä¸‹ã•ã„
+show current users on navigation bar	preferences	ja	ç¾åœ¨ã®ãƒ¦ãƒ¼ã‚¶æ•°ã‚’è¡¨ç¤ºã™ã‚‹ã€‚
+show navigation bar as	preferences	ja	ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³
+show text on navigation icons	preferences	ja	ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ã‚³ãƒ³ã«ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤º
+text only	preferences	ja	ãƒ†ã‚­ã‚¹ãƒˆã®ã¿
+theme (colors/fonts) selection	preferences	ja	ãƒ†ãƒ¼ãƒï¼ˆè‰²ãƒ»ãƒ•ã‚©ãƒ³ãƒˆï¼‰é¸æŠ
+this server is located in the %1 timezone	preferences	ja	 ã‚¿ã‚¤ãƒ ã‚¾ãƒ¼ãƒ³
+time format	preferences	ja	æ™‚é–“æ›¸å¼
+use selectbox	preferences	ja	ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹
+use text entry	preferences	ja	ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ›
 your current theme is: %1	preferences	ja	</b>

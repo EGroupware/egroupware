@@ -1,100 +1,100 @@
-%1 - %2 of %3 user accounts	admin	pt-br	%1 - %2 de %3 contas de usu·rios
-%1 - %2 of %3 user groups	admin	pt-br	%1 - %2 de %3 grupos de usu·rios
+%1 - %2 of %3 user accounts	admin	pt-br	%1 - %2 de %3 contas de usu√°rios
+%1 - %2 of %3 user groups	admin	pt-br	%1 - %2 de %3 grupos de usu√°rios
 %1 acl records of not (longer) existing accounts deleted.	admin	pt-br	%1 registro(s) ACL de contas inexistentes removido(s).
-%1 not found or not executable !!!	admin	pt-br	%1 n„o encontrado ou n„o-execut·vel !!!
-(default no, leave it off if you dont use it)	admin	pt-br	(padr„o N„o, deixe-o assim se vocÍ n„o o usa)
-(stored password will not be shown here)	admin	pt-br	(Senha salva n„o ser· exibida aqui)
+%1 not found or not executable !!!	admin	pt-br	%1 n√£o encontrado ou n√£o-execut√°vel !!!
+(default no, leave it off if you dont use it)	admin	pt-br	(padr√£o N√£o, deixe-o assim se voc√™ n√£o o usa)
+(stored password will not be shown here)	admin	pt-br	(Senha salva n√£o ser√° exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos] !!!)
 -  type	admin	pt-br	- tipo
-accesslog and bruteforce defense	admin	pt-br	Registro de acesso e defesa de ForÁa Bruta
+accesslog and bruteforce defense	admin	pt-br	Registro de acesso e defesa de For√ßa Bruta
 account active	admin	pt-br	Conta ativa
 account has been created	common	pt-br	A conta foi criada
 account has been deleted	common	pt-br	A conta foi removida
 account has been updated	common	pt-br	A conta foi atualizada
 account list	admin	pt-br	Lista de contas
-account permissions	admin	pt-br	Permissıes da conta
-account preferences	admin	pt-br	PreferÍncias da conta
-acl manager	admin	pt-br	AdministraÁ„o de Regras de Acesso (ACL)
-acl rights	common	pt-br	Permissıes de Acesso
-action	admin	pt-br	AÁ„o
+account permissions	admin	pt-br	Permiss√µes da conta
+account preferences	admin	pt-br	Prefer√™ncias da conta
+acl manager	admin	pt-br	Administra√ß√£o de Regras de Acesso (ACL)
+acl rights	common	pt-br	Permiss√µes de Acesso
+action	admin	pt-br	A√ß√£o
 activate wysiwyg-editor	admin	pt-br	ativar editor WYSIWYG
 add a category	admin	pt-br	adicionar uma categoria
 add a group	admin	pt-br	adicionar um grupo
 add a new account.	admin	pt-br	Adicionar uma nova conta.
 add a subcategory	admin	pt-br	adicionar uma subcategoria
-add a user	admin	pt-br	adicionar um usu·rio
+add a user	admin	pt-br	adicionar um usu√°rio
 add account	admin	pt-br	Adicionar uma conta
 add application	admin	pt-br	Adicionar um aplicativo
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pt-br	Adicionar usu·rios criados automaticamente para este grupo (o grupo 'Default' ser· tentado se este campo estiver vazio.)
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pt-br	Adicionar usu√°rios criados automaticamente para este grupo (o grupo 'Default' ser√° tentado se este campo estiver vazio.)
 add global category	admin	pt-br	Adicionar categoria global
 add global category for %1	admin	pt-br	Adicionar categoria global para %1
 add group	admin	pt-br	Adicionar grupo
 add new account	admin	pt-br	Adicionar nova conta
-add new application	admin	pt-br	Adicionar nova aplicaÁ„o
+add new application	admin	pt-br	Adicionar nova aplica√ß√£o
 add peer server	admin	pt-br	Adicionar servidor remoto
 add sub-category	admin	pt-br	Adicionar subcategoria
 admin email	admin	pt-br	Email do Administrador
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt-br	EndereÁos eletrÙnicos dos administradores (seprados por vÌrgula) a serem notificados em caso de bloqueio (em branco para n„o notificar)
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt-br	Endere√ßos eletr√¥nicos dos administradores (seprados por v√≠rgula) a serem notificados em caso de bloqueio (em branco para n√£o notificar)
 admin name	admin	pt-br	Nome do Administrador
-administration	admin	pt-br	AdministraÁ„o
+administration	admin	pt-br	Administra√ß√£o
 admins	admin	pt-br	Administradores
-advanced options	admin	pt-br	opÁıes avanÁadas
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt-br	ApÛs quantos erros de conex„o, a conta dever· ser bloqueada (padr„o 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pt-br	ApÛs quantos erros de conex„o, um endereÁo IP dever· ser bloqueado (padr„o 3)?
+advanced options	admin	pt-br	op√ß√µes avan√ßadas
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt-br	Ap√≥s quantos erros de conex√£o, a conta dever√° ser bloqueada (padr√£o 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pt-br	Ap√≥s quantos erros de conex√£o, um endere√ßo IP dever√° ser bloqueado (padr√£o 3)?
 aliases	admin	pt-br	Apelidos
-all records and account information will be lost!	admin	pt-br	Todos registros e informaÁıes de contas ser„o perdidos!
-all users	admin	pt-br	Todos usu·rios
-allow anonymous access to this app	admin	pt-br	Permitir acesso anÙnimo a esta aplicaÁ„o
-alternate email address	admin	pt-br	endereÁo de e-mail alternativo
-anonymous user	admin	pt-br	Usu·rio AnÙnimo
-anonymous user (not shown in list sessions)	admin	pt-br	Usu·rio AnÙnimo (n„o È exibido na lista de sessıes)
-anonymous user does not exist!	admin	pt-br	Usu·rio AnÙnimo n„o existe!
-anonymous user has no run-rights for the application!	admin	pt-br	Usu·rio AnÙnimo n„o tem acesso de execuÁ„o para este aplicativo!
-appearance	admin	pt-br	AparÍncia
+all records and account information will be lost!	admin	pt-br	Todos registros e informa√ß√µes de contas ser√£o perdidos!
+all users	admin	pt-br	Todos usu√°rios
+allow anonymous access to this app	admin	pt-br	Permitir acesso an√¥nimo a esta aplica√ß√£o
+alternate email address	admin	pt-br	endere√ßo de e-mail alternativo
+anonymous user	admin	pt-br	Usu√°rio An√¥nimo
+anonymous user (not shown in list sessions)	admin	pt-br	Usu√°rio An√¥nimo (n√£o √© exibido na lista de sess√µes)
+anonymous user does not exist!	admin	pt-br	Usu√°rio An√¥nimo n√£o existe!
+anonymous user has no run-rights for the application!	admin	pt-br	Usu√°rio An√¥nimo n√£o tem acesso de execu√ß√£o para este aplicativo!
+appearance	admin	pt-br	Apar√™ncia
 application	admin	pt-br	Aplicativo
 application name	admin	pt-br	Nome do Aplicativo
-application title	admin	pt-br	TÌtulo do Aplicativo
+application title	admin	pt-br	T√≠tulo do Aplicativo
 applications	admin	pt-br	Aplicativos
 applications list	admin	pt-br	Lista de Aplicativos
-applies the changes	admin	pt-br	aplicar as alteraÁıes
-are you sure you want to delete the application %1 ?	admin	pt-br	VocÍ tem certeza que deseja remover o aplicativo %1 ?
-are you sure you want to delete this account ?	admin	pt-br	VocÍ tem certeza que deseja remover esta conta?
-are you sure you want to delete this application ?	admin	pt-br	VocÍ tem certeza que deseja remover este aplicativo?
-are you sure you want to delete this category ?	common	pt-br	VocÍ tem certeza que deseja remover esta categoria?
-are you sure you want to delete this global category ?	admin	pt-br	VocÍ tem certeza que deseja remover esta categoria global?
-are you sure you want to delete this group ?	admin	pt-br	VocÍ tem certeza que deseja remover este grupo?
-are you sure you want to delete this server?	admin	pt-br	VocÍ tem certeza que deseja remover este servidor?
-are you sure you want to kill this session ?	admin	pt-br	VocÍ tem certeza que deseja terminar esta seÁ„o?
-async services last executed	admin	pt-br	⁄ltima execuÁ„o dos ServiÁos AssÌncronos
-asynchronous timed services	admin	pt-br	ServiÁos AssÌncronos agendados
-asyncservices not yet installed or other error (%1) !!!	admin	pt-br	ServiÁos AssÌncronos ainda n„o est„o instalados, ou outro erro n„o definido.
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt-br	Tentar usar mimetype correto para FTP ao invÈs do padr„o 'application/octet-stream'
+applies the changes	admin	pt-br	aplicar as altera√ß√µes
+are you sure you want to delete the application %1 ?	admin	pt-br	Voc√™ tem certeza que deseja remover o aplicativo %1 ?
+are you sure you want to delete this account ?	admin	pt-br	Voc√™ tem certeza que deseja remover esta conta?
+are you sure you want to delete this application ?	admin	pt-br	Voc√™ tem certeza que deseja remover este aplicativo?
+are you sure you want to delete this category ?	common	pt-br	Voc√™ tem certeza que deseja remover esta categoria?
+are you sure you want to delete this global category ?	admin	pt-br	Voc√™ tem certeza que deseja remover esta categoria global?
+are you sure you want to delete this group ?	admin	pt-br	Voc√™ tem certeza que deseja remover este grupo?
+are you sure you want to delete this server?	admin	pt-br	Voc√™ tem certeza que deseja remover este servidor?
+are you sure you want to kill this session ?	admin	pt-br	Voc√™ tem certeza que deseja terminar esta se√ß√£o?
+async services last executed	admin	pt-br	√öltima execu√ß√£o dos Servi√ßos Ass√≠ncronos
+asynchronous timed services	admin	pt-br	Servi√ßos Ass√≠ncronos agendados
+asyncservices not yet installed or other error (%1) !!!	admin	pt-br	Servi√ßos Ass√≠ncronos ainda n√£o est√£o instalados, ou outro erro n√£o definido.
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt-br	Tentar usar mimetype correto para FTP ao inv√©s do padr√£o 'application/octet-stream'
 attribute accountstatus explained	admin	pt-br	Isto trata o atributo <b><i>-accountStatus-</i></b> do esquema do QMAIL.
-attribute mail explained	admin	pt-br	Isto trata o atributo <b><i>-mail-</i></b> do esquema do QMAIL e nunca pode estar vazio. … tambÈm o campo de e-mail interno do eGW.
+attribute mail explained	admin	pt-br	Isto trata o atributo <b><i>-mail-</i></b> do esquema do QMAIL e nunca pode estar vazio. √â tamb√©m o campo de e-mail interno do eGW.
 attribute mailalternateaddress explained	admin	pt-br	Isto trata o atributo <b><i>-mailAlternateAddress-</i></b> do esquema do QMAIL e pode ser tratado como maps virtual ou apelidos.
-attribute mailforwardingaddress explained	admin	pt-br	Isto trata o atributo <b><i>-mailForwardingAddress-</i></b> do esquema do QMAIL e n„o deve estar vazio se designado.
-authentication / accounts	admin	pt-br	AutenticaÁ„o / Contas
-auto create account records for authenticated users	admin	pt-br	Automaticamente criar registros de conta para usu·rios autenticados
-back to the list	admin	pt-br	voltar ‡ lista
+attribute mailforwardingaddress explained	admin	pt-br	Isto trata o atributo <b><i>-mailForwardingAddress-</i></b> do esquema do QMAIL e n√£o deve estar vazio se designado.
+authentication / accounts	admin	pt-br	Autentica√ß√£o / Contas
+auto create account records for authenticated users	admin	pt-br	Automaticamente criar registros de conta para usu√°rios autenticados
+back to the list	admin	pt-br	voltar √† lista
 bi-dir passthrough	admin	pt-br	Pular bi-direcional
 bi-directional	admin	pt-br	bi-direcional
 bottom	admin	pt-br	inferior
-calculate next run	admin	pt-br	Calcular prÛxima execuÁ„o
+calculate next run	admin	pt-br	Calcular pr√≥xima execu√ß√£o
 can change password	admin	pt-br	Permite alterar a senha
 cancel testjob!	admin	pt-br	Cancelar trabalhos de teste!
 categories list	admin	pt-br	Lista de Categorias
 category %1 has been saved !	admin	pt-br	Categoria %1 foi salva!
 category list	admin	pt-br	Lista de Categorias
 change acl rights	admin	pt-br	Mudar direitos da ACL
-change config settings	admin	pt-br	Mudar par‚metros de configuraÁ„o
+change config settings	admin	pt-br	Mudar par√¢metros de configura√ß√£o
 change main screen message	admin	pt-br	Alterar mensagem da tela principal
-check ip address of all sessions	admin	pt-br	Verificar endereÁo IP de todas sessıes
+check ip address of all sessions	admin	pt-br	Verificar endere√ßo IP de todas sess√µes
 check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
 click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
-cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie domÌnio (o padr„o vazio significa usar o nome completo do domÌnio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo domÌnio para egw.dominio.com.br e www.dominio.com.br)
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite m˙ltiplas sessıes eGW com diferentes diretÛrios, mas tem problemas com SiteMgr!)
-country selection	admin	pt-br	SeleÁ„o de PaÌs
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie dom√≠nio (o padr√£o vazio significa usar o nome completo do dom√≠nio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo dom√≠nio para egw.dominio.com.br e www.dominio.com.br)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite m√∫ltiplas sess√µes eGW com diferentes diret√≥rios, mas tem problemas com SiteMgr!)
+country selection	admin	pt-br	Sele√ß√£o de Pa√≠s
 create group	admin	pt-br	Criar Grupo
 creates a new field	admin	pt-br	criar um novo campo
 crontab only (recomended)	admin	pt-br	somente crontab (recomendado)
@@ -103,10 +103,10 @@ cyrus imap server	admin	pt-br	Servidor IMAP Cyrus
 data	admin	pt-br	Dados
 day	admin	pt-br	Dia
 day of week<br>(0-6, 0=sun)	admin	pt-br	Dia da Semana <br> (0-6, 0=Dom)
-db backup and restore	admin	pt-br	Backup e RestauraÁ„o do BD
-default	admin	pt-br	Padr„o
-default file system space per user	admin	pt-br	EspaÁo em disco padr„o por usu·rio?
-default file system space per user/group ?	admin	pt-br	EspaÁo em disco padr„o por usu·rio/grupo?
+db backup and restore	admin	pt-br	Backup e Restaura√ß√£o do BD
+default	admin	pt-br	Padr√£o
+default file system space per user	admin	pt-br	Espa√ßo em disco padr√£o por usu√°rio?
+default file system space per user/group ?	admin	pt-br	Espa√ßo em disco padr√£o por usu√°rio/grupo?
 deinstall crontab	admin	pt-br	Desinstalar crontab
 delete account	admin	pt-br	Remover conta
 delete all records	admin	pt-br	Remover todos os registros
@@ -118,99 +118,99 @@ delete the category	admin	pt-br	Remover a categoria
 delete the group	admin	pt-br	Remover o grupo
 delete this category	admin	pt-br	Remover esta categoria
 delete this group	admin	pt-br	Remover este grupo
-delete this user	admin	pt-br	remover este usu·rio
+delete this user	admin	pt-br	remover este usu√°rio
 deletes this field	admin	pt-br	Remover este campo
 deliver extern	admin	pt-br	entrega externa
 deny access to access log	admin	pt-br	Negar acesso ao registro de acessos
 deny access to application registery	admin	pt-br	Negar acesso ao registro de aplicativos
 deny access to applications	admin	pt-br	Negar acesso aos aplicativos
-deny access to asynchronous timed services	admin	pt-br	Negar acesso aos ServiÁos AssÌcronos agendados
-deny access to current sessions	admin	pt-br	Negar acesso ‡s sessıes atuais
-deny access to db backup and restore	admin	pt-br	Negar acesso ao backup e restauraÁ„o do BD
+deny access to asynchronous timed services	admin	pt-br	Negar acesso aos Servi√ßos Ass√≠cronos agendados
+deny access to current sessions	admin	pt-br	Negar acesso √†s sess√µes atuais
+deny access to db backup and restore	admin	pt-br	Negar acesso ao backup e restaura√ß√£o do BD
 deny access to error log	admin	pt-br	Negar acesso ao regsitro de erros
 deny access to global categories	admin	pt-br	Negar acesso as categorias globais
 deny access to groups	admin	pt-br	Negar acesso aos grupos
-deny access to mainscreen message	admin	pt-br	Negar acesso ‡ mensagem da tela principal
+deny access to mainscreen message	admin	pt-br	Negar acesso √† mensagem da tela principal
 deny access to peer servers	admin	pt-br	Negar acesso aos servidores remotos
 deny access to phpinfo	admin	pt-br	Negar acesso ao phpinfo
-deny access to site configuration	admin	pt-br	Negar acesso ‡ configuraÁ„o do site
-deny access to user accounts	admin	pt-br	Negar acesso ‡s contas de usu·rios
-deny all users access to grant other users access to their entries ?	admin	pt-br	N„o permitir que usu·rios concedam acesso aos seus registros para outros usu·rios ?
-description can not exceed 255 characters in length !	admin	pt-br	A descriÁ„o n„o dever· exceder 255 caracteres!
-determines the order the fields are displayed	admin	pt-br	determinar a ordem de exibiÁ„o dos campos
-disable "auto completion" of the login form	admin	pt-br	Desbilitar "auto completar" no formul·rio de entrada
+deny access to site configuration	admin	pt-br	Negar acesso √† configura√ß√£o do site
+deny access to user accounts	admin	pt-br	Negar acesso √†s contas de usu√°rios
+deny all users access to grant other users access to their entries ?	admin	pt-br	N√£o permitir que usu√°rios concedam acesso aos seus registros para outros usu√°rios ?
+description can not exceed 255 characters in length !	admin	pt-br	A descri√ß√£o n√£o dever√° exceder 255 caracteres!
+determines the order the fields are displayed	admin	pt-br	determinar a ordem de exibi√ß√£o dos campos
+disable "auto completion" of the login form	admin	pt-br	Desbilitar "auto completar" no formul√°rio de entrada
 disable wysiwyg-editor	admin	pt-br	desabilitar editor WYSIWYG
-disabled (not recomended)	admin	pt-br	desabilitar (n„o recomendado)
+disabled (not recomended)	admin	pt-br	desabilitar (n√£o recomendado)
 display	admin	pt-br	Exibir
-do not delete the category and return back to the list	admin	pt-br	N√O remova essa categoria e retorne ‡ lista
-do you also want to delete all global subcategories ?	admin	pt-br	Deseja tambÈm remover todas subcategorias globais ?
+do not delete the category and return back to the list	admin	pt-br	N√ÉO remova essa categoria e retorne √† lista
+do you also want to delete all global subcategories ?	admin	pt-br	Deseja tamb√©m remover todas subcategorias globais ?
 do you want to delete all global subcategories ?	admin	pt-br	Deseja remover todas subcategorias globais ?
-do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um nÌvel abaixo?
-document root (default)	admin	pt-br	Pasta raiz (padr„o)
-each value is a line like <id>[=<label>]	admin	pt-br	cada valor È uma linha como <id>[=<label>]
-each value is a line like id[=label]	admin	pt-br	cada valor È uma linha como id[=label]
+do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um n√≠vel abaixo?
+document root (default)	admin	pt-br	Pasta raiz (padr√£o)
+each value is a line like <id>[=<label>]	admin	pt-br	cada valor √© uma linha como <id>[=<label>]
+each value is a line like id[=label]	admin	pt-br	cada valor √© uma linha como id[=label]
 edit account	admin	pt-br	Editar conta
 edit application	admin	pt-br	Editar Aplicativo
-edit email settings	admin	pt-br	Editar configuraÁıes de e-mail
+edit email settings	admin	pt-br	Editar configura√ß√µes de e-mail
 edit global category	admin	pt-br	Editar categoria global
 edit global category for %1	admin	pt-br	Editar categoria global para %1
 edit group	admin	pt-br	Editar Grupo
 edit group acl's	admin	pt-br	Editar grupo ACL
-edit login screen message	admin	pt-br	Editar mensagem da tela de conex„o
+edit login screen message	admin	pt-br	Editar mensagem da tela de conex√£o
 edit main screen message	admin	pt-br	Editar mensagem da tela inicial
 edit peer server	admin	pt-br	Editar servidor parceiro
 edit table format	admin	pt-br	Editar formato de tabela
 edit this category	admin	pt-br	editar esta categoria
 edit this group	admin	pt-br	editar este grupo
-edit this user	admin	pt-br	editar este usu·rio
-edit user	admin	pt-br	editar usu·rio
-edit user account	admin	pt-br	Editar conta de usu·rio
-egroupware directory	admin	pt-br	DiretÛrio eGroupWare
+edit this user	admin	pt-br	editar este usu√°rio
+edit user	admin	pt-br	editar usu√°rio
+edit user account	admin	pt-br	Editar conta de usu√°rio
+egroupware directory	admin	pt-br	Diret√≥rio eGroupWare
 email account active	admin	pt-br	conta de e-mail ativa
 email address	admin	pt-br	e-mail
-enable debug-messages	admin	pt-br	Habilitar menssagens de depuraÁ„o
-enable the soap service	admin	pt-br	Habilitar o serviÁo soap
-enable the xmlrpc service	admin	pt-br	Habilitar o serviÁo xmlrpc
-enabled - hidden from navbar	admin	pt-br	Habilitado - Escondido da barra de navegaÁ„o
-enabled - popup window	admin	pt-br	Habilitar Janelas instant‚neas
-enter a description for the category	admin	pt-br	digite uma descriÁ„o para a categoria
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt-br	Digite um texto aleatÛrio para a encriptaÁ„o de sess„o (requer mcrypt)
-enter the background color for the login page	admin	pt-br	Digite a cor de fundo para a p·gina de login
-enter the background color for the site title	admin	pt-br	Digite a cor de fundo para o tÌtulo do site
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt-br	Digite o caminho completo para arquivos tempor·rios.<br>Exemplos: /tmp, C:TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	Digite o caminho completo para arquivos tempor·rios.<br>Exemplos: /tmp, C:TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usu·rios e grupos.<br>Exemplos: /files, E:FILES
-enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usu·rios e grupos.<br>Exemplos: /files, E:FILES
-enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da m·quina em que este servidor est· sendo executado
+enable debug-messages	admin	pt-br	Habilitar menssagens de depura√ß√£o
+enable the soap service	admin	pt-br	Habilitar o servi√ßo soap
+enable the xmlrpc service	admin	pt-br	Habilitar o servi√ßo xmlrpc
+enabled - hidden from navbar	admin	pt-br	Habilitado - Escondido da barra de navega√ß√£o
+enabled - popup window	admin	pt-br	Habilitar Janelas instant√¢neas
+enter a description for the category	admin	pt-br	digite uma descri√ß√£o para a categoria
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt-br	Digite um texto aleat√≥rio para a encripta√ß√£o de sess√£o (requer mcrypt)
+enter the background color for the login page	admin	pt-br	Digite a cor de fundo para a p√°gina de login
+enter the background color for the site title	admin	pt-br	Digite a cor de fundo para o t√≠tulo do site
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt-br	Digite o caminho completo para arquivos tempor√°rios.<br>Exemplos: /tmp, C:TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	Digite o caminho completo para arquivos tempor√°rios.<br>Exemplos: /tmp, C:TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usu√°rios e grupos.<br>Exemplos: /files, E:FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usu√°rios e grupos.<br>Exemplos: /files, E:FILES
+enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da m√°quina em que este servidor est√° sendo executado
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware   ou   /egroupware<br><b>Sem a barra final</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a express„o de busca. Para mostrar todas as entradas, deixe este campo em branco e pressione ENVIAR novamente
-enter the site password for peer servers	admin	pt-br	Digite a senha do servidor para comunicaÁ„o com servidores parceiros
-enter the site username for peer servers	admin	pt-br	Digite o usu·rio do servidor para comunicaÁ„o com servidores parceiros
-enter the title for your site	admin	pt-br	Digite o tÌtulo para o seu site
-enter the title of your logo	admin	pt-br	Digite o tÌtulo do seu logotipo
+enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a express√£o de busca. Para mostrar todas as entradas, deixe este campo em branco e pressione ENVIAR novamente
+enter the site password for peer servers	admin	pt-br	Digite a senha do servidor para comunica√ß√£o com servidores parceiros
+enter the site username for peer servers	admin	pt-br	Digite o usu√°rio do servidor para comunica√ß√£o com servidores parceiros
+enter the title for your site	admin	pt-br	Digite o t√≠tulo para o seu site
+enter the title of your logo	admin	pt-br	Digite o t√≠tulo do seu logotipo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	pt-br	Digite a URL ou o nome do arquivo (em phpgwapi/templates/default/images) do seu logotipo.
 enter the url where your logo should link to	admin	pt-br	Digite a url para onde o seu logotipo deve apontar
-enter your default ftp server	admin	pt-br	Digite seu servidor FTP padr„o
-enter your default mail domain ( from: user@domain )	admin	pt-br	Digite seu domÌnio padr„o de correio eletrÙnico (usuario@dominio)
-enter your http proxy server	admin	pt-br	Digite o endereÁo do servidor proxy HTTP
+enter your default ftp server	admin	pt-br	Digite seu servidor FTP padr√£o
+enter your default mail domain ( from: user@domain )	admin	pt-br	Digite seu dom√≠nio padr√£o de correio eletr√¥nico (usuario@dominio)
+enter your http proxy server	admin	pt-br	Digite o endere√ßo do servidor proxy HTTP
 enter your http proxy server port	admin	pt-br	Digite a porta do servidor proxy HTTP
-enter your smtp server hostname or ip address	admin	pt-br	Digite o endereÁo de seu servidor SMTP
+enter your smtp server hostname or ip address	admin	pt-br	Digite o endere√ßo de seu servidor SMTP
 enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
-error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum est· configurado !!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez j· exista um sendo executado !!!
-error! no appname found	admin	pt-br	Erro: Nome de aplicativo n„o encontrado
-error: %1 not found or other error !!!	admin	pt-br	Erro: %1 n„o encrontrado ou outro erro n„o definido !!!
+error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum est√° configurado !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez j√° exista um sendo executado !!!
+error! no appname found	admin	pt-br	Erro: Nome de aplicativo n√£o encontrado
+error: %1 not found or other error !!!	admin	pt-br	Erro: %1 n√£o encrontrado ou outro erro n√£o definido !!!
 expires	admin	pt-br	Expira
-explanation of ldapman	admin	pt-br	AtÈ o momento, este mÛdulo foi testado para POSTFIX, LDAP, Courier-IMAP e precisa dos esquemas CORE e QMAIL (OID7914). Mais detalhes, sobre como usar e configurar este sistema, pode ser encontrato no arquivo README.ldapman na pasta doc de ADMIN.
-fallback (after each pageview)	admin	pt-br	recuperar (apÛs cada p·gina visualizada)
-field '%1' already exists !!!	admin	pt-br	Campo '%1' j· existe !!!
-file space	admin	pt-br	EspaÁo para arquivos
-file space must be an integer	admin	pt-br	EspaÁo para arquivos deve ser um n˙mero inteiro
-find and register all application hooks	admin	pt-br	Procurar e registrar todas as configuraÁıes de aplicaÁıes
-for the times above	admin	pt-br	para os hor·rios acima
-for the times below (empty values count as '*', all empty = every minute)	admin	pt-br	para os hor·rios abaixo (campos vazios contam como '*', todos vazios = a cada minuto)
-force selectbox	admin	pt-br	ForÁar Caixa de seleÁ„o
-forward also to	admin	pt-br	encaminhar tambÈm para
+explanation of ldapman	admin	pt-br	At√© o momento, este m√≥dulo foi testado para POSTFIX, LDAP, Courier-IMAP e precisa dos esquemas CORE e QMAIL (OID7914). Mais detalhes, sobre como usar e configurar este sistema, pode ser encontrato no arquivo README.ldapman na pasta doc de ADMIN.
+fallback (after each pageview)	admin	pt-br	recuperar (ap√≥s cada p√°gina visualizada)
+field '%1' already exists !!!	admin	pt-br	Campo '%1' j√° existe !!!
+file space	admin	pt-br	Espa√ßo para arquivos
+file space must be an integer	admin	pt-br	Espa√ßo para arquivos deve ser um n√∫mero inteiro
+find and register all application hooks	admin	pt-br	Procurar e registrar todas as configura√ß√µes de aplica√ß√µes
+for the times above	admin	pt-br	para os hor√°rios acima
+for the times below (empty values count as '*', all empty = every minute)	admin	pt-br	para os hor√°rios abaixo (campos vazios contam como '*', todos vazios = a cada minuto)
+force selectbox	admin	pt-br	For√ßar Caixa de sele√ß√£o
+forward also to	admin	pt-br	encaminhar tamb√©m para
 forward emails to	admin	pt-br	encaminhar e-mails para
 forward only	admin	pt-br	apenas encaminhar
 global categories	common	pt-br	Categorias globais
@@ -219,20 +219,20 @@ group has been added	common	pt-br	Grupo adicionado
 group has been deleted	common	pt-br	Grupo removido
 group has been updated	common	pt-br	Grupo atualizado
 group list	admin	pt-br	Lista de Grupos
-group manager	admin	pt-br	ManutenÁ„o de Grupos
+group manager	admin	pt-br	Manuten√ß√£o de Grupos
 group name	admin	pt-br	Nome do Grupo
-hide php information	admin	pt-br	Esconder informaÁıes de PHP
-home directory	admin	pt-br	DiretÛrio de instalaÁ„o
-host information	admin	pt-br	InformaÁıes do servidor
+hide php information	admin	pt-br	Esconder informa√ß√µes de PHP
+home directory	admin	pt-br	Diret√≥rio de instala√ß√£o
+host information	admin	pt-br	Informa√ß√µes do servidor
 hour<br>(0-23)	admin	pt-br	Hora<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt-br	Quantos dias as entradas devem ser mantidas no registro de acessos, antes de serem removidas (padr„o 90)?
-how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	pt-br	Quantos registros usu·rios n„o administradores ser„o capazes de exportar (vazio = sem limites, no = nenhum)
-how many minutes should an account or ip be blocked (default 30) ?	admin	pt-br	Quantos minutos uma conta ou endereÁo IP devem ser bloqueados (padr„o 30)?
-how should email addresses for new users be constructed?	admin	pt-br	Como dever„o ser construÌdos oo endereÁos de e-mail, para novos usu·rios ?
-icon	admin	pt-br	Õcone
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt-br	Quantos dias as entradas devem ser mantidas no registro de acessos, antes de serem removidas (padr√£o 90)?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	pt-br	Quantos registros usu√°rios n√£o administradores ser√£o capazes de exportar (vazio = sem limites, no = nenhum)
+how many minutes should an account or ip be blocked (default 30) ?	admin	pt-br	Quantos minutos uma conta ou endere√ßo IP devem ser bloqueados (padr√£o 30)?
+how should email addresses for new users be constructed?	admin	pt-br	Como dever√£o ser constru√≠dos oo endere√ßos de e-mail, para novos usu√°rios ?
+icon	admin	pt-br	√çcone
 idle	admin	pt-br	ocioso
-if no acl records for user or any group the user is a member of	admin	pt-br	Se n„o houver registro de permissoes ou grupo para o usu·rio ele È membro do
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	se estiver usando LDAP, vocÍ deseja definir atributos de diretÛrio home e shell de login?
+if no acl records for user or any group the user is a member of	admin	pt-br	Se n√£o houver registro de permissoes ou grupo para o usu√°rio ele √© membro do
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	se estiver usando LDAP, voc√™ deseja definir atributos de diret√≥rio home e shell de login?
 in mbyte	admin	pt-br	em MByte
 inbound	admin	pt-br	Entrada
 initial	admin	pt-br	Inicial
@@ -243,211 +243,211 @@ interface	admin	pt-br	Interface
 ip	admin	pt-br	IP
 jobs	admin	pt-br	Trabalhos
 kill	admin	pt-br	Terminar
-kill session	admin	pt-br	Terminar sess„o
-last %1 logins	admin	pt-br	⁄ltimas %1 conexıes
-last %1 logins for %2	admin	pt-br	⁄ltimas %1 conexıes para %2
-last login	admin	pt-br	˙ltima conex„o
-last login from	admin	pt-br	˙ltima conex„o de
-last time read	admin	pt-br	⁄ltima vez lido
+kill session	admin	pt-br	Terminar sess√£o
+last %1 logins	admin	pt-br	√öltimas %1 conex√µes
+last %1 logins for %2	admin	pt-br	√öltimas %1 conex√µes para %2
+last login	admin	pt-br	√∫ltima conex√£o
+last login from	admin	pt-br	√∫ltima conex√£o de
+last time read	admin	pt-br	√öltima vez lido
 ldap accounts context	admin	pt-br	contexto de contas LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt-br	prefixo de diretÛrio home padr„o LDAP (Exemplo: /home para /home/username)
-ldap default shell (e.g. /bin/bash)	admin	pt-br	shell padr„o LDAP (Exemplo: /bin/bash)
-ldap encryption type	admin	pt-br	tipo de encriptaÁ„o LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt-br	prefixo de diret√≥rio home padr√£o LDAP (Exemplo: /home para /home/username)
+ldap default shell (e.g. /bin/bash)	admin	pt-br	shell padr√£o LDAP (Exemplo: /bin/bash)
+ldap encryption type	admin	pt-br	tipo de encripta√ß√£o LDAP
 ldap groups context	admin	pt-br	contexto de grupos LDAP
 ldap host	admin	pt-br	servidor LDAP
-ldap root password	admin	pt-br	senha do super usu·rio LDAP
-ldap rootdn	admin	pt-br	super usu·rio LDAP
+ldap root password	admin	pt-br	senha do super usu√°rio LDAP
+ldap rootdn	admin	pt-br	super usu√°rio LDAP
 leave empty for no quota	admin	pt-br	deixar vazio para sem cota
-leave the category untouched and return back to the list	admin	pt-br	deixar a categoria intocada e retornar ‡ lista
-leave the group untouched and return back to the list	admin	pt-br	deixar o grupo intocado e retornar ‡ lista
+leave the category untouched and return back to the list	admin	pt-br	deixar a categoria intocada e retornar √† lista
+leave the group untouched and return back to the list	admin	pt-br	deixar o grupo intocado e retornar √† lista
 leaves without saveing	admin	pt-br	sair sem salvar
 length<br>rows	admin	pt-br	Tamanho<br>Linhas
-list config settings	admin	pt-br	Listar par‚metros de configuraÁ„o
-list current sessions	admin	pt-br	Listar sessıes correntes
-list of current users	admin	pt-br	lista de usu·rios conectados
-login history	common	pt-br	HistÛrico de conexıes
+list config settings	admin	pt-br	Listar par√¢metros de configura√ß√£o
+list current sessions	admin	pt-br	Listar sess√µes correntes
+list of current users	admin	pt-br	lista de usu√°rios conectados
+login history	common	pt-br	Hist√≥rico de conex√µes
 login message	admin	pt-br	Mensagem de entrada
-login screen	admin	pt-br	Tela de Conex„o
-login shell	admin	pt-br	Shell de Conex„o
-login time	admin	pt-br	Hora da conex„o
-loginid	admin	pt-br	CÛdigo do usu·rio
-mail settings	admin	pt-br	ConfiguraÁıes de E-Mail
+login screen	admin	pt-br	Tela de Conex√£o
+login shell	admin	pt-br	Shell de Conex√£o
+login time	admin	pt-br	Hora da conex√£o
+loginid	admin	pt-br	C√≥digo do usu√°rio
+mail settings	admin	pt-br	Configura√ß√µes de E-Mail
 main email-address	admin	pt-br	E-Mail principal
 main screen message	admin	pt-br	Mensagem da tela principal
 manager	admin	pt-br	Gerenciador
-max length of the input [, length of the inputfield (optional)]	admin	pt-br	tamanho m·ximo da entrada [, tamanho do campo de entrada (opcional)]
-maximum account id (e.g. 65535 or 1000000)	admin	pt-br	id m·ximo para contas (Exemplo: 65535 ou 1000000)
-maximum entries in click path history	admin	pt-br	M·ximo de entradas no histÛrico de caminho de cliques
+max length of the input [, length of the inputfield (optional)]	admin	pt-br	tamanho m√°ximo da entrada [, tamanho do campo de entrada (opcional)]
+maximum account id (e.g. 65535 or 1000000)	admin	pt-br	id m√°ximo para contas (Exemplo: 65535 ou 1000000)
+maximum entries in click path history	admin	pt-br	M√°ximo de entradas no hist√≥rico de caminho de cliques
 message has been updated	admin	pt-br	Mensagem foi atualizada
-method	admin	pt-br	MÈtodo
-minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	id mÌnimo para contas (Exemplo: 500 ou 100, etc.)
+method	admin	pt-br	M√©todo
+minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	id m√≠nimo para contas (Exemplo: 500 ou 100, etc.)
 minute	admin	pt-br	Minuto
 mode	admin	pt-br	Modo
-month	admin	pt-br	MÍs
+month	admin	pt-br	M√™s
 more secure	admin	pt-br	mais seguro
-name must not be empty !!!	admin	pt-br	Nome n„o pode estar vazio !!!
+name must not be empty !!!	admin	pt-br	Nome n√£o pode estar vazio !!!
 new group name	admin	pt-br	Nome do novo Grupo
 new name	admin	pt-br	novo nome
-new password [ leave blank for no change ]	admin	pt-br	Nova senha [ Deixe em branco para n„o alterar ]
-next run	admin	pt-br	PrÛxima execuÁ„o
-no algorithms available	admin	pt-br	nenhum algoritmo disponÌvel
+new password [ leave blank for no change ]	admin	pt-br	Nova senha [ Deixe em branco para n√£o alterar ]
+next run	admin	pt-br	Pr√≥xima execu√ß√£o
+no algorithms available	admin	pt-br	nenhum algoritmo dispon√≠vel
 no alternate email address	admin	pt-br	nenhum e-mail alternativo
 no jobs in the database !!!	admin	pt-br	Nenhum trabalho na base de dados !!!
-no login history exists for this user	admin	pt-br	N„o existe histÛrico de conexıes para este usu·rio
-no matches found	admin	pt-br	Nenhuma ocorrÍncia encontrada
-no modes available	admin	pt-br	nenhum modo disponÌvel
-no permission to add groups	admin	pt-br	sem permiss„o para adicionar grupos
-no permission to add users	admin	pt-br	sem permiss„o para adicionar grupos
-no permission to create groups	admin	pt-br	sem permiss„o para criar grupos
-note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: O SSL estar· disponÌvel somente se o PHP houver sido compilado com suporte a curl
-number of row for a multiline inputfield or line of a multi-select-box	admin	pt-br	n˙mero de linhas para um campo de entrada ou linhas para uma caixa de seleÁ„o
+no login history exists for this user	admin	pt-br	N√£o existe hist√≥rico de conex√µes para este usu√°rio
+no matches found	admin	pt-br	Nenhuma ocorr√™ncia encontrada
+no modes available	admin	pt-br	nenhum modo dispon√≠vel
+no permission to add groups	admin	pt-br	sem permiss√£o para adicionar grupos
+no permission to add users	admin	pt-br	sem permiss√£o para adicionar grupos
+no permission to create groups	admin	pt-br	sem permiss√£o para criar grupos
+note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: O SSL estar√° dispon√≠vel somente se o PHP houver sido compilado com suporte a curl
+number of row for a multiline inputfield or line of a multi-select-box	admin	pt-br	n√∫mero de linhas para um campo de entrada ou linhas para uma caixa de sele√ß√£o
 order	admin	pt-br	Ordem
-outbound	admin	pt-br	SaÌda
+outbound	admin	pt-br	Sa√≠da
 passthrough	admin	pt-br	Atravessar
-password for smtp-authentication	admin	pt-br	Senha para autenticaÁ„o SMTP
-path information	admin	pt-br	InformaÁ„o de Path
+password for smtp-authentication	admin	pt-br	Senha para autentica√ß√£o SMTP
+path information	admin	pt-br	Informa√ß√£o de Path
 peer server list	admin	pt-br	Lista de servidores parceiros
 peer servers	admin	pt-br	Servidores parceiros
-percent of users that logged out	admin	pt-br	Percentual de usu·rios que desconectaram
-percent this user has logged out	admin	pt-br	Percentagem de vezes que este usu·rio desconectou
-permission denied	admin	pt-br	Permiss„o negada
-permissions	admin	pt-br	Permissıes
-permissions this group has	admin	pt-br	Permissıes do grupo
-phpinfo	admin	pt-br	InformaÁıes do PHP
+percent of users that logged out	admin	pt-br	Percentual de usu√°rios que desconectaram
+percent this user has logged out	admin	pt-br	Percentagem de vezes que este usu√°rio desconectou
+permission denied	admin	pt-br	Permiss√£o negada
+permissions	admin	pt-br	Permiss√µes
+permissions this group has	admin	pt-br	Permiss√µes do grupo
+phpinfo	admin	pt-br	Informa√ß√µes do PHP
 please enter a name	admin	pt-br	Por favor digite um nome
 please enter a name for that server !	admin	pt-br	Por favor digite um nome para este servidor !
-please run setup to become current	admin	pt-br	Por favor execute a ConfiguraÁ„o para atualizar o sistema
+please run setup to become current	admin	pt-br	Por favor execute a Configura√ß√£o para atualizar o sistema
 please select	admin	pt-br	Por favor selecione
 postfix with ldap	admin	pt-br	Postfix com LDAP
-preferences	admin	pt-br	PreferÍncias
-primary group	admin	pt-br	Grupo prim·rio
+preferences	admin	pt-br	Prefer√™ncias
+primary group	admin	pt-br	Grupo prim√°rio
 qmaildotmode	admin	pt-br	qmaildotmode
-quota settings	admin	pt-br	configuraÁıes de cota
+quota settings	admin	pt-br	configura√ß√µes de cota
 quota size in mbyte	admin	pt-br	tamanho da cota em MByte
 re-enter password	admin	pt-br	Redigite a senha
-read this list of methods.	admin	pt-br	Ler esta lista de mÈtodos
-register application hooks	admin	pt-br	Registrar configuraÁıes das aplicaÁıes
+read this list of methods.	admin	pt-br	Ler esta lista de m√©todos
+register application hooks	admin	pt-br	Registrar configura√ß√µes das aplica√ß√µes
 remove	admin	pt-br	remover
-remove all users from this group	admin	pt-br	Remover todos os usu·rios deste grupo
-remove all users from this group ?	admin	pt-br	Remover todos os usu·rios desse grupo?
-return to admin mainscreen	admin	pt-br	retornar ‡ tela principal da AdministraÁ„o
-return to view account	admin	pt-br	retornar ‡ visualizaÁ„o da conta
+remove all users from this group	admin	pt-br	Remover todos os usu√°rios deste grupo
+remove all users from this group ?	admin	pt-br	Remover todos os usu√°rios desse grupo?
+return to admin mainscreen	admin	pt-br	retornar √† tela principal da Administra√ß√£o
+return to view account	admin	pt-br	retornar √† visualiza√ß√£o da conta
 route all mails to	admin	pt-br	Remeter todos e-mails para
-run asynchronous services	admin	pt-br	Executar ServiÁos AssÌcronos
+run asynchronous services	admin	pt-br	Executar Servi√ßos Ass√≠cronos
 save the category	admin	pt-br	salvar a categoria
-save the category and return back to the list	admin	pt-br	salvar a categoria e retornar ‡ lista
-saves the changes made and leaves	admin	pt-br	salvar as alteraÁıes feitas e sair
+save the category and return back to the list	admin	pt-br	salvar a categoria e retornar √† lista
+saves the changes made and leaves	admin	pt-br	salvar as altera√ß√µes feitas e sair
 search accounts	admin	pt-br	Pesquisar contas
 search categories	admin	pt-br	Pesquisar categorias
 search groups	admin	pt-br	Pesquisar grupos
 search peer servers	admin	pt-br	Pesquisar servidores parceiros
-security	admin	pt-br	SeguranÁa
-select group managers	admin	pt-br	Selecione ManutenÁ„o de Grupos
-select permissions this group will have	admin	pt-br	Selecione as permissıes que este grupo ter·
+security	admin	pt-br	Seguran√ßa
+select group managers	admin	pt-br	Selecione Manuten√ß√£o de Grupos
+select permissions this group will have	admin	pt-br	Selecione as permiss√µes que este grupo ter√°
 select the parent category. if this is a main category select no category	admin	pt-br	Selecione a categoria pai. Caso seja um categoria pai selecione SEM CATEGORIA
-select users for inclusion	admin	pt-br	Selecione usu·rios para inclus„o
-select where you want to store/retrieve filesystem information	admin	pt-br	Selecione onde vocÍ deseja guardar as informaÁıes do sistema de arquivos
-select where you want to store/retrieve user accounts	admin	pt-br	Selecione onde vocÍ deseja guardar as contas de usu·rios
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	pt-br	Selecione onde este aplicativo deve aparecer na barra de navegaÁ„o, esquerda para direita
-selectbox	admin	pt-br	Tela de seleÁ„o
+select users for inclusion	admin	pt-br	Selecione usu√°rios para inclus√£o
+select where you want to store/retrieve filesystem information	admin	pt-br	Selecione onde voc√™ deseja guardar as informa√ß√µes do sistema de arquivos
+select where you want to store/retrieve user accounts	admin	pt-br	Selecione onde voc√™ deseja guardar as contas de usu√°rios
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	pt-br	Selecione onde este aplicativo deve aparecer na barra de navega√ß√£o, esquerda para direita
+selectbox	admin	pt-br	Tela de sele√ß√£o
 server %1 has been updated	admin	pt-br	Servidor %1 foi atualizado
 server list	admin	pt-br	Lista de servidores
 server password	admin	pt-br	Senha do servidor
 server type(mode)	admin	pt-br	Tipo de servidor (modo)
 server url	admin	pt-br	URL do servidor
-server username	admin	pt-br	Usu·rio do servidor
-set preference values.	admin	pt-br	Definir preferÍncias.
-should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conex„o deve incluÌr uma caixa de seleÁ„o de idioma? (˙til para sites de demonstraÁ„o)
-show 'powered by' logo on	admin	pt-br	¡rea para exibiÁ„o de 'powered by eGroupWare'
+server username	admin	pt-br	Usu√°rio do servidor
+set preference values.	admin	pt-br	Definir prefer√™ncias.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conex√£o deve inclu√≠r uma caixa de sele√ß√£o de idioma? (√∫til para sites de demonstra√ß√£o)
+show 'powered by' logo on	admin	pt-br	√Årea para exibi√ß√£o de 'powered by eGroupWare'
 show access log	admin	pt-br	Exibir registros de acessos
-show an asterisk (*) to mark untranslated strings	admin	pt-br	Exibe um asterisco (*) para marcar as frases n„o traduzidas
-show current action	admin	pt-br	Exibir aÁ„o corrente
+show an asterisk (*) to mark untranslated strings	admin	pt-br	Exibe um asterisco (*) para marcar as frases n√£o traduzidas
+show current action	admin	pt-br	Exibir a√ß√£o corrente
 show error log	admin	pt-br	Exibir registro de erros
 show phpinfo()	admin	pt-br	Exibir phpinfo()
-show session ip address	admin	pt-br	Exibir endereÁo IP das sessıes
+show session ip address	admin	pt-br	Exibir endere√ßo IP das sess√µes
 site	admin	pt-br	Site
-site configuration	common	pt-br	ConfiguraÁ„o do servidor
+site configuration	common	pt-br	Configura√ß√£o do servidor
 soap	admin	pt-br	SOAP
-sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo j· est· em uso.
-sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usu·rios acima ainda s„o membros do grupo %1
-sorry, the follow users are still a member of the group %1	admin	pt-br	Desculpe, os seguintes usu·rios ainda s„o membros do grupo %1
+sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo j√° est√° em uso.
+sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usu√°rios acima ainda s√£o membros do grupo %1
+sorry, the follow users are still a member of the group %1	admin	pt-br	Desculpe, os seguintes usu√°rios ainda s√£o membros do grupo %1
 sort the entries	admin	pt-br	ordenar as entradas
 ssl	admin	pt-br	ssl
-standard	admin	pt-br	padr„o
-standard imap server	admin	pt-br	servidor IMAP padr„o
-standard pop3 server	admin	pt-br	servidor POP3 padr„o
-standard smtp-server	admin	pt-br	servidor SMTP padr„o
+standard	admin	pt-br	padr√£o
+standard imap server	admin	pt-br	servidor IMAP padr√£o
+standard pop3 server	admin	pt-br	servidor POP3 padr√£o
+standard smtp-server	admin	pt-br	servidor SMTP padr√£o
 start testjob!	admin	pt-br	Iniciar TestJob!
-submit changes	admin	pt-br	Enviar alteraÁıes
-submit the search string	admin	pt-br	Enviar express„o de busca
+submit changes	admin	pt-br	Enviar altera√ß√µes
+submit the search string	admin	pt-br	Enviar express√£o de busca
 subtype	admin	pt-br	Sub tipo
-switch it off, if users are randomly thrown out	admin	pt-br	desabilite, se usu·rios estiverem, aleatoriamente, sendo desconectados
-template selection	admin	pt-br	SeleÁ„o de modelos
+switch it off, if users are randomly thrown out	admin	pt-br	desabilite, se usu√°rios estiverem, aleatoriamente, sendo desconectados
+template selection	admin	pt-br	Sele√ß√£o de modelos
 text entry	admin	pt-br	Entrada de texto
-that application name already exists.	admin	pt-br	Este nome de aplicativo j· existe.
-that application order must be a number.	admin	pt-br	O campo ordem de aplicativo deve ser um n˙mero.
-that loginid has already been taken	admin	pt-br	Este cÛdigo de usu·rio j· existe
-that name has been used already	admin	pt-br	Este nome j· est· em uso
-that server name has been used already !	admin	pt-br	Este nome de servidor j· est· em uso!
-the api is current	admin	pt-br	A base (API) do eGroupWare est· atualizada
+that application name already exists.	admin	pt-br	Este nome de aplicativo j√° existe.
+that application order must be a number.	admin	pt-br	O campo ordem de aplicativo deve ser um n√∫mero.
+that loginid has already been taken	admin	pt-br	Este c√≥digo de usu√°rio j√° existe
+that name has been used already	admin	pt-br	Este nome j√° est√° em uso
+that server name has been used already !	admin	pt-br	Este nome de servidor j√° est√° em uso!
+the api is current	admin	pt-br	A base (API) do eGroupWare est√° atualizada
 the api requires an upgrade	admin	pt-br	A base (API) do eGroupWare precisa ser atualizada
-the groups must include the primary group	admin	pt-br	Os grupos devem incluÌr o grupo prim·rio
-the login and password can not be the same	admin	pt-br	O login e a senha n„o podem ser iguais
-the loginid can not be more then 8 characters	admin	pt-br	O cÛdigo de usu·rio n„o pode ter mais de 8 caracteres
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pt-br	o nome usado internamente (<= 20 caracteres), alterando-o far· dados existentes ficarem inacessÌveis
-the testjob sends you a mail everytime it is called.	admin	pt-br	O TestJob lhe envia um email sempre que È executado.
-the text displayed to the user	admin	pt-br	o texto exibido para o usu·rio
-the two passwords are not the same	admin	pt-br	As senhas n„o conferem
-the users bellow are still members of group %1	admin	pt-br	os usu·rios abaixo ainda s„o membros do grupo %1
-there already is a group with this name. userid's can not have the same name as a groupid	admin	pt-br	J· existe um grupo com este nome. O nome do usu·rio n„o pode ser o mesmo de um grupo.
+the groups must include the primary group	admin	pt-br	Os grupos devem inclu√≠r o grupo prim√°rio
+the login and password can not be the same	admin	pt-br	O login e a senha n√£o podem ser iguais
+the loginid can not be more then 8 characters	admin	pt-br	O c√≥digo de usu√°rio n√£o pode ter mais de 8 caracteres
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pt-br	o nome usado internamente (<= 20 caracteres), alterando-o far√° dados existentes ficarem inacess√≠veis
+the testjob sends you a mail everytime it is called.	admin	pt-br	O TestJob lhe envia um email sempre que √© executado.
+the text displayed to the user	admin	pt-br	o texto exibido para o usu√°rio
+the two passwords are not the same	admin	pt-br	As senhas n√£o conferem
+the users bellow are still members of group %1	admin	pt-br	os usu√°rios abaixo ainda s√£o membros do grupo %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	pt-br	J√° existe um grupo com este nome. O nome do usu√°rio n√£o pode ser o mesmo de um grupo.
 they must be removed before you can continue	admin	pt-br	Eles devem ser removidos antes de continuar
-this application is current	admin	pt-br	Este aplicativo est· atualizado
+this application is current	admin	pt-br	Este aplicativo est√° atualizado
 this application requires an upgrade	admin	pt-br	Esta aplicativo precisa ser atualizado
-this category is currently being used by applications as a parent category	admin	pt-br	Esta categoria est· sendo usada por Aplicativos como categoria pai.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	pt-br	Tempo para expiraÁ„o de dados da sess„o do aplicativo em segundos (padr„o 86400 = 1 dia)
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt-br	Tempo para expiraÁ„o da sessıes em segundos (padr„o 14400 = 4 horas)
-times	admin	pt-br	Hor·rios
+this category is currently being used by applications as a parent category	admin	pt-br	Esta categoria est√° sendo usada por Aplicativos como categoria pai.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	pt-br	Tempo para expira√ß√£o de dados da sess√£o do aplicativo em segundos (padr√£o 86400 = 1 dia)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt-br	Tempo para expira√ß√£o da sess√µes em segundos (padr√£o 14400 = 4 horas)
+times	admin	pt-br	Hor√°rios
 top	admin	pt-br	topo
 total records	admin	pt-br	Total de registros
-trust level	admin	pt-br	NÌvel de confianÁa
-trust relationship	admin	pt-br	RelaÁ„o de confianÁa
-type '%1' already exists !!!	admin	pt-br	tipo '%1' j· existe !!
+trust level	admin	pt-br	N√≠vel de confian√ßa
+trust relationship	admin	pt-br	Rela√ß√£o de confian√ßa
+type '%1' already exists !!!	admin	pt-br	tipo '%1' j√° existe !!
 type of customfield	admin	pt-br	Tipo do campo personalizado
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	No Windows vocÍ precisa instalar o asyncservide %1manualmente%2 ou usar o modo fallback. Fallback significa que os trabalhos ser„o verificados somente apÛs cada visualizaÁ„o de p·gina!!!
-use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sess„o
-use pure html compliant code (not fully working yet)	admin	pt-br	Usar cÛdigo HTML puro (n„o funciona totalmente ainda)
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	No Windows voc√™ precisa instalar o asyncservide %1manualmente%2 ou usar o modo fallback. Fallback significa que os trabalhos ser√£o verificados somente ap√≥s cada visualiza√ß√£o de p√°gina!!!
+use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sess√£o
+use pure html compliant code (not fully working yet)	admin	pt-br	Usar c√≥digo HTML puro (n√£o funciona totalmente ainda)
 use theme	admin	pt-br	Usar tema
-user accounts	admin	pt-br	Contas de usu·rios
-user data	common	pt-br	Dados de usu·rios
-user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usu·rio para autenticaÁ„o SMTP (deixe em branco se n„o requer autenticaÁ„o)
-user groups	admin	pt-br	Grupos de usu·rios
-userdata	admin	pt-br	Dados de usu·rio
-users choice	admin	pt-br	Escolha do usu·rio
+user accounts	admin	pt-br	Contas de usu√°rios
+user data	common	pt-br	Dados de usu√°rios
+user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usu√°rio para autentica√ß√£o SMTP (deixe em branco se n√£o requer autentica√ß√£o)
+user groups	admin	pt-br	Grupos de usu√°rios
+userdata	admin	pt-br	Dados de usu√°rio
+users choice	admin	pt-br	Escolha do usu√°rio
 view access log	admin	pt-br	Exibir registro de acessos
 view account	admin	pt-br	Exibir conta
 view category	admin	pt-br	Exibir categoria
 view error log	admin	pt-br	Exibir registro de erros
-view sessions	admin	pt-br	Exibir sessıes
-view this user	admin	pt-br	exibir este usu·rio
-view user account	admin	pt-br	exibir conta de usu·rio
-who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem vocÍ deseja transferir todas as entradas do usu·rio removido?
-would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o eGroupWare faÁa cache do vetor de informaÁıes egw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o eGroupWare verifique se h· nova vers„o<br>quando administradores estejam acessando o sistema ?
-would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o eGroupware verifique automaticamente novas versıes de aplicativos quando administradores estiverem conectados?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localizaÁ„o sejam carragados automaticamente (ao entrar)
-would you like to show each application's upgrade status ?	admin	pt-br	Deseja exibir se cada aplicaÁ„o est· atualizada ?
+view sessions	admin	pt-br	Exibir sess√µes
+view this user	admin	pt-br	exibir este usu√°rio
+view user account	admin	pt-br	exibir conta de usu√°rio
+who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem voc√™ deseja transferir todas as entradas do usu√°rio removido?
+would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o eGroupWare fa√ßa cache do vetor de informa√ß√µes egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o eGroupWare verifique se h√° nova vers√£o<br>quando administradores estejam acessando o sistema ?
+would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o eGroupware verifique automaticamente novas vers√µes de aplicativos quando administradores estiverem conectados?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localiza√ß√£o sejam carragados automaticamente (ao entrar)
+would you like to show each application's upgrade status ?	admin	pt-br	Deseja exibir se cada aplica√ß√£o est√° atualizada ?
 xml-rpc	admin	pt-br	XML-RPC
-you have entered an invalid expiration date	admin	pt-br	A data de expiraÁ„o digitada È inv·lida
-you have to enter a name, to create a new field!!!	admin	pt-br	VocÍ precisa informar um nome para criar um novo campo!!!
-you have to enter a name, to create a new type!!!	admin	pt-br	VocÍ precisa informar um novo para criar um novo tipo!!!
-you must add at least 1 permission or group to this account	admin	pt-br	VocÍ deve adicionar no mÌnimo uma permiss„o ou grupo para esta conta
-you must enter a group name.	admin	pt-br	VocÍ deve digitar um nome de grupo.
-you must enter a lastname	admin	pt-br	VocÍ deve digitar um sobrenome
-you must enter a loginid	admin	pt-br	VocÍ deve digitar um cÛdigo
-you must enter an application name and title.	admin	pt-br	VocÍ deve digitar um nome e um tÌtulo para aplicaÁ„o.
-you must enter an application name.	admin	pt-br	VocÍ deve digitar um nome para a aplicaÁ„o.
-you must enter an application title.	admin	pt-br	VocÍ deve digitar um tÌtulo para a aplicaÁ„o.
-you must select a file type	admin	pt-br	VocÍ deve selecionar um tipo de arquivo.
-you must select at least one group member.	admin	pt-br	VocÍ deve selecionar ao menos um membro.
-you will need to remove the subcategories before you can delete this category	admin	pt-br	VocÍ dever· remover as subcategorias antes de remover esta categoria !
-your session could not be verified.	admin	pt-br	Sua sess„o n„o pÙde ser verificada
+you have entered an invalid expiration date	admin	pt-br	A data de expira√ß√£o digitada √© inv√°lida
+you have to enter a name, to create a new field!!!	admin	pt-br	Voc√™ precisa informar um nome para criar um novo campo!!!
+you have to enter a name, to create a new type!!!	admin	pt-br	Voc√™ precisa informar um novo para criar um novo tipo!!!
+you must add at least 1 permission or group to this account	admin	pt-br	Voc√™ deve adicionar no m√≠nimo uma permiss√£o ou grupo para esta conta
+you must enter a group name.	admin	pt-br	Voc√™ deve digitar um nome de grupo.
+you must enter a lastname	admin	pt-br	Voc√™ deve digitar um sobrenome
+you must enter a loginid	admin	pt-br	Voc√™ deve digitar um c√≥digo
+you must enter an application name and title.	admin	pt-br	Voc√™ deve digitar um nome e um t√≠tulo para aplica√ß√£o.
+you must enter an application name.	admin	pt-br	Voc√™ deve digitar um nome para a aplica√ß√£o.
+you must enter an application title.	admin	pt-br	Voc√™ deve digitar um t√≠tulo para a aplica√ß√£o.
+you must select a file type	admin	pt-br	Voc√™ deve selecionar um tipo de arquivo.
+you must select at least one group member.	admin	pt-br	Voc√™ deve selecionar ao menos um membro.
+you will need to remove the subcategories before you can delete this category	admin	pt-br	Voc√™ dever√° remover as subcategorias antes de remover esta categoria !
+your session could not be verified.	admin	pt-br	Sua sess√£o n√£o p√¥de ser verificada

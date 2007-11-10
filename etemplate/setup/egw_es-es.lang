@@ -1,58 +1,58 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	es-es	%1 mensajes(%2 nuevos) escritos para la aplicaciÛn '%3' e idiomas '%4'
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	es-es	%1 mensajes(%2 nuevos) escritos para la aplicaci√≥n '%3' e idiomas '%4'
 %1 etemplates deleted	etemplate	es-es	%1 plantillas borradas
-%1 etemplates for application '%2' dumped to '%3'	etemplate	es-es	%1 plantillas para la aplicaciÛn '%2' volcadas a '%3'
+%1 etemplates for application '%2' dumped to '%3'	etemplate	es-es	%1 plantillas para la aplicaci√≥n '%2' volcadas a '%3'
 %1 etemplates found	etemplate	es-es	%1 plantillas encontradas
-%1 matches on search criteria	etemplate	es-es	%1 coincidencias para la b˙squeda solicitada
-%1 new etemplates imported for application '%2'	etemplate	es-es	%1 nuevas plantillas importadas para la aplicaciÛn '%2'
+%1 matches on search criteria	etemplate	es-es	%1 coincidencias para la b√∫squeda solicitada
+%1 new etemplates imported for application '%2'	etemplate	es-es	%1 nuevas plantillas importadas para la aplicaci√≥n '%2'
 %s disabled	etemplate	es-es	%s desactivado
 %s needed	etemplate	es-es	%s es necesario
-%s notranslation	etemplate	es-es	%s sin traducciÛn
+%s notranslation	etemplate	es-es	%s sin traducci√≥n
 %s onchange	etemplate	es-es	%s al cambiar
-%s readonly	etemplate	es-es	%s de sÛlo lectura
-'%1' has an invalid format !!!	etemplate	es-es	°°°'%1' no tiene un formato v·lido!!!
-'%1' is not a valid date !!!	etemplate	es-es	°°'%1'  no es una fecha v·lida!!
-'%1' is not a valid floatingpoint number !!!	etemplate	es-es	°°°'%1' no es un n˙mero v·lido de coma flotante!!!
-'%1' is not a valid integer !!!	etemplate	es-es	°°°'%1' no es un entero v·lido!!!
-a pattern to be searched for	etemplate	es-es	un patrÛn de b˙squeda
-accesskey	etemplate	es-es	Tecla r·pida
-accesskeys can also be specified with an & in the label (eg. &name)	etemplate	es-es	Las teclas r·pidas se pueden especificar tambiÈn poniendo & en la etiqueta (p. ej. &Nombre)
+%s readonly	etemplate	es-es	%s de s√≥lo lectura
+'%1' has an invalid format !!!	etemplate	es-es	¬°¬°¬°'%1' no tiene un formato v√°lido!!!
+'%1' is not a valid date !!!	etemplate	es-es	¬°¬°'%1'  no es una fecha v√°lida!!
+'%1' is not a valid floatingpoint number !!!	etemplate	es-es	¬°¬°¬°'%1' no es un n√∫mero v√°lido de coma flotante!!!
+'%1' is not a valid integer !!!	etemplate	es-es	¬°¬°¬°'%1' no es un entero v√°lido!!!
+a pattern to be searched for	etemplate	es-es	un patr√≥n de b√∫squeda
+accesskey	etemplate	es-es	Tecla r√°pida
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	es-es	Las teclas r√°pidas se pueden especificar tambi√©n poniendo & en la etiqueta (p. ej. &Nombre)
 account contactdata	etemplate	es-es	Datos de contacto de la cuenta
-add a new column (after the existing ones)	etemplate	es-es	AÒadir una columna nueva (detr·s de las existentes)
-add a new entry of the selected application	etemplate	es-es	AÒadir una entrada nueva de la aplicaciÛn seleccionada
-add a new multi-column index	etemplate	es-es	AÒadir un nuevo Ìndice multicolumna
-add column	etemplate	es-es	AÒadir columna
-add index	etemplate	es-es	AÒadir Ìndice
-add new	etemplate	es-es	AÒadir nueva
-add table	etemplate	es-es	AÒadir tabla
-advanced search	etemplate	es-es	B˙squeda avanzada
+add a new column (after the existing ones)	etemplate	es-es	A√±adir una columna nueva (detr√°s de las existentes)
+add a new entry of the selected application	etemplate	es-es	A√±adir una entrada nueva de la aplicaci√≥n seleccionada
+add a new multi-column index	etemplate	es-es	A√±adir un nuevo √≠ndice multicolumna
+add column	etemplate	es-es	A√±adir columna
+add index	etemplate	es-es	A√±adir √≠ndice
+add new	etemplate	es-es	A√±adir nueva
+add table	etemplate	es-es	A√±adir tabla
+advanced search	etemplate	es-es	B√∫squeda avanzada
 align	etemplate	es-es	Alinear
-alignment of label and input-field in table-cell	etemplate	es-es	posiciÛn de la etiqueta y campo de entrada en la celda de la tabla
-alignment of the v/hbox containing table-cell	etemplate	es-es	PosiciÛn del recuadro horizontal o vertical que contiene la celda de la tabla
-all days	etemplate	es-es	todos los dÌas
-all operations save the template!	etemplate	es-es	°Todas las operaciones guardan la plantilla!
+alignment of label and input-field in table-cell	etemplate	es-es	posici√≥n de la etiqueta y campo de entrada en la celda de la tabla
+alignment of the v/hbox containing table-cell	etemplate	es-es	Posici√≥n del recuadro horizontal o vertical que contiene la celda de la tabla
+all days	etemplate	es-es	todos los d√≠as
+all operations save the template!	etemplate	es-es	¬°Todas las operaciones guardan la plantilla!
 am	etemplate	es-es	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	es-es	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
-application	etemplate	es-es	AplicaciÛn
-application name needed to write a langfile or dump the etemplates !!!	etemplate	es-es	Se necesita el nombre de la aplicaciÛn para escribir un fichero de idioma o volcar las plantillas
+application	etemplate	es-es	Aplicaci√≥n
+application name needed to write a langfile or dump the etemplates !!!	etemplate	es-es	Se necesita el nombre de la aplicaci√≥n para escribir un fichero de idioma o volcar las plantillas
 applies the changes made	etemplate	es-es	aplica los cambios realizados
-applies the changes to the given version of the template	etemplate	es-es	aplica los cambios a la versiÛn dada de la plantilla
+applies the changes to the given version of the template	etemplate	es-es	aplica los cambios a la versi√≥n dada de la plantilla
 as default	etemplate	es-es	como predeterminado
 attach	etemplate	es-es	Adjuntar
 attach file	etemplate	es-es	Adjuntar fichero
-baseline	etemplate	es-es	LÌnea base
+baseline	etemplate	es-es	L√≠nea base
 blurtext	etemplate	es-es	Texto poco claro
 border	etemplate	es-es	Borde
-border-line-thickness for the table-tag	etemplate	es-es	Grosor de la lÌnea del borde de la etiqueta de la tabla
+border-line-thickness for the table-tag	etemplate	es-es	Grosor de la l√≠nea del borde de la etiqueta de la tabla
 bottom	etemplate	es-es	Parte inferior
 box	etemplate	es-es	Caja
 box...	etemplate	es-es	Caja...
 can not have special sql-value null	etemplate	es-es	no puede tener el valor especial de SQL NULL
 cancel	etemplate	es-es	Cancelar
-cant delete a single widget from a grid !!!	etemplate	es-es	°No se puede borrar un ˙nico control de una rejilla!
-cant delete the only column of a grid !!!	etemplate	es-es	°No se puede borrar la ˙nica columna de una rejilla!
-cant delete the only row in a grid !!!	etemplate	es-es	°No se puede borrar la ˙nica fila de una rejilla!
-category	etemplate	es-es	CategorÌa
-category tree	etemplate	es-es	Arbol de categorÌas
+cant delete a single widget from a grid !!!	etemplate	es-es	¬°No se puede borrar un √∫nico control de una rejilla!
+cant delete the only column of a grid !!!	etemplate	es-es	¬°No se puede borrar la √∫nica columna de una rejilla!
+cant delete the only row in a grid !!!	etemplate	es-es	¬°No se puede borrar la √∫nica fila de una rejilla!
+category	etemplate	es-es	Categor√≠a
+category tree	etemplate	es-es	Arbol de categor√≠as
 cellpadding for the table-tag	etemplate	es-es	Distancia de la etiqueta de la tabla la celda
 cells	etemplate	es-es	Celdas
 cellspacing for the table-tag	etemplate	es-es	Espaciado en la celda para la etiqueta de la tabla
@@ -62,26 +62,26 @@ check if content should only be displayed but not altered (the content is not se
 check if field has to be filled by user	etemplate	es-es	marcar si el campo tiene que rellenarlo el usuario
 checkbox	etemplate	es-es	Casilla
 class	etemplate	es-es	Clase
-class, valign	etemplate	es-es	clase, posiciÛn vertical
-click here to attach the file	etemplate	es-es	pulse aquÌ para adjuntar el fichero
-click here to create the link	etemplate	es-es	pulse aquÌ para crear el enlace
-click here to start the search	etemplate	es-es	Pulse aquÌ para iniciar la b˙squeda
-click here to upload the file	etemplate	es-es	Pulse aquÌ para subir el fichero al servidor
-click to order after that criteria	etemplate	es-es	pulse para ordenar despuÈs de ese criterio
+class, valign	etemplate	es-es	clase, posici√≥n vertical
+click here to attach the file	etemplate	es-es	pulse aqu√≠ para adjuntar el fichero
+click here to create the link	etemplate	es-es	pulse aqu√≠ para crear el enlace
+click here to start the search	etemplate	es-es	Pulse aqu√≠ para iniciar la b√∫squeda
+click here to upload the file	etemplate	es-es	Pulse aqu√≠ para subir el fichero al servidor
+click to order after that criteria	etemplate	es-es	pulse para ordenar despu√©s de ese criterio
 clickable path	etemplate	es-es	ruta pulsable
 closes the window without saving the changes	etemplate	es-es	cierra la ventana sin guardar los cambios
 column...	etemplate	es-es	Columna...
 columnname	etemplate	es-es	Nombre de la columna
 comment	etemplate	es-es	Comentario
 confirm	etemplate	es-es	confirmar
-confirmation message or custom javascript (returning true or false)	etemplate	es-es	mensaje de confirmaciÛn o javascript personalizado (devolviendo 'true' o 'false')
-confirmation necesary or custom java-script	etemplate	es-es	confirmaciÛn necesaria o javascript personalizado
+confirmation message or custom javascript (returning true or false)	etemplate	es-es	mensaje de confirmaci√≥n o javascript personalizado (devolviendo 'true' o 'false')
+confirmation necesary or custom java-script	etemplate	es-es	confirmaci√≥n necesaria o javascript personalizado
 contact	etemplate	es-es	Contacto
 contact field to show	etemplate	es-es	Campo del contacto a mostrar
 contact fields	etemplate	es-es	Campos de contacto
 contains	etemplate	es-es	contiene
-create a new table for the application	etemplate	es-es	Crear una tabla nueva para la aplicaciÛn
-creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	es-es	Crea un fichero de idioma en inglÈs ('en') a partir de la etiqueta y textos de ayuda (para la aplicaciÛn indicada en Nombre)
+create a new table for the application	etemplate	es-es	Crear una tabla nueva para la aplicaci√≥n
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	es-es	Crea un fichero de idioma en ingl√©s ('en') a partir de la etiqueta y textos de ayuda (para la aplicaci√≥n indicada en Nombre)
 css class for the table-tag	etemplate	es-es	clase CSS para la etiqueta de la tabla
 css properties	etemplate	es-es	Propiedades CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	es-es	Nombre de la clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
@@ -93,19 +93,19 @@ custom javascript for onchange	etemplate	es-es	javascript personalizado para onC
 cut	etemplate	es-es	Cortar
 date+time	etemplate	es-es	Fecha + hora
 datum	etemplate	es-es	Fecha
-day	etemplate	es-es	DÌa
-days	etemplate	es-es	dÌas
-db ensures that every row has a unique value in that column	etemplate	es-es	La base de datos se asegura de que cada fila tiene un valor ˙nico en esa columna
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	es-es	Opciones de Ìndice especÌficas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
+day	etemplate	es-es	D√≠a
+days	etemplate	es-es	d√≠as
+db ensures that every row has a unique value in that column	etemplate	es-es	La base de datos se asegura de que cada fila tiene un valor √∫nico en esa columna
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	es-es	Opciones de √≠ndice espec√≠ficas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
 db-tools	etemplate	es-es	Herramientas de la base de datos
 deck	etemplate	es-es	Cubierta (interna)
 default	etemplate	es-es	Predeterminado
 delete a single entry by passing the id.	etemplate	es-es	Borrar una entrada simple pasando el id.
 delete all selected etemplates, without further inquiry	etemplate	es-es	Borrar TODAS las plantillas seleccionadas, SIN preguntar
-delete and cut save the template!	etemplate	es-es	°borrar y cortar guardan la plantilla!
+delete and cut save the template!	etemplate	es-es	¬°borrar y cortar guardan la plantilla!
 delete column	etemplate	es-es	Borrar columna
-delete index	etemplate	es-es	Borrar Ìndice
-delete the spezified etemplate	etemplate	es-es	Borrar la plantilla especÌfica
+delete index	etemplate	es-es	Borrar √≠ndice
+delete the spezified etemplate	etemplate	es-es	Borrar la plantilla espec√≠fica
 delete this column	etemplate	es-es	borrar esta columna
 delete this etemplate	etemplate	es-es	Borrar esta plantilla
 delete this file	etemplate	es-es	Borrar este fichero
@@ -114,18 +114,18 @@ delete whole column (can not be undone!!!)	etemplate	es-es	Borra la columna comp
 deletes the above spez. etemplate from the database, can not be undone	etemplate	es-es	Borra la plantilla especificada de la base de datos. NO se puede deshacer.
 deletes the etemplate spez. above	etemplate	es-es	Borra la plantilla especificada arriba
 deletes this column	etemplate	es-es	Borra esta columna
-deletes this index	etemplate	es-es	Borra este Ìndice
+deletes this index	etemplate	es-es	Borra este √≠ndice
 discard changes	etemplate	es-es	Descartar cambios
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	es-es	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del botÛn de enviar o el nombre del fichero de la imagen)
-displayed in statusline of browser if input-field gets focus	etemplate	es-es	Se muestra en la lÌnea de estado del navegador cuando el cuadro de texto tiene el foco
-displayed in the top line of the groupbox (legend)	etemplate	es-es	mostrada en la lÌnea superior del recuadro de grupo (leyenda)
-do you want to save the changes you made in table %s?	etemplate	es-es	øDesea guardar los cambios que ha realizado en la tabla %s?
-documentation	etemplate	es-es	DocumentaciÛn
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	es-es	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del bot√≥n de enviar o el nombre del fichero de la imagen)
+displayed in statusline of browser if input-field gets focus	etemplate	es-es	Se muestra en la l√≠nea de estado del navegador cuando el cuadro de texto tiene el foco
+displayed in the top line of the groupbox (legend)	etemplate	es-es	mostrada en la l√≠nea superior del recuadro de grupo (leyenda)
+do you want to save the changes you made in table %s?	etemplate	es-es	¬øDesea guardar los cambios que ha realizado en la tabla %s?
+documentation	etemplate	es-es	Documentaci√≥n
 doesn't matter	etemplate	es-es	no importa
 drop a table - this can not be undone	etemplate	es-es	Borrar una tabla - NO se puede deshacer
 drop table	etemplate	es-es	Borrar tabla
-dump4setup	etemplate	es-es	Volcar para instalaciÛn
-duration	etemplate	es-es	DuraciÛn
+dump4setup	etemplate	es-es	Volcar para instalaci√≥n
+duration	etemplate	es-es	Duraci√≥n
 edit	etemplate	es-es	Editar
 edit embeded css styles or of the applications app.css file	etemplate	es-es	editar estilos CSS incrustados o el fichero app.css de las aplicaciones
 edit the etemplate spez. above	etemplate	es-es	editar las especificaciones de la plantilla indicada arriba
@@ -135,33 +135,33 @@ editable templates - delete template	etemplate	es-es	Plantillas editables - Borr
 editable templates - editor	etemplate	es-es	Plantillas editables - Editor
 editable templates - search	etemplate	es-es	Plantillas editables - Buscar
 editable templates - show template	etemplate	es-es	Plantillas editables - Mostrar plantilla
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la p·gina)
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la p√°gina)
 enable javascript onchange submit	etemplate	es-es	activar enviar JavaScript onChange
-enter '' for an empty default, nothing mean no default	etemplate	es-es	Introduzca '' para un valor predeterminado vacÌo. Si se deja en blanco, no hay valor predeterminado
-enter a search pattern	etemplate	es-es	Introduzca un patrÛn de b˙squeda
+enter '' for an empty default, nothing mean no default	etemplate	es-es	Introduzca '' para un valor predeterminado vac√≠o. Si se deja en blanco, no hay valor predeterminado
+enter a search pattern	etemplate	es-es	Introduzca un patr√≥n de b√∫squeda
 enter filename to upload and attach, use [browse...] to search for it	etemplate	es-es	Introduzca el nombre del fichero para subir y adjuntar. Use [Examinar...] Para buscarlo
-enter the new version number here (> old_version), empty for no update-file	etemplate	es-es	Introduzca el nuevo n˙mero de versiÛn aquÌ (mayor que versiÛn anterior), vacÌo para no usar fichero de actualizaciÛn
-enter the new version number here (has to be > old_version)	etemplate	es-es	Introduzca el nuevo n˙mero de versiÛn aquÌ (tiene que ser mayor que la versiÛn anterior)
+enter the new version number here (> old_version), empty for no update-file	etemplate	es-es	Introduzca el nuevo n√∫mero de versi√≥n aqu√≠ (mayor que versi√≥n anterior), vac√≠o para no usar fichero de actualizaci√≥n
+enter the new version number here (has to be > old_version)	etemplate	es-es	Introduzca el nuevo n√∫mero de versi√≥n aqu√≠ (tiene que ser mayor que la versi√≥n anterior)
 entry saved	etemplate	es-es	La entrada ha sido guardada
-error: template not found !!!	etemplate	es-es	Error: no se encontrÛ la plantilla
-error: webserver is not allowed to write into '%1' !!!	etemplate	es-es	Error: °El servidor no puede escribir en '%1'!
-error: while saving !!!	etemplate	es-es	°°Error al guardar!!
+error: template not found !!!	etemplate	es-es	Error: no se encontr√≥ la plantilla
+error: webserver is not allowed to write into '%1' !!!	etemplate	es-es	Error: ¬°El servidor no puede escribir en '%1'!
+error: while saving !!!	etemplate	es-es	¬°¬°Error al guardar!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	es-es	Error: el servidor web no tiene permiso de escritura
-etemplate	common	es-es	Plantilla electrÛnica
-etemplate '%1' imported, use save to put it in the database	etemplate	es-es	Se ha importado la plantilla electrÛnica '%1'. Use Guardar para ponerla en la base de datos
-etemplate '%1' written to '%2'	etemplate	es-es	La plantilla electrÛnica '%1' se ha guardado en '%2'
-etemplate editor	etemplate	es-es	Editor de plantillas electrÛnicas
-etemplate reference	etemplate	es-es	Referencia de plantillas electrÛnicas
-etemplate tutorial	etemplate	es-es	Tutorial de plantillas electrÛnicas
+etemplate	common	es-es	Plantilla electr√≥nica
+etemplate '%1' imported, use save to put it in the database	etemplate	es-es	Se ha importado la plantilla electr√≥nica '%1'. Use Guardar para ponerla en la base de datos
+etemplate '%1' written to '%2'	etemplate	es-es	La plantilla electr√≥nica '%1' se ha guardado en '%2'
+etemplate editor	etemplate	es-es	Editor de plantillas electr√≥nicas
+etemplate reference	etemplate	es-es	Referencia de plantillas electr√≥nicas
+etemplate tutorial	etemplate	es-es	Tutorial de plantillas electr√≥nicas
 exchange this row with the one above	etemplate	es-es	Intercambiar esta fila con la de encima
 exchange this two columns	etemplate	es-es	Intercambiar estas dos columnas
 export the loaded etemplate into a xml-file	etemplate	es-es	Exportar la plantilla cargada en un fichero xml
 export xml	etemplate	es-es	Exportar XML
 extensions loaded:	etemplate	es-es	Extensiones cargadas:
 field	etemplate	es-es	Campo
-field must not be empty !!!	etemplate	es-es	°°°El campo no debe estar vacÌo!!!
+field must not be empty !!!	etemplate	es-es	¬°¬°¬°El campo no debe estar vac√≠o!!!
 file	etemplate	es-es	Fichero
-file contains more than one etemplate, last one is shown !!!	etemplate	es-es	El fichero contiene m·s de una plantilla. SÛlo se mostrar· la ˙ltima.
+file contains more than one etemplate, last one is shown !!!	etemplate	es-es	El fichero contiene m√°s de una plantilla. S√≥lo se mostrar√° la √∫ltima.
 file writen	etemplate	es-es	Fichero guardado
 fileupload	etemplate	es-es	Subir fichero
 first	etemplate	es-es	Primero
@@ -169,9 +169,9 @@ floating point	etemplate	es-es	Coma flotante
 foreign key	etemplate	es-es	Clave ajena
 formatted text (html)	etemplate	es-es	Texto con formato (HTML)
 go to the first entry	etemplate	es-es	Ir a la primera entrada
-go to the last entry	etemplate	es-es	Ir a la ˙ltima entrada
-go to the next page of entries	etemplate	es-es	Ir a la p·gina siguiente de entradas
-go to the previous page of entries	etemplate	es-es	Ir a la p·gina anterior de entradas
+go to the last entry	etemplate	es-es	Ir a la √∫ltima entrada
+go to the next page of entries	etemplate	es-es	Ir a la p√°gina siguiente de entradas
+go to the previous page of entries	etemplate	es-es	Ir a la p√°gina anterior de entradas
 grid	etemplate	es-es	Rejilla
 grid column attributes	etemplate	es-es	Atributos de la columna de la rejilla
 grid row attributes	etemplate	es-es	Atributos de la fila de la rejilla
@@ -179,43 +179,43 @@ groupbox	etemplate	es-es	Recuadro de grupo
 hbox	etemplate	es-es	Cuadro horizontal
 height	etemplate	es-es	Altura
 height of row (in % or pixel)	etemplate	es-es	altura de la fila (en % o pixels)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	es-es	Altura de la fila (en % o pÌxeles), desactivar fila: [!= no]<valor>[=<check>]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos est· vacÌo.
-height of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Altura de la tabla en % o pÌxeles para la etiqueta de la tabla y, opcionalmente, div.
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	es-es	Altura de la fila (en % o p√≠xeles), desactivar fila: [!= no]<valor>[=<check>]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos est√° vac√≠o.
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Altura de la tabla en % o p√≠xeles para la etiqueta de la tabla y, opcionalmente, div.
 height, disabled	etemplate	es-es	Altura, desactivada
 help	etemplate	es-es	Ayuda
-history log	etemplate	es-es	Registro histÛrico
-horizontal rule	etemplate	es-es	LÌnea horizontal
-hour	etemplate	es-es	Hora (del dÌa)
+history log	etemplate	es-es	Registro hist√≥rico
+horizontal rule	etemplate	es-es	L√≠nea horizontal
+hour	etemplate	es-es	Hora (del d√≠a)
 hours	etemplate	es-es	horas
-how many entries should the list show	etemplate	es-es	øCu·ntas entradas se muestran en la lista?
+how many entries should the list show	etemplate	es-es	¬øCu√°ntas entradas se muestran en la lista?
 html	etemplate	es-es	Html
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	es-es	Si el campo est· desactivado, se muestra la celda de la tabla vacÌa, para borrar temporalmente un campo o celda.
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	es-es	Si el campo est√° desactivado, se muestra la celda de la tabla vac√≠a, para borrar temporalmente un campo o celda.
 image	etemplate	es-es	Imagen
 import	etemplate	es-es	Importar
 import an etemplate from a xml-file	etemplate	es-es	Importar una plantilla de un fichero xml
 import table-definitions from existing db-table	etemplate	es-es	Importar definiciones de tabla de una tabla de una base de datos existente
 import xml	etemplate	es-es	Importar XML
-increment version to not overwrite the existing template	etemplate	es-es	Incrementar la versiÛn para no sobreescribir la plantilla existente
-index/name of returned content (name of the template, link / method for image)	etemplate	es-es	Nombre o Ìndice del nombre del contenido devuelto (nombre de la plantilla, enlace o mÈtodo para una imagen)
+increment version to not overwrite the existing template	etemplate	es-es	Incrementar la versi√≥n para no sobreescribir la plantilla existente
+index/name of returned content (name of the template, link / method for image)	etemplate	es-es	Nombre o √≠ndice del nombre del contenido devuelto (nombre de la plantilla, enlace o m√©todo para una imagen)
 indexed	etemplate	es-es	Indexado
 indexoptions	etemplate	es-es	Opciones de indexar
 insert a column before	etemplate	es-es	insertar una columna delante
-insert a column behind	etemplate	es-es	insertar una columna detr·s
+insert a column behind	etemplate	es-es	insertar una columna detr√°s
 insert a row above	etemplate	es-es	insertar una fila encima
 insert a row below	etemplate	es-es	insertar una fila debajo
 insert a widget before	etemplate	es-es	insertar un control delante
-insert a widget behind	etemplate	es-es	insertar un control detr·s
-insert new column behind this one	etemplate	es-es	Insertar nueva columna detr·s de Èsta
+insert a widget behind	etemplate	es-es	insertar un control detr√°s
+insert new column behind this one	etemplate	es-es	Insertar nueva columna detr√°s de √©sta
 insert new column in front of all	etemplate	es-es	Insertar nueva columna al principio de todas
-insert new row after this one	etemplate	es-es	Insertar una nueva fila despuÈs de Èsta
-insert new row in front of first line	etemplate	es-es	Insertar una nueva fila delante de la primera lÌnea
+insert new row after this one	etemplate	es-es	Insertar una nueva fila despu√©s de √©sta
+insert new row in front of first line	etemplate	es-es	Insertar una nueva fila delante de la primera l√≠nea
 integer	etemplate	es-es	Entero
 key	etemplate	es-es	Clave
 label	etemplate	es-es	Etiqueta
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	es-es	Etiqueta:[bold][italic] Texto:[len][,max] N˙meros:[min][,[max][,len]] ¡rea de texto:[rows][,cols] BotÛnRadio:valor LÌnea hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	es-es	Etiqueta:[bold][italic] Texto:[len][,max] N√∫meros:[min][,[max][,len]] √Årea de texto:[rows][,cols] Bot√≥nRadio:valor L√≠nea hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
 lang	etemplate	es-es	Idioma
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	es-es	Abreviatura del idioma (ej. 'en' para inglÈs) para plantillas que dependen del idioma ('' lee las preferencias del idioma o el predeterminado. Use 'default' para la plantilla predeterminada.
-last	etemplate	es-es	⁄ltima
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	es-es	Abreviatura del idioma (ej. 'en' para ingl√©s) para plantillas que dependen del idioma ('' lee las preferencias del idioma o el predeterminado. Use 'default' para la plantilla predeterminada.
+last	etemplate	es-es	√öltima
 left	etemplate	es-es	Izquierda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	es-es	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
 link	etemplate	es-es	Enlace
@@ -232,35 +232,35 @@ month	etemplate	es-es	Mes
 multicolumn indices	etemplate	es-es	Indices multicolumna
 name	etemplate	es-es	Nombre
 name of other table where column is a key from	etemplate	es-es	Nombre de la otra tabla donde la columna es una clave
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	es-es	nombre del conjunto de plantillas (p. ej. verdiak): " = predeterminada (leer· la plantila de preferencias. Use 'default' para leer la plantilla predeterminada ")
-name of table to add	etemplate	es-es	Nombre de la tabla a aÒadir
-name of the etemplate, should be in form application.function[.subtemplate]	etemplate	es-es	Nombre de la plantilla. Debe estar en el formato aplicaciÛn.funciÛn[.subplantilla]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	es-es	Necesita ser ˙nica en la tabla y no ser palabra reservada SQL. Intente poner un prefijo com˙n de dos caracteres para la aplicaciÛn, por ejemplo 'et_'
-new search	etemplate	es-es	Nueva b˙squeda
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	es-es	nombre del conjunto de plantillas (p. ej. verdiak): " = predeterminada (leer√° la plantila de preferencias. Use 'default' para leer la plantilla predeterminada ")
+name of table to add	etemplate	es-es	Nombre de la tabla a a√±adir
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	es-es	Nombre de la plantilla. Debe estar en el formato aplicaci√≥n.funci√≥n[.subplantilla]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	es-es	Necesita ser √∫nica en la tabla y no ser palabra reservada SQL. Intente poner un prefijo com√∫n de dos caracteres para la aplicaci√≥n, por ejemplo 'et_'
+new search	etemplate	es-es	Nueva b√∫squeda
 new table created	etemplate	es-es	Se ha creado una tabla nueva
-newer version '%1' exists !!!	etemplate	es-es	°Existe una versiÛn '%1' m·s reciente!
+newer version '%1' exists !!!	etemplate	es-es	¬°Existe una versi√≥n '%1' m√°s reciente!
 nextmatch	etemplate	es-es	Control 'Nextmach' (Siguiente coincidencia)
 nextmatch accountfilter	etemplate	es-es	Nextmatch con filtro de cuentas
 nextmatch custom filterheader	etemplate	es-es	Filtro de cabecera personalizado para nextmatch
 nextmatch filterheader	etemplate	es-es	Nextmatch con filtro de cabeceras
 nextmatch header	etemplate	es-es	Encabezado de control Nextmatch
 nextmatch sortheader	etemplate	es-es	Cabecera de orden de siguiente coincidencia
-no column to swap with !!!	etemplate	es-es	°No hay columna con la que intercambiar!
+no column to swap with !!!	etemplate	es-es	¬°No hay columna con la que intercambiar!
 no file	etemplate	es-es	sin fichero
-no filename given or selected via browse...	etemplate	es-es	no se indicÛ un nombre de fichero ni se selecciÛno mediante Examinar...
-no row to swap with !!!	etemplate	es-es	°No hay fila con la que intercambiar!
+no filename given or selected via browse...	etemplate	es-es	no se indic√≥ un nombre de fichero ni se selecci√≥no mediante Examinar...
+no row to swap with !!!	etemplate	es-es	¬°No hay fila con la que intercambiar!
 not null	etemplate	es-es	NOT NULL
 nothing	etemplate	es-es	nada
-nothing found - try again !!!	etemplate	es-es	No se encontrÛ nada. IntÈntelo de nuevo.
-nothing in clipboard to paste !!!	etemplate	es-es	°°No hay nada en el portapapeles para pegar!!
-nothing matched search criteria !!!	etemplate	es-es	No se encontrÛ nada con ese criterio.
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	es-es	n˙mero de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	es-es	n˙mero de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
+nothing found - try again !!!	etemplate	es-es	No se encontr√≥ nada. Int√©ntelo de nuevo.
+nothing in clipboard to paste !!!	etemplate	es-es	¬°¬°No hay nada en el portapapeles para pegar!!
+nothing matched search criteria !!!	etemplate	es-es	No se encontr√≥ nada con ese criterio.
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	es-es	n√∫mero de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	es-es	n√∫mero de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
 of	etemplate	es-es	de
 onchange	etemplate	es-es	onChange
 onclick	etemplate	es-es	onClick
-only an other version found !!!	etemplate	es-es	sÛlo se encontrÛ otra versiÛn
-open the online help.	etemplate	es-es	Abrir la ayuda en lÌnea
+only an other version found !!!	etemplate	es-es	s√≥lo se encontr√≥ otra versi√≥n
+open the online help.	etemplate	es-es	Abrir la ayuda en l√≠nea
 operator	etemplate	es-es	Operador
 optional note about the link	etemplate	es-es	nota opcional sobre el enlace
 options	etemplate	es-es	Opciones
@@ -273,51 +273,51 @@ path	etemplate	es-es	Ruta
 please enter table-name first !!!	etemplate	es-es	Por favor, introduzca el nombre de la tabla primero
 pm	etemplate	es-es	pm
 popup	etemplate	es-es	Ventama emergente
-precision	etemplate	es-es	PrecisiÛn
+precision	etemplate	es-es	Precisi√≥n
 primary key	etemplate	es-es	Clave primaria
-primary key for the table, gets automaticaly indexed	etemplate	es-es	Clave primaria para la tabla, se indexa autom·ticamente
-radiobutton	etemplate	es-es	BotÛn tipo radio
+primary key for the table, gets automaticaly indexed	etemplate	es-es	Clave primaria para la tabla, se indexa autom√°ticamente
+radiobutton	etemplate	es-es	Bot√≥n tipo radio
 read	etemplate	es-es	Leer
 read a list of entries.	etemplate	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	etemplate	es-es	Leer una sola entrada pasando el id y la lista de campos
 read etemplate from database (for the keys above)	etemplate	es-es	leer plantilla de la base de datos (para las claves de arriba)
-readonly	etemplate	es-es	sÛlo lectura
-remove row (can not be undone!!!)	etemplate	es-es	Eliminar fila (°NO se puede deshacer!)
-remove this link (not the entry itself)	etemplate	es-es	Borrar este enlace (no la entrada en sÌ)
+readonly	etemplate	es-es	s√≥lo lectura
+remove row (can not be undone!!!)	etemplate	es-es	Eliminar fila (¬°NO se puede deshacer!)
+remove this link (not the entry itself)	etemplate	es-es	Borrar este enlace (no la entrada en s√≠)
 returns savely, without deleting	etemplate	es-es	Vuelve de forma segura, SIN borrar
 right	etemplate	es-es	Derecha
 row...	etemplate	es-es	Fila...
 save selected columns as default preference for all users.	etemplate	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
 save the changes made and close the window	etemplate	es-es	Guardar los cambios realizados y cerrar la ventana
-save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). C·mbielas para Guardar como.
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). C√°mbielas para Guardar como.
 saves changes to tables_current.inc.php	etemplate	es-es	Guarda los cambios en el fichero tables_current.inc.php
-saves the template with given version number and closes the window	etemplate	es-es	Guarda la plantilla con el n˙mero de versiÛn indicado y cierra la ventana
+saves the template with given version number and closes the window	etemplate	es-es	Guarda la plantilla con el n√∫mero de versi√≥n indicado y cierra la ventana
 scale	etemplate	es-es	Escala
 scale for float	etemplate	es-es	escala para flotante
 search	etemplate	es-es	Buscar
-select a category	etemplate	es-es	seleccionar una categorÌa
+select a category	etemplate	es-es	seleccionar una categor√≠a
 select a primary contact, to show in the list	etemplate	es-es	Seleccionar un contacto primario, para mostrar en la lista
 select access	etemplate	es-es	Seleccionar acceso
 select account	etemplate	es-es	Seleccionar cuenta
-select an app first !!!	etemplate	es-es	Seleccione una aplicaciÛn primero
-select an app to search in	etemplate	es-es	Seleccionar una aplicaciÛn en la que buscar
-select an application	etemplate	es-es	Seleccionar una aplicaciÛn
-select an application, (*) = uninstalled	etemplate	es-es	Seleccionar una aplicaciÛn. (*) = sin instalar
+select an app first !!!	etemplate	es-es	Seleccione una aplicaci√≥n primero
+select an app to search in	etemplate	es-es	Seleccionar una aplicaci√≥n en la que buscar
+select an application	etemplate	es-es	Seleccionar una aplicaci√≥n
+select an application, (*) = uninstalled	etemplate	es-es	Seleccionar una aplicaci√≥n. (*) = sin instalar
 select an entry to link with	etemplate	es-es	Seleccionar una entrada para enlazar
-select an table of the application	etemplate	es-es	Seleccione una tabla de la aplicaciÛn
-select application	etemplate	es-es	Seleccionar aplicaciÛn
-select application to search	etemplate	es-es	Seleccionar aplicaciÛn para buscar
-select category	etemplate	es-es	Seleccionar categorÌa
+select an table of the application	etemplate	es-es	Seleccione una tabla de la aplicaci√≥n
+select application	etemplate	es-es	Seleccionar aplicaci√≥n
+select application to search	etemplate	es-es	Seleccionar aplicaci√≥n para buscar
+select category	etemplate	es-es	Seleccionar categor√≠a
 select columns	etemplate	es-es	Seleccionar columnas
-select country	etemplate	es-es	Seleccionar paÌs
-select day	etemplate	es-es	Seleccionar dÌa
-select day of week	etemplate	es-es	Seleccionar dÌa de la semana
+select country	etemplate	es-es	Seleccionar pa√≠s
+select day	etemplate	es-es	Seleccionar d√≠a
+select day of week	etemplate	es-es	Seleccionar d√≠a de la semana
 select entry	etemplate	es-es	Seleccionar entrada
-select hour	etemplate	es-es	Seleccionar hora del dÌa
+select hour	etemplate	es-es	Seleccionar hora del d√≠a
 select if content of field should not be translated (label gets always translated)	etemplate	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
 select language	etemplate	es-es	Seleccionar idioma
 select month	etemplate	es-es	Seleccionar mes
-select number	etemplate	es-es	Seleccionar n˙mero
+select number	etemplate	es-es	Seleccionar n√∫mero
 select one ...	etemplate	es-es	Seleccionar uno...
 select percentage	etemplate	es-es	Seleccionar porcentaje
 select priority	etemplate	es-es	Seleccionar prioridad
@@ -326,9 +326,9 @@ select the columns to display in the list	etemplate	es-es	Seleccionar columnas a
 select the indexed columns in their desired order	etemplate	es-es	Seleccionar las columnas indexadas en su orden deseado
 select this etemplate to delete it	etemplate	es-es	Seleccionar esta plantilla para borrarla
 select which accounts to show	etemplate	es-es	seleccionar las cuentas a mostrar
-select which values to show	etemplate	es-es	Seleccionar quÈ valores mostrar
-select year	etemplate	es-es	Seleccionar aÒo
-selectbox	etemplate	es-es	Cuadro de selecciÛn
+select which values to show	etemplate	es-es	Seleccionar qu√© valores mostrar
+select year	etemplate	es-es	Seleccionar a√±o
+selectbox	etemplate	es-es	Cuadro de selecci√≥n
 sets today as date	etemplate	es-es	pone hoy como fecha
 should the form be submitted or any custom javascript be executed	etemplate	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
 show	etemplate	es-es	Mostrar
@@ -341,65 +341,65 @@ spacing	etemplate	es-es	Espaciado
 span	etemplate	es-es	Span
 span, class	etemplate	es-es	span, clase
 stack	etemplate	es-es	Pila
-start a new search, cancel this link	etemplate	es-es	comienzar una nueva b˙squeda, cancelar este enlace
-start new search for the above pattern	etemplate	es-es	comenzar una nueva b˙squeda para el patrÛn de arriba
+start a new search, cancel this link	etemplate	es-es	comienzar una nueva b√∫squeda, cancelar este enlace
+start new search for the above pattern	etemplate	es-es	comenzar una nueva b√∫squeda para el patr√≥n de arriba
 submit form	etemplate	es-es	Enviar formulario
-submitbutton	etemplate	es-es	BotÛn de enviar
+submitbutton	etemplate	es-es	Bot√≥n de enviar
 swap	etemplate	es-es	intercambiar
 swap widget with next one	etemplate	es-es	intercambiar control con el siguiente
 swap with next column	etemplate	es-es	intercambiar con la siguiente columna
 swap with next row	etemplate	es-es	intercambiar con la fila siguiente
 switch to a parent widget	etemplate	es-es	Cambiar a un control superior
 switch to an other widgets of that container	etemplate	es-es	Cambiar a otros controles de ese contenedor
-tabindex	etemplate	es-es	Õndice de tabulaciÛn
+tabindex	etemplate	es-es	√çndice de tabulaci√≥n
 table unchanged, no write necessary !!!	etemplate	es-es	La tabla no se ha modificado, no es necesario guardarla
 tablename	etemplate	es-es	Nombre de la tabla
-tabs	etemplate	es-es	PestaÒas
+tabs	etemplate	es-es	Pesta√±as
 template	etemplate	es-es	Plantilla
 template deleted	etemplate	es-es	Plantilla borrada
 template saved	etemplate	es-es	Plantilla guardada
 text	etemplate	es-es	Texto
 textarea	etemplate	es-es	Area de texto
-this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	es-es	este texto se muestra si el campo de entrada est· vacÌo y no tiene foco (borroso)
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	es-es	este texto se muestra si el campo de entrada est√° vac√≠o y no tiene foco (borroso)
 time	etemplate	es-es	Hora (completa)
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	es-es	para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' est· vacÌo
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	es-es	para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' est√° vac√≠o
 to start the db-tools	etemplate	es-es	para iniciar las Herramientas de la base de datos
 to start the etemplate editor	etemplate	es-es	para iniciar el editor de plantillas
-to start the search	etemplate	es-es	para iniciar la b˙squeda
+to start the search	etemplate	es-es	para iniciar la b√∫squeda
 today	etemplate	es-es	Hoy
 top	etemplate	es-es	Superior
 tree	etemplate	es-es	Arbol
 type	etemplate	es-es	Tipo
 type of the column	etemplate	es-es	tipo de la columna
-type of the field (select label if field should be empty)	etemplate	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vacÌo)
-unique	etemplate	es-es	⁄nico
+type of the field (select label if field should be empty)	etemplate	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vac√≠o)
+unique	etemplate	es-es	√önico
 unlink	etemplate	es-es	Desvincular
-update a single entry by passing the fields.	etemplate	es-es	Actualizar una ˙nica entrada pasando los campos
-update from version '%s' to	etemplate	es-es	Actualizar de la versiÛn '%s' a
+update a single entry by passing the fields.	etemplate	es-es	Actualizar una √∫nica entrada pasando los campos
+update from version '%s' to	etemplate	es-es	Actualizar de la versi√≥n '%s' a
 upload	etemplate	es-es	Subir a un servidor
-valign	etemplate	es-es	AlineaciÛn vertical
+valign	etemplate	es-es	Alineaci√≥n vertical
 value	etemplate	es-es	Valor
-value has to be at least '%1' !!!	etemplate	es-es	°°°El valor tiene que ser al menos '%1'!!!
-value has to be at maximum '%1' !!!	etemplate	es-es	°°°El valor tiene que ser como m·ximo '%1'!!!
+value has to be at least '%1' !!!	etemplate	es-es	¬°¬°¬°El valor tiene que ser al menos '%1'!!!
+value has to be at maximum '%1' !!!	etemplate	es-es	¬°¬°¬°El valor tiene que ser como m√°ximo '%1'!!!
 vbox	etemplate	es-es	VBox
-version	etemplate	es-es	VersiÛn
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	es-es	n˙mero de la versiÛn, en formato mayor.menor.revisiÛn.n˙mero (por ej. 0.9.13.001, con todos los n˙meros rellenos con ceros)
-vertical alignment of row	etemplate	es-es	alineaciÛn vertical de la fila
+version	etemplate	es-es	Versi√≥n
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	es-es	n√∫mero de la versi√≥n, en formato mayor.menor.revisi√≥n.n√∫mero (por ej. 0.9.13.001, con todos los n√∫meros rellenos con ceros)
+vertical alignment of row	etemplate	es-es	alineaci√≥n vertical de la fila
 view this etemplate	etemplate	es-es	ver esta plantilla
-view this linked entry in its application	etemplate	es-es	ver esta entrada enlazada en su aplicaciÛn
+view this linked entry in its application	etemplate	es-es	ver esta entrada enlazada en su aplicaci√≥n
 weekend	etemplate	es-es	fin de semana
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	es-es	QuÈ hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, autom·tico (decide el navegador)
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	es-es	Qu√© hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, autom√°tico (decide el navegador)
 widget copied into clipboard	etemplate	es-es	control copiado en el portapapeles
 width	etemplate	es-es	Ancho
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	es-es	ancho de la columna (en % o pÌxeles), desactivar columna: [!= no]<valor>[=<comprobar>] ej: '!@data' desactiva la columna si el contenido de los datos est· vacÌo
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	es-es	ancho de la columna (en % o p√≠xeles), desactivar columna: [!= no]<valor>[=<comprobar>] ej: '!@data' desactiva la columna si el contenido de los datos est√° vac√≠o
 width of column (in % or pixel)	etemplate	es-es	ancho de la columna (en % o pixel)
-width of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Ancho de la tabla en % o pÌxeles para la etiqueta y, opcionalmente, elemento div
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Ancho de la tabla en % o p√≠xeles para la etiqueta y, opcionalmente, elemento div
 width, disabled	etemplate	es-es	Ancho, desactivado
-working days	etemplate	es-es	dÌas laborales
+working days	etemplate	es-es	d√≠as laborales
 write <app>/setup/tables_current.inc.php	etemplate	es-es	Escribir <app>/setup/tables_current.inc.php
 write langfile	etemplate	es-es	Escribir fichero de idioma
 write tables	etemplate	es-es	Escribir tablas
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	es-es	escribe un fichero 'etemplates.inc.php' (para la aplicaciÛn en Nombre) en el directorio de instalaciÛn de la aplicaciÛn
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	es-es	escribe un fichero 'etemplates.inc.php' (para la aplicaci√≥n en Nombre) en el directorio de instalaci√≥n de la aplicaci√≥n
 xml-file to import	etemplate	es-es	fichero xml a importar
 xslt template	etemplate	es-es	Plantilla XSLT
-year	etemplate	es-es	AÒo
+year	etemplate	es-es	A√±o

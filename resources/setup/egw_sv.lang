@@ -1,102 +1,102 @@
-accessories of	resources	sv	Tillbehˆr till
-accessories:	resources	sv	Tillbehˆr:
-actions	resources	sv	≈tg‰rder
-add accessory	resources	sv	L‰gg till tillbehˆr
-add resource	resources	sv	L‰gg till resurs
-add resources	resources	sv	L‰gg till resurser
-administrator	resources	sv	Administratˆr
+accessories of	resources	sv	Tillbeh√∂r till
+accessories:	resources	sv	Tillbeh√∂r:
+actions	resources	sv	√Ötg√§rder
+add accessory	resources	sv	L√§gg till tillbeh√∂r
+add resource	resources	sv	L√§gg till resurs
+add resources	resources	sv	L√§gg till resurser
+administrator	resources	sv	Administrat√∂r
 all categories	resources	sv	Alla kategorier
 book	resources	sv	Boka
 book selected resources	resources	sv	Boka valda resurser
 book this resource	resources	sv	Boka resursen
 bookable	resources	sv	Bokningsbar
-buy this article	resources	sv	Kˆp artikeln
-buy this resource	resources	sv	Kˆp resursen
+buy this article	resources	sv	K√∂p artikeln
+buy this resource	resources	sv	K√∂p resursen
 buyable	resources	sv	Till salu
-categories admin	resources	sv	Kategori administratˆr
+categories admin	resources	sv	Kategori administrat√∂r
 category:	resources	sv	Kategori:
 check all	resources	sv	Markera alla
-choose categories admin	resources	sv	V‰lj kategori administratˆr
+choose categories admin	resources	sv	V√§lj kategori administrat√∂r
 clear selection	resources	sv	Rensa markeringar
-configure access permissions	admin	sv	Reglera Âtkomst
-create new accessory for this resource	resources	sv	Skapa tillbehˆr till resursen
-create new links	resources	sv	Skapa nya l‰nkar
+configure access permissions	admin	sv	Reglera √•tkomst
+create new accessory for this resource	resources	sv	Skapa tillbeh√∂r till resursen
+create new links	resources	sv	Skapa nya l√§nkar
 delete selected resources	resources	sv	Radera valda resurser
 delete this entry	resources	sv	Radera posten
 description (short)	resources	sv	Beskrivning (kort)
-direct booking permissions	resources	sv	Direkt bokningsr‰ttigheter
-don't use vfs (this will need a symlink --> see readme)	resources	sv	Anv‰nd inte VFS (detta behˆver en mjukl‰nk --> l‰s i README)
-edit this entry	resources	sv	ƒndra post
-existing links	resources	sv	Befintliga l‰nkar
-general	resources	sv	Allm‰nt
-general informations about resource	resources	sv	Allm‰n information om resurser
-gernal resource	resources	sv	Allm‰na resuser
-how many of the resources are useable?	resources	sv	Hur mÂnga av resurserna ‰r tillg‰ngliga
-how many of them are useable?	resources	sv	Hur mÂnga av dem ‰r tillg‰ngliga
-how many of this resource are usable	resources	sv	Hur mÂnga av resursen ‰r tillg‰ngliga
-how many of this resource exists	resources	sv	Hur mÂnga av resursen finns
-implies booking permission	resources	sv	Ger bokningsr‰ttigheter
-implies read permission	resources	sv	Ger l‰sr‰ttigheter
+direct booking permissions	resources	sv	Direkt bokningsr√§ttigheter
+don't use vfs (this will need a symlink --> see readme)	resources	sv	Anv√§nd inte VFS (detta beh√∂ver en mjukl√§nk --> l√§s i README)
+edit this entry	resources	sv	√Ñndra post
+existing links	resources	sv	Befintliga l√§nkar
+general	resources	sv	Allm√§nt
+general informations about resource	resources	sv	Allm√§n information om resurser
+gernal resource	resources	sv	Allm√§na resuser
+how many of the resources are useable?	resources	sv	Hur m√•nga av resurserna √§r tillg√§ngliga
+how many of them are useable?	resources	sv	Hur m√•nga av dem √§r tillg√§ngliga
+how many of this resource are usable	resources	sv	Hur m√•nga av resursen √§r tillg√§ngliga
+how many of this resource exists	resources	sv	Hur m√•nga av resursen finns
+implies booking permission	resources	sv	Ger bokningsr√§ttigheter
+implies read permission	resources	sv	Ger l√§sr√§ttigheter
 information about storage	resources	sv	Information om lager
 informations about the location of resource	resources	sv	Information om resursens placering
 inventory number	resources	sv	Inventarie nr
 inventory number:	resources	sv	Inventarie nr:
-is resource bookable?	resources	sv	ƒr resursen bokningsbar
-is resource buyable?	resources	sv	ƒr resursen till salu
-is this resource bookable?	resources	sv	ƒr resursen bokningsbar
-is this resource buyable?	resources	sv	ƒr resursen till salu
-links	resources	sv	L‰nkar
+is resource bookable?	resources	sv	√Ñr resursen bokningsbar
+is resource buyable?	resources	sv	√Ñr resursen till salu
+is this resource bookable?	resources	sv	√Ñr resursen bokningsbar
+is this resource buyable?	resources	sv	√Ñr resursen till salu
+links	resources	sv	L√§nkar
 location	resources	sv	Placering
 location of resource	resources	sv	Resursens placering
 location:	resources	sv	Placering:
 name of resource	resources	sv	Resuserns namn
 name:	resources	sv	Namn:
-no description available	resources	sv	Ingen beskrivning tillg‰nglig
+no description available	resources	sv	Ingen beskrivning tillg√§nglig
 no resources selected	resources	sv	Inga valda resuser
-notify your administrator to correct this situation	resources	sv	Meddela administratˆren om problemet
+notify your administrator to correct this situation	resources	sv	Meddela administrat√∂ren om problemet
 picture	resources	sv	Bild
-picture source	resources	sv	Bildk‰lla
-picture type is not supported, sorry!	resources	sv	Bildformatet stˆds tyv‰rr inte
-pictures or resource	resources	sv	Bild pÂ resusen
+picture source	resources	sv	Bildk√§lla
+picture type is not supported, sorry!	resources	sv	Bildformatet st√∂ds tyv√§rr inte
+pictures or resource	resources	sv	Bild p√• resusen
 planer	resources	sv	Planerare
-prizeing information for booking or buying	resources	sv	Prisinformation fˆr bokning eller fˆrs‰ljning
+prizeing information for booking or buying	resources	sv	Prisinformation f√∂r bokning eller f√∂rs√§ljning
 quantity	resources	sv	Antal
 quantity of resource	resources	sv	Resurs antal
 quantity:	resources	sv	Antal:
-read calendar permissions	resources	sv	Kalender l‰sr‰ttigheter
-read permissions	resources	sv	L‰sr‰ttigheter
-related links	resources	sv	Relaterade l‰nkar
+read calendar permissions	resources	sv	Kalender l√§sr√§ttigheter
+read permissions	resources	sv	L√§sr√§ttigheter
+related links	resources	sv	Relaterade l√§nkar
 resources	common	sv	Resurser
 resources list	resources	sv	Resurslista
 responsible:	resources	sv	Ansvarig:
 saves entry and exits	resources	sv	Spara och avsluta
-select a category	resources	sv	V‰lj kategori
-select resource	resources	sv	V‰lj resurs
-select resources	common	sv	V‰lj resurser
+select a category	resources	sv	V√§lj kategori
+select resource	resources	sv	V√§lj resurs
+select resources	common	sv	V√§lj resurser
 select/deselect all	resources	sv	Markera / Avmarkera alla
 short description	resources	sv	Kort beskrivning
 short description of resource	resources	sv	Kort beskrivning av resursen
 show calendar of resource	resources	sv	Visa resursens kalender
-something went wrong by deleting resource	resources	sv	NÂgot gick fel vid radering av resursen
-something went wrong by saving resource	resources	sv	NÂgot gick fel vid sparandet av resursen
+something went wrong by deleting resource	resources	sv	N√•got gick fel vid radering av resursen
+something went wrong by saving resource	resources	sv	N√•got gick fel vid sparandet av resursen
 storage inforation	resources	sv	Lager information
 storage information	resources	sv	Lager information
 storage information:	resources	sv	Lager information:
 the calendar of this resource	resources	sv	Resursens kalender
 this module displays the resources app	resources	sv	Modulen visar resurs applikationen
-use general resources icon	resources	sv	Anv‰nd allm‰n resurs ikon
-use own picture	resources	sv	Anv‰nd egen bild
-use the category's icon	resources	sv	Anv‰nd kategorins ikon
-useable	resources	sv	Anv‰ndbara
-useable:	resources	sv	Anv‰ndbara:
-view accessories for this resource	resources	sv	Visa resursens tillbehˆr
+use general resources icon	resources	sv	Anv√§nd allm√§n resurs ikon
+use own picture	resources	sv	Anv√§nd egen bild
+use the category's icon	resources	sv	Anv√§nd kategorins ikon
+useable	resources	sv	Anv√§ndbara
+useable:	resources	sv	Anv√§ndbara:
+view accessories for this resource	resources	sv	Visa resursens tillbeh√∂r
 view this entry	resources	sv	Visa posten
 web-page of resource	resources	sv	Resursens webbsida
 web-site for this resource	resources	sv	Resursens webbsajt
 where to find this resource?	resources	sv	Var hittas resursen
-which category does this resource belong to?	resources	sv	Vilken kategori tillhˆr resursen
-write permissions	resources	sv	Skrivr‰ttigheter
-you are not permitted to delete this reource!	resources	sv	Du saknar r‰ttigheter att radera resursen
-you are not permitted to edit this reource!	resources	sv	Du saknar r‰ttigheter att ‰ndra i resursen
-you are not permitted to get information about this resource!	resources	sv	Du saknar behˆrighet att h‰mta information om resusen
-you chose more resources than available	resources	sv	Du valde fler resurser ‰n tillg‰ngliga
+which category does this resource belong to?	resources	sv	Vilken kategori tillh√∂r resursen
+write permissions	resources	sv	Skrivr√§ttigheter
+you are not permitted to delete this reource!	resources	sv	Du saknar r√§ttigheter att radera resursen
+you are not permitted to edit this reource!	resources	sv	Du saknar r√§ttigheter att √§ndra i resursen
+you are not permitted to get information about this resource!	resources	sv	Du saknar beh√∂righet att h√§mta information om resusen
+you chose more resources than available	resources	sv	Du valde fler resurser √§n tillg√§ngliga

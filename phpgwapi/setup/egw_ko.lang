@@ -1,314 +1,314 @@
-%1 email addresses inserted	common	ko	%1 E-Mail ÁÖ¼Ò°¡ »ğÀÔµÇ¾ú½À´Ï´Ù.
-%1 is not executable by the webserver !!!	common	ko	%1 Àº À¥¼­¹ö¿¡ ÀÇÇØ ½ÇÇàµÉ ¼ö ¾ø½À´Ï´Ù !!!
-(shift-)click or drag to change value	jscalendar	ko	½¬ÇÁÆ® Å¬¸¯ È¤Àº µå·¡±×·Î °ªÀ» º¯°æÇÏ¼¼¿ä
-about	common	ko	¼Ò°³
-about %1	common	ko	%1 ¿¡ ´ëÇÏ¿©
-access	common	ko	¾×¼¼½º
-access not permitted	common	ko	Á¢±ÙÀÌ °ÅÀıµÇ¾ú½À´Ï´Ù
-account has been created	common	ko	¾ÆÀÌµğ°¡ »ı¼ºµÇ¾ú½À´Ï´Ù.
-account has been deleted	common	ko	¾ÆÀÌµğ°¡ »èÁ¦µÇ¾ú½À´Ï´Ù.
-account has been updated	common	ko	¾ÆÀÌµğ°¡ º¯°æµÇ¾ú½À´Ï´Ù.
-account is expired	common	ko	¾ÆÀÌµğ°¡ ¸¸·áµÇ¾ú½À´Ï´Ù.
-add	common	ko	Ãß°¡
-add category	common	ko	Ä«Å×°í¸® Ãß°¡
-add sub	common	ko	ÇÏÀ§ Ãß°¡
-addressbook	common	ko	ÁÖ¼Ò·Ï
-admin	common	ko	°ü¸®
-administration	common	ko	°ü¸®
-all fields	common	ko	¸ğµç ÇÊµå
-apply	common	ko	Àû¿ë
-april	common	ko	4¿ù
-are you sure you want to delete these entries ?	common	ko	ÀÌ Ç×¸ñµéÀ» Á¤¸»·Î »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?
-are you sure you want to delete this entry ?	common	ko	ÇöÀç Ç×¸ñÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?
-august	common	ko	8¿ù
-bad login or password	common	ko	»ç¿ëÀÚID³ª ÆĞ½º¿öµå°¡ Æ²¸³´Ï´Ù.
-bold	common	ko	ÁøÇÏ°Ô
-border	common	ko	Å×µÎ¸®
-bottom	common	ko	ÇÏ´Ü
-cancel	common	ko	Ãë¼Ò
-categories	common	ko	ºĞ·ùµé
-category	common	ko	ºĞ·ù
-category %1 has been added !	common	ko	%1 ºĞ·ù°¡ Ãß°¡µÇ¾ú½À´Ï´Ù!
-category %1 has been updated !	common	ko	%1 ºĞ·ù°¡ °»½ÅµÇ¾ú½À´Ï´Ù!
-change	common	ko	º¯°æ
-charset	common	ko	euc-kr
-check installation	common	ko	¼³Ä¡ Á¡°Ë
-check now	common	ko	Áö±İ Á¡°Ë
-choose a background color	common	ko	¹è°æ»öÀ» ¼±ÅÃÇÏ¼¼¿ä
-choose a background color for the icons	common	ko	¾ÆÀÌÄÜÀÇ ¹è°æ»öÀ» ¼±ÅÃÇÏ¼¼¿ä
-choose a background image.	common	ko	¹è°æÀÌ¹ÌÁö¸¦ ¼±ÅÃÇÏ¼¼¿ä
-choose a background style.	common	ko	¹è°æ½ºÅ¸ÀÏÀ» ¼±ÅÃÇÏ¼¼¿ä
-choose a text color for the icons	common	ko	¾ÆÀÌÄÜÀÇ ±ÛÀÚ»öÀ» ¼±ÅÃÇÏ¼¼¿ä
-choose the category	common	ko	ºĞ·ù¸¦ ¼±ÅÃÇÏ¼¼¿ä
-choose the parent category	common	ko	»óÀ§ ºĞ·ù¸¦ ¼±ÅÃÇÏ¼¼¿ä
-clear	common	ko	ÃÊ±âÈ­
-clear form	common	ko	ÃÊ±âÈ­
-close	common	ko	´İ±â
-common preferences	common	ko	°øÅë¼³Á¤
-company	common	ko	È¸»ç
-copy	common	ko	º¹»ç
-create	common	ko	ÀÛ¼º
-created by	common	ko	ÀÛ¼ºÀÚ
-current	common	ko	ÇöÀç
-current users	common	ko	ÇöÀç »ç¿ëÀÚ
-date	common	ko	³¯Â¥
-date due	common	ko	¸¸±âÀÏ
-december	common	ko	12¿ù
-delete	common	ko	»èÁ¦
-delete row	common	ko	¿­ »èÁ¦
-description	common	ko	³»¿ë
-detail	common	ko	»ó¼¼
-details	common	ko	»ó¼¼
-direction left to right	common	ko	¿ŞÂÊ¿¡¼­ ¿À¸¥ÂÊ¹æÇâ
-disable internet explorer png-image-bugfix	common	ko	ÀÎÅÍ³İ ÀÍ½ºÇÃ·Î·¯ÀÇ png ÀÌ¹ÌÁö ¿À·ù¼öÁ¤±â´É ºñÈ°¼ºÈ­
-disable slider effects	common	ko	½½¶óÀÌµù È¿°ú ºñÈ°¼ºÈ­
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ko	ÆäÀÌÁöÀÇ ¸Ş´º Ç¥½Ã¸¦ À§ÇÑ ½½¶óÀÌµù ¿¡´Ï¸ŞÀÌ¼Ç È¿°ú¸¦ ºñÈ°¼ºÈ­ ÇÏ½Ã°Ú½À´Ï±î? ¿ÀÆä¶ó³ª ÄÁÄõ·¯µîÀÇ ºê¶ó¿ìÀú¸¦ À§ÇØ¼­´Â ºñÈ°¼ºÈ­ÇÏ´Â°ÍÀÌ ÁÁ½À´Ï´Ù.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ko	Åõ¸í PNG ÀÌ¹ÌÁö¸¦ ÀÎÅÍ³İ ÀÍ½ºÇÃ·Î·¯ 5.5ÀÌ»ó¿¡¼­ º¸ÀÌ±â À§ÇÑ ¿À·ù¼öÁ¤ ½ºÅ©¸³Æ®ÀÇ ½ÇÇàÀ» ºñÈ°¼ºÈ­ ÇÏ½Ã°Ú½À´Ï±î?
-disabled	common	ko	ºñÈ°¼ºÈ­µÊ
-do you also want to delete all subcategories ?	common	ko	¸ğµç ÇÏÀ§ ºĞ·ùµéÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?
-doctype:	common	ko	¹®¼­Çü½Ä:
-document properties	common	ko	¹®¼­ ¼Ó¼º
-document title:	common	ko	¹®¼­ Á¦¸ñ:
-domain	common	ko	µµ¸ŞÀÎ
-domain name for mail-address, eg. "%1"	common	ko	ÀÌ¸ŞÀÏ ÁÖ¼Ò¸¦ À§ÇÑ µµ¸ŞÀÎ (¿¹ : %1)
-done	common	ko	¿Ï·á
+%1 email addresses inserted	common	ko	%1 E-Mail ì£¼ì†Œê°€ ì‚½ì…ë˜ì—ˆìŠµë‹ˆë‹¤.
+%1 is not executable by the webserver !!!	common	ko	%1 ì€ ì›¹ì„œë²„ì— ì˜í•´ ì‹¤í–‰ë  ìˆ˜ ì—†ìŠµë‹ˆë‹¤ !!!
+(shift-)click or drag to change value	jscalendar	ko	ì‰¬í”„íŠ¸ í´ë¦­ í˜¹ì€ ë“œë˜ê·¸ë¡œ ê°’ì„ ë³€ê²½í•˜ì„¸ìš”
+about	common	ko	ì†Œê°œ
+about %1	common	ko	%1 ì— ëŒ€í•˜ì—¬
+access	common	ko	ì•¡ì„¸ìŠ¤
+access not permitted	common	ko	ì ‘ê·¼ì´ ê±°ì ˆë˜ì—ˆìŠµë‹ˆë‹¤
+account has been created	common	ko	ì•„ì´ë””ê°€ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤.
+account has been deleted	common	ko	ì•„ì´ë””ê°€ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.
+account has been updated	common	ko	ì•„ì´ë””ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
+account is expired	common	ko	ì•„ì´ë””ê°€ ë§Œë£Œë˜ì—ˆìŠµë‹ˆë‹¤.
+add	common	ko	ì¶”ê°€
+add category	common	ko	ì¹´í…Œê³ ë¦¬ ì¶”ê°€
+add sub	common	ko	í•˜ìœ„ ì¶”ê°€
+addressbook	common	ko	ì£¼ì†Œë¡
+admin	common	ko	ê´€ë¦¬
+administration	common	ko	ê´€ë¦¬
+all fields	common	ko	ëª¨ë“  í•„ë“œ
+apply	common	ko	ì ìš©
+april	common	ko	4ì›”
+are you sure you want to delete these entries ?	common	ko	ì´ í•­ëª©ë“¤ì„ ì •ë§ë¡œ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+are you sure you want to delete this entry ?	common	ko	í˜„ì¬ í•­ëª©ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+august	common	ko	8ì›”
+bad login or password	common	ko	ì‚¬ìš©ìIDë‚˜ íŒ¨ìŠ¤ì›Œë“œê°€ í‹€ë¦½ë‹ˆë‹¤.
+bold	common	ko	ì§„í•˜ê²Œ
+border	common	ko	í…Œë‘ë¦¬
+bottom	common	ko	í•˜ë‹¨
+cancel	common	ko	ì·¨ì†Œ
+categories	common	ko	ë¶„ë¥˜ë“¤
+category	common	ko	ë¶„ë¥˜
+category %1 has been added !	common	ko	%1 ë¶„ë¥˜ê°€ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤!
+category %1 has been updated !	common	ko	%1 ë¶„ë¥˜ê°€ ê°±ì‹ ë˜ì—ˆìŠµë‹ˆë‹¤!
+change	common	ko	ë³€ê²½
+charset	common	ko	utf-8
+check installation	common	ko	ì„¤ì¹˜ ì ê²€
+check now	common	ko	ì§€ê¸ˆ ì ê²€
+choose a background color	common	ko	ë°°ê²½ìƒ‰ì„ ì„ íƒí•˜ì„¸ìš”
+choose a background color for the icons	common	ko	ì•„ì´ì½˜ì˜ ë°°ê²½ìƒ‰ì„ ì„ íƒí•˜ì„¸ìš”
+choose a background image.	common	ko	ë°°ê²½ì´ë¯¸ì§€ë¥¼ ì„ íƒí•˜ì„¸ìš”
+choose a background style.	common	ko	ë°°ê²½ìŠ¤íƒ€ì¼ì„ ì„ íƒí•˜ì„¸ìš”
+choose a text color for the icons	common	ko	ì•„ì´ì½˜ì˜ ê¸€ììƒ‰ì„ ì„ íƒí•˜ì„¸ìš”
+choose the category	common	ko	ë¶„ë¥˜ë¥¼ ì„ íƒí•˜ì„¸ìš”
+choose the parent category	common	ko	ìƒìœ„ ë¶„ë¥˜ë¥¼ ì„ íƒí•˜ì„¸ìš”
+clear	common	ko	ì´ˆê¸°í™”
+clear form	common	ko	ì´ˆê¸°í™”
+close	common	ko	ë‹«ê¸°
+common preferences	common	ko	ê³µí†µì„¤ì •
+company	common	ko	íšŒì‚¬
+copy	common	ko	ë³µì‚¬
+create	common	ko	ì‘ì„±
+created by	common	ko	ì‘ì„±ì
+current	common	ko	í˜„ì¬
+current users	common	ko	í˜„ì¬ ì‚¬ìš©ì
+date	common	ko	ë‚ ì§œ
+date due	common	ko	ë§Œê¸°ì¼
+december	common	ko	12ì›”
+delete	common	ko	ì‚­ì œ
+delete row	common	ko	ì—´ ì‚­ì œ
+description	common	ko	ë‚´ìš©
+detail	common	ko	ìƒì„¸
+details	common	ko	ìƒì„¸
+direction left to right	common	ko	ì™¼ìª½ì—ì„œ ì˜¤ë¥¸ìª½ë°©í–¥
+disable internet explorer png-image-bugfix	common	ko	ì¸í„°ë„· ìµìŠ¤í”Œë¡œëŸ¬ì˜ png ì´ë¯¸ì§€ ì˜¤ë¥˜ìˆ˜ì •ê¸°ëŠ¥ ë¹„í™œì„±í™”
+disable slider effects	common	ko	ìŠ¬ë¼ì´ë”© íš¨ê³¼ ë¹„í™œì„±í™”
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ko	í˜ì´ì§€ì˜ ë©”ë‰´ í‘œì‹œë¥¼ ìœ„í•œ ìŠ¬ë¼ì´ë”© ì—ë‹ˆë©”ì´ì…˜ íš¨ê³¼ë¥¼ ë¹„í™œì„±í™” í•˜ì‹œê² ìŠµë‹ˆê¹Œ? ì˜¤í˜ë¼ë‚˜ ì»¨ì¿¼ëŸ¬ë“±ì˜ ë¸Œë¼ìš°ì €ë¥¼ ìœ„í•´ì„œëŠ” ë¹„í™œì„±í™”í•˜ëŠ”ê²ƒì´ ì¢‹ìŠµë‹ˆë‹¤.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ko	íˆ¬ëª… PNG ì´ë¯¸ì§€ë¥¼ ì¸í„°ë„· ìµìŠ¤í”Œë¡œëŸ¬ 5.5ì´ìƒì—ì„œ ë³´ì´ê¸° ìœ„í•œ ì˜¤ë¥˜ìˆ˜ì • ìŠ¤í¬ë¦½íŠ¸ì˜ ì‹¤í–‰ì„ ë¹„í™œì„±í™” í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+disabled	common	ko	ë¹„í™œì„±í™”ë¨
+do you also want to delete all subcategories ?	common	ko	ëª¨ë“  í•˜ìœ„ ë¶„ë¥˜ë“¤ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+doctype:	common	ko	ë¬¸ì„œí˜•ì‹:
+document properties	common	ko	ë¬¸ì„œ ì†ì„±
+document title:	common	ko	ë¬¸ì„œ ì œëª©:
+domain	common	ko	ë„ë©”ì¸
+domain name for mail-address, eg. "%1"	common	ko	ì´ë©”ì¼ ì£¼ì†Œë¥¼ ìœ„í•œ ë„ë©”ì¸ (ì˜ˆ : %1)
+done	common	ko	ì™„ë£Œ
 e-mail	common	ko	E-Mail
-edit	common	ko	¼öÁ¤
-edit categories	common	ko	ºĞ·ù ¼öÁ¤
-edit category	common	ko	ºĞ·ù ¼öÁ¤
-egroupware: login blocked for user '%1', ip %2	common	ko	eGroupWare: »ç¿ëÀÚ %1 ¹× IP %2¿¡ ´ëÇÑ ·Î±×ÀÎÀÌ Â÷´ÜµÇ¾ú½À´Ï´Ù.
+edit	common	ko	ìˆ˜ì •
+edit categories	common	ko	ë¶„ë¥˜ ìˆ˜ì •
+edit category	common	ko	ë¶„ë¥˜ ìˆ˜ì •
+egroupware: login blocked for user '%1', ip %2	common	ko	eGroupWare: ì‚¬ìš©ì %1 ë° IP %2ì— ëŒ€í•œ ë¡œê·¸ì¸ì´ ì°¨ë‹¨ë˜ì—ˆìŠµë‹ˆë‹¤.
 email	common	ko	E-Mail
-enabled	common	ko	È°¼ºÈ­µÊ
-end date	common	ko	Á¾·áÀÏ
-end time	common	ko	Á¾·á½Ã°£
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	eGroupWareÀÇ URL À§Ä¡¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä<BR>¿¹Á¦: http://www.domain.com/egroupware È¤Àº /egroupware<br><b>¸¶Áö¸·¿¡ / (½½·¡½Ã)¸¦ ºÙÀÌÁö ¸¶¼¼¿ä</b>
-entry has been deleted sucessfully	common	ko	µ¥ÀÌÅÍ°¡ ¼º°øÀûÀ¸·Î »èÁ¦µÇ¾ú½À´Ï´Ù.
-entry updated sucessfully	common	ko	µ¥ÀÌÅÍ°¡ ¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù.
-error	common	ko	¿À·ù
-error creating %1 %2 directory	common	ko	%1 %2 µğ·ºÅä¸®¸¦ »ı¼ºÇÏ´Âµ¥ ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.
-error deleting %1 %2 directory	common	ko	%1 %2 µğ·ºÅä¸®¸¦ »èÁ¦ÇÏ´Âµ¥ ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.
-error renaming %1 %2 directory	common	ko	%1 %2 µğ·ºÅä¸®¸¦ ÀÌ¸§º¯°æÇÏ´Âµ¥ ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.
-fax number	common	ko	ÆÑ½º¹øÈ£
-february	common	ko	2¿ù
-fields	common	ko	ÇÊµåµé
-files	common	ko	ÆÄÀÏµé
-filter	common	ko	ÇÊÅÍ
-first name	common	ko	ÀÌ¸§
-first name of the user, eg. "%1"	common	ko	»ç¿ëÀÚÀÇ ÀÌ¸§, ¿¹. "%1"
-first page	common	ko	Ã¹ ÆäÀÌÁö
-firstname	common	ko	ÀÌ¸§
-folder already exists.	common	ko	Æú´õ°¡ ÀÌ¹Ì ÀÖ½À´Ï´Ù
-friday	common	ko	±İ¿äÀÏ
+enabled	common	ko	í™œì„±í™”ë¨
+end date	common	ko	ì¢…ë£Œì¼
+end time	common	ko	ì¢…ë£Œì‹œê°„
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	eGroupWareì˜ URL ìœ„ì¹˜ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”<BR>ì˜ˆì œ: http://www.domain.com/egroupware í˜¹ì€ /egroupware<br><b>ë§ˆì§€ë§‰ì— / (ìŠ¬ë˜ì‹œ)ë¥¼ ë¶™ì´ì§€ ë§ˆì„¸ìš”</b>
+entry has been deleted sucessfully	common	ko	ë°ì´í„°ê°€ ì„±ê³µì ìœ¼ë¡œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.
+entry updated sucessfully	common	ko	ë°ì´í„°ê°€ ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.
+error	common	ko	ì˜¤ë¥˜
+error creating %1 %2 directory	common	ko	%1 %2 ë””ë ‰í† ë¦¬ë¥¼ ìƒì„±í•˜ëŠ”ë° ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.
+error deleting %1 %2 directory	common	ko	%1 %2 ë””ë ‰í† ë¦¬ë¥¼ ì‚­ì œí•˜ëŠ”ë° ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.
+error renaming %1 %2 directory	common	ko	%1 %2 ë””ë ‰í† ë¦¬ë¥¼ ì´ë¦„ë³€ê²½í•˜ëŠ”ë° ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.
+fax number	common	ko	íŒ©ìŠ¤ë²ˆí˜¸
+february	common	ko	2ì›”
+fields	common	ko	í•„ë“œë“¤
+files	common	ko	íŒŒì¼ë“¤
+filter	common	ko	í•„í„°
+first name	common	ko	ì´ë¦„
+first name of the user, eg. "%1"	common	ko	ì‚¬ìš©ìì˜ ì´ë¦„, ì˜ˆ. "%1"
+first page	common	ko	ì²« í˜ì´ì§€
+firstname	common	ko	ì´ë¦„
+folder already exists.	common	ko	í´ë”ê°€ ì´ë¯¸ ìˆìŠµë‹ˆë‹¤
+friday	common	ko	ê¸ˆìš”ì¼
 ftp	common	ko	FTP
-fullscreen mode	common	ko	ÀüÃ¼È­¸é ¸ğµå
-global public	common	ko	¸ğµÎ¿¡°Ô °ø°³
-grant access	common	ko	Á¢±Ù ½ÂÀÎ
-group	common	ko	±×·ì
-group access	common	ko	±×·ì ¾×¼¼½º
-group has been added	common	ko	±×·ìÀÌ Ãß°¡µÇ¾ú½À´Ï´Ù.
-group has been deleted	common	ko	±×·ìÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.
-group has been updated	common	ko	±×·ìÀÌ º¯°æµÇ¾ú½À´Ï´Ù.
-group name	common	ko	±×·ì¸í
-group public	common	ko	±×·ì³» °ø°³
-groups	common	ko	±×·ì
-height	common	ko	³ôÀÌ
-help	common	ko	µµ¿ò¸»
-high	common	ko	³ôÀ½
-home	common	ko	È¨À¸·Î
-home email	common	ko	ÀÚÅÃ E-mail
-image url	common	ko	±×¸² URL
-insert 'return false'	common	ko	return false ¹® »ğÀÔ
-insert column after	common	ko	µÚ¿¡ Çà ³Ö±â
-insert column before	common	ko	¾Õ¿¡ Çà ³Ö±â
-insert row after	common	ko	µÚ¿¡ ¿­ ³Ö±â
-insert row before	common	ko	¾Õ¿¡ ¿­ ³Ö±â
-invalid filename	common	ko	Àß¸øµÈ ÆÄÀÏ¸í
-invalid ip address	common	ko	Àß¸øµÈ IPÁÖ¼Ò
-invalid password	common	ko	Àß¸øµÈ ºñ¹Ğ¹øÈ£
-it has been more then %1 days since you changed your password	common	ko	¾ÏÈ£¸¦ º¯°æÇÑÁö %1 ÀÏÀÌ °æ°úÇß½À´Ï´Ù.
-it is recommended that you run setup to upgrade your tables to the current version	common	ko	¼Â¾÷ ±â´ÉÀ» ¼öÇàÇÏ¿© µ¥ÀÌÅÍº£ÀÌ½º Å×ÀÌºíÀ» ÇöÀç ¹öÀüÀ¸·Î ¾÷±×·¹ÀÌµå ÇÏ´Â°ÍÀ» ÃßÃµÇÕ´Ï´Ù.
-italic	common	ko	±â¿ïÀÓ
-january	common	ko	1¿ù
-july	common	ko	7¿ù
-jun	common	ko	6¿ù
-june	common	ko	6¿ù
-justify center	common	ko	Áß¾Ó ÀÚ¸®¸ÂÃã
-justify full	common	ko	ÀüÃ¼ ÀÚ¸®¸ÂÃã
-justify left	common	ko	¿ŞÂÊ ÀÚ¸®¸ÂÃã
-justify right	common	ko	¿À¸¥ÂÊ ÀÚ¸®¸ÂÃã
-keywords	common	ko	Å°¿öµå
-korea, democratic peoples republic of	common	ko	ºÏÇÑ
-korea, republic of	common	ko	´ëÇÑ¹Î±¹
-language	common	ko	¾ğ¾î
-last name	common	ko	¼º
-last page	common	ko	³¡ ÆäÀÌÁö·Î
-lastname	common	ko	¼º
-left	common	ko	¿ŞÂÊ
-list members	common	ko	¸â¹ö ¸ñ·Ï
-login	common	ko	·Î±×ÀÎ
-loginid	common	ko	·Î±×ÀÎID
-logout	common	ko	·Î±×¾Æ¿ô
-low	common	ko	³·À½
-mail domain, eg. "%1"	common	ko	¸ŞÀÏ µµ¸ŞÀÎ, ¿¹. "%1"
-main category	common	ko	±âº» ºĞ·ù
-main screen	common	ko	±âº» È­¸é
-maintainer	common	ko	°ü¸®ÀÚ
-march	common	ko	3¿ù
-max number of icons in navbar	common	ko	³×ºñ°ÔÀÌ¼Ç¹ÙÀÇ ÃÖ´ë ¾ÆÀÌÄÜ °¹¼ö
-may	common	ko	5¿ù
-medium	common	ko	Áß°£
-message	common	ko	¸Ş¼¼Áö
-minute	common	ko	ºĞ
-monday	common	ko	¿ù¿äÀÏ
-name	common	ko	ÀÌ¸§
-name of the user, eg. "%1"	common	ko	»ç¿ëÀÚÀÇ ÀÌ¸§, ¿¹. "%1"
-new entry added sucessfully	common	ko	»õ·Î¿î µ¥ÀÌÅÍ°¡ Ãß°¡µÇ¾ú½À´Ï´Ù.
-new main category	common	ko	»õ ±âº» ºĞ·ù
-new value	common	ko	»õ °ª
-next	common	ko	´ÙÀ½
-next page	common	ko	´ÙÀ½ ÆäÀÌÁö·Î
-no	common	ko	¾Æ´Ï¿À
-no entries found, try again ...	common	ko	Ç×¸ñÀ» Ã£Áö ¸øÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØº¸¼¼¿ä
-no history for this record	common	ko	ÀÌ ·¹ÄÚµåÀÇ ³»¿ª(º¯µ¿±â·Ï)ÀÌ ¾ø½À´Ï´Ù.
-no subject	common	ko	Á¦¸ñ¾øÀ½
-none	common	ko	¾øÀ½
-normal	common	ko	º¸Åë
-not assigned	common	ko	ÇÒ´çµÇÁö ¾ÊÀ½
-notes	common	ko	±âÅ¸
-november	common	ko	11¿ù
-october	common	ko	10¿ù
-ok	common	ko	È®ÀÎ
-old value	common	ko	ÀÌÀü °ª
-on *nix systems please type: %1	common	ko	À¯´Ğ½º ±â¹İ ½Ã½ºÅÛÀÇ °æ¿ì ´ÙÀ½°ú °°ÀÌ ÀÔ·ÂÇÏ¼¼¿ä: %1
-on mouse over	common	ko	¸¶¿ì½º¸¦ ¿Ã·ÈÀ»¶§
-only private	common	ko	°³ÀÎÀûÀÎ°Í¸¸
-only yours	common	ko	ÀÚ½ÅÀÇ °Í¸¸
-open notify window	common	ko	¾Ë¸²Ã¢ ¿­±â
-open popup window	common	ko	ÆË¾÷Ã¢ ¿­±â
-open sidebox	common	ko	»çÀÌµå¹Ú½º ¿­±â
-ordered list	common	ko	¹øÈ£ ¸Å±â±â
-original	common	ko	¿øº»
-owner	common	ko	¼ÒÀ¯ÀÚ
-page	common	ko	ÆäÀÌÁö
-page was generated in %1 seconds	common	ko	ÆäÀÌÁö »ı¼º¿¡ ¼Ò¿äµÈ ½Ã°£ : %1 ÃÊ
-parent category	common	ko	»óÀ§ ºĞ·ù
-password	common	ko	ºñ¹Ğ¹øÈ£
-password could not be changed	common	ko	ºñ¹Ğ¹øÈ£°¡ º¯°æµÇÁö ¾Ê¾Ò½À´Ï´Ù.
-password has been updated	common	ko	ºñ¹Ğ¹øÈ£°¡ º¯°æµÇ¾ú½À´Ï´Ù.
-password must contain at least %1 lowercase letters	common	ko	ºñ¹Ğ¹øÈ£´Â Àû¾îµµ %1 °³ÀÇ ¼Ò¹®ÀÚ¸¦ Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.
-password must contain at least %1 numbers	common	ko	ºñ¹Ğ¹øÈ£´Â Àû¾îµµ %1 °³ÀÇ ¼ıÀÚ¸¦ Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.
-password must contain at least %1 special characters	common	ko	ºñ¹Ğ¹øÈ£´Â Àû¾îµµ %1 °³ÀÇ Æ¯¼ö¹®ÀÚ¸¦ Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.
-password must contain at least %1 uppercase letters	common	ko	ºñ¹Ğ¹øÈ£´Â Àû¾îµµ %1 °³ÀÇ ´ë¹®ÀÚ¸¦ Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.
-password must have at least %1 characters	common	ko	ºñ¹Ğ¹øÈ£´Â Àû¾îµµ %1 °³ÀÇ ¹®ÀÚ¸¦ Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.
+fullscreen mode	common	ko	ì „ì²´í™”ë©´ ëª¨ë“œ
+global public	common	ko	ëª¨ë‘ì—ê²Œ ê³µê°œ
+grant access	common	ko	ì ‘ê·¼ ìŠ¹ì¸
+group	common	ko	ê·¸ë£¹
+group access	common	ko	ê·¸ë£¹ ì•¡ì„¸ìŠ¤
+group has been added	common	ko	ê·¸ë£¹ì´ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.
+group has been deleted	common	ko	ê·¸ë£¹ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.
+group has been updated	common	ko	ê·¸ë£¹ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
+group name	common	ko	ê·¸ë£¹ëª…
+group public	common	ko	ê·¸ë£¹ë‚´ ê³µê°œ
+groups	common	ko	ê·¸ë£¹
+height	common	ko	ë†’ì´
+help	common	ko	ë„ì›€ë§
+high	common	ko	ë†’ìŒ
+home	common	ko	í™ˆìœ¼ë¡œ
+home email	common	ko	ìíƒ E-mail
+image url	common	ko	ê·¸ë¦¼ URL
+insert 'return false'	common	ko	return false ë¬¸ ì‚½ì…
+insert column after	common	ko	ë’¤ì— í–‰ ë„£ê¸°
+insert column before	common	ko	ì•ì— í–‰ ë„£ê¸°
+insert row after	common	ko	ë’¤ì— ì—´ ë„£ê¸°
+insert row before	common	ko	ì•ì— ì—´ ë„£ê¸°
+invalid filename	common	ko	ì˜ëª»ëœ íŒŒì¼ëª…
+invalid ip address	common	ko	ì˜ëª»ëœ IPì£¼ì†Œ
+invalid password	common	ko	ì˜ëª»ëœ ë¹„ë°€ë²ˆí˜¸
+it has been more then %1 days since you changed your password	common	ko	ì•”í˜¸ë¥¼ ë³€ê²½í•œì§€ %1 ì¼ì´ ê²½ê³¼í–ˆìŠµë‹ˆë‹¤.
+it is recommended that you run setup to upgrade your tables to the current version	common	ko	ì…‹ì—… ê¸°ëŠ¥ì„ ìˆ˜í–‰í•˜ì—¬ ë°ì´í„°ë² ì´ìŠ¤ í…Œì´ë¸”ì„ í˜„ì¬ ë²„ì „ìœ¼ë¡œ ì—…ê·¸ë ˆì´ë“œ í•˜ëŠ”ê²ƒì„ ì¶”ì²œí•©ë‹ˆë‹¤.
+italic	common	ko	ê¸°ìš¸ì„
+january	common	ko	1ì›”
+july	common	ko	7ì›”
+jun	common	ko	6ì›”
+june	common	ko	6ì›”
+justify center	common	ko	ì¤‘ì•™ ìë¦¬ë§ì¶¤
+justify full	common	ko	ì „ì²´ ìë¦¬ë§ì¶¤
+justify left	common	ko	ì™¼ìª½ ìë¦¬ë§ì¶¤
+justify right	common	ko	ì˜¤ë¥¸ìª½ ìë¦¬ë§ì¶¤
+keywords	common	ko	í‚¤ì›Œë“œ
+korea, democratic peoples republic of	common	ko	ë¶í•œ
+korea, republic of	common	ko	ëŒ€í•œë¯¼êµ­
+language	common	ko	ì–¸ì–´
+last name	common	ko	ì„±
+last page	common	ko	ë í˜ì´ì§€ë¡œ
+lastname	common	ko	ì„±
+left	common	ko	ì™¼ìª½
+list members	common	ko	ë©¤ë²„ ëª©ë¡
+login	common	ko	ë¡œê·¸ì¸
+loginid	common	ko	ë¡œê·¸ì¸ID
+logout	common	ko	ë¡œê·¸ì•„ì›ƒ
+low	common	ko	ë‚®ìŒ
+mail domain, eg. "%1"	common	ko	ë©”ì¼ ë„ë©”ì¸, ì˜ˆ. "%1"
+main category	common	ko	ê¸°ë³¸ ë¶„ë¥˜
+main screen	common	ko	ê¸°ë³¸ í™”ë©´
+maintainer	common	ko	ê´€ë¦¬ì
+march	common	ko	3ì›”
+max number of icons in navbar	common	ko	ë„¤ë¹„ê²Œì´ì…˜ë°”ì˜ ìµœëŒ€ ì•„ì´ì½˜ ê°¯ìˆ˜
+may	common	ko	5ì›”
+medium	common	ko	ì¤‘ê°„
+message	common	ko	ë©”ì„¸ì§€
+minute	common	ko	ë¶„
+monday	common	ko	ì›”ìš”ì¼
+name	common	ko	ì´ë¦„
+name of the user, eg. "%1"	common	ko	ì‚¬ìš©ìì˜ ì´ë¦„, ì˜ˆ. "%1"
+new entry added sucessfully	common	ko	ìƒˆë¡œìš´ ë°ì´í„°ê°€ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.
+new main category	common	ko	ìƒˆ ê¸°ë³¸ ë¶„ë¥˜
+new value	common	ko	ìƒˆ ê°’
+next	common	ko	ë‹¤ìŒ
+next page	common	ko	ë‹¤ìŒ í˜ì´ì§€ë¡œ
+no	common	ko	ì•„ë‹ˆì˜¤
+no entries found, try again ...	common	ko	í•­ëª©ì„ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•´ë³´ì„¸ìš”
+no history for this record	common	ko	ì´ ë ˆì½”ë“œì˜ ë‚´ì—­(ë³€ë™ê¸°ë¡)ì´ ì—†ìŠµë‹ˆë‹¤.
+no subject	common	ko	ì œëª©ì—†ìŒ
+none	common	ko	ì—†ìŒ
+normal	common	ko	ë³´í†µ
+not assigned	common	ko	í• ë‹¹ë˜ì§€ ì•ŠìŒ
+notes	common	ko	ê¸°íƒ€
+november	common	ko	11ì›”
+october	common	ko	10ì›”
+ok	common	ko	í™•ì¸
+old value	common	ko	ì´ì „ ê°’
+on *nix systems please type: %1	common	ko	ìœ ë‹‰ìŠ¤ ê¸°ë°˜ ì‹œìŠ¤í…œì˜ ê²½ìš° ë‹¤ìŒê³¼ ê°™ì´ ì…ë ¥í•˜ì„¸ìš”: %1
+on mouse over	common	ko	ë§ˆìš°ìŠ¤ë¥¼ ì˜¬ë ¸ì„ë•Œ
+only private	common	ko	ê°œì¸ì ì¸ê²ƒë§Œ
+only yours	common	ko	ìì‹ ì˜ ê²ƒë§Œ
+open notify window	common	ko	ì•Œë¦¼ì°½ ì—´ê¸°
+open popup window	common	ko	íŒì—…ì°½ ì—´ê¸°
+open sidebox	common	ko	ì‚¬ì´ë“œë°•ìŠ¤ ì—´ê¸°
+ordered list	common	ko	ë²ˆí˜¸ ë§¤ê¸°ê¸°
+original	common	ko	ì›ë³¸
+owner	common	ko	ì†Œìœ ì
+page	common	ko	í˜ì´ì§€
+page was generated in %1 seconds	common	ko	í˜ì´ì§€ ìƒì„±ì— ì†Œìš”ëœ ì‹œê°„ : %1 ì´ˆ
+parent category	common	ko	ìƒìœ„ ë¶„ë¥˜
+password	common	ko	ë¹„ë°€ë²ˆí˜¸
+password could not be changed	common	ko	ë¹„ë°€ë²ˆí˜¸ê°€ ë³€ê²½ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.
+password has been updated	common	ko	ë¹„ë°€ë²ˆí˜¸ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
+password must contain at least %1 lowercase letters	common	ko	ë¹„ë°€ë²ˆí˜¸ëŠ” ì ì–´ë„ %1 ê°œì˜ ì†Œë¬¸ìë¥¼ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.
+password must contain at least %1 numbers	common	ko	ë¹„ë°€ë²ˆí˜¸ëŠ” ì ì–´ë„ %1 ê°œì˜ ìˆ«ìë¥¼ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.
+password must contain at least %1 special characters	common	ko	ë¹„ë°€ë²ˆí˜¸ëŠ” ì ì–´ë„ %1 ê°œì˜ íŠ¹ìˆ˜ë¬¸ìë¥¼ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.
+password must contain at least %1 uppercase letters	common	ko	ë¹„ë°€ë²ˆí˜¸ëŠ” ì ì–´ë„ %1 ê°œì˜ ëŒ€ë¬¸ìë¥¼ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.
+password must have at least %1 characters	common	ko	ë¹„ë°€ë²ˆí˜¸ëŠ” ì ì–´ë„ %1 ê°œì˜ ë¬¸ìë¥¼ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.
 permissions to the files/users directory	common	ko	permissions to the files/users directory
-phone number	common	ko	ÀüÈ­¹øÈ£
-please %1 by hand	common	ko	%1À» Á÷Á¢ ÇÏ½Ã¿À.
-please enter a name	common	ko	ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä!
-please select	common	ko	¼±ÅÃÇØÁÖ¼¼¿ä
-please set your global preferences	common	ko	Àü¿ª È¯°æ¼³Á¤À» ÇÊÈ÷ ¼³Á¤ÇØÁÖ¼¼¿ä!
-please set your preferences for this application	common	ko	ÀÌ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ È¯°æ¼³Á¤À» ¼³Á¤ÇØÁÖ¼¼¿ä
-please wait...	common	ko	±â´Ù·ÁÁÖ¼¼¿ä
+phone number	common	ko	ì „í™”ë²ˆí˜¸
+please %1 by hand	common	ko	%1ì„ ì§ì ‘ í•˜ì‹œì˜¤.
+please enter a name	common	ko	ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”!
+please select	common	ko	ì„ íƒí•´ì£¼ì„¸ìš”
+please set your global preferences	common	ko	ì „ì—­ í™˜ê²½ì„¤ì •ì„ í•„íˆ ì„¤ì •í•´ì£¼ì„¸ìš”!
+please set your preferences for this application	common	ko	ì´ ì‘ìš©í”„ë¡œê·¸ë¨ì˜ í™˜ê²½ì„¤ì •ì„ ì„¤ì •í•´ì£¼ì„¸ìš”
+please wait...	common	ko	ê¸°ë‹¤ë ¤ì£¼ì„¸ìš”
 powered by egroupware version %1	common	ko	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
-preferences	common	ko	È¯°æ¼³Á¤
-previous page	common	ko	ÀÌÀü ÆäÀÌÁö·Î
-priority	common	ko	Áß¿äµµ
-private	common	ko	°³ÀÎ
-public	common	ko	°ø°³
-reject	common	ko	°ÅºÎ
-remove selected accounts	common	ko	¼±ÅÃµÈ °èÁ¤ »èÁ¦
-rename	common	ko	ÀÌ¸§º¯°æ
-replace	common	ko	Ä¡È¯
-replace with	common	ko	Ä¡È¯µÉ ±Û¿ù
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	ko	½Ã½ºÅÛÀÇ Á¸ÀçÇÏ´Â °èÁ¤ÀÇ ÀüÃ¼¸ñ·ÏÀ» ¹İÈ¯ÇÕ´Ï´Ù. ÁÖÀÇ: µ¥ÀÌÅÍ°¡ »ó´çÈ÷ Å¬ ¼ö ÀÖ½À´Ï´Ù.
-returns struct of users application access	common	ko	»ç¿ëÀÚÀÇ ÀÀ¿ëÇÁ·Î±×·¥ ¾×¼¼½º ±¸Á¶ ¹İÈ¯
-right	common	ko	¿À¸¥ÂÊ
-saturday	common	ko	Åä¿äÀÏ
-save	common	ko	ÀúÀå
-search	common	ko	°Ë»ö
-search or select accounts	common	ko	°èÁ¤ ¼±ÅÃ È¤Àº °Ë»ö
-search or select multiple accounts	common	ko	´ÙÁß °èÁ¤ ¼±ÅÃ È¤Àº °Ë»ö
-second	common	ko	ÃÊ
-select	common	ko	¼±ÅÃ
-select category	common	ko	ºĞ·ù ¼±ÅÃ
-select date	common	ko	³¯Â¥ ¼±ÅÃ
-select group	common	ko	±×·ì ¼±ÅÃ
-select home email address	common	ko	ÀÚÅÃ E-Mail address ¼±ÅÃ
-select multiple accounts	common	ko	´ÙÁß°èÁ¤ ¼±ÅÃ
-select the default height for the application windows	common	ko	ÀÌ ÀÀ¿ëÇÁ·Î±×·¥ Ã¢ÀÌ »ç¿ëÇÒ ±âº» ³ôÀÌ¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä
-select the default width for the application windows	common	ko	ÀÌ ÀÀ¿ëÇÁ·Î±×·¥ Ã¢ÀÌ »ç¿ëÇÒ ±âº» ±æÀÌ¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä
-select user	common	ko	»ç¿ëÀÚ ¼±ÅÃ
-select work email address	common	ko	¾÷¹« ¸ŞÀÏÁÖ¼Ò ¼±ÅÃ
-send	common	ko	º¸³»±â
-september	common	ko	9¿ù
-server %1 has been added	common	ko	%1 ¼­¹ö°¡ Ãß°¡µÇ¾ú½À´Ï´Ù.
-server answered. processing response...	common	ko	¼­¹ö°¡ È¸½ÅÇß½À´Ï´Ù. ÀÀ´äÀ» Ã³¸®ÁßÀÔ´Ï´Ù.
-server contacted. waiting for response...	common	ko	¼­¹ö¿Í ¿¬°áµÇ¾ú½À´Ï´Ù. ÀÀ´äÀ» ´ë±âÁßÀÔ´Ï´Ù.
-server name	common	ko	¼­¹öÀÌ¸§
-session has been killed	common	ko	ÀÛ¾÷ÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.
-setup	common	ko	¼³Á¤
-setup main menu	common	ko	¸ŞÀÎ ¸Ş´º ¼³Á¤
-show all	common	ko	¸ğµÎ º¸±â
-show all categorys	common	ko	¸ğµç ºĞ·ù º¸±â
-show home and logout button in main application bar?	common	ko	È¨À¸·Î¿Í ·Î±×¾Æ¿ô ¹öÆ°À» ÁÖ ÀÀ¿ëÇÁ·Î±×·¥ ¹Ù¿¡ Ãâ·ÂÇÏ½Ã°Ú½À´Ï±î?
-show menu	common	ko	¸Ş´º º¸ÀÌ±â
-show page generation time	common	ko	ÆäÀÌÁö »ı¼º½Ã°£ º¸ÀÌ±â
-show page generation time on the bottom of the page?	common	ko	ÆäÀÌÁö »ı¼º ½Ã°£À» ÆäÀÌÁö ÇÏ´Ü¿¡ Ãâ·ÂÇÏ½Ã°Ú½À´Ï±î?
-show page generation time?	common	ko	ÆäÀÌÁö »ı¼º½Ã°£À» Ãâ·ÂÇÕ´Ï±î?
-showing %1	common	ko	ÇöÀç %1
-showing %1 - %2 of %3	common	ko	ÀüÃ¼ %3¿¡¼­ %1 - %2
-sorry, your login has expired	login	ko	±ÍÇÏÀÇ »ç¿ëÀÚID´Â ¸¸·áµÇ¾î ´õ ÀÌ»ó »ç¿ëÇÏ½Ç¼ö ¾ø½À´Ï´Ù.
-status	common	ko	»óÅÂ
-subject	common	ko	Á¦¸ñ
-submit	common	ko	Àü¼Û
-sunday	common	ko	ÀÏ¿äÀÏ
-table properties	common	ko	Å×ÀÌºí ¼Ó¼º
-the api is current	common	ko	ÀÌ API ´Â ÃÖ½Å¹öÀüÀÔ´Ï´Ù.
-the api requires an upgrade	common	ko	ÀÌ API ´Â ¾÷±×·¹ÀÌµå°¡ ÇÊ¿äÇÕ´Ï´Ù.
-the following applications require upgrades	common	ko	´ÙÀ½ÀÇ ÀÀ¿ëÇÁ·Î±×·¥Àº ¾÷±×·¹ÀÌµå°¡ ÇÊ¿äÇÕ´Ï´Ù.
-this application is current	common	ko	ÀÌ ÀÀ¿ëÇÁ·Î±×·¥Àº ÃÖ½ÅÀÔ´Ï´Ù.
-this application requires an upgrade	common	ko	ÀÌ ÀÀ¿ëÇÁ·Î±×·¥Àº ¾÷±×·¹ÀÌµå°¡ ÇÊ¿äÇÕ´Ï´Ù.
-thursday	common	ko	¸ñ¿äÀÏ
-time	common	ko	½Ã°£
-title	common	ko	Á¦¸ñ
-to correct this error for the future you will need to properly set the	common	ko	ÀÌ ¿À·ù¸¦ ¼öÁ¤ÇÏ±â À§ÇØ¼­´Â ´ÙÀ½ ¼³Á¤À» ÇÏ¿©¾ß ÇÕ´Ï´Ù :
-to go back to the msg list, click <a href= %1 >here</a>	common	ko	¸Ş¼¼Áö ¸ñ·ÏÀ¸·Î µ¹¾Æ°¡±â À§ÇØ¼­´Â <a href="%1">¿©±â</a>¸¦ Å¬¸¯ÇØÁÖ¼¼¿ä
-today	common	ko	¿À´Ã
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	ko	½ÇÆĞ ·Î±×ÀÎ ½Ãµµ È½¼ö°¡ ³Ê¹« ¸¹½À´Ï´Ù: %1 »ç¿ëÀÚ '%2', %3 IP %4
+preferences	common	ko	í™˜ê²½ì„¤ì •
+previous page	common	ko	ì´ì „ í˜ì´ì§€ë¡œ
+priority	common	ko	ì¤‘ìš”ë„
+private	common	ko	ê°œì¸
+public	common	ko	ê³µê°œ
+reject	common	ko	ê±°ë¶€
+remove selected accounts	common	ko	ì„ íƒëœ ê³„ì • ì‚­ì œ
+rename	common	ko	ì´ë¦„ë³€ê²½
+replace	common	ko	ì¹˜í™˜
+replace with	common	ko	ì¹˜í™˜ë  ê¸€ì›”
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	ko	ì‹œìŠ¤í…œì˜ ì¡´ì¬í•˜ëŠ” ê³„ì •ì˜ ì „ì²´ëª©ë¡ì„ ë°˜í™˜í•©ë‹ˆë‹¤. ì£¼ì˜: ë°ì´í„°ê°€ ìƒë‹¹íˆ í´ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+returns struct of users application access	common	ko	ì‚¬ìš©ìì˜ ì‘ìš©í”„ë¡œê·¸ë¨ ì•¡ì„¸ìŠ¤ êµ¬ì¡° ë°˜í™˜
+right	common	ko	ì˜¤ë¥¸ìª½
+saturday	common	ko	í† ìš”ì¼
+save	common	ko	ì €ì¥
+search	common	ko	ê²€ìƒ‰
+search or select accounts	common	ko	ê³„ì • ì„ íƒ í˜¹ì€ ê²€ìƒ‰
+search or select multiple accounts	common	ko	ë‹¤ì¤‘ ê³„ì • ì„ íƒ í˜¹ì€ ê²€ìƒ‰
+second	common	ko	ì´ˆ
+select	common	ko	ì„ íƒ
+select category	common	ko	ë¶„ë¥˜ ì„ íƒ
+select date	common	ko	ë‚ ì§œ ì„ íƒ
+select group	common	ko	ê·¸ë£¹ ì„ íƒ
+select home email address	common	ko	ìíƒ E-Mail address ì„ íƒ
+select multiple accounts	common	ko	ë‹¤ì¤‘ê³„ì • ì„ íƒ
+select the default height for the application windows	common	ko	ì´ ì‘ìš©í”„ë¡œê·¸ë¨ ì°½ì´ ì‚¬ìš©í•  ê¸°ë³¸ ë†’ì´ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”
+select the default width for the application windows	common	ko	ì´ ì‘ìš©í”„ë¡œê·¸ë¨ ì°½ì´ ì‚¬ìš©í•  ê¸°ë³¸ ê¸¸ì´ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”
+select user	common	ko	ì‚¬ìš©ì ì„ íƒ
+select work email address	common	ko	ì—…ë¬´ ë©”ì¼ì£¼ì†Œ ì„ íƒ
+send	common	ko	ë³´ë‚´ê¸°
+september	common	ko	9ì›”
+server %1 has been added	common	ko	%1 ì„œë²„ê°€ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.
+server answered. processing response...	common	ko	ì„œë²„ê°€ íšŒì‹ í–ˆìŠµë‹ˆë‹¤. ì‘ë‹µì„ ì²˜ë¦¬ì¤‘ì…ë‹ˆë‹¤.
+server contacted. waiting for response...	common	ko	ì„œë²„ì™€ ì—°ê²°ë˜ì—ˆìŠµë‹ˆë‹¤. ì‘ë‹µì„ ëŒ€ê¸°ì¤‘ì…ë‹ˆë‹¤.
+server name	common	ko	ì„œë²„ì´ë¦„
+session has been killed	common	ko	ì‘ì—…ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.
+setup	common	ko	ì„¤ì •
+setup main menu	common	ko	ë©”ì¸ ë©”ë‰´ ì„¤ì •
+show all	common	ko	ëª¨ë‘ ë³´ê¸°
+show all categorys	common	ko	ëª¨ë“  ë¶„ë¥˜ ë³´ê¸°
+show home and logout button in main application bar?	common	ko	í™ˆìœ¼ë¡œì™€ ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ì„ ì£¼ ì‘ìš©í”„ë¡œê·¸ë¨ ë°”ì— ì¶œë ¥í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+show menu	common	ko	ë©”ë‰´ ë³´ì´ê¸°
+show page generation time	common	ko	í˜ì´ì§€ ìƒì„±ì‹œê°„ ë³´ì´ê¸°
+show page generation time on the bottom of the page?	common	ko	í˜ì´ì§€ ìƒì„± ì‹œê°„ì„ í˜ì´ì§€ í•˜ë‹¨ì— ì¶œë ¥í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+show page generation time?	common	ko	í˜ì´ì§€ ìƒì„±ì‹œê°„ì„ ì¶œë ¥í•©ë‹ˆê¹Œ?
+showing %1	common	ko	í˜„ì¬ %1
+showing %1 - %2 of %3	common	ko	ì „ì²´ %3ì—ì„œ %1 - %2
+sorry, your login has expired	login	ko	ê·€í•˜ì˜ ì‚¬ìš©ìIDëŠ” ë§Œë£Œë˜ì–´ ë” ì´ìƒ ì‚¬ìš©í•˜ì‹¤ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
+status	common	ko	ìƒíƒœ
+subject	common	ko	ì œëª©
+submit	common	ko	ì „ì†¡
+sunday	common	ko	ì¼ìš”ì¼
+table properties	common	ko	í…Œì´ë¸” ì†ì„±
+the api is current	common	ko	ì´ API ëŠ” ìµœì‹ ë²„ì „ì…ë‹ˆë‹¤.
+the api requires an upgrade	common	ko	ì´ API ëŠ” ì—…ê·¸ë ˆì´ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤.
+the following applications require upgrades	common	ko	ë‹¤ìŒì˜ ì‘ìš©í”„ë¡œê·¸ë¨ì€ ì—…ê·¸ë ˆì´ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤.
+this application is current	common	ko	ì´ ì‘ìš©í”„ë¡œê·¸ë¨ì€ ìµœì‹ ì…ë‹ˆë‹¤.
+this application requires an upgrade	common	ko	ì´ ì‘ìš©í”„ë¡œê·¸ë¨ì€ ì—…ê·¸ë ˆì´ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤.
+thursday	common	ko	ëª©ìš”ì¼
+time	common	ko	ì‹œê°„
+title	common	ko	ì œëª©
+to correct this error for the future you will need to properly set the	common	ko	ì´ ì˜¤ë¥˜ë¥¼ ìˆ˜ì •í•˜ê¸° ìœ„í•´ì„œëŠ” ë‹¤ìŒ ì„¤ì •ì„ í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤ :
+to go back to the msg list, click <a href= %1 >here</a>	common	ko	ë©”ì„¸ì§€ ëª©ë¡ìœ¼ë¡œ ëŒì•„ê°€ê¸° ìœ„í•´ì„œëŠ” <a href="%1">ì—¬ê¸°</a>ë¥¼ í´ë¦­í•´ì£¼ì„¸ìš”
+today	common	ko	ì˜¤ëŠ˜
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	ko	ì‹¤íŒ¨ ë¡œê·¸ì¸ ì‹œë„ íšŸìˆ˜ê°€ ë„ˆë¬´ ë§ìŠµë‹ˆë‹¤: %1 ì‚¬ìš©ì '%2', %3 IP %4
 top	common	ko	Top
-total	common	ko	ÇÕ°è
-tuesday	common	ko	È­¿äÀÏ
-type	common	ko	Çü½Ä
-underline	common	ko	¹ØÁÙ
-update	common	ko	°»½Å
-upload	common	ko	¾÷·Îµå
-upload directory does not exist, or is not writeable by webserver	common	ko	¾÷·Îµå µğ·ºÅä¸®°¡ Á¸ÀçÇÏÁö ¾Ê°Å³ª, À¥¼­¹öÀÇ ¾²±â±ÇÇÑÀÌ ¾ø½À´Ï´Ù.
-user	common	ko	»ç¿ëÀÚ
-user accounts	common	ko	»ç¿ëÀÚ °èÁ¤
-user groups	common	ko	»ç¿ëÀÚ ±×·ì
-username	common	ko	»ç¿ëÀÚID
-users	common	ko	»ç¿ëÀÚ
-view	common	ko	º¸±â
-wednesday	common	ko	¼ö¿äÀÏ
-welcome	common	ko	È¯¿µÇÕ´Ï´Ù
-which groups	common	ko	±×·ì¼±ÅÃ
-width	common	ko	³Êºñ
-wk	jscalendar	ko	ÁÖ
-work email	common	ko	¾÷¹« E-Mail
-would you like to display the page generation time at the bottom of every window?	common	ko	ÆäÀÌÁö »ı¼º ½Ã°£À» ¸ğµç Ã¢ÀÇ ÇÏ´Ü¿¡ Ãâ·ÂÇÏ±æ ¿øÇÏ½Ê´Ï±î?
-written by:	common	ko	ÀÛ¼º:
-yes	common	ko	¿¹
-you have been successfully logged out	login	ko	·Î±×¾Æ¿ô µÇ¾ú½À´Ï´Ù.
-you have not entered a title	common	ko	Á¦¸ñÀ» ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù
-you have not entered a valid date	common	ko	¿Ã¹Ù¸¥ ³¯Â¥¸¦ ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù
-you have not entered participants	common	ko	Âü¼®ÀÚ¸¦ ÁöÁ¤ÇÏÁö ¾Ê¾Ò½À´Ï´Ù
-you have selected an invalid date	common	ko	¿Ã¹Ù¸£Áö ¸øÇÑ ³¯ÀÚ¸¦ ¼±ÅÃÇß½À´Ï´Ù!
-you have selected an invalid main category	common	ko	¿Ã¹Ù¸£Áö ¸øÇÑ ±âº» ºĞ·ù¸¦ ¼±ÅÃÇß½À´Ï´Ù!
-you have successfully logged out	common	ko	¼º°øÀûÀ¸·Î ·Î±×¾Æ¿ôÇÏ¿´½À´Ï´Ù
-you need to add the webserver user '%1' to the group '%2'.	common	ko	´ç½ÅÀº À¥¼­¹öÀÇ À¯Àú·Î UID %1, GID %2 ¿¡ ÇØ´çÇÏ´Â ID¸¦ Ãß°¡ÇØ¾ßÇÕ´Ï´Ù.
-your message could <b>not</b> be sent!<br>	common	ko	´ç½ÅÀÇ ¸Ş½ÃÁö´Â <B>¹ß¼Û ½ÇÆĞ</B>µÇ¾ú½À´Ï´Ù<BR>
-your message has been sent	common	ko	¸Ş½ÃÁö°¡ Àü¼ÛµÇ¾ú½À´Ï´Ù.
-your search returned %1 matchs	common	ko	%1°ÇÀÇ °á°ú°¡ °Ë»öµÇ¾ú½À´Ï´Ù.
-your search returned 1 match	common	ko	1°ÇÀÇ °á°ú°¡ °Ë»öµÇ¾ú½À´Ï´Ù.
-your session could not be verified.	login	ko	¼¼¼ÇÀÌ °ËÁõµÇÁö ¾Ê¾Ò½À´Ï´Ù
-your settings have been updated	common	ko	¼³Á¤ÀÌ º¯°æµÇ¾ú½À´Ï´Ù.
-zoom	common	ko	È®´ë
+total	common	ko	í•©ê³„
+tuesday	common	ko	í™”ìš”ì¼
+type	common	ko	í˜•ì‹
+underline	common	ko	ë°‘ì¤„
+update	common	ko	ê°±ì‹ 
+upload	common	ko	ì—…ë¡œë“œ
+upload directory does not exist, or is not writeable by webserver	common	ko	ì—…ë¡œë“œ ë””ë ‰í† ë¦¬ê°€ ì¡´ì¬í•˜ì§€ ì•Šê±°ë‚˜, ì›¹ì„œë²„ì˜ ì“°ê¸°ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.
+user	common	ko	ì‚¬ìš©ì
+user accounts	common	ko	ì‚¬ìš©ì ê³„ì •
+user groups	common	ko	ì‚¬ìš©ì ê·¸ë£¹
+username	common	ko	ì‚¬ìš©ìID
+users	common	ko	ì‚¬ìš©ì
+view	common	ko	ë³´ê¸°
+wednesday	common	ko	ìˆ˜ìš”ì¼
+welcome	common	ko	í™˜ì˜í•©ë‹ˆë‹¤
+which groups	common	ko	ê·¸ë£¹ì„ íƒ
+width	common	ko	ë„ˆë¹„
+wk	jscalendar	ko	ì£¼
+work email	common	ko	ì—…ë¬´ E-Mail
+would you like to display the page generation time at the bottom of every window?	common	ko	í˜ì´ì§€ ìƒì„± ì‹œê°„ì„ ëª¨ë“  ì°½ì˜ í•˜ë‹¨ì— ì¶œë ¥í•˜ê¸¸ ì›í•˜ì‹­ë‹ˆê¹Œ?
+written by:	common	ko	ì‘ì„±:
+yes	common	ko	ì˜ˆ
+you have been successfully logged out	login	ko	ë¡œê·¸ì•„ì›ƒ ë˜ì—ˆìŠµë‹ˆë‹¤.
+you have not entered a title	common	ko	ì œëª©ì„ ì…ë ¥í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+you have not entered a valid date	common	ko	ì˜¬ë°”ë¥¸ ë‚ ì§œë¥¼ ì…ë ¥í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+you have not entered participants	common	ko	ì°¸ì„ìë¥¼ ì§€ì •í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+you have selected an invalid date	common	ko	ì˜¬ë°”ë¥´ì§€ ëª»í•œ ë‚ ìë¥¼ ì„ íƒí–ˆìŠµë‹ˆë‹¤!
+you have selected an invalid main category	common	ko	ì˜¬ë°”ë¥´ì§€ ëª»í•œ ê¸°ë³¸ ë¶„ë¥˜ë¥¼ ì„ íƒí–ˆìŠµë‹ˆë‹¤!
+you have successfully logged out	common	ko	ì„±ê³µì ìœ¼ë¡œ ë¡œê·¸ì•„ì›ƒí•˜ì˜€ìŠµë‹ˆë‹¤
+you need to add the webserver user '%1' to the group '%2'.	common	ko	ë‹¹ì‹ ì€ ì›¹ì„œë²„ì˜ ìœ ì €ë¡œ UID %1, GID %2 ì— í•´ë‹¹í•˜ëŠ” IDë¥¼ ì¶”ê°€í•´ì•¼í•©ë‹ˆë‹¤.
+your message could <b>not</b> be sent!<br>	common	ko	ë‹¹ì‹ ì˜ ë©”ì‹œì§€ëŠ” <B>ë°œì†¡ ì‹¤íŒ¨</B>ë˜ì—ˆìŠµë‹ˆë‹¤<BR>
+your message has been sent	common	ko	ë©”ì‹œì§€ê°€ ì „ì†¡ë˜ì—ˆìŠµë‹ˆë‹¤.
+your search returned %1 matchs	common	ko	%1ê±´ì˜ ê²°ê³¼ê°€ ê²€ìƒ‰ë˜ì—ˆìŠµë‹ˆë‹¤.
+your search returned 1 match	common	ko	1ê±´ì˜ ê²°ê³¼ê°€ ê²€ìƒ‰ë˜ì—ˆìŠµë‹ˆë‹¤.
+your session could not be verified.	login	ko	ì„¸ì…˜ì´ ê²€ì¦ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+your settings have been updated	common	ko	ì„¤ì •ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
+zoom	common	ko	í™•ëŒ€

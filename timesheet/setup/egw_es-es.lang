@@ -1,6 +1,6 @@
 2 month ago	timesheet	es-es	Hace 2 meses
-2 years ago	timesheet	es-es	Hace 2 años
-3 years ago	timesheet	es-es	Hace 3 años
+2 years ago	timesheet	es-es	Hace 2 aÃ±os
+3 years ago	timesheet	es-es	Hace 3 aÃ±os
 actions	timesheet	es-es	Acciones
 all projects	timesheet	es-es	Todos los proyectos
 both: allow to use projectmanager and free project-names	admin	es-es	Ambos: permitir usar nombres de proyectos del Administrador de proyectos y libres
@@ -9,45 +9,45 @@ create new links	timesheet	es-es	Crear enlaces nuevos
 creating new entry	timesheet	es-es	creando nueva entrada
 delete this entry	timesheet	es-es	Borrar esta entrada
 edit this entry	timesheet	es-es	Editar esta entrada
-empty if identical to duration	timesheet	es-es	Vacío si es idéntico a la duración
+empty if identical to duration	timesheet	es-es	VacÃ­o si es idÃ©ntico a la duraciÃ³n
 end	timesheet	es-es	Fin
 entry deleted	timesheet	es-es	Se ha borrado la entrada
 entry saved	timesheet	es-es	Se ha guardado la entrada
 error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
-error saving the entry!!!	timesheet	es-es	¡Se ha producido un error al guardar la entrada!
+error saving the entry!!!	timesheet	es-es	Â¡Se ha producido un error al guardar la entrada!
 existing links	timesheet	es-es	Enlaces existentes
-full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
+full: use only projectmanager	admin	es-es	Completo: usar sÃ³lo el Administrador de proyectos
 general	timesheet	es-es	General
-last modified	timesheet	es-es	Ultima modificación
-last month	timesheet	es-es	Último mes
-last week	timesheet	es-es	Última semana
-last year	timesheet	es-es	Último año
+last modified	timesheet	es-es	Ultima modificaciÃ³n
+last month	timesheet	es-es	Ãšltimo mes
+last week	timesheet	es-es	Ãšltima semana
+last year	timesheet	es-es	Ãšltimo aÃ±o
 leave it empty for a full week	timesheet	es-es	Dejar en blanco durante una semana completa
 links	timesheet	es-es	Enlaces
 no details	timesheet	es-es	Sin detalles
 no project	timesheet	es-es	Sin proyecto
-none: use only free project-names	admin	es-es	Ninguno: usar sólo nombres de proyecto libres
-or endtime	timesheet	es-es	u hora de finalización
-permission denied!!!	timesheet	es-es	¡Se ha denegado el permiso!
+none: use only free project-names	admin	es-es	Ninguno: usar sÃ³lo nombres de proyecto libres
+or endtime	timesheet	es-es	u hora de finalizaciÃ³n
+permission denied!!!	timesheet	es-es	Â¡Se ha denegado el permiso!
 price	timesheet	es-es	Precio
-projectmanager integration	admin	es-es	Integración con el Administrador de proyectos
+projectmanager integration	admin	es-es	IntegraciÃ³n con el Administrador de proyectos
 quantity	timesheet	es-es	Cantidad
 save & new	timesheet	es-es	Guardar y crear
 saves the changes made	timesheet	es-es	Guardar los cambios realizados
-saves this entry and add a new one	timesheet	es-es	Guarda esta entrada y añade una nueva
+saves this entry and add a new one	timesheet	es-es	Guarda esta entrada y aÃ±ade una nueva
 select a price	timesheet	es-es	Seleccionar un precio
 select a project	timesheet	es-es	Seleccionar un proyecto
 show a quantity sum (eg. to sum up negative overtime)	admin	es-es	Mostrar una suma de cantidades (p. ej. sumar tiempo extra negativo)
 start	timesheet	es-es	Inicio
 starttime	timesheet	es-es	Hora de inicio
-starttime has to be before endtime !!!	timesheet	es-es	¡La hora de comienzo tiene que ser antes que la hora de fin!
+starttime has to be before endtime !!!	timesheet	es-es	Â¡La hora de comienzo tiene que ser antes que la hora de fin!
 sum %1:	timesheet	es-es	Suma %1:
 this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana
-this year	timesheet	es-es	Este año
+this year	timesheet	es-es	Este aÃ±o
 timesheet	common	es-es	Hoja de presencia
 unitprice	timesheet	es-es	Precio por unidad
 view this entry	timesheet	es-es	Ver esta entrada
 week	timesheet	es-es	Semana
 yesterday	timesheet	es-es	Ayer
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	es-es	La base de datos NO está actualizada (%1 vs %2). Por favor, ejecute %3setup%4 para actualizar la base de datos.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	es-es	La base de datos NO estÃ¡ actualizada (%1 vs %2). Por favor, ejecute %3setup%4 para actualizar la base de datos.

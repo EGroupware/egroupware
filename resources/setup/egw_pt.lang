@@ -1,7 +1,7 @@
-accessories of	resources	pt	acessÛrios de
-accessories:	resources	pt	AcessÛrios:
-actions	resources	pt	AcÁıes
-add accessory	resources	pt	Adicionar acessÛrio
+accessories of	resources	pt	acess√≥rios de
+accessories:	resources	pt	Acess√≥rios:
+actions	resources	pt	Ac√ß√µes
+add accessory	resources	pt	Adicionar acess√≥rio
 add resource	resources	pt	Adicionar recurso
 add resources	resources	pt	Adicionar recursos
 administrator	resources	pt	Administrador
@@ -9,94 +9,94 @@ all categories	resources	pt	Todas as categorias
 book	resources	pt	Agendar
 book selected resources	resources	pt	Agendar recursos seleccionados
 book this resource	resources	pt	Agendar este recurso
-bookable	resources	pt	Agend·vel
+bookable	resources	pt	Agend√°vel
 buy this article	resources	pt	Comprar este artigo
 buy this resource	resources	pt	Comprar este recurso
-buyable	resources	pt	¿ venda
-categories admin	resources	pt	Categorias de administraÁ„o
+buyable	resources	pt	√Ä venda
+categories admin	resources	pt	Categorias de administra√ß√£o
 category:	resources	pt	Categoria
 check all	resources	pt	Marcar todas
-choose categories admin	resources	pt	escolher categorias de administraÁ„o
-clear selection	resources	pt	Limpar selecÁ„o
-configure access permissions	resources	pt	Configurar permissıes de acesso
-create new accessory for this resource	resources	pt	Criar novo acessÛrio para este recurso
-create new links	resources	pt	Criar novas ligaÁıes
+choose categories admin	resources	pt	escolher categorias de administra√ß√£o
+clear selection	resources	pt	Limpar selec√ß√£o
+configure access permissions	resources	pt	Configurar permiss√µes de acesso
+create new accessory for this resource	resources	pt	Criar novo acess√≥rio para este recurso
+create new links	resources	pt	Criar novas liga√ß√µes
 delete selected resources	resources	pt	Eliminar recursos seleccionados
 delete this entry	resources	pt	Eliminar este registo
-description (short)	resources	pt	DescriÁ„o (breve)
-direct booking permissions	resources	pt	Permissıes de agendamento directo
-don't use vfs (this will need a symlink --> see readme)	resources	pt	N„o utilize vfs (necessitar· de um symlink --> ver README)
+description (short)	resources	pt	Descri√ß√£o (breve)
+direct booking permissions	resources	pt	Permiss√µes de agendamento directo
+don't use vfs (this will need a symlink --> see readme)	resources	pt	N√£o utilize vfs (necessitar√° de um symlink --> ver README)
 edit this entry	resources	pt	Editar este registo
-existing links	resources	pt	LigaÁıes existentes
+existing links	resources	pt	Liga√ß√µes existentes
 general	resources	pt	Geral
-general informations about resource	resources	pt	InformaÁıes gerais sobre recurso
+general informations about resource	resources	pt	Informa√ß√µes gerais sobre recurso
 gernal resource	resources	pt	Recurso geral
-how many of the resources are useable?	resources	pt	Quantos recursos est„o funcionais?
-how many of them are useable?	resources	pt	Quantos deles est„o funcionais?
-how many of this resource are usable	resources	pt	Quantos deste recurso est„o funcionais
+how many of the resources are useable?	resources	pt	Quantos recursos est√£o funcionais?
+how many of them are useable?	resources	pt	Quantos deles est√£o funcionais?
+how many of this resource are usable	resources	pt	Quantos deste recurso est√£o funcionais
 how many of this resource exists	resources	pt	Quantos deste recurso existem
-implies booking permission	resources	pt	implica permiss„o de agendamento
-implies read permission	resources	pt	implica permiss„o de leitura
-information about storage	resources	pt	InformaÁıes sobre armazenamento
-informations about the location of resource	resources	pt	InformaÁıes sobre a localizaÁ„o do recurso
-inventory number	resources	pt	N˙mero de invent·rio
-inventory number:	resources	pt	N˙mero de invent·rio:
-is resource bookable?	resources	pt	… possÌvel agendar recurso?
-is resource buyable?	resources	pt	… possÌvem comprar recurso?
-is this resource bookable?	resources	pt	Este recurso È agend·vel?
-is this resource buyable?	resources	pt	Este recurso est· ‡ venda?
-links	resources	pt	LigaÁıes
+implies booking permission	resources	pt	implica permiss√£o de agendamento
+implies read permission	resources	pt	implica permiss√£o de leitura
+information about storage	resources	pt	Informa√ß√µes sobre armazenamento
+informations about the location of resource	resources	pt	Informa√ß√µes sobre a localiza√ß√£o do recurso
+inventory number	resources	pt	N√∫mero de invent√°rio
+inventory number:	resources	pt	N√∫mero de invent√°rio:
+is resource bookable?	resources	pt	√â poss√≠vel agendar recurso?
+is resource buyable?	resources	pt	√â poss√≠vem comprar recurso?
+is this resource bookable?	resources	pt	Este recurso √© agend√°vel?
+is this resource buyable?	resources	pt	Este recurso est√° √† venda?
+links	resources	pt	Liga√ß√µes
 location	resources	pt	Local
 location of resource	resources	pt	Local do recurso
 location:	resources	pt	Local:
 name of resource	resources	pt	Nome do recurso
 name:	resources	pt	Nome:
-no description available	resources	pt	sem descriÁ„o disponÌvel
+no description available	resources	pt	sem descri√ß√£o dispon√≠vel
 no resources selected	resources	pt	Nenhum recurso seleccionado
-notify your administrator to correct this situation	resources	pt	Notifique o administrador para que esta situaÁ„o seja corrigida
+notify your administrator to correct this situation	resources	pt	Notifique o administrador para que esta situa√ß√£o seja corrigida
 picture	resources	pt	Imagem
 picture source	resources	pt	Fonte da imagem
-picture type is not supported, sorry!	resources	pt	Pedimos desculpa, mas o tipo de imagem n„o È suportado!
+picture type is not supported, sorry!	resources	pt	Pedimos desculpa, mas o tipo de imagem n√£o √© suportado!
 pictures or resource	resources	pt	Imagens ou recurso
 planer	resources	pt	Planeamento
-prizeing information for booking or buying	resources	pt	Tabela de preÁos para reserva ou compra
+prizeing information for booking or buying	resources	pt	Tabela de pre√ßos para reserva ou compra
 quantity	resources	pt	Quantidade
 quantity of resource	resources	pt	Quantidade do recurso
 quantity:	resources	pt	Quantidade:
-read calendar permissions	resources	pt	Ler permissıes de calend·rio
-read permissions	resources	pt	Ler permissıes
-related links	resources	pt	LigaÁıes relacionadas
+read calendar permissions	resources	pt	Ler permiss√µes de calend√°rio
+read permissions	resources	pt	Ler permiss√µes
+related links	resources	pt	Liga√ß√µes relacionadas
 resources	common	pt	Recursos
 resources list	resources	pt	Lista de recursos
-responsible:	resources	pt	Respons·vel:
+responsible:	resources	pt	Respons√°vel:
 saves entry and exits	resources	pt	Guarda registo e sai
 select a category	resources	pt	Seleccionar uma categoria
 select resource	resources	pt	Seleccionar recurso
 select resources	common	pt	Seleccionar recursos
-select/deselect all	resources	pt	Seleccionar/n„o seleccionar todos
-short description	resources	pt	Breve descriÁ„o
-short description of resource	resources	pt	Breve descriÁ„o do recurso
-show calendar of resource	resources	pt	Exibir recurso do calend·rio
+select/deselect all	resources	pt	Seleccionar/n√£o seleccionar todos
+short description	resources	pt	Breve descri√ß√£o
+short description of resource	resources	pt	Breve descri√ß√£o do recurso
+show calendar of resource	resources	pt	Exibir recurso do calend√°rio
 something went wrong by deleting resource	resources	pt	Ocorreu um erro ao eliminar recurso
 something went wrong by saving resource	resources	pt	Ocorreu um erro ao guardar recurso
-storage inforation	resources	pt	InformaÁıes sobre armazenamento
-storage information	resources	pt	InformaÁıes sobre armazenamento
-storage information:	resources	pt	InformaÁıes sobre armazenamento:
-the calendar of this resource	resources	pt	O calend·rio deste recurso
-this module displays the resources app	resources	pt	Este mÛdulo apresenta as aplicaÁıes de recursos
-use general resources icon	resources	pt	Utilizar Ìcone de recursos gerais
-use own picture	resources	pt	Utilizar imagem prÛpria
-use the category's icon	resources	pt	Utilizar o Ìcone da categoria
+storage inforation	resources	pt	Informa√ß√µes sobre armazenamento
+storage information	resources	pt	Informa√ß√µes sobre armazenamento
+storage information:	resources	pt	Informa√ß√µes sobre armazenamento:
+the calendar of this resource	resources	pt	O calend√°rio deste recurso
+this module displays the resources app	resources	pt	Este m√≥dulo apresenta as aplica√ß√µes de recursos
+use general resources icon	resources	pt	Utilizar √≠cone de recursos gerais
+use own picture	resources	pt	Utilizar imagem pr√≥pria
+use the category's icon	resources	pt	Utilizar o √≠cone da categoria
 useable	resources	pt	Usabilidade
 useable:	resources	pt	Usabilidade:
-view accessories for this resource	resources	pt	Ver acessÛrios para este recurso
+view accessories for this resource	resources	pt	Ver acess√≥rios para este recurso
 view this entry	resources	pt	Ver este registo
-web-page of resource	resources	pt	Recurso de p·gina Web
-web-site for this resource	resources	pt	P·gina Web para este recurso
+web-page of resource	resources	pt	Recurso de p√°gina Web
+web-site for this resource	resources	pt	P√°gina Web para este recurso
 where to find this resource?	resources	pt	Onde encontrar este recurso?
 which category does this resource belong to?	resources	pt	A que categoria pertence este recurso?
-write permissions	resources	pt	Permissıes de escrita
-you are not permitted to delete this reource!	resources	pt	N„o tem permissıes para eliminar este recurso!
-you are not permitted to edit this reource!	resources	pt	N„o tem permissıes para editar este recurso!
-you are not permitted to get information about this resource!	resources	pt	N„o tem permissıes para aceder a informaÁıes sobre este recurso!
-you chose more resources than available	resources	pt	Escolheu mais recursos do que os disponÌveis
+write permissions	resources	pt	Permiss√µes de escrita
+you are not permitted to delete this reource!	resources	pt	N√£o tem permiss√µes para eliminar este recurso!
+you are not permitted to edit this reource!	resources	pt	N√£o tem permiss√µes para editar este recurso!
+you are not permitted to get information about this resource!	resources	pt	N√£o tem permiss√µes para aceder a informa√ß√µes sobre este recurso!
+you chose more resources than available	resources	pt	Escolheu mais recursos do que os dispon√≠veis

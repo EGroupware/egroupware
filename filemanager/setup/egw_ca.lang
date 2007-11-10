@@ -1,9 +1,9 @@
 %1 already exists as a file	filemanager	ca	%1 ja existeix com a arxiu
-application	filemanager	ca	Aplicació
+application	filemanager	ca	AplicaciÃ³
 back to file manager	filemanager	ca	Tornar a l'Administrador d'Arxius
-cancel editing %1 without saving	filemanager	ca	Cancelar la edición de %1 sin guardar
-cannot create directory because it begins or ends in a space	filemanager	ca	No es pot crear el directori perqué comença o acaba amb un espai
-cannot replace %1 because it is a directory	filemanager	ca	No es pot reemplaçar %1 perqué és un directori
+cancel editing %1 without saving	filemanager	ca	Cancelar la ediciÃ³n de %1 sin guardar
+cannot create directory because it begins or ends in a space	filemanager	ca	No es pot crear el directori perquÃ© comenÃ§a o acaba amb un espai
+cannot replace %1 because it is a directory	filemanager	ca	No es pot reemplaÃ§ar %1 perquÃ© Ã©s un directori
 command sucessfully run	filemanager	ca	Ordre executada correctament
 comment	filemanager	ca	Comentari
 comments cannot contain "%1"	filemanager	ca	Els comentaris no poden tenir "%1"
@@ -47,7 +47,7 @@ file names cannot contain  or /	filemanager	ca	Los nombres de fichero no pueden 
 file names cannot contain "%1"	filemanager	ca	Els noms d'arxiu no poden tenir "%1"
 file names cannot contain \ or /	filemanager	ca	Los nombres de fichero no pueden contener  o /
 filemanager	common	ca	Administrador d'Arxius
-filemanager preferences	filemanager	ca	Preferències de l'Administrador d'Arxius
+filemanager preferences	filemanager	ca	PreferÃ¨ncies de l'Administrador d'Arxius
 files	filemanager	ca	Arxius
 files is this directory	filemanager	ca	Ficheros en este directorio
 folder	filemanager	ca	Carpeta
@@ -59,7 +59,7 @@ go to your home directory	filemanager	ca	Anar al directori personal
 go to:	filemanager	ca	Anar a:
 go up	filemanager	ca	subir
 home	filemanager	ca	Inici
-location	filemanager	ca	Ubicación
+location	filemanager	ca	UbicaciÃ³n
 locked	filemanager	ca	Bloquejat
 mime type	filemanager	ca	Tipus MIME
 modified	filemanager	ca	Modificat
@@ -68,17 +68,17 @@ move to	filemanager	ca	Moure A
 move to:	filemanager	ca	Moure a:
 moved %1 to %2	filemanager	ca	S'ha mogut %1 a %2
 no files in this directory.	filemanager	ca	No hay ficheros en este directorio
-no version history for this file/directory	filemanager	ca	No hi ha historial de versió per aquest arxiu o directori
-operation	filemanager	ca	Operació
+no version history for this file/directory	filemanager	ca	No hi ha historial de versiÃ³ per aquest arxiu o directori
+operation	filemanager	ca	OperaciÃ³
 owner	filemanager	ca	Propietari
 please select a file to delete.	filemanager	ca	Por favor, seleccione un fichero para borrar
 preferences old	preferences	ca	Preferencias antiguas
-preview %1	filemanager	ca	Vista prévia de %1
-preview of %1	filemanager	ca	Vista prévia de %1
+preview %1	filemanager	ca	Vista prÃ©via de %1
+preview of %1	filemanager	ca	Vista prÃ©via de %1
 reload	filemanager	ca	recargar
 rename	filemanager	ca	Reanomenar
 renamed %1 to %2	filemanager	ca	S'ha reanomenat %1 a %2
-replaced %1	filemanager	ca	Reemplaçat %1
+replaced %1	filemanager	ca	ReemplaÃ§at %1
 save %1	filemanager	ca	Desar %1
 save %1, and go back to file listing	filemanager	ca	Guardar %1, y volver al listado de ficheros
 save all	filemanager	ca	Desar tot
@@ -87,7 +87,7 @@ saved %1	filemanager	ca	Desat %1
 show	filemanager	ca	Mostrar
 show ..	filemanager	ca	Mostrar ..
 show .files	filemanager	ca	Mostrar arxius ocults
-show command line (experimental. dangerous.)	filemanager	ca	Mostrar línia d'ordres (EXPERIMENTAL. PERILLÓS.)
+show command line (experimental. dangerous.)	filemanager	ca	Mostrar lÃ­nia d'ordres (EXPERIMENTAL. PERILLÃ“S.)
 show help	filemanager	ca	Mostrar l'ajuda
 size	filemanager	ca	Tamany
 sort by:	filemanager	ca	Ordenar per:
@@ -101,11 +101,11 @@ updated comment for %1	filemanager	ca	Comentari actualitzat per %1
 upload	filemanager	ca	Copiar a servidor
 upload fields	filemanager	ca	Pujar camps
 upload files	filemanager	ca	Pujar arxius
-use new experimental filemanager?	filemanager	ca	¿Usar el nuevo Administrador de archivos (experimental)?
+use new experimental filemanager?	filemanager	ca	Â¿Usar el nuevo Administrador de archivos (experimental)?
 used space	filemanager	ca	Espai usat
 users	filemanager	ca	Usuaris
-version	filemanager	ca	Versió
+version	filemanager	ca	VersiÃ³
 view documents in new window	filemanager	ca	Veure documents en una nova finestra
-view documents on server (if available)	filemanager	ca	Veure documents al servidor (si està disponible)
+view documents on server (if available)	filemanager	ca	Veure documents al servidor (si estÃ  disponible)
 who	filemanager	ca	Qui
-you do not have access to %1	filemanager	ca	No teniu accés a %1
+you do not have access to %1	filemanager	ca	No teniu accÃ©s a %1

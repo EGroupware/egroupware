@@ -1,552 +1,552 @@
-%1 matches found	calendar	bg	Открити са %1 съвпадения
-%1 messages have been deleted	email	bg	%1 писма бяха изтрити
-%1 records imported	calendar	bg	%1 записа са вмъкнати
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	bg	Прочетени са %1 записа, но не са вмъкнати. Можете да се върнете на предната съпка и да демаркирате "Тест за вмъкване".
-(for weekly)	calendar	bg	(за Седмично)
-(required)	email	bg	(задължително)
-1 match found	calendar	bg	Открито е едно съвпадение
-1 message has been deleted	email	bg	1 писмо беше изтрито
-1 message has been moved to	email	bg	1 писмо беше преместено в
-<b>*apply*</b> this filter	email	bg	<b>*ИЗПОЛЗВАЙ*</b> този филтър
-<b>apply all</b> filters	email	bg	<b>ИЗПОЛЗВАЙ ВСИЧКИ</b> филтри
-accept	calendar	bg	Приемане
-accepted	calendar	bg	Прието
-account	email	bg	акаунт
-account name	email	bg	Име на акаунта
-account user name	email	bg	Акаунт - име на потребителя
-accounts	common	bg	Акаунти
-accounts:	email	bg	Акаунти:
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	bg	Действия, причиняващи известяване: Добавяне, Премахване, Приемане, Отказване, ...
-add alarm	calendar	bg	Добавяне на напомняне
-add contact	calendar	bg	Добави в адресника
-add to address book	email	bg	Добави в адресника
-add to addressbook	email	bg	Добави в адресника
-added	calendar	bg	Добавено
-address book	calendar	bg	Адресник
-after	email	bg	След
-alarm	calendar	bg	Напомняне
-alarm for %1 at %2 in %3	calendar	bg	Напомняне за %1 - %2 в %3
-alarm management	calendar	bg	Редактиране на напомнянията
-alarm-management	calendar	bg	Напомняне-Редактиране
-alarms	calendar	bg	Напомняния
-all day	calendar	bg	Всеки ден
-all messages	email	bg	Всички писма
-and	email	bg	и
-and stop filtering	email	bg	и прекрати филтрирането
-answered	email	bg	на които е отговорено
-apply	email	bg	приложи
-apply filters report:	email	bg	Резултат след прилагане на филтрите:
-apr	email	bg	Април
-aqua fusion	email	bg	Стил "Aqua Fusion"
-are you sure you want to delete this country ?	calendar	bg	Потвърдете изтриването на държавата ...
-are you sure you want to delete this holiday ?	calendar	bg	Потвърдете изтриването на празника ...
-are you sure\nyou want to\ndelete these alarms?	calendar	bg	Потвърдете изтриването на напомнянията ...
-are you sure\nyou want to\ndelete this entry ?	calendar	bg	Потвърдете изтриването на записа ...
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	bg	Потвърдете изтриването на записа. Това ще го изтрие и за всички други потребители !
-are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	bg	Потвърдете изтриването само на това събитие. Ще го изтриете и за всички други потребители !
-arrival date	email	bg	Дата на пристигане
-as	email	bg	като
-attach file	email	bg	Прикрепи файл
-attach signature	email	bg	Добави подпис
-attachment	email	bg	Прикрепен файл
-aug	email	bg	Август
-bcc	email	bg	"ВСС" копие
-bcc address	email	bg	Адрес за "ВСС" копие
-before	email	bg	Преди
-before the event	calendar	bg	преди събитието
-big	email	bg	Голям
-bigger	email	bg	По-голям
-biggest	email	bg	Най-голям
-body	email	bg	Текст на писмото
-both	email	bg	Двете
-brief description	calendar	bg	Кратко описание
-button type	email	bg	Тип бутони
-cache server data whenever possible	email	bg	запомняй често ползваното, когато е възможно
-calendar	common	bg	Календар
-calendar - add	calendar	bg	Календар - добавяне
-calendar - edit	calendar	bg	Календар - редактиране
-calendar event	calendar	bg	Събитие в календара
-calendar holiday management	admin	bg	Календар - Редактиране на празниците
-calendar preferences	calendar	bg	Календар - Предпочитания
-calendar settings	admin	bg	Календар - Настройки
-calendar-fieldname	calendar	bg	Календар - Име на поле
-canceled	calendar	bg	Отказано
-cc	email	bg	"СС" копие
-cc address	email	bg	Адрес за "СС" копие
-change all events for $params['old_owner'] to $params['new_owner'].	calendar	bg	Прехвърли всички ангажименти на $params['old_owner'] към тези на $params['new_owner'].
-change font size in your e-mail pages	email	bg	Променя шрифта в страниците на ЕПоща
-check flags for type of mails	email	bg	Маркирай за избор на тип писмо
-choose for rename	email	bg	Преименовай
-choose to rename	email	bg	преименовай
-click here for more info in a new window	email	bg	Натисни за повече информация в нов прозорец
-click here to continue	email	bg	Продължавай
-click here to edit the settings for this email account.	email	bg	натисни за редактиране настройките на тази пощенска кутия
-click here to return to your home page.	email	bg	натисни за преход към началната страница
-company	email	bg	Фирма
-compose	common	bg	Писане
-compose message	email	bg	писане на писмо
-compose new	common	bg	Напиши ново
-contains	email	bg	Съдържа
-could not open this mailbox	email	bg	Не мога да отворя тази кутия
-countries	calendar	bg	Държави
-country	calendar	bg	Държава
-create (expert)	email	bg	създай (експерт)
-create a folder	email	bg	Създай папка
-created by	calendar	bg	Автор
-current attachments (%1)	email	bg	Приложени (%1)
-custom e-mail preferences	email	bg	Потребителски настройки на ЕПоща
-custom e-mail settings	email	bg	Е-поща настройки
-daily	calendar	bg	Дневен
-daily matrix view	calendar	bg	Преглед за деня (матричен)
-days	calendar	bg	дни
-days repeated	calendar	bg	дни за повторение
-dayview	calendar	bg	Дневен вид
-debugging page	email	bg	Страница за диагностика
-dec	email	bg	Декември
-default appointment length (in minutes)	calendar	bg	Нормална продължителност (в минути)
-default calendar filter	calendar	bg	Филтър по подразбиране
-default calendar view	calendar	bg	Вид по подразбиране
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	bg	Продължителност по подразбиране в минути на новосъздадените ангажименти.
-default sorting order	email	bg	Сортиране по подразбиране
-default:	common	bg	текущ:
-defines the size in minutes of the lines in the day view.	calendar	bg	Задава продължителност в минути на редовете в "Дневен вид"
-delete (expert)	email	bg	Премахни (експерт)
-delete a folder	email	bg	Премахни папка
-delete account	common	bg	Премахни пощ. кутия
-delete an entire users calendar.	calendar	bg	Изтрий целия календар на потребителя.
-delete selected contacts	calendar	bg	Изтрий маркираните контакти.
-deleted	calendar	bg	премахнати
-deleted messages (trash) folder	email	bg	Папка за изтрити писма (Trash)
-deleted messages folder name	email	bg	Име на папката за изтрити писма
-deleted messages go to trash	email	bg	Премествай изтритите в папката за изтрити
-deleted messages saved to folder:	email	bg	Записах изтритите писма в папка:
-description	calendar	bg	Описание
-disable	calendar	bg	Забрани
-disabled	calendar	bg	забранен
-discard	email	bg	Откажи
-display status of events	calendar	bg	Изобразявай статуса на поканите
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	bg	Изобразяване на вида календар по подразбиране и на страницата "Начало".
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	bg	Желаете ли редовно да получавате кратко описание на ангажиментите Ви чрез e-mail? Писмата за деня се изпращат сутрин, а за седмицата - в понеделник. Не се изпращат писма ако нямате ангажименти за деня, съответно седмицата.
-does not contain	email	bg	Не съдържа
-draft	email	bg	чернова
-duration	calendar	bg	Продължителност
-e-mail extra account	email	bg	Допълнителна пощ. кутия
-e-mail extra accounts	email	bg	Допълнителни пощ. кутии
-e-mail extra accounts list	email	bg	Списък допълнителни пощ. кутии
-e-mail filters	common	bg	Филтри в ЕПоща
-e-mail folders	common	bg	Папки в ЕПоща
-e-mail inbox filters list	email	bg	Списък филтри в ЕПоща Получени
-e-mail preferences	common	bg	ЕПоща настройки
-each user has a summary page which can display a variety of information. this option will show a small list of email messages in the inbox of the users default email account on the users summary home page.	email	bg	Всеки потребител разполага със собствена начална страница. Тази настройка определя дали и как на нея да се изобразява списъка с получени писма.
-edit filters	email	bg	Редактиране на филтрите
-email account name	email	bg	Име на e-mail акаунта
-email address	email	bg	E-mail адрес
-email notification	calendar	bg	Напомняне с писмо
-email notification for %1	calendar	bg	Напомняне с писмо за %1
-email password	email	bg	Парола на акаунта
-email signature	email	bg	Текст за подпис
-email type	common	bg	Тип e-mail
-enable	calendar	bg	Разреши
-enable this email account	common	bg	Разреши този e-mail акаунт
-enable utf-7 encoded folder names	email	bg	Разреши utf-7 символи в имената на папките
-enabled	calendar	bg	разрешен
-end date/time	calendar	bg	Край Дата/Час
-enddate	calendar	bg	ДатаКрай
-enter the search string in the text boxes	email	bg	В съответното поле въведете текст за търсене
-enter your pop	admin	bg	Въведете POP сървър
-error moving messages to	email	bg	Грешка при местенето на писмата в
-error text not provided	email	bg	липсва описание на грешката
-error: unknown message data	email	bg	Грешка:  Непознати данни в писмото
-evolution style	email	bg	Стил "Evolution"
-exceptions	calendar	bg	Изключения
-extended	calendar	bg	Разширен
-external participants	calendar	bg	Външни участници
-extra accounts	email	bg	Допълнителни акаунти
-extra e-mail account	common	bg	Допълнителен e-mail акаунт
-extra e-mail accounts	common	bg	Допълнителни e-mail акаунти
-extra e-mail preferences number %1	email	bg	Настройки на допълнителен акаунт %1
-failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	bg	Опита за изпращане на писмо до '%1' #%2 относно '%3', с подател '%4' е неуспешен !!!
-feb	email	bg	Февруари
-fewer actions	email	bg	По-малко действия
-fewer choices	email	bg	По-малко избрани
-file	email	bg	Файл
-file attachment	email	bg	Прикрепен файл
-file into	email	bg	Информация за файла
-fill in as much as you can	email	bg	попълнете колкото може повече
-filter [number] and name	email	bg	Филтър [номер] и име
-filter inbox for accounts	email	bg	Филтрирай получените в акаунти
-filter name	email	bg	Име на филтъра
-filter name:	email	bg	име на филтъра:
-filter number	email	bg	Номер на филтъра
-filters	email	bg	Филтри
-filters list	email	bg	Списък на филтрите
-firstname of person to notify	calendar	bg	Собствено име на лицето за известяване.
-flag as important	email	bg	Флаг за важност
-flagged	email	bg	с флаг
-folder	common	bg	Папка
-folder maintenance	email	bg	Редактиране на папките
-folder name	email	bg	Име на папката
-folder size	email	bg	Обем на папката
-folders	email	bg	Папки
-for the file to actually upload	email	bg	за зареждане на файла
-for these items, fill only what is different from you default e-mail preferences	common	bg	Променете само тези настройки за ЕПоща, които се различават от предпочитаното
-forward	email	bg	Препращане
-free/busy	calendar	bg	Свободен/Зает
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	bg	заетост: Непознат потребител '%1', грешна парола или достъпа е забранен за външни потребители !!!
-fri	calendar	bg	Пт
-from	email	bg	От
-from address	email	bg	Подател
-full description	calendar	bg	Подробно описание
-fullname of person to notify	calendar	bg	Пълно име на лицето за известяване
-generate printer-friendly version	calendar	bg	Генериране на вариант за отпечатване
-get size	email	bg	Какъв е обема?
-go	email	bg	продължавай
-go back	email	bg	Назад
-go back to	email	bg	Върни се на
-go!	calendar	bg	Давай!
-group planner	calendar	bg	Планер на група
-header field	email	bg	Заглавно поле
-here is your requested alarm.	calendar	bg	Това е поискано от Вас напомняне.
-hidden	email	bg	скрито
-hide help	email	bg	Скрий описанията
-high priority	calendar	bg	висок приоритет
-holiday	calendar	bg	Празник
-holiday management	calendar	bg	Редактиране на празниците
-holiday-management	calendar	bg	Празници-редактиране
-holidays	calendar	bg	Празници
-hours	calendar	bg	часа
-html messages with the iframe  tag may be klez or other worm emails.	email	bg	писмо с html IFRAME може да съдържа вирус
-i participate	calendar	bg	Ще участвам
-icon size	email	bg	Големина на иконите
-icon theme	email	bg	Вид на иконите
-idots crystal style	email	bg	Стил "iDots Crystal"
-if &quot; deleted messages go to trash &quot; is checked, deleted message will be sent to the folder name you type in this box. if this folder does not exist, it will be created for you automatically. default name is &quot;trash&quot;. this will be your &quot;trash&quot; folder, but it does not have to actually be called &quot;trash&quot;, you can name it anything. only works with imap servers, pop servers do not have folders.	email	bg	Ако &quot;Премествай изтритите в папката ...&quot; е маркирано, всяко изтрито писмо ще бъде премествано в папката, чието име напишете тук. Ако тя не съществува, ще бъде създадена автоматично. Обикновено името и е &quot;Sent&quot;. Наложително е периодично или веднага да изпразвате тази папка. Функцията работи само с IMAP сървър, и не работи с POP.
-if &quot; sent messages folder &quot; is checked, a copy of your sent mail will be stored in the folder name you type in this box. if this folder does not exist, it will be created for you automatically. default name is &quot;sent&quot;. this will be your &quot;sent&quot; folder, but it does not have to actually be called &quot;sent&quot;, you can name it anything. only works with imap servers, pop servers do not have folders.	email	bg	Ако &quot;Записвай изпратените съобщения в папка ...&quot; е маркирано, копие на всяко изпратено писмо ще бъде записвано в папката, чието име напишете тук. Ако тя не съществува, ще бъде създадена автоматично. Обикновено името и е &quot;Sent&quot;. Наложително е периодично да почиствате тази папка от излишните писма. Тази функция работи само с IMAP сървър, и не работи с POP.
-if applicable	email	bg	Ако е приложимо
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	bg	Маркирайте за преместване на празника в следващия понеделник ако попадне в събота или в неделя.
-if checked, a copy of your sent mail will be stored in the &quot;sent&quot; folder name which you specify in the box for &quot;sent messages folder &quot;. only works with imap servers, pop servers do not have folders.	email	bg	Ако е маркирано, в папката с име &quot;Sent&quot; ще бъде записвано копие на всяко изпратено писмо. Това налага периодично или веднага да почиствате тази папка. Името и се задава в поле &quot;Папка за изпратени писма&quot;. Тази функция работи само с IMAP сървър, и не работи с POP.
-if checked, deleted message will be sent to the &quot;trash&quot; folder name which you specify in the box for &quot; deleted messages (trash) folder &quot;. only works with imap servers, pop servers do not have folders.	email	bg	Ако е маркирано, писмата, които изтривате ще бъдат премествани в папката с име &quot;Trash&quot; вместо да бъдат изтрити. Това налага периодично или веднага да я изпразвате. Името на папката се задава в поле &quot;Папка за изтрити писма&quot;. Тази функция работи само с IMAP сървър, и не работи с POP.
-if messages match	email	bg	Ако се намери писмо
-if there is no obvious error, check your email account name and password first.	email	bg	ако грешката не е ясна, първо проверете името и паролата за акаунта
-if there is no obvious error, check your username and password first.	email	bg	ако грешката не е ясна, първо проверете името и паролата за акаунта
-if using an imap server, what kind is it, most often this option can safely be set to &quot;cyrus or courier&quot;. technically, this means the server uses a dot between the different parts of the folder names, such as &quot;inbox.sent&quot;. the other major kind of imap server is the university of washington &quot;uwash&quot; imap server. it uses slashes instead of the dots the other servers use, and although it has a folder called &quot;inbox&quot;, it is not considered the &quot;namespace&quot; for the other folder names. the &quot;uw-maildir&quot; is a rare combination of the two above types. this is the least used kind of imap server. if you are unsure, ask your it administrator. only applies to imap servers.	email	bg	Тази настройка може да е &quot;Cyrus или Courier&quot; и всичко да работи нормално ако ползвате IMAP сървър, независимо от вида му. Тези сървъри ползват за разделител знакът точка , докато сървърът UWash, разработен от университета във Вашингтон, ползва за равделител наклонена черта. Ако не сте сигурни, попитайте администратора. Ползва се само за IMAP сървъри.
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	bg	Ако тук не въведете парола, информацията за Вашата заетост ще е достъпна за всеки, който знае URL адреса!!!
-ignore conflict	calendar	bg	Игнорирай конфликта
-image	email	bg	Изображение
-imap mail server hostname or ip address	admin	bg	IP или име на IMAP сървъра
-imap server type	common	bg	Тип на IMAP сървъра
-imap server type - if applicable	email	bg	Тип на IMAP сървъра - ако се ползва такъв
-important	email	bg	важно
-in the email index page, the page which lists all the mails in a folder, mail may be sorted by date, author, size, or subject, however all of these need to be ordered from first to last, this options controlls what is first and last. for example, if sorting by date, the newest to oldest displays the most recent emails first, in decending order down to the oldest emails last.	email	bg	Когато гледате списъка писма в дадена папка, Вие можете да ги сортирате по дата, подател, големина или "Относно". Освен това можете да ги подредите отпред-назад или отзад-напред. Ако са сортирани по дата тази настройка определя дали първото писмо в списъка да е най-новото или да е най-старото писмо.
-inbox	email	bg	Получени
-interval	calendar	bg	Интервал
-intervals in day view	calendar	bg	Интервал в "Дневен вид"
-jan	email	bg	Януари
-jul	email	bg	Юли
-jun	email	bg	Юни
-keep	email	bg	Запази
-keyword	email	bg	ключова дума
-keywords	email	bg	Ключови думи
-last	calendar	bg	последен
-lastname of person to notify	calendar	bg	Фамилия на лицето за известяване
-layout 1	common	bg	Вид 1
-layout 2	common	bg	Вид 2
-length shown<br>(emtpy for full length)	calendar	bg	Изобразявана дължина (празно за цялата)
-length<br>(<= 255)	calendar	bg	Дължина (<= 255)
-lines	email	bg	Линии
-link	calendar	bg	Препратка
-link to view the event	calendar	bg	Препратка за преглед на събитието
-list all categories.	calendar	bg	Покажи всички категории.
-list messages	email	bg	списък на писмата
-location	calendar	bg	Място на събитието
-long names	email	bg	дълги имена
-mail folder(uw-maildir)	email	bg	Папка за писма(UW-папка)
-mail server	email	bg	Пощенски сървър
-mail server type	email	bg	Вид пощенски сървър
-mail you send will use this address as the &quot;from&quot; address. this may be the same as your egroupware login name, or the server administrator may have set it for you. when the recipient clicks reply, this address will be used. you can leave this box blank and the default value will be used.	email	bg	Писмата, които пращате ще носят този адрес като адрес на подателя. Когато получателя натисне "Отговор" автоматично ще бъде използван този адрес за връзка с Вас. Ако изтриете съдържанието на полето в настройките на основния акаунт то автоматично ще бъде попълнено с първоначалните настройки, направени от администратора.
-make freebusy information availible to not loged in persons?	calendar	bg	Нека информацията за моята заетост да е достъпна и за потребители, които не са влезли в системата.
-manage accounts	email	bg	Редактиране на акаунтите
-manage folders	email	bg	Редактиране на папките
-mar	email	bg	Март
-matrixview	calendar	bg	Матричен вид
-message list layout	common	bg	Изглед  на списъка на писмата
-messages	email	bg	Писма
-messages found in folder	email	bg	Писма открити в папка
-messages have been moved to	email	bg	писмата бяха преместени в
-minutes	calendar	bg	минути
-modified	calendar	bg	Редактирано
-modify list of external participants	calendar	bg	Редактиране списъка на външните участници
-mon	calendar	bg	Пон
-month	calendar	bg	Месец
-monthly	calendar	bg	Месечен
-monthly (by date)	calendar	bg	Месечно (по дати)
-monthly (by day)	calendar	bg	Месечно (по дни)
-monthview	calendar	bg	Месечен вид
-more actions	email	bg	Повече действия
-more choices	email	bg	Повече избрани
-most us and european users do not need to enable this. if this option is checked then your email server can handle folder names with non us-ascii charactors in them / default is disabled, not checked. only use if you are really sure you need it. only works with imap servers, pop servers do not have folders.	email	bg	Повечето потребители в Европа и САЩ няма нужда да разрешават това. Ако е маркирано, имената на папките ще могат да съдържат не US-ASCII символи. Обикновено е забранено (не е маркирано). Разрешете го само ако наистина се нуждаете от това и ако сте сигурни, че ще работи. Тази функция работи само с IMAP сървър, и не работи с POP.
-move down	email	bg	Премести надолу
-move selected messages into	email	bg	Премести маркираните в
-move this message into	email	bg	Премести писмото в
-move up	email	bg	Премести нагоре
-mozilla modern style	email	bg	Стил "Mozilla Modern"
-name of the mail server you want to access. should be a name like &quot;mail.example.com&quot;. if you leave this box blank then the default value will be used.	email	bg	Име или IP адрес на пощенския сървър. Ако го оставите празно, автоматично ще бъде попълнено с първоначалното съдържание.
-new	email	bg	Нови
-new account	email	bg	Нов акаунт
-new entry	calendar	bg	Записване (ново)
-new filter	email	bg	Добавяне на филтър
-new message	email	bg	Ново писмо
-new messages	email	bg	Нови писма
-new name must not exist and not be empty!!!	calendar	bg	Новото име да е несъществуващо и да не е празно !!!
-newest	common	bg	първо
-next message	email	bg	Следващо писмо
-no change	email	bg	не променяй
-no error returned from server	email	bg	Няма грешка според сървъра
-no matches found	calendar	bg	Не са открити съвпадения
-no message found in folder '%1'	email	bg	Не са намерени писма в папка '%1'
-no next message	email	bg	Няма следващо
-no previous message	email	bg	Няма предишно
-no response	calendar	bg	Без отговор
-noia &#64; carlitus style	email	bg	Стил "Noia @ Carlitus"
-non-standard	email	bg	Нестандартен
-not used	email	bg	неизползван
-notification messages for added events	calendar	bg	Известие за добавен ангажимент
-notification messages for canceled events	calendar	bg	Известие за премахнат ангажимент
-notification messages for modified events	calendar	bg	Известие за променен ангажимент
-notification messages for your alarms	calendar	bg	Напомняне за ангажимент
-notification messages for your responses	calendar	bg	Известие за Ваш отговор на покана
-notify on delivery	email	bg	Обратна разписка
-nov	email	bg	Ноември
-number	common	bg	Номер
-number of matches:	email	bg	брой намерени:
-number of months	calendar	bg	Брой месеци
-oct	email	bg	Октомври
-old	email	bg	Стар
-old startdate	calendar	bg	Стара начална дата
-olddate	calendar	bg	СтараДата
-oldest	common	bg	последно
-on	email	bg	На
-only needed with the university of washington &quot;uwash&quot; imap server. the default value is &quot;mail&quot; which means your mail folders, other then inbox, are located in a directory called &quot;mail&quot; directly under your &quot;home&quot; directory. this box may be left empty, which means your mail folders are located in your &quot;home&quot; directory, not a subdirectory. if your mail folders are located in a subdirectory of &quot;home&quot; then put the name of that subdirectory here. generally, it is not necessary to use any special slashes or tildes, &quot;home&quot; is always considered the base directory, and the slash bewteen &quot;home&quot; and the subdirectory will be added for you automatically, do not put the slash in this box.	email	bg	Необходимо само ако ползвате разработения от университета във Вашингтон UWash IMAP сървър. The default value is &quot;mail&quot; which means your mail folders, other then INBOX, are located in a directory called &quot;mail&quot; directly under your &quot;HOME&quot; directory. This box may be left empty, which means your mail folders are located in your &quot;HOME&quot; directory, not a subdirectory. If your mail folders are located in a subdirectory of &quot;HOME&quot; then put the name of that subdirectory here. Generally, it is not necessary to use any special slashes or tildes, &quot;HOME&quot; is always considered the base directory, and the slash bewteen &quot;HOME&quot; and the subdirectory will be added for you automatically, do not put the slash in this box.
-or	common	bg	или
-or enter text	email	bg	или въведете текст
-or you can use custom settings for this email account	email	bg	или да ползвате Вашите потребителски настройки за този акаунт
-order	calendar	bg	Подреждане
-organization	email	bg	Организация
-participant	calendar	bg	Участник
-participants	calendar	bg	Участници
-participates	calendar	bg	Ще участва
-password for not loged in users to your freebusy information?	calendar	bg	Парола за достъп до информацията за Вашата заетост за потребители, които не са влезли в системата. Задайте парола, различна от Вашата!
-permission denied	calendar	bg	Не е позволено
-persistent email server session	email	bg	текущия обмен с пощенския сървър
-phone	email	bg	Телефон
-planner	calendar	bg	Планер
-planner by category	calendar	bg	Планер по категории
-planner by user	calendar	bg	Планер по потребители
-please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	bg	Моля потвърдете, приемете, откажете или прегледайте промените в съответния запис в календара Ви !
-please enter a filename !!!	calendar	bg	Моля въведете име на файл!
-please fill in everything you need	email	bg	Моля, попълнете всичко от което се нуждаете
-please select a folder to rename	email	bg	Моля, изберете папката за преименоване
-please select a message first	email	bg	Моля първо да посочите писмото
-please submit a filename to attach	email	bg	Моля задайте името на файла за прикрепяне
-please type a folder name in the text box	email	bg	Моля напишете текст за име на папката
-preselected group for entering the planner	calendar	bg	Група при влизане в "Планер"
-previous	email	bg	Предишно
-previous message	email	bg	Предишно писмо
-print calendars in black & white	calendar	bg	Черно/бяло отпечатване на календарите
-print the mini calendars	calendar	bg	Печатане на мини календари
-printable	email	bg	за отпечатване
-printer friendly	calendar	bg	Вариант за отпечатване
-private only	calendar	bg	Само личните
-raw message	email	bg	необработено
-re-edit event	calendar	bg	Редактиране отново
-read mail	email	bg	Отвори
-recent	email	bg	скорошни
-recipient	email	bg	Получател
-refresh	calendar	bg	Опресни
-rejected	calendar	bg	Отказано
-rename a folder	email	bg	Преименуване на папка
-repeat day	calendar	bg	Повторение в дните
-repeat end date	calendar	bg	Повтаряне до (дата)
-repeat type	calendar	bg	Тип на повторение
-repeating event information	calendar	bg	Информация за повтарящи се събития
-reply	email	bg	Отговор
-reply all	email	bg	Отговор на всички
-request delivery notification	email	bg	Искане за обратна разписка
-required	email	bg	задължително
-return mails during this time period	email	bg	Търси в периода
-sa	calendar	bg	Сб
-sat	calendar	bg	Съб
-search for mails in these folders	email	bg	Търси сред писмата в папките
-search results	calendar	bg	Резултат от търсенето
-seen	email	bg	видяни
-select this box if you want the text body of the message you are forwarding to appear inline in the body of your sent message	email	bg	Ако е маркирано, когато препращате писмо, текста му ще бъде вмъкнат в кавички в новото писмо.
-select your screensize for proper showing of the javascript addressbook	email	bg	Посочете големината на екрана в точки (pixels) за коректното изобразяване на Java адресника.
-select your screensize for propper showing of the javascript addressbook	email	bg	Посочете големината на екрана в точки (pixels) за коректното изобразяване на Java адресника.
-select your style for the addressbook. the traditional, simple style. or the new javascript enabled complex addressbook	email	bg	Изберете вида на адресника. Може да е обикновен (традиционен) или новия стил, разработен на езика Java.
-send	email	bg	Изпращане
-send deleted messages to the trash	email	bg	Премести изтритите в папката за изтрити
-send forwarded mail as quoted attachment	email	bg	Изпращай препратените като като вмъкнат в кавички текст
-sender	email	bg	Подател
-sent	common	bg	изпратени
-sent folder	email	bg	папка за изпратени
-sent messages folder	common	bg	Папка за изпратени писма
-sent messages folder name	email	bg	Име на папка "Изпратени"
-sent messages saved in &quot;sent&quot; folder	common	bg	Записвай изпратените съобщения в папка &quot;sent&quot
-sent messages saved to folder:	email	bg	Записах изпратените в папка:
-sep	email	bg	Септември
-set a year only for one-time / non-regular holidays.	calendar	bg	Задайте годината само ако празникът е едиствено за тази година и няма да се повтаря през следващите.
-set new events to private	calendar	bg	При добавяне на ангажимент  - "Личен"
-settings	common	bg	Настройки
-short names	email	bg	кратки имена
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	bg	Искате ли събитията, за които сте били поканени, но сте отказали участие, да се изобразяват в календара? Вие можете по-късно да приемете участието (напр. при отпадане на конфликт в програмата Ви).
-should new events created as private by default ?	calendar	bg	При добавяне на нов ангажимент,  "Личен" по подразбиране да е маркирано.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	bg	Бихте могли да разрешите на потребители, които нямат акаунт за влизане в тази система, да имат достъп до информацията за Вашата заетост. Информацията е в iCal формат и включва само времето, през което сте зает, като не включва заглавието, описанието и местото на ангажиментите. Можете да зададете парола за достъп до информацията, а URL адресът е %1
-should the mini calendars by printed / displayed in the printer friendly views ?	calendar	bg	Желаете ли във варианта за отпечатване да се изобразяват мини календарчета?
-should the printer friendly view be in black & white or in color (as in normal view)?	calendar	bg	Желаете ли варианта за отпечатване да е черно/бял?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	bg	В скоби, след името на поканения за дадено събитие, ще се изписва неговия отговор (Приема, Отказва,...).
-show day view on main screen	calendar	bg	Изобразявай дневен вид на календара на страницата "Начало"
-show default view on main screen	calendar	bg	Показвай го и на страницата "Начало"
-show help	email	bg	Покажи описанията
-show high priority events on main screen	calendar	bg	Показвай събитията с висок приоритет на страницата "Начало"
-show invitations you rejected	calendar	bg	Показвай и поканите, които съм отказал
-show list of upcoming events	calendar	bg	Покажи списък на приближаващите събития
-show long names	email	bg	Покажи с дълги имена
-show message	email	bg	покажи писмото
-show new messages in combobox	email	bg	Показвай броя на новите в падащия списък
-show new messages on main screen	email	bg	Покажи новите на началния екран
-show next seven days	calendar	bg	Покажи следващите седем дни
-show only one day	calendar	bg	Покажи само един ден
-show sender's email address with name	email	bg	Покажи адреса на подателя с име
-show short names	email	bg	Покажи с кратки имена
-show total folder size by default	email	bg	Показвай пълния обем на папките
-size	email	bg	Обем
-size larger than	email	bg	Обемът е по-голям от
-size smaller than	email	bg	Обемът е по-малък от
-small	email	bg	Малък
-small view	email	bg	малък шрифт
-smaller	email	bg	По-малък
-smallest	email	bg	Най-малък
-somebody	email	bg	някой
-sorry, the owner has just deleted this event	calendar	bg	Съжаляваме, но автора току що изтри това събитие.
-sorry, this event does not exist	calendar	bg	Съжаляваме, но това събитие не съществува.
-sorry, this event does not have exceptions defined	calendar	bg	Съжаляваме, но за това събитие не са дефинирани изключения.
-sort by	calendar	bg	Сортиране по
-spell check	email	bg	Проверка на правописа
-standard e-mail preferences	email	bg	Стандартни настройки на ЕПоща
-start date/time	calendar	bg	Начало Дата/Час
-start- and enddates	calendar	bg	Начална и крайна дата
-startdate	calendar	bg	ДатаНачало
-su	calendar	bg	Нд
-sun	calendar	bg	Нед
-switch accounts	email	bg	Преход към акаунт
-switch current folder to	common	bg	Покажи ми папка
-tentative	calendar	bg	Пробно
-test all filters	email	bg	Тествай всички филтри
-test import (show importable records <u>only</u> in browser)	calendar	bg	Тест за вмъкване. Само ще провери възможността за вмъкване.
-test or apply all filters	email	bg	Тестване и прилагане на филтрите
-test run this filter	email	bg	Тествай този филтър
-text	calendar	bg	Текст
-the email application offers 2 different layouts for the index page, that is the page that lists the emails in a folder. this page may be the page the user looks at the most and so different layouts, or looks, are offered.	email	bg	Приложението ЕПоща предлага два варианта за изглед на най-често изобразяваната страница - списъка на писмата в дадена папка.
-the email application offers different button displays, these buttons can be text, images, or both.	email	bg	Приложението ЕПоща предлага три варианта за изглед на бутоните - само изображение (икона), само текст или и двете.
-the email application offers different icon image themes, groups of images of a similar style which are used in this email application. currently the available themes are images based on evolution by ximian and the netscape6 / mozilla browser buttons. additional themes are anticipated and welcome.	email	bg	Приложението ЕПоща предлага няколко варианта за изглед на иконите. Наличните в момента са взаимствани от бутоните на браузърите Evolution (Ximian) и Netscape6 / Mozilla.
-the email application offers different icon image themes, groups of images of a similar style which are used in this email application. currently the available themes are images based on evolution by ximian and the netscape7, mozilla browser buttons. additional themes are anticipated and welcome.	email	bg	Приложението ЕПоща предлага няколко варианта за изглед на иконите. Наличните в момента са взаимствани от бутоните на браузърите Evolution (Ximian) и Netscape7 / Mozilla.
-the email application offers different icon image themes, these icons can be big or small.	email	bg	Приложението ЕПоща предлага няколко варианта за изглед на иконите, които могат да бъдат и малки и големи.
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	bg	Предпочетеното време <ul>%1</ul> е заето от следния ангажимент:
-the login name to use when checking mail for this email account. this may be the same as your egroupware login name, or the server administrator may have set it for you. if your have multiple email accounts set up, you will need to fill this in. if you have only one email account set up, then you can probably leave this alone. if you clear this box, then it goes back to the default value. if you only need some custom settings but want this one to be the default value, then leave this box blank, the default value will be used, and you will see that default value in this box the next time you come to this preferences page.	email	bg	Името на акаунта за пред пощенския сървър. Може да бъде същото като името на акаунта в eGroupWare или друго, зададено от администратора на сървъра. Ще трябва да зададете име ако имате повече от един пощенски акаунт. В противен случай няма нужда да го променяте. Ако изтриете съдържанието на полето, то ще бъде автоматично попълнено и при следващото влизане на тази страница ще видите настройката по подразбиране.
-the password to use when checking mail for this email account. this may be the same as your egroupware password, or the server administrator may have set it for you. if your have multiple email accounts set up, you will need to fill this in. if you have only one email account set up, then you can probably leave this alone. if you do set a custom password, this box will be blank the next time you come to this settings page. this is a security feature because your custom email password is not sent to your browser after you set it. to change your custom password, simply enter a new password in the box. extra email accounts require you to set this. for your default email account, you can clear your custom password by unchecking the &quot;use custom settings&quot; option.	email	bg	Паролата на акаунта за пред пощенския сървър. Може да бъде същата като паролата на акаунта в eGroupWare или друга, зададена от администратора на сървъра. Ще трябва да я зададете ако имате повече от един пощенски акаунт. В противен случай няма нужда да я променяте. Ако зададете друга парола, при следващото влизане на тази страница полето ще бъде празно с цел запазване на паролата в тайна. За да смените паролата си просто въведете тук новата. За допълнителните акаунти това е задължително. Ако искате да изчистите съдържанието на полето за основния акаунт, демаркирайте клетката "Ползвай следващите потребителски настройки".
-the type of mail server you want to access. imap mail servers have folders, such as the sent and trash folders. pop servers do not have folders. pop, pop-3, and pop3 are the same thing. you can have the server connection encrypted by using imaps or pops, only if the mailserver supports it and if your egroupware installation has a &quot;ssl&quot; capabable version of php.	email	bg	Тип на пощенския сървър. POP, POP-3 и POP3 е едно и също. Ако поддържа криптиране на връзката и ако инсталацията на PHP, която ползвате е с SSL поддръжка, можете да ползвате IMAPS или POPS. Сървърът IMAP може да работи с папки, а сървърът POP - не.
-the user %1 is not participating in this event!	calendar	bg	Потребителят %1 не прие да участва в това събитие!
-there is no text or other part of the email to display to the user, all part(s) are attachments.	email	bg	Няма текст или друго за изобразяване. Има само приложения.
-there was an error trying to connect to your imap server.<br>please contact your admin to check the servername, username or password.	email	bg	Възникна грешка при опита за връзка с IMAP сървъра.<br>Моля, свържете се с администратора за проверка името на сървъра, името на потребителя и паролата му.
-there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	bg	Възникна грешка при опита за връзка с пощенския сървър.<br>Моля, проверете името и паролата си или се свържете с администратора.
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	bg	Грешка при опита за свързване със сървъра за новини. Моля, свържете се с администратора и проверете името на сървъра, както и името и паролата на акаунта.
-there was an error trying to connect to your pop3 server.<br>please contact your admin to check the servername, username or password.	email	bg	Възникна грешка при опита за връзка с POP3 сървъра.<br>Моля, свържете се с администратора за проверка името на сървъра, името на потребителя и паролата му.
-this confusing and often misunderstood option is left over from this email apps origins as aeromail by mark cushman. when viewing a list of emails in a folder, the from column may show you a) the senders name only, if a name was provided, b) the senders from email address, in addition to the senders name, or c) the senders reply to address if it is different from the senders from address, in addition to the senders name if it was provided. typically users set this to none, which will show only the senders name. if no name was supplied by the sender, then the senders from email address will be shown, whether a seperate reply to address is provided has no effect on this, the from address is always used if the senders name is not provided.	email	bg	Тази, често неправилно разбирана настройка, е наследена от оригиналното приложение Aeromail, чийто автор е Mark Cushman. В колоната "Подател" в списъка писма може да бъде изписвано а)само името на подателя ако е приложено; б)e-mail адреса на подателя заедно с името на подателя или в)адреса за обратна връзка ако е различен от адреса на подателя и името на подателя ако е приложено. Обикновено потребителите оставят полето със съдържание none*, което отговаря на вариант "а". Ако име на подателя не е приложено, ще бъде изписан e-mail адреса на подателя. , whether a seperate reply to address is provided has no effect on this, the FROM address is always used if the senders name is not provided.
-this confusing and often misunderstood option is left over from this email apps origins as aeromail by mark cushman. when viewing a list of emails in a folder, the from column may show you<br>a) the senders name only, if a name was provided,<br>b) the senders from email address, in addition to the senders name, or<br>c) the senders reply to address if it is different from the senders<br>from address, in addition to the senders name if it was provided. typically users set this to none, which will show only the senders name. if no name was supplied by the sender, then the senders from email address will be shown, whether a seperate reply to address is provided has no effect on this, the from address is always used if the senders name is not provided.	email	bg	Тази, често неправилно разбирана настройка, е наследена от оригиналното приложение Aeromail, чийто автор е Mark Cushman. В колоната "Подател" в списъка писма може да бъде изписвано<br>а)само името на подателя ако е приложено;<br>б)e-mail адреса на подателя заедно с името на подателя или<br>в)адреса за обратна връзка ако е различен от адреса на подателя и името на подателя ако е приложено. Обикновено потребителите оставят полето със съдържание none*, което отговаря на вариант "а". Ако име на подателя не е приложено, ще бъде изписан e-mail адреса на подателя. , whether a seperate reply to address is provided has no effect on this, the FROM address is always used if the senders name is not provided.
-this day is shown as first day in the week or month view.	calendar	bg	Този ден ще е първи в седмичния и в месечния вид на календара.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	bg	Това определя края на работното време в Дневен вид на календара. Ангажиментите, след този час се изобразяват отдолу.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	bg	Това определя началото на работното време в Дневен вид на календара. Ангажиментите, преди този час се изобразяват отгоре. Този час се ползва и за Начален час в бланката за добавяне на нов ангажимент.
-this folder is empty	email	bg	Тази папка е празна
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	bg	При влизане в "Планер" ще виждате информацията за тази група. След това можете да поискате изобразяване на информацията за друга група.
-this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	bg	Това овикновено се причинява от неправилно конфигуриран SMTP сървър. Съобщете на Вашия администратор.
-this is the name that appears in the account combobox. if for leave this blank, your accounts will be given a standard name like account[1]: jane doe, where jane doe is the name you give below as your full name. if you want to give an account a special name you can fill this in. no matter what, this is for your use, your emails will still use your full name as your from name for email messages. note that your full name for your email account 0 is the name you gave in the egroupware setup.	email	bg	Това е името, което се появява в падащия списък за избор на акаунт. Ако го оставяте празно на акаунтите Ви ще бъдат задавани стандартни имена като Account[1]:Jane Doe, където Jane Doe  е името, което сте задали в поле "Пълното Ви име" по-долу. Ако искате акаунта да има специално име, задайте го тук. То е само за Ваша употреба - писмата, които изпращате, ползват името в полето "Пълното Ви име" за име на подателя. Трябва да отбележа, че "Пълното Ви име" за акаунт 0 е името, което администраторът Ви е задал при създаването на Вашия акаунт.
-this is the name that appears in the users from address. the default mail account gets this value automatically from the phpgwapi. additional accounts are created with the phpgwapi supplied fullname you can specify a different fullname for each extra email account.	email	bg	Това е името, което се появява като име на подателя в писмата, които пращате. Името за акаунт 0 е името, което администраторът Ви е задал при създаването на Вашия акаунт. Акаунтите, допълнително добавени от Вас, могат да ползват зададено от Вас име.
-this message is sent for canceled or deleted events.	calendar	bg	Писмо с такъв текст ще бъде изпратено при прекратяване или премахване на ангажимент.
-this message is sent for modified or moved events.	calendar	bg	Писмо с такъв текст ще бъде изпратено при редактиране или преместване на ангажимент.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	bg	Когато записвате ново събитие, писмо с такъв текст ще получи всеки от участниците в събитието, който в предпочитанията си е задал да му бъде изпращано известие при добавяне на нов ангажимент. Можете да ползвате няколко променливи, които ще се заместват със съответните данни за ангажимента. За "Относно" в писмото се ползва първия ред от текста.
-this message is sent when you accept, tentative accept or reject an event.	calendar	bg	Писмо с такъв текст ще бъде изпратено, когато приемете, приемете с колебание или откажете участие в ангажимент.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	bg	Писмо с такъв текст ще получавате ако зададете "Напомняне" за дадено събитие. Можете да включите цялата информация, от която ще се нуждаете.
-this month	calendar	bg	Този месец
-this pref currently does nothing users may have more than one email account. in the future it is anticipated that automatic actions may be performed on these accounts, such as automatic new mail checks,auto filtering, etc... perhaps the user may want to disable an account so that these automatic actions do not occur for that account. this is one possible use. also, an admin may want to disable accounts from time to time.	email	bg	ТОВА ЗАСЕГА НЕ ПРАВИ НИЩО. Потребителите могат да имат повече от един e-mail акаунт. Очаква се в бъдеще да могат да бъдат извършвани автоматични действия с писмата в тези акаунти, като проверка за нови получени писма, автоматично филтриране и др. Възможно е потребителят да поиска да спре извършването на тези действия. Това е едно от възможните приложения.
-this pref currently does nothing<br>users may have more than one email account. in the future it is anticipated that automatic actions may be performedon these accounts, such as automatic new mail checks, auto filtering, etc... perhaps the user may want to disable an account so that these automatic actions do not occur for that account. this is one possible use.<br>also, an admin may want to disable accounts from time to time.	email	bg	ТОВА ЗАСЕГА НЕ ПРАВИ НИЩО.<br>Потребителите могат да имат повече от един e-mail акаунт. Очаква се в бъдеще да могат да бъдат извършвани автоматични действия с писмата в тези акаунти, като проверка за нови получени писма, автоматично филтриране и др. Възможно е потребителят да поиска да спре извършването на тези действия. Това е едно от възможните приложения.
-this specifies whether or not to show the number of new message in the folders combo box on the index screen.	email	bg	Определя дали в падащия списък с имената на папките "Покажи ми папка" да бъде изписван и броя на новите писма.
-this specifies whether or not to show the total size of folders by default. if this is not checked, you will be presented with a button allowing you to display folder size.	email	bg	Определя дали да бъде изобразяван обема на папките. Ако не е маркирано, можете да узнаете обема на папка с натискането на бутон.
-this text will be appended to the bottom of the users emails for this email account. currently, html tags are not supported. also, forwarded email will not get this email sig appended to it for reasons such as it clutters the email, the forwarded part probably has its own email sig from the original author, which is really the information that matters the most.	email	bg	Този текст ще се добавя в края на писмата, които пращате от този акаунт. За сега HTML не се поддържа. Освен това, този текст НЕ се добавя към препратените от Вас писма, тъй като те може да съдържат подобен текст от автора им, който текст е важен в този случай.
-this week	calendar	bg	Тази седмица
-this year	calendar	bg	Тази година
-thu	calendar	bg	Чет
-title	calendar	bg	Заглавие
-title of the event	calendar	bg	Заглавие на събитието
-to	email	bg	До
-to address	email	bg	Адрес на получателя
-today	calendar	bg	Днес
-total messages	email	bg	Общо писма
-translation	calendar	bg	Превод
-trash	email	bg	кошче
-trash folder	email	bg	папка за кошче
-tue	calendar	bg	Вто
-u-wash mail folder	email	bg	U-Wash папка за писма
-u-wash mail folder - if applicable	email	bg	U-Wash папка за писма - Ако е приложимо
-unanswered	email	bg	неотговорени
-undeleted	email	bg	неизтрити
-undisclosed recipients	email	bg	Получателя запазен в тайна
-undisclosed sender	email	bg	Подателя запазен в тайна
-unflagged	email	bg	немаркирани
-unknown action	email	bg	Неизвестно действие
-unknown error	email	bg	Неизвестна грешка
-unknown translation	email	bg	неизвестен превод
-unseen	email	bg	непрочетени
-use custom settings	email	bg	Ползвай следващите потребителски настройки
-use end date	calendar	bg	Дата за край
-view formatted	email	bg	Форматиран вид
-view unformatted	email	bg	Неформатиран вид
-we have recently added this new addressbook so that users can choose to have a more complex addressbook that features a) easy, point and click searching, b) best suited for organizations with large central addressbooks with many categories. you can choose here which addressbook do you prefer.	email	bg	Добавихме скоро тази възможност за потребителите с много богат адресник. Позволява лесно търсене и маркиране. Подходящо за организации с голям общ адресник с много категории. Тук можете да изберете предпочитания вариант.
-we have recently added this new addressbook so that users can choose to have a more complex addressbook that features<br>a) easy, point and click searching,<br>b) best suited for organizations with large central addressbooks with many categories.<br>you can choose here which addressbook do you prefer.	email	bg	Добавихме скоро тази възможност за потребителите с много богат адресник. Позволява лесно търсене и маркиране. Подходящо за организации с голям общ адресник с много категории. Тук можете да изберете предпочитания вариант.
-we have three sizes that tell us how to better render the addressbook for you: 800x600 (addressbook will popout in a 700 pixel wide box), 1024x768 (it will be a 800 box), 1200x1600 (will be a 900 box). the fonts for all html stuff will be, respectively set to xx-small, x-small and normal (no font setting).	email	bg	Съобразявайки се с режима на Вашия екран ще изобразим Java адресника по един от тези три начина. Ако работите в режим 800х600 точки, адресника ще се появява със ширина 700 точки, а за режимите 1024х768 и 1200х1600 съответно 800 и 900 точки. Шрифта за трите режима ще бъде съответно много малък, малък и нормален.
-wed	calendar	bg	Сря
-week	calendar	bg	Седмица
-weekday starts on	calendar	bg	Работната седмица започва в
-weekly	calendar	bg	Седмичен
-weekview	calendar	bg	Седмичен вид
-when creating new events default set to private	calendar	bg	При записване на нов ангажимент по подразбиране да е "Личен"
-which events do you want to see when you enter the calendar.	calendar	bg	Кои ангажименти искате да се изобразяват при влизане в "Календар" ?
-which of calendar view do you want to see, when you start calendar ?	calendar	bg	Предпочитан вид календар за изобразяване при влизане в приложението "Календар"
-work day ends on	calendar	bg	Работно време - край
-work day starts on	calendar	bg	Работно време - начало
-wrote	email	bg	запаметени
-yearly	calendar	bg	Годишен
-yearview	calendar	bg	Годишен вид
-you do not have permission to add alarms to this event !!!	calendar	bg	Нямате права за за добавяне на напомняне за това събитие!
-you do not have permission to delete this alarm !!!	calendar	bg	Нямате права за премахване на това напомняне!
-you do not have permission to enable/disable this alarm !!!	calendar	bg	Нямате права за разрешаване или забраняване на напомнянето!
-you do not have permission to read this record!	calendar	bg	Нямате права за четене на този запис!
-you have %1 high priority events on your calendar today.	common	bg	Днес в календара Ви има %1 ангажименти с висок приоритет.
-you have %1 new messages!	common	bg	Имате %1 нови писма!
-you have 1 high priority event on your calendar today.	common	bg	Днес в календара Ви има един ангажимент с висок приоритет.
-you have 1 new message!	common	bg	Имате 1 ново писмо!
-you have a meeting scheduled for %1	calendar	bg	Имате ангажимент, насрочен за %1
-you have messages!	common	bg	Имате съобщения!
-you have no new messages	common	bg	За Вас няма нови съобщения.
-you have not entered a title	calendar	bg	Не сте въвели заглавие
-you have not entered a valid date	calendar	bg	Не сте въвели валидна дата
-you have not entered a valid time of day	calendar	bg	Не сте въвели валиден час
-you have not entered participants	calendar	bg	Не сте въвели участници
-you must click	email	bg	Трябва да натиснете
-you must click %1 for the file to actually upload	email	bg	Трябва да натиснете %1 за да заредите файла
-you must enter one or more search keywords	calendar	bg	Трябва да въведете една или повече думи за търсене
-your full name	common	bg	Пълното Ви име
-your meeting scheduled for %1 has been canceled	calendar	bg	Вашият ангажимент, насрочен за %1 беше отменен
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	bg	Вашият ангажимент, насрочен за %1 беше пренасрочен за %2
-your message has been sent	common	bg	Писмото Ви е изпратено!
-your server administrator will set the default values for the following options. you may never need to change any of them. if you do need to use settings that are different from the defaults for the options below here, then check this box. default is disabled, not checked. if you fill in some of the options, but later decide to go back to the default values, unchecking this box will erase your custom values and put back the default values. all of the following options start out with the default value, so you may see some settings below even if you have never filled them in. this checkbox only shows up for the default email account. if you are setting up additional email accounts, you will be required to fill in the following options and this checkbox will not be displayed, it will be checked for all extra email accounts.	email	bg	Следващите настройки са направени от администратора на Вашия сървър. Някои ще имат зададени стойности, въпреки че никога не сте попълвали нищо в тях. Вероятно няма да се наложи да ги променяте, но ако все пак решите да го направите, маркирайте тази клетка. По подразбиране тя не е маркирана. Ако някога решите да се върнете към настройките, направени от администратора, можете да демаркирате клетката. При това, настройките направени от Вас ще бъдат изтрити и заменени с първоначалните им стойности. Тази клетка се появява само за основната пошенска кутия. Тя не се появява за евентуално активираните от Вас допълнителни пощенски кутии. Там тя ще е маркирана и Вие ще трябва да попълните тези настройки.
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	bg	Предпочетеното време <B> %1 - %2 </B> е в конфликт със следните съществуващи ангажименти:
+%1 matches found	calendar	bg	РћС‚РєСЂРёС‚Рё СЃР° %1 СЃСЉРІРїР°РґРµРЅРёСЏ
+%1 messages have been deleted	email	bg	%1 РїРёСЃРјР° Р±СЏС…Р° РёР·С‚СЂРёС‚Рё
+%1 records imported	calendar	bg	%1 Р·Р°РїРёСЃР° СЃР° РІРјСЉРєРЅР°С‚Рё
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	bg	РџСЂРѕС‡РµС‚РµРЅРё СЃР° %1 Р·Р°РїРёСЃР°, РЅРѕ РЅРµ СЃР° РІРјСЉРєРЅР°С‚Рё. РњРѕР¶РµС‚Рµ РґР° СЃРµ РІСЉСЂРЅРµС‚Рµ РЅР° РїСЂРµРґРЅР°С‚Р° СЃСЉРїРєР° Рё РґР° РґРµРјР°СЂРєРёСЂР°С‚Рµ "РўРµСЃС‚ Р·Р° РІРјСЉРєРІР°РЅРµ".
+(for weekly)	calendar	bg	(Р·Р° РЎРµРґРјРёС‡РЅРѕ)
+(required)	email	bg	(Р·Р°РґСЉР»Р¶РёС‚РµР»РЅРѕ)
+1 match found	calendar	bg	РћС‚РєСЂРёС‚Рѕ Рµ РµРґРЅРѕ СЃСЉРІРїР°РґРµРЅРёРµ
+1 message has been deleted	email	bg	1 РїРёСЃРјРѕ Р±РµС€Рµ РёР·С‚СЂРёС‚Рѕ
+1 message has been moved to	email	bg	1 РїРёСЃРјРѕ Р±РµС€Рµ РїСЂРµРјРµСЃС‚РµРЅРѕ РІ
+<b>*apply*</b> this filter	email	bg	<b>*РР—РџРћР›Р—Р’РђР™*</b> С‚РѕР·Рё С„РёР»С‚СЉСЂ
+<b>apply all</b> filters	email	bg	<b>РР—РџРћР›Р—Р’РђР™ Р’РЎРР§РљР</b> С„РёР»С‚СЂРё
+accept	calendar	bg	РџСЂРёРµРјР°РЅРµ
+accepted	calendar	bg	РџСЂРёРµС‚Рѕ
+account	email	bg	Р°РєР°СѓРЅС‚
+account name	email	bg	РРјРµ РЅР° Р°РєР°СѓРЅС‚Р°
+account user name	email	bg	РђРєР°СѓРЅС‚ - РёРјРµ РЅР° РїРѕС‚СЂРµР±РёС‚РµР»СЏ
+accounts	common	bg	РђРєР°СѓРЅС‚Рё
+accounts:	email	bg	РђРєР°СѓРЅС‚Рё:
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	bg	Р”РµР№СЃС‚РІРёСЏ, РїСЂРёС‡РёРЅСЏРІР°С‰Рё РёР·РІРµСЃС‚СЏРІР°РЅРµ: Р”РѕР±Р°РІСЏРЅРµ, РџСЂРµРјР°С…РІР°РЅРµ, РџСЂРёРµРјР°РЅРµ, РћС‚РєР°Р·РІР°РЅРµ, ...
+add alarm	calendar	bg	Р”РѕР±Р°РІСЏРЅРµ РЅР° РЅР°РїРѕРјРЅСЏРЅРµ
+add contact	calendar	bg	Р”РѕР±Р°РІРё РІ Р°РґСЂРµСЃРЅРёРєР°
+add to address book	email	bg	Р”РѕР±Р°РІРё РІ Р°РґСЂРµСЃРЅРёРєР°
+add to addressbook	email	bg	Р”РѕР±Р°РІРё РІ Р°РґСЂРµСЃРЅРёРєР°
+added	calendar	bg	Р”РѕР±Р°РІРµРЅРѕ
+address book	calendar	bg	РђРґСЂРµСЃРЅРёРє
+after	email	bg	РЎР»РµРґ
+alarm	calendar	bg	РќР°РїРѕРјРЅСЏРЅРµ
+alarm for %1 at %2 in %3	calendar	bg	РќР°РїРѕРјРЅСЏРЅРµ Р·Р° %1 - %2 РІ %3
+alarm management	calendar	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ РЅР° РЅР°РїРѕРјРЅСЏРЅРёСЏС‚Р°
+alarm-management	calendar	bg	РќР°РїРѕРјРЅСЏРЅРµ-Р РµРґР°РєС‚РёСЂР°РЅРµ
+alarms	calendar	bg	РќР°РїРѕРјРЅСЏРЅРёСЏ
+all day	calendar	bg	Р’СЃРµРєРё РґРµРЅ
+all messages	email	bg	Р’СЃРёС‡РєРё РїРёСЃРјР°
+and	email	bg	Рё
+and stop filtering	email	bg	Рё РїСЂРµРєСЂР°С‚Рё С„РёР»С‚СЂРёСЂР°РЅРµС‚Рѕ
+answered	email	bg	РЅР° РєРѕРёС‚Рѕ Рµ РѕС‚РіРѕРІРѕСЂРµРЅРѕ
+apply	email	bg	РїСЂРёР»РѕР¶Рё
+apply filters report:	email	bg	Р РµР·СѓР»С‚Р°С‚ СЃР»РµРґ РїСЂРёР»Р°РіР°РЅРµ РЅР° С„РёР»С‚СЂРёС‚Рµ:
+apr	email	bg	РђРїСЂРёР»
+aqua fusion	email	bg	РЎС‚РёР» "Aqua Fusion"
+are you sure you want to delete this country ?	calendar	bg	РџРѕС‚РІСЉСЂРґРµС‚Рµ РёР·С‚СЂРёРІР°РЅРµС‚Рѕ РЅР° РґСЉСЂР¶Р°РІР°С‚Р° ...
+are you sure you want to delete this holiday ?	calendar	bg	РџРѕС‚РІСЉСЂРґРµС‚Рµ РёР·С‚СЂРёРІР°РЅРµС‚Рѕ РЅР° РїСЂР°Р·РЅРёРєР° ...
+are you sure\nyou want to\ndelete these alarms?	calendar	bg	РџРѕС‚РІСЉСЂРґРµС‚Рµ РёР·С‚СЂРёРІР°РЅРµС‚Рѕ РЅР° РЅР°РїРѕРјРЅСЏРЅРёСЏС‚Р° ...
+are you sure\nyou want to\ndelete this entry ?	calendar	bg	РџРѕС‚РІСЉСЂРґРµС‚Рµ РёР·С‚СЂРёРІР°РЅРµС‚Рѕ РЅР° Р·Р°РїРёСЃР° ...
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	bg	РџРѕС‚РІСЉСЂРґРµС‚Рµ РёР·С‚СЂРёРІР°РЅРµС‚Рѕ РЅР° Р·Р°РїРёСЃР°. РўРѕРІР° С‰Рµ РіРѕ РёР·С‚СЂРёРµ Рё Р·Р° РІСЃРёС‡РєРё РґСЂСѓРіРё РїРѕС‚СЂРµР±РёС‚РµР»Рё !
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	bg	РџРѕС‚РІСЉСЂРґРµС‚Рµ РёР·С‚СЂРёРІР°РЅРµС‚Рѕ СЃР°РјРѕ РЅР° С‚РѕРІР° СЃСЉР±РёС‚РёРµ. Р©Рµ РіРѕ РёР·С‚СЂРёРµС‚Рµ Рё Р·Р° РІСЃРёС‡РєРё РґСЂСѓРіРё РїРѕС‚СЂРµР±РёС‚РµР»Рё !
+arrival date	email	bg	Р”Р°С‚Р° РЅР° РїСЂРёСЃС‚РёРіР°РЅРµ
+as	email	bg	РєР°С‚Рѕ
+attach file	email	bg	РџСЂРёРєСЂРµРїРё С„Р°Р№Р»
+attach signature	email	bg	Р”РѕР±Р°РІРё РїРѕРґРїРёСЃ
+attachment	email	bg	РџСЂРёРєСЂРµРїРµРЅ С„Р°Р№Р»
+aug	email	bg	РђРІРіСѓСЃС‚
+bcc	email	bg	"Р’РЎРЎ" РєРѕРїРёРµ
+bcc address	email	bg	РђРґСЂРµСЃ Р·Р° "Р’РЎРЎ" РєРѕРїРёРµ
+before	email	bg	РџСЂРµРґРё
+before the event	calendar	bg	РїСЂРµРґРё СЃСЉР±РёС‚РёРµС‚Рѕ
+big	email	bg	Р“РѕР»СЏРј
+bigger	email	bg	РџРѕ-РіРѕР»СЏРј
+biggest	email	bg	РќР°Р№-РіРѕР»СЏРј
+body	email	bg	РўРµРєСЃС‚ РЅР° РїРёСЃРјРѕС‚Рѕ
+both	email	bg	Р”РІРµС‚Рµ
+brief description	calendar	bg	РљСЂР°С‚РєРѕ РѕРїРёСЃР°РЅРёРµ
+button type	email	bg	РўРёРї Р±СѓС‚РѕРЅРё
+cache server data whenever possible	email	bg	Р·Р°РїРѕРјРЅСЏР№ С‡РµСЃС‚Рѕ РїРѕР»Р·РІР°РЅРѕС‚Рѕ, РєРѕРіР°С‚Рѕ Рµ РІСЉР·РјРѕР¶РЅРѕ
+calendar	common	bg	РљР°Р»РµРЅРґР°СЂ
+calendar - add	calendar	bg	РљР°Р»РµРЅРґР°СЂ - РґРѕР±Р°РІСЏРЅРµ
+calendar - edit	calendar	bg	РљР°Р»РµРЅРґР°СЂ - СЂРµРґР°РєС‚РёСЂР°РЅРµ
+calendar event	calendar	bg	РЎСЉР±РёС‚РёРµ РІ РєР°Р»РµРЅРґР°СЂР°
+calendar holiday management	admin	bg	РљР°Р»РµРЅРґР°СЂ - Р РµРґР°РєС‚РёСЂР°РЅРµ РЅР° РїСЂР°Р·РЅРёС†РёС‚Рµ
+calendar preferences	calendar	bg	РљР°Р»РµРЅРґР°СЂ - РџСЂРµРґРїРѕС‡РёС‚Р°РЅРёСЏ
+calendar settings	admin	bg	РљР°Р»РµРЅРґР°СЂ - РќР°СЃС‚СЂРѕР№РєРё
+calendar-fieldname	calendar	bg	РљР°Р»РµРЅРґР°СЂ - РРјРµ РЅР° РїРѕР»Рµ
+canceled	calendar	bg	РћС‚РєР°Р·Р°РЅРѕ
+cc	email	bg	"РЎРЎ" РєРѕРїРёРµ
+cc address	email	bg	РђРґСЂРµСЃ Р·Р° "РЎРЎ" РєРѕРїРёРµ
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	bg	РџСЂРµС…РІСЉСЂР»Рё РІСЃРёС‡РєРё Р°РЅРіР°Р¶РёРјРµРЅС‚Рё РЅР° $params['old_owner'] РєСЉРј С‚РµР·Рё РЅР° $params['new_owner'].
+change font size in your e-mail pages	email	bg	РџСЂРѕРјРµРЅСЏ С€СЂРёС„С‚Р° РІ СЃС‚СЂР°РЅРёС†РёС‚Рµ РЅР° Р•РџРѕС‰Р°
+check flags for type of mails	email	bg	РњР°СЂРєРёСЂР°Р№ Р·Р° РёР·Р±РѕСЂ РЅР° С‚РёРї РїРёСЃРјРѕ
+choose for rename	email	bg	РџСЂРµРёРјРµРЅРѕРІР°Р№
+choose to rename	email	bg	РїСЂРµРёРјРµРЅРѕРІР°Р№
+click here for more info in a new window	email	bg	РќР°С‚РёСЃРЅРё Р·Р° РїРѕРІРµС‡Рµ РёРЅС„РѕСЂРјР°С†РёСЏ РІ РЅРѕРІ РїСЂРѕР·РѕСЂРµС†
+click here to continue	email	bg	РџСЂРѕРґСЉР»Р¶Р°РІР°Р№
+click here to edit the settings for this email account.	email	bg	РЅР°С‚РёСЃРЅРё Р·Р° СЂРµРґР°РєС‚РёСЂР°РЅРµ РЅР°СЃС‚СЂРѕР№РєРёС‚Рµ РЅР° С‚Р°Р·Рё РїРѕС‰РµРЅСЃРєР° РєСѓС‚РёСЏ
+click here to return to your home page.	email	bg	РЅР°С‚РёСЃРЅРё Р·Р° РїСЂРµС…РѕРґ РєСЉРј РЅР°С‡Р°Р»РЅР°С‚Р° СЃС‚СЂР°РЅРёС†Р°
+company	email	bg	Р¤РёСЂРјР°
+compose	common	bg	РџРёСЃР°РЅРµ
+compose message	email	bg	РїРёСЃР°РЅРµ РЅР° РїРёСЃРјРѕ
+compose new	common	bg	РќР°РїРёС€Рё РЅРѕРІРѕ
+contains	email	bg	РЎСЉРґСЉСЂР¶Р°
+could not open this mailbox	email	bg	РќРµ РјРѕРіР° РґР° РѕС‚РІРѕСЂСЏ С‚Р°Р·Рё РєСѓС‚РёСЏ
+countries	calendar	bg	Р”СЉСЂР¶Р°РІРё
+country	calendar	bg	Р”СЉСЂР¶Р°РІР°
+create (expert)	email	bg	СЃСЉР·РґР°Р№ (РµРєСЃРїРµСЂС‚)
+create a folder	email	bg	РЎСЉР·РґР°Р№ РїР°РїРєР°
+created by	calendar	bg	РђРІС‚РѕСЂ
+current attachments (%1)	email	bg	РџСЂРёР»РѕР¶РµРЅРё (%1)
+custom e-mail preferences	email	bg	РџРѕС‚СЂРµР±РёС‚РµР»СЃРєРё РЅР°СЃС‚СЂРѕР№РєРё РЅР° Р•РџРѕС‰Р°
+custom e-mail settings	email	bg	Р•-РїРѕС‰Р° РЅР°СЃС‚СЂРѕР№РєРё
+daily	calendar	bg	Р”РЅРµРІРµРЅ
+daily matrix view	calendar	bg	РџСЂРµРіР»РµРґ Р·Р° РґРµРЅСЏ (РјР°С‚СЂРёС‡РµРЅ)
+days	calendar	bg	РґРЅРё
+days repeated	calendar	bg	РґРЅРё Р·Р° РїРѕРІС‚РѕСЂРµРЅРёРµ
+dayview	calendar	bg	Р”РЅРµРІРµРЅ РІРёРґ
+debugging page	email	bg	РЎС‚СЂР°РЅРёС†Р° Р·Р° РґРёР°РіРЅРѕСЃС‚РёРєР°
+dec	email	bg	Р”РµРєРµРјРІСЂРё
+default appointment length (in minutes)	calendar	bg	РќРѕСЂРјР°Р»РЅР° РїСЂРѕРґСЉР»Р¶РёС‚РµР»РЅРѕСЃС‚ (РІ РјРёРЅСѓС‚Рё)
+default calendar filter	calendar	bg	Р¤РёР»С‚СЉСЂ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ
+default calendar view	calendar	bg	Р’РёРґ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	bg	РџСЂРѕРґСЉР»Р¶РёС‚РµР»РЅРѕСЃС‚ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ РІ РјРёРЅСѓС‚Рё РЅР° РЅРѕРІРѕСЃСЉР·РґР°РґРµРЅРёС‚Рµ Р°РЅРіР°Р¶РёРјРµРЅС‚Рё.
+default sorting order	email	bg	РЎРѕСЂС‚РёСЂР°РЅРµ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ
+default:	common	bg	С‚РµРєСѓС‰:
+defines the size in minutes of the lines in the day view.	calendar	bg	Р—Р°РґР°РІР° РїСЂРѕРґСЉР»Р¶РёС‚РµР»РЅРѕСЃС‚ РІ РјРёРЅСѓС‚Рё РЅР° СЂРµРґРѕРІРµС‚Рµ РІ "Р”РЅРµРІРµРЅ РІРёРґ"
+delete (expert)	email	bg	РџСЂРµРјР°С…РЅРё (РµРєСЃРїРµСЂС‚)
+delete a folder	email	bg	РџСЂРµРјР°С…РЅРё РїР°РїРєР°
+delete account	common	bg	РџСЂРµРјР°С…РЅРё РїРѕС‰. РєСѓС‚РёСЏ
+delete an entire users calendar.	calendar	bg	РР·С‚СЂРёР№ С†РµР»РёСЏ РєР°Р»РµРЅРґР°СЂ РЅР° РїРѕС‚СЂРµР±РёС‚РµР»СЏ.
+delete selected contacts	calendar	bg	РР·С‚СЂРёР№ РјР°СЂРєРёСЂР°РЅРёС‚Рµ РєРѕРЅС‚Р°РєС‚Рё.
+deleted	calendar	bg	РїСЂРµРјР°С…РЅР°С‚Рё
+deleted messages (trash) folder	email	bg	РџР°РїРєР° Р·Р° РёР·С‚СЂРёС‚Рё РїРёСЃРјР° (Trash)
+deleted messages folder name	email	bg	РРјРµ РЅР° РїР°РїРєР°С‚Р° Р·Р° РёР·С‚СЂРёС‚Рё РїРёСЃРјР°
+deleted messages go to trash	email	bg	РџСЂРµРјРµСЃС‚РІР°Р№ РёР·С‚СЂРёС‚РёС‚Рµ РІ РїР°РїРєР°С‚Р° Р·Р° РёР·С‚СЂРёС‚Рё
+deleted messages saved to folder:	email	bg	Р—Р°РїРёСЃР°С… РёР·С‚СЂРёС‚РёС‚Рµ РїРёСЃРјР° РІ РїР°РїРєР°:
+description	calendar	bg	РћРїРёСЃР°РЅРёРµ
+disable	calendar	bg	Р—Р°Р±СЂР°РЅРё
+disabled	calendar	bg	Р·Р°Р±СЂР°РЅРµРЅ
+discard	email	bg	РћС‚РєР°Р¶Рё
+display status of events	calendar	bg	РР·РѕР±СЂР°Р·СЏРІР°Р№ СЃС‚Р°С‚СѓСЃР° РЅР° РїРѕРєР°РЅРёС‚Рµ
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	bg	РР·РѕР±СЂР°Р·СЏРІР°РЅРµ РЅР° РІРёРґР° РєР°Р»РµРЅРґР°СЂ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ Рё РЅР° СЃС‚СЂР°РЅРёС†Р°С‚Р° "РќР°С‡Р°Р»Рѕ".
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	bg	Р–РµР»Р°РµС‚Рµ Р»Рё СЂРµРґРѕРІРЅРѕ РґР° РїРѕР»СѓС‡Р°РІР°С‚Рµ РєСЂР°С‚РєРѕ РѕРїРёСЃР°РЅРёРµ РЅР° Р°РЅРіР°Р¶РёРјРµРЅС‚РёС‚Рµ Р’Рё С‡СЂРµР· e-mail? РџРёСЃРјР°С‚Р° Р·Р° РґРµРЅСЏ СЃРµ РёР·РїСЂР°С‰Р°С‚ СЃСѓС‚СЂРёРЅ, Р° Р·Р° СЃРµРґРјРёС†Р°С‚Р° - РІ РїРѕРЅРµРґРµР»РЅРёРє. РќРµ СЃРµ РёР·РїСЂР°С‰Р°С‚ РїРёСЃРјР° Р°РєРѕ РЅСЏРјР°С‚Рµ Р°РЅРіР°Р¶РёРјРµРЅС‚Рё Р·Р° РґРµРЅСЏ, СЃСЉРѕС‚РІРµС‚РЅРѕ СЃРµРґРјРёС†Р°С‚Р°.
+does not contain	email	bg	РќРµ СЃСЉРґСЉСЂР¶Р°
+draft	email	bg	С‡РµСЂРЅРѕРІР°
+duration	calendar	bg	РџСЂРѕРґСЉР»Р¶РёС‚РµР»РЅРѕСЃС‚
+e-mail extra account	email	bg	Р”РѕРїСЉР»РЅРёС‚РµР»РЅР° РїРѕС‰. РєСѓС‚РёСЏ
+e-mail extra accounts	email	bg	Р”РѕРїСЉР»РЅРёС‚РµР»РЅРё РїРѕС‰. РєСѓС‚РёРё
+e-mail extra accounts list	email	bg	РЎРїРёСЃСЉРє РґРѕРїСЉР»РЅРёС‚РµР»РЅРё РїРѕС‰. РєСѓС‚РёРё
+e-mail filters	common	bg	Р¤РёР»С‚СЂРё РІ Р•РџРѕС‰Р°
+e-mail folders	common	bg	РџР°РїРєРё РІ Р•РџРѕС‰Р°
+e-mail inbox filters list	email	bg	РЎРїРёСЃСЉРє С„РёР»С‚СЂРё РІ Р•РџРѕС‰Р° РџРѕР»СѓС‡РµРЅРё
+e-mail preferences	common	bg	Р•РџРѕС‰Р° РЅР°СЃС‚СЂРѕР№РєРё
+each user has a summary page which can display a variety of information. this option will show a small list of email messages in the inbox of the users default email account on the users summary home page.	email	bg	Р’СЃРµРєРё РїРѕС‚СЂРµР±РёС‚РµР» СЂР°Р·РїРѕР»Р°РіР° СЃСЉСЃ СЃРѕР±СЃС‚РІРµРЅР° РЅР°С‡Р°Р»РЅР° СЃС‚СЂР°РЅРёС†Р°. РўР°Р·Рё РЅР°СЃС‚СЂРѕР№РєР° РѕРїСЂРµРґРµР»СЏ РґР°Р»Рё Рё РєР°Рє РЅР° РЅРµСЏ РґР° СЃРµ РёР·РѕР±СЂР°Р·СЏРІР° СЃРїРёСЃСЉРєР° СЃ РїРѕР»СѓС‡РµРЅРё РїРёСЃРјР°.
+edit filters	email	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ РЅР° С„РёР»С‚СЂРёС‚Рµ
+email account name	email	bg	РРјРµ РЅР° e-mail Р°РєР°СѓРЅС‚Р°
+email address	email	bg	E-mail Р°РґСЂРµСЃ
+email notification	calendar	bg	РќР°РїРѕРјРЅСЏРЅРµ СЃ РїРёСЃРјРѕ
+email notification for %1	calendar	bg	РќР°РїРѕРјРЅСЏРЅРµ СЃ РїРёСЃРјРѕ Р·Р° %1
+email password	email	bg	РџР°СЂРѕР»Р° РЅР° Р°РєР°СѓРЅС‚Р°
+email signature	email	bg	РўРµРєСЃС‚ Р·Р° РїРѕРґРїРёСЃ
+email type	common	bg	РўРёРї e-mail
+enable	calendar	bg	Р Р°Р·СЂРµС€Рё
+enable this email account	common	bg	Р Р°Р·СЂРµС€Рё С‚РѕР·Рё e-mail Р°РєР°СѓРЅС‚
+enable utf-7 encoded folder names	email	bg	Р Р°Р·СЂРµС€Рё utf-7 СЃРёРјРІРѕР»Рё РІ РёРјРµРЅР°С‚Р° РЅР° РїР°РїРєРёС‚Рµ
+enabled	calendar	bg	СЂР°Р·СЂРµС€РµРЅ
+end date/time	calendar	bg	РљСЂР°Р№ Р”Р°С‚Р°/Р§Р°СЃ
+enddate	calendar	bg	Р”Р°С‚Р°РљСЂР°Р№
+enter the search string in the text boxes	email	bg	Р’ СЃСЉРѕС‚РІРµС‚РЅРѕС‚Рѕ РїРѕР»Рµ РІСЉРІРµРґРµС‚Рµ С‚РµРєСЃС‚ Р·Р° С‚СЉСЂСЃРµРЅРµ
+enter your pop	admin	bg	Р’СЉРІРµРґРµС‚Рµ POP СЃСЉСЂРІСЉСЂ
+error moving messages to	email	bg	Р“СЂРµС€РєР° РїСЂРё РјРµСЃС‚РµРЅРµС‚Рѕ РЅР° РїРёСЃРјР°С‚Р° РІ
+error text not provided	email	bg	Р»РёРїСЃРІР° РѕРїРёСЃР°РЅРёРµ РЅР° РіСЂРµС€РєР°С‚Р°
+error: unknown message data	email	bg	Р“СЂРµС€РєР°:  РќРµРїРѕР·РЅР°С‚Рё РґР°РЅРЅРё РІ РїРёСЃРјРѕС‚Рѕ
+evolution style	email	bg	РЎС‚РёР» "Evolution"
+exceptions	calendar	bg	РР·РєР»СЋС‡РµРЅРёСЏ
+extended	calendar	bg	Р Р°Р·С€РёСЂРµРЅ
+external participants	calendar	bg	Р’СЉРЅС€РЅРё СѓС‡Р°СЃС‚РЅРёС†Рё
+extra accounts	email	bg	Р”РѕРїСЉР»РЅРёС‚РµР»РЅРё Р°РєР°СѓРЅС‚Рё
+extra e-mail account	common	bg	Р”РѕРїСЉР»РЅРёС‚РµР»РµРЅ e-mail Р°РєР°СѓРЅС‚
+extra e-mail accounts	common	bg	Р”РѕРїСЉР»РЅРёС‚РµР»РЅРё e-mail Р°РєР°СѓРЅС‚Рё
+extra e-mail preferences number %1	email	bg	РќР°СЃС‚СЂРѕР№РєРё РЅР° РґРѕРїСЉР»РЅРёС‚РµР»РµРЅ Р°РєР°СѓРЅС‚ %1
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	bg	РћРїРёС‚Р° Р·Р° РёР·РїСЂР°С‰Р°РЅРµ РЅР° РїРёСЃРјРѕ РґРѕ '%1' #%2 РѕС‚РЅРѕСЃРЅРѕ '%3', СЃ РїРѕРґР°С‚РµР» '%4' Рµ РЅРµСѓСЃРїРµС€РµРЅ !!!
+feb	email	bg	Р¤РµРІСЂСѓР°СЂРё
+fewer actions	email	bg	РџРѕ-РјР°Р»РєРѕ РґРµР№СЃС‚РІРёСЏ
+fewer choices	email	bg	РџРѕ-РјР°Р»РєРѕ РёР·Р±СЂР°РЅРё
+file	email	bg	Р¤Р°Р№Р»
+file attachment	email	bg	РџСЂРёРєСЂРµРїРµРЅ С„Р°Р№Р»
+file into	email	bg	РРЅС„РѕСЂРјР°С†РёСЏ Р·Р° С„Р°Р№Р»Р°
+fill in as much as you can	email	bg	РїРѕРїСЉР»РЅРµС‚Рµ РєРѕР»РєРѕС‚Рѕ РјРѕР¶Рµ РїРѕРІРµС‡Рµ
+filter [number] and name	email	bg	Р¤РёР»С‚СЉСЂ [РЅРѕРјРµСЂ] Рё РёРјРµ
+filter inbox for accounts	email	bg	Р¤РёР»С‚СЂРёСЂР°Р№ РїРѕР»СѓС‡РµРЅРёС‚Рµ РІ Р°РєР°СѓРЅС‚Рё
+filter name	email	bg	РРјРµ РЅР° С„РёР»С‚СЉСЂР°
+filter name:	email	bg	РёРјРµ РЅР° С„РёР»С‚СЉСЂР°:
+filter number	email	bg	РќРѕРјРµСЂ РЅР° С„РёР»С‚СЉСЂР°
+filters	email	bg	Р¤РёР»С‚СЂРё
+filters list	email	bg	РЎРїРёСЃСЉРє РЅР° С„РёР»С‚СЂРёС‚Рµ
+firstname of person to notify	calendar	bg	РЎРѕР±СЃС‚РІРµРЅРѕ РёРјРµ РЅР° Р»РёС†РµС‚Рѕ Р·Р° РёР·РІРµСЃС‚СЏРІР°РЅРµ.
+flag as important	email	bg	Р¤Р»Р°Рі Р·Р° РІР°Р¶РЅРѕСЃС‚
+flagged	email	bg	СЃ С„Р»Р°Рі
+folder	common	bg	РџР°РїРєР°
+folder maintenance	email	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ РЅР° РїР°РїРєРёС‚Рµ
+folder name	email	bg	РРјРµ РЅР° РїР°РїРєР°С‚Р°
+folder size	email	bg	РћР±РµРј РЅР° РїР°РїРєР°С‚Р°
+folders	email	bg	РџР°РїРєРё
+for the file to actually upload	email	bg	Р·Р° Р·Р°СЂРµР¶РґР°РЅРµ РЅР° С„Р°Р№Р»Р°
+for these items, fill only what is different from you default e-mail preferences	common	bg	РџСЂРѕРјРµРЅРµС‚Рµ СЃР°РјРѕ С‚РµР·Рё РЅР°СЃС‚СЂРѕР№РєРё Р·Р° Р•РџРѕС‰Р°, РєРѕРёС‚Рѕ СЃРµ СЂР°Р·Р»РёС‡Р°РІР°С‚ РѕС‚ РїСЂРµРґРїРѕС‡РёС‚Р°РЅРѕС‚Рѕ
+forward	email	bg	РџСЂРµРїСЂР°С‰Р°РЅРµ
+free/busy	calendar	bg	РЎРІРѕР±РѕРґРµРЅ/Р—Р°РµС‚
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	bg	Р·Р°РµС‚РѕСЃС‚: РќРµРїРѕР·РЅР°С‚ РїРѕС‚СЂРµР±РёС‚РµР» '%1', РіСЂРµС€РЅР° РїР°СЂРѕР»Р° РёР»Рё РґРѕСЃС‚СЉРїР° Рµ Р·Р°Р±СЂР°РЅРµРЅ Р·Р° РІСЉРЅС€РЅРё РїРѕС‚СЂРµР±РёС‚РµР»Рё !!!
+fri	calendar	bg	РџС‚
+from	email	bg	РћС‚
+from address	email	bg	РџРѕРґР°С‚РµР»
+full description	calendar	bg	РџРѕРґСЂРѕР±РЅРѕ РѕРїРёСЃР°РЅРёРµ
+fullname of person to notify	calendar	bg	РџСЉР»РЅРѕ РёРјРµ РЅР° Р»РёС†РµС‚Рѕ Р·Р° РёР·РІРµСЃС‚СЏРІР°РЅРµ
+generate printer-friendly version	calendar	bg	Р“РµРЅРµСЂРёСЂР°РЅРµ РЅР° РІР°СЂРёР°РЅС‚ Р·Р° РѕС‚РїРµС‡Р°С‚РІР°РЅРµ
+get size	email	bg	РљР°РєСЉРІ Рµ РѕР±РµРјР°?
+go	email	bg	РїСЂРѕРґСЉР»Р¶Р°РІР°Р№
+go back	email	bg	РќР°Р·Р°Рґ
+go back to	email	bg	Р’СЉСЂРЅРё СЃРµ РЅР°
+go!	calendar	bg	Р”Р°РІР°Р№!
+group planner	calendar	bg	РџР»Р°РЅРµСЂ РЅР° РіСЂСѓРїР°
+header field	email	bg	Р—Р°РіР»Р°РІРЅРѕ РїРѕР»Рµ
+here is your requested alarm.	calendar	bg	РўРѕРІР° Рµ РїРѕРёСЃРєР°РЅРѕ РѕС‚ Р’Р°СЃ РЅР°РїРѕРјРЅСЏРЅРµ.
+hidden	email	bg	СЃРєСЂРёС‚Рѕ
+hide help	email	bg	РЎРєСЂРёР№ РѕРїРёСЃР°РЅРёСЏС‚Р°
+high priority	calendar	bg	РІРёСЃРѕРє РїСЂРёРѕСЂРёС‚РµС‚
+holiday	calendar	bg	РџСЂР°Р·РЅРёРє
+holiday management	calendar	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ РЅР° РїСЂР°Р·РЅРёС†РёС‚Рµ
+holiday-management	calendar	bg	РџСЂР°Р·РЅРёС†Рё-СЂРµРґР°РєС‚РёСЂР°РЅРµ
+holidays	calendar	bg	РџСЂР°Р·РЅРёС†Рё
+hours	calendar	bg	С‡Р°СЃР°
+html messages with the iframe  tag may be klez or other worm emails.	email	bg	РїРёСЃРјРѕ СЃ html IFRAME РјРѕР¶Рµ РґР° СЃСЉРґСЉСЂР¶Р° РІРёСЂСѓСЃ
+i participate	calendar	bg	Р©Рµ СѓС‡Р°СЃС‚РІР°Рј
+icon size	email	bg	Р“РѕР»РµРјРёРЅР° РЅР° РёРєРѕРЅРёС‚Рµ
+icon theme	email	bg	Р’РёРґ РЅР° РёРєРѕРЅРёС‚Рµ
+idots crystal style	email	bg	РЎС‚РёР» "iDots Crystal"
+if &quot; deleted messages go to trash &quot; is checked, deleted message will be sent to the folder name you type in this box. if this folder does not exist, it will be created for you automatically. default name is &quot;trash&quot;. this will be your &quot;trash&quot; folder, but it does not have to actually be called &quot;trash&quot;, you can name it anything. only works with imap servers, pop servers do not have folders.	email	bg	РђРєРѕ &quot;РџСЂРµРјРµСЃС‚РІР°Р№ РёР·С‚СЂРёС‚РёС‚Рµ РІ РїР°РїРєР°С‚Р° ...&quot; Рµ РјР°СЂРєРёСЂР°РЅРѕ, РІСЃСЏРєРѕ РёР·С‚СЂРёС‚Рѕ РїРёСЃРјРѕ С‰Рµ Р±СЉРґРµ РїСЂРµРјРµСЃС‚РІР°РЅРѕ РІ РїР°РїРєР°С‚Р°, С‡РёРµС‚Рѕ РёРјРµ РЅР°РїРёС€РµС‚Рµ С‚СѓРє. РђРєРѕ С‚СЏ РЅРµ СЃСЉС‰РµСЃС‚РІСѓРІР°, С‰Рµ Р±СЉРґРµ СЃСЉР·РґР°РґРµРЅР° Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ. РћР±РёРєРЅРѕРІРµРЅРѕ РёРјРµС‚Рѕ Рё Рµ &quot;Sent&quot;. РќР°Р»РѕР¶РёС‚РµР»РЅРѕ Рµ РїРµСЂРёРѕРґРёС‡РЅРѕ РёР»Рё РІРµРґРЅР°РіР° РґР° РёР·РїСЂР°Р·РІР°С‚Рµ С‚Р°Р·Рё РїР°РїРєР°. Р¤СѓРЅРєС†РёСЏС‚Р° СЂР°Р±РѕС‚Рё СЃР°РјРѕ СЃ IMAP СЃСЉСЂРІСЉСЂ, Рё РЅРµ СЂР°Р±РѕС‚Рё СЃ POP.
+if &quot; sent messages folder &quot; is checked, a copy of your sent mail will be stored in the folder name you type in this box. if this folder does not exist, it will be created for you automatically. default name is &quot;sent&quot;. this will be your &quot;sent&quot; folder, but it does not have to actually be called &quot;sent&quot;, you can name it anything. only works with imap servers, pop servers do not have folders.	email	bg	РђРєРѕ &quot;Р—Р°РїРёСЃРІР°Р№ РёР·РїСЂР°С‚РµРЅРёС‚Рµ СЃСЉРѕР±С‰РµРЅРёСЏ РІ РїР°РїРєР° ...&quot; Рµ РјР°СЂРєРёСЂР°РЅРѕ, РєРѕРїРёРµ РЅР° РІСЃСЏРєРѕ РёР·РїСЂР°С‚РµРЅРѕ РїРёСЃРјРѕ С‰Рµ Р±СЉРґРµ Р·Р°РїРёСЃРІР°РЅРѕ РІ РїР°РїРєР°С‚Р°, С‡РёРµС‚Рѕ РёРјРµ РЅР°РїРёС€РµС‚Рµ С‚СѓРє. РђРєРѕ С‚СЏ РЅРµ СЃСЉС‰РµСЃС‚РІСѓРІР°, С‰Рµ Р±СЉРґРµ СЃСЉР·РґР°РґРµРЅР° Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ. РћР±РёРєРЅРѕРІРµРЅРѕ РёРјРµС‚Рѕ Рё Рµ &quot;Sent&quot;. РќР°Р»РѕР¶РёС‚РµР»РЅРѕ Рµ РїРµСЂРёРѕРґРёС‡РЅРѕ РґР° РїРѕС‡РёСЃС‚РІР°С‚Рµ С‚Р°Р·Рё РїР°РїРєР° РѕС‚ РёР·Р»РёС€РЅРёС‚Рµ РїРёСЃРјР°. РўР°Р·Рё С„СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Рё СЃР°РјРѕ СЃ IMAP СЃСЉСЂРІСЉСЂ, Рё РЅРµ СЂР°Р±РѕС‚Рё СЃ POP.
+if applicable	email	bg	РђРєРѕ Рµ РїСЂРёР»РѕР¶РёРјРѕ
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	bg	РњР°СЂРєРёСЂР°Р№С‚Рµ Р·Р° РїСЂРµРјРµСЃС‚РІР°РЅРµ РЅР° РїСЂР°Р·РЅРёРєР° РІ СЃР»РµРґРІР°С‰РёСЏ РїРѕРЅРµРґРµР»РЅРёРє Р°РєРѕ РїРѕРїР°РґРЅРµ РІ СЃСЉР±РѕС‚Р° РёР»Рё РІ РЅРµРґРµР»СЏ.
+if checked, a copy of your sent mail will be stored in the &quot;sent&quot; folder name which you specify in the box for &quot;sent messages folder &quot;. only works with imap servers, pop servers do not have folders.	email	bg	РђРєРѕ Рµ РјР°СЂРєРёСЂР°РЅРѕ, РІ РїР°РїРєР°С‚Р° СЃ РёРјРµ &quot;Sent&quot; С‰Рµ Р±СЉРґРµ Р·Р°РїРёСЃРІР°РЅРѕ РєРѕРїРёРµ РЅР° РІСЃСЏРєРѕ РёР·РїСЂР°С‚РµРЅРѕ РїРёСЃРјРѕ. РўРѕРІР° РЅР°Р»Р°РіР° РїРµСЂРёРѕРґРёС‡РЅРѕ РёР»Рё РІРµРґРЅР°РіР° РґР° РїРѕС‡РёСЃС‚РІР°С‚Рµ С‚Р°Р·Рё РїР°РїРєР°. РРјРµС‚Рѕ Рё СЃРµ Р·Р°РґР°РІР° РІ РїРѕР»Рµ &quot;РџР°РїРєР° Р·Р° РёР·РїСЂР°С‚РµРЅРё РїРёСЃРјР°&quot;. РўР°Р·Рё С„СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Рё СЃР°РјРѕ СЃ IMAP СЃСЉСЂРІСЉСЂ, Рё РЅРµ СЂР°Р±РѕС‚Рё СЃ POP.
+if checked, deleted message will be sent to the &quot;trash&quot; folder name which you specify in the box for &quot; deleted messages (trash) folder &quot;. only works with imap servers, pop servers do not have folders.	email	bg	РђРєРѕ Рµ РјР°СЂРєРёСЂР°РЅРѕ, РїРёСЃРјР°С‚Р°, РєРѕРёС‚Рѕ РёР·С‚СЂРёРІР°С‚Рµ С‰Рµ Р±СЉРґР°С‚ РїСЂРµРјРµСЃС‚РІР°РЅРё РІ РїР°РїРєР°С‚Р° СЃ РёРјРµ &quot;Trash&quot; РІРјРµСЃС‚Рѕ РґР° Р±СЉРґР°С‚ РёР·С‚СЂРёС‚Рё. РўРѕРІР° РЅР°Р»Р°РіР° РїРµСЂРёРѕРґРёС‡РЅРѕ РёР»Рё РІРµРґРЅР°РіР° РґР° СЏ РёР·РїСЂР°Р·РІР°С‚Рµ. РРјРµС‚Рѕ РЅР° РїР°РїРєР°С‚Р° СЃРµ Р·Р°РґР°РІР° РІ РїРѕР»Рµ &quot;РџР°РїРєР° Р·Р° РёР·С‚СЂРёС‚Рё РїРёСЃРјР°&quot;. РўР°Р·Рё С„СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Рё СЃР°РјРѕ СЃ IMAP СЃСЉСЂРІСЉСЂ, Рё РЅРµ СЂР°Р±РѕС‚Рё СЃ POP.
+if messages match	email	bg	РђРєРѕ СЃРµ РЅР°РјРµСЂРё РїРёСЃРјРѕ
+if there is no obvious error, check your email account name and password first.	email	bg	Р°РєРѕ РіСЂРµС€РєР°С‚Р° РЅРµ Рµ СЏСЃРЅР°, РїСЉСЂРІРѕ РїСЂРѕРІРµСЂРµС‚Рµ РёРјРµС‚Рѕ Рё РїР°СЂРѕР»Р°С‚Р° Р·Р° Р°РєР°СѓРЅС‚Р°
+if there is no obvious error, check your username and password first.	email	bg	Р°РєРѕ РіСЂРµС€РєР°С‚Р° РЅРµ Рµ СЏСЃРЅР°, РїСЉСЂРІРѕ РїСЂРѕРІРµСЂРµС‚Рµ РёРјРµС‚Рѕ Рё РїР°СЂРѕР»Р°С‚Р° Р·Р° Р°РєР°СѓРЅС‚Р°
+if using an imap server, what kind is it, most often this option can safely be set to &quot;cyrus or courier&quot;. technically, this means the server uses a dot between the different parts of the folder names, such as &quot;inbox.sent&quot;. the other major kind of imap server is the university of washington &quot;uwash&quot; imap server. it uses slashes instead of the dots the other servers use, and although it has a folder called &quot;inbox&quot;, it is not considered the &quot;namespace&quot; for the other folder names. the &quot;uw-maildir&quot; is a rare combination of the two above types. this is the least used kind of imap server. if you are unsure, ask your it administrator. only applies to imap servers.	email	bg	РўР°Р·Рё РЅР°СЃС‚СЂРѕР№РєР° РјРѕР¶Рµ РґР° Рµ &quot;Cyrus РёР»Рё Courier&quot; Рё РІСЃРёС‡РєРѕ РґР° СЂР°Р±РѕС‚Рё РЅРѕСЂРјР°Р»РЅРѕ Р°РєРѕ РїРѕР»Р·РІР°С‚Рµ IMAP СЃСЉСЂРІСЉСЂ, РЅРµР·Р°РІРёСЃРёРјРѕ РѕС‚ РІРёРґР° РјСѓ. РўРµР·Рё СЃСЉСЂРІСЉСЂРё РїРѕР»Р·РІР°С‚ Р·Р° СЂР°Р·РґРµР»РёС‚РµР» Р·РЅР°РєСЉС‚ С‚РѕС‡РєР° , РґРѕРєР°С‚Рѕ СЃСЉСЂРІСЉСЂСЉС‚ UWash, СЂР°Р·СЂР°Р±РѕС‚РµРЅ РѕС‚ СѓРЅРёРІРµСЂСЃРёС‚РµС‚Р° РІСЉРІ Р’Р°С€РёРЅРіС‚РѕРЅ, РїРѕР»Р·РІР° Р·Р° СЂР°РІРґРµР»РёС‚РµР» РЅР°РєР»РѕРЅРµРЅР° С‡РµСЂС‚Р°. РђРєРѕ РЅРµ СЃС‚Рµ СЃРёРіСѓСЂРЅРё, РїРѕРїРёС‚Р°Р№С‚Рµ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°. РџРѕР»Р·РІР° СЃРµ СЃР°РјРѕ Р·Р° IMAP СЃСЉСЂРІСЉСЂРё.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	bg	РђРєРѕ С‚СѓРє РЅРµ РІСЉРІРµРґРµС‚Рµ РїР°СЂРѕР»Р°, РёРЅС„РѕСЂРјР°С†РёСЏС‚Р° Р·Р° Р’Р°С€Р°С‚Р° Р·Р°РµС‚РѕСЃС‚ С‰Рµ Рµ РґРѕСЃС‚СЉРїРЅР° Р·Р° РІСЃРµРєРё, РєРѕР№С‚Рѕ Р·РЅР°Рµ URL Р°РґСЂРµСЃР°!!!
+ignore conflict	calendar	bg	РРіРЅРѕСЂРёСЂР°Р№ РєРѕРЅС„Р»РёРєС‚Р°
+image	email	bg	РР·РѕР±СЂР°Р¶РµРЅРёРµ
+imap mail server hostname or ip address	admin	bg	IP РёР»Рё РёРјРµ РЅР° IMAP СЃСЉСЂРІСЉСЂР°
+imap server type	common	bg	РўРёРї РЅР° IMAP СЃСЉСЂРІСЉСЂР°
+imap server type - if applicable	email	bg	РўРёРї РЅР° IMAP СЃСЉСЂРІСЉСЂР° - Р°РєРѕ СЃРµ РїРѕР»Р·РІР° С‚Р°РєСЉРІ
+important	email	bg	РІР°Р¶РЅРѕ
+in the email index page, the page which lists all the mails in a folder, mail may be sorted by date, author, size, or subject, however all of these need to be ordered from first to last, this options controlls what is first and last. for example, if sorting by date, the newest to oldest displays the most recent emails first, in decending order down to the oldest emails last.	email	bg	РљРѕРіР°С‚Рѕ РіР»РµРґР°С‚Рµ СЃРїРёСЃСЉРєР° РїРёСЃРјР° РІ РґР°РґРµРЅР° РїР°РїРєР°, Р’РёРµ РјРѕР¶РµС‚Рµ РґР° РіРё СЃРѕСЂС‚РёСЂР°С‚Рµ РїРѕ РґР°С‚Р°, РїРѕРґР°С‚РµР», РіРѕР»РµРјРёРЅР° РёР»Рё "РћС‚РЅРѕСЃРЅРѕ". РћСЃРІРµРЅ С‚РѕРІР° РјРѕР¶РµС‚Рµ РґР° РіРё РїРѕРґСЂРµРґРёС‚Рµ РѕС‚РїСЂРµРґ-РЅР°Р·Р°Рґ РёР»Рё РѕС‚Р·Р°Рґ-РЅР°РїСЂРµРґ. РђРєРѕ СЃР° СЃРѕСЂС‚РёСЂР°РЅРё РїРѕ РґР°С‚Р° С‚Р°Р·Рё РЅР°СЃС‚СЂРѕР№РєР° РѕРїСЂРµРґРµР»СЏ РґР°Р»Рё РїСЉСЂРІРѕС‚Рѕ РїРёСЃРјРѕ РІ СЃРїРёСЃСЉРєР° РґР° Рµ РЅР°Р№-РЅРѕРІРѕС‚Рѕ РёР»Рё РґР° Рµ РЅР°Р№-СЃС‚Р°СЂРѕС‚Рѕ РїРёСЃРјРѕ.
+inbox	email	bg	РџРѕР»СѓС‡РµРЅРё
+interval	calendar	bg	РРЅС‚РµСЂРІР°Р»
+intervals in day view	calendar	bg	РРЅС‚РµСЂРІР°Р» РІ "Р”РЅРµРІРµРЅ РІРёРґ"
+jan	email	bg	РЇРЅСѓР°СЂРё
+jul	email	bg	Р®Р»Рё
+jun	email	bg	Р®РЅРё
+keep	email	bg	Р—Р°РїР°Р·Рё
+keyword	email	bg	РєР»СЋС‡РѕРІР° РґСѓРјР°
+keywords	email	bg	РљР»СЋС‡РѕРІРё РґСѓРјРё
+last	calendar	bg	РїРѕСЃР»РµРґРµРЅ
+lastname of person to notify	calendar	bg	Р¤Р°РјРёР»РёСЏ РЅР° Р»РёС†РµС‚Рѕ Р·Р° РёР·РІРµСЃС‚СЏРІР°РЅРµ
+layout 1	common	bg	Р’РёРґ 1
+layout 2	common	bg	Р’РёРґ 2
+length shown<br>(emtpy for full length)	calendar	bg	РР·РѕР±СЂР°Р·СЏРІР°РЅР° РґСЉР»Р¶РёРЅР° (РїСЂР°Р·РЅРѕ Р·Р° С†СЏР»Р°С‚Р°)
+length<br>(<= 255)	calendar	bg	Р”СЉР»Р¶РёРЅР° (<= 255)
+lines	email	bg	Р›РёРЅРёРё
+link	calendar	bg	РџСЂРµРїСЂР°С‚РєР°
+link to view the event	calendar	bg	РџСЂРµРїСЂР°С‚РєР° Р·Р° РїСЂРµРіР»РµРґ РЅР° СЃСЉР±РёС‚РёРµС‚Рѕ
+list all categories.	calendar	bg	РџРѕРєР°Р¶Рё РІСЃРёС‡РєРё РєР°С‚РµРіРѕСЂРёРё.
+list messages	email	bg	СЃРїРёСЃСЉРє РЅР° РїРёСЃРјР°С‚Р°
+location	calendar	bg	РњСЏСЃС‚Рѕ РЅР° СЃСЉР±РёС‚РёРµС‚Рѕ
+long names	email	bg	РґСЉР»РіРё РёРјРµРЅР°
+mail folder(uw-maildir)	email	bg	РџР°РїРєР° Р·Р° РїРёСЃРјР°(UW-РїР°РїРєР°)
+mail server	email	bg	РџРѕС‰РµРЅСЃРєРё СЃСЉСЂРІСЉСЂ
+mail server type	email	bg	Р’РёРґ РїРѕС‰РµРЅСЃРєРё СЃСЉСЂРІСЉСЂ
+mail you send will use this address as the &quot;from&quot; address. this may be the same as your egroupware login name, or the server administrator may have set it for you. when the recipient clicks reply, this address will be used. you can leave this box blank and the default value will be used.	email	bg	РџРёСЃРјР°С‚Р°, РєРѕРёС‚Рѕ РїСЂР°С‰Р°С‚Рµ С‰Рµ РЅРѕСЃСЏС‚ С‚РѕР·Рё Р°РґСЂРµСЃ РєР°С‚Рѕ Р°РґСЂРµСЃ РЅР° РїРѕРґР°С‚РµР»СЏ. РљРѕРіР°С‚Рѕ РїРѕР»СѓС‡Р°С‚РµР»СЏ РЅР°С‚РёСЃРЅРµ "РћС‚РіРѕРІРѕСЂ" Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ С‰Рµ Р±СЉРґРµ РёР·РїРѕР»Р·РІР°РЅ С‚РѕР·Рё Р°РґСЂРµСЃ Р·Р° РІСЂСЉР·РєР° СЃ Р’Р°СЃ. РђРєРѕ РёР·С‚СЂРёРµС‚Рµ СЃСЉРґСЉСЂР¶Р°РЅРёРµС‚Рѕ РЅР° РїРѕР»РµС‚Рѕ РІ РЅР°СЃС‚СЂРѕР№РєРёС‚Рµ РЅР° РѕСЃРЅРѕРІРЅРёСЏ Р°РєР°СѓРЅС‚ С‚Рѕ Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ С‰Рµ Р±СЉРґРµ РїРѕРїСЉР»РЅРµРЅРѕ СЃ РїСЉСЂРІРѕРЅР°С‡Р°Р»РЅРёС‚Рµ РЅР°СЃС‚СЂРѕР№РєРё, РЅР°РїСЂР°РІРµРЅРё РѕС‚ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°.
+make freebusy information availible to not loged in persons?	calendar	bg	РќРµРєР° РёРЅС„РѕСЂРјР°С†РёСЏС‚Р° Р·Р° РјРѕСЏС‚Р° Р·Р°РµС‚РѕСЃС‚ РґР° Рµ РґРѕСЃС‚СЉРїРЅР° Рё Р·Р° РїРѕС‚СЂРµР±РёС‚РµР»Рё, РєРѕРёС‚Рѕ РЅРµ СЃР° РІР»РµР·Р»Рё РІ СЃРёСЃС‚РµРјР°С‚Р°.
+manage accounts	email	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ РЅР° Р°РєР°СѓРЅС‚РёС‚Рµ
+manage folders	email	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ РЅР° РїР°РїРєРёС‚Рµ
+mar	email	bg	РњР°СЂС‚
+matrixview	calendar	bg	РњР°С‚СЂРёС‡РµРЅ РІРёРґ
+message list layout	common	bg	РР·РіР»РµРґ  РЅР° СЃРїРёСЃСЉРєР° РЅР° РїРёСЃРјР°С‚Р°
+messages	email	bg	РџРёСЃРјР°
+messages found in folder	email	bg	РџРёСЃРјР° РѕС‚РєСЂРёС‚Рё РІ РїР°РїРєР°
+messages have been moved to	email	bg	РїРёСЃРјР°С‚Р° Р±СЏС…Р° РїСЂРµРјРµСЃС‚РµРЅРё РІ
+minutes	calendar	bg	РјРёРЅСѓС‚Рё
+modified	calendar	bg	Р РµРґР°РєС‚РёСЂР°РЅРѕ
+modify list of external participants	calendar	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ СЃРїРёСЃСЉРєР° РЅР° РІСЉРЅС€РЅРёС‚Рµ СѓС‡Р°СЃС‚РЅРёС†Рё
+mon	calendar	bg	РџРѕРЅ
+month	calendar	bg	РњРµСЃРµС†
+monthly	calendar	bg	РњРµСЃРµС‡РµРЅ
+monthly (by date)	calendar	bg	РњРµСЃРµС‡РЅРѕ (РїРѕ РґР°С‚Рё)
+monthly (by day)	calendar	bg	РњРµСЃРµС‡РЅРѕ (РїРѕ РґРЅРё)
+monthview	calendar	bg	РњРµСЃРµС‡РµРЅ РІРёРґ
+more actions	email	bg	РџРѕРІРµС‡Рµ РґРµР№СЃС‚РІРёСЏ
+more choices	email	bg	РџРѕРІРµС‡Рµ РёР·Р±СЂР°РЅРё
+most us and european users do not need to enable this. if this option is checked then your email server can handle folder names with non us-ascii charactors in them / default is disabled, not checked. only use if you are really sure you need it. only works with imap servers, pop servers do not have folders.	email	bg	РџРѕРІРµС‡РµС‚Рѕ РїРѕС‚СЂРµР±РёС‚РµР»Рё РІ Р•РІСЂРѕРїР° Рё РЎРђР© РЅСЏРјР° РЅСѓР¶РґР° РґР° СЂР°Р·СЂРµС€Р°РІР°С‚ С‚РѕРІР°. РђРєРѕ Рµ РјР°СЂРєРёСЂР°РЅРѕ, РёРјРµРЅР°С‚Р° РЅР° РїР°РїРєРёС‚Рµ С‰Рµ РјРѕРіР°С‚ РґР° СЃСЉРґСЉСЂР¶Р°С‚ РЅРµ US-ASCII СЃРёРјРІРѕР»Рё. РћР±РёРєРЅРѕРІРµРЅРѕ Рµ Р·Р°Р±СЂР°РЅРµРЅРѕ (РЅРµ Рµ РјР°СЂРєРёСЂР°РЅРѕ). Р Р°Р·СЂРµС€РµС‚Рµ РіРѕ СЃР°РјРѕ Р°РєРѕ РЅР°РёСЃС‚РёРЅР° СЃРµ РЅСѓР¶РґР°РµС‚Рµ РѕС‚ С‚РѕРІР° Рё Р°РєРѕ СЃС‚Рµ СЃРёРіСѓСЂРЅРё, С‡Рµ С‰Рµ СЂР°Р±РѕС‚Рё. РўР°Р·Рё С„СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Рё СЃР°РјРѕ СЃ IMAP СЃСЉСЂРІСЉСЂ, Рё РЅРµ СЂР°Р±РѕС‚Рё СЃ POP.
+move down	email	bg	РџСЂРµРјРµСЃС‚Рё РЅР°РґРѕР»Сѓ
+move selected messages into	email	bg	РџСЂРµРјРµСЃС‚Рё РјР°СЂРєРёСЂР°РЅРёС‚Рµ РІ
+move this message into	email	bg	РџСЂРµРјРµСЃС‚Рё РїРёСЃРјРѕС‚Рѕ РІ
+move up	email	bg	РџСЂРµРјРµСЃС‚Рё РЅР°РіРѕСЂРµ
+mozilla modern style	email	bg	РЎС‚РёР» "Mozilla Modern"
+name of the mail server you want to access. should be a name like &quot;mail.example.com&quot;. if you leave this box blank then the default value will be used.	email	bg	РРјРµ РёР»Рё IP Р°РґСЂРµСЃ РЅР° РїРѕС‰РµРЅСЃРєРёСЏ СЃСЉСЂРІСЉСЂ. РђРєРѕ РіРѕ РѕСЃС‚Р°РІРёС‚Рµ РїСЂР°Р·РЅРѕ, Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ С‰Рµ Р±СЉРґРµ РїРѕРїСЉР»РЅРµРЅРѕ СЃ РїСЉСЂРІРѕРЅР°С‡Р°Р»РЅРѕС‚Рѕ СЃСЉРґСЉСЂР¶Р°РЅРёРµ.
+new	email	bg	РќРѕРІРё
+new account	email	bg	РќРѕРІ Р°РєР°СѓРЅС‚
+new entry	calendar	bg	Р—Р°РїРёСЃРІР°РЅРµ (РЅРѕРІРѕ)
+new filter	email	bg	Р”РѕР±Р°РІСЏРЅРµ РЅР° С„РёР»С‚СЉСЂ
+new message	email	bg	РќРѕРІРѕ РїРёСЃРјРѕ
+new messages	email	bg	РќРѕРІРё РїРёСЃРјР°
+new name must not exist and not be empty!!!	calendar	bg	РќРѕРІРѕС‚Рѕ РёРјРµ РґР° Рµ РЅРµСЃСЉС‰РµСЃС‚РІСѓРІР°С‰Рѕ Рё РґР° РЅРµ Рµ РїСЂР°Р·РЅРѕ !!!
+newest	common	bg	РїСЉСЂРІРѕ
+next message	email	bg	РЎР»РµРґРІР°С‰Рѕ РїРёСЃРјРѕ
+no change	email	bg	РЅРµ РїСЂРѕРјРµРЅСЏР№
+no error returned from server	email	bg	РќСЏРјР° РіСЂРµС€РєР° СЃРїРѕСЂРµРґ СЃСЉСЂРІСЉСЂР°
+no matches found	calendar	bg	РќРµ СЃР° РѕС‚РєСЂРёС‚Рё СЃСЉРІРїР°РґРµРЅРёСЏ
+no message found in folder '%1'	email	bg	РќРµ СЃР° РЅР°РјРµСЂРµРЅРё РїРёСЃРјР° РІ РїР°РїРєР° '%1'
+no next message	email	bg	РќСЏРјР° СЃР»РµРґРІР°С‰Рѕ
+no previous message	email	bg	РќСЏРјР° РїСЂРµРґРёС€РЅРѕ
+no response	calendar	bg	Р‘РµР· РѕС‚РіРѕРІРѕСЂ
+noia &#64; carlitus style	email	bg	РЎС‚РёР» "Noia @ Carlitus"
+non-standard	email	bg	РќРµСЃС‚Р°РЅРґР°СЂС‚РµРЅ
+not used	email	bg	РЅРµРёР·РїРѕР»Р·РІР°РЅ
+notification messages for added events	calendar	bg	РР·РІРµСЃС‚РёРµ Р·Р° РґРѕР±Р°РІРµРЅ Р°РЅРіР°Р¶РёРјРµРЅС‚
+notification messages for canceled events	calendar	bg	РР·РІРµСЃС‚РёРµ Р·Р° РїСЂРµРјР°С…РЅР°С‚ Р°РЅРіР°Р¶РёРјРµРЅС‚
+notification messages for modified events	calendar	bg	РР·РІРµСЃС‚РёРµ Р·Р° РїСЂРѕРјРµРЅРµРЅ Р°РЅРіР°Р¶РёРјРµРЅС‚
+notification messages for your alarms	calendar	bg	РќР°РїРѕРјРЅСЏРЅРµ Р·Р° Р°РЅРіР°Р¶РёРјРµРЅС‚
+notification messages for your responses	calendar	bg	РР·РІРµСЃС‚РёРµ Р·Р° Р’Р°С€ РѕС‚РіРѕРІРѕСЂ РЅР° РїРѕРєР°РЅР°
+notify on delivery	email	bg	РћР±СЂР°С‚РЅР° СЂР°Р·РїРёСЃРєР°
+nov	email	bg	РќРѕРµРјРІСЂРё
+number	common	bg	РќРѕРјРµСЂ
+number of matches:	email	bg	Р±СЂРѕР№ РЅР°РјРµСЂРµРЅРё:
+number of months	calendar	bg	Р‘СЂРѕР№ РјРµСЃРµС†Рё
+oct	email	bg	РћРєС‚РѕРјРІСЂРё
+old	email	bg	РЎС‚Р°СЂ
+old startdate	calendar	bg	РЎС‚Р°СЂР° РЅР°С‡Р°Р»РЅР° РґР°С‚Р°
+olddate	calendar	bg	РЎС‚Р°СЂР°Р”Р°С‚Р°
+oldest	common	bg	РїРѕСЃР»РµРґРЅРѕ
+on	email	bg	РќР°
+only needed with the university of washington &quot;uwash&quot; imap server. the default value is &quot;mail&quot; which means your mail folders, other then inbox, are located in a directory called &quot;mail&quot; directly under your &quot;home&quot; directory. this box may be left empty, which means your mail folders are located in your &quot;home&quot; directory, not a subdirectory. if your mail folders are located in a subdirectory of &quot;home&quot; then put the name of that subdirectory here. generally, it is not necessary to use any special slashes or tildes, &quot;home&quot; is always considered the base directory, and the slash bewteen &quot;home&quot; and the subdirectory will be added for you automatically, do not put the slash in this box.	email	bg	РќРµРѕР±С…РѕРґРёРјРѕ СЃР°РјРѕ Р°РєРѕ РїРѕР»Р·РІР°С‚Рµ СЂР°Р·СЂР°Р±РѕС‚РµРЅРёСЏ РѕС‚ СѓРЅРёРІРµСЂСЃРёС‚РµС‚Р° РІСЉРІ Р’Р°С€РёРЅРіС‚РѕРЅ UWash IMAP СЃСЉСЂРІСЉСЂ. The default value is &quot;mail&quot; which means your mail folders, other then INBOX, are located in a directory called &quot;mail&quot; directly under your &quot;HOME&quot; directory. This box may be left empty, which means your mail folders are located in your &quot;HOME&quot; directory, not a subdirectory. If your mail folders are located in a subdirectory of &quot;HOME&quot; then put the name of that subdirectory here. Generally, it is not necessary to use any special slashes or tildes, &quot;HOME&quot; is always considered the base directory, and the slash bewteen &quot;HOME&quot; and the subdirectory will be added for you automatically, do not put the slash in this box.
+or	common	bg	РёР»Рё
+or enter text	email	bg	РёР»Рё РІСЉРІРµРґРµС‚Рµ С‚РµРєСЃС‚
+or you can use custom settings for this email account	email	bg	РёР»Рё РґР° РїРѕР»Р·РІР°С‚Рµ Р’Р°С€РёС‚Рµ РїРѕС‚СЂРµР±РёС‚РµР»СЃРєРё РЅР°СЃС‚СЂРѕР№РєРё Р·Р° С‚РѕР·Рё Р°РєР°СѓРЅС‚
+order	calendar	bg	РџРѕРґСЂРµР¶РґР°РЅРµ
+organization	email	bg	РћСЂРіР°РЅРёР·Р°С†РёСЏ
+participant	calendar	bg	РЈС‡Р°СЃС‚РЅРёРє
+participants	calendar	bg	РЈС‡Р°СЃС‚РЅРёС†Рё
+participates	calendar	bg	Р©Рµ СѓС‡Р°СЃС‚РІР°
+password for not loged in users to your freebusy information?	calendar	bg	РџР°СЂРѕР»Р° Р·Р° РґРѕСЃС‚СЉРї РґРѕ РёРЅС„РѕСЂРјР°С†РёСЏС‚Р° Р·Р° Р’Р°С€Р°С‚Р° Р·Р°РµС‚РѕСЃС‚ Р·Р° РїРѕС‚СЂРµР±РёС‚РµР»Рё, РєРѕРёС‚Рѕ РЅРµ СЃР° РІР»РµР·Р»Рё РІ СЃРёСЃС‚РµРјР°С‚Р°. Р—Р°РґР°Р№С‚Рµ РїР°СЂРѕР»Р°, СЂР°Р·Р»РёС‡РЅР° РѕС‚ Р’Р°С€Р°С‚Р°!
+permission denied	calendar	bg	РќРµ Рµ РїРѕР·РІРѕР»РµРЅРѕ
+persistent email server session	email	bg	С‚РµРєСѓС‰РёСЏ РѕР±РјРµРЅ СЃ РїРѕС‰РµРЅСЃРєРёСЏ СЃСЉСЂРІСЉСЂ
+phone	email	bg	РўРµР»РµС„РѕРЅ
+planner	calendar	bg	РџР»Р°РЅРµСЂ
+planner by category	calendar	bg	РџР»Р°РЅРµСЂ РїРѕ РєР°С‚РµРіРѕСЂРёРё
+planner by user	calendar	bg	РџР»Р°РЅРµСЂ РїРѕ РїРѕС‚СЂРµР±РёС‚РµР»Рё
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	bg	РњРѕР»СЏ РїРѕС‚РІСЉСЂРґРµС‚Рµ, РїСЂРёРµРјРµС‚Рµ, РѕС‚РєР°Р¶РµС‚Рµ РёР»Рё РїСЂРµРіР»РµРґР°Р№С‚Рµ РїСЂРѕРјРµРЅРёС‚Рµ РІ СЃСЉРѕС‚РІРµС‚РЅРёСЏ Р·Р°РїРёСЃ РІ РєР°Р»РµРЅРґР°СЂР° Р’Рё !
+please enter a filename !!!	calendar	bg	РњРѕР»СЏ РІСЉРІРµРґРµС‚Рµ РёРјРµ РЅР° С„Р°Р№Р»!
+please fill in everything you need	email	bg	РњРѕР»СЏ, РїРѕРїСЉР»РЅРµС‚Рµ РІСЃРёС‡РєРѕ РѕС‚ РєРѕРµС‚Рѕ СЃРµ РЅСѓР¶РґР°РµС‚Рµ
+please select a folder to rename	email	bg	РњРѕР»СЏ, РёР·Р±РµСЂРµС‚Рµ РїР°РїРєР°С‚Р° Р·Р° РїСЂРµРёРјРµРЅРѕРІР°РЅРµ
+please select a message first	email	bg	РњРѕР»СЏ РїСЉСЂРІРѕ РґР° РїРѕСЃРѕС‡РёС‚Рµ РїРёСЃРјРѕС‚Рѕ
+please submit a filename to attach	email	bg	РњРѕР»СЏ Р·Р°РґР°Р№С‚Рµ РёРјРµС‚Рѕ РЅР° С„Р°Р№Р»Р° Р·Р° РїСЂРёРєСЂРµРїСЏРЅРµ
+please type a folder name in the text box	email	bg	РњРѕР»СЏ РЅР°РїРёС€РµС‚Рµ С‚РµРєСЃС‚ Р·Р° РёРјРµ РЅР° РїР°РїРєР°С‚Р°
+preselected group for entering the planner	calendar	bg	Р“СЂСѓРїР° РїСЂРё РІР»РёР·Р°РЅРµ РІ "РџР»Р°РЅРµСЂ"
+previous	email	bg	РџСЂРµРґРёС€РЅРѕ
+previous message	email	bg	РџСЂРµРґРёС€РЅРѕ РїРёСЃРјРѕ
+print calendars in black & white	calendar	bg	Р§РµСЂРЅРѕ/Р±СЏР»Рѕ РѕС‚РїРµС‡Р°С‚РІР°РЅРµ РЅР° РєР°Р»РµРЅРґР°СЂРёС‚Рµ
+print the mini calendars	calendar	bg	РџРµС‡Р°С‚Р°РЅРµ РЅР° РјРёРЅРё РєР°Р»РµРЅРґР°СЂРё
+printable	email	bg	Р·Р° РѕС‚РїРµС‡Р°С‚РІР°РЅРµ
+printer friendly	calendar	bg	Р’Р°СЂРёР°РЅС‚ Р·Р° РѕС‚РїРµС‡Р°С‚РІР°РЅРµ
+private only	calendar	bg	РЎР°РјРѕ Р»РёС‡РЅРёС‚Рµ
+raw message	email	bg	РЅРµРѕР±СЂР°Р±РѕС‚РµРЅРѕ
+re-edit event	calendar	bg	Р РµРґР°РєС‚РёСЂР°РЅРµ РѕС‚РЅРѕРІРѕ
+read mail	email	bg	РћС‚РІРѕСЂРё
+recent	email	bg	СЃРєРѕСЂРѕС€РЅРё
+recipient	email	bg	РџРѕР»СѓС‡Р°С‚РµР»
+refresh	calendar	bg	РћРїСЂРµСЃРЅРё
+rejected	calendar	bg	РћС‚РєР°Р·Р°РЅРѕ
+rename a folder	email	bg	РџСЂРµРёРјРµРЅСѓРІР°РЅРµ РЅР° РїР°РїРєР°
+repeat day	calendar	bg	РџРѕРІС‚РѕСЂРµРЅРёРµ РІ РґРЅРёС‚Рµ
+repeat end date	calendar	bg	РџРѕРІС‚Р°СЂСЏРЅРµ РґРѕ (РґР°С‚Р°)
+repeat type	calendar	bg	РўРёРї РЅР° РїРѕРІС‚РѕСЂРµРЅРёРµ
+repeating event information	calendar	bg	РРЅС„РѕСЂРјР°С†РёСЏ Р·Р° РїРѕРІС‚Р°СЂСЏС‰Рё СЃРµ СЃСЉР±РёС‚РёСЏ
+reply	email	bg	РћС‚РіРѕРІРѕСЂ
+reply all	email	bg	РћС‚РіРѕРІРѕСЂ РЅР° РІСЃРёС‡РєРё
+request delivery notification	email	bg	РСЃРєР°РЅРµ Р·Р° РѕР±СЂР°С‚РЅР° СЂР°Р·РїРёСЃРєР°
+required	email	bg	Р·Р°РґСЉР»Р¶РёС‚РµР»РЅРѕ
+return mails during this time period	email	bg	РўСЉСЂСЃРё РІ РїРµСЂРёРѕРґР°
+sa	calendar	bg	РЎР±
+sat	calendar	bg	РЎСЉР±
+search for mails in these folders	email	bg	РўСЉСЂСЃРё СЃСЂРµРґ РїРёСЃРјР°С‚Р° РІ РїР°РїРєРёС‚Рµ
+search results	calendar	bg	Р РµР·СѓР»С‚Р°С‚ РѕС‚ С‚СЉСЂСЃРµРЅРµС‚Рѕ
+seen	email	bg	РІРёРґСЏРЅРё
+select this box if you want the text body of the message you are forwarding to appear inline in the body of your sent message	email	bg	РђРєРѕ Рµ РјР°СЂРєРёСЂР°РЅРѕ, РєРѕРіР°С‚Рѕ РїСЂРµРїСЂР°С‰Р°С‚Рµ РїРёСЃРјРѕ, С‚РµРєСЃС‚Р° РјСѓ С‰Рµ Р±СЉРґРµ РІРјСЉРєРЅР°С‚ РІ РєР°РІРёС‡РєРё РІ РЅРѕРІРѕС‚Рѕ РїРёСЃРјРѕ.
+select your screensize for proper showing of the javascript addressbook	email	bg	РџРѕСЃРѕС‡РµС‚Рµ РіРѕР»РµРјРёРЅР°С‚Р° РЅР° РµРєСЂР°РЅР° РІ С‚РѕС‡РєРё (pixels) Р·Р° РєРѕСЂРµРєС‚РЅРѕС‚Рѕ РёР·РѕР±СЂР°Р·СЏРІР°РЅРµ РЅР° Java Р°РґСЂРµСЃРЅРёРєР°.
+select your screensize for propper showing of the javascript addressbook	email	bg	РџРѕСЃРѕС‡РµС‚Рµ РіРѕР»РµРјРёРЅР°С‚Р° РЅР° РµРєСЂР°РЅР° РІ С‚РѕС‡РєРё (pixels) Р·Р° РєРѕСЂРµРєС‚РЅРѕС‚Рѕ РёР·РѕР±СЂР°Р·СЏРІР°РЅРµ РЅР° Java Р°РґСЂРµСЃРЅРёРєР°.
+select your style for the addressbook. the traditional, simple style. or the new javascript enabled complex addressbook	email	bg	РР·Р±РµСЂРµС‚Рµ РІРёРґР° РЅР° Р°РґСЂРµСЃРЅРёРєР°. РњРѕР¶Рµ РґР° Рµ РѕР±РёРєРЅРѕРІРµРЅ (С‚СЂР°РґРёС†РёРѕРЅРµРЅ) РёР»Рё РЅРѕРІРёСЏ СЃС‚РёР», СЂР°Р·СЂР°Р±РѕС‚РµРЅ РЅР° РµР·РёРєР° Java.
+send	email	bg	РР·РїСЂР°С‰Р°РЅРµ
+send deleted messages to the trash	email	bg	РџСЂРµРјРµСЃС‚Рё РёР·С‚СЂРёС‚РёС‚Рµ РІ РїР°РїРєР°С‚Р° Р·Р° РёР·С‚СЂРёС‚Рё
+send forwarded mail as quoted attachment	email	bg	РР·РїСЂР°С‰Р°Р№ РїСЂРµРїСЂР°С‚РµРЅРёС‚Рµ РєР°С‚Рѕ РєР°С‚Рѕ РІРјСЉРєРЅР°С‚ РІ РєР°РІРёС‡РєРё С‚РµРєСЃС‚
+sender	email	bg	РџРѕРґР°С‚РµР»
+sent	common	bg	РёР·РїСЂР°С‚РµРЅРё
+sent folder	email	bg	РїР°РїРєР° Р·Р° РёР·РїСЂР°С‚РµРЅРё
+sent messages folder	common	bg	РџР°РїРєР° Р·Р° РёР·РїСЂР°С‚РµРЅРё РїРёСЃРјР°
+sent messages folder name	email	bg	РРјРµ РЅР° РїР°РїРєР° "РР·РїСЂР°С‚РµРЅРё"
+sent messages saved in &quot;sent&quot; folder	common	bg	Р—Р°РїРёСЃРІР°Р№ РёР·РїСЂР°С‚РµРЅРёС‚Рµ СЃСЉРѕР±С‰РµРЅРёСЏ РІ РїР°РїРєР° &quot;sent&quot
+sent messages saved to folder:	email	bg	Р—Р°РїРёСЃР°С… РёР·РїСЂР°С‚РµРЅРёС‚Рµ РІ РїР°РїРєР°:
+sep	email	bg	РЎРµРїС‚РµРјРІСЂРё
+set a year only for one-time / non-regular holidays.	calendar	bg	Р—Р°РґР°Р№С‚Рµ РіРѕРґРёРЅР°С‚Р° СЃР°РјРѕ Р°РєРѕ РїСЂР°Р·РЅРёРєСЉС‚ Рµ РµРґРёСЃС‚РІРµРЅРѕ Р·Р° С‚Р°Р·Рё РіРѕРґРёРЅР° Рё РЅСЏРјР° РґР° СЃРµ РїРѕРІС‚Р°СЂСЏ РїСЂРµР· СЃР»РµРґРІР°С‰РёС‚Рµ.
+set new events to private	calendar	bg	РџСЂРё РґРѕР±Р°РІСЏРЅРµ РЅР° Р°РЅРіР°Р¶РёРјРµРЅС‚  - "Р›РёС‡РµРЅ"
+settings	common	bg	РќР°СЃС‚СЂРѕР№РєРё
+short names	email	bg	РєСЂР°С‚РєРё РёРјРµРЅР°
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	bg	РСЃРєР°С‚Рµ Р»Рё СЃСЉР±РёС‚РёСЏС‚Р°, Р·Р° РєРѕРёС‚Рѕ СЃС‚Рµ Р±РёР»Рё РїРѕРєР°РЅРµРЅРё, РЅРѕ СЃС‚Рµ РѕС‚РєР°Р·Р°Р»Рё СѓС‡Р°СЃС‚РёРµ, РґР° СЃРµ РёР·РѕР±СЂР°Р·СЏРІР°С‚ РІ РєР°Р»РµРЅРґР°СЂР°? Р’РёРµ РјРѕР¶РµС‚Рµ РїРѕ-РєСЉСЃРЅРѕ РґР° РїСЂРёРµРјРµС‚Рµ СѓС‡Р°СЃС‚РёРµС‚Рѕ (РЅР°РїСЂ. РїСЂРё РѕС‚РїР°РґР°РЅРµ РЅР° РєРѕРЅС„Р»РёРєС‚ РІ РїСЂРѕРіСЂР°РјР°С‚Р° Р’Рё).
+should new events created as private by default ?	calendar	bg	РџСЂРё РґРѕР±Р°РІСЏРЅРµ РЅР° РЅРѕРІ Р°РЅРіР°Р¶РёРјРµРЅС‚,  "Р›РёС‡РµРЅ" РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ РґР° Рµ РјР°СЂРєРёСЂР°РЅРѕ.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	bg	Р‘РёС…С‚Рµ РјРѕРіР»Рё РґР° СЂР°Р·СЂРµС€РёС‚Рµ РЅР° РїРѕС‚СЂРµР±РёС‚РµР»Рё, РєРѕРёС‚Рѕ РЅСЏРјР°С‚ Р°РєР°СѓРЅС‚ Р·Р° РІР»РёР·Р°РЅРµ РІ С‚Р°Р·Рё СЃРёСЃС‚РµРјР°, РґР° РёРјР°С‚ РґРѕСЃС‚СЉРї РґРѕ РёРЅС„РѕСЂРјР°С†РёСЏС‚Р° Р·Р° Р’Р°С€Р°С‚Р° Р·Р°РµС‚РѕСЃС‚. РРЅС„РѕСЂРјР°С†РёСЏС‚Р° Рµ РІ iCal С„РѕСЂРјР°С‚ Рё РІРєР»СЋС‡РІР° СЃР°РјРѕ РІСЂРµРјРµС‚Рѕ, РїСЂРµР· РєРѕРµС‚Рѕ СЃС‚Рµ Р·Р°РµС‚, РєР°С‚Рѕ РЅРµ РІРєР»СЋС‡РІР° Р·Р°РіР»Р°РІРёРµС‚Рѕ, РѕРїРёСЃР°РЅРёРµС‚Рѕ Рё РјРµСЃС‚РѕС‚Рѕ РЅР° Р°РЅРіР°Р¶РёРјРµРЅС‚РёС‚Рµ. РњРѕР¶РµС‚Рµ РґР° Р·Р°РґР°РґРµС‚Рµ РїР°СЂРѕР»Р° Р·Р° РґРѕСЃС‚СЉРї РґРѕ РёРЅС„РѕСЂРјР°С†РёСЏС‚Р°, Р° URL Р°РґСЂРµСЃСЉС‚ Рµ %1
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	bg	Р–РµР»Р°РµС‚Рµ Р»Рё РІСЉРІ РІР°СЂРёР°РЅС‚Р° Р·Р° РѕС‚РїРµС‡Р°С‚РІР°РЅРµ РґР° СЃРµ РёР·РѕР±СЂР°Р·СЏРІР°С‚ РјРёРЅРё РєР°Р»РµРЅРґР°СЂС‡РµС‚Р°?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	bg	Р–РµР»Р°РµС‚Рµ Р»Рё РІР°СЂРёР°РЅС‚Р° Р·Р° РѕС‚РїРµС‡Р°С‚РІР°РЅРµ РґР° Рµ С‡РµСЂРЅРѕ/Р±СЏР»?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	bg	Р’ СЃРєРѕР±Рё, СЃР»РµРґ РёРјРµС‚Рѕ РЅР° РїРѕРєР°РЅРµРЅРёСЏ Р·Р° РґР°РґРµРЅРѕ СЃСЉР±РёС‚РёРµ, С‰Рµ СЃРµ РёР·РїРёСЃРІР° РЅРµРіРѕРІРёСЏ РѕС‚РіРѕРІРѕСЂ (РџСЂРёРµРјР°, РћС‚РєР°Р·РІР°,...).
+show day view on main screen	calendar	bg	РР·РѕР±СЂР°Р·СЏРІР°Р№ РґРЅРµРІРµРЅ РІРёРґ РЅР° РєР°Р»РµРЅРґР°СЂР° РЅР° СЃС‚СЂР°РЅРёС†Р°С‚Р° "РќР°С‡Р°Р»Рѕ"
+show default view on main screen	calendar	bg	РџРѕРєР°Р·РІР°Р№ РіРѕ Рё РЅР° СЃС‚СЂР°РЅРёС†Р°С‚Р° "РќР°С‡Р°Р»Рѕ"
+show help	email	bg	РџРѕРєР°Р¶Рё РѕРїРёСЃР°РЅРёСЏС‚Р°
+show high priority events on main screen	calendar	bg	РџРѕРєР°Р·РІР°Р№ СЃСЉР±РёС‚РёСЏС‚Р° СЃ РІРёСЃРѕРє РїСЂРёРѕСЂРёС‚РµС‚ РЅР° СЃС‚СЂР°РЅРёС†Р°С‚Р° "РќР°С‡Р°Р»Рѕ"
+show invitations you rejected	calendar	bg	РџРѕРєР°Р·РІР°Р№ Рё РїРѕРєР°РЅРёС‚Рµ, РєРѕРёС‚Рѕ СЃСЉРј РѕС‚РєР°Р·Р°Р»
+show list of upcoming events	calendar	bg	РџРѕРєР°Р¶Рё СЃРїРёСЃСЉРє РЅР° РїСЂРёР±Р»РёР¶Р°РІР°С‰РёС‚Рµ СЃСЉР±РёС‚РёСЏ
+show long names	email	bg	РџРѕРєР°Р¶Рё СЃ РґСЉР»РіРё РёРјРµРЅР°
+show message	email	bg	РїРѕРєР°Р¶Рё РїРёСЃРјРѕС‚Рѕ
+show new messages in combobox	email	bg	РџРѕРєР°Р·РІР°Р№ Р±СЂРѕСЏ РЅР° РЅРѕРІРёС‚Рµ РІ РїР°РґР°С‰РёСЏ СЃРїРёСЃСЉРє
+show new messages on main screen	email	bg	РџРѕРєР°Р¶Рё РЅРѕРІРёС‚Рµ РЅР° РЅР°С‡Р°Р»РЅРёСЏ РµРєСЂР°РЅ
+show next seven days	calendar	bg	РџРѕРєР°Р¶Рё СЃР»РµРґРІР°С‰РёС‚Рµ СЃРµРґРµРј РґРЅРё
+show only one day	calendar	bg	РџРѕРєР°Р¶Рё СЃР°РјРѕ РµРґРёРЅ РґРµРЅ
+show sender's email address with name	email	bg	РџРѕРєР°Р¶Рё Р°РґСЂРµСЃР° РЅР° РїРѕРґР°С‚РµР»СЏ СЃ РёРјРµ
+show short names	email	bg	РџРѕРєР°Р¶Рё СЃ РєСЂР°С‚РєРё РёРјРµРЅР°
+show total folder size by default	email	bg	РџРѕРєР°Р·РІР°Р№ РїСЉР»РЅРёСЏ РѕР±РµРј РЅР° РїР°РїРєРёС‚Рµ
+size	email	bg	РћР±РµРј
+size larger than	email	bg	РћР±РµРјСЉС‚ Рµ РїРѕ-РіРѕР»СЏРј РѕС‚
+size smaller than	email	bg	РћР±РµРјСЉС‚ Рµ РїРѕ-РјР°Р»СЉРє РѕС‚
+small	email	bg	РњР°Р»СЉРє
+small view	email	bg	РјР°Р»СЉРє С€СЂРёС„С‚
+smaller	email	bg	РџРѕ-РјР°Р»СЉРє
+smallest	email	bg	РќР°Р№-РјР°Р»СЉРє
+somebody	email	bg	РЅСЏРєРѕР№
+sorry, the owner has just deleted this event	calendar	bg	РЎСЉР¶Р°Р»СЏРІР°РјРµ, РЅРѕ Р°РІС‚РѕСЂР° С‚РѕРєСѓ С‰Рѕ РёР·С‚СЂРё С‚РѕРІР° СЃСЉР±РёС‚РёРµ.
+sorry, this event does not exist	calendar	bg	РЎСЉР¶Р°Р»СЏРІР°РјРµ, РЅРѕ С‚РѕРІР° СЃСЉР±РёС‚РёРµ РЅРµ СЃСЉС‰РµСЃС‚РІСѓРІР°.
+sorry, this event does not have exceptions defined	calendar	bg	РЎСЉР¶Р°Р»СЏРІР°РјРµ, РЅРѕ Р·Р° С‚РѕРІР° СЃСЉР±РёС‚РёРµ РЅРµ СЃР° РґРµС„РёРЅРёСЂР°РЅРё РёР·РєР»СЋС‡РµРЅРёСЏ.
+sort by	calendar	bg	РЎРѕСЂС‚РёСЂР°РЅРµ РїРѕ
+spell check	email	bg	РџСЂРѕРІРµСЂРєР° РЅР° РїСЂР°РІРѕРїРёСЃР°
+standard e-mail preferences	email	bg	РЎС‚Р°РЅРґР°СЂС‚РЅРё РЅР°СЃС‚СЂРѕР№РєРё РЅР° Р•РџРѕС‰Р°
+start date/time	calendar	bg	РќР°С‡Р°Р»Рѕ Р”Р°С‚Р°/Р§Р°СЃ
+start- and enddates	calendar	bg	РќР°С‡Р°Р»РЅР° Рё РєСЂР°Р№РЅР° РґР°С‚Р°
+startdate	calendar	bg	Р”Р°С‚Р°РќР°С‡Р°Р»Рѕ
+su	calendar	bg	РќРґ
+sun	calendar	bg	РќРµРґ
+switch accounts	email	bg	РџСЂРµС…РѕРґ РєСЉРј Р°РєР°СѓРЅС‚
+switch current folder to	common	bg	РџРѕРєР°Р¶Рё РјРё РїР°РїРєР°
+tentative	calendar	bg	РџСЂРѕР±РЅРѕ
+test all filters	email	bg	РўРµСЃС‚РІР°Р№ РІСЃРёС‡РєРё С„РёР»С‚СЂРё
+test import (show importable records <u>only</u> in browser)	calendar	bg	РўРµСЃС‚ Р·Р° РІРјСЉРєРІР°РЅРµ. РЎР°РјРѕ С‰Рµ РїСЂРѕРІРµСЂРё РІСЉР·РјРѕР¶РЅРѕСЃС‚С‚Р° Р·Р° РІРјСЉРєРІР°РЅРµ.
+test or apply all filters	email	bg	РўРµСЃС‚РІР°РЅРµ Рё РїСЂРёР»Р°РіР°РЅРµ РЅР° С„РёР»С‚СЂРёС‚Рµ
+test run this filter	email	bg	РўРµСЃС‚РІР°Р№ С‚РѕР·Рё С„РёР»С‚СЉСЂ
+text	calendar	bg	РўРµРєСЃС‚
+the email application offers 2 different layouts for the index page, that is the page that lists the emails in a folder. this page may be the page the user looks at the most and so different layouts, or looks, are offered.	email	bg	РџСЂРёР»РѕР¶РµРЅРёРµС‚Рѕ Р•РџРѕС‰Р° РїСЂРµРґР»Р°РіР° РґРІР° РІР°СЂРёР°РЅС‚Р° Р·Р° РёР·РіР»РµРґ РЅР° РЅР°Р№-С‡РµСЃС‚Рѕ РёР·РѕР±СЂР°Р·СЏРІР°РЅР°С‚Р° СЃС‚СЂР°РЅРёС†Р° - СЃРїРёСЃСЉРєР° РЅР° РїРёСЃРјР°С‚Р° РІ РґР°РґРµРЅР° РїР°РїРєР°.
+the email application offers different button displays, these buttons can be text, images, or both.	email	bg	РџСЂРёР»РѕР¶РµРЅРёРµС‚Рѕ Р•РџРѕС‰Р° РїСЂРµРґР»Р°РіР° С‚СЂРё РІР°СЂРёР°РЅС‚Р° Р·Р° РёР·РіР»РµРґ РЅР° Р±СѓС‚РѕРЅРёС‚Рµ - СЃР°РјРѕ РёР·РѕР±СЂР°Р¶РµРЅРёРµ (РёРєРѕРЅР°), СЃР°РјРѕ С‚РµРєСЃС‚ РёР»Рё Рё РґРІРµС‚Рµ.
+the email application offers different icon image themes, groups of images of a similar style which are used in this email application. currently the available themes are images based on evolution by ximian and the netscape6 / mozilla browser buttons. additional themes are anticipated and welcome.	email	bg	РџСЂРёР»РѕР¶РµРЅРёРµС‚Рѕ Р•РџРѕС‰Р° РїСЂРµРґР»Р°РіР° РЅСЏРєРѕР»РєРѕ РІР°СЂРёР°РЅС‚Р° Р·Р° РёР·РіР»РµРґ РЅР° РёРєРѕРЅРёС‚Рµ. РќР°Р»РёС‡РЅРёС‚Рµ РІ РјРѕРјРµРЅС‚Р° СЃР° РІР·Р°РёРјСЃС‚РІР°РЅРё РѕС‚ Р±СѓС‚РѕРЅРёС‚Рµ РЅР° Р±СЂР°СѓР·СЉСЂРёС‚Рµ Evolution (Ximian) Рё Netscape6 / Mozilla.
+the email application offers different icon image themes, groups of images of a similar style which are used in this email application. currently the available themes are images based on evolution by ximian and the netscape7, mozilla browser buttons. additional themes are anticipated and welcome.	email	bg	РџСЂРёР»РѕР¶РµРЅРёРµС‚Рѕ Р•РџРѕС‰Р° РїСЂРµРґР»Р°РіР° РЅСЏРєРѕР»РєРѕ РІР°СЂРёР°РЅС‚Р° Р·Р° РёР·РіР»РµРґ РЅР° РёРєРѕРЅРёС‚Рµ. РќР°Р»РёС‡РЅРёС‚Рµ РІ РјРѕРјРµРЅС‚Р° СЃР° РІР·Р°РёРјСЃС‚РІР°РЅРё РѕС‚ Р±СѓС‚РѕРЅРёС‚Рµ РЅР° Р±СЂР°СѓР·СЉСЂРёС‚Рµ Evolution (Ximian) Рё Netscape7 / Mozilla.
+the email application offers different icon image themes, these icons can be big or small.	email	bg	РџСЂРёР»РѕР¶РµРЅРёРµС‚Рѕ Р•РџРѕС‰Р° РїСЂРµРґР»Р°РіР° РЅСЏРєРѕР»РєРѕ РІР°СЂРёР°РЅС‚Р° Р·Р° РёР·РіР»РµРґ РЅР° РёРєРѕРЅРёС‚Рµ, РєРѕРёС‚Рѕ РјРѕРіР°С‚ РґР° Р±СЉРґР°С‚ Рё РјР°Р»РєРё Рё РіРѕР»РµРјРё.
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	bg	РџСЂРµРґРїРѕС‡РµС‚РµРЅРѕС‚Рѕ РІСЂРµРјРµ <ul>%1</ul> Рµ Р·Р°РµС‚Рѕ РѕС‚ СЃР»РµРґРЅРёСЏ Р°РЅРіР°Р¶РёРјРµРЅС‚:
+the login name to use when checking mail for this email account. this may be the same as your egroupware login name, or the server administrator may have set it for you. if your have multiple email accounts set up, you will need to fill this in. if you have only one email account set up, then you can probably leave this alone. if you clear this box, then it goes back to the default value. if you only need some custom settings but want this one to be the default value, then leave this box blank, the default value will be used, and you will see that default value in this box the next time you come to this preferences page.	email	bg	РРјРµС‚Рѕ РЅР° Р°РєР°СѓРЅС‚Р° Р·Р° РїСЂРµРґ РїРѕС‰РµРЅСЃРєРёСЏ СЃСЉСЂРІСЉСЂ. РњРѕР¶Рµ РґР° Р±СЉРґРµ СЃСЉС‰РѕС‚Рѕ РєР°С‚Рѕ РёРјРµС‚Рѕ РЅР° Р°РєР°СѓРЅС‚Р° РІ eGroupWare РёР»Рё РґСЂСѓРіРѕ, Р·Р°РґР°РґРµРЅРѕ РѕС‚ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР° РЅР° СЃСЉСЂРІСЉСЂР°. Р©Рµ С‚СЂСЏР±РІР° РґР° Р·Р°РґР°РґРµС‚Рµ РёРјРµ Р°РєРѕ РёРјР°С‚Рµ РїРѕРІРµС‡Рµ РѕС‚ РµРґРёРЅ РїРѕС‰РµРЅСЃРєРё Р°РєР°СѓРЅС‚. Р’ РїСЂРѕС‚РёРІРµРЅ СЃР»СѓС‡Р°Р№ РЅСЏРјР° РЅСѓР¶РґР° РґР° РіРѕ РїСЂРѕРјРµРЅСЏС‚Рµ. РђРєРѕ РёР·С‚СЂРёРµС‚Рµ СЃСЉРґСЉСЂР¶Р°РЅРёРµС‚Рѕ РЅР° РїРѕР»РµС‚Рѕ, С‚Рѕ С‰Рµ Р±СЉРґРµ Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ РїРѕРїСЉР»РЅРµРЅРѕ Рё РїСЂРё СЃР»РµРґРІР°С‰РѕС‚Рѕ РІР»РёР·Р°РЅРµ РЅР° С‚Р°Р·Рё СЃС‚СЂР°РЅРёС†Р° С‰Рµ РІРёРґРёС‚Рµ РЅР°СЃС‚СЂРѕР№РєР°С‚Р° РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ.
+the password to use when checking mail for this email account. this may be the same as your egroupware password, or the server administrator may have set it for you. if your have multiple email accounts set up, you will need to fill this in. if you have only one email account set up, then you can probably leave this alone. if you do set a custom password, this box will be blank the next time you come to this settings page. this is a security feature because your custom email password is not sent to your browser after you set it. to change your custom password, simply enter a new password in the box. extra email accounts require you to set this. for your default email account, you can clear your custom password by unchecking the &quot;use custom settings&quot; option.	email	bg	РџР°СЂРѕР»Р°С‚Р° РЅР° Р°РєР°СѓРЅС‚Р° Р·Р° РїСЂРµРґ РїРѕС‰РµРЅСЃРєРёСЏ СЃСЉСЂРІСЉСЂ. РњРѕР¶Рµ РґР° Р±СЉРґРµ СЃСЉС‰Р°С‚Р° РєР°С‚Рѕ РїР°СЂРѕР»Р°С‚Р° РЅР° Р°РєР°СѓРЅС‚Р° РІ eGroupWare РёР»Рё РґСЂСѓРіР°, Р·Р°РґР°РґРµРЅР° РѕС‚ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР° РЅР° СЃСЉСЂРІСЉСЂР°. Р©Рµ С‚СЂСЏР±РІР° РґР° СЏ Р·Р°РґР°РґРµС‚Рµ Р°РєРѕ РёРјР°С‚Рµ РїРѕРІРµС‡Рµ РѕС‚ РµРґРёРЅ РїРѕС‰РµРЅСЃРєРё Р°РєР°СѓРЅС‚. Р’ РїСЂРѕС‚РёРІРµРЅ СЃР»СѓС‡Р°Р№ РЅСЏРјР° РЅСѓР¶РґР° РґР° СЏ РїСЂРѕРјРµРЅСЏС‚Рµ. РђРєРѕ Р·Р°РґР°РґРµС‚Рµ РґСЂСѓРіР° РїР°СЂРѕР»Р°, РїСЂРё СЃР»РµРґРІР°С‰РѕС‚Рѕ РІР»РёР·Р°РЅРµ РЅР° С‚Р°Р·Рё СЃС‚СЂР°РЅРёС†Р° РїРѕР»РµС‚Рѕ С‰Рµ Р±СЉРґРµ РїСЂР°Р·РЅРѕ СЃ С†РµР» Р·Р°РїР°Р·РІР°РЅРµ РЅР° РїР°СЂРѕР»Р°С‚Р° РІ С‚Р°Р№РЅР°. Р—Р° РґР° СЃРјРµРЅРёС‚Рµ РїР°СЂРѕР»Р°С‚Р° СЃРё РїСЂРѕСЃС‚Рѕ РІСЉРІРµРґРµС‚Рµ С‚СѓРє РЅРѕРІР°С‚Р°. Р—Р° РґРѕРїСЉР»РЅРёС‚РµР»РЅРёС‚Рµ Р°РєР°СѓРЅС‚Рё С‚РѕРІР° Рµ Р·Р°РґСЉР»Р¶РёС‚РµР»РЅРѕ. РђРєРѕ РёСЃРєР°С‚Рµ РґР° РёР·С‡РёСЃС‚РёС‚Рµ СЃСЉРґСЉСЂР¶Р°РЅРёРµС‚Рѕ РЅР° РїРѕР»РµС‚Рѕ Р·Р° РѕСЃРЅРѕРІРЅРёСЏ Р°РєР°СѓРЅС‚, РґРµРјР°СЂРєРёСЂР°Р№С‚Рµ РєР»РµС‚РєР°С‚Р° "РџРѕР»Р·РІР°Р№ СЃР»РµРґРІР°С‰РёС‚Рµ РїРѕС‚СЂРµР±РёС‚РµР»СЃРєРё РЅР°СЃС‚СЂРѕР№РєРё".
+the type of mail server you want to access. imap mail servers have folders, such as the sent and trash folders. pop servers do not have folders. pop, pop-3, and pop3 are the same thing. you can have the server connection encrypted by using imaps or pops, only if the mailserver supports it and if your egroupware installation has a &quot;ssl&quot; capabable version of php.	email	bg	РўРёРї РЅР° РїРѕС‰РµРЅСЃРєРёСЏ СЃСЉСЂРІСЉСЂ. POP, POP-3 Рё POP3 Рµ РµРґРЅРѕ Рё СЃСЉС‰Рѕ. РђРєРѕ РїРѕРґРґСЉСЂР¶Р° РєСЂРёРїС‚РёСЂР°РЅРµ РЅР° РІСЂСЉР·РєР°С‚Р° Рё Р°РєРѕ РёРЅСЃС‚Р°Р»Р°С†РёСЏС‚Р° РЅР° PHP, РєРѕСЏС‚Рѕ РїРѕР»Р·РІР°С‚Рµ Рµ СЃ SSL РїРѕРґРґСЂСЉР¶РєР°, РјРѕР¶РµС‚Рµ РґР° РїРѕР»Р·РІР°С‚Рµ IMAPS РёР»Рё POPS. РЎСЉСЂРІСЉСЂСЉС‚ IMAP РјРѕР¶Рµ РґР° СЂР°Р±РѕС‚Рё СЃ РїР°РїРєРё, Р° СЃСЉСЂРІСЉСЂСЉС‚ POP - РЅРµ.
+the user %1 is not participating in this event!	calendar	bg	РџРѕС‚СЂРµР±РёС‚РµР»СЏС‚ %1 РЅРµ РїСЂРёРµ РґР° СѓС‡Р°СЃС‚РІР° РІ С‚РѕРІР° СЃСЉР±РёС‚РёРµ!
+there is no text or other part of the email to display to the user, all part(s) are attachments.	email	bg	РќСЏРјР° С‚РµРєСЃС‚ РёР»Рё РґСЂСѓРіРѕ Р·Р° РёР·РѕР±СЂР°Р·СЏРІР°РЅРµ. РРјР° СЃР°РјРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
+there was an error trying to connect to your imap server.<br>please contact your admin to check the servername, username or password.	email	bg	Р’СЉР·РЅРёРєРЅР° РіСЂРµС€РєР° РїСЂРё РѕРїРёС‚Р° Р·Р° РІСЂСЉР·РєР° СЃ IMAP СЃСЉСЂРІСЉСЂР°.<br>РњРѕР»СЏ, СЃРІСЉСЂР¶РµС‚Рµ СЃРµ СЃ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР° Р·Р° РїСЂРѕРІРµСЂРєР° РёРјРµС‚Рѕ РЅР° СЃСЉСЂРІСЉСЂР°, РёРјРµС‚Рѕ РЅР° РїРѕС‚СЂРµР±РёС‚РµР»СЏ Рё РїР°СЂРѕР»Р°С‚Р° РјСѓ.
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	bg	Р’СЉР·РЅРёРєРЅР° РіСЂРµС€РєР° РїСЂРё РѕРїРёС‚Р° Р·Р° РІСЂСЉР·РєР° СЃ РїРѕС‰РµРЅСЃРєРёСЏ СЃСЉСЂРІСЉСЂ.<br>РњРѕР»СЏ, РїСЂРѕРІРµСЂРµС‚Рµ РёРјРµС‚Рѕ Рё РїР°СЂРѕР»Р°С‚Р° СЃРё РёР»Рё СЃРµ СЃРІСЉСЂР¶РµС‚Рµ СЃ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°.
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	bg	Р“СЂРµС€РєР° РїСЂРё РѕРїРёС‚Р° Р·Р° СЃРІСЉСЂР·РІР°РЅРµ СЃСЉСЃ СЃСЉСЂРІСЉСЂР° Р·Р° РЅРѕРІРёРЅРё. РњРѕР»СЏ, СЃРІСЉСЂР¶РµС‚Рµ СЃРµ СЃ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР° Рё РїСЂРѕРІРµСЂРµС‚Рµ РёРјРµС‚Рѕ РЅР° СЃСЉСЂРІСЉСЂР°, РєР°РєС‚Рѕ Рё РёРјРµС‚Рѕ Рё РїР°СЂРѕР»Р°С‚Р° РЅР° Р°РєР°СѓРЅС‚Р°.
+there was an error trying to connect to your pop3 server.<br>please contact your admin to check the servername, username or password.	email	bg	Р’СЉР·РЅРёРєРЅР° РіСЂРµС€РєР° РїСЂРё РѕРїРёС‚Р° Р·Р° РІСЂСЉР·РєР° СЃ POP3 СЃСЉСЂРІСЉСЂР°.<br>РњРѕР»СЏ, СЃРІСЉСЂР¶РµС‚Рµ СЃРµ СЃ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР° Р·Р° РїСЂРѕРІРµСЂРєР° РёРјРµС‚Рѕ РЅР° СЃСЉСЂРІСЉСЂР°, РёРјРµС‚Рѕ РЅР° РїРѕС‚СЂРµР±РёС‚РµР»СЏ Рё РїР°СЂРѕР»Р°С‚Р° РјСѓ.
+this confusing and often misunderstood option is left over from this email apps origins as aeromail by mark cushman. when viewing a list of emails in a folder, the from column may show you a) the senders name only, if a name was provided, b) the senders from email address, in addition to the senders name, or c) the senders reply to address if it is different from the senders from address, in addition to the senders name if it was provided. typically users set this to none, which will show only the senders name. if no name was supplied by the sender, then the senders from email address will be shown, whether a seperate reply to address is provided has no effect on this, the from address is always used if the senders name is not provided.	email	bg	РўР°Р·Рё, С‡РµСЃС‚Рѕ РЅРµРїСЂР°РІРёР»РЅРѕ СЂР°Р·Р±РёСЂР°РЅР° РЅР°СЃС‚СЂРѕР№РєР°, Рµ РЅР°СЃР»РµРґРµРЅР° РѕС‚ РѕСЂРёРіРёРЅР°Р»РЅРѕС‚Рѕ РїСЂРёР»РѕР¶РµРЅРёРµ Aeromail, С‡РёР№С‚Рѕ Р°РІС‚РѕСЂ Рµ Mark Cushman. Р’ РєРѕР»РѕРЅР°С‚Р° "РџРѕРґР°С‚РµР»" РІ СЃРїРёСЃСЉРєР° РїРёСЃРјР° РјРѕР¶Рµ РґР° Р±СЉРґРµ РёР·РїРёСЃРІР°РЅРѕ Р°)СЃР°РјРѕ РёРјРµС‚Рѕ РЅР° РїРѕРґР°С‚РµР»СЏ Р°РєРѕ Рµ РїСЂРёР»РѕР¶РµРЅРѕ; Р±)e-mail Р°РґСЂРµСЃР° РЅР° РїРѕРґР°С‚РµР»СЏ Р·Р°РµРґРЅРѕ СЃ РёРјРµС‚Рѕ РЅР° РїРѕРґР°С‚РµР»СЏ РёР»Рё РІ)Р°РґСЂРµСЃР° Р·Р° РѕР±СЂР°С‚РЅР° РІСЂСЉР·РєР° Р°РєРѕ Рµ СЂР°Р·Р»РёС‡РµРЅ РѕС‚ Р°РґСЂРµСЃР° РЅР° РїРѕРґР°С‚РµР»СЏ Рё РёРјРµС‚Рѕ РЅР° РїРѕРґР°С‚РµР»СЏ Р°РєРѕ Рµ РїСЂРёР»РѕР¶РµРЅРѕ. РћР±РёРєРЅРѕРІРµРЅРѕ РїРѕС‚СЂРµР±РёС‚РµР»РёС‚Рµ РѕСЃС‚Р°РІСЏС‚ РїРѕР»РµС‚Рѕ СЃСЉСЃ СЃСЉРґСЉСЂР¶Р°РЅРёРµ none*, РєРѕРµС‚Рѕ РѕС‚РіРѕРІР°СЂСЏ РЅР° РІР°СЂРёР°РЅС‚ "Р°". РђРєРѕ РёРјРµ РЅР° РїРѕРґР°С‚РµР»СЏ РЅРµ Рµ РїСЂРёР»РѕР¶РµРЅРѕ, С‰Рµ Р±СЉРґРµ РёР·РїРёСЃР°РЅ e-mail Р°РґСЂРµСЃР° РЅР° РїРѕРґР°С‚РµР»СЏ. , whether a seperate reply to address is provided has no effect on this, the FROM address is always used if the senders name is not provided.
+this confusing and often misunderstood option is left over from this email apps origins as aeromail by mark cushman. when viewing a list of emails in a folder, the from column may show you<br>a) the senders name only, if a name was provided,<br>b) the senders from email address, in addition to the senders name, or<br>c) the senders reply to address if it is different from the senders<br>from address, in addition to the senders name if it was provided. typically users set this to none, which will show only the senders name. if no name was supplied by the sender, then the senders from email address will be shown, whether a seperate reply to address is provided has no effect on this, the from address is always used if the senders name is not provided.	email	bg	РўР°Р·Рё, С‡РµСЃС‚Рѕ РЅРµРїСЂР°РІРёР»РЅРѕ СЂР°Р·Р±РёСЂР°РЅР° РЅР°СЃС‚СЂРѕР№РєР°, Рµ РЅР°СЃР»РµРґРµРЅР° РѕС‚ РѕСЂРёРіРёРЅР°Р»РЅРѕС‚Рѕ РїСЂРёР»РѕР¶РµРЅРёРµ Aeromail, С‡РёР№С‚Рѕ Р°РІС‚РѕСЂ Рµ Mark Cushman. Р’ РєРѕР»РѕРЅР°С‚Р° "РџРѕРґР°С‚РµР»" РІ СЃРїРёСЃСЉРєР° РїРёСЃРјР° РјРѕР¶Рµ РґР° Р±СЉРґРµ РёР·РїРёСЃРІР°РЅРѕ<br>Р°)СЃР°РјРѕ РёРјРµС‚Рѕ РЅР° РїРѕРґР°С‚РµР»СЏ Р°РєРѕ Рµ РїСЂРёР»РѕР¶РµРЅРѕ;<br>Р±)e-mail Р°РґСЂРµСЃР° РЅР° РїРѕРґР°С‚РµР»СЏ Р·Р°РµРґРЅРѕ СЃ РёРјРµС‚Рѕ РЅР° РїРѕРґР°С‚РµР»СЏ РёР»Рё<br>РІ)Р°РґСЂРµСЃР° Р·Р° РѕР±СЂР°С‚РЅР° РІСЂСЉР·РєР° Р°РєРѕ Рµ СЂР°Р·Р»РёС‡РµРЅ РѕС‚ Р°РґСЂРµСЃР° РЅР° РїРѕРґР°С‚РµР»СЏ Рё РёРјРµС‚Рѕ РЅР° РїРѕРґР°С‚РµР»СЏ Р°РєРѕ Рµ РїСЂРёР»РѕР¶РµРЅРѕ. РћР±РёРєРЅРѕРІРµРЅРѕ РїРѕС‚СЂРµР±РёС‚РµР»РёС‚Рµ РѕСЃС‚Р°РІСЏС‚ РїРѕР»РµС‚Рѕ СЃСЉСЃ СЃСЉРґСЉСЂР¶Р°РЅРёРµ none*, РєРѕРµС‚Рѕ РѕС‚РіРѕРІР°СЂСЏ РЅР° РІР°СЂРёР°РЅС‚ "Р°". РђРєРѕ РёРјРµ РЅР° РїРѕРґР°С‚РµР»СЏ РЅРµ Рµ РїСЂРёР»РѕР¶РµРЅРѕ, С‰Рµ Р±СЉРґРµ РёР·РїРёСЃР°РЅ e-mail Р°РґСЂРµСЃР° РЅР° РїРѕРґР°С‚РµР»СЏ. , whether a seperate reply to address is provided has no effect on this, the FROM address is always used if the senders name is not provided.
+this day is shown as first day in the week or month view.	calendar	bg	РўРѕР·Рё РґРµРЅ С‰Рµ Рµ РїСЉСЂРІРё РІ СЃРµРґРјРёС‡РЅРёСЏ Рё РІ РјРµСЃРµС‡РЅРёСЏ РІРёРґ РЅР° РєР°Р»РµРЅРґР°СЂР°.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	bg	РўРѕРІР° РѕРїСЂРµРґРµР»СЏ РєСЂР°СЏ РЅР° СЂР°Р±РѕС‚РЅРѕС‚Рѕ РІСЂРµРјРµ РІ Р”РЅРµРІРµРЅ РІРёРґ РЅР° РєР°Р»РµРЅРґР°СЂР°. РђРЅРіР°Р¶РёРјРµРЅС‚РёС‚Рµ, СЃР»РµРґ С‚РѕР·Рё С‡Р°СЃ СЃРµ РёР·РѕР±СЂР°Р·СЏРІР°С‚ РѕС‚РґРѕР»Сѓ.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	bg	РўРѕРІР° РѕРїСЂРµРґРµР»СЏ РЅР°С‡Р°Р»РѕС‚Рѕ РЅР° СЂР°Р±РѕС‚РЅРѕС‚Рѕ РІСЂРµРјРµ РІ Р”РЅРµРІРµРЅ РІРёРґ РЅР° РєР°Р»РµРЅРґР°СЂР°. РђРЅРіР°Р¶РёРјРµРЅС‚РёС‚Рµ, РїСЂРµРґРё С‚РѕР·Рё С‡Р°СЃ СЃРµ РёР·РѕР±СЂР°Р·СЏРІР°С‚ РѕС‚РіРѕСЂРµ. РўРѕР·Рё С‡Р°СЃ СЃРµ РїРѕР»Р·РІР° Рё Р·Р° РќР°С‡Р°Р»РµРЅ С‡Р°СЃ РІ Р±Р»Р°РЅРєР°С‚Р° Р·Р° РґРѕР±Р°РІСЏРЅРµ РЅР° РЅРѕРІ Р°РЅРіР°Р¶РёРјРµРЅС‚.
+this folder is empty	email	bg	РўР°Р·Рё РїР°РїРєР° Рµ РїСЂР°Р·РЅР°
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	bg	РџСЂРё РІР»РёР·Р°РЅРµ РІ "РџР»Р°РЅРµСЂ" С‰Рµ РІРёР¶РґР°С‚Рµ РёРЅС„РѕСЂРјР°С†РёСЏС‚Р° Р·Р° С‚Р°Р·Рё РіСЂСѓРїР°. РЎР»РµРґ С‚РѕРІР° РјРѕР¶РµС‚Рµ РґР° РїРѕРёСЃРєР°С‚Рµ РёР·РѕР±СЂР°Р·СЏРІР°РЅРµ РЅР° РёРЅС„РѕСЂРјР°С†РёСЏС‚Р° Р·Р° РґСЂСѓРіР° РіСЂСѓРїР°.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	bg	РўРѕРІР° РѕРІРёРєРЅРѕРІРµРЅРѕ СЃРµ РїСЂРёС‡РёРЅСЏРІР° РѕС‚ РЅРµРїСЂР°РІРёР»РЅРѕ РєРѕРЅС„РёРіСѓСЂРёСЂР°РЅ SMTP СЃСЉСЂРІСЉСЂ. РЎСЉРѕР±С‰РµС‚Рµ РЅР° Р’Р°С€РёСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ.
+this is the name that appears in the account combobox. if for leave this blank, your accounts will be given a standard name like account[1]: jane doe, where jane doe is the name you give below as your full name. if you want to give an account a special name you can fill this in. no matter what, this is for your use, your emails will still use your full name as your from name for email messages. note that your full name for your email account 0 is the name you gave in the egroupware setup.	email	bg	РўРѕРІР° Рµ РёРјРµС‚Рѕ, РєРѕРµС‚Рѕ СЃРµ РїРѕСЏРІСЏРІР° РІ РїР°РґР°С‰РёСЏ СЃРїРёСЃСЉРє Р·Р° РёР·Р±РѕСЂ РЅР° Р°РєР°СѓРЅС‚. РђРєРѕ РіРѕ РѕСЃС‚Р°РІСЏС‚Рµ РїСЂР°Р·РЅРѕ РЅР° Р°РєР°СѓРЅС‚РёС‚Рµ Р’Рё С‰Рµ Р±СЉРґР°С‚ Р·Р°РґР°РІР°РЅРё СЃС‚Р°РЅРґР°СЂС‚РЅРё РёРјРµРЅР° РєР°С‚Рѕ Account[1]:Jane Doe, РєСЉРґРµС‚Рѕ Jane Doe  Рµ РёРјРµС‚Рѕ, РєРѕРµС‚Рѕ СЃС‚Рµ Р·Р°РґР°Р»Рё РІ РїРѕР»Рµ "РџСЉР»РЅРѕС‚Рѕ Р’Рё РёРјРµ" РїРѕ-РґРѕР»Сѓ. РђРєРѕ РёСЃРєР°С‚Рµ Р°РєР°СѓРЅС‚Р° РґР° РёРјР° СЃРїРµС†РёР°Р»РЅРѕ РёРјРµ, Р·Р°РґР°Р№С‚Рµ РіРѕ С‚СѓРє. РўРѕ Рµ СЃР°РјРѕ Р·Р° Р’Р°С€Р° СѓРїРѕС‚СЂРµР±Р° - РїРёСЃРјР°С‚Р°, РєРѕРёС‚Рѕ РёР·РїСЂР°С‰Р°С‚Рµ, РїРѕР»Р·РІР°С‚ РёРјРµС‚Рѕ РІ РїРѕР»РµС‚Рѕ "РџСЉР»РЅРѕС‚Рѕ Р’Рё РёРјРµ" Р·Р° РёРјРµ РЅР° РїРѕРґР°С‚РµР»СЏ. РўСЂСЏР±РІР° РґР° РѕС‚Р±РµР»РµР¶Р°, С‡Рµ "РџСЉР»РЅРѕС‚Рѕ Р’Рё РёРјРµ" Р·Р° Р°РєР°СѓРЅС‚ 0 Рµ РёРјРµС‚Рѕ, РєРѕРµС‚Рѕ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂСЉС‚ Р’Рё Рµ Р·Р°РґР°Р» РїСЂРё СЃСЉР·РґР°РІР°РЅРµС‚Рѕ РЅР° Р’Р°С€РёСЏ Р°РєР°СѓРЅС‚.
+this is the name that appears in the users from address. the default mail account gets this value automatically from the phpgwapi. additional accounts are created with the phpgwapi supplied fullname you can specify a different fullname for each extra email account.	email	bg	РўРѕРІР° Рµ РёРјРµС‚Рѕ, РєРѕРµС‚Рѕ СЃРµ РїРѕСЏРІСЏРІР° РєР°С‚Рѕ РёРјРµ РЅР° РїРѕРґР°С‚РµР»СЏ РІ РїРёСЃРјР°С‚Р°, РєРѕРёС‚Рѕ РїСЂР°С‰Р°С‚Рµ. РРјРµС‚Рѕ Р·Р° Р°РєР°СѓРЅС‚ 0 Рµ РёРјРµС‚Рѕ, РєРѕРµС‚Рѕ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂСЉС‚ Р’Рё Рµ Р·Р°РґР°Р» РїСЂРё СЃСЉР·РґР°РІР°РЅРµС‚Рѕ РЅР° Р’Р°С€РёСЏ Р°РєР°СѓРЅС‚. РђРєР°СѓРЅС‚РёС‚Рµ, РґРѕРїСЉР»РЅРёС‚РµР»РЅРѕ РґРѕР±Р°РІРµРЅРё РѕС‚ Р’Р°СЃ, РјРѕРіР°С‚ РґР° РїРѕР»Р·РІР°С‚ Р·Р°РґР°РґРµРЅРѕ РѕС‚ Р’Р°СЃ РёРјРµ.
+this message is sent for canceled or deleted events.	calendar	bg	РџРёСЃРјРѕ СЃ С‚Р°РєСЉРІ С‚РµРєСЃС‚ С‰Рµ Р±СЉРґРµ РёР·РїСЂР°С‚РµРЅРѕ РїСЂРё РїСЂРµРєСЂР°С‚СЏРІР°РЅРµ РёР»Рё РїСЂРµРјР°С…РІР°РЅРµ РЅР° Р°РЅРіР°Р¶РёРјРµРЅС‚.
+this message is sent for modified or moved events.	calendar	bg	РџРёСЃРјРѕ СЃ С‚Р°РєСЉРІ С‚РµРєСЃС‚ С‰Рµ Р±СЉРґРµ РёР·РїСЂР°С‚РµРЅРѕ РїСЂРё СЂРµРґР°РєС‚РёСЂР°РЅРµ РёР»Рё РїСЂРµРјРµСЃС‚РІР°РЅРµ РЅР° Р°РЅРіР°Р¶РёРјРµРЅС‚.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	bg	РљРѕРіР°С‚Рѕ Р·Р°РїРёСЃРІР°С‚Рµ РЅРѕРІРѕ СЃСЉР±РёС‚РёРµ, РїРёСЃРјРѕ СЃ С‚Р°РєСЉРІ С‚РµРєСЃС‚ С‰Рµ РїРѕР»СѓС‡Рё РІСЃРµРєРё РѕС‚ СѓС‡Р°СЃС‚РЅРёС†РёС‚Рµ РІ СЃСЉР±РёС‚РёРµС‚Рѕ, РєРѕР№С‚Рѕ РІ РїСЂРµРґРїРѕС‡РёС‚Р°РЅРёСЏС‚Р° СЃРё Рµ Р·Р°РґР°Р» РґР° РјСѓ Р±СЉРґРµ РёР·РїСЂР°С‰Р°РЅРѕ РёР·РІРµСЃС‚РёРµ РїСЂРё РґРѕР±Р°РІСЏРЅРµ РЅР° РЅРѕРІ Р°РЅРіР°Р¶РёРјРµРЅС‚. РњРѕР¶РµС‚Рµ РґР° РїРѕР»Р·РІР°С‚Рµ РЅСЏРєРѕР»РєРѕ РїСЂРѕРјРµРЅР»РёРІРё, РєРѕРёС‚Рѕ С‰Рµ СЃРµ Р·Р°РјРµСЃС‚РІР°С‚ СЃСЉСЃ СЃСЉРѕС‚РІРµС‚РЅРёС‚Рµ РґР°РЅРЅРё Р·Р° Р°РЅРіР°Р¶РёРјРµРЅС‚Р°. Р—Р° "РћС‚РЅРѕСЃРЅРѕ" РІ РїРёСЃРјРѕС‚Рѕ СЃРµ РїРѕР»Р·РІР° РїСЉСЂРІРёСЏ СЂРµРґ РѕС‚ С‚РµРєСЃС‚Р°.
+this message is sent when you accept, tentative accept or reject an event.	calendar	bg	РџРёСЃРјРѕ СЃ С‚Р°РєСЉРІ С‚РµРєСЃС‚ С‰Рµ Р±СЉРґРµ РёР·РїСЂР°С‚РµРЅРѕ, РєРѕРіР°С‚Рѕ РїСЂРёРµРјРµС‚Рµ, РїСЂРёРµРјРµС‚Рµ СЃ РєРѕР»РµР±Р°РЅРёРµ РёР»Рё РѕС‚РєР°Р¶РµС‚Рµ СѓС‡Р°СЃС‚РёРµ РІ Р°РЅРіР°Р¶РёРјРµРЅС‚.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	bg	РџРёСЃРјРѕ СЃ С‚Р°РєСЉРІ С‚РµРєСЃС‚ С‰Рµ РїРѕР»СѓС‡Р°РІР°С‚Рµ Р°РєРѕ Р·Р°РґР°РґРµС‚Рµ "РќР°РїРѕРјРЅСЏРЅРµ" Р·Р° РґР°РґРµРЅРѕ СЃСЉР±РёС‚РёРµ. РњРѕР¶РµС‚Рµ РґР° РІРєР»СЋС‡РёС‚Рµ С†СЏР»Р°С‚Р° РёРЅС„РѕСЂРјР°С†РёСЏ, РѕС‚ РєРѕСЏС‚Рѕ С‰Рµ СЃРµ РЅСѓР¶РґР°РµС‚Рµ.
+this month	calendar	bg	РўРѕР·Рё РјРµСЃРµС†
+this pref currently does nothing users may have more than one email account. in the future it is anticipated that automatic actions may be performed on these accounts, such as automatic new mail checks,auto filtering, etc... perhaps the user may want to disable an account so that these automatic actions do not occur for that account. this is one possible use. also, an admin may want to disable accounts from time to time.	email	bg	РўРћР’Рђ Р—РђРЎР•Р“Рђ РќР• РџР РђР’Р РќРР©Рћ. РџРѕС‚СЂРµР±РёС‚РµР»РёС‚Рµ РјРѕРіР°С‚ РґР° РёРјР°С‚ РїРѕРІРµС‡Рµ РѕС‚ РµРґРёРЅ e-mail Р°РєР°СѓРЅС‚. РћС‡Р°РєРІР° СЃРµ РІ Р±СЉРґРµС‰Рµ РґР° РјРѕРіР°С‚ РґР° Р±СЉРґР°С‚ РёР·РІСЉСЂС€РІР°РЅРё Р°РІС‚РѕРјР°С‚РёС‡РЅРё РґРµР№СЃС‚РІРёСЏ СЃ РїРёСЃРјР°С‚Р° РІ С‚РµР·Рё Р°РєР°СѓРЅС‚Рё, РєР°С‚Рѕ РїСЂРѕРІРµСЂРєР° Р·Р° РЅРѕРІРё РїРѕР»СѓС‡РµРЅРё РїРёСЃРјР°, Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ С„РёР»С‚СЂРёСЂР°РЅРµ Рё РґСЂ. Р’СЉР·РјРѕР¶РЅРѕ Рµ РїРѕС‚СЂРµР±РёС‚РµР»СЏС‚ РґР° РїРѕРёСЃРєР° РґР° СЃРїСЂРµ РёР·РІСЉСЂС€РІР°РЅРµС‚Рѕ РЅР° С‚РµР·Рё РґРµР№СЃС‚РІРёСЏ. РўРѕРІР° Рµ РµРґРЅРѕ РѕС‚ РІСЉР·РјРѕР¶РЅРёС‚Рµ РїСЂРёР»РѕР¶РµРЅРёСЏ.
+this pref currently does nothing<br>users may have more than one email account. in the future it is anticipated that automatic actions may be performedon these accounts, such as automatic new mail checks, auto filtering, etc... perhaps the user may want to disable an account so that these automatic actions do not occur for that account. this is one possible use.<br>also, an admin may want to disable accounts from time to time.	email	bg	РўРћР’Рђ Р—РђРЎР•Р“Рђ РќР• РџР РђР’Р РќРР©Рћ.<br>РџРѕС‚СЂРµР±РёС‚РµР»РёС‚Рµ РјРѕРіР°С‚ РґР° РёРјР°С‚ РїРѕРІРµС‡Рµ РѕС‚ РµРґРёРЅ e-mail Р°РєР°СѓРЅС‚. РћС‡Р°РєРІР° СЃРµ РІ Р±СЉРґРµС‰Рµ РґР° РјРѕРіР°С‚ РґР° Р±СЉРґР°С‚ РёР·РІСЉСЂС€РІР°РЅРё Р°РІС‚РѕРјР°С‚РёС‡РЅРё РґРµР№СЃС‚РІРёСЏ СЃ РїРёСЃРјР°С‚Р° РІ С‚РµР·Рё Р°РєР°СѓРЅС‚Рё, РєР°С‚Рѕ РїСЂРѕРІРµСЂРєР° Р·Р° РЅРѕРІРё РїРѕР»СѓС‡РµРЅРё РїРёСЃРјР°, Р°РІС‚РѕРјР°С‚РёС‡РЅРѕ С„РёР»С‚СЂРёСЂР°РЅРµ Рё РґСЂ. Р’СЉР·РјРѕР¶РЅРѕ Рµ РїРѕС‚СЂРµР±РёС‚РµР»СЏС‚ РґР° РїРѕРёСЃРєР° РґР° СЃРїСЂРµ РёР·РІСЉСЂС€РІР°РЅРµС‚Рѕ РЅР° С‚РµР·Рё РґРµР№СЃС‚РІРёСЏ. РўРѕРІР° Рµ РµРґРЅРѕ РѕС‚ РІСЉР·РјРѕР¶РЅРёС‚Рµ РїСЂРёР»РѕР¶РµРЅРёСЏ.
+this specifies whether or not to show the number of new message in the folders combo box on the index screen.	email	bg	РћРїСЂРµРґРµР»СЏ РґР°Р»Рё РІ РїР°РґР°С‰РёСЏ СЃРїРёСЃСЉРє СЃ РёРјРµРЅР°С‚Р° РЅР° РїР°РїРєРёС‚Рµ "РџРѕРєР°Р¶Рё РјРё РїР°РїРєР°" РґР° Р±СЉРґРµ РёР·РїРёСЃРІР°РЅ Рё Р±СЂРѕСЏ РЅР° РЅРѕРІРёС‚Рµ РїРёСЃРјР°.
+this specifies whether or not to show the total size of folders by default. if this is not checked, you will be presented with a button allowing you to display folder size.	email	bg	РћРїСЂРµРґРµР»СЏ РґР°Р»Рё РґР° Р±СЉРґРµ РёР·РѕР±СЂР°Р·СЏРІР°РЅ РѕР±РµРјР° РЅР° РїР°РїРєРёС‚Рµ. РђРєРѕ РЅРµ Рµ РјР°СЂРєРёСЂР°РЅРѕ, РјРѕР¶РµС‚Рµ РґР° СѓР·РЅР°РµС‚Рµ РѕР±РµРјР° РЅР° РїР°РїРєР° СЃ РЅР°С‚РёСЃРєР°РЅРµС‚Рѕ РЅР° Р±СѓС‚РѕРЅ.
+this text will be appended to the bottom of the users emails for this email account. currently, html tags are not supported. also, forwarded email will not get this email sig appended to it for reasons such as it clutters the email, the forwarded part probably has its own email sig from the original author, which is really the information that matters the most.	email	bg	РўРѕР·Рё С‚РµРєСЃС‚ С‰Рµ СЃРµ РґРѕР±Р°РІСЏ РІ РєСЂР°СЏ РЅР° РїРёСЃРјР°С‚Р°, РєРѕРёС‚Рѕ РїСЂР°С‰Р°С‚Рµ РѕС‚ С‚РѕР·Рё Р°РєР°СѓРЅС‚. Р—Р° СЃРµРіР° HTML РЅРµ СЃРµ РїРѕРґРґСЉСЂР¶Р°. РћСЃРІРµРЅ С‚РѕРІР°, С‚РѕР·Рё С‚РµРєСЃС‚ РќР• СЃРµ РґРѕР±Р°РІСЏ РєСЉРј РїСЂРµРїСЂР°С‚РµРЅРёС‚Рµ РѕС‚ Р’Р°СЃ РїРёСЃРјР°, С‚СЉР№ РєР°С‚Рѕ С‚Рµ РјРѕР¶Рµ РґР° СЃСЉРґСЉСЂР¶Р°С‚ РїРѕРґРѕР±РµРЅ С‚РµРєСЃС‚ РѕС‚ Р°РІС‚РѕСЂР° РёРј, РєРѕР№С‚Рѕ С‚РµРєСЃС‚ Рµ РІР°Р¶РµРЅ РІ С‚РѕР·Рё СЃР»СѓС‡Р°Р№.
+this week	calendar	bg	РўР°Р·Рё СЃРµРґРјРёС†Р°
+this year	calendar	bg	РўР°Р·Рё РіРѕРґРёРЅР°
+thu	calendar	bg	Р§РµС‚
+title	calendar	bg	Р—Р°РіР»Р°РІРёРµ
+title of the event	calendar	bg	Р—Р°РіР»Р°РІРёРµ РЅР° СЃСЉР±РёС‚РёРµС‚Рѕ
+to	email	bg	Р”Рѕ
+to address	email	bg	РђРґСЂРµСЃ РЅР° РїРѕР»СѓС‡Р°С‚РµР»СЏ
+today	calendar	bg	Р”РЅРµСЃ
+total messages	email	bg	РћР±С‰Рѕ РїРёСЃРјР°
+translation	calendar	bg	РџСЂРµРІРѕРґ
+trash	email	bg	РєРѕС€С‡Рµ
+trash folder	email	bg	РїР°РїРєР° Р·Р° РєРѕС€С‡Рµ
+tue	calendar	bg	Р’С‚Рѕ
+u-wash mail folder	email	bg	U-Wash РїР°РїРєР° Р·Р° РїРёСЃРјР°
+u-wash mail folder - if applicable	email	bg	U-Wash РїР°РїРєР° Р·Р° РїРёСЃРјР° - РђРєРѕ Рµ РїСЂРёР»РѕР¶РёРјРѕ
+unanswered	email	bg	РЅРµРѕС‚РіРѕРІРѕСЂРµРЅРё
+undeleted	email	bg	РЅРµРёР·С‚СЂРёС‚Рё
+undisclosed recipients	email	bg	РџРѕР»СѓС‡Р°С‚РµР»СЏ Р·Р°РїР°Р·РµРЅ РІ С‚Р°Р№РЅР°
+undisclosed sender	email	bg	РџРѕРґР°С‚РµР»СЏ Р·Р°РїР°Р·РµРЅ РІ С‚Р°Р№РЅР°
+unflagged	email	bg	РЅРµРјР°СЂРєРёСЂР°РЅРё
+unknown action	email	bg	РќРµРёР·РІРµСЃС‚РЅРѕ РґРµР№СЃС‚РІРёРµ
+unknown error	email	bg	РќРµРёР·РІРµСЃС‚РЅР° РіСЂРµС€РєР°
+unknown translation	email	bg	РЅРµРёР·РІРµСЃС‚РµРЅ РїСЂРµРІРѕРґ
+unseen	email	bg	РЅРµРїСЂРѕС‡РµС‚РµРЅРё
+use custom settings	email	bg	РџРѕР»Р·РІР°Р№ СЃР»РµРґРІР°С‰РёС‚Рµ РїРѕС‚СЂРµР±РёС‚РµР»СЃРєРё РЅР°СЃС‚СЂРѕР№РєРё
+use end date	calendar	bg	Р”Р°С‚Р° Р·Р° РєСЂР°Р№
+view formatted	email	bg	Р¤РѕСЂРјР°С‚РёСЂР°РЅ РІРёРґ
+view unformatted	email	bg	РќРµС„РѕСЂРјР°С‚РёСЂР°РЅ РІРёРґ
+we have recently added this new addressbook so that users can choose to have a more complex addressbook that features a) easy, point and click searching, b) best suited for organizations with large central addressbooks with many categories. you can choose here which addressbook do you prefer.	email	bg	Р”РѕР±Р°РІРёС…РјРµ СЃРєРѕСЂРѕ С‚Р°Р·Рё РІСЉР·РјРѕР¶РЅРѕСЃС‚ Р·Р° РїРѕС‚СЂРµР±РёС‚РµР»РёС‚Рµ СЃ РјРЅРѕРіРѕ Р±РѕРіР°С‚ Р°РґСЂРµСЃРЅРёРє. РџРѕР·РІРѕР»СЏРІР° Р»РµСЃРЅРѕ С‚СЉСЂСЃРµРЅРµ Рё РјР°СЂРєРёСЂР°РЅРµ. РџРѕРґС…РѕРґСЏС‰Рѕ Р·Р° РѕСЂРіР°РЅРёР·Р°С†РёРё СЃ РіРѕР»СЏРј РѕР±С‰ Р°РґСЂРµСЃРЅРёРє СЃ РјРЅРѕРіРѕ РєР°С‚РµРіРѕСЂРёРё. РўСѓРє РјРѕР¶РµС‚Рµ РґР° РёР·Р±РµСЂРµС‚Рµ РїСЂРµРґРїРѕС‡РёС‚Р°РЅРёСЏ РІР°СЂРёР°РЅС‚.
+we have recently added this new addressbook so that users can choose to have a more complex addressbook that features<br>a) easy, point and click searching,<br>b) best suited for organizations with large central addressbooks with many categories.<br>you can choose here which addressbook do you prefer.	email	bg	Р”РѕР±Р°РІРёС…РјРµ СЃРєРѕСЂРѕ С‚Р°Р·Рё РІСЉР·РјРѕР¶РЅРѕСЃС‚ Р·Р° РїРѕС‚СЂРµР±РёС‚РµР»РёС‚Рµ СЃ РјРЅРѕРіРѕ Р±РѕРіР°С‚ Р°РґСЂРµСЃРЅРёРє. РџРѕР·РІРѕР»СЏРІР° Р»РµСЃРЅРѕ С‚СЉСЂСЃРµРЅРµ Рё РјР°СЂРєРёСЂР°РЅРµ. РџРѕРґС…РѕРґСЏС‰Рѕ Р·Р° РѕСЂРіР°РЅРёР·Р°С†РёРё СЃ РіРѕР»СЏРј РѕР±С‰ Р°РґСЂРµСЃРЅРёРє СЃ РјРЅРѕРіРѕ РєР°С‚РµРіРѕСЂРёРё. РўСѓРє РјРѕР¶РµС‚Рµ РґР° РёР·Р±РµСЂРµС‚Рµ РїСЂРµРґРїРѕС‡РёС‚Р°РЅРёСЏ РІР°СЂРёР°РЅС‚.
+we have three sizes that tell us how to better render the addressbook for you: 800x600 (addressbook will popout in a 700 pixel wide box), 1024x768 (it will be a 800 box), 1200x1600 (will be a 900 box). the fonts for all html stuff will be, respectively set to xx-small, x-small and normal (no font setting).	email	bg	РЎСЉРѕР±СЂР°Р·СЏРІР°Р№РєРё СЃРµ СЃ СЂРµР¶РёРјР° РЅР° Р’Р°С€РёСЏ РµРєСЂР°РЅ С‰Рµ РёР·РѕР±СЂР°Р·РёРј Java Р°РґСЂРµСЃРЅРёРєР° РїРѕ РµРґРёРЅ РѕС‚ С‚РµР·Рё С‚СЂРё РЅР°С‡РёРЅР°. РђРєРѕ СЂР°Р±РѕС‚РёС‚Рµ РІ СЂРµР¶РёРј 800С…600 С‚РѕС‡РєРё, Р°РґСЂРµСЃРЅРёРєР° С‰Рµ СЃРµ РїРѕСЏРІСЏРІР° СЃСЉСЃ С€РёСЂРёРЅР° 700 С‚РѕС‡РєРё, Р° Р·Р° СЂРµР¶РёРјРёС‚Рµ 1024С…768 Рё 1200С…1600 СЃСЉРѕС‚РІРµС‚РЅРѕ 800 Рё 900 С‚РѕС‡РєРё. РЁСЂРёС„С‚Р° Р·Р° С‚СЂРёС‚Рµ СЂРµР¶РёРјР° С‰Рµ Р±СЉРґРµ СЃСЉРѕС‚РІРµС‚РЅРѕ РјРЅРѕРіРѕ РјР°Р»СЉРє, РјР°Р»СЉРє Рё РЅРѕСЂРјР°Р»РµРЅ.
+wed	calendar	bg	РЎСЂСЏ
+week	calendar	bg	РЎРµРґРјРёС†Р°
+weekday starts on	calendar	bg	Р Р°Р±РѕС‚РЅР°С‚Р° СЃРµРґРјРёС†Р° Р·Р°РїРѕС‡РІР° РІ
+weekly	calendar	bg	РЎРµРґРјРёС‡РµРЅ
+weekview	calendar	bg	РЎРµРґРјРёС‡РµРЅ РІРёРґ
+when creating new events default set to private	calendar	bg	РџСЂРё Р·Р°РїРёСЃРІР°РЅРµ РЅР° РЅРѕРІ Р°РЅРіР°Р¶РёРјРµРЅС‚ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ РґР° Рµ "Р›РёС‡РµРЅ"
+which events do you want to see when you enter the calendar.	calendar	bg	РљРѕРё Р°РЅРіР°Р¶РёРјРµРЅС‚Рё РёСЃРєР°С‚Рµ РґР° СЃРµ РёР·РѕР±СЂР°Р·СЏРІР°С‚ РїСЂРё РІР»РёР·Р°РЅРµ РІ "РљР°Р»РµРЅРґР°СЂ" ?
+which of calendar view do you want to see, when you start calendar ?	calendar	bg	РџСЂРµРґРїРѕС‡РёС‚Р°РЅ РІРёРґ РєР°Р»РµРЅРґР°СЂ Р·Р° РёР·РѕР±СЂР°Р·СЏРІР°РЅРµ РїСЂРё РІР»РёР·Р°РЅРµ РІ РїСЂРёР»РѕР¶РµРЅРёРµС‚Рѕ "РљР°Р»РµРЅРґР°СЂ"
+work day ends on	calendar	bg	Р Р°Р±РѕС‚РЅРѕ РІСЂРµРјРµ - РєСЂР°Р№
+work day starts on	calendar	bg	Р Р°Р±РѕС‚РЅРѕ РІСЂРµРјРµ - РЅР°С‡Р°Р»Рѕ
+wrote	email	bg	Р·Р°РїР°РјРµС‚РµРЅРё
+yearly	calendar	bg	Р“РѕРґРёС€РµРЅ
+yearview	calendar	bg	Р“РѕРґРёС€РµРЅ РІРёРґ
+you do not have permission to add alarms to this event !!!	calendar	bg	РќСЏРјР°С‚Рµ РїСЂР°РІР° Р·Р° Р·Р° РґРѕР±Р°РІСЏРЅРµ РЅР° РЅР°РїРѕРјРЅСЏРЅРµ Р·Р° С‚РѕРІР° СЃСЉР±РёС‚РёРµ!
+you do not have permission to delete this alarm !!!	calendar	bg	РќСЏРјР°С‚Рµ РїСЂР°РІР° Р·Р° РїСЂРµРјР°С…РІР°РЅРµ РЅР° С‚РѕРІР° РЅР°РїРѕРјРЅСЏРЅРµ!
+you do not have permission to enable/disable this alarm !!!	calendar	bg	РќСЏРјР°С‚Рµ РїСЂР°РІР° Р·Р° СЂР°Р·СЂРµС€Р°РІР°РЅРµ РёР»Рё Р·Р°Р±СЂР°РЅСЏРІР°РЅРµ РЅР° РЅР°РїРѕРјРЅСЏРЅРµС‚Рѕ!
+you do not have permission to read this record!	calendar	bg	РќСЏРјР°С‚Рµ РїСЂР°РІР° Р·Р° С‡РµС‚РµРЅРµ РЅР° С‚РѕР·Рё Р·Р°РїРёСЃ!
+you have %1 high priority events on your calendar today.	common	bg	Р”РЅРµСЃ РІ РєР°Р»РµРЅРґР°СЂР° Р’Рё РёРјР° %1 Р°РЅРіР°Р¶РёРјРµРЅС‚Рё СЃ РІРёСЃРѕРє РїСЂРёРѕСЂРёС‚РµС‚.
+you have %1 new messages!	common	bg	РРјР°С‚Рµ %1 РЅРѕРІРё РїРёСЃРјР°!
+you have 1 high priority event on your calendar today.	common	bg	Р”РЅРµСЃ РІ РєР°Р»РµРЅРґР°СЂР° Р’Рё РёРјР° РµРґРёРЅ Р°РЅРіР°Р¶РёРјРµРЅС‚ СЃ РІРёСЃРѕРє РїСЂРёРѕСЂРёС‚РµС‚.
+you have 1 new message!	common	bg	РРјР°С‚Рµ 1 РЅРѕРІРѕ РїРёСЃРјРѕ!
+you have a meeting scheduled for %1	calendar	bg	РРјР°С‚Рµ Р°РЅРіР°Р¶РёРјРµРЅС‚, РЅР°СЃСЂРѕС‡РµРЅ Р·Р° %1
+you have messages!	common	bg	РРјР°С‚Рµ СЃСЉРѕР±С‰РµРЅРёСЏ!
+you have no new messages	common	bg	Р—Р° Р’Р°СЃ РЅСЏРјР° РЅРѕРІРё СЃСЉРѕР±С‰РµРЅРёСЏ.
+you have not entered a title	calendar	bg	РќРµ СЃС‚Рµ РІСЉРІРµР»Рё Р·Р°РіР»Р°РІРёРµ
+you have not entered a valid date	calendar	bg	РќРµ СЃС‚Рµ РІСЉРІРµР»Рё РІР°Р»РёРґРЅР° РґР°С‚Р°
+you have not entered a valid time of day	calendar	bg	РќРµ СЃС‚Рµ РІСЉРІРµР»Рё РІР°Р»РёРґРµРЅ С‡Р°СЃ
+you have not entered participants	calendar	bg	РќРµ СЃС‚Рµ РІСЉРІРµР»Рё СѓС‡Р°СЃС‚РЅРёС†Рё
+you must click	email	bg	РўСЂСЏР±РІР° РґР° РЅР°С‚РёСЃРЅРµС‚Рµ
+you must click %1 for the file to actually upload	email	bg	РўСЂСЏР±РІР° РґР° РЅР°С‚РёСЃРЅРµС‚Рµ %1 Р·Р° РґР° Р·Р°СЂРµРґРёС‚Рµ С„Р°Р№Р»Р°
+you must enter one or more search keywords	calendar	bg	РўСЂСЏР±РІР° РґР° РІСЉРІРµРґРµС‚Рµ РµРґРЅР° РёР»Рё РїРѕРІРµС‡Рµ РґСѓРјРё Р·Р° С‚СЉСЂСЃРµРЅРµ
+your full name	common	bg	РџСЉР»РЅРѕС‚Рѕ Р’Рё РёРјРµ
+your meeting scheduled for %1 has been canceled	calendar	bg	Р’Р°С€РёСЏС‚ Р°РЅРіР°Р¶РёРјРµРЅС‚, РЅР°СЃСЂРѕС‡РµРЅ Р·Р° %1 Р±РµС€Рµ РѕС‚РјРµРЅРµРЅ
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	bg	Р’Р°С€РёСЏС‚ Р°РЅРіР°Р¶РёРјРµРЅС‚, РЅР°СЃСЂРѕС‡РµРЅ Р·Р° %1 Р±РµС€Рµ РїСЂРµРЅР°СЃСЂРѕС‡РµРЅ Р·Р° %2
+your message has been sent	common	bg	РџРёСЃРјРѕС‚Рѕ Р’Рё Рµ РёР·РїСЂР°С‚РµРЅРѕ!
+your server administrator will set the default values for the following options. you may never need to change any of them. if you do need to use settings that are different from the defaults for the options below here, then check this box. default is disabled, not checked. if you fill in some of the options, but later decide to go back to the default values, unchecking this box will erase your custom values and put back the default values. all of the following options start out with the default value, so you may see some settings below even if you have never filled them in. this checkbox only shows up for the default email account. if you are setting up additional email accounts, you will be required to fill in the following options and this checkbox will not be displayed, it will be checked for all extra email accounts.	email	bg	РЎР»РµРґРІР°С‰РёС‚Рµ РЅР°СЃС‚СЂРѕР№РєРё СЃР° РЅР°РїСЂР°РІРµРЅРё РѕС‚ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР° РЅР° Р’Р°С€РёСЏ СЃСЉСЂРІСЉСЂ. РќСЏРєРѕРё С‰Рµ РёРјР°С‚ Р·Р°РґР°РґРµРЅРё СЃС‚РѕР№РЅРѕСЃС‚Рё, РІСЉРїСЂРµРєРё С‡Рµ РЅРёРєРѕРіР° РЅРµ СЃС‚Рµ РїРѕРїСЉР»РІР°Р»Рё РЅРёС‰Рѕ РІ С‚СЏС…. Р’РµСЂРѕСЏС‚РЅРѕ РЅСЏРјР° РґР° СЃРµ РЅР°Р»РѕР¶Рё РґР° РіРё РїСЂРѕРјРµРЅСЏС‚Рµ, РЅРѕ Р°РєРѕ РІСЃРµ РїР°Рє СЂРµС€РёС‚Рµ РґР° РіРѕ РЅР°РїСЂР°РІРёС‚Рµ, РјР°СЂРєРёСЂР°Р№С‚Рµ С‚Р°Р·Рё РєР»РµС‚РєР°. РџРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ С‚СЏ РЅРµ Рµ РјР°СЂРєРёСЂР°РЅР°. РђРєРѕ РЅСЏРєРѕРіР° СЂРµС€РёС‚Рµ РґР° СЃРµ РІСЉСЂРЅРµС‚Рµ РєСЉРј РЅР°СЃС‚СЂРѕР№РєРёС‚Рµ, РЅР°РїСЂР°РІРµРЅРё РѕС‚ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°, РјРѕР¶РµС‚Рµ РґР° РґРµРјР°СЂРєРёСЂР°С‚Рµ РєР»РµС‚РєР°С‚Р°. РџСЂРё С‚РѕРІР°, РЅР°СЃС‚СЂРѕР№РєРёС‚Рµ РЅР°РїСЂР°РІРµРЅРё РѕС‚ Р’Р°СЃ С‰Рµ Р±СЉРґР°С‚ РёР·С‚СЂРёС‚Рё Рё Р·Р°РјРµРЅРµРЅРё СЃ РїСЉСЂРІРѕРЅР°С‡Р°Р»РЅРёС‚Рµ РёРј СЃС‚РѕР№РЅРѕСЃС‚Рё. РўР°Р·Рё РєР»РµС‚РєР° СЃРµ РїРѕСЏРІСЏРІР° СЃР°РјРѕ Р·Р° РѕСЃРЅРѕРІРЅР°С‚Р° РїРѕС€РµРЅСЃРєР° РєСѓС‚РёСЏ. РўСЏ РЅРµ СЃРµ РїРѕСЏРІСЏРІР° Р·Р° РµРІРµРЅС‚СѓР°Р»РЅРѕ Р°РєС‚РёРІРёСЂР°РЅРёС‚Рµ РѕС‚ Р’Р°СЃ РґРѕРїСЉР»РЅРёС‚РµР»РЅРё РїРѕС‰РµРЅСЃРєРё РєСѓС‚РёРё. РўР°Рј С‚СЏ С‰Рµ Рµ РјР°СЂРєРёСЂР°РЅР° Рё Р’РёРµ С‰Рµ С‚СЂСЏР±РІР° РґР° РїРѕРїСЉР»РЅРёС‚Рµ С‚РµР·Рё РЅР°СЃС‚СЂРѕР№РєРё.
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	bg	РџСЂРµРґРїРѕС‡РµС‚РµРЅРѕС‚Рѕ РІСЂРµРјРµ <B> %1 - %2 </B> Рµ РІ РєРѕРЅС„Р»РёРєС‚ СЃСЉСЃ СЃР»РµРґРЅРёС‚Рµ СЃСЉС‰РµСЃС‚РІСѓРІР°С‰Рё Р°РЅРіР°Р¶РёРјРµРЅС‚Рё:

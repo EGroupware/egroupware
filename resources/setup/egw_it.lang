@@ -25,7 +25,7 @@ delete selected resources	resources	it	elimina risorse selezionate
 delete this entry	resources	it	Cancella questa voce
 description (short)	resources	it	Descrizione (breve)
 direct booking permissions	resources	it	Permessi di prenotazione diretti
-don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare vfs (servir‡ un symlink --> vedi README)
+don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare vfs (servir√† un symlink --> vedi README)
 edit this entry	resources	it	Modifica questa voce
 existing links	resources	it	Collegamenti esistenti
 general	resources	it	Generale
@@ -41,10 +41,10 @@ information about storage	resources	it	Informazioni sullo stoccaggio
 informations about the location of resource	resources	it	Informazioni sulla localizzazione della risorsa
 inventory number	resources	it	Numero inventario
 inventory number:	resources	it	Numero inventario:
-is resource bookable?	resources	it	La risorsa Ë prenotabile?
-is resource buyable?	resources	it	La risorsa Ë acquistabile?
-is this resource bookable?	resources	it	Questa risorsa Ë prenotabile?
-is this resource buyable?	resources	it	Questa risorsa Ë acquistabile?
+is resource bookable?	resources	it	La risorsa √® prenotabile?
+is resource buyable?	resources	it	La risorsa √® acquistabile?
+is this resource bookable?	resources	it	Questa risorsa √® prenotabile?
+is this resource buyable?	resources	it	Questa risorsa √® acquistabile?
 links	resources	it	Collegamenti
 location	resources	it	Luogo
 location of resource	resources	it	Luogo della risorsa
@@ -60,9 +60,9 @@ picture type is not supported, sorry!	resources	it	Tipo immagine non supportato,
 pictures or resource	resources	it	Immagini della risorsa
 planer	resources	it	pianificatore
 prizeing information for booking or buying	resources	it	Prezziario per prenotazione o acquisto
-quantity	resources	it	Quantit‡
-quantity of resource	resources	it	Quantit‡ della risorsa
-quantity:	resources	it	Quantit‡:
+quantity	resources	it	Quantit√†
+quantity of resource	resources	it	Quantit√† della risorsa
+quantity:	resources	it	Quantit√†:
 read calendar permissions	resources	it	Permessi di lettura calendario
 read permissions	resources	it	Permessi di lettura
 related links	resources	it	Collegamenti relativi
@@ -99,4 +99,4 @@ write permissions	resources	it	Permessi di scrittura
 you are not permitted to delete this reource!	resources	it	Non hai il permesso di cancellare questa risorsa!
 you are not permitted to edit this reource!	resources	it	Non hai il permesso di modificare questa risorsa!
 you are not permitted to get information about this resource!	resources	it	Non hai il permesso di ottenere informazioni su questa risorsa!
-you chose more resources than available	resources	it	Hai scelto pi˘ risorse di quelle disponibili
+you chose more resources than available	resources	it	Hai scelto pi√π risorse di quelle disponibili

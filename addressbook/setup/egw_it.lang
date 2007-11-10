@@ -3,11 +3,11 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti !!!
 %1 fields in %2 other organisation member(s) changed	addressbook	it	%1 campi in %2 altro/i membro/i dell'organizzazione modificati.
 %1 records imported	addressbook	it	%1 record importati
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, Ë possibile tornare %2indietro%3 e deselezionare Test Importazione)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, √® possibile tornare %2indietro%3 e deselezionare Test Importazione)
 %1 starts with '%2'	addressbook	it	%1 inizia con '%2'
 (e.g. 1969)	addressbook	it	(es. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione <nessuno> non Ë stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
-@-eval() is only availible to admins!!!	addressbook	it	@-eval() Ë disponibile solo agli amministratori!!!
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione <nessuno> non √® stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
+@-eval() is only availible to admins!!!	addressbook	it	@-eval() √® disponibile solo agli amministratori!!!
 account repository	admin	it	Archivio account
 accounts	addressbook	it	Account
 actions	addressbook	it	Azioni
@@ -23,7 +23,7 @@ address book - view	addressbook	it	Rubrica - visualizza
 address line 2	addressbook	it	Indirizzo linea 2
 address type	addressbook	it	Tipo di indirizzo
 addressbook	common	it	Rubrica
-addressbook menu	addressbook	it	Men˘ Rubrica
+addressbook menu	addressbook	it	Men√π Rubrica
 addressbook preferences	addressbook	it	Preferenze Rubrica
 addressbook the contact should be saved to	addressbook	it	Rubrica nella quale salvare il contatto
 addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
@@ -44,7 +44,7 @@ birthdays	common	it	Compleanni
 blank	addressbook	it	In bianco
 business	common	it	Ufficio
 business address	addressbook	it	Indirizzo Ufficio
-business city	addressbook	it	Citt‡ Ufficio
+business city	addressbook	it	Citt√† Ufficio
 business country	addressbook	it	Nazione Ufficio
 business email	addressbook	it	Email Ufficio
 business fax	addressbook	it	Fax ufficio
@@ -53,7 +53,7 @@ business state	addressbook	it	Provincia ufficio
 business street	addressbook	it	Via ufficio
 business zip code	addressbook	it	CAP ufficio
 calendar uri	addressbook	it	URI Agenda
-can be changed via setup >> configuration	admin	it	PuÚ essere modificato tramite Setup >> Configurazione
+can be changed via setup >> configuration	admin	it	Pu√≤ essere modificato tramite Setup >> Configurazione
 car phone	addressbook	it	Telefono veicolare
 cell phone	addressbook	it	Telefono cellulare
 change all organisation members	addressbook	it	modifica tutti i membri dell'organizzazione
@@ -62,9 +62,9 @@ charset of file	addressbook	it	Set di Caratteri del file
 check all	addressbook	it	Seleziona tutto
 choose an icon for this contact type	admin	it	Scegli un'icona per questo tipo di contatto
 chosse an etemplate for this contact type	admin	it	Scegli un eTemplate per questo tipo di contatto
-city	common	it	Citt‡
-company	common	it	Societ‡
-company name	addressbook	it	Nome societ‡
+city	common	it	Citt√†
+company	common	it	Societ√†
+company name	addressbook	it	Nome societ√†
 configuration	common	it	Configurazione
 contact	common	it	Contatto
 contact application	admin	it	Applicativo Contatti
@@ -97,7 +97,7 @@ deletes the photo	addressbook	it	Cancella la foto
 department	common	it	Dipartimento
 departments	addressbook	it	dipartimenti
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	it	Visualizza un promemoria per i compleanni sulla pagina iniziale (pagina che vedi quando entri in eGroupWare o clicchi sull'icona Home).
-do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	it	Vuoi una rubrica privata, che non puÚ essere vista dagli utenti, autorizzi l'accesso alla tua rubrica personale?
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	it	Vuoi una rubrica privata, che non pu√≤ essere vista dagli utenti, autorizzi l'accesso alla tua rubrica personale?
 do your really want to delete this contact?	addressbook	it	Vuoi davvero eliminare questo contatto
 doesn't matter	addressbook	it	non importa
 domestic	addressbook	it	Nazionale
@@ -126,8 +126,8 @@ exported	addressbook	it	esportato
 extra	addressbook	it	Extra
 fax	addressbook	it	Fax
 fax number	common	it	Numero Fax
-field %1 has been added !	addressbook	it	Il campo %1 Ë stato aggiunto!
-field %1 has been updated !	addressbook	it	Il campo %1 Ë stato aggiornato!
+field %1 has been added !	addressbook	it	Il campo %1 √® stato aggiunto!
+field %1 has been updated !	addressbook	it	Il campo %1 √® stato aggiornato!
 field name	addressbook	it	Nome Campo
 fields for the csv export	addressbook	it	Campi per l'esportazione CSV
 fields to show in address list	addressbook	it	Campi da visualizzare nella lista degli indirizzi
@@ -138,7 +138,7 @@ global categories	addressbook	it	Categorie Globali
 grant addressbook access	common	it	Permetti accesso alla Rubrica
 group %1	addressbook	it	Gruppo %1
 home address	addressbook	it	Indirizzo Abitazione
-home city	addressbook	it	Citt‡ Abitazione
+home city	addressbook	it	Citt√† Abitazione
 home country	addressbook	it	Nazione Abitazione
 home email	addressbook	it	Email Abitazione
 home phone	addressbook	it	Telefono Abitazione
@@ -146,7 +146,7 @@ home state	addressbook	it	Provincia Abitazione
 home street	addressbook	it	Via Abitazione
 home zip code	addressbook	it	CAP Abitazione
 icon	addressbook	it	Icona
-if accounts are already in ldap	admin	it	se gli account sono gi‡ in LDAP
+if accounts are already in ldap	admin	it	se gli account sono gi√† in LDAP
 import	addressbook	it	Importa
 import contacts	addressbook	it	Importa Contatti
 import csv-file into addressbook	addressbook	it	Importa file CSV nella Rubrica
@@ -156,8 +156,8 @@ import from ldif, csv, or vcard	addressbook	it	Importa da LDIF, CSV, or VCard
 import from outlook	addressbook	it	Importa da Outlook
 import multiple vcard	addressbook	it	Importa Molteplici VCard
 import next set	addressbook	it	Import il prossimo set
-import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verr‡ esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verr‡ esportato in formato VCard.
-in %1 days (%2) is %3's birthday.	addressbook	it	Tra %1 giorni (%2) sar‡ il compleanno di %3.
+import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verr√† esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verr√† esportato in formato VCard.
+in %1 days (%2) is %3's birthday.	addressbook	it	Tra %1 giorni (%2) sar√† il compleanno di %3.
 income	addressbook	it	Entrata
 international	addressbook	it	Internazionale
 label	addressbook	it	Etichetta
@@ -172,7 +172,7 @@ links	addressbook	it	Collegamenti
 list all categories	addressbook	it	Elenca tutte le categorie
 list all customfields	addressbook	it	Elenca tutti i campi personalizzati
 load vcard	addressbook	it	Carica VCard
-locations	addressbook	it	localit‡
+locations	addressbook	it	localit√†
 mark records as private	addressbook	it	Marca i record come privati
 message phone	addressbook	it	Telefono per Messaggi
 middle name	addressbook	it	Secondo Nome
@@ -187,12 +187,12 @@ multiple vcard	addressbook	it	Molteplici VCard
 no vcard	addressbook	it	Nessuna VCard
 number	addressbook	it	Numero
 number of records to read (%1)	addressbook	it	Numero di record da leggere (%1)
-only if there is content	addressbook	it	solo se c'Ë contenuto
+only if there is content	addressbook	it	solo se c'√® contenuto
 options for type	admin	it	Opzioni per tipo
 organisation	addressbook	it	organizzazione
 organisations	addressbook	it	Organizzazioni
 organisations by departments	addressbook	it	Organizzazioni per dipartimenti
-organisations by location	addressbook	it	Organizzazioni per localit‡
+organisations by location	addressbook	it	Organizzazioni per localit√†
 other number	addressbook	it	Altro Numero
 other phone	addressbook	it	Altro Telefono
 own sorting	addressbook	it	proprio ordinamento
@@ -219,7 +219,7 @@ record owner	addressbook	it	Proprietario della scheda
 role	addressbook	it	Ruolo
 room	addressbook	it	Stanza
 search for '%1'	addressbook	it	Cerca '%1'
-select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	it	Seleziona una foto jpeg in formato ritratto. Sar‡ ridimensionata ad una larghezza di 60 pixel.
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	it	Seleziona una foto jpeg in formato ritratto. Sar√† ridimensionata ad una larghezza di 60 pixel.
 select a view	addressbook	it	Seleziona una vista
 select addressbook type	addressbook	it	Seleziona il tipo di rubrica
 select all	addressbook	it	Seleziona tutto
@@ -240,13 +240,13 @@ suffix	addressbook	it	Suffisso
 tel home	addressbook	it	tel abitazione
 telephony integration	admin	it	Integrazione telefonia
 test import (show importable records <u>only</u> in browser)	addressbook	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
-that field name has been used already !	addressbook	it	Il nome di campo Ë gi‡ stato utilizzato
+that field name has been used already !	addressbook	it	Il nome di campo √® gi√† stato utilizzato
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
 this person's last name was not in the address book.	addressbook	it	Il cognome di questa persona non era nella rubrica.
 timezone	addressbook	it	Fuso orario
 to many might exceed your execution-time-limit	addressbook	it	troppi potrebbero far superare il tempo-limite-esecuzione
-today is %1's birthday!	common	it	Oggi Ë il compleanno di %1!
-tomorrow is %1's birthday.	common	it	Domani Ë il compleanno di %1.
+today is %1's birthday!	common	it	Oggi √® il compleanno di %1!
+tomorrow is %1's birthday.	common	it	Domani √® il compleanno di %1.
 translation	addressbook	it	Traduzione
 type	addressbook	it	Tipo
 update a single entry by passing the fields.	addressbook	it	Aggiorna una singola voce passando i campi.
@@ -256,14 +256,14 @@ used for links and for the own sorting of the list	addressbook	it	usato per coll
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
 vcards require a last name entry.	addressbook	it	Le Vcards richiedono un valore per il cognome
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP Ë utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP √® utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 warning: all contacts found will be deleted!	addressbook	it	ATTENZIONE: Tutti i contatti trovati saranno cancellati!
 whole query	addressbook	it	intera query
 work phone	addressbook	it	Telefono Ufficio
-yes, for the next three days	addressbook	it	SÏ, per i prossimi tre giorni
-yes, for the next two weeks	addressbook	it	SÏ, per le prossime due settimane
-yes, for the next week	addressbook	it	SÏ, per la prossima settimana
-yes, for today and tomorrow	addressbook	it	SÏ, per oggi e domani
+yes, for the next three days	addressbook	it	S√¨, per i prossimi tre giorni
+yes, for the next two weeks	addressbook	it	S√¨, per le prossime due settimane
+yes, for the next week	addressbook	it	S√¨, per la prossima settimana
+yes, for today and tomorrow	addressbook	it	S√¨, per oggi e domani
 you are not permitted to delete contact %1	addressbook	it	Non hai il permesso di cancellare il contatto %1
 you are not permittet to delete this contact	addressbook	it	Non hai il permesso di cancellare questo contatto
 you are not permittet to edit this contact	addressbook	it	Non hai il permesso di modificare questo contatto

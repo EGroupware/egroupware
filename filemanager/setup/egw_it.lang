@@ -1,9 +1,9 @@
-%1 already exists as a file	filemanager	it	%1 esiste gi‡ come file
+%1 already exists as a file	filemanager	it	%1 esiste gi√† come file
 application	filemanager	it	Applicazione
 back to file manager	filemanager	it	Indietro a File manager
 cancel editing %1 without saving	filemanager	it	Annulla modifiche di %1 senza salvare
-cannot create directory because it begins or ends in a space	filemanager	it	Non posso creare la directory perchÈ inizia o finisce con uno spazio
-cannot replace %1 because it is a directory	filemanager	it	Non posso sotituire %1 perchÈ Ë una directory
+cannot create directory because it begins or ends in a space	filemanager	it	Non posso creare la directory perch√© inizia o finisce con uno spazio
+cannot replace %1 because it is a directory	filemanager	it	Non posso sotituire %1 perch√© √® una directory
 command sucessfully run	filemanager	it	Comando eseguito con successo
 comment	filemanager	it	Commento
 comments cannot contain "%1"	filemanager	it	I commenti non possono contenere "%1"
@@ -11,12 +11,12 @@ copied %1 to %2	filemanager	it	Ho copiato %1 in %2
 copy to	filemanager	it	Copia In
 copy to:	filemanager	it	Copia in:
 could not copy %1 to %2	filemanager	it	Non posso copiare %1 in %2
-could not copy file because no destination directory is given	filemanager	it	Non posso copiare il file perchÈ non Ë indicata la directory di destinazione
+could not copy file because no destination directory is given	filemanager	it	Non posso copiare il file perch√© non √® indicata la directory di destinazione
 could not create %1	filemanager	it	Non posso creare %1
 could not create directory %1	filemanager	it	Non posso creare la directory %1
 could not delete %1	filemanager	it	Non posso eliminare %1
 could not move %1 to %2	filemanager	it	Non posso spostare %1 in %2
-could not move file because no destination directory is given	filemanager	it	Non posso spostare il file perchÈ non Ë indicata la directory di destinazione
+could not move file because no destination directory is given	filemanager	it	Non posso spostare il file perch√© non √® indicata la directory di destinazione
 could not rename %1 to %2	filemanager	it	Non posso rinominare %1 in %2
 could not save %1	filemanager	it	Non posso salvare %1
 create file	filemanager	it	Crea File
@@ -31,7 +31,7 @@ default number of upload fields to show	filemanager	it	Numero predefinito di cam
 delete	filemanager	it	Elimina
 deleted %1	filemanager	it	Eliminato %1
 directory	filemanager	it	Directory
-directory %1 already exists	filemanager	it	La directory %1 esiste gi‡
+directory %1 already exists	filemanager	it	La directory %1 esiste gi√†
 directory %1 does not exist	filemanager	it	La directory %1 non esiste
 directory names cannot contain "%1"	filemanager	it	I nomi di directory non possono contenere "%1"
 display attributes	filemanager	it	Visualizza attributi
@@ -43,8 +43,8 @@ execute	filemanager	it	Esegui
 failed to create directory	filemanager	it	Creazione directory fallita
 fake base dir did not exist, egroupware created a new one.	filemanager	it	La finta Directory base non esisteva, eGroupWare ne ha creata una nuova.
 file	filemanager	it	File
-file %1 already exists. please edit it or delete it first.	filemanager	it	Il file %1 esiste gi‡. Per favore, prima modificalo o cancellalo.
-file %1 could not be created.	filemanager	it	Il file %1 non puÚ essere creato.
+file %1 already exists. please edit it or delete it first.	filemanager	it	Il file %1 esiste gi√†. Per favore, prima modificalo o cancellalo.
+file %1 could not be created.	filemanager	it	Il file %1 non pu√≤ essere creato.
 file name	filemanager	it	Nome del File
 file names cannot contain "%1"	filemanager	it	I nomi dei File non possono contenere "%1"
 file names cannot contain \ or /	filemanager	it	I nomi dei File non possono contenere \ o /

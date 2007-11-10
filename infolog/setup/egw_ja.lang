@@ -1,18 +1,18 @@
-accept	infolog	ja	¾µÂú
-action	infolog	ja	¥¢¥¯¥·¥ç¥ó
-add sub	infolog	ja	¥µ¥ÖÄÉ²Ã
-are you sure you want to delete this entry	infolog	ja	¤³¤Î¹àÌÜ¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
-back to projectlist	infolog	ja	¥×¥í¥¸¥§¥¯¥È¥ê¥¹¥È¤Ø
-csv-filename	infolog	ja	CSV¥Õ¥¡¥¤¥ëÌ¾
-done	infolog	ja	½ªÎ»
-download	infolog	ja	¥À¥¦¥ó¥í¡¼¥É
-duration	infolog	ja	·ÑÂ³»ş´Ö
+accept	infolog	ja	æ‰¿è«¾
+action	infolog	ja	ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+add sub	infolog	ja	ã‚µãƒ–è¿½åŠ 
+are you sure you want to delete this entry	infolog	ja	ã“ã®é …ç›®ã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ã€‚
+back to projectlist	infolog	ja	ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒªã‚¹ãƒˆã¸
+csv-filename	infolog	ja	CSVãƒ•ã‚¡ã‚¤ãƒ«å
+done	infolog	ja	çµ‚äº†
+download	infolog	ja	ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
+duration	infolog	ja	ç¶™ç¶šæ™‚é–“
 fax	infolog	ja	Fax
-fieldseparator	infolog	ja	¹àÌÜ¤Î¶èÀÚ¤ê
-from	infolog	ja	º¹½Ğ¿Í
-owner	infolog	ja	½êÍ­¼Ô
-reject	infolog	ja	µñÈİ
-sub	infolog	ja	¥µ¥Ö
-today	infolog	ja	º£Æü
-translation	infolog	ja	¸À¸ì´Ä¶­
-urgency	infolog	ja	Í¥ÀèÅÙ
+fieldseparator	infolog	ja	é …ç›®ã®åŒºåˆ‡ã‚Š
+from	infolog	ja	å·®å‡ºäºº
+owner	infolog	ja	æ‰€æœ‰è€…
+reject	infolog	ja	æ‹’å¦
+sub	infolog	ja	ã‚µãƒ–
+today	infolog	ja	ä»Šæ—¥
+translation	infolog	ja	è¨€èªç’°å¢ƒ
+urgency	infolog	ja	å„ªå…ˆåº¦

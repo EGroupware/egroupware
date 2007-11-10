@@ -1,52 +1,52 @@
-2 month ago	timesheet	pl	2 miesi±ce temu
+2 month ago	timesheet	pl	2 miesiÄ…ce temu
 2 years ago	timesheet	pl	2 lata temu
 3 years ago	timesheet	pl	2 lata temu
-actions	timesheet	pl	Dzia³ania
+actions	timesheet	pl	DziaÅ‚ania
 all projects	timesheet	pl	Wszystkie projekty
-both: allow to use projectmanager and free project-names	admin	pl	Czê¶ciowa: zezwalaj na u¿ywanie Menad¿era Projektów jak równie¿ dowolnych nazw projektów
+both: allow to use projectmanager and free project-names	admin	pl	CzÄ™Å›ciowa: zezwalaj na uÅ¼ywanie MenadÅ¼era ProjektÃ³w jak rÃ³wnieÅ¼ dowolnych nazw projektÃ³w
 by	timesheet	pl	przez
-create new links	timesheet	pl	Utwórz nowe odsy³acze
+create new links	timesheet	pl	UtwÃ³rz nowe odsyÅ‚acze
 creating new entry	timesheet	pl	Tworzenie nowego wpisu
-delete this entry	timesheet	pl	Usuñ ten wpis
+delete this entry	timesheet	pl	UsuÅ„ ten wpis
 edit this entry	timesheet	pl	Edytuj ten wpis
 empty if identical to duration	timesheet	pl	pusty jesli identyczny jak czas trwania
 end	timesheet	pl	Koniec
-entry deleted	timesheet	pl	Wpis usuniêty
+entry deleted	timesheet	pl	Wpis usuniÄ™ty
 entry saved	timesheet	pl	Wpis zachowany
-error deleting the entry!!!	timesheet	pl	B³±d przy usuwaniu wpisu !!!
-error saving the entry!!!	timesheet	pl	B³±d przy zachowywaniu wpisu !!!
-existing links	timesheet	pl	Istniej±ce odsy³acze
-full: use only projectmanager	admin	pl	Pe³na: zezwalaj tylko na nazwy z Menad¿era Projektów
-general	timesheet	pl	Ogólnie
+error deleting the entry!!!	timesheet	pl	BÅ‚Ä…d przy usuwaniu wpisu !!!
+error saving the entry!!!	timesheet	pl	BÅ‚Ä…d przy zachowywaniu wpisu !!!
+existing links	timesheet	pl	IstniejÄ…ce odsyÅ‚acze
+full: use only projectmanager	admin	pl	PeÅ‚na: zezwalaj tylko na nazwy z MenadÅ¼era ProjektÃ³w
+general	timesheet	pl	OgÃ³lnie
 last modified	timesheet	pl	Ostatnio zmodyfikowany
-last month	timesheet	pl	Ostatni miesi±c
-last week	timesheet	pl	Ostatni tydzieñ
+last month	timesheet	pl	Ostatni miesiÄ…c
+last week	timesheet	pl	Ostatni tydzieÅ„
 last year	timesheet	pl	Ostatni rok
-leave it empty for a full week	timesheet	pl	Pozostaw pusty na ca³y tydzieñ
-links	timesheet	pl	Odsy³acze
-no details	timesheet	pl	bez szczegó³ów
-no project	timesheet	pl	¯aden projekt
-none: use only free project-names	admin	pl	¯adna: u¿ywaj nazw niezale¿nych od Menad¿era Projektów
-or endtime	timesheet	pl	lub czas zakoñczenia
-permission denied!!!	timesheet	pl	Dostêp zabroniony !!!
+leave it empty for a full week	timesheet	pl	Pozostaw pusty na caÅ‚y tydzieÅ„
+links	timesheet	pl	OdsyÅ‚acze
+no details	timesheet	pl	bez szczegÃ³Å‚Ã³w
+no project	timesheet	pl	Å»aden projekt
+none: use only free project-names	admin	pl	Å»adna: uÅ¼ywaj nazw niezaleÅ¼nych od MenadÅ¼era ProjektÃ³w
+or endtime	timesheet	pl	lub czas zakoÅ„czenia
+permission denied!!!	timesheet	pl	DostÄ™p zabroniony !!!
 price	timesheet	pl	Cena
-projectmanager integration	admin	pl	Integracja z Menad¿erem projektów
-quantity	timesheet	pl	Ilo¶æ
+projectmanager integration	admin	pl	Integracja z MenadÅ¼erem projektÃ³w
+quantity	timesheet	pl	IloÅ›Ä‡
 save & new	timesheet	pl	Zapisz & Nowy
 saves the changes made	timesheet	pl	Zapisz poczynione zmiany
 saves this entry and add a new one	timesheet	pl	Zachowaj ten wpis i dodaj nowy
-select a price	timesheet	pl	Wybierz cen±
+select a price	timesheet	pl	Wybierz cenÄ…
 select a project	timesheet	pl	Wybierz projekt
-start	timesheet	pl	Pocz±tek
-starttime	timesheet	pl	Czas rozpoczêcia
-starttime has to be before endtime !!!	timesheet	pl	Czas rozpoczêcia musi byæ wcze¶niejszy ni¿ czas zakoñczenia!
+start	timesheet	pl	PoczÄ…tek
+starttime	timesheet	pl	Czas rozpoczÄ™cia
+starttime has to be before endtime !!!	timesheet	pl	Czas rozpoczÄ™cia musi byÄ‡ wczeÅ›niejszy niÅ¼ czas zakoÅ„czenia!
 sum %1:	timesheet	pl	Suma %1:
-this month	timesheet	pl	Bie¿±cy miesi±c
-this week	timesheet	pl	Bie¿±cy tydzieñ
-this year	timesheet	pl	Bie¿±cy rok
+this month	timesheet	pl	BieÅ¼Ä…cy miesiÄ…c
+this week	timesheet	pl	BieÅ¼Ä…cy tydzieÅ„
+this year	timesheet	pl	BieÅ¼Ä…cy rok
 timesheet	common	pl	Czas Pracy
 unitprice	timesheet	pl	Cena jednostkowa
-view this entry	timesheet	pl	Poka¿ ten wpis
-week	timesheet	pl	Tydzieñ
+view this entry	timesheet	pl	PokaÅ¼ ten wpis
+week	timesheet	pl	TydzieÅ„
 yesterday	timesheet	pl	Wczoraj
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pl	Twoja baza danych jest NIEAKTUALNA (%1 vs. %2), proszê uruchom %3setup%4 by zaktualizowaæ Twoj± bazê.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pl	Twoja baza danych jest NIEAKTUALNA (%1 vs. %2), proszÄ™ uruchom %3setup%4 by zaktualizowaÄ‡ TwojÄ… bazÄ™.

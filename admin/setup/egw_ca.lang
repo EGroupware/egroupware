@@ -1,22 +1,22 @@
 %1 - %2 of %3 user accounts	admin	ca	%1 - %2 de %3 comptes d'usuaris
 %1 - %2 of %3 user groups	admin	ca	%1 - %2 de %3 grups d'usuaris
 %1 acl records of not (longer) existing accounts deleted.	admin	ca	S'han esborrat %1 registres ACL de comptes no existents.
-%1 not found or not executable !!!	admin	ca	No s'ha trobat %1 o no Ès un executable
-(default no, leave it off if you dont use it)	admin	ca	(per defecte NO, deixa-ho aixÌ si no l'utilitzes)
-(stored password will not be shown here)	admin	ca	(les contrasenyes desades no es mostraran aquÌ)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal∑lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
+%1 not found or not executable !!!	admin	ca	No s'ha trobat %1 o no √©s un executable
+(default no, leave it off if you dont use it)	admin	ca	(per defecte NO, deixa-ho aix√≠ si no l'utilitzes)
+(stored password will not be shown here)	admin	ca	(les contrasenyes desades no es mostraran aqu√≠)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal¬∑lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
 -  type	admin	ca	- tipus
-accesslog and bruteforce defense	admin	ca	Defensa d'accÈs al registre i forÁa bruta
+accesslog and bruteforce defense	admin	ca	Defensa d'acc√©s al registre i for√ßa bruta
 account active	admin	ca	Compte actiu
 account has been created	common	ca	S'ha creat el compte
 account has been deleted	common	ca	S'ha esborrat el compte
 account has been updated	common	ca	S'ha actualitzat el compte
 account list	admin	ca	Llista de comptes
 account permissions	admin	ca	Permisos del compte
-account preferences	admin	ca	PreferËncies del compte
-acl manager	admin	ca	GestiÛ de LCA
+account preferences	admin	ca	Prefer√®ncies del compte
+acl manager	admin	ca	Gesti√≥ de LCA
 acl rights	common	ca	Permisos de LCA
-action	admin	ca	AcciÛ
+action	admin	ca	Acci√≥
 activate wysiwyg-editor	admin	ca	Activar l'editor WYSIWYG
 add a category	admin	ca	Afegir una categoria
 add a group	admin	ca	Afegir un grup
@@ -24,89 +24,89 @@ add a new account.	admin	ca	Afegir un nou compte.
 add a subcategory	admin	ca	Afegir una subcategoria
 add a user	admin	ca	Afegir un usuari
 add account	admin	ca	Afegir compte
-add application	admin	ca	Afegir aplicaciÛ
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	ca	Afegir usuaris creats autom‡ticament al seg¸ent grup (es far‡ servir 'Default' si no n'especifiqueu cap.)
+add application	admin	ca	Afegir aplicaci√≥
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	ca	Afegir usuaris creats autom√†ticament al seg√ºent grup (es far√† servir 'Default' si no n'especifiqueu cap.)
 add global category	admin	ca	Afegir categoria global
 add global category for %1	admin	ca	Afegir categoria global per a %1
 add group	admin	ca	Afegir grup
 add new account	admin	ca	Afegir compte nou
-add new application	admin	ca	Afegir aplicaciÛ nova
+add new application	admin	ca	Afegir aplicaci√≥ nova
 add peer server	admin	ca	Afegir Servidor Parell
 add sub-category	admin	ca	Afegir subcategoria
 admin email	admin	ca	E-mail de l'Administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ca	Adreces de correu de l'administrador (separades per comes) per a notificar els bloquejos (en blanc per a no notificar)
 admin name	admin	ca	Nom de l'Administrador
-administration	admin	ca	AdministraciÛ
+administration	admin	ca	Administraci√≥
 admins	admin	ca	Administradors
-advanced options	admin	ca	opcions avanÁades
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ca	DesprÈs de quants intents erronis de connexiÛ ha de bloquejar-se un compte? (predeterminat, 3)
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ca	DesprÈs de quants intents erronis de connexiÛ ha de bloquejar-se una IP? (predeterminat, 3)
-aliases	admin	ca	¿lies
-all records and account information will be lost!	admin	ca	Es perdran tots els registres i la informaciÛ dels comptes!
+advanced options	admin	ca	opcions avan√ßades
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ca	Despr√©s de quants intents erronis de connexi√≥ ha de bloquejar-se un compte? (predeterminat, 3)
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ca	Despr√©s de quants intents erronis de connexi√≥ ha de bloquejar-se una IP? (predeterminat, 3)
+aliases	admin	ca	√Älies
+all records and account information will be lost!	admin	ca	Es perdran tots els registres i la informaci√≥ dels comptes!
 all users	admin	ca	Tots els usuaris
-allow anonymous access to this app	admin	ca	Permetre l'accÈs anÚnim a aquesta aplicaciÛ
-alternate email address	admin	ca	adreÁa de correu alternativa
-anonymous user	admin	ca	Usuari anÚnim
-anonymous user (not shown in list sessions)	admin	ca	Usuari anÚnim (no es mostra a les llistes de sessions)
+allow anonymous access to this app	admin	ca	Permetre l'acc√©s an√≤nim a aquesta aplicaci√≥
+alternate email address	admin	ca	adre√ßa de correu alternativa
+anonymous user	admin	ca	Usuari an√≤nim
+anonymous user (not shown in list sessions)	admin	ca	Usuari an√≤nim (no es mostra a les llistes de sessions)
 appearance	admin	ca	Aspecte
-application	admin	ca	AplicaciÛ
-application name	admin	ca	Nom de l'aplicaciÛ
-application title	admin	ca	TÌtol de l'aplicaciÛ
+application	admin	ca	Aplicaci√≥
+application name	admin	ca	Nom de l'aplicaci√≥
+application title	admin	ca	T√≠tol de l'aplicaci√≥
 applications	admin	ca	Aplicacions
 applications list	admin	ca	Llista d'aplicacions
 applies the changes	admin	ca	aplica els canvis
-are you sure you want to delete the application %1 ?	admin	ca	Esteu segurs de voler esborrar l'aplicaciÛ %1 ?
+are you sure you want to delete the application %1 ?	admin	ca	Esteu segurs de voler esborrar l'aplicaci√≥ %1 ?
 are you sure you want to delete this account ?	admin	ca	Esteu segurs de voler esborrar aquest compte?
-are you sure you want to delete this application ?	admin	ca	Esteu segurs de voler esborrar aquesta aplicaciÛ?
+are you sure you want to delete this application ?	admin	ca	Esteu segurs de voler esborrar aquesta aplicaci√≥?
 are you sure you want to delete this category ?	common	ca	Esteu segurs de voler esborrar aquesta categoria?
 are you sure you want to delete this global category ?	admin	ca	Esteu segurs de voler esborrar la categoria global?
 are you sure you want to delete this group ?	admin	ca	Esteu segurs de voler esborrar aquest grup?
 are you sure you want to delete this server?	admin	ca	Esteu segurs de voler esborrar aquest servidor?
-are you sure you want to kill this session ?	admin	ca	Esteu segurs de voler cancel∑lar aquesta sessiÛ?
-async services last executed	admin	ca	Darrers serveis asÌncrons executats
-asynchronous timed services	admin	ca	Serveis asÌncrons programats
-asyncservices not yet installed or other error (%1) !!!	admin	ca	Serveis asÌncrons encara no instal∑lats o bÈ un altre error (%1)
+are you sure you want to kill this session ?	admin	ca	Esteu segurs de voler cancel¬∑lar aquesta sessi√≥?
+async services last executed	admin	ca	Darrers serveis as√≠ncrons executats
+asynchronous timed services	admin	ca	Serveis as√≠ncrons programats
+asyncservices not yet installed or other error (%1) !!!	admin	ca	Serveis as√≠ncrons encara no instal¬∑lats o b√© un altre error (%1)
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ca	Intenteu fer servir el tipus MIME correcte per a FTP en lloc del valor per defecte  'application/octet-stream'
-attribute accountstatus explained	admin	ca	AixÚ gestiona l'atribut <b><i>-accountStatus-</i></b> de l'esquema de QMAIL.
-attribute mail explained	admin	ca	AixÚ gestiona l'atribut <b><i>-mail-</i></b> de l'esquema de QMAIL i no hauria de ser mai buit. TambÈ Ès el camp intern de correu d'eGW.
-attribute mailalternateaddress explained	admin	ca	AixÚ gestiona l'atribut <b><i>-mail-</i></b> de l'esquema de QMAIL i pot ser gestionat com a mapes virtuals o ‡lies.
-attribute mailforwardingaddress explained	admin	ca	AixÚ gestiona l'atribut <b><i>-mail-</i></b> de l'Esquema de QMAIL i no pot ser buit si s'assigna.
-authentication / accounts	admin	ca	IdentificaciÛ / Comptes
-auto create account records for authenticated users	admin	ca	Crear comptes autom‡ticament per a usuaris identificats
+attribute accountstatus explained	admin	ca	Aix√≤ gestiona l'atribut <b><i>-accountStatus-</i></b> de l'esquema de QMAIL.
+attribute mail explained	admin	ca	Aix√≤ gestiona l'atribut <b><i>-mail-</i></b> de l'esquema de QMAIL i no hauria de ser mai buit. Tamb√© √©s el camp intern de correu d'eGW.
+attribute mailalternateaddress explained	admin	ca	Aix√≤ gestiona l'atribut <b><i>-mail-</i></b> de l'esquema de QMAIL i pot ser gestionat com a mapes virtuals o √†lies.
+attribute mailforwardingaddress explained	admin	ca	Aix√≤ gestiona l'atribut <b><i>-mail-</i></b> de l'Esquema de QMAIL i no pot ser buit si s'assigna.
+authentication / accounts	admin	ca	Identificaci√≥ / Comptes
+auto create account records for authenticated users	admin	ca	Crear comptes autom√†ticament per a usuaris identificats
 back to the list	admin	ca	tornar a la llista
 bi-dir passthrough	admin	ca	pas bidireccional
 bi-directional	admin	ca	bidireccional
 bottom	admin	ca	peu
-calculate next run	admin	ca	Calcular la propera execuciÛ
+calculate next run	admin	ca	Calcular la propera execuci√≥
 can change password	admin	ca	Pot canviar la contrasenya
-cancel testjob!	admin	ca	Cancel∑lar treball de proves
+cancel testjob!	admin	ca	Cancel¬∑lar treball de proves
 categories list	admin	ca	Llista de categories
 category %1 has been saved !	admin	ca	S'ha guardat la categoria %1 !!
 category list	admin	ca	Llista de categories
 change acl rights	admin	ca	canviar permissos de LCA
-change config settings	admin	ca	Canviar opcions de configuraciÛ
+change config settings	admin	ca	Canviar opcions de configuraci√≥
 change main screen message	admin	ca	Canviar missatge de la pantalla principal
-check ip address of all sessions	admin	ca	Comprovar l'adreÁa IP de totes les sessions
+check ip address of all sessions	admin	ca	Comprovar l'adre√ßa IP de totes les sessions
 check items to <b>%1</b> to %2 for %3	admin	ca	Comprovar elements de <b>%1</b> a %2 per a %3
 click to select a color	admin	ca	Pitjau per a seleccionar un color
 color	admin	ca	Color
-country selection	admin	ca	Seleccionar paÌs
+country selection	admin	ca	Seleccionar pa√≠s
 create group	admin	ca	Crear grup
 creates a new field	admin	ca	crea un camp nou
-crontab only (recomended)	admin	ca	NomÈs per crontab (recomenat)
+crontab only (recomended)	admin	ca	Nom√©s per crontab (recomenat)
 custom fields	admin	ca	Camps personalitzats
 cyrus imap server	admin	ca	Servidor IMAP Cyrus
 data	admin	ca	Dades
 day	admin	ca	Dia
 day of week<br>(0-6, 0=sun)	admin	ca	Dia de la setmana<br>(0-6, 0=Diu)
-db backup and restore	admin	ca	BBDD de cÚpia de seguretat i recuperaciÛ
+db backup and restore	admin	ca	BBDD de c√≤pia de seguretat i recuperaci√≥
 default	admin	ca	Predeterminat
 default file system space per user	admin	ca	Espai per defecte al sistema d'arxius per usuari
 default file system space per user/group ?	admin	ca	Espai per defecte al sistema d'arxius per usuari/grup ?
-deinstall crontab	admin	ca	Desinstal∑lar crontab
+deinstall crontab	admin	ca	Desinstal¬∑lar crontab
 delete account	admin	ca	Esborrar compte
 delete all records	admin	ca	Esborrar tots els registres
-delete application	admin	ca	Esborrar aplicaciÛ
+delete application	admin	ca	Esborrar aplicaci√≥
 delete category	admin	ca	Esborrar categoria
 delete group	admin	ca	Esborrar grup
 delete peer server	admin	ca	Esborrar servidor parell
@@ -117,36 +117,36 @@ delete this group	admin	ca	esborrar aquest grup
 delete this user	admin	ca	esborrar aquest usuari
 deletes this field	admin	ca	esborra aquest camp
 deliver extern	admin	ca	lliura extern
-deny access to access log	admin	ca	Denegar accÈs al registre d'accesos
-deny access to application registery	admin	ca	Denegar accÈs al registre d'aplicacions
-deny access to applications	admin	ca	Denegar accÈs a les aplicacions
-deny access to asynchronous timed services	admin	ca	Denegar accÈs als serveis asÌncrons programats
-deny access to current sessions	admin	ca	Denegar accÈs a les sessions actuals
-deny access to db backup and restore	admin	ca	Denegar accÈs a la BBDD de cÚpia de seguretat i recuperaciÛ
-deny access to error log	admin	ca	Denegar accÈs al registre d'errors
-deny access to global categories	admin	ca	Denegar accÈs a les categories globals
-deny access to groups	admin	ca	Denegar accÈs a grups
-deny access to mainscreen message	admin	ca	Denegar accÈs al missatge de la pantalla principal
-deny access to peer servers	admin	ca	Denegar accÈs als servidors parells
-deny access to phpinfo	admin	ca	Denegar accÈs a phpinfo
-deny access to site configuration	admin	ca	Denegar accÈs a la configuraciÛ del lloc
-deny access to user accounts	admin	ca	Denegar accÈs als comptes d'usuari
-deny all users access to grant other users access to their entries ?	admin	ca	Prohibir als usuaris cedir accÈs a d'altres per als seus registres?
-description can not exceed 255 characters in length !	admin	ca	La descripciÛ no pot excedir de 255 car‡cters!
+deny access to access log	admin	ca	Denegar acc√©s al registre d'accesos
+deny access to application registery	admin	ca	Denegar acc√©s al registre d'aplicacions
+deny access to applications	admin	ca	Denegar acc√©s a les aplicacions
+deny access to asynchronous timed services	admin	ca	Denegar acc√©s als serveis as√≠ncrons programats
+deny access to current sessions	admin	ca	Denegar acc√©s a les sessions actuals
+deny access to db backup and restore	admin	ca	Denegar acc√©s a la BBDD de c√≤pia de seguretat i recuperaci√≥
+deny access to error log	admin	ca	Denegar acc√©s al registre d'errors
+deny access to global categories	admin	ca	Denegar acc√©s a les categories globals
+deny access to groups	admin	ca	Denegar acc√©s a grups
+deny access to mainscreen message	admin	ca	Denegar acc√©s al missatge de la pantalla principal
+deny access to peer servers	admin	ca	Denegar acc√©s als servidors parells
+deny access to phpinfo	admin	ca	Denegar acc√©s a phpinfo
+deny access to site configuration	admin	ca	Denegar acc√©s a la configuraci√≥ del lloc
+deny access to user accounts	admin	ca	Denegar acc√©s als comptes d'usuari
+deny all users access to grant other users access to their entries ?	admin	ca	Prohibir als usuaris cedir acc√©s a d'altres per als seus registres?
+description can not exceed 255 characters in length !	admin	ca	La descripci√≥ no pot excedir de 255 car√†cters!
 determines the order the fields are displayed	admin	ca	determina l'ordre en que es mostren els camps
-disable "auto completion" of the login form	admin	ca	Desactivar "completat autom‡tic" al formulari d'inici de sessiÛ
+disable "auto completion" of the login form	admin	ca	Desactivar "completat autom√†tic" al formulari d'inici de sessi√≥
 disable wysiwyg-editor	admin	ca	desactiva l'editor WYSIWYG
 disabled (not recomended)	admin	ca	desactivat (no es recomana)
 display	admin	ca	Mostrar
 do not delete the category and return back to the list	admin	ca	NO esborrar la categoria i tornar a la lista
-do you also want to delete all global subcategories ?	admin	ca	Voleu tambÈ esborrar totes les subcategories globals?
+do you also want to delete all global subcategories ?	admin	ca	Voleu tamb√© esborrar totes les subcategories globals?
 do you want to delete all global subcategories ?	admin	ca	Voleu esborrar totes les subcategories globals?
 do you want to move all global subcategories one level down ?	admin	ca	Voleu moure totes les subcategories globals un nivell cap avall?
-each value is a line like <id>[=<label>]	admin	ca	cada valor Ès una lÌnia com <id>[=<etiqueta>]
-each value is a line like id[=label]	admin	ca	cada valor Ès una lÌnia com id[=etiqueta]
+each value is a line like <id>[=<label>]	admin	ca	cada valor √©s una l√≠nia com <id>[=<etiqueta>]
+each value is a line like id[=label]	admin	ca	cada valor √©s una l√≠nia com id[=etiqueta]
 edit account	admin	ca	Editar compte
-edit application	admin	ca	Editar aplicaciÛ
-edit email settings	admin	ca	edita les preferËncies de correu
+edit application	admin	ca	Editar aplicaci√≥
+edit email settings	admin	ca	edita les prefer√®ncies de correu
 edit global category	admin	ca	Editar categoria global
 edit global category for %1	admin	ca	Editar categoria global per a %1
 edit group	admin	ca	Editar Grup
@@ -161,50 +161,50 @@ edit this user	admin	ca	editar aquest usuari
 edit user	admin	ca	editar usuari
 edit user account	admin	ca	Editar compte de l'usuari
 email account active	admin	ca	compte de correu actiu
-email address	admin	ca	adreÁa de correu
-enable debug-messages	admin	ca	Activar missatges de depuraciÛ
+email address	admin	ca	adre√ßa de correu
+enable debug-messages	admin	ca	Activar missatges de depuraci√≥
 enable the soap service	admin	ca	Habilita el servei soap
 enable the xmlrpc service	admin	ca	Habilita el servei xmlrpc
-enabled - hidden from navbar	admin	ca	Activat - Amagat a la Barra de NavegaciÛ
+enabled - hidden from navbar	admin	ca	Activat - Amagat a la Barra de Navegaci√≥
 enabled - popup window	admin	ca	Activat - Finestra de Popup
-enter a description for the category	admin	ca	IntroduÔu una descripciÛ per a aquesta categoria
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	ca	IntroduÔu un text aleatori per al xifratge <br> de la sessiÛ (requereix mcrypt)
-enter the background color for the login page	admin	ca	IntroduÔu el color de fons per a la p‡gina d'inici de sessiÛ
-enter the background color for the site title	admin	ca	IntroduÔu el color de fons per el tÌtol del lloc
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ca	IntroduÔu el camÌ complet per als fitxers temporals.<br>Exemples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	ca	IntroduÔu el camÌ complet per als fitxers d'usuaris i grups.<br>Exemples: /files, E:\FILES
-enter the hostname of the machine on which this server is running	admin	ca	IntroduÔu el nom complet de l'ordinador on s'executa aquest servidor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	IntroduÔu la URL del vostre eGroupware.<br>Exemple: http://www.domini.com/egroupware   o   /egroupware<br><b>Sense barra al final</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	ca	IntroduÔu la cadena de recerca. Per a mostrar totes les entrades, deixeu buit aquest camp i premeu el botÛ ENVIAR altra vegada.
-enter the site password for peer servers	admin	ca	IntroduÔu la contrasenya del lloc per a servidors parells
-enter the site username for peer servers	admin	ca	IntroduÔu el nom d'usuari del lloc per a servidors parells
-enter the title for your site	admin	ca	IntroduÔu el tÌtol per al vostre lloc
-enter the title of your logo	admin	ca	IntroduÔu el tÌtol del vostre logo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ca	IntroduÔu la URL o nom del fitxer (a phpgwapi/templates/default/images) del vostre logo
-enter the url where your logo should link to	admin	ca	IntroduÔu l'adreÁa url a on apunta el logo
-enter your default ftp server	admin	ca	IntroduÔu el servidor FTP per defecte
-enter your default mail domain ( from: user@domain )	admin	ca	IntroduÔu el vostre domini de correu per defecte ( De: usuari@domini )
-enter your http proxy server	admin	ca	IntroduÔu el servidor proxy HTTP
-enter your http proxy server port	admin	ca	IntroduÔu el port del servidor proxy HTTP
-enter your smtp server hostname or ip address	admin	ca	IntroduÔu el nom o l'adreÁa IP del servidor SMTP
-enter your smtp server port	admin	ca	IntroduÔu el port del servidor SMTP
-error canceling timer, maybe there's none set !!!	admin	ca	Error en cancel∑lar el temporitzador,  potser no hi ha cap activat !!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	ca	Error en configurar el temporitzador. La sintaxi Ès incorrecta o pot ser que un ja estigui en execuciÛ !!!
-error: %1 not found or other error !!!	admin	ca	Error: no s'ha trobat %1 o bÈ un altre error
+enter a description for the category	admin	ca	Introdu√Øu una descripci√≥ per a aquesta categoria
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	ca	Introdu√Øu un text aleatori per al xifratge <br> de la sessi√≥ (requereix mcrypt)
+enter the background color for the login page	admin	ca	Introdu√Øu el color de fons per a la p√†gina d'inici de sessi√≥
+enter the background color for the site title	admin	ca	Introdu√Øu el color de fons per el t√≠tol del lloc
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ca	Introdu√Øu el cam√≠ complet per als fitxers temporals.<br>Exemples: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	ca	Introdu√Øu el cam√≠ complet per als fitxers d'usuaris i grups.<br>Exemples: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	ca	Introdu√Øu el nom complet de l'ordinador on s'executa aquest servidor
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Introdu√Øu la URL del vostre eGroupware.<br>Exemple: http://www.domini.com/egroupware   o   /egroupware<br><b>Sense barra al final</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	ca	Introdu√Øu la cadena de recerca. Per a mostrar totes les entrades, deixeu buit aquest camp i premeu el bot√≥ ENVIAR altra vegada.
+enter the site password for peer servers	admin	ca	Introdu√Øu la contrasenya del lloc per a servidors parells
+enter the site username for peer servers	admin	ca	Introdu√Øu el nom d'usuari del lloc per a servidors parells
+enter the title for your site	admin	ca	Introdu√Øu el t√≠tol per al vostre lloc
+enter the title of your logo	admin	ca	Introdu√Øu el t√≠tol del vostre logo
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ca	Introdu√Øu la URL o nom del fitxer (a phpgwapi/templates/default/images) del vostre logo
+enter the url where your logo should link to	admin	ca	Introdu√Øu l'adre√ßa url a on apunta el logo
+enter your default ftp server	admin	ca	Introdu√Øu el servidor FTP per defecte
+enter your default mail domain ( from: user@domain )	admin	ca	Introdu√Øu el vostre domini de correu per defecte ( De: usuari@domini )
+enter your http proxy server	admin	ca	Introdu√Øu el servidor proxy HTTP
+enter your http proxy server port	admin	ca	Introdu√Øu el port del servidor proxy HTTP
+enter your smtp server hostname or ip address	admin	ca	Introdu√Øu el nom o l'adre√ßa IP del servidor SMTP
+enter your smtp server port	admin	ca	Introdu√Øu el port del servidor SMTP
+error canceling timer, maybe there's none set !!!	admin	ca	Error en cancel¬∑lar el temporitzador,  potser no hi ha cap activat !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	ca	Error en configurar el temporitzador. La sintaxi √©s incorrecta o pot ser que un ja estigui en execuci√≥ !!!
+error: %1 not found or other error !!!	admin	ca	Error: no s'ha trobat %1 o b√© un altre error
 expires	admin	ca	Caduca
-explanation of ldapman	admin	ca	Aquest mÚdul ha estat provat per POSTFIX,LDAP,Courier-IMAP i necessita els esquemes CORE i QMAIL (OID7914). MÈs detalls de com utilitzar i configurar aquest sistema es pot trobar a README.ldapman dins la carpeta doc d'ADMIN.
-fallback (after each pageview)	admin	ca	Activar desprÈs d'error (desprÈs de veure cada p‡gina)
+explanation of ldapman	admin	ca	Aquest m√≤dul ha estat provat per POSTFIX,LDAP,Courier-IMAP i necessita els esquemes CORE i QMAIL (OID7914). M√©s detalls de com utilitzar i configurar aquest sistema es pot trobar a README.ldapman dins la carpeta doc d'ADMIN.
+fallback (after each pageview)	admin	ca	Activar despr√©s d'error (despr√©s de veure cada p√†gina)
 field '%1' already exists !!!	admin	ca	El camp '%1' ja existeix !!!
 file space	admin	ca	Espai per a arxius
 file space must be an integer	admin	ca	L'espai per a arxius ha de ser un nombre sencer
 find and register all application hooks	admin	ca	Trobar i registrar tots els "hooks" de les aplicacions
 for the times above	admin	ca	per a les vegades indicades a dalt
 for the times below (empty values count as '*', all empty = every minute)	admin	ca	per a les vegades indicades avall (valors buits equivalen a un '*', tots buits = cada minut)
-force selectbox	admin	ca	Llista desplegable obligatÚria
-forward also to	admin	ca	reenviar tambÈ a
+force selectbox	admin	ca	Llista desplegable obligat√≤ria
+forward also to	admin	ca	reenviar tamb√© a
 forward email's to	admin	ca	reenviar correu a
 forward emails to	admin	ca	reenviar correu a
-forward only	admin	ca	reenviar nomÈs
+forward only	admin	ca	reenviar nom√©s
 global categories	common	ca	Categories Globals
 group ?	admin	ca	grup ?
 group has been added	common	ca	Grup afegit
@@ -213,63 +213,63 @@ group has been updated	common	ca	Grup actualitzat
 group list	admin	ca	Llista de grups
 group manager	admin	ca	Administrador de grups
 group name	admin	ca	Nom de Grup
-hide php information	admin	ca	Amagar informaciÛ de PHP
+hide php information	admin	ca	Amagar informaci√≥ de PHP
 home directory	admin	ca	Directori principal
-host information	admin	ca	InformaciÛ del servidor
+host information	admin	ca	Informaci√≥ del servidor
 hour<br>(0-23)	admin	ca	Hora<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ca	Quants dies han d'estar les entrades al registre d'accÈs, abans d'esborrar-les? (per defecte, 90)
-how many minutes should an account or ip be blocked (default 30) ?	admin	ca	Quants minuts ha d'estar bloquejat un compte o una adreÁa IP? (per defecte, 30)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ca	Quants dies han d'estar les entrades al registre d'acc√©s, abans d'esborrar-les? (per defecte, 90)
+how many minutes should an account or ip be blocked (default 30) ?	admin	ca	Quants minuts ha d'estar bloquejat un compte o una adre√ßa IP? (per defecte, 30)
 icon	admin	ca	Icona
 idle	admin	ca	inactiu
-if no acl records for user or any group the user is a member of	admin	ca	Si no es troben registres LCA de l'usuari i grup, llavors l'usuari Ès membre de:
+if no acl records for user or any group the user is a member of	admin	ca	Si no es troben registres LCA de l'usuari i grup, llavors l'usuari √©s membre de:
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ca	Si s'utilitza LDAP, voleu gestionar els atributs del directori d'inici i el compte?
 in mbyte	admin	ca	en MByte
 inbound	admin	ca	entrants
-install crontab	admin	ca	Instal∑lar crontab
-installed applications	common	ca	Aplicacions instal∑lades
-installed crontab	admin	ca	Crontab instal∑lat
-interface	admin	ca	InterfÌcie
+install crontab	admin	ca	Instal¬∑lar crontab
+installed applications	common	ca	Aplicacions instal¬∑lades
+installed crontab	admin	ca	Crontab instal¬∑lat
+interface	admin	ca	Interf√≠cie
 ip	admin	ca	IP
 jobs	admin	ca	Treball
 kill	admin	ca	Matar
-kill session	admin	ca	Matar sessiÛ
+kill session	admin	ca	Matar sessi√≥
 last %1 logins	admin	ca	Darreres %1 connexions
 last %1 logins for %2	admin	ca	Darreres %1 connexions de %2
-last login	admin	ca	Darrera connexiÛ
-last login from	admin	ca	Darrera connexiÛ des de
+last login	admin	ca	Darrera connexi√≥
+last login from	admin	ca	Darrera connexi√≥ des de
 last time read	admin	ca	Darrera lectura
 ldap accounts context	admin	ca	Context dels comptes LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ca	Prefix del directori d'inici LDAP per defecte (exemple: /home per a /home/usuari)
-ldap default shell (e.g. /bin/bash)	admin	ca	IntËrpret d'ordres LDAP per defecte (ej. /bin/bash)
+ldap default shell (e.g. /bin/bash)	admin	ca	Int√®rpret d'ordres LDAP per defecte (ej. /bin/bash)
 ldap encryption type	admin	ca	Tipus de xifrat LDAP
 ldap groups context	admin	ca	Contexte de grups LDAP
 ldap host	admin	ca	Servidor LDAP
 ldap root password	admin	ca	Contrasenya de superusuari LDAP
 ldap rootdn	admin	ca	LDAP rootdn
-leave empty for no quota	admin	ca	deixar buit si no tÈ cita
+leave empty for no quota	admin	ca	deixar buit si no t√© cita
 leave the category untouched and return back to the list	admin	ca	deixar la categoria intacta i tornar a la llista
 leave the group untouched and return back to the list	admin	ca	Deixar el grup intacte i tornar a la llista
 leaves without saveing	admin	ca	Sortir sense desar
 length<br>rows	admin	ca	Longitud<br>Files
-list config settings	admin	ca	Llista de les opcions de configuraciÛ
+list config settings	admin	ca	Llista de les opcions de configuraci√≥
 list current sessions	admin	ca	Llista de les sessions actuals
 list of current users	admin	ca	Llista d'usuaris presents
 login history	common	ca	Historial d'accessos
-login message	admin	ca	Missatge d'inici de sessiÛ
-login screen	admin	ca	Pantalla d'inici de sessiÛ
-login shell	admin	ca	IntËrpret d'ordres d'inici de sessiÛ
-login time	admin	ca	Hora de ConnexiÛ
-loginid	admin	ca	ID de ConnexiÛ
+login message	admin	ca	Missatge d'inici de sessi√≥
+login screen	admin	ca	Pantalla d'inici de sessi√≥
+login shell	admin	ca	Int√®rpret d'ordres d'inici de sessi√≥
+login time	admin	ca	Hora de Connexi√≥
+loginid	admin	ca	ID de Connexi√≥
 mail settings	admin	ca	Configuracions de Correu
-main email-address	admin	ca	AdreÁa de Correu Principal
+main email-address	admin	ca	Adre√ßa de Correu Principal
 main screen message	admin	ca	Missatge de la Pantalla Principal
 manager	admin	ca	Gestor
-max length of the input [, length of the inputfield (optional)]	admin	ca	longitud m‡xima de l'entrada [, longitud del camp de text (opcional)]
-maximum account id (e.g. 65535 or 1000000)	admin	ca	M‡xim id de compte (ex. 65535 o 1000000)
-maximum entries in click path history	admin	ca	Nombre m‡xim d'entrades a l'historial de pulsacions de rutes
+max length of the input [, length of the inputfield (optional)]	admin	ca	longitud m√†xima de l'entrada [, longitud del camp de text (opcional)]
+maximum account id (e.g. 65535 or 1000000)	admin	ca	M√†xim id de compte (ex. 65535 o 1000000)
+maximum entries in click path history	admin	ca	Nombre m√†xim d'entrades a l'historial de pulsacions de rutes
 message has been updated	admin	ca	el missatge s'ha actualitzat
-method	admin	ca	MËtode
-minimum account id (e.g. 500 or 100, etc.)	admin	ca	MÌnim id de compte (ex. 500 o 100, etc.)
+method	admin	ca	M√®tode
+minimum account id (e.g. 500 or 100, etc.)	admin	ca	M√≠nim id de compte (ex. 500 o 100, etc.)
 minute	admin	ca	Minut
 mode	admin	ca	Mode
 month	admin	ca	Mes
@@ -277,51 +277,51 @@ name must not be empty !!!	admin	ca	El nom no pot estar buit !!!
 new group name	admin	ca	Nou nom de grup
 new name	admin	ca	nou nom
 new password [ leave blank for no change ]	admin	ca	Nova contrasenya [ Deixeu en blanc per a NO canviar ]
-next run	admin	ca	Seg¸ent execuciÛ
+next run	admin	ca	Seg√ºent execuci√≥
 no algorithms available	admin	ca	no hi ha algorismes disponibles
-no alternate email address	admin	ca	sense adreÁa de correu alternativa
+no alternate email address	admin	ca	sense adre√ßa de correu alternativa
 no jobs in the database !!!	admin	ca	No hi ha treballs a la base de dades!!
-no login history exists for this user	admin	ca	No hi ha registres de connexiÛ per a aquest usuari
+no login history exists for this user	admin	ca	No hi ha registres de connexi√≥ per a aquest usuari
 no matches found	admin	ca	Sense resultats
 no modes available	admin	ca	no hi ha modes disponibles
-no permission to add groups	admin	ca	no teniu permÌs per a afegir grups
-no permission to add users	admin	ca	no teniu permÌs per a afegir usuaris
-no permission to create groups	admin	ca	no teniu permÌs per a crear grups
-note: ssl available only if php is compiled with curl support	admin	ca	Nota: "SSL" disponible nomÈs si "PHP" est· compilat amb suport "curl"
-number of row for a multiline inputfield or line of a multi-select-box	admin	ca	n˙mero de files per a un camp de text de mÈs d'una selecciÛ
+no permission to add groups	admin	ca	no teniu perm√≠s per a afegir grups
+no permission to add users	admin	ca	no teniu perm√≠s per a afegir usuaris
+no permission to create groups	admin	ca	no teniu perm√≠s per a crear grups
+note: ssl available only if php is compiled with curl support	admin	ca	Nota: "SSL" disponible nom√©s si "PHP" est√° compilat amb suport "curl"
+number of row for a multiline inputfield or line of a multi-select-box	admin	ca	n√∫mero de files per a un camp de text de m√©s d'una selecci√≥
 order	admin	ca	Ordre
 outbound	admin	ca	Notes
 passthrough	admin	ca	passant
-password for smtp-authentication	admin	ca	Contrasenya per l'autentificaciÛ SMTP
-path information	admin	ca	InformaciÛ de Rutes
+password for smtp-authentication	admin	ca	Contrasenya per l'autentificaci√≥ SMTP
+path information	admin	ca	Informaci√≥ de Rutes
 peer server list	admin	ca	Llista de servidors parells
 peer servers	admin	ca	Servidors Parells
 percent of users that logged out	admin	ca	Percentatge d'usuaris que han sortit
 percent this user has logged out	admin	ca	Percentatge de desconnexions d'aquest usuari
-permission denied	admin	ca	PermÌs denegat
+permission denied	admin	ca	Perm√≠s denegat
 permissions	admin	ca	Permisos
 permissions this group has	admin	ca	Permisos d'aquest grup
-phpinfo	admin	ca	InformaciÛ de PHP
-please enter a name	admin	ca	IntroduÔu un nom
-please enter a name for that server !	admin	ca	IntroduÔu un nom per a aquest sevidor !
+phpinfo	admin	ca	Informaci√≥ de PHP
+please enter a name	admin	ca	Introdu√Øu un nom
+please enter a name for that server !	admin	ca	Introdu√Øu un nom per a aquest sevidor !
 please run setup to become current	admin	ca	Executeu Setup per a actualitzar
 please select	admin	ca	Seleccioneu
 postfix with ldap	admin	ca	Postfix amb LDAP
-preferences	admin	ca	PreferËncies
+preferences	admin	ca	Prefer√®ncies
 primary group	admin	ca	grup principal
 qmaildotmode	admin	ca	mode qmaildot
-quota settings	admin	ca	preferËncies de la cita
+quota settings	admin	ca	prefer√®ncies de la cita
 quota size in mbyte	admin	ca	mida de la cita en MByte
 re-enter password	admin	ca	Torneu a entrar la contrasenya
-read this list of methods.	admin	ca	Llegir aquesta llista de mËtodes
-register application hooks	admin	ca	Registrar "hooks" de l'aplicaciÛ
+read this list of methods.	admin	ca	Llegir aquesta llista de m√®todes
+register application hooks	admin	ca	Registrar "hooks" de l'aplicaci√≥
 remove	admin	ca	esborrar
 remove all users from this group	admin	ca	Esborrar tots els usuaris d'aquest grup
 remove all users from this group ?	admin	ca	Esborrar tots els usuaris d'aquest grup ?
-return to admin mainscreen	admin	ca	tornar a la pantalla principal d'administraciÛ
+return to admin mainscreen	admin	ca	tornar a la pantalla principal d'administraci√≥
 return to view account	admin	ca	Tornar a veure compte
 route all mails to	admin	ca	Direcciona tots els Correus a
-run asynchronous services	admin	ca	Executar serveis asÌncrons
+run asynchronous services	admin	ca	Executar serveis as√≠ncrons
 save the category	admin	ca	guardar la categoria
 save the category and return back to the list	admin	ca	guardar la categoria i tornar a la llista
 saves the changes made and leaves	admin	ca	Desar els canvis fets i sortir
@@ -331,84 +331,84 @@ search groups	admin	ca	Cercar grups
 search peer servers	admin	ca	Cercar servidors parells
 security	admin	ca	Seguretat
 select group managers	admin	ca	Seleccioneu administradors de grup
-select permissions this group will have	admin	ca	Seleccioneu els permisos que tindr‡ aquest grup
-select the parent category. if this is a main category select no category	admin	ca	Seleccioneu la categoria superior. Si Ès una categoria principal, seleccioneu SENSE CATEGORIA
+select permissions this group will have	admin	ca	Seleccioneu els permisos que tindr√† aquest grup
+select the parent category. if this is a main category select no category	admin	ca	Seleccioneu la categoria superior. Si √©s una categoria principal, seleccioneu SENSE CATEGORIA
 select users for inclusion	admin	ca	Seleccioneu usuaris per a incloure
-select where you want to store/retrieve filesystem information	admin	ca	Seleccioneu on voleu emmagatzemar informaciÛ del sistema d'arxius
-select where you want to store/retrieve user accounts	admin	ca	Seleccioneu on voleu emmagatzemar informaciÛ dels comptes d'usuari
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ca	Seleccioneu en quin lloc voleu que aparegui la icona de l'aplicaciÛ a la barra de navegaciÛ, de menor (esquerra) a major (dreta)
+select where you want to store/retrieve filesystem information	admin	ca	Seleccioneu on voleu emmagatzemar informaci√≥ del sistema d'arxius
+select where you want to store/retrieve user accounts	admin	ca	Seleccioneu on voleu emmagatzemar informaci√≥ dels comptes d'usuari
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ca	Seleccioneu en quin lloc voleu que aparegui la icona de l'aplicaci√≥ a la barra de navegaci√≥, de menor (esquerra) a major (dreta)
 selectbox	admin	ca	Llista desplegable
 server %1 has been updated	admin	ca	El servidor %1 ha estat actualitzat
 server list	admin	ca	Llistat de servidors
 server password	admin	ca	Contrasenya del servidor
 server type(mode)	admin	ca	Tipus (mode) del servidor
-server url	admin	ca	AdreÁa URL
+server url	admin	ca	Adre√ßa URL
 server username	admin	ca	Usuari del servidor
-set preference values.	admin	ca	Establir valors per a les preferËncies
-should the login page include a language selectbox (useful for demo-sites) ?	admin	ca	S'hauria d'incloure la selecciÛ d'idioma a la p‡gina d'entrada (˙til per a llocs de prova) ?
+set preference values.	admin	ca	Establir valors per a les prefer√®ncies
+should the login page include a language selectbox (useful for demo-sites) ?	admin	ca	S'hauria d'incloure la selecci√≥ d'idioma a la p√†gina d'entrada (√∫til per a llocs de prova) ?
 show 'powered by' logo on	admin	ca	Mostrar logo de 'mantingut per' a
-show access log	admin	ca	Mostrar registre d'accÈs
-show current action	admin	ca	Mostrar acciÛ actual
+show access log	admin	ca	Mostrar registre d'acc√©s
+show current action	admin	ca	Mostrar acci√≥ actual
 show error log	admin	ca	Mostrar registre d'errors
 show phpinfo()	admin	ca	Mostrar phpinfo()
-show session ip address	admin	ca	Mostar l'adreÁa IP de la sessiÛ
+show session ip address	admin	ca	Mostar l'adre√ßa IP de la sessi√≥
 site	admin	ca	Llocs
-site configuration	common	ca	ConfiguraciÛ del Lloc
+site configuration	common	ca	Configuraci√≥ del Lloc
 soap	admin	ca	SOAP
 sorry, that group name has already been taken.	admin	ca	Aquest nom de grup ja es fa servir.
-sorry, the above users are still a member of the group %1	admin	ca	Els usuaris anteriors encara no sÛn membres del grup %1
-sorry, the follow users are still a member of the group %1	admin	ca	Els usuaris seg¸ents encara sÛn membres del grup %1
+sorry, the above users are still a member of the group %1	admin	ca	Els usuaris anteriors encara no s√≥n membres del grup %1
+sorry, the follow users are still a member of the group %1	admin	ca	Els usuaris seg√ºents encara s√≥n membres del grup %1
 sort the entries	admin	ca	ordenar les entrades
 ssl	admin	ca	ssl
-standard	admin	ca	est‡ndard
-standard imap server	admin	ca	servidor IMAP est‡ndard
-standard pop3 server	admin	ca	servidor POP3 est‡ndard
-standard smtp-server	admin	ca	servidor SMTP est‡ndard
+standard	admin	ca	est√†ndard
+standard imap server	admin	ca	servidor IMAP est√†ndard
+standard pop3 server	admin	ca	servidor POP3 est√†ndard
+standard smtp-server	admin	ca	servidor SMTP est√†ndard
 start testjob!	admin	ca	Iniciar el treball de proves
 submit changes	admin	ca	Enviar canvis
 submit the search string	admin	ca	Enviar la cadena de recerca
 subtype	admin	ca	Subtipus
-template selection	admin	ca	SelecciÛ de plantilla
+template selection	admin	ca	Selecci√≥ de plantilla
 text entry	admin	ca	Entrada de text
-that application name already exists.	admin	ca	Aquest nom d'aplicaciÛ ja existeix.
-that application order must be a number.	admin	ca	L'ordre de la aplicaciÛ ha de ser un nombre.
+that application name already exists.	admin	ca	Aquest nom d'aplicaci√≥ ja existeix.
+that application order must be a number.	admin	ca	L'ordre de la aplicaci√≥ ha de ser un nombre.
 that loginid has already been taken	admin	ca	Aquest nom d'usuari ja es fa servir
 that name has been used already	admin	ca	Aquest nom ja s'ha fet servir
 that server name has been used already !	admin	ca	Aquest nom de servidor ja s'ha fet servir
-the api is current	admin	ca	L'API ja est‡ actualitzada
+the api is current	admin	ca	L'API ja est√† actualitzada
 the api requires an upgrade	admin	ca	L'API necessita actualitzacions
 the groups must include the primary group	admin	ca	Els grups han d'incloure el grup principal
 the login and password can not be the same	admin	ca	El nom d'usuari i la contrasenya NO poden ser iguals
-the loginid can not be more then 8 characters	admin	ca	El nom d'usuari no pot ser mÈs gran de 8 car‡cters
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ca	el nom utilitzat internament (<= 20 car‡cters), si el canvies fas que les dades existents siguin inaccessibles.
+the loginid can not be more then 8 characters	admin	ca	El nom d'usuari no pot ser m√©s gran de 8 car√†cters
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ca	el nom utilitzat internament (<= 20 car√†cters), si el canvies fas que les dades existents siguin inaccessibles.
 the testjob sends you a mail everytime it is called.	admin	ca	El treball de prova us envia un correu cada vegada que s'executa
 the text displayed to the user	admin	ca	el text mostrat a l'usuari
-the two passwords are not the same	admin	ca	Les dues contrasenyes no sÛn iguals
-the users bellow are still members of group %1	admin	ca	Els usuaris seg¸ents encara sÛn membres del grup %1
+the two passwords are not the same	admin	ca	Les dues contrasenyes no s√≥n iguals
+the users bellow are still members of group %1	admin	ca	Els usuaris seg√ºents encara s√≥n membres del grup %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	ca	Ja existeix un grup amb aquest nom.
 they must be removed before you can continue	admin	ca	Aquests han d'esborrar-se per poder continuar
-this application is current	admin	ca	Aquesta aplicaciÛ est‡ al dia
-this application requires an upgrade	admin	ca	Aquesta aplicaciÛ necessita actualitzacions
+this application is current	admin	ca	Aquesta aplicaci√≥ est√† al dia
+this application requires an upgrade	admin	ca	Aquesta aplicaci√≥ necessita actualitzacions
 this category is currently being used by applications as a parent category	admin	ca	Aquesta categoria es fa servir per les aplicacions com a categoria pare.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	ca	Temps d'espera per a les dades de la sessiÛ en segons (per defecte 86400 = 1 dia)
+timeout for application session data in seconds (default 86400 = 1 day)	admin	ca	Temps d'espera per a les dades de la sessi√≥ en segons (per defecte 86400 = 1 dia)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	ca	Temps d'espera per a les sessions en segons (per defecte 14400 = 4 hores)
 times	admin	ca	Vegades
 top	admin	ca	Superior
 total records	admin	ca	Total de Registres
-trust level	admin	ca	Nivell de confianÁa
-trust relationship	admin	ca	Relacions de confianÁa
+trust level	admin	ca	Nivell de confian√ßa
+trust relationship	admin	ca	Relacions de confian√ßa
 type of customfield	admin	ca	Tipus de camp
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ca	En Windows necessites instal∑lar el servei asÌncron %1manualment%2 o utilitzar el mode de sistema alternatiu. Sistema alternatiu significa que les feines nomÈs s'activen desprÈs de cada vista de p‡gina !!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ca	En Windows necessites instal¬∑lar el servei as√≠ncron %1manualment%2 o utilitzar el mode de sistema alternatiu. Sistema alternatiu significa que les feines nom√©s s'activen despr√©s de cada vista de p√†gina !!!
 use cookies to pass sessionid	admin	ca	Usar galetes per a gestionar sessions
-use pure html compliant code (not fully working yet)	admin	ca	Usar codi HTML pur (no Ès totalment funcional encara)
+use pure html compliant code (not fully working yet)	admin	ca	Usar codi HTML pur (no √©s totalment funcional encara)
 use theme	admin	ca	Usar tema
 user accounts	admin	ca	Comptes d'usuari
 user data	admin	ca	Dades de l'usuari
-user for smtp-authentication (leave it empty if no auth required)	admin	ca	Usuari per l'autentificaciÛ SMTP (deixau-ho en blanc si no es requerix autentificaciÛ)
+user for smtp-authentication (leave it empty if no auth required)	admin	ca	Usuari per l'autentificaci√≥ SMTP (deixau-ho en blanc si no es requerix autentificaci√≥)
 user groups	admin	ca	Grups d'usuaris
 userdata	admin	ca	Dades de l'usuari
-users choice	admin	ca	A elecciÛ de l'usuari
-view access log	admin	ca	Veure registre d'accÈs
+users choice	admin	ca	A elecci√≥ de l'usuari
+view access log	admin	ca	Veure registre d'acc√©s
 view account	admin	ca	Veure compte
 view category	admin	ca	Veure categoria
 view error log	admin	ca	Veure registre d'errors
@@ -416,23 +416,23 @@ view sessions	admin	ca	Veure sessions
 view this user	admin	ca	Veure aquest usuari
 view user account	admin	ca	Veure compte d'usuari
 who would you like to transfer all records owned by the deleted user to?	admin	ca	A qui voleu transferir TOTS els registres que pertanyen a l'usuari esborrat?
-would you like egroupware to cache the egw info array ?	admin	ca	Voleu que eGroupWare desi en memÚria cau la taula d'informaciÛ d'egw ?
-would you like egroupware to cache the phpgw info array ?	admin	ca	Voleu que eGroupWare desi en memÚria cau la taula d'informaciÛ phpgw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	ca	Voleu que eGroupWare comprovi si hi ha una nova versiÛ<br> quan un administrador es connecti ?
+would you like egroupware to cache the egw info array ?	admin	ca	Voleu que eGroupWare desi en mem√≤ria cau la taula d'informaci√≥ d'egw ?
+would you like egroupware to cache the phpgw info array ?	admin	ca	Voleu que eGroupWare desi en mem√≤ria cau la taula d'informaci√≥ phpgw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	ca	Voleu que eGroupWare comprovi si hi ha una nova versi√≥<br> quan un administrador es connecti ?
 would you like egroupware to check for new application versions when admins login ?	admin	ca	Voleu que eGroupWare comprovi si hi ha noves versions de les aplicacions<br> quan un administrador es connecti ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	ca	Voleu carregar autom‡ticament nous arxius d'idioma (en iniciar la sessiÛ)?
-would you like to show each application's upgrade status ?	admin	ca	Voleu mostrar l'estat d'actualitzaciÛ de cada aplicaciÛ ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	ca	Voleu carregar autom√†ticament nous arxius d'idioma (en iniciar la sessi√≥)?
+would you like to show each application's upgrade status ?	admin	ca	Voleu mostrar l'estat d'actualitzaci√≥ de cada aplicaci√≥ ?
 xml-rpc	admin	ca	XML-RPC
-you have entered an invalid expiration date	admin	ca	Heu introduÔt una data de caducitat incorrecta
+you have entered an invalid expiration date	admin	ca	Heu introdu√Øt una data de caducitat incorrecta
 you have to enter a name, to create a new field!!!	admin	ca	Heu d'introduir un nom, per a crear un nou camp!!!
-you must add at least 1 permission or group to this account	admin	ca	Heu d'afegir com a mÌnim un permÌs o grup per a aquest compte
+you must add at least 1 permission or group to this account	admin	ca	Heu d'afegir com a m√≠nim un perm√≠s o grup per a aquest compte
 you must enter a group name.	admin	ca	Heu d'introduir un nom de grup
 you must enter a lastname	admin	ca	Heu d'introduir els cognoms
 you must enter a loginid	admin	ca	Heu d'introduir un nom d'usuari
-you must enter an application name and title.	admin	ca	Heu d'introduir un nom i tÌtol per a l'aplicaciÛ.
-you must enter an application name.	admin	ca	Heu d'introduir un nom d'aplicaciÛ.
-you must enter an application title.	admin	ca	Heu d'introduÔr un tÌtol per a l'aplicaciÛ.
+you must enter an application name and title.	admin	ca	Heu d'introduir un nom i t√≠tol per a l'aplicaci√≥.
+you must enter an application name.	admin	ca	Heu d'introduir un nom d'aplicaci√≥.
+you must enter an application title.	admin	ca	Heu d'introdu√Ør un t√≠tol per a l'aplicaci√≥.
 you must select a file type	admin	ca	Heu de seleccionar un tipus d'arxiu
 you will need to remove the subcategories before you can delete this category	admin	ca	Heu d'esborrar les subcategories abans de poder esborrar aquesta categoria !
 
-your session could not be verified.	admin	ca	La vostra sessiÛ no s'ha pogut verificar.
+your session could not be verified.	admin	ca	La vostra sessi√≥ no s'ha pogut verificar.

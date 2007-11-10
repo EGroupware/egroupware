@@ -77,7 +77,7 @@ do you want to be notified about new or changed appointments? you be notified ab
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	eu	Zure egutegiko gertakarien laburpena posta bidez jaso nahi duzu? Laburpena zure posta helbidera bidaliko da goizero baldin eta zure eguneko egutegian gertakaririk baldin badaukazu.
 do you wish to autoload calendar holidays files dynamically?	admin	eu	Jai egutegia dinamikoki internetetik kargatu nahi duzu?
 download	calendar	eu	Deskargatu
-download this event as ical	calendar	eu	Gertakari hau deskargatu ¡Cal moduan
+download this event as ical	calendar	eu	Gertakari hau deskargatu Â¡Cal moduan
 duration of the meeting	calendar	eu	Bileraren iraupena
 edit exception	calendar	eu	Salbuespena editatu
 edit series	calendar	eu	Serieak editatu
@@ -91,7 +91,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	eu	Bileraren 
 enddate of the export	calendar	eu	Esportazioaren amaiera data
 ends	calendar	eu	Bukaera
 error adding the alarm	calendar	eu	Errorea alarma gehitzean
-error: importing the ical	calendar	eu	Errorea: ¡Cal fitxategia inportatzerakoan
+error: importing the ical	calendar	eu	Errorea: Â¡Cal fitxategia inportatzerakoan
 error: no participants selected !!!	calendar	eu	Errorea: ez duzu partehartzailerik aukeratu
 error: saving the event !!!	calendar	eu	Errorea: gertakaria gordetzerakoan
 error: starttime has to be before the endtime !!!	calendar	eu	Errorea: hasiera ordua amaiera ordua baina lehenago izan behar da
@@ -137,12 +137,12 @@ holidays	calendar	eu	Jaiegunak
 hours	calendar	eu	orduak
 how far to search (from startdate)	calendar	eu	zenbait bilatu (hasiera datatik)
 how many minutes should each interval last?	calendar	eu	Zenbat minutuko denbora tarteak nahi dituzu?
-ical	calendar	eu	¡Cal
-ical / rfc2445	calendar	eu	¡Cal / rfc2445
-ical export	calendar	eu	¡Cal esportatu
-ical file	calendar	eu	¡Cal fitxategia
-ical import	calendar	eu	¡Cal inportatu
-ical successful imported	calendar	eu	¡Cal fitxategia arazorik gabe inportatu da
+ical	calendar	eu	Â¡Cal
+ical / rfc2445	calendar	eu	Â¡Cal / rfc2445
+ical export	calendar	eu	Â¡Cal esportatu
+ical file	calendar	eu	Â¡Cal fitxategia
+ical import	calendar	eu	Â¡Cal inportatu
+ical successful imported	calendar	eu	Â¡Cal fitxategia arazorik gabe inportatu da
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	eu	Jai egunak astebukaeretan erortzen badira ondorengo astelehena jai bihurtuko da.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	eu	Hemen pasahitza ez baduzu ezartzen, zure URLa dakien edonork izango du sarrera zure egutegiko ordu libre/lanpetu ikuspegira.
 ignore conflict	calendar	eu	Gatazka alde batera utzi
@@ -305,7 +305,7 @@ you can only set a year or a occurence !!!	calendar	eu	Bakarrik urtea edo zebate
 you do not have permission to read this record!	calendar	eu	Ez daukazu baimenik erregistro hau irakurtzeko!
 you have a meeting scheduled for %1	calendar	eu	Bilera bat daukazu %1 programatua
 you have been disinvited from the meeting at %1	calendar	eu	%1en bilerara gobidatua egoteari utzi diozu
-you need to select an ical file first	calendar	eu	Lehenago ¡Cal fitxategi bat aukeratu behar duzu
+you need to select an ical file first	calendar	eu	Lehenago Â¡Cal fitxategi bat aukeratu behar duzu
 you need to set either a day or a occurence !!!	calendar	eu	Egun bat edo ateraldi bat jarri behar duzu
 your meeting scheduled for %1 has been canceled	calendar	eu	%1 programatutako bilera ezeztatu egin da
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	eu	%1 programatutako bilera %2 programatu da

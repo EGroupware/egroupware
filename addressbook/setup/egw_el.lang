@@ -1,350 +1,350 @@
-%1 added	addressbook	el	%1 προστέθηκε
-%1 contact(s) %2	addressbook	el	%1 επαφή(ές) %2
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	el	%1 επαφή(ές) %2, %3 απέτυχαν εξαιτίας ανεπαρκών δικαιωμάτων !!!
-%1 fields in %2 other organisation member(s) changed	addressbook	el	%1 πεδία σε %2 άλλου οργανισμού μέλος(η) άλλαξαν
-%1 records imported	addressbook	el	%1 εγγραφές εισήχθησαν
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	el	%1 εγγραφές αναγνώσθηκαν (δεν εισηχθησαν ακόμη, μπορείτε να %2επιστρέψετε%3 και να ξετσεκάρετε τη Δοκιμαστική Εισαγωγή)
-%1 starts with '%2'	addressbook	el	%1 ξεκινά με '%2'
-%s please calculate the result	addressbook	el	%s παρακαλώ υπολογίστε το αποτέλεσμα
-(e.g. 1969)	addressbook	el	(π.χ. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	el	<b>Κανένας τύπος μετατροπής <none> δεν εντοπίστηκε.</b> Παρακαλώ επιλέξτε έναν τύπο μετατροπής από τον κατάλογο
-@-eval() is only availible to admins!!!	addressbook	el	@-eval() διατίθεται μόνο σε διαχειριστές!!!
-account repository	admin	el	Ταμείο λογαριασμού
-accounts	addressbook	el	Λογαριασμοί
-actions	addressbook	el	Ενέργειες
-add %1	addressbook	el	Προσθέστε %1
-add a contact to this organisation	addressbook	el	Προσθέστε μία επαφή σε αυτόν τον οργανισμό
-add a new contact	addressbook	el	Προσθέστε μία νέα επαφή
-add a new list	addressbook	el	Προσθέστε μία νέα λίστα
-add a single entry by passing the fields.	addressbook	el	Προσθέστε ένα λήμμα διαβαίνοντας τα πεδία.
-add business email of whole distribution list?	addressbook	el	Προσθήκη email εργασίας ολόκληρης της λίστας διανομής;
-add custom field	addressbook	el	Πρόσθεση Τυχαίου Πεδίου
-add to distribution list:	addressbook	el	Προσθήκη στη λίστα διανομής:
-added by synchronisation	addressbook	el	προστέθηκε συγχρονισμένα
-added to distribution list	addressbook	el	προστέθηκε στη λίστα διανομής
-additional information about using ldap as contact repository	admin	el	Επιπρόσθετες πληροφορίες για τη χρήση του LDAP ως αποθήκη επαφής
-address book	common	el	Επαφές
-address book - vcard in	addressbook	el	Επαφές - VCard in
-address book - view	addressbook	el	Επαφές - εμφάνιση
-address line 2	addressbook	el	Γραμμή Διευθύνσεων 2
-address type	addressbook	el	Τύπος Διεύθυνσης
-addressbook	common	el	Επαφές
-addressbook csv export	addressbook	el	CSV εξαγωγή επαφών
-addressbook menu	addressbook	el	Μενού επαφών
-addressbook preferences	addressbook	el	Προτιμήσεις Επαφών
-addressbook the contact should be saved to	addressbook	el	Σε ποιο βιβλίο διεθύνσεων να αποθηκευτεί η επαφή
-addressbook-fieldname	addressbook	el	Επαφές-Πεδίο ονόματος
-addvcard	addressbook	el	Προσθήκη VCard
-advanced search	addressbook	el	Αναζήτηση για προχωρημένους
-all contacts	addressbook	el	Όλες οι επαφές
-allow users to maintain their own account-data	admin	el	Επιτρέψτε στους χρήστες να διατηρούν τα δικά τους στοιχεία λογαριασμού
-alt. csv import	addressbook	el	Εναλλακτική εισαγωγή CSV
-always	addressbook	el	πάντα
-apply changes to all members, whose fields have the same previous content	addressbook	el	Εφαρμογή των αλλαγών σε όλα τα μέλη, των οποίων τα πεδία έχουν το ίδιο με προηγουμένως περιεχόμενο
-apply the action on the whole query, not only the shown contacts!!!	addressbook	el	Εφαρμογή της ενέργειας σε όλες τις απορίες, ΟΧΙ μόνο των εμφανιζόμενων επαφών!!!
-are you shure you want to delete this contact?	addressbook	el	Είστε σίγουρος ότι θέλετε να διαγράψετε αυτήν την επαφή;
-are you sure you want to delete this field?	addressbook	el	Θέλετε σίγουρα να διαγραφεί αυτό το πεδίο;
-assistent	addressbook	el	Βοηθός
-assistent phone	addressbook	el	τηλέφωνο ανάγκης
-birthday	common	el	Ημέρα Γενεθλίων
-birthdays	common	el	Γενέθλια
-blank	addressbook	el	Κενό
-business	common	el	Εργασία
-business address	addressbook	el	Διεύθυνση εργασίας
-business city	addressbook	el	Πόλη εργασίας
-business country	addressbook	el	Χώρα Εργασίας
-business email	addressbook	el	EMail Εργασίας
-business fax	addressbook	el	Fax Εργασίας
-business phone	addressbook	el	Τηλέφωνο εργασίας
-business state	addressbook	el	Νομός εργασίας
-business street	addressbook	el	Διεύθυνση εργασίας
-business zip code	addressbook	el	Τ.Κ. εργασίας
-calendar fields:	addressbook	el	Πεδία Ημερολογίου:
-calendar uri	addressbook	el	Ημερολόγιο URI
-can be changed via setup >> configuration	admin	el	Μπορεί  να αλλάξει μέσω Setup >> Configuration
-car phone	addressbook	el	Τηλέφωνο αυτοκινήτου
-categories, notes, ...	addressbook	el	Κατηγορίες, Σημειώσεις, ...
-cell phone	addressbook	el	Κινητό τηλέφωνο
-change all organisation members	addressbook	el	Αλλαγή όλων των μελών του οργανισμού
-charset for the csv export	addressbook	el	Κωδικοσελίδα για την CSV εξαγωγή
-charset of file	addressbook	el	Κωδικοσελίδα αρχείου
-check all	addressbook	el	Έλεγχος όλων
-choose an icon for this contact type	admin	el	Επιλέξτε μία εικόνα για αυτόν τον τύπο επαφής
-choose owner of imported data	addressbook	el	Επιλέξτε ιδιοκτήτη των εισαγόμενων δεδομένων
-chosse an etemplate for this contact type	admin	el	Επιλέξτε μία eΤαμπλέτα για αυτόν τον τύπο επαφής
-city	common	el	Πόλη
-company	common	el	Εταιρία
-company name	addressbook	el	Ονομα εταιρίας
-configuration	common	el	Διαμόρφωση
-contact	common	el	Επαφή
-contact application	admin	el	Αίτηση επαφής
-contact copied	addressbook	el	Επαφή αντιγράφηκε
-contact deleted	addressbook	el	Επαφή διεγράφη
-contact fields to show	addressbook	el	Πεδία επαφών προς προβολή
-contact fields:	addressbook	el	Πεδία επαφών:
-contact id	addressbook	el	Ταυτότητα επαφής
-contact modified by %1 at %2	addressbook	el	Επαφή τροποποιήθηκε από %1 στις %2
-contact not found!	addressbook	el	Δεν βρέθηκε η επαφή!
-contact repository	admin	el	Αποθήκη επαφής
-contact saved	addressbook	el	Επαφή αποθηκεύτηκε
-contact settings	admin	el	Ρυθμίσεις επαφής
-contactform	addressbook	el	Φόρμα επαφής
-contacts and account contact-data to ldap	admin	el	επαφές και επαφή-στοιχεία λογαριασμού προς LDAP
-contacts to ldap	admin	el	επαφές προς LDAP
-contacts to ldap, account contact-data to sql	admin	el	επαφές προς LDAP, επαφή-στοιχεία λογαριασμού προς SQL
-contains	addressbook	el	περιέχει
-copied by %1, from record #%2.	addressbook	el	Αντιγράφτηκε από %1, από την εγγραφή #%2.
-copy a contact and edit the copy	addressbook	el	Αντιγραφή επαφής και επεξεργασία αντιγράφου
-country	common	el	Χώρα
-create new links	addressbook	el	Δημιουργία νέων συνδέσμων
-created	addressbook	el	Δημιουργήθηκε
-credit	addressbook	el	Πίστωση
-csv-fieldname	addressbook	el	Ονομα πεδίου  CSV
-csv-filename	addressbook	el	Ονομα αρχείου CSV
-custom	addressbook	el	Προσαρμογή
-custom etemplate for the contactform	addressbook	el	Προσαρμογή eΤαμπλέτας για τη φόρμα επαφών
-custom fields	addressbook	el	Προσαρμοσμένα πεδία
-debug output in browser	addressbook	el	Αποσφαλμάτωση εξαγωγής στο φυλλομετρητή
-default	addressbook	el	προκαθορισμένο
-default address format	addressbook	el	Προκαθορισμένη μορφή διευθύνσεων
-default addressbook for adding contacts	addressbook	el	Προκαθορισμένο βιβλίο διευθύνσεων για προσθήκη επαφών
-default filter	addressbook	el	Προκαθορισμένο φίλτρο
-delete a single entry by passing the id.	addressbook	el	Διαγραφή μιας καταχώρησης με εισαγωγή του id.
-delete selected distribution list!	addressbook	el	Διαγραφή επιλεγμένης λίστας διανομής!
-delete this contact	addressbook	el	Διαγραφή αυτής της επαφής
-delete this organisation including all its contacts	addressbook	el	Διαγραφή αυτού του οργανισμού συμπεριλαμβανομένων και ΟΛΩΝ των επαφών του
-deleted	addressbook	el	διεγράφη
-deletes the photo	addressbook	el	Διαγραφή φωτογραφίας
-department	common	el	Τμήμα
-departments	addressbook	el	τμήματα
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	el	Δείχνει μία υπενθύμιση γενεθλίων στην αρχική σελίδα (η σελίδα που εμφανίζεται όταν εισέρχεστε στο eGroupWare ή όταν κάνετε κλικ στο εικονίδιο αρχικής σελίδας).
-distribution list deleted	addressbook	el	Λίστα διανομής διεγράφη
-distribution lists	addressbook	el	Λίστες διανομής
-do your really want to delete this contact?	addressbook	el	Θέλετε πραγματικά να διαγράψετε αυτήν την επαφή;
-doesn't matter	addressbook	el	δεν έχει σημασία
-domestic	addressbook	el	Εσωτερικός
-don't hide empty columns	addressbook	el	Μην αποκρύπτετε κενές στήλες
-download	addressbook	el	Καταβίβαση
-download export file (uncheck to debug output in browser)	addressbook	el	Καταβίβαση αρχείου εξαγωγής (Ξετσεκάρετε για αποσφαλμάτωση εξαγωγής στο φυλλομετρητή)
-download this contact as vcard file	addressbook	el	φορτώστε αυτήν την επαφή ως vCard αρχείο
-duration	addressbook	el	Διάρκεια
-edit custom field	addressbook	el	Επεξεργασία προσαρμοσμένου πεδίου
-edit custom fields	admin	el	Επεξεργασία προσαρμοσμένων πεδίων
-edit extra account-data in the addressbook	admin	el	Επεξεργασία επιπλέον στοιχείων λογαριασμού στο βιβλίο διευθύνσεων
-edit phonenumbers -	addressbook	el	Επεξαργασία αριθμών τηλεφώνων
-either the configured email addesses are wrong or the mail configuration.	addressbook	el	Είτε οι διαμορφωμένες διευθύνσεις των email είναι λάθος είτε η διαμόρφωση του μηνύματος.
+%1 added	addressbook	el	%1 Ο€ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ
+%1 contact(s) %2	addressbook	el	%1 ΞµΟ€Ξ±Ο†Ξ®(Ξ­Ο‚) %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	el	%1 ΞµΟ€Ξ±Ο†Ξ®(Ξ­Ο‚) %2, %3 Ξ±Ο€Ξ­Ο„Ο…Ο‡Ξ±Ξ½ ΞµΞΎΞ±ΞΉΟ„Ξ―Ξ±Ο‚ Ξ±Ξ½ΞµΟ€Ξ±ΟΞΊΟΞ½ Ξ΄ΞΉΞΊΞ±ΞΉΟ‰ΞΌΞ¬Ο„Ο‰Ξ½ !!!
+%1 fields in %2 other organisation member(s) changed	addressbook	el	%1 Ο€ΞµΞ΄Ξ―Ξ± ΟƒΞµ %2 Ξ¬Ξ»Ξ»ΞΏΟ… ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΟ ΞΌΞ­Ξ»ΞΏΟ‚(Ξ·) Ξ¬Ξ»Ξ»Ξ±ΞΎΞ±Ξ½
+%1 records imported	addressbook	el	%1 ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚ ΞµΞΉΟƒΞ®Ο‡ΞΈΞ·ΟƒΞ±Ξ½
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	el	%1 ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚ Ξ±Ξ½Ξ±Ξ³Ξ½ΟΟƒΞΈΞ·ΞΊΞ±Ξ½ (Ξ΄ΞµΞ½ ΞµΞΉΟƒΞ·Ο‡ΞΈΞ·ΟƒΞ±Ξ½ Ξ±ΞΊΟΞΌΞ·, ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± %2ΞµΟ€ΞΉΟƒΟ„ΟΞ­ΟΞµΟ„Ξµ%3 ΞΊΞ±ΞΉ Ξ½Ξ± ΞΎΞµΟ„ΟƒΞµΞΊΞ¬ΟΞµΟ„Ξµ Ο„Ξ· Ξ”ΞΏΞΊΞΉΞΌΞ±ΟƒΟ„ΞΉΞΊΞ® Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®)
+%1 starts with '%2'	addressbook	el	%1 ΞΎΞµΞΊΞΉΞ½Ξ¬ ΞΌΞµ '%2'
+%s please calculate the result	addressbook	el	%s Ο€Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο…Ο€ΞΏΞ»ΞΏΞ³Ξ―ΟƒΟ„Ξµ Ο„ΞΏ Ξ±Ο€ΞΏΟ„Ξ­Ξ»ΞµΟƒΞΌΞ±
+(e.g. 1969)	addressbook	el	(Ο€.Ο‡. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	el	<b>ΞΞ±Ξ½Ξ­Ξ½Ξ±Ο‚ Ο„ΟΟ€ΞΏΟ‚ ΞΌΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ®Ο‚ <none> Ξ΄ΞµΞ½ ΞµΞ½Ο„ΞΏΟ€Ξ―ΟƒΟ„Ξ·ΞΊΞµ.</b> Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ±Ξ½ Ο„ΟΟ€ΞΏ ΞΌΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ®Ο‚ Ξ±Ο€Ο Ο„ΞΏΞ½ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ
+@-eval() is only availible to admins!!!	addressbook	el	@-eval() Ξ΄ΞΉΞ±Ο„Ξ―ΞΈΞµΟ„Ξ±ΞΉ ΞΌΟΞ½ΞΏ ΟƒΞµ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ­Ο‚!!!
+account repository	admin	el	Ξ¤Ξ±ΞΌΞµΞ―ΞΏ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+accounts	addressbook	el	Ξ›ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΞ―
+actions	addressbook	el	Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚
+add %1	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ­ΟƒΟ„Ξµ %1
+add a contact to this organisation	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ­ΟƒΟ„Ξµ ΞΌΞ―Ξ± ΞµΟ€Ξ±Ο†Ξ® ΟƒΞµ Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΟ
+add a new contact	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ­ΟƒΟ„Ξµ ΞΌΞ―Ξ± Ξ½Ξ­Ξ± ΞµΟ€Ξ±Ο†Ξ®
+add a new list	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ­ΟƒΟ„Ξµ ΞΌΞ―Ξ± Ξ½Ξ­Ξ± Ξ»Ξ―ΟƒΟ„Ξ±
+add a single entry by passing the fields.	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ­ΟƒΟ„Ξµ Ξ­Ξ½Ξ± Ξ»Ξ®ΞΌΞΌΞ± Ξ΄ΞΉΞ±Ξ²Ξ±Ξ―Ξ½ΞΏΞ½Ο„Ξ±Ο‚ Ο„Ξ± Ο€ΞµΞ΄Ξ―Ξ±.
+add business email of whole distribution list?	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· email ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΞΏΞ»ΟΞΊΞ»Ξ·ΟΞ·Ο‚ Ο„Ξ·Ο‚ Ξ»Ξ―ΟƒΟ„Ξ±Ο‚ Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚;
+add custom field	addressbook	el	Ξ ΟΟΟƒΞΈΞµΟƒΞ· Ξ¤Ο…Ο‡Ξ±Ξ―ΞΏΟ… Ξ ΞµΞ΄Ξ―ΞΏΟ…
+add to distribution list:	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚:
+added by synchronisation	addressbook	el	Ο€ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ ΟƒΟ…Ξ³Ο‡ΟΞΏΞ½ΞΉΟƒΞΌΞ­Ξ½Ξ±
+added to distribution list	addressbook	el	Ο€ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚
+additional information about using ldap as contact repository	admin	el	Ξ•Ο€ΞΉΟ€ΟΟΟƒΞΈΞµΟ„ΞµΟ‚ Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ Ξ³ΞΉΞ± Ο„Ξ· Ο‡ΟΞ®ΟƒΞ· Ο„ΞΏΟ… LDAP Ο‰Ο‚ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞ· ΞµΟ€Ξ±Ο†Ξ®Ο‚
+address book	common	el	Ξ•Ο€Ξ±Ο†Ξ­Ο‚
+address book - vcard in	addressbook	el	Ξ•Ο€Ξ±Ο†Ξ­Ο‚ - VCard in
+address book - view	addressbook	el	Ξ•Ο€Ξ±Ο†Ξ­Ο‚ - ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·
+address line 2	addressbook	el	Ξ“ΟΞ±ΞΌΞΌΞ® Ξ”ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ 2
+address type	addressbook	el	Ξ¤ΟΟ€ΞΏΟ‚ Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·Ο‚
+addressbook	common	el	Ξ•Ο€Ξ±Ο†Ξ­Ο‚
+addressbook csv export	addressbook	el	CSV ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ® ΞµΟ€Ξ±Ο†ΟΞ½
+addressbook menu	addressbook	el	ΞΞµΞ½ΞΏΟ ΞµΟ€Ξ±Ο†ΟΞ½
+addressbook preferences	addressbook	el	Ξ ΟΞΏΟ„ΞΉΞΌΞ®ΟƒΞµΞΉΟ‚ Ξ•Ο€Ξ±Ο†ΟΞ½
+addressbook the contact should be saved to	addressbook	el	Ξ£Ξµ Ο€ΞΏΞΉΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΞΈΟΞ½ΟƒΞµΟ‰Ξ½ Ξ½Ξ± Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟ…Ο„ΞµΞ― Ξ· ΞµΟ€Ξ±Ο†Ξ®
+addressbook-fieldname	addressbook	el	Ξ•Ο€Ξ±Ο†Ξ­Ο‚-Ξ ΞµΞ΄Ξ―ΞΏ ΞΏΞ½ΟΞΌΞ±Ο„ΞΏΟ‚
+addvcard	addressbook	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· VCard
+advanced search	addressbook	el	Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ³ΞΉΞ± Ο€ΟΞΏΟ‡Ο‰ΟΞ·ΞΌΞ­Ξ½ΞΏΟ…Ο‚
+all contacts	addressbook	el	ΞΞ»ΞµΟ‚ ΞΏΞΉ ΞµΟ€Ξ±Ο†Ξ­Ο‚
+allow users to maintain their own account-data	admin	el	Ξ•Ο€ΞΉΟ„ΟΞ­ΟΟ„Ξµ ΟƒΟ„ΞΏΟ…Ο‚ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ο„Ξ·ΟΞΏΟΞ½ Ο„Ξ± Ξ΄ΞΉΞΊΞ¬ Ο„ΞΏΟ…Ο‚ ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+alt. csv import	addressbook	el	Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±ΞΊΟ„ΞΉΞΊΞ® ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® CSV
+always	addressbook	el	Ο€Ξ¬Ξ½Ο„Ξ±
+apply changes to all members, whose fields have the same previous content	addressbook	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ® Ο„Ο‰Ξ½ Ξ±Ξ»Ξ»Ξ±Ξ³ΟΞ½ ΟƒΞµ ΟΞ»Ξ± Ο„Ξ± ΞΌΞ­Ξ»Ξ·, Ο„Ο‰Ξ½ ΞΏΟ€ΞΏΞ―Ο‰Ξ½ Ο„Ξ± Ο€ΞµΞ΄Ξ―Ξ± Ξ­Ο‡ΞΏΟ…Ξ½ Ο„ΞΏ Ξ―Ξ΄ΞΉΞΏ ΞΌΞµ Ο€ΟΞΏΞ·Ξ³ΞΏΟ…ΞΌΞ­Ξ½Ο‰Ο‚ Ο€ΞµΟΞΉΞµΟ‡ΟΞΌΞµΞ½ΞΏ
+apply the action on the whole query, not only the shown contacts!!!	addressbook	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ® Ο„Ξ·Ο‚ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞ±Ο‚ ΟƒΞµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ±Ο€ΞΏΟΞ―ΞµΟ‚, ΞΞ§Ξ™ ΞΌΟΞ½ΞΏ Ο„Ο‰Ξ½ ΞµΞΌΟ†Ξ±Ξ½ΞΉΞ¶ΟΞΌΞµΞ½Ο‰Ξ½ ΞµΟ€Ξ±Ο†ΟΞ½!!!
+are you shure you want to delete this contact?	addressbook	el	Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ±Ο…Ο„Ξ®Ξ½ Ο„Ξ·Ξ½ ΞµΟ€Ξ±Ο†Ξ®;
+are you sure you want to delete this field?	addressbook	el	ΞΞ­Ξ»ΞµΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞ± Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞµΞ― Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ;
+assistent	addressbook	el	Ξ’ΞΏΞ·ΞΈΟΟ‚
+assistent phone	addressbook	el	Ο„Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ Ξ±Ξ½Ξ¬Ξ³ΞΊΞ·Ο‚
+birthday	common	el	Ξ—ΞΌΞ­ΟΞ± Ξ“ΞµΞ½ΞµΞΈΞ»Ξ―Ο‰Ξ½
+birthdays	common	el	Ξ“ΞµΞ½Ξ­ΞΈΞ»ΞΉΞ±
+blank	addressbook	el	ΞΞµΞ½Ο
+business	common	el	Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±
+business address	addressbook	el	Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business city	addressbook	el	Ξ ΟΞ»Ξ· ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business country	addressbook	el	Ξ§ΟΟΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business email	addressbook	el	EMail Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business fax	addressbook	el	Fax Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business phone	addressbook	el	Ξ¤Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business state	addressbook	el	ΞΞΏΞΌΟΟ‚ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business street	addressbook	el	Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+business zip code	addressbook	el	Ξ¤.Ξ. ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+calendar fields:	addressbook	el	Ξ ΞµΞ΄Ξ―Ξ± Ξ—ΞΌΞµΟΞΏΞ»ΞΏΞ³Ξ―ΞΏΟ…:
+calendar uri	addressbook	el	Ξ—ΞΌΞµΟΞΏΞ»ΟΞ³ΞΉΞΏ URI
+can be changed via setup >> configuration	admin	el	ΞΟ€ΞΏΟΞµΞ―  Ξ½Ξ± Ξ±Ξ»Ξ»Ξ¬ΞΎΞµΞΉ ΞΌΞ­ΟƒΟ‰ Setup >> Configuration
+car phone	addressbook	el	Ξ¤Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ Ξ±Ο…Ο„ΞΏΞΊΞΉΞ½Ξ®Ο„ΞΏΟ…
+categories, notes, ...	addressbook	el	ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚, Ξ£Ξ·ΞΌΞµΞΉΟΟƒΞµΞΉΟ‚, ...
+cell phone	addressbook	el	ΞΞΉΞ½Ξ·Ο„Ο Ο„Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ
+change all organisation members	addressbook	el	Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ ΞΌΞµΞ»ΟΞ½ Ο„ΞΏΟ… ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΟ
+charset for the csv export	addressbook	el	ΞΟ‰Ξ΄ΞΉΞΊΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ± Ξ³ΞΉΞ± Ο„Ξ·Ξ½ CSV ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®
+charset of file	addressbook	el	ΞΟ‰Ξ΄ΞΉΞΊΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+check all	addressbook	el	ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ ΟΞ»Ο‰Ξ½
+choose an icon for this contact type	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞ―Ξ± ΞµΞΉΞΊΟΞ½Ξ± Ξ³ΞΉΞ± Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ ΞµΟ€Ξ±Ο†Ξ®Ο‚
+choose owner of imported data	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΉΞ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ· Ο„Ο‰Ξ½ ΞµΞΉΟƒΞ±Ξ³ΟΞΌΞµΞ½Ο‰Ξ½ Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½
+chosse an etemplate for this contact type	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞ―Ξ± eΞ¤Ξ±ΞΌΟ€Ξ»Ξ­Ο„Ξ± Ξ³ΞΉΞ± Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ ΞµΟ€Ξ±Ο†Ξ®Ο‚
+city	common	el	Ξ ΟΞ»Ξ·
+company	common	el	Ξ•Ο„Ξ±ΞΉΟΞ―Ξ±
+company name	addressbook	el	ΞΞ½ΞΏΞΌΞ± ΞµΟ„Ξ±ΞΉΟΞ―Ξ±Ο‚
+configuration	common	el	Ξ”ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ·
+contact	common	el	Ξ•Ο€Ξ±Ο†Ξ®
+contact application	admin	el	Ξ‘Ξ―Ο„Ξ·ΟƒΞ· ΞµΟ€Ξ±Ο†Ξ®Ο‚
+contact copied	addressbook	el	Ξ•Ο€Ξ±Ο†Ξ® Ξ±Ξ½Ο„ΞΉΞ³ΟΞ¬Ο†Ξ·ΞΊΞµ
+contact deleted	addressbook	el	Ξ•Ο€Ξ±Ο†Ξ® Ξ΄ΞΉΞµΞ³ΟΞ¬Ο†Ξ·
+contact fields to show	addressbook	el	Ξ ΞµΞ΄Ξ―Ξ± ΞµΟ€Ξ±Ο†ΟΞ½ Ο€ΟΞΏΟ‚ Ο€ΟΞΏΞ²ΞΏΞ»Ξ®
+contact fields:	addressbook	el	Ξ ΞµΞ΄Ξ―Ξ± ΞµΟ€Ξ±Ο†ΟΞ½:
+contact id	addressbook	el	Ξ¤Ξ±Ο…Ο„ΟΟ„Ξ·Ο„Ξ± ΞµΟ€Ξ±Ο†Ξ®Ο‚
+contact modified by %1 at %2	addressbook	el	Ξ•Ο€Ξ±Ο†Ξ® Ο„ΟΞΏΟ€ΞΏΟ€ΞΏΞΉΞ®ΞΈΞ·ΞΊΞµ Ξ±Ο€Ο %1 ΟƒΟ„ΞΉΟ‚ %2
+contact not found!	addressbook	el	Ξ”ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞµ Ξ· ΞµΟ€Ξ±Ο†Ξ®!
+contact repository	admin	el	Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞ· ΞµΟ€Ξ±Ο†Ξ®Ο‚
+contact saved	addressbook	el	Ξ•Ο€Ξ±Ο†Ξ® Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΟ„Ξ·ΞΊΞµ
+contact settings	admin	el	Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ®Ο‚
+contactform	addressbook	el	Ξ¦ΟΟΞΌΞ± ΞµΟ€Ξ±Ο†Ξ®Ο‚
+contacts and account contact-data to ldap	admin	el	ΞµΟ€Ξ±Ο†Ξ­Ο‚ ΞΊΞ±ΞΉ ΞµΟ€Ξ±Ο†Ξ®-ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ Ο€ΟΞΏΟ‚ LDAP
+contacts to ldap	admin	el	ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ο€ΟΞΏΟ‚ LDAP
+contacts to ldap, account contact-data to sql	admin	el	ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ο€ΟΞΏΟ‚ LDAP, ΞµΟ€Ξ±Ο†Ξ®-ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ Ο€ΟΞΏΟ‚ SQL
+contains	addressbook	el	Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ
+copied by %1, from record #%2.	addressbook	el	Ξ‘Ξ½Ο„ΞΉΞ³ΟΞ¬Ο†Ο„Ξ·ΞΊΞµ Ξ±Ο€Ο %1, Ξ±Ο€Ο Ο„Ξ·Ξ½ ΞµΞ³Ξ³ΟΞ±Ο†Ξ® #%2.
+copy a contact and edit the copy	addressbook	el	Ξ‘Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ® ΞµΟ€Ξ±Ο†Ξ®Ο‚ ΞΊΞ±ΞΉ ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ±Ξ½Ο„ΞΉΞ³ΟΞ¬Ο†ΞΏΟ…
+country	common	el	Ξ§ΟΟΞ±
+create new links	addressbook	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ½Ξ­Ο‰Ξ½ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΟ‰Ξ½
+created	addressbook	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ
+credit	addressbook	el	Ξ Ξ―ΟƒΟ„Ο‰ΟƒΞ·
+csv-fieldname	addressbook	el	ΞΞ½ΞΏΞΌΞ± Ο€ΞµΞ΄Ξ―ΞΏΟ…  CSV
+csv-filename	addressbook	el	ΞΞ½ΞΏΞΌΞ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… CSV
+custom	addressbook	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ®
+custom etemplate for the contactform	addressbook	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ® eΞ¤Ξ±ΞΌΟ€Ξ»Ξ­Ο„Ξ±Ο‚ Ξ³ΞΉΞ± Ο„Ξ· Ο†ΟΟΞΌΞ± ΞµΟ€Ξ±Ο†ΟΞ½
+custom fields	addressbook	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ± Ο€ΞµΞ΄Ξ―Ξ±
+debug output in browser	addressbook	el	Ξ‘Ο€ΞΏΟƒΟ†Ξ±Ξ»ΞΌΞ¬Ο„Ο‰ΟƒΞ· ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ ΟƒΟ„ΞΏ Ο†Ο…Ξ»Ξ»ΞΏΞΌΞµΟ„ΟΞ·Ο„Ξ®
+default	addressbook	el	Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ
+default address format	addressbook	el	Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ· ΞΌΞΏΟΟ†Ξ® Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+default addressbook for adding contacts	addressbook	el	Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± Ο€ΟΞΏΟƒΞΈΞ®ΞΊΞ· ΞµΟ€Ξ±Ο†ΟΞ½
+default filter	addressbook	el	Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ Ο†Ξ―Ξ»Ο„ΟΞΏ
+delete a single entry by passing the id.	addressbook	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΌΞΉΞ±Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ ΞΌΞµ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ο„ΞΏΟ… id.
+delete selected distribution list!	addressbook	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚ Ξ»Ξ―ΟƒΟ„Ξ±Ο‚ Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚!
+delete this contact	addressbook	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞµΟ€Ξ±Ο†Ξ®Ο‚
+delete this organisation including all its contacts	addressbook	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΟ ΟƒΟ…ΞΌΟ€ΞµΟΞΉΞ»Ξ±ΞΌΞ²Ξ±Ξ½ΞΏΞΌΞ­Ξ½Ο‰Ξ½ ΞΊΞ±ΞΉ ΞΞ›Ξ©Ξ Ο„Ο‰Ξ½ ΞµΟ€Ξ±Ο†ΟΞ½ Ο„ΞΏΟ…
+deleted	addressbook	el	Ξ΄ΞΉΞµΞ³ΟΞ¬Ο†Ξ·
+deletes the photo	addressbook	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ο†Ο‰Ο„ΞΏΞ³ΟΞ±Ο†Ξ―Ξ±Ο‚
+department	common	el	Ξ¤ΞΌΞ®ΞΌΞ±
+departments	addressbook	el	Ο„ΞΌΞ®ΞΌΞ±Ο„Ξ±
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	el	Ξ”ΞµΞ―Ο‡Ξ½ΞµΞΉ ΞΌΞ―Ξ± Ο…Ο€ΞµΞ½ΞΈΟΞΌΞΉΟƒΞ· Ξ³ΞµΞ½ΞµΞΈΞ»Ξ―Ο‰Ξ½ ΟƒΟ„Ξ·Ξ½ Ξ±ΟΟ‡ΞΉΞΊΞ® ΟƒΞµΞ»Ξ―Ξ΄Ξ± (Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ± Ο€ΞΏΟ… ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ ΟΟ„Ξ±Ξ½ ΞµΞΉΟƒΞ­ΟΟ‡ΞµΟƒΟ„Ξµ ΟƒΟ„ΞΏ eGroupWare Ξ® ΟΟ„Ξ±Ξ½ ΞΊΞ¬Ξ½ΞµΟ„Ξµ ΞΊΞ»ΞΉΞΊ ΟƒΟ„ΞΏ ΞµΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ Ξ±ΟΟ‡ΞΉΞΊΞ®Ο‚ ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚).
+distribution list deleted	addressbook	el	Ξ›Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚ Ξ΄ΞΉΞµΞ³ΟΞ¬Ο†Ξ·
+distribution lists	addressbook	el	Ξ›Ξ―ΟƒΟ„ΞµΟ‚ Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚
+do your really want to delete this contact?	addressbook	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ο€ΟΞ±Ξ³ΞΌΞ±Ο„ΞΉΞΊΞ¬ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ±Ο…Ο„Ξ®Ξ½ Ο„Ξ·Ξ½ ΞµΟ€Ξ±Ο†Ξ®;
+doesn't matter	addressbook	el	Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΞΉ ΟƒΞ·ΞΌΞ±ΟƒΞ―Ξ±
+domestic	addressbook	el	Ξ•ΟƒΟ‰Ο„ΞµΟΞΉΞΊΟΟ‚
+don't hide empty columns	addressbook	el	ΞΞ·Ξ½ Ξ±Ο€ΞΏΞΊΟΟΟ€Ο„ΞµΟ„Ξµ ΞΊΞµΞ½Ξ­Ο‚ ΟƒΟ„Ξ®Ξ»ΞµΟ‚
+download	addressbook	el	ΞΞ±Ο„Ξ±Ξ²Ξ―Ξ²Ξ±ΟƒΞ·
+download export file (uncheck to debug output in browser)	addressbook	el	ΞΞ±Ο„Ξ±Ξ²Ξ―Ξ²Ξ±ΟƒΞ· Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ (ΞΞµΟ„ΟƒΞµΞΊΞ¬ΟΞµΟ„Ξµ Ξ³ΞΉΞ± Ξ±Ο€ΞΏΟƒΟ†Ξ±Ξ»ΞΌΞ¬Ο„Ο‰ΟƒΞ· ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ ΟƒΟ„ΞΏ Ο†Ο…Ξ»Ξ»ΞΏΞΌΞµΟ„ΟΞ·Ο„Ξ®)
+download this contact as vcard file	addressbook	el	Ο†ΞΏΟΟ„ΟΟƒΟ„Ξµ Ξ±Ο…Ο„Ξ®Ξ½ Ο„Ξ·Ξ½ ΞµΟ€Ξ±Ο†Ξ® Ο‰Ο‚ vCard Ξ±ΟΟ‡ΞµΞ―ΞΏ
+duration	addressbook	el	Ξ”ΞΉΞ¬ΟΞΊΞµΞΉΞ±
+edit custom field	addressbook	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏΟ… Ο€ΞµΞ΄Ξ―ΞΏΟ…
+edit custom fields	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ο‰Ξ½ Ο€ΞµΞ΄Ξ―Ο‰Ξ½
+edit extra account-data in the addressbook	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞµΟ€ΞΉΟ€Ξ»Ξ­ΞΏΞ½ ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ο‰Ξ½ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+edit phonenumbers -	addressbook	el	Ξ•Ο€ΞµΞΎΞ±ΟΞ³Ξ±ΟƒΞ―Ξ± Ξ±ΟΞΉΞΈΞΌΟΞ½ Ο„Ξ·Ξ»ΞµΟ†ΟΞ½Ο‰Ξ½
+either the configured email addesses are wrong or the mail configuration.	addressbook	el	Ξ•Ξ―Ο„Ξµ ΞΏΞΉ Ξ΄ΞΉΞ±ΞΌΞΏΟΟ†Ο‰ΞΌΞ­Ξ½ΞµΟ‚ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΞΉΟ‚ Ο„Ο‰Ξ½ email ΞµΞ―Ξ½Ξ±ΞΉ Ξ»Ξ¬ΞΈΞΏΟ‚ ΞµΞ―Ο„Ξµ Ξ· Ξ΄ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ· Ο„ΞΏΟ… ΞΌΞ·Ξ½ΟΞΌΞ±Ο„ΞΏΟ‚.
 email & internet	addressbook	el	Email & Internet
-email addresses (comma separated) to send the contact data	addressbook	el	Διευθύνσεις Email (διαχωρισένες με κόμμα) για αποστολή των δεδομένων των επαφών
-empty for all	addressbook	el	Κενό για όλα
-enable an extra private addressbook	addressbook	el	Ενεργοποιήστε ένα έξτρα προσωπικό βιβλίο διευθύνσεων
-end	addressbook	el	Τέλος
-enter the path to the exported file here	addressbook	el	Εισάγετε τη διαδρομή για το αρχείο εξαγωγής εδώ
-error deleting the contact !!!	addressbook	el	Σφάλμα στη διαγραφή της επαφής !!!
-error saving the contact !!!	addressbook	el	Σφάλμα στην αποθήκευση της επαφής !!!
-existing links	addressbook	el	Υπάρχοντες σύνδεσμοι
-export	addressbook	el	εξαγωγή
-export as csv	addressbook	el	Εξαγωγή ως CSV
-export as vcard	addressbook	el	Εξαγωγή ως VCard
-export contacts	addressbook	el	Εξαγωγή επαφών
-export file name	addressbook	el	Ονομα αρχείου εξαγωγής
-export from addressbook	addressbook	el	Εξαγωγή από το βιβλίο Διευθύνσεων
-export selection	addressbook	el	Επιλογές εξαγωγής
-exported	addressbook	el	εξήχθη
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εξάγει επαφές από το βιβλίο διευθύνσεών σας σε CSV αρχείο.CSV σημαίνει 'Comma Seperated Values'. Παρολαυτά στην καρτέλα Επιλογές μπορείτε επίσης να διαλέξετε και άλλους διαχωριστήρες.
-extra	addressbook	el	Επιπλέον
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Απέτυχε η αλλαγή του-των μέλους(η) του %1 οργανισμού (ανεπαρκή δικαιώματα)!!!
+email addresses (comma separated) to send the contact data	addressbook	el	Ξ”ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΞΉΟ‚ Email (Ξ΄ΞΉΞ±Ο‡Ο‰ΟΞΉΟƒΞ­Ξ½ΞµΟ‚ ΞΌΞµ ΞΊΟΞΌΞΌΞ±) Ξ³ΞΉΞ± Ξ±Ο€ΞΏΟƒΟ„ΞΏΞ»Ξ® Ο„Ο‰Ξ½ Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½ Ο„Ο‰Ξ½ ΞµΟ€Ξ±Ο†ΟΞ½
+empty for all	addressbook	el	ΞΞµΞ½Ο Ξ³ΞΉΞ± ΟΞ»Ξ±
+enable an extra private addressbook	addressbook	el	Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ Ξ­Ξ½Ξ± Ξ­ΞΎΟ„ΟΞ± Ο€ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΟ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+end	addressbook	el	Ξ¤Ξ­Ξ»ΞΏΟ‚
+enter the path to the exported file here	addressbook	el	Ξ•ΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο„Ξ· Ξ΄ΞΉΞ±Ξ΄ΟΞΏΞΌΞ® Ξ³ΞΉΞ± Ο„ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ ΞµΞ΄Ο
+error deleting the contact !!!	addressbook	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΟƒΟ„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ο„Ξ·Ο‚ ΞµΟ€Ξ±Ο†Ξ®Ο‚ !!!
+error saving the contact !!!	addressbook	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΟƒΟ„Ξ·Ξ½ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ο„Ξ·Ο‚ ΞµΟ€Ξ±Ο†Ξ®Ο‚ !!!
+existing links	addressbook	el	Ξ¥Ο€Ξ¬ΟΟ‡ΞΏΞ½Ο„ΞµΟ‚ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏΞΉ
+export	addressbook	el	ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®
+export as csv	addressbook	el	Ξ•ΞΎΞ±Ξ³Ο‰Ξ³Ξ® Ο‰Ο‚ CSV
+export as vcard	addressbook	el	Ξ•ΞΎΞ±Ξ³Ο‰Ξ³Ξ® Ο‰Ο‚ VCard
+export contacts	addressbook	el	Ξ•ΞΎΞ±Ξ³Ο‰Ξ³Ξ® ΞµΟ€Ξ±Ο†ΟΞ½
+export file name	addressbook	el	ΞΞ½ΞΏΞΌΞ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®Ο‚
+export from addressbook	addressbook	el	Ξ•ΞΎΞ±Ξ³Ο‰Ξ³Ξ® Ξ±Ο€Ο Ο„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ”ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+export selection	addressbook	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®Ο‚
+exported	addressbook	el	ΞµΞΎΞ®Ο‡ΞΈΞ·
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	el	Ξ•ΞΎΞ¬Ξ³ΞµΞΉ ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ξ±Ο€Ο Ο„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟΞ½ ΟƒΞ±Ο‚ ΟƒΞµ CSV Ξ±ΟΟ‡ΞµΞ―ΞΏ.CSV ΟƒΞ·ΞΌΞ±Ξ―Ξ½ΞµΞΉ 'Comma Seperated Values'. Ξ Ξ±ΟΞΏΞ»Ξ±Ο…Ο„Ξ¬ ΟƒΟ„Ξ·Ξ½ ΞΊΞ±ΟΟ„Ξ­Ξ»Ξ± Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ ΞµΟ€Ξ―ΟƒΞ·Ο‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ»Ξ­ΞΎΞµΟ„Ξµ ΞΊΞ±ΞΉ Ξ¬Ξ»Ξ»ΞΏΟ…Ο‚ Ξ΄ΞΉΞ±Ο‡Ο‰ΟΞΉΟƒΟ„Ξ®ΟΞµΟ‚.
+extra	addressbook	el	Ξ•Ο€ΞΉΟ€Ξ»Ξ­ΞΏΞ½
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Ξ‘Ο€Ξ­Ο„Ο…Ο‡Ξµ Ξ· Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® Ο„ΞΏΟ…-Ο„Ο‰Ξ½ ΞΌΞ­Ξ»ΞΏΟ…Ο‚(Ξ·) Ο„ΞΏΟ… %1 ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΟ (Ξ±Ξ½ΞµΟ€Ξ±ΟΞΊΞ® Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ±)!!!
 fax	addressbook	el	Fax
-fax number	common	el	Αριθμός Fax
-field %1 has been added !	addressbook	el	Το πεδίο %1 προστέθηκε !
-field %1 has been updated !	addressbook	el	Το πεδίο %1 ενημερώθηκε !
-field name	addressbook	el	Ονομα πεδίου
-fields for the csv export	addressbook	el	Πεδία για την CSV εξαγωγή
-fields the user is allowed to edit himself	admin	el	Πεδία τα οποία ο ίδιος ο χρήστης μπορεί να επεξεργαστεί
-fields to show in address list	addressbook	el	Πεδία που θα εμφανίζονται στη λίστα διευθύνσεων
-fieldseparator	addressbook	el	Διαχωριστής πεδίων
-for read only ldap	admin	el	Για ανάγνωση μόνο LDAP
-full name	addressbook	el	Πλήρες όνομα
-general	addressbook	el	Γενικά
-general fields:	addressbook	el	Γενικά πεδία:
+fax number	common	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Fax
+field %1 has been added !	addressbook	el	Ξ¤ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ %1 Ο€ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ !
+field %1 has been updated !	addressbook	el	Ξ¤ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ %1 ΞµΞ½Ξ·ΞΌΞµΟΟΞΈΞ·ΞΊΞµ !
+field name	addressbook	el	ΞΞ½ΞΏΞΌΞ± Ο€ΞµΞ΄Ξ―ΞΏΟ…
+fields for the csv export	addressbook	el	Ξ ΞµΞ΄Ξ―Ξ± Ξ³ΞΉΞ± Ο„Ξ·Ξ½ CSV ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®
+fields the user is allowed to edit himself	admin	el	Ξ ΞµΞ΄Ξ―Ξ± Ο„Ξ± ΞΏΟ€ΞΏΞ―Ξ± ΞΏ Ξ―Ξ΄ΞΉΞΏΟ‚ ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΟ„ΞµΞ―
+fields to show in address list	addressbook	el	Ξ ΞµΞ΄Ξ―Ξ± Ο€ΞΏΟ… ΞΈΞ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+fieldseparator	addressbook	el	Ξ”ΞΉΞ±Ο‡Ο‰ΟΞΉΟƒΟ„Ξ®Ο‚ Ο€ΞµΞ΄Ξ―Ο‰Ξ½
+for read only ldap	admin	el	Ξ“ΞΉΞ± Ξ±Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· ΞΌΟΞ½ΞΏ LDAP
+full name	addressbook	el	Ξ Ξ»Ξ®ΟΞµΟ‚ ΟΞ½ΞΏΞΌΞ±
+general	addressbook	el	Ξ“ΞµΞ½ΞΉΞΊΞ¬
+general fields:	addressbook	el	Ξ“ΞµΞ½ΞΉΞΊΞ¬ Ο€ΞµΞ΄Ξ―Ξ±:
 geo	addressbook	el	GEO
-global categories	addressbook	el	Παγκόσμιες κατηγορίες
-grant addressbook access	common	el	Πρόσβαση στο βιβλίο Διευθύνσεων
-group %1	addressbook	el	Ομάδα %1
-hide accounts from addressbook	addressbook	el	Απόκρυψη λογαριασμών από το βιβλίο διευθύνσεων
-hides accounts completly from the adressbook.	addressbook	el	Αποκρύπτει λογαριασμούς εντελώς από το βιβλίο διευθύνσεων
-home address	addressbook	el	Διεύθυνση οικίας
-home address, birthday, ...	addressbook	el	Διεύθυνση οικίας, Γενέθλια, ...
-home city	addressbook	el	Πόλη οικίας
-home country	addressbook	el	Χώρα οικίας
-home email	addressbook	el	Email οικίας
-home phone	addressbook	el	Τηλέφωνο οικίας
-home state	addressbook	el	Νομός οικίας
-home street	addressbook	el	Διεύθυνση οικίας
-home zip code	addressbook	el	Τ.Κ. οικίας
-how many contacts should non-admins be able to export (empty = no limit)	admin	el	Πόσες επαφές επιθυμείτε οι μη διαχεριστές να μπορούν να εξάγουν (κενό=απεριόριστες)
-icon	addressbook	el	Εικόνα
-if accounts are already in ldap	admin	el	αν οι λογαριασμοί είναι ακόμα στο LDAP
-import	addressbook	el	Εισαγωγή
-import contacts	addressbook	el	Εισαγωγή επαφών
-import csv-file into addressbook	addressbook	el	Εισαγωγή αρχείου CSV στο βιβλίο Διευθύνσεων
-import file	addressbook	el	Εισαγωγή Αρχείου
-import from	addressbook	el	Εισαγωγή από
-import from ldif, csv, or vcard	addressbook	el	Εισαγωγή από LDIF, CSV, ή VCard
-import from outlook	addressbook	el	Εισαγωγή από το Outlook
-import multiple vcard	addressbook	el	Εισαγωγή  πολλαπλών VCard
-import next set	addressbook	el	Εισαγωγή επόμενου σετ
-import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε VCard μορφή.
-in %1 days (%2) is %3's birthday.	addressbook	el	Σε %1 ημέρες (%2) είναι του/της %3 τα γενέθλια.
-income	addressbook	el	Εισόδημα
-insufficent rights to delete this list!	addressbook	el	Ανεπαρκή δικαιώματα για διαγραφή αυτής της λίστας!
-international	addressbook	el	Διεθνείς
-label	addressbook	el	Ετικέττα
-last modified	addressbook	el	Τελευταία τροποποίηση
-last modified by	addressbook	el	Τελευταία τροποποίηση από
-ldap context for contacts	admin	el	LDAP πλαίσιο για τις επαφές
-ldap host for contacts	admin	el	LDAP φορέας για τις επαφές
-ldap settings for contacts	admin	el	LDAP ρυθμίσεις για τις επαφές
+global categories	addressbook	el	Ξ Ξ±Ξ³ΞΊΟΟƒΞΌΞΉΞµΟ‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚
+grant addressbook access	common	el	Ξ ΟΟΟƒΞ²Ξ±ΟƒΞ· ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ”ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+group %1	addressbook	el	ΞΞΌΞ¬Ξ΄Ξ± %1
+hide accounts from addressbook	addressbook	el	Ξ‘Ο€ΟΞΊΟΟ…ΟΞ· Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½ Ξ±Ο€Ο Ο„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+hides accounts completly from the adressbook.	addressbook	el	Ξ‘Ο€ΞΏΞΊΟΟΟ€Ο„ΞµΞΉ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟΟ‚ ΞµΞ½Ο„ΞµΞ»ΟΟ‚ Ξ±Ο€Ο Ο„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+home address	addressbook	el	Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· ΞΏΞΉΞΊΞ―Ξ±Ο‚
+home address, birthday, ...	addressbook	el	Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· ΞΏΞΉΞΊΞ―Ξ±Ο‚, Ξ“ΞµΞ½Ξ­ΞΈΞ»ΞΉΞ±, ...
+home city	addressbook	el	Ξ ΟΞ»Ξ· ΞΏΞΉΞΊΞ―Ξ±Ο‚
+home country	addressbook	el	Ξ§ΟΟΞ± ΞΏΞΉΞΊΞ―Ξ±Ο‚
+home email	addressbook	el	Email ΞΏΞΉΞΊΞ―Ξ±Ο‚
+home phone	addressbook	el	Ξ¤Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ ΞΏΞΉΞΊΞ―Ξ±Ο‚
+home state	addressbook	el	ΞΞΏΞΌΟΟ‚ ΞΏΞΉΞΊΞ―Ξ±Ο‚
+home street	addressbook	el	Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· ΞΏΞΉΞΊΞ―Ξ±Ο‚
+home zip code	addressbook	el	Ξ¤.Ξ. ΞΏΞΉΞΊΞ―Ξ±Ο‚
+how many contacts should non-admins be able to export (empty = no limit)	admin	el	Ξ ΟΟƒΞµΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚ ΞµΟ€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞΏΞΉ ΞΌΞ· Ξ΄ΞΉΞ±Ο‡ΞµΟΞΉΟƒΟ„Ξ­Ο‚ Ξ½Ξ± ΞΌΟ€ΞΏΟΞΏΟΞ½ Ξ½Ξ± ΞµΞΎΞ¬Ξ³ΞΏΟ…Ξ½ (ΞΊΞµΞ½Ο=Ξ±Ο€ΞµΟΞΉΟΟΞΉΟƒΟ„ΞµΟ‚)
+icon	addressbook	el	Ξ•ΞΉΞΊΟΞ½Ξ±
+if accounts are already in ldap	admin	el	Ξ±Ξ½ ΞΏΞΉ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΞ― ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΞΊΟΞΌΞ± ΟƒΟ„ΞΏ LDAP
+import	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®
+import contacts	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΞµΟ€Ξ±Ο†ΟΞ½
+import csv-file into addressbook	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… CSV ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ”ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+import file	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…
+import from	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ±Ο€Ο
+import from ldif, csv, or vcard	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ±Ο€Ο LDIF, CSV, Ξ® VCard
+import from outlook	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ±Ο€Ο Ο„ΞΏ Outlook
+import multiple vcard	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®  Ο€ΞΏΞ»Ξ»Ξ±Ο€Ξ»ΟΞ½ VCard
+import next set	addressbook	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΞµΟ€ΟΞΌΞµΞ½ΞΏΟ… ΟƒΞµΟ„
+import_instructions	addressbook	el	Ξ£Ο„ΞΏ Netscape, Ξ±Ξ½ΞΏΞ―ΞΎΟ„Ξµ Ο„Ξ·Ξ½ Ξ±Ο„Ξ¶Ξ­Ξ½Ο„Ξ± Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ ΞΊΞ±ΞΉ ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ <b>Ξ•ΞΎΞ±Ξ³Ο‰Ξ³Ξ®</b> Ξ±Ο€Ο Ο„ΞΏ <b>Ξ‘ΟΟ‡ΞµΞ―ΞΏ</b>. Ξ¤ΞΏ ΞµΞΎΞ±Ξ³ΟΞ³ΞΉΞΌΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ ΞΈΞ± ΞµΞ―Ξ½Ξ±ΞΉ ΟƒΞµ LDIF ΞΌΞΏΟΟ†Ξ®.<p>Ξ‰, ΟƒΟ„ΞΏ Outlook, ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΞΏ Ο†Ξ¬ΞΊΞµΞ»ΞΏ EΟ€Ξ±Ο†ΟΞ½, ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ<b>Import and Export...</b> Ξ±Ο€Ο Ο„ΞΏ <b>File</b> menu ΞΊΞ±ΞΉ ΞµΞΎΞ¬Ξ³ΞµΟ„Ξµ Ο„ΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚ ΟƒΞ±Ο‚ ΟƒΞµ Ξ­Ξ½Ξ± CSV Ξ±ΟΟ‡ΞµΞ―ΞΏ.<p>Ξ‰, ΟƒΟ„ΞΏ Palm Desktop 4.0 Ξ® ΞΌΞµΞ³Ξ±Ξ»ΟΟ„ΞµΟΞΏ, ΞµΟ€ΞΉΟƒΞΊΞµΟ†ΞΈΞµΞ―Ο„Ξµ Ο„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ ΟƒΞ±Ο‚ ΞΊΞ±ΞΉ ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ <b>Export</b> Ξ±Ο€Ο Ο„ΞΏ <b>File</b> menu.Ξ¤ΞΏ ΞµΞΎΞ±Ξ³ΟΞ³ΞΉΞΌΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ ΞΈΞ± ΞµΞΉΞ½Ξ±ΞΉ ΟƒΞµ VCard ΞΌΞΏΟΟ†Ξ®.
+in %1 days (%2) is %3's birthday.	addressbook	el	Ξ£Ξµ %1 Ξ·ΞΌΞ­ΟΞµΟ‚ (%2) ΞµΞ―Ξ½Ξ±ΞΉ Ο„ΞΏΟ…/Ο„Ξ·Ο‚ %3 Ο„Ξ± Ξ³ΞµΞ½Ξ­ΞΈΞ»ΞΉΞ±.
+income	addressbook	el	Ξ•ΞΉΟƒΟΞ΄Ξ·ΞΌΞ±
+insufficent rights to delete this list!	addressbook	el	Ξ‘Ξ½ΞµΟ€Ξ±ΟΞΊΞ® Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ Ξ»Ξ―ΟƒΟ„Ξ±Ο‚!
+international	addressbook	el	Ξ”ΞΉΞµΞΈΞ½ΞµΞ―Ο‚
+label	addressbook	el	Ξ•Ο„ΞΉΞΊΞ­Ο„Ο„Ξ±
+last modified	addressbook	el	Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± Ο„ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·
+last modified by	addressbook	el	Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± Ο„ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ±Ο€Ο
+ldap context for contacts	admin	el	LDAP Ο€Ξ»Ξ±Ξ―ΟƒΞΉΞΏ Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚
+ldap host for contacts	admin	el	LDAP Ο†ΞΏΟΞ­Ξ±Ο‚ Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚
+ldap settings for contacts	admin	el	LDAP ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚
 ldif	addressbook	el	LDIF
-line 2	addressbook	el	Γραμμή 2
-link title for contacts show	addressbook	el	Τίτλος συνδέσμου για παρουσίαση επαφών
-links	addressbook	el	Σύνδεσμοι
-list all categories	addressbook	el	Τοποθέτηση σε λίστα όλων των κατηγοριών
-list all customfields	addressbook	el	Τοποθέτηση σε λίστα όλων των προσαρμοσμένων πεδίων
-list already exists!	addressbook	el	Η λίστα υπάρχει ήδη
-list created	addressbook	el	Η λίστα δημιουργήθηκε
-list creation failed, no rights!	addressbook	el	Η δημιουργία της λίστας απέτυχε, δεν έχετε το δικαίωμα!
-load vcard	addressbook	el	Φόρτωση VCard
-locations	addressbook	el	τοποθεσίες
-mark records as private	addressbook	el	Σημείωση εγγραφών ως ιδιωτικές
-merge into first or account, deletes all other!	addressbook	el	Συγχώνευση στο πρώτο ή το λογαριασμό,διαγραφή όλων των άλλων
-merged	addressbook	el	συγχωνεύτηκε
-message after submitting the form	addressbook	el	Μήνυμα μετά την υποβολή της φόρμας
-message phone	addressbook	el	Τηλέφωνο μηνυμάτων
-middle name	addressbook	el	Μεσαίο όνομα
-migration finished	addressbook	el	Ολοκληρώθηκε η μετανάστευση
-migration to ldap	admin	el	Μετανάστευση στο LDAP
-mobile	addressbook	el	Κινητό
-mobile phone	addressbook	el	Κινητό τηλέφωνο
-modem phone	addressbook	el	Τηλέφωνο modem
-more ...	addressbook	el	Περισσότερα
-move to addressbook:	addressbook	el	Μετακίνηση στο βιβλίο διευθύνσεων:
-moved	addressbook	el	μετακινήθηκε
-multiple vcard	addressbook	el	Πολλαπλή VCard
-name for the distribution list	addressbook	el	Όνομα για την λίστα διανομής
-name, address	addressbook	el	Όνομα, Διεύθυνση
-new contact submitted by %1 at %2	addressbook	el	Νέα επαφή υπεβλήθει από %1 στις %2
-no vcard	addressbook	el	Οχι VCard
-number	addressbook	el	Αριθμός
-number of records to read (%1)	addressbook	el	Αριθμός εγγραφών προς ανάγνωση (%1)
-options for type	admin	el	Επιλογές για τον τύπο
-organisation	addressbook	el	οργανισμός
-organisations	addressbook	el	Οργανισμοί
-organisations by departments	addressbook	el	Οργανισμοί σύμφωνα με τα τμήματα
-organisations by location	addressbook	el	Οργανισμοί σύμφωνα με την τοποθεσία
-other number	addressbook	el	Αλλος αριθμός
-other phone	addressbook	el	Αλλο τηλέφωνο
-own sorting	addressbook	el	προσωπική ταξινόμηση
-pager	common	el	Αριθμός μπίπερ
-parcel	addressbook	el	Πακέτο
-permission denied !!!	addressbook	el	¶δεια απορρίπτεται !!!
-phone number	common	el	Αριθμός τηλεφώνου
-phone numbers	common	el	Αριθμοί τηλεφώνων
-photo	addressbook	el	Φωτογραφία
-please enter a name for that field !	addressbook	el	Παρακαλώ εισάγετε όνομα γι' αυτό το πεδίο !
-please select only one category	addressbook	el	Παρακαλώ επιλέξτε μόνο μία κατηγορία
-postal	common	el	Ταχυδρομικός
-pref	addressbook	el	Προτιμήσεις
-preferred phone	addressbook	el	προτιμητέο τηλέφωνο
-prefix	addressbook	el	Πρόθεμα
-public key	addressbook	el	Δημόσιο κλειδί
-publish into groups:	addressbook	el	Δημοσίευση σε ομάδες:
-read a list / search for entries.	addressbook	el	Ανάγνωση μιας λίστας/αναζήτηση για καταχωρήσεις.
-read a list of entries.	addressbook	el	Ανάγνωση λίστας καταχωρήσεων
-read a single entry by passing the id and fieldlist.	addressbook	el	Ανάγνωση μεμονωμένης καταχώρησης με εισαγωγή id και λίστας πεδίων
-read only	addressbook	el	μόνο ανάγνωση
-record access	addressbook	el	Πρόσβαση Εγγραφής
-record owner	addressbook	el	Ιδιοκτήτης εγγραφής
-remove selected contacts from distribution list	addressbook	el	Αφαίρεση επιλεγμένων επαφών από τη λίστα διανομής
-removed from distribution list	addressbook	el	Αφαιρέθηκε από τη λίστα διανομής
-required fields *	addressbook	el	απαιτούμενα πεδία *
-role	addressbook	el	Ρόλος
-room	addressbook	el	Γραφείο
-search for '%1'	addressbook	el	Αναζήτηση για '%1'
-select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	el	Επιλέξτε μια jpeg φωτογραφία σε μορφή πορτραίτου. Θα επαναπροσδιοριστεί σε 60 pixel πλάτος.
-select a view	addressbook	el	Επιλέξτε μία προβολή
-select addressbook type	addressbook	el	Επιλέξτε τύπο βιβλίου διευθύνσεων
-select all	addressbook	el	Επιλογή όλων
-select an action or addressbook to move to	addressbook	el	Επιλέξτε μία ενέργεια ή ένα βιβλίο διευθύνσεων για μετακίνηση σε αυτό
-select migration type	admin	el	Επιλέξτε τύπο μετανάστευσης
-select multiple contacts for a further action	addressbook	el	Επιλέξτε πολλαπλές επαφές για περαιτέρω ενέργειες
-select phone number as prefered way of contact	addressbook	el	επιλέξτε τον αριθμό τηλεφώνου ως προτιμότερο τρόπο επικοινωνίας
-select the type of conversion	addressbook	el	Επιλέξτε τύπο μετατροπής
-select the type of conversion:	addressbook	el	Επιλέξτε τύπο μετατροπής:
-select where you want to store / retrieve contacts	admin	el	Επιλέξτε που θέλετε να αποθηκεύετε/ανακτάτε τις επαφές
-selected contacts	addressbook	el	επιλεγμένες επαφές
-should the columns photo and home address always be displayed, even if they are empty.	addressbook	el	Επιθυμείτε να εμφανίζονται πάντα οι στήλες φωτογραφίας και διεύθυνσης οικίας, ακόμα και αν είναι κενές.
-show	addressbook	el	Εμφάνιση
-show birthday reminders on main screen	addressbook	el	Εμφάνιση υπενθυμίσεων γενεθλίων στην κεντρική οθόνη
-show infolog entries for this organisation	addressbook	el	Παρουσίαση των InfoLog καταχωρήσεων για αυτόν τον οργανισμό
-show the contacts of this organisation	addressbook	el	Εμφανίστε τις επαφές αυτού του οργανισμού
-start	admin	el	Έναρξη
-startrecord	addressbook	el	Αρχική εγγραφή
-state	common	el	Νομός
-street	common	el	Οδός
-subject for email	addressbook	el	Θέμα email
-successfully imported %1 records into your addressbook.	addressbook	el	Επιτυχής εισαγωγή %1 εγγραφής(ών) στο βιβλίο Διευθύνσεων
-suffix	addressbook	el	Επίθεμα
-tel home	addressbook	el	τηλ σπιτιού
-telephony integration	admin	el	Τηλεφωνική ενοποίηση
-test import (show importable records <u>only</u> in browser)	addressbook	el	Δοκιμαστική Εισαγωγή
-thank you for contacting us.	addressbook	el	Ευχαριστούμε που επικοινωνήσατε μαζί μας.
-that field name has been used already !	addressbook	el	Το όνομα πεδίου χρησιμοποιείται ήδη !
-the anonymous user has probably no add rights for this addressbook.	addressbook	el	Ο ανώνυμος χρήστης δεν έχει πιθανότατα δικαίωμα προσθήκης σε αυτό το βιβλίο διευθύνσεων
-the anonymous user needs add rights for it!	addressbook	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα για να προσθέσει σε αυτό!
-there was an error saving your data :-(	addressbook	el	Υπήρξε ένα σφάλμα κατά την αποθήκευση των δεδομένων σας :-(
-this module displays a contactform, that stores direct into the addressbook.	addressbook	el	Αυτή η ενότητα εμφανίζει μία φόρμα επαφών, που αποθηκεύεται απευθείας στο βιβλίο διευθύνσεων.
-this person's first name was not in the address book.	addressbook	el	Το όνομα αυτού του ατόμου δεν υπάρχει στο βιβλίο διευθύνσεων
-this person's last name was not in the address book.	addressbook	el	Το επίθετο αυτού του ατόμου δεν υπάρχει στο βιβλίο διευθύνσεων
-timezone	addressbook	el	Ζώνη ώρας
-to many might exceed your execution-time-limit	addressbook	el	Πάρα πολλοί. Ενδεχόμενο υπέρβασης ορίου χρόνου εκτέλεσης
-today is %1's birthday!	common	el	Σήμερα είναι τα γενέθλια του/της %1 !
-tomorrow is %1's birthday.	common	el	Αύριο είναι τα γενέθλια του/της %1 !
-translation	addressbook	el	Μετάφραση
-type	addressbook	el	Τύπος
-update a single entry by passing the fields.	addressbook	el	Ενημέρωση συγκεκριμένης καταχώρησης εισάγωντας τα πεδία
-upload or delete the photo	addressbook	el	Φορτώστε ή διαγράψτε τη φωτογραφία
-use an extra category tab?	addressbook	el	Χρήση μιας επιπλέον ετικέτας κατηγοριών
-use country list	addressbook	el	Χρήση καταλόγου χωρών
-use setup for a full account-migration	admin	el	χρήση της εγκατάστασης για πλήρη μετανάστευση λογαριασμού
-used for links and for the own sorting of the list	addressbook	el	χρησιμοποιείται για συνδέσμους και προσωπικές ταξινομήσεις της λίστας
+line 2	addressbook	el	Ξ“ΟΞ±ΞΌΞΌΞ® 2
+link title for contacts show	addressbook	el	Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ… Ξ³ΞΉΞ± Ο€Ξ±ΟΞΏΟ…ΟƒΞ―Ξ±ΟƒΞ· ΞµΟ€Ξ±Ο†ΟΞ½
+links	addressbook	el	Ξ£ΟΞ½Ξ΄ΞµΟƒΞΌΞΏΞΉ
+list all categories	addressbook	el	Ξ¤ΞΏΟ€ΞΏΞΈΞ­Ο„Ξ·ΟƒΞ· ΟƒΞµ Ξ»Ξ―ΟƒΟ„Ξ± ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+list all customfields	addressbook	el	Ξ¤ΞΏΟ€ΞΏΞΈΞ­Ο„Ξ·ΟƒΞ· ΟƒΞµ Ξ»Ξ―ΟƒΟ„Ξ± ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ο‰Ξ½ Ο€ΞµΞ΄Ξ―Ο‰Ξ½
+list already exists!	addressbook	el	Ξ— Ξ»Ξ―ΟƒΟ„Ξ± Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ·
+list created	addressbook	el	Ξ— Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ
+list creation failed, no rights!	addressbook	el	Ξ— Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ο„Ξ·Ο‚ Ξ»Ξ―ΟƒΟ„Ξ±Ο‚ Ξ±Ο€Ξ­Ο„Ο…Ο‡Ξµ, Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ Ο„ΞΏ Ξ΄ΞΉΞΊΞ±Ξ―Ο‰ΞΌΞ±!
+load vcard	addressbook	el	Ξ¦ΟΟΟ„Ο‰ΟƒΞ· VCard
+locations	addressbook	el	Ο„ΞΏΟ€ΞΏΞΈΞµΟƒΞ―ΞµΟ‚
+mark records as private	addressbook	el	Ξ£Ξ·ΞΌΞµΞ―Ο‰ΟƒΞ· ΞµΞ³Ξ³ΟΞ±Ο†ΟΞ½ Ο‰Ο‚ ΞΉΞ΄ΞΉΟ‰Ο„ΞΉΞΊΞ­Ο‚
+merge into first or account, deletes all other!	addressbook	el	Ξ£Ο…Ξ³Ο‡ΟΞ½ΞµΟ…ΟƒΞ· ΟƒΟ„ΞΏ Ο€ΟΟΟ„ΞΏ Ξ® Ο„ΞΏ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟ,Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ξ¬Ξ»Ξ»Ο‰Ξ½
+merged	addressbook	el	ΟƒΟ…Ξ³Ο‡Ο‰Ξ½ΞµΟΟ„Ξ·ΞΊΞµ
+message after submitting the form	addressbook	el	ΞΞ®Ξ½Ο…ΞΌΞ± ΞΌΞµΟ„Ξ¬ Ο„Ξ·Ξ½ Ο…Ο€ΞΏΞ²ΞΏΞ»Ξ® Ο„Ξ·Ο‚ Ο†ΟΟΞΌΞ±Ο‚
+message phone	addressbook	el	Ξ¤Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ ΞΌΞ·Ξ½Ο…ΞΌΞ¬Ο„Ο‰Ξ½
+middle name	addressbook	el	ΞΞµΟƒΞ±Ξ―ΞΏ ΟΞ½ΞΏΞΌΞ±
+migration finished	addressbook	el	ΞΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ Ξ· ΞΌΞµΟ„Ξ±Ξ½Ξ¬ΟƒΟ„ΞµΟ…ΟƒΞ·
+migration to ldap	admin	el	ΞΞµΟ„Ξ±Ξ½Ξ¬ΟƒΟ„ΞµΟ…ΟƒΞ· ΟƒΟ„ΞΏ LDAP
+mobile	addressbook	el	ΞΞΉΞ½Ξ·Ο„Ο
+mobile phone	addressbook	el	ΞΞΉΞ½Ξ·Ο„Ο Ο„Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ
+modem phone	addressbook	el	Ξ¤Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ modem
+more ...	addressbook	el	Ξ ΞµΟΞΉΟƒΟƒΟΟ„ΞµΟΞ±
+move to addressbook:	addressbook	el	ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ· ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½:
+moved	addressbook	el	ΞΌΞµΟ„Ξ±ΞΊΞΉΞ½Ξ®ΞΈΞ·ΞΊΞµ
+multiple vcard	addressbook	el	Ξ ΞΏΞ»Ξ»Ξ±Ο€Ξ»Ξ® VCard
+name for the distribution list	addressbook	el	ΞΞ½ΞΏΞΌΞ± Ξ³ΞΉΞ± Ο„Ξ·Ξ½ Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚
+name, address	addressbook	el	ΞΞ½ΞΏΞΌΞ±, Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·
+new contact submitted by %1 at %2	addressbook	el	ΞΞ­Ξ± ΞµΟ€Ξ±Ο†Ξ® Ο…Ο€ΞµΞ²Ξ»Ξ®ΞΈΞµΞΉ Ξ±Ο€Ο %1 ΟƒΟ„ΞΉΟ‚ %2
+no vcard	addressbook	el	ΞΟ‡ΞΉ VCard
+number	addressbook	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚
+number of records to read (%1)	addressbook	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚ ΞµΞ³Ξ³ΟΞ±Ο†ΟΞ½ Ο€ΟΞΏΟ‚ Ξ±Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· (%1)
+options for type	admin	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ Ξ³ΞΉΞ± Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ
+organisation	addressbook	el	ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΟΟ‚
+organisations	addressbook	el	ΞΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΞ―
+organisations by departments	addressbook	el	ΞΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΞ― ΟƒΟΞΌΟ†Ο‰Ξ½Ξ± ΞΌΞµ Ο„Ξ± Ο„ΞΌΞ®ΞΌΞ±Ο„Ξ±
+organisations by location	addressbook	el	ΞΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΞ― ΟƒΟΞΌΟ†Ο‰Ξ½Ξ± ΞΌΞµ Ο„Ξ·Ξ½ Ο„ΞΏΟ€ΞΏΞΈΞµΟƒΞ―Ξ±
+other number	addressbook	el	Ξ‘Ξ»Ξ»ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚
+other phone	addressbook	el	Ξ‘Ξ»Ξ»ΞΏ Ο„Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ
+own sorting	addressbook	el	Ο€ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΞ® Ο„Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ·
+pager	common	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚ ΞΌΟ€Ξ―Ο€ΞµΟ
+parcel	addressbook	el	Ξ Ξ±ΞΊΞ­Ο„ΞΏ
+permission denied !!!	addressbook	el	Ξ†Ξ΄ΞµΞΉΞ± Ξ±Ο€ΞΏΟΟΞ―Ο€Ο„ΞµΟ„Ξ±ΞΉ !!!
+phone number	common	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ο„Ξ·Ξ»ΞµΟ†ΟΞ½ΞΏΟ…
+phone numbers	common	el	Ξ‘ΟΞΉΞΈΞΌΞΏΞ― Ο„Ξ·Ξ»ΞµΟ†ΟΞ½Ο‰Ξ½
+photo	addressbook	el	Ξ¦Ο‰Ο„ΞΏΞ³ΟΞ±Ο†Ξ―Ξ±
+please enter a name for that field !	addressbook	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ ΟΞ½ΞΏΞΌΞ± Ξ³ΞΉ' Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ !
+please select only one category	addressbook	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΟΞ½ΞΏ ΞΌΞ―Ξ± ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+postal	common	el	Ξ¤Ξ±Ο‡Ο…Ξ΄ΟΞΏΞΌΞΉΞΊΟΟ‚
+pref	addressbook	el	Ξ ΟΞΏΟ„ΞΉΞΌΞ®ΟƒΞµΞΉΟ‚
+preferred phone	addressbook	el	Ο€ΟΞΏΟ„ΞΉΞΌΞ·Ο„Ξ­ΞΏ Ο„Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ
+prefix	addressbook	el	Ξ ΟΟΞΈΞµΞΌΞ±
+public key	addressbook	el	Ξ”Ξ·ΞΌΟΟƒΞΉΞΏ ΞΊΞ»ΞµΞΉΞ΄Ξ―
+publish into groups:	addressbook	el	Ξ”Ξ·ΞΌΞΏΟƒΞ―ΞµΟ…ΟƒΞ· ΟƒΞµ ΞΏΞΌΞ¬Ξ΄ΞµΟ‚:
+read a list / search for entries.	addressbook	el	Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· ΞΌΞΉΞ±Ο‚ Ξ»Ξ―ΟƒΟ„Ξ±Ο‚/Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ³ΞΉΞ± ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚.
+read a list of entries.	addressbook	el	Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· Ξ»Ξ―ΟƒΟ„Ξ±Ο‚ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½
+read a single entry by passing the id and fieldlist.	addressbook	el	Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· ΞΌΞµΞΌΞΏΞ½Ο‰ΞΌΞ­Ξ½Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ ΞΌΞµ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® id ΞΊΞ±ΞΉ Ξ»Ξ―ΟƒΟ„Ξ±Ο‚ Ο€ΞµΞ΄Ξ―Ο‰Ξ½
+read only	addressbook	el	ΞΌΟΞ½ΞΏ Ξ±Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ·
+record access	addressbook	el	Ξ ΟΟΟƒΞ²Ξ±ΟƒΞ· Ξ•Ξ³Ξ³ΟΞ±Ο†Ξ®Ο‚
+record owner	addressbook	el	Ξ™Ξ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ·Ο‚ ΞµΞ³Ξ³ΟΞ±Ο†Ξ®Ο‚
+remove selected contacts from distribution list	addressbook	el	Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ο‰Ξ½ ΞµΟ€Ξ±Ο†ΟΞ½ Ξ±Ο€Ο Ο„Ξ· Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚
+removed from distribution list	addressbook	el	Ξ‘Ο†Ξ±ΞΉΟΞ­ΞΈΞ·ΞΊΞµ Ξ±Ο€Ο Ο„Ξ· Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚
+required fields *	addressbook	el	Ξ±Ο€Ξ±ΞΉΟ„ΞΏΟΞΌΞµΞ½Ξ± Ο€ΞµΞ΄Ξ―Ξ± *
+role	addressbook	el	Ξ΅ΟΞ»ΞΏΟ‚
+room	addressbook	el	Ξ“ΟΞ±Ο†ΞµΞ―ΞΏ
+search for '%1'	addressbook	el	Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ³ΞΉΞ± '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞΉΞ± jpeg Ο†Ο‰Ο„ΞΏΞ³ΟΞ±Ο†Ξ―Ξ± ΟƒΞµ ΞΌΞΏΟΟ†Ξ® Ο€ΞΏΟΟ„ΟΞ±Ξ―Ο„ΞΏΟ…. ΞΞ± ΞµΟ€Ξ±Ξ½Ξ±Ο€ΟΞΏΟƒΞ΄ΞΉΞΏΟΞΉΟƒΟ„ΞµΞ― ΟƒΞµ 60 pixel Ο€Ξ»Ξ¬Ο„ΞΏΟ‚.
+select a view	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞ―Ξ± Ο€ΟΞΏΞ²ΞΏΞ»Ξ®
+select addressbook type	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΟΟ€ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏΟ… Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+select all	addressbook	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΟΞ»Ο‰Ξ½
+select an action or addressbook to move to	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞ―Ξ± ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞ± Ξ® Ξ­Ξ½Ξ± Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± ΞΌΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ· ΟƒΞµ Ξ±Ο…Ο„Ο
+select migration type	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΟΟ€ΞΏ ΞΌΞµΟ„Ξ±Ξ½Ξ¬ΟƒΟ„ΞµΟ…ΟƒΞ·Ο‚
+select multiple contacts for a further action	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο€ΞΏΞ»Ξ»Ξ±Ο€Ξ»Ξ­Ο‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ξ³ΞΉΞ± Ο€ΞµΟΞ±ΞΉΟ„Ξ­ΟΟ‰ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚
+select phone number as prefered way of contact	addressbook	el	ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΞΏΞ½ Ξ±ΟΞΉΞΈΞΌΟ Ο„Ξ·Ξ»ΞµΟ†ΟΞ½ΞΏΟ… Ο‰Ο‚ Ο€ΟΞΏΟ„ΞΉΞΌΟΟ„ΞµΟΞΏ Ο„ΟΟΟ€ΞΏ ΞµΟ€ΞΉΞΊΞΏΞΉΞ½Ο‰Ξ½Ξ―Ξ±Ο‚
+select the type of conversion	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΟΟ€ΞΏ ΞΌΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ®Ο‚
+select the type of conversion:	addressbook	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΟΟ€ΞΏ ΞΌΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ®Ο‚:
+select where you want to store / retrieve contacts	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο€ΞΏΟ… ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΞµΟ„Ξµ/Ξ±Ξ½Ξ±ΞΊΟ„Ξ¬Ο„Ξµ Ο„ΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚
+selected contacts	addressbook	el	ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞµΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ Ο€Ξ¬Ξ½Ο„Ξ± ΞΏΞΉ ΟƒΟ„Ξ®Ξ»ΞµΟ‚ Ο†Ο‰Ο„ΞΏΞ³ΟΞ±Ο†Ξ―Ξ±Ο‚ ΞΊΞ±ΞΉ Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·Ο‚ ΞΏΞΉΞΊΞ―Ξ±Ο‚, Ξ±ΞΊΟΞΌΞ± ΞΊΞ±ΞΉ Ξ±Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ ΞΊΞµΞ½Ξ­Ο‚.
+show	addressbook	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·
+show birthday reminders on main screen	addressbook	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο…Ο€ΞµΞ½ΞΈΟ…ΞΌΞ―ΟƒΞµΟ‰Ξ½ Ξ³ΞµΞ½ΞµΞΈΞ»Ξ―Ο‰Ξ½ ΟƒΟ„Ξ·Ξ½ ΞΊΞµΞ½Ο„ΟΞΉΞΊΞ® ΞΏΞΈΟΞ½Ξ·
+show infolog entries for this organisation	addressbook	el	Ξ Ξ±ΟΞΏΟ…ΟƒΞ―Ξ±ΟƒΞ· Ο„Ο‰Ξ½ InfoLog ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΟ
+show the contacts of this organisation	addressbook	el	Ξ•ΞΌΟ†Ξ±Ξ½Ξ―ΟƒΟ„Ξµ Ο„ΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΞΏΟΞ³Ξ±Ξ½ΞΉΟƒΞΌΞΏΟ
+start	admin	el	ΞΞ½Ξ±ΟΞΎΞ·
+startrecord	addressbook	el	Ξ‘ΟΟ‡ΞΉΞΊΞ® ΞµΞ³Ξ³ΟΞ±Ο†Ξ®
+state	common	el	ΞΞΏΞΌΟΟ‚
+street	common	el	ΞΞ΄ΟΟ‚
+subject for email	addressbook	el	ΞΞ­ΞΌΞ± email
+successfully imported %1 records into your addressbook.	addressbook	el	Ξ•Ο€ΞΉΟ„Ο…Ο‡Ξ®Ο‚ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® %1 ΞµΞ³Ξ³ΟΞ±Ο†Ξ®Ο‚(ΟΞ½) ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ”ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+suffix	addressbook	el	Ξ•Ο€Ξ―ΞΈΞµΞΌΞ±
+tel home	addressbook	el	Ο„Ξ·Ξ» ΟƒΟ€ΞΉΟ„ΞΉΞΏΟ
+telephony integration	admin	el	Ξ¤Ξ·Ξ»ΞµΟ†Ο‰Ξ½ΞΉΞΊΞ® ΞµΞ½ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·
+test import (show importable records <u>only</u> in browser)	addressbook	el	Ξ”ΞΏΞΊΞΉΞΌΞ±ΟƒΟ„ΞΉΞΊΞ® Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®
+thank you for contacting us.	addressbook	el	Ξ•Ο…Ο‡Ξ±ΟΞΉΟƒΟ„ΞΏΟΞΌΞµ Ο€ΞΏΟ… ΞµΟ€ΞΉΞΊΞΏΞΉΞ½Ο‰Ξ½Ξ®ΟƒΞ±Ο„Ξµ ΞΌΞ±Ξ¶Ξ― ΞΌΞ±Ο‚.
+that field name has been used already !	addressbook	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± Ο€ΞµΞ΄Ξ―ΞΏΟ… Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ Ξ®Ξ΄Ξ· !
+the anonymous user has probably no add rights for this addressbook.	addressbook	el	Ξ Ξ±Ξ½ΟΞ½Ο…ΞΌΞΏΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚ Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΞΉ Ο€ΞΉΞΈΞ±Ξ½ΟΟ„Ξ±Ο„Ξ± Ξ΄ΞΉΞΊΞ±Ξ―Ο‰ΞΌΞ± Ο€ΟΞΏΟƒΞΈΞ®ΞΊΞ·Ο‚ ΟƒΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+the anonymous user needs add rights for it!	addressbook	el	Ξ Ξ±Ξ½ΟΞ½Ο…ΞΌΞΏΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚ Ο‡ΟΞµΞΉΞ¬Ξ¶ΞµΟ„Ξ±ΞΉ Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ξ½Ξ± Ο€ΟΞΏΟƒΞΈΞ­ΟƒΞµΞΉ ΟƒΞµ Ξ±Ο…Ο„Ο!
+there was an error saving your data :-(	addressbook	el	Ξ¥Ο€Ξ®ΟΞΎΞµ Ξ­Ξ½Ξ± ΟƒΟ†Ξ¬Ξ»ΞΌΞ± ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ο„Ο‰Ξ½ Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½ ΟƒΞ±Ο‚ :-(
+this module displays a contactform, that stores direct into the addressbook.	addressbook	el	Ξ‘Ο…Ο„Ξ® Ξ· ΞµΞ½ΟΟ„Ξ·Ο„Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΞΉ ΞΌΞ―Ξ± Ο†ΟΟΞΌΞ± ΞµΟ€Ξ±Ο†ΟΞ½, Ο€ΞΏΟ… Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΞµΟ„Ξ±ΞΉ Ξ±Ο€ΞµΟ…ΞΈΞµΞ―Ξ±Ο‚ ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½.
+this person's first name was not in the address book.	addressbook	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ξ±Ο„ΟΞΌΞΏΟ… Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+this person's last name was not in the address book.	addressbook	el	Ξ¤ΞΏ ΞµΟ€Ξ―ΞΈΞµΟ„ΞΏ Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ξ±Ο„ΟΞΌΞΏΟ… Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+timezone	addressbook	el	Ξ–ΟΞ½Ξ· ΟΟΞ±Ο‚
+to many might exceed your execution-time-limit	addressbook	el	Ξ Ξ¬ΟΞ± Ο€ΞΏΞ»Ξ»ΞΏΞ―. Ξ•Ξ½Ξ΄ΞµΟ‡ΟΞΌΞµΞ½ΞΏ Ο…Ο€Ξ­ΟΞ²Ξ±ΟƒΞ·Ο‚ ΞΏΟΞ―ΞΏΟ… Ο‡ΟΟΞ½ΞΏΟ… ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·Ο‚
+today is %1's birthday!	common	el	Ξ£Ξ®ΞΌΞµΟΞ± ΞµΞ―Ξ½Ξ±ΞΉ Ο„Ξ± Ξ³ΞµΞ½Ξ­ΞΈΞ»ΞΉΞ± Ο„ΞΏΟ…/Ο„Ξ·Ο‚ %1 !
+tomorrow is %1's birthday.	common	el	Ξ‘ΟΟΞΉΞΏ ΞµΞ―Ξ½Ξ±ΞΉ Ο„Ξ± Ξ³ΞµΞ½Ξ­ΞΈΞ»ΞΉΞ± Ο„ΞΏΟ…/Ο„Ξ·Ο‚ %1 !
+translation	addressbook	el	ΞΞµΟ„Ξ¬Ο†ΟΞ±ΟƒΞ·
+type	addressbook	el	Ξ¤ΟΟ€ΞΏΟ‚
+update a single entry by passing the fields.	addressbook	el	Ξ•Ξ½Ξ·ΞΌΞ­ΟΟ‰ΟƒΞ· ΟƒΟ…Ξ³ΞΊΞµΞΊΟΞΉΞΌΞ­Ξ½Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ ΞµΞΉΟƒΞ¬Ξ³Ο‰Ξ½Ο„Ξ±Ο‚ Ο„Ξ± Ο€ΞµΞ΄Ξ―Ξ±
+upload or delete the photo	addressbook	el	Ξ¦ΞΏΟΟ„ΟΟƒΟ„Ξµ Ξ® Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΟ„Ξµ Ο„Ξ· Ο†Ο‰Ο„ΞΏΞ³ΟΞ±Ο†Ξ―Ξ±
+use an extra category tab?	addressbook	el	Ξ§ΟΞ®ΟƒΞ· ΞΌΞΉΞ±Ο‚ ΞµΟ€ΞΉΟ€Ξ»Ξ­ΞΏΞ½ ΞµΟ„ΞΉΞΊΞ­Ο„Ξ±Ο‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+use country list	addressbook	el	Ξ§ΟΞ®ΟƒΞ· ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ… Ο‡Ο‰ΟΟΞ½
+use setup for a full account-migration	admin	el	Ο‡ΟΞ®ΟƒΞ· Ο„Ξ·Ο‚ ΞµΞ³ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚ Ξ³ΞΉΞ± Ο€Ξ»Ξ®ΟΞ· ΞΌΞµΟ„Ξ±Ξ½Ξ¬ΟƒΟ„ΞµΟ…ΟƒΞ· Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+used for links and for the own sorting of the list	addressbook	el	Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ Ξ³ΞΉΞ± ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…Ο‚ ΞΊΞ±ΞΉ Ο€ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΞ­Ο‚ Ο„Ξ±ΞΎΞΉΞ½ΞΏΞΌΞ®ΟƒΞµΞΉΟ‚ Ο„Ξ·Ο‚ Ξ»Ξ―ΟƒΟ„Ξ±Ο‚
 vcard	common	el	VCard
-vcards require a first name entry.	addressbook	el	VCards απαιτούν καταχώρηση ονόματος
-vcards require a last name entry.	addressbook	el	VCards απαιτούν καταχώρηση επίθετου
-verification	addressbook	el	Επαλήθευση
-view linked infolog entries	addressbook	el	Εμφάνιση συνδεδεμένων καταχωρήσεων του InfoLog
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	el	ΠΡΟΣΟΧΗ!! LDAP ισχύει μόνο εάν ΔΕΝ χρησιμοποιείτε τις επαφές για την αποθήκευση
-warning: all contacts found will be deleted!	addressbook	el	ΠΡΟΣΟΧΗ: Όλες οι επαφές που βρέθηκαν θα διαγραφούν!
-which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	el	Ποια μορφή διεύθυνσης θα έπρεπε το βιβλίο διευθύνσεων να χρησιμοποιεί για τις χώρες που δεν γνωρίζει τη μορφή διεύθυνσής τους. Αν η μορφή διεύθυνσης μιας χώρας είναι γνωστή, χρησιμοποιεί την ανεξάρτητη αυτής της διάταξης.
-which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	el	Ποιο βιβλίο διευθύνσεων πρέπει να επιλέγεται όταν προσθέτετε επαφή χωρίς να έχετε δικαιώματα στο συγκεκριμένο βιβλίο διευθύνσεων.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του eGroupWare.
-which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	el	Ποια πεδία θα πρέπει να εξάγωνται.Όλα σημαίνει κάθε πεδίο που είναι αποθηκευμένο στο βιβλίο διευθύνσεων συμπεριλαμβανομένου και των προσαρμοσμένων πεδίων.Η διεύθυνση εργασίας ή οικίας περιέχει μόνο το όνομα, την εταιρεία και την επιλεγμένη διεύθυνση.
-whole query	addressbook	el	ολόκληρη απορία
-work phone	addressbook	el	Τηλέφωνο Εργασίας
-write (update or add) a single entry by passing the fields.	addressbook	el	Εγγραφή (ενημέρωση ή προσθήκη) μιας καταχώρησης διαβαίνοντας από τα πεδία.
-wrong - try again ...	addressbook	el	Λάθος - προσπαθήστε ξανά ...
-yes, for the next three days	addressbook	el	Ναι, για τις επόμενες τρεις ημέρες
-yes, for the next two weeks	addressbook	el	Ναι, για τις επόμενες δύο εβδομάδες
-yes, for the next week	addressbook	el	Ναι, για την επόμενη εβδομάδα
-yes, for today and tomorrow	addressbook	el	Ναι, για σήμερα και αύριο
-you are not permitted to delete contact %1	addressbook	el	Δεν έχετε άδεια να διαγράψετε την επαφή %1
-you are not permittet to delete this contact	addressbook	el	Δεν έχετε άδεια να διαγράψετε αυτήν την επαφή
-you are not permittet to edit this contact	addressbook	el	Δεν έχετε άδεια να επεξεργαστείτε αυτήν την επαφή
-you are not permittet to view this contact	addressbook	el	Δεν έχετε άδεια να δείτε τα στοιχεία αυτής της επαφής
-you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	el	Μπορείτε να χρησιμοποιήσετε το LDAP ως αποθήκη επαφής μόνο αν οι λογαριασμοί αποθηκεύονται στο LDAP επίσης!
-you can respond by visiting:	addressbook	el	Για να το δείτε επισκεφθείτε:
-you must select a vcard. (*.vcf)	addressbook	el	Πρέπει να επιλέξετε μια VCard (*.vcf)
-you must select at least 1 column to display	addressbook	el	Πρέπει να επιλέξετε τουλάχιστο μία στήλη για εμφάνιση
-you need to select a distribution list	addressbook	el	Πρέπει να επιλέξετε μια λίστα διανομής
-you need to select some contacts first	addressbook	el	Πρέπει να επιλέξετε κάποιες επαφές πρώτα
-zip code	common	el	Τ.Κ.
-zip_note	addressbook	el	<p><b>Σημείωση:</b> Το αρχείο μπορεί να είναι μια συλλογή συμπιεσμένων αρχείων .csv, .vcf, ή .ldif αρχείων. Εντούτοις, μην αναμίξτε τους τύπους αρχείου ανά εισαγωγή.
+vcards require a first name entry.	addressbook	el	VCards Ξ±Ο€Ξ±ΞΉΟ„ΞΏΟΞ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· ΞΏΞ½ΟΞΌΞ±Ο„ΞΏΟ‚
+vcards require a last name entry.	addressbook	el	VCards Ξ±Ο€Ξ±ΞΉΟ„ΞΏΟΞ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· ΞµΟ€Ξ―ΞΈΞµΟ„ΞΏΟ…
+verification	addressbook	el	Ξ•Ο€Ξ±Ξ»Ξ®ΞΈΞµΟ…ΟƒΞ·
+view linked infolog entries	addressbook	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΟ…Ξ½Ξ΄ΞµΞ΄ΞµΞΌΞ­Ξ½Ο‰Ξ½ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½ Ο„ΞΏΟ… InfoLog
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	el	Ξ Ξ΅ΞΞ£ΞΞ§Ξ—!! LDAP ΞΉΟƒΟ‡ΟΞµΞΉ ΞΌΟΞ½ΞΏ ΞµΞ¬Ξ½ Ξ”Ξ•Ξ Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξµ Ο„ΞΉΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ·
+warning: all contacts found will be deleted!	addressbook	el	Ξ Ξ΅ΞΞ£ΞΞ§Ξ—: ΞΞ»ΞµΟ‚ ΞΏΞΉ ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ο€ΞΏΟ… Ξ²ΟΞ­ΞΈΞ·ΞΊΞ±Ξ½ ΞΈΞ± Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞΏΟΞ½!
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	el	Ξ ΞΏΞΉΞ± ΞΌΞΏΟΟ†Ξ® Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·Ο‚ ΞΈΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ο„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ― Ξ³ΞΉΞ± Ο„ΞΉΟ‚ Ο‡ΟΟΞµΟ‚ Ο€ΞΏΟ… Ξ΄ΞµΞ½ Ξ³Ξ½Ο‰ΟΞ―Ξ¶ΞµΞΉ Ο„Ξ· ΞΌΞΏΟΟ†Ξ® Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ®Ο‚ Ο„ΞΏΟ…Ο‚. Ξ‘Ξ½ Ξ· ΞΌΞΏΟΟ†Ξ® Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·Ο‚ ΞΌΞΉΞ±Ο‚ Ο‡ΟΟΞ±Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ Ξ³Ξ½Ο‰ΟƒΟ„Ξ®, Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ― Ο„Ξ·Ξ½ Ξ±Ξ½ΞµΞΎΞ¬ΟΟ„Ξ·Ο„Ξ· Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ Ξ΄ΞΉΞ¬Ο„Ξ±ΞΎΞ·Ο‚.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	el	Ξ ΞΏΞΉΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­Ξ³ΞµΟ„Ξ±ΞΉ ΟΟ„Ξ±Ξ½ Ο€ΟΞΏΟƒΞΈΞ­Ο„ΞµΟ„Ξµ ΞµΟ€Ξ±Ο†Ξ® Ο‡Ο‰ΟΞ―Ο‚ Ξ½Ξ± Ξ­Ο‡ΞµΟ„Ξµ Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± ΟƒΟ„ΞΏ ΟƒΟ…Ξ³ΞΊΞµΞΊΟΞΉΞΌΞ­Ξ½ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ξ ΞΏΞΉΞ± ΞΊΟ‰Ξ΄ΞΉΞΊΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ± ΞΈΞ± Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ­ΞΉΟ„Ξ±ΞΉ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ CSV ΞµΞΎΞ±Ξ³Ο‰Ξ³Ξ®.Ξ¤ΞΏ Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ± ΞµΞΉΞ½Ξ±ΞΉ Ξ· ΞΊΟ‰Ξ΄ΞΉΞΊΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ± Ο„Ξ·Ο‚ ΞµΞ³ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚ Ο„ΞΏΟ… eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	el	Ξ ΞΏΞΉΞ± Ο€ΞµΞ΄Ξ―Ξ± ΞΈΞ± Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞΎΞ¬Ξ³Ο‰Ξ½Ο„Ξ±ΞΉ.ΞΞ»Ξ± ΟƒΞ·ΞΌΞ±Ξ―Ξ½ΞµΞΉ ΞΊΞ¬ΞΈΞµ Ο€ΞµΞ΄Ξ―ΞΏ Ο€ΞΏΟ… ΞµΞ―Ξ½Ξ±ΞΉ Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟ…ΞΌΞ­Ξ½ΞΏ ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ ΟƒΟ…ΞΌΟ€ΞµΟΞΉΞ»Ξ±ΞΌΞ²Ξ±Ξ½ΞΏΞΌΞ­Ξ½ΞΏΟ… ΞΊΞ±ΞΉ Ο„Ο‰Ξ½ Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ο‰Ξ½ Ο€ΞµΞ΄Ξ―Ο‰Ξ½.Ξ— Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ® ΞΏΞΉΞΊΞ―Ξ±Ο‚ Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ ΞΌΟΞ½ΞΏ Ο„ΞΏ ΟΞ½ΞΏΞΌΞ±, Ο„Ξ·Ξ½ ΞµΟ„Ξ±ΞΉΟΞµΞ―Ξ± ΞΊΞ±ΞΉ Ο„Ξ·Ξ½ ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ· Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·.
+whole query	addressbook	el	ΞΏΞ»ΟΞΊΞ»Ξ·ΟΞ· Ξ±Ο€ΞΏΟΞ―Ξ±
+work phone	addressbook	el	Ξ¤Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+write (update or add) a single entry by passing the fields.	addressbook	el	Ξ•Ξ³Ξ³ΟΞ±Ο†Ξ® (ΞµΞ½Ξ·ΞΌΞ­ΟΟ‰ΟƒΞ· Ξ® Ο€ΟΞΏΟƒΞΈΞ®ΞΊΞ·) ΞΌΞΉΞ±Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ Ξ΄ΞΉΞ±Ξ²Ξ±Ξ―Ξ½ΞΏΞ½Ο„Ξ±Ο‚ Ξ±Ο€Ο Ο„Ξ± Ο€ΞµΞ΄Ξ―Ξ±.
+wrong - try again ...	addressbook	el	Ξ›Ξ¬ΞΈΞΏΟ‚ - Ο€ΟΞΏΟƒΟ€Ξ±ΞΈΞ®ΟƒΟ„Ξµ ΞΎΞ±Ξ½Ξ¬ ...
+yes, for the next three days	addressbook	el	ΞΞ±ΞΉ, Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞµΟ€ΟΞΌΞµΞ½ΞµΟ‚ Ο„ΟΞµΞΉΟ‚ Ξ·ΞΌΞ­ΟΞµΟ‚
+yes, for the next two weeks	addressbook	el	ΞΞ±ΞΉ, Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞµΟ€ΟΞΌΞµΞ½ΞµΟ‚ Ξ΄ΟΞΏ ΞµΞ²Ξ΄ΞΏΞΌΞ¬Ξ΄ΞµΟ‚
+yes, for the next week	addressbook	el	ΞΞ±ΞΉ, Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞµΟ€ΟΞΌΞµΞ½Ξ· ΞµΞ²Ξ΄ΞΏΞΌΞ¬Ξ΄Ξ±
+yes, for today and tomorrow	addressbook	el	ΞΞ±ΞΉ, Ξ³ΞΉΞ± ΟƒΞ®ΞΌΞµΟΞ± ΞΊΞ±ΞΉ Ξ±ΟΟΞΉΞΏ
+you are not permitted to delete contact %1	addressbook	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ Ξ¬Ξ΄ΞµΞΉΞ± Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ο„Ξ·Ξ½ ΞµΟ€Ξ±Ο†Ξ® %1
+you are not permittet to delete this contact	addressbook	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ Ξ¬Ξ΄ΞµΞΉΞ± Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ±Ο…Ο„Ξ®Ξ½ Ο„Ξ·Ξ½ ΞµΟ€Ξ±Ο†Ξ®
+you are not permittet to edit this contact	addressbook	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ Ξ¬Ξ΄ΞµΞΉΞ± Ξ½Ξ± ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΟ„ΞµΞ―Ο„Ξµ Ξ±Ο…Ο„Ξ®Ξ½ Ο„Ξ·Ξ½ ΞµΟ€Ξ±Ο†Ξ®
+you are not permittet to view this contact	addressbook	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ Ξ¬Ξ΄ΞµΞΉΞ± Ξ½Ξ± Ξ΄ΞµΞ―Ο„Ξµ Ο„Ξ± ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ± Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞµΟ€Ξ±Ο†Ξ®Ο‚
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	el	ΞΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ„Ξµ Ο„ΞΏ LDAP Ο‰Ο‚ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞ· ΞµΟ€Ξ±Ο†Ξ®Ο‚ ΞΌΟΞ½ΞΏ Ξ±Ξ½ ΞΏΞΉ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΞ― Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΞΏΞ½Ο„Ξ±ΞΉ ΟƒΟ„ΞΏ LDAP ΞµΟ€Ξ―ΟƒΞ·Ο‚!
+you can respond by visiting:	addressbook	el	Ξ“ΞΉΞ± Ξ½Ξ± Ο„ΞΏ Ξ΄ΞµΞ―Ο„Ξµ ΞµΟ€ΞΉΟƒΞΊΞµΟ†ΞΈΞµΞ―Ο„Ξµ:
+you must select a vcard. (*.vcf)	addressbook	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ ΞΌΞΉΞ± VCard (*.vcf)
+you must select at least 1 column to display	addressbook	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ Ο„ΞΏΟ…Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏ ΞΌΞ―Ξ± ΟƒΟ„Ξ®Ξ»Ξ· Ξ³ΞΉΞ± ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·
+you need to select a distribution list	addressbook	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ ΞΌΞΉΞ± Ξ»Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±Ξ½ΞΏΞΌΞ®Ο‚
+you need to select some contacts first	addressbook	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ ΞΊΞ¬Ο€ΞΏΞΉΞµΟ‚ ΞµΟ€Ξ±Ο†Ξ­Ο‚ Ο€ΟΟΟ„Ξ±
+zip code	common	el	Ξ¤.Ξ.
+zip_note	addressbook	el	<p><b>Ξ£Ξ·ΞΌΞµΞ―Ο‰ΟƒΞ·:</b> Ξ¤ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΞΉΞ± ΟƒΟ…Ξ»Ξ»ΞΏΞ³Ξ® ΟƒΟ…ΞΌΟ€ΞΉΞµΟƒΞΌΞ­Ξ½Ο‰Ξ½ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½ .csv, .vcf, Ξ® .ldif Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½. Ξ•Ξ½Ο„ΞΏΟΟ„ΞΏΞΉΟ‚, ΞΌΞ·Ξ½ Ξ±Ξ½Ξ±ΞΌΞ―ΞΎΟ„Ξµ Ο„ΞΏΟ…Ο‚ Ο„ΟΟ€ΞΏΟ…Ο‚ Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… Ξ±Ξ½Ξ¬ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®.

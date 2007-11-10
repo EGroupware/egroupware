@@ -1,85 +1,85 @@
-%1 - preferences	preferences	ko	%1 - È¯°æ¼³Á¤
-%1 hours	preferences	ko	%1 ½Ã°£
-12 hour	preferences	ko	12 ½Ã°£
-24 hour	preferences	ko	24 ½Ã°£
-a template defines the layout of egroupware and it contains icons for each application.	preferences	ko	ÅÛÇÃ¸´ÀÇ Á¤ÀÇ´Â eGroupWare ·¹ÀÌ¾Æ¿ô °ú °¢ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¾ÆÀÌÄÜÀ» Æ÷ÇÔÇÕ´Ï´Ù.
-a theme defines the colors and fonts used by the template.	preferences	ko	Å×¸¶´Â ÅÛÇÃ¸´¿¡¼­ »ç¿ëÇÒ »ö°ú ±Û²ÃÀ» Á¤ÀÇÇÕ´Ï´Ù.
-acl grants have been updated	preferences	ko	ACL Çã¿ëÀÌ ¾÷µ¥ÀÌÆ® µÇ¾ú½À´Ï´Ù.
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	eGroupWare¿¡¼­ »ç¿ëµÇ´Â ¾î¶°ÇÑ ¸®½ºÆ®ÀÇ °³¼ö³ª ÆäÀÌÁö´ç ¶óÀÎÀº ¼³Á¤ÇÑ ¼ö¸¸Å­ º¸ÀÔ´Ï´Ù.<br>³Ê¹« Å« ¼ö´Â ÆäÀÌÁö Ç¥½Ã°¡ ´À·ÁÁö°í , ³Ê¹« ÀÛÀº ¼ö´Â ÀüÃ¼ÀûÀÎ º¸±â¿¡ ¸¹Àº ½Ã°£À» ¼ÒºñÇÏ°Ô µË´Ï´Ù.
-are you sure you want to delete this category ?	preferences	ko	Á¤¸» ÀÌ Ä«Å×°í¸®¸¦ »èÁ¦ÇÒ±î¿ä?
-change your password	preferences	ko	¾ÏÈ£ º¯°æ
-change your profile	preferences	ko	ÇÁ·ÎÇÊ º¯°æ
-change your settings	preferences	ko	¼³Á¤ ¹Ù²Ù±â
-click to select a color	preferences	ko	Å¬¸¯ÇØ¼­ »ö±òÀ» ¼±ÅÃ
-color	preferences	ko	»ö
-country	preferences	ko	±¹°¡
-date format	preferences	ko	³¯Â¥ Çü½Ä
-default	preferences	ko	±âº»
-default application	preferences	ko	±âº» ÀÀ¿ëÇÁ·Î±×·¥
-default preferences	preferences	ko	±âº» È¯°æ¼³Á¤
-delete categories	preferences	ko	Ä«Å×°í¸® »èÁ¦
-description can not exceed 255 characters in length !	preferences	ko	¼³¸íÀº 255 ±ÛÀÚ¸¦ ³Ñ±æ¼ö ¾ø½À´Ï´Ù!
-do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ko	24½Ã°£ ½Ã°£ Çü½ÄÀÌ ÁÁÀ¸½Å°¡¿ä? ¾Æ´Ï¸é 12½Ã°£ ½Ã°£Çü½Ä¿¡ am/pm ÀÌ µ¡ºÙÇô Ç¥±âµÇ´Â Çü½ÄÀÌ ÁÁÀ¸½Å°¡¿ä?
-edit custom fields	preferences	ko	»ç¿ëÀÚÁ¤ÀÇ ÇÊµå¸¦ ÆíÁı
-email signature	preferences	ko	E-Mail ¼­¸í
-enter your new password	preferences	ko	»õ·Î¿î ¾ÏÈ£¸¦ ÀÔ·Â
-error: there was a problem finding the preference file for %1 in %2	preferences	ko	¿À·ù: ¼³Á¤ ÆÄÀÏ %2¿¡¼­ %1À» Ã£´Âµ¥ ¹®Á¦°¡ ÀÖ½À´Ï´Ù
-failed to change password.  please contact your administrator.	preferences	ko	¾ÏÈ£¸¦ ¹Ù²Ù´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä
-forced preferences	preferences	ko	°­Á¦ È¯°æ¼³Á¤
-help off	preferences	ko	µµ¿ò¸» ²ô±â
-hours	preferences	ko	½Ã°£
-how do you like to display accounts	preferences	ko	¾î¶»°Ô °èÁ¤À» Ç¥½ÃÇÏ°Ú½À´Ï±î?
-how do you like to select accounts	preferences	ko	¾î¶»°Ô °èÁ¤À» ¼±ÅÃÇÏ½Ã°Ú½À´Ï±î?
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	ko	¼­¹öÀÇ ½Ã°£´ë(timezone)º¸´Ù ¸î½Ã°£ ¾Õ¼­±æ ¿øÇÏ³ª¿ä.<br>¸¸¾à ¼­¹ö¿Í °°Àº ½Ã°£´ë¿¡ ÀÖ´Ù¸é 0½Ã°£À» ¼±ÅÃÇÏ°Å³ª , ±ÍÇÏÀÇ ÇöÁö ³¯Â¥¿Í ½Ã°£À» ¼±ÅÃÇÏ¼¼¿ä.
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	ko	ÃÖ»óÀ§ ÆäÀÌÁöÀÇ ³×ºñ°ÔÀÌ¼Ç ¹Ù¿¡¼­ ¸î°³ÀÇ ¾ÆÀÌÄÜÀÌ º¸ÀÌ±æ ¿øÇÏ³ª¿ä. ¿©ºĞÀÇ ¾ÆÀÌÄÜÀº °¡Àå ³×ºñ°ÔÀÌ¼Ç¹ÙÀÇ °¡Àå ¿À¸¥ÂÊ ¾ÆÀÌÄÜÀÇ Ç®´Ù¿î ¸Ş´º¾ÈÀ¸·Î µé¾î°©´Ï´Ù.
-how should egroupware display dates for you.	preferences	ko	eGroupWare°¡ ³¯Â¥¸¦ ¾î¶»°Ô º¸¿©µå¸±±î¿ä?
-icon	preferences	ko	¾ÆÀÌÄÜ
-icons and text	preferences	ko	¾ÆÀÌÄÜ°ú ¼³¸í
-icons only	preferences	ko	¿ÀÁ÷ ¾ÆÀÌÄÜ¸¸
-in which country are you. this is used to set certain defaults for you.	preferences	ko	Áö±İ °è½Å ±¹°¡´Â? ÀÌ ¼³Á¤Àº ±âº»¼³Á¤ÀÌ µË´Ï´Ù.
-interface/template selection	preferences	ko	ÀÎÅÍÆäÀÌ½º/ÅÛÇÃ¸´ ¼±ÅÃ
-language	preferences	ko	¾ğ¾î
-max matches per page	preferences	ko	ÆäÀÌÁö´ç ÃÖ´ë ÀÏÄ¡ °³¼ö
-max matchs per page	preferences	ko	ÆäÀÌÁö´ç ÃÖ´ë °Ë»ö °á°ú Ç×¸ñ ¼ö
-max number of icons in navbar	preferences	ko	³×ºñ°ÔÀÌ¼Ç¹Ù ¿¡¼­ ÃÖ´ë ¾ÆÀÌÄÜ °³¼ö
-no default	preferences	ko	±âº»¼³Á¤ ¾øÀ½
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	ko	Âü°í: e-mailÀÇ ¾ÏÈ£´Â º¯°æµÇÁö ¾Ê½À´Ï´Ù. ¼öµ¿À¸·Î º¯°æÇÏ½Ê½Ã¿À.
-please, select a new theme	preferences	ko	»õ·Î¿î Å×¸¶¸¦ ¼±ÅÃÇÏ¼¼¿ä.
-popup with search	preferences	ko	ÆË¾÷À¸·Î °Ë»ö
-re-enter your password	preferences	ko	»õ·Î¿î ¾ÏÈ£ È®ÀÎ
-select different theme	preferences	ko	Å×¸¶ ¹Ù²Ù±â
-select one	preferences	ko	ÇÏ³ª¸¦ ¼±ÅÃ
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ko	eGroupWareÀÇ ¹®Àå°ú ¸Ş¼¼ÁöÀÇ ¾ğ¾î¸¦ ¼±ÅÃÇÏ¼¼¿ä.<br>Æ¯Á¤ ¾ğ¾î´Â ¸ğµç ¸Ş¼¼Áö¸¦ Æ÷ÇÔÇÏ°í ÀÖÁö ¾Ê¾Æ¼­ ¿µ¾î·Î º¸ÀÔ´Ï´Ù.
-selectbox	preferences	ko	¼±ÅÃ»óÀÚ
-selectbox with primary group and search	preferences	ko	Ã¹¹øÂ° ±×·ì°ú °Ë»öÃ¢ÀÌ ÀÖ´Â ¼±ÅÃ»óÀÚ
-set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	ko	¸¶À½¿¡ µé¸é ¼³Á¤ÇÏ¼¼¿ä. º¸¾È»óÀÌÀ¯·Î´Â »ç¿ëÀÚÀÌ¸§À» ¸ğµÎ¿¡°Ô º¸ÀÌ°í ½ÍÁö ¾ÊÀ»¼öµµ ÀÖ½À´Ï´Ù
-should the number of active sessions be displayed for you all the time.	preferences	ko	Ç×»ó ÇöÀç »ç¿ëÁßÀÎ ¼¼¼ÇÀÇ ¼ö¸¦ Ç¥±âÇÕ´Ï´Ù
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	ko	È¯°æ¼³Á¤À» º¯°æÇÒ¶§³ª ¿øÇÒ¶§, µµ¿ò¸»ÀÌ Ç×»ó Ç¥½ÃµË´Ï´Ù.
-show birthday reminders on main screen	preferences	ko	»ıÀÏÀÎ »ç¶÷ ¾Ë·ÁÁÖ±â.
-show current users on navigation bar	preferences	ko	ÇöÀç »ç¿ëÀÚ¸¦ navigation bar¿¡ Ç¥½ÃÇÕ´Ï´Ù.
-show helpmessages by default	preferences	ko	±âº»ÀûÀ¸·Î µµ¿ò¸» º¸ÀÌ±â
-show high priority events on main screen	preferences	ko	Áß¿äµµ°¡ ³ôÀº ÀÛ¾÷ º¸¿©ÁÖ±â
-show navigation bar as	preferences	ko	³×ºñ°ÔÀÌ¼Ç ¹Ù¸¦ º¼¶§
-show new messages on main screen	preferences	ko	»õ·Î¿î ¸Ş½ÃÁö¸¦ ¸ŞÀÎÈ­¸é¿¡ º¸¿©Áİ´Ï´Ù.
-show number of current users	preferences	ko	ÇöÀç »ç¿ëÀÚ ¼ö
-show text on navigation icons	preferences	ko	ÅøÆÁº¸±â
-show_more_apps	common	ko	´õ ¸¹Àº ÀÀ¿ëÇÁ·Î±×·¥ º¸±â
-text only	preferences	ko	±ÛÀÚ¸¸
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ko	** eGroupWare¸¦ ½ÃÀÛÇÏ¸é ±âº» ÀÀ¿ëÇÁ·Î±×·¥ÀÌ ½ÃÀÛµÇ°í È¨ÆäÀÌÁö ¾ÆÀÌÄÜÀ» Å¬¸¯ÇØµµ ¸¶Âù°¡ÁöÀÔ´Ï´Ù.<br>¿©±â¼­ ÀÀ¿ëÇÁ·Î±×·¥À» Á÷Á¢ ¼±ÅÃÇÏÁö ¾Ê°í °¢ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ±¸¼º¿¡¼­ ¼³Á¤ÇÏÁö ¾ÊÀ» °æ¿ì ÇÏ³ª ÀÌ»óÀÇ ÀÀ¿ëÇÁ·Î±×·¥À» È¨ÆäÀÌÁö¿¡ º¸ÀÌ°Ô È¯°æ¼³Á¤ÇÒ¼ö ÀÖ½À´Ï´Ù
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ko	¼±ÅÃ»óÀÚ°¡ ¸ğµç »ç¿ëÀÚ¿¡ º¸ÀÔ´Ï´Ù (¸¸¾à »ç¿ëÀÚ°¡ ¸¹´Ù¸é ´À·ÁÁú¼ö ÀÖ½À´Ï´Ù) ÆË¾÷Ã¢Àº »ç¿ëÀÚÀÇ ÀÌ¸§ÀÌ³ª ±×·ìÀ¸·Î °Ë»öÇÒ ¼ö ÀÖ½À´Ï´Ù.
-the two passwords are not the same	preferences	ko	µÎ ¾ÏÈ£°¡ ¼­·Î ´Ù¸¨´Ï´Ù
-theme (colors/fonts) selection	preferences	ko	Å×¸¶ (ÄÃ·¯/ÆùÆ®) ¼±ÅÃ
-this server is located in the %1 timezone	preferences	ko	ÀÌ ¼­¹ö´Â %1 ½Ã°£´ë¿¡ ÀÖ½À´Ï´Ù
-time format	preferences	ko	½Ã°£ Çü½Ä
-time zone offset	preferences	ko	½Ã°£´ë º¯°æ
-use default	preferences	ko	±âº» »ç¿ë
-users choice	preferences	ko	»ç¿ëÀÚ ¼±ÅÃ
-weekday starts on	preferences	ko	ÇÑÁÖÀÏÀÇ ½ÃÀÛ
-which currency symbol or name should be used in egroupware.	preferences	ko	eGroupWare¿¡¼­ »ç¿ëÇÒ Çö±İ´ÜÀ§ÀÇ ÀÌ¸§ÀÌ³ª ±âÈ£´Â ¾î¶²°ÍÀ¸·Î ÇÒ±î¿ä
-work day ends on	preferences	ko	±Ù¹« Á¾·á ½Ã°¢
-work day starts on	preferences	ko	±Ù¹« ½ÃÀÛ ½Ã°¢
-you can show the applications as icons only, icons with app-name or both.	preferences	ko	ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¾ÆÀÌÄÜ¸¸ º¸ÀÌ°Ô ÇÏ°Å³ª ÀÌ¸§°ú ¾ÆÀÌÄÜ µ¿½Ã¿¡ º¸ÀÌ°Ô ÇÒ¼ö ÀÖ½À´Ï´Ù
-you do not have permission to set acl's in this mode!	preferences	ko	ÇöÀç ACLÀ» ¼³Á¤ÇÒ ±ÇÇÑÀÌ ¾ø½À´Ï´Ù
-you must enter a password	preferences	ko	¾ÏÈ£¸¦ ÀÔ·ÂÇØ¾ß¸¸ ÇÕ´Ï´Ù.
-your current theme is: %1	preferences	ko	ÇöÀç Å×¸¶´Â %1 ÀÔ´Ï´Ù.
-your preferences	preferences	ko	±ÍÇÏÀÇ È¯°æ¼³Á¤
+%1 - preferences	preferences	ko	%1 - í™˜ê²½ì„¤ì •
+%1 hours	preferences	ko	%1 ì‹œê°„
+12 hour	preferences	ko	12 ì‹œê°„
+24 hour	preferences	ko	24 ì‹œê°„
+a template defines the layout of egroupware and it contains icons for each application.	preferences	ko	í…œí”Œë¦¿ì˜ ì •ì˜ëŠ” eGroupWare ë ˆì´ì•„ì›ƒ ê³¼ ê° ì‘ìš©í”„ë¡œê·¸ë¨ì˜ ì•„ì´ì½˜ì„ í¬í•¨í•©ë‹ˆë‹¤.
+a theme defines the colors and fonts used by the template.	preferences	ko	í…Œë§ˆëŠ” í…œí”Œë¦¿ì—ì„œ ì‚¬ìš©í•  ìƒ‰ê³¼ ê¸€ê¼´ì„ ì •ì˜í•©ë‹ˆë‹¤.
+acl grants have been updated	preferences	ko	ACL í—ˆìš©ì´ ì—…ë°ì´íŠ¸ ë˜ì—ˆìŠµë‹ˆë‹¤.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	eGroupWareì—ì„œ ì‚¬ìš©ë˜ëŠ” ì–´ë– í•œ ë¦¬ìŠ¤íŠ¸ì˜ ê°œìˆ˜ë‚˜ í˜ì´ì§€ë‹¹ ë¼ì¸ì€ ì„¤ì •í•œ ìˆ˜ë§Œí¼ ë³´ì…ë‹ˆë‹¤.<br>ë„ˆë¬´ í° ìˆ˜ëŠ” í˜ì´ì§€ í‘œì‹œê°€ ëŠë ¤ì§€ê³  , ë„ˆë¬´ ì‘ì€ ìˆ˜ëŠ” ì „ì²´ì ì¸ ë³´ê¸°ì— ë§ì€ ì‹œê°„ì„ ì†Œë¹„í•˜ê²Œ ë©ë‹ˆë‹¤.
+are you sure you want to delete this category ?	preferences	ko	ì •ë§ ì´ ì¹´í…Œê³ ë¦¬ë¥¼ ì‚­ì œí• ê¹Œìš”?
+change your password	preferences	ko	ì•”í˜¸ ë³€ê²½
+change your profile	preferences	ko	í”„ë¡œí•„ ë³€ê²½
+change your settings	preferences	ko	ì„¤ì • ë°”ê¾¸ê¸°
+click to select a color	preferences	ko	í´ë¦­í•´ì„œ ìƒ‰ê¹”ì„ ì„ íƒ
+color	preferences	ko	ìƒ‰
+country	preferences	ko	êµ­ê°€
+date format	preferences	ko	ë‚ ì§œ í˜•ì‹
+default	preferences	ko	ê¸°ë³¸
+default application	preferences	ko	ê¸°ë³¸ ì‘ìš©í”„ë¡œê·¸ë¨
+default preferences	preferences	ko	ê¸°ë³¸ í™˜ê²½ì„¤ì •
+delete categories	preferences	ko	ì¹´í…Œê³ ë¦¬ ì‚­ì œ
+description can not exceed 255 characters in length !	preferences	ko	ì„¤ëª…ì€ 255 ê¸€ìë¥¼ ë„˜ê¸¸ìˆ˜ ì—†ìŠµë‹ˆë‹¤!
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ko	24ì‹œê°„ ì‹œê°„ í˜•ì‹ì´ ì¢‹ìœ¼ì‹ ê°€ìš”? ì•„ë‹ˆë©´ 12ì‹œê°„ ì‹œê°„í˜•ì‹ì— am/pm ì´ ë§ë¶™í˜€ í‘œê¸°ë˜ëŠ” í˜•ì‹ì´ ì¢‹ìœ¼ì‹ ê°€ìš”?
+edit custom fields	preferences	ko	ì‚¬ìš©ìì •ì˜ í•„ë“œë¥¼ í¸ì§‘
+email signature	preferences	ko	E-Mail ì„œëª…
+enter your new password	preferences	ko	ìƒˆë¡œìš´ ì•”í˜¸ë¥¼ ì…ë ¥
+error: there was a problem finding the preference file for %1 in %2	preferences	ko	ì˜¤ë¥˜: ì„¤ì • íŒŒì¼ %2ì—ì„œ %1ì„ ì°¾ëŠ”ë° ë¬¸ì œê°€ ìˆìŠµë‹ˆë‹¤
+failed to change password.  please contact your administrator.	preferences	ko	ì•”í˜¸ë¥¼ ë°”ê¾¸ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. ê´€ë¦¬ìì—ê²Œ ë¬¸ì˜í•˜ì„¸ìš”
+forced preferences	preferences	ko	ê°•ì œ í™˜ê²½ì„¤ì •
+help off	preferences	ko	ë„ì›€ë§ ë„ê¸°
+hours	preferences	ko	ì‹œê°„
+how do you like to display accounts	preferences	ko	ì–´ë–»ê²Œ ê³„ì •ì„ í‘œì‹œí•˜ê² ìŠµë‹ˆê¹Œ?
+how do you like to select accounts	preferences	ko	ì–´ë–»ê²Œ ê³„ì •ì„ ì„ íƒí•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	ko	ì„œë²„ì˜ ì‹œê°„ëŒ€(timezone)ë³´ë‹¤ ëª‡ì‹œê°„ ì•ì„œê¸¸ ì›í•˜ë‚˜ìš”.<br>ë§Œì•½ ì„œë²„ì™€ ê°™ì€ ì‹œê°„ëŒ€ì— ìˆë‹¤ë©´ 0ì‹œê°„ì„ ì„ íƒí•˜ê±°ë‚˜ , ê·€í•˜ì˜ í˜„ì§€ ë‚ ì§œì™€ ì‹œê°„ì„ ì„ íƒí•˜ì„¸ìš”.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	ko	ìµœìƒìœ„ í˜ì´ì§€ì˜ ë„¤ë¹„ê²Œì´ì…˜ ë°”ì—ì„œ ëª‡ê°œì˜ ì•„ì´ì½˜ì´ ë³´ì´ê¸¸ ì›í•˜ë‚˜ìš”. ì—¬ë¶„ì˜ ì•„ì´ì½˜ì€ ê°€ì¥ ë„¤ë¹„ê²Œì´ì…˜ë°”ì˜ ê°€ì¥ ì˜¤ë¥¸ìª½ ì•„ì´ì½˜ì˜ í’€ë‹¤ìš´ ë©”ë‰´ì•ˆìœ¼ë¡œ ë“¤ì–´ê°‘ë‹ˆë‹¤.
+how should egroupware display dates for you.	preferences	ko	eGroupWareê°€ ë‚ ì§œë¥¼ ì–´ë–»ê²Œ ë³´ì—¬ë“œë¦´ê¹Œìš”?
+icon	preferences	ko	ì•„ì´ì½˜
+icons and text	preferences	ko	ì•„ì´ì½˜ê³¼ ì„¤ëª…
+icons only	preferences	ko	ì˜¤ì§ ì•„ì´ì½˜ë§Œ
+in which country are you. this is used to set certain defaults for you.	preferences	ko	ì§€ê¸ˆ ê³„ì‹  êµ­ê°€ëŠ”? ì´ ì„¤ì •ì€ ê¸°ë³¸ì„¤ì •ì´ ë©ë‹ˆë‹¤.
+interface/template selection	preferences	ko	ì¸í„°í˜ì´ìŠ¤/í…œí”Œë¦¿ ì„ íƒ
+language	preferences	ko	ì–¸ì–´
+max matches per page	preferences	ko	í˜ì´ì§€ë‹¹ ìµœëŒ€ ì¼ì¹˜ ê°œìˆ˜
+max matchs per page	preferences	ko	í˜ì´ì§€ë‹¹ ìµœëŒ€ ê²€ìƒ‰ ê²°ê³¼ í•­ëª© ìˆ˜
+max number of icons in navbar	preferences	ko	ë„¤ë¹„ê²Œì´ì…˜ë°” ì—ì„œ ìµœëŒ€ ì•„ì´ì½˜ ê°œìˆ˜
+no default	preferences	ko	ê¸°ë³¸ì„¤ì • ì—†ìŒ
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	ko	ì°¸ê³ : e-mailì˜ ì•”í˜¸ëŠ” ë³€ê²½ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ìˆ˜ë™ìœ¼ë¡œ ë³€ê²½í•˜ì‹­ì‹œì˜¤.
+please, select a new theme	preferences	ko	ìƒˆë¡œìš´ í…Œë§ˆë¥¼ ì„ íƒí•˜ì„¸ìš”.
+popup with search	preferences	ko	íŒì—…ìœ¼ë¡œ ê²€ìƒ‰
+re-enter your password	preferences	ko	ìƒˆë¡œìš´ ì•”í˜¸ í™•ì¸
+select different theme	preferences	ko	í…Œë§ˆ ë°”ê¾¸ê¸°
+select one	preferences	ko	í•˜ë‚˜ë¥¼ ì„ íƒ
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ko	eGroupWareì˜ ë¬¸ì¥ê³¼ ë©”ì„¸ì§€ì˜ ì–¸ì–´ë¥¼ ì„ íƒí•˜ì„¸ìš”.<br>íŠ¹ì • ì–¸ì–´ëŠ” ëª¨ë“  ë©”ì„¸ì§€ë¥¼ í¬í•¨í•˜ê³  ìˆì§€ ì•Šì•„ì„œ ì˜ì–´ë¡œ ë³´ì…ë‹ˆë‹¤.
+selectbox	preferences	ko	ì„ íƒìƒì
+selectbox with primary group and search	preferences	ko	ì²«ë²ˆì§¸ ê·¸ë£¹ê³¼ ê²€ìƒ‰ì°½ì´ ìˆëŠ” ì„ íƒìƒì
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	ko	ë§ˆìŒì— ë“¤ë©´ ì„¤ì •í•˜ì„¸ìš”. ë³´ì•ˆìƒì´ìœ ë¡œëŠ” ì‚¬ìš©ìì´ë¦„ì„ ëª¨ë‘ì—ê²Œ ë³´ì´ê³  ì‹¶ì§€ ì•Šì„ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤
+should the number of active sessions be displayed for you all the time.	preferences	ko	í•­ìƒ í˜„ì¬ ì‚¬ìš©ì¤‘ì¸ ì„¸ì…˜ì˜ ìˆ˜ë¥¼ í‘œê¸°í•©ë‹ˆë‹¤
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	ko	í™˜ê²½ì„¤ì •ì„ ë³€ê²½í• ë•Œë‚˜ ì›í• ë•Œ, ë„ì›€ë§ì´ í•­ìƒ í‘œì‹œë©ë‹ˆë‹¤.
+show birthday reminders on main screen	preferences	ko	ìƒì¼ì¸ ì‚¬ëŒ ì•Œë ¤ì£¼ê¸°.
+show current users on navigation bar	preferences	ko	í˜„ì¬ ì‚¬ìš©ìë¥¼ navigation barì— í‘œì‹œí•©ë‹ˆë‹¤.
+show helpmessages by default	preferences	ko	ê¸°ë³¸ì ìœ¼ë¡œ ë„ì›€ë§ ë³´ì´ê¸°
+show high priority events on main screen	preferences	ko	ì¤‘ìš”ë„ê°€ ë†’ì€ ì‘ì—… ë³´ì—¬ì£¼ê¸°
+show navigation bar as	preferences	ko	ë„¤ë¹„ê²Œì´ì…˜ ë°”ë¥¼ ë³¼ë•Œ
+show new messages on main screen	preferences	ko	ìƒˆë¡œìš´ ë©”ì‹œì§€ë¥¼ ë©”ì¸í™”ë©´ì— ë³´ì—¬ì¤ë‹ˆë‹¤.
+show number of current users	preferences	ko	í˜„ì¬ ì‚¬ìš©ì ìˆ˜
+show text on navigation icons	preferences	ko	íˆ´íŒë³´ê¸°
+show_more_apps	common	ko	ë” ë§ì€ ì‘ìš©í”„ë¡œê·¸ë¨ ë³´ê¸°
+text only	preferences	ko	ê¸€ìë§Œ
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ko	** eGroupWareë¥¼ ì‹œì‘í•˜ë©´ ê¸°ë³¸ ì‘ìš©í”„ë¡œê·¸ë¨ì´ ì‹œì‘ë˜ê³  í™ˆí˜ì´ì§€ ì•„ì´ì½˜ì„ í´ë¦­í•´ë„ ë§ˆì°¬ê°€ì§€ì…ë‹ˆë‹¤.<br>ì—¬ê¸°ì„œ ì‘ìš©í”„ë¡œê·¸ë¨ì„ ì§ì ‘ ì„ íƒí•˜ì§€ ì•Šê³  ê° ì‘ìš©í”„ë¡œê·¸ë¨ì˜ êµ¬ì„±ì—ì„œ ì„¤ì •í•˜ì§€ ì•Šì„ ê²½ìš° í•˜ë‚˜ ì´ìƒì˜ ì‘ìš©í”„ë¡œê·¸ë¨ì„ í™ˆí˜ì´ì§€ì— ë³´ì´ê²Œ í™˜ê²½ì„¤ì •í• ìˆ˜ ìˆìŠµë‹ˆë‹¤
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ko	ì„ íƒìƒìê°€ ëª¨ë“  ì‚¬ìš©ìì— ë³´ì…ë‹ˆë‹¤ (ë§Œì•½ ì‚¬ìš©ìê°€ ë§ë‹¤ë©´ ëŠë ¤ì§ˆìˆ˜ ìˆìŠµë‹ˆë‹¤) íŒì—…ì°½ì€ ì‚¬ìš©ìì˜ ì´ë¦„ì´ë‚˜ ê·¸ë£¹ìœ¼ë¡œ ê²€ìƒ‰í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+the two passwords are not the same	preferences	ko	ë‘ ì•”í˜¸ê°€ ì„œë¡œ ë‹¤ë¦…ë‹ˆë‹¤
+theme (colors/fonts) selection	preferences	ko	í…Œë§ˆ (ì»¬ëŸ¬/í°íŠ¸) ì„ íƒ
+this server is located in the %1 timezone	preferences	ko	ì´ ì„œë²„ëŠ” %1 ì‹œê°„ëŒ€ì— ìˆìŠµë‹ˆë‹¤
+time format	preferences	ko	ì‹œê°„ í˜•ì‹
+time zone offset	preferences	ko	ì‹œê°„ëŒ€ ë³€ê²½
+use default	preferences	ko	ê¸°ë³¸ ì‚¬ìš©
+users choice	preferences	ko	ì‚¬ìš©ì ì„ íƒ
+weekday starts on	preferences	ko	í•œì£¼ì¼ì˜ ì‹œì‘
+which currency symbol or name should be used in egroupware.	preferences	ko	eGroupWareì—ì„œ ì‚¬ìš©í•  í˜„ê¸ˆë‹¨ìœ„ì˜ ì´ë¦„ì´ë‚˜ ê¸°í˜¸ëŠ” ì–´ë–¤ê²ƒìœ¼ë¡œ í• ê¹Œìš”
+work day ends on	preferences	ko	ê·¼ë¬´ ì¢…ë£Œ ì‹œê°
+work day starts on	preferences	ko	ê·¼ë¬´ ì‹œì‘ ì‹œê°
+you can show the applications as icons only, icons with app-name or both.	preferences	ko	ì‘ìš©í”„ë¡œê·¸ë¨ì˜ ì•„ì´ì½˜ë§Œ ë³´ì´ê²Œ í•˜ê±°ë‚˜ ì´ë¦„ê³¼ ì•„ì´ì½˜ ë™ì‹œì— ë³´ì´ê²Œ í• ìˆ˜ ìˆìŠµë‹ˆë‹¤
+you do not have permission to set acl's in this mode!	preferences	ko	í˜„ì¬ ACLì„ ì„¤ì •í•  ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤
+you must enter a password	preferences	ko	ì•”í˜¸ë¥¼ ì…ë ¥í•´ì•¼ë§Œ í•©ë‹ˆë‹¤.
+your current theme is: %1	preferences	ko	í˜„ì¬ í…Œë§ˆëŠ” %1 ì…ë‹ˆë‹¤.
+your preferences	preferences	ko	ê·€í•˜ì˜ í™˜ê²½ì„¤ì •

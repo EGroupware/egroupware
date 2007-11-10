@@ -1,116 +1,116 @@
-%1 already exists as a file	filemanager	sk	%1 u¾ existuje ako súbor
-application	filemanager	sk	Aplikácia
-back to file manager	filemanager	sk	Naspä» na Správcu Súborov
-cancel editing %1 without saving	filemanager	sk	Zru¹i» úpravu %1 bez ulo¾enia zmien
-cannot create directory because it begins or ends in a space	filemanager	sk	Nemô¾em vytvori» adresár, preto¾e zaèína alebo konèí medzerou
-cannot replace %1 because it is a directory	filemanager	sk	Nemô¾em prepísa» %1 preto¾e je to adresár
-command sucessfully run	filemanager	sk	Príkaz bol úspe¹ne spustenı
-comment	filemanager	sk	Komentár
-comments cannot contain "%1"	filemanager	sk	Komentáre nemô¾u obsahova» %1
-copied %1 to %2	filemanager	sk	Skopíroval som %1 do %2
-copy to	filemanager	sk	Kopírova» do
-copy to:	filemanager	sk	Kopírova» do:
-could not copy %1 to %2	filemanager	sk	Nepodarilo sa skopírova» %1 do %2
-could not copy file because no destination directory is given	filemanager	sk	Nepodarilo sa skopírova» súbor, preto¾e nebol zadanı cieµovı adresár
-could not create %1	filemanager	sk	Nepodarilo sa vytvori» %1
-could not create directory %1	filemanager	sk	Nepodarilo sa vytvori» adresár %1
-could not delete %1	filemanager	sk	Nepodarilo sa odstráni» %1
-could not move %1 to %2	filemanager	sk	Nepodarilo sa presunú» %1 do %2
-could not move file because no destination directory is given	filemanager	sk	Nepodarilo sa presunú» súbor, preto¾e nebol zadanı cieµovı adresár
-could not rename %1 to %2	filemanager	sk	Nepodarilo sa premenova» %1 na %2
-could not save %1	filemanager	sk	Nepodarilo sa ulo¾i» %1
-create file	filemanager	sk	Vytvori» súbor
-create folder	filemanager	sk	Vytvori» prieèinok
-created	filemanager	sk	vytvorené
-created %1	filemanager	sk	%1 bolo vytvorené
-created %1,%2	filemanager	sk	%1, %2 bolo vytvorené
+%1 already exists as a file	filemanager	sk	%1 uÅ¾ existuje ako sÃºbor
+application	filemanager	sk	AplikÃ¡cia
+back to file manager	filemanager	sk	NaspÃ¤Å¥ na SprÃ¡vcu SÃºborov
+cancel editing %1 without saving	filemanager	sk	ZruÅ¡iÅ¥ Ãºpravu %1 bez uloÅ¾enia zmien
+cannot create directory because it begins or ends in a space	filemanager	sk	NemÃ´Å¾em vytvoriÅ¥ adresÃ¡r, pretoÅ¾e zaÄÃ­na alebo konÄÃ­ medzerou
+cannot replace %1 because it is a directory	filemanager	sk	NemÃ´Å¾em prepÃ­saÅ¥ %1 pretoÅ¾e je to adresÃ¡r
+command sucessfully run	filemanager	sk	PrÃ­kaz bol ÃºspeÅ¡ne spustenÃ½
+comment	filemanager	sk	KomentÃ¡r
+comments cannot contain "%1"	filemanager	sk	KomentÃ¡re nemÃ´Å¾u obsahovaÅ¥ %1
+copied %1 to %2	filemanager	sk	SkopÃ­roval som %1 do %2
+copy to	filemanager	sk	KopÃ­rovaÅ¥ do
+copy to:	filemanager	sk	KopÃ­rovaÅ¥ do:
+could not copy %1 to %2	filemanager	sk	Nepodarilo sa skopÃ­rovaÅ¥ %1 do %2
+could not copy file because no destination directory is given	filemanager	sk	Nepodarilo sa skopÃ­rovaÅ¥ sÃºbor, pretoÅ¾e nebol zadanÃ½ cieÄ¾ovÃ½ adresÃ¡r
+could not create %1	filemanager	sk	Nepodarilo sa vytvoriÅ¥ %1
+could not create directory %1	filemanager	sk	Nepodarilo sa vytvoriÅ¥ adresÃ¡r %1
+could not delete %1	filemanager	sk	Nepodarilo sa odstrÃ¡niÅ¥ %1
+could not move %1 to %2	filemanager	sk	Nepodarilo sa presunÃºÅ¥ %1 do %2
+could not move file because no destination directory is given	filemanager	sk	Nepodarilo sa presunÃºÅ¥ sÃºbor, pretoÅ¾e nebol zadanÃ½ cieÄ¾ovÃ½ adresÃ¡r
+could not rename %1 to %2	filemanager	sk	Nepodarilo sa premenovaÅ¥ %1 na %2
+could not save %1	filemanager	sk	Nepodarilo sa uloÅ¾iÅ¥ %1
+create file	filemanager	sk	VytvoriÅ¥ sÃºbor
+create folder	filemanager	sk	VytvoriÅ¥ prieÄinok
+created	filemanager	sk	vytvorenÃ©
+created %1	filemanager	sk	%1 bolo vytvorenÃ©
+created %1,%2	filemanager	sk	%1, %2 bolo vytvorenÃ©
 created by	filemanager	sk	Vytvoril
-created directory %1	filemanager	sk	Bol vytvorenı adresár %1
-date	filemanager	sk	Dátum
-default number of upload fields to show	filemanager	sk	Predvolenı poèet polí pre odovzdanie, ktoré sa zobrazia
-delete	filemanager	sk	Odstráni»
-deleted %1	filemanager	sk	%1 bolo odstránené
-directory	filemanager	sk	Adresár
-directory %1 already exists	filemanager	sk	Adresár %1 u¾ existuje
-directory %1 does not exist	filemanager	sk	Adresár %1 neexistuje
-directory names cannot contain "%1"	filemanager	sk	Názov adresára nesmie obsahova» "%1"
-display attributes	filemanager	sk	Zobrazi» atribúty
-download	filemanager	sk	Stiahnu»
-edit	filemanager	sk	Upravi»
-edit comments	filemanager	sk	Upravi» komentáre
-error running command	filemanager	sk	Chyba pri vykonávaní príkazu
-execute	filemanager	sk	Vykona»
-failed to create directory	filemanager	sk	Nepodarilo sa vytvori» adresár
-fake base dir did not exist, egroupware created a new one.	filemanager	sk	Falo¹nı základnı adresár neexistoval, eGroupWare preto vytvoril novı.
-file	filemanager	sk	Súbor
-file %1 already exists. please edit it or delete it first.	filemanager	sk	Súbor %1 u¾ existuje. Prosím upravte ho alebo najprv odstráòte.
-file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvori».
-file name	filemanager	sk	Názov súboru
-file names cannot contain  or /	filemanager	sk	Názvy súborov nesmú obsahova» \ alebo /
-file names cannot contain "%1"	filemanager	sk	Názvı súborov nesmú obsahova» "%1"
-file names cannot contain \ or /	filemanager	sk	Názvy súborov nesmú obsahova» \ alebo /
-filemanager	common	sk	Správca Súborov
-filemanager preferences	filemanager	sk	Predvoµby Správcu Súborov
-files	filemanager	sk	Súbory
-files in this directory	filemanager	sk	Súbory v tomto adresári
-folder	filemanager	sk	Prieèinok
-folder up	filemanager	sk	O prieèinok vy¹¹ie
+created directory %1	filemanager	sk	Bol vytvorenÃ½ adresÃ¡r %1
+date	filemanager	sk	DÃ¡tum
+default number of upload fields to show	filemanager	sk	PredvolenÃ½ poÄet polÃ­ pre odovzdanie, ktorÃ© sa zobrazia
+delete	filemanager	sk	OdstrÃ¡niÅ¥
+deleted %1	filemanager	sk	%1 bolo odstrÃ¡nenÃ©
+directory	filemanager	sk	AdresÃ¡r
+directory %1 already exists	filemanager	sk	AdresÃ¡r %1 uÅ¾ existuje
+directory %1 does not exist	filemanager	sk	AdresÃ¡r %1 neexistuje
+directory names cannot contain "%1"	filemanager	sk	NÃ¡zov adresÃ¡ra nesmie obsahovaÅ¥ "%1"
+display attributes	filemanager	sk	ZobraziÅ¥ atribÃºty
+download	filemanager	sk	StiahnuÅ¥
+edit	filemanager	sk	UpraviÅ¥
+edit comments	filemanager	sk	UpraviÅ¥ komentÃ¡re
+error running command	filemanager	sk	Chyba pri vykonÃ¡vanÃ­ prÃ­kazu
+execute	filemanager	sk	VykonaÅ¥
+failed to create directory	filemanager	sk	Nepodarilo sa vytvoriÅ¥ adresÃ¡r
+fake base dir did not exist, egroupware created a new one.	filemanager	sk	FaloÅ¡nÃ½ zÃ¡kladnÃ½ adresÃ¡r neexistoval, eGroupWare preto vytvoril novÃ½.
+file	filemanager	sk	SÃºbor
+file %1 already exists. please edit it or delete it first.	filemanager	sk	SÃºbor %1 uÅ¾ existuje. ProsÃ­m upravte ho alebo najprv odstrÃ¡Åˆte.
+file %1 could not be created.	filemanager	sk	SÃºbor %1 sa nepodarilo vytvoriÅ¥.
+file name	filemanager	sk	NÃ¡zov sÃºboru
+file names cannot contain  or /	filemanager	sk	NÃ¡zvy sÃºborov nesmÃº obsahovaÅ¥ \ alebo /
+file names cannot contain "%1"	filemanager	sk	NÃ¡zvÃ½ sÃºborov nesmÃº obsahovaÅ¥ "%1"
+file names cannot contain \ or /	filemanager	sk	NÃ¡zvy sÃºborov nesmÃº obsahovaÅ¥ \ alebo /
+filemanager	common	sk	SprÃ¡vca SÃºborov
+filemanager preferences	filemanager	sk	PredvoÄ¾by SprÃ¡vcu SÃºborov
+files	filemanager	sk	SÃºbory
+files in this directory	filemanager	sk	SÃºbory v tomto adresÃ¡ri
+folder	filemanager	sk	PrieÄinok
+folder up	filemanager	sk	O prieÄinok vyÅ¡Å¡ie
 go home	filemanager	sk	domov
-go to	filemanager	sk	Choï na
-go to %1	filemanager	sk	Choï na %1
-go to your home directory	filemanager	sk	Choï do svojho domovského adresára
-go to:	filemanager	sk	Choï na:
-go up	filemanager	sk	Choï vy¹¹ie
+go to	filemanager	sk	ChoÄ na
+go to %1	filemanager	sk	ChoÄ na %1
+go to your home directory	filemanager	sk	ChoÄ do svojho domovskÃ©ho adresÃ¡ra
+go to:	filemanager	sk	ChoÄ na:
+go up	filemanager	sk	ChoÄ vyÅ¡Å¡ie
 home	filemanager	sk	Domov
 location	filemanager	sk	Umiestnenie
-locked	filemanager	sk	Zamknuté
+locked	filemanager	sk	ZamknutÃ©
 mime type	filemanager	sk	MIME typ
-modified	filemanager	sk	Zmenené
-modified by	filemanager	sk	Zmenené (kım)
-move to	filemanager	sk	Presunú» do
-move to:	filemanager	sk	Presunú» do:
-moved %1 to %2	filemanager	sk	Presunuté %1 do %2
-no files in this directory.	filemanager	sk	V tomto adresári nie sú ¾iadne súbory.
-no version history for this file/directory	filemanager	sk	®iadna história verzií pre tento súbor / adresár
-operation	filemanager	sk	Operácia
-other settings	filemanager	sk	Iné nastavenia
-owner	filemanager	sk	Vlastník
-please select a file to delete.	filemanager	sk	Prosím vyberte súbor ktorı sa má odstráni».
-preview %1	filemanager	sk	Náhµad %1
-preview of %1	filemanager	sk	Náhµad %1
-quick jump to	filemanager	sk	Rıchly skok na
-reload	filemanager	sk	znovunaèíta»
-rename	filemanager	sk	Premenova»
-renamed %1 to %2	filemanager	sk	Premenované %1 na %2
-replaced %1	filemanager	sk	Prepísané %1
-save %1	filemanager	sk	Ulo¾i» %1
-save %1, and go back to file listing	filemanager	sk	Ulo¾i» %1, a vráti» sa na zoznam súborov
-save all	filemanager	sk	Ulo¾i» v¹etko
-save changes	filemanager	sk	Ulo¾i» zmeny
-saved %1	filemanager	sk	%1 bolo ulo¾ené
-show	filemanager	sk	Ukáza»
-show ..	filemanager	sk	Ukáza» ..
-show .files	filemanager	sk	Ukáza» .súbory
-show command line (experimental. dangerous.)	filemanager	sk	Ukáza» príkazovı riadok (EXPERIMENTÁLNE. NEBEZPEÈNÉ.)
-show help	filemanager	sk	Uká¾ Pomoc
-size	filemanager	sk	Veµkos»
-sort by:	filemanager	sk	Triedi» podµa:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	sk	Budúci Správca Súborov, zatiaµ LEN PRE TESTOVACIE ÚÈELY, prosím posielajte správy o chybách
-total files	filemanager	sk	Súborov celkovo
-unknown mime-type defaults to text/plain when viewing	filemanager	sk	Neznámy MIME typ sa predvolene chápe ako text/plain pri pokuse o zobrazenie
-unused space	filemanager	sk	Nevyu¾itı priestor
+modified	filemanager	sk	ZmenenÃ©
+modified by	filemanager	sk	ZmenenÃ© (kÃ½m)
+move to	filemanager	sk	PresunÃºÅ¥ do
+move to:	filemanager	sk	PresunÃºÅ¥ do:
+moved %1 to %2	filemanager	sk	PresunutÃ© %1 do %2
+no files in this directory.	filemanager	sk	V tomto adresÃ¡ri nie sÃº Å¾iadne sÃºbory.
+no version history for this file/directory	filemanager	sk	Å½iadna histÃ³ria verziÃ­ pre tento sÃºbor / adresÃ¡r
+operation	filemanager	sk	OperÃ¡cia
+other settings	filemanager	sk	InÃ© nastavenia
+owner	filemanager	sk	VlastnÃ­k
+please select a file to delete.	filemanager	sk	ProsÃ­m vyberte sÃºbor ktorÃ½ sa mÃ¡ odstrÃ¡niÅ¥.
+preview %1	filemanager	sk	NÃ¡hÄ¾ad %1
+preview of %1	filemanager	sk	NÃ¡hÄ¾ad %1
+quick jump to	filemanager	sk	RÃ½chly skok na
+reload	filemanager	sk	znovunaÄÃ­taÅ¥
+rename	filemanager	sk	PremenovaÅ¥
+renamed %1 to %2	filemanager	sk	PremenovanÃ© %1 na %2
+replaced %1	filemanager	sk	PrepÃ­sanÃ© %1
+save %1	filemanager	sk	UloÅ¾iÅ¥ %1
+save %1, and go back to file listing	filemanager	sk	UloÅ¾iÅ¥ %1, a vrÃ¡tiÅ¥ sa na zoznam sÃºborov
+save all	filemanager	sk	UloÅ¾iÅ¥ vÅ¡etko
+save changes	filemanager	sk	UloÅ¾iÅ¥ zmeny
+saved %1	filemanager	sk	%1 bolo uloÅ¾enÃ©
+show	filemanager	sk	UkÃ¡zaÅ¥
+show ..	filemanager	sk	UkÃ¡zaÅ¥ ..
+show .files	filemanager	sk	UkÃ¡zaÅ¥ .sÃºbory
+show command line (experimental. dangerous.)	filemanager	sk	UkÃ¡zaÅ¥ prÃ­kazovÃ½ riadok (EXPERIMENTÃLNE. NEBEZPEÄŒNÃ‰.)
+show help	filemanager	sk	UkÃ¡Å¾ Pomoc
+size	filemanager	sk	VeÄ¾kosÅ¥
+sort by:	filemanager	sk	TriediÅ¥ podÄ¾a:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	sk	BudÃºci SprÃ¡vca SÃºborov, zatiaÄ¾ LEN PRE TESTOVACIE ÃšÄŒELY, prosÃ­m posielajte sprÃ¡vy o chybÃ¡ch
+total files	filemanager	sk	SÃºborov celkovo
+unknown mime-type defaults to text/plain when viewing	filemanager	sk	NeznÃ¡my MIME typ sa predvolene chÃ¡pe ako text/plain pri pokuse o zobrazenie
+unused space	filemanager	sk	NevyuÅ¾itÃ½ priestor
 up	filemanager	sk	Hore
-update	filemanager	sk	Aktualizácia
-updated comment for %1	filemanager	sk	Aktualizovanı komentár pre %1
-upload	filemanager	sk	Nahra»
-upload fields	filemanager	sk	Nahra» polo¾ky
-upload files	filemanager	sk	Nahra» súbory
-use new experimental filemanager?	filemanager	sk	Pou¾i» nového experimentálneho Správcu Súborov?
-used space	filemanager	sk	Pou¾itı priestor
-users	filemanager	sk	Pou¾ívatelia
+update	filemanager	sk	AktualizÃ¡cia
+updated comment for %1	filemanager	sk	AktualizovanÃ½ komentÃ¡r pre %1
+upload	filemanager	sk	NahraÅ¥
+upload fields	filemanager	sk	NahraÅ¥ poloÅ¾ky
+upload files	filemanager	sk	NahraÅ¥ sÃºbory
+use new experimental filemanager?	filemanager	sk	PouÅ¾iÅ¥ novÃ©ho experimentÃ¡lneho SprÃ¡vcu SÃºborov?
+used space	filemanager	sk	PouÅ¾itÃ½ priestor
+users	filemanager	sk	PouÅ¾Ã­vatelia
 version	filemanager	sk	Verzia
-view documents in new window	filemanager	sk	Zobrazi» dokumenty v novom okne
-view documents on server (if available)	filemanager	sk	Zobrazi» dokumenty na serveri (ak sa dá)
+view documents in new window	filemanager	sk	ZobraziÅ¥ dokumenty v novom okne
+view documents on server (if available)	filemanager	sk	ZobraziÅ¥ dokumenty na serveri (ak sa dÃ¡)
 who	filemanager	sk	Kto
-you do not have access to %1	filemanager	sk	Nemáte prístup ku %1
-your home dir did not exist, egroupware created a new one.	filemanager	sk	Vá¹ domovskı adresár neexistoval, eGroupWare vytvoril novı.
+you do not have access to %1	filemanager	sk	NemÃ¡te prÃ­stup ku %1
+your home dir did not exist, egroupware created a new one.	filemanager	sk	VÃ¡Å¡ domovskÃ½ adresÃ¡r neexistoval, eGroupWare vytvoril novÃ½.

@@ -1,113 +1,113 @@
-%1 already exists as a file	filemanager	el	%1 υπάρχει ήδη ως αρχείο
-application	filemanager	el	Εφαρμογή
-back to file manager	filemanager	el	Πίσω στον διαχειριστή αρχείων
-cancel editing %1 without saving	filemanager	el	Ακύρωση επεξεργασίας %1 χωρίς αποθήκευση
-cannot create directory because it begins or ends in a space	filemanager	el	Δεν μπορεί να δημιουργηθεί ο φάκελος γιατί ξεκινά ή τελειώνει με κενό
-cannot replace %1 because it is a directory	filemanager	el	Δεν μπορεί να αντικατασταθεί το %1 επειδή είναι κατάλογος
-command sucessfully run	filemanager	el	Επιτυχής εκτέλεση εντολής
-comment	filemanager	el	Σχόλιο
-comments cannot contain "%1"	filemanager	el	Τα σχόλια δεν μπορούν να περιέχουν "%1"
-copied %1 to %2	filemanager	el	Αντιγράφηκε το %1 στο %2
-copy to	filemanager	el	Αντιγραφή στο
-copy to:	filemanager	el	Αντιγραφή στο:
-could not copy %1 to %2	filemanager	el	Δεν μπόρεσε να αντιγραφή το %1 στο %2
-could not copy file because no destination directory is given	filemanager	el	Δεν μπόρεσε να αντιγραφεί το αρχείο γιατί δεν έχει δωθεί κατάλογος προορισμού
-could not create %1	filemanager	el	Δεν μπόρεσε να δημιουργηθεί %1
-could not create directory %1	filemanager	el	Δεν μπόρεσε να δημιουργηθεί ο κατάλογος %1
-could not delete %1	filemanager	el	Δεν μπόρεσε να διαγραφεί %1
-could not move %1 to %2	filemanager	el	Δεν μπόρεσε να μετακινηθεί το %1 στο %2
-could not move file because no destination directory is given	filemanager	el	Δεν μπόρεσε να μετακινηθεί το αρχείο γιατί δεν δωθεί κατάλογος προορισμού
-could not rename %1 to %2	filemanager	el	Δεν μπόρεσε να μετονομασθεί το %1 σε %2
-could not save %1	filemanager	el	Δεν μπόρεσε να αποθηκευθεί %1
-create file	filemanager	el	Δημιουργία αρχείου
-create folder	filemanager	el	Δημιουργία Φακέλου
-created	filemanager	el	Δημιουργήθηκε
-created %1	filemanager	el	Δημιουργήθηκε %1
-created %1,%2	filemanager	el	Δημιουργήθηκαν %1, %2
-created by	filemanager	el	Δημιουργήθηκε από
-created directory %1	filemanager	el	Δημιουργήθηκε ο κατάλογος %1
-date	filemanager	el	Ημερομηνία
-default number of upload fields to show	filemanager	el	Προεπιλεγμένος αριθμός πεδίων φόρτωσης για προβολή
-delete	filemanager	el	Διαγραφή
-deleted %1	filemanager	el	Διεγράφη %1
-directory	filemanager	el	Κατάλογος
-directory %1 already exists	filemanager	el	Ο κατάλογος %1 υπάρχει ήδη
-directory %1 does not exist	filemanager	el	Ο κατάλογος %1 δεν υπάρχει
-directory names cannot contain "%1"	filemanager	el	Τα ονόματα των καταλόγων δεν μπορούν να περιέχουν "%1"
-display attributes	filemanager	el	Προβολή ιδιοτήτων
-download	filemanager	el	Φόρτωση
-edit	filemanager	el	Επεξεργασία
-edit comments	filemanager	el	Επεξεργασία σχολίων
-error running command	filemanager	el	Σφάλμα κατά την εκτέλεση της εντολής
-execute	filemanager	el	Εκτέλεση
-failed to create directory	filemanager	el	Αποτυχία δημιουργίας καταλόγου
-fake base dir did not exist, egroupware created a new one.	filemanager	el	Η Απομίμηση του Βασικού Κατ δεν υπήρχε, το eGroupWare δημιούργησε ένα νέο.
-file	filemanager	el	Αρχείο
-file %1 already exists. please edit it or delete it first.	filemanager	el	Το αρχείο %1 υπάρχει ήδη.Παρακαλώ επεξεργαστείτε το ή διαγράψτε το πρώτα.
-file %1 could not be created.	filemanager	el	Το αρχείο %1 δεν μπόρεσε να δημιουργηθεί.
-file name	filemanager	el	Όνομα Αρχείου
-file names cannot contain "%1"	filemanager	el	Τα ονόματα αρχείων δεν μπορούν να περιέχουν "%1"
-filemanager	common	el	Διαχειριστής αρχείων
-filemanager preferences	filemanager	el	Προτιμήσεις διαχειριστή αρχείων
-files	filemanager	el	Αρχεία
-files in this directory	filemanager	el	Αρχεία σε αυτόν τον κατάλογο
-folder	filemanager	el	Φάκελος
-folder up	filemanager	el	Φάκελος πίσω
-go home	filemanager	el	επιστροφή στην αρχική σελίδα
-go to	filemanager	el	Πηγαινε στο
-go to %1	filemanager	el	Πήγαινε στο %1
-go to your home directory	filemanager	el	Πήγαινε στον αρχικό κατάλογο
-go to:	filemanager	el	Πήγαινε στο:
-go up	filemanager	el	πήγαινε πίσω
-home	filemanager	el	Αρχική Σελίδα
-location	filemanager	el	Τοποθεσία
-locked	filemanager	el	Κλειδώθηκε
-mime type	filemanager	el	MIME τύπος
-modified	filemanager	el	Τροποποιήθηκε
-modified by	filemanager	el	Τροποποιήθηκε από
-move to	filemanager	el	Μετακίνηση στο
-move to:	filemanager	el	Μετακίνηση στο:
-moved %1 to %2	filemanager	el	Μετακινήθηκε το %1 στο %2
-no files in this directory.	filemanager	el	Κενός κατάλογος
-no version history for this file/directory	filemanager	el	Δεν υπάρχει ιστορικό έκδοσης για αυτλο το αρχείο/κατάλογος
-operation	filemanager	el	Λειτουργία
-other settings	filemanager	el	¶λλες ρυθμίσεις
-owner	filemanager	el	Ιδιοκτήτης
-please select a file to delete.	filemanager	el	Παρακαλώ επιλέξτε ένα αρχείο προς διαγραφή
-preview %1	filemanager	el	Προεπισκόπηση %1
-preview of %1	filemanager	el	Προεπισκόπηση του %1
-quick jump to	filemanager	el	Γρήγορη μετάβαση στο
-reload	filemanager	el	επαναφόρτωση
-rename	filemanager	el	Μετονομασία
-renamed %1 to %2	filemanager	el	Μετονομάστηκε από %1 σε %2
-replaced %1	filemanager	el	Αντικαταστάθηκε %1
-save %1	filemanager	el	Αποθήκευση %1
-save %1, and go back to file listing	filemanager	el	Αποθήκευση %1, και επιστροφή στη  σύνταξη καταλόγου
-save all	filemanager	el	Αποθήκευση όλων
-save changes	filemanager	el	Αποθήκευση αλλαγών
-saved %1	filemanager	el	Αποθηκεύθηκε %1
-show	filemanager	el	Προβολή
-show ..	filemanager	el	Προβολή...
-show .files	filemanager	el	Προβολή αρχείων
-show command line (experimental. dangerous.)	filemanager	el	Προβολή γραμμής εντολών (ΠΕΙΡΑΜΑΤΙΚΟ. ΕΠΙΚΙΝΔΥΝΟ.)
-show help	filemanager	el	Προβολή βοήθειας
-size	filemanager	el	Μέγεθος
-sort by:	filemanager	el	Ταξινόμηση βάσει:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	el	Ο μελλοντικός διαχειριστής αρχείων, τώρα για ΛΟΓΟΥΣ ΕΛΕΓΧΟΥ ΜΟΝΟ, παρακαλώ στείλτε bugreports
-total files	filemanager	el	Συνολικά Αρχεία
-unused space	filemanager	el	Αχρησιμοποίητο κενό
-up	filemanager	el	Πίσω
-update	filemanager	el	Ενημέρωση
-updated comment for %1	filemanager	el	Ενημέρωση σχολίου για %1
-upload	filemanager	el	Φόρτωση
-upload fields	filemanager	el	φόρτωση πεδίων
-upload files	filemanager	el	φόρτωση αρχείων
-use new experimental filemanager?	filemanager	el	Χρήση τοπυ νέου πειραματικού διαχειριστή αρχείων;
-used space	filemanager	el	Χρησιμοποιημένο Κενό
-users	filemanager	el	Χρήστες
-version	filemanager	el	Έκδοση
-view documents in new window	filemanager	el	Προβολή εγγράφων σε νέο παράθυρο
-view documents on server (if available)	filemanager	el	Προβολή εγγράφων στον server (αν είναι διαθέσιμο)
-who	filemanager	el	Ποιος
-you do not have access to %1	filemanager	el	Δεν έχετε άδεια εισόδου στο %1
-your home dir did not exist, egroupware created a new one.	filemanager	el	Ο Αρχικός Κατ δεν υπήρχε, το eGroupWare δημιούργησε ένα νέο.
+%1 already exists as a file	filemanager	el	%1 Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ· Ο‰Ο‚ Ξ±ΟΟ‡ΞµΞ―ΞΏ
+application	filemanager	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®
+back to file manager	filemanager	el	Ξ Ξ―ΟƒΟ‰ ΟƒΟ„ΞΏΞ½ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ® Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½
+cancel editing %1 without saving	filemanager	el	Ξ‘ΞΊΟΟΟ‰ΟƒΞ· ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ %1 Ο‡Ο‰ΟΞ―Ο‚ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ·
+cannot create directory because it begins or ends in a space	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ·ΞΈΞµΞ― ΞΏ Ο†Ξ¬ΞΊΞµΞ»ΞΏΟ‚ Ξ³ΞΉΞ±Ο„Ξ― ΞΎΞµΞΊΞΉΞ½Ξ¬ Ξ® Ο„ΞµΞ»ΞµΞΉΟΞ½ΞµΞΉ ΞΌΞµ ΞΊΞµΞ½Ο
+cannot replace %1 because it is a directory	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± Ξ±Ξ½Ο„ΞΉΞΊΞ±Ο„Ξ±ΟƒΟ„Ξ±ΞΈΞµΞ― Ο„ΞΏ %1 ΞµΟ€ΞµΞΉΞ΄Ξ® ΞµΞ―Ξ½Ξ±ΞΉ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚
+command sucessfully run	filemanager	el	Ξ•Ο€ΞΉΟ„Ο…Ο‡Ξ®Ο‚ ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· ΞµΞ½Ο„ΞΏΞ»Ξ®Ο‚
+comment	filemanager	el	Ξ£Ο‡ΟΞ»ΞΉΞΏ
+comments cannot contain "%1"	filemanager	el	Ξ¤Ξ± ΟƒΟ‡ΟΞ»ΞΉΞ± Ξ΄ΞµΞ½ ΞΌΟ€ΞΏΟΞΏΟΞ½ Ξ½Ξ± Ο€ΞµΟΞΉΞ­Ο‡ΞΏΟ…Ξ½ "%1"
+copied %1 to %2	filemanager	el	Ξ‘Ξ½Ο„ΞΉΞ³ΟΞ¬Ο†Ξ·ΞΊΞµ Ο„ΞΏ %1 ΟƒΟ„ΞΏ %2
+copy to	filemanager	el	Ξ‘Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ® ΟƒΟ„ΞΏ
+copy to:	filemanager	el	Ξ‘Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ® ΟƒΟ„ΞΏ:
+could not copy %1 to %2	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ±Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ® Ο„ΞΏ %1 ΟƒΟ„ΞΏ %2
+could not copy file because no destination directory is given	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ±Ξ½Ο„ΞΉΞ³ΟΞ±Ο†ΞµΞ― Ο„ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ Ξ³ΞΉΞ±Ο„Ξ― Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΞΉ Ξ΄Ο‰ΞΈΞµΞ― ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ Ο€ΟΞΏΞΏΟΞΉΟƒΞΌΞΏΟ
+could not create %1	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ·ΞΈΞµΞ― %1
+could not create directory %1	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ·ΞΈΞµΞ― ΞΏ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ %1
+could not delete %1	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞµΞ― %1
+could not move %1 to %2	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞΌΞµΟ„Ξ±ΞΊΞΉΞ½Ξ·ΞΈΞµΞ― Ο„ΞΏ %1 ΟƒΟ„ΞΏ %2
+could not move file because no destination directory is given	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞΌΞµΟ„Ξ±ΞΊΞΉΞ½Ξ·ΞΈΞµΞ― Ο„ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ Ξ³ΞΉΞ±Ο„Ξ― Ξ΄ΞµΞ½ Ξ΄Ο‰ΞΈΞµΞ― ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ Ο€ΟΞΏΞΏΟΞΉΟƒΞΌΞΏΟ
+could not rename %1 to %2	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞΌΞµΟ„ΞΏΞ½ΞΏΞΌΞ±ΟƒΞΈΞµΞ― Ο„ΞΏ %1 ΟƒΞµ %2
+could not save %1	filemanager	el	Ξ”ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟ…ΞΈΞµΞ― %1
+create file	filemanager	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+create folder	filemanager	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ¦Ξ±ΞΊΞ­Ξ»ΞΏΟ…
+created	filemanager	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ
+created %1	filemanager	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ %1
+created %1,%2	filemanager	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞ±Ξ½ %1, %2
+created by	filemanager	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ Ξ±Ο€Ο
+created directory %1	filemanager	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ ΞΏ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ %1
+date	filemanager	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±
+default number of upload fields to show	filemanager	el	Ξ ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ Ο€ΞµΞ΄Ξ―Ο‰Ξ½ Ο†ΟΟΟ„Ο‰ΟƒΞ·Ο‚ Ξ³ΞΉΞ± Ο€ΟΞΏΞ²ΞΏΞ»Ξ®
+delete	filemanager	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®
+deleted %1	filemanager	el	Ξ”ΞΉΞµΞ³ΟΞ¬Ο†Ξ· %1
+directory	filemanager	el	ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚
+directory %1 already exists	filemanager	el	Ξ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ %1 Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ·
+directory %1 does not exist	filemanager	el	Ξ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ %1 Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ
+directory names cannot contain "%1"	filemanager	el	Ξ¤Ξ± ΞΏΞ½ΟΞΌΞ±Ο„Ξ± Ο„Ο‰Ξ½ ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³Ο‰Ξ½ Ξ΄ΞµΞ½ ΞΌΟ€ΞΏΟΞΏΟΞ½ Ξ½Ξ± Ο€ΞµΟΞΉΞ­Ο‡ΞΏΟ…Ξ½ "%1"
+display attributes	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ® ΞΉΞ΄ΞΉΞΏΟ„Ξ®Ο„Ο‰Ξ½
+download	filemanager	el	Ξ¦ΟΟΟ„Ο‰ΟƒΞ·
+edit	filemanager	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ±
+edit comments	filemanager	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΟƒΟ‡ΞΏΞ»Ξ―Ο‰Ξ½
+error running command	filemanager	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· Ο„Ξ·Ο‚ ΞµΞ½Ο„ΞΏΞ»Ξ®Ο‚
+execute	filemanager	el	Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·
+failed to create directory	filemanager	el	Ξ‘Ο€ΞΏΟ„Ο…Ο‡Ξ―Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±Ο‚ ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ…
+fake base dir did not exist, egroupware created a new one.	filemanager	el	Ξ— Ξ‘Ο€ΞΏΞΌΞ―ΞΌΞ·ΟƒΞ· Ο„ΞΏΟ… Ξ’Ξ±ΟƒΞΉΞΊΞΏΟ ΞΞ±Ο„ Ξ΄ΞµΞ½ Ο…Ο€Ξ®ΟΟ‡Ξµ, Ο„ΞΏ eGroupWare Ξ΄Ξ·ΞΌΞΉΞΏΟΟΞ³Ξ·ΟƒΞµ Ξ­Ξ½Ξ± Ξ½Ξ­ΞΏ.
+file	filemanager	el	Ξ‘ΟΟ‡ΞµΞ―ΞΏ
+file %1 already exists. please edit it or delete it first.	filemanager	el	Ξ¤ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ %1 Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ·.Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΟ„ΞµΞ―Ο„Ξµ Ο„ΞΏ Ξ® Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΟ„Ξµ Ο„ΞΏ Ο€ΟΟΟ„Ξ±.
+file %1 could not be created.	filemanager	el	Ξ¤ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ %1 Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ·ΞΈΞµΞ―.
+file name	filemanager	el	ΞΞ½ΞΏΞΌΞ± Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…
+file names cannot contain "%1"	filemanager	el	Ξ¤Ξ± ΞΏΞ½ΟΞΌΞ±Ο„Ξ± Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½ Ξ΄ΞµΞ½ ΞΌΟ€ΞΏΟΞΏΟΞ½ Ξ½Ξ± Ο€ΞµΟΞΉΞ­Ο‡ΞΏΟ…Ξ½ "%1"
+filemanager	common	el	Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½
+filemanager preferences	filemanager	el	Ξ ΟΞΏΟ„ΞΉΞΌΞ®ΟƒΞµΞΉΟ‚ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ® Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½
+files	filemanager	el	Ξ‘ΟΟ‡ΞµΞ―Ξ±
+files in this directory	filemanager	el	Ξ‘ΟΟ‡ΞµΞ―Ξ± ΟƒΞµ Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ
+folder	filemanager	el	Ξ¦Ξ¬ΞΊΞµΞ»ΞΏΟ‚
+folder up	filemanager	el	Ξ¦Ξ¬ΞΊΞµΞ»ΞΏΟ‚ Ο€Ξ―ΟƒΟ‰
+go home	filemanager	el	ΞµΟ€ΞΉΟƒΟ„ΟΞΏΟ†Ξ® ΟƒΟ„Ξ·Ξ½ Ξ±ΟΟ‡ΞΉΞΊΞ® ΟƒΞµΞ»Ξ―Ξ΄Ξ±
+go to	filemanager	el	Ξ Ξ·Ξ³Ξ±ΞΉΞ½Ξµ ΟƒΟ„ΞΏ
+go to %1	filemanager	el	Ξ Ξ®Ξ³Ξ±ΞΉΞ½Ξµ ΟƒΟ„ΞΏ %1
+go to your home directory	filemanager	el	Ξ Ξ®Ξ³Ξ±ΞΉΞ½Ξµ ΟƒΟ„ΞΏΞ½ Ξ±ΟΟ‡ΞΉΞΊΟ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ
+go to:	filemanager	el	Ξ Ξ®Ξ³Ξ±ΞΉΞ½Ξµ ΟƒΟ„ΞΏ:
+go up	filemanager	el	Ο€Ξ®Ξ³Ξ±ΞΉΞ½Ξµ Ο€Ξ―ΟƒΟ‰
+home	filemanager	el	Ξ‘ΟΟ‡ΞΉΞΊΞ® Ξ£ΞµΞ»Ξ―Ξ΄Ξ±
+location	filemanager	el	Ξ¤ΞΏΟ€ΞΏΞΈΞµΟƒΞ―Ξ±
+locked	filemanager	el	ΞΞ»ΞµΞΉΞ΄ΟΞΈΞ·ΞΊΞµ
+mime type	filemanager	el	MIME Ο„ΟΟ€ΞΏΟ‚
+modified	filemanager	el	Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞΉΞ®ΞΈΞ·ΞΊΞµ
+modified by	filemanager	el	Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞΉΞ®ΞΈΞ·ΞΊΞµ Ξ±Ο€Ο
+move to	filemanager	el	ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ· ΟƒΟ„ΞΏ
+move to:	filemanager	el	ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ· ΟƒΟ„ΞΏ:
+moved %1 to %2	filemanager	el	ΞΞµΟ„Ξ±ΞΊΞΉΞ½Ξ®ΞΈΞ·ΞΊΞµ Ο„ΞΏ %1 ΟƒΟ„ΞΏ %2
+no files in this directory.	filemanager	el	ΞΞµΞ½ΟΟ‚ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚
+no version history for this file/directory	filemanager	el	Ξ”ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΞΉΟƒΟ„ΞΏΟΞΉΞΊΟ Ξ­ΞΊΞ΄ΞΏΟƒΞ·Ο‚ Ξ³ΞΉΞ± Ξ±Ο…Ο„Ξ»ΞΏ Ο„ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ/ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚
+operation	filemanager	el	Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ±
+other settings	filemanager	el	Ξ†Ξ»Ξ»ΞµΟ‚ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚
+owner	filemanager	el	Ξ™Ξ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ·Ο‚
+please select a file to delete.	filemanager	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ± Ξ±ΟΟ‡ΞµΞ―ΞΏ Ο€ΟΞΏΟ‚ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®
+preview %1	filemanager	el	Ξ ΟΞΏΞµΟ€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ· %1
+preview of %1	filemanager	el	Ξ ΟΞΏΞµΟ€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ· Ο„ΞΏΟ… %1
+quick jump to	filemanager	el	Ξ“ΟΞ®Ξ³ΞΏΟΞ· ΞΌΞµΟ„Ξ¬Ξ²Ξ±ΟƒΞ· ΟƒΟ„ΞΏ
+reload	filemanager	el	ΞµΟ€Ξ±Ξ½Ξ±Ο†ΟΟΟ„Ο‰ΟƒΞ·
+rename	filemanager	el	ΞΞµΟ„ΞΏΞ½ΞΏΞΌΞ±ΟƒΞ―Ξ±
+renamed %1 to %2	filemanager	el	ΞΞµΟ„ΞΏΞ½ΞΏΞΌΞ¬ΟƒΟ„Ξ·ΞΊΞµ Ξ±Ο€Ο %1 ΟƒΞµ %2
+replaced %1	filemanager	el	Ξ‘Ξ½Ο„ΞΉΞΊΞ±Ο„Ξ±ΟƒΟ„Ξ¬ΞΈΞ·ΞΊΞµ %1
+save %1	filemanager	el	Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· %1
+save %1, and go back to file listing	filemanager	el	Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· %1, ΞΊΞ±ΞΉ ΞµΟ€ΞΉΟƒΟ„ΟΞΏΟ†Ξ® ΟƒΟ„Ξ·  ΟƒΟΞ½Ο„Ξ±ΞΎΞ· ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ…
+save all	filemanager	el	Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· ΟΞ»Ο‰Ξ½
+save changes	filemanager	el	Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ξ±Ξ»Ξ»Ξ±Ξ³ΟΞ½
+saved %1	filemanager	el	Ξ‘Ο€ΞΏΞΈΞ·ΞΊΞµΟΞΈΞ·ΞΊΞµ %1
+show	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ®
+show ..	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ®...
+show .files	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ® Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½
+show command line (experimental. dangerous.)	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ® Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚ ΞµΞ½Ο„ΞΏΞ»ΟΞ½ (Ξ Ξ•Ξ™Ξ΅Ξ‘ΞΞ‘Ξ¤Ξ™ΞΞ. Ξ•Ξ Ξ™ΞΞ™ΞΞ”Ξ¥ΞΞ.)
+show help	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ® Ξ²ΞΏΞ®ΞΈΞµΞΉΞ±Ο‚
+size	filemanager	el	ΞΞ­Ξ³ΞµΞΈΞΏΟ‚
+sort by:	filemanager	el	Ξ¤Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ· Ξ²Ξ¬ΟƒΞµΞΉ:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	el	Ξ ΞΌΞµΞ»Ξ»ΞΏΞ½Ο„ΞΉΞΊΟΟ‚ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½, Ο„ΟΟΞ± Ξ³ΞΉΞ± Ξ›ΞΞ“ΞΞ¥Ξ£ Ξ•Ξ›Ξ•Ξ“Ξ§ΞΞ¥ ΞΞΞΞ, Ο€Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΟƒΟ„ΞµΞ―Ξ»Ο„Ξµ bugreports
+total files	filemanager	el	Ξ£Ο…Ξ½ΞΏΞ»ΞΉΞΊΞ¬ Ξ‘ΟΟ‡ΞµΞ―Ξ±
+unused space	filemanager	el	Ξ‘Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞ―Ξ·Ο„ΞΏ ΞΊΞµΞ½Ο
+up	filemanager	el	Ξ Ξ―ΟƒΟ‰
+update	filemanager	el	Ξ•Ξ½Ξ·ΞΌΞ­ΟΟ‰ΟƒΞ·
+updated comment for %1	filemanager	el	Ξ•Ξ½Ξ·ΞΌΞ­ΟΟ‰ΟƒΞ· ΟƒΟ‡ΞΏΞ»Ξ―ΞΏΟ… Ξ³ΞΉΞ± %1
+upload	filemanager	el	Ξ¦ΟΟΟ„Ο‰ΟƒΞ·
+upload fields	filemanager	el	Ο†ΟΟΟ„Ο‰ΟƒΞ· Ο€ΞµΞ΄Ξ―Ο‰Ξ½
+upload files	filemanager	el	Ο†ΟΟΟ„Ο‰ΟƒΞ· Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½
+use new experimental filemanager?	filemanager	el	Ξ§ΟΞ®ΟƒΞ· Ο„ΞΏΟ€Ο… Ξ½Ξ­ΞΏΟ… Ο€ΞµΞΉΟΞ±ΞΌΞ±Ο„ΞΉΞΊΞΏΟ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ® Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½;
+used space	filemanager	el	Ξ§ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏ ΞΞµΞ½Ο
+users	filemanager	el	Ξ§ΟΞ®ΟƒΟ„ΞµΟ‚
+version	filemanager	el	ΞΞΊΞ΄ΞΏΟƒΞ·
+view documents in new window	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ® ΞµΞ³Ξ³ΟΞ¬Ο†Ο‰Ξ½ ΟƒΞµ Ξ½Ξ­ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ
+view documents on server (if available)	filemanager	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ® ΞµΞ³Ξ³ΟΞ¬Ο†Ο‰Ξ½ ΟƒΟ„ΞΏΞ½ server (Ξ±Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ΄ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞΏ)
+who	filemanager	el	Ξ ΞΏΞΉΞΏΟ‚
+you do not have access to %1	filemanager	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ Ξ¬Ξ΄ΞµΞΉΞ± ΞµΞΉΟƒΟΞ΄ΞΏΟ… ΟƒΟ„ΞΏ %1
+your home dir did not exist, egroupware created a new one.	filemanager	el	Ξ Ξ‘ΟΟ‡ΞΉΞΊΟΟ‚ ΞΞ±Ο„ Ξ΄ΞµΞ½ Ο…Ο€Ξ®ΟΟ‡Ξµ, Ο„ΞΏ eGroupWare Ξ΄Ξ·ΞΌΞΉΞΏΟΟΞ³Ξ·ΟƒΞµ Ξ­Ξ½Ξ± Ξ½Ξ­ΞΏ.

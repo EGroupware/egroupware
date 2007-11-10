@@ -31,7 +31,7 @@ or endtime	timesheet	it	o OraFine
 permission denied!!!	timesheet	it	Permesso negato!!!
 price	timesheet	it	Prezzo
 projectmanager integration	admin	it	Integrazione Gestione Progetti
-quantity	timesheet	it	Quantit‡
+quantity	timesheet	it	Quantit√†
 save & new	timesheet	it	Salva & Nuovo
 saves the changes made	timesheet	it	Salva le modifiche fatte
 saves this entry and add a new one	timesheet	it	Salva questa voce e ne aggiunge una nuova
@@ -48,4 +48,4 @@ unitprice	timesheet	it	Prezzo unitario
 view this entry	timesheet	it	Vedi questa voce
 week	timesheet	it	Settimana
 yesterday	timesheet	it	Ieri
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	it	Il tuo database NON Ë aggiornato (%1 contro %2), prego esegui %3setup%4 per aggiornare il database.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	it	Il tuo database NON √® aggiornato (%1 contro %2), prego esegui %3setup%4 per aggiornare il database.

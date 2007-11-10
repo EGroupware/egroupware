@@ -1,443 +1,443 @@
 %1 - %2 of %3 user accounts	admin	el	%1 - %2 of %3 user accounts
-%1 acl records of not (longer) existing accounts deleted.	admin	el	%1 ACL εγγραφές από μη υπάρχοντες λογαριασμούς διαγράφηκαν.
+%1 acl records of not (longer) existing accounts deleted.	admin	el	%1 ACL ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚ Ξ±Ο€Ο ΞΌΞ· Ο…Ο€Ξ¬ΟΟ‡ΞΏΞ½Ο„ΞµΟ‚ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟΟ‚ Ξ΄ΞΉΞ±Ξ³ΟΞ¬Ο†Ξ·ΞΊΞ±Ξ½.
 %1 not found or not executable !!!	admin	el	%1 not found or not executable !!!
-(default no, leave it off if you dont use it)	admin	el	(προεπιλεγμένο Νο, να μείνει απενεργοποιημένο αν δεν χρησιμοποιείται)
-(stored password will not be shown here)	admin	el	(Τα αποθηκευμένα password δεν θα εμφανίζονται εδω)
+(default no, leave it off if you dont use it)	admin	el	(Ο€ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ ΞΞΏ, Ξ½Ξ± ΞΌΞµΞ―Ξ½ΞµΞΉ Ξ±Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏ Ξ±Ξ½ Ξ΄ΞµΞ½ Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ)
+(stored password will not be shown here)	admin	el	(Ξ¤Ξ± Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟ…ΞΌΞ­Ξ½Ξ± password Ξ΄ΞµΞ½ ΞΈΞ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ ΞµΞ΄Ο‰)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	el	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
--  type	admin	el	- τύπος
-accesslog and bruteforce defense	admin	el	AccessLog και BruteForce άμυνα
-account active	admin	el	Λογαριασμός ενεργός
-account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
-account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
-account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
-account list	admin	el	Λίστα λογαριασμών
-account permissions	admin	el	Δικαιώματα λογαριασμού
-account preferences	admin	el	Ιδιότητες λογαριασμού
-acl manager	admin	el	Διαχειριστής ACL
-acl rights	common	el	Δικαιώματα ACL
-action	admin	el	Ενέργια
-activate wysiwyg-editor	admin	el	ενεργοποιήστε WYSIWYG-συντάκτης
-add a category	admin	el	πρόσθεσε μία κατηγορία
-add a group	admin	el	πρόσθεσε ένα Group
-add a new account.	admin	el	Πρόσθεσε έναν νέο λογαριασμό
-add a subcategory	admin	el	πρόσθεσε έναν υποκατάλογο
-add a user	admin	el	πρόσθεσε έναν χρήστη
-add account	admin	el	Πρόσθεσε έναν λογαριασμό
-add application	admin	el	Πρόσθεσε μία εφαρμογή
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	el	Πρόσθεσε auto-created χρήστες στο group ('Default' θα επιχειρηθεί αν αυτο είναι άδειο.)
-add global category	admin	el	Πρόσθεσε γενική κατηγορία
-add global category for %1	admin	el	Πρόσθεσε γενική κατηγορία για %1
-add group	admin	el	Πρόσθεσε ομάδα
-add new account	admin	el	Πρόσθεσε νέο λογαριασμό
-add new application	admin	el	Πρόσθεσε νέα εγαρμογή
-add peer server	admin	el	Πρόσθεσε ομότιμο server
-add sub-category	admin	el	Πρόσθεσε υποκατάλογο
-admin email	admin	el	Email διαχειρηστή
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	el	Email διευθυνση διαχειρηστή (διαχωρισμένο με κομμα) είναι να ειδοποιηθει για το μπλοκάρισμα (άδειο για να μην ειδοποιηθεί)
-admin name	admin	el	Ονομα διαχειρηστή
-administration	admin	el	Διαχείρηση
-admins	admin	el	Διαχειριστές
-advanced options	admin	el	επιλογές για προχωρημένους
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	el	Μετα απο πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένας λογαριασμός θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	el	Μετα απο πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
-aliases	admin	el	Ψευδώνυμα
-all records and account information will be lost!	admin	el	Ολες οι εγγραφές και οι πληροφορίες λογαριασμών θα χαθούν!
-all users	admin	el	Ολοι οι χρήστες
-allow anonymous access to this app	admin	el	Επιτρέπεται ανώνυμη πρόσβαση σε αυτή την εφαρμογή
-alternate email address	admin	el	εναλλακτική διεύθυνση email
-anonymous user	admin	el	Ανώνυμος χρήστης
-anonymous user (not shown in list sessions)	admin	el	Ανώνυμος χρήστης
-anonymous user does not exist!	admin	el	Ο ανώνυμος χρήστης ΔΕΝ υπάρχει!
-anonymous user has no run-rights for the application!	admin	el	Ο ανώνυμος χρήστης ΔΕΝ έχει δικαιώματα για αυτήν την εφαρμογή!
-appearance	admin	el	Εμφάνιση
-application	admin	el	Εφαρμογή
-application name	admin	el	Ονομα εφαρμογής
-application title	admin	el	Τίτλος εφαρμογής
-applications	admin	el	Εφαρμογές
-applications list	admin	el	Λίστα εφαρμογών
-applies the changes	admin	el	εφαρμόζει τις αλλαγές
-are you sure you want to delete the application %1 ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις την εφαρμογή %1 ?
-are you sure you want to delete this account ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το λογαριασμό
-are you sure you want to delete this application ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την εφαρμογή
-are you sure you want to delete this category ?	common	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την κατηγορία
-are you sure you want to delete this global category ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή τη γενική κατηγορία
-are you sure you want to delete this group ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το group?
-are you sure you want to delete this server?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το server?
-are you sure you want to kill this session ?	admin	el	Είσαι σίγουρος πως θέλεις να διακόψεις αυτή την περίοδο?
-async services last executed	admin	el	Ασύγχρονες υπηρεσίες θα εκτελεστούν τελευταίες
-asynchronous timed services	admin	el	Ασύγχρονες υπηρεσίες
-asyncservices not yet installed or other error (%1) !!!	admin	el	ασύγχρονες υπηρεσίες δεν έχουν εγκατεστηθεί ακόμα ή άλλο λάθος (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	el	Επιχειρήθηκε να χρησημοοιηθεί σωστή ομοιοτυπία αντι του προκαθορισμένου 'εφαρμογή/octet-stream'
-attribute accountstatus explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-accountStatus-</i></b> από το σχήμα QMAIL.
-attribute mail explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-mail-</i></b> από το σχήμα QMAIL και δεν πρέπει ποτέ να είναι άδειο.Είναι επίσης το eGW εσωτερικό email πεδίο.
-attribute mailalternateaddress explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-mailAlternateAddress-</i></b> από το σχήμα QMAIL και μπορεί να διαχειριστεί ως οπτικοί χάρτες ή ψευδώνυμα.
-attribute mailforwardingaddress explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-mailForwardingAddress-</i></b> για το σχήμα QMAIL και δεν πρέπει να είναι κενό αν έχει ανατεθεί.
-authentication / accounts	admin	el	Ποιστοποίηση / λογαριασμοί
-auto create account records for authenticated users	admin	el	Αυτόματη δημιουργία εγραφών λογαριασμού για ποιστοποιημένους χρήστες
-back to the list	admin	el	πίσω στη λίστα
-bi-dir passthrough	admin	el	ημη-κατευθυντικό πέρασμα
-bi-directional	admin	el	ημη-κατευθυντικός
-bottom	admin	el	βάση
-calculate next run	admin	el	Υπολόγησε επόμενη ενέργεια
-can change password	admin	el	Επιτρέπεται η αλλαγή συνθηματικού
-cancel testjob!	admin	el	Διέκοψε την δοκιμαστική ενέργεια!
-categories list	admin	el	Λίστα κατηγοριών
-category %1 has been saved !	admin	el	Κατηγορία %1 έχει σωθεί
-category list	admin	el	Λίστα κατηγοριών
-change acl rights	admin	el	αλλαγή ACL δικαιομάτων
-change config settings	admin	el	Αλλαγή ρυθμήσεων διαμόρφωσης
-change main screen message	admin	el	Αλλαγή μηνύματος κύριας οθόνης
-check ip address of all sessions	admin	el	Ελεγξε τις διευθύνσεις IP από όλα τα sessions
-check items to <b>%1</b> to %2 for %3	admin	el	Ελεγξε τα θέματα στα <b>%1</b> to %2 για %3
-click to select a color	admin	el	Κάντε κλικ για να επιλέξετε ένα χρ΄'ωμα
-color	admin	el	Χρώμα
-country selection	admin	el	Επιλογή χώρας
-create group	admin	el	Δημιουργία ομάδας
-creates a new field	admin	el	δημιουργεί νέο πεδίο
-crontab only (recomended)	admin	el	μόνο cronetab (προτείνεται)
-custom fields	admin	el	Σύνηθη πεδία
-data	admin	el	Δεδομένα
-day	admin	el	Ημέρα
-day of week<br>(0-6, 0=sun)	admin	el	Ημέρα της εβδομάδας <br>(0-6, 0=Κυρ)
-db backup and restore	admin	el	DB backup και επαναφορά
-default	admin	el	Προεπιλεγμένος
-default file system space per user	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη
-default file system space per user/group ?	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά ?
-deinstall crontab	admin	el	Απεγκατάσταση crontab
-delete account	admin	el	Διαγραφή λογαριασμών
-delete all records	admin	el	Διαγραφή Ολων των εγγραφών
-delete application	admin	el	Διαγραφή εφαρμογής
-delete category	admin	el	Διαγραφή κατηγορίας
-delete group	admin	el	Διαγραφή ομάδας
-delete peer server	admin	el	Διαγραφή ισότιμων server
-delete the category	admin	el	διέγραψε την κατηγορία
-delete the group	admin	el	διέγραψε την ομάδα
-delete this category	admin	el	διέγραψε αυτή την κατηγορία
-delete this group	admin	el	διέγραψε αυτή την ομάδα
-delete this user	admin	el	διέγραψε αυτό τον χρήστη
-deletes this field	admin	el	δια γράφει αυτό το πεσίο
-deliver extern	admin	el	παράδοση εξωτερ
-deny access to access log	admin	el	Αρνηση πρόσβασης στην αναφορά πρόσβασης
-deny access to application registery	admin	el	Αρνηση πρόσβασης στην καταγραφή της εφαρμογής
-deny access to applications	admin	el	Αρνηση πρόσβασης στις εφαρμογές
-deny access to asynchronous timed services	admin	el	Αρνηση πρόσβασης στις ασυχρόνηστες υπηρεσίες
-deny access to current sessions	admin	el	Αρνηση πρόσβασης στις τρέχουσες περιόδους
-deny access to db backup and restore	admin	el	¶ρνηση πρόσβασης στο DB εφεδρικό και επαναφορά
-deny access to error log	admin	el	Αρνηση πρόσβασης στην αναφορά λαθών
-deny access to global categories	admin	el	Αρνηση πρόσβασης στις γενικές κατηγορίες
-deny access to groups	admin	el	Αρνηση πρόσβασης στις ομάδες
-deny access to mainscreen message	admin	el	Αρνηση πρόσβασης στο μήνυμα της κύριας οθόνης
-deny access to peer servers	admin	el	Αρνηση πρόσβασης σε ισότιμους server
-deny access to phpinfo	admin	el	Αρνηση πρόσβασης στο phpinfo
-deny access to site configuration	admin	el	Αρνηση πρόσβασης στην διαμόρφωση της ιστιοσελίδας
-deny access to user accounts	admin	el	Αρνηση πρόσβασης στους λογαριασμούς του χρήστη
-deny all users access to grant other users access to their entries ?	admin	el	Αρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους?
-description can not exceed 255 characters in length !	admin	el	Η περιγραφή δεν πρέπει να υπερβένει τους 255 χαρακτήρες σε μήκος
-determines the order the fields are displayed	admin	el	καθορίζει τη σειρά εμφάνισης των πεδίων
-disable "auto completion" of the login form	admin	el	απενεργοποίηση "αυτόματης συμπλήρωσης" της φόρμασ εισαγωγής
-disable wysiwyg-editor	admin	el	απαενεργοποίηση του WYSIWYG-συντάκτη
-disabled (not recomended)	admin	el	απενεργοποίηση (δεν προτείνεται)
-display	admin	el	Εμφάνηση
-do not delete the category and return back to the list	admin	el	μην σβύνετε την κατηγορία και γυρήστε πίσω στην λίστα
-do you also want to delete all global subcategories ?	admin	el	Θέλεις επίσης να σβυστούν όλες οι γενικές υποκατηγορίες?
-do you want to delete all global subcategories ?	admin	el	Θέλεις να σβύσεις όλες τις γενικές υποκατηγορίες?
-do you want to move all global subcategories one level down ?	admin	el	Θέλεις να μετακινήσεις όλες τις γενικές υποκατηγορίες ένα επίπεδο κάτω?
-document root (default)	admin	el	Πορεία εγγράφου (προεπιλεγμένη)
-each value is a line like <id>[=<label>]	admin	el	κάθε τιμή είναι μία γραμμή σαν <id>[=<label>]
-each value is a line like id[=label]	admin	el	κάθε τιμή είναι μία γραμμή σαν id[=label]
-edit account	admin	el	Επεξεργασία λογαριασμού
-edit application	admin	el	Επεξεργασία εφαρμογής
-edit email settings	admin	el	επεξεργασία ρυθμίσεων email
-edit global category	admin	el	Επεξεργασία γενικής κατηγορίας
-edit global category for %1	admin	el	Επεξεργασία γενικής κατηγορίας για %1
-edit group	admin	el	Επεξεργασία Ομάδας
-edit group acl's	admin	el	επεξεργασία των ACL των ομάδων
-edit login screen message	admin	el	Επεξεργασία μηνύματος οθόνης εισόδου
-edit main screen message	admin	el	Επεξεργασία μηνύματος κύριας οθόνης
-edit peer server	admin	el	Επεξεργασία ισότιμου server
-edit table format	admin	el	Επεξεργασία διαμόρφωσης πίνακα
-edit this category	admin	el	επεξεργάσου αυτή την κατηγορία
-edit this group	admin	el	επεξεργάσου αυτή την ομάδα
-edit this user	admin	el	επεξεργάσου αυτόν τον χρήστη
-edit user	admin	el	επεξεργασία χρήστη
-edit user account	admin	el	Επεξεργασία λογαριασμού χρήστη
-egroupware directory	admin	el	κατάλογος eGroupWare
-email account active	admin	el	ενεργός κατάλογος email
-email address	admin	el	διεύθυνση email
-enable debug-messages	admin	el	Εμφάνιση μηνυμάτων-αποσφαλμάτωσης
-enable the xmlrpc service	admin	el	Ενεργοποίηση της υπηρεσίας xmlrpc
-enabled - hidden from navbar	admin	el	Εμφάνιση - Απόκρυψη απο μπάρα πλοήγησης
-enabled - popup window	admin	el	Ενεργοποίηση - Εμφνιζόμενο Παράθυρο
-enter a description for the category	admin	el	Εισήγαγε μια περιγραφή για την κατηγορία
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	el	Εισήγαγε λιγο τυχαίο κείμενο για περίοδο εφαρμογής <br> encryption (απαιτήται mcrypt)
-enter the background color for the login page	admin	el	Εισάγετε χρώμα φόντου για την σελίδα εισαγωγής
-enter the background color for the site title	admin	el	Εισάγετε χρώμα φόντου για τον τίτλο της ιστιοσελίδας
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	el	Πληκτρολογήστε ολόκληρο το μονοπάτι για τα προσωρινά αρχεία. <br>Παραδείγματα: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	el	Πληκτρολογίστε ολόκληρο το μονοπάτι για τα αρχεία χρηστών ομάδων. <br>Παραδείγματα: /files, E:\FILES
-enter the hostname of the machine on which this server is running	admin	el	Εισάγετε το όνομα κομβου του μηχανήματος στο οποίο τρέχει ο server
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε την τοποθεσία του eGroupWare's URL.<br>Παράδειγμα: http://www.domain.com/egroupware   ή   /egroupware<br><b>Χωρίς να ακολουθείται απο κάθετο</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	el	Εισάγετε το αλφαριθμητικό εύρεσης. Για εμφάνηση όλων των εισόδων, άδεισε αυτό το πεδίο και πάτα το κουμπί ΥΠΟΒΟΛΗ πάλι
-enter the site password for peer servers	admin	el	Εισήγαγε το συνθηματικό της ιστιοσελίδας για ισότιμους server
-enter the site username for peer servers	admin	el	Εισήγαγε το όνομα χρήστη της ιστιοσελίδας για ισότιμους server
-enter the title for your site	admin	el	Εισήγαγε τον τίτλο για την ιστιοσελίδα σου
-enter the title of your logo	admin	el	Εισήγαγε τον τίτλο για το λογοτυπο σου
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	el	Πληκτρολογήστε το URL ή το όνομα του αρχείου(στο phpgwapi/templates/default/images) του λογότυπού σας
-enter the url where your logo should link to	admin	el	Εισήγαγε την url από όπου το λογότυπό σου πρέπει να συνδέεται
-enter your default ftp server	admin	el	Εισήγαγε τον προκαθορισμένο FTP server
-enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκαθορισμένου ονόματος τομέα αλληλογραφίας (Από:user@domain)
-enter your http proxy server	admin	el	Εισήγαγε τον HTTP proxy server
-enter your http proxy server port	admin	el	Εισήγαγε το port του HTTP proxy server
-enter your smtp server hostname or ip address	admin	el	Εισάγωγή του ονόματος ή του IP του SMTP server
-enter your smtp server port	admin	el	Εισάγωγή του SMTP server port
-error canceling timer, maybe there's none set !!!	admin	el	Λάθος ακυρώνωντας χρονομέτρη, ισως να μην εχει ρυθμηστεί κανένας
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	el	Λάθος ακυρώνωντας χρονομέτρη, λάθος σύνταξη ή ίσως ήδη τρέχει ένας!!!
-error! no appname found	admin	el	Σφάλμα!Δεν βρέθηκε το όνομα εφαρμ
-error: %1 not found or other error !!!	admin	el	Λάθος: %1 δεν βρέθηκε ή άλλο λάθος !!!
-expires	admin	el	Λήγει
-explanation of ldapman	admin	el	Αυτή η ενότητα έχει ελεγχθεί έως τώρα για τα POSTFIX,LDAP,Courier-IMAP και χρειάζεται τα σχήματα CORE και QMAIL (OID7914). Περισσότερες λεπτομέρειες σχετικά με τη χρήση και τη διαμόρφωση αυτού του συστήματος μπορείτε να βρείτε στο README.ldapman στον φάκελο εγγ του ADMIN.
-fallback (after each pageview)	admin	el	υποχώρηση (μετα από κάθε εμφάνηση οθόνης)
-field '%1' already exists !!!	admin	el	Το πεδίο '%1' υπάρχει ήδη !!!
-file space	admin	el	Κενό αρχείου
-file space must be an integer	admin	el	Το κενό αρχείου πρέπει να είναι ακείραιος
-find and register all application hooks	admin	el	Βρείτε και καταχωρήστε όλα τα Application Hooks
-for the times above	admin	el	για τις παραπάνω φορές
-for the times below (empty values count as '*', all empty = every minute)	admin	el	για τις παρακάτω φορές (κενές τιμές λογαριάζονται ώς '*', όλο κενό = κάθε λεπτό)
-force selectbox	admin	el	Εξανάγκασε Επιλογή κουτιού
-forward also to	admin	el	προώθηση επίσης στο
-forward emails to	admin	el	προώθηση των emails στο
-forward only	admin	el	μόνο προώθηση
-global categories	common	el	Γενικές κατηγορίες
-group ?	admin	el	ομαδα ?
-group has been added	common	el	Ομάδα προστέθηκε
-group has been deleted	common	el	Ομάδα έχει σβηστεί
-group has been updated	common	el	Ομάδα έχει ενημερωθεί
-group list	admin	el	Λίστα ομάδας
-group manager	admin	el	Διαχειριστής ομάδας
-group name	admin	el	Ονομα ομάδας
-hide php information	admin	el	απόκρυψε php πληροφορία
-home directory	admin	el	Αρχικος κατάλογος
-host information	admin	el	Πληροφορία
-hour<br>(0-23)	admin	el	Ωρα<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Πόσες ημέρες πρέπει οι εισαγωγές να μένουν στην καταγραφή πρόσβασης, πρίν σβυστούν(προκαθορισμένο 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	el	Πόσα λεπτά πρέπει ένας λογαριασμός ή IP να μπλοκαρίζεται (προκαθορισμένο 30) ?
-how should email addresses for new users be constructed?	admin	el	Πως θέλετε οι διευθύνσεις Email για τους νεόυς χρήστες να κατασκευάζονται;
-icon	admin	el	Εικόνα
-idle	admin	el	αδρανής
-if no acl records for user or any group the user is a member of	admin	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής?
-in mbyte	admin	el	σε MByte
-inbound	admin	el	εισερχόμενος
-initial	admin	el	Αρχικό
-install crontab	admin	el	Εγκατάσταση crontab
-installed applications	common	el	Εγκατεστημένες εφαρμογές
-installed crontab	admin	el	Εγκατεστημένα crontab
-interface	admin	el	Επιφάνεια
+-  type	admin	el	- Ο„ΟΟ€ΞΏΟ‚
+accesslog and bruteforce defense	admin	el	AccessLog ΞΊΞ±ΞΉ BruteForce Ξ¬ΞΌΟ…Ξ½Ξ±
+account active	admin	el	Ξ›ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ ΞµΞ½ΞµΟΞ³ΟΟ‚
+account has been created	common	el	Ξ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ­Ο‡ΞµΞΉ Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ·ΞΈΞµΞ―
+account has been deleted	common	el	Ξ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ­Ο‡ΞµΞΉ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞµΞ―
+account has been updated	common	el	Ξ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ­Ο‡ΞµΞΉ ΞµΞ½Ξ·ΞΌΞµΟΟ‰ΞΈΞµΞ―
+account list	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½
+account permissions	admin	el	Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+account preferences	admin	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+acl manager	admin	el	Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ ACL
+acl rights	common	el	Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± ACL
+action	admin	el	Ξ•Ξ½Ξ­ΟΞ³ΞΉΞ±
+activate wysiwyg-editor	admin	el	ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ WYSIWYG-ΟƒΟ…Ξ½Ο„Ξ¬ΞΊΟ„Ξ·Ο‚
+add a category	admin	el	Ο€ΟΟΟƒΞΈΞµΟƒΞµ ΞΌΞ―Ξ± ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+add a group	admin	el	Ο€ΟΟΟƒΞΈΞµΟƒΞµ Ξ­Ξ½Ξ± Group
+add a new account.	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ Ξ­Ξ½Ξ±Ξ½ Ξ½Ξ­ΞΏ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟ
+add a subcategory	admin	el	Ο€ΟΟΟƒΞΈΞµΟƒΞµ Ξ­Ξ½Ξ±Ξ½ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ
+add a user	admin	el	Ο€ΟΟΟƒΞΈΞµΟƒΞµ Ξ­Ξ½Ξ±Ξ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
+add account	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ Ξ­Ξ½Ξ±Ξ½ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟ
+add application	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ ΞΌΞ―Ξ± ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ auto-created Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ ΟƒΟ„ΞΏ group ('Default' ΞΈΞ± ΞµΟ€ΞΉΟ‡ΞµΞΉΟΞ·ΞΈΞµΞ― Ξ±Ξ½ Ξ±Ο…Ο„ΞΏ ΞµΞ―Ξ½Ξ±ΞΉ Ξ¬Ξ΄ΞµΞΉΞΏ.)
+add global category	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ Ξ³ΞµΞ½ΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+add global category for %1	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ Ξ³ΞµΞ½ΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± Ξ³ΞΉΞ± %1
+add group	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ ΞΏΞΌΞ¬Ξ΄Ξ±
+add new account	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ Ξ½Ξ­ΞΏ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟ
+add new application	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ Ξ½Ξ­Ξ± ΞµΞ³Ξ±ΟΞΌΞΏΞ³Ξ®
+add peer server	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ ΞΏΞΌΟΟ„ΞΉΞΌΞΏ server
+add sub-category	admin	el	Ξ ΟΟΟƒΞΈΞµΟƒΞµ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ
+admin email	admin	el	Email Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ·ΟƒΟ„Ξ®
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	el	Email Ξ΄ΞΉΞµΟ…ΞΈΟ…Ξ½ΟƒΞ· Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ·ΟƒΟ„Ξ® (Ξ΄ΞΉΞ±Ο‡Ο‰ΟΞΉΟƒΞΌΞ­Ξ½ΞΏ ΞΌΞµ ΞΊΞΏΞΌΞΌΞ±) ΞµΞ―Ξ½Ξ±ΞΉ Ξ½Ξ± ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ·ΞΈΞµΞΉ Ξ³ΞΉΞ± Ο„ΞΏ ΞΌΟ€Ξ»ΞΏΞΊΞ¬ΟΞΉΟƒΞΌΞ± (Ξ¬Ξ΄ΞµΞΉΞΏ Ξ³ΞΉΞ± Ξ½Ξ± ΞΌΞ·Ξ½ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ·ΞΈΞµΞ―)
+admin name	admin	el	ΞΞ½ΞΏΞΌΞ± Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ·ΟƒΟ„Ξ®
+administration	admin	el	Ξ”ΞΉΞ±Ο‡ΞµΞ―ΟΞ·ΟƒΞ·
+admins	admin	el	Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ­Ο‚
+advanced options	admin	el	ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ Ξ³ΞΉΞ± Ο€ΟΞΏΟ‡Ο‰ΟΞ·ΞΌΞ­Ξ½ΞΏΟ…Ο‚
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	el	ΞΞµΟ„Ξ± Ξ±Ο€ΞΏ Ο€ΟΟƒΞµΟ‚ Ξ±Ο€ΞΏΟ„Ο…Ο‡Ξ·ΞΌΞ­Ξ½ΞµΟ‚ Ο€ΟΞΏΟƒΟ€Ξ¬ΞΈΞµΞΉΞµΟ‚ Ξ³ΞΉΞ± ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®, Ξ­Ξ½Ξ±Ο‚ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ ΞΈΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ½Ξ± ΞΌΟ€Ξ»ΞΏΞΊΞ±ΟΞΉΟƒΟ„ΞµΞ― (Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	el	ΞΞµΟ„Ξ± Ξ±Ο€ΞΏ Ο€ΟΟƒΞµΟ‚ Ξ±Ο€ΞΏΟ„Ο…Ο‡Ξ·ΞΌΞ­Ξ½ΞµΟ‚ Ο€ΟΞΏΟƒΟ€Ξ¬ΞΈΞµΞΉΞµΟ‚ Ξ³ΞΉΞ± ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®, Ξ­Ξ½Ξ± IP ΞΈΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ½Ξ± ΞΌΟ€Ξ»ΞΏΞΊΞ±ΟΞΉΟƒΟ„ΞµΞ― (Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ 3) ?
+aliases	admin	el	Ξ¨ΞµΟ…Ξ΄ΟΞ½Ο…ΞΌΞ±
+all records and account information will be lost!	admin	el	ΞΞ»ΞµΟ‚ ΞΏΞΉ ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚ ΞΊΞ±ΞΉ ΞΏΞΉ Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½ ΞΈΞ± Ο‡Ξ±ΞΈΞΏΟΞ½!
+all users	admin	el	ΞΞ»ΞΏΞΉ ΞΏΞΉ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚
+allow anonymous access to this app	admin	el	Ξ•Ο€ΞΉΟ„ΟΞ­Ο€ΞµΟ„Ξ±ΞΉ Ξ±Ξ½ΟΞ½Ο…ΞΌΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ· ΟƒΞµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®
+alternate email address	admin	el	ΞµΞ½Ξ±Ξ»Ξ»Ξ±ΞΊΟ„ΞΉΞΊΞ® Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· email
+anonymous user	admin	el	Ξ‘Ξ½ΟΞ½Ο…ΞΌΞΏΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚
+anonymous user (not shown in list sessions)	admin	el	Ξ‘Ξ½ΟΞ½Ο…ΞΌΞΏΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚
+anonymous user does not exist!	admin	el	Ξ Ξ±Ξ½ΟΞ½Ο…ΞΌΞΏΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚ Ξ”Ξ•Ξ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ!
+anonymous user has no run-rights for the application!	admin	el	Ξ Ξ±Ξ½ΟΞ½Ο…ΞΌΞΏΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚ Ξ”Ξ•Ξ Ξ­Ο‡ΞµΞΉ Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ξ±Ο…Ο„Ξ®Ξ½ Ο„Ξ·Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®!
+appearance	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·
+application	admin	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®
+application name	admin	el	ΞΞ½ΞΏΞΌΞ± ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+application title	admin	el	Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+applications	admin	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚
+applications list	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± ΞµΟ†Ξ±ΟΞΌΞΏΞ³ΟΞ½
+applies the changes	admin	el	ΞµΟ†Ξ±ΟΞΌΟΞ¶ΞµΞΉ Ο„ΞΉΟ‚ Ξ±Ξ»Ξ»Ξ±Ξ³Ξ­Ο‚
+are you sure you want to delete the application %1 ?	admin	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ο„Ξ·Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® %1 ?
+are you sure you want to delete this account ?	admin	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ο Ο„ΞΏ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟ
+are you sure you want to delete this application ?	admin	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®
+are you sure you want to delete this category ?	common	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+are you sure you want to delete this global category ?	admin	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ξ® Ο„Ξ· Ξ³ΞµΞ½ΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+are you sure you want to delete this group ?	admin	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ο Ο„ΞΏ group?
+are you sure you want to delete this server?	admin	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ο Ο„ΞΏ server?
+are you sure you want to kill this session ?	admin	el	Ξ•Ξ―ΟƒΞ±ΞΉ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± Ξ΄ΞΉΞ±ΞΊΟΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ Ο€ΞµΟΞ―ΞΏΞ΄ΞΏ?
+async services last executed	admin	el	Ξ‘ΟƒΟΞ³Ο‡ΟΞΏΞ½ΞµΟ‚ Ο…Ο€Ξ·ΟΞµΟƒΞ―ΞµΟ‚ ΞΈΞ± ΞµΞΊΟ„ΞµΞ»ΞµΟƒΟ„ΞΏΟΞ½ Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―ΞµΟ‚
+asynchronous timed services	admin	el	Ξ‘ΟƒΟΞ³Ο‡ΟΞΏΞ½ΞµΟ‚ Ο…Ο€Ξ·ΟΞµΟƒΞ―ΞµΟ‚
+asyncservices not yet installed or other error (%1) !!!	admin	el	Ξ±ΟƒΟΞ³Ο‡ΟΞΏΞ½ΞµΟ‚ Ο…Ο€Ξ·ΟΞµΟƒΞ―ΞµΟ‚ Ξ΄ΞµΞ½ Ξ­Ο‡ΞΏΟ…Ξ½ ΞµΞ³ΞΊΞ±Ο„ΞµΟƒΟ„Ξ·ΞΈΞµΞ― Ξ±ΞΊΟΞΌΞ± Ξ® Ξ¬Ξ»Ξ»ΞΏ Ξ»Ξ¬ΞΈΞΏΟ‚ (%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	el	Ξ•Ο€ΞΉΟ‡ΞµΞΉΟΞ®ΞΈΞ·ΞΊΞµ Ξ½Ξ± Ο‡ΟΞ·ΟƒΞ·ΞΌΞΏΞΏΞΉΞ·ΞΈΞµΞ― ΟƒΟ‰ΟƒΟ„Ξ® ΞΏΞΌΞΏΞΉΞΏΟ„Ο…Ο€Ξ―Ξ± Ξ±Ξ½Ο„ΞΉ Ο„ΞΏΟ… Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏΟ… 'ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®/octet-stream'
+attribute accountstatus explained	admin	el	Ξ‘Ο…Ο„Ο Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ―Ξ¶ΞµΟ„Ξ±ΞΉ Ο„ΞΏ Ξ³Ξ½ΟΟΞΉΟƒΞΌΞ± <b><i>-accountStatus-</i></b> Ξ±Ο€Ο Ο„ΞΏ ΟƒΟ‡Ξ®ΞΌΞ± QMAIL.
+attribute mail explained	admin	el	Ξ‘Ο…Ο„Ο Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ―Ξ¶ΞµΟ„Ξ±ΞΉ Ο„ΞΏ Ξ³Ξ½ΟΟΞΉΟƒΞΌΞ± <b><i>-mail-</i></b> Ξ±Ο€Ο Ο„ΞΏ ΟƒΟ‡Ξ®ΞΌΞ± QMAIL ΞΊΞ±ΞΉ Ξ΄ΞµΞ½ Ο€ΟΞ­Ο€ΞµΞΉ Ο€ΞΏΟ„Ξ­ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ¬Ξ΄ΞµΞΉΞΏ.Ξ•Ξ―Ξ½Ξ±ΞΉ ΞµΟ€Ξ―ΟƒΞ·Ο‚ Ο„ΞΏ eGW ΞµΟƒΟ‰Ο„ΞµΟΞΉΞΊΟ email Ο€ΞµΞ΄Ξ―ΞΏ.
+attribute mailalternateaddress explained	admin	el	Ξ‘Ο…Ο„Ο Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ―Ξ¶ΞµΟ„Ξ±ΞΉ Ο„ΞΏ Ξ³Ξ½ΟΟΞΉΟƒΞΌΞ± <b><i>-mailAlternateAddress-</i></b> Ξ±Ο€Ο Ο„ΞΏ ΟƒΟ‡Ξ®ΞΌΞ± QMAIL ΞΊΞ±ΞΉ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„ΞµΞ― Ο‰Ο‚ ΞΏΟ€Ο„ΞΉΞΊΞΏΞ― Ο‡Ξ¬ΟΟ„ΞµΟ‚ Ξ® ΟΞµΟ…Ξ΄ΟΞ½Ο…ΞΌΞ±.
+attribute mailforwardingaddress explained	admin	el	Ξ‘Ο…Ο„Ο Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ―Ξ¶ΞµΟ„Ξ±ΞΉ Ο„ΞΏ Ξ³Ξ½ΟΟΞΉΟƒΞΌΞ± <b><i>-mailForwardingAddress-</i></b> Ξ³ΞΉΞ± Ο„ΞΏ ΟƒΟ‡Ξ®ΞΌΞ± QMAIL ΞΊΞ±ΞΉ Ξ΄ΞµΞ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞΊΞµΞ½Ο Ξ±Ξ½ Ξ­Ο‡ΞµΞΉ Ξ±Ξ½Ξ±Ο„ΞµΞΈΞµΞ―.
+authentication / accounts	admin	el	Ξ ΞΏΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· / Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΞ―
+auto create account records for authenticated users	admin	el	Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΞµΞ³ΟΞ±Ο†ΟΞ½ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ Ξ³ΞΉΞ± Ο€ΞΏΞΉΟƒΟ„ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏΟ…Ο‚ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚
+back to the list	admin	el	Ο€Ξ―ΟƒΟ‰ ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ±
+bi-dir passthrough	admin	el	Ξ·ΞΌΞ·-ΞΊΞ±Ο„ΞµΟ…ΞΈΟ…Ξ½Ο„ΞΉΞΊΟ Ο€Ξ­ΟΞ±ΟƒΞΌΞ±
+bi-directional	admin	el	Ξ·ΞΌΞ·-ΞΊΞ±Ο„ΞµΟ…ΞΈΟ…Ξ½Ο„ΞΉΞΊΟΟ‚
+bottom	admin	el	Ξ²Ξ¬ΟƒΞ·
+calculate next run	admin	el	Ξ¥Ο€ΞΏΞ»ΟΞ³Ξ·ΟƒΞµ ΞµΟ€ΟΞΌΞµΞ½Ξ· ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞ±
+can change password	admin	el	Ξ•Ο€ΞΉΟ„ΟΞ­Ο€ΞµΟ„Ξ±ΞΉ Ξ· Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΞΏΟ
+cancel testjob!	admin	el	Ξ”ΞΉΞ­ΞΊΞΏΟΞµ Ο„Ξ·Ξ½ Ξ΄ΞΏΞΊΞΉΞΌΞ±ΟƒΟ„ΞΉΞΊΞ® ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞ±!
+categories list	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+category %1 has been saved !	admin	el	ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± %1 Ξ­Ο‡ΞµΞΉ ΟƒΟ‰ΞΈΞµΞ―
+category list	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+change acl rights	admin	el	Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ACL Ξ΄ΞΉΞΊΞ±ΞΉΞΏΞΌΞ¬Ο„Ο‰Ξ½
+change config settings	admin	el	Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟΟ…ΞΈΞΌΞ®ΟƒΞµΟ‰Ξ½ Ξ΄ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ·Ο‚
+change main screen message	admin	el	Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΞΌΞ·Ξ½ΟΞΌΞ±Ο„ΞΏΟ‚ ΞΊΟΟΞΉΞ±Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚
+check ip address of all sessions	admin	el	Ξ•Ξ»ΞµΞ³ΞΎΞµ Ο„ΞΉΟ‚ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΞΉΟ‚ IP Ξ±Ο€Ο ΟΞ»Ξ± Ο„Ξ± sessions
+check items to <b>%1</b> to %2 for %3	admin	el	Ξ•Ξ»ΞµΞ³ΞΎΞµ Ο„Ξ± ΞΈΞ­ΞΌΞ±Ο„Ξ± ΟƒΟ„Ξ± <b>%1</b> to %2 Ξ³ΞΉΞ± %3
+click to select a color	admin	el	ΞΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ Ξ³ΞΉΞ± Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ Ξ­Ξ½Ξ± Ο‡ΟΞ„'Ο‰ΞΌΞ±
+color	admin	el	Ξ§ΟΟΞΌΞ±
+country selection	admin	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο‡ΟΟΞ±Ο‚
+create group	admin	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+creates a new field	admin	el	Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³ΞµΞ― Ξ½Ξ­ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ
+crontab only (recomended)	admin	el	ΞΌΟΞ½ΞΏ cronetab (Ο€ΟΞΏΟ„ΞµΞ―Ξ½ΞµΟ„Ξ±ΞΉ)
+custom fields	admin	el	Ξ£ΟΞ½Ξ·ΞΈΞ· Ο€ΞµΞ΄Ξ―Ξ±
+data	admin	el	Ξ”ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ±
+day	admin	el	Ξ—ΞΌΞ­ΟΞ±
+day of week<br>(0-6, 0=sun)	admin	el	Ξ—ΞΌΞ­ΟΞ± Ο„Ξ·Ο‚ ΞµΞ²Ξ΄ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚ <br>(0-6, 0=ΞΟ…Ο)
+db backup and restore	admin	el	DB backup ΞΊΞ±ΞΉ ΞµΟ€Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬
+default	admin	el	Ξ ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ‚
+default file system space per user	admin	el	Ξ ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ± Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½ Ξ±Ξ½Ξ± Ο‡ΟΞ®ΟƒΟ„Ξ·
+default file system space per user/group ?	admin	el	Ξ ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ± Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½ Ξ±Ξ½Ξ± Ο‡ΟΞ®ΟƒΟ„Ξ·/ΞΏΞΌΞ±Ξ΄Ξ¬ ?
+deinstall crontab	admin	el	Ξ‘Ο€ΞµΞ³ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· crontab
+delete account	admin	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½
+delete all records	admin	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ ΞµΞ³Ξ³ΟΞ±Ο†ΟΞ½
+delete application	admin	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+delete category	admin	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚
+delete group	admin	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+delete peer server	admin	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΉΟƒΟΟ„ΞΉΞΌΟ‰Ξ½ server
+delete the category	admin	el	Ξ΄ΞΉΞ­Ξ³ΟΞ±ΟΞµ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+delete the group	admin	el	Ξ΄ΞΉΞ­Ξ³ΟΞ±ΟΞµ Ο„Ξ·Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ±
+delete this category	admin	el	Ξ΄ΞΉΞ­Ξ³ΟΞ±ΟΞµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+delete this group	admin	el	Ξ΄ΞΉΞ­Ξ³ΟΞ±ΟΞµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ±
+delete this user	admin	el	Ξ΄ΞΉΞ­Ξ³ΟΞ±ΟΞµ Ξ±Ο…Ο„Ο Ο„ΞΏΞ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
+deletes this field	admin	el	Ξ΄ΞΉΞ± Ξ³ΟΞ¬Ο†ΞµΞΉ Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€ΞµΟƒΞ―ΞΏ
+deliver extern	admin	el	Ο€Ξ±ΟΞ¬Ξ΄ΞΏΟƒΞ· ΞµΞΎΟ‰Ο„ΞµΟ
+deny access to access log	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„Ξ·Ξ½ Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬ Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚
+deny access to application registery	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ® Ο„Ξ·Ο‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+deny access to applications	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΉΟ‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚
+deny access to asynchronous timed services	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΉΟ‚ Ξ±ΟƒΟ…Ο‡ΟΟΞ½Ξ·ΟƒΟ„ΞµΟ‚ Ο…Ο€Ξ·ΟΞµΟƒΞ―ΞµΟ‚
+deny access to current sessions	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΉΟ‚ Ο„ΟΞ­Ο‡ΞΏΟ…ΟƒΞµΟ‚ Ο€ΞµΟΞΉΟΞ΄ΞΏΟ…Ο‚
+deny access to db backup and restore	admin	el	Ξ†ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΏ DB ΞµΟ†ΞµΞ΄ΟΞΉΞΊΟ ΞΊΞ±ΞΉ ΞµΟ€Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬
+deny access to error log	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„Ξ·Ξ½ Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬ Ξ»Ξ±ΞΈΟΞ½
+deny access to global categories	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΉΟ‚ Ξ³ΞµΞ½ΞΉΞΊΞ­Ο‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚
+deny access to groups	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΉΟ‚ ΞΏΞΌΞ¬Ξ΄ΞµΟ‚
+deny access to mainscreen message	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΏ ΞΌΞ®Ξ½Ο…ΞΌΞ± Ο„Ξ·Ο‚ ΞΊΟΟΞΉΞ±Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚
+deny access to peer servers	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΞµ ΞΉΟƒΟΟ„ΞΉΞΌΞΏΟ…Ο‚ server
+deny access to phpinfo	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΏ phpinfo
+deny access to site configuration	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„Ξ·Ξ½ Ξ΄ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ· Ο„Ξ·Ο‚ ΞΉΟƒΟ„ΞΉΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚
+deny access to user accounts	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟƒΟ„ΞΏΟ…Ο‚ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟΟ‚ Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ·
+deny all users access to grant other users access to their entries ?	admin	el	Ξ‘ΟΞ½Ξ·ΟƒΞ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ο‡ΟΞ·ΟƒΟ„ΟΞ½ ΟƒΟ„Ξ·Ξ½ ΞΌΞµΟ„Ξ±Ξ²Ξ―Ξ²Ξ±ΟƒΞ· Ο„Ξ·Ο‚ Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ Ξ¬Ξ»Ξ»Ο‰Ξ½ Ο‡ΟΞ·ΟƒΟ„ΟΞ½ ΟƒΟ„ΞΉΟ‚ ΞµΞΉΟƒΟΞ΄ΞΏΟ…Ο‚ Ο„ΞΏΟ…Ο‚?
+description can not exceed 255 characters in length !	admin	el	Ξ— Ο€ΞµΟΞΉΞ³ΟΞ±Ο†Ξ® Ξ΄ΞµΞ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο…Ο€ΞµΟΞ²Ξ­Ξ½ΞµΞΉ Ο„ΞΏΟ…Ο‚ 255 Ο‡Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚ ΟƒΞµ ΞΌΞ®ΞΊΞΏΟ‚
+determines the order the fields are displayed	admin	el	ΞΊΞ±ΞΈΞΏΟΞ―Ξ¶ΞµΞΉ Ο„Ξ· ΟƒΞµΞΉΟΞ¬ ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·Ο‚ Ο„Ο‰Ξ½ Ο€ΞµΞ΄Ξ―Ο‰Ξ½
+disable "auto completion" of the login form	admin	el	Ξ±Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· "Ξ±Ο…Ο„ΟΞΌΞ±Ο„Ξ·Ο‚ ΟƒΟ…ΞΌΟ€Ξ»Ξ®ΟΟ‰ΟƒΞ·Ο‚" Ο„Ξ·Ο‚ Ο†ΟΟΞΌΞ±Οƒ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚
+disable wysiwyg-editor	admin	el	Ξ±Ο€Ξ±ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ο„ΞΏΟ… WYSIWYG-ΟƒΟ…Ξ½Ο„Ξ¬ΞΊΟ„Ξ·
+disabled (not recomended)	admin	el	Ξ±Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· (Ξ΄ΞµΞ½ Ο€ΟΞΏΟ„ΞµΞ―Ξ½ΞµΟ„Ξ±ΞΉ)
+display	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ·
+do not delete the category and return back to the list	admin	el	ΞΌΞ·Ξ½ ΟƒΞ²ΟΞ½ΞµΟ„Ξµ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± ΞΊΞ±ΞΉ Ξ³Ο…ΟΞ®ΟƒΟ„Ξµ Ο€Ξ―ΟƒΟ‰ ΟƒΟ„Ξ·Ξ½ Ξ»Ξ―ΟƒΟ„Ξ±
+do you also want to delete all global subcategories ?	admin	el	ΞΞ­Ξ»ΞµΞΉΟ‚ ΞµΟ€Ξ―ΟƒΞ·Ο‚ Ξ½Ξ± ΟƒΞ²Ο…ΟƒΟ„ΞΏΟΞ½ ΟΞ»ΞµΟ‚ ΞΏΞΉ Ξ³ΞµΞ½ΞΉΞΊΞ­Ο‚ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚?
+do you want to delete all global subcategories ?	admin	el	ΞΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± ΟƒΞ²ΟΟƒΞµΞΉΟ‚ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ³ΞµΞ½ΞΉΞΊΞ­Ο‚ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚?
+do you want to move all global subcategories one level down ?	admin	el	ΞΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± ΞΌΞµΟ„Ξ±ΞΊΞΉΞ½Ξ®ΟƒΞµΞΉΟ‚ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ³ΞµΞ½ΞΉΞΊΞ­Ο‚ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ Ξ­Ξ½Ξ± ΞµΟ€Ξ―Ο€ΞµΞ΄ΞΏ ΞΊΞ¬Ο„Ο‰?
+document root (default)	admin	el	Ξ ΞΏΟΞµΞ―Ξ± ΞµΞ³Ξ³ΟΞ¬Ο†ΞΏΟ… (Ο€ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·)
+each value is a line like <id>[=<label>]	admin	el	ΞΊΞ¬ΞΈΞµ Ο„ΞΉΞΌΞ® ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΞ―Ξ± Ξ³ΟΞ±ΞΌΞΌΞ® ΟƒΞ±Ξ½ <id>[=<label>]
+each value is a line like id[=label]	admin	el	ΞΊΞ¬ΞΈΞµ Ο„ΞΉΞΌΞ® ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΞ―Ξ± Ξ³ΟΞ±ΞΌΞΌΞ® ΟƒΞ±Ξ½ id[=label]
+edit account	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+edit application	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+edit email settings	admin	el	ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΟΟ…ΞΈΞΌΞ―ΟƒΞµΟ‰Ξ½ email
+edit global category	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ³ΞµΞ½ΞΉΞΊΞ®Ο‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚
+edit global category for %1	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ³ΞµΞ½ΞΉΞΊΞ®Ο‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚ Ξ³ΞΉΞ± %1
+edit group	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞΞΌΞ¬Ξ΄Ξ±Ο‚
+edit group acl's	admin	el	ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ο„Ο‰Ξ½ ACL Ο„Ο‰Ξ½ ΞΏΞΌΞ¬Ξ΄Ο‰Ξ½
+edit login screen message	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞΌΞ·Ξ½ΟΞΌΞ±Ο„ΞΏΟ‚ ΞΏΞΈΟΞ½Ξ·Ο‚ ΞµΞΉΟƒΟΞ΄ΞΏΟ…
+edit main screen message	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞΌΞ·Ξ½ΟΞΌΞ±Ο„ΞΏΟ‚ ΞΊΟΟΞΉΞ±Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚
+edit peer server	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞΉΟƒΟΟ„ΞΉΞΌΞΏΟ… server
+edit table format	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ΄ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ·Ο‚ Ο€Ξ―Ξ½Ξ±ΞΊΞ±
+edit this category	admin	el	ΞµΟ€ΞµΞΎΞµΟΞ³Ξ¬ΟƒΞΏΟ… Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+edit this group	admin	el	ΞµΟ€ΞµΞΎΞµΟΞ³Ξ¬ΟƒΞΏΟ… Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ±
+edit this user	admin	el	ΞµΟ€ΞµΞΎΞµΟΞ³Ξ¬ΟƒΞΏΟ… Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
+edit user	admin	el	ΞµΟ€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ο‡ΟΞ®ΟƒΟ„Ξ·
+edit user account	admin	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ Ο‡ΟΞ®ΟƒΟ„Ξ·
+egroupware directory	admin	el	ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ eGroupWare
+email account active	admin	el	ΞµΞ½ΞµΟΞ³ΟΟ‚ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ email
+email address	admin	el	Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· email
+enable debug-messages	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΌΞ·Ξ½Ο…ΞΌΞ¬Ο„Ο‰Ξ½-Ξ±Ο€ΞΏΟƒΟ†Ξ±Ξ»ΞΌΞ¬Ο„Ο‰ΟƒΞ·Ο‚
+enable the xmlrpc service	admin	el	Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ο„Ξ·Ο‚ Ο…Ο€Ξ·ΟΞµΟƒΞ―Ξ±Ο‚ xmlrpc
+enabled - hidden from navbar	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· - Ξ‘Ο€ΟΞΊΟΟ…ΟΞ· Ξ±Ο€ΞΏ ΞΌΟ€Ξ¬ΟΞ± Ο€Ξ»ΞΏΞ®Ξ³Ξ·ΟƒΞ·Ο‚
+enabled - popup window	admin	el	Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· - Ξ•ΞΌΟ†Ξ½ΞΉΞ¶ΟΞΌΞµΞ½ΞΏ Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ
+enter a description for the category	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ ΞΌΞΉΞ± Ο€ΞµΟΞΉΞ³ΟΞ±Ο†Ξ® Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ξ»ΞΉΞ³ΞΏ Ο„Ο…Ο‡Ξ±Ξ―ΞΏ ΞΊΞµΞ―ΞΌΞµΞ½ΞΏ Ξ³ΞΉΞ± Ο€ΞµΟΞ―ΞΏΞ΄ΞΏ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚ <br> encryption (Ξ±Ο€Ξ±ΞΉΟ„Ξ®Ο„Ξ±ΞΉ mcrypt)
+enter the background color for the login page	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο‡ΟΟΞΌΞ± Ο†ΟΞ½Ο„ΞΏΟ… Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΟƒΞµΞ»Ξ―Ξ΄Ξ± ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚
+enter the background color for the site title	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο‡ΟΟΞΌΞ± Ο†ΟΞ½Ο„ΞΏΟ… Ξ³ΞΉΞ± Ο„ΞΏΞ½ Ο„Ξ―Ο„Ξ»ΞΏ Ο„Ξ·Ο‚ ΞΉΟƒΟ„ΞΉΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	el	Ξ Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΟ„Ξµ ΞΏΞ»ΟΞΊΞ»Ξ·ΟΞΏ Ο„ΞΏ ΞΌΞΏΞ½ΞΏΟ€Ξ¬Ο„ΞΉ Ξ³ΞΉΞ± Ο„Ξ± Ο€ΟΞΏΟƒΟ‰ΟΞΉΞ½Ξ¬ Ξ±ΟΟ‡ΞµΞ―Ξ±. <br>Ξ Ξ±ΟΞ±Ξ΄ΞµΞ―Ξ³ΞΌΞ±Ο„Ξ±: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	el	Ξ Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ―ΟƒΟ„Ξµ ΞΏΞ»ΟΞΊΞ»Ξ·ΟΞΏ Ο„ΞΏ ΞΌΞΏΞ½ΞΏΟ€Ξ¬Ο„ΞΉ Ξ³ΞΉΞ± Ο„Ξ± Ξ±ΟΟ‡ΞµΞ―Ξ± Ο‡ΟΞ·ΟƒΟ„ΟΞ½ ΞΏΞΌΞ¬Ξ΄Ο‰Ξ½. <br>Ξ Ξ±ΟΞ±Ξ΄ΞµΞ―Ξ³ΞΌΞ±Ο„Ξ±: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο„ΞΏ ΟΞ½ΞΏΞΌΞ± ΞΊΞΏΞΌΞ²ΞΏΟ… Ο„ΞΏΟ… ΞΌΞ·Ο‡Ξ±Ξ½Ξ®ΞΌΞ±Ο„ΞΏΟ‚ ΟƒΟ„ΞΏ ΞΏΟ€ΞΏΞ―ΞΏ Ο„ΟΞ­Ο‡ΞµΞΉ ΞΏ server
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο„Ξ·Ξ½ Ο„ΞΏΟ€ΞΏΞΈΞµΟƒΞ―Ξ± Ο„ΞΏΟ… eGroupWare's URL.<br>Ξ Ξ±ΟΞ¬Ξ΄ΞµΞΉΞ³ΞΌΞ±: http://www.domain.com/egroupware   Ξ®   /egroupware<br><b>Ξ§Ο‰ΟΞ―Ο‚ Ξ½Ξ± Ξ±ΞΊΞΏΞ»ΞΏΟ…ΞΈΞµΞ―Ο„Ξ±ΞΉ Ξ±Ο€ΞΏ ΞΊΞ¬ΞΈΞµΟ„ΞΏ</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο„ΞΏ Ξ±Ξ»Ο†Ξ±ΟΞΉΞΈΞΌΞ·Ο„ΞΉΞΊΟ ΞµΟΟΞµΟƒΞ·Ο‚. Ξ“ΞΉΞ± ΞµΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ ΞµΞΉΟƒΟΞ΄Ο‰Ξ½, Ξ¬Ξ΄ΞµΞΉΟƒΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ ΞΊΞ±ΞΉ Ο€Ξ¬Ο„Ξ± Ο„ΞΏ ΞΊΞΏΟ…ΞΌΟ€Ξ― Ξ¥Ξ ΞΞ’ΞΞ›Ξ— Ο€Ξ¬Ξ»ΞΉ
+enter the site password for peer servers	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„ΞΏ ΟƒΟ…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΟ Ο„Ξ·Ο‚ ΞΉΟƒΟ„ΞΉΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚ Ξ³ΞΉΞ± ΞΉΟƒΟΟ„ΞΉΞΌΞΏΟ…Ο‚ server
+enter the site username for peer servers	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„ΞΏ ΟΞ½ΞΏΞΌΞ± Ο‡ΟΞ®ΟƒΟ„Ξ· Ο„Ξ·Ο‚ ΞΉΟƒΟ„ΞΉΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚ Ξ³ΞΉΞ± ΞΉΟƒΟΟ„ΞΉΞΌΞΏΟ…Ο‚ server
+enter the title for your site	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„ΞΏΞ½ Ο„Ξ―Ο„Ξ»ΞΏ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞΉΟƒΟ„ΞΉΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ± ΟƒΞΏΟ…
+enter the title of your logo	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„ΞΏΞ½ Ο„Ξ―Ο„Ξ»ΞΏ Ξ³ΞΉΞ± Ο„ΞΏ Ξ»ΞΏΞ³ΞΏΟ„Ο…Ο€ΞΏ ΟƒΞΏΟ…
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	el	Ξ Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΟ„Ξµ Ο„ΞΏ URL Ξ® Ο„ΞΏ ΟΞ½ΞΏΞΌΞ± Ο„ΞΏΟ… Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…(ΟƒΟ„ΞΏ phpgwapi/templates/default/images) Ο„ΞΏΟ… Ξ»ΞΏΞ³ΟΟ„Ο…Ο€ΞΏΟ ΟƒΞ±Ο‚
+enter the url where your logo should link to	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„Ξ·Ξ½ url Ξ±Ο€Ο ΟΟ€ΞΏΟ… Ο„ΞΏ Ξ»ΞΏΞ³ΟΟ„Ο…Ο€Ο ΟƒΞΏΟ… Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΟƒΟ…Ξ½Ξ΄Ξ­ΞµΟ„Ξ±ΞΉ
+enter your default ftp server	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„ΞΏΞ½ Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ FTP server
+enter your default mail domain ( from: user@domain )	admin	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ο„ΞΏΟ… Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏΟ… ΞΏΞ½ΟΞΌΞ±Ο„ΞΏΟ‚ Ο„ΞΏΞΌΞ­Ξ± Ξ±Ξ»Ξ»Ξ·Ξ»ΞΏΞ³ΟΞ±Ο†Ξ―Ξ±Ο‚ (Ξ‘Ο€Ο:user@domain)
+enter your http proxy server	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„ΞΏΞ½ HTTP proxy server
+enter your http proxy server port	admin	el	Ξ•ΞΉΟƒΞ®Ξ³Ξ±Ξ³Ξµ Ο„ΞΏ port Ο„ΞΏΟ… HTTP proxy server
+enter your smtp server hostname or ip address	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³Ο‰Ξ³Ξ® Ο„ΞΏΟ… ΞΏΞ½ΟΞΌΞ±Ο„ΞΏΟ‚ Ξ® Ο„ΞΏΟ… IP Ο„ΞΏΟ… SMTP server
+enter your smtp server port	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³Ο‰Ξ³Ξ® Ο„ΞΏΟ… SMTP server port
+error canceling timer, maybe there's none set !!!	admin	el	Ξ›Ξ¬ΞΈΞΏΟ‚ Ξ±ΞΊΟ…ΟΟΞ½Ο‰Ξ½Ο„Ξ±Ο‚ Ο‡ΟΞΏΞ½ΞΏΞΌΞ­Ο„ΟΞ·, ΞΉΟƒΟ‰Ο‚ Ξ½Ξ± ΞΌΞ·Ξ½ ΞµΟ‡ΞµΞΉ ΟΟ…ΞΈΞΌΞ·ΟƒΟ„ΞµΞ― ΞΊΞ±Ξ½Ξ­Ξ½Ξ±Ο‚
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	el	Ξ›Ξ¬ΞΈΞΏΟ‚ Ξ±ΞΊΟ…ΟΟΞ½Ο‰Ξ½Ο„Ξ±Ο‚ Ο‡ΟΞΏΞ½ΞΏΞΌΞ­Ο„ΟΞ·, Ξ»Ξ¬ΞΈΞΏΟ‚ ΟƒΟΞ½Ο„Ξ±ΞΎΞ· Ξ® Ξ―ΟƒΟ‰Ο‚ Ξ®Ξ΄Ξ· Ο„ΟΞ­Ο‡ΞµΞΉ Ξ­Ξ½Ξ±Ο‚!!!
+error! no appname found	admin	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ±!Ξ”ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞµ Ο„ΞΏ ΟΞ½ΞΏΞΌΞ± ΞµΟ†Ξ±ΟΞΌ
+error: %1 not found or other error !!!	admin	el	Ξ›Ξ¬ΞΈΞΏΟ‚: %1 Ξ΄ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞµ Ξ® Ξ¬Ξ»Ξ»ΞΏ Ξ»Ξ¬ΞΈΞΏΟ‚ !!!
+expires	admin	el	Ξ›Ξ®Ξ³ΞµΞΉ
+explanation of ldapman	admin	el	Ξ‘Ο…Ο„Ξ® Ξ· ΞµΞ½ΟΟ„Ξ·Ο„Ξ± Ξ­Ο‡ΞµΞΉ ΞµΞ»ΞµΞ³Ο‡ΞΈΞµΞ― Ξ­Ο‰Ο‚ Ο„ΟΟΞ± Ξ³ΞΉΞ± Ο„Ξ± POSTFIX,LDAP,Courier-IMAP ΞΊΞ±ΞΉ Ο‡ΟΞµΞΉΞ¬Ξ¶ΞµΟ„Ξ±ΞΉ Ο„Ξ± ΟƒΟ‡Ξ®ΞΌΞ±Ο„Ξ± CORE ΞΊΞ±ΞΉ QMAIL (OID7914). Ξ ΞµΟΞΉΟƒΟƒΟΟ„ΞµΟΞµΟ‚ Ξ»ΞµΟ€Ο„ΞΏΞΌΞ­ΟΞµΞΉΞµΟ‚ ΟƒΟ‡ΞµΟ„ΞΉΞΊΞ¬ ΞΌΞµ Ο„Ξ· Ο‡ΟΞ®ΟƒΞ· ΞΊΞ±ΞΉ Ο„Ξ· Ξ΄ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ· Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± Ξ²ΟΞµΞ―Ο„Ξµ ΟƒΟ„ΞΏ README.ldapman ΟƒΟ„ΞΏΞ½ Ο†Ξ¬ΞΊΞµΞ»ΞΏ ΞµΞ³Ξ³ Ο„ΞΏΟ… ADMIN.
+fallback (after each pageview)	admin	el	Ο…Ο€ΞΏΟ‡ΟΟΞ·ΟƒΞ· (ΞΌΞµΟ„Ξ± Ξ±Ο€Ο ΞΊΞ¬ΞΈΞµ ΞµΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· ΞΏΞΈΟΞ½Ξ·Ο‚)
+field '%1' already exists !!!	admin	el	Ξ¤ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ '%1' Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ· !!!
+file space	admin	el	ΞΞµΞ½Ο Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+file space must be an integer	admin	el	Ξ¤ΞΏ ΞΊΞµΞ½Ο Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΞΊΞµΞ―ΟΞ±ΞΉΞΏΟ‚
+find and register all application hooks	admin	el	Ξ’ΟΞµΞ―Ο„Ξµ ΞΊΞ±ΞΉ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΟ„Ξµ ΟΞ»Ξ± Ο„Ξ± Application Hooks
+for the times above	admin	el	Ξ³ΞΉΞ± Ο„ΞΉΟ‚ Ο€Ξ±ΟΞ±Ο€Ξ¬Ξ½Ο‰ Ο†ΞΏΟΞ­Ο‚
+for the times below (empty values count as '*', all empty = every minute)	admin	el	Ξ³ΞΉΞ± Ο„ΞΉΟ‚ Ο€Ξ±ΟΞ±ΞΊΞ¬Ο„Ο‰ Ο†ΞΏΟΞ­Ο‚ (ΞΊΞµΞ½Ξ­Ο‚ Ο„ΞΉΞΌΞ­Ο‚ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ¬Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ ΟΟ‚ '*', ΟΞ»ΞΏ ΞΊΞµΞ½Ο = ΞΊΞ¬ΞΈΞµ Ξ»ΞµΟ€Ο„Ο)
+force selectbox	admin	el	Ξ•ΞΎΞ±Ξ½Ξ¬Ξ³ΞΊΞ±ΟƒΞµ Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞΊΞΏΟ…Ο„ΞΉΞΏΟ
+forward also to	admin	el	Ο€ΟΞΏΟΞΈΞ·ΟƒΞ· ΞµΟ€Ξ―ΟƒΞ·Ο‚ ΟƒΟ„ΞΏ
+forward emails to	admin	el	Ο€ΟΞΏΟΞΈΞ·ΟƒΞ· Ο„Ο‰Ξ½ emails ΟƒΟ„ΞΏ
+forward only	admin	el	ΞΌΟΞ½ΞΏ Ο€ΟΞΏΟΞΈΞ·ΟƒΞ·
+global categories	common	el	Ξ“ΞµΞ½ΞΉΞΊΞ­Ο‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚
+group ?	admin	el	ΞΏΞΌΞ±Ξ΄Ξ± ?
+group has been added	common	el	ΞΞΌΞ¬Ξ΄Ξ± Ο€ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ
+group has been deleted	common	el	ΞΞΌΞ¬Ξ΄Ξ± Ξ­Ο‡ΞµΞΉ ΟƒΞ²Ξ·ΟƒΟ„ΞµΞ―
+group has been updated	common	el	ΞΞΌΞ¬Ξ΄Ξ± Ξ­Ο‡ΞµΞΉ ΞµΞ½Ξ·ΞΌΞµΟΟ‰ΞΈΞµΞ―
+group list	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+group manager	admin	el	Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+group name	admin	el	ΞΞ½ΞΏΞΌΞ± ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+hide php information	admin	el	Ξ±Ο€ΟΞΊΟΟ…ΟΞµ php Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―Ξ±
+home directory	admin	el	Ξ‘ΟΟ‡ΞΉΞΊΞΏΟ‚ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚
+host information	admin	el	Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―Ξ±
+hour<br>(0-23)	admin	el	Ξ©ΟΞ±<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Ξ ΟΟƒΞµΟ‚ Ξ·ΞΌΞ­ΟΞµΟ‚ Ο€ΟΞ­Ο€ΞµΞΉ ΞΏΞΉ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ­Ο‚ Ξ½Ξ± ΞΌΞ­Ξ½ΞΏΟ…Ξ½ ΟƒΟ„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ® Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚, Ο€ΟΞ―Ξ½ ΟƒΞ²Ο…ΟƒΟ„ΞΏΟΞ½(Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ 90) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	el	Ξ ΟΟƒΞ± Ξ»ΞµΟ€Ο„Ξ¬ Ο€ΟΞ­Ο€ΞµΞΉ Ξ­Ξ½Ξ±Ο‚ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ® IP Ξ½Ξ± ΞΌΟ€Ξ»ΞΏΞΊΞ±ΟΞ―Ξ¶ΞµΟ„Ξ±ΞΉ (Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ 30) ?
+how should email addresses for new users be constructed?	admin	el	Ξ Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΟ„Ξµ ΞΏΞΉ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΞΉΟ‚ Email Ξ³ΞΉΞ± Ο„ΞΏΟ…Ο‚ Ξ½ΞµΟΟ…Ο‚ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ Ξ½Ξ± ΞΊΞ±Ο„Ξ±ΟƒΞΊΞµΟ…Ξ¬Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ;
+icon	admin	el	Ξ•ΞΉΞΊΟΞ½Ξ±
+idle	admin	el	Ξ±Ξ΄ΟΞ±Ξ½Ξ®Ο‚
+if no acl records for user or any group the user is a member of	admin	el	Ξ±Ξ½ ΞΊΞ±ΞΌΞ―Ξ± ΞµΞ³Ξ³ΟΞ±Ο†Ξ® ACL Ξ³ΞΉΞ± Ο‡ΟΞ®ΟƒΟ„Ξ· Ξ® ΟΟ€ΞΏΞΉΞ±Ο‚ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΞ­Ξ»ΞΏΟ‚ Ο„ΞΏΟ…
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Ξ‘Ξ½ Ο‡ΟΞ·ΟƒΞ·ΞΌΞΏΟ€ΞΏΞΉΞ®Ο„Ξµ LDAP, ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„ΞµΞ―Ο„Ξµ Ο„ΞΏΞ½ Ξ±ΟΟ‡ΞΉΞΊΟ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ ΞΊΞ±ΞΉ Ο„Ξ± Ο‡Ξ±ΟΞ±ΞΊΟ„Ξ·ΟΞΉΟƒΟ„ΞΉΞΊΞ¬ ΞΊΞ­Ξ»Ο…Ο†ΞΏΟ…Ο‚ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚?
+in mbyte	admin	el	ΟƒΞµ MByte
+inbound	admin	el	ΞµΞΉΟƒΞµΟΟ‡ΟΞΌΞµΞ½ΞΏΟ‚
+initial	admin	el	Ξ‘ΟΟ‡ΞΉΞΊΟ
+install crontab	admin	el	Ξ•Ξ³ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· crontab
+installed applications	common	el	Ξ•Ξ³ΞΊΞ±Ο„ΞµΟƒΟ„Ξ·ΞΌΞ­Ξ½ΞµΟ‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚
+installed crontab	admin	el	Ξ•Ξ³ΞΊΞ±Ο„ΞµΟƒΟ„Ξ·ΞΌΞ­Ξ½Ξ± crontab
+interface	admin	el	Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±
 ip	admin	el	IP
-jobs	admin	el	Εργασίες
-kill	admin	el	Διέκοψε
-kill session	admin	el	Διέκοψε την περίοδο
-last %1 logins	admin	el	Τελευταίες %1 εισόδους
-last %1 logins for %2	admin	el	Τελευταίες %1 εισόδους για %2
-last login	admin	el	τελευταία είσοδος
-last login from	admin	el	τελευταία είσοδος από
-last time read	admin	el	Διάβασμα τελευταίας φοράς
-ldap accounts context	admin	el	LDAP περιβάλλον λογαριασμών
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	el	LDAP προκαθορισμένο πρόθεμα αρχικού διαμερίσματος (π.χ. /home για /home/username)
-ldap default shell (e.g. /bin/bash)	admin	el	LDAP Προκαθορισμένο κέλυφος (π.χ. /bin/bash)
-ldap encryption type	admin	el	LDAP τύπος απόκρυψης
-ldap groups context	admin	el	LDAP περιβάλον ομάδων
+jobs	admin	el	Ξ•ΟΞ³Ξ±ΟƒΞ―ΞµΟ‚
+kill	admin	el	Ξ”ΞΉΞ­ΞΊΞΏΟΞµ
+kill session	admin	el	Ξ”ΞΉΞ­ΞΊΞΏΟΞµ Ο„Ξ·Ξ½ Ο€ΞµΟΞ―ΞΏΞ΄ΞΏ
+last %1 logins	admin	el	Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―ΞµΟ‚ %1 ΞµΞΉΟƒΟΞ΄ΞΏΟ…Ο‚
+last %1 logins for %2	admin	el	Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―ΞµΟ‚ %1 ΞµΞΉΟƒΟΞ΄ΞΏΟ…Ο‚ Ξ³ΞΉΞ± %2
+last login	admin	el	Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± ΞµΞ―ΟƒΞΏΞ΄ΞΏΟ‚
+last login from	admin	el	Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± ΞµΞ―ΟƒΞΏΞ΄ΞΏΟ‚ Ξ±Ο€Ο
+last time read	admin	el	Ξ”ΞΉΞ¬Ξ²Ξ±ΟƒΞΌΞ± Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ±Ο‚ Ο†ΞΏΟΞ¬Ο‚
+ldap accounts context	admin	el	LDAP Ο€ΞµΟΞΉΞ²Ξ¬Ξ»Ξ»ΞΏΞ½ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	el	LDAP Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ Ο€ΟΟΞΈΞµΞΌΞ± Ξ±ΟΟ‡ΞΉΞΊΞΏΟ Ξ΄ΞΉΞ±ΞΌΞµΟΞ―ΟƒΞΌΞ±Ο„ΞΏΟ‚ (Ο€.Ο‡. /home Ξ³ΞΉΞ± /home/username)
+ldap default shell (e.g. /bin/bash)	admin	el	LDAP Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ ΞΊΞ­Ξ»Ο…Ο†ΞΏΟ‚ (Ο€.Ο‡. /bin/bash)
+ldap encryption type	admin	el	LDAP Ο„ΟΟ€ΞΏΟ‚ Ξ±Ο€ΟΞΊΟΟ…ΟΞ·Ο‚
+ldap groups context	admin	el	LDAP Ο€ΞµΟΞΉΞ²Ξ¬Ξ»ΞΏΞ½ ΞΏΞΌΞ¬Ξ΄Ο‰Ξ½
 ldap host	admin	el	LDAP host
-ldap root password	admin	el	LDAP root συνθηματικό
+ldap root password	admin	el	LDAP root ΟƒΟ…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΟ
 ldap rootdn	admin	el	LDAP rootdn
-leave empty for no quota	admin	el	να μείνει κενό για μη ποσοστόσεις
-leave the category untouched and return back to the list	admin	el	Αφείστε την κατηγορία ανέπαφη και επιστρέψτε στην λίστα
-leave the group untouched and return back to the list	admin	el	Αφείστε την ομάδα ανέπαφη και επιστρέψτε στην λίστα
-leaves without saveing	admin	el	αποχώρηση χωρίς αποθήκευση
-length<br>rows	admin	el	Μήκος<br>Γραμμές
-list config settings	admin	el	Λίστα διαμόρφωσης ρυθμίσεων
-list current sessions	admin	el	Λίστα τρέχωντων περιόδων
-list of current users	admin	el	λίστα απο τρέχων χρήστες
-login history	common	el	Ιστορικό Εισόδου
-login message	admin	el	Μήνυμα εισόδου
-login screen	admin	el	Οθόνη εισόδου
-login shell	admin	el	Κέλυφος εισόδου
-login time	admin	el	Ωρα Εισόδου
-loginid	admin	el	ID εισόδου
-mail settings	admin	el	Ρυθμίσεις μηνυμάτων
-main email-address	admin	el	Κύρια Διεύθυνση Email
-main screen message	admin	el	Μήνυμα κύριας οθόνης
-manager	admin	el	Διαχειριστής
-max length of the input [, length of the inputfield (optional)]	admin	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
-maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
-maximum entries in click path history	admin	el	Μέγιστος αριθμός εισόδων στο click path ιστορικό
-message has been updated	admin	el	το μήνυμα έχει ενημερωθεί
-method	admin	el	Μέθοδος
-minimum account id (e.g. 500 or 100, etc.)	admin	el	Μίνιμουμ id λογαριασμού (π.χ. 500 ή 100, κ.λ.π)
-minute	admin	el	Λεπτό
-mode	admin	el	Μέθοδος
-month	admin	el	Μήνας
-more secure	admin	el	πιο ασφαλές
-name must not be empty !!!	admin	el	Το όνομα δεν πρέπει να είναι κενό !!!
-new group name	admin	el	Νέο όνομα ομάδας
-new name	admin	el	νέο όνομα
-new password [ leave blank for no change ]	admin	el	Νέο συνθηματικό [Αφείστε κενό για μή αλλαγή]
-next run	admin	el	Επόμενη ενέργεια
-no algorithms available	admin	el	δεν υπάρχουν διαθέσιμοι αλγόριθμοι
-no alternate email address	admin	el	δεν υπάρχει εναλλακτική διεύθυνση email
-no jobs in the database !!!	admin	el	Δέν υπάρχουν ενέργειες στην βάση δεδομένων
-no login history exists for this user	admin	el	Δεν υπάρχει ιστορικό εισόδου γι'αυτόν τον χρήστη
-no matches found	admin	el	Δέν βρέθηκαν όμοια
-no modes available	admin	el	δεν υπάρχουν διαθέσιμες modes
-no permission to add groups	admin	el	δεν υπάρχουν δικαώματα για να προσθέσετε ομάδες
-no permission to add users	admin	el	δεν υπάρχουν δικαώματα για να προσθέσετε χρήστες
-no permission to create groups	admin	el	δεν υπάρχουν δικαώματα για να δημιουργήσετε ομάδες
-note: ssl available only if php is compiled with curl support	admin	el	Σημείωση: SSL διαθέσιμα μόνο αν PHP έχει μεταγλωτιστεί με curl sypport
-number of row for a multiline inputfield or line of a multi-select-box	admin	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
-order	admin	el	Ταξινόμηση
-outbound	admin	el	βγαίνει προς τα έξω
-passthrough	admin	el	διέρχεται
-password for smtp-authentication	admin	el	Κωδικός για την SMTP-πιστοποίηση
-path information	admin	el	Πλητοφορία path
-peer server list	admin	el	Λίστα ισότιμων server
-peer servers	admin	el	Ισότιμοι server
-percent of users that logged out	admin	el	Ποσοστό χρηστών που κάνανε logged out
-percent this user has logged out	admin	el	Ποσοστό αυτού του χρήστη ποσο έχει κάνει logged out
-permission denied	admin	el	¶δεια απορρίπτεται
-permissions	admin	el	Δικαιώματα
-permissions this group has	admin	el	Δικαιώματα που έχει αυτή η ομάδα
-phpinfo	admin	el	Πληροφορία PHP
-please enter a name	admin	el	Παρακαλώ εισάγετε ένα όνομα
-please enter a name for that server !	admin	el	Παρακαλώ εισάγετε ένα όνομα γι'αυτόν τον server !
-please run setup to become current	admin	el	Παρακαλώ τρέξτε το setup για να γίνετε τρέχων
-please select	admin	el	Παρακαλώ επιλέξτε
-preferences	admin	el	Προτιμήσεις
-primary group	admin	el	Κυρίως ομάδα
-quota settings	admin	el	ρυθμίσεις ποσοστών
-quota size in mbyte	admin	el	μέγεθος ποσοστών σε MByte
-re-enter password	admin	el	Ξανα-εισάγετε το συνθηματικό
-read this list of methods.	admin	el	Διαβάστε αυτή τη λίστα από μεθόδους
-register application hooks	admin	el	Καταχώρηση hook της εφαρμογής
-remove	admin	el	αφαίρεση
-remove all users from this group	admin	el	Διαγράψτε όλους τους χρήστες απο αυτη την ομάδα
-remove all users from this group ?	admin	el	Θα διαγράψετε όλους τους χρήστες απο αυτη την ομάδα?
-return to admin mainscreen	admin	el	Επιστροφή στην κύρια οθόνη του admin
-return to view account	admin	el	Επιστροφή στην εμφάνηση του λογαριασμού
-route all mails to	admin	el	Δρομολογήστε όλα τα Μηνύματα στο
-run asynchronous services	admin	el	Τρέξτε Ασύνχρονες υπηρεσίες
-save the category	admin	el	σώστε την κατηγορία
-save the category and return back to the list	admin	el	σώστε την κατηγορία και επιστρέψτε πίσω στη λίστα
-saves the changes made and leaves	admin	el	αποθηκέυει όλες τις αλλαγές που έγιναν και αποχωρεί
-search accounts	admin	el	Ψάξιμο λογαριασμών
-search categories	admin	el	Ψάξιμο κατηγοριών
-search groups	admin	el	Ψάξιμο ομάδων
-search peer servers	admin	el	Ψάξιμο ισότιμων server
-security	admin	el	Ασφάλεια
-select group managers	admin	el	Επιλέξτε Ομαδα Διαχειριστών
-select permissions this group will have	admin	el	Επιλέξτε δικαιώματα που θαέχει αυτή η ομάδα
-select the parent category. if this is a main category select no category	admin	el	Επιλέξτε την μητρική κατηγορία. Αν αυτή είναι μια κύρια κατηγορία επιλέξτε ΟΧΙ ΚΑΤΗΓΟΡΙΑ
-select users for inclusion	admin	el	Επιλέξτε χρήστες για συνυπολογισμό
-select where you want to store/retrieve filesystem information	admin	el	Επιλέξτε πού θέλετε να αποθηκεύεται/ανακτάται η πληροφορία του συστήματος αρχείων
-select where you want to store/retrieve user accounts	admin	el	Επιλέξτε πού θέλετε να αποθηκεύονται/ανακτώνται οι λογαριασμοί του χρήστη
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	el	Επιλέξτε σε ποιό μέρος της μπάρας πλοήγησης αυτή η εφαρμογή θα έπρεπε να εμφανίζεται, χαμηλότερη (αριστερα) με ψηλότερη (δεξιά)
-selectbox	admin	el	Κουτί επιλογής
-server %1 has been updated	admin	el	Server %1 έχει αναβαθμηστεί
-server list	admin	el	Λίστα Server
-server password	admin	el	Συνθηματικό Server
-server type(mode)	admin	el	Τύπος Server(μέθοδος)
+leave empty for no quota	admin	el	Ξ½Ξ± ΞΌΞµΞ―Ξ½ΞµΞΉ ΞΊΞµΞ½Ο Ξ³ΞΉΞ± ΞΌΞ· Ο€ΞΏΟƒΞΏΟƒΟ„ΟΟƒΞµΞΉΟ‚
+leave the category untouched and return back to the list	admin	el	Ξ‘Ο†ΞµΞ―ΟƒΟ„Ξµ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± Ξ±Ξ½Ξ­Ο€Ξ±Ο†Ξ· ΞΊΞ±ΞΉ ΞµΟ€ΞΉΟƒΟ„ΟΞ­ΟΟ„Ξµ ΟƒΟ„Ξ·Ξ½ Ξ»Ξ―ΟƒΟ„Ξ±
+leave the group untouched and return back to the list	admin	el	Ξ‘Ο†ΞµΞ―ΟƒΟ„Ξµ Ο„Ξ·Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ± Ξ±Ξ½Ξ­Ο€Ξ±Ο†Ξ· ΞΊΞ±ΞΉ ΞµΟ€ΞΉΟƒΟ„ΟΞ­ΟΟ„Ξµ ΟƒΟ„Ξ·Ξ½ Ξ»Ξ―ΟƒΟ„Ξ±
+leaves without saveing	admin	el	Ξ±Ο€ΞΏΟ‡ΟΟΞ·ΟƒΞ· Ο‡Ο‰ΟΞ―Ο‚ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ·
+length<br>rows	admin	el	ΞΞ®ΞΊΞΏΟ‚<br>Ξ“ΟΞ±ΞΌΞΌΞ­Ο‚
+list config settings	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± Ξ΄ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ·Ο‚ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΟ‰Ξ½
+list current sessions	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± Ο„ΟΞ­Ο‡Ο‰Ξ½Ο„Ο‰Ξ½ Ο€ΞµΟΞΉΟΞ΄Ο‰Ξ½
+list of current users	admin	el	Ξ»Ξ―ΟƒΟ„Ξ± Ξ±Ο€ΞΏ Ο„ΟΞ­Ο‡Ο‰Ξ½ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚
+login history	common	el	Ξ™ΟƒΟ„ΞΏΟΞΉΞΊΟ Ξ•ΞΉΟƒΟΞ΄ΞΏΟ…
+login message	admin	el	ΞΞ®Ξ½Ο…ΞΌΞ± ΞµΞΉΟƒΟΞ΄ΞΏΟ…
+login screen	admin	el	ΞΞΈΟΞ½Ξ· ΞµΞΉΟƒΟΞ΄ΞΏΟ…
+login shell	admin	el	ΞΞ­Ξ»Ο…Ο†ΞΏΟ‚ ΞµΞΉΟƒΟΞ΄ΞΏΟ…
+login time	admin	el	Ξ©ΟΞ± Ξ•ΞΉΟƒΟΞ΄ΞΏΟ…
+loginid	admin	el	ID ΞµΞΉΟƒΟΞ΄ΞΏΟ…
+mail settings	admin	el	Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΌΞ·Ξ½Ο…ΞΌΞ¬Ο„Ο‰Ξ½
+main email-address	admin	el	ΞΟΟΞΉΞ± Ξ”ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· Email
+main screen message	admin	el	ΞΞ®Ξ½Ο…ΞΌΞ± ΞΊΟΟΞΉΞ±Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚
+manager	admin	el	Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚
+max length of the input [, length of the inputfield (optional)]	admin	el	ΞΌΞ­Ξ³ΞΉΟƒΟ„ΞΏ ΞΌΞ®ΞΊΞΏΟ‚ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®, [ΞΌΞ®ΞΊΞΏΟ‚ Ο„ΞΏΟ… Ο€ΞµΞ΄Ξ―ΞΏΟ… ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ (ΞΊΞ±Ο„'ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®Ξ½)]
+maximum account id (e.g. 65535 or 1000000)	admin	el	ΞΞ­Ξ³ΞΉΟƒΟ„ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ id  Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½ (Ο€.Ο‡. 65535 Ξ® 1000000)
+maximum entries in click path history	admin	el	ΞΞ­Ξ³ΞΉΟƒΟ„ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ ΞµΞΉΟƒΟΞ΄Ο‰Ξ½ ΟƒΟ„ΞΏ click path ΞΉΟƒΟ„ΞΏΟΞΉΞΊΟ
+message has been updated	admin	el	Ο„ΞΏ ΞΌΞ®Ξ½Ο…ΞΌΞ± Ξ­Ο‡ΞµΞΉ ΞµΞ½Ξ·ΞΌΞµΟΟ‰ΞΈΞµΞ―
+method	admin	el	ΞΞ­ΞΈΞΏΞ΄ΞΏΟ‚
+minimum account id (e.g. 500 or 100, etc.)	admin	el	ΞΞ―Ξ½ΞΉΞΌΞΏΟ…ΞΌ id Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ (Ο€.Ο‡. 500 Ξ® 100, ΞΊ.Ξ».Ο€)
+minute	admin	el	Ξ›ΞµΟ€Ο„Ο
+mode	admin	el	ΞΞ­ΞΈΞΏΞ΄ΞΏΟ‚
+month	admin	el	ΞΞ®Ξ½Ξ±Ο‚
+more secure	admin	el	Ο€ΞΉΞΏ Ξ±ΟƒΟ†Ξ±Ξ»Ξ­Ο‚
+name must not be empty !!!	admin	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± Ξ΄ΞµΞ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞΊΞµΞ½Ο !!!
+new group name	admin	el	ΞΞ­ΞΏ ΟΞ½ΞΏΞΌΞ± ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+new name	admin	el	Ξ½Ξ­ΞΏ ΟΞ½ΞΏΞΌΞ±
+new password [ leave blank for no change ]	admin	el	ΞΞ­ΞΏ ΟƒΟ…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΟ [Ξ‘Ο†ΞµΞ―ΟƒΟ„Ξµ ΞΊΞµΞ½Ο Ξ³ΞΉΞ± ΞΌΞ® Ξ±Ξ»Ξ»Ξ±Ξ³Ξ®]
+next run	admin	el	Ξ•Ο€ΟΞΌΞµΞ½Ξ· ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞ±
+no algorithms available	admin	el	Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞΏΞΉ Ξ±Ξ»Ξ³ΟΟΞΉΞΈΞΌΞΏΞΉ
+no alternate email address	admin	el	Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΞµΞ½Ξ±Ξ»Ξ»Ξ±ΞΊΟ„ΞΉΞΊΞ® Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· email
+no jobs in the database !!!	admin	el	Ξ”Ξ­Ξ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚ ΟƒΟ„Ξ·Ξ½ Ξ²Ξ¬ΟƒΞ· Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½
+no login history exists for this user	admin	el	Ξ”ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΞΉΟƒΟ„ΞΏΟΞΉΞΊΟ ΞµΞΉΟƒΟΞ΄ΞΏΟ… Ξ³ΞΉ'Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
+no matches found	admin	el	Ξ”Ξ­Ξ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞ±Ξ½ ΟΞΌΞΏΞΉΞ±
+no modes available	admin	el	Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞµΟ‚ modes
+no permission to add groups	admin	el	Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞΊΞ±ΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ξ½Ξ± Ο€ΟΞΏΟƒΞΈΞ­ΟƒΞµΟ„Ξµ ΞΏΞΌΞ¬Ξ΄ΞµΟ‚
+no permission to add users	admin	el	Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞΊΞ±ΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ξ½Ξ± Ο€ΟΞΏΟƒΞΈΞ­ΟƒΞµΟ„Ξµ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚
+no permission to create groups	admin	el	Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞΊΞ±ΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ξ½Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΟƒΞµΟ„Ξµ ΞΏΞΌΞ¬Ξ΄ΞµΟ‚
+note: ssl available only if php is compiled with curl support	admin	el	Ξ£Ξ·ΞΌΞµΞ―Ο‰ΟƒΞ·: SSL Ξ΄ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞ± ΞΌΟΞ½ΞΏ Ξ±Ξ½ PHP Ξ­Ο‡ΞµΞΉ ΞΌΞµΟ„Ξ±Ξ³Ξ»Ο‰Ο„ΞΉΟƒΟ„ΞµΞ― ΞΌΞµ curl sypport
+number of row for a multiline inputfield or line of a multi-select-box	admin	el	Ξ±ΟΞΉΞΈΞΌΟΟ‚ ΟƒΞµΞΉΟΟΞ½ Ξ³ΞΉΞ± Ξ­Ξ½Ξ± Ο€ΞΏΞ»Ο…Ξ³ΟΞ±ΞΌΞΌΞΉΞΊΟ Ο€ΞµΞ΄Ξ―ΞΏ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ Ξ® Ξ³ΟΞ±ΞΌΞΌΟΞ½ Ξ³ΞΉΞ± Ξ­Ξ½Ξ± Ο€ΞΏΞ»Ο…-ΞµΟ€ΞΉΞ»ΞΏΞ³ΟΞ½-ΞΊΞΏΟ…Ο„Ξ―
+order	admin	el	Ξ¤Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ·
+outbound	admin	el	Ξ²Ξ³Ξ±Ξ―Ξ½ΞµΞΉ Ο€ΟΞΏΟ‚ Ο„Ξ± Ξ­ΞΎΟ‰
+passthrough	admin	el	Ξ΄ΞΉΞ­ΟΟ‡ΞµΟ„Ξ±ΞΉ
+password for smtp-authentication	admin	el	ΞΟ‰Ξ΄ΞΉΞΊΟΟ‚ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ SMTP-Ο€ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·
+path information	admin	el	Ξ Ξ»Ξ·Ο„ΞΏΟ†ΞΏΟΞ―Ξ± path
+peer server list	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± ΞΉΟƒΟΟ„ΞΉΞΌΟ‰Ξ½ server
+peer servers	admin	el	Ξ™ΟƒΟΟ„ΞΉΞΌΞΏΞΉ server
+percent of users that logged out	admin	el	Ξ ΞΏΟƒΞΏΟƒΟ„Ο Ο‡ΟΞ·ΟƒΟ„ΟΞ½ Ο€ΞΏΟ… ΞΊΞ¬Ξ½Ξ±Ξ½Ξµ logged out
+percent this user has logged out	admin	el	Ξ ΞΏΟƒΞΏΟƒΟ„Ο Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ· Ο€ΞΏΟƒΞΏ Ξ­Ο‡ΞµΞΉ ΞΊΞ¬Ξ½ΞµΞΉ logged out
+permission denied	admin	el	Ξ†Ξ΄ΞµΞΉΞ± Ξ±Ο€ΞΏΟΟΞ―Ο€Ο„ΞµΟ„Ξ±ΞΉ
+permissions	admin	el	Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ±
+permissions this group has	admin	el	Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ο€ΞΏΟ… Ξ­Ο‡ΞµΞΉ Ξ±Ο…Ο„Ξ® Ξ· ΞΏΞΌΞ¬Ξ΄Ξ±
+phpinfo	admin	el	Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―Ξ± PHP
+please enter a name	admin	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ±
+please enter a name for that server !	admin	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ± Ξ³ΞΉ'Ξ±Ο…Ο„ΟΞ½ Ο„ΞΏΞ½ server !
+please run setup to become current	admin	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο„ΟΞ­ΞΎΟ„Ξµ Ο„ΞΏ setup Ξ³ΞΉΞ± Ξ½Ξ± Ξ³Ξ―Ξ½ΞµΟ„Ξµ Ο„ΟΞ­Ο‡Ο‰Ξ½
+please select	admin	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ
+preferences	admin	el	Ξ ΟΞΏΟ„ΞΉΞΌΞ®ΟƒΞµΞΉΟ‚
+primary group	admin	el	ΞΟ…ΟΞ―Ο‰Ο‚ ΞΏΞΌΞ¬Ξ΄Ξ±
+quota settings	admin	el	ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ο€ΞΏΟƒΞΏΟƒΟ„ΟΞ½
+quota size in mbyte	admin	el	ΞΌΞ­Ξ³ΞµΞΈΞΏΟ‚ Ο€ΞΏΟƒΞΏΟƒΟ„ΟΞ½ ΟƒΞµ MByte
+re-enter password	admin	el	ΞΞ±Ξ½Ξ±-ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο„ΞΏ ΟƒΟ…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΟ
+read this list of methods.	admin	el	Ξ”ΞΉΞ±Ξ²Ξ¬ΟƒΟ„Ξµ Ξ±Ο…Ο„Ξ® Ο„Ξ· Ξ»Ξ―ΟƒΟ„Ξ± Ξ±Ο€Ο ΞΌΞµΞΈΟΞ΄ΞΏΟ…Ο‚
+register application hooks	admin	el	ΞΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· hook Ο„Ξ·Ο‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+remove	admin	el	Ξ±Ο†Ξ±Ξ―ΟΞµΟƒΞ·
+remove all users from this group	admin	el	Ξ”ΞΉΞ±Ξ³ΟΞ¬ΟΟ„Ξµ ΟΞ»ΞΏΟ…Ο‚ Ο„ΞΏΟ…Ο‚ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ Ξ±Ο€ΞΏ Ξ±Ο…Ο„Ξ· Ο„Ξ·Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ±
+remove all users from this group ?	admin	el	ΞΞ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ ΟΞ»ΞΏΟ…Ο‚ Ο„ΞΏΟ…Ο‚ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ Ξ±Ο€ΞΏ Ξ±Ο…Ο„Ξ· Ο„Ξ·Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ±?
+return to admin mainscreen	admin	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞΏΟ†Ξ® ΟƒΟ„Ξ·Ξ½ ΞΊΟΟΞΉΞ± ΞΏΞΈΟΞ½Ξ· Ο„ΞΏΟ… admin
+return to view account	admin	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞΏΟ†Ξ® ΟƒΟ„Ξ·Ξ½ ΞµΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· Ο„ΞΏΟ… Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+route all mails to	admin	el	Ξ”ΟΞΏΞΌΞΏΞ»ΞΏΞ³Ξ®ΟƒΟ„Ξµ ΟΞ»Ξ± Ο„Ξ± ΞΞ·Ξ½ΟΞΌΞ±Ο„Ξ± ΟƒΟ„ΞΏ
+run asynchronous services	admin	el	Ξ¤ΟΞ­ΞΎΟ„Ξµ Ξ‘ΟƒΟΞ½Ο‡ΟΞΏΞ½ΞµΟ‚ Ο…Ο€Ξ·ΟΞµΟƒΞ―ΞµΟ‚
+save the category	admin	el	ΟƒΟΟƒΟ„Ξµ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+save the category and return back to the list	admin	el	ΟƒΟΟƒΟ„Ξµ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± ΞΊΞ±ΞΉ ΞµΟ€ΞΉΟƒΟ„ΟΞ­ΟΟ„Ξµ Ο€Ξ―ΟƒΟ‰ ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ±
+saves the changes made and leaves	admin	el	Ξ±Ο€ΞΏΞΈΞ·ΞΊΞ­Ο…ΞµΞΉ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ±Ξ»Ξ»Ξ±Ξ³Ξ­Ο‚ Ο€ΞΏΟ… Ξ­Ξ³ΞΉΞ½Ξ±Ξ½ ΞΊΞ±ΞΉ Ξ±Ο€ΞΏΟ‡Ο‰ΟΞµΞ―
+search accounts	admin	el	Ξ¨Ξ¬ΞΎΞΉΞΌΞΏ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½
+search categories	admin	el	Ξ¨Ξ¬ΞΎΞΉΞΌΞΏ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+search groups	admin	el	Ξ¨Ξ¬ΞΎΞΉΞΌΞΏ ΞΏΞΌΞ¬Ξ΄Ο‰Ξ½
+search peer servers	admin	el	Ξ¨Ξ¬ΞΎΞΉΞΌΞΏ ΞΉΟƒΟΟ„ΞΉΞΌΟ‰Ξ½ server
+security	admin	el	Ξ‘ΟƒΟ†Ξ¬Ξ»ΞµΞΉΞ±
+select group managers	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΞΌΞ±Ξ΄Ξ± Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„ΟΞ½
+select permissions this group will have	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ο€ΞΏΟ… ΞΈΞ±Ξ­Ο‡ΞµΞΉ Ξ±Ο…Ο„Ξ® Ξ· ΞΏΞΌΞ¬Ξ΄Ξ±
+select the parent category. if this is a main category select no category	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„Ξ·Ξ½ ΞΌΞ·Ο„ΟΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±. Ξ‘Ξ½ Ξ±Ο…Ο„Ξ® ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΞΉΞ± ΞΊΟΟΞΉΞ± ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΞ§Ξ™ ΞΞ‘Ξ¤Ξ—Ξ“ΞΞ΅Ξ™Ξ‘
+select users for inclusion	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ Ξ³ΞΉΞ± ΟƒΟ…Ξ½Ο…Ο€ΞΏΞ»ΞΏΞ³ΞΉΟƒΞΌΟ
+select where you want to store/retrieve filesystem information	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο€ΞΏΟ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΞµΟ„Ξ±ΞΉ/Ξ±Ξ½Ξ±ΞΊΟ„Ξ¬Ο„Ξ±ΞΉ Ξ· Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―Ξ± Ο„ΞΏΟ… ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½
+select where you want to store/retrieve user accounts	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο€ΞΏΟ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΞΏΞ½Ο„Ξ±ΞΉ/Ξ±Ξ½Ξ±ΞΊΟ„ΟΞ½Ο„Ξ±ΞΉ ΞΏΞΉ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΞ― Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ·
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΟƒΞµ Ο€ΞΏΞΉΟ ΞΌΞ­ΟΞΏΟ‚ Ο„Ξ·Ο‚ ΞΌΟ€Ξ¬ΟΞ±Ο‚ Ο€Ξ»ΞΏΞ®Ξ³Ξ·ΟƒΞ·Ο‚ Ξ±Ο…Ο„Ξ® Ξ· ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® ΞΈΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ, Ο‡Ξ±ΞΌΞ·Ξ»ΟΟ„ΞµΟΞ· (Ξ±ΟΞΉΟƒΟ„ΞµΟΞ±) ΞΌΞµ ΟΞ·Ξ»ΟΟ„ΞµΟΞ· (Ξ΄ΞµΞΎΞΉΞ¬)
+selectbox	admin	el	ΞΞΏΟ…Ο„Ξ― ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®Ο‚
+server %1 has been updated	admin	el	Server %1 Ξ­Ο‡ΞµΞΉ Ξ±Ξ½Ξ±Ξ²Ξ±ΞΈΞΌΞ·ΟƒΟ„ΞµΞ―
+server list	admin	el	Ξ›Ξ―ΟƒΟ„Ξ± Server
+server password	admin	el	Ξ£Ο…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΟ Server
+server type(mode)	admin	el	Ξ¤ΟΟ€ΞΏΟ‚ Server(ΞΌΞ­ΞΈΞΏΞ΄ΞΏΟ‚)
 server url	admin	el	Server URL
-server username	admin	el	Ονομα Χρήστη Server
-set preference values.	admin	el	Καθορισμός τιμών προτιμίσεων
-should the login page include a language selectbox (useful for demo-sites) ?	admin	el	Θα έπρεπε η σελίδα εισόδου να περιέχει ένα κουτί επιλογής (χρήσιμο για demo-sites);
-show 'powered by' logo on	admin	el	Εμφάνηση λογότυπου 'powered by'
-show access log	admin	el	Εμφάνηση καταγραφής συνδέσεων
-show an asterisk (*) to mark untranslated strings	admin	el	Εμφάνιση αστερίσκου (*) ως σημείωση αμετάφραστων στοιχειοσειρών
-show current action	admin	el	Εμφάνηση τρέχουσας ενέργειας
-show error log	admin	el	Εμφάνηση καταγραφή λαθών
-show phpinfo()	admin	el	Εμφάνηση phpinfo()
-show session ip address	admin	el	Εμφάνηση διεύθυνσης περιόδων IP
-site	admin	el	Ιστιοσελίδα
-site configuration	common	el	Διαμόρφωση ιστιοσελίδας
+server username	admin	el	ΞΞ½ΞΏΞΌΞ± Ξ§ΟΞ®ΟƒΟ„Ξ· Server
+set preference values.	admin	el	ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΟΟ‚ Ο„ΞΉΞΌΟΞ½ Ο€ΟΞΏΟ„ΞΉΞΌΞ―ΟƒΞµΟ‰Ξ½
+should the login page include a language selectbox (useful for demo-sites) ?	admin	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ± ΞµΞΉΟƒΟΞ΄ΞΏΟ… Ξ½Ξ± Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ Ξ­Ξ½Ξ± ΞΊΞΏΟ…Ο„Ξ― ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®Ο‚ (Ο‡ΟΞ®ΟƒΞΉΞΌΞΏ Ξ³ΞΉΞ± demo-sites);
+show 'powered by' logo on	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· Ξ»ΞΏΞ³ΟΟ„Ο…Ο€ΞΏΟ… 'powered by'
+show access log	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· ΞΊΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ®Ο‚ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞµΟ‰Ξ½
+show an asterisk (*) to mark untranslated strings	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ±ΟƒΟ„ΞµΟΞ―ΟƒΞΊΞΏΟ… (*) Ο‰Ο‚ ΟƒΞ·ΞΌΞµΞ―Ο‰ΟƒΞ· Ξ±ΞΌΞµΟ„Ξ¬Ο†ΟΞ±ΟƒΟ„Ο‰Ξ½ ΟƒΟ„ΞΏΞΉΟ‡ΞµΞΉΞΏΟƒΞµΞΉΟΟΞ½
+show current action	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· Ο„ΟΞ­Ο‡ΞΏΟ…ΟƒΞ±Ο‚ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞ±Ο‚
+show error log	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· ΞΊΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ® Ξ»Ξ±ΞΈΟΞ½
+show phpinfo()	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· phpinfo()
+show session ip address	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½Ξ·ΟƒΞ· Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·Ο‚ Ο€ΞµΟΞΉΟΞ΄Ο‰Ξ½ IP
+site	admin	el	Ξ™ΟƒΟ„ΞΉΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ±
+site configuration	common	el	Ξ”ΞΉΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ· ΞΉΟƒΟ„ΞΉΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚
 soap	admin	el	SOAP
-sorry, that group name has already been taken.	admin	el	Συγνώμη, αυτό το όνομα ομάδας υπάρχει ήδη
-sorry, the above users are still a member of the group %1	admin	el	Συγνώμη, οι παραπάνω χρήστες είναι ακόμα μέλοι της ομάδας %1
-sorry, the follow users are still a member of the group %1	admin	el	Συγνώμη, οι ακόλουθοι χρήστες είναι ακόμα μέλοι της ομάδας %1
-sort the entries	admin	el	ταξινόμηση των εισόδων
+sorry, that group name has already been taken.	admin	el	Ξ£Ο…Ξ³Ξ½ΟΞΌΞ·, Ξ±Ο…Ο„Ο Ο„ΞΏ ΟΞ½ΞΏΞΌΞ± ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ·
+sorry, the above users are still a member of the group %1	admin	el	Ξ£Ο…Ξ³Ξ½ΟΞΌΞ·, ΞΏΞΉ Ο€Ξ±ΟΞ±Ο€Ξ¬Ξ½Ο‰ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΞΊΟΞΌΞ± ΞΌΞ­Ξ»ΞΏΞΉ Ο„Ξ·Ο‚ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚ %1
+sorry, the follow users are still a member of the group %1	admin	el	Ξ£Ο…Ξ³Ξ½ΟΞΌΞ·, ΞΏΞΉ Ξ±ΞΊΟΞ»ΞΏΟ…ΞΈΞΏΞΉ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΞΊΟΞΌΞ± ΞΌΞ­Ξ»ΞΏΞΉ Ο„Ξ·Ο‚ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚ %1
+sort the entries	admin	el	Ο„Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ· Ο„Ο‰Ξ½ ΞµΞΉΟƒΟΞ΄Ο‰Ξ½
 ssl	admin	el	ssl
-standard	admin	el	συνήθης
-standard imap server	admin	el	συνήθης IMAP server
-standard pop3 server	admin	el	συνήθης POP3 server
-standard smtp-server	admin	el	συνήθης SMTP-server
-start testjob!	admin	el	Εναρξη Δοκιμαστικής Εργασίας !
-submit changes	admin	el	Υποβολή Αλλαγών
-submit the search string	admin	el	Υποβολή του αλφαριθμητικού εύρεσης
-subtype	admin	el	Υποτύπος
-switch it off, if users are randomly thrown out	admin	el	απενεργοποίηση, αν οι χρήστες "πετάγονται έξω" τυχαία
-template selection	admin	el	Επιλογή φόρμας
-text entry	admin	el	Είσοδος κειμένου
-that application name already exists.	admin	el	Το όνομα της εφαρμογής ισχύει ήδη
-that application order must be a number.	admin	el	Αυτή η σειρά εφαρμογής πρέπει να είναι αριθμός
-that loginid has already been taken	admin	el	Αυτή η Ταυτότητα εισαγωγής είναι καταχωρημένη απο άλλον
-that name has been used already	admin	el	Αυτό το όνομα χρησιμοποιήται ήδη
-that server name has been used already !	admin	el	Το όνομα του server χρησιμοποιήται ήδη !
-the api is current	admin	el	Το API χρησιμοποιήται αυτη τη στιγμή
-the api requires an upgrade	admin	el	Το API απαιτεί αναβάθμηση
-the groups must include the primary group	admin	el	Οι ομάδες πρέπει να συμπεριλαμβάνουν την αρχική ομάδα
-the login and password can not be the same	admin	el	Το όνομα εισαγωγής και το συνθηματικό δεν πρέπει να είναι το ίδιο
-the loginid can not be more then 8 characters	admin	el	Η Ταυτότητα εισαγωγής δεν πρέπει να είναι παραπάνς απο 8 χαρακτήρες
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
-the testjob sends you a mail everytime it is called.	admin	el	Η Δοκιμαστική Εργασία σας στέλνει ενα mail κάθε φορά που την καλείτε
-the text displayed to the user	admin	el	το κείμενο που προβάλεται στον χρήστη
-the two passwords are not the same	admin	el	Τα δυο συνθηματικά δέν είναι ίδια
-the users bellow are still members of group %1	admin	el	οι χρήστες παρακάτω είναι ακόμα μέλη της ομάδας %1
-there already is a group with this name. userid's can not have the same name as a groupid	admin	el	Υπάρχει ήδη ομάδα με αυτό το όνομα.Η ταυτότητα χρήστη δεν μπορεί να έχει το ίδιο όνομα με αυτο της ταυτότητας μιας ομάδας.
-they must be removed before you can continue	admin	el	Πρέπει να απομακρινθούν πρίν συνεχίσετε
-this application is current	admin	el	Αυτή η εφαρμογή χρησιμοποιήται
-this application requires an upgrade	admin	el	Αυτή η εφαρμογή απαιτεί αναβάθμιση
-this category is currently being used by applications as a parent category	admin	el	Αυτή η κατηγορία χρησημοποιήται αυτή τη στιγμή απο εφαρμογές σαν αρχική κατηγορία
-timeout for application session data in seconds (default 86400 = 1 day)	admin	el	Χρονοαναμονή για δεδομένα περιόδου εφαρμογής σε δευτερόλεπτα (προκαθορισμένο 86400 = 1 ημέρα)
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	el	Χρονοαναμονή για περίοδο σε δευτερόλεπτα (προκαθορισμένο 14400 = 4 ώρες)
-times	admin	el	Φορες
-top	admin	el	κορυφή
-total records	admin	el	Σύνολο εγγραφών
-trust level	admin	el	Επίπεδο εμπιστοσύνης
-trust relationship	admin	el	Σχέση εμπιστοσύνης
-type '%1' already exists !!!	admin	el	ο τύπος '%1" υπάρχει ήδη !!!
-type of customfield	admin	el	Τύπος συνήθους πεδίου
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Στο λειτουργικό σύστημα των windows πρέπει να εγκαταστήσετε %1χειροκίνητα%2 το asyncservice ή να χρησιμοποιήσετε το fallback mode. Fallback σημαίνει ότι οι εργασίες ελέγχονται μόνο μετά από κάθε προβολή σελίδας.
-use cookies to pass sessionid	admin	el	Χρησημοποίηση cookies για να περάσεις την sessionid
-use pure html compliant code (not fully working yet)	admin	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
-use theme	admin	el	Χρησιμοποίηση θέματος
-user accounts	admin	el	Λογαριασμοί χρήστη
-user data	common	el	Δεδομένα χρήστη
-user for smtp-authentication (leave it empty if no auth required)	admin	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
-user groups	admin	el	Ομάδες χρήστη
-userdata	admin	el	δεδομένα χρήστη
-users choice	admin	el	Επιλογή Χρήστη
-view access log	admin	el	Εμφάνιση καταγραφής πρόσβασης
-view account	admin	el	Εμφάνιση λογαριασμού
-view category	admin	el	Εμφάνιση κατηγορίας
-view error log	admin	el	Εμφάνιση καταγραφής λαθών
-view sessions	admin	el	Εμφάνιση περιόδων
-view this user	admin	el	εμφάνιση αυτού του χρήστη
-view user account	admin	el	Εμφάνιση λογαριασμού χρήστη
-who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε?
-would you like egroupware to cache the egw info array ?	admin	el	Θέλετε η eGroupWare να κρύβει τον πίνακα πληροφοριών της egw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η eGroupWare να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή ?
-would you like egroupware to check for new application versions when admins login ?	admin	el	Θέλετε η eGroupWare να ελέγχει για νέες εκδώσεις της εφαρμογής όταν ο διαχειρηστής κάνει εισαγωγή ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	el	Θέλετε αυτόματα να φορτώνονται νέα langfiles (κατα τη διάρκεια εισαγογής) ?
-would you like to show each application's upgrade status ?	admin	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής ?
+standard	admin	el	ΟƒΟ…Ξ½Ξ®ΞΈΞ·Ο‚
+standard imap server	admin	el	ΟƒΟ…Ξ½Ξ®ΞΈΞ·Ο‚ IMAP server
+standard pop3 server	admin	el	ΟƒΟ…Ξ½Ξ®ΞΈΞ·Ο‚ POP3 server
+standard smtp-server	admin	el	ΟƒΟ…Ξ½Ξ®ΞΈΞ·Ο‚ SMTP-server
+start testjob!	admin	el	Ξ•Ξ½Ξ±ΟΞΎΞ· Ξ”ΞΏΞΊΞΉΞΌΞ±ΟƒΟ„ΞΉΞΊΞ®Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ !
+submit changes	admin	el	Ξ¥Ο€ΞΏΞ²ΞΏΞ»Ξ® Ξ‘Ξ»Ξ»Ξ±Ξ³ΟΞ½
+submit the search string	admin	el	Ξ¥Ο€ΞΏΞ²ΞΏΞ»Ξ® Ο„ΞΏΟ… Ξ±Ξ»Ο†Ξ±ΟΞΉΞΈΞΌΞ·Ο„ΞΉΞΊΞΏΟ ΞµΟΟΞµΟƒΞ·Ο‚
+subtype	admin	el	Ξ¥Ο€ΞΏΟ„ΟΟ€ΞΏΟ‚
+switch it off, if users are randomly thrown out	admin	el	Ξ±Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·, Ξ±Ξ½ ΞΏΞΉ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ "Ο€ΞµΟ„Ξ¬Ξ³ΞΏΞ½Ο„Ξ±ΞΉ Ξ­ΞΎΟ‰" Ο„Ο…Ο‡Ξ±Ξ―Ξ±
+template selection	admin	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο†ΟΟΞΌΞ±Ο‚
+text entry	admin	el	Ξ•Ξ―ΟƒΞΏΞ΄ΞΏΟ‚ ΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ…
+that application name already exists.	admin	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± Ο„Ξ·Ο‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚ ΞΉΟƒΟ‡ΟΞµΞΉ Ξ®Ξ΄Ξ·
+that application order must be a number.	admin	el	Ξ‘Ο…Ο„Ξ® Ξ· ΟƒΞµΞΉΟΞ¬ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΟΞΉΞΈΞΌΟΟ‚
+that loginid has already been taken	admin	el	Ξ‘Ο…Ο„Ξ® Ξ· Ξ¤Ξ±Ο…Ο„ΟΟ„Ξ·Ο„Ξ± ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ·ΞΌΞ­Ξ½Ξ· Ξ±Ο€ΞΏ Ξ¬Ξ»Ξ»ΞΏΞ½
+that name has been used already	admin	el	Ξ‘Ο…Ο„Ο Ο„ΞΏ ΟΞ½ΞΏΞΌΞ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®Ο„Ξ±ΞΉ Ξ®Ξ΄Ξ·
+that server name has been used already !	admin	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± Ο„ΞΏΟ… server Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®Ο„Ξ±ΞΉ Ξ®Ξ΄Ξ· !
+the api is current	admin	el	Ξ¤ΞΏ API Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®Ο„Ξ±ΞΉ Ξ±Ο…Ο„Ξ· Ο„Ξ· ΟƒΟ„ΞΉΞ³ΞΌΞ®
+the api requires an upgrade	admin	el	Ξ¤ΞΏ API Ξ±Ο€Ξ±ΞΉΟ„ΞµΞ― Ξ±Ξ½Ξ±Ξ²Ξ¬ΞΈΞΌΞ·ΟƒΞ·
+the groups must include the primary group	admin	el	ΞΞΉ ΞΏΞΌΞ¬Ξ΄ΞµΟ‚ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΟƒΟ…ΞΌΟ€ΞµΟΞΉΞ»Ξ±ΞΌΞ²Ξ¬Ξ½ΞΏΟ…Ξ½ Ο„Ξ·Ξ½ Ξ±ΟΟ‡ΞΉΞΊΞ® ΞΏΞΌΞ¬Ξ΄Ξ±
+the login and password can not be the same	admin	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ ΞΊΞ±ΞΉ Ο„ΞΏ ΟƒΟ…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΟ Ξ΄ΞµΞ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ο„ΞΏ Ξ―Ξ΄ΞΉΞΏ
+the loginid can not be more then 8 characters	admin	el	Ξ— Ξ¤Ξ±Ο…Ο„ΟΟ„Ξ·Ο„Ξ± ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ Ξ΄ΞµΞ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ο€Ξ±ΟΞ±Ο€Ξ¬Ξ½Ο‚ Ξ±Ο€ΞΏ 8 Ο‡Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	el	Ο„ΞΏ ΟΞ½ΞΏΞΌΞ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ ΞµΟƒΟ‰Ο„ΞµΟΞΉΞΊΞ¬ (<=20 Ο‡Ξ±ΟΞ±ΞΊΟ„), ΞµΞ½Ξ΄ΞµΟ‡ΟΞΌΞµΞ½Ξ· Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® Ο„ΞΏΟ… Ο€ΟΞΏΞΊΞ±Ξ»ΞµΞ― ΞΌΞ· Ξ΄ΞΉΞ±ΞΈΞµΟƒΞΉΞΌΟΟ„Ξ·Ο„Ξ± Ο„Ο‰Ξ½ Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½
+the testjob sends you a mail everytime it is called.	admin	el	Ξ— Ξ”ΞΏΞΊΞΉΞΌΞ±ΟƒΟ„ΞΉΞΊΞ® Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ± ΟƒΞ±Ο‚ ΟƒΟ„Ξ­Ξ»Ξ½ΞµΞΉ ΞµΞ½Ξ± mail ΞΊΞ¬ΞΈΞµ Ο†ΞΏΟΞ¬ Ο€ΞΏΟ… Ο„Ξ·Ξ½ ΞΊΞ±Ξ»ΞµΞ―Ο„Ξµ
+the text displayed to the user	admin	el	Ο„ΞΏ ΞΊΞµΞ―ΞΌΞµΞ½ΞΏ Ο€ΞΏΟ… Ο€ΟΞΏΞ²Ξ¬Ξ»ΞµΟ„Ξ±ΞΉ ΟƒΟ„ΞΏΞ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
+the two passwords are not the same	admin	el	Ξ¤Ξ± Ξ΄Ο…ΞΏ ΟƒΟ…Ξ½ΞΈΞ·ΞΌΞ±Ο„ΞΉΞΊΞ¬ Ξ΄Ξ­Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ―Ξ΄ΞΉΞ±
+the users bellow are still members of group %1	admin	el	ΞΏΞΉ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ Ο€Ξ±ΟΞ±ΞΊΞ¬Ο„Ο‰ ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΞΊΟΞΌΞ± ΞΌΞ­Ξ»Ξ· Ο„Ξ·Ο‚ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚ %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	el	Ξ¥Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ· ΞΏΞΌΞ¬Ξ΄Ξ± ΞΌΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ ΟΞ½ΞΏΞΌΞ±.Ξ— Ο„Ξ±Ο…Ο„ΟΟ„Ξ·Ο„Ξ± Ο‡ΟΞ®ΟƒΟ„Ξ· Ξ΄ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± Ξ­Ο‡ΞµΞΉ Ο„ΞΏ Ξ―Ξ΄ΞΉΞΏ ΟΞ½ΞΏΞΌΞ± ΞΌΞµ Ξ±Ο…Ο„ΞΏ Ο„Ξ·Ο‚ Ο„Ξ±Ο…Ο„ΟΟ„Ξ·Ο„Ξ±Ο‚ ΞΌΞΉΞ±Ο‚ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚.
+they must be removed before you can continue	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ξ±Ο€ΞΏΞΌΞ±ΞΊΟΞΉΞ½ΞΈΞΏΟΞ½ Ο€ΟΞ―Ξ½ ΟƒΟ…Ξ½ΞµΟ‡Ξ―ΟƒΞµΟ„Ξµ
+this application is current	admin	el	Ξ‘Ο…Ο„Ξ® Ξ· ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®Ο„Ξ±ΞΉ
+this application requires an upgrade	admin	el	Ξ‘Ο…Ο„Ξ® Ξ· ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® Ξ±Ο€Ξ±ΞΉΟ„ΞµΞ― Ξ±Ξ½Ξ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·
+this category is currently being used by applications as a parent category	admin	el	Ξ‘Ο…Ο„Ξ® Ξ· ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± Ο‡ΟΞ·ΟƒΞ·ΞΌΞΏΟ€ΞΏΞΉΞ®Ο„Ξ±ΞΉ Ξ±Ο…Ο„Ξ® Ο„Ξ· ΟƒΟ„ΞΉΞ³ΞΌΞ® Ξ±Ο€ΞΏ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚ ΟƒΞ±Ξ½ Ξ±ΟΟ‡ΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+timeout for application session data in seconds (default 86400 = 1 day)	admin	el	Ξ§ΟΞΏΞ½ΞΏΞ±Ξ½Ξ±ΞΌΞΏΞ½Ξ® Ξ³ΞΉΞ± Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ± Ο€ΞµΟΞΉΟΞ΄ΞΏΟ… ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚ ΟƒΞµ Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„Ξ± (Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ 86400 = 1 Ξ·ΞΌΞ­ΟΞ±)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	el	Ξ§ΟΞΏΞ½ΞΏΞ±Ξ½Ξ±ΞΌΞΏΞ½Ξ® Ξ³ΞΉΞ± Ο€ΞµΟΞ―ΞΏΞ΄ΞΏ ΟƒΞµ Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„Ξ± (Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ 14400 = 4 ΟΟΞµΟ‚)
+times	admin	el	Ξ¦ΞΏΟΞµΟ‚
+top	admin	el	ΞΊΞΏΟΟ…Ο†Ξ®
+total records	admin	el	Ξ£ΟΞ½ΞΏΞ»ΞΏ ΞµΞ³Ξ³ΟΞ±Ο†ΟΞ½
+trust level	admin	el	Ξ•Ο€Ξ―Ο€ΞµΞ΄ΞΏ ΞµΞΌΟ€ΞΉΟƒΟ„ΞΏΟƒΟΞ½Ξ·Ο‚
+trust relationship	admin	el	Ξ£Ο‡Ξ­ΟƒΞ· ΞµΞΌΟ€ΞΉΟƒΟ„ΞΏΟƒΟΞ½Ξ·Ο‚
+type '%1' already exists !!!	admin	el	ΞΏ Ο„ΟΟ€ΞΏΟ‚ '%1" Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ· !!!
+type of customfield	admin	el	Ξ¤ΟΟ€ΞΏΟ‚ ΟƒΟ…Ξ½Ξ®ΞΈΞΏΟ…Ο‚ Ο€ΞµΞ΄Ξ―ΞΏΟ…
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Ξ£Ο„ΞΏ Ξ»ΞµΞΉΟ„ΞΏΟ…ΟΞ³ΞΉΞΊΟ ΟƒΟΟƒΟ„Ξ·ΞΌΞ± Ο„Ο‰Ξ½ windows Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞ³ΞΊΞ±Ο„Ξ±ΟƒΟ„Ξ®ΟƒΞµΟ„Ξµ %1Ο‡ΞµΞΉΟΞΏΞΊΞ―Ξ½Ξ·Ο„Ξ±%2 Ο„ΞΏ asyncservice Ξ® Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ„Ξµ Ο„ΞΏ fallback mode. Fallback ΟƒΞ·ΞΌΞ±Ξ―Ξ½ΞµΞΉ ΟΟ„ΞΉ ΞΏΞΉ ΞµΟΞ³Ξ±ΟƒΞ―ΞµΟ‚ ΞµΞ»Ξ­Ξ³Ο‡ΞΏΞ½Ο„Ξ±ΞΉ ΞΌΟΞ½ΞΏ ΞΌΞµΟ„Ξ¬ Ξ±Ο€Ο ΞΊΞ¬ΞΈΞµ Ο€ΟΞΏΞ²ΞΏΞ»Ξ® ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚.
+use cookies to pass sessionid	admin	el	Ξ§ΟΞ·ΟƒΞ·ΞΌΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· cookies Ξ³ΞΉΞ± Ξ½Ξ± Ο€ΞµΟΞ¬ΟƒΞµΞΉΟ‚ Ο„Ξ·Ξ½ sessionid
+use pure html compliant code (not fully working yet)	admin	el	Ξ§ΟΞ®ΟƒΞ· ΞΊΞ±Ξ½ΞΏΞ½ΞΉΞΊΞΏΟ ΟƒΟ…ΞΌΞ²Ξ±Ο„ΞΏΟ HTML ΞΊΟΞ΄ΞΉΞΊΞ± (Ξ΄Ξ­Ξ½ Ο€Ξ±Ξ―Ξ¶ΞµΞΉ ΟƒΟ‰ΟƒΟ„Ξ¬ Ξ±ΞΊΟΞΌΞ±)
+use theme	admin	el	Ξ§ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΈΞ­ΞΌΞ±Ο„ΞΏΟ‚
+user accounts	admin	el	Ξ›ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΞ― Ο‡ΟΞ®ΟƒΟ„Ξ·
+user data	common	el	Ξ”ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ± Ο‡ΟΞ®ΟƒΟ„Ξ·
+user for smtp-authentication (leave it empty if no auth required)	admin	el	Ξ§ΟΞ®ΟƒΟ„Ξ·Ο‚ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ SMTP-Ο€ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· (Ξ½Ξ± ΞΌΞµΞ―Ξ½ΞµΞΉ ΞΊΞµΞ½Ο Ξ±Ξ½ Ξ΄ΞµΞ½ Ο‡ΟΞµΞΉΞ¬Ξ¶ΞµΟ„Ξ±ΞΉ Ο€ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·)
+user groups	admin	el	ΞΞΌΞ¬Ξ΄ΞµΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·
+userdata	admin	el	Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ± Ο‡ΟΞ®ΟƒΟ„Ξ·
+users choice	admin	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ§ΟΞ®ΟƒΟ„Ξ·
+view access log	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΊΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ®Ο‚ Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚
+view account	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ
+view category	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚
+view error log	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΊΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ®Ο‚ Ξ»Ξ±ΞΈΟΞ½
+view sessions	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο€ΞµΟΞΉΟΞ΄Ο‰Ξ½
+view this user	admin	el	ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ·
+view user account	admin	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΟ Ο‡ΟΞ®ΟƒΟ„Ξ·
+who would you like to transfer all records owned by the deleted user to?	admin	el	Ξ ΞΏΞΉΟΟ‚ ΞΈΞ± ΞΈΞ­Ξ»Ξ±Ο„Ξµ Ξ½Ξ± ΞΌΞµΟ„Ξ±Ο†Ξ­ΟΞµΞΉ ΞΞ›Ξ•Ξ£ Ο„Ξ·Ο‚ ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚ Ο€ΞΏΟ… Ξ±Ξ½Ξ®ΞΊΞΏΟ…Ξ½ ΟƒΟ„ΞΏΞ½ Ο‡ΟΞ®ΟƒΟ„Ξ· Ο€ΞΏΟ… Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ·ΞΊΞµ?
+would you like egroupware to cache the egw info array ?	admin	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ· eGroupWare Ξ½Ξ± ΞΊΟΟΞ²ΞµΞΉ Ο„ΞΏΞ½ Ο€Ξ―Ξ½Ξ±ΞΊΞ± Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞΉΟΞ½ Ο„Ξ·Ο‚ egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ· eGroupWare Ξ½Ξ± ΞµΞ»Ξ­Ξ³Ο‡ΞµΞΉ Ξ³ΞΉΞ± ΞΌΞΉΞ± Ξ½Ξ­Ξ± Ξ­ΞΊΞ΄Ο‰ΟƒΞ· ΟΟ„Ξ±Ξ½ ΞΏ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ·ΟƒΟ„Ξ®Ο‚ ΞΊΞ¬Ξ½ΞµΞΉ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ?
+would you like egroupware to check for new application versions when admins login ?	admin	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ· eGroupWare Ξ½Ξ± ΞµΞ»Ξ­Ξ³Ο‡ΞµΞΉ Ξ³ΞΉΞ± Ξ½Ξ­ΞµΟ‚ ΞµΞΊΞ΄ΟΟƒΞµΞΉΟ‚ Ο„Ξ·Ο‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚ ΟΟ„Ξ±Ξ½ ΞΏ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞ·ΟƒΟ„Ξ®Ο‚ ΞΊΞ¬Ξ½ΞµΞΉ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ±Ο…Ο„ΟΞΌΞ±Ο„Ξ± Ξ½Ξ± Ο†ΞΏΟΟ„ΟΞ½ΞΏΞ½Ο„Ξ±ΞΉ Ξ½Ξ­Ξ± langfiles (ΞΊΞ±Ο„Ξ± Ο„Ξ· Ξ΄ΞΉΞ¬ΟΞΊΞµΞΉΞ± ΞµΞΉΟƒΞ±Ξ³ΞΏΞ³Ξ®Ο‚) ?
+would you like to show each application's upgrade status ?	admin	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ ΞΊΞ±ΞΈΞµ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ξ±Ξ½Ξ±Ξ²Ξ¬ΞΈΞΌΞ·ΟƒΞ·Ο‚ Ο„Ξ·Ξµ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚ ?
 xml-rpc	admin	el	XML-RPC
-you have entered an invalid expiration date	admin	el	Εχετε εισάγει μια λάθοςημερομηνία λήξης
-you have to enter a name, to create a new field!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου πεδίου!!!
-you have to enter a name, to create a new type!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου τύπου!!!
-you must add at least 1 permission or group to this account	admin	el	Πρέπει να προσθέσεις το λιγότερο 1 δικαίωμα ή ομάδα σ'αυτό τον λογαριασμό
-you must enter a group name.	admin	el	Πρέπει να εισάγετε ένα όνομα ομάδας
-you must enter a lastname	admin	el	Πρέπει να εισάγετε ένα επίθετο
-you must enter a loginid	admin	el	Πρέπει να εισάγετε ένα id εισόδου
-you must enter an application name and title.	admin	el	Πρέπει να εισάγετε ένα όνομα και έναν τίτλο εφαρμογής
-you must enter an application name.	admin	el	Πρέπει να εισάγετε ένα όνομα εφαρμογής
-you must enter an application title.	admin	el	Πρέπει να εισάγετε έναν τίτλο εφαρμογής
-you must select a file type	admin	el	Πρέπει να επιλέξετε έναν τύπο αρχείου
-you must select at least one group member.	admin	el	Πρέπει να επιλέξετε τουλάχιστον ένα μέλος ομάδας
-you will need to remove the subcategories before you can delete this category	admin	el	Θα πρέπει να διαγραφούν οι υποκατηγορίες πρίν διαγράψεις αυτή την κατηγορία !
-your session could not be verified.	admin	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί
+you have entered an invalid expiration date	admin	el	Ξ•Ο‡ΞµΟ„Ξµ ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ ΞΌΞΉΞ± Ξ»Ξ¬ΞΈΞΏΟ‚Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ»Ξ®ΞΎΞ·Ο‚
+you have to enter a name, to create a new field!!!	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ±, Ξ³ΞΉΞ± Ο„Ξ· Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ½Ξ­ΞΏΟ… Ο€ΞµΞ΄Ξ―ΞΏΟ…!!!
+you have to enter a name, to create a new type!!!	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ±, Ξ³ΞΉΞ± Ο„Ξ· Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ½Ξ­ΞΏΟ… Ο„ΟΟ€ΞΏΟ…!!!
+you must add at least 1 permission or group to this account	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€ΟΞΏΟƒΞΈΞ­ΟƒΞµΞΉΟ‚ Ο„ΞΏ Ξ»ΞΉΞ³ΟΟ„ΞµΟΞΏ 1 Ξ΄ΞΉΞΊΞ±Ξ―Ο‰ΞΌΞ± Ξ® ΞΏΞΌΞ¬Ξ΄Ξ± Οƒ'Ξ±Ο…Ο„Ο Ο„ΞΏΞ½ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟ
+you must enter a group name.	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ± ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+you must enter a lastname	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ± ΞµΟ€Ξ―ΞΈΞµΟ„ΞΏ
+you must enter a loginid	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ± id ΞµΞΉΟƒΟΞ΄ΞΏΟ…
+you must enter an application name and title.	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ± ΞΊΞ±ΞΉ Ξ­Ξ½Ξ±Ξ½ Ο„Ξ―Ο„Ξ»ΞΏ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+you must enter an application name.	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ± ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+you must enter an application title.	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ξ­Ξ½Ξ±Ξ½ Ο„Ξ―Ο„Ξ»ΞΏ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚
+you must select a file type	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ Ξ­Ξ½Ξ±Ξ½ Ο„ΟΟ€ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+you must select at least one group member.	admin	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ Ο„ΞΏΟ…Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏΞ½ Ξ­Ξ½Ξ± ΞΌΞ­Ξ»ΞΏΟ‚ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+you will need to remove the subcategories before you can delete this category	admin	el	ΞΞ± Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞΏΟΞ½ ΞΏΞΉ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ Ο€ΟΞ―Ξ½ Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΞΉΟ‚ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± !
+your session could not be verified.	admin	el	Ξ— Ο€ΞµΟΞ―ΞΏΞ΄ΞΏΟ‚ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞµΟ€Ξ±Ξ»Ξ·ΞΈΞµΟ…ΞΈΞµΞ―

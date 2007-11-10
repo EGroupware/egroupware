@@ -1,442 +1,442 @@
-%1 - %2 of %3 user accounts	admin	ru	%1 *%2 bp %3 учетных записей пользователей
-%1 - %2 of %3 user groups	admin	ru	%1 *%2 bp %3 пользовательских групп
-%1 acl records of not (longer) existing accounts deleted.	admin	ru	%1 запись ACL (более) не существуещей учетной записи удалена
-%1 not found or not executable !!!	admin	ru	%1 не найден или не может быть выполнен !!!
-(default no, leave it off if you dont use it)	admin	ru	(по умолчанию - Нет, оставьте, если не используете)
-(stored password will not be shown here)	admin	ru	(Хранящиеся пароли не будут отображены здесь)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ru	(Для установки новых приложений используйте<br><a href="setup/" target="setup">Установка</a> [Управление приложениями] !!!)
--  type	admin	ru	- тип
-accesslog and bruteforce defense	admin	ru	Журнал доступа и защита от грубого взлома
-account active	admin	ru	Учетная запись активна
-account has been created	common	ru	Учетная запись создана
-account has been deleted	common	ru	Учетная запись удалена
-account has been updated	common	ru	Учетная запись изменена
-account list	admin	ru	Список учетных записей
-account permissions	admin	ru	Разрешения учетной записи
-account preferences	admin	ru	Настройки учетной записи
-acl manager	admin	ru	Менеджер ACL
-acl rights	common	ru	Права ACL
-action	admin	ru	Действие
-activate wysiwyg-editor	admin	ru	включить визуальный (WYSIWYG) редактор
-add a category	admin	ru	Добавить категорию
-add a group	admin	ru	Добавить группу
-add a new account.	admin	ru	Добавить новую учетную запись.
-add a subcategory	admin	ru	добавить подкатегорию
-add a user	admin	ru	добавить пользователя
-add account	admin	ru	Добавить учетную запись
-add application	admin	ru	Добавить приложение
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	ru	Добавить автоматически создаваемых пользователей в эту группу (если пусто - назначается группа 'Default' )
-add global category	admin	ru	Добавить общую категорию
-add global category for %1	admin	ru	Добавить общую категорию для %1
-add group	admin	ru	Добавить группу
-add new account	admin	ru	Добавить новую учетную запись
-add new application	admin	ru	Добавить новое приложение
-add peer server	admin	ru	Добавить равноправный сервер
-add sub-category	admin	ru	Добавить подкатегорию
-admin email	admin	ru	Адрес электронной почты Администратора
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ru	Адреса электронной почты Администратора (разделенные запятыми) для извещения о блокировке (оставить пустым, если извещать не надо)
-admin name	admin	ru	Имя Администратора
-administration	admin	ru	Администрация
-admins	admin	ru	Администраторы
-advanced options	admin	ru	расширенные параметры
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать учетную запись (по умолчанию 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать IP-адрес (по умолчанию 3)?
-aliases	admin	ru	Псевдонимы
-all records and account information will be lost!	admin	ru	Все записи и информация учетные записи будут потеряны!
-all users	admin	ru	Все пользователи
-allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
-alternate email address	admin	ru	дополнительный e-mail адрес
-anonymous user	admin	ru	Анонимный пользователь
-anonymous user (not shown in list sessions)	admin	ru	Анонимный пользователь (не отображается в списке сеансов)
-anonymous user does not exist!	admin	ru	Анонимный пользователь НЕ существует!
-anonymous user has no run-rights for the application!	admin	ru	Анонимный пользователь не имеет права запуска приложения!
-appearance	admin	ru	Вид
-application	admin	ru	Приложение
-application name	admin	ru	Имя приложения
-application title	admin	ru	Заголовок приложения
-applications	admin	ru	Приложения
-applications list	admin	ru	Список приложений
-applies the changes	admin	ru	применить изменения
-are you sure you want to delete the application %1 ?	admin	ru	Вы уверены, что хотите удалить приложение %1?
-are you sure you want to delete this account ?	admin	ru	Вы уверены, что хотите удалить эту учетную запичь?
-are you sure you want to delete this application ?	admin	ru	Вы уверены, что хотите удалить это приложение?
-are you sure you want to delete this category ?	common	ru	Вы уверены, что хотите удалить эту категорию?
-are you sure you want to delete this global category ?	admin	ru	Вы уверены, что хотите удалить эту Общую Категорию?
-are you sure you want to delete this group ?	admin	ru	Вы уверены, что хотите удалить эту группу?
-are you sure you want to delete this server?	admin	ru	Вы уверены, что хотите удалить этот сервер?
-are you sure you want to kill this session ?	admin	ru	Вы уверены, что хотите прервать этот сеанс?
-async services last executed	admin	ru	Асинхронные сервисы, исполнявшиеся последними
-asynchronous timed services	admin	ru	Асинхронные сервисы по таймеру
-asyncservices not yet installed or other error (%1) !!!	admin	ru	асинхронные сервисы еще не установлены, или иная ошибка (%1)!!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ru	Попытка использоывать правильный тип mime для FTP вместо 'application/octet-stream' по умолчанию
-attribute accountstatus explained	admin	ru	Это обрабатывает свойство <b><i>-accountStatus-</i></b> из схемы QMAIL
-attribute mail explained	admin	ru	Это обрабатывает свойство <b><i>-mail-</i></b> из схемы QMAIL никогда не может быть пустым. Это так же внутреннее поле электронной почты eGW
-attribute mailalternateaddress explained	admin	ru	Это обрабатывает свойство <b><i>-mailAlternateAddress-</i></b> из схемы QMAIL и может быть использовано как виртуальные карты или прпсевдоним.
-attribute mailforwardingaddress explained	admin	ru	Это обрабатывает свойство <b><i>-mailForwardingAddress-</i></b> из схемы QMAIL и требует заполнения.
-authentication / accounts	admin	ru	Идентификация / Учетные записи
-auto create account records for authenticated users	admin	ru	Автоматическое создание записей для идентифицированных пользователей
-back to the list	admin	ru	назад к списку
-bi-dir passthrough	admin	ru	Двунаправленное прохождение паролей
-bi-directional	admin	ru	Двунаправленный
-bottom	admin	ru	низ
-calculate next run	admin	ru	Вычислить следующий запуск
-can change password	admin	ru	Возможно изменять пароль
-cancel testjob!	admin	ru	Прервать Тестовое Задание!
-categories list	admin	ru	Список категорий
-category %1 has been saved !	admin	ru	Категория %1 сохранена !
-category list	admin	ru	Список категорий
-change acl rights	admin	ru	изменить права ACL
-change config settings	admin	ru	Изменить настройки конфигурации
-change main screen message	admin	ru	Изменить сообщение на главной странице
-check ip address of all sessions	admin	ru	Проверить IP-адреса всех сеансов
-check items to <b>%1</b> to %2 for %3	admin	ru	Проверить элементы к <b>%1</b>, к %2 для %3
-click to select a color	admin	ru	Щелкните для выбора цвета
-color	admin	ru	Цвет
-country selection	admin	ru	Выбор страны
-create group	admin	ru	Создать группу
-creates a new field	admin	ru	создать новое поле
-crontab only (recomended)	admin	ru	только crontab (рекомендовано)
-custom fields	admin	ru	Пользовательские Поля
-cyrus imap server	admin	ru	Сервер Cyrus IMAP
-data	admin	ru	Дата
-day	admin	ru	День
-day of week<br>(0-6, 0=sun)	admin	ru	День недели<br>(0-6, 0=Вск)
-db backup and restore	admin	ru	Резервное копирование и восстановление Базы Данных
-default	admin	ru	По умолчанию
-default file system space per user	admin	ru	Размер по умолчанию свободного места системы на пользователя
-default file system space per user/group ?	admin	ru	Размер по умолчанию свободного места системы на пользователя/группу ?
-deinstall crontab	admin	ru	Деинсталировать crontab
-delete account	admin	ru	Удалить учетную запись
-delete all records	admin	ru	Удалить Все записи
-delete application	admin	ru	Удалить приложение
-delete category	admin	ru	Удалить категорию
-delete group	admin	ru	Удалить группу
-delete peer server	admin	ru	Удалить равноправный сервер
-delete the category	admin	ru	удалить категорию
-delete the group	admin	ru	удалить группу
-delete this category	admin	ru	удалить эту категорию
-delete this group	admin	ru	удалить эту группу
-delete this user	admin	ru	удалить этого пользователя
-deletes this field	admin	ru	Удалить это поле
-deliver extern	admin	ru	доставка извне
-deny access to access log	admin	ru	Закрыть доступ к журналу доступов
-deny access to application registery	admin	ru	Закрыть доступ к реестру приложений
-deny access to applications	admin	ru	Закрыть доступ к приложениям
-deny access to asynchronous timed services	admin	ru	Закрыть доступ к асинхронным сервисам по времени
-deny access to current sessions	admin	ru	Закрыть доступ к текущим сеансам
-deny access to db backup and restore	admin	ru	Закрыть доступ к резервной копии базы данных и восстановлению
-deny access to error log	admin	ru	Закрыть доступ к журналу ошибоr
-deny access to global categories	admin	ru	Закрыть доступ к общим категориям
-deny access to groups	admin	ru	Закрыть доступ к группам
-deny access to mainscreen message	admin	ru	Закрыть доступ к сообщению главного экарана
-deny access to peer servers	admin	ru	Закрыть доступ к равноправным серверам
-deny access to phpinfo	admin	ru	Закрыть доступ к информации php
-deny access to site configuration	admin	ru	Закрыть доступ к конфигурации сайта
-deny access to user accounts	admin	ru	Закрыть доступ к учетным записям пользователей
-deny all users access to grant other users access to their entries ?	admin	ru	Закрыть всем пользователям доступ к возможности предоставлять доступ другим пользователям к их записям ?
-description can not exceed 255 characters in length !	admin	ru	Описание не может превышать 255 знаков в длину !
-determines the order the fields are displayed	admin	ru	оперделяет порядок,в котором отображаются поля
-disable "auto completion" of the login form	admin	ru	Отключить автозаполнение формы входа
-disable wysiwyg-editor	admin	ru	отключить визуальный (WYSIWYG) редактор
-disabled (not recomended)	admin	ru	отключено (не рекомендуется)
-display	admin	ru	Отобразить
-do not delete the category and return back to the list	admin	ru	НЕ удалять категорию и вернуться назад к списку
-do you also want to delete all global subcategories ?	admin	ru	Вы также хотите удалить все подкатегории ?
-do you want to delete all global subcategories ?	admin	ru	Вы хотите удалить все общие подкатегории ?
-do you want to move all global subcategories one level down ?	admin	ru	Вы также хотите сместить все подкатегории на уровень ниже ?
-each value is a line like <id>[=<label>]	admin	ru	каждое значение - это строка типа <идентификатор>[=<метка>]
-each value is a line like id[=label]	admin	ru	каждое значение - это строка типа <идентификатор>[=<метка>]
-edit account	admin	ru	Редактировать учетную запись
-edit application	admin	ru	Редактировать приложение
-edit email settings	admin	ru	редактировать настройки e-mail
-edit global category	admin	ru	Редактировать общую категорию
-edit global category for %1	admin	ru	Редактировать общую категорию для %1
-edit group	admin	ru	Редактировать Группу
-edit group acl's	admin	ru	Редактировать ACL'и группы
-edit login screen message	admin	ru	Редактировать сообщение при входе в систему
-edit main screen message	admin	ru	Редактировать сообщение на главном экране
-edit peer server	admin	ru	Редактировать равноправный сервер
-edit table format	admin	ru	Редактировать формат Таблицы
-edit this category	admin	ru	редактировать эту категорию
-edit this group	admin	ru	редактировать эту группу
-edit this user	admin	ru	редактировать этого пользователя
-edit user	admin	ru	редактировать пользователя
-edit user account	admin	ru	Редактировать учетную запись пользователя
-email account active	admin	ru	учетная запись электронной почты активна
-email address	admin	ru	адрес электронной почты
-enable debug-messages	admin	ru	Разрешить отладочные сообщения
-enable the soap service	admin	ru	Разрешить сервис soap
-enable the xmlrpc service	admin	ru	Разрешить сервис xmlrpc
-enabled - hidden from navbar	admin	ru	Разрешено - Скрыть из панели навигации
-enabled - popup window	admin	ru	Разрешено - Всплывающее Окно
-enter a description for the category	admin	ru	введите описание категории
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	ru	Введите какой-либо случайный текст для<br>шифрования сенса приложения (требует mcrypt)
-enter the background color for the login page	admin	ru	Введите цвет фона для экране входа
-enter the background color for the site title	admin	ru	Введите цвет фона для заголовка сайта
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ru	Введите полный путь для временных файлов.<br>Пример: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	ru	Введите полный путь для файлов пользователей и групп.<br>Пример: /files, E:\FILES
-enter the hostname of the machine on which this server is running	admin	ru	Введите имя хоста компьютера, на котором работает этот сервер
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите местонахождение eGroupWare.<br>Например http://www.domain.com/egroupware или /egroupware<br><b>Без наклонной черты в конце</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	ru	Введите строку поиска. Чтобы показать все записи, очистите поле и нажмите кнопку ВПЕРЕД снова
-enter the site password for peer servers	admin	ru	Введите пароль для равноправных серверов
-enter the site username for peer servers	admin	ru	Введите имя пользователя сайта для равноправных серверов
-enter the title for your site	admin	ru	Введите заголовок для вашего сайта
-enter the title of your logo	admin	ru	введите название вашего логотипа
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ru	Введите URL или имя файла (в каталоге phpgwapi/templates/default/images) вашего логотипа
-enter the url where your logo should link to	admin	ru	Введите URL на который будет ссылаться ваш логотип
-enter your default ftp server	admin	ru	Введите ваш FTP сервер по умолчанию
-enter your default mail domain ( from: user@domain )	admin	ru	Введите Ваш почтовый домен по умолчанию  (От: пользователь@домен)
-enter your http proxy server	admin	ru	Введите адрес вашего сервера HTTP-прокси
-enter your http proxy server port	admin	ru	Введите порт вашего сервера HTTP-прокси
-enter your smtp server hostname or ip address	admin	ru	Введите имя хоста или IP-адрес вашего SMTP-сервера
-enter your smtp server port	admin	ru	Введите порт вашего SMTP-сервера
-error canceling timer, maybe there's none set !!!	admin	ru	Ошибка при отмене таймера, возможно ничего не установлено !!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	ru	Ошибка при установке таймера, неверный синтаксис или он уже запущен !!!
-error! no appname found	admin	ru	Ошибка! Не найдено имя приложения
-error: %1 not found or other error !!!	admin	ru	Ошибка: %1 не найден или иная ошибка!!!
-expires	admin	ru	Окончание действия
-explanation of ldapman	admin	ru	Данный модуль был протестирован для POSTFIX, LDAP, Courier-IMAP и требует схем CORE и QMAIL (OID7914). Подробную информацию об использовании и настройке этой системы можно найти в файле README.ldapadmin в папке с документацией Администратора
-fallback (after each pageview)	admin	ru	назад (после каждой страницы)
-field '%1' already exists !!!	admin	ru	Поле '%1' уже существует !!!
-file space	admin	ru	Размер файла
-file space must be an integer	admin	ru	Размер файла должен быть целым числом
-find and register all application hooks	admin	ru	Найти и зарегистрировать ловушки всех приложений
-for the times above	admin	ru	на время, указанное выше
-for the times below (empty values count as '*', all empty = every minute)	admin	ru	на время, казанное ниже (пустые значения считаются как '*', все пустые = каждую минуту)
-force selectbox	admin	ru	Принудительно список выбора
-forward also to	admin	ru	перенаправить также к
-forward emails to	admin	ru	перенаправить почту к
-forward only	admin	ru	только перенаправить
-global categories	common	ru	Общие Категории
-group ?	admin	ru	группа?
-group has been added	common	ru	Группа добавлена
-group has been deleted	common	ru	Группа удалена
-group has been updated	common	ru	Группа обновлена
-group list	admin	ru	Список Групп
-group manager	admin	ru	Менеджер Группы
-group name	admin	ru	Имя Группы
-hide php information	admin	ru	убрать информацию о PHP
-home directory	admin	ru	Домашний каталог
-host information	admin	ru	Информация о хосте
-hour<br>(0-23)	admin	ru	Часы<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ru	Сколько дней должны храниться записи в журнале до их удаления (по  умолчанию 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	ru	На сколько минут блокировать учетную запись или IP (по умолчанию 30) ?
-how should email addresses for new users be constructed?	admin	ru	Как должен быть построен адрес Email для новых пользователей?
-icon	admin	ru	Пиктограмма
-idle	admin	ru	простой
-if no acl records for user or any group the user is a member of	admin	ru	Если нет записей ACL для пользователя или любой группы пользователь является членом
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ru	При использовании LDAP - хотите ли вы управлять свойствами "домашний каталог" и "оболочка входа"
-in mbyte	admin	ru	в Мбайтах
-inbound	admin	ru	входящий
-initial	admin	ru	Первоначальный
-install crontab	admin	ru	Установить crontab
-installed applications	common	ru	Установленные приложения
-installed crontab	admin	ru	Crontab установлен
-interface	admin	ru	Интерфейс
+%1 - %2 of %3 user accounts	admin	ru	%1 *%2 bp %3 я┐я┤п╣я┌п╫я▀я┘ п╥п╟п©п╦я│п╣п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+%1 - %2 of %3 user groups	admin	ru	%1 *%2 bp %3 п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╦я┘ пЁя─я┐п©п©
+%1 acl records of not (longer) existing accounts deleted.	admin	ru	%1 п╥п╟п©п╦я│я▄ ACL (п╠п╬п╩п╣п╣) п╫п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┴п╣п╧ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦ я┐п╢п╟п╩п╣п╫п╟
+%1 not found or not executable !!!	admin	ru	%1 п╫п╣ п╫п╟п╧п╢п╣п╫ п╦п╩п╦ п╫п╣ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╡я▀п©п╬п╩п╫п╣п╫ !!!
+(default no, leave it off if you dont use it)	admin	ru	(п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ - п²п╣я┌, п╬я│я┌п╟п╡я▄я┌п╣, п╣я│п╩п╦ п╫п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌п╣)
+(stored password will not be shown here)	admin	ru	(п╔я─п╟п╫я▐я┴п╦п╣я│я▐ п©п╟я─п╬п╩п╦ п╫п╣ п╠я┐п╢я┐я┌ п╬я┌п╬п╠я─п╟п╤п╣п╫я▀ п╥п╢п╣я│я▄)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ru	(п■п╩я▐ я┐я│я┌п╟п╫п╬п╡п╨п╦ п╫п╬п╡я▀я┘ п©я─п╦п╩п╬п╤п╣п╫п╦п╧ п╦я│п©п╬п╩я▄п╥я┐п╧я┌п╣<br><a href="setup/" target="setup">пёя│я┌п╟п╫п╬п╡п╨п╟</a> [пёп©я─п╟п╡п╩п╣п╫п╦п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐п╪п╦] !!!)
+-  type	admin	ru	- я┌п╦п©
+accesslog and bruteforce defense	admin	ru	п√я┐я─п╫п╟п╩ п╢п╬я│я┌я┐п©п╟ п╦ п╥п╟я┴п╦я┌п╟ п╬я┌ пЁя─я┐п╠п╬пЁп╬ п╡п╥п╩п╬п╪п╟
+account active	admin	ru	пёя┤п╣я┌п╫п╟я▐ п╥п╟п©п╦я│я▄ п╟п╨я┌п╦п╡п╫п╟
+account has been created	common	ru	пёя┤п╣я┌п╫п╟я▐ п╥п╟п©п╦я│я▄ я│п╬п╥п╢п╟п╫п╟
+account has been deleted	common	ru	пёя┤п╣я┌п╫п╟я▐ п╥п╟п©п╦я│я▄ я┐п╢п╟п╩п╣п╫п╟
+account has been updated	common	ru	пёя┤п╣я┌п╫п╟я▐ п╥п╟п©п╦я│я▄ п╦п╥п╪п╣п╫п╣п╫п╟
+account list	admin	ru	п║п©п╦я│п╬п╨ я┐я┤п╣я┌п╫я▀я┘ п╥п╟п©п╦я│п╣п╧
+account permissions	admin	ru	п═п╟п╥я─п╣я┬п╣п╫п╦я▐ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦
+account preferences	admin	ru	п²п╟я│я┌я─п╬п╧п╨п╦ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦
+acl manager	admin	ru	п°п╣п╫п╣п╢п╤п╣я─ ACL
+acl rights	common	ru	п÷я─п╟п╡п╟ ACL
+action	admin	ru	п■п╣п╧я│я┌п╡п╦п╣
+activate wysiwyg-editor	admin	ru	п╡п╨п╩я▌я┤п╦я┌я▄ п╡п╦п╥я┐п╟п╩я▄п╫я▀п╧ (WYSIWYG) я─п╣п╢п╟п╨я┌п╬я─
+add a category	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╨п╟я┌п╣пЁп╬я─п╦я▌
+add a group	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ пЁя─я┐п©п©я┐
+add a new account.	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╫п╬п╡я┐я▌ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄.
+add a subcategory	admin	ru	п╢п╬п╠п╟п╡п╦я┌я▄ п©п╬п╢п╨п╟я┌п╣пЁп╬я─п╦я▌
+add a user	admin	ru	п╢п╬п╠п╟п╡п╦я┌я▄ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+add account	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄
+add application	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п©я─п╦п╩п╬п╤п╣п╫п╦п╣
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦ я│п╬п╥п╢п╟п╡п╟п╣п╪я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧ п╡ я█я┌я┐ пЁя─я┐п©п©я┐ (п╣я│п╩п╦ п©я┐я│я┌п╬ - п╫п╟п╥п╫п╟я┤п╟п╣я┌я│я▐ пЁя─я┐п©п©п╟ 'Default' )
+add global category	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╬п╠я┴я┐я▌ п╨п╟я┌п╣пЁп╬я─п╦я▌
+add global category for %1	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╬п╠я┴я┐я▌ п╨п╟я┌п╣пЁп╬я─п╦я▌ п╢п╩я▐ %1
+add group	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ пЁя─я┐п©п©я┐
+add new account	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╫п╬п╡я┐я▌ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄
+add new application	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╫п╬п╡п╬п╣ п©я─п╦п╩п╬п╤п╣п╫п╦п╣
+add peer server	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀п╧ я│п╣я─п╡п╣я─
+add sub-category	admin	ru	п■п╬п╠п╟п╡п╦я┌я▄ п©п╬п╢п╨п╟я┌п╣пЁп╬я─п╦я▌
+admin email	admin	ru	п░п╢я─п╣я│ я█п╩п╣п╨я┌я─п╬п╫п╫п╬п╧ п©п╬я┤я┌я▀ п░п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ru	п░п╢я─п╣я│п╟ я█п╩п╣п╨я┌я─п╬п╫п╫п╬п╧ п©п╬я┤я┌я▀ п░п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟ (я─п╟п╥п╢п╣п╩п╣п╫п╫я▀п╣ п╥п╟п©я▐я┌я▀п╪п╦) п╢п╩я▐ п╦п╥п╡п╣я┴п╣п╫п╦я▐ п╬ п╠п╩п╬п╨п╦я─п╬п╡п╨п╣ (п╬я│я┌п╟п╡п╦я┌я▄ п©я┐я│я┌я▀п╪, п╣я│п╩п╦ п╦п╥п╡п╣я┴п╟я┌я▄ п╫п╣ п╫п╟п╢п╬)
+admin name	admin	ru	п≤п╪я▐ п░п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+administration	admin	ru	п░п╢п╪п╦п╫п╦я│я┌я─п╟я├п╦я▐
+admins	admin	ru	п░п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─я▀
+advanced options	admin	ru	я─п╟я│я┬п╦я─п╣п╫п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ru	п÷п╬я│п╩п╣ я│п╨п╬п╩я▄п╨п╦я┘ п╫п╣я┐п╢п╟я┤п╫я▀я┘ п©п╬п©я▀я┌п╬п╨ п╡я┘п╬п╢п╟ п╡ я│п╦я│я┌п╣п╪я┐ п╠п╩п╬п╨п╦я─п╬п╡п╟я┌я▄ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄ (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ru	п÷п╬я│п╩п╣ я│п╨п╬п╩я▄п╨п╦я┘ п╫п╣я┐п╢п╟я┤п╫я▀я┘ п©п╬п©я▀я┌п╬п╨ п╡я┘п╬п╢п╟ п╡ я│п╦я│я┌п╣п╪я┐ п╠п╩п╬п╨п╦я─п╬п╡п╟я┌я▄ IP-п╟п╢я─п╣я│ (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ 3)?
+aliases	admin	ru	п÷я│п╣п╡п╢п╬п╫п╦п╪я▀
+all records and account information will be lost!	admin	ru	п▓я│п╣ п╥п╟п©п╦я│п╦ п╦ п╦п╫я└п╬я─п╪п╟я├п╦я▐ я┐я┤п╣я┌п╫я▀п╣ п╥п╟п©п╦я│п╦ п╠я┐п╢я┐я┌ п©п╬я┌п╣я─я▐п╫я▀!
+all users	admin	ru	п▓я│п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╦
+allow anonymous access to this app	admin	ru	п═п╟п╥я─п╣я┬п╦я┌я▄ п╟п╫п╬п╫п╦п╪п╫я▀п╧ п╢п╬я│я┌я┐п© п╨ п╢п╟п╫п╫п╬п╪я┐ п©я─п╦п╩п╬п╤п╣п╫п╦я▌
+alternate email address	admin	ru	п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╧ e-mail п╟п╢я─п╣я│
+anonymous user	admin	ru	п░п╫п╬п╫п╦п╪п╫я▀п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄
+anonymous user (not shown in list sessions)	admin	ru	п░п╫п╬п╫п╦п╪п╫я▀п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ (п╫п╣ п╬я┌п╬п╠я─п╟п╤п╟п╣я┌я│я▐ п╡ я│п©п╦я│п╨п╣ я│п╣п╟п╫я│п╬п╡)
+anonymous user does not exist!	admin	ru	п░п╫п╬п╫п╦п╪п╫я▀п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ п²п∙ я│я┐я┴п╣я│я┌п╡я┐п╣я┌!
+anonymous user has no run-rights for the application!	admin	ru	п░п╫п╬п╫п╦п╪п╫я▀п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ п╫п╣ п╦п╪п╣п╣я┌ п©я─п╟п╡п╟ п╥п╟п©я┐я│п╨п╟ п©я─п╦п╩п╬п╤п╣п╫п╦я▐!
+appearance	admin	ru	п▓п╦п╢
+application	admin	ru	п÷я─п╦п╩п╬п╤п╣п╫п╦п╣
+application name	admin	ru	п≤п╪я▐ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+application title	admin	ru	п≈п╟пЁп╬п╩п╬п╡п╬п╨ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+applications	admin	ru	п÷я─п╦п╩п╬п╤п╣п╫п╦я▐
+applications list	admin	ru	п║п©п╦я│п╬п╨ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+applies the changes	admin	ru	п©я─п╦п╪п╣п╫п╦я┌я▄ п╦п╥п╪п╣п╫п╣п╫п╦я▐
+are you sure you want to delete the application %1 ?	admin	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ п©я─п╦п╩п╬п╤п╣п╫п╦п╣ %1?
+are you sure you want to delete this account ?	admin	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ я█я┌я┐ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я┤я▄?
+are you sure you want to delete this application ?	admin	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ я█я┌п╬ п©я─п╦п╩п╬п╤п╣п╫п╦п╣?
+are you sure you want to delete this category ?	common	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ я█я┌я┐ п╨п╟я┌п╣пЁп╬я─п╦я▌?
+are you sure you want to delete this global category ?	admin	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ я█я┌я┐ п·п╠я┴я┐я▌ п п╟я┌п╣пЁп╬я─п╦я▌?
+are you sure you want to delete this group ?	admin	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ я█я┌я┐ пЁя─я┐п©п©я┐?
+are you sure you want to delete this server?	admin	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ я█я┌п╬я┌ я│п╣я─п╡п╣я─?
+are you sure you want to kill this session ?	admin	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ п©я─п╣я─п╡п╟я┌я▄ я█я┌п╬я┌ я│п╣п╟п╫я│?
+async services last executed	admin	ru	п░я│п╦п╫я┘я─п╬п╫п╫я▀п╣ я│п╣я─п╡п╦я│я▀, п╦я│п©п╬п╩п╫я▐п╡я┬п╦п╣я│я▐ п©п╬я│п╩п╣п╢п╫п╦п╪п╦
+asynchronous timed services	admin	ru	п░я│п╦п╫я┘я─п╬п╫п╫я▀п╣ я│п╣я─п╡п╦я│я▀ п©п╬ я┌п╟п╧п╪п╣я─я┐
+asyncservices not yet installed or other error (%1) !!!	admin	ru	п╟я│п╦п╫я┘я─п╬п╫п╫я▀п╣ я│п╣я─п╡п╦я│я▀ п╣я┴п╣ п╫п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫я▀, п╦п╩п╦ п╦п╫п╟я▐ п╬я┬п╦п╠п╨п╟ (%1)!!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ru	п÷п╬п©я▀я┌п╨п╟ п╦я│п©п╬п╩я▄п╥п╬я▀п╡п╟я┌я▄ п©я─п╟п╡п╦п╩я▄п╫я▀п╧ я┌п╦п© mime п╢п╩я▐ FTP п╡п╪п╣я│я┌п╬ 'application/octet-stream' п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
+attribute accountstatus explained	admin	ru	п╜я┌п╬ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ я│п╡п╬п╧я│я┌п╡п╬ <b><i>-accountStatus-</i></b> п╦п╥ я│я┘п╣п╪я▀ QMAIL
+attribute mail explained	admin	ru	п╜я┌п╬ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ я│п╡п╬п╧я│я┌п╡п╬ <b><i>-mail-</i></b> п╦п╥ я│я┘п╣п╪я▀ QMAIL п╫п╦п╨п╬пЁп╢п╟ п╫п╣ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п©я┐я│я┌я▀п╪. п╜я┌п╬ я┌п╟п╨ п╤п╣ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©п╬п╩п╣ я█п╩п╣п╨я┌я─п╬п╫п╫п╬п╧ п©п╬я┤я┌я▀ eGW
+attribute mailalternateaddress explained	admin	ru	п╜я┌п╬ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ я│п╡п╬п╧я│я┌п╡п╬ <b><i>-mailAlternateAddress-</i></b> п╦п╥ я│я┘п╣п╪я▀ QMAIL п╦ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╬ п╨п╟п╨ п╡п╦я─я┌я┐п╟п╩я▄п╫я▀п╣ п╨п╟я─я┌я▀ п╦п╩п╦ п©я─п©я│п╣п╡п╢п╬п╫п╦п╪.
+attribute mailforwardingaddress explained	admin	ru	п╜я┌п╬ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ я│п╡п╬п╧я│я┌п╡п╬ <b><i>-mailForwardingAddress-</i></b> п╦п╥ я│я┘п╣п╪я▀ QMAIL п╦ я┌я─п╣п╠я┐п╣я┌ п╥п╟п©п╬п╩п╫п╣п╫п╦я▐.
+authentication / accounts	admin	ru	п≤п╢п╣п╫я┌п╦я└п╦п╨п╟я├п╦я▐ / пёя┤п╣я┌п╫я▀п╣ п╥п╟п©п╦я│п╦
+auto create account records for authenticated users	admin	ru	п░п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╬п╣ я│п╬п╥п╢п╟п╫п╦п╣ п╥п╟п©п╦я│п╣п╧ п╢п╩я▐ п╦п╢п╣п╫я┌п╦я└п╦я├п╦я─п╬п╡п╟п╫п╫я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+back to the list	admin	ru	п╫п╟п╥п╟п╢ п╨ я│п©п╦я│п╨я┐
+bi-dir passthrough	admin	ru	п■п╡я┐п╫п╟п©я─п╟п╡п╩п╣п╫п╫п╬п╣ п©я─п╬я┘п╬п╤п╢п╣п╫п╦п╣ п©п╟я─п╬п╩п╣п╧
+bi-directional	admin	ru	п■п╡я┐п╫п╟п©я─п╟п╡п╩п╣п╫п╫я▀п╧
+bottom	admin	ru	п╫п╦п╥
+calculate next run	admin	ru	п▓я▀я┤п╦я│п╩п╦я┌я▄ я│п╩п╣п╢я┐я▌я┴п╦п╧ п╥п╟п©я┐я│п╨
+can change password	admin	ru	п▓п╬п╥п╪п╬п╤п╫п╬ п╦п╥п╪п╣п╫я▐я┌я▄ п©п╟я─п╬п╩я▄
+cancel testjob!	admin	ru	п÷я─п╣я─п╡п╟я┌я▄ п╒п╣я│я┌п╬п╡п╬п╣ п≈п╟п╢п╟п╫п╦п╣!
+categories list	admin	ru	п║п©п╦я│п╬п╨ п╨п╟я┌п╣пЁп╬я─п╦п╧
+category %1 has been saved !	admin	ru	п п╟я┌п╣пЁп╬я─п╦я▐ %1 я│п╬я┘я─п╟п╫п╣п╫п╟ !
+category list	admin	ru	п║п©п╦я│п╬п╨ п╨п╟я┌п╣пЁп╬я─п╦п╧
+change acl rights	admin	ru	п╦п╥п╪п╣п╫п╦я┌я▄ п©я─п╟п╡п╟ ACL
+change config settings	admin	ru	п≤п╥п╪п╣п╫п╦я┌я▄ п╫п╟я│я┌я─п╬п╧п╨п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
+change main screen message	admin	ru	п≤п╥п╪п╣п╫п╦я┌я▄ я│п╬п╬п╠я┴п╣п╫п╦п╣ п╫п╟ пЁп╩п╟п╡п╫п╬п╧ я│я┌я─п╟п╫п╦я├п╣
+check ip address of all sessions	admin	ru	п÷я─п╬п╡п╣я─п╦я┌я▄ IP-п╟п╢я─п╣я│п╟ п╡я│п╣я┘ я│п╣п╟п╫я│п╬п╡
+check items to <b>%1</b> to %2 for %3	admin	ru	п÷я─п╬п╡п╣я─п╦я┌я▄ я█п╩п╣п╪п╣п╫я┌я▀ п╨ <b>%1</b>, п╨ %2 п╢п╩я▐ %3
+click to select a color	admin	ru	п╘п╣п╩п╨п╫п╦я┌п╣ п╢п╩я▐ п╡я▀п╠п╬я─п╟ я├п╡п╣я┌п╟
+color	admin	ru	п╕п╡п╣я┌
+country selection	admin	ru	п▓я▀п╠п╬я─ я│я┌я─п╟п╫я▀
+create group	admin	ru	п║п╬п╥п╢п╟я┌я▄ пЁя─я┐п©п©я┐
+creates a new field	admin	ru	я│п╬п╥п╢п╟я┌я▄ п╫п╬п╡п╬п╣ п©п╬п╩п╣
+crontab only (recomended)	admin	ru	я┌п╬п╩я▄п╨п╬ crontab (я─п╣п╨п╬п╪п╣п╫п╢п╬п╡п╟п╫п╬)
+custom fields	admin	ru	п÷п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╦п╣ п÷п╬п╩я▐
+cyrus imap server	admin	ru	п║п╣я─п╡п╣я─ Cyrus IMAP
+data	admin	ru	п■п╟я┌п╟
+day	admin	ru	п■п╣п╫я▄
+day of week<br>(0-6, 0=sun)	admin	ru	п■п╣п╫я▄ п╫п╣п╢п╣п╩п╦<br>(0-6, 0=п▓я│п╨)
+db backup and restore	admin	ru	п═п╣п╥п╣я─п╡п╫п╬п╣ п╨п╬п©п╦я─п╬п╡п╟п╫п╦п╣ п╦ п╡п╬я│я│я┌п╟п╫п╬п╡п╩п╣п╫п╦п╣ п▒п╟п╥я▀ п■п╟п╫п╫я▀я┘
+default	admin	ru	п÷п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
+default file system space per user	admin	ru	п═п╟п╥п╪п╣я─ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ я│п╡п╬п╠п╬п╢п╫п╬пЁп╬ п╪п╣я│я┌п╟ я│п╦я│я┌п╣п╪я▀ п╫п╟ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+default file system space per user/group ?	admin	ru	п═п╟п╥п╪п╣я─ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ я│п╡п╬п╠п╬п╢п╫п╬пЁп╬ п╪п╣я│я┌п╟ я│п╦я│я┌п╣п╪я▀ п╫п╟ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐/пЁя─я┐п©п©я┐ ?
+deinstall crontab	admin	ru	п■п╣п╦п╫я│я┌п╟п╩п╦я─п╬п╡п╟я┌я▄ crontab
+delete account	admin	ru	пёп╢п╟п╩п╦я┌я▄ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄
+delete all records	admin	ru	пёп╢п╟п╩п╦я┌я▄ п▓я│п╣ п╥п╟п©п╦я│п╦
+delete application	admin	ru	пёп╢п╟п╩п╦я┌я▄ п©я─п╦п╩п╬п╤п╣п╫п╦п╣
+delete category	admin	ru	пёп╢п╟п╩п╦я┌я▄ п╨п╟я┌п╣пЁп╬я─п╦я▌
+delete group	admin	ru	пёп╢п╟п╩п╦я┌я▄ пЁя─я┐п©п©я┐
+delete peer server	admin	ru	пёп╢п╟п╩п╦я┌я▄ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀п╧ я│п╣я─п╡п╣я─
+delete the category	admin	ru	я┐п╢п╟п╩п╦я┌я▄ п╨п╟я┌п╣пЁп╬я─п╦я▌
+delete the group	admin	ru	я┐п╢п╟п╩п╦я┌я▄ пЁя─я┐п©п©я┐
+delete this category	admin	ru	я┐п╢п╟п╩п╦я┌я▄ я█я┌я┐ п╨п╟я┌п╣пЁп╬я─п╦я▌
+delete this group	admin	ru	я┐п╢п╟п╩п╦я┌я▄ я█я┌я┐ пЁя─я┐п©п©я┐
+delete this user	admin	ru	я┐п╢п╟п╩п╦я┌я▄ я█я┌п╬пЁп╬ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+deletes this field	admin	ru	пёп╢п╟п╩п╦я┌я▄ я█я┌п╬ п©п╬п╩п╣
+deliver extern	admin	ru	п╢п╬я│я┌п╟п╡п╨п╟ п╦п╥п╡п╫п╣
+deny access to access log	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ п╤я┐я─п╫п╟п╩я┐ п╢п╬я│я┌я┐п©п╬п╡
+deny access to application registery	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ я─п╣п╣я│я┌я─я┐ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+deny access to applications	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ п©я─п╦п╩п╬п╤п╣п╫п╦я▐п╪
+deny access to asynchronous timed services	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ п╟я│п╦п╫я┘я─п╬п╫п╫я▀п╪ я│п╣я─п╡п╦я│п╟п╪ п©п╬ п╡я─п╣п╪п╣п╫п╦
+deny access to current sessions	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ я┌п╣п╨я┐я┴п╦п╪ я│п╣п╟п╫я│п╟п╪
+deny access to db backup and restore	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ я─п╣п╥п╣я─п╡п╫п╬п╧ п╨п╬п©п╦п╦ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘ п╦ п╡п╬я│я│я┌п╟п╫п╬п╡п╩п╣п╫п╦я▌
+deny access to error log	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ п╤я┐я─п╫п╟п╩я┐ п╬я┬п╦п╠п╬r
+deny access to global categories	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ п╬п╠я┴п╦п╪ п╨п╟я┌п╣пЁп╬я─п╦я▐п╪
+deny access to groups	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ пЁя─я┐п©п©п╟п╪
+deny access to mainscreen message	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ я│п╬п╬п╠я┴п╣п╫п╦я▌ пЁп╩п╟п╡п╫п╬пЁп╬ я█п╨п╟я─п╟п╫п╟
+deny access to peer servers	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀п╪ я│п╣я─п╡п╣я─п╟п╪
+deny access to phpinfo	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ п╦п╫я└п╬я─п╪п╟я├п╦п╦ php
+deny access to site configuration	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦ я│п╟п╧я┌п╟
+deny access to user accounts	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╢п╬я│я┌я┐п© п╨ я┐я┤п╣я┌п╫я▀п╪ п╥п╟п©п╦я│я▐п╪ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+deny all users access to grant other users access to their entries ?	admin	ru	п≈п╟п╨я─я▀я┌я▄ п╡я│п╣п╪ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐п╪ п╢п╬я│я┌я┐п© п╨ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌п╦ п©я─п╣п╢п╬я│я┌п╟п╡п╩я▐я┌я▄ п╢п╬я│я┌я┐п© п╢я─я┐пЁп╦п╪ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐п╪ п╨ п╦я┘ п╥п╟п©п╦я│я▐п╪ ?
+description can not exceed 255 characters in length !	admin	ru	п·п©п╦я│п╟п╫п╦п╣ п╫п╣ п╪п╬п╤п╣я┌ п©я─п╣п╡я▀я┬п╟я┌я▄ 255 п╥п╫п╟п╨п╬п╡ п╡ п╢п╩п╦п╫я┐ !
+determines the order the fields are displayed	admin	ru	п╬п©п╣я─п╢п╣п╩я▐п╣я┌ п©п╬я─я▐п╢п╬п╨,п╡ п╨п╬я┌п╬я─п╬п╪ п╬я┌п╬п╠я─п╟п╤п╟я▌я┌я│я▐ п©п╬п╩я▐
+disable "auto completion" of the login form	admin	ru	п·я┌п╨п╩я▌я┤п╦я┌я▄ п╟п╡я┌п╬п╥п╟п©п╬п╩п╫п╣п╫п╦п╣ я└п╬я─п╪я▀ п╡я┘п╬п╢п╟
+disable wysiwyg-editor	admin	ru	п╬я┌п╨п╩я▌я┤п╦я┌я▄ п╡п╦п╥я┐п╟п╩я▄п╫я▀п╧ (WYSIWYG) я─п╣п╢п╟п╨я┌п╬я─
+disabled (not recomended)	admin	ru	п╬я┌п╨п╩я▌я┤п╣п╫п╬ (п╫п╣ я─п╣п╨п╬п╪п╣п╫п╢я┐п╣я┌я│я▐)
+display	admin	ru	п·я┌п╬п╠я─п╟п╥п╦я┌я▄
+do not delete the category and return back to the list	admin	ru	п²п∙ я┐п╢п╟п╩я▐я┌я▄ п╨п╟я┌п╣пЁп╬я─п╦я▌ п╦ п╡п╣я─п╫я┐я┌я▄я│я▐ п╫п╟п╥п╟п╢ п╨ я│п©п╦я│п╨я┐
+do you also want to delete all global subcategories ?	admin	ru	п▓я▀ я┌п╟п╨п╤п╣ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ п╡я│п╣ п©п╬п╢п╨п╟я┌п╣пЁп╬я─п╦п╦ ?
+do you want to delete all global subcategories ?	admin	ru	п▓я▀ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ п╡я│п╣ п╬п╠я┴п╦п╣ п©п╬п╢п╨п╟я┌п╣пЁп╬я─п╦п╦ ?
+do you want to move all global subcategories one level down ?	admin	ru	п▓я▀ я┌п╟п╨п╤п╣ я┘п╬я┌п╦я┌п╣ я│п╪п╣я│я┌п╦я┌я▄ п╡я│п╣ п©п╬п╢п╨п╟я┌п╣пЁп╬я─п╦п╦ п╫п╟ я┐я─п╬п╡п╣п╫я▄ п╫п╦п╤п╣ ?
+each value is a line like <id>[=<label>]	admin	ru	п╨п╟п╤п╢п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ - я█я┌п╬ я│я┌я─п╬п╨п╟ я┌п╦п©п╟ <п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─>[=<п╪п╣я┌п╨п╟>]
+each value is a line like id[=label]	admin	ru	п╨п╟п╤п╢п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ - я█я┌п╬ я│я┌я─п╬п╨п╟ я┌п╦п©п╟ <п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─>[=<п╪п╣я┌п╨п╟>]
+edit account	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄
+edit application	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п©я─п╦п╩п╬п╤п╣п╫п╦п╣
+edit email settings	admin	ru	я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п╫п╟я│я┌я─п╬п╧п╨п╦ e-mail
+edit global category	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п╬п╠я┴я┐я▌ п╨п╟я┌п╣пЁп╬я─п╦я▌
+edit global category for %1	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п╬п╠я┴я┐я▌ п╨п╟я┌п╣пЁп╬я─п╦я▌ п╢п╩я▐ %1
+edit group	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п⌠я─я┐п©п©я┐
+edit group acl's	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ ACL'п╦ пЁя─я┐п©п©я▀
+edit login screen message	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я│п╬п╬п╠я┴п╣п╫п╦п╣ п©я─п╦ п╡я┘п╬п╢п╣ п╡ я│п╦я│я┌п╣п╪я┐
+edit main screen message	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я│п╬п╬п╠я┴п╣п╫п╦п╣ п╫п╟ пЁп╩п╟п╡п╫п╬п╪ я█п╨я─п╟п╫п╣
+edit peer server	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀п╧ я│п╣я─п╡п╣я─
+edit table format	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я└п╬я─п╪п╟я┌ п╒п╟п╠п╩п╦я├я▀
+edit this category	admin	ru	я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я█я┌я┐ п╨п╟я┌п╣пЁп╬я─п╦я▌
+edit this group	admin	ru	я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я█я┌я┐ пЁя─я┐п©п©я┐
+edit this user	admin	ru	я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я█я┌п╬пЁп╬ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+edit user	admin	ru	я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+edit user account	admin	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+email account active	admin	ru	я┐я┤п╣я┌п╫п╟я▐ п╥п╟п©п╦я│я▄ я█п╩п╣п╨я┌я─п╬п╫п╫п╬п╧ п©п╬я┤я┌я▀ п╟п╨я┌п╦п╡п╫п╟
+email address	admin	ru	п╟п╢я─п╣я│ я█п╩п╣п╨я┌я─п╬п╫п╫п╬п╧ п©п╬я┤я┌я▀
+enable debug-messages	admin	ru	п═п╟п╥я─п╣я┬п╦я┌я▄ п╬я┌п╩п╟п╢п╬я┤п╫я▀п╣ я│п╬п╬п╠я┴п╣п╫п╦я▐
+enable the soap service	admin	ru	п═п╟п╥я─п╣я┬п╦я┌я▄ я│п╣я─п╡п╦я│ soap
+enable the xmlrpc service	admin	ru	п═п╟п╥я─п╣я┬п╦я┌я▄ я│п╣я─п╡п╦я│ xmlrpc
+enabled - hidden from navbar	admin	ru	п═п╟п╥я─п╣я┬п╣п╫п╬ - п║п╨я─я▀я┌я▄ п╦п╥ п©п╟п╫п╣п╩п╦ п╫п╟п╡п╦пЁп╟я├п╦п╦
+enabled - popup window	admin	ru	п═п╟п╥я─п╣я┬п╣п╫п╬ - п▓я│п©п╩я▀п╡п╟я▌я┴п╣п╣ п·п╨п╫п╬
+enter a description for the category	admin	ru	п╡п╡п╣п╢п╦я┌п╣ п╬п©п╦я│п╟п╫п╦п╣ п╨п╟я┌п╣пЁп╬я─п╦п╦
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╨п╟п╨п╬п╧-п╩п╦п╠п╬ я│п╩я┐я┤п╟п╧п╫я▀п╧ я┌п╣п╨я│я┌ п╢п╩я▐<br>я┬п╦я└я─п╬п╡п╟п╫п╦я▐ я│п╣п╫я│п╟ п©я─п╦п╩п╬п╤п╣п╫п╦я▐ (я┌я─п╣п╠я┐п╣я┌ mcrypt)
+enter the background color for the login page	admin	ru	п▓п╡п╣п╢п╦я┌п╣ я├п╡п╣я┌ я└п╬п╫п╟ п╢п╩я▐ я█п╨я─п╟п╫п╣ п╡я┘п╬п╢п╟
+enter the background color for the site title	admin	ru	п▓п╡п╣п╢п╦я┌п╣ я├п╡п╣я┌ я└п╬п╫п╟ п╢п╩я▐ п╥п╟пЁп╬п╩п╬п╡п╨п╟ я│п╟п╧я┌п╟
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п©п╬п╩п╫я▀п╧ п©я┐я┌я▄ п╢п╩я▐ п╡я─п╣п╪п╣п╫п╫я▀я┘ я└п╟п╧п╩п╬п╡.<br>п÷я─п╦п╪п╣я─: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п©п╬п╩п╫я▀п╧ п©я┐я┌я▄ п╢п╩я▐ я└п╟п╧п╩п╬п╡ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧ п╦ пЁя─я┐п©п©.<br>п÷я─п╦п╪п╣я─: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╦п╪я▐ я┘п╬я│я┌п╟ п╨п╬п╪п©я▄я▌я┌п╣я─п╟, п╫п╟ п╨п╬я┌п╬я─п╬п╪ я─п╟п╠п╬я┌п╟п╣я┌ я█я┌п╬я┌ я│п╣я─п╡п╣я─
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╪п╣я│я┌п╬п╫п╟я┘п╬п╤п╢п╣п╫п╦п╣ eGroupWare.<br>п²п╟п©я─п╦п╪п╣я─ http://www.domain.com/egroupware п╦п╩п╦ /egroupware<br><b>п▒п╣п╥ п╫п╟п╨п╩п╬п╫п╫п╬п╧ я┤п╣я─я┌я▀ п╡ п╨п╬п╫я├п╣</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	ru	п▓п╡п╣п╢п╦я┌п╣ я│я┌я─п╬п╨я┐ п©п╬п╦я│п╨п╟. п╖я┌п╬п╠я▀ п©п╬п╨п╟п╥п╟я┌я▄ п╡я│п╣ п╥п╟п©п╦я│п╦, п╬я┤п╦я│я┌п╦я┌п╣ п©п╬п╩п╣ п╦ п╫п╟п╤п╪п╦я┌п╣ п╨п╫п╬п©п╨я┐ п▓п÷п∙п═п∙п■ я│п╫п╬п╡п╟
+enter the site password for peer servers	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п©п╟я─п╬п╩я▄ п╢п╩я▐ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀я┘ я│п╣я─п╡п╣я─п╬п╡
+enter the site username for peer servers	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╦п╪я▐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ я│п╟п╧я┌п╟ п╢п╩я▐ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀я┘ я│п╣я─п╡п╣я─п╬п╡
+enter the title for your site	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╥п╟пЁп╬п╩п╬п╡п╬п╨ п╢п╩я▐ п╡п╟я┬п╣пЁп╬ я│п╟п╧я┌п╟
+enter the title of your logo	admin	ru	п╡п╡п╣п╢п╦я┌п╣ п╫п╟п╥п╡п╟п╫п╦п╣ п╡п╟я┬п╣пЁп╬ п╩п╬пЁп╬я┌п╦п©п╟
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ru	п▓п╡п╣п╢п╦я┌п╣ URL п╦п╩п╦ п╦п╪я▐ я└п╟п╧п╩п╟ (п╡ п╨п╟я┌п╟п╩п╬пЁп╣ phpgwapi/templates/default/images) п╡п╟я┬п╣пЁп╬ п╩п╬пЁп╬я┌п╦п©п╟
+enter the url where your logo should link to	admin	ru	п▓п╡п╣п╢п╦я┌п╣ URL п╫п╟ п╨п╬я┌п╬я─я▀п╧ п╠я┐п╢п╣я┌ я│я│я▀п╩п╟я┌я▄я│я▐ п╡п╟я┬ п╩п╬пЁп╬я┌п╦п©
+enter your default ftp server	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╡п╟я┬ FTP я│п╣я─п╡п╣я─ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
+enter your default mail domain ( from: user@domain )	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п▓п╟я┬ п©п╬я┤я┌п╬п╡я▀п╧ п╢п╬п╪п╣п╫ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌  (п·я┌: п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄@п╢п╬п╪п╣п╫)
+enter your http proxy server	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╟п╢я─п╣я│ п╡п╟я┬п╣пЁп╬ я│п╣я─п╡п╣я─п╟ HTTP-п©я─п╬п╨я│п╦
+enter your http proxy server port	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п©п╬я─я┌ п╡п╟я┬п╣пЁп╬ я│п╣я─п╡п╣я─п╟ HTTP-п©я─п╬п╨я│п╦
+enter your smtp server hostname or ip address	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╦п╪я▐ я┘п╬я│я┌п╟ п╦п╩п╦ IP-п╟п╢я─п╣я│ п╡п╟я┬п╣пЁп╬ SMTP-я│п╣я─п╡п╣я─п╟
+enter your smtp server port	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п©п╬я─я┌ п╡п╟я┬п╣пЁп╬ SMTP-я│п╣я─п╡п╣я─п╟
+error canceling timer, maybe there's none set !!!	admin	ru	п·я┬п╦п╠п╨п╟ п©я─п╦ п╬я┌п╪п╣п╫п╣ я┌п╟п╧п╪п╣я─п╟, п╡п╬п╥п╪п╬п╤п╫п╬ п╫п╦я┤п╣пЁп╬ п╫п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╬ !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	ru	п·я┬п╦п╠п╨п╟ п©я─п╦ я┐я│я┌п╟п╫п╬п╡п╨п╣ я┌п╟п╧п╪п╣я─п╟, п╫п╣п╡п╣я─п╫я▀п╧ я│п╦п╫я┌п╟п╨я│п╦я│ п╦п╩п╦ п╬п╫ я┐п╤п╣ п╥п╟п©я┐я┴п╣п╫ !!!
+error! no appname found	admin	ru	п·я┬п╦п╠п╨п╟! п²п╣ п╫п╟п╧п╢п╣п╫п╬ п╦п╪я▐ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+error: %1 not found or other error !!!	admin	ru	п·я┬п╦п╠п╨п╟: %1 п╫п╣ п╫п╟п╧п╢п╣п╫ п╦п╩п╦ п╦п╫п╟я▐ п╬я┬п╦п╠п╨п╟!!!
+expires	admin	ru	п·п╨п╬п╫я┤п╟п╫п╦п╣ п╢п╣п╧я│я┌п╡п╦я▐
+explanation of ldapman	admin	ru	п■п╟п╫п╫я▀п╧ п╪п╬п╢я┐п╩я▄ п╠я▀п╩ п©я─п╬я┌п╣я│я┌п╦я─п╬п╡п╟п╫ п╢п╩я▐ POSTFIX, LDAP, Courier-IMAP п╦ я┌я─п╣п╠я┐п╣я┌ я│я┘п╣п╪ CORE п╦ QMAIL (OID7914). п÷п╬п╢я─п╬п╠п╫я┐я▌ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬п╠ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╦ п╦ п╫п╟я│я┌я─п╬п╧п╨п╣ я█я┌п╬п╧ я│п╦я│я┌п╣п╪я▀ п╪п╬п╤п╫п╬ п╫п╟п╧я┌п╦ п╡ я└п╟п╧п╩п╣ README.ldapadmin п╡ п©п╟п©п╨п╣ я│ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╣п╧ п░п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+fallback (after each pageview)	admin	ru	п╫п╟п╥п╟п╢ (п©п╬я│п╩п╣ п╨п╟п╤п╢п╬п╧ я│я┌я─п╟п╫п╦я├я▀)
+field '%1' already exists !!!	admin	ru	п÷п╬п╩п╣ '%1' я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌ !!!
+file space	admin	ru	п═п╟п╥п╪п╣я─ я└п╟п╧п╩п╟
+file space must be an integer	admin	ru	п═п╟п╥п╪п╣я─ я└п╟п╧п╩п╟ п╢п╬п╩п╤п╣п╫ п╠я▀я┌я▄ я├п╣п╩я▀п╪ я┤п╦я│п╩п╬п╪
+find and register all application hooks	admin	ru	п²п╟п╧я┌п╦ п╦ п╥п╟я─п╣пЁп╦я│я┌я─п╦я─п╬п╡п╟я┌я▄ п╩п╬п╡я┐я┬п╨п╦ п╡я│п╣я┘ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+for the times above	admin	ru	п╫п╟ п╡я─п╣п╪я▐, я┐п╨п╟п╥п╟п╫п╫п╬п╣ п╡я▀я┬п╣
+for the times below (empty values count as '*', all empty = every minute)	admin	ru	п╫п╟ п╡я─п╣п╪я▐, п╨п╟п╥п╟п╫п╫п╬п╣ п╫п╦п╤п╣ (п©я┐я│я┌я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я│я┤п╦я┌п╟я▌я┌я│я▐ п╨п╟п╨ '*', п╡я│п╣ п©я┐я│я┌я▀п╣ = п╨п╟п╤п╢я┐я▌ п╪п╦п╫я┐я┌я┐)
+force selectbox	admin	ru	п÷я─п╦п╫я┐п╢п╦я┌п╣п╩я▄п╫п╬ я│п©п╦я│п╬п╨ п╡я▀п╠п╬я─п╟
+forward also to	admin	ru	п©п╣я─п╣п╫п╟п©я─п╟п╡п╦я┌я▄ я┌п╟п╨п╤п╣ п╨
+forward emails to	admin	ru	п©п╣я─п╣п╫п╟п©я─п╟п╡п╦я┌я▄ п©п╬я┤я┌я┐ п╨
+forward only	admin	ru	я┌п╬п╩я▄п╨п╬ п©п╣я─п╣п╫п╟п©я─п╟п╡п╦я┌я▄
+global categories	common	ru	п·п╠я┴п╦п╣ п п╟я┌п╣пЁп╬я─п╦п╦
+group ?	admin	ru	пЁя─я┐п©п©п╟?
+group has been added	common	ru	п⌠я─я┐п©п©п╟ п╢п╬п╠п╟п╡п╩п╣п╫п╟
+group has been deleted	common	ru	п⌠я─я┐п©п©п╟ я┐п╢п╟п╩п╣п╫п╟
+group has been updated	common	ru	п⌠я─я┐п©п©п╟ п╬п╠п╫п╬п╡п╩п╣п╫п╟
+group list	admin	ru	п║п©п╦я│п╬п╨ п⌠я─я┐п©п©
+group manager	admin	ru	п°п╣п╫п╣п╢п╤п╣я─ п⌠я─я┐п©п©я▀
+group name	admin	ru	п≤п╪я▐ п⌠я─я┐п©п©я▀
+hide php information	admin	ru	я┐п╠я─п╟я┌я▄ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ PHP
+home directory	admin	ru	п■п╬п╪п╟я┬п╫п╦п╧ п╨п╟я┌п╟п╩п╬пЁ
+host information	admin	ru	п≤п╫я└п╬я─п╪п╟я├п╦я▐ п╬ я┘п╬я│я┌п╣
+hour<br>(0-23)	admin	ru	п╖п╟я│я▀<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ru	п║п╨п╬п╩я▄п╨п╬ п╢п╫п╣п╧ п╢п╬п╩п╤п╫я▀ я┘я─п╟п╫п╦я┌я▄я│я▐ п╥п╟п©п╦я│п╦ п╡ п╤я┐я─п╫п╟п╩п╣ п╢п╬ п╦я┘ я┐п╢п╟п╩п╣п╫п╦я▐ (п©п╬  я┐п╪п╬п╩я┤п╟п╫п╦я▌ 90) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	ru	п²п╟ я│п╨п╬п╩я▄п╨п╬ п╪п╦п╫я┐я┌ п╠п╩п╬п╨п╦я─п╬п╡п╟я┌я▄ я┐я┤п╣я┌п╫я┐я▌ п╥п╟п©п╦я│я▄ п╦п╩п╦ IP (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ 30) ?
+how should email addresses for new users be constructed?	admin	ru	п п╟п╨ п╢п╬п╩п╤п╣п╫ п╠я▀я┌я▄ п©п╬я│я┌я─п╬п╣п╫ п╟п╢я─п╣я│ Email п╢п╩я▐ п╫п╬п╡я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧?
+icon	admin	ru	п÷п╦п╨я┌п╬пЁя─п╟п╪п╪п╟
+idle	admin	ru	п©я─п╬я│я┌п╬п╧
+if no acl records for user or any group the user is a member of	admin	ru	п∙я│п╩п╦ п╫п╣я┌ п╥п╟п©п╦я│п╣п╧ ACL п╢п╩я▐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ п╦п╩п╦ п╩я▌п╠п╬п╧ пЁя─я┐п©п©я▀ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ я▐п╡п╩я▐п╣я┌я│я▐ я┤п╩п╣п╫п╬п╪
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ru	п÷я─п╦ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╦ LDAP - я┘п╬я┌п╦я┌п╣ п╩п╦ п╡я▀ я┐п©я─п╟п╡п╩я▐я┌я▄ я│п╡п╬п╧я│я┌п╡п╟п╪п╦ "п╢п╬п╪п╟я┬п╫п╦п╧ п╨п╟я┌п╟п╩п╬пЁ" п╦ "п╬п╠п╬п╩п╬я┤п╨п╟ п╡я┘п╬п╢п╟"
+in mbyte	admin	ru	п╡ п°п╠п╟п╧я┌п╟я┘
+inbound	admin	ru	п╡я┘п╬п╢я▐я┴п╦п╧
+initial	admin	ru	п÷п╣я─п╡п╬п╫п╟я┤п╟п╩я▄п╫я▀п╧
+install crontab	admin	ru	пёя│я┌п╟п╫п╬п╡п╦я┌я▄ crontab
+installed applications	common	ru	пёя│я┌п╟п╫п╬п╡п╩п╣п╫п╫я▀п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+installed crontab	admin	ru	Crontab я┐я│я┌п╟п╫п╬п╡п╩п╣п╫
+interface	admin	ru	п≤п╫я┌п╣я─я└п╣п╧я│
 ip	admin	ru	IP
-jobs	admin	ru	Задания
-kill	admin	ru	Прервать
-kill session	admin	ru	Прервать сеанс
-last %1 logins	admin	ru	Последние %1 подключений
-last %1 logins for %2	admin	ru	Последние %1 подключений для %2
-last login	admin	ru	последнее подключение
-last login from	admin	ru	последнее подключение с
-last time read	admin	ru	Время последнего просмотра
-ldap accounts context	admin	ru	Контекст учетных записей LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ru	Префикс по умолчанию домашних каталогов в LDAP (напр. /home для /home/username)
-ldap default shell (e.g. /bin/bash)	admin	ru	Командная оболочка в LDAP по умолчанию (напр. /bin/bash)
-ldap encryption type	admin	ru	Тип шифрования LDAP
-ldap groups context	admin	ru	Контекст групп LDAP
-ldap host	admin	ru	Хост LDAP
-ldap root password	admin	ru	Пароль root LDAP'а
+jobs	admin	ru	п≈п╟п╢п╟п╫п╦я▐
+kill	admin	ru	п÷я─п╣я─п╡п╟я┌я▄
+kill session	admin	ru	п÷я─п╣я─п╡п╟я┌я▄ я│п╣п╟п╫я│
+last %1 logins	admin	ru	п÷п╬я│п╩п╣п╢п╫п╦п╣ %1 п©п╬п╢п╨п╩я▌я┤п╣п╫п╦п╧
+last %1 logins for %2	admin	ru	п÷п╬я│п╩п╣п╢п╫п╦п╣ %1 п©п╬п╢п╨п╩я▌я┤п╣п╫п╦п╧ п╢п╩я▐ %2
+last login	admin	ru	п©п╬я│п╩п╣п╢п╫п╣п╣ п©п╬п╢п╨п╩я▌я┤п╣п╫п╦п╣
+last login from	admin	ru	п©п╬я│п╩п╣п╢п╫п╣п╣ п©п╬п╢п╨п╩я▌я┤п╣п╫п╦п╣ я│
+last time read	admin	ru	п▓я─п╣п╪я▐ п©п╬я│п╩п╣п╢п╫п╣пЁп╬ п©я─п╬я│п╪п╬я┌я─п╟
+ldap accounts context	admin	ru	п п╬п╫я┌п╣п╨я│я┌ я┐я┤п╣я┌п╫я▀я┘ п╥п╟п©п╦я│п╣п╧ LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ru	п÷я─п╣я└п╦п╨я│ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╢п╬п╪п╟я┬п╫п╦я┘ п╨п╟я┌п╟п╩п╬пЁп╬п╡ п╡ LDAP (п╫п╟п©я─. /home п╢п╩я▐ /home/username)
+ldap default shell (e.g. /bin/bash)	admin	ru	п п╬п╪п╟п╫п╢п╫п╟я▐ п╬п╠п╬п╩п╬я┤п╨п╟ п╡ LDAP п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ (п╫п╟п©я─. /bin/bash)
+ldap encryption type	admin	ru	п╒п╦п© я┬п╦я└я─п╬п╡п╟п╫п╦я▐ LDAP
+ldap groups context	admin	ru	п п╬п╫я┌п╣п╨я│я┌ пЁя─я┐п©п© LDAP
+ldap host	admin	ru	п╔п╬я│я┌ LDAP
+ldap root password	admin	ru	п÷п╟я─п╬п╩я▄ root LDAP'п╟
 ldap rootdn	admin	ru	LDAP rootdn
-leave empty for no quota	admin	ru	Оставить пустым, если нет квот
-leave the category untouched and return back to the list	admin	ru	Оставить категорию нетронутой и вернуться назад к списку
-leave the group untouched and return back to the list	admin	ru	Оставить группу нетронутой и вернуться назад к списку
-leaves without saveing	admin	ru	выйти без сохранения
-length<br>rows	admin	ru	Длина<br>Строк
-list config settings	admin	ru	Список установок конфигурации
-list current sessions	admin	ru	Пролистать текущие сеансы
-list of current users	admin	ru	список текущих пользователей
-login history	common	ru	История Подключений
-login message	admin	ru	Сообщение сеанса
-login screen	admin	ru	Экран сеанса
-login shell	admin	ru	Оболочка входа
-login time	admin	ru	Время подключения
+leave empty for no quota	admin	ru	п·я│я┌п╟п╡п╦я┌я▄ п©я┐я│я┌я▀п╪, п╣я│п╩п╦ п╫п╣я┌ п╨п╡п╬я┌
+leave the category untouched and return back to the list	admin	ru	п·я│я┌п╟п╡п╦я┌я▄ п╨п╟я┌п╣пЁп╬я─п╦я▌ п╫п╣я┌я─п╬п╫я┐я┌п╬п╧ п╦ п╡п╣я─п╫я┐я┌я▄я│я▐ п╫п╟п╥п╟п╢ п╨ я│п©п╦я│п╨я┐
+leave the group untouched and return back to the list	admin	ru	п·я│я┌п╟п╡п╦я┌я▄ пЁя─я┐п©п©я┐ п╫п╣я┌я─п╬п╫я┐я┌п╬п╧ п╦ п╡п╣я─п╫я┐я┌я▄я│я▐ п╫п╟п╥п╟п╢ п╨ я│п©п╦я│п╨я┐
+leaves without saveing	admin	ru	п╡я▀п╧я┌п╦ п╠п╣п╥ я│п╬я┘я─п╟п╫п╣п╫п╦я▐
+length<br>rows	admin	ru	п■п╩п╦п╫п╟<br>п║я┌я─п╬п╨
+list config settings	admin	ru	п║п©п╦я│п╬п╨ я┐я│я┌п╟п╫п╬п╡п╬п╨ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
+list current sessions	admin	ru	п÷я─п╬п╩п╦я│я┌п╟я┌я▄ я┌п╣п╨я┐я┴п╦п╣ я│п╣п╟п╫я│я▀
+list of current users	admin	ru	я│п©п╦я│п╬п╨ я┌п╣п╨я┐я┴п╦я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+login history	common	ru	п≤я│я┌п╬я─п╦я▐ п÷п╬п╢п╨п╩я▌я┤п╣п╫п╦п╧
+login message	admin	ru	п║п╬п╬п╠я┴п╣п╫п╦п╣ я│п╣п╟п╫я│п╟
+login screen	admin	ru	п╜п╨я─п╟п╫ я│п╣п╟п╫я│п╟
+login shell	admin	ru	п·п╠п╬п╩п╬я┤п╨п╟ п╡я┘п╬п╢п╟
+login time	admin	ru	п▓я─п╣п╪я▐ п©п╬п╢п╨п╩я▌я┤п╣п╫п╦я▐
 loginid	admin	ru	LoginID
-mail settings	admin	ru	Установки почты
-main email-address	admin	ru	Основной адрес электронной почты
-main screen message	admin	ru	Сообщение главного окна
-manager	admin	ru	Менеджер
-max length of the input [, length of the inputfield (optional)]	admin	ru	макс. длина строки ввода [, длина поля ввода (необязательно)]
-maximum account id (e.g. 65535 or 1000000)	admin	ru	Максимальный идентификатор учетной записи (напр. 65535 или 1000000)
-maximum entries in click path history	admin	ru	Максимальное количество записей в истории пути кликов
-message has been updated	admin	ru	сообщение обновлено
-method	admin	ru	Метод
-minimum account id (e.g. 500 or 100, etc.)	admin	ru	Минимальный идентификатор учетной записи (напр. 500 или 100)
-minute	admin	ru	Минута
-mode	admin	ru	Режим
-month	admin	ru	Месяц
-name must not be empty !!!	admin	ru	Имя не должно быть пустым !!!
-new group name	admin	ru	Имя новой группы (новое имя группы?)
-new name	admin	ru	новое имя
-new password [ leave blank for no change ]	admin	ru	Новый пародь [оставьте пустым, если без изменения]
-next run	admin	ru	Следующий запуск
-no algorithms available	admin	ru	нет возможных алгоритмов
-no alternate email address	admin	ru	нет альтернативного адреса электронной почты
-no jobs in the database !!!	admin	ru	Нет заданий в базе данных !!!
-no login history exists for this user	admin	ru	Для данного пользователя инстория подключений не существует
-no matches found	admin	ru	Совпадений не найдено
-no modes available	admin	ru	нет возможных режимов
-no permission to add groups	admin	ru	нет прав добавлять группы
-no permission to add users	admin	ru	нет прав добавлять пользователей
-no permission to create groups	admin	ru	нет прав создавать группы
-note: ssl available only if php is compiled with curl support	admin	ru	Примечание: SSL доступен только если PHP собран с поддержкой curl
-number of row for a multiline inputfield or line of a multi-select-box	admin	ru	количество строк с многострочном поле вводща или в списке с множественным выбором
-order	admin	ru	Порядок
-outbound	admin	ru	исходящий
-passthrough	admin	ru	Прохождение пароля
-password for smtp-authentication	admin	ru	Пароль для SMTP-авторизации
-path information	admin	ru	Информация о пути
-peer server list	admin	ru	Список равноправных серверов
-peer servers	admin	ru	Равноправные серверы
-percent of users that logged out	admin	ru	Процент неподключенных пользователей
-percent this user has logged out	admin	ru	Процент этого пользователя, когда он не подключен
-permission denied	admin	ru	Доступ запрещен
-permissions	admin	ru	Разрешения
-permissions this group has	admin	ru	Разрешения, которые есть у этой группы
-phpinfo	admin	ru	Информация о PHP
-please enter a name	admin	ru	Введите имя
-please enter a name for that server !	admin	ru	Введите имя для этого сервера !
-please run setup to become current	admin	ru	Пожалуйста, запустите установку
-please select	admin	ru	Пожалуйста, выберите
+mail settings	admin	ru	пёя│я┌п╟п╫п╬п╡п╨п╦ п©п╬я┤я┌я▀
+main email-address	admin	ru	п·я│п╫п╬п╡п╫п╬п╧ п╟п╢я─п╣я│ я█п╩п╣п╨я┌я─п╬п╫п╫п╬п╧ п©п╬я┤я┌я▀
+main screen message	admin	ru	п║п╬п╬п╠я┴п╣п╫п╦п╣ пЁп╩п╟п╡п╫п╬пЁп╬ п╬п╨п╫п╟
+manager	admin	ru	п°п╣п╫п╣п╢п╤п╣я─
+max length of the input [, length of the inputfield (optional)]	admin	ru	п╪п╟п╨я│. п╢п╩п╦п╫п╟ я│я┌я─п╬п╨п╦ п╡п╡п╬п╢п╟ [, п╢п╩п╦п╫п╟ п©п╬п╩я▐ п╡п╡п╬п╢п╟ (п╫п╣п╬п╠я▐п╥п╟я┌п╣п╩я▄п╫п╬)]
+maximum account id (e.g. 65535 or 1000000)	admin	ru	п°п╟п╨я│п╦п╪п╟п╩я▄п╫я▀п╧ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦ (п╫п╟п©я─. 65535 п╦п╩п╦ 1000000)
+maximum entries in click path history	admin	ru	п°п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╨п╬п╩п╦я┤п╣я│я┌п╡п╬ п╥п╟п©п╦я│п╣п╧ п╡ п╦я│я┌п╬я─п╦п╦ п©я┐я┌п╦ п╨п╩п╦п╨п╬п╡
+message has been updated	admin	ru	я│п╬п╬п╠я┴п╣п╫п╦п╣ п╬п╠п╫п╬п╡п╩п╣п╫п╬
+method	admin	ru	п°п╣я┌п╬п╢
+minimum account id (e.g. 500 or 100, etc.)	admin	ru	п°п╦п╫п╦п╪п╟п╩я▄п╫я▀п╧ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦ (п╫п╟п©я─. 500 п╦п╩п╦ 100)
+minute	admin	ru	п°п╦п╫я┐я┌п╟
+mode	admin	ru	п═п╣п╤п╦п╪
+month	admin	ru	п°п╣я│я▐я├
+name must not be empty !!!	admin	ru	п≤п╪я▐ п╫п╣ п╢п╬п╩п╤п╫п╬ п╠я▀я┌я▄ п©я┐я│я┌я▀п╪ !!!
+new group name	admin	ru	п≤п╪я▐ п╫п╬п╡п╬п╧ пЁя─я┐п©п©я▀ (п╫п╬п╡п╬п╣ п╦п╪я▐ пЁя─я┐п©п©я▀?)
+new name	admin	ru	п╫п╬п╡п╬п╣ п╦п╪я▐
+new password [ leave blank for no change ]	admin	ru	п²п╬п╡я▀п╧ п©п╟я─п╬п╢я▄ [п╬я│я┌п╟п╡я▄я┌п╣ п©я┐я│я┌я▀п╪, п╣я│п╩п╦ п╠п╣п╥ п╦п╥п╪п╣п╫п╣п╫п╦я▐]
+next run	admin	ru	п║п╩п╣п╢я┐я▌я┴п╦п╧ п╥п╟п©я┐я│п╨
+no algorithms available	admin	ru	п╫п╣я┌ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡
+no alternate email address	admin	ru	п╫п╣я┌ п╟п╩я▄я┌п╣я─п╫п╟я┌п╦п╡п╫п╬пЁп╬ п╟п╢я─п╣я│п╟ я█п╩п╣п╨я┌я─п╬п╫п╫п╬п╧ п©п╬я┤я┌я▀
+no jobs in the database !!!	admin	ru	п²п╣я┌ п╥п╟п╢п╟п╫п╦п╧ п╡ п╠п╟п╥п╣ п╢п╟п╫п╫я▀я┘ !!!
+no login history exists for this user	admin	ru	п■п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ п╦п╫я│я┌п╬я─п╦я▐ п©п╬п╢п╨п╩я▌я┤п╣п╫п╦п╧ п╫п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌
+no matches found	admin	ru	п║п╬п╡п©п╟п╢п╣п╫п╦п╧ п╫п╣ п╫п╟п╧п╢п╣п╫п╬
+no modes available	admin	ru	п╫п╣я┌ п╡п╬п╥п╪п╬п╤п╫я▀я┘ я─п╣п╤п╦п╪п╬п╡
+no permission to add groups	admin	ru	п╫п╣я┌ п©я─п╟п╡ п╢п╬п╠п╟п╡п╩я▐я┌я▄ пЁя─я┐п©п©я▀
+no permission to add users	admin	ru	п╫п╣я┌ п©я─п╟п╡ п╢п╬п╠п╟п╡п╩я▐я┌я▄ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+no permission to create groups	admin	ru	п╫п╣я┌ п©я─п╟п╡ я│п╬п╥п╢п╟п╡п╟я┌я▄ пЁя─я┐п©п©я▀
+note: ssl available only if php is compiled with curl support	admin	ru	п÷я─п╦п╪п╣я┤п╟п╫п╦п╣: SSL п╢п╬я│я┌я┐п©п╣п╫ я┌п╬п╩я▄п╨п╬ п╣я│п╩п╦ PHP я│п╬п╠я─п╟п╫ я│ п©п╬п╢п╢п╣я─п╤п╨п╬п╧ curl
+number of row for a multiline inputfield or line of a multi-select-box	admin	ru	п╨п╬п╩п╦я┤п╣я│я┌п╡п╬ я│я┌я─п╬п╨ я│ п╪п╫п╬пЁп╬я│я┌я─п╬я┤п╫п╬п╪ п©п╬п╩п╣ п╡п╡п╬п╢я┴п╟ п╦п╩п╦ п╡ я│п©п╦я│п╨п╣ я│ п╪п╫п╬п╤п╣я│я┌п╡п╣п╫п╫я▀п╪ п╡я▀п╠п╬я─п╬п╪
+order	admin	ru	п÷п╬я─я▐п╢п╬п╨
+outbound	admin	ru	п╦я│я┘п╬п╢я▐я┴п╦п╧
+passthrough	admin	ru	п÷я─п╬я┘п╬п╤п╢п╣п╫п╦п╣ п©п╟я─п╬п╩я▐
+password for smtp-authentication	admin	ru	п÷п╟я─п╬п╩я▄ п╢п╩я▐ SMTP-п╟п╡я┌п╬я─п╦п╥п╟я├п╦п╦
+path information	admin	ru	п≤п╫я└п╬я─п╪п╟я├п╦я▐ п╬ п©я┐я┌п╦
+peer server list	admin	ru	п║п©п╦я│п╬п╨ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀я┘ я│п╣я─п╡п╣я─п╬п╡
+peer servers	admin	ru	п═п╟п╡п╫п╬п©я─п╟п╡п╫я▀п╣ я│п╣я─п╡п╣я─я▀
+percent of users that logged out	admin	ru	п÷я─п╬я├п╣п╫я┌ п╫п╣п©п╬п╢п╨п╩я▌я┤п╣п╫п╫я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+percent this user has logged out	admin	ru	п÷я─п╬я├п╣п╫я┌ я█я┌п╬пЁп╬ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐, п╨п╬пЁп╢п╟ п╬п╫ п╫п╣ п©п╬п╢п╨п╩я▌я┤п╣п╫
+permission denied	admin	ru	п■п╬я│я┌я┐п© п╥п╟п©я─п╣я┴п╣п╫
+permissions	admin	ru	п═п╟п╥я─п╣я┬п╣п╫п╦я▐
+permissions this group has	admin	ru	п═п╟п╥я─п╣я┬п╣п╫п╦я▐, п╨п╬я┌п╬я─я▀п╣ п╣я│я┌я▄ я┐ я█я┌п╬п╧ пЁя─я┐п©п©я▀
+phpinfo	admin	ru	п≤п╫я└п╬я─п╪п╟я├п╦я▐ п╬ PHP
+please enter a name	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╦п╪я▐
+please enter a name for that server !	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╦п╪я▐ п╢п╩я▐ я█я┌п╬пЁп╬ я│п╣я─п╡п╣я─п╟ !
+please run setup to become current	admin	ru	п÷п╬п╤п╟п╩я┐п╧я│я┌п╟, п╥п╟п©я┐я│я┌п╦я┌п╣ я┐я│я┌п╟п╫п╬п╡п╨я┐
+please select	admin	ru	п÷п╬п╤п╟п╩я┐п╧я│я┌п╟, п╡я▀п╠п╣я─п╦я┌п╣
 postfix with ldap	admin	ru	Postfix c LDAP
-preferences	admin	ru	Настройки
-primary group	admin	ru	первичная Группа
-qmaildotmode	admin	ru	режим qmaildot
-quota settings	admin	ru	установки квот
-quota size in mbyte	admin	ru	Размер квоты в МБайтах
-re-enter password	admin	ru	Введите пароль еще раз
-read this list of methods.	admin	ru	Читать этот список методов.
-register application hooks	admin	ru	Зарегистрировать ловушки приложения
-remove	admin	ru	удалить
-remove all users from this group	admin	ru	Удалить всех пользователей из этой группы
-remove all users from this group ?	admin	ru	Удалить всех пользователей из этой группы ?
-return to admin mainscreen	admin	ru	вернуться в главное окно администратора
-return to view account	admin	ru	Вернуться в просмотр учетных записей
-route all mails to	admin	ru	Направлять всю почту к
-run asynchronous services	admin	ru	Запустить Асинхронные сервисы
-save the category	admin	ru	записать категорию
-save the category and return back to the list	admin	ru	записать категорию и вернуться назад к списку
-saves the changes made and leaves	admin	ru	записать сделанные изменения и выйти
-search accounts	admin	ru	Поиск учетной записи
-search categories	admin	ru	Поиск категорий
-search groups	admin	ru	Поиск групп
-search peer servers	admin	ru	Поиск равноправных серверов
-security	admin	ru	Безопасность
-select group managers	admin	ru	Выбрать менеджеров группы
-select permissions this group will have	admin	ru	Выберите разрешения, которые будет иметь эта группа
-select the parent category. if this is a main category select no category	admin	ru	Выбрать родительскую категорию. Если это - главная категория, выберите НЕТ КАТЕГОРИИ
-select users for inclusion	admin	ru	Выбирите пользователя для включения
-select where you want to store/retrieve filesystem information	admin	ru	Выберите где вы хотите хранить/получать информацию о файловой системе
-select where you want to store/retrieve user accounts	admin	ru	Выберите где вы хотите хранить/получать учетные записи пользователей
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ru	Выберите место на панели навигации, где появится это приложение, от низшего (лево) до высшего (право)
-selectbox	admin	ru	Список выбора
-server %1 has been updated	admin	ru	Сервер %1 обновлен
-server list	admin	ru	Список Серверов
-server password	admin	ru	Пароль Сервера
-server type(mode)	admin	ru	Тип (режим) Сервера
-server url	admin	ru	URL сервера
-server username	admin	ru	Имя пользователя сервера
-set preference values.	admin	ru	Установить значения настроек.
-should the login page include a language selectbox (useful for demo-sites) ?	admin	ru	Отображать на странице входа выбор языков (полезно для demo-сайта) ?
-show 'powered by' logo on	admin	ru	Показать логотип 'на основе'
-show access log	admin	ru	Показать журнал доступа
-show current action	admin	ru	Показать текущее действие
-show error log	admin	ru	Показать журнал ошибок
-show phpinfo()	admin	ru	Показать информацию php
-show session ip address	admin	ru	Показать адрес IP сеанса
-site	admin	ru	Сайт
-site configuration	common	ru	Конфигурация сайта
+preferences	admin	ru	п²п╟я│я┌я─п╬п╧п╨п╦
+primary group	admin	ru	п©п╣я─п╡п╦я┤п╫п╟я▐ п⌠я─я┐п©п©п╟
+qmaildotmode	admin	ru	я─п╣п╤п╦п╪ qmaildot
+quota settings	admin	ru	я┐я│я┌п╟п╫п╬п╡п╨п╦ п╨п╡п╬я┌
+quota size in mbyte	admin	ru	п═п╟п╥п╪п╣я─ п╨п╡п╬я┌я▀ п╡ п°п▒п╟п╧я┌п╟я┘
+re-enter password	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п©п╟я─п╬п╩я▄ п╣я┴п╣ я─п╟п╥
+read this list of methods.	admin	ru	п╖п╦я┌п╟я┌я▄ я█я┌п╬я┌ я│п©п╦я│п╬п╨ п╪п╣я┌п╬п╢п╬п╡.
+register application hooks	admin	ru	п≈п╟я─п╣пЁп╦я│я┌я─п╦я─п╬п╡п╟я┌я▄ п╩п╬п╡я┐я┬п╨п╦ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+remove	admin	ru	я┐п╢п╟п╩п╦я┌я▄
+remove all users from this group	admin	ru	пёп╢п╟п╩п╦я┌я▄ п╡я│п╣я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧ п╦п╥ я█я┌п╬п╧ пЁя─я┐п©п©я▀
+remove all users from this group ?	admin	ru	пёп╢п╟п╩п╦я┌я▄ п╡я│п╣я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧ п╦п╥ я█я┌п╬п╧ пЁя─я┐п©п©я▀ ?
+return to admin mainscreen	admin	ru	п╡п╣я─п╫я┐я┌я▄я│я▐ п╡ пЁп╩п╟п╡п╫п╬п╣ п╬п╨п╫п╬ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+return to view account	admin	ru	п▓п╣я─п╫я┐я┌я▄я│я▐ п╡ п©я─п╬я│п╪п╬я┌я─ я┐я┤п╣я┌п╫я▀я┘ п╥п╟п©п╦я│п╣п╧
+route all mails to	admin	ru	п²п╟п©я─п╟п╡п╩я▐я┌я▄ п╡я│я▌ п©п╬я┤я┌я┐ п╨
+run asynchronous services	admin	ru	п≈п╟п©я┐я│я┌п╦я┌я▄ п░я│п╦п╫я┘я─п╬п╫п╫я▀п╣ я│п╣я─п╡п╦я│я▀
+save the category	admin	ru	п╥п╟п©п╦я│п╟я┌я▄ п╨п╟я┌п╣пЁп╬я─п╦я▌
+save the category and return back to the list	admin	ru	п╥п╟п©п╦я│п╟я┌я▄ п╨п╟я┌п╣пЁп╬я─п╦я▌ п╦ п╡п╣я─п╫я┐я┌я▄я│я▐ п╫п╟п╥п╟п╢ п╨ я│п©п╦я│п╨я┐
+saves the changes made and leaves	admin	ru	п╥п╟п©п╦я│п╟я┌я▄ я│п╢п╣п╩п╟п╫п╫я▀п╣ п╦п╥п╪п╣п╫п╣п╫п╦я▐ п╦ п╡я▀п╧я┌п╦
+search accounts	admin	ru	п÷п╬п╦я│п╨ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦
+search categories	admin	ru	п÷п╬п╦я│п╨ п╨п╟я┌п╣пЁп╬я─п╦п╧
+search groups	admin	ru	п÷п╬п╦я│п╨ пЁя─я┐п©п©
+search peer servers	admin	ru	п÷п╬п╦я│п╨ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀я┘ я│п╣я─п╡п╣я─п╬п╡
+security	admin	ru	п▒п╣п╥п╬п©п╟я│п╫п╬я│я┌я▄
+select group managers	admin	ru	п▓я▀п╠я─п╟я┌я▄ п╪п╣п╫п╣п╢п╤п╣я─п╬п╡ пЁя─я┐п©п©я▀
+select permissions this group will have	admin	ru	п▓я▀п╠п╣я─п╦я┌п╣ я─п╟п╥я─п╣я┬п╣п╫п╦я▐, п╨п╬я┌п╬я─я▀п╣ п╠я┐п╢п╣я┌ п╦п╪п╣я┌я▄ я█я┌п╟ пЁя─я┐п©п©п╟
+select the parent category. if this is a main category select no category	admin	ru	п▓я▀п╠я─п╟я┌я▄ я─п╬п╢п╦я┌п╣п╩я▄я│п╨я┐я▌ п╨п╟я┌п╣пЁп╬я─п╦я▌. п∙я│п╩п╦ я█я┌п╬ - пЁп╩п╟п╡п╫п╟я▐ п╨п╟я┌п╣пЁп╬я─п╦я▐, п╡я▀п╠п╣я─п╦я┌п╣ п²п∙п╒ п п░п╒п∙п⌠п·п═п≤п≤
+select users for inclusion	admin	ru	п▓я▀п╠п╦я─п╦я┌п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ п╢п╩я▐ п╡п╨п╩я▌я┤п╣п╫п╦я▐
+select where you want to store/retrieve filesystem information	admin	ru	п▓я▀п╠п╣я─п╦я┌п╣ пЁп╢п╣ п╡я▀ я┘п╬я┌п╦я┌п╣ я┘я─п╟п╫п╦я┌я▄/п©п╬п╩я┐я┤п╟я┌я▄ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я└п╟п╧п╩п╬п╡п╬п╧ я│п╦я│я┌п╣п╪п╣
+select where you want to store/retrieve user accounts	admin	ru	п▓я▀п╠п╣я─п╦я┌п╣ пЁп╢п╣ п╡я▀ я┘п╬я┌п╦я┌п╣ я┘я─п╟п╫п╦я┌я▄/п©п╬п╩я┐я┤п╟я┌я▄ я┐я┤п╣я┌п╫я▀п╣ п╥п╟п©п╦я│п╦ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ru	п▓я▀п╠п╣я─п╦я┌п╣ п╪п╣я│я┌п╬ п╫п╟ п©п╟п╫п╣п╩п╦ п╫п╟п╡п╦пЁп╟я├п╦п╦, пЁп╢п╣ п©п╬я▐п╡п╦я┌я│я▐ я█я┌п╬ п©я─п╦п╩п╬п╤п╣п╫п╦п╣, п╬я┌ п╫п╦п╥я┬п╣пЁп╬ (п╩п╣п╡п╬) п╢п╬ п╡я▀я│я┬п╣пЁп╬ (п©я─п╟п╡п╬)
+selectbox	admin	ru	п║п©п╦я│п╬п╨ п╡я▀п╠п╬я─п╟
+server %1 has been updated	admin	ru	п║п╣я─п╡п╣я─ %1 п╬п╠п╫п╬п╡п╩п╣п╫
+server list	admin	ru	п║п©п╦я│п╬п╨ п║п╣я─п╡п╣я─п╬п╡
+server password	admin	ru	п÷п╟я─п╬п╩я▄ п║п╣я─п╡п╣я─п╟
+server type(mode)	admin	ru	п╒п╦п© (я─п╣п╤п╦п╪) п║п╣я─п╡п╣я─п╟
+server url	admin	ru	URL я│п╣я─п╡п╣я─п╟
+server username	admin	ru	п≤п╪я▐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ я│п╣я─п╡п╣я─п╟
+set preference values.	admin	ru	пёя│я┌п╟п╫п╬п╡п╦я┌я▄ п╥п╫п╟я┤п╣п╫п╦я▐ п╫п╟я│я┌я─п╬п╣п╨.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	ru	п·я┌п╬п╠я─п╟п╤п╟я┌я▄ п╫п╟ я│я┌я─п╟п╫п╦я├п╣ п╡я┘п╬п╢п╟ п╡я▀п╠п╬я─ я▐п╥я▀п╨п╬п╡ (п©п╬п╩п╣п╥п╫п╬ п╢п╩я▐ demo-я│п╟п╧я┌п╟) ?
+show 'powered by' logo on	admin	ru	п÷п╬п╨п╟п╥п╟я┌я▄ п╩п╬пЁп╬я┌п╦п© 'п╫п╟ п╬я│п╫п╬п╡п╣'
+show access log	admin	ru	п÷п╬п╨п╟п╥п╟я┌я▄ п╤я┐я─п╫п╟п╩ п╢п╬я│я┌я┐п©п╟
+show current action	admin	ru	п÷п╬п╨п╟п╥п╟я┌я▄ я┌п╣п╨я┐я┴п╣п╣ п╢п╣п╧я│я┌п╡п╦п╣
+show error log	admin	ru	п÷п╬п╨п╟п╥п╟я┌я▄ п╤я┐я─п╫п╟п╩ п╬я┬п╦п╠п╬п╨
+show phpinfo()	admin	ru	п÷п╬п╨п╟п╥п╟я┌я▄ п╦п╫я└п╬я─п╪п╟я├п╦я▌ php
+show session ip address	admin	ru	п÷п╬п╨п╟п╥п╟я┌я▄ п╟п╢я─п╣я│ IP я│п╣п╟п╫я│п╟
+site	admin	ru	п║п╟п╧я┌
+site configuration	common	ru	п п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ я│п╟п╧я┌п╟
 soap	admin	ru	SOAP
-sorry, that group name has already been taken.	admin	ru	Извините. Такое имя группы уже существует.
-sorry, the above users are still a member of the group %1	admin	ru	Извините, но указанные выше пользователи являются членами группы %1
-sorry, the follow users are still a member of the group %1	admin	ru	Извините, следующие пользователи явяляются членами группы %1
-sort the entries	admin	ru	отсортировать записи
+sorry, that group name has already been taken.	admin	ru	п≤п╥п╡п╦п╫п╦я┌п╣. п╒п╟п╨п╬п╣ п╦п╪я▐ пЁя─я┐п©п©я▀ я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌.
+sorry, the above users are still a member of the group %1	admin	ru	п≤п╥п╡п╦п╫п╦я┌п╣, п╫п╬ я┐п╨п╟п╥п╟п╫п╫я▀п╣ п╡я▀я┬п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╦ я▐п╡п╩я▐я▌я┌я│я▐ я┤п╩п╣п╫п╟п╪п╦ пЁя─я┐п©п©я▀ %1
+sorry, the follow users are still a member of the group %1	admin	ru	п≤п╥п╡п╦п╫п╦я┌п╣, я│п╩п╣п╢я┐я▌я┴п╦п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╦ я▐п╡я▐п╩я▐я▌я┌я│я▐ я┤п╩п╣п╫п╟п╪п╦ пЁя─я┐п©п©я▀ %1
+sort the entries	admin	ru	п╬я┌я│п╬я─я┌п╦я─п╬п╡п╟я┌я▄ п╥п╟п©п╦я│п╦
 ssl	admin	ru	ssl
-standard	admin	ru	стандартный
-standard imap server	admin	ru	стандартный сервер IMAP
-standard pop3 server	admin	ru	стандартный сервер POP3
-standard smtp-server	admin	ru	стандартный сервер SMTP
-start testjob!	admin	ru	Начать Тестовое Задание!
-submit changes	admin	ru	Подтвердить Изменения
-submit the search string	admin	ru	Подтвердить строку поиска
-subtype	admin	ru	Подтип
-template selection	admin	ru	Выбор Шаблона
-text entry	admin	ru	Текстовая запись
-that application name already exists.	admin	ru	Такое имя приложения уже существует
-that application order must be a number.	admin	ru	Порядок этого приложения должен быть номером.
-that loginid has already been taken	admin	ru	Этот логин уже занят
-that name has been used already	admin	ru	Это имя уже используется
-that server name has been used already !	admin	ru	Это имя сервера уже используется!
-the api is current	admin	ru	Обновление API не требуется
-the api requires an upgrade	admin	ru	API требует обновления
-the groups must include the primary group	admin	ru	Группы должны включать в себя первичную группу
-the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
-the loginid can not be more then 8 characters	admin	ru	Логин не должен превышать 8 символов
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ru	Внутреннее имя (<= 20 символов), изменение сделает существующие данные недоступными
-the testjob sends you a mail everytime it is called.	admin	ru	Тестовое Задание посылает почтовое сообщение при каждом старте.
-the text displayed to the user	admin	ru	текст, показываемый пользователю
-the two passwords are not the same	admin	ru	Два пароля не совпадают
-the users bellow are still members of group %1	admin	ru	нижеперечисленные пользователи являются членами группы %1
-there already is a group with this name. userid's can not have the same name as a groupid	admin	ru	Уже существует группа с таким именем. Пользователь не может иметь то же имя, что и идентификатор группы
-they must be removed before you can continue	admin	ru	Они должны быть исключены прежде, чем вы сможете продолжить
-this application is current	admin	ru	Обновление этого приложения не требуется
-this application requires an upgrade	admin	ru	Это приложение требует обновления
-this category is currently being used by applications as a parent category	admin	ru	Эта категория в текущий момент используется приложениями как родительская категория.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	ru	Таймаут для сеансных данных приложения в секундах (по умолчанию 86400 = 1 день)
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	ru	Таймаут для сеанса в секундах (по умолчанию 14400 = 4 часа)
-times	admin	ru	Раз
-top	admin	ru	верх
-total records	admin	ru	Всего записей
-trust level	admin	ru	Уровень Доверия
-trust relationship	admin	ru	Доверительные Отношения
-type '%1' already exists !!!	admin	ru	тип '%1' уже существует
-type of customfield	admin	ru	Тип пользовательского поля
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ru	Под окном вы должны установить асинхронные сервисы %1вручную%2 или использовать режим отката. Откат означает, что задания толдько проверяются после каждого просмотра страницы!!!
-use cookies to pass sessionid	admin	ru	Использовать cookies для передачи идентификатора сеанса
-use pure html compliant code (not fully working yet)	admin	ru	Использовать код, отвечающий чистому HTML (пока не полностью работоспособно)
-use theme	admin	ru	Использовать тему
-user accounts	admin	ru	Учетные записи пользователей
-user data	common	ru	Данные Пользователя
-user for smtp-authentication (leave it empty if no auth required)	admin	ru	Пользователь для SMTP-идентификации (оставьте пустым, если идентификация не нужна)
-user groups	admin	ru	Группы пользователя
-userdata	admin	ru	Данные пользователя
-users choice	admin	ru	Выбор Пользователя
-view access log	admin	ru	Просмотр журнала подключений
-view account	admin	ru	Просмотр учетной записи
-view category	admin	ru	Просмотр категории
-view error log	admin	ru	Просмотр журнала ошибок
-view sessions	admin	ru	Просмотр сеансов
-view this user	admin	ru	Просмотр этого пользователя
-view user account	admin	ru	Просмотр учетной записи пользователя
-who would you like to transfer all records owned by the deleted user to?	admin	ru	Кому Вы хотите передать ВСЕ записи, владельцем которых был удаленный пользователь?
-would you like egroupware to cache the egw info array ?	admin	ru	Вы хотите, чтобы eGroupWare кешировал массив информации egw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	ru	Хотите, что бы eGroupWare делала проверку на наличие новой версии,<br>когда подключается администратор?
-would you like egroupware to check for new application versions when admins login ?	admin	ru	Хотите, что бы eGroupware производило проверку новых версий приложений при входе администраторов?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	ru	Хотите, что бы загружались новые языковые файлы (при входе)?
-would you like to show each application's upgrade status ?	admin	ru	Вы хотите показать состояние обновления каждого приложения ?
+standard	admin	ru	я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╧
+standard imap server	admin	ru	я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ я│п╣я─п╡п╣я─ IMAP
+standard pop3 server	admin	ru	я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ я│п╣я─п╡п╣я─ POP3
+standard smtp-server	admin	ru	я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ я│п╣я─п╡п╣я─ SMTP
+start testjob!	admin	ru	п²п╟я┤п╟я┌я▄ п╒п╣я│я┌п╬п╡п╬п╣ п≈п╟п╢п╟п╫п╦п╣!
+submit changes	admin	ru	п÷п╬п╢я┌п╡п╣я─п╢п╦я┌я▄ п≤п╥п╪п╣п╫п╣п╫п╦я▐
+submit the search string	admin	ru	п÷п╬п╢я┌п╡п╣я─п╢п╦я┌я▄ я│я┌я─п╬п╨я┐ п©п╬п╦я│п╨п╟
+subtype	admin	ru	п÷п╬п╢я┌п╦п©
+template selection	admin	ru	п▓я▀п╠п╬я─ п╗п╟п╠п╩п╬п╫п╟
+text entry	admin	ru	п╒п╣п╨я│я┌п╬п╡п╟я▐ п╥п╟п©п╦я│я▄
+that application name already exists.	admin	ru	п╒п╟п╨п╬п╣ п╦п╪я▐ п©я─п╦п╩п╬п╤п╣п╫п╦я▐ я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌
+that application order must be a number.	admin	ru	п÷п╬я─я▐п╢п╬п╨ я█я┌п╬пЁп╬ п©я─п╦п╩п╬п╤п╣п╫п╦я▐ п╢п╬п╩п╤п╣п╫ п╠я▀я┌я▄ п╫п╬п╪п╣я─п╬п╪.
+that loginid has already been taken	admin	ru	п╜я┌п╬я┌ п╩п╬пЁп╦п╫ я┐п╤п╣ п╥п╟п╫я▐я┌
+that name has been used already	admin	ru	п╜я┌п╬ п╦п╪я▐ я┐п╤п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐
+that server name has been used already !	admin	ru	п╜я┌п╬ п╦п╪я▐ я│п╣я─п╡п╣я─п╟ я┐п╤п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐!
+the api is current	admin	ru	п·п╠п╫п╬п╡п╩п╣п╫п╦п╣ API п╫п╣ я┌я─п╣п╠я┐п╣я┌я│я▐
+the api requires an upgrade	admin	ru	API я┌я─п╣п╠я┐п╣я┌ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐
+the groups must include the primary group	admin	ru	п⌠я─я┐п©п©я▀ п╢п╬п╩п╤п╫я▀ п╡п╨п╩я▌я┤п╟я┌я▄ п╡ я│п╣п╠я▐ п©п╣я─п╡п╦я┤п╫я┐я▌ пЁя─я┐п©п©я┐
+the login and password can not be the same	admin	ru	п⌡п╬пЁп╦п╫ п╦ п©п╟я─п╬п╩я▄ п╫п╣ п╪п╬пЁя┐я┌ п╠я▀я┌я▄ п╬п╢п╦п╫п╟п╨п╬п╡я▀
+the loginid can not be more then 8 characters	admin	ru	п⌡п╬пЁп╦п╫ п╫п╣ п╢п╬п╩п╤п╣п╫ п©я─п╣п╡я▀я┬п╟я┌я▄ 8 я│п╦п╪п╡п╬п╩п╬п╡
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ru	п▓п╫я┐я┌я─п╣п╫п╫п╣п╣ п╦п╪я▐ (<= 20 я│п╦п╪п╡п╬п╩п╬п╡), п╦п╥п╪п╣п╫п╣п╫п╦п╣ я│п╢п╣п╩п╟п╣я┌ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╣ п╢п╟п╫п╫я▀п╣ п╫п╣п╢п╬я│я┌я┐п©п╫я▀п╪п╦
+the testjob sends you a mail everytime it is called.	admin	ru	п╒п╣я│я┌п╬п╡п╬п╣ п≈п╟п╢п╟п╫п╦п╣ п©п╬я│я▀п╩п╟п╣я┌ п©п╬я┤я┌п╬п╡п╬п╣ я│п╬п╬п╠я┴п╣п╫п╦п╣ п©я─п╦ п╨п╟п╤п╢п╬п╪ я│я┌п╟я─я┌п╣.
+the text displayed to the user	admin	ru	я┌п╣п╨я│я┌, п©п╬п╨п╟п╥я▀п╡п╟п╣п╪я▀п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▌
+the two passwords are not the same	admin	ru	п■п╡п╟ п©п╟я─п╬п╩я▐ п╫п╣ я│п╬п╡п©п╟п╢п╟я▌я┌
+the users bellow are still members of group %1	admin	ru	п╫п╦п╤п╣п©п╣я─п╣я┤п╦я│п╩п╣п╫п╫я▀п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╦ я▐п╡п╩я▐я▌я┌я│я▐ я┤п╩п╣п╫п╟п╪п╦ пЁя─я┐п©п©я▀ %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	ru	пёп╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌ пЁя─я┐п©п©п╟ я│ я┌п╟п╨п╦п╪ п╦п╪п╣п╫п╣п╪. п÷п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ п╫п╣ п╪п╬п╤п╣я┌ п╦п╪п╣я┌я▄ я┌п╬ п╤п╣ п╦п╪я▐, я┤я┌п╬ п╦ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─ пЁя─я┐п©п©я▀
+they must be removed before you can continue	admin	ru	п·п╫п╦ п╢п╬п╩п╤п╫я▀ п╠я▀я┌я▄ п╦я│п╨п╩я▌я┤п╣п╫я▀ п©я─п╣п╤п╢п╣, я┤п╣п╪ п╡я▀ я│п╪п╬п╤п╣я┌п╣ п©я─п╬п╢п╬п╩п╤п╦я┌я▄
+this application is current	admin	ru	п·п╠п╫п╬п╡п╩п╣п╫п╦п╣ я█я┌п╬пЁп╬ п©я─п╦п╩п╬п╤п╣п╫п╦я▐ п╫п╣ я┌я─п╣п╠я┐п╣я┌я│я▐
+this application requires an upgrade	admin	ru	п╜я┌п╬ п©я─п╦п╩п╬п╤п╣п╫п╦п╣ я┌я─п╣п╠я┐п╣я┌ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐
+this category is currently being used by applications as a parent category	admin	ru	п╜я┌п╟ п╨п╟я┌п╣пЁп╬я─п╦я▐ п╡ я┌п╣п╨я┐я┴п╦п╧ п╪п╬п╪п╣п╫я┌ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п©я─п╦п╩п╬п╤п╣п╫п╦я▐п╪п╦ п╨п╟п╨ я─п╬п╢п╦я┌п╣п╩я▄я│п╨п╟я▐ п╨п╟я┌п╣пЁп╬я─п╦я▐.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	ru	п╒п╟п╧п╪п╟я┐я┌ п╢п╩я▐ я│п╣п╟п╫я│п╫я▀я┘ п╢п╟п╫п╫я▀я┘ п©я─п╦п╩п╬п╤п╣п╫п╦я▐ п╡ я│п╣п╨я┐п╫п╢п╟я┘ (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ 86400 = 1 п╢п╣п╫я▄)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	ru	п╒п╟п╧п╪п╟я┐я┌ п╢п╩я▐ я│п╣п╟п╫я│п╟ п╡ я│п╣п╨я┐п╫п╢п╟я┘ (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ 14400 = 4 я┤п╟я│п╟)
+times	admin	ru	п═п╟п╥
+top	admin	ru	п╡п╣я─я┘
+total records	admin	ru	п▓я│п╣пЁп╬ п╥п╟п©п╦я│п╣п╧
+trust level	admin	ru	пёя─п╬п╡п╣п╫я▄ п■п╬п╡п╣я─п╦я▐
+trust relationship	admin	ru	п■п╬п╡п╣я─п╦я┌п╣п╩я▄п╫я▀п╣ п·я┌п╫п╬я┬п╣п╫п╦я▐
+type '%1' already exists !!!	admin	ru	я┌п╦п© '%1' я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌
+type of customfield	admin	ru	п╒п╦п© п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╬пЁп╬ п©п╬п╩я▐
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ru	п÷п╬п╢ п╬п╨п╫п╬п╪ п╡я▀ п╢п╬п╩п╤п╫я▀ я┐я│я┌п╟п╫п╬п╡п╦я┌я▄ п╟я│п╦п╫я┘я─п╬п╫п╫я▀п╣ я│п╣я─п╡п╦я│я▀ %1п╡я─я┐я┤п╫я┐я▌%2 п╦п╩п╦ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я─п╣п╤п╦п╪ п╬я┌п╨п╟я┌п╟. п·я┌п╨п╟я┌ п╬п╥п╫п╟я┤п╟п╣я┌, я┤я┌п╬ п╥п╟п╢п╟п╫п╦я▐ я┌п╬п╩п╢я▄п╨п╬ п©я─п╬п╡п╣я─я▐я▌я┌я│я▐ п©п╬я│п╩п╣ п╨п╟п╤п╢п╬пЁп╬ п©я─п╬я│п╪п╬я┌я─п╟ я│я┌я─п╟п╫п╦я├я▀!!!
+use cookies to pass sessionid	admin	ru	п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ cookies п╢п╩я▐ п©п╣я─п╣п╢п╟я┤п╦ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─п╟ я│п╣п╟п╫я│п╟
+use pure html compliant code (not fully working yet)	admin	ru	п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╨п╬п╢, п╬я┌п╡п╣я┤п╟я▌я┴п╦п╧ я┤п╦я│я┌п╬п╪я┐ HTML (п©п╬п╨п╟ п╫п╣ п©п╬п╩п╫п╬я│я┌я▄я▌ я─п╟п╠п╬я┌п╬я│п©п╬я│п╬п╠п╫п╬)
+use theme	admin	ru	п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я┌п╣п╪я┐
+user accounts	admin	ru	пёя┤п╣я┌п╫я▀п╣ п╥п╟п©п╦я│п╦ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+user data	common	ru	п■п╟п╫п╫я▀п╣ п÷п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+user for smtp-authentication (leave it empty if no auth required)	admin	ru	п÷п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ п╢п╩я▐ SMTP-п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я├п╦п╦ (п╬я│я┌п╟п╡я▄я┌п╣ п©я┐я│я┌я▀п╪, п╣я│п╩п╦ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я├п╦я▐ п╫п╣ п╫я┐п╤п╫п╟)
+user groups	admin	ru	п⌠я─я┐п©п©я▀ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+userdata	admin	ru	п■п╟п╫п╫я▀п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+users choice	admin	ru	п▓я▀п╠п╬я─ п÷п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+view access log	admin	ru	п÷я─п╬я│п╪п╬я┌я─ п╤я┐я─п╫п╟п╩п╟ п©п╬п╢п╨п╩я▌я┤п╣п╫п╦п╧
+view account	admin	ru	п÷я─п╬я│п╪п╬я┌я─ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦
+view category	admin	ru	п÷я─п╬я│п╪п╬я┌я─ п╨п╟я┌п╣пЁп╬я─п╦п╦
+view error log	admin	ru	п÷я─п╬я│п╪п╬я┌я─ п╤я┐я─п╫п╟п╩п╟ п╬я┬п╦п╠п╬п╨
+view sessions	admin	ru	п÷я─п╬я│п╪п╬я┌я─ я│п╣п╟п╫я│п╬п╡
+view this user	admin	ru	п÷я─п╬я│п╪п╬я┌я─ я█я┌п╬пЁп╬ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+view user account	admin	ru	п÷я─п╬я│п╪п╬я┌я─ я┐я┤п╣я┌п╫п╬п╧ п╥п╟п©п╦я│п╦ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+who would you like to transfer all records owned by the deleted user to?	admin	ru	п п╬п╪я┐ п▓я▀ я┘п╬я┌п╦я┌п╣ п©п╣я─п╣п╢п╟я┌я▄ п▓п║п∙ п╥п╟п©п╦я│п╦, п╡п╩п╟п╢п╣п╩я▄я├п╣п╪ п╨п╬я┌п╬я─я▀я┘ п╠я▀п╩ я┐п╢п╟п╩п╣п╫п╫я▀п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄?
+would you like egroupware to cache the egw info array ?	admin	ru	п▓я▀ я┘п╬я┌п╦я┌п╣, я┤я┌п╬п╠я▀ eGroupWare п╨п╣я┬п╦я─п╬п╡п╟п╩ п╪п╟я│я│п╦п╡ п╦п╫я└п╬я─п╪п╟я├п╦п╦ egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	ru	п╔п╬я┌п╦я┌п╣, я┤я┌п╬ п╠я▀ eGroupWare п╢п╣п╩п╟п╩п╟ п©я─п╬п╡п╣я─п╨я┐ п╫п╟ п╫п╟п╩п╦я┤п╦п╣ п╫п╬п╡п╬п╧ п╡п╣я─я│п╦п╦,<br>п╨п╬пЁп╢п╟ п©п╬п╢п╨п╩я▌я┤п╟п╣я┌я│я▐ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─?
+would you like egroupware to check for new application versions when admins login ?	admin	ru	п╔п╬я┌п╦я┌п╣, я┤я┌п╬ п╠я▀ eGroupware п©я─п╬п╦п╥п╡п╬п╢п╦п╩п╬ п©я─п╬п╡п╣я─п╨я┐ п╫п╬п╡я▀я┘ п╡п╣я─я│п╦п╧ п©я─п╦п╩п╬п╤п╣п╫п╦п╧ п©я─п╦ п╡я┘п╬п╢п╣ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╬п╡?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	ru	п╔п╬я┌п╦я┌п╣, я┤я┌п╬ п╠я▀ п╥п╟пЁя─я┐п╤п╟п╩п╦я│я▄ п╫п╬п╡я▀п╣ я▐п╥я▀п╨п╬п╡я▀п╣ я└п╟п╧п╩я▀ (п©я─п╦ п╡я┘п╬п╢п╣)?
+would you like to show each application's upgrade status ?	admin	ru	п▓я▀ я┘п╬я┌п╦я┌п╣ п©п╬п╨п╟п╥п╟я┌я▄ я│п╬я│я┌п╬я▐п╫п╦п╣ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐ п╨п╟п╤п╢п╬пЁп╬ п©я─п╦п╩п╬п╤п╣п╫п╦я▐ ?
 xml-rpc	admin	ru	XML-RPC
-you have entered an invalid expiration date	admin	ru	Вы ввели неправильную дату окончания
-you have to enter a name, to create a new field!!!	admin	ru	Введите имя для создания нового поля!!!
-you have to enter a name, to create a new type!!!	admin	ru	Введите имя для создания нового типа!!!
-you must add at least 1 permission or group to this account	admin	ru	Добавьте хотя бы одно разрешение или группу для этого экаунта
-you must enter a group name.	admin	ru	Вы должны ввести имя группы.
-you must enter a lastname	admin	ru	Вы должны ввести фамилию
-you must enter a loginid	admin	ru	Вы должны ввести Логин
-you must enter an application name and title.	admin	ru	Вы должны ввести имя и заголовок приложения.
-you must enter an application name.	admin	ru	Вы должны ввести имя приложения
-you must enter an application title.	admin	ru	Вы должны ввести заголовок приложения.
-you must select a file type	admin	ru	Вы должны выбрать тип файла
-you must select at least one group member	admin	ru	Вы должны выбрать минимум одного члена группы.
-you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
+you have entered an invalid expiration date	admin	ru	п▓я▀ п╡п╡п╣п╩п╦ п╫п╣п©я─п╟п╡п╦п╩я▄п╫я┐я▌ п╢п╟я┌я┐ п╬п╨п╬п╫я┤п╟п╫п╦я▐
+you have to enter a name, to create a new field!!!	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╦п╪я▐ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╫п╬п╡п╬пЁп╬ п©п╬п╩я▐!!!
+you have to enter a name, to create a new type!!!	admin	ru	п▓п╡п╣п╢п╦я┌п╣ п╦п╪я▐ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╫п╬п╡п╬пЁп╬ я┌п╦п©п╟!!!
+you must add at least 1 permission or group to this account	admin	ru	п■п╬п╠п╟п╡я▄я┌п╣ я┘п╬я┌я▐ п╠я▀ п╬п╢п╫п╬ я─п╟п╥я─п╣я┬п╣п╫п╦п╣ п╦п╩п╦ пЁя─я┐п©п©я┐ п╢п╩я▐ я█я┌п╬пЁп╬ я█п╨п╟я┐п╫я┌п╟
+you must enter a group name.	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡п╡п╣я│я┌п╦ п╦п╪я▐ пЁя─я┐п©п©я▀.
+you must enter a lastname	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡п╡п╣я│я┌п╦ я└п╟п╪п╦п╩п╦я▌
+you must enter a loginid	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡п╡п╣я│я┌п╦ п⌡п╬пЁп╦п╫
+you must enter an application name and title.	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡п╡п╣я│я┌п╦ п╦п╪я▐ п╦ п╥п╟пЁп╬п╩п╬п╡п╬п╨ п©я─п╦п╩п╬п╤п╣п╫п╦я▐.
+you must enter an application name.	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡п╡п╣я│я┌п╦ п╦п╪я▐ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+you must enter an application title.	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡п╡п╣я│я┌п╦ п╥п╟пЁп╬п╩п╬п╡п╬п╨ п©я─п╦п╩п╬п╤п╣п╫п╦я▐.
+you must select a file type	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡я▀п╠я─п╟я┌я▄ я┌п╦п© я└п╟п╧п╩п╟
+you must select at least one group member	admin	ru	п▓я▀ п╢п╬п╩п╤п╫я▀ п╡я▀п╠я─п╟я┌я▄ п╪п╦п╫п╦п╪я┐п╪ п╬п╢п╫п╬пЁп╬ я┤п╩п╣п╫п╟ пЁя─я┐п©п©я▀.
+you will need to remove the subcategories before you can delete this category	admin	ru	п▓п╟п╪ п╫я┐п╤п╫п╬ я┐п╢п╟п╩п╦я┌я▄ п╡я│п╣ п©п╬п╢п╨п╟я┌п╣пЁп╬я─п╦п╦ п©я─п╣п╤п╢п╣, я┤п╣п╪ п╡я▀ я│п╪п╬п╤п╣я┌п╣ я┐п╢п╟п╩п╦я┌я▄ п╢п╟п╫п╫я┐я▌ п╨п╟я┌п╣пЁп╬я─п╦я▌ !

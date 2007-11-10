@@ -1,712 +1,712 @@
-%1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
-%1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
-%1 manual	common	el	%1 χειροκίνητα
-%1 start	common	el	%1 έναρξη
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1eGroupWare%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
-(shift-)click or drag to change value	jscalendar	el	(Shift-)Click ή σύρετε για να αλλάξετε τιμή
-- click on any of the time parts to increase it	jscalendar	el	- Κάντε κλικ σε οποιοδήποτε τμήμα της ώρας για να το αυξήσετε
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	el	- Κάντε κλικ και κρατηστε πατημένο το κουμπί του ποντικιού πάνω από οποιοδήποτε από τα παραπάνω κουμπιά για γρηγορότερη επιλογή
-- or click and drag for faster selection.	jscalendar	el	- ή κάντε κλικ και σύρετε για γρηγορότερη επιλογή
-- or shift-click to decrease it	jscalendar	el	- ή κάντε shift-click gια να το αυξήσετε
-- use the %1, %2 buttons to select month	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε μήνα
-- use the %1, %2 buttons to select year	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε χρόνο
-00 (disable)	admin	el	00 (Απενεργοποίηση)
+%1 email addresses inserted	common	el	%1 Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΞΉΟ‚ email ΞµΞΉΟƒΞ®Ο‡ΞΈΞ·ΟƒΞ±Ξ½
+%1 is not executable by the webserver !!!	common	el	%1 Ξ΄ΞµΞ½ ΞµΞ―Ξ½Ξ±ΞΉ ΞµΞΊΟ„ΞµΞ»Ξ­ΟƒΞΉΞΌΞΏ Ξ±Ο€Ο Ο„ΞΏΞ½ webserver !!!
+%1 manual	common	el	%1 Ο‡ΞµΞΉΟΞΏΞΊΞ―Ξ½Ξ·Ο„Ξ±
+%1 start	common	el	%1 Ξ­Ξ½Ξ±ΟΞΎΞ·
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ±Ξ½ Ξ¬Ξ»Ξ»ΞΏ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ%2<br />Ξ® ΞΊΞ¬Ξ½Ο„Ξµ %3 ΞµΞ³Ξ³ΟΞ¬ΟΞΉΞΌΞΏ Ξ±Ο€Ο Ο„ΞΏΞ½ webserver
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1eGroupWare%2 ΞµΞ―Ξ½Ξ±ΞΉ Ξ­Ξ½Ξ± multi-user, web-based groupware suite Ξ³ΟΞ±ΞΌΞΌΞ­Ξ½ΞΏ ΟƒΞµ %3PHP%4.
+(shift-)click or drag to change value	jscalendar	el	(Shift-)Click Ξ® ΟƒΟΟΞµΟ„Ξµ Ξ³ΞΉΞ± Ξ½Ξ± Ξ±Ξ»Ξ»Ξ¬ΞΎΞµΟ„Ξµ Ο„ΞΉΞΌΞ®
+- click on any of the time parts to increase it	jscalendar	el	- ΞΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ ΟƒΞµ ΞΏΟ€ΞΏΞΉΞΏΞ΄Ξ®Ο€ΞΏΟ„Ξµ Ο„ΞΌΞ®ΞΌΞ± Ο„Ξ·Ο‚ ΟΟΞ±Ο‚ Ξ³ΞΉΞ± Ξ½Ξ± Ο„ΞΏ Ξ±Ο…ΞΎΞ®ΟƒΞµΟ„Ξµ
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	el	- ΞΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ ΞΊΞ±ΞΉ ΞΊΟΞ±Ο„Ξ·ΟƒΟ„Ξµ Ο€Ξ±Ο„Ξ·ΞΌΞ­Ξ½ΞΏ Ο„ΞΏ ΞΊΞΏΟ…ΞΌΟ€Ξ― Ο„ΞΏΟ… Ο€ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ Ο€Ξ¬Ξ½Ο‰ Ξ±Ο€Ο ΞΏΟ€ΞΏΞΉΞΏΞ΄Ξ®Ο€ΞΏΟ„Ξµ Ξ±Ο€Ο Ο„Ξ± Ο€Ξ±ΟΞ±Ο€Ξ¬Ξ½Ο‰ ΞΊΞΏΟ…ΞΌΟ€ΞΉΞ¬ Ξ³ΞΉΞ± Ξ³ΟΞ·Ξ³ΞΏΟΟΟ„ΞµΟΞ· ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®
+- or click and drag for faster selection.	jscalendar	el	- Ξ® ΞΊΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ ΞΊΞ±ΞΉ ΟƒΟΟΞµΟ„Ξµ Ξ³ΞΉΞ± Ξ³ΟΞ·Ξ³ΞΏΟΟΟ„ΞµΟΞ· ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®
+- or shift-click to decrease it	jscalendar	el	- Ξ® ΞΊΞ¬Ξ½Ο„Ξµ shift-click gΞΉΞ± Ξ½Ξ± Ο„ΞΏ Ξ±Ο…ΞΎΞ®ΟƒΞµΟ„Ξµ
+- use the %1, %2 buttons to select month	jscalendar	el	- Ξ§ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ Ο„Ξ± ΞΊΞΏΟ…ΞΌΟ€ΞΉΞ¬ %1, %2 Ξ³ΞΉΞ± Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ ΞΌΞ®Ξ½Ξ±
+- use the %1, %2 buttons to select year	jscalendar	el	- Ξ§ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ Ο„Ξ± ΞΊΞΏΟ…ΞΌΟ€ΞΉΞ¬ %1, %2 Ξ³ΞΉΞ± Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ Ο‡ΟΟΞ½ΞΏ
+00 (disable)	admin	el	00 (Ξ‘Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·)
 13 (ntp)	admin	el	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	el	3 αριθμός διαγραμμάτων για καθημερινή-συντόμευση
-3 number of chars for month-shortcut	jscalendar	el	3 αριθμός διαγραμμάτων για μηνιαία-συντόμευση
+3 number of chars for day-shortcut	jscalendar	el	3 Ξ±ΟΞΉΞΈΞΌΟΟ‚ Ξ΄ΞΉΞ±Ξ³ΟΞ±ΞΌΞΌΞ¬Ο„Ο‰Ξ½ Ξ³ΞΉΞ± ΞΊΞ±ΞΈΞ·ΞΌΞµΟΞΉΞ½Ξ®-ΟƒΟ…Ξ½Ο„ΟΞΌΞµΟ…ΟƒΞ·
+3 number of chars for month-shortcut	jscalendar	el	3 Ξ±ΟΞΉΞΈΞΌΟΟ‚ Ξ΄ΞΉΞ±Ξ³ΟΞ±ΞΌΞΌΞ¬Ο„Ο‰Ξ½ Ξ³ΞΉΞ± ΞΌΞ·Ξ½ΞΉΞ±Ξ―Ξ±-ΟƒΟ…Ξ½Ο„ΟΞΌΞµΟ…ΟƒΞ·
 80 (http)	admin	el	80 (http)
-about	common	el	Πληροφορίες
-about %1	common	el	Πληροφορίες %1
-about egroupware	common	el	Πληροφορίες για το eGroupware
-about the calendar	jscalendar	el	Για το ημερολόγιο
-access	common	el	Πρόσβαση
-access not permitted	common	el	Απαγορεύεται η πρόσβαση
-account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
-account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
-account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
-account is expired	common	el	Ο λογαριασμός έχει λήξει
+about	common	el	Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚
+about %1	common	el	Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ %1
+about egroupware	common	el	Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ Ξ³ΞΉΞ± Ο„ΞΏ eGroupware
+about the calendar	jscalendar	el	Ξ“ΞΉΞ± Ο„ΞΏ Ξ·ΞΌΞµΟΞΏΞ»ΟΞ³ΞΉΞΏ
+access	common	el	Ξ ΟΟΟƒΞ²Ξ±ΟƒΞ·
+access not permitted	common	el	Ξ‘Ο€Ξ±Ξ³ΞΏΟΞµΟΞµΟ„Ξ±ΞΉ Ξ· Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·
+account has been created	common	el	Ξ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ­Ο‡ΞµΞΉ Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ·ΞΈΞµΞ―
+account has been deleted	common	el	Ξ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ­Ο‡ΞµΞΉ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞµΞ―
+account has been updated	common	el	Ξ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ­Ο‡ΞµΞΉ ΞµΞ½Ξ·ΞΌΞµΟΟ‰ΞΈΞµΞ―
+account is expired	common	el	Ξ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚ Ξ­Ο‡ΞµΞΉ Ξ»Ξ®ΞΎΞµΞΉ
 acl	common	el	ACL
-action	common	el	Ενέργεια
-active	common	el	Ενεργό
-add	common	el	Προσθήκη
-add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
-add category	common	el	Προσθήκη κατηγορίας
-add shortcut	common	el	Προσθήκη Συντόμευσης
-add sub	common	el	Προσθήκη υπo
-addressbook	common	el	Επαφές
-admin	common	el	Διαχειριστής
-administration	common	el	Διαχείριση
-afghanistan	common	el	ΑΦΓΑΝΙΣΤΑΝ
-albania	common	el	ΑΛΒΑΝΙΑ
-algeria	common	el	ΑΛΓΕΡΙΑ
-all	common	el	Ολα
-all fields	common	el	όλα τα πεδία
-alphabet	common	el	α,β,γ,δ,ε,ζ,η,θ,ι,κ,λ,μ,ν,ξ,ο,π,ρ,σ,τ,υ,φ,χ,ψ,ω,
-alternate style-sheet:	common	el	Εναλλακτικό στυλ-φύλλου
-american samoa	common	el	ΑΜΕΡΙΚΑΝΙΚΗ ΣΑΜΟΑ
-an existing and by the webserver readable directory enables the image browser and upload.	common	el	Ένας υπάρχον ΚΑΙ από τον webserver αναγνώσιμος κατάλογος ενεργοποιεί τον εικονικό browser και τον φορτώνει.
-andorra	common	el	ΑΝΔΟΡΡΑ
-angola	common	el	ΑΝΓΚΟΛΑ
-anguilla	common	el	ΑΝΓΚΟΥΙΛΛΑ
-antarctica	common	el	ΑΝΤΑΡΚΤΙΚΗ
-antigua and barbuda	common	el	ΑΝΤΙΓΚΟΥΑ & ΜΠΑΡΜΠΟΥΝΤΑ
-application	common	el	Εφαρμογή
-apply	common	el	Εφαρμογή
-april	common	el	Απρίλιος
-are you sure you want to delete these entries ?	common	el	Είστε σίγουροι ότι θέλετε να διαγράψετε αυτές τις καταχωρίσεις;
-are you sure you want to delete this entry ?	common	el	Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την καταχωώριση;
-argentina	common	el	ΑΡΓΕΝΤΙΝΗ
-armenia	common	el	ΑΡΜΕΝΙΑ
-aruba	common	el	ΑΡΟΥΜΠΑ
-august	common	el	Αύγουστος
-australia	common	el	ΑΥΣΤΡΑΛΙΑ
-austria	common	el	ΑΥΣΤΡΙΑ
-author	common	el	Συγγραφέας
-autohide sidebox menu's	common	el	Αυτόματη απόκρυψη μενού
-autohide sidebox menus	common	el	Αυτόματη απόκρυψη μενού
-automatically hide the sidebox menu's?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
-automatically hide the sidebox menus?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
-autosave default category	common	el	Αυτόματη αποθήκευση της προεπιλεγμένης κατηγορίας
-azerbaijan	common	el	ΑΖΕΡΜΠΑΪΤΖΑΝ
-back	common	el	Επιστροφή
-back to user login	common	el	Επιστροφή στη σελίδα σύνδεσης
-background color:	common	el	Χρωματισμός φόντου:
-bad login or password	common	el	Λάθος όνομα χρήστη ή κωδικός
-bahamas	common	el	ΜΠΑΧΑΜΕΣ
-bahrain	common	el	ΜΠΑΧΡΕΪΝ
-bangladesh	common	el	ΜΠΑΓΚΛΑΝΤΕΣ
-barbados	common	el	ΜΠΑΡΜΠΑΝΤΟΣ
-bcc	common	el	Κρυφή Κοινοποίηση
-belarus	common	el	ΛΕΥΚΟΡΩΣΙΑ
-belgium	common	el	ΒΕΛΓΙΟ
-belize	common	el	ΜΠΕΛΙΖ
-benin	common	el	ΜΠΕΝΙΝ
-bermuda	common	el	ΒΕΡΜΟΥΔΑ
-bhutan	common	el	ΜΠΟΥΤΑΝ
-blocked, too many attempts	common	el	Μπλοκαρισμένο, πάρα πολλές προσπάθειες
-bold	common	el	Τονισμένα
-bolivia	common	el	ΒΟΛΙΒΙΑ
-border	common	el	Όριο
-bosnia and herzegovina	common	el	ΒΟΣΝΙΑ & ΕΡΖΕΓΟΒΙΝΗ
-botswana	common	el	ΜΠΟΤΣΟΥΑΝΑ
-bottom	common	el	Κάτω τμήμα
-bouvet island	common	el	ΝΗΣΟΙ ΜΠΟΥΒΕ
-brazil	common	el	ΒΡΑΖΙΛΙΑ
-british indian ocean territory	common	el	ΒΡΕΤΑΝΙΚΕΣ ΚΤΗΣΕΙΣ ΙΝΔΙΚΟΥ ΩΚΕΑΝΟΥ
-brunei darussalam	common	el	ΜΠΡΟΥΝΕΪ ΝΤΑΡΟΥΣΑΛΑΜ
-bulgaria	common	el	ΒΟΥΛΓΑΡΙΑ
-burkina faso	common	el	ΜΠΟΥΡΚΙΝΑ ΦΑΣΟ
-burundi	common	el	ΜΠΟΥΡΟΥΝΤΙ
-calendar	common	el	Ημερολόγιο
-cambodia	common	el	ΚΑΜΠΟΤΖΗ
-cameroon	common	el	ΚΑΜΕΡΟΥΝ
-canada	common	el	ΚΑΝΑΔΑΣ
-cancel	common	el	Ακύρωση
-cannot replace %1 because it is a directory	common	el	Δεν γίνεται η αντικατάσταση του %1 επειδή είναι  κατάλογος
-cant open '%1' for %2	common	el	Δεν μπορεί να ανοιχτεί το '%1' για το '%2'
-cape verde	common	el	ΠΡΑΣΙΝΟ ΑΚΡΩΤΗΡΙ
-caption	common	el	Κεφαλαία
-categories	common	el	Κατηγορίες
-categories for	common	el	Κατηγορίες για
-category	common	el	Κατηγορία
-category %1 has been added !	common	el	Η κατηγορία %1 προστέθηκε
-category %1 has been updated !	common	el	Η κατηγορία %1 ενημερώθηκε
-cayman islands	common	el	ΝΗΣΟΙ ΚΕΪΜΑΝ
-cc	common	el	Κοινοποίηση
-centered	common	el	κεντραρισμένο
-central african republic	common	el	ΔΗΜΟΚΡΑΤΙΑ ΚΕΝΤΡΙΚΗΣ ΑΦΡΙΚΗΣ
-chad	common	el	ΤΣΑΝΤ
-change	common	el	Αλλαγή
-charset	common	el	ISO-8859-7
-check installation	common	el	Ελεγχος εγκατάστασης
-check now	common	el	Έλεγχος τώρα
-chile	common	el	ΧΙΛΗ
-china	common	el	ΚΙΝΑ
-choose a background color	common	el	Επιλέξτε ένα χρώμα φόντου
-choose a background color for the icons	common	el	Επιλέξτε ένα χρώμα φόντου για τις εικόνες
-choose a background image.	common	el	Επιλέξτε μία εικόνα φόντου
-choose a background style.	common	el	Επιλέξτε ένα στυλ φόντου
-choose a text color for the icons	common	el	Επιλέξτε ένα χρώμα κειμένου για τις εικόνες
-choose the category	common	el	Επιλέξτε κατηγορία
-choose the parent category	common	el	Επιλέξτε γονική κατηγορία
-christmas island	common	el	ΝΗΣΟΙ ΧΡΙΣΤΟΥΓΕΝΝΩΝ
-clear	common	el	Εκκαθάριση
-clear form	common	el	Εκκαθάριση Φόρμας
-click	common	el	Κάντε κλικ
-click or mouse over to show menus	common	el	Κάντε κλικ ή τοποθετήστε επάνω το ποντίκι για εμφάνιση των μενού
-click or mouse over to show menus?	common	el	Κλικ ή mouse over για εμφάνιση των μενού;
-close	common	el	Κλείσιμο
-close sidebox	common	el	Κλείσιμο μενού
-cocos (keeling) islands	common	el	ΝΗΣΟΙ ΚΟΚΟΣ (ΚΙΛΙΓΚ)
-colombia	common	el	ΚΟΛΟΜΒΙΑ
-common preferences	common	el	Κοινές προτιμήσεις
-comoros	common	el	ΚΟΜΟΡΑ
-company	common	el	Εταιρεία
-congo	common	el	ΚΟΝΓΚΟ
-congo, the democratic republic of the	common	el	ΚΟΝΓΚΟ, ΟΜΟΣΠΟΝΔΙΑΚΗ ΔΗΜΟΚΡΑΤΙΑ
-contacting server...	common	el	Επικοινωνία με τον Server
-cook islands	common	el	ΝΗΣΟΙ ΚΟΥΚ
-copy	common	el	Αντιγραφή
-costa rica	common	el	ΚΟΣΤΑ ΡΙΚΑ
-cote d ivoire	common	el	ΑΚΤΗ ΕΛΕΦΑΝΤΟΣΤΟΥ
-could not contact server. operation timed out!	common	el	Δεν κατέστει δυνατή η επικοινωνία με τον Server.
-create	common	el	Δημιουργία
-created by	common	el	Δημιουργία από
-croatia	common	el	ΚΡΟΑΤΙΑ
-cuba	common	el	ΚΟΥΒΑ
-currency	common	el	Νόμισμα
-current	common	el	Τρέχων
-current users	common	el	Τρέχοντες Χρήστες
-cyprus	common	el	ΚΥΠΡΟΣ
-czech republic	common	el	ΤΣΕΧΙΑ
-date	common	el	Ημερομηνία
-date due	common	el	Ημερομηνία ολοκλήρωσης
-date selection:	jscalendar	el	Ημερομηνία επιλογής
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.<br> Aν χρησιμοποιείται τη θύρα 13, παρακαλώ ορίστε καταλλήλως τους κανόνες του firewall πριν υποβάλετε αυτή τη σελίδα.<br>(Port: 13 / Host: 129.6.15.28)
-december	common	el	Δεκέμβριος
-default category	common	el	Προεπιλεγμένη Κατηγορία
-default height for the windows	common	el	Προεπιλεγμένο ύψος για τα παράθυρα
-default width for the windows	common	el	Προεπιλεγμένο πλάτος για τα παράθυρα
-delete	common	el	Διαγραφή
-delete row	common	el	Διαγραφή σειράς
-denmark	common	el	ΔΑΝΙΑ
-description	common	el	Περιγραφή
-detail	common	el	Λεπτομέρεια
-details	common	el	Λεπτομέρειες
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	el	Nα απενεργοποιηθεί η εκτέλεση του bugfixscript στον Internet Explorer 5.5 και μεγαλύτερο για να εμφανίζεται η διαφάνεια στις PNG-εικόνες;
-direction left to right	common	el	Κατεύθυνση από αριστερά προς τα δεξιά
-directory does not exist, is not readable by the webserver or is not relative to the document root!	common	el	Ο κατάλογος δεν υπάρχει, δεν είναι αναγνώσιμος από τον webserver ή δεν είναι σχετικός με την πορεία του εγγράφου!
-disable internet explorer png-image-bugfix	common	el	Απενεργοποίηση του Internet Explorer png-image-bugfix
-disable slider effects	common	el	Aπενεργοποίηση των εφέ της μπάρας κύλισης
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	el	Να απενεργοποιθούν τα εφέ της μπάρας κύλισης κατά την εμφάνιση ή απόκρυψη των μενού σ' αυτή τη σελίδα; Αυτό πιθανόν χρειάζεται για τους χρήστες των Opera και Konqueror.
-disabled	common	el	Απενεργοποιημένο
-display %s first	jscalendar	el	Προβολή % πρώτα
-djibouti	common	el	ΤΣΙΜΠΟΥΤΙ
-do you also want to delete all subcategories ?	common	el	Θέλετε να διαγράψετε και όλες τις υποκατηγορίες;
-document properties	common	el	Ιδιότητες εγγράφου
-document title:	common	el	Τίτλος εγγράφου:
-domain	common	el	Τομέας
-domain name for mail-address, eg. "%1"	common	el	Όνομα Τομέα για διεύθυνση ηλεκτρονικού ταχυδρομείου π.χ. "%1"
-domestic	common	el	Εσωτερικός
-dominica	common	el	ΔΟΜΙΝΙΚΗ
-dominican republic	common	el	ΔΟΜΙΝΙΚΑΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ
-done	common	el	Ολοκληρώθηκε
-drag to move	jscalendar	el	Σύρε για μετακίνηση
+action	common	el	Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±
+active	common	el	Ξ•Ξ½ΞµΟΞ³Ο
+add	common	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ·
+add %1 category for	common	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚ %1 Ξ³ΞΉΞ±
+add category	common	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚
+add shortcut	common	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ£Ο…Ξ½Ο„ΟΞΌΞµΟ…ΟƒΞ·Ο‚
+add sub	common	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ο…Ο€o
+addressbook	common	el	Ξ•Ο€Ξ±Ο†Ξ­Ο‚
+admin	common	el	Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚
+administration	common	el	Ξ”ΞΉΞ±Ο‡ΞµΞ―ΟΞΉΟƒΞ·
+afghanistan	common	el	Ξ‘Ξ¦Ξ“Ξ‘ΞΞ™Ξ£Ξ¤Ξ‘Ξ
+albania	common	el	Ξ‘Ξ›Ξ’Ξ‘ΞΞ™Ξ‘
+algeria	common	el	Ξ‘Ξ›Ξ“Ξ•Ξ΅Ξ™Ξ‘
+all	common	el	ΞΞ»Ξ±
+all fields	common	el	ΟΞ»Ξ± Ο„Ξ± Ο€ΞµΞ΄Ξ―Ξ±
+alphabet	common	el	Ξ±,Ξ²,Ξ³,Ξ΄,Ξµ,Ξ¶,Ξ·,ΞΈ,ΞΉ,ΞΊ,Ξ»,ΞΌ,Ξ½,ΞΎ,ΞΏ,Ο€,Ο,Οƒ,Ο„,Ο…,Ο†,Ο‡,Ο,Ο‰,
+alternate style-sheet:	common	el	Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±ΞΊΟ„ΞΉΞΊΟ ΟƒΟ„Ο…Ξ»-Ο†ΟΞ»Ξ»ΞΏΟ…
+american samoa	common	el	Ξ‘ΞΞ•Ξ΅Ξ™ΞΞ‘ΞΞ™ΞΞ— Ξ£Ξ‘ΞΞΞ‘
+an existing and by the webserver readable directory enables the image browser and upload.	common	el	ΞΞ½Ξ±Ο‚ Ο…Ο€Ξ¬ΟΟ‡ΞΏΞ½ ΞΞ‘Ξ™ Ξ±Ο€Ο Ο„ΞΏΞ½ webserver Ξ±Ξ½Ξ±Ξ³Ξ½ΟΟƒΞΉΞΌΞΏΟ‚ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞµΞ― Ο„ΞΏΞ½ ΞµΞΉΞΊΞΏΞ½ΞΉΞΊΟ browser ΞΊΞ±ΞΉ Ο„ΞΏΞ½ Ο†ΞΏΟΟ„ΟΞ½ΞµΞΉ.
+andorra	common	el	Ξ‘ΞΞ”ΞΞ΅Ξ΅Ξ‘
+angola	common	el	Ξ‘ΞΞ“ΞΞΞ›Ξ‘
+anguilla	common	el	Ξ‘ΞΞ“ΞΞΞ¥Ξ™Ξ›Ξ›Ξ‘
+antarctica	common	el	Ξ‘ΞΞ¤Ξ‘Ξ΅ΞΞ¤Ξ™ΞΞ—
+antigua and barbuda	common	el	Ξ‘ΞΞ¤Ξ™Ξ“ΞΞΞ¥Ξ‘ & ΞΞ Ξ‘Ξ΅ΞΞ ΞΞ¥ΞΞ¤Ξ‘
+application	common	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®
+apply	common	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®
+april	common	el	Ξ‘Ο€ΟΞ―Ξ»ΞΉΞΏΟ‚
+are you sure you want to delete these entries ?	common	el	Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ±Ο…Ο„Ξ­Ο‚ Ο„ΞΉΟ‚ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ―ΟƒΞµΞΉΟ‚;
+are you sure you want to delete this entry ?	common	el	Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΟΞΉΟƒΞ·;
+argentina	common	el	Ξ‘Ξ΅Ξ“Ξ•ΞΞ¤Ξ™ΞΞ—
+armenia	common	el	Ξ‘Ξ΅ΞΞ•ΞΞ™Ξ‘
+aruba	common	el	Ξ‘Ξ΅ΞΞ¥ΞΞ Ξ‘
+august	common	el	Ξ‘ΟΞ³ΞΏΟ…ΟƒΟ„ΞΏΟ‚
+australia	common	el	Ξ‘Ξ¥Ξ£Ξ¤Ξ΅Ξ‘Ξ›Ξ™Ξ‘
+austria	common	el	Ξ‘Ξ¥Ξ£Ξ¤Ξ΅Ξ™Ξ‘
+author	common	el	Ξ£Ο…Ξ³Ξ³ΟΞ±Ο†Ξ­Ξ±Ο‚
+autohide sidebox menu's	common	el	Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ±Ο€ΟΞΊΟΟ…ΟΞ· ΞΌΞµΞ½ΞΏΟ
+autohide sidebox menus	common	el	Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ±Ο€ΟΞΊΟΟ…ΟΞ· ΞΌΞµΞ½ΞΏΟ
+automatically hide the sidebox menu's?	common	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ±Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ±Ο€ΟΞΊΟΟ…ΟΞ· ΞΌΞµΞ½ΞΏΟ;
+automatically hide the sidebox menus?	common	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ±Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ±Ο€ΟΞΊΟΟ…ΟΞ· ΞΌΞµΞ½ΞΏΟ;
+autosave default category	common	el	Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ο„Ξ·Ο‚ Ο€ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚
+azerbaijan	common	el	Ξ‘Ξ–Ξ•Ξ΅ΞΞ Ξ‘ΞªΞ¤Ξ–Ξ‘Ξ
+back	common	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞΏΟ†Ξ®
+back to user login	common	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞΏΟ†Ξ® ΟƒΟ„Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ± ΟƒΟΞ½Ξ΄ΞµΟƒΞ·Ο‚
+background color:	common	el	Ξ§ΟΟ‰ΞΌΞ±Ο„ΞΉΟƒΞΌΟΟ‚ Ο†ΟΞ½Ο„ΞΏΟ…:
+bad login or password	common	el	Ξ›Ξ¬ΞΈΞΏΟ‚ ΟΞ½ΞΏΞΌΞ± Ο‡ΟΞ®ΟƒΟ„Ξ· Ξ® ΞΊΟ‰Ξ΄ΞΉΞΊΟΟ‚
+bahamas	common	el	ΞΞ Ξ‘Ξ§Ξ‘ΞΞ•Ξ£
+bahrain	common	el	ΞΞ Ξ‘Ξ§Ξ΅Ξ•ΞªΞ
+bangladesh	common	el	ΞΞ Ξ‘Ξ“ΞΞ›Ξ‘ΞΞ¤Ξ•Ξ£
+barbados	common	el	ΞΞ Ξ‘Ξ΅ΞΞ Ξ‘ΞΞ¤ΞΞ£
+bcc	common	el	ΞΟΟ…Ο†Ξ® ΞΞΏΞΉΞ½ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·
+belarus	common	el	Ξ›Ξ•Ξ¥ΞΞΞ΅Ξ©Ξ£Ξ™Ξ‘
+belgium	common	el	Ξ’Ξ•Ξ›Ξ“Ξ™Ξ
+belize	common	el	ΞΞ Ξ•Ξ›Ξ™Ξ–
+benin	common	el	ΞΞ Ξ•ΞΞ™Ξ
+bermuda	common	el	Ξ’Ξ•Ξ΅ΞΞΞ¥Ξ”Ξ‘
+bhutan	common	el	ΞΞ ΞΞ¥Ξ¤Ξ‘Ξ
+blocked, too many attempts	common	el	ΞΟ€Ξ»ΞΏΞΊΞ±ΟΞΉΟƒΞΌΞ­Ξ½ΞΏ, Ο€Ξ¬ΟΞ± Ο€ΞΏΞ»Ξ»Ξ­Ο‚ Ο€ΟΞΏΟƒΟ€Ξ¬ΞΈΞµΞΉΞµΟ‚
+bold	common	el	Ξ¤ΞΏΞ½ΞΉΟƒΞΌΞ­Ξ½Ξ±
+bolivia	common	el	Ξ’ΞΞ›Ξ™Ξ’Ξ™Ξ‘
+border	common	el	ΞΟΞΉΞΏ
+bosnia and herzegovina	common	el	Ξ’ΞΞ£ΞΞ™Ξ‘ & Ξ•Ξ΅Ξ–Ξ•Ξ“ΞΞ’Ξ™ΞΞ—
+botswana	common	el	ΞΞ ΞΞ¤Ξ£ΞΞ¥Ξ‘ΞΞ‘
+bottom	common	el	ΞΞ¬Ο„Ο‰ Ο„ΞΌΞ®ΞΌΞ±
+bouvet island	common	el	ΞΞ—Ξ£ΞΞ™ ΞΞ ΞΞ¥Ξ’Ξ•
+brazil	common	el	Ξ’Ξ΅Ξ‘Ξ–Ξ™Ξ›Ξ™Ξ‘
+british indian ocean territory	common	el	Ξ’Ξ΅Ξ•Ξ¤Ξ‘ΞΞ™ΞΞ•Ξ£ ΞΞ¤Ξ—Ξ£Ξ•Ξ™Ξ£ Ξ™ΞΞ”Ξ™ΞΞΞ¥ Ξ©ΞΞ•Ξ‘ΞΞΞ¥
+brunei darussalam	common	el	ΞΞ Ξ΅ΞΞ¥ΞΞ•Ξª ΞΞ¤Ξ‘Ξ΅ΞΞ¥Ξ£Ξ‘Ξ›Ξ‘Ξ
+bulgaria	common	el	Ξ’ΞΞ¥Ξ›Ξ“Ξ‘Ξ΅Ξ™Ξ‘
+burkina faso	common	el	ΞΞ ΞΞ¥Ξ΅ΞΞ™ΞΞ‘ Ξ¦Ξ‘Ξ£Ξ
+burundi	common	el	ΞΞ ΞΞ¥Ξ΅ΞΞ¥ΞΞ¤Ξ™
+calendar	common	el	Ξ—ΞΌΞµΟΞΏΞ»ΟΞ³ΞΉΞΏ
+cambodia	common	el	ΞΞ‘ΞΞ ΞΞ¤Ξ–Ξ—
+cameroon	common	el	ΞΞ‘ΞΞ•Ξ΅ΞΞ¥Ξ
+canada	common	el	ΞΞ‘ΞΞ‘Ξ”Ξ‘Ξ£
+cancel	common	el	Ξ‘ΞΊΟΟΟ‰ΟƒΞ·
+cannot replace %1 because it is a directory	common	el	Ξ”ΞµΞ½ Ξ³Ξ―Ξ½ΞµΟ„Ξ±ΞΉ Ξ· Ξ±Ξ½Ο„ΞΉΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ο„ΞΏΟ… %1 ΞµΟ€ΞµΞΉΞ΄Ξ® ΞµΞ―Ξ½Ξ±ΞΉ  ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚
+cant open '%1' for %2	common	el	Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± Ξ±Ξ½ΞΏΞΉΟ‡Ο„ΞµΞ― Ο„ΞΏ '%1' Ξ³ΞΉΞ± Ο„ΞΏ '%2'
+cape verde	common	el	Ξ Ξ΅Ξ‘Ξ£Ξ™ΞΞ Ξ‘ΞΞ΅Ξ©Ξ¤Ξ—Ξ΅Ξ™
+caption	common	el	ΞΞµΟ†Ξ±Ξ»Ξ±Ξ―Ξ±
+categories	common	el	ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚
+categories for	common	el	ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ Ξ³ΞΉΞ±
+category	common	el	ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+category %1 has been added !	common	el	Ξ— ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± %1 Ο€ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ
+category %1 has been updated !	common	el	Ξ— ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± %1 ΞµΞ½Ξ·ΞΌΞµΟΟΞΈΞ·ΞΊΞµ
+cayman islands	common	el	ΞΞ—Ξ£ΞΞ™ ΞΞ•ΞªΞΞ‘Ξ
+cc	common	el	ΞΞΏΞΉΞ½ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·
+centered	common	el	ΞΊΞµΞ½Ο„ΟΞ±ΟΞΉΟƒΞΌΞ­Ξ½ΞΏ
+central african republic	common	el	Ξ”Ξ—ΞΞΞΞ΅Ξ‘Ξ¤Ξ™Ξ‘ ΞΞ•ΞΞ¤Ξ΅Ξ™ΞΞ—Ξ£ Ξ‘Ξ¦Ξ΅Ξ™ΞΞ—Ξ£
+chad	common	el	Ξ¤Ξ£Ξ‘ΞΞ¤
+change	common	el	Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ®
+charset	common	el	utf-8
+check installation	common	el	Ξ•Ξ»ΞµΞ³Ο‡ΞΏΟ‚ ΞµΞ³ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚
+check now	common	el	ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ο„ΟΟΞ±
+chile	common	el	Ξ§Ξ™Ξ›Ξ—
+china	common	el	ΞΞ™ΞΞ‘
+choose a background color	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ± Ο‡ΟΟΞΌΞ± Ο†ΟΞ½Ο„ΞΏΟ…
+choose a background color for the icons	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ± Ο‡ΟΟΞΌΞ± Ο†ΟΞ½Ο„ΞΏΟ… Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞµΞΉΞΊΟΞ½ΞµΟ‚
+choose a background image.	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞ―Ξ± ΞµΞΉΞΊΟΞ½Ξ± Ο†ΟΞ½Ο„ΞΏΟ…
+choose a background style.	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ± ΟƒΟ„Ο…Ξ» Ο†ΟΞ½Ο„ΞΏΟ…
+choose a text color for the icons	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ± Ο‡ΟΟΞΌΞ± ΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ… Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞµΞΉΞΊΟΞ½ΞµΟ‚
+choose the category	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+choose the parent category	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ³ΞΏΞ½ΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+christmas island	common	el	ΞΞ—Ξ£ΞΞ™ Ξ§Ξ΅Ξ™Ξ£Ξ¤ΞΞ¥Ξ“Ξ•ΞΞΞ©Ξ
+clear	common	el	Ξ•ΞΊΞΊΞ±ΞΈΞ¬ΟΞΉΟƒΞ·
+clear form	common	el	Ξ•ΞΊΞΊΞ±ΞΈΞ¬ΟΞΉΟƒΞ· Ξ¦ΟΟΞΌΞ±Ο‚
+click	common	el	ΞΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ
+click or mouse over to show menus	common	el	ΞΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ Ξ® Ο„ΞΏΟ€ΞΏΞΈΞµΟ„Ξ®ΟƒΟ„Ξµ ΞµΟ€Ξ¬Ξ½Ο‰ Ο„ΞΏ Ο€ΞΏΞ½Ο„Ξ―ΞΊΞΉ Ξ³ΞΉΞ± ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο„Ο‰Ξ½ ΞΌΞµΞ½ΞΏΟ
+click or mouse over to show menus?	common	el	ΞΞ»ΞΉΞΊ Ξ® mouse over Ξ³ΞΉΞ± ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο„Ο‰Ξ½ ΞΌΞµΞ½ΞΏΟ;
+close	common	el	ΞΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ
+close sidebox	common	el	ΞΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ ΞΌΞµΞ½ΞΏΟ
+cocos (keeling) islands	common	el	ΞΞ—Ξ£ΞΞ™ ΞΞΞΞΞ£ (ΞΞ™Ξ›Ξ™Ξ“Ξ)
+colombia	common	el	ΞΞΞ›ΞΞΞ’Ξ™Ξ‘
+common preferences	common	el	ΞΞΏΞΉΞ½Ξ­Ο‚ Ο€ΟΞΏΟ„ΞΉΞΌΞ®ΟƒΞµΞΉΟ‚
+comoros	common	el	ΞΞΞΞΞ΅Ξ‘
+company	common	el	Ξ•Ο„Ξ±ΞΉΟΞµΞ―Ξ±
+congo	common	el	ΞΞΞΞ“ΞΞ
+congo, the democratic republic of the	common	el	ΞΞΞΞ“ΞΞ, ΞΞΞΞ£Ξ ΞΞΞ”Ξ™Ξ‘ΞΞ— Ξ”Ξ—ΞΞΞΞ΅Ξ‘Ξ¤Ξ™Ξ‘
+contacting server...	common	el	Ξ•Ο€ΞΉΞΊΞΏΞΉΞ½Ο‰Ξ½Ξ―Ξ± ΞΌΞµ Ο„ΞΏΞ½ Server
+cook islands	common	el	ΞΞ—Ξ£ΞΞ™ ΞΞΞ¥Ξ
+copy	common	el	Ξ‘Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ®
+costa rica	common	el	ΞΞΞ£Ξ¤Ξ‘ Ξ΅Ξ™ΞΞ‘
+cote d ivoire	common	el	Ξ‘ΞΞ¤Ξ— Ξ•Ξ›Ξ•Ξ¦Ξ‘ΞΞ¤ΞΞ£Ξ¤ΞΞ¥
+could not contact server. operation timed out!	common	el	Ξ”ΞµΞ½ ΞΊΞ±Ο„Ξ­ΟƒΟ„ΞµΞΉ Ξ΄Ο…Ξ½Ξ±Ο„Ξ® Ξ· ΞµΟ€ΞΉΞΊΞΏΞΉΞ½Ο‰Ξ½Ξ―Ξ± ΞΌΞµ Ο„ΞΏΞ½ Server.
+create	common	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±
+created by	common	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ±Ο€Ο
+croatia	common	el	ΞΞ΅ΞΞ‘Ξ¤Ξ™Ξ‘
+cuba	common	el	ΞΞΞ¥Ξ’Ξ‘
+currency	common	el	ΞΟΞΌΞΉΟƒΞΌΞ±
+current	common	el	Ξ¤ΟΞ­Ο‡Ο‰Ξ½
+current users	common	el	Ξ¤ΟΞ­Ο‡ΞΏΞ½Ο„ΞµΟ‚ Ξ§ΟΞ®ΟƒΟ„ΞµΟ‚
+cyprus	common	el	ΞΞ¥Ξ Ξ΅ΞΞ£
+czech republic	common	el	Ξ¤Ξ£Ξ•Ξ§Ξ™Ξ‘
+date	common	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±
+date due	common	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΞΏΞ»ΞΏΞΊΞ»Ξ®ΟΟ‰ΟƒΞ·Ο‚
+date selection:	jscalendar	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®Ο‚
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.<br> AΞ½ Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ Ο„Ξ· ΞΈΟΟΞ± 13, Ο€Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞΏΟΞ―ΟƒΟ„Ξµ ΞΊΞ±Ο„Ξ±Ξ»Ξ»Ξ®Ξ»Ο‰Ο‚ Ο„ΞΏΟ…Ο‚ ΞΊΞ±Ξ½ΟΞ½ΞµΟ‚ Ο„ΞΏΟ… firewall Ο€ΟΞΉΞ½ Ο…Ο€ΞΏΞ²Ξ¬Ξ»ΞµΟ„Ξµ Ξ±Ο…Ο„Ξ® Ο„Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ±.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	el	Ξ”ΞµΞΊΞ­ΞΌΞ²ΟΞΉΞΏΟ‚
+default category	common	el	Ξ ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ· ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+default height for the windows	common	el	Ξ ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ ΟΟΞΏΟ‚ Ξ³ΞΉΞ± Ο„Ξ± Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞ±
+default width for the windows	common	el	Ξ ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ Ο€Ξ»Ξ¬Ο„ΞΏΟ‚ Ξ³ΞΉΞ± Ο„Ξ± Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞ±
+delete	common	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®
+delete row	common	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΟƒΞµΞΉΟΞ¬Ο‚
+denmark	common	el	Ξ”Ξ‘ΞΞ™Ξ‘
+description	common	el	Ξ ΞµΟΞΉΞ³ΟΞ±Ο†Ξ®
+detail	common	el	Ξ›ΞµΟ€Ο„ΞΏΞΌΞ­ΟΞµΞΉΞ±
+details	common	el	Ξ›ΞµΟ€Ο„ΞΏΞΌΞ­ΟΞµΞΉΞµΟ‚
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	el	NΞ± Ξ±Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ·ΞΈΞµΞ― Ξ· ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· Ο„ΞΏΟ… bugfixscript ΟƒΟ„ΞΏΞ½ Internet Explorer 5.5 ΞΊΞ±ΞΉ ΞΌΞµΞ³Ξ±Ξ»ΟΟ„ΞµΟΞΏ Ξ³ΞΉΞ± Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ Ξ· Ξ΄ΞΉΞ±Ο†Ξ¬Ξ½ΞµΞΉΞ± ΟƒΟ„ΞΉΟ‚ PNG-ΞµΞΉΞΊΟΞ½ΞµΟ‚;
+direction left to right	common	el	ΞΞ±Ο„ΞµΟΞΈΟ…Ξ½ΟƒΞ· Ξ±Ο€Ο Ξ±ΟΞΉΟƒΟ„ΞµΟΞ¬ Ο€ΟΞΏΟ‚ Ο„Ξ± Ξ΄ΞµΞΎΞΉΞ¬
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	el	Ξ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ, Ξ΄ΞµΞ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ±Ξ½Ξ±Ξ³Ξ½ΟΟƒΞΉΞΌΞΏΟ‚ Ξ±Ο€Ο Ο„ΞΏΞ½ webserver Ξ® Ξ΄ΞµΞ½ ΞµΞ―Ξ½Ξ±ΞΉ ΟƒΟ‡ΞµΟ„ΞΉΞΊΟΟ‚ ΞΌΞµ Ο„Ξ·Ξ½ Ο€ΞΏΟΞµΞ―Ξ± Ο„ΞΏΟ… ΞµΞ³Ξ³ΟΞ¬Ο†ΞΏΟ…!
+disable internet explorer png-image-bugfix	common	el	Ξ‘Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ο„ΞΏΟ… Internet Explorer png-image-bugfix
+disable slider effects	common	el	AΟ€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ο„Ο‰Ξ½ ΞµΟ†Ξ­ Ο„Ξ·Ο‚ ΞΌΟ€Ξ¬ΟΞ±Ο‚ ΞΊΟΞ»ΞΉΟƒΞ·Ο‚
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	el	ΞΞ± Ξ±Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞΈΞΏΟΞ½ Ο„Ξ± ΞµΟ†Ξ­ Ο„Ξ·Ο‚ ΞΌΟ€Ξ¬ΟΞ±Ο‚ ΞΊΟΞ»ΞΉΟƒΞ·Ο‚ ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ® Ξ±Ο€ΟΞΊΟΟ…ΟΞ· Ο„Ο‰Ξ½ ΞΌΞµΞ½ΞΏΟ Οƒ' Ξ±Ο…Ο„Ξ® Ο„Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ±; Ξ‘Ο…Ο„Ο Ο€ΞΉΞΈΞ±Ξ½ΟΞ½ Ο‡ΟΞµΞΉΞ¬Ξ¶ΞµΟ„Ξ±ΞΉ Ξ³ΞΉΞ± Ο„ΞΏΟ…Ο‚ Ο‡ΟΞ®ΟƒΟ„ΞµΟ‚ Ο„Ο‰Ξ½ Opera ΞΊΞ±ΞΉ Konqueror.
+disabled	common	el	Ξ‘Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏ
+display %s first	jscalendar	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ® % Ο€ΟΟΟ„Ξ±
+djibouti	common	el	Ξ¤Ξ£Ξ™ΞΞ ΞΞ¥Ξ¤Ξ™
+do you also want to delete all subcategories ?	common	el	ΞΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ ΞΊΞ±ΞΉ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚;
+document properties	common	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ ΞµΞ³Ξ³ΟΞ¬Ο†ΞΏΟ…
+document title:	common	el	Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ ΞµΞ³Ξ³ΟΞ¬Ο†ΞΏΟ…:
+domain	common	el	Ξ¤ΞΏΞΌΞ­Ξ±Ο‚
+domain name for mail-address, eg. "%1"	common	el	ΞΞ½ΞΏΞΌΞ± Ξ¤ΞΏΞΌΞ­Ξ± Ξ³ΞΉΞ± Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· Ξ·Ξ»ΞµΞΊΟ„ΟΞΏΞ½ΞΉΞΊΞΏΟ Ο„Ξ±Ο‡Ο…Ξ΄ΟΞΏΞΌΞµΞ―ΞΏΟ… Ο€.Ο‡. "%1"
+domestic	common	el	Ξ•ΟƒΟ‰Ο„ΞµΟΞΉΞΊΟΟ‚
+dominica	common	el	Ξ”ΞΞΞ™ΞΞ™ΞΞ—
+dominican republic	common	el	Ξ”ΞΞΞ™ΞΞ™ΞΞ‘ΞΞ™ΞΞ— Ξ”Ξ—ΞΞΞΞ΅Ξ‘Ξ¤Ξ™Ξ‘
+done	common	el	ΞΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ
+drag to move	jscalendar	el	Ξ£ΟΟΞµ Ξ³ΞΉΞ± ΞΌΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·
 e-mail	common	el	E-Mail
-east timor	common	el	ΑΝΑΤΟΛΙΚΟ ΤΙΜΟΡ
-ecuador	common	el	ΙΣΗΜΕΡΙΝΟΣ
-edit	common	el	Επεξεργασία
-edit %1 category for	common	el	Επεξεργασία της κατηγορίας 1% για
-edit categories	common	el	Επεξεργασία Κατηγοριών
-edit category	common	el	Επεξεργασία Κατηγορίας
-egroupware api version %1	common	el	eGroupWare API έκδοση %1
-egroupware: login blocked for user '%1', ip %2	common	el	eGroupWare: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με ip %2
-egypt	common	el	ΑΙΓΥΠΤΟΣ
-el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
-email	common	el	Ε-Μail
-email-address of the user, eg. "%1"	common	el	e-mail του χρήστη π.χ. "%1"
-enabled	common	el	Ενεργοποιημένο
-end date	common	el	Ημερομηνία παράδοσης
-end time	common	el	Ώρα παράδοσης
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του eGroupWare URL.<br>Παράδειγμα: http://www.domain.com/egroupware   or  /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
-entry has been deleted sucessfully	common	el	Η καταχώρηση διαγράφηκε επιτυχώς
-entry updated sucessfully	common	el	Η καταχώρηση ενημερώθηκε επιτυχώς
-equatorial guinea	common	el	ΙΣΗΜΕΡΙΝΗ ΓΟΥΪΝΕΑ
-eritrea	common	el	ΕΡΥΘΡΑΙΑ
-error	common	el	Σφάλμα
-error creating %1 %2 directory	common	el	Σφάλμα κατά τη δημιουργία του καταλόγου %1 %2
-error deleting %1 %2 directory	common	el	Σφάλμα κατά τη διαγραφή του καταλόγου %1 %2
-error renaming %1 %2 directory	common	el	Σφάλμα κατά τη μετονομασία του καταλόγου %1 %2
-estonia	common	el	ΕΣΘΟΝΙΑ
-ethiopia	common	el	ΑΙΘΙΟΠΙΑ
-everything	common	el	Όλα
-exact	common	el	ακριβώς
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	el	Αποτυχία Σύνδεσης με τον Server ή ¶κυρη Απάντηση από τον Server. Προσπαθήστε να εισέλθετε ξανά. Επικοινωνήστε με τον Admin σε περίπτωση αποτυχίας.
-falkland islands (malvinas)	common	el	ΝΗΣΟΙ ΦΩΚΛΑΝΤ (ΜΑΛΒΙΝΑΣ)
-faroe islands	common	el	ΝΗΣΟΙ ΦΕΡΟΕ
-fax number	common	el	Αριθμός Fax
-features of the editor?	common	el	Χαρακτηριστικά του συντάκτη
-february	common	el	Φεβρουάριος
-fields	common	el	Πεδία
-fiji	common	el	ΦΙΤΖΙ
-files	common	el	Αρχεία
-filter	common	el	Φίλτρο
-finland	common	el	ΦΙΛΑΝΔΙΑ
-first name	common	el	Ονομα
-first name of the user, eg. "%1"	common	el	Ονομα χρήστη, π.χ. "%1"
-first page	common	el	Αρχική σελίδα
-firstname	common	el	Ονομα
-fixme!	common	el	Διόρθωσέ με!
-folder already exists.	common	el	Ο φάκελος υπάρχει ήδη
-france	common	el	ΓΑΛΙΑ
-french guiana	common	el	ΓΑΛΛΙΚΗ ΓΟΥΪΑΝΑ
-french polynesia	common	el	ΓΑΛΛΙΚΗ ΠΟΛΥΝΗΣΙΑ
-french southern territories	common	el	ΝΟΤΙΕΣ ΓΑΛΛΙΚΕΣ ΚΤΗΣΕΙΣ
-friday	common	el	Παρασκευή
+east timor	common	el	Ξ‘ΞΞ‘Ξ¤ΞΞ›Ξ™ΞΞ Ξ¤Ξ™ΞΞΞ΅
+ecuador	common	el	Ξ™Ξ£Ξ—ΞΞ•Ξ΅Ξ™ΞΞΞ£
+edit	common	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ±
+edit %1 category for	common	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚ 1% Ξ³ΞΉΞ±
+edit categories	common	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+edit category	common	el	Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚
+egroupware api version %1	common	el	eGroupWare API Ξ­ΞΊΞ΄ΞΏΟƒΞ· %1
+egroupware: login blocked for user '%1', ip %2	common	el	eGroupWare: Ξ•Ξ―ΟƒΞΏΞ΄ΞΏΟ‚ ΞΌΟ€Ξ»ΞΏΞΊΞ±ΟΞΉΟƒΞΌΞ­Ξ½Ξ· Ξ³ΞΉΞ± Ο„ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ· '%1', ΞΌΞµ ip %2
+egypt	common	el	Ξ‘Ξ™Ξ“Ξ¥Ξ Ξ¤ΞΞ£
+el salvador	common	el	Ξ•Ξ› Ξ£Ξ‘Ξ›Ξ’Ξ‘Ξ”ΞΞ΅
+email	common	el	Ξ•-Ξail
+email-address of the user, eg. "%1"	common	el	e-mail Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ· Ο€.Ο‡. "%1"
+enabled	common	el	Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏ
+end date	common	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ο€Ξ±ΟΞ¬Ξ΄ΞΏΟƒΞ·Ο‚
+end time	common	el	ΞΟΞ± Ο€Ξ±ΟΞ¬Ξ΄ΞΏΟƒΞ·Ο‚
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Ξ•ΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο„Ξ· ΞΈΞ­ΟƒΞ· Ο„ΞΏΟ… eGroupWare URL.<br>Ξ Ξ±ΟΞ¬Ξ΄ΞµΞΉΞ³ΞΌΞ±: http://www.domain.com/egroupware   or  /egroupware<br><b>Ξ§Ο‰ΟΞ―Ο‚ Ξ΄ΞµΞΎΞΉΞ¬ Ο€Ξ±ΟΞ»Ξ± ΟƒΟ„ΞΏ Ο„Ξ­Ξ»ΞΏΟ‚</b>
+entry has been deleted sucessfully	common	el	Ξ— ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· Ξ΄ΞΉΞ±Ξ³ΟΞ¬Ο†Ξ·ΞΊΞµ ΞµΟ€ΞΉΟ„Ο…Ο‡ΟΟ‚
+entry updated sucessfully	common	el	Ξ— ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· ΞµΞ½Ξ·ΞΌΞµΟΟΞΈΞ·ΞΊΞµ ΞµΟ€ΞΉΟ„Ο…Ο‡ΟΟ‚
+equatorial guinea	common	el	Ξ™Ξ£Ξ—ΞΞ•Ξ΅Ξ™ΞΞ— Ξ“ΞΞ¥ΞªΞΞ•Ξ‘
+eritrea	common	el	Ξ•Ξ΅Ξ¥ΞΞ΅Ξ‘Ξ™Ξ‘
+error	common	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ±
+error creating %1 %2 directory	common	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞΊΞ±Ο„Ξ¬ Ο„Ξ· Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ο„ΞΏΟ… ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ… %1 %2
+error deleting %1 %2 directory	common	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞΊΞ±Ο„Ξ¬ Ο„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ο„ΞΏΟ… ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ… %1 %2
+error renaming %1 %2 directory	common	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞΊΞ±Ο„Ξ¬ Ο„Ξ· ΞΌΞµΟ„ΞΏΞ½ΞΏΞΌΞ±ΟƒΞ―Ξ± Ο„ΞΏΟ… ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ… %1 %2
+estonia	common	el	Ξ•Ξ£ΞΞΞΞ™Ξ‘
+ethiopia	common	el	Ξ‘Ξ™ΞΞ™ΞΞ Ξ™Ξ‘
+everything	common	el	ΞΞ»Ξ±
+exact	common	el	Ξ±ΞΊΟΞΉΞ²ΟΟ‚
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	el	Ξ‘Ο€ΞΏΟ„Ο…Ο‡Ξ―Ξ± Ξ£ΟΞ½Ξ΄ΞµΟƒΞ·Ο‚ ΞΌΞµ Ο„ΞΏΞ½ Server Ξ® Ξ†ΞΊΟ…ΟΞ· Ξ‘Ο€Ξ¬Ξ½Ο„Ξ·ΟƒΞ· Ξ±Ο€Ο Ο„ΞΏΞ½ Server. Ξ ΟΞΏΟƒΟ€Ξ±ΞΈΞ®ΟƒΟ„Ξµ Ξ½Ξ± ΞµΞΉΟƒΞ­Ξ»ΞΈΞµΟ„Ξµ ΞΎΞ±Ξ½Ξ¬. Ξ•Ο€ΞΉΞΊΞΏΞΉΞ½Ο‰Ξ½Ξ®ΟƒΟ„Ξµ ΞΌΞµ Ο„ΞΏΞ½ Admin ΟƒΞµ Ο€ΞµΟΞ―Ο€Ο„Ο‰ΟƒΞ· Ξ±Ο€ΞΏΟ„Ο…Ο‡Ξ―Ξ±Ο‚.
+falkland islands (malvinas)	common	el	ΞΞ—Ξ£ΞΞ™ Ξ¦Ξ©ΞΞ›Ξ‘ΞΞ¤ (ΞΞ‘Ξ›Ξ’Ξ™ΞΞ‘Ξ£)
+faroe islands	common	el	ΞΞ—Ξ£ΞΞ™ Ξ¦Ξ•Ξ΅ΞΞ•
+fax number	common	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Fax
+features of the editor?	common	el	Ξ§Ξ±ΟΞ±ΞΊΟ„Ξ·ΟΞΉΟƒΟ„ΞΉΞΊΞ¬ Ο„ΞΏΟ… ΟƒΟ…Ξ½Ο„Ξ¬ΞΊΟ„Ξ·
+february	common	el	Ξ¦ΞµΞ²ΟΞΏΟ…Ξ¬ΟΞΉΞΏΟ‚
+fields	common	el	Ξ ΞµΞ΄Ξ―Ξ±
+fiji	common	el	Ξ¦Ξ™Ξ¤Ξ–Ξ™
+files	common	el	Ξ‘ΟΟ‡ΞµΞ―Ξ±
+filter	common	el	Ξ¦Ξ―Ξ»Ο„ΟΞΏ
+finland	common	el	Ξ¦Ξ™Ξ›Ξ‘ΞΞ”Ξ™Ξ‘
+first name	common	el	ΞΞ½ΞΏΞΌΞ±
+first name of the user, eg. "%1"	common	el	ΞΞ½ΞΏΞΌΞ± Ο‡ΟΞ®ΟƒΟ„Ξ·, Ο€.Ο‡. "%1"
+first page	common	el	Ξ‘ΟΟ‡ΞΉΞΊΞ® ΟƒΞµΞ»Ξ―Ξ΄Ξ±
+firstname	common	el	ΞΞ½ΞΏΞΌΞ±
+fixme!	common	el	Ξ”ΞΉΟΟΞΈΟ‰ΟƒΞ­ ΞΌΞµ!
+folder already exists.	common	el	Ξ Ο†Ξ¬ΞΊΞµΞ»ΞΏΟ‚ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ·
+france	common	el	Ξ“Ξ‘Ξ›Ξ™Ξ‘
+french guiana	common	el	Ξ“Ξ‘Ξ›Ξ›Ξ™ΞΞ— Ξ“ΞΞ¥ΞªΞ‘ΞΞ‘
+french polynesia	common	el	Ξ“Ξ‘Ξ›Ξ›Ξ™ΞΞ— Ξ ΞΞ›Ξ¥ΞΞ—Ξ£Ξ™Ξ‘
+french southern territories	common	el	ΞΞΞ¤Ξ™Ξ•Ξ£ Ξ“Ξ‘Ξ›Ξ›Ξ™ΞΞ•Ξ£ ΞΞ¤Ξ—Ξ£Ξ•Ξ™Ξ£
+friday	common	el	Ξ Ξ±ΟΞ±ΟƒΞΊΞµΟ…Ξ®
 ftp	common	el	FTP
-fullname	common	el	Ονοματεπώνυμο
-fullscreen mode	common	el	Πλήρης οθόνη
-gabon	common	el	ΓΚΑΜΠΟΝ
-gambia	common	el	ΓΚΑΜΠΙΑ
-general menu	common	el	Γενικό Μενού
-georgia	common	el	ΓΕΩΡΓΙΑ
-german	common	el	Γερμανικά
-germany	common	el	ΓΕΡΜΑΝΙΑ
-ghana	common	el	ΓΚΑΝΑ
-gibraltar	common	el	ΓΙΒΡΑΛΤΑΡ
-global	common	el	Παγκόσμιο
-global public	common	el	Παγκόσμιο Κοινό
-go today	jscalendar	el	Σήμερα
-grant access	common	el	Χορήγηση Πρόσβασης
-greece	common	el	ΕΛΛΑΔΑ
-greenland	common	el	ΓΡΟΙΛΑΝΔΙΑ
-grenada	common	el	ΓΡΑΝΑΔΑ
-group	common	el	Ομάδα
-group access	common	el	Πρόσβαση Ομάδας
-group has been added	common	el	Η ομάδα προστέθηκε
-group has been deleted	common	el	Η ομάδα διαγράφηκε
-group has been updated	common	el	Η ομάδα ανανεώθηκε
-group name	common	el	όνομα ομάδας
-group public	common	el	Δημόσια Ομάδα
-groups	common	el	Ομάδες
-groups with permission for %1	common	el	Ομάδες με άδεια για %1
-groups without permission for %1	common	el	Ομάδες χωρίς άδεια για %1
-guadeloupe	common	el	ΓΟΥΑΔΑΛΟΥΠΗ
-guam	common	el	ΓΚΟΥΑΜ
-guatemala	common	el	ΓΚΟΥΑΤΕΜΑΛΑ
-guinea	common	el	ΓΟΥΪΝΕΑ
-guinea-bissau	common	el	ΓΟΥΪΝΕΑ-ΜΠΙΣΩ
-guyana	common	el	ΓΟΥΪΑΝΑ
-haiti	common	el	ΑΪΤΗ
-heard island and mcdonald islands	common	el	ΝΗΣΟΙ ΧΕΡΝΤ & ΜΑΚΝΤΟΝΑΛΝΤ
-height	common	el	Ύψος
-help	common	el	Βοήθεια
-high	common	el	Ψηλά
-highest	common	el	Ψηλότερα
-holy see (vatican city state)	common	el	ΒΑΤΙΚΑΝΟ
-home	common	el	Αρχική Σελίδα
-home email	common	el	Email οικίας
-honduras	common	el	ΟΝΔΟΥΡΑ
-hong kong	common	el	ΧΟΝΓΚ ΚΟΝΓΚ
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	el	Πόσες εικόνες θα εμφανίζονται στη μπάρα πλοήγησης (κορυφή της σελίδας). Οι επιπλέον εικόνες μπαίνουν σ' ένα είδος pulldown menu, και ανακτώνται από το εικονίδιο στην τέρμα δεξιά πλευρά του μενού πλοήγησης.
-hungary	common	el	ΟΥΓΓΑΡΙΑ
-iceland	common	el	ΙΣΛΑΝΔΙΑ
-iespell not detected. click ok to go to download page.	common	el	ieSpell δεν βρέθηκε.Κλικ στο ΟΚ για να πάτε στη download page
-if the clock is enabled would you like it to update it every second or every minute?	common	el	Αν το ρολόι είναι ενεργοποιημένο θα θέλατε να το ενημερώνετε κάθε δευτερόλεπτο ή κάθε λεπτό;
-if there are some images in the background folder you can choose the one you would like to see.	common	el	Εάν υπάρχουν μερικές εικόνες στο φάκελο φόντου μπορείτε να επιλέξετε αυτές που θέλετε να δείτε.
-image directory relative to document root (use / !), example:	common	el	Κατάλογος εικόνας σχετικός με τη ρίζα εγγράφου (χρήση /!), π.χ.:
-image url	common	el	Εικόνα URL
-india	common	el	ΙΝΔΙΑ
-indonesia	common	el	ΙΝΔΟΝΗΣΙΑ
-insert all %1 addresses of the %2 contacts in %3	common	el	Εισαγωγή όλων των %1 διευθύνσεων των %2 επαφών στο %3
-insert column after	common	el	Εισαγωγή στήλης μετά
-insert column before	common	el	Εισαγωγή στήλης πριν
-insert row after	common	el	Εισαγωγή σειράς μετά
-insert row before	common	el	Εισαγωγή σειράς πριν
-international	common	el	Διεθνείς
-invalid filename	common	el	¶κυρο όνομα αρχείου
-invalid ip address	common	el	Ακυρη διεύθυνση ΙΡ
-invalid password	common	el	¶κυρος κωδικός
-iran, islamic republic of	common	el	ΙΡΑΝ
-iraq	common	el	ΙΡΑΚ
-ireland	common	el	ΙΡΛΑΝΔΙΑ
-israel	common	el	ΙΣΡΑΗΛ
-it has been more then %1 days since you changed your password	common	el	Πέρασαν πάνω από %1 μέρες από την τελευταία αλλαγή του κωδικού σας
-it is recommended that you run setup to upgrade your tables to the current version	common	el	Συνιστάται η εκτέλεση του setup για αναβάθμιση των πινάκων σας στην τρέχουσα έκδοση.
-italic	common	el	Πλάγια
-italy	common	el	ΙΤΑΛΙΑ
-jamaica	common	el	ΤΖΑΜΑΙΚΑ
-january	common	el	Ιανουάριος
-japan	common	el	ΙΑΠΩΝΙΑ
-jordan	common	el	ΙΟΡΔΑΝΙΑ
-july	common	el	Ιούλιος
-jun	common	el	Ιούν
-june	common	el	Ιούνιος
-justify center	common	el	Στοίχιση στο κέντρο
-justify full	common	el	Πλήρης στοίχιση
-justify left	common	el	Στοίχιση αριστερά
-justify right	common	el	Στοίχιση δεξιά
-kazakstan	common	el	ΚΑΖΑΚΣΤΑΝ
-kenya	common	el	ΚΕΝΥΑ
-keywords	common	el	Λέξεις κλειδιά
-kiribati	common	el	ΚΙΡΙΜΠΑΤΙ
-korea, democratic peoples republic of	common	el	ΚΟΡΕΑ, ΒΟΡΕΙΑ
-korea, republic of	common	el	ΚΟΡΕΑ, ΝΟΤΙΑ
-kuwait	common	el	ΚΟΥΒΕΪΤ
-kyrgyzstan	common	el	ΚΥΡΓΥΣΤΑΝ
-language	common	el	Γλώσσα
-language_direction_rtl	common	el	γλώσσα_κατεύθυνση_rtl
-lao peoples democratic republic	common	el	ΛΑΟΣ
-last name	common	el	Επίθετο
-last name of the user, eg. "%1"	common	el	επίθετο του χρήστη, π.χ. "%1"
-last page	common	el	Τελευταία σελίδα
-lastname	common	el	Επίθετο
-latvia	common	el	ΛΕΤΟΝΙΑ
-ldap-mgr	common	el	LDAP-Διαχειριστής
-lebanon	common	el	ΛΙΒΑΝΟΣ
-left	common	el	Αριστερά
-lesotho	common	el	ΛΕΣΟΤΟ
-liberia	common	el	ΛΙΒΕΡΙΑ
-libyan arab jamahiriya	common	el	ΛΙΒΥΚΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
-license	common	el	Αδεια
-liechtenstein	common	el	ΛΙΧΤΕΝΣΤΑΪΝ
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Γραμμή 1: '%2'<br>csv δεδομένα δεν αντιστοιχούν με τη στήλη-αρίθμηση τραπεζιού %3 ==>αγνοήθηκε</b>
-list	common	el	Λίστα
-list members	common	el	Μέλη λίστας
-lithuania	common	el	ΛΙΘΟΥΑΝΙΑ
-local	common	el	Τοπικός
-login	common	el	Είσοδος
-loginid	common	el	Ταυτότητα εισόδου
-logout	common	el	Εξοδος
-low	common	el	Χαμηλό
-lowest	common	el	Ελάχιστο
-luxembourg	common	el	ΛΟΥΞΕΜΒΟΥΡΓΟ
-macau	common	el	ΜΑΚΑΟ
-macedonia, the former yugoslav republic of	common	el	Π.Γ.Δ. ΤΗΣ ΜΑΚΕΔΟΝΙΑΣ
-madagascar	common	el	ΜΑΔΑΓΑΣΚΑΡΗ
-mail domain, eg. "%1"	common	el	mail domain, π.χ. "%1"
-main category	common	el	Βασική κατηγορία
-main screen	common	el	Βασική οθόνη
-maintainer	common	el	Συντηρητής
-malawi	common	el	ΜΑΛΑΟΥΪ
-malaysia	common	el	ΜΑΛΑΙΣΙΑ
-maldives	common	el	ΜΑΛΔΙΒΕΣ
-mali	common	el	ΜΑΛΙ
-malta	common	el	ΜΑΛΤΑ
-march	common	el	Μάρτιος
-marshall islands	common	el	ΝΗΣΟΙ ΜΑΡΣΑΛ
-martinique	common	el	ΜΑΡΤΙΝΙΚΑ
-mauritania	common	el	ΜΑΥΡΙΤΑΝΙΑ
-mauritius	common	el	ΜΑΥΡΙΚΙΟΣ
-max number of icons in navbar	common	el	Μέγιστος αριθμός εικονιδίων στη μπάρα πλοήγησης
-may	common	el	Μάϊος
-mayotte	common	el	ΜΑΓΙΟΤΕ
-medium	common	el	Μεσαίο
-menu	common	el	Μενού
-message	common	el	Μήνυμα
-mexico	common	el	ΜΕΞΙΚΟ
-micronesia, federated states of	common	el	ΜΙΚΡΟΝΗΣΙΑ
-minute	common	el	λεπτό
-moldova, republic of	common	el	ΜΟΛΔΑΒΙΑ
-monaco	common	el	ΜΟΝΑΚΟ
-monday	common	el	Δευτέρα
-mongolia	common	el	ΜΟΓΓΟΛΙΑ
-montenegro	common	el	ΜΑΥΡΟΒΟΥΝΙΟ
-montserrat	common	el	ΜΟΝΣΕΡΑ
-morocco	common	el	ΜΑΡΟΚΟ
-mozambique	common	el	ΜΟΝΖΑΒΙΚΗ
-multiple	common	el	πολλαπλό
-myanmar	common	el	ΜΥΑΝΜΑΡ
-name	common	el	Όνομα
-name of the user, eg. "%1"	common	el	Ονομα χρήστη, π.χ. "%1"
-namibia	common	el	ΝΑΜΙΜΠΙΑ
-nauru	common	el	ΝΑΟΥΡΟΥ
-nepal	common	el	ΝΕΠΑΛ
-netherlands	common	el	ΟΛΛΑΝΔΙΑ
-netherlands antilles	common	el	ΟΛΛΑΝΔΙΚΕΣ ΑΝΤΙΛΛΕΣ
-never	common	el	Ποτέ
-new caledonia	common	el	ΝΕΑ ΚΑΛΗΔΟΝΙΑ
-new entry added sucessfully	common	el	Επιτυχής προσθήκη νέας εισαγωγής
-new main category	common	el	Νέα βασική κατηγορία
-new value	common	el	Νέα τιμή
-new zealand	common	el	ΝΕΑ ΖΗΛΑΝΔΙΑ
-next	common	el	Επόμενο
-next month (hold for menu)	jscalendar	el	Επόμενος μήνας (κρατήστε για μενού)
-next page	common	el	Επόμενη σελίδα
-next year (hold for menu)	jscalendar	el	Επόμενος χρόνος (κρατήστε για μενού)
-nicaragua	common	el	ΝΙΚΑΡΑΓΟΥΑ
-niger	common	el	ΝΙΓΗΡ
-nigeria	common	el	ΝΙΓΗΡΙΑ
-niue	common	el	ΝΙΟΥΕ
-no	common	el	Όχι
-no entries found, try again ...	common	el	δεν βρέθηκαν καταχωρήσεις, ξαναπροσπαθήστε...
-no history for this record	common	el	Δεν υπάρχει ιστορικό γι' αυτή την εγγραφή
-no savant2 template directories were found in:	common	el	Δεν βρέθηκαν ετικέτες καταλόγων Savant2 στο:
-no subject	common	el	Χωρίς θέμα
-none	common	el	Κανένα
-norfolk island	common	el	ΝΗΣΟΣ ΝΟΡΦΟΛΚ
-normal	common	el	Κανονικό
-northern mariana islands	common	el	ΝΗΣΟΙ ΝΟΤΙΑ ΜΑΡΙΑΝΑ
-norway	common	el	ΝΟΡΒΗΓΙΑ
-not assigned	common	el	χωρίς ανάθεση
-note	common	el	Σημείωση
-notes	common	el	Σημειώσεις
-notify window	common	el	Παράθυρο ειδοποίησης
-notify your administrator to correct this situation	common	el	Ενημερώστε τον Διαχειριστή ώστε να διορθωθεί αυτή η Κατάσταση
-november	common	el	Νοέμβριος
-october	common	el	Οκτώβριος
-ok	common	el	ΟΚ
-old value	common	el	Παλιά Τιμή
-oman	common	el	ΟΜΑΝ
-on *nix systems please type: %1	common	el	Σε *nix συστήματα πληκτρολογίστε: %1
-on mouse over	common	el	Με mouse over
-only private	common	el	μόνο ιδιωτικά
-only yours	common	el	μόνο δικά σας
-open notify window	common	el	Ανοιξε το παράθυρο ειδοποίησης
-open popup window	common	el	Ανοιξε το εκτινασσόμενο παράθυρο
-open sidebox	common	el	¶νοιγμα μενού
-original	common	el	Αρχικός
-other	common	el	Αλλο
-overview	common	el	Επισκόπηση
-owner	common	el	Ιδιοκτήτης
-page	common	el	Σελίδα
-page was generated in %1 seconds	common	el	Η σελίδα δημιουργήθηκε σε %1 δευτερόλεπτα
-pakistan	common	el	ΠΑΚΙΣΤΑΝ
-palau	common	el	ΠΑΛΑΟΥ
-palestinian territory, occupied	common	el	ΠΑΛΑΙΣΤΗΝΙΑΚΗ ΚΑΤΕΧΟΜΕΝΗ ΠΕΡΙΟΧΗ
-panama	common	el	ΠΑΝΑΜΑΣ
-papua new guinea	common	el	ΠΑΠΟΥΑ ΝΕΑ ΓΟΥΪΝΕΑ
-paraguay	common	el	ΠΑΡΑΓΟΥΑΗ
-parcel	common	el	Πακέτο
-parent category	common	el	Γονική Κατηγορία
-password	common	el	Κωδικός
-password could not be changed	common	el	Ο κωδικός δεν μπόρεσε να αλλαχθεί
-password has been updated	common	el	Ο κωδικός ενημερώθηκε
-password must contain at least %1 numbers	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 αριθμούς
-password must contain at least %1 special characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 ειδικούς χαρακτήρες
-password must have at least %1 characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 χαρακτήρες
-path to user and group files has to be outside of the webservers document-root!!!	common	el	Η διαδρομή του χρήστη και των αρχείων ομάδας ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ του webserver document-root!!!
-permissions to the files/users directory	common	el	δικαιώματα για τον κατάλογο αρχείων/χρηστών
-personal	common	el	Προσωπικό
-peru	common	el	ΠΕΡΟΥ
-philippines	common	el	ΦΙΛΙΠΠΙΝΕΣ
-phone number	common	el	Αριθμός τηλεφώνου
+fullname	common	el	ΞΞ½ΞΏΞΌΞ±Ο„ΞµΟ€ΟΞ½Ο…ΞΌΞΏ
+fullscreen mode	common	el	Ξ Ξ»Ξ®ΟΞ·Ο‚ ΞΏΞΈΟΞ½Ξ·
+gabon	common	el	Ξ“ΞΞ‘ΞΞ ΞΞ
+gambia	common	el	Ξ“ΞΞ‘ΞΞ Ξ™Ξ‘
+general menu	common	el	Ξ“ΞµΞ½ΞΉΞΊΟ ΞΞµΞ½ΞΏΟ
+georgia	common	el	Ξ“Ξ•Ξ©Ξ΅Ξ“Ξ™Ξ‘
+german	common	el	Ξ“ΞµΟΞΌΞ±Ξ½ΞΉΞΊΞ¬
+germany	common	el	Ξ“Ξ•Ξ΅ΞΞ‘ΞΞ™Ξ‘
+ghana	common	el	Ξ“ΞΞ‘ΞΞ‘
+gibraltar	common	el	Ξ“Ξ™Ξ’Ξ΅Ξ‘Ξ›Ξ¤Ξ‘Ξ΅
+global	common	el	Ξ Ξ±Ξ³ΞΊΟΟƒΞΌΞΉΞΏ
+global public	common	el	Ξ Ξ±Ξ³ΞΊΟΟƒΞΌΞΉΞΏ ΞΞΏΞΉΞ½Ο
+go today	jscalendar	el	Ξ£Ξ®ΞΌΞµΟΞ±
+grant access	common	el	Ξ§ΞΏΟΞ®Ξ³Ξ·ΟƒΞ· Ξ ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚
+greece	common	el	Ξ•Ξ›Ξ›Ξ‘Ξ”Ξ‘
+greenland	common	el	Ξ“Ξ΅ΞΞ™Ξ›Ξ‘ΞΞ”Ξ™Ξ‘
+grenada	common	el	Ξ“Ξ΅Ξ‘ΞΞ‘Ξ”Ξ‘
+group	common	el	ΞΞΌΞ¬Ξ΄Ξ±
+group access	common	el	Ξ ΟΟΟƒΞ²Ξ±ΟƒΞ· ΞΞΌΞ¬Ξ΄Ξ±Ο‚
+group has been added	common	el	Ξ— ΞΏΞΌΞ¬Ξ΄Ξ± Ο€ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ
+group has been deleted	common	el	Ξ— ΞΏΞΌΞ¬Ξ΄Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬Ο†Ξ·ΞΊΞµ
+group has been updated	common	el	Ξ— ΞΏΞΌΞ¬Ξ΄Ξ± Ξ±Ξ½Ξ±Ξ½ΞµΟΞΈΞ·ΞΊΞµ
+group name	common	el	ΟΞ½ΞΏΞΌΞ± ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+group public	common	el	Ξ”Ξ·ΞΌΟΟƒΞΉΞ± ΞΞΌΞ¬Ξ΄Ξ±
+groups	common	el	ΞΞΌΞ¬Ξ΄ΞµΟ‚
+groups with permission for %1	common	el	ΞΞΌΞ¬Ξ΄ΞµΟ‚ ΞΌΞµ Ξ¬Ξ΄ΞµΞΉΞ± Ξ³ΞΉΞ± %1
+groups without permission for %1	common	el	ΞΞΌΞ¬Ξ΄ΞµΟ‚ Ο‡Ο‰ΟΞ―Ο‚ Ξ¬Ξ΄ΞµΞΉΞ± Ξ³ΞΉΞ± %1
+guadeloupe	common	el	Ξ“ΞΞ¥Ξ‘Ξ”Ξ‘Ξ›ΞΞ¥Ξ Ξ—
+guam	common	el	Ξ“ΞΞΞ¥Ξ‘Ξ
+guatemala	common	el	Ξ“ΞΞΞ¥Ξ‘Ξ¤Ξ•ΞΞ‘Ξ›Ξ‘
+guinea	common	el	Ξ“ΞΞ¥ΞªΞΞ•Ξ‘
+guinea-bissau	common	el	Ξ“ΞΞ¥ΞªΞΞ•Ξ‘-ΞΞ Ξ™Ξ£Ξ©
+guyana	common	el	Ξ“ΞΞ¥ΞªΞ‘ΞΞ‘
+haiti	common	el	Ξ‘ΞªΞ¤Ξ—
+heard island and mcdonald islands	common	el	ΞΞ—Ξ£ΞΞ™ Ξ§Ξ•Ξ΅ΞΞ¤ & ΞΞ‘ΞΞΞ¤ΞΞΞ‘Ξ›ΞΞ¤
+height	common	el	ΞΟΞΏΟ‚
+help	common	el	Ξ’ΞΏΞ®ΞΈΞµΞΉΞ±
+high	common	el	Ξ¨Ξ·Ξ»Ξ¬
+highest	common	el	Ξ¨Ξ·Ξ»ΟΟ„ΞµΟΞ±
+holy see (vatican city state)	common	el	Ξ’Ξ‘Ξ¤Ξ™ΞΞ‘ΞΞ
+home	common	el	Ξ‘ΟΟ‡ΞΉΞΊΞ® Ξ£ΞµΞ»Ξ―Ξ΄Ξ±
+home email	common	el	Email ΞΏΞΉΞΊΞ―Ξ±Ο‚
+honduras	common	el	ΞΞΞ”ΞΞ¥Ξ΅Ξ‘
+hong kong	common	el	Ξ§ΞΞΞ“Ξ ΞΞΞΞ“Ξ
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	el	Ξ ΟΟƒΞµΟ‚ ΞµΞΉΞΊΟΞ½ΞµΟ‚ ΞΈΞ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ ΟƒΟ„Ξ· ΞΌΟ€Ξ¬ΟΞ± Ο€Ξ»ΞΏΞ®Ξ³Ξ·ΟƒΞ·Ο‚ (ΞΊΞΏΟΟ…Ο†Ξ® Ο„Ξ·Ο‚ ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚). ΞΞΉ ΞµΟ€ΞΉΟ€Ξ»Ξ­ΞΏΞ½ ΞµΞΉΞΊΟΞ½ΞµΟ‚ ΞΌΟ€Ξ±Ξ―Ξ½ΞΏΟ…Ξ½ Οƒ' Ξ­Ξ½Ξ± ΞµΞ―Ξ΄ΞΏΟ‚ pulldown menu, ΞΊΞ±ΞΉ Ξ±Ξ½Ξ±ΞΊΟ„ΟΞ½Ο„Ξ±ΞΉ Ξ±Ο€Ο Ο„ΞΏ ΞµΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ ΟƒΟ„Ξ·Ξ½ Ο„Ξ­ΟΞΌΞ± Ξ΄ΞµΞΎΞΉΞ¬ Ο€Ξ»ΞµΟ…ΟΞ¬ Ο„ΞΏΟ… ΞΌΞµΞ½ΞΏΟ Ο€Ξ»ΞΏΞ®Ξ³Ξ·ΟƒΞ·Ο‚.
+hungary	common	el	ΞΞ¥Ξ“Ξ“Ξ‘Ξ΅Ξ™Ξ‘
+iceland	common	el	Ξ™Ξ£Ξ›Ξ‘ΞΞ”Ξ™Ξ‘
+iespell not detected. click ok to go to download page.	common	el	ieSpell Ξ΄ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞµ.ΞΞ»ΞΉΞΊ ΟƒΟ„ΞΏ ΞΞ Ξ³ΞΉΞ± Ξ½Ξ± Ο€Ξ¬Ο„Ξµ ΟƒΟ„Ξ· download page
+if the clock is enabled would you like it to update it every second or every minute?	common	el	Ξ‘Ξ½ Ο„ΞΏ ΟΞΏΞ»ΟΞΉ ΞµΞ―Ξ½Ξ±ΞΉ ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏ ΞΈΞ± ΞΈΞ­Ξ»Ξ±Ο„Ξµ Ξ½Ξ± Ο„ΞΏ ΞµΞ½Ξ·ΞΌΞµΟΟΞ½ΞµΟ„Ξµ ΞΊΞ¬ΞΈΞµ Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„ΞΏ Ξ® ΞΊΞ¬ΞΈΞµ Ξ»ΞµΟ€Ο„Ο;
+if there are some images in the background folder you can choose the one you would like to see.	common	el	Ξ•Ξ¬Ξ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ ΞΌΞµΟΞΉΞΊΞ­Ο‚ ΞµΞΉΞΊΟΞ½ΞµΟ‚ ΟƒΟ„ΞΏ Ο†Ξ¬ΞΊΞµΞ»ΞΏ Ο†ΟΞ½Ο„ΞΏΟ… ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ Ξ±Ο…Ο„Ξ­Ο‚ Ο€ΞΏΟ… ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞµΞ―Ο„Ξµ.
+image directory relative to document root (use / !), example:	common	el	ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ ΞµΞΉΞΊΟΞ½Ξ±Ο‚ ΟƒΟ‡ΞµΟ„ΞΉΞΊΟΟ‚ ΞΌΞµ Ο„Ξ· ΟΞ―Ξ¶Ξ± ΞµΞ³Ξ³ΟΞ¬Ο†ΞΏΟ… (Ο‡ΟΞ®ΟƒΞ· /!), Ο€.Ο‡.:
+image url	common	el	Ξ•ΞΉΞΊΟΞ½Ξ± URL
+india	common	el	Ξ™ΞΞ”Ξ™Ξ‘
+indonesia	common	el	Ξ™ΞΞ”ΞΞΞ—Ξ£Ξ™Ξ‘
+insert all %1 addresses of the %2 contacts in %3	common	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ %1 Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½ Ο„Ο‰Ξ½ %2 ΞµΟ€Ξ±Ο†ΟΞ½ ΟƒΟ„ΞΏ %3
+insert column after	common	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟƒΟ„Ξ®Ξ»Ξ·Ο‚ ΞΌΞµΟ„Ξ¬
+insert column before	common	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟƒΟ„Ξ®Ξ»Ξ·Ο‚ Ο€ΟΞΉΞ½
+insert row after	common	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟƒΞµΞΉΟΞ¬Ο‚ ΞΌΞµΟ„Ξ¬
+insert row before	common	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟƒΞµΞΉΟΞ¬Ο‚ Ο€ΟΞΉΞ½
+international	common	el	Ξ”ΞΉΞµΞΈΞ½ΞµΞ―Ο‚
+invalid filename	common	el	Ξ†ΞΊΟ…ΟΞΏ ΟΞ½ΞΏΞΌΞ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+invalid ip address	common	el	Ξ‘ΞΊΟ…ΟΞ· Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· Ξ™Ξ΅
+invalid password	common	el	Ξ†ΞΊΟ…ΟΞΏΟ‚ ΞΊΟ‰Ξ΄ΞΉΞΊΟΟ‚
+iran, islamic republic of	common	el	Ξ™Ξ΅Ξ‘Ξ
+iraq	common	el	Ξ™Ξ΅Ξ‘Ξ
+ireland	common	el	Ξ™Ξ΅Ξ›Ξ‘ΞΞ”Ξ™Ξ‘
+israel	common	el	Ξ™Ξ£Ξ΅Ξ‘Ξ—Ξ›
+it has been more then %1 days since you changed your password	common	el	Ξ Ξ­ΟΞ±ΟƒΞ±Ξ½ Ο€Ξ¬Ξ½Ο‰ Ξ±Ο€Ο %1 ΞΌΞ­ΟΞµΟ‚ Ξ±Ο€Ο Ο„Ξ·Ξ½ Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® Ο„ΞΏΟ… ΞΊΟ‰Ξ΄ΞΉΞΊΞΏΟ ΟƒΞ±Ο‚
+it is recommended that you run setup to upgrade your tables to the current version	common	el	Ξ£Ο…Ξ½ΞΉΟƒΟ„Ξ¬Ο„Ξ±ΞΉ Ξ· ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· Ο„ΞΏΟ… setup Ξ³ΞΉΞ± Ξ±Ξ½Ξ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ· Ο„Ο‰Ξ½ Ο€ΞΉΞ½Ξ¬ΞΊΟ‰Ξ½ ΟƒΞ±Ο‚ ΟƒΟ„Ξ·Ξ½ Ο„ΟΞ­Ο‡ΞΏΟ…ΟƒΞ± Ξ­ΞΊΞ΄ΞΏΟƒΞ·.
+italic	common	el	Ξ Ξ»Ξ¬Ξ³ΞΉΞ±
+italy	common	el	Ξ™Ξ¤Ξ‘Ξ›Ξ™Ξ‘
+jamaica	common	el	Ξ¤Ξ–Ξ‘ΞΞ‘Ξ™ΞΞ‘
+january	common	el	Ξ™Ξ±Ξ½ΞΏΟ…Ξ¬ΟΞΉΞΏΟ‚
+japan	common	el	Ξ™Ξ‘Ξ Ξ©ΞΞ™Ξ‘
+jordan	common	el	Ξ™ΞΞ΅Ξ”Ξ‘ΞΞ™Ξ‘
+july	common	el	Ξ™ΞΏΟΞ»ΞΉΞΏΟ‚
+jun	common	el	Ξ™ΞΏΟΞ½
+june	common	el	Ξ™ΞΏΟΞ½ΞΉΞΏΟ‚
+justify center	common	el	Ξ£Ο„ΞΏΞ―Ο‡ΞΉΟƒΞ· ΟƒΟ„ΞΏ ΞΊΞ­Ξ½Ο„ΟΞΏ
+justify full	common	el	Ξ Ξ»Ξ®ΟΞ·Ο‚ ΟƒΟ„ΞΏΞ―Ο‡ΞΉΟƒΞ·
+justify left	common	el	Ξ£Ο„ΞΏΞ―Ο‡ΞΉΟƒΞ· Ξ±ΟΞΉΟƒΟ„ΞµΟΞ¬
+justify right	common	el	Ξ£Ο„ΞΏΞ―Ο‡ΞΉΟƒΞ· Ξ΄ΞµΞΎΞΉΞ¬
+kazakstan	common	el	ΞΞ‘Ξ–Ξ‘ΞΞ£Ξ¤Ξ‘Ξ
+kenya	common	el	ΞΞ•ΞΞ¥Ξ‘
+keywords	common	el	Ξ›Ξ­ΞΎΞµΞΉΟ‚ ΞΊΞ»ΞµΞΉΞ΄ΞΉΞ¬
+kiribati	common	el	ΞΞ™Ξ΅Ξ™ΞΞ Ξ‘Ξ¤Ξ™
+korea, democratic peoples republic of	common	el	ΞΞΞ΅Ξ•Ξ‘, Ξ’ΞΞ΅Ξ•Ξ™Ξ‘
+korea, republic of	common	el	ΞΞΞ΅Ξ•Ξ‘, ΞΞΞ¤Ξ™Ξ‘
+kuwait	common	el	ΞΞΞ¥Ξ’Ξ•ΞªΞ¤
+kyrgyzstan	common	el	ΞΞ¥Ξ΅Ξ“Ξ¥Ξ£Ξ¤Ξ‘Ξ
+language	common	el	Ξ“Ξ»ΟΟƒΟƒΞ±
+language_direction_rtl	common	el	Ξ³Ξ»ΟΟƒΟƒΞ±_ΞΊΞ±Ο„ΞµΟΞΈΟ…Ξ½ΟƒΞ·_rtl
+lao peoples democratic republic	common	el	Ξ›Ξ‘ΞΞ£
+last name	common	el	Ξ•Ο€Ξ―ΞΈΞµΟ„ΞΏ
+last name of the user, eg. "%1"	common	el	ΞµΟ€Ξ―ΞΈΞµΟ„ΞΏ Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ·, Ο€.Ο‡. "%1"
+last page	common	el	Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± ΟƒΞµΞ»Ξ―Ξ΄Ξ±
+lastname	common	el	Ξ•Ο€Ξ―ΞΈΞµΟ„ΞΏ
+latvia	common	el	Ξ›Ξ•Ξ¤ΞΞΞ™Ξ‘
+ldap-mgr	common	el	LDAP-Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚
+lebanon	common	el	Ξ›Ξ™Ξ’Ξ‘ΞΞΞ£
+left	common	el	Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬
+lesotho	common	el	Ξ›Ξ•Ξ£ΞΞ¤Ξ
+liberia	common	el	Ξ›Ξ™Ξ’Ξ•Ξ΅Ξ™Ξ‘
+libyan arab jamahiriya	common	el	Ξ›Ξ™Ξ’Ξ¥ΞΞ‘ Ξ‘Ξ΅Ξ‘Ξ’Ξ™ΞΞ‘ Ξ•ΞΞ™Ξ΅Ξ‘Ξ¤Ξ‘
+license	common	el	Ξ‘Ξ΄ΞµΞΉΞ±
+liechtenstein	common	el	Ξ›Ξ™Ξ§Ξ¤Ξ•ΞΞ£Ξ¤Ξ‘ΞªΞ
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Ξ“ΟΞ±ΞΌΞΌΞ® 1: '%2'<br>csv Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ± Ξ΄ΞµΞ½ Ξ±Ξ½Ο„ΞΉΟƒΟ„ΞΏΞΉΟ‡ΞΏΟΞ½ ΞΌΞµ Ο„Ξ· ΟƒΟ„Ξ®Ξ»Ξ·-Ξ±ΟΞ―ΞΈΞΌΞ·ΟƒΞ· Ο„ΟΞ±Ο€ΞµΞ¶ΞΉΞΏΟ %3 ==>Ξ±Ξ³Ξ½ΞΏΞ®ΞΈΞ·ΞΊΞµ</b>
+list	common	el	Ξ›Ξ―ΟƒΟ„Ξ±
+list members	common	el	ΞΞ­Ξ»Ξ· Ξ»Ξ―ΟƒΟ„Ξ±Ο‚
+lithuania	common	el	Ξ›Ξ™ΞΞΞ¥Ξ‘ΞΞ™Ξ‘
+local	common	el	Ξ¤ΞΏΟ€ΞΉΞΊΟΟ‚
+login	common	el	Ξ•Ξ―ΟƒΞΏΞ΄ΞΏΟ‚
+loginid	common	el	Ξ¤Ξ±Ο…Ο„ΟΟ„Ξ·Ο„Ξ± ΞµΞΉΟƒΟΞ΄ΞΏΟ…
+logout	common	el	Ξ•ΞΎΞΏΞ΄ΞΏΟ‚
+low	common	el	Ξ§Ξ±ΞΌΞ·Ξ»Ο
+lowest	common	el	Ξ•Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏ
+luxembourg	common	el	Ξ›ΞΞ¥ΞΞ•ΞΞ’ΞΞ¥Ξ΅Ξ“Ξ
+macau	common	el	ΞΞ‘ΞΞ‘Ξ
+macedonia, the former yugoslav republic of	common	el	Ξ .Ξ“.Ξ”. Ξ¤Ξ—Ξ£ ΞΞ‘ΞΞ•Ξ”ΞΞΞ™Ξ‘Ξ£
+madagascar	common	el	ΞΞ‘Ξ”Ξ‘Ξ“Ξ‘Ξ£ΞΞ‘Ξ΅Ξ—
+mail domain, eg. "%1"	common	el	mail domain, Ο€.Ο‡. "%1"
+main category	common	el	Ξ’Ξ±ΟƒΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+main screen	common	el	Ξ’Ξ±ΟƒΞΉΞΊΞ® ΞΏΞΈΟΞ½Ξ·
+maintainer	common	el	Ξ£Ο…Ξ½Ο„Ξ·ΟΞ·Ο„Ξ®Ο‚
+malawi	common	el	ΞΞ‘Ξ›Ξ‘ΞΞ¥Ξª
+malaysia	common	el	ΞΞ‘Ξ›Ξ‘Ξ™Ξ£Ξ™Ξ‘
+maldives	common	el	ΞΞ‘Ξ›Ξ”Ξ™Ξ’Ξ•Ξ£
+mali	common	el	ΞΞ‘Ξ›Ξ™
+malta	common	el	ΞΞ‘Ξ›Ξ¤Ξ‘
+march	common	el	ΞΞ¬ΟΟ„ΞΉΞΏΟ‚
+marshall islands	common	el	ΞΞ—Ξ£ΞΞ™ ΞΞ‘Ξ΅Ξ£Ξ‘Ξ›
+martinique	common	el	ΞΞ‘Ξ΅Ξ¤Ξ™ΞΞ™ΞΞ‘
+mauritania	common	el	ΞΞ‘Ξ¥Ξ΅Ξ™Ξ¤Ξ‘ΞΞ™Ξ‘
+mauritius	common	el	ΞΞ‘Ξ¥Ξ΅Ξ™ΞΞ™ΞΞ£
+max number of icons in navbar	common	el	ΞΞ­Ξ³ΞΉΟƒΟ„ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ ΞµΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―Ο‰Ξ½ ΟƒΟ„Ξ· ΞΌΟ€Ξ¬ΟΞ± Ο€Ξ»ΞΏΞ®Ξ³Ξ·ΟƒΞ·Ο‚
+may	common	el	ΞΞ¬ΟΞΏΟ‚
+mayotte	common	el	ΞΞ‘Ξ“Ξ™ΞΞ¤Ξ•
+medium	common	el	ΞΞµΟƒΞ±Ξ―ΞΏ
+menu	common	el	ΞΞµΞ½ΞΏΟ
+message	common	el	ΞΞ®Ξ½Ο…ΞΌΞ±
+mexico	common	el	ΞΞ•ΞΞ™ΞΞ
+micronesia, federated states of	common	el	ΞΞ™ΞΞ΅ΞΞΞ—Ξ£Ξ™Ξ‘
+minute	common	el	Ξ»ΞµΟ€Ο„Ο
+moldova, republic of	common	el	ΞΞΞ›Ξ”Ξ‘Ξ’Ξ™Ξ‘
+monaco	common	el	ΞΞΞΞ‘ΞΞ
+monday	common	el	Ξ”ΞµΟ…Ο„Ξ­ΟΞ±
+mongolia	common	el	ΞΞΞ“Ξ“ΞΞ›Ξ™Ξ‘
+montenegro	common	el	ΞΞ‘Ξ¥Ξ΅ΞΞ’ΞΞ¥ΞΞ™Ξ
+montserrat	common	el	ΞΞΞΞ£Ξ•Ξ΅Ξ‘
+morocco	common	el	ΞΞ‘Ξ΅ΞΞΞ
+mozambique	common	el	ΞΞΞΞ–Ξ‘Ξ’Ξ™ΞΞ—
+multiple	common	el	Ο€ΞΏΞ»Ξ»Ξ±Ο€Ξ»Ο
+myanmar	common	el	ΞΞ¥Ξ‘ΞΞΞ‘Ξ΅
+name	common	el	ΞΞ½ΞΏΞΌΞ±
+name of the user, eg. "%1"	common	el	ΞΞ½ΞΏΞΌΞ± Ο‡ΟΞ®ΟƒΟ„Ξ·, Ο€.Ο‡. "%1"
+namibia	common	el	ΞΞ‘ΞΞ™ΞΞ Ξ™Ξ‘
+nauru	common	el	ΞΞ‘ΞΞ¥Ξ΅ΞΞ¥
+nepal	common	el	ΞΞ•Ξ Ξ‘Ξ›
+netherlands	common	el	ΞΞ›Ξ›Ξ‘ΞΞ”Ξ™Ξ‘
+netherlands antilles	common	el	ΞΞ›Ξ›Ξ‘ΞΞ”Ξ™ΞΞ•Ξ£ Ξ‘ΞΞ¤Ξ™Ξ›Ξ›Ξ•Ξ£
+never	common	el	Ξ ΞΏΟ„Ξ­
+new caledonia	common	el	ΞΞ•Ξ‘ ΞΞ‘Ξ›Ξ—Ξ”ΞΞΞ™Ξ‘
+new entry added sucessfully	common	el	Ξ•Ο€ΞΉΟ„Ο…Ο‡Ξ®Ο‚ Ο€ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ½Ξ­Ξ±Ο‚ ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚
+new main category	common	el	ΞΞ­Ξ± Ξ²Ξ±ΟƒΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+new value	common	el	ΞΞ­Ξ± Ο„ΞΉΞΌΞ®
+new zealand	common	el	ΞΞ•Ξ‘ Ξ–Ξ—Ξ›Ξ‘ΞΞ”Ξ™Ξ‘
+next	common	el	Ξ•Ο€ΟΞΌΞµΞ½ΞΏ
+next month (hold for menu)	jscalendar	el	Ξ•Ο€ΟΞΌΞµΞ½ΞΏΟ‚ ΞΌΞ®Ξ½Ξ±Ο‚ (ΞΊΟΞ±Ο„Ξ®ΟƒΟ„Ξµ Ξ³ΞΉΞ± ΞΌΞµΞ½ΞΏΟ)
+next page	common	el	Ξ•Ο€ΟΞΌΞµΞ½Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ±
+next year (hold for menu)	jscalendar	el	Ξ•Ο€ΟΞΌΞµΞ½ΞΏΟ‚ Ο‡ΟΟΞ½ΞΏΟ‚ (ΞΊΟΞ±Ο„Ξ®ΟƒΟ„Ξµ Ξ³ΞΉΞ± ΞΌΞµΞ½ΞΏΟ)
+nicaragua	common	el	ΞΞ™ΞΞ‘Ξ΅Ξ‘Ξ“ΞΞ¥Ξ‘
+niger	common	el	ΞΞ™Ξ“Ξ—Ξ΅
+nigeria	common	el	ΞΞ™Ξ“Ξ—Ξ΅Ξ™Ξ‘
+niue	common	el	ΞΞ™ΞΞ¥Ξ•
+no	common	el	ΞΟ‡ΞΉ
+no entries found, try again ...	common	el	Ξ΄ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞ±Ξ½ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚, ΞΎΞ±Ξ½Ξ±Ο€ΟΞΏΟƒΟ€Ξ±ΞΈΞ®ΟƒΟ„Ξµ...
+no history for this record	common	el	Ξ”ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΞΉΟƒΟ„ΞΏΟΞΉΞΊΟ Ξ³ΞΉ' Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞµΞ³Ξ³ΟΞ±Ο†Ξ®
+no savant2 template directories were found in:	common	el	Ξ”ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞ±Ξ½ ΞµΟ„ΞΉΞΊΞ­Ο„ΞµΟ‚ ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³Ο‰Ξ½ Savant2 ΟƒΟ„ΞΏ:
+no subject	common	el	Ξ§Ο‰ΟΞ―Ο‚ ΞΈΞ­ΞΌΞ±
+none	common	el	ΞΞ±Ξ½Ξ­Ξ½Ξ±
+norfolk island	common	el	ΞΞ—Ξ£ΞΞ£ ΞΞΞ΅Ξ¦ΞΞ›Ξ
+normal	common	el	ΞΞ±Ξ½ΞΏΞ½ΞΉΞΊΟ
+northern mariana islands	common	el	ΞΞ—Ξ£ΞΞ™ ΞΞΞ¤Ξ™Ξ‘ ΞΞ‘Ξ΅Ξ™Ξ‘ΞΞ‘
+norway	common	el	ΞΞΞ΅Ξ’Ξ—Ξ“Ξ™Ξ‘
+not assigned	common	el	Ο‡Ο‰ΟΞ―Ο‚ Ξ±Ξ½Ξ¬ΞΈΞµΟƒΞ·
+note	common	el	Ξ£Ξ·ΞΌΞµΞ―Ο‰ΟƒΞ·
+notes	common	el	Ξ£Ξ·ΞΌΞµΞΉΟΟƒΞµΞΉΟ‚
+notify window	common	el	Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚
+notify your administrator to correct this situation	common	el	Ξ•Ξ½Ξ·ΞΌΞµΟΟΟƒΟ„Ξµ Ο„ΞΏΞ½ Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ® ΟΟƒΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞΏΟΞΈΟ‰ΞΈΞµΞ― Ξ±Ο…Ο„Ξ® Ξ· ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·
+november	common	el	ΞΞΏΞ­ΞΌΞ²ΟΞΉΞΏΟ‚
+october	common	el	ΞΞΊΟ„ΟΞ²ΟΞΉΞΏΟ‚
+ok	common	el	ΞΞ
+old value	common	el	Ξ Ξ±Ξ»ΞΉΞ¬ Ξ¤ΞΉΞΌΞ®
+oman	common	el	ΞΞΞ‘Ξ
+on *nix systems please type: %1	common	el	Ξ£Ξµ *nix ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„Ξ± Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ―ΟƒΟ„Ξµ: %1
+on mouse over	common	el	ΞΞµ mouse over
+only private	common	el	ΞΌΟΞ½ΞΏ ΞΉΞ΄ΞΉΟ‰Ο„ΞΉΞΊΞ¬
+only yours	common	el	ΞΌΟΞ½ΞΏ Ξ΄ΞΉΞΊΞ¬ ΟƒΞ±Ο‚
+open notify window	common	el	Ξ‘Ξ½ΞΏΞΉΞΎΞµ Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚
+open popup window	common	el	Ξ‘Ξ½ΞΏΞΉΞΎΞµ Ο„ΞΏ ΞµΞΊΟ„ΞΉΞ½Ξ±ΟƒΟƒΟΞΌΞµΞ½ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ
+open sidebox	common	el	Ξ†Ξ½ΞΏΞΉΞ³ΞΌΞ± ΞΌΞµΞ½ΞΏΟ
+original	common	el	Ξ‘ΟΟ‡ΞΉΞΊΟΟ‚
+other	common	el	Ξ‘Ξ»Ξ»ΞΏ
+overview	common	el	Ξ•Ο€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ·
+owner	common	el	Ξ™Ξ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ·Ο‚
+page	common	el	Ξ£ΞµΞ»Ξ―Ξ΄Ξ±
+page was generated in %1 seconds	common	el	Ξ— ΟƒΞµΞ»Ξ―Ξ΄Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ ΟƒΞµ %1 Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„Ξ±
+pakistan	common	el	Ξ Ξ‘ΞΞ™Ξ£Ξ¤Ξ‘Ξ
+palau	common	el	Ξ Ξ‘Ξ›Ξ‘ΞΞ¥
+palestinian territory, occupied	common	el	Ξ Ξ‘Ξ›Ξ‘Ξ™Ξ£Ξ¤Ξ—ΞΞ™Ξ‘ΞΞ— ΞΞ‘Ξ¤Ξ•Ξ§ΞΞΞ•ΞΞ— Ξ Ξ•Ξ΅Ξ™ΞΞ§Ξ—
+panama	common	el	Ξ Ξ‘ΞΞ‘ΞΞ‘Ξ£
+papua new guinea	common	el	Ξ Ξ‘Ξ ΞΞ¥Ξ‘ ΞΞ•Ξ‘ Ξ“ΞΞ¥ΞªΞΞ•Ξ‘
+paraguay	common	el	Ξ Ξ‘Ξ΅Ξ‘Ξ“ΞΞ¥Ξ‘Ξ—
+parcel	common	el	Ξ Ξ±ΞΊΞ­Ο„ΞΏ
+parent category	common	el	Ξ“ΞΏΞ½ΞΉΞΊΞ® ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+password	common	el	ΞΟ‰Ξ΄ΞΉΞΊΟΟ‚
+password could not be changed	common	el	Ξ ΞΊΟ‰Ξ΄ΞΉΞΊΟΟ‚ Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ±Ξ»Ξ»Ξ±Ο‡ΞΈΞµΞ―
+password has been updated	common	el	Ξ ΞΊΟ‰Ξ΄ΞΉΞΊΟΟ‚ ΞµΞ½Ξ·ΞΌΞµΟΟΞΈΞ·ΞΊΞµ
+password must contain at least %1 numbers	common	el	Ξ ΞΊΟ‰Ξ΄ΞΉΞΊΟΟ‚ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ Ο„ΞΏΟ…Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏΞ½ %1 Ξ±ΟΞΉΞΈΞΌΞΏΟΟ‚
+password must contain at least %1 special characters	common	el	Ξ ΞΊΟ‰Ξ΄ΞΉΞΊΟΟ‚ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ Ο„ΞΏΟ…Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏΞ½ %1 ΞµΞΉΞ΄ΞΉΞΊΞΏΟΟ‚ Ο‡Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚
+password must have at least %1 characters	common	el	Ξ ΞΊΟ‰Ξ΄ΞΉΞΊΟΟ‚ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ Ο„ΞΏΟ…Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏΞ½ %1 Ο‡Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚
+path to user and group files has to be outside of the webservers document-root!!!	common	el	Ξ— Ξ΄ΞΉΞ±Ξ΄ΟΞΏΞΌΞ® Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ· ΞΊΞ±ΞΉ Ο„Ο‰Ξ½ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚ Ξ Ξ΅Ξ•Ξ Ξ•Ξ™ ΞΞ‘ Ξ•Ξ™ΞΞ‘Ξ™ Ξ•ΞΞ¤ΞΞ£ Ο„ΞΏΟ… webserver document-root!!!
+permissions to the files/users directory	common	el	Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ο„ΞΏΞ½ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½/Ο‡ΟΞ·ΟƒΟ„ΟΞ½
+personal	common	el	Ξ ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΟ
+peru	common	el	Ξ Ξ•Ξ΅ΞΞ¥
+philippines	common	el	Ξ¦Ξ™Ξ›Ξ™Ξ Ξ Ξ™ΞΞ•Ξ£
+phone number	common	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ο„Ξ·Ξ»ΞµΟ†ΟΞ½ΞΏΟ…
 phpgwapi	common	el	eGroupWare API
-pitcairn	common	el	ΠΙΤΚΕΡΝ
-please %1 by hand	common	el	Παρακαλώ %1 με το χέρι
-please enter a name	common	el	Παρακαλώ εισάγετε όνομα
-please run setup to become current	common	el	Παρακαλώ τρέξτε το setup για να γίνετε έγκυρος
-please select	common	el	Παρακαλώ επιλέξτε
-please set your global preferences	common	el	Παρακαλώ ορίστε τις παγκόσμιες ρυθμίσεις σας!
-please set your preferences for this application	common	el	Παρακαλώ ορίστε τις ρυθμίσεις σας γι' αυτή την εφαρμογή
-please wait...	common	el	Παρακαλώ περιμένετε
-poland	common	el	ΠΟΛΩΝΙΑ
-portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
-postal	common	el	Ταχυδρομικός
-powered by egroupware version %1	common	el	Powered by <a href="http://www.egroupware.org">eGroupWare</a> έκδοση %1
-preferences	common	el	Επιλογές
-preferences for the idots template set	common	el	Επιλογές συνόλων προτύπων για τα idots
-prev. month (hold for menu)	jscalendar	el	Προηγούμενος μήνας (κρατήστε για μενού)
-prev. year (hold for menu)	jscalendar	el	Προηγούμενος χρόνος (κρατήστε για μενού)
-previous page	common	el	Προηγούμενη σελίδα
-primary style-sheet:	common	el	Αρχικός τύπος φύλλου
-print	common	el	Εκτύπωση
-priority	common	el	Προτεραιότητα
-private	common	el	Προσωπικό
-programs	common	el	Προγράμματα
-project	common	el	Προβολή
-public	common	el	κοινόχρηστο
-puerto rico	common	el	ΠΟΥΕΡΤΟ ΡΙΚΟ
-qatar	common	el	ΚΑΤΑΡ
-read	common	el	Ανάγνωση
-read this list of methods.	common	el	Ανάγνωση λίστας μεθόδων
-reading	common	el	ανάγνωση
-regular	common	el	Κανονικό
-reject	common	el	Απόρριψη
-remove selected accounts	common	el	Αφαίρεση επιλεγμένων λογαριασμών
-remove shortcut	common	el	Αφαίρεση Συντόμευσης
-rename	common	el	Μετονομασία
-replace	common	el	Αντικατάσταση
-replace with	common	el	Αντικατάσταση με
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	el	Επιστρέφει πλήρη λίστα λογαριασμών στο σύστημα. Προειδοποίηση: η λίστα μπορεί να είναι αρκετά μεγάλη
-returns an array of todo items	common	el	Επιστρέφει μια σειρά ανειλημμένες εργασίες
-returns struct of users application access	common	el	Επιστρέφει τη δομή πρόσβασης των εφαρμογών χρήστη
-reunion	common	el	Επανένωση
-right	common	el	Δεξιά
-romania	common	el	ΡΟΥΜΑΝΙΑ
-russian federation	common	el	ΡΩΣΣΙΑ
-rwanda	common	el	ΡΟΥΑΝΤΑ
-saint helena	common	el	ΑΓΙΑ ΕΛΕΝΗ
-saint kitts and nevis	common	el	ΑΓΙΟΙ ΚΙΤΣ & ΝΕΒΙΣ
-saint lucia	common	el	ΑΓΙΑ ΛΟΥΚΙΑ
-saint pierre and miquelon	common	el	ΑΓΙΟΙ ΠΙΕΡ & ΜΙΚΕΛΟΝ
-saint vincent and the grenadines	common	el	ΑΓΙΟΣ ΒΙΝΣΕΝΤ & ΓΡΕΝΑΔΙΝΕΣ
-samoa	common	el	ΣΑΜΟΑ
-san marino	common	el	ΣΑΝ ΜΑΡΙΝΟ
-sao tome and principe	common	el	ΣΑΟ ΤΟΜΕ & ΠΡΙΝΣΙΠΕ
-saturday	common	el	Σάββατο
-saudi arabia	common	el	ΣΑΟΥΔΙΚΗ ΑΡΑΒΙΑ
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 έκδοση διαφέρει από Savant2 περιτύλιγμα. <br/>Αυτή η έκδοση:%1 <br/>Έκδοση Savant:%2
-save	common	el	Αποθήκευση
-search	common	el	Αναζήτηση
-search %1 '%2'	common	el	Αναζήτηση %1 '%2'
-search accounts	common	el	Αναζήτηση λογαριασμών
-second	common	el	δευτερόλεπτο
-section	common	el	Τομέας
-select	common	el	Επιλογή
-select all %1 %2 for %3	common	el	Επιλογή όλων %1 %2 για %3
-select category	common	el	Επιλογή κατηγορίας
-select date	common	el	Επιλογή ημερομηνίας
-select group	common	el	Επιλογή ομάδας
-select home email address	common	el	Επιλογή διεύθυνσης email οικίας
-select multiple accounts	common	el	επιλογή πολλαπλών λογαριασμών
-select one	common	el	Επιλογή ενός
-select the default height for the application windows	common	el	Επιλογή του προεπιλεγμένου ύψους για τα παράθυρα των εφαρμογών
-select the default width for the application windows	common	el	Επιλογή του προεπιλεγμένου πλάτους για τα παράθυρα των εφαρμογών
-select user	common	el	Επιλογή χρήστη
-select work email address	common	el	Επιλογή διεύθυνσης email eργασίας
-selection	common	el	Επιλογή
-send	common	el	Αποστολή
-senegal	common	el	ΣΕΝΕΓΑΛΗ
-september	common	el	Σεπτέμβριος
-serbia	common	el	Σερβία
-server %1 has been added	common	el	Προστέθηκε ο διακομιστής %1
-server answered. processing response...	common	el	Ο Server απάντησε.Επεξεργασία απάντησης
-server contacted. waiting for response...	common	el	Ολοκλήρωση επικοινωνίας με τον Server. Αναμονή για απάντηση
-server name	common	el	Ονομα Διακομιστή
-session has been killed	common	el	H περίοδος εργασίας διεκόπηκε
-setup	common	el	Εγκατάσταση
-setup main menu	common	el	Βασικό μενού εγκατάστασης
-seychelles	common	el	ΣΕΫΧΕΛΛΕΣ
-show all	common	el	εμφάνιση όλων
-show all categorys	common	el	Εμφάνιση όλων των κατηγοριών
-show clock?	common	el	Εμφάνιση ρολογιού;
-show home and logout button in main application bar?	common	el	Εμφάνιση κουμπιού αρχικής σελίδας και εξόδου από το σύστημα στην μπάρα εφαρμογών;
-show logo's on the desktop.	common	el	Εμφάνιση λογότυπου στην επιφάνεια εργασίας
-show menu	common	el	Εμφάνιση του μενού
-show page generation time	common	el	Εμφάνιση χρόνου δημιουργίας σελίδας
-show page generation time on the bottom of the page?	common	el	Να εμφανισθεί ο χρόνος δημιουργίας της σελίδας στο τέλος της σελίδας;
-show page generation time?	common	el	Εμφάνιση σελίδας δημιουργίας ώρας;
-show the logo's of egroupware and x-desktop on the desktop.	common	el	Εμφάνιση των λογότυπων του eGroupware και της "πρώην" επιφάνειας εργασίας στην επιφάνεια εργασίας
+pitcairn	common	el	Ξ Ξ™Ξ¤ΞΞ•Ξ΅Ξ
+please %1 by hand	common	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο %1 ΞΌΞµ Ο„ΞΏ Ο‡Ξ­ΟΞΉ
+please enter a name	common	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ ΟΞ½ΞΏΞΌΞ±
+please run setup to become current	common	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο„ΟΞ­ΞΎΟ„Ξµ Ο„ΞΏ setup Ξ³ΞΉΞ± Ξ½Ξ± Ξ³Ξ―Ξ½ΞµΟ„Ξµ Ξ­Ξ³ΞΊΟ…ΟΞΏΟ‚
+please select	common	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ
+please set your global preferences	common	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞΏΟΞ―ΟƒΟ„Ξµ Ο„ΞΉΟ‚ Ο€Ξ±Ξ³ΞΊΟΟƒΞΌΞΉΞµΟ‚ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΟƒΞ±Ο‚!
+please set your preferences for this application	common	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞΏΟΞ―ΟƒΟ„Ξµ Ο„ΞΉΟ‚ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΟƒΞ±Ο‚ Ξ³ΞΉ' Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®
+please wait...	common	el	Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο€ΞµΟΞΉΞΌΞ­Ξ½ΞµΟ„Ξµ
+poland	common	el	Ξ ΞΞ›Ξ©ΞΞ™Ξ‘
+portugal	common	el	Ξ ΞΞ΅Ξ¤ΞΞ“Ξ‘Ξ›Ξ™Ξ‘
+postal	common	el	Ξ¤Ξ±Ο‡Ο…Ξ΄ΟΞΏΞΌΞΉΞΊΟΟ‚
+powered by egroupware version %1	common	el	Powered by <a href="http://www.egroupware.org">eGroupWare</a> Ξ­ΞΊΞ΄ΞΏΟƒΞ· %1
+preferences	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚
+preferences for the idots template set	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ ΟƒΟ…Ξ½ΟΞ»Ο‰Ξ½ Ο€ΟΞΏΟ„ΟΟ€Ο‰Ξ½ Ξ³ΞΉΞ± Ο„Ξ± idots
+prev. month (hold for menu)	jscalendar	el	Ξ ΟΞΏΞ·Ξ³ΞΏΟΞΌΞµΞ½ΞΏΟ‚ ΞΌΞ®Ξ½Ξ±Ο‚ (ΞΊΟΞ±Ο„Ξ®ΟƒΟ„Ξµ Ξ³ΞΉΞ± ΞΌΞµΞ½ΞΏΟ)
+prev. year (hold for menu)	jscalendar	el	Ξ ΟΞΏΞ·Ξ³ΞΏΟΞΌΞµΞ½ΞΏΟ‚ Ο‡ΟΟΞ½ΞΏΟ‚ (ΞΊΟΞ±Ο„Ξ®ΟƒΟ„Ξµ Ξ³ΞΉΞ± ΞΌΞµΞ½ΞΏΟ)
+previous page	common	el	Ξ ΟΞΏΞ·Ξ³ΞΏΟΞΌΞµΞ½Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ±
+primary style-sheet:	common	el	Ξ‘ΟΟ‡ΞΉΞΊΟΟ‚ Ο„ΟΟ€ΞΏΟ‚ Ο†ΟΞ»Ξ»ΞΏΟ…
+print	common	el	Ξ•ΞΊΟ„ΟΟ€Ο‰ΟƒΞ·
+priority	common	el	Ξ ΟΞΏΟ„ΞµΟΞ±ΞΉΟΟ„Ξ·Ο„Ξ±
+private	common	el	Ξ ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΟ
+programs	common	el	Ξ ΟΞΏΞ³ΟΞ¬ΞΌΞΌΞ±Ο„Ξ±
+project	common	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ®
+public	common	el	ΞΊΞΏΞΉΞ½ΟΟ‡ΟΞ·ΟƒΟ„ΞΏ
+puerto rico	common	el	Ξ ΞΞ¥Ξ•Ξ΅Ξ¤Ξ Ξ΅Ξ™ΞΞ
+qatar	common	el	ΞΞ‘Ξ¤Ξ‘Ξ΅
+read	common	el	Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ·
+read this list of methods.	common	el	Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· Ξ»Ξ―ΟƒΟ„Ξ±Ο‚ ΞΌΞµΞΈΟΞ΄Ο‰Ξ½
+reading	common	el	Ξ±Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ·
+regular	common	el	ΞΞ±Ξ½ΞΏΞ½ΞΉΞΊΟ
+reject	common	el	Ξ‘Ο€ΟΟΟΞΉΟΞ·
+remove selected accounts	common	el	Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ο‰Ξ½ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½
+remove shortcut	common	el	Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· Ξ£Ο…Ξ½Ο„ΟΞΌΞµΟ…ΟƒΞ·Ο‚
+rename	common	el	ΞΞµΟ„ΞΏΞ½ΞΏΞΌΞ±ΟƒΞ―Ξ±
+replace	common	el	Ξ‘Ξ½Ο„ΞΉΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·
+replace with	common	el	Ξ‘Ξ½Ο„ΞΉΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· ΞΌΞµ
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞ­Ο†ΞµΞΉ Ο€Ξ»Ξ®ΟΞ· Ξ»Ξ―ΟƒΟ„Ξ± Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½ ΟƒΟ„ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ±. Ξ ΟΞΏΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·: Ξ· Ξ»Ξ―ΟƒΟ„Ξ± ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΟΞΊΞµΟ„Ξ¬ ΞΌΞµΞ³Ξ¬Ξ»Ξ·
+returns an array of todo items	common	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞ­Ο†ΞµΞΉ ΞΌΞΉΞ± ΟƒΞµΞΉΟΞ¬ Ξ±Ξ½ΞµΞΉΞ»Ξ·ΞΌΞΌΞ­Ξ½ΞµΟ‚ ΞµΟΞ³Ξ±ΟƒΞ―ΞµΟ‚
+returns struct of users application access	common	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞ­Ο†ΞµΞΉ Ο„Ξ· Ξ΄ΞΏΞΌΞ® Ο€ΟΟΟƒΞ²Ξ±ΟƒΞ·Ο‚ Ο„Ο‰Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³ΟΞ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
+reunion	common	el	Ξ•Ο€Ξ±Ξ½Ξ­Ξ½Ο‰ΟƒΞ·
+right	common	el	Ξ”ΞµΞΎΞΉΞ¬
+romania	common	el	Ξ΅ΞΞ¥ΞΞ‘ΞΞ™Ξ‘
+russian federation	common	el	Ξ΅Ξ©Ξ£Ξ£Ξ™Ξ‘
+rwanda	common	el	Ξ΅ΞΞ¥Ξ‘ΞΞ¤Ξ‘
+saint helena	common	el	Ξ‘Ξ“Ξ™Ξ‘ Ξ•Ξ›Ξ•ΞΞ—
+saint kitts and nevis	common	el	Ξ‘Ξ“Ξ™ΞΞ™ ΞΞ™Ξ¤Ξ£ & ΞΞ•Ξ’Ξ™Ξ£
+saint lucia	common	el	Ξ‘Ξ“Ξ™Ξ‘ Ξ›ΞΞ¥ΞΞ™Ξ‘
+saint pierre and miquelon	common	el	Ξ‘Ξ“Ξ™ΞΞ™ Ξ Ξ™Ξ•Ξ΅ & ΞΞ™ΞΞ•Ξ›ΞΞ
+saint vincent and the grenadines	common	el	Ξ‘Ξ“Ξ™ΞΞ£ Ξ’Ξ™ΞΞ£Ξ•ΞΞ¤ & Ξ“Ξ΅Ξ•ΞΞ‘Ξ”Ξ™ΞΞ•Ξ£
+samoa	common	el	Ξ£Ξ‘ΞΞΞ‘
+san marino	common	el	Ξ£Ξ‘Ξ ΞΞ‘Ξ΅Ξ™ΞΞ
+sao tome and principe	common	el	Ξ£Ξ‘Ξ Ξ¤ΞΞΞ• & Ξ Ξ΅Ξ™ΞΞ£Ξ™Ξ Ξ•
+saturday	common	el	Ξ£Ξ¬Ξ²Ξ²Ξ±Ο„ΞΏ
+saudi arabia	common	el	Ξ£Ξ‘ΞΞ¥Ξ”Ξ™ΞΞ— Ξ‘Ξ΅Ξ‘Ξ’Ξ™Ξ‘
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 Ξ­ΞΊΞ΄ΞΏΟƒΞ· Ξ΄ΞΉΞ±Ο†Ξ­ΟΞµΞΉ Ξ±Ο€Ο Savant2 Ο€ΞµΟΞΉΟ„ΟΞ»ΞΉΞ³ΞΌΞ±. <br/>Ξ‘Ο…Ο„Ξ® Ξ· Ξ­ΞΊΞ΄ΞΏΟƒΞ·:%1 <br/>ΞΞΊΞ΄ΞΏΟƒΞ· Savant:%2
+save	common	el	Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ·
+search	common	el	Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·
+search %1 '%2'	common	el	Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· %1 '%2'
+search accounts	common	el	Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½
+second	common	el	Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„ΞΏ
+section	common	el	Ξ¤ΞΏΞΌΞ­Ξ±Ο‚
+select	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ®
+select all %1 %2 for %3	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΟΞ»Ο‰Ξ½ %1 %2 Ξ³ΞΉΞ± %3
+select category	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±Ο‚
+select date	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±Ο‚
+select group	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+select home email address	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·Ο‚ email ΞΏΞΉΞΊΞ―Ξ±Ο‚
+select multiple accounts	common	el	ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ® Ο€ΞΏΞ»Ξ»Ξ±Ο€Ξ»ΟΞ½ Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΞ½
+select one	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞµΞ½ΟΟ‚
+select the default height for the application windows	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο„ΞΏΟ… Ο€ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ… ΟΟΞΏΟ…Ο‚ Ξ³ΞΉΞ± Ο„Ξ± Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞ± Ο„Ο‰Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³ΟΞ½
+select the default width for the application windows	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο„ΞΏΟ… Ο€ΟΞΏΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ… Ο€Ξ»Ξ¬Ο„ΞΏΟ…Ο‚ Ξ³ΞΉΞ± Ο„Ξ± Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞ± Ο„Ο‰Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³ΟΞ½
+select user	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο‡ΟΞ®ΟƒΟ„Ξ·
+select work email address	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ·Ο‚ email eΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+selection	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ®
+send	common	el	Ξ‘Ο€ΞΏΟƒΟ„ΞΏΞ»Ξ®
+senegal	common	el	Ξ£Ξ•ΞΞ•Ξ“Ξ‘Ξ›Ξ—
+september	common	el	Ξ£ΞµΟ€Ο„Ξ­ΞΌΞ²ΟΞΉΞΏΟ‚
+serbia	common	el	Ξ£ΞµΟΞ²Ξ―Ξ±
+server %1 has been added	common	el	Ξ ΟΞΏΟƒΟ„Ξ­ΞΈΞ·ΞΊΞµ ΞΏ Ξ΄ΞΉΞ±ΞΊΞΏΞΌΞΉΟƒΟ„Ξ®Ο‚ %1
+server answered. processing response...	common	el	Ξ Server Ξ±Ο€Ξ¬Ξ½Ο„Ξ·ΟƒΞµ.Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ±Ο€Ξ¬Ξ½Ο„Ξ·ΟƒΞ·Ο‚
+server contacted. waiting for response...	common	el	ΞΞ»ΞΏΞΊΞ»Ξ®ΟΟ‰ΟƒΞ· ΞµΟ€ΞΉΞΊΞΏΞΉΞ½Ο‰Ξ½Ξ―Ξ±Ο‚ ΞΌΞµ Ο„ΞΏΞ½ Server. Ξ‘Ξ½Ξ±ΞΌΞΏΞ½Ξ® Ξ³ΞΉΞ± Ξ±Ο€Ξ¬Ξ½Ο„Ξ·ΟƒΞ·
+server name	common	el	ΞΞ½ΞΏΞΌΞ± Ξ”ΞΉΞ±ΞΊΞΏΞΌΞΉΟƒΟ„Ξ®
+session has been killed	common	el	H Ο€ΞµΟΞ―ΞΏΞ΄ΞΏΟ‚ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ΄ΞΉΞµΞΊΟΟ€Ξ·ΞΊΞµ
+setup	common	el	Ξ•Ξ³ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·
+setup main menu	common	el	Ξ’Ξ±ΟƒΞΉΞΊΟ ΞΌΞµΞ½ΞΏΟ ΞµΞ³ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚
+seychelles	common	el	Ξ£Ξ•Ξ«Ξ§Ξ•Ξ›Ξ›Ξ•Ξ£
+show all	common	el	ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟΞ»Ο‰Ξ½
+show all categorys	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+show clock?	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟΞΏΞ»ΞΏΞ³ΞΉΞΏΟ;
+show home and logout button in main application bar?	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΊΞΏΟ…ΞΌΟ€ΞΉΞΏΟ Ξ±ΟΟ‡ΞΉΞΊΞ®Ο‚ ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚ ΞΊΞ±ΞΉ ΞµΞΎΟΞ΄ΞΏΟ… Ξ±Ο€Ο Ο„ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ± ΟƒΟ„Ξ·Ξ½ ΞΌΟ€Ξ¬ΟΞ± ΞµΟ†Ξ±ΟΞΌΞΏΞ³ΟΞ½;
+show logo's on the desktop.	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ»ΞΏΞ³ΟΟ„Ο…Ο€ΞΏΟ… ΟƒΟ„Ξ·Ξ½ ΞµΟ€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+show menu	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο„ΞΏΟ… ΞΌΞµΞ½ΞΏΟ
+show page generation time	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο‡ΟΟΞ½ΞΏΟ… Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±Ο‚ ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚
+show page generation time on the bottom of the page?	common	el	ΞΞ± ΞµΞΌΟ†Ξ±Ξ½ΞΉΟƒΞΈΞµΞ― ΞΏ Ο‡ΟΟΞ½ΞΏΟ‚ Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±Ο‚ Ο„Ξ·Ο‚ ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚ ΟƒΟ„ΞΏ Ο„Ξ­Ξ»ΞΏΟ‚ Ο„Ξ·Ο‚ ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚;
+show page generation time?	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚ Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±Ο‚ ΟΟΞ±Ο‚;
+show the logo's of egroupware and x-desktop on the desktop.	common	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο„Ο‰Ξ½ Ξ»ΞΏΞ³ΟΟ„Ο…Ο€Ο‰Ξ½ Ο„ΞΏΟ… eGroupware ΞΊΞ±ΞΉ Ο„Ξ·Ο‚ "Ο€ΟΟΞ·Ξ½" ΞµΟ€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΟƒΟ„Ξ·Ξ½ ΞµΟ€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
 show_more_apps	common	el	show_more_apps
-showing %1	common	el	εμφάνιση %1
-showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3
-sierra leone	common	el	ΣΙΕΡΡΑ ΛΕΟΝΕ
-simple	common	el	Απλό
-singapore	common	el	ΣΙΓΚΑΠΟΥΡΗ
-slovakia	common	el	ΣΛΟΒΑΚΙΑ
-slovenia	common	el	ΣΛΟΒΕΝΙΑ
-solomon islands	common	el	ΝΗΣΟΙ ΣΟΛΟΜΩΝΤΑ
-somalia	common	el	ΣΟΜΑΛΙΑ
-sorry, your login has expired	login	el	Η σύνδεσή σας έχει λήξει
-south africa	common	el	ΝΟΤΙΑ ΑΦΡΙΚΗ
-south georgia and the south sandwich islands	common	el	ΝΟΤΙΑ ΓΕΩΡΓΙΑ & ΝΟΤΙΑ ΝΗΣΙΑ ΣΑΝΤΟΥΪΤΣ
-spain	common	el	ΙΣΠΑΝΙΑ
-sri lanka	common	el	ΣΡΙ ΛΑΝΚΑ
-start date	common	el	Hμερομηνία έναρξης
-start time	common	el	Ωρα έναρξης
-start with	common	el	έναρξη με
-starting up...	common	el	Εκκίνηση...
-status	common	el	Κατάσταση
-stretched	common	el	εκτεταμένο
-subject	common	el	Θέμα
-submit	common	el	Υποβολή
-substitutions and their meanings:	common	el	Αντικαταστάσεις και οι έννοιές τους:
-sudan	common	el	ΣΟΥΔΑΝ
-sunday	common	el	Κυριακή
-suriname	common	el	ΣΟΥΡΙΝΑΜ
-svalbard and jan mayen	common	el	ΣΒΑΛΜΠΑΡΝΤ & ΓΙΑΝ ΜΕΪΓΕΝ
-swaziland	common	el	ΖΟΥΑΖΙΛΑΝΔΗ
-sweden	common	el	ΣΟΥΗΔΙΑ
-switzerland	common	el	ΕΛΒΕΤΙΑ
-syrian arab republic	common	el	ΣΥΡΙΑ
-table properties	common	el	Ιδιότητες πίνακα
-taiwan	common	el	ΤΑΪΒΑΝ/ΤΑΪΠΕΪ
-tajikistan	common	el	ΤΑΖΙΚΙΣΤΑΝ
-tanzania, united republic of	common	el	ΤΑΝΖΑΝΙΑ
-text color:	common	el	Χρώμα κειμένου:
-thailand	common	el	ΤΑΪΛΑΝΔΗ
-the api is current	common	el	Το ΑΡΙ είναι το τρέχον
-the api requires an upgrade	common	el	Το ΑΡΙ χρειάζεται αναβάθμιση
-the following applications require upgrades	common	el	Οι παρακάτω εφαρμογές χρειάζονται αναβάθμιση
-the mail server returned	common	el	Ο διακομιστής email επέστρεψε
-this application is current	common	el	Η εφαρμογή είναι η τρέχουσα
-this application requires an upgrade	common	el	Η εφαρμογή χρειάζεται αναβάθμιση
-this name has been used already	common	el	Το όνομα ήδη χρησιμοποιείται
-thursday	common	el	Πέμπτη
-time	common	el	Ωρα
-time selection:	jscalendar	el	Επιλογή ώρας:
-time zone	common	el	Χρονική Ζώνη
-time zone offset	common	el	Μετακίνηση χρονικής ζώνης
-title	common	el	Τίτλος
-to	common	el	Προς:
-to correct this error for the future you will need to properly set the	common	el	Για να διορθωθεί αυτό το λάθος πρέπει να ορίσετε το
-to go back to the msg list, click <a href= %1 >here</a>	common	el	Για να επιστρέψετε στη λίστα μηνυμάτων, κάντε κλικ <a href="%1">εδώ</a>
-today	common	el	Σήμερα
-todays date, eg. "%1"	common	el	σημερινή ημερομηνία, π.χ. "%1"
-toggle first day of week	jscalendar	el	Εναλλαγή πρώτης ημέρας της εβδομάδας
-togo	common	el	ΤΟΓΚΟ
-tokelau	common	el	ΤΟΚΕΛΑΟΥ
-tonga	common	el	ΤΟΝΓΚΑ
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	el	Πολλές αποτυχημένες προσπάθειες για είσοδο: %1 από το χρήστη '%2', %3 με ΙΡ %4
-top	common	el	Κορυφή
-total	common	el	Σύνολο
-trinidad and tobago	common	el	ΤΡΙΝΙΤΑΝΤ & ΤΟΜΠΑΚΟ
-tuesday	common	el	Τρίτη
-tunisia	common	el	ΤΥΝΗΣΙΑ
-turkey	common	el	ΤΟΥΡΚΙΑ
-turkmenistan	common	el	ΤΟΥΡΚΜΕΝΙΣΤΑΝ
-turks and caicos islands	common	el	ΝΗΣΟΙ ΤΕΚΣ & ΚΑΪΚΟΣ
-tuvalu	common	el	ΤΟΥΒΑΛΟΥ
-type	common	el	Τύπος
-uganda	common	el	ΟΥΓΚΑΝΤΑ
-ukraine	common	el	ΟΥΚΡΑΝΙΑ
-underline	common	el	Υπογράμμιση
-united arab emirates	common	el	ΗΝΩΜΕΝΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
-united kingdom	common	el	ΗΝΩΜΕΝΟ ΒΑΣΙΛΕΙΟ
-united states	common	el	ΗΝΩΜΕΝΕΣ ΠΟΛΙΤΕΙΕΣ
-united states minor outlying islands	common	el	ΝΗΣΟΙ ΗΝΩΜΕΝΩΝ ΠΟΛΙΤΕΙΩΝ
-unknown	common	el	Αγνωστο
-update	common	el	Ανανέωση
-update the clock per minute or per second	common	el	Ενημέρωση του ρολογιού ανά λεπτό ή ανά δευτερόλεπτο
-upload	common	el	Φόρτωμα
-upload directory does not exist, or is not writeable by webserver	common	el	Ο κατάλογος φόρτωσης δεν υπάρχει, ή δεν είναι εγγράψιμος από τον webserver
-upload requires the directory to be writable by the webserver!	common	el	Η φόρτωση απαιτεί ο κατάλογος να είναι εγγράψιμος από τον webserver
+showing %1	common	el	ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· %1
+showing %1 - %2 of %3	common	el	ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· %1 - %2 Ξ±Ο€Ο %3
+sierra leone	common	el	Ξ£Ξ™Ξ•Ξ΅Ξ΅Ξ‘ Ξ›Ξ•ΞΞΞ•
+simple	common	el	Ξ‘Ο€Ξ»Ο
+singapore	common	el	Ξ£Ξ™Ξ“ΞΞ‘Ξ ΞΞ¥Ξ΅Ξ—
+slovakia	common	el	Ξ£Ξ›ΞΞ’Ξ‘ΞΞ™Ξ‘
+slovenia	common	el	Ξ£Ξ›ΞΞ’Ξ•ΞΞ™Ξ‘
+solomon islands	common	el	ΞΞ—Ξ£ΞΞ™ Ξ£ΞΞ›ΞΞΞ©ΞΞ¤Ξ‘
+somalia	common	el	Ξ£ΞΞΞ‘Ξ›Ξ™Ξ‘
+sorry, your login has expired	login	el	Ξ— ΟƒΟΞ½Ξ΄ΞµΟƒΞ® ΟƒΞ±Ο‚ Ξ­Ο‡ΞµΞΉ Ξ»Ξ®ΞΎΞµΞΉ
+south africa	common	el	ΞΞΞ¤Ξ™Ξ‘ Ξ‘Ξ¦Ξ΅Ξ™ΞΞ—
+south georgia and the south sandwich islands	common	el	ΞΞΞ¤Ξ™Ξ‘ Ξ“Ξ•Ξ©Ξ΅Ξ“Ξ™Ξ‘ & ΞΞΞ¤Ξ™Ξ‘ ΞΞ—Ξ£Ξ™Ξ‘ Ξ£Ξ‘ΞΞ¤ΞΞ¥ΞªΞ¤Ξ£
+spain	common	el	Ξ™Ξ£Ξ Ξ‘ΞΞ™Ξ‘
+sri lanka	common	el	Ξ£Ξ΅Ξ™ Ξ›Ξ‘ΞΞΞ‘
+start date	common	el	HΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚
+start time	common	el	Ξ©ΟΞ± Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚
+start with	common	el	Ξ­Ξ½Ξ±ΟΞΎΞ· ΞΌΞµ
+starting up...	common	el	Ξ•ΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·...
+status	common	el	ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·
+stretched	common	el	ΞµΞΊΟ„ΞµΟ„Ξ±ΞΌΞ­Ξ½ΞΏ
+subject	common	el	ΞΞ­ΞΌΞ±
+submit	common	el	Ξ¥Ο€ΞΏΞ²ΞΏΞ»Ξ®
+substitutions and their meanings:	common	el	Ξ‘Ξ½Ο„ΞΉΞΊΞ±Ο„Ξ±ΟƒΟ„Ξ¬ΟƒΞµΞΉΟ‚ ΞΊΞ±ΞΉ ΞΏΞΉ Ξ­Ξ½Ξ½ΞΏΞΉΞ­Ο‚ Ο„ΞΏΟ…Ο‚:
+sudan	common	el	Ξ£ΞΞ¥Ξ”Ξ‘Ξ
+sunday	common	el	ΞΟ…ΟΞΉΞ±ΞΊΞ®
+suriname	common	el	Ξ£ΞΞ¥Ξ΅Ξ™ΞΞ‘Ξ
+svalbard and jan mayen	common	el	Ξ£Ξ’Ξ‘Ξ›ΞΞ Ξ‘Ξ΅ΞΞ¤ & Ξ“Ξ™Ξ‘Ξ ΞΞ•ΞªΞ“Ξ•Ξ
+swaziland	common	el	Ξ–ΞΞ¥Ξ‘Ξ–Ξ™Ξ›Ξ‘ΞΞ”Ξ—
+sweden	common	el	Ξ£ΞΞ¥Ξ—Ξ”Ξ™Ξ‘
+switzerland	common	el	Ξ•Ξ›Ξ’Ξ•Ξ¤Ξ™Ξ‘
+syrian arab republic	common	el	Ξ£Ξ¥Ξ΅Ξ™Ξ‘
+table properties	common	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ο€Ξ―Ξ½Ξ±ΞΊΞ±
+taiwan	common	el	Ξ¤Ξ‘ΞªΞ’Ξ‘Ξ/Ξ¤Ξ‘ΞªΞ Ξ•Ξª
+tajikistan	common	el	Ξ¤Ξ‘Ξ–Ξ™ΞΞ™Ξ£Ξ¤Ξ‘Ξ
+tanzania, united republic of	common	el	Ξ¤Ξ‘ΞΞ–Ξ‘ΞΞ™Ξ‘
+text color:	common	el	Ξ§ΟΟΞΌΞ± ΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ…:
+thailand	common	el	Ξ¤Ξ‘ΞªΞ›Ξ‘ΞΞ”Ξ—
+the api is current	common	el	Ξ¤ΞΏ Ξ‘Ξ΅Ξ™ ΞµΞ―Ξ½Ξ±ΞΉ Ο„ΞΏ Ο„ΟΞ­Ο‡ΞΏΞ½
+the api requires an upgrade	common	el	Ξ¤ΞΏ Ξ‘Ξ΅Ξ™ Ο‡ΟΞµΞΉΞ¬Ξ¶ΞµΟ„Ξ±ΞΉ Ξ±Ξ½Ξ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·
+the following applications require upgrades	common	el	ΞΞΉ Ο€Ξ±ΟΞ±ΞΊΞ¬Ο„Ο‰ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚ Ο‡ΟΞµΞΉΞ¬Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ Ξ±Ξ½Ξ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·
+the mail server returned	common	el	Ξ Ξ΄ΞΉΞ±ΞΊΞΏΞΌΞΉΟƒΟ„Ξ®Ο‚ email ΞµΟ€Ξ­ΟƒΟ„ΟΞµΟΞµ
+this application is current	common	el	Ξ— ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® ΞµΞ―Ξ½Ξ±ΞΉ Ξ· Ο„ΟΞ­Ο‡ΞΏΟ…ΟƒΞ±
+this application requires an upgrade	common	el	Ξ— ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® Ο‡ΟΞµΞΉΞ¬Ξ¶ΞµΟ„Ξ±ΞΉ Ξ±Ξ½Ξ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·
+this name has been used already	common	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± Ξ®Ξ΄Ξ· Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ
+thursday	common	el	Ξ Ξ­ΞΌΟ€Ο„Ξ·
+time	common	el	Ξ©ΟΞ±
+time selection:	jscalendar	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΟΟΞ±Ο‚:
+time zone	common	el	Ξ§ΟΞΏΞ½ΞΉΞΊΞ® Ξ–ΟΞ½Ξ·
+time zone offset	common	el	ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ· Ο‡ΟΞΏΞ½ΞΉΞΊΞ®Ο‚ Ξ¶ΟΞ½Ξ·Ο‚
+title	common	el	Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚
+to	common	el	Ξ ΟΞΏΟ‚:
+to correct this error for the future you will need to properly set the	common	el	Ξ“ΞΉΞ± Ξ½Ξ± Ξ΄ΞΉΞΏΟΞΈΟ‰ΞΈΞµΞ― Ξ±Ο…Ο„Ο Ο„ΞΏ Ξ»Ξ¬ΞΈΞΏΟ‚ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞΏΟΞ―ΟƒΞµΟ„Ξµ Ο„ΞΏ
+to go back to the msg list, click <a href= %1 >here</a>	common	el	Ξ“ΞΉΞ± Ξ½Ξ± ΞµΟ€ΞΉΟƒΟ„ΟΞ­ΟΞµΟ„Ξµ ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ± ΞΌΞ·Ξ½Ο…ΞΌΞ¬Ο„Ο‰Ξ½, ΞΊΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ <a href="%1">ΞµΞ΄Ο</a>
+today	common	el	Ξ£Ξ®ΞΌΞµΟΞ±
+todays date, eg. "%1"	common	el	ΟƒΞ·ΞΌΞµΟΞΉΞ½Ξ® Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±, Ο€.Ο‡. "%1"
+toggle first day of week	jscalendar	el	Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® Ο€ΟΟΟ„Ξ·Ο‚ Ξ·ΞΌΞ­ΟΞ±Ο‚ Ο„Ξ·Ο‚ ΞµΞ²Ξ΄ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚
+togo	common	el	Ξ¤ΞΞ“ΞΞ
+tokelau	common	el	Ξ¤ΞΞΞ•Ξ›Ξ‘ΞΞ¥
+tonga	common	el	Ξ¤ΞΞΞ“ΞΞ‘
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	el	Ξ ΞΏΞ»Ξ»Ξ­Ο‚ Ξ±Ο€ΞΏΟ„Ο…Ο‡Ξ·ΞΌΞ­Ξ½ΞµΟ‚ Ο€ΟΞΏΟƒΟ€Ξ¬ΞΈΞµΞΉΞµΟ‚ Ξ³ΞΉΞ± ΞµΞ―ΟƒΞΏΞ΄ΞΏ: %1 Ξ±Ο€Ο Ο„ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ· '%2', %3 ΞΌΞµ Ξ™Ξ΅ %4
+top	common	el	ΞΞΏΟΟ…Ο†Ξ®
+total	common	el	Ξ£ΟΞ½ΞΏΞ»ΞΏ
+trinidad and tobago	common	el	Ξ¤Ξ΅Ξ™ΞΞ™Ξ¤Ξ‘ΞΞ¤ & Ξ¤ΞΞΞ Ξ‘ΞΞ
+tuesday	common	el	Ξ¤ΟΞ―Ο„Ξ·
+tunisia	common	el	Ξ¤Ξ¥ΞΞ—Ξ£Ξ™Ξ‘
+turkey	common	el	Ξ¤ΞΞ¥Ξ΅ΞΞ™Ξ‘
+turkmenistan	common	el	Ξ¤ΞΞ¥Ξ΅ΞΞΞ•ΞΞ™Ξ£Ξ¤Ξ‘Ξ
+turks and caicos islands	common	el	ΞΞ—Ξ£ΞΞ™ Ξ¤Ξ•ΞΞ£ & ΞΞ‘ΞªΞΞΞ£
+tuvalu	common	el	Ξ¤ΞΞ¥Ξ’Ξ‘Ξ›ΞΞ¥
+type	common	el	Ξ¤ΟΟ€ΞΏΟ‚
+uganda	common	el	ΞΞ¥Ξ“ΞΞ‘ΞΞ¤Ξ‘
+ukraine	common	el	ΞΞ¥ΞΞ΅Ξ‘ΞΞ™Ξ‘
+underline	common	el	Ξ¥Ο€ΞΏΞ³ΟΞ¬ΞΌΞΌΞΉΟƒΞ·
+united arab emirates	common	el	Ξ—ΞΞ©ΞΞ•ΞΞ‘ Ξ‘Ξ΅Ξ‘Ξ’Ξ™ΞΞ‘ Ξ•ΞΞ™Ξ΅Ξ‘Ξ¤Ξ‘
+united kingdom	common	el	Ξ—ΞΞ©ΞΞ•ΞΞ Ξ’Ξ‘Ξ£Ξ™Ξ›Ξ•Ξ™Ξ
+united states	common	el	Ξ—ΞΞ©ΞΞ•ΞΞ•Ξ£ Ξ ΞΞ›Ξ™Ξ¤Ξ•Ξ™Ξ•Ξ£
+united states minor outlying islands	common	el	ΞΞ—Ξ£ΞΞ™ Ξ—ΞΞ©ΞΞ•ΞΞ©Ξ Ξ ΞΞ›Ξ™Ξ¤Ξ•Ξ™Ξ©Ξ
+unknown	common	el	Ξ‘Ξ³Ξ½Ο‰ΟƒΟ„ΞΏ
+update	common	el	Ξ‘Ξ½Ξ±Ξ½Ξ­Ο‰ΟƒΞ·
+update the clock per minute or per second	common	el	Ξ•Ξ½Ξ·ΞΌΞ­ΟΟ‰ΟƒΞ· Ο„ΞΏΟ… ΟΞΏΞ»ΞΏΞ³ΞΉΞΏΟ Ξ±Ξ½Ξ¬ Ξ»ΞµΟ€Ο„Ο Ξ® Ξ±Ξ½Ξ¬ Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„ΞΏ
+upload	common	el	Ξ¦ΟΟΟ„Ο‰ΞΌΞ±
+upload directory does not exist, or is not writeable by webserver	common	el	Ξ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ Ο†ΟΟΟ„Ο‰ΟƒΞ·Ο‚ Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ, Ξ® Ξ΄ΞµΞ½ ΞµΞ―Ξ½Ξ±ΞΉ ΞµΞ³Ξ³ΟΞ¬ΟΞΉΞΌΞΏΟ‚ Ξ±Ο€Ο Ο„ΞΏΞ½ webserver
+upload requires the directory to be writable by the webserver!	common	el	Ξ— Ο†ΟΟΟ„Ο‰ΟƒΞ· Ξ±Ο€Ξ±ΞΉΟ„ΞµΞ― ΞΏ ΞΊΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞµΞ³Ξ³ΟΞ¬ΟΞΉΞΌΞΏΟ‚ Ξ±Ο€Ο Ο„ΞΏΞ½ webserver
 url	common	el	URL
-uruguay	common	el	ΟΥΡΟΥΓΟΥΑΗ
-use button to search for	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση
-use button to search for address	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση διευθύνσεων
-use button to search for calendarevent	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση γεγονότων ημερολογίου
-use button to search for project	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση προβολής
-user	common	el	Χρήστης
-user accounts	common	el	λογαριασμοί χρηστών
-user groups	common	el	ομάδες χρηστών
-username	common	el	Ονομα χρήστη
-users	common	el	Χρήστες
-users choice	common	el	Επιλογή χρηστών
-uzbekistan	common	el	ΟΥΖΜΠΕΚΙΣΤΑΝ
-vanuatu	common	el	ΒΑΝΟΥΑΤΟΥ
-venezuela	common	el	ΒΕΝΕΖΟΥΕΛΑ
-version	common	el	Έκδοση
-viet nam	common	el	ΒΙΕΤΝΑΜ
-view	common	el	Προβολή
-virgin islands, british	common	el	ΝΗΣΟΙ ΒΕΡΤΖΙΝ, ΒΡΕΤΑΝΙΚΑ
-virgin islands, u.s.	common	el	ΝΗΣΟΙ ΒΕΡΤΖΙΝ, Η.Π.Α.
-wallis and futuna	common	el	ΓΟΥΟΛΙΣ & ΦΟΥΤΟΥΝΑ
-wednesday	common	el	Τετάρτη
-welcome	common	el	Καλώς ήρθατε
-western sahara	common	el	ΔΥΤΙΚΗ ΣΑΧΑΡΑ
-what color should all the blank space on the desktop have	common	el	Τι χρώμα θα έπρεπε όλα τα κενά στην επιφάνεια εργασίας να έχουν
-what style would you like the image to have?	common	el	Τι στυλ θα θέλατε να έχει η εικόνα;
-when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	el	Όταν λέτε ναι τα κουμπιά αρχικής σελίδας και εξόδου από το σύστημα εμφανίζονται ως εφαρμογές στην κύρια μπάρα εργασιών
-which groups	common	el	Ποιές ομάδες
-width	common	el	Πλάτος
-wk	jscalendar	el	εβ.
-work email	common	el	email εργασίας
-would you like to display the page generation time at the bottom of every window?	common	el	Θα θέλατε βα εμφανίζεται η σελίδα δημιουργίας της ώρας στο κάτω μέρος κάθε παραθύρου;
-writing	common	el	εγγραφή
-written by:	common	el	Γραμμένο από:
-year	common	el	Έτος
-yemen	common	el	ΥΕΜΕΝΗ
-yes	common	el	Ναι
-you are required to change your password during your first login	common	el	Απαιτείται η αλλαγή του κωδικού σας κατά την πρώτη είσοδο
-you can customize how many icons and toolbars the editor shows.	common	el	Μπορείτε να ρυθμίσετε πόσες εικόνες και μπάρες εργαλειών θα δείχνει ο εκδότης.
-you have been successfully logged out	login	el	Επιτυχής έξοδος
-you have not entered a title	common	el	Δεν έχετε εισάγει τίτλο
-you have not entered a valid date	common	el	Δεν έχετε εισάγει έγκυρη ημερομηνία
-you have not entered a valid time of day	common	el	Δεν έχετε εισάγει έγκυρη ώρα της ημέρας
-you have not entered participants	common	el	Δεν έχετε εισάγει συμμετέχοντες
-you have selected an invalid date	common	el	Επιλέξατε άκυρη ημερομηνία!
-you have selected an invalid main category	common	el	Επιλέξατε άκυρη βασική κατηγορία!
-you have successfully logged out	common	el	Επιτυχής έξοδος
-you need to add the webserver user '%1' to the group '%2'.	common	el	Πρέπει να προσθέσετε τον webserver χρήστη '%1' στην ομάδα '%2'.
-your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b>δεν</b> μπόρεσε να σταλεί!<br>
-your message has been sent	common	el	To μήνυμά σας εστάλει
-your search returned %1 matchs	common	el	η αναζήτηση επέστρεψε %1 αποτελέσματα
-your search returned 1 match	common	el	η αναζήτηση επέστρεψε 1 αποτέλεσμα
-your session could not be verified.	login	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί
-your settings have been updated	common	el	Οι ρυθμίσεις σας έχουν ενημερωθεί
-zambia	common	el	ΖΑΜΠΙΑ
-zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ
-zoom	common	el	Εστίαση
+uruguay	common	el	ΞΞ¥Ξ΅ΞΞ¥Ξ“ΞΞ¥Ξ‘Ξ—
+use button to search for	common	el	Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ Ο„ΞΏ ΞΊΞΏΟ…ΞΌΟ€Ξ― Ξ³ΞΉΞ± Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·
+use button to search for address	common	el	Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ Ο„ΞΏ ΞΊΞΏΟ…ΞΌΟ€Ξ― Ξ³ΞΉΞ± Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+use button to search for calendarevent	common	el	Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ Ο„ΞΏ ΞΊΞΏΟ…ΞΌΟ€Ξ― Ξ³ΞΉΞ± Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ³ΞµΞ³ΞΏΞ½ΟΟ„Ο‰Ξ½ Ξ·ΞΌΞµΟΞΏΞ»ΞΏΞ³Ξ―ΞΏΟ…
+use button to search for project	common	el	Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ®ΟƒΟ„Ξµ Ο„ΞΏ ΞΊΞΏΟ…ΞΌΟ€Ξ― Ξ³ΞΉΞ± Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ο€ΟΞΏΞ²ΞΏΞ»Ξ®Ο‚
+user	common	el	Ξ§ΟΞ®ΟƒΟ„Ξ·Ο‚
+user accounts	common	el	Ξ»ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΞΏΞ― Ο‡ΟΞ·ΟƒΟ„ΟΞ½
+user groups	common	el	ΞΏΞΌΞ¬Ξ΄ΞµΟ‚ Ο‡ΟΞ·ΟƒΟ„ΟΞ½
+username	common	el	ΞΞ½ΞΏΞΌΞ± Ο‡ΟΞ®ΟƒΟ„Ξ·
+users	common	el	Ξ§ΟΞ®ΟƒΟ„ΞµΟ‚
+users choice	common	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο‡ΟΞ·ΟƒΟ„ΟΞ½
+uzbekistan	common	el	ΞΞ¥Ξ–ΞΞ Ξ•ΞΞ™Ξ£Ξ¤Ξ‘Ξ
+vanuatu	common	el	Ξ’Ξ‘ΞΞΞ¥Ξ‘Ξ¤ΞΞ¥
+venezuela	common	el	Ξ’Ξ•ΞΞ•Ξ–ΞΞ¥Ξ•Ξ›Ξ‘
+version	common	el	ΞΞΊΞ΄ΞΏΟƒΞ·
+viet nam	common	el	Ξ’Ξ™Ξ•Ξ¤ΞΞ‘Ξ
+view	common	el	Ξ ΟΞΏΞ²ΞΏΞ»Ξ®
+virgin islands, british	common	el	ΞΞ—Ξ£ΞΞ™ Ξ’Ξ•Ξ΅Ξ¤Ξ–Ξ™Ξ, Ξ’Ξ΅Ξ•Ξ¤Ξ‘ΞΞ™ΞΞ‘
+virgin islands, u.s.	common	el	ΞΞ—Ξ£ΞΞ™ Ξ’Ξ•Ξ΅Ξ¤Ξ–Ξ™Ξ, Ξ—.Ξ .Ξ‘.
+wallis and futuna	common	el	Ξ“ΞΞ¥ΞΞ›Ξ™Ξ£ & Ξ¦ΞΞ¥Ξ¤ΞΞ¥ΞΞ‘
+wednesday	common	el	Ξ¤ΞµΟ„Ξ¬ΟΟ„Ξ·
+welcome	common	el	ΞΞ±Ξ»ΟΟ‚ Ξ®ΟΞΈΞ±Ο„Ξµ
+western sahara	common	el	Ξ”Ξ¥Ξ¤Ξ™ΞΞ— Ξ£Ξ‘Ξ§Ξ‘Ξ΅Ξ‘
+what color should all the blank space on the desktop have	common	el	Ξ¤ΞΉ Ο‡ΟΟΞΌΞ± ΞΈΞ± Ξ­Ο€ΟΞµΟ€Ξµ ΟΞ»Ξ± Ο„Ξ± ΞΊΞµΞ½Ξ¬ ΟƒΟ„Ξ·Ξ½ ΞµΟ€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ½Ξ± Ξ­Ο‡ΞΏΟ…Ξ½
+what style would you like the image to have?	common	el	Ξ¤ΞΉ ΟƒΟ„Ο…Ξ» ΞΈΞ± ΞΈΞ­Ξ»Ξ±Ο„Ξµ Ξ½Ξ± Ξ­Ο‡ΞµΞΉ Ξ· ΞµΞΉΞΊΟΞ½Ξ±;
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	el	ΞΟ„Ξ±Ξ½ Ξ»Ξ­Ο„Ξµ Ξ½Ξ±ΞΉ Ο„Ξ± ΞΊΞΏΟ…ΞΌΟ€ΞΉΞ¬ Ξ±ΟΟ‡ΞΉΞΊΞ®Ο‚ ΟƒΞµΞ»Ξ―Ξ΄Ξ±Ο‚ ΞΊΞ±ΞΉ ΞµΞΎΟΞ΄ΞΏΟ… Ξ±Ο€Ο Ο„ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ Ο‰Ο‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚ ΟƒΟ„Ξ·Ξ½ ΞΊΟΟΞΉΞ± ΞΌΟ€Ξ¬ΟΞ± ΞµΟΞ³Ξ±ΟƒΞΉΟΞ½
+which groups	common	el	Ξ ΞΏΞΉΞ­Ο‚ ΞΏΞΌΞ¬Ξ΄ΞµΟ‚
+width	common	el	Ξ Ξ»Ξ¬Ο„ΞΏΟ‚
+wk	jscalendar	el	ΞµΞ².
+work email	common	el	email ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚
+would you like to display the page generation time at the bottom of every window?	common	el	ΞΞ± ΞΈΞ­Ξ»Ξ±Ο„Ξµ Ξ²Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±Ο‚ Ο„Ξ·Ο‚ ΟΟΞ±Ο‚ ΟƒΟ„ΞΏ ΞΊΞ¬Ο„Ο‰ ΞΌΞ­ΟΞΏΟ‚ ΞΊΞ¬ΞΈΞµ Ο€Ξ±ΟΞ±ΞΈΟΟΞΏΟ…;
+writing	common	el	ΞµΞ³Ξ³ΟΞ±Ο†Ξ®
+written by:	common	el	Ξ“ΟΞ±ΞΌΞΌΞ­Ξ½ΞΏ Ξ±Ο€Ο:
+year	common	el	ΞΟ„ΞΏΟ‚
+yemen	common	el	Ξ¥Ξ•ΞΞ•ΞΞ—
+yes	common	el	ΞΞ±ΞΉ
+you are required to change your password during your first login	common	el	Ξ‘Ο€Ξ±ΞΉΟ„ΞµΞ―Ο„Ξ±ΞΉ Ξ· Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® Ο„ΞΏΟ… ΞΊΟ‰Ξ΄ΞΉΞΊΞΏΟ ΟƒΞ±Ο‚ ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ Ο€ΟΟΟ„Ξ· ΞµΞ―ΟƒΞΏΞ΄ΞΏ
+you can customize how many icons and toolbars the editor shows.	common	el	ΞΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΟΟ…ΞΈΞΌΞ―ΟƒΞµΟ„Ξµ Ο€ΟΟƒΞµΟ‚ ΞµΞΉΞΊΟΞ½ΞµΟ‚ ΞΊΞ±ΞΉ ΞΌΟ€Ξ¬ΟΞµΟ‚ ΞµΟΞ³Ξ±Ξ»ΞµΞΉΟΞ½ ΞΈΞ± Ξ΄ΞµΞ―Ο‡Ξ½ΞµΞΉ ΞΏ ΞµΞΊΞ΄ΟΟ„Ξ·Ο‚.
+you have been successfully logged out	login	el	Ξ•Ο€ΞΉΟ„Ο…Ο‡Ξ®Ο‚ Ξ­ΞΎΞΏΞ΄ΞΏΟ‚
+you have not entered a title	common	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ Ο„Ξ―Ο„Ξ»ΞΏ
+you have not entered a valid date	common	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ Ξ­Ξ³ΞΊΟ…ΟΞ· Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±
+you have not entered a valid time of day	common	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ Ξ­Ξ³ΞΊΟ…ΟΞ· ΟΟΞ± Ο„Ξ·Ο‚ Ξ·ΞΌΞ­ΟΞ±Ο‚
+you have not entered participants	common	el	Ξ”ΞµΞ½ Ξ­Ο‡ΞµΟ„Ξµ ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ ΟƒΟ…ΞΌΞΌΞµΟ„Ξ­Ο‡ΞΏΞ½Ο„ΞµΟ‚
+you have selected an invalid date	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΞ±Ο„Ξµ Ξ¬ΞΊΟ…ΟΞ· Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±!
+you have selected an invalid main category	common	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΞ±Ο„Ξµ Ξ¬ΞΊΟ…ΟΞ· Ξ²Ξ±ΟƒΞΉΞΊΞ® ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±!
+you have successfully logged out	common	el	Ξ•Ο€ΞΉΟ„Ο…Ο‡Ξ®Ο‚ Ξ­ΞΎΞΏΞ΄ΞΏΟ‚
+you need to add the webserver user '%1' to the group '%2'.	common	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€ΟΞΏΟƒΞΈΞ­ΟƒΞµΟ„Ξµ Ο„ΞΏΞ½ webserver Ο‡ΟΞ®ΟƒΟ„Ξ· '%1' ΟƒΟ„Ξ·Ξ½ ΞΏΞΌΞ¬Ξ΄Ξ± '%2'.
+your message could <b>not</b> be sent!<br>	common	el	Ξ¤ΞΏ ΞΌΞ®Ξ½Ο…ΞΌΞ¬ ΟƒΞ±Ο‚ <b>Ξ΄ΞµΞ½</b> ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΟƒΟ„Ξ±Ξ»ΞµΞ―!<br>
+your message has been sent	common	el	To ΞΌΞ®Ξ½Ο…ΞΌΞ¬ ΟƒΞ±Ο‚ ΞµΟƒΟ„Ξ¬Ξ»ΞµΞΉ
+your search returned %1 matchs	common	el	Ξ· Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· ΞµΟ€Ξ­ΟƒΟ„ΟΞµΟΞµ %1 Ξ±Ο€ΞΏΟ„ΞµΞ»Ξ­ΟƒΞΌΞ±Ο„Ξ±
+your search returned 1 match	common	el	Ξ· Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· ΞµΟ€Ξ­ΟƒΟ„ΟΞµΟΞµ 1 Ξ±Ο€ΞΏΟ„Ξ­Ξ»ΞµΟƒΞΌΞ±
+your session could not be verified.	login	el	Ξ— Ο€ΞµΟΞ―ΞΏΞ΄ΞΏΟ‚ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞµΟ€Ξ±Ξ»Ξ·ΞΈΞµΟ…ΞΈΞµΞ―
+your settings have been updated	common	el	ΞΞΉ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΟƒΞ±Ο‚ Ξ­Ο‡ΞΏΟ…Ξ½ ΞµΞ½Ξ·ΞΌΞµΟΟ‰ΞΈΞµΞ―
+zambia	common	el	Ξ–Ξ‘ΞΞ Ξ™Ξ‘
+zimbabwe	common	el	Ξ–Ξ™ΞΞ Ξ‘ΞΞ ΞΞ¥Ξ•
+zoom	common	el	Ξ•ΟƒΟ„Ξ―Ξ±ΟƒΞ·

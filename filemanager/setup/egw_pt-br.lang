@@ -1,27 +1,27 @@
-%1 already exists as a file	filemanager	pt-br	%1 j· existe como um arquivo
-application	filemanager	pt-br	AplicaÁ„o
+%1 already exists as a file	filemanager	pt-br	%1 j√° existe como um arquivo
+application	filemanager	pt-br	Aplica√ß√£o
 back to file manager	filemanager	pt-br	Voltar ao Gerenciador de Arquivos
-cancel editing %1 without saving	filemanager	pt-br	Cancelar ediÁ„o %1 sem salvar
-cannot create directory because it begins or ends in a space	filemanager	pt-br	N„o È possÌvel criar a pasta porque seu nome inicia ou termina em espaÁo em branco
-cannot replace %1 because it is a directory	filemanager	pt-br	N„o È possÌvel subtituir %1 porque È uma pasta
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	pt-br	Escolhendo datas onde "data atÈ" È anterior a "data de", resultar· em uma pesquisa que retornar· todos os registros, exceto aqueles entre as duas datas informadas.
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	pt-br	Escolhando apenas uma data (de/atÈ) resultar· em uma pesquisa que retornar· todos os registros anteriores/posteriores a data informada.
+cancel editing %1 without saving	filemanager	pt-br	Cancelar edi√ß√£o %1 sem salvar
+cannot create directory because it begins or ends in a space	filemanager	pt-br	N√£o √© poss√≠vel criar a pasta porque seu nome inicia ou termina em espa√ßo em branco
+cannot replace %1 because it is a directory	filemanager	pt-br	N√£o √© poss√≠vel subtituir %1 porque √© uma pasta
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	pt-br	Escolhendo datas onde "data at√©" √© anterior a "data de", resultar√° em uma pesquisa que retornar√° todos os registros, exceto aqueles entre as duas datas informadas.
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	pt-br	Escolhando apenas uma data (de/at√©) resultar√° em uma pesquisa que retornar√° todos os registros anteriores/posteriores a data informada.
 clear search	filemanager	pt-br	limpar pesquisa
 command sucessfully run	filemanager	pt-br	Comando executado com sucesso
-comment	filemanager	pt-br	Coment·rio
-comments cannot contain "%1"	filemanager	pt-br	Coment·rios n„o podem conter "%1"
+comment	filemanager	pt-br	Coment√°rio
+comments cannot contain "%1"	filemanager	pt-br	Coment√°rios n√£o podem conter "%1"
 copied %1 to %2	filemanager	pt-br	Copiado %1 para %2
 copy to	filemanager	pt-br	Copiar Para
 copy to:	filemanager	pt-br	Copiar para:
-could not copy %1 to %2	filemanager	pt-br	N„o foi possÌvel copiar %1 para %2
-could not copy file because no destination directory is given	filemanager	pt-br	N„o foi possÌvel copiar o arquivo porque n„o se definiu um diretÛrio de destino
-could not create %1	filemanager	pt-br	N„o foi possÌvel criar %1
-could not create directory %1	filemanager	pt-br	N„o foi possÌvel criar a pasta %1
-could not delete %1	filemanager	pt-br	N„o foi possÌvel remover %1
-could not move %1 to %2	filemanager	pt-br	N„o foi possÌvel mover %1 para %2
-could not move file because no destination directory is given	filemanager	pt-br	N„o foi possÌvel mover o arquivo porque n„o se definiu um diretÛrio de destino
-could not rename %1 to %2	filemanager	pt-br	N„o foi possÌvel renomear %1 para %2
-could not save %1	filemanager	pt-br	N„o foi possÌvel salvar %1
+could not copy %1 to %2	filemanager	pt-br	N√£o foi poss√≠vel copiar %1 para %2
+could not copy file because no destination directory is given	filemanager	pt-br	N√£o foi poss√≠vel copiar o arquivo porque n√£o se definiu um diret√≥rio de destino
+could not create %1	filemanager	pt-br	N√£o foi poss√≠vel criar %1
+could not create directory %1	filemanager	pt-br	N√£o foi poss√≠vel criar a pasta %1
+could not delete %1	filemanager	pt-br	N√£o foi poss√≠vel remover %1
+could not move %1 to %2	filemanager	pt-br	N√£o foi poss√≠vel mover %1 para %2
+could not move file because no destination directory is given	filemanager	pt-br	N√£o foi poss√≠vel mover o arquivo porque n√£o se definiu um diret√≥rio de destino
+could not rename %1 to %2	filemanager	pt-br	N√£o foi poss√≠vel renomear %1 para %2
+could not save %1	filemanager	pt-br	N√£o foi poss√≠vel salvar %1
 create file	filemanager	pt-br	Criar Arquivo
 create folder	filemanager	pt-br	Criar Pasta
 created	filemanager	pt-br	Criado
@@ -31,42 +31,42 @@ created between	filemanager	pt-br	criado entre
 created by	filemanager	pt-br	Criado por
 created directory %1	filemanager	pt-br	Criada pasta %1
 date	filemanager	pt-br	Data
-default number of upload fields to show	filemanager	pt-br	Padr„o para o n˙mero de campos de envio de arquivos a exibir
+default number of upload fields to show	filemanager	pt-br	Padr√£o para o n√∫mero de campos de envio de arquivos a exibir
 delete	filemanager	pt-br	Remover
 deleted %1	filemanager	pt-br	Removido %1
 directory	filemanager	pt-br	Pasta
-directory %1 already exists	filemanager	pt-br	Pasta %1 j· existe
-directory %1 does not exist	filemanager	pt-br	Pasta %1 n„o existe
-directory names cannot contain "%1"	filemanager	pt-br	Nomes de pastas n„o podem conter "%1"
+directory %1 already exists	filemanager	pt-br	Pasta %1 j√° existe
+directory %1 does not exist	filemanager	pt-br	Pasta %1 n√£o existe
+directory names cannot contain "%1"	filemanager	pt-br	Nomes de pastas n√£o podem conter "%1"
 display attributes	filemanager	pt-br	Exibir atributos
 download	filemanager	pt-br	Download
 edit	filemanager	pt-br	Editar
-edit comments	filemanager	pt-br	Editar Coment·rios
+edit comments	filemanager	pt-br	Editar Coment√°rios
 error running command	filemanager	pt-br	Erro executando comando
 execute	filemanager	pt-br	Executar
 failed to create directory	filemanager	pt-br	falhou ao criar pasta
-fake base dir did not exist, egroupware created a new one.	filemanager	pt-br	DiretÛrio Base n„o existia, eGroupWare criou um novo.
+fake base dir did not exist, egroupware created a new one.	filemanager	pt-br	Diret√≥rio Base n√£o existia, eGroupWare criou um novo.
 file	filemanager	pt-br	Arquivo
-file %1 already exists. please edit it or delete it first.	filemanager	pt-br	Arquivo %1 j· existe. Por favor edite-o ou remova-o antes.
-file %1 could not be created.	filemanager	pt-br	Arquivo %1 n„o pÙde ser criado.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	pt-br	arquivo %1 pode ser muito grande. Contacte seu administrador do sistema para maiores informaÁıes.
+file %1 already exists. please edit it or delete it first.	filemanager	pt-br	Arquivo %1 j√° existe. Por favor edite-o ou remova-o antes.
+file %1 could not be created.	filemanager	pt-br	Arquivo %1 n√£o p√¥de ser criado.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	pt-br	arquivo %1 pode ser muito grande. Contacte seu administrador do sistema para maiores informa√ß√µes.
 file name	filemanager	pt-br	Nome do Arquivo
-file names cannot contain  or /	filemanager	pt-br	Nomes de arquivos n„o podem conter \ ou /
-file names cannot contain "%1"	filemanager	pt-br	Nomes de arquivos n„o podem conter "%1"
-file names cannot contain \ or /	filemanager	pt-br	Nomes de arquivos n„o podem conter \ ou /
+file names cannot contain  or /	filemanager	pt-br	Nomes de arquivos n√£o podem conter \ ou /
+file names cannot contain "%1"	filemanager	pt-br	Nomes de arquivos n√£o podem conter "%1"
+file names cannot contain \ or /	filemanager	pt-br	Nomes de arquivos n√£o podem conter \ ou /
 filemanager	common	pt-br	Gerenciador de Arquivos
-filemanager preferences	filemanager	pt-br	PreferÍncias para Gerenciador de Arquivos
+filemanager preferences	filemanager	pt-br	Prefer√™ncias para Gerenciador de Arquivos
 files	filemanager	pt-br	Arquivos
-files in this directory	filemanager	pt-br	Arquivos nesse diretÛrio
+files in this directory	filemanager	pt-br	Arquivos nesse diret√≥rio
 folder	filemanager	pt-br	Pasta
-folder up	filemanager	pt-br	DiretÛrio Acima
-go home	filemanager	pt-br	ir para p·gina principal
+folder up	filemanager	pt-br	Diret√≥rio Acima
+go home	filemanager	pt-br	ir para p√°gina principal
 go to	filemanager	pt-br	Ir Para
 go to %1	filemanager	pt-br	Ir para %1
 go to your home directory	filemanager	pt-br	Ir para sua pasta Home
 go to:	filemanager	pt-br	Ir para:
 go up	filemanager	pt-br	subir
-home	filemanager	pt-br	InÌcio
+home	filemanager	pt-br	In√≠cio
 id	filemanager	pt-br	ID
 location	filemanager	pt-br	Local
 locked	filemanager	pt-br	Travado
@@ -77,10 +77,10 @@ modified by	filemanager	pt-br	Modificado por
 move to	filemanager	pt-br	Mover Para
 move to:	filemanager	pt-br	Mover para:
 moved %1 to %2	filemanager	pt-br	Movido %1 para %2
-no files in this directory.	filemanager	pt-br	Nenhum arquivo nesse diretÛrio
-no version history for this file/directory	filemanager	pt-br	Sem histÛrico de vers„o para este arquivo/pasta
-operation	filemanager	pt-br	OperaÁ„o
-other settings	filemanager	pt-br	Outras configuraÁıes
+no files in this directory.	filemanager	pt-br	Nenhum arquivo nesse diret√≥rio
+no version history for this file/directory	filemanager	pt-br	Sem hist√≥rico de vers√£o para este arquivo/pasta
+operation	filemanager	pt-br	Opera√ß√£o
+other settings	filemanager	pt-br	Outras configura√ß√µes
 owner	filemanager	pt-br	Dono
 please select a file to delete.	filemanager	pt-br	Por favor selecione um arquivo para excluir
 preview %1	filemanager	pt-br	Visualizar %1
@@ -89,13 +89,13 @@ quick jump to	filemanager	pt-br	Atalho para:
 reload	filemanager	pt-br	recarregar
 rename	filemanager	pt-br	Renomear
 renamed %1 to %2	filemanager	pt-br	Renomeado %1 para %2
-replaced %1	filemanager	pt-br	SubstituÌdo %1
+replaced %1	filemanager	pt-br	Substitu√≠do %1
 save %1	filemanager	pt-br	Salvar %1
 save %1, and go back to file listing	filemanager	pt-br	Salvar %1, e voltar para listagem dos arquivos
 save all	filemanager	pt-br	Salvar tudo
-save changes	filemanager	pt-br	Salvar modificaÁıes
+save changes	filemanager	pt-br	Salvar modifica√ß√µes
 saved %1	filemanager	pt-br	Salvo %1
-searchstring	filemanager	pt-br	par‚metro de pesquisa
+searchstring	filemanager	pt-br	par√¢metro de pesquisa
 show	filemanager	pt-br	Exibir
 show ..	filemanager	pt-br	Exibir ..
 show .files	filemanager	pt-br	Exibir arquivos cujos nomes iniciem por um ponto
@@ -104,22 +104,22 @@ show help	filemanager	pt-br	Exibir ajuda
 size	filemanager	pt-br	Tamanho
 sort by:	filemanager	pt-br	Ordenar por:
 start search	filemanager	pt-br	iniciar procura
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	pt-br	Futuro gerenciador de arquivos, agora para PROP”SITOS DE TESTES APENAS, por favor envie relatÛrios de erro.
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	pt-br	Futuro gerenciador de arquivos, agora para PROP√ìSITOS DE TESTES APENAS, por favor envie relat√≥rios de erro.
 total files	filemanager	pt-br	Total de Arquivos
-unknown mime-type defaults to text/plain when viewing	filemanager	pt-br	Tipos MIME desconhecidos s„o visualizados como text/plain por padr„o
-unused space	filemanager	pt-br	EspaÁo N„o Usado
+unknown mime-type defaults to text/plain when viewing	filemanager	pt-br	Tipos MIME desconhecidos s√£o visualizados como text/plain por padr√£o
+unused space	filemanager	pt-br	Espa√ßo N√£o Usado
 up	filemanager	pt-br	Acima
 update	filemanager	pt-br	Atualizar
-updated comment for %1	filemanager	pt-br	Coment·rio atualizado para %1
+updated comment for %1	filemanager	pt-br	Coment√°rio atualizado para %1
 upload	filemanager	pt-br	Carregar
 upload fields	filemanager	pt-br	campos de envio de arquivos
 upload files	filemanager	pt-br	Enviar Arquivos
 use new experimental filemanager?	filemanager	pt-br	Usar o novo Gerenciador de Arquivos experimental?
-used space	filemanager	pt-br	EspaÁo Usado
-users	filemanager	pt-br	Usu·rios
-version	filemanager	pt-br	Vers„o
+used space	filemanager	pt-br	Espa√ßo Usado
+users	filemanager	pt-br	Usu√°rios
+version	filemanager	pt-br	Vers√£o
 view documents in new window	filemanager	pt-br	Visualizar documentos em uma nova janela
-view documents on server (if available)	filemanager	pt-br	Visualizar documentos no servidor (se disponÌvel)
+view documents on server (if available)	filemanager	pt-br	Visualizar documentos no servidor (se dispon√≠vel)
 who	filemanager	pt-br	Quem
-you do not have access to %1	filemanager	pt-br	VocÍ n„o tem acesso a %1
-your home dir did not exist, egroupware created a new one.	filemanager	pt-br	Seu DiretÛrio Home n„o existia, eGroupWare criou um novo.
+you do not have access to %1	filemanager	pt-br	Voc√™ n√£o tem acesso a %1
+your home dir did not exist, egroupware created a new one.	filemanager	pt-br	Seu Diret√≥rio Home n√£o existia, eGroupWare criou um novo.

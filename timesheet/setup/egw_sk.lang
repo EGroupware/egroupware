@@ -1,52 +1,52 @@
-2 month ago	timesheet	sk	2 mesiace spä»
-2 years ago	timesheet	sk	2 roky spä»
-3 years ago	timesheet	sk	3 roky spä»
+2 month ago	timesheet	sk	2 mesiace spÃ¤Å¥
+2 years ago	timesheet	sk	2 roky spÃ¤Å¥
+3 years ago	timesheet	sk	3 roky spÃ¤Å¥
 actions	timesheet	sk	Akcie
-all projects	timesheet	sk	V¹etky projekty
-both: allow to use projectmanager and free project-names	admin	sk	Obidvoje: povoli» pou¾ívanie Projektovníka a voµné názvy projektov
-by	timesheet	sk	(kım)
-create new links	timesheet	sk	Vytvori» nové odkazy
-creating new entry	timesheet	sk	vytvára sa nová polo¾ka
-delete this entry	timesheet	sk	odstráni» túto polo¾ku
-edit this entry	timesheet	sk	Upravi» túto polo¾ku
-empty if identical to duration	timesheet	sk	prázdne, ak sa zhoduje då¾ka trvania
+all projects	timesheet	sk	VÅ¡etky projekty
+both: allow to use projectmanager and free project-names	admin	sk	Obidvoje: povoliÅ¥ pouÅ¾Ã­vanie ProjektovnÃ­ka a voÄ¾nÃ© nÃ¡zvy projektov
+by	timesheet	sk	(kÃ½m)
+create new links	timesheet	sk	VytvoriÅ¥ novÃ© odkazy
+creating new entry	timesheet	sk	vytvÃ¡ra sa novÃ¡ poloÅ¾ka
+delete this entry	timesheet	sk	odstrÃ¡niÅ¥ tÃºto poloÅ¾ku
+edit this entry	timesheet	sk	UpraviÅ¥ tÃºto poloÅ¾ku
+empty if identical to duration	timesheet	sk	prÃ¡zdne, ak sa zhoduje dÄºÅ¾ka trvania
 end	timesheet	sk	Koniec
-entry deleted	timesheet	sk	Polo¾ka bola odstránená
-entry saved	timesheet	sk	Polo¾ka bola ulo¾ená
-error deleting the entry!!!	timesheet	sk	Chyba pri odstraòovaní polo¾ky!!!
-error saving the entry!!!	timesheet	sk	Chyba pri ukladaní polo¾ky!!!
-existing links	timesheet	sk	Existujúce odkazy
-full: use only projectmanager	admin	sk	Plné: pou¾i» iba Projektovník
-general	timesheet	sk	Hlavné
-last modified	timesheet	sk	Naposledy upravené
-last month	timesheet	sk	Poslednı mesiac
-last week	timesheet	sk	Poslednı tı¾deò
-last year	timesheet	sk	Poslednı rok
-leave it empty for a full week	timesheet	sk	Ponechajte prázdne ak chcete plnı tı¾deò
+entry deleted	timesheet	sk	PoloÅ¾ka bola odstrÃ¡nenÃ¡
+entry saved	timesheet	sk	PoloÅ¾ka bola uloÅ¾enÃ¡
+error deleting the entry!!!	timesheet	sk	Chyba pri odstraÅˆovanÃ­ poloÅ¾ky!!!
+error saving the entry!!!	timesheet	sk	Chyba pri ukladanÃ­ poloÅ¾ky!!!
+existing links	timesheet	sk	ExistujÃºce odkazy
+full: use only projectmanager	admin	sk	PlnÃ©: pouÅ¾iÅ¥ iba ProjektovnÃ­k
+general	timesheet	sk	HlavnÃ©
+last modified	timesheet	sk	Naposledy upravenÃ©
+last month	timesheet	sk	PoslednÃ½ mesiac
+last week	timesheet	sk	PoslednÃ½ tÃ½Å¾deÅˆ
+last year	timesheet	sk	PoslednÃ½ rok
+leave it empty for a full week	timesheet	sk	Ponechajte prÃ¡zdne ak chcete plnÃ½ tÃ½Å¾deÅˆ
 links	timesheet	sk	Odkazy
-no details	timesheet	sk	¾iadne podrobnosti
-no project	timesheet	sk	®iadny projekt
-none: use only free project-names	admin	sk	®iadne: pou¾i» iba voµné názvy projektov
-or endtime	timesheet	sk	alebo Èas skonèenia
-permission denied!!!	timesheet	sk	Prístup bol odmietnutı !!!
+no details	timesheet	sk	Å¾iadne podrobnosti
+no project	timesheet	sk	Å½iadny projekt
+none: use only free project-names	admin	sk	Å½iadne: pouÅ¾iÅ¥ iba voÄ¾nÃ© nÃ¡zvy projektov
+or endtime	timesheet	sk	alebo ÄŒas skonÄenia
+permission denied!!!	timesheet	sk	PrÃ­stup bol odmietnutÃ½ !!!
 price	timesheet	sk	Cena
-projectmanager integration	admin	sk	integrácia s Projektovníkom
-quantity	timesheet	sk	Mno¾stvo
-save & new	timesheet	sk	Ulo¾i» & Nové
-saves the changes made	timesheet	sk	Ulo¾í vykonané zmeny
-saves this entry and add a new one	timesheet	sk	Ulo¾í túto polo¾ku a pridá novú
+projectmanager integration	admin	sk	integrÃ¡cia s ProjektovnÃ­kom
+quantity	timesheet	sk	MnoÅ¾stvo
+save & new	timesheet	sk	UloÅ¾iÅ¥ & NovÃ©
+saves the changes made	timesheet	sk	UloÅ¾Ã­ vykonanÃ© zmeny
+saves this entry and add a new one	timesheet	sk	UloÅ¾Ã­ tÃºto poloÅ¾ku a pridÃ¡ novÃº
 select a price	timesheet	sk	Vyberte cenu
 select a project	timesheet	sk	Vyberte projekt
-start	timesheet	sk	Zaèiatok
-starttime	timesheet	sk	Èas zaèiatku
-starttime has to be before endtime !!!	timesheet	sk	Èas zaèiatku musí by» skôr ne¾ èas konca !!!
-sum %1:	timesheet	sk	Súèet %1:
+start	timesheet	sk	ZaÄiatok
+starttime	timesheet	sk	ÄŒas zaÄiatku
+starttime has to be before endtime !!!	timesheet	sk	ÄŒas zaÄiatku musÃ­ byÅ¥ skÃ´r neÅ¾ Äas konca !!!
+sum %1:	timesheet	sk	SÃºÄet %1:
 this month	timesheet	sk	Tento mesiac
-this week	timesheet	sk	Tento tı¾deò
+this week	timesheet	sk	Tento tÃ½Å¾deÅˆ
 this year	timesheet	sk	Tento rok
 timesheet	common	sk	Harmonogram
-unitprice	timesheet	sk	Jednotková cena
-view this entry	timesheet	sk	Zobrazi» polo¾ku
-week	timesheet	sk	Tı¾deò
-yesterday	timesheet	sk	Vèera
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sk	Va¹a databáza NIE je aktuálna (%1 oproti %2), prosím spustite %3setup%4 kvôli aktualizácii va¹ej databázy.
+unitprice	timesheet	sk	JednotkovÃ¡ cena
+view this entry	timesheet	sk	ZobraziÅ¥ poloÅ¾ku
+week	timesheet	sk	TÃ½Å¾deÅˆ
+yesterday	timesheet	sk	VÄera
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sk	VaÅ¡a databÃ¡za NIE je aktuÃ¡lna (%1 oproti %2), prosÃ­m spustite %3setup%4 kvÃ´li aktualizÃ¡cii vaÅ¡ej databÃ¡zy.

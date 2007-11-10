@@ -1,267 +1,267 @@
-%1 %2 in %3	calendar	ko	%3¿¡ %1 %2
-%1 records imported	calendar	ko	%1°³ÀÇ ·¹ÄÚµå¸¦ °¡Á®¿Ô½À´Ï´Ù.
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	ko	%1°³ Ç×¸ñÀ» ÀĞÀ½ ( ¾ÆÁ÷ °¡Á®¿À±â¸¦ ¼öÇàÇÏÁö ¾ÊÀ½, µÚ·Îµ¹¾Æ°¡±â¸¦ ¼±ÅÃÇØ¼­ °¡Á®¿À±âÅ×½ºÆ®¸¦ Ã¼Å©ÇØÁ¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù)
-accept or reject an invitation	calendar	ko	ÃÊ´ë¿¡ ´ëÇØ ½Â¶ô È¤Àº °ÅÀı
-accepted	calendar	ko	½Â¶ôµÊ
-access denied to the calendar of %1 !!!	calendar	ko	%1 ÀÏÁ¤ÀÇ Á¢±ÙÀÌ ±İÁöµÇ¾ú½À´Ï´Ù !!
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ko	¾Ë¸² ¸Ş¼¼Áö¸¦ ¹ß»ıÇÏ´Â Çàµ¿: Ãß°¡µÊ,Ãë¼ÒµÊ,½Â¶ôµÊ,°ÅºÎµÊ, ...
-add alarm	calendar	ko	¾Ë¶÷ Ãß°¡
-added	calendar	ko	Ãß°¡µÊ
-after current date	calendar	ko	¿À´ÃÀÌÈÄ
-alarm	calendar	ko	¾Ë¶÷
-alarm added	calendar	ko	¾Ë¶÷ Ãß°¡µÊ
-alarm deleted	calendar	ko	¾Ë¶÷ »èÁ¦µÊ
-alarm for %1 at %2 in %3	calendar	ko	** %3, %1¿¡ %2 ¾Ë¶÷
-alarm management	calendar	ko	¾Ë¶÷°ü¸®
-alarms	calendar	ko	¾Ë¶÷
-all categories	calendar	ko	¸ğµç Ä«Å×°í¸®
-all day	calendar	ko	ÇÏ·çÁ¾ÀÏ
-all events	calendar	ko	¸ğµç ÀÌº¥Æ®
-all participants	calendar	ko	¸ğµç Âü¼®ÀÚ
-allows to edit the event again	calendar	ko	ÀÌº¥Æ® Àç¼öÁ¤ Çã¿ë
-apply the changes	calendar	ko	º¯°æ»çÇ× Àû¿ë
-are you sure you want to delete this country ?	calendar	ko	ÀÌ ±¹°¡¸¦ »èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?
-are you sure you want to delete this holiday ?	calendar	ko	ÀÌ °øÈŞÀÏÀ» »èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?
-before current date	calendar	ko	¿À´Ã ÀÌÀü¿¡
-before the event	calendar	ko	ÀÌº¥Æ® Àü¿¡
-birthday	calendar	ko	»ıÀÏ
-calendar	common	ko	ÀÏÁ¤
-calendar event	calendar	ko	ÀÏÁ¤ ÀÌº¥Æ®
-calendar holiday management	admin	ko	ÀÏÁ¤ °øÈŞÀÏ °ü¸®
-calendar menu	calendar	ko	ÀÏÁ¤ ¸Ş´º
-calendar preferences	calendar	ko	ÀÏÁ¤ È¯°æ¼³Á¤
-calendar settings	admin	ko	ÀÏÁ¤ ¼³Á¤
-calendar-fieldname	calendar	ko	ÀÏÁ¤-ÇÊµåÀÌ¸§
-canceled	calendar	ko	Ãë¼ÒµÊ
-charset of file	calendar	ko	ÆÄÀÏÀÇ ¹®ÀÚ¼Â
-close the window	calendar	ko	Ã¢´İ±â
-compose a mail to all participants after the event is saved	calendar	ko	ÀÌº¥Æ® ÀúÀåÈÄ ¸ğµç Âü¼®ÀÚ¿¡°Ô ¸ŞÀÏÀÛ¼º
-copy of:	calendar	ko	»çº»:
-copy this event	calendar	ko	ÀÌ ÀÌº¥Æ® º¹»ç
-countries	calendar	ko	±¹°¡µé
-country	calendar	ko	±¹°¡
-create an exception at this recuring event	calendar	ko	ÀÌ ¿¬¼ÓÀÌº¥Æ®´ëÇÑ ¿¹¿ÜÀÛ¼º
-create new links	calendar	ko	»õ ¸µÅ©°³¼³
-csv-fieldname	calendar	ko	ÄÄ¸¶±¸ºĞ°ª-ÇÊµåÀÌ¸§
-csv-filename	calendar	ko	ÄÄ¸¶±¸ºĞ°ª-ÆÄÀÏÀÌ¸§
-custom fields	common	ko	»ç¿ëÀÚÁ¤ÀÇ ÇÊµå
-daily	calendar	ko	¸ÅÀÏ
-days	calendar	ko	ÀÏµ¿¾È
-days of the week for a weekly repeated event	calendar	ko	ÁÖ°£¹İº¹ÀÌº¥Æ®°¡ Àû¿ëµÉ ¿äÀÏ
-days repeated	calendar	ko	ÀÏµ¿¾È ¹İº¹µÊ
-dayview	calendar	ko	ÇÏ·ç º¸±â
-default appointment length (in minutes)	calendar	ko	±âº» ¾à¼Ó ±æÀÌ(ºĞ´ÜÀ§)
-default calendar filter	calendar	ko	±âº» ÀÏÁ¤ ÇÊÅÍ
-default calendar view	calendar	ko	±âº» ÀÏÁ¤ º¸±â
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	ko	»õ·Ó°Ô »ı¼ºµÉ ÀÌº¥Æ®ÀÇ ±âº» ±æÀÌ. ±æÀÌ´Â ºĞ´ÜÀ§ ¿¹) 60 Àº ÇÑ½Ã°£
-default week view	calendar	ko	±âº» ÁÖ°£º¸±â
-delete series	calendar	ko	¿¬¼Ó »èÁ¦
-delete this alarm	calendar	ko	ÀÌ ¾Ë¶÷ »èÁ¦
-delete this event	calendar	ko	ÀÌ ÀÌº¥Æ® »èÁ¦
-delete this exception	calendar	ko	ÀÌ ¿¹¿Ü »èÁ¦
-delete this series of recuring events	calendar	ko	ÀÌ ¿¬¼Ó ÀÌº¥Æ® »èÁ¦
-disinvited	calendar	ko	Á¦¿Ü
-display status of events	calendar	ko	ÀÌº¥Æ®ÀÇ »óÅÂ¸¦ Ç¥½Ã
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	ko	±âº» ÇÑ´Ş º¸±â¸¦ ½ÃÀÛÆäÀÌÁö¿¡ º¸ÀÌ°Ú½À´Ï±î? ( eGroupWare¿¡ µé¾î¿Ã¶§³ª È¨ÆäÀÌÁö ¾ÆÀÌÄÜÀ» Å¬¸¯ÇßÀ»¶§ÀÇ ÆäÀÌÁö)
-do you want a weekview with or without weekend?	calendar	ko	ÁÖ°£º¸±â¿¡ ÁÖ¸»À» Æ÷ÇÔÇÏ½Ã°Ú½À´Ï±î? Æ÷ÇÔÇÏÁö ¾Ê°Ú½À´Ï±î?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	ko	¾à¼ÓÀÌ º¯°æµÇ°Å³ª »õ·Î ¸¸µé¾îÁö¸é ¾Ë¸²¸Ş¼¼Áö¸¦ ¹ŞÀ¸½Ã°Ú½À´Ï±î? ¸¸¾à ±×·¸´Ù¸é ÀÚ½ÅÀÌ ÀÛ¼ºÇÑ ¾à¼Ó¿¡µµ ¾Ë¸²¸Ş¼¼Áö¸¦ ¹Ş°Ô µË´Ï´Ù.<br> ¾Ë¸²¸Ş¼¼Áö¸¦ Æ¯Á¤ÆäÀÌÁö¿¡¼­¸¸ µ¿ÀÛÇÏµµ·Ï Á¦ÇÑÇÒ¼ö ÀÖ½À´Ï´Ù. °¢ Ç×¸ñÀº ¸ğµç ¾Ë¸²¸Ş¼¼Áö¸¦ °¡Áö°í ÀÖ°Ô µË´Ï´Ù. Á¦¸ñ, ¼³¸í, Âü¿©ÀÚ¸¦ Æ÷ÇÔÇÑ ¾î¶°ÇÑ ¼öÁ¤»çÇ×ÀÌ ¹ß»ıÇÏ´Â °Íµµ Æ÷ÇÔÇÕ´Ï´Ù. ´Ü Âü¿©ÀÚÀÇ ÀÀ´äÀº Á¦¿ÜÇÕ´Ï´Ù. ¸¸¾à ÀÌº¥Æ®ÀÇ ÁÖÃÖÀÚ°¡ ¸ğµç ¾Ë¸²¸Ş¼¼Áö¸¦ ¿ä±¸ÇßÀ» °æ¿ì ±×´Â ¾ğÁ¦µç Âü¿©ÀÚÀÇ ½Â³«°ú °ÅºÎµîÀÇ ´ë´äÀ» ¹ŞÀ»¼ö ÀÖ½À´Ï´Ù.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ko	¾à¼ÓÀ» ¿ä¾àÇÑ ÀÌ¸ŞÀÏÀ» Á¤±âÀû ¼ö½ÅÇÏ½Ã°Ú½À´Ï±î?<br>¿ä¾à¹®Àº ±âº» ÀÌ¸ŞÀÏ ÁÖ¼Ò·Î ¸ÅÀÏ ¾ÆÄ§ÀÌ³ª ¸ÅÁÖ ¿ù¿äÀÏ ÁÖº° ¿ä¾àÀ» ¹ß¼ÛÇÕ´Ï´Ù.<br> ±× ³¯ÀÌ³ª ±× ÁÖ¿¡ ¾à¼ÓÀÌ ÀÖÀ»°æ¿ì¿¡¸¸ ¹ß¼ÛµË´Ï´Ù.
-do you wish to autoload calendar holidays files dynamically?	admin	ko	°øÈŞÀÏ ÀÏÁ¤ ÀÚµ¿·Îµå¸¦ µ¿ÀûÀ¸·Î ¼öÇàÇÒ±î¿ä?
-download	calendar	ko	³»·Á¹Ş±â
-download this event as ical	calendar	ko	ÀÌ ÀÌº¥Æ® iCal·Î ´Ù¿î·Îµå
-duration of the meeting	calendar	ko	¹ÌÆÃ±â°£
-edit exception	calendar	ko	¿¹¿Ü ÆíÁı
-edit series	calendar	ko	¿¬¼Ó ÆíÁı
-edit this event	calendar	ko	ÀÌ ÀÌº¥Æ® ÆíÁı
-edit this series of recuring events	calendar	ko	ÀÌ ¿¬¼ÓµÈ ¹İº¹ ÀÌº¥Æ® ÆíÁı
-empty for all	calendar	ko	¸ğµÎ ºñ¿ì±â
-end	calendar	ko	Á¾·á
-end date/time	calendar	ko	³¡³ª´Â ³¯Â¥/½Ã°£
-enddate	calendar	ko	Á¾·áÀÏ
-ends	calendar	ko	Á¾·á
-error adding the alarm	calendar	ko	¾Ë¶÷ Ãß°¡Áß ¿À·ù¹ß»ı
-error: importing the ical	calendar	ko	¿À·ù: ical ºÒ·¯¿À±â ¿À·ù
-error: no participants selected !!!	calendar	ko	¿À·ù: Âü¼®ÀÚ°¡ ¼±ÅÃµÇÁö ¾Ê¾Ò½À´Ï´Ù.
-error: saving the event !!!	calendar	ko	¿À·ù: ÀÌº¥Æ® ÀúÀå
-error: starttime has to be before the endtime !!!	calendar	ko	¿À·ù: ½ÃÀÛ½Ã°£ÀÌ Á¾·á½Ã°£º¸´Ù ÀÌ¸¨´Ï´Ù.
-event copied - the copy can now be edited	calendar	ko	ÀÌº¥Æ® º¹»çµÊ - ÀÌ º¹»ç´Â ÀÌÁ¦ ¼öÁ¤ÀÌ °¡´ÉÇÕ´Ï´Ù
-event deleted	calendar	ko	ÀÌº¥Æ® »èÁ¦µÊ
-event details follow	calendar	ko	** ´ÙÀ½Àº ÀÌº¥Æ®-¼³¸í
-event saved	calendar	ko	ÀÌº¥Æ® ÀúÀåµÊ
-exception	calendar	ko	¿¹¿Ü
-exceptions	calendar	ko	¿¹¿Ü
-existing links	calendar	ko	±âÁ¸¸µÅ©
-export	calendar	ko	³»º¸³»±â
-extended	calendar	ko	È®Àå
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ko	¿ÏÀüÇÑ ÀÌº¥Æ®-¼³¸íÀ» Ç×»ó Æ÷ÇÔÇÏ´Â È®Àå. iCalÀº Æ¯Á¤ ´Ù¸¥ ÀÏÁ¤ ÀÀ¿ëÇÁ·Î±×·¥À¸·Î °¡Á®¿À±â¸¦ ÇÒ¼ö ÀÖ½À´Ï´Ù.
-fieldseparator	calendar	ko	ÇÊµå±¸ºĞÀÚ
-filename	calendar	ko	ÆÄÀÏ¸í
-filename of the download	calendar	ko	³»·Á¹ŞÀ» ÆÄÀÏ¸í
-firstname of person to notify	calendar	ko	¾Ë¸² ¸Ş¼¼Â¡ ÇÒ »ç¶÷ÀÇ ÀÌ¸§
-format of event updates	calendar	ko	ÀÌº¥Æ® °»½Å Çü½Ä
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	ko	Freebusy: ¾Ë¼ö¾ø´Â »ç¿ëÀÚ '%1', ¾ÏÈ£°¡ Æ²·È°Å³ª, Á¢¼ÓÇÑ »ç¿ëÀÚÁß¿¡ ¾øÀ¸¹Ç·Î ºÒ°¡´ÉÇÕ´Ï´Ù!!!
-freetime search	calendar	ko	¿©ºĞ½Ã°£ Ã£±â
-fri	calendar	ko	±İ¿äÀÏ
-full description	calendar	ko	ÀÚ¼¼ÇÑ ¼³¸í
-fullname of person to notify	calendar	ko	¾Ë¸² ¸Ş¼¼Â¡ ÇÒ »ç¶÷ÀÇ ÀüÃ¼ÀÌ¸§
-general	calendar	ko	ÀÏ¹İ
-global public and group public	calendar	ko	Àü¿ª °ø¿ë °ú ±×·ì °ø¿ë
-global public only	calendar	ko	Àü¿ª °ø¿ë¸¸
-group invitation	calendar	ko	±×·ì ÃÊ´ë
-group planner	calendar	ko	±×·ì °èÈ¹ ÀÛ¼º
-group public only	calendar	ko	±×·ì °ø¿ë¸¸
-groupmember(s) %1 not included, because you have no access.	calendar	ko	±ÇÇÑÀÌ ¾ø´ÂÀÌÀ¯·Î ±×·ì¸â¹öÁß %1 Àº Á¦¿ÜµÇ¾ú½À´Ï´Ù.
-here is your requested alarm.	calendar	ko	¿äÃ»ÇÏ½Å ¾Ë¶÷ÀÔ´Ï´Ù.
-high priority	calendar	ko	³ôÀº ¿ì¼±¼øÀ§
-holiday	calendar	ko	°øÈŞÀÏ
-holiday management	calendar	ko	°øÈŞÀÏ°ü¸®
-holidays	calendar	ko	°øÈŞÀÏ
-hours	calendar	ko	½Ã°£
+%1 %2 in %3	calendar	ko	%3ì— %1 %2
+%1 records imported	calendar	ko	%1ê°œì˜ ë ˆì½”ë“œë¥¼ ê°€ì ¸ì™”ìŠµë‹ˆë‹¤.
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	ko	%1ê°œ í•­ëª©ì„ ì½ìŒ ( ì•„ì§ ê°€ì ¸ì˜¤ê¸°ë¥¼ ìˆ˜í–‰í•˜ì§€ ì•ŠìŒ, ë’¤ë¡œëŒì•„ê°€ê¸°ë¥¼ ì„ íƒí•´ì„œ ê°€ì ¸ì˜¤ê¸°í…ŒìŠ¤íŠ¸ë¥¼ ì²´í¬í•´ì œ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤)
+accept or reject an invitation	calendar	ko	ì´ˆëŒ€ì— ëŒ€í•´ ìŠ¹ë½ í˜¹ì€ ê±°ì ˆ
+accepted	calendar	ko	ìŠ¹ë½ë¨
+access denied to the calendar of %1 !!!	calendar	ko	%1 ì¼ì •ì˜ ì ‘ê·¼ì´ ê¸ˆì§€ë˜ì—ˆìŠµë‹ˆë‹¤ !!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ko	ì•Œë¦¼ ë©”ì„¸ì§€ë¥¼ ë°œìƒí•˜ëŠ” í–‰ë™: ì¶”ê°€ë¨,ì·¨ì†Œë¨,ìŠ¹ë½ë¨,ê±°ë¶€ë¨, ...
+add alarm	calendar	ko	ì•ŒëŒ ì¶”ê°€
+added	calendar	ko	ì¶”ê°€ë¨
+after current date	calendar	ko	ì˜¤ëŠ˜ì´í›„
+alarm	calendar	ko	ì•ŒëŒ
+alarm added	calendar	ko	ì•ŒëŒ ì¶”ê°€ë¨
+alarm deleted	calendar	ko	ì•ŒëŒ ì‚­ì œë¨
+alarm for %1 at %2 in %3	calendar	ko	** %3, %1ì— %2 ì•ŒëŒ
+alarm management	calendar	ko	ì•ŒëŒê´€ë¦¬
+alarms	calendar	ko	ì•ŒëŒ
+all categories	calendar	ko	ëª¨ë“  ì¹´í…Œê³ ë¦¬
+all day	calendar	ko	í•˜ë£¨ì¢…ì¼
+all events	calendar	ko	ëª¨ë“  ì´ë²¤íŠ¸
+all participants	calendar	ko	ëª¨ë“  ì°¸ì„ì
+allows to edit the event again	calendar	ko	ì´ë²¤íŠ¸ ì¬ìˆ˜ì • í—ˆìš©
+apply the changes	calendar	ko	ë³€ê²½ì‚¬í•­ ì ìš©
+are you sure you want to delete this country ?	calendar	ko	ì´ êµ­ê°€ë¥¼ ì‚­ì œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+are you sure you want to delete this holiday ?	calendar	ko	ì´ ê³µíœ´ì¼ì„ ì‚­ì œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+before current date	calendar	ko	ì˜¤ëŠ˜ ì´ì „ì—
+before the event	calendar	ko	ì´ë²¤íŠ¸ ì „ì—
+birthday	calendar	ko	ìƒì¼
+calendar	common	ko	ì¼ì •
+calendar event	calendar	ko	ì¼ì • ì´ë²¤íŠ¸
+calendar holiday management	admin	ko	ì¼ì • ê³µíœ´ì¼ ê´€ë¦¬
+calendar menu	calendar	ko	ì¼ì • ë©”ë‰´
+calendar preferences	calendar	ko	ì¼ì • í™˜ê²½ì„¤ì •
+calendar settings	admin	ko	ì¼ì • ì„¤ì •
+calendar-fieldname	calendar	ko	ì¼ì •-í•„ë“œì´ë¦„
+canceled	calendar	ko	ì·¨ì†Œë¨
+charset of file	calendar	ko	íŒŒì¼ì˜ ë¬¸ìì…‹
+close the window	calendar	ko	ì°½ë‹«ê¸°
+compose a mail to all participants after the event is saved	calendar	ko	ì´ë²¤íŠ¸ ì €ì¥í›„ ëª¨ë“  ì°¸ì„ìì—ê²Œ ë©”ì¼ì‘ì„±
+copy of:	calendar	ko	ì‚¬ë³¸:
+copy this event	calendar	ko	ì´ ì´ë²¤íŠ¸ ë³µì‚¬
+countries	calendar	ko	êµ­ê°€ë“¤
+country	calendar	ko	êµ­ê°€
+create an exception at this recuring event	calendar	ko	ì´ ì—°ì†ì´ë²¤íŠ¸ëŒ€í•œ ì˜ˆì™¸ì‘ì„±
+create new links	calendar	ko	ìƒˆ ë§í¬ê°œì„¤
+csv-fieldname	calendar	ko	ì»´ë§ˆêµ¬ë¶„ê°’-í•„ë“œì´ë¦„
+csv-filename	calendar	ko	ì»´ë§ˆêµ¬ë¶„ê°’-íŒŒì¼ì´ë¦„
+custom fields	common	ko	ì‚¬ìš©ìì •ì˜ í•„ë“œ
+daily	calendar	ko	ë§¤ì¼
+days	calendar	ko	ì¼ë™ì•ˆ
+days of the week for a weekly repeated event	calendar	ko	ì£¼ê°„ë°˜ë³µì´ë²¤íŠ¸ê°€ ì ìš©ë  ìš”ì¼
+days repeated	calendar	ko	ì¼ë™ì•ˆ ë°˜ë³µë¨
+dayview	calendar	ko	í•˜ë£¨ ë³´ê¸°
+default appointment length (in minutes)	calendar	ko	ê¸°ë³¸ ì•½ì† ê¸¸ì´(ë¶„ë‹¨ìœ„)
+default calendar filter	calendar	ko	ê¸°ë³¸ ì¼ì • í•„í„°
+default calendar view	calendar	ko	ê¸°ë³¸ ì¼ì • ë³´ê¸°
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	ko	ìƒˆë¡­ê²Œ ìƒì„±ë  ì´ë²¤íŠ¸ì˜ ê¸°ë³¸ ê¸¸ì´. ê¸¸ì´ëŠ” ë¶„ë‹¨ìœ„ ì˜ˆ) 60 ì€ í•œì‹œê°„
+default week view	calendar	ko	ê¸°ë³¸ ì£¼ê°„ë³´ê¸°
+delete series	calendar	ko	ì—°ì† ì‚­ì œ
+delete this alarm	calendar	ko	ì´ ì•ŒëŒ ì‚­ì œ
+delete this event	calendar	ko	ì´ ì´ë²¤íŠ¸ ì‚­ì œ
+delete this exception	calendar	ko	ì´ ì˜ˆì™¸ ì‚­ì œ
+delete this series of recuring events	calendar	ko	ì´ ì—°ì† ì´ë²¤íŠ¸ ì‚­ì œ
+disinvited	calendar	ko	ì œì™¸
+display status of events	calendar	ko	ì´ë²¤íŠ¸ì˜ ìƒíƒœë¥¼ í‘œì‹œ
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	ko	ê¸°ë³¸ í•œë‹¬ ë³´ê¸°ë¥¼ ì‹œì‘í˜ì´ì§€ì— ë³´ì´ê² ìŠµë‹ˆê¹Œ? ( eGroupWareì— ë“¤ì–´ì˜¬ë•Œë‚˜ í™ˆí˜ì´ì§€ ì•„ì´ì½˜ì„ í´ë¦­í–ˆì„ë•Œì˜ í˜ì´ì§€)
+do you want a weekview with or without weekend?	calendar	ko	ì£¼ê°„ë³´ê¸°ì— ì£¼ë§ì„ í¬í•¨í•˜ì‹œê² ìŠµë‹ˆê¹Œ? í¬í•¨í•˜ì§€ ì•Šê² ìŠµë‹ˆê¹Œ?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	ko	ì•½ì†ì´ ë³€ê²½ë˜ê±°ë‚˜ ìƒˆë¡œ ë§Œë“¤ì–´ì§€ë©´ ì•Œë¦¼ë©”ì„¸ì§€ë¥¼ ë°›ìœ¼ì‹œê² ìŠµë‹ˆê¹Œ? ë§Œì•½ ê·¸ë ‡ë‹¤ë©´ ìì‹ ì´ ì‘ì„±í•œ ì•½ì†ì—ë„ ì•Œë¦¼ë©”ì„¸ì§€ë¥¼ ë°›ê²Œ ë©ë‹ˆë‹¤.<br> ì•Œë¦¼ë©”ì„¸ì§€ë¥¼ íŠ¹ì •í˜ì´ì§€ì—ì„œë§Œ ë™ì‘í•˜ë„ë¡ ì œí•œí• ìˆ˜ ìˆìŠµë‹ˆë‹¤. ê° í•­ëª©ì€ ëª¨ë“  ì•Œë¦¼ë©”ì„¸ì§€ë¥¼ ê°€ì§€ê³  ìˆê²Œ ë©ë‹ˆë‹¤. ì œëª©, ì„¤ëª…, ì°¸ì—¬ìë¥¼ í¬í•¨í•œ ì–´ë– í•œ ìˆ˜ì •ì‚¬í•­ì´ ë°œìƒí•˜ëŠ” ê²ƒë„ í¬í•¨í•©ë‹ˆë‹¤. ë‹¨ ì°¸ì—¬ìì˜ ì‘ë‹µì€ ì œì™¸í•©ë‹ˆë‹¤. ë§Œì•½ ì´ë²¤íŠ¸ì˜ ì£¼ìµœìê°€ ëª¨ë“  ì•Œë¦¼ë©”ì„¸ì§€ë¥¼ ìš”êµ¬í–ˆì„ ê²½ìš° ê·¸ëŠ” ì–¸ì œë“  ì°¸ì—¬ìì˜ ìŠ¹ë‚™ê³¼ ê±°ë¶€ë“±ì˜ ëŒ€ë‹µì„ ë°›ì„ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ko	ì•½ì†ì„ ìš”ì•½í•œ ì´ë©”ì¼ì„ ì •ê¸°ì  ìˆ˜ì‹ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?<br>ìš”ì•½ë¬¸ì€ ê¸°ë³¸ ì´ë©”ì¼ ì£¼ì†Œë¡œ ë§¤ì¼ ì•„ì¹¨ì´ë‚˜ ë§¤ì£¼ ì›”ìš”ì¼ ì£¼ë³„ ìš”ì•½ì„ ë°œì†¡í•©ë‹ˆë‹¤.<br> ê·¸ ë‚ ì´ë‚˜ ê·¸ ì£¼ì— ì•½ì†ì´ ìˆì„ê²½ìš°ì—ë§Œ ë°œì†¡ë©ë‹ˆë‹¤.
+do you wish to autoload calendar holidays files dynamically?	admin	ko	ê³µíœ´ì¼ ì¼ì • ìë™ë¡œë“œë¥¼ ë™ì ìœ¼ë¡œ ìˆ˜í–‰í• ê¹Œìš”?
+download	calendar	ko	ë‚´ë ¤ë°›ê¸°
+download this event as ical	calendar	ko	ì´ ì´ë²¤íŠ¸ iCalë¡œ ë‹¤ìš´ë¡œë“œ
+duration of the meeting	calendar	ko	ë¯¸íŒ…ê¸°ê°„
+edit exception	calendar	ko	ì˜ˆì™¸ í¸ì§‘
+edit series	calendar	ko	ì—°ì† í¸ì§‘
+edit this event	calendar	ko	ì´ ì´ë²¤íŠ¸ í¸ì§‘
+edit this series of recuring events	calendar	ko	ì´ ì—°ì†ëœ ë°˜ë³µ ì´ë²¤íŠ¸ í¸ì§‘
+empty for all	calendar	ko	ëª¨ë‘ ë¹„ìš°ê¸°
+end	calendar	ko	ì¢…ë£Œ
+end date/time	calendar	ko	ëë‚˜ëŠ” ë‚ ì§œ/ì‹œê°„
+enddate	calendar	ko	ì¢…ë£Œì¼
+ends	calendar	ko	ì¢…ë£Œ
+error adding the alarm	calendar	ko	ì•ŒëŒ ì¶”ê°€ì¤‘ ì˜¤ë¥˜ë°œìƒ
+error: importing the ical	calendar	ko	ì˜¤ë¥˜: ical ë¶ˆëŸ¬ì˜¤ê¸° ì˜¤ë¥˜
+error: no participants selected !!!	calendar	ko	ì˜¤ë¥˜: ì°¸ì„ìê°€ ì„ íƒë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.
+error: saving the event !!!	calendar	ko	ì˜¤ë¥˜: ì´ë²¤íŠ¸ ì €ì¥
+error: starttime has to be before the endtime !!!	calendar	ko	ì˜¤ë¥˜: ì‹œì‘ì‹œê°„ì´ ì¢…ë£Œì‹œê°„ë³´ë‹¤ ì´ë¦…ë‹ˆë‹¤.
+event copied - the copy can now be edited	calendar	ko	ì´ë²¤íŠ¸ ë³µì‚¬ë¨ - ì´ ë³µì‚¬ëŠ” ì´ì œ ìˆ˜ì •ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤
+event deleted	calendar	ko	ì´ë²¤íŠ¸ ì‚­ì œë¨
+event details follow	calendar	ko	** ë‹¤ìŒì€ ì´ë²¤íŠ¸-ì„¤ëª…
+event saved	calendar	ko	ì´ë²¤íŠ¸ ì €ì¥ë¨
+exception	calendar	ko	ì˜ˆì™¸
+exceptions	calendar	ko	ì˜ˆì™¸
+existing links	calendar	ko	ê¸°ì¡´ë§í¬
+export	calendar	ko	ë‚´ë³´ë‚´ê¸°
+extended	calendar	ko	í™•ì¥
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ko	ì™„ì „í•œ ì´ë²¤íŠ¸-ì„¤ëª…ì„ í•­ìƒ í¬í•¨í•˜ëŠ” í™•ì¥. iCalì€ íŠ¹ì • ë‹¤ë¥¸ ì¼ì • ì‘ìš©í”„ë¡œê·¸ë¨ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°ë¥¼ í• ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+fieldseparator	calendar	ko	í•„ë“œêµ¬ë¶„ì
+filename	calendar	ko	íŒŒì¼ëª…
+filename of the download	calendar	ko	ë‚´ë ¤ë°›ì„ íŒŒì¼ëª…
+firstname of person to notify	calendar	ko	ì•Œë¦¼ ë©”ì„¸ì§• í•  ì‚¬ëŒì˜ ì´ë¦„
+format of event updates	calendar	ko	ì´ë²¤íŠ¸ ê°±ì‹  í˜•ì‹
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	ko	Freebusy: ì•Œìˆ˜ì—†ëŠ” ì‚¬ìš©ì '%1', ì•”í˜¸ê°€ í‹€ë ¸ê±°ë‚˜, ì ‘ì†í•œ ì‚¬ìš©ìì¤‘ì— ì—†ìœ¼ë¯€ë¡œ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤!!!
+freetime search	calendar	ko	ì—¬ë¶„ì‹œê°„ ì°¾ê¸°
+fri	calendar	ko	ê¸ˆìš”ì¼
+full description	calendar	ko	ìì„¸í•œ ì„¤ëª…
+fullname of person to notify	calendar	ko	ì•Œë¦¼ ë©”ì„¸ì§• í•  ì‚¬ëŒì˜ ì „ì²´ì´ë¦„
+general	calendar	ko	ì¼ë°˜
+global public and group public	calendar	ko	ì „ì—­ ê³µìš© ê³¼ ê·¸ë£¹ ê³µìš©
+global public only	calendar	ko	ì „ì—­ ê³µìš©ë§Œ
+group invitation	calendar	ko	ê·¸ë£¹ ì´ˆëŒ€
+group planner	calendar	ko	ê·¸ë£¹ ê³„íš ì‘ì„±
+group public only	calendar	ko	ê·¸ë£¹ ê³µìš©ë§Œ
+groupmember(s) %1 not included, because you have no access.	calendar	ko	ê¶Œí•œì´ ì—†ëŠ”ì´ìœ ë¡œ ê·¸ë£¹ë©¤ë²„ì¤‘ %1 ì€ ì œì™¸ë˜ì—ˆìŠµë‹ˆë‹¤.
+here is your requested alarm.	calendar	ko	ìš”ì²­í•˜ì‹  ì•ŒëŒì…ë‹ˆë‹¤.
+high priority	calendar	ko	ë†’ì€ ìš°ì„ ìˆœìœ„
+holiday	calendar	ko	ê³µíœ´ì¼
+holiday management	calendar	ko	ê³µíœ´ì¼ê´€ë¦¬
+holidays	calendar	ko	ê³µíœ´ì¼
+hours	calendar	ko	ì‹œê°„
 ical / rfc2445	calendar	ko	iCal / rfc2445
-ical successful imported	calendar	ko	iCal ºÒ·¯¿À±â ¼º°ø
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	ko	¸¸¾à ÁÖ¸»¿¡ °øÈŞÀÏÀÌ ÀÖ´Ù¸é, ¿ù¿äÀÏ·Î °øÈŞÀÏ ¼³Á¤.
-ignore conflict	calendar	ko	°ãÄ¡´Â ÀÏÁ¤ ¹«½ÃÇÏ±â
-import	calendar	ko	°¡Á®¿À±â
-import csv-file	common	ko	ÄÄ¸¶±¸ºĞ-ÆÄÀÏ °¡Á®¿À±â
-interval	calendar	ko	°£°İ
-last	calendar	ko	¸¶Áö¸·
-lastname of person to notify	calendar	ko	¾Ë¸² ¸Ş¼¼Â¡ ÇÒ »ç¶÷ÀÇ ¼º
-link to view the event	calendar	ko	ÀÌº¥Æ® º¸±â·Î ¸µÅ©
-links	calendar	ko	¸µÅ©
-links, attachments	calendar	ko	¸µÅ©, Ã·ºÎ
-listview	calendar	ko	¸ñ·Ïº¸±â
-location	calendar	ko	Àå¼Ò
-location to autoload from	admin	ko	ÀÚµ¿·Îµå·Î ÀĞ¾î¿Â À§Ä¡Á¤º¸
-mail all participants	calendar	ko	Âü¼®ÀÚ¿¡°Ô ¸ŞÀÏÀü¼Û
-minutes	calendar	ko	ºĞ
-modified	calendar	ko	º¯°æµÊ
-mon	calendar	ko	¿ù¿äÀÏ
-monthly	calendar	ko	¿ùº°
-monthly (by date)	calendar	ko	¸Å¿ù (by date)
-monthly (by day)	calendar	ko	¸Å¿ù (by day)
-monthview	calendar	ko	¿ù º¸±â
-new search with the above parameters	calendar	ko	¾Æ·¡ÀÇ °ªÀ¸·Î ´Ù½Ã °Ë»ö
-no events found	calendar	ko	ÀÌº¥Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù
-no filter	calendar	ko	ÇÊÅÍ¾øÀ½
-no matches found	calendar	ko	ÀÏÄ¡ÇÏ´Â °ÍÀ» Ã£À»¼ö ¾ø½À´Ï´Ù
-no response	calendar	ko	´äº¯ÀÌ ¾ø½À´Ï´Ù
-notification messages for added events	calendar	ko	Ãß°¡µÈ ÀÌº¥Æ®¿¡ ¾Ë¸² ¸Ş¼¼Áö
-notification messages for canceled events	calendar	ko	Ãë¼ÒµÈ ÀÌº¥Æ®¿¡ ¾Ë¸² ¸Ş¼¼Áö
-notification messages for modified events	calendar	ko	º¯°æµÈ ÀÌº¥Æ®¿¡ ¾Ë¸² ¸Ş¼¼Áö
-notification messages for your alarms	calendar	ko	¾Ë¶÷¿¡ ¾Ë¸² ¸Ş¼¼Áö
-notification messages for your responses	calendar	ko	ÀÀ´ä¿¡ ¾Ë¸² ¸Ş¼¼Áö
-number of records to read (%1)	calendar	ko	ÀĞÀ» ·¹ÄÚµå¼ö (%1)
-observance rule	calendar	ko	ÁØ¼öÇÒ ±ÔÄ¢
-occurence	calendar	ko	ÀÏÁ¤(Occurence)
-old startdate	calendar	ko	ÀÌÀü ½ÃÀÛ³¯Â¥
-on %1 %2 %3 your meeting request for %4	calendar	ko	** %4¿¡°Ô %1 %2 %3ÀÇ ¹ÌÆÃ ¿äÃ»
-on all modification, but responses	calendar	ko	¸ğµÎ º¯°æ,´Ü ÀÀ´ä Á¦¿Ü
-on any time change too	calendar	ko	¸ğµç ½Ã°£ º¯°æµµ Æ÷ÇÔ
-on invitation / cancelation only	calendar	ko	ÃÊ´ë / Ãë¼Ò ¸¸
-on participant responses too	calendar	ko	Âü¿©ÀÚ ÀÀ´ä ¿ª½Ã
-on time change of more than 4 hours too	calendar	ko	4½Ã°£ ÀÌ»óÀÇ ½Ã°£º¯°æµµ
-one month	calendar	ko	1°³¿ù
-one week	calendar	ko	1ÁÖ
-one year	calendar	ko	1³â
-open todo's:	calendar	ko	ÇÒÀÏ ¿­±â :
-overlap holiday	calendar	ko	** °ãÄ¡´Â ÈŞÀÏ
-participants	calendar	ko	Âü¼®ÀÚµé
-participants disinvited from an event	calendar	ko	ÀÌº¥Æ®·ÎºÎÅÍ Á¦¿ÜµÈ Âü¼®ÀÚ
-participants, resources, ...	calendar	ko	Âü¼®ÀÚ, ¸®¼Ò½º, ...
-password for not loged in users to your freebusy information?	calendar	ko	** ±ÍÇÏÀÇ freebusy Á¤º¸¸¦ Á¢¼Ó¾ÈÇÑ »ç¿ëÀÚµé·Î ºÎÅÍ ¾ÏÈ£¸¦ ¸¸µé¾î º¸È£ÇÏ½Ã°Ú½À´Ï±î?
-people holiday	calendar	ko	** °øÈŞÀÏ(people holiday)
-permission denied	calendar	ko	Á¢±Ù±ÇÇÑÀÌ ¾ø½À´Ï´Ù
-planner by category	calendar	ko	Ä«Å×°í¸®¿¡ ÀÇÇÑ ÇÃ·¹³Ê
-planner by user	calendar	ko	»ç¿ëÀÚ¿¡ ÀÇÇÑ ÇÃ·¹³Ê
-preselected group for entering the planner	calendar	ko	ÇÃ·¹³Ê¿¡ ÀÔ·ÂÇÒ ¹Ì¸® ¼±ÅÃµÈ ±×·ì
-previous	calendar	ko	ÀÌÀü
-private and global public	calendar	ko	»ç»ıÈ° °ú Àü¿ª°ø¿ë
-private and group public	calendar	ko	»ç»ıÈ° °ú Àü¿ª°ø¿ë
-private only	calendar	ko	»ç»ıÈ°¸¸
-re-edit event	calendar	ko	ÀÌº¥Æ® ´Ù½ÃÆíÁı
-receive email updates	calendar	ko	°»½ÅµÈ ³»¿ëÀº ÀÌ¸ŞÀÏ·Î ¹Ş±â
-receive summary of appointments	calendar	ko	¾à¼Ó ¿ä¾à ¹Ş±â
-recurrence	calendar	ko	¹İº¹
-recurring event	calendar	ko	¹İº¹ ÀÌº¥Æ®
-rejected	calendar	ko	°ÅºÎµÊ
-repeat days	calendar	ko	¹İº¹ÀÏ¼ö
-repeat the event until which date (empty means unlimited)	calendar	ko	¾ğÁ¦±îÁö ÀÌº¥Æ®¸¦ ¹İº¹ÇÒ±î¿ä? (°ø¹éÀº ¹«ÇÑ)
-repeat type	calendar	ko	¹İº¹¹æ¹ı
-repeating event information	calendar	ko	¹İº¹ ÀÌº¥Æ® Á¤º¸
-repeating interval, eg. 2 to repeat every second week	calendar	ko	¹İº¹ ÁÖ±â (2´Â ¸Å 2¹øÂ°ÁÖ¸¦ ÀÇ¹ÌÇÔ)
-repetition	calendar	ko	¹İº¹
-repetitiondetails (or empty)	calendar	ko	¹İº¹ ¼¼ºÎ (ÀÌ°Å³ª °ø¶õ)
-reset	calendar	ko	¸®¼Â
-resources	calendar	ko	¸®¼Ò½º
-rule	calendar	ko	±ÔÄ¢
-sat	calendar	ko	Åä¿äÀÏ
-saves the changes made	calendar	ko	º¯°æ»çÇ× ÀúÀå
-saves the event ignoring the conflict	calendar	ko	ÀúÀå (ÀÌº¥Æ® Ãæµ¹ ¹«½Ã)
-scheduling conflict	calendar	ko	ÀÏÁ¤ °ãÄ§
-select a %1	calendar	ko	%1 ¼±ÅÃ
-select a time	calendar	ko	½Ã°£¼±ÅÃ
-select resources	calendar	ko	¸®¼Ò½º ¼±ÅÃ
-set a year only for one-time / non-regular holidays.	calendar	ko	1È¸¸¸ ÀÖ°Å³ª Á¤±âÀûÀÌÁö ¾ÊÀº ÈŞÀÏÀ» Æ÷ÇÔÇÑ ³âµµ ¼³Á¤
-set new events to private	calendar	ko	»õ °³ÀÎ ÀÌº¥Æ® ¼³Á¤
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	ko	°ÅºÎµÈ ÃÊ´ëµµ °è¼Ó ÀÏÁ¤¿¡ Ç¥½ÃÇÒ±î¿ä?<br>¸¸¾à ÀÌµéÀÌ ±ÍÇÏÀÇ ÀÏÁ¤¿¡ ¾ÆÁ÷ º¸¿©Áø´Ù¸é ÀÌµéÀº ³ªÁß¿¡ ½Â¶ô¸¸ ÇÒ¼ö ÀÖ½À´Ï´Ù(¿¹ ÀÏÁ¤¿¡¼­ ´Ù¸¥ÀÏÁ¤°úÀÇ Áßº¹ÀÌ ¾ø¾îÁ³À»¶§)
-should new events created as private by default ?	calendar	ko	»õ·Î »ı¼ºµÇ´Â ÀÌº¥Æ®´Â °³ÀÎ - ±âº» À¸·Î ÇÏ½Ã°Ú½À´Ï±î?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	ko	Á¢¼ÓÇÏÁö ¾ÊÀº »ç¶÷µµ ±ÍÇÏÀÇ freebusy Á¤º¸¸¦ º¼¼ö ÀÖ°Ô ÇÏ½Ã°Ú½À´Ï±î? ±âº»ÀûÀÎ ¾ÏÈ£¿Í ´Ù¸¥ Ãß°¡ ¾ÏÈ£¸¦ ¼³Á¤ÇÏ¼Å¼­ ÀÌ Á¤º¸¸¦ º¸È£ÇÒ ¼ö ÀÖ½À´Ï´Ù. ±ÍÇÏ°¡ ¹Ù»Ú½Ç¶§ÀÇ freebusy Á¤º¸´Â iCal Æ÷¸äÇü½Ä¿¡ ½Ã°£À» Æ÷ÇÔÇÑ ÇüÅÂ·Î Æ÷ÇÔµÇ¾î ÀÖ½À´Ï´Ù. ÀÌ´Â ÀÌº¥Æ®ÀÌ¸§ÀÌ³ª ¼³¸í, À§Ä¡µîÀÇ Á¤º¸¸¦ Æ÷ÇÔÇÏ°í ÀÖÁö ¾Ê½À´Ï´Ù. ±ÍÇÏÀÇ freebusy Á¤º¸ÀÇ URLÀº %1 ÀÔ´Ï´Ù.
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	ko	ÀÌº¥Æ®-Âü°¡ÀÚÀÇ »óÈ²ÀÌ °¢ Âü°¡ÀÚÀÌ¸§ ÀÌÈÄ¿¡ °ıÈ£·Î Ç¥½ÃÇÏ½Ã°Ú½À´Ï±î? ( ½Â¶ô, °ÅºÎ, µî)
-show default view on main screen	calendar	ko	±âº»º¸±â·Î ÁÖÈ­¸é º¸±â
-show invitations you rejected	calendar	ko	°ÅºÎÇÑ ÃÊ´ë º¸±â
-show list of upcoming events	calendar	ko	¿¹Á¤µÈ ÀÌº¥Æ® ¸ñ·Ï º¸±â
-show this month	calendar	ko	ÀÌ¹ø´Şº¸±â
-show this week	calendar	ko	ÀÌ¹øÁÖº¸±â
-single event	calendar	ko	´Üµ¶ ÀÌº¥Æ®
-start	calendar	ko	½ÃÀÛ
-start date/time	calendar	ko	½ÃÀÛ ³¯Â¥/½Ã°£
-startdate / -time	calendar	ko	½ÃÀÛ ³¯Â¥/-½Ã°£
-startrecord	calendar	ko	½ÃÀÛ·¹ÄÚµå
-status changed	calendar	ko	»óÅÂ º¯°æµÊ
-submit to repository	calendar	ko	ÀúÀå¼Ò·Î º¸³»±â(¼­ºê¹Ô)
-sun	calendar	ko	ÀÏ¿äÀÏ
-tentative	calendar	ko	½ÃÇèÀûÀÎ
-test import (show importable records <u>only</u> in browser)	calendar	ko	°¡Á®¿À±â½ÃÇè ( ºê¶ó¿ìÀú¿¡ °¡Á®¿Ã¼ö ÀÖ´Â ·¹ÄÚµå <u> ¸¸ </u> º¾´Ï´Ù )
-this day is shown as first day in the week or month view.	calendar	ko	ÀÌ³¯Àº ¿ù´ÜÀ§ º¸±â ³ª ÁÖ´ÜÀ§ º¸±â¿¡ Ã¹Â°³¯·Î º¸¿©Áı´Ï´Ù.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	ko	ÀÌ Á¤ÀÇ´Â ÇÏ·ç º¸±â¿¡ °¡Àå ³¡ÀÔ´Ï´Ù. ÀÌ ½Ã°£ ÀÌÈÄ¿¡ ÀÌº¥Æ®´Â ÇÏ·çº¸±â ¾Æ·¡¿¡ ³ªÅ¸³³´Ï´Ù.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	ko	ÀÌ Á¤ÀÇ´Â ÇÏ·ç º¸±â¿¡ °¡Àå Ã³À½ÀÔ´Ï´Ù. ÀÌ ½Ã°£ ÀÌÀü¿¡ ÀÌº¥Æ®´Â ÇÏ·çº¸±â À§¿¡ ³ªÅ¸³³´Ï´Ù.<br>ÀÌ ½Ã°£Àº »õ·Î ¹ß»ıÇÏ´Â ÀÌº¥Æ®ÀÇ ±âº» ÇÏ·ç ½ÃÀÛ ½Ã°£À¸·Î »ç¿ëµË´Ï´Ù.
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ko	ÀÌ ±×·ìÀº ÇÃ·¹³Ê·Î µé¾î°¥¶§ ÀÌ¹Ì ¼±ÅÃµÇ¾ú½À´Ï´Ù. ¹°·Ğ ÇÃ·¹³Ê¿¡¼­ ¾ğÁ¦µç ¹Ù²Ù°í ½ÍÀ¸½Ç¶§ ¹Ù²Ù½Ç¼ö ÀÖ½À´Ï´Ù.
-this message is sent for canceled or deleted events.	calendar	ko	ÀÌ ¸Ş¼¼Áö´Â Ãë¼ÒµÇ¾ú°Å³ª »èÁ¦µÈ ÀÌº¥Æ®¿¡°Ô º¸³»Áı´Ï´Ù.
-this message is sent for modified or moved events.	calendar	ko	ÀÌ ¸Ş¼¼Áö´Â º¯°æµÇ°Å³ª ÀÌµ¿µÈ ÀÌº¥Æ®¿¡°Ô º¸³»Áı´Ï´Ù.
-this message is sent to disinvited participants.	calendar	ko	ÀÌ ¸Ş¼¼Áö´Â Á¦¿ÜµÈ Âü¼®ÀÚ¿¡°Ô Àü¼ÛµË´Ï´Ù.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ko	ÀÌ ¸Ş¼¼Áö´Â ±ÍÇÏ°¡ ÁÖÃÖÇÑ ÀÌº¥Æ®¿¡ º¸³»Áö¸ç ¹Ş¾Æº¸½Ç ºĞµéÀº »õ ÀÌº¥Æ® ¹ß»ı½Ã ¾Ë¸²À» ¿ä±¸ÇÑ ¸ğµç ºĞµé¿¡°Ô º¸³»Áı´Ï´Ù.<br>Æ¯Á¤ ÀÌº¥Æ®ÀÇ ÀÚ·á¿Í ¹Ù²Ù½Ç Æ¯Á¤ÇÑ º¯¼ö¸¦ ÀÌ¿ëÇÏ½Ç¼ö ÀÖÀ¸¸ç, Ã¹¹øÂ° ¶óÀÎÀº ÀÌ ¸ŞÀÏÀÇ Á¦¸ñÀÌ µË´Ï´Ù.
-this message is sent when you accept, tentative accept or reject an event.	calendar	ko	ÀÌ ¸Ş¼¼Áö´Â ±ÍÇÏ°¡ ½Â¶ô, ½ÃÇèÀûÀÎ ½Â¶ô,°ÅºÎ¸¦ ÇÏ¼ÌÀ»¶§ º¸³»Áı´Ï´Ù.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	ko	ÀÌ ¸Ş¼¼Áö´Â Æ¯Á¤ÀÌº¥Æ®¿¡ ¾Ë¶÷À» ¼³Á¤ÇÏ¼ÌÀ»¶§ º¸³»Áö¸ç ¿äÃ»ÇÏ½Å ¸ğµç Á¤º¸¸¦ Æ÷ÇÔÇÕ´Ï´Ù.
-three month	calendar	ko	ºĞ±â
-thu	calendar	ko	¸ñ¿äÀÏ
-title of the event	calendar	ko	ÀÌº¥Æ® Á¦¸ñ
-to many might exceed your execution-time-limit	calendar	ko	³Ê¹« ¸¹À» °æ¿ì ÃÖ´ë½ÇÇà½Ã°£(execution-time-limit)¸¦ ÃÊ°úÇÏ°Ô µË´Ï´Ù
-translation	calendar	ko	¹ø¿ª
-tue	calendar	ko	È­¿äÀÏ
-two weeks	calendar	ko	º¸¸§
-updated	calendar	ko	°»½ÅµÊ
-use end date	calendar	ko	¸¶Áö¸· ³¯Â¥ »ç¿ë
-view this event	calendar	ko	ÀÌ ÀÌº¥Æ® º¸±â
-wed	calendar	ko	¼ö¿äÀÏ
-week	calendar	ko	ÁÖ
-weekday starts on	calendar	ko	ÁÖÁß ½ÃÀÛÀÏ
-weekly	calendar	ko	¸ÅÁÖ
-weekview	calendar	ko	ÁÖ°£ º¸±â
-weekview with weekend	calendar	ko	ÁÖ°£º¸±â (ÁÖ¸»Æ÷ÇÔ)
-weekview without weekend	calendar	ko	ÁÖ°£º¸±â (ÁÖ¸»Á¦¿Ü)
-which events do you want to see when you enter the calendar.	calendar	ko	ÀÏÁ¤À» º¸½Ç¶§ ¾î¶² ÀÌº¥Æ®¸¦ º¸°í ½ÍÀ¸½Å°¡¿ä?
-which of calendar view do you want to see, when you start calendar ?	calendar	ko	ÀÏÁ¤À» ½ÃÀÛÇÒ¶§ ¾î¶² Çü½ÄÀÇ ÀÏÁ¤À» º¸°í ½ÍÀ¸½Å°¡¿ä?
-whole day	calendar	ko	ÇÏ·çÁ¾ÀÏ
-wk	calendar	ko	ÁÖ
-work day ends on	calendar	ko	¾÷¹« ³¡³ª´Â ³¯
-work day starts on	calendar	ko	¾÷¹« ½ÃÀÛÇÏ´Â ³¯
-yearly	calendar	ko	¸Å³â
-yearview	calendar	ko	ÇÑÇØ º¸±â
-you can either set a year or a occurence, not both !!!	calendar	ko	³âµµ³ª ÀÏÁ¤ ¹«¾ùÀÌµç ¼³Á¤ÇÏµÇ µ¿½Ã¿¡ µÎ°³´Â ¼³Á¤ÇÏ¸é ¾ÈµË´Ï´Ù.
-you can only set a year or a occurence !!!	calendar	ko	³âµµ³ª ÀÏÁ¤À» ¼³Á¤ÇÒ¼ö ÀÖ½À´Ï´Ù!!
-you do not have permission to read this record!	calendar	ko	ÀÌ ·¹ÄÚµå¸¦ ÀĞÀ» ±ÇÇÑÀÌ ¾ø½À´Ï´Ù!
-you have a meeting scheduled for %1	calendar	ko	** %1ÀÇ ¹ÌÆÃ ÀÏÁ¤ÀÌ ÀÖ½À´Ï´Ù
-you have been disinvited from the meeting at %1	calendar	ko	** %1ÀÇ ¹ÌÆÃÀ¸·Î ºÎÅÍ Á¦¿ÜµÇ¾ú½À´Ï´Ù.
-you need to set either a day or a occurence !!!	calendar	ko	** ÇÏ·ç³ª ÀÏÁ¤À» ¼³Á¤ÇØ¾ß ÇÕ´Ï´Ù
-your meeting scheduled for %1 has been canceled	calendar	ko	%1 ¹ÌÆÃ ÀÏÁ¤ÀÌ Ãë¼ÒµÇ¾ú½À´Ï´Ù.
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	ko	%1À¸·Î ÀÏÁ¤ÀÌ Á¤ÇØÁ³´ø ¹ÌÆÃÀÌ %2·Î Á¶Á¤µÇ¾ú½À´Ï´Ù.
+ical successful imported	calendar	ko	iCal ë¶ˆëŸ¬ì˜¤ê¸° ì„±ê³µ
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	ko	ë§Œì•½ ì£¼ë§ì— ê³µíœ´ì¼ì´ ìˆë‹¤ë©´, ì›”ìš”ì¼ë¡œ ê³µíœ´ì¼ ì„¤ì •.
+ignore conflict	calendar	ko	ê²¹ì¹˜ëŠ” ì¼ì • ë¬´ì‹œí•˜ê¸°
+import	calendar	ko	ê°€ì ¸ì˜¤ê¸°
+import csv-file	common	ko	ì»´ë§ˆêµ¬ë¶„-íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
+interval	calendar	ko	ê°„ê²©
+last	calendar	ko	ë§ˆì§€ë§‰
+lastname of person to notify	calendar	ko	ì•Œë¦¼ ë©”ì„¸ì§• í•  ì‚¬ëŒì˜ ì„±
+link to view the event	calendar	ko	ì´ë²¤íŠ¸ ë³´ê¸°ë¡œ ë§í¬
+links	calendar	ko	ë§í¬
+links, attachments	calendar	ko	ë§í¬, ì²¨ë¶€
+listview	calendar	ko	ëª©ë¡ë³´ê¸°
+location	calendar	ko	ì¥ì†Œ
+location to autoload from	admin	ko	ìë™ë¡œë“œë¡œ ì½ì–´ì˜¨ ìœ„ì¹˜ì •ë³´
+mail all participants	calendar	ko	ì°¸ì„ìì—ê²Œ ë©”ì¼ì „ì†¡
+minutes	calendar	ko	ë¶„
+modified	calendar	ko	ë³€ê²½ë¨
+mon	calendar	ko	ì›”ìš”ì¼
+monthly	calendar	ko	ì›”ë³„
+monthly (by date)	calendar	ko	ë§¤ì›” (by date)
+monthly (by day)	calendar	ko	ë§¤ì›” (by day)
+monthview	calendar	ko	ì›” ë³´ê¸°
+new search with the above parameters	calendar	ko	ì•„ë˜ì˜ ê°’ìœ¼ë¡œ ë‹¤ì‹œ ê²€ìƒ‰
+no events found	calendar	ko	ì´ë²¤íŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤
+no filter	calendar	ko	í•„í„°ì—†ìŒ
+no matches found	calendar	ko	ì¼ì¹˜í•˜ëŠ” ê²ƒì„ ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤
+no response	calendar	ko	ë‹µë³€ì´ ì—†ìŠµë‹ˆë‹¤
+notification messages for added events	calendar	ko	ì¶”ê°€ëœ ì´ë²¤íŠ¸ì— ì•Œë¦¼ ë©”ì„¸ì§€
+notification messages for canceled events	calendar	ko	ì·¨ì†Œëœ ì´ë²¤íŠ¸ì— ì•Œë¦¼ ë©”ì„¸ì§€
+notification messages for modified events	calendar	ko	ë³€ê²½ëœ ì´ë²¤íŠ¸ì— ì•Œë¦¼ ë©”ì„¸ì§€
+notification messages for your alarms	calendar	ko	ì•ŒëŒì— ì•Œë¦¼ ë©”ì„¸ì§€
+notification messages for your responses	calendar	ko	ì‘ë‹µì— ì•Œë¦¼ ë©”ì„¸ì§€
+number of records to read (%1)	calendar	ko	ì½ì„ ë ˆì½”ë“œìˆ˜ (%1)
+observance rule	calendar	ko	ì¤€ìˆ˜í•  ê·œì¹™
+occurence	calendar	ko	ì¼ì •(Occurence)
+old startdate	calendar	ko	ì´ì „ ì‹œì‘ë‚ ì§œ
+on %1 %2 %3 your meeting request for %4	calendar	ko	** %4ì—ê²Œ %1 %2 %3ì˜ ë¯¸íŒ… ìš”ì²­
+on all modification, but responses	calendar	ko	ëª¨ë‘ ë³€ê²½,ë‹¨ ì‘ë‹µ ì œì™¸
+on any time change too	calendar	ko	ëª¨ë“  ì‹œê°„ ë³€ê²½ë„ í¬í•¨
+on invitation / cancelation only	calendar	ko	ì´ˆëŒ€ / ì·¨ì†Œ ë§Œ
+on participant responses too	calendar	ko	ì°¸ì—¬ì ì‘ë‹µ ì—­ì‹œ
+on time change of more than 4 hours too	calendar	ko	4ì‹œê°„ ì´ìƒì˜ ì‹œê°„ë³€ê²½ë„
+one month	calendar	ko	1ê°œì›”
+one week	calendar	ko	1ì£¼
+one year	calendar	ko	1ë…„
+open todo's:	calendar	ko	í• ì¼ ì—´ê¸° :
+overlap holiday	calendar	ko	** ê²¹ì¹˜ëŠ” íœ´ì¼
+participants	calendar	ko	ì°¸ì„ìë“¤
+participants disinvited from an event	calendar	ko	ì´ë²¤íŠ¸ë¡œë¶€í„° ì œì™¸ëœ ì°¸ì„ì
+participants, resources, ...	calendar	ko	ì°¸ì„ì, ë¦¬ì†ŒìŠ¤, ...
+password for not loged in users to your freebusy information?	calendar	ko	** ê·€í•˜ì˜ freebusy ì •ë³´ë¥¼ ì ‘ì†ì•ˆí•œ ì‚¬ìš©ìë“¤ë¡œ ë¶€í„° ì•”í˜¸ë¥¼ ë§Œë“¤ì–´ ë³´í˜¸í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+people holiday	calendar	ko	** ê³µíœ´ì¼(people holiday)
+permission denied	calendar	ko	ì ‘ê·¼ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤
+planner by category	calendar	ko	ì¹´í…Œê³ ë¦¬ì— ì˜í•œ í”Œë ˆë„ˆ
+planner by user	calendar	ko	ì‚¬ìš©ìì— ì˜í•œ í”Œë ˆë„ˆ
+preselected group for entering the planner	calendar	ko	í”Œë ˆë„ˆì— ì…ë ¥í•  ë¯¸ë¦¬ ì„ íƒëœ ê·¸ë£¹
+previous	calendar	ko	ì´ì „
+private and global public	calendar	ko	ì‚¬ìƒí™œ ê³¼ ì „ì—­ê³µìš©
+private and group public	calendar	ko	ì‚¬ìƒí™œ ê³¼ ì „ì—­ê³µìš©
+private only	calendar	ko	ì‚¬ìƒí™œë§Œ
+re-edit event	calendar	ko	ì´ë²¤íŠ¸ ë‹¤ì‹œí¸ì§‘
+receive email updates	calendar	ko	ê°±ì‹ ëœ ë‚´ìš©ì€ ì´ë©”ì¼ë¡œ ë°›ê¸°
+receive summary of appointments	calendar	ko	ì•½ì† ìš”ì•½ ë°›ê¸°
+recurrence	calendar	ko	ë°˜ë³µ
+recurring event	calendar	ko	ë°˜ë³µ ì´ë²¤íŠ¸
+rejected	calendar	ko	ê±°ë¶€ë¨
+repeat days	calendar	ko	ë°˜ë³µì¼ìˆ˜
+repeat the event until which date (empty means unlimited)	calendar	ko	ì–¸ì œê¹Œì§€ ì´ë²¤íŠ¸ë¥¼ ë°˜ë³µí• ê¹Œìš”? (ê³µë°±ì€ ë¬´í•œ)
+repeat type	calendar	ko	ë°˜ë³µë°©ë²•
+repeating event information	calendar	ko	ë°˜ë³µ ì´ë²¤íŠ¸ ì •ë³´
+repeating interval, eg. 2 to repeat every second week	calendar	ko	ë°˜ë³µ ì£¼ê¸° (2ëŠ” ë§¤ 2ë²ˆì§¸ì£¼ë¥¼ ì˜ë¯¸í•¨)
+repetition	calendar	ko	ë°˜ë³µ
+repetitiondetails (or empty)	calendar	ko	ë°˜ë³µ ì„¸ë¶€ (ì´ê±°ë‚˜ ê³µë€)
+reset	calendar	ko	ë¦¬ì…‹
+resources	calendar	ko	ë¦¬ì†ŒìŠ¤
+rule	calendar	ko	ê·œì¹™
+sat	calendar	ko	í† ìš”ì¼
+saves the changes made	calendar	ko	ë³€ê²½ì‚¬í•­ ì €ì¥
+saves the event ignoring the conflict	calendar	ko	ì €ì¥ (ì´ë²¤íŠ¸ ì¶©ëŒ ë¬´ì‹œ)
+scheduling conflict	calendar	ko	ì¼ì • ê²¹ì¹¨
+select a %1	calendar	ko	%1 ì„ íƒ
+select a time	calendar	ko	ì‹œê°„ì„ íƒ
+select resources	calendar	ko	ë¦¬ì†ŒìŠ¤ ì„ íƒ
+set a year only for one-time / non-regular holidays.	calendar	ko	1íšŒë§Œ ìˆê±°ë‚˜ ì •ê¸°ì ì´ì§€ ì•Šì€ íœ´ì¼ì„ í¬í•¨í•œ ë…„ë„ ì„¤ì •
+set new events to private	calendar	ko	ìƒˆ ê°œì¸ ì´ë²¤íŠ¸ ì„¤ì •
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	ko	ê±°ë¶€ëœ ì´ˆëŒ€ë„ ê³„ì† ì¼ì •ì— í‘œì‹œí• ê¹Œìš”?<br>ë§Œì•½ ì´ë“¤ì´ ê·€í•˜ì˜ ì¼ì •ì— ì•„ì§ ë³´ì—¬ì§„ë‹¤ë©´ ì´ë“¤ì€ ë‚˜ì¤‘ì— ìŠ¹ë½ë§Œ í• ìˆ˜ ìˆìŠµë‹ˆë‹¤(ì˜ˆ ì¼ì •ì—ì„œ ë‹¤ë¥¸ì¼ì •ê³¼ì˜ ì¤‘ë³µì´ ì—†ì–´ì¡Œì„ë•Œ)
+should new events created as private by default ?	calendar	ko	ìƒˆë¡œ ìƒì„±ë˜ëŠ” ì´ë²¤íŠ¸ëŠ” ê°œì¸ - ê¸°ë³¸ ìœ¼ë¡œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	ko	ì ‘ì†í•˜ì§€ ì•Šì€ ì‚¬ëŒë„ ê·€í•˜ì˜ freebusy ì •ë³´ë¥¼ ë³¼ìˆ˜ ìˆê²Œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ? ê¸°ë³¸ì ì¸ ì•”í˜¸ì™€ ë‹¤ë¥¸ ì¶”ê°€ ì•”í˜¸ë¥¼ ì„¤ì •í•˜ì…”ì„œ ì´ ì •ë³´ë¥¼ ë³´í˜¸í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. ê·€í•˜ê°€ ë°”ì˜ì‹¤ë•Œì˜ freebusy ì •ë³´ëŠ” iCal í¬ë©§í˜•ì‹ì— ì‹œê°„ì„ í¬í•¨í•œ í˜•íƒœë¡œ í¬í•¨ë˜ì–´ ìˆìŠµë‹ˆë‹¤. ì´ëŠ” ì´ë²¤íŠ¸ì´ë¦„ì´ë‚˜ ì„¤ëª…, ìœ„ì¹˜ë“±ì˜ ì •ë³´ë¥¼ í¬í•¨í•˜ê³  ìˆì§€ ì•ŠìŠµë‹ˆë‹¤. ê·€í•˜ì˜ freebusy ì •ë³´ì˜ URLì€ %1 ì…ë‹ˆë‹¤.
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	ko	ì´ë²¤íŠ¸-ì°¸ê°€ìì˜ ìƒí™©ì´ ê° ì°¸ê°€ìì´ë¦„ ì´í›„ì— ê´„í˜¸ë¡œ í‘œì‹œí•˜ì‹œê² ìŠµë‹ˆê¹Œ? ( ìŠ¹ë½, ê±°ë¶€, ë“±)
+show default view on main screen	calendar	ko	ê¸°ë³¸ë³´ê¸°ë¡œ ì£¼í™”ë©´ ë³´ê¸°
+show invitations you rejected	calendar	ko	ê±°ë¶€í•œ ì´ˆëŒ€ ë³´ê¸°
+show list of upcoming events	calendar	ko	ì˜ˆì •ëœ ì´ë²¤íŠ¸ ëª©ë¡ ë³´ê¸°
+show this month	calendar	ko	ì´ë²ˆë‹¬ë³´ê¸°
+show this week	calendar	ko	ì´ë²ˆì£¼ë³´ê¸°
+single event	calendar	ko	ë‹¨ë… ì´ë²¤íŠ¸
+start	calendar	ko	ì‹œì‘
+start date/time	calendar	ko	ì‹œì‘ ë‚ ì§œ/ì‹œê°„
+startdate / -time	calendar	ko	ì‹œì‘ ë‚ ì§œ/-ì‹œê°„
+startrecord	calendar	ko	ì‹œì‘ë ˆì½”ë“œ
+status changed	calendar	ko	ìƒíƒœ ë³€ê²½ë¨
+submit to repository	calendar	ko	ì €ì¥ì†Œë¡œ ë³´ë‚´ê¸°(ì„œë¸Œë°‹)
+sun	calendar	ko	ì¼ìš”ì¼
+tentative	calendar	ko	ì‹œí—˜ì ì¸
+test import (show importable records <u>only</u> in browser)	calendar	ko	ê°€ì ¸ì˜¤ê¸°ì‹œí—˜ ( ë¸Œë¼ìš°ì €ì— ê°€ì ¸ì˜¬ìˆ˜ ìˆëŠ” ë ˆì½”ë“œ <u> ë§Œ </u> ë´…ë‹ˆë‹¤ )
+this day is shown as first day in the week or month view.	calendar	ko	ì´ë‚ ì€ ì›”ë‹¨ìœ„ ë³´ê¸° ë‚˜ ì£¼ë‹¨ìœ„ ë³´ê¸°ì— ì²«ì§¸ë‚ ë¡œ ë³´ì—¬ì§‘ë‹ˆë‹¤.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	ko	ì´ ì •ì˜ëŠ” í•˜ë£¨ ë³´ê¸°ì— ê°€ì¥ ëì…ë‹ˆë‹¤. ì´ ì‹œê°„ ì´í›„ì— ì´ë²¤íŠ¸ëŠ” í•˜ë£¨ë³´ê¸° ì•„ë˜ì— ë‚˜íƒ€ë‚©ë‹ˆë‹¤.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	ko	ì´ ì •ì˜ëŠ” í•˜ë£¨ ë³´ê¸°ì— ê°€ì¥ ì²˜ìŒì…ë‹ˆë‹¤. ì´ ì‹œê°„ ì´ì „ì— ì´ë²¤íŠ¸ëŠ” í•˜ë£¨ë³´ê¸° ìœ„ì— ë‚˜íƒ€ë‚©ë‹ˆë‹¤.<br>ì´ ì‹œê°„ì€ ìƒˆë¡œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸ì˜ ê¸°ë³¸ í•˜ë£¨ ì‹œì‘ ì‹œê°„ìœ¼ë¡œ ì‚¬ìš©ë©ë‹ˆë‹¤.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ko	ì´ ê·¸ë£¹ì€ í”Œë ˆë„ˆë¡œ ë“¤ì–´ê°ˆë•Œ ì´ë¯¸ ì„ íƒë˜ì—ˆìŠµë‹ˆë‹¤. ë¬¼ë¡  í”Œë ˆë„ˆì—ì„œ ì–¸ì œë“  ë°”ê¾¸ê³  ì‹¶ìœ¼ì‹¤ë•Œ ë°”ê¾¸ì‹¤ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+this message is sent for canceled or deleted events.	calendar	ko	ì´ ë©”ì„¸ì§€ëŠ” ì·¨ì†Œë˜ì—ˆê±°ë‚˜ ì‚­ì œëœ ì´ë²¤íŠ¸ì—ê²Œ ë³´ë‚´ì§‘ë‹ˆë‹¤.
+this message is sent for modified or moved events.	calendar	ko	ì´ ë©”ì„¸ì§€ëŠ” ë³€ê²½ë˜ê±°ë‚˜ ì´ë™ëœ ì´ë²¤íŠ¸ì—ê²Œ ë³´ë‚´ì§‘ë‹ˆë‹¤.
+this message is sent to disinvited participants.	calendar	ko	ì´ ë©”ì„¸ì§€ëŠ” ì œì™¸ëœ ì°¸ì„ìì—ê²Œ ì „ì†¡ë©ë‹ˆë‹¤.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ko	ì´ ë©”ì„¸ì§€ëŠ” ê·€í•˜ê°€ ì£¼ìµœí•œ ì´ë²¤íŠ¸ì— ë³´ë‚´ì§€ë©° ë°›ì•„ë³´ì‹¤ ë¶„ë“¤ì€ ìƒˆ ì´ë²¤íŠ¸ ë°œìƒì‹œ ì•Œë¦¼ì„ ìš”êµ¬í•œ ëª¨ë“  ë¶„ë“¤ì—ê²Œ ë³´ë‚´ì§‘ë‹ˆë‹¤.<br>íŠ¹ì • ì´ë²¤íŠ¸ì˜ ìë£Œì™€ ë°”ê¾¸ì‹¤ íŠ¹ì •í•œ ë³€ìˆ˜ë¥¼ ì´ìš©í•˜ì‹¤ìˆ˜ ìˆìœ¼ë©°, ì²«ë²ˆì§¸ ë¼ì¸ì€ ì´ ë©”ì¼ì˜ ì œëª©ì´ ë©ë‹ˆë‹¤.
+this message is sent when you accept, tentative accept or reject an event.	calendar	ko	ì´ ë©”ì„¸ì§€ëŠ” ê·€í•˜ê°€ ìŠ¹ë½, ì‹œí—˜ì ì¸ ìŠ¹ë½,ê±°ë¶€ë¥¼ í•˜ì…¨ì„ë•Œ ë³´ë‚´ì§‘ë‹ˆë‹¤.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	ko	ì´ ë©”ì„¸ì§€ëŠ” íŠ¹ì •ì´ë²¤íŠ¸ì— ì•ŒëŒì„ ì„¤ì •í•˜ì…¨ì„ë•Œ ë³´ë‚´ì§€ë©° ìš”ì²­í•˜ì‹  ëª¨ë“  ì •ë³´ë¥¼ í¬í•¨í•©ë‹ˆë‹¤.
+three month	calendar	ko	ë¶„ê¸°
+thu	calendar	ko	ëª©ìš”ì¼
+title of the event	calendar	ko	ì´ë²¤íŠ¸ ì œëª©
+to many might exceed your execution-time-limit	calendar	ko	ë„ˆë¬´ ë§ì„ ê²½ìš° ìµœëŒ€ì‹¤í–‰ì‹œê°„(execution-time-limit)ë¥¼ ì´ˆê³¼í•˜ê²Œ ë©ë‹ˆë‹¤
+translation	calendar	ko	ë²ˆì—­
+tue	calendar	ko	í™”ìš”ì¼
+two weeks	calendar	ko	ë³´ë¦„
+updated	calendar	ko	ê°±ì‹ ë¨
+use end date	calendar	ko	ë§ˆì§€ë§‰ ë‚ ì§œ ì‚¬ìš©
+view this event	calendar	ko	ì´ ì´ë²¤íŠ¸ ë³´ê¸°
+wed	calendar	ko	ìˆ˜ìš”ì¼
+week	calendar	ko	ì£¼
+weekday starts on	calendar	ko	ì£¼ì¤‘ ì‹œì‘ì¼
+weekly	calendar	ko	ë§¤ì£¼
+weekview	calendar	ko	ì£¼ê°„ ë³´ê¸°
+weekview with weekend	calendar	ko	ì£¼ê°„ë³´ê¸° (ì£¼ë§í¬í•¨)
+weekview without weekend	calendar	ko	ì£¼ê°„ë³´ê¸° (ì£¼ë§ì œì™¸)
+which events do you want to see when you enter the calendar.	calendar	ko	ì¼ì •ì„ ë³´ì‹¤ë•Œ ì–´ë–¤ ì´ë²¤íŠ¸ë¥¼ ë³´ê³  ì‹¶ìœ¼ì‹ ê°€ìš”?
+which of calendar view do you want to see, when you start calendar ?	calendar	ko	ì¼ì •ì„ ì‹œì‘í• ë•Œ ì–´ë–¤ í˜•ì‹ì˜ ì¼ì •ì„ ë³´ê³  ì‹¶ìœ¼ì‹ ê°€ìš”?
+whole day	calendar	ko	í•˜ë£¨ì¢…ì¼
+wk	calendar	ko	ì£¼
+work day ends on	calendar	ko	ì—…ë¬´ ëë‚˜ëŠ” ë‚ 
+work day starts on	calendar	ko	ì—…ë¬´ ì‹œì‘í•˜ëŠ” ë‚ 
+yearly	calendar	ko	ë§¤ë…„
+yearview	calendar	ko	í•œí•´ ë³´ê¸°
+you can either set a year or a occurence, not both !!!	calendar	ko	ë…„ë„ë‚˜ ì¼ì • ë¬´ì—‡ì´ë“  ì„¤ì •í•˜ë˜ ë™ì‹œì— ë‘ê°œëŠ” ì„¤ì •í•˜ë©´ ì•ˆë©ë‹ˆë‹¤.
+you can only set a year or a occurence !!!	calendar	ko	ë…„ë„ë‚˜ ì¼ì •ì„ ì„¤ì •í• ìˆ˜ ìˆìŠµë‹ˆë‹¤!!
+you do not have permission to read this record!	calendar	ko	ì´ ë ˆì½”ë“œë¥¼ ì½ì„ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤!
+you have a meeting scheduled for %1	calendar	ko	** %1ì˜ ë¯¸íŒ… ì¼ì •ì´ ìˆìŠµë‹ˆë‹¤
+you have been disinvited from the meeting at %1	calendar	ko	** %1ì˜ ë¯¸íŒ…ìœ¼ë¡œ ë¶€í„° ì œì™¸ë˜ì—ˆìŠµë‹ˆë‹¤.
+you need to set either a day or a occurence !!!	calendar	ko	** í•˜ë£¨ë‚˜ ì¼ì •ì„ ì„¤ì •í•´ì•¼ í•©ë‹ˆë‹¤
+your meeting scheduled for %1 has been canceled	calendar	ko	%1 ë¯¸íŒ… ì¼ì •ì´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	ko	%1ìœ¼ë¡œ ì¼ì •ì´ ì •í•´ì¡Œë˜ ë¯¸íŒ…ì´ %2ë¡œ ì¡°ì •ë˜ì—ˆìŠµë‹ˆë‹¤.

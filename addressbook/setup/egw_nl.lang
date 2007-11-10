@@ -2,8 +2,8 @@
 %1 contact(s) %2	addressbook	nl	%1 contact(en) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege onvoldoende rechten !!!
 %1 fields in %2 other organisation member(s) changed	addressbook	nl	%1 velden in %2 andere organisatie lid/leden gewijzigd
-%1 records imported	addressbook	nl	%1 adressen geïmporteerd
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	nl	%1 adressen gelezen (nog niet geïmporteerd, U kunt %2terug%3 gaan en "Test Import" uitzetten)
+%1 records imported	addressbook	nl	%1 adressen geÃ¯mporteerd
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	nl	%1 adressen gelezen (nog niet geÃ¯mporteerd, U kunt %2terug%3 gaan en "Test Import" uitzetten)
 %1 starts with '%2'	addressbook	nl	%1 begint met '%2'
 (e.g. 1969)	addressbook	nl	(bijv. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	nl	<b>Geen conversietype <none&g; gevonden </b> Selecteer a.u.b. een conversietype uit de lijst.
@@ -55,7 +55,7 @@ business zip code	addressbook	nl	Postcode Bedrijf
 calendar uri	addressbook	nl	Kalender URI
 can be changed via setup >> configuration	admin	nl	Kan gewijzigd worden via Setup >> Configuratie
 car phone	addressbook	nl	Autotelefoon
-categories, notes, ...	addressbook	nl	Categorieën, notities, ...
+categories, notes, ...	addressbook	nl	CategorieÃ«n, notities, ...
 cell phone	addressbook	nl	Mobilofoon
 change all organisation members	addressbook	nl	wijzig alle  leden van de organisatie
 charset for the csv export	addressbook	nl	Karakterset voor de CSV export
@@ -83,7 +83,7 @@ copied by %1, from record #%2.	addressbook	nl	Gekopieerd door %1, van record #%2
 copy a contact and edit the copy	addressbook	nl	Kopieer een contact en bewerk de kopie
 country	common	nl	Land
 create new links	addressbook	nl	Nieuwe links aanmaken
-created	addressbook	nl	Gecreëerd
+created	addressbook	nl	GecreÃ«erd
 credit	addressbook	nl	Credit
 csv-fieldname	addressbook	nl	CSV-Veldnaam
 csv-filename	addressbook	nl	CSV-Bestandsnaam
@@ -142,18 +142,18 @@ freebusy uri	addressbook	nl	Vrij/bezet URI
 full name	addressbook	nl	Volledige naam
 general	addressbook	nl	Algemeen
 geo	addressbook	nl	GEO
-global categories	addressbook	nl	Algemene categoriën
+global categories	addressbook	nl	Algemene categoriÃ«n
 grant addressbook access	common	nl	Geen toegang adresboek
 group %1	addressbook	nl	Groep %1
-home address	addressbook	nl	Privé adres
+home address	addressbook	nl	PrivÃ© adres
 home address, birthday, ...	addressbook	nl	Thuis adres, geboortedatum, ...
-home city	addressbook	nl	Privé Woonplaats
-home country	addressbook	nl	Privé Land
-home email	addressbook	nl	Privé Email
-home phone	addressbook	nl	Privé telefoon
-home state	addressbook	nl	Privé Provincie / Staat / Streek
-home street	addressbook	nl	Privé Straat
-home zip code	addressbook	nl	Privé Postcode
+home city	addressbook	nl	PrivÃ© Woonplaats
+home country	addressbook	nl	PrivÃ© Land
+home email	addressbook	nl	PrivÃ© Email
+home phone	addressbook	nl	PrivÃ© telefoon
+home state	addressbook	nl	PrivÃ© Provincie / Staat / Streek
+home street	addressbook	nl	PrivÃ© Straat
+home zip code	addressbook	nl	PrivÃ© Postcode
 icon	addressbook	nl	Icoon
 if accounts are already in ldap	admin	nl	indien accounts reeds in LDAP zitten
 import	addressbook	nl	Importeren
@@ -165,7 +165,7 @@ import from ldif, csv, or vcard	addressbook	nl	Importeren vanuit LDIF, CSV or VC
 import from outlook	addressbook	nl	Importeren vanuit Outlook
 import multiple vcard	addressbook	nl	Importeer Meervoudige VCard
 import next set	addressbook	nl	Importeren volgende serie
-import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geexporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geëxporteerd in het VCard formaat.
+import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geexporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geÃ«xporteerd in het VCard formaat.
 in %1 days (%2) is %3's birthday.	addressbook	nl	Over %1 dagen (%2) is %3 jarig.
 income	addressbook	nl	Inkomen
 international	addressbook	nl	Internationaal
@@ -179,11 +179,11 @@ ldif	addressbook	nl	LDIF
 line 2	addressbook	nl	Regel 2
 link title for contacts show	addressbook	nl	Linktitel voor contactenweergave
 links	addressbook	nl	Links
-list all categories	addressbook	nl	Toon alle categoriën
+list all categories	addressbook	nl	Toon alle categoriÃ«n
 list all customfields	addressbook	nl	Toon alle op maat gemaakte velden
 load vcard	addressbook	nl	Laad VCard
 locations	addressbook	nl	locaties
-mark records as private	addressbook	nl	Markeer records als privé
+mark records as private	addressbook	nl	Markeer records als privÃ©
 message phone	addressbook	nl	Bericht Telefoon
 middle name	addressbook	nl	Tweede naam
 migration finished	addressbook	nl	Migratie voltooid
@@ -214,7 +214,7 @@ phone number	common	nl	Telefoonnummer
 phone numbers	common	nl	Telefoonnummers
 photo	addressbook	nl	Foto
 please enter a name for that field !	addressbook	nl	Vul een naam voor dat veld  in svp !
-please select only one category	addressbook	nl	Kies svp slechts één categorie
+please select only one category	addressbook	nl	Kies svp slechts Ã©Ã©n categorie
 postal	common	nl	Postadres
 pref	addressbook	nl	voorkeur
 preferred phone	addressbook	nl	voorkeurstelefoon
@@ -252,7 +252,7 @@ start	admin	nl	Start
 startrecord	addressbook	nl	Startbestand
 state	common	nl	Provincie / Staat / Streek
 street	common	nl	Straatnaam
-successfully imported %1 records into your addressbook.	addressbook	nl	Met succes %1 record geïmporteerd naar uw adresboek
+successfully imported %1 records into your addressbook.	addressbook	nl	Met succes %1 record geÃ¯mporteerd naar uw adresboek
 suffix	addressbook	nl	Achtervoegsel
 tel home	addressbook	nl	tel thuis
 telephony integration	admin	nl	Telefonie integratie
@@ -283,7 +283,7 @@ what should links to the addressbook display in other applications. empty values
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	nl	Wanneer moet de contactenlijst deze kolom weergeven. "Alleen als er inhoud is" verbergt de kolom tenzij er iets weer te geven is.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	nl	Welke adresboek moet geselecteerd worden wanneer een contact wordt bijgevoegd EN wanneer u geen toevoegingsrecht heb bij het huidige adresboek.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	nl	Welke karakterset moet gebruikt worden voor de CSV export. De systeem standaard is de karakterset van deze eGroupWare installatie.
-which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	nl	Welke velden moeten geexporteerd worden. "Alles" betekent elke veld dat in het adresboek is opgeslagen, inclusief de aangepaste velden. "Alleen bedrijf adres of privé adres" betekent dat alleen naam, organisatie en het gekozen adres wordt geexporteerd.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	nl	Welke velden moeten geexporteerd worden. "Alles" betekent elke veld dat in het adresboek is opgeslagen, inclusief de aangepaste velden. "Alleen bedrijf adres of privÃ© adres" betekent dat alleen naam, organisatie en het gekozen adres wordt geexporteerd.
 whole query	addressbook	nl	gehele query
 work phone	addressbook	nl	Telefoon werk
 write (update or add) a single entry by passing the fields.	addressbook	nl	Schrijf (bijwerken of toevoegen) een record door de velden mee te geven.

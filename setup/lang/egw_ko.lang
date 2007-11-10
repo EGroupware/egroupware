@@ -1,466 +1,466 @@
-%1 does not exist !!!	setup	ko	%1 Àº Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.
-%1 is %2%3 !!!	setup	ko	%1Àº %2 %3 !!!
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ko	*** ¼³Á¤À» ÅëÇØ µ¥ÀÌÅÍº£ÀÌ½º¸¦ °»½ÅÇÏÁö ¸¶¼¼¿ä, ÃÖ´ë½ÇÇà½Ã°£(max_execution_time) ¼³Á¤¶§¹®¿¡ ÁßÁöµÈ ¾÷µ¥ÀÌÆ®´Â µ¥ÀÌÅÍº£ÀÌ½º¿¡ ³²°ÜÁ® º¹±¸ÇÒ¼ö ¾ø´Â »óÅÂ°¡ µË´Ï´Ù.(Áï µ¥ÀÌÅÍ¸¦ ÀÒ°ÔµË´Ï´Ù) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ko	*** eGWÀÌ ¿ÏÀüÈ÷ µ¿ÀÛ ÇÏ±â À§ÇØ¼­´Â php.ini¸¦ Á÷Á¢ ¼öÁ¤ÇØÁÖ¾î¾ß ÇÕ´Ï´Ù !!!
-00 (disable)	setup	ko	00 ( ¹Ì»ç¿ë / ÃßÃµ )
+%1 does not exist !!!	setup	ko	%1 ì€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+%1 is %2%3 !!!	setup	ko	%1ì€ %2 %3 !!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ko	*** ì„¤ì •ì„ í†µí•´ ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ê°±ì‹ í•˜ì§€ ë§ˆì„¸ìš”, ìµœëŒ€ì‹¤í–‰ì‹œê°„(max_execution_time) ì„¤ì •ë•Œë¬¸ì— ì¤‘ì§€ëœ ì—…ë°ì´íŠ¸ëŠ” ë°ì´í„°ë² ì´ìŠ¤ì— ë‚¨ê²¨ì ¸ ë³µêµ¬í• ìˆ˜ ì—†ëŠ” ìƒíƒœê°€ ë©ë‹ˆë‹¤.(ì¦‰ ë°ì´í„°ë¥¼ ìƒê²Œë©ë‹ˆë‹¤) !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ko	*** eGWì´ ì™„ì „íˆ ë™ì‘ í•˜ê¸° ìœ„í•´ì„œëŠ” php.inië¥¼ ì§ì ‘ ìˆ˜ì •í•´ì£¼ì–´ì•¼ í•©ë‹ˆë‹¤ !!!
+00 (disable)	setup	ko	00 ( ë¯¸ì‚¬ìš© / ì¶”ì²œ )
 13 (ntp)	setup	ko	13 (ntp)
 80 (http)	setup	ko	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ko	<b>ÀÌ°ÍÀº 1°³ÀÇ °ü¸®ÀÚ °èÁ¤µÂ 3°³ÀÇ µ¥¸ğ °èÁ¤À» »ı¼ºÇÕ´Ï´Ù</b><br />»ç¿ëÀÚÀÌ¸§/¾ÏÈ£´Â demo/guest, demo2/guest, demo3/guest ÀÔ´Ï´Ù
-accounts existing	setup	ko	°èÁ¤ Á¸ÀçÇÔ
-actions	setup	ko	¾×¼Ç
-add a domain	setup	ko	µµ¸ŞÀÎ Ãß°¡
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ko	ÀÚµ¿-»ı¼ºµÈ »ç¿ëÀÚ¸¦ ÀÌ ±×·ì¿¡ Ãß°¡ ('±âº»¼³Á¤' ¿©±â°¡ °ø¹éÀÌ¸é ½ÃµµÇÕ´Ï´Ù)
-additional settings	setup	ko	Ãß°¡ ¼³Á¤
-admin first name	setup	ko	°ü¸®ÀÚ ÀÌ¸§
-admin last name	setup	ko	°ü¸®ÀÚ ¼º
-admin password	setup	ko	°ü¸®ÀÚ ¾ÏÈ£
-admin password to header manager	setup	ko	»óÀ§ °ü¸®ÀÚÀÇ °ü¸®¾ÏÈ£
-admin user for header manager	setup	ko	»óÀ§ °ü¸®ÀÚÀÇ °ü¸®»ç¿ëÀÚ
-admin username	setup	ko	°ü¸®»ç¿ëÀÚ ÀÌ¸§
-admins	setup	ko	°ü¸®ÀÚ
-after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	ko	ÆÄÀÏÀ» °¡Á®¿ÂÈÄ, header.inc.phpÀÇ À§Ä¡¿¡ ³Ö°í, "°è¼Ó"À» Å¬¸¯
-all applications	setup	ko	¸ğµç ÀÀ¿ëÇÁ·Î±×·¥
-all core tables and the admin and preferences applications	setup	ko	¸ğµç ÄÚ¾î-Å×ÀÌºí°ú °ü¸®ÀÚ ±×¸®°í ¼³Á¤¿ë ÀÀ¿ëÇÁ·Î±×·¥
-all users	setup	ko	¸ğµç »ç¿ëÀÚ
-analysis	setup	ko	ºĞ¼®
-and reload your webserver, so the above changes take effect !!!	setup	ko	±×¸®°í À¥¼­¹ö¸¦ ¸®·ÎµåÇÏ¸é, À§ÀÇ º¯°æ»çÇ×ÀÌ È¿°ú°¡ ÀÖ½À´Ï´Ù !!!
-app details	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ÀÚ¼¼ÇÑ ¼³¸í
-app install/remove/upgrade	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ¼³Ä¡/»èÁ¦/¾÷±×·¹ÀÌµå
-app process	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ÇÁ·Î¼¼½º
-application data	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ µ¥ÀÌÅÍ
-application list	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ¸ñ·Ï
-application management	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ °ü¸®
-application name and status	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ÀÌ¸§°ú »óÅÂ
-application name and status information	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ÀÌ¸§°ú »óÅÂ Á¤º¸
-application title	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ Á¦¸ñ
-application: %1, file: %2, line: "%3"	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥: %1 , ÆÄÀÏ: %2 , ¶óÀÎ: "%3"
-are you sure you want to delete your existing tables and data?	setup	ko	±âÁ¸¿¡ Å×ÀÌºí°ú µ¥ÀÌÅÍ¸¦ »èÁ¦ÇÏ´Â°Ô ¸Â½À´Ï±î?
-are you sure?	setup	ko	È®½ÇÇÕ´Ï±î?
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ko	±ÍÇÏÀÇ ¿ä±¸¿¡ µû¶ó ÀÌ ½ºÅ©¸®ºê´Â µ¥ÀÌÅÍº£ÀÌ½º¸¦ »ı¼ºÇÏ°í µ¥ÀÌÅÍº£ÀÌ½ºÀÇ À¯Àú¿¡°Ô ±ÇÇÑÀ» Áİ´Ï´Ù
-at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	ko	±ÍÇÏÀÇ ¿ä±¸¿¡µû¶ó, ÀÌ ½ºÅ©¸³Æ®´Â ÇÙ½É Å×ÀÌºí°ú °ü¸®ÀÚ ±×¸®°í È¯°æ¼³Á¤¿ë ÀÀ¿ëÇÁ·Î±×·¥À» ¼³Ä¡ÇÕ´Ï´Ù
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ko	±ÍÇÏÀÇ ¿ä±¸¿¡µû¶ó, ÀÌ ½ºÅ©¸³Æ®´Â ÀÌÀü ÀÀ¿ëÇÁ·Î±×·¥À» ÇöÀç-¹öÀüÀ¸·Î ¾÷±×·¹ÀÌµå ½ÃµµÇÕ´Ï´Ù
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ko	±ÍÇÏÀÇ ¿ä±¸¿¡µû¶ó, ÀÌ ½ºÅ©¸³Æ®´Â ÀÌÀü Å×ÀÌºíÀ» »õ Çü½ÄÀ¸·Î ¾÷±×·¹ÀÌµå ½ÃµµÇÕ´Ï´Ù
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ko	±ÍÇÏÀÇ ¿ä±¸¿¡µû¶ó, ÀÌ ½ºÅ©¸³Æ®´Â ±âÁ¸ Å×ÀÌºíÀ» »èÁ¦ÇÏ°í »õ·Î¿î Çü½ÄÀ¸·Î ´Ù½Ã »ı¼ºÀ» °­ÇàÇÕ´Ï´Ù
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ko	±ÍÇÏÀÇ ¿ä±¸¿¡µû¶ó, ÀÌ ½ºÅ©¸³Æ®´Â Á¸ÀçÇÏ´Â ¸ğµç Å×ÀÌºí°ú µ¥ÀÌÅÍ ±×¸®°í ¸ğµç ÀÀ¿ëÇÁ·Î±×·¥ »èÁ¦¸¦ °­ÇàÇÕ´Ï´Ù
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ko	FTP¸¦ À§ÇØ ÀûÀıÇÑ mimetype»ç¿ëÀ» ½ÃµµÇÏ°í ±âº»¼³Á¤ÀÎ'application/octet-stream'Àº ¹«½ÃÇÕ´Ï´Ù
-authentication / accounts	setup	ko	ÀÎÁõ / °èÁ¤
-auto create account records for authenticated users	setup	ko	ÀÎÁõµÈ »ç¿ëÀÚµéÀ» À§ÇÑ ÀÚµ¿»ı¼º°èÁ¤ ·¹ÄÚµå
-auto-created user accounts expire	setup	ko	ÀÚµ¿»ı¼ºµÈ »ç¿ëÀÚ °èÁ¤ ¸¸·á
-available version	setup	ko	°¡´ÉÇÑ ¹öÀü
-back to the previous screen	setup	ko	ÀÌÀü È­¸éÀ¸·Î µ¹¾Æ°¡±â
-back to user login	setup	ko	»ç¿ëÀÚ Á¢¼ÓÀ¸·Î µ¹¾Æ°¡±â
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	ko	ÇÏÁö¸¸ ÀúÈñ´Â ½ºÅ©¸³Æ®°¡ ½ÇÇàµµÁß µ¥ÀÌÅÍ¸¦ ¼Õ»óÇÒ ¼ö ÀÖ±â¶§¹®¿¡ ±ÍÇÏÀÇ Å×ÀÌºíÀ» <u>¹é¾÷ÇÏ±æ Àû±Ø ±ÇÀå</u>ÇÕ´Ï´Ù<br /><strong>ÀÌ ÀÚµ¿È­µÈ ½ºÅ©¸³Æ®´Â µ¥ÀÌÅÍ¼Õ½ÇÀÌ ÀÏ¾î³¯¼ö ÀÖ½À´Ï´Ù.</strong>
-because an application it depends upon was upgraded	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ÀÌ ¾÷±×·¹ÀÌµå µÇ¾ú´ÂÁö ¿©ºÎ¿¡ ´Ş·ÁÀÖÀ½
-because it depends upon	setup	ko	ÀÇÁ¸¼º¶§¹®¿¡
-because it is not a user application, or access is controlled via acl	setup	ko	»ç¿ëÀÚ ÀÀ¿ëÇÁ·Î±×·¥ÀÌ ¾Æ´Ï±â¶§¹®¿¡, Á¢±Ù Á¦¾î´Â ACLÀ» ÅëÇØ¼­
-because it requires manual table installation, <br />or the table definition was incorrect	setup	ko	ÀÌ´Â Å×ÀÌºí ¼³Ä¡¸¦ ¼öµ¿À¸·Î ÇØ¾ßÇÏ°Å³ª, Å×ÀÌºí Á¤ÀÇ°¡ Æ²·È±â ¶§¹®ÀÔ´Ï´Ù
-because it was manually disabled	setup	ko	Á÷Á¢ »ç¿ë¾ÈÇÔÀ¸·Î ¼³Á¤Çß±â ¶§¹®ÀÔ´Ï´Ù
-because of a failed upgrade or install	setup	ko	¾÷±×·¹ÀÌµå³ª ¼³Ä¡¿¡ ½ÇÆĞÇß±â ¶§¹®ÀÔ´Ï´Ù
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	ko	¾÷±×·¹ÀÌµå¿¡ ½ÇÆĞÇß°Å³ª, µ¥ÀÌÅÍº£ÀÌ½º°¡ ¼³Ä¡µÈ ÀÀ¿ëÇÁ·Î±×·¥º¸´Ù »õ ¹öÀüÀÌ ¶§¹®ÀÔ´Ï´Ù
-because the enable flag for this app is set to 0, or is undefined	setup	ko	ÀÌ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ È°¼ºÈ­ÇÃ·¹±×°¡ 0À¸·Î ¼³Á¤µÇ¾ú°Å³ª, ¾Æ¿¡ Á¤ÀÇµÇÁö ¾Ê¾Ò±â ¶§¹®ÀÔ´Ï´Ù
-bottom	setup	ko	ÇÏ´Ü
-cancel	setup	ko	Ãë¼Ò
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	ko	ÆÄÀÏ ±ÇÇÑÀÌ ¾ø±â¶§¹®¿¡ header.inc.php¸¦ »ı¼ºÇÒ¼ö ¾ø½À´Ï´Ù. ´ë½Å %1 ÆÄÀÏ·Î ÇÒ¼ö ÀÖ½À´Ï´Ù
-change system-charset	setup	ko	½Ã½ºÅÛ ¹®ÀÚ¼Â ¹Ù²Ù±â
-charset	setup	ko	euc-kr
-charset to convert to	setup	ko	ÀüÈ¯ÇÒ ¹®ÀÚ¼Â
-check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ko	À¥¼­¹ö¸¦ ÅëÇØ È£ÃâµÇÁö¸¸ ±× À¥¼­¹ö°¡ »ç¿ëÀÚID¿Í ÀÌ¸§À» ¸ğ¸£´Â »óÅÂ¿¡¼­ ½ÇÇàµÈ´Ù¸é Ã¼Å©ÇÏ¼¼¿ä
-check installation	setup	ko	¼³Ä¡ È®ÀÎ
-check ip address of all sessions	setup	ko	¸ğµç ¼¼¼Ç¿¡ ip ÁÖ¼Ò È®ÀÎ
-checking extension %1 is loaded or loadable	setup	ko	%1 È®ÀåÀÌ ÀÌ¹Ì ·ÎµåµÇ¾ú°Å³ª ·Îµå°¡ °¡´ÉÇÑÁö È®ÀÎ
-checking file-permissions of %1 for %2: %3	setup	ko	%2¸¦ À§ÇØ %1 ÆÄÀÏ-±ÇÇÑÀ» È®ÀÎ : %3
-checking for gd support...	setup	ko	GD Áö¿ø¿©ºÎ È®ÀÎ..
-checking php.ini	setup	ko	php.ini È®ÀÎ
-checking the egroupware installation	setup	ko	eGroupWare ¼³Ä¡ È®ÀÎ
-click <a href="index.php">here</a> to return to setup.	setup	ko	¼³Á¤À¸·Î µ¹¾Æ°¡·Á¸é <a href="index.php">¿©±â</a>¸¦ Å¬¸¯ÇÏ¼¼¿ä
-click here	setup	ko	¿©±â¸¦ Å¬¸¯ÇÏ¼¼¿ä
-click here to re-run the installation tests	setup	ko	¼³Ä¡ Å×½ºÆ®¸¦ ´Ù½Ã ¼öÇàÇÏ±âÀ§ÇØ¼­ ¿©±â¸¦ Å¬¸¯ÇÏ¼¼¿ä
-completed	setup	ko	¿Ï·áµÊ
-config password	setup	ko	¾ÏÈ£ ±¸¼º
-config username	setup	ko	»ç¿ëÀÚ ÀÌ¸§ ±¸¼º
-configuration	setup	ko	±¸¼º
-configuration completed	setup	ko	±¸¼º ¿Ï·á
-configuration password	setup	ko	¾ÏÈ£ ±¸¼º
-configuration user	setup	ko	À¯Àú ±¸¼º
-configure now	setup	ko	Áö±İ ±¸¼º
-contain	setup	ko	Æ÷ÇÔ
-continue	setup	ko	°è¼Ó
-continue to the header admin	setup	ko	»óÀ§ °ü¸®ÀÚ °èÁ¤À¸·Î °è¼Ó
-convert	setup	ko	º¯È¯
-could not open header.inc.php for writing!	setup	ko	header.inc.php ÆÄÀÏ¿¡ ¾µ¼ö¾ø½À´Ï´Ù.
-country selection	setup	ko	±¹°¡ ¼±ÅÃ
-create	setup	ko	»ı¼º
-create admin account	setup	ko	°ü¸® °èÁ¤ »ı¼º
-create database	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º »ı¼º
-create demo accounts	setup	ko	µ¥¸ğ °èÁ¤ »ı¼º
-create one now	setup	ko	Áö±İ ÇÏ³ª »ı¼º
-create the empty database -	setup	ko	ºó µ¥ÀÌÅÍº£ÀÌ½º »ı¼º -
-create the empty database and grant user permissions -	setup	ko	ºó µ¥ÀÌÅÍº£ÀÌ½º¸¦ »ı¼ºÇÏ°í »ç¿ëÀÚ ±ÇÇÑÀ» ºÎ¿© -
-create your header.inc.php	setup	ko	´ç½ÅÀÇ header.inc.php »ı¼º
-created	setup	ko	»ı¼ºµÊ
-created header.inc.php!	setup	ko	»ı¼ºµÈ header.inc.php!
-creating tables	setup	ko	Å×ÀÌºí »ı¼ºÁß
-current system-charset	setup	ko	ÇöÀç ½Ã½ºÅÛ ¹®ÀÚ¼Â
-current system-charset is %1, click %2here%3 to change it.	setup	ko	ÇöÀç ½Ã½ºÅÛ ¹®ÀÚ¼ÂÀº %1ÀÔ´Ï´Ù. ¹Ù²Ù½Ã·Á¸é %2¿©±â%3À» ´©¸£¼¼¿ä.
-current version	setup	ko	ÇöÀç ¹öÀü
-currently installed languages: %1 <br />	setup	ko	ÇöÀç ¼³Ä¡µÈ ¾ğ¾î: %1 <br />
-database successfully converted from '%1' to '%2'	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º°¡ '%1'¿¡¼­ '%2'À¸·Î ÀüÈ¯¿¡ ¼º°øÇß½À´Ï´Ù.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ko	³¯Â¥½Ã°£ Æ÷Æ®¸¦ ¼³Á¤ÇÕ´Ï´Ù<br /> ¸¸¾à 13¹ø Æ÷Æ®¸¦ »ç¿ëÇÏ½Å´Ù¸é ÀûÇÕÇÑ ¹æÈ­º® Á¤Ã¥À» ¼³Á¤ÇÏ½Ã°í ÀÌ ÆäÀÌÁö¸¦ ¼­ºê¹Ô(submit)ÇØ ÁÖ¼¼¿ä.<br />(Æ÷Æ®:13 / È£½ºÆ®:129.6.15.28)
-db host	setup	ko	DB È£½ºÆ®
-db name	setup	ko	DB ÀÌ¸§
-db password	setup	ko	DB ¾ÏÈ£
-db port	setup	ko	DB Æ÷Æ®
-db root password	setup	ko	DB ·çÆ® ¾ÏÈ£
-db root username	setup	ko	DB ·çÆ® »ç¿ëÀÚÀÌ¸§
-db type	setup	ko	DB ÇüÅÂ
-db user	setup	ko	DB »ç¿ëÀÚ
-default file system space per user/group ?	setup	ko	À¯Àú/±×·ì ´ç ±âº» ÆÄÀÏ½Ã½ºÅÛ ¿ë·®Àº?
-delete	setup	ko	»èÁ¦
-delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	ko	¸ğµç  SQL °èÁ¤, ±×·ì, ACL ±×¸®°í È¯°æ¼³Á¤ À» »èÁ¦ÇÕ´Ï±î? (Àß ¾²ÀÌÁø ¾Ê°ÚÁÒ)?
-delete all my tables and data	setup	ko	³» ¸ğµç Å×ÀÌºí°ú µ¥ÀÌÅÍ¸¦ »èÁ¦
-delete all old languages and install new ones	setup	ko	ÀÌÀü ¾ğ¾î¸¦ ¸ğµÎ »èÁ¦ÇÏ°í »õ ¾ğ¾î¸¦ ¼³Ä¡
-deleting tables	setup	ko	Å×ÀÌºí »èÁ¦Áß
-demo server setup	setup	ko	µ¥¸ğ ¼­¹ö ¼³Á¤
-deny access	setup	ko	Á¢±Ù ±İÁö
-deny all users access to grant other users access to their entries ?	setup	ko	´Ù¸¥ »ç¿ëÀÚ°¡ °¢ÀÚÀÇ Ç×¸ñ¿¡ Á¢±ÙÇÏ´Â°Í ÀÌ¿Ü¿¡ ¸ğµç »ç¿ëÀÚÀÇ Á¢±ÙÀ» ±İÁö ½ÃÅ³±î¿ä?
-dependency failure	setup	ko	ÀÇÁ¸¼º È®ÀÎ ½ÇÆĞ
-deregistered	setup	ko	µî·ÏÇØÁöµÊ
-details for admin account	setup	ko	°ü¸®ÀÚ °èÁ¤¿¡ ÀÚ¼¼ÇÑ Á¤º¸
-developers' table schema toy	setup	ko	°³¹ßÀÚ¿ë Å×ÀÌºí ½ºÅ°¸¶ µµ±¸
-did not find any valid db support!	setup	ko	À¯¿äÇÑ DB Áö¿øÀ» Ã£À»¼ö ¾ø½À´Ï´Ù!
-do you want persistent connections (higher performance, but consumes more resources)	setup	ko	Áö¼ÓÀûÀÎ ¿¬°áÀ» ÇÒ±î¿ä? ( ½ÇÇà¼Óµµ´Â ÁÁ½À´Ï´Ù¸¸,´õ ¸¹Àº ÀÚ¿øÀ» ¼Ò¸ğÇÕ´Ï´Ù)
-do you want to manage homedirectory and loginshell attributes?	setup	ko	È¨µğ·ºÅä¸®¿Í ·Î±×ÀÎ½© ¼Ó¼ºÀ» °ü¸®ÇÏ½Ã°Ú½À´Ï±î?
-domain	setup	ko	µµ¸ŞÀÎ
-domain select box on login	setup	ko	·Î±×ÀÎ½Ã µµ¸ŞÀÎ ¼±ÅÃ »óÀÚ º¸ÀÌ±â
-dont touch my data	setup	ko	³» µ¥ÀÌÅÍ´Â ¼Õ´ëÁö ¸»°Í
-download	setup	ko	³»·Á¹Ş±â
-edit current configuration	setup	ko	ÇöÀç±¸¼ºÀ» ÆíÁı
-edit your existing header.inc.php	setup	ko	±âÁ¸ header.inc.php¸¦ ÆíÁı
-edit your header.inc.php	setup	ko	±ÍÇÏÀÇ header.inc.php¸¦ ÆíÁı
-egroupware administration manual	setup	ko	eGroupWare °ü¸®ÀÚ ¸Ş´º¾ó
-enable for extra debug-messages	setup	ko	ÀÚ¼¼ÇÑ µğ¹ö±×-¸Ş¼¼Áö Ãâ·Â
-enable ldap version 3	setup	ko	LDAP Version 3 È°¼ºÈ­
-enable mcrypt	setup	ko	MCrypt È°¼ºÈ­
-enter some random text for app session encryption	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ¼¼¼Ç ¾ÏÈ£È­¿¡ »ç¿ëÇÒ ¹«ÀÛÀ§ ¹®ÀÚ¿­ ÀÔ·Â
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ¼¼¼Ç ¾ÏÈ£È­¿¡ <br />»ç¿ëÇÒ ÀÓÀÇ ¹®ÀÚ¿­À» ÀÔ·ÂÇÏ¼¼¿ä (mcrypt ÇÊ¿ä)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ko	ÀÓ½Ã ÆÄÀÏÀÇ ¿ÏÀüÇÑ°æ·Î¸¦ ÀÔ·ÂÇÏ¼¼¿ä.<br />¿¹: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	ko	»ç¿ëÀÚ¿Í ±×·ìÆÄÀÏÀ» À§ÇÑ ¿ÏÀüÇÑ°æ·Î¸¦ ÀÔ·ÂÇÏ¼¼¿ä. <br />¿¹: /files, E:\FILES
-enter the hostname of the machine on which this server is running	setup	ko	ÀÌ ¼­¹ö°¡ ½ÇÇàµÇ°í ÀÖ´Â ÀåºñÀÇ È£½ºÆ® ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ko	eGroupWareÀÇ URLÀ» ÀÔ·Â<br />¿¹: http://domain.com/egroupware &nbsp;ÀÌ³ª &nbsp/egroupware<br /><b>´Ü ½½·¡½Ã(/)·Î ³¡³ªÁö ¾Ê°Ô ÇÏ¼¼¿ä</b>
-enter the site password for peer servers	setup	ko	ÇÇ¾î¼­¹öÀÇ »çÀÌÆ®¾ÏÈ£ ÀÔ·Â
-enter the site username for peer servers	setup	ko	ÇÇ¾î¼­¹öÀÇ »çÀÌÆ®»ç¿ëÀÚÀÌ¸§ ÀÔ·Â
-enter the title for your site	setup	ko	±ÍÇÏÀÇ »çÀÌÆ® Á¦¸ñÀ» ÀÔ·Â
-enter your default ftp server	setup	ko	±ÍÇÏÀÇ ±âº» FTP ¼­¹öÁÖ¼Ò ÀÔ·Â
-enter your http proxy server	setup	ko	HTTP ÇÁ·Ï½Ã ¼­¹öÁÖ¼Ò ÀÔ·Â
-enter your http proxy server password	setup	ko	HTTP ÇÁ·Ï½Ã ¼­¹ö ¾ÏÈ£ ÀÔ·Â
-enter your http proxy server port	setup	ko	HTTP ÇÁ·Ï½Ã ¼­¹ö Æ÷Æ® ÀÔ·Â
-enter your http proxy server username	setup	ko	HTTP ÇÁ·Ï½Ã ¼­¹ö »ç¿ëÀÚÀÌ¸§ ÀÔ·Â
-error in admin-creation !!!	setup	ko	°ü¸®ÀÚ »ı¼º ¿¡·¯!!!
-error in group-creation !!!	setup	ko	±×·ì »ı¼º ¿¡·¯!!!
-export egroupware accounts from sql to ldap	setup	ko	eGroupWareÀÇ °èÁ¤µéÀ» SQL¿¡¼­ LDAP·Î ³»º¸³»±â
-export has been completed!  you will need to set the user passwords manually.	setup	ko	³»º¸³»±â°¡ ¿Ï·á µÇ¾ú½À´Ï´Ù! »ç¿ëÀÚ ¾ÏÈ£¸¦ Á÷Á¢ ¼³Á¤ÇÏ¼Å¾ß ÇÕ´Ï´Ù.
-export sql users to ldap	setup	ko	SQL»ç¿ëÀÚµéÀ» LDAP·Î ³»º¸³»±â
-false	setup	ko	°ÅÁş
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ko	<b>ì´ê²ƒì€ 1ê°œì˜ ê´€ë¦¬ì ê³„ì •ë  3ê°œì˜ ë°ëª¨ ê³„ì •ì„ ìƒì„±í•©ë‹ˆë‹¤</b><br />ì‚¬ìš©ìì´ë¦„/ì•”í˜¸ëŠ” demo/guest, demo2/guest, demo3/guest ì…ë‹ˆë‹¤
+accounts existing	setup	ko	ê³„ì • ì¡´ì¬í•¨
+actions	setup	ko	ì•¡ì…˜
+add a domain	setup	ko	ë„ë©”ì¸ ì¶”ê°€
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ko	ìë™-ìƒì„±ëœ ì‚¬ìš©ìë¥¼ ì´ ê·¸ë£¹ì— ì¶”ê°€ ('ê¸°ë³¸ì„¤ì •' ì—¬ê¸°ê°€ ê³µë°±ì´ë©´ ì‹œë„í•©ë‹ˆë‹¤)
+additional settings	setup	ko	ì¶”ê°€ ì„¤ì •
+admin first name	setup	ko	ê´€ë¦¬ì ì´ë¦„
+admin last name	setup	ko	ê´€ë¦¬ì ì„±
+admin password	setup	ko	ê´€ë¦¬ì ì•”í˜¸
+admin password to header manager	setup	ko	ìƒìœ„ ê´€ë¦¬ìì˜ ê´€ë¦¬ì•”í˜¸
+admin user for header manager	setup	ko	ìƒìœ„ ê´€ë¦¬ìì˜ ê´€ë¦¬ì‚¬ìš©ì
+admin username	setup	ko	ê´€ë¦¬ì‚¬ìš©ì ì´ë¦„
+admins	setup	ko	ê´€ë¦¬ì
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	ko	íŒŒì¼ì„ ê°€ì ¸ì˜¨í›„, header.inc.phpì˜ ìœ„ì¹˜ì— ë„£ê³ , "ê³„ì†"ì„ í´ë¦­
+all applications	setup	ko	ëª¨ë“  ì‘ìš©í”„ë¡œê·¸ë¨
+all core tables and the admin and preferences applications	setup	ko	ëª¨ë“  ì½”ì–´-í…Œì´ë¸”ê³¼ ê´€ë¦¬ì ê·¸ë¦¬ê³  ì„¤ì •ìš© ì‘ìš©í”„ë¡œê·¸ë¨
+all users	setup	ko	ëª¨ë“  ì‚¬ìš©ì
+analysis	setup	ko	ë¶„ì„
+and reload your webserver, so the above changes take effect !!!	setup	ko	ê·¸ë¦¬ê³  ì›¹ì„œë²„ë¥¼ ë¦¬ë¡œë“œí•˜ë©´, ìœ„ì˜ ë³€ê²½ì‚¬í•­ì´ íš¨ê³¼ê°€ ìˆìŠµë‹ˆë‹¤ !!!
+app details	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ìì„¸í•œ ì„¤ëª…
+app install/remove/upgrade	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ì„¤ì¹˜/ì‚­ì œ/ì—…ê·¸ë ˆì´ë“œ
+app process	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ í”„ë¡œì„¸ìŠ¤
+application data	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ë°ì´í„°
+application list	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ëª©ë¡
+application management	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ê´€ë¦¬
+application name and status	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ì´ë¦„ê³¼ ìƒíƒœ
+application name and status information	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ì´ë¦„ê³¼ ìƒíƒœ ì •ë³´
+application title	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ì œëª©
+application: %1, file: %2, line: "%3"	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨: %1 , íŒŒì¼: %2 , ë¼ì¸: "%3"
+are you sure you want to delete your existing tables and data?	setup	ko	ê¸°ì¡´ì— í…Œì´ë¸”ê³¼ ë°ì´í„°ë¥¼ ì‚­ì œí•˜ëŠ”ê²Œ ë§ìŠµë‹ˆê¹Œ?
+are you sure?	setup	ko	í™•ì‹¤í•©ë‹ˆê¹Œ?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ko	ê·€í•˜ì˜ ìš”êµ¬ì— ë”°ë¼ ì´ ìŠ¤í¬ë¦¬ë¸ŒëŠ” ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ìƒì„±í•˜ê³  ë°ì´í„°ë² ì´ìŠ¤ì˜ ìœ ì €ì—ê²Œ ê¶Œí•œì„ ì¤ë‹ˆë‹¤
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	ko	ê·€í•˜ì˜ ìš”êµ¬ì—ë”°ë¼, ì´ ìŠ¤í¬ë¦½íŠ¸ëŠ” í•µì‹¬ í…Œì´ë¸”ê³¼ ê´€ë¦¬ì ê·¸ë¦¬ê³  í™˜ê²½ì„¤ì •ìš© ì‘ìš©í”„ë¡œê·¸ë¨ì„ ì„¤ì¹˜í•©ë‹ˆë‹¤
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ko	ê·€í•˜ì˜ ìš”êµ¬ì—ë”°ë¼, ì´ ìŠ¤í¬ë¦½íŠ¸ëŠ” ì´ì „ ì‘ìš©í”„ë¡œê·¸ë¨ì„ í˜„ì¬-ë²„ì „ìœ¼ë¡œ ì—…ê·¸ë ˆì´ë“œ ì‹œë„í•©ë‹ˆë‹¤
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ko	ê·€í•˜ì˜ ìš”êµ¬ì—ë”°ë¼, ì´ ìŠ¤í¬ë¦½íŠ¸ëŠ” ì´ì „ í…Œì´ë¸”ì„ ìƒˆ í˜•ì‹ìœ¼ë¡œ ì—…ê·¸ë ˆì´ë“œ ì‹œë„í•©ë‹ˆë‹¤
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ko	ê·€í•˜ì˜ ìš”êµ¬ì—ë”°ë¼, ì´ ìŠ¤í¬ë¦½íŠ¸ëŠ” ê¸°ì¡´ í…Œì´ë¸”ì„ ì‚­ì œí•˜ê³  ìƒˆë¡œìš´ í˜•ì‹ìœ¼ë¡œ ë‹¤ì‹œ ìƒì„±ì„ ê°•í–‰í•©ë‹ˆë‹¤
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ko	ê·€í•˜ì˜ ìš”êµ¬ì—ë”°ë¼, ì´ ìŠ¤í¬ë¦½íŠ¸ëŠ” ì¡´ì¬í•˜ëŠ” ëª¨ë“  í…Œì´ë¸”ê³¼ ë°ì´í„° ê·¸ë¦¬ê³  ëª¨ë“  ì‘ìš©í”„ë¡œê·¸ë¨ ì‚­ì œë¥¼ ê°•í–‰í•©ë‹ˆë‹¤
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ko	FTPë¥¼ ìœ„í•´ ì ì ˆí•œ mimetypeì‚¬ìš©ì„ ì‹œë„í•˜ê³  ê¸°ë³¸ì„¤ì •ì¸'application/octet-stream'ì€ ë¬´ì‹œí•©ë‹ˆë‹¤
+authentication / accounts	setup	ko	ì¸ì¦ / ê³„ì •
+auto create account records for authenticated users	setup	ko	ì¸ì¦ëœ ì‚¬ìš©ìë“¤ì„ ìœ„í•œ ìë™ìƒì„±ê³„ì • ë ˆì½”ë“œ
+auto-created user accounts expire	setup	ko	ìë™ìƒì„±ëœ ì‚¬ìš©ì ê³„ì • ë§Œë£Œ
+available version	setup	ko	ê°€ëŠ¥í•œ ë²„ì „
+back to the previous screen	setup	ko	ì´ì „ í™”ë©´ìœ¼ë¡œ ëŒì•„ê°€ê¸°
+back to user login	setup	ko	ì‚¬ìš©ì ì ‘ì†ìœ¼ë¡œ ëŒì•„ê°€ê¸°
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	ko	í•˜ì§€ë§Œ ì €í¬ëŠ” ìŠ¤í¬ë¦½íŠ¸ê°€ ì‹¤í–‰ë„ì¤‘ ë°ì´í„°ë¥¼ ì†ìƒí•  ìˆ˜ ìˆê¸°ë•Œë¬¸ì— ê·€í•˜ì˜ í…Œì´ë¸”ì„ <u>ë°±ì—…í•˜ê¸¸ ì ê·¹ ê¶Œì¥</u>í•©ë‹ˆë‹¤<br /><strong>ì´ ìë™í™”ëœ ìŠ¤í¬ë¦½íŠ¸ëŠ” ë°ì´í„°ì†ì‹¤ì´ ì¼ì–´ë‚ ìˆ˜ ìˆìŠµë‹ˆë‹¤.</strong>
+because an application it depends upon was upgraded	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ì´ ì—…ê·¸ë ˆì´ë“œ ë˜ì—ˆëŠ”ì§€ ì—¬ë¶€ì— ë‹¬ë ¤ìˆìŒ
+because it depends upon	setup	ko	ì˜ì¡´ì„±ë•Œë¬¸ì—
+because it is not a user application, or access is controlled via acl	setup	ko	ì‚¬ìš©ì ì‘ìš©í”„ë¡œê·¸ë¨ì´ ì•„ë‹ˆê¸°ë•Œë¬¸ì—, ì ‘ê·¼ ì œì–´ëŠ” ACLì„ í†µí•´ì„œ
+because it requires manual table installation, <br />or the table definition was incorrect	setup	ko	ì´ëŠ” í…Œì´ë¸” ì„¤ì¹˜ë¥¼ ìˆ˜ë™ìœ¼ë¡œ í•´ì•¼í•˜ê±°ë‚˜, í…Œì´ë¸” ì •ì˜ê°€ í‹€ë ¸ê¸° ë•Œë¬¸ì…ë‹ˆë‹¤
+because it was manually disabled	setup	ko	ì§ì ‘ ì‚¬ìš©ì•ˆí•¨ìœ¼ë¡œ ì„¤ì •í–ˆê¸° ë•Œë¬¸ì…ë‹ˆë‹¤
+because of a failed upgrade or install	setup	ko	ì—…ê·¸ë ˆì´ë“œë‚˜ ì„¤ì¹˜ì— ì‹¤íŒ¨í–ˆê¸° ë•Œë¬¸ì…ë‹ˆë‹¤
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	ko	ì—…ê·¸ë ˆì´ë“œì— ì‹¤íŒ¨í–ˆê±°ë‚˜, ë°ì´í„°ë² ì´ìŠ¤ê°€ ì„¤ì¹˜ëœ ì‘ìš©í”„ë¡œê·¸ë¨ë³´ë‹¤ ìƒˆ ë²„ì „ì´ ë•Œë¬¸ì…ë‹ˆë‹¤
+because the enable flag for this app is set to 0, or is undefined	setup	ko	ì´ ì‘ìš©í”„ë¡œê·¸ë¨ì˜ í™œì„±í™”í”Œë ˆê·¸ê°€ 0ìœ¼ë¡œ ì„¤ì •ë˜ì—ˆê±°ë‚˜, ì•„ì— ì •ì˜ë˜ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì…ë‹ˆë‹¤
+bottom	setup	ko	í•˜ë‹¨
+cancel	setup	ko	ì·¨ì†Œ
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	ko	íŒŒì¼ ê¶Œí•œì´ ì—†ê¸°ë•Œë¬¸ì— header.inc.phpë¥¼ ìƒì„±í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ëŒ€ì‹  %1 íŒŒì¼ë¡œ í• ìˆ˜ ìˆìŠµë‹ˆë‹¤
+change system-charset	setup	ko	ì‹œìŠ¤í…œ ë¬¸ìì…‹ ë°”ê¾¸ê¸°
+charset	setup	ko	utf-8
+charset to convert to	setup	ko	ì „í™˜í•  ë¬¸ìì…‹
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ko	ì›¹ì„œë²„ë¥¼ í†µí•´ í˜¸ì¶œë˜ì§€ë§Œ ê·¸ ì›¹ì„œë²„ê°€ ì‚¬ìš©ìIDì™€ ì´ë¦„ì„ ëª¨ë¥´ëŠ” ìƒíƒœì—ì„œ ì‹¤í–‰ëœë‹¤ë©´ ì²´í¬í•˜ì„¸ìš”
+check installation	setup	ko	ì„¤ì¹˜ í™•ì¸
+check ip address of all sessions	setup	ko	ëª¨ë“  ì„¸ì…˜ì— ip ì£¼ì†Œ í™•ì¸
+checking extension %1 is loaded or loadable	setup	ko	%1 í™•ì¥ì´ ì´ë¯¸ ë¡œë“œë˜ì—ˆê±°ë‚˜ ë¡œë“œê°€ ê°€ëŠ¥í•œì§€ í™•ì¸
+checking file-permissions of %1 for %2: %3	setup	ko	%2ë¥¼ ìœ„í•´ %1 íŒŒì¼-ê¶Œí•œì„ í™•ì¸ : %3
+checking for gd support...	setup	ko	GD ì§€ì›ì—¬ë¶€ í™•ì¸..
+checking php.ini	setup	ko	php.ini í™•ì¸
+checking the egroupware installation	setup	ko	eGroupWare ì„¤ì¹˜ í™•ì¸
+click <a href="index.php">here</a> to return to setup.	setup	ko	ì„¤ì •ìœ¼ë¡œ ëŒì•„ê°€ë ¤ë©´ <a href="index.php">ì—¬ê¸°</a>ë¥¼ í´ë¦­í•˜ì„¸ìš”
+click here	setup	ko	ì—¬ê¸°ë¥¼ í´ë¦­í•˜ì„¸ìš”
+click here to re-run the installation tests	setup	ko	ì„¤ì¹˜ í…ŒìŠ¤íŠ¸ë¥¼ ë‹¤ì‹œ ìˆ˜í–‰í•˜ê¸°ìœ„í•´ì„œ ì—¬ê¸°ë¥¼ í´ë¦­í•˜ì„¸ìš”
+completed	setup	ko	ì™„ë£Œë¨
+config password	setup	ko	ì•”í˜¸ êµ¬ì„±
+config username	setup	ko	ì‚¬ìš©ì ì´ë¦„ êµ¬ì„±
+configuration	setup	ko	êµ¬ì„±
+configuration completed	setup	ko	êµ¬ì„± ì™„ë£Œ
+configuration password	setup	ko	ì•”í˜¸ êµ¬ì„±
+configuration user	setup	ko	ìœ ì € êµ¬ì„±
+configure now	setup	ko	ì§€ê¸ˆ êµ¬ì„±
+contain	setup	ko	í¬í•¨
+continue	setup	ko	ê³„ì†
+continue to the header admin	setup	ko	ìƒìœ„ ê´€ë¦¬ì ê³„ì •ìœ¼ë¡œ ê³„ì†
+convert	setup	ko	ë³€í™˜
+could not open header.inc.php for writing!	setup	ko	header.inc.php íŒŒì¼ì— ì“¸ìˆ˜ì—†ìŠµë‹ˆë‹¤.
+country selection	setup	ko	êµ­ê°€ ì„ íƒ
+create	setup	ko	ìƒì„±
+create admin account	setup	ko	ê´€ë¦¬ ê³„ì • ìƒì„±
+create database	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ ìƒì„±
+create demo accounts	setup	ko	ë°ëª¨ ê³„ì • ìƒì„±
+create one now	setup	ko	ì§€ê¸ˆ í•˜ë‚˜ ìƒì„±
+create the empty database -	setup	ko	ë¹ˆ ë°ì´í„°ë² ì´ìŠ¤ ìƒì„± -
+create the empty database and grant user permissions -	setup	ko	ë¹ˆ ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ìƒì„±í•˜ê³  ì‚¬ìš©ì ê¶Œí•œì„ ë¶€ì—¬ -
+create your header.inc.php	setup	ko	ë‹¹ì‹ ì˜ header.inc.php ìƒì„±
+created	setup	ko	ìƒì„±ë¨
+created header.inc.php!	setup	ko	ìƒì„±ëœ header.inc.php!
+creating tables	setup	ko	í…Œì´ë¸” ìƒì„±ì¤‘
+current system-charset	setup	ko	í˜„ì¬ ì‹œìŠ¤í…œ ë¬¸ìì…‹
+current system-charset is %1, click %2here%3 to change it.	setup	ko	í˜„ì¬ ì‹œìŠ¤í…œ ë¬¸ìì…‹ì€ %1ì…ë‹ˆë‹¤. ë°”ê¾¸ì‹œë ¤ë©´ %2ì—¬ê¸°%3ì„ ëˆ„ë¥´ì„¸ìš”.
+current version	setup	ko	í˜„ì¬ ë²„ì „
+currently installed languages: %1 <br />	setup	ko	í˜„ì¬ ì„¤ì¹˜ëœ ì–¸ì–´: %1 <br />
+database successfully converted from '%1' to '%2'	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ê°€ '%1'ì—ì„œ '%2'ìœ¼ë¡œ ì „í™˜ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ko	ë‚ ì§œì‹œê°„ í¬íŠ¸ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤<br /> ë§Œì•½ 13ë²ˆ í¬íŠ¸ë¥¼ ì‚¬ìš©í•˜ì‹ ë‹¤ë©´ ì í•©í•œ ë°©í™”ë²½ ì •ì±…ì„ ì„¤ì •í•˜ì‹œê³  ì´ í˜ì´ì§€ë¥¼ ì„œë¸Œë°‹(submit)í•´ ì£¼ì„¸ìš”.<br />(í¬íŠ¸:13 / í˜¸ìŠ¤íŠ¸:129.6.15.28)
+db host	setup	ko	DB í˜¸ìŠ¤íŠ¸
+db name	setup	ko	DB ì´ë¦„
+db password	setup	ko	DB ì•”í˜¸
+db port	setup	ko	DB í¬íŠ¸
+db root password	setup	ko	DB ë£¨íŠ¸ ì•”í˜¸
+db root username	setup	ko	DB ë£¨íŠ¸ ì‚¬ìš©ìì´ë¦„
+db type	setup	ko	DB í˜•íƒœ
+db user	setup	ko	DB ì‚¬ìš©ì
+default file system space per user/group ?	setup	ko	ìœ ì €/ê·¸ë£¹ ë‹¹ ê¸°ë³¸ íŒŒì¼ì‹œìŠ¤í…œ ìš©ëŸ‰ì€?
+delete	setup	ko	ì‚­ì œ
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	ko	ëª¨ë“   SQL ê³„ì •, ê·¸ë£¹, ACL ê·¸ë¦¬ê³  í™˜ê²½ì„¤ì • ì„ ì‚­ì œí•©ë‹ˆê¹Œ? (ì˜ ì“°ì´ì§„ ì•Šê² ì£ )?
+delete all my tables and data	setup	ko	ë‚´ ëª¨ë“  í…Œì´ë¸”ê³¼ ë°ì´í„°ë¥¼ ì‚­ì œ
+delete all old languages and install new ones	setup	ko	ì´ì „ ì–¸ì–´ë¥¼ ëª¨ë‘ ì‚­ì œí•˜ê³  ìƒˆ ì–¸ì–´ë¥¼ ì„¤ì¹˜
+deleting tables	setup	ko	í…Œì´ë¸” ì‚­ì œì¤‘
+demo server setup	setup	ko	ë°ëª¨ ì„œë²„ ì„¤ì •
+deny access	setup	ko	ì ‘ê·¼ ê¸ˆì§€
+deny all users access to grant other users access to their entries ?	setup	ko	ë‹¤ë¥¸ ì‚¬ìš©ìê°€ ê°ìì˜ í•­ëª©ì— ì ‘ê·¼í•˜ëŠ”ê²ƒ ì´ì™¸ì— ëª¨ë“  ì‚¬ìš©ìì˜ ì ‘ê·¼ì„ ê¸ˆì§€ ì‹œí‚¬ê¹Œìš”?
+dependency failure	setup	ko	ì˜ì¡´ì„± í™•ì¸ ì‹¤íŒ¨
+deregistered	setup	ko	ë“±ë¡í•´ì§€ë¨
+details for admin account	setup	ko	ê´€ë¦¬ì ê³„ì •ì— ìì„¸í•œ ì •ë³´
+developers' table schema toy	setup	ko	ê°œë°œììš© í…Œì´ë¸” ìŠ¤í‚¤ë§ˆ ë„êµ¬
+did not find any valid db support!	setup	ko	ìœ ìš”í•œ DB ì§€ì›ì„ ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤!
+do you want persistent connections (higher performance, but consumes more resources)	setup	ko	ì§€ì†ì ì¸ ì—°ê²°ì„ í• ê¹Œìš”? ( ì‹¤í–‰ì†ë„ëŠ” ì¢‹ìŠµë‹ˆë‹¤ë§Œ,ë” ë§ì€ ìì›ì„ ì†Œëª¨í•©ë‹ˆë‹¤)
+do you want to manage homedirectory and loginshell attributes?	setup	ko	í™ˆë””ë ‰í† ë¦¬ì™€ ë¡œê·¸ì¸ì‰˜ ì†ì„±ì„ ê´€ë¦¬í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+domain	setup	ko	ë„ë©”ì¸
+domain select box on login	setup	ko	ë¡œê·¸ì¸ì‹œ ë„ë©”ì¸ ì„ íƒ ìƒì ë³´ì´ê¸°
+dont touch my data	setup	ko	ë‚´ ë°ì´í„°ëŠ” ì†ëŒ€ì§€ ë§ê²ƒ
+download	setup	ko	ë‚´ë ¤ë°›ê¸°
+edit current configuration	setup	ko	í˜„ì¬êµ¬ì„±ì„ í¸ì§‘
+edit your existing header.inc.php	setup	ko	ê¸°ì¡´ header.inc.phpë¥¼ í¸ì§‘
+edit your header.inc.php	setup	ko	ê·€í•˜ì˜ header.inc.phpë¥¼ í¸ì§‘
+egroupware administration manual	setup	ko	eGroupWare ê´€ë¦¬ì ë©”ë‰´ì–¼
+enable for extra debug-messages	setup	ko	ìì„¸í•œ ë””ë²„ê·¸-ë©”ì„¸ì§€ ì¶œë ¥
+enable ldap version 3	setup	ko	LDAP Version 3 í™œì„±í™”
+enable mcrypt	setup	ko	MCrypt í™œì„±í™”
+enter some random text for app session encryption	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ì„¸ì…˜ ì•”í˜¸í™”ì— ì‚¬ìš©í•  ë¬´ì‘ìœ„ ë¬¸ìì—´ ì…ë ¥
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ì„¸ì…˜ ì•”í˜¸í™”ì— <br />ì‚¬ìš©í•  ì„ì˜ ë¬¸ìì—´ì„ ì…ë ¥í•˜ì„¸ìš” (mcrypt í•„ìš”)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ko	ì„ì‹œ íŒŒì¼ì˜ ì™„ì „í•œê²½ë¡œë¥¼ ì…ë ¥í•˜ì„¸ìš”.<br />ì˜ˆ: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	ko	ì‚¬ìš©ìì™€ ê·¸ë£¹íŒŒì¼ì„ ìœ„í•œ ì™„ì „í•œê²½ë¡œë¥¼ ì…ë ¥í•˜ì„¸ìš”. <br />ì˜ˆ: /files, E:\FILES
+enter the hostname of the machine on which this server is running	setup	ko	ì´ ì„œë²„ê°€ ì‹¤í–‰ë˜ê³  ìˆëŠ” ì¥ë¹„ì˜ í˜¸ìŠ¤íŠ¸ ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ko	eGroupWareì˜ URLì„ ì…ë ¥<br />ì˜ˆ: http://domain.com/egroupware &nbsp;ì´ë‚˜ &nbsp/egroupware<br /><b>ë‹¨ ìŠ¬ë˜ì‹œ(/)ë¡œ ëë‚˜ì§€ ì•Šê²Œ í•˜ì„¸ìš”</b>
+enter the site password for peer servers	setup	ko	í”¼ì–´ì„œë²„ì˜ ì‚¬ì´íŠ¸ì•”í˜¸ ì…ë ¥
+enter the site username for peer servers	setup	ko	í”¼ì–´ì„œë²„ì˜ ì‚¬ì´íŠ¸ì‚¬ìš©ìì´ë¦„ ì…ë ¥
+enter the title for your site	setup	ko	ê·€í•˜ì˜ ì‚¬ì´íŠ¸ ì œëª©ì„ ì…ë ¥
+enter your default ftp server	setup	ko	ê·€í•˜ì˜ ê¸°ë³¸ FTP ì„œë²„ì£¼ì†Œ ì…ë ¥
+enter your http proxy server	setup	ko	HTTP í”„ë¡ì‹œ ì„œë²„ì£¼ì†Œ ì…ë ¥
+enter your http proxy server password	setup	ko	HTTP í”„ë¡ì‹œ ì„œë²„ ì•”í˜¸ ì…ë ¥
+enter your http proxy server port	setup	ko	HTTP í”„ë¡ì‹œ ì„œë²„ í¬íŠ¸ ì…ë ¥
+enter your http proxy server username	setup	ko	HTTP í”„ë¡ì‹œ ì„œë²„ ì‚¬ìš©ìì´ë¦„ ì…ë ¥
+error in admin-creation !!!	setup	ko	ê´€ë¦¬ì ìƒì„± ì—ëŸ¬!!!
+error in group-creation !!!	setup	ko	ê·¸ë£¹ ìƒì„± ì—ëŸ¬!!!
+export egroupware accounts from sql to ldap	setup	ko	eGroupWareì˜ ê³„ì •ë“¤ì„ SQLì—ì„œ LDAPë¡œ ë‚´ë³´ë‚´ê¸°
+export has been completed!  you will need to set the user passwords manually.	setup	ko	ë‚´ë³´ë‚´ê¸°ê°€ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤! ì‚¬ìš©ì ì•”í˜¸ë¥¼ ì§ì ‘ ì„¤ì •í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.
+export sql users to ldap	setup	ko	SQLì‚¬ìš©ìë“¤ì„ LDAPë¡œ ë‚´ë³´ë‚´ê¸°
+false	setup	ko	ê±°ì§“
 file	setup	ko	FILE
-file type, size, version, etc.	setup	ko	ÆÄÀÏ Çü,Å©±â,¹öÀü,±âÅ¸.
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ko	»õ ¼³Ä¡¸¦ À§ÇØ, °¡Á®¿À±â¸¦ ¼±ÅÃÇÏ¼¼¿ä. ±âÁ¸¿¡ SQL °èÀúÀ» LDAP·Î º¯È¯ÇÏ½Ã·Á¸é ³»º¸³»±â¸¦ ¼±ÅÃÇÏ¼¼¿ä
-force selectbox	setup	ko	°­Á¦ ¼±ÅÃ»óÀÚ
-found existing configuration file. loading settings from the file...	setup	ko	±âÁ¸¿¡ ±¸¼ºÆÄÀÏÀ» Ã£¾Ò½À´Ï´Ù. ÀÌ ÆÄÀÏ¿¡¼­ ¼³Á¤À» ºÒ·¯¿É´Ï´Ù...
-go back	setup	ko	µÚ·Î °¡±â
-go to	setup	ko	ÀÌµ¿ÇÏ±â(Go to)
-grant access	setup	ko	Á¢¼Ó ½ÂÀÎ
-has a version mismatch	setup	ko	¹öÀüÀÌ ¸ÂÁö ¾Ê½À´Ï´Ù.
-header admin login	setup	ko	»óÀ§°ü¸®ÀÚ ·Î±×ÀÎ
-header password	setup	ko	»óÀ§°ü¸®ÀÚ ¾ÏÈ£
-header username	setup	ko	»óÀ§°ü¸®ÀÚ »ç¿ëÀÚÀÌ¸§
-historylog removed	setup	ko	Historylog »èÁ¦µÊ
-hooks deregistered	setup	ko	°¡·ÎÃ¤±â µî·ÏÇØÁöµÊ
-hooks registered	setup	ko	°¡·ÎÃ¤±â µî·ÏµÊ
-host information	setup	ko	È£½ºÆ® Á¤º¸
-hostname/ip of database server	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º¼­¹öÀÇ È£½ºÆ®ÀÌ¸§/IP
-however, the application is otherwise installed	setup	ko	¾îÂ·µç, ÀÀ¿ëÇÁ·Î±×·¥ÀÌ ¼³Ä¡µÊ
-however, the application may still work	setup	ko	¾îÂ·µç, ÀÀ¿ëÇÁ·Î±×·¥ÀÌ °è¼Ó µ¿ÀÛÁß
-if no acl records for user or any group the user is a member of	setup	ko	ACL ·¹ÄÚµå°¡ ¾ø´Â »ç¿ëÀÚ³ª, ¾î¶² ±×·ìÀÇ ±¸¼º¿øÀÌ ¾Æ´Ñ »ç¿ëÀÚ¶ó¸é
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ko	¾ÈÀü¸ğµå°¡ ÄÑÁ³À¸¸é, eGW´Â ½ÇÇàÁß¿£ ¾î¶² ¼³Á¤µµ ¹Ù²Ü¼ö ¾øÀ» »Ó¸¸ ¾Æ´Ï¶ó,¾ÆÁ÷±îÁö ·ÎµåµÇÁö ¾ÊÀº ¾î¶² ¸ğµâµµ ·ÎµåÇÒ¼ö ¾ø½À´Ï´Ù
-if the application has no defined tables, selecting upgrade should remedy the problem	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ÀÌ Á¤ÀÇµÈ Å×ÀÌºíÀÌ ¾øÀ¸¸é ¾÷±×·¹ÀÌµå¸¦ ¼±ÅÃÇÏ´Â°Ô ¹®Á¦¸¦ ÇØ°áÇÒ¼ö ÀÖÀ» °ÍÀÔ´Ï´Ù
-if using ldap	setup	ko	¸¸¾à LDAP¸¦ »ç¿ëÇÑ´Ù¸é
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ko	LDAP¸¦ »ç¿ëÇÑ´Ù¸é, È¨µğ·ºÅä¸®¿Í ·Î±×ÀÎ½© ¼Ó¼ºÀ» °ü¸® ÇÏ½Ã°Ú½À´Ï±î?
-if you did not receive any errors, your applications have been	setup	ko	¸¸¾à ¾Æ¹«·± ¿À·ù°¡ ¾ø´Ù¸é, ±ÍÇÏÀÇ ÀÀ¿ëÇÁ·Î±×·¥Àº
-if you did not receive any errors, your tables have been	setup	ko	¸¸¾à ¾Æ¹«·± ¿À·ù°¡ ¾ø´Ù¸é, ±ÍÇÏÀÇ ÀÀ¿ëÇÁ·Î±×·¥Àº
-if you running this the first time, don't forget to manualy %1 !!!	setup	ko	Ã³À½ ½ÇÇàÇÏ´Â °ÍÀÌ¶ó¸é, '%1', Á÷Á¢ ÇÏ´Â°ÍÀ» ÀØÁö¸¶¼¼¿ä !!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ko	¸¸¾à °°Àº ¹®ÀÚ¼ÂÀ¸·Î ÇÏ³ªÀÇ ¾ğ¾î¸¦ »ç¿ëÇÏ½Å´Ù¸é ½Ã½ºÅÛ ¹®ÀÚ¼ÂÀ» ¼³Á¤ÇÒ ÇÊ¿ä¾ø½À´Ï´Ù.(¿¹ ¿ş½ºÅÏ À¯·´)
-image type selection order	setup	ko	ÀÌ¹ÌÁö Å¸ÀÔ ¼±ÅÃ ¼ø¼­
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	ko	LDAP¿¡¼­ eGroupWare·Î °èÁ¤ Å×ÀÌºíÀ» °¡Á®¿À±â (SQL °èÁ¤ »õ·Î ¼³Ä¡½Ã¿¡ »ç¿ëÇÔ)
-import has been completed!	setup	ko	°¡Á®¿À±â¸¦ ¸¶ÃÆ½À´Ï´Ù.
-import ldap users/groups	setup	ko	LDAP »ç¿ëÀÚ/±×·ìÀ» °¡Á®¿À±â
-importing old settings into the new format....	setup	ko	¿¹Àü ¼³Á¤µéÀ» »õ ÇüÅÂ·Î °¡Á®¿À´Â ÁßÀÔ´Ï´Ù...
-include root (this should be the same as server root unless you know what you are doing)	setup	ko	·çÆ®Æ÷ÇÔ (¼­¹öÀÇ ·çÆ®¿Í °°½À´Ï´Ù, Áö±İ ÇÏ½Ã´Â ÀÛ¾÷À» Á¤È®ÇÏ°Ô ¾ËÁö ¸øÇÏ½Å´Ù¸é ±ÇÀåÇÏÁö ¾Ê½À´Ï´Ù)
-include_path need to contain "." - the current directory	setup	ko	include_path´Â "." (ÇöÀç µğ·ºÅä¸®)¸¦ Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù
-install	setup	ko	¼³Ä¡
-install all	setup	ko	¸ğµÎ ¼³Ä¡
-install applications	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ ¼³Ä¡
-install language	setup	ko	¾ğ¾î ¼³Ä¡
-installed	setup	ko	¼³Ä¡µÊ
-instructions for creating the database in %1:	setup	ko	%1 µ¥ÀÌÅÍº£ÀÌ½º¸¦ »ı¼ºÇÏ´Â ¹æ¹ı:
-invalid ip address	setup	ko	ºÎÀûÀıÇÑ IP ÁÖ¼Ò
-invalid password	setup	ko	ºÎÀûÀıÇÑ ¾ÏÈ£
-is broken	setup	ko	´Â ±úÁ³½À´Ï´Ù.
-is disabled	setup	ko	´Â »ç¿ëÇÒ¼ö¾ø½À´Ï´Ù.(disabled)
-ldap account import/export	setup	ko	LDAP °èÁ¤ °¡Á®¿À±â/³»º¸³»±â
-ldap accounts configuration	setup	ko	LDAP °èÁ¤ ¼³Á¤
-ldap accounts context	setup	ko	LDAP °èÁ¤ ÄÁÅØ½ºÆ®
-ldap config	setup	ko	LDAP ¼³Á¤
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ko	LDAP ±âº» È¨µğ·ºÅä¸® Á¢µÎ¾î(prefix) (¿¹: /home/usernameÀÇ /home)
-ldap default shell (e.g. /bin/bash)	setup	ko	LDAP ±âº» ½© (¿¹ /bin/bash)
-ldap encryption type	setup	ko	LDAP ¾ÏÈ£È­ Å¸ÀÔ
-ldap export	setup	ko	LDAP ³»º¸³»±â
-ldap export users	setup	ko	LDAP ³»º¸³¾ »ç¿ëÀÚ
-ldap groups context	setup	ko	LDAP ±×·ì ÄÁÅØ½ºÆ®
-ldap host	setup	ko	LDAP È£½ºÆ®
-ldap import	setup	ko	LDAP °¡Á®¿À±â
-ldap import users	setup	ko	LDAP °¡Á®¿Ã »ç¿ëÀÚ
-ldap modify	setup	ko	LDAP º¯°æ
-ldap root password	setup	ko	LDAP ·çÆ®¾ÏÈ£
+file type, size, version, etc.	setup	ko	íŒŒì¼ í˜•,í¬ê¸°,ë²„ì „,ê¸°íƒ€.
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ko	ìƒˆ ì„¤ì¹˜ë¥¼ ìœ„í•´, ê°€ì ¸ì˜¤ê¸°ë¥¼ ì„ íƒí•˜ì„¸ìš”. ê¸°ì¡´ì— SQL ê³„ì €ì„ LDAPë¡œ ë³€í™˜í•˜ì‹œë ¤ë©´ ë‚´ë³´ë‚´ê¸°ë¥¼ ì„ íƒí•˜ì„¸ìš”
+force selectbox	setup	ko	ê°•ì œ ì„ íƒìƒì
+found existing configuration file. loading settings from the file...	setup	ko	ê¸°ì¡´ì— êµ¬ì„±íŒŒì¼ì„ ì°¾ì•˜ìŠµë‹ˆë‹¤. ì´ íŒŒì¼ì—ì„œ ì„¤ì •ì„ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤...
+go back	setup	ko	ë’¤ë¡œ ê°€ê¸°
+go to	setup	ko	ì´ë™í•˜ê¸°(Go to)
+grant access	setup	ko	ì ‘ì† ìŠ¹ì¸
+has a version mismatch	setup	ko	ë²„ì „ì´ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.
+header admin login	setup	ko	ìƒìœ„ê´€ë¦¬ì ë¡œê·¸ì¸
+header password	setup	ko	ìƒìœ„ê´€ë¦¬ì ì•”í˜¸
+header username	setup	ko	ìƒìœ„ê´€ë¦¬ì ì‚¬ìš©ìì´ë¦„
+historylog removed	setup	ko	Historylog ì‚­ì œë¨
+hooks deregistered	setup	ko	ê°€ë¡œì±„ê¸° ë“±ë¡í•´ì§€ë¨
+hooks registered	setup	ko	ê°€ë¡œì±„ê¸° ë“±ë¡ë¨
+host information	setup	ko	í˜¸ìŠ¤íŠ¸ ì •ë³´
+hostname/ip of database server	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ì„œë²„ì˜ í˜¸ìŠ¤íŠ¸ì´ë¦„/IP
+however, the application is otherwise installed	setup	ko	ì–´ì¨Œë“ , ì‘ìš©í”„ë¡œê·¸ë¨ì´ ì„¤ì¹˜ë¨
+however, the application may still work	setup	ko	ì–´ì¨Œë“ , ì‘ìš©í”„ë¡œê·¸ë¨ì´ ê³„ì† ë™ì‘ì¤‘
+if no acl records for user or any group the user is a member of	setup	ko	ACL ë ˆì½”ë“œê°€ ì—†ëŠ” ì‚¬ìš©ìë‚˜, ì–´ë–¤ ê·¸ë£¹ì˜ êµ¬ì„±ì›ì´ ì•„ë‹Œ ì‚¬ìš©ìë¼ë©´
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ko	ì•ˆì „ëª¨ë“œê°€ ì¼œì¡Œìœ¼ë©´, eGWëŠ” ì‹¤í–‰ì¤‘ì—” ì–´ë–¤ ì„¤ì •ë„ ë°”ê¿€ìˆ˜ ì—†ì„ ë¿ë§Œ ì•„ë‹ˆë¼,ì•„ì§ê¹Œì§€ ë¡œë“œë˜ì§€ ì•Šì€ ì–´ë–¤ ëª¨ë“ˆë„ ë¡œë“œí• ìˆ˜ ì—†ìŠµë‹ˆë‹¤
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ì´ ì •ì˜ëœ í…Œì´ë¸”ì´ ì—†ìœ¼ë©´ ì—…ê·¸ë ˆì´ë“œë¥¼ ì„ íƒí•˜ëŠ”ê²Œ ë¬¸ì œë¥¼ í•´ê²°í• ìˆ˜ ìˆì„ ê²ƒì…ë‹ˆë‹¤
+if using ldap	setup	ko	ë§Œì•½ LDAPë¥¼ ì‚¬ìš©í•œë‹¤ë©´
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ko	LDAPë¥¼ ì‚¬ìš©í•œë‹¤ë©´, í™ˆë””ë ‰í† ë¦¬ì™€ ë¡œê·¸ì¸ì‰˜ ì†ì„±ì„ ê´€ë¦¬ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+if you did not receive any errors, your applications have been	setup	ko	ë§Œì•½ ì•„ë¬´ëŸ° ì˜¤ë¥˜ê°€ ì—†ë‹¤ë©´, ê·€í•˜ì˜ ì‘ìš©í”„ë¡œê·¸ë¨ì€
+if you did not receive any errors, your tables have been	setup	ko	ë§Œì•½ ì•„ë¬´ëŸ° ì˜¤ë¥˜ê°€ ì—†ë‹¤ë©´, ê·€í•˜ì˜ ì‘ìš©í”„ë¡œê·¸ë¨ì€
+if you running this the first time, don't forget to manualy %1 !!!	setup	ko	ì²˜ìŒ ì‹¤í–‰í•˜ëŠ” ê²ƒì´ë¼ë©´, '%1', ì§ì ‘ í•˜ëŠ”ê²ƒì„ ìŠì§€ë§ˆì„¸ìš” !!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ko	ë§Œì•½ ê°™ì€ ë¬¸ìì…‹ìœ¼ë¡œ í•˜ë‚˜ì˜ ì–¸ì–´ë¥¼ ì‚¬ìš©í•˜ì‹ ë‹¤ë©´ ì‹œìŠ¤í…œ ë¬¸ìì…‹ì„ ì„¤ì •í•  í•„ìš”ì—†ìŠµë‹ˆë‹¤.(ì˜ˆ ì›¨ìŠ¤í„´ ìœ ëŸ½)
+image type selection order	setup	ko	ì´ë¯¸ì§€ íƒ€ì… ì„ íƒ ìˆœì„œ
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	ko	LDAPì—ì„œ eGroupWareë¡œ ê³„ì • í…Œì´ë¸”ì„ ê°€ì ¸ì˜¤ê¸° (SQL ê³„ì • ìƒˆë¡œ ì„¤ì¹˜ì‹œì— ì‚¬ìš©í•¨)
+import has been completed!	setup	ko	ê°€ì ¸ì˜¤ê¸°ë¥¼ ë§ˆì³¤ìŠµë‹ˆë‹¤.
+import ldap users/groups	setup	ko	LDAP ì‚¬ìš©ì/ê·¸ë£¹ì„ ê°€ì ¸ì˜¤ê¸°
+importing old settings into the new format....	setup	ko	ì˜ˆì „ ì„¤ì •ë“¤ì„ ìƒˆ í˜•íƒœë¡œ ê°€ì ¸ì˜¤ëŠ” ì¤‘ì…ë‹ˆë‹¤...
+include root (this should be the same as server root unless you know what you are doing)	setup	ko	ë£¨íŠ¸í¬í•¨ (ì„œë²„ì˜ ë£¨íŠ¸ì™€ ê°™ìŠµë‹ˆë‹¤, ì§€ê¸ˆ í•˜ì‹œëŠ” ì‘ì—…ì„ ì •í™•í•˜ê²Œ ì•Œì§€ ëª»í•˜ì‹ ë‹¤ë©´ ê¶Œì¥í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤)
+include_path need to contain "." - the current directory	setup	ko	include_pathëŠ” "." (í˜„ì¬ ë””ë ‰í† ë¦¬)ë¥¼ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤
+install	setup	ko	ì„¤ì¹˜
+install all	setup	ko	ëª¨ë‘ ì„¤ì¹˜
+install applications	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ì„¤ì¹˜
+install language	setup	ko	ì–¸ì–´ ì„¤ì¹˜
+installed	setup	ko	ì„¤ì¹˜ë¨
+instructions for creating the database in %1:	setup	ko	%1 ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ìƒì„±í•˜ëŠ” ë°©ë²•:
+invalid ip address	setup	ko	ë¶€ì ì ˆí•œ IP ì£¼ì†Œ
+invalid password	setup	ko	ë¶€ì ì ˆí•œ ì•”í˜¸
+is broken	setup	ko	ëŠ” ê¹¨ì¡ŒìŠµë‹ˆë‹¤.
+is disabled	setup	ko	ëŠ” ì‚¬ìš©í• ìˆ˜ì—†ìŠµë‹ˆë‹¤.(disabled)
+ldap account import/export	setup	ko	LDAP ê³„ì • ê°€ì ¸ì˜¤ê¸°/ë‚´ë³´ë‚´ê¸°
+ldap accounts configuration	setup	ko	LDAP ê³„ì • ì„¤ì •
+ldap accounts context	setup	ko	LDAP ê³„ì • ì»¨í…ìŠ¤íŠ¸
+ldap config	setup	ko	LDAP ì„¤ì •
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ko	LDAP ê¸°ë³¸ í™ˆë””ë ‰í† ë¦¬ ì ‘ë‘ì–´(prefix) (ì˜ˆ: /home/usernameì˜ /home)
+ldap default shell (e.g. /bin/bash)	setup	ko	LDAP ê¸°ë³¸ ì‰˜ (ì˜ˆ /bin/bash)
+ldap encryption type	setup	ko	LDAP ì•”í˜¸í™” íƒ€ì…
+ldap export	setup	ko	LDAP ë‚´ë³´ë‚´ê¸°
+ldap export users	setup	ko	LDAP ë‚´ë³´ë‚¼ ì‚¬ìš©ì
+ldap groups context	setup	ko	LDAP ê·¸ë£¹ ì»¨í…ìŠ¤íŠ¸
+ldap host	setup	ko	LDAP í˜¸ìŠ¤íŠ¸
+ldap import	setup	ko	LDAP ê°€ì ¸ì˜¤ê¸°
+ldap import users	setup	ko	LDAP ê°€ì ¸ì˜¬ ì‚¬ìš©ì
+ldap modify	setup	ko	LDAP ë³€ê²½
+ldap root password	setup	ko	LDAP ë£¨íŠ¸ì•”í˜¸
 ldap rootdn	setup	ko	LDAP rootdn
-limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ko	ÁÖ¼Ò³ª ³×Æ®¿÷, È£½ºÆ®ÀÌ¸§ ¼³Á¤¿¡ Á¢±ÙÀ» Á¦ÇÑÇÔ (¿¹: 127.0.0.1,101.1.1,myhost.dnydns.org)
-login to mysql -	setup	ko	mysql·Î Á¢¼Ó -
-logout	setup	ko	Á¢¼ÓÇØÁ¦
-make sure that your database is created and the account permissions are set	setup	ko	±ÍÇÏÀÇ µ¥ÀÌÅÍº£ÀÌ½º´Â »ı¼ºµÇ¾ú°í °èÁ¤ÀÇ ±ÇÇÑµµ ¼³Á¤µÇ¾úÀ½À» È®ÀÎÇÏ¼¼¿ä
-manage applications	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ °ü¸®
-manage languages	setup	ko	¾ğ¾î °ü¸®
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time ÀÌ 30ÃÊ ÀÌÇÏ·Î ¼³Á¤µÇ¾î ÀÖ½À´Ï´Ù: eGroupWare´Â °¡²û º¸´Ù ´õ ±ä ½ÇÇà½Ã°£ÀÌ °É¸±¼öµµ ÀÖ½À´Ï´Ù, ¹°·Ğ °¡²û ½ÇÆĞÇÏ´Â °æ¿ì´Â ¿¹¿ÜÀÔ´Ï´Ù
-maximum account id (e.g. 65535 or 1000000)	setup	ko	ÃÖ´ë °èÁ¤ID  (¿¹ 65535 ³ª 1000000)
-may be broken	setup	ko	´Â ±úÁø°Í °°½À´Ï´Ù.
-mcrypt algorithm (default tripledes)	setup	ko	Mcrypt ¾Ë°í¸®Áò (±âº» TRIPLEDES)
-mcrypt initialization vector	setup	ko	MCrypt ÃÊ±âÈ­ ¹éÅÍ
-mcrypt mode (default cbc)	setup	ko	Mcrypt ¹æ½Ä (±âº» CBC)
-mcrypt settings (requires mcrypt php extension)	setup	ko	Mcrypt ¼³Á¤ (mcrypt PHP È®Àå¿¡ ÇÊ¿äÇÔ)
-mcrypt version	setup	ko	MCrypt ¹öÀü
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit ÀÌ %1ÀÌÇÏ·Î ¼³Á¤µÇ¾î ÀÖ½À´Ï´Ù: eGroupWareÀÇ Æ¯Á¤ ÀÀ¿ëÇÁ·Î±×·¥Àº 8MÀÌ»ó ±ÇÀåÇÒ ¼öµµ ÀÖ½À´Ï´Ù, ¹°·Ğ °¡¾¸ ½ÇÆĞÇÏ´Â °æ¿ì´Â ¿¹¿ÜÀÔ´Ï´Ù
-minimum account id (e.g. 500 or 100, etc.)	setup	ko	ÃÖ¼Ò °èÁ¤ID (¿¹ 500 ³ª 100, ±âÅ¸.)
-modifications have been completed!	setup	ko	º¯°æÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù!
-modify	setup	ko	º¯°æ
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	ko	eGroupWare¿¡ »ç¿ëÇÏ±â À§ÇØ¼­ ±âÁ¸¿¡ LDAP °èÁ¤À» ÀúÀåÇÕ´Ï´Ù (LDAP °èÁ¤À» »ç¿ëÇØ Ã³À½ ¼³Ä¡ÇÒ¶§ »ç¿ëÇÔ)
-multi-language support setup	setup	ko	´ÙÁß-¾ğ¾î Áö¿ø ¼³Á¤
-name of database	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º ÀÌ¸§
-name of db user egroupware uses to connect	setup	ko	eGroupWare°¡ »ç¿ëÇÒ DB »ç¿ëÀÚ ÀÌ¸§
-never	setup	ko	Àı´ë(never)
-new	setup	ko	»õ·Î¸¸µé±â
-no	setup	ko	¾Æ´Ï¿À
-no accounts existing	setup	ko	°èÁ¤ÀÌ ¾øÀ½
-no algorithms available	setup	ko	°¡´ÉÇÑ ¾Ë°í¸®ÁòÀÌ ¾ø½À´Ï´Ù
-no microsoft sql server support found. disabling	setup	ko	Microsoft SQL ¼­¹ö¸¦ Áö¿øÇÒ ¼ö ¾ø½À´Ï´Ù. Áö¿øÇØÁ¦ÇÕ´Ï´Ù.
-no modes available	setup	ko	°¡´ÉÇÑ ¹æ½ÄÀÌ ¾øÀ½
-no mysql support found. disabling	setup	ko	MySQLÀ» Áö¿øÇÒ ¼ö ¾ø½À´Ï´Ù. Áö¿øÇØÁ¦ÇÕ´Ï´Ù.
-no oracle-db support found. disabling	setup	ko	Oracle-DB¸¦ Áö¿øÇÒ ¼ö ¾ø½À´Ï´Ù. Áö¿øÇØÁ¦ÇÕ´Ï´Ù.
-no postgresql support found. disabling	setup	ko	PostgreSQLÀ» Áö¿øÇÒ ¼ö ¾ø½À´Ï´Ù. Áö¿øÇØÁ¦ÇÕ´Ï´Ù.
-no xml support found. disabling	setup	ko	XMLÀ» Áö¿øÇÒ ¼ö ¾ø½À´Ï´Ù. Áö¿øÇØÁ¦ÇÕ´Ï´Ù.
-not	setup	ko	¾Æ´Ï(not)
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ko	¸ğµç mcrypt ¾Ë°í¸®Áò°ú ¸ğµåµéÀÌ eGroupWare¿Í °°ÀÌ µ¿ÀÛÇÒ¼ö ÀÖ´Â °ÍÀº ¾Æ´Õ´Ï´Ù ¸¸¾à ¹®Á¦Á¡ÀÌ ¹ß°ßµÇ¸é ²¨ÁÖ¼¼¿ä
-not complete	setup	ko	¿Ï·á ¾ÈµÊ
-not completed	setup	ko	¿Ï·áµÇÁö ¾Ê¾Ò½À´Ï´Ù
-not ready for this stage yet	setup	ko	ÇöÀç ½ºÅ×ÀÌÁö°¡ ¾ÆÁ÷ ÁØºñ¾ÈµÆ½À´Ï´Ù
-not set	setup	ko	¼³Á¤ ¾ÈµÊ
-note: you will be able to customize this later	setup	ko	È®ÀÎ: ÀÌ ¼³Á¤Àº ³ªÁß¿¡ ´Ù½Ã ÇÒ¼ö ÀÖ½À´Ï´Ù
-now guessing better values for defaults...	setup	ko	ÀûÀıÇÑ ±âº»°ªÀ¸·Î Ã£´Â ÁßÀÔ´Ï´Ù...
-ok	setup	ko	¿ÀÄÉÀÌ
-once the database is setup correctly	setup	ko	µ¥ÀÌÅÍº£ÀÌ½ºÀÇ ¼³Á¤ÀÌ Á¦´ë·Î ¼öÇàµÇ¾úÀ»¶§
-one month	setup	ko	ÇÑ ´Ş
-one week	setup	ko	ÀÏÁÖÀÏ
-only add languages that are not in the database already	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¾øÀ»¶§¸¸ »õ ¾ğ¾î Ãß°¡ÇÏ±â¸¦ »ç¿ëÇÏ¼¼¿ä
-only add new phrases	setup	ko	»õ ±¸¹®¸¸ Ãß°¡
-or	setup	ko	ÀÌ°Å³ª(OR¿¬»ê)
-or %1continue to the header admin%2	setup	ko	ÀÌ°Å³ª %1»óÀ§ °ü¸®ÀÚ·Î °è¼Ó%2
-or http://webdav.domain.com (webdav)	setup	ko	ÀÌ³ª http://webdav.domain.com (WebDAV)
-or we can attempt to create the database for you:	setup	ko	¾Æ´Ï¸é µ¥ÀÌÅÍº£ÀÌ½º »ı¼ºÀ» ½ÃµµÇÒ ¼ö ÀÖ½À´Ï´Ù:
-password needed for configuration	setup	ko	±¸¼ºÇÏ±â À§ÇØ¼­ ¾ÏÈ£°¡ ÇÊ¿äÇÕ´Ï´Ù
-password of db user	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º »ç¿ëÀÚ ¾ÏÈ£
-passwords did not match, please re-enter	setup	ko	¾ÏÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù, ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä
-path information	setup	ko	°æ·Î Á¤º¸
-path to user and group files has to be outside of the webservers document-root!!!	setup	ko	»ç¿ëÀÚ¿Í ±×·ìÆÄÀÏÀÇ °æ·Î´Â ¹İµå½Ã À¥¼­¹ö DocumentRoot ¼³Á¤ ¿ÜºÎ¿¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù!!!
-persistent connections	setup	ko	Áö¼ÓÀû ¿¬°á
-please check for sql scripts within the application's directory	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ µğ·ºÅä¸®¿¡ Æ÷ÇÔµÈ sql ½ºÅ©¸³Æ®µéÀ» È®ÀÎÇØº¸¼¼¿ä
-please check read/write permissions on directories, or back up and use another option.	setup	ko	µğ·ºÅä¸®ÀÇ ÀĞ±â/¾²±â ±ÇÇÑÀ» È®ÀÎÇÏ½Ã°¡³ª µ¹¾Æ°¡¼Å¼­ ´Ù¸¥ ¿É¼ÇÀ» »ç¿ëÇØÁÖ¼¼¿ä
-please configure egroupware for your environment	setup	ko	±ÍÇÏ¿¡°Ô ¸Â´Â eGroupWare ¼³Á¤À» ÇØÁÖ¼¼¿ä
-please consult the %1.	setup	ko	** %1 À»(¸¦) °í·ÁÇØÁÖ¼¼¿ä.
-please fix the above errors (%1) and warnings(%2)	setup	ko	À§¿Í °°Àº ¿¡·¯ (%1) ¿Í °æ°í(%2)¸¦ ¼öÁ¤ÇØÁÖ¼¼¿ä
-please install	setup	ko	¼³Ä¡ÇØ ÁÖ¼¼¿ä
-please login	setup	ko	·Î±×ÀÎ ÇØÁÖ¼¼¿ä
-please login to egroupware and run the admin application for additional site configuration	setup	ko	Ãß°¡ÀûÀÎ »çÀÌÆ® ±¸¼ºÀÛ¾÷À» ÇÏ½Ã·Á¸é eGroupWare¿¡ ·Î±×ÀÎ ÇÏ½Ã°í °ü¸® ¾îÇÃ¸®ÄÉÀÌ¼ÇÀ» ÀÌ¿ëÇØ ÁÖ¼¼¿ä
-please make the following change in your php.ini	setup	ko	±ÍÇÏÀÇ php.ini¿¡ ´ÙÀ½°ú °°Àº °ÍÀ» º¯°æÇØÁÖ¼¼¿ä
-please wait...	setup	ko	Àá½Ã¸¸ ±â´Ù¸®¼¼¿ä...
-possible reasons	setup	ko	°¡´ÉÇÑ ÀÌÀ¯µé
-possible solutions	setup	ko	°¡´ÉÇÑ ÇØ°áÃ¥µé
-post-install dependency failure	setup	ko	ÈÄ-¼³Ä¡(Post-Install) ÀÇÁ¸¼º ½ÇÆĞ
-potential problem	setup	ko	ÀáÀçÀûÀÎ ¹®Á¦
-preferences	setup	ko	¼³Á¤
-problem resolution	setup	ko	¹®Á¦ ÇØ°á
-process	setup	ko	ÇÁ·Î¼¼½º
-re-check my database	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º¸¦ ´Ù½Ã Ã¼Å©
-re-check my installation	setup	ko	¼³Ä¡¸¦ ´Ù½Ã Ã¼Å©
-re-enter password	setup	ko	¾ÏÈ£ ÀçÀÔ·Â
-read translations from	setup	ko	¹ø¿ª³»¿ë ÀĞ±â
-readable by the webserver	setup	ko	À¥ ¼­¹ö°¡ ÀĞÀ»¼ö ÀÖÀ½
-really uninstall all applications	setup	ko	¸ğµç ÀÀ¿ëÇÁ·Î±×·¥À» »èÁ¦
-recommended: filesystem	setup	ko	ÃßÃµ: ÆÄÀÏ½Ã½ºÅÛ
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals ÀÌ ÄÑÁ® ÀÖ½À´Ï´Ù, eGroupWare¿¡¼­´Â ÇÊ¿ä¾ø´Â ±â´ÉÀÌ¸ç º¸¾È»óÀ¸·Îµµ Off·Î ¼³Á¤ÇÏ½Ã´Â °ÍÀÌ ÁÁ½À´Ï´Ù
-registered	setup	ko	µî·ÏµÊ
-rejected lines	setup	ko	°ÅºÎµÈ ¶óÀÎ
-remove	setup	ko	»èÁ¦
-remove all	setup	ko	¸ğµÎ »èÁ¦
-requires reinstall or manual repair	setup	ko	Àç¼³Ä¡ÇÏ°Å³ª Á÷Á¢ ¼ö¸®°¡ ÇÊ¿äÇÔ
-requires upgrade	setup	ko	¾÷±×·¹ÀÌµå°¡ ÇÊ¿äÇÔ
-resolve	setup	ko	ÇØ°á(Resolve)
-return to setup	setup	ko	¼³Á¤À¸·Î µ¹¾Æ°¨
-run installation tests	setup	ko	¼³Ä¡ Å×½ºÆ®¸¦ ¼öÇà
-safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ko	safe_mode °¡ È°¼ºÈ­ µÇ¾î ÀÖ½À´Ï´Ù, Åë»óÀûÀ¸·Î ±ÍÇÏÀÇ ¼³Ä¡¸¦ Á»´õ ¾ÈÀüÇÏ°Ô ÇÏ´Âµ¥ ÁÁ½À´Ï´Ù.
-sample configuration not found. using built in defaults	setup	ko	±¸¼º ¿¹Á¦¸¦ Ã£À»¼ö ¾ø½À´Ï´Ù. ±âº»¼³Á¤À¸·Î ÀÛ¼ºµË´Ï´Ù
-save	setup	ko	ÀúÀå
-save this text as contents of your header.inc.php	setup	ko	ÀÌ ÅØ½ºÆ®¸¦ ±ÍÇÏÀÇ header.inc.php·Î ÀúÀå
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥À» ¼±ÅÃÇØ¼­ ´ë»ó ¹öÀüÀ» ÀÔ·ÂÇÑÈÄ º¸³»¼¼¿ä(submit).<br />¸¸¾à ¹öÀüÀ» ÀÔ·ÂÇÏÁö ¾ÊÀ¸½Ã¸é, ¼³Ä¡µÈ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ±âº» Å×ÀÌºíµé¸¸  ¼³Ä¡µË´Ï´Ù.<br /><blink>ÀÌ ÀÛ¾÷Àº ¸ğµç ÀÀ¿ëÇÁ·Î±×·¥ÀÇ Å×ÀÌºíÀ» ¸ÕÀú »èÁ¦ÇÕ´Ï´Ù</blink>
-select one...	setup	ko	ÇÏ³ª¸¦ ¼±ÅÃÇÏ¼¼¿ä...
-select the default applications to which your users will have access	setup	ko	»ç¿ëÀÚ°¡ Á¢±ÙÇÒ ±âº»ÀÀ¿ëÇÁ·Î±×·¥ ¼±ÅÃ
-select the desired action(s) from the available choices	setup	ko	°¡´ÉÇÑ ¼±ÅÃµé Áß¿¡¼­ ¿øÇÏ´Â ¾×¼ÇÀ» ¼±ÅÃ
-select to download file	setup	ko	´Ù¿î·ÎµåÇÒ ÆÄÀÏÀ» ¼±ÅÃ
-select where you want to store/retrieve file contents	setup	ko	ÆÄÀÏ ÄÁÅÙÃ÷µéÀ» ÀúÀå/È¸¼öÇÒ °÷À» ¼±ÅÃ
-select where you want to store/retrieve filesystem information	setup	ko	ÆÄÀÏ½Ã½ºÅÛ Á¤º¸¸¦ ÀúÀå/È¸¼öÇÒ °÷À» ¼±ÅÃ
-select where you want to store/retrieve user accounts	setup	ko	»ç¿ëÀÚ °èÁ¤µéÀ» ÀúÀå/È¸¼öÇÒ °÷À» ¼±ÅÃ
-select which group(s) will be exported (group membership will be maintained)	setup	ko	³»º¸³»±â¸¦ ¼öÇàÇÒ ±×·ìµéÀ» ¼±ÅÃ (±×·ìÀÇ ±¸¼º¿øÀº À¯ÁöµË´Ï´Ù)
-select which group(s) will be imported (group membership will be maintained)	setup	ko	°¡Á®¿À±â¸¦¼öÇàÇÒ ±×·ìµéÀ» ¼±ÅÃ (±×·ìÀÇ ±¸¼º¿øÀº À¯ÁöµË´Ï´Ù)
-select which group(s) will be modified (group membership will be maintained)	setup	ko	¼öÁ¤µÉ ±×·ìµéÀ» ¼±ÅÃ (±×·ìÀÇ ±¸¼º¿øÀº À¯ÁöµË´Ï´Ù)
-select which languages you would like to use	setup	ko	»ç¿ëÇÒ ¾ğ¾î¸¦ ¼±ÅÃ
-select which method of upgrade you would like to do	setup	ko	¾÷±×·¹ÀÌ¹æ¹ıÀ» ¼±ÅÃ
-select which type of authentication you are using	setup	ko	¾î¶² ÀÎÁõÀ» »ç¿ëÇÒÁö ¼±ÅÃ
-select which user(s) will also have admin privileges	setup	ko	°ü¸®ÀÚ±ÇÇÑÀ» °¡Áú »ç¿ëÀÚµéÀ» ¼±ÅÃ
-select which user(s) will be exported	setup	ko	¾î¶² »ç¿ëÀÚµéÀ» ³»º¸³¾Áö ¼±ÅÃ
-select which user(s) will be imported	setup	ko	¾î¶² »ç¿ëÀÚµéÀ»°¡Á®¿ÃÁö ¼±ÅÃ
-select which user(s) will be modified	setup	ko	¾î¶² »ç¿ëÀÚµéÀ»º¯°æÇÒÁö ¼±ÅÃ
-select which user(s) will have admin privileges	setup	ko	¾î¶² »ç¿ëÀÚµéÀÌ °ü¸®ÀÚ-±ÇÇÑÀ» °¡ÁúÁö ¼±ÅÃ
-select your old version	setup	ko	±ÍÇÏÀÇ ÀÌÀü ¹öÀüÀ» ¼±ÅÃ
-selectbox	setup	ko	¼±ÅÃ»óÀÚ
-server root	setup	ko	¼­¹ö ·çÆ®
-sessions type	setup	ko	¼¼¼Ç Å¸ÀÔ
-set	setup	ko	** ¼Â(set)
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	ko	»ç¿ëÇÏ´Â mcrypt version ¹öÀüÀ» ÁöÁ¤ÇÏ¼¼¿ä ¸¸¾à 2.4 º¸´Ù ³·À¸¸é "old"¸¦ ¼³Á¤
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ko	½Ã½ºÅÛ-¹®ÀÚ¼ÂÀ» UTF-8(À¯´ÏÄÚµå)·Î ¼³Á¤ÇÏ¸é ¼­·Î ´Ù¸¥ ¾ğ¾îÀÇ ¹®ÀÚ¼ÂÀÌ °øÁ¸ÇÒ¼ö ÀÖ½À´Ï´Ù
-settings	setup	ko	¼³Á¤
-setup	setup	ko	¼³Á¤
-setup demo accounts in ldap	setup	ko	LDAP µ¥¸ğ °èÁ¤À» ¼³Á¤
-setup main menu	setup	ko	ÁÖ ¸Ş´º¸¦ ¼³Á¤
-setup the database	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º ¼³Á¤
-setup/config admin login	setup	ko	¼³Á¤/±¸¼º °ü¸®ÀÚ Á¢¼Ó
-show 'powered by' logo on	setup	ko	'powered by' ·Î°í¸¦ º¸¿©ÁÜ
-some or all of its tables are missing	setup	ko	ÀÏºÎ ¶Ç´Â ÀüÃ¼ÀÇ Å×ÀÌºíÀÌ ¾ø½À´Ï´Ù.
-sql encryption type	setup	ko	¾ÏÈ£¿¡ »ç¿ëÇÒ SQL ¾ÏÈ£È­ Å¸ÀÔ (±âº» md5)
-start the postmaster	setup	ko	Æ÷½ºÆ®¸¶½ºÅÍ(Postmaster)¸¦ ½ÃÀÛ
-status	setup	ko	»óÈ²
-step %1 - admin account	setup	ko	%1 ´Ü°è - °ü¸®ÀÚ »ı¼º
-step %1 - advanced application management	setup	ko	%1 ´Ü°è - °í±Ş»ç¿ëÀÚ¿ë ÀÀ¿ëÇÁ·Î±×·¥ °ü¸®
-step %1 - configuration	setup	ko	%1 ´Ü°è - ¼³Á¤
-step %1 - language management	setup	ko	%1 ´Ü°è - ¾ğ¾î °ü¸®
-step %1 - simple application management	setup	ko	%1 ´Ü°è - °£´ÜÇÑ ÀÀ¿ëÇÁ·Î±×·¥ °ü¸®
-table change messages	setup	ko	Å×ÀÌºí º¯°æ ¸Ş¼¼Áö
-tables dropped	setup	ko	Å×ÀÌºíÀÌ »èÁ¦µÊ
-tables installed, unless there are errors printed above	setup	ko	ÀÌ»ó Ãâ·ÂµÈ ¿¡·¯°¡ ÀÖÁö¸¸ Å×ÀÌºíÀÌ ¼³Ä¡µÇ¾ú½À´Ï´Ù
-tables upgraded	setup	ko	Å×ÀÌºíÀÌ ¾÷±×·¹ÀÌµåµÊ
-target version	setup	ko	Å¸°Ù ¹öÀü
-tcp port number of database server	setup	ko	µ¥ÀÌÅÍº£ÀÌ½ºÀÇ TCP Æ÷Æ® ¹øÈ£
-text entry	setup	ko	ÅØ½ºÆ® ¿£Æ®¸®(Text entry)
-the %1 extension is needed, if you plan to use a %2 database.	setup	ko	%2 µ¥ÀÌÅÍº£ÀÌ½º¸¦ »ç¿ëÇÒ °èÈ¹ÀÌ¶ó¸é %1 È®ÀåÀÌ ÇÊ¿äÇÕ´Ï´Ù
-the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ko	ÀÌ ¼­¹ö¿¡¼­ ±âº»¼³Á¤ %1 db_type Àº Áö¿øÇÏÁö ¾Ê½À´Ï´Ù. ¸ÕÀú Áö¿øÇÏ´Â Å¸ÀÔÀ» ¼±ÅÃÇÏ¼¼¿ä
-the file	setup	ko	** ÆÄÀÏ(the file)
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ko	eGroupWare¸¦ ¼³Ä¡ÇÏ´Â °¡Àå Ã¹ ´Ü°è´Â ÀÀ¿ëÇÁ·Î±×·¥À» ±¸µ¿ÇÏ±âÀ§ÇÑ È¯°æ¼³Á¤À» ÇÏ´Â °ÍÀÔ´Ï´Ù
-the following applications need to be upgraded:	setup	ko	´ÙÀ½ÀÇ ÀÀ¿ëÇÁ·Î±×·¥Àº ¾÷±×·¹ÀÌµå°¡ ÇØ¾ßÇÕ´Ï´Ù:
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	ko	imap È®ÀåÀº 2°³ÀÇ ÀÌ¸ŞÀÏ ÀÀ¿ëÇÁ·Î±×·¥¿¡¼­ ÇÊ¿äÇÕ´Ï´Ù(pop3ÇÁ·ÎÅäÄİ·Î emailÀ» »ç¿ëÇÏ¼Åµµ ¿ª½Ã ÇÊ¿äÇÕ´Ï´Ù)
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ko	mbstring È®ÀåÀº À¯´ÏÄÚµå(UTF-8)ÀÌ³ª ±âÅ¸ ´ÙÁß¹ÙÀÌÆ®-¹®ÀÚ¼ÂÀ» ¿Ïº®È÷ Áö¿øÇÏ´Âµ¥ ÇÊ¿äÇÕ´Ï´Ù
-the table definition was correct, and the tables were installed	setup	ko	Å×ÀÌºí Á¤ÀÇ°¡ ¼öÁ¤µÇ¾ú°í Å×ÀÌºíµéÀÌ ¼³Ä¡µÇ¾ú½À´Ï´Ù
-the tables	setup	ko	¿©·¯ Å×ÀÌºí
-there was a problem trying to connect to your ldap server. <br />	setup	ko	LDAP¼­¹ö¿¡ Á¢¼ÓÇÏ´Âµ¥ ¹®Á¦°¡ ÀÖ½À´Ï´Ù.<br />
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	ko	+* LDAP¼­¹ö¿¡ Á¢¼ÓÇÏ´Âµ¥ ¹®Á¦°¡ ÀÖ½À´Ï´Ù.<br /> ±ÍÇÏÀÇ LDAP ¼­¹öÀÇ ±¸¼ºÀ» È®ÀÎÇØº¸¼¼¿ä
-this has to be outside the webservers document-root!!!	setup	ko	À¥¼­¹öÀÇ DocumentRoot ¿ÜºÎ¿¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù!!!
-this might take a while, please wait ...	setup	ko	¾à°£ ½Ã°£ÀÌ °É¸³´Ï´Ù, Àá½Ã¸¸ ±â´Ù¸®¼¼¿ä...
-this program will convert your database to a new system-charset.	setup	ko	ÀÌ ÇÁ·Î±×·¥Àº ±ÍÇÏÀÇ µ¥ÀÌÅÍº£ÀÌ½º¸¦ »õ ½Ã½ºÅÛ-¹®ÀÚ¼ÂÀ¸·Î º¯È¯ÇØÁİ´Ï´Ù
-this program will help you upgrade or install different languages for egroupware	setup	ko	ÀÌ ÇÁ·Î±×·¥Àº eGroupWareÀÇ ´Ù¸¥ ¾ğ¾î¸¦ ¼³Ä¡ÇÏ°Å³ª ¾÷±×·¹ÀÌµåÇÏ´Âµ¥ µµ¿òÀ» Áİ´Ï´Ù
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ko	ÀÌ ¼½¼ÇÀº eGroupWareÀÇ »ç¿ëÀÚ¿Í ±×·ìµéÀÇ °èÁ¤ Å×ÀÌºíÀ» LDAP Æ®¸®·Î ³»º¸´Âµ¥ µµ¿òÀ» Áİ´Ï´Ù
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	ko	ÀÌ ¼½¼ÇÀº LDAP Æ®¸®ÀÇ »ç¿ëÀÚ¿Í ±×·ìµéÀÇ eGroupWareÀÇ °èÁ¤ Å×ÀÌºí·Î °¡Á®¿À´Âµ¥ µµ¿òÀ» Áİ´Ï´Ù
-this section will help you setup your ldap accounts for use with egroupware	setup	ko	ÀÌ ¼½¼ÇÀº eGroupWare¿Í ÇÔ²² »ç¿ëÇÒ LDAP °èÁ¤À» ¼³Á¤ÇÏ´Âµ¥ µµ¿òÀ» Áİ´Ï´Ù.
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	ko	30 ¹ÙÀÌÆ® ³»¿Ü¿©¾ß ÇÕ´Ï´Ù.<br /> ÁÖÀÇ: ±âº»¼³Á¤Àº ¾Æ¹«°ªÀÌ³ª »ı¼ºµË´Ï´Ù
-this stage is completed<br />	setup	ko	½ºÅ×ÀÌÁö°¡ ¿Ï·áµÊ<br />
-to a version it does not know about	setup	ko	Àß ¾Ë¼ö ¾ø´Â ¹öÀüÀ¸·Î
-to setup 1 admin account and 3 demo accounts.	setup	ko	1°³ÀÇ °ü¸®ÀÚ °èÁ¤°ú 3°³ÀÇ µ¥¸ğ °èÁ¤À» ¼³Á¤
-top	setup	ko	ÃÖ»óÀ§
-translations added	setup	ko	¹ø¿ª Ãß°¡µÊ
-translations removed	setup	ko	¹ø¿ª »èÁ¦µÊ
-translations upgraded	setup	ko	¹ø¿ª ¾÷±×·¹ÀÌµåµÊ
-true	setup	ko	Âü
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ko	À§¿¡¼­ ¾ğ±ŞÇÑ DBMSÁß ÇÏ³ª¸¦ Áö¿øÇÏ±âÀ§ÇØ¼­ php¸¦ ±¸¼ºÇÏ½Ã°Å³ª eGroupWare¸¦ ¼öµ¿À¸·Î ¼³Ä¡ÇÏ¼¼¿ä
-two weeks	setup	ko	2ÁÖÀÏ
-uninstall	setup	ko	¼³Ä¡Á¦°Å
-uninstall all applications	setup	ko	¸ğµç ÀÀ¿ëÇÁ·Î±×·¥À» ¼³Ä¡Á¦°Å
-uninstalled	setup	ko	¼³Ä¡Á¦°ÅµÊ
-upgrade	setup	ko	¾÷±×·¹ÀÌµå
-upgrade all	setup	ko	¸ğµÎ ¾÷±×·¹ÀÌµå
-upgraded	setup	ko	¾÷±×·¹ÀÌµåµÊ
-upgrading tables	setup	ko	Å×ÀÌºíÀ» ¾÷±×·¹ÀÌµåÁß
-use cookies to pass sessionid	setup	ko	sessionid ¸¦ Àü´ŞÇÏ±â À§ÇØ ÄíÅ° »ç¿ë
-use pure html compliant code (not fully working yet)	setup	ko	¼ø¼ö HTML È£È¯ ÄÚµå »ç¿ë ( ¾ÆÁ÷ ¿Ïº®ÇÏ°Ô µ¿ÀÛÇÏÁö ¾Ê½À´Ï´Ù)
-user account prefix	setup	ko	»ç¿ëÀÚ°èÁ¤ Á¢µÎ¾î(prefix)
-usernames are casesensitive	setup	ko	»ç¿ëÀÚÀÌ¸§Àº ´ë¼Ò¹®ÀÚ±¸ºĞÇÔ
-users choice	setup	ko	»ç¿ëÀÚ ¼±ÅÃ
-utf-8 (unicode)	setup	ko	utf-8 (À¯´ÏÄÚµå)
-version	setup	ko	¹öÀü
-version mismatch	setup	ko	¹öÀüÀÌ ÀÏÄ¡ÇÏÁö ¾ÊÀ½
-view	setup	ko	º¸±â
-warning!	setup	ko	°æ°í!
-we can proceed	setup	ko	ÁøÇà °¡´É
-we will automatically update your tables/records to %1	setup	ko	±ÍÇÏÀÇ Å×ÀÌºí/·¹ÄÚµåµéÀ» ÀÚµ¿À¸·Î %1·Î º¯È¯ÇÕ´Ï´Ù.
-we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ko	¿¬¼ÓÀûÀÎ Å×½ºÆ®¸¦ ¼öÇàÇÕ´Ï´Ù, ¸îºĞÁ¤µµ °É¸±¼ö ÀÖ½À´Ï´Ù. °è¼ÓÇÏ·Á¸é ¸µÅ©¸¦ Å¬¸¯ÇÏ¼¼¿ä
-welcome to the egroupware installation	setup	ko	eGroupWare ¼³Ä¡¸¦ È¯¿µÇÕ´Ï´Ù
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	ko	+* ¼¼¼Ç °ü¸®¸¦ À§ÇØ »ç¿ëÇÏ½Ç °ÍÀº (PHP4 ¼¼¼Ç °ü¸®°¡ Á¶±İ ´õ ³ªÀº ¼º´É)?
-which database type do you want to use with egroupware?	setup	ko	eGroupWare¿Í ÇÔ²² »ç¿ëÇÒ µ¥ÀÌÅÍº£ÀÌ½º Å¸ÀÔÀº?
-world readable	setup	ko	´©±¸³ª ÀĞÀ»¼ö ÀÖÀ½
-world writable	setup	ko	´©±¸³ª ¾µ¼ö ÀÖÀ½
-would you like egroupware to cache the phpgw info array ?	setup	ko	eGroupWare°¡ phpgw info ¹è¿­À» Ä³½¬ÇÏ±æ ¿øÇÏ½Ê´Ï±î?
-would you like egroupware to check for a new version<br />when admins login ?	setup	ko	°ü¸®ÀÚ°¡ ·Î±×ÀÎÇßÀ»¶§ <br /> eGroupWare »õ¹öÀüÀ» È®ÀÎÇÒ±î¿ä?
-would you like to show each application's upgrade status ?	setup	ko	°¢ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¾÷±×·¹ÀÌµå »óÅÂ¸¦ º¸¿©ÁÙ±î¿ä?
-writable by the webserver	setup	ko	À¥¼­¹ö°¡ ¾µ¼ö ÀÖÀ½
-write config	setup	ko	±¸¼º ±â·Ï
-yes	setup	ko	¿¹
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ko	eGroupWare º£Å¸¹öÀüÀ» »ç¿ëÇÏ½Ã°í °è½Ê´Ï´Ù.<br />ÀÌ ¹öÀüÀº ´õÀÌ»ó Áö¿øÇÏÁö ¾ÊÀ¸¸ç ¼³Á¤¿¡ ¾÷±×·¹ÀÌµåÇÒ °æ·Îµµ ¾ø½À´Ï´Ù<br /> ¸ÕÀú 0.9.10 ¹öÀü(º£Å¸¾÷±×·¹ÀÌµå Áö¿ø ¸¶Áö¸·¹öÀü)À¸·Î ¾÷±×·¹ÀÌµå ÇÏ½Ã°í<br />±× ÈÄ¿¡ ÃÖ½Å ¹öÀüÀ¸·Î ¾÷±×·¹ÀÌµå ÇÏ¼¼¿ä.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ko	PHP¹öÀüÀÌ ¿À·¡µÇ¾ú½À´Ï´Ù<br />»õ·Î¿î ¹öÀüÀ¸·Î ¾÷±×·¹ÀÌµå ÇÏ½Ã±æ ±ÇÀåÇÕ´Ï´Ù.<br />ÀÌÀü ¹öÀüÀÇ PHP´Â eGroupWare°¡ Á¤»óÀûÀ¸·Î µ¿ÀÛÇÏÁö ¾Ê½À´Ï´Ù<br /><br />Àû¾îµµ %1 ¹öÀüÀ¸·Î´Â ¾÷±×·¹ÀÌµå ÇØÁÖ¼Å¾ß ÇÕ´Ï´Ù.
-you appear to be running version %1 of egroupware	setup	ko	eGroupWare ¹öÀü %1À» »ç¿ëÇÏ°í ÀÖ½À´Ï´Ù
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	ko	PHP¹öÀü 4.1.0 ÀÌÀü¹öÀüÀ» »ç¿ëÇÏ°í °è½Ê´Ï´Ù. eGroupWare´Â 4.1.0 ÀÌ³ª ÀÌ ÀÌÈÄ ¹öÀüÀÌ ÇÊ¿äÇÕ´Ï´Ù
-you appear to be using php3. disabling php4 sessions support	setup	ko	PHP3À» »ç¿ëÇÏ°í °è½Ê´Ï´Ù. PHP4 ¼¼¼Ç Áö¿øÀ» ºñÈ°¼ºÈ­ ÇÕ´Ï´Ù
-you appear to be using php4. enabling php4 sessions support	setup	ko	PHP4À» »ç¿ëÇÏ°í °è½Ê´Ï´Ù. PHP4 ¼¼¼Ç Áö¿øÀ» È°¼ºÈ­ ÇÕ´Ï´Ù
-you appear to have microsoft sql server support enabled	setup	ko	¸¶ÀÌÅ©·Î¼ÒÇÁÆ® SQL¼­¹ö Áö¿øÀÌ È°¼ºÈ­ µÇ¾ú½À´Ï´Ù.
-you appear to have mysql support enabled	setup	ko	MySQLÀ» Áö¿øÇÕ´Ï´Ù.
-you appear to have oracle support enabled	setup	ko	OracleÀ» Áö¿øÇÕ´Ï´Ù.
-you appear to have oracle v8 (oci) support enabled	setup	ko	Oracle V8 (OCI) À» Áö¿øÇÕ´Ï´Ù.
-you appear to have postgresql support enabled	setup	ko	PostgreSQLÀ» Áö¿øÇÕ´Ï´Ù.
-you appear to have xml support enabled	setup	ko	XMLÀ» Áö¿øÇÕ´Ï´Ù.
-you are ready for this stage, but this stage is not yet written.<br />	setup	ko	ÇöÀç ½ºÅ×ÀÌÁö¸¦ ¼öÇàÇÒ ÁØºñ°¡ µÇ¾ú½À´Ï´Ù¸¸, ¾ÆÁ÷ ¿ÏÀüÈ÷ ÀÛ¼ºµÇÁö´Â ¾Ê¾Ò½À´Ï´Ù.<br />
-you didn't enter a config password for domain %1	setup	ko	%1µµ¸ŞÀÎÀÇ ±¸¼º¾ÏÈ£¸¦ ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù
-you didn't enter a config username for domain %1	setup	ko	%1µµ¸ŞÀÎÀÇ ±¸¼º»ç¿ëÀÚÀÌ¸§À» ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù
-you didn't enter a header admin password	setup	ko	»óÀ§°ü¸®ÀÚ ¾ÏÈ£¸¦ ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù
-you didn't enter a header admin username	setup	ko	»óÀ§°ü¸®ÀÚ »ç¿ëÀÚÀÌ¸§À» ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù.
-you do not have any languages installed. please install one now <br />	setup	ko	¾Æ¹«¾ğ¾îµµ ¼³Ä¡µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù. ÇÑ°¡Áö¸¦ Áö±İ ¼³Ä¡ÇÏ¼¼¿ä<br />
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	ko	±ÍÇÏÀÇ header.inc.php¸¦ ¾ÆÁ÷ »ı¼ºÇÏÁö ¾Ê¾Ò½À´Ï´Ù!<br />Áö±İ »ı¼ºÇÏ¼¼¿ä.
-you have successfully logged out	setup	ko	¼º°øÀûÀ¸·Î Á¢¼ÓÁ¾·á µÇ¾ú½À´Ï´Ù
-you must enter a username for the admin	setup	ko	°ü¸®ÇÒ »ç¿ëÀÚÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä
-you need to add some domains to your header.inc.php.	setup	ko	header.inc.php ¿¡ ¾î¶² µµ¸ŞÀÎÀÌµç Ãß°¡ÇÏ¼Å¾ß ÇÕ´Ï´Ù.
-you need to select your current charset!	setup	ko	ÇöÀç ¹®ÀÚ¼ÂÀ» ¼±ÅÃÇÏ¼¼¿ä!
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	ko	¼³Ä¡Á¦°Å³ª Àç¼³Ä¡¸¦ ¼öÇàÇÏ¼Å¾ß ÇÏ¸ç, ¾Æ´Ï¸é Á÷Á¢ ¼öÁ¤ÇÏ¼Å¾ß ÇÕ´Ï´Ù
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	ko	LDAP ¼­¹ö¿¡ ÀûÀıÇÑ ½ºÅ°¸¶¸¦ ºÒ·¯¿À¼Å¾ß ÇÕ´Ï´Ù. Âü°í: <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
-you're using an old configuration file format...	setup	ko	ÀÌÀü ¼³Á¤ ÆÄÀÏÀÇ Çü½ÄÀ» »ç¿ëÇÏ°í ÀÖ½À´Ï´Ù...
-you're using an old header.inc.php version...	setup	ko	ÀÌÀü header.inc.php ¹öÀüÀ» »ç¿ëÇÏ°í ÀÖ½À´Ï´Ù...
-your applications are current	setup	ko	ÀÀ¿ëÇÁ·Î±×·¥ÀÌ ÇöÀç ¹öÀüÀÔ´Ï´Ù
-your database does not exist	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.
-your database is not working!	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º°¡ µ¿ÀÛÇÏÁö ¾Ê½À´Ï´Ù.
-your database is working, but you dont have any applications installed	setup	ko	µ¥ÀÌÅÍº£ÀÌ½º´Â Àåµ¿ÇÕ´Ï´Ù¸¸, ¼³Ä¡µÈ ÀÀ¿ëÇÁ·Î±×·¥ÀÌ ¾ø½À´Ï´Ù
-your header admin password is not set. please set it now!	setup	ko	»óÀ§°ü¸®ÀÚ ¾ÏÈ£°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù. Áö±İ ¼³Á¤ÇÏ¼¼¿ä!
-your header.inc.php needs upgrading.	setup	ko	header.inc.php ÀÇ ¾÷±×·¹ÀÌµå°¡ ÇÊ¿äÇÕ´Ï´Ù.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ko	±ÍÇÏÀÇ header.inc.php ´Â ¾÷±×·¹ÀÌµå°¡ ÇÊ¿äÇÕ´Ï´Ù.<br /><blink><b class="msg">°æ°í!</b></blink><br /><b>¹é¾÷ÇÏ¼¼¿ä!</b>
-your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	ko	±ÍÇÏÀÇ PHP¿¡ GDÁö¿øÀÌ ¾ø½À´Ï´Ù. gd ¶óÀÌºê·¯¸®¹öÀü 1.8 ÀÌ³ª ±× ÀÌÈÄÀÇ ¹öÀüÀ» ¼³Ä¡ÇÏ¼Å¾ß ÇÁ·ÎÁ§Æ®¿¡¼­ °£Æ®Ã­Æ®¸¦ º¸½Ç¼ö ÀÖ½À´Ï´Ù
-your tables are current	setup	ko	Å×ÀÌºí¿¡ ÀÌ»ó ¾øÀ½
-your tables may be altered and you may lose data	setup	ko	Å×ÀÌºíÀÌ º¯°æµÇ¸é¼­ µ¥ÀÌÅÍ¸¦ ÀÒÀ»¼öµµ ÀÖ½À´Ï´Ù.
-your tables will be dropped and you will lose data	setup	ko	Å×ÀÌºíµéÀÌ »èÁ¦µÇ¸é¼­ ±ÍÇÏÀÇ ÀÚ·á¸¦ ÀÒÀ»¼öµµ ÀÖ½À´Ï´Ù !!
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ko	ì£¼ì†Œë‚˜ ë„¤íŠ¸ì›, í˜¸ìŠ¤íŠ¸ì´ë¦„ ì„¤ì •ì— ì ‘ê·¼ì„ ì œí•œí•¨ (ì˜ˆ: 127.0.0.1,101.1.1,myhost.dnydns.org)
+login to mysql -	setup	ko	mysqlë¡œ ì ‘ì† -
+logout	setup	ko	ì ‘ì†í•´ì œ
+make sure that your database is created and the account permissions are set	setup	ko	ê·€í•˜ì˜ ë°ì´í„°ë² ì´ìŠ¤ëŠ” ìƒì„±ë˜ì—ˆê³  ê³„ì •ì˜ ê¶Œí•œë„ ì„¤ì •ë˜ì—ˆìŒì„ í™•ì¸í•˜ì„¸ìš”
+manage applications	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ê´€ë¦¬
+manage languages	setup	ko	ì–¸ì–´ ê´€ë¦¬
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time ì´ 30ì´ˆ ì´í•˜ë¡œ ì„¤ì •ë˜ì–´ ìˆìŠµë‹ˆë‹¤: eGroupWareëŠ” ê°€ë” ë³´ë‹¤ ë” ê¸´ ì‹¤í–‰ì‹œê°„ì´ ê±¸ë¦´ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤, ë¬¼ë¡  ê°€ë” ì‹¤íŒ¨í•˜ëŠ” ê²½ìš°ëŠ” ì˜ˆì™¸ì…ë‹ˆë‹¤
+maximum account id (e.g. 65535 or 1000000)	setup	ko	ìµœëŒ€ ê³„ì •ID  (ì˜ˆ 65535 ë‚˜ 1000000)
+may be broken	setup	ko	ëŠ” ê¹¨ì§„ê²ƒ ê°™ìŠµë‹ˆë‹¤.
+mcrypt algorithm (default tripledes)	setup	ko	Mcrypt ì•Œê³ ë¦¬ì¦˜ (ê¸°ë³¸ TRIPLEDES)
+mcrypt initialization vector	setup	ko	MCrypt ì´ˆê¸°í™” ë°±í„°
+mcrypt mode (default cbc)	setup	ko	Mcrypt ë°©ì‹ (ê¸°ë³¸ CBC)
+mcrypt settings (requires mcrypt php extension)	setup	ko	Mcrypt ì„¤ì • (mcrypt PHP í™•ì¥ì— í•„ìš”í•¨)
+mcrypt version	setup	ko	MCrypt ë²„ì „
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit ì´ %1ì´í•˜ë¡œ ì„¤ì •ë˜ì–´ ìˆìŠµë‹ˆë‹¤: eGroupWareì˜ íŠ¹ì • ì‘ìš©í”„ë¡œê·¸ë¨ì€ 8Mì´ìƒ ê¶Œì¥í•  ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤, ë¬¼ë¡  ê°€ì”€ ì‹¤íŒ¨í•˜ëŠ” ê²½ìš°ëŠ” ì˜ˆì™¸ì…ë‹ˆë‹¤
+minimum account id (e.g. 500 or 100, etc.)	setup	ko	ìµœì†Œ ê³„ì •ID (ì˜ˆ 500 ë‚˜ 100, ê¸°íƒ€.)
+modifications have been completed!	setup	ko	ë³€ê²½ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤!
+modify	setup	ko	ë³€ê²½
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	ko	eGroupWareì— ì‚¬ìš©í•˜ê¸° ìœ„í•´ì„œ ê¸°ì¡´ì— LDAP ê³„ì •ì„ ì €ì¥í•©ë‹ˆë‹¤ (LDAP ê³„ì •ì„ ì‚¬ìš©í•´ ì²˜ìŒ ì„¤ì¹˜í• ë•Œ ì‚¬ìš©í•¨)
+multi-language support setup	setup	ko	ë‹¤ì¤‘-ì–¸ì–´ ì§€ì› ì„¤ì •
+name of database	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ ì´ë¦„
+name of db user egroupware uses to connect	setup	ko	eGroupWareê°€ ì‚¬ìš©í•  DB ì‚¬ìš©ì ì´ë¦„
+never	setup	ko	ì ˆëŒ€(never)
+new	setup	ko	ìƒˆë¡œë§Œë“¤ê¸°
+no	setup	ko	ì•„ë‹ˆì˜¤
+no accounts existing	setup	ko	ê³„ì •ì´ ì—†ìŒ
+no algorithms available	setup	ko	ê°€ëŠ¥í•œ ì•Œê³ ë¦¬ì¦˜ì´ ì—†ìŠµë‹ˆë‹¤
+no microsoft sql server support found. disabling	setup	ko	Microsoft SQL ì„œë²„ë¥¼ ì§€ì›í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì§€ì›í•´ì œí•©ë‹ˆë‹¤.
+no modes available	setup	ko	ê°€ëŠ¥í•œ ë°©ì‹ì´ ì—†ìŒ
+no mysql support found. disabling	setup	ko	MySQLì„ ì§€ì›í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì§€ì›í•´ì œí•©ë‹ˆë‹¤.
+no oracle-db support found. disabling	setup	ko	Oracle-DBë¥¼ ì§€ì›í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì§€ì›í•´ì œí•©ë‹ˆë‹¤.
+no postgresql support found. disabling	setup	ko	PostgreSQLì„ ì§€ì›í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì§€ì›í•´ì œí•©ë‹ˆë‹¤.
+no xml support found. disabling	setup	ko	XMLì„ ì§€ì›í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì§€ì›í•´ì œí•©ë‹ˆë‹¤.
+not	setup	ko	ì•„ë‹ˆ(not)
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ko	ëª¨ë“  mcrypt ì•Œê³ ë¦¬ì¦˜ê³¼ ëª¨ë“œë“¤ì´ eGroupWareì™€ ê°™ì´ ë™ì‘í• ìˆ˜ ìˆëŠ” ê²ƒì€ ì•„ë‹™ë‹ˆë‹¤ ë§Œì•½ ë¬¸ì œì ì´ ë°œê²¬ë˜ë©´ êº¼ì£¼ì„¸ìš”
+not complete	setup	ko	ì™„ë£Œ ì•ˆë¨
+not completed	setup	ko	ì™„ë£Œë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+not ready for this stage yet	setup	ko	í˜„ì¬ ìŠ¤í…Œì´ì§€ê°€ ì•„ì§ ì¤€ë¹„ì•ˆëìŠµë‹ˆë‹¤
+not set	setup	ko	ì„¤ì • ì•ˆë¨
+note: you will be able to customize this later	setup	ko	í™•ì¸: ì´ ì„¤ì •ì€ ë‚˜ì¤‘ì— ë‹¤ì‹œ í• ìˆ˜ ìˆìŠµë‹ˆë‹¤
+now guessing better values for defaults...	setup	ko	ì ì ˆí•œ ê¸°ë³¸ê°’ìœ¼ë¡œ ì°¾ëŠ” ì¤‘ì…ë‹ˆë‹¤...
+ok	setup	ko	ì˜¤ì¼€ì´
+once the database is setup correctly	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ì˜ ì„¤ì •ì´ ì œëŒ€ë¡œ ìˆ˜í–‰ë˜ì—ˆì„ë•Œ
+one month	setup	ko	í•œ ë‹¬
+one week	setup	ko	ì¼ì£¼ì¼
+only add languages that are not in the database already	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ì— ì—†ì„ë•Œë§Œ ìƒˆ ì–¸ì–´ ì¶”ê°€í•˜ê¸°ë¥¼ ì‚¬ìš©í•˜ì„¸ìš”
+only add new phrases	setup	ko	ìƒˆ êµ¬ë¬¸ë§Œ ì¶”ê°€
+or	setup	ko	ì´ê±°ë‚˜(ORì—°ì‚°)
+or %1continue to the header admin%2	setup	ko	ì´ê±°ë‚˜ %1ìƒìœ„ ê´€ë¦¬ìë¡œ ê³„ì†%2
+or http://webdav.domain.com (webdav)	setup	ko	ì´ë‚˜ http://webdav.domain.com (WebDAV)
+or we can attempt to create the database for you:	setup	ko	ì•„ë‹ˆë©´ ë°ì´í„°ë² ì´ìŠ¤ ìƒì„±ì„ ì‹œë„í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤:
+password needed for configuration	setup	ko	êµ¬ì„±í•˜ê¸° ìœ„í•´ì„œ ì•”í˜¸ê°€ í•„ìš”í•©ë‹ˆë‹¤
+password of db user	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ ì‚¬ìš©ì ì•”í˜¸
+passwords did not match, please re-enter	setup	ko	ì•”í˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤, ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”
+path information	setup	ko	ê²½ë¡œ ì •ë³´
+path to user and group files has to be outside of the webservers document-root!!!	setup	ko	ì‚¬ìš©ìì™€ ê·¸ë£¹íŒŒì¼ì˜ ê²½ë¡œëŠ” ë°˜ë“œì‹œ ì›¹ì„œë²„ DocumentRoot ì„¤ì • ì™¸ë¶€ì— ìˆì–´ì•¼ í•©ë‹ˆë‹¤!!!
+persistent connections	setup	ko	ì§€ì†ì  ì—°ê²°
+please check for sql scripts within the application's directory	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ ë””ë ‰í† ë¦¬ì— í¬í•¨ëœ sql ìŠ¤í¬ë¦½íŠ¸ë“¤ì„ í™•ì¸í•´ë³´ì„¸ìš”
+please check read/write permissions on directories, or back up and use another option.	setup	ko	ë””ë ‰í† ë¦¬ì˜ ì½ê¸°/ì“°ê¸° ê¶Œí•œì„ í™•ì¸í•˜ì‹œê°€ë‚˜ ëŒì•„ê°€ì…”ì„œ ë‹¤ë¥¸ ì˜µì…˜ì„ ì‚¬ìš©í•´ì£¼ì„¸ìš”
+please configure egroupware for your environment	setup	ko	ê·€í•˜ì—ê²Œ ë§ëŠ” eGroupWare ì„¤ì •ì„ í•´ì£¼ì„¸ìš”
+please consult the %1.	setup	ko	** %1 ì„(ë¥¼) ê³ ë ¤í•´ì£¼ì„¸ìš”.
+please fix the above errors (%1) and warnings(%2)	setup	ko	ìœ„ì™€ ê°™ì€ ì—ëŸ¬ (%1) ì™€ ê²½ê³ (%2)ë¥¼ ìˆ˜ì •í•´ì£¼ì„¸ìš”
+please install	setup	ko	ì„¤ì¹˜í•´ ì£¼ì„¸ìš”
+please login	setup	ko	ë¡œê·¸ì¸ í•´ì£¼ì„¸ìš”
+please login to egroupware and run the admin application for additional site configuration	setup	ko	ì¶”ê°€ì ì¸ ì‚¬ì´íŠ¸ êµ¬ì„±ì‘ì—…ì„ í•˜ì‹œë ¤ë©´ eGroupWareì— ë¡œê·¸ì¸ í•˜ì‹œê³  ê´€ë¦¬ ì–´í”Œë¦¬ì¼€ì´ì…˜ì„ ì´ìš©í•´ ì£¼ì„¸ìš”
+please make the following change in your php.ini	setup	ko	ê·€í•˜ì˜ php.iniì— ë‹¤ìŒê³¼ ê°™ì€ ê²ƒì„ ë³€ê²½í•´ì£¼ì„¸ìš”
+please wait...	setup	ko	ì ì‹œë§Œ ê¸°ë‹¤ë¦¬ì„¸ìš”...
+possible reasons	setup	ko	ê°€ëŠ¥í•œ ì´ìœ ë“¤
+possible solutions	setup	ko	ê°€ëŠ¥í•œ í•´ê²°ì±…ë“¤
+post-install dependency failure	setup	ko	í›„-ì„¤ì¹˜(Post-Install) ì˜ì¡´ì„± ì‹¤íŒ¨
+potential problem	setup	ko	ì ì¬ì ì¸ ë¬¸ì œ
+preferences	setup	ko	ì„¤ì •
+problem resolution	setup	ko	ë¬¸ì œ í•´ê²°
+process	setup	ko	í”„ë¡œì„¸ìŠ¤
+re-check my database	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ë‹¤ì‹œ ì²´í¬
+re-check my installation	setup	ko	ì„¤ì¹˜ë¥¼ ë‹¤ì‹œ ì²´í¬
+re-enter password	setup	ko	ì•”í˜¸ ì¬ì…ë ¥
+read translations from	setup	ko	ë²ˆì—­ë‚´ìš© ì½ê¸°
+readable by the webserver	setup	ko	ì›¹ ì„œë²„ê°€ ì½ì„ìˆ˜ ìˆìŒ
+really uninstall all applications	setup	ko	ëª¨ë“  ì‘ìš©í”„ë¡œê·¸ë¨ì„ ì‚­ì œ
+recommended: filesystem	setup	ko	ì¶”ì²œ: íŒŒì¼ì‹œìŠ¤í…œ
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals ì´ ì¼œì ¸ ìˆìŠµë‹ˆë‹¤, eGroupWareì—ì„œëŠ” í•„ìš”ì—†ëŠ” ê¸°ëŠ¥ì´ë©° ë³´ì•ˆìƒìœ¼ë¡œë„ Offë¡œ ì„¤ì •í•˜ì‹œëŠ” ê²ƒì´ ì¢‹ìŠµë‹ˆë‹¤
+registered	setup	ko	ë“±ë¡ë¨
+rejected lines	setup	ko	ê±°ë¶€ëœ ë¼ì¸
+remove	setup	ko	ì‚­ì œ
+remove all	setup	ko	ëª¨ë‘ ì‚­ì œ
+requires reinstall or manual repair	setup	ko	ì¬ì„¤ì¹˜í•˜ê±°ë‚˜ ì§ì ‘ ìˆ˜ë¦¬ê°€ í•„ìš”í•¨
+requires upgrade	setup	ko	ì—…ê·¸ë ˆì´ë“œê°€ í•„ìš”í•¨
+resolve	setup	ko	í•´ê²°(Resolve)
+return to setup	setup	ko	ì„¤ì •ìœ¼ë¡œ ëŒì•„ê°
+run installation tests	setup	ko	ì„¤ì¹˜ í…ŒìŠ¤íŠ¸ë¥¼ ìˆ˜í–‰
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ko	safe_mode ê°€ í™œì„±í™” ë˜ì–´ ìˆìŠµë‹ˆë‹¤, í†µìƒì ìœ¼ë¡œ ê·€í•˜ì˜ ì„¤ì¹˜ë¥¼ ì¢€ë” ì•ˆì „í•˜ê²Œ í•˜ëŠ”ë° ì¢‹ìŠµë‹ˆë‹¤.
+sample configuration not found. using built in defaults	setup	ko	êµ¬ì„± ì˜ˆì œë¥¼ ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ê¸°ë³¸ì„¤ì •ìœ¼ë¡œ ì‘ì„±ë©ë‹ˆë‹¤
+save	setup	ko	ì €ì¥
+save this text as contents of your header.inc.php	setup	ko	ì´ í…ìŠ¤íŠ¸ë¥¼ ê·€í•˜ì˜ header.inc.phpë¡œ ì €ì¥
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ì„ ì„ íƒí•´ì„œ ëŒ€ìƒ ë²„ì „ì„ ì…ë ¥í•œí›„ ë³´ë‚´ì„¸ìš”(submit).<br />ë§Œì•½ ë²„ì „ì„ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì‹œë©´, ì„¤ì¹˜ëœ ì‘ìš©í”„ë¡œê·¸ë¨ì˜ ê¸°ë³¸ í…Œì´ë¸”ë“¤ë§Œ  ì„¤ì¹˜ë©ë‹ˆë‹¤.<br /><blink>ì´ ì‘ì—…ì€ ëª¨ë“  ì‘ìš©í”„ë¡œê·¸ë¨ì˜ í…Œì´ë¸”ì„ ë¨¼ì € ì‚­ì œí•©ë‹ˆë‹¤</blink>
+select one...	setup	ko	í•˜ë‚˜ë¥¼ ì„ íƒí•˜ì„¸ìš”...
+select the default applications to which your users will have access	setup	ko	ì‚¬ìš©ìê°€ ì ‘ê·¼í•  ê¸°ë³¸ì‘ìš©í”„ë¡œê·¸ë¨ ì„ íƒ
+select the desired action(s) from the available choices	setup	ko	ê°€ëŠ¥í•œ ì„ íƒë“¤ ì¤‘ì—ì„œ ì›í•˜ëŠ” ì•¡ì…˜ì„ ì„ íƒ
+select to download file	setup	ko	ë‹¤ìš´ë¡œë“œí•  íŒŒì¼ì„ ì„ íƒ
+select where you want to store/retrieve file contents	setup	ko	íŒŒì¼ ì»¨í…ì¸ ë“¤ì„ ì €ì¥/íšŒìˆ˜í•  ê³³ì„ ì„ íƒ
+select where you want to store/retrieve filesystem information	setup	ko	íŒŒì¼ì‹œìŠ¤í…œ ì •ë³´ë¥¼ ì €ì¥/íšŒìˆ˜í•  ê³³ì„ ì„ íƒ
+select where you want to store/retrieve user accounts	setup	ko	ì‚¬ìš©ì ê³„ì •ë“¤ì„ ì €ì¥/íšŒìˆ˜í•  ê³³ì„ ì„ íƒ
+select which group(s) will be exported (group membership will be maintained)	setup	ko	ë‚´ë³´ë‚´ê¸°ë¥¼ ìˆ˜í–‰í•  ê·¸ë£¹ë“¤ì„ ì„ íƒ (ê·¸ë£¹ì˜ êµ¬ì„±ì›ì€ ìœ ì§€ë©ë‹ˆë‹¤)
+select which group(s) will be imported (group membership will be maintained)	setup	ko	ê°€ì ¸ì˜¤ê¸°ë¥¼ìˆ˜í–‰í•  ê·¸ë£¹ë“¤ì„ ì„ íƒ (ê·¸ë£¹ì˜ êµ¬ì„±ì›ì€ ìœ ì§€ë©ë‹ˆë‹¤)
+select which group(s) will be modified (group membership will be maintained)	setup	ko	ìˆ˜ì •ë  ê·¸ë£¹ë“¤ì„ ì„ íƒ (ê·¸ë£¹ì˜ êµ¬ì„±ì›ì€ ìœ ì§€ë©ë‹ˆë‹¤)
+select which languages you would like to use	setup	ko	ì‚¬ìš©í•  ì–¸ì–´ë¥¼ ì„ íƒ
+select which method of upgrade you would like to do	setup	ko	ì—…ê·¸ë ˆì´ë°©ë²•ì„ ì„ íƒ
+select which type of authentication you are using	setup	ko	ì–´ë–¤ ì¸ì¦ì„ ì‚¬ìš©í• ì§€ ì„ íƒ
+select which user(s) will also have admin privileges	setup	ko	ê´€ë¦¬ìê¶Œí•œì„ ê°€ì§ˆ ì‚¬ìš©ìë“¤ì„ ì„ íƒ
+select which user(s) will be exported	setup	ko	ì–´ë–¤ ì‚¬ìš©ìë“¤ì„ ë‚´ë³´ë‚¼ì§€ ì„ íƒ
+select which user(s) will be imported	setup	ko	ì–´ë–¤ ì‚¬ìš©ìë“¤ì„ê°€ì ¸ì˜¬ì§€ ì„ íƒ
+select which user(s) will be modified	setup	ko	ì–´ë–¤ ì‚¬ìš©ìë“¤ì„ë³€ê²½í• ì§€ ì„ íƒ
+select which user(s) will have admin privileges	setup	ko	ì–´ë–¤ ì‚¬ìš©ìë“¤ì´ ê´€ë¦¬ì-ê¶Œí•œì„ ê°€ì§ˆì§€ ì„ íƒ
+select your old version	setup	ko	ê·€í•˜ì˜ ì´ì „ ë²„ì „ì„ ì„ íƒ
+selectbox	setup	ko	ì„ íƒìƒì
+server root	setup	ko	ì„œë²„ ë£¨íŠ¸
+sessions type	setup	ko	ì„¸ì…˜ íƒ€ì…
+set	setup	ko	** ì…‹(set)
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	ko	ì‚¬ìš©í•˜ëŠ” mcrypt version ë²„ì „ì„ ì§€ì •í•˜ì„¸ìš” ë§Œì•½ 2.4 ë³´ë‹¤ ë‚®ìœ¼ë©´ "old"ë¥¼ ì„¤ì •
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ko	ì‹œìŠ¤í…œ-ë¬¸ìì…‹ì„ UTF-8(ìœ ë‹ˆì½”ë“œ)ë¡œ ì„¤ì •í•˜ë©´ ì„œë¡œ ë‹¤ë¥¸ ì–¸ì–´ì˜ ë¬¸ìì…‹ì´ ê³µì¡´í• ìˆ˜ ìˆìŠµë‹ˆë‹¤
+settings	setup	ko	ì„¤ì •
+setup	setup	ko	ì„¤ì •
+setup demo accounts in ldap	setup	ko	LDAP ë°ëª¨ ê³„ì •ì„ ì„¤ì •
+setup main menu	setup	ko	ì£¼ ë©”ë‰´ë¥¼ ì„¤ì •
+setup the database	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ ì„¤ì •
+setup/config admin login	setup	ko	ì„¤ì •/êµ¬ì„± ê´€ë¦¬ì ì ‘ì†
+show 'powered by' logo on	setup	ko	'powered by' ë¡œê³ ë¥¼ ë³´ì—¬ì¤Œ
+some or all of its tables are missing	setup	ko	ì¼ë¶€ ë˜ëŠ” ì „ì²´ì˜ í…Œì´ë¸”ì´ ì—†ìŠµë‹ˆë‹¤.
+sql encryption type	setup	ko	ì•”í˜¸ì— ì‚¬ìš©í•  SQL ì•”í˜¸í™” íƒ€ì… (ê¸°ë³¸ md5)
+start the postmaster	setup	ko	í¬ìŠ¤íŠ¸ë§ˆìŠ¤í„°(Postmaster)ë¥¼ ì‹œì‘
+status	setup	ko	ìƒí™©
+step %1 - admin account	setup	ko	%1 ë‹¨ê³„ - ê´€ë¦¬ì ìƒì„±
+step %1 - advanced application management	setup	ko	%1 ë‹¨ê³„ - ê³ ê¸‰ì‚¬ìš©ììš© ì‘ìš©í”„ë¡œê·¸ë¨ ê´€ë¦¬
+step %1 - configuration	setup	ko	%1 ë‹¨ê³„ - ì„¤ì •
+step %1 - language management	setup	ko	%1 ë‹¨ê³„ - ì–¸ì–´ ê´€ë¦¬
+step %1 - simple application management	setup	ko	%1 ë‹¨ê³„ - ê°„ë‹¨í•œ ì‘ìš©í”„ë¡œê·¸ë¨ ê´€ë¦¬
+table change messages	setup	ko	í…Œì´ë¸” ë³€ê²½ ë©”ì„¸ì§€
+tables dropped	setup	ko	í…Œì´ë¸”ì´ ì‚­ì œë¨
+tables installed, unless there are errors printed above	setup	ko	ì´ìƒ ì¶œë ¥ëœ ì—ëŸ¬ê°€ ìˆì§€ë§Œ í…Œì´ë¸”ì´ ì„¤ì¹˜ë˜ì—ˆìŠµë‹ˆë‹¤
+tables upgraded	setup	ko	í…Œì´ë¸”ì´ ì—…ê·¸ë ˆì´ë“œë¨
+target version	setup	ko	íƒ€ê²Ÿ ë²„ì „
+tcp port number of database server	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ì˜ TCP í¬íŠ¸ ë²ˆí˜¸
+text entry	setup	ko	í…ìŠ¤íŠ¸ ì—”íŠ¸ë¦¬(Text entry)
+the %1 extension is needed, if you plan to use a %2 database.	setup	ko	%2 ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ì‚¬ìš©í•  ê³„íšì´ë¼ë©´ %1 í™•ì¥ì´ í•„ìš”í•©ë‹ˆë‹¤
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ko	ì´ ì„œë²„ì—ì„œ ê¸°ë³¸ì„¤ì • %1 db_type ì€ ì§€ì›í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ë¨¼ì € ì§€ì›í•˜ëŠ” íƒ€ì…ì„ ì„ íƒí•˜ì„¸ìš”
+the file	setup	ko	** íŒŒì¼(the file)
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ko	eGroupWareë¥¼ ì„¤ì¹˜í•˜ëŠ” ê°€ì¥ ì²« ë‹¨ê³„ëŠ” ì‘ìš©í”„ë¡œê·¸ë¨ì„ êµ¬ë™í•˜ê¸°ìœ„í•œ í™˜ê²½ì„¤ì •ì„ í•˜ëŠ” ê²ƒì…ë‹ˆë‹¤
+the following applications need to be upgraded:	setup	ko	ë‹¤ìŒì˜ ì‘ìš©í”„ë¡œê·¸ë¨ì€ ì—…ê·¸ë ˆì´ë“œê°€ í•´ì•¼í•©ë‹ˆë‹¤:
+the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	ko	imap í™•ì¥ì€ 2ê°œì˜ ì´ë©”ì¼ ì‘ìš©í”„ë¡œê·¸ë¨ì—ì„œ í•„ìš”í•©ë‹ˆë‹¤(pop3í”„ë¡œí† ì½œë¡œ emailì„ ì‚¬ìš©í•˜ì…”ë„ ì—­ì‹œ í•„ìš”í•©ë‹ˆë‹¤)
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ko	mbstring í™•ì¥ì€ ìœ ë‹ˆì½”ë“œ(UTF-8)ì´ë‚˜ ê¸°íƒ€ ë‹¤ì¤‘ë°”ì´íŠ¸-ë¬¸ìì…‹ì„ ì™„ë²½íˆ ì§€ì›í•˜ëŠ”ë° í•„ìš”í•©ë‹ˆë‹¤
+the table definition was correct, and the tables were installed	setup	ko	í…Œì´ë¸” ì •ì˜ê°€ ìˆ˜ì •ë˜ì—ˆê³  í…Œì´ë¸”ë“¤ì´ ì„¤ì¹˜ë˜ì—ˆìŠµë‹ˆë‹¤
+the tables	setup	ko	ì—¬ëŸ¬ í…Œì´ë¸”
+there was a problem trying to connect to your ldap server. <br />	setup	ko	LDAPì„œë²„ì— ì ‘ì†í•˜ëŠ”ë° ë¬¸ì œê°€ ìˆìŠµë‹ˆë‹¤.<br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	ko	+* LDAPì„œë²„ì— ì ‘ì†í•˜ëŠ”ë° ë¬¸ì œê°€ ìˆìŠµë‹ˆë‹¤.<br /> ê·€í•˜ì˜ LDAP ì„œë²„ì˜ êµ¬ì„±ì„ í™•ì¸í•´ë³´ì„¸ìš”
+this has to be outside the webservers document-root!!!	setup	ko	ì›¹ì„œë²„ì˜ DocumentRoot ì™¸ë¶€ì— ìˆì–´ì•¼ í•©ë‹ˆë‹¤!!!
+this might take a while, please wait ...	setup	ko	ì•½ê°„ ì‹œê°„ì´ ê±¸ë¦½ë‹ˆë‹¤, ì ì‹œë§Œ ê¸°ë‹¤ë¦¬ì„¸ìš”...
+this program will convert your database to a new system-charset.	setup	ko	ì´ í”„ë¡œê·¸ë¨ì€ ê·€í•˜ì˜ ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ìƒˆ ì‹œìŠ¤í…œ-ë¬¸ìì…‹ìœ¼ë¡œ ë³€í™˜í•´ì¤ë‹ˆë‹¤
+this program will help you upgrade or install different languages for egroupware	setup	ko	ì´ í”„ë¡œê·¸ë¨ì€ eGroupWareì˜ ë‹¤ë¥¸ ì–¸ì–´ë¥¼ ì„¤ì¹˜í•˜ê±°ë‚˜ ì—…ê·¸ë ˆì´ë“œí•˜ëŠ”ë° ë„ì›€ì„ ì¤ë‹ˆë‹¤
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ko	ì´ ì„¹ì…˜ì€ eGroupWareì˜ ì‚¬ìš©ìì™€ ê·¸ë£¹ë“¤ì˜ ê³„ì • í…Œì´ë¸”ì„ LDAP íŠ¸ë¦¬ë¡œ ë‚´ë³´ëŠ”ë° ë„ì›€ì„ ì¤ë‹ˆë‹¤
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	ko	ì´ ì„¹ì…˜ì€ LDAP íŠ¸ë¦¬ì˜ ì‚¬ìš©ìì™€ ê·¸ë£¹ë“¤ì˜ eGroupWareì˜ ê³„ì • í…Œì´ë¸”ë¡œ ê°€ì ¸ì˜¤ëŠ”ë° ë„ì›€ì„ ì¤ë‹ˆë‹¤
+this section will help you setup your ldap accounts for use with egroupware	setup	ko	ì´ ì„¹ì…˜ì€ eGroupWareì™€ í•¨ê»˜ ì‚¬ìš©í•  LDAP ê³„ì •ì„ ì„¤ì •í•˜ëŠ”ë° ë„ì›€ì„ ì¤ë‹ˆë‹¤.
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	ko	30 ë°”ì´íŠ¸ ë‚´ì™¸ì—¬ì•¼ í•©ë‹ˆë‹¤.<br /> ì£¼ì˜: ê¸°ë³¸ì„¤ì •ì€ ì•„ë¬´ê°’ì´ë‚˜ ìƒì„±ë©ë‹ˆë‹¤
+this stage is completed<br />	setup	ko	ìŠ¤í…Œì´ì§€ê°€ ì™„ë£Œë¨<br />
+to a version it does not know about	setup	ko	ì˜ ì•Œìˆ˜ ì—†ëŠ” ë²„ì „ìœ¼ë¡œ
+to setup 1 admin account and 3 demo accounts.	setup	ko	1ê°œì˜ ê´€ë¦¬ì ê³„ì •ê³¼ 3ê°œì˜ ë°ëª¨ ê³„ì •ì„ ì„¤ì •
+top	setup	ko	ìµœìƒìœ„
+translations added	setup	ko	ë²ˆì—­ ì¶”ê°€ë¨
+translations removed	setup	ko	ë²ˆì—­ ì‚­ì œë¨
+translations upgraded	setup	ko	ë²ˆì—­ ì—…ê·¸ë ˆì´ë“œë¨
+true	setup	ko	ì°¸
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ko	ìœ„ì—ì„œ ì–¸ê¸‰í•œ DBMSì¤‘ í•˜ë‚˜ë¥¼ ì§€ì›í•˜ê¸°ìœ„í•´ì„œ phpë¥¼ êµ¬ì„±í•˜ì‹œê±°ë‚˜ eGroupWareë¥¼ ìˆ˜ë™ìœ¼ë¡œ ì„¤ì¹˜í•˜ì„¸ìš”
+two weeks	setup	ko	2ì£¼ì¼
+uninstall	setup	ko	ì„¤ì¹˜ì œê±°
+uninstall all applications	setup	ko	ëª¨ë“  ì‘ìš©í”„ë¡œê·¸ë¨ì„ ì„¤ì¹˜ì œê±°
+uninstalled	setup	ko	ì„¤ì¹˜ì œê±°ë¨
+upgrade	setup	ko	ì—…ê·¸ë ˆì´ë“œ
+upgrade all	setup	ko	ëª¨ë‘ ì—…ê·¸ë ˆì´ë“œ
+upgraded	setup	ko	ì—…ê·¸ë ˆì´ë“œë¨
+upgrading tables	setup	ko	í…Œì´ë¸”ì„ ì—…ê·¸ë ˆì´ë“œì¤‘
+use cookies to pass sessionid	setup	ko	sessionid ë¥¼ ì „ë‹¬í•˜ê¸° ìœ„í•´ ì¿ í‚¤ ì‚¬ìš©
+use pure html compliant code (not fully working yet)	setup	ko	ìˆœìˆ˜ HTML í˜¸í™˜ ì½”ë“œ ì‚¬ìš© ( ì•„ì§ ì™„ë²½í•˜ê²Œ ë™ì‘í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤)
+user account prefix	setup	ko	ì‚¬ìš©ìê³„ì • ì ‘ë‘ì–´(prefix)
+usernames are casesensitive	setup	ko	ì‚¬ìš©ìì´ë¦„ì€ ëŒ€ì†Œë¬¸ìêµ¬ë¶„í•¨
+users choice	setup	ko	ì‚¬ìš©ì ì„ íƒ
+utf-8 (unicode)	setup	ko	utf-8 (ìœ ë‹ˆì½”ë“œ)
+version	setup	ko	ë²„ì „
+version mismatch	setup	ko	ë²„ì „ì´ ì¼ì¹˜í•˜ì§€ ì•ŠìŒ
+view	setup	ko	ë³´ê¸°
+warning!	setup	ko	ê²½ê³ !
+we can proceed	setup	ko	ì§„í–‰ ê°€ëŠ¥
+we will automatically update your tables/records to %1	setup	ko	ê·€í•˜ì˜ í…Œì´ë¸”/ë ˆì½”ë“œë“¤ì„ ìë™ìœ¼ë¡œ %1ë¡œ ë³€í™˜í•©ë‹ˆë‹¤.
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ko	ì—°ì†ì ì¸ í…ŒìŠ¤íŠ¸ë¥¼ ìˆ˜í–‰í•©ë‹ˆë‹¤, ëª‡ë¶„ì •ë„ ê±¸ë¦´ìˆ˜ ìˆìŠµë‹ˆë‹¤. ê³„ì†í•˜ë ¤ë©´ ë§í¬ë¥¼ í´ë¦­í•˜ì„¸ìš”
+welcome to the egroupware installation	setup	ko	eGroupWare ì„¤ì¹˜ë¥¼ í™˜ì˜í•©ë‹ˆë‹¤
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	ko	+* ì„¸ì…˜ ê´€ë¦¬ë¥¼ ìœ„í•´ ì‚¬ìš©í•˜ì‹¤ ê²ƒì€ (PHP4 ì„¸ì…˜ ê´€ë¦¬ê°€ ì¡°ê¸ˆ ë” ë‚˜ì€ ì„±ëŠ¥)?
+which database type do you want to use with egroupware?	setup	ko	eGroupWareì™€ í•¨ê»˜ ì‚¬ìš©í•  ë°ì´í„°ë² ì´ìŠ¤ íƒ€ì…ì€?
+world readable	setup	ko	ëˆ„êµ¬ë‚˜ ì½ì„ìˆ˜ ìˆìŒ
+world writable	setup	ko	ëˆ„êµ¬ë‚˜ ì“¸ìˆ˜ ìˆìŒ
+would you like egroupware to cache the phpgw info array ?	setup	ko	eGroupWareê°€ phpgw info ë°°ì—´ì„ ìºì‰¬í•˜ê¸¸ ì›í•˜ì‹­ë‹ˆê¹Œ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	ko	ê´€ë¦¬ìê°€ ë¡œê·¸ì¸í–ˆì„ë•Œ <br /> eGroupWare ìƒˆë²„ì „ì„ í™•ì¸í• ê¹Œìš”?
+would you like to show each application's upgrade status ?	setup	ko	ê° ì‘ìš©í”„ë¡œê·¸ë¨ì˜ ì—…ê·¸ë ˆì´ë“œ ìƒíƒœë¥¼ ë³´ì—¬ì¤„ê¹Œìš”?
+writable by the webserver	setup	ko	ì›¹ì„œë²„ê°€ ì“¸ìˆ˜ ìˆìŒ
+write config	setup	ko	êµ¬ì„± ê¸°ë¡
+yes	setup	ko	ì˜ˆ
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ko	eGroupWare ë² íƒ€ë²„ì „ì„ ì‚¬ìš©í•˜ì‹œê³  ê³„ì‹­ë‹ˆë‹¤.<br />ì´ ë²„ì „ì€ ë”ì´ìƒ ì§€ì›í•˜ì§€ ì•Šìœ¼ë©° ì„¤ì •ì— ì—…ê·¸ë ˆì´ë“œí•  ê²½ë¡œë„ ì—†ìŠµë‹ˆë‹¤<br /> ë¨¼ì € 0.9.10 ë²„ì „(ë² íƒ€ì—…ê·¸ë ˆì´ë“œ ì§€ì› ë§ˆì§€ë§‰ë²„ì „)ìœ¼ë¡œ ì—…ê·¸ë ˆì´ë“œ í•˜ì‹œê³ <br />ê·¸ í›„ì— ìµœì‹  ë²„ì „ìœ¼ë¡œ ì—…ê·¸ë ˆì´ë“œ í•˜ì„¸ìš”.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ko	PHPë²„ì „ì´ ì˜¤ë˜ë˜ì—ˆìŠµë‹ˆë‹¤<br />ìƒˆë¡œìš´ ë²„ì „ìœ¼ë¡œ ì—…ê·¸ë ˆì´ë“œ í•˜ì‹œê¸¸ ê¶Œì¥í•©ë‹ˆë‹¤.<br />ì´ì „ ë²„ì „ì˜ PHPëŠ” eGroupWareê°€ ì •ìƒì ìœ¼ë¡œ ë™ì‘í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤<br /><br />ì ì–´ë„ %1 ë²„ì „ìœ¼ë¡œëŠ” ì—…ê·¸ë ˆì´ë“œ í•´ì£¼ì…”ì•¼ í•©ë‹ˆë‹¤.
+you appear to be running version %1 of egroupware	setup	ko	eGroupWare ë²„ì „ %1ì„ ì‚¬ìš©í•˜ê³  ìˆìŠµë‹ˆë‹¤
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	ko	PHPë²„ì „ 4.1.0 ì´ì „ë²„ì „ì„ ì‚¬ìš©í•˜ê³  ê³„ì‹­ë‹ˆë‹¤. eGroupWareëŠ” 4.1.0 ì´ë‚˜ ì´ ì´í›„ ë²„ì „ì´ í•„ìš”í•©ë‹ˆë‹¤
+you appear to be using php3. disabling php4 sessions support	setup	ko	PHP3ì„ ì‚¬ìš©í•˜ê³  ê³„ì‹­ë‹ˆë‹¤. PHP4 ì„¸ì…˜ ì§€ì›ì„ ë¹„í™œì„±í™” í•©ë‹ˆë‹¤
+you appear to be using php4. enabling php4 sessions support	setup	ko	PHP4ì„ ì‚¬ìš©í•˜ê³  ê³„ì‹­ë‹ˆë‹¤. PHP4 ì„¸ì…˜ ì§€ì›ì„ í™œì„±í™” í•©ë‹ˆë‹¤
+you appear to have microsoft sql server support enabled	setup	ko	ë§ˆì´í¬ë¡œì†Œí”„íŠ¸ SQLì„œë²„ ì§€ì›ì´ í™œì„±í™” ë˜ì—ˆìŠµë‹ˆë‹¤.
+you appear to have mysql support enabled	setup	ko	MySQLì„ ì§€ì›í•©ë‹ˆë‹¤.
+you appear to have oracle support enabled	setup	ko	Oracleì„ ì§€ì›í•©ë‹ˆë‹¤.
+you appear to have oracle v8 (oci) support enabled	setup	ko	Oracle V8 (OCI) ì„ ì§€ì›í•©ë‹ˆë‹¤.
+you appear to have postgresql support enabled	setup	ko	PostgreSQLì„ ì§€ì›í•©ë‹ˆë‹¤.
+you appear to have xml support enabled	setup	ko	XMLì„ ì§€ì›í•©ë‹ˆë‹¤.
+you are ready for this stage, but this stage is not yet written.<br />	setup	ko	í˜„ì¬ ìŠ¤í…Œì´ì§€ë¥¼ ìˆ˜í–‰í•  ì¤€ë¹„ê°€ ë˜ì—ˆìŠµë‹ˆë‹¤ë§Œ, ì•„ì§ ì™„ì „íˆ ì‘ì„±ë˜ì§€ëŠ” ì•Šì•˜ìŠµë‹ˆë‹¤.<br />
+you didn't enter a config password for domain %1	setup	ko	%1ë„ë©”ì¸ì˜ êµ¬ì„±ì•”í˜¸ë¥¼ ì…ë ¥í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+you didn't enter a config username for domain %1	setup	ko	%1ë„ë©”ì¸ì˜ êµ¬ì„±ì‚¬ìš©ìì´ë¦„ì„ ì…ë ¥í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+you didn't enter a header admin password	setup	ko	ìƒìœ„ê´€ë¦¬ì ì•”í˜¸ë¥¼ ì…ë ¥í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+you didn't enter a header admin username	setup	ko	ìƒìœ„ê´€ë¦¬ì ì‚¬ìš©ìì´ë¦„ì„ ì…ë ¥í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.
+you do not have any languages installed. please install one now <br />	setup	ko	ì•„ë¬´ì–¸ì–´ë„ ì„¤ì¹˜ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤. í•œê°€ì§€ë¥¼ ì§€ê¸ˆ ì„¤ì¹˜í•˜ì„¸ìš”<br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	ko	ê·€í•˜ì˜ header.inc.phpë¥¼ ì•„ì§ ìƒì„±í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!<br />ì§€ê¸ˆ ìƒì„±í•˜ì„¸ìš”.
+you have successfully logged out	setup	ko	ì„±ê³µì ìœ¼ë¡œ ì ‘ì†ì¢…ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤
+you must enter a username for the admin	setup	ko	ê´€ë¦¬í•  ì‚¬ìš©ìì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”
+you need to add some domains to your header.inc.php.	setup	ko	header.inc.php ì— ì–´ë–¤ ë„ë©”ì¸ì´ë“  ì¶”ê°€í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.
+you need to select your current charset!	setup	ko	í˜„ì¬ ë¬¸ìì…‹ì„ ì„ íƒí•˜ì„¸ìš”!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	ko	ì„¤ì¹˜ì œê±°ë‚˜ ì¬ì„¤ì¹˜ë¥¼ ìˆ˜í–‰í•˜ì…”ì•¼ í•˜ë©°, ì•„ë‹ˆë©´ ì§ì ‘ ìˆ˜ì •í•˜ì…”ì•¼ í•©ë‹ˆë‹¤
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	ko	LDAP ì„œë²„ì— ì ì ˆí•œ ìŠ¤í‚¤ë§ˆë¥¼ ë¶ˆëŸ¬ì˜¤ì…”ì•¼ í•©ë‹ˆë‹¤. ì°¸ê³ : <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
+you're using an old configuration file format...	setup	ko	ì´ì „ ì„¤ì • íŒŒì¼ì˜ í˜•ì‹ì„ ì‚¬ìš©í•˜ê³  ìˆìŠµë‹ˆë‹¤...
+you're using an old header.inc.php version...	setup	ko	ì´ì „ header.inc.php ë²„ì „ì„ ì‚¬ìš©í•˜ê³  ìˆìŠµë‹ˆë‹¤...
+your applications are current	setup	ko	ì‘ìš©í”„ë¡œê·¸ë¨ì´ í˜„ì¬ ë²„ì „ì…ë‹ˆë‹¤
+your database does not exist	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+your database is not working!	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ê°€ ë™ì‘í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+your database is working, but you dont have any applications installed	setup	ko	ë°ì´í„°ë² ì´ìŠ¤ëŠ” ì¥ë™í•©ë‹ˆë‹¤ë§Œ, ì„¤ì¹˜ëœ ì‘ìš©í”„ë¡œê·¸ë¨ì´ ì—†ìŠµë‹ˆë‹¤
+your header admin password is not set. please set it now!	setup	ko	ìƒìœ„ê´€ë¦¬ì ì•”í˜¸ê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. ì§€ê¸ˆ ì„¤ì •í•˜ì„¸ìš”!
+your header.inc.php needs upgrading.	setup	ko	header.inc.php ì˜ ì—…ê·¸ë ˆì´ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤.
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ko	ê·€í•˜ì˜ header.inc.php ëŠ” ì—…ê·¸ë ˆì´ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤.<br /><blink><b class="msg">ê²½ê³ !</b></blink><br /><b>ë°±ì—…í•˜ì„¸ìš”!</b>
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	ko	ê·€í•˜ì˜ PHPì— GDì§€ì›ì´ ì—†ìŠµë‹ˆë‹¤. gd ë¼ì´ë¸ŒëŸ¬ë¦¬ë²„ì „ 1.8 ì´ë‚˜ ê·¸ ì´í›„ì˜ ë²„ì „ì„ ì„¤ì¹˜í•˜ì…”ì•¼ í”„ë¡œì íŠ¸ì—ì„œ ê°„íŠ¸ì± íŠ¸ë¥¼ ë³´ì‹¤ìˆ˜ ìˆìŠµë‹ˆë‹¤
+your tables are current	setup	ko	í…Œì´ë¸”ì— ì´ìƒ ì—†ìŒ
+your tables may be altered and you may lose data	setup	ko	í…Œì´ë¸”ì´ ë³€ê²½ë˜ë©´ì„œ ë°ì´í„°ë¥¼ ìƒì„ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤.
+your tables will be dropped and you will lose data	setup	ko	í…Œì´ë¸”ë“¤ì´ ì‚­ì œë˜ë©´ì„œ ê·€í•˜ì˜ ìë£Œë¥¼ ìƒì„ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤ !!

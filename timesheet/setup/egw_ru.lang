@@ -1,52 +1,52 @@
-2 month ago	timesheet	ru	2 месяца назад
-2 years ago	timesheet	ru	2 года назад
-3 years ago	timesheet	ru	3 года назад
-actions	timesheet	ru	Действия
-all projects	timesheet	ru	Все проекты
-both: allow to use projectmanager and free project-names	admin	ru	Оба: позволяет использовать Управление проектами и свободные названия проектов
-by	timesheet	ru	к
-create new links	timesheet	ru	Создать новые ссылки
-creating new entry	timesheet	ru	создание новой записи
-delete this entry	timesheet	ru	Удалить эту запись
-edit this entry	timesheet	ru	Редактировать эту запись
-empty if identical to duration	timesheet	ru	пусто, если идентично длительности
-end	timesheet	ru	Конец
-entry deleted	timesheet	ru	Запись удалена
-entry saved	timesheet	ru	Запись сохранена
-error deleting the entry!!!	timesheet	ru	Ошибка при удалении записи!!!
-error saving the entry!!!	timesheet	ru	Ошибка при сохранении записи!!!
-existing links	timesheet	ru	Существующие ссылки
-full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
-general	timesheet	ru	Общий
-last modified	timesheet	ru	Последнее изменение
-last month	timesheet	ru	Прошлый месяц
-last week	timesheet	ru	Прошлая неделя
-last year	timesheet	ru	Прошлый год
-leave it empty for a full week	timesheet	ru	Оставьте незаполненным для всей недели
-links	timesheet	ru	Ссылки
-no details	timesheet	ru	нет подробностей
-no project	timesheet	ru	Нет проекта
-none: use only free project-names	admin	ru	Пусто: использовать только свободные названия проектов
-or endtime	timesheet	ru	или Время окончания
-permission denied!!!	timesheet	ru	Доступ запрещен!!!
-price	timesheet	ru	Цена
-projectmanager integration	admin	ru	Интеграция Управления проектами
-quantity	timesheet	ru	Количество
-save & new	timesheet	ru	Сохранить и добавить новый
-saves the changes made	timesheet	ru	Сохраняет внесенные изменения
-saves this entry and add a new one	timesheet	ru	Сохраняет эту запись и добавляет новую
-select a price	timesheet	ru	Выбрать цену
-select a project	timesheet	ru	Выбрать проект
-start	timesheet	ru	Старт
-starttime	timesheet	ru	Время начала
-starttime has to be before endtime !!!	timesheet	ru	Время начала должно быть перед временем окончания !!!
-sum %1:	timesheet	ru	Сумма %1:
-this month	timesheet	ru	Этот месяц
-this week	timesheet	ru	Эта неделя
-this year	timesheet	ru	Этот год
-timesheet	common	ru	Табель учета времени
-unitprice	timesheet	ru	Цена за единицу
-view this entry	timesheet	ru	Показать эту запись
-week	timesheet	ru	Неделя
-yesterday	timesheet	ru	Вчера
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ru	ваша база данных устарела (%1 против %2), пожалуйста, запустите %3Установку%4 чтобы обновить вашу базу данных.
+2 month ago	timesheet	ru	2 п╪п╣я│я▐я├п╟ п╫п╟п╥п╟п╢
+2 years ago	timesheet	ru	2 пЁп╬п╢п╟ п╫п╟п╥п╟п╢
+3 years ago	timesheet	ru	3 пЁп╬п╢п╟ п╫п╟п╥п╟п╢
+actions	timesheet	ru	п■п╣п╧я│я┌п╡п╦я▐
+all projects	timesheet	ru	п▓я│п╣ п©я─п╬п╣п╨я┌я▀
+both: allow to use projectmanager and free project-names	admin	ru	п·п╠п╟: п©п╬п╥п╡п╬п╩я▐п╣я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ пёп©я─п╟п╡п╩п╣п╫п╦п╣ п©я─п╬п╣п╨я┌п╟п╪п╦ п╦ я│п╡п╬п╠п╬п╢п╫я▀п╣ п╫п╟п╥п╡п╟п╫п╦я▐ п©я─п╬п╣п╨я┌п╬п╡
+by	timesheet	ru	п╨
+create new links	timesheet	ru	п║п╬п╥п╢п╟я┌я▄ п╫п╬п╡я▀п╣ я│я│я▀п╩п╨п╦
+creating new entry	timesheet	ru	я│п╬п╥п╢п╟п╫п╦п╣ п╫п╬п╡п╬п╧ п╥п╟п©п╦я│п╦
+delete this entry	timesheet	ru	пёп╢п╟п╩п╦я┌я▄ я█я┌я┐ п╥п╟п©п╦я│я▄
+edit this entry	timesheet	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я█я┌я┐ п╥п╟п©п╦я│я▄
+empty if identical to duration	timesheet	ru	п©я┐я│я┌п╬, п╣я│п╩п╦ п╦п╢п╣п╫я┌п╦я┤п╫п╬ п╢п╩п╦я┌п╣п╩я▄п╫п╬я│я┌п╦
+end	timesheet	ru	п п╬п╫п╣я├
+entry deleted	timesheet	ru	п≈п╟п©п╦я│я▄ я┐п╢п╟п╩п╣п╫п╟
+entry saved	timesheet	ru	п≈п╟п©п╦я│я▄ я│п╬я┘я─п╟п╫п╣п╫п╟
+error deleting the entry!!!	timesheet	ru	п·я┬п╦п╠п╨п╟ п©я─п╦ я┐п╢п╟п╩п╣п╫п╦п╦ п╥п╟п©п╦я│п╦!!!
+error saving the entry!!!	timesheet	ru	п·я┬п╦п╠п╨п╟ п©я─п╦ я│п╬я┘я─п╟п╫п╣п╫п╦п╦ п╥п╟п©п╦я│п╦!!!
+existing links	timesheet	ru	п║я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╣ я│я│я▀п╩п╨п╦
+full: use only projectmanager	admin	ru	п÷п╬п╩п╫я▀п╧: п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я┌п╬п╩я▄п╨п╬ пёп©я─п╟п╡п╩п╣п╫п╦п╣ п©я─п╬п╣п╨я┌п╟п╪п╦
+general	timesheet	ru	п·п╠я┴п╦п╧
+last modified	timesheet	ru	п÷п╬я│п╩п╣п╢п╫п╣п╣ п╦п╥п╪п╣п╫п╣п╫п╦п╣
+last month	timesheet	ru	п÷я─п╬я┬п╩я▀п╧ п╪п╣я│я▐я├
+last week	timesheet	ru	п÷я─п╬я┬п╩п╟я▐ п╫п╣п╢п╣п╩я▐
+last year	timesheet	ru	п÷я─п╬я┬п╩я▀п╧ пЁп╬п╢
+leave it empty for a full week	timesheet	ru	п·я│я┌п╟п╡я▄я┌п╣ п╫п╣п╥п╟п©п╬п╩п╫п╣п╫п╫я▀п╪ п╢п╩я▐ п╡я│п╣п╧ п╫п╣п╢п╣п╩п╦
+links	timesheet	ru	п║я│я▀п╩п╨п╦
+no details	timesheet	ru	п╫п╣я┌ п©п╬п╢я─п╬п╠п╫п╬я│я┌п╣п╧
+no project	timesheet	ru	п²п╣я┌ п©я─п╬п╣п╨я┌п╟
+none: use only free project-names	admin	ru	п÷я┐я│я┌п╬: п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я┌п╬п╩я▄п╨п╬ я│п╡п╬п╠п╬п╢п╫я▀п╣ п╫п╟п╥п╡п╟п╫п╦я▐ п©я─п╬п╣п╨я┌п╬п╡
+or endtime	timesheet	ru	п╦п╩п╦ п▓я─п╣п╪я▐ п╬п╨п╬п╫я┤п╟п╫п╦я▐
+permission denied!!!	timesheet	ru	п■п╬я│я┌я┐п© п╥п╟п©я─п╣я┴п╣п╫!!!
+price	timesheet	ru	п╕п╣п╫п╟
+projectmanager integration	admin	ru	п≤п╫я┌п╣пЁя─п╟я├п╦я▐ пёп©я─п╟п╡п╩п╣п╫п╦я▐ п©я─п╬п╣п╨я┌п╟п╪п╦
+quantity	timesheet	ru	п п╬п╩п╦я┤п╣я│я┌п╡п╬
+save & new	timesheet	ru	п║п╬я┘я─п╟п╫п╦я┌я▄ п╦ п╢п╬п╠п╟п╡п╦я┌я▄ п╫п╬п╡я▀п╧
+saves the changes made	timesheet	ru	п║п╬я┘я─п╟п╫я▐п╣я┌ п╡п╫п╣я│п╣п╫п╫я▀п╣ п╦п╥п╪п╣п╫п╣п╫п╦я▐
+saves this entry and add a new one	timesheet	ru	п║п╬я┘я─п╟п╫я▐п╣я┌ я█я┌я┐ п╥п╟п©п╦я│я▄ п╦ п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╫п╬п╡я┐я▌
+select a price	timesheet	ru	п▓я▀п╠я─п╟я┌я▄ я├п╣п╫я┐
+select a project	timesheet	ru	п▓я▀п╠я─п╟я┌я▄ п©я─п╬п╣п╨я┌
+start	timesheet	ru	п║я┌п╟я─я┌
+starttime	timesheet	ru	п▓я─п╣п╪я▐ п╫п╟я┤п╟п╩п╟
+starttime has to be before endtime !!!	timesheet	ru	п▓я─п╣п╪я▐ п╫п╟я┤п╟п╩п╟ п╢п╬п╩п╤п╫п╬ п╠я▀я┌я▄ п©п╣я─п╣п╢ п╡я─п╣п╪п╣п╫п╣п╪ п╬п╨п╬п╫я┤п╟п╫п╦я▐ !!!
+sum %1:	timesheet	ru	п║я┐п╪п╪п╟ %1:
+this month	timesheet	ru	п╜я┌п╬я┌ п╪п╣я│я▐я├
+this week	timesheet	ru	п╜я┌п╟ п╫п╣п╢п╣п╩я▐
+this year	timesheet	ru	п╜я┌п╬я┌ пЁп╬п╢
+timesheet	common	ru	п╒п╟п╠п╣п╩я▄ я┐я┤п╣я┌п╟ п╡я─п╣п╪п╣п╫п╦
+unitprice	timesheet	ru	п╕п╣п╫п╟ п╥п╟ п╣п╢п╦п╫п╦я├я┐
+view this entry	timesheet	ru	п÷п╬п╨п╟п╥п╟я┌я▄ я█я┌я┐ п╥п╟п©п╦я│я▄
+week	timesheet	ru	п²п╣п╢п╣п╩я▐
+yesterday	timesheet	ru	п▓я┤п╣я─п╟
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ru	п╡п╟я┬п╟ п╠п╟п╥п╟ п╢п╟п╫п╫я▀я┘ я┐я│я┌п╟я─п╣п╩п╟ (%1 п©я─п╬я┌п╦п╡ %2), п©п╬п╤п╟п╩я┐п╧я│я┌п╟, п╥п╟п©я┐я│я┌п╦я┌п╣ %3пёя│я┌п╟п╫п╬п╡п╨я┐%4 я┤я┌п╬п╠я▀ п╬п╠п╫п╬п╡п╦я┌я▄ п╡п╟я┬я┐ п╠п╟п╥я┐ п╢п╟п╫п╫я▀я┘.

@@ -11,6 +11,7 @@ authentication / accounts	setup	hu	Azonosítás / Azonosítók
 back to user login	setup	hu	Vissza a felhasználói bejelentkezéshez
 bottom	setup	hu	legalsó
 cancel	setup	hu	Mégsem
+charset	setup	hu	utf-8
 check installation	setup	hu	Telepítés ellenőrzése
 check ip address of all sessions	setup	hu	Összes session IP cím ellenőrzése
 completed	setup	hu	Teljesítve

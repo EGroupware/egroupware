@@ -3,49 +3,49 @@
 3 years ago	timesheet	fi	3 vuotta sitten
 actions	timesheet	fi	Toiminnot
 all projects	timesheet	fi	Kaikki projektit
-both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien k‰yttˆ
+both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien k√§ytt√∂
 create new links	timesheet	fi	Luo uusi linkki
-creating new entry	timesheet	fi	Luo uusi merkint‰
-delete this entry	timesheet	fi	poista t‰m‰ merkint‰
-edit this entry	timesheet	fi	Muokkaa t‰t‰ merkint‰‰
-empty if identical to duration	timesheet	fi	poista jos kesto on yht‰ pitk‰
-end	timesheet	fi	P‰‰tˆs
-entry deleted	timesheet	fi	Merkint‰ poistettu
-entry saved	timesheet	fi	Merkint‰ tallennettu
-error deleting the entry!!!	timesheet	fi	Virhe poistettaessa merkint‰‰ !!!
-error saving the entry!!!	timesheet	fi	Virhe tallentaessa merkint‰‰ !!!
+creating new entry	timesheet	fi	Luo uusi merkint√§
+delete this entry	timesheet	fi	poista t√§m√§ merkint√§
+edit this entry	timesheet	fi	Muokkaa t√§t√§ merkint√§√§
+empty if identical to duration	timesheet	fi	poista jos kesto on yht√§ pitk√§
+end	timesheet	fi	P√§√§t√∂s
+entry deleted	timesheet	fi	Merkint√§ poistettu
+entry saved	timesheet	fi	Merkint√§ tallennettu
+error deleting the entry!!!	timesheet	fi	Virhe poistettaessa merkint√§√§ !!!
+error saving the entry!!!	timesheet	fi	Virhe tallentaessa merkint√§√§ !!!
 existing links	timesheet	fi	Olemassa olevat linkit
-full: use only projectmanager	admin	fi	T‰ydet: k‰yt‰ vain projektinhallintaa
+full: use only projectmanager	admin	fi	T√§ydet: k√§yt√§ vain projektinhallintaa
 general	timesheet	fi	Yleinen
 last modified	timesheet	fi	Viimeksi muokattu
 last month	timesheet	fi	Viime kuussa
 last week	timesheet	fi	Viime viikolla
 last year	timesheet	fi	Viime vuonna
-leave it empty for a full week	timesheet	fi	J‰t‰ tyhj‰ koko viikon ajalta
+leave it empty for a full week	timesheet	fi	J√§t√§ tyhj√§ koko viikon ajalta
 links	timesheet	fi	Linkit
-no details	timesheet	fi	Ei lis‰tietoja
+no details	timesheet	fi	Ei lis√§tietoja
 no project	timesheet	fi	Ei projektia
-none: use only free project-names	admin	fi	Ei mit‰‰n: k‰yt‰ vain vapaita projektinimi‰
-or endtime	timesheet	fi	ei p‰‰ttymishetke‰
-permission denied!!!	timesheet	fi	P‰‰sy estetty!!!
+none: use only free project-names	admin	fi	Ei mit√§√§n: k√§yt√§ vain vapaita projektinimi√§
+or endtime	timesheet	fi	ei p√§√§ttymishetke√§
+permission denied!!!	timesheet	fi	P√§√§sy estetty!!!
 price	timesheet	fi	Hinta
 projectmanager integration	admin	fi	Projektinhallinnan integrointi
-quantity	timesheet	fi	M‰‰r‰
+quantity	timesheet	fi	M√§√§r√§
 save & new	timesheet	fi	Tallenna ja tee uusi
 saves the changes made	timesheet	fi	Tallenna tehdyt muutokset
-saves this entry and add a new one	timesheet	fi	Tallenna t‰m‰ merkint‰ ja lis‰‰ uusi
+saves this entry and add a new one	timesheet	fi	Tallenna t√§m√§ merkint√§ ja lis√§√§ uusi
 select a price	timesheet	fi	Valitse hinta
 select a project	timesheet	fi	Valitse projekti
 start	timesheet	fi	Alku
 starttime	timesheet	fi	Aloittamisaika
-starttime has to be before endtime !!!	timesheet	fi	Aloittamisajan pit‰‰ olla ennen p‰‰ttymiaikaa
+starttime has to be before endtime !!!	timesheet	fi	Aloittamisajan pit√§√§ olla ennen p√§√§ttymiaikaa
 sum %1:	timesheet	fi	Summa %1:
-this month	timesheet	fi	T‰ss‰ kuussa
-this week	timesheet	fi	T‰ll‰ viikolla
-this year	timesheet	fi	T‰n‰ vuonna
+this month	timesheet	fi	T√§ss√§ kuussa
+this week	timesheet	fi	T√§ll√§ viikolla
+this year	timesheet	fi	T√§n√§ vuonna
 timesheet	common	fi	Ajanseuranta
-unitprice	timesheet	fi	Yksikkˆhinta
-view this entry	timesheet	fi	N‰yt‰ t‰m‰ merkint‰
+unitprice	timesheet	fi	Yksikk√∂hinta
+view this entry	timesheet	fi	N√§yt√§ t√§m√§ merkint√§
 week	timesheet	fi	Viikko
 yesterday	timesheet	fi	Eilen
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fi	Tietokantasi EI ole ajan tasalla %1 vs. %2), suorita %3setup%4 p‰ivitt‰‰ksesi tietokantasi.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fi	Tietokantasi EI ole ajan tasalla %1 vs. %2), suorita %3setup%4 p√§ivitt√§√§ksesi tietokantasi.

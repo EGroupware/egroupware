@@ -118,7 +118,7 @@ centered	common	en	centered
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
-charset	common	en	iso-8859-1
+charset	common	en	utf-8
 check installation	common	en	Check installation
 check now	common	en	Check Now
 chile	common	en	CHILE
@@ -211,7 +211,7 @@ email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware Â  or Â  /egroupware<br><b>No trailing slash</b>
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
 equatorial guinea	common	en	EQUATORIAL GUINEA

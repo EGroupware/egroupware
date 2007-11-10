@@ -1,214 +1,214 @@
-(account deletion in SQL only)	setup	ja	(SQL ¤Î¤ß¤Î¥¢¥«¥¦¥ó¥Èºï½ü)
-actions	setup	ja	Æ°ºî
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ja	¼«Æ°ºîÀ®»ş¤Î¥°¥ë¡¼¥× &nbsp; (»ØÄê¤Ê¤·¤Î¾ì¹ç 'default')
-admins	setup	ja	´ÉÍı¼Ô
-admin first name	setup	ja	À«
-admin last name	setup	ja	Ì¾
-admin password	setup	ja	¥Ñ¥¹¥ï¡¼¥É
-admin username	setup	ja	¥æ¡¼¥¶ID
-all applications	setup	ja	¤Ç¡¢¤¹¤Ù¤Æ¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤òºîÀ®¤·¤Ş¤¹¡£
-all users	setup	ja	Á´¤Æ¤Î¥æ¡¼¥¶
-app details	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¾ÜºÙ
-app install/remove/upgrade	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÄÉ²Ã/¹¹¿·/ºï½ü
-application data	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¾ğÊó
-application management	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÀßÄê
-application name and status information	setup	ja	<center>¥¢¥×¥ê¥±¡¼¥·¥ç¥óÌ¾<BR>¾õÂÖ</center>
-application title	setup	ja	¥¿¥¤¥È¥ëÌ¾
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤ÎºîÀ®¡¢¤ª¤è¤Ó¥æ¡¼¥¶¤ò¥¢¥µ¥¤¥ó¤·¤Ş¤·¤¿¡£
-at your request, this script is going to attempt to install all the applications for you	setup	ja	¤¹¤Ù¤Æ¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤òºîÀ®¤·¤Ş¤·¤¿
+(account deletion in SQL only)	setup	ja	(SQL ã®ã¿ã®ã‚¢ã‚«ã‚¦ãƒ³ãƒˆå‰Šé™¤)
+actions	setup	ja	å‹•ä½œ
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ja	è‡ªå‹•ä½œæˆæ™‚ã®ã‚°ãƒ«ãƒ¼ãƒ— &nbsp; (æŒ‡å®šãªã—ã®å ´åˆ 'default')
+admins	setup	ja	ç®¡ç†è€…
+admin first name	setup	ja	å§“
+admin last name	setup	ja	å
+admin password	setup	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+admin username	setup	ja	ãƒ¦ãƒ¼ã‚¶ID
+all applications	setup	ja	ã§ã€ã™ã¹ã¦ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
+all users	setup	ja	å…¨ã¦ã®ãƒ¦ãƒ¼ã‚¶
+app details	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®è©³ç´°
+app install/remove/upgrade	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®è¿½åŠ /æ›´æ–°/å‰Šé™¤
+application data	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
+application management	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
+application name and status information	setup	ja	<center>ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³å<BR>çŠ¶æ…‹</center>
+application title	setup	ja	ã‚¿ã‚¤ãƒˆãƒ«å
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ja	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®ä½œæˆã€ãŠã‚ˆã³ãƒ¦ãƒ¼ã‚¶ã‚’ã‚¢ã‚µã‚¤ãƒ³ã—ã¾ã—ãŸã€‚
+at your request, this script is going to attempt to install all the applications for you	setup	ja	ã™ã¹ã¦ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã—ã¾ã—ãŸ
 at your request, this script is going to attempt to the tables for you	setup	ja	At your request, this script is going to attempt to the tables for you
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ja	¸Å¤¤¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ò¸½ºß¤Î¥Ğ¡¼¥¸¥ç¥ó¤Ë¥¢¥Ã¥×¥°¥ì¡¼¥É¤·¤Ş¤·¤¿¡£
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ja	¸Å¤¤¥Æ¡¼¥Ö¥ë¤ò¸½ºß¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¤Ë¥¢¥Ã¥×¥°¥ì¡¼¥É¤·¤Ş¤·¤¿¡£
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ja	å¤ã„ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç¾åœ¨ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã«ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰ã—ã¾ã—ãŸã€‚
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ja	å¤ã„ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ç¾åœ¨ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã«ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰ã—ã¾ã—ãŸã€‚
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ja	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥¢¥ó¥¤¥ó¥¹¥È¡¼¥ë¤Ç¡¢¥Æ¡¼¥Ö¥ë¤È¥Ç¡¼¥¿¤òºï½ü¤·¤Ş¤·¤¿
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP ¤ÎMIME¥¿¥¤¥×¤Ç &nbsp; 'application/octet-stream' &nbsp; ¤ÎÂå¤ï¤ê¤Ë<br />Àµ¤·¤¤¥¿¥¤¥×¤ò»È¤¦
-authentication / accounts	setup	ja	Ç§¾Ú/¥¢¥«¥¦¥ó¥È¾ğÊó
-auto create account records for authenticated users	setup	ja	Ç§¾Ú¤·¤¿¥æ¡¼¥¶¾ğÊó¤ò¼«Æ°Åª¤ËºîÀ®¤¹¤ë
-auto-created user accounts expire	setup	ja	¼«Æ°ºîÀ®¤·¤¿¥æ¡¼¥¶¤ÎÍ­¸ú´ü¸Â
-available version	setup	ja	ºÇ¿·¤Î<BR>¥Ğ¡¼¥¸¥ç¥ó
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	ja	<br />¤·¤«¤·¡¢¤³¤Î½èÍı¤¬¡¢¤¢¤Ê¤¿¤Î¥Ç¡¼¥¿¤òÇË²õ¤·¤Æ¤·¤Ş¤Ã¤¿¾ì¹ç¤ËÈ÷¤¨¤Æ¡¢<u>¥Ç¡¼¥¿¥Ğ¥Ã¥¯¥¢¥Ã¥×¤ò¤ª´«¤á¤·¤Ş¤¹¡£</u>
-because it depends upon	setup	ja	ÍıÍ³¤Ï¼¡¤Î¤È¤ª¤ê¤Ç¤¹
-because it is not a user application, or access is controlled via acl	setup	ja	¥æ¡¼¥¶¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Ç¤Ê¤¤¤«¡¢ACL ¤Ë¤è¤Ã¤Æ¥¢¥¯¥»¥¹À©¸Â¤·¤Æ¤¤¤Ş¤¹¡£
-because it requires manual table installation, <br />or the table definition was incorrect	setup	ja	¼êÆ°¤Ç¥Æ¡¼¥Ö¥ë¤ò¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ëÉ¬Í×¤¬¤¢¤ë¤«¡¢<br />¥Æ¡¼¥Ö¥ëÄêµÁ¤¬Àµ¤·¤¯¤¢¤ê¤Ş¤»¤ó¡£
-because of a failed upgrade or install	setup	ja	ÄÉ²Ã¤â¤·¤¯¤Ï¹¹¿·¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤Î¥Ğ¡¼¥¸¥ç¥ó¤¬¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÆ°ºî²ÄÇ½¥Ğ¡¼¥¸¥ç¥ó¤è¤ê¤â¿·¤·¤¤¤¿¤á¡¢¹¹¿·¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£
-because the enable flag for this app is set to 0, or is undefined	setup	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤¬ÍøÍÑ²ÄÇ½¤È¤Ê¤Ã¤Æ¤¤¤Ş¤»¤ó¡£
-bottom	setup	ja	²¼Éô
-cancel	setup	ja	¥­¥ã¥ó¥»¥ë
-charset	setup	ja	EUC-JP
-check ip address of all sessions	setup	ja	Á´¤Æ¤Î¥»¥Ã¥·¥ç¥ó¤Ç IP ¥¢¥É¥ì¥¹¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
-click here	setup	ja	¤³¤³¤ò¥¯¥ê¥Ã¥¯¤¹¤ë
-configuration completed	setup	ja	´Ä¶­ÀßÄê¤Ï´°Î»¤·¤Ş¤·¤¿¡£
-configuration	setup	ja	´Ä¶­ÀßÄê
-configure now	setup	ja	´Ä¶­ÀßÄê
-country selection	setup	ja	¹ñ¤ÎÁªÂò
-create demo accounts	setup	ja	¥Ç¥âÍÑ¥¢¥«¥¦¥ó¥ÈºîÀ®
-create one now	setup	ja	ºîÀ®
-create	setup	ja	ºîÀ®
-create database	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºîÀ®¤·¤Ş¤·¤¿
-created	setup	ja	ºîÀ®
-creating tables	setup	ja	¥Æ¡¼¥Ö¥ë¤òºîÀ®¤·¤Ş¤·¤¿¡£
-currently installed languages: %1 <br />	setup	ja	¸½ºß¤Î¸À¸ì: %1 <br />
-current version	setup	ja	¸½ºß¤Î<BR>¥Ğ¡¼¥¸¥ç¥ó
-delete all my tables and data	setup	ja	¤¹¤Ù¤Æ¤Î¥Æ¡¼¥Ö¥ë¤È¥Ç¡¼¥¿¤òºï½ü¤·¤Ş¤¹
-delete all old languages and install new ones	setup	ja	¸½ºß¤Î¸À¸ì¤ò¤¹¤Ù¤Æºï½ü¤·¤Æ¡¢ÁªÂò¤·¤¿¸À¸ì¤ò¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
-deleting tables	setup	ja	¥Æ¡¼¥Ö¥ë¤òºï½ü¤·¤Ş¤·¤¿
-demo server setup	setup	ja	¥Ç¥â¥µ¡¼¥Ğ¥»¥Ã¥È¥¢¥Ã¥×
-deny access	setup	ja	¥¢¥¯¥»¥¹ÉÔ²Ä
-deny all users access to grant other users access to their entries ?	setup	ja	Â¾¤Î¥æ¡¼¥¶¾ğÊó¤Ø¤Î¥¢¥¯¥»¥¹¤òÁ´¤Æ¤Î¥æ¡¼¥¶¤Ëµö²Ä¤·¤Ê¤¤
-deregistered	setup	ja	ÅĞÏ¿²ò½ü¤·¤Ş¤·¤¿
-details for admin account	setup	ja	´ÉÍı¼Ô¥¢¥«¥¦¥ó¥È¤Î¾ÜºÙ¾ğÊó
-domain	setup	ja	¥É¥á¥¤¥ó
-edit current configuration	setup	ja	´Ä¶­ÀßÄê
-enter some random text for app session <br />encryption (requires mcrypt)	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥»¥Ã¥·¥ç¥ó°Å¹æ²½¤Î¤¿¤á¤Î<br />Ç¤°Õ¥Æ¥­¥¹¥ÈÆşÎÏ(mcrypt »şÉ¬Í×)
-enter some random text for app session encryption	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥»¥Ã¥·¥ç¥ó°Å¹æ²½¤Î¤¿¤á¤ÎÇ¤°Õ¥Æ¥­¥¹¥ÈÆşÎÏ
-enter the full path for temporary files.<br />Examples: /tmp, c:\temp	setup	ja	¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ë¡Ê¥Õ¥ë¥Ñ¥¹¡Ë<br />Îã¡§/tmp ¤ä C:\TEMP ¤Ê¤É
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	ja	¥Õ¥¡¥¤¥ë¥Ş¥Í¡¼¥¸¥ã¤Î¥Õ¥¡¥¤¥ëÊİÂ¸Àè¡Ê¥Õ¥ë¥Ñ¥¹¡Ë<br />Îã¡§/files ¤ä E:\FILES ¤Ê¤É
-enter the hostname of the machine on which this server is running	setup	ja	eGroupWare ¤¬Æ°ºî¤¹¤ë¥Û¥¹¥ÈÌ¾
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ja	eGroupWare ¤Î URL<BR>Îã¡§http://www.itheart.com/egroupware &nbsp; ¤ä &nbsp; /egroupware ¤Ê¤É<BR><b>ºÇ¸å¤Ï¥¹¥é¥Ã¥·¥å¤ò»ØÄê¤·¤Ê¤¤¤³¤È</b>
-enter the site username for peer servers	setup	ja	Æ±Åù¥µ¡¼¥Ğ¤Î¥æ¡¼¥¶Ì¾
-enter the site password for peer servers	setup	ja	Æ±Åù¥µ¡¼¥Ğ¤Î¥Ñ¥¹¥ï¡¼¥É
-enter the title for your site	setup	ja	¥¿¥¤¥È¥ëÌ¾
-export sql users to ldap	setup	ja	LDAP ¤Ø SQL¤Î¥æ¡¼¥¶¤ò¥¨¥¯¥¹¥İ¡¼¥È¤·¤Ş¤¹
-enter your default ftp server	setup	ja	´ûÄê¤Î FTP ¥µ¡¼¥Ğ
-enter your http proxy server	setup	ja	HTTP &nbsp; ¥×¥í¥­¥·¥µ¡¼¥Ğ
-enter your http proxy server port	setup	ja	HTTP &nbsp; ¥×¥í¥­¥·¥µ¡¼¥Ğ¥İ¡¼¥È
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ja	¿·µ¬¥¤¥ó¥¹¥È¡¼¥ë¤Î¾ì¹ç¤Ï¡¢¥¤¥ó¥İ¡¼¥È¤òÁªÂò¤·¤Æ²¼¤µ¤¤¡£´ûÂ¸¤Î SQL ¥¢¥«¥¦¥ó¥È¤ò LDAP ¤ËÊÑ´¹¤¹¤ë¾ì¹ç¤Ï¡¢¥¨¥¯¥¹¥İ¡¼¥È¤òÁªÂò¤·¤Æ²¼¤µ¤¤¡£
-force selectbox	setup	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
-go back	setup	ja	Ìá¤ë
-grant access	setup	ja	¥¢¥¯¥»¥¹µö²Ä
-has a version mismatch	setup	ja	¥Ğ¡¼¥¸¥ç¥ó¤¬°Û¤Ê¤ê¤Ş¤¹
-hooks deregistered	setup	ja	¥Õ¥Ã¥¯¤òÅĞÏ¿²ò½ü¤·¤Ş¤·¤¿¡£
-hooks registered	setup	ja	¥Õ¥Ã¥¯¤òÅĞÏ¿¤·¤Ş¤·¤¿¡£
-host information	setup	ja	¥Û¥¹¥È¾ğÊó
-however, the application is otherwise installed	setup	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÂ¾¤ÎÉôÊ¬¤Ï¥¤¥ó¥¹¥È¡¼¥ë¤·¤Ş¤·¤¿¡£
-if no acl records for user or any group the user is a member of	setup	ja	ACL¤Ë¥æ¡¼¥¶¤ä¥°¥ë¡¼¥×¤Î¾ğÊó¤¬¤Ê¤¤¾ì¹ç¤Î½èÍı
-if the application has no defined tables, selecting upgrade should remedy the problem	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¹¹¿·¤òÁªÂò¤·¤ÆÌäÂê¤ò²ò·è¤·¤Æ¤¯¤À¤µ¤¤¡£
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ja	LDAP ÍøÍÑ»ş¤Î¥Û¡¼¥à¥Ç¥£¥ì¥¯¥È¥ê¤È¥í¥°¥¤¥ó¥·¥§¥ë¤Î¾ğÊó
-if you did not receive any errors, your applications have been	setup	ja	¥¨¥é¡¼¤Ï¸«¤Ä¤«¤ê¤Ş¤»¤ó¤Ç¤·¤¿¡£
-if you did not receive any errors, your tables have been	setup	ja	¥¨¥é¡¼¤Ï¸«¤Ä¤«¤ê¤Ş¤»¤ó¤Ç¤·¤¿¡£
-import ldap users/groups	setup	ja	LDAP ¥æ¡¼¥¶/¥°¥ë¡¼¥× ¥¤¥ó¥İ¡¼¥È
-install Applications	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄÉ²Ã
-install language	setup	ja	¸À¸ìÄÉ²Ã
-install	setup	ja	¥¤¥ó¥¹¥È¡¼¥ë
-installed	setup	ja	¥¤¥ó¥¹¥È¡¼¥ë
-is broken	setup	ja	²õ¤ì¤Æ¤¤¤Ş¤¹
-is disabled	setup	ja	»ÈÍÑ¤Ç¤­¤Ş¤»¤ó
-ldap account import/export	setup	ja	LDAP ¥¢¥«¥¦¥ó¥È ¥¤¥ó¥İ¡¼¥È/¥¨¥¯¥¹¥İ¡¼¥È
-ldap accounts configuration	setup	ja	LDAP ¥¢¥«¥¦¥ó¥ÈÀßÄê
-ldap accounts context	setup	ja	LDAP ¥¢¥«¥¦¥ó¥È¥³¥ó¥Æ¥­¥¹¥È
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ja	´ûÄê¤Î¥Û¡¼¥à¥Ç¥£¥ì¥¯¥È¥ê¥×¥ì¥Õ¥£¥Ã¥¯¥¹<br /> &nbsp; &nbsp; (Îã¡§/home ¤Ê¤é¤Ğ /home/uername ¤È¤Ê¤ê¤Ş¤¹)
-ldap default shell (e.g. /bin/bash)	setup	ja	´ûÄê¤Î¥·¥§¥ë &nbsp; (Îã¡§/bin/bash¤Ê¤É)
-ldap encryption type	setup	ja	LDAP °Å¹æ²½¥¿¥¤¥×
-ldap export users	setup	ja	LDAP ¥¨¥¯¥¹¥İ¡¼¥È¥æ¡¼¥¶
-ldap groups context	setup	ja	LDAP ¥°¥ë¡¼¥×¥³¥ó¥Æ¥­¥¹¥È
-ldap host	setup	ja	LDAP ¥Û¥¹¥ÈÌ¾
-ldap import users	setup	ja	LDAP ¥¤¥ó¥İ¡¼¥È¥æ¡¼¥¶
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã§ã€ãƒ†ãƒ¼ãƒ–ãƒ«ã¨ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã—ã¾ã—ãŸ
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP ã®MIMEã‚¿ã‚¤ãƒ—ã§ &nbsp; 'application/octet-stream' &nbsp; ã®ä»£ã‚ã‚Šã«<br />æ­£ã—ã„ã‚¿ã‚¤ãƒ—ã‚’ä½¿ã†
+authentication / accounts	setup	ja	èªè¨¼/ã‚¢ã‚«ã‚¦ãƒ³ãƒˆæƒ…å ±
+auto create account records for authenticated users	setup	ja	èªè¨¼ã—ãŸãƒ¦ãƒ¼ã‚¶æƒ…å ±ã‚’è‡ªå‹•çš„ã«ä½œæˆã™ã‚‹
+auto-created user accounts expire	setup	ja	è‡ªå‹•ä½œæˆã—ãŸãƒ¦ãƒ¼ã‚¶ã®æœ‰åŠ¹æœŸé™
+available version	setup	ja	æœ€æ–°ã®<BR>ãƒãƒ¼ã‚¸ãƒ§ãƒ³
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	ja	<br />ã—ã‹ã—ã€ã“ã®å‡¦ç†ãŒã€ã‚ãªãŸã®ãƒ‡ãƒ¼ã‚¿ã‚’ç ´å£Šã—ã¦ã—ã¾ã£ãŸå ´åˆã«å‚™ãˆã¦ã€<u>ãƒ‡ãƒ¼ã‚¿ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã‚’ãŠå‹§ã‚ã—ã¾ã™ã€‚</u>
+because it depends upon	setup	ja	ç†ç”±ã¯æ¬¡ã®ã¨ãŠã‚Šã§ã™
+because it is not a user application, or access is controlled via acl	setup	ja	ãƒ¦ãƒ¼ã‚¶ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã§ãªã„ã‹ã€ACL ã«ã‚ˆã£ã¦ã‚¢ã‚¯ã‚»ã‚¹åˆ¶é™ã—ã¦ã„ã¾ã™ã€‚
+because it requires manual table installation, <br />or the table definition was incorrect	setup	ja	æ‰‹å‹•ã§ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã‹ã€<br />ãƒ†ãƒ¼ãƒ–ãƒ«å®šç¾©ãŒæ­£ã—ãã‚ã‚Šã¾ã›ã‚“ã€‚
+because of a failed upgrade or install	setup	ja	è¿½åŠ ã‚‚ã—ãã¯æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	ja	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãŒã“ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®å‹•ä½œå¯èƒ½ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚ˆã‚Šã‚‚æ–°ã—ã„ãŸã‚ã€æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
+because the enable flag for this app is set to 0, or is undefined	setup	ja	ã“ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒåˆ©ç”¨å¯èƒ½ã¨ãªã£ã¦ã„ã¾ã›ã‚“ã€‚
+bottom	setup	ja	ä¸‹éƒ¨
+cancel	setup	ja	ã‚­ãƒ£ãƒ³ã‚»ãƒ«
+charset	setup	ja	utf-8
+check ip address of all sessions	setup	ja	å…¨ã¦ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³ã§ IP ã‚¢ãƒ‰ãƒ¬ã‚¹ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
+click here	setup	ja	ã“ã“ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹
+configuration completed	setup	ja	ç’°å¢ƒè¨­å®šã¯å®Œäº†ã—ã¾ã—ãŸã€‚
+configuration	setup	ja	ç’°å¢ƒè¨­å®š
+configure now	setup	ja	ç’°å¢ƒè¨­å®š
+country selection	setup	ja	å›½ã®é¸æŠ
+create demo accounts	setup	ja	ãƒ‡ãƒ¢ç”¨ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆ
+create one now	setup	ja	ä½œæˆ
+create	setup	ja	ä½œæˆ
+create database	setup	ja	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’ä½œæˆã—ã¾ã—ãŸ
+created	setup	ja	ä½œæˆ
+creating tables	setup	ja	ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã—ã¾ã—ãŸã€‚
+currently installed languages: %1 <br />	setup	ja	ç¾åœ¨ã®è¨€èª: %1 <br />
+current version	setup	ja	ç¾åœ¨ã®<BR>ãƒãƒ¼ã‚¸ãƒ§ãƒ³
+delete all my tables and data	setup	ja	ã™ã¹ã¦ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã¨ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã—ã¾ã™
+delete all old languages and install new ones	setup	ja	ç¾åœ¨ã®è¨€èªã‚’ã™ã¹ã¦å‰Šé™¤ã—ã¦ã€é¸æŠã—ãŸè¨€èªã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹
+deleting tables	setup	ja	ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’å‰Šé™¤ã—ã¾ã—ãŸ
+demo server setup	setup	ja	ãƒ‡ãƒ¢ã‚µãƒ¼ãƒã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
+deny access	setup	ja	ã‚¢ã‚¯ã‚»ã‚¹ä¸å¯
+deny all users access to grant other users access to their entries ?	setup	ja	ä»–ã®ãƒ¦ãƒ¼ã‚¶æƒ…å ±ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’å…¨ã¦ã®ãƒ¦ãƒ¼ã‚¶ã«è¨±å¯ã—ãªã„
+deregistered	setup	ja	ç™»éŒ²è§£é™¤ã—ã¾ã—ãŸ
+details for admin account	setup	ja	ç®¡ç†è€…ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã®è©³ç´°æƒ…å ±
+domain	setup	ja	ãƒ‰ãƒ¡ã‚¤ãƒ³
+edit current configuration	setup	ja	ç’°å¢ƒè¨­å®š
+enter some random text for app session <br />encryption (requires mcrypt)	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³æš—å·åŒ–ã®ãŸã‚ã®<br />ä»»æ„ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ›(mcrypt æ™‚å¿…è¦)
+enter some random text for app session encryption	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³æš—å·åŒ–ã®ãŸã‚ã®ä»»æ„ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ›
+enter the full path for temporary files.<br />Examples: /tmp, c:\temp	setup	ja	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆãƒ•ãƒ«ãƒ‘ã‚¹ï¼‰<br />ä¾‹ï¼š/tmp ã‚„ C:\TEMP ãªã©
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	ja	ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ã®ãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜å…ˆï¼ˆãƒ•ãƒ«ãƒ‘ã‚¹ï¼‰<br />ä¾‹ï¼š/files ã‚„ E:\FILES ãªã©
+enter the hostname of the machine on which this server is running	setup	ja	eGroupWare ãŒå‹•ä½œã™ã‚‹ãƒ›ã‚¹ãƒˆå
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ja	eGroupWare ã® URL<BR>ä¾‹ï¼šhttp://www.itheart.com/egroupware &nbsp; ã‚„ &nbsp; /egroupware ãªã©<BR><b>æœ€å¾Œã¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’æŒ‡å®šã—ãªã„ã“ã¨</b>
+enter the site username for peer servers	setup	ja	åŒç­‰ã‚µãƒ¼ãƒã®ãƒ¦ãƒ¼ã‚¶å
+enter the site password for peer servers	setup	ja	åŒç­‰ã‚µãƒ¼ãƒã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+enter the title for your site	setup	ja	ã‚¿ã‚¤ãƒˆãƒ«å
+export sql users to ldap	setup	ja	LDAP ã¸ SQLã®ãƒ¦ãƒ¼ã‚¶ã‚’ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã—ã¾ã™
+enter your default ftp server	setup	ja	æ—¢å®šã® FTP ã‚µãƒ¼ãƒ
+enter your http proxy server	setup	ja	HTTP &nbsp; ãƒ—ãƒ­ã‚­ã‚·ã‚µãƒ¼ãƒ
+enter your http proxy server port	setup	ja	HTTP &nbsp; ãƒ—ãƒ­ã‚­ã‚·ã‚µãƒ¼ãƒãƒãƒ¼ãƒˆ
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ja	æ–°è¦ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã®å ´åˆã¯ã€ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’é¸æŠã—ã¦ä¸‹ã•ã„ã€‚æ—¢å­˜ã® SQL ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ LDAP ã«å¤‰æ›ã™ã‚‹å ´åˆã¯ã€ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã‚’é¸æŠã—ã¦ä¸‹ã•ã„ã€‚
+force selectbox	setup	ja	ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹
+go back	setup	ja	æˆ»ã‚‹
+grant access	setup	ja	ã‚¢ã‚¯ã‚»ã‚¹è¨±å¯
+has a version mismatch	setup	ja	ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãŒç•°ãªã‚Šã¾ã™
+hooks deregistered	setup	ja	ãƒ•ãƒƒã‚¯ã‚’ç™»éŒ²è§£é™¤ã—ã¾ã—ãŸã€‚
+hooks registered	setup	ja	ãƒ•ãƒƒã‚¯ã‚’ç™»éŒ²ã—ã¾ã—ãŸã€‚
+host information	setup	ja	ãƒ›ã‚¹ãƒˆæƒ…å ±
+however, the application is otherwise installed	setup	ja	ã“ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ä»–ã®éƒ¨åˆ†ã¯ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã—ãŸã€‚
+if no acl records for user or any group the user is a member of	setup	ja	ACLã«ãƒ¦ãƒ¼ã‚¶ã‚„ã‚°ãƒ«ãƒ¼ãƒ—ã®æƒ…å ±ãŒãªã„å ´åˆã®å‡¦ç†
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆã€æ›´æ–°ã‚’é¸æŠã—ã¦å•é¡Œã‚’è§£æ±ºã—ã¦ãã ã•ã„ã€‚
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ja	LDAP åˆ©ç”¨æ™‚ã®ãƒ›ãƒ¼ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ãƒ­ã‚°ã‚¤ãƒ³ã‚·ã‚§ãƒ«ã®æƒ…å ±
+if you did not receive any errors, your applications have been	setup	ja	ã‚¨ãƒ©ãƒ¼ã¯è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚
+if you did not receive any errors, your tables have been	setup	ja	ã‚¨ãƒ©ãƒ¼ã¯è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚
+import ldap users/groups	setup	ja	LDAP ãƒ¦ãƒ¼ã‚¶/ã‚°ãƒ«ãƒ¼ãƒ— ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
+install Applications	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³è¿½åŠ 
+install language	setup	ja	è¨€èªè¿½åŠ 
+install	setup	ja	ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+installed	setup	ja	ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+is broken	setup	ja	å£Šã‚Œã¦ã„ã¾ã™
+is disabled	setup	ja	ä½¿ç”¨ã§ãã¾ã›ã‚“
+ldap account import/export	setup	ja	LDAP ã‚¢ã‚«ã‚¦ãƒ³ãƒˆ ã‚¤ãƒ³ãƒãƒ¼ãƒˆ/ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
+ldap accounts configuration	setup	ja	LDAP ã‚¢ã‚«ã‚¦ãƒ³ãƒˆè¨­å®š
+ldap accounts context	setup	ja	LDAP ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ja	æ—¢å®šã®ãƒ›ãƒ¼ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ—ãƒ¬ãƒ•ã‚£ãƒƒã‚¯ã‚¹<br /> &nbsp; &nbsp; (ä¾‹ï¼š/home ãªã‚‰ã° /home/uername ã¨ãªã‚Šã¾ã™)
+ldap default shell (e.g. /bin/bash)	setup	ja	æ—¢å®šã®ã‚·ã‚§ãƒ« &nbsp; (ä¾‹ï¼š/bin/bashãªã©)
+ldap encryption type	setup	ja	LDAP æš—å·åŒ–ã‚¿ã‚¤ãƒ—
+ldap export users	setup	ja	LDAP ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆãƒ¦ãƒ¼ã‚¶
+ldap groups context	setup	ja	LDAP ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+ldap host	setup	ja	LDAP ãƒ›ã‚¹ãƒˆå
+ldap import users	setup	ja	LDAP ã‚¤ãƒ³ãƒãƒ¼ãƒˆãƒ¦ãƒ¼ã‚¶
 ldap rootdn	setup	ja	LDAP rootdn
-ldap root password	setup	ja	LDAP ¥ë¡¼¥È¥Ñ¥¹¥ï¡¼¥É
-logout	setup	ja	¥í¥°¥¢¥¦¥È
-make sure that your database is created and the account permissions are set	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤ÎºîÀ®¤È¥¢¥«¥¦¥ó¥È¤Ë¸¢¸Â¤òÍ¿¤¨¤Ş¤¹
-manage applications	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÀßÄê
-manage languages	setup	ja	¸À¸ì´Ä¶­ÀßÄê
-maximum account id (e.g. 65535 or 1000000)	setup	ja	ºÇÂç¥æ¡¼¥¶ID &nbsp; (Îã¡§65536 ¤ä 1000000 ¤Ê¤É)
-mcrypt algorithm (default tripledes)	setup	ja	Mcrypt¥¢¥ë¥´¥ê¥º¥à(¥Ç¥Õ¥©¥ë¥È:TRIPLEDES)
-mcrypt mode (default cbc)	setup	ja	Mcrypt¥â¡¼¥É(¥Ç¥Õ¥©¥ë¥È:CBC)
-mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt ÀßÄê¾ğÊó(Mcrypt¤ÏPHP¤Î³ÈÄ¥¤¬É¬Í×)
-minimum account id (e.g. 500 or 100, etc.)	setup	ja	ºÇ¾®¥æ¡¼¥¶ID &nbsp; (Îã¡§ 500 ¤ä 100 ¤Ê¤É)
-multi-language support setup	setup	ja	¸À¸ì´Ä¶­ÀßÄê
-never	setup	ja	Ìµ´ü¸Â
-no	setup	ja	¤¤¤¤¤¨
-not complete	setup	ja	´°Î»¤·¤Æ¤¤¤Ş¤»¤ó¡£
-note: you will be able to customize this later	setup	ja	È÷¹Í: ¸å¤Ç¥«¥¹¥¿¥Ş¥¤¥º¤¹¤ë¤³¤È¤¬²ÄÇ½¤Ç¤¹
-not ready for this stage yet	setup	ja	¼Â¹Ô¤Ç¤­¤Ş¤»¤ó¡£
+ldap root password	setup	ja	LDAP ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+logout	setup	ja	ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ
+make sure that your database is created and the account permissions are set	setup	ja	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®ä½œæˆã¨ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã«æ¨©é™ã‚’ä¸ãˆã¾ã™
+manage applications	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
+manage languages	setup	ja	è¨€èªç’°å¢ƒè¨­å®š
+maximum account id (e.g. 65535 or 1000000)	setup	ja	æœ€å¤§ãƒ¦ãƒ¼ã‚¶ID &nbsp; (ä¾‹ï¼š65536 ã‚„ 1000000 ãªã©)
+mcrypt algorithm (default tripledes)	setup	ja	Mcryptã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ (ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ:TRIPLEDES)
+mcrypt mode (default cbc)	setup	ja	Mcryptãƒ¢ãƒ¼ãƒ‰(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ:CBC)
+mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt è¨­å®šæƒ…å ±(Mcryptã¯PHPã®æ‹¡å¼µãŒå¿…è¦)
+minimum account id (e.g. 500 or 100, etc.)	setup	ja	æœ€å°ãƒ¦ãƒ¼ã‚¶ID &nbsp; (ä¾‹ï¼š 500 ã‚„ 100 ãªã©)
+multi-language support setup	setup	ja	è¨€èªç’°å¢ƒè¨­å®š
+never	setup	ja	ç„¡æœŸé™
+no	setup	ja	ã„ã„ãˆ
+not complete	setup	ja	å®Œäº†ã—ã¦ã„ã¾ã›ã‚“ã€‚
+note: you will be able to customize this later	setup	ja	å‚™è€ƒ: å¾Œã§ã‚«ã‚¹ã‚¿ãƒã‚¤ã‚ºã™ã‚‹ã“ã¨ãŒå¯èƒ½ã§ã™
+not ready for this stage yet	setup	ja	å®Ÿè¡Œã§ãã¾ã›ã‚“ã€‚
 ok	setup	ja	OK
 once the database is setup correctly	setup	ja	Once the database is setup correctly
-one month	setup	ja	£±¥ö·î
-one week	setup	ja	£±½µ´Ö
-only add languages that are not in the database already	setup	ja	¿·¤·¤¤¸À¸ì¤¹¤Ù¤Æ¤òÄÉ²Ã¡Ê½é¤á¤ÆÄÉ²Ã¤¹¤ë¾ì¹ç¡Ë
-only add new phrases	setup	ja	¿·¤·¤¤¥Õ¥ì¡¼¥º¤ÎÄÉ²Ã
-or we can attempt to create the database for you:	setup	ja	¤Ş¤¿¤Ï¡¢¤³¤Î½èÍı¤Ç¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºîÀ®¤¹¤ë¤³¤È¤¬²ÄÇ½¤Ç¤¹
-passwords did not match, please re-enter	setup	ja	¥Ñ¥¹¥ï¡¼¥É¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹¡£ºÆÅÙÆşÎÏ¤·¤Æ²¼¤µ¤¤
-path information	setup	ja	¥Ñ¥¹¾ğÊó
+one month	setup	ja	ï¼‘ãƒ¶æœˆ
+one week	setup	ja	ï¼‘é€±é–“
+only add languages that are not in the database already	setup	ja	æ–°ã—ã„è¨€èªã™ã¹ã¦ã‚’è¿½åŠ ï¼ˆåˆã‚ã¦è¿½åŠ ã™ã‚‹å ´åˆï¼‰
+only add new phrases	setup	ja	æ–°ã—ã„ãƒ•ãƒ¬ãƒ¼ã‚ºã®è¿½åŠ 
+or we can attempt to create the database for you:	setup	ja	ã¾ãŸã¯ã€ã“ã®å‡¦ç†ã§ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’ä½œæˆã™ã‚‹ã“ã¨ãŒå¯èƒ½ã§ã™
+passwords did not match, please re-enter	setup	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™ã€‚å†åº¦å…¥åŠ›ã—ã¦ä¸‹ã•ã„
+path information	setup	ja	ãƒ‘ã‚¹æƒ…å ±
 please check for sql scripts within the application's directory	setup	ja	Please check for sql scripts within the application's directory
 please configure eGroupWare for your environment	setup	ja	Please configure eGroupWare for your environment
 please install	setup	ja	Please install
-please login	setup	ja	¥í¥°¥¤¥ó
-please login to egroupware and run the admin application for additional site configuration	setup	ja	eGroupWare ¤Ë¥í¥°¥¤¥ó¤·¤Æ¡¢admin ¥¢¥×¥ê¥±¡¼¥·¥ç¥óÆâ¤Î³Æ¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥µ¥¤¥È´Ä¶­ÀßÄê¤ò¼Â¹Ô¤·¤Æ²¼¤µ¤¤
+please login	setup	ja	ãƒ­ã‚°ã‚¤ãƒ³
+please login to egroupware and run the admin application for additional site configuration	setup	ja	eGroupWare ã«ãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ã€admin ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³å†…ã®å„ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚µã‚¤ãƒˆç’°å¢ƒè¨­å®šã‚’å®Ÿè¡Œã—ã¦ä¸‹ã•ã„
 possible solutions	setup	ja	Possible Solutions
 potential problem	setup	ja	Potential Problem
-preferences	setup	ja	¥æ¡¼¥¶ÀßÄê¾ğÊó
-problem resolution	setup	ja	²ò·èÊıË¡
-re-check my installation	setup	ja	¥¤¥ó¥¹¥È¡¼¥ë³ÎÇ§
-re-enter password	setup	ja	¥Ñ¥¹¥ï¡¼¥ÉºÆÆşÎÏ
+preferences	setup	ja	ãƒ¦ãƒ¼ã‚¶è¨­å®šæƒ…å ±
+problem resolution	setup	ja	è§£æ±ºæ–¹æ³•
+re-check my installation	setup	ja	ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèª
+re-enter password	setup	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å†å…¥åŠ›
 registered	setup	ja	registered
-remove	setup	ja	ºï½ü
+remove	setup	ja	å‰Šé™¤
 requires reinstall or manual repair	setup	ja	Requires reinstall or manual repair
 requires upgrade	setup	ja	Requires upgrade
-resolve	setup	ja	³ÎÇ§
+resolve	setup	ja	ç¢ºèª
 select the default applications to which your users will have access	setup	ja	Select the default applications to which your users will have access
-select the desired action(s) from the available choices	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÀßÄêÆ°ºî¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
-select where you want to store/retrieve filesystem information	setup	ja	¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à¾ğÊó¤Î³ÊÇ¼/¸¡º÷¾ì½ê
-select where you want to store/retrieve user accounts	setup	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥È¤Î³ÊÇ¼/¸¡º÷¾ì½ê
+select the desired action(s) from the available choices	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®è¨­å®šå‹•ä½œã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚
+select where you want to store/retrieve filesystem information	setup	ja	ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ æƒ…å ±ã®æ ¼ç´/æ¤œç´¢å ´æ‰€
+select where you want to store/retrieve user accounts	setup	ja	ãƒ¦ãƒ¼ã‚¶ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã®æ ¼ç´/æ¤œç´¢å ´æ‰€
 select which group(s) will be exported (group membership will be maintained)	setup	ja	Select which group(s) will be exported (group membership will be maintained)
 select which group(s) will be imported (group membership will be maintained)	setup	ja	Select which group(s) will be imported (group membership will be maintained)
-select which languages you would like to use	setup	ja	¸À¸ì¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
-select which method of upgrade you would like to do	setup	ja	¸À¸ì´Ä¶­ÀßÄê¤ÎÊıË¡¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
-select which type of authentication you are using	setup	ja	Ç§¾Ú¥¿¥¤¥×
+select which languages you would like to use	setup	ja	è¨€èªã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚
+select which method of upgrade you would like to do	setup	ja	è¨€èªç’°å¢ƒè¨­å®šã®æ–¹æ³•ã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚
+select which type of authentication you are using	setup	ja	èªè¨¼ã‚¿ã‚¤ãƒ—
 select which user(s) will be exported	setup	ja	Select which user(s) will be exported
 select which user(s) will be imported	setup	ja	Select which user(s) will be imported
 select which user(s) will have admin privileges	setup	ja	Select which user(s) will have admin privileges
 select your old version	setup	ja	Select your old version
-selectbox	setup	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
-setup	setup	ja	¥»¥Ã¥È¥¢¥Ã¥×
-show 'powered by' logo on	setup	ja	powered by ¥í¥´É½¼¨°ÌÃÖ
-some or all of its tables are missing	setup	ja	É¬Í×¤Ê¥Æ¡¼¥Ö¥ë¤¬Â¸ºß¤·¤Ş¤»¤ó¡£
-status	setup	ja	¾õÂÖÉ½¼¨
-step %1 - simple application management	setup	ja	Step %1 - ¥Æ¡¼¥Ö¥ëºîÀ®
-step %1 - configuration	setup	ja	Step %1 - ´Ä¶­ÀßÄê
-step %1 - language management	setup	ja	Step %1 - ¸À¸ì´Ä¶­ÀßÄê
-step %1 - advanced application management	setup	ja	Step %1 - ¥¢¥×¥ê¥±¡¼¥·¥ç¥óÀßÄê
-submit	setup	ja	¼Â¹Ô
-table change messages	setup	ja	¥Æ¡¼¥Ö¥ëÊÑ¹¹¥á¥Ã¥»¡¼¥¸
-tables dropped	setup	ja	¥Æ¡¼¥Ö¥ë¤òºï½ü¤·¤Ş¤·¤¿
-tables installed, unless there are errors printed above	setup	ja	¤ò¥¤¥ó¥¹¥È¡¼¥ë¤·¤Ş¤·¤¿¡£¥¨¥é¡¼É½¼¨¤¬¤Ê¤±¤ì¤Ğ´°Î»¤Ç¤¹¡£
-tables upgraded	setup	ja	¥Æ¡¼¥Ö¥ë¤ò¹¹¿·¤·¤Ş¤·¤¿
-text entry	setup	ja	¥Æ¥­¥¹¥ÈÆşÎÏ
+selectbox	setup	ja	ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹
+setup	setup	ja	ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
+show 'powered by' logo on	setup	ja	powered by ãƒ­ã‚´è¡¨ç¤ºä½ç½®
+some or all of its tables are missing	setup	ja	å¿…è¦ãªãƒ†ãƒ¼ãƒ–ãƒ«ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚
+status	setup	ja	çŠ¶æ…‹è¡¨ç¤º
+step %1 - simple application management	setup	ja	Step %1 - ãƒ†ãƒ¼ãƒ–ãƒ«ä½œæˆ
+step %1 - configuration	setup	ja	Step %1 - ç’°å¢ƒè¨­å®š
+step %1 - language management	setup	ja	Step %1 - è¨€èªç’°å¢ƒè¨­å®š
+step %1 - advanced application management	setup	ja	Step %1 - ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
+submit	setup	ja	å®Ÿè¡Œ
+table change messages	setup	ja	ãƒ†ãƒ¼ãƒ–ãƒ«å¤‰æ›´ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+tables dropped	setup	ja	ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’å‰Šé™¤ã—ã¾ã—ãŸ
+tables installed, unless there are errors printed above	setup	ja	ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã—ãŸã€‚ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºãŒãªã‘ã‚Œã°å®Œäº†ã§ã™ã€‚
+tables upgraded	setup	ja	ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’æ›´æ–°ã—ã¾ã—ãŸ
+text entry	setup	ja	ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ›
 there was a problem tring to connect to your ldap server. <br />please check your LDAP server configuration	setup	ja	There was a problem tring to connect to your LDAP server. <br />please check your LDAP server configuration
 the tables	setup	ja	the tables
-this program will help you upgrade or install different languages for eGroupWare	setup	ja	eGroupWare ¤Ç¤Î¡¢¸À¸ì´Ä¶­¤òÀßÄê¤·¤Ş¤¹¡£
+this program will help you upgrade or install different languages for eGroupWare	setup	ja	eGroupWare ã§ã®ã€è¨€èªç’°å¢ƒã‚’è¨­å®šã—ã¾ã™ã€‚
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ja	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	ja	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
-this stage is completed<br />	setup	ja	¤³¤ÎÃÊ³¬¤Ï´°Î»¤·¤Ş¤·¤¿¡£<br />
-this will create 1 admin account and 3 demo accounts<br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br /><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br />	setup	ja	£±¤Ä¤Î´ÉÍı¼Ô¥¢¥«¥¦¥ó¥È¤È£³¤Ä¤Î¥Ç¥â¥¢¥«¥¦¥ó¥È¤ò¥»¥Ã¥È¥¢¥Ã¥×¤·¤Ş¤¹¡£<br />¥Ç¥â¥¢¥«¥¦¥ó¥È¤Î¥æ¡¼¥¶Ì¾¤È¥Ñ¥¹¥ï¡¼¥É¤Ï demo/guest, demo2/guest, demo3/guest ¤Ç¤¹¡£<br /><b>¸½ºß¤Î¥¢¥«¥¦¥ó¥È¤ò¤¹¤Ù¤Æºï½ü¤·¤Ş¤¹¤Î¤ÇÃí°Õ¤·¤Æ¤¯¤À¤µ¤¤¡£</b><br />
-to setup 1 admin account and 3 demo accounts.<br /><b>this will delete all existing accounts</b>	setup	ja	¤È¡¢£±¤Ä¤Î´ÉÍı¼Ô¥¢¥«¥¦¥ó¥È¤È£³¤Ä¤Î¥Ç¥â¥¢¥«¥¦¥ó¥È¤ò¥»¥Ã¥È¥¢¥Ã¥×¤·¤Ş¤¹¡£<br /><b>¸½ºß¤Î¥¢¥«¥¦¥ó¥È¤ò¤¹¤Ù¤Æºï½ü¤·¤Ş¤¹¤Î¤ÇÃí°Õ¤·¤Æ¤¯¤À¤µ¤¤¡£</b>
-top	setup	ja	¾åÉô
-two weeks	setup	ja	£²½µ´Ö
-uninstall all applications	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¥¢¥ó¥¤¥ó¥¹¥È¡¼¥ë
-uninstalled	setup	ja	¥¢¥ó¥¤¥ó¥¹¥È¡¼¥ë
-upgraded	setup	ja	¥¢¥Ã¥×¥°¥ì¡¼¥É
-upgrade	setup	ja	¹¹¿·
+this stage is completed<br />	setup	ja	ã“ã®æ®µéšã¯å®Œäº†ã—ã¾ã—ãŸã€‚<br />
+this will create 1 admin account and 3 demo accounts<br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br /><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br />	setup	ja	ï¼‘ã¤ã®ç®¡ç†è€…ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã¨ï¼“ã¤ã®ãƒ‡ãƒ¢ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã—ã¾ã™ã€‚<br />ãƒ‡ãƒ¢ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã®ãƒ¦ãƒ¼ã‚¶åã¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¯ demo/guest, demo2/guest, demo3/guest ã§ã™ã€‚<br /><b>ç¾åœ¨ã®ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ã™ã¹ã¦å‰Šé™¤ã—ã¾ã™ã®ã§æ³¨æ„ã—ã¦ãã ã•ã„ã€‚</b><br />
+to setup 1 admin account and 3 demo accounts.<br /><b>this will delete all existing accounts</b>	setup	ja	ã¨ã€ï¼‘ã¤ã®ç®¡ç†è€…ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã¨ï¼“ã¤ã®ãƒ‡ãƒ¢ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã—ã¾ã™ã€‚<br /><b>ç¾åœ¨ã®ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ã™ã¹ã¦å‰Šé™¤ã—ã¾ã™ã®ã§æ³¨æ„ã—ã¦ãã ã•ã„ã€‚</b>
+top	setup	ja	ä¸Šéƒ¨
+two weeks	setup	ja	ï¼’é€±é–“
+uninstall all applications	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+uninstalled	setup	ja	ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+upgraded	setup	ja	ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰
+upgrade	setup	ja	æ›´æ–°
 upgrading tables	setup	ja	Upgrading Tables
-use pure html compliant code (not fully working yet)	setup	ja	½ã¿è¤ÊHTML¤òÍøÍÑ¡Ê´°Á´¤ËÆ°ºî¤·¤Ş¤»¤ó¡Ë
-use cookies to pass sessionid	setup	ja	cookie¤Î¥»¥Ã¥·¥ç¥óid¤ò»ÈÍÑ
-users choice	setup	ja	¥æ¡¼¥¶ÁªÂò
+use pure html compliant code (not fully working yet)	setup	ja	ç´”ç²‹ãªHTMLã‚’åˆ©ç”¨ï¼ˆå®Œå…¨ã«å‹•ä½œã—ã¾ã›ã‚“ï¼‰
+use cookies to pass sessionid	setup	ja	cookieã®ã‚»ãƒƒã‚·ãƒ§ãƒ³idã‚’ä½¿ç”¨
+users choice	setup	ja	ãƒ¦ãƒ¼ã‚¶é¸æŠ
 version mismatch	setup	ja	Version Mismatch
-we will automatically update your tables/records to %1	setup	ja	¥»¥Ã¥È¥¢¥Ã¥×¤Ï¡¢%1 ÍÑ¤Î¥Æ¡¼¥Ö¥ë¤ä¥Ç¡¼¥¿¤Ë¼«Æ°¥¢¥Ã¥×¥°¥ì¡¼¥É¤·¤Ş¤¹¡£
-would you like egroupware to check for a new version<br />when admins login ?	setup	ja	´ÉÍı¼Ô¤Ç¥í¥°¥¤¥ó»ş¡¢eGroupWare¤Î¥Ğ¡¼¥¸¥ç¥ó¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
-would you like egroupware to cache the phpgw info array ?	setup	ja	eGroupWare ¤Î¥­¥ã¥Ã¥·¥å¤Ëphpgw info ÇÛÎó¤òÍøÍÑ¤¹¤ë
-would you like to show each application's upgrade status ?	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¥¢¥Ã¥×¥°¥ì¡¼¥É¾õ¶·É½¼¨
-yes	setup	ja	¤Ï¤¤
-you appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version 4.1.0	setup	ja	PHP¤Î¥Ğ¡¼¥¸¥ç¥ó¤¬¸Å¤¤¤è¤¦¤Ç¤¹¡£<br />¥Ğ¡¼¥¸¥ç¥ó¥¢¥Ã¥×¤ò¤ª´«¤á¤·¤Ş¤¹¡£<br />¸Å¤¤¥Ğ¡¼¥¸¥ç¥ó¤Î PHP ¤Ç¤Ï¡¢eGroupWare ¤Î¤¹¤Ù¤Æ¤Îµ¡Ç½¤¬Àµ³Î¤ËÆ°ºî¤·¤Ş¤»¤ó¡£<br /><br />Ver 4.1.0 °Ê¹ß¤Ë¥Ğ¡¼¥¸¥ç¥ó¥¢¥Ã¥×¤·¤Æ¤¯¤À¤µ¤¤¡£
+we will automatically update your tables/records to %1	setup	ja	ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã¯ã€%1 ç”¨ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚„ãƒ‡ãƒ¼ã‚¿ã«è‡ªå‹•ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰ã—ã¾ã™ã€‚
+would you like egroupware to check for a new version<br />when admins login ?	setup	ja	ç®¡ç†è€…ã§ãƒ­ã‚°ã‚¤ãƒ³æ™‚ã€eGroupWareã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
+would you like egroupware to cache the phpgw info array ?	setup	ja	eGroupWare ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«phpgw info é…åˆ—ã‚’åˆ©ç”¨ã™ã‚‹
+would you like to show each application's upgrade status ?	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰çŠ¶æ³è¡¨ç¤º
+yes	setup	ja	ã¯ã„
+you appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version 4.1.0	setup	ja	PHPã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãŒå¤ã„ã‚ˆã†ã§ã™ã€‚<br />ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚¢ãƒƒãƒ—ã‚’ãŠå‹§ã‚ã—ã¾ã™ã€‚<br />å¤ã„ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã® PHP ã§ã¯ã€eGroupWare ã®ã™ã¹ã¦ã®æ©Ÿèƒ½ãŒæ­£ç¢ºã«å‹•ä½œã—ã¾ã›ã‚“ã€‚<br /><br />Ver 4.1.0 ä»¥é™ã«ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚¢ãƒƒãƒ—ã—ã¦ãã ã•ã„ã€‚
 You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
-you appear to be running version %1 of eGroupWare	setup	ja	¸½ºß¡¢eGroupWare Ver. %1 ¤¬Æ°ºî¤·¤Æ¤¤¤ë¤È»×¤ï¤ì¤Ş¤¹¡£
+you appear to be running version %1 of eGroupWare	setup	ja	ç¾åœ¨ã€eGroupWare Ver. %1 ãŒå‹•ä½œã—ã¦ã„ã‚‹ã¨æ€ã‚ã‚Œã¾ã™ã€‚
 you are ready for this stage, but this stage is not yet written.<br />	setup	ja	You are ready for this stage, but this stage is not yet written.<br />
-you do not have any languages installed. please install one now <br />	setup	ja	¤É¤Î¸À¸ì´Ä¶­¤â¤¢¤ê¤Ş¤»¤ó¡£ºÇÄã£±¤Ä¤Î¸À¸ì´Ä¶­¤ò¥¤¥ó¥¹¥È¡¼¥ë¤·¤Æ²¼¤µ¤¤¡£<br />
-you must enter a username for the admin	setup	ja	¥æ¡¼¥¶ID¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
-your applications are current	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¥¤¥ó¥¹¥È¡¼¥ë¤Ï´°Î»¤·¤Ş¤·¤¿¡£
-your database does not exist	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤¬Â¸ºß¤·¤Ş¤»¤ó¡£
-your database is not working!	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤¬Â¸ºß¤·¤Ş¤»¤ó¡£
-your database is working, but you dont have any applications installed	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤ÏÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¤¬¡¢³Æ¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤¬Ì¤ºîÀ®¤Ç¤¹¡£
+you do not have any languages installed. please install one now <br />	setup	ja	ã©ã®è¨€èªç’°å¢ƒã‚‚ã‚ã‚Šã¾ã›ã‚“ã€‚æœ€ä½ï¼‘ã¤ã®è¨€èªç’°å¢ƒã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ä¸‹ã•ã„ã€‚<br />
+you must enter a username for the admin	setup	ja	ãƒ¦ãƒ¼ã‚¶IDã‚’å…¥åŠ›ã—ã¦ä¸‹ã•ã„ã€‚
+your applications are current	setup	ja	ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã¯å®Œäº†ã—ã¾ã—ãŸã€‚
+your database does not exist	setup	ja	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚
+your database is not working!	setup	ja	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚
+your database is working, but you dont have any applications installed	setup	ja	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã¯å­˜åœ¨ã—ã¦ã„ã¾ã™ãŒã€å„ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ãŒæœªä½œæˆã§ã™ã€‚
 your tables are current	setup	ja	Your tables are current
-your tables may be altered and you may lose data	setup	ja	¥Æ¡¼¥Ö¥ë¤òÊÑ¹¹¤·¤Ş¤¹¡£¥Ç¡¼¥¿¤¬¼º¤ï¤ì¤ë¤«¤â¤·¤ì¤Ş¤»¤ó
-your tables will be dropped and you will lose data	setup	ja	¥Æ¡¼¥Ö¥ë¤òºï½ü¤·¤Ş¤¹¡£¥Ç¡¼¥¿¤ÏÉüµì¤Ç¤­¤Ş¤»¤ó
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	ja	¥¢¥ó¥¤¥ó¥¹¥È¡¼¥ë¤·¤¿¸åºÆ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë¤«¡¢¼êÆ°¤Ç¥¤¥ó¥¹¥È¡¼¥ë¤·¤Æ²¼¤µ¤¤¡£
+your tables may be altered and you may lose data	setup	ja	ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’å¤‰æ›´ã—ã¾ã™ã€‚ãƒ‡ãƒ¼ã‚¿ãŒå¤±ã‚ã‚Œã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“
+your tables will be dropped and you will lose data	setup	ja	ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’å‰Šé™¤ã—ã¾ã™ã€‚ãƒ‡ãƒ¼ã‚¿ã¯å¾©æ—§ã§ãã¾ã›ã‚“
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	ja	ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ãŸå¾Œå†ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹ã‹ã€æ‰‹å‹•ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ä¸‹ã•ã„ã€‚

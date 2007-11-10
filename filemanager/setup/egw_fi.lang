@@ -1,12 +1,12 @@
-%1 already exists as a file	filemanager	fi	Tiedosto nimelt‰ %1 on jo olemassa
+%1 already exists as a file	filemanager	fi	Tiedosto nimelt√§ %1 on jo olemassa
 application	filemanager	fi	Sovellus
 back to file manager	filemanager	fi	Takaisin Tiedostonhallintaan
 cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta muutoksia
-cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai p‰‰ttyy v‰lilyˆntiin
+cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai p√§√§ttyy v√§lily√∂ntiin
 cannot replace %1 because it is a directory	filemanager	fi	Ei voi korvata %1, koska se on hakemisto
 command sucessfully run	filemanager	fi	Komento suoritettu
 comment	filemanager	fi	Kommentti
-comments cannot contain "%1"	filemanager	fi	Kommentti ei saa sis‰lt‰‰ "%1"
+comments cannot contain "%1"	filemanager	fi	Kommentti ei saa sis√§lt√§√§ "%1"
 copied %1 to %2	filemanager	fi	%1 kopioitu %2
 copy to	filemanager	fi	Kopio kohteeseen
 copy to:	filemanager	fi	Kopio kohteeseen:
@@ -15,9 +15,9 @@ could not copy file because no destination directory is given	filemanager	fi	Ei 
 could not create %1	filemanager	fi	Ei voitu luoda %1
 could not create directory %1	filemanager	fi	Ei voitu luoda kansiota %1
 could not delete %1	filemanager	fi	Ei voitu poistaa %1
-could not move %1 to %2	filemanager	fi	%1 ei voitu siirt‰‰ %2
-could not move file because no destination directory is given	filemanager	fi	Ei voitu siirt‰‰, koska kohdehakemistoa ei annettu
-could not rename %1 to %2	filemanager	fi	%1 ei voitu nimet‰ %2
+could not move %1 to %2	filemanager	fi	%1 ei voitu siirt√§√§ %2
+could not move file because no destination directory is given	filemanager	fi	Ei voitu siirt√§√§, koska kohdehakemistoa ei annettu
+could not rename %1 to %2	filemanager	fi	%1 ei voitu nimet√§ %2
 could not save %1	filemanager	fi	%1 ei voitu tallentaa
 create file	filemanager	fi	Luo tiedosto
 create folder	filemanager	fi	Luo kansio
@@ -27,31 +27,31 @@ created %1,%2	filemanager	fi	Luotu %1,%2
 created by	filemanager	fi	Luonut
 created directory %1	filemanager	fi	Luotiin kansio %1
 date	filemanager	fi	Aika
-default number of upload fields to show	filemanager	fi	Kerralla ladattavien tiedostojen oletusm‰‰r‰
+default number of upload fields to show	filemanager	fi	Kerralla ladattavien tiedostojen oletusm√§√§r√§
 delete	filemanager	fi	Poista
 deleted %1	filemanager	fi	Poistettiin %1
 directory	filemanager	fi	Kansio
 directory %1 already exists	filemanager	fi	Kansio %1 on jo olemassa
 directory %1 does not exist	filemanager	fi	Kansiota %1 ei ole
-directory names cannot contain "%1"	filemanager	fi	Kansion nimess‰ ei saa olla "%1"
-display attributes	filemanager	fi	N‰yttˆm‰‰reet
+directory names cannot contain "%1"	filemanager	fi	Kansion nimess√§ ei saa olla "%1"
+display attributes	filemanager	fi	N√§ytt√∂m√§√§reet
 download	filemanager	fi	Lataa
 edit	filemanager	fi	Muokkaa
 edit comments	filemanager	fi	Muokkaa kommentteja
 error running command	filemanager	fi	Virhe komennon suorituksessa
 execute	filemanager	fi	Suorita
 failed to create directory	filemanager	fi	kansion luominen ei onnistunut
-fake base dir did not exist, egroupware created a new one.	filemanager	fi	Juurihakemistoa ei lˆytynyt, eGroupWare loi sen.
+fake base dir did not exist, egroupware created a new one.	filemanager	fi	Juurihakemistoa ei l√∂ytynyt, eGroupWare loi sen.
 file	filemanager	fi	Tiedosto
-file %1 already exists. please edit it or delete it first.	filemanager	fi	Tiedosto %1 on jo olemassa. Muokkaa sit‰ tai poista se.
+file %1 already exists. please edit it or delete it first.	filemanager	fi	Tiedosto %1 on jo olemassa. Muokkaa sit√§ tai poista se.
 file %1 could not be created.	filemanager	fi	Tiedostoa %1 ei voitu luoda.
 file name	filemanager	fi	Tiedoston nimi
-file names cannot contain "%1"	filemanager	fi	Tiedoston nimess‰ ei saa olla "%1"
-file names cannot contain \ or /	filemanager	fi	Tiedoston nimess‰ ei saa olla \ tai /
+file names cannot contain "%1"	filemanager	fi	Tiedoston nimess√§ ei saa olla "%1"
+file names cannot contain \ or /	filemanager	fi	Tiedoston nimess√§ ei saa olla \ tai /
 filemanager	common	fi	Tiedostonhallinta
 filemanager preferences	filemanager	fi	Tiedostonhallinnan asetukset
 files	filemanager	fi	Tiedostot
-files in this directory	filemanager	fi	Tiedostot t‰ss‰ kansiossa
+files in this directory	filemanager	fi	Tiedostot t√§ss√§ kansiossa
 folder	filemanager	fi	Kansio
 folder up	filemanager	fi	Ylempi kansio
 go home	filemanager	fi	kotiin
@@ -59,15 +59,15 @@ go to	filemanager	fi	Mene
 go to %1	filemanager	fi	Mene %1
 go to your home directory	filemanager	fi	Kotihakemistoon
 go to:	filemanager	fi	Mene:
-go up	filemanager	fi	ylˆs
+go up	filemanager	fi	yl√∂s
 home	filemanager	fi	Kotihakemisto
 location	filemanager	fi	Sijainti
 locked	filemanager	fi	Lukittu
 mime type	filemanager	fi	MIME-tyyppi
 modified	filemanager	fi	Muutettu
 modified by	filemanager	fi	Muuttanut
-move to	filemanager	fi	Siirr‰
-move to:	filemanager	fi	Siirr‰:
+move to	filemanager	fi	Siirr√§
+move to:	filemanager	fi	Siirr√§:
 moved %1 to %2	filemanager	fi	%1 siirrettiin %2
 no files in this directory.	filemanager	fi	Kansiossa ei ole tiedostoja
 no version history for this file/directory	filemanager	fi	Tiedostolla/kansiolla ei ole versioita
@@ -79,7 +79,7 @@ preview %1	filemanager	fi	Esikatsele %1
 preview of %1	filemanager	fi	%1 esikatselu
 quick jump to	filemanager	fi	Mene
 reload	filemanager	fi	lataa uudelleen
-rename	filemanager	fi	Nime‰ uudelleen
+rename	filemanager	fi	Nime√§ uudelleen
 renamed %1 to %2	filemanager	fi	%1 nimettiin uudelleen %2
 replaced %1	filemanager	fi	Korvattiin %1
 save %1	filemanager	fi	Tallenna %1
@@ -87,30 +87,30 @@ save %1, and go back to file listing	filemanager	fi	Tallenna %1 ja palaa kansioo
 save all	filemanager	fi	Tallenna kaikki
 save changes	filemanager	fi	Tallenna muutokset
 saved %1	filemanager	fi	Tallennettiin %1
-show	filemanager	fi	N‰yt‰
-show ..	filemanager	fi	N‰yt‰ ..
-show .files	filemanager	fi	N‰yt‰ .tiedostot
-show command line (experimental. dangerous.)	filemanager	fi	N‰yt‰ komentorivi (KOKEELLINEN, VAARALLINEN)
-show help	filemanager	fi	N‰yt‰ ohje
+show	filemanager	fi	N√§yt√§
+show ..	filemanager	fi	N√§yt√§ ..
+show .files	filemanager	fi	N√§yt√§ .tiedostot
+show command line (experimental. dangerous.)	filemanager	fi	N√§yt√§ komentorivi (KOKEELLINEN, VAARALLINEN)
+show help	filemanager	fi	N√§yt√§ ohje
 size	filemanager	fi	Koko
 sort by:	filemanager	fi	Lajittelu:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	fi	Uusi Tiedostonhallinta, vain TESTAUSKƒYTT÷÷N, ilmoita virheist‰ kehitt‰jille
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	fi	Uusi Tiedostonhallinta, vain TESTAUSK√ÑYTT√ñ√ñN, ilmoita virheist√§ kehitt√§jille
 total files	filemanager	fi	Tiedostoja
-unknown mime-type defaults to text/plain when viewing	filemanager	fi	Tuntemattomat MIME-tyypit oletetaan tyypiksi text/plain n‰ytett‰ess‰ ruudulla
+unknown mime-type defaults to text/plain when viewing	filemanager	fi	Tuntemattomat MIME-tyypit oletetaan tyypiksi text/plain n√§ytett√§ess√§ ruudulla
 unused space	filemanager	fi	Tilaa vapaana
-up	filemanager	fi	Ylˆs
-update	filemanager	fi	P‰ivit‰
-updated comment for %1	filemanager	fi	P‰ivitettiin %1 kommentit
-upload	filemanager	fi	Siirr‰ palvelimelle
-upload fields	filemanager	fi	latauskentti‰
+up	filemanager	fi	Yl√∂s
+update	filemanager	fi	P√§ivit√§
+updated comment for %1	filemanager	fi	P√§ivitettiin %1 kommentit
+upload	filemanager	fi	Siirr√§ palvelimelle
+upload fields	filemanager	fi	latauskentti√§
 upload files	filemanager	fi	Lataa tiedostoja palvelimelle
-use new experimental filemanager?	filemanager	fi	K‰yt‰ uutta, kokeellista Tiedostonhallintaa?
-used space	filemanager	fi	K‰ytetty tila
-users	filemanager	fi	K‰ytt‰ji‰
+use new experimental filemanager?	filemanager	fi	K√§yt√§ uutta, kokeellista Tiedostonhallintaa?
+used space	filemanager	fi	K√§ytetty tila
+users	filemanager	fi	K√§ytt√§ji√§
 version	filemanager	fi	Versio
-view documents in new window	filemanager	fi	N‰yt‰ tiedostot uudessa ikkunassa
-view documents on server (if available)	filemanager	fi	N‰yt‰ tiedostot palvelimella (jos mahdollista)
+view documents in new window	filemanager	fi	N√§yt√§ tiedostot uudessa ikkunassa
+view documents on server (if available)	filemanager	fi	N√§yt√§ tiedostot palvelimella (jos mahdollista)
 who	filemanager	fi	Kuka
-you do not have access to %1	filemanager	fi	Sinulla ei ole k‰yttˆoikeutta kohteeseen %1
-your home dir did not exist, egroupware created a new one.	filemanager	fi	Kotihakemistoa ei lˆytynyt, eGroupWare loi sen.
+you do not have access to %1	filemanager	fi	Sinulla ei ole k√§ytt√∂oikeutta kohteeseen %1
+your home dir did not exist, egroupware created a new one.	filemanager	fi	Kotihakemistoa ei l√∂ytynyt, eGroupWare loi sen.
 

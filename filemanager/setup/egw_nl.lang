@@ -8,10 +8,10 @@ command sucessfully run	filemanager	nl	Commando met succes uitgevoerd.
 comment	filemanager	nl	Opmerking
 comments cannot contain "%1"	filemanager	nl	Opmerkingen kunnen geen "%1" bevatten.
 copied %1 to %2	filemanager	nl	%1 gekopieerd naar %2.
-copy to	filemanager	nl	Kopiëren naar
-copy to:	filemanager	nl	Kopiëren naar:
-could not copy %1 to %2	filemanager	nl	Kon %1 niet naar %2 kopiëren.
-could not copy file because no destination directory is given	filemanager	nl	Kon het bestand niet kopiëren omdat geen doel directory is opgegeven
+copy to	filemanager	nl	KopiÃ«ren naar
+copy to:	filemanager	nl	KopiÃ«ren naar:
+could not copy %1 to %2	filemanager	nl	Kon %1 niet naar %2 kopiÃ«ren.
+could not copy file because no destination directory is given	filemanager	nl	Kon het bestand niet kopiÃ«ren omdat geen doel directory is opgegeven
 could not create %1	filemanager	nl	Kon %1 niet aanmaken.
 could not create directory %1	filemanager	nl	Kon directory %1 niet aanmaken.
 could not delete %1	filemanager	nl	Kon %1 niet verwijderen.

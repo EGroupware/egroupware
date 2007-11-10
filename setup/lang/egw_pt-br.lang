@@ -1,645 +1,645 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pt-br	%1 '%2' n„o existe, o servidor web n„o tem permiss„o de leitura ou n„o contÈm uma instalaÁ„o do eGroupware!
-%1 already exists in %2.	setup	pt-br	%1 j· existe em %2.
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pt-br	%1 '%2' n√£o existe, o servidor web n√£o tem permiss√£o de leitura ou n√£o cont√©m uma instala√ß√£o do eGroupware!
+%1 already exists in %2.	setup	pt-br	%1 j√° existe em %2.
 %1 created in %2.	setup	pt-br	%1 criado em %2.
-%1 does not exist !!!	setup	pt-br	%1 n„o existe!!!
-%1 is %2%3 !!!	setup	pt-br	%1 È %2%3 !!!
-%1, %2 or %3 the configuration file.	setup	pt-br	%1, %2 ou %3 o arquivo de configuraÁ„o.
-'%1' is not allowed as %2. arguments of option %3 !!!	setup	pt-br	'%1' n„o È permitido como argumento %2 da opÁ„o %3 !!!
+%1 does not exist !!!	setup	pt-br	%1 n√£o existe!!!
+%1 is %2%3 !!!	setup	pt-br	%1 √© %2%3 !!!
+%1, %2 or %3 the configuration file.	setup	pt-br	%1, %2 ou %3 o arquivo de configura√ß√£o.
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	pt-br	'%1' n√£o √© permitido como argumento %2 da op√ß√£o %3 !!!
 (searching accounts and changing passwords)	setup	pt-br	(procurando contas e alterando senhas)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pt-br	N„o atualize sua base de dados usando o configurador, j· que a atualizaÁ„o pode ser interrompida pelo limite m·ximo de tempo seu servidor. Isto pode deixar sua base de dados em uma situaÁ„o irrecuper·vel, provocando perda de dados.
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt-br	VocÍ ter· que modificar seu php.ini manualmente (normalmente em /etc) antes que o eGroupWare esteja completamente operacional.
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pt-br	N√£o atualize sua base de dados usando o configurador, j√° que a atualiza√ß√£o pode ser interrompida pelo limite m√°ximo de tempo seu servidor. Isto pode deixar sua base de dados em uma situa√ß√£o irrecuper√°vel, provocando perda de dados.
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt-br	Voc√™ ter√° que modificar seu php.ini manualmente (normalmente em /etc) antes que o eGroupWare esteja completamente operacional.
 00 (disable)	setup	pt-br	00 (desabilitado / recomendado)
 13 (ntp)	setup	pt-br	13 (ntp)
 80 (http)	setup	pt-br	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pt-br	<b>codificaÁ„o de caracteres</b> (use utf-8 se vocÍ pretende usar idiomas com diferentes codificaÁıes).
-[header-password],[header-user],[new-password],[new-user]	setup	pt-br	[senha-header],[usu·rio-header],[nova-senha],[novo-usu·rio]
-access denied: wrong username or password for manage-header !!!	setup	pt-br	Acesso negado: nome de usu·rio ou senha errados para gerenciar o servidor !!!
-access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pt-br	Acesso negado: nome de usu·rio ou senha errados para configurar o domÌnio '%1 (%2)' !!!
-account repository need to be set to the one you migrate to!	setup	pt-br	RepositÛrio de contas precisa ser configurado para o qual vocÍ migrou!
-account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	pt-br	repositÛrio de contas {sql(padr„o) | ldap},[autenticaÁ„o{sql | ldap | mail | ads | http | ...}],[criptografia sql{md5 | browfish_crypt | md5_crypt | crypt}],[permitir salvar senha{(padr„o) | True}],[permitir autenticaÁ„o via cookie{(padr„o) | True}]
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pt-br	<b>codifica√ß√£o de caracteres</b> (use utf-8 se voc√™ pretende usar idiomas com diferentes codifica√ß√µes).
+[header-password],[header-user],[new-password],[new-user]	setup	pt-br	[senha-header],[usu√°rio-header],[nova-senha],[novo-usu√°rio]
+access denied: wrong username or password for manage-header !!!	setup	pt-br	Acesso negado: nome de usu√°rio ou senha errados para gerenciar o servidor !!!
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pt-br	Acesso negado: nome de usu√°rio ou senha errados para configurar o dom√≠nio '%1 (%2)' !!!
+account repository need to be set to the one you migrate to!	setup	pt-br	Reposit√≥rio de contas precisa ser configurado para o qual voc√™ migrou!
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	pt-br	reposit√≥rio de contas {sql(padr√£o) | ldap},[autentica√ß√£o{sql | ldap | mail | ads | http | ...}],[criptografia sql{md5 | browfish_crypt | md5_crypt | crypt}],[permitir salvar senha{(padr√£o) | True}],[permitir autentica√ß√£o via cookie{(padr√£o) | True}]
 accounts existing	setup	pt-br	Contas existentes
-actions	setup	pt-br	AÁıes
+actions	setup	pt-br	A√ß√µes
 activate safe password check	setup	pt-br	Ativar salvamento de senhas
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pt-br	Adicionar usu·rios criados automaticamente para este grupo (o grupo 'Padr„o' ser· utilizado se este campo estiver vazio.)
-add new database instance (egw domain)	setup	pt-br	Adicionar nova base de dados (domÌnio eGW )
-add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	pt-br	adicionar ou editar um domÌnio:
-adding, editing or deleting an egroupware domain / database instance:	setup	pt-br	Adicionando, editando ou removendo um domÌnio / base de dados do eGroupware:
-additional options and there defaults (in brackets)	setup	pt-br	OpÁıes adicionais e valores padrıes (entre parÍnteses)
-additional settings	setup	pt-br	ConfiguraÁıes Adicionais
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pt-br	Adicionar usu√°rios criados automaticamente para este grupo (o grupo 'Padr√£o' ser√° utilizado se este campo estiver vazio.)
+add new database instance (egw domain)	setup	pt-br	Adicionar nova base de dados (dom√≠nio eGW )
+add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	pt-br	adicionar ou editar um dom√≠nio:
+adding, editing or deleting an egroupware domain / database instance:	setup	pt-br	Adicionando, editando ou removendo um dom√≠nio / base de dados do eGroupware:
+additional options and there defaults (in brackets)	setup	pt-br	Op√ß√µes adicionais e valores padr√µes (entre par√™nteses)
+additional settings	setup	pt-br	Configura√ß√µes Adicionais
 admin account successful created.	setup	pt-br	Conta administrativa criada com sucesso.
 admin email address	setup	pt-br	E-mail da conta administrativa
 admin first name	setup	pt-br	Primeiro nome do Administrador
-admin last name	setup	pt-br	⁄ltimo nome do Administrador
+admin last name	setup	pt-br	√öltimo nome do Administrador
 admin password	setup	pt-br	Senha do Administrador
-admin password to header manager	setup	pt-br	Senha de administraÁ„o para o gerenciador do servidor
-admin user for header manager	setup	pt-br	Usu·rio de administraÁ„o para o gerenciador do servidor
-admin username	setup	pt-br	usu·rio para administraÁ„o
+admin password to header manager	setup	pt-br	Senha de administra√ß√£o para o gerenciador do servidor
+admin user for header manager	setup	pt-br	Usu√°rio de administra√ß√£o para o gerenciador do servidor
+admin username	setup	pt-br	usu√°rio para administra√ß√£o
 admins	setup	pt-br	Administradores
-after backing up your tables first.	setup	pt-br	ApÛs fazer backup de suas tabelas.
+after backing up your tables first.	setup	pt-br	Ap√≥s fazer backup de suas tabelas.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	pt-br	Depois de recuperar o arquivo, coloque-o no lugar como header.inc.php e clique em "continuar"
 all applications	setup	pt-br	Todos aplicativos
-all core tables and the admin and preferences applications	setup	pt-br	Todas as tabelas principais e os aplicativos de administraÁ„o e preferÍncias
-all exit codes of the command line interface	setup	pt-br	todos os cÛdigos de saÌda de erros da linha de comando
-all languages (incl. not listed ones)	setup	pt-br	Todos os idiomas (incluindo os n„o listados)
-all users	setup	pt-br	Todos usu·rios
-allow authentication via cookie	setup	pt-br	Permitir autenticaÁ„o via cookie
-allow password migration	setup	pt-br	Permitir migraÁ„o de senhas
-allowed migration types (comma-separated)	setup	pt-br	Tipos permitidos de migraÁ„o (separados por vÌrgula)
-alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	pt-br	DomÌnios alternativos podem ser acessados logando com <i>nome_usu·rio@domÌnio</i>
-analysis	setup	pt-br	An·lise
-and is up to date	setup	pt-br	e est· atualizado
-and reload your webserver, so the above changes take effect !!!	setup	pt-br	E reinicie seu servidor Web, de forma que as mudanÁas acima surtam efeito !!!
+all core tables and the admin and preferences applications	setup	pt-br	Todas as tabelas principais e os aplicativos de administra√ß√£o e prefer√™ncias
+all exit codes of the command line interface	setup	pt-br	todos os c√≥digos de sa√≠da de erros da linha de comando
+all languages (incl. not listed ones)	setup	pt-br	Todos os idiomas (incluindo os n√£o listados)
+all users	setup	pt-br	Todos usu√°rios
+allow authentication via cookie	setup	pt-br	Permitir autentica√ß√£o via cookie
+allow password migration	setup	pt-br	Permitir migra√ß√£o de senhas
+allowed migration types (comma-separated)	setup	pt-br	Tipos permitidos de migra√ß√£o (separados por v√≠rgula)
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	pt-br	Dom√≠nios alternativos podem ser acessados logando com <i>nome_usu√°rio@dom√≠nio</i>
+analysis	setup	pt-br	An√°lise
+and is up to date	setup	pt-br	e est√° atualizado
+and reload your webserver, so the above changes take effect !!!	setup	pt-br	E reinicie seu servidor Web, de forma que as mudan√ßas acima surtam efeito !!!
 app details	setup	pt-br	Detlhes do aplicativo
-app install/remove/upgrade	setup	pt-br	instalaÁ„o/remoÁ„o/atualizaÁ„o de Aplicativos
+app install/remove/upgrade	setup	pt-br	instala√ß√£o/remo√ß√£o/atualiza√ß√£o de Aplicativos
 app process	setup	pt-br	Processos de Aplicativos
 application data	setup	pt-br	Dados de Aplicativos
 application list	setup	pt-br	Lista de Aplicativos
 application management	setup	pt-br	Gerenciamento de  Aplicativos
 application name and status	setup	pt-br	Nome e Status do Aplicativo
-application name and status information	setup	pt-br	InformaÁ„o do Nome e Status do Aplicativo
-application title	setup	pt-br	TÌtulo do Aplicativo
+application name and status information	setup	pt-br	Informa√ß√£o do Nome e Status do Aplicativo
+application title	setup	pt-br	T√≠tulo do Aplicativo
 application: %1, file: %2, line: "%3"	setup	pt-br	Aplicativo: %1, Arquivo: %2, LInha: "%3"
-are you sure you want to delete your existing tables and data?	setup	pt-br	VocÍ tem certeza que deseja apagar suas tabelas e dados?
-are you sure?	setup	pt-br	VOC  TEM CERTEZA ?
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	pt-br	A seu pedido, este script ir· tentar criar a base de dados e definir as permissıes de acesso ao usu·rio.
-at your request, this script is going to attempt to install a previous backup	setup	pt-br	Ao seu pedido, este script tentar· instalar um backup anterior.
-at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	pt-br	A seu pedido, este script ir· tentar instalar as tabelas principais e os Aplicativos de AdministraÁ„o e PreferÍncias.
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	pt-br	A seu pedido, este script ir· tentar atualizar seus aplicativos com as versıes mais recentes.
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	pt-br	A seu pedido, este script ir· tentar atualizar as tabelas do banco de dados para o novo formato
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	pt-br	A seu pedido, este script ir· remover as tabelas do banco de dados e cri·-las no novo formato
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	pt-br	A seu pedido, este script ir· desinstalar  todas suas aplicaÁıes, removendo as tabelas do banco de dados e seus dados
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	pt-br	Tentar usar o mimetype correto para FTP ao invÈs do padr„o 'application/octet-stream'
-authentication / accounts	setup	pt-br	AutenticaÁ„o / Contas
-auto create account records for authenticated users	setup	pt-br	Criar contas de usu·rios automaticamente para usu·rios autenticados
-auto login anonymous user	setup	pt-br	Login autom·tico do usu·rio anÙnimo
-auto-created user accounts expire	setup	pt-br	Usu·rios criados automaticamente expiram em
-available version	setup	pt-br	Vers„o DisponÌvel
-back to the previous screen	setup	pt-br	Voltar ‡ tela anterior
-back to user login	setup	pt-br	Voltar ‡ tela de conex„o
+are you sure you want to delete your existing tables and data?	setup	pt-br	Voc√™ tem certeza que deseja apagar suas tabelas e dados?
+are you sure?	setup	pt-br	VOC√ä TEM CERTEZA ?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	pt-br	A seu pedido, este script ir√° tentar criar a base de dados e definir as permiss√µes de acesso ao usu√°rio.
+at your request, this script is going to attempt to install a previous backup	setup	pt-br	Ao seu pedido, este script tentar√° instalar um backup anterior.
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	pt-br	A seu pedido, este script ir√° tentar instalar as tabelas principais e os Aplicativos de Administra√ß√£o e Prefer√™ncias.
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	pt-br	A seu pedido, este script ir√° tentar atualizar seus aplicativos com as vers√µes mais recentes.
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	pt-br	A seu pedido, este script ir√° tentar atualizar as tabelas do banco de dados para o novo formato
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	pt-br	A seu pedido, este script ir√° remover as tabelas do banco de dados e cri√°-las no novo formato
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	pt-br	A seu pedido, este script ir√° desinstalar  todas suas aplica√ß√µes, removendo as tabelas do banco de dados e seus dados
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	pt-br	Tentar usar o mimetype correto para FTP ao inv√©s do padr√£o 'application/octet-stream'
+authentication / accounts	setup	pt-br	Autentica√ß√£o / Contas
+auto create account records for authenticated users	setup	pt-br	Criar contas de usu√°rios automaticamente para usu√°rios autenticados
+auto login anonymous user	setup	pt-br	Login autom√°tico do usu√°rio an√¥nimo
+auto-created user accounts expire	setup	pt-br	Usu√°rios criados automaticamente expiram em
+available version	setup	pt-br	Vers√£o Dispon√≠vel
+back to the previous screen	setup	pt-br	Voltar √† tela anterior
+back to user login	setup	pt-br	Voltar √† tela de conex√£o
 back's up your db now, this might take a few minutes	setup	pt-br	Fazer backup de sua base de dados agora. Isto pode demorar alguns minutos...
 backup '%1' deleted	setup	pt-br	Backup '%1' removido
 backup '%1' renamed to '%2'	setup	pt-br	Backup '%1' renomeado para '%2'
 backup '%1' restored	setup	pt-br	Backup '%1' restaurado
-backup and restore	setup	pt-br	Backup e RestauraÁ„o
+backup and restore	setup	pt-br	Backup e Restaura√ß√£o
 backup failed	setup	pt-br	Backup falhou
 backup finished	setup	pt-br	Backup terminou
 backup now	setup	pt-br	Fazer backup agora
-backup sets	setup	pt-br	ConfiguraÁıes de backup
+backup sets	setup	pt-br	Configura√ß√µes de backup
 backup skipped!	setup	pt-br	Backup ignorado!
 backup started, this might take a few minutes ...	setup	pt-br	Backup iniciado. Isto pode demorar alguns minutos...
 because an application it depends upon was upgraded	setup	pt-br	Porque um aplicativo que ele depende foi atualizado
 because it depends upon	setup	pt-br	pois depende de
-because it is not a user application, or access is controlled via acl	setup	pt-br	porque n„o È uma aplicaÁ„o de usu·rio ou o acesso È controlado atravÈs das regras de acesso
-because it requires manual table installation, <br />or the table definition was incorrect	setup	pt-br	porque requer instalaÁ„o das tabelas do banco de dados manualmente, <br />ou a definiÁ„o da tabela est· incorreta
+because it is not a user application, or access is controlled via acl	setup	pt-br	porque n√£o √© uma aplica√ß√£o de usu√°rio ou o acesso √© controlado atrav√©s das regras de acesso
+because it requires manual table installation, <br />or the table definition was incorrect	setup	pt-br	porque requer instala√ß√£o das tabelas do banco de dados manualmente, <br />ou a defini√ß√£o da tabela est√° incorreta
 because it was manually disabled	setup	pt-br	porque foi desabilitado manualmente
-because of a failed upgrade or install	setup	pt-br	devido a uma falha na atualizaÁ„o ou instalaÁ„o
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	pt-br	devido a uma falha na atualizaÁ„o, ou a base de dados È mais nova que a vers„o instalada desta aplicaÁ„o
-because the enable flag for this app is set to 0, or is undefined	setup	pt-br	porque o campo de habilitaÁ„o (flag) desta aplicaÁ„o est· definido como 0, ou est· indefinido
+because of a failed upgrade or install	setup	pt-br	devido a uma falha na atualiza√ß√£o ou instala√ß√£o
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	pt-br	devido a uma falha na atualiza√ß√£o, ou a base de dados √© mais nova que a vers√£o instalada desta aplica√ß√£o
+because the enable flag for this app is set to 0, or is undefined	setup	pt-br	porque o campo de habilita√ß√£o (flag) desta aplica√ß√£o est√° definido como 0, ou est√° indefinido
 bottom	setup	pt-br	Inferior
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pt-br	È <u>altamente recomend·vel</u> fazer uma cÛpia de seguranÁa das tabelas do banco de dados caso o script danifique seus dados. <br /><strong>Estes scripts autom·ticos podem destruir seus dados facilmente</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pt-br	√© <u>altamente recomend√°vel</u> fazer uma c√≥pia de seguran√ßa das tabelas do banco de dados caso o script danifique seus dados. <br /><strong>Estes scripts autom√°ticos podem destruir seus dados facilmente</strong>
 cancel	setup	pt-br	Cancelar
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	pt-br	N„o È possÌvel criar o arquivo header.inc.php devido ‡ problemas de permissıes. <br/>Ent„o vocÍ pode %1 ou %2 o arquivo.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	pt-br	N√£o √© poss√≠vel criar o arquivo header.inc.php devido √† problemas de permiss√µes. <br/>Ent√£o voc√™ pode %1 ou %2 o arquivo.
 change system-charset	setup	pt-br	Trocar o Conjunto de Carcteres do Sistema
-charset	setup	pt-br	conjunto de caracteres
+charset	setup	pt-br	utf-8
 charset to convert to	setup	pt-br	Conjuto de Caracteres destino
 charsets used by the different languages	setup	pt-br	conjunto de caracteres usado por idiomas diferentes
-check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	pt-br	VerificaÁ„o sÛ pode ser realizada se chamada via servidor web, j· que o cÛdigo e nome do usu·rio do servidor web n„o È conhecido.
-check installation	setup	pt-br	Verificar a instalaÁ„o
-check ip address of all sessions	setup	pt-br	Verificar endereÁo IP de todas sessıes
-checking extension %1 is loaded or loadable	setup	pt-br	Verificando se a extens„o %1 est· carregada ou pode ser carregada
-checking file-permissions of %1 for %2 %3: %4	setup	pt-br	Verificando permissıes de arquivo de %1 para %2 %3: %4
-checking for gd support...	setup	pt-br	Verificando suporte ‡ biblioteca GD...
-checking function %1 exists	setup	pt-br	Verificando se funÁ„o %1 existe
-checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pt-br	Verificando se session.save_path='%1', do arquivo php.ini, È grav·vel pelo servidor web
-checking pear%1 is installed	setup	pt-br	Verificando se PEAR %1 est· instalado
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	pt-br	Verifica√ß√£o s√≥ pode ser realizada se chamada via servidor web, j√° que o c√≥digo e nome do usu√°rio do servidor web n√£o √© conhecido.
+check installation	setup	pt-br	Verificar a instala√ß√£o
+check ip address of all sessions	setup	pt-br	Verificar endere√ßo IP de todas sess√µes
+checking extension %1 is loaded or loadable	setup	pt-br	Verificando se a extens√£o %1 est√° carregada ou pode ser carregada
+checking file-permissions of %1 for %2 %3: %4	setup	pt-br	Verificando permiss√µes de arquivo de %1 para %2 %3: %4
+checking for gd support...	setup	pt-br	Verificando suporte √† biblioteca GD...
+checking function %1 exists	setup	pt-br	Verificando se fun√ß√£o %1 existe
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pt-br	Verificando se session.save_path='%1', do arquivo php.ini, √© grav√°vel pelo servidor web
+checking pear%1 is installed	setup	pt-br	Verificando se PEAR %1 est√° instalado
 checking php.ini	setup	pt-br	Verificando php.ini
-checking required php version %1 (recommended %2)	setup	pt-br	Verificando vers„o do PHP requerida %1 (recomandada %2)
-checking the egroupware installation	setup	pt-br	Verificando a instalaÁ„o do eGroupWare
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pt-br	Verifica se o eGroupware est· instalado, suas versıes e atualizaÁıes necess·rias (retona valores... veja --exit-codes)
+checking required php version %1 (recommended %2)	setup	pt-br	Verificando vers√£o do PHP requerida %1 (recomandada %2)
+checking the egroupware installation	setup	pt-br	Verificando a instala√ß√£o do eGroupWare
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pt-br	Verifica se o eGroupware est√° instalado, suas vers√µes e atualiza√ß√µes necess√°rias (retona valores... veja --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	pt-br	Clique <a href="index.php">aqui</a> para voltar ao configurador
 click here	setup	pt-br	Clique aqui
-click here to re-run the installation tests	setup	pt-br	Clique aqui para re-executar os testes de instalaÁ„o
-comma separated ip-addresses or host-names, default access to setup from everywhere	setup	pt-br	EndereÁos de IP separados ou nomes de servidores separados por vÌrgulas. O padr„o È acesso ‡ ConfiguraÁ„o por qualquer lugar.
+click here to re-run the installation tests	setup	pt-br	Clique aqui para re-executar os testes de instala√ß√£o
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	pt-br	Endere√ßos de IP separados ou nomes de servidores separados por v√≠rgulas. O padr√£o √© acesso √† Configura√ß√£o por qualquer lugar.
 completed	setup	pt-br	COMPLETO
 config password	setup	pt-br	Senha do Configurador
-config username	setup	pt-br	Usu·rio do Configurador
-configuration	setup	pt-br	ConfiguraÁ„o
-configuration changed.	setup	pt-br	ConfiguraÁ„o alterada.
-configuration completed	setup	pt-br	ConfiguraÁ„o completa
-configuration errors:	setup	pt-br	Erros de configuraÁ„o:
-configuration password	setup	pt-br	Senha de ConfiguraÁ„o
-configuration user	setup	pt-br	Usu·rio de ConfiguraÁ„o
+config username	setup	pt-br	Usu√°rio do Configurador
+configuration	setup	pt-br	Configura√ß√£o
+configuration changed.	setup	pt-br	Configura√ß√£o alterada.
+configuration completed	setup	pt-br	Configura√ß√£o completa
+configuration errors:	setup	pt-br	Erros de configura√ß√£o:
+configuration password	setup	pt-br	Senha de Configura√ß√£o
+configuration user	setup	pt-br	Usu√°rio de Configura√ß√£o
 configure now	setup	pt-br	Configurar agora
-confirm to delete this backup?	setup	pt-br	Confirma a remoÁ„o deste backup?
-contain	setup	pt-br	contÈm
+confirm to delete this backup?	setup	pt-br	Confirma a remo√ß√£o deste backup?
+contain	setup	pt-br	cont√©m
 continue	setup	pt-br	Continuar
-continue to the header admin	setup	pt-br	Continuar para a ConfiguraÁ„o do Servidor
+continue to the header admin	setup	pt-br	Continuar para a Configura√ß√£o do Servidor
 convert	setup	pt-br	Converta
-convert backup to charset selected above	setup	pt-br	Converter o backup para a codificaÁ„o acima selecionada.
-could not open header.inc.php for writing!	setup	pt-br	N„o foi possÌval abrir o header.inc.php para escrita!
-country selection	setup	pt-br	SeleÁ„o de PaÌs
+convert backup to charset selected above	setup	pt-br	Converter o backup para a codifica√ß√£o acima selecionada.
+could not open header.inc.php for writing!	setup	pt-br	N√£o foi poss√≠val abrir o header.inc.php para escrita!
+country selection	setup	pt-br	Sele√ß√£o de Pa√≠s
 create	setup	pt-br	Criar
 create a backup before upgrading the db	setup	pt-br	Criar um backup antes de atualizar a base de dados.
 create admin account	setup	pt-br	Criar conta de administrador
 create database	setup	pt-br	Criar base de dados
-create demo accounts	setup	pt-br	Criar contas de DemonstraÁ„o
+create demo accounts	setup	pt-br	Criar contas de Demonstra√ß√£o
 create one now	setup	pt-br	Criar uma agora
-create or edit the egroupware configuration file: header.inc.php:	setup	pt-br	Criar ou editar o arquivo de configuraÁ„o do eGroupware: header.inc.php:
+create or edit the egroupware configuration file: header.inc.php:	setup	pt-br	Criar ou editar o arquivo de configura√ß√£o do eGroupware: header.inc.php:
 create the empty database -	setup	pt-br	Criar uma base de dados vazia -
-create the empty database and grant user permissions -	setup	pt-br	Criar uma base de dados vazia e garantir as permissıes do usu·rio
+create the empty database and grant user permissions -	setup	pt-br	Criar uma base de dados vazia e garantir as permiss√µes do usu√°rio
 create your header.inc.php	setup	pt-br	criar o arquivo header.ini.php
 created	setup	pt-br	criado
 created header.inc.php!	setup	pt-br	Arquivo header.inc.php criado!
-creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	pt-br	cria um usu·rio administrativo: domÌnio(padr„o),[usu·rio administrativo(admin)],senha,nome_de_usu·rio,senha,[primeiro nome],[˙ltimo nome],[e-mail]
+creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	pt-br	cria um usu√°rio administrativo: dom√≠nio(padr√£o),[usu√°rio administrativo(admin)],senha,nome_de_usu√°rio,senha,[primeiro nome],[√∫ltimo nome],[e-mail]
 creating tables	setup	pt-br	Criando tabelas
-creation of %1 in %2 failed !!!	setup	pt-br	CriaÁ„o de %1 em %2 falhou !!!
-current configuration:	setup	pt-br	ConfiguraÁ„o atual:
-current system-charset	setup	pt-br	CodificaÁ„o de caracteres atual do sistema
-current system-charset is %1.	setup	pt-br	CodificaÁ„o de caracteres atual do sistema È %1.
-current version	setup	pt-br	Vers„o atual
+creation of %1 in %2 failed !!!	setup	pt-br	Cria√ß√£o de %1 em %2 falhou !!!
+current configuration:	setup	pt-br	Configura√ß√£o atual:
+current system-charset	setup	pt-br	Codifica√ß√£o de caracteres atual do sistema
+current system-charset is %1.	setup	pt-br	Codifica√ß√£o de caracteres atual do sistema √© %1.
+current version	setup	pt-br	Vers√£o atual
 currently installed languages: %1 <br />	setup	pt-br	Idiomas instalados atualmente: %1 <br />
-cyrus imap: admin user,password	setup	pt-br	IMAP Cyrus: usu·rio administrador,senha
+cyrus imap: admin user,password	setup	pt-br	IMAP Cyrus: usu√°rio administrador,senha
 database	setup	pt-br	Base de dados
-database instance (egw domain)	setup	pt-br	Inst‚ncia da base de dados (domÌnio eGW)
-database is version %1 and up to date.	setup	pt-br	base de dados est· na vers„o %1 e atualizada
-database successfully converted from '%1' to '%2'	setup	pt-br	Convers„o bem sucedida da base de dados de '%1' para '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pt-br	Nota ntp <br /> se estiver usando a porta 13, por favor configure as regras de acesso do seu firewall corretamente antes de enviar essa p·gina <br /> (port 13 / servidor 129.6.15.28)
+database instance (egw domain)	setup	pt-br	Inst√¢ncia da base de dados (dom√≠nio eGW)
+database is version %1 and up to date.	setup	pt-br	base de dados est√° na vers√£o %1 e atualizada
+database successfully converted from '%1' to '%2'	setup	pt-br	Convers√£o bem sucedida da base de dados de '%1' para '%2'
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pt-br	Nota ntp <br /> se estiver usando a porta 13, por favor configure as regras de acesso do seu firewall corretamente antes de enviar essa p√°gina <br /> (port 13 / servidor 129.6.15.28)
 day	setup	pt-br	dia
 day of week<br />(0-6, 0=sunday)	setup	pt-br	dia da semana<br/>(0-6, 0=domingo)
-db backup and restore	setup	pt-br	Backup e RestauraÁ„o da base de dados
+db backup and restore	setup	pt-br	Backup e Restaura√ß√£o da base de dados
 db host	setup	pt-br	Servidor da base de dados
 db name	setup	pt-br	Nome da base de dados
 db password	setup	pt-br	Senha  da base de dados
 db port	setup	pt-br	Porta  da base de dados
-db root password	setup	pt-br	Senha do super-usu·rio no base de dados
-db root username	setup	pt-br	Nome do super-usu·rio na base de dados
+db root password	setup	pt-br	Senha do super-usu√°rio no base de dados
+db root username	setup	pt-br	Nome do super-usu√°rio na base de dados
 db type	setup	pt-br	Tipo de base de dados
-db user	setup	pt-br	Usu·rio da base de dados
-default	setup	pt-br	padr„o recomendado
-default file system space per user/group ?	setup	pt-br	Cota padr„o por usu·rio/grupo ?
+db user	setup	pt-br	Usu√°rio da base de dados
+default	setup	pt-br	padr√£o recomendado
+default file system space per user/group ?	setup	pt-br	Cota padr√£o por usu√°rio/grupo ?
 delete	setup	pt-br	Remover
-delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	pt-br	Remover todas as contas SQL, grupos, regras de acesso e preferÍncias existentes? (Normalmente isso n„o È necess·rio - seus dados ser„o perdidos)
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	pt-br	Remover todas as contas SQL, grupos, regras de acesso e prefer√™ncias existentes? (Normalmente isso n√£o √© necess√°rio - seus dados ser√£o perdidos)
 delete all my tables and data	setup	pt-br	Remover todas as minhas tabelas e dados
 delete all old languages and install new ones	setup	pt-br	Remover todos os idiomas antigos e instalar novos
 deleting tables	setup	pt-br	Removendo tabelas
-demo server setup	setup	pt-br	ConfiguraÁ„o de demonstraÁ„o do servidor
+demo server setup	setup	pt-br	Configura√ß√£o de demonstra√ß√£o do servidor
 deny access	setup	pt-br	Negar acesso
-deny all users access to grant other users access to their entries ?	setup	pt-br	N„o permitir que usu·rios concedam acesso de seus registros a outros usu·rios ?
-dependency failure	setup	pt-br	Falha na estrutura de dependÍncias
+deny all users access to grant other users access to their entries ?	setup	pt-br	N√£o permitir que usu√°rios concedam acesso de seus registros a outros usu√°rios ?
+dependency failure	setup	pt-br	Falha na estrutura de depend√™ncias
 deregistered	setup	pt-br	descadastrada
 details for admin account	setup	pt-br	Detalhes da conta do Administrador
 developers' table schema toy	setup	pt-br	Ferramenta  para esquemas de tabelas
-did not find any valid db support!	setup	pt-br	N„o foi possÌvel localizar um suporte a base de dados v·lido
-do you want persistent connections (higher performance, but consumes more resources)	setup	pt-br	VocÍ deseja usar conexıes persistentes? (implica em uma performace melhor mas em um maior gasto de recursos)
-do you want to manage homedirectory and loginshell attributes?	setup	pt-br	VocÍ deseja gerenciar os atributos do diretÛrio base e do interpretador de comandos?
-does not exist	setup	pt-br	n„o existe
-domain	setup	pt-br	DomÌnio
-domain '%1' does not exist !!!	setup	pt-br	DomÌnio '%1' n„o existe !!!
-domain name	setup	pt-br	Nome do domÌnio
-domain select box on login	setup	pt-br	Caixa de seleÁ„o de domÌnios no login
-domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	pt-br	domÌnio(todos),[usu·rio configurador(admin)],senha,[nome-arquivo(padr„o: backup-dir/db_backup-YYYYMMDDHHii)]
-domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	pt-br	domÌnio(padr„o),[usu·rio configurador(admin)],senha,[backup a instalar],[conjunto de caracteres(padr„o: depende do idioma)]
-domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	pt-br	domÌnio(padr„o),[usu·rio configurador(admin)],senha,[nome=valor,...] define valores de configuraÁ„o ao lado de:
-domain-name	setup	pt-br	nome do domÌnio
-dont touch my data	setup	pt-br	N„o alterar meus dados
+did not find any valid db support!	setup	pt-br	N√£o foi poss√≠vel localizar um suporte a base de dados v√°lido
+do you want persistent connections (higher performance, but consumes more resources)	setup	pt-br	Voc√™ deseja usar conex√µes persistentes? (implica em uma performace melhor mas em um maior gasto de recursos)
+do you want to manage homedirectory and loginshell attributes?	setup	pt-br	Voc√™ deseja gerenciar os atributos do diret√≥rio base e do interpretador de comandos?
+does not exist	setup	pt-br	n√£o existe
+domain	setup	pt-br	Dom√≠nio
+domain '%1' does not exist !!!	setup	pt-br	Dom√≠nio '%1' n√£o existe !!!
+domain name	setup	pt-br	Nome do dom√≠nio
+domain select box on login	setup	pt-br	Caixa de sele√ß√£o de dom√≠nios no login
+domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	pt-br	dom√≠nio(todos),[usu√°rio configurador(admin)],senha,[nome-arquivo(padr√£o: backup-dir/db_backup-YYYYMMDDHHii)]
+domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	pt-br	dom√≠nio(padr√£o),[usu√°rio configurador(admin)],senha,[backup a instalar],[conjunto de caracteres(padr√£o: depende do idioma)]
+domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	pt-br	dom√≠nio(padr√£o),[usu√°rio configurador(admin)],senha,[nome=valor,...] define valores de configura√ß√£o ao lado de:
+domain-name	setup	pt-br	nome do dom√≠nio
+dont touch my data	setup	pt-br	N√£o alterar meus dados
 download	setup	pt-br	Baixar
-edit current configuration	setup	pt-br	Editar configuraÁ„o atual
+edit current configuration	setup	pt-br	Editar configura√ß√£o atual
 edit your existing header.inc.php	setup	pt-br	Editar o seu arquivo header.inc.php existente
 edit your header.inc.php	setup	pt-br	Editar o seu arquivo header.inc.php
-eg. /egroupware or http://domain.com/egroupware, default: %1	setup	pt-br	exemplo: /egroupware ou http://dominio.com/egroupware, padr„o: %1
-egroupware administration manual	setup	pt-br	Manual de  AdministraÁ„o do eGroupWare
-egroupware api needs a database (schema) update from version %1 to %2!	setup	pt-br	A API do eGroupware precisa atualizar a base de dados (esquema) da vers„o %1 para %2!
-egroupware api version %1 found.	setup	pt-br	API do eGroupWare vers„o %1 encontrada.
-egroupware configuration file (header.inc.php) does not exist.	setup	pt-br	Arquivo de configuraÁ„o do eGroupWare (header.inc.php) n„o existe.
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	pt-br	Arquivo de configuraÁ„o do eGroupWare (header.inc.php) vers„o %1 existe %2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	pt-br	Arquivo de configuraÁ„o do eGroupWare (header.inc.php) j· existe. VocÍ precisa usar --edit-header ou delet·-lo antes!
-egroupware domain/instance %1(%2):	setup	pt-br	DomÌnio/inst‚ncia do eGroupWare %1 (%2)
-egroupware is already installed!	setup	pt-br	eGroupWare j· est· instalado!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pt-br	Arquivos do eGroupWare em '%2' n„o est„o completos: arquivo '%2' est· faltando !!!
+eg. /egroupware or http://domain.com/egroupware, default: %1	setup	pt-br	exemplo: /egroupware ou http://dominio.com/egroupware, padr√£o: %1
+egroupware administration manual	setup	pt-br	Manual de  Administra√ß√£o do eGroupWare
+egroupware api needs a database (schema) update from version %1 to %2!	setup	pt-br	A API do eGroupware precisa atualizar a base de dados (esquema) da vers√£o %1 para %2!
+egroupware api version %1 found.	setup	pt-br	API do eGroupWare vers√£o %1 encontrada.
+egroupware configuration file (header.inc.php) does not exist.	setup	pt-br	Arquivo de configura√ß√£o do eGroupWare (header.inc.php) n√£o existe.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	pt-br	Arquivo de configura√ß√£o do eGroupWare (header.inc.php) vers√£o %1 existe %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	pt-br	Arquivo de configura√ß√£o do eGroupWare (header.inc.php) j√° existe. Voc√™ precisa usar --edit-header ou delet√°-lo antes!
+egroupware domain/instance %1(%2):	setup	pt-br	Dom√≠nio/inst√¢ncia do eGroupWare %1 (%2)
+egroupware is already installed!	setup	pt-br	eGroupWare j√° est√° instalado!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pt-br	Arquivos do eGroupWare em '%2' n√£o est√£o completos: arquivo '%2' est√° faltando !!!
 emailadmin profile updated:	setup	pt-br	Perfil EMailAdmin atualizado:
-enable for extra debug-messages	setup	pt-br	Habilitar mensagens de depuraÁ„o extras
+enable for extra debug-messages	setup	pt-br	Habilitar mensagens de depura√ß√£o extras
 enable mcrypt	setup	pt-br	Habilitar MCrypt
-enter some random text for app session encryption	setup	pt-br	Digite algum texto aleatÛrio para encriptaÁ„o de sess„o
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	pt-br	Digite um texto aleatÛrio para a encriptaÁ„o de sess„o (requer MCrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt-br	Digite o caminho completo para arquivos tempor·rios.<br />Exemplos: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pt-br	Digite o caminho completo para arquivos tempor·rios.<br />Exemplos: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt-br	Digite o caminho completo para arquivos de usu·rios e grupos.<br />Exemplos: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:files	setup	pt-br	Digite o caminho completo para arquivos de usu·rios e grupos.<br />Exemplos: /files, E:\FILES
-enter the full path to the backup directory.<br />if empty: files directory	setup	pt-br	Informe o caminho completo para o diretÛrio de backup.<br/>Se vazio: diretÛrio de arquivos
-enter the hostname of the machine on which this server is running	setup	pt-br	Digite o nome da m·quina em que este servidor est· sendo executado
+enter some random text for app session encryption	setup	pt-br	Digite algum texto aleat√≥rio para encripta√ß√£o de sess√£o
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	pt-br	Digite um texto aleat√≥rio para a encripta√ß√£o de sess√£o (requer MCrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt-br	Digite o caminho completo para arquivos tempor√°rios.<br />Exemplos: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pt-br	Digite o caminho completo para arquivos tempor√°rios.<br />Exemplos: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt-br	Digite o caminho completo para arquivos de usu√°rios e grupos.<br />Exemplos: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	pt-br	Digite o caminho completo para arquivos de usu√°rios e grupos.<br />Exemplos: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	pt-br	Informe o caminho completo para o diret√≥rio de backup.<br/>Se vazio: diret√≥rio de arquivos
+enter the hostname of the machine on which this server is running	setup	pt-br	Digite o nome da m√°quina em que este servidor est√° sendo executado
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt-br	Digite a URL do eGroupWare.<br />Ex.: http://www.dominio.com.br/egroupware   ou   /egroupware<br /><b>Sem a barra final</b>
 enter the site password for peer servers	setup	pt-br	Digite a senha do servidor para uso com servidores parceiros
-enter the site username for peer servers	setup	pt-br	Digite o usu·rio do servidor para uso com  servidores parceiros
-enter the title for your site	setup	pt-br	Digite o tÌtulo para o site
-enter your default ftp server	setup	pt-br	Digite seu servidor FTP padr„o
-enter your http proxy server	setup	pt-br	Digite o endereÁo do servidor proxy HTTP
+enter the site username for peer servers	setup	pt-br	Digite o usu√°rio do servidor para uso com  servidores parceiros
+enter the title for your site	setup	pt-br	Digite o t√≠tulo para o site
+enter your default ftp server	setup	pt-br	Digite seu servidor FTP padr√£o
+enter your http proxy server	setup	pt-br	Digite o endere√ßo do servidor proxy HTTP
 enter your http proxy server password	setup	pt-br	Digite a senha do seu proxy HTTP
 enter your http proxy server port	setup	pt-br	Digite a porta do servidor proxy HTTP
-enter your http proxy server username	setup	pt-br	Digite o nome de usu·rio do seu Servidor Proxy Http
-error in admin-creation !!!	setup	pt-br	Erro na criaÁ„o do admin !!!
-error in group-creation !!!	setup	pt-br	Erro na criaÁ„o do grupo !!!
-export has been completed!	setup	pt-br	ExportaÁ„o foi completada!
-failed writing configuration file header.inc.php, check the permissions !!!	setup	pt-br	Falha gravando o arquivo de configuraÁ„o header.inc.php. Cheque as permissıes !!!
+enter your http proxy server username	setup	pt-br	Digite o nome de usu√°rio do seu Servidor Proxy Http
+error in admin-creation !!!	setup	pt-br	Erro na cria√ß√£o do admin !!!
+error in group-creation !!!	setup	pt-br	Erro na cria√ß√£o do grupo !!!
+export has been completed!	setup	pt-br	Exporta√ß√£o foi completada!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	pt-br	Falha gravando o arquivo de configura√ß√£o header.inc.php. Cheque as permiss√µes !!!
 false	setup	pt-br	Falso
 file	setup	pt-br	Arquivo
-file type, size, version, etc.	setup	pt-br	tipo de arquivo, tamanho, vers„o, etc...
-file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	pt-br	Carregamento de arquivos est· desabilitado. VocÍ N√O pode pode usar nenhum dos gerenciadores de arquivo nem adicionar arquivos em v·rios aplicativos!
+file type, size, version, etc.	setup	pt-br	tipo de arquivo, tamanho, vers√£o, etc...
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	pt-br	Carregamento de arquivos est√° desabilitado. Voc√™ N√ÉO pode pode usar nenhum dos gerenciadores de arquivo nem adicionar arquivos em v√°rios aplicativos!
 filename	setup	pt-br	Nome do arquivo
 filesystem	setup	pt-br	Sistema de arquivos
-force selectbox	setup	pt-br	ForÁar caixa de seleÁ„o
-found existing configuration file. loading settings from the file...	setup	pt-br	Foi encontrado um arquivo de configuraÁıes. Carregando os dados desse arquivo.
+force selectbox	setup	pt-br	For√ßar caixa de sele√ß√£o
+found existing configuration file. loading settings from the file...	setup	pt-br	Foi encontrado um arquivo de configura√ß√µes. Carregando os dados desse arquivo.
 give admin access to all installed apps	setup	pt-br	Dar acesso administrativo a todos os aplicativos instalados
-gives further options	setup	pt-br	D· opÁıes adicionais
+gives further options	setup	pt-br	D√° op√ß√µes adicionais
 go back	setup	pt-br	Voltar
 go to	setup	pt-br	Ir para
 grant access	setup	pt-br	Liberar acesso
 group	setup	pt-br	grupo
-group memberships will be migrated too.	setup	pt-br	Membros do grupo ser„o migrados tambÈm.
-has a version mismatch	setup	pt-br	Existe um erro de vers„o
-header admin login	setup	pt-br	Conex„o para configuraÁ„o do servidor
-header password	setup	pt-br	Senha para configuraÁ„o do servidor
-header username	setup	pt-br	Usu·rio para configuraÁ„o do servidor
-header-password[,header-user(admin)]	setup	pt-br	senha-header[,usu·rio-header(admin)]
+group memberships will be migrated too.	setup	pt-br	Membros do grupo ser√£o migrados tamb√©m.
+has a version mismatch	setup	pt-br	Existe um erro de vers√£o
+header admin login	setup	pt-br	Conex√£o para configura√ß√£o do servidor
+header password	setup	pt-br	Senha para configura√ß√£o do servidor
+header username	setup	pt-br	Usu√°rio para configura√ß√£o do servidor
+header-password[,header-user(admin)]	setup	pt-br	senha-header[,usu√°rio-header(admin)]
 header.inc.php successful written.	setup	pt-br	header.inc.php gravado com sucesso.
-historylog removed	setup	pt-br	Registro histÛrico removido
-hooks deregistered	setup	pt-br	ligaÁıes descadastradas (hooks)
-hooks registered	setup	pt-br	ligaÁıes cadastradas (hooks)
-host information	setup	pt-br	InformaÁıes do servidor
-host,[smtp port],[smtp user],[smtp password]	setup	pt-br	servidor,[porta smtp],[usu·rio smtp],[senha smtp]
-host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	pt-br	servidor,{imap | pop3 | imaps | pop3s},[domÌnio],[{normal(padr„o) | vmailmgr = adicionar domÌnio para logar no servidor de e-mail}]
-host/ip domain controler	setup	pt-br	Servidor/IP do Controlador de DomÌnio
+historylog removed	setup	pt-br	Registro hist√≥rico removido
+hooks deregistered	setup	pt-br	liga√ß√µes descadastradas (hooks)
+hooks registered	setup	pt-br	liga√ß√µes cadastradas (hooks)
+host information	setup	pt-br	Informa√ß√µes do servidor
+host,[smtp port],[smtp user],[smtp password]	setup	pt-br	servidor,[porta smtp],[usu√°rio smtp],[senha smtp]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	pt-br	servidor,{imap | pop3 | imaps | pop3s},[dom√≠nio],[{normal(padr√£o) | vmailmgr = adicionar dom√≠nio para logar no servidor de e-mail}]
+host/ip domain controler	setup	pt-br	Servidor/IP do Controlador de Dom√≠nio
 hostname/ip of database server	setup	pt-br	Nome do Servidor / IP da base de dados
 hour (0-24)	setup	pt-br	hora (0-24)
 however the tables are still in the database	setup	pt-br	No entanto, as tabelas permanecem no banco de dados
-however, the application is otherwise installed	setup	pt-br	No entanto, a aplicaÁ„o est· instalada
-however, the application may still work	setup	pt-br	No entanto, a aplicaÁ„o ainda pode funcionar
-if no acl records for user or any group the user is a member of	setup	pt-br	Caso n„o exista registro de permissıes ou grupo para o usu·rio ele È membro do
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt-br	Se o modo de seguranÁa estiver ligado, o eGroupware n„o ser· capaz de modificar autom·ticamente determinados valores de configuraÁ„o, n„o ser· possÌvel carregar mÛdulos que ainda n„o estejam carregados.
-if the application has no defined tables, selecting upgrade should remedy the problem	setup	pt-br	Se o aplicativo n„o tÍm tabelas definidas, selecionar atualizar deve resolver o problema
-if using ads (active directory) authentication	setup	pt-br	Se estiver usando autenticaÁ„o por ADS (Active Directory)
+however, the application is otherwise installed	setup	pt-br	No entanto, a aplica√ß√£o est√° instalada
+however, the application may still work	setup	pt-br	No entanto, a aplica√ß√£o ainda pode funcionar
+if no acl records for user or any group the user is a member of	setup	pt-br	Caso n√£o exista registro de permiss√µes ou grupo para o usu√°rio ele √© membro do
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt-br	Se o modo de seguran√ßa estiver ligado, o eGroupware n√£o ser√° capaz de modificar autom√°ticamente determinados valores de configura√ß√£o, n√£o ser√° poss√≠vel carregar m√≥dulos que ainda n√£o estejam carregados.
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	pt-br	Se o aplicativo n√£o t√™m tabelas definidas, selecionar atualizar deve resolver o problema
+if using ads (active directory) authentication	setup	pt-br	Se estiver usando autentica√ß√£o por ADS (Active Directory)
 if using ldap	setup	pt-br	Se estiver usando LDAP
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pt-br	Se estiver usando LDAP, vocÍ deseja definir atributos de diretÛrio base e  do interpretador de comandos?
-if you did not receive any errors, your applications have been	setup	pt-br	Se n„o foi exibido nenhum erro, suas aplicaÁıes foram
-if you did not receive any errors, your tables have been	setup	pt-br	Se n„o foi exibido nenhum erro, as tabelas foram
-if you running this the first time, don't forget to manualy %1 !!!	setup	pt-br	Se vocÍ est· rodando isso pela primeira vez, n„o esqueÁa de  %1 manualmente!!!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	pt-br	Se vocÍ usa apenas idiomas do mesmo conjunto de caracteres (ex: western european) vocÍ n„o precisa definir um conjunto de caracteres!
-image type selection order	setup	pt-br	SeleÁ„o de ordem de tipos de imagens
-import has been completed!	setup	pt-br	A importaÁ„o est· completa!
-importing old settings into the new format....	setup	pt-br	Importar configuraÁıes antigas no novo formato
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pt-br	Se estiver usando LDAP, voc√™ deseja definir atributos de diret√≥rio base e  do interpretador de comandos?
+if you did not receive any errors, your applications have been	setup	pt-br	Se n√£o foi exibido nenhum erro, suas aplica√ß√µes foram
+if you did not receive any errors, your tables have been	setup	pt-br	Se n√£o foi exibido nenhum erro, as tabelas foram
+if you running this the first time, don't forget to manualy %1 !!!	setup	pt-br	Se voc√™ est√° rodando isso pela primeira vez, n√£o esque√ßa de  %1 manualmente!!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	pt-br	Se voc√™ usa apenas idiomas do mesmo conjunto de caracteres (ex: western european) voc√™ n√£o precisa definir um conjunto de caracteres!
+image type selection order	setup	pt-br	Sele√ß√£o de ordem de tipos de imagens
+import has been completed!	setup	pt-br	A importa√ß√£o est√° completa!
+importing old settings into the new format....	setup	pt-br	Importar configura√ß√µes antigas no novo formato
 include root	setup	pt-br	Incluir root
-include_path need to contain "." - the current directory	setup	pt-br	Inclua o caminho necess·rio para conter " " - o diretÛrio atual
+include_path need to contain "." - the current directory	setup	pt-br	Inclua o caminho necess√°rio para conter " " - o diret√≥rio atual
 install	setup	pt-br	Instalar
 install all	setup	pt-br	Instalar todos
 install applications	setup	pt-br	Instalar Aplicativos
 install backup	setup	pt-br	Instalar backup
 install language	setup	pt-br	Instalar idioma
-install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	pt-br	instalar ou atualizar traduÁıes: domÌnio(todos),[usu·rio configurador(admin)],senha,[[+]lang1[,lang2,...]] + adiciona idiomas n„o existentes
-installation finished	setup	pt-br	InstalaÁ„o concluÌda
-installation started, this might take a few minutes ...	setup	pt-br	A instalaÁ„o teve inÌcio. Isso pode demorar alguns minutos...
+install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	pt-br	instalar ou atualizar tradu√ß√µes: dom√≠nio(todos),[usu√°rio configurador(admin)],senha,[[+]lang1[,lang2,...]] + adiciona idiomas n√£o existentes
+installation finished	setup	pt-br	Instala√ß√£o conclu√≠da
+installation started, this might take a few minutes ...	setup	pt-br	A instala√ß√£o teve in√≠cio. Isso pode demorar alguns minutos...
 installed	setup	pt-br	instaladas
-instructions for creating the database in %1:	setup	pt-br	InstruÁıes para criar a base de dados em %1
-invalid ip address	setup	pt-br	endereÁo IP inv·lido
-invalid mcrypt algorithm/mode combination	setup	pt-br	CombinaÁ„o inv·lida para algorÌtimo/modo do Mcrypt
-invalid password	setup	pt-br	Senha inv·lida
-is broken	setup	pt-br	est· quebrado
-is disabled	setup	pt-br	est· desabilitado
-is in the webservers docroot	setup	pt-br	est· no caminho raiz do servidor web
-is not writeable by the webserver	setup	pt-br	n„o permite gravaÁ„o pelo servidor web
-it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	pt-br	… necess·rio atualizar para vers„o %1! Use --update-header <senha>[,<usu·rio>] para fazÍ-lo (--usage informa mais opÁıes).
+instructions for creating the database in %1:	setup	pt-br	Instru√ß√µes para criar a base de dados em %1
+invalid ip address	setup	pt-br	endere√ßo IP inv√°lido
+invalid mcrypt algorithm/mode combination	setup	pt-br	Combina√ß√£o inv√°lida para algor√≠timo/modo do Mcrypt
+invalid password	setup	pt-br	Senha inv√°lida
+is broken	setup	pt-br	est√° quebrado
+is disabled	setup	pt-br	est√° desabilitado
+is in the webservers docroot	setup	pt-br	est√° no caminho raiz do servidor web
+is not writeable by the webserver	setup	pt-br	n√£o permite grava√ß√£o pelo servidor web
+it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	pt-br	√â necess√°rio atualizar para vers√£o %1! Use --update-header <senha>[,<usu√°rio>] para faz√™-lo (--usage informa mais op√ß√µes).
 languages updated.	setup	pt-br	Idiomas atualizados.
-ldap accounts configuration	setup	pt-br	ConfiguraÁ„o de contas LDAP
+ldap accounts configuration	setup	pt-br	Configura√ß√£o de contas LDAP
 ldap accounts context	setup	pt-br	Contexto de contas LDAP
-ldap config	setup	pt-br	ConfiguraÁ„o LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	pt-br	Prefixo de diretÛrio home padr„o LDAP (Exemplo: /home para /home/codigodeusuario)
-ldap default shell (e.g. /bin/bash)	setup	pt-br	Interpretador de comandos padr„o LDAP (Exemplo: /bin/bash)
-ldap encryption type	setup	pt-br	Tipo de encriptaÁ„o LDAP
+ldap config	setup	pt-br	Configura√ß√£o LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	pt-br	Prefixo de diret√≥rio home padr√£o LDAP (Exemplo: /home para /home/codigodeusuario)
+ldap default shell (e.g. /bin/bash)	setup	pt-br	Interpretador de comandos padr√£o LDAP (Exemplo: /bin/bash)
+ldap encryption type	setup	pt-br	Tipo de encripta√ß√£o LDAP
 ldap groups context	setup	pt-br	Contexto de grupos LDAP
 ldap host	setup	pt-br	Servidor LDAP
-ldap import	setup	pt-br	ImportaÁ„o LDAP
-ldap root password	setup	pt-br	Senha do super usu·rio LDAP
-ldap rootdn	setup	pt-br	Super usu·rio LDAP
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pt-br	Filtro de pesquisa para contas LDAP. Padr„o: "(uid=%user)", %domain=eGW-domain
+ldap import	setup	pt-br	Importa√ß√£o LDAP
+ldap root password	setup	pt-br	Senha do super usu√°rio LDAP
+ldap rootdn	setup	pt-br	Super usu√°rio LDAP
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pt-br	Filtro de pesquisa para contas LDAP. Padr√£o: "(uid=%user)", %domain=eGW-domain
 leave empty to keep current.	setup	pt-br	Deixe em branco para manter a atual
 limit access	setup	pt-br	Limitar acesso
-limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	pt-br	Limitar acesso ao setup aos seguintes endereÁos IP, redes ou nomes de domÌnio (ex: 127.0.0.1, 10.1.1, meudominio.nomesite.com.br)
-list availible values	setup	pt-br	Ligar valores disponÌveis
-list of availible translations	setup	pt-br	Lista das traduÁıes disponÌveis
-login as user postgres, eg. by using su as root	setup	pt-br	Logar como usu·rio postgres, por exemplo usando 'su' como root
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	pt-br	Limitar acesso ao setup aos seguintes endere√ßos IP, redes ou nomes de dom√≠nio (ex: 127.0.0.1, 10.1.1, meudominio.nomesite.com.br)
+list availible values	setup	pt-br	Ligar valores dispon√≠veis
+list of availible translations	setup	pt-br	Lista das tradu√ß√µes dispon√≠veis
+login as user postgres, eg. by using su as root	setup	pt-br	Logar como usu√°rio postgres, por exemplo usando 'su' como root
 login to mysql -	setup	pt-br	Conectar no mysql -
-loginname needed for domain configuration	setup	pt-br	Nome de usu·rio necess·rio para configuraÁ„o de domÌnio
+loginname needed for domain configuration	setup	pt-br	Nome de usu√°rio necess√°rio para configura√ß√£o de dom√≠nio
 logout	setup	pt-br	Desconectar
-mail domain (for virtual mail manager)	setup	pt-br	DomÌnio de E-mail (para gerenciador de E-Mail Virtual)
+mail domain (for virtual mail manager)	setup	pt-br	Dom√≠nio de E-mail (para gerenciador de E-Mail Virtual)
 mail server login type	setup	pt-br	Tipo do login no servidor de e-mail
 mail server protocol	setup	pt-br	Protocolo do servidor de e-mail
-make sure that your database is created and the account permissions are set	setup	pt-br	Verifique se sua base de dados est· criada e as permissıes de acesso est„o definidas
-manage applications	setup	pt-br	Configurar aplicaÁıes
+make sure that your database is created and the account permissions are set	setup	pt-br	Verifique se sua base de dados est√° criada e as permiss√µes de acesso est√£o definidas
+manage applications	setup	pt-br	Configurar aplica√ß√µes
 manage languages	setup	pt-br	Configurar idiomas
 manual / help	setup	pt-br	Manual / Ajuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execuÁ„o est· setado para menos de 30 segundos. Algumas vezes, o eGroupWare necessita de um limite maior que esse. … possÌvel que ocorram problemas.
-maximum account id (e.g. 65535 or 1000000)	setup	pt-br	Id m·ximo para contas (Exemplo: 65535 ou 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execu√ß√£o est√° setado para menos de 30 segundos. Algumas vezes, o eGroupWare necessita de um limite maior que esse. √â poss√≠vel que ocorram problemas.
+maximum account id (e.g. 65535 or 1000000)	setup	pt-br	Id m√°ximo para contas (Exemplo: 65535 ou 1000000)
 may be broken	setup	pt-br	pode estar quebrado
-mcrypt algorithm (default tripledes)	setup	pt-br	Algoritmo Mcrypt (padr„o TRIPLEDES)
-mcrypt initialization vector	setup	pt-br	Vetor de iniciaÁ„o do MCrypt
-mcrypt mode (default cbc)	setup	pt-br	Modo Mcrypt (padr„o CBC)
-mcrypt settings (requires mcrypt php extension)	setup	pt-br	ConfiguraÁıes para Mcrypt (requer extens„o mcrypt do PHP)
-mcrypt version	setup	pt-br	Vers„o do MCrypt
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt-br	O Valor de limite de memÛria est· menor que %1. Alguns aplicativos do eGroupware necessitam mais que os 8M recomendados. … possÌvel que ocorram problemas.
-migration between egroupware account repositories	setup	pt-br	MigraÁ„o entre respositÛrios de contas do eGroupWare
-minimum account id (e.g. 500 or 100, etc.)	setup	pt-br	Id mÌnimo para contas (Exemplo: 500 ou 100, etc.)
+mcrypt algorithm (default tripledes)	setup	pt-br	Algoritmo Mcrypt (padr√£o TRIPLEDES)
+mcrypt initialization vector	setup	pt-br	Vetor de inicia√ß√£o do MCrypt
+mcrypt mode (default cbc)	setup	pt-br	Modo Mcrypt (padr√£o CBC)
+mcrypt settings (requires mcrypt php extension)	setup	pt-br	Configura√ß√µes para Mcrypt (requer extens√£o mcrypt do PHP)
+mcrypt version	setup	pt-br	Vers√£o do MCrypt
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt-br	O Valor de limite de mem√≥ria est√° menor que %1. Alguns aplicativos do eGroupware necessitam mais que os 8M recomendados. √â poss√≠vel que ocorram problemas.
+migration between egroupware account repositories	setup	pt-br	Migra√ß√£o entre resposit√≥rios de contas do eGroupWare
+minimum account id (e.g. 500 or 100, etc.)	setup	pt-br	Id m√≠nimo para contas (Exemplo: 500 ou 100, etc.)
 minute	setup	pt-br	minuto
-missing or uncomplete mailserver configuration	setup	pt-br	ConfiguraÁ„o do servidor de e-mail est· faltando
-modifications have been completed!	setup	pt-br	As modificaÁıes foram completadas
+missing or uncomplete mailserver configuration	setup	pt-br	Configura√ß√£o do servidor de e-mail est√° faltando
+modifications have been completed!	setup	pt-br	As modifica√ß√µes foram completadas
 modify	setup	pt-br	Modificar
-month	setup	pt-br	mÍs
-multi-language support setup	setup	pt-br	ConfiguraÁ„o de suporte a idiomas
+month	setup	pt-br	m√™s
+multi-language support setup	setup	pt-br	Configura√ß√£o de suporte a idiomas
 name of database	setup	pt-br	Nome da base de dados
-name of db user egroupware uses to connect	setup	pt-br	Nome do usu·rio da base de dados que o eGroupWare deve usar para conex„o
+name of db user egroupware uses to connect	setup	pt-br	Nome do usu√°rio da base de dados que o eGroupWare deve usar para conex√£o
 never	setup	pt-br	nunca
 new	setup	pt-br	NOVO
-next run	setup	pt-br	prÛxima execuÁ„o
-no	setup	pt-br	N„o
-no %1 support found. disabling	setup	pt-br	N„o h· suporte para %1. Desabilitando.
-no accounts existing	setup	pt-br	N„o h· contas existentes
-no algorithms available	setup	pt-br	Nenhum algoritmo disponÌvel
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	pt-br	Nenhum domÌnio / base de dados do eGroupWare existe! Use --edit-header --domain para adicionar um (--usage retorna mais opÁıes).
-no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	pt-br	Nenhuma senha para configuraÁ„o do servidor definida! Use --edit-header <senha>[,<user>] para definir uma (--usage retorna mais opÁıes).
-no modes available	setup	pt-br	nenhum modo disponÌvel
-no update necessary, domain %1(%2) is up to date.	setup	pt-br	Nenhuma atualizaÁ„o È necess·ria. DomÌnio %1 (%2) est· atualizado.
-no xml support found. disabling	setup	pt-br	N„o foi encontrado suporte para XML. Desablilitando
-not	setup	pt-br	N„o
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pt-br	Nem todos os algorÌtmos de criptografia do MCrypt funcionan com o eGroupware. Se vocÍ encontrar algum problema tente desligar essa opÁ„o.
+next run	setup	pt-br	pr√≥xima execu√ß√£o
+no	setup	pt-br	N√£o
+no %1 support found. disabling	setup	pt-br	N√£o h√° suporte para %1. Desabilitando.
+no accounts existing	setup	pt-br	N√£o h√° contas existentes
+no algorithms available	setup	pt-br	Nenhum algoritmo dispon√≠vel
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	pt-br	Nenhum dom√≠nio / base de dados do eGroupWare existe! Use --edit-header --domain para adicionar um (--usage retorna mais op√ß√µes).
+no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	pt-br	Nenhuma senha para configura√ß√£o do servidor definida! Use --edit-header <senha>[,<user>] para definir uma (--usage retorna mais op√ß√µes).
+no modes available	setup	pt-br	nenhum modo dispon√≠vel
+no update necessary, domain %1(%2) is up to date.	setup	pt-br	Nenhuma atualiza√ß√£o √© necess√°ria. Dom√≠nio %1 (%2) est√° atualizado.
+no xml support found. disabling	setup	pt-br	N√£o foi encontrado suporte para XML. Desablilitando
+not	setup	pt-br	N√£o
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pt-br	Nem todos os algor√≠tmos de criptografia do MCrypt funcionan com o eGroupware. Se voc√™ encontrar algum problema tente desligar essa op√ß√£o.
 not complete	setup	pt-br	incompleto
 not completed	setup	pt-br	Incompleto
-not ready for this stage yet	setup	pt-br	N„o est· pronto para este passo ainda
-not set	setup	pt-br	n„o configurado
-note: you will be able to customize this later	setup	pt-br	Nota: ser· possÌvel personalizar isto depois
-now guessing better values for defaults...	setup	pt-br	Agora, testando valores melhores para padr„o
+not ready for this stage yet	setup	pt-br	N√£o est√° pronto para este passo ainda
+not set	setup	pt-br	n√£o configurado
+note: you will be able to customize this later	setup	pt-br	Nota: ser√° poss√≠vel personalizar isto depois
+now guessing better values for defaults...	setup	pt-br	Agora, testando valores melhores para padr√£o
 odbc / maxdb: dsn (data source name) to use	setup	pt-br	Nome da fonte de dados ODBC/MaxDB (DSN) a ser usada
 ok	setup	pt-br	OK
 once the database is setup correctly	setup	pt-br	Quando a base de dados estiver configurada corretamente
-one month	setup	pt-br	um mÍs
+one month	setup	pt-br	um m√™s
 one week	setup	pt-br	uma semana
-only add languages that are not in the database already	setup	pt-br	Somente adicionar idiomas que ainda n„o est„o na base de dados
+only add languages that are not in the database already	setup	pt-br	Somente adicionar idiomas que ainda n√£o est√£o na base de dados
 only add new phrases	setup	pt-br	Somente adicionar novas frases
 or	setup	pt-br	ou
-or %1continue to the header admin%2	setup	pt-br	ou %1Prosseguir para a ConfiguraÁ„o do Servidor%2
+or %1continue to the header admin%2	setup	pt-br	ou %1Prosseguir para a Configura√ß√£o do Servidor%2
 or http://webdav.domain.com (webdav)	setup	pt-br	ou http://webdav.domain.com (WebDAV)
-or we can attempt to create the database for you:	setup	pt-br	Ou eGroupWare pode criar a base de dados para vocÍ:
-or you can install a previous backup.	setup	pt-br	Ou vocÍ pode instalar um backup anterior.
-password for smtp-authentication	setup	pt-br	Senha para autenticaÁ„o SMTP.
-password needed for domain configuration.	setup	pt-br	Senha necess·ria para administrador domÌnio.
-password of db user	setup	pt-br	Senha do usu·rio da base de dados
-passwords did not match, please re-enter	setup	pt-br	Senhas n„o conferem, digite novamente
-path (not url!) to your egroupware installation.	setup	pt-br	Caminho (n„o URL!) para sua instalaÁ„o do eGroupWare
-path information	setup	pt-br	InformaÁ„o de Caminho do sistema (Path)
-path of egroupware install directory (default auto-detected)	setup	pt-br	caminho para o diretÛrio de instalaÁ„o do eGroupWare (padr„o auto-dect·vel)
-path to user and group files has to be outside of the webservers document-root!!!	setup	pt-br	Caminho para ser usado para arquivos de usu·rios e grupos. TEM QUE ESTAR FORA do diretÛrio de documentos do servidor web.
-path to various directories: have to exist and be writeable by the webserver	setup	pt-br	caminho para v·rios diretÛrios: devem existir e o servidor web deve ter permiss„o de escrita neles
-pear (%1) is a php repository and is usually in a package called %2.	setup	pt-br	PEAR (%1) È um repositÛrio PHP e normalmente est· em um pacote chamado %2.
-pear%1 is needed by: %2.	setup	pt-br	PEAR %1 È requerido por: %2.
-persistent connections	setup	pt-br	Conexıes Persistentes
-php plus restore	setup	pt-br	PHP + restauraÁ„o
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	pt-br	PHP + restauraÁ„o tem uma performance melhor, j· que o ambiente eGW È completamente guardado na sess„o.
-please check for sql scripts within the application's directory	setup	pt-br	Por favor verifique os scripts SQL no diretÛrio da aplicaÁ„o
-please check read/write permissions on directories, or back up and use another option.	setup	pt-br	Porfavor verifique os direitos de escrita/leitura. ou faÁa uma cÛpia de seguranÁa e use outra opÁ„o.
+or we can attempt to create the database for you:	setup	pt-br	Ou eGroupWare pode criar a base de dados para voc√™:
+or you can install a previous backup.	setup	pt-br	Ou voc√™ pode instalar um backup anterior.
+password for smtp-authentication	setup	pt-br	Senha para autentica√ß√£o SMTP.
+password needed for domain configuration.	setup	pt-br	Senha necess√°ria para administrador dom√≠nio.
+password of db user	setup	pt-br	Senha do usu√°rio da base de dados
+passwords did not match, please re-enter	setup	pt-br	Senhas n√£o conferem, digite novamente
+path (not url!) to your egroupware installation.	setup	pt-br	Caminho (n√£o URL!) para sua instala√ß√£o do eGroupWare
+path information	setup	pt-br	Informa√ß√£o de Caminho do sistema (Path)
+path of egroupware install directory (default auto-detected)	setup	pt-br	caminho para o diret√≥rio de instala√ß√£o do eGroupWare (padr√£o auto-dect√°vel)
+path to user and group files has to be outside of the webservers document-root!!!	setup	pt-br	Caminho para ser usado para arquivos de usu√°rios e grupos. TEM QUE ESTAR FORA do diret√≥rio de documentos do servidor web.
+path to various directories: have to exist and be writeable by the webserver	setup	pt-br	caminho para v√°rios diret√≥rios: devem existir e o servidor web deve ter permiss√£o de escrita neles
+pear (%1) is a php repository and is usually in a package called %2.	setup	pt-br	PEAR (%1) √© um reposit√≥rio PHP e normalmente est√° em um pacote chamado %2.
+pear%1 is needed by: %2.	setup	pt-br	PEAR %1 √© requerido por: %2.
+persistent connections	setup	pt-br	Conex√µes Persistentes
+php plus restore	setup	pt-br	PHP + restaura√ß√£o
+php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	pt-br	PHP + restaura√ß√£o tem uma performance melhor, j√° que o ambiente eGW √© completamente guardado na sess√£o.
+please check for sql scripts within the application's directory	setup	pt-br	Por favor verifique os scripts SQL no diret√≥rio da aplica√ß√£o
+please check read/write permissions on directories, or back up and use another option.	setup	pt-br	Porfavor verifique os direitos de escrita/leitura. ou fa√ßa uma c√≥pia de seguran√ßa e use outra op√ß√£o.
 please configure egroupware for your environment	setup	pt-br	Por favor configure o eGroupWare para o seu ambiente
 please consult the %1.	setup	pt-br	Por Favor consulte %1
 please fix the above errors (%1) and warnings(%2)	setup	pt-br	Por favor corrija os erros acima (%1) e avisos (%2)
 please install	setup	pt-br	Por favor instale
 please login	setup	pt-br	Por favor conecte-se
-please login to egroupware and run the admin application for additional site configuration	setup	pt-br	Por favor, conecte-se no eGroupWare e execute o aplicativo de administraÁ„o para executar as outras configuraÁıes do servidor
-please make the following change in your php.ini	setup	pt-br	Por favor faÁa a seguinte alteraÁ„o no seu php.ini
+please login to egroupware and run the admin application for additional site configuration	setup	pt-br	Por favor, conecte-se no eGroupWare e execute o aplicativo de administra√ß√£o para executar as outras configura√ß√µes do servidor
+please make the following change in your php.ini	setup	pt-br	Por favor fa√ßa a seguinte altera√ß√£o no seu php.ini
 please wait...	setup	pt-br	Por favor aguarde...
-pop/imap mail server hostname or ip address	setup	pt-br	EndereÁo IP ou nome do servidor POP/MAIL do servidor de e-mail
-possible reasons	setup	pt-br	Razıes PossÌveis
-possible solutions	setup	pt-br	SoluÁıes PossÌveis
-post-install dependency failure	setup	pt-br	Falha em uma dependÍncia posterior a instalaÁ„o
+pop/imap mail server hostname or ip address	setup	pt-br	Endere√ßo IP ou nome do servidor POP/MAIL do servidor de e-mail
+possible reasons	setup	pt-br	Raz√µes Poss√≠veis
+possible solutions	setup	pt-br	Solu√ß√µes Poss√≠veis
+post-install dependency failure	setup	pt-br	Falha em uma depend√™ncia posterior a instala√ß√£o
 postfix with ldap: [yes(user edit forwarding)]	setup	pt-br	Postfix com LDAP: [sim(user edit fowarding)]
-postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	pt-br	Postgres: Deixe-o vazio para usar o socket unix preferido ao invÈs de uma conex„o TCP/IP.
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	pt-br	Postgres: Deixe-o vazio para usar o socket unix preferido ao inv√©s de uma conex√£o TCP/IP.
 potential problem	setup	pt-br	Problema em potencial
-preferences	setup	pt-br	PreferÍncias
-problem resolution	setup	pt-br	SoluÁ„o do problema
+preferences	setup	pt-br	Prefer√™ncias
+problem resolution	setup	pt-br	Solu√ß√£o do problema
 process	setup	pt-br	Processar
 re-check my database	setup	pt-br	Verificar novamente a base de dados
-re-check my installation	setup	pt-br	Verificar novamente a instalaÁ„o
+re-check my installation	setup	pt-br	Verificar novamente a instala√ß√£o
 re-enter password	setup	pt-br	Digite novamente a senha
-read translations from	setup	pt-br	Ler as traduÁıes de
+read translations from	setup	pt-br	Ler as tradu√ß√µes de
 readable by the webserver	setup	pt-br	Leitura pelo servidor web
-really uninstall all applications	setup	pt-br	REALMENTE desinstalar todas aplicaÁıes
+really uninstall all applications	setup	pt-br	REALMENTE desinstalar todas aplica√ß√µes
 recommended: filesystem	setup	pt-br	Sistemas de Arquivos recomendado
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt-br	A vari·vel register_globais est· ligada. O eGroupWare n„o necessita desse recurso e geralmente È mais seguro manter essa vari·vel desligada.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt-br	A vari√°vel register_globais est√° ligada. O eGroupWare n√£o necessita desse recurso e geralmente √© mais seguro manter essa vari√°vel desligada.
 registered	setup	pt-br	registrado
 rejected lines	setup	pt-br	Linhas rejeitadas.
 remove	setup	pt-br	Remover
 remove all	setup	pt-br	Remover todos
 rename	setup	pt-br	Renomear
-requires reinstall or manual repair	setup	pt-br	Requer reinstalaÁ„o ou reparo manual
-requires upgrade	setup	pt-br	Requer atualizaÁ„o
+requires reinstall or manual repair	setup	pt-br	Requer reinstala√ß√£o ou reparo manual
+requires upgrade	setup	pt-br	Requer atualiza√ß√£o
 resolve	setup	pt-br	Resolver
 restore	setup	pt-br	Restaurar
-restore failed	setup	pt-br	RestauraÁ„o falhou
-restore finished	setup	pt-br	RestauraÁ„o terminou
-restore started, this might take a few minutes ...	setup	pt-br	RestauraÁ„o iniciou. Isto pode demorar alguns minutos...
-restoring a backup will delete/replace all content in your database. are you sure?	setup	pt-br	Restaurar um backup poder· remover/substituir todo o conte˙do de sua base de dados. VocÍ tem certeza?
+restore failed	setup	pt-br	Restaura√ß√£o falhou
+restore finished	setup	pt-br	Restaura√ß√£o terminou
+restore started, this might take a few minutes ...	setup	pt-br	Restaura√ß√£o iniciou. Isto pode demorar alguns minutos...
+restoring a backup will delete/replace all content in your database. are you sure?	setup	pt-br	Restaurar um backup poder√° remover/substituir todo o conte√∫do de sua base de dados. Voc√™ tem certeza?
 return to setup	setup	pt-br	Retornar ao Configurador
-run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	pt-br	rodar uma atualizaÁ„o de base de dados (se necess·rio): domÌnio(todos),[usu·rio configurador(admin)],senha
-run installation tests	setup	pt-br	Executar testes de instalaÁ„o
-safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	pt-br	A Modo de seguranÁa est· ligado. O que normalmente È uma coisa boa, isto torna sua instalaÁ„o mais segura.
-sample configuration not found. using built in defaults	setup	pt-br	ConfiguraÁ„o padr„o n„o encontrada. usado os valores padrıes internos.
+run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	pt-br	rodar uma atualiza√ß√£o de base de dados (se necess√°rio): dom√≠nio(todos),[usu√°rio configurador(admin)],senha
+run installation tests	setup	pt-br	Executar testes de instala√ß√£o
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	pt-br	A Modo de seguran√ßa est√° ligado. O que normalmente √© uma coisa boa, isto torna sua instala√ß√£o mais segura.
+sample configuration not found. using built in defaults	setup	pt-br	Configura√ß√£o padr√£o n√£o encontrada. usado os valores padr√µes internos.
 save	setup	pt-br	Salvar
-save this text as contents of your header.inc.php	setup	pt-br	Salve este texto como conte˙do do seu header.inc.php
+save this text as contents of your header.inc.php	setup	pt-br	Salve este texto como conte√∫do do seu header.inc.php
 schedule	setup	pt-br	agendar
 scheduled backups	setup	pt-br	Backups agendados
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pt-br	Selecione um aplicativo, escolha a vers„o de destino e clique em Enviar para processar esta vers„o.<br />Se vocÍ n„o definir uma vers„o somente as tabelas base ser„o instaladas para o aplicativo.<br /><blink>Primeiro, esta operaÁ„o ir· remover todas as tabelas de Aplicativos!</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pt-br	Selecione um aplicativo, escolha a vers√£o de destino e clique em Enviar para processar esta vers√£o.<br />Se voc√™ n√£o definir uma vers√£o somente as tabelas base ser√£o instaladas para o aplicativo.<br /><blink>Primeiro, esta opera√ß√£o ir√° remover todas as tabelas de Aplicativos!</blink>
 select one...	setup	pt-br	selecione um
-select the default applications to which your users will have access	setup	pt-br	Selecione o aplicativo padr„o.
-select the desired action(s) from the available choices	setup	pt-br	Selecione a aÁ„o (ou aÁıes) desejada(s) a partir das opÁıes
+select the default applications to which your users will have access	setup	pt-br	Selecione o aplicativo padr√£o.
+select the desired action(s) from the available choices	setup	pt-br	Selecione a a√ß√£o (ou a√ß√µes) desejada(s) a partir das op√ß√µes
 select to download file	setup	pt-br	Selecione para baixar um arquivo
-select where you want to store/retrieve file contents	setup	pt-br	Selecione onde vocÍ deseja salvar/recuperar arquivos de conte˙do.
-select where you want to store/retrieve filesystem information	setup	pt-br	Selecione onde vocÍ deseja salvar / recuperar informaÁıes de arquivos do sistema.
-select where you want to store/retrieve user accounts	setup	pt-br	Selecione onde vocÍ deseja salvar / recuperar as contas de usu·rios
-select which group(s) will be exported	setup	pt-br	Selecionar que(quais) grupo(s) ser·(„o) exportado(s)
-select which group(s) will be imported (group membership will be maintained)	setup	pt-br	Selecione qual grupo (ou grupos) ser„o importados (a estrutura de membros dos grupos ser· mantida)
-select which group(s) will be modified (group membership will be maintained)	setup	pt-br	Selecione qual grupo (ou grupos) ser„o modificados (a estrutura de membros dos grupos ser· mantida)
+select where you want to store/retrieve file contents	setup	pt-br	Selecione onde voc√™ deseja salvar/recuperar arquivos de conte√∫do.
+select where you want to store/retrieve filesystem information	setup	pt-br	Selecione onde voc√™ deseja salvar / recuperar informa√ß√µes de arquivos do sistema.
+select where you want to store/retrieve user accounts	setup	pt-br	Selecione onde voc√™ deseja salvar / recuperar as contas de usu√°rios
+select which group(s) will be exported	setup	pt-br	Selecionar que(quais) grupo(s) ser√°(√£o) exportado(s)
+select which group(s) will be imported (group membership will be maintained)	setup	pt-br	Selecione qual grupo (ou grupos) ser√£o importados (a estrutura de membros dos grupos ser√° mantida)
+select which group(s) will be modified (group membership will be maintained)	setup	pt-br	Selecione qual grupo (ou grupos) ser√£o modificados (a estrutura de membros dos grupos ser√° mantida)
 select which languages you would like to use	setup	pt-br	Selecione o idioma a ser usado
-select which method of upgrade you would like to do	setup	pt-br	Selecione o mÈtodo de atualizaÁ„o desejado
-select which type of authentication you are using	setup	pt-br	Selecione o tipo de autenticaÁ„o a ser usado
-select which user(s) will also have admin privileges	setup	pt-br	Selecione qual usu·rio (ou usu·rios) ter„o privilÈgios de administrador
-select which user(s) will be exported	setup	pt-br	Selecione os usu·rios que ser„o exportados
-select which user(s) will be imported	setup	pt-br	Selecione os usu·rios que ser„o importados
-select which user(s) will be modified	setup	pt-br	Selecione os usu·rios que ser„o modificados
-select which user(s) will have admin privileges	setup	pt-br	Selecione os usu·rios que ter„o privilÈgios de administradores
-select your old version	setup	pt-br	Selecione a vers„o antiga
-selectbox	setup	pt-br	Caixa de seleÁ„o
+select which method of upgrade you would like to do	setup	pt-br	Selecione o m√©todo de atualiza√ß√£o desejado
+select which type of authentication you are using	setup	pt-br	Selecione o tipo de autentica√ß√£o a ser usado
+select which user(s) will also have admin privileges	setup	pt-br	Selecione qual usu√°rio (ou usu√°rios) ter√£o privil√©gios de administrador
+select which user(s) will be exported	setup	pt-br	Selecione os usu√°rios que ser√£o exportados
+select which user(s) will be imported	setup	pt-br	Selecione os usu√°rios que ser√£o importados
+select which user(s) will be modified	setup	pt-br	Selecione os usu√°rios que ser√£o modificados
+select which user(s) will have admin privileges	setup	pt-br	Selecione os usu√°rios que ter√£o privil√©gios de administradores
+select your old version	setup	pt-br	Selecione a vers√£o antiga
+selectbox	setup	pt-br	Caixa de sele√ß√£o
 server root	setup	pt-br	Raiz do Servidor
-sessions type	setup	pt-br	Tipo de seÁ„o
+sessions type	setup	pt-br	Tipo de se√ß√£o
 set	setup	pt-br	Configure
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	pt-br	Defina esse valor para "old"para versıes < 2.4, ou para a vers„o exata do MCrypt em uso.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	pt-br	Defina esse valor para "old"para vers√µes < 2.4, ou para a vers√£o exata do MCrypt em uso.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	pt-br	Definir o conjunto de caracteres para UTF-8 (unicode) permite que dados de idiomas diferentes possam aparecer e coexistir no sistema.
-settings	setup	pt-br	ConfiguraÁıes
+settings	setup	pt-br	Configura√ß√µes
 setup	setup	pt-br	Configurador
-setup main menu	setup	pt-br	Menu principal de configuraÁ„o
+setup main menu	setup	pt-br	Menu principal de configura√ß√£o
 setup the database	setup	pt-br	Configurar a base de dados
-setup/config admin login	setup	pt-br	Definir/Configurar a conex„o do Administrador
-should be the same as server root unless you know what you are doing.	setup	pt-br	Dever· ser o mesmo que RaÌz do Servidor, a menos que vocÍ saiba o que est· fazendo.
-show 'powered by' logo on	setup	pt-br	¡rea para exibiÁ„o 'powered by  eGroupWare'
+setup/config admin login	setup	pt-br	Definir/Configurar a conex√£o do Administrador
+should be the same as server root unless you know what you are doing.	setup	pt-br	Dever√° ser o mesmo que Ra√≠z do Servidor, a menos que voc√™ saiba o que est√° fazendo.
+show 'powered by' logo on	setup	pt-br	√Årea para exibi√ß√£o 'powered by  eGroupWare'
 sieve: host[,port(2000)]	setup	pt-br	Sieve: servidor[,port(2000)]
 size	setup	pt-br	tamanho
-skip the installation tests (not recommended)	setup	pt-br	Pular os testes de instalaÁ„o (n„o recomendado)
-smtp server hostname or ip address	setup	pt-br	EndereÁo IP ou nome do servidor SMTP
+skip the installation tests (not recommended)	setup	pt-br	Pular os testes de instala√ß√£o (n√£o recomendado)
+smtp server hostname or ip address	setup	pt-br	Endere√ßo IP ou nome do servidor SMTP
 smtp server port	setup	pt-br	Porta do servidor SMTP
-some or all of its tables are missing	setup	pt-br	Est„o faltando algumas tabelas (ou todas)
+some or all of its tables are missing	setup	pt-br	Est√£o faltando algumas tabelas (ou todas)
 sources deleted/missing	setup	pt-br	Fontes removidas/faltando
-sql encryption type	setup	pt-br	Tipo de criptografia para senhas  SQL(padr„o Md5)
-standard (login-name identical to egroupware user-name)	setup	pt-br	padr„o (nome de login idÍntico ao nome de usu·rio do eGroupWare)
-standard mailserver settings (used for mail authentication too)	setup	pt-br	ConfiguraÁıes de servidor de e-mail padr„o (tambÈm usadas para autenticaÁ„o)
+sql encryption type	setup	pt-br	Tipo de criptografia para senhas  SQL(padr√£o Md5)
+standard (login-name identical to egroupware user-name)	setup	pt-br	padr√£o (nome de login id√™ntico ao nome de usu√°rio do eGroupWare)
+standard mailserver settings (used for mail authentication too)	setup	pt-br	Configura√ß√µes de servidor de e-mail padr√£o (tamb√©m usadas para autentica√ß√£o)
 start the postmaster	setup	pt-br	Iniciar o postmaster
 start updating languages %1 ...	setup	pt-br	Atualizando idiomas %1 ...
 start updating the database ...	setup	pt-br	Atualizando a base de dados ...
 status	setup	pt-br	Status
 step %1 - admin account	setup	pt-br	Passo %1 - Conta do administrador
-step %1 - advanced application management	setup	pt-br	Passo %1 - Gerenciamento avanÁado da instalaÁ„o
-step %1 - configuration	setup	pt-br	Passo %1 - ConfiguraÁ„o
-step %1 - db backup and restore	setup	pt-br	Passo %1 - Backup e RestauraÁ„o de base de dados
+step %1 - advanced application management	setup	pt-br	Passo %1 - Gerenciamento avan√ßado da instala√ß√£o
+step %1 - configuration	setup	pt-br	Passo %1 - Configura√ß√£o
+step %1 - db backup and restore	setup	pt-br	Passo %1 - Backup e Restaura√ß√£o de base de dados
 step %1 - language management	setup	pt-br	Passo %1 - Gerenciamento de idiomas
 step %1 - simple application management	setup	pt-br	Passo %1 - Gerenciamento simples  de aplicativos
 succesfully uploaded file %1	setup	pt-br	Arquivo % carregado com sucesso.
-table change messages	setup	pt-br	Mensagens de alteraÁıes nas tabelas
+table change messages	setup	pt-br	Mensagens de altera√ß√µes nas tabelas
 tables dropped	setup	pt-br	tabelas removidas (DROP)
-tables installed, unless there are errors printed above	setup	pt-br	caso n„o existam erros mostrados abaixo, suas tabelas ter„o sido instaladas com sucesso.
+tables installed, unless there are errors printed above	setup	pt-br	caso n√£o existam erros mostrados abaixo, suas tabelas ter√£o sido instaladas com sucesso.
 tables upgraded	setup	pt-br	tabelas atualizadas
-target version	setup	pt-br	Vers„o de destino
-tcp port number of database server	setup	pt-br	N˙mero da porta TCP do servidor da base de dados
+target version	setup	pt-br	Vers√£o de destino
+tcp port number of database server	setup	pt-br	N√∫mero da porta TCP do servidor da base de dados
 text entry	setup	pt-br	Entrada de texto
-the %1 extension is needed from: %2.	setup	pt-br	A extens„o %1 È requerida por: %2.
-the %1 extension is needed, if you plan to use a %2 database.	setup	pt-br	A extens„o %1 È necess·ria, se vocÍ est· planejando usar a base de dados %2
-the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	pt-br	O valor da vari·vel db_type (%1) indica um banco de dados que n„o tem suporte nesse servidor. Usaremos o primeiro tipo encontrado que tenha suporte nesse servidor.
+the %1 extension is needed from: %2.	setup	pt-br	A extens√£o %1 √© requerida por: %2.
+the %1 extension is needed, if you plan to use a %2 database.	setup	pt-br	A extens√£o %1 √© necess√°ria, se voc√™ est√° planejando usar a base de dados %2
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	pt-br	O valor da vari√°vel db_type (%1) indica um banco de dados que n√£o tem suporte nesse servidor. Usaremos o primeiro tipo encontrado que tenha suporte nesse servidor.
 the file	setup	pt-br	o arquivo
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt-br	O primeiro passo ao instalar eGroupWare È assegurar que seu ambiente possui as configuraÁıes necess·rias para executar corretamente a aplicaÁ„o.
-the following applications need to be upgraded:	setup	pt-br	As seguintes aplicaÁıes precisam ser atualizadas:
-the function %1 is needed from: %2.	setup	pt-br	A funÁ„o %1 È necess·ria para: %2
-the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	pt-br	A funÁ„o imagecreatefromjpeg È fornecida pela extens„o gd (compilada com suporte jpeg!). Ela È necess·ria para fazer upload de fotos dos contatos.
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	As extensıes mbstring s„o necess·rias para suporte unicode (utf-8) completo ou para outros conjuntos de car·cteres multibyte.
-the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	A opÁ„o 'mbstring.func_overload = 7' È necess·ria para total suporte unicode (utf-8) ou outros caracteres multibyte.
-the session extension is needed to use php sessions (db-sessions work without).	setup	pt-br	A extens„o 'session' È necess·ria para usar sessıes php (sessıes db funciona sem ela)
-the table definition was correct, and the tables were installed	setup	pt-br	As definiÁıes de tabelas est„o corretas e as tabelas est„o instaladas
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt-br	O primeiro passo ao instalar eGroupWare √© assegurar que seu ambiente possui as configura√ß√µes necess√°rias para executar corretamente a aplica√ß√£o.
+the following applications need to be upgraded:	setup	pt-br	As seguintes aplica√ß√µes precisam ser atualizadas:
+the function %1 is needed from: %2.	setup	pt-br	A fun√ß√£o %1 √© necess√°ria para: %2
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	pt-br	A fun√ß√£o imagecreatefromjpeg √© fornecida pela extens√£o gd (compilada com suporte jpeg!). Ela √© necess√°ria para fazer upload de fotos dos contatos.
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	As extens√µes mbstring s√£o necess√°rias para suporte unicode (utf-8) completo ou para outros conjuntos de car√°cteres multibyte.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	A op√ß√£o 'mbstring.func_overload = 7' √© necess√°ria para total suporte unicode (utf-8) ou outros caracteres multibyte.
+the session extension is needed to use php sessions (db-sessions work without).	setup	pt-br	A extens√£o 'session' √© necess√°ria para usar sess√µes php (sess√µes db funciona sem ela)
+the table definition was correct, and the tables were installed	setup	pt-br	As defini√ß√µes de tabelas est√£o corretas e as tabelas est√£o instaladas
 the tables	setup	pt-br	as tabelas
-the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	pt-br	Os usu·rios/senhas s„o: demo/guest, demo2/guest e demo3/guest
-there was a problem trying to connect to your ldap server. <br />	setup	pt-br	Ocorreu um problema durante a tentativa de conex„o com o servidor LDAP <br />
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	pt-br	Ocorreu um problema durante a tentativa de conex„o com o servidor LDAP <br /> por favor verifique as configuraÁıes do servidor LDAP
-this has to be outside the webservers document-root!!!	setup	pt-br	Isto tem que estar fora do diretÛrio de documentos do seu servidor web!!!
+the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	pt-br	Os usu√°rios/senhas s√£o: demo/guest, demo2/guest e demo3/guest
+there was a problem trying to connect to your ldap server. <br />	setup	pt-br	Ocorreu um problema durante a tentativa de conex√£o com o servidor LDAP <br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	pt-br	Ocorreu um problema durante a tentativa de conex√£o com o servidor LDAP <br /> por favor verifique as configura√ß√µes do servidor LDAP
+this has to be outside the webservers document-root!!!	setup	pt-br	Isto tem que estar fora do diret√≥rio de documentos do seu servidor web!!!
 this might take a while, please wait ...	setup	pt-br	Isto pode demorar um pouco, por favo aquarde...
-this program lets you backup your database, schedule a backup or restore it.	setup	pt-br	Este aplicativo permite vocÍ fazer backup de sua base dados, agendar um backup ou restaur·-lo.
-this program will convert your database to a new system-charset.	setup	pt-br	Este programa converter· a sua base de dados para um novo sistema-charset.
-this program will help you upgrade or install different languages for egroupware	setup	pt-br	Este programa ajudar· a atualizar ou instalar idiomas diferentes para o eGroupWare
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pt-br	Isto deve ter aproximadamente 30 bytes.<br /> Nota: o valor padr„o foi aleatÛriamente gerado
-this stage is completed<br />	setup	pt-br	Este passo est· completo<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pt-br	Isto criar· um primeiro usu·rio no eGroupWare ou resetar a senha e poderes administrativos de um usu·rio existente
-to a version it does not know about	setup	pt-br	para uma vers„o desconhecida
-to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	pt-br	Para permitir autenticaÁ„o de senhas, adicione a seguinte linha em seu arquivo pg_hba.conf (acima de todas as outras) E reinicie o serviÁo postgres:
-to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	pt-br	Para alterar a codificaÁ„o de caracteres: faÁa backup de sua base de dados, desinstale todos os aplicativos e reinstale o backup com "converter backup para a codificaÁ„o selecionada" marcada.
+this program lets you backup your database, schedule a backup or restore it.	setup	pt-br	Este aplicativo permite voc√™ fazer backup de sua base dados, agendar um backup ou restaur√°-lo.
+this program will convert your database to a new system-charset.	setup	pt-br	Este programa converter√° a sua base de dados para um novo sistema-charset.
+this program will help you upgrade or install different languages for egroupware	setup	pt-br	Este programa ajudar√° a atualizar ou instalar idiomas diferentes para o eGroupWare
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pt-br	Isto deve ter aproximadamente 30 bytes.<br /> Nota: o valor padr√£o foi aleat√≥riamente gerado
+this stage is completed<br />	setup	pt-br	Este passo est√° completo<br />
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pt-br	Isto criar√° um primeiro usu√°rio no eGroupWare ou resetar a senha e poderes administrativos de um usu√°rio existente
+to a version it does not know about	setup	pt-br	para uma vers√£o desconhecida
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	pt-br	Para permitir autentica√ß√£o de senhas, adicione a seguinte linha em seu arquivo pg_hba.conf (acima de todas as outras) E reinicie o servi√ßo postgres:
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	pt-br	Para alterar a codifica√ß√£o de caracteres: fa√ßa backup de sua base de dados, desinstale todos os aplicativos e reinstale o backup com "converter backup para a codifica√ß√£o selecionada" marcada.
 to setup 1 admin account and 3 demo accounts.	setup	pt-br	para configurar 1 conta de administrador e 3 contas demo
 top	setup	pt-br	topo
-translations added	setup	pt-br	TraduÁıes adicionadas
-translations removed	setup	pt-br	TraduÁıes removidas
-translations upgraded	setup	pt-br	TraduÁıes atualizadas
+translations added	setup	pt-br	Tradu√ß√µes adicionadas
+translations removed	setup	pt-br	Tradu√ß√µes removidas
+translations upgraded	setup	pt-br	Tradu√ß√µes atualizadas
 true	setup	pt-br	Verdadeiro
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pt-br	Tente configurar seu PHP para suportar um dos Banco de Dados mencionados acima, ou instale o eGroupWare manualmente
 two weeks	setup	pt-br	2 semanas
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	pt-br	Infelizmente alguns pacotes PHP/Apache tÍm problems com isso (Apache termina e vocÍ n„o pode logar novamente)
+unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	pt-br	Infelizmente alguns pacotes PHP/Apache t√™m problems com isso (Apache termina e voc√™ n√£o pode logar novamente)
 uninstall	setup	pt-br	desinstalar
-uninstall all applications	setup	pt-br	Desinstalar todas aplicaÁıes
+uninstall all applications	setup	pt-br	Desinstalar todas aplica√ß√µes
 uninstalled	setup	pt-br	desinstaladas
-unknown option '%1' !!!	setup	pt-br	OpÁ„o desconhecida '%1' !!!
-update finished.	setup	pt-br	Atualizada concluÌda.
+unknown option '%1' !!!	setup	pt-br	Op√ß√£o desconhecida '%1' !!!
+update finished.	setup	pt-br	Atualizada conclu√≠da.
 upgrade	setup	pt-br	Atualizar
 upgrade all	setup	pt-br	Atualizar Todas
 upgraded	setup	pt-br	atualizadas
 upgrading tables	setup	pt-br	Atualizando tabelas
 upload backup	setup	pt-br	Carregar backup
 uploads a backup and installs it on your db	setup	pt-br	Carrega um backup e o instala em sua base de dados.
-uploads a backup to the backup-dir, from where you can restore it	setup	pt-br	Carrega um backup para o diretÛrio de backups, de onde vocÍ pode restaur·-lo.
-usage: %1 command [additional options]	setup	pt-br	Uso: comando %1 [opÁıes adicionais]
-use --create-header to create the configuration file (--usage gives more options).	setup	pt-br	Use --create-header para criar o arquivo de configuraÁ„o (--usage fornece mais opÁıes)
+uploads a backup to the backup-dir, from where you can restore it	setup	pt-br	Carrega um backup para o diret√≥rio de backups, de onde voc√™ pode restaur√°-lo.
+usage: %1 command [additional options]	setup	pt-br	Uso: comando %1 [op√ß√µes adicionais]
+use --create-header to create the configuration file (--usage gives more options).	setup	pt-br	Use --create-header para criar o arquivo de configura√ß√£o (--usage fornece mais op√ß√µes)
 use --install to install egroupware.	setup	pt-br	Use --install para instalar o eGroupWare
 use --update to do so.	setup	pt-br	Use --update para atualizar.
-use cookies to pass sessionid	setup	pt-br	Usar cookies para transmitir id de sess„o
-use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	pt-br	Usar mcrypt para criptografar dados da sess„o: {off(default) | on},{mcrypt-init-vector(default: gerado aleatoriamente)],[vers„o-mcrypt]
-use persistent db connections: {on(default) | off}	setup	pt-br	usar conexıes persistentes ‡ base de dados: {on(default) | off}
-use pure html compliant code (not fully working yet)	setup	pt-br	Usar cÛdigo HTML puro (ainda n„o funciona totalmente)
-user	setup	pt-br	usu·rio
-user account prefix	setup	pt-br	usar prefixo para as contas de usu·rios
-user for smtp-authentication (leave it empty if no auth required)	setup	pt-br	Usu·rio para autenticaÁ„o SMTP (deixe-o vazio se n„o h· antenticaÁ„o)
-usernames are casesensitive	setup	pt-br	Nomes de usu·rios s„o sensÌveis ‡ Mai˙sculas / Min˙sculas
-users choice	setup	pt-br	¿ escolha dos usu·rios
-usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	pt-br	Normalmente mais incÙmodo.<br/>Administradores podem usar Adminstrador >> Gerenciar contas ou grupos para dar acesso a aplicativos.
+use cookies to pass sessionid	setup	pt-br	Usar cookies para transmitir id de sess√£o
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	pt-br	Usar mcrypt para criptografar dados da sess√£o: {off(default) | on},{mcrypt-init-vector(default: gerado aleatoriamente)],[vers√£o-mcrypt]
+use persistent db connections: {on(default) | off}	setup	pt-br	usar conex√µes persistentes √† base de dados: {on(default) | off}
+use pure html compliant code (not fully working yet)	setup	pt-br	Usar c√≥digo HTML puro (ainda n√£o funciona totalmente)
+user	setup	pt-br	usu√°rio
+user account prefix	setup	pt-br	usar prefixo para as contas de usu√°rios
+user for smtp-authentication (leave it empty if no auth required)	setup	pt-br	Usu√°rio para autentica√ß√£o SMTP (deixe-o vazio se n√£o h√° antentica√ß√£o)
+usernames are casesensitive	setup	pt-br	Nomes de usu√°rios s√£o sens√≠veis √† Mai√∫sculas / Min√∫sculas
+users choice	setup	pt-br	√Ä escolha dos usu√°rios
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	pt-br	Normalmente mais inc√¥modo.<br/>Administradores podem usar Adminstrador >> Gerenciar contas ou grupos para dar acesso a aplicativos.
 utf-8 (unicode)	setup	pt-br	utf-8 (Unicode)
-validation errors	setup	pt-br	Erros de validaÁ„o
-version	setup	pt-br	vers„o
-version mismatch	setup	pt-br	Erro de vers„o
+validation errors	setup	pt-br	Erros de valida√ß√£o
+version	setup	pt-br	vers√£o
+version mismatch	setup	pt-br	Erro de vers√£o
 view	setup	pt-br	Visualizar
-virtual mail manager (login-name includes domain)	setup	pt-br	Gerenciador de e-mail virtual (nome de login inclui o domÌnio)
+virtual mail manager (login-name includes domain)	setup	pt-br	Gerenciador de e-mail virtual (nome de login inclui o dom√≠nio)
 warning!	setup	pt-br	Aviso!
 we can proceed	setup	pt-br	Podemos prosseguir
-we could not determine the version of %1, please make sure it is at least %2	setup	pt-br	N„o foi possÌvel determinar a vers„o de %1. Por favor, certifique-se que seja, ao menos, %2.
-we will automatically update your tables/records to %1	setup	pt-br	As tabelas/registros ser„o automaticamente atualizadas para %1
-we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt-br	NÛs iremos executar neste momento uma sÈrie de testes que poder„o levar alguns minutos. Clique noa link abaixo para prosseguir.
-welcome to the egroupware installation	setup	pt-br	Bem-vindo(a) ‡ instalaÁ„o do eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	pt-br	Que tipo de gerenciamento de sess„o vocÍ quer usar (sessıes PHP podem ser melhores)?
-which database type do you want to use with egroupware?	setup	pt-br	Qual tipo de base de dados vocÍ pretende usar com o eGroupWare?
+we could not determine the version of %1, please make sure it is at least %2	setup	pt-br	N√£o foi poss√≠vel determinar a vers√£o de %1. Por favor, certifique-se que seja, ao menos, %2.
+we will automatically update your tables/records to %1	setup	pt-br	As tabelas/registros ser√£o automaticamente atualizadas para %1
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt-br	N√≥s iremos executar neste momento uma s√©rie de testes que poder√£o levar alguns minutos. Clique noa link abaixo para prosseguir.
+welcome to the egroupware installation	setup	pt-br	Bem-vindo(a) √† instala√ß√£o do eGroupWare
+what type of sessions management do you want to use (php session management may perform better)?	setup	pt-br	Que tipo de gerenciamento de sess√£o voc√™ quer usar (sess√µes PHP podem ser melhores)?
+which database type do you want to use with egroupware?	setup	pt-br	Qual tipo de base de dados voc√™ pretende usar com o eGroupWare?
 world readable	setup	pt-br	Leitura permitida para todos
 world writable	setup	pt-br	Escrita permitida para todos
-would you like egroupware to cache the phpgw info array ?	setup	pt-br	Deseja que o eGroupWare armazene o vetor de informaÁıes phpgw? (cache)
-would you like egroupware to check for a new version<br />when admins login ?	setup	pt-br	Deseja que o eGroupWare verifique se h· uma nova vers„o disponÌvel <br />quando administradores estejam acessando o sistema?
-would you like to show each application's upgrade status ?	setup	pt-br	Deseja exibir o status de atualizaÁ„o de cada aplicativo?
+would you like egroupware to cache the phpgw info array ?	setup	pt-br	Deseja que o eGroupWare armazene o vetor de informa√ß√µes phpgw? (cache)
+would you like egroupware to check for a new version<br />when admins login ?	setup	pt-br	Deseja que o eGroupWare verifique se h√° uma nova vers√£o dispon√≠vel <br />quando administradores estejam acessando o sistema?
+would you like to show each application's upgrade status ?	setup	pt-br	Deseja exibir o status de atualiza√ß√£o de cada aplicativo?
 writable by the webserver	setup	pt-br	Escrita permitida para o servidor Web
 write	setup	pt-br	Gravar
 year	setup	pt-br	ano
 yes	setup	pt-br	Sim
-yes, with lowercase usernames	setup	pt-br	Sim, com nome de usu·rios em letras min˙sculas
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pt-br	Aparentemente vocÍ est· usando uma vers„o prÈ-beta do eGroupWare.<br />Estas versıes n„o s„o mais suportadas, e n„o h· como usar o configurador para atualiz·-las.<br /> VocÍ deve primeiro atualizar para a vers„o 0.9.10 (a ˙ltima vers„o que suporta atualizaÁ„o de prÈ-betas) <br />e ent„o atualizar a partir desta vers„o para a vers„o atual.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pt-br	Aparentemente vocÍ est· rodando uma vers„o antiga do PHP <br /> È altamente recomend·vel que vocÍ faÁa a atualizaÁ„o para uma vers„o mais nova <br /> Versıes antigas do PHP podem n„o rodar corretamente com o eGroupWare. <br /><br />Por favor atualize para, no mÌnimo, a vers„o %1
-you appear to be running version %1 of egroupware	setup	pt-br	Aparentemente vocÍ est· rodando a vers„o %1 do eGroupWare
-you appear to have %1 support.	setup	pt-br	Aparentemente vocÍ tem suporte a %1
-you appear to have php session support. enabling php sessions.	setup	pt-br	Aparentemente vocÍ tem suporte ‡ sessıes PHP. Habilitando sessıes PHP.
-you appear to have xml support enabled	setup	pt-br	Aparentemente vocÍ tem suporte a XML
-you are ready for this stage, but this stage is not yet written.<br />	setup	pt-br	VocÍ est· pronto para este passo, mas este est·gio n„o est· escrito ainda.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pt-br	VocÍ est· usando PHP vers„o %1. eGroupWare requer %2 ou superior, %3 È recomendada.
-you can install it by running:	setup	pt-br	VocÍ pode instal·-lo rodando:
-you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pt-br	VocÍ pode usar o usu·rio e senha de configuraÁ„o do servidor para todos os domÌnios tambÈm. Se a senha n„o for definida pela linha de comando, ela È lida da vari·vel de ambiente EGW_CLI_PASSWORD ou requisitada ao usu·rio.
-you didn't enter a config password for domain %1	setup	pt-br	VocÍ n„o digitou uma senha de configuraÁ„o para o domÌnio  %1
-you didn't enter a config username for domain %1	setup	pt-br	VocÍ n„o digitou um usu·rio de configuraÁ„o para o domÌnio  %1
-you didn't enter a header admin password	setup	pt-br	VocÍ n„o digitou uma senha para configuraÁ„o do servidor
-you didn't enter a header admin username	setup	pt-br	VocÍ n„o digitou um usu·rio para configuraÁ„o do servidor
-you do not have any languages installed. please install one now <br />	setup	pt-br	N„o h· nenhum idioma instalado. Por favor instale um agora <br />
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	pt-br	VocÍ ainda n„o criou seu arquivo heades.inc.php!<br /> VocÍ pode cri·-lo agora.
-you have successfully logged out	setup	pt-br	VocÍ foi desconectado com sucesso.
-you must enter a username for the admin	setup	pt-br	VocÍ deve especificar um nome de usu·rio para o Administrador
-you need to add at least one egroupware domain / database instance.	setup	pt-br	VocÍ precisa adicionar ao menos um domÌnio / base de dados ao eGroupWare.
-you need to add some domains to your header.inc.php.	setup	pt-br	VocÍ precisa adicionar um domÌnio no arquivo header.inc.php
-you need to configure egroupware:	setup	pt-br	VocÍ precisa configurar o eGroupWare:
-you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pt-br	VocÍ precisa corrigir os erros acima antes que o arquivo header.inc.php possa ser gravado!
-you need to save the settings you made here first!	setup	pt-br	VocÍ precisa salvar as configuraÁıes que vocÍ fez aqui antes!
-you need to select your current charset!	setup	pt-br	VocÍ  precisa selecionar seu conjunto de car·cteres atual
-you should either install the sources or uninstall it, to get rid of the tables	setup	pt-br	VocÍ deve instalar as fontes ou desinstal·-las, para se livrar das tabelas
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt-br	VocÍ pode tentar desinstalar e ent„o reinstalar ou tentar executar reparos manuais.
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt-br	VocÍ n„o poder· logar no eGroupWare usando sessıes PHP: "sess„o n„o poder· ser verificada !!"
-you're using an old configuration file format...	setup	pt-br	VocÍ est· usando um formato de arquivo de configuraÁ„o antigo
-you're using an old header.inc.php version...	setup	pt-br	VocÍ est· usando uma vers„o antiga do arquivo header.inc.php
-your applications are current	setup	pt-br	Suas aplicaÁıes est„o atualizadas
-your backup directory '%1' %2	setup	pt-br	Seu diretÛrio de backup '%1' %2
-your database does not exist	setup	pt-br	Sua base de dados n„o existe
-your database is not working!	setup	pt-br	Sua base de dados n„o est· funcionando!
-your database is working, but you dont have any applications installed	setup	pt-br	Sua base de dados est· funcionando, mas n„o h· nenhuma aplicaÁ„o instalada
-your egroupware api is current	setup	pt-br	Sua atual API do eGroupWare È
-your files directory '%1' %2	setup	pt-br	Seu diretÛrio de arquivos '%1' %2
-your header admin password is not set. please set it now!	setup	pt-br	Sua senha de configuraÁ„o do servidor n„o est· definida. Por favor defina uma agora.
+yes, with lowercase usernames	setup	pt-br	Sim, com nome de usu√°rios em letras min√∫sculas
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pt-br	Aparentemente voc√™ est√° usando uma vers√£o pr√©-beta do eGroupWare.<br />Estas vers√µes n√£o s√£o mais suportadas, e n√£o h√° como usar o configurador para atualiz√°-las.<br /> Voc√™ deve primeiro atualizar para a vers√£o 0.9.10 (a √∫ltima vers√£o que suporta atualiza√ß√£o de pr√©-betas) <br />e ent√£o atualizar a partir desta vers√£o para a vers√£o atual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pt-br	Aparentemente voc√™ est√° rodando uma vers√£o antiga do PHP <br /> √© altamente recomend√°vel que voc√™ fa√ßa a atualiza√ß√£o para uma vers√£o mais nova <br /> Vers√µes antigas do PHP podem n√£o rodar corretamente com o eGroupWare. <br /><br />Por favor atualize para, no m√≠nimo, a vers√£o %1
+you appear to be running version %1 of egroupware	setup	pt-br	Aparentemente voc√™ est√° rodando a vers√£o %1 do eGroupWare
+you appear to have %1 support.	setup	pt-br	Aparentemente voc√™ tem suporte a %1
+you appear to have php session support. enabling php sessions.	setup	pt-br	Aparentemente voc√™ tem suporte √† sess√µes PHP. Habilitando sess√µes PHP.
+you appear to have xml support enabled	setup	pt-br	Aparentemente voc√™ tem suporte a XML
+you are ready for this stage, but this stage is not yet written.<br />	setup	pt-br	Voc√™ est√° pronto para este passo, mas este est√°gio n√£o est√° escrito ainda.<br />
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pt-br	Voc√™ est√° usando PHP vers√£o %1. eGroupWare requer %2 ou superior, %3 √© recomendada.
+you can install it by running:	setup	pt-br	Voc√™ pode instal√°-lo rodando:
+you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pt-br	Voc√™ pode usar o usu√°rio e senha de configura√ß√£o do servidor para todos os dom√≠nios tamb√©m. Se a senha n√£o for definida pela linha de comando, ela √© lida da vari√°vel de ambiente EGW_CLI_PASSWORD ou requisitada ao usu√°rio.
+you didn't enter a config password for domain %1	setup	pt-br	Voc√™ n√£o digitou uma senha de configura√ß√£o para o dom√≠nio  %1
+you didn't enter a config username for domain %1	setup	pt-br	Voc√™ n√£o digitou um usu√°rio de configura√ß√£o para o dom√≠nio  %1
+you didn't enter a header admin password	setup	pt-br	Voc√™ n√£o digitou uma senha para configura√ß√£o do servidor
+you didn't enter a header admin username	setup	pt-br	Voc√™ n√£o digitou um usu√°rio para configura√ß√£o do servidor
+you do not have any languages installed. please install one now <br />	setup	pt-br	N√£o h√° nenhum idioma instalado. Por favor instale um agora <br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	pt-br	Voc√™ ainda n√£o criou seu arquivo heades.inc.php!<br /> Voc√™ pode cri√°-lo agora.
+you have successfully logged out	setup	pt-br	Voc√™ foi desconectado com sucesso.
+you must enter a username for the admin	setup	pt-br	Voc√™ deve especificar um nome de usu√°rio para o Administrador
+you need to add at least one egroupware domain / database instance.	setup	pt-br	Voc√™ precisa adicionar ao menos um dom√≠nio / base de dados ao eGroupWare.
+you need to add some domains to your header.inc.php.	setup	pt-br	Voc√™ precisa adicionar um dom√≠nio no arquivo header.inc.php
+you need to configure egroupware:	setup	pt-br	Voc√™ precisa configurar o eGroupWare:
+you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pt-br	Voc√™ precisa corrigir os erros acima antes que o arquivo header.inc.php possa ser gravado!
+you need to save the settings you made here first!	setup	pt-br	Voc√™ precisa salvar as configura√ß√µes que voc√™ fez aqui antes!
+you need to select your current charset!	setup	pt-br	Voc√™  precisa selecionar seu conjunto de car√°cteres atual
+you should either install the sources or uninstall it, to get rid of the tables	setup	pt-br	Voc√™ deve instalar as fontes ou desinstal√°-las, para se livrar das tabelas
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt-br	Voc√™ pode tentar desinstalar e ent√£o reinstalar ou tentar executar reparos manuais.
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt-br	Voc√™ n√£o poder√° logar no eGroupWare usando sess√µes PHP: "sess√£o n√£o poder√° ser verificada !!"
+you're using an old configuration file format...	setup	pt-br	Voc√™ est√° usando um formato de arquivo de configura√ß√£o antigo
+you're using an old header.inc.php version...	setup	pt-br	Voc√™ est√° usando uma vers√£o antiga do arquivo header.inc.php
+your applications are current	setup	pt-br	Suas aplica√ß√µes est√£o atualizadas
+your backup directory '%1' %2	setup	pt-br	Seu diret√≥rio de backup '%1' %2
+your database does not exist	setup	pt-br	Sua base de dados n√£o existe
+your database is not working!	setup	pt-br	Sua base de dados n√£o est√° funcionando!
+your database is working, but you dont have any applications installed	setup	pt-br	Sua base de dados est√° funcionando, mas n√£o h√° nenhuma aplica√ß√£o instalada
+your egroupware api is current	setup	pt-br	Sua atual API do eGroupWare √©
+your files directory '%1' %2	setup	pt-br	Seu diret√≥rio de arquivos '%1' %2
+your header admin password is not set. please set it now!	setup	pt-br	Sua senha de configura√ß√£o do servidor n√£o est√° definida. Por favor defina uma agora.
 your header.inc.php needs upgrading.	setup	pt-br	Seu arquivo header.inc.php precisa ser atualizado
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pt-br	Seu arquivo header.inc.php necessita de atualizaÁ„o <br /><blink><b class="msg">AVISO!</b></blink><br /><b>FA«A C”PIAS DE SEGURAN«A!</b>
-your installed version of %1 is %2, required is at least %3, please run:	setup	pt-br	Sua vers„o instalada de %1 È %2. No mÌnimo È necess·ria a vers„o %3. Por favor, execute:
-your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pt-br	Sua instalaÁ„o PHP n„o possui suporte apropriado ‡ biblioteca GD. VocÍ precisa da vers„o 1.8 ou superior para ver os diagramas de Gantt dos projetos.
-your tables are current	setup	pt-br	Suas tabelas est„o atualizadas
-your tables will be dropped and you will lose data	setup	pt-br	Suas tabelas ser„o removidas e os dados ser„o perdidos!!
-your temporary directory '%1' %2	setup	pt-br	Seu diretÛrio tempor·rio '%1' %2
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pt-br	Seu arquivo header.inc.php necessita de atualiza√ß√£o <br /><blink><b class="msg">AVISO!</b></blink><br /><b>FA√áA C√ìPIAS DE SEGURAN√áA!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	pt-br	Sua vers√£o instalada de %1 √© %2. No m√≠nimo √© necess√°ria a vers√£o %3. Por favor, execute:
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pt-br	Sua instala√ß√£o PHP n√£o possui suporte apropriado √† biblioteca GD. Voc√™ precisa da vers√£o 1.8 ou superior para ver os diagramas de Gantt dos projetos.
+your tables are current	setup	pt-br	Suas tabelas est√£o atualizadas
+your tables will be dropped and you will lose data	setup	pt-br	Suas tabelas ser√£o removidas e os dados ser√£o perdidos!!
+your temporary directory '%1' %2	setup	pt-br	Seu diret√≥rio tempor√°rio '%1' %2
 {db | php(default) | php-restore}	setup	pt-br	{db | php(default) | php-restore}
 {off(default) | on}	setup	pt-br	{off(default | on}

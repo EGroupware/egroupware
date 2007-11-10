@@ -1,39 +1,39 @@
 %1 email addresses inserted	common	sv	%1 e-postadresser tillagda
-%1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
+%1 is not executable by the webserver !!!	common	sv	%1 Ã¤r inte exekverbar av webbservern!
 %1 manual	common	sv	%1 manual
 %1 start	common	sv	%1 start
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br/> eller gör %3 skrivbar för webbservern
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1eGroupWare%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
-(shift-)click or drag to change value	jscalendar	sv	(Shift)-klicka eller dra för att ändra värde
-- click on any of the time parts to increase it	jscalendar	sv	- Klicka på någon av tids intervallerna för att utöka
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	sv	- Håll musknappen över någon av knapparna ovan för snabbare val
-- or click and drag for faster selection.	jscalendar	sv	- eller klicka och dra för snabbare val
-- or shift-click to decrease it	jscalendar	sv	- eller Shift-klicka för att minska
-- use the %1, %2 buttons to select month	jscalendar	sv	- Använd %1, %2 knappar för att välja månad
-- use the %1, %2 buttons to select year	jscalendar	sv	- Använd %1, %2 knappar för att välja år
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1VÃ¤lj en annan katalog%2<br/> eller gÃ¶r %3 skrivbar fÃ¶r webbservern
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1eGroupWare%2 Ã¤r en webbaserad grupp-programvara skriven i %3PHP%4.
+(shift-)click or drag to change value	jscalendar	sv	(Shift)-klicka eller dra fÃ¶r att Ã¤ndra vÃ¤rde
+- click on any of the time parts to increase it	jscalendar	sv	- Klicka pÃ¥ nÃ¥gon av tids intervallerna fÃ¶r att utÃ¶ka
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	sv	- HÃ¥ll musknappen Ã¶ver nÃ¥gon av knapparna ovan fÃ¶r snabbare val
+- or click and drag for faster selection.	jscalendar	sv	- eller klicka och dra fÃ¶r snabbare val
+- or shift-click to decrease it	jscalendar	sv	- eller Shift-klicka fÃ¶r att minska
+- use the %1, %2 buttons to select month	jscalendar	sv	- AnvÃ¤nd %1, %2 knappar fÃ¶r att vÃ¤lja mÃ¥nad
+- use the %1, %2 buttons to select year	jscalendar	sv	- AnvÃ¤nd %1, %2 knappar fÃ¶r att vÃ¤lja Ã¥r
 00 (disable)	admin	sv	00 (inaktivera)
 13 (ntp)	admin	sv	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	sv	3 tecken för dag genväg
-3 number of chars for month-shortcut	jscalendar	sv	3 tecken för månad genväg
+3 number of chars for day-shortcut	jscalendar	sv	3 tecken fÃ¶r dag genvÃ¤g
+3 number of chars for month-shortcut	jscalendar	sv	3 tecken fÃ¶r mÃ¥nad genvÃ¤g
 80 (http)	admin	sv	80 (http)
 about	common	sv	Om
 about %1	common	sv	Om %1
 about egroupware	common	sv	Om eGroupware
 about the calendar	jscalendar	sv	Om Kalendern
-access	common	sv	Åtkomst
-access not permitted	common	sv	Åtkomst nekad
+access	common	sv	Ã…tkomst
+access not permitted	common	sv	Ã…tkomst nekad
 account has been created	common	sv	Kontot skapat
 account has been deleted	common	sv	Kontot raderat
 account has been updated	common	sv	Kontot uppdaterat
-account is expired	common	sv	Kontot har förfallit
+account is expired	common	sv	Kontot har fÃ¶rfallit
 acl	common	sv	ACL
-action	common	sv	Åtgärd
+action	common	sv	Ã…tgÃ¤rd
 active	common	sv	Aktiv
-add	common	sv	Lägg till
-add %1 category for	common	sv	Lägg till %1 kategori för
-add category	common	sv	Lägg till kategori
-add shortcut	common	sv	Lägg till genväg
-add sub	common	sv	Lägg till under
+add	common	sv	LÃ¤gg till
+add %1 category for	common	sv	LÃ¤gg till %1 kategori fÃ¶r
+add category	common	sv	LÃ¤gg till kategori
+add shortcut	common	sv	LÃ¤gg till genvÃ¤g
+add sub	common	sv	LÃ¤gg till under
 addressbook	common	sv	Adressbok
 admin	common	sv	Admin
 administration	common	sv	Administration
@@ -41,8 +41,8 @@ afghanistan	common	sv	AFGHANISTAN
 albania	common	sv	ALBANIEN
 algeria	common	sv	ALGERIET
 all	common	sv	Alla
-all fields	common	sv	Alla fält
-alphabet	common	sv	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
+all fields	common	sv	Alla fÃ¤lt
+alphabet	common	sv	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,Ã¥,Ã¤,Ã¶
 alternate style-sheet:	common	sv	Alternerande style-sheet:
 american samoa	common	sv	AMERIKANSKA SAMOA
 andorra	common	sv	ANDORRA
@@ -51,7 +51,7 @@ anguilla	common	sv	ANGUILLA
 antarctica	common	sv	ANTARKTIS
 antigua and barbuda	common	sv	ANTIGUA OCH BARBUDA
 application	common	sv	Applikation
-apply	common	sv	Utför
+apply	common	sv	UtfÃ¶r
 april	common	sv	April
 are you sure you want to delete these entries ?	common	sv	Vill du verkligen radera dessa poster?
 are you sure you want to delete this entry ?	common	sv	Vill du verkligen radera denna post?
@@ -60,19 +60,19 @@ armenia	common	sv	ARMENIEN
 aruba	common	sv	ARUBA
 august	common	sv	Augusti
 australia	common	sv	AUSTRALIEN
-austria	common	sv	ÖSTERIKE
-author	common	sv	Författare
-autohide sidebox menu's	common	sv	Autogöm Länkboxen
-autohide sidebox menus	common	sv	Autogöm Länkboxen
-automatically hide the sidebox menu's?	common	sv	Göm automatiskt Länkboxens menyer?
-automatically hide the sidebox menus?	common	sv	Göm automatiskt Länkboxens menyer?
+austria	common	sv	Ã–STERIKE
+author	common	sv	FÃ¶rfattare
+autohide sidebox menu's	common	sv	AutogÃ¶m LÃ¤nkboxen
+autohide sidebox menus	common	sv	AutogÃ¶m LÃ¤nkboxen
+automatically hide the sidebox menu's?	common	sv	GÃ¶m automatiskt LÃ¤nkboxens menyer?
+automatically hide the sidebox menus?	common	sv	GÃ¶m automatiskt LÃ¤nkboxens menyer?
 autosave default category	common	sv	Autospara standard kategori
 azerbaijan	common	sv	AZERBAIJAN
 back	common	sv	Tillbaks
 back to user login	common	sv	Tillbaks till inloggningen
-background color:	common	sv	Bakgrundsfärg:
-backupdir '%1' is not writeable by the webserver	common	sv	Backup katalogen %1 är inte skrivbar av webbservern
-bad login or password	common	sv	Ogiltigt användarnamn eller lösenord
+background color:	common	sv	BakgrundsfÃ¤rg:
+backupdir '%1' is not writeable by the webserver	common	sv	Backup katalogen %1 Ã¤r inte skrivbar av webbservern
+bad login or password	common	sv	Ogiltigt anvÃ¤ndarnamn eller lÃ¶senord
 bahamas	common	sv	BAHAMAS
 bahrain	common	sv	BAHRAIN
 bangladesh	common	sv	BANGLADESH
@@ -84,7 +84,7 @@ belize	common	sv	BELIZE
 benin	common	sv	BENIN
 bermuda	common	sv	BERMUDA
 bhutan	common	sv	BHUTAN
-blocked, too many attempts	common	sv	Spärrad pga för många försök
+blocked, too many attempts	common	sv	SpÃ¤rrad pga fÃ¶r mÃ¥nga fÃ¶rsÃ¶k
 bold	common	sv	Fet
 bolivia	common	sv	BOLIVIEN
 border	common	sv	Rambredd
@@ -103,50 +103,50 @@ cambodia	common	sv	CAMBODJA
 cameroon	common	sv	CAMERUN
 canada	common	sv	KANADA
 cancel	common	sv	Avbryt
-cannot replace %1 because it is a directory	common	sv	Kan inte ersätta %1 eftersom det är en katalog
-cant open '%1' for %2	common	sv	Kan inte öppna '%1' åt %2
+cannot replace %1 because it is a directory	common	sv	Kan inte ersÃ¤tta %1 eftersom det Ã¤r en katalog
+cant open '%1' for %2	common	sv	Kan inte Ã¶ppna '%1' Ã¥t %2
 cape verde	common	sv	KAP VERDE
-caption	common	sv	Överskrift
+caption	common	sv	Ã–verskrift
 categories	common	sv	Kategorier
-categories for	common	sv	Kategorier för
+categories for	common	sv	Kategorier fÃ¶r
 category	common	sv	Kategori
 category %1 has been added !	common	sv	Kategori %1 tillagd
 category %1 has been updated !	common	sv	Kategori %1 uppdaterad
-cayman islands	common	sv	CAYMANÖARNA
+cayman islands	common	sv	CAYMANÃ–ARNA
 cc	common	sv	Cc
 centered	common	sv	Centrerat
 central african republic	common	sv	CENTRAL AFRIKANSKA REPUBLIKEN
 chad	common	sv	TCHAD
-change	common	sv	Ändra
-charset	common	sv	iso-8859-1
+change	common	sv	Ã„ndra
+charset	common	sv	utf-8
 check installation	common	sv	Kontrollera installationen
 check now	common	sv	Kontrollera nu
 chile	common	sv	CHILE
 china	common	sv	KINA
-choose a background color	common	sv	Välj bakgrundsfärg
-choose a background color for the icons	common	sv	Välj bakgrundsfärg för ikonen
-choose a background image.	common	sv	Välj bakgrundsbild
-choose a background style.	common	sv	Välj bakgrundsstil
-choose a text color for the icons	common	sv	Välj text till ikonen
-choose the category	common	sv	Välj kategori
-choose the parent category	common	sv	Välj huvudkategori
-christmas island	common	sv	JULÖN
+choose a background color	common	sv	VÃ¤lj bakgrundsfÃ¤rg
+choose a background color for the icons	common	sv	VÃ¤lj bakgrundsfÃ¤rg fÃ¶r ikonen
+choose a background image.	common	sv	VÃ¤lj bakgrundsbild
+choose a background style.	common	sv	VÃ¤lj bakgrundsstil
+choose a text color for the icons	common	sv	VÃ¤lj text till ikonen
+choose the category	common	sv	VÃ¤lj kategori
+choose the parent category	common	sv	VÃ¤lj huvudkategori
+christmas island	common	sv	JULÃ–N
 clear	common	sv	Rensa
-clear form	common	sv	Rensa formulär
+clear form	common	sv	Rensa formulÃ¤r
 click	common	sv	Klicka
-click or mouse over to show menus	common	sv	Klicka eller håll musen över för att se menyer
-click or mouse over to show menus?	common	sv	Klicka eller håll musen över för att se menyer
-close	common	sv	Stäng
-close sidebox	common	sv	Stäng Länkbox
-cocos (keeling) islands	common	sv	KOKOSÖARNA
+click or mouse over to show menus	common	sv	Klicka eller hÃ¥ll musen Ã¶ver fÃ¶r att se menyer
+click or mouse over to show menus?	common	sv	Klicka eller hÃ¥ll musen Ã¶ver fÃ¶r att se menyer
+close	common	sv	StÃ¤ng
+close sidebox	common	sv	StÃ¤ng LÃ¤nkbox
+cocos (keeling) islands	common	sv	KOKOSÃ–ARNA
 colombia	common	sv	COLOMBIA
-common preferences	common	sv	Allmäna inställningar
+common preferences	common	sv	AllmÃ¤na instÃ¤llningar
 comoros	common	sv	KOMORERNA
-company	common	sv	Företag
+company	common	sv	FÃ¶retag
 congo	common	sv	KONGO, REPUBLIKEN
 congo, the democratic republic of the	common	sv	KONGO, DEMOKRATISKA REPUBLIKEN
 contacting server...	common	sv	Kontaktar server ...
-cook islands	common	sv	COOKÖARNA
+cook islands	common	sv	COOKÃ–ARNA
 copy	common	sv	Kopiera
 costa rica	common	sv	COSTA RICA
 cote d ivoire	common	sv	ELFENBENSKUSTEN
@@ -157,61 +157,61 @@ croatia	common	sv	KROATIEN
 cuba	common	sv	KUBA
 currency	common	sv	Valuta
 current	common	sv	Aktuell
-current users	common	sv	Aktuella användare
+current users	common	sv	Aktuella anvÃ¤ndare
 cyprus	common	sv	CYPERN
 czech republic	common	sv	TJEKISKA REPUBLIKEN
 date	common	sv	Datum
-date due	common	sv	Förfallodatum
+date due	common	sv	FÃ¶rfallodatum
 date selection:	jscalendar	sv	Datum val:
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.<br>Om port 13, uppdatera brandväggen rätt innan du skickar med denna sida.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.<br>Om port 13, uppdatera brandvÃ¤ggen rÃ¤tt innan du skickar med denna sida.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	sv	December
 default category	common	sv	Standard kategori
-default height for the windows	common	sv	Standard hjöd för fönstret
-default width for the windows	common	sv	Standard bredd för fönstret
+default height for the windows	common	sv	Standard hjÃ¶d fÃ¶r fÃ¶nstret
+default width for the windows	common	sv	Standard bredd fÃ¶r fÃ¶nstret
 delete	common	sv	Radera
 delete row	common	sv	Radera rad
 denmark	common	sv	DANMARK
 description	common	sv	Beskrivning
 detail	common	sv	Detalj
 details	common	sv	Detaljer
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
-direction left to right	common	sv	Riktning från vänster till höger
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript fÃ¶r IExplorer 5.5 och hÃ¶gre fÃ¶r att visa transparanta png-bilder?
+direction left to right	common	sv	Riktning frÃ¥n vÃ¤nster till hÃ¶ger
 disable internet explorer png-image-bugfix	common	sv	Inaktivera Internet Explorer png-bild-bugfix
 disable slider effects	common	sv	Inaktivera animerade effekter
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sv	Inaktivera animerade effekter vid visning eller vid täckta menyer på sidan? Opera och Konqueror användare väljer troligen detta.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sv	Inaktivera animerade effekter vid visning eller vid tÃ¤ckta menyer pÃ¥ sidan? Opera och Konqueror anvÃ¤ndare vÃ¤ljer troligen detta.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript fÃ¶r IExplorer 5.5 och hÃ¶gre fÃ¶r att visa transparanta png-bilder?
 disabled	common	sv	Inaktiverad
-display %s first	jscalendar	sv	Visa % första
+display %s first	jscalendar	sv	Visa % fÃ¶rsta
 djibouti	common	sv	DJIBOUTI
-do you also want to delete all subcategories ?	common	sv	Vill du även radera alla underkategorier
+do you also want to delete all subcategories ?	common	sv	Vill du Ã¤ven radera alla underkategorier
 doctype:	common	sv	Dokumenttyp:
 document properties	common	sv	Dokument alternativ
 document title:	common	sv	Dokument rubrik
-domain	common	sv	Domän
-domain name for mail-address, eg. "%1"	common	sv	E-postadressens domän, ex. "%1"
+domain	common	sv	DomÃ¤n
+domain name for mail-address, eg. "%1"	common	sv	E-postadressens domÃ¤n, ex. "%1"
 domestic	common	sv	Inrikes
 dominica	common	sv	DOMINICA
 dominican republic	common	sv	DOMINIKANSKA REPUBLIKEN
-done	common	sv	Färdig
-drag to move	jscalendar	sv	Dra för att flytta
+done	common	sv	FÃ¤rdig
+drag to move	jscalendar	sv	Dra fÃ¶r att flytta
 e-mail	common	sv	E-post
-east timor	common	sv	ÖSTRA TIMOR
+east timor	common	sv	Ã–STRA TIMOR
 ecuador	common	sv	ECUADOR
-edit	common	sv	Ändra
-edit %1 category for	common	sv	Ändra %1 kategori för
-edit categories	common	sv	Ändra kategorier
-edit category	common	sv	Ändra kategori
+edit	common	sv	Ã„ndra
+edit %1 category for	common	sv	Ã„ndra %1 kategori fÃ¶r
+edit categories	common	sv	Ã„ndra kategorier
+edit category	common	sv	Ã„ndra kategori
 egroupware api version %1	common	sv	eGroupWare API version %1
-egroupware: login blocked for user '%1', ip %2	common	sv	eGroupWare: inloggning spärrad för '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	sv	eGroupWare: inloggning spÃ¤rrad fÃ¶r '%1', IP %2
 egypt	common	sv	EGYPTEN
 el salvador	common	sv	EL SALVADOR
 email	common	sv	E-post
-email-address of the user, eg. "%1"	common	sv	Användarens e-postadress, ex. "%1"
+email-address of the user, eg. "%1"	common	sv	AnvÃ¤ndarens e-postadress, ex. "%1"
 en	common	sv	en
 enabled	common	sv	Aktiverad
 end date	common	sv	Slutdatum
 end time	common	sv	Sluttid
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   eller   /egroupware<br><b>Utan efterföljande snedstreck</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sÃ¶kvÃ¤g till eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   eller   /egroupware<br><b>Utan efterfÃ¶ljande snedstreck</b>
 entry has been deleted sucessfully	common	sv	Post raderad
 entry updated sucessfully	common	sv	Post uppdaterad
 equatorial guinea	common	sv	EKVATORIALGUINEA
@@ -219,38 +219,38 @@ eritrea	common	sv	ERITREA
 error	common	sv	Fel
 error creating %1 %2 directory	common	sv	Fel vid skapande av %1 %2 katalog
 error deleting %1 %2 directory	common	sv	Fel vid radering av %1 %2 katalog
-error renaming %1 %2 directory	common	sv	Fel vid namnbyte på %1 %2 katalog
+error renaming %1 %2 directory	common	sv	Fel vid namnbyte pÃ¥ %1 %2 katalog
 estonia	common	sv	ESTLAND
 ethiopia	common	sv	ETIOPIEN
 exact	common	sv	Exakt
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sv	Kunde inte kontakta server eller felaktigt svar. Försökt att uppdatera igen eller kontakta administratör om felet kvarstår.
-falkland islands (malvinas)	common	sv	FALKLANDSÖARNA
-faroe islands	common	sv	FÄRÖARNA
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sv	Kunde inte kontakta server eller felaktigt svar. FÃ¶rsÃ¶kt att uppdatera igen eller kontakta administratÃ¶r om felet kvarstÃ¥r.
+falkland islands (malvinas)	common	sv	FALKLANDSÃ–ARNA
+faroe islands	common	sv	FÃ„RÃ–ARNA
 fax number	common	sv	Faxnummer
 february	common	sv	Februari
-fields	common	sv	Fält
+fields	common	sv	FÃ¤lt
 fiji	common	sv	FIJI
 files	common	sv	Filer
 filter	common	sv	Filter
 finland	common	sv	FINLAND
-first name	common	sv	Förnamn
-first name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
-first page	common	sv	Första sidan
-firstname	common	sv	Förnamn
+first name	common	sv	FÃ¶rnamn
+first name of the user, eg. "%1"	common	sv	AnvÃ¤ndarens fÃ¶rnamn, ex. "%1"
+first page	common	sv	FÃ¶rsta sidan
+firstname	common	sv	FÃ¶rnamn
 fixme!	common	sv	FIXAMIG!!!!
 folder already exists.	common	sv	Katalogen finns redan
 force selectbox	common	sv	Tvinga Valruta
 france	common	sv	FRANKRIKE
 french guiana	common	sv	FRANSKA GUYANA
 french polynesia	common	sv	FRANSKA POLYNESIEN
-french southern territories	common	sv	FRANSKA SÖDRA TERRITORIERNA
+french southern territories	common	sv	FRANSKA SÃ–DRA TERRITORIERNA
 friday	common	sv	Fredag
 ftp	common	sv	FTP
-fullname	common	sv	Fullständigt namn
-fullscreen mode	common	sv	Helskärm
+fullname	common	sv	FullstÃ¤ndigt namn
+fullscreen mode	common	sv	HelskÃ¤rm
 gabon	common	sv	GABON
 gambia	common	sv	GAMBIA
-general menu	common	sv	Allmän meny
+general menu	common	sv	AllmÃ¤n meny
 georgia	common	sv	GEORGIEN
 german	common	sv	Tysk
 germany	common	sv	TYSKLAND
@@ -258,21 +258,21 @@ ghana	common	sv	GHANA
 gibraltar	common	sv	GIBRALTAR
 global	common	sv	Global
 global public	common	sv	Globalt publik
-go today	jscalendar	sv	Gå Idag
-grant access	common	sv	Reglera åtkomst
+go today	jscalendar	sv	GÃ¥ Idag
+grant access	common	sv	Reglera Ã¥tkomst
 greece	common	sv	GREKLAND
-greenland	common	sv	GRÖNLAND
+greenland	common	sv	GRÃ–NLAND
 grenada	common	sv	GRENADA
 group	common	sv	Grupp
-group access	common	sv	Gruppåtkomst
+group access	common	sv	GruppÃ¥tkomst
 group has been added	common	sv	Grupp tillagd
 group has been deleted	common	sv	Grupp raderad
 group has been updated	common	sv	Grupp uppdaterad
 group name	common	sv	Gruppnamn
 group public	common	sv	Grupp publik
 groups	common	sv	Grupper
-groups with permission for %1	common	sv	Grupper med åtkomst till %1
-groups without permission for %1	common	sv	Grupper utan åtkomst till %1
+groups with permission for %1	common	sv	Grupper med Ã¥tkomst till %1
+groups without permission for %1	common	sv	Grupper utan Ã¥tkomst till %1
 guadeloupe	common	sv	GUADELOUPE
 guam	common	sv	GUAM
 guatemala	common	sv	GUATEMALA
@@ -280,41 +280,41 @@ guinea	common	sv	GUINEA
 guinea-bissau	common	sv	GUINEA-BISSAU
 guyana	common	sv	GUYANA
 haiti	common	sv	HAITI
-heard island and mcdonald islands	common	sv	HEARD- OCH MCDONALDSÖARNA
-height	common	sv	Höjd
-help	common	sv	Hjälp
-high	common	sv	Hög
-highest	common	sv	Högsta
+heard island and mcdonald islands	common	sv	HEARD- OCH MCDONALDSÃ–ARNA
+height	common	sv	HÃ¶jd
+help	common	sv	HjÃ¤lp
+high	common	sv	HÃ¶g
+highest	common	sv	HÃ¶gsta
 holy see (vatican city state)	common	sv	VATIKANEN
 home	common	sv	Hem
 home email	common	sv	Hem e-post
 honduras	common	sv	HONDURAS
 hong kong	common	sv	HONG KONG
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sv	Hur många ikoner ska visas i Navigeringslisten (överst på sidan). Ikoner utöver dessa visas i Länkboxen som hämtas via ikonen längst till höger.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sv	Hur mÃ¥nga ikoner ska visas i Navigeringslisten (Ã¶verst pÃ¥ sidan). Ikoner utÃ¶ver dessa visas i LÃ¤nkboxen som hÃ¤mtas via ikonen lÃ¤ngst till hÃ¶ger.
 hungary	common	sv	UNGERN
 iceland	common	sv	ISLAND
-iespell not detected. click ok to go to download page.	common	sv	ieSpell hittades inte. Klicka OK för att gå till nerladdnings sidan.
+iespell not detected. click ok to go to download page.	common	sv	ieSpell hittades inte. Klicka OK fÃ¶r att gÃ¥ till nerladdnings sidan.
 if the clock is enabled would you like it to update it every second or every minute?	common	sv	Vill du att klockan uppdateras varje sekund eller minut om den aktiveras?
-if there are some images in the background folder you can choose the one you would like to see.	common	sv	Om det finns bilder i bakgrundskatalogen, kan du välja den du vill se.
+if there are some images in the background folder you can choose the one you would like to see.	common	sv	Om det finns bilder i bakgrundskatalogen, kan du vÃ¤lja den du vill se.
 image url	common	sv	Bild URL
 india	common	sv	INDIEN
 indonesia	common	sv	INDONESIEN
 insert 'return false'	common	sv	Infoga 'return false'
-insert all %1 addresses of the %2 contacts in %3	common	sv	Infoga alla %1 adresser för %2 kontakterna i %3
+insert all %1 addresses of the %2 contacts in %3	common	sv	Infoga alla %1 adresser fÃ¶r %2 kontakterna i %3
 insert column after	common	sv	Infoga kolumn efter
-insert column before	common	sv	Infoga kolumn före
+insert column before	common	sv	Infoga kolumn fÃ¶re
 insert row after	common	sv	Infoga rad efter
-insert row before	common	sv	Infoga rad före
+insert row before	common	sv	Infoga rad fÃ¶re
 international	common	sv	Internationell
 invalid filename	common	sv	Ogiltigt filnamn
 invalid ip address	common	sv	Ogiltig IP adress
-invalid password	common	sv	Ogiltigt lösenord
+invalid password	common	sv	Ogiltigt lÃ¶senord
 iran, islamic republic of	common	sv	IRAN
 iraq	common	sv	IRAK
 ireland	common	sv	IRLAND
 israel	common	sv	ISRAEL
-it has been more then %1 days since you changed your password	common	sv	Det är mer än %1 dagar sedan du ändrade ditt lösenord
-it is recommended that you run setup to upgrade your tables to the current version	common	sv	Det rekomenderas att du kör installationen för att uppgradera dina tabeller till aktuell version.
+it has been more then %1 days since you changed your password	common	sv	Det Ã¤r mer Ã¤n %1 dagar sedan du Ã¤ndrade ditt lÃ¶senord
+it is recommended that you run setup to upgrade your tables to the current version	common	sv	Det rekomenderas att du kÃ¶r installationen fÃ¶r att uppgradera dina tabeller till aktuell version.
 italic	common	sv	Kursiv
 italic.gif	common	sv	italic.gif
 italy	common	sv	ITALIEN
@@ -327,8 +327,8 @@ jun	common	sv	Jun
 june	common	sv	Juni
 justify center	common	sv	Centerera
 justify full	common	sv	Marginaljustera
-justify left	common	sv	Vänsterjustera
-justify right	common	sv	Högerjustera
+justify left	common	sv	VÃ¤nsterjustera
+justify right	common	sv	HÃ¶gerjustera
 kazakstan	common	sv	KAZAKSTAN
 kenya	common	sv	KENYA
 keywords	common	sv	Nyckelord
@@ -337,17 +337,17 @@ korea, democratic peoples republic of	common	sv	KOREA, NORD
 korea, republic of	common	sv	KOREA, SYD
 kuwait	common	sv	KUWAIT
 kyrgyzstan	common	sv	KIRGIZISTAN
-language	common	sv	Språk
+language	common	sv	SprÃ¥k
 language_direction_rtl	common	sv	language_direction_rtl
 lao peoples democratic republic	common	sv	LAOS
 last name	common	sv	Efternamn
-last name of the user, eg. "%1"	common	sv	Användarens efternamn, ex. "%1"
+last name of the user, eg. "%1"	common	sv	AnvÃ¤ndarens efternamn, ex. "%1"
 last page	common	sv	Sista sidan
 lastname	common	sv	Efternamn
 latvia	common	sv	LETTLAND
 ldap-mgr	common	sv	LDAP hanterare
 lebanon	common	sv	LIBANON
-left	common	sv	Vänster
+left	common	sv	VÃ¤nster
 lesotho	common	sv	LESOTHO
 liberia	common	sv	LIBERIA
 libyan arab jamahiriya	common	sv	LIBYEN
@@ -361,23 +361,23 @@ local	common	sv	Lokal
 login	common	sv	Inloggning
 loginid	common	sv	Inloggnings ID
 logout	common	sv	Logga ut
-low	common	sv	Låg
-lowest	common	sv	Lägsta
+low	common	sv	LÃ¥g
+lowest	common	sv	LÃ¤gsta
 luxembourg	common	sv	LUXEMBOURG
 macau	common	sv	MACAU
 macedonia, the former yugoslav republic of	common	sv	MAKEDONIEN
 madagascar	common	sv	MADAGASKAR
-mail domain, eg. "%1"	common	sv	E-postdomän, ex. "%1"
+mail domain, eg. "%1"	common	sv	E-postdomÃ¤n, ex. "%1"
 main category	common	sv	Huvudkategori
 main screen	common	sv	Startsidan
-maintainer	common	sv	Underhåll
+maintainer	common	sv	UnderhÃ¥ll
 malawi	common	sv	MALAWI
 malaysia	common	sv	MALAYSIA
 maldives	common	sv	MALDIVERNA
 mali	common	sv	MALI
 malta	common	sv	MALTA
 march	common	sv	Mars
-marshall islands	common	sv	MARSHALLÖARNA
+marshall islands	common	sv	MARSHALLÃ–ARNA
 martinique	common	sv	MARTINIQUE
 mauritania	common	sv	MAURITANIA
 mauritius	common	sv	MAURITIUS
@@ -392,7 +392,7 @@ micronesia, federated states of	common	sv	MIKRONESIEN
 minute	common	sv	Minut
 moldova, republic of	common	sv	MOLDOVIEN
 monaco	common	sv	MONACO
-monday	common	sv	Måndag
+monday	common	sv	MÃ¥ndag
 mongolia	common	sv	MONGOLIEN
 montserrat	common	sv	MONTSERRAT
 morocco	common	sv	MAROCKO
@@ -400,60 +400,60 @@ mozambique	common	sv	MOZAMBIQUE
 multiple	common	sv	Flera
 myanmar	common	sv	MYANMAR
 name	common	sv	Namn
-name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
+name of the user, eg. "%1"	common	sv	AnvÃ¤ndarens fÃ¶rnamn, ex. "%1"
 namibia	common	sv	NAMIBIA
 nauru	common	sv	NAURU
 nepal	common	sv	NEPAL
-netherlands	common	sv	NEDERLÄNDERNA
-netherlands antilles	common	sv	NEDERLÄNDSKA ANTILLERNA
+netherlands	common	sv	NEDERLÃ„NDERNA
+netherlands antilles	common	sv	NEDERLÃ„NDSKA ANTILLERNA
 never	common	sv	Aldrig
 new caledonia	common	sv	NYA KALEDONIEN
 new entry added sucessfully	common	sv	Ny post tillagd
 new main category	common	sv	Ny huvudkategori
-new value	common	sv	Nytt värde
+new value	common	sv	Nytt vÃ¤rde
 new zealand	common	sv	NYA ZEELAND
-next	common	sv	Nästa
-next month (hold for menu)	jscalendar	sv	Nästa månad (håll för meny)
-next page	common	sv	Nästa sida
-next year (hold for menu)	jscalendar	sv	Nästa år (håll för meny)
+next	common	sv	NÃ¤sta
+next month (hold for menu)	jscalendar	sv	NÃ¤sta mÃ¥nad (hÃ¥ll fÃ¶r meny)
+next page	common	sv	NÃ¤sta sida
+next year (hold for menu)	jscalendar	sv	NÃ¤sta Ã¥r (hÃ¥ll fÃ¶r meny)
 nicaragua	common	sv	NICARAGUA
 niger	common	sv	NIGER
 nigeria	common	sv	NIGERIA
 niue	common	sv	NIUE
 no	common	sv	Nej
-no entries found, try again ...	common	sv	Inga poster hittades, försök igen ...
-no history for this record	common	sv	Ingen historik för posten
+no entries found, try again ...	common	sv	Inga poster hittades, fÃ¶rsÃ¶k igen ...
+no history for this record	common	sv	Ingen historik fÃ¶r posten
 no savant2 template directories were found in:	common	sv	Ingen Savant2 mall katalog hittades i:
-no subject	common	sv	Inget ämne
+no subject	common	sv	Inget Ã¤mne
 none	common	sv	Ingen
-norfolk island	common	sv	NORFOLKÖN
+norfolk island	common	sv	NORFOLKÃ–N
 normal	common	sv	Normal
 northern mariana islands	common	sv	NORDMARIANERNA
 norway	common	sv	NORGE
 not assigned	common	sv	Inte tilldelad
 note	common	sv	Anteckning
 notes	common	sv	Anteckningar
-notify window	common	sv	Meddelande fönster
-notify your administrator to correct this situation	common	sv	Meddela administratör om problemet.
+notify window	common	sv	Meddelande fÃ¶nster
+notify your administrator to correct this situation	common	sv	Meddela administratÃ¶r om problemet.
 november	common	sv	November
 october	common	sv	Oktober
 ok	common	sv	Ok
-old value	common	sv	Gammalt värde
+old value	common	sv	Gammalt vÃ¤rde
 oman	common	sv	OMAN
-on *nix systems please type: %1	common	sv	På *nix system skriv: %1
-on mouse over	common	sv	När pekaren förs över
+on *nix systems please type: %1	common	sv	PÃ¥ *nix system skriv: %1
+on mouse over	common	sv	NÃ¤r pekaren fÃ¶rs Ã¶ver
 only private	common	sv	Endast privata
 only yours	common	sv	Endast dina
-open notify window	common	sv	Öppna meddelande fönster
-open popup window	common	sv	Öppna popup fönster
-open sidebox	common	sv	Öppna Länkboxen
+open notify window	common	sv	Ã–ppna meddelande fÃ¶nster
+open popup window	common	sv	Ã–ppna popup fÃ¶nster
+open sidebox	common	sv	Ã–ppna LÃ¤nkboxen
 ordered list	common	sv	Numrerad lista
 original	common	sv	Orginal
-other	common	sv	Övriga
-overview	common	sv	Översikt
-owner	common	sv	Ägare
+other	common	sv	Ã–vriga
+overview	common	sv	Ã–versikt
+owner	common	sv	Ã„gare
 page	common	sv	Sida
-page was generated in %1 seconds	common	sv	Sidan genererades på %1 sekunder
+page was generated in %1 seconds	common	sv	Sidan genererades pÃ¥ %1 sekunder
 pakistan	common	sv	PAKISTAN
 palau	common	sv	PALAU
 palestinian territory, occupied	common	sv	PALESTINA
@@ -462,32 +462,32 @@ papua new guinea	common	sv	PAPUA NYA GUINEA
 paraguay	common	sv	PARAGUAY
 parcel	common	sv	Paket
 parent category	common	sv	Huvudkategori
-password	common	sv	Lösenord
-password could not be changed	common	sv	Lösenordet kunde inte ändras
-password has been updated	common	sv	Lösenordet uppdaterat
-password must contain at least %1 lowercase letters	common	sv	Lösenordet måste innehålla åtminstone %1 små bokstäver
-password must contain at least %1 numbers	common	sv	Lösenordet måste innehålla åtminstone %1 siffror
-password must contain at least %1 special characters	common	sv	Lösenordet måste innehålla åtminstone %1 special tecken
-password must contain at least %1 uppercase letters	common	sv	Lösenordet måste innehålla åtminstone %1 stora bokstäver
-password must have at least %1 characters	common	sv	Lösenordet måste innehålla åtminstone %1 tecken
-path to user and group files has to be outside of the webservers document-root!!!	common	sv	Sökvägen till användar- och gruppfiler måste vara utanför webbserverns dokument root!
-pattern for search in addressbook	common	sv	Sökmönster i Adressboken
-pattern for search in calendar	common	sv	Sökmönster i Kalendern
-pattern for search in projects	common	sv	Sökmönster i Projekt
-permissions to the files/users directory	common	sv	Rättigheter på filer/användar bibliotek
+password	common	sv	LÃ¶senord
+password could not be changed	common	sv	LÃ¶senordet kunde inte Ã¤ndras
+password has been updated	common	sv	LÃ¶senordet uppdaterat
+password must contain at least %1 lowercase letters	common	sv	LÃ¶senordet mÃ¥ste innehÃ¥lla Ã¥tminstone %1 smÃ¥ bokstÃ¤ver
+password must contain at least %1 numbers	common	sv	LÃ¶senordet mÃ¥ste innehÃ¥lla Ã¥tminstone %1 siffror
+password must contain at least %1 special characters	common	sv	LÃ¶senordet mÃ¥ste innehÃ¥lla Ã¥tminstone %1 special tecken
+password must contain at least %1 uppercase letters	common	sv	LÃ¶senordet mÃ¥ste innehÃ¥lla Ã¥tminstone %1 stora bokstÃ¤ver
+password must have at least %1 characters	common	sv	LÃ¶senordet mÃ¥ste innehÃ¥lla Ã¥tminstone %1 tecken
+path to user and group files has to be outside of the webservers document-root!!!	common	sv	SÃ¶kvÃ¤gen till anvÃ¤ndar- och gruppfiler mÃ¥ste vara utanfÃ¶r webbserverns dokument root!
+pattern for search in addressbook	common	sv	SÃ¶kmÃ¶nster i Adressboken
+pattern for search in calendar	common	sv	SÃ¶kmÃ¶nster i Kalendern
+pattern for search in projects	common	sv	SÃ¶kmÃ¶nster i Projekt
+permissions to the files/users directory	common	sv	RÃ¤ttigheter pÃ¥ filer/anvÃ¤ndar bibliotek
 personal	common	sv	Personligt
 peru	common	sv	PERU
 philippines	common	sv	FILIPINERNA
 phone number	common	sv	Telefonnummer
 phpgwapi	common	sv	eGroupWare API
-pitcairn	common	sv	PITCAIRNÖARNA
-please %1 by hand	common	sv	Var god och %1 för hand
+pitcairn	common	sv	PITCAIRNÃ–ARNA
+please %1 by hand	common	sv	Var god och %1 fÃ¶r hand
 please enter a name	common	sv	Ange ett namn
-please run setup to become current	common	sv	Kör installationen för att uppdatera
-please select	common	sv	Välj
-please set your global preferences	common	sv	Gör dina globala inställningar
-please set your preferences for this application	common	sv	Gör dina inställningar för applikationen
-please wait...	common	sv	Var god vänta ...
+please run setup to become current	common	sv	KÃ¶r installationen fÃ¶r att uppdatera
+please select	common	sv	VÃ¤lj
+please set your global preferences	common	sv	GÃ¶r dina globala instÃ¤llningar
+please set your preferences for this application	common	sv	GÃ¶r dina instÃ¤llningar fÃ¶r applikationen
+please wait...	common	sv	Var god vÃ¤nta ...
 poland	common	sv	POLEN
 portugal	common	sv	PORTUGAL
 postal	common	sv	Post adress
@@ -495,10 +495,10 @@ powered by egroupware version %1	common	sv	Powered by <a href="http://www.egroup
 powered by phpgroupware version %1	common	sv	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
 preferences	common	sv	Alternativ
 preferences for the idots template set	common	sv	Idots mall alternativ
-prev. month (hold for menu)	jscalendar	sv	Föreg. månad (håll för meny)
-prev. year (hold for menu)	jscalendar	sv	Föreg. år (håll för meny)
-previous page	common	sv	Föregående sida
-primary style-sheet:	common	sv	Primär Style sheet
+prev. month (hold for menu)	jscalendar	sv	FÃ¶reg. mÃ¥nad (hÃ¥ll fÃ¶r meny)
+prev. year (hold for menu)	jscalendar	sv	FÃ¶reg. Ã¥r (hÃ¥ll fÃ¶r meny)
+previous page	common	sv	FÃ¶regÃ¥ende sida
+primary style-sheet:	common	sv	PrimÃ¤r Style sheet
 print	common	sv	Skriv ut
 priority	common	sv	Prioritet
 private	common	sv	Privat
@@ -507,21 +507,21 @@ project	common	sv	Projekt
 public	common	sv	Publik
 puerto rico	common	sv	PUERTO RICO
 qatar	common	sv	QUATAR
-read	common	sv	Läs
-read this list of methods.	common	sv	Läs lista på metoder
-reading	common	sv	Läser
+read	common	sv	LÃ¤s
+read this list of methods.	common	sv	LÃ¤s lista pÃ¥ metoder
+reading	common	sv	LÃ¤ser
 reject	common	sv	Avvisa
 remove selected accounts	common	sv	Radera valda konton
-remove shortcut	common	sv	Radera genväg
+remove shortcut	common	sv	Radera genvÃ¤g
 rename	common	sv	Byt namn
-replace	common	sv	Ersätt
-replace with	common	sv	Ersätt med
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	sv	Returnerar en fullständig lista på konton. Varning: Den kan vara tämligen stor
-returns an array of todo items	common	sv	Returnera en lista på Uppgifter
-returns struct of users application access	common	sv	Returnerar struktur på användares applikationsanvändning
+replace	common	sv	ErsÃ¤tt
+replace with	common	sv	ErsÃ¤tt med
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	sv	Returnerar en fullstÃ¤ndig lista pÃ¥ konton. Varning: Den kan vara tÃ¤mligen stor
+returns an array of todo items	common	sv	Returnera en lista pÃ¥ Uppgifter
+returns struct of users application access	common	sv	Returnerar struktur pÃ¥ anvÃ¤ndares applikationsanvÃ¤ndning
 reunion	common	sv	REUNION
-right	common	sv	Höger
-romania	common	sv	RUMÄNIEN
+right	common	sv	HÃ¶ger
+romania	common	sv	RUMÃ„NIEN
 russian federation	common	sv	RYSKA FEDERATIONEN
 rwanda	common	sv	RWANDA
 saint helena	common	sv	SAINT HELENA
@@ -532,35 +532,35 @@ saint vincent and the grenadines	common	sv	SAINT VINCENT OCH GRENADINERNA
 samoa	common	sv	SAMOA
 san marino	common	sv	SAN MARINO
 sao tome and principe	common	sv	SAO TOME OCH PRINCIPE
-saturday	common	sv	Lördag
+saturday	common	sv	LÃ¶rdag
 saudi arabia	common	sv	SAUDI ARABIEN
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sv	Savant2 version skiljer sig mot Savant2 wrapper. <br/>Denna version: %1 <br/>Savants version: %2
 save	common	sv	Spara
-search	common	sv	Sök
-search %1 '%2'	common	sv	Sök %1 '%2'
-search or select accounts	common	sv	Sök eller välj konton
-search or select multiple accounts	common	sv	Sök eller välj flera konton
+search	common	sv	SÃ¶k
+search %1 '%2'	common	sv	SÃ¶k %1 '%2'
+search or select accounts	common	sv	SÃ¶k eller vÃ¤lj konton
+search or select multiple accounts	common	sv	SÃ¶k eller vÃ¤lj flera konton
 second	common	sv	Sekund
 section	common	sv	Avsnitt
-select	common	sv	Välj
-select all %1 %2 for %3	common	sv	Välj alla %1 %2 för %3
-select category	common	sv	Välj kategori
-select date	common	sv	Välj datum
-select group	common	sv	Välj grupp
-select home email address	common	sv	Välj hem e-postadress
-select multiple accounts	common	sv	Välj flera konton
-select one	common	sv	Välj en
-select the default height for the application windows	common	sv	Välj standard höjd för applikationsfönstret
-select the default width for the application windows	common	sv	Välj standard bredd för applikationsfönstret
-select user	common	sv	Välj användare
-select work email address	common	sv	Välj Företagets e-postadres
+select	common	sv	VÃ¤lj
+select all %1 %2 for %3	common	sv	VÃ¤lj alla %1 %2 fÃ¶r %3
+select category	common	sv	VÃ¤lj kategori
+select date	common	sv	VÃ¤lj datum
+select group	common	sv	VÃ¤lj grupp
+select home email address	common	sv	VÃ¤lj hem e-postadress
+select multiple accounts	common	sv	VÃ¤lj flera konton
+select one	common	sv	VÃ¤lj en
+select the default height for the application windows	common	sv	VÃ¤lj standard hÃ¶jd fÃ¶r applikationsfÃ¶nstret
+select the default width for the application windows	common	sv	VÃ¤lj standard bredd fÃ¶r applikationsfÃ¶nstret
+select user	common	sv	VÃ¤lj anvÃ¤ndare
+select work email address	common	sv	VÃ¤lj FÃ¶retagets e-postadres
 selection	common	sv	Val
 send	common	sv	Skicka
 senegal	common	sv	SENEGAL
 september	common	sv	September
 server %1 has been added	common	sv	Server %1 tillagd
 server answered. processing response...	common	sv	Servern svarade. Behandlar svaret ...
-server contacted. waiting for response...	common	sv	Servern kontaktad. Väntar på svar ...
+server contacted. waiting for response...	common	sv	Servern kontaktad. VÃ¤ntar pÃ¥ svar ...
 server name	common	sv	Server namn
 session has been killed	common	sv	Sessionen avslutad
 setup	common	sv	Installation
@@ -570,12 +570,12 @@ show all	common	sv	Visa alla
 show all categorys	common	sv	Visa alla kategorier
 show clock?	common	sv	Visa klockan?
 show home and logout button in main application bar?	common	sv	Visa Hem- och utloggnings knappen i navigeringslisten?
-show logo's on the desktop.	common	sv	Visa logotyp på skrivbordet
+show logo's on the desktop.	common	sv	Visa logotyp pÃ¥ skrivbordet
 show menu	common	sv	Visa meny
 show page generation time	common	sv	Visa sidans genereringstid
-show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan?
+show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid lÃ¤ngst ner pÃ¥ sidan?
 show page generation time?	common	sv	Visa sidans genereringstid?
-show the logo's of egroupware and x-desktop on the desktop.	common	sv	Visa eGroupware och x-desktop logotypen på skrivbordet
+show the logo's of egroupware and x-desktop on the desktop.	common	sv	Visa eGroupware och x-desktop logotypen pÃ¥ skrivbordet
 show_more_apps	common	sv	Visa fler applikationer
 showing %1	common	sv	Visar %1
 showing %1 - %2 of %3	common	sv	Visar %1 - %2 av %3
@@ -583,24 +583,24 @@ sierra leone	common	sv	SIERRA LEONE
 singapore	common	sv	SINGAPORE
 slovakia	common	sv	SLOVAKIEN
 slovenia	common	sv	SLOVENIEN
-solomon islands	common	sv	SALOMONÖARNA
+solomon islands	common	sv	SALOMONÃ–ARNA
 somalia	common	sv	SOMALIEN
-sorry, your login has expired	login	sv	Beklagar, din inloggning har förfallit
+sorry, your login has expired	login	sv	Beklagar, din inloggning har fÃ¶rfallit
 south africa	common	sv	SYD AFRIKA
-south georgia and the south sandwich islands	common	sv	SYDGEORGIEN OCH SYDSANDWICHÖARNA
+south georgia and the south sandwich islands	common	sv	SYDGEORGIEN OCH SYDSANDWICHÃ–ARNA
 spain	common	sv	SPANIEN
 sri lanka	common	sv	SRI LANKA
 start date	common	sv	Startdatum
 start time	common	sv	Starttid
-start with	common	sv	Börja med
+start with	common	sv	BÃ¶rja med
 starting up...	common	sv	Startar ...
 status	common	sv	Status
-stretched	common	sv	Utsträckt
-subject	common	sv	Ämne
-submit	common	sv	Utför
+stretched	common	sv	UtstrÃ¤ckt
+subject	common	sv	Ã„mne
+submit	common	sv	UtfÃ¶r
 substitutions and their meanings:	common	sv	Substitutioner och dess mening:
 sudan	common	sv	SUDAN
-sunday	common	sv	Söndag
+sunday	common	sv	SÃ¶ndag
 suriname	common	sv	SURINAME
 svalbard and jan mayen	common	sv	SVALBARD OCH JAN MAYEN
 swaziland	common	sv	SWAZILAND
@@ -611,109 +611,109 @@ table properties	common	sv	Tabell egenskaper
 taiwan	common	sv	TAIWAN/TAIPEI
 tajikistan	common	sv	TAJIKISTAN
 tanzania, united republic of	common	sv	TANZANIA
-text color:	common	sv	Textfärg
+text color:	common	sv	TextfÃ¤rg
 thailand	common	sv	THAILAND
-the api is current	common	sv	API är senast tillgängliga
-the api requires an upgrade	common	sv	API behöver uppgradering
-the following applications require upgrades	common	sv	Följande applikationer behöver uppgraderas
+the api is current	common	sv	API Ã¤r senast tillgÃ¤ngliga
+the api requires an upgrade	common	sv	API behÃ¶ver uppgradering
+the following applications require upgrades	common	sv	FÃ¶ljande applikationer behÃ¶ver uppgraderas
 the mail server returned	common	sv	E-postservern returnerade
-this application is current	common	sv	Applikationen är senast tillgängliga
-this application requires an upgrade	common	sv	Applikationen behöver uppgraderas
-this name has been used already	common	sv	Namnet är redan upptaget
+this application is current	common	sv	Applikationen Ã¤r senast tillgÃ¤ngliga
+this application requires an upgrade	common	sv	Applikationen behÃ¶ver uppgraderas
+this name has been used already	common	sv	Namnet Ã¤r redan upptaget
 thursday	common	sv	Torsdag
 tiled	common	sv	Vinklad
 time	common	sv	Tid
 time selection:	jscalendar	sv	Tidsintervall:
 time zone	common	sv	Tidzon
-time zone offset	common	sv	Tidsförskjutning
+time zone offset	common	sv	TidsfÃ¶rskjutning
 title	common	sv	Rubrik
 to	common	sv	Till
-to correct this error for the future you will need to properly set the	common	sv	För att undvika problemet framöver måste du sätta
-to go back to the msg list, click <a href= %1 >here</a>	common	sv	Klicka <a href="%1">här</a> för att komma tillbaks till meddelandelistan
+to correct this error for the future you will need to properly set the	common	sv	FÃ¶r att undvika problemet framÃ¶ver mÃ¥ste du sÃ¤tta
+to go back to the msg list, click <a href= %1 >here</a>	common	sv	Klicka <a href="%1">hÃ¤r</a> fÃ¶r att komma tillbaks till meddelandelistan
 today	common	sv	Idag
 todays date, eg. "%1"	common	sv	Dagens datum, ex. "%1"
-toggle first day of week	jscalendar	sv	Visa veckans första dag
+toggle first day of week	jscalendar	sv	Visa veckans fÃ¶rsta dag
 togo	common	sv	TOGO
-tokelau	common	sv	TOKELAUÖARNA
+tokelau	common	sv	TOKELAUÃ–ARNA
 tonga	common	sv	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sv	För många misslyckade inloggnings försök: %1 för användare '%2', %3 med IP %4
-top	common	sv	Överst
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sv	FÃ¶r mÃ¥nga misslyckade inloggnings fÃ¶rsÃ¶k: %1 fÃ¶r anvÃ¤ndare '%2', %3 med IP %4
+top	common	sv	Ã–verst
 total	common	sv	Summa
-transparant bg for the icons?	common	sv	Transparent bakgrund för ikoner?
+transparant bg for the icons?	common	sv	Transparent bakgrund fÃ¶r ikoner?
 trinidad and tobago	common	sv	TRINIDAD OCH TOBAGO
 tuesday	common	sv	Tisdag
 tunisia	common	sv	TUNISIEN
 turkey	common	sv	TURKIET
 turkmenistan	common	sv	TURKMENISTAN
-turks and caicos islands	common	sv	TURKS- OCH CAICOSÖARNA
+turks and caicos islands	common	sv	TURKS- OCH CAICOSÃ–ARNA
 tuvalu	common	sv	TUVALU
 type	common	sv	Typ
 uganda	common	sv	UGANDA
 ukraine	common	sv	UKRAINA
 underline	common	sv	Understruken
 underline.gif	common	sv	underline.gif
-united arab emirates	common	sv	FÖRENTA ARAB EMIRATEN
+united arab emirates	common	sv	FÃ–RENTA ARAB EMIRATEN
 united kingdom	common	sv	STORBRITANIEN
 united states	common	sv	U.S.A
-united states minor outlying islands	common	sv	FÖRENTA STATERNAS MINDRE ÖAR I OCEANIEN OCH VÄSTINDIEN
-unknown	common	sv	Okänd
+united states minor outlying islands	common	sv	FÃ–RENTA STATERNAS MINDRE Ã–AR I OCEANIEN OCH VÃ„STINDIEN
+unknown	common	sv	OkÃ¤nd
 update	common	sv	Uppdatera
 update the clock per minute or per second	common	sv	Uppdatera klockan per minut eller sekund
 upload	common	sv	Ladda upp
-upload directory does not exist, or is not writeable by webserver	common	sv	Uppladdningskatalogen finns inte eller är inte skrivbar av webbservern
+upload directory does not exist, or is not writeable by webserver	common	sv	Uppladdningskatalogen finns inte eller Ã¤r inte skrivbar av webbservern
 url	common	sv	URL
 uruguay	common	sv	URUGUAI
-use button to search for	common	sv	Använd knappen för att söka
-use button to search for address	common	sv	Använd knappen för att söka adresser
-use button to search for calendarevent	common	sv	Använd knappen för att söka kalender händelser
-use button to search for project	common	sv	Använd knappen för att söka projekt
-user	common	sv	Användare
-user accounts	common	sv	Användarkonto
-user groups	common	sv	Användargrupp
-username	common	sv	Användarnamn
-users	common	sv	Användare
-users choice	common	sv	Användarnas val
+use button to search for	common	sv	AnvÃ¤nd knappen fÃ¶r att sÃ¶ka
+use button to search for address	common	sv	AnvÃ¤nd knappen fÃ¶r att sÃ¶ka adresser
+use button to search for calendarevent	common	sv	AnvÃ¤nd knappen fÃ¶r att sÃ¶ka kalender hÃ¤ndelser
+use button to search for project	common	sv	AnvÃ¤nd knappen fÃ¶r att sÃ¶ka projekt
+user	common	sv	AnvÃ¤ndare
+user accounts	common	sv	AnvÃ¤ndarkonto
+user groups	common	sv	AnvÃ¤ndargrupp
+username	common	sv	AnvÃ¤ndarnamn
+users	common	sv	AnvÃ¤ndare
+users choice	common	sv	AnvÃ¤ndarnas val
 uzbekistan	common	sv	UZBEKISTAN
 vanuatu	common	sv	VANUATU
 venezuela	common	sv	VENEZUELA
 version	common	sv	Version
 viet nam	common	sv	VIETNAM
 view	common	sv	Visa
-virgin islands, british	common	sv	JUNGFRUÖARNA, BRITTISKA
-virgin islands, u.s.	common	sv	JUNGFRUÖARNA, U.S.A
+virgin islands, british	common	sv	JUNGFRUÃ–ARNA, BRITTISKA
+virgin islands, u.s.	common	sv	JUNGFRUÃ–ARNA, U.S.A
 wallis and futuna	common	sv	WALLIS OCH FUTUNA
 wednesday	common	sv	Onsdag
-welcome	common	sv	Välkommen
-western sahara	common	sv	VÄSTRA SAHARA
-what color should all the blank space on the desktop have	common	sv	Vilken färg ska alla blanka utrymmen på skrivbordet ha
+welcome	common	sv	VÃ¤lkommen
+western sahara	common	sv	VÃ„STRA SAHARA
+what color should all the blank space on the desktop have	common	sv	Vilken fÃ¤rg ska alla blanka utrymmen pÃ¥ skrivbordet ha
 what style would you like the image to have?	common	sv	Vilken stil vill du att bilden ska ha?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sv	Om du svara ja kommer Hem- och utloggningsknappen att visas i navigeringslisten.
 which groups	common	sv	Vilka grupper
 width	common	sv	Bredd
 wk	jscalendar	sv	v.
 work email	common	sv	Arbete e-post
-would you like to display the page generation time at the bottom of every window?	common	sv	Vill du visa sidans genereringstid nederst på varje sida?
+would you like to display the page generation time at the bottom of every window?	common	sv	Vill du visa sidans genereringstid nederst pÃ¥ varje sida?
 writing	common	sv	Skriver
 written by:	common	sv	Skriven av:
-year	common	sv	År
+year	common	sv	Ã…r
 yemen	common	sv	YEMEN
 yes	common	sv	Ja
-you are required to change your password during your first login	common	sv	Du måste byta lösenord vid första inloggningen
-you have been successfully logged out	login	sv	Du är utloggad
+you are required to change your password during your first login	common	sv	Du mÃ¥ste byta lÃ¶senord vid fÃ¶rsta inloggningen
+you have been successfully logged out	login	sv	Du Ã¤r utloggad
 you have not entered a title	common	sv	Rubriken saknas
 you have not entered a valid date	common	sv	Ogiltigt datum
 you have not entered a valid time of day	common	sv	Ogiltig tid
 you have not entered participants	common	sv	Deltagare saknas
 you have selected an invalid date	common	sv	Ogiltigt datum
 you have selected an invalid main category	common	sv	Ogiltig huvudkategori
-you have successfully logged out	common	sv	Du är utloggad
-you need to add the webserver user '%1' to the group '%2'.	common	sv	Du behöver lägga till webbserver användare '%1' till gruppen '%2'.
+you have successfully logged out	common	sv	Du Ã¤r utloggad
+you need to add the webserver user '%1' to the group '%2'.	common	sv	Du behÃ¶ver lÃ¤gga till webbserver anvÃ¤ndare '%1' till gruppen '%2'.
 your message could <b>not</b> be sent!<br>	common	sv	Meddelandet <b>inte</b> skickat<br>
 your message has been sent	common	sv	Meddelandet skickat
-your search returned %1 matchs	common	sv	Sökning gav %1 träffar
-your search returned 1 match	common	sv	Sökning gav 1 träff
+your search returned %1 matchs	common	sv	SÃ¶kning gav %1 trÃ¤ffar
+your search returned 1 match	common	sv	SÃ¶kning gav 1 trÃ¤ff
 your session could not be verified.	login	sv	Din session kunde inte verifieras
-your settings have been updated	common	sv	Inställningarna uppdaterade
+your settings have been updated	common	sv	InstÃ¤llningarna uppdaterade
 yugoslavia	common	sv	YOGOSLAVIEN
 zambia	common	sv	ZAMBIA
 zimbabwe	common	sv	ZIMBABWE

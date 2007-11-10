@@ -1,11 +1,11 @@
-%1 days in advance	infolog	el	%1 ημέρες προκαταβολικά
-%1 deleted	infolog	el	%1 διαγράφηκαν
-%1 deleted by %2 at %3	infolog	el	%1 διαγράφηκαν από %2 στις %3
-%1 modified	infolog	el	%1 επεξεργάστηκαν
-%1 modified by %2 at %3	infolog	el	%1 επεξεργάστηκαν από %2 στις %3
-%1 records imported	infolog	el	%1 εγγραφές εισήχθησαν
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	el	Έχουν διαβαστεί %1 εγγραφές(δεν έχουν ακόμα εισαχθεί,μπορείτε να πάτε %2πίσω%3 και να ξετσεκάρετε το Τεστ Εισαγωγής)
-- subprojects from	infolog	el	- Υποκατηγορίες σχεδίων από
+%1 days in advance	infolog	el	%1 Ξ·ΞΌΞ­ΟΞµΟ‚ Ο€ΟΞΏΞΊΞ±Ο„Ξ±Ξ²ΞΏΞ»ΞΉΞΊΞ¬
+%1 deleted	infolog	el	%1 Ξ΄ΞΉΞ±Ξ³ΟΞ¬Ο†Ξ·ΞΊΞ±Ξ½
+%1 deleted by %2 at %3	infolog	el	%1 Ξ΄ΞΉΞ±Ξ³ΟΞ¬Ο†Ξ·ΞΊΞ±Ξ½ Ξ±Ο€Ο %2 ΟƒΟ„ΞΉΟ‚ %3
+%1 modified	infolog	el	%1 ΞµΟ€ΞµΞΎΞµΟΞ³Ξ¬ΟƒΟ„Ξ·ΞΊΞ±Ξ½
+%1 modified by %2 at %3	infolog	el	%1 ΞµΟ€ΞµΞΎΞµΟΞ³Ξ¬ΟƒΟ„Ξ·ΞΊΞ±Ξ½ Ξ±Ο€Ο %2 ΟƒΟ„ΞΉΟ‚ %3
+%1 records imported	infolog	el	%1 ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚ ΞµΞΉΟƒΞ®Ο‡ΞΈΞ·ΟƒΞ±Ξ½
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	el	ΞΟ‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞ±Ξ²Ξ±ΟƒΟ„ΞµΞ― %1 ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚(Ξ΄ΞµΞ½ Ξ­Ο‡ΞΏΟ…Ξ½ Ξ±ΞΊΟΞΌΞ± ΞµΞΉΟƒΞ±Ο‡ΞΈΞµΞ―,ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± Ο€Ξ¬Ο„Ξµ %2Ο€Ξ―ΟƒΟ‰%3 ΞΊΞ±ΞΉ Ξ½Ξ± ΞΎΞµΟ„ΟƒΞµΞΊΞ¬ΟΞµΟ„Ξµ Ο„ΞΏ Ξ¤ΞµΟƒΟ„ Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚)
+- subprojects from	infolog	el	- Ξ¥Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ ΟƒΟ‡ΞµΞ΄Ξ―Ο‰Ξ½ Ξ±Ο€Ο
 0%	infolog	el	0%
 10%	infolog	el	10%
 100%	infolog	el	100%
@@ -17,323 +17,323 @@
 70%	infolog	el	70%
 80%	infolog	el	80%
 90%	infolog	el	90%
-a short subject for the entry	infolog	el	ένα μικρό θέμα για την καταχώρηση
-abort without deleting	infolog	el	Έξοδος χωρίς διαγραφή
-accept	infolog	el	αποδοχή
-action	infolog	el	Ενέργεια
-actual date and time	infolog	el	πραγματική ημερομηνία και ώρα
-add	infolog	el	Προσθήκη
-add a file	infolog	el	Προσθήκη αρχείου
-add a new entry	infolog	el	Προσθήκη νέας καταχώρησης
-add a new note	infolog	el	Προσθήκη νέας σημείωσης
-add a new phonecall	infolog	el	Προσθήκη νέας τηλεφωνικής κλήσης
-add a new sub-task, -note, -call to this entry	infolog	el	Προσθήκη νεόυ υπο-καθήκοντος,-σημείωσης,-κλήσης σε αυτή την καταχώρηση
-add a new todo	infolog	el	Προσθήκη νέας εκκρεμότητας
-add file	infolog	el	Προσθήκη αρχείου
-add sub	infolog	el	προσθήκη υπό
-add:	infolog	el	Προσθήκη:
-all	infolog	el	Όλα
-all links and attachments	infolog	el	όλοι οι σύνδεσμοι και οι επισυνάψεις
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	el	επιτρέπει τον καθορισμό της κατάστασης μιας καταχώρησης,π.χ. καθορισμός μιας εκκρεμότητας σε ολοκληρωμένη εάν τελείωσε (αξίες εξαρτώνται από τον τύπο της καταχώρησης)
-apply the changes	infolog	el	Εφαρμογή των αλλαγών
-are you shure you want to delete this entry ?	infolog	el	Είστε σίγουρος ότι θέλετε να διαγράψετε αυτή την καταχώρηση;
-attach a file	infolog	el	Επισύναψη αρχείου
-attach file	infolog	el	Επισύναψη αρχείου
-attention: no contact with address %1 found.	infolog	el	Προσοχή: Καμία Επαφή με τη διεύθυνση %1 δεν βρέθηκε.
-back to main list	infolog	el	Πίσω στη βασική λίστα
-billed	infolog	el	χρεώθηκε
-both	infolog	el	και οι δύο
-call	infolog	el	κλήση
-cancel	infolog	el	Ακύρωση
-cancelled	infolog	el	ακυρώθηκε
-categories	infolog	el	Κατηγορίες
-category	infolog	el	Κατηγορία
-change the status of an entry, eg. close it	infolog	el	Αλλαγή της κατάστασης μιας καταχώρησης, π.χ. κλείσιμο
-charset of file	infolog	el	Κωδικοσελίδα αρχείου
-check to set startday	infolog	el	Έλεγχος για ορισμό ημέρας έναρξης
-check to specify custom contact	infolog	el	Έλεγχος για καθορισμό  επαφής πελάτη
-click here to create the link	infolog	el	κάντε κλικ εδώ για τη δημιουργία συνδέσμου
-click here to start the search	infolog	el	κάντε κλικ εδώ για να αρχίσετε την αναζήτηση
-close	infolog	el	Κλείσιμο
-comment	infolog	el	Σχόλιο
-completed	infolog	el	Ολοκληρώθηκε
-configuration	infolog	el	Τροποποίηση
-confirm	infolog	el	Επιβεβαίωση
-contact	infolog	el	Επαφή
-create new links	infolog	el	Δημιουργία νέων συνδέσμων
-creates a new field	infolog	el	δημιουργεί νέο πεδίο
-creates a new status with the given values	infolog	el	δημιουργεί μια νέα κατάσταση με τις δοσμένες αξίες
-creates a new typ with the given name	infolog	el	δημιουργεί ένα νέο τύπο με το δοσμένο όνομα
-creation	infolog	el	Δημιουργία
-csv-fieldname	infolog	el	CSV-Όνομα πεδίου
-csv-filename	infolog	el	CSV-Όνομα αρχείου
-csv-import	common	el	CSV-Εισαγωγή
-custom	infolog	el	Προσαρμογή
-custom contact-address, leave empty to use information from most recent link	infolog	el	Προσαρμοσμένη διεύθυνση επαφής, να μένει κενό για τη χρησιμοποίηση των πιο πρόσφατων συνδέσμων
-custom contact-information, leave emtpy to use information from most recent link	infolog	el	Προσαρμοσμένες πληροφορίες επαφής, να μένει κενό για τη χρησιμοποίηση των πιο πρόσφατων συνδέσμων
-custom fields	infolog	el	Προσαρμοσμένα πεδία
-custom fields, typ and status	common	el	Προσαρμοσμένα πεδία,τύπος και κατάσταση
-custom regarding	infolog	el	Προσαρμοσμένη αναφορά
-custom status for typ	infolog	el	Προσαρμοσμένη κατάσταση για τον τύπο
-customfields	infolog	el	Προσαρμοσμένα πεδία
-date completed	infolog	el	Ημερομηνία και ώρα ολοκλήρωσης
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	el	Συνάντηση ολοκληρώθηκε(να μείνει κενό για να οριστεί αυτόματα αν η κατάσταση εχει τελειώσει ή χρεωθεί
-datecreated	infolog	el	ορίστηκε συνάντηση
-dates, status, access	infolog	el	Συναντήσεις, Κατάσταση,Είσοδος
-days	infolog	el	ημέρες
-default filter for infolog	infolog	el	Προκαθορισμένο Φίλτρο για  το InfoLog
-default status for a new log entry	infolog	el	προκαθορισμένη κατάσταση για μια νέα είσοδο
-delegated	infolog	el	εξουσιοδοτήθηκε
-delegated open	infolog	el	εξουσιοδοτημένα ανοικτά
-delegated overdue	infolog	el	εξουσιοδοτημένα καθυστερημένα
-delegated upcomming	infolog	el	εξουσιοδοτημένα επερχόμενα
-delegation	infolog	el	Εξουσιοδότηση
-delete	infolog	el	Διαγραφή
-delete one record by passing its id.	infolog	el	Διαγραφή μιας εγγραφής διαβαίνοντας απο το id της.
-delete the entry	infolog	el	Διαγραφή αυτής της καταχώρησης
-delete this entry	infolog	el	δαγραφή αυτής της καταχώρησης
-delete this entry and all listed sub-entries	infolog	el	Διαγραφή αυτής της καταχώρησης και όλων των υπο-καταχωρήσεων στη λίστα
-deleted	infolog	el	διαγράφηκαν
-deletes the selected typ	infolog	el	διαγραφή του επιλεγμένου τύπου
-deletes this field	infolog	el	διαγραφή αυτού του πεδίου
-deletes this status	infolog	el	διαγραφή αυτής της κατάστασης
-description	infolog	el	Περιγραφή
-determines the order the fields are displayed	infolog	el	καθορίζει τη σειρά με την οποία εμφανίζονται τα πεδία
-disables a status without deleting it	infolog	el	ακυρώνει μια κατάσταση χωρίς να τη διαγράφει
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	el	επιθυμείτε επιβεβαίωση του υπεύθυνου για:αποδοχή,ολοκλήρωση του έργου ή και τα δύο
-do you want a notification, if items get assigned to you or assigned items get updated?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα ανατίθενται σε εσάς ή αντικείμενα τα οποία έχουν ανατεθεί ενημερώνονται;
-do you want a notification, if items you are responsible for are about to start?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε υπεύθυνος πρόκειται να ξεκινήσουν;
-do you want a notification, if items you are responsible for are due?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε υπεύθυνος έχουν καθυστερήσει;
-do you want a notification, if items you created get updated?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα που έχετε δημιουργήσει ενημερώνονται;
-do you want a notification, if items you delegated are about to start?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε εξουσιοδοτημένος πρόκειται να ξεκινήσουν;
-do you want a notification, if items you delegated are due?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε εξουσιοδοτημένος έχουν καθυστερήσει;
-do you want to receive notifications as html-mails or plain text?	infolog	el	Επιθυμείτε να λαμβάνετε ειδοποιήσεις ως html-mails ή απλό κείμενο;
-do you want to see custom infolog types in the calendar?	infolog	el	Επιθυμείτε να βλέπετε τους προσαρμοσμένους Infolog τύπους στο ημερολόγιο;
-don't show infolog	infolog	el	ΜΗΝ εμφανίζετε το InfoLog
-done	infolog	el	ολοκληρώθηκε
-download	infolog	el	Φορτώστε
-duration	infolog	el	Διάρκεια
-each value is a line like <id>[=<label>]	infolog	el	κάθε αξία είναι μία γραμμή όπως <id>[=<label>]
-edit	infolog	el	Προσαρμογή
-edit or create categories for ingolog	infolog	el	Επιμέλεια ή δημιουργία κατηγοριών για το InfoLog
-edit rights (full edit rights incl. making someone else responsible!)	infolog	el	προσαρμογή δικαιωμάτων(ολοκληρωμένη προσαρμογή δικαιωμάτων συμπεριλαμβανομένου τον καθορισμό κάποιου άλλου ως υπεύθυνο!)
-edit status	infolog	el	Επιμέλεια κατάστασης
-edit the entry	infolog	el	Επιμέλεια της καταχώρησης
-edit this entry	infolog	el	Επιμέλεια αυτής της καταχώρησης
-empty for all	infolog	el	άδειο για όλα
-enddate	infolog	el	Προθεσμία λήξης
-enddate can not be before startdate	infolog	el	Η προθεσμία λήξης δεν μπορεί να είναι προηγούμενη της  ημερομηνίας έναρξης
-enter a custom contact, leave empty if linked entry should be used	infolog	el	είσοδος σε μία προσαρμοσμένη επαφή, να μείνει κενή αν πρέπει να χρησιμοποιηθεί συνδεδεμένη καταχώρηση
-enter a custom phone/email, leave empty if linked entry should be used	infolog	el	είσοδος σε ένα προσαρμοσμένο τηλέφωνο/email, να μένει κενό αν πρέπει να χρησιμοποιηθεί συνδεδεμένη καταχώρηση
-enter a textual description of the log-entry	infolog	el	Πληκτρολογήστε μία περιγραφή κειμένου για την καταχώρηση
-enter the query pattern	infolog	el	Είσοδος στο πρότυπο αποριών
-error: saving the entry	infolog	el	Σφάλμα:κατά την αποθήκευση της καταχώρησης
-error: the entry has been updated since you opened it for editing!	infolog	el	Σφάλμα:η καταχώρηση έχει ενημερωθεί από όταν την ανοίξατε για προσαρμογή!
-existing links	infolog	el	Υπάρχοντες σύνδεσμοι
+a short subject for the entry	infolog	el	Ξ­Ξ½Ξ± ΞΌΞΉΞΊΟΟ ΞΈΞ­ΞΌΞ± Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·
+abort without deleting	infolog	el	ΞΞΎΞΏΞ΄ΞΏΟ‚ Ο‡Ο‰ΟΞ―Ο‚ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®
+accept	infolog	el	Ξ±Ο€ΞΏΞ΄ΞΏΟ‡Ξ®
+action	infolog	el	Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±
+actual date and time	infolog	el	Ο€ΟΞ±Ξ³ΞΌΞ±Ο„ΞΉΞΊΞ® Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΞΊΞ±ΞΉ ΟΟΞ±
+add	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ·
+add a file	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+add a new entry	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ½Ξ­Ξ±Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+add a new note	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ½Ξ­Ξ±Ο‚ ΟƒΞ·ΞΌΞµΞ―Ο‰ΟƒΞ·Ο‚
+add a new phonecall	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ½Ξ­Ξ±Ο‚ Ο„Ξ·Ξ»ΞµΟ†Ο‰Ξ½ΞΉΞΊΞ®Ο‚ ΞΊΞ»Ξ®ΟƒΞ·Ο‚
+add a new sub-task, -note, -call to this entry	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ½ΞµΟΟ… Ο…Ο€ΞΏ-ΞΊΞ±ΞΈΞ®ΞΊΞΏΞ½Ο„ΞΏΟ‚,-ΟƒΞ·ΞΌΞµΞ―Ο‰ΟƒΞ·Ο‚,-ΞΊΞ»Ξ®ΟƒΞ·Ο‚ ΟƒΞµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·
+add a new todo	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ½Ξ­Ξ±Ο‚ ΞµΞΊΞΊΟΞµΞΌΟΟ„Ξ·Ο„Ξ±Ο‚
+add file	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+add sub	infolog	el	Ο€ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ο…Ο€Ο
+add:	infolog	el	Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ·:
+all	infolog	el	ΞΞ»Ξ±
+all links and attachments	infolog	el	ΟΞ»ΞΏΞΉ ΞΏΞΉ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏΞΉ ΞΊΞ±ΞΉ ΞΏΞΉ ΞµΟ€ΞΉΟƒΟ…Ξ½Ξ¬ΟΞµΞΉΟ‚
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	el	ΞµΟ€ΞΉΟ„ΟΞ­Ο€ΞµΞΉ Ο„ΞΏΞ½ ΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΟ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚ ΞΌΞΉΞ±Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚,Ο€.Ο‡. ΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΟΟ‚ ΞΌΞΉΞ±Ο‚ ΞµΞΊΞΊΟΞµΞΌΟΟ„Ξ·Ο„Ξ±Ο‚ ΟƒΞµ ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟ‰ΞΌΞ­Ξ½Ξ· ΞµΞ¬Ξ½ Ο„ΞµΞ»ΞµΞ―Ο‰ΟƒΞµ (Ξ±ΞΎΞ―ΞµΟ‚ ΞµΞΎΞ±ΟΟ„ΟΞ½Ο„Ξ±ΞΉ Ξ±Ο€Ο Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚)
+apply the changes	infolog	el	Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ® Ο„Ο‰Ξ½ Ξ±Ξ»Ξ»Ξ±Ξ³ΟΞ½
+are you shure you want to delete this entry ?	infolog	el	Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·;
+attach a file	infolog	el	Ξ•Ο€ΞΉΟƒΟΞ½Ξ±ΟΞ· Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+attach file	infolog	el	Ξ•Ο€ΞΉΟƒΟΞ½Ξ±ΟΞ· Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+attention: no contact with address %1 found.	infolog	el	Ξ ΟΞΏΟƒΞΏΟ‡Ξ®: ΞΞ±ΞΌΞ―Ξ± Ξ•Ο€Ξ±Ο†Ξ® ΞΌΞµ Ο„Ξ· Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· %1 Ξ΄ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞµ.
+back to main list	infolog	el	Ξ Ξ―ΟƒΟ‰ ΟƒΟ„Ξ· Ξ²Ξ±ΟƒΞΉΞΊΞ® Ξ»Ξ―ΟƒΟ„Ξ±
+billed	infolog	el	Ο‡ΟΞµΟΞΈΞ·ΞΊΞµ
+both	infolog	el	ΞΊΞ±ΞΉ ΞΏΞΉ Ξ΄ΟΞΏ
+call	infolog	el	ΞΊΞ»Ξ®ΟƒΞ·
+cancel	infolog	el	Ξ‘ΞΊΟΟΟ‰ΟƒΞ·
+cancelled	infolog	el	Ξ±ΞΊΟ…ΟΟΞΈΞ·ΞΊΞµ
+categories	infolog	el	ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚
+category	infolog	el	ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±
+change the status of an entry, eg. close it	infolog	el	Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚ ΞΌΞΉΞ±Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚, Ο€.Ο‡. ΞΊΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ
+charset of file	infolog	el	ΞΟ‰Ξ΄ΞΉΞΊΞΏΟƒΞµΞ»Ξ―Ξ΄Ξ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+check to set startday	infolog	el	ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ³ΞΉΞ± ΞΏΟΞΉΟƒΞΌΟ Ξ·ΞΌΞ­ΟΞ±Ο‚ Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚
+check to specify custom contact	infolog	el	ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ³ΞΉΞ± ΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΟ  ΞµΟ€Ξ±Ο†Ξ®Ο‚ Ο€ΞµΞ»Ξ¬Ο„Ξ·
+click here to create the link	infolog	el	ΞΊΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ ΞµΞ΄Ο Ξ³ΞΉΞ± Ο„Ξ· Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…
+click here to start the search	infolog	el	ΞΊΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ ΞµΞ΄Ο Ξ³ΞΉΞ± Ξ½Ξ± Ξ±ΟΟ‡Ξ―ΟƒΞµΟ„Ξµ Ο„Ξ·Ξ½ Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·
+close	infolog	el	ΞΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ
+comment	infolog	el	Ξ£Ο‡ΟΞ»ΞΉΞΏ
+completed	infolog	el	ΞΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ
+configuration	infolog	el	Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·
+confirm	infolog	el	Ξ•Ο€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ·
+contact	infolog	el	Ξ•Ο€Ξ±Ο†Ξ®
+create new links	infolog	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ½Ξ­Ο‰Ξ½ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΟ‰Ξ½
+creates a new field	infolog	el	Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³ΞµΞ― Ξ½Ξ­ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ
+creates a new status with the given values	infolog	el	Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³ΞµΞ― ΞΌΞΉΞ± Ξ½Ξ­Ξ± ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· ΞΌΞµ Ο„ΞΉΟ‚ Ξ΄ΞΏΟƒΞΌΞ­Ξ½ΞµΟ‚ Ξ±ΞΎΞ―ΞµΟ‚
+creates a new typ with the given name	infolog	el	Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³ΞµΞ― Ξ­Ξ½Ξ± Ξ½Ξ­ΞΏ Ο„ΟΟ€ΞΏ ΞΌΞµ Ο„ΞΏ Ξ΄ΞΏΟƒΞΌΞ­Ξ½ΞΏ ΟΞ½ΞΏΞΌΞ±
+creation	infolog	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±
+csv-fieldname	infolog	el	CSV-ΞΞ½ΞΏΞΌΞ± Ο€ΞµΞ΄Ξ―ΞΏΟ…
+csv-filename	infolog	el	CSV-ΞΞ½ΞΏΞΌΞ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+csv-import	common	el	CSV-Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®
+custom	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ®
+custom contact-address, leave empty to use information from most recent link	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ· Ξ΄ΞΉΞµΟΞΈΟ…Ξ½ΟƒΞ· ΞµΟ€Ξ±Ο†Ξ®Ο‚, Ξ½Ξ± ΞΌΞ­Ξ½ΞµΞΉ ΞΊΞµΞ½Ο Ξ³ΞΉΞ± Ο„Ξ· Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ο„Ο‰Ξ½ Ο€ΞΉΞΏ Ο€ΟΟΟƒΟ†Ξ±Ο„Ο‰Ξ½ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΟ‰Ξ½
+custom contact-information, leave emtpy to use information from most recent link	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞµΟ‚ Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ ΞµΟ€Ξ±Ο†Ξ®Ο‚, Ξ½Ξ± ΞΌΞ­Ξ½ΞµΞΉ ΞΊΞµΞ½Ο Ξ³ΞΉΞ± Ο„Ξ· Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ο„Ο‰Ξ½ Ο€ΞΉΞΏ Ο€ΟΟΟƒΟ†Ξ±Ο„Ο‰Ξ½ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΟ‰Ξ½
+custom fields	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ± Ο€ΞµΞ΄Ξ―Ξ±
+custom fields, typ and status	common	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ± Ο€ΞµΞ΄Ξ―Ξ±,Ο„ΟΟ€ΞΏΟ‚ ΞΊΞ±ΞΉ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·
+custom regarding	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ· Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬
+custom status for typ	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ· ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ξ³ΞΉΞ± Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ
+customfields	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ± Ο€ΞµΞ΄Ξ―Ξ±
+date completed	infolog	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΞΊΞ±ΞΉ ΟΟΞ± ΞΏΞ»ΞΏΞΊΞ»Ξ®ΟΟ‰ΟƒΞ·Ο‚
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	el	Ξ£Ο…Ξ½Ξ¬Ξ½Ο„Ξ·ΟƒΞ· ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ(Ξ½Ξ± ΞΌΞµΞ―Ξ½ΞµΞΉ ΞΊΞµΞ½Ο Ξ³ΞΉΞ± Ξ½Ξ± ΞΏΟΞΉΟƒΟ„ΞµΞ― Ξ±Ο…Ο„ΟΞΌΞ±Ο„Ξ± Ξ±Ξ½ Ξ· ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· ΞµΟ‡ΞµΞΉ Ο„ΞµΞ»ΞµΞΉΟΟƒΞµΞΉ Ξ® Ο‡ΟΞµΟ‰ΞΈΞµΞ―
+datecreated	infolog	el	ΞΏΟΞ―ΟƒΟ„Ξ·ΞΊΞµ ΟƒΟ…Ξ½Ξ¬Ξ½Ο„Ξ·ΟƒΞ·
+dates, status, access	infolog	el	Ξ£Ο…Ξ½Ξ±Ξ½Ο„Ξ®ΟƒΞµΞΉΟ‚, ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·,Ξ•Ξ―ΟƒΞΏΞ΄ΞΏΟ‚
+days	infolog	el	Ξ·ΞΌΞ­ΟΞµΟ‚
+default filter for infolog	infolog	el	Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ Ξ¦Ξ―Ξ»Ο„ΟΞΏ Ξ³ΞΉΞ±  Ο„ΞΏ InfoLog
+default status for a new log entry	infolog	el	Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ· ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ξ³ΞΉΞ± ΞΌΞΉΞ± Ξ½Ξ­Ξ± ΞµΞ―ΟƒΞΏΞ΄ΞΏ
+delegated	infolog	el	ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ®ΞΈΞ·ΞΊΞµ
+delegated open	infolog	el	ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ·ΞΌΞ­Ξ½Ξ± Ξ±Ξ½ΞΏΞΉΞΊΟ„Ξ¬
+delegated overdue	infolog	el	ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ·ΞΌΞ­Ξ½Ξ± ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ·ΞΌΞ­Ξ½Ξ±
+delegated upcomming	infolog	el	ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ·ΞΌΞ­Ξ½Ξ± ΞµΟ€ΞµΟΟ‡ΟΞΌΞµΞ½Ξ±
+delegation	infolog	el	Ξ•ΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΟΟ„Ξ·ΟƒΞ·
+delete	infolog	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®
+delete one record by passing its id.	infolog	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΌΞΉΞ±Ο‚ ΞµΞ³Ξ³ΟΞ±Ο†Ξ®Ο‚ Ξ΄ΞΉΞ±Ξ²Ξ±Ξ―Ξ½ΞΏΞ½Ο„Ξ±Ο‚ Ξ±Ο€ΞΏ Ο„ΞΏ id Ο„Ξ·Ο‚.
+delete the entry	infolog	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+delete this entry	infolog	el	Ξ΄Ξ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+delete this entry and all listed sub-entries	infolog	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ ΞΊΞ±ΞΉ ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ο…Ο€ΞΏ-ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½ ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ±
+deleted	infolog	el	Ξ΄ΞΉΞ±Ξ³ΟΞ¬Ο†Ξ·ΞΊΞ±Ξ½
+deletes the selected typ	infolog	el	Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ο„ΞΏΟ… ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ… Ο„ΟΟ€ΞΏΟ…
+deletes this field	infolog	el	Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο€ΞµΞ΄Ξ―ΞΏΟ…
+deletes this status	infolog	el	Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚
+description	infolog	el	Ξ ΞµΟΞΉΞ³ΟΞ±Ο†Ξ®
+determines the order the fields are displayed	infolog	el	ΞΊΞ±ΞΈΞΏΟΞ―Ξ¶ΞµΞΉ Ο„Ξ· ΟƒΞµΞΉΟΞ¬ ΞΌΞµ Ο„Ξ·Ξ½ ΞΏΟ€ΞΏΞ―Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ Ο„Ξ± Ο€ΞµΞ΄Ξ―Ξ±
+disables a status without deleting it	infolog	el	Ξ±ΞΊΟ…ΟΟΞ½ΞµΞΉ ΞΌΞΉΞ± ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ο‡Ο‰ΟΞ―Ο‚ Ξ½Ξ± Ο„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ¬Ο†ΞµΞΉ
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	el	ΞµΟ€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞµΟ€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ· Ο„ΞΏΟ… Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ… Ξ³ΞΉΞ±:Ξ±Ο€ΞΏΞ΄ΞΏΟ‡Ξ®,ΞΏΞ»ΞΏΞΊΞ»Ξ®ΟΟ‰ΟƒΞ· Ο„ΞΏΟ… Ξ­ΟΞ³ΞΏΟ… Ξ® ΞΊΞ±ΞΉ Ο„Ξ± Ξ΄ΟΞΏ
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·, Ξ±Ξ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ξ±Ξ½Ξ±Ο„Ξ―ΞΈΞµΞ½Ο„Ξ±ΞΉ ΟƒΞµ ΞµΟƒΞ¬Ο‚ Ξ® Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ο„Ξ± ΞΏΟ€ΞΏΞ―Ξ± Ξ­Ο‡ΞΏΟ…Ξ½ Ξ±Ξ½Ξ±Ο„ΞµΞΈΞµΞ― ΞµΞ½Ξ·ΞΌΞµΟΟΞ½ΞΏΞ½Ο„Ξ±ΞΉ;
+do you want a notification, if items you are responsible for are about to start?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·, Ξ±Ξ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ξ³ΞΉΞ± Ο„Ξ± ΞΏΟ€ΞΏΞ―Ξ± ΞµΞ―ΟƒΟ„Ξµ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ Ο€ΟΟΞΊΞµΞΉΟ„Ξ±ΞΉ Ξ½Ξ± ΞΎΞµΞΊΞΉΞ½Ξ®ΟƒΞΏΟ…Ξ½;
+do you want a notification, if items you are responsible for are due?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·, Ξ±Ξ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ξ³ΞΉΞ± Ο„Ξ± ΞΏΟ€ΞΏΞ―Ξ± ΞµΞ―ΟƒΟ„Ξµ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ Ξ­Ο‡ΞΏΟ…Ξ½ ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ®ΟƒΞµΞΉ;
+do you want a notification, if items you created get updated?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·, Ξ±Ξ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ο€ΞΏΟ… Ξ­Ο‡ΞµΟ„Ξµ Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΟƒΞµΞΉ ΞµΞ½Ξ·ΞΌΞµΟΟΞ½ΞΏΞ½Ο„Ξ±ΞΉ;
+do you want a notification, if items you delegated are about to start?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·, Ξ±Ξ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ξ³ΞΉΞ± Ο„Ξ± ΞΏΟ€ΞΏΞ―Ξ± ΞµΞ―ΟƒΟ„Ξµ ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ·ΞΌΞ­Ξ½ΞΏΟ‚ Ο€ΟΟΞΊΞµΞΉΟ„Ξ±ΞΉ Ξ½Ξ± ΞΎΞµΞΊΞΉΞ½Ξ®ΟƒΞΏΟ…Ξ½;
+do you want a notification, if items you delegated are due?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·, Ξ±Ξ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ξ³ΞΉΞ± Ο„Ξ± ΞΏΟ€ΞΏΞ―Ξ± ΞµΞ―ΟƒΟ„Ξµ ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ·ΞΌΞ­Ξ½ΞΏΟ‚ Ξ­Ο‡ΞΏΟ…Ξ½ ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ®ΟƒΞµΞΉ;
+do you want to receive notifications as html-mails or plain text?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ Ξ½Ξ± Ξ»Ξ±ΞΌΞ²Ξ¬Ξ½ΞµΟ„Ξµ ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΞΉΟ‚ Ο‰Ο‚ html-mails Ξ® Ξ±Ο€Ξ»Ο ΞΊΞµΞ―ΞΌΞµΞ½ΞΏ;
+do you want to see custom infolog types in the calendar?	infolog	el	Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ Ξ½Ξ± Ξ²Ξ»Ξ­Ο€ΞµΟ„Ξµ Ο„ΞΏΟ…Ο‚ Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏΟ…Ο‚ Infolog Ο„ΟΟ€ΞΏΟ…Ο‚ ΟƒΟ„ΞΏ Ξ·ΞΌΞµΟΞΏΞ»ΟΞ³ΞΉΞΏ;
+don't show infolog	infolog	el	ΞΞ—Ξ ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξµ Ο„ΞΏ InfoLog
+done	infolog	el	ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ
+download	infolog	el	Ξ¦ΞΏΟΟ„ΟΟƒΟ„Ξµ
+duration	infolog	el	Ξ”ΞΉΞ¬ΟΞΊΞµΞΉΞ±
+each value is a line like <id>[=<label>]	infolog	el	ΞΊΞ¬ΞΈΞµ Ξ±ΞΎΞ―Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΞ―Ξ± Ξ³ΟΞ±ΞΌΞΌΞ® ΟΟ€Ο‰Ο‚ <id>[=<label>]
+edit	infolog	el	Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ®
+edit or create categories for ingolog	infolog	el	Ξ•Ο€ΞΉΞΌΞ­Ξ»ΞµΞΉΞ± Ξ® Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½ Ξ³ΞΉΞ± Ο„ΞΏ InfoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	el	Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ® Ξ΄ΞΉΞΊΞ±ΞΉΟ‰ΞΌΞ¬Ο„Ο‰Ξ½(ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟ‰ΞΌΞ­Ξ½Ξ· Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ® Ξ΄ΞΉΞΊΞ±ΞΉΟ‰ΞΌΞ¬Ο„Ο‰Ξ½ ΟƒΟ…ΞΌΟ€ΞµΟΞΉΞ»Ξ±ΞΌΞ²Ξ±Ξ½ΞΏΞΌΞ­Ξ½ΞΏΟ… Ο„ΞΏΞ½ ΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΟ ΞΊΞ¬Ο€ΞΏΞΉΞΏΟ… Ξ¬Ξ»Ξ»ΞΏΟ… Ο‰Ο‚ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏ!)
+edit status	infolog	el	Ξ•Ο€ΞΉΞΌΞ­Ξ»ΞµΞΉΞ± ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚
+edit the entry	infolog	el	Ξ•Ο€ΞΉΞΌΞ­Ξ»ΞµΞΉΞ± Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+edit this entry	infolog	el	Ξ•Ο€ΞΉΞΌΞ­Ξ»ΞµΞΉΞ± Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+empty for all	infolog	el	Ξ¬Ξ΄ΞµΞΉΞΏ Ξ³ΞΉΞ± ΟΞ»Ξ±
+enddate	infolog	el	Ξ ΟΞΏΞΈΞµΟƒΞΌΞ―Ξ± Ξ»Ξ®ΞΎΞ·Ο‚
+enddate can not be before startdate	infolog	el	Ξ— Ο€ΟΞΏΞΈΞµΟƒΞΌΞ―Ξ± Ξ»Ξ®ΞΎΞ·Ο‚ Ξ΄ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ο€ΟΞΏΞ·Ξ³ΞΏΟΞΌΞµΞ½Ξ· Ο„Ξ·Ο‚  Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±Ο‚ Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚
+enter a custom contact, leave empty if linked entry should be used	infolog	el	ΞµΞ―ΟƒΞΏΞ΄ΞΏΟ‚ ΟƒΞµ ΞΌΞ―Ξ± Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ· ΞµΟ€Ξ±Ο†Ξ®, Ξ½Ξ± ΞΌΞµΞ―Ξ½ΞµΞΉ ΞΊΞµΞ½Ξ® Ξ±Ξ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ·ΞΈΞµΞ― ΟƒΟ…Ξ½Ξ΄ΞµΞ΄ΞµΞΌΞ­Ξ½Ξ· ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·
+enter a custom phone/email, leave empty if linked entry should be used	infolog	el	ΞµΞ―ΟƒΞΏΞ΄ΞΏΟ‚ ΟƒΞµ Ξ­Ξ½Ξ± Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏ Ο„Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ/email, Ξ½Ξ± ΞΌΞ­Ξ½ΞµΞΉ ΞΊΞµΞ½Ο Ξ±Ξ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ·ΞΈΞµΞ― ΟƒΟ…Ξ½Ξ΄ΞµΞ΄ΞµΞΌΞ­Ξ½Ξ· ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·
+enter a textual description of the log-entry	infolog	el	Ξ Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΟ„Ξµ ΞΌΞ―Ξ± Ο€ΞµΟΞΉΞ³ΟΞ±Ο†Ξ® ΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ… Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·
+enter the query pattern	infolog	el	Ξ•Ξ―ΟƒΞΏΞ΄ΞΏΟ‚ ΟƒΟ„ΞΏ Ο€ΟΟΟ„Ο…Ο€ΞΏ Ξ±Ο€ΞΏΟΞΉΟΞ½
+error: saving the entry	infolog	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ±:ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+error: the entry has been updated since you opened it for editing!	infolog	el	Ξ£Ο†Ξ¬Ξ»ΞΌΞ±:Ξ· ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· Ξ­Ο‡ΞµΞΉ ΞµΞ½Ξ·ΞΌΞµΟΟ‰ΞΈΞµΞ― Ξ±Ο€Ο ΟΟ„Ξ±Ξ½ Ο„Ξ·Ξ½ Ξ±Ξ½ΞΏΞ―ΞΎΞ±Ο„Ξµ Ξ³ΞΉΞ± Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ®!
+existing links	infolog	el	Ξ¥Ο€Ξ¬ΟΟ‡ΞΏΞ½Ο„ΞµΟ‚ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏΞΉ
 fax	infolog	el	Fax
-fieldseparator	infolog	el	Διαχωριστής πεδίων
-finish	infolog	el	τέλος
-for which types should this field be used	infolog	el	για ποιους τύπους να χρησιμοποιηθεί αυτό το πεδίο
-from	infolog	el	Από
-general	infolog	el	Γενικά
-high	infolog	el	υψηλή
-history logging	infolog	el	Ιστορικό εισόδων
-history logging and deleting of items	infolog	el	Ιστορικό εισόδων και διαγραφών αντικειμένων
+fieldseparator	infolog	el	Ξ”ΞΉΞ±Ο‡Ο‰ΟΞΉΟƒΟ„Ξ®Ο‚ Ο€ΞµΞ΄Ξ―Ο‰Ξ½
+finish	infolog	el	Ο„Ξ­Ξ»ΞΏΟ‚
+for which types should this field be used	infolog	el	Ξ³ΞΉΞ± Ο€ΞΏΞΉΞΏΟ…Ο‚ Ο„ΟΟ€ΞΏΟ…Ο‚ Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ·ΞΈΞµΞ― Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€ΞµΞ΄Ξ―ΞΏ
+from	infolog	el	Ξ‘Ο€Ο
+general	infolog	el	Ξ“ΞµΞ½ΞΉΞΊΞ¬
+high	infolog	el	Ο…ΟΞ·Ξ»Ξ®
+history logging	infolog	el	Ξ™ΟƒΟ„ΞΏΟΞΉΞΊΟ ΞµΞΉΟƒΟΞ΄Ο‰Ξ½
+history logging and deleting of items	infolog	el	Ξ™ΟƒΟ„ΞΏΟΞΉΞΊΟ ΞµΞΉΟƒΟΞ΄Ο‰Ξ½ ΞΊΞ±ΞΉ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΟΞ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞΉΞΌΞ­Ξ½Ο‰Ξ½
 id	infolog	el	Id
-if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	el	Αν ο τύπος έχει έναν ιδιοκτήτη ομάδας, όλες οι καταχωρήσεις αυτού του τύπου θα ανήκουν στη συγκεριμένη ομάδα και ΟΧΙ στο χρήστη που το δημιούργησε!
-import	infolog	el	Εισαγωγή
-import next set	infolog	el	εισαγωγή επόμενου σετ
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	el	Ξ‘Ξ½ ΞΏ Ο„ΟΟ€ΞΏΟ‚ Ξ­Ο‡ΞµΞΉ Ξ­Ξ½Ξ±Ξ½ ΞΉΞ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ· ΞΏΞΌΞ¬Ξ΄Ξ±Ο‚, ΟΞ»ΞµΟ‚ ΞΏΞΉ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο„ΟΟ€ΞΏΟ… ΞΈΞ± Ξ±Ξ½Ξ®ΞΊΞΏΟ…Ξ½ ΟƒΟ„Ξ· ΟƒΟ…Ξ³ΞΊΞµΟΞΉΞΌΞ­Ξ½Ξ· ΞΏΞΌΞ¬Ξ΄Ξ± ΞΊΞ±ΞΉ ΞΞ§Ξ™ ΟƒΟ„ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ· Ο€ΞΏΟ… Ο„ΞΏ Ξ΄Ξ·ΞΌΞΉΞΏΟΟΞ³Ξ·ΟƒΞµ!
+import	infolog	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®
+import next set	infolog	el	ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΞµΟ€ΟΞΌΞµΞ½ΞΏΟ… ΟƒΞµΟ„
 info log	common	el	Infolog
 infolog	common	el	Infolog
-infolog - delete	infolog	el	Infolog - Διαγραφή
-infolog - edit	infolog	el	Infolog - Επιμέλεια
-infolog - import csv-file	infolog	el	Infolog - Εισαγωγή CSV αρχείου
-infolog - new	infolog	el	Infolog - Νέο
-infolog - new subproject	infolog	el	Infolog - Νέα υποκατηγορία σχεδίων
-infolog - subprojects from	infolog	el	Infolog - Υποκατηγορίες σχεδίων από
-infolog entry deleted	infolog	el	Infolog καταχώρηση διεγράφη
-infolog entry saved	infolog	el	Infolog καταχώρηση αποθηκεύτηκε
-infolog filter for the main screen	infolog	el	Infolog φίλτρο για τη βασική οθόνη
-infolog list	infolog	el	Infolog λίστα
-infolog preferences	common	el	Infolog προτιμήσεις
-infolog-fieldname	infolog	el	Infolog - Όνομα πεδίου
-invalid filename	infolog	el	¶κυρο όνομα αρχείου
-label<br>helptext	infolog	el	Ετικέτα<br>Κείμενο βοήθειας
-last changed	infolog	el	Τελευταία αλλαγή
-last modified	infolog	el	Τελευταία προσαρμογή
-leave it empty	infolog	el	να μείνει κενό
-leave without saveing the entry	infolog	el	αποχώρηση χωρίς αποθήκευση της καταχώρησης
-leaves without saveing	infolog	el	αποχωρεί χωρίς αποθήκευση
-length<br>rows	infolog	el	Μήκος<br>Γραμμών
-link	infolog	el	Σύνδεσμος
-links	infolog	el	Σύνδεσμοι
-links of this entry	infolog	el	Σύνδεσμοι αυτής της καταχώρησης
-list all categories	infolog	el	Να μπουν σε λίστα όλες οι κατηγορίες
-location	infolog	el	Τοποθεσία
-longer textual description	infolog	el	εκτενέστερη περιγραφή κειμένου
-low	infolog	el	χαμηλή
-max length of the input [, length of the inputfield (optional)]	infolog	el	μέγιστο μήκος εισροής [μήκος πεδίου εισροών (κατ'επιλογή)]
-name must not be empty !!!	infolog	el	Το όνομα δεν πρέπει να μένει κενό
-name of new type to create	infolog	el	όνομα νέου τύπου προς δημιουργία
-never hide search and filters	infolog	el	Να μην αποκρύπτεται ποτέ η αναζήτηση και τα φίλτρα
-new %1	infolog	el	Νέο %1
-new %1 created by %2 at %3	infolog	el	Νέο %1 δημιουργήθηκε από %2 στις %3
-new name	infolog	el	νέο όνομα
-new search	infolog	el	Νέα αναζήτηση
-no - cancel	infolog	el	Όχι-¶κυρο
-no describtion, links or attachments	infolog	el	καμία περιγραφή, σύνδεσμος ή επισύναψη
-no details	infolog	el	συνοπτικά
-no entries found, try again ...	infolog	el	δεν βρέθηκαν καταχωρήσεις, προσπαθήστε ξανά
-no filter	infolog	el	κανένα Φίλτρο
-no links or attachments	infolog	el	κανένα φίλτρο ή επισυνάψεις
-none	infolog	el	Κανένα
-normal	infolog	el	κανονικό
-not	infolog	el	δεν
-not assigned	infolog	el	δεν έχει ανατεθεί
-not-started	infolog	el	δεν έχει αρχίσει
-note	infolog	el	Σημείωση
-number of records to read (%1)	infolog	el	Αριθμός εγγραφών προς ανάγνωση (%1)
-number of row for a multiline inputfield or line of a multi-select-box	infolog	el	αριθμός σειράς για ένα πολυγραμμικό πεδίο εισροών ή γραμμή ενός κουτιού πολλών επιλογών
-offer	infolog	el	προσφορά
-one day after	infolog	el	μία μέρα μετά
-one day in advance	infolog	el	Μία μέρα νωρίτερα
-ongoing	infolog	el	τρέχων
-only for details	infolog	el	Μόνο για λεπτομέρειες
-only if i get assigned or removed	infolog	el	Μόνο εάν μου ανατεθεί ή αφαιρεθεί
-only the attachments	infolog	el	μόνο οι επισυνάψεις
-only the links	infolog	el	μόνο οι σύνδεσμοι
-open	infolog	el	ανοικτά
-optional note to the link	infolog	el	προαιρετική σημείωση στο σύνδεσμο
-order	infolog	el	Παραγγελία
-overdue	infolog	el	καθυστερημένα
-own	infolog	el	δικά μου
-own open	infolog	el	δικά μου ανοικτά
-own overdue	infolog	el	δικά μου καθυστερημένα
-own upcoming	infolog	el	δικά μου επερχόμενα
-path to user and group files has to be outside of the webservers document-root!!!	infolog	el	Το μονοπάτι προς τα αρχεία του χρήστη και των ομάδων ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ της πορείας των εγγράφων των webservers!!!
-pattern for search in addressbook	infolog	el	πρότυπο αναζήτησης στο βιβλίο διευθύνσεων
-pattern for search in projects	infolog	el	πρότυπο αναζήτησης στα σχέδια
-percent completed	infolog	el	ποσοστό που έχει ολοκληρωθεί
-permission denied	infolog	el	¶δεια απορρίπτεται
-phone	infolog	el	Κλήση τηλεφώνου
-phone/email	infolog	el	Τηλέφωνο/Email
-phonecall	infolog	el	Κλήση τηλεφώνου
-planned	infolog	el	προγραμματίστηκε
-planned time	infolog	el	ώρα σχεδίου
-price	infolog	el	Τιμή
-priority	infolog	el	Προτεραιότητα
-private	infolog	el	Προσωπικό
-project	infolog	el	Σχέδιο
-project settings: price, times	infolog	el	Ρυθμίσεις σχεδίων:τιμή, ώρες
-re:	infolog	el	Αφορά:
-read one record by passing its id.	infolog	el	Διαβάστε μία εγγραφή διαβαίνοντας από το ID της
-read rights (default)	infolog	el	ανάγνωση δικαιωμάτων (προκαθορισμένη)
-receive notifications about due entries you are responsible for	infolog	el	Λήψη ειδοποιήσεων για καταχωρήσεις των οποίων είστε υπεύθυνος και που έχουν καθυστερήσει
-receive notifications about due entries you delegated	infolog	el	Λήψη ειδοποιήσεων για καταχωρήσεις των οποίων είστε εξουσιοδοτημένος και που έχουν καθυστερήσει
-receive notifications about items assigned to you	infolog	el	Λήψη ειδοποιήσεων για αντικείμενα τα οποία σας έχουν ανατεθεί
-receive notifications about own items	infolog	el	Λήψη ειδοποιήσεων για τα δικά σας αντικείμενα
-receive notifications about starting entries you are responsible for	infolog	el	Λήψη ειδοποιήσεων για καταχωρήσεις που ξεκινούν και για τις οποίες είστε υπεύθυνος
-receive notifications about starting entries you delegated	infolog	el	Λήψη ειδοποιήσεων για καταχωρήσεις που ξεκινούν και για τις οποίες είστε εξουσιοδοτημένος
-receive notifications as html-mails	infolog	el	Λήψη ειδοποιήσεων ως html-mails
-remark	infolog	el	Ξαναμαρκάρετε
-remove this link (not the entry itself)	infolog	el	Αφαιρέστε το σύνδεσμο (όχι την ίδια την καταχώρηση)
-responsible	infolog	el	υπεύθυνος
-responsible open	infolog	el	υπεύθυνος ανοικτά
-responsible overdue	infolog	el	υπεύθυνος καθυστερημένα
-responsible upcoming	infolog	el	υπεύθυνος επερχόμενα
-responsible user, priority	infolog	el	υπεύθυνος χρήστης, προτεραιότητα
-returns a list / search for records.	infolog	el	Επιστρέφει μια λίστα/αναζήτηση για εγγραφές
-rights for the responsible	infolog	el	Δικαιώματα για τον υπεύθυνο
-same day	infolog	el	ίδια ημέρα
-save	infolog	el	Αποθήκευση
-saves the changes made and leaves	infolog	el	αποθηκεύει τις αλλαγές που έγιναν και αποχωρεί
-saves this entry	infolog	el	Αποθηκεύει την καταχώρηση
-search	infolog	el	Αναζήτηση
-search for:	infolog	el	Αναζήτηση για:
-select	infolog	el	Επιλέξτε
-select a category for this entry	infolog	el	επιλέξτε μια κατηγορία για αυτήν την καταχώρηση
-select a price	infolog	el	Επιλέξτε μια τιμή
-select a priority for this task	infolog	el	επιλέξτε προτεραιότητα για αυτό το έργο
-select a project	infolog	el	Επιλέξτε ένα έργο
-select a responsible user: a person you want to delegate this task	infolog	el	Επιλέξτε τον υπεύθυνο χρήστη: ένα άτομο στο οποίο θέλετε να αναθέσετε αυτό το έργο
-select a typ to edit it's status-values or delete it	infolog	el	επιλέξτε έναν τύπο για να επιμεληθείτε την κατάστασή του
-select an entry to link with	infolog	el	Επελέξτε μία καταχώρηση προς σύνδεση
-select to filter by owner	infolog	el	Επιλογή φίλτρου σύμφωνα με τον ιδιοκτήτη
-select to filter by responsible	infolog	el	Επιλογή φίλτρου σύμφωνα με τον υπεύθυνο
-sets the status of this entry and its subs to done	infolog	el	Ορίζει την κατάσταση αυτής της καταχώρησης και των υποκατηγοριών της σε ολοκληρωμένη
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	el	Θα έπρεπε το InfoLog να εμφανίζει τις υπο-εργασίες, -κλήσεις ή -σημειώσεις στην κανονική εμφάνιση ή όχι. Μπορείτε πάντα να βλέπετε τις υποκατηγορίες μέσω των μητρικών τους.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζει τους συνδέσμους με άλλες εφαρμογές και/ή τις προσκολλήσεις αρχείου στην InfoLog λίστα (κανονική εμφάνιση όταν εισέρχεστε στο InfoLog).
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζεται στη βασική οθόνη και με ποιο φίλτρο.Λειτουργεί μόνο αν δεν επιλέξατε μία εφαρμογή για την βασική οθόνη (στις προτιμήσεις σας).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	el	Θα έπρεπε το InfoLog να χρησιμοποιεί ολόκληρα ονόματα (επώνυμα και οικογενειακά ονόματα) ή μόνο τα ονόματα εισόδου.
-should the calendar show custom types too	infolog	el	Θα έπρεπε το ημερολόγιο να δείχνει προσαρμοσμένους τύπους επίσης
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει ένα μοναδικό νούμερο Id, το οποίο να μπορεί να χρησιμοποιείται π.χ. ως Id εισιτηρίου.
-should the infolog list show the column "last modified".	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει τη στήλη "τελευταία τροποποίηση".
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει το ποσοστό ολοκλήρωσης μόνο για την κατάσταση τρέχων ή δύο ξεχωριστά εικονίδια.
-should this entry only be visible to you and people you grant privat access via the acl	infolog	el	θέλετε αυτή η καταχώρηση να είναι ορατή σε εσάς και στα άτομα που δίνεται προσωπική άδεια μέσω του ACL
-show a column for used and planned times in the list.	infolog	el	Παρουσιάστε μία στήλη για χρησιμοποιημένες και προγραμματισμένες ώρες στη λίστα
-show full usernames	infolog	el	Παρουσίαση ολόκληρων των ονομάτων χρήστη
-show in the infolog list	infolog	el	Εμφάνιση στην InfoLog λίστα
-show last modified	infolog	el	Εμφάνιση τελευταίας μετατροπής
-show status and percent done separate	infolog	el	Παρουσίαση της κατάστασης και του ποσοστού ολοκλήρωσης ξεχωριστά
-show ticket id	infolog	el	Εμφάνιση Id εισιτηρίου
-show times	infolog	el	Εμφάνιση των ωρών
-small view	infolog	el	μικρή εμφάνιση
-start a new search, cancel this link	infolog	el	έναρξη νέας αναζήτησης, ακύρωση αυτού του συνδέσμου
-startdate	infolog	el	Ημερομηνία έναρξης
-startdate enddate	infolog	el	Ημερομηνία έναρξης ημερομηνία εξόφλησης
-startdate for new entries	infolog	el	Ημερομηνία έναρξης για νέες καταχωρήσεις
-startrecord	infolog	el	Έναρξη εγγραφής
-status	infolog	el	Κατάσταση
-status ...	infolog	el	Κατάσταση
-sub	infolog	el	Υπό
-sub-entries become subs of the parent or main entries, if there's no parent	infolog	el	Υπό-καταχωρήσεις γίνονται υποκατηγορίες των μητρικών ή βασικών καταχωρήσεων, αν δεν υπάρχει μητρική
-subject	infolog	el	Θέμα
-task	infolog	el	Εργασίες
-test import (show importable records <u>only</u> in browser)	infolog	el	Έλεγχος Εισαγωγής (εμφάνιση εισαγώγιμων εγγραφών <u>only</> στο browser)
-the text displayed to the user	infolog	el	το κείμενο εμφανίζεται στο χρήστη
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	el	Αυτές είναι οι χρήσεις του InfoLog φίλτρου όταν εισέρχεστε στην εφαρμογή.Τα φίλτρα περιορίζουν τις καταχωρήσεις να εμφανίζονται στην πραγματική παρουσίαση.Υπάρχουν φίλτρα που παρουσιάζουν μόνο τα ολοκληρωμένα, τα τρέχοντα ή τις δικές σας μελλοντικές καταχωρήσεις ή και όλων των χρηστών.
-til when should the todo or phonecall be finished	infolog	el	μέχρι πότε πρέπει το θέμα προς διεκπαιρέωση ή η τηλεφωνική κλήση να έχει τελείωσει
-times	infolog	el	Ώρες
-to many might exceed your execution-time-limit	infolog	el	Πάρα πολλοί. Ενδεχόμενο υπέρβασης ορίου χρόνου εκτέλεσης
-to what should the startdate of new entries be set.	infolog	el	Σε τι πρέπει η ημερομηνία έναρξης νέων καταχωρήσεων να οριστεί.
-today	infolog	el	Σήμερα
-todays date	infolog	el	σημερινή ημερομηνία
-todo	infolog	el	Εργασίες
-translation	infolog	el	Μετάφραση
-typ	infolog	el	Τύπος
-typ '%1' already exists !!!	infolog	el	Ο τύπος '%1' υπάρχει ήδη
-type	infolog	el	Τύπος
-type ...	infolog	el	Τύπος ...
-type of customfield	infolog	el	Τύπος προσαρμοσμένου πεδίου
-type of the log-entry: note, phonecall or todo	infolog	el	Τύπος της ειδόδου-καταχώρησης: Σημείωση, Κλήση τηλεφώνου ή Εργασίες
-unlink	infolog	el	Αποσύνδεση
-upcoming	infolog	el	επερχόμενο
-urgency	infolog	el	επείγον
-urgent	infolog	el	επείγον
-used time	infolog	el	χρησιμοποιημένος χρόνος
-valid path on clientside<br>eg. \servershare or e:	infolog	el	έγκυρο μονοπάτι προς την πλευρά του πελάτη<br>π.χ. \\Server\Share ή e:\
-valid path on clientside<br>eg. servershare or e:	infolog	el	έγκυρο μονοπάτι προς την πλευρά του πελάτη<br>π.χ. \\Server\Share ή e:\
-values for selectbox	infolog	el	Αξίες του επιλεγμένου κουτιού
-view all subs of this entry	infolog	el	Εμφάνιση όλων των υποκατηγοριών αυτής της καταχώρησης
-view other subs	infolog	el	εμφάνιση άλλων υποκατηγοριών
-view parent	infolog	el	Εμφάνιση μητρικής
-view subs	infolog	el	εμφάνιση υποκατηγοριών
-view the parent of this entry and all his subs	infolog	el	Εμφάνιση της μητρικής αυτής της καταχώρησης και όλων των υποκατηγοριών της
-view this linked entry in its application	infolog	el	εμφάνιση αυτής της συνδεδεμένης καταχώρησης στην αίτησή της
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	el	πότε θα έπρεπε οι Εργασίες ή Κλήση τηλεφώνου να αρχίζουν,εμφανίζεται από εκείνη την ημερομηνία στο άνοιγμα φίλτρου ή δικά μου άνοιγμα (αρχική σελίδα)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	el	Ποια επιπλέον πεδία πρέπει ο υπεύθυνος να έχει άδεια να επιμεληθεί χωρίς να έχει δικαιώματα επιμέλειας;<br/>Κατάσταση, ποσοστό και ημερομηνία ολοκλήρωσης είναι πάντοτε επιτρεπτά.
-which implicit acl rights should the responsible get?	infolog	el	Ποια αυτονόητα ACL δικαιώματα πρέπει ο υπεύθυνος να έχει;
-will-call	infolog	el	θα τηλεφωνήσει
-write (add or update) a record by passing its fields.	infolog	el	Καταγραφή (προσθήκη ή ενημέρωση) μιας εγγραφής διαβαίνοντας από τα πεδία της.
-yes - delete	infolog	el	Ναι- Διαγραφή
-yes - delete including sub-entries	infolog	el	Ναι-Διαγραφή συμπεριλαμβανομένων και των υπο-καταχωρήσεων
-yes, noone can purge deleted items	infolog	el	Νια, κανείς δεν μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί
-yes, only admins can purge deleted items	infolog	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί
-yes, with larger fontsize	infolog	el	Ναι,  με μεγαλύτερο μέγεθος φόντου
-yes, with purging of deleted items possible	infolog	el	Ναι, με τον καθαρισμό των διαγραμένων αντικειμένων να είναι δυνατός
-you can't delete one of the stock types !!!	infolog	el	Δεν μπορείτε να διαγράψετε έναν από τους προκαθορισμένους τύπους !!!
-you have entered an invalid ending date	infolog	el	Έχετε πληκτρολογήσει μια άκυρη ημερομηνία οφειλής
-you have entered an invalid starting date	infolog	el	Έχετε πληκτρολογήσει μια άκυρη ημερομηνία έναρξης
-you have to enter a name, to create a new typ!!!	infolog	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου τύπου!!!
-you must enter a subject or a description	infolog	el	Πρέπει να πληκτρολογήσετε ένα θέμα ή μια περιγραφή
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	el	Το ηλεκτρονικό σας αρχείο ΔΕΝ είναι ενημερωμένο (%1 vs. %2), παρακαλώ τρέξτε %3setup%4  για να ενημερώσετε το ηλεκτρονικό σας αρχείο.
+infolog - delete	infolog	el	Infolog - Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®
+infolog - edit	infolog	el	Infolog - Ξ•Ο€ΞΉΞΌΞ­Ξ»ΞµΞΉΞ±
+infolog - import csv-file	infolog	el	Infolog - Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® CSV Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+infolog - new	infolog	el	Infolog - ΞΞ­ΞΏ
+infolog - new subproject	infolog	el	Infolog - ΞΞ­Ξ± Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± ΟƒΟ‡ΞµΞ΄Ξ―Ο‰Ξ½
+infolog - subprojects from	infolog	el	Infolog - Ξ¥Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ ΟƒΟ‡ΞµΞ΄Ξ―Ο‰Ξ½ Ξ±Ο€Ο
+infolog entry deleted	infolog	el	Infolog ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· Ξ΄ΞΉΞµΞ³ΟΞ¬Ο†Ξ·
+infolog entry saved	infolog	el	Infolog ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΟ„Ξ·ΞΊΞµ
+infolog filter for the main screen	infolog	el	Infolog Ο†Ξ―Ξ»Ο„ΟΞΏ Ξ³ΞΉΞ± Ο„Ξ· Ξ²Ξ±ΟƒΞΉΞΊΞ® ΞΏΞΈΟΞ½Ξ·
+infolog list	infolog	el	Infolog Ξ»Ξ―ΟƒΟ„Ξ±
+infolog preferences	common	el	Infolog Ο€ΟΞΏΟ„ΞΉΞΌΞ®ΟƒΞµΞΉΟ‚
+infolog-fieldname	infolog	el	Infolog - ΞΞ½ΞΏΞΌΞ± Ο€ΞµΞ΄Ξ―ΞΏΟ…
+invalid filename	infolog	el	Ξ†ΞΊΟ…ΟΞΏ ΟΞ½ΞΏΞΌΞ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…
+label<br>helptext	infolog	el	Ξ•Ο„ΞΉΞΊΞ­Ο„Ξ±<br>ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ²ΞΏΞ®ΞΈΞµΞΉΞ±Ο‚
+last changed	infolog	el	Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± Ξ±Ξ»Ξ»Ξ±Ξ³Ξ®
+last modified	infolog	el	Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΞ³Ξ®
+leave it empty	infolog	el	Ξ½Ξ± ΞΌΞµΞ―Ξ½ΞµΞΉ ΞΊΞµΞ½Ο
+leave without saveing the entry	infolog	el	Ξ±Ο€ΞΏΟ‡ΟΟΞ·ΟƒΞ· Ο‡Ο‰ΟΞ―Ο‚ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+leaves without saveing	infolog	el	Ξ±Ο€ΞΏΟ‡Ο‰ΟΞµΞ― Ο‡Ο‰ΟΞ―Ο‚ Ξ±Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ·
+length<br>rows	infolog	el	ΞΞ®ΞΊΞΏΟ‚<br>Ξ“ΟΞ±ΞΌΞΌΟΞ½
+link	infolog	el	Ξ£ΟΞ½Ξ΄ΞµΟƒΞΌΞΏΟ‚
+links	infolog	el	Ξ£ΟΞ½Ξ΄ΞµΟƒΞΌΞΏΞΉ
+links of this entry	infolog	el	Ξ£ΟΞ½Ξ΄ΞµΟƒΞΌΞΏΞΉ Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+list all categories	infolog	el	ΞΞ± ΞΌΟ€ΞΏΟ…Ξ½ ΟƒΞµ Ξ»Ξ―ΟƒΟ„Ξ± ΟΞ»ΞµΟ‚ ΞΏΞΉ ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚
+location	infolog	el	Ξ¤ΞΏΟ€ΞΏΞΈΞµΟƒΞ―Ξ±
+longer textual description	infolog	el	ΞµΞΊΟ„ΞµΞ½Ξ­ΟƒΟ„ΞµΟΞ· Ο€ΞµΟΞΉΞ³ΟΞ±Ο†Ξ® ΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ…
+low	infolog	el	Ο‡Ξ±ΞΌΞ·Ξ»Ξ®
+max length of the input [, length of the inputfield (optional)]	infolog	el	ΞΌΞ­Ξ³ΞΉΟƒΟ„ΞΏ ΞΌΞ®ΞΊΞΏΟ‚ ΞµΞΉΟƒΟΞΏΞ®Ο‚ [ΞΌΞ®ΞΊΞΏΟ‚ Ο€ΞµΞ΄Ξ―ΞΏΟ… ΞµΞΉΟƒΟΞΏΟΞ½ (ΞΊΞ±Ο„'ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®)]
+name must not be empty !!!	infolog	el	Ξ¤ΞΏ ΟΞ½ΞΏΞΌΞ± Ξ΄ΞµΞ½ Ο€ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± ΞΌΞ­Ξ½ΞµΞΉ ΞΊΞµΞ½Ο
+name of new type to create	infolog	el	ΟΞ½ΞΏΞΌΞ± Ξ½Ξ­ΞΏΟ… Ο„ΟΟ€ΞΏΟ… Ο€ΟΞΏΟ‚ Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±
+never hide search and filters	infolog	el	ΞΞ± ΞΌΞ·Ξ½ Ξ±Ο€ΞΏΞΊΟΟΟ€Ο„ΞµΟ„Ξ±ΞΉ Ο€ΞΏΟ„Ξ­ Ξ· Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· ΞΊΞ±ΞΉ Ο„Ξ± Ο†Ξ―Ξ»Ο„ΟΞ±
+new %1	infolog	el	ΞΞ­ΞΏ %1
+new %1 created by %2 at %3	infolog	el	ΞΞ­ΞΏ %1 Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΞΈΞ·ΞΊΞµ Ξ±Ο€Ο %2 ΟƒΟ„ΞΉΟ‚ %3
+new name	infolog	el	Ξ½Ξ­ΞΏ ΟΞ½ΞΏΞΌΞ±
+new search	infolog	el	ΞΞ­Ξ± Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·
+no - cancel	infolog	el	ΞΟ‡ΞΉ-Ξ†ΞΊΟ…ΟΞΏ
+no describtion, links or attachments	infolog	el	ΞΊΞ±ΞΌΞ―Ξ± Ο€ΞµΟΞΉΞ³ΟΞ±Ο†Ξ®, ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏΟ‚ Ξ® ΞµΟ€ΞΉΟƒΟΞ½Ξ±ΟΞ·
+no details	infolog	el	ΟƒΟ…Ξ½ΞΏΟ€Ο„ΞΉΞΊΞ¬
+no entries found, try again ...	infolog	el	Ξ΄ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞ±Ξ½ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚, Ο€ΟΞΏΟƒΟ€Ξ±ΞΈΞ®ΟƒΟ„Ξµ ΞΎΞ±Ξ½Ξ¬
+no filter	infolog	el	ΞΊΞ±Ξ½Ξ­Ξ½Ξ± Ξ¦Ξ―Ξ»Ο„ΟΞΏ
+no links or attachments	infolog	el	ΞΊΞ±Ξ½Ξ­Ξ½Ξ± Ο†Ξ―Ξ»Ο„ΟΞΏ Ξ® ΞµΟ€ΞΉΟƒΟ…Ξ½Ξ¬ΟΞµΞΉΟ‚
+none	infolog	el	ΞΞ±Ξ½Ξ­Ξ½Ξ±
+normal	infolog	el	ΞΊΞ±Ξ½ΞΏΞ½ΞΉΞΊΟ
+not	infolog	el	Ξ΄ΞµΞ½
+not assigned	infolog	el	Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΞΉ Ξ±Ξ½Ξ±Ο„ΞµΞΈΞµΞ―
+not-started	infolog	el	Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΞΉ Ξ±ΟΟ‡Ξ―ΟƒΞµΞΉ
+note	infolog	el	Ξ£Ξ·ΞΌΞµΞ―Ο‰ΟƒΞ·
+number of records to read (%1)	infolog	el	Ξ‘ΟΞΉΞΈΞΌΟΟ‚ ΞµΞ³Ξ³ΟΞ±Ο†ΟΞ½ Ο€ΟΞΏΟ‚ Ξ±Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	el	Ξ±ΟΞΉΞΈΞΌΟΟ‚ ΟƒΞµΞΉΟΞ¬Ο‚ Ξ³ΞΉΞ± Ξ­Ξ½Ξ± Ο€ΞΏΞ»Ο…Ξ³ΟΞ±ΞΌΞΌΞΉΞΊΟ Ο€ΞµΞ΄Ξ―ΞΏ ΞµΞΉΟƒΟΞΏΟΞ½ Ξ® Ξ³ΟΞ±ΞΌΞΌΞ® ΞµΞ½ΟΟ‚ ΞΊΞΏΟ…Ο„ΞΉΞΏΟ Ο€ΞΏΞ»Ξ»ΟΞ½ ΞµΟ€ΞΉΞ»ΞΏΞ³ΟΞ½
+offer	infolog	el	Ο€ΟΞΏΟƒΟ†ΞΏΟΞ¬
+one day after	infolog	el	ΞΌΞ―Ξ± ΞΌΞ­ΟΞ± ΞΌΞµΟ„Ξ¬
+one day in advance	infolog	el	ΞΞ―Ξ± ΞΌΞ­ΟΞ± Ξ½Ο‰ΟΞ―Ο„ΞµΟΞ±
+ongoing	infolog	el	Ο„ΟΞ­Ο‡Ο‰Ξ½
+only for details	infolog	el	ΞΟΞ½ΞΏ Ξ³ΞΉΞ± Ξ»ΞµΟ€Ο„ΞΏΞΌΞ­ΟΞµΞΉΞµΟ‚
+only if i get assigned or removed	infolog	el	ΞΟΞ½ΞΏ ΞµΞ¬Ξ½ ΞΌΞΏΟ… Ξ±Ξ½Ξ±Ο„ΞµΞΈΞµΞ― Ξ® Ξ±Ο†Ξ±ΞΉΟΞµΞΈΞµΞ―
+only the attachments	infolog	el	ΞΌΟΞ½ΞΏ ΞΏΞΉ ΞµΟ€ΞΉΟƒΟ…Ξ½Ξ¬ΟΞµΞΉΟ‚
+only the links	infolog	el	ΞΌΟΞ½ΞΏ ΞΏΞΉ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏΞΉ
+open	infolog	el	Ξ±Ξ½ΞΏΞΉΞΊΟ„Ξ¬
+optional note to the link	infolog	el	Ο€ΟΞΏΞ±ΞΉΟΞµΟ„ΞΉΞΊΞ® ΟƒΞ·ΞΌΞµΞ―Ο‰ΟƒΞ· ΟƒΟ„ΞΏ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏ
+order	infolog	el	Ξ Ξ±ΟΞ±Ξ³Ξ³ΞµΞ»Ξ―Ξ±
+overdue	infolog	el	ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ·ΞΌΞ­Ξ½Ξ±
+own	infolog	el	Ξ΄ΞΉΞΊΞ¬ ΞΌΞΏΟ…
+own open	infolog	el	Ξ΄ΞΉΞΊΞ¬ ΞΌΞΏΟ… Ξ±Ξ½ΞΏΞΉΞΊΟ„Ξ¬
+own overdue	infolog	el	Ξ΄ΞΉΞΊΞ¬ ΞΌΞΏΟ… ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ·ΞΌΞ­Ξ½Ξ±
+own upcoming	infolog	el	Ξ΄ΞΉΞΊΞ¬ ΞΌΞΏΟ… ΞµΟ€ΞµΟΟ‡ΟΞΌΞµΞ½Ξ±
+path to user and group files has to be outside of the webservers document-root!!!	infolog	el	Ξ¤ΞΏ ΞΌΞΏΞ½ΞΏΟ€Ξ¬Ο„ΞΉ Ο€ΟΞΏΟ‚ Ο„Ξ± Ξ±ΟΟ‡ΞµΞ―Ξ± Ο„ΞΏΟ… Ο‡ΟΞ®ΟƒΟ„Ξ· ΞΊΞ±ΞΉ Ο„Ο‰Ξ½ ΞΏΞΌΞ¬Ξ΄Ο‰Ξ½ Ξ Ξ΅Ξ•Ξ Ξ•Ξ™ ΞΞ‘ Ξ•Ξ™ΞΞ‘Ξ™ Ξ•ΞΞ¤ΞΞ£ Ο„Ξ·Ο‚ Ο€ΞΏΟΞµΞ―Ξ±Ο‚ Ο„Ο‰Ξ½ ΞµΞ³Ξ³ΟΞ¬Ο†Ο‰Ξ½ Ο„Ο‰Ξ½ webservers!!!
+pattern for search in addressbook	infolog	el	Ο€ΟΟΟ„Ο…Ο€ΞΏ Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·Ο‚ ΟƒΟ„ΞΏ Ξ²ΞΉΞ²Ξ»Ξ―ΞΏ Ξ΄ΞΉΞµΟ…ΞΈΟΞ½ΟƒΞµΟ‰Ξ½
+pattern for search in projects	infolog	el	Ο€ΟΟΟ„Ο…Ο€ΞΏ Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·Ο‚ ΟƒΟ„Ξ± ΟƒΟ‡Ξ­Ξ΄ΞΉΞ±
+percent completed	infolog	el	Ο€ΞΏΟƒΞΏΟƒΟ„Ο Ο€ΞΏΟ… Ξ­Ο‡ΞµΞΉ ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟ‰ΞΈΞµΞ―
+permission denied	infolog	el	Ξ†Ξ΄ΞµΞΉΞ± Ξ±Ο€ΞΏΟΟΞ―Ο€Ο„ΞµΟ„Ξ±ΞΉ
+phone	infolog	el	ΞΞ»Ξ®ΟƒΞ· Ο„Ξ·Ξ»ΞµΟ†ΟΞ½ΞΏΟ…
+phone/email	infolog	el	Ξ¤Ξ·Ξ»Ξ­Ο†Ο‰Ξ½ΞΏ/Email
+phonecall	infolog	el	ΞΞ»Ξ®ΟƒΞ· Ο„Ξ·Ξ»ΞµΟ†ΟΞ½ΞΏΟ…
+planned	infolog	el	Ο€ΟΞΏΞ³ΟΞ±ΞΌΞΌΞ±Ο„Ξ―ΟƒΟ„Ξ·ΞΊΞµ
+planned time	infolog	el	ΟΟΞ± ΟƒΟ‡ΞµΞ΄Ξ―ΞΏΟ…
+price	infolog	el	Ξ¤ΞΉΞΌΞ®
+priority	infolog	el	Ξ ΟΞΏΟ„ΞµΟΞ±ΞΉΟΟ„Ξ·Ο„Ξ±
+private	infolog	el	Ξ ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΟ
+project	infolog	el	Ξ£Ο‡Ξ­Ξ΄ΞΉΞΏ
+project settings: price, times	infolog	el	Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΟƒΟ‡ΞµΞ΄Ξ―Ο‰Ξ½:Ο„ΞΉΞΌΞ®, ΟΟΞµΟ‚
+re:	infolog	el	Ξ‘Ο†ΞΏΟΞ¬:
+read one record by passing its id.	infolog	el	Ξ”ΞΉΞ±Ξ²Ξ¬ΟƒΟ„Ξµ ΞΌΞ―Ξ± ΞµΞ³Ξ³ΟΞ±Ο†Ξ® Ξ΄ΞΉΞ±Ξ²Ξ±Ξ―Ξ½ΞΏΞ½Ο„Ξ±Ο‚ Ξ±Ο€Ο Ο„ΞΏ ID Ο„Ξ·Ο‚
+read rights (default)	infolog	el	Ξ±Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· Ξ΄ΞΉΞΊΞ±ΞΉΟ‰ΞΌΞ¬Ο„Ο‰Ξ½ (Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ·)
+receive notifications about due entries you are responsible for	infolog	el	Ξ›Ξ®ΟΞ· ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ο„Ο‰Ξ½ ΞΏΟ€ΞΏΞ―Ο‰Ξ½ ΞµΞ―ΟƒΟ„Ξµ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ ΞΊΞ±ΞΉ Ο€ΞΏΟ… Ξ­Ο‡ΞΏΟ…Ξ½ ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ®ΟƒΞµΞΉ
+receive notifications about due entries you delegated	infolog	el	Ξ›Ξ®ΟΞ· ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ο„Ο‰Ξ½ ΞΏΟ€ΞΏΞ―Ο‰Ξ½ ΞµΞ―ΟƒΟ„Ξµ ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ·ΞΌΞ­Ξ½ΞΏΟ‚ ΞΊΞ±ΞΉ Ο€ΞΏΟ… Ξ­Ο‡ΞΏΟ…Ξ½ ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ®ΟƒΞµΞΉ
+receive notifications about items assigned to you	infolog	el	Ξ›Ξ®ΟΞ· ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ο„Ξ± ΞΏΟ€ΞΏΞ―Ξ± ΟƒΞ±Ο‚ Ξ­Ο‡ΞΏΟ…Ξ½ Ξ±Ξ½Ξ±Ο„ΞµΞΈΞµΞ―
+receive notifications about own items	infolog	el	Ξ›Ξ®ΟΞ· ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± Ο„Ξ± Ξ΄ΞΉΞΊΞ¬ ΟƒΞ±Ο‚ Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ±
+receive notifications about starting entries you are responsible for	infolog	el	Ξ›Ξ®ΟΞ· ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ο€ΞΏΟ… ΞΎΞµΞΊΞΉΞ½ΞΏΟΞ½ ΞΊΞ±ΞΉ Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞΏΟ€ΞΏΞ―ΞµΟ‚ ΞµΞ―ΟƒΟ„Ξµ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚
+receive notifications about starting entries you delegated	infolog	el	Ξ›Ξ®ΟΞ· ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ‰Ξ½ Ξ³ΞΉΞ± ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ο€ΞΏΟ… ΞΎΞµΞΊΞΉΞ½ΞΏΟΞ½ ΞΊΞ±ΞΉ Ξ³ΞΉΞ± Ο„ΞΉΟ‚ ΞΏΟ€ΞΏΞ―ΞµΟ‚ ΞµΞ―ΟƒΟ„Ξµ ΞµΞΎΞΏΟ…ΟƒΞΉΞΏΞ΄ΞΏΟ„Ξ·ΞΌΞ­Ξ½ΞΏΟ‚
+receive notifications as html-mails	infolog	el	Ξ›Ξ®ΟΞ· ΞµΞΉΞ΄ΞΏΟ€ΞΏΞΉΞ®ΟƒΞµΟ‰Ξ½ Ο‰Ο‚ html-mails
+remark	infolog	el	ΞΞ±Ξ½Ξ±ΞΌΞ±ΟΞΊΞ¬ΟΞµΟ„Ξµ
+remove this link (not the entry itself)	infolog	el	Ξ‘Ο†Ξ±ΞΉΟΞ­ΟƒΟ„Ξµ Ο„ΞΏ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏ (ΟΟ‡ΞΉ Ο„Ξ·Ξ½ Ξ―Ξ΄ΞΉΞ± Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·)
+responsible	infolog	el	Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚
+responsible open	infolog	el	Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ Ξ±Ξ½ΞΏΞΉΞΊΟ„Ξ¬
+responsible overdue	infolog	el	Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ·ΞΌΞ­Ξ½Ξ±
+responsible upcoming	infolog	el	Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ ΞµΟ€ΞµΟΟ‡ΟΞΌΞµΞ½Ξ±
+responsible user, priority	infolog	el	Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ Ο‡ΟΞ®ΟƒΟ„Ξ·Ο‚, Ο€ΟΞΏΟ„ΞµΟΞ±ΞΉΟΟ„Ξ·Ο„Ξ±
+returns a list / search for records.	infolog	el	Ξ•Ο€ΞΉΟƒΟ„ΟΞ­Ο†ΞµΞΉ ΞΌΞΉΞ± Ξ»Ξ―ΟƒΟ„Ξ±/Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ³ΞΉΞ± ΞµΞ³Ξ³ΟΞ±Ο†Ξ­Ο‚
+rights for the responsible	infolog	el	Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ξ³ΞΉΞ± Ο„ΞΏΞ½ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏ
+same day	infolog	el	Ξ―Ξ΄ΞΉΞ± Ξ·ΞΌΞ­ΟΞ±
+save	infolog	el	Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ·
+saves the changes made and leaves	infolog	el	Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΞµΞΉ Ο„ΞΉΟ‚ Ξ±Ξ»Ξ»Ξ±Ξ³Ξ­Ο‚ Ο€ΞΏΟ… Ξ­Ξ³ΞΉΞ½Ξ±Ξ½ ΞΊΞ±ΞΉ Ξ±Ο€ΞΏΟ‡Ο‰ΟΞµΞ―
+saves this entry	infolog	el	Ξ‘Ο€ΞΏΞΈΞ·ΞΊΞµΟΞµΞΉ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·
+search	infolog	el	Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·
+search for:	infolog	el	Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· Ξ³ΞΉΞ±:
+select	infolog	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ
+select a category for this entry	infolog	el	ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞΉΞ± ΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± Ξ³ΞΉΞ± Ξ±Ο…Ο„Ξ®Ξ½ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·
+select a price	infolog	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞΉΞ± Ο„ΞΉΞΌΞ®
+select a priority for this task	infolog	el	ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο€ΟΞΏΟ„ΞµΟΞ±ΞΉΟΟ„Ξ·Ο„Ξ± Ξ³ΞΉΞ± Ξ±Ο…Ο„Ο Ο„ΞΏ Ξ­ΟΞ³ΞΏ
+select a project	infolog	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ± Ξ­ΟΞ³ΞΏ
+select a responsible user: a person you want to delegate this task	infolog	el	Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΞΏΞ½ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ·: Ξ­Ξ½Ξ± Ξ¬Ο„ΞΏΞΌΞΏ ΟƒΟ„ΞΏ ΞΏΟ€ΞΏΞ―ΞΏ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ±Ξ½Ξ±ΞΈΞ­ΟƒΞµΟ„Ξµ Ξ±Ο…Ο„Ο Ο„ΞΏ Ξ­ΟΞ³ΞΏ
+select a typ to edit it's status-values or delete it	infolog	el	ΞµΟ€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ­Ξ½Ξ±Ξ½ Ο„ΟΟ€ΞΏ Ξ³ΞΉΞ± Ξ½Ξ± ΞµΟ€ΞΉΞΌΞµΞ»Ξ·ΞΈΞµΞ―Ο„Ξµ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ® Ο„ΞΏΟ…
+select an entry to link with	infolog	el	Ξ•Ο€ΞµΞ»Ξ­ΞΎΟ„Ξµ ΞΌΞ―Ξ± ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· Ο€ΟΞΏΟ‚ ΟƒΟΞ½Ξ΄ΞµΟƒΞ·
+select to filter by owner	infolog	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο†Ξ―Ξ»Ο„ΟΞΏΟ… ΟƒΟΞΌΟ†Ο‰Ξ½Ξ± ΞΌΞµ Ο„ΞΏΞ½ ΞΉΞ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ·
+select to filter by responsible	infolog	el	Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο†Ξ―Ξ»Ο„ΟΞΏΟ… ΟƒΟΞΌΟ†Ο‰Ξ½Ξ± ΞΌΞµ Ο„ΞΏΞ½ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏ
+sets the status of this entry and its subs to done	infolog	el	ΞΟΞ―Ξ¶ΞµΞΉ Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ ΞΊΞ±ΞΉ Ο„Ο‰Ξ½ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½ Ο„Ξ·Ο‚ ΟƒΞµ ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟ‰ΞΌΞ­Ξ½Ξ·
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ο„ΞΏ InfoLog Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΞΉ Ο„ΞΉΟ‚ Ο…Ο€ΞΏ-ΞµΟΞ³Ξ±ΟƒΞ―ΞµΟ‚, -ΞΊΞ»Ξ®ΟƒΞµΞΉΟ‚ Ξ® -ΟƒΞ·ΞΌΞµΞΉΟΟƒΞµΞΉΟ‚ ΟƒΟ„Ξ·Ξ½ ΞΊΞ±Ξ½ΞΏΞ½ΞΉΞΊΞ® ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ® ΟΟ‡ΞΉ. ΞΟ€ΞΏΟΞµΞ―Ο„Ξµ Ο€Ξ¬Ξ½Ο„Ξ± Ξ½Ξ± Ξ²Ξ»Ξ­Ο€ΞµΟ„Ξµ Ο„ΞΉΟ‚ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ ΞΌΞ­ΟƒΟ‰ Ο„Ο‰Ξ½ ΞΌΞ·Ο„ΟΞΉΞΊΟΞ½ Ο„ΞΏΟ…Ο‚.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ο„ΞΏ InfoLog Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΞΉ Ο„ΞΏΟ…Ο‚ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…Ο‚ ΞΌΞµ Ξ¬Ξ»Ξ»ΞµΟ‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚ ΞΊΞ±ΞΉ/Ξ® Ο„ΞΉΟ‚ Ο€ΟΞΏΟƒΞΊΞΏΞ»Ξ»Ξ®ΟƒΞµΞΉΟ‚ Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… ΟƒΟ„Ξ·Ξ½ InfoLog Ξ»Ξ―ΟƒΟ„Ξ± (ΞΊΞ±Ξ½ΞΏΞ½ΞΉΞΊΞ® ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟΟ„Ξ±Ξ½ ΞµΞΉΟƒΞ­ΟΟ‡ΞµΟƒΟ„Ξµ ΟƒΟ„ΞΏ InfoLog).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ο„ΞΏ InfoLog Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ ΟƒΟ„Ξ· Ξ²Ξ±ΟƒΞΉΞΊΞ® ΞΏΞΈΟΞ½Ξ· ΞΊΞ±ΞΉ ΞΌΞµ Ο€ΞΏΞΉΞΏ Ο†Ξ―Ξ»Ο„ΟΞΏ.Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³ΞµΞ― ΞΌΟΞ½ΞΏ Ξ±Ξ½ Ξ΄ΞµΞ½ ΞµΟ€ΞΉΞ»Ξ­ΞΎΞ±Ο„Ξµ ΞΌΞ―Ξ± ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® Ξ³ΞΉΞ± Ο„Ξ·Ξ½ Ξ²Ξ±ΟƒΞΉΞΊΞ® ΞΏΞΈΟΞ½Ξ· (ΟƒΟ„ΞΉΟ‚ Ο€ΟΞΏΟ„ΞΉΞΌΞ®ΟƒΞµΞΉΟ‚ ΟƒΞ±Ο‚).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ο„ΞΏ InfoLog Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ― ΞΏΞ»ΟΞΊΞ»Ξ·ΟΞ± ΞΏΞ½ΟΞΌΞ±Ο„Ξ± (ΞµΟ€ΟΞ½Ο…ΞΌΞ± ΞΊΞ±ΞΉ ΞΏΞΉΞΊΞΏΞ³ΞµΞ½ΞµΞΉΞ±ΞΊΞ¬ ΞΏΞ½ΟΞΌΞ±Ο„Ξ±) Ξ® ΞΌΟΞ½ΞΏ Ο„Ξ± ΞΏΞ½ΟΞΌΞ±Ο„Ξ± ΞµΞΉΟƒΟΞ΄ΞΏΟ….
+should the calendar show custom types too	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ο„ΞΏ Ξ·ΞΌΞµΟΞΏΞ»ΟΞ³ΞΉΞΏ Ξ½Ξ± Ξ΄ΞµΞ―Ο‡Ξ½ΞµΞΉ Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏΟ…Ο‚ Ο„ΟΟ€ΞΏΟ…Ο‚ ΞµΟ€Ξ―ΟƒΞ·Ο‚
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ· InfoLog Ξ»Ξ―ΟƒΟ„Ξ± Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΞΉ Ξ­Ξ½Ξ± ΞΌΞΏΞ½Ξ±Ξ΄ΞΉΞΊΟ Ξ½ΞΏΟΞΌΞµΟΞΏ Id, Ο„ΞΏ ΞΏΟ€ΞΏΞ―ΞΏ Ξ½Ξ± ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ Ο€.Ο‡. Ο‰Ο‚ Id ΞµΞΉΟƒΞΉΟ„Ξ·ΟΞ―ΞΏΟ….
+should the infolog list show the column "last modified".	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ· InfoLog Ξ»Ξ―ΟƒΟ„Ξ± Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΞΉ Ο„Ξ· ΟƒΟ„Ξ®Ξ»Ξ· "Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± Ο„ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	el	ΞΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ· InfoLog Ξ»Ξ―ΟƒΟ„Ξ± Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΞΉ Ο„ΞΏ Ο€ΞΏΟƒΞΏΟƒΟ„Ο ΞΏΞ»ΞΏΞΊΞ»Ξ®ΟΟ‰ΟƒΞ·Ο‚ ΞΌΟΞ½ΞΏ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ο„ΟΞ­Ο‡Ο‰Ξ½ Ξ® Ξ΄ΟΞΏ ΞΎΞµΟ‡Ο‰ΟΞΉΟƒΟ„Ξ¬ ΞµΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ±.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	el	ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ±Ο…Ο„Ξ® Ξ· ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ· Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞΏΟΞ±Ο„Ξ® ΟƒΞµ ΞµΟƒΞ¬Ο‚ ΞΊΞ±ΞΉ ΟƒΟ„Ξ± Ξ¬Ο„ΞΏΞΌΞ± Ο€ΞΏΟ… Ξ΄Ξ―Ξ½ΞµΟ„Ξ±ΞΉ Ο€ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΞ® Ξ¬Ξ΄ΞµΞΉΞ± ΞΌΞ­ΟƒΟ‰ Ο„ΞΏΟ… ACL
+show a column for used and planned times in the list.	infolog	el	Ξ Ξ±ΟΞΏΟ…ΟƒΞΉΞ¬ΟƒΟ„Ξµ ΞΌΞ―Ξ± ΟƒΟ„Ξ®Ξ»Ξ· Ξ³ΞΉΞ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞµΟ‚ ΞΊΞ±ΞΉ Ο€ΟΞΏΞ³ΟΞ±ΞΌΞΌΞ±Ο„ΞΉΟƒΞΌΞ­Ξ½ΞµΟ‚ ΟΟΞµΟ‚ ΟƒΟ„Ξ· Ξ»Ξ―ΟƒΟ„Ξ±
+show full usernames	infolog	el	Ξ Ξ±ΟΞΏΟ…ΟƒΞ―Ξ±ΟƒΞ· ΞΏΞ»ΟΞΊΞ»Ξ·ΟΟ‰Ξ½ Ο„Ο‰Ξ½ ΞΏΞ½ΞΏΞΌΞ¬Ο„Ο‰Ξ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
+show in the infolog list	infolog	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΟ„Ξ·Ξ½ InfoLog Ξ»Ξ―ΟƒΟ„Ξ±
+show last modified	infolog	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ±Ο‚ ΞΌΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ®Ο‚
+show status and percent done separate	infolog	el	Ξ Ξ±ΟΞΏΟ…ΟƒΞ―Ξ±ΟƒΞ· Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚ ΞΊΞ±ΞΉ Ο„ΞΏΟ… Ο€ΞΏΟƒΞΏΟƒΟ„ΞΏΟ ΞΏΞ»ΞΏΞΊΞ»Ξ®ΟΟ‰ΟƒΞ·Ο‚ ΞΎΞµΟ‡Ο‰ΟΞΉΟƒΟ„Ξ¬
+show ticket id	infolog	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Id ΞµΞΉΟƒΞΉΟ„Ξ·ΟΞ―ΞΏΟ…
+show times	infolog	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο„Ο‰Ξ½ Ο‰ΟΟΞ½
+small view	infolog	el	ΞΌΞΉΞΊΟΞ® ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·
+start a new search, cancel this link	infolog	el	Ξ­Ξ½Ξ±ΟΞΎΞ· Ξ½Ξ­Ξ±Ο‚ Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·Ο‚, Ξ±ΞΊΟΟΟ‰ΟƒΞ· Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…
+startdate	infolog	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚
+startdate enddate	infolog	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚ Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΞµΞΎΟΟ†Ξ»Ξ·ΟƒΞ·Ο‚
+startdate for new entries	infolog	el	Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚ Ξ³ΞΉΞ± Ξ½Ξ­ΞµΟ‚ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚
+startrecord	infolog	el	ΞΞ½Ξ±ΟΞΎΞ· ΞµΞ³Ξ³ΟΞ±Ο†Ξ®Ο‚
+status	infolog	el	ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·
+status ...	infolog	el	ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·
+sub	infolog	el	Ξ¥Ο€Ο
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	el	Ξ¥Ο€Ο-ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ξ³Ξ―Ξ½ΞΏΞ½Ο„Ξ±ΞΉ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ Ο„Ο‰Ξ½ ΞΌΞ·Ο„ΟΞΉΞΊΟΞ½ Ξ® Ξ²Ξ±ΟƒΞΉΞΊΟΞ½ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½, Ξ±Ξ½ Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΞΌΞ·Ο„ΟΞΉΞΊΞ®
+subject	infolog	el	ΞΞ­ΞΌΞ±
+task	infolog	el	Ξ•ΟΞ³Ξ±ΟƒΞ―ΞµΟ‚
+test import (show importable records <u>only</u> in browser)	infolog	el	ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ (ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞµΞΉΟƒΞ±Ξ³ΟΞ³ΞΉΞΌΟ‰Ξ½ ΞµΞ³Ξ³ΟΞ±Ο†ΟΞ½ <u>only</> ΟƒΟ„ΞΏ browser)
+the text displayed to the user	infolog	el	Ο„ΞΏ ΞΊΞµΞ―ΞΌΞµΞ½ΞΏ ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ ΟƒΟ„ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ·
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	el	Ξ‘Ο…Ο„Ξ­Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ ΞΏΞΉ Ο‡ΟΞ®ΟƒΞµΞΉΟ‚ Ο„ΞΏΟ… InfoLog Ο†Ξ―Ξ»Ο„ΟΞΏΟ… ΟΟ„Ξ±Ξ½ ΞµΞΉΟƒΞ­ΟΟ‡ΞµΟƒΟ„Ξµ ΟƒΟ„Ξ·Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®.Ξ¤Ξ± Ο†Ξ―Ξ»Ο„ΟΞ± Ο€ΞµΟΞΉΞΏΟΞ―Ξ¶ΞΏΟ…Ξ½ Ο„ΞΉΟ‚ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ξ½Ξ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ ΟƒΟ„Ξ·Ξ½ Ο€ΟΞ±Ξ³ΞΌΞ±Ο„ΞΉΞΊΞ® Ο€Ξ±ΟΞΏΟ…ΟƒΞ―Ξ±ΟƒΞ·.Ξ¥Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ Ο†Ξ―Ξ»Ο„ΟΞ± Ο€ΞΏΟ… Ο€Ξ±ΟΞΏΟ…ΟƒΞΉΞ¬Ξ¶ΞΏΟ…Ξ½ ΞΌΟΞ½ΞΏ Ο„Ξ± ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟ‰ΞΌΞ­Ξ½Ξ±, Ο„Ξ± Ο„ΟΞ­Ο‡ΞΏΞ½Ο„Ξ± Ξ® Ο„ΞΉΟ‚ Ξ΄ΞΉΞΊΞ­Ο‚ ΟƒΞ±Ο‚ ΞΌΞµΞ»Ξ»ΞΏΞ½Ο„ΞΉΞΊΞ­Ο‚ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΞΉΟ‚ Ξ® ΞΊΞ±ΞΉ ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ο‡ΟΞ·ΟƒΟ„ΟΞ½.
+til when should the todo or phonecall be finished	infolog	el	ΞΌΞ­Ο‡ΟΞΉ Ο€ΟΟ„Ξµ Ο€ΟΞ­Ο€ΞµΞΉ Ο„ΞΏ ΞΈΞ­ΞΌΞ± Ο€ΟΞΏΟ‚ Ξ΄ΞΉΞµΞΊΟ€Ξ±ΞΉΟΞ­Ο‰ΟƒΞ· Ξ® Ξ· Ο„Ξ·Ξ»ΞµΟ†Ο‰Ξ½ΞΉΞΊΞ® ΞΊΞ»Ξ®ΟƒΞ· Ξ½Ξ± Ξ­Ο‡ΞµΞΉ Ο„ΞµΞ»ΞµΞ―Ο‰ΟƒΞµΞΉ
+times	infolog	el	ΞΟΞµΟ‚
+to many might exceed your execution-time-limit	infolog	el	Ξ Ξ¬ΟΞ± Ο€ΞΏΞ»Ξ»ΞΏΞ―. Ξ•Ξ½Ξ΄ΞµΟ‡ΟΞΌΞµΞ½ΞΏ Ο…Ο€Ξ­ΟΞ²Ξ±ΟƒΞ·Ο‚ ΞΏΟΞ―ΞΏΟ… Ο‡ΟΟΞ½ΞΏΟ… ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·Ο‚
+to what should the startdate of new entries be set.	infolog	el	Ξ£Ξµ Ο„ΞΉ Ο€ΟΞ­Ο€ΞµΞΉ Ξ· Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚ Ξ½Ξ­Ο‰Ξ½ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½ Ξ½Ξ± ΞΏΟΞΉΟƒΟ„ΞµΞ―.
+today	infolog	el	Ξ£Ξ®ΞΌΞµΟΞ±
+todays date	infolog	el	ΟƒΞ·ΞΌΞµΟΞΉΞ½Ξ® Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ±
+todo	infolog	el	Ξ•ΟΞ³Ξ±ΟƒΞ―ΞµΟ‚
+translation	infolog	el	ΞΞµΟ„Ξ¬Ο†ΟΞ±ΟƒΞ·
+typ	infolog	el	Ξ¤ΟΟ€ΞΏΟ‚
+typ '%1' already exists !!!	infolog	el	Ξ Ο„ΟΟ€ΞΏΟ‚ '%1' Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ Ξ®Ξ΄Ξ·
+type	infolog	el	Ξ¤ΟΟ€ΞΏΟ‚
+type ...	infolog	el	Ξ¤ΟΟ€ΞΏΟ‚ ...
+type of customfield	infolog	el	Ξ¤ΟΟ€ΞΏΟ‚ Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏΟ… Ο€ΞµΞ΄Ξ―ΞΏΟ…
+type of the log-entry: note, phonecall or todo	infolog	el	Ξ¤ΟΟ€ΞΏΟ‚ Ο„Ξ·Ο‚ ΞµΞΉΞ΄ΟΞ΄ΞΏΟ…-ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚: Ξ£Ξ·ΞΌΞµΞ―Ο‰ΟƒΞ·, ΞΞ»Ξ®ΟƒΞ· Ο„Ξ·Ξ»ΞµΟ†ΟΞ½ΞΏΟ… Ξ® Ξ•ΟΞ³Ξ±ΟƒΞ―ΞµΟ‚
+unlink	infolog	el	Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ·
+upcoming	infolog	el	ΞµΟ€ΞµΟΟ‡ΟΞΌΞµΞ½ΞΏ
+urgency	infolog	el	ΞµΟ€ΞµΞ―Ξ³ΞΏΞ½
+urgent	infolog	el	ΞµΟ€ΞµΞ―Ξ³ΞΏΞ½
+used time	infolog	el	Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏΟ‚ Ο‡ΟΟΞ½ΞΏΟ‚
+valid path on clientside<br>eg. \servershare or e:	infolog	el	Ξ­Ξ³ΞΊΟ…ΟΞΏ ΞΌΞΏΞ½ΞΏΟ€Ξ¬Ο„ΞΉ Ο€ΟΞΏΟ‚ Ο„Ξ·Ξ½ Ο€Ξ»ΞµΟ…ΟΞ¬ Ο„ΞΏΟ… Ο€ΞµΞ»Ξ¬Ο„Ξ·<br>Ο€.Ο‡. \\Server\Share Ξ® e:\
+valid path on clientside<br>eg. servershare or e:	infolog	el	Ξ­Ξ³ΞΊΟ…ΟΞΏ ΞΌΞΏΞ½ΞΏΟ€Ξ¬Ο„ΞΉ Ο€ΟΞΏΟ‚ Ο„Ξ·Ξ½ Ο€Ξ»ΞµΟ…ΟΞ¬ Ο„ΞΏΟ… Ο€ΞµΞ»Ξ¬Ο„Ξ·<br>Ο€.Ο‡. \\Server\Share Ξ® e:\
+values for selectbox	infolog	el	Ξ‘ΞΎΞ―ΞµΟ‚ Ο„ΞΏΟ… ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ… ΞΊΞΏΟ…Ο„ΞΉΞΏΟ
+view all subs of this entry	infolog	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½ Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚
+view other subs	infolog	el	ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ¬Ξ»Ξ»Ο‰Ξ½ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+view parent	infolog	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΌΞ·Ο„ΟΞΉΞΊΞ®Ο‚
+view subs	infolog	el	ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½
+view the parent of this entry and all his subs	infolog	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο„Ξ·Ο‚ ΞΌΞ·Ο„ΟΞΉΞΊΞ®Ο‚ Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ ΞΊΞ±ΞΉ ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ο…Ο€ΞΏΞΊΞ±Ο„Ξ·Ξ³ΞΏΟΞΉΟΞ½ Ο„Ξ·Ο‚
+view this linked entry in its application	infolog	el	ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ±Ο…Ο„Ξ®Ο‚ Ο„Ξ·Ο‚ ΟƒΟ…Ξ½Ξ΄ΞµΞ΄ΞµΞΌΞ­Ξ½Ξ·Ο‚ ΞΊΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚ ΟƒΟ„Ξ·Ξ½ Ξ±Ξ―Ο„Ξ·ΟƒΞ® Ο„Ξ·Ο‚
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	el	Ο€ΟΟ„Ξµ ΞΈΞ± Ξ­Ο€ΟΞµΟ€Ξµ ΞΏΞΉ Ξ•ΟΞ³Ξ±ΟƒΞ―ΞµΟ‚ Ξ® ΞΞ»Ξ®ΟƒΞ· Ο„Ξ·Ξ»ΞµΟ†ΟΞ½ΞΏΟ… Ξ½Ξ± Ξ±ΟΟ‡Ξ―Ξ¶ΞΏΟ…Ξ½,ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞµΟ„Ξ±ΞΉ Ξ±Ο€Ο ΞµΞΊΞµΞ―Ξ½Ξ· Ο„Ξ·Ξ½ Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΟƒΟ„ΞΏ Ξ¬Ξ½ΞΏΞΉΞ³ΞΌΞ± Ο†Ξ―Ξ»Ο„ΟΞΏΟ… Ξ® Ξ΄ΞΉΞΊΞ¬ ΞΌΞΏΟ… Ξ¬Ξ½ΞΏΞΉΞ³ΞΌΞ± (Ξ±ΟΟ‡ΞΉΞΊΞ® ΟƒΞµΞ»Ξ―Ξ΄Ξ±)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	el	Ξ ΞΏΞΉΞ± ΞµΟ€ΞΉΟ€Ξ»Ξ­ΞΏΞ½ Ο€ΞµΞ΄Ξ―Ξ± Ο€ΟΞ­Ο€ΞµΞΉ ΞΏ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ Ξ½Ξ± Ξ­Ο‡ΞµΞΉ Ξ¬Ξ΄ΞµΞΉΞ± Ξ½Ξ± ΞµΟ€ΞΉΞΌΞµΞ»Ξ·ΞΈΞµΞ― Ο‡Ο‰ΟΞ―Ο‚ Ξ½Ξ± Ξ­Ο‡ΞµΞΉ Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± ΞµΟ€ΞΉΞΌΞ­Ξ»ΞµΞΉΞ±Ο‚;<br/>ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·, Ο€ΞΏΟƒΞΏΟƒΟ„Ο ΞΊΞ±ΞΉ Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΞΏΞ»ΞΏΞΊΞ»Ξ®ΟΟ‰ΟƒΞ·Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ Ο€Ξ¬Ξ½Ο„ΞΏΟ„Ξµ ΞµΟ€ΞΉΟ„ΟΞµΟ€Ο„Ξ¬.
+which implicit acl rights should the responsible get?	infolog	el	Ξ ΞΏΞΉΞ± Ξ±Ο…Ο„ΞΏΞ½ΟΞ·Ο„Ξ± ACL Ξ΄ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ± Ο€ΟΞ­Ο€ΞµΞΉ ΞΏ Ο…Ο€ΞµΟΞΈΟ…Ξ½ΞΏΟ‚ Ξ½Ξ± Ξ­Ο‡ΞµΞΉ;
+will-call	infolog	el	ΞΈΞ± Ο„Ξ·Ξ»ΞµΟ†Ο‰Ξ½Ξ®ΟƒΞµΞΉ
+write (add or update) a record by passing its fields.	infolog	el	ΞΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ® (Ο€ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ® ΞµΞ½Ξ·ΞΌΞ­ΟΟ‰ΟƒΞ·) ΞΌΞΉΞ±Ο‚ ΞµΞ³Ξ³ΟΞ±Ο†Ξ®Ο‚ Ξ΄ΞΉΞ±Ξ²Ξ±Ξ―Ξ½ΞΏΞ½Ο„Ξ±Ο‚ Ξ±Ο€Ο Ο„Ξ± Ο€ΞµΞ΄Ξ―Ξ± Ο„Ξ·Ο‚.
+yes - delete	infolog	el	ΞΞ±ΞΉ- Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®
+yes - delete including sub-entries	infolog	el	ΞΞ±ΞΉ-Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΟƒΟ…ΞΌΟ€ΞµΟΞΉΞ»Ξ±ΞΌΞ²Ξ±Ξ½ΞΏΞΌΞ­Ξ½Ο‰Ξ½ ΞΊΞ±ΞΉ Ο„Ο‰Ξ½ Ο…Ο€ΞΏ-ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½
+yes, noone can purge deleted items	infolog	el	ΞΞΉΞ±, ΞΊΞ±Ξ½ΞµΞ―Ο‚ Ξ΄ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± ΞΊΞ±ΞΈΞ±ΟΞ―ΟƒΞµΞΉ Ο„Ξ± Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ο€ΞΏΟ… Ξ­Ο‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞµΞ―
+yes, only admins can purge deleted items	infolog	el	ΞΞ±ΞΉ, ΞΌΟΞ½ΞΏ ΞΏ Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ ΞΌΟ€ΞΏΟΞµΞ― Ξ½Ξ± ΞΊΞ±ΞΈΞ±ΟΞ―ΟƒΞµΞΉ Ο„Ξ± Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ο€ΞΏΟ… Ξ­Ο‡ΞΏΟ…Ξ½ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†ΞµΞ―
+yes, with larger fontsize	infolog	el	ΞΞ±ΞΉ,  ΞΌΞµ ΞΌΞµΞ³Ξ±Ξ»ΟΟ„ΞµΟΞΏ ΞΌΞ­Ξ³ΞµΞΈΞΏΟ‚ Ο†ΟΞ½Ο„ΞΏΟ…
+yes, with purging of deleted items possible	infolog	el	ΞΞ±ΞΉ, ΞΌΞµ Ο„ΞΏΞ½ ΞΊΞ±ΞΈΞ±ΟΞΉΟƒΞΌΟ Ο„Ο‰Ξ½ Ξ΄ΞΉΞ±Ξ³ΟΞ±ΞΌΞ­Ξ½Ο‰Ξ½ Ξ±Ξ½Ο„ΞΉΞΊΞµΞΉΞΌΞ­Ξ½Ο‰Ξ½ Ξ½Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ΄Ο…Ξ½Ξ±Ο„ΟΟ‚
+you can't delete one of the stock types !!!	infolog	el	Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ­Ξ½Ξ±Ξ½ Ξ±Ο€Ο Ο„ΞΏΟ…Ο‚ Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏΟ…Ο‚ Ο„ΟΟ€ΞΏΟ…Ο‚ !!!
+you have entered an invalid ending date	infolog	el	ΞΟ‡ΞµΟ„Ξµ Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΞµΞΉ ΞΌΞΉΞ± Ξ¬ΞΊΟ…ΟΞ· Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± ΞΏΟ†ΞµΞΉΞ»Ξ®Ο‚
+you have entered an invalid starting date	infolog	el	ΞΟ‡ΞµΟ„Ξµ Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΞµΞΉ ΞΌΞΉΞ± Ξ¬ΞΊΟ…ΟΞ· Ξ·ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ­Ξ½Ξ±ΟΞΎΞ·Ο‚
+you have to enter a name, to create a new typ!!!	infolog	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΞµΟ„Ξµ Ξ­Ξ½Ξ± ΟΞ½ΞΏΞΌΞ±, Ξ³ΞΉΞ± Ο„Ξ· Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ½Ξ­ΞΏΟ… Ο„ΟΟ€ΞΏΟ…!!!
+you must enter a subject or a description	infolog	el	Ξ ΟΞ­Ο€ΞµΞΉ Ξ½Ξ± Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ®ΟƒΞµΟ„Ξµ Ξ­Ξ½Ξ± ΞΈΞ­ΞΌΞ± Ξ® ΞΌΞΉΞ± Ο€ΞµΟΞΉΞ³ΟΞ±Ο†Ξ®
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	el	Ξ¤ΞΏ Ξ·Ξ»ΞµΞΊΟ„ΟΞΏΞ½ΞΉΞΊΟ ΟƒΞ±Ο‚ Ξ±ΟΟ‡ΞµΞ―ΞΏ Ξ”Ξ•Ξ ΞµΞ―Ξ½Ξ±ΞΉ ΞµΞ½Ξ·ΞΌΞµΟΟ‰ΞΌΞ­Ξ½ΞΏ (%1 vs. %2), Ο€Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο„ΟΞ­ΞΎΟ„Ξµ %3setup%4  Ξ³ΞΉΞ± Ξ½Ξ± ΞµΞ½Ξ·ΞΌΞµΟΟΟƒΞµΟ„Ξµ Ο„ΞΏ Ξ·Ξ»ΞµΞΊΟ„ΟΞΏΞ½ΞΉΞΊΟ ΟƒΞ±Ο‚ Ξ±ΟΟ‡ΞµΞ―ΞΏ.

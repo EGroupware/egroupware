@@ -1,335 +1,335 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pl	%1 '%2' nie istnieje, nie mo¿e byæ odczytane przez serwer WWW lub nie zawiera instalacji eGroupWare
-%1 already exists in %2.	setup	pl	%1 ju¿ istnieje w %2.
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pl	%1 '%2' nie istnieje, nie moÅ¼e byÄ‡ odczytane przez serwer WWW lub nie zawiera instalacji eGroupWare
+%1 already exists in %2.	setup	pl	%1 juÅ¼ istnieje w %2.
 %1 created in %2.	setup	pl	%1 utworzono w %2.
 %1 does not exist !!!	setup	pl	%1 nie istnieje!
 %1 is %2%3 !!!	setup	pl	%1 jest %2%3!
 %1, %2 or %3 the configuration file.	setup	pl	%1, %2 lub %3 plik konfiguracyjny
-(searching accounts and changing passwords)	setup	pl	(wyszukujê konta i zmieniam has³a)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pl	*** Nie aktualizuj bazy danych przez aplikacjê ustawieñ. poniewa¿ aktualizacja mo¿e byæ przerwana przez parametr maksymalnego czasu wykonania, co spowoduje uszkodzenie bazy danych - dane zostan± utracone!
-00 (disable)	setup	pl	00 (wy³±czony / opcja zalecana)
+(searching accounts and changing passwords)	setup	pl	(wyszukujÄ™ konta i zmieniam hasÅ‚a)
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pl	*** Nie aktualizuj bazy danych przez aplikacjÄ™ ustawieÅ„. poniewaÅ¼ aktualizacja moÅ¼e byÄ‡ przerwana przez parametr maksymalnego czasu wykonania, co spowoduje uszkodzenie bazy danych - dane zostanÄ… utracone!
+00 (disable)	setup	pl	00 (wyÅ‚Ä…czony / opcja zalecana)
 13 (ntp)	setup	pl	13 (ntp)
 80 (http)	setup	pl	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pl	<b>zestaw znaków do u¿ycia</b> (wybierz UTF8 je¿eli planujesz u¿ywaæ ró¿nych jêzyków z ró¿nymi zestawami znaków)
-access denied: wrong username or password for manage-header !!!	setup	pl	Dostêp zabroniony: nieprawid³owa nazwa u¿ytkownika lub has³o do zarz±dzania domenami eGW!
-access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pl	Dostêp zabroniony: nieprawid³owa nazwa u¿ytkownika lub has³o do konfigurowania domeny '%1(%2)'!
-account repository need to be set to the one you migrate to!	setup	pl	Repozytorium kont powinno byæ ustawione na takie, do którego wykonywana jest migracja!
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pl	<b>zestaw znakÃ³w do uÅ¼ycia</b> (wybierz UTF8 jeÅ¼eli planujesz uÅ¼ywaÄ‡ rÃ³Å¼nych jÄ™zykÃ³w z rÃ³Å¼nymi zestawami znakÃ³w)
+access denied: wrong username or password for manage-header !!!	setup	pl	DostÄ™p zabroniony: nieprawidÅ‚owa nazwa uÅ¼ytkownika lub hasÅ‚o do zarzÄ…dzania domenami eGW!
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pl	DostÄ™p zabroniony: nieprawidÅ‚owa nazwa uÅ¼ytkownika lub hasÅ‚o do konfigurowania domeny '%1(%2)'!
+account repository need to be set to the one you migrate to!	setup	pl	Repozytorium kont powinno byÄ‡ ustawione na takie, do ktÃ³rego wykonywana jest migracja!
 actions	setup	pl	Akcje
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pl	Dodawaj automatycznie tworzonych u¿ytkowników do tej grupy ('Domy¶lna' bêdzie wybierana je¿eli zostawisz puste.)
-add new database instance (egw domain)	setup	pl	Dodaj now± instancjê bazy danych (domenê eGroupWare)
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pl	Dodawaj automatycznie tworzonych uÅ¼ytkownikÃ³w do tej grupy ('DomyÅ›lna' bÄ™dzie wybierana jeÅ¼eli zostawisz puste.)
+add new database instance (egw domain)	setup	pl	Dodaj nowÄ… instancjÄ™ bazy danych (domenÄ™ eGroupWare)
 adding, editing or deleting an egroupware domain / database instance:	setup	pl	Dodawanie, edytowanie lub usuwanie domeny eGroupWare (instancji bazy danych)
-additional options and there defaults (in brackets)	setup	pl	Dodatkowe opcje oraz warto¶ci domy¶lne (w nawiasach)
+additional options and there defaults (in brackets)	setup	pl	Dodatkowe opcje oraz wartoÅ›ci domyÅ›lne (w nawiasach)
 additional settings	setup	pl	Ustawienia dodatkowe
-admin account successful created.	setup	pl	Konto administratora zosta³o pomy¶lnie utworzone
+admin account successful created.	setup	pl	Konto administratora zostaÅ‚o pomyÅ›lnie utworzone
 admin email address	setup	pl	Adres e-mail administratora
-admin first name	setup	pl	Imiê administratora
+admin first name	setup	pl	ImiÄ™ administratora
 admin last name	setup	pl	Nazwisko administratora
-admin password	setup	pl	Has³o administratora
-admin password to header manager	setup	pl	Has³o konta do administracji domenami eGW
+admin password	setup	pl	HasÅ‚o administratora
+admin password to header manager	setup	pl	HasÅ‚o konta do administracji domenami eGW
 admin user for header manager	setup	pl	Nazwa konta do administracji domenami eGW
 admin username	setup	pl	Nazwa administratora
 admins	setup	pl	Administratorzy
-after backing up your tables first.	setup	pl	Po wcze¶niejszym wykonaniu kopii zapasowej tabel
+after backing up your tables first.	setup	pl	Po wczeÅ›niejszym wykonaniu kopii zapasowej tabel
 all applications	setup	pl	wszystkie aplikacje
 all core tables and the admin and preferences applications	setup	pl	wszystkie tabele trzonowe oraz aplikacje administratora oraz preferencji
-all languages (incl. not listed ones)	setup	pl	wszystkie jêzyki (³±cznie z tymi nie wy¶wietlonymi)
-all users	setup	pl	Wszyscy u¿ytkownicy
-allow authentication via cookie	setup	pl	Zezwól na autentykacjê przez ciasteczka (cookies)
-allow password migration	setup	pl	Zezwól na przenoszenie (migracjê) hase³
-and is up to date	setup	pl	i jest w bie¿±cej wersji
-app details	setup	pl	Szczegó³owe dane o aplikacji
-app install/remove/upgrade	setup	pl	Instaluj/Usuñ/Aktualizuj aplikacje
+all languages (incl. not listed ones)	setup	pl	wszystkie jÄ™zyki (Å‚Ä…cznie z tymi nie wyÅ›wietlonymi)
+all users	setup	pl	Wszyscy uÅ¼ytkownicy
+allow authentication via cookie	setup	pl	ZezwÃ³l na autentykacjÄ™ przez ciasteczka (cookies)
+allow password migration	setup	pl	ZezwÃ³l na przenoszenie (migracjÄ™) haseÅ‚
+and is up to date	setup	pl	i jest w bieÅ¼Ä…cej wersji
+app details	setup	pl	SzczegÃ³Å‚owe dane o aplikacji
+app install/remove/upgrade	setup	pl	Instaluj/UsuÅ„/Aktualizuj aplikacje
 application data	setup	pl	Dane aplikacji
 application list	setup	pl	Lista aplikacji
-application management	setup	pl	Zarz±dzanie aplikacjami
+application management	setup	pl	ZarzÄ…dzanie aplikacjami
 application name and status	setup	pl	Nazwa aplikacji i status
 application name and status information	setup	pl	Nazwa aplikacji i status
-application title	setup	pl	Tytu³ aplikacji
+application title	setup	pl	TytuÅ‚ aplikacji
 application: %1, file: %2, line: "%3"	setup	pl	Aplikacja: %1, Plik: %2, Linia: '%3'
-are you sure you want to delete your existing tables and data?	setup	pl	Czy NA PEWNO chcesz usun±æ istniej±ce tabele i dane?
-are you sure?	setup	pl	CZY JESTE¦ PEWIEN?
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	pl	Na Twoje ¿±danie, skrypt podejmie próbê utworzenia bazy danych i przypisania do niej uprawnieñ dla u¿ytkownika bazy danych
-at your request, this script is going to attempt to install a previous backup	setup	pl	Na Twoje ¿±danie, skrypt podejmie próbê przywrócenia bazy danych z kopii zapasowej
-at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	pl	Na Twoje ¿±danie, skrypt podejmie próbê instalacji tabel trzonowych oraz aplikacji administratora oraz preferencji
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	pl	Na Twoje ¿±danie, skrypt podejmie próbê aktualizacji przestarza³ych aplikacji do najnowszych wersji
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	pl	Na Twoje ¿±danie, skrypt podejmie próbê aktualizacji przestarza³ych tabel bazy danych do nowego formatu
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	pl	Na Twoje ¿±danie, skrypt podejmie paskudn± akcjê usuniêcia bie¿±cych tabel bazy danych i ponownego utworzenia ich w nowym formacie.
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	pl	Na Twoje ¿±danie, skrypt podejmie paskudn± akcjê odinstalowania wszystkich aplikacji, co spowoduje usuniêcie wszystkich danych i tabel bazy danych
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	pl	Próbuj u¿yæ w³a¶ciwy typ MIME dla FTP zamiast domy¶lnego 'application/octet-stream'
+are you sure you want to delete your existing tables and data?	setup	pl	Czy NA PEWNO chcesz usunÄ…Ä‡ istniejÄ…ce tabele i dane?
+are you sure?	setup	pl	CZY JESTEÅš PEWIEN?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	pl	Na Twoje Å¼Ä…danie, skrypt podejmie prÃ³bÄ™ utworzenia bazy danych i przypisania do niej uprawnieÅ„ dla uÅ¼ytkownika bazy danych
+at your request, this script is going to attempt to install a previous backup	setup	pl	Na Twoje Å¼Ä…danie, skrypt podejmie prÃ³bÄ™ przywrÃ³cenia bazy danych z kopii zapasowej
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	pl	Na Twoje Å¼Ä…danie, skrypt podejmie prÃ³bÄ™ instalacji tabel trzonowych oraz aplikacji administratora oraz preferencji
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	pl	Na Twoje Å¼Ä…danie, skrypt podejmie prÃ³bÄ™ aktualizacji przestarzaÅ‚ych aplikacji do najnowszych wersji
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	pl	Na Twoje Å¼Ä…danie, skrypt podejmie prÃ³bÄ™ aktualizacji przestarzaÅ‚ych tabel bazy danych do nowego formatu
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	pl	Na Twoje Å¼Ä…danie, skrypt podejmie paskudnÄ… akcjÄ™ usuniÄ™cia bieÅ¼Ä…cych tabel bazy danych i ponownego utworzenia ich w nowym formacie.
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	pl	Na Twoje Å¼Ä…danie, skrypt podejmie paskudnÄ… akcjÄ™ odinstalowania wszystkich aplikacji, co spowoduje usuniÄ™cie wszystkich danych i tabel bazy danych
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	pl	PrÃ³buj uÅ¼yÄ‡ wÅ‚aÅ›ciwy typ MIME dla FTP zamiast domyÅ›lnego 'application/octet-stream'
 authentication / accounts	setup	pl	Uwierzytelnianie / Konta
-auto create account records for authenticated users	setup	pl	Automatycznie twórz zapisy kont dla uwierzytelnionych u¿ytkowników
-auto login anonymous user	setup	pl	Automatycznie zaloguj anonimowego u¿ytkownika
-auto-created user accounts expire	setup	pl	Wygasanie automatycznie utworzonych kont u¿ytkowników
-available version	setup	pl	Dostêpna wersja
-back to the previous screen	setup	pl	Powrót do poprzedniego ekranu
-back to user login	setup	pl	Powrót do ekranu logowania
-back's up your db now, this might take a few minutes	setup	pl	wykonuje kopiê zapasow± bazy danych (mo¿e to zaj±æ kilka minut)
-backup '%1' deleted	setup	pl	kopia zapasowa '%1' zosta³a usuniêta
-backup '%1' renamed to '%2'	setup	pl	kopia zapasowa '%1' zmieni³a nazwê na '%2'
-backup '%1' restored	setup	pl	odtworzono kopiê zapasow± '%1'
+auto create account records for authenticated users	setup	pl	Automatycznie twÃ³rz zapisy kont dla uwierzytelnionych uÅ¼ytkownikÃ³w
+auto login anonymous user	setup	pl	Automatycznie zaloguj anonimowego uÅ¼ytkownika
+auto-created user accounts expire	setup	pl	Wygasanie automatycznie utworzonych kont uÅ¼ytkownikÃ³w
+available version	setup	pl	DostÄ™pna wersja
+back to the previous screen	setup	pl	PowrÃ³t do poprzedniego ekranu
+back to user login	setup	pl	PowrÃ³t do ekranu logowania
+back's up your db now, this might take a few minutes	setup	pl	wykonuje kopiÄ™ zapasowÄ… bazy danych (moÅ¼e to zajÄ…Ä‡ kilka minut)
+backup '%1' deleted	setup	pl	kopia zapasowa '%1' zostaÅ‚a usuniÄ™ta
+backup '%1' renamed to '%2'	setup	pl	kopia zapasowa '%1' zmieniÅ‚a nazwÄ™ na '%2'
+backup '%1' restored	setup	pl	odtworzono kopiÄ™ zapasowÄ… '%1'
 backup and restore	setup	pl	kopie zapasowe i odtwarzanie danych
-backup failed	setup	pl	Kopia zapasowa nie powiod³a siê
-backup finished	setup	pl	Kopia zapasowa zosta³a wykonana
+backup failed	setup	pl	Kopia zapasowa nie powiodÅ‚a siÄ™
+backup finished	setup	pl	Kopia zapasowa zostaÅ‚a wykonana
 backup now	setup	pl	Wykonaj teraz
 backup sets	setup	pl	Zbiory kopii zapasowych
-backup skipped!	setup	pl	Kopia zapasowa zosta³a pominiêta!
-backup started, this might take a few minutes ...	setup	pl	Kopia zapasowa w toku... to mo¿e zaj±æ trochê czasu
-because an application it depends upon was upgraded	setup	pl	ze wzglêdu na wykonan± aktualizacjê aplikacji, od której jest to zale¿ne
-because it depends upon	setup	pl	poniewa¿ jest to zale¿ne
-because it is not a user application, or access is controlled via acl	setup	pl	poniewa¿ nie jest to aplikacja u¿ytkownika lub dostêp kontrolowany jest przez mechanizm ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	pl	poniewa¿ wymagana jest rêczna instalacja tabel bazy danych, <br />lub definicje tabel nie by³y poprawne
-because it was manually disabled	setup	pl	poniewa¿ zosta³o to rêcznie wy³±czone
-because its sources are missing	setup	pl	poniewa¿ brakuje plików z kodem ¼ród³owym
-because of a failed upgrade or install	setup	pl	ze wzglêdu na niepoprawn± aktualizacjê lub instalacjê
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	pl	ze wzglêdu na niepoprawn± aktualizacje lub poniewa¿ baza danych jest nowsza ni¿ zainstalowana wersja aplikacji
-because the enable flag for this app is set to 0, or is undefined	setup	pl	poniewa¿ flaga aktywacji dla tej aplikacji zosta³a ustawiona na 0 (zero) lub nie zosta³a zdefiniowana
-bottom	setup	pl	U do³u
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pl	jednak¿e <u>gor±co zachêcamy do wykonania kopii zapasowej</u> tabel bazy danych na wypadek gdyby skrypt spowodowa³ uszkodzenie danych. <br /><strong>Automatyczne skrypty mog± ³atwo doprowadziæ do uszkodzenia bazy danych.</strong>
+backup skipped!	setup	pl	Kopia zapasowa zostaÅ‚a pominiÄ™ta!
+backup started, this might take a few minutes ...	setup	pl	Kopia zapasowa w toku... to moÅ¼e zajÄ…Ä‡ trochÄ™ czasu
+because an application it depends upon was upgraded	setup	pl	ze wzglÄ™du na wykonanÄ… aktualizacjÄ™ aplikacji, od ktÃ³rej jest to zaleÅ¼ne
+because it depends upon	setup	pl	poniewaÅ¼ jest to zaleÅ¼ne
+because it is not a user application, or access is controlled via acl	setup	pl	poniewaÅ¼ nie jest to aplikacja uÅ¼ytkownika lub dostÄ™p kontrolowany jest przez mechanizm ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	pl	poniewaÅ¼ wymagana jest rÄ™czna instalacja tabel bazy danych, <br />lub definicje tabel nie byÅ‚y poprawne
+because it was manually disabled	setup	pl	poniewaÅ¼ zostaÅ‚o to rÄ™cznie wyÅ‚Ä…czone
+because its sources are missing	setup	pl	poniewaÅ¼ brakuje plikÃ³w z kodem ÅºrÃ³dÅ‚owym
+because of a failed upgrade or install	setup	pl	ze wzglÄ™du na niepoprawnÄ… aktualizacjÄ™ lub instalacjÄ™
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	pl	ze wzglÄ™du na niepoprawnÄ… aktualizacje lub poniewaÅ¼ baza danych jest nowsza niÅ¼ zainstalowana wersja aplikacji
+because the enable flag for this app is set to 0, or is undefined	setup	pl	poniewaÅ¼ flaga aktywacji dla tej aplikacji zostaÅ‚a ustawiona na 0 (zero) lub nie zostaÅ‚a zdefiniowana
+bottom	setup	pl	U doÅ‚u
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pl	jednakÅ¼e <u>gorÄ…co zachÄ™camy do wykonania kopii zapasowej</u> tabel bazy danych na wypadek gdyby skrypt spowodowaÅ‚ uszkodzenie danych. <br /><strong>Automatyczne skrypty mogÄ… Å‚atwo doprowadziÄ‡ do uszkodzenia bazy danych.</strong>
 cancel	setup	pl	Anuluj
-change system-charset	setup	pl	Zmieñ systemowy zestaw znaków
-charset	setup	pl	ISO-8859-2
-charset to convert to	setup	pl	Wykonaj kowersjê na zestaw znaków
-charsets used by the different languages	setup	pl	zestaw znaków u¿ywany przez ró¿ne jêzyki
-check installation	setup	pl	Sprawd¼ instalacjê
-check ip address of all sessions	setup	pl	Sprawdzaæ IP dla wszystkich sesji
-checking extension %1 is loaded or loadable	setup	pl	Sprawdzam, czy rozszerzenie %1 jest za³adowane lub mo¿liwe do za³adowania
-checking file-permissions of %1 for %2 %3: %4	setup	pl	Sprawdzam prawa dostêpu obiektu %1 dla %2 %3: %4
-checking for gd support...	setup	pl	Sprawdzam wsparcie dla modu³u GD...
+change system-charset	setup	pl	ZmieÅ„ systemowy zestaw znakÃ³w
+charset	setup	pl	utf-8
+charset to convert to	setup	pl	Wykonaj kowersjÄ™ na zestaw znakÃ³w
+charsets used by the different languages	setup	pl	zestaw znakÃ³w uÅ¼ywany przez rÃ³Å¼ne jÄ™zyki
+check installation	setup	pl	SprawdÅº instalacjÄ™
+check ip address of all sessions	setup	pl	SprawdzaÄ‡ IP dla wszystkich sesji
+checking extension %1 is loaded or loadable	setup	pl	Sprawdzam, czy rozszerzenie %1 jest zaÅ‚adowane lub moÅ¼liwe do zaÅ‚adowania
+checking file-permissions of %1 for %2 %3: %4	setup	pl	Sprawdzam prawa dostÄ™pu obiektu %1 dla %2 %3: %4
+checking for gd support...	setup	pl	Sprawdzam wsparcie dla moduÅ‚u GD...
 checking function %1 exists	setup	pl	Sprawdzam, czy funkcja '%1' istnieje
 checking php.ini	setup	pl	Sprawdzam plik php.ini
-checking required php version %1 (recommended %2)	setup	pl	Sprawdzam wersje PHP (wymana %1, po¿±dana %2)
-checking the egroupware installation	setup	pl	Sprawdzam instalacjê eGroupWare
+checking required php version %1 (recommended %2)	setup	pl	Sprawdzam wersje PHP (wymana %1, poÅ¼Ä…dana %2)
+checking the egroupware installation	setup	pl	Sprawdzam instalacjÄ™ eGroupWare
 click here	setup	pl	Kliknij tutaj
-click here to re-run the installation tests	setup	pl	Kliknij, aby ponowiæ testy instalacyjne
-comma separated ip-addresses or host-names, default access to setup from everywhere	setup	pl	oddzielone przecinkiem adresy IP lub nazwy domenowy, domy¶lnie dostêp jest otwarty dla wszystkich
-completed	setup	pl	Zakoñczono
-config password	setup	pl	Has³o (dla domeny)
-config username	setup	pl	U¿ytkownik (dla domeny)
+click here to re-run the installation tests	setup	pl	Kliknij, aby ponowiÄ‡ testy instalacyjne
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	pl	oddzielone przecinkiem adresy IP lub nazwy domenowy, domyÅ›lnie dostÄ™p jest otwarty dla wszystkich
+completed	setup	pl	ZakoÅ„czono
+config password	setup	pl	HasÅ‚o (dla domeny)
+config username	setup	pl	UÅ¼ytkownik (dla domeny)
 configuration	setup	pl	Konfiguracja
-configuration changed.	setup	pl	Konfiguracja zosta³a zmieniona
-configuration completed	setup	pl	Zakoñczono konfiguracjê
-configuration errors:	setup	pl	B³êdy w konfiguracji:
-configuration password	setup	pl	Has³o do konfiguracji tej domeny
-configuration user	setup	pl	U¿ytkownik do konfiguracji tej domeny
+configuration changed.	setup	pl	Konfiguracja zostaÅ‚a zmieniona
+configuration completed	setup	pl	ZakoÅ„czono konfiguracjÄ™
+configuration errors:	setup	pl	BÅ‚Ä™dy w konfiguracji:
+configuration password	setup	pl	HasÅ‚o do konfiguracji tej domeny
+configuration user	setup	pl	UÅ¼ytkownik do konfiguracji tej domeny
 configure now	setup	pl	Konfiguruj teraz
-confirm to delete this backup?	setup	pl	Czy na pewno usun±æ kopiê zapasow±?
+confirm to delete this backup?	setup	pl	Czy na pewno usunÄ…Ä‡ kopiÄ™ zapasowÄ…?
 contain	setup	pl	zawiera
-continue to the header admin	setup	pl	Przejd¼ do administrowania domenami eGW
+continue to the header admin	setup	pl	PrzejdÅº do administrowania domenami eGW
 convert	setup	pl	Konwertuj
-convert backup to charset selected above	setup	pl	Wykonaj konwersjê kopii zapasowej do zestawu znaków wskazanego powy¿ej
-could not open header.inc.php for writing!	setup	pl	Plik 'header.inc.php' nie mo¿e byæ zapisany przez serwer WWW.
-country selection	setup	pl	Wybór kraju
-create	setup	pl	Twórz
-create a backup before upgrading the db	setup	pl	utwórz kopiê zapasow± przed wykonaniem aktualizacji bazy danych
-create admin account	setup	pl	Utwórz konto administratora
+convert backup to charset selected above	setup	pl	Wykonaj konwersjÄ™ kopii zapasowej do zestawu znakÃ³w wskazanego powyÅ¼ej
+could not open header.inc.php for writing!	setup	pl	Plik 'header.inc.php' nie moÅ¼e byÄ‡ zapisany przez serwer WWW.
+country selection	setup	pl	WybÃ³r kraju
+create	setup	pl	TwÃ³rz
+create a backup before upgrading the db	setup	pl	utwÃ³rz kopiÄ™ zapasowÄ… przed wykonaniem aktualizacji bazy danych
+create admin account	setup	pl	UtwÃ³rz konto administratora
 create database	setup	pl	Tworzenie bazy danych
-create demo accounts	setup	pl	Utwórz konta demonstracyjne
+create demo accounts	setup	pl	UtwÃ³rz konta demonstracyjne
 create one now	setup	pl	Create one now
-create or edit the egroupware configuration file: header.inc.php:	setup	pl	Utwórz lub edytuj plik konfiguracyjny eGroupWare: 'header.inc.php'
-create the empty database -	setup	pl	Utwórz pust± bazê danych -
-create the empty database and grant user permissions -	setup	pl	Utwórz pust± bazê danych i nadaj uprawnienia u¿ytkowikowi
-create your header.inc.php	setup	pl	Utwórz plik 'header.inc.php'
+create or edit the egroupware configuration file: header.inc.php:	setup	pl	UtwÃ³rz lub edytuj plik konfiguracyjny eGroupWare: 'header.inc.php'
+create the empty database -	setup	pl	UtwÃ³rz pustÄ… bazÄ™ danych -
+create the empty database and grant user permissions -	setup	pl	UtwÃ³rz pustÄ… bazÄ™ danych i nadaj uprawnienia uÅ¼ytkowikowi
+create your header.inc.php	setup	pl	UtwÃ³rz plik 'header.inc.php'
 created	setup	pl	utworzono
 created header.inc.php!	setup	pl	Utworzono 'header.inc.php'
 creating tables	setup	pl	Tworzenie tabel
-current configuration:	setup	pl	Bie¿±ca konfiguracja:
-current system-charset	setup	pl	Bie¿±cy systemowy zestaw znaków
-current system-charset is %1.	setup	pl	Bie¿±cy systemowy zestaw znaków to %1.
+current configuration:	setup	pl	BieÅ¼Ä…ca konfiguracja:
+current system-charset	setup	pl	BieÅ¼Ä…cy systemowy zestaw znakÃ³w
+current system-charset is %1.	setup	pl	BieÅ¼Ä…cy systemowy zestaw znakÃ³w to %1.
 current version	setup	pl	Aktualna wersja
-currently installed languages: %1 <br />	setup	pl	Zainstalowane wersje jêzykowe: %1 <br />
+currently installed languages: %1 <br />	setup	pl	Zainstalowane wersje jÄ™zykowe: %1 <br />
 database	setup	pl	Baza danych
 database instance (egw domain)	setup	pl	Instancja bazy danych domena (eGroupWare)
-database is version %1 and up to date.	setup	pl	wersja bazy danych to %1 i jest to najnowsza dostêpna wersja
-db root password	setup	pl	Has³o root do bazy danych
-db root username	setup	pl	nazwa u¿ytkownika root bazy danych
-default file system space per user/group ?	setup	pl	Domy¶lny rozmiar plików na u¿ytkownika/grupê ?
+database is version %1 and up to date.	setup	pl	wersja bazy danych to %1 i jest to najnowsza dostÄ™pna wersja
+db root password	setup	pl	HasÅ‚o root do bazy danych
+db root username	setup	pl	nazwa uÅ¼ytkownika root bazy danych
+default file system space per user/group ?	setup	pl	DomyÅ›lny rozmiar plikÃ³w na uÅ¼ytkownika/grupÄ™ ?
 delete all my tables and data	setup	pl	Uswanie wszystkich moich tabel i danych
-delete all old languages and install new ones	setup	pl	Usuñ wszystkie jêzyki i zainstaluj je na nowo
+delete all old languages and install new ones	setup	pl	UsuÅ„ wszystkie jÄ™zyki i zainstaluj je na nowo
 deleting tables	setup	pl	Usuwanie tabel
 demo server setup	setup	pl	Demo Server Setup
-deny access	setup	pl	Odmów dostêpu
-deny all users access to grant other users access to their entries ?	setup	pl	Zabroniæ u¿ytkownikom nadawania uprawnieñ dla innych u¿ytkowników?
+deny access	setup	pl	OdmÃ³w dostÄ™pu
+deny all users access to grant other users access to their entries ?	setup	pl	ZabroniÄ‡ uÅ¼ytkownikom nadawania uprawnieÅ„ dla innych uÅ¼ytkownikÃ³w?
 deregistered	setup	pl	Wyrejestrowano
 details for admin account	setup	pl	Dane konta administratora
-did not find any valid db support!	setup	pl	Nie znaleziono ¿adnego wsparcia dla znanych baz danych!
+did not find any valid db support!	setup	pl	Nie znaleziono Å¼adnego wsparcia dla znanych baz danych!
 domain	setup	pl	Ustawienia domeny
 dont touch my data	setup	pl	Nie dotykaj moich danych
-edit current configuration	setup	pl	Edytuj bie¿±c± konfiguracjê
-enter some random text for app session encryption	setup	pl	Wprowad¼ losowy tekst  dla zaszyfrowania sesji aplikacji
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	pl	Wprowad¼ losowy tekst  dla zaszyfrowania <br />sesji aplikacji (wymaga mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pl	Podaj pe³n± ¶cie¿kê do katalogu dla plików tymczasowych.<br />Na przyk³ad: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pl	Podaj pe³n± ¶cie¿kê do katalogu dla plików tymczasowych.<br />Na przyk³ad: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	pl	Podaj pe³n± ¶ie¿kê do plików u¿ytkowników i grup.<br />Na przyk³ad: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:files	setup	pl	Podaj pe³n± ¶ie¿kê do plików u¿ytkowników i grup.<br />Na przyk³ad: /files, E:\FILES
-enter the hostname of the machine on which this server is running	setup	pl	Podaj nazwê komputera, na którym jest uruchomiony serwer
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala eGroupWare's URL.<br />Na przyk³ad: http://www.domain.com/egroupware   or   /egroupware<br /><b>Bez koñcz±cego ciacha (,,/'')</b>
-enter the site password for peer servers	setup	pl	Wprowad¼ has³o serwisu dla serwerów równorzêdnych (peer servers)
-enter the site username for peer servers	setup	pl	Wprowad¼ nazwê u¿ytkownika serwisu dla serwerów równorzêdnych (peer servers)
-enter the title for your site	setup	pl	Podaj nazwê swojego portala (serwisu)
-enter your default ftp server	setup	pl	Podaj domy¶lny serwer FTP
+edit current configuration	setup	pl	Edytuj bieÅ¼Ä…cÄ… konfiguracjÄ™
+enter some random text for app session encryption	setup	pl	WprowadÅº losowy tekst  dla zaszyfrowania sesji aplikacji
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	pl	WprowadÅº losowy tekst  dla zaszyfrowania <br />sesji aplikacji (wymaga mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pl	Podaj peÅ‚nÄ… Å›cieÅ¼kÄ™ do katalogu dla plikÃ³w tymczasowych.<br />Na przykÅ‚ad: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pl	Podaj peÅ‚nÄ… Å›cieÅ¼kÄ™ do katalogu dla plikÃ³w tymczasowych.<br />Na przykÅ‚ad: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pl	Podaj peÅ‚nÄ… Å›ieÅ¼kÄ™ do plikÃ³w uÅ¼ytkownikÃ³w i grup.<br />Na przykÅ‚ad: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	pl	Podaj peÅ‚nÄ… Å›ieÅ¼kÄ™ do plikÃ³w uÅ¼ytkownikÃ³w i grup.<br />Na przykÅ‚ad: /files, E:\FILES
+enter the hostname of the machine on which this server is running	setup	pl	Podaj nazwÄ™ komputera, na ktÃ³rym jest uruchomiony serwer
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala eGroupWare's URL.<br />Na przykÅ‚ad: http://www.domain.com/egroupware   or   /egroupware<br /><b>Bez koÅ„czÄ…cego ciacha (,,/'')</b>
+enter the site password for peer servers	setup	pl	WprowadÅº hasÅ‚o serwisu dla serwerÃ³w rÃ³wnorzÄ™dnych (peer servers)
+enter the site username for peer servers	setup	pl	WprowadÅº nazwÄ™ uÅ¼ytkownika serwisu dla serwerÃ³w rÃ³wnorzÄ™dnych (peer servers)
+enter the title for your site	setup	pl	Podaj nazwÄ™ swojego portala (serwisu)
+enter your default ftp server	setup	pl	Podaj domyÅ›lny serwer FTP
 enter your http proxy server	setup	pl	Podaj adres serwera proxy HTTP
 enter your http proxy server port	setup	pl	Podaj port serwera proxy HTTP
-force selectbox	setup	pl	Wymu¶ wybór z listy
-go back	setup	pl	Powrót
-go to	setup	pl	Id¼ do
-grant access	setup	pl	Przydziel dostêp
-has a version mismatch	setup	pl	ma niezgodn± wersjê
+force selectbox	setup	pl	WymuÅ› wybÃ³r z listy
+go back	setup	pl	PowrÃ³t
+go to	setup	pl	IdÅº do
+grant access	setup	pl	Przydziel dostÄ™p
+has a version mismatch	setup	pl	ma niezgodnÄ… wersjÄ™
 header admin login	setup	pl	Logowanie do administrowania domenami eGW
-header password	setup	pl	Has³o do zarz±dzania domenami
-header username	setup	pl	U¿ytkownik do zarz±dzania domenami
+header password	setup	pl	HasÅ‚o do zarzÄ…dzania domenami
+header username	setup	pl	UÅ¼ytkownik do zarzÄ…dzania domenami
 header.inc.php successful written.	setup	pl	Plik header.inc.php zapisano poprawnie
 hooks deregistered	setup	pl	Wyrejestrowano uchwyty
 hooks registered	setup	pl	Zarejestrowano uchwyty
 host information	setup	pl	Informacja o stacji roboczej
 hour (0-24)	setup	pl	godzina (0-24)
-however the tables are still in the database	setup	pl	Mimo to tabele s± ci±gle w bazie danych
+however the tables are still in the database	setup	pl	Mimo to tabele sÄ… ciÄ…gle w bazie danych
 however, the application is otherwise installed	setup	pl	Mimo to aplikacja jest zainstalowana
-however, the application may still work	setup	pl	Mimo to aplikacja mo¿e ci±gle pracowaæ
+however, the application may still work	setup	pl	Mimo to aplikacja moÅ¼e ciÄ…gle pracowaÄ‡
 install	setup	pl	Instaluj
 install applications	setup	pl	Instaluj aplikacji
-install language	setup	pl	Instaluj wersje jêzykowe
+install language	setup	pl	Instaluj wersje jÄ™zykowe
 installed	setup	pl	Zainstalowano
 is broken	setup	pl	is broken
 is disabled	setup	pl	Jest zablokowane
 ldap accounts context	setup	pl	Kontekst kont LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	pl	Domy¶lny prefiks katalogu domowego LDAP (np. /home dla /home/username)
-ldap default shell (e.g. /bin/bash)	setup	pl	Domy¶lna pow³oka LDAP (e.g. /bin/bash)
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	pl	DomyÅ›lny prefiks katalogu domowego LDAP (np. /home dla /home/username)
+ldap default shell (e.g. /bin/bash)	setup	pl	DomyÅ›lna powÅ‚oka LDAP (e.g. /bin/bash)
 ldap encryption type	setup	pl	Typ szyfrowania LDAP
 ldap groups context	setup	pl	Kontekst grup LDAP
 ldap host	setup	pl	Stacja (host) LDAP
-ldap root password	setup	pl	Has³o u¿ytkownika root LDAP
+ldap root password	setup	pl	HasÅ‚o uÅ¼ytkownika root LDAP
 ldap rootdn	setup	pl	LDAP rootdn
 logout	setup	pl	Wyloguj
-make sure that your database is created and the account permissions are set	setup	pl	Upewnij siê, ¿e baza danych zosta³a utworzona i uprawnienia kont s± ustawione
-manage applications	setup	pl	Zarz±dzanie aplikacjami
-manage languages	setup	pl	Zarz±dzanie jêzykami
+make sure that your database is created and the account permissions are set	setup	pl	Upewnij siÄ™, Å¼e baza danych zostaÅ‚a utworzona i uprawnienia kont sÄ… ustawione
+manage applications	setup	pl	ZarzÄ…dzanie aplikacjami
+manage languages	setup	pl	ZarzÄ…dzanie jÄ™zykami
 maximum account id (e.g. 65535 or 1000000)	setup	pl	Maksymalny ID konta (np. 65535 lub 1000000)
 mcrypt algorithm (default tripledes)	setup	pl	Mcrypt algorithm (default TRIPLEDES)
 mcrypt mode (default cbc)	setup	pl	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pl	Ustawienia Mcrypt (wymaga rozszerzenia PHP: mcrypt)
 minimum account id (e.g. 500 or 100, etc.)	setup	pl	Minimalny ID konta (np. 500 lub 100, itd.)
-multi-language support setup	setup	pl	Instalacja wersji jêzykowych
+multi-language support setup	setup	pl	Instalacja wersji jÄ™zykowych
 never	setup	pl	Nigdy
 no	setup	pl	Nie
-no algorithms available	setup	pl	brak dostêpnych algorytmów
-no modes available	setup	pl	brak dostêpnych trybów
+no algorithms available	setup	pl	brak dostÄ™pnych algorytmÃ³w
+no modes available	setup	pl	brak dostÄ™pnych trybÃ³w
 not complete	setup	pl	Nie gotowe
-not completed	setup	pl	Nie zakoñczone
+not completed	setup	pl	Nie zakoÅ„czone
 not ready for this stage yet	setup	pl	Jeszcze nie gotowe na tym etapie
-note: you will be able to customize this later	setup	pl	Uwaga: Bêdzie mo¿na zmieniæ to pó¼niej
+note: you will be able to customize this later	setup	pl	Uwaga: BÄ™dzie moÅ¼na zmieniÄ‡ to pÃ³Åºniej
 ok	setup	pl	OK
 once the database is setup correctly	setup	pl	Once the database is setup correctly
-one month	setup	pl	Jeden miesi±c
-one week	setup	pl	Jeden tydzieñ
-only add languages that are not in the database already	setup	pl	Dodaj tylko te jêzyki, których nie ma jeszcze w bazie danych
+one month	setup	pl	Jeden miesiÄ…c
+one week	setup	pl	Jeden tydzieÅ„
+only add languages that are not in the database already	setup	pl	Dodaj tylko te jÄ™zyki, ktÃ³rych nie ma jeszcze w bazie danych
 only add new phrases	setup	pl	Dodaj tylko nowe zdania
-passwords did not match, please re-enter	setup	pl	Has³a nie s± identyczne, proszê wpisaæ je jeszcze raz
-path information	setup	pl	¦cie¿ki
-please check for sql scripts within the application's directory	setup	pl	Proszê sprawdziæ skrypty SQL w katalogu aplikacji
-please configure egroupware for your environment	setup	pl	Proszê skonfigurowaæ eGroupWare dla Twojego ¶rodowiska
-please install	setup	pl	Proszê zainstalowaæ
-please login to egroupware and run the admin application for additional site configuration	setup	pl	Proszê zalogowaæ siê siê do eGroupWare i wej¶æ do modu³u Administracja dla dalszej konfiguracji
-possible solutions	setup	pl	Mo¿liwe rozwiazania
+passwords did not match, please re-enter	setup	pl	HasÅ‚a nie sÄ… identyczne, proszÄ™ wpisaÄ‡ je jeszcze raz
+path information	setup	pl	ÅšcieÅ¼ki
+please check for sql scripts within the application's directory	setup	pl	ProszÄ™ sprawdziÄ‡ skrypty SQL w katalogu aplikacji
+please configure egroupware for your environment	setup	pl	ProszÄ™ skonfigurowaÄ‡ eGroupWare dla Twojego Å›rodowiska
+please install	setup	pl	ProszÄ™ zainstalowaÄ‡
+please login to egroupware and run the admin application for additional site configuration	setup	pl	ProszÄ™ zalogowaÄ‡ siÄ™ siÄ™ do eGroupWare i wejÅ›Ä‡ do moduÅ‚u Administracja dla dalszej konfiguracji
+possible solutions	setup	pl	MoÅ¼liwe rozwiazania
 potential problem	setup	pl	Potencjalny problem
 preferences	setup	pl	Ustawienia
 problem resolution	setup	pl	Rozwiazanie problemu
 process	setup	pl	Process
-re-check my database	setup	pl	Sprawd¼ moj± bazê
-re-check my installation	setup	pl	Sprawd¼ moj± instalacjê
-re-enter password	setup	pl	Podaj powtórnie has³o
-really uninstall all applications	setup	pl	NA PEWNO usun±æ WSZYSTKIE aplikacje
+re-check my database	setup	pl	SprawdÅº mojÄ… bazÄ™
+re-check my installation	setup	pl	SprawdÅº mojÄ… instalacjÄ™
+re-enter password	setup	pl	Podaj powtÃ³rnie hasÅ‚o
+really uninstall all applications	setup	pl	NA PEWNO usunÄ…Ä‡ WSZYSTKIE aplikacje
 registered	setup	pl	Zarejestrowano
-remove	setup	pl	Usuñ
-requires reinstall or manual repair	setup	pl	Wymaga reinstalacji lub rêcznej naprawy
+remove	setup	pl	UsuÅ„
+requires reinstall or manual repair	setup	pl	Wymaga reinstalacji lub rÄ™cznej naprawy
 requires upgrade	setup	pl	Wymaga aktualizacji
-resolve	setup	pl	Rozwi±¿
+resolve	setup	pl	RozwiÄ…Å¼
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pl	Select an app, enter a target version, then submit to process to that version.<br />If you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 select the default applications to which your users will have access	setup	pl	Select the default applications to which your users will have access
-select the desired action(s) from the available choices	setup	pl	Wybierz z dostêpnych ¿±dane polecenie
+select the desired action(s) from the available choices	setup	pl	Wybierz z dostÄ™pnych Å¼Ä…dane polecenie
 select to download file	setup	pl	Select to download file
-select where you want to store/retrieve filesystem information	setup	pl	Wybierz gdzie chcesz przechowywaæ informacje o systemie plików
-select where you want to store/retrieve user accounts	setup	pl	Wybierz gdzie chcesz przechowywaæ konta u¿ytkowników
+select where you want to store/retrieve filesystem information	setup	pl	Wybierz gdzie chcesz przechowywaÄ‡ informacje o systemie plikÃ³w
+select where you want to store/retrieve user accounts	setup	pl	Wybierz gdzie chcesz przechowywaÄ‡ konta uÅ¼ytkownikÃ³w
 select which group(s) will be imported (group membership will be maintained)	setup	pl	Select which group(s) will be imported (group membership will be maintained)
-select which languages you would like to use	setup	pl	Wybierz te jêzyki, które chcesz zainstalowaæ
-select which method of upgrade you would like to do	setup	pl	Wybierz metodê aktualizacji
-select which type of authentication you are using	setup	pl	Wybierz rodzaj autentykacji, który chcesz u¿ywaæ
+select which languages you would like to use	setup	pl	Wybierz te jÄ™zyki, ktÃ³re chcesz zainstalowaÄ‡
+select which method of upgrade you would like to do	setup	pl	Wybierz metodÄ™ aktualizacji
+select which type of authentication you are using	setup	pl	Wybierz rodzaj autentykacji, ktÃ³ry chcesz uÅ¼ywaÄ‡
 select which user(s) will be exported	setup	pl	Select which user(s) will be exported
 select which user(s) will be imported	setup	pl	Select which user(s) will be imported
 select which user(s) will have admin privileges	setup	pl	Select which user(s) will have admin privileges
 select your old version	setup	pl	Select your old version
-selectbox	setup	pl	Wybór z listy
+selectbox	setup	pl	WybÃ³r z listy
 setup	setup	pl	Setup
 setup/config admin login	setup	pl	Logowanie do konfiguracji domeny eGW
-show 'powered by' logo on	setup	pl	Wy¶wietlaj logo 'dzia³a w oparciu o'
+show 'powered by' logo on	setup	pl	WyÅ›wietlaj logo 'dziaÅ‚a w oparciu o'
 some or all of its tables are missing	setup	pl	Some or all of its tables are missing
 status	setup	pl	Status
-step %1 - advanced application management	setup	pl	Step %1 - Zaawansowane zarz±dzanie aplikacj±
+step %1 - advanced application management	setup	pl	Step %1 - Zaawansowane zarzÄ…dzanie aplikacjÄ…
 step %1 - configuration	setup	pl	Krok %1 - Konfiguracja
-step %1 - language management	setup	pl	Krok %1 - Zarz±dzanie wersjami jêzykowymi
-step %1 - simple application management	setup	pl	Krok %1 - Proste zarz±dzanie aplikacj±
+step %1 - language management	setup	pl	Krok %1 - ZarzÄ…dzanie wersjami jÄ™zykowymi
+step %1 - simple application management	setup	pl	Krok %1 - Proste zarzÄ…dzanie aplikacjÄ…
 table change messages	setup	pl	Komunikaty zmiany tabel
-tables dropped	setup	pl	Usuniêto tabele
+tables dropped	setup	pl	UsuniÄ™to tabele
 tables installed, unless there are errors printed above	setup	pl	Zainstalowano tabele, unless there are errors printed above
 tables upgraded	setup	pl	Tabele zaktualizowano
 target version	setup	pl	Wersja docelowa
 text entry	setup	pl	Wpisywanie tekstu
-the table definition was correct, and the tables were installed	setup	pl	Definicja tabel jest poprawna i tabele zosta³y zainstalowane
+the table definition was correct, and the tables were installed	setup	pl	Definicja tabel jest poprawna i tabele zostaÅ‚y zainstalowane
 the tables	setup	pl	tabele
-this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomo¿e Ci zainstalowaæ lub uaktualniæ wersje jêzykowe eGroupWare
-this stage is completed<br />	setup	pl	Etap zakoñczony<br />
-top	setup	pl	U góry
-translations added	setup	pl	Dodano t³umaczenia
-translations removed	setup	pl	Usuniêto t³umaczenia
-translations upgraded	setup	pl	Zaktualizowano t³umaczenia
+this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomoÅ¼e Ci zainstalowaÄ‡ lub uaktualniÄ‡ wersje jÄ™zykowe eGroupWare
+this stage is completed<br />	setup	pl	Etap zakoÅ„czony<br />
+top	setup	pl	U gÃ³ry
+translations added	setup	pl	Dodano tÅ‚umaczenia
+translations removed	setup	pl	UsuniÄ™to tÅ‚umaczenia
+translations upgraded	setup	pl	Zaktualizowano tÅ‚umaczenia
 two weeks	setup	pl	Dwa tygodnie
 uninstall all applications	setup	pl	Odinstaluj wszystkie aplikacje
 uninstalled	setup	pl	Odinstalowano
 upgrade	setup	pl	Aktualizacja
 upgraded	setup	pl	Zaktualizowano
 upgrading tables	setup	pl	Aktualizacja tabel
-use cookies to pass sessionid	setup	pl	U¿ywaæ cookie do przechowywania sessionid
+use cookies to pass sessionid	setup	pl	UÅ¼ywaÄ‡ cookie do przechowywania sessionid
 use pure html compliant code (not fully working yet)	setup	pl	Use pure HTML compliant code (not fully working yet)
-users choice	setup	pl	Wybór u¿ytkownika
+users choice	setup	pl	WybÃ³r uÅ¼ytkownika
 version mismatch	setup	pl	Niezgodne wersje
 we will automatically update your tables/records to %1	setup	pl	We will automatically update your tables/records to %1
 would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like eGroupWare to cache the phpgw info array ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzaæ czy jest nowa wersja eGroupWare<br />gdy loguje siê administrator?
+would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzaÄ‡ czy jest nowa wersja eGroupWare<br />gdy loguje siÄ™ administrator?
 would you like to show each application's upgrade status ?	setup	pl	Would you like to show each application's upgrade status ?
 yes	setup	pl	Tak
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
 you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of eGroupWare
-you appear to have php session support. enabling php sessions.	setup	pl	Wygl±da na to, ¿e jest dostêpne wsparcie dla sesji PHP. Uruchamiam sesje PHP.
-you appear to have xml support enabled	setup	pl	Wygl±da na to, ¿e jest dostêpne wsparcie dla XML.
+you appear to have php session support. enabling php sessions.	setup	pl	WyglÄ…da na to, Å¼e jest dostÄ™pne wsparcie dla sesji PHP. Uruchamiam sesje PHP.
+you appear to have xml support enabled	setup	pl	WyglÄ…da na to, Å¼e jest dostÄ™pne wsparcie dla XML.
 you are ready for this stage, but this stage is not yet written.<br />	setup	pl	You are ready for this stage, but this stage is not yet written.<br />
-you can install it by running:	setup	pl	Mo¿na zainstalowaæ to wydaj±c polecenie:
-you didn't enter a config password for domain %1	setup	pl	Nie podano has³a administratora dla domeny '%1'.
+you can install it by running:	setup	pl	MoÅ¼na zainstalowaÄ‡ to wydajÄ…c polecenie:
+you didn't enter a config password for domain %1	setup	pl	Nie podano hasÅ‚a administratora dla domeny '%1'.
 you didn't enter a config username for domain %1	setup	pl	Nie podano nazwy administratora dla domeny '%1'.
-you didn't enter a header admin password	setup	pl	Nie podano has³a do administracji domenami eGW
-you didn't enter a header admin username	setup	pl	Nie podano nazwy u¿ytkownika do administracji domenami eGW
+you didn't enter a header admin password	setup	pl	Nie podano hasÅ‚a do administracji domenami eGW
+you didn't enter a header admin username	setup	pl	Nie podano nazwy uÅ¼ytkownika do administracji domenami eGW
 you do not have any languages installed. please install one now <br />	setup	pl	You do not have any languages installed. Please install one now <br />
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	pl	Nie utworzono dot±d pliku konfiguracyjnego 'header.inc.php'!<br />Mo¿esz zrobiæ to teraz.
-you have successfully logged out	setup	pl	Pomy¶lnie wylogowano z eGroupWare
-you must enter a username for the admin	setup	pl	Musisz podaæ nazwê administratora
-you need to add at least one egroupware domain / database instance.	setup	pl	Nale¿y dodaæ przynajmniej jedn± domenê eGroupWare (instancjê bazy danych) w pliku 'header.inc.php'
-you need to add some domains to your header.inc.php.	setup	pl	Nale¿y dodaæ przynajmniej jedn± domenê eGroupWare (instancjê bazy danych) w pliku 'header.inc.php'
-you need to configure egroupware:	setup	pl	Musisz przeprowadziæ konfiguracjê eGroupWare:
-you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pl	Nale¿y poprawiæ poni¿sze b³êdy zanim plik konfiguracyjny 'header.inc.php' zostanie zapisany!
-you need to save the settings you made here first!	setup	pl	Nale¿y wpierw zapisaæ zmiany, które zosta³y wykonane!
-you need to select your current charset!	setup	pl	Nale¿y wybraæ bie¿±cy zestaw znaków!
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	pl	Mo¿esz odinstalowaæ j± i zainstalowaæ ponownie lub podj±æ próbê rêcznej naprawy.
-you're using an old configuration file format...	setup	pl	U¿ywasz starego formatu pliku konfiguracyjnego
-you're using an old header.inc.php version...	setup	pl	U¿ywasz starej wersji pliku 'header.inc.php'
-your applications are current	setup	pl	Aplikacje s± w najnowszych wersjach
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	pl	Nie utworzono dotÄ…d pliku konfiguracyjnego 'header.inc.php'!<br />MoÅ¼esz zrobiÄ‡ to teraz.
+you have successfully logged out	setup	pl	PomyÅ›lnie wylogowano z eGroupWare
+you must enter a username for the admin	setup	pl	Musisz podaÄ‡ nazwÄ™ administratora
+you need to add at least one egroupware domain / database instance.	setup	pl	NaleÅ¼y dodaÄ‡ przynajmniej jednÄ… domenÄ™ eGroupWare (instancjÄ™ bazy danych) w pliku 'header.inc.php'
+you need to add some domains to your header.inc.php.	setup	pl	NaleÅ¼y dodaÄ‡ przynajmniej jednÄ… domenÄ™ eGroupWare (instancjÄ™ bazy danych) w pliku 'header.inc.php'
+you need to configure egroupware:	setup	pl	Musisz przeprowadziÄ‡ konfiguracjÄ™ eGroupWare:
+you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pl	NaleÅ¼y poprawiÄ‡ poniÅ¼sze bÅ‚Ä™dy zanim plik konfiguracyjny 'header.inc.php' zostanie zapisany!
+you need to save the settings you made here first!	setup	pl	NaleÅ¼y wpierw zapisaÄ‡ zmiany, ktÃ³re zostaÅ‚y wykonane!
+you need to select your current charset!	setup	pl	NaleÅ¼y wybraÄ‡ bieÅ¼Ä…cy zestaw znakÃ³w!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	pl	MoÅ¼esz odinstalowaÄ‡ jÄ… i zainstalowaÄ‡ ponownie lub podjÄ…Ä‡ prÃ³bÄ™ rÄ™cznej naprawy.
+you're using an old configuration file format...	setup	pl	UÅ¼ywasz starego formatu pliku konfiguracyjnego
+you're using an old header.inc.php version...	setup	pl	UÅ¼ywasz starej wersji pliku 'header.inc.php'
+your applications are current	setup	pl	Aplikacje sÄ… w najnowszych wersjach
 your backup directory '%1' %2	setup	pl	Katalog kopii zapasowych '%1' %2
 your database does not exist	setup	pl	Baza danych nie istnieje
 your database is not working!	setup	pl	Baza danych nie pracuje!
-your database is working, but you dont have any applications installed	setup	pl	Twoja baza pracuje, ale nie ma zainstalowanej ¿adnej aplikacji
+your database is working, but you dont have any applications installed	setup	pl	Twoja baza pracuje, ale nie ma zainstalowanej Å¼adnej aplikacji
 your egroupware api is current	setup	pl	eGroupWare API jest w najnowszej wersji
-your files directory '%1' %2	setup	pl	Katalog plików '%1' %2
-your header admin password is not set. please set it now!	setup	pl	Brak has³a administratora domen eGW. Proszê ustawiæ has³o teraz!
+your files directory '%1' %2	setup	pl	Katalog plikÃ³w '%1' %2
+your header admin password is not set. please set it now!	setup	pl	Brak hasÅ‚a administratora domen eGW. ProszÄ™ ustawiÄ‡ hasÅ‚o teraz!
 your header.inc.php needs upgrading.	setup	pl	Plik 'header.inc.php' wymaga aktualizacji
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pl	Plik 'header.inc.php' wymaga aktualizacji.<br /><blink><b class="msg">UWAGA!</b></blink><br /><b>WYKONAJ KOPIÊ ZAPASOW¡!</b>
-your installed version of %1 is %2, required is at least %3, please run:	setup	pl	Zainstalowan± wersj± komponentu '%1' jest '%2', podczas gdy wymagana jest przynajmniej %3, proszê wykonaj:
-your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pl	PHP nie posiada odpowiedniej wersji biblioteki GD. Potrzebna jest wersja 1.8 lub nowsza aby ogl±daæ wykresy Gantta w Menad¿erze Projektów
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pl	Plik 'header.inc.php' wymaga aktualizacji.<br /><blink><b class="msg">UWAGA!</b></blink><br /><b>WYKONAJ KOPIÄ˜ ZAPASOWÄ„!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	pl	ZainstalowanÄ… wersjÄ… komponentu '%1' jest '%2', podczas gdy wymagana jest przynajmniej %3, proszÄ™ wykonaj:
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pl	PHP nie posiada odpowiedniej wersji biblioteki GD. Potrzebna jest wersja 1.8 lub nowsza aby oglÄ…daÄ‡ wykresy Gantta w MenadÅ¼erze ProjektÃ³w
 your tables are current	setup	pl	Your tables are current
-your tables will be dropped and you will lose data	setup	pl	Tabele zostan± usuniête, a Twoje dane utracone!
+your tables will be dropped and you will lose data	setup	pl	Tabele zostanÄ… usuniÄ™te, a Twoje dane utracone!
 your temporary directory '%1' %2	setup	pl	Katalog tymczasowy '%1' %2

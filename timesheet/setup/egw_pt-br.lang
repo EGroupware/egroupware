@@ -1,7 +1,7 @@
-2 month ago	timesheet	pt-br	2 meses atrás
-2 years ago	timesheet	pt-br	2 anos atrás
-3 years ago	timesheet	pt-br	3 anos atrás
-actions	timesheet	pt-br	Ações
+2 month ago	timesheet	pt-br	2 meses atrÃ¡s
+2 years ago	timesheet	pt-br	2 anos atrÃ¡s
+3 years ago	timesheet	pt-br	3 anos atrÃ¡s
+actions	timesheet	pt-br	AÃ§Ãµes
 all projects	timesheet	pt-br	Todos projetos
 both: allow to use projectmanager and free project-names	admin	pt-br	Ambos: permitir usar Gerenciador de Projetos e nomes de projetos livres
 by	timesheet	pt-br	por
@@ -9,7 +9,7 @@ create new links	timesheet	pt-br	Criar novos links
 creating new entry	timesheet	pt-br	criando novo registro
 delete this entry	timesheet	pt-br	Remover este registro
 edit this entry	timesheet	pt-br	Editar este registro
-empty if identical to duration	timesheet	pt-br	vazio se idêntico à duração
+empty if identical to duration	timesheet	pt-br	vazio se idÃªntico Ã  duraÃ§Ã£o
 end	timesheet	pt-br	Fim
 entry deleted	timesheet	pt-br	Registro removido
 entry saved	timesheet	pt-br	Registro salvo
@@ -18,35 +18,35 @@ error saving the entry!!!	timesheet	pt-br	Erro salvando o registro!!
 existing links	timesheet	pt-br	Links existentes
 full: use only projectmanager	admin	pt-br	Completo: usar apenas Gerenciador de Projetos
 general	timesheet	pt-br	Geral
-last modified	timesheet	pt-br	Modificado por último
-last month	timesheet	pt-br	Último mês
-last week	timesheet	pt-br	Última semana
-last year	timesheet	pt-br	Último ano
+last modified	timesheet	pt-br	Modificado por Ãºltimo
+last month	timesheet	pt-br	Ãšltimo mÃªs
+last week	timesheet	pt-br	Ãšltima semana
+last year	timesheet	pt-br	Ãšltimo ano
 leave it empty for a full week	timesheet	pt-br	Deixar vazio para uma semana inteira
 links	timesheet	pt-br	Links
 no details	timesheet	pt-br	Sem detalhes
 no project	timesheet	pt-br	Nenhum projeto
 none: use only free project-names	admin	pt-br	Nenhum: usar apenas nomes de projetos livres
-or endtime	timesheet	pt-br	or horário final
-permission denied!!!	timesheet	pt-br	Permissão negada !!
-price	timesheet	pt-br	Preço
-projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos
+or endtime	timesheet	pt-br	or horÃ¡rio final
+permission denied!!!	timesheet	pt-br	PermissÃ£o negada !!
+price	timesheet	pt-br	PreÃ§o
+projectmanager integration	admin	pt-br	IntegraÃ§Ã£o com Gerenciador de Projetos
 quantity	timesheet	pt-br	Quantidade
 save & new	timesheet	pt-br	Salvar e Novo
-saves the changes made	timesheet	pt-br	Salvar as alterações feitas
+saves the changes made	timesheet	pt-br	Salvar as alteraÃ§Ãµes feitas
 saves this entry and add a new one	timesheet	pt-br	Salvar este registro e adicionar um novo
-select a price	timesheet	pt-br	Selecionar um preço
+select a price	timesheet	pt-br	Selecionar um preÃ§o
 select a project	timesheet	pt-br	Selecionar um projeto
-start	timesheet	pt-br	Início
-starttime	timesheet	pt-br	Horário inicial
-starttime has to be before endtime !!!	timesheet	pt-br	Horário inicial deve ser anterior ao horário final !!!
+start	timesheet	pt-br	InÃ­cio
+starttime	timesheet	pt-br	HorÃ¡rio inicial
+starttime has to be before endtime !!!	timesheet	pt-br	HorÃ¡rio inicial deve ser anterior ao horÃ¡rio final !!!
 sum %1:	timesheet	pt-br	Soma %1:
-this month	timesheet	pt-br	Este mês
+this month	timesheet	pt-br	Este mÃªs
 this week	timesheet	pt-br	Esta semana
 this year	timesheet	pt-br	Este ano
 timesheet	common	pt-br	Planilha de Tempo
-unitprice	timesheet	pt-br	Unidade de preço
+unitprice	timesheet	pt-br	Unidade de preÃ§o
 view this entry	timesheet	pt-br	Exibir este registro
 week	timesheet	pt-br	Semana
 yesterday	timesheet	pt-br	Ontem
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt-br	Sua base de dados NÃO está atualizada (%1 x %2). Por favor execute %3setup%4 para atualizá-la.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt-br	Sua base de dados NÃƒO estÃ¡ atualizada (%1 x %2). Por favor execute %3setup%4 para atualizÃ¡-la.

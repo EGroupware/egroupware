@@ -1,93 +1,93 @@
-%1 already exists as a file	filemanager	fr	%1 existe déjà en tant que fichier
+%1 already exists as a file	filemanager	fr	%1 existe dÃ©jÃ  en tant que fichier
 application	filemanager	fr	Application
 back to file manager	filemanager	fr	Retourner au gestionnaire de fichiers
 cancel editing %1 without saving	filemanager	fr	Annuler les modifications de "%1"
-cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
-cannot replace %1 because it is a directory	filemanager	fr	Ne peut remplacer %1 car c'est un répertoire
-command sucessfully run	filemanager	fr	Commande exécutée avec succès
+cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut crÃ©Ã©r le rÃ©pertoire car il commence ou finit sur un espace
+cannot replace %1 because it is a directory	filemanager	fr	Ne peut remplacer %1 car c'est un rÃ©pertoire
+command sucessfully run	filemanager	fr	Commande exÃ©cutÃ©e avec succÃ¨s
 comment	filemanager	fr	Commentaire
 comments cannot contain "%1"	filemanager	fr	Les commentaires ne peuvent pas contenir "%1"
-copied %1 to %2	filemanager	fr	Copié %1 vers %2
+copied %1 to %2	filemanager	fr	CopiÃ© %1 vers %2
 copy to	filemanager	fr	Copier Vers
 copy to:	filemanager	fr	Copier vers:
 could not copy %1 to %2	filemanager	fr	N'a pas pu copier %1 vers %2
-could not copy file because no destination directory is given	filemanager	fr	Impossible de copier le fichier car aucun répertoire de destination n'a été donné
-could not create %1	filemanager	fr	N'a pas pu créér %1
-could not create directory %1	filemanager	fr	N'a pas pu créér le répertoire %1
+could not copy file because no destination directory is given	filemanager	fr	Impossible de copier le fichier car aucun rÃ©pertoire de destination n'a Ã©tÃ© donnÃ©
+could not create %1	filemanager	fr	N'a pas pu crÃ©Ã©r %1
+could not create directory %1	filemanager	fr	N'a pas pu crÃ©Ã©r le rÃ©pertoire %1
 could not delete %1	filemanager	fr	N'a pas pu effacer %1
-could not move %1 to %2	filemanager	fr	N'a pas pu déplacer %1 to %2
-could not move file because no destination directory is given	filemanager	fr	Impossible de déplacer le fichier car aucun répertoire de destination n'a été donné
+could not move %1 to %2	filemanager	fr	N'a pas pu dÃ©placer %1 to %2
+could not move file because no destination directory is given	filemanager	fr	Impossible de dÃ©placer le fichier car aucun rÃ©pertoire de destination n'a Ã©tÃ© donnÃ©
 could not rename %1 to %2	filemanager	fr	N'a pas pu renommer %1 to %2
 could not save %1	filemanager	fr	N'a pas pu enregistrer %1
-create file	filemanager	fr	Créer fichier
-create folder	filemanager	fr	Créer dossier
-created	filemanager	fr	Créé
-created %1	filemanager	fr	%1 créé
-created %1,%2	filemanager	fr	Création de %1,%2
-created by	filemanager	fr	Créé par
-created directory %1	filemanager	fr	Répertoire %1 créé
+create file	filemanager	fr	CrÃ©er fichier
+create folder	filemanager	fr	CrÃ©er dossier
+created	filemanager	fr	CrÃ©Ã©
+created %1	filemanager	fr	%1 crÃ©Ã©
+created %1,%2	filemanager	fr	CrÃ©ation de %1,%2
+created by	filemanager	fr	CrÃ©Ã© par
+created directory %1	filemanager	fr	RÃ©pertoire %1 crÃ©Ã©
 date	filemanager	fr	Date
-default number of upload fields to show	filemanager	fr	Nombre de champs d'upload par défaut à montrer
+default number of upload fields to show	filemanager	fr	Nombre de champs d'upload par dÃ©faut Ã  montrer
 delete	filemanager	fr	Effacer
-deleted %1	filemanager	fr	%1 effacé
-directory	filemanager	fr	Répertoire
-directory %1 already exists	filemanager	fr	Le répertoire %1 existe déjà
-directory %1 does not exist	filemanager	fr	Le répertoire %1 n'existe pas
-directory names cannot contain "%1"	filemanager	fr	Les noms de répertoire ne peuvent pas contenir "%1"
+deleted %1	filemanager	fr	%1 effacÃ©
+directory	filemanager	fr	RÃ©pertoire
+directory %1 already exists	filemanager	fr	Le rÃ©pertoire %1 existe dÃ©jÃ 
+directory %1 does not exist	filemanager	fr	Le rÃ©pertoire %1 n'existe pas
+directory names cannot contain "%1"	filemanager	fr	Les noms de rÃ©pertoire ne peuvent pas contenir "%1"
 display attributes	filemanager	fr	Afficher les attributs
 download	filemanager	fr	Downloader
 edit	filemanager	fr	Modifier
 edit comments	filemanager	fr	Modifier les commentaires
-error running command	filemanager	fr	Erreur à l'exécution de la commande
-execute	filemanager	fr	Exécuter
-failed to create directory	filemanager	fr	Echec de création du répertoire
-fake base dir did not exist, egroupware created a new one.	filemanager	fr	Le répertoire de base n'existait pas, eGroupWare l'a créé.
+error running command	filemanager	fr	Erreur Ã  l'exÃ©cution de la commande
+execute	filemanager	fr	ExÃ©cuter
+failed to create directory	filemanager	fr	Echec de crÃ©ation du rÃ©pertoire
+fake base dir did not exist, egroupware created a new one.	filemanager	fr	Le rÃ©pertoire de base n'existait pas, eGroupWare l'a crÃ©Ã©.
 file	filemanager	fr	Fichier
-file %1 already exists. please edit it or delete it first.	filemanager	fr	Le fichier %1 existe déjà. SVP modifiez-le ou effacez-le d'abord.
-file %1 could not be created.	filemanager	fr	Le fichier %1 n'a pas pu être créé.
+file %1 already exists. please edit it or delete it first.	filemanager	fr	Le fichier %1 existe dÃ©jÃ . SVP modifiez-le ou effacez-le d'abord.
+file %1 could not be created.	filemanager	fr	Le fichier %1 n'a pas pu Ãªtre crÃ©Ã©.
 file name	filemanager	fr	Nom du fichier
 file names cannot contain  or /	filemanager	fr	Les noms de fichier ne peuvent contenir \ ou /
 file names cannot contain "%1"	filemanager	fr	Les noms de fichier ne peuvent contenir "%1"
 file names cannot contain \ or /	filemanager	fr	Les noms de fichier ne peuvent contenir \ ou /
 filemanager	common	fr	Gestionnaire de fichiers
-filemanager preferences	filemanager	fr	Préférences gestionnaire de fichiers
+filemanager preferences	filemanager	fr	PrÃ©fÃ©rences gestionnaire de fichiers
 files	filemanager	fr	Fichiers
-files in this directory	filemanager	fr	Fichiers dans ce répertoire
+files in this directory	filemanager	fr	Fichiers dans ce rÃ©pertoire
 folder	filemanager	fr	Dossier
-folder up	filemanager	fr	Répertoire parent
-go home	filemanager	fr	Répertoire personnel
+folder up	filemanager	fr	RÃ©pertoire parent
+go home	filemanager	fr	RÃ©pertoire personnel
 go to	filemanager	fr	Aller dans
 go to %1	filemanager	fr	Aller dans %1
-go to your home directory	filemanager	fr	Aller dans votre répertoire "home" (maison)
-go to:	filemanager	fr	Aller à:
+go to your home directory	filemanager	fr	Aller dans votre rÃ©pertoire "home" (maison)
+go to:	filemanager	fr	Aller Ã :
 go up	filemanager	fr	Remonter
 home	filemanager	fr	Maison
 location	filemanager	fr	Emplacement
-locked	filemanager	fr	Verouillé
+locked	filemanager	fr	VerouillÃ©
 mime type	filemanager	fr	Type MIME
-modified	filemanager	fr	Modifié
-modified by	filemanager	fr	Modifié par
-move to	filemanager	fr	Déplacer Dans
-move to:	filemanager	fr	Déplacer dans:
-moved %1 to %2	filemanager	fr	Déplacé %1 dans %2
-no files in this directory.	filemanager	fr	Pas de fichiers dans ce répertoire.
-no version history for this file/directory	filemanager	fr	Pas d'historique de versions pour ce fichier/répertoire
-operation	filemanager	fr	Opération
-other settings	filemanager	fr	Autres paramètres
-owner	filemanager	fr	Propriétaire
-please select a file to delete.	filemanager	fr	Sélectionnez un fichier à effacer.
-preview %1	filemanager	fr	Prévisualisation %1
-preview of %1	filemanager	fr	Prévisualisation de %1
-quick jump to	filemanager	fr	Aller à
+modified	filemanager	fr	ModifiÃ©
+modified by	filemanager	fr	ModifiÃ© par
+move to	filemanager	fr	DÃ©placer Dans
+move to:	filemanager	fr	DÃ©placer dans:
+moved %1 to %2	filemanager	fr	DÃ©placÃ© %1 dans %2
+no files in this directory.	filemanager	fr	Pas de fichiers dans ce rÃ©pertoire.
+no version history for this file/directory	filemanager	fr	Pas d'historique de versions pour ce fichier/rÃ©pertoire
+operation	filemanager	fr	OpÃ©ration
+other settings	filemanager	fr	Autres paramÃ¨tres
+owner	filemanager	fr	PropriÃ©taire
+please select a file to delete.	filemanager	fr	SÃ©lectionnez un fichier Ã  effacer.
+preview %1	filemanager	fr	PrÃ©visualisation %1
+preview of %1	filemanager	fr	PrÃ©visualisation de %1
+quick jump to	filemanager	fr	Aller Ã 
 reload	filemanager	fr	Recharger
 rename	filemanager	fr	Renommer
-renamed %1 to %2	filemanager	fr	Renommé %1 en %2
-replaced %1	filemanager	fr	Remplacé %1
+renamed %1 to %2	filemanager	fr	RenommÃ© %1 en %2
+replaced %1	filemanager	fr	RemplacÃ© %1
 save %1	filemanager	fr	Enregistrer %1
 save %1, and go back to file listing	filemanager	fr	Enregistrer %1, et retour au listing
 save all	filemanager	fr	Enregistrer tout
 save changes	filemanager	fr	Enregistrer les changements
-saved %1	filemanager	fr	%1 enregistré
+saved %1	filemanager	fr	%1 enregistrÃ©
 show	filemanager	fr	Montrer
 show ..	filemanager	fr	Montrer ..
 show .files	filemanager	fr	Montrer .fichiers
@@ -97,20 +97,20 @@ size	filemanager	fr	Taille
 sort by:	filemanager	fr	Trier par:
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	fr	Le futur gestionnaire de fichiers, SEULEMENT POUR DES TESTS, envoyez des rapports de bogues svp
 total files	filemanager	fr	Nombre de Fichiers
-unknown mime-type defaults to text/plain when viewing	filemanager	fr	text/plain utilisé par défaut si type MIME inconnu
-unused space	filemanager	fr	Espace inutilisé
+unknown mime-type defaults to text/plain when viewing	filemanager	fr	text/plain utilisÃ© par dÃ©faut si type MIME inconnu
+unused space	filemanager	fr	Espace inutilisÃ©
 up	filemanager	fr	Haut
-update	filemanager	fr	Mettre à jour
-updated comment for %1	filemanager	fr	Commentaire pour %1 mis à jour
+update	filemanager	fr	Mettre Ã  jour
+updated comment for %1	filemanager	fr	Commentaire pour %1 mis Ã  jour
 upload	filemanager	fr	Envoyer
 upload fields	filemanager	fr	Champs d'envoi
-upload files	filemanager	fr	Fichiers à envoyer
-use new experimental filemanager?	filemanager	fr	Utiliser le Gestionnaire de fichier expérimental?
-used space	filemanager	fr	Espace utilisé
+upload files	filemanager	fr	Fichiers Ã  envoyer
+use new experimental filemanager?	filemanager	fr	Utiliser le Gestionnaire de fichier expÃ©rimental?
+used space	filemanager	fr	Espace utilisÃ©
 users	filemanager	fr	Utilisateurs
 version	filemanager	fr	Version
-view documents in new window	filemanager	fr	Voir les documents dans une nouvelle fenêtre
+view documents in new window	filemanager	fr	Voir les documents dans une nouvelle fenÃªtre
 view documents on server (if available)	filemanager	fr	Voir les documents sur le serveur (si disponible)
 who	filemanager	fr	Qui
-you do not have access to %1	filemanager	fr	Vous n'avez pas accès à %1
-your home dir did not exist, egroupware created a new one.	filemanager	fr	Votre répertoire personnel n'existe pas, eGroupWare l'a créé.
+you do not have access to %1	filemanager	fr	Vous n'avez pas accÃ¨s Ã  %1
+your home dir did not exist, egroupware created a new one.	filemanager	fr	Votre rÃ©pertoire personnel n'existe pas, eGroupWare l'a crÃ©Ã©.

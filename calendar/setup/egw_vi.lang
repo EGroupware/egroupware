@@ -1,329 +1,329 @@
 %1 %2 in %3	calendar	vi	%1 %2 trong %3
-%1 matches found	calendar	vi	%1 &#273;&#432;&#7907;c tÏm th&#7845;y
+%1 matches found	calendar	vi	%1 &#273;&#432;&#7907;c t√¨m th&#7845;y
 %1 records imported	calendar	vi	%1 &#273;&#432;&#7907;c nh&#7853;p
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	vi	%1 m&#7849;u tin &#273;&#7885;c &#273;&#432;&#7907;c (ch&#432;a &#273;&#432;&#7907;c nh&#7853;p, b&#7841;n cÛ th&#7875; quay l&#7841;i v‡ g&#7905; b&#7887; &#273;·nh d&#7845;u Ki&#7875;m tra Nh&#7853;p)
-(for weekly)	calendar	vi	(cho H‡ng tu&#7847;n)
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	vi	%1 m&#7849;u tin &#273;&#7885;c &#273;&#432;&#7907;c (ch&#432;a &#273;&#432;&#7907;c nh&#7853;p, b&#7841;n c√≥ th&#7875; quay l&#7841;i v√† g&#7905; b&#7887; &#273;√°nh d&#7845;u Ki&#7875;m tra Nh&#7853;p)
+(for weekly)	calendar	vi	(cho H√†ng tu&#7847;n)
 (i/v)cal	calendar	vi	(i/v)Cal
-1 match found	calendar	vi	1 &#273;&#432;&#7907;c tÏm th&#7845;y
+1 match found	calendar	vi	1 &#273;&#432;&#7907;c t√¨m th&#7845;y
 a	calendar	vi	a
-accept	calendar	vi	&#272;&#7891;ng ˝
-accepted	calendar	vi	&#272;„ &#273;&#7891;ng ˝
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	vi	T·c v&#7909; cho ra thÙng b·o: &#272;„ thÍm, &#272;„ H&#7911;y b&#7887;, &#272;„ &#272;&#7891;ng ˝, &#272;„ t&#7915; ch&#7889;i, ...
-add a single entry by passing the fields.	calendar	vi	ThÍm m&#7897;t m&#7909;c b&#7857;ng c·ch truy&#7873;n gi· tr&#7883; c·c tr&#432;&#7901;ng.
-add alarm	calendar	vi	ThÍm nh&#7855;c nh&#7903;
-add contact	calendar	vi	ThÍm danh b&#7841;
-add or update a single entry by passing the fields.	calendar	vi	ThÍm ho&#7863;c c&#7853;p nh&#7853;t m&#7897;t m&#7909;c b&#7857;ng c·ch truy&#7873;n gi· tr&#7883; c·c tr&#432;&#7901;ng.
-added	calendar	vi	&#272;„ thÍm
+accept	calendar	vi	&#272;&#7891;ng √Ω
+accepted	calendar	vi	&#272;√£ &#273;&#7891;ng √Ω
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	vi	T√°c v&#7909; cho ra th√¥ng b√°o: &#272;√£ th√™m, &#272;√£ H&#7911;y b&#7887;, &#272;√£ &#272;&#7891;ng √Ω, &#272;√£ t&#7915; ch&#7889;i, ...
+add a single entry by passing the fields.	calendar	vi	Th√™m m&#7897;t m&#7909;c b&#7857;ng c√°ch truy&#7873;n gi√° tr&#7883; c√°c tr&#432;&#7901;ng.
+add alarm	calendar	vi	Th√™m nh&#7855;c nh&#7903;
+add contact	calendar	vi	Th√™m danh b&#7841;
+add or update a single entry by passing the fields.	calendar	vi	Th√™m ho&#7863;c c&#7853;p nh&#7853;t m&#7897;t m&#7909;c b&#7857;ng c√°ch truy&#7873;n gi√° tr&#7883; c√°c tr&#432;&#7901;ng.
+added	calendar	vi	&#272;√£ th√™m
 address book	calendar	vi	S&#7893; &#273;&#7883;a ch&#7881;
 alarm	calendar	vi	Nh&#7855;c nh&#7903;
 alarm for %1 at %2 in %3	calendar	vi	Nh&#7855;c nh&#7903; cho %1 t&#7841;i %2 trong %3
-alarm management	calendar	vi	Qu&#7843;n l˝ Nh&#7855;c nh&#7903;
-alarm-management	calendar	vi	Qu&#7843;n l˝ Nh&#7855;c nh&#7903;
-alarms	calendar	vi	C·c nh&#7855;c nh&#7903;
-all day	calendar	vi	C&#7843; ng‡y
-are you sure you want to delete this country ?	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng mÏnh mu&#7889;n xÛa Qu&#7889;c gia n‡y ?
-are you sure you want to delete this holiday ?	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng mÏnh mu&#7889;n xÛa Ng‡y ngh&#7881; l&#7877; n‡y ?
-are you sure\nyou want to\ndelete these alarms?	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa nh&#7919;ng nh&#7855;c nh&#7903; n‡y ?
-are you sure\nyou want to\ndelete this entry ?	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa m&#7909;c n‡y ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa m&#7909;c n‡y ?\n\n&#272;i&#7873;u n‡y s&#7869; khi&#7871;n cho\nm&#7909;c n‡y b&#7883; xÛa kh&#7887;i t&#7845;t c&#7843; c·c ng&#432;&#7901;i s&#7917; d&#7909;ng kh·c.
-are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa s&#7921; ki&#7879;n &#273;&#417;n n‡y ?\n\n&#272;i&#7873;u n‡y s&#7869; khi&#7871;n cho\nm&#7909;c n‡y b&#7883; xÛa kh&#7887;i t&#7845;t c&#7843; c·c ng&#432;&#7901;i s&#7917; d&#7909;ng kh·c.
-are you surenyou want tondelete these alarms?	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa nh&#7919;ng nh&#7855;c nh&#7903; n‡y ?
-are you surenyou want tondelete this entry ?	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa m&#7909;c n‡y ?
-are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa m&#7909;c n‡y ?\n\nNÛ s&#7869; xÛa\nm&#7909;c n‡y kh&#7887;i t&#7845;t c&#7843; c·c ng&#432;&#7901;i s&#7917; d&#7909;ng.
-are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng\nmÏnh mu&#7889;n\nxÛa s&#7921; ki&#7879;n n‡y ?\n\nNÛ s&#7869; xÛa\nm&#7909;c n‡y kh&#7887;i t&#7845;t c&#7843; c·c ng&#432;&#7901;i s&#7917; d&#7909;ng.
+alarm management	calendar	vi	Qu&#7843;n l√Ω Nh&#7855;c nh&#7903;
+alarm-management	calendar	vi	Qu&#7843;n l√Ω Nh&#7855;c nh&#7903;
+alarms	calendar	vi	C√°c nh&#7855;c nh&#7903;
+all day	calendar	vi	C&#7843; ng√†y
+are you sure you want to delete this country ?	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng m√¨nh mu&#7889;n x√≥a Qu&#7889;c gia n√†y ?
+are you sure you want to delete this holiday ?	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng m√¨nh mu&#7889;n x√≥a Ng√†y ngh&#7881; l&#7877; n√†y ?
+are you sure\nyou want to\ndelete these alarms?	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a nh&#7919;ng nh&#7855;c nh&#7903; n√†y ?
+are you sure\nyou want to\ndelete this entry ?	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a m&#7909;c n√†y ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a m&#7909;c n√†y ?\n\n&#272;i&#7873;u n√†y s&#7869; khi&#7871;n cho\nm&#7909;c n√†y b&#7883; x√≥a kh&#7887;i t&#7845;t c&#7843; c√°c ng&#432;&#7901;i s&#7917; d&#7909;ng kh√°c.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a s&#7921; ki&#7879;n &#273;&#417;n n√†y ?\n\n&#272;i&#7873;u n√†y s&#7869; khi&#7871;n cho\nm&#7909;c n√†y b&#7883; x√≥a kh&#7887;i t&#7845;t c&#7843; c√°c ng&#432;&#7901;i s&#7917; d&#7909;ng kh√°c.
+are you surenyou want tondelete these alarms?	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a nh&#7919;ng nh&#7855;c nh&#7903; n√†y ?
+are you surenyou want tondelete this entry ?	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a m&#7909;c n√†y ?
+are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a m&#7909;c n√†y ?\n\nN√≥ s&#7869; x√≥a\nm&#7909;c n√†y kh&#7887;i t&#7845;t c&#7843; c√°c ng&#432;&#7901;i s&#7917; d&#7909;ng.
+are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng\nm√¨nh mu&#7889;n\nx√≥a s&#7921; ki&#7879;n n√†y ?\n\nN√≥ s&#7869; x√≥a\nm&#7909;c n√†y kh&#7887;i t&#7845;t c&#7843; c√°c ng&#432;&#7901;i s&#7917; d&#7909;ng.
 before the event	calendar	vi	tr&#432;&#7899;c s&#7921; ki&#7879;n
-brief description	calendar	vi	Di&#7877;n gi&#7843;i tÛm t&#7855;t
-business	calendar	vi	CÙng vi&#7879;c
+brief description	calendar	vi	Di&#7877;n gi&#7843;i t√≥m t&#7855;t
+business	calendar	vi	C√¥ng vi&#7879;c
 calendar	common	vi	L&#7883;ch
 calendar - [iv]cal importer	calendar	vi	L&#7883;ch - B&#7897; nh&#7853;p [iv]Cal
-calendar - add	calendar	vi	L&#7883;ch - ThÍm m&#7899;i
+calendar - add	calendar	vi	L&#7883;ch - Th√™m m&#7899;i
 calendar - edit	calendar	vi	L&#7883;ch - Hi&#7879;u ch&#7881;nh
 calendar event	calendar	vi	L&#7883;ch S&#7921; ki&#7879;n
-calendar holiday management	admin	vi	L&#7883;ch Qu&#7843;n l˝ Ng‡y ngh&#7881; l&#7877;
-calendar preferences	calendar	vi	C·c t˘y ch&#7885;n L&#7883;ch
-calendar settings	admin	vi	C·c thi&#7871;t l&#7853;p L&#7883;ch
-calendar-fieldname	calendar	vi	L&#7883;ch-TÍn tr&#432;&#7901;ng
+calendar holiday management	admin	vi	L&#7883;ch Qu&#7843;n l√Ω Ng√†y ngh&#7881; l&#7877;
+calendar preferences	calendar	vi	C√°c t√πy ch&#7885;n L&#7883;ch
+calendar settings	admin	vi	C√°c thi&#7871;t l&#7853;p L&#7883;ch
+calendar-fieldname	calendar	vi	L&#7883;ch-T√™n tr&#432;&#7901;ng
 canceled	calendar	vi	H&#7911;y b&#7887;
-change all events for $params['old_owner'] to $params['new_owner'].	calendar	vi	Chuy&#7875;n t&#7845;t c&#7843; c·c s&#7921; ki&#7879;n c&#7911;a $params['old_owner'] sang cho $params['new_owner'].
-change status	calendar	vi	&#272;&#7893;i tr&#7841;ng th·i
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	vi	Chuy&#7875;n t&#7845;t c&#7843; c√°c s&#7921; ki&#7879;n c&#7911;a $params['old_owner'] sang cho $params['new_owner'].
+change status	calendar	vi	&#272;&#7893;i tr&#7841;ng th√°i
 charset of file	calendar	vi	Charset c&#7911;a t&#7853;p tin
-click %1here%2 to return to the calendar.	calendar	vi	Click %1v‡o &#273;‚y%2 &#273;&#7875; tr&#7903; v&#7873; l&#7883;ch.
-configuration	calendar	vi	C&#7845;u hÏnh
-countries	calendar	vi	C·c qu&#7889;c gia
+click %1here%2 to return to the calendar.	calendar	vi	Click %1v√†o &#273;√¢y%2 &#273;&#7875; tr&#7903; v&#7873; l&#7883;ch.
+configuration	calendar	vi	C&#7845;u h√¨nh
+countries	calendar	vi	C√°c qu&#7889;c gia
 country	calendar	vi	Qu&#7889;c gia
 created by	calendar	vi	T&#7841;o b&#7903;i
-csv-fieldname	calendar	vi	CSV-TÍn tr&#432;&#7901;ng
-csv-filename	calendar	vi	CSV-TÍn t&#7853;p tin
-custom fields	calendar	vi	C·c tr&#432;&#7901;ng t&#7921; t&#7841;o
-custom fields and sorting	common	vi	C·c tr&#432;&#7901;ng t&#7921; t&#7841;o v‡ s&#7855;p x&#7871;p
-daily	calendar	vi	H‡ng ng‡y
-daily matrix view	calendar	vi	B&#7843;ng xem h‡ng ng‡y d&#7841;ng l&#432;&#7899;i
-days	calendar	vi	ng‡y
-days repeated	calendar	vi	ng‡y &#273;&#432;&#7907;c l&#7863;p l&#7841;i
-dayview	calendar	vi	B&#7843;ng xem Ng‡y
-default appointment length (in minutes)	calendar	vi	m&#7863;c &#273;&#7883;nh th&#7901;i gian cu&#7897;c h&#7865;n (tÌnh theo ph˙t)
+csv-fieldname	calendar	vi	CSV-T√™n tr&#432;&#7901;ng
+csv-filename	calendar	vi	CSV-T√™n t&#7853;p tin
+custom fields	calendar	vi	C√°c tr&#432;&#7901;ng t&#7921; t&#7841;o
+custom fields and sorting	common	vi	C√°c tr&#432;&#7901;ng t&#7921; t&#7841;o v√† s&#7855;p x&#7871;p
+daily	calendar	vi	H√†ng ng√†y
+daily matrix view	calendar	vi	B&#7843;ng xem h√†ng ng√†y d&#7841;ng l&#432;&#7899;i
+days	calendar	vi	ng√†y
+days repeated	calendar	vi	ng√†y &#273;&#432;&#7907;c l&#7863;p l&#7841;i
+dayview	calendar	vi	B&#7843;ng xem Ng√†y
+default appointment length (in minutes)	calendar	vi	m&#7863;c &#273;&#7883;nh th&#7901;i gian cu&#7897;c h&#7865;n (t√≠nh theo ph√∫t)
 default calendar filter	calendar	vi	M&#7863;c &#273;&#7883;nh b&#7897; l&#7885;c l&#7883;ch
 default calendar view	calendar	vi	M&#7863;c &#273;&#7883;nh b&#7843;ng xem l&#7883;ch
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	vi	Th&#7901;i gian m&#7863;c &#273;&#7883;nh c&#7911;a c·c s&#7921; ki&#7879;n &#273;&#432;&#7907;c t&#7841;o m&#7899;i. TÌnh theo ph˙t, vÌ d&#7909;: 60 ngh&#297;a l‡ 1 gi&#7901;.
-defines the size in minutes of the lines in the day view.	calendar	vi	&#272;&#7883;nh ngh&#297;a kÌch th&#432;&#7899;c theo ph˙t c&#7911;a c·c dÚng trong b&#7843;ng xem ng‡y.
-delete a single entry by passing the id.	calendar	vi	XÛa 1 m&#7909;c b&#7857;ng c·ch truy&#7873;n id.
-delete an entire users calendar.	calendar	vi	XÛa to‡n b&#7897; l&#7883;ch c&#7911;a c·c ng&#432;&#7901;i d˘ng.
-delete selected contacts	calendar	vi	XÛa c·c danh b&#7841; &#273;&#432;&#7907;c ch&#7885;n
-delete series	calendar	vi	XÛa m&#7897;t lo&#7841;t
-delete single	calendar	vi	XÛa t&#7915;ng m&#7909;c
-deleted	calendar	vi	&#272;„ xÛa
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	vi	Th&#7901;i gian m&#7863;c &#273;&#7883;nh c&#7911;a c√°c s&#7921; ki&#7879;n &#273;&#432;&#7907;c t&#7841;o m&#7899;i. T√≠nh theo ph√∫t, v√≠ d&#7909;: 60 ngh&#297;a l√† 1 gi&#7901;.
+defines the size in minutes of the lines in the day view.	calendar	vi	&#272;&#7883;nh ngh&#297;a k√≠ch th&#432;&#7899;c theo ph√∫t c&#7911;a c√°c d√≤ng trong b&#7843;ng xem ng√†y.
+delete a single entry by passing the id.	calendar	vi	X√≥a 1 m&#7909;c b&#7857;ng c√°ch truy&#7873;n id.
+delete an entire users calendar.	calendar	vi	X√≥a to√†n b&#7897; l&#7883;ch c&#7911;a c√°c ng&#432;&#7901;i d√πng.
+delete selected contacts	calendar	vi	X√≥a c√°c danh b&#7841; &#273;&#432;&#7907;c ch&#7885;n
+delete series	calendar	vi	X√≥a m&#7897;t lo&#7841;t
+delete single	calendar	vi	X√≥a t&#7915;ng m&#7909;c
+deleted	calendar	vi	&#272;√£ x√≥a
 description	calendar	vi	Di&#7877;n gi&#7843;i
 disable	calendar	vi	C&#7845;m
 disabled	calendar	vi	b&#7883; c&#7845;m
-display interval in day view	calendar	vi	Hi&#7875;n th&#7883; &#273;&#7883;nh th&#7901;i trong B&#7843;ng xem Ng‡y
-display mini calendars when printing	calendar	vi	Hi&#7875;n th&#7883; c·c l&#7883;ch mini khi in
-display status of events	calendar	vi	Hi&#7875;n th&#7883; Tr&#7841;ng th·i c&#7911;a c·c S&#7921; ki&#7879;n
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	vi	Hi&#7875;n th&#7883; b&#7843;ng xem l&#7883;ch m&#7863;c &#273;&#7883;nh c&#7911;a b&#7841;n trÍn trang &#273;&#7847;u tiÍn(trang m‡ b&#7841;n th&#7845;y ngay sau khi &#273;&#259;ng nh&#7853;p v‡o h&#7879; th&#7889;ng ho&#7863;c click v‡o bi&#7875;u t&#432;&#7907;ng trang ch&#7911;)?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	vi	B&#7841;n cÛ mu&#7889;n nh&#7853;n &#273;&#432;&#7907;c thÙng b·o v&#7873; c·c cu&#7897;c h&#7865;n m&#7899;i ho&#7863;c cÛ thay &#273;&#7893;i? B&#7841;n &#273;&#432;&#7907;c thÙng b·o v&#7873; c·c thay &#273;&#7893;i do chÌnh b&#7841;n t&#7841;o ra.<br>B&#7841;n cÛ th&#7875; gi&#7899;i h&#7841;n nh&#7919;ng thÙng b·o ch&#7881; cho nh&#7919;ng thay &#273;&#7893;i n‡o &#273;Û m‡ thÙi. M&#7895;i m&#7909;c bao g&#7891;m t&#7845;t c&#7843; thÙng b·o &#273;&#432;&#7907;c li&#7879;t kÍ &#7903; phÌa trÍn nÛ. T&#7845;t c&#7843; s&#7921; thay &#273;&#7893;i bao g&#7891;m thay &#273;&#7893;i tiÍu &#273;&#7873;, di&#7877;n gi&#7843;i, th‡nh viÍn, nh&#432;ng khÙng cÛ &#273;·p &#7913;ng th‡nh viÍn n‡o. N&#7871;u ng&#432;&#7901;i ch&#7911; trÏ s&#7921; ki&#7879;n yÍu c&#7847;u b&#7845;t k&#7923; thÙng b·o n‡o, anh &#7845;y c&#361;ng luÙn luÙn nh&#7853;n &#273;&#432;&#7907;c c·c ph&#7843;n h&#7891;i c&#7911;a th‡nh viÍn nh&#432; nh&#7919;ng s&#7921; &#273;&#7891;ng ˝ v‡ t&#7915; ch&#7889;i
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	vi	B&#7841;n cÛ mu&#7889;n nh&#7853;n m&#7897;t b&#7843;ng tÛm t&#7855;t c·c cu&#7897;c h&#7865;n qua email hay khÙng?<br>B&#7843;ng tÛm t&#7855;t &#273;&#432;&#7907;c g&#7917;i t&#7899;i &#273;&#7883;a ch&#7881; email chÌnh th&#7913;c c&#7911;a b&#7841;n v‡o s·ng ng‡y hÙm &#273;Û ho&#7863;c v‡o th&#7913; Hai &#273;&#7889;i v&#7899;i c·c b&#7843;ng t&#7893;ng k&#7871;t h‡ng tu&#7847;n.<br>NÛ ch&#7881; &#273;&#432;&#7907;c g&#7917;i &#273;i khi b&#7841;n cÛ b&#7845;t k&#7923; cu&#7897;c h&#7865;n n‡o trong ng‡y hÙm &#273;Û ho&#7863;c trong tu&#7847;n &#273;Û.
-do you wish to autoload calendar holidays files dynamically?	admin	vi	B&#7841;n cÛ mu&#7889;n t&#7921; &#273;&#7897;ng t&#7843;i c·c t&#7853;p tin ng‡y ngh&#7881; l&#7877; ?
+display interval in day view	calendar	vi	Hi&#7875;n th&#7883; &#273;&#7883;nh th&#7901;i trong B&#7843;ng xem Ng√†y
+display mini calendars when printing	calendar	vi	Hi&#7875;n th&#7883; c√°c l&#7883;ch mini khi in
+display status of events	calendar	vi	Hi&#7875;n th&#7883; Tr&#7841;ng th√°i c&#7911;a c√°c S&#7921; ki&#7879;n
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	vi	Hi&#7875;n th&#7883; b&#7843;ng xem l&#7883;ch m&#7863;c &#273;&#7883;nh c&#7911;a b&#7841;n tr√™n trang &#273;&#7847;u ti√™n(trang m√† b&#7841;n th&#7845;y ngay sau khi &#273;&#259;ng nh&#7853;p v√†o h&#7879; th&#7889;ng ho&#7863;c click v√†o bi&#7875;u t&#432;&#7907;ng trang ch&#7911;)?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	vi	B&#7841;n c√≥ mu&#7889;n nh&#7853;n &#273;&#432;&#7907;c th√¥ng b√°o v&#7873; c√°c cu&#7897;c h&#7865;n m&#7899;i ho&#7863;c c√≥ thay &#273;&#7893;i? B&#7841;n &#273;&#432;&#7907;c th√¥ng b√°o v&#7873; c√°c thay &#273;&#7893;i do ch√≠nh b&#7841;n t&#7841;o ra.<br>B&#7841;n c√≥ th&#7875; gi&#7899;i h&#7841;n nh&#7919;ng th√¥ng b√°o ch&#7881; cho nh&#7919;ng thay &#273;&#7893;i n√†o &#273;√≥ m√† th√¥i. M&#7895;i m&#7909;c bao g&#7891;m t&#7845;t c&#7843; th√¥ng b√°o &#273;&#432;&#7907;c li&#7879;t k√™ &#7903; ph√≠a tr√™n n√≥. T&#7845;t c&#7843; s&#7921; thay &#273;&#7893;i bao g&#7891;m thay &#273;&#7893;i ti√™u &#273;&#7873;, di&#7877;n gi&#7843;i, th√†nh vi√™n, nh&#432;ng kh√¥ng c√≥ &#273;√°p &#7913;ng th√†nh vi√™n n√†o. N&#7871;u ng&#432;&#7901;i ch&#7911; tr√¨ s&#7921; ki&#7879;n y√™u c&#7847;u b&#7845;t k&#7923; th√¥ng b√°o n√†o, anh &#7845;y c&#361;ng lu√¥n lu√¥n nh&#7853;n &#273;&#432;&#7907;c c√°c ph&#7843;n h&#7891;i c&#7911;a th√†nh vi√™n nh&#432; nh&#7919;ng s&#7921; &#273;&#7891;ng √Ω v√† t&#7915; ch&#7889;i
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	vi	B&#7841;n c√≥ mu&#7889;n nh&#7853;n m&#7897;t b&#7843;ng t√≥m t&#7855;t c√°c cu&#7897;c h&#7865;n qua email hay kh√¥ng?<br>B&#7843;ng t√≥m t&#7855;t &#273;&#432;&#7907;c g&#7917;i t&#7899;i &#273;&#7883;a ch&#7881; email ch√≠nh th&#7913;c c&#7911;a b&#7841;n v√†o s√°ng ng√†y h√¥m &#273;√≥ ho&#7863;c v√†o th&#7913; Hai &#273;&#7889;i v&#7899;i c√°c b&#7843;ng t&#7893;ng k&#7871;t h√†ng tu&#7847;n.<br>N√≥ ch&#7881; &#273;&#432;&#7907;c g&#7917;i &#273;i khi b&#7841;n c√≥ b&#7845;t k&#7923; cu&#7897;c h&#7865;n n√†o trong ng√†y h√¥m &#273;√≥ ho&#7863;c trong tu&#7847;n &#273;√≥.
+do you wish to autoload calendar holidays files dynamically?	admin	vi	B&#7841;n c√≥ mu&#7889;n t&#7921; &#273;&#7897;ng t&#7843;i c√°c t&#7853;p tin ng√†y ngh&#7881; l&#7877; ?
 download	calendar	vi	T&#7843;i v&#7873;
 duration	calendar	vi	Th&#7901;i gian
-edit series	calendar	vi	Hi&#7879;u ch&#7881;nh h‡ng lo&#7841;t
+edit series	calendar	vi	Hi&#7879;u ch&#7881;nh h√†ng lo&#7841;t
 edit single	calendar	vi	Hi&#7879;u ch&#7881;nh ch&#7881; m&#7897;t
-email notification	calendar	vi	ThÙng b·o cÛ th&#432;
-email notification for %1	calendar	vi	ThÙng b·o cÛ th&#432; cho %1
-empty for all	calendar	vi	l‡m r&#7895;ng h&#7871;t
-enable	calendar	vi	Cho phÈp
-enabled	calendar	vi	&#273;&#432;&#7907;c phÈp
-end date/time	calendar	vi	Ng‡y/gi&#7901; k&#7871;t th˙c
-enddate	calendar	vi	Ng‡y k&#7871;t th˙c
-ends	calendar	vi	k&#7871;t th˙c
-enter output filename: ( .vcs appended )	calendar	vi	Nh&#7853;p tÍn t&#7853;p tin xu&#7845;t: ( &#273;uÙi .vcs s&#7869; &#273;&#432;&#7907;c n&#7889;i thÍm v‡o )
-event details follow	calendar	vi	Theo dıi Chi ti&#7871;t S&#7921; ki&#7879;n
-exceptions	calendar	vi	C·c ngo&#7841;i l&#7879;
+email notification	calendar	vi	Th√¥ng b√°o c√≥ th&#432;
+email notification for %1	calendar	vi	Th√¥ng b√°o c√≥ th&#432; cho %1
+empty for all	calendar	vi	l√†m r&#7895;ng h&#7871;t
+enable	calendar	vi	Cho ph√©p
+enabled	calendar	vi	&#273;&#432;&#7907;c ph√©p
+end date/time	calendar	vi	Ng√†y/gi&#7901; k&#7871;t th√∫c
+enddate	calendar	vi	Ng√†y k&#7871;t th√∫c
+ends	calendar	vi	k&#7871;t th√∫c
+enter output filename: ( .vcs appended )	calendar	vi	Nh&#7853;p t√™n t&#7853;p tin xu&#7845;t: ( &#273;u√¥i .vcs s&#7869; &#273;&#432;&#7907;c n&#7889;i th√™m v√†o )
+event details follow	calendar	vi	Theo d√µi Chi ti&#7871;t S&#7921; ki&#7879;n
+exceptions	calendar	vi	C√°c ngo&#7841;i l&#7879;
 export	calendar	vi	Xu&#7845;t
-export a list of entries in ical format.	calendar	vi	Xu&#7845;t m&#7897;t danh s·ch c·c m&#7909;c theo &#273;&#7883;nh d&#7841;ng iCal.
+export a list of entries in ical format.	calendar	vi	Xu&#7845;t m&#7897;t danh s√°ch c√°c m&#7909;c theo &#273;&#7883;nh d&#7841;ng iCal.
 extended	calendar	vi	M&#7903; r&#7897;ng
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	vi	C·c c&#7853;p nh&#7853;t m&#7903; r&#7897;ng luÙn luÙn bao g&#7891;m to‡n b&#7897; chi ti&#7871;t s&#7921; ki&#7879;n. iCal cÛ th&#7875; &#273;&#432;&#7907;c nh&#7853;p b&#7857;ng c·c &#7913;ng d&#7909;ng l&#7883;ch n‡o &#273;Û.
-external participants	calendar	vi	Th‡nh viÍn bÍn ngo‡i
-failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	vi	KhÙng th&#7875; g&#7917;i tin nh&#7855;n t&#7899;i '%1' #%2 ch&#7911; &#273;&#7873;='%3', ng&#432;&#7901;i g&#7917;i='%4' !!!
-fieldseparator	calendar	vi	D&#7845;u ph‚n c·ch tr&#432;&#7901;ng
-firstname of person to notify	calendar	vi	TÍn c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c thÙng b·o
-format of event updates	calendar	vi	&#272;&#7883;nh d&#7841;ng c&#7911;a c·c c&#7853;p nh&#7853;t s&#7921; ki&#7879;n
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	vi	C√°c c&#7853;p nh&#7853;t m&#7903; r&#7897;ng lu√¥n lu√¥n bao g&#7891;m to√†n b&#7897; chi ti&#7871;t s&#7921; ki&#7879;n. iCal c√≥ th&#7875; &#273;&#432;&#7907;c nh&#7853;p b&#7857;ng c√°c &#7913;ng d&#7909;ng l&#7883;ch n√†o &#273;√≥.
+external participants	calendar	vi	Th√†nh vi√™n b√™n ngo√†i
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	vi	Kh√¥ng th&#7875; g&#7917;i tin nh&#7855;n t&#7899;i '%1' #%2 ch&#7911; &#273;&#7873;='%3', ng&#432;&#7901;i g&#7917;i='%4' !!!
+fieldseparator	calendar	vi	D&#7845;u ph√¢n c√°ch tr&#432;&#7901;ng
+firstname of person to notify	calendar	vi	T√™n c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c th√¥ng b√°o
+format of event updates	calendar	vi	&#272;&#7883;nh d&#7841;ng c&#7911;a c√°c c&#7853;p nh&#7853;t s&#7921; ki&#7879;n
 fr	calendar	vi	S
-free/busy	calendar	vi	L&#7883;ch cÙng t·c
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	vi	freebusy: Ng&#432;&#7901;i d˘ng ch&#432;a bi&#7871;t '%1', sai m&#7853;t kh&#7849;u ho&#7863;c ch&#432;a cÛ ch&#7895; cho c·c ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p !!!
-frequency	calendar	vi	M&#7913;c &#273;&#7897; th&#432;&#7901;ng xuyÍn
-fri	calendar	vi	S·u
+free/busy	calendar	vi	L&#7883;ch c√¥ng t√°c
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	vi	freebusy: Ng&#432;&#7901;i d√πng ch&#432;a bi&#7871;t '%1', sai m&#7853;t kh&#7849;u ho&#7863;c ch&#432;a c√≥ ch&#7895; cho c√°c ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p !!!
+frequency	calendar	vi	M&#7913;c &#273;&#7897; th&#432;&#7901;ng xuy√™n
+fri	calendar	vi	S√°u
 full description	calendar	vi	Di&#7877;n gi&#7843;i &#273;&#7847;y &#273;&#7911;
-fullname of person to notify	calendar	vi	H&#7885; tÍn c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c thÙng b·o
-generate printer-friendly version	calendar	vi	T&#7841;o phiÍn b&#7843;n in &#273;&#7865;p
-global categories	calendar	vi	C·c ph‚n lo&#7841;i chung
-global public and group public	calendar	vi	MÙi tr&#432;&#7901;ng chung v‡ mÙi tr&#432;&#7901;ng nhÛm
-global public only	calendar	vi	D‡nh cho mÙi tr&#432;&#7901;ng chung
+fullname of person to notify	calendar	vi	H&#7885; t√™n c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c th√¥ng b√°o
+generate printer-friendly version	calendar	vi	T&#7841;o phi√™n b&#7843;n in &#273;&#7865;p
+global categories	calendar	vi	C√°c ph√¢n lo&#7841;i chung
+global public and group public	calendar	vi	M√¥i tr&#432;&#7901;ng chung v√† m√¥i tr&#432;&#7901;ng nh√≥m
+global public only	calendar	vi	D√†nh cho m√¥i tr&#432;&#7901;ng chung
 go!	calendar	vi	B&#7855;t &#273;&#7847;u!
-grant calendar access	common	vi	Ph‚n quy&#7873;n truy c&#7853;p L&#7883;ch
-group planner	calendar	vi	Ng&#432;&#7901;i L&#7853;p K&#7871; ho&#7841;ch NhÛm
-group public only	calendar	vi	D‡nh cho mÙi tr&#432;&#7901;ng chung
-here is your requested alarm.	calendar	vi	&#272;‚y l‡ nh&#7855;c nh&#7903; &#273;&#432;&#7907;c yÍu c&#7847;u c&#7911;a b&#7841;n.
+grant calendar access	common	vi	Ph√¢n quy&#7873;n truy c&#7853;p L&#7883;ch
+group planner	calendar	vi	Ng&#432;&#7901;i L&#7853;p K&#7871; ho&#7841;ch Nh√≥m
+group public only	calendar	vi	D√†nh cho m√¥i tr&#432;&#7901;ng chung
+here is your requested alarm.	calendar	vi	&#272;√¢y l√† nh&#7855;c nh&#7903; &#273;&#432;&#7907;c y√™u c&#7847;u c&#7911;a b&#7841;n.
 high priority	calendar	vi	kh&#7849;n
-holiday	calendar	vi	Ng‡y ngh&#7881; l&#7877;
-holiday management	calendar	vi	Qu&#7843;n l˝ Ng‡y ngh&#7881; l&#7877;
-holiday-management	calendar	vi	Qu&#7843;n l˝ Ng‡y ngh&#7881; l&#7877;
-holidays	calendar	vi	C·c Ng‡y ngh&#7881; l&#7877;
+holiday	calendar	vi	Ng√†y ngh&#7881; l&#7877;
+holiday management	calendar	vi	Qu&#7843;n l√Ω Ng√†y ngh&#7881; l&#7877;
+holiday-management	calendar	vi	Qu&#7843;n l√Ω Ng√†y ngh&#7881; l&#7877;
+holidays	calendar	vi	C√°c Ng√†y ngh&#7881; l&#7877;
 hours	calendar	vi	gi&#7901;
-i participate	calendar	vi	TÙi tham gia
+i participate	calendar	vi	T√¥i tham gia
 ical / rfc2445	calendar	vi	iCal / rfc2445
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	vi	N&#7871;u ng‡y ngh&#7881; l&#7877; r&#417;i v‡o cu&#7889;i tu&#7847;n, nÛ s&#7869; &#273;&#432;&#7907;c tÌnh sang ng‡y th&#7913; Hai tu&#7847;n sau.
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	vi	N&#7871;u b&#7841;n khÙng &#273;&#7863;t m&#7853;t kh&#7849;u, thÙng tin s&#7869; m&#7903; ra cho m&#7885;i ng&#432;&#7901;i, nh&#7919;ng ai bi&#7871;t &#273;&#432;&#7907;c &#273;&#7883;a ch&#7881; URL!!!
-ignore conflict	calendar	vi	B&#7887; qua s&#7921; ch&#7891;ng chÈo
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	vi	N&#7871;u ng√†y ngh&#7881; l&#7877; r&#417;i v√†o cu&#7889;i tu&#7847;n, n√≥ s&#7869; &#273;&#432;&#7907;c t√≠nh sang ng√†y th&#7913; Hai tu&#7847;n sau.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	vi	N&#7871;u b&#7841;n kh√¥ng &#273;&#7863;t m&#7853;t kh&#7849;u, th√¥ng tin s&#7869; m&#7903; ra cho m&#7885;i ng&#432;&#7901;i, nh&#7919;ng ai bi&#7871;t &#273;&#432;&#7907;c &#273;&#7883;a ch&#7881; URL!!!
+ignore conflict	calendar	vi	B&#7887; qua s&#7921; ch&#7891;ng ch√©o
 import	calendar	vi	Nh&#7853;p
 import csv-file	common	vi	Nh&#7853;p t&#7853;p tin CSV
 interval	calendar	vi	&#272;&#7883;nh th&#7901;i
-intervals in day view	calendar	vi	C·c &#273;&#7883;nh th&#7901;i trong b&#7843;ng xem Ng‡y
-intervals per day in planner view	calendar	vi	C·c &#273;&#7883;nh th&#7901;i m&#7895;i ng‡y trong b&#7843;ng xem c&#7911;a ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch
-invalid entry id.	calendar	vi	ID c&#7911;a m&#7909;c khÙng h&#7907;p l&#7879;.
+intervals in day view	calendar	vi	C√°c &#273;&#7883;nh th&#7901;i trong b&#7843;ng xem Ng√†y
+intervals per day in planner view	calendar	vi	C√°c &#273;&#7883;nh th&#7901;i m&#7895;i ng√†y trong b&#7843;ng xem c&#7911;a ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch
+invalid entry id.	calendar	vi	ID c&#7911;a m&#7909;c kh√¥ng h&#7907;p l&#7879;.
 last	calendar	vi	cu&#7889;i
-lastname of person to notify	calendar	vi	H&#7885; c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c nh&#7853;n thÙng b·o
-length shown<br>(emtpy for full length)	calendar	vi	Chi&#7873;u d‡i &#273;&#432;&#7907;c th&#7875; hi&#7879;n<br>(r&#7895;ng v&#7899;i to‡n b&#7897;)
-length<br>(<= 255)	calendar	vi	Chi&#7873;u d‡i<br>(<= 255)
-link	calendar	vi	LiÍn k&#7871;t
-link to view the event	calendar	vi	LiÍn k&#7871;t &#273;&#7875; xem s&#7921; ki&#7879;n
-list all categories.	calendar	vi	Li&#7879;t kÍ t&#7845;t c&#7843; c·c ph‚n lo&#7841;i
+lastname of person to notify	calendar	vi	H&#7885; c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c nh&#7853;n th√¥ng b√°o
+length shown<br>(emtpy for full length)	calendar	vi	Chi&#7873;u d√†i &#273;&#432;&#7907;c th&#7875; hi&#7879;n<br>(r&#7895;ng v&#7899;i to√†n b&#7897;)
+length<br>(<= 255)	calendar	vi	Chi&#7873;u d√†i<br>(<= 255)
+link	calendar	vi	Li√™n k&#7871;t
+link to view the event	calendar	vi	Li√™n k&#7871;t &#273;&#7875; xem s&#7921; ki&#7879;n
+list all categories.	calendar	vi	Li&#7879;t k√™ t&#7845;t c&#7843; c√°c ph√¢n lo&#7841;i
 load [iv]cal	calendar	vi	T&#7843;i [iv]Cal
-location	calendar	vi	V&#7883; trÌ
-location to autoload from	admin	vi	T&#7921; &#273;&#7897;ng t&#7843;i t&#7915; v&#7883; trÌ
-make freebusy information availible to not loged in persons?	calendar	vi	T&#7841;o thÙng tin freebusy s&#7861;n cho nh&#7919;ng ng&#432;&#7901;i ch&#432;a &#273;&#259;ng nh&#7853;p ?
+location	calendar	vi	V&#7883; tr√≠
+location to autoload from	admin	vi	T&#7921; &#273;&#7897;ng t&#7843;i t&#7915; v&#7883; tr√≠
+make freebusy information availible to not loged in persons?	calendar	vi	T&#7841;o th√¥ng tin freebusy s&#7861;n cho nh&#7919;ng ng&#432;&#7901;i ch&#432;a &#273;&#259;ng nh&#7853;p ?
 matrixview	calendar	vi	Xem d&#7841;ng l&#432;&#7899;i
-minutes	calendar	vi	ph˙t
+minutes	calendar	vi	ph√∫t
 mo	calendar	vi	H
-modified	calendar	vi	&#272;„ hi&#7879;u ch&#7881;nh
-modify list of external participants	calendar	vi	Hi&#7879;u ch&#7881;nh danh s·ch nh&#7919;ng th‡nh viÍn bÍn ngo‡i
+modified	calendar	vi	&#272;√£ hi&#7879;u ch&#7881;nh
+modify list of external participants	calendar	vi	Hi&#7879;u ch&#7881;nh danh s√°ch nh&#7919;ng th√†nh vi√™n b√™n ngo√†i
 mon	calendar	vi	Hai
-month	calendar	vi	Th·ng
-monthly	calendar	vi	H‡ng th·ng
-monthly (by date)	calendar	vi	H‡ng th·ng (theo ng‡y)
-monthly (by day)	calendar	vi	H‡ng th·ng (theo th&#7913;)
-monthview	calendar	vi	B&#7843;ng xem theo Th·ng
+month	calendar	vi	Th√°ng
+monthly	calendar	vi	H√†ng th√°ng
+monthly (by date)	calendar	vi	H√†ng th√°ng (theo ng√†y)
+monthly (by day)	calendar	vi	H√†ng th√°ng (theo th&#7913;)
+monthview	calendar	vi	B&#7843;ng xem theo Th√°ng
 new entry	calendar	vi	M&#7909;c m&#7899;i
-new name must not exist and not be empty!!!	calendar	vi	TÍn m&#7899;i ph&#7843;i ch&#432;a cÛ v‡ khÙng &#273;&#432;&#7907;c &#273;&#7875; tr&#7889;ng!!!
-no matches found	calendar	vi	KhÙng tÏm th&#7845;y
-no response	calendar	vi	KhÙng cÛ ph&#7843;n h&#7891;i n‡o
-notification messages for added events	calendar	vi	C·c tin nh&#7855;n thÙng b·o cho c·c s&#7921; ki&#7879;n &#273;&#432;&#7907;c thÍm m&#7899;i
-notification messages for canceled events	calendar	vi	C·c tin nh&#7855;n thÙng b·o cho c·c s&#7921; ki&#7879;n &#273;&#432;&#7907;c h&#7911;y b&#7887;
-notification messages for modified events	calendar	vi	C·c tin nh&#7855;n thÙng b·o cho c·c s&#7921; ki&#7879;n cÛ thay &#273;&#7893;i
-notification messages for your alarms	calendar	vi	C·c tin nh&#7855;n thÙng b·o cho c·c nh&#7855;c nh&#7903; c&#7911;a b&#7841;n
-notification messages for your responses	calendar	vi	C·c tin nh&#7855;n thÙng b·o cho c·c ph&#7843;n h&#7891;i c&#7911;a b&#7841;n
-number of intervals per day in planner view	calendar	vi	S&#7889; l&#7847;n l&#7863;p l&#7841;i m&#7895;i ng‡y trong B&#7843;ng xem Ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch
-number of months	calendar	vi	S&#7889; th·ng
+new name must not exist and not be empty!!!	calendar	vi	T√™n m&#7899;i ph&#7843;i ch&#432;a c√≥ v√† kh√¥ng &#273;&#432;&#7907;c &#273;&#7875; tr&#7889;ng!!!
+no matches found	calendar	vi	Kh√¥ng t√¨m th&#7845;y
+no response	calendar	vi	Kh√¥ng c√≥ ph&#7843;n h&#7891;i n√†o
+notification messages for added events	calendar	vi	C√°c tin nh&#7855;n th√¥ng b√°o cho c√°c s&#7921; ki&#7879;n &#273;&#432;&#7907;c th√™m m&#7899;i
+notification messages for canceled events	calendar	vi	C√°c tin nh&#7855;n th√¥ng b√°o cho c√°c s&#7921; ki&#7879;n &#273;&#432;&#7907;c h&#7911;y b&#7887;
+notification messages for modified events	calendar	vi	C√°c tin nh&#7855;n th√¥ng b√°o cho c√°c s&#7921; ki&#7879;n c√≥ thay &#273;&#7893;i
+notification messages for your alarms	calendar	vi	C√°c tin nh&#7855;n th√¥ng b√°o cho c√°c nh&#7855;c nh&#7903; c&#7911;a b&#7841;n
+notification messages for your responses	calendar	vi	C√°c tin nh&#7855;n th√¥ng b√°o cho c√°c ph&#7843;n h&#7891;i c&#7911;a b&#7841;n
+number of intervals per day in planner view	calendar	vi	S&#7889; l&#7847;n l&#7863;p l&#7841;i m&#7895;i ng√†y trong B&#7843;ng xem Ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch
+number of months	calendar	vi	S&#7889; th√°ng
 number of records to read (%1)	calendar	vi	S&#7889; l&#432;&#7907;ng m&#7849;u tin &#273;&#7885;c (%1)
-observance rule	calendar	vi	NguyÍn t&#7855;c chung
+observance rule	calendar	vi	Nguy√™n t&#7855;c chung
 occurence	calendar	vi	S&#7921; ki&#7879;n
-old startdate	calendar	vi	Ng‡y b&#7855;t &#273;&#7847;u c&#361;
-olddate	calendar	vi	Ng‡y c&#361;
-on %1 %2 %3 your meeting request for %4	calendar	vi	Khi %1 %2 %3 yÍu c&#7847;u h&#7885;p m&#7863;t c&#7911;a b&#7841;n cho %4
+old startdate	calendar	vi	Ng√†y b&#7855;t &#273;&#7847;u c&#361;
+olddate	calendar	vi	Ng√†y c&#361;
+on %1 %2 %3 your meeting request for %4	calendar	vi	Khi %1 %2 %3 y√™u c&#7847;u h&#7885;p m&#7863;t c&#7911;a b&#7841;n cho %4
 on all changes	calendar	vi	&#273;&#7889;i v&#7899;i m&#7885;i s&#7921; thay &#273;&#7893;i
-on all modification, but responses	calendar	vi	&#273;&#7889;i v&#7899;i m&#7885;i c&#7853;p nh&#7853;t, ngo&#7841;i tr&#7915; c·c ph&#7843;n h&#7891;i
-on any time change too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i b&#7845;t k&#7923; s&#7921; thay &#273;&#7893;i n‡o v&#7873; th&#7901;i gian
+on all modification, but responses	calendar	vi	&#273;&#7889;i v&#7899;i m&#7885;i c&#7853;p nh&#7853;t, ngo&#7841;i tr&#7915; c√°c ph&#7843;n h&#7891;i
+on any time change too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i b&#7845;t k&#7923; s&#7921; thay &#273;&#7893;i n√†o v&#7873; th&#7901;i gian
 on invitation / cancelation only	calendar	vi	ch&#7881; &#273;&#7889;i v&#7899;i l&#7901;i m&#7901;i/s&#7921; h&#7911;y b&#7887;
-on participant responses too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i c·c ph&#7843;n h&#7891;i th‡nh viÍn
-on time change of more than 4 hours too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i thay &#273;&#7893;i v&#7873; th&#7901;i gian qu· 4 gi&#7901;
-open todo's:	calendar	vi	M&#7903; xem c·c vi&#7879;c c&#7847;n l‡m ngay
+on participant responses too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i c√°c ph&#7843;n h&#7891;i th√†nh vi√™n
+on time change of more than 4 hours too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i thay &#273;&#7893;i v&#7873; th&#7901;i gian qu√° 4 gi&#7901;
+open todo's:	calendar	vi	M&#7903; xem c√°c vi&#7879;c c&#7847;n l√†m ngay
 order	calendar	vi	Th&#7913; t&#7921;
-overlap holiday	calendar	vi	Ng‡y ngh&#7881; tr˘ng l&#7855;p
-participant	calendar	vi	Th‡nh viÍn
-participants	calendar	vi	C·c th‡nh viÍn
+overlap holiday	calendar	vi	Ng√†y ngh&#7881; tr√πng l&#7855;p
+participant	calendar	vi	Th√†nh vi√™n
+participants	calendar	vi	C√°c th√†nh vi√™n
 participates	calendar	vi	Tham gia
-password for not loged in users to your freebusy information?	calendar	vi	M&#7853;t kh&#7849;u cho nh&#7919;ng ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p &#273;&#7875; xem thÙng tin l&#7883;ch cÙng t·c c&#7911;a b&#7841;n ?
-people holiday	calendar	vi	ng‡y ngh&#7881; to‡n d‚n
-permission denied	calendar	vi	KhÙng cÛ quy&#7873;n
+password for not loged in users to your freebusy information?	calendar	vi	M&#7853;t kh&#7849;u cho nh&#7919;ng ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p &#273;&#7875; xem th√¥ng tin l&#7883;ch c√¥ng t√°c c&#7911;a b&#7841;n ?
+people holiday	calendar	vi	ng√†y ngh&#7881; to√†n d√¢n
+permission denied	calendar	vi	Kh√¥ng c√≥ quy&#7873;n
 planner	calendar	vi	Ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch
-planner by category	calendar	vi	Ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch theo nhÛm
-planner by user	calendar	vi	Ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch theo tÍn ng&#432;&#7901;i s&#7917; d&#7909;ng
-please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	vi	Vui lÚng x·c nh&#7853;n, &#273;&#7891;ng ˝, t&#7915; ch&#7889;i ho&#7863;c xem xÈt c·c thay &#273;&#7893;i trong m&#7909;c t&#432;&#417;ng &#7913;ng trÍn l&#7883;ch c&#7911;a b&#7841;n
-please enter a filename !!!	calendar	vi	vui lÚng &#273;i&#7873;n tÍn t&#7853;p tin
-preselected group for entering the planner	calendar	vi	NhÛm cho ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch l&#7921;a ch&#7885;n tham d&#7921;
-print calendars in black & white	calendar	vi	In c·c l&#7883;ch d&#7841;ng tr&#7855;ng &#273;en
-print the mini calendars	calendar	vi	In c·c l&#7883;ch mini
+planner by category	calendar	vi	Ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch theo nh√≥m
+planner by user	calendar	vi	Ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch theo t√™n ng&#432;&#7901;i s&#7917; d&#7909;ng
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	vi	Vui l√≤ng x√°c nh&#7853;n, &#273;&#7891;ng √Ω, t&#7915; ch&#7889;i ho&#7863;c xem x√©t c√°c thay &#273;&#7893;i trong m&#7909;c t&#432;&#417;ng &#7913;ng tr√™n l&#7883;ch c&#7911;a b&#7841;n
+please enter a filename !!!	calendar	vi	vui l√≤ng &#273;i&#7873;n t√™n t&#7853;p tin
+preselected group for entering the planner	calendar	vi	Nh√≥m cho ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch l&#7921;a ch&#7885;n tham d&#7921;
+print calendars in black & white	calendar	vi	In c√°c l&#7883;ch d&#7841;ng tr&#7855;ng &#273;en
+print the mini calendars	calendar	vi	In c√°c l&#7883;ch mini
 printer friendly	calendar	vi	B&#7843;n in ra gi&#7845;y
-privat	calendar	vi	C· nh‚n
-private and global public	calendar	vi	C· nh‚n v‡ mÙi tr&#432;&#7901;ng chung
-private and group public	calendar	vi	C· nh‚n v‡ mÙi tr&#432;&#7901;ng nhÛm
-private only	calendar	vi	Ch&#7881; d‡nh cho c· nh‚n
+privat	calendar	vi	C√° nh√¢n
+private and global public	calendar	vi	C√° nh√¢n v√† m√¥i tr&#432;&#7901;ng chung
+private and group public	calendar	vi	C√° nh√¢n v√† m√¥i tr&#432;&#7901;ng nh√≥m
+private only	calendar	vi	Ch&#7881; d√†nh cho c√° nh√¢n
 re-edit event	calendar	vi	Hi&#7879;u ch&#7881;nh l&#7841;i s&#7921; ki&#7879;n
-read a list of entries.	calendar	vi	Li&#7879;t kÍ danh s·ch c·c m&#7909;c
-read a single entry by passing the id and fieldlist.	calendar	vi	Li&#7879;t kÍ m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng c·ch truy&#7873;n id v‡ fieldlist
-read this list of methods.	calendar	vi	Li&#7879;t kÍ danh s·ch c·c ph&#432;&#417;ng th&#7913;c
+read a list of entries.	calendar	vi	Li&#7879;t k√™ danh s√°ch c√°c m&#7909;c
+read a single entry by passing the id and fieldlist.	calendar	vi	Li&#7879;t k√™ m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng c√°ch truy&#7873;n id v√† fieldlist
+read this list of methods.	calendar	vi	Li&#7879;t k√™ danh s√°ch c√°c ph&#432;&#417;ng th&#7913;c
 receive email updates	calendar	vi	Nh&#7853;n email c&#7853;p nh&#7853;t
-receive extra information in event mails	calendar	vi	Nh&#7853;n thÙng tin &#273;&#7863;c bi&#7879;t trong email s&#7921; ki&#7879;n
-receive summary of appointments	calendar	vi	Nh&#7853;n b&#7843;ng tÛm t&#7855;t c·c cu&#7897;c h&#7865;n
+receive extra information in event mails	calendar	vi	Nh&#7853;n th√¥ng tin &#273;&#7863;c bi&#7879;t trong email s&#7921; ki&#7879;n
+receive summary of appointments	calendar	vi	Nh&#7853;n b&#7843;ng t√≥m t&#7855;t c√°c cu&#7897;c h&#7865;n
 recurring event	calendar	vi	S&#7921; ki&#7879;n &#273;&#7883;nh k&#7923;
 refresh	calendar	vi	N&#7841;p l&#7841;i
-reinstate	calendar	vi	B&#7889; trÌ l&#7841;i
-rejected	calendar	vi	&#272;„ t&#7915; ch&#7889;i
-repeat day	calendar	vi	Ng‡y nh&#7855;c l&#7841;i
-repeat end date	calendar	vi	Ng‡y k&#7871;t th˙c nh&#7855;c l&#7841;i
-repeat type	calendar	vi	HÏnh th&#7913;c nh&#7855;c l&#7841;i
-repeating event information	calendar	vi	Nh&#7855;c l&#7841;i thÙng tin s&#7921; ki&#7879;n
+reinstate	calendar	vi	B&#7889; tr√≠ l&#7841;i
+rejected	calendar	vi	&#272;√£ t&#7915; ch&#7889;i
+repeat day	calendar	vi	Ng√†y nh&#7855;c l&#7841;i
+repeat end date	calendar	vi	Ng√†y k&#7871;t th√∫c nh&#7855;c l&#7841;i
+repeat type	calendar	vi	H√¨nh th&#7913;c nh&#7855;c l&#7841;i
+repeating event information	calendar	vi	Nh&#7855;c l&#7841;i th√¥ng tin s&#7921; ki&#7879;n
 repetition	calendar	vi	S&#7921; nh&#7855;c l&#7841;i
 repetitiondetails (or empty)	calendar	vi	Chi ti&#7871;t vi&#7879;c nh&#7855;c l&#7841;i (ho&#7863;c &#273;&#7875; tr&#7889;ng)
 reset	calendar	vi	Thi&#7871;t l&#7853;p l&#7841;i
-rule	calendar	vi	NguyÍn t&#7855;c
+rule	calendar	vi	Nguy√™n t&#7855;c
 sa	calendar	vi	B
 sat	calendar	vi	B&#7843;y
-scheduling conflict	calendar	vi	LÍn l&#7883;ch ch&#7891;ng chÈo
-search results	calendar	vi	C·c k&#7871;t qu&#7843; tÏm ki&#7871;m
-selected contacts (%1)	calendar	vi	C·c thÙng tin liÍn h&#7879; &#273;&#432;&#7907;c ch&#7885;n (%1)
-send updates via email	common	vi	G&#7917;i c·c c&#7853;p nh&#7853;t qua email
-send/receive updates via email	calendar	vi	G&#7917;i/Nh&#7853;n c·c c&#7853;p nh&#7853;t qua email
-set a year only for one-time / non-regular holidays.	calendar	vi	Thi&#7871;t l&#7853;p ng‡y ngh&#7881; m&#7897;t l&#7847;n trong n&#259;m/ng‡y ngh&#7881; b&#7845;t th&#432;&#7901;ng
-set new events to private	calendar	vi	Gi&#7919; kÌn c·c s&#7921; ki&#7879;n m&#7899;i cho c· nh‚n
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	vi	CÛ nÍn gi&#7919; nguyÍn c·c l&#7901;i m&#7901;i m‡ b&#7841;n t&#7915; ch&#7889;i trong l&#7883;ch c&#7911;a b&#7841;n ?<br>B&#7841;n ch&#7881; cÛ th&#7875; nh&#7853;n l&#7901;i sau n‡y (vÌ d&#7909;: l˙c b&#7841;n d‡n x&#7871;p &#7893;n th&#7887;a c·c ch&#7891;ng chÈo khi lÍn l&#7883;ch) n&#7871;u nh&#432; c·c l&#7901;i m&#7901;i v&#7851;n cÚn gi&#7919; nguyÍn trÍn l&#7883;ch c&#7911;a b&#7841;n!
-should new events created as private by default ?	calendar	vi	CÛ nÍn &#273;&#7875; m&#7863;c &#273;&#7883;nh c·c s&#7921; ki&#7879;n m&#7899;i &#273;&#432;&#7907;c gi&#7919; riÍng cho c· nh‚n ?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	vi	CÛ nÍn &#273;&#7875; nh&#7919;ng ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p xem &#273;&#432;&#7907;c thÙng tin v&#7873; l&#7883;ch cÙng t·c c&#7911;a b&#7841;n ? B&#7841;n cÛ th&#7875; thi&#7871;t l&#7853;p m&#7897;t m&#7853;t kh&#7849;u &#273;&#7863;c bi&#7879;t, kh·c v&#7899;i m&#7853;t kh&#7849;u bÏnh th&#432;&#7901;ng c&#7911;a b&#7841;n, &#273;&#7875; gi&#7919; kÌn nh&#7919;ng thÙng tin n‡y. ThÙng tin v&#7873; l&#7883;ch cÙng t·c &#273;&#432;&#7907;c trÏnh b‡y &#7903; d&#7841;ng iCal v‡ ch&#7881; th&#7875; hi&#7879;n c·c kho&#7843;ng th&#7901;i gian m‡ b&#7841;n b&#7853;n vi&#7879;c. NÛ khÙng th&#7875; hi&#7879;n tÍn s&#7921; ki&#7879;n/cÙng vi&#7879;c, n&#7897;i dung s&#7921; ki&#7879;n/cÙng vi&#7879;c v‡ nh&#7919;ng n&#417;i di&#7877;n ra. URL ch&#7881; &#273;&#7871;n thÙng tin v&#7873; l&#7883;ch cÙng t·c c&#7911;a b&#7841;n l‡ %1.
-should the mini calendars by printed / displayed in the printer friendly views ?	calendar	vi	CÛ c&#7847;n &#273;&#7875; c·c l&#7883;ch mini &#273;&#432;&#7907;c in ra/hi&#7875;n th&#7883; trÍn b&#7843;n in ra gi&#7845;y ?
-should the printer friendly view be in black & white or in color (as in normal view)?	calendar	vi	B&#7843;n in ra gi&#7845;y nÍn in ra d&#7841;ng tr&#7855;ng &#273;en hay m‡u (nh&#432; l˙c xem trÍn m‡n hÏnh) ?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	vi	CÛ c&#7847;n hi&#7875;n th&#7883; tÏnh tr&#7841;ng c&#7911;a s&#7921; ki&#7879;n/cÙng vi&#7879;c-c·c th‡nh viÍn (&#273;&#7891;ng ˝, t&#7915; ch&#7889;i, ...) trong ngo&#7863;c vuÙng phÌa sau m&#7895;i tÍn th‡nh viÍn khÙng?
-show day view on main screen	calendar	vi	hi&#7879;n b&#7843;ng xem theo ng‡y trÍn m‡n hÏnh chÌnh
-show default view on main screen	calendar	vi	hi&#7879;n b&#7843;ng xem m&#7863;c &#273;&#7883;nh trÍn m‡n hÏnh chÌnh
-show high priority events on main screen	calendar	vi	Li&#7879;t kÍ c·c s&#7921; ki&#7879;n kh&#7849;n trÍn m‡n hÏnh chÌnh
-show invitations you rejected	calendar	vi	Li&#7879;t kÍ c·c l&#7901;i m&#7901;i m‡ b&#7841;n &#273;„ t&#7915; ch&#7889;i
-show list of upcoming events	calendar	vi	Li&#7879;t kÍ c·c s&#7921; ki&#7879;n s&#7855;p x&#7843;y ra
+scheduling conflict	calendar	vi	L√™n l&#7883;ch ch&#7891;ng ch√©o
+search results	calendar	vi	C√°c k&#7871;t qu&#7843; t√¨m ki&#7871;m
+selected contacts (%1)	calendar	vi	C√°c th√¥ng tin li√™n h&#7879; &#273;&#432;&#7907;c ch&#7885;n (%1)
+send updates via email	common	vi	G&#7917;i c√°c c&#7853;p nh&#7853;t qua email
+send/receive updates via email	calendar	vi	G&#7917;i/Nh&#7853;n c√°c c&#7853;p nh&#7853;t qua email
+set a year only for one-time / non-regular holidays.	calendar	vi	Thi&#7871;t l&#7853;p ng√†y ngh&#7881; m&#7897;t l&#7847;n trong n&#259;m/ng√†y ngh&#7881; b&#7845;t th&#432;&#7901;ng
+set new events to private	calendar	vi	Gi&#7919; k√≠n c√°c s&#7921; ki&#7879;n m&#7899;i cho c√° nh√¢n
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	vi	C√≥ n√™n gi&#7919; nguy√™n c√°c l&#7901;i m&#7901;i m√† b&#7841;n t&#7915; ch&#7889;i trong l&#7883;ch c&#7911;a b&#7841;n ?<br>B&#7841;n ch&#7881; c√≥ th&#7875; nh&#7853;n l&#7901;i sau n√†y (v√≠ d&#7909;: l√∫c b&#7841;n d√†n x&#7871;p &#7893;n th&#7887;a c√°c ch&#7891;ng ch√©o khi l√™n l&#7883;ch) n&#7871;u nh&#432; c√°c l&#7901;i m&#7901;i v&#7851;n c√≤n gi&#7919; nguy√™n tr√™n l&#7883;ch c&#7911;a b&#7841;n!
+should new events created as private by default ?	calendar	vi	C√≥ n√™n &#273;&#7875; m&#7863;c &#273;&#7883;nh c√°c s&#7921; ki&#7879;n m&#7899;i &#273;&#432;&#7907;c gi&#7919; ri√™ng cho c√° nh√¢n ?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	vi	C√≥ n√™n &#273;&#7875; nh&#7919;ng ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p xem &#273;&#432;&#7907;c th√¥ng tin v&#7873; l&#7883;ch c√¥ng t√°c c&#7911;a b&#7841;n ? B&#7841;n c√≥ th&#7875; thi&#7871;t l&#7853;p m&#7897;t m&#7853;t kh&#7849;u &#273;&#7863;c bi&#7879;t, kh√°c v&#7899;i m&#7853;t kh&#7849;u b√¨nh th&#432;&#7901;ng c&#7911;a b&#7841;n, &#273;&#7875; gi&#7919; k√≠n nh&#7919;ng th√¥ng tin n√†y. Th√¥ng tin v&#7873; l&#7883;ch c√¥ng t√°c &#273;&#432;&#7907;c tr√¨nh b√†y &#7903; d&#7841;ng iCal v√† ch&#7881; th&#7875; hi&#7879;n c√°c kho&#7843;ng th&#7901;i gian m√† b&#7841;n b&#7853;n vi&#7879;c. N√≥ kh√¥ng th&#7875; hi&#7879;n t√™n s&#7921; ki&#7879;n/c√¥ng vi&#7879;c, n&#7897;i dung s&#7921; ki&#7879;n/c√¥ng vi&#7879;c v√† nh&#7919;ng n&#417;i di&#7877;n ra. URL ch&#7881; &#273;&#7871;n th√¥ng tin v&#7873; l&#7883;ch c√¥ng t√°c c&#7911;a b&#7841;n l√† %1.
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	vi	C√≥ c&#7847;n &#273;&#7875; c√°c l&#7883;ch mini &#273;&#432;&#7907;c in ra/hi&#7875;n th&#7883; tr√™n b&#7843;n in ra gi&#7845;y ?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	vi	B&#7843;n in ra gi&#7845;y n√™n in ra d&#7841;ng tr&#7855;ng &#273;en hay m√†u (nh&#432; l√∫c xem tr√™n m√†n h√¨nh) ?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	vi	C√≥ c&#7847;n hi&#7875;n th&#7883; t√¨nh tr&#7841;ng c&#7911;a s&#7921; ki&#7879;n/c√¥ng vi&#7879;c-c√°c th√†nh vi√™n (&#273;&#7891;ng √Ω, t&#7915; ch&#7889;i, ...) trong ngo&#7863;c vu√¥ng ph√≠a sau m&#7895;i t√™n th√†nh vi√™n kh√¥ng?
+show day view on main screen	calendar	vi	hi&#7879;n b&#7843;ng xem theo ng√†y tr√™n m√†n h√¨nh ch√≠nh
+show default view on main screen	calendar	vi	hi&#7879;n b&#7843;ng xem m&#7863;c &#273;&#7883;nh tr√™n m√†n h√¨nh ch√≠nh
+show high priority events on main screen	calendar	vi	Li&#7879;t k√™ c√°c s&#7921; ki&#7879;n kh&#7849;n tr√™n m√†n h√¨nh ch√≠nh
+show invitations you rejected	calendar	vi	Li&#7879;t k√™ c√°c l&#7901;i m&#7901;i m√† b&#7841;n &#273;√£ t&#7915; ch&#7889;i
+show list of upcoming events	calendar	vi	Li&#7879;t k√™ c√°c s&#7921; ki&#7879;n s&#7855;p x&#7843;y ra
 single event	calendar	vi	s&#7921; ki&#7879;n &#273;&#417;n
-sorry, the owner has just deleted this event	calendar	vi	R&#7845;t ti&#7871;c, ng&#432;&#7901;i ch&#7911; trÏ &#273;„ xÛa m&#7845;t s&#7921; ki&#7879;n n‡y r&#7891;i
-sorry, this event does not exist	calendar	vi	R&#7845;t ti&#7871;c, s&#7921; ki&#7879;n n‡y khÙng t&#7891;n t&#7841;i
-sorry, this event does not have exceptions defined	calendar	vi	R&#7845;t ti&#7871;c, s&#7921; ki&#7879;n n‡y khÙng cÛ ngo&#7841;i l&#7879;
+sorry, the owner has just deleted this event	calendar	vi	R&#7845;t ti&#7871;c, ng&#432;&#7901;i ch&#7911; tr√¨ &#273;√£ x√≥a m&#7845;t s&#7921; ki&#7879;n n√†y r&#7891;i
+sorry, this event does not exist	calendar	vi	R&#7845;t ti&#7871;c, s&#7921; ki&#7879;n n√†y kh√¥ng t&#7891;n t&#7841;i
+sorry, this event does not have exceptions defined	calendar	vi	R&#7845;t ti&#7871;c, s&#7921; ki&#7879;n n√†y kh√¥ng c√≥ ngo&#7841;i l&#7879;
 sort by	calendar	vi	S&#7855;p x&#7871;p theo
-specifies the the number of intervals shown in the planner view.	calendar	vi	X·c &#273;&#7883;nh s&#7889; l&#7847;n l&#7863;p l&#7841;i &#273;&#432;&#7907;c th&#7875; hi&#7879;n trong b&#7843;ng xem c&#7911;a ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch
-start date/time	calendar	vi	Ng‡y/Gi&#7901; b&#7855;t &#273;&#7847;u
-start- and enddates	calendar	vi	Ng‡y b&#7855;t &#273;&#7847;u v‡ k&#7871;t th˙c
-startdate	calendar	vi	Ng‡y b&#7855;t &#273;&#7847;u
+specifies the the number of intervals shown in the planner view.	calendar	vi	X√°c &#273;&#7883;nh s&#7889; l&#7847;n l&#7863;p l&#7841;i &#273;&#432;&#7907;c th&#7875; hi&#7879;n trong b&#7843;ng xem c&#7911;a ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch
+start date/time	calendar	vi	Ng√†y/Gi&#7901; b&#7855;t &#273;&#7847;u
+start- and enddates	calendar	vi	Ng√†y b&#7855;t &#273;&#7847;u v√† k&#7871;t th√∫c
+startdate	calendar	vi	Ng√†y b&#7855;t &#273;&#7847;u
 startrecord	calendar	vi	Ghi nh&#7853;n b&#7855;t &#273;&#7847;u
 su	calendar	vi	CN
-submit to repository	calendar	vi	B&#7887; v‡o ch&#7895; l&#432;u tr&#7919;
+submit to repository	calendar	vi	B&#7887; v√†o ch&#7895; l&#432;u tr&#7919;
 sun	calendar	vi	Ch&#7911; nh&#7853;t
 tentative	calendar	vi	Do d&#7921;
-test import (show importable records <u>only</u> in browser)	calendar	vi	Ki&#7875;m tra nh&#7853;p (<u>ch&#7881;</u> li&#7879;t kÍ c·c m&#7849;u tin cÛ th&#7875; nh&#7853;p &#273;&#432;&#7907;c trong trÏnh duy&#7879;t)
+test import (show importable records <u>only</u> in browser)	calendar	vi	Ki&#7875;m tra nh&#7853;p (<u>ch&#7881;</u> li&#7879;t k√™ c√°c m&#7849;u tin c√≥ th&#7875; nh&#7853;p &#273;&#432;&#7907;c trong tr√¨nh duy&#7879;t)
 text	calendar	vi	Ph&#7847;n ghi
 th	calendar	vi	N
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	vi	C·c ch&#7891;ng chÈo sau kËm theo th&#7901;i gian &#273;&#7873; xu&#7845;t:<ul>%1</ul>
-the user %1 is not participating in this event!	calendar	vi	Ng&#432;&#7901;i s&#7917; d&#7909;ng %1 khÙng cÛ tham gia v‡o s&#7921; ki&#7879;n n‡y!
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	vi	X&#7843;y ra l&#7895;i trong khi k&#7871;t n&#7889;i &#273;&#7871;n m·y ch&#7911; tin t&#7913;c c&#7911;a b&#7841;n.<br>Vui lÚng liÍn h&#7879; v&#7899;i qu&#7843;n tr&#7883; m&#7841;ng &#273;&#7875; x·c nh&#7853;n l&#7841;i tÍn m·y ch&#7911; tin t&#7913;c, tÍn &#273;&#259;ng nh&#7853;p v‡ m&#7853;t kh&#7849;u.
-this day is shown as first day in the week or month view.	calendar	vi	Ng‡y n‡y &#273;&#432;&#7907;c th&#7875; hi&#7879;n nh&#432; l‡ ng‡y &#273;&#7847;u tiÍn trong b&#7843;ng xem theo tu&#7847;n ho&#7863;c theo th·ng.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	vi	T&#7915; &#273;‚y x·c &#273;&#7883;nh ph&#7847;n cu&#7889;i c&#7911;a b&#7843;ng xem theo ng‡y c&#7911;a b&#7841;n. C·c s&#7921; ki&#7879;n sau th&#7901;i gian n‡y s&#7869; &#273;&#432;&#7907;c hi&#7875;n th&#7883; bÍn d&#432;&#7899;i b&#7843;ng xem theo ng‡y.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	vi	T&#7915; &#273;‚y x·c &#273;&#7883;nh ph&#7847;n &#273;&#7847;u c&#7911;a b&#7843;ng xem theo ng‡y c&#7911;a b&#7841;n. C·c s&#7921; ki&#7879;n tr&#432;&#7899;c th&#7901;i gian n‡y &#273;&#432;&#7907;c hi&#7875;n th&#7883; bÍn trÍn b&#7843;ng xem theo ng‡y.<br>Th&#7901;i gian n‡y c&#361;ng &#273;&#432;&#7907;c xem nh&#432; th&#7901;i gian b&#7855;t &#273;&#7847;u m&#7863;c &#273;&#7883;nh cho c·c s&#7921; ki&#7879;n m&#7899;i.
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	vi	NhÛm n‡y &#273;&#432;&#7907;c ch&#7885;n tr&#432;&#7899;c khi b&#7841;n v‡o b&#7843;ng xem ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch. B&#7841;n cÛ th&#7875; thay &#273;&#7893;i nÛ trong b&#7843;ng xem ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch v‡o b&#7845;t k&#7923; l˙c n‡o b&#7841;n mu&#7889;n.
-this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	vi	Ch&#7855;c ch&#7855;n l‡ do m·y ch&#7911; SMTP ch&#432;a &#273;&#432;&#7907;c c&#7845;u hÏnh ho&#7863;c c&#7845;u hÏnh ch&#432;a &#273;˙ng. ThÙng b·o v&#7899;i qu&#7843;n tr&#7883; m&#7841;ng c&#7911;a b&#7841;n.
-this message is sent for canceled or deleted events.	calendar	vi	Tin nh&#7855;n n‡y &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n c·c s&#7921; ki&#7879;n b&#7883; h&#7911;y ho&#7863;c xÛa.
-this message is sent for modified or moved events.	calendar	vi	Tin nh&#7855;n n‡y &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n c·c s&#7921; ki&#7879;n cÛ thay &#273;&#7893;i ho&#7863;c d&#7901;i &#273;i.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	vi	Tin nh&#7855;n n‡y &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n m&#7885;i th‡nh viÍn liÍn quan &#273;&#7871;n s&#7921; ki&#7879;n do b&#7841;n ch&#7911; trÏ, nh&#7919;ng ng&#432;&#7901;i &#273;„ yÍu c&#7847;u thÙng b·o khi cÛ s&#7921; ki&#7879;n m&#7899;i.<br>B&#7841;n cÛ th&#7875; d˘ng c·c bi&#7871;n thay th&#7871; n‡o &#273;Û v&#7899;i s&#7889; li&#7879;u c&#7911;a s&#7921; ki&#7879;n. DÚng &#273;&#7847;u tiÍn l‡ ch&#7911; &#273;&#7873; c&#7911;a email.
-this message is sent when you accept, tentative accept or reject an event.	calendar	vi	Tin nh&#7855;n n‡y &#273;&#432;&#7907;c g&#7917;i khi b&#7841;n &#273;&#7891;ng ˝, cÚn h&#417;i do d&#7921;, ho&#7863;c t&#7915; ch&#7889;i m&#7897;t s&#7921; ki&#7879;n.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	vi	Tin nh&#7855;n n‡y &#273;&#432;&#7907;c g&#7917;i khi b&#7841;n thi&#7871;t l&#7853;p Nh&#7855;c nh&#7903; cho m&#7897;t s&#7921; ki&#7879;n n‡o &#273;Û. Ghi v‡o t&#7845;t c&#7843; nh&#7919;ng thÙng tin m‡ b&#7841;n th&#7845;y c&#7847;n.
-this month	calendar	vi	Th·ng n‡y
-this week	calendar	vi	Tu&#7847;n n‡y
-this year	calendar	vi	N&#259;m n‡y
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	vi	C√°c ch&#7891;ng ch√©o sau k√®m theo th&#7901;i gian &#273;&#7873; xu&#7845;t:<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	vi	Ng&#432;&#7901;i s&#7917; d&#7909;ng %1 kh√¥ng c√≥ tham gia v√†o s&#7921; ki&#7879;n n√†y!
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	vi	X&#7843;y ra l&#7895;i trong khi k&#7871;t n&#7889;i &#273;&#7871;n m√°y ch&#7911; tin t&#7913;c c&#7911;a b&#7841;n.<br>Vui l√≤ng li√™n h&#7879; v&#7899;i qu&#7843;n tr&#7883; m&#7841;ng &#273;&#7875; x√°c nh&#7853;n l&#7841;i t√™n m√°y ch&#7911; tin t&#7913;c, t√™n &#273;&#259;ng nh&#7853;p v√† m&#7853;t kh&#7849;u.
+this day is shown as first day in the week or month view.	calendar	vi	Ng√†y n√†y &#273;&#432;&#7907;c th&#7875; hi&#7879;n nh&#432; l√† ng√†y &#273;&#7847;u ti√™n trong b&#7843;ng xem theo tu&#7847;n ho&#7863;c theo th√°ng.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	vi	T&#7915; &#273;√¢y x√°c &#273;&#7883;nh ph&#7847;n cu&#7889;i c&#7911;a b&#7843;ng xem theo ng√†y c&#7911;a b&#7841;n. C√°c s&#7921; ki&#7879;n sau th&#7901;i gian n√†y s&#7869; &#273;&#432;&#7907;c hi&#7875;n th&#7883; b√™n d&#432;&#7899;i b&#7843;ng xem theo ng√†y.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	vi	T&#7915; &#273;√¢y x√°c &#273;&#7883;nh ph&#7847;n &#273;&#7847;u c&#7911;a b&#7843;ng xem theo ng√†y c&#7911;a b&#7841;n. C√°c s&#7921; ki&#7879;n tr&#432;&#7899;c th&#7901;i gian n√†y &#273;&#432;&#7907;c hi&#7875;n th&#7883; b√™n tr√™n b&#7843;ng xem theo ng√†y.<br>Th&#7901;i gian n√†y c&#361;ng &#273;&#432;&#7907;c xem nh&#432; th&#7901;i gian b&#7855;t &#273;&#7847;u m&#7863;c &#273;&#7883;nh cho c√°c s&#7921; ki&#7879;n m&#7899;i.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	vi	Nh√≥m n√†y &#273;&#432;&#7907;c ch&#7885;n tr&#432;&#7899;c khi b&#7841;n v√†o b&#7843;ng xem ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch. B&#7841;n c√≥ th&#7875; thay &#273;&#7893;i n√≥ trong b&#7843;ng xem ng&#432;&#7901;i l&#7853;p k&#7871; ho&#7841;ch v√†o b&#7845;t k&#7923; l√∫c n√†o b&#7841;n mu&#7889;n.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	vi	Ch&#7855;c ch&#7855;n l√† do m√°y ch&#7911; SMTP ch&#432;a &#273;&#432;&#7907;c c&#7845;u h√¨nh ho&#7863;c c&#7845;u h√¨nh ch&#432;a &#273;√∫ng. Th√¥ng b√°o v&#7899;i qu&#7843;n tr&#7883; m&#7841;ng c&#7911;a b&#7841;n.
+this message is sent for canceled or deleted events.	calendar	vi	Tin nh&#7855;n n√†y &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n c√°c s&#7921; ki&#7879;n b&#7883; h&#7911;y ho&#7863;c x√≥a.
+this message is sent for modified or moved events.	calendar	vi	Tin nh&#7855;n n√†y &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n c√°c s&#7921; ki&#7879;n c√≥ thay &#273;&#7893;i ho&#7863;c d&#7901;i &#273;i.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	vi	Tin nh&#7855;n n√†y &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n m&#7885;i th√†nh vi√™n li√™n quan &#273;&#7871;n s&#7921; ki&#7879;n do b&#7841;n ch&#7911; tr√¨, nh&#7919;ng ng&#432;&#7901;i &#273;√£ y√™u c&#7847;u th√¥ng b√°o khi c√≥ s&#7921; ki&#7879;n m&#7899;i.<br>B&#7841;n c√≥ th&#7875; d√πng c√°c bi&#7871;n thay th&#7871; n√†o &#273;√≥ v&#7899;i s&#7889; li&#7879;u c&#7911;a s&#7921; ki&#7879;n. D√≤ng &#273;&#7847;u ti√™n l√† ch&#7911; &#273;&#7873; c&#7911;a email.
+this message is sent when you accept, tentative accept or reject an event.	calendar	vi	Tin nh&#7855;n n√†y &#273;&#432;&#7907;c g&#7917;i khi b&#7841;n &#273;&#7891;ng √Ω, c√≤n h&#417;i do d&#7921;, ho&#7863;c t&#7915; ch&#7889;i m&#7897;t s&#7921; ki&#7879;n.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	vi	Tin nh&#7855;n n√†y &#273;&#432;&#7907;c g&#7917;i khi b&#7841;n thi&#7871;t l&#7853;p Nh&#7855;c nh&#7903; cho m&#7897;t s&#7921; ki&#7879;n n√†o &#273;√≥. Ghi v√†o t&#7845;t c&#7843; nh&#7919;ng th√¥ng tin m√† b&#7841;n th&#7845;y c&#7847;n.
+this month	calendar	vi	Th√°ng n√†y
+this week	calendar	vi	Tu&#7847;n n√†y
+this year	calendar	vi	N&#259;m n√†y
 thu	calendar	vi	N&#259;m
-title	calendar	vi	TiÍu &#273;&#7873;
-title of the event	calendar	vi	TiÍu &#273;&#7873; c&#7911;a s&#7921; ki&#7879;n
-title-row	calendar	vi	DÚng tiÍu &#273;&#7873;
-to many might exceed your execution-time-limit	calendar	vi	qu· nhi&#7873;u, cÛ kh&#7843; n&#259;ng v&#432;&#7907;t qu· gi&#7899;i h&#7841;n th&#7901;i gian th&#7921;c hi&#7879;n c&#7911;a b&#7841;n
-to-firstname	calendar	vi	&#272;&#7871;n-TÍn
-to-fullname	calendar	vi	&#272;&#7871;n-TÍn &#273;&#7847;y &#273;&#7911;
+title	calendar	vi	Ti√™u &#273;&#7873;
+title of the event	calendar	vi	Ti√™u &#273;&#7873; c&#7911;a s&#7921; ki&#7879;n
+title-row	calendar	vi	D√≤ng ti√™u &#273;&#7873;
+to many might exceed your execution-time-limit	calendar	vi	qu√° nhi&#7873;u, c√≥ kh&#7843; n&#259;ng v&#432;&#7907;t qu√° gi&#7899;i h&#7841;n th&#7901;i gian th&#7921;c hi&#7879;n c&#7911;a b&#7841;n
+to-firstname	calendar	vi	&#272;&#7871;n-T√™n
+to-fullname	calendar	vi	&#272;&#7871;n-T√™n &#273;&#7847;y &#273;&#7911;
 to-lastname	calendar	vi	&#272;&#7871;n-H&#7885;
-today	calendar	vi	HÙm nay
+today	calendar	vi	H√¥m nay
 translation	calendar	vi	D&#7883;ch
 tu	calendar	vi	B
 tue	calendar	vi	Ba
-update a single entry by passing the fields.	calendar	vi	C&#7853;p nh&#7853;t m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng c·ch truy&#7873;n c·c tr&#432;&#7901;ng
-updated	calendar	vi	&#272;„ c&#7853;p nh&#7853;t
-use end date	calendar	vi	D˘ng ng‡y k&#7871;t th˙c
-view this entry	calendar	vi	Xem m&#7909;c n‡y
+update a single entry by passing the fields.	calendar	vi	C&#7853;p nh&#7853;t m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng c√°ch truy&#7873;n c√°c tr&#432;&#7901;ng
+updated	calendar	vi	&#272;√£ c&#7853;p nh&#7853;t
+use end date	calendar	vi	D√πng ng√†y k&#7871;t th√∫c
+view this entry	calendar	vi	Xem m&#7909;c n√†y
 we	calendar	vi	T
 wed	calendar	vi	T&#432;
 week	calendar	vi	Tu&#7847;n
-weekday starts on	calendar	vi	Ng‡y &#273;&#7847;u tiÍn trong tu&#7847;n
-weekly	calendar	vi	H‡ng tu&#7847;n
+weekday starts on	calendar	vi	Ng√†y &#273;&#7847;u ti√™n trong tu&#7847;n
+weekly	calendar	vi	H√†ng tu&#7847;n
 weekview	calendar	vi	B&#7843;ng xem theo tu&#7847;n
-when creating new events default set to private	calendar	vi	Khi t&#7841;o s&#7921; ki&#7879;n m&#7899;i, m&#7863;c nhiÍn gi&#7919; nÛ riÍng cho c· nh‚n
-which events do you want to see when you enter the calendar.	calendar	vi	Nh&#7919;ng s&#7921; ki&#7879;n n‡o b&#7841;n c&#7847;n th&#7845;y khi b&#7841;n m&#7903; l&#7883;ch
-which of calendar view do you want to see, when you start calendar ?	calendar	vi	B&#7843;ng xem l&#7883;ch d&#7841;ng n‡o b&#7841;n mu&#7889;n th&#7845;y khi m&#7903; l&#7883;ch ?
-work day ends on	calendar	vi	Ng‡y l‡m vi&#7879;c k&#7871;t th˙c v‡o
-work day starts on	calendar	vi	Ng‡y l‡m vi&#7879;c b&#7855;t &#273;&#7847;u v‡o
-workdayends	calendar	vi	ng‡y l‡m vi&#7879;c k&#7871;t th˙c
-yearly	calendar	vi	H‡ng n&#259;m
+when creating new events default set to private	calendar	vi	Khi t&#7841;o s&#7921; ki&#7879;n m&#7899;i, m&#7863;c nhi√™n gi&#7919; n√≥ ri√™ng cho c√° nh√¢n
+which events do you want to see when you enter the calendar.	calendar	vi	Nh&#7919;ng s&#7921; ki&#7879;n n√†o b&#7841;n c&#7847;n th&#7845;y khi b&#7841;n m&#7903; l&#7883;ch
+which of calendar view do you want to see, when you start calendar ?	calendar	vi	B&#7843;ng xem l&#7883;ch d&#7841;ng n√†o b&#7841;n mu&#7889;n th&#7845;y khi m&#7903; l&#7883;ch ?
+work day ends on	calendar	vi	Ng√†y l√†m vi&#7879;c k&#7871;t th√∫c v√†o
+work day starts on	calendar	vi	Ng√†y l√†m vi&#7879;c b&#7855;t &#273;&#7847;u v√†o
+workdayends	calendar	vi	ng√†y l√†m vi&#7879;c k&#7871;t th√∫c
+yearly	calendar	vi	H√†ng n&#259;m
 yearview	calendar	vi	B&#7843;ng xem theo n&#259;m
-you can either set a year or a occurence, not both !!!	calendar	vi	B&#7841;n cÛ th&#7875; &#273;&#7863;t m&#7897;t N&#259;m ho&#7863;c m&#7897;t S&#7921; ki&#7879;n, ho&#7863;c khÙng c&#7847;n c&#7843; hai !!!
-you can only set a year or a occurence !!!	calendar	vi	B&#7841;n ch&#7881; cÛ th&#7875; &#273;&#7863;t m&#7897;t n&#259;m ho&#7863;c m&#7897;t s&#7921; ki&#7879;n !!!
-you do not have permission to add alarms to this event !!!	calendar	vi	B&#7841;n khÙng cÛ quy&#7873;n thÍm c·c nh&#7855;c nh&#7903; cho s&#7921; ki&#7879;n n‡y !!!
-you do not have permission to delete this alarm !!!	calendar	vi	B&#7841;n khÙng cÛ quy&#7873;n xÛa l&#7901;i nh&#7855;c nh&#7903; n‡y !!!
-you do not have permission to enable/disable this alarm !!!	calendar	vi	B&#7841;n khÙng cÛ quy&#7873;n b&#7853;t/t&#7855;t l&#7901;i nh&#7855;c nh&#7903; n‡y !!!
-you do not have permission to read this record!	calendar	vi	B&#7841;n khÙng cÛ quy&#7873;n &#273;&#7885;c m&#7849;u tin n‡y!
-you have %1 high priority events on your calendar today.	common	vi	B&#7841;n cÛ %1 s&#7921; ki&#7879;n kh&#7849;n trong l&#7883;ch hÙm nay.
-you have 1 high priority event on your calendar today.	common	vi	B&#7841;n cÛ 1 s&#7921; ki&#7879;n kh&#7849;n trong l&#7883;ch hÙm nay.
-you have a meeting scheduled for %1	calendar	vi	B&#7841;n cÛ m&#7897;t cu&#7897;c h&#7885;p &#273;„ lÍn l&#7883;ch tr&#432;&#7899;c v‡o %1
-you have not entered a title	calendar	vi	B&#7841;n ch&#432;a &#273;i&#7873;n v‡o tiÍu &#273;&#7873;
-you have not entered a valid date	calendar	vi	B&#7841;n &#273;i&#7873;n sai ng‡y
-you have not entered a valid time of day	calendar	vi	B&#7841;n &#273;i&#7873;n sai gi&#7901; trong ng‡y
-you have not entered participants	calendar	vi	B&#7841;n ch&#432;a &#273;i&#7873;n v‡o th‡nh viÍn n‡o
-you must enter one or more search keywords	calendar	vi	B&#7841;n ph&#7843;i &#273;i&#7873;n v‡o Ìt nh&#7845;t m&#7897;t t&#7915; khÛa
+you can either set a year or a occurence, not both !!!	calendar	vi	B&#7841;n c√≥ th&#7875; &#273;&#7863;t m&#7897;t N&#259;m ho&#7863;c m&#7897;t S&#7921; ki&#7879;n, ho&#7863;c kh√¥ng c&#7847;n c&#7843; hai !!!
+you can only set a year or a occurence !!!	calendar	vi	B&#7841;n ch&#7881; c√≥ th&#7875; &#273;&#7863;t m&#7897;t n&#259;m ho&#7863;c m&#7897;t s&#7921; ki&#7879;n !!!
+you do not have permission to add alarms to this event !!!	calendar	vi	B&#7841;n kh√¥ng c√≥ quy&#7873;n th√™m c√°c nh&#7855;c nh&#7903; cho s&#7921; ki&#7879;n n√†y !!!
+you do not have permission to delete this alarm !!!	calendar	vi	B&#7841;n kh√¥ng c√≥ quy&#7873;n x√≥a l&#7901;i nh&#7855;c nh&#7903; n√†y !!!
+you do not have permission to enable/disable this alarm !!!	calendar	vi	B&#7841;n kh√¥ng c√≥ quy&#7873;n b&#7853;t/t&#7855;t l&#7901;i nh&#7855;c nh&#7903; n√†y !!!
+you do not have permission to read this record!	calendar	vi	B&#7841;n kh√¥ng c√≥ quy&#7873;n &#273;&#7885;c m&#7849;u tin n√†y!
+you have %1 high priority events on your calendar today.	common	vi	B&#7841;n c√≥ %1 s&#7921; ki&#7879;n kh&#7849;n trong l&#7883;ch h√¥m nay.
+you have 1 high priority event on your calendar today.	common	vi	B&#7841;n c√≥ 1 s&#7921; ki&#7879;n kh&#7849;n trong l&#7883;ch h√¥m nay.
+you have a meeting scheduled for %1	calendar	vi	B&#7841;n c√≥ m&#7897;t cu&#7897;c h&#7885;p &#273;√£ l√™n l&#7883;ch tr&#432;&#7899;c v√†o %1
+you have not entered a title	calendar	vi	B&#7841;n ch&#432;a &#273;i&#7873;n v√†o ti√™u &#273;&#7873;
+you have not entered a valid date	calendar	vi	B&#7841;n &#273;i&#7873;n sai ng√†y
+you have not entered a valid time of day	calendar	vi	B&#7841;n &#273;i&#7873;n sai gi&#7901; trong ng√†y
+you have not entered participants	calendar	vi	B&#7841;n ch&#432;a &#273;i&#7873;n v√†o th√†nh vi√™n n√†o
+you must enter one or more search keywords	calendar	vi	B&#7841;n ph&#7843;i &#273;i&#7873;n v√†o √≠t nh&#7845;t m&#7897;t t&#7915; kh√≥a
 you must select a [iv]cal. (*.[iv]cs)	calendar	vi	B&#7841;n ph&#7843;i ch&#7885;n m&#7897;t [iv]Cal. (*.[iv]cs)
-you need to set either a day or a occurence !!!	calendar	vi	B&#7841;n c&#7847;n &#273;&#7863;t m&#7897;t ng‡y ho&#7863;c m&#7897;t s&#7921; ki&#7879;n
-your meeting scheduled for %1 has been canceled	calendar	vi	Cu&#7897;c h&#7885;p &#273;„ lÍn l&#7883;ch tr&#432;&#7899;c c&#7911;a b&#7841;n v‡o %1 &#273;„ b&#7883; h&#7911;y
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	vi	Cu&#7897;c h&#7885;p c&#7911;a b&#7841;n &#273;&#432;&#7907;c lÍn l&#7883;ch v‡o %1 b‚y gi&#7901; &#273;„ d&#7901;i l&#7841;i v‡o %2
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	vi	Kho&#7843;ng th&#7901;i gian &#273;&#7873; xu&#7845;t c&#7911;a b&#7841;n t&#7915; <B> %1 - %2 </B> tr˘ng v&#7899;i c·c s&#7921; ki&#7879;n &#273;„ &#273;&#432;&#7907;c lÍn l&#7883;ch sau:
+you need to set either a day or a occurence !!!	calendar	vi	B&#7841;n c&#7847;n &#273;&#7863;t m&#7897;t ng√†y ho&#7863;c m&#7897;t s&#7921; ki&#7879;n
+your meeting scheduled for %1 has been canceled	calendar	vi	Cu&#7897;c h&#7885;p &#273;√£ l√™n l&#7883;ch tr&#432;&#7899;c c&#7911;a b&#7841;n v√†o %1 &#273;√£ b&#7883; h&#7911;y
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	vi	Cu&#7897;c h&#7885;p c&#7911;a b&#7841;n &#273;&#432;&#7907;c l√™n l&#7883;ch v√†o %1 b√¢y gi&#7901; &#273;√£ d&#7901;i l&#7841;i v√†o %2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	vi	Kho&#7843;ng th&#7901;i gian &#273;&#7873; xu&#7845;t c&#7911;a b&#7841;n t&#7915; <B> %1 - %2 </B> tr√πng v&#7899;i c√°c s&#7921; ki&#7879;n &#273;√£ &#273;&#432;&#7907;c l√™n l&#7883;ch sau:

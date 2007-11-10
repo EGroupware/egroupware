@@ -1,29 +1,29 @@
-%d matches on search criteria	et_media	fr	%d occurences sur les critères de recherche
+%d matches on search criteria	et_media	fr	%d occurences sur les critÃ¨res de recherche
 author	et_media	fr	Auteur
 book	et_media	en	Book
 cancel	et_media	fr	Annuler
-clears the form, without changing anything	et_media	fr	Remet à vide le formulaire, sans rien changer
-click here to edit the entry	et_media	fr	Cliquez ici pour modifier l'entrée
+clears the form, without changing anything	et_media	fr	Remet Ã  vide le formulaire, sans rien changer
+click here to edit the entry	et_media	fr	Cliquez ici pour modifier l'entrÃ©e
 compact disc	et_media	en	Compact Disc
 delete	et_media	fr	Effacer
-deletes an entry	et_media	fr	Efface une entrée
+deletes an entry	et_media	fr	Efface une entrÃ©e
 description	et_media	fr	Description
 dvd	et_media	en	DVD
 edit	et_media	fr	Modifier
-entry saved	et_media	fr	Entrée enregistrée
-error: writeing !!!	et_media	fr	Erreur: à l'écriture !!!
+entry saved	et_media	fr	EntrÃ©e enregistrÃ©e
+error: writeing !!!	et_media	fr	Erreur: Ã  l'Ã©criture !!!
 et_media	common	fr	eTemplates MediaDB
 etemplates mediadb	et_media	fr	eTemplates MediaDB
 here goes the name of the publication / record	et_media	fr	Ici on met le nom de la publication / l'enregistrement
 name	et_media	fr	Nom
-nothing matched search criteria !!!	et_media	fr	Aucune occurence sur les critères de recherche !!!
-please use name, first name	et_media	fr	SVP utilisez nom, prénom
+nothing matched search criteria !!!	et_media	fr	Aucune occurence sur les critÃ¨res de recherche !!!
+please use name, first name	et_media	fr	SVP utilisez nom, prÃ©nom
 read	et_media	fr	Lire
-reads or searches for entries matching the criteria above	et_media	fr	Lit ou recherche des entrées qui correspondent aux critères ci-dessus
+reads or searches for entries matching the criteria above	et_media	fr	Lit ou recherche des entrÃ©es qui correspondent aux critÃ¨res ci-dessus
 save	et_media	fr	Enregistrer
-saves the change to the db	et_media	fr	Enregistre les changements dans la base de données
+saves the change to the db	et_media	fr	Enregistre les changements dans la base de donnÃ©es
 select one ...	et_media	en	Select one ...
 select the type fitting most	et_media	fr	Choisissez le type qui correspond le mieux
 type	et_media	fr	Type
 video tape	et_media	en	Video Tape
-we have a fulltext search using that description	et_media	fr	Nous avons une recherche en texte intégral qui utilise cette description
+we have a fulltext search using that description	et_media	fr	Nous avons une recherche en texte intÃ©gral qui utilise cette description

@@ -1,204 +1,204 @@
-a short subject for the entry	infolog	ko	ÀÌ ¿£Æ®¸®ÀÇ ÂªÀº Á¦¸ñ
-abort without deleting	infolog	ko	»èÁ¦¾øÀÌ Ãë¼Ò
-accept	infolog	ko	¼ö¶ô
-action	infolog	ko	Ã³¸®
-add	infolog	ko	Ãß°¡
-add a file	infolog	ko	ÆÄÀÏ Ãß°¡
-add a new entry	infolog	ko	»õ ¿£Æ®¸® Ãß°¡
-add a new note	infolog	ko	»õ ³ëÆ® Ãß°¡
-add a new phonecall	infolog	ko	»õ ÅëÈ­±â·Ï Ãß°¡
-add a new sub-task, -note, -call to this entry	infolog	ko	ÀÌ ¿£Æ®¸®ÀÇ ÇÏÀ§ÀÛ¾÷ Ãß°¡
-add a new todo	infolog	ko	»õ ÇÒÀÏ Ãß°¡
-add file	infolog	ko	ÆÄÀÏ Ãß°¡
-add sub	infolog	ko	ÇÏÀ§ Ãß°¡
-add timesheet entry	infolog	ko	Å¸ÀÓ½ÃÆ® ¿£Æ®¸®¿¡ Ãß°¡
-add:	infolog	ko	Ãß°¡:
-all	infolog	ko	¸ğµÎ
-all links and attachments	infolog	ko	¸ğµç Ã·ºÎ¿Í ¸µÅ©µé
-apply the changes	infolog	ko	º¯°æ»çÇ× Àû¿ë
-are you shure you want to delete this entry ?	infolog	ko	Á¤¸»·Î ÀÌ ¿£Æ®¸®¸¦ »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?
-attach a file	infolog	ko	ÆÄÀÏ Ã·ºÎ
-attach file	infolog	ko	ÆÄÀÏ Ã·ºÎ
-back to main list	infolog	ko	¸ŞÀÎ ¸ñ·ÏÀ¸·Î µ¹¾Æ°¡±â
-both	infolog	ko	¸ğµÎ
-call	infolog	ko	ÅëÈ­
-cancel	infolog	ko	Ãë¼Ò
-cancelled	infolog	ko	Ãë¼ÒµÊ
-categories	infolog	ko	Ä«Å×°í¸®µé
-category	infolog	ko	Ä«Å×°í¸®
-change the status of an entry, eg. close it	infolog	ko	¿£Æ®¸®ÀÇ »óÅÂ¸¦ º¯°æ (¿¹: ¸¸·á)
-charset of file	infolog	ko	ÆÄÀÏÀÇ ¹®ÀÚ¿­¼³Á¤
-check to set startday	infolog	ko	½ÃÀÛÀÏ ¼³Á¤À» È®ÀÎ
-click here to create the link	infolog	ko	»õ ¸µÅ©¸¦ »ı¼ºÇÏ·Á¸é Å¬¸¯ÇÏ¼¼¿ä
-click here to start the search	infolog	ko	°Ë»öÀ» ½ÃÀÛÇÏ·Á¸é Å¬¸¯ÇÏ¼¼¿ä
-close	infolog	ko	¸¸·á
-comment	infolog	ko	Ä¿¸àÆ®
-completed	infolog	ko	¿Ï·áµÊ
-configuration	infolog	ko	¼³Á¤
-confirm	infolog	ko	È®ÀÎ
-contact	infolog	ko	¿¬¶ô
-create new links	infolog	ko	»õ ¸µÅ© ¸¸µé±â
-creates a new field	infolog	ko	»õ ÇÊµå ¸¸µé±â
-creates a new status with the given values	infolog	ko	ÁÖ¾îÁø °ªÀ¸·Î »õ »óÅÂ ¸¸µé±â
-creates a new typ with the given name	infolog	ko	ÁÖ¾îÁø ÀÌ¸§À¸·Î »õ Çü½Ä ¸¸µé±â
-creation	infolog	ko	»ı¼º
-date completed	infolog	ko	¿Ï·áÀÏ
-datecreated	infolog	ko	°³¼³ÀÏ
-delegation	infolog	ko	À§ÀÓ
-delete	infolog	ko	»èÁ¦
-delete the entry	infolog	ko	¿£Æ®¸® »èÁ¦
-delete this entry	infolog	ko	ÀÌ ¿£Æ®¸® »èÁ¦
-delete this entry and all listed sub-entries	infolog	ko	ÇÏÀ§ ¿£Æ®¸®¸¦ Æ÷ÇÔ »èÁ¦
-deletes the selected typ	infolog	ko	¼±ÅÃµÈ Çü½Ä »èÁ¦
-deletes this field	infolog	ko	ÀÌ ÇÊµå »èÁ¦
-deletes this status	infolog	ko	ÀÌ »óÅÂ »èÁ¦
-description	infolog	ko	³»¿ë
-details	infolog	ko	³»¿ëÆ÷ÇÔ
-don't show infolog	infolog	ko	ÀÎÆ÷·Î±× º¸ÀÌÁö ¾Ê±â
-done	infolog	ko	¿Ï·á
-download	infolog	ko	´Ù¿î·Îµå
-duration	infolog	ko	±â°£
-edit	infolog	ko	¼öÁ¤
-edit or create categories for ingolog	infolog	ko	ÀÎÆ÷·Î±×Àü¿ë Ä«Å×°í¸® ÆíÁı/¼öÁ¤
-edit rights (full edit rights incl. making someone else responsible!)	infolog	ko	ÆíÁı ±ÇÇÑ (Æ¯Á¤ÀÎ È¤Àº ÀÀ´äÀÚ¸¦ Æ÷ÇÔÇÑ ¼öÁ¤ÀÇ ¸ğµç±ÇÇÑ)
-edit status	infolog	ko	»óÅÂ ¼öÁ¤
-edit the entry	infolog	ko	¿£Æ®¸® ¼öÁ¤
-edit this entry	infolog	ko	ÀÌ ¿£Æ®¸® ¼öÁ¤
-enddate	infolog	ko	¸¸±âÀÏ
-enddate can not be before startdate	infolog	ko	¸¸±âÀÏÀº ½ÃÀÛÀÏº¸´Ù ¾Õ¼³¼ö ¾ø½À´Ï´Ù.
-enter the query pattern	infolog	ko	ÁúÀÇ ÆĞÅÏ ÀÔ·Â
-error: saving the entry	infolog	ko	¿À·ù: ¿£Æ®¸® ÀúÀå
-error: the entry has been updated since you opened it for editing!	infolog	ko	¿À·ù: ÀÌ ¿£Æ®¸®´Â ´ç½ÅÀÌ ¼öÁ¤ÇÏ´Â Áß°£¿¡ ¾÷µ¥ÀÌÆ® µÇ¾ú½À´Ï´Ù.
-existing links	infolog	ko	±âÁ¸ ¸µÅ©
-fax	infolog	ko	ÆÑ½º
-fieldseparator	infolog	ko	ÇÊµå±¸ºĞÀÚ
-finish	infolog	ko	¿Ï·á
-general	infolog	ko	ÀÏ¹İ
-import	infolog	ko	ºÒ·¯¿À±â
-info log	common	ko	ÀÎÆ÷·Î±×
-infolog	common	ko	ÀÎÆ÷·Î±×
-infolog - delete	infolog	ko	ÀÎÆ÷·Î±× - »èÁ¦
-infolog - edit	infolog	ko	ÀÎÆ÷·Î±× - ¼öÁ¤
-infolog - import csv-file	infolog	ko	ÀÎÆ÷·Î±× - ºÒ·¯¿À±â CSV
-infolog - new	infolog	ko	ÀÎÆ÷·Î±× - ½Å±Ô
-infolog - new subproject	infolog	ko	ÀÎÆ÷·Î±× - »õ ÇÏÀ§ÇÁ·ÎÁ§Æ®
-infolog - subprojects from	infolog	ko	ÀÎÆ÷·Î±× - ¼­ºêÇÁ·ÎÁ§Æ®·ÎºÎÅÍ
-infolog entry deleted	infolog	ko	ÀÎÆ÷·Î±× ¿£Æ®¸®°¡ »èÁ¦µÊ
-infolog entry saved	infolog	ko	ÀÎÆ÷·Î±× ¿£Æ®¸®°¡ ÀúÀåµÊ
-infolog filter for the main screen	infolog	ko	¸ŞÀÎÈ­¸éÀÇ ÀÎÆ÷·Î±× ÇÊÅÍ
-infolog list	infolog	ko	ÀÎÆ÷·Î±× ¸ñ·Ï
-infolog preferences	common	ko	ÀÎÆ÷·Î±× ¼³Á¤
-infolog-fieldname	infolog	ko	ÀÎÆ÷·Î±× - ÇÊµå¸í
-invalid filename	infolog	ko	Àß¸øµÈ ÆÄÀÏ¸í
-last changed	infolog	ko	¸¶Áö¸· º¯°æ
-last modified	infolog	ko	¸¶Áö¸· ¼öÁ¤
-leave it empty	infolog	ko	ºóÃ¤·Î ³²°ÜµÎ±â
-leave without saveing the entry	infolog	ko	¿£Æ®¸®¸¦ ÀúÀå¾øÀÌ ³ª°¡±â
-leaves without saveing	infolog	ko	ÀúÀå¾øÀÌ ³ª°¡±â
-link	infolog	ko	¸µÅ©
-links	infolog	ko	¸µÅ©µé
-links of this entry	infolog	ko	ÀÌ ¿£Æ®¸®ÀÇ ¸µÅ©
-list all categories	infolog	ko	¸ğµç Ä«Å×°í¸® ¸ñ·Ï
-list no subs/childs	infolog	ko	½º·¹µå Á¦¿Ü ¸ñ·Ï
-location	infolog	ko	Àå¼Ò
-low	infolog	ko	³·À½
-name must not be empty !!!	infolog	ko	ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä
-name of new type to create	infolog	ko	»õ Çü½ÄÀ» ¸¸µé±â À§ÇÑ ¸íÄª
-never hide search and filters	infolog	ko	°Ë»ö ¹× ÇÊÅÍ ¼û±âÁö ¾ÊÀ½
-new name	infolog	ko	»õ ÀÌ¸§
-new search	infolog	ko	»õ °Ë»ö
-no - cancel	infolog	ko	¾Æ´Ï¿À - Ãë¼Ò
-no describtion, links or attachments	infolog	ko	¼³¸í,¸µÅ©,Ã·ºÎ Á¦¿Ü
-no details	infolog	ko	³»¿ëÁ¦¿Ü
-no entries found, try again ...	infolog	ko	Ç×¸ñÀÌ ¾ø½À´Ï´Ù. ´Ù½ÃÇØÁÖ¼¼¿ä
-no filter	infolog	ko	ÇÊÅÍ¾øÀ½
-no links or attachments	infolog	ko	¸µÅ© È¤Àº Ã·ºÎ ¾øÀ½
-none	infolog	ko	¾øÀ½
-normal	infolog	ko	ÀÏ¹İ
-not assigned	infolog	ko	ÁöÁ¤¾ÈµÊ
-not-started	infolog	ko	½ÃÀÛ¾ÈµÊ
-note	infolog	ko	³ëÆ®
-number of records to read (%1)	infolog	ko	%1 °³ÀÇ ·¹ÄÚµå¸¦ ÀĞ¾ú½À´Ï´Ù.
-offer	infolog	ko	Á¦¾È
-ongoing	infolog	ko	ÁøÇàÁß
-open	infolog	ko	°³¼³
-overdue	infolog	ko	¸¸±âÃÊ°ú
-own	infolog	ko	¼ÒÀ¯
-own open	infolog	ko	¼ÒÀ¯ °³¼³
-own overdue	infolog	ko	¼ÒÀ¯ ¸¸±âÃÊ°ú
-own upcoming	infolog	ko	¼ÒÀ¯ ¿¹Á¤
-owner	infolog	ko	¼ÒÀ¯ÁÖ
-pattern for search in addressbook	infolog	ko	ÁÖ¼Ò·Ï °Ë»öÀ» À§ÇÑ ÆĞÅÏ
-pattern for search in projects	infolog	ko	ÇÁ·ÎÁ§Æ® °Ë»öÀ» À§ÇÑ ÆĞÅÏ
-percent completed	infolog	ko	ÆÛ¼¾Æ® ¿Ï·á
-permission denied	infolog	ko	±ÇÇÑ °ÅÀı
-phone	infolog	ko	ÅëÈ­
-phone/email	infolog	ko	ÀüÈ­/¸ŞÀÏ
-phonecall	infolog	ko	ÅëÈ­
-planned	infolog	ko	±âÈ¹
-planned time	infolog	ko	±âÈ¹±â°£
-price	infolog	ko	°¡°İ
-priority	infolog	ko	Áß¿äµµ
-private	infolog	ko	°³ÀÎ
-project	infolog	ko	ÇÁ·ÎÁ§Æ®
-re:	infolog	ko	È¸½Å:
-responsible	infolog	ko	ÀÀ´ä´ë»ó
-responsible open	infolog	ko	ÀÀ´äÀÚ °³¼³
-responsible overdue	infolog	ko	ÀÀ´äÀÚ ¸¸±âÃÊ°ú
-responsible upcoming	infolog	ko	ÀÀ´äÀÚ ¿¹Á¤
-responsible user, priority	infolog	ko	ÀÀ´ä´ë»ó,Áß¿äµµ
-rights for the responsible	infolog	ko	ÀÀ´äÀÚ¿¡ ´ëÇÑ ±ÇÇÑ
-save	infolog	ko	ÀúÀå
-saves the changes made and leaves	infolog	ko	ÀúÀåÇÏ°í ³ª°¡±â
-saves this entry	infolog	ko	ÀÌ ¿£Æ®¸®¸¦ ÀúÀåÇÔ
-search	infolog	ko	°Ë»ö
-select	infolog	ko	¼±ÅÃ
-select a category for this entry	infolog	ko	ÀÌ ¿£Æ®¸®ÀÇ Ä«Å×°í¸®¸¦ ¼±ÅÃÇÏ¼¼¿ä
-select a price	infolog	ko	°¡°İÀ» ¼±ÅÃÇÏ¼¼¿ä
-select a priority for this task	infolog	ko	ÀÌ ¿£Æ®¸®ÀÇ Áß¿äµµ¸¦ ¼±ÅÃÇÏ¼¼¿ä
-select a project	infolog	ko	ÇÁ·ÎÁ§Æ®¸¦ ¼±ÅÃÇÏ¼¼¿ä
-select a responsible user: a person you want to delegate this task	infolog	ko	ÀÀ´äÀÚ¸¦ ¼±ÅÃÇÏ¼¼¿ä (ÀÌ¾÷¹«¸¦ À§ÀÓÇÒ »ç¶÷)
-select to filter by owner	infolog	ko	¼ÒÀ¯ÀÚ¿¡ µû¸¥ Á¤·Ä
-select to filter by responsible	infolog	ko	ÀÀ´ä¿¡ µû¸¥ Á¤·Ä
-show full usernames	infolog	ko	±ä »ç¿ëÀÚ¸í Ç¥±â
-show in the infolog list	infolog	ko	ÀÎÆ÷·Î±× ¸ñ·Ï¿¡ Ç¥±â
-show last modified	infolog	ko	¸¶Áö¸· ¼öÁ¤ÀÏ Ç¥±â
-show status and percent done separate	infolog	ko	»óÅÂ ¹× ¿Ï·áµµ °³º° Ç¥±â
-show ticket id	infolog	ko	Æ¼ÄÏID Ç¥±â
-small view	infolog	ko	¹Ì´Ïºä
-start a new search, cancel this link	infolog	ko	ÀÌ ¸µÅ©¸¦ Ãë¼ÒÇÏ°í »õ·Î °Ë»ö
-startdate	infolog	ko	½ÃÀÛÀÏ
-startdate enddate	infolog	ko	½ÃÀÛÀÏ ¸¸±âÀÏ
-startdate for new entries	infolog	ko	»õ ¿£Æ®¸®¸¦ À§ÇÑ ½ÃÀÛÀÏ
-startrecord	infolog	ko	½ÃÀÛ·¹ÄÚµå
-status	infolog	ko	»óÅÂ
-status ...	infolog	ko	»óÅÂ ...
-sub	infolog	ko	ÇÏÀ§
-subject	infolog	ko	Á¦¸ñ
-task	infolog	ko	ÇÒÀÏ
-today	infolog	ko	¿À´Ã
-todays date	infolog	ko	¿À´Ã ÀÏÀÚ
-todo	infolog	ko	ÇÒÀÏ
-translation	infolog	ko	¹ø¿ª
-typ	infolog	ko	Çü½Ä
-typ '%1' already exists !!!	infolog	ko	%1 Çü½ÄÀº ÀÌ¹Ì ÀÖ½À´Ï´Ù.
-type	infolog	ko	Çü½Ä
-type ...	infolog	ko	Çü½Ä ..
-unlink	infolog	ko	»èÁ¦
-upcoming	infolog	ko	¿¹Á¤
-urgency	infolog	ko	±ä±Ş
-urgent	infolog	ko	±ä±Ş
-used time	infolog	ko	»ç¿ëÇÑ ½Ã°£
-view all subs of this entry	infolog	ko	ÀÌ ¿£Æ®¸®ÀÇ ¸ğµç ÇÏÀ§º¸±â
-view other subs	infolog	ko	´Ù¸¥ ÇÏÀ§º¸±â
-view parent	infolog	ko	»óÀ§º¸±â
-view subs	infolog	ko	ÇÏÀ§º¸±â
-view the parent of this entry and all his subs	infolog	ko	ÀÌ »óÀ§¿¡ ¼ÓÇÑ ¸ğµç ÇÏÀ§º¸±â
-will-call	infolog	ko	ÅëÈ­ ¿¹¾à
-yes - delete	infolog	ko	¿¹ - »èÁ¦
-yes - delete including sub-entries	infolog	ko	¿¹ - ÇÏÀ§ ¿£Æ®¸® Æ÷ÇÔ»èÁ¦
-you can't delete one of the stock types !!!	infolog	ko	±âº»Çü½ÄÀ» »èÁ¦ÇÒ ¼ö ¾ø½À´Ï´Ù.
-you have entered an invalid ending date	infolog	ko	¸¸±âÀÏÀ» Àß¸øÀÔ·ÂÇÏ¿´½À´Ï´Ù.
-you have entered an invalid starting date	infolog	ko	½ÃÀÛÀÏÀ» Àß¸øÀÔ·ÂÇÏ¿´½À´Ï´Ù.
-you have to enter a name, to create a new typ!!!	infolog	ko	»õ Çü½ÄÀ» ¸¸µé±â À§ÇØ¼­´Â ÀÌ¸§À» ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.
-you must enter a subject or a description	infolog	ko	Á¦¸ñÀÌ³ª ³»¿ëÀ» ÇÊÈ÷ ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.
+a short subject for the entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ì˜ ì§§ì€ ì œëª©
+abort without deleting	infolog	ko	ì‚­ì œì—†ì´ ì·¨ì†Œ
+accept	infolog	ko	ìˆ˜ë½
+action	infolog	ko	ì²˜ë¦¬
+add	infolog	ko	ì¶”ê°€
+add a file	infolog	ko	íŒŒì¼ ì¶”ê°€
+add a new entry	infolog	ko	ìƒˆ ì—”íŠ¸ë¦¬ ì¶”ê°€
+add a new note	infolog	ko	ìƒˆ ë…¸íŠ¸ ì¶”ê°€
+add a new phonecall	infolog	ko	ìƒˆ í†µí™”ê¸°ë¡ ì¶”ê°€
+add a new sub-task, -note, -call to this entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ì˜ í•˜ìœ„ì‘ì—… ì¶”ê°€
+add a new todo	infolog	ko	ìƒˆ í• ì¼ ì¶”ê°€
+add file	infolog	ko	íŒŒì¼ ì¶”ê°€
+add sub	infolog	ko	í•˜ìœ„ ì¶”ê°€
+add timesheet entry	infolog	ko	íƒ€ì„ì‹œíŠ¸ ì—”íŠ¸ë¦¬ì— ì¶”ê°€
+add:	infolog	ko	ì¶”ê°€:
+all	infolog	ko	ëª¨ë‘
+all links and attachments	infolog	ko	ëª¨ë“  ì²¨ë¶€ì™€ ë§í¬ë“¤
+apply the changes	infolog	ko	ë³€ê²½ì‚¬í•­ ì ìš©
+are you shure you want to delete this entry ?	infolog	ko	ì •ë§ë¡œ ì´ ì—”íŠ¸ë¦¬ë¥¼ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+attach a file	infolog	ko	íŒŒì¼ ì²¨ë¶€
+attach file	infolog	ko	íŒŒì¼ ì²¨ë¶€
+back to main list	infolog	ko	ë©”ì¸ ëª©ë¡ìœ¼ë¡œ ëŒì•„ê°€ê¸°
+both	infolog	ko	ëª¨ë‘
+call	infolog	ko	í†µí™”
+cancel	infolog	ko	ì·¨ì†Œ
+cancelled	infolog	ko	ì·¨ì†Œë¨
+categories	infolog	ko	ì¹´í…Œê³ ë¦¬ë“¤
+category	infolog	ko	ì¹´í…Œê³ ë¦¬
+change the status of an entry, eg. close it	infolog	ko	ì—”íŠ¸ë¦¬ì˜ ìƒíƒœë¥¼ ë³€ê²½ (ì˜ˆ: ë§Œë£Œ)
+charset of file	infolog	ko	íŒŒì¼ì˜ ë¬¸ìì—´ì„¤ì •
+check to set startday	infolog	ko	ì‹œì‘ì¼ ì„¤ì •ì„ í™•ì¸
+click here to create the link	infolog	ko	ìƒˆ ë§í¬ë¥¼ ìƒì„±í•˜ë ¤ë©´ í´ë¦­í•˜ì„¸ìš”
+click here to start the search	infolog	ko	ê²€ìƒ‰ì„ ì‹œì‘í•˜ë ¤ë©´ í´ë¦­í•˜ì„¸ìš”
+close	infolog	ko	ë§Œë£Œ
+comment	infolog	ko	ì»¤ë©˜íŠ¸
+completed	infolog	ko	ì™„ë£Œë¨
+configuration	infolog	ko	ì„¤ì •
+confirm	infolog	ko	í™•ì¸
+contact	infolog	ko	ì—°ë½
+create new links	infolog	ko	ìƒˆ ë§í¬ ë§Œë“¤ê¸°
+creates a new field	infolog	ko	ìƒˆ í•„ë“œ ë§Œë“¤ê¸°
+creates a new status with the given values	infolog	ko	ì£¼ì–´ì§„ ê°’ìœ¼ë¡œ ìƒˆ ìƒíƒœ ë§Œë“¤ê¸°
+creates a new typ with the given name	infolog	ko	ì£¼ì–´ì§„ ì´ë¦„ìœ¼ë¡œ ìƒˆ í˜•ì‹ ë§Œë“¤ê¸°
+creation	infolog	ko	ìƒì„±
+date completed	infolog	ko	ì™„ë£Œì¼
+datecreated	infolog	ko	ê°œì„¤ì¼
+delegation	infolog	ko	ìœ„ì„
+delete	infolog	ko	ì‚­ì œ
+delete the entry	infolog	ko	ì—”íŠ¸ë¦¬ ì‚­ì œ
+delete this entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ ì‚­ì œ
+delete this entry and all listed sub-entries	infolog	ko	í•˜ìœ„ ì—”íŠ¸ë¦¬ë¥¼ í¬í•¨ ì‚­ì œ
+deletes the selected typ	infolog	ko	ì„ íƒëœ í˜•ì‹ ì‚­ì œ
+deletes this field	infolog	ko	ì´ í•„ë“œ ì‚­ì œ
+deletes this status	infolog	ko	ì´ ìƒíƒœ ì‚­ì œ
+description	infolog	ko	ë‚´ìš©
+details	infolog	ko	ë‚´ìš©í¬í•¨
+don't show infolog	infolog	ko	ì¸í¬ë¡œê·¸ ë³´ì´ì§€ ì•Šê¸°
+done	infolog	ko	ì™„ë£Œ
+download	infolog	ko	ë‹¤ìš´ë¡œë“œ
+duration	infolog	ko	ê¸°ê°„
+edit	infolog	ko	ìˆ˜ì •
+edit or create categories for ingolog	infolog	ko	ì¸í¬ë¡œê·¸ì „ìš© ì¹´í…Œê³ ë¦¬ í¸ì§‘/ìˆ˜ì •
+edit rights (full edit rights incl. making someone else responsible!)	infolog	ko	í¸ì§‘ ê¶Œí•œ (íŠ¹ì •ì¸ í˜¹ì€ ì‘ë‹µìë¥¼ í¬í•¨í•œ ìˆ˜ì •ì˜ ëª¨ë“ ê¶Œí•œ)
+edit status	infolog	ko	ìƒíƒœ ìˆ˜ì •
+edit the entry	infolog	ko	ì—”íŠ¸ë¦¬ ìˆ˜ì •
+edit this entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ ìˆ˜ì •
+enddate	infolog	ko	ë§Œê¸°ì¼
+enddate can not be before startdate	infolog	ko	ë§Œê¸°ì¼ì€ ì‹œì‘ì¼ë³´ë‹¤ ì•ì„¤ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
+enter the query pattern	infolog	ko	ì§ˆì˜ íŒ¨í„´ ì…ë ¥
+error: saving the entry	infolog	ko	ì˜¤ë¥˜: ì—”íŠ¸ë¦¬ ì €ì¥
+error: the entry has been updated since you opened it for editing!	infolog	ko	ì˜¤ë¥˜: ì´ ì—”íŠ¸ë¦¬ëŠ” ë‹¹ì‹ ì´ ìˆ˜ì •í•˜ëŠ” ì¤‘ê°„ì— ì—…ë°ì´íŠ¸ ë˜ì—ˆìŠµë‹ˆë‹¤.
+existing links	infolog	ko	ê¸°ì¡´ ë§í¬
+fax	infolog	ko	íŒ©ìŠ¤
+fieldseparator	infolog	ko	í•„ë“œêµ¬ë¶„ì
+finish	infolog	ko	ì™„ë£Œ
+general	infolog	ko	ì¼ë°˜
+import	infolog	ko	ë¶ˆëŸ¬ì˜¤ê¸°
+info log	common	ko	ì¸í¬ë¡œê·¸
+infolog	common	ko	ì¸í¬ë¡œê·¸
+infolog - delete	infolog	ko	ì¸í¬ë¡œê·¸ - ì‚­ì œ
+infolog - edit	infolog	ko	ì¸í¬ë¡œê·¸ - ìˆ˜ì •
+infolog - import csv-file	infolog	ko	ì¸í¬ë¡œê·¸ - ë¶ˆëŸ¬ì˜¤ê¸° CSV
+infolog - new	infolog	ko	ì¸í¬ë¡œê·¸ - ì‹ ê·œ
+infolog - new subproject	infolog	ko	ì¸í¬ë¡œê·¸ - ìƒˆ í•˜ìœ„í”„ë¡œì íŠ¸
+infolog - subprojects from	infolog	ko	ì¸í¬ë¡œê·¸ - ì„œë¸Œí”„ë¡œì íŠ¸ë¡œë¶€í„°
+infolog entry deleted	infolog	ko	ì¸í¬ë¡œê·¸ ì—”íŠ¸ë¦¬ê°€ ì‚­ì œë¨
+infolog entry saved	infolog	ko	ì¸í¬ë¡œê·¸ ì—”íŠ¸ë¦¬ê°€ ì €ì¥ë¨
+infolog filter for the main screen	infolog	ko	ë©”ì¸í™”ë©´ì˜ ì¸í¬ë¡œê·¸ í•„í„°
+infolog list	infolog	ko	ì¸í¬ë¡œê·¸ ëª©ë¡
+infolog preferences	common	ko	ì¸í¬ë¡œê·¸ ì„¤ì •
+infolog-fieldname	infolog	ko	ì¸í¬ë¡œê·¸ - í•„ë“œëª…
+invalid filename	infolog	ko	ì˜ëª»ëœ íŒŒì¼ëª…
+last changed	infolog	ko	ë§ˆì§€ë§‰ ë³€ê²½
+last modified	infolog	ko	ë§ˆì§€ë§‰ ìˆ˜ì •
+leave it empty	infolog	ko	ë¹ˆì±„ë¡œ ë‚¨ê²¨ë‘ê¸°
+leave without saveing the entry	infolog	ko	ì—”íŠ¸ë¦¬ë¥¼ ì €ì¥ì—†ì´ ë‚˜ê°€ê¸°
+leaves without saveing	infolog	ko	ì €ì¥ì—†ì´ ë‚˜ê°€ê¸°
+link	infolog	ko	ë§í¬
+links	infolog	ko	ë§í¬ë“¤
+links of this entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ì˜ ë§í¬
+list all categories	infolog	ko	ëª¨ë“  ì¹´í…Œê³ ë¦¬ ëª©ë¡
+list no subs/childs	infolog	ko	ìŠ¤ë ˆë“œ ì œì™¸ ëª©ë¡
+location	infolog	ko	ì¥ì†Œ
+low	infolog	ko	ë‚®ìŒ
+name must not be empty !!!	infolog	ko	ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”
+name of new type to create	infolog	ko	ìƒˆ í˜•ì‹ì„ ë§Œë“¤ê¸° ìœ„í•œ ëª…ì¹­
+never hide search and filters	infolog	ko	ê²€ìƒ‰ ë° í•„í„° ìˆ¨ê¸°ì§€ ì•ŠìŒ
+new name	infolog	ko	ìƒˆ ì´ë¦„
+new search	infolog	ko	ìƒˆ ê²€ìƒ‰
+no - cancel	infolog	ko	ì•„ë‹ˆì˜¤ - ì·¨ì†Œ
+no describtion, links or attachments	infolog	ko	ì„¤ëª…,ë§í¬,ì²¨ë¶€ ì œì™¸
+no details	infolog	ko	ë‚´ìš©ì œì™¸
+no entries found, try again ...	infolog	ko	í•­ëª©ì´ ì—†ìŠµë‹ˆë‹¤. ë‹¤ì‹œí•´ì£¼ì„¸ìš”
+no filter	infolog	ko	í•„í„°ì—†ìŒ
+no links or attachments	infolog	ko	ë§í¬ í˜¹ì€ ì²¨ë¶€ ì—†ìŒ
+none	infolog	ko	ì—†ìŒ
+normal	infolog	ko	ì¼ë°˜
+not assigned	infolog	ko	ì§€ì •ì•ˆë¨
+not-started	infolog	ko	ì‹œì‘ì•ˆë¨
+note	infolog	ko	ë…¸íŠ¸
+number of records to read (%1)	infolog	ko	%1 ê°œì˜ ë ˆì½”ë“œë¥¼ ì½ì—ˆìŠµë‹ˆë‹¤.
+offer	infolog	ko	ì œì•ˆ
+ongoing	infolog	ko	ì§„í–‰ì¤‘
+open	infolog	ko	ê°œì„¤
+overdue	infolog	ko	ë§Œê¸°ì´ˆê³¼
+own	infolog	ko	ì†Œìœ 
+own open	infolog	ko	ì†Œìœ  ê°œì„¤
+own overdue	infolog	ko	ì†Œìœ  ë§Œê¸°ì´ˆê³¼
+own upcoming	infolog	ko	ì†Œìœ  ì˜ˆì •
+owner	infolog	ko	ì†Œìœ ì£¼
+pattern for search in addressbook	infolog	ko	ì£¼ì†Œë¡ ê²€ìƒ‰ì„ ìœ„í•œ íŒ¨í„´
+pattern for search in projects	infolog	ko	í”„ë¡œì íŠ¸ ê²€ìƒ‰ì„ ìœ„í•œ íŒ¨í„´
+percent completed	infolog	ko	í¼ì„¼íŠ¸ ì™„ë£Œ
+permission denied	infolog	ko	ê¶Œí•œ ê±°ì ˆ
+phone	infolog	ko	í†µí™”
+phone/email	infolog	ko	ì „í™”/ë©”ì¼
+phonecall	infolog	ko	í†µí™”
+planned	infolog	ko	ê¸°íš
+planned time	infolog	ko	ê¸°íšê¸°ê°„
+price	infolog	ko	ê°€ê²©
+priority	infolog	ko	ì¤‘ìš”ë„
+private	infolog	ko	ê°œì¸
+project	infolog	ko	í”„ë¡œì íŠ¸
+re:	infolog	ko	íšŒì‹ :
+responsible	infolog	ko	ì‘ë‹µëŒ€ìƒ
+responsible open	infolog	ko	ì‘ë‹µì ê°œì„¤
+responsible overdue	infolog	ko	ì‘ë‹µì ë§Œê¸°ì´ˆê³¼
+responsible upcoming	infolog	ko	ì‘ë‹µì ì˜ˆì •
+responsible user, priority	infolog	ko	ì‘ë‹µëŒ€ìƒ,ì¤‘ìš”ë„
+rights for the responsible	infolog	ko	ì‘ë‹µìì— ëŒ€í•œ ê¶Œí•œ
+save	infolog	ko	ì €ì¥
+saves the changes made and leaves	infolog	ko	ì €ì¥í•˜ê³  ë‚˜ê°€ê¸°
+saves this entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ë¥¼ ì €ì¥í•¨
+search	infolog	ko	ê²€ìƒ‰
+select	infolog	ko	ì„ íƒ
+select a category for this entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ì˜ ì¹´í…Œê³ ë¦¬ë¥¼ ì„ íƒí•˜ì„¸ìš”
+select a price	infolog	ko	ê°€ê²©ì„ ì„ íƒí•˜ì„¸ìš”
+select a priority for this task	infolog	ko	ì´ ì—”íŠ¸ë¦¬ì˜ ì¤‘ìš”ë„ë¥¼ ì„ íƒí•˜ì„¸ìš”
+select a project	infolog	ko	í”„ë¡œì íŠ¸ë¥¼ ì„ íƒí•˜ì„¸ìš”
+select a responsible user: a person you want to delegate this task	infolog	ko	ì‘ë‹µìë¥¼ ì„ íƒí•˜ì„¸ìš” (ì´ì—…ë¬´ë¥¼ ìœ„ì„í•  ì‚¬ëŒ)
+select to filter by owner	infolog	ko	ì†Œìœ ìì— ë”°ë¥¸ ì •ë ¬
+select to filter by responsible	infolog	ko	ì‘ë‹µì— ë”°ë¥¸ ì •ë ¬
+show full usernames	infolog	ko	ê¸´ ì‚¬ìš©ìëª… í‘œê¸°
+show in the infolog list	infolog	ko	ì¸í¬ë¡œê·¸ ëª©ë¡ì— í‘œê¸°
+show last modified	infolog	ko	ë§ˆì§€ë§‰ ìˆ˜ì •ì¼ í‘œê¸°
+show status and percent done separate	infolog	ko	ìƒíƒœ ë° ì™„ë£Œë„ ê°œë³„ í‘œê¸°
+show ticket id	infolog	ko	í‹°ì¼“ID í‘œê¸°
+small view	infolog	ko	ë¯¸ë‹ˆë·°
+start a new search, cancel this link	infolog	ko	ì´ ë§í¬ë¥¼ ì·¨ì†Œí•˜ê³  ìƒˆë¡œ ê²€ìƒ‰
+startdate	infolog	ko	ì‹œì‘ì¼
+startdate enddate	infolog	ko	ì‹œì‘ì¼ ë§Œê¸°ì¼
+startdate for new entries	infolog	ko	ìƒˆ ì—”íŠ¸ë¦¬ë¥¼ ìœ„í•œ ì‹œì‘ì¼
+startrecord	infolog	ko	ì‹œì‘ë ˆì½”ë“œ
+status	infolog	ko	ìƒíƒœ
+status ...	infolog	ko	ìƒíƒœ ...
+sub	infolog	ko	í•˜ìœ„
+subject	infolog	ko	ì œëª©
+task	infolog	ko	í• ì¼
+today	infolog	ko	ì˜¤ëŠ˜
+todays date	infolog	ko	ì˜¤ëŠ˜ ì¼ì
+todo	infolog	ko	í• ì¼
+translation	infolog	ko	ë²ˆì—­
+typ	infolog	ko	í˜•ì‹
+typ '%1' already exists !!!	infolog	ko	%1 í˜•ì‹ì€ ì´ë¯¸ ìˆìŠµë‹ˆë‹¤.
+type	infolog	ko	í˜•ì‹
+type ...	infolog	ko	í˜•ì‹ ..
+unlink	infolog	ko	ì‚­ì œ
+upcoming	infolog	ko	ì˜ˆì •
+urgency	infolog	ko	ê¸´ê¸‰
+urgent	infolog	ko	ê¸´ê¸‰
+used time	infolog	ko	ì‚¬ìš©í•œ ì‹œê°„
+view all subs of this entry	infolog	ko	ì´ ì—”íŠ¸ë¦¬ì˜ ëª¨ë“  í•˜ìœ„ë³´ê¸°
+view other subs	infolog	ko	ë‹¤ë¥¸ í•˜ìœ„ë³´ê¸°
+view parent	infolog	ko	ìƒìœ„ë³´ê¸°
+view subs	infolog	ko	í•˜ìœ„ë³´ê¸°
+view the parent of this entry and all his subs	infolog	ko	ì´ ìƒìœ„ì— ì†í•œ ëª¨ë“  í•˜ìœ„ë³´ê¸°
+will-call	infolog	ko	í†µí™” ì˜ˆì•½
+yes - delete	infolog	ko	ì˜ˆ - ì‚­ì œ
+yes - delete including sub-entries	infolog	ko	ì˜ˆ - í•˜ìœ„ ì—”íŠ¸ë¦¬ í¬í•¨ì‚­ì œ
+you can't delete one of the stock types !!!	infolog	ko	ê¸°ë³¸í˜•ì‹ì„ ì‚­ì œí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
+you have entered an invalid ending date	infolog	ko	ë§Œê¸°ì¼ì„ ì˜ëª»ì…ë ¥í•˜ì˜€ìŠµë‹ˆë‹¤.
+you have entered an invalid starting date	infolog	ko	ì‹œì‘ì¼ì„ ì˜ëª»ì…ë ¥í•˜ì˜€ìŠµë‹ˆë‹¤.
+you have to enter a name, to create a new typ!!!	infolog	ko	ìƒˆ í˜•ì‹ì„ ë§Œë“¤ê¸° ìœ„í•´ì„œëŠ” ì´ë¦„ì„ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.
+you must enter a subject or a description	infolog	ko	ì œëª©ì´ë‚˜ ë‚´ìš©ì„ í•„íˆ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.

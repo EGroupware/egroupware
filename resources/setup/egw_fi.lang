@@ -1,40 +1,40 @@
-accessories of	resources	fi	lis‰tarvikkeet:
-accessories:	resources	fi	Lis‰tarvikkeet:
+accessories of	resources	fi	lis√§tarvikkeet:
+accessories:	resources	fi	Lis√§tarvikkeet:
 actions	resources	fi	Toiminnot
-add accessory	resources	fi	Lis‰‰ lis‰tarvike
-add resource	resources	fi	lis‰‰ resurssi
-add resources	resources	fi	Lis‰‰ resursseja
-administrator	resources	fi	Yll‰pit‰j‰
+add accessory	resources	fi	Lis√§√§ lis√§tarvike
+add resource	resources	fi	lis√§√§ resurssi
+add resources	resources	fi	Lis√§√§ resursseja
+administrator	resources	fi	Yll√§pit√§j√§
 all categories	resources	fi	kaikki kategoriat
 book	resources	fi	Varaus
 book selected resources	resources	fi	Varaa valitsemasi resurssit
-book this resource	resources	fi	Varaa t‰m‰ resurssi
+book this resource	resources	fi	Varaa t√§m√§ resurssi
 bookable	resources	fi	Varattavissa
-buy this article	resources	fi	Osta t‰m‰ tuote
-buy this resource	resources	fi	Osta t‰m‰ resurssi
+buy this article	resources	fi	Osta t√§m√§ tuote
+buy this resource	resources	fi	Osta t√§m√§ resurssi
 buyable	resources	fi	Ostettavissa
-categories admin	resources	fi	Kategorioiden yll‰pit‰j‰
+categories admin	resources	fi	Kategorioiden yll√§pit√§j√§
 category:	resources	fi	Kategoria:
 check all	resources	fi	Valitse kaikki
-choose categories admin	resources	fi	valitse kategorioiden yll‰pit‰j‰
+choose categories admin	resources	fi	valitse kategorioiden yll√§pit√§j√§
 clear selection	resources	fi	poista valinnat
-configure access permissions	admin	fi	Konfiguroi p‰‰syoikeudet
-create new accessory for this resource	resources	fi	Luo uusi lis‰tarvike t‰lle resurssille
+configure access permissions	admin	fi	Konfiguroi p√§√§syoikeudet
+create new accessory for this resource	resources	fi	Luo uusi lis√§tarvike t√§lle resurssille
 create new links	resources	fi	Luo uusi linkki
 delete selected resources	resources	fi	poista valitut resurssit
-delete this entry	resources	fi	poista t‰m‰ merkint‰
+delete this entry	resources	fi	poista t√§m√§ merkint√§
 description (short)	resources	fi	Kuvaus (lyhyt)
 direct booking permissions	resources	fi	Suora varaus lupa
-don't use vfs (this will need a symlink --> see readme)	resources	fi	ƒl‰ k‰yt‰ vfs (t‰m‰ tarvitsee symbolisenlinkin --> katso LueMinut)
-edit this entry	resources	fi	Muokkaa t‰t‰ merkint‰‰
+don't use vfs (this will need a symlink --> see readme)	resources	fi	√Ñl√§ k√§yt√§ vfs (t√§m√§ tarvitsee symbolisenlinkin --> katso LueMinut)
+edit this entry	resources	fi	Muokkaa t√§t√§ merkint√§√§
 existing links	resources	fi	Olemassa olevat linkit
 general	resources	fi	Yleinen
-general informations about resource	resources	fi	Yleist‰ tietoa resurssista
+general informations about resource	resources	fi	Yleist√§ tietoa resurssista
 gernal resource	resources	fi	yleinen resurssi
-how many of the resources are useable?	resources	fi	Kuinka moni resurssi on k‰ytett‰viss‰?
-how many of them are useable?	resources	fi	Kuinka moni niist‰ on k‰ytett‰viss‰?
-how many of this resource are usable	resources	fi	Kuinka moni n‰ist‰ resursseista on k‰ytett‰viss‰
-how many of this resource exists	resources	fi	Kuinka monta n‰ist‰ resursseista on olemassa
+how many of the resources are useable?	resources	fi	Kuinka moni resurssi on k√§ytett√§viss√§?
+how many of them are useable?	resources	fi	Kuinka moni niist√§ on k√§ytett√§viss√§?
+how many of this resource are usable	resources	fi	Kuinka moni n√§ist√§ resursseista on k√§ytett√§viss√§
+how many of this resource exists	resources	fi	Kuinka monta n√§ist√§ resursseista on olemassa
 implies booking permission	resources	fi	vaikuttaa varausoikeuksiin
 implies read permission	resources	fi	vaikuttaa lukuoikeuksiin
 information about storage	resources	fi	Varaston tiedot
@@ -43,8 +43,8 @@ inventory number	resources	fi	Varastosaldo
 inventory number:	resources	fi	Varastosaldo:
 is resource bookable?	resources	fi	Resurssi on varattavissa?
 is resource buyable?	resources	fi	Resurssi on ostettavissa?
-is this resource bookable?	resources	fi	Onko t‰m‰ resurssi varattavissa?
-is this resource buyable?	resources	fi	Onko t‰m‰ resurssi ostettavissa?
+is this resource bookable?	resources	fi	Onko t√§m√§ resurssi varattavissa?
+is this resource buyable?	resources	fi	Onko t√§m√§ resurssi ostettavissa?
 links	resources	fi	Linkit
 location	resources	fi	Sijainti
 location of resource	resources	fi	Resurssin sijainti
@@ -53,48 +53,48 @@ name of resource	resources	fi	Resurssin nimi
 name:	resources	fi	Nimi:
 no description available	resources	fi	kuvausta ei ole saatavilla
 no resources selected	resources	fi	Resursseja ei ole valittu
-notify your administrator to correct this situation	resources	fi	Ilmoita t‰st‰ yll‰pit‰j‰lle jotta tilanne korjataan
+notify your administrator to correct this situation	resources	fi	Ilmoita t√§st√§ yll√§pit√§j√§lle jotta tilanne korjataan
 picture	resources	fi	Kuva
-picture source	resources	fi	Kuvan l‰hde
-picture type is not supported, sorry!	resources	fi	Kuvan tyyppi‰ ei tueta.
+picture source	resources	fi	Kuvan l√§hde
+picture type is not supported, sorry!	resources	fi	Kuvan tyyppi√§ ei tueta.
 pictures or resource	resources	fi	Kuvat tai resurssit
 prizeing information for booking or buying	resources	fi	Hinnasto varausta tai ostamista varten
-quantity	resources	fi	M‰‰r‰
-quantity of resource	resources	fi	Resurssien m‰‰r‰
-quantity:	resources	fi	M‰‰r‰:
+quantity	resources	fi	M√§√§r√§
+quantity of resource	resources	fi	Resurssien m√§√§r√§
+quantity:	resources	fi	M√§√§r√§:
 read calendar permissions	resources	fi	Kalenterin lukuoikeudet
 read permissions	resources	fi	Lukuoikeudet
-related links	resources	fi	Liittyv‰t linkit
+related links	resources	fi	Liittyv√§t linkit
 resources	common	fi	Resurssit
 resources list	resources	fi	Resurssilista
 responsible:	resources	fi	Vastuussa:
-saves entry and exits	resources	fi	Tallenna merkint‰ ja poistu
+saves entry and exits	resources	fi	Tallenna merkint√§ ja poistu
 select a category	resources	fi	Valitse kategoria
 select resource	resources	fi	Valitse resurssi
 select resources	common	fi	Valitse resurssit
 select/deselect all	resources	fi	valitse / poista valinta kaikista
 short description	resources	fi	Lyhyt kuvaus
 short description of resource	resources	fi	Resurssin lyhyt kuvaus
-show calendar of resource	resources	fi	N‰yt‰ resurssin kalenteri
+show calendar of resource	resources	fi	N√§yt√§ resurssin kalenteri
 something went wrong by deleting resource	resources	fi	Virhe poistettaessa resurssia
 something went wrong by saving resource	resources	fi	Virhe tallentaessa resurssia
 storage inforation	resources	fi	Varaston tiedot
 storage information	resources	fi	Varaston tiedot
 storage information:	resources	fi	Varaston tiedot:
-the calendar of this resource	resources	fi	T‰m‰n resurssin kalenteri
-this module displays the resources app	resources	fi	T‰m‰ moduli n‰kyy resurssien sovelluksessa
-use general resources icon	resources	fi	K‰yt‰ yleist‰ resurssin kuvaketta
-use own picture	resources	fi	K‰yt‰ omaa kuvaa
-use the category's icon	resources	fi	K‰yt‰ t‰m‰n katekorian kuvaketta
-useable	resources	fi	k‰ytett‰viss‰
-useable:	resources	fi	K‰ytett‰viss‰:
-view accessories for this resource	resources	fi	N‰yt‰ t‰m‰n resurssin lis‰tarvikkeet
-view this entry	resources	fi	N‰yt‰ t‰m‰ merkint‰
+the calendar of this resource	resources	fi	T√§m√§n resurssin kalenteri
+this module displays the resources app	resources	fi	T√§m√§ moduli n√§kyy resurssien sovelluksessa
+use general resources icon	resources	fi	K√§yt√§ yleist√§ resurssin kuvaketta
+use own picture	resources	fi	K√§yt√§ omaa kuvaa
+use the category's icon	resources	fi	K√§yt√§ t√§m√§n katekorian kuvaketta
+useable	resources	fi	k√§ytett√§viss√§
+useable:	resources	fi	K√§ytett√§viss√§:
+view accessories for this resource	resources	fi	N√§yt√§ t√§m√§n resurssin lis√§tarvikkeet
+view this entry	resources	fi	N√§yt√§ t√§m√§ merkint√§
 web-page of resource	resources	fi	Resurssien sivu
-web-site for this resource	resources	fi	T‰m‰n resurssin sivu
-where to find this resource?	resources	fi	Mist‰ lˆyd‰n t‰m‰n resurssin?
-which category does this resource belong to?	resources	fi	Mihin kategoriaan t‰m‰ resurssi kuuluu?
+web-site for this resource	resources	fi	T√§m√§n resurssin sivu
+where to find this resource?	resources	fi	Mist√§ l√∂yd√§n t√§m√§n resurssin?
+which category does this resource belong to?	resources	fi	Mihin kategoriaan t√§m√§ resurssi kuuluu?
 write permissions	resources	fi	Kirjoitusoikeudet
-you are not permitted to edit this reource!	resources	fi	Sinulla ei ole oikeuksia muokata t‰t‰ resurssia
-you are not permitted to get information about this resource!	resources	fi	Sinulla ei ole oikeutta n‰hd‰ t‰m‰n resurssin tietoja!
-you chose more resources than available	resources	fi	Valitsit useamman resurssin kuin mit‰ oli vapaana
+you are not permitted to edit this reource!	resources	fi	Sinulla ei ole oikeuksia muokata t√§t√§ resurssia
+you are not permitted to get information about this resource!	resources	fi	Sinulla ei ole oikeutta n√§hd√§ t√§m√§n resurssin tietoja!
+you chose more resources than available	resources	fi	Valitsit useamman resurssin kuin mit√§ oli vapaana

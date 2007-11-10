@@ -1,10 +1,10 @@
 %1 records imported	addressbook	no	%1 rekker importert
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	no	%1 rekker lest (ikke importert enda, du kan gå %2tilbake%3 og fjerne haken på Test Import.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	no	%1 rekker lest (ikke importert enda, du kan gÃ¥ %2tilbake%3 og fjerne haken pÃ¥ Test Import.
 (e.g. 1969)	addressbook	no	(eks. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	no	<b>Ingen oversettingstype <none> ble funnet.</b>Vennligst velg oversettingstype fra listen.
 @-eval() is only availible to admins!!!	addressbook	no	@-eval() er kun tilgjengelig for admins!!!
 actions	addressbook	no	Funksjoner
-add a single entry by passing the fields.	addressbook	no	Legg til ett enkelt innslag ved å fylle inn feltene.
+add a single entry by passing the fields.	addressbook	no	Legg til ett enkelt innslag ved Ã¥ fylle inn feltene.
 add custom field	addressbook	no	Legg til egendefinert felt
 address book	common	no	Addressebok
 address book - vcard in	addressbook	no	Adressebok - VCard inn
@@ -16,13 +16,13 @@ addressbook	common	no	Adressebok
 addressbook preferences	addressbook	no	Adressebok preferanser
 addressbook-fieldname	addressbook	no	Adressebok-Feltnavn
 addvcard	addressbook	no	Legg til VCard
-advanced search	addressbook	no	Avansert søk
+advanced search	addressbook	no	Avansert sÃ¸k
 alt. csv import	addressbook	no	Alt. CSV Import
-are you shure you want to delete this contact?	addressbook	no	Er du sikker på at du ønsker å slette denne kontakten?
+are you shure you want to delete this contact?	addressbook	no	Er du sikker pÃ¥ at du Ã¸nsker Ã¥ slette denne kontakten?
 are you sure you want to delete this field?	addressbook	no	Er du sikker du vil slette dette feltet?
 bbs phone	addressbook	no	BBS Telefon
-birthday	common	no	Fødselsdag
-birthdays	common	no	Fødselsdager
+birthday	common	no	FÃ¸dselsdag
+birthdays	common	no	FÃ¸dselsdager
 blank	addressbook	no	Tom
 business	common	no	Arbeid
 business address type	addressbook	no	Adresse Type, Arbeid
@@ -56,15 +56,15 @@ csv-fieldname	addressbook	no	CSV-Feltnavn
 csv-filename	addressbook	no	CSV-FIlnavn
 custom	addressbook	no	Egendefinert
 custom fields	addressbook	no	Egendefinerte Felter
-debug output in browser	addressbook	no	Feilsøkingsmeldinger i webleser
+debug output in browser	addressbook	no	FeilsÃ¸kingsmeldinger i webleser
 default filter	addressbook	no	Standard Filter
-delete a single entry by passing the id.	addressbook	no	Oppgi id for å slette ett enkelt innslag.
+delete a single entry by passing the id.	addressbook	no	Oppgi id for Ã¥ slette ett enkelt innslag.
 department	common	no	Avdeling
-do your really want to delete this contact?	addressbook	no	Ønsker du virkelig å slette denne kontakten?
+do your really want to delete this contact?	addressbook	no	Ã˜nsker du virkelig Ã¥ slette denne kontakten?
 doesn't matter	addressbook	no	Spiller ingen rolle
 domestic	addressbook	no	Innenlands
 download	addressbook	no	Last ned
-download export file (uncheck to debug output in browser)	addressbook	no	Last ned eksport fil (fjern hake for å se feilsøkingsinformasjon i webleser)
+download export file (uncheck to debug output in browser)	addressbook	no	Last ned eksport fil (fjern hake for Ã¥ se feilsÃ¸kingsinformasjon i webleser)
 download this contact as vcard file	addressbook	no	Last ned kontakten som en vCard-fil
 edit custom field	addressbook	no	Endre egendefinert felt
 edit custom fields	admin	no	Endre egendefinerte felter
@@ -108,13 +108,13 @@ import from ldif, csv, or vcard	addressbook	no	Importer fra LDIF, CSV eller VCar
 import from outlook	addressbook	no	Importer fra Outlook
 import multiple vcard	addressbook	no	Importer flere VCard
 import next set	addressbook	no	Importer neste sett
-import_instructions	addressbook	no	I Netscape, åpne adresselisten og velg <b>Eksporter</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være i LDIF format. I Outlook velger du Kontakter mappen, så <b>Import og eksport...</b> fra <b>Fil</b> menyen, og eksporterer kontaktene til en kommaseparert (CSV) fil.<p>For Palm Desktop 4.0 og høyere, gå til adresseliste og velg <b>Eksport</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være på VCard format.
+import_instructions	addressbook	no	I Netscape, Ã¥pne adresselisten og velg <b>Eksporter</b> fra <b>Fil</b> menyen. Den eksporterte filen vil vÃ¦re i LDIF format. I Outlook velger du Kontakter mappen, sÃ¥ <b>Import og eksport...</b> fra <b>Fil</b> menyen, og eksporterer kontaktene til en kommaseparert (CSV) fil.<p>For Palm Desktop 4.0 og hÃ¸yere, gÃ¥ til adresseliste og velg <b>Eksport</b> fra <b>Fil</b> menyen. Den eksporterte filen vil vÃ¦re pÃ¥ VCard format.
 income	addressbook	no	Inntekt
 international	addressbook	no	Internasjonal
 isdn phone	addressbook	no	ISDN Telefon
 label	addressbook	no	Etikett
 last modified	addressbook	no	Sist endret
-ldap context for contacts	admin	no	LDAP område for kontakter
+ldap context for contacts	admin	no	LDAP omrÃ¥de for kontakter
 ldap host for contacts	admin	no	LDAP tjener for kontakter
 ldap root dn for contacts	admin	no	LDAP root dn for kontakter
 ldap root pw for contacts	admin	no	LDAP root passord for kontakter
@@ -139,7 +139,7 @@ options for type	addressbook	no	Valg for type
 organisation	addressbook	no	Organisasjon
 other number	addressbook	no	Annet Nummer
 other phone	addressbook	no	Annen Telefon
-pager	common	no	Personsøker
+pager	common	no	PersonsÃ¸ker
 parcel	addressbook	no	Pakken
 phone number	common	no	Telefon Nummer
 phone numbers	common	no	Telefon Numre
@@ -147,20 +147,20 @@ please enter a name for that field !	addressbook	no	Vennligst skriv inn feltnavn
 postal	common	no	Post
 pref	addressbook	no	Pref.
 prefix	addressbook	no	Forstavelse
-public key	addressbook	no	Offentlig Nøkkel
+public key	addressbook	no	Offentlig NÃ¸kkel
 publish into groups:	addressbook	no	Publiser i grupper :
-read a list / search for entries.	addressbook	no	Les en liste / søk etter forekomster
+read a list / search for entries.	addressbook	no	Les en liste / sÃ¸k etter forekomster
 read a list of entries.	addressbook	no	Lese liste
-read a single entry by passing the id and fieldlist.	addressbook	no	Les ett enkelt innslag ved å gi id og feltliste.
+read a single entry by passing the id and fieldlist.	addressbook	no	Les ett enkelt innslag ved Ã¥ gi id og feltliste.
 record access	addressbook	no	Rekketilgang
 record owner	addressbook	no	Rekkeeier
 retrieve contacts	admin	no	Hent kontakter
 select all	addressbook	no	Velg alle
 select the type of conversion	addressbook	no	Velg konverteringstype
 select the type of conversion:	addressbook	no	Velg konverterings type:
-select where you want to store	admin	no	Velg området du vil lagre
+select where you want to store	admin	no	Velg omrÃ¥det du vil lagre
 show	addressbook	no	Vis
-show birthday reminders on main screen	addressbook	no	Vis fødselsdags-påminnelse på hovedskjerm
+show birthday reminders on main screen	addressbook	no	Vis fÃ¸dselsdags-pÃ¥minnelse pÃ¥ hovedskjerm
 something went wrong by deleting %1	addressbook	no	Noe gikk galt ved sletting av %1
 something went wrong by deleting this contact	addressbook	no	Noe gikk galt ved sletting av denne kontakten
 something went wrong by reading this contact	addressbook	no	Noe gikk galt ved lesing av denne kontakten
@@ -176,10 +176,10 @@ that field name has been used already !	addressbook	no	Feltnavnet er allerede i 
 this person's first name was not in the address book.	addressbook	no	Personens fornavn var ikke i adresseboken
 this person's last name was not in the address book.	addressbook	no	Personens etternavn var ikke i adresseboken
 to many might exceed your execution-time-limit	addressbook	no	for mange vil muligens overskride din eksekverings-tidsgrense
-today is %1's birthday!	common	no	I dag har %1 fødselsdag!
-tomorrow is %1's birthday.	common	no	I morgen er det %1's fødselsdag.
+today is %1's birthday!	common	no	I dag har %1 fÃ¸dselsdag!
+tomorrow is %1's birthday.	common	no	I morgen er det %1's fÃ¸dselsdag.
 translation	addressbook	no	Oversetting
-update a single entry by passing the fields.	addressbook	no	Oppdater ett enkelt innslag ved å legge inn felter.
+update a single entry by passing the fields.	addressbook	no	Oppdater ett enkelt innslag ved Ã¥ legge inn felter.
 use country list	addressbook	no	Bruk landliste
 vcard	common	no	VCard
 vcards require a first name entry.	addressbook	no	VCard krever fornavn.
@@ -189,11 +189,11 @@ voice phone	addressbook	no	Vanlig Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	no	ADVARSEL!! LDAP er kun aktuellt dersom du IKKE bruker kontakter til konto lagring!
 warning: all contacts found will be deleted!	addressbook	no	Advarsel: Alle kontakter funnet vil bli slettet!
 work phone	addressbook	no	Telefon arbeid
-you are not permitted to delete contact %1	addressbook	no	Du har ikke tillatelse til å slette kontakt %1
-you are not permittet to delete this contact	addressbook	no	Du har ikke tillatelse til å slette denne kontakten
-you are not permittet to edit this contact	addressbook	no	Du har ikke tillatelse til å endre denne kontakten
-you are not permittet to view this contact	addressbook	no	Du har ikke tillatelse til å vise denne kontakten
-you must select a vcard. (*.vcf)	addressbook	no	Du må velge et vcard. (*.vcf)
-you must select at least 1 column to display	addressbook	no	Du må velge minst en kolonne for visning
+you are not permitted to delete contact %1	addressbook	no	Du har ikke tillatelse til Ã¥ slette kontakt %1
+you are not permittet to delete this contact	addressbook	no	Du har ikke tillatelse til Ã¥ slette denne kontakten
+you are not permittet to edit this contact	addressbook	no	Du har ikke tillatelse til Ã¥ endre denne kontakten
+you are not permittet to view this contact	addressbook	no	Du har ikke tillatelse til Ã¥ vise denne kontakten
+you must select a vcard. (*.vcf)	addressbook	no	Du mÃ¥ velge et vcard. (*.vcf)
+you must select at least 1 column to display	addressbook	no	Du mÃ¥ velge minst en kolonne for visning
 zip code	common	no	Postnummer
-zip_note	addressbook	no	<p><b>Merk:</b>Denne filen kan være en pakket samling av .csv, .vcf eller .ldif filer. Du må ikke blande filtyper under import.
+zip_note	addressbook	no	<p><b>Merk:</b>Denne filen kan vÃ¦re en pakket samling av .csv, .vcf eller .ldif filer. Du mÃ¥ ikke blande filtyper under import.

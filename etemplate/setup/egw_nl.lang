@@ -3,7 +3,7 @@
 %1 etemplates for application '%2' dumped to '%3'	etemplate	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
 %1 etemplates found	etemplate	nl	%1 eTemplates gevonden
 %1 matches on search criteria	etemplate	nl	%1 komt overeen met zoekcriteria
-%1 new etemplates imported for application '%2'	etemplate	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
+%1 new etemplates imported for application '%2'	etemplate	nl	%1 nieuwe eTemplates geÃ¯mporteerd voor applicatie '%2'
 %s disabled	etemplate	nl	%s uitgeschakeld
 %s needed	etemplate	nl	%s nodig
 %s notranslation	etemplate	nl	%s GeenVertaling
@@ -46,7 +46,7 @@ box	etemplate	nl	Box
 box...	etemplate	nl	Box...
 can not have special sql-value null	etemplate	nl	kan geen speciaal SQL-waarde NULL bevatten
 cancel	etemplate	nl	Annuleren
-cant delete a single widget from a grid !!!	etemplate	nl	kan één enkele widget niet van een grid verwijderen !!!
+cant delete a single widget from a grid !!!	etemplate	nl	kan Ã©Ã©n enkele widget niet van een grid verwijderen !!!
 cant delete the only column of a grid !!!	etemplate	nl	kan de enige kolom van een grid niet verwijderen !!!
 cant delete the only row in a grid !!!	etemplate	nl	kan de enige rij in een grid niet verwijderen !!!
 category	etemplate	nl	Categorie
@@ -76,7 +76,7 @@ confirmation necesary or custom java-script	etemplate	nl	bevestiging nodig of aa
 contact fields	etemplate	nl	Veldnamen contacten
 contains	etemplate	nl	bevat
 create a new table for the application	etemplate	nl	Maak een nieuwe tabel voor de applicatie
-creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	creÃ«ert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
 css class for the table-tag	etemplate	nl	CSS klasse voor de table-tag
 css properties	etemplate	nl	CSS eigenschappen
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	nl	CSS-klasse naam voor deze rij, keuzemogelijkheden: 'nmh' = volgende overeenkomende kop, 'nmr' = afwisselend bij iedere volgende rij, 'nmr0'+'nmr1' volgende rijen
@@ -143,7 +143,7 @@ error: webserver is not allowed to write into '%1' !!!	etemplate	nl	Fout: webser
 error: while saving !!!	etemplate	nl	Fout: tijdens het opslaan !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	nl	Fout bij het schrijven (geen schrijfrechten voor de webserver) !!!
 etemplate	common	nl	eTemplate
-etemplate '%1' imported, use save to put it in the database	etemplate	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
+etemplate '%1' imported, use save to put it in the database	etemplate	nl	eTemplate '%1' geÃ¯mporteerd, gebruik Opslaan om het in de database te zetten.
 etemplate '%1' written to '%2'	etemplate	nl	eTemplate '%1' geschreven naar '%2'
 etemplate editor	etemplate	nl	eTemplate Editor
 etemplate reference	etemplate	nl	eTemplate Referentie
@@ -155,7 +155,7 @@ export xml	etemplate	nl	Exporteer XML
 extensions loaded:	etemplate	nl	Geladen extensies:
 field must not be empty !!!	etemplate	nl	Veld mag niet leeg zijn !!!
 file	etemplate	nl	Bestand
-file contains more than one etemplate, last one is shown !!!	etemplate	nl	Bestand bevat meer dan één eTemplate, alleen de laatste wordt getoond !!!
+file contains more than one etemplate, last one is shown !!!	etemplate	nl	Bestand bevat meer dan Ã©Ã©n eTemplate, alleen de laatste wordt getoond !!!
 file writen	etemplate	nl	Bestand weggeschreven
 fileupload	etemplate	nl	Bestandsupload
 first	etemplate	nl	Eerste
@@ -272,7 +272,7 @@ primary key for the table, gets automaticaly indexed	etemplate	nl	Primaire sleut
 radiobutton	etemplate	nl	Radiobutton
 read	etemplate	nl	Lezen
 read a list of entries.	etemplate	nl	Lees een lijst van entries.
-read a single entry by passing the id and fieldlist.	etemplate	nl	Lees één entry door het ID en veldlijst mee te geven
+read a single entry by passing the id and fieldlist.	etemplate	nl	Lees Ã©Ã©n entry door het ID en veldlijst mee te geven
 read etemplate from database (for the keys above)	etemplate	nl	lees eTemplate uit de database (voor de sleutels hierboven)
 readonly	etemplate	nl	alleen lezen
 remove row (can not be undone!!!)	etemplate	nl	Rij verwijderen (kan NIET ongedaan gemaakt worden)
@@ -294,7 +294,7 @@ select account	etemplate	nl	Selecteer account
 select an app first !!!	etemplate	nl	Eerst een applicatie selecteren
 select an app to search in	etemplate	nl	Selecteer een applicatie om in te zoeken
 select an application	etemplate	nl	Selecteer een applicatie
-select an application, (*) = uninstalled	etemplate	nl	Selecteer een applicatie, (*) = niet geïnstaleerd
+select an application, (*) = uninstalled	etemplate	nl	Selecteer een applicatie, (*) = niet geÃ¯nstaleerd
 select an entry to link with	etemplate	nl	Selecteer een entry om een link mee te maken
 select an table of the application	etemplate	nl	Selecteer een tabel van de toepassing
 select application	etemplate	nl	Selecteer applicatie
@@ -307,7 +307,7 @@ select hour	etemplate	nl	Selecteer uur
 select if content of field should not be translated (label gets always translated)	etemplate	nl	markeer als de inhoud van het veld niet vertaald mag worden (label wordt altijd vertaald)
 select month	etemplate	nl	Selecteer maand
 select number	etemplate	nl	Selecteer nummer
-select one ...	etemplate	nl	Selecteer één ...
+select one ...	etemplate	nl	Selecteer Ã©Ã©n ...
 select percentage	etemplate	nl	Selecteer percentage
 select priority	etemplate	nl	Selecteer prioriteit
 select state	etemplate	nl	Selecteer staat / provincie / streek

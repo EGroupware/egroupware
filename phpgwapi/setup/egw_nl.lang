@@ -38,7 +38,7 @@ addressbook	common	nl	Adresboek
 admin	common	nl	Beheer
 administration	common	nl	Beheer
 afghanistan	common	nl	AFGHANISTAN
-albania	common	nl	ALBANIÀ
+albania	common	nl	ALBANI√ã
 algeria	common	nl	ALGERIJE
 all	common	nl	Alles
 all fields	common	nl	alle velden
@@ -55,11 +55,11 @@ apply	common	nl	Toepassen
 april	common	nl	April
 are you sure you want to delete these entries ?	common	nl	Weet u zeker dat uw deze records wilt verwijderen?
 are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit item wilt verwijderen?
-argentina	common	nl	ARGENTINIÀ
-armenia	common	nl	ARMENIÀ
+argentina	common	nl	ARGENTINI√ã
+armenia	common	nl	ARMENI√ã
 aruba	common	nl	ARUBA
 august	common	nl	Augustus
-australia	common	nl	AUSTRALIÀ
+australia	common	nl	AUSTRALI√ã
 austria	common	nl	OOSTENRIJK
 author	common	nl	Auteur
 autohide sidebox menu's	common	nl	Automatisch menu's in de zijlijn verbergen
@@ -79,7 +79,7 @@ bangladesh	common	nl	BANGLADESH
 barbados	common	nl	BARBADOS
 bcc	common	nl	Bcc
 belarus	common	nl	WIT-RUSLAND
-belgium	common	nl	BELGIÀ
+belgium	common	nl	BELGI√ã
 belize	common	nl	BELIZE
 benin	common	nl	BENIN
 bermuda	common	nl	BERMUDA
@@ -89,11 +89,11 @@ bold	common	nl	Vet
 bold.gif	common	nl	bold.gif
 bolivia	common	nl	BOLIVIA
 border	common	nl	Rand
-bosnia and herzegovina	common	nl	BOSNIÀ-HERZEGOVINA
+bosnia and herzegovina	common	nl	BOSNI√ã-HERZEGOVINA
 botswana	common	nl	BOTSWANA
 bottom	common	nl	Onder
 bouvet island	common	nl	Centraal Afrikaanse Republiek
-brazil	common	nl	BRAZILIÀ
+brazil	common	nl	BRAZILI√ã
 british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	nl	BRUNEI DARUSSALAM
 bulgaria	common	nl	BULGARIJE
@@ -106,10 +106,10 @@ canada	common	nl	CANADA
 cancel	common	nl	Annuleren
 cannot replace %1 because it is a directory	common	nl	Kan %1 niet vervangen omdat het een map is
 cant open '%1' for %2	common	nl	Kan '%1' niet openen voor %2
-cape verde	common	nl	KAAPVERDIÀ
+cape verde	common	nl	KAAPVERDI√ã
 caption	common	nl	Opmerking
-categories	common	nl	CategorieÎn
-categories for	common	nl	categorieÎn voor
+categories	common	nl	Categorie√´n
+categories for	common	nl	categorie√´n voor
 category	common	nl	Categorie
 category %1 has been added !	common	nl	Categorie %1 is toegevoegd
 category %1 has been updated !	common	nl	Categorie %1 is bijgewerkt
@@ -119,7 +119,7 @@ centered	common	nl	gecentreerd
 central african republic	common	nl	CENTRAAL-AFRIKAANSE REPUBLIEK
 chad	common	nl	CHAD
 change	common	nl	Veranderen
-charset	common	nl	iso-8859-1
+charset	common	nl	utf-8
 check installation	common	nl	Controleer installatie
 check now	common	nl	Nu controleren
 chile	common	nl	CHILI
@@ -148,19 +148,19 @@ congo	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 congo, the democratic republic of the	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 contacting server...	common	nl	Verbinden met server...
 cook islands	common	nl	COOKEILANDEN
-copy	common	nl	KopiÎren
+copy	common	nl	Kopi√´ren
 costa rica	common	nl	COSTA RICA
 cote d ivoire	common	nl	IVOORKUST
 could not contact server. operation timed out!	common	nl	Kon geen verbinding met server maken. Bewerkingstijd is overschreden!
 create	common	nl	Maken
 created by	common	nl	Gemaakt door
-croatia	common	nl	KROATIÀ
+croatia	common	nl	KROATI√ã
 cuba	common	nl	CUBA
 currency	common	nl	Munteenheid
 current	common	nl	Huidig
 current users	common	nl	Huidig aantal gebruikers
 cyprus	common	nl	CYPRUS
-czech republic	common	nl	TSJECHIÀ
+czech republic	common	nl	TSJECHI√ã
 date	common	nl	Datum
 date due	common	nl	Einddatum
 date selection:	jscalendar	nl	Datumselectie
@@ -184,7 +184,7 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	nl	Uitgeschakeld
 display %s first	jscalendar	nl	%s eerst tonen
 djibouti	common	nl	DJIBOUTI
-do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorieÎn wissen
+do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorie√´n wissen
 doctype:	common	nl	DOCTYPE:
 document properties	common	nl	Documenteigenschappen
 document title:	common	nl	Documenttitel:
@@ -200,7 +200,7 @@ east timor	common	nl	OOST TIMOR
 ecuador	common	nl	ECUADOR
 edit	common	nl	Bewerken
 edit %1 category for	common	nl	Bewerk %1 categorie voor
-edit categories	common	nl	CategorieÎn bewerken
+edit categories	common	nl	Categorie√´n bewerken
 edit category	common	nl	Bewerk categorie
 egroupware api version %1	common	nl	eGroupWare API versie %1
 egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
@@ -218,11 +218,11 @@ entry updated sucessfully	common	nl	Item succesvol bijgewerkt
 equatorial guinea	common	nl	EQUATORIAAL GUINEA
 eritrea	common	nl	ERITREA
 error	common	nl	Fout
-error creating %1 %2 directory	common	nl	Error tijdens het creÎren van %1 %2 directory
+error creating %1 %2 directory	common	nl	Error tijdens het cre√´ren van %1 %2 directory
 error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2 directory
 error renaming %1 %2 directory	common	nl	Error tijdens het hernoemen van %1 %2 directory
 estonia	common	nl	ESTONIA
-ethiopia	common	nl	ETHIOPIÀ
+ethiopia	common	nl	ETHIOPI√ã
 exact	common	nl	exact
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	nl	Verbinden met server is mislukt of een ongeldige reactie is ontvangen. Probeer opnieuw in te loggen. Neem contact op met de beheerder indien het mislukt.
 falkland islands (malvinas)	common	nl	FALKLAND EILANDEN
@@ -243,7 +243,7 @@ folder already exists.	common	nl	Map bestaat reeds.
 force selectbox	common	nl	Forceer Selectbox
 france	common	nl	FRANKRIJK
 french guiana	common	nl	FRANS GUYANA
-french polynesia	common	nl	FRANS POLYNESIÀ
+french polynesia	common	nl	FRANS POLYNESI√ã
 french southern territories	common	nl	FRANSE ZUIDELIJKE GEBIEDEN
 friday	common	nl	Vrijdag
 ftp	common	nl	FTP
@@ -292,14 +292,14 @@ home email	common	nl	email thuis
 honduras	common	nl	HONDURAS
 hong kong	common	nl	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
-hungary	common	nl	HONGARIJÀ
+hungary	common	nl	HONGARIJ√ã
 iceland	common	nl	IJSLAND
 iespell not detected. click ok to go to download page.	common	nl	ieSpell is niet gevonden. Klik OK om naar de download pagina te gaan.
 if the clock is enabled would you like it to update it every second or every minute?	common	nl	Indien de klok is ingeschakeld, wilt u dan dat deze iedere seconde of iedere minuut wordt geactualiseerd?
 if there are some images in the background folder you can choose the one you would like to see.	common	nl	Indien er enkele afbeeldingen in de achtergrond map aanwezig zijn, kunt u er een kiezen die u wilt weergeven.
 image url	common	nl	Afbeelding URL
 india	common	nl	INDIA
-indonesia	common	nl	INDONESIÀ
+indonesia	common	nl	INDONESI√ã
 insert 'return false'	common	nl	'return false' invoegen
 insert all %1 addresses of the %2 contacts in %3	common	nl	Voer alle %1 adressen in van de %2 contacten in %3
 insert column after	common	nl	Kolom invoegen achter
@@ -313,16 +313,16 @@ invalid password	common	nl	Ongeldig wachtwoord
 iran, islamic republic of	common	nl	IRAN
 iraq	common	nl	IIRAK
 ireland	common	nl	IERLAND
-israel	common	nl	ISRAÀL
+israel	common	nl	ISRA√ãL
 it has been more then %1 days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd.
 it is recommended that you run setup to upgrade your tables to the current version	common	nl	Het is aanbevolen dat u setup uitvoerd om uw tabellen bij te werken naar een actuele versie
 italic	common	nl	Cursief
 italic.gif	common	nl	italic.gif
-italy	common	nl	ITALIÀ
+italy	common	nl	ITALI√ã
 jamaica	common	nl	JAMAICA
 january	common	nl	Januari
 japan	common	nl	JAPAN
-jordan	common	nl	JORDANIÀ
+jordan	common	nl	JORDANI√ã
 july	common	nl	Juli
 jun	common	nl	Jun
 june	common	nl	Juni
@@ -337,7 +337,7 @@ kiribati	common	nl	KIRIBATI
 korea, democratic peoples republic of	common	nl	NOORD-KOREA
 korea, republic of	common	nl	ZUID-KOREA
 kuwait	common	nl	KOEWEIT
-kyrgyzstan	common	nl	KIRGIZIÀ
+kyrgyzstan	common	nl	KIRGIZI√ã
 language	common	nl	Taal
 language_direction_rtl	common	nl	language_direction_rtl
 lao peoples democratic republic	common	nl	LAOS
@@ -351,7 +351,7 @@ lebanon	common	nl	LIBANON
 left	common	nl	Links
 lesotho	common	nl	LESOTHO
 liberia	common	nl	LIBERIE
-libyan arab jamahiriya	common	nl	LIBIÀ
+libyan arab jamahiriya	common	nl	LIBI√ã
 license	common	nl	Licentie
 liechtenstein	common	nl	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens klopt niet met het aantal kolommen van tabel %3 ==> genegeerd</b>
@@ -366,21 +366,21 @@ low	common	nl	Laag
 lowest	common	nl	Laagste
 luxembourg	common	nl	LUXEMBURG
 macau	common	nl	MACAU
-macedonia, the former yugoslav republic of	common	nl	MACEDONIÀ
+macedonia, the former yugoslav republic of	common	nl	MACEDONI√ã
 madagascar	common	nl	MADAGASKAR
 mail domain, eg. "%1"	common	nl	emai domein, bijv. "%1"
 main category	common	nl	Hoofdcategorie
 main screen	common	nl	Hoofdscherm
 maintainer	common	nl	Beheerder
 malawi	common	nl	MALAWI
-malaysia	common	nl	MALEISIÀ
+malaysia	common	nl	MALEISI√ã
 maldives	common	nl	MALADIEVEN
 mali	common	nl	MALI
 malta	common	nl	MALTA
 march	common	nl	Maart
 marshall islands	common	nl	MARSHALL EILANDEN
 martinique	common	nl	MARTINIQUE
-mauritania	common	nl	MAURITANIÀ
+mauritania	common	nl	MAURITANI√ã
 mauritius	common	nl	MAURITIUS
 max number of icons in navbar	common	nl	Max. aantal iconen in navigatiebalk?
 may	common	nl	Mei
@@ -389,12 +389,12 @@ medium	common	nl	Gemiddeld
 menu	common	nl	Menu
 message	common	nl	Bericht
 mexico	common	nl	MEXICO
-micronesia, federated states of	common	nl	MICRONESIÀ
+micronesia, federated states of	common	nl	MICRONESI√ã
 minute	common	nl	minuut
-moldova, republic of	common	nl	MOLDOVIÀ
+moldova, republic of	common	nl	MOLDOVI√ã
 monaco	common	nl	MONACO
 monday	common	nl	Maandag
-mongolia	common	nl	MONGOLIÀ
+mongolia	common	nl	MONGOLI√ã
 montserrat	common	nl	MONTSERRAT
 morocco	common	nl	MAROKKO
 mozambique	common	nl	MOZAMBIQUE
@@ -402,13 +402,13 @@ multiple	common	nl	meerdere
 myanmar	common	nl	BIRMA (MYANMAR)
 name	common	nl	Naam
 name of the user, eg. "%1"	common	nl	naam van de gebruiker, bijv. "%1"
-namibia	common	nl	NAMIBIÀ
+namibia	common	nl	NAMIBI√ã
 nauru	common	nl	NAURU
 nepal	common	nl	NEPAL
 netherlands	common	nl	NEDERLAND
 netherlands antilles	common	nl	DE NEDERLANDSE ANTILLEN
 never	common	nl	Nooit
-new caledonia	common	nl	NIEUW-CALEDONIÀ
+new caledonia	common	nl	NIEUW-CALEDONI√ã
 new entry added sucessfully	common	nl	Nieuw item succesvol toegevoegd
 new main category	common	nl	Nieuwe hoofdcategorie
 new value	common	nl	Nieuwe waarde
@@ -438,12 +438,12 @@ notify window	common	nl	Attentievenster
 notify your administrator to correct this situation	common	nl	Waarschuw uw beheerder om deze situatie te laten corrigeren
 november	common	nl	November
 october	common	nl	Oktober
-ok	common	nl	OkÈ
+ok	common	nl	Ok√©
 old value	common	nl	Oude waarde
 oman	common	nl	OMAN
 on *nix systems please type: %1	common	nl	Op *nix systemen typt u: %1
 on mouse over	common	nl	Bij Mouse Over
-only private	common	nl	alleen privÈ
+only private	common	nl	alleen priv√©
 only yours	common	nl	alleen eigen weergeven
 open notify window	common	nl	Attentievenster openen
 open popup window	common	nl	Popupvenster openen
@@ -502,7 +502,7 @@ previous page	common	nl	Vorige pagina
 primary style-sheet:	common	nl	Primaire style-sheet:
 print	common	nl	Afdrukken
 priority	common	nl	Prioriteit
-private	common	nl	PrivÈ
+private	common	nl	Priv√©
 programs	common	nl	Programma's
 project	common	nl	Project
 public	common	nl	publiek
@@ -520,9 +520,9 @@ replace with	common	nl	Vervangen met
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
 returns an array of todo items	common	nl	Geef een serie van todo items
 returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
-reunion	common	nl	R…UNION (EILAND)
+reunion	common	nl	R√âUNION (EILAND)
 right	common	nl	Rechts
-romania	common	nl	ROMANIÀ
+romania	common	nl	ROMANI√ã
 russian federation	common	nl	RUSLAND
 rwanda	common	nl	RWANDA
 saint helena	common	nl	SINT HELENA
@@ -532,9 +532,9 @@ saint pierre and miquelon	common	nl	SINT PIERRE EN MIQUELON
 saint vincent and the grenadines	common	nl	SINT VINCENT EN DE GRENADINEN
 samoa	common	nl	SAMOA
 san marino	common	nl	SAN MARINO
-sao tome and principe	common	nl	SAO TOM… AND PRINCIPE
+sao tome and principe	common	nl	SAO TOM√â AND PRINCIPE
 saturday	common	nl	Zaterdag
-saudi arabia	common	nl	SAUDI ARABIÀ
+saudi arabia	common	nl	SAUDI ARABI√ã
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	nl	Savant2 versie verschilt van Savant2 wrapper.<br />Deze versie: %1<br />Savants versie: %2
 save	common	nl	Opslaan
 search	common	nl	Zoeken
@@ -563,12 +563,12 @@ server %1 has been added	common	nl	Server %1 is toegevoegd
 server answered. processing response...	common	nl	Server heeft geantwoord. Reactie wordt verwerkt...
 server contacted. waiting for response...	common	nl	Server verbonden. Wacht op reactie...
 server name	common	nl	Servernaam
-session has been killed	common	nl	Sessie is beÎindigd
+session has been killed	common	nl	Sessie is be√´indigd
 setup	common	nl	Setup
 setup main menu	common	nl	Setup hoofdmenu
 seychelles	common	nl	SEYCHELLEN
 show all	common	nl	laat alles zien
-show all categorys	common	nl	Alle categorieÎn weergegeven
+show all categorys	common	nl	Alle categorie√´n weergegeven
 show clock?	common	nl	Klok weergeven?
 show home and logout button in main application bar?	common	nl	Home en logout knop weergeven in de toepassingen balk?
 show logo's on the desktop.	common	nl	Logo's op het bureaublad weergeven.
@@ -582,10 +582,10 @@ showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
 sierra leone	common	nl	SIERRA LEONE
 singapore	common	nl	SINGAPORE
-slovakia	common	nl	SLOWAKIJÀ
-slovenia	common	nl	SLOVENIÀ
+slovakia	common	nl	SLOWAKIJ√ã
+slovenia	common	nl	SLOVENI√ã
 solomon islands	common	nl	SALOMOMEILANDEN
-somalia	common	nl	SOMALIÀ
+somalia	common	nl	SOMALI√ã
 sorry, your login has expired	login	nl	Excuses, uw sessie is verlopen
 south africa	common	nl	ZUID AFRIKA
 south georgia and the south sandwich islands	common	nl	ZUID-GEORGIA EN DE ZUIDELIJKE SANDWICHEILANDEN
@@ -607,7 +607,7 @@ svalbard and jan mayen	common	nl	SVALBARD EN JAN MAYEN (EILANDEN)
 swaziland	common	nl	SWAZILAND
 sweden	common	nl	ZWEDEN
 switzerland	common	nl	ZWITSERLAND
-syrian arab republic	common	nl	SYRIÀ
+syrian arab republic	common	nl	SYRI√ã
 table properties	common	nl	Tabel-eigenschappen
 taiwan	common	nl	TAIWAN/TAIPEI
 tajikistan	common	nl	TADZJIKISTAN
@@ -643,14 +643,14 @@ total	common	nl	Totaal
 transparant bg for the icons?	common	nl	Transparante achtergrond voor de pictogrammen?
 trinidad and tobago	common	nl	TRINIDAD EN TOBAGO
 tuesday	common	nl	Dinsdag
-tunisia	common	nl	TUNISIÀ
-turkey	common	nl	TURKIJÀ
+tunisia	common	nl	TUNISI√ã
+turkey	common	nl	TURKIJ√ã
 turkmenistan	common	nl	TURKMENISTAN
 turks and caicos islands	common	nl	TURKS EN CAICOSEILANDEN
 tuvalu	common	nl	TUVALU
 type	common	nl	Type
 uganda	common	nl	UGANDA
-ukraine	common	nl	OEKRAœNE
+ukraine	common	nl	OEKRA√èNE
 underline	common	nl	Onderstrepen
 underline.gif	common	nl	underline.gif
 united arab emirates	common	nl	VERENIGDE ARABISCHE EMIRATEN
@@ -716,7 +716,7 @@ your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
 your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
 your session could not be verified.	login	nl	Uw sessie kon niet geverifieerd worden
 your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
-yugoslavia	common	nl	JOEGOSLAVIÀ
+yugoslavia	common	nl	JOEGOSLAVI√ã
 zambia	common	nl	ZAMBIA
 zimbabwe	common	nl	ZIMBABWE
 zoom	common	nl	Inzoemen

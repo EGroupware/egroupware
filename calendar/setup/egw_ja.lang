@@ -1,164 +1,164 @@
-%1 matches found	calendar	ja	%1 ·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
-%1 records imported	calendar	ja	%1 ·ï¥¤¥ó¥İ¡¼¥È¤µ¤ì¤Ş¤·¤¿
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	ja	%1 ·ïÆÉ¤ß¹ş¤ß¤Ş¤·¤¿(¤Ş¤À¥¤¥ó¥İ¡¼¥È¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£Ìá¤Ã¤ÆTest¥¤¥ó¥İ¡¼¥È¤Î¥Á¥§¥Ã¥¯¤ò³°¤·¤Æ¤ä¤ê¤Ê¤ª¤·¤Æ¤¯¤À¤µ¤¤)
-(for weekly)	calendar	ja	(Ëè½µ»ş)
+%1 matches found	calendar	ja	%1 ä»¶è¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚
+%1 records imported	calendar	ja	%1 ä»¶ã‚¤ãƒ³ãƒãƒ¼ãƒˆã•ã‚Œã¾ã—ãŸ
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	ja	%1 ä»¶èª­ã¿è¾¼ã¿ã¾ã—ãŸ(ã¾ã ã‚¤ãƒ³ãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚æˆ»ã£ã¦Testã‚¤ãƒ³ãƒãƒ¼ãƒˆã®ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã—ã¦ã‚„ã‚ŠãªãŠã—ã¦ãã ã•ã„)
+(for weekly)	calendar	ja	(æ¯é€±æ™‚)
 (i/v)cal	calendar	ja	(i/v)Cal
-1 match found	calendar	ja	£±·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
-accept	calendar	ja	¾µÂú
-add alarm	calendar	ja	¥¢¥é¡¼¥à¤òÄÉ²Ã
-alarm	calendar	ja	¥¢¥é¡¼¥à
-alarm management	calendar	ja	¥¢¥é¡¼¥à´ÉÍı
-alarm-management	calendar	ja	¥¢¥é¡¼¥à´ÉÍı
-alarms	calendar	ja	¥¢¥é¡¼¥à
-all day	calendar	ja	Á´¤Æ¤ÎÆü
-am	calendar	ja	¸áÁ°
-are you sure you want to delete this country ?	calendar	ja	¤³¤Î¹ñ¤ÎµÙÆü¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«?
-are you sure you want to delete this holiday ?	calendar	ja	¤³¤ÎµÙÆü¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«?
-are you sure\nyou want to\ndelete these alarms?	calendar	ja	¤³¤Î¥¢¥é¡¼¥à¤ò\nºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«?
-are you sure\nyou want to\ndelete this entry ?	calendar	ja	¤³¤Î¹àÌÜ¤ò\nºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	ºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£\n¡ÊÁ´¤Æ¤Î¥æ¡¼¥¶¤Ë±Æ¶Á¤·¤Ş¤¹¡Ë
-Are you sure\nyou want to\ndelete this single occurence ?\n\nThis will delete\nthis entry for all users.	calendar	ja	ºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£\n¡ÊÁ´¤Æ¤Î¥æ¡¼¥¶¤Ë±Æ¶Á¤·¤Ş¤¹¡Ë
-back	calendar	ja	Ìá¤ë
-brief description	calendar	ja	·ïÌ¾
-calendar	common	ja	¥«¥ì¥ó¥À¡¼
-calendar - [iv]cal importer	calendar	ja	¥«¥ì¥ó¥À¡¼ - [iv]Cal ¥¤¥ó¥İ¡¼¥È
-calendar - add	calendar	ja	¥«¥ì¥ó¥À¡¼ - ÄÉ²Ã
-calendar - edit	calendar	ja	¥«¥ì¥ó¥À¡¼ - ÄûÀµ
-calendar holiday management	admin	ja	µÙÆüÀßÄê
-calendar preferences	calendar	ja	¥«¥ì¥ó¥À¡¼¥æ¡¼¥¶ÀßÄê
-calendar settings	admin	ja	¥«¥ì¥ó¥À¡¼ÀßÄê
-countries	calendar	ja	¹ñ°ìÍ÷
-country	calendar	ja	¹ñ
-csv-filename	calendar	ja	CSV¥Õ¥¡¥¤¥ëÌ¾
-custom fields	calendar	ja	¥«¥¹¥¿¥à¹àÌÜ
-custom fields and sorting	common	ja	¥«¥¹¥¿¥à¹àÌÜ¤È½ç½ø
-daily	calendar	ja	ÆüÃ±°Ì
-daily matrix view	calendar	ja	ÆüÄøÉ½¼¨
-days repeated	calendar	ja	ÍËÆü
-dayview	calendar	ja	ÆüÉ½¼¨
-default calendar filter	calendar	ja	¥«¥ì¥ó¥À¡¼¤Î½é´üÁªÂò
-default calendar view	calendar	ja	¥«¥ì¥ó¥À¡¼¤Î½é´üÉ½¼¨
-delete series	calendar	ja	Ï¢Â³ºï½ü
-delete single	calendar	ja	Ã±ÆÈºï½ü
-display interval in day view	calendar	ja	ÆüÉ½¼¨»ş¤Î»ş´Ö´Ö³Ö
-display mini calendars when printing	calendar	ja	°õºşÍÑ¤Î»ş¡¢¾®¥«¥ì¥ó¥À¤òÉ½¼¨
-display status of events	calendar	ja	¥¤¥Ù¥ó¥È¾õ¶·É½¼¨
-do you wish to autoload calendar holidays files dynamically?	admin	ja	µÙÆü¥Õ¥¡¥¤¥ë¤ò¼«Æ°¥í¡¼¥É¤¹¤ë
-download	calendar	ja	¥À¥¦¥ó¥í¡¼¥É
-duration	calendar	ja	·ÑÂ³»ş´Ö
-edit series	calendar	ja	Ï¢Â³ÄûÀµ
-edit single	calendar	ja	Ã±ÆÈÄûÀµ
-end date/time	calendar	ja	½ªÎ»Æü»ş
-ends	calendar	ja	½ªÎ»Æü
-export	calendar	ja	¥¨¥¯¥¹¥İ¡¼¥È
-fr	calendar	ja	¶â
-free/busy	calendar	ja	»ş´ÖÉ½
-frequency	calendar	ja	´Ö³Ö
-fri	calendar	ja	¶â
-full description	calendar	ja	¾ÜºÙ
-generate printer-friendly version	calendar	ja	°õºşÍÑ
-global public and group public	calendar	ja	¥Ñ¥Ö¥ê¥Ã¥¯¤È½êÂ°¥°¥ë¡¼¥×
-global public only	calendar	ja	¥Ñ¥Ö¥ê¥Ã¥¯
+1 match found	calendar	ja	ï¼‘ä»¶è¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚
+accept	calendar	ja	æ‰¿è«¾
+add alarm	calendar	ja	ã‚¢ãƒ©ãƒ¼ãƒ ã‚’è¿½åŠ 
+alarm	calendar	ja	ã‚¢ãƒ©ãƒ¼ãƒ 
+alarm management	calendar	ja	ã‚¢ãƒ©ãƒ¼ãƒ ç®¡ç†
+alarm-management	calendar	ja	ã‚¢ãƒ©ãƒ¼ãƒ ç®¡ç†
+alarms	calendar	ja	ã‚¢ãƒ©ãƒ¼ãƒ 
+all day	calendar	ja	å…¨ã¦ã®æ—¥
+am	calendar	ja	åˆå‰
+are you sure you want to delete this country ?	calendar	ja	ã“ã®å›½ã®ä¼‘æ—¥ã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹?
+are you sure you want to delete this holiday ?	calendar	ja	ã“ã®ä¼‘æ—¥ã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹?
+are you sure\nyou want to\ndelete these alarms?	calendar	ja	ã“ã®ã‚¢ãƒ©ãƒ¼ãƒ ã‚’\nå‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹?
+are you sure\nyou want to\ndelete this entry ?	calendar	ja	ã“ã®é …ç›®ã‚’\nå‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ã€‚\nï¼ˆå…¨ã¦ã®ãƒ¦ãƒ¼ã‚¶ã«å½±éŸ¿ã—ã¾ã™ï¼‰
+Are you sure\nyou want to\ndelete this single occurence ?\n\nThis will delete\nthis entry for all users.	calendar	ja	å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ã€‚\nï¼ˆå…¨ã¦ã®ãƒ¦ãƒ¼ã‚¶ã«å½±éŸ¿ã—ã¾ã™ï¼‰
+back	calendar	ja	æˆ»ã‚‹
+brief description	calendar	ja	ä»¶å
+calendar	common	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼
+calendar - [iv]cal importer	calendar	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ - [iv]Cal ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
+calendar - add	calendar	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ - è¿½åŠ 
+calendar - edit	calendar	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ - è¨‚æ­£
+calendar holiday management	admin	ja	ä¼‘æ—¥è¨­å®š
+calendar preferences	calendar	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ¦ãƒ¼ã‚¶è¨­å®š
+calendar settings	admin	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼è¨­å®š
+countries	calendar	ja	å›½ä¸€è¦§
+country	calendar	ja	å›½
+csv-filename	calendar	ja	CSVãƒ•ã‚¡ã‚¤ãƒ«å
+custom fields	calendar	ja	ã‚«ã‚¹ã‚¿ãƒ é …ç›®
+custom fields and sorting	common	ja	ã‚«ã‚¹ã‚¿ãƒ é …ç›®ã¨é †åº
+daily	calendar	ja	æ—¥å˜ä½
+daily matrix view	calendar	ja	æ—¥ç¨‹è¡¨ç¤º
+days repeated	calendar	ja	æ›œæ—¥
+dayview	calendar	ja	æ—¥è¡¨ç¤º
+default calendar filter	calendar	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®åˆæœŸé¸æŠ
+default calendar view	calendar	ja	ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®åˆæœŸè¡¨ç¤º
+delete series	calendar	ja	é€£ç¶šå‰Šé™¤
+delete single	calendar	ja	å˜ç‹¬å‰Šé™¤
+display interval in day view	calendar	ja	æ—¥è¡¨ç¤ºæ™‚ã®æ™‚é–“é–“éš”
+display mini calendars when printing	calendar	ja	å°åˆ·ç”¨ã®æ™‚ã€å°ã‚«ãƒ¬ãƒ³ãƒ€ã‚’è¡¨ç¤º
+display status of events	calendar	ja	ã‚¤ãƒ™ãƒ³ãƒˆçŠ¶æ³è¡¨ç¤º
+do you wish to autoload calendar holidays files dynamically?	admin	ja	ä¼‘æ—¥ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è‡ªå‹•ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+download	calendar	ja	ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
+duration	calendar	ja	ç¶™ç¶šæ™‚é–“
+edit series	calendar	ja	é€£ç¶šè¨‚æ­£
+edit single	calendar	ja	å˜ç‹¬è¨‚æ­£
+end date/time	calendar	ja	çµ‚äº†æ—¥æ™‚
+ends	calendar	ja	çµ‚äº†æ—¥
+export	calendar	ja	ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
+fr	calendar	ja	é‡‘
+free/busy	calendar	ja	æ™‚é–“è¡¨
+frequency	calendar	ja	é–“éš”
+fri	calendar	ja	é‡‘
+full description	calendar	ja	è©³ç´°
+generate printer-friendly version	calendar	ja	å°åˆ·ç”¨
+global public and group public	calendar	ja	ãƒ‘ãƒ–ãƒªãƒƒã‚¯ã¨æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—
+global public only	calendar	ja	ãƒ‘ãƒ–ãƒªãƒƒã‚¯
 go!	calendar	ja	Go!
-grant calendar access	common	ja	ÍøÍÑµö²ÄÀßÄê
-group planner	calendar	ja	¥°¥ë¡¼¥×Í½ÄêÉ½
-group public only	calendar	ja	½êÂ°¥°¥ë¡¼¥×
-holiday	calendar	ja	µÙÆü
-holidays	calendar	ja	µÙÆü°ìÍ÷
-i participate	calendar	ja	¼«Ê¬¤â»²²Ã¼Ô
+grant calendar access	common	ja	åˆ©ç”¨è¨±å¯è¨­å®š
+group planner	calendar	ja	ã‚°ãƒ«ãƒ¼ãƒ—äºˆå®šè¡¨
+group public only	calendar	ja	æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—
+holiday	calendar	ja	ä¼‘æ—¥
+holidays	calendar	ja	ä¼‘æ—¥ä¸€è¦§
+i participate	calendar	ja	è‡ªåˆ†ã‚‚å‚åŠ è€…
 ical / rfc2445	calendar	ja	iCal / rfc2445
-ignore conflict	calendar	ja	Ìµ»ë
-import	calendar	ja	¥¤¥ó¥İ¡¼¥È
-import csv-file	common	ja	CSV¥Õ¥¡¥¤¥ë¤ò¥¤¥ó¥İ¡¼¥È
-interval	calendar	ja	´Ö³Ö
-location	calendar	ja	¾ì½ê
-location to autoload from	admin	ja	¼«Æ°¥í¡¼¥É¸µ
-minutes	calendar	ja	Ê¬
-mo	calendar	ja	·î
-mon	calendar	ja	·î
-month	calendar	ja	·î
-monthly	calendar	ja	·îÃ±°Ì
-monthly (by date)	calendar	ja	·îÃ±°Ì(Æü)
-monthly (by day)	calendar	ja	·îÃ±°Ì(ÍËÆü)
-monthlybydate	calendar	ja	·îÃ±°Ì(Æü)
-monthlybyday	calendar	ja	·îÃ±°Ì(ÍËÆü)
-monthview	calendar	ja	·îÉ½¼¨
-new entry	calendar	ja	¹àÌÜÄÉ²Ã
-no matches found.	calendar	ja	¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£
-no matchs found	calendar	ja	¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£
-no response	calendar	ja	ÊÖÅú¤Ê¤·
-observance rule	calendar	ja	µÙÆü¤Î¥ë¡¼¥ë¤òÅ¬ÍÑ
-occurence	calendar	ja	ÍËÆü»ØÄê
-open todo\'s:	calendar	ja	Ì¤½èÍı¤ÎToDo¹àÌÜ:
-order	calendar	ja	½ç½ø
-overlap holiday	calendar	ja	¿¶ÂØµÙÆü
-participant	calendar	ja	»²²Ã¼Ô
-participants	calendar	ja	»²²Ã¼Ô
-participates	calendar	ja	¤â»²²Ã
-people holiday	calendar	ja	¹ñÌ±¤ÎµÙÆü
-planner	calendar	ja	¥×¥é¥ó¥Ê¡¼
-please enter a filename !!!	calendar	ja	¥Õ¥¡¥¤¥ëÌ¾¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤!!!
-pm	calendar	ja	¸á¸å
-print calendars in black & white	calendar	ja	°õºşÍÑ¤Î»ş¡¢Çò¹õÉ½¼¨¤Ë¤¹¤ë
-printer friendly	calendar	ja	°õºşÍÑ¤Ø
-private and global public	calendar	ja	¥×¥é¥¤¥Ù¡¼¥È¤È¶¦Í­
-private and group public	calendar	ja	¥×¥é¥¤¥Ù¡¼¥È¤È½êÂ°¥°¥ë¡¼¥×
-private only	calendar	ja	¥×¥é¥¤¥Ù¡¼¥È¤Î¤ß
-re-edit event	calendar	ja	ºÆÊÔ½¸
-refresh	calendar	ja	ºÆÉ½¼¨
-reject	calendar	ja	µñÈİ
-rejected	calendar	ja	µñÈİºÑ¤ß
-repeat day	calendar	ja	ÍËÆü¤Î·«ÊÖ¤·
-repeat end date	calendar	ja	·«ÊÖ¤·¤Î½ªÎ»Æü
-repeat type	calendar	ja	¥¿¥¤¥×
-repeating event information	calendar	ja	·«ÊÖ¤·¥¤¥Ù¥ó¥È
-repetition	calendar	ja	·«ÊÖ¤·
-repitition	calendar	ja	·«ÊÖ¤·
-reset	calendar	ja	ºÆÆşÎÏ
-sa	calendar	ja	ÅÚ
-sat	calendar	ja	ÅÚ
-scheduling conflict	calendar	ja	Í½Äê¤ò³ÎÇ§
-search results	calendar	ja	¸¡º÷·ë²Ì
-select country for including holidays	calendar	ja	µÙÆü¥Ç¡¼¥¿ÁªÂò
-send/receive updates via email	calendar	ja	¹¹¿·¾ğÊó¤òÅÅ»Ò¥á¡¼¥ë¤Ç¼õ¼è¤ë
-show day view on main screen	calendar	ja	º£Æü¤ÎÍ½Äê¤ò¥á¥¤¥ó²èÌÌ¤ËÉ½¼¨
-show default view on main screen	calendar	ja	½é´üÉ½¼¨¤ò¥á¥¤¥ó²èÌÌ¤ËÉ½¼¨
-show high priority events on main screen	calendar	ja	Í¥ÀèÅÙ¤¬¹â¤¤¥¤¥Ù¥ó¥È¤ò¥á¥¤¥ó²èÌÌ¤ËÉ½¼¨
-start date/time	calendar	ja	³«»ÏÆü»ş
-su	calendar	ja	Æü
-submit to repository	calendar	ja	Å¾Á÷
-sun	calendar	ja	Æü
-tentative	calendar	ja	²¾¾µÂú
-th	calendar	ja	ÌÚ
+ignore conflict	calendar	ja	ç„¡è¦–
+import	calendar	ja	ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
+import csv-file	common	ja	CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
+interval	calendar	ja	é–“éš”
+location	calendar	ja	å ´æ‰€
+location to autoload from	admin	ja	è‡ªå‹•ãƒ­ãƒ¼ãƒ‰å…ƒ
+minutes	calendar	ja	åˆ†
+mo	calendar	ja	æœˆ
+mon	calendar	ja	æœˆ
+month	calendar	ja	æœˆ
+monthly	calendar	ja	æœˆå˜ä½
+monthly (by date)	calendar	ja	æœˆå˜ä½(æ—¥)
+monthly (by day)	calendar	ja	æœˆå˜ä½(æ›œæ—¥)
+monthlybydate	calendar	ja	æœˆå˜ä½(æ—¥)
+monthlybyday	calendar	ja	æœˆå˜ä½(æ›œæ—¥)
+monthview	calendar	ja	æœˆè¡¨ç¤º
+new entry	calendar	ja	é …ç›®è¿½åŠ 
+no matches found.	calendar	ja	è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚
+no matchs found	calendar	ja	è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚
+no response	calendar	ja	è¿”ç­”ãªã—
+observance rule	calendar	ja	ä¼‘æ—¥ã®ãƒ«ãƒ¼ãƒ«ã‚’é©ç”¨
+occurence	calendar	ja	æ›œæ—¥æŒ‡å®š
+open todo\'s:	calendar	ja	æœªå‡¦ç†ã®ToDoé …ç›®:
+order	calendar	ja	é †åº
+overlap holiday	calendar	ja	æŒ¯æ›¿ä¼‘æ—¥
+participant	calendar	ja	å‚åŠ è€…
+participants	calendar	ja	å‚åŠ è€…
+participates	calendar	ja	ã‚‚å‚åŠ 
+people holiday	calendar	ja	å›½æ°‘ã®ä¼‘æ—¥
+planner	calendar	ja	ãƒ—ãƒ©ãƒ³ãƒŠãƒ¼
+please enter a filename !!!	calendar	ja	ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å…¥åŠ›ã—ã¦ãã ã•ã„!!!
+pm	calendar	ja	åˆå¾Œ
+print calendars in black & white	calendar	ja	å°åˆ·ç”¨ã®æ™‚ã€ç™½é»’è¡¨ç¤ºã«ã™ã‚‹
+printer friendly	calendar	ja	å°åˆ·ç”¨ã¸
+private and global public	calendar	ja	ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã¨å…±æœ‰
+private and group public	calendar	ja	ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã¨æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—
+private only	calendar	ja	ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã®ã¿
+re-edit event	calendar	ja	å†ç·¨é›†
+refresh	calendar	ja	å†è¡¨ç¤º
+reject	calendar	ja	æ‹’å¦
+rejected	calendar	ja	æ‹’å¦æ¸ˆã¿
+repeat day	calendar	ja	æ›œæ—¥ã®ç¹°è¿”ã—
+repeat end date	calendar	ja	ç¹°è¿”ã—ã®çµ‚äº†æ—¥
+repeat type	calendar	ja	ã‚¿ã‚¤ãƒ—
+repeating event information	calendar	ja	ç¹°è¿”ã—ã‚¤ãƒ™ãƒ³ãƒˆ
+repetition	calendar	ja	ç¹°è¿”ã—
+repitition	calendar	ja	ç¹°è¿”ã—
+reset	calendar	ja	å†å…¥åŠ›
+sa	calendar	ja	åœŸ
+sat	calendar	ja	åœŸ
+scheduling conflict	calendar	ja	äºˆå®šã‚’ç¢ºèª
+search results	calendar	ja	æ¤œç´¢çµæœ
+select country for including holidays	calendar	ja	ä¼‘æ—¥ãƒ‡ãƒ¼ã‚¿é¸æŠ
+send/receive updates via email	calendar	ja	æ›´æ–°æƒ…å ±ã‚’é›»å­ãƒ¡ãƒ¼ãƒ«ã§å—å–ã‚‹
+show day view on main screen	calendar	ja	ä»Šæ—¥ã®äºˆå®šã‚’ãƒ¡ã‚¤ãƒ³ç”»é¢ã«è¡¨ç¤º
+show default view on main screen	calendar	ja	åˆæœŸè¡¨ç¤ºã‚’ãƒ¡ã‚¤ãƒ³ç”»é¢ã«è¡¨ç¤º
+show high priority events on main screen	calendar	ja	å„ªå…ˆåº¦ãŒé«˜ã„ã‚¤ãƒ™ãƒ³ãƒˆã‚’ãƒ¡ã‚¤ãƒ³ç”»é¢ã«è¡¨ç¤º
+start date/time	calendar	ja	é–‹å§‹æ—¥æ™‚
+su	calendar	ja	æ—¥
+submit to repository	calendar	ja	è»¢é€
+sun	calendar	ja	æ—¥
+tentative	calendar	ja	ä»®æ‰¿è«¾
+th	calendar	ja	æœ¨
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	ja	The following conflicts with the suggested time:<ul>%1</ul>
-this month	calendar	ja	º£·î
-this week	calendar	ja	º£½µ
-this year	calendar	ja	º£Ç¯
-thu	calendar	ja	ÌÚ
-today	calendar	ja	º£Æü
-tu	calendar	ja	²Ğ
-tue	calendar	ja	²Ğ
-use end date	calendar	ja	½ªÎ»Æü»ØÄê
-user	calendar	ja	¥æ¡¼¥¶
-view this entry	calendar	ja	¹àÌÜÉ½¼¨
-we	calendar	ja	¿å
-wed	calendar	ja	¿å
-week	calendar	ja	½µ
-weekday starts on	calendar	ja	½µ¤Î½é¤á
-weekly	calendar	ja	½µÃ±°Ì
-weekview	calendar	ja	½µÉ½¼¨
-when creating new events default set to private	calendar	ja	¥×¥é¥¤¥Ù¡¼¥ÈÍÑ¤È¤¹¤ë¡Ê¿·µ¬ºîÀ®»ş¡Ë
-work day ends on	calendar	ja	½¢¶È»ş´Ö¡Ê½ªÎ»¡Ë
-work day starts on	calendar	ja	½¢¶È»ş´Ö¡Ê³«»Ï¡Ë
-year	calendar	ja	Ç¯
-yearly	calendar	ja	Ç¯Ã±°Ì
-yearview	calendar	ja	Ç¯É½¼¨
-you have %1 high priority events on your calendar today.	common	ja	Í¥ÀèÅÙ¤Î¹â¤¤Í½Äê¤¬ %1 ¤Ä¤¢¤ê¤Ş¤¹¡£
-you have 1 high priority event on your calendar today.	common	ja	Í¥ÀèÅÙ¤Î¹â¤¤Í½Äê¤¬£±¤Ä¤¢¤ê¤Ş¤¹¡£
-you have not entered a brief description	calendar	ja	³µÍ×¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£
-you have not entered a title	calendar	ja	¥¿¥¤¥È¥ë¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤
-you have not entered a valid date	calendar	ja	ÆüÉÕ¤¬Àµ¤·¤¯¤¢¤ê¤Ş¤»¤ó
-you have not entered a\nbrief description	calendar	ja	³µÍ×¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£
-you have not entered a\nvalid time of day.	calendar	ja	»ş¹ï¤¬¸í¤Ã¤Æ¤¤¤Ş¤¹¡£
-you must enter one or more search keywords	calendar	ja	¸¡º÷¥­¡¼¥ï¡¼¥É¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	ja	<B> %1 - %2 </B> ¤Ë¤Ï¡¢ÊÌ¤ÎÍ½Äê¤¬¤¢¤ê¤Ş¤¹¡£
+this month	calendar	ja	ä»Šæœˆ
+this week	calendar	ja	ä»Šé€±
+this year	calendar	ja	ä»Šå¹´
+thu	calendar	ja	æœ¨
+today	calendar	ja	ä»Šæ—¥
+tu	calendar	ja	ç«
+tue	calendar	ja	ç«
+use end date	calendar	ja	çµ‚äº†æ—¥æŒ‡å®š
+user	calendar	ja	ãƒ¦ãƒ¼ã‚¶
+view this entry	calendar	ja	é …ç›®è¡¨ç¤º
+we	calendar	ja	æ°´
+wed	calendar	ja	æ°´
+week	calendar	ja	é€±
+weekday starts on	calendar	ja	é€±ã®åˆã‚
+weekly	calendar	ja	é€±å˜ä½
+weekview	calendar	ja	é€±è¡¨ç¤º
+when creating new events default set to private	calendar	ja	ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆç”¨ã¨ã™ã‚‹ï¼ˆæ–°è¦ä½œæˆæ™‚ï¼‰
+work day ends on	calendar	ja	å°±æ¥­æ™‚é–“ï¼ˆçµ‚äº†ï¼‰
+work day starts on	calendar	ja	å°±æ¥­æ™‚é–“ï¼ˆé–‹å§‹ï¼‰
+year	calendar	ja	å¹´
+yearly	calendar	ja	å¹´å˜ä½
+yearview	calendar	ja	å¹´è¡¨ç¤º
+you have %1 high priority events on your calendar today.	common	ja	å„ªå…ˆåº¦ã®é«˜ã„äºˆå®šãŒ %1 ã¤ã‚ã‚Šã¾ã™ã€‚
+you have 1 high priority event on your calendar today.	common	ja	å„ªå…ˆåº¦ã®é«˜ã„äºˆå®šãŒï¼‘ã¤ã‚ã‚Šã¾ã™ã€‚
+you have not entered a brief description	calendar	ja	æ¦‚è¦ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚
+you have not entered a title	calendar	ja	ã‚¿ã‚¤ãƒˆãƒ«ã‚’å…¥åŠ›ã—ã¦ä¸‹ã•ã„
+you have not entered a valid date	calendar	ja	æ—¥ä»˜ãŒæ­£ã—ãã‚ã‚Šã¾ã›ã‚“
+you have not entered a\nbrief description	calendar	ja	æ¦‚è¦ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚
+you have not entered a\nvalid time of day.	calendar	ja	æ™‚åˆ»ãŒèª¤ã£ã¦ã„ã¾ã™ã€‚
+you must enter one or more search keywords	calendar	ja	æ¤œç´¢ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ä¸‹ã•ã„ã€‚
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	ja	<B> %1 - %2 </B> ã«ã¯ã€åˆ¥ã®äºˆå®šãŒã‚ã‚Šã¾ã™ã€‚

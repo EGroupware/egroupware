@@ -5,7 +5,7 @@ add accessory	resources	nl	Toebehoren toevoegen
 add resource	resources	nl	hulpbron toevoegen
 add resources	resources	nl	Hulpbronnen toevoegen
 administrator	resources	nl	Beheerder
-all categories	resources	nl	alle categorieën
+all categories	resources	nl	alle categorieÃ«n
 book	resources	nl	Boeken
 book selected resources	resources	nl	boek de geselecteerde hulpbronnen
 book this resource	resources	nl	Deze hulpbron boeken
@@ -13,10 +13,10 @@ bookable	resources	nl	Te boeken
 buy this article	resources	nl	Koop dit artikel
 buy this resource	resources	nl	Deze hulpbron kopen
 buyable	resources	nl	Te kopen
-categories admin	resources	nl	Categorieën beheer
+categories admin	resources	nl	CategorieÃ«n beheer
 category:	resources	nl	Categorie:
 check all	resources	nl	Alles markeren
-choose categories admin	resources	nl	kies categorieën beheer
+choose categories admin	resources	nl	kies categorieÃ«n beheer
 clear selection	resources	nl	selectie wissen
 configure access permissions	resources	nl	Toegangsrechten configureren
 create new accessory for this resource	resources	nl	Nieuw toebehoren voor deze hulpbron aanmaken

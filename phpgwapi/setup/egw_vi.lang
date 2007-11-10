@@ -1,34 +1,34 @@
-%1 email addresses inserted	common	vi	CÛ %1 &#273;&#7883;a ch&#7881; email &#273;&#432;&#7907;c thÍm v‡o
-%1 is not executable by the webserver !!!	common	vi	%1 khÙng th&#7875; th&#7921;c thi b&#7903;i m·y ch&#7911; web !!!
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	vi	%1eGroupWare%2 l‡ b&#7897; ph&#7847;n m&#7873;m nhÛm d&#7841;ng Web h&#7895; tr&#7907; &#273;a ng&#432;&#7901;i d˘ng vi&#7871;t b&#7857;ng %3PHP%4.
-(shift-)click or drag to change value	jscalendar	vi	(Shift-)Click ho&#7863;c kÈo v‡ rÍ chu&#7897;t &#273;&#7875; thay &#273;&#7893;i gi· tr&#7883;
-- click on any of the time parts to increase it	jscalendar	vi	- Click v‡o b&#7845;t k&#7923; ph&#7847;n th&#7901;i gian n‡o &#273;&#7875; t&#259;ng nÛ
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	vi	- Gi&#7919; phÌm tr·i chu&#7897;t trÍn b&#7845;t k&#7923; n˙t &#7845;n n‡o phÌa trÍn &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
-- or click and drag for faster selection.	jscalendar	vi	- ho&#7863;c click v‡ kÈo - rÍ chu&#7897;t &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
-- or shift-click to decrease it	jscalendar	vi	- ho&#7863;c Shift-Click chu&#7897;t &#273;&#7875; gi&#7843;m nÛ
-- use the %1, %2 buttons to select month	jscalendar	vi	- D˘ng c·c n˙t &#7845;n %1, %2 &#273;&#7875; ch&#7885;n th·ng
-- use the %1, %2 buttons to select year	jscalendar	vi	- D˘ng c·c n˙t &#7845;n %1, %2 &#273;&#7875; ch&#7885;n n&#259;m
+%1 email addresses inserted	common	vi	C√≥ %1 &#273;&#7883;a ch&#7881; email &#273;&#432;&#7907;c th√™m v√†o
+%1 is not executable by the webserver !!!	common	vi	%1 kh√¥ng th&#7875; th&#7921;c thi b&#7903;i m√°y ch&#7911; web !!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	vi	%1eGroupWare%2 l√† b&#7897; ph&#7847;n m&#7873;m nh√≥m d&#7841;ng Web h&#7895; tr&#7907; &#273;a ng&#432;&#7901;i d√πng vi&#7871;t b&#7857;ng %3PHP%4.
+(shift-)click or drag to change value	jscalendar	vi	(Shift-)Click ho&#7863;c k√©o v√† r√™ chu&#7897;t &#273;&#7875; thay &#273;&#7893;i gi√° tr&#7883;
+- click on any of the time parts to increase it	jscalendar	vi	- Click v√†o b&#7845;t k&#7923; ph&#7847;n th&#7901;i gian n√†o &#273;&#7875; t&#259;ng n√≥
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	vi	- Gi&#7919; ph√≠m tr√°i chu&#7897;t tr√™n b&#7845;t k&#7923; n√∫t &#7845;n n√†o ph√≠a tr√™n &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or click and drag for faster selection.	jscalendar	vi	- ho&#7863;c click v√† k√©o - r√™ chu&#7897;t &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or shift-click to decrease it	jscalendar	vi	- ho&#7863;c Shift-Click chu&#7897;t &#273;&#7875; gi&#7843;m n√≥
+- use the %1, %2 buttons to select month	jscalendar	vi	- D√πng c√°c n√∫t &#7845;n %1, %2 &#273;&#7875; ch&#7885;n th√°ng
+- use the %1, %2 buttons to select year	jscalendar	vi	- D√πng c√°c n√∫t &#7845;n %1, %2 &#273;&#7875; ch&#7885;n n&#259;m
 00 (disable)	admin	vi	00 (t&#7855;t)
 13 (ntp)	admin	vi	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	vi	3 k˝ t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t ng‡y
-3 number of chars for month-shortcut	jscalendar	vi	3 k˝ t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t th·ng
+3 number of chars for day-shortcut	jscalendar	vi	3 k√Ω t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t ng√†y
+3 number of chars for month-shortcut	jscalendar	vi	3 k√Ω t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t th√°ng
 80 (http)	admin	vi	80 (http)
 about	common	vi	Gi&#7899;i thi&#7879;u
 about %1	common	vi	Gi&#7899;i thi&#7879;u %1
 about the calendar	jscalendar	vi	Gi&#7899;i thi&#7879;u v&#7873; L&#7883;ch
 access	common	vi	Truy c&#7853;p
-access not permitted	common	vi	Truy c&#7853;p khÙng &#273;&#432;&#7907;c phÈp
-account has been created	common	vi	T‡i kho&#7843;n &#273;„ &#273;&#432;&#7907;c t&#7841;o
-account has been deleted	common	vi	T‡i kho&#7843;n &#273;„ b&#7883; xÛa
-account has been updated	common	vi	T‡i kho&#7843;n &#273;„ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
-account is expired	common	vi	T‡i kho&#7843;n h&#7871;t h&#7841;n
-acl	common	vi	Danh s·ch ph‚n quy&#7873;n truy c&#7853;p
-action	common	vi	H‡nh &#273;&#7897;ng
-active	common	vi	TÌch c&#7921;c
-add	common	vi	ThÍm m&#7899;i
-add %1 category for	common	vi	ThÍm m&#7899;i %1 nhÛm cho
-add category	common	vi	ThÍm m&#7899;i nhÛm
-add sub	common	vi	ThÍm nhÛm con
+access not permitted	common	vi	Truy c&#7853;p kh√¥ng &#273;&#432;&#7907;c ph√©p
+account has been created	common	vi	T√†i kho&#7843;n &#273;√£ &#273;&#432;&#7907;c t&#7841;o
+account has been deleted	common	vi	T√†i kho&#7843;n &#273;√£ b&#7883; x√≥a
+account has been updated	common	vi	T√†i kho&#7843;n &#273;√£ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+account is expired	common	vi	T√†i kho&#7843;n h&#7871;t h&#7841;n
+acl	common	vi	Danh s√°ch ph√¢n quy&#7873;n truy c&#7853;p
+action	common	vi	H√†nh &#273;&#7897;ng
+active	common	vi	T√≠ch c&#7921;c
+add	common	vi	Th√™m m&#7899;i
+add %1 category for	common	vi	Th√™m m&#7899;i %1 nh√≥m cho
+add category	common	vi	Th√™m m&#7899;i nh√≥m
+add sub	common	vi	Th√™m nh√≥m con
 addressbook	common	vi	S&#7893; &#273;&#7883;a ch&#7881;
 admin	common	vi	Ng&#432;&#7901;i qu&#7843;n tr&#7883;
 administration	common	vi	Qu&#7843;n tr&#7883; h&#7879; th&#7889;ng
@@ -36,7 +36,7 @@ afghanistan	common	vi	AFGHANISTAN
 albania	common	vi	ALBANIA
 algeria	common	vi	ALGERIA
 all	common	vi	T&#7845;t c&#7843;
-all fields	common	vi	t&#7845;t c&#7843; c·c tr&#432;&#7901;ng
+all fields	common	vi	t&#7845;t c&#7843; c√°c tr&#432;&#7901;ng
 alphabet	common	vi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	vi	Style-sheet thay th&#7871;:
 american samoa	common	vi	AMERICAN SAMOA
@@ -45,37 +45,37 @@ angola	common	vi	ANGOLA
 anguilla	common	vi	ANGUILLA
 antarctica	common	vi	ANTARCTICA
 antigua and barbuda	common	vi	ANTIGUA AND BARBUDA
-apply	common	vi	¡p d&#7909;ng
-april	common	vi	Th·ng T&#432;
-are you sure you want to delete these entries ?	common	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng mÏnh mu&#7889;n xÛa c·c m&#7909;c n‡y khÙng ?
-are you sure you want to delete this entry ?	common	vi	B&#7841;n cÛ ch&#7855;c ch&#7855;n r&#7857;ng mÏnh mu&#7889;n xÛa m&#7909;c n‡y khÙng ?
+apply	common	vi	√Åp d&#7909;ng
+april	common	vi	Th√°ng T&#432;
+are you sure you want to delete these entries ?	common	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng m√¨nh mu&#7889;n x√≥a c√°c m&#7909;c n√†y kh√¥ng ?
+are you sure you want to delete this entry ?	common	vi	B&#7841;n c√≥ ch&#7855;c ch&#7855;n r&#7857;ng m√¨nh mu&#7889;n x√≥a m&#7909;c n√†y kh√¥ng ?
 argentina	common	vi	ARGENTINA
 armenia	common	vi	ARMENIA
 aruba	common	vi	ARUBA
-august	common	vi	Th·ng T·m
+august	common	vi	Th√°ng T√°m
 australia	common	vi	AUSTRALIA
 austria	common	vi	AUSTRIA
-author	common	vi	T·c gi&#7843;
-autohide sidebox menus	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bÍn ph&#7843;i
-automatically hide the sidebox menus?	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bÍn ph&#7843;i
-autosave default category	common	vi	T&#7921; &#273;&#7897;ng l&#432;u nhÛm m&#7863;c &#273;&#7883;nh
+author	common	vi	T√°c gi&#7843;
+autohide sidebox menus	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu b√™n ph&#7843;i
+automatically hide the sidebox menus?	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu b√™n ph&#7843;i
+autosave default category	common	vi	T&#7921; &#273;&#7897;ng l&#432;u nh√≥m m&#7863;c &#273;&#7883;nh
 azerbaijan	common	vi	AZERBAIJAN
 back	common	vi	Quay tr&#7903; l&#7841;i
 back to user login	common	vi	Quay v&#7873; trang &#273;&#259;ng nh&#7853;p
-background color:	common	vi	M‡u n&#7873;n:
-bad login or password	common	vi	Sai tÍn &#273;&#259;ng nh&#7853;p ho&#7863;c m&#7853;t kh&#7849;u
+background color:	common	vi	M√†u n&#7873;n:
+bad login or password	common	vi	Sai t√™n &#273;&#259;ng nh&#7853;p ho&#7863;c m&#7853;t kh&#7849;u
 bahamas	common	vi	BAHAMAS
 bahrain	common	vi	BAHRAIN
 bangladesh	common	vi	BANGLADESH
 barbados	common	vi	BARBADOS
-bcc	common	vi	G&#7917;i kÌn
+bcc	common	vi	G&#7917;i k√≠n
 belarus	common	vi	BELARUS
 belgium	common	vi	BELGIUM
 belize	common	vi	BELIZE
 benin	common	vi	BENIN
 bermuda	common	vi	BERMUDA
 bhutan	common	vi	BHUTAN
-blocked, too many attempts	common	vi	B&#7883; khÛa, &#273;&#259;ng nh&#7853;p sai qu· nhi&#7873;u l&#7847;n
+blocked, too many attempts	common	vi	B&#7883; kh√≥a, &#273;&#259;ng nh&#7853;p sai qu√° nhi&#7873;u l&#7847;n
 bolivia	common	vi	BOLIVIA
 bosnia and herzegovina	common	vi	BOSNIA AND HERZEGOVINA
 botswana	common	vi	BOTSWANA
@@ -92,38 +92,38 @@ cameroon	common	vi	CAMEROON
 canada	common	vi	CANADA
 cancel	common	vi	H&#7911;y b&#7887;
 cape verde	common	vi	CAPE VERDE
-categories	common	vi	C·c nhÛm
-categories for	common	vi	Ph‚n nhÛm cho
-category	common	vi	NhÛm
-category %1 has been added !	common	vi	NhÛm %1 &#273;„ &#273;&#432;&#7907;c thÍm m&#7899;i !
-category %1 has been updated !	common	vi	NhÛm %1 &#273;„ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t !
+categories	common	vi	C√°c nh√≥m
+categories for	common	vi	Ph√¢n nh√≥m cho
+category	common	vi	Nh√≥m
+category %1 has been added !	common	vi	Nh√≥m %1 &#273;√£ &#273;&#432;&#7907;c th√™m m&#7899;i !
+category %1 has been updated !	common	vi	Nh√≥m %1 &#273;√£ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t !
 cayman islands	common	vi	CAYMAN ISLANDS
-cc	common	vi	&#272;&#7891;ng kÌnh g&#7917;i
+cc	common	vi	&#272;&#7891;ng k√≠nh g&#7917;i
 central african republic	common	vi	CENTRAL AFRICAN REPUBLIC
 chad	common	vi	CHAD
 change	common	vi	Thay &#273;&#7893;i
-charset	common	vi	iso-8859-1
-check installation	common	vi	Ki&#7875;m tra c‡i &#273;&#7863;t
+charset	common	vi	utf-8
+check installation	common	vi	Ki&#7875;m tra c√†i &#273;&#7863;t
 check now	common	vi	Ki&#7875;m tra ngay
 chile	common	vi	CHILE
 china	common	vi	CHINA
-choose the category	common	vi	Ch&#7885;n nhÛm
-choose the parent category	common	vi	Ch&#7885;n nhÛm cha
+choose the category	common	vi	Ch&#7885;n nh√≥m
+choose the parent category	common	vi	Ch&#7885;n nh√≥m cha
 christmas island	common	vi	CHRISTMAS ISLAND
-clear	common	vi	XÛa
-clear form	common	vi	XÛa bi&#7875;u m&#7851;u
+clear	common	vi	X√≥a
+clear form	common	vi	X√≥a bi&#7875;u m&#7851;u
 click	common	vi	Click
-click or mouse over to show menus	common	vi	Click ho&#7863;c kÈo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu
-click or mouse over to show menus?	common	vi	Click ho&#7863;c kÈo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu ?
-close	common	vi	&#272;Ûng
+click or mouse over to show menus	common	vi	Click ho&#7863;c k√©o chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu
+click or mouse over to show menus?	common	vi	Click ho&#7863;c k√©o chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu ?
+close	common	vi	&#272;√≥ng
 cocos (keeling) islands	common	vi	COCOS (KEELING) ISLANDS
 colombia	common	vi	COLOMBIA
 comoros	common	vi	COMOROS
-company	common	vi	CÙng ty
+company	common	vi	C√¥ng ty
 congo	common	vi	CONGO
 congo, the democratic republic of the	common	vi	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	vi	COOK ISLANDS
-copy	common	vi	Sao chÈp
+copy	common	vi	Sao ch√©p
 costa rica	common	vi	COSTA RICA
 cote d ivoire	common	vi	COTE D IVOIRE
 create	common	vi	T&#7841;o
@@ -131,89 +131,89 @@ created by	common	vi	T&#7841;o b&#7903;i
 croatia	common	vi	CROATIA
 cuba	common	vi	CUBA
 currency	common	vi	Lo&#7841;i ti&#7873;n
-current	common	vi	Hi&#7879;n h‡nh
-current users	common	vi	C·c ng&#432;&#7901;i s&#7917; d&#7909;ng hi&#7879;n h‡nh
+current	common	vi	Hi&#7879;n h√†nh
+current users	common	vi	C√°c ng&#432;&#7901;i s&#7917; d&#7909;ng hi&#7879;n h√†nh
 cyprus	common	vi	CYPRUS
 czech republic	common	vi	CZECH REPUBLIC
-date	common	vi	Ng‡y
-date due	common	vi	Ng‡y &#273;&#7871;n h&#7841;n
-date selection:	jscalendar	vi	L&#7921;a ch&#7885;n ng‡y:
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.<br>N&#7871;u d˘ng c&#7893;ng 13, vui lÚng thi&#7871;t l&#7853;p c·c ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang n‡y.<br>(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
-december	common	vi	Th·ng M&#432;&#7901;i Hai
-default category	common	vi	NhÛm m&#7863;c &#273;&#7883;nh
-delete	common	vi	XÛa
+date	common	vi	Ng√†y
+date due	common	vi	Ng√†y &#273;&#7871;n h&#7841;n
+date selection:	jscalendar	vi	L&#7921;a ch&#7885;n ng√†y:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.<br>N&#7871;u d√πng c&#7893;ng 13, vui l√≤ng thi&#7871;t l&#7853;p c√°c ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang n√†y.<br>(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
+december	common	vi	Th√°ng M&#432;&#7901;i Hai
+default category	common	vi	Nh√≥m m&#7863;c &#273;&#7883;nh
+delete	common	vi	X√≥a
 denmark	common	vi	DENMARK
 description	common	vi	Di&#7877;n gi&#7843;i
 detail	common	vi	Chi ti&#7871;t
-details	common	vi	C·c kho&#7843;n chi ti&#7871;t
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	vi	T&#7855;t vi&#7879;c th&#7921;c thi c·c &#273;o&#7841;n script s&#7917;a l&#7895;i c&#7911;a trÏnh duy&#7879;t Internet Explorer 5.5 v‡ c·c phiÍn b&#7843;n cao h&#417;n &#273;&#7875; hi&#7875;n th&#7883; &#273;&#432;&#7907;c c·c &#7843;nh d&#7841;ng PNG ?
+details	common	vi	C√°c kho&#7843;n chi ti&#7871;t
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	vi	T&#7855;t vi&#7879;c th&#7921;c thi c√°c &#273;o&#7841;n script s&#7917;a l&#7895;i c&#7911;a tr√¨nh duy&#7879;t Internet Explorer 5.5 v√† c√°c phi√™n b&#7843;n cao h&#417;n &#273;&#7875; hi&#7875;n th&#7883; &#273;&#432;&#7907;c c√°c &#7843;nh d&#7841;ng PNG ?
 disable internet explorer png-image-bugfix	common	vi	T&#7855;t ch&#7913;c n&#259;ng s&#7917;a l&#7895;i &#7843;nh png c&#7911;a Internet Explorer
 disable slider effects	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t &#273;&#7897;ng khi hi&#7875;n th&#7883; ho&#7863;c t&#7855;t c·c menu trong trang? C·c ng&#432;&#7901;i s&#7917; d&#7909;ng trÏnh duy&#7879;t Opera v‡ Konqueror h&#7847;u nh&#432; c&#7847;n l‡m nh&#432; v&#7847;y.
-disabled	common	vi	&#272;„ t&#7855;t
-display %s first	jscalendar	vi	Hi&#7875;n th&#7883; %s &#273;&#7847;u tiÍn
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t &#273;&#7897;ng khi hi&#7875;n th&#7883; ho&#7863;c t&#7855;t c√°c menu trong trang? C√°c ng&#432;&#7901;i s&#7917; d&#7909;ng tr√¨nh duy&#7879;t Opera v√† Konqueror h&#7847;u nh&#432; c&#7847;n l√†m nh&#432; v&#7847;y.
+disabled	common	vi	&#272;√£ t&#7855;t
+display %s first	jscalendar	vi	Hi&#7875;n th&#7883; %s &#273;&#7847;u ti√™n
 djibouti	common	vi	DJIBOUTI
-do you also want to delete all subcategories ?	common	vi	B&#7841;n c&#361;ng mu&#7889;n xÛa luÙn c·c nhÛm con ph&#7843;i khÙng ?
+do you also want to delete all subcategories ?	common	vi	B&#7841;n c&#361;ng mu&#7889;n x√≥a lu√¥n c√°c nh√≥m con ph&#7843;i kh√¥ng ?
 doctype:	common	vi	DOCTYPE:
-document properties	common	vi	Thu&#7897;c tÌnh document
-document title:	common	vi	TiÍu &#273;&#7873; document:
+document properties	common	vi	Thu&#7897;c t√≠nh document
+document title:	common	vi	Ti√™u &#273;&#7873; document:
 domain	common	vi	Domain
-domain name for mail-address, eg. "%1"	common	vi	tÍn domain d˘ng cho &#273;&#7883;a ch&#7881; email, vÌ d&#7909;: "%1"
-domestic	common	vi	V˘ng
+domain name for mail-address, eg. "%1"	common	vi	t√™n domain d√πng cho &#273;&#7883;a ch&#7881; email, v√≠ d&#7909;: "%1"
+domestic	common	vi	V√πng
 dominica	common	vi	DOMINICA
 dominican republic	common	vi	DOMINICAN REPUBLIC
-done	common	vi	&#272;„ xong
-drag to move	jscalendar	vi	KÈo v‡ rÍ chu&#7897;t &#273;&#7875; di chuy&#7875;n
+done	common	vi	&#272;√£ xong
+drag to move	jscalendar	vi	K√©o v√† r√™ chu&#7897;t &#273;&#7875; di chuy&#7875;n
 e-mail	common	vi	E-Mail
 east timor	common	vi	EAST TIMOR
 ecuador	common	vi	ECUADOR
 edit	common	vi	Hi&#7879;u ch&#7881;nh
-edit %1 category for	common	vi	Hi&#7879;u ch&#7881;nh %1 nhÛm cho
-edit categories	common	vi	Hi&#7879;u ch&#7881;nh c·c nhÛm
-edit category	common	vi	Hi&#7879;u ch&#7881;nh nhÛm
-egroupware api version %1	common	vi	eGroupWare API phiÍn b&#7843;n %1
-egroupware: login blocked for user '%1', ip %2	common	vi	eGroupWare: &#273;&#259;ng nh&#7853;p b&#7883; khÛa &#273;&#7889;i v&#7899;i ng&#432;&#7901;i s&#7917; d&#7909;ng '%1', cÛ &#273;&#7883;a ch&#7881; IP %2
+edit %1 category for	common	vi	Hi&#7879;u ch&#7881;nh %1 nh√≥m cho
+edit categories	common	vi	Hi&#7879;u ch&#7881;nh c√°c nh√≥m
+edit category	common	vi	Hi&#7879;u ch&#7881;nh nh√≥m
+egroupware api version %1	common	vi	eGroupWare API phi√™n b&#7843;n %1
+egroupware: login blocked for user '%1', ip %2	common	vi	eGroupWare: &#273;&#259;ng nh&#7853;p b&#7883; kh√≥a &#273;&#7889;i v&#7899;i ng&#432;&#7901;i s&#7917; d&#7909;ng '%1', c√≥ &#273;&#7883;a ch&#7881; IP %2
 egypt	common	vi	EGYPT
 el salvador	common	vi	EL SALVADOR
 email	common	vi	E-Mail
-email-address of the user, eg. "%1"	common	vi	&#273;&#7883;a ch&#7881; email c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, vÌ d&#7909;: "%1"
+email-address of the user, eg. "%1"	common	vi	&#273;&#7883;a ch&#7881; email c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, v√≠ d&#7909;: "%1"
 enabled	common	vi	&#272;&#432;&#7907;c b&#7853;t
-end date	common	vi	Ng‡y k&#7871;t th˙c
-end time	common	vi	Gi&#7901; k&#7871;t th˙c
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p v‡o URL c&#7911;a eGroupWare.<br>VÌ d&#7909;: http://www.domain.com/egroupware † ho&#7863;c † /egroupware<br><b>KhÙng cÛ d&#7845;u slash &#7903; phÌa sau</b>
-entry has been deleted sucessfully	common	vi	&#272;„ xÛa xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
+end date	common	vi	Ng√†y k&#7871;t th√∫c
+end time	common	vi	Gi&#7901; k&#7871;t th√∫c
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p v√†o URL c&#7911;a eGroupWare.<br>V√≠ d&#7909;: http://www.domain.com/egroupware ¬† ho&#7863;c ¬† /egroupware<br><b>Kh√¥ng c√≥ d&#7845;u slash &#7903; ph√≠a sau</b>
+entry has been deleted sucessfully	common	vi	&#272;√£ x√≥a xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
 entry updated sucessfully	common	vi	C&#7853;p nh&#7853;t xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
 equatorial guinea	common	vi	EQUATORIAL GUINEA
 eritrea	common	vi	ERITREA
 error	common	vi	L&#7895;i
 error creating %1 %2 directory	common	vi	L&#7895;i t&#7841;o %1 %2 th&#432; m&#7909;c
-error deleting %1 %2 directory	common	vi	L&#7895;i xÛa %1 %2 th&#432; m&#7909;c
-error renaming %1 %2 directory	common	vi	L&#7895;i &#273;&#7893;i tÍn %1 %2 th&#432; m&#7909;c
+error deleting %1 %2 directory	common	vi	L&#7895;i x√≥a %1 %2 th&#432; m&#7909;c
+error renaming %1 %2 directory	common	vi	L&#7895;i &#273;&#7893;i t√™n %1 %2 th&#432; m&#7909;c
 estonia	common	vi	ESTONIA
 ethiopia	common	vi	ETHIOPIA
-exact	common	vi	chÌnh x·c
+exact	common	vi	ch√≠nh x√°c
 falkland islands (malvinas)	common	vi	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	vi	FAROE ISLANDS
 fax number	common	vi	s&#7889; fax
-february	common	vi	Th·ng Hai
-fields	common	vi	C·c tr&#432;&#7901;ng
+february	common	vi	Th√°ng Hai
+fields	common	vi	C√°c tr&#432;&#7901;ng
 fiji	common	vi	FIJI
-files	common	vi	C·c t&#7853;p tin
+files	common	vi	C√°c t&#7853;p tin
 filter	common	vi	B&#7897; l&#7885;c
 finland	common	vi	FINLAND
-first name	common	vi	TÍn
-first name of the user, eg. "%1"	common	vi	tÍn c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, vÌ d&#7909;: "%1"
-first page	common	vi	Trang &#273;&#7847;u tiÍn
-firstname	common	vi	TÍn
-fixme!	common	vi	S&#7917;a tÙi!
-force selectbox	common	vi	‘ ch&#7885;n b&#7855;t bu&#7897;c
+first name	common	vi	T√™n
+first name of the user, eg. "%1"	common	vi	t√™n c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, v√≠ d&#7909;: "%1"
+first page	common	vi	Trang &#273;&#7847;u ti√™n
+firstname	common	vi	T√™n
+fixme!	common	vi	S&#7917;a t√¥i!
+force selectbox	common	vi	√î ch&#7885;n b&#7855;t bu&#7897;c
 france	common	vi	FRANCE
 french guiana	common	vi	FRENCH GUIANA
 french polynesia	common	vi	FRENCH POLYNESIA
 french southern territories	common	vi	FRENCH SOUTHERN TERRITORIES
-friday	common	vi	Th&#7913; s·u
+friday	common	vi	Th&#7913; s√°u
 ftp	common	vi	FTP
-fullname	common	vi	TÍn &#273;&#7847;y &#273;&#7911;
+fullname	common	vi	T√™n &#273;&#7847;y &#273;&#7911;
 gabon	common	vi	GABON
 gambia	common	vi	GAMBIA
 general menu	common	vi	Menu chung
@@ -222,22 +222,22 @@ germany	common	vi	GERMANY
 ghana	common	vi	GHANA
 gibraltar	common	vi	GIBRALTAR
 global	common	vi	Chung
-global public	common	vi	MÙi tr&#432;&#7901;ng chung
-go today	jscalendar	vi	V‡o m&#7909;c HÙm nay
-grant access	common	vi	Ph‚n quy&#7873;n truy c&#7853;p
+global public	common	vi	M√¥i tr&#432;&#7901;ng chung
+go today	jscalendar	vi	V√†o m&#7909;c H√¥m nay
+grant access	common	vi	Ph√¢n quy&#7873;n truy c&#7853;p
 greece	common	vi	GREECE
 greenland	common	vi	GREENLAND
 grenada	common	vi	GRENADA
-group	common	vi	NhÛm
-group access	common	vi	Truy c&#7853;p NhÛm
-group has been added	common	vi	NhÛm &#273;„ &#273;&#432;&#7907;c thÍm v‡o
-group has been deleted	common	vi	NhÛm &#273;„ b&#7883; xÛa
-group has been updated	common	vi	NhÛm &#273;„ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
-group name	common	vi	tÍn nhÛm
-group public	common	vi	MÙi tr&#432;&#7901;ng NhÛm
-groups	common	vi	C·c nhÛm
-groups with permission for %1	common	vi	C·c nhÛm cÛ quy&#7873;n l‡ %1
-groups without permission for %1	common	vi	C·c nhÛm khÙng cÛ quy&#7873;n l‡ %1
+group	common	vi	Nh√≥m
+group access	common	vi	Truy c&#7853;p Nh√≥m
+group has been added	common	vi	Nh√≥m &#273;√£ &#273;&#432;&#7907;c th√™m v√†o
+group has been deleted	common	vi	Nh√≥m &#273;√£ b&#7883; x√≥a
+group has been updated	common	vi	Nh√≥m &#273;√£ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+group name	common	vi	t√™n nh√≥m
+group public	common	vi	M√¥i tr&#432;&#7901;ng Nh√≥m
+groups	common	vi	C√°c nh√≥m
+groups with permission for %1	common	vi	C√°c nh√≥m c√≥ quy&#7873;n l√† %1
+groups without permission for %1	common	vi	C√°c nh√≥m kh√¥ng c√≥ quy&#7873;n l√† %1
 guadeloupe	common	vi	GUADELOUPE
 guam	common	vi	GUAM
 guatemala	common	vi	GUATEMALA
@@ -246,54 +246,54 @@ guinea-bissau	common	vi	GUINEA-BISSAU
 guyana	common	vi	GUYANA
 haiti	common	vi	HAITI
 heard island and mcdonald islands	common	vi	HEARD ISLAND AND MCDONALD ISLANDS
-help	common	vi	Tr&#7907; gi˙p
+help	common	vi	Tr&#7907; gi√∫p
 high	common	vi	Cao
 highest	common	vi	Cao nh&#7845;t
 holy see (vatican city state)	common	vi	HOLY SEE (VATICAN CITY STATE)
 home	common	vi	Trang ch&#7911;
-home email	common	vi	email riÍng
+home email	common	vi	email ri√™ng
 honduras	common	vi	HONDURAS
 hong kong	common	vi	HONG KONG
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	vi	NÍn cÛ bao nhiÍu bi&#7875;u t&#432;&#7907;ng hi&#7875;n th&#7883; &#7903; menu ngang (&#273;&#7847;u trang). C·c bi&#7875;u t&#432;&#7907;ng n&#7857;m sau khÙng &#273;&#7911; ch&#7895; hi&#7875;n th&#7883; trÍn menu ngang s&#7869; &#273;&#432;&#7907;c d&#7891;n xu&#7889;ng menu d&#7885;c n&#7857;m bÍn ph&#7843;i. Menu n‡y cÛ th&#7875; &#273;&#432;&#7907;c kÌch ho&#7841;t b&#7857;ng bi&#7875;u t&#432;&#7907;ng n&#7857;m &#7903; c&#7841;nh ph&#7843;i c&#7911;a menu ngang.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	vi	N√™n c√≥ bao nhi√™u bi&#7875;u t&#432;&#7907;ng hi&#7875;n th&#7883; &#7903; menu ngang (&#273;&#7847;u trang). C√°c bi&#7875;u t&#432;&#7907;ng n&#7857;m sau kh√¥ng &#273;&#7911; ch&#7895; hi&#7875;n th&#7883; tr√™n menu ngang s&#7869; &#273;&#432;&#7907;c d&#7891;n xu&#7889;ng menu d&#7885;c n&#7857;m b√™n ph&#7843;i. Menu n√†y c√≥ th&#7875; &#273;&#432;&#7907;c k√≠ch ho&#7841;t b&#7857;ng bi&#7875;u t&#432;&#7907;ng n&#7857;m &#7903; c&#7841;nh ph&#7843;i c&#7911;a menu ngang.
 hungary	common	vi	HUNGARY
 iceland	common	vi	ICELAND
 india	common	vi	INDIA
 indonesia	common	vi	INDONESIA
-insert all %1 addresses of the %2 contacts in %3	common	vi	ChËn t&#7845;t c&#7843; %1 c·c &#273;&#7883;a ch&#7881; c&#7911;a %2 c·c thÙng tin liÍn h&#7879; trong %3
+insert all %1 addresses of the %2 contacts in %3	common	vi	Ch√®n t&#7845;t c&#7843; %1 c√°c &#273;&#7883;a ch&#7881; c&#7911;a %2 c√°c th√¥ng tin li√™n h&#7879; trong %3
 international	common	vi	Qu&#7889;c t&#7871;
-invalid ip address	common	vi	&#272;&#7883;a ch&#7881; IP khÙng h&#7907;p l&#7879;
-invalid password	common	vi	M&#7853;t kh&#7849;u khÙng h&#7907;p l&#7879;
+invalid ip address	common	vi	&#272;&#7883;a ch&#7881; IP kh√¥ng h&#7907;p l&#7879;
+invalid password	common	vi	M&#7853;t kh&#7849;u kh√¥ng h&#7907;p l&#7879;
 iran, islamic republic of	common	vi	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	vi	IRAQ
 ireland	common	vi	IRELAND
 israel	common	vi	ISRAEL
-it has been more then %1 days since you changed your password	common	vi	&#272;„ h&#417;n %1 ng‡y t&#7915; khi b&#7841;n &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n
-it is recommended that you run setup to upgrade your tables to the current version	common	vi	B&#7841;n nÍn ch&#7841;y setup &#273;&#7875; n‚ng c&#7845;p c·c b&#7843;ng c&#7911;a b&#7841;n lÍn phiÍn b&#7843;n hi&#7879;n h‡nh.
-italic	common	vi	NghiÍng
+it has been more then %1 days since you changed your password	common	vi	&#272;√£ h&#417;n %1 ng√†y t&#7915; khi b&#7841;n &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n
+it is recommended that you run setup to upgrade your tables to the current version	common	vi	B&#7841;n n√™n ch&#7841;y setup &#273;&#7875; n√¢ng c&#7845;p c√°c b&#7843;ng c&#7911;a b&#7841;n l√™n phi√™n b&#7843;n hi&#7879;n h√†nh.
+italic	common	vi	Nghi√™ng
 italy	common	vi	ITALY
 jamaica	common	vi	JAMAICA
-january	common	vi	Th·ng GiÍng
+january	common	vi	Th√°ng Gi√™ng
 japan	common	vi	JAPAN
 jordan	common	vi	JORDAN
-july	common	vi	Th·ng B&#7843;y
-jun	common	vi	Th·ng S·u
-june	common	vi	Th·ng S·u
+july	common	vi	Th√°ng B&#7843;y
+jun	common	vi	Th√°ng S√°u
+june	common	vi	Th√°ng S√°u
 justify center	common	vi	Canh gi&#7919;a &#273;&#7873;u
-justify full	common	vi	Canh &#273;&#7873;u to‡n b&#7897;
-justify left	common	vi	Canh tr·i &#273;&#7873;u
+justify full	common	vi	Canh &#273;&#7873;u to√†n b&#7897;
+justify left	common	vi	Canh tr√°i &#273;&#7873;u
 justify right	common	vi	Canh ph&#7843;i &#273;&#7873;u
 kazakstan	common	vi	KAZAKSTAN
 kenya	common	vi	KENYA
-keywords	common	vi	C·c t&#7915; khÛa
+keywords	common	vi	C√°c t&#7915; kh√≥a
 kiribati	common	vi	KIRIBATI
 korea, democratic peoples republic of	common	vi	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
 korea, republic of	common	vi	KOREA, REPUBLIC OF
 kuwait	common	vi	KUWAIT
 kyrgyzstan	common	vi	KYRGYZSTAN
-language	common	vi	NgÙn ng&#7919;
+language	common	vi	Ng√¥n ng&#7919;
 lao peoples democratic republic	common	vi	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	vi	H&#7885;
-last name of the user, eg. "%1"	common	vi	h&#7885; c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng,vÌ d&#7909;: "%1"
+last name of the user, eg. "%1"	common	vi	h&#7885; c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng,v√≠ d&#7909;: "%1"
 last page	common	vi	Trang cu&#7889;i
 lastname	common	vi	H&#7885;
 latvia	common	vi	LATVIA
@@ -301,15 +301,15 @@ lebanon	common	vi	LEBANON
 lesotho	common	vi	LESOTHO
 liberia	common	vi	LIBERIA
 libyan arab jamahiriya	common	vi	LIBYAN ARAB JAMAHIRIYA
-license	common	vi	C&#7845;p phÈp
+license	common	vi	C&#7845;p ph√©p
 liechtenstein	common	vi	LIECHTENSTEIN
-list	common	vi	Danh s·ch
-list members	common	vi	Li&#7879;t kÍ c·c th‡nh viÍn
+list	common	vi	Danh s√°ch
+list members	common	vi	Li&#7879;t k√™ c√°c th√†nh vi√™n
 lithuania	common	vi	LITHUANIA
 local	common	vi	C&#7909;c b&#7897;
 login	common	vi	&#272;&#259;ng nh&#7853;p
-loginid	common	vi	TÍn &#273;&#259;ng nh&#7853;p
-logout	common	vi	Tho·t
+loginid	common	vi	T√™n &#273;&#259;ng nh&#7853;p
+logout	common	vi	Tho√°t
 low	common	vi	Th&#7845;p
 lowest	common	vi	Th&#7845;p nh&#7845;t
 luxembourg	common	vi	LUXEMBOURG
@@ -317,23 +317,23 @@ macau	common	vi	MACAU
 macedonia, the former yugoslav republic of	common	vi	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	vi	MADAGASCAR
 mail domain, eg. "%1"	common	vi	mail domain, eg. "%1"
-main category	common	vi	NhÛm chÌnh
-main screen	common	vi	M‡n hÏnh chÌnh
-maintainer	common	vi	Ng&#432;&#7901;i duy trÏ
+main category	common	vi	Nh√≥m ch√≠nh
+main screen	common	vi	M√†n h√¨nh ch√≠nh
+maintainer	common	vi	Ng&#432;&#7901;i duy tr√¨
 malawi	common	vi	MALAWI
 malaysia	common	vi	MALAYSIA
 maldives	common	vi	MALDIVES
 mali	common	vi	MALI
 malta	common	vi	MALTA
-march	common	vi	Th·ng Ba
+march	common	vi	Th√°ng Ba
 marshall islands	common	vi	MARSHALL ISLANDS
 martinique	common	vi	MARTINIQUE
 mauritania	common	vi	MAURITANIA
 mauritius	common	vi	MAURITIUS
-max number of icons in navbar	common	vi	S&#7889; l&#432;&#7907;ng nhi&#7873;u nh&#7845;t c·c bi&#7875;u t&#432;&#7907;ng trÍn menu ngang
-may	common	vi	Th·ng N&#259;m
+max number of icons in navbar	common	vi	S&#7889; l&#432;&#7907;ng nhi&#7873;u nh&#7845;t c√°c bi&#7875;u t&#432;&#7907;ng tr√™n menu ngang
+may	common	vi	Th√°ng N&#259;m
 mayotte	common	vi	MAYOTTE
-medium	common	vi	Trung bÏnh
+medium	common	vi	Trung b√¨nh
 menu	common	vi	Menu
 message	common	vi	Tin nh&#7855;n
 mexico	common	vi	MEXICO
@@ -346,57 +346,57 @@ montserrat	common	vi	MONTSERRAT
 morocco	common	vi	MOROCCO
 mozambique	common	vi	MOZAMBIQUE
 myanmar	common	vi	MYANMAR
-name	common	vi	TÍn
-name of the user, eg. "%1"	common	vi	tÍn c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, vÌ d&#7909;: "%1"
+name	common	vi	T√™n
+name of the user, eg. "%1"	common	vi	t√™n c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, v√≠ d&#7909;: "%1"
 namibia	common	vi	NAMIBIA
 nauru	common	vi	NAURU
 nepal	common	vi	NEPAL
 netherlands	common	vi	NETHERLANDS
 netherlands antilles	common	vi	NETHERLANDS ANTILLES
-never	common	vi	KhÙng bao gi&#7901;
+never	common	vi	Kh√¥ng bao gi&#7901;
 new caledonia	common	vi	NEW CALEDONIA
-new entry added sucessfully	common	vi	M&#7909;c m&#7899;i &#273;„ &#273;&#432;&#7907;c thÍm v‡o
-new main category	common	vi	NhÛm chÌnh m&#7899;i
-new value	common	vi	Gi· tr&#7883; m&#7899;i
+new entry added sucessfully	common	vi	M&#7909;c m&#7899;i &#273;√£ &#273;&#432;&#7907;c th√™m v√†o
+new main category	common	vi	Nh√≥m ch√≠nh m&#7899;i
+new value	common	vi	Gi√° tr&#7883; m&#7899;i
 new zealand	common	vi	NEW ZEALAND
 next	common	vi	K&#7871; ti&#7871;p
-next month (hold for menu)	jscalendar	vi	Th·ng k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
+next month (hold for menu)	jscalendar	vi	Th√°ng k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
 next page	common	vi	Trang k&#7871; ti&#7871;p
 next year (hold for menu)	jscalendar	vi	N&#259;m k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
 nicaragua	common	vi	NICARAGUA
 niger	common	vi	NIGER
 nigeria	common	vi	NIGERIA
 niue	common	vi	NIUE
-no	common	vi	KhÙng
-no entries found, try again ...	common	vi	khÙng cÛ m&#7909;c n‡o &#273;&#432;&#7907;c tÏm th&#7845;y, th&#7917; l&#7841;i l&#7847;n n&#7919;a ...
-no history for this record	common	vi	KhÙng cÛ nh&#7853;t k˝ c&#7911;a m&#7849;u tin n‡y
-no subject	common	vi	KhÙng cÛ ch&#7911; &#273;&#7873;
-none	common	vi	KhÙng
+no	common	vi	Kh√¥ng
+no entries found, try again ...	common	vi	kh√¥ng c√≥ m&#7909;c n√†o &#273;&#432;&#7907;c t√¨m th&#7845;y, th&#7917; l&#7841;i l&#7847;n n&#7919;a ...
+no history for this record	common	vi	Kh√¥ng c√≥ nh&#7853;t k√Ω c&#7911;a m&#7849;u tin n√†y
+no subject	common	vi	Kh√¥ng c√≥ ch&#7911; &#273;&#7873;
+none	common	vi	Kh√¥ng
 norfolk island	common	vi	NORFOLK ISLAND
-normal	common	vi	BÏnh th&#432;&#7901;ng
+normal	common	vi	B√¨nh th&#432;&#7901;ng
 northern mariana islands	common	vi	NORTHERN MARIANA ISLANDS
 norway	common	vi	NORWAY
-not assigned	common	vi	ch&#432;a g·n
-note	common	vi	Ghi ch˙
-notes	common	vi	C·c ghi ch˙
-notify window	common	vi	C&#7917;a s&#7893; thÙng b·o
-november	common	vi	Th·ng M&#432;&#7901;i M&#7897;t
-october	common	vi	Th·ng M&#432;&#7901;i
+not assigned	common	vi	ch&#432;a g√°n
+note	common	vi	Ghi ch√∫
+notes	common	vi	C√°c ghi ch√∫
+notify window	common	vi	C&#7917;a s&#7893; th√¥ng b√°o
+november	common	vi	Th√°ng M&#432;&#7901;i M&#7897;t
+october	common	vi	Th√°ng M&#432;&#7901;i
 ok	common	vi	OK
-old value	common	vi	Gi· tr&#7883; c&#361;
+old value	common	vi	Gi√° tr&#7883; c&#361;
 oman	common	vi	OMAN
-on *nix systems please type: %1	common	vi	TrÍn c·c h&#7879; th&#7889;ng *nix vui lÚng gı v‡o: %1
-on mouse over	common	vi	Khi rÍ chu&#7897;t qua
-only private	common	vi	ch&#7881; d‡nh cho c· nh‚n
-only yours	common	vi	ch&#7881; d‡nh cho b&#7841;n
-open notify window	common	vi	M&#7903; c&#7917;a s&#7893; thÙng b·o
+on *nix systems please type: %1	common	vi	Tr√™n c√°c h&#7879; th&#7889;ng *nix vui l√≤ng g√µ v√†o: %1
+on mouse over	common	vi	Khi r√™ chu&#7897;t qua
+only private	common	vi	ch&#7881; d√†nh cho c√° nh√¢n
+only yours	common	vi	ch&#7881; d√†nh cho b&#7841;n
+open notify window	common	vi	M&#7903; c&#7917;a s&#7893; th√¥ng b√°o
 open popup window	common	vi	M&#7903; c&#7917;a s&#7893; pop-up
-original	common	vi	NguyÍn g&#7889;c
-other	common	vi	Kh·c
-overview	common	vi	Kh·i qu·t
-owner	common	vi	Ng&#432;&#7901;i ch&#7911; trÏ
+original	common	vi	Nguy√™n g&#7889;c
+other	common	vi	Kh√°c
+overview	common	vi	Kh√°i qu√°t
+owner	common	vi	Ng&#432;&#7901;i ch&#7911; tr√¨
 page	common	vi	Trang
-page was generated in %1 seconds	common	vi	Trang &#273;&#432;&#7907;c sinh ra m&#7845;t %1 gi‚y
+page was generated in %1 seconds	common	vi	Trang &#273;&#432;&#7907;c sinh ra m&#7845;t %1 gi√¢y
 pakistan	common	vi	PAKISTAN
 palau	common	vi	PALAU
 palestinian territory, occupied	common	vi	PALESTINIAN TERRITORY, OCCUPIED
@@ -404,53 +404,53 @@ panama	common	vi	PANAMA
 papua new guinea	common	vi	PAPUA NEW GUINEA
 paraguay	common	vi	PARAGUAY
 parcel	common	vi	B&#432;u ki&#7879;n
-parent category	common	vi	NhÛm cha
+parent category	common	vi	Nh√≥m cha
 password	common	vi	M&#7853;t kh&#7849;u
-password could not be changed	common	vi	M&#7853;t kh&#7849;u khÙng th&#7875; thay &#273;&#7893;i
-password has been updated	common	vi	M&#7853;t kh&#7849;u &#273;„ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
-path to user and group files has to be outside of the webservers document-root!!!	common	vi	&#272;&#432;&#7901;ng d&#7851;n &#273;&#7871;n c·c t&#7853;p tin ng&#432;&#7901;i s&#7917; d&#7909;ng v‡ nhÛm PH&#7842;I N&#7856;M NGO¿I th&#432; m&#7909;c g&#7889;c c&#7911;a m·y ch&#7911; Web.
-pattern for search in addressbook	common	vi	M&#7851;u d˘ng cho TÏm ki&#7871;n trong S&#7893; &#273;&#7883;a ch&#7881;
-pattern for search in calendar	common	vi	M&#7851;u d˘ng cho TÏm ki&#7871;m trong L&#7883;ch
-pattern for search in projects	common	vi	M&#7851;u d˘ng cho TÏm ki&#7871;m trong Qu&#7843;n l˝ D&#7921; ·n
-permissions to the files/users directory	common	vi	c·c quy&#7873;n truy c&#7853;p &#273;&#7871;n c·c t&#7853;p tin/ th&#432; m&#7909;c c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
-personal	common	vi	C· nh‚n
+password could not be changed	common	vi	M&#7853;t kh&#7849;u kh√¥ng th&#7875; thay &#273;&#7893;i
+password has been updated	common	vi	M&#7853;t kh&#7849;u &#273;√£ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+path to user and group files has to be outside of the webservers document-root!!!	common	vi	&#272;&#432;&#7901;ng d&#7851;n &#273;&#7871;n c√°c t&#7853;p tin ng&#432;&#7901;i s&#7917; d&#7909;ng v√† nh√≥m PH&#7842;I N&#7856;M NGO√ÄI th&#432; m&#7909;c g&#7889;c c&#7911;a m√°y ch&#7911; Web.
+pattern for search in addressbook	common	vi	M&#7851;u d√πng cho T√¨m ki&#7871;n trong S&#7893; &#273;&#7883;a ch&#7881;
+pattern for search in calendar	common	vi	M&#7851;u d√πng cho T√¨m ki&#7871;m trong L&#7883;ch
+pattern for search in projects	common	vi	M&#7851;u d√πng cho T√¨m ki&#7871;m trong Qu&#7843;n l√Ω D&#7921; √°n
+permissions to the files/users directory	common	vi	c√°c quy&#7873;n truy c&#7853;p &#273;&#7871;n c√°c t&#7853;p tin/ th&#432; m&#7909;c c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
+personal	common	vi	C√° nh√¢n
 peru	common	vi	PERU
 philippines	common	vi	PHILIPPINES
 phone number	common	vi	s&#7889; &#273;i&#7879;n tho&#7841;i
 pitcairn	common	vi	PITCAIRN
-please %1 by hand	common	vi	Vui lÚng %1 b&#7857;ng tay
-please enter a name	common	vi	Vui lÚng &#273;i&#7873;n tÍn !
-please run setup to become current	common	vi	Vui lÚng ch&#7841;y setup &#273;&#7875; tr&#7903; th‡nh hi&#7879;n h‡nh
-please select	common	vi	Vui lÚng ch&#7885;n
-please set your global preferences	common	vi	Vui lÚng thi&#7871;t l&#7853;p c·c t˘y ch&#7885;n chung c&#7911;a b&#7841;n !
-please set your preferences for this application	common	vi	Vui lÚng thi&#7871;t l&#7853;p c·c t˘y ch&#7885;n c&#7911;a b&#7841;n cho &#7913;ng d&#7909;ng n‡y !
-please wait...	common	vi	Vui lÚng &#273;&#7907;i trong ch&#7889;c l·t ...
+please %1 by hand	common	vi	Vui l√≤ng %1 b&#7857;ng tay
+please enter a name	common	vi	Vui l√≤ng &#273;i&#7873;n t√™n !
+please run setup to become current	common	vi	Vui l√≤ng ch&#7841;y setup &#273;&#7875; tr&#7903; th√†nh hi&#7879;n h√†nh
+please select	common	vi	Vui l√≤ng ch&#7885;n
+please set your global preferences	common	vi	Vui l√≤ng thi&#7871;t l&#7853;p c√°c t√πy ch&#7885;n chung c&#7911;a b&#7841;n !
+please set your preferences for this application	common	vi	Vui l√≤ng thi&#7871;t l&#7853;p c√°c t√πy ch&#7885;n c&#7911;a b&#7841;n cho &#7913;ng d&#7909;ng n√†y !
+please wait...	common	vi	Vui l√≤ng &#273;&#7907;i trong ch&#7889;c l√°t ...
 poland	common	vi	POLAND
 portugal	common	vi	PORTUGAL
 postal	common	vi	&#272;&#432;&#7901;ng b&#432;u &#273;i&#7879;n
 powered by phpgroupware version %1	common	vi	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
-preferences	common	vi	C·c t˘y ch&#7885;n
-preferences for the idots template set	common	vi	C·c t˘y ch&#7885;n cho b&#7897; idots template
-prev. month (hold for menu)	jscalendar	vi	Th·ng tr&#432;&#7899;c (&#273;&#432;a ra menu)
+preferences	common	vi	C√°c t√πy ch&#7885;n
+preferences for the idots template set	common	vi	C√°c t√πy ch&#7885;n cho b&#7897; idots template
+prev. month (hold for menu)	jscalendar	vi	Th√°ng tr&#432;&#7899;c (&#273;&#432;a ra menu)
 prev. year (hold for menu)	jscalendar	vi	N&#259;m tr&#432;&#7899;c (&#273;&#432;a ra menu)
 previous page	common	vi	Trang tr&#432;&#7899;c
-primary style-sheet:	common	vi	Style-sheet chÌnh:
+primary style-sheet:	common	vi	Style-sheet ch√≠nh:
 print	common	vi	In
-priority	common	vi	&#431;u tiÍn
-private	common	vi	C· nh‚n
-project	common	vi	D&#7921; ·n
+priority	common	vi	&#431;u ti√™n
+private	common	vi	C√° nh√¢n
+project	common	vi	D&#7921; √°n
 public	common	vi	chung
 puerto rico	common	vi	PUERTO RICO
 qatar	common	vi	QATAR
 read	common	vi	&#272;&#7885;c
-read this list of methods.	common	vi	Li&#7879;t kÍ c·c ph&#432;&#417;ng th&#7913;c
+read this list of methods.	common	vi	Li&#7879;t k√™ c√°c ph&#432;&#417;ng th&#7913;c
 reject	common	vi	T&#7915; ch&#7889;i
-remove selected accounts	common	vi	xÛa c·c t‡i kho&#7843;n &#273;„ ch&#7885;n
-rename	common	vi	&#272;&#7893;i tÍn
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	vi	Tr&#7843; v&#7873; m&#7897;t danh s·ch &#273;&#7847;y &#273;&#7911; c·c t‡i kho&#7843;n trong h&#7879; th&#7889;ng. C&#7843;nh b·o: K&#7871;t qu&#7843; tr&#7843; v&#7873; cÛ th&#7875; r&#7845;t l&#7899;n
-returns an array of todo items	common	vi	Tr&#7843; v&#7873; m&#7897;t m&#7843;ng c·c cÙng vi&#7879;c c&#7847;n l‡m
+remove selected accounts	common	vi	x√≥a c√°c t√†i kho&#7843;n &#273;√£ ch&#7885;n
+rename	common	vi	&#272;&#7893;i t√™n
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	vi	Tr&#7843; v&#7873; m&#7897;t danh s√°ch &#273;&#7847;y &#273;&#7911; c√°c t√†i kho&#7843;n trong h&#7879; th&#7889;ng. C&#7843;nh b√°o: K&#7871;t qu&#7843; tr&#7843; v&#7873; c√≥ th&#7875; r&#7845;t l&#7899;n
+returns an array of todo items	common	vi	Tr&#7843; v&#7873; m&#7897;t m&#7843;ng c√°c c√¥ng vi&#7879;c c&#7847;n l√†m
 returns struct of users application access	common	vi	Tr&#7843; v&#7873; k&#7871;t c&#7845;u truy c&#7853;p &#7913;ng d&#7909;ng c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
-reunion	common	vi	LI N K&#7870;T L&#7840;I
+reunion	common	vi	LI√äN K&#7870;T L&#7840;I
 romania	common	vi	ROMANIA
 russian federation	common	vi	RUSSIAN FEDERATION
 rwanda	common	vi	RWANDA
@@ -465,35 +465,35 @@ sao tome and principe	common	vi	SAO TOME AND PRINCIPE
 saturday	common	vi	Th&#7913; B&#7843;y
 saudi arabia	common	vi	SAUDI ARABIA
 save	common	vi	L&#432;u
-search	common	vi	TÏm ki&#7871;m
-search %1 '%2'	common	vi	TÏm ki&#7871;m %1 '%2'
-search or select accounts	common	vi	TÏm ki&#7871;m ho&#7863;c ch&#7885;n c·c t‡i kho&#7843;n
-section	common	vi	Ph‚n v˘ng
+search	common	vi	T√¨m ki&#7871;m
+search %1 '%2'	common	vi	T√¨m ki&#7871;m %1 '%2'
+search or select accounts	common	vi	T√¨m ki&#7871;m ho&#7863;c ch&#7885;n c√°c t√†i kho&#7843;n
+section	common	vi	Ph√¢n v√πng
 select	common	vi	Ch&#7885;n
 select all %1 %2 for %3	common	vi	Ch&#7885;n t&#7845;t c&#7843; %1 %2 cho %3
-select category	common	vi	Ch&#7885;n NhÛm
-select date	common	vi	Ch&#7885;n ng‡y
-select group	common	vi	Ch&#7885;n nhÛm
-select home email address	common	vi	Ch&#7885;n &#273;&#7883;a ch&#7881; email riÍng
+select category	common	vi	Ch&#7885;n Nh√≥m
+select date	common	vi	Ch&#7885;n ng√†y
+select group	common	vi	Ch&#7885;n nh√≥m
+select home email address	common	vi	Ch&#7885;n &#273;&#7883;a ch&#7881; email ri√™ng
 select one	common	vi	Ch&#7885;n m&#7897;t
 select user	common	vi	Ch&#7885;n ng&#432;&#7901;i s&#7917; d&#7909;ng
 select work email address	common	vi	Ch&#7885;n &#273;&#7883;a ch&#7881; email t&#7841;i C&#417; quan
 selection	common	vi	S&#7921; l&#7921;a ch&#7885;n
 send	common	vi	G&#7917;i
 senegal	common	vi	SENEGAL
-september	common	vi	Th·ng ChÌn
-server %1 has been added	common	vi	M·y ch&#7911; %1 &#273;„ &#273;&#432;&#7907;c thÍm v‡o
-server name	common	vi	TÍn m·y ch&#7911;
-session has been killed	common	vi	PhiÍn l‡m vi&#7879;c (session) &#273;„ b&#7883; h&#7911;y
-setup	common	vi	C‡i &#273;&#7863;t
-setup main menu	common	vi	Menu chÌnh c&#7911;a c‡i &#273;&#7863;t
+september	common	vi	Th√°ng Ch√≠n
+server %1 has been added	common	vi	M√°y ch&#7911; %1 &#273;√£ &#273;&#432;&#7907;c th√™m v√†o
+server name	common	vi	T√™n m√°y ch&#7911;
+session has been killed	common	vi	Phi√™n l√†m vi&#7879;c (session) &#273;√£ b&#7883; h&#7911;y
+setup	common	vi	C√†i &#273;&#7863;t
+setup main menu	common	vi	Menu ch√≠nh c&#7911;a c√†i &#273;&#7863;t
 seychelles	common	vi	SEYCHELLES
 show all	common	vi	hi&#7879;n t&#7845;t c&#7843;
-show all categorys	common	vi	Hi&#7879;n t&#7845;t c&#7843; c·c nhÛm
+show all categorys	common	vi	Hi&#7879;n t&#7845;t c&#7843; c√°c nh√≥m
 show menu	common	vi	hi&#7879;n menu
 show page generation time	common	vi	Hi&#7879;n th&#7901;i gian sinh trang
 show page generation time on the bottom of the page?	common	vi	Hi&#7879;n th&#7901;i gian sinh trang &#7903; cu&#7889;i trang
-show_more_apps	common	vi	hi&#7879;n_thÍm_c·c &#7913;ng d&#7909;ng
+show_more_apps	common	vi	hi&#7879;n_th√™m_c√°c &#7913;ng d&#7909;ng
 showing %1	common	vi	&#273;ang hi&#7879;n %1
 showing %1 - %2 of %3	common	vi	&#273;ang hi&#7879;n %1 - %2 of %3
 sierra leone	common	vi	SIERRA LEONE
@@ -502,18 +502,18 @@ slovakia	common	vi	SLOVAKIA
 slovenia	common	vi	SLOVENIA
 solomon islands	common	vi	SOLOMON ISLANDS
 somalia	common	vi	SOMALIA
-sorry, your login has expired	login	vi	R&#7845;t ti&#7871;c, tÍn &#273;&#259;ng nh&#7853;p c&#7911;a b&#7841;n &#273;„ h&#7871;t h&#7841;n
+sorry, your login has expired	login	vi	R&#7845;t ti&#7871;c, t√™n &#273;&#259;ng nh&#7853;p c&#7911;a b&#7841;n &#273;√£ h&#7871;t h&#7841;n
 south africa	common	vi	SOUTH AFRICA
 south georgia and the south sandwich islands	common	vi	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 spain	common	vi	SPAIN
 sri lanka	common	vi	SRI LANKA
-start date	common	vi	Ng‡y b&#7855;t &#273;&#7847;u
+start date	common	vi	Ng√†y b&#7855;t &#273;&#7847;u
 start time	common	vi	Gi&#7901; b&#7855;t &#273;&#7847;u
 start with	common	vi	b&#7855;t &#273;&#7847;u b&#7857;ng
-status	common	vi	Tr&#7841;ng th·i
+status	common	vi	Tr&#7841;ng th√°i
 subject	common	vi	Ch&#7911; &#273;&#7873;
-submit	common	vi	G&#7917;i lÍn
-substitutions and their meanings:	common	vi	C·c thay th&#7871; v‡ ˝ ngh&#297;a c&#7911;a ch˙ng:
+submit	common	vi	G&#7917;i l√™n
+substitutions and their meanings:	common	vi	C√°c thay th&#7871; v√† √Ω ngh&#297;a c&#7911;a ch√∫ng:
 sudan	common	vi	SUDAN
 sunday	common	vi	Ch&#7911; nh&#7853;t
 suriname	common	vi	SURINAME
@@ -525,31 +525,31 @@ syrian arab republic	common	vi	SYRIAN ARAB REPUBLIC
 taiwan	common	vi	TAIWAN/TAIPEI
 tajikistan	common	vi	TAJIKISTAN
 tanzania, united republic of	common	vi	TANZANIA, UNITED REPUBLIC OF
-text color:	common	vi	M‡u ch&#7919; v&#259;n b&#7843;n:
+text color:	common	vi	M√†u ch&#7919; v&#259;n b&#7843;n:
 thailand	common	vi	THAILAND
-the api is current	common	vi	PhiÍn b&#7843;n API hi&#7879;n h‡nh
-the api requires an upgrade	common	vi	API c&#7847;n n‚ng c&#7845;p
-the following applications require upgrades	common	vi	C·c &#7913;ng d&#7909;ng sau c&#7847;n &#273;&#432;&#7907;c n‚ng c&#7845;p
-the mail server returned	common	vi	M·y ch&#7911; Mail tr&#7843; v&#7873;
-this application is current	common	vi	PhiÍn b&#7843;n &#7913;ng d&#7909;ng hi&#7879;n h‡nh
-this application requires an upgrade	common	vi	&#7912;ng d&#7909;ng n‡y c&#7847;n &#273;&#432;&#7907;c n‚ng c&#7845;p
-this name has been used already	common	vi	TÍn n‡y &#273;„ &#273;&#432;&#7907;c s&#7917; d&#7909;ng !
+the api is current	common	vi	Phi√™n b&#7843;n API hi&#7879;n h√†nh
+the api requires an upgrade	common	vi	API c&#7847;n n√¢ng c&#7845;p
+the following applications require upgrades	common	vi	C√°c &#7913;ng d&#7909;ng sau c&#7847;n &#273;&#432;&#7907;c n√¢ng c&#7845;p
+the mail server returned	common	vi	M√°y ch&#7911; Mail tr&#7843; v&#7873;
+this application is current	common	vi	Phi√™n b&#7843;n &#7913;ng d&#7909;ng hi&#7879;n h√†nh
+this application requires an upgrade	common	vi	&#7912;ng d&#7909;ng n√†y c&#7847;n &#273;&#432;&#7907;c n√¢ng c&#7845;p
+this name has been used already	common	vi	T√™n n√†y &#273;√£ &#273;&#432;&#7907;c s&#7917; d&#7909;ng !
 thursday	common	vi	Th&#7913; N&#259;m
 time	common	vi	Gi&#7901;
 time selection:	jscalendar	vi	Ch&#7885;n gi&#7901;
-time zone	common	vi	M˙i gi&#7901;
-time zone offset	common	vi	&#272;&#7897; l&#7879;ch m˙i gi&#7901;
-title	common	vi	TiÍu &#273;&#7873;
+time zone	common	vi	M√∫i gi&#7901;
+time zone offset	common	vi	&#272;&#7897; l&#7879;ch m√∫i gi&#7901;
+title	common	vi	Ti√™u &#273;&#7873;
 to	common	vi	&#272;&#7871;n
-to correct this error for the future you will need to properly set the	common	vi	&#272;&#7875; kh&#7855;c ph&#7909;c l&#7895;i n‡y cho v&#7873; sau b&#7841;n s&#7869; c&#7847;n ph&#7843;i thi&#7871;t l&#7853;p &#273;˙ng
-to go back to the msg list, click <a href= %1 >here</a>	common	vi	&#272;&#7875; quay l&#7841;i danh s·ch tin nh&#7855;n, click <a href="%1">v‡o &#273;‚y</a>
-today	common	vi	HÙm nay
-todays date, eg. "%1"	common	vi	ng‡y hÙm nay, vÌ d&#7909;: "%1"
-toggle first day of week	jscalendar	vi	Chuy&#7875;n qua ng‡y &#273;&#7847;u tu&#7847;n
+to correct this error for the future you will need to properly set the	common	vi	&#272;&#7875; kh&#7855;c ph&#7909;c l&#7895;i n√†y cho v&#7873; sau b&#7841;n s&#7869; c&#7847;n ph&#7843;i thi&#7871;t l&#7853;p &#273;√∫ng
+to go back to the msg list, click <a href= %1 >here</a>	common	vi	&#272;&#7875; quay l&#7841;i danh s√°ch tin nh&#7855;n, click <a href="%1">v√†o &#273;√¢y</a>
+today	common	vi	H√¥m nay
+todays date, eg. "%1"	common	vi	ng√†y h√¥m nay, v√≠ d&#7909;: "%1"
+toggle first day of week	jscalendar	vi	Chuy&#7875;n qua ng√†y &#273;&#7847;u tu&#7847;n
 togo	common	vi	TOGO
 tokelau	common	vi	TOKELAU
 tonga	common	vi	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	vi	Qu· nhi&#7873;u l&#7847;n &#273;&#259;ng nh&#7853;p khÙng th‡nh cÙng: %1 c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng '%2', %3 c&#7911;a &#273;&#7883;a ch&#7881; IP %4
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	vi	Qu√° nhi&#7873;u l&#7847;n &#273;&#259;ng nh&#7853;p kh√¥ng th√†nh c√¥ng: %1 c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng '%2', %3 c&#7911;a &#273;&#7883;a ch&#7881; IP %4
 total	common	vi	T&#7893;ng c&#7897;ng
 trinidad and tobago	common	vi	TRINIDAD AND TOBAGO
 tuesday	common	vi	Th&#7913; Ba
@@ -568,52 +568,52 @@ unknown	common	vi	Ch&#432;a bi&#7871;t
 update	common	vi	C&#7853;p nh&#7853;t
 url	common	vi	URL
 uruguay	common	vi	URUGUAY
-use button to search for	common	vi	d˘ng n˙t &#7845;n &#273;&#7875; tÏm ki&#7871;m
-use button to search for address	common	vi	d˘ng n˙t &#7845;n &#273;&#7875; tÏm ki&#7871;m &#273;&#7883;a ch&#7881;
-use button to search for calendarevent	common	vi	d˘ng n˙t &#7845;n &#273;&#7875; tÏm ki&#7871;m s&#7921; ki&#7879;n trÍn L&#7883;ch
-use button to search for project	common	vi	d˘ng n˙t &#7845;n &#273;&#7875; tÏm ki&#7871;m d&#7921; ·n
+use button to search for	common	vi	d√πng n√∫t &#7845;n &#273;&#7875; t√¨m ki&#7871;m
+use button to search for address	common	vi	d√πng n√∫t &#7845;n &#273;&#7875; t√¨m ki&#7871;m &#273;&#7883;a ch&#7881;
+use button to search for calendarevent	common	vi	d√πng n√∫t &#7845;n &#273;&#7875; t√¨m ki&#7871;m s&#7921; ki&#7879;n tr√™n L&#7883;ch
+use button to search for project	common	vi	d√πng n√∫t &#7845;n &#273;&#7875; t√¨m ki&#7871;m d&#7921; √°n
 user	common	vi	Ng&#432;&#7901;i s&#7917; d&#7909;ng
-user accounts	common	vi	c·c t‡i kho&#7843;n ng&#432;&#7901;i s&#7917; d&#7909;ng
-user groups	common	vi	c·c nhÛm ng&#432;&#7901;i s&#7917; d&#7909;ng
-username	common	vi	TÍn ng&#432;&#7901;i s&#7917; d&#7909;ng
+user accounts	common	vi	c√°c t√†i kho&#7843;n ng&#432;&#7901;i s&#7917; d&#7909;ng
+user groups	common	vi	c√°c nh√≥m ng&#432;&#7901;i s&#7917; d&#7909;ng
+username	common	vi	T√™n ng&#432;&#7901;i s&#7917; d&#7909;ng
 users	common	vi	ng&#432;&#7901;i s&#7917; d&#7909;ng
 users choice	common	vi	S&#7921; l&#7921;a ch&#7885;n c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
 uzbekistan	common	vi	UZBEKISTAN
 vanuatu	common	vi	VANUATU
 venezuela	common	vi	VENEZUELA
-version	common	vi	PhiÍn b&#7843;n
+version	common	vi	Phi√™n b&#7843;n
 viet nam	common	vi	VIET NAM
 view	common	vi	Xem
 virgin islands, british	common	vi	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	vi	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	vi	WALLIS AND FUTUNA
 wednesday	common	vi	Th&#7913; T&#432;
-welcome	common	vi	Ch‡o m&#7915;ng
+welcome	common	vi	Ch√†o m&#7915;ng
 western sahara	common	vi	WESTERN SAHARA
-which groups	common	vi	C·c nhÛm n‡o
+which groups	common	vi	C√°c nh√≥m n√†o
 wk	jscalendar	vi	wk
 work email	common	vi	email t&#7841;i C&#417; quan
 written by:	common	vi	&#272;&#432;&#7907;c vi&#7871;t b&#7903;i
 year	common	vi	N&#259;m
 yemen	common	vi	YEMEN
-yes	common	vi	V‚ng
-you are required to change your password during your first login	common	vi	B&#7841;n c&#7847;n thay &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n trong l&#7847;n &#273;&#259;ng nh&#7853;p &#273;&#7847;u tiÍn
-you are running a newer version of phpgroupware than your database is setup for	common	vi	B&#7841;n &#273;ang s&#7917; d&#7909;ng phiÍn b&#7843;n phpGroupware m&#7899;i h&#417;n c·i m‡ c&#417; s&#7903; d&#7919; li&#7879;u b&#7841;n &#273;„ c‡i &#273;&#7863;t c&#7847;n.
-you have been successfully logged out	login	vi	B&#7841;n &#273;„ &#273;&#432;&#7907;c tho·t ra ngo‡i h&#7879; th&#7889;ng th‡nh cÙng
-you have not entered a title	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n tiÍu &#273;&#7873;
-you have not entered a valid date	common	vi	B&#7841;n &#273;i&#7873;n sai ng‡y
-you have not entered a valid time of day	common	vi	B&#7841;n &#273;i&#7873;n sai gi&#7901; trong ng‡y
-you have not entered participants	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n c·c th‡nh viÍn
-you have selected an invalid date	common	vi	B&#7841;n &#273;„ ch&#7885;n m&#7897;t ng‡y khÙng h&#7907;p l&#7879; !
-you have selected an invalid main category	common	vi	B&#7841;n &#273;„ ch&#7885;n nhÛm chÌnh khÙng h&#7907;p l&#7879; !
-you have successfully logged out	common	vi	B&#7841;n &#273;„ tho·t ra ngo‡i h&#7879; th&#7889;ng
-you need to add the webserver user '%1' to the group '%2'.	common	vi	B&#7841;n c&#7847;n thÍm tÍn &#273;&#259;ng nh&#7853;p m·y ch&#7911; Web '%1' v‡o trong nhÛm '%2'.
-your message could <b>not</b> be sent!<br>	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n <b>khÙng th&#7875;</b> &#273;&#432;&#7907;c g&#7917;i &#273;i!<br>
-your message has been sent	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n &#273;„ &#273;&#432;&#7907;c g&#7917;i &#273;i
-your search returned %1 matchs	common	vi	t·c v&#7909; tÏm ki&#7871;m c&#7911;a b&#7841;n tÏm th&#7845;y %1 k&#7871;t qu&#7843;
-your search returned 1 match	common	vi	t·c v&#7909; tÏm ki&#7871;m c&#7911;a b&#7841;n tÏm th&#7845;y 1 k&#7871;t qu&#7843;
-your session could not be verified.	login	vi	PhiÍn l‡m vi&#7879;c c&#7911;a b&#7841;n khÙng th&#7875; x·c minh &#273;&#432;&#7907;c
-your settings have been updated	common	vi	C·c thi&#7871;t l&#7853;p c&#7911;a b&#7841;n &#273;„ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+yes	common	vi	V√¢ng
+you are required to change your password during your first login	common	vi	B&#7841;n c&#7847;n thay &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n trong l&#7847;n &#273;&#259;ng nh&#7853;p &#273;&#7847;u ti√™n
+you are running a newer version of phpgroupware than your database is setup for	common	vi	B&#7841;n &#273;ang s&#7917; d&#7909;ng phi√™n b&#7843;n phpGroupware m&#7899;i h&#417;n c√°i m√† c&#417; s&#7903; d&#7919; li&#7879;u b&#7841;n &#273;√£ c√†i &#273;&#7863;t c&#7847;n.
+you have been successfully logged out	login	vi	B&#7841;n &#273;√£ &#273;&#432;&#7907;c tho√°t ra ngo√†i h&#7879; th&#7889;ng th√†nh c√¥ng
+you have not entered a title	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n ti√™u &#273;&#7873;
+you have not entered a valid date	common	vi	B&#7841;n &#273;i&#7873;n sai ng√†y
+you have not entered a valid time of day	common	vi	B&#7841;n &#273;i&#7873;n sai gi&#7901; trong ng√†y
+you have not entered participants	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n c√°c th√†nh vi√™n
+you have selected an invalid date	common	vi	B&#7841;n &#273;√£ ch&#7885;n m&#7897;t ng√†y kh√¥ng h&#7907;p l&#7879; !
+you have selected an invalid main category	common	vi	B&#7841;n &#273;√£ ch&#7885;n nh√≥m ch√≠nh kh√¥ng h&#7907;p l&#7879; !
+you have successfully logged out	common	vi	B&#7841;n &#273;√£ tho√°t ra ngo√†i h&#7879; th&#7889;ng
+you need to add the webserver user '%1' to the group '%2'.	common	vi	B&#7841;n c&#7847;n th√™m t√™n &#273;&#259;ng nh&#7853;p m√°y ch&#7911; Web '%1' v√†o trong nh√≥m '%2'.
+your message could <b>not</b> be sent!<br>	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n <b>kh√¥ng th&#7875;</b> &#273;&#432;&#7907;c g&#7917;i &#273;i!<br>
+your message has been sent	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n &#273;√£ &#273;&#432;&#7907;c g&#7917;i &#273;i
+your search returned %1 matchs	common	vi	t√°c v&#7909; t√¨m ki&#7871;m c&#7911;a b&#7841;n t√¨m th&#7845;y %1 k&#7871;t qu&#7843;
+your search returned 1 match	common	vi	t√°c v&#7909; t√¨m ki&#7871;m c&#7911;a b&#7841;n t√¨m th&#7845;y 1 k&#7871;t qu&#7843;
+your session could not be verified.	login	vi	Phi√™n l√†m vi&#7879;c c&#7911;a b&#7841;n kh√¥ng th&#7875; x√°c minh &#273;&#432;&#7907;c
+your settings have been updated	common	vi	C√°c thi&#7871;t l&#7853;p c&#7911;a b&#7841;n &#273;√£ &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
 yugoslavia	common	vi	YUGOSLAVIA
 zambia	common	vi	ZAMBIA
 zimbabwe	common	vi	ZIMBABWE

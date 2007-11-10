@@ -1,209 +1,209 @@
-%1 does not exist !!!	setup	ru	%1 не  существует !!!
-%1 is %2%3 !!!	setup	ru	%1 это %2%3 !!!
-(searching accounts and changing passwords)	setup	ru	(поиск экаунтов и смена паролей
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ru	Не обновляйте базу данных с помощью via setup
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ru	*** Сделайте изменения вручную в вашем php.ini
-00 (disable)	setup	ru	00 (отключить/рекомендовано)
+%1 does not exist !!!	setup	ru	%1 п╫п╣  я│я┐я┴п╣я│я┌п╡я┐п╣я┌ !!!
+%1 is %2%3 !!!	setup	ru	%1 я█я┌п╬ %2%3 !!!
+(searching accounts and changing passwords)	setup	ru	(п©п╬п╦я│п╨ я█п╨п╟я┐п╫я┌п╬п╡ п╦ я│п╪п╣п╫п╟ п©п╟я─п╬п╩п╣п╧
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ru	п²п╣ п╬п╠п╫п╬п╡п╩я▐п╧я┌п╣ п╠п╟п╥я┐ п╢п╟п╫п╫я▀я┘ я│ п©п╬п╪п╬я┴я▄я▌ via setup
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ru	*** п║п╢п╣п╩п╟п╧я┌п╣ п╦п╥п╪п╣п╫п╣п╫п╦я▐ п╡я─я┐я┤п╫я┐я▌ п╡ п╡п╟я┬п╣п╪ php.ini
+00 (disable)	setup	ru	00 (п╬я┌п╨п╩я▌я┤п╦я┌я▄/я─п╣п╨п╬п╪п╣п╫п╢п╬п╡п╟п╫п╬)
 13 (ntp)	setup	ru	13 (ntp)
 80 (http)	setup	ru	80 (http)
-accounts existing	setup	ru	Экаунты существующие
-actions	setup	ru	Действия
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ru	Добавить автоматически созданных пользователей для этой группы
-add new database instance (egw domain)	setup	ru	Добавьте новую операцию в базу данных
-additional settings	setup	ru	Дополнительные установки
-admin first name	setup	ru	Имя администратора
-admin last name	setup	ru	Фамилия Администратора
-admin password	setup	ru	Пароль администратора
-admin password to header manager	setup	ru	Пароль администратора к header файлу
-admin username	setup	ru	Имя администратора
-admins	setup	ru	Администраторы
-all applications	setup	ru	все приложения
-all languages (incl. not listed ones)	setup	ru	все языки
-all users	setup	ru	Все пользователи
-allow authentication via cookie	setup	ru	Разрешить идентификация
-allow password migration	setup	ru	Разрешить перемещение паролей
-allowed migration types (comma-separated)	setup	ru	Разрешить типы перемещений
-analysis	setup	ru	Анализ
-and reload your webserver, so the above changes take effect !!!	setup	ru	И перезагрузите свой web сервер,чтобы изменения вступили в силу
-app details	setup	ru	Описание приложения
-app install/remove/upgrade	setup	ru	Установка приложения/удаление/обновление
-app process	setup	ru	Процесс приложения
-application data	setup	ru	Данныен приложения
-application list	setup	ru	Список приложений
-application management	setup	ru	Управление приложениями
-application name and status	setup	ru	Название и состояние приложения
-application name and status information	setup	ru	информация о названии состоянии приложения
-application title	setup	ru	Заголовок приложения
-application: %1, file: %2, line: "%3"	setup	ru	Приложение: %1,файл: %2,линия: "%3"
-are you sure you want to delete your existing tables and data?	setup	ru	Вы уверены, что хотите удалить все существующие таблицы и данные?
-are you sure?	setup	ru	ВЫ УВЕРЕНЫ?
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ru	По вашему запросу, данный скрипт попытается обновить ваши старые приложения до текущей версии
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ru	По вашему запросу, данный скрипт попытается обновить старые таблицы и перевести их в новый формат
-authentication / accounts	setup	ru	Авторизация / Учетные записи
-available version	setup	ru	Доступная версия
-back to the previous screen	setup	ru	Вернуться к предыдущему
-back to user login	setup	ru	Назад к логину пользователя
-back's up your db now, this might take a view minutes	setup	ru	создайте резервную копию базы данных,это может занять несколько минут
-backup '%1' deleted	setup	ru	резервная копия '%1' удалена
-backup '%1' renamed to '%2'	setup	ru	резервная копия '%1' переименованная в '%2'
-backup '%1' restored	setup	ru	резервная копия '%1' восстановлена
-backup and restore	setup	ru	создать резервную копию и восстановить
-backup failed	setup	ru	ошибка при создании резервной копии
-backup finished	setup	ru	создание резервной копии завершено
-backup now	setup	ru	создать резервную копию сейчас
-backup sets	setup	ru	резервная копия устанавливается
-backup started, this might take a view minutes ...	setup	ru	резервная копия запущена,это может занять несколько минут
-because it depends upon	setup	ru	потому что зависит от
-because it is not a user application, or access is controlled via acl	setup	ru	потому что это не пользовательское приложения
-because it was manually disabled	setup	ru	т.к. отключено вручную
-because of a failed upgrade or install	setup	ru	т.к. произошла ошибка обновления или установки
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	ru	т.к. произошла ошибка обновления,или база данных новее,чем установленнаяч версия данного приложения
-cancel	setup	ru	Отменить
-change system-charset	setup	ru	Изменить кодировку
-charset	setup	ru	koi8-r
-charset to convert to	setup	ru	Конвертировать в кодировку
-check installation	setup	ru	Проверка установки
-check ip address of all sessions	setup	ru	проверить ipадрес всех сессий
-checking extension %1 is loaded or loadable	setup	ru	Проверка расширений %1 загружена или загружаема
-checking for gd support...	setup	ru	Проверка GD поддержки
-checking pear%1 is installed	setup	ru	Проверка PEAR %! установлена
-checking php.ini	setup	ru	Проверка php.ini
-checking required php version %1 (recommended %2)	setup	ru	Проверка запрошенной PHP версии %1 (рекомендовано %2)
-checking the egroupware installation	setup	ru	Проверка установки eGroupWare
-click here	setup	ru	Кликните здесь
-click here to re-run the installation tests	setup	ru	Кликните здесь для повторной проверки установки
-completed	setup	ru	Готово
-config password	setup	ru	Пароль конфигурации
-config username	setup	ru	Имя конфигурации
-configuration	setup	ru	Конфигурация
-configuration completed	setup	ru	Конфигурация завершена
-configuration password	setup	ru	Пароль конфигурации
-configuration user	setup	ru	Конфигурация пользователя
-configure now	setup	ru	Сконфигурировать сейчас
-confirm to delete this backup?	setup	ru	Подтвердите удаление резервной копии
-contain	setup	ru	содержит
-continue	setup	ru	Продолжить
-continue to the header admin	setup	ru	Продолжить к Header Admin
-convert	setup	ru	Конвертируйте
-could not open header.inc.php for writing!	setup	ru	Невозможно открыть header.inc.php для работы
-country selection	setup	ru	Выбор страны
-create	setup	ru	Создать
-create a backup before upgrading the db	setup	ru	создать резервную копию базы данных перед обновлением
-create your header.inc.php	setup	ru	Создайте файл your header.inc.php
-created	setup	ru	создан
-created header.inc.php!	setup	ru	header.inc.php сознана!
-creating tables	setup	ru	Создание таблиц
-current system-charset	setup	ru	Теущий набор символов
-current system-charset is %1.	setup	ru	Теущий набор символов %1
-current version	setup	ru	Текущая версия
-currently installed languages: %1 <br />	setup	ru	Установленные языки: %1
-database instance (egw domain)	setup	ru	Операция базы данных
-database successfully converted from '%1' to '%2'	setup	ru	База данных успешно  переделана из %1 в %2
-datebase	setup	ru	База данных
-day	setup	ru	день
-day of week<br />(0-6, 0=sunday)	setup	ru	день недели
-db backup and restore	setup	ru	База данных резервнач копия и восстановление
-db host	setup	ru	База данных хост
-db name	setup	ru	База данных имя
-db password	setup	ru	База данных пароль
-db port	setup	ru	База данных порт
-db root password	setup	ru	База данных пароль
-db root username	setup	ru	База данных имя пользователя
-db type	setup	ru	База данных тип
-db user	setup	ru	База данных пользователь
-default	setup	ru	рекомендовано по умолчанию
-delete	setup	ru	Удалить
-delete all my tables and data	setup	ru	Удалить все мои таблицы и содержимое
-delete all old languages and install new ones	setup	ru	Удалить старые языки и установить новые
-deleting tables	setup	ru	Удаление таблиц
-demo server setup	setup	ru	Демо версия установки сервера
-deny access	setup	ru	Отсменить доступ
-details for admin account	setup	ru	Описание администраторского экаунта
-does not exist	setup	ru	не существует
-domain	setup	ru	Преобладание
-domain name	setup	ru	Преобладающее название
-dont touch my data	setup	ru	Не использовать мои данные
-download	setup	ru	Скачать
-edit current configuration	setup	ru	редактировать текущую конфигурацию
-edit your existing header.inc.php	setup	ru	Редактировать вашу существующий
-edit your header.inc.php	setup	ru	Редактировать  header.inc.php
-egroupware administration manual	setup	ru	Ручное управление eGroupWare
-enable ldap version 3	setup	ru	включить версию 3 LDAP
-enable mcrypt	setup	ru	Включить MCrypt
-enter the site password for peer servers	setup	ru	Введите пароль для равноправных пользователей
-enter the site username for peer servers	setup	ru	Введите название сайта для равноправных пользователей
-enter the title for your site	setup	ru	Введите заголовок для вашего сайта
-enter your default ftp server	setup	ru	Введите ваш FTP сервер по умолчанию
-enter your http proxy server	setup	ru	Введите ваш HTTP прокси сервер
-enter your http proxy server password	setup	ru	Введите ваш HTTP пароль прокси сервера
-enter your http proxy server port	setup	ru	Введите ваш HTTP порт прокси сервера
-enter your http proxy server username	setup	ru	Введите ваш HTTP имя пользователя прокси сервера
-error in admin-creation !!!	setup	ru	Ошибка при создании админа !!!
-error in group-creation !!!	setup	ru	Ошибка при создании группы
-export egroupware accounts from sql to ldap	setup	ru	Экспорт экаунтов из SQL  в LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	ru	Экспорт завершен.Введите пароль вручную
-export sql users to ldap	setup	ru	Экспорт пользователей
-false	setup	ru	Ошибка
-file	setup	ru	ФАЙЛ
-file type, size, version, etc.	setup	ru	тип файла,размер,версия,и т.д.
-filename	setup	ru	имя файла
-filesystem	setup	ru	система файлов
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ru	Для новой установки выбирете импорт.превратить существующие SQL экаунты В LDAP , выбирете экспорт
-go back	setup	ru	Вернуться
-go to	setup	ru	Перейти к
-grant access	setup	ru	Обширный доступ
-header admin login	setup	ru	Логин Header Admin
-header password	setup	ru	Пароль Header
-header username	setup	ru	Имя пользователя Header
-historylog removed	setup	ru	Журнал истории удален
-host information	setup	ru	Информация о  хосте
-hostname/ip of database server	setup	ru	Имя хоста/ IP адрес базы данных сервера
-hour (0-24)	setup	ru	часы(0-24)
-however, the application is otherwise installed	setup	ru	однаок, приложение установлено
-however, the application may still work	setup	ru	однако,приложение может работать
-if using ads (active directory) authentication	setup	ru	используя ADS идентификацию
-if using ldap	setup	ru	используя LDAP
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ru	используя LDAP,вы хотите управлять домашними директориями и loginshell атрибутами
-if you did not receive any errors, your applications have been	setup	ru	Если вы не получили уведомлений об ошибках,ваше приложение успешно
-if you did not receive any errors, your tables have been	setup	ru	Если вы не получили уведомлений об ошибках,ваши таблицы успешны
-if you running this the first time, don't forget to manualy %1 !!!	setup	ru	Работая с этим в первый раз,не забудьте вручную %1 !!!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ru	Если вы используете языки того же набора,вам не нужно устанавливать систему наборов языков
-image type selection order	setup	ru	порядок выбора типов изображений
-import has been completed!	setup	ru	Импорт завершен
-import ldap users/groups	setup	ru	Импорт ldap пользователей/групп
-importing old settings into the new format....	setup	ru	Импортирование новых установок в новый формат
-install	setup	ru	Установить
-install all	setup	ru	Установить все
-install applications	setup	ru	Установить приложения
-install backup	setup	ru	Установить резервную копию
-install language	setup	ru	Установить язык
-installed	setup	ru	установлено
-instructions for creating the database in %1:	setup	ru	Инструкции по созданию базы данных в %1
-invalid ip address	setup	ru	Неверный ipадрес
-invalid mcrypt algorithm/mode combination	setup	ru	Неверный Mcrypt Algorithm/комбинация типов
-invalid password	setup	ru	Неправильный пароль
-is broken	setup	ru	не работает
-is disabled	setup	ru	отключен
-ldap account import/export	setup	ru	LDAP экаунт импорт/экспорт
-ldap accounts configuration	setup	ru	LDAP конфигурация экаунта
-ldap accounts context	setup	ru	LDAP контекст
-ldap config	setup	ru	LDAP конфигурация
-ldap default shell (e.g. /bin/bash)	setup	ru	LDAP оболочка по умолчанию
-ldap encryption type	setup	ru	LDAP шифрование типов
-ldap export	setup	ru	LDAP экспорт
-ldap export users	setup	ru	LDAP пользователи экспорта
-ldap groups context	setup	ru	LDAP групповой контекст
-ldap host	setup	ru	LDAP хост
-ldap import	setup	ru	LDAP импорт
-ldap import users	setup	ru	LDAP пользоватли импорта
-ldap modify	setup	ru	LDAP модификация
-ldap root password	setup	ru	LDAP пароль
-ldap rootdn	setup	ru	LDAP корневой dn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ru	LDAP поисковые фильтры для экаунтов
-never	setup	ru	никогда
-no	setup	ru	Нет
-really uninstall all applications	setup	ru	Действительно деинсталировать все приложения?
-yes	setup	ru	Да
-your database is not working!	setup	ru	Ваша База Данных не работает!
-your header.inc.php needs upgrading.	setup	ru	Файл header.inc.php требует обновления.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ru	Файл header.inc.php требует обновления.<br /><blink><b class="msg">ВНИМАНИЕ!</b></blink><br /><b>СДЕЛАЙТЕ РЕЗЕРВНУЮ КОПИЮ!</b>
+accounts existing	setup	ru	п╜п╨п╟я┐п╫я┌я▀ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╣
+actions	setup	ru	п■п╣п╧я│я┌п╡п╦я▐
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ru	п■п╬п╠п╟п╡п╦я┌я▄ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦ я│п╬п╥п╢п╟п╫п╫я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧ п╢п╩я▐ я█я┌п╬п╧ пЁя─я┐п©п©я▀
+add new database instance (egw domain)	setup	ru	п■п╬п╠п╟п╡я▄я┌п╣ п╫п╬п╡я┐я▌ п╬п©п╣я─п╟я├п╦я▌ п╡ п╠п╟п╥я┐ п╢п╟п╫п╫я▀я┘
+additional settings	setup	ru	п■п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣ я┐я│я┌п╟п╫п╬п╡п╨п╦
+admin first name	setup	ru	п≤п╪я▐ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+admin last name	setup	ru	п╓п╟п╪п╦п╩п╦я▐ п░п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+admin password	setup	ru	п÷п╟я─п╬п╩я▄ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+admin password to header manager	setup	ru	п÷п╟я─п╬п╩я▄ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟ п╨ header я└п╟п╧п╩я┐
+admin username	setup	ru	п≤п╪я▐ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟
+admins	setup	ru	п░п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─я▀
+all applications	setup	ru	п╡я│п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+all languages (incl. not listed ones)	setup	ru	п╡я│п╣ я▐п╥я▀п╨п╦
+all users	setup	ru	п▓я│п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╦
+allow authentication via cookie	setup	ru	п═п╟п╥я─п╣я┬п╦я┌я▄ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я├п╦я▐
+allow password migration	setup	ru	п═п╟п╥я─п╣я┬п╦я┌я▄ п©п╣я─п╣п╪п╣я┴п╣п╫п╦п╣ п©п╟я─п╬п╩п╣п╧
+allowed migration types (comma-separated)	setup	ru	п═п╟п╥я─п╣я┬п╦я┌я▄ я┌п╦п©я▀ п©п╣я─п╣п╪п╣я┴п╣п╫п╦п╧
+analysis	setup	ru	п░п╫п╟п╩п╦п╥
+and reload your webserver, so the above changes take effect !!!	setup	ru	п≤ п©п╣я─п╣п╥п╟пЁя─я┐п╥п╦я┌п╣ я│п╡п╬п╧ web я│п╣я─п╡п╣я─,я┤я┌п╬п╠я▀ п╦п╥п╪п╣п╫п╣п╫п╦я▐ п╡я│я┌я┐п©п╦п╩п╦ п╡ я│п╦п╩я┐
+app details	setup	ru	п·п©п╦я│п╟п╫п╦п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+app install/remove/upgrade	setup	ru	пёя│я┌п╟п╫п╬п╡п╨п╟ п©я─п╦п╩п╬п╤п╣п╫п╦я▐/я┐п╢п╟п╩п╣п╫п╦п╣/п╬п╠п╫п╬п╡п╩п╣п╫п╦п╣
+app process	setup	ru	п÷я─п╬я├п╣я│я│ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+application data	setup	ru	п■п╟п╫п╫я▀п╣п╫ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+application list	setup	ru	п║п©п╦я│п╬п╨ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+application management	setup	ru	пёп©я─п╟п╡п╩п╣п╫п╦п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐п╪п╦
+application name and status	setup	ru	п²п╟п╥п╡п╟п╫п╦п╣ п╦ я│п╬я│я┌п╬я▐п╫п╦п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+application name and status information	setup	ru	п╦п╫я└п╬я─п╪п╟я├п╦я▐ п╬ п╫п╟п╥п╡п╟п╫п╦п╦ я│п╬я│я┌п╬я▐п╫п╦п╦ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+application title	setup	ru	п≈п╟пЁп╬п╩п╬п╡п╬п╨ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+application: %1, file: %2, line: "%3"	setup	ru	п÷я─п╦п╩п╬п╤п╣п╫п╦п╣: %1,я└п╟п╧п╩: %2,п╩п╦п╫п╦я▐: "%3"
+are you sure you want to delete your existing tables and data?	setup	ru	п▓я▀ я┐п╡п╣я─п╣п╫я▀, я┤я┌п╬ я┘п╬я┌п╦я┌п╣ я┐п╢п╟п╩п╦я┌я▄ п╡я│п╣ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╣ я┌п╟п╠п╩п╦я├я▀ п╦ п╢п╟п╫п╫я▀п╣?
+are you sure?	setup	ru	п▓п╚ пёп▓п∙п═п∙п²п╚?
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ru	п÷п╬ п╡п╟я┬п╣п╪я┐ п╥п╟п©я─п╬я│я┐, п╢п╟п╫п╫я▀п╧ я│п╨я─п╦п©я┌ п©п╬п©я▀я┌п╟п╣я┌я│я▐ п╬п╠п╫п╬п╡п╦я┌я▄ п╡п╟я┬п╦ я│я┌п╟я─я▀п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐ п╢п╬ я┌п╣п╨я┐я┴п╣п╧ п╡п╣я─я│п╦п╦
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ru	п÷п╬ п╡п╟я┬п╣п╪я┐ п╥п╟п©я─п╬я│я┐, п╢п╟п╫п╫я▀п╧ я│п╨я─п╦п©я┌ п©п╬п©я▀я┌п╟п╣я┌я│я▐ п╬п╠п╫п╬п╡п╦я┌я▄ я│я┌п╟я─я▀п╣ я┌п╟п╠п╩п╦я├я▀ п╦ п©п╣я─п╣п╡п╣я│я┌п╦ п╦я┘ п╡ п╫п╬п╡я▀п╧ я└п╬я─п╪п╟я┌
+authentication / accounts	setup	ru	п░п╡я┌п╬я─п╦п╥п╟я├п╦я▐ / пёя┤п╣я┌п╫я▀п╣ п╥п╟п©п╦я│п╦
+available version	setup	ru	п■п╬я│я┌я┐п©п╫п╟я▐ п╡п╣я─я│п╦я▐
+back to the previous screen	setup	ru	п▓п╣я─п╫я┐я┌я▄я│я▐ п╨ п©я─п╣п╢я▀п╢я┐я┴п╣п╪я┐
+back to user login	setup	ru	п²п╟п╥п╟п╢ п╨ п╩п╬пЁп╦п╫я┐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+back's up your db now, this might take a view minutes	setup	ru	я│п╬п╥п╢п╟п╧я┌п╣ я─п╣п╥п╣я─п╡п╫я┐я▌ п╨п╬п©п╦я▌ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘,я█я┌п╬ п╪п╬п╤п╣я┌ п╥п╟п╫я▐я┌я▄ п╫п╣я│п╨п╬п╩я▄п╨п╬ п╪п╦п╫я┐я┌
+backup '%1' deleted	setup	ru	я─п╣п╥п╣я─п╡п╫п╟я▐ п╨п╬п©п╦я▐ '%1' я┐п╢п╟п╩п╣п╫п╟
+backup '%1' renamed to '%2'	setup	ru	я─п╣п╥п╣я─п╡п╫п╟я▐ п╨п╬п©п╦я▐ '%1' п©п╣я─п╣п╦п╪п╣п╫п╬п╡п╟п╫п╫п╟я▐ п╡ '%2'
+backup '%1' restored	setup	ru	я─п╣п╥п╣я─п╡п╫п╟я▐ п╨п╬п©п╦я▐ '%1' п╡п╬я│я│я┌п╟п╫п╬п╡п╩п╣п╫п╟
+backup and restore	setup	ru	я│п╬п╥п╢п╟я┌я▄ я─п╣п╥п╣я─п╡п╫я┐я▌ п╨п╬п©п╦я▌ п╦ п╡п╬я│я│я┌п╟п╫п╬п╡п╦я┌я▄
+backup failed	setup	ru	п╬я┬п╦п╠п╨п╟ п©я─п╦ я│п╬п╥п╢п╟п╫п╦п╦ я─п╣п╥п╣я─п╡п╫п╬п╧ п╨п╬п©п╦п╦
+backup finished	setup	ru	я│п╬п╥п╢п╟п╫п╦п╣ я─п╣п╥п╣я─п╡п╫п╬п╧ п╨п╬п©п╦п╦ п╥п╟п╡п╣я─я┬п╣п╫п╬
+backup now	setup	ru	я│п╬п╥п╢п╟я┌я▄ я─п╣п╥п╣я─п╡п╫я┐я▌ п╨п╬п©п╦я▌ я│п╣п╧я┤п╟я│
+backup sets	setup	ru	я─п╣п╥п╣я─п╡п╫п╟я▐ п╨п╬п©п╦я▐ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌я│я▐
+backup started, this might take a view minutes ...	setup	ru	я─п╣п╥п╣я─п╡п╫п╟я▐ п╨п╬п©п╦я▐ п╥п╟п©я┐я┴п╣п╫п╟,я█я┌п╬ п╪п╬п╤п╣я┌ п╥п╟п╫я▐я┌я▄ п╫п╣я│п╨п╬п╩я▄п╨п╬ п╪п╦п╫я┐я┌
+because it depends upon	setup	ru	п©п╬я┌п╬п╪я┐ я┤я┌п╬ п╥п╟п╡п╦я│п╦я┌ п╬я┌
+because it is not a user application, or access is controlled via acl	setup	ru	п©п╬я┌п╬п╪я┐ я┤я┌п╬ я█я┌п╬ п╫п╣ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╬п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+because it was manually disabled	setup	ru	я┌.п╨. п╬я┌п╨п╩я▌я┤п╣п╫п╬ п╡я─я┐я┤п╫я┐я▌
+because of a failed upgrade or install	setup	ru	я┌.п╨. п©я─п╬п╦п╥п╬я┬п╩п╟ п╬я┬п╦п╠п╨п╟ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐ п╦п╩п╦ я┐я│я┌п╟п╫п╬п╡п╨п╦
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	ru	я┌.п╨. п©я─п╬п╦п╥п╬я┬п╩п╟ п╬я┬п╦п╠п╨п╟ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐,п╦п╩п╦ п╠п╟п╥п╟ п╢п╟п╫п╫я▀я┘ п╫п╬п╡п╣п╣,я┤п╣п╪ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╫п╟я▐я┤ п╡п╣я─я│п╦я▐ п╢п╟п╫п╫п╬пЁп╬ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+cancel	setup	ru	п·я┌п╪п╣п╫п╦я┌я▄
+change system-charset	setup	ru	п≤п╥п╪п╣п╫п╦я┌я▄ п╨п╬п╢п╦я─п╬п╡п╨я┐
+charset	setup	ru	utf-8
+charset to convert to	setup	ru	п п╬п╫п╡п╣я─я┌п╦я─п╬п╡п╟я┌я▄ п╡ п╨п╬п╢п╦я─п╬п╡п╨я┐
+check installation	setup	ru	п÷я─п╬п╡п╣я─п╨п╟ я┐я│я┌п╟п╫п╬п╡п╨п╦
+check ip address of all sessions	setup	ru	п©я─п╬п╡п╣я─п╦я┌я▄ ipп╟п╢я─п╣я│ п╡я│п╣я┘ я│п╣я│я│п╦п╧
+checking extension %1 is loaded or loadable	setup	ru	п÷я─п╬п╡п╣я─п╨п╟ я─п╟я│я┬п╦я─п╣п╫п╦п╧ %1 п╥п╟пЁя─я┐п╤п╣п╫п╟ п╦п╩п╦ п╥п╟пЁя─я┐п╤п╟п╣п╪п╟
+checking for gd support...	setup	ru	п÷я─п╬п╡п╣я─п╨п╟ GD п©п╬п╢п╢п╣я─п╤п╨п╦
+checking pear%1 is installed	setup	ru	п÷я─п╬п╡п╣я─п╨п╟ PEAR %! я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╟
+checking php.ini	setup	ru	п÷я─п╬п╡п╣я─п╨п╟ php.ini
+checking required php version %1 (recommended %2)	setup	ru	п÷я─п╬п╡п╣я─п╨п╟ п╥п╟п©я─п╬я┬п╣п╫п╫п╬п╧ PHP п╡п╣я─я│п╦п╦ %1 (я─п╣п╨п╬п╪п╣п╫п╢п╬п╡п╟п╫п╬ %2)
+checking the egroupware installation	setup	ru	п÷я─п╬п╡п╣я─п╨п╟ я┐я│я┌п╟п╫п╬п╡п╨п╦ eGroupWare
+click here	setup	ru	п п╩п╦п╨п╫п╦я┌п╣ п╥п╢п╣я│я▄
+click here to re-run the installation tests	setup	ru	п п╩п╦п╨п╫п╦я┌п╣ п╥п╢п╣я│я▄ п╢п╩я▐ п©п╬п╡я┌п╬я─п╫п╬п╧ п©я─п╬п╡п╣я─п╨п╦ я┐я│я┌п╟п╫п╬п╡п╨п╦
+completed	setup	ru	п⌠п╬я┌п╬п╡п╬
+config password	setup	ru	п÷п╟я─п╬п╩я▄ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
+config username	setup	ru	п≤п╪я▐ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
+configuration	setup	ru	п п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐
+configuration completed	setup	ru	п п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ п╥п╟п╡п╣я─я┬п╣п╫п╟
+configuration password	setup	ru	п÷п╟я─п╬п╩я▄ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
+configuration user	setup	ru	п п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+configure now	setup	ru	п║п╨п╬п╫я└п╦пЁя┐я─п╦я─п╬п╡п╟я┌я▄ я│п╣п╧я┤п╟я│
+confirm to delete this backup?	setup	ru	п÷п╬п╢я┌п╡п╣я─п╢п╦я┌п╣ я┐п╢п╟п╩п╣п╫п╦п╣ я─п╣п╥п╣я─п╡п╫п╬п╧ п╨п╬п©п╦п╦
+contain	setup	ru	я│п╬п╢п╣я─п╤п╦я┌
+continue	setup	ru	п÷я─п╬п╢п╬п╩п╤п╦я┌я▄
+continue to the header admin	setup	ru	п÷я─п╬п╢п╬п╩п╤п╦я┌я▄ п╨ Header Admin
+convert	setup	ru	п п╬п╫п╡п╣я─я┌п╦я─я┐п╧я┌п╣
+could not open header.inc.php for writing!	setup	ru	п²п╣п╡п╬п╥п╪п╬п╤п╫п╬ п╬я┌п╨я─я▀я┌я▄ header.inc.php п╢п╩я▐ я─п╟п╠п╬я┌я▀
+country selection	setup	ru	п▓я▀п╠п╬я─ я│я┌я─п╟п╫я▀
+create	setup	ru	п║п╬п╥п╢п╟я┌я▄
+create a backup before upgrading the db	setup	ru	я│п╬п╥п╢п╟я┌я▄ я─п╣п╥п╣я─п╡п╫я┐я▌ п╨п╬п©п╦я▌ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘ п©п╣я─п╣п╢ п╬п╠п╫п╬п╡п╩п╣п╫п╦п╣п╪
+create your header.inc.php	setup	ru	п║п╬п╥п╢п╟п╧я┌п╣ я└п╟п╧п╩ your header.inc.php
+created	setup	ru	я│п╬п╥п╢п╟п╫
+created header.inc.php!	setup	ru	header.inc.php я│п╬п╥п╫п╟п╫п╟!
+creating tables	setup	ru	п║п╬п╥п╢п╟п╫п╦п╣ я┌п╟п╠п╩п╦я├
+current system-charset	setup	ru	п╒п╣я┐я┴п╦п╧ п╫п╟п╠п╬я─ я│п╦п╪п╡п╬п╩п╬п╡
+current system-charset is %1.	setup	ru	п╒п╣я┐я┴п╦п╧ п╫п╟п╠п╬я─ я│п╦п╪п╡п╬п╩п╬п╡ %1
+current version	setup	ru	п╒п╣п╨я┐я┴п╟я▐ п╡п╣я─я│п╦я▐
+currently installed languages: %1 <br />	setup	ru	пёя│я┌п╟п╫п╬п╡п╩п╣п╫п╫я▀п╣ я▐п╥я▀п╨п╦: %1
+database instance (egw domain)	setup	ru	п·п©п╣я─п╟я├п╦я▐ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘
+database successfully converted from '%1' to '%2'	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ я┐я│п©п╣я┬п╫п╬  п©п╣я─п╣п╢п╣п╩п╟п╫п╟ п╦п╥ %1 п╡ %2
+datebase	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘
+day	setup	ru	п╢п╣п╫я▄
+day of week<br />(0-6, 0=sunday)	setup	ru	п╢п╣п╫я▄ п╫п╣п╢п╣п╩п╦
+db backup and restore	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ я─п╣п╥п╣я─п╡п╫п╟я┤ п╨п╬п©п╦я▐ п╦ п╡п╬я│я│я┌п╟п╫п╬п╡п╩п╣п╫п╦п╣
+db host	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ я┘п╬я│я┌
+db name	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ п╦п╪я▐
+db password	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ п©п╟я─п╬п╩я▄
+db port	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ п©п╬я─я┌
+db root password	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ п©п╟я─п╬п╩я▄
+db root username	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ п╦п╪я▐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐
+db type	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ я┌п╦п©
+db user	setup	ru	п▒п╟п╥п╟ п╢п╟п╫п╫я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄
+default	setup	ru	я─п╣п╨п╬п╪п╣п╫п╢п╬п╡п╟п╫п╬ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
+delete	setup	ru	пёп╢п╟п╩п╦я┌я▄
+delete all my tables and data	setup	ru	пёп╢п╟п╩п╦я┌я▄ п╡я│п╣ п╪п╬п╦ я┌п╟п╠п╩п╦я├я▀ п╦ я│п╬п╢п╣я─п╤п╦п╪п╬п╣
+delete all old languages and install new ones	setup	ru	пёп╢п╟п╩п╦я┌я▄ я│я┌п╟я─я▀п╣ я▐п╥я▀п╨п╦ п╦ я┐я│я┌п╟п╫п╬п╡п╦я┌я▄ п╫п╬п╡я▀п╣
+deleting tables	setup	ru	пёп╢п╟п╩п╣п╫п╦п╣ я┌п╟п╠п╩п╦я├
+demo server setup	setup	ru	п■п╣п╪п╬ п╡п╣я─я│п╦я▐ я┐я│я┌п╟п╫п╬п╡п╨п╦ я│п╣я─п╡п╣я─п╟
+deny access	setup	ru	п·я┌я│п╪п╣п╫п╦я┌я▄ п╢п╬я│я┌я┐п©
+details for admin account	setup	ru	п·п©п╦я│п╟п╫п╦п╣ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─я│п╨п╬пЁп╬ я█п╨п╟я┐п╫я┌п╟
+does not exist	setup	ru	п╫п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌
+domain	setup	ru	п÷я─п╣п╬п╠п╩п╟п╢п╟п╫п╦п╣
+domain name	setup	ru	п÷я─п╣п╬п╠п╩п╟п╢п╟я▌я┴п╣п╣ п╫п╟п╥п╡п╟п╫п╦п╣
+dont touch my data	setup	ru	п²п╣ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╪п╬п╦ п╢п╟п╫п╫я▀п╣
+download	setup	ru	п║п╨п╟я┤п╟я┌я▄
+edit current configuration	setup	ru	я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ я┌п╣п╨я┐я┴я┐я▌ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦я▌
+edit your existing header.inc.php	setup	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п╡п╟я┬я┐ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╧
+edit your header.inc.php	setup	ru	п═п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄  header.inc.php
+egroupware administration manual	setup	ru	п═я┐я┤п╫п╬п╣ я┐п©я─п╟п╡п╩п╣п╫п╦п╣ eGroupWare
+enable ldap version 3	setup	ru	п╡п╨п╩я▌я┤п╦я┌я▄ п╡п╣я─я│п╦я▌ 3 LDAP
+enable mcrypt	setup	ru	п▓п╨п╩я▌я┤п╦я┌я▄ MCrypt
+enter the site password for peer servers	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п©п╟я─п╬п╩я▄ п╢п╩я▐ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+enter the site username for peer servers	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п╫п╟п╥п╡п╟п╫п╦п╣ я│п╟п╧я┌п╟ п╢п╩я▐ я─п╟п╡п╫п╬п©я─п╟п╡п╫я▀я┘ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+enter the title for your site	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п╥п╟пЁп╬п╩п╬п╡п╬п╨ п╢п╩я▐ п╡п╟я┬п╣пЁп╬ я│п╟п╧я┌п╟
+enter your default ftp server	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п╡п╟я┬ FTP я│п╣я─п╡п╣я─ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
+enter your http proxy server	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п╡п╟я┬ HTTP п©я─п╬п╨я│п╦ я│п╣я─п╡п╣я─
+enter your http proxy server password	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п╡п╟я┬ HTTP п©п╟я─п╬п╩я▄ п©я─п╬п╨я│п╦ я│п╣я─п╡п╣я─п╟
+enter your http proxy server port	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п╡п╟я┬ HTTP п©п╬я─я┌ п©я─п╬п╨я│п╦ я│п╣я─п╡п╣я─п╟
+enter your http proxy server username	setup	ru	п▓п╡п╣п╢п╦я┌п╣ п╡п╟я┬ HTTP п╦п╪я▐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ п©я─п╬п╨я│п╦ я│п╣я─п╡п╣я─п╟
+error in admin-creation !!!	setup	ru	п·я┬п╦п╠п╨п╟ п©я─п╦ я│п╬п╥п╢п╟п╫п╦п╦ п╟п╢п╪п╦п╫п╟ !!!
+error in group-creation !!!	setup	ru	п·я┬п╦п╠п╨п╟ п©я─п╦ я│п╬п╥п╢п╟п╫п╦п╦ пЁя─я┐п©п©я▀
+export egroupware accounts from sql to ldap	setup	ru	п╜п╨я│п©п╬я─я┌ я█п╨п╟я┐п╫я┌п╬п╡ п╦п╥ SQL  п╡ LDAP
+export has been completed!  you will need to set the user passwords manually.	setup	ru	п╜п╨я│п©п╬я─я┌ п╥п╟п╡п╣я─я┬п╣п╫.п▓п╡п╣п╢п╦я┌п╣ п©п╟я─п╬п╩я▄ п╡я─я┐я┤п╫я┐я▌
+export sql users to ldap	setup	ru	п╜п╨я│п©п╬я─я┌ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧
+false	setup	ru	п·я┬п╦п╠п╨п╟
+file	setup	ru	п╓п░п≥п⌡
+file type, size, version, etc.	setup	ru	я┌п╦п© я└п╟п╧п╩п╟,я─п╟п╥п╪п╣я─,п╡п╣я─я│п╦я▐,п╦ я┌.п╢.
+filename	setup	ru	п╦п╪я▐ я└п╟п╧п╩п╟
+filesystem	setup	ru	я│п╦я│я┌п╣п╪п╟ я└п╟п╧п╩п╬п╡
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ru	п■п╩я▐ п╫п╬п╡п╬п╧ я┐я│я┌п╟п╫п╬п╡п╨п╦ п╡я▀п╠п╦я─п╣я┌п╣ п╦п╪п©п╬я─я┌.п©я─п╣п╡я─п╟я┌п╦я┌я▄ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╣ SQL я█п╨п╟я┐п╫я┌я▀ п▓ LDAP , п╡я▀п╠п╦я─п╣я┌п╣ я█п╨я│п©п╬я─я┌
+go back	setup	ru	п▓п╣я─п╫я┐я┌я▄я│я▐
+go to	setup	ru	п÷п╣я─п╣п╧я┌п╦ п╨
+grant access	setup	ru	п·п╠я┬п╦я─п╫я▀п╧ п╢п╬я│я┌я┐п©
+header admin login	setup	ru	п⌡п╬пЁп╦п╫ Header Admin
+header password	setup	ru	п÷п╟я─п╬п╩я▄ Header
+header username	setup	ru	п≤п╪я▐ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ Header
+historylog removed	setup	ru	п√я┐я─п╫п╟п╩ п╦я│я┌п╬я─п╦п╦ я┐п╢п╟п╩п╣п╫
+host information	setup	ru	п≤п╫я└п╬я─п╪п╟я├п╦я▐ п╬  я┘п╬я│я┌п╣
+hostname/ip of database server	setup	ru	п≤п╪я▐ я┘п╬я│я┌п╟/ IP п╟п╢я─п╣я│ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘ я│п╣я─п╡п╣я─п╟
+hour (0-24)	setup	ru	я┤п╟я│я▀(0-24)
+however, the application is otherwise installed	setup	ru	п╬п╢п╫п╟п╬п╨, п©я─п╦п╩п╬п╤п╣п╫п╦п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╬
+however, the application may still work	setup	ru	п╬п╢п╫п╟п╨п╬,п©я─п╦п╩п╬п╤п╣п╫п╦п╣ п╪п╬п╤п╣я┌ я─п╟п╠п╬я┌п╟я┌я▄
+if using ads (active directory) authentication	setup	ru	п╦я│п©п╬п╩я▄п╥я┐я▐ ADS п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я├п╦я▌
+if using ldap	setup	ru	п╦я│п©п╬п╩я▄п╥я┐я▐ LDAP
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ru	п╦я│п©п╬п╩я▄п╥я┐я▐ LDAP,п╡я▀ я┘п╬я┌п╦я┌п╣ я┐п©я─п╟п╡п╩я▐я┌я▄ п╢п╬п╪п╟я┬п╫п╦п╪п╦ п╢п╦я─п╣п╨я┌п╬я─п╦я▐п╪п╦ п╦ loginshell п╟я┌я─п╦п╠я┐я┌п╟п╪п╦
+if you did not receive any errors, your applications have been	setup	ru	п∙я│п╩п╦ п╡я▀ п╫п╣ п©п╬п╩я┐я┤п╦п╩п╦ я┐п╡п╣п╢п╬п╪п╩п╣п╫п╦п╧ п╬п╠ п╬я┬п╦п╠п╨п╟я┘,п╡п╟я┬п╣ п©я─п╦п╩п╬п╤п╣п╫п╦п╣ я┐я│п©п╣я┬п╫п╬
+if you did not receive any errors, your tables have been	setup	ru	п∙я│п╩п╦ п╡я▀ п╫п╣ п©п╬п╩я┐я┤п╦п╩п╦ я┐п╡п╣п╢п╬п╪п╩п╣п╫п╦п╧ п╬п╠ п╬я┬п╦п╠п╨п╟я┘,п╡п╟я┬п╦ я┌п╟п╠п╩п╦я├я▀ я┐я│п©п╣я┬п╫я▀
+if you running this the first time, don't forget to manualy %1 !!!	setup	ru	п═п╟п╠п╬я┌п╟я▐ я│ я█я┌п╦п╪ п╡ п©п╣я─п╡я▀п╧ я─п╟п╥,п╫п╣ п╥п╟п╠я┐п╢я▄я┌п╣ п╡я─я┐я┤п╫я┐я▌ %1 !!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ru	п∙я│п╩п╦ п╡я▀ п╦я│п©п╬п╩я▄п╥я┐п╣я┌п╣ я▐п╥я▀п╨п╦ я┌п╬пЁп╬ п╤п╣ п╫п╟п╠п╬я─п╟,п╡п╟п╪ п╫п╣ п╫я┐п╤п╫п╬ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟я┌я▄ я│п╦я│я┌п╣п╪я┐ п╫п╟п╠п╬я─п╬п╡ я▐п╥я▀п╨п╬п╡
+image type selection order	setup	ru	п©п╬я─я▐п╢п╬п╨ п╡я▀п╠п╬я─п╟ я┌п╦п©п╬п╡ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧
+import has been completed!	setup	ru	п≤п╪п©п╬я─я┌ п╥п╟п╡п╣я─я┬п╣п╫
+import ldap users/groups	setup	ru	п≤п╪п©п╬я─я┌ ldap п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧/пЁя─я┐п©п©
+importing old settings into the new format....	setup	ru	п≤п╪п©п╬я─я┌п╦я─п╬п╡п╟п╫п╦п╣ п╫п╬п╡я▀я┘ я┐я│я┌п╟п╫п╬п╡п╬п╨ п╡ п╫п╬п╡я▀п╧ я└п╬я─п╪п╟я┌
+install	setup	ru	пёя│я┌п╟п╫п╬п╡п╦я┌я▄
+install all	setup	ru	пёя│я┌п╟п╫п╬п╡п╦я┌я▄ п╡я│п╣
+install applications	setup	ru	пёя│я┌п╟п╫п╬п╡п╦я┌я▄ п©я─п╦п╩п╬п╤п╣п╫п╦я▐
+install backup	setup	ru	пёя│я┌п╟п╫п╬п╡п╦я┌я▄ я─п╣п╥п╣я─п╡п╫я┐я▌ п╨п╬п©п╦я▌
+install language	setup	ru	пёя│я┌п╟п╫п╬п╡п╦я┌я▄ я▐п╥я▀п╨
+installed	setup	ru	я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╬
+instructions for creating the database in %1:	setup	ru	п≤п╫я│я┌я─я┐п╨я├п╦п╦ п©п╬ я│п╬п╥п╢п╟п╫п╦я▌ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘ п╡ %1
+invalid ip address	setup	ru	п²п╣п╡п╣я─п╫я▀п╧ ipп╟п╢я─п╣я│
+invalid mcrypt algorithm/mode combination	setup	ru	п²п╣п╡п╣я─п╫я▀п╧ Mcrypt Algorithm/п╨п╬п╪п╠п╦п╫п╟я├п╦я▐ я┌п╦п©п╬п╡
+invalid password	setup	ru	п²п╣п©я─п╟п╡п╦п╩я▄п╫я▀п╧ п©п╟я─п╬п╩я▄
+is broken	setup	ru	п╫п╣ я─п╟п╠п╬я┌п╟п╣я┌
+is disabled	setup	ru	п╬я┌п╨п╩я▌я┤п╣п╫
+ldap account import/export	setup	ru	LDAP я█п╨п╟я┐п╫я┌ п╦п╪п©п╬я─я┌/я█п╨я│п©п╬я─я┌
+ldap accounts configuration	setup	ru	LDAP п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ я█п╨п╟я┐п╫я┌п╟
+ldap accounts context	setup	ru	LDAP п╨п╬п╫я┌п╣п╨я│я┌
+ldap config	setup	ru	LDAP п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐
+ldap default shell (e.g. /bin/bash)	setup	ru	LDAP п╬п╠п╬п╩п╬я┤п╨п╟ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
+ldap encryption type	setup	ru	LDAP я┬п╦я└я─п╬п╡п╟п╫п╦п╣ я┌п╦п©п╬п╡
+ldap export	setup	ru	LDAP я█п╨я│п©п╬я─я┌
+ldap export users	setup	ru	LDAP п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╦ я█п╨я│п©п╬я─я┌п╟
+ldap groups context	setup	ru	LDAP пЁя─я┐п©п©п╬п╡п╬п╧ п╨п╬п╫я┌п╣п╨я│я┌
+ldap host	setup	ru	LDAP я┘п╬я│я┌
+ldap import	setup	ru	LDAP п╦п╪п©п╬я─я┌
+ldap import users	setup	ru	LDAP п©п╬п╩я▄п╥п╬п╡п╟я┌п╩п╦ п╦п╪п©п╬я─я┌п╟
+ldap modify	setup	ru	LDAP п╪п╬п╢п╦я└п╦п╨п╟я├п╦я▐
+ldap root password	setup	ru	LDAP п©п╟я─п╬п╩я▄
+ldap rootdn	setup	ru	LDAP п╨п╬я─п╫п╣п╡п╬п╧ dn
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ru	LDAP п©п╬п╦я│п╨п╬п╡я▀п╣ я└п╦п╩я▄я┌я─я▀ п╢п╩я▐ я█п╨п╟я┐п╫я┌п╬п╡
+never	setup	ru	п╫п╦п╨п╬пЁп╢п╟
+no	setup	ru	п²п╣я┌
+really uninstall all applications	setup	ru	п■п╣п╧я│я┌п╡п╦я┌п╣п╩я▄п╫п╬ п╢п╣п╦п╫я│я┌п╟п╩п╦я─п╬п╡п╟я┌я▄ п╡я│п╣ п©я─п╦п╩п╬п╤п╣п╫п╦я▐?
+yes	setup	ru	п■п╟
+your database is not working!	setup	ru	п▓п╟я┬п╟ п▒п╟п╥п╟ п■п╟п╫п╫я▀я┘ п╫п╣ я─п╟п╠п╬я┌п╟п╣я┌!
+your header.inc.php needs upgrading.	setup	ru	п╓п╟п╧п╩ header.inc.php я┌я─п╣п╠я┐п╣я┌ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐.
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ru	п╓п╟п╧п╩ header.inc.php я┌я─п╣п╠я┐п╣я┌ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐.<br /><blink><b class="msg">п▓п²п≤п°п░п²п≤п∙!</b></blink><br /><b>п║п■п∙п⌡п░п≥п╒п∙ п═п∙п≈п∙п═п▓п²пёп╝ п п·п÷п≤п╝!</b>

@@ -1,168 +1,168 @@
-%1 added	addressbook	ko	%1 Ãß°¡µÊ
-%1 records imported	addressbook	ko	%1 °³ÀÇ ·¹ÄÚµå¸¦ °¡Á®¿Ô½À´Ï´Ù
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ko	%1 °³ÀÇ ·¹ÄÚµå¸¦ ÀĞÀ½ (¾ÆÁ÷ °¡Á®¿À±â´Â ¼öÇàµÇÁö ¾Ê¾ÒÀ½, %2µÚ·Î°¡±â%2 ÇØ¼­ °¡Á®¿À±â Å×½ºÆ®¸¦ Ã¼Å©ÇØÁ¦ÇÑ ÈÄ ¼öÇàÇÏ¼¼¿ä)
-(e.g. 1969)	addressbook	ko	¿¹ 1969
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ko	<b>º¯È¯ÇÒ Å¸ÀÔÀÌ <¾ø½À´Ï´Ù></b> ¸®½ºÆ®¿¡¼­ º¯È¯ÇÒ Å¸ÀÔÀ» ¼±ÅÃÇÏ¼¼¿ä
-@-eval() is only availible to admins!!!	addressbook	ko	@-eval() Àº °ü¸®ÀÚ¸¸ °¡´ÉÇÕ´Ï´Ù!!
-account repository	admin	ko	°èÁ¤ ÀúÀå¼Ò
-accounts	addressbook	ko	°èÁ¤
-actions	addressbook	ko	¾×¼Ç
-add %1	addressbook	ko	%1 Ãß°¡
-add a contact to this organisation	addressbook	ko	ÀÌ Á¶Á÷¿¡ ¿¬¶ôÃ³ Ãß°¡
-add a new contact	addressbook	ko	»õ ¿¬¶ôÃ³ Ãß°¡
-add a new list	addressbook	ko	»õ ¸ñ·Ï Ãß°¡
-add a single entry by passing the fields.	addressbook	ko	ÇÊµå·Î ´ÜÀÏÇ×¸ñ Ãß°¡
-add custom field	addressbook	ko	»ç¿ëÀÚÁ¤ÀÇ ÇÊµå Ãß°¡
-address book	common	ko	ÁÖ¼Ò·Ï
-address book - vcard in	addressbook	ko	ÁÖ¼Ò·Ï - VCard
-address book - view	addressbook	ko	ÁÖ¼Ò·Ï - º¸±â
-address line 2	addressbook	ko	ÁÖ¼Ò 2
-address type	addressbook	ko	ÁÖ¼Ò ÇüÅÂ
-addressbook	common	ko	ÁÖ¼Ò·Ï
-addressbook preferences	addressbook	ko	ÁÖ¼Ò·Ï È¯°æ¼³Á¤
-addressbook-fieldname	addressbook	ko	ÁÖ¼Ò·Ï-ÇÊµåÀÌ¸§
-addvcard	addressbook	ko	VCard Ãß°¡
-advanced search	addressbook	ko	»ó¼¼ °Ë»ö
-all contacts	addressbook	ko	¸ğµç ¿¬¶ôÃ³
-alt. csv import	addressbook	ko	´Ù¸¥ ¹æ¹ıÀ¸·Î CVS °¡Á®¿À±â
-always	addressbook	ko	¾ğÁ¦³ª
-apply changes to all members, whose fields have the same previous content	addressbook	ko	ÀÌÀü ³»¿ë°ú µ¿ÀÏÇÑ ÇÊµå¸¦ °¡Áø ¸ğµç ¸â¹öµé¿¡ ´ëÇÑ º¯°æ»çÇ×ÀÌ Àû¿ëµË´Ï´Ù
-apply the action on the whole query, not only the shown contacts!!!	addressbook	ko	ÀÌ ¾×¼ÇÀº ÀüÃ¼ Äõ¸®·Î Àû¿ëµË´Ï´Ù. (º¸ÀÌ´Â ¿¬¶ôÃ³¿¡¸¸ ¹İ¿µµÇ´Â°ÍÀÌ ¾Æ´Õ´Ï´Ù)
-are you shure you want to delete this contact?	addressbook	ko	Á¤¸» ÀÌ ¿¬¶ôÃ³¸¦ »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?
-are you sure you want to delete this field?	addressbook	ko	ÀÌ ÇÊµå¸¦ »èÁ¦ÇÏ´Â°Ô È®½ÇÇÏ³ª¿ä?
-birthday	common	ko	»ıÀÏ
-birthdays	common	ko	»ıÀÏ
-blank	addressbook	ko	°ø¶õ
-business	common	ko	¾÷¹«
-business city	addressbook	ko	Á÷Àå¼ÒÁ¦ µµ½Ã
-business country	addressbook	ko	Á÷Àå¼ÒÁ¦ ±¹°¡
-business email	addressbook	ko	¾÷¹« ÀÌ¸ŞÀÏ
-business fax	addressbook	ko	¾÷¹« ÆÑ½º
-business phone	addressbook	ko	¾÷¹« ÀüÈ­
-business state	addressbook	ko	Á÷Àå¼ÒÁ¦ ÁÖ
-business street	addressbook	ko	Á÷ÀåÁÖ¼Ò
-business zip code	addressbook	ko	Á÷Àå ¿ìÆí¹øÈ£
-car phone	addressbook	ko	Â÷·® Àü¿ë ÀüÈ­
-cell phone	addressbook	ko	ÀÌµ¿ÀüÈ­
-charset of file	addressbook	ko	ÆÄÀÏÀÇ ¹®ÀÚ¼Â
-city	common	ko	µµ½Ã
-company	common	ko	È¸»ç
-company name	addressbook	ko	È¸»ç ÀÌ¸§
-configuration	common	ko	±¸¼º
-contact	common	ko	ÁÖ¼Ò·Ï
-contact application	admin	ko	ÁÖ¼Ò·Ï ¿¬µ¿ÇÁ·Î±×·¥
-contact copied	addressbook	ko	¿¬¶ôÃ³ º¹»çµÊ
-contact deleted	addressbook	ko	¿¬¶ôÃ³ »èÁ¦µÊ
-contact repository	admin	ko	¿¬¶ôÃ³ ÀúÀå¼Ò
-contact saved	addressbook	ko	¿¬¶ôÃ³ ÀúÀåµÊ
-contact settings	admin	ko	ÁÖ¼Ò·Ï°ü¸® ¼³Á¤
-contacts and account contact-data to ldap	admin	ko	ÁÖ¼Ò·Ï ¹× °èÁ¤ ¿¬¶ôÃ³ÀÚ·á¸¦ LDAP·Î
-contacts to ldap	admin	ko	ÁÖ¼Ò·ÏÀ» LDAP·Î
-contacts to ldap, account contact-data to sql	admin	ko	ÁÖ¼Ò·ÏÀ» LDAP·Î, °èÁ¤ ¿¬¶ôÃ³ ÀÚ·á¸¦ SQL·Î
-copied by %1, from record #%2.	addressbook	ko	#%2 ·¹ÄÚµå¿¡¼­ %1ÀÌ º¹»çÇÔ
-country	common	ko	±¹°¡
-create new links	addressbook	ko	»õ ¸µÅ© ¸¸µé±â
-csv-fieldname	addressbook	ko	CSV-ÇÊµåÀÌ¸§
-csv-filename	addressbook	ko	CSV-ÆÄÀÏÀÌ¸§
-custom	addressbook	ko	»ç¿ëÀÚÁ¤ÀÇ
-custom fields	addressbook	ko	»ç¿ëÀÚÁ¤ÀÇ ÇÊµå
-debug output in browser	addressbook	ko	ºê¶ó¿ìÀú¿¡¼­ µğ¹ö±× Ãâ·Â
-default filter	addressbook	ko	±âº» ÇÊÅÍ
-delete a single entry by passing the id.	addressbook	ko	ID°ªÀ¸·Î ´ÜÀÏ ¿£Æ®¸® »èÁ¦
-delete this contact	addressbook	ko	ÀÌ ¿¬¶ôÃ³ »èÁ¦
-delete this organisation including all its contacts	addressbook	ko	ÀÌ Á¶Á÷°ú Æ÷ÇÔÇÏ´Â ¸ğµç ¿¬¶ôÃ³¸¦ ¸ğµÎ »èÁ¦
-deleted	addressbook	ko	»èÁ¦µÊ
-department	common	ko	ºÎ¼­
-departments	addressbook	ko	ºÎ¼­
-domestic	addressbook	ko	±â¼÷»ç
-download	addressbook	ko	³»·Á¹Ş±â
-download export file (uncheck to debug output in browser)	addressbook	ko	³»º¸³»±â ÆÄÀÏ ³»·Á¹Ş±â (ºê¶ó¿ìÀúÀÇ µğ¹ö±× Ãâ·Â Ã¼Å©ÇØÁ¦)
-edit custom field	addressbook	ko	»ç¿ëÀÚÁ¤ÀÇ ÇÊµå ÆíÁı
-edit custom fields	admin	ko	º¹¼öÀÇ »ç¿ëÀÚÁ¤ÀÇ ÇÊµå ÆíÁı
-empty for all	addressbook	ko	¸ğµÎ ºñ¿ì±â
-enter the path to the exported file here	addressbook	ko	³»º¸³½ ÆÄÀÏ °æ·Î¸¦ ¿©±â¿¡ ÀÔ·Â
-export contacts	addressbook	ko	ÀÎÀû°ü°è¸¦ ³»º¸³»±â
-export file name	addressbook	ko	ÆÄÀÏÀÌ¸§ ³»º¸³»±â
-export from addressbook	addressbook	ko	ÁÖ¼Ò·Ï¿¡¼­ ³»º¸³»±â
-extra	addressbook	ko	±âÅ¸
-fax	addressbook	ko	ÆÑ½º
-fax number	common	ko	ÆÑ½º ¹øÈ£
-field %1 has been added !	addressbook	ko	%1 ÇÊµå°¡ Ãß°¡µÇ¾ú½À´Ï´Ù!
-field %1 has been updated !	addressbook	ko	%1 ÇÊµå°¡ °»½ÅµÇ¾ú½À´Ï´Ù!
-field name	addressbook	ko	ÇÊµå ÀÌ¸§
-fields to show in address list	addressbook	ko	ÁÖ¼Ò ¸ñ·Ï¿¡¼­ º¸¿©Áú ÇÊµå
-fieldseparator	addressbook	ko	ÇÊµå ±¸ºĞÀÚ
-full name	addressbook	ko	ÀÌ¸§
-global categories	addressbook	ko	Àü¿ª Ä«Å×°í¸®
-grant addressbook access	common	ko	ÁÖ¼Ò·Ï Á¢±ÙÀ» Çã¿ë
-home city	addressbook	ko	ÁıÀÌ ÀÖ´Â µµ½Ã
-home country	addressbook	ko	ÁıÀÌ ÀÖ´Â ±¹°¡
-home email	addressbook	ko	Áı ÀÌ¸ŞÀÏ
-home phone	addressbook	ko	ÁıÀüÈ­
-home state	addressbook	ko	ÁıÀÌ ÀÖ´Â ÁÖ
-home street	addressbook	ko	Áı ÁÖ¼Ò
-home zip code	addressbook	ko	Áı ¿ìÆí¹øÈ£
-import	addressbook	ko	°¡Á®¿À±â
-import contacts	addressbook	ko	ÀÎÀû°ü°è °¡Á®¿À±â
-import csv-file into addressbook	addressbook	ko	ÄÄ¸¶±¸ºĞÆÄÀÏÀ» ÁÖ¼Ò·ÏÀ¸·Î °¡Á®¿À±â
-import file	addressbook	ko	ÆÄÀÏ °¡Á®¿À±â
-import from ldif, csv, or vcard	addressbook	ko	LDIF,CSV ³ª VCard¿¡¼­ °¡Á®¿À±â
-import from outlook	addressbook	ko	¾Æ¿ô·è¿¡¼­ °¡Á®¿À±â
-import next set	addressbook	ko	** ´ÙÀ½ ÁıÇÕ(set)¿¡¼­ °¡Á®¿À±â
-import_instructions	addressbook	ko	³İ½ºÄÉÀÔ¿¡¼­ ÁÖ¼Ò·ÏÀ» ¿­°í <b>ÆÄÀÏ</b>¸Ş´º¿¡¼­ <b>³»º¸³»±â</b>¸¦ ¼±ÅÃÇÕ´Ï´Ù. ÆÄÀÏÀÌ LDIFÇü½ÄÀ¸·Î ÀúÀåµË´Ï´Ù.<p> ¾Æ¿ô·èÀÏ¶§ ÄÁÅØ(ÀÎÀû°ü¸®) Æú´õ·Î °¡¼­ <b>ÆÄÀÏ</b>¸Ş´º¿¡ <b>°¡Á®¿À±â ¿Í ³»º¸³»±â...</b>¸¦ ¼±ÅÃÇÏ¸é ÄÄ¸¶±¸ºĞÅØ½ºÆ®·Î ³»º¸³»±â µÇ¾î ÀúÀåµË´Ï´Ù.<p> ÆÊ µ¥½ºÅ©Å¾ 4.0ÀÌ³ª ±× ÀÌ»ó ¹öÀü¿¡¼­´Â , ÁÖ¼Ò·Ï¿¡ °¡¼­ <b>ÆÄÀÏ</b>¸Ş´º¿¡ <b>³»º¸³»±â</b>¸¦ ¼±ÅÃÇÏ¸é VCard Çü½ÄÀ¸·Î ÆÄÀÏÀÌ ³»º¸³»±â µÇ¾î ÀúÀåµË´Ï´Ù.
-international	addressbook	ko	±¹Á¦
-label	addressbook	ko	¶óº§
-ldap context for contacts	admin	ko	LDAP ÄÁÅØ½ºÆ®¸¦ À§ÇÑ ÀÎÀû°ü°è(contacts)
-ldap host for contacts	admin	ko	LDAP È£½ºÆ®¸¦ À§ÇÑ ÀÎÀû°ü°è(contacts)
+%1 added	addressbook	ko	%1 ì¶”ê°€ë¨
+%1 records imported	addressbook	ko	%1 ê°œì˜ ë ˆì½”ë“œë¥¼ ê°€ì ¸ì™”ìŠµë‹ˆë‹¤
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ko	%1 ê°œì˜ ë ˆì½”ë“œë¥¼ ì½ìŒ (ì•„ì§ ê°€ì ¸ì˜¤ê¸°ëŠ” ìˆ˜í–‰ë˜ì§€ ì•Šì•˜ìŒ, %2ë’¤ë¡œê°€ê¸°%2 í•´ì„œ ê°€ì ¸ì˜¤ê¸° í…ŒìŠ¤íŠ¸ë¥¼ ì²´í¬í•´ì œí•œ í›„ ìˆ˜í–‰í•˜ì„¸ìš”)
+(e.g. 1969)	addressbook	ko	ì˜ˆ 1969
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ko	<b>ë³€í™˜í•  íƒ€ì…ì´ <ì—†ìŠµë‹ˆë‹¤></b> ë¦¬ìŠ¤íŠ¸ì—ì„œ ë³€í™˜í•  íƒ€ì…ì„ ì„ íƒí•˜ì„¸ìš”
+@-eval() is only availible to admins!!!	addressbook	ko	@-eval() ì€ ê´€ë¦¬ìë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤!!
+account repository	admin	ko	ê³„ì • ì €ì¥ì†Œ
+accounts	addressbook	ko	ê³„ì •
+actions	addressbook	ko	ì•¡ì…˜
+add %1	addressbook	ko	%1 ì¶”ê°€
+add a contact to this organisation	addressbook	ko	ì´ ì¡°ì§ì— ì—°ë½ì²˜ ì¶”ê°€
+add a new contact	addressbook	ko	ìƒˆ ì—°ë½ì²˜ ì¶”ê°€
+add a new list	addressbook	ko	ìƒˆ ëª©ë¡ ì¶”ê°€
+add a single entry by passing the fields.	addressbook	ko	í•„ë“œë¡œ ë‹¨ì¼í•­ëª© ì¶”ê°€
+add custom field	addressbook	ko	ì‚¬ìš©ìì •ì˜ í•„ë“œ ì¶”ê°€
+address book	common	ko	ì£¼ì†Œë¡
+address book - vcard in	addressbook	ko	ì£¼ì†Œë¡ - VCard
+address book - view	addressbook	ko	ì£¼ì†Œë¡ - ë³´ê¸°
+address line 2	addressbook	ko	ì£¼ì†Œ 2
+address type	addressbook	ko	ì£¼ì†Œ í˜•íƒœ
+addressbook	common	ko	ì£¼ì†Œë¡
+addressbook preferences	addressbook	ko	ì£¼ì†Œë¡ í™˜ê²½ì„¤ì •
+addressbook-fieldname	addressbook	ko	ì£¼ì†Œë¡-í•„ë“œì´ë¦„
+addvcard	addressbook	ko	VCard ì¶”ê°€
+advanced search	addressbook	ko	ìƒì„¸ ê²€ìƒ‰
+all contacts	addressbook	ko	ëª¨ë“  ì—°ë½ì²˜
+alt. csv import	addressbook	ko	ë‹¤ë¥¸ ë°©ë²•ìœ¼ë¡œ CVS ê°€ì ¸ì˜¤ê¸°
+always	addressbook	ko	ì–¸ì œë‚˜
+apply changes to all members, whose fields have the same previous content	addressbook	ko	ì´ì „ ë‚´ìš©ê³¼ ë™ì¼í•œ í•„ë“œë¥¼ ê°€ì§„ ëª¨ë“  ë©¤ë²„ë“¤ì— ëŒ€í•œ ë³€ê²½ì‚¬í•­ì´ ì ìš©ë©ë‹ˆë‹¤
+apply the action on the whole query, not only the shown contacts!!!	addressbook	ko	ì´ ì•¡ì…˜ì€ ì „ì²´ ì¿¼ë¦¬ë¡œ ì ìš©ë©ë‹ˆë‹¤. (ë³´ì´ëŠ” ì—°ë½ì²˜ì—ë§Œ ë°˜ì˜ë˜ëŠ”ê²ƒì´ ì•„ë‹™ë‹ˆë‹¤)
+are you shure you want to delete this contact?	addressbook	ko	ì •ë§ ì´ ì—°ë½ì²˜ë¥¼ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+are you sure you want to delete this field?	addressbook	ko	ì´ í•„ë“œë¥¼ ì‚­ì œí•˜ëŠ”ê²Œ í™•ì‹¤í•˜ë‚˜ìš”?
+birthday	common	ko	ìƒì¼
+birthdays	common	ko	ìƒì¼
+blank	addressbook	ko	ê³µë€
+business	common	ko	ì—…ë¬´
+business city	addressbook	ko	ì§ì¥ì†Œì œ ë„ì‹œ
+business country	addressbook	ko	ì§ì¥ì†Œì œ êµ­ê°€
+business email	addressbook	ko	ì—…ë¬´ ì´ë©”ì¼
+business fax	addressbook	ko	ì—…ë¬´ íŒ©ìŠ¤
+business phone	addressbook	ko	ì—…ë¬´ ì „í™”
+business state	addressbook	ko	ì§ì¥ì†Œì œ ì£¼
+business street	addressbook	ko	ì§ì¥ì£¼ì†Œ
+business zip code	addressbook	ko	ì§ì¥ ìš°í¸ë²ˆí˜¸
+car phone	addressbook	ko	ì°¨ëŸ‰ ì „ìš© ì „í™”
+cell phone	addressbook	ko	ì´ë™ì „í™”
+charset of file	addressbook	ko	íŒŒì¼ì˜ ë¬¸ìì…‹
+city	common	ko	ë„ì‹œ
+company	common	ko	íšŒì‚¬
+company name	addressbook	ko	íšŒì‚¬ ì´ë¦„
+configuration	common	ko	êµ¬ì„±
+contact	common	ko	ì£¼ì†Œë¡
+contact application	admin	ko	ì£¼ì†Œë¡ ì—°ë™í”„ë¡œê·¸ë¨
+contact copied	addressbook	ko	ì—°ë½ì²˜ ë³µì‚¬ë¨
+contact deleted	addressbook	ko	ì—°ë½ì²˜ ì‚­ì œë¨
+contact repository	admin	ko	ì—°ë½ì²˜ ì €ì¥ì†Œ
+contact saved	addressbook	ko	ì—°ë½ì²˜ ì €ì¥ë¨
+contact settings	admin	ko	ì£¼ì†Œë¡ê´€ë¦¬ ì„¤ì •
+contacts and account contact-data to ldap	admin	ko	ì£¼ì†Œë¡ ë° ê³„ì • ì—°ë½ì²˜ìë£Œë¥¼ LDAPë¡œ
+contacts to ldap	admin	ko	ì£¼ì†Œë¡ì„ LDAPë¡œ
+contacts to ldap, account contact-data to sql	admin	ko	ì£¼ì†Œë¡ì„ LDAPë¡œ, ê³„ì • ì—°ë½ì²˜ ìë£Œë¥¼ SQLë¡œ
+copied by %1, from record #%2.	addressbook	ko	#%2 ë ˆì½”ë“œì—ì„œ %1ì´ ë³µì‚¬í•¨
+country	common	ko	êµ­ê°€
+create new links	addressbook	ko	ìƒˆ ë§í¬ ë§Œë“¤ê¸°
+csv-fieldname	addressbook	ko	CSV-í•„ë“œì´ë¦„
+csv-filename	addressbook	ko	CSV-íŒŒì¼ì´ë¦„
+custom	addressbook	ko	ì‚¬ìš©ìì •ì˜
+custom fields	addressbook	ko	ì‚¬ìš©ìì •ì˜ í•„ë“œ
+debug output in browser	addressbook	ko	ë¸Œë¼ìš°ì €ì—ì„œ ë””ë²„ê·¸ ì¶œë ¥
+default filter	addressbook	ko	ê¸°ë³¸ í•„í„°
+delete a single entry by passing the id.	addressbook	ko	IDê°’ìœ¼ë¡œ ë‹¨ì¼ ì—”íŠ¸ë¦¬ ì‚­ì œ
+delete this contact	addressbook	ko	ì´ ì—°ë½ì²˜ ì‚­ì œ
+delete this organisation including all its contacts	addressbook	ko	ì´ ì¡°ì§ê³¼ í¬í•¨í•˜ëŠ” ëª¨ë“  ì—°ë½ì²˜ë¥¼ ëª¨ë‘ ì‚­ì œ
+deleted	addressbook	ko	ì‚­ì œë¨
+department	common	ko	ë¶€ì„œ
+departments	addressbook	ko	ë¶€ì„œ
+domestic	addressbook	ko	ê¸°ìˆ™ì‚¬
+download	addressbook	ko	ë‚´ë ¤ë°›ê¸°
+download export file (uncheck to debug output in browser)	addressbook	ko	ë‚´ë³´ë‚´ê¸° íŒŒì¼ ë‚´ë ¤ë°›ê¸° (ë¸Œë¼ìš°ì €ì˜ ë””ë²„ê·¸ ì¶œë ¥ ì²´í¬í•´ì œ)
+edit custom field	addressbook	ko	ì‚¬ìš©ìì •ì˜ í•„ë“œ í¸ì§‘
+edit custom fields	admin	ko	ë³µìˆ˜ì˜ ì‚¬ìš©ìì •ì˜ í•„ë“œ í¸ì§‘
+empty for all	addressbook	ko	ëª¨ë‘ ë¹„ìš°ê¸°
+enter the path to the exported file here	addressbook	ko	ë‚´ë³´ë‚¸ íŒŒì¼ ê²½ë¡œë¥¼ ì—¬ê¸°ì— ì…ë ¥
+export contacts	addressbook	ko	ì¸ì ê´€ê³„ë¥¼ ë‚´ë³´ë‚´ê¸°
+export file name	addressbook	ko	íŒŒì¼ì´ë¦„ ë‚´ë³´ë‚´ê¸°
+export from addressbook	addressbook	ko	ì£¼ì†Œë¡ì—ì„œ ë‚´ë³´ë‚´ê¸°
+extra	addressbook	ko	ê¸°íƒ€
+fax	addressbook	ko	íŒ©ìŠ¤
+fax number	common	ko	íŒ©ìŠ¤ ë²ˆí˜¸
+field %1 has been added !	addressbook	ko	%1 í•„ë“œê°€ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤!
+field %1 has been updated !	addressbook	ko	%1 í•„ë“œê°€ ê°±ì‹ ë˜ì—ˆìŠµë‹ˆë‹¤!
+field name	addressbook	ko	í•„ë“œ ì´ë¦„
+fields to show in address list	addressbook	ko	ì£¼ì†Œ ëª©ë¡ì—ì„œ ë³´ì—¬ì§ˆ í•„ë“œ
+fieldseparator	addressbook	ko	í•„ë“œ êµ¬ë¶„ì
+full name	addressbook	ko	ì´ë¦„
+global categories	addressbook	ko	ì „ì—­ ì¹´í…Œê³ ë¦¬
+grant addressbook access	common	ko	ì£¼ì†Œë¡ ì ‘ê·¼ì„ í—ˆìš©
+home city	addressbook	ko	ì§‘ì´ ìˆëŠ” ë„ì‹œ
+home country	addressbook	ko	ì§‘ì´ ìˆëŠ” êµ­ê°€
+home email	addressbook	ko	ì§‘ ì´ë©”ì¼
+home phone	addressbook	ko	ì§‘ì „í™”
+home state	addressbook	ko	ì§‘ì´ ìˆëŠ” ì£¼
+home street	addressbook	ko	ì§‘ ì£¼ì†Œ
+home zip code	addressbook	ko	ì§‘ ìš°í¸ë²ˆí˜¸
+import	addressbook	ko	ê°€ì ¸ì˜¤ê¸°
+import contacts	addressbook	ko	ì¸ì ê´€ê³„ ê°€ì ¸ì˜¤ê¸°
+import csv-file into addressbook	addressbook	ko	ì»´ë§ˆêµ¬ë¶„íŒŒì¼ì„ ì£¼ì†Œë¡ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
+import file	addressbook	ko	íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
+import from ldif, csv, or vcard	addressbook	ko	LDIF,CSV ë‚˜ VCardì—ì„œ ê°€ì ¸ì˜¤ê¸°
+import from outlook	addressbook	ko	ì•„ì›ƒë£©ì—ì„œ ê°€ì ¸ì˜¤ê¸°
+import next set	addressbook	ko	** ë‹¤ìŒ ì§‘í•©(set)ì—ì„œ ê°€ì ¸ì˜¤ê¸°
+import_instructions	addressbook	ko	ë„·ìŠ¤ì¼€ì…ì—ì„œ ì£¼ì†Œë¡ì„ ì—´ê³  <b>íŒŒì¼</b>ë©”ë‰´ì—ì„œ <b>ë‚´ë³´ë‚´ê¸°</b>ë¥¼ ì„ íƒí•©ë‹ˆë‹¤. íŒŒì¼ì´ LDIFí˜•ì‹ìœ¼ë¡œ ì €ì¥ë©ë‹ˆë‹¤.<p> ì•„ì›ƒë£©ì¼ë•Œ ì»¨í…(ì¸ì ê´€ë¦¬) í´ë”ë¡œ ê°€ì„œ <b>íŒŒì¼</b>ë©”ë‰´ì— <b>ê°€ì ¸ì˜¤ê¸° ì™€ ë‚´ë³´ë‚´ê¸°...</b>ë¥¼ ì„ íƒí•˜ë©´ ì»´ë§ˆêµ¬ë¶„í…ìŠ¤íŠ¸ë¡œ ë‚´ë³´ë‚´ê¸° ë˜ì–´ ì €ì¥ë©ë‹ˆë‹¤.<p> íŒœ ë°ìŠ¤í¬íƒ‘ 4.0ì´ë‚˜ ê·¸ ì´ìƒ ë²„ì „ì—ì„œëŠ” , ì£¼ì†Œë¡ì— ê°€ì„œ <b>íŒŒì¼</b>ë©”ë‰´ì— <b>ë‚´ë³´ë‚´ê¸°</b>ë¥¼ ì„ íƒí•˜ë©´ VCard í˜•ì‹ìœ¼ë¡œ íŒŒì¼ì´ ë‚´ë³´ë‚´ê¸° ë˜ì–´ ì €ì¥ë©ë‹ˆë‹¤.
+international	addressbook	ko	êµ­ì œ
+label	addressbook	ko	ë¼ë²¨
+ldap context for contacts	admin	ko	LDAP ì»¨í…ìŠ¤íŠ¸ë¥¼ ìœ„í•œ ì¸ì ê´€ê³„(contacts)
+ldap host for contacts	admin	ko	LDAP í˜¸ìŠ¤íŠ¸ë¥¼ ìœ„í•œ ì¸ì ê´€ê³„(contacts)
 ldif	addressbook	ko	LDIF
-line 2	addressbook	ko	2Â° ÁÙ
-mark records as private	addressbook	ko	Ç×¸ñÀ» °³ÀÎÀûÀÎ °Í(private)À¸·Î Ç¥±â
-message phone	addressbook	ko	¸Ş¼¼Áö ÀüÈ­
-middle name	addressbook	ko	Áß°£ ÀÌ¸§
-mobile	addressbook	ko	ÇÚµåÆù
-mobile phone	addressbook	ko	ÀÌµ¿ÀüÈ­
-modem phone	addressbook	ko	¸ğµ© ÀüÈ­
-no vcard	addressbook	ko	VCard ¾øÀ½
-number of records to read (%1)	addressbook	ko	(%1) ÀĞÀ» ·¹ÄÚµå¼ö
-other number	addressbook	ko	±âÅ¸¹øÈ£
-other phone	addressbook	ko	±âÅ¸ ÀüÈ­
-pager	common	ko	»ß»ß
-parcel	addressbook	ko	¼ÒÆ÷
-phone number	common	ko	ÀüÈ­¹øÈ£
-phone numbers	common	ko	ÀüÈ­¹øÈ£
-please enter a name for that field !	addressbook	ko	ÇÊµåÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä
-postal	common	ko	¿ìÆí¹øÈ£
-prefix	addressbook	ko	Á¢µÎ¾î
-public key	addressbook	ko	°ø°³Å°
-read a list of entries.	addressbook	ko	¿£Æ®¸® ¸ñ·ÏÀ» ÀĞÀ½
-read a single entry by passing the id and fieldlist.	addressbook	ko	ID¿Í ÇÊµå¸ñ·ÏÀ¸·Î ´ÜÀÏ ¿£Æ®¸®¸¦ ÀĞÀ½
-record access	addressbook	ko	·¹ÄÚµå Á¢±Ù
-record owner	addressbook	ko	·¹ÄÚµå ¼ÒÀ¯ÀÚ
-select all	addressbook	ko	¸ğµÎ ¼±ÅÃ
-select the type of conversion	addressbook	ko	º¯È¯ÇÒ Çü½ÄÀ» ¼±ÅÃÇÏ¼¼¿ä
-select the type of conversion:	addressbook	ko	º¯È¯ÇÒ Çü½Ä¼±ÅÃ:
-show birthday reminders on main screen	addressbook	ko	ÁÖ È­¸é¿¡¼­ »ıÀÏ ¾Ë¸²À» Ç¥½Ã
-startrecord	addressbook	ko	½ÃÀÛ·¹ÄÚµå
-state	common	ko	ÁÖ
-street	common	ko	ÁÖ¼Ò
-successfully imported %1 records into your addressbook.	addressbook	ko	%1 °³ÀÇ ·¹ÄÚµå¸¦ ÁÖ¼Ò·ÏÀ¸·Î °¡Á®¿À´Âµ¥ ¼º°øÇß½À´Ï´Ù
-suffix	addressbook	ko	Á¢¹Ì¾î
-test import (show importable records <u>only</u> in browser)	addressbook	ko	°¡Á®¿À±â Å×½ºÆ® (°¡Á®¿Ã¼ö ÀÖ´Â ·¹ÄÚµå <u>¿ÀÁ÷</u> ºê¶ó¿ìÀú¿¡¼­¸¸ º¸¿©Áİ´Ï´Ù)
-that field name has been used already !	addressbook	ko	ÇÊµå ÀÌ¸§ÀÌ ÀÌ¹Ì »ç¿ëµÇ¾ú½À´Ï´Ù
-this person's first name was not in the address book.	addressbook	ko	ÀÌ »ç¶÷ÀÇ ÀÌ¸§ÀÌ ÁÖ¼Ò·Ï¿¡ ¾ø½À´Ï´Ù.
-this person's last name was not in the address book.	addressbook	ko	ÀÌ »ç¶÷ÀÇ ¼ºÀÌ ÁÖ¼Ò·Ï¿¡ ¾ø½À´Ï´Ù.
-to many might exceed your execution-time-limit	addressbook	ko	³Ê¹« ¸¹À» °æ¿ì ÃÖ´ë½ÇÇà½Ã°£(execution-time-limit)À» ÃÊ°úÇÔ
-today is %1's birthday!	common	ko	¿À´ÃÀº %1ÀÇ »ıÀÏÀÔ´Ï´Ù!
-tomorrow is %1's birthday.	common	ko	³»ÀÏÀº %1ÀÇ »ıÀÏÀÔ´Ï´Ù.
-translation	addressbook	ko	¹ø¿ª
-update a single entry by passing the fields.	addressbook	ko	ÇÊµå°ªÀ¸·Î ´ÜÀÏ ¿£Æ®¸® °»½Å
-use country list	addressbook	ko	±¹°¡ ¸ñ·Ï »ç¿ë
+line 2	addressbook	ko	2ì§¸ ì¤„
+mark records as private	addressbook	ko	í•­ëª©ì„ ê°œì¸ì ì¸ ê²ƒ(private)ìœ¼ë¡œ í‘œê¸°
+message phone	addressbook	ko	ë©”ì„¸ì§€ ì „í™”
+middle name	addressbook	ko	ì¤‘ê°„ ì´ë¦„
+mobile	addressbook	ko	í•¸ë“œí°
+mobile phone	addressbook	ko	ì´ë™ì „í™”
+modem phone	addressbook	ko	ëª¨ë€ ì „í™”
+no vcard	addressbook	ko	VCard ì—†ìŒ
+number of records to read (%1)	addressbook	ko	(%1) ì½ì„ ë ˆì½”ë“œìˆ˜
+other number	addressbook	ko	ê¸°íƒ€ë²ˆí˜¸
+other phone	addressbook	ko	ê¸°íƒ€ ì „í™”
+pager	common	ko	ì‚ì‚
+parcel	addressbook	ko	ì†Œí¬
+phone number	common	ko	ì „í™”ë²ˆí˜¸
+phone numbers	common	ko	ì „í™”ë²ˆí˜¸
+please enter a name for that field !	addressbook	ko	í•„ë“œì˜ ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”
+postal	common	ko	ìš°í¸ë²ˆí˜¸
+prefix	addressbook	ko	ì ‘ë‘ì–´
+public key	addressbook	ko	ê³µê°œí‚¤
+read a list of entries.	addressbook	ko	ì—”íŠ¸ë¦¬ ëª©ë¡ì„ ì½ìŒ
+read a single entry by passing the id and fieldlist.	addressbook	ko	IDì™€ í•„ë“œëª©ë¡ìœ¼ë¡œ ë‹¨ì¼ ì—”íŠ¸ë¦¬ë¥¼ ì½ìŒ
+record access	addressbook	ko	ë ˆì½”ë“œ ì ‘ê·¼
+record owner	addressbook	ko	ë ˆì½”ë“œ ì†Œìœ ì
+select all	addressbook	ko	ëª¨ë‘ ì„ íƒ
+select the type of conversion	addressbook	ko	ë³€í™˜í•  í˜•ì‹ì„ ì„ íƒí•˜ì„¸ìš”
+select the type of conversion:	addressbook	ko	ë³€í™˜í•  í˜•ì‹ì„ íƒ:
+show birthday reminders on main screen	addressbook	ko	ì£¼ í™”ë©´ì—ì„œ ìƒì¼ ì•Œë¦¼ì„ í‘œì‹œ
+startrecord	addressbook	ko	ì‹œì‘ë ˆì½”ë“œ
+state	common	ko	ì£¼
+street	common	ko	ì£¼ì†Œ
+successfully imported %1 records into your addressbook.	addressbook	ko	%1 ê°œì˜ ë ˆì½”ë“œë¥¼ ì£¼ì†Œë¡ìœ¼ë¡œ ê°€ì ¸ì˜¤ëŠ”ë° ì„±ê³µí–ˆìŠµë‹ˆë‹¤
+suffix	addressbook	ko	ì ‘ë¯¸ì–´
+test import (show importable records <u>only</u> in browser)	addressbook	ko	ê°€ì ¸ì˜¤ê¸° í…ŒìŠ¤íŠ¸ (ê°€ì ¸ì˜¬ìˆ˜ ìˆëŠ” ë ˆì½”ë“œ <u>ì˜¤ì§</u> ë¸Œë¼ìš°ì €ì—ì„œë§Œ ë³´ì—¬ì¤ë‹ˆë‹¤)
+that field name has been used already !	addressbook	ko	í•„ë“œ ì´ë¦„ì´ ì´ë¯¸ ì‚¬ìš©ë˜ì—ˆìŠµë‹ˆë‹¤
+this person's first name was not in the address book.	addressbook	ko	ì´ ì‚¬ëŒì˜ ì´ë¦„ì´ ì£¼ì†Œë¡ì— ì—†ìŠµë‹ˆë‹¤.
+this person's last name was not in the address book.	addressbook	ko	ì´ ì‚¬ëŒì˜ ì„±ì´ ì£¼ì†Œë¡ì— ì—†ìŠµë‹ˆë‹¤.
+to many might exceed your execution-time-limit	addressbook	ko	ë„ˆë¬´ ë§ì„ ê²½ìš° ìµœëŒ€ì‹¤í–‰ì‹œê°„(execution-time-limit)ì„ ì´ˆê³¼í•¨
+today is %1's birthday!	common	ko	ì˜¤ëŠ˜ì€ %1ì˜ ìƒì¼ì…ë‹ˆë‹¤!
+tomorrow is %1's birthday.	common	ko	ë‚´ì¼ì€ %1ì˜ ìƒì¼ì…ë‹ˆë‹¤.
+translation	addressbook	ko	ë²ˆì—­
+update a single entry by passing the fields.	addressbook	ko	í•„ë“œê°’ìœ¼ë¡œ ë‹¨ì¼ ì—”íŠ¸ë¦¬ ê°±ì‹ 
+use country list	addressbook	ko	êµ­ê°€ ëª©ë¡ ì‚¬ìš©
 vcard	common	ko	VCard
-vcards require a first name entry.	addressbook	ko	VCard¿¡´Â ÀÌ¸§ Ç×¸ñÀÌ ÇÊ¿äÇÕ´Ï´Ù.
-vcards require a last name entry.	addressbook	ko	VCard¿¡´Â ¼º Ç×¸ñÀÌ ÇÊ¿äÇÕ´Ï´Ù.
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ko	°æ°í!! LDAP´Â ÀÎÀû°ü°è(contacts)¸¦ °èÁ¤ ÀúÀå¼Ò(accounts storages)·Î »ç¿ëÇÏÁö ¾ÊÀ»¶§¸¸ °¡´ÉÇÕ´Ï´Ù!
-work phone	addressbook	ko	Á÷Àå ÀüÈ­
-you must select a vcard. (*.vcf)	addressbook	ko	VÄ«µå¸¦ ¼±ÅÃÇØ¾ß¸¸ ÇÕ´Ï´Ù. (*.vcf)
-you must select at least 1 column to display	addressbook	ko	Ç¥½ÃÇÏ±â À§ÇØ¼± Àû¾îµµ 1 ¿­ÀºÀº ¼±ÅÃÇØ¾ßÇÕ´Ï´Ù
-zip code	common	ko	¿ìÆí¹øÈ£
-zip_note	addressbook	ko	<p><b>ÁÖÀÇ:</b> ÆÄÀÏÀÌ .csv .vcf ³ª ldif µîÀÇ ÆÄÀÏ ¾ĞÃàÆÄÀÏ ¹­À½ÀÎµí ÇÕ´Ï´Ù.°¡Á®¿À±â¸¦ ½ÇÇàÇÏ±â À§ÇØ¼± ÆÄÀÏ Çü½ÄÀÌ È¥ÇÕµÇÁö ¾Êµµ·Ï ÇØÁÖ¼¼¿ä
+vcards require a first name entry.	addressbook	ko	VCardì—ëŠ” ì´ë¦„ í•­ëª©ì´ í•„ìš”í•©ë‹ˆë‹¤.
+vcards require a last name entry.	addressbook	ko	VCardì—ëŠ” ì„± í•­ëª©ì´ í•„ìš”í•©ë‹ˆë‹¤.
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ko	ê²½ê³ !! LDAPëŠ” ì¸ì ê´€ê³„(contacts)ë¥¼ ê³„ì • ì €ì¥ì†Œ(accounts storages)ë¡œ ì‚¬ìš©í•˜ì§€ ì•Šì„ë•Œë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤!
+work phone	addressbook	ko	ì§ì¥ ì „í™”
+you must select a vcard. (*.vcf)	addressbook	ko	Vì¹´ë“œë¥¼ ì„ íƒí•´ì•¼ë§Œ í•©ë‹ˆë‹¤. (*.vcf)
+you must select at least 1 column to display	addressbook	ko	í‘œì‹œí•˜ê¸° ìœ„í•´ì„  ì ì–´ë„ 1 ì—´ì€ì€ ì„ íƒí•´ì•¼í•©ë‹ˆë‹¤
+zip code	common	ko	ìš°í¸ë²ˆí˜¸
+zip_note	addressbook	ko	<p><b>ì£¼ì˜:</b> íŒŒì¼ì´ .csv .vcf ë‚˜ ldif ë“±ì˜ íŒŒì¼ ì••ì¶•íŒŒì¼ ë¬¶ìŒì¸ë“¯ í•©ë‹ˆë‹¤.ê°€ì ¸ì˜¤ê¸°ë¥¼ ì‹¤í–‰í•˜ê¸° ìœ„í•´ì„  íŒŒì¼ í˜•ì‹ì´ í˜¼í•©ë˜ì§€ ì•Šë„ë¡ í•´ì£¼ì„¸ìš”

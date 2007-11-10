@@ -1,35 +1,35 @@
-2 month ago	timesheet	sv	3 månader tidigare
-2 years ago	timesheet	sv	2 år tidigare
-3 years ago	timesheet	sv	3 år tidigare
-actions	timesheet	sv	Åtgärder
+2 month ago	timesheet	sv	3 mÃ¥nader tidigare
+2 years ago	timesheet	sv	2 Ã¥r tidigare
+3 years ago	timesheet	sv	3 Ã¥r tidigare
+actions	timesheet	sv	Ã…tgÃ¤rder
 by	timesheet	sv	av
-create new links	timesheet	sv	Skapa ny länk
+create new links	timesheet	sv	Skapa ny lÃ¤nk
 delete this entry	timesheet	sv	Radera posten
-edit this entry	timesheet	sv	Ändra post
+edit this entry	timesheet	sv	Ã„ndra post
 empty if identical to duration	timesheet	sv	Tom om identisk med varaktighet
 entry deleted	timesheet	sv	Posten raderad
 entry saved	timesheet	sv	Posten sparad
 error deleting the entry!!!	timesheet	sv	Fel uppstod vid radering av posten!
 error saving the entry!!!	timesheet	sv	Fel uppstod vid sparandet av posten!
-existing links	timesheet	sv	Nuvarande länkar
-general	timesheet	sv	Allmänt
-last modified	timesheet	sv	Senast ändrad
-last month	timesheet	sv	Förra månaden
-last week	timesheet	sv	Förra veckan
-last year	timesheet	sv	Förra året
-links	timesheet	sv	Länkar
+existing links	timesheet	sv	Nuvarande lÃ¤nkar
+general	timesheet	sv	AllmÃ¤nt
+last modified	timesheet	sv	Senast Ã¤ndrad
+last month	timesheet	sv	FÃ¶rra mÃ¥naden
+last week	timesheet	sv	FÃ¶rra veckan
+last year	timesheet	sv	FÃ¶rra Ã¥ret
+links	timesheet	sv	LÃ¤nkar
 no details	timesheet	sv	Inga detaljer
-permission denied!!!	timesheet	sv	Åtkomst nekad!
+permission denied!!!	timesheet	sv	Ã…tkomst nekad!
 price	timesheet	sv	Pris
 quantity	timesheet	sv	Antal
 save & new	timesheet	sv	Spara och skapa ny
-saves the changes made	timesheet	sv	Spara ändringar
+saves the changes made	timesheet	sv	Spara Ã¤ndringar
 saves this entry and add a new one	timesheet	sv	Spara och skapa ny
-this month	timesheet	sv	Denna månad
+this month	timesheet	sv	Denna mÃ¥nad
 this week	timesheet	sv	Denna vecka
-this year	timesheet	sv	Detta år
+this year	timesheet	sv	Detta Ã¥r
 timesheet	common	sv	Tidhantering
 unitprice	timesheet	sv	Pris per antal
 view this entry	timesheet	sv	Visa posten
-yesterday	timesheet	sv	Igår
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sv	Ditt data är inte uppdaterat (%1 mot %2), var god och kör %3installationen%4 och uppdatera databasen.
+yesterday	timesheet	sv	IgÃ¥r
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sv	Ditt data Ã¤r inte uppdaterat (%1 mot %2), var god och kÃ¶r %3installationen%4 och uppdatera databasen.

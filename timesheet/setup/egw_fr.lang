@@ -5,48 +5,48 @@ actions	timesheet	fr	Actions
 all projects	timesheet	fr	Tous les projets
 both: allow to use projectmanager and free project-names	admin	fr	Les deux: permettre l'utilisation du Gestionnaire de projets et l'utilisation de noms de projets libres
 by	timesheet	fr	par
-create new links	timesheet	fr	Créer de nouveaux liens
-creating new entry	timesheet	fr	nouvelle entrée en création
-delete this entry	timesheet	fr	Supprimer cette entrée
-edit this entry	timesheet	fr	Modifier cette entrée
-empty if identical to duration	timesheet	fr	vide si identique à la durée
+create new links	timesheet	fr	CrÃ©er de nouveaux liens
+creating new entry	timesheet	fr	nouvelle entrÃ©e en crÃ©ation
+delete this entry	timesheet	fr	Supprimer cette entrÃ©e
+edit this entry	timesheet	fr	Modifier cette entrÃ©e
+empty if identical to duration	timesheet	fr	vide si identique Ã  la durÃ©e
 end	timesheet	fr	Fin
-entry deleted	timesheet	fr	Entrée supprimée
-entry saved	timesheet	fr	Entrée enregistrée
-error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entrée !!!
-error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !!!
+entry deleted	timesheet	fr	EntrÃ©e supprimÃ©e
+entry saved	timesheet	fr	EntrÃ©e enregistrÃ©e
+error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entrÃ©e !!!
+error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrÃ©e !!!
 existing links	timesheet	fr	Liens existants
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
-general	timesheet	fr	Général
-last modified	timesheet	fr	Dernière modification
+general	timesheet	fr	GÃ©nÃ©ral
+last modified	timesheet	fr	DerniÃ¨re modification
 last month	timesheet	fr	Le mois dernier
-last week	timesheet	fr	La semaine dernière
-last year	timesheet	fr	L'année dernière
+last week	timesheet	fr	La semaine derniÃ¨re
+last year	timesheet	fr	L'annÃ©e derniÃ¨re
 leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
 links	timesheet	fr	Liens
-no details	timesheet	fr	pas de détails
+no details	timesheet	fr	pas de dÃ©tails
 no project	timesheet	fr	Pas de projet
 none: use only free project-names	admin	fr	Aucun: utiliser seulement des noms de projets libres
 or endtime	timesheet	fr	ou Date de fin
-permission denied!!!	timesheet	fr	Autorisation refusée!!!
+permission denied!!!	timesheet	fr	Autorisation refusÃ©e!!!
 price	timesheet	fr	Prix
-projectmanager integration	admin	fr	Intégration au Gestionnaire de projets
-quantity	timesheet	fr	Quantité
+projectmanager integration	admin	fr	IntÃ©gration au Gestionnaire de projets
+quantity	timesheet	fr	QuantitÃ©
 save & new	timesheet	fr	Enregistrer & Nouveau
 saves the changes made	timesheet	fr	Enregistrer les modifications
-saves this entry and add a new one	timesheet	fr	Enregistrer cette entrée et en ajouter une nouvelle
+saves this entry and add a new one	timesheet	fr	Enregistrer cette entrÃ©e et en ajouter une nouvelle
 select a price	timesheet	fr	Choisissez un prix
 select a project	timesheet	fr	Choisissez un projet
-start	timesheet	fr	Début
-starttime	timesheet	fr	Heure de début
-starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !!!
+start	timesheet	fr	DÃ©but
+starttime	timesheet	fr	Heure de dÃ©but
+starttime has to be before endtime !!!	timesheet	fr	L'heure de dÃ©but doit Ãªtre avant l'heure de fin !!!
 sum %1:	timesheet	fr	Somme %1:
 this month	timesheet	fr	Ce mois
 this week	timesheet	fr	Cette semaine
-this year	timesheet	fr	Cette année
+this year	timesheet	fr	Cette annÃ©e
 timesheet	common	fr	Feuille de temps
-unitprice	timesheet	fr	Prix à l'unité
-view this entry	timesheet	fr	Voir cette entrée
+unitprice	timesheet	fr	Prix Ã  l'unitÃ©
+view this entry	timesheet	fr	Voir cette entrÃ©e
 week	timesheet	fr	Semaine
 yesterday	timesheet	fr	Hier
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fr	Votre base de données n'est PAS à jour (%1 contre %2), veuillez exécuter %3setup%4 pour mettre à jour votre base de données.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fr	Votre base de donnÃ©es n'est PAS Ã  jour (%1 contre %2), veuillez exÃ©cuter %3setup%4 pour mettre Ã  jour votre base de donnÃ©es.

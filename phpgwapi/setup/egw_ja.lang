@@ -1,222 +1,222 @@
 ab	common	ja	ab
-accepted	common	ja	¾µÂúºÑ¤ß
-access	common	ja	¥¢¥¯¥»¥¹
-access not permitted	common	ja	¥¢¥¯¥»¥¹¸¢¤¬¤¢¤ê¤Ş¤»¤ó
-access type	common	ja	¥¢¥¯¥»¥¹¸¢
-account has been created	common	ja	¥¢¥«¥¦¥ó¥È¤òºîÀ®¤·¤Ş¤·¤¿
-account has been deleted	common	ja	¥¢¥«¥¦¥ó¥È¤òºï½ü¤·¤Ş¤·¤¿
-account has been updated	common	ja	¥¢¥«¥¦¥ó¥È¤ò¹¹¿·¤·¤Ş¤·¤¿
-account must belong to at least 1 group	common	ja	½êÂ°¥°¥ë¡¼¥×¤ò»ØÄê¤·¤Æ¤¯¤À¤µ¤¤¡£
-account preferences	common	ja	¥¢¥«¥¦¥ó¥È¥æ¡¼¥¶ÀßÄê
-acl	common	ja	µö²ÄÀßÄê
-active	common	ja	¥¢¥¯¥Æ¥£¥Ö
-add	common	ja	ÄÉ²Ã
-add category	common	ja	¥«¥Æ¥´¥êÄÉ²Ã
-add %1 category for	common	ja	%1 ¥«¥Æ¥´¥êÄÉ²Ã
-admin	common	ja	´Ä¶­ÀßÄê
-administration	common	ja	´Ä¶­ÀßÄê
-all	common	ja	Á´¤Æ
-april	common	ja	£´·î
-are you sure you want to delete this category ?	common	ja	¤³¤Î¥«¥Æ¥´¥ê¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
-are you sure you want to delete this entry ?	common	ja	¤³¤Î¹àÌÜ¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
-august	common	ja	£¸·î
-autosave default category	common	ja	¥Ç¥Õ¥©¥ë¥È¥«¥Æ¥´¥ê¤ò¼«Æ°ÊİÂ¸
-cancel	common	ja	¼è¾Ã
-categories	common	ja	¥«¥Æ¥´¥ê
-category	common	ja	¥«¥Æ¥´¥ê
-categories for	common	ja	¥«¥Æ¥´¥ê
-category %1 has been added !	common	ja	¥«¥Æ¥´¥ê %1 ¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
-category %1 has been updated !	common	ja	¥«¥Æ¥´¥ê %1 ¤òÄûÀµ¤·¤Ş¤·¤¿¡£
-cc	common	ja	£Ã£Ã
-change	common	ja	ÊÑ¹¹
-charset	common	ja	EUC-JP
-choose the category	common	ja	¥«¥Æ¥´¥êÁªÂò
-clear	common	ja	¥¯¥ê¥¢
-clear form	common	ja	ºÆÆşÎÏ
-compose	common	ja	¿·µ¬ºîÀ®
-copy	common	ja	¥³¥Ô¡¼
-create	common	ja	ºîÀ®
-created by	common	ja	ºîÀ®¼Ô
+accepted	common	ja	æ‰¿è«¾æ¸ˆã¿
+access	common	ja	ã‚¢ã‚¯ã‚»ã‚¹
+access not permitted	common	ja	ã‚¢ã‚¯ã‚»ã‚¹æ¨©ãŒã‚ã‚Šã¾ã›ã‚“
+access type	common	ja	ã‚¢ã‚¯ã‚»ã‚¹æ¨©
+account has been created	common	ja	ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ä½œæˆã—ã¾ã—ãŸ
+account has been deleted	common	ja	ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’å‰Šé™¤ã—ã¾ã—ãŸ
+account has been updated	common	ja	ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’æ›´æ–°ã—ã¾ã—ãŸ
+account must belong to at least 1 group	common	ja	æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+account preferences	common	ja	ã‚¢ã‚«ã‚¦ãƒ³ãƒˆãƒ¦ãƒ¼ã‚¶è¨­å®š
+acl	common	ja	è¨±å¯è¨­å®š
+active	common	ja	ã‚¢ã‚¯ãƒ†ã‚£ãƒ–
+add	common	ja	è¿½åŠ 
+add category	common	ja	ã‚«ãƒ†ã‚´ãƒªè¿½åŠ 
+add %1 category for	common	ja	%1 ã‚«ãƒ†ã‚´ãƒªè¿½åŠ 
+admin	common	ja	ç’°å¢ƒè¨­å®š
+administration	common	ja	ç’°å¢ƒè¨­å®š
+all	common	ja	å…¨ã¦
+april	common	ja	ï¼”æœˆ
+are you sure you want to delete this category ?	common	ja	ã“ã®ã‚«ãƒ†ã‚´ãƒªã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ã€‚
+are you sure you want to delete this entry ?	common	ja	ã“ã®é …ç›®ã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ã€‚
+august	common	ja	ï¼˜æœˆ
+autosave default category	common	ja	ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ†ã‚´ãƒªã‚’è‡ªå‹•ä¿å­˜
+cancel	common	ja	å–æ¶ˆ
+categories	common	ja	ã‚«ãƒ†ã‚´ãƒª
+category	common	ja	ã‚«ãƒ†ã‚´ãƒª
+categories for	common	ja	ã‚«ãƒ†ã‚´ãƒª
+category %1 has been added !	common	ja	ã‚«ãƒ†ã‚´ãƒª %1 ã‚’è¿½åŠ ã—ã¾ã—ãŸã€‚
+category %1 has been updated !	common	ja	ã‚«ãƒ†ã‚´ãƒª %1 ã‚’è¨‚æ­£ã—ã¾ã—ãŸã€‚
+cc	common	ja	ï¼£ï¼£
+change	common	ja	å¤‰æ›´
+charset	common	ja	utf-8
+choose the category	common	ja	ã‚«ãƒ†ã‚´ãƒªé¸æŠ
+clear	common	ja	ã‚¯ãƒªã‚¢
+clear form	common	ja	å†å…¥åŠ›
+compose	common	ja	æ–°è¦ä½œæˆ
+copy	common	ja	ã‚³ãƒ”ãƒ¼
+create	common	ja	ä½œæˆ
+created by	common	ja	ä½œæˆè€…
 cron	common	ja	Cron
-currency	common	ja	ÄÌ²ß
-current users	common	ja	¸½ºß¤Î¥æ¡¼¥¶
-custom	common	ja	¥«¥¹¥¿¥à
-date	common	ja	Æü
-december	common	ja	£±£²·î
-default category	common	ja	´ûÄê¤Î¥«¥Æ¥´¥ê
-delete	common	ja	ºï½ü
-description	common	ja	¾ÜºÙ
-do you also want to delete all subcategories ?	common	ja	¥µ¥Ö¥«¥Æ¥´¥ê¤âÆ±»ş¤Ëºï½ü¤·¤Ş¤¹¤«¡£
-domestic	common	ja	¹ñÆâ
-done	common	ja	½ªÎ»
-download	common	ja	¥À¥¦¥ó¥í¡¼¥É
-e-mail	common	ja	ÅÅ»Ò¥á¡¼¥ë
-edit	common	ja	ÄûÀµ
-edit categories	common	ja	¥«¥Æ¥´¥êÄûÀµ
-edit category	common	ja	¥«¥Æ¥´¥êÄûÀµ
-edit %1 category for	common	ja	%1 ¥«¥Æ¥´¥êÄûÀµ
-email	common	ja	ÅÅ»Ò¥á¡¼¥ë
-end date	common	ja	½ªÎ»Æü
-end time	common	ja	½ªÎ»»ş´Ö
-entry has been deleted sucessfully	common	ja	ºï½ü¤·¤Ş¤·¤¿¡£
-entry updated sucessfully	common	ja	ÄûÀµ¤·¤Ş¤·¤¿¡£
-error	common	ja	¥¨¥é¡¼
-exit	common	ja	ÊÄ¤¸¤ë
-extra	common	ja	ÄÉ²Ã
-february	common	ja	£²·î
-fields	common	ja	¹àÌÜ
-files	common	ja	¥Õ¥¡¥¤¥ë
-filter	common	ja	ÁªÂò
-first name	common	ja	À«
-firstname	common	ja	À«
-folders	common	ja	¥Õ¥©¥ë¥À
-forward	common	ja	Å¾Á÷
-friday	common	ja	¶âÍËÆü
-from	common	ja	º¹½Ğ¿Í
+currency	common	ja	é€šè²¨
+current users	common	ja	ç¾åœ¨ã®ãƒ¦ãƒ¼ã‚¶
+custom	common	ja	ã‚«ã‚¹ã‚¿ãƒ 
+date	common	ja	æ—¥
+december	common	ja	ï¼‘ï¼’æœˆ
+default category	common	ja	æ—¢å®šã®ã‚«ãƒ†ã‚´ãƒª
+delete	common	ja	å‰Šé™¤
+description	common	ja	è©³ç´°
+do you also want to delete all subcategories ?	common	ja	ã‚µãƒ–ã‚«ãƒ†ã‚´ãƒªã‚‚åŒæ™‚ã«å‰Šé™¤ã—ã¾ã™ã‹ã€‚
+domestic	common	ja	å›½å†…
+done	common	ja	çµ‚äº†
+download	common	ja	ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
+e-mail	common	ja	é›»å­ãƒ¡ãƒ¼ãƒ«
+edit	common	ja	è¨‚æ­£
+edit categories	common	ja	ã‚«ãƒ†ã‚´ãƒªè¨‚æ­£
+edit category	common	ja	ã‚«ãƒ†ã‚´ãƒªè¨‚æ­£
+edit %1 category for	common	ja	%1 ã‚«ãƒ†ã‚´ãƒªè¨‚æ­£
+email	common	ja	é›»å­ãƒ¡ãƒ¼ãƒ«
+end date	common	ja	çµ‚äº†æ—¥
+end time	common	ja	çµ‚äº†æ™‚é–“
+entry has been deleted sucessfully	common	ja	å‰Šé™¤ã—ã¾ã—ãŸã€‚
+entry updated sucessfully	common	ja	è¨‚æ­£ã—ã¾ã—ãŸã€‚
+error	common	ja	ã‚¨ãƒ©ãƒ¼
+exit	common	ja	é–‰ã˜ã‚‹
+extra	common	ja	è¿½åŠ 
+february	common	ja	ï¼’æœˆ
+fields	common	ja	é …ç›®
+files	common	ja	ãƒ•ã‚¡ã‚¤ãƒ«
+filter	common	ja	é¸æŠ
+first name	common	ja	å§“
+firstname	common	ja	å§“
+folders	common	ja	ãƒ•ã‚©ãƒ«ãƒ€
+forward	common	ja	è»¢é€
+friday	common	ja	é‡‘æ›œæ—¥
+from	common	ja	å·®å‡ºäºº
 ftp	common	ja	FTP
-full name	common	ja	Ì¾Á°
-global	common	ja	¥°¥í¡¼¥Ğ¥ë
-global public	common	ja	¥Ñ¥Ö¥ê¥Ã¥¯
-grant access	common	ja	ÍøÍÑµö²ÄÀßÄê
-group	common	ja	¥°¥ë¡¼¥×
-group access	common	ja	¥°¥ë¡¼¥×
-group has been added	common	ja	¥°¥ë¡¼¥×¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
-group has been deleted	common	ja	¥°¥ë¡¼¥×¤òºï½ü¤·¤Ş¤·¤¿¡£
-group has been updated	common	ja	¥°¥ë¡¼¥×¤òÄûÀµ¤·¤Ş¤·¤¿¡£
-group public	common	ja	½êÂ°¥°¥ë¡¼¥×
-groups	common	ja	¥°¥ë¡¼¥×
-help	common	ja	¥Ø¥ë¥×
-high	common	ja	¹â
-home	common	ja	¥Û¡¼¥à
+full name	common	ja	åå‰
+global	common	ja	ã‚°ãƒ­ãƒ¼ãƒãƒ«
+global public	common	ja	ãƒ‘ãƒ–ãƒªãƒƒã‚¯
+grant access	common	ja	åˆ©ç”¨è¨±å¯è¨­å®š
+group	common	ja	ã‚°ãƒ«ãƒ¼ãƒ—
+group access	common	ja	ã‚°ãƒ«ãƒ¼ãƒ—
+group has been added	common	ja	ã‚°ãƒ«ãƒ¼ãƒ—ã‚’è¿½åŠ ã—ã¾ã—ãŸã€‚
+group has been deleted	common	ja	ã‚°ãƒ«ãƒ¼ãƒ—ã‚’å‰Šé™¤ã—ã¾ã—ãŸã€‚
+group has been updated	common	ja	ã‚°ãƒ«ãƒ¼ãƒ—ã‚’è¨‚æ­£ã—ã¾ã—ãŸã€‚
+group public	common	ja	æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—
+groups	common	ja	ã‚°ãƒ«ãƒ¼ãƒ—
+help	common	ja	ãƒ˜ãƒ«ãƒ—
+high	common	ja	é«˜
+home	common	ja	ãƒ›ãƒ¼ãƒ 
 images	common	ja	Images
 inc	common	ja	Inc
-international	common	ja	¹ñºİ
+international	common	ja	å›½éš›
 it has been more then %1 days since you changed your password	common	ja	It has been more then %1 days since you changed your password
-january	common	ja	£±·î
-july	common	ja	£··î
-june	common	ja	£¶·î
-large	common	ja	Âç
-last name	common	ja	Ì¾
-lastname	common	ja	Ì¾
+january	common	ja	ï¼‘æœˆ
+july	common	ja	ï¼—æœˆ
+june	common	ja	ï¼–æœˆ
+large	common	ja	å¤§
+last name	common	ja	å
+lastname	common	ja	å
 last page	common	ja	last page
-login	common	ja	¥í¥°¥¤¥ó
-logout	common	ja	¥í¥°¥¢¥¦¥È
-low	common	ja	Äã
-main category	common	ja	¥á¥¤¥ó¥«¥Æ¥´¥ê
-main screen	common	ja	¥á¥¤¥ó²èÌÌ
-march	common	ja	£³·î
-may	common	ja	£µ·î
-medium	common	ja	Ãæ
-message	common	ja	¥á¥Ã¥»¡¼¥¸
-mobile phone	common	ja	·ÈÂÓÅÅÏÃ
-modem phone	common	ja	¥â¥Ç¥à
-monday	common	ja	·îÍËÆü
-monitor	common	ja	´Æ»ë
-name	common	ja	Ì¾Á°
-new entry added sucessfully	common	ja	¿·¤·¤¤¹àÌÜ¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
-new main category	common	ja	¿·µ¬¥á¥¤¥ó¥«¥Æ¥´¥ê
-next	common	ja	¼¡
-next page	common	ja	¼¡¥Ú¡¼¥¸
-no	common	ja	¤¤¤¤¤¨
-none	common	ja	¤Ê¤·
-normal	common	ja	É¸½à
-notes	common	ja	¥Î¡¼¥È
-notes preferences	common	ja	¥Î¡¼¥È¥æ¡¼¥¶ÀßÄê
-november	common	ja	£±£±·î
-october	common	ja	£±£°·î
+login	common	ja	ãƒ­ã‚°ã‚¤ãƒ³
+logout	common	ja	ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ
+low	common	ja	ä½
+main category	common	ja	ãƒ¡ã‚¤ãƒ³ã‚«ãƒ†ã‚´ãƒª
+main screen	common	ja	ãƒ¡ã‚¤ãƒ³ç”»é¢
+march	common	ja	ï¼“æœˆ
+may	common	ja	ï¼•æœˆ
+medium	common	ja	ä¸­
+message	common	ja	ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+mobile phone	common	ja	æºå¸¯é›»è©±
+modem phone	common	ja	ãƒ¢ãƒ‡ãƒ 
+monday	common	ja	æœˆæ›œæ—¥
+monitor	common	ja	ç›£è¦–
+name	common	ja	åå‰
+new entry added sucessfully	common	ja	æ–°ã—ã„é …ç›®ã‚’è¿½åŠ ã—ã¾ã—ãŸã€‚
+new main category	common	ja	æ–°è¦ãƒ¡ã‚¤ãƒ³ã‚«ãƒ†ã‚´ãƒª
+next	common	ja	æ¬¡
+next page	common	ja	æ¬¡ãƒšãƒ¼ã‚¸
+no	common	ja	ã„ã„ãˆ
+none	common	ja	ãªã—
+normal	common	ja	æ¨™æº–
+notes	common	ja	ãƒãƒ¼ãƒˆ
+notes preferences	common	ja	ãƒãƒ¼ãƒˆãƒ¦ãƒ¼ã‚¶è¨­å®š
+november	common	ja	ï¼‘ï¼‘æœˆ
+october	common	ja	ï¼‘ï¼æœˆ
 ok	common	ja	OK
 on *nix systems please type: %1	common	ja	On *nix systems please type: %1
-only yours	common	ja	½êÍ­¼Ô
-original	common	ja	¥ª¥ê¥¸¥Ê¥ë
-other	common	ja	¤½¤ÎÂ¾
-other phone	common	ja	¤½¤ÎÂ¾ÈÖ¹æ
+only yours	common	ja	æ‰€æœ‰è€…
+original	common	ja	ã‚ªãƒªã‚¸ãƒŠãƒ«
+other	common	ja	ãã®ä»–
+other phone	common	ja	ãã®ä»–ç•ªå·
 outcharset	common	ja	ISO-2022-JP
-open notify window	common	ja	ÄÌÃÎ¾ğÊó
-owner	common	ja	½êÍ­¼Ô
-parent category	common	ja	¿Æ¥«¥Æ¥´¥ê
-password	common	ja	¥Ñ¥¹¥ï¡¼¥É
-password has been updated	common	ja	¥Ñ¥¹¥ï¡¼¥É¤òÊÑ¹¹¤·¤Ş¤·¤¿¡£
+open notify window	common	ja	é€šçŸ¥æƒ…å ±
+owner	common	ja	æ‰€æœ‰è€…
+parent category	common	ja	è¦ªã‚«ãƒ†ã‚´ãƒª
+password	common	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+password has been updated	common	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã—ã¾ã—ãŸã€‚
 permissions to the files/users directory	common	ja	permissions to the files/users directory
-personal	common	ja	¸Ä¿Í
-please set your preferences for this application	common	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¥æ¡¼¥¶ÀßÄê¤ò¹Ô¤Ã¤Æ²¼¤µ¤¤¡£
+personal	common	ja	å€‹äºº
+please set your preferences for this application	common	ja	ã“ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ¦ãƒ¼ã‚¶è¨­å®šã‚’è¡Œã£ã¦ä¸‹ã•ã„ã€‚
 please %1 by hand	common	ja	Please %1 by hand
-please, check your username and password, or contact your admin.	common	ja	¥æ¡¼¥¶¤È¥Ñ¥¹¥ï¡¼¥É¤ò¥Á¥§¥Ã¥¯¤¹¤ë¤«¡¢´ÉÍı¼Ô¤ËÌä¤¤¹ç¤ï¤»¤Æ¤¯¤À¤µ¤¤¡£
+please, check your username and password, or contact your admin.	common	ja	ãƒ¦ãƒ¼ã‚¶ã¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‹ã€ç®¡ç†è€…ã«å•ã„åˆã‚ã›ã¦ãã ã•ã„ã€‚
 powered by egroupware version %1	common	ja	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
-pref	common	ja	Í¥Àè
-prefer	common	ja	¹¥¤ß
-preferences	common	ja	¥æ¡¼¥¶ÀßÄê
-previous	common	ja	Á°
-previous page	common	ja	Á°¥Ú¡¼¥¸
-print	common	ja	°õºş
-priority	common	ja	Í¥Àè½ç°Ì
-private	common	ja	¥×¥é¥¤¥Ù¡¼¥È
-public	common	ja	¶¦Í­
-read	common	ja	É½¼¨
-rename	common	ja	Ì¾Á°¤ÎÊÑ¹¹
-reply	common	ja	ÊÖ¿®
-reply all	common	ja	Á´°÷¤ËÊÖ¿®
-replyto	common	ja	¥ê¥×¥é¥¤
-saturday	common	ja	ÅÚÍËÆü
-save	common	ja	ÊİÂ¸
-search	common	ja	¸¡º÷
-select	common	ja	ÁªÂò
-select category	common	ja	¥«¥Æ¥´¥êÁªÂò
-select headline news sites	common	ja	¥Ø¥Ã¥É¥é¥¤¥ó¥Ë¥å¡¼¥¹¥µ¥¤¥È¤ÎÁªÂò
-select parent category	common	ja	¿Æ¥«¥Æ¥´¥êÁªÂò
-send	common	ja	Á÷¿®
-send updates via email	common	ja	¹¹¿·¾ğÊó¤òÅÅ»Ò¥á¡¼¥ë¤Ç¼õ¼è¤ë
-september	common	ja	£¹·î
-session has been killed	common	ja	¥»¥Ã¥·¥ç¥ó¤òºï½ü¤·¤Ş¤·¤¿¡£
-show all	common	ja	Á´¤ÆÉ½¼¨
-showing %1	common	ja	É½¼¨¿ô %1
-showing %1 - %2 of %3	common	ja	É½¼¨¿ô %1 - %2 of %3
-small	common	ja	¾®
+pref	common	ja	å„ªå…ˆ
+prefer	common	ja	å¥½ã¿
+preferences	common	ja	ãƒ¦ãƒ¼ã‚¶è¨­å®š
+previous	common	ja	å‰
+previous page	common	ja	å‰ãƒšãƒ¼ã‚¸
+print	common	ja	å°åˆ·
+priority	common	ja	å„ªå…ˆé †ä½
+private	common	ja	ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆ
+public	common	ja	å…±æœ‰
+read	common	ja	è¡¨ç¤º
+rename	common	ja	åå‰ã®å¤‰æ›´
+reply	common	ja	è¿”ä¿¡
+reply all	common	ja	å…¨å“¡ã«è¿”ä¿¡
+replyto	common	ja	ãƒªãƒ—ãƒ©ã‚¤
+saturday	common	ja	åœŸæ›œæ—¥
+save	common	ja	ä¿å­˜
+search	common	ja	æ¤œç´¢
+select	common	ja	é¸æŠ
+select category	common	ja	ã‚«ãƒ†ã‚´ãƒªé¸æŠ
+select headline news sites	common	ja	ãƒ˜ãƒƒãƒ‰ãƒ©ã‚¤ãƒ³ãƒ‹ãƒ¥ãƒ¼ã‚¹ã‚µã‚¤ãƒˆã®é¸æŠ
+select parent category	common	ja	è¦ªã‚«ãƒ†ã‚´ãƒªé¸æŠ
+send	common	ja	é€ä¿¡
+send updates via email	common	ja	æ›´æ–°æƒ…å ±ã‚’é›»å­ãƒ¡ãƒ¼ãƒ«ã§å—å–ã‚‹
+september	common	ja	ï¼™æœˆ
+session has been killed	common	ja	ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’å‰Šé™¤ã—ã¾ã—ãŸã€‚
+show all	common	ja	å…¨ã¦è¡¨ç¤º
+showing %1	common	ja	è¡¨ç¤ºæ•° %1
+showing %1 - %2 of %3	common	ja	è¡¨ç¤ºæ•° %1 - %2 of %3
+small	common	ja	å°
 sorry, there was a problem processing your request.	common	ja	Sorry, there was a problem processing your request.
 squirrelmail	common	ja	Squirrelmail
-start date	common	ja	³«»ÏÆü
-start time	common	ja	³«»Ï»ş´Ö
-status	common	ja	¾õÂÖ
-subject	common	ja	·ïÌ¾
-subject:	common	ja	·ïÌ¾¡§
-submit	common	ja	¼Â¹Ô
-sunday	common	ja	ÆüÍËÆü
-that category name has been used already !	common	ja	¥«¥Æ¥´¥êÌ¾¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£
-the two passwords are not the same	common	ja	£²¤Ä¤Î¥Ñ¥¹¥ï¡¼¥É¤¬Åù¤·¤¯¤¢¤ê¤Ş¤»¤ó
+start date	common	ja	é–‹å§‹æ—¥
+start time	common	ja	é–‹å§‹æ™‚é–“
+status	common	ja	çŠ¶æ…‹
+subject	common	ja	ä»¶å
+subject:	common	ja	ä»¶åï¼š
+submit	common	ja	å®Ÿè¡Œ
+sunday	common	ja	æ—¥æ›œæ—¥
+that category name has been used already !	common	ja	ã‚«ãƒ†ã‚´ãƒªåã¯æ—¢ã«å­˜åœ¨ã—ã¦ã„ã¾ã™ã€‚
+the two passwords are not the same	common	ja	ï¼’ã¤ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒç­‰ã—ãã‚ã‚Šã¾ã›ã‚“
 themes	common	ja	Themes
-there was an error trying to connect to your mail server.	common	ja	¥á¡¼¥ë¥µ¡¼¥Ğ¤ËÀÜÂ³¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£
-there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	common	ja	¥á¡¼¥ë¥µ¡¼¥Ğ¤ËÀÜÂ³¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£<BR>ÅÅ»Ò¥á¡¼¥ë¤Î¥æ¡¼¥¶Ì¾¤È¥Ñ¥¹¥ï¡¼¥É¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£
-this folder is empty	common	ja	¥á¥Ã¥»¡¼¥¸¤Ï¤¢¤ê¤Ş¤»¤ó¡£
-thursday	common	ja	ÌÚÍËÆü
-time	common	ja	»ş´Ö
-time zone	common	ja	»şº¹
-time zone offset	common	ja	»şº¹
-title	common	ja	¥¿¥¤¥È¥ë
+there was an error trying to connect to your mail server.	common	ja	ãƒ¡ãƒ¼ãƒ«ã‚µãƒ¼ãƒã«æ¥ç¶šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	common	ja	ãƒ¡ãƒ¼ãƒ«ã‚µãƒ¼ãƒã«æ¥ç¶šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚<BR>é›»å­ãƒ¡ãƒ¼ãƒ«ã®ãƒ¦ãƒ¼ã‚¶åã¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+this folder is empty	common	ja	ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
+thursday	common	ja	æœ¨æ›œæ—¥
+time	common	ja	æ™‚é–“
+time zone	common	ja	æ™‚å·®
+time zone offset	common	ja	æ™‚å·®
+title	common	ja	ã‚¿ã‚¤ãƒˆãƒ«
 to correct this error for the future you will need to properly set the	common	ja	To correct this error for the future you will need to properly set the
-total	common	ja	¹ç·×
-tuesday	common	ja	²ĞÍËÆü
-updated	common	ja	¹¹¿·Æü»ş
-users	common	ja	¥æ¡¼¥¶
-view	common	ja	É½¼¨
-wednesday	common	ja	¿åÍËÆü
-which groups	common	ja	¥°¥ë¡¼¥×ÁªÂò
-yes	common	ja	¤Ï¤¤
-you are required to change your password during your first login	common	ja	½é²ó¥í¥°¥¤¥ó»ş¤Ë¥Ñ¥¹¥ï¡¼¥ÉÊÑ¹¹
-you are required to change your password durring your first login	common	ja	½é²ó¥í¥°¥¤¥ó»ş¤Ë¥Ñ¥¹¥ï¡¼¥ÉÊÑ¹¹
-you have 1 new message!	common	ja	¿·Ãå¥á¡¼¥ë¤¬£±ÄÌ¤¢¤ê¤Ş¤¹¡£
-you have messages!	common	ja	¥á¥Ã¥»¡¼¥¸¤¬¤¢¤ê¤Ş¤¹¡£
-you have no new messages	common	ja	¿·Ãå¥á¡¼¥ë¤Ï¤¢¤ê¤Ş¤»¤ó¡£
-you have %1 new messages!	common	ja	¿·Ãå¥á¡¼¥ë¤¬ %1 ÄÌ¤¢¤ê¤Ş¤¹¡£
-you must enter a password	common	ja	¥Ñ¥¹¥ï¡¼¥É¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
-your message has been sent	common	ja	¥á¥Ã¥»¡¼¥¸¤òÁ÷¿®¤·¤Ş¤·¤¿¡£
-your search has returned no matchs !	common	ja	¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£
-your search returned 1 match	common	ja	£±·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
-your search returned %1 matchs	common	ja	%1 ·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
+total	common	ja	åˆè¨ˆ
+tuesday	common	ja	ç«æ›œæ—¥
+updated	common	ja	æ›´æ–°æ—¥æ™‚
+users	common	ja	ãƒ¦ãƒ¼ã‚¶
+view	common	ja	è¡¨ç¤º
+wednesday	common	ja	æ°´æ›œæ—¥
+which groups	common	ja	ã‚°ãƒ«ãƒ¼ãƒ—é¸æŠ
+yes	common	ja	ã¯ã„
+you are required to change your password during your first login	common	ja	åˆå›ãƒ­ã‚°ã‚¤ãƒ³æ™‚ã«ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å¤‰æ›´
+you are required to change your password durring your first login	common	ja	åˆå›ãƒ­ã‚°ã‚¤ãƒ³æ™‚ã«ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å¤‰æ›´
+you have 1 new message!	common	ja	æ–°ç€ãƒ¡ãƒ¼ãƒ«ãŒï¼‘é€šã‚ã‚Šã¾ã™ã€‚
+you have messages!	common	ja	ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã‚ã‚Šã¾ã™ã€‚
+you have no new messages	common	ja	æ–°ç€ãƒ¡ãƒ¼ãƒ«ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
+you have %1 new messages!	common	ja	æ–°ç€ãƒ¡ãƒ¼ãƒ«ãŒ %1 é€šã‚ã‚Šã¾ã™ã€‚
+you must enter a password	common	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ä¸‹ã•ã„ã€‚
+your message has been sent	common	ja	ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ä¿¡ã—ã¾ã—ãŸã€‚
+your search has returned no matchs !	common	ja	è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚
+your search returned 1 match	common	ja	ï¼‘ä»¶è¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚
+your search returned %1 matchs	common	ja	%1 ä»¶è¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚
 your settings have been updated	common	ja	Your settings have been Updated
-bad login or password	common	ja	¥Ñ¥¹¥ï¡¼¥É¤¬¸í¤Ã¤Æ¤¤¤Ş¤¹
-login	login	ja	¥í¥°¥¤¥ó
-password	login	ja	¥Ñ¥¹¥ï¡¼¥É
-sorry, your login has expired	login	ja	¥í¥°¥¤¥óÍ­¸ú´ü¸Â¤¬ÀÚ¤ì¤Ş¤·¤¿
-use cookies	login	ja	Cookie ¤ò»ÈÍÑ
-username	login	ja	¥æ¡¼¥¶Ì¾
-you have been successfully logged out	login	ja	¥í¥°¥¢¥¦¥È¤·¤Ş¤·¤¿¡£
+bad login or password	common	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒèª¤ã£ã¦ã„ã¾ã™
+login	login	ja	ãƒ­ã‚°ã‚¤ãƒ³
+password	login	ja	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+sorry, your login has expired	login	ja	ãƒ­ã‚°ã‚¤ãƒ³æœ‰åŠ¹æœŸé™ãŒåˆ‡ã‚Œã¾ã—ãŸ
+use cookies	login	ja	Cookie ã‚’ä½¿ç”¨
+username	login	ja	ãƒ¦ãƒ¼ã‚¶å
+you have been successfully logged out	login	ja	ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã—ã¾ã—ãŸã€‚
 your session could not be verified.	login	ja	Your session could not be verified.
