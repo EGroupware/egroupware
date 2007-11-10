@@ -24,7 +24,6 @@ as a subfolder of	felamimail	ca	com una subcarpeta de
 attachments	felamimail	ca	Adjunts
 auto refresh folder list	felamimail	ca	Autorefrescar la llista de carpetes
 back to folder	felamimail	ca	Tornar a la carpeta
-bad reque	felamimail	ca	Petició errònia
 based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	ca	Basat en els criteris donats, els missatges que arribin poden tenir distints colors de fons a la llista de missatges. Això ajuda a distinguir fàcilment de qui són els missatges, especialment per a llistes de correu.
 bcc	felamimail	ca	Cco
 before headers	felamimail	ca	Abans de les capçaleres
@@ -118,7 +117,7 @@ file into	felamimail	ca	Informació del fitxer
 files	felamimail	ca	Fitxers
 filter active	felamimail	ca	Filtre actiu
 filter name	felamimail	ca	Nom del filtre
-filter rules	felamimail	ca	regles de filtratge
+filter rules	common	ca	regles de filtratge
 first name	felamimail	ca	Nom de pila
 flagged	felamimail	ca	marcat
 flags	felamimail	ca	Marques
@@ -165,8 +164,6 @@ imap server type	felamimail	ca	Tipus de servidor IMAP
 imaps authentication	felamimail	ca	Identificació IMAPS
 imaps encryption only	felamimail	ca	Xifrat IMAPS només
 in	felamimail	ca	a
-in order for squirrelmail to provide the full set of options you need to create the special folders listed below.  just click the check box and hit the create button.	felamimail	ca	Per a que SquirrelMail proporcioni totes les opcions necessita crear les carpetes especials que s'indiquen més avall. Simplement marqueu el quadre i pijau el botó de crear.
-in the center	felamimail	ca	en el centre
 index order	felamimail	ca	Ordre de l'índex
 info	felamimail	ca	Informació
 invalid user name or password	felamimail	ca	L'usuari o la contrasenya no són vàlids
@@ -179,16 +176,9 @@ last name	felamimail	ca	Cognoms
 left	felamimail	ca	Esquerra
 less	felamimail	ca	menys
 less than	felamimail	ca	menor que
-let this folder contain subfolders	felamimail	ca	Permetre a aquesta carpeta tenir subcarpetes
-light blue	felamimail	ca	Blau clar
-light cyan	felamimail	ca	Cyan clar
 light gray	felamimail	ca	Gris clar
-light green	felamimail	ca	Verd clar
-light magenta	felamimail	ca	Magenta clar
-light yellow	felamimail	ca	Groc clar
 list all	felamimail	ca	Llista-ho tot
 location of buttons when composing	felamimail	ca	Ubicació dels botons en redactar
-location of folder list	felamimail	ca	Ubicació de la llista de carpetes
 mail server login type	admin	ca	Tipus de sessió del servidor de correu
 mail settings	felamimail	ca	Configuració del correu
 mainmessage	felamimail	ca	missatge principal
@@ -204,28 +194,21 @@ mark selected as unread	felamimail	ca	Marcar la selecció com a no llegit
 match	felamimail	ca	Coincidència
 matches	felamimail	ca	coincideix
 matches regexp	felamimail	ca	coincideix amb l'expressió
-medium gray	felamimail	ca	Gris mitjà
-message	felamimail	ca	Missatge
 message highlighting	felamimail	ca	Resaltat del missatge
 message list	felamimail	ca	Llista de missatges
 messages	felamimail	ca	missatges
-minute	felamimail	ca	Minut
-minutes	felamimail	ca	Minuts
 mon	felamimail	ca	Dl
-more	felamimail	ca	més
 move	felamimail	ca	moure
 move messages	felamimail	ca	moure missatges
 move selected to	felamimail	ca	moure els seleccionats a
 move to trash	felamimail	ca	Moure a la paperera
 moving messages to	felamimail	ca	movent missatges a
-must be unique	felamimail	ca	Ha de ser únic
 name	felamimail	ca	Nom
 never display html emails	felamimail	ca	No mostrar mai els correus HTML
 new	common	ca	Nou
 new filter	felamimail	ca	Nou filtre
 next	felamimail	ca	Següent
 next message	felamimail	ca	Missatge següent
-nickname	felamimail	ca	Sobrenom
 no filter	felamimail	ca	Sense filtre
 no folders found	felamimail	ca	No s'han trobat carpetes
 no folders were found to subscribe to!	felamimail	ca	No s'han trobat carpetes on subscriure's
@@ -233,14 +216,9 @@ no folders were found to unsubscribe from!	felamimail	ca	No s'han trobat carpete
 no highlighting is defined	felamimail	ca	No s'ha definit un resaltat
 no messages found...	felamimail	ca	no s'han trobat missatges...
 no messages were selected.	felamimail	ca	No s'han seleccionat missatges.
-no next message	felamimail	ca	No hi ha missatge següent
-no notification	felamimail	ca	Sense notificació
-no personal address book is defined. contact administrator.	felamimail	ca	No s'ha definit una llibreta d'adreces personal. Poseu-vos en contacte amb l'administrador
-no persons matching your search was found	felamimail	ca	No s'han trobat persones amb el criteri indicat
 no previous message	felamimail	ca	No hi ha missatge anterior
 no valid emailprofile selected!!	felamimail	ca	No s'ha seleccionat un perfil de correu vàlid!!
 none	felamimail	ca	cap
-number of messages to index	felamimail	ca	Número de missatges a indexar
 on behalf of	felamimail	ca	en nom de
 one address is not valid	felamimail	ca	Una adreça no és vàlida
 only inbox	felamimail	ca	Només la Safata d'entrada
@@ -251,28 +229,20 @@ options	felamimail	ca	Opcions
 organisation	felamimail	ca	Organització
 organization	felamimail	ca	Organització
 organization name	admin	ca	Nom de l'organització
-oth	felamimail	ca	Altres
 participants	felamimail	ca	Participants
 personal information	felamimail	ca	Informació personal
 please select a address	felamimail	ca	Si us plau, seleccioneu una adreça
 please select the number of days to wait between responses	felamimail	ca	Si us plau, seleccioneu el número de dies a esperar entre respostes
 please supply the message to send with auto-responses	felamimail	ca	Si us plau, indiqueu el missatge a enviar amb auto-respostes
 posting	felamimail	ca	enviar
-preference file %1 not found. exiting abnormally	felamimail	ca	El fitxer de prefèrencies %1 no s'ha trobat. Sortint de forma anormal.
-preference file, %1, does not exist. log out, and log back in to create a default preference file.	felamimail	ca	El fitxer de preferències %1 no existeix. Tanqueu la sessió i torneu a iniciar-la per crear un fitxer de preferències predeterminat.
 previous	felamimail	ca	Anterior
 previous message	felamimail	ca	Missatge anterior
 print it	felamimail	ca	Imprimir-lo
 print this page	felamimail	ca	Imprimir aquesta pàgina
-purge	felamimail	ca	Purgar
 quicksearch	felamimail	ca	Cerca ràpida
 read	felamimail	ca	llegit
-read da	felamimail	ca	Data de lectura
 reading	felamimail	ca	llegint
-reason giv	felamimail	ca	Raó
 recent	felamimail	ca	recent(s)
-refresh folder list	felamimail	ca	Refrescar la llista de carpetes
-refresh page	felamimail	ca	Refrescar pàgina
 refresh time in minutes	felamimail	ca	Temps de refresc en minuts
 remove	felamimail	ca	eliminar
 remove immediately	felamimail	ca	Eliminar inmediatament
@@ -291,8 +261,6 @@ return	felamimail	ca	Tornar
 return to options page	felamimail	ca	Tornar a la pàgina d'opcions
 right	felamimail	ca	Dreta
 rule	felamimail	ca	Regla
-running squirrelmail version %1 (c) 1999-2000.	felamimail	ca	Executant SquirrelMail versió %1 (c) 1999-2000
-same window - not functional yet	felamimail	ca	A la mateixa finestra - encara no funciona
 sat	felamimail	ca	Ds
 save	felamimail	ca	Desar
 save changes	felamimail	ca	desar canvis
@@ -300,19 +268,14 @@ script name	felamimail	ca	nom de la seqüència
 script status	felamimail	ca	estat de la seqüència
 search	felamimail	ca	Cercar
 search for	felamimail	ca	Cercar
-seconds	felamimail	ca	Segons
 select	felamimail	ca	Seleccionar
 select all	felamimail	ca	Seleccionar tot
 select emailprofile	felamimail	ca	Seleccionar perfil de correu
 select folder	felamimail	ca	Selecciona la carpeta
-select home email address	felamimail	ca	Seleccionar adreça de correu
-select work email address	felamimail	ca	Seleccionar adreça de correu del treball
 select your mail server type	admin	ca	Seleccionar el tipus de servidor de correu
 send	felamimail	ca	Enviar
 send a reject message	felamimail	ca	envia un missatge de rebuig
-sent fold	felamimail	ca	Carpeta d'enviats
 sent folder	felamimail	ca	Carpeta d'enviats
-server respond	felamimail	ca	Resposta del servidor
 show header	felamimail	ca	mostrar capçalera
 show new messages on main screen	felamimail	ca	Mostrar missatges nous a la pantalla principal
 sieve settings	admin	ca	Configuració de Sieve
@@ -325,10 +288,6 @@ size(...->0)	felamimail	ca	Mida (...->0)
 size(0->...)	felamimail	ca	Mida (0->...)
 small view	felamimail	ca	Vista reduïda
 smtp settings	admin	ca	Opcions SMTP
-some or all of the help documents are not present!	felamimail	ca	Alguns o tots els documents de l'ajuda no estan presents
-source	felamimail	ca	Origen
-special folder options	felamimail	ca	Opcions especials de la carpeta
-squirrelmail	felamimail	ca	Squirrelmail
 subject	felamimail	ca	Assumpte
 subject(a->z)	felamimail	ca	Assumpte (A->Z)
 subject(z->a)	felamimail	ca	Assumpte (Z->A)
@@ -336,38 +295,22 @@ submit	felamimail	ca	Enviar
 subscribe	felamimail	ca	Subscriure's
 subscribed	felamimail	ca	Subscrit
 subscribed successfully!	felamimail	ca	Subscripció correcta
-successfully saved display preferences!	felamimail	ca	Les preferències de visualització s'han desat correctament
-successfully saved folder preferences!	felamimail	ca	Les preferències de les carpetes s'han desat correctament
-successfully saved personal information!	felamimail	ca	La informació personal s'ha desat correctament
 sun	felamimail	ca	Dg
-switch current folder to	felamimail	ca	canviar la carpeta actual a
 table of contents	felamimail	ca	Taula de continguts
 text only	felamimail	ca	Només text
 the connection to the imap server failed!!	felamimail	ca	Ha fallat la connexió amb el servidor IMAP!
-the help has not been translated to %1.  it will be displayed in english instead.	felamimail	ca	L'ajuda no ha estat traduïda a %1. Es mostrarà en anglès.
-the index order is the order that the columns are arranged in the message index.  you can add, remove, and move columns around to customize them to fit your needs.	felamimail	ca	L'ordre dels índexos és l'ordre en el qual es mostren les columnes a l'índex de missatges. Podeu afegir, esborrar i moure columnes per personalitzar-les i ajustar-les a les vostres necessitats.
-the order of the message index can be rearanged and changed to contain the headers in any order you want.	felamimail	ca	L'ordre de l'índex de missatges es pot reordenar i canviar per contenir les capçaleres en l'ordre que es vulgui.
-theme	felamimail	ca	Tema
 then	felamimail	ca	ALESHORES
-these settings change the way your folders are displayed and manipulated.	felamimail	ca	Aquestes opcions varien depenent de com es manipulin les carpetes.
-this contains personal information about yourself such as your name, your email address, etc.	felamimail	ca	Aquesta conté informació personal sobre vós, com el vostre nom, adreça de correu electrònic, etc.
 this folder is empty	felamimail	ca	AQUESTA CARPETA ESTÀ BUIDA
 this php has no imap support compiled in!!	felamimail	ca	Aquesta instal·lació de PHP no té suport IMAP!
-this port is based on squirrelmail, which is a standalone imap client.<br>	felamimail	ca	Aquest port està basat en Squirrelmail, que és un client IMAP.<br>
 thu	felamimail	ca	Dj
 to	felamimail	ca	Per a
 to mail sent to	felamimail	ca	al correu enviat a
-to the left	felamimail	ca	a l'esquerra
-to the right	felamimail	ca	a la dreta
-top	felamimail	ca	Superior
-translation location	felamimail	ca	Ubicació de la traducció
 translation preferences	felamimail	ca	Preferències de la traducció
 translation server	felamimail	ca	Servidor de traduccions
 trash fold	felamimail	ca	Carpeta Paperera
 trash folder	felamimail	ca	Carpeta Paperera
 tue	felamimail	ca	Dt
 type	felamimail	ca	tipus
-unable to list addresses from %1	felamimail	ca	No s'han pogut llistar les adreces des de %1
 unflagged	felamimail	ca	Sense senyalar
 unknown err	felamimail	ca	Error desconegut
 unknown error	felamimail	ca	Error desconegut
@@ -375,44 +318,29 @@ unknown sender	felamimail	ca	Remitent desconegut
 unknown user or password incorrect.	felamimail	ca	Usuari desconegut o contrasenya incorrecta
 unread	common	ca	No llegit
 unseen	felamimail	ca	No vist
-unseen and total	felamimail	ca	No vists i total
-unseen message notification	felamimail	ca	Notificació de missatge desconeguda
-unseen message notification type	felamimail	ca	Tipus de notificació de missatge no vist
 unselect all	felamimail	ca	Deseleccionar tot
 unsubscribe	felamimail	ca	Desubscriure
 unsubscribed	felamimail	ca	No subscrit
 unsubscribed successfully!	felamimail	ca	Desubscripció correcta
 up	felamimail	ca	a dalt
-update address	felamimail	ca	Actualitzar adreça
 use <a href="%1">emailadmin</a> to create profiles	felamimail	ca	utilitzeu <a href="%1">EmailAdmin</a> per a crear perfils de correu
 use a signature	felamimail	ca	Utilitzar una signatura
 use a signature?	felamimail	ca	Utilitzar una signatura?
 use addresses	felamimail	ca	Utilitzar adreces
 use custom settings	felamimail	ca	Utilitzar opcions personalitzades
-use javascript or html addressbook?	felamimail	ca	Utilitzar javascript o llibreta d'adreces HTML
 use regular expressions	felamimail	ca	utilitza expressions regulars
 use smtp auth	admin	ca	Utilitzar identificació SMTP
 users can define their own emailaccounts	admin	ca	Els usuaris poden definir els seus propis comptes de correu
-vacation notice	felamimail	ca	notificació de vacances
+vacation notice	common	ca	notificació de vacances
 view full header	felamimail	ca	Veure la capçalera sencera
 view message	felamimail	ca	Veure missatge
 viewing full header	felamimail	ca	Veient la capçalera sencera
 viewing message	felamimail	ca	Veient missatge
 viewing messages	felamimail	ca	Veient missatges
 wed	felamimail	ca	Dc
-welcome to %1's webmail system	felamimail	ca	Benvingut al sistema de WebMail %1
 when deleting messages	felamimail	ca	En esborrar missatges
-white	felamimail	ca	Blanc
-width of folder list	felamimail	ca	Amplada de la llista de carpetes
 with message	felamimail	ca	amb missatge
 with message "%1"	felamimail	ca	amb missatge "%1"
 wrap incoming text at	felamimail	ca	Ajustar el text entrant a
 writing	felamimail	ca	escrivint
 wrote	felamimail	ca	ha escrit
-you can change the way that squirrelmail looks and displays information to you, such as the colors, the language, and other settings.	felamimail	ca	Podeu canviar la forma en que SquirrelMail mira i mostra la informació, com els colors, l'idioma i altres opcions.
-you can only edit one address at the time	felamimail	ca	Només podeu editar una adreça al mateix temps
-you must login first.	felamimail	ca	Abans, heu d'iniciar la sessió.
-you need a valid user and password to access this page!	felamimail	ca	Necessiteu un usuari i una contrasenya vàlids per accedir a aquesta pàgina
-your search failed with the following error(s)	felamimail	ca	La cerca ha fallat i ha donat els següents errors:
-1	felamimail	ca	1
-

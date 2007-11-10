@@ -1,0 +1,102 @@
+accessories of	resources	ca	accessoris de
+accessories:	resources	ca	Accessoris:
+actions	resources	ca	Accions
+add accessory	resources	ca	Afegeix accesori
+add resource	resources	ca	afegeix un recurs
+add resources	resources	ca	Afegeix recursos
+administrator	resources	ca	Administrador
+all categories	resources	ca	totes les categories
+book	resources	ca	Reserva
+book selected resources	resources	ca	reserva els recursos seleccionats
+book this resource	resources	ca	Reserva aquest recurs
+bookable	resources	ca	Es pot reservar
+buy this article	resources	ca	Compra aquest article
+buy this resource	resources	ca	Compra aquest recurs
+buyable	resources	ca	Es pot comprar
+categories admin	resources	ca	Administrador de categories
+category:	resources	ca	Categoria:
+check all	resources	ca	Comprova-ho tot
+choose categories admin	resources	ca	tria l'administrador de categories
+clear selection	resources	ca	esborra la selecció
+configure access permissions	admin	ca	Configura Permissos d'Accés
+create new accessory for this resource	resources	ca	Crea un nou accessori per aquest recurs
+create new links	resources	ca	Crea nous enllaços
+delete selected resources	resources	ca	esborra els recursos seleccionats
+delete this entry	resources	ca	Esborra aquesta entrada
+description (short)	resources	ca	Descripció (curta)
+direct booking permissions	resources	ca	Permissos directes de reserva
+don't use vfs (this will need a symlink --> see readme)	resources	ca	No utilitzeu vfs (necessita un enllaç simbòlic --> mireu README
+edit this entry	resources	ca	Edita aquesta entrada
+existing links	resources	ca	Enllaços existents
+general	resources	ca	General
+general informations about resource	resources	ca	Informació general sobre els recursos
+gernal resource	resources	ca	recursos generals
+how many of the resources are useable?	resources	ca	Quants recursos són utilitzables?
+how many of them are useable?	resources	ca	Quants són utilitzables?
+how many of this resource are usable	resources	ca	Quants d'aquests recursos són utilitzables
+how many of this resource exists	resources	ca	Quants d'aquests recursos existeixen
+implies booking permission	resources	ca	implica permís per reservar
+implies read permission	resources	ca	implica permís per llegir
+information about storage	resources	ca	Informació sobre emmagatzematge
+informations about the location of resource	resources	ca	Informació sobre la ubicació del recurs
+inventory number	resources	ca	Número d'inventari
+inventory number:	resources	ca	Número d'inventari:
+is resource bookable?	resources	ca	Es pot reservar el recurs?
+is resource buyable?	resources	ca	Es pot comprar el recurs?
+is this resource bookable?	resources	ca	Es pot reservar aquest recurs?
+is this resource buyable?	resources	ca	Es pot comprar aquest recurs?
+links	resources	ca	Enllaços
+location	resources	ca	Ubicació
+location of resource	resources	ca	Ubicació del recurs
+location:	resources	ca	Ubicació:
+name of resource	resources	ca	Nom del recurs
+name:	resources	ca	Nom:
+no description available	resources	ca	Descripció no disponible
+no resources selected	resources	ca	Cap recurs seleccionat
+notify your administrator to correct this situation	resources	ca	Notifica al teu administrador que corregeixi aquesta situació
+picture	resources	ca	Imatge
+picture source	resources	ca	origen de la imatge
+picture type is not supported, sorry!	resources	ca	No es permet el tipus d'imatge!
+pictures or resource	resources	ca	Imatges o recursos
+planer	resources	ca	planificador
+prizeing information for booking or buying	resources	ca	Informació de preus per reserva o compra
+quantity	resources	ca	Quantitat
+quantity of resource	resources	ca	Quantitat de recurs
+quantity:	resources	ca	Quantitat:
+read calendar permissions	resources	ca	Llegiu permissos de Calendari
+read permissions	resources	ca	Llegiu permissos
+related links	resources	ca	Enllaços relacionats
+resources	common	ca	Recursos
+resources list	resources	ca	Llista de recursos
+responsible:	resources	ca	Responsable:
+saves entry and exits	resources	ca	Desa entrades i sortides
+select a category	resources	ca	Seleccioneu una categoria
+select resource	resources	ca	Seleccioneu un recurs
+select resources	common	ca	Seleccioneu recursos
+select/deselect all	resources	ca	Seleccioneu/deseleccioneu tot
+short description	resources	ca	Descripció curta
+short description of resource	resources	ca	Descripció curta del recurs
+show calendar of resource	resources	ca	Mostra el calendari del recurs
+something went wrong by deleting resource	resources	ca	S'ha produit un error esborrant el recurs
+something went wrong by saving resource	resources	ca	S'ha produit un error desant el recurs
+storage inforation	resources	ca	Informació d'Emmagatzematge
+storage information	resources	ca	Informació d'emmagatzematge
+storage information:	resources	ca	Informació d'emmagatzematge:
+the calendar of this resource	resources	ca	El Calendari d'aquest recurs
+this module displays the resources app	resources	ca	Aquest mòdul mostra les aplicacions dels recursos
+use general resources icon	resources	ca	Utilitza la icona de recursos generals
+use own picture	resources	ca	Utilitza la pròpia imatge
+use the category's icon	resources	ca	Utilitza la icona de categoria
+useable	resources	ca	es pot utilitzar
+useable:	resources	ca	Es pot utilitzar
+view accessories for this resource	resources	ca	Veure accessoris per aquest recurs
+view this entry	resources	ca	Veure aquesta entrada
+web-page of resource	resources	ca	Pàgina Web del recurs
+web-site for this resource	resources	ca	Lloc Web per aquest recurs
+where to find this resource?	resources	ca	On puc trobar aquest recurs?
+which category does this resource belong to?	resources	ca	A quina categoria correspon aquest recurs?
+write permissions	resources	ca	Escriu permissos
+you are not permitted to delete this reource!	resources	ca	No teniu permís per esborrar aquest recurs!
+you are not permitted to edit this reource!	resources	ca	No teniu permís per editar aquest recurs!
+you are not permitted to get information about this resource!	resources	ca	No teniu permís per obtenir informació sobre aquest recurs!
+you chose more resources than available	resources	ca	Heu triat més recursos dels disponibles
