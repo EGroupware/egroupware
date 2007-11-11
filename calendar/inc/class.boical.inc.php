@@ -991,6 +991,10 @@
 				case 'synthesis ag':
 					switch(strtolower($_productName))
 					{
+						case 'sysync client pocketpc std':
+						case 'sysync client pocketpc pro':
+							$this->supportedFields = $defaultFields['full'];
+							break;
 						default:
 							$this->supportedFields = $defaultFields['synthesis'];
 							break;
