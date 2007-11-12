@@ -96,5 +96,11 @@
 			$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['egw']->link('/admin/phpinfo.php') . "')";
 		}
 
-		display_sidebox($appname,$menu_title,$file);
-	}
+		if($GLOBALS['egw_info']['flags']['currentapp'] =='admin')
+		{
+		   $menu_title = 'Administration';
+		   $file = array();
+
+		   display_sidebox($appname,$menu_title,$file);
+		}
+	 }
