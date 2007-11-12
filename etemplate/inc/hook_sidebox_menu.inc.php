@@ -21,9 +21,11 @@
 			'_NewLine_', // give a newline
 			'developer_tools' => $GLOBALS['egw']->link('/index.php','menuaction=developer_tools.uilangfile.index'),
 		);
-	}
-	display_sidebox($appname,$menu_title,$file);
-
+	 }
+	 if($GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate')
+	 {
+		display_sidebox($appname,$menu_title,$file);
+	 }
 	$menu_title = lang('Documentation');
 	$docs = $GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/doc/';
 	$file = Array(
@@ -50,4 +52,8 @@
 		),
 
 	);
-	display_sidebox($appname,$menu_title,$file);
+
+	if($GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate')
+	{
+	   display_sidebox($appname,$menu_title,$file);
+	}
