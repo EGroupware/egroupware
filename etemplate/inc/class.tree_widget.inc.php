@@ -208,7 +208,7 @@ class tree_widget
 				}
 				else
 				{
-					$parts = explode('/',$path);
+					$parts = explode('/',$value);
 					$value = array_pop($parts);
 				}
 		}
