@@ -771,7 +771,17 @@
 			{
 				if (($fp = fopen ($p->real_full_path, 'rb')))
 				{
-					$contents = fread ($fp, filesize ($p->real_full_path));
+				    if (filesize($p->real_full_path) > 0)
+				    {
+				        $contents = fread ($fp, filesize($p->real_full_path));
+				    }
+				    else
+				    {
+				        // files could also have no contents. In this case
+				        // the second parameter should not be present!
+				        $contents = fread ($fp);
+				    }
+					
 					fclose ($fp);
 				}
 				else
