@@ -670,7 +670,7 @@ class Horde_SyncML_State {
 			$res['ContentType'] = $ctype;
 		}
 
-		switch($ctype)
+		switch(strtolower($ctype))
 		{
 			case 'text/x-vcard':
 			case 'text/x-vcalendar':
@@ -687,19 +687,20 @@ class Horde_SyncML_State {
 				$res['ContentFormat'] = 'b64';
 				$res['mayFragment'] = 0;
 				break;
-		}
 
-		if (!isset($res['mayFragment']))
-		{
-			$res['mayFragment'] = 0;
+			default:
+   				Horde::logMessage("SyncML: unrecognized content type '$ctype'", __FILE__, __LINE__, PEAR_LOG_ERR);
+				break;
 		}
 
 		if ($target != null)
 		{
-			switch($target)
+			$_target = str_replace('./','',$target);
+			switch(strtolower($_target))
 			{
 				case 'calendar':
 				case 'tasks':
+				case 'caltasks':
 				case 'notes':
 				case 'contacts':
 					$res['mayFragment'] = 1;
@@ -710,13 +711,21 @@ class Horde_SyncML_State {
 				case 'sifnotes':
 				case 'sifcontacts':
 				case 'scard':
-				case 'scalendar':
+				case 'scal':
 				case 'stask':
 				case 'snote':
-				default:
 					$res['mayFragment'] = 0;
 					break;
+
+				default:
+					Horde::logMessage("SyncML: unrecognized target '$_target'", __FILE__, __LINE__, PEAR_LOG_ERR);
+					break;
 			}
+		}
+
+		if (!isset($res['mayFragment']))
+		{
+			$res['mayFragment'] = 0;
 		}
 
 		return $res;
@@ -725,7 +734,7 @@ class Horde_SyncML_State {
 	function getPreferedContentType($type)
 	{
 		$_type = str_replace('./','',$type);
-		switch($_type)
+		switch(strtolower($_type))
 		{
 			case 'contacts':
 				return 'text/x-vcard';
@@ -735,11 +744,9 @@ class Horde_SyncML_State {
 				return 'text/x-vnote';
 				break;
 				
-			case 'tasks':
-				return 'text/x-vcalendar';
-				break;
-
 			case 'calendar':
+			case 'tasks':
+			case 'caltasks':
 				return 'text/x-vcalendar';
 				break;
 				
@@ -762,13 +769,17 @@ class Horde_SyncML_State {
 			case 'snote':
 				return 'text/x-s4j-sifn';
 				break;
+			
+			default:
+				Horde::logMessage("SyncML: unrecognized content type '$_type'", __FILE__, __LINE__, PEAR_LOG_ERR);
+				break;
 		}
 	}
 
 	function getHordeType($type)
 	{
 		$_type = str_replace('./','',$type);
-		switch($_type)
+		switch(strtolower($_type))
 		{
 			case 'contacts':
 				return 'contacts';
@@ -783,6 +794,7 @@ class Horde_SyncML_State {
 				break;
 			
 			case 'calendar':
+			case 'caltasks':
 				return 'calendar';
 				break;
 
@@ -809,7 +821,7 @@ class Horde_SyncML_State {
 				break;
 
 			default:
-				Horde::logMessage("unknown hordeType for type=$type ($_type)", __FILE__, __LINE__, PEAR_LOG_INFO);
+				Horde::logMessage("SyncML: unknown hordeType for type=$type ($_type)", __FILE__, __LINE__, PEAR_LOG_INFO);
 				return $_type;
 				break;
 		}
