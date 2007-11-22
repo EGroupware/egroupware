@@ -27,6 +27,7 @@
 			'customfields' => 'custom fields',
 			'customfields-types' => 'custom field types',
 			'customfields-list'  => 'custom field list',
+			'customfields-no-label' => 'custom fields without label',
 		);
 		
 		/**
@@ -55,10 +56,31 @@
 		* @var $prefix string Prefix for every custiomfield name returned in $content (# for general (admin) customfields)
 		*/
 		var $prefix = '#';
+		
+		/**
+		 * Current application
+		 *
+		 * @var string
+		 */
+		var $appname;
+		/**
+		 * Instance of the config class for $appname
+		 *
+		 * @var config
+		 */
+		var $config;
+		/**
+		 * Our customfields as name => data array
+		 *
+		 * @var array
+		 */
+		var $customfields;
+		var $types;
+		var $advanced_search;
 
-		function customfields_widget($ui)
+		function customfields_widget($ui,$appname=null)
 		{
-			$this->appname = $GLOBALS['egw_info']['flags']['currentapp'];
+			$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
 			$this->config =& CreateObject('phpgwapi.config',$this->appname);
 			$this->config->appname = $this->appname;
 			$config = $this->config->read_repository();
@@ -72,8 +94,21 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			if ($this->appname == 'etemplate')	// if we are in the etemplate editor, load the cf's from the app the tpl belongs too
+			{
+				list($app) = explode('.',$tmpl->name);
+				if ($app && $app != $this->appname) $this->customfields_widget(null,$app);
+			}
 			$type2 = $cell['size'];
 
+			$fields = $this->customfields;
+			// check if name refers to a single custom field --> show only that
+			if (($pos=strpos($cell['name'],$this->prefix)) !== false && // allow the prefixed name to be an array index too
+				preg_match("/$this->prefix([^\]]+)/",$cell['name'],$matches) && isset($fields[$name=$matches[1]]))
+			{
+				$fields = array($name => $fields[$name]);
+				$value = array($this->prefix.$name => $value);
+			}
 			switch($type = $cell['type'])
 			{
 				case 'customfields-types':
@@ -86,7 +121,7 @@
 					return true;
 
 				case 'customfields-list':
-					foreach(array_reverse($this->customfields) as $name => $field)
+					foreach(array_reverse($fields) as $name => $field)
 					{
 						if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false) continue;	// not for our content type
 						if (isset($value[$this->prefix.$name]) && $value[$this->prefix.$name] !== '') break;
@@ -96,7 +131,7 @@
 			}
 			$readonly = $cell['readonly'] || $readonlys[$name] || $type == 'customfields-list';
 
-			if(!is_array($this->customfields))
+			if(!is_array($fields))
 			{
 				$cell['type'] = 'label';
 				return True;
@@ -105,9 +140,9 @@
 			$cell['type'] = 'grid';
 			$cell['data'] = array(array());
 			$cell['rows'] = $cell['cols'] = 0;
-			
+
 			$n = 1;
-			foreach($this->customfields as $name => $field)
+			foreach($fields as $name => $field)
 			{
 				if ($stop_at_field && $name == $stop_at_field) break;	// no further row necessary
 
@@ -118,7 +153,7 @@
 				}
 				$new_row = null; etemplate::add_child($cell,$new_row);
 
-				if ($type != 'customfields-list')
+				if ($type == 'customfields')
 				{
 					$row_class = 'row';
 					etemplate::add_child($cell,$label =& etemplate::empty_cell('label','',array(
