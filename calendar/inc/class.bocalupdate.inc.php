@@ -410,7 +410,7 @@ class bocalupdate extends bocal
 	 * @param array $old_event Event before the change
 	 * @param array $new_event=null Event after the change
 	 * @param int $user=0 User who started the notify, default current user
-	 * @return  mixed returncode from send-class or false on error
+	 * @return bool true/false
 	 */
 	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
 	{
@@ -443,9 +443,7 @@ class bocalupdate extends bocal
 			$GLOBALS['egw']->preferences->preferences($user);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		}
-		$sender = $GLOBALS['egw_info']['user']['email'];
-		$sender_fullname = $GLOBALS['egw_info']['user']['fullname'];
-
+		$senderid = $GLOBALS['egw_info']['user']['account_id'];
 		$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
 
 		switch($msg_type)
@@ -507,13 +505,7 @@ class bocalupdate extends bocal
 			$notify_msg = $this->cal_prefs['notifyAdded'];	// use a default
 		}
 		$details = $this->_get_event_details($event,$action,$event_arr,$disinvited);
-
-		if(!is_object($GLOBALS['egw']->send))
-		{
-			$GLOBALS['egw']->send =& CreateObject('phpgwapi.send');
-		}
-		$send = &$GLOBALS['egw']->send;
-
+		
 		// add all group-members to the notification, unless they are already participants
 		foreach($to_notify as $userid => $statusid)
 		{
@@ -554,14 +546,7 @@ class bocalupdate extends bocal
 				}
 				$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
 				$details['to-fullname'] = $GLOBALS['egw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
-
-				$to = $GLOBALS['egw']->accounts->id2name($userid,'account_email');
-				if (!$to || strpos($to,'@') === false)
-				{
-					// ToDo: give an error-message
-					echo '<p>'.lang('Invalid email-address "%1" for user %2',$to,$GLOBALS['egw']->common->grab_owner_name($userid))."</p>\n";
-					continue;
-				}
+				
 				$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
 				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
 				$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
@@ -576,21 +561,22 @@ class bocalupdate extends bocal
 
 				list($subject,$body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
 
-				$send->ClearAddresses();
-				$send->ClearAttachments();
-				$send->IsHTML(False);
-				$send->AddAddress($to);
-				$send->AddCustomHeader('X-eGroupWare-type: calendarupdate');
-
 				switch($part_prefs['calendar']['update_format'])
 				{
 					case  'extended':
 						$body .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
 						{
-							if ($key != 'access' && $key != 'priority' && strlen($details[$key]))
-							{
-								$body .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
+							if(strlen($details[$key])) {
+								switch($key){
+							 		case 'access':
+									case 'priority':
+									case 'link':
+										break;
+									default:
+										$body .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
+										break;
+							 	}
 							}
 						}
 						break;
@@ -599,35 +585,37 @@ class bocalupdate extends bocal
 						$ics = ExecMethod2('calendar.boical.exportVCal',$event['id'],'2.0',$method);
 						if ($method == 'REQUEST') 
 						{
-							$send->AddStringAttachment($ics, "cal.ics", "8bit", "text/calendar; method=$method");
+							$attachment = array(	'string' => $ics,
+													'filename' => 'cal.ics',
+													'encoding' => '8bit',
+													'type' => 'text/calendar; method='.$method,
+													);
 						}
 						break;
 				}
-				$send->From = $sender;
-				$send->FromName = $sender_fullname;
-				$send->Subject = $send->encode_subject($subject);
-				$send->Body = $body;
-				if ($this->debug)
-				{
-					echo "<hr /><p>to: $to<br>from: $sender_fullname &lt;$sender&gt;<br>Subject: $subject<br>".nl2br($body)."</p><hr />\n";
+				// send via notification_app
+				require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
+				try {
+					$notification = new notification();
+					$notification->set_receivers(array($userid));
+					$notification->set_message($body);
+					$notification->set_sender($senderid);
+					$notification->set_subject($subject);
+					$notification->set_links(array($details['link_arr']));
+					if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
+					$notification->send();
 				}
-				$returncode = $send->Send();
-				
-				// ToDo: give error-messages for all all failed sendings
-				
-				// notification via notification app.
-				if (version_compare("5.1.0", phpversion()) && array_key_exists('notifications',$GLOBALS['egw_info']['apps'])) {
-					require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
-					include(EGW_INCLUDE_ROOT. '/calendar/inc/class.php5_notification.inc.php');
+				catch (Exception $exception) {
+					error_log('error while notifying user '.$userid.':'.$exception->getMessage());
+					continue;
 				}
-
 			}
 		}
 		// restore the enviroment
 		$GLOBALS['egw_info']['user'] = $temp_user;
 		$GLOBALS['egw']->datetime->tz_offset = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 
-		return $returncode;
+		return true;
 	}
 
 	function get_update_message($event,$added)
@@ -859,13 +847,25 @@ class bocalupdate extends bocal
 				$link;
 		}
 		$event_arr['link']['data'] = $details['link'] = $link;
+		
+		/* this is needed for notification-app
+		 * notification-app creates the link individual for
+		 * every user, so we must provide a neutral link-style
+		 */
+		$link_arr = array();
+		$link_arr['menuaction'] = 'calendar.uiforms.edit';
+		$link_arr['params'] = array(	'cal_id' => $event['id'],
+										'date' => $eventStart_arr['full'],
+										);
+		$link_arr['text'] = $event['title'];
+		$details['link_arr'] = $link_arr;
+		
 		$dis = array();
 		foreach($disinvited as $uid)
 		{
 			$dis[] = $this->participant_name($uid);
 		}
 		$details['disinvited'] = implode(', ',$dis);
-
 		return $details;
 	}
 

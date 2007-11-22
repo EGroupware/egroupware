@@ -32,6 +32,8 @@ $setup_info[NOTIFICATION_APP]['description'] =
 /* The hooks this app includes, needed for hooks registration */
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'after_navbar';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'preferences';
+$setup_info[NOTIFICATION_APP]['hooks'][] = 'settings';
+$setup_info[NOTIFICATION_APP]['hooks'][] = 'admin';
 //$setup_info[NOTIFICATION_APP]['hooks']['settings'] = NOTIFICATION_APP.'.ts_admin_prefs_sidebox_hooks.settings';
 //$setup_info[NOTIFICATION_APP]['hooks']['admin'] = NOTIFICATION_APP.'.ts_admin_prefs_sidebox_hooks.all_hooks';
 //$setup_info[NOTIFICATION_APP]['hooks']['sidebox_menu'] = NOTIFICATION_APP.'.ts_admin_prefs_sidebox_hooks.all_hooks';

@@ -308,30 +308,6 @@ class bo_tracking
 		}
 		return !count($this->errors);
 	}
-	
-	/**
-	 * Send a popup notification via the notification app
-	 *
-	 * @param int $user
-	 * @param string $message
-	 * @return boolean true on success, false on error
-	 */
-	function popup_notification($user,$message)
-	{
-		static $is_php51;
-		if (is_null($is_php51)) $is_php51 = version_compare(phpversion(),'5.1.0','>=');
-
-		if (!$is_php51) return false;
-		
-		// check if the to notifying user has rights to run the notifcation app
-		$ids = $GLOBALS['egw']->accounts->memberships($user,true);
-		$ids[] = $user;
-		if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($ids,'run','notifications')) return false;
-
-		if (!include_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php')) return false;
-
-		return is_null(notification::notify(array($user),$message));	// return the exeception on error
-	}
 
 	/**
 	 * Sending a notification to the given email-address
@@ -350,7 +326,7 @@ class bo_tracking
 	{
 		//error_log("bo_trackering::send_notification(,,'$email',$user_or_lang,$check)");
 		if (!$email) return false;
-		
+
 		if (!$this->save_prefs) $this->save_prefs = $GLOBALS['egw_info']['user'];
 		
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
@@ -369,6 +345,10 @@ class bo_tracking
 			{
 				return false;	// only notification about changed assignment requested
 			}
+			if($this->user == $user_or_lang)
+			{ 
+				return false;  // no popup for own actions
+			}
 		}
 		else
 		{
@@ -380,70 +360,91 @@ class bo_tracking
 		{
 			$GLOBALS['egw']->translation->init();
 		}
-		// send popup notification
-		if (is_numeric($user_or_lang) && $this->user != $user_or_lang)	// no popup for own actions
-		{
-			//die('sending popup notification'.$this->html->htmlspecialchars($this->get_popup_message($data,$old)));
-			$this->popup_notification($user_or_lang,$this->get_popup_message($data,$old));
-		}
-		// PHPMailer aka send-class, seems not to be able to send more then one mail, IF we need to authenticate to the SMTP server
-		// There for the object is newly created for ever mail, 'til this get fixed in PHPMailer.
-		//if(!is_object($GLOBALS['egw']->send))
-		{
-			require_once(EGW_API_INC.'/class.send.inc.php');
-			$GLOBALS['egw']->send = $send =& new send();
-		}
-		//$send = &$GLOBALS['egw']->send;
-		$send->ClearAddresses();
-		$send->ClearAttachments();
-
-		// does the user wants html-emails
-		$html_email = !!$GLOBALS['egw_info']['user']['preferences']['tracker'][$this->check2pref ? $this->check2pref['notify_html'] : 'notify_html'];
-		$send->IsHTML($html_email);		
-
-		if (preg_match('/^(.+) *<(.+)>/',$email,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as address
-		{
-			$send->AddAddress($matches[2],$matches[1]);
-		}
-		else
-		{
-			$send->AddAddress($email,is_numeric($user_or_lang) ? $GLOBALS['egw']->accounts->id2name($user_or_lang,'account_fullname') : '');
-		}
-		$send->AddCustomHeader("X-eGroupWare-type: {$this->app}update");
-
+		
 		$sender = $this->get_sender($data,$old);
-		if (preg_match('/^(.+) *<(.+)>/',$sender,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as sender
-		{
-			$send->From = $matches[2];
-			$send->FromName = $matches[1];
-		}
-		else
-		{
-			$send->From = $sender;
-			$send->FromName = '';
-		}
-		$send->Subject = $this->get_subject($data,$old);
-
-		$send->Body = $this->get_body($html_email,$data,$old);
-
-		foreach($this->get_attachments($data,$old) as $attachment)
-		{
-			if (isset($attachment['content']))
-			{
-				$send->AddStringAttachment($attachment['content'],$attachment['filename'],$attachment['encoding'],$attachment['mimetype']);
+		$subject = $this->get_subject($data,$old);
+		$attachments = $this->get_attachments($data,$old);
+		/* send over notification_app or alternative old-style mail class
+		 * in future, we can make the notification app able to send mails
+		 * for non-system users, so the else part below could be dropped
+		 */
+		if (is_numeric($user_or_lang)) {
+			// send via notification_app
+			require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
+			try {
+				$notification = new notification();
+				$notification->set_receivers(array($user_or_lang));
+				$notification->set_message($this->get_notification_body($data,$old));
+				$notification->set_sender($this->user);
+				$notification->set_subject($subject);
+				$notification->set_links(array($this->get_notification_link($data,$old)));
+				if(is_array($attachments)) { $notification->set_attachments($attachments); }
+				$notification->send();
 			}
-			elseif (isset($attachment['path']))
+			catch (Exception $exception) {
+				$this->errors[] = $exception->getMessage();
+				return false;
+			}
+		} else {
+			// PHPMailer aka send-class, seems not to be able to send more then one mail, IF we need to authenticate to the SMTP server
+			// There for the object is newly created for ever mail, 'til this get fixed in PHPMailer.
+			$notification_sent = false;
+			if(!is_object($GLOBALS['egw']->send))
 			{
-				$send->AddAttachment($attachment['path'],$attachment['filename'],$attachment['encoding'],$attachment['$mimetype']);
+			 require_once(EGW_API_INC.'/class.send.inc.php');
+			 $GLOBALS['egw']->send = $send =& new send();
+			}
+		
+			$send->ClearAddresses();
+			$send->ClearAttachments();
+
+			// does the user want html-emails
+			$html_email = !!$GLOBALS['egw_info']['user']['preferences']['tracker'][$this->check2pref ? $this->check2pref['notify_html'] : 'notify_html'];
+			$send->IsHTML($html_email);		
+
+			if (preg_match('/^(.+) *<(.+)>/',$email,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as address
+			{
+			 $send->AddAddress($matches[2],$matches[1]);
+			}
+			else
+			{
+			 $send->AddAddress($email,is_numeric($user_or_lang) ? $GLOBALS['egw']->accounts->id2name($user_or_lang,'account_fullname') : '');
+			}
+			$send->AddCustomHeader("X-eGroupWare-type: {$this->app}update");
+		
+			if (preg_match('/^(.+) *<(.+)>/',$sender,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as sender
+			{
+			 $send->From = $matches[2];
+			 $send->FromName = $matches[1];
+			}
+			else
+			{
+			 $send->From = $sender;
+			 $send->FromName = '';
+			}
+			$send->Subject = $subject;
+			$send->Body = $this->get_body($html_email,$data,$old);
+			
+			foreach($attachments as $attachment)
+			{
+			 	if (isset($attachment['content']))
+				{
+				 	$send->AddStringAttachment($attachment['content'],$attachment['filename'],$attachment['encoding'],$attachment['mimetype']);
+				}
+				elseif (isset($attachment['path']))
+				{
+				 	$send->AddAttachment($attachment['path'],$attachment['filename'],$attachment['encoding'],$attachment['$mimetype']);
+				}
+			}
+		
+			//echo "<p>bo_trackering::send_notification(): sending <pre>".print_r($send,true)."</pre>\n";
+			$notification_sent = $send->Send();
+			if(!$notification_sent) {
+		 		$this->errors[] = lang('Error while notifying %1: %2',$email,$send->ErrorInfo);
+		 		return false;
 			}
 		}
-
-		//echo "<p>bo_trackering::send_notification(): sending <pre>".print_r($send,true)."</pre>\n";
-		if (!$send->Send())
-		{
-			$this->errors[] = lang('Error while notifying %1: %2',$email,$send->ErrorInfo);
-			return false;
-		}
+		
 		return true;
 	}
 	
@@ -579,28 +580,45 @@ class bo_tracking
 	}
 	
 	/**
-	 * Get the body of the notification message, can be reimplemented
+	 * Get a link for notifications to view the entry
 	 *
-	 * @param boolean $html_email
+	 * @param array $data
+	 * @param array $old
+	 * @return array with link
+	 */
+	function get_notification_link($data,$old)
+	{
+		if (!is_object($GLOBALS['egw']->link))
+		{
+			require_once(EGW_API_INC.'/class.bolink.inc.php');
+			$GLOBALS['egw']->link =& new bolink();
+		}
+		if($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])) {
+			return array(	'menuaction' => $view['menuaction'],
+							'params' => array (	'action' => $view['action'],
+												'action_id' => $view['action_id'],
+												),
+							'text' => $data['info_subject'],
+							);
+		} else {
+			return false;
+		}
+	}
+		
+	/**
+	 * Get the body of the notification message for notification-app
+	 *
 	 * @param array $data
 	 * @param array $old
 	 * @return string
 	 */
-	function get_body($html_email,$data,$old)
+	function get_notification_body($data,$old)
 	{
 		$body = '';
-		if ($html_email)
-		{	
-			$body = "<html>\n<body>\n".'<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
-		}
 		// new or modified message
 		if (($message = $this->get_message($data,$old)))
 		{
-			$body .= $this->format_line($html_email,'message',false,$message);
-		}
-		if (($link = $this->get_link($data,$old)))
-		{
-			$body .= $this->format_line($html_email,'link',false,lang('You can respond by visiting:'),$link);
+			$body .= $this->format_line(false,'message',false,$message);
 		}
 		foreach($this->get_details($data) as $name => $detail)
 		{
@@ -610,12 +628,8 @@ class bo_tracking
 			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 			
-			$body .= $this->format_line($html_email,$detail['type'],$modified,
+			$body .= $this->format_line(false,$detail['type'],$modified,
 				($detail['label'] ? $detail['label'].': ':'').$detail['value']);
-		}
-		if ($html_email)
-		{
-			$body .= "</table>\n</body>\n</html>\n";
 		}
 		return $body;
 	}
@@ -698,7 +712,7 @@ class bo_tracking
 	}
 	
 	/**
-	 * Get the attachments for a notificaton mail
+	 * Get the attachments for a notification mail
 	 *
 	 * @param array $data
 	 * @param array $old
@@ -706,39 +720,6 @@ class bo_tracking
 	 */
 	function get_attachments($data,$old)
 	{
-		return array();
-	}
-
-	/**
-	 * Get the message for the popup
-	 * 
-	 * Default implementation uses get_subject() with get_link() and get_message() as an extra line
-	 *
-	 * @param array $data
-	 * @param array $old
-	 * @return string
-	 */
-	function get_popup_message($data,$old)
-	{
-		$message = $this->html->htmlspecialchars($this->get_subject($data,$old));
-		
-		if ((list($link,$popup) = $this->get_link($data,$old,true)))
-		{
-			if ($popup)
-			{
-				list($width,$height) = explode('x',$popup);
-				$options = 'onclick="egw_openWindowCentered2(this.href,\'_blank\', \''.$width.'\', \''.$height.'\', \'yes\'); return false;"';
-			}
-			else
-			{
-				$options = 'target="_blank"';
-			}
-			$message = $this->html->a_href($this->html->htmlspecialchars($message),$link,'',$options);
-		}
-		if (($extra = $this->get_message($data,$old)))
-		{
-			$message .= '<br />'.$this->html->htmlspecialchars($extra);
-		}
-		return $message;
+	 	return array();
 	}
 }

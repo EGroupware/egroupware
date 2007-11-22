@@ -11,6 +11,7 @@
  */
 
 require_once('class.iface_notification.inc.php');
+require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.config.inc.php');
 
 /**
  * Instant user notification with egroupware popup.
@@ -38,11 +39,25 @@ class notification_popup implements iface_notification {
 	const _notification_table = 'egw_notificationpopup';
 	
 	/**
+	 * holds account object for user who sends the message
+	 *
+	 * @var object
+	 */
+	private $sender;
+	
+	/**
 	 * holds account object for user to notify
 	 *
 	 * @var object
 	 */
-	private $account;
+	private $recipient;
+	
+	/**
+	 * holds config object (sitewide application config)
+	 *
+	 * @var object
+	 */
+	private $config;
 	
 	/**
 	 * holds preferences object of user to notify
@@ -61,20 +76,40 @@ class notification_popup implements iface_notification {
 	/**
 	 * constructor of notification_egwpopup
 	 *
-	 * @param object $_account
+	 * @param object $_sender
+	 * @param object $_recipient
 	 * @param object $_preferences
 	 */
-	public function __construct( $_account=false, $_preferences=false) {
-		// If we are called from class notification account and prefs are objects.
+	public function __construct( $_sender=false, $_recipient=false, $_config=false, $_preferences=false) {
+		// If we are called from class notification sender, recipient, config and prefs are objects.
 		// otherwise we have to fetch this objects for current user.
-		if (!is_object($_account)) {
-			$this->account = (object) $GLOBALS['egw']->accounts->read($_account);
-			$this->account->id =& $this->account->account_id;
+		if (!is_object($_sender)) {
+			$this->sender = (object) $GLOBALS['egw']->accounts->read($_sender);
+			$this->sender->id =& $this->sender->account_id;
 		}
 		else {
-			$this->account = $_account;
+			$this->sender = $_sender;
 		}
-		$this->preferences = is_object($_preferences) ? $_preferences : $GLOBALS['egw']->preferences;
+		if (!is_object($_recipient)) {
+			$this->recipient = (object) $GLOBALS['egw']->accounts->read($_recipient);
+			$this->recipient->id =& $this->recipient->account_id;
+		}
+		else {
+			$this->recipient = $_recipient;
+		}
+		if(!is_object($_config)) {
+			$config = new config(self::_appname);
+			$this->config = (object) $config->read_repository();
+		} else {
+			$this->config = $_config;
+		}
+		if(!is_object($_preferences)) {
+			$prefs = new preferences($this->recipient->id);
+			$preferences = $prefs->read();
+			$this->preferences = (object)$preferences[self::_appname ];
+		} else {
+			$this->preferences = $_preferences;
+		}
 		$this->db = &$GLOBALS['egw']->db;
 		$this->db->set_app( self::_appname );
 	}
@@ -82,18 +117,20 @@ class notification_popup implements iface_notification {
 	/**
 	 * sends notification if user is online
 	 *
-	 * @param string $_message
+	 * @param string $_subject
+	 * @param array $_messages
+	 * @param array $_attachments
 	 */
-	public function send( $_message ) {
+	public function send( $_subject = false, $_messages, $_attachments = false) {
 		$sessions = $GLOBALS['egw']->session->list_sessions(0, 'asc', 'session_dla', true);
 		$user_sessions = array();
 		foreach ($sessions as $session) {
-			if ($session['session_lid'] == $this->account->lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
+			if ($session['session_lid'] == $this->recipient->lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
 				$user_sessions[] = $session['session_id'];
 			}
 		}
-		if ( empty($user_sessions) ) throw new Exception("Notice: User #{$this->account->id} isn't online. Can't send notification via popup");
-		$this->save( $_message, $user_sessions );
+		if ( empty($user_sessions) ) throw new Exception("User {$this->recipient->lid} isn't online. Can't send notification via popup");
+		$this->save( $_messages['html']['text'].$_messages['html']['link_jspopup'], $user_sessions );
 	}
 	
 	/**
@@ -108,7 +145,7 @@ class notification_popup implements iface_notification {
 		$message = '';
 		$this->db->select(self::_notification_table, 
 			'*', array(
-				'account_id' => $this->account->id,
+				'account_id' => $this->recipient->id,
 				'session_id' => $session_id,
 			),
 			__LINE__,__FILE__);
@@ -116,25 +153,36 @@ class notification_popup implements iface_notification {
 			while ($notification = $this->db->row(true)) {
 				switch (self::_window ) {
 					case 'div' :
-						$message .= '<p>'. nl2br($notification['message']). '</p>';
+						$response->addScriptCall('append_notification_message',$notification['message']);
 						break;
 					case 'alert' :
-						$message .= ".\n". $notification['message']. "\n";
+						$response->addAlert($notification['message']);
 						break;
 				}
 			}
-			$this->db->delete(self::_notification_table,array(
-				'account_id' =>$this->account->id,
+			$myval=$this->db->delete(self::_notification_table,array(
+				'account_id' => $this->recipient->id,
 				'session_id' => $session_id,
 			),__LINE__,__FILE__);
 			
 			switch (self::_window) {
 				case 'div' :
-					$response->addAppend('notificationwindow_message','innerHTML',$message);
-					$response->addScript('notificationwindow_display();');
+					switch($this->preferences->egwpopup_verbosity) {
+						case 'low':
+							$response->addScript('notificationbell_switch("active");');
+							break;
+						case 'high':
+							$response->addAlert(lang('eGroupware has some notifications for you'));
+							$response->addScript('notificationwindow_display();');
+							break;
+						case 'medium':
+						default:
+							$response->addScript('notificationwindow_display();');
+							break;
+					}
 					break;
 				case 'alert' :
-					$response->addAlert($message);
+					// nothing to do for now
 					break;
 			}
 		}
@@ -151,11 +199,11 @@ class notification_popup implements iface_notification {
 	private function save( $_message, array $_user_sessions ) {
 		foreach ($_user_sessions as $user_session) {
 			$result =& $this->db->insert( self::_notification_table, array(
-				'account_id'	=> $this->account->id,
+				'account_id'	=> $this->recipient->id,
 				'session_id'	=> $user_session,
 				'message'		=> $_message
 				), false,__LINE__,__FILE__);
 		}
-		if ($result === false) throw new Exception("Error: Can't save notification into SQL table");
+		if ($result === false) throw new Exception("Can't save notification into SQL table");
 	}
 }

@@ -400,6 +400,21 @@ class egw_framework
 		return $GLOBALS['egw']->html->select('quick_add','',$options,true,$options=' onchange="eval(this.value); this.value=0; return false;"');		
 	}
 	
+	function _get_notification_bell() {
+		if (!is_object($GLOBALS['egw']->html))
+		{
+			require_once(EGW_API_INC.'/class.html.inc.php');
+			$GLOBALS['egw']->html =& new html();
+		}
+		return $GLOBALS['egw']->html->div(	$GLOBALS['egw']->html->a_href(	$GLOBALS['egw']->html->image('notifications','notificationbell',lang('notifications')),
+																					'javascript: notificationwindow_display();'
+																					),
+													'id="notificationbell"', // options
+													'', // class
+													'display: none' //style
+													);	
+	}
+	
 
 	/**
 	 * Prepare an array with apps used to render the navbar

@@ -21,7 +21,9 @@ if (!$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxp
 			<div id="divAppboxHeader">'. lang('Notification'). '</div>
 				<div id="divAppbox">
 				<div id="notificationwindow_message"></div>
-				<center><input type="submit" value="'. lang('ok'). '" onClick="notificationwindow_button_ok();"></center>
+				<center>
+					<input id="notificationwindow_ok_button" type="submit" value="'. lang('ok'). '" onClick="notificationwindow_button_ok();">
+				</center>
 			</div>
 		</div>
 	';

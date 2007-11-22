@@ -17,10 +17,11 @@ interface iface_notification {
 	/**
 	 * constructor 
 	 *
-	 * @param object $_account
+	 * @param object $_sender
+	 * @param object $_recipient
 	 * @param object $_preferences
 	 */
-	public function __construct( $_account=false, $_preferences=false );
+	public function __construct( $_sender=false, $_recipient=false, $_config=false, $_preferences=false );
 	
 	/**
 	 * sends notification
@@ -29,5 +30,5 @@ interface iface_notification {
 	 * implementing class needs to handle them somehow.
 	 * @param string $_message
 	 */
-	public function send( $_message );
+	public function send( $_subject = false, $_messages, $_attachments = false);
 }
