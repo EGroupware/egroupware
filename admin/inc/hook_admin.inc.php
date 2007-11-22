@@ -81,6 +81,7 @@
 	{
 		$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['egw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['egw']->link('/admin/phpinfo.php');
 	}
+	$file['Admin queue and history'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.admin_cmds.index');
  
 	/* Do not modify below this line */
 	display_section('admin',$file);

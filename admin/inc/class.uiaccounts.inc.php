@@ -547,6 +547,7 @@
 			if ($GLOBALS['egw']->acl->check('account_access',4,'admin'))
 			{
 				$this->list_users();
+				return;
 			}
 
 			if($_POST['submit'])

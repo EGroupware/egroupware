@@ -27,12 +27,16 @@ else
 {
 	$action = '--help';
 }
+
 // this is kind of a hack, as the autocreate_session_callback can not change the type of the loaded account-class
 // so we need to make sure the right one is loaded by setting the domain before the header gets included.
-$arg0s = explode(',',@$arguments[0]);
+$arg0s = explode(',',@array_shift($arguments));
 @list(,$_GET['domain']) = explode('@',$arg0s[0]);
 
-if (is_dir('/tmp')) ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
+if (!is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
+{
+	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
+}
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
@@ -68,6 +72,9 @@ switch($action)
 	case '--change-account-id':
 		return do_change_account_id($arg0s);
 		
+	case '--subscribe-other':
+		return do_subscribe_other($arg0s[2],$arg0s[3]);
+		
 	case '--check-acl';
 		return do_check_acl();
 		
@@ -79,6 +86,43 @@ switch($action)
 		break;
 }
 exit(0);
+
+/**
+ * run a command object, after checking for additional arguments: sheduled, requested or comment
+ *
+ * @param admin_cmd $cmd
+ * @return string see admin_cmd::run()
+ */
+function run_command($cmd)
+{
+	global $arguments;
+
+	while ($arguments && ($extra = array_shift($arguments)))
+	{
+		switch($extra)
+		{
+			case '--shedule':	// shedule the command instead of running it directly
+				$time = admin_cmd::parse_date(array_shift($arguments));
+				break;
+				
+			case '--requested':	// note who requested to run the command
+				$cmd->requested = 0;
+				$cmd->requested_email = array_shift($arguments);
+				break;
+				
+			case '--comment':	// note a comment
+				$cmd->comment = array_shift($arguments);
+				break;
+				
+			default:
+				//fail(99,lang('Unknown option %1',$extra);
+				echo lang('Unknown option %1',$extra)."\n\n";
+				usage('',99);
+				break;
+		}
+	}
+	return $cmd->run($time);
+}
 
 /**
  * callback to authenticate with the user/pw specified on the commandline
@@ -118,7 +162,7 @@ function user_pass_from_argv(&$account)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename($_SERVER['argv'][0]);
-	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,...\n\n";
+	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...']\n\n";
 	
 	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...]\n";
 	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!\n";
@@ -155,6 +199,16 @@ function do_account_app($args,$allow)
 	array_shift($args);	// admin-account
 	array_shift($args);	// admin-pw
 	$account = array_shift($args);
+	
+	include_once(EGW_INCLUDE_ROOT.'/admin/inc/class.admin_cmd_account_app.inc.php');
+	$cmd = new admin_cmd_account_app($allow,$account,$args);
+	$msg = run_command($cmd);
+	if ($cmd->errno)
+	{
+		fail($cmd->errno,$cmd->error);
+	}
+	echo $msg."\n\n";
+	return 0;
 	
 	if ($GLOBALS['egw']->acl->check('account_access',16,'admin'))	// user is explicitly forbidden to edit accounts
 	{
@@ -881,5 +935,61 @@ function list_exit_codes()
 	foreach($codes as $num => $msg)
 	{
 		echo $num."\t".str_replace("\n","\n\t",$msg)."\n";
+	}
+}
+
+/**
+ * Read the IMAP ACLs
+ *
+ * @param array $args admin-account[@domain],admin-password,accout_lid[,pw]
+ * @return int 0 on success
+ */
+function do_subscribe_other($account_lid,$pw=null)
+{
+	if (!($account_id = $GLOBALS['egw']->accounts->name2id($account_lid)))
+	{
+		fail(15,lang("Unknown account: %1 !!!",$account_lid));		
+	}
+	$GLOBALS['egw_info']['user'] = array(
+		'account_id' => $account_id,
+		'account_lid' => $account_lid,
+		'passwd' => $pw,
+	);
+	include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.bo.inc.php');
+
+	$emailadmin = new bo();
+	$user_profile = $emailadmin->getUserProfile('felamimail');
+	unset($emailadmin);
+	
+	$icServer = new cyrusimap();
+	//$icServer =& $user_profile->ic_server[0];
+	//print_r($icServer);
+	
+	$icServer->openConnection(!$pw);
+	
+	$delimiter = $icServer->getHierarchyDelimiter();
+
+	$mailboxes = $icServer->getMailboxes();
+	//print_r($mailboxes);
+	
+	$own_mbox = 'user'.$delimiter.$account_lid;
+	
+	foreach($mailboxes as $n => $mailbox)
+	{
+//		if ($n < 1) continue;
+
+		if (substr($mailbox,0,5) != 'user'.$delimiter || substr($mailbox,0,strlen($own_mbox)) == $own_mbox) continue;
+
+		if (!$pw) $mailbox = str_replace('INBOX','user'.$delimiter.$account_lid,$mailbox);
+
+/*		$rights = $icServer->getACL($mailbox);
+		echo "getACL($mailbox)\n";
+		foreach($rights as $data)
+		{
+			echo $data['USER'].' '.$data['RIGHTS']."\n";
+		}*/
+		echo "subscribing $mailbox for $account_lid\n";
+		//$icServer->subscribeMailbox($mailbox);
+		//exit;
 	}
 }
