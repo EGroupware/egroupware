@@ -145,6 +145,12 @@ class uicontacts extends bocontacts
 			{
 				$org_view = $content['nm']['org_view'];
 			}
+			if ($content['nm']['col_filter']['tid'])
+			{
+				$typeselection=$content['nm']['col_filter']['tid'] ;
+			} else {
+				$typeselection='n';
+			}
 		}
 		elseif($_GET['add_list'])
 		{
@@ -169,6 +175,7 @@ class uicontacts extends bocontacts
 		$content = array(
 			'msg' => $msg ? $msg : $_GET['msg'],
 		);
+
 		$content['nm'] = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
 		if (!is_array($content['nm']))
 		{
@@ -286,12 +293,14 @@ class uicontacts extends bocontacts
 		}
 		else
 		{
+			$content['nm']['col_filter']['tid'] = ($typeselection ? $typeselection : 'n');
 			$content['nm']['header_right'] = 'addressbook.index.right';
 			foreach($this->content_types as $tid => $data)
 			{
 				$sel_options['col_filter[tid]'][$tid] = $data['name'];
 			}
 		}
+
 		// get the availible org-views plus the label of the contacts view of one org
 		$sel_options['org_view'] = $this->org_views;
 		if (isset($org_view)) $content['nm']['org_view'] = $org_view;
