@@ -60,6 +60,7 @@ install: build
 
 	for APP in $(MODULES) ; do \
 	  APPDIR=$$(echo $${APP} | sed 's/-/_/g') ; \
+	  [ $${APPDIR} == 'egw_pear' ] && APPDIR='egw-pear' ; \
 	  if [ -d $(CURDIR)/$${APPDIR} ] ; then \
 	    cd $(CURDIR)/$${APPDIR}; \
 	    find $(FINDOPT) $(APPFILES) \

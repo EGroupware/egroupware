@@ -1,4 +1,4 @@
 #04-egw-ldap-doc
 06-egw-header-template
-08-egw-checkinstall-symlink
-10-egw-functions-egw_pear
+#08-egw-checkinstall-symlink
+#10-egw-functions-egw_pear
