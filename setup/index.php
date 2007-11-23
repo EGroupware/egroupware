@@ -527,6 +527,7 @@
 				if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
 				{
 					$to_upgrade[] = $app;
+					$setup_tpl->set_var('apps_status_img',$incomplete);
 				}
 			}
 			$btn_manage_apps = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
