@@ -463,8 +463,9 @@ class bocontacts extends socontacts
 			// if no owner/addressbook set use the setting of the add_default prefs (if set, otherwise the users personal addressbook)
 			if (!isset($contact['owner'])) $contact['owner'] = (int)$this->prefs['add_default'] ? (int)$this->prefs['add_default'] : $this->user;
 			if (!isset($contact['private'])) $contact['private'] = (int)(substr($this->prefs['add_default'],-1) == 'p');
-			$contact['creator'] = $this->user;
-			$contact['created'] = $this->now_su;
+			// allow admins to import contacts with creator / created date set
+			if (!$contact['creator'] || !$this->is_admin($contact)) $contact['creator'] = $this->user;
+			if (!$contact['created'] || !$this->is_admin($contact)) $contact['created'] = $this->now_su;
 			
 			if (!$contact['tid']) $contact['tid'] = 'n';
 		}
