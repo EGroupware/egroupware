@@ -145,6 +145,12 @@ class uicontacts extends bocontacts
 			{
 				$org_view = $content['nm']['org_view'];
 			}
+			if ($content['nm']['col_filter']['tid'])
+			{
+				$typeselection=$content['nm']['col_filter']['tid'] ;
+			} else {
+				$typeselection='n';
+			}
 		}
 		elseif($_GET['add_list'])
 		{
@@ -284,6 +290,7 @@ class uicontacts extends bocontacts
 		}
 		else
 		{
+			$content['nm']['col_filter']['tid'] = ($typeselection ? $typeselection : 'n');
 			$content['nm']['header_right'] = 'addressbook.index.right';
 			foreach($this->content_types as $tid => $data)
 			{
@@ -923,7 +930,6 @@ class uicontacts extends bocontacts
 				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
 				
 				if ($row['photo']) $photos = true;
-				
 				if (isset($customfields[$row['id']]))
 				{
 					foreach($this->customfields as $name => $data)
