@@ -27,13 +27,17 @@ if (!isset($GLOBALS['egw_domain'][$instance]))
 	$instance = $GLOBALS['egw_info']['server']['default_domain'];
 }
 $domain_data = $GLOBALS['egw_domain'][$instance];
+//echo $instance; _debug_array($domain_data);
 
+// to authenticate with the installation we use a secret, which is a md5 hash build from the uid 
+// of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash 
+// of the md5 hash of the config password and the install_id (egw_admin_remote.remote_hash)
 if (!$domain_data || is_numeric($_REQUEST['uid']) ||
-	$_REQUEST['secret'] != ($md5=md5($_REQUEST['uid'].$GLOBALS['egw_info']['server']['install_id'].$domain_data['config_password'])))
+	$_REQUEST['secret'] != ($md5=md5($_REQUEST['uid'].md5($domain_data['config_passwd'].$GLOBALS['egw_info']['server']['install_id']))))
 {
 	header("HTTP/1.1 401 Unauthorized");
-	//die("secret != '$md5'");
-	echo lang('Permission denied!');
+	//die("0 secret != '$md5'");
+	echo lang('0 Permission denied!');
 	$GLOBALS['egw']->common->egw_exit();
 }
 
@@ -53,14 +57,15 @@ if (!$_REQUEST['uid'] ||	// no uid
 	!$_REQUEST['creator_email'])	// no creator email
 {
 	header("HTTP/1.1 400 Bad format!");
-	echo lang('Bad format!');
+	echo lang('0 Bad format!');
 	$GLOBALS['egw']->common->egw_exit();
 }
 
 // create command from request data
 $data = isset($_POST['uid']) ? $_POST : $_GET;
 unset($data['secret']);
-unset($data['id']);		// we are remote
+unset($data['id']);			// we are remote
+unset($data['remote_id']);
 $data['creator'] = 0;	// remote
 if (isset($data['modifier'])) $data['modifier'] = 0;
 if (isset($data['requested'])) $data['requested'] = 0;
@@ -69,7 +74,7 @@ if (isset($data['requested'])) $data['requested'] = 0;
 try {
 	$cmd = admin_cmd::instanciate($data);
 	//_debug_array($cmd); exit;
-	$success_msg = $cmd->run($data['sheduled']);
+	$success_msg = $cmd->run();
 }
 catch (Exception $e) {
 	header('HTTP/1.1 400 '.$e->getMessage());

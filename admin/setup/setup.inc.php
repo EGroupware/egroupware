@@ -10,9 +10,9 @@
  */
 
 $setup_info['admin']['name']      = 'admin';
-$setup_info['admin']['version']   = '1.5.001';
+$setup_info['admin']['version']   = '1.5.003';
 $setup_info['admin']['app_order'] = 1;
-$setup_info['admin']['tables']    = array('egw_admin_queue');
+$setup_info['admin']['tables']    = array('egw_admin_queue','egw_admin_remote');
 $setup_info['admin']['enable']    = 1;
 
 $setup_info['admin']['author'][] = array(
@@ -53,3 +53,4 @@ $setup_info['admin']['depends'][] = array(
 	'appname' => 'etemplate',
 	'versions' => Array('1.4','1.5')
 );
+

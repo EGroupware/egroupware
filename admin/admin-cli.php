@@ -114,6 +114,10 @@ function run_command($cmd)
 				$cmd->comment = array_shift($arguments);
 				break;
 				
+			case '--remote':	// run the command on a remote install
+				$cmd->remote_id = admin_cmd::parse_remote(array_shift($arguments));
+				break;
+				
 			default:
 				//fail(99,lang('Unknown option %1',$extra);
 				echo lang('Unknown option %1',$extra)."\n\n";
@@ -121,6 +125,7 @@ function run_command($cmd)
 				break;
 		}
 	}
+	//_debug_array($cmd);
 	return $cmd->run($time);
 }
 
@@ -162,7 +167,7 @@ function user_pass_from_argv(&$account)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename($_SERVER['argv'][0]);
-	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...']\n\n";
+	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}]\n\n";
 	
 	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...]\n";
 	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!\n";

@@ -50,6 +50,8 @@ abstract class admin_cmd
 	private $id;
 	private $uid;
 	private $type = __CLASS__;
+	public $remote_id;
+
 	/**
 	 * Stores the data of the derived classes
 	 *
@@ -77,6 +79,13 @@ abstract class admin_cmd
 	 * @var so_sql
 	 */
 	static private $sql;
+	
+	/**
+	 * Instance of so_sql for egw_admin_remote
+	 *
+	 * @var so_sql
+	 */
+	static private $remote;
 	
 	/**
 	 * Executes the command
@@ -136,7 +145,14 @@ abstract class admin_cmd
 		else
 		{
 			try {
-				$ret = $this->exec();
+				if (!$this->remote_id)
+				{
+					$ret = $this->exec();
+				}
+				else
+				{
+					$ret = $this->remote_exec();
+				}
 				$this->status = admin_cmd::successful;
 			}
 			catch (Exception $e) {
@@ -150,6 +166,61 @@ abstract class admin_cmd
 			return false;
 		}
 		return $ret;
+	}
+	
+	/**
+	 * Runs a command on a remote install
+	 * 
+	 * This is a very basic remote procedure call to an other egw instance.
+	 * The payload / command data is send as POST request to the remote installs admin/remote.php script.
+	 * The remote domain (eGW instance) and the secret authenticating the request are send as GET parameters.
+	 *
+	 * To authenticate with the installation we use a secret, which is a md5 hash build from the uid 
+	 * of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash 
+	 * of the md5 hash of the config password and the install_id (egw_admin_remote.remote_hash)
+	 * 
+	 * @return string sussess message
+	 * @throws Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997) or other Exceptions reported from remote
+	 */
+	private function remote_exec()
+	{
+		admin_cmd::_instanciate_remote();
+		
+		if (!($remote = admin_cmd::$remote->read($this->remote_id)))
+		{
+			throw new Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997);
+		}
+		if (!$this->uid)
+		{
+			$this->save();	// to get the uid
+		}
+		$secret = md5($this->uid.$remote['remote_hash']);
+		
+		$postdata = $GLOBALS['egw']->translation->convert($this->as_array(),$GLOBALS['egw']->translation->charset(),'utf-8');
+		// dont send the id's which have no meaning on the remote install
+		foreach(array('id','creator','modifier','requested','remote_id') as $name)
+		{
+			unset($postdata[$name]);
+		}
+		$opts = array('http' =>
+		    array(
+		        'method'  => 'POST',
+		        'header'  => 'Content-type: application/x-www-form-urlencoded',
+		        'content' => http_build_query($postdata),
+		    )
+		);
+		$url = $remote['remote_url'].'/admin/remote.php?domain='.urlencode($remote['remote_domain']).'&secret='.urlencode($secret);
+		//echo "sending command to $url\n"; _debug_array($opts);
+		$message = file_get_contents($url, false, stream_context_create($opts));
+		//echo "got: $message\n";
+		
+		$message = $GLOBALS['egw']->translation->convert($message,'utf-8');
+		
+		if (preg_match('/^([0-9]+) (.*)$/',$message,$matches))
+		{
+			throw new Exception($matches[2],(int)$matches[1]);
+		}
+		return $message;
 	}
 	
 	/**
@@ -301,17 +372,32 @@ abstract class admin_cmd
 	}
 
 	/**
-	 * Instanciate our static so_sql object
+	 * Instanciate our static so_sql object for egw_admin_queue
 	 *
 	 * @static 
 	 */
 	private static function _instanciate_sql()
 	{
-		include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
-
 		if (is_null(admin_cmd::$sql))
 		{
+			include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
+
 			admin_cmd::$sql = new so_sql('admin','egw_admin_queue',null,'cmd_');
+		}
+	}
+	
+	/**
+	 * Instanciate our static so_sql object for egw_admin_remote
+	 *
+	 * @static 
+	 */
+	private static function _instanciate_remote()
+	{
+		if (is_null(admin_cmd::$remote))
+		{
+			include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
+
+			admin_cmd::$remote = new so_sql('admin','egw_admin_remote');
 		}
 	}
 	
@@ -437,6 +523,7 @@ abstract class admin_cmd
 	 *
 	 * @param string $date
 	 * @return int timestamp
+	 * @throws Exception(lang('Invalid formated date "%1"!',$datein),998);
 	 */
 	static function parse_date($date)
 	{
@@ -452,6 +539,27 @@ abstract class admin_cmd
 			}
 		}
 		return (int)$date;
+	}
+	
+	/**
+	 * Parse a remote id or name and return the remote_id
+	 *
+	 * @param string $id_or_name
+	 * @return int remote_id
+	 * @throws Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997);
+	 */
+	static function parse_remote($id_or_name)
+	{
+		admin_cmd::_instanciate_remote();
+		
+		if (!($remotes = admin_cmd::$remote->search(array(
+			'remote_id' => $id_or_name,
+			'remote_name' => $id_or_name,
+		),true,'','','',false,'OR')) || count($remotes) != 1)
+		{
+			throw new Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997);
+		}
+		return $remotes[0]['remote_id'];
 	}
 
 	/**
