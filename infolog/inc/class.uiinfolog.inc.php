@@ -341,6 +341,61 @@ class uiinfolog
 			}
 			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
 		}
+		// do we need to read the custom fields, depends on the column is enabled and customfields exist
+		$columselection = $this->prefs['nextmatch-infolog.index.rows'];
+		//_debug_array($columselection);
+		if ($columselection) 
+		{
+			if (!isset($query['selectcols'])) $query['selectcols']=$columselection; 
+			$columselection = explode(',',$columselection);
+		}
+		$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->bo->customfields;
+		$lv_customfields=array(); // used to set the visible columns
+		$showallcustfields=0;  // control the switching on and off, of the customfields
+		if ((stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ) $showallcustfields=1;
+		if ( $show_custom_fields ||  $query['custom_fields'] )  
+		{
+			if ($query['col_filter']['info_type'])
+			{
+				foreach ($this->bo->customfields as $cf=>$cfa)
+				{
+					if (isset($cfa['type2'])&& trim($cfa['type2'])!=='') // type specific fields
+					{
+						if ((stripos($cfa['type2'], $query['col_filter']['info_type'] )) !== FALSE && 
+							(in_array('#'.$cf,$columselection)||$showallcustfields==1)) 
+						{
+							$lv_customfields[$cf]=$cfa;
+							$readonlys['#'.$cf] = true;
+							if (stripos($query['selectcols'],'#'.$cf)===FALSE) $query['selectcols'].=",#".$cf;
+						}
+					} else {
+						if ($showallcustfields==1 || in_array('#'.$cf,$columselection)) {
+							$lv_customfields[$cf]=$cfa;
+							$readonlys['#'.$cf] = true;
+							if (stripos($query['selectcols'],'#'.$cf)===FALSE) $query['selectcols'].=",#".$cf;
+						}
+					}
+					// set the array for the available cust-cols
+					$query['options-selectcols']['#'.$cf]=$cfa['label'];
+				}
+			} else {
+				// set the columns to be available for selections
+				$cvp=array();
+				foreach($this->bo->customfields as $name => $value)
+				{
+					 if ($showallcustfields==1 || in_array('#'.$name,$columselection)) {
+						$lv_customfields[$name]=$value;
+						//echo $name."->". $value['label']."<br>";
+						$readonlys['#'.$name] = true;
+						if (stripos($query['selectcols'],'#'.$name)!==FALSE) $query['selectcols'].=",#".$name;
+					}
+					//set the array for the available cust-cols
+					$cvp['#'.$name] = $value['label'];
+				}
+				$query['options-selectcols']=$cvp;
+			}
+			$query['custom_fields'] =true;
+		}
 		$ids = $this->bo->search($query);
 		if (!is_array($ids))
 		{
@@ -375,11 +430,22 @@ class uiinfolog
 				}
 			}
 			$rows[] = $info;
+			//foreach($info as $name => $value)
+			//{
+			//	if (!(stripos($name,'#')===false))
+			//	{
+			//		$customfields[$id][$name]=$value;
+			//	}
+			//}
 		}
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['no_actions']) $rows['no_actions'] = true;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 		$rows['duration_format'] = ','.$this->duration_format.',,1';
+		if ( $show_custom_fields ||  $query['custom_fields'] )
+		{
+			$rows['customfields'] = array_values($lv_customfields);
+		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
@@ -557,7 +623,7 @@ class uiinfolog
 		$readonlys['cancel'] = $action != 'sp';
 
 		$this->tmpl->read('infolog.index');
-
+		
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.uiinfolog.get_rows';
 		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
@@ -590,7 +656,6 @@ class uiinfolog
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
-
 		$all_stati = array();
 		foreach($this->bo->status as $typ => $stati)
 		{

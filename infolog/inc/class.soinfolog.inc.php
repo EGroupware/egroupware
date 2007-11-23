@@ -73,6 +73,41 @@ class soinfolog 				// DB-Layer
 	 * @var int
 	 */
 	var $tz_offset;
+
+
+        /**
+        * @var string
+        */
+        var $extra_id = 'info_id';
+
+        /**
+        * @var string
+        */
+        var $extra_key = 'info_extra_name';
+
+        /**
+        * @var string
+        */
+        var $extra_value = 'info_extra_value';
+
+	 /**
+	 * custom fields backend
+         *
+         * @var so_sql
+         */
+        var $soextra;
+        /**
+         * customfields name => array(...) pairs
+         *
+         * @var array
+         */
+        var $customfields = array();
+        /**
+         * content-types as name => array(...) pairs
+         *
+         * @var array
+         */
+        var $content_types = array();
 	
 	/**
 	 * Constructor
@@ -90,7 +125,23 @@ class soinfolog 				// DB-Layer
 		$this->links =& new solink();
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-	}
+                $this->soextra =& CreateObject('etemplate.so_sql');
+                $this->soextra->so_sql('infolog',$this->extra_table);
+
+                $custom =& CreateObject('admin.customfields','infolog');
+                $this->customfields = $custom->get_customfields();
+                $this->content_types = $custom->get_content_types();
+                if (!$this->content_types)
+                {
+                        $this->content_types = $custom->content_types = array('n' => array(
+                                'name' => 'infolog',
+                                'options' => array(
+                                        'template' => 'infolog.edit',
+                                        'icon' => 'navbar.png'
+                        )));
+                        $custom->save_repository();
+                }
+ 	}
 
 	/**
 	 * Check if use is responsible for an entry: he or one of his memberships is in responsible
@@ -694,6 +745,9 @@ class soinfolog 				// DB-Layer
 
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
+		}
+		if ($query['search'] || $query['custom_fields'] )
+		{
 			$join = "LEFT JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
@@ -721,7 +775,10 @@ class soinfolog 				// DB-Layer
 			{
 				$count_subs = ",(SELECT count(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
 			}
-			$this->db->query($sql="SELECT $distinct main.* $count_subs $sql_query $ordermethod",__LINE__,__FILE__,
+			$info_customfield = "";
+			//$info_customfield = ", $this->extra_table.info_extra_value ";
+			//echo "SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod"."<br>";
+			$this->db->query($sql="SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
 				(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1);
 			//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 			while (($info =& $this->db->row(true)))
@@ -735,7 +792,12 @@ class soinfolog 				// DB-Layer
 				$this->db->select($this->extra_table,'*',array('info_id'=>array_keys($ids)),__LINE__,__FILE__);
 				while ($row = $this->db->row(true))
 				{
-					$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+					if ((isset($row['info_extra_value'])&&strlen($row['info_extra_value'])>0) && 
+						(stripos($query['selectcols'],'#'.$row['info_extra_name'])!==FALSE || !isset($query['selectcols']) || 
+						(stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ))
+					{
+						$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+					}
 				}
 			}
 		}
