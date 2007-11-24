@@ -374,7 +374,7 @@ class bo_tracking
 			try {
 				$notification = new notification();
 				$notification->set_receivers(array($user_or_lang));
-				$notification->set_message($this->get_notification_body($data,$old));
+				$notification->set_message($this->get_body(false,$data,$old));
 				$notification->set_sender($this->user);
 				$notification->set_subject($subject);
 				$notification->set_links(array($this->get_notification_link($data,$old)));
@@ -608,11 +608,12 @@ class bo_tracking
 	/**
 	 * Get the body of the notification message for notification-app
 	 *
+	 * @param array $html_email - ignored till I find a solution for new notifications
 	 * @param array $data
 	 * @param array $old
 	 * @return string
 	 */
-	function get_notification_body($data,$old)
+	function get_body($html_email = false, $data,$old)
 	{
 		$body = '';
 		// new or modified message
