@@ -251,6 +251,11 @@
     <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:</td>
     <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>
    </tr>
+   </tr>
+   <tr class="row_off">
+    <td>{lang_Allow_remote_administration_from_following_install_ID's_(comma_separated)}:<br />{lang_Own_install_ID:_}{value_install_id}</td>
+    <td><input name="newsettings[allow_remote_admin]" value="{allow_remote_admin}" size="40"></td>
+   </tr>
 
 <!-- END body -->
 

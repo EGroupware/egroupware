@@ -345,6 +345,10 @@ abstract class admin_cmd
 	{
 		admin_cmd::_instanciate_sql();
 
+		if ((string)$query['col_filter']['remote_id'] === '0')
+		{
+			$query['col_filter']['remote_id'] = null;
+		}
 		return admin_cmd::$sql->get_rows($query,$rows,$readonlys);
 	}
 
@@ -555,6 +559,7 @@ abstract class admin_cmd
 		if (!($remotes = admin_cmd::$remote->search(array(
 			'remote_id' => $id_or_name,
 			'remote_name' => $id_or_name,
+			'remote_domain' => $id_or_name,
 		),true,'','','',false,'OR')) || count($remotes) != 1)
 		{
 			throw new Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997);
@@ -706,5 +711,70 @@ abstract class admin_cmd
 		admin_cmd::$running_queued_jobs = false;
 
 		return admin_cmd::_set_async_job();
+	}
+	
+	/**
+	 * Return a list of defined remote instances
+	 *
+	 * @return array remote_id => remote_name pairs, plus 0 => local
+	 */
+	static function remote_sites()
+	{
+		admin_cmd::_instanciate_remote();
+		
+		return array(lang('local'))+admin_cmd::$remote->query_list('remote_name','remote_id');
+	}
+	
+	/**
+	 * get_rows for remote instances
+	 *
+	 * @param array $query
+	 * @param array &$rows
+	 * @param array &$readonlys
+	 * @return int
+	 */
+	static function get_remotes($query,&$rows,&$readonlys)
+	{
+		admin_cmd::_instanciate_remote();
+		
+		return admin_cmd::$remote->get_rows($query,$rows,$readonlys);
+	}
+	
+	/**
+	 * Read data of a remote instance
+	 *
+	 * @param array/int $keys
+	 * @return array
+	 */
+	static function read_remote($keys)
+	{
+		admin_cmd::_instanciate_remote();
+		
+		return admin_cmd::$remote->read($keys);
+	}
+	
+	/**
+	 * Save / adds a remote instance
+	 *
+	 * @param array $data
+	 * @return array/boolean data including remote_id or false on failure
+	 */
+	static function save_remote(array $data)
+	{
+		admin_cmd::_instanciate_remote();
+		
+		if ($data['install_id'] && $data['config_passwd'])	// calculate hash
+		{
+			$pw = preg_match('/^[a-f0-9]{32}$/',$data['config_passwd']) ? $data['config_passwd'] : md5($data['config_passwd']);
+			$data['remote_hash'] = md5($pw.$data['install_id']);
+		}
+		elseif ($data['install_id'] || $data['config_passwd'] || !$data['remote_hash'])
+		{
+			return false;	// we need either install_id AND config_passwd OR the remote_hash
+		}
+		//_debug_array($data);
+		admin_cmd::$remote->init($data);
+		
+		return admin_cmd::$remote->save() == 0 ? admin_cmd::$remote->data : false;
 	}
 }
