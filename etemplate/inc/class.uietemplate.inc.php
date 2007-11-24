@@ -86,6 +86,12 @@
 		 * @var string
 		 */
 		var $name_vars='exec';
+		/**
+		 * Are we running as sitemgr module or not
+		 *
+		 * @var boolean
+		 */
+		var $sitemgr=false;
 
 		/**
 		 * constructor of etemplate class, reads an eTemplate if $name is given
@@ -1267,7 +1273,7 @@ foreach($sess as $key => $val)
 					if (!$readonly && $type != 'buttononly')	// input button, are never submitted back!
 					{
 						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-						if (strtolower($name) == 'cancel')
+						if ($name == 'cancel' || stripos($name,'[cancel]') !== false)
 						{
 							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = 'cancel';
 						}
