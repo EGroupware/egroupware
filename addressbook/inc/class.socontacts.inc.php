@@ -594,9 +594,6 @@ class socontacts
 
 		if (!$rows) return array();
 
-		list(,$by) = explode(',',$param['org_view']);
-		if (!$by) $by = 'adr_one_locality';
-
 		foreach($rows as $n => $row)
 		{
 			$rows[$n]['id'] = 'org_name:'.$row['org_name'];
