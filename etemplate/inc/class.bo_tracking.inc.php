@@ -364,6 +364,9 @@ class bo_tracking
 		$sender = $this->get_sender($data,$old);
 		$subject = $this->get_subject($data,$old);
 		$attachments = $this->get_attachments($data,$old);
+		// does the user want html-emails
+		$html_email = !!$GLOBALS['egw_info']['user']['preferences']['tracker'][$this->check2pref ? $this->check2pref['notify_html'] : 'notify_html'];
+
 		/* send over notification_app or alternative old-style mail class
 		 * in future, we can make the notification app able to send mails
 		 * for non-system users, so the else part below could be dropped
@@ -374,10 +377,11 @@ class bo_tracking
 			try {
 				$notification = new notification();
 				$notification->set_receivers(array($user_or_lang));
-				$notification->set_message($this->get_body(false,$data,$old));
+				$notification->set_message($this->get_body($html_email,$data,$old));
 				$notification->set_sender($this->user);
 				$notification->set_subject($subject);
-				$notification->set_links(array($this->get_notification_link($data,$old)));
+				// does not work atm
+				//$notification->set_links(array($this->get_notification_link($data,$old)));
 				if(is_array($attachments)) { $notification->set_attachments($attachments); }
 				$notification->send();
 			}
@@ -398,8 +402,6 @@ class bo_tracking
 			$send->ClearAddresses();
 			$send->ClearAttachments();
 
-			// does the user want html-emails
-			$html_email = !!$GLOBALS['egw_info']['user']['preferences']['tracker'][$this->check2pref ? $this->check2pref['notify_html'] : 'notify_html'];
 			$send->IsHTML($html_email);		
 
 			if (preg_match('/^(.+) *<(.+)>/',$email,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as address
@@ -605,35 +607,49 @@ class bo_tracking
 		}
 	}
 		
+	
 	/**
-	 * Get the body of the notification message for notification-app
-	 *
-	 * @param array $html_email - ignored till I find a solution for new notifications
-	 * @param array $data
-	 * @param array $old
-	 * @return string
-	 */
-	function get_body($html_email = false, $data,$old)
-	{
-		$body = '';
-		// new or modified message
-		if (($message = $this->get_message($data,$old)))
-		{
-			$body .= $this->format_line(false,'message',false,$message);
-		}
-		foreach($this->get_details($data) as $name => $detail)
-		{
-			// if there's no old entry, the entry is not modified by definition
-			// if both values are '', 0 or null, we count them as equal too
-			$modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
-			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
-			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
-			
-			$body .= $this->format_line(false,$detail['type'],$modified,
-				($detail['label'] ? $detail['label'].': ':'').$detail['value']);
-		}
-		return $body;
-	}
+     * Get the body of the notification message, can be reimplemented
+     *
+     * @param boolean $html_email
+     * @param array $data
+     * @param array $old
+     * @return string
+     */
+    function get_body($html_email,$data,$old)
+    {
+        $body = '';
+        if ($html_email)
+        {    
+            $body = "<html>\n<body>\n".'<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
+        }
+        // new or modified message
+        if (($message = $this->get_message($data,$old)))
+        {
+            $body .= $this->format_line($html_email,'message',false,$message);
+        }
+        if (($link = $this->get_link($data,$old)))
+        {
+            $body .= $this->format_line($html_email,'link',false,lang('You can respond by visiting:'),$link);
+        }
+        foreach($this->get_details($data) as $name => $detail)
+        {
+            // if there's no old entry, the entry is not modified by definition
+            // if both values are '', 0 or null, we count them as equal too
+            $modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
+            //if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
+            if (empty($detail['value']) && !$modified) continue;    // skip unchanged, empty values
+            
+            $body .= $this->format_line($html_email,$detail['type'],$modified,
+                ($detail['label'] ? $detail['label'].': ':'').$detail['value']);
+        }
+        if ($html_email)
+        {
+            $body .= "</table>\n</body>\n</html>\n";
+        }
+        
+        return $body;
+    }
 	
 	/**
 	 * Format one line to the mail body

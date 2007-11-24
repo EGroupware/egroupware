@@ -333,8 +333,15 @@ final class notification {
 		$messages['plain'] = array();
 		$messages['html'] = array();
 		
-		$messages['plain']['text'] = $_message;
-		$messages['html']['text'] = nl2br($_message);
+		if(strlen($_message) == strlen(strip_tags($_message))) {
+			// $_message is plaintext
+			$messages['plain']['text'] = $_message;
+			$messages['html']['text'] = nl2br($_message);
+		} else {
+			// $_message already contains html
+			$messages['plain']['text'] = strip_tags($_message);
+			$messages['html']['text'] = $_message;
+		}
 		if(is_array($_links)) {
 			foreach($_links as $link) {
 				$params = '';
