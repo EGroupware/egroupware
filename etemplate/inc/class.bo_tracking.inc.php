@@ -425,7 +425,7 @@ class bo_tracking
 			 $send->FromName = '';
 			}
 			$send->Subject = $subject;
-			$send->Body = $this->get_body($html_email,$data,$old);
+			$send->Body = "<html>\n<body>\n".$this->get_body($html_email,$data,$old)."</body>\n</html>\n";
 			
 			foreach($attachments as $attachment)
 			{
@@ -621,7 +621,7 @@ class bo_tracking
         $body = '';
         if ($html_email)
         {    
-            $body = "<html>\n<body>\n".'<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
+            $body = '<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
         }
         // new or modified message
         if (($message = $this->get_message($data,$old)))
@@ -645,7 +645,7 @@ class bo_tracking
         }
         if ($html_email)
         {
-            $body .= "</table>\n</body>\n</html>\n";
+            $body .= "</table>\n";
         }
         
         return $body;

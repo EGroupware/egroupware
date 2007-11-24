@@ -119,10 +119,10 @@ class notification_email implements iface_notification {
 		}
 		if($this->preferences->external_mailclient) {
 			$body_plain = $_messages['plain']['text'].$_messages['plain']['link_external'];
-			$body_html = $_messages['html']['text'].$_messages['html']['link_external'];
+			$body_html = "<html>\n<body>\n".$_messages['html']['text'].$_messages['html']['link_external']."</body>\n</html>\n";
 		} else {
 			$body_plain = $_messages['plain']['text'].$_messages['plain']['link_internal'];
-			$body_html = $_messages['html']['text'].$_messages['html']['link_internal'];
+			$body_html = "<html>\n<body>\n".$_messages['html']['text'].$_messages['html']['link_internal']."</body>\n</html>\n";
 		}
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();
