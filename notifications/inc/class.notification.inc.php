@@ -100,7 +100,6 @@ final class notification {
 					$send_succseed++;
 				}
 				catch (Exception $exception) {
-					$send_succseed--;
 					//echo $exception->getMessage(), "\n";
 				}
 			}
