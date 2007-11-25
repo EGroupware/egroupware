@@ -345,7 +345,7 @@ class bo_tracking
 			{
 				return false;	// only notification about changed assignment requested
 			}
-			if($this->user == $user_or_lang)
+			if($this->user == $user_or_lang && !$this->notify_current_user)
 			{ 
 				return false;  // no popup for own actions
 			}
