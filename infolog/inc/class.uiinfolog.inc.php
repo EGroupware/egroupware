@@ -1250,7 +1250,7 @@ class uiinfolog
 		{
 			if (is_array($val))
 			{
-				$arr[$key] = self::array_stripslashes($var);
+				$arr[$key] = $this->array_stripslashes($var);
 			}
 			else
 			{
@@ -1282,7 +1282,7 @@ class uiinfolog
 		{
 			if (get_magic_quotes_gpc())
 			{
-				$_POST = self::array_stripslashes($_POST);
+				$_POST = $this->array_stripslashes($_POST);
 			}
 			$this->bo->config->config_data['link_pathes'] = $this->bo->link_pathes = array();
 			$this->bo->config->config_data['send_file_ips'] = $this->bo->send_file_ips = array();
