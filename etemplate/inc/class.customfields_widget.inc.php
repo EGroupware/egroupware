@@ -86,7 +86,7 @@
 			$config = $this->config->read_repository();
 			//merge old config_name in egw_config table
 			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
-			$this->customfields = $config[$config_name] ? $config[$config_name] : array('test'=>array('type'=>'label'));
+			$this->customfields = $config[$config_name];
 			$this->types = $config['types'];
 			$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
 
@@ -94,7 +94,7 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			if ($this->appname == 'etemplate')	// if we are in the etemplate editor, load the cf's from the app the tpl belongs too
+			if ($this->appname == 'etemplate' || !$this->customfields)	// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
 			{
 				list($app) = explode('.',$tmpl->name);
 				if ($app && $app != $this->appname) $this->customfields_widget(null,$app);
@@ -180,7 +180,7 @@
 						$input =& etemplate::empty_cell('select',$this->prefix.$name,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
-							'no_lang'     => True								
+							'no_lang'     => True
 						));
 						if($this->advanced_search)
 						{
@@ -284,6 +284,8 @@
 				{
 					if ($readonly) $input['readonly'] = true;
 					
+					if ($cell['needed']) $input['needed'] = $cell['needed'];
+					
 					if (!empty($field['help']) && $row_class != 'th')
 					{
 						$input['help'] = $field['help'];
@@ -299,7 +301,7 @@
 				$cell['data'][0]['A'] = '100';
 			}
 			list($span,$class) = explode(',',$cell['span']);	// msie (at least 5.5) shows nothing with div overflow=auto
-			$cell['size'] = '100%,100%,0,'.$class.','.($type=='customfields-list'?',0':',').($tmpl->html->user_agent != 'msie' ? ',auto' : '');
+			$cell['size'] = '100%,100%,0,'.$class.','.(in_array($type,array('customfields-list','customfields-no-label'))?'0,0':',').($tmpl->html->user_agent != 'msie' ? ',auto' : '');
 
 			return True;	// extra Label is ok
 		}
