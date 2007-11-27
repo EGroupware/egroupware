@@ -101,7 +101,7 @@
 
 		function formatted_list($format,$type,$cat_parent,$global_cats)
 		{
-			return $this->cats->formated_list($format,$type,$cat_parent,$global_cats);
+			return $this->cats->formatted_list($format,$type,$cat_parent,$global_cats);
 		}
 
 		function delete($cat_id,$subs)
