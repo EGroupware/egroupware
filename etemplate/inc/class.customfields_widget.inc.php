@@ -31,14 +31,14 @@
 		);
 		
 		/**
-		* Allowd types of customfields
-		* 
-		* The additionally allowed app-names from the link-class, will be add by the edit-method only,
-		* as the link-class has to be called, which can NOT be instanciated by the constructor, as 
-		* we get a loop in the instanciation.
-		* 
-		* @var array
-		*/
+		 * Allowd types of customfields
+		 * 
+		 * The additionally allowed app-names from the link-class, will be add by the edit-method only,
+		 * as the link-class has to be called, which can NOT be instanciated by the constructor, as 
+		 * we get a loop in the instanciation.
+		 * 
+		 * @var array
+		 */
 		var $cf_types = array(
 			'text'     => 'Text',
 			'label'    => 'Label',
@@ -48,15 +48,14 @@
 			'date'     => 'Date',
 			'date-time'=> 'Date+Time',
 			'select-account' => 'Select account',
-			'button'   => 'Button',		// button to execute javascript
+			'button'   => 'Button',         // button to execute javascript
 			'link-entry' => 'Select entry',		// should be last type, as the individual apps get added behind
 		);
 
 		/**
-		* @var $prefix string Prefix for every custiomfield name returned in $content (# for general (admin) customfields)
-		*/
+		 * @var $prefix string Prefix for every custiomfield name returned in $content (# for general (admin) customfields)
+		 */
 		var $prefix = '#';
-		
 		/**
 		 * Current application
 		 *
@@ -77,6 +76,7 @@
 		var $customfields;
 		var $types;
 		var $advanced_search;
+
 
 		function customfields_widget($ui,$appname=null)
 		{
@@ -100,6 +100,7 @@
 				if ($app && $app != $this->appname) $this->customfields_widget(null,$app);
 			}
 			$type2 = $cell['size'];
+			$fields_with_vals=array();
 
 			$fields = $this->customfields;
 			// check if name refers to a single custom field --> show only that
@@ -113,21 +114,33 @@
 			{
 				case 'customfields-types':
 					$cell['type'] = 'select';
-					foreach($this->cf_types as $name => $label) $cell['sel_options'][$name] = lang($label);
+					foreach($this->cf_types as $lname => $label) 
+					{
+						$cell['sel_options'][$lname] = lang($label);
+						$fields_with_vals[]=$lname;
+					}
 					$link_types = ExecMethod('phpgwapi.bolink.app_list','');
 					ksort($link_types);
-					foreach($link_types as $name => $label) $cell['sel_options'][$name] = '- '.$label;
+					foreach($link_types as $lname => $label) $cell['sel_options'][$lname] = '- '.$label;
 					$cell['no_lang'] = true;
 					return true;
 
 				case 'customfields-list':
-					foreach(array_reverse($fields) as $name => $field)
+					foreach(array_reverse($fields) as $lname => $field)
 					{
-						if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false) continue;	// not for our content type
-						if (isset($value[$this->prefix.$name]) && $value[$this->prefix.$name] !== '') break;
-						$stop_at_field = $name;
+						if (!empty($type2) && !empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false) continue;	// not for our content type//
+						if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') //break;
+						{
+							$fields_with_vals[]=$lname;
+						}
+						//$stop_at_field = $name;
 					}
 					break;
+				default:
+					foreach(array_reverse($fields) as $lname => $field)
+					{
+						$fields_with_vals[]=$lname;
+					}
 			}
 			$readonly = $cell['readonly'] || $readonlys[$name] || $type == 'customfields-list';
 
@@ -142,18 +155,19 @@
 			$cell['rows'] = $cell['cols'] = 0;
 
 			$n = 1;
-			foreach($fields as $name => $field)
+			foreach($fields as $lname => $field)
 			{
-				if ($stop_at_field && $name == $stop_at_field) break;	// no further row necessary
+			   if (!(array_search($lname,$fields_with_vals)===false))
+			   {
+				if ($stop_at_field && $lname == $stop_at_field) break;	// no further row necessary
 
 				// check if the customfield get's displayed for type $value, we can have multiple comma-separated types now
-				if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false)
+				if (!empty($type2) && !empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false)
 				{
 					continue;	// not for our content type
 				}
 				$new_row = null; etemplate::add_child($cell,$new_row);
-
-				if ($type == 'customfields')
+				if ($type != 'customfields-list' && $type == 'customfields')
 				{
 					$row_class = 'row';
 					etemplate::add_child($cell,$label =& etemplate::empty_cell('label','',array(
@@ -161,7 +175,14 @@
 						'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0,
 						'span' => $field['type'] === 'label' ? '2' : '',
 					)));
+				} elseif ($type == 'customfields-list') {
+					if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') {
+						etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
+							array('label'=>lang("custom fields").": ".$field['label'],'width'=>"16px",
+								'onclick'=>"return alert('".lang("custom fields").": ".$field['label']."');")));
+					}
 				}
+
 				switch ((string)$field['type'])
 				{
 					case 'select' :
@@ -177,17 +198,17 @@
 								$field['values'][$key] = $val;
 							}
 						}
-						$input =& etemplate::empty_cell('select',$this->prefix.$name,array(
+						$input =& etemplate::empty_cell('select',$this->prefix.$lname,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
-							'no_lang'     => True
+							'no_lang'     => True,
 						));
 						if($this->advanced_search)
 						{
 							$select =& $input; unset($input);
 							$input =& etemplate::empty_cell('hbox');
 							etemplate::add_child($input, $select); unset($select);
-							etemplate::add_child($input, etemplate::empty_cell('select',$this->prefix.$name,array(
+							etemplate::add_child($input, etemplate::empty_cell('select',$this->prefix.$lname,array(
 								'sel_options' => $field['values'],
 								'size'        => $field['rows'],
 								'no_lang'     => True
@@ -198,7 +219,7 @@
 						$row_class = 'th';
 						break;
 					case 'checkbox' :
-						$input =& etemplate::empty_cell('checkbox',$this->prefix.$name);
+						$input =& etemplate::empty_cell('checkbox',$this->prefix.$lname);
 						break;
 					case 'radio' :
 						if (count($field['values']) == 1 && isset($field['values']['@']))
@@ -209,7 +230,7 @@
 						$m = 0;
 						foreach ($field['values'] as $key => $val)
 						{
-							$radio = etemplate::empty_cell('radio',$this->prefix.$name);
+							$radio = etemplate::empty_cell('radio',$this->prefix.$lname);
 							$radio['label'] = $val;
 							$radio['size'] = $key;
 							etemplate::add_child($input,$radio);
@@ -220,45 +241,63 @@
 					case 'textarea' :
 					case '' :	// not set
 						$field['len'] = $field['len'] ? $field['len'] : 20;
-						if($field['rows'] <= 1)
+						if ($type != 'customfields-list')
 						{
-							list($max,$shown) = explode(',',$field['len']);
-							$input =& etemplate::empty_cell('text',$this->prefix.$name,array(
-								'size' => intval($shown > 0 ? $shown : $max).','.intval($max)
-							));
-						}
-						else
-						{
-							$input =& etemplate::empty_cell('textarea',$this->prefix.$name,array(
-								'size' => $field['rows'].($field['len'] > 0 ? ','.(int)$field['len'] : '')
-							));
+							if($field['rows'] <= 1)
+							{//text
+								list($max,$shown) = explode(',',$field['len']);
+								$tmparray=array(
+									'size' => intval($shown > 0 ? $shown : $max).','.intval($max),
+									'maxlength'=>intval($max),
+								);
+								if (is_array($field['values']))
+								{
+									if (array_key_exists('readonly',$field['values']))
+									{
+										$tmparray['readonly']='readonly';
+									}
+								}
+								$input =& etemplate::empty_cell('text',$this->prefix.$lname,$tmparray);
+							}
+							else
+							{//textarea
+								$tmparray=array(
+									'size' => $field['rows'].($field['len'] >0 ? ','.(int)$field['len'] : '')
+								);
+								if (array_key_exists('readonly',$field['values']))
+								{
+									$tmparray['readonly']='readonly';
+								}
+								$input =& etemplate::empty_cell('textarea',$this->prefix.$lname,$tmparray);
+							}
+						} else {
+							$input =& etemplate::empty_cell('label',$this->prefix.$lname, 
+								array(
+									'onclick'=>"return alert('".lang("custom fields").": ".
+										$lname."=>".htmlentities(str_replace("\r","",str_replace("\n"," ",$value[$this->prefix.$lname]))) ."');",
+								)
+							);
 						}
 						break;
 					case 'date':
 					case 'date-time':
-						$input =& etemplate::empty_cell($field['type'],$this->prefix.$name,array(
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
 							'size' => $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s'),
 						));
 						break;
 					case 'select-account':
 						list($opts) = explode('=',$field['values'][0]);
-						$input =& etemplate::empty_cell('select-account',$this->prefix.$name,array(
+						$input =& etemplate::empty_cell('select-account',$this->prefix.$lname,array(
 							'size' => ($field['rows']>1?$field['rows']:lang('None')).','.$opts,
 						));
 						break;
-					case 'link-entry':
-					default :	// link-entry to given app
-						$input =& etemplate::empty_cell('link-entry',$this->prefix.$name,array(
-							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
-						));
-						break;
-					case 'button':	// button(s) to execute javascript (label=onclick) or textinputs (empty label, readonly with neg. length)
+					case 'button':  // button(s) to execute javascript (label=onclick) or textinputs (empty label, readonly with neg. length)
 						$input =& etemplate::empty_cell('hbox');
 						foreach($field['values'] as $label => $js)
 						{
-							if (!$label)	// display an readonly input
+							if (!$label)    // display an readonly input
 							{
-								$widget =& etemplate::empty_cell('text',$this->prefix.$name.$label,array(
+								$widget =& etemplate::empty_cell('text',$this->prefix.$lname.$label,array(
 									'size' => $field['len'] ? $field['len'] : 20,
 									'readonly' => $field['len'] < 0,
 									'onchange' => $js,
@@ -266,24 +305,29 @@
 							}
 							else
 							{
-								if ($readonly) continue;	// dont display buttons if we're readonly
-								$widget =& etemplate::empty_cell('buttononly',$this->prefix.$name.$label,array(
+								if ($readonly) continue;        // dont display buttons if we're readonly
+								$widget =& etemplate::empty_cell('buttononly',$this->prefix.$lname.$label,array(
 									'label' => $label ? $label : lang('Submit'),
 									'onclick' => $js,
-									'no_lang' => True								
+									'no_lang' => True
 								));
 							}
 							etemplate::add_child($input,$widget);
 							unset($widget);
 						}
-						break;				
+						break;
+					case 'link-entry':
+					default :	// link-entry to given app
+						$input =& etemplate::empty_cell('link-entry',$this->prefix.$lname,array(
+							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
+						));
 				}
 				$cell['data'][0]['c'.$n++] = $row_class.',top';
 				
 				if (!is_null($input))
 				{
 					if ($readonly) $input['readonly'] = true;
-					
+
 					if ($cell['needed']) $input['needed'] = $cell['needed'];
 					
 					if (!empty($field['help']) && $row_class != 'th')
@@ -295,31 +339,33 @@
 					unset($input);
 				}
 				unset($label);
+			   }
 			}
 			if ($type != 'customfields-list')
 			{
 				$cell['data'][0]['A'] = '100';
 			}
 			list($span,$class) = explode(',',$cell['span']);	// msie (at least 5.5) shows nothing with div overflow=auto
-			$cell['size'] = '100%,100%,0,'.$class.','.(in_array($type,array('customfields-list','customfields-no-label'))?'0,0':',').($tmpl->html->user_agent != 'msie' ? ',auto' : '');
+			// we dont want to use up the full space for the table created, so we skip the line below
+			//$cell['size'] = '100%,100%,0,'.$class.','.(in_array($type,array('customfields-list','customfields-no-label'))?'0,0':',').($tmpl->html->user_agent != 'msie' ? ',auto' : '');
 
 			return True;	// extra Label is ok
 		}
-		
+
 		/**
 		 * Read the options of a 'select' or 'radio' custom field from a file
-		 * 
-		 * For security reasons that file has to be relative to the eGW root 
+		 *
+		 * For security reasons that file has to be relative to the eGW root
 		 * (to not use that feature to explore arbitrary files on the server)
 		 * and it has to be a php file setting one variable called options,
-		 * (to not display it to anonymously by the webserver). 
+		 * (to not display it to anonymously by the webserver).
 		 * The $options var has to be an array with value => label pairs, eg:
-		 * 
+		 *
 		 * <?php
 		 * $options = array(
-		 * 	'a' => 'Option A',
-		 * 	'b' => 'Option B',
-		 * 	'c' => 'Option C',
+		 *      'a' => 'Option A',
+		 *      'b' => 'Option B',
+		 *      'c' => 'Option C',
 		 * );
 		 *
 		 * @param string $file file name inside the eGW server root, either relative to it or absolute
@@ -335,7 +381,7 @@
 				return array(lang("'%1' is no php file in the eGW server root (%2)!".': '.$path,$file,EGW_SERVER_ROOT));
 			}
 			include($path);
-			
+
 			return $options;
 		}
 	}
