@@ -399,11 +399,11 @@ class bo_tracking
 			// PHPMailer aka send-class, seems not to be able to send more then one mail, IF we need to authenticate to the SMTP server
 			// There for the object is newly created for ever mail, 'til this get fixed in PHPMailer.
 			$notification_sent = false;
-			if(!is_object($GLOBALS['egw']->send))
-			{
+			//if(!is_object($GLOBALS['egw']->send))
+			//{
 			 require_once(EGW_API_INC.'/class.send.inc.php');
 			 $GLOBALS['egw']->send = $send =& new send();
-			}
+			//}
 		
 			$send->ClearAddresses();
 			$send->ClearAttachments();
