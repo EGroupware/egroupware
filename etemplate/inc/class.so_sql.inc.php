@@ -837,9 +837,11 @@ class so_sql
 				$criteria[$col] = $query['search'];
 			}
 		}
-		$rows = (array) $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
+		$rows = $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
 			'','%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
 			$query['col_filter'],$join,$need_full_no_count);
+			
+		if (!$rows) $rows = array();	// otherwise false returned from search would be returned as array(false)
 
 		return $this->total;
 	}
