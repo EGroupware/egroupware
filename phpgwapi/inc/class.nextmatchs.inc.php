@@ -177,7 +177,7 @@
 				'lang_all'      => lang('All'),
 				'lang_select'   => lang('Select'),
 				'cat_field'     => $cat_field,
-				'categories'    => $GLOBALS['egw']->categories->formated_list('select','all',$cat_id,'True'),
+				'categories'    => $GLOBALS['egw']->categories->formatted_list('select','all',$cat_id,'True'),
 				'hidden'       => $GLOBALS['egw']->html->input_hidden(array(
 					'filter' => $this->_filter,
 					'qfield' => $this->_qfield,
@@ -363,7 +363,7 @@
 				'lang_all'      => lang('All'),
 				'lang_select'   => lang('Select'),
 				'cat_field'     => $cat_field,
-				'categories'    => $GLOBALS['egw']->categories->formated_list('select','all',(int)$cat_id,'True'),
+				'categories'    => $GLOBALS['egw']->categories->formatted_list('select','all',(int)$cat_id,'True'),
 				'hidden'       => $GLOBALS['egw']->html->input_hidden(array(
 					'filter' => $this->_filter,
 					'qfield' => $this->_qfield,

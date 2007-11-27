@@ -449,13 +449,6 @@
 			}
 			return $s;
 		}
-		/**
-		 * @deprecated use formatted_list
-		 */
-		function formated_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')
-		{
-			return $this->formatted_list($format,$type,$selected,$globals,$site_link);
-		}
 
 		/**
 		 * add a category

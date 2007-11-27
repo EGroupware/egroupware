@@ -423,7 +423,7 @@
 				$type = 'mains';
 			}
 
-			$GLOBALS['egw']->template->set_var('category_list',$this->bo->cats->formated_list(array(
+			$GLOBALS['egw']->template->set_var('category_list',$this->bo->cats->formatted_list(array(
 				'type' => $type,'selected' => $cat['parent'],
 				'globals' => $global_cats, 'self' => $cat_id
 			)));
