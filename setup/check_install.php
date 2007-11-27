@@ -157,9 +157,8 @@
 			'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 		),
 	);
-	if (extension_loaded('session'))
+	if (extension_loaded('session') && ini_get('session.save_handler') == 'files')
 	{
-		//ini_set('session.save_path','/hugo');
 		$checks[session_save_path()] = array(
 			'func' => 'permission_check',
 			'is_writable' => true,
