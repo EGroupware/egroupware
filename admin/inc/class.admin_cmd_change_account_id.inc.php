@@ -1,0 +1,306 @@
+<?php
+/**
+ * eGgroupWare admin - admin command: change an account_id
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package admin
+ * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
+
+/**
+ * admin command: change an account_id
+ */
+class admin_cmd_change_account_id extends admin_cmd 
+{
+	/**
+	 * Constructor
+	 *
+	 * @param array $change array with old => new id pairs
+	 */
+	function __construct(array $change)
+	{
+		if (!is_set($change['change']))
+		{
+			$change = array(
+				'change' => $change,
+			);
+		}
+		admin_cmd::__construct($change);
+	}
+
+	/**
+	 * App-, Table- and column-names containing nummeric account-id's
+	 * @var array
+	 */
+	private $columns2change = array(
+			'phpgwapi' => array(
+				'egw_access_log'     => 'account_id',
+				'egw_accounts'       => array(array('account_id','.type'=>'abs'),'account_primary_group'),
+				'egw_acl'            => array('acl_account','acl_location'),
+				'egw_addressbook'    => array('contact_owner','contact_creator','contact_modifier','account_id'),
+				'egw_addressbook2list' => array('list_added_by'),
+				'egw_addressbook_extra' => 'contact_owner',
+				'egw_addressbook_lists' => array('list_owner','list_creator'),
+				'egw_api_content_history' => 'sync_changedby',
+				'egw_applications'   => false,
+				'egw_app_sessions'   => 'loginid',
+				'egw_async'          => 'async_account_id',
+				'egw_categories'     => array(array('cat_owner','cat_owner > 0')),	// -1 are global cats, not cats from group 1!
+				'egw_config'         => false,
+				'egw_history_log'    => 'history_owner',
+				'egw_hooks'          => false,
+				'egw_interserv'      => false,
+				'egw_lang'           => false,
+				'egw_languages'      => false,
+				'egw_links'          => 'link_owner',
+				'egw_log'            => 'log_user',
+				'egw_log_msg'        => false,
+				'egw_nextid'         => false,
+				'egw_preferences'    => array(array('preference_owner','preference_owner > 0')),
+				'egw_sessions'       => false,	// only account_lid stored
+				'egw_vfs'            => array('vfs_owner_id','vfs_createdby_id','vfs_modifiedby_id'),	// 'vfs_directory' contains account_lid for /home/account 
+			),
+			'etemplate' => array(
+				'egw_etemplate'      => 'et_group',
+			),
+			'bookmarks' => array(
+				'egw_bookmarks'      => 'bm_owner',
+			),
+			'calendar' => array(
+				'egw_cal'            => array('cal_owner','cal_modifier'),
+				'egw_cal_dates'      => false,
+				'egw_cal_extra'      => false,
+				'egw_cal_holidays'   => false,
+				'egw_cal_repeats'    => false,
+				'egw_cal_user'       => array(array('cal_user_id','cal_user_type' => 'u')),	// cal_user_id for cal_user_type='u'
+			),
+			'emailadmin' => array(
+				'egw_emailadmin'     => false,
+			),
+			'felamimail' => array(
+				'egw_felamimail_accounts'      => 'fm_owner',
+				'egw_felamimail_cache'         => 'fmail_accountid',	// afaik not used in 1.4+
+				'egw_felamimail_displayfilter' => 'fmail_filter_accountid',
+				'egw_felamimail_folderstatus'  => 'fmail_accountid',	// afaik not used in 1.4+
+				'egw_felamimail_signatures'    => 'fm_accountid',
+			),
+			'infolog' => array(
+				'egw_infolog'        => array('info_owner',array('info_responsible','.type' => 'comma-sep'),'info_modifier'),
+				'egw_infolog_extra'  => false,
+			),
+			'news_admin' => array(
+				'egw_news'           => 'news_submittedby',
+				'egw_news_export'    => false,
+			),
+			'projectmanager' => array(
+				'egw_pm_constraints' => false,
+				'egw_pm_elements'    => array('pe_modifier',array('pe_resources','.type' => 'comma-sep')),
+				'egw_pm_extra'       => false,
+				'egw_pm_members'     => 'member_uid',
+				'egw_pm_milestones'  => false,
+				'egw_pm_pricelist'   => false,
+				'egw_pm_prices'      => 'pl_modifier',
+				'egw_pm_projects'    => array('pm_creator','pm_modifier'),
+				'egw_pm_roles'       => false,
+			),
+			'registration' => array(
+				'egw_reg_accounts'   => false,
+				'egw_reg_fields'     => false,
+			),
+			'resources' => array(
+				'egw_resources'      => false,
+				'egw_resources_extra'=> 'extra_owner',
+			),
+			'sitemgr' => array(
+				'egw_sitemgr_active_modules'   => false,
+				'egw_sitemgr_blocks'           => false,
+				'egw_sitemgr_blocks_lang'      => false,
+				'egw_sitemgr_categories_lang'  => false,
+				'egw_sitemgr_categories_state' => false,
+				'egw_sitemgr_content'          => false,
+				'egw_sitemgr_content_lang'     => false,
+				'egw_sitemgr_modules'          => false,
+				'egw_sitemgr_notifications'    => false,
+				'egw_sitemgr_notify_messages'  => false,
+				'egw_sitemgr_pages'            => false,
+				'egw_sitemgr_pages_lang'       => false,
+				'egw_sitemgr_properties'       => false,
+				'egw_sitemgr_sites'            => false,
+			),
+			'syncml' => array(
+				'egw_contentmap'        => false,
+				'egw_syncmldeviceowner' => false,	// Lars: is owner_devid a account_id???
+				'egw_syncmldevinfo'     => false,
+				'egw_syncmlsummary'     => false,
+			),
+			'tracker' => array(
+				'egw_tracker'           => array('tr_assigned','tr_creator','tr_modifier'),
+				'egw_tracker_bounties'  => array('bounty_creator','bounty_confirmer'),
+				'egw_tracker_replies'   => array('reply_creator'),
+				'egw_tracker_votes'     => array('vote_uid'),
+			),
+			'timesheet' => array(
+				'egw_timesheet'      => array('ts_owner','ts_modifier'),
+				'egw_timesheet_extra'=> false,
+			),
+			'wiki' => array(
+				'egw_wiki_interwiki' => false,
+				'egw_wiki_links'     => false,
+				'egw_wiki_pages'     => array(array('wiki_readable','wiki_readable < 0'),array('wiki_writable','wiki_writable < 0')),	// only groups
+				'egw_wiki_rate'      => false,
+				'egw_wiki_remote_pages' => false,
+				'egw_wiki_sisterwiki'=> false,
+			),
+			'phpbrain' => array(	// aka knowledgebase
+				'phpgw_kb_articles'  => array('user_id','modified_user_id'),
+				'phpgw_kb_comment'   => 'user_id',
+				'phpgw_kb_files'     => false,
+				'phpgw_kb_questions' => 'user_id',
+				'phpgw_kb_ratings'   => 'user_id',
+				'phpgw_kb_related_art' => false,
+				'phpgw_kb_search'    => false,
+				'phpgw_kb_urls'      => false,
+			),
+			'polls' => array(
+				'egw_polls'         => false,
+				'egw_polls_answers' => false,
+				'egw_polls_votes'   => 'vote_uid',
+			),
+			'gallery' => array(
+				'g2_ExternalIdMap' => array(array('g_externalId',"g_entityType='GalleryUser'")),
+			),
+			// MyDMS	ToDo!!!
+			// VFS2		ToDo!!!
+		);
+		
+	/**
+	 * give or remove run rights from a given account and application
+	 * 
+	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @return string success message
+	 * @throws Exception(lang("Permission denied !!!"),2)
+	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws Exception(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
+	 */
+	protected function exec($check_only=false)
+	{
+		foreach($this->change as $from => $to)
+		{
+			if (!(int)$from || !(int)$to)
+			{
+				throw new Exception (lang("Account-id's have to be integers!"),16);
+			}
+		}
+		if ($check_only) return true;
+
+		$total = 0;
+		foreach($this->columns2change as $app => $data)
+		{
+			$db = clone($GLOBALS['egw']->db);
+			$db->set_app($app);
+			
+			foreach($data as $table => $columns)
+			{
+				if (!$columns)
+				{
+					echo "$app: $table no columns with account-id's\n";
+					continue;	// noting to do for this table
+				}
+				if (!is_array($columns)) $columns = array($columns);
+				
+				foreach($columns as $column)
+				{
+					$type = $where = null;
+					if (is_array($column))
+					{
+						$type = $column['.type'];
+						unset($column['.type']);
+						$where = $column;
+						$column = array_shift($where);
+					}
+					$total += ($changed = self::_update_account_id($ids2change,$db,$table,$column,$where,$type));
+					echo "$app: $table.$column $changed id's changed\n";
+				}
+			}
+		}
+		return lang("Total of %1 id's changed.",$total)."\n\n";
+	}
+
+	private static function _update_account_id($ids2change,$db,$table,$column,$where=null,$type=null)
+	{
+		static $update_sql;
+		
+		if (is_null($update_sql))
+		{
+			foreach($ids2change as $from => $to)
+			{
+				$update_sql .= "WHEN $from THEN $to ";
+			}
+			$update_sql .= "END";
+		}
+		switch($type)
+		{
+			case 'comma-sep':
+				if (!$where) $where = array();
+				$where[] = "$column IS NOT NULL";
+				$where[] = "$column != ''";
+				$db->select($table,'DISTINCT '.$column,$where,__LINE__,__FILE__);
+				$change = array();
+				while(($row = $db->row(true)))
+				{
+					$ids = explode(',',$old_ids=$row[$column]);
+					foreach($ids as $key => $id)
+					{
+						if (isset($account_id2change[$id])) $ids[$key] = $account_id2change[$id];
+					}
+					$ids = implode(',',$ids);
+					if ($ids != $old_ids)
+					{
+						$change[$old_ids] = $ids;
+					}
+				}
+				$changed = 0;
+				foreach($change as $from => $to)
+				{
+					$db->update($table,array($column=>$to),$where+array($column=>$from),__LINE__,__FILE__);
+					$changed += $db->affected_rows();
+				}
+				break;
+				
+			case 'abs':
+				if (!$where) $where = array();
+				$where[$column] = array();
+				foreach(array_keys($ids2change) as $id)
+				{
+					$where[$column][] = abs($id);
+				}
+				$db->update($table,$column.'= CASE '.$column.' '.preg_replace('/-([0-9]+)/','\1',$update_sql),$where,__LINE__,__FILE__);
+				$changed = $db->affected_rows();
+				break;
+				
+			default:
+				if (!$where) $where = array();
+				$where[$column] = array_keys($ids2change);
+				$db->update($table,$column.'= CASE '.$column.' '.$update_sql,$where,__LINE__,__FILE__);
+				$changed = $db->affected_rows();
+				break;
+		}
+		return $changed;
+	}
+
+	/**
+	 * Return a title / string representation for a given command, eg. to display it
+	 *
+	 * @return string
+	 */
+	function __tostring()
+	{
+		$change = array();
+		foreach($this->change as $from => $to) $change[] = $from.'->'.$to;
+
+		return lang('Change account_id').': '.implode(', ',$change);
+	}
+}

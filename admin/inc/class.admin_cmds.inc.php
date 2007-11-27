@@ -10,9 +10,6 @@
  * @version $Id$ 
  */
 
-require_once(EGW_INCLUDE_ROOT.'/admin/inc/class.admin_cmd.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
-
 /**
  * UI for the admin comand queue
  */
@@ -31,7 +28,7 @@ class admin_cmds
 	 * @param array &$readonlys
 	 * @return int
 	 */
-	static function get_rows($query,&$rows,&$readonlys)
+	static function get_rows(array $query,&$rows,&$readonlys)
 	{
 		$GLOBALS['egw']->session->appsession('cmds','admin',$query);
 
@@ -103,7 +100,7 @@ class admin_cmds
 	 * @param array &$readonlys
 	 * @return int
 	 */
-	static function get_remotes($query,&$rows,&$readonlys)
+	static function get_remotes(array $query,&$rows,&$readonlys)
 	{
 		return admin_cmd::get_remotes($query,$rows,$readonlys);
 	}

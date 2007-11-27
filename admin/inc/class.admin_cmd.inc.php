@@ -90,10 +90,11 @@ abstract class admin_cmd
 	/**
 	 * Executes the command
 	 * 
+	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception()
 	 */
-	abstract function exec();
+	protected abstract function exec($check_only=false);
 	
 	/**
 	 * Return a title / string representation for a given command, eg. to display it
@@ -130,17 +131,31 @@ abstract class admin_cmd
 	 *
 	 * The command will be written to the database queue, incl. its scheduled start time or execution status
 	 *
-	 * @param $time=null timestamp to run the command or null to run it immediatly
-	 * @param $set_modifier=null should the current user be set as modifier, default true
+	 * @param int $time=null timestamp to run the command or null to run it immediatly
+	 * @param boolean $set_modifier=null should the current user be set as modifier, default true
+	 * @param booelan $skip_checks=false do not yet run the checks for a scheduled command
 	 * @return mixed string with execution error or success message, false for other errors
 	 */
-	function run($time=null,$set_modifier=true)
+	function run($time=null,$set_modifier=true,$skip_checks=false)
 	{
 		if (!is_null($time))
 		{
 			$this->scheduled = $time;
 			$this->status = admin_cmd::scheduled;
 			$ret = lang('Command scheduled to run at %1',date('Y-m-d H:i',$time));
+			// running the checks of the arguments for local commands, if not explicitly requested to not run them
+			if (!$this->remote_id && !$skip_checks)
+			{
+				try {
+					$this->exec(true);
+				}
+				catch (Exception $e) {
+					$this->error = $e->getMessage();
+					$ret = $this->errno = $e->getCode();
+					$this->status = admin_cmd::failed;
+					$dont_save = true;
+				}
+			}
 		}
 		else
 		{
@@ -161,7 +176,7 @@ abstract class admin_cmd
 				$this->status = admin_cmd::failed;
 			}
 		}
-		if (!$this->save($set_modifier))
+		if (!$dont_save && !$this->save($set_modifier))
 		{
 			return false;
 		}
@@ -316,12 +331,7 @@ abstract class admin_cmd
 		}
 		if (!class_exists($class = $data['type']))
 		{
-			list($app) = explode('_',$class);
-			@include_once(EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php');
-			if (!class_exists($class))
-			{
-				throw new Exception(lang('Unknown command %1!',$class),0);
-			}
+			throw new Exception(lang('Unknown command %1!',$class),0);
 		}
 		$cmd = new $class($data);
 		
@@ -474,7 +484,7 @@ abstract class admin_cmd
 	 * @return array of app-names
 	 * @throws Exception(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
 	 */
-	protected static function _parse_apps(array $apps)
+	static function parse_apps(array $apps)
 	{
 		foreach($apps as $key => $name)
 		{
@@ -500,22 +510,24 @@ abstract class admin_cmd
 	/**
 	 * parse account name or id
 	 *
-	 * @param string/int $account
-	 * @param boolean $allow_only=null true=only user, false=only groups, default both
-	 * @return int account_id
-	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only?lang('user'):lang('group')),15);
+	 * @param string/int $account account_id or account_lid
+	 * @param boolean $allow_only_user=null true=only user, false=only groups, default both
+	 * @return int/array account_id
+	 * @throws Exception(lang("Unknown account: %1 !!!",$account),15);
+	 * @throws Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
 	 */
-	protected static function _parse_account($account,$allow_only=null)
+	static function parse_account($account,$allow_only_user=null)
 	{
+		admin_cmd::_instanciate_accounts();
+
 		if (!($type = admin_cmd::$accounts->exists($account)) || 
 			!is_numeric($id=$account) && !($id = admin_cmd::$accounts->name2id($account)))
 		{
 			throw new Exception(lang("Unknown account: %1 !!!",$account),15);
 		}
-		if (!is_null($allow_only) && $allow_only !== ($type == 1))
+		if (!is_null($allow_only_user) && $allow_only_user !== ($type == 1))
 		{
-			throw new Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only?lang('user'):lang('group')),15);
+			throw new Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
 		}
 		if ($type == 2 && $id > 0) $id = -$id;	// groups use negative id's internally, fix it, if user given the wrong sign
 	
@@ -523,11 +535,32 @@ abstract class admin_cmd
 	}
 	
 	/**
+	 * parse account names or ids
+	 *
+	 * @param string/int/array $accounts array or comma-separated account_id's or account_lid's
+	 * @param boolean $allow_only_user=null true=only user, false=only groups, default both
+	 * @return array of account_id's or null if none specified
+	 * @throws Exception(lang("Unknown account: %1 !!!",$account),15);
+	 * @throws Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only?lang('user'):lang('group')),15);
+	 */
+	static function parse_accounts($accounts,$allow_only_user=null)
+	{
+		if (!$accounts) return null;
+		
+		$ids = array();
+		foreach(is_array($accounts) ? $accounts : explode(',',$accounts) as $account)
+		{
+			$ids[] = admin_cmd::parse_account($account,$allow_only_user);
+		}
+		return $ids;
+	}
+	
+	/**
 	 * Parses a date into an integer timestamp
 	 *
 	 * @param string $date
 	 * @return int timestamp
-	 * @throws Exception(lang('Invalid formated date "%1"!',$datein),998);
+	 * @throws Exception(lang('Invalid formated date "%1"!',$datein),6);
 	 */
 	static function parse_date($date)
 	{
@@ -539,10 +572,35 @@ abstract class admin_cmd
 	
 			if (($date = strtotime($date))  === false)
 			{
-				throw new Exception(lang('Invalid formated date "%1"!',$datein),998);
+				throw new Exception(lang('Invalid formated date "%1"!',$datein),6);
 			}
 		}
 		return (int)$date;
+	}
+	
+	/**
+	 * Parse a boolean value
+	 *
+	 * @param string $value
+	 * @param boolean $default=null
+	 * @return boolean
+	 * @throws Exception(lang('Invalid value "%1" use yes or no!',$value),998);
+	 */
+	static function parse_boolean($value,$default=null)
+	{
+		if (is_null($value) || (string)$value === '')
+		{
+			return $default;
+		}
+		if (in_array($value,array('1','yes','true',lang('yes'),lang('true'))))
+		{
+			return true;
+		}
+		if (in_array($value,array('0','no','false',lang('no'),lang('false'))))
+		{
+			return false;
+		}
+		throw new Exception(lang('Invalid value "%1" use yes or no!',$value),998);
 	}
 	
 	/**
@@ -776,5 +834,20 @@ abstract class admin_cmd
 		admin_cmd::$remote->init($data);
 		
 		return admin_cmd::$remote->save() == 0 ? admin_cmd::$remote->data : false;
+	}
+	
+	/**
+	 * displays an account specified by it's id or lid
+	 * 
+	 * We show the value given by the user, plus the full name in brackets.
+	 *
+	 * @param int/string $account
+	 * @return string
+	 */
+	static function display_account($account)
+	{
+		$id = is_numeric($account) ? $account : $GLOBALS['egw']->accounts->id2name($account);
+		
+		return $account.' ('.$GLOBALS['egw']->common->grab_owner_name($id).')';
 	}
 }

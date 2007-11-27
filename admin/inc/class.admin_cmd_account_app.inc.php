@@ -10,8 +10,6 @@
  * @version $Id$ 
  */
 
-require_once(EGW_INCLUDE_ROOT.'/admin/inc/class.admin_cmd.inc.php');
-
 /**
  * admin command: give or remove run rights from a given account and application
  */
@@ -38,28 +36,30 @@ class admin_cmd_account_app extends admin_cmd
 		{
 			$allow['apps'] = explode(',',$allow['apps']);
 		}
-		parent::__construct($allow);
+		admin_cmd::__construct($allow);
 	}
 
 	/**
 	 * give or remove run rights from a given account and application
 	 * 
+	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang("Permission denied !!!"),2)
 	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
 	 * @throws Exception(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
 	 */
-	function exec()
+	protected function exec($check_only=false)
 	{
-		admin_cmd::_instanciate_acl($this->creator);
-		admin_cmd::_instanciate_accounts();
-
-		$account_id = admin_cmd::_parse_account($this->account);
+		$account_id = admin_cmd::parse_account($this->account);
 		// check creator is still admin and not explicitly forbidden to edit accounts/groups
 		if ($this->creator) $this->_check_admin($account_id > 0 ? 'account_access' : 'group_access',16);
 		
-		$apps = admin_cmd::_parse_apps($this->apps);
+		$apps = admin_cmd::parse_apps($this->apps);
+		
+		if ($check_only) return true;
+
 		//echo "account=$this->account, account_id=$account_id, apps: ".implode(', ',$apps)."\n";
+		admin_cmd::_instanciate_acl($account_id);
 		foreach($apps as $app)
 		{
 			if ($this->allow)
@@ -82,6 +82,6 @@ class admin_cmd_account_app extends admin_cmd
 	function __tostring()
 	{
 		return lang('%1 rights for %2 and applications %3',$this->allow ? lang('Grant') : lang('Remove'),
-			$this->account,implode(', ',$this->apps));
+			admin_cmd::display_account($this->account),implode(', ',$this->apps));
 	}
 }
