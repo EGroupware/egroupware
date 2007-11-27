@@ -127,6 +127,12 @@ class bo_tracking
 	 * @var html
 	 */
 	var $html;
+	/**
+	 * Should the class allow html content (for notifications)
+	 * 
+	 * @var boolean
+	 */
+	var $html_content_allow = false;
 	
 	/**
 	 * Constructor
@@ -668,7 +674,7 @@ class bo_tracking
 		
 		if ($html_mail)
 		{
-			$line = $this->html->htmlspecialchars($line);	// XSS
+			if (!$this->html_content_allow) $line = $this->html->htmlspecialchars($line);	// XSS
 
 			$color = $modified ? 'red' : false;
 			$size  = $html_mail == 'medium' ? 'medium' : 'small';
@@ -688,7 +694,12 @@ class bo_tracking
 					$bold = true;
 					break;
 				case 'multiline':
-					$line = nl2br($line);
+					// Only Convert nl2br on non-html content
+					$pos = strpos($line, '<br');
+					if ($pos===false) 
+					{
+						$line = nl2br($line);	
+					}				
 					break;
 				case 'reply':
 					$background = '#F1F1F1';					

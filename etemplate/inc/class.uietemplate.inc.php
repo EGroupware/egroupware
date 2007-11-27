@@ -1140,7 +1140,10 @@ foreach($sess as $key => $val)
 					}
 					break;
 				case 'htmlarea':	// Multiline formatted Text Input, size: {simple|extended|advanced},height,width,toolbar-expanded,upload-path
-					list($mode,$height,$width,$toolbar,$baseref) = explode(',',$cell_options);
+					list($mode,$height,$width,$toolbar,$baseref,$convertnl) = explode(',',$cell_options);
+					
+					if ($convertnl == 1) $value = nl2br($value);
+					
 					if (!$readonly)
 					{
 						$mode = $mode ? $mode : 'simple';
@@ -1158,7 +1161,7 @@ foreach($sess as $key => $val)
 					}
 					else
 					{
-						$html .= $this->html->div($this->html->activate_links($value),'style="overflow: auto; border: thin inset black; width='. $width. '; height='. $height. '"');
+						$html .= $this->html->div($this->html->activate_links($value),'style="overflow: auto; width='. $width. '; height='. $height. '"');
 					}
 					break;
 				case 'checkbox':
