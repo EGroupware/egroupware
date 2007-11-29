@@ -377,7 +377,7 @@ class bo_tracking
 		 * in future, we can make the notification app able to send mails
 		 * for non-system users, so the else part below could be dropped
 		 */
-		if (is_numeric($user_or_lang)) {
+		if (is_numeric($user_or_lang) && $GLOBALS['egw_info']['apps']['notifications']['enabled']) {
 			// send via notification_app
 			require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
 			try {
