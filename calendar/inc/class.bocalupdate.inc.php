@@ -594,20 +594,24 @@ class bocalupdate extends bocal
 						break;
 				}
 				// send via notification_app
-				require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
-				try {
-					$notification = new notification();
-					$notification->set_receivers(array($userid));
-					$notification->set_message($body);
-					$notification->set_sender($senderid);
-					$notification->set_subject($subject);
-					$notification->set_links(array($details['link_arr']));
-					if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
-					$notification->send();
-				}
-				catch (Exception $exception) {
-					error_log('error while notifying user '.$userid.':'.$exception->getMessage());
-					continue;
+				if($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
+					require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
+					try {
+						$notification = new notification();
+						$notification->set_receivers(array($userid));
+						$notification->set_message($body);
+						$notification->set_sender($senderid);
+						$notification->set_subject($subject);
+						$notification->set_links(array($details['link_arr']));
+						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
+						$notification->send();
+					}
+					catch (Exception $exception) {
+						error_log('error while notifying user '.$userid.':'.$exception->getMessage());
+						continue;
+					}
+				} else {
+					error_log('calendar: cannot send any notifications because notification-app is not installed');
 				}
 			}
 		}
