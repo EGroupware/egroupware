@@ -20,7 +20,7 @@
 	 <tr class="row_n">
     <td>&nbsp;</td>
     <td>
-		<strong>Example:</strong> /bin/echo '[message]' | /usr/bin/smbclient -M computer-[4] -I [IP] -U '[SENDER]'<br /><br />
+		<strong>Example:</strong> /bin/echo '[MESSAGE]' | /usr/bin/smbclient -M computer-[4] -I [IP] -U '[SENDER]'<br /><br />
 		<strong><u>placeholders:</u></strong><br />
 		[MESSAGE] is the notification message itself<br />
 		[1] - [4] are the IP-Octets of the windows machine to notify<br />
