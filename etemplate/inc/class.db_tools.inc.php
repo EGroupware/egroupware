@@ -430,6 +430,11 @@
 			for (reset($content),$n = 1; isset($content["Row$n"]); ++$n)
 			{
 				$col = $content["Row$n"];
+				
+				if ($col['type'] == 'auto')	// auto columns are the primary key and not null!
+				{
+					$col['pk'] = $col['notnull'] = true;	// set it, in case the user forgot
+				}
 
 				while ((list($old_name,$old_col) = @each($old_cols)) &&
 							 $this->changes[$posted_table][$old_name] == '**deleted**') ;
