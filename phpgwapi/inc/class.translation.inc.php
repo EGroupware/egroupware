@@ -376,6 +376,18 @@
 						$data .= ($data ? ', ' : $charset.': ').$lang;
 					}						
 				}
+				// add the old charsets, to provide some alternatives to utf-8 while importing
+				foreach(array(
+					'iso-8859-1' => 'Western european',
+					'iso-8859-2' => 'Eastern european',
+					'iso-8859-7' => 'Greek',
+					'euc-jp'     => 'Japanese',
+					'euc-kr'     => 'Korean',
+					'koi8-r'     => 'Russian',				
+					'windows-1251' => 'Bulgarian') as $charset => $lang)
+				{
+					$this->charsets[$charset] .= (!isset($this->charsets[$charset]) ? $charset.': ' : ', ') . $lang;
+				}
 			}
 			return $this->charsets;
 		}
