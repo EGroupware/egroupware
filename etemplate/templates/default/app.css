@@ -64,6 +64,13 @@
 	top: 16px;
 	display: none;
 }
+/*
+ * Browserhack for IE to position the colselection within the nextmatch header, because of visibility problems of the
+ * columnselection against selectboxes in the background  
+ */
+* html #.colselection {
+	position: static;
+}
 
 /*
  * Styles for the tab widget
