@@ -15,8 +15,6 @@ require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.config.inc.php');
 /**
  * Notifies users according to their preferences.
  * 
- * @abstract NOTE:Notifications are small messages. No subject and no attechments. 
- * If you need this kind of elements you probably want to send a mail, don't you :-)
  * @abstract NOTE: This is for instant notifications. If you need time dependend notifications use the 
  * asyncservices wrapper!
  * 
@@ -76,10 +74,16 @@ final class notification {
 	private $subject = '';
 	
 	/**
-	 * holds notification message
+	 * holds notification message in plaintext
 	 * @var string
 	 */
-	private $message = '';
+	private $message_plain = '';
+	
+	/**
+	 * holds notification message in html
+	 * @var string
+	 */
+	private $message_html = '';
 	
 	/**
 	 * array with objects of links
@@ -155,14 +159,20 @@ final class notification {
 	
 	/**
 	 * sets notification message
-	 * @abstract $message accepts html tags: <p><a><b><br>.
+	 * @abstract $_message accepts plaintext or html
 	 * NOTE: There is no XSS prevention in notifications framework! 
-	 * You have to filter userinputs yourseve (e.g. htmlspechialchars() )
+	 * You have to filter userinputs yourselve (e.g. htmlspechialchars() )
+	 * If you want to set plain AND html messages, just call this function
+	 * two times, it autodetects the type of your input
 	 * 
 	 * @param string $_message
 	 */
 	public function set_message($_message) {
-		$this->message = $_message;
+		if(strlen($_message) == strlen(strip_tags($_message))) {
+			$this->message_plain = $_message;
+		} else {
+			$this->message_html = $_message;
+		}
 		return true;
 	}
 	
@@ -240,18 +250,21 @@ final class notification {
 	 * sends notification 
 	 */
 	public function send() {
-		if (empty($this->receivers) || !$this->message) {
+		if (empty($this->receivers) || (empty($this->message_plain) && empty($this->message_html))) {
 			throw new Exception('Error: Could not send notification. No receiver or no message where supplied');
 		}
-		// create all message styles
-		$messages = $this->create_messages($this->message, $this->links);
+		if(!$messages = $this->create_messages($this->message_plain, $this->message_html, $this->links)) {
+			throw new Exception('Error: Could not send notification. Generating the messages failed');
+		}
 		foreach ($this->receivers as $receiver) {
+			$user_notified = false;
+			$backend_errors = array();
 			try {
 				// check if the receiver has rights to run the notifcation app
 				$ids = $GLOBALS['egw']->accounts->memberships($receiver->id,true);
 				$ids[] = $receiver->id;
 				if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($ids,'run','notifications')) {
-					throw new Exception('Error: Could not send notification to user '.$receiver->lid.' because of missing execute rights on notification-app.');
+					throw new Exception('Could not send notification to user '.$receiver->lid.' because of missing execute rights on notification-app.');
 				}
 				
 				$prefs = new preferences($receiver->id);
@@ -259,45 +272,46 @@ final class notification {
 				$preferences = (object)$preferences[self::_appname];
 				$notification_chain = $this->notification_chains[$preferences->notification_chain];
 				if(!is_array($notification_chain)) {
-					throw new Exception('Error: Could not send notification to user '.$receiver->lid.' because of missing notification settings.');
+					throw new Exception('Could not send notification to user '.$receiver->lid.' because of missing notification settings.');
 				}
-			}
-			catch (Exception $exception) {
-				error_log('notification of receiver'.$receiver->lid.' failed: '.$exception->getMessage());
-			}
 
-			$user_notified = false;
-			$backend_errors = array();
-			foreach($notification_chain as $notification_backend => $action) {
-				try {
-					$notification_backend = 'notification_'.$notification_backend;
-					require_once(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php');
-					$obj = @new $notification_backend( $this->sender, $receiver, $this->config, $preferences );
-					if ( !is_a( $obj, iface_notification )) {
-						unset ( $obj );
-					 	throw new Exception('Error: '.$notification_backend. ' is no implementation of iface_notification');
-					}
-									
-					$obj->send($this->subject, $messages, $this->attachments);
-				}
-				catch (Exception $exception) {
-					$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();
-					// try next backend
-					if($action == 'fail' || $action == 'continue') {
-						continue;
-					}
-					// all backends failed - give error message
-					if(!$user_notified) {
-						error_log('Error: notification of receiver '.$receiver->lid.' failed');
-						foreach($backend_errors as $id=>$backend_error) {
-							error_log($backend_error);
+				foreach($notification_chain as $notification_backend => $action) {
+					try {
+						$notification_backend = 'notification_'.$notification_backend;
+						if(!file_exists(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php')) {
+							throw new Exception('file for '.$notification_backend. ' does not exist');
 						}
+						require_once(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php');
+						$obj = @new $notification_backend( $this->sender, $receiver, $this->config, $preferences );
+						if ( !is_a( $obj, iface_notification )) {
+							unset ( $obj );
+					 		throw new Exception($notification_backend. ' is no implementation of iface_notification');
+						}
+									
+						$obj->send($this->subject, $messages, $this->attachments);
 					}
-					break; // stop running through chain
+					catch (Exception $exception) {
+						$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();
+						// try next backend
+						if($action == 'fail' || $action == 'continue') {
+							continue;
+						}
+						// all backends failed - give error message
+						if(!$user_notified) {
+							error_log('Error: notification of receiver '.$receiver->lid.' failed for the following reasons:');
+							foreach($backend_errors as $id=>$backend_error) {
+								error_log($backend_error);
+							}
+						}
+						break; // stop running through chain
+					}
+					// backend sucseeded
+					$user_notified = true;
+					if($action == 'stop' || $action == 'fail') { break; } // stop running through chain				
 				}
-				// backend sucseeded
-				$user_notified = true;
-				if($action == 'stop' || $action == 'fail') { break; } // stop running through chain				
+			}
+			catch (Exception $exception_user) {
+				error_log('Error: notification of receiver '.$receiver->lid.' failed: '.$exception_user->getMessage());
 			}
 		}
 		return true;
@@ -323,25 +337,31 @@ final class notification {
 	
 	/**
 	 * this function creates an array with the message as plaintext and html
+	 * including given links for internal usage or external mailers
 	 *
-	 * @param string $message
+	 * @param string $message_plain
+	 * @param string $message_html
 	 * @param array $links
 	 * @return array $messages
 	 */
-	private function create_messages($_message, $_links = false) {
+	private function create_messages($_message_plain = '', $_message_html = '', $_links = false) {
+		if(empty($_message_plain) && empty($_message_html)) { return false; } // no message set
 		$messages = array();
 		$messages['plain'] = array();
 		$messages['html'] = array();
 		
-		if(strlen($_message) == strlen(strip_tags($_message))) {
-			// $_message is plaintext
-			$messages['plain']['text'] = $_message;
-			$messages['html']['text'] = nl2br($_message);
+		if(!empty($_message_plain)) {
+			$messages['plain']['text'] = $_message_plain;
 		} else {
-			// $_message already contains html
-			$messages['plain']['text'] = strip_tags($_message);
-			$messages['html']['text'] = $_message;
+			$messages['plain']['text'] = strip_tags($_message_html);
 		}
+		
+		if(!empty($_message_html)) {
+			$messages['html']['text'] = $_message_html;
+		} else {
+			$messages['html']['text'] = nl2br($_message_plain);
+		}
+
 		if(is_array($_links)) {
 			foreach($_links as $link) {
 				$params = '';
