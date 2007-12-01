@@ -269,7 +269,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
                 $this->_credData = base64_decode($this->_credData);
                 //}
 
-                $tmp = split(':', $this->_credData);
+                $tmp = split(':', $this->_credData, 2);
                 // set only if not set by LocName already
                 if(!isset($this->_locName))
                 {
