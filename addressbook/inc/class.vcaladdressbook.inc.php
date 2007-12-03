@@ -354,6 +354,31 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'      => array('url'),
 			'URL'           => array('url_home'),
 		);
+		$defaultFields[7] = array(
+			'N'=>		array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+			'TITLE'		=> array('title'),
+			'ROLE'		=> array('role'),
+			'ORG'		=> array('org_name','org_unit','room'),
+			'ADR;WORK'	=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region', 'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'	=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region', 'adr_two_postalcode','adr_two_countryname'),
+			'TEL;WORK;VOICE'	=> array('tel_work'),
+			'TEL;HOME;VOICE'	=> array('tel_home'),
+			'TEL;CELL;WORK'	=> array('tel_cell'),
+			'TEL;FAX;WORK'	=> array('tel_fax'),
+			'TEL;FAX;HOME'	=> array('tel_fax_home'),
+			'TEL;PAGER;WORK' => array('tel_pager'),
+			'TEL;CAR'	=> array('tel_car'),
+			'TEL;VOICE'	=> array('tel_other'),
+			'EMAIL;INTERNET;WORK'	=> array('email'),
+			'EMAIL;INTERNET;HOME'	=> array('email_home'),
+			'URL;WORK'		=> array('url'),
+			'BDAY'		=> array('bday'),
+			'CATEGORIES'	=> array('cat_id'),
+			'NOTE'		=> array('note'),
+			'X-EVOLUTION-ASSISTANT'		=> array('assistent'),
+			// segmentation fault ? 'PHOTO;JPEG'		=> array('jpegphoto'),
+		);
+
 
 		//error_log("Client: $_productManufacturer $_productName");
 		switch(strtolower($_productManufacturer))
@@ -456,6 +481,10 @@ class vcaladdressbook extends bocontacts
 				}
 				break;
 				
+			case 'patrick ohly':	// SyncEvolution
+				$this->supportedFields = $defaultFields[7];
+				break;
+
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
 				$this->supportedFields = $defaultFields[1];
 				break;
@@ -475,9 +504,6 @@ class vcaladdressbook extends bocontacts
 		if(!is_array($this->supportedFields)) {
 			$this->setSupportedFields();
 		}
-
-		$this->supportedFields[0] = array(
-		);
 
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
@@ -524,6 +550,14 @@ class vcaladdressbook extends bocontacts
 			if(isset($vcardRow['params']['HOME']) || $type == 'HOME')
 			{
 				$rowName .= ';HOME';
+			}
+			if(isset($vcardRow['params']['VOICE']) || $type == 'VOICE')
+			{
+				$rowName .= ';VOICE';
+			}
+			if(isset($vcardRow['params']['CAR']) || $type == 'CAR')
+			{
+				$rowName .= ';CAR';
 			}
 			//error_log("key: $key --> $rowName: name=$vcardRow[name], params=".print_r($vcardRow['params'],true));
 			$rowNames[$rowName] = $key;
