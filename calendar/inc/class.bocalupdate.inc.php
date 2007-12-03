@@ -151,7 +151,12 @@ class bocalupdate extends bocal
 			foreach($event['participants'] as $uid => $status)
 			{
 				if ($status[0] == 'R') continue;	// ignore rejected participants
-
+				
+				if ($uid < 0)	// group, check it's members too
+				{
+					$users += $GLOBALS['egw']->accounts->members($uid,true);
+					$users = array_unique($users);
+				}
 				$users[] = $uid;
 				if (in_array($uid{0},$types_with_quantity))
 				{
