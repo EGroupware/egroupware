@@ -237,7 +237,7 @@
 
 		// try owner + base for a personal vircal request 
 	}
-	elseif(preg_match('#^/([\w]+)(/[^<^>^?]+)$#', $_SERVER['PATH_INFO'], $matches))
+	elseif(preg_match('#^/([\w.]+)(/[^<^>^?]+)$#', $_SERVER['PATH_INFO'], $matches))
 	{
 		$reqvircal_pathname = $matches[0];
 		$reqvircal_owner = $matches[1];
