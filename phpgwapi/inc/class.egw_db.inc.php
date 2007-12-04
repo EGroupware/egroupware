@@ -113,7 +113,7 @@
 		 *
 		 * @var string
 		 */
-		var $query_log = '/tmp/query.log';	//false;
+		var $query_log;
 
 		//i am not documenting private vars - skwashd :)
         var $xmlrpc = False;
