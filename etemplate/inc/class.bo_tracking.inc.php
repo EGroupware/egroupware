@@ -384,7 +384,7 @@ class bo_tracking
 				$notification = new notification();
 				$notification->set_receivers(array($user_or_lang));
 				$notification->set_message($this->get_body($html_email,$data,$old));
-				$notification->set_sender($this->user);
+				$notification->set_sender($sender);
 				$notification->set_subject($subject);
 				// does not work atm
 				//$notification->set_links(array($this->get_notification_link($data,$old)));
