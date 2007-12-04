@@ -101,10 +101,24 @@ class so_sql
 	 */
 	var $data = array();
 	/**
-	 * @deprecated  a SO class dont need to and should NOT export functions (make them callable via menuaction)
+	 * Timestaps that need to be adjusted to user-time on reading or saving
+	 * 
 	 * @var array
 	 */
-	var $public_functions = array();
+	var $timestamps = array();
+	/**
+	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time 
+	 * or substracted from a user-time to get the server-time
+	 * 
+	 * @var int
+	 */
+	var $tz_offset_s;
+	/**
+	 * Current time as timestamp in user-time
+	 * 
+	 * @var int
+	 */
+	var $now;
 
 	/**
 	 * constructor of the class
@@ -136,6 +150,12 @@ class so_sql
 			echo "<p>so_sql('$app','$table')</p>\n";
 			_debug_array($this);
 		}
+		if (!is_object($GLOBALS['egw']->datetime))
+		{
+			$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
+		}
+		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
+		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
 	}
 
 	/**
@@ -219,8 +239,9 @@ class so_sql
 	/**
 	 * changes the data from the db-format to your work-format
 	 *
-	 * it gets called everytime when data is read from the db
-	 * This function needs to be reimplemented in the derived class
+	 * It gets called everytime when data is read from the db.
+	 * This default implementation only converts the timestamps mentioned in $this->timestampfs from server to user time.
+	 * You can reimplement it in a derived class
 	 *
 	 * @param array $data if given works on that array and returns result, else works on internal data-array
 	 */
@@ -230,6 +251,13 @@ class so_sql
 		{
 			$data = &$this->data;
 		}
+		if ($this->tz_offset_s && $this->timestamps)
+		{
+			foreach($this->timestamps as $name)
+			{
+				if (isset($data[$name]) && $data[$name]) $data[$name] += $this->tz_offset_s;
+			}
+		}
 		// do the necessare changes here
 
 		return $data;
@@ -238,8 +266,9 @@ class so_sql
 	/**
 	 * changes the data from your work-format to the db-format
 	 *
-	 * It gets called everytime when data gets writen into db or on keys for db-searches
-	 * this needs to be reimplemented in the derived class
+	 * It gets called everytime when data gets writen into db or on keys for db-searches.
+	 * This default implementation only converts the timestamps mentioned in $this->timestampfs from user to server time.
+	 * You can reimplement it in a derived class
 	 *
 	 * @param array $data if given works on that array and returns result, else works on internal data-array
 	 */
@@ -248,6 +277,13 @@ class so_sql
 		if ($intern = !is_array($data))
 		{
 			$data = &$this->data;
+		}
+		if ($this->tz_offset_s && $this->timestamps)
+		{
+			foreach($this->timestamps as $name)
+			{
+				if (isset($data[$name]) && $data[$name]) $data[$name] -= $this->tz_offset_s;
+			}
 		}
 		// do the necessary changes here
 
@@ -353,7 +389,7 @@ class so_sql
 		{
 			foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
 			{
-				if (FALSE!==stripos($col,'as')) $col = preg_replace('/^.*as *([a-z0-9_]+) *$/i','\\1',$col);
+				if (FALSE!==stripos($col,' as ')) $col = preg_replace('/^.* as *([a-z0-9_]+) *$/i','\\1',$col);
 				$cols[$col] = $col;
 			}
 		}
