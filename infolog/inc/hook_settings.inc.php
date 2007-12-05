@@ -196,17 +196,3 @@ $GLOBALS['settings']['notify_start_responsible'] = array(
 	'xmlrpc' => True,
 	'admin'  => False,
 );
-
-$GLOBALS['settings']['notify_html'] = array(
-	'type'   => 'select',
-	'label'  => 'Receive notifications as html-mails',
-	'name'   => 'notify_html',
-	'help'   => 'Do you want to receive notifications as html-mails or plain text?',
-	'values' => array(
-		'0'  => lang('No'),
-		'1'  => lang('Yes'),
-		'medium' => lang('Yes, with larger fontsize'),
-	),
-	'xmlrpc' => True,
-	'admin'  => False,
-);

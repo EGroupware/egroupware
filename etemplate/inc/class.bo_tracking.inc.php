@@ -55,7 +55,6 @@ class bo_tracking
 	 * Can be used to map the following prefs to different names:
 	 *  - notify_creator  - user wants to be notified for items he created
 	 *  - notify_assigned - user wants to be notified for items assigned to him
-	 *  - notify_html     - user wants his notifications as html-email
 	 * @var array
 	 */
 	var $check2pref;
@@ -370,9 +369,6 @@ class bo_tracking
 		$sender = $this->get_sender($data,$old);
 		$subject = $this->get_subject($data,$old);
 		$attachments = $this->get_attachments($data,$old);
-		// does the user want html-emails
-		$html_email = !!$GLOBALS['egw_info']['user']['preferences']['tracker'][$this->check2pref ? $this->check2pref['notify_html'] : 'notify_html'];
-
 		/* send over notification_app or alternative old-style mail class
 		 * in future, we can make the notification app able to send mails
 		 * for non-system users, so the else part below could be dropped
@@ -383,7 +379,8 @@ class bo_tracking
 			try {
 				$notification = new notification();
 				$notification->set_receivers(array($user_or_lang));
-				$notification->set_message($this->get_body($html_email,$data,$old));
+				$notification->set_message($this->get_body(false,$data,$old)); // set message as plaintext
+				$notification->set_message($this->get_body(true,$data,$old)); // and html
 				$notification->set_sender($this->user);
 				$notification->set_subject($subject);
 				// does not work atm
@@ -431,7 +428,7 @@ class bo_tracking
 			 $send->FromName = '';
 			}
 			$send->Subject = $subject;
-			$send->Body = "<html>\n<body>\n".$this->get_body($html_email,$data,$old)."</body>\n</html>\n";
+			$send->Body = "<html>\n<body>\n".$this->get_body(true,$data,$old)."</body>\n</html>\n";
 			
 			foreach($attachments as $attachment)
 			{
@@ -677,7 +674,7 @@ class bo_tracking
 			if (!$this->html_content_allow) $line = $this->html->htmlspecialchars($line);	// XSS
 
 			$color = $modified ? 'red' : false;
-			$size  = $html_mail == 'medium' ? 'medium' : 'small';
+			$size  = '120%';
 			$bold = false;
 			$background = '#FFFFF1';
 			switch($type)
@@ -705,7 +702,7 @@ class bo_tracking
 					$background = '#F1F1F1';					
 					break;
 				default:
-					$size = $size == 'small' ? 'x-small' : 'small';
+					$size = '100%';
 			}
 			$style = ($bold ? 'font-weight:bold;' : '').($size ? 'font-size:'.$size.';' : '').($color?'color:'.$color:'');
 			
