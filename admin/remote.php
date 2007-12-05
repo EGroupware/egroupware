@@ -1,6 +1,6 @@
 <?php
 /**
- * eGgroupWare admin - remote admin comand execution
+ * eGgroupWare admin - remote admin command execution
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -10,6 +10,9 @@
  * @version $Id$ 
  */
 
+/**
+ * @var array
+ */
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'login',
@@ -21,7 +24,7 @@ include('../header.inc.php');
 
 $GLOBALS['egw']->applications->read_installed_apps();	// set $GLOBALS['egw_info']['apps'] (not set for login)
 
-$instance = $_REQUEST['domain'];
+$instance = isset($_GET['domain']) ? $_GET['domain'] : $_REQUEST['domain'];	// use GET before the rest
 if (!isset($GLOBALS['egw_domain'][$instance]))
 {
 	$instance = $GLOBALS['egw_info']['server']['default_domain'];
@@ -39,7 +42,7 @@ if (!$domain_data || is_numeric($_REQUEST['uid']) || !in_array($remote_admin_ins
 	$_REQUEST['secret'] != ($md5=md5($_REQUEST['uid'].md5($domain_data['config_passwd'].$GLOBALS['egw_info']['server']['install_id']))))
 {
 	header("HTTP/1.1 200 Unauthorized");
-	//die("0 secret != '$md5'");
+	die("0 secret != '$md5'");
 	echo lang('0 Permission denied!');
 	if (!in_array($remote_admin_install_id,$allowed_remote_admin_ids))
 	{

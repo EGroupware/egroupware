@@ -78,6 +78,9 @@ switch($action)
 	case '--check-acl';
 		return do_check_acl();
 		
+	case '--show-header';
+		return run_command(new setup_cmd_showheader());
+		
 	case '--exit-codes':
 		return list_exit_codes();
 
@@ -123,6 +126,14 @@ function run_command(admin_cmd $cmd)
 			case '--skip-checks':	//do not yet run the checks for scheduled local commands
 				$skip_checks = true;
 				break;
+				
+			case '--header-access':
+				if ($cmd instanceof setup_cmd)
+				{
+					list($user,$pw) = explode(',',array_shift($arguments),2);
+					$cmd->set_header_secret($user,$pw);
+				}
+				break;
 
 			default:
 				//fail(99,lang('Unknown option %1',$extra);
@@ -138,7 +149,15 @@ function run_command(admin_cmd $cmd)
 	{
 		fail($cmd->errno,$cmd->error);
 	}
-	echo $msg."\n\n";
+	if (($value = unserialize($msg)) !== false && $msg !== serialize(false))
+	{
+		print_r($value);
+		echo "\n";
+	}
+	else
+	{
+		echo $msg."\n\n";
+	}
 	exit(0);
 }
 

@@ -15,8 +15,6 @@
  */
 abstract class admin_cmd
 {
-	const edit_user = 16;
-	
 	const deleted = 0;
 	const scheduled = 1;
 	const successful = 2;
@@ -29,7 +27,7 @@ abstract class admin_cmd
 	private $status;
 
 	static $stati = array(
-		admin_cmd::scheduled   => 'scheduled',
+		admin_cmd::scheduled  => 'scheduled',
 		admin_cmd::successful => 'successful',
 		admin_cmd::failed     => 'failed',
 		admin_cmd::deleted    => 'deleted',
@@ -48,7 +46,7 @@ abstract class admin_cmd
 	public $requested_email;
 	public $comment;
 	private $id;
-	private $uid;
+	protected $uid;
 	private $type = __CLASS__;
 	public $remote_id;
 
@@ -394,8 +392,6 @@ abstract class admin_cmd
 	{
 		if (is_null(admin_cmd::$sql))
 		{
-			include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
-
 			admin_cmd::$sql = new so_sql('admin','egw_admin_queue',null,'cmd_');
 		}
 	}
@@ -409,8 +405,6 @@ abstract class admin_cmd
 	{
 		if (is_null(admin_cmd::$remote))
 		{
-			include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
-
 			admin_cmd::$remote = new so_sql('admin','egw_admin_remote');
 		}
 	}
@@ -815,7 +809,7 @@ abstract class admin_cmd
 	 * Save / adds a remote instance
 	 *
 	 * @param array $data
-	 * @return array/boolean data including remote_id or false on failure
+	 * @return int remote_id
 	 */
 	static function save_remote(array $data)
 	{
@@ -823,17 +817,21 @@ abstract class admin_cmd
 		
 		if ($data['install_id'] && $data['config_passwd'])	// calculate hash
 		{
-			$pw = preg_match('/^[a-f0-9]{32}$/',$data['config_passwd']) ? $data['config_passwd'] : md5($data['config_passwd']);
+			$pw = self::is_md5($data['config_passwd']) ? $data['config_passwd'] : md5($data['config_passwd']);
 			$data['remote_hash'] = md5($pw.$data['install_id']);
 		}
 		elseif ($data['install_id'] || $data['config_passwd'] || !$data['remote_hash'])
 		{
-			return false;	// we need either install_id AND config_passwd OR the remote_hash
+			throw new Exception(lang('Either Install ID AND config password needed OR the remote hash!'));
 		}
 		//_debug_array($data);
 		admin_cmd::$remote->init($data);
 		
-		return admin_cmd::$remote->save() == 0 ? admin_cmd::$remote->data : false;
+		if (admin_cmd::$remote->save() != 0)
+		{
+			throw new Exception (lang('Error saving to db:').' '.$this->sql->db->Error.' ('.$this->sql->db->Errno.')',$this->sql->db->Errno);
+		}
+		return admin_cmd::$remote->data['remote_id'];
 	}
 	
 	/**
@@ -849,5 +847,16 @@ abstract class admin_cmd
 		$id = is_numeric($account) ? $account : $GLOBALS['egw']->accounts->id2name($account);
 		
 		return $account.' ('.$GLOBALS['egw']->common->grab_owner_name($id).')';
+	}
+	
+	/**
+	 * Check if string is a md5 hash (32 chars of 0-9 or a-f)
+	 *
+	 * @param string $str
+	 * @return boolean
+	 */
+	static function is_md5($str)
+	{
+		return preg_match('/^[0-9a-f]{32}$/',$str);
 	}
 }

@@ -157,9 +157,12 @@ class admin_cmds
 							$content['msg'] = lang('You need to enter Install ID AND Password!');
 							break;
 						}
-						if (($content['remote'] = admin_cmd::save_remote($content['remote'])))
-						{
+						try {
+							$content['remote']['remote_id'] = admin_cmd::save_remote($content['remote']);
 							$content['msg'] = lang('Remote instance saved');
+						} catch (Exception $e) {
+							$content['msg'] = lang('Error saving').': '.$e->getMessage().' ('.$e->getCode().')';
+							break;
 						}
 						if ($button == 'apply') break;
 						// fall through for save
