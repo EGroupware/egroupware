@@ -640,3 +640,11 @@ body {
 	padding-left: 15px;
 	padding-right: 15px;
 }
+
+/*
+	Tables inside notification window
+*/
+#notificationwindow_message > table
+{
+	font-size: 90%
+}
