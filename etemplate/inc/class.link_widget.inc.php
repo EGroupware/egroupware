@@ -120,10 +120,11 @@
 			$extension_data['needed'] = $cell['needed'];
 			$help = $cell['help'] ? ($value['help'] ? $value['help'] : $cell['help']) : lang('view this linked entry in its application');
 
-			if (($type == 'link-to' || $type == 'link-add') && ($cell['readonly'] || $readonlys))
+			if (($type == 'link-to' || $type == 'link-add' || $type == 'link-entry' && !$value) && ($cell['readonly'] || $readonlys))
 			{
-				//echo "<p>link-to is readonly, cell=".print_r($cell,true).", readonlys=".print_r($readonlys)."</p>\n";
+				//echo "<p>link-to is readonly, cell=".print_r($cell,true).", readonlys=".print_r($readonlys).", value='$value'</p>\n";
 				// readonly ==> omit the whole widget
+				$value = '';
 				$cell = $tmpl->empty_cell();
 				return;
 			}
