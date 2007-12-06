@@ -62,16 +62,60 @@ class setup_cmd_showheader extends setup_cmd
 
 		// include the api version of this instance
 		$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $egw_info_backup['server']['versions']['phpgwapi'];
-
-		$ret = serialize(array(
+		
+		// fetching the install id's stored in the database
+		foreach($GLOBALS['egw_domain'] as $domain => &$data)
+		{
+			$data += $this->_fetch_config($data);
+		}
+		$ret = array(
 			'egw_info' => $GLOBALS['egw_info'],
 			'egw_domain' => $GLOBALS['egw_domain'],
 			'EGW_SERVER_ROOT' => EGW_SERVER_ROOT,
 			'EGW_INCLUDE_ROOT' => EGW_INCLUDE_ROOT,
-		));
+		);
 
 		$GLOBALS['egw_info'] = $egw_info_backup;
 		
+		// restoring the db connection, seems to be necessary when we run via remote execution
+		$GLOBALS['egw']->db->disconnect();
+		$GLOBALS['egw']->db->connect();
+		
 		return $ret;
+	}
+	
+	/**
+	 * Fetch the install_id, and webserver_url of a domain from the DB
+	 *
+	 * @param array $data with values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type'
+	 * @return array with values for keys install_id, webserver_url
+	 */
+	private function _fetch_config(array $data)
+	{
+		$db = new egw_db();
+
+		ob_start();		// not available db connection echos a lot grab ;-)
+		$err_rep = error_reporting(0);
+
+		$config = array();
+		try {
+			$db->connect($data['db_name'],$data['db_host'],$data['db_port'],$data['db_user'],$data['db_pass'],$data['db_type']);
+			$db->set_app('phpgwapi');
+			$db->select('egw_config','config_name,config_value',array(
+				'config_name'=>array('install_id','webserver_url'),
+				'config_app'=>'phpgwapi',
+			),__LINE__,__FILE__);
+			while (($row = $db->row(true)))
+			{
+				$config[$row['config_name']] = $row['config_value'];
+			}
+		}
+		catch (Exception $e) {
+			$config['error'] = strip_tags($e->getMessage());
+		}
+		error_reporting($err_rep);
+		ob_end_clean();
+
+		return $config;
 	}
 }

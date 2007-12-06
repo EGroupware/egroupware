@@ -208,30 +208,3 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $GLOBAL
 	}
 	$_SESSION['egw_object_cache'] = serialize($GLOBALS['egw']);
 }
-
-/**
- * php5 autoload function for eGroupWare understanding the following naming schema:
- *	1. new (prefered) nameing schema: app_class_something loading app/inc/class.class_something.inc.php
- *	2. API classe: classname loading phpgwapi/inc/class.classname.inc.php
- *	3. eTemplate classes: classname loading etemplate/inc/class.classname.inc.php
- *	4. classes of the current app: classname loading $GLOBALS['egw_info']['flags']['currentapp']/inc/class.classname.inc.php
- *
- * @param string $class name of class to load
- */
-function __autoload($class)
-{
-	list($app) = explode('_',$class);
-	
-	// classes using the new naming schema app_class_name, eg. admin_cmd
-	if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
-		// eGW api classes using the old naming schema, eg. html
-		file_exists($file = EGW_API_INC.'/inc/class.'.$class.'.inc.php') ||
-		// eGW eTemplate classes using the old naming schema, eg. etemplate
-		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
-		// classes of the current application using the old naming schema
-		file_exists($file = EGW_INCLUDE_ROOT.'/'.$GLOBALS['egw_info']['flags']['currentapp'].'/inc/class.'.$class.'.inc.php'))
-	{
-		//error_log("autoloaded class $class from $file");
-		include_once($file);
-	}
-}

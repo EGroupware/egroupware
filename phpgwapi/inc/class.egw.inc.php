@@ -338,9 +338,18 @@
 			if ($GLOBALS['egw_info']['flags']['currentapp'] != 'about')
 			{
 				// This will need to use ACL in the future
-				if (!$GLOBALS['egw_info']['user']['apps'][$GLOBALS['egw_info']['flags']['currentapp']] ||
+				if (!$GLOBALS['egw_info']['user']['apps'][$currentapp = $GLOBALS['egw_info']['flags']['currentapp']] ||
 					($GLOBALS['egw_info']['flags']['admin_only'] && !$GLOBALS['egw_info']['user']['apps']['admin']))
 				{
+					if ($currentapp == 'admin' || $GLOBALS['egw_info']['flags']['admin_only'])
+					{
+						throw new egw_exception_no_permission_admin();
+					}
+					else
+					{
+						throw new egw_exception_no_permission_app($currentapp);
+					}
+					// old code no longer called
 					$this->common->egw_header();
 					if ($GLOBALS['egw_info']['flags']['nonavbar'])
 					{

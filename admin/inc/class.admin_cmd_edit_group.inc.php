@@ -38,8 +38,8 @@ class admin_cmd_edit_group extends admin_cmd
 	 * 
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws Exception(lang("Permission denied !!!"),2)
-	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws egw_exception_no_admin
+	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
 	 */
 	protected function exec($check_only=false)
 	{
@@ -64,16 +64,16 @@ class admin_cmd_edit_group extends admin_cmd
 		}
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
 		{
-			throw new Exception(lang('You must enter a group name.'),9);
+			throw new egw_exception_wrong_userinput(lang('You must enter a group name.'),9);
 		}
 		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','g')) && 
 			$id !== $data['account_id'])
 		{
-			throw new Exception(lang('That loginid has already been taken'),999);
+			throw new egw_exception_wrong_userinput(lang('That loginid has already been taken'),999);
 		}
 		if (!$data['account_members'] && !$this->account)
 		{
-			throw new Exception(lang('You must select at least one group member.'),9);
+			throw new egw_exception_wrong_userinput(lang('You must select at least one group member.'),9);
 		}
 		if ($data['account_members'])
 		{
@@ -85,7 +85,7 @@ class admin_cmd_edit_group extends admin_cmd
 		{
 			if (!($old = admin_cmd::$accounts->read($data['account_id'])))
 			{
-				throw new Exception(lang("Unknown account: %1 !!!",$this->account),15);
+				throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
 			}
 			// as the current account class always sets all values, we have to add the not specified ones
 			foreach($data as $name => &$value)
@@ -96,7 +96,7 @@ class admin_cmd_edit_group extends admin_cmd
 		if (!($data['account_id'] = admin_cmd::$accounts->save($data)))
 		{
 			//_debug_array($data);
-			throw new Exception(lang("Error saving account!"),11);
+			throw new egw_exception_db(lang("Error saving account!"),11);
 		}
 		$GLOBALS['hook_values'] =& $data;
 		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(

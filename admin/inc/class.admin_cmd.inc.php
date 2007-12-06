@@ -132,7 +132,8 @@ abstract class admin_cmd
 	 * @param int $time=null timestamp to run the command or null to run it immediatly
 	 * @param boolean $set_modifier=null should the current user be set as modifier, default true
 	 * @param booelan $skip_checks=false do not yet run the checks for a scheduled command
-	 * @return mixed string with execution error or success message, false for other errors
+	 * @return mixed return value of the command
+	 * @throws Exceptions on error
 	 */
 	function run($time=null,$set_modifier=true,$skip_checks=false)
 	{
@@ -176,7 +177,11 @@ abstract class admin_cmd
 		}
 		if (!$dont_save && !$this->save($set_modifier))
 		{
-			return false;
+			throw new egw_exception_db(lang('Error saving the command!'));
+		}
+		if ($e instanceof Exception)
+		{
+			throw $e;
 		}
 		return $ret;
 	}
@@ -201,7 +206,7 @@ abstract class admin_cmd
 		
 		if (!($remote = admin_cmd::$remote->read($this->remote_id)))
 		{
-			throw new Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997);
+			throw new egw_exception_wrong_userinput(lang('Invalid remote id or name "%1"!',$id_or_name),997);
 		}
 		if (!$this->uid)
 		{
@@ -227,11 +232,15 @@ abstract class admin_cmd
 		$message = file_get_contents($url, false, stream_context_create($opts));
 		//echo "got: $message\n";
 		
+		if (($value = unserialize($message)) !== false && $message !== serialize(false))
+		{
+			$message = $value;
+		}
 		$message = $GLOBALS['egw']->translation->convert($message,'utf-8');
 		
-		if (preg_match('/^([0-9]+) (.*)$/',$message,$matches))
+		if (is_string($message) && preg_match('/^([0-9]+) (.*)$/',$message,$matches))
 		{
-			throw new Exception($matches[2],(int)$matches[1]);
+			throw new egw_exception($matches[2],(int)$matches[1]);
 		}
 		return $message;
 	}
@@ -318,8 +327,7 @@ abstract class admin_cmd
 	 * @static 
 	 * @param array $data
 	 * @return admin_cmd
-	 * @throws Exception(lang('Unknown command %1!',$class),0);
-	 * @throws Exception(lang('%1 is no command!',$class),0);
+	 * @throws egw_exception_wrong_parameter if class does not exist or is no instance of admin_cmd
 	 */
 	static function instanciate(array $data)
 	{
@@ -329,7 +337,7 @@ abstract class admin_cmd
 		}
 		if (!class_exists($class = $data['type']))
 		{
-			throw new Exception(lang('Unknown command %1!',$class),0);
+			throw new egw_exception_wrong_parameter(lang('Unknown command %1!',$class),0);
 		}
 		$cmd = new $class($data);
 		
@@ -337,7 +345,7 @@ abstract class admin_cmd
 		{
 			return $cmd;
 		}
-		throw new Exception(lang('%1 is no command!',$class),0);
+		throw new egw_exception_wrong_parameter(lang('%1 is no command!',$class),0);
 	}
 	
 	/**
@@ -455,7 +463,7 @@ abstract class admin_cmd
 	 *
 	 * @param string $extra_acl=null further admin rights to check, eg. 'account_access'
 	 * @param int $extra_deny=null further admin rights to check, eg. 16 = deny edit accounts
-	 * @throws Exception(lang("Permission denied !!!"),2);
+	 * @throws egw_exception_no_admin
 	 */
 	protected function _check_admin($extra_acl=null,$extra_deny=null)
 	{
@@ -466,7 +474,7 @@ abstract class admin_cmd
 			if (!admin_cmd::$acl->check('run',1,'admin') &&		// creator is no longer admin
 				$extra_acl && $extra_deny && admin_cmd::$acl->check($extra_acl,$extra_deny,'admin'))	// creator is explicitly forbidden to do something
 			{
-				throw new Exception(lang("Permission denied !!!"),2);
+				throw new egw_exception_no_permission_admin();
 			}
 		}
 	}
@@ -476,7 +484,7 @@ abstract class admin_cmd
 	 *
 	 * @param array $apps names, titles or localised names
 	 * @return array of app-names
-	 * @throws Exception(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
+	 * @throws egw_exception_wrong_userinput lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8
 	 */
 	static function parse_apps(array $apps)
 	{
@@ -495,7 +503,7 @@ abstract class admin_cmd
 			}
 			if (!isset($GLOBALS['egw_info']['apps'][$name]))
 			{
-				throw new Exception(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
+				throw new egw_exception_wrong_userinput(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
 			}
 		}
 		return $apps;
@@ -507,8 +515,8 @@ abstract class admin_cmd
 	 * @param string/int $account account_id or account_lid
 	 * @param boolean $allow_only_user=null true=only user, false=only groups, default both
 	 * @return int/array account_id
-	 * @throws Exception(lang("Unknown account: %1 !!!",$account),15);
-	 * @throws Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
+	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account),15);
+	 * @throws egw_exception_wrong_userinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
 	 */
 	static function parse_account($account,$allow_only_user=null)
 	{
@@ -517,11 +525,11 @@ abstract class admin_cmd
 		if (!($type = admin_cmd::$accounts->exists($account)) || 
 			!is_numeric($id=$account) && !($id = admin_cmd::$accounts->name2id($account)))
 		{
-			throw new Exception(lang("Unknown account: %1 !!!",$account),15);
+			throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account),15);
 		}
 		if (!is_null($allow_only_user) && $allow_only_user !== ($type == 1))
 		{
-			throw new Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
+			throw new egw_exception_wrong_userinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
 		}
 		if ($type == 2 && $id > 0) $id = -$id;	// groups use negative id's internally, fix it, if user given the wrong sign
 	
@@ -534,8 +542,8 @@ abstract class admin_cmd
 	 * @param string/int/array $accounts array or comma-separated account_id's or account_lid's
 	 * @param boolean $allow_only_user=null true=only user, false=only groups, default both
 	 * @return array of account_id's or null if none specified
-	 * @throws Exception(lang("Unknown account: %1 !!!",$account),15);
-	 * @throws Exception(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only?lang('user'):lang('group')),15);
+	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account),15);
+	 * @throws egw_exception_wrong_userinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only?lang('user'):lang('group')),15);
 	 */
 	static function parse_accounts($accounts,$allow_only_user=null)
 	{
@@ -554,7 +562,7 @@ abstract class admin_cmd
 	 *
 	 * @param string $date
 	 * @return int timestamp
-	 * @throws Exception(lang('Invalid formated date "%1"!',$datein),6);
+	 * @throws egw_exception_wrong_userinput(lang('Invalid formated date "%1"!',$datein),6);
 	 */
 	static function parse_date($date)
 	{
@@ -566,7 +574,7 @@ abstract class admin_cmd
 	
 			if (($date = strtotime($date))  === false)
 			{
-				throw new Exception(lang('Invalid formated date "%1"!',$datein),6);
+				throw new egw_exception_wrong_userinput(lang('Invalid formated date "%1"!',$datein),6);
 			}
 		}
 		return (int)$date;
@@ -578,7 +586,7 @@ abstract class admin_cmd
 	 * @param string $value
 	 * @param boolean $default=null
 	 * @return boolean
-	 * @throws Exception(lang('Invalid value "%1" use yes or no!',$value),998);
+	 * @throws egw_exception_wrong_userinput(lang('Invalid value "%1" use yes or no!',$value),998);
 	 */
 	static function parse_boolean($value,$default=null)
 	{
@@ -594,7 +602,7 @@ abstract class admin_cmd
 		{
 			return false;
 		}
-		throw new Exception(lang('Invalid value "%1" use yes or no!',$value),998);
+		throw new egw_exception_wrong_userinput(lang('Invalid value "%1" use yes or no!',$value),998);
 	}
 	
 	/**
@@ -602,7 +610,7 @@ abstract class admin_cmd
 	 *
 	 * @param string $id_or_name
 	 * @return int remote_id
-	 * @throws Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997);
+	 * @throws egw_exception_wrong_userinput(lang('Invalid remote id or name "%1"!',$id_or_name),997);
 	 */
 	static function parse_remote($id_or_name)
 	{
@@ -614,7 +622,7 @@ abstract class admin_cmd
 			'remote_domain' => $id_or_name,
 		),true,'','','',false,'OR')) || count($remotes) != 1)
 		{
-			throw new Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997);
+			throw new egw_exception_wrong_userinput(lang('Invalid remote id or name "%1"!',$id_or_name),997);
 		}
 		return $remotes[0]['remote_id'];
 	}
@@ -623,7 +631,7 @@ abstract class admin_cmd
 	 * Instanciated accounts class
 	 *
 	 * @todo accounts class instanciation for setup
-	 * @throws Exception(lang('%1 class not instanciated','accounts'),999);
+	 * @throws egw_exception_assertion_failed(lang('%1 class not instanciated','accounts'),999);
 	 */
 	protected function _instanciate_accounts()
 	{
@@ -631,7 +639,7 @@ abstract class admin_cmd
 		{
 			if (!is_object($GLOBALS['egw']->accounts))
 			{
-				throw new Exception(lang('%1 class not instanciated','accounts'),999);
+				throw new egw_exception_assertion_failed(lang('%1 class not instanciated','accounts'),999);
 			}
 			admin_cmd::$accounts = $GLOBALS['egw']->accounts;
 		}
@@ -642,7 +650,7 @@ abstract class admin_cmd
 	 *
 	 * @todo acl class instanciation for setup
 	 * @param int $account=null account_id the class needs to be instanciated for, default need only account-independent methods
-	 * @throws Exception(lang('%1 class not instanciated','acl'),999);
+	 * @throws egw_exception_assertion_failed(lang('%1 class not instanciated','acl'),999);
 	 */
 	protected function _instanciate_acl($account=null)
 	{
@@ -650,7 +658,7 @@ abstract class admin_cmd
 		{
 			if (!is_object($GLOBALS['egw']->acl))
 			{
-				throw new Exception(lang('%1 class not instanciated','acl'),999);
+				throw new egw_exception_assertion_failed(lang('%1 class not instanciated','acl'),999);
 			}
 			if ($account && $GLOBALS['egw']->acl->account_id != $account)
 			{
@@ -822,14 +830,14 @@ abstract class admin_cmd
 		}
 		elseif ($data['install_id'] || $data['config_passwd'] || !$data['remote_hash'])
 		{
-			throw new Exception(lang('Either Install ID AND config password needed OR the remote hash!'));
+			throw new egw_exception_wrong_userinput(lang('Either Install ID AND config password needed OR the remote hash!'));
 		}
 		//_debug_array($data);
 		admin_cmd::$remote->init($data);
 		
 		if (admin_cmd::$remote->save() != 0)
 		{
-			throw new Exception (lang('Error saving to db:').' '.$this->sql->db->Error.' ('.$this->sql->db->Errno.')',$this->sql->db->Errno);
+			throw new egw_exception_db(lang('Error saving to db:').' '.$this->sql->db->Error.' ('.$this->sql->db->Errno.')',$this->sql->db->Errno);
 		}
 		return admin_cmd::$remote->data['remote_id'];
 	}

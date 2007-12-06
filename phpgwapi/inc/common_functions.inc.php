@@ -1293,4 +1293,68 @@
 			return $GLOBALS['egw']->translation->translate($key,$vars);
 		}
 	}
-?>
+
+/**
+ * php5 autoload function for eGroupWare understanding the following naming schema:
+ *	1. new (prefered) nameing schema: app_class_something loading app/inc/class.class_something.inc.php
+ *	2. API classes: classname loading phpgwapi/inc/class.classname.inc.php
+ *  2a.API classes containing multiple classes per file eg. egw_exception* in class.egw_exception.inc.php
+ *	3. eTemplate classes: classname loading etemplate/inc/class.classname.inc.php
+ *	4. classes of the current app: classname loading $GLOBALS['egw_info']['flags']['currentapp']/inc/class.classname.inc.php
+ *
+ * @param string $class name of class to load
+ */
+function __autoload($class)
+{
+	list($app,$baseclass) = explode('_',$class);
+	
+	// classes using the new naming schema app_class_name, eg. admin_cmd
+	if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
+		// classes using the new naming schema app_class_name, eg. admin_cmd
+		file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$baseclass.'.inc.php') ||
+		// eGW api classes using the old naming schema, eg. html
+		file_exists($file = EGW_API_INC.'/class.'.$class.'.inc.php') ||
+		// eGW api classes using the old naming schema, eg. html
+		file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$baseclass.'.inc.php') ||
+		// eGW eTemplate classes using the old naming schema, eg. etemplate
+		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
+		// classes of the current application using the old naming schema
+		file_exists($file = EGW_INCLUDE_ROOT.'/'.$GLOBALS['egw_info']['flags']['currentapp'].'/inc/class.'.$class.'.inc.php'))
+	{
+		//error_log("autoloaded class $class from $file");
+		include_once($file);
+	}
+}
+	
+/**
+ * Fail a little bit more gracefully then an uncought exception
+ * 
+ * Does NOT return
+ *
+ * @param Exception $e
+ */
+function egw_exception_handler(Exception $e)
+{
+	if ($e instanceof egw_exception_no_permission)
+	{
+		$headline = lang('Permission denied!');
+	}
+	elseif ($e instanceof egw_exception_db)
+	{
+		$headline = lang('Database error');
+	}
+	else
+	{
+		$headline = lang('An error happend');
+	}
+	$GLOBALS['egw']->framework->render(
+		'<h3>'.$headline."</h3>\n".
+		'<pre><b>'.$e->getMessage()."</b>\n\n".
+		$e->getTraceAsString()."</pre>\n".
+		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.lang('Click here to resume your eGroupWare Session.').'</a>',
+		$headline);
+
+	$GLOBALS['egw']->common->egw_exit();
+}
+		
+set_exception_handler('egw_exception_handler');

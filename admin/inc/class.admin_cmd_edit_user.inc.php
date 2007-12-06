@@ -40,9 +40,9 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 * 
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws Exception(lang("Permission denied !!!"),2)
-	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws Exception(lang('Error changing the password for %1 !!!',$this->account),99);
+	 * @throws egw_exception_no_admin
+	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws egw_exception_wrong_userinput(lang('Error changing the password for %1 !!!',$this->account),99);
 	 */
 	protected function exec($check_only=false)
 	{
@@ -60,20 +60,20 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		}
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
 		{
-			throw new Exception(lang('You must enter a loginid'),9);
+			throw new egw_exception_wrong_userinput(lang('You must enter a loginid'),9);
 		}
 		if (!$data['account_lastname'] && (!$this->account || !is_null($data['account_lastname'])))
 		{
-			throw new Exception(lang('You must enter a lastname'),9);
+			throw new egw_exception_wrong_userinput(lang('You must enter a lastname'),9);
 		}
 		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','u')) && 
 			$id !== $data['account_id'])
 		{
-			throw new Exception(lang('That loginid has already been taken'),999);
+			throw new egw_exception_wrong_userinput(lang('That loginid has already been taken'),999);
 		}
 		if (isset($data['account_passwd_2']) && $data['account_passwd'] != $data['account_passwd_2'])
 		{
-			throw new Exception(lang('The two passwords are not the same'),0);
+			throw new egw_exception_wrong_userinput(lang('The two passwords are not the same'),0);
 		}
 		$data['account_expires'] = $expires = self::_parse_expired($data['account_expires'],(boolean)$this->account);
 		$data['account_status'] = is_null($expires) ? null : ($expires == -1 || $expires > time() ? 'A' : '');
@@ -111,7 +111,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		{
 			if (!($old = admin_cmd::$accounts->read($data['account_id'])))
 			{
-				throw new Exception(lang("Unknown account: %1 !!!",$this->account),15);
+				throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
 			}
 			// as the current account class always sets all values, we have to add the not specified ones
 			foreach($data as $name => &$value)
@@ -122,7 +122,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		if (!($data['account_id'] = admin_cmd::$accounts->save($data)))
 		{
 			//_debug_array($data);
-			throw new Exception(lang("Error saving account!"),11);
+			throw new egw_exception_db(lang("Error saving account!"),11);
 		}
 		if ($data['account_groups'])
 		{
@@ -183,7 +183,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 * @param string $str date, 'never', 'already' or '' (=dont change, or default of never of new accounts)
 	 * @param boolean $exists
 	 * @return int timestamp, 0 for already, -1 for never or null for dont change
-	 * @throws Exception(lang('Invalid formated date "%1"!',$datein),6);
+	 * @throws egw_exception_wrong_userinput(lang('Invalid formated date "%1"!',$datein),6);
 	 */
 	private function _parse_expired($str,$existing)
 	{

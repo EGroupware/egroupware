@@ -188,6 +188,8 @@
 		* @param string $Port database port to connect to (optional)
 		* @param string $User name of database user (optional)
 		* @param string $Password password for database user (optional)
+		* @param string $Type type of database (optional)
+		* @return ADONewConnection
 		*/
 		function connect($Database = NULL, $Host = NULL, $Port = NULL, $User = NULL, $Password = NULL,$Type = NULL)
 		{
@@ -285,7 +287,7 @@
 						!dl(PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX)))
 					{
 						$this->halt("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
-						return 0;	// in case error-reporting = 'no'
+						return null;	// in case error-reporting = 'no'
 					}
 					if (!is_object($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
 					{
@@ -299,7 +301,7 @@
 					if (!$this->Link_ID)
 					{
 						$this->halt("No ADOdb support for '$type' ($this->Type) !!!");
-						return 0;	// in case error-reporting = 'no'
+						return null;	// in case error-reporting = 'no'
 					}
 					$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
 					if (($Ok = $this->Link_ID->$connect($Host, $User, $Password)))
@@ -314,7 +316,7 @@
 					if (!$Ok)
 					{
 						$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
-						return 0;	// in case error-reporting = 'no'
+						return null;	// in case error-reporting = 'no'
 					}
 					if ($this->Debug)
 					{
@@ -837,6 +839,10 @@
 			if ($this->Halt_On_Error == "no")
 			{
 				return;
+			}
+			if ($this->Halt_On_Error == 'yes')
+			{
+				throw new egw_exception_db($msg.($this->Error?":\n".$this->Error:''),$this->Errno);
 			}
 			$this->haltmsg($msg);
 

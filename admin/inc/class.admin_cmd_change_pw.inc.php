@@ -38,9 +38,9 @@ class admin_cmd_change_pw extends admin_cmd
 	 * 
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws Exception(lang("Permission denied !!!"),2)
-	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws Exception(lang('Error changing the password for %1 !!!',$this->account),99);
+	 * @throws egw_exception_no_admin
+	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws egw_exception_wrong_userinput(lang('Error changing the password for %1 !!!',$this->account),99);
 	 */
 	protected function exec($check_only=false)
 	{

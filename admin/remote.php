@@ -85,6 +85,13 @@ try {
 	$cmd = admin_cmd::instanciate($data);
 	//_debug_array($cmd); exit;
 	$success_msg = $cmd->run();
+	
+	$GLOBALS['egw']->translation->convert($success_msg,$GLOBALS['egw']->translation->charset(),'utf-8');
+
+	if (!is_string($success_msg))
+	{
+		$success_msg = serialize($success_msg);
+	}
 }
 catch (Exception $e) {
 	header('HTTP/1.1 200 '.$e->getMessage());
@@ -107,6 +114,7 @@ function exit_with_status($cmd,$success_msg='Successful')
 			// fall through
 		case admin_cmd::successful:
 			header('HTTP/1.1 200 '.$cmd->stati[$cmd->status]);
+			header('Content-type: text/plain; charset=utf-8');
 			echo $success_msg;
 	}
 	$GLOBALS['egw']->common->egw_exit();

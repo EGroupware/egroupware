@@ -181,9 +181,9 @@ class admin_cmd_change_account_id extends admin_cmd
 	 * 
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws Exception(lang("Permission denied !!!"),2)
-	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws Exception(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
+	 * @throws egw_exception_no_admin
+	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws egw_exception_wrong_userinput(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
 	 */
 	protected function exec($check_only=false)
 	{
@@ -191,7 +191,7 @@ class admin_cmd_change_account_id extends admin_cmd
 		{
 			if (!(int)$from || !(int)$to)
 			{
-				throw new Exception (lang("Account-id's have to be integers!"),16);
+				throw new egw_exception_wrong_userinput(lang("Account-id's have to be integers!"),16);
 			}
 		}
 		if ($check_only) return true;
