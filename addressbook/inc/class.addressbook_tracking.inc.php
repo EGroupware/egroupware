@@ -228,7 +228,7 @@ class addressbook_tracking extends bo_tracking
 				}
 				$details['#'.$name] = array(
 					'label' => $custom['label'],
-					'value' => $data['#'.$name],
+					'value' => $custom['type'] == 'select' ? $custom['values'][$data['#'.$name]] : $data['#'.$name],
 				);
 			}
 		}
