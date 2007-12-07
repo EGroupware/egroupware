@@ -315,6 +315,7 @@
 					}
 					if (!$Ok)
 					{
+						$Host = preg_replace('/password=[^ ]+/','password=$Password',$Host);	// eg. postgres dsn contains password
 						$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
 						return null;	// in case error-reporting = 'no'
 					}
