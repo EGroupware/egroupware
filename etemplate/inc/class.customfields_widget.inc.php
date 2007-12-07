@@ -109,6 +109,7 @@
 			{
 				$fields = array($name => $fields[$name]);
 				$value = array($this->prefix.$name => $value);
+				$singlefield = true;
 			}
 			switch($type = $cell['type'])
 			{
@@ -334,6 +335,12 @@
 					{
 						$input['help'] = $field['help'];
 						$input['no_lang'] = substr(lang($help),-1) == '*' ? 2 : 0;
+					}
+					if ($singlefield)	// a single field, can & need to be returned instead of the cell (no grid)
+					{
+						$cell = $input;
+						if ($type == 'customfields') $cell['label'] = $field['label'];
+						return true;
 					}
 					etemplate::add_child($cell,$input);
 					unset($input);
