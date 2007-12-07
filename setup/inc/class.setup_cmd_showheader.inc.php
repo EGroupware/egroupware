@@ -21,10 +21,16 @@ class setup_cmd_showheader extends setup_cmd
 	/**
 	 * Constructor
 	 *
-	 * @param array $data=array() default parm from parent class, no real parameters
+	 * @param boolean $data=true send only the remote_hash, domain and webserver_url and not the complete header
 	 */
-	function __construct($data=array())
+	function __construct($data=true)
 	{
+		if (!is_array($data))
+		{
+			$data = array(
+				'hash_only' => $data,
+			);
+		}
 		//echo __CLASS__.'::__construct()'; _debug_array($data);
 		admin_cmd::__construct($data);
 	}
@@ -67,19 +73,37 @@ class setup_cmd_showheader extends setup_cmd
 		foreach($GLOBALS['egw_domain'] as $domain => &$data)
 		{
 			$data += $this->_fetch_config($data);
+			try {
+				// it's saver to only send the remote_hash and not install_id and config_pw
+				$data['remote_hash'] = admin_cmd::remote_hash($data['install_id'],$data['config_passwd']);
+			}
+			catch(Exception $e) {
+				if ($data['install_id']) $data['error'] .= $e->getMessage();
+			}
+			if ($this->hash_only)
+			{
+				$data = array(
+					'remote_hash' => $data['remote_hash'],
+					'webserver_url' => $data['webserver_url'],
+				)+($data['error'] ? array(
+					'error' => $data['error'],				
+				) : array());
+			}
 		}
-		$ret = array(
-			'egw_info' => $GLOBALS['egw_info'],
-			'egw_domain' => $GLOBALS['egw_domain'],
-			'EGW_SERVER_ROOT' => EGW_SERVER_ROOT,
-			'EGW_INCLUDE_ROOT' => EGW_INCLUDE_ROOT,
-		);
-
+		if ($this->hash_only)
+		{
+			$ret = array('egw_domain' => $GLOBALS['egw_domain']);
+		}
+		else
+		{
+			$ret = array(
+				'egw_info' => $GLOBALS['egw_info'],
+				'egw_domain' => $GLOBALS['egw_domain'],
+				'EGW_SERVER_ROOT' => EGW_SERVER_ROOT,
+				'EGW_INCLUDE_ROOT' => EGW_INCLUDE_ROOT,
+			);
+		}
 		$GLOBALS['egw_info'] = $egw_info_backup;
-		
-		// restoring the db connection, seems to be necessary when we run via remote execution
-		$GLOBALS['egw']->db->disconnect();
-		$GLOBALS['egw']->db->connect();
 		
 		return $ret;
 	}
@@ -113,6 +137,10 @@ class setup_cmd_showheader extends setup_cmd
 		catch (Exception $e) {
 			$config['error'] = strip_tags($e->getMessage());
 		}
+		// restoring the db connection, seems to be necessary when we run via remote execution
+		$GLOBALS['egw']->db->disconnect();
+		$GLOBALS['egw']->db->connect();
+		
 		error_reporting($err_rep);
 		ob_end_clean();
 

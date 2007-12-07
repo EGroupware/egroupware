@@ -82,7 +82,7 @@ switch($action)
 		return do_check_acl();
 		
 	case '--show-header';
-		return run_command(new setup_cmd_showheader());
+		return run_command(new setup_cmd_showheader($arg0s[2]));
 		
 	case '--exit-codes':
 		return list_exit_codes();
