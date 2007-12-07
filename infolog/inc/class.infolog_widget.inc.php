@@ -157,7 +157,14 @@ class infolog_widget
 						if ($type{0} == '#')	// custom field --> use field-type itself
 						{
 							$field = $this->infolog->customfields[substr($type,1)];
-							if (($cell['type'] = $field['type'])) break;
+							if (($cell['type'] = $field['type']))
+							{
+								if ($field['type'] == 'select')
+								{
+									$cell['sel_options'] = $field['values'];
+								}
+								break;
+							}
 						}
 						$cell['type'] = 'label';
 						break;
