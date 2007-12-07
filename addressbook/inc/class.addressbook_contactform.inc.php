@@ -68,7 +68,7 @@ class addressbook_contactform
 				}
 				else	// this is only called, if we send only email and dont save it
 				{
-					if ($contact['email_contactform'])
+					if ($content['email_contactform'])
 					{
 						require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_tracking.inc.php');
 						$tracking = new addressbook_tracking($contact);
