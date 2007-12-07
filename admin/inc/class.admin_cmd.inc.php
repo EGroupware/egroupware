@@ -825,8 +825,7 @@ abstract class admin_cmd
 		
 		if ($data['install_id'] && $data['config_passwd'])	// calculate hash
 		{
-			$pw = self::is_md5($data['config_passwd']) ? $data['config_passwd'] : md5($data['config_passwd']);
-			$data['remote_hash'] = md5($pw.$data['install_id']);
+			$data['remote_hash'] = self::remote_hash($data['install_id'],$data['config_passwd']);
 		}
 		elseif ($data['install_id'] || $data['config_passwd'] || !$data['remote_hash'])
 		{
@@ -840,6 +839,24 @@ abstract class admin_cmd
 			throw new egw_exception_db(lang('Error saving to db:').' '.$this->sql->db->Error.' ('.$this->sql->db->Errno.')',$this->sql->db->Errno);
 		}
 		return admin_cmd::$remote->data['remote_id'];
+	}
+	
+	/**
+	 * Calculate the remote hash from install_id and config_passwd
+	 *
+	 * @param string $install_id
+	 * @param string $config_passwd
+	 * @return string 32char md5 hash
+	 */
+	static function remote_hash($install_id,$config_passwd)
+	{
+		if (empty($config_passwd) || !self::is_md5($install_id))
+		{
+			throw new egw_exception_wrong_parameter(empty($config_passwd)?'Empty config password':'install_id no md5 hash');
+		}
+		if (!self::is_md5($config_passwd)) $config_passwd = md5($config_passwd);
+			
+		return md5($config_passwd.$install_id);
 	}
 	
 	/**

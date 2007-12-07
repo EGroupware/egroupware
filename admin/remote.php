@@ -39,10 +39,10 @@ $allowed_remote_admin_ids = $GLOBALS['egw_info']['server']['allow_remote_admin']
 // of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash 
 // of the md5 hash of the config password and the install_id (egw_admin_remote.remote_hash)
 if (!$domain_data || is_numeric($_REQUEST['uid']) || !in_array($remote_admin_install_id,$allowed_remote_admin_ids) ||
-	$_REQUEST['secret'] != ($md5=md5($_REQUEST['uid'].md5($domain_data['config_passwd'].$GLOBALS['egw_info']['server']['install_id']))))
+	$_REQUEST['secret'] != ($md5=md5($_REQUEST['uid'].admin_cmd::remote_hash($GLOBALS['egw_info']['server']['install_id'],$domain_data['config_passwd']))))
 {
 	header("HTTP/1.1 200 Unauthorized");
-	die("0 secret != '$md5'");
+	//die("0 secret != '$md5'");
 	echo lang('0 Permission denied!');
 	if (!in_array($remote_admin_install_id,$allowed_remote_admin_ids))
 	{
