@@ -453,34 +453,27 @@
 			return true;
 		}
 
-		/***************************************************************************/
-		/* public: halt(string $msg)
-		 * msg:    error message to show.
+		/**
+		 * Giving a error message and halt the execution (if $this->halt_on_error == 'yes')
+		 *
+		 * @param string $msg error message to show
 		 */
 		function halt($msg)
 		{
 			$this->last_error = $msg;
 
-			if ($this->halt_on_error != 'no')
+			switch ($this->halt_on_error)
 			{
-				$this->haltmsg($msg);
+				case 'no':
+					// ignore error quitely
+					break;
+				case 'report':
+					printf("<b>Template Error:</b> %s<br>\n", $msg);
+					echo "<b>Backtrace</b>: ".function_backtrace(2)."<br>\n";
+					break;
+				case 'yes':
+					throw new egw_exception_wrong_parameter('Template Error: '.$msg);
 			}
-
-			if ($this->halt_on_error == 'yes')
-			{
-				echo('<b>Halted.</b>');
-			}
-
-			$GLOBALS['phpgw']->common->phpgw_exit(True);
-		}
-
-		/* public, override: haltmsg($msg)
-		 * msg: error message to show.
-		 */
-		function haltmsg($msg)
-		{
-			printf("<b>Template Error:</b> %s<br>\n", $msg);
-			echo "<b>Backtrace</b>: ".function_backtrace(2)."<br>\n";
 		}
 
 		function check_debug($str)
