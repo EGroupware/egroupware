@@ -18,6 +18,17 @@
 .gray { 
 	color: gray; 
 }
+.leftPad5 {
+	padding-left: 5px;
+}
+
+/*
+ * mark input as required
+ */
+.inputRequired input,.inputRequired select,.inputRequired textarea {
+	border: gray 1px solid;
+	background-color: #ffffd0;
+}
 
 /*
  * Styles of the eT editor 

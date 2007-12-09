@@ -984,6 +984,10 @@ foreach($sess as $key => $val)
 			{
 				$class = $this->expand_name($class,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
+			if ($cell['needed'] && !in_array($cell['type'],array('button','buttononly')))
+			{
+				$class .= ' inputRequired';
+			}
 			$cell_options = $cell['size'];
 			if (strchr($cell_options,'$') || $cell_options{0} == '@')
 			{
