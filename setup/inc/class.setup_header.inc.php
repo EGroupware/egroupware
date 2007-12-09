@@ -158,7 +158,7 @@ class setup_header
 	 */
 	function generate($egw_info,$egw_domain)
 	{
-		$tpl =& CreateObject('setup.Template','../');
+		$tpl =& CreateObject('phpgwapi.Template','../');
 		$tpl->set_file(array('header' => 'header.inc.php.template'));
 		$tpl->set_block('header','domain','domain');
 

@@ -704,7 +704,7 @@
 	if ($run_by_webserver)
 	{
 		$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-		$setup_tpl = CreateObject('setup.Template',$tpl_root);
+		$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 		$setup_tpl->set_file(array(
 			'T_head' => 'head.tpl',
 			'T_footer' => 'footer.tpl',

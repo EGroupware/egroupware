@@ -38,7 +38,7 @@ if (isset($_REQUEST['setup_session']))
 session_start();
 
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-$setup_tpl = CreateObject('setup.Template',$tpl_root);
+$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 $setup_tpl->set_file(array(
 	'migration' => 'account_migration.tpl',
 	'T_head' => 'head.tpl',

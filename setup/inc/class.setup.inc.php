@@ -51,8 +51,8 @@
 		/**
 		 * @var float $required_php_version php version required by eGroupWare
 		 */
-		var $required_php_version = 4.3;
-		var $recommended_php_version = '5+';
+		var $required_php_version = 5.1;
+		var $recommended_php_version = '5.1+';
 
 		function setup($html=False, $translation=False)
 		{

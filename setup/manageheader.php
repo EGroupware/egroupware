@@ -23,7 +23,7 @@ include('./inc/functions.inc.php');
 require_once('./inc/class.setup_header.inc.php');
 $GLOBALS['egw_setup']->header =& new setup_header(); 
 
-$setup_tpl = CreateObject('setup.Template','./templates/default');
+$setup_tpl = CreateObject('phpgwapi.Template','./templates/default');
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',

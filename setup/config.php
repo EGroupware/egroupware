@@ -31,7 +31,7 @@
 	}
 
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('setup.Template',$tpl_root);
+	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
@@ -145,7 +145,7 @@
 	$GLOBALS['egw']->common =& CreateObject('phpgwapi.common');
 	$GLOBALS['egw']->db     =& $GLOBALS['egw_setup']->db;
 
-	$t = CreateObject('setup.Template',$GLOBALS['egw']->common->get_tpl_dir('setup'));
+	$t = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('setup'));
 
 	$t->set_unknowns('keep');
 	$t->set_file(array('config' => 'config.tpl'));
