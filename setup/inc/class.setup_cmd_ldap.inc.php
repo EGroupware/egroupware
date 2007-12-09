@@ -23,7 +23,7 @@ class setup_cmd_ldap extends setup_cmd
 	private $test_ldap;
 
 	/**
-	 * Enter description here...
+	 * Constructor
 	 *
 	 * @param string/array $domain domain-name to customize the defaults or array with all parameters
 	 * @param string $ldap_type db-type (mysql, pgsql, ...)
@@ -168,7 +168,7 @@ class setup_cmd_ldap extends setup_cmd
 				$this->connect();
 			}
 		}
-		return lang('Successful connected to LDAP server on %1 and created required structur %2.',
+		return lang('Successful connected to LDAP server on %1 and created/checked required structur %2.',
 			$this->ldap_host,$this->ldap_base);
 	}
 	
