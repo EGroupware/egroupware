@@ -138,8 +138,7 @@ class setup_cmd_showheader extends setup_cmd
 			$config['error'] = strip_tags($e->getMessage());
 		}
 		// restoring the db connection, seems to be necessary when we run via remote execution
-		$GLOBALS['egw']->db->disconnect();
-		$GLOBALS['egw']->db->connect();
+		$this->restore_db();
 		
 		error_reporting($err_rep);
 		ob_end_clean();

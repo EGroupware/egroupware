@@ -16,6 +16,13 @@
 abstract class setup_cmd extends admin_cmd 
 {
 	/**
+	 * Defaults set for empty options while running the command
+	 *
+	 * @var array
+	 */
+	public $set_defaults = array();
+
+	/**
 	 * Should be called by every command usually requiring header admin rights
 	 *
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
@@ -64,5 +71,31 @@ abstract class setup_cmd extends admin_cmd
 		$secret = md5($this->uid.$header_admin_user.$header_admin_password);
 		//echo "header_secret='$secret' = md5('$this->uid'.'$header_admin_user'.'$header_admin_password')\n";
 		return $secret;
+	}
+	
+	/**
+	 * Restore our db connection
+	 *
+	 */
+	static protected function restore_db()
+	{
+		$GLOBALS['egw']->db->disconnect();
+		$GLOBALS['egw']->db->connect();
+		
+	}
+	
+	/**
+	 * Saving the object to the database, reimplemented to not do it in setup context
+	 *
+	 * @param boolean $set_modifier=true set the current user as modifier or 0 (= run by the system)
+	 * @return boolean true on success, false otherwise
+	 */
+	function save($set_modifier=true)
+	{
+		if (is_object($GLOBALS['egw']->db))
+		{
+			return parent::save($set_modifier);
+		}
+		return true;
 	}
 }

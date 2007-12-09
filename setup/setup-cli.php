@@ -637,174 +637,32 @@ function do_check($domain='',$stop=0)
  */
 function do_header($create,&$arguments)
 {
-	require_once('inc/class.setup_header.inc.php');
-	$GLOBALS['egw_setup']->header =& new setup_header();
-
-	if (!file_exists('../header.inc.php'))
+	if (!$create)
 	{
-		if (!$create) fail(1,lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'));
-
-		$GLOBALS['egw_setup']->header->defaults(false);
-	}
-	else
-	{
-		if ($create) fail(20,lang('eGroupWare configuration file header.inc.php already exists, you need to use --edit-header or delete it first!'));
-		
-		// check header-admin-user and -password (only if a password is set!)
-		if ($GLOBALS['egw_info']['server']['header_admin_password'])
+		// read password from enviroment or query it from user, if not given
+		@list($password,$user) = $options = explode(',',@$arguments[0]);
+		if (!$user) $user = 'admin';
+		if (!$password && !($password = $_SERVER['EGW_CLI_PASSWORD']))
 		{
-			@list($password,$user) = $options = explode(',',@$arguments[0]);
-			if (!$user) $user = 'admin';
-			if (!$password && !($password = $_SERVER['EGW_CLI_PASSWORD']))
-			{
-				echo lang('Admin password to header manager').' ';
-				$password = trim(fgets($f = fopen('php://stdin','rb')));
-				fclose($f);
-			}
-			$options[0] = $password;
-			$options[1] = $user;
-			$arguments[0] = implode(',',$options);
-
-			if (!$GLOBALS['egw_setup']->check_auth($user,$password,$GLOBALS['egw_info']['server']['header_admin_user'],
-					$GLOBALS['egw_info']['server']['header_admin_password']))
-			{
-				fail(21,lang('Access denied: wrong username or password for manage-header !!!'));
-			}
-		}
-		$GLOBALS['egw_info']['server']['server_root'] = EGW_SERVER_ROOT;
-		$GLOBALS['egw_info']['server']['include_root'] = EGW_INCLUDE_ROOT;
-	}
-	
-	$options = array(
-		'--create-header' => array(
-			'header_admin_password' => 'egw_info/server/',
-			'header_admin_user' => 'egw_info/server/',
-		),
-		'--edit-header'   => array(
-			'header_admin_password' => 'egw_info/server/',
-			'header_admin_user' => 'egw_info/server/',
-			'new_admin_password' => 'egw_info/server/header_admin_password',
-			'new_admin_user' => 'egw_info/server/header_admin_user',
-		),
-		'--server-root'  => 'egw_info/server/server_root',
-		'--include-root' => 'egw_info/server/include_root',
-		'--session-type' => array(
-			'sessions_type' => array(
-				'type' => 'egw_info/server/',
-				'allowed' => array('php'=>'php4','php4'=>'php4','php-restore'=>'php4-restore','php4-restore'=>'php4-restore','db'=>'db'),
-			),
-		),
-		'--limit-access' => 'egw_info/server/setup_acl',	// name used in setup
-		'--setup-acl'    => 'egw_info/server/setup_acl',	// alias to match the real name
-		'--mcrypt' => array(
-			'mcrypt_enabled' => array(
-				'type' => 'egw_info/server/',
-				'allowed' => array('on' => true,'off' => false),
-			),
-			'mcrypt_iv' => 'egw_info/server/',
-			'mcrypt' => 'egw_info/versions/mcrypt',
-		),
-		'--domain-selectbox' => array(
-			'show_domain_selectbox' => array(
-				'type' => 'egw_info/server/',
-				'allowed' => array('on' => true,'off' => false),
-			),
-		),
-		'--db-persistent' => array(
-			'db_persistent' => array(
-				'type' => 'egw_info/server/',
-				'allowed' => array('on' => true,'off' => false),
-			),
-		),
-		'--domain' => array(
-			'domain' => '@',
-			'db_name' => 'egw_domain/@/',
-			'db_user' => 'egw_domain/@/',
-			'db_pass' => 'egw_domain/@/',
-			'db_type' => 'egw_domain/@/',
-			'db_host' => 'egw_domain/@/',
-			'db_port' => 'egw_domain/@/',
-			'config_user'   => 'egw_domain/@/',
-			'config_passwd' => 'egw_domain/@/',
-		),
-		'--delete-domain' => true,
-	);
-	array_unshift($arguments,$create ? '--create-header' : '--edit-header');
-	while(($arg = array_shift($arguments)))
-	{
-		$values = count($arguments) && substr($arguments[0],0,2) !== '--' ? array_shift($arguments) : 'on';
-		
-		if ($arg == '--delete-domain')
-		{
-			if (!isset($GLOBALS['egw_domain'][$values])) fail(92,lang("Domain '%1' does NOT exist !!!",$values));
-			unset($GLOBALS['egw_domain'][$values]);
-			continue;
-		}
-		
-		if (!isset($options[$arg]))	fail(90,lang("Unknown option '%1' !!!",$arg));
-
-		$option = $options[$arg];
-		$values = !is_array($option) ? array($values) : explode(',',$values);
-		if (!is_array($option)) $option = array($option => $option);
-		$n = 0;
-		foreach($option as $name => $data)
-		{
-			if ($n >= count($values)) break;
-
-			if (!is_array($data)) $data = array('type' => $data);
-			$type = $data['type'];
-			
-			$value = $values[$n];
-			if (isset($data['allowed']))
-			{
-				if (!isset($data['allowed'][$value]))
-				{
-					fail(91,lang("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg));
-				}
-				$value = $data['allowed'][$value];
-			}
-			if ($type == '@')
-			{
-				$remember = $arg == '--domain' && !$value ? 'default' : $value;
-				if ($arg == '--domain' && (!isset($GLOBALS['egw_domain'][$remember]) || $create))
-				{
-					$GLOBALS['egw_domain'][$remember] = $GLOBALS['egw_setup']->header->domain_defaults($GLOBALS['egw_info']['server']['header_admin_user'],$GLOBALS['egw_info']['server']['header_admin_password']);
-				}
-			}
-			elseif ($value !== '')
-			{
-				_set_value($GLOBALS,str_replace('@',$remember,$type),$name,$value);
-				if ($name == 'egw_info/server/server_root')
-				{
-					_set_value($GLOBALS,'egw_info/server/include_root',$name,$value);
-				}
-			}
-			++$n;
-		}
-	}
-	if (($errors = $GLOBALS['egw_setup']->header->validation_errors($GLOBALS['egw_info']['server']['server_root'],$GLOBALS['egw_info']['server']['include_root'])))
-	{
-		unset($GLOBALS['egw_info']['flags']);
-		echo '$GLOBALS[egw_info] = '; print_r($GLOBALS['egw_info']);
-		echo '$GLOBALS[egw_domain] = '; print_r($GLOBALS['egw_domain']);
-		echo "\n".lang('Configuration errors:')."\n- ".implode("\n- ",$errors)."\n";
-		fail(23,lang("You need to fix the above errors, before the configuration file header.inc.php can be written!"));
-	}
-	$header = $GLOBALS['egw_setup']->header->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain']);
-		
-	echo $header;
-
-	if (file_exists('../header.inc.php') && is_writable('../header.inc.php') || is_writable('../'))
-	{
-		if (is_writable('../') && file_exists('../header.inc.php')) unlink('../header.inc.php');
-		if (($f = fopen('../header.inc.php','wb')) && fwrite($f,$header))
-		{
+			echo lang('Admin password to header manager').' ';
+			$password = trim(fgets($f = fopen('php://stdin','rb')));
 			fclose($f);
-			echo "\n".lang('header.inc.php successful written.')."\n\n";
-			exit(0);
 		}
+		$options[0] = $password;
+		$options[1] = $user;
+		$arguments[0] = implode(',',$options);
 	}
-	fail(24,lang("Failed writing configuration file header.inc.php, check the permissions !!!"));
+	array_unshift($arguments,$create ? '--create-header' : '--edit-header');
+
+	$cmd = new setup_cmd_header($create?'create':'edit',$arguments);
+	try {
+		$msg = $cmd->run();
+	}
+	catch(Exception $e) {
+		fail($e->getCode(),$e->getMessage());
+	}
+	echo "\n$msg\n\n";
+	exit(0);
 }
 
 /**
