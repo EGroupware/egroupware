@@ -41,7 +41,7 @@ class setup_cmd_database extends setup_cmd
 	{
 		if (!is_array($domain))
 		{
-			$data = array(
+			$domain = array(
 				'domain'  => $domain,
 				'db_type' => $db_type,
 				'db_host' => $db_host,
@@ -115,7 +115,7 @@ class setup_cmd_database extends setup_cmd
 	private function connect($user=null,$pass=null,$name=null)
 	{
 		if (is_null($user)) $user = $this->db_user;
-		if (is_null($pass)) $pass = $this->db_name;
+		if (is_null($pass)) $pass = $this->db_pass;
 		if (is_null($name)) $name = $this->db_name;
 
 		$this->test_db = new egw_db();
