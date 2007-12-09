@@ -179,7 +179,7 @@
 				
 				if ($data['func'] == 'pear_check' || in_array($data['func'],array('extension_check','php_ini_check')) && !isset($data['warning']))
 				{
-					if ($checks[$name]['from'] && !is_array($checks[$name]['from']))
+					if (isset($checks[$name]['from']) && $checks[$name]['from'] && !is_array($checks[$name]['from']))
 					{
 						$checks[$name]['from'] = array($checks[$name]['from']);
 					}
