@@ -36,12 +36,27 @@
 		var $oProc;
 		var $cookie_domain;
 
+		/**
+		 * @var setup_detection
+		 */
 		var $detection;
+		/**
+		 * @var setup_process
+		 */
 		var $process;
-		var $lang;
+		/**
+		 * @var setup_translation
+		 */
+		var $translation;
+		/**
+		 * @var setup_html
+		 */
 		var $html;
 		
 		var $system_charset;
+		var $lang;
+		
+		var $ConfigDomain;
 
 		/* table name vars */
 		var $tbl_apps;
@@ -78,7 +93,6 @@
 			{
 				$this->ConfigDomain = get_var('ConfigDomain',array('COOKIE','POST'),$_POST['FormDomain']);
 			}
-
 			$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_type'];
 
 			if ($GLOBALS['egw_info']['server']['db_type'] == 'pgsql')
@@ -92,7 +106,7 @@
 			$this->db->Database = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_name'];
 			$this->db->User     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_user'];
 			$this->db->Password = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_pass'];
-			
+
 			$this->db->set_app('phpgwapi');
 			
 			if ($connect_and_setcharset)
@@ -941,7 +955,7 @@
 				}
 				if (!$changepw) $this->add_acl('preferences','nopasswordchange',$accountid);
 			}
-			error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') successfull created accountid=$accountid");
+			//error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') successfull created accountid=$accountid");
 			return $accountid;
 		}
 		
@@ -1002,7 +1016,7 @@
 		 */
 		function add_acl($apps,$location,$account,$rights=1)
 		{
-			error_log("setup::add_acl(".(is_array($apps) ? "array('".implode("','",$apps)."')" : "'$apps'").",'$location',$account,$rights)");
+			//error_log("setup::add_acl(".(is_array($apps) ? "array('".implode("','",$apps)."')" : "'$apps'").",'$location',$account,$rights)");
 			if (!is_numeric($account))
 			{
 				$this->setup_account_object();
