@@ -85,14 +85,12 @@ class notification_winpopup implements iface_notification {
 		// otherwise we have to fetch this objects for current user.
 		if (!is_object($_sender)) {
 			$this->sender = (object) $GLOBALS['egw']->accounts->read($_sender);
-			$this->sender->id =& $this->sender->account_id;
 		}
 		else {
 			$this->sender = $_sender;
 		}
 		if (!is_object($_recipient)) {
 			$this->recipient = (object) $GLOBALS['egw']->accounts->read($_recipient);
-			$this->recipient->id =& $this->recipient->account_id;
 		}
 		else {
 			$this->recipient = $_recipient;
@@ -104,7 +102,7 @@ class notification_winpopup implements iface_notification {
 			$this->config = $_config;
 		}
 		if(!is_object($_preferences)) {
-			$prefs = new preferences($this->recipient->id);
+			$prefs = new preferences($this->recipient->account_id);
 			$preferences = $prefs->read();
 			$this->preferences = (object)$preferences[self::_appname ];
 		} else {
@@ -125,19 +123,22 @@ class notification_winpopup implements iface_notification {
 									'Please check var "netbios_command" in winpopup backend '.
 									'('.EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.notification_winpopup.inc.php).');
 		}
+		if(!is_object($this->sender)) {
+			throw new Exception("No sender given.");
+		}
 		
 		$sessions = $GLOBALS['egw']->session->list_sessions(0, 'asc', 'session_dla', true);
 		$user_sessions = array();
 		foreach ($sessions as $session) {
-			if ($session['session_lid'] == $this->recipient->lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
+			if ($session['session_lid'] == $this->recipient->account_lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
 				if($this->valid_ip($session['session_ip'])) {
 					$user_sessions[] = $session['session_ip'];
 				}
 			}
 		}
-		if ( empty($user_sessions) ) throw new Exception("User #{$this->recipient->id} isn't online. Can't send notification via winpopup");
+		if ( empty($user_sessions) ) throw new Exception("User #{$this->recipient->account_id} isn't online. Can't send notification via winpopup");
 		
-		$this->send_winpopup( $_messages['plain']['text'], $user_sessions );
+		$this->send_winpopup( $_messages['plain']['info_subject'].$_messages['plain']['text'], $user_sessions );
 		return true;
 	}
 	
@@ -161,7 +162,7 @@ class notification_winpopup implements iface_notification {
 									'/\[3\]/' => $ip_octets[2],
 									'/\[4\]/' => $ip_octets[3],
 									'/\[IP\]/' => $user_session,
-									'/\[SENDER\]/' => $GLOBALS['egw']->accounts->id2name($this->sender->id,'account_fullname'),
+									'/\[SENDER\]/' => $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender->account_email,
 									);
 			$command = preg_replace(array_keys($placeholders), $placeholders, $this->netbios_command);
 			exec($command,$output,$returncode);

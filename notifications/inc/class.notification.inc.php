@@ -125,26 +125,70 @@ final class notification {
 	 * Set sender for the current notification
 	 *
 	 * @param $_sender object of account
-	 * as long as the accounts class isn't a nice object, it's an int with the account id :-(
+	 * as long as the accounts class isn't a nice object,
+	 * it's an int with the account id or the e-mail address of a non-eGW user
 	 */
 	public function set_sender($_sender) {
-		$this->sender = is_object($_sender) ? $_sender : (object) $GLOBALS['egw']->accounts->get_account_data($_sender);
-		return true;
+		if(is_object($_sender)) {
+			$this->sender = $_sender;
+			return true;
+		} else {
+			// no object atm, we have to handle this and make a pseudo-object
+			if(is_numeric($_sender)) {
+				$this->sender = (object) $GLOBALS['egw']->accounts->read($_sender);
+				return true;
+			}
+			if(is_string($_sender) && strpos($_sender,'@')) {
+				$this->sender = (object) array (
+									'account_email' => $this->get_addresspart($_sender,'email'),
+									'account_fullname' => $this->get_addresspart($_sender,'fullname'),	
+									);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
 	 * Set receivers for the current notification
 	 *
 	 * @param array $_receivers array with objects of accounts
-	 * as long as the accounts class isn't a nice object, it's an array of account id's :-(
+	 * as long as the accounts class isn't a nice object,
+	 * it's an array with the int of the account id or the e-mail address of a non-eGW user
 	 */
 	public function set_receivers(array $_receivers) {
-		foreach ($_receivers as $receiver_id) {
-			$receiver = $GLOBALS['egw']->accounts->get_account_data($receiver_id);
-			$receiver[$receiver_id]['id'] = $receiver_id;
-			$this->receivers[$receiver_id] = (object)$receiver[$receiver_id];
+		$this->receivers = array();
+		foreach ($_receivers as $receiver) {
+			$this->add_receiver($receiver);
 		}
-		return true;
+	}
+	
+	/**
+	 * Add single receiver for the current notification
+	 *
+	 * @param $_receiver object of account
+	 * as long as the accounts class isn't a nice object,
+	 * it's an int with the account id or the e-mail address of a non-eGW user
+	 */
+	public function add_receiver($_receiver) {
+		if(is_object($_receiver)) {
+			$this->receivers[] = $_receiver;
+			return true;
+		} else {
+			// no object atm, we have to handle this and make a pseudo-object
+			if(is_numeric($_receiver)) {
+				$this->receivers[] = (object) $GLOBALS['egw']->accounts->read($_receiver);
+				return true;
+			}
+			if(is_string($_receiver) && strpos($_receiver,'@')) {
+				$this->receivers[] = (object) array (
+									'account_email' => $this->get_addresspart($_receiver,'email'),
+									'account_fullname' => $this->get_addresspart($_receiver,'fullname'),	
+									);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -260,19 +304,29 @@ final class notification {
 			$user_notified = false;
 			$backend_errors = array();
 			try {
-				// check if the receiver has rights to run the notifcation app
-				$ids = $GLOBALS['egw']->accounts->memberships($receiver->id,true);
-				$ids[] = $receiver->id;
-				if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($ids,'run','notifications')) {
-					throw new Exception('Could not send notification to user '.$receiver->lid.' because of missing execute rights on notification-app.');
+				// eGW user or external user
+				if($receiver->account_id && is_numeric($receiver->account_id)) {
+					// receiver is a eGW system-user
+					$receiver->handle = $receiver->account_lid;
+					// check if the receiver has rights to run the notifcation app
+					$ids = $GLOBALS['egw']->accounts->memberships($receiver->account_id,true);
+					$ids[] = $receiver->account_id;
+					if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($ids,'run','notifications')) {
+						throw new Exception('Could not send notification to '.$receiver->handle.' because of missing execute rights on notification-app.');
+					}
+					// read the users notification chain
+					$prefs = new preferences($receiver->account_id);
+					$preferences = $prefs->read();
+					$preferences = (object)$preferences[self::_appname];
+					$notification_chain = $this->notification_chains[$preferences->notification_chain];
+				} else {
+					// receiver is not a eGW system-user
+					$receiver->handle = $receiver->account_email;
+					$notification_chain = $this->notification_chains['email_only'];
 				}
 				
-				$prefs = new preferences($receiver->id);
-				$preferences = $prefs->read();
-				$preferences = (object)$preferences[self::_appname];
-				$notification_chain = $this->notification_chains[$preferences->notification_chain];
 				if(!is_array($notification_chain)) {
-					throw new Exception('Could not send notification to user '.$receiver->lid.' because of missing notification settings.');
+					throw new Exception('Could not send notification to '.$receiver->handle.' because of missing notification settings.');
 				}
 
 				foreach($notification_chain as $notification_backend => $action) {
@@ -298,7 +352,7 @@ final class notification {
 						}
 						// all backends failed - give error message
 						if(!$user_notified) {
-							error_log('Error: notification of receiver '.$receiver->lid.' failed for the following reasons:');
+							error_log('Error: notification of receiver '.$receiver->handle.' failed for the following reasons:');
 							foreach($backend_errors as $id=>$backend_error) {
 								error_log($backend_error);
 							}
@@ -311,7 +365,7 @@ final class notification {
 				}
 			}
 			catch (Exception $exception_user) {
-				error_log('Error: notification of receiver '.$receiver->lid.' failed: '.$exception_user->getMessage());
+				error_log('Error: notification of receiver '.$receiver->handle.' failed: '.$exception_user->getMessage());
 			}
 		}
 		return true;
@@ -329,7 +383,7 @@ final class notification {
 	/**
 	 * gets receivers
 	 *
-	 * @return array of account objects
+	 * @return array of receiver objects
 	 */
 	public function get_receivers() {
 		return $this->receivers;
@@ -350,6 +404,7 @@ final class notification {
 		$messages['plain'] = array();
 		$messages['html'] = array();
 		
+		// create the messages
 		if(!empty($_message_plain)) {
 			$messages['plain']['text'] = $_message_plain;
 		} else {
@@ -362,6 +417,7 @@ final class notification {
 			$messages['html']['text'] = nl2br($_message_plain);
 		}
 
+		// create the links
 		if(is_array($_links)) {
 			foreach($_links as $link) {
 				$params = '';
@@ -379,6 +435,19 @@ final class notification {
 				$messages['html']['link_jspopup'] .= '<br /><div onclick="'.$this->popup($url).'">'.$image.$link->text.'</div>';
 			}
 		}
+		
+		// create additional formatted info for backends which do not use
+		// subject or sender as plain info
+		if(is_object($this->sender)) {
+			$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
+			$messages['plain']['info_sender'] = lang('Message from').': '.$sender."\n";
+			$messages['html']['info_sender'] = lang('Message from').': '.$sender.'<br />';
+		}
+		if(!empty($this->subject)) {
+			$messages['plain']['info_subject'] = $this->subject."\n";
+			$messages['html']['info_subject'] = $this->html->bold($this->subject).'<br />';
+		}
+		
 		return $messages;
 	}
 	
@@ -396,5 +465,33 @@ final class notification {
 		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
 			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
 	}
+	
+	/**
+	 * returns specified part from a given mailaddress
+	 *
+	 * @param string $_address
+	 * @param string $_part
+	 * @return string chosen part of the address
+	 */
+	 private function get_addresspart($_address, $_part='email') {
+	 	if(strpos($_address,'<')) { // _address contains a fullname part
+	 		ereg('^(.*)[:space:]{0,1}<(.*)>',$_address,&$parts);
+	 		$fullname = trim(trim($parts[1]),'\"');
+	 		$email = $parts[2];
+	 	} else {
+	 		$fullname = false;
+	 		$email = $_address;
+	 	}
+	 	switch($_part) {
+	 		case 'fullname':
+	 			return $fullname;
+	 			break;	
+	 		case 'email':
+	 		default:
+	 			return $email;
+	 			break;
+	 	}
+	 	return false;
+	 }
 	
 }

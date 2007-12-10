@@ -60,7 +60,9 @@ class notification_email implements iface_notification {
 	/**
 	 * constructor of notification_email
 	 *
+	 * @param object $_sender
 	 * @param object $_recipient
+	 * @param object $_config
 	 * @param object $_preferences
 	 */
 	public function __construct( $_sender=false, $_recipient=false, $_config=false, $_preferences=false) {
@@ -68,14 +70,12 @@ class notification_email implements iface_notification {
 		// otherwise we have to fetch this objects for current user.
 		if (!is_object($_sender)) {
 			$this->sender = (object) $GLOBALS['egw']->accounts->read($_sender);
-			$this->sender->id =& $this->sender->account_id;
 		}
 		else {
 			$this->sender = $_sender;
 		}
 		if (!is_object($_recipient)) {
 			$this->recipient = (object) $GLOBALS['egw']->accounts->read($_recipient);
-			$this->recipient->id =& $this->recipient->account_id;
 		}
 		else {
 			$this->recipient = $_recipient;
@@ -87,7 +87,7 @@ class notification_email implements iface_notification {
 			$this->config = $_config;
 		}
 		if(!is_object($_preferences)) {
-			$prefs = new preferences($this->recipient->id);
+			$prefs = new preferences($this->recipient->account_id);
 			$preferences = $prefs->read();
 			$this->preferences = (object)$preferences[self::_appname ];
 		} else {
@@ -107,15 +107,12 @@ class notification_email implements iface_notification {
 	 * @param array $_attachments
 	 */
 	public function send( $_subject = false, $_messages, $_attachments = false) {
-		$sender_email = $GLOBALS['egw']->accounts->id2name($this->sender->id,'account_email');
-		$sender_fullname = $GLOBALS['egw']->accounts->id2name($this->sender->id,'account_fullname');
-		$recipient_email = $GLOBALS['egw']->accounts->id2name($this->recipient->id,'account_email');
-		$recipient_fullname = $GLOBALS['egw']->accounts->id2name($this->recipient->id,'account_fullname');
-		if (!$sender_email || strpos($sender_email,'@') === false) {
-			throw new Exception("Failed sending notification message via email. No valid sender given.");
+		if(!is_object($this->sender)) {
+			throw new Exception("No sender given.");
 		}
-		if (!$recipient_email || strpos($recipient_email,'@') === false) {
-			throw new Exception("Failed sending notification message via email. No valid recipient given.");
+
+		if (!$this->recipient->account_email || strpos($this->recipient->account_email,'@') === false) {
+			throw new Exception("No valid recipient given.");
 		}
 		if($this->preferences->external_mailclient) {
 			$body_plain = $_messages['plain']['text'].$_messages['plain']['link_external'];
@@ -127,10 +124,10 @@ class notification_email implements iface_notification {
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();
 		$this->mail->IsHTML(true);
-		$this->mail->AddAddress($recipient_email, $recipient_fullname);
+		$this->mail->AddAddress($this->recipient->account_email, $this->recipient->account_fullname);
 		$this->mail->AddCustomHeader('X-eGroupWare-type: notification-mail');
-		$this->mail->From = $sender_email;
-		$this->mail->FromName = $sender_fullname;
+		$this->mail->From = $this->sender->account_email;
+		$this->mail->FromName = $this->sender->account_fullname;
 		$this->mail->Subject = $this->mail->encode_subject($_subject);
 		$this->mail->Body = $body_html;
 		$this->mail->AltBody = $body_plain;

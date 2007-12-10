@@ -366,25 +366,21 @@ class bo_tracking
 			$GLOBALS['egw']->translation->init();
 		}
 		
-		$sender = $this->get_sender($data,$old);
-		$subject = $this->get_subject($data,$old);
-		$attachments = $this->get_attachments($data,$old);
-		/* send over notification_app or alternative old-style mail class
-		 * in future, we can make the notification app able to send mails
-		 * for non-system users, so the else part below could be dropped
-		 */
-		if (is_numeric($user_or_lang) && $GLOBALS['egw_info']['apps']['notifications']['enabled']) {
+		// send over notification_app
+		if ($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
 			// send via notification_app
+			$receiver = is_numeric($user_or_lang) ? $user_or_lang : $email;
 			require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
 			try {
 				$notification = new notification();
-				$notification->set_receivers(array($user_or_lang));
+				$notification->set_receivers(array($receiver));
 				$notification->set_message($this->get_body(false,$data,$old)); // set message as plaintext
 				$notification->set_message($this->get_body(true,$data,$old)); // and html
-				$notification->set_sender($this->user);
-				$notification->set_subject($subject);
+				$notification->set_sender($this->get_sender($data,$old,true));
+				$notification->set_subject($this->get_subject($data,$old));
 				// does not work atm
 				//$notification->set_links(array($this->get_notification_link($data,$old)));
+				$attachments = $this->get_attachments($data,$old);
 				if(is_array($attachments)) { $notification->set_attachments($attachments); }
 				$notification->send();
 			}
@@ -393,61 +389,7 @@ class bo_tracking
 				return false;
 			}
 		} else {
-			// PHPMailer aka send-class, seems not to be able to send more then one mail, IF we need to authenticate to the SMTP server
-			// There for the object is newly created for ever mail, 'til this get fixed in PHPMailer.
-			$notification_sent = false;
-			//if(!is_object($GLOBALS['egw']->send))
-			//{
-			 require_once(EGW_API_INC.'/class.send.inc.php');
-			 $GLOBALS['egw']->send = $send =& new send();
-			//}
-		
-			$send->ClearAddresses();
-			$send->ClearAttachments();
-
-			$send->IsHTML($html_email);		
-
-			if (preg_match('/^(.+) *<(.+)>/',$email,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as address
-			{
-			 $send->AddAddress($matches[2],$matches[1]);
-			}
-			else
-			{
-			 $send->AddAddress($email,is_numeric($user_or_lang) ? $GLOBALS['egw']->accounts->id2name($user_or_lang,'account_fullname') : '');
-			}
-			$send->AddCustomHeader("X-eGroupWare-type: {$this->app}update");
-		
-			if (preg_match('/^(.+) *<(.+)>/',$sender,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as sender
-			{
-			 $send->From = $matches[2];
-			 $send->FromName = $matches[1];
-			}
-			else
-			{
-			 $send->From = $sender;
-			 $send->FromName = '';
-			}
-			$send->Subject = $subject;
-			$send->Body = "<html>\n<body>\n".$this->get_body(true,$data,$old)."</body>\n</html>\n";
-			
-			foreach($attachments as $attachment)
-			{
-			 	if (isset($attachment['content']))
-				{
-				 	$send->AddStringAttachment($attachment['content'],$attachment['filename'],$attachment['encoding'],$attachment['mimetype']);
-				}
-				elseif (isset($attachment['path']))
-				{
-				 	$send->AddAttachment($attachment['path'],$attachment['filename'],$attachment['encoding'],$attachment['$mimetype']);
-				}
-			}
-		
-			//echo "<p>bo_trackering::send_notification(): sending <pre>".print_r($send,true)."</pre>\n";
-			$notification_sent = $send->Send();
-			if(!$notification_sent) {
-		 		$this->errors[] = lang('Error while notifying %1: %2',$email,$send->ErrorInfo);
-		 		return false;
-			}
+			error_log('tracking: cannot send any notifications because notification-app is not installed');
 		}
 		
 		return true;
@@ -482,9 +424,10 @@ class bo_tracking
 	 * @param int $user account_lid of user
 	 * @param array $data
 	 * @param array $old
-	 * @return string
+	 * @param bool $prefer_id returns the userid rather than email
+	 * @return string or userid
 	 */
-	function get_sender($data,$old)
+	function get_sender($data,$old,$prefer_id=false)
 	{
 		$sender = $this->get_config('sender',$data,$old);
 		//echo "<p>bo_tracking::get_sender() get_config('sender',...)='".htmlspecialchars($sender)."'</p>\n";
@@ -494,7 +437,11 @@ class bo_tracking
 		{
 			$name = $GLOBALS['egw']->accounts->id2name($this->user,'account_fullname');
 			
-			$sender = $name ? $name.' <'.$email.'>' : $email;
+			if($prefer_id) {
+				$sender = $this->user;
+			} else {
+				$sender = $name ? $name.' <'.$email.'>' : $email;
+			}
 		}
 		elseif(!$sender)
 		{
@@ -722,7 +669,9 @@ class bo_tracking
 			
 			if ($html_mail)
 			{
-				$content .= $this->html->a_href($link,$link,'','target="_blank"');
+				// the link is often too long for html boxes
+				// chunk-split allows to break lines if needed
+				$content .= $this->html->a_href(chunk_split($link,40,'&#8203'),$link,'','target="_blank"');
 			}
 			else
 			{

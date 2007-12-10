@@ -78,6 +78,7 @@ class notification_popup implements iface_notification {
 	 *
 	 * @param object $_sender
 	 * @param object $_recipient
+	 * @param object $_config
 	 * @param object $_preferences
 	 */
 	public function __construct( $_sender=false, $_recipient=false, $_config=false, $_preferences=false) {
@@ -85,14 +86,12 @@ class notification_popup implements iface_notification {
 		// otherwise we have to fetch this objects for current user.
 		if (!is_object($_sender)) {
 			$this->sender = (object) $GLOBALS['egw']->accounts->read($_sender);
-			$this->sender->id =& $this->sender->account_id;
 		}
 		else {
 			$this->sender = $_sender;
 		}
 		if (!is_object($_recipient)) {
 			$this->recipient = (object) $GLOBALS['egw']->accounts->read($_recipient);
-			$this->recipient->id =& $this->recipient->account_id;
 		}
 		else {
 			$this->recipient = $_recipient;
@@ -104,7 +103,7 @@ class notification_popup implements iface_notification {
 			$this->config = $_config;
 		}
 		if(!is_object($_preferences)) {
-			$prefs = new preferences($this->recipient->id);
+			$prefs = new preferences($this->recipient->account_id);
 			$preferences = $prefs->read();
 			$this->preferences = (object)$preferences[self::_appname ];
 		} else {
@@ -122,15 +121,18 @@ class notification_popup implements iface_notification {
 	 * @param array $_attachments
 	 */
 	public function send( $_subject = false, $_messages, $_attachments = false) {
+		if(!is_object($this->sender)) {
+			throw new Exception("No sender given.");
+		}
 		$sessions = $GLOBALS['egw']->session->list_sessions(0, 'asc', 'session_dla', true);
 		$user_sessions = array();
 		foreach ($sessions as $session) {
-			if ($session['session_lid'] == $this->recipient->lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
+			if ($session['session_lid'] == $this->recipient->account_lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
 				$user_sessions[] = $session['session_id'];
 			}
 		}
-		if ( empty($user_sessions) ) throw new Exception("User {$this->recipient->lid} isn't online. Can't send notification via popup");
-		$this->save( $_messages['html']['text'].$_messages['html']['link_jspopup'], $user_sessions );
+		if ( empty($user_sessions) ) throw new Exception("User {$this->recipient->account_lid} isn't online. Can't send notification via popup");
+		$this->save( $_messages['html']['info_sender'].$_messages['html']['info_subject'].$_messages['html']['text'].$_messages['html']['link_jspopup'], $user_sessions );
 	}
 	
 	/**
@@ -145,7 +147,7 @@ class notification_popup implements iface_notification {
 		$message = '';
 		$this->db->select(self::_notification_table, 
 			'*', array(
-				'account_id' => $this->recipient->id,
+				'account_id' => $this->recipient->account_id,
 				'session_id' => $session_id,
 			),
 			__LINE__,__FILE__);
@@ -161,7 +163,7 @@ class notification_popup implements iface_notification {
 				}
 			}
 			$myval=$this->db->delete(self::_notification_table,array(
-				'account_id' => $this->recipient->id,
+				'account_id' => $this->recipient->account_id,
 				'session_id' => $session_id,
 			),__LINE__,__FILE__);
 			
@@ -199,7 +201,7 @@ class notification_popup implements iface_notification {
 	private function save( $_message, array $_user_sessions ) {
 		foreach ($_user_sessions as $user_session) {
 			$result =& $this->db->insert( self::_notification_table, array(
-				'account_id'	=> $this->recipient->id,
+				'account_id'	=> $this->recipient->account_id,
 				'session_id'	=> $user_session,
 				'message'		=> $_message
 				), false,__LINE__,__FILE__);
