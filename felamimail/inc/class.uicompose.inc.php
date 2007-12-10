@@ -461,13 +461,21 @@
 				)
 			);
 			// strip comments out of the message completely
-                        while (stripos($_body,'<!--')!==FALSE) {
-                                $begin_comment=stripos($_body,'<!--');
-                                if (stripos($_body,'-->',$begin_comment+4)!== FALSE) {
-                                        $end_comment=stripos($_body,'-->',$begin_comment+4);
-                                        $_body=substr($_body,0,$begin_comment).substr($_body,$end_comment+3);
-                                }
-                        }
+			if ($_body) {
+				$begin_comment=stripos($_body,'<!--');
+				while ($begin_comment!==FALSE) {
+					//since there is a begin tag there should be an end tag, starting somewhere at least 4 chars further down
+					$end_comment=stripos($_body,'-->',$begin_comment+4);
+					if ($end_comment !== FALSE) {
+						$_body=substr($_body,0,$begin_comment-1).substr($_body,$end_comment+3);
+					} else {
+						//somehow there is a begin tag of a comment but no end tag. throw it away
+						$_body=str_replace('<!--','',$_body);
+					}
+					$begin_comment=stripos($_body,'<!--');
+					if (strlen($_body)<$begin_comment) break;
+				}
+			}
 			$body	= $kses->Parse($_body);
 
 			$body	= preg_replace($nonDisplayAbleCharacters, '', $body);
