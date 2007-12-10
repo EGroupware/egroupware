@@ -45,7 +45,7 @@ class setup_cmd_ldap extends setup_cmd
 	{
 		if (!is_array($domain))
 		{
-			$data = array(
+			$domain = array(
 				'domain'        => $domain,
 				'ldap_host'     => $ldap_host,
 				'ldap_suffix'   => $ldap_suffix,

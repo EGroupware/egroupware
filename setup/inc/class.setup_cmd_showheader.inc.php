@@ -7,7 +7,7 @@
  * @package setup
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.admin_cmd_check_acl.inc.php 24709 2007-11-27 03:20:28Z ralfbecker $ 
+ * @version $Id$ 
  */
 
 /**
@@ -21,7 +21,9 @@ class setup_cmd_showheader extends setup_cmd
 	/**
 	 * Constructor
 	 *
-	 * @param boolean $data=true send only the remote_hash, domain and webserver_url and not the complete header
+	 * @param boolean $data=true true: send only the remote_hash, domain and webserver_url, 
+	 *                           false: the complete header vars, plus install_id and webserver_url from the config table,
+	 *                           null:  only the header vars
 	 */
 	function __construct($data=true)
 	{
@@ -72,7 +74,10 @@ class setup_cmd_showheader extends setup_cmd
 		// fetching the install id's stored in the database
 		foreach($GLOBALS['egw_domain'] as $domain => &$data)
 		{
-			$data += $this->_fetch_config($data);
+			if (!is_null($this->hash_only))
+			{
+				$data += $this->_fetch_config($data);
+			}
 			try {
 				// it's saver to only send the remote_hash and not install_id and config_pw
 				$data['remote_hash'] = admin_cmd::remote_hash($data['install_id'],$data['config_passwd']);
@@ -137,12 +142,12 @@ class setup_cmd_showheader extends setup_cmd
 		catch (Exception $e) {
 			$config['error'] = strip_tags($e->getMessage());
 		}
-		// restoring the db connection, seems to be necessary when we run via remote execution
-		$this->restore_db();
-		
 		error_reporting($err_rep);
 		ob_end_clean();
 
+		// restoring the db connection, seems to be necessary when we run via remote execution
+		$this->restore_db();
+		
 		return $config;
 	}
 }

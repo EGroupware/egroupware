@@ -83,41 +83,23 @@ class setup_cmd_header extends setup_cmd
 				throw new egw_exception_wrong_userinput(
 					lang('eGroupWare configuration file header.inc.php already exists, you need to use --edit-header or delete it first!'),20);
 			}
-			
-			// check header-admin-user and -password (only if a password is set!)
-			if ($GLOBALS['egw_info']['server']['header_admin_password'])
+			if ($this->arguments)
 			{
-				if (!is_object($GLOBALS['egw_setup']))
-				{
-					$GLOBALS['egw_setup'] = new setup();				
-				}
-				if ($this->arguments)
-				{
-					list($this->header_admin_password,$this->header_admin_user) = explode(',',$this->arguments[1]);
-				}
-				if (!$GLOBALS['egw_setup']->check_auth($this->header_admin_user,$this->header_admin_password,
-					$GLOBALS['egw_info']['server']['header_admin_user'],
-					$GLOBALS['egw_info']['server']['header_admin_password']))
-				{
-					throw new egw_exception_no_permission(lang('Access denied: wrong username or password for manage-header !!!'),21);
-				}
+				list($this->header_admin_password,$this->header_admin_user) = explode(',',$this->arguments[1]);
 			}
+			$this->check_setup_auth($this->header_admin_user,$this->header_admin_password);	// no domain, we require header access!
+
 			$GLOBALS['egw_info']['server']['server_root'] = EGW_SERVER_ROOT;
 			$GLOBALS['egw_info']['server']['include_root'] = EGW_INCLUDE_ROOT;
-			
-			if (!isset($GLOBALS['egw_domain']))
-			{
-				// we run inside eGW, not setup --> read egw_domain array from the header via the showheader cmd
-				$cmd = new setup_cmd_showheader();
-				$header = $cmd->run();
-				$GLOBALS['egw_domain'] = $header['egw_domain'];
-				unset($cmd); unset($header);
-			}
 		}
 		
 		if ($this->arguments)	// we have command line arguments
 		{
 			$this->_parse_cli_arguments();
+		}
+		elseif ($this->sub_command == 'delete')
+		{
+			self::_delete_domain($this->domain);
 		}
 		else
 		{
@@ -249,11 +231,7 @@ class setup_cmd_header extends setup_cmd
 			
 			if ($arg == '--delete-domain')
 			{
-				if (!isset($GLOBALS['egw_domain'][$values]))
-				{
-					throw new egw_exception_wrong_userinput(lang("Domain '%1' does NOT exist !!!",$values),92);
-				}
-				unset($GLOBALS['egw_domain'][$values]);
+				$this->_delete_domain($values);
 				continue;
 			}
 			
@@ -275,6 +253,20 @@ class setup_cmd_header extends setup_cmd
 		}
 	}
 	
+	/**
+	 * Delete a given domain/instance from the header
+	 *
+	 * @param string $domain
+	 */
+	private static function _delete_domain($domain)
+	{
+		if (!isset($GLOBALS['egw_domain'][$domain]))
+		{
+			throw new egw_exception_wrong_userinput(lang("Domain '%1' does NOT exist !!!",$domain),92);
+		}
+		unset($GLOBALS['egw_domain'][$domain]);
+	}
+
 	/**
 	 * Parses a single value
 	 *
