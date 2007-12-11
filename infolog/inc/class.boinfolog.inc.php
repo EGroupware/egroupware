@@ -1318,6 +1318,12 @@ class boinfolog
 		return $cat_id_list;
 	}
 
+	/**
+	 * Get names for categories specified by their id's
+	 *
+	 * @param array|string $cat_id_list array or comma-sparated list of id's
+	 * @return array with names
+	 */
 	function get_categories($cat_id_list)
 	{
 		if (!is_object($this->glob_cat))
@@ -1335,7 +1341,7 @@ class boinfolog
 		}
 
 		$cat_list = array();
-		foreach(explode(',',$cat_id_list) as $cat_id)
+		foreach(is_array($cat_id_list) ? $cat_id_list : explode(',',$cat_id_list) as $cat_id)
 		{
 			if ( ($cat_data = $this->glob_cat->return_single($cat_id))
 				|| ($cat_data = $this->app_cat->return_single($cat_id)) )
