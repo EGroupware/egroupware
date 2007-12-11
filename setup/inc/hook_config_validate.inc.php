@@ -36,7 +36,7 @@
 
 	function temp_dir($settings)
 	{
-		if (!check_dir($settings['temp_dir'],$error_msg))
+		if (!setup_detection::check_dir($settings['temp_dir'],$error_msg))
 		{
 			$GLOBALS['config_error'] = lang("Your temporary directory '%1' %2",$settings['temp_dir'],$error_msg);
 		}
@@ -44,7 +44,8 @@
 	
 	function files_dir($settings)
 	{
-		if ($settings['file_repository'] == 'sql' && $settings['file_store_contents'] == 'filesystem' && !check_dir($settings['files_dir'],$error_msg,true))
+		if ($settings['file_repository'] == 'sql' && $settings['file_store_contents'] == 'filesystem' && 
+			!setup_detection::check_dir($settings['files_dir'],$error_msg,true))
 		{
 			$GLOBALS['config_error'] = lang("Your files directory '%1' %2",$settings['files_dir'],$error_msg);
 		}
@@ -56,7 +57,7 @@
 		{
 			$settings['backup_dir'] = $settings['files_dir'].'/db_backup';
 		}
-		if (!check_dir($settings['backup_dir'],$error_msg,true))
+		if (!setup_detection::check_dir($settings['backup_dir'],$error_msg,true))
 		{
 			$GLOBALS['config_error'] = lang("Your backup directory '%1' %2",$settings['backup_dir'],$error_msg);
 		}
