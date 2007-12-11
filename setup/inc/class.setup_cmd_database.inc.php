@@ -154,8 +154,11 @@ class setup_cmd_database extends setup_cmd
 		}
 		catch (egw_exception_wrong_userinput $e) {
 			// db or user not working --> connect as root and create it
-			if (!$this->test_db->create_database($this->db_root,$this->db_root_pw,$this->db_charset))
-			{
+			try {
+				$this->test_db->create_database($this->db_root,$this->db_root_pw,$this->db_charset);
+				$this->connect();
+			}
+			catch(egw_exception_wrong_userinput $e) {
 				// try connect as root to check if that's the problem
 				$this->connect($this->db_root,$this->db_root_pw,$this->db_meta);
 				// if not give general error
