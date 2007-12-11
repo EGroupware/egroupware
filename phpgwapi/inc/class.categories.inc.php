@@ -463,11 +463,19 @@
 				$values['level'] = $this->id2name($values['parent'],'level')+1;
 				$values['main'] = $this->id2name($values['parent'],'main');
 			}
+
+			$values = array_merge(
+				array(
+					'app_name'	=> $this->app_name,
+					'access'	=> 'public',
+				),
+				$values);
+
 			$this->db->insert($this->table,array(
 				'cat_parent'  => $values['parent'],
 				'cat_owner'   => $this->account_id,
 				'cat_access'  => $values['access'],
-				'cat_appname' => $this->app_name,
+				'cat_appname' => $values['app_name'],
 				'cat_name'    => $values['name'],
 				'cat_description' => $values['descr'],
 				'cat_data'    => $values['data'],
@@ -597,22 +605,40 @@
 		 * @param string $cat_name cat-name
 		 * @return int cat-id or 0 if not found
 		 */
-		function name2id($cat_name)
+		function name2id($cat_name,$strip)
 		{
 			static $cache = array();	// a litle bit of caching
 			
 			if (isset($cache[$cat_name])) return $cache[$cat_name];
 
-			$this->db->select($this->table,'cat_id',array(
-				'cat_name' => $cat_name,
-				'(cat_appname='.$this->db->quote($this->app_name)." OR cat_appname='phpgw')",
+			if ($strip === true)
+			{
+				$strip = 'X-';
+			}
+
+			$cats = array($cat_name);
+			if (isset($strip) && strncmp($strip, $cat_name, strlen($strip)) == 0)
+			{
+				$stripped_cat_name = substr($cat_name, strlen($strip));
+				if (isset($cache[$stripped_cat_name]))
+				{
+					$cache[$cat_name] = $cache[$stripped_cat_name];
+					return $cache[$stripped_cat_name];
+				}
+				$cats[] = $stripped_cat_name;
+			}
+				
+
+			$this->db->select($this->table,array('cat_name','cat_id'),array(
+				'cat_name' => $cats,
+				'cat_appname' => array($this->app_name, 'phpgw'),
 			),__LINE__,__FILE__,0,
-			"ORDER BY (CASE cat_owner WHEN ".(int)$this->account_id." THEN 1 WHEN -1 THEN 2 ELSE 3 END),cat_appname='phpgw'",
+			"ORDER BY cat_name!='$cat_name',(CASE cat_owner WHEN ".(int)$this->account_id." THEN 1 WHEN -1 THEN 2 ELSE 3 END),cat_appname='phpgw'",
 			false,1);
 
 			if (!$this->db->next_record()) return 0;	// cat not found, dont cache it, as it might be created in this request
 
-			return $cache[$cat_name] = (int) $this->db->f('cat_id');
+			return $cache[$this->db->f('cat_name')] = (int) $this->db->f('cat_id');
 		}
 
 		/**
