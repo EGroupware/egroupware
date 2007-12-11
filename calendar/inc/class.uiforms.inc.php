@@ -534,12 +534,24 @@ class uiforms extends uical
 			
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
+				if (!($email = $GLOBALS['egw']->accounts->id2name($uid,'account_email'))) continue;
+
 				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
-				 
-				$to[] = $firstname.' '.$lastname.
-					' <'.$GLOBALS['egw']->accounts->id2name($uid,'account_email').'>';
+					 
+				$to[] = $firstname.' '.$lastname.' <'.$email.'>';
 			}
-			if ($uid{0} == 'c' )
+			elseif ($uid < 0)
+			{
+				foreach($GLOBALS['egw']->accounts->members($uid,true) as $uid)
+				{
+					if (!($email = $GLOBALS['egw']->accounts->id2name($uid,'account_email'))) continue;
+
+					$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
+					 
+					$to[] = $firstname.' '.$lastname.' <'.$email.'>';
+				}
+			}
+			elseif ($uid{0} == 'c' )
 			{
 				if (!is_object($GLOBALS['egw']->contacts))
 				{
