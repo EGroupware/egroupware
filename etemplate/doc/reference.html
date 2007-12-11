@@ -838,7 +838,13 @@ $content[$id] = array(		<span>// I = value set by the app, 0 = value on return /
 	'no_columnselection' => <span>// I  turns off the columnselection completly, turned on by default</span>
 	'columnselection-pref' => <span>// I  name of the preference (plus 'nextmatch-' prefix), default = template-name</span>
 	'default_cols'   => 	<span>// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns</span>
-	'options-selectcols' => <span>// I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.</span>
+	'options-selectcols' => <span>// I  array with name/label pairs for the column-selection, this gets autodetected by default. 
+					A name => false hides the column from the column-selection.  
+					To completely hide a column, you need to use the Grid column attributes - disabled in eTemplate, and have your get_rows function
+					set a key that matches.  
+					For example, if your column name is private_phone, use the eTemplate editor to set column disabled to @no_private_phone, 
+					and have your get_rows function set $rows['no_private_phone'] = true (or some calculated condition).
+					</span>
 	'return'         =>     <span>// IO allows to return something from the get_rows function if $query is a var-param!</span>
 	'csv_fields'     =>	<span>// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames, 
 					or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)</span>
