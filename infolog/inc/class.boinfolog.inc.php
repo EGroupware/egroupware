@@ -1279,40 +1279,34 @@ class boinfolog
 		return $icons;
 	}
 
-	var $app_cat;
-	var $glob_cat;
+	var $categories;
 
 	function find_or_add_categories($catname_list)
 	{
-		if (!is_object($this->glob_cat))
+		if (!is_object($this->categories))
 		{
-			if (!is_object($GLOBALS['egw']->categories))
-			{
-				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'phpgw');
-			}
-			$this->glob_cat =& $GLOBALS['egw']->categories;
-		}
-
-		if (!is_object($this->app_cat))
-		{
-			$this->app_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
+			$this->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
 		}
 
 		$cat_id_list = array();
 		foreach($catname_list as $cat_name)
 		{
 			$cat_name = trim($cat_name);
-			if (!($cat_id = $this->glob_cat->name2id($cat_name))
-				&& !($cat_id = $this->app_cat->name2id($cat_name)))
+			$cat_id = $this->categories->name2id($cat_name, 'X-');
+			if (!$cat_id)
 			{
-				$cat_id = $this->app_cat->add( array('name' => $cat_name,'descr' => $cat_name ));
+				$cat_id = $this->categories->add(array('name' => $cat_name,'descr' => $cat_name));
 			}
 
-			$cat_id_list[] = $cat_id;
+			if ($cat_id)
+			{
+				$cat_id_list[] = $cat_id;
+			}
 		}
 
 		if (count($cat_id_list) > 1)
 		{
+			$cat_id_list = array_unique($cat_id_list);
 			sort($cat_id_list, SORT_NUMERIC);
 		}
 		return $cat_id_list;
@@ -1326,25 +1320,19 @@ class boinfolog
 	 */
 	function get_categories($cat_id_list)
 	{
-		if (!is_object($this->glob_cat))
+		if (!is_object($this->categories))
 		{
-			if (!is_object($GLOBALS['egw']->categories))
-			{
-				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'phpgw');
-			}
-			$this->glob_cat =& $GLOBALS['egw']->categories;
+			$this->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
 		}
 
-		if (!is_object($this->app_cat))
+		if (!is_array($cat_id_list))
 		{
-			$this->app_cat =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
+			$cat_id_list = explode(',',$cat_id_list);
 		}
-
 		$cat_list = array();
-		foreach(is_array($cat_id_list) ? $cat_id_list : explode(',',$cat_id_list) as $cat_id)
+		foreach($cat_id_list as $cat_id)
 		{
-			if ( ($cat_data = $this->glob_cat->return_single($cat_id))
-				|| ($cat_data = $this->app_cat->return_single($cat_id)) )
+			if ($cat_data = $this->categories->return_single($cat_id))
 			{
 				$cat_list[] = $cat_data[0]['name'];
 			}
