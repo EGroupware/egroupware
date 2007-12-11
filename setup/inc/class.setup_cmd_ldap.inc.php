@@ -32,16 +32,16 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $ldap_admin=null root-dn needed to create new entries in the suffix
 	 * @param string $ldap_admin_pw=null
 	 * @param string $ldap_base=null base of the instance, default "o=$domain,$suffix"
-	 * @param string $ldap_root=null root-dn used for the instance, default "cn=admin,$base"
+	 * @param string $ldap_root_dn=null root-dn used for the instance, default "cn=admin,$base"
 	 * @param string $ldap_root_pw=null
 	 * @param string $ldap_context=null ou for accounts, default "ou=accounts,$base"
 	 * @param string $ldap_search_filter=null search-filter for accounts, default "(uid=%user)"
-	 * @param string $ldap_context_group=null ou for groups, default "ou=groups,$base"
+	 * @param string $ldap_group_context=null ou for groups, default "ou=groups,$base"
 	 * @param string $sub_command='create_ldap' 'create_ldap', 'test_ldap', 'test_ldap_root'
 	 */
 	function __construct($domain,$ldap_host=null,$ldap_suffix=null,$ldap_admin=null,$ldap_admin_pw=null,
-		$ldap_base=null,$ldap_root=null,$ldap_root_pw=null,$ldap_context=null,$ldap_search_filter=null,
-		$ldap_context_group=null,$sub_command='create_ldap')
+		$ldap_base=null,$ldap_root_dn=null,$ldap_root_pw=null,$ldap_context=null,$ldap_search_filter=null,
+		$ldap_group_context=null,$sub_command='create_ldap')
 	{
 		if (!is_array($domain))
 		{
@@ -52,11 +52,11 @@ class setup_cmd_ldap extends setup_cmd
 				'ldap_admin'    => $ldap_admin,
 				'ldap_admin_pw' => $ldap_admin_pw,
 				'ldap_base'     => $ldap_base,
-				'ldap_root'     => $ldap_root,
+				'ldap_root_dn'  => $ldap_root_dn,
 				'ldap_root_pw'  => $ldap_root_pw,
 				'ldap_context'  => $ldap_context,
 				'ldap_search_filter' => $ldap_search_filter,
-				'ldap_context_group' => $ldap_context_group,
+				'ldap_group_context' => $ldap_group_context,
 				'sub_command'   => $sub_command
 			);
 		}
@@ -83,29 +83,18 @@ class setup_cmd_ldap extends setup_cmd
 		$this->_merge_defaults();
 		//_debug_array($this->as_array());
 
-		try {
-			switch($this->sub_command)
-			{
-				case 'test_ldap_root':
-					$msg = $this->connect($this->ldap_admin,$this->ldap_admin_pw);
-					break;
-				case 'test_ldap':
-					$msg = $this->connect();
-					break;
-				case 'create_ldap':
-				default:
-					$msg = $this->create();
-					break;
-			}
-		}
-		catch (Exception $e) {
-			// we catch the exception to properly restore the db
-		}
-		$this->restore_db();
-		
-		if ($e)
+		switch($this->sub_command)
 		{
-			throw $e;
+			case 'test_ldap_root':
+				$msg = $this->connect($this->ldap_admin,$this->ldap_admin_pw);
+				break;
+			case 'test_ldap':
+				$msg = $this->connect();
+				break;
+			case 'create_ldap':
+			default:
+				$msg = $this->create();
+				break;
 		}
 		return $msg;
 	}
@@ -113,13 +102,13 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Connect to ldap server
 	 *
-	 * @param string $dn=null default $this->ldap_root
+	 * @param string $dn=null default $this->ldap_root_dn
 	 * @param string $pw=null default $this->ldap_root_pw
 	 * @throws egw_exception_wrong_userinput Can not connect to ldap ...
 	 */
 	private function connect($dn=null,$pw=null)
 	{
-		if (is_null($dn)) $dn = $this->ldap_root;
+		if (is_null($dn)) $dn = $this->ldap_root_dn;
 		if (is_null($pw)) $pw = $this->ldap_root_pw;
 		
 		if (!$pw)	// ldap::ldapConnect use the current eGW's pw otherwise
@@ -158,11 +147,11 @@ class setup_cmd_ldap extends setup_cmd
 		foreach(array(
 			$this->ldap_base => array(),
 			$this->ldap_context => array(),
-			$this->ldap_context_group => array(),
-			$this->ldap_root => array('userPassword' => '{crypt}'.crypt($this->ldap_root_pw)),
+			$this->ldap_group_context => array(),
+			$this->ldap_root_dn => array('userPassword' => '{crypt}'.crypt($this->ldap_root_pw)),
 		) as $dn => $extra)
 		{
-			if (!$this->_create_node($dn,$extra,$check_only) && $dn == $this->ldap_root)
+			if (!$this->_create_node($dn,$extra,$check_only) && $dn == $this->ldap_root_dn)
 			{
 				// ldap_root already existed, lets check the pw is correct
 				$this->connect();
@@ -240,11 +229,11 @@ class setup_cmd_ldap extends setup_cmd
 			'ldap_admin'    => 'cn=admin,$suffix',
 			'ldap_admin_pw' => '',
 			'ldap_base'     => 'o=$domain,$suffix',
-			'ldap_root'     => 'cn=admin,$base',
-			'ldap_root_pw'  => md5(microtime(true).$domain.session_id()),
+			'ldap_root_dn'  => 'cn=admin,$base',
+			'ldap_root_pw'  => self::randomstring(),
 			'ldap_context'  => 'ou=accounts,$base',
 			'ldap_search_filter' => '(uid=%user)',
-			'ldap_context_group' => 'ou=groups,$base',
+			'ldap_group_context' => 'ou=groups,$base',
 		);
 	}
 
@@ -253,7 +242,7 @@ class setup_cmd_ldap extends setup_cmd
 	 */
 	private function _merge_defaults()
 	{
-		foreach(self::defaults($this->domain) as $name => $default)
+		foreach(self::defaults() as $name => $default)
 		{
 			if (!$this->$name)
 			{

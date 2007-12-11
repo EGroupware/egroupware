@@ -203,7 +203,7 @@ class setup_cmd_database extends setup_cmd
 			'db_port' => 3306,
 			'db_name' => 'egw_$domain',
 			'db_user' => 'egw_$domain',
-			'db_pass' => md5(microtime(true).$domain.session_id()),
+			'db_pass' => self::randomstring(),
 			'db_root' => 'root',
 			'db_root_pw' => '',	// not really a default
 			'db_meta' => $meta_db,
@@ -216,7 +216,7 @@ class setup_cmd_database extends setup_cmd
 	 */
 	private function _merge_defaults()
 	{
-		foreach(self::defaults($this->domain) as $name => $default)
+		foreach(self::defaults() as $name => $default)
 		{
 			if (!$this->$name)
 			{

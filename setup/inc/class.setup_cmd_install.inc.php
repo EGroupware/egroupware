@@ -23,6 +23,7 @@ class setup_cmd_install extends setup_cmd
 	 * @param string $config_passwd=null pw of above user
 	 * @param string $backup=null filename of backup to use instead of new install, default new install
 	 * @param string $charset='utf-8' charset for the install, default utf-8 now
+	 * @param boolean $verbose=false if true, echos out some status information during the run
 	 */
 	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$charset='utf-8',$verbose=false)
 	{
