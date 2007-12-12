@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-	if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') === false)
+	if (strpos($_SERVER['PHP_SELF'],'admin_account.php') !== false)
 	{
 		$GLOBALS['egw_info'] = array(
 			'flags' => array(
@@ -108,13 +108,15 @@
 				$GLOBALS['egw_setup']->db->delete($table,'1=1',__LINE__,__FILE__);
 			}
 		}
+echo "About to create Default group\n";
 		/* Create the demo groups */
 		$defaultgroupid = (int)$GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 		$admingroupid   = (int)$GLOBALS['egw_setup']->add_account('Admins','Admin','Group',False,False);
+echo "Groups created\n";
 		
 		if (!$defaultgroupid || !$admingroupid)
 		{
-			if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') !== false)
+			if (strpos($_SERVER['PHP_SELF'],'admin_account.php') === false)
 			{
 				return 42; //lang('Error in group-creation !!!');	// dont exit on setup-cli
 			}
@@ -201,7 +203,7 @@
 		$accountid = $GLOBALS['egw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True,$email);
 		if (!$accountid)
 		{
-			if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') !== false)
+			if (strpos($_SERVER['PHP_SELF'],'admin_account.php') === false)
 			{
 				return 41; //lang('Error in admin-creation !!!');	// dont exit on setup-cli
 			}
@@ -214,7 +216,7 @@
 
 		$GLOBALS['egw_setup']->db->transaction_commit();
 
-		if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') === false)
+		if (strpos($_SERVER['PHP_SELF'],'admin_account.php') !== false)
 		{
 			Header('Location: index.php');
 		}
