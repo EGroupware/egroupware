@@ -95,6 +95,8 @@ abstract class setup_cmd extends admin_cmd
 	 */
 	static protected $egw_setup;
 	
+	static private $egw_accounts_backup;
+	
 	/**
 	 * Create the setup enviroment (for running within setup or eGW)
 	 */
@@ -114,6 +116,11 @@ abstract class setup_cmd extends admin_cmd
 			$header = $cmd->run();
 			$GLOBALS['egw_domain'] = $header['egw_domain'];
 			
+			if (is_object($GLOBALS['egw']->accounts) && is_null(self::$egw_accounts_backup))
+			{
+				self::$egw_accounts_backup = $GLOBALS['egw']->accounts;
+				unset($GLOBALS['egw']->accounts);
+			}
 			if ($this->config) self::$egw_setup->setup_account_object($this->config);
 		}
 		if (is_object($GLOBALS['egw']->db) && $domain)
@@ -147,6 +154,11 @@ abstract class setup_cmd extends admin_cmd
 				$GLOBALS['egw_info']['server']['db_pass'],
 				$GLOBALS['egw_info']['server']['db_type']
 			);
+			if (!is_null(self::$egw_accounts_backup))
+			{
+				$GLOBALS['egw']->accounts = self::$egw_accounts_backup;
+				unset(self::$egw_accounts_backup);
+			}
 		}
 	}
 	
