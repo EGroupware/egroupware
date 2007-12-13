@@ -32,7 +32,7 @@
  * @subpackage accounts
  * @access internal only use the interface provided by the accounts class
  */
-class accounts_backend
+class accounts_sql
 {
 	/**
 	 * instance of the db class
@@ -65,8 +65,23 @@ class accounts_backend
 	 */
 	var $total;
 
-	function accounts_backend()
+	/**
+	 * Reference to our frontend
+	 *
+	 * @var accounts
+	 */
+	private $fontend;
+
+	/**
+	 * Constructor
+	 *
+	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
+	 * @return accounts_sql
+	 */
+	function __construct(accounts $frontend)
 	{
+		$this->frontend = $frontend;
+
 		if (is_object($GLOBALS['egw_setup']->db))
 		{
 			$this->db = clone($GLOBALS['egw_setup']->db);
@@ -455,6 +470,20 @@ class accounts_backend
 		return ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id');
 	}
 	
+	/**
+	 * Convert an numeric account_id to any other value of that account (account_lid, account_email, ...)
+	 * 
+	 * Uses the read method to fetch all data.
+	 *
+	 * @param int $account_id numerica account_id
+	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @return string/false converted value or false on error ($account_id not found)
+	 */
+	function id2name($account_id,$which='account_lid')
+	{
+		return $this->frontend->id2name($account_id,$which);
+	}
+
 	/**
 	 * Update the last login timestamps and the IP
 	 *

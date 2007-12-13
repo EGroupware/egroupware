@@ -21,24 +21,10 @@
  * @version $Id$
  */
 
-// load the backend class, which this class extends
-if (empty($GLOBALS['egw_info']['server']['account_repository']))
-{
-	if (!empty($GLOBALS['egw_info']['server']['auth_type']))
-	{
-		$GLOBALS['egw_info']['server']['account_repository'] = $GLOBALS['egw_info']['server']['auth_type'];
-	}
-	else
-	{
-		$GLOBALS['egw_info']['server']['account_repository'] = 'sql';
-	}
-}
-include_once(EGW_API_INC . '/class.accounts_' . $GLOBALS['egw_info']['server']['account_repository'] . '.inc.php');
-
 /**
  * API - accounts
  * 
- * This class extends a backend class (at them moment SQL or LDAP) and implements some
+ * This class uses a backend class (at them moment SQL or LDAP) and implements some
  * caching on to top of the backend functions. The cache is share for all instances of
  * the accounts class and for LDAP it is persistent through the whole session, for SQL 
  * it's only on a per request basis.
@@ -59,7 +45,7 @@ include_once(EGW_API_INC . '/class.accounts_' . $GLOBALS['egw_info']['server']['
  * @access public
  * @version $Id$
  */
-class accounts extends accounts_backend
+class accounts
 {
 	var $xmlrpc_methods = array(
 		array(
@@ -97,7 +83,7 @@ class accounts extends accounts_backend
 	 * Depricated: Account data of $this->account_id
 	 *
 	 * @deprecated dont use this in new code, store the data in your own code
-	 * @var unknown_type
+	 * @var array
 	 */
 	var $data;
 
@@ -124,16 +110,80 @@ class accounts extends accounts_backend
 		'start' => 'start with',
 		'exact' => 'exact',
 	);
+	
+	/**
+	 * Backend to use
+	 *
+	 * @var accounts_sql|accounts_ldap
+	 */
+	var $backend;
+	
+	/**
+	 * total number of found entries
+	 *
+	 * @var int
+	 */
+	var $total;
+	
+	/**
+	 * Current configuration
+	 *
+	 * @var array
+	 */
+	var $config;
+
 	/**
 	 * Constructor
 	 * 
-	 * @param int $account_id=0 account to instanciate the class for (depricated)
+	 * @param string|array $backend=null string with backend 'sql'|'ldap', or whole config array, default read from global egw_info
+	 */
+	function __construct($backend=null)
+	{
+		if (is_numeric($backend))	// depricated use with account_id
+		{
+			if ((int)$backend) $this->account_id = (int) $backend;
+			$backend = null;
+		}
+		if (is_array($backend))
+		{
+			$this->config = $backend;
+			$backend = null;
+		}
+		else
+		{
+			$this->config =& $GLOBALS['egw_info']['server'];
+		}
+		if (is_null($backend))
+		{
+			if (empty($this->config['account_repository']))
+			{
+				if (!empty($this->config['auth_type']))
+				{
+					$this->config['account_repository'] = $this->config['auth_type'];
+				}
+				else
+				{
+					$this->config['account_repository'] = 'sql';
+				}
+			}
+			$backend = $this->config['account_repository'];
+		}
+		$backend_class = 'accounts_'.$backend;
+		
+		$this->backend = new $backend_class($this);
+	}
+	
+	/**
+	 * Old constructor name
+	 *
+	 * @param int $account_id=0 depricated param to instanciate for the given account_id
+	 * @deprecated use __construct
 	 */
 	function accounts($account_id=0)
 	{
-		if($account_id && is_numeric($account_id)) $this->account_id = (int) $account_id;
+		$this->account_id = (int) $account_id;
 
-		$this->accounts_backend();	// call constructor of extended class
+		$this->__construct();
 	}
 
 	/**
@@ -168,11 +218,11 @@ class accounts extends accounts_backend
 		{
 			$this->total = $account_search[$serial]['total'];
 		}
-		elseif ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
+		elseif ($this->config['account_repository'] == 'ldap')
 		//not correct for php<5.1 elseif ((method_exists($this,'search'))	// implements its on search function ==> use it
 		{
-			$account_search[$serial]['data'] = parent::search($param);
-			$account_search[$serial]['total'] = $this->total;
+			$account_search[$serial]['data'] = $this->backend->search($param);
+			$account_search[$serial]['total'] = $this->total = $this->backend->total;
 		}
 		else
 		{
@@ -198,19 +248,19 @@ class accounts extends accounts_backend
 			if (!isset($account_search[$serial2]))	// check if we already did this general search
 			{
 				$account_search[$serial2]['data'] = array();
-				$accounts = parent::get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type']);
+				$accounts = $this->backend->get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type']);
 				if (!$accounts) $accounts = array();
 				foreach($accounts as $data)
 				{
 					$account_search[$serial2]['data'][$data['account_id']] = $data;
 				}
-				$account_search[$serial2]['total'] = $this->total;
+				$account_search[$serial2]['total'] = $this->total = $this->backend->total;
 			}
 			else
 			{
 				$this->total = $account_search[$serial2]['total'];
 			}
-			//echo "parent::get_list($param[type],$param[start],$param[sort],$param[order],$param[query],$param[offset],$param[query_type]) returned<pre>".print_r($account_search[$serial2],True)."</pre>\n";
+			//echo "$this->backend->get_list($param[type],$param[start],$param[sort],$param[order],$param[query],$param[offset],$param[query_type]) returned<pre>".print_r($account_search[$serial2],True)."</pre>\n";
 			if ($app || $group)	// limit the search on accounts with run-rights for app or a group
 			{
 				$valid = array();
@@ -279,7 +329,7 @@ class accounts extends accounts_backend
 
 		if (!isset($account_data[$id]))
 		{
-			$account_data[$id] = parent::read($id);
+			$account_data[$id] = $this->backend->read($id);
 		}
 		if (!$account_data[$id] || !$set_depricated_names) 
 		{
@@ -314,11 +364,11 @@ class accounts extends accounts_backend
 				}
 			}
 		}
-		if (($id = parent::save($data)) && $data['account_type'] != 'g')
+		if (($id = $this->backend->save($data)) && $data['account_type'] != 'g')
 		{ 
 			// if we are not on a pure LDAP system, we have to write the account-date via the contacts class now
-			if (($GLOBALS['egw_info']['server']['account_repository'] != 'ldap' ||
-				$GLOBALS['egw_info']['server']['contact_repository'] == 'sql-ldap') &&
+			if (($this->config['account_repository'] != 'ldap' ||
+				$this->config['contact_repository'] == 'sql-ldap') &&
 				(!($old = $this->read($data['account_id'])) ||	// only for new account or changed contact-data
 				$old['account_firstname'] != $data['account_firstname'] ||
 				$old['account_lastname'] != $data['account_lastname'] ||
@@ -369,7 +419,7 @@ class accounts extends accounts_backend
 		if (!$id) return false;
 
 		$this->cache_invalidate($id);
-		parent::delete($id);
+		$this->backend->delete($id);
 		
 		// delete all acl_entries belonging to that user or group
 		$GLOBALS['egw']->acl->delete_account($id);
@@ -419,7 +469,7 @@ class accounts extends accounts_backend
 		{
 			return False;
 		}
-		return $name_list[$which][$name] = parent::name2id($name,$which,$account_type);
+		return $name_list[$which][$name] = $this->backend->name2id($name,$which,$account_type);
 	}
 
 	/**
@@ -488,7 +538,7 @@ class accounts extends accounts_backend
 		}
 		if (!isset($memberships_list[$account_id]))
 		{
-			$memberships_list[$account_id] = parent::memberships($account_id);
+			$memberships_list[$account_id] = $this->backend->memberships($account_id);
 		}
 		//echo "accounts::memberships($account_id)"; _debug_array($memberships_list[$account_id]);
 		return $just_id && $memberships_list[$account_id] ? array_keys($memberships_list[$account_id]) : $memberships_list[$account_id];
@@ -507,7 +557,7 @@ class accounts extends accounts_backend
 		{
 			$account_id = $this->name2id($account_id);
 		}
-		parent::set_memberships($groups,$account_id);
+		$this->backend->set_memberships($groups,$account_id);
 
 		$this->cache_invalidate($account_id);
 	}
@@ -531,7 +581,7 @@ class accounts extends accounts_backend
 		}
 		if (!isset($members_list[$account_id]))
 		{
-			$members_list[$account_id] = parent::members($account_id);
+			$members_list[$account_id] = $this->backend->members($account_id);
 		}
 		//echo "accounts::members($account_id)"; _debug_array($members_list[$account_id]);
 		return $just_id && $members_list[$account_id] ? array_keys($members_list[$account_id]) : $members_list[$account_id];
@@ -546,7 +596,7 @@ class accounts extends accounts_backend
 	function set_members($members,$gid)
 	{
 		//echo "<p>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
-		parent::set_members($members,$gid);
+		$this->backend->set_members($members,$gid);
 
 		$this->cache_invalidate(0);
 	}
@@ -633,12 +683,12 @@ class accounts extends accounts_backend
 	 */
 	function auto_add($account_lid, $passwd)
 	{
-		$expires = !isset($GLOBALS['egw_info']['server']['auto_create_expire']) ||
-			$GLOBALS['egw_info']['server']['auto_create_expire'] == 'never' ? -1 :
-			time() + $GLOBALS['egw_info']['server']['auto_create_expire'] + 2;
+		$expires = !isset($this->config['auto_create_expire']) ||
+			$this->config['auto_create_expire'] == 'never' ? -1 :
+			time() + $this->config['auto_create_expire'] + 2;
 
 		
-		if (!($default_group_id = $this->name2id($GLOBALS['egw_info']['server']['default_group_lid'])))
+		if (!($default_group_id = $this->name2id($this->config['default_group_lid'])))
 		{
 			$default_group_id = $this->name2id('Default');
 		}
@@ -677,6 +727,18 @@ class accounts extends accounts_backend
 		),False,True);  // called for every app now, not only enabled ones
 
 		return $data['account_id'];
+	}
+	
+	/**
+	 * Update the last login timestamps and the IP
+	 *
+	 * @param int $account_id
+	 * @param string $ip
+	 * @return int lastlogin time
+	 */
+	function update_lastlogin($account_id, $ip)
+	{
+		return $this->backend->update_lastlogin($account_id, $ip);
 	}
 
 	function list_methods($_type='xmlrpc')

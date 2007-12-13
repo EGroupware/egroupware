@@ -38,7 +38,7 @@
  * @subpackage accounts
  * @access internal only use the interface provided by the accounts class
  */
-class accounts_backend
+class accounts_ldap
 {
 	/**
 	 * resource with connection to the ldap server
@@ -89,7 +89,7 @@ class accounts_backend
 	/**
 	 * Classes allowing to set a mail-address for a group and specify the memberaddresses as forwarding addresses
 	 *
-	 * @var unknown_type
+	 * @var array
 	 */
 	var $group_mail_classes = array(
 		'dbmailforwardingaddress' => 'mailforwardingaddress',
@@ -99,31 +99,51 @@ class accounts_backend
 	/**
 	 * reference to the translation class
 	 * 
-	 * @var object
+	 * @var translation
 	 */
 	var $translation;
+	
+	/**
+	 * Reference to our frontend
+	 *
+	 * @var accounts
+	 */
+	private $frontend;
+	
+	/**
+	 * Instance of the ldap class
+	 *
+	 * @var ldap
+	 */
+	private $ldap;
 
 	/**
 	 * Constructor
 	 *
-	 * @return accounts_backend
+	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
+	 * @return accounts_ldap
 	 */
-	function accounts_backend()
+	function __construct(accounts $frontend)
 	{
+		$this->frontend = $frontend;
+
 		// enable the caching in the session, done by the accounts class extending this class.
 		$this->use_session_cache = true;
 
-		$this->ds = $GLOBALS['egw']->common->ldapConnect();
+		$this->ldap = new ldap();
+		$this->ds = $this->ldap->ldapConnect($this->frontend->config['ldap_host'],
+			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
+
 		if(!@is_object($GLOBALS['egw']->translation))
 		{
-			$GLOBALS['egw']->translation =& CreateObject('phpgwapi.translation');
+			$GLOBALS['egw']->translation =& new translation();
 		}
 		$this->translation =& $GLOBALS['egw']->translation;
 
-		$this->user_context  = $GLOBALS['egw_info']['server']['ldap_context'];
-		$this->account_filter = $GLOBALS['egw_info']['server']['ldap_search_filter'];
-		$this->group_context = $GLOBALS['egw_info']['server']['ldap_group_context'] ? 
-			$GLOBALS['egw_info']['server']['ldap_group_context'] : $GLOBALS['egw_info']['server']['ldap_context'];
+		$this->user_context  = $this->frontend->config['ldap_context'];
+		$this->account_filter = $this->frontend->config['ldap_search_filter'];
+		$this->group_context = $this->frontend->config['ldap_group_context'] ? 
+			$this->frontend->config['ldap_group_context'] : $this->frontend->config['ldap_context'];
 	}
 
 	/**
@@ -160,7 +180,7 @@ class accounts_backend
 				
 		if (!is_object($this->ldapServerInfo))
 		{
-			$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_host']);
+			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
 		}
 		// common code for users and groups
 		// checks if accout_lid (dn) has been changed or required objectclass'es are missing
@@ -197,8 +217,7 @@ class accounts_backend
 						$members = $old ? $old['memberuid'] : $this->members($data['account_id']);
 					}
 					// if dn has changed --> delete the old entry, as we cant rename the dn
-					// $this->delete would call accounts::delete, which will delete als ACL of the user too!
-					accounts_backend::delete($data['account_id']);	
+					$this->delete($data['account_id']);	
 					unset($old['dn']);
 					// removing the namedObject object-class, if it's included
 					if ($key !== false) unset($old['objectclass'][$key]);
@@ -241,7 +260,7 @@ class accounts_backend
 			$groupOfNames = in_array('groupofnames',$old ? $old['objectclass'] : $to_write['objectclass']);
 			if (!$old && $groupOfNames || $members)
 			{
-				$to_write = array_merge($to_write,accounts_backend::set_members($members,
+				$to_write = array_merge($to_write,$this->set_members($members,
 					$data['account_id'],$groupOfNames,$dn));
 			}
 			// check if we should set a mail address and forwards for each member
@@ -421,7 +440,7 @@ class accounts_backend
 		);
 		if (!is_object($this->ldapServerInfo))
 		{
-			$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_host']);
+			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
 		}
 		foreach($this->group_mail_classes as $objectclass => $forward)
 		{
@@ -480,7 +499,7 @@ class accounts_backend
 			'person_id'         => $data['uid'][0],	// id of associated contact
 		);
 		//echo "<p align=right>accounts_ldap::_read_user($account_id): shadowexpire={$data['shadowexpire'][0]} --> account_expires=$user[account_expires]=".date('Y-m-d H:i',$user['account_expires'])."</p>\n";
-		if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
+		if ($this->frontend->config['ldap_extra_attributes'])
 		{
 			$user['homedirectory']  = $data['homedirectory'][0];
 			$user['loginshell']     = $data['loginshell'][0];
@@ -567,7 +586,7 @@ class accounts_backend
 		// $to_write['phpgwaccountlastlogin'] = $data['lastlogin'];
 		// $to_write['phpgwaccountlastloginfrom'] = $data['lastloginfrom'];
 
-		if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
+		if ($this->frontend->config['ldap_extra_attributes'])
 		{
 			if (isset($data['homedirectory'])) $to_write['homedirectory']  = $data['homedirectory'];
 			if (isset($data['loginshell'])) $to_write['loginshell'] = $data['loginshell'] ? $data['loginshell'] : array();
@@ -600,7 +619,7 @@ class accounts_backend
 	 */
 	function search($param)
 	{
-		//echo "<p>accounts_backend::search(".print_r($param,true)."): ".microtime()."</p>\n";
+		//echo "<p>accounts_ldap::search(".print_r($param,true)."): ".microtime()."</p>\n";
 		$account_search = &$this->cache['account_search'];
 		
 		// check if the query is cached
@@ -661,7 +680,7 @@ class accounts_backend
 				if (is_numeric($param['type']))	// return only group-members
 				{
 					if (!($members = $this->members($param['type']))) return array();
-					//echo "<p>accounts_backend::search() after members($param[type]): ".microtime()."</p>\n";
+					//echo "<p>accounts_ldap::search() after members($param[type]): ".microtime()."</p>\n";
 					
 					$filter .= '(|(uid='.implode(')(uid=',$members).'))';
 				}
@@ -679,7 +698,7 @@ class accounts_backend
 				{
 					settype($allVals,'array');
 					$test = @$allVals['uid'][0];
-					if (!$GLOBALS['egw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
+					if (!$this->frontend->config['global_denied_users'][$test] && $allVals['uid'][0])
 					{
 						$accounts[] = Array(
 							'account_id'        => $allVals['uidnumber'][0],
@@ -709,7 +728,7 @@ class accounts_backend
 				{
 					settype($allVals,'array');
 					$test = $allVals['cn'][0];
-					if (!$GLOBALS['egw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
+					if (!$this->frontend->config['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
 						$accounts[] = Array(
 							'account_id'        => -$allVals['gidnumber'][0],
@@ -731,7 +750,7 @@ class accounts_backend
 			$account_search[$unl_serial]['data'] = $sortedAccounts = $arrayFunctions->arfsort($accounts,explode(',',$param['order']),$param['sort']);
 			$account_search[$unl_serial]['total'] = $this->total = count($accounts);
 		}
-		//echo "<p>accounts_backend::search() found $this->total: ".microtime()."</p>\n";
+		//echo "<p>accounts_ldap::search() found $this->total: ".microtime()."</p>\n";
 		// return only the wanted accounts
 		reset($sortedAccounts);
 		if(is_numeric($start) && is_numeric($offset))
@@ -786,6 +805,20 @@ class accounts_backend
 		}
 		return False;
 	}
+	
+	/**
+	 * Convert an numeric account_id to any other value of that account (account_lid, account_email, ...)
+	 * 
+	 * Uses the read method to fetch all data.
+	 *
+	 * @param int $account_id numerica account_id
+	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @return string/false converted value or false on error ($account_id not found)
+	 */
+	function id2name($account_id,$which='account_lid')
+	{
+		return $this->frontend->id2name($account_id,$which);
+	}
 
 	/**
 	 * Update the last login timestamps and the IP
@@ -801,7 +834,7 @@ class accounts_backend
 		$entry['phpgwaccountlastlogin']     = time();
 		$entry['phpgwaccountlastloginfrom'] = $ip;
 
-		$sri = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
+		$sri = ldap_search($this->ds, $this->frontend->config['ldap_context'], 'uidnumber=' . (int)$_account_id);
 		$allValues = ldap_get_entries($this->ds, $sri);
 
 		$dn = $allValues[0]['dn'];
@@ -957,8 +990,8 @@ class accounts_backend
 	 */
 	function _get_nextid($account_type='u')
 	{
-		$min = $GLOBALS['egw_info']['server']['account_min_id'] ? $GLOBALS['egw_info']['server']['account_min_id'] : 0;
-		$max = $GLOBALS['egw_info']['server']['account_max_id'] ? $GLOBALS['egw_info']['server']['account_max_id'] : 0;
+		$min = $this->frontend->config['account_min_id'] ? $this->frontend->config['account_min_id'] : 0;
+		$max = $this->frontend->config['account_max_id'] ? $this->frontend->config['account_max_id'] : 0;
 
 		if ($account_type == 'g')
 		{
@@ -975,10 +1008,10 @@ class accounts_backend
 		{
 			$account_id = (int) $GLOBALS['egw']->common->next_id($type,$min,$max);
 		} 
-		while ($account_id && $this->exists($sign * $account_id));	// check need to include the sign!
+		while ($account_id && $this->frontend->exists($sign * $account_id));	// check need to include the sign!
 
-		if	(!$account_id || $GLOBALS['egw_info']['server']['account_max_id'] &&
-			$account_id > $GLOBALS['egw_info']['server']['account_max_id'])
+		if	(!$account_id || $this->frontend->config['account_max_id'] &&
+			$account_id > $this->frontend->config['account_max_id'])
 		{
 			return False;
 		}
