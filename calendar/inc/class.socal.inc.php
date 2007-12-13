@@ -248,7 +248,7 @@ class socal
 			}
 			array_walk($cats,create_function('&$val,$key','$val = (int) $val;'));
 
-			$sql = '(cal_category'.(count($cats) > 1 ? ' IN ('.implode(',',$cats).')' : '='.$this->db->quote((int)$cat_id));
+			$sql = '(cal_category'.(count($cats) > 1 ? " IN ('".implode("','",$cats)."')" : '='.$this->db->quote((int)$cat_id));
 			foreach($cats as $cat)
 			{
 				$sql .= ' OR '.$this->db->concat("','",'cal_category',"','").' LIKE '.$this->db->quote('%,'.$cat.',%');
