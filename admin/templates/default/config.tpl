@@ -254,7 +254,7 @@
    </tr>
    <tr class="row_off">
     <td>{lang_Allow_remote_administration_from_following_install_ID's_(comma_separated)}:<br />{lang_Own_install_ID:_}{value_install_id}</td>
-    <td><input name="newsettings[allow_remote_admin]" value="{allow_remote_admin}" size="40"></td>
+    <td><input name="newsettings[allow_remote_admin]" value="{value_allow_remote_admin}" size="40"></td>
    </tr>
 
 <!-- END body -->
