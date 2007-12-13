@@ -41,10 +41,10 @@ class setup_cmd_config extends setup_cmd
 	}
 
 	/**
-	 * test or create database
+	 * run the command: write the configuration to the database
 	 * 
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
-	 * @return string serialized $GLOBALS defined in the header.inc.php
+	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
 	 */

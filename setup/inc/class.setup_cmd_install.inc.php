@@ -1,6 +1,6 @@
 <?php
 /**
- * eGgroupWare setup - install a new instance
+ * eGgroupWare setup - install the tables
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -11,7 +11,7 @@
  */
 
 /**
- * setup command: install a new instance
+ * setup command: install the tables
  */
 class setup_cmd_install extends setup_cmd 
 {
@@ -24,8 +24,9 @@ class setup_cmd_install extends setup_cmd
 	 * @param string $backup=null filename of backup to use instead of new install, default new install
 	 * @param string $charset='utf-8' charset for the install, default utf-8 now
 	 * @param boolean $verbose=false if true, echos out some status information during the run
+	 * @param array $config=array() configuration to preset the defaults during the install, eg. set the account_repository
 	 */
-	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$charset='utf-8',$verbose=false)
+	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$charset='utf-8',$verbose=false,$config=array())
 	{
 		if (!is_array($domain))
 		{
@@ -36,6 +37,7 @@ class setup_cmd_install extends setup_cmd
 				'backup'        => $backup,
 				'charset'       => $charset,
 				'verbose'       => $verbose,
+				'config'        => $config,
 			);
 		}
 		elseif(!$domain['charset'])
@@ -47,7 +49,7 @@ class setup_cmd_install extends setup_cmd
 	}
 
 	/**
-	 * test or create database
+	 * run the command: install the tables
 	 * 
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string serialized $GLOBALS defined in the header.inc.php
@@ -90,7 +92,7 @@ class setup_cmd_install extends setup_cmd
 		self::$egw_setup->db->Link_ID->SetCharSet($this->charset);
 
 		if ($this->verbose) echo lang('Installation started, this might take a few minutes ...')."\n";
-		$setup_info = self::$egw_setup->process->pass($setup_info,'new',false,True);
+		$setup_info = self::$egw_setup->process->pass($setup_info,'new',false,True,$this->config);
 		
 		return lang('Installation finished');
 	}

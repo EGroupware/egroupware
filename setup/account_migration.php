@@ -101,7 +101,7 @@ if (!$_POST['migrate'])
 	$GLOBALS['egw_setup']->setup_account_object();
 	
 	// fetch all users and groups
-	$accounts = $GLOBALS['egw']->accounts->search(array(
+	$accounts = $GLOBALS['egw_setup']->accounts->search(array(
 		'type' => 'both',
 	));
 	// fetch the complete data (search reads not everything), plus the members(hips)
@@ -112,15 +112,15 @@ if (!$_POST['migrate'])
 			unset($accounts[$account_id]);
 			$account_id = $account['account_id'];
 		}
-		$accounts[$account_id] = $GLOBALS['egw']->accounts->read($account_id);
+		$accounts[$account_id] = $GLOBALS['egw_setup']->accounts->read($account_id);
 
 		if ($account['account_type'] == 'g')
 		{
-			$accounts[$account_id]['members'] = $GLOBALS['egw']->accounts->members($account_id,true);
+			$accounts[$account_id]['members'] = $GLOBALS['egw_setup']->accounts->members($account_id,true);
 		}
 		else
 		{
-			$accounts[$account_id]['memberships'] = $GLOBALS['egw']->accounts->memberships($account_id,true);
+			$accounts[$account_id]['memberships'] = $GLOBALS['egw_setup']->accounts->memberships($account_id,true);
 		}
 	}
 	//_debug_array($accounts);
@@ -186,7 +186,7 @@ else	// do the migration
 			if (!isset($accounts[$account_id])) continue;
 
 			// check if user already exists
-			if ($GLOBALS['egw']->accounts->exists($account_id))
+			if ($GLOBALS['egw_setup']->accounts->exists($account_id))
 			{
 				echo '<p>'.lang('%1 already exists in %2.',lang('User')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
 				continue;
@@ -213,12 +213,12 @@ else	// do the migration
 			}
 			unset($accounts[$account_id]['person_id']);
 
-			if (!$GLOBALS['egw']->accounts->save($accounts[$account_id]))
+			if (!$GLOBALS['egw_setup']->accounts->save($accounts[$account_id]))
 			{
 				echo '<p>'.lang('Creation of %1 in %2 failed !!!',lang('User')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
 				continue;
 			}
-			$GLOBALS['egw']->accounts->set_memberships($accounts[$account_id]['memberships'],$account_id);
+			$GLOBALS['egw_setup']->accounts->set_memberships($accounts[$account_id]['memberships'],$account_id);
 			echo '<p>'.lang('%1 created in %2.',lang('User')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
 		}
 	}
@@ -229,9 +229,9 @@ else	// do the migration
 			if (!isset($accounts[$account_id])) continue;
 
 			// check if group already exists
-			if (!$GLOBALS['egw']->accounts->exists($account_id))
+			if (!$GLOBALS['egw_setup']->accounts->exists($account_id))
 			{
-				if (!$GLOBALS['egw']->accounts->save($accounts[$account_id]))
+				if (!$GLOBALS['egw_setup']->accounts->save($accounts[$account_id]))
 				{
 					echo '<p>'.lang('Creation of %1 in %2 failed !!!',lang('Group')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
 					continue;
@@ -242,13 +242,13 @@ else	// do the migration
 			{
 				echo '<p>'.lang('%1 already exists in %2.',lang('Group')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
 
-				if ($GLOBALS['egw']->accounts->id2name($account_id) != $accounts[$account_id]['account_lid'])
+				if ($GLOBALS['egw_setup']->accounts->id2name($account_id) != $accounts[$account_id]['account_lid'])
 				{
 					continue;	// different group under that gidnumber!
 				}
 			}
 			// now saving / updating the memberships
-			$GLOBALS['egw']->accounts->set_members($accounts[$account_id]['members'],$account_id);
+			$GLOBALS['egw_setup']->accounts->set_members($accounts[$account_id]['members'],$account_id);
 		}
 	}
 	echo '<p align="center">'.lang('Export has been completed!')."</p>\n";

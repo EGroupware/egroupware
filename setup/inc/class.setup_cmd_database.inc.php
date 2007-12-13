@@ -23,7 +23,7 @@ class setup_cmd_database extends setup_cmd
 	private $test_db;
 	
 	/**
-	 * Enter description here...
+	 * Constructor
 	 *
 	 * @param string/array $domain domain-name to customize the defaults or array with all parameters
 	 * @param string $db_type db-type (mysql, pgsql, ...)
@@ -59,10 +59,10 @@ class setup_cmd_database extends setup_cmd
 	}
 
 	/**
-	 * test or create database
+	 * run the command: test or create database
 	 * 
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
-	 * @return string serialized $GLOBALS defined in the header.inc.php
+	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
 	 */

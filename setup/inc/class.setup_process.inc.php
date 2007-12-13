@@ -56,8 +56,9 @@
 		 * @param boolean $DEBUG=false print debugging info
 		 * @param boolean $force_en=false install english language files
 		 * @param string $system_charset=null charset to use	
+		 * @param array $preset_config=array()
 		 */
-		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False)
+		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False,$preset_config=array())
 		{
 			if(!$method)
 			{
@@ -118,7 +119,7 @@
 					case 'new':
 						/* Create tables and insert new records for each app in this list */
 						$passing = $this->current($pass,$DEBUG);
-						$this->save_minimal_config();
+						$this->save_minimal_config($preset_config);
 						$passing = $this->default_records($passing,$DEBUG);
 						$do_langs = true;	// just do it once at the end of all passes
 						break;
@@ -190,51 +191,59 @@
 		/**
 		 * saves a minimal default config, so you get a running install without entering and saveing Step #2 config
 		 *
+		 * @param array $preset_config=array()
 		 */
-		function save_minimal_config()
+		function save_minimal_config(array $preset_config=array())
 		{
 			$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 		
-			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
-			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : 'localhost';
+			$current_config['site_title'] = 'eGroupWare';
+			$current_config['hostname']  = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : 'localhost';
 
 			// guessing the eGW url
 			$parts = explode('/',$_SERVER['PHP_SELF']);
 			array_pop($parts);	// remove config.php
 			array_pop($parts);	// remove setup
-			$GLOBALS['current_config']['webserver_url'] = implode('/',$parts);
+			$current_config['webserver_url'] = implode('/',$parts);
 			$egroupwareDirName = end($parts);
 
 			if(!$is_windows) {
 				if(@is_dir('/tmp')) {
-					$GLOBALS['current_config']['temp_dir'] = '/tmp';
+					$current_config['temp_dir'] = '/tmp';
 				} else {
-					$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
+					$current_config['temp_dir'] = '/path/to/temp/dir';
 				}
-				$GLOBALS['current_config']['files_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/files';
-				$GLOBALS['current_config']['backup_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/backup';
+				$current_config['files_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/files';
+				$current_config['backup_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/backup';
 			} else {
 				if(@is_dir('c:\\windows\\temp')) {
-					$GLOBALS['current_config']['temp_dir'] = 'c:\\windows\\temp';
+					$current_config['temp_dir'] = 'c:\\windows\\temp';
 				} else {
-					$GLOBALS['current_config']['temp_dir'] = 'c:\\path\\to\\temp\\dir';
+					$current_config['temp_dir'] = 'c:\\path\\to\\temp\\dir';
 				}
-				$GLOBALS['current_config']['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
-				$GLOBALS['current_config']['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
+				$current_config['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
+				$current_config['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
 			} 
 			$datetime =& CreateObject('phpgwapi.datetime');
-			$GLOBALS['current_config']['tz_offset'] = $datetime->getbestguess();
+			$current_config['tz_offset'] = $datetime->getbestguess();
 			unset($datetime);
 
 			// RalfBecker: php.net recommend this for security reasons, it should be our default too
-			$GLOBALS['current_config']['usecookies'] = 'True';
+			$current_config['usecookies'] = 'True';
 			
 			if ($GLOBALS['egw_setup']->system_charset)
 			{
-				$GLOBALS['current_config']['system_charset'] = $GLOBALS['egw_setup']->system_charset;
+				$current_config['system_charset'] = $GLOBALS['egw_setup']->system_charset;
+			}
+			
+			$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
+			
+			if ($preset_config)
+			{
+				$current_config = array_merge($current_config,$preset_config);
 			}
 
-			foreach($GLOBALS['current_config'] as $name => $value)
+			foreach($current_config as $name => $value)
 			{
 				$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
 					'config_value' => $value,
@@ -243,6 +252,9 @@
 					'config_name' => $name,
 				),__FILE__,__LINE__);
 			}
+
+			// so the default_records use the current data
+			$GLOBALS['egw_setup']->setup_account_object($current_config);
 		}
 
 		/**

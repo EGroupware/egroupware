@@ -172,23 +172,11 @@ function do_emailadmin()
  */
 function do_admin($arg)
 {
-	list($_POST['username'],$_POST['passwd'],$_POST['fname'],$_POST['lname'],$_POST['email']) =	_check_auth_config($arg,15);
-	$_POST['passwd2'] = $_POST['passwd'];
+	list($domain,$user,$password,$admin,$pw,$first,$last,$email) = explode(',',$arg);
+	_fetch_user_password($user,$password);
 	
-	if (!$_POST['fname']) $_POST['fname'] = 'Admin';
-	if (!$_POST['lname']) $_POST['lname'] = 'User';
-	
-	$_POST['submit'] = true;
-	$error = include('admin_account.php');
-
-	switch ($error)
-	{
-		case 41:
-			fail(41,lang('Error in admin-creation !!!'));
-		case 42:
-			fail(42,lang('Error in group-creation !!!'));
-	}
-	echo lang('Admin account successful created.')."\n";
+	$cmd = new setup_cmd_admin($domain,$user,$password,$admin,$pw,$first,$last,$email);
+	echo $cmd->run()."\n";
 }
 
 /**

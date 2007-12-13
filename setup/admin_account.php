@@ -108,11 +108,9 @@
 				$GLOBALS['egw_setup']->db->delete($table,'1=1',__LINE__,__FILE__);
 			}
 		}
-echo "About to create Default group\n";
 		/* Create the demo groups */
 		$defaultgroupid = (int)$GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 		$admingroupid   = (int)$GLOBALS['egw_setup']->add_account('Admins','Admin','Group',False,False);
-echo "Groups created\n";
 		
 		if (!$defaultgroupid || !$admingroupid)
 		{

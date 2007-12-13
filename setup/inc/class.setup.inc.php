@@ -866,22 +866,30 @@
 			}
 		}
 
-		function setup_account_object()
+		/**
+		 * Own instance of the accounts class
+		 *
+		 * @var accounts
+		 */
+		var $accounts;
+		
+		function setup_account_object(array $config=array())
 		{
-			if (!is_object($GLOBALS['egw']->accounts))
+			if (!is_object($this->accounts) || $config)
 			{
 				if (!is_object($this->db))
 				{
 					$this->loaddb();
 				}
-				/* Load up some configured values */
-				$this->db->select($this->config_table,'config_name,config_value',
-					"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",__LINE__,__FILE__);
-				while(($row = $this->db->row(true)))
+				if (!$config)
 				{
-					if (!isset($GLOBALS['egw_info']['server'][$row['config_name']]))	// dont overwrite
+					// load the configuration from the database
+					$this->db->select($this->config_table,'config_name,config_value',
+						"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",__LINE__,__FILE__);
+					
+					while(($row = $this->db->row(true)))
 					{
-						$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
+						$config[$row['config_name']] = $row['config_value'];
 					}
 				}
 				if (!is_object($GLOBALS['egw']))
@@ -891,10 +899,12 @@
 				}
 				$GLOBALS['egw']->db          = clone($this->db);
 				$GLOBALS['egw']->common      =& CreateObject('phpgwapi.common');
-				$GLOBALS['egw']->accounts    =& CreateObject('phpgwapi.accounts');
+
+				$this->accounts = new accounts($config);
+				$this->accounts->cache_invalidate();	// the cache is shared for all instances of the class
 
 				if(($GLOBALS['egw_info']['server']['account_repository'] == 'ldap') &&
-					!$GLOBALS['egw']->accounts->ds)
+					!$this->accounts->ds)
 				{
 					printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['egw_info']['server']['ldap_host']);
 					return false;
@@ -921,9 +931,9 @@
 		{
 			$this->setup_account_object();
 
-			$primary_group_id = $primary_group ? $GLOBALS['egw']->accounts->name2id($primary_group) : False;
+			$primary_group_id = $primary_group ? $this->accounts->name2id($primary_group) : False;
 
-			if(!($accountid = $GLOBALS['egw']->accounts->name2id($username)))
+			if(!($accountid = $this->accounts->name2id($username)))
 			{
 				$account = array(
 					'account_type'      => $primary_group ? 'u' : 'g',
@@ -937,7 +947,7 @@
 					'account_email'     => $email,
 					'account_members'   => ''
 				);
-				if (!($accountid = $GLOBALS['egw']->accounts->save($account)))
+				if (!($accountid = $this->accounts->save($account)))
 				{
 					error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') failed! accountid=$accountid");
 					return false;
@@ -945,13 +955,13 @@
 			}
 			if ($primary_group)	// only for users, NOT groups
 			{
-				$memberships = $GLOBALS['egw']->accounts->memberships($accountid,true);
+				$memberships = $this->accounts->memberships($accountid,true);
 	
 				if($primary_group_id && !in_array($primary_group_id,$memberships))
 				{
 					$memberships[] = $primary_group_id;
 					
-					$GLOBALS['egw']->accounts->set_memberships($memberships,$accountid);
+					$this->accounts->set_memberships($memberships,$accountid);
 				}
 				if (!$changepw) $this->add_acl('preferences','nopasswordchange',$accountid);
 			}
@@ -969,7 +979,7 @@
 		{
 			$this->setup_account_object();
 			
-			return $GLOBALS['egw']->accounts->set_memberships($groups,$user);
+			return $this->accounts->set_memberships($groups,$user);
 		}
 		
 		/**
@@ -983,7 +993,7 @@
 		{
 			if (!$this->setup_account_object()) return false;
 
-			$accounts = $GLOBALS['egw']->accounts->search(array(
+			$accounts = $this->accounts->search(array(
 				'type'   => 'accounts',
 				'start'  => 0,
 				'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
@@ -1020,7 +1030,7 @@
 			if (!is_numeric($account))
 			{
 				$this->setup_account_object();
-				$account = $GLOBALS['egw']->accounts->name2id($account);
+				$account = $this->accounts->name2id($account);
 			}
 			if(!is_object($this->db))
 			{

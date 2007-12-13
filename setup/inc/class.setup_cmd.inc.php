@@ -94,7 +94,7 @@ abstract class setup_cmd extends admin_cmd
 	 * @var setup
 	 */
 	static protected $egw_setup;
-
+	
 	/**
 	 * Create the setup enviroment (for running within setup or eGW)
 	 */
@@ -113,6 +113,8 @@ abstract class setup_cmd extends admin_cmd
 			$cmd = new setup_cmd_showheader(null);	// null = only header, no db stuff, no hashes
 			$header = $cmd->run();
 			$GLOBALS['egw_domain'] = $header['egw_domain'];
+			
+			if ($this->config) self::$egw_setup->setup_account_object($this->config);
 		}
 		if (is_object($GLOBALS['egw']->db) && $domain)
 		{
@@ -346,7 +348,7 @@ abstract class setup_cmd extends admin_cmd
 			'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
 			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
 			'@','!','$','%','&','/','(',')','=','?',';',':','#','_','-','<',
-			'>','|','{','[',']','}',	// dont add ,'" as we have problems dealing with them
+			'>','|','{','[',']','}',	// dont add \,'" as we have problems dealing with them
 		);
 
 		$str = '';
