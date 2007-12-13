@@ -900,7 +900,7 @@
 				$GLOBALS['egw']->db          = clone($this->db);
 				$GLOBALS['egw']->common      =& CreateObject('phpgwapi.common');
 
-				$this->accounts = new accounts($config);
+				$GLOBALS['egw']->accounts = $this->accounts = new accounts($config);
 				$this->accounts->cache_invalidate();	// the cache is shared for all instances of the class
 
 				if(($GLOBALS['egw_info']['server']['account_repository'] == 'ldap') &&
