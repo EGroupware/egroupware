@@ -374,11 +374,13 @@ class uiinfolog
 							(in_array('#'.$cf,$columselection)||$showallcustfields==1)) 
 						{
 							$lv_customfields[$cf]=$cfa;
+							$lv_customfields[$cf]['name']='#'.$cf;
 							$readonlys['#'.$cf] = true;
 						}
 					} else {
 						if ($showallcustfields==1 || in_array('#'.$cf,$columselection)) {
 							$lv_customfields[$cf]=$cfa;
+							$lv_customfields[$cf]['name']='#'.$cf;
 							$readonlys['#'.$cf] = true;
 						}
 					}
@@ -392,6 +394,7 @@ class uiinfolog
 				{
 					 if ($showallcustfields==1 || in_array('#'.$name,$columselection)) {
 						$lv_customfields[$name]=$value;
+						$lv_customfields[$name]['name']='#'.$name;
 						//echo $name."->". $value['label']."<br>";
 						$readonlys['#'.$name] = true;
 					}
