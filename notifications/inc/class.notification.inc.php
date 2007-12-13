@@ -30,6 +30,11 @@ final class notification {
 	 */
 	const _appname = 'notifications';
 	
+	/**
+	 * backend to use for fallback reasons
+	 */
+	const _fallback = 'email_only';
+	
 	/** 
 		* pre-defined notificaton chains
 		* @abstract
@@ -304,29 +309,34 @@ final class notification {
 			$user_notified = false;
 			$backend_errors = array();
 			try {
-				// eGW user or external user
+				// system or non-system user
 				if($receiver->account_id && is_numeric($receiver->account_id)) {
-					// receiver is a eGW system-user
+					// system user
 					$receiver->handle = $receiver->account_lid;
 					// check if the receiver has rights to run the notifcation app
 					$ids = $GLOBALS['egw']->accounts->memberships($receiver->account_id,true);
 					$ids[] = $receiver->account_id;
-					if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($ids,'run','notifications')) {
-						throw new Exception('Could not send notification to '.$receiver->handle.' because of missing execute rights on notification-app.');
+					if ($GLOBALS['egw']->acl->get_specific_rights_for_account($ids,'run','notifications')) {
+						// read the users notification chain
+						$prefs = new preferences($receiver->account_id);
+						$preferences = $prefs->read();
+						$preferences = (object)$preferences[self::_appname];
+						if($preferences->notification_chain) {
+							$notification_chain = $this->notification_chains[$preferences->notification_chain];
+						} else {
+							$notification_chain = $this->notification_chains[self::_fallback]; // fallback: no prefs
+						}
+					} else {
+						$notification_chain = $this->notification_chains[self::_fallback]; // fallback: no rights to app
 					}
-					// read the users notification chain
-					$prefs = new preferences($receiver->account_id);
-					$preferences = $prefs->read();
-					$preferences = (object)$preferences[self::_appname];
-					$notification_chain = $this->notification_chains[$preferences->notification_chain];
 				} else {
-					// receiver is not a eGW system-user
+					// non-system user
 					$receiver->handle = $receiver->account_email;
-					$notification_chain = $this->notification_chains['email_only'];
+					$notification_chain = $this->notification_chains[self::_fallback]; // fallback: non-system user
 				}
 				
-				if(!is_array($notification_chain)) {
-					throw new Exception('Could not send notification to '.$receiver->handle.' because of missing notification settings.');
+				if($notification_chain === false) {
+					continue; //user disabled notifications
 				}
 
 				foreach($notification_chain as $notification_backend => $action) {
