@@ -28,6 +28,7 @@
 			'customfields-types' => 'custom field types',
 			'customfields-list'  => 'custom field list',
 			'customfields-no-label' => 'custom fields without label',
+			'customfields-header' => 'Header for custom fields',
 		);
 		
 		/**
@@ -137,6 +138,8 @@
 						//$stop_at_field = $name;
 					}
 					break;
+				case 'customfields-header':
+					return $this->pre_process_cf_header($name,$cell,$fields);
 				default:
 					foreach(array_reverse($fields) as $lname => $field)
 					{
@@ -390,5 +393,60 @@
 			include($path);
 
 			return $options;
+		}
+
+		/**
+		 * pre_process_cf_header
+		 * function to display the customfields in a nextmatch table-header with the functionality of sorting and selecting
+		 * by customfields. Of cource you need to adapt the source of your get_rows or search functionality to do the
+		 * actual sorting and selecting
+		 * You can pass the allowed/wanted fields to the header by passing an array of the wanted fields to the widget
+		 * through the options parameter (see the eTemplate editor for fields/cells). This array is passed on through
+		 * $cell['size']. By now the array passed through is only working, if it is the only entry in the optionsparameter.
+		 * The allowed fields array assumes an numerical indexed array of (an) array(s) with ['name'] tag(s) set. 
+		 * The name provided assumes a preceding #. (e.g.: $allowed_fields[x]['name']='#MyCustomField')
+		 * @param string $name -> the name  of the particular field/cell object of that etemplate
+		 * @param array $cell -> values passed from the the cell definition of the particular field/cell object of that etemplate 
+		 * @param array $fields -> the customfields of the current app
+		 * @return false -> no extra label
+		 */
+		function pre_process_cf_header($name,&$cell,$fields)
+		{
+			$allowed_fields = $cell[size] ? (is_array($cell[size])?$cell[size]:explode(',',$cell[size])):false;
+			#_debug_array($allowed_fields);
+			$afs='';
+			if (is_array($allowed_fields)) {
+				foreach ($allowed_fields as $lidx => $afa)
+				{
+					$afs.=$afa['name'].",";
+				}
+			}
+			$cell['type'] = 'vbox';
+			$cell['name'] = '';
+			$cell['size'] = '0,,0,0';
+
+			foreach($fields as $lname => $field)
+			{
+				if (stripos($afs,"#".$lname)!==FALSE)
+				{
+					if($field['type'] == 'select')
+					{
+						$header =& etemplate::empty_cell('nextmatch-filterheader',$this->prefix.$lname,array(
+							'sel_options' => $field['values'],
+							'size'        => $field['label'],
+							'no_lang'     => True,
+						));
+					}
+					else
+					{
+						$header =& etemplate::empty_cell('nextmatch-sortheader',$this->prefix.$lname,array(
+							'label'       => $field['label'],
+						));
+					}
+					etemplate::add_child($cell,$header);
+					unset($header);
+				}
+			}
+			return false;	// no extra label
 		}
 	}
