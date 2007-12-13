@@ -431,7 +431,22 @@ abstract class admin_cmd
 		}
 		return $this->data[$property];
 	}
-	
+
+	/**
+	 * magic method to check if a property is set, all non admin-cmd properties are stored in the data array
+	 * 
+	 * @param string $property
+	 * @return boolean
+	 */
+	function __isset($property)
+	{
+		if (property_exists('admin_cmd',$property))
+		{
+			return isset($this->$property);	// making all (non static) class vars readonly available
+		}
+		return isset($this->data[$property]);
+	}
+
 	/**
 	 * magic method to set a property, all non admin-cmd properties are stored in the data array
 	 *
@@ -443,7 +458,17 @@ abstract class admin_cmd
 	{
 		$this->data[$property] = $value;
 	}
-	
+
+	/**
+	 * magic method to unset a property, all non admin-cmd properties are stored in the data array
+	 *
+	 * @param string $property
+	 */
+	protected function __unset($property)
+	{
+		unset($this->data[$property]);
+	}
+
 	/**
 	 * Return the whole object-data as array, it's a cast of the object to an array
 	 *
@@ -782,7 +807,12 @@ abstract class admin_cmd
 	{
 		admin_cmd::_instanciate_remote();
 		
-		return array(lang('local'))+admin_cmd::$remote->query_list('remote_name','remote_id');
+		$sites = array(lang('local'));
+		if ($remote = admin_cmd::$remote->query_list('remote_name','remote_id'))
+		{
+			$sites = array_merge($sites,$remote);
+		}
+		return $sites;
 	}
 	
 	/**
