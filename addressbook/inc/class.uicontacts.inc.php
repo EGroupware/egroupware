@@ -1270,8 +1270,8 @@ class uicontacts extends bocontacts
 				$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 				if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
 				{
-					$content['owner'] = $this->prefs['add_default'];
-					$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
+					$content['owner'] = $this->default_addressbook;
+					$content['private'] = (int)$this->default_private;
 
 					if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
 					{
@@ -1298,7 +1298,7 @@ class uicontacts extends bocontacts
 					$content['id']));
 				// create a new contact with the content of the old
 				foreach(array('id','modified','modifier','account_id') as $key) unset($content[$key]);
-				$content['owner'] = $this->prefs['add_default'] ? $this->prefs['add_default'] : $this->user;
+				$content['owner'] = $this->default_private ? $this->user.'p' : $this->default_addressbook;
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
 				$content['msg'] = lang('Contact copied');

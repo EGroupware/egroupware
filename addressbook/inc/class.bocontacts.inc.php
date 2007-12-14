@@ -112,6 +112,18 @@ class bocontacts extends socontacts
 	 * @var array
 	 */
 	var $prefs;
+	/**
+	 * Default addressbook for new contacts, if no addressbook is specified (user preference)
+	 *
+	 * @var int
+	 */
+	var $default_addressbook;
+	/**
+	 * Default addressbook is the private one
+	 *
+	 * @var boolean
+	 */
+	var $default_private;
 
 	function bocontacts($contact_app='addressbook')
 	{
@@ -121,6 +133,18 @@ class bocontacts extends socontacts
 		$this->now_su = time() + $this->tz_offset_s;
 
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
+		
+		// get the default addressbook from the users prefs
+		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook'],-1) == 'p';
+		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook'] ? 
+			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook'] : $this->user;
+		if ($this->default_addressbook > 0 && $this->default_addressbook != $this->user &&
+			($this->default_private || 
+			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default']) ||
+			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->default['addressbook']['add_default'])
+		{
+			$this->default_addressbook = $this->user;	// admin set a default or forced pref for personal addressbook
+		}
 
 		$this->contact_fields = array(
 			'id'                   => lang('Contact ID'),
@@ -461,8 +485,8 @@ class bocontacts extends socontacts
 		if (!$isUpdate) 
 		{
 			// if no owner/addressbook set use the setting of the add_default prefs (if set, otherwise the users personal addressbook)
-			if (!isset($contact['owner'])) $contact['owner'] = (int)$this->prefs['add_default'] ? (int)$this->prefs['add_default'] : $this->user;
-			if (!isset($contact['private'])) $contact['private'] = (int)(substr($this->prefs['add_default'],-1) == 'p');
+			if (!isset($contact['owner'])) $contact['owner'] = $this->default_addressbook;
+			if (!isset($contact['private'])) $contact['private'] = (int)$this->default_private;
 			// allow admins to import contacts with creator / created date set
 			if (!$contact['creator'] || !$this->is_admin($contact)) $contact['creator'] = $this->user;
 			if (!$contact['created'] || !$this->is_admin($contact)) $contact['created'] = $this->now_su;
