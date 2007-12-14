@@ -337,6 +337,70 @@ class uiinfolog
 			}
 			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
 		}
+		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
+		// so we have to check that as well
+        $details = $query['filter2'] == 'all';
+		$columselection = $this->prefs['nextmatch-infolog.index.rows'.($details?'-details':'')];
+		//_debug_array($columselection);
+		if ($columselection) 
+		{
+			$query['selectcols']=$columselection; 
+			$columselection = explode(',',$columselection);
+		} else {
+			if (isset($query['selectcols']))
+			{
+				 $columselection =explode(',',$query['selectcols']);
+			} else {
+				$columselection=array();
+			}
+		}
+		$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->bo->customfields;
+		$lv_customfields=array(); // used to set the visible columns
+		$showallcustfields=0;  // control the switching on and off, of the customfields
+		if ((stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ) $showallcustfields=1;
+		if ( $show_custom_fields ||  $query['custom_fields'] )  
+		{
+			if ($query['col_filter']['info_type'])
+			{
+				foreach ($this->bo->customfields as $cf=>$cfa)
+				{
+					if (isset($cfa['type2'])&& trim($cfa['type2'])!=='') // type specific fields
+					{
+						if ((stripos($cfa['type2'], $query['col_filter']['info_type'] )) !== FALSE && 
+							(in_array('#'.$cf,$columselection)||$showallcustfields==1)) 
+						{
+							$lv_customfields[$cf]=$cfa;
+							$lv_customfields[$cf]['name']='#'.$cf;
+							$readonlys['#'.$cf] = true;
+						}
+					} else {
+						if ($showallcustfields==1 || in_array('#'.$cf,$columselection)) {
+							$lv_customfields[$cf]=$cfa;
+							$lv_customfields[$cf]['name']='#'.$cf;
+							$readonlys['#'.$cf] = true;
+						}
+					}
+					// set the array for the available cust-cols
+					$query['options-selectcols']['#'.$cf]=$cfa['label'];
+				}
+			} else {
+				// set the columns to be available for selections
+				$cvp=array();
+				foreach($this->bo->customfields as $name => $value)
+				{
+					 if ($showallcustfields==1 || in_array('#'.$name,$columselection)) {
+						$lv_customfields[$name]=$value;
+						$lv_customfields[$name]['name']='#'.$name;
+						//echo $name."->". $value['label']."<br>";
+						$readonlys['#'.$name] = true;
+					}
+					//set the array for the available cust-cols
+					$cvp['#'.$name] = $value['label'];
+				}
+				$query['options-selectcols']=$cvp;
+			}
+			$query['custom_fields'] =true;
+		}
 		$ids = $this->bo->search($query);
 		if (!is_array($ids))
 		{
@@ -376,6 +440,10 @@ class uiinfolog
 		if ($query['no_actions']) $rows['no_actions'] = true;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 		$rows['duration_format'] = ','.$this->duration_format.',,1';
+		if ( $show_custom_fields ||  $query['custom_fields'] )
+		{
+			$rows['customfields'] = array_values($lv_customfields);
+		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
@@ -567,9 +635,17 @@ class uiinfolog
 		if ($action == 'sp')
 		{
 			$pref = 'nextmatch-infolog.index.rows'.($values['nm']['filter2']=='all'?'-details':'');
-			foreach(array('info_used_time_info_planned_time','info_datemodified','info_owner_info_responsible') as $name)
+			foreach(array('info_used_time_info_planned_time','info_datemodified','info_owner_info_responsible','customfields') as $name)
 			{
 				$values['main']['no_'.$name] = strpos($this->prefs[$pref],$name) === false;
+			}
+			if (!$values['main']['no_customfields']) 
+			{
+				// set the column-header of the main table for the customfields.
+				foreach($this->bo->customfields as $lname => $data)
+				{
+					$values['main']['customfields'].=$lname."\n";
+				}
 			}
 		}
 		$values['nm']['header_right'] = 'infolog.index.header_right';
