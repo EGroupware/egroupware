@@ -58,7 +58,7 @@ class notification_winpopup implements iface_notification {
 	 * holds the netbios command to be executed on notification
 	 *
 	 * @abstract 
-	 * Example: /bin/echo '[MESSAGE]' | /usr/bin/smbclient -M computer-[4] -I [IP] -U '[SENDER]'
+	 * Example: /bin/echo [MESSAGE] | /usr/bin/smbclient -M computer-[4] -I [IP] -U [SENDER]
 	 *
 	 * Placeholders are:
 	 * [MESSAGE] is the notification message itself
@@ -156,13 +156,13 @@ class notification_winpopup implements iface_notification {
 				if(strlen($ip_octet)==1) { $ip_octets[$id] = '00'.$ip_octet; }
 				if(strlen($ip_octet)==2) { $ip_octets[$id] = '0'.$ip_octet; }
 			}
-			$placeholders = array(	'/\[MESSAGE\]/' => $_message,
+			$placeholders = array(	'/\[MESSAGE\]/' => escapeshellarg($_message), // XSS prevention
 									'/\[1\]/' => $ip_octets[0],
 									'/\[2\]/' => $ip_octets[1],
 									'/\[3\]/' => $ip_octets[2],
 									'/\[4\]/' => $ip_octets[3],
 									'/\[IP\]/' => $user_session,
-									'/\[SENDER\]/' => $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender->account_email,
+									'/\[SENDER\]/' => $this->sender->account_fullname ? escapeshellarg($this->sender->account_fullname) : escapeshellarg($this->sender->account_email),
 									);
 			$command = preg_replace(array_keys($placeholders), $placeholders, $this->netbios_command);
 			exec($command,$output,$returncode);
