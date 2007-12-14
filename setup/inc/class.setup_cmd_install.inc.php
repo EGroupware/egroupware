@@ -94,6 +94,8 @@ class setup_cmd_install extends setup_cmd
 		if ($this->verbose) echo lang('Installation started, this might take a few minutes ...')."\n";
 		$setup_info = self::$egw_setup->process->pass($setup_info,'new',false,True,$this->config);
 		
+		$this->restore_db();
+		
 		return lang('Installation finished');
 	}
 }

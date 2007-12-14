@@ -85,6 +85,8 @@ class setup_cmd_config extends setup_cmd
 			
 			return lang('Configuration changed.');
 		}
+		$this->restore_db();
+
 		return lang('Nothing to change.');
 	}
 	
@@ -165,6 +167,7 @@ class setup_cmd_config extends setup_cmd
 		'--ldap-context' => 'ldap_context',
 		'--ldap-search-filter' => 'ldap_search_filter',
 		'--ldap-group-context' => 'ldap_group_context',
+		'--allow-remote-admin' => 'allow_remote_admin',
 	);
 	
 	/**
