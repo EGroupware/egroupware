@@ -72,7 +72,26 @@ class soinfolog 				// DB-Layer
 	 *
 	 * @var int
 	 */
-	var $tz_offset;
+	 var $tz_offset;
+
+	/**
+	 * custom fields backend
+	 *
+	 * @var so_sql
+	 */
+	var $soextra;
+	/**
+	 * customfields name => array(...) pairs
+	 *
+	 * @var array
+	 */
+	var $customfields = array();
+	/**
+	 * content-types as name => array(...) pairs
+	 *
+	 * @var array
+	 */
+	var $content_types = array();
 	
 	/**
 	 * Constructor
@@ -90,6 +109,22 @@ class soinfolog 				// DB-Layer
 		$this->links =& new solink();
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+		$this->soextra =& CreateObject('etemplate.so_sql');
+		$this->soextra->so_sql('infolog',$this->extra_table);
+
+		$custom =& CreateObject('admin.customfields','infolog');
+		$this->customfields = $custom->get_customfields();
+		$this->content_types = $custom->get_content_types();
+		if (!$this->content_types)
+		{
+			$this->content_types = $custom->content_types = array('n' => array(
+					'name' => 'infolog',
+					'options' => array(
+					'template' => 'infolog.edit',
+					'icon' => 'navbar.png'
+				)));
+			$custom->save_repository();
+		}
 	}
 
 	/**
@@ -633,18 +668,24 @@ class soinfolog 				// DB-Layer
 				$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
 			}
 		}
-		if (!empty($query['order']) && eregi('^[a-z_0-9, ]+$',$query['order']) && (empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
+		$sortbycf='';
+		if (!empty($query['order']) && (eregi('^[a-z_0-9, ]+$',$query['order']) || stripos($query['order'],'#')!==FALSE ) && (empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
 		{
 			$order = array();
 			foreach(explode(',',$query['order']) as $val)
 			{
 				$val = trim($val);
-				$val = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
-				if ($val == 'info_des' && $this->db->capabilities['order_on_text'] !== true)
-				{
-					if (!$this->db->capabilities['order_on_text']) continue;
+				if (substr($val,0,1)=='#') {
+					$sortbycf=substr($val,1);
+					$val="cfsortcrit";
+				} else {
+					$val = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
+					if ($val == 'info_des' && $this->db->capabilities['order_on_text'] !== true)
+					{
+						if (!$this->db->capabilities['order_on_text']) continue;
 
-					$val = sprintf($this->db->capabilities['order_on_text'],$val);
+						$val = sprintf($this->db->capabilities['order_on_text'],$val);
+					}
 				}
 				$order[] = $val;
 			}
@@ -657,12 +698,12 @@ class soinfolog 				// DB-Layer
 		$acl_filter = $filtermethod = $this->aclFilter($query['filter']);
 		if (!$query['col_filter']['info_status'])  $filtermethod .= $this->statusFilter($query['filter']);
 		$filtermethod .= $this->dateFilter($query['filter']);
-
+		$cfcolfilter=0;
 		if (is_array($query['col_filter']))
 		{
 			foreach($query['col_filter'] as $col => $data)
 			{
-				if (substr($col,0,5) != 'info_') $col = 'info_'.$col;
+				if (substr($col,0,5) != 'info_' && substr($col,0,1)!='#') $col = 'info_'.$col;
 				if (!empty($data) && eregi('^[a-z_0-9]+$',$col))
 				{
 					if ($col == 'info_responsible')
@@ -678,6 +719,10 @@ class soinfolog 				// DB-Layer
 					{
 						$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
 					}	
+				}
+				if (substr($col,0,1)=='#' &&  $query['custom_fields'] && $data) {
+					$filtermethod.=" and main.info_id in (select distinct info_id from $this->extra_table"." where (info_extra_name='".substr($col,1)."' and info_extra_value='".$data."')) ";
+					$cfcolfilter++;
 				}
 			}
 		}
@@ -705,7 +750,10 @@ class soinfolog 				// DB-Layer
 
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
-			$join = "LEFT JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id";
+		}
+		if ($query['search'] || $query['custom_fields'] )
+		{
+			$join = ($cfcolfilter>0 ? '':"LEFT")." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 		}
@@ -732,7 +780,12 @@ class soinfolog 				// DB-Layer
 			{
 				$count_subs = ",(SELECT count(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
 			}
-			$this->db->query($sql="SELECT $distinct main.* $count_subs $sql_query $ordermethod",__LINE__,__FILE__,
+			$info_customfield = "";
+			if ($sortbycf!='') {
+				$info_customfield = ", (select distinct info_extra_value from $this->extra_table sub2 where sub2.info_id=main.info_id and info_extra_name='".$sortbycf."') AS cfsortcrit ";
+			}
+			//echo "SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod"."<br>";
+			$this->db->query($sql="SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
 				(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1);
 			//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 			while (($info =& $this->db->row(true)))
@@ -746,7 +799,14 @@ class soinfolog 				// DB-Layer
 				$this->db->select($this->extra_table,'*',array('info_id'=>array_keys($ids)),__LINE__,__FILE__);
 				while ($row = $this->db->row(true))
 				{
-					$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+					if ((isset($row['info_extra_value'])&&strlen($row['info_extra_value'])>0) && 
+						(stripos($query['selectcols'],'#'.$row['info_extra_name'])!==FALSE || !isset($query['selectcols']) || 
+						(stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ))
+					{
+						$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+					} else {
+						unset($ids[$row['info_id']]['#'.$row['info_extra_name']]);
+					}
 				}
 			}
 		}
