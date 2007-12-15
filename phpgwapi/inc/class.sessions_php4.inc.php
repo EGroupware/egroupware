@@ -209,7 +209,7 @@
 			$values = array();
 			$maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			$dir = @opendir($path = ini_get('session.save_path'));
-			if (!$dir)	// eg. openbasedir restrictions
+			if (!$dir || !@file_exists($path.'/.'))	// eg. openbasedir restrictions, or dir not listable
 			{
 				return $values;
 			}
