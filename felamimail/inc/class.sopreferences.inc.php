@@ -42,6 +42,10 @@
 				$where,__LINE__,__FILE__);
 				
 			while(($row = $this->db->row(true,'fm_'))) {
+				foreach(array('ic_validatecertificate','ic_enable_sieve','og_smtpauth') as $name)
+				{
+					$row[$name] = $this->db->from_bool($row[$name]);
+				}
 				$retValue[$row['id']] = $row;
 			}
 
