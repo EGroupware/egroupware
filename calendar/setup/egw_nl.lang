@@ -47,7 +47,6 @@ copy of:	calendar	nl	Kopie van:
 copy this event	calendar	nl	Kopieer deze gebeurtenis
 countries	calendar	nl	Landen
 country	calendar	nl	Land
-create an exception at this recuring event	calendar	nl	Maak een uitzondering op deze herhalende gebeurtenis
 create new links	calendar	nl	Nieuwe links aanmaken
 csv	calendar	nl	CSV
 csv-fieldname	calendar	nl	CSV-veldnaam
@@ -276,7 +275,6 @@ til	calendar	nl	tot
 timeframe	calendar	nl	Tijdskader
 timeframe to search	calendar	nl	Tijdskader om te zoeken
 title of the event	calendar	nl	Titel van afspraak
-to many might exceed your execution-time-limit	calendar	nl	Te veel kan mogelijk de uitvoertijd van dit programme overschrijden.
 translation	calendar	nl	Vertaling
 tue	calendar	nl	Din
 two weeks	calendar	nl	twee weken
@@ -290,10 +288,6 @@ week	calendar	nl	Week
 weekday starts on	calendar	nl	De week begint op
 weekdays	calendar	nl	Weekdagen
 weekdays to use in search	calendar	nl	Weekdagen waarop gezocht moet worden
-weekly	calendar	nl	wekelijks
-weekview	calendar	nl	Weekweergave
-weekview with weekend	calendar	nl	weekweergave met weekend
-weekview without weekend	calendar	nl	weekweergave zonder weekend
 which events do you want to see when you enter the calendar.	calendar	nl	Welke afspraken wilt u zien wanneer u de agenda opent?
 which of calendar view do you want to see, when you start calendar ?	calendar	nl	Welke agendaweergave wilt u zien wanneer u de agenda opent?
 whole day	calendar	nl	hele dag
@@ -302,7 +296,6 @@ work day ends on	calendar	nl	Werkdag eindigt om
 work day starts on	calendar	nl	Werkdag begint om
 yearly	calendar	nl	Jaarlijks
 yearview	calendar	nl	Jaarweergave
-you can either set a year or a occurence, not both !!!	calendar	nl	U kunt of een Jaar of een Gebeurtenis in, niet beide !!!
 you can only set a year or a occurence !!!	calendar	nl	U kunt alleen een Jaar of een Gebeurtenis instellen !!!
 you do not have permission to read this record!	calendar	nl	U heeft geen toegang om dit record in te lezen
 you have a meeting scheduled for %1	calendar	nl	U heeft een vergadering gepland voor %1
