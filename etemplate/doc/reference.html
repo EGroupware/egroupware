@@ -624,9 +624,9 @@ implement only a subset of XUL. Here are the main differences:</p>
 				years from now or if > 100 a absolut year)<br />
 			<b>select-number</b>:<br />
 				Select a number out of a range specified by the options-field:<br />
-				,{start (default=1)},{end (incl., default=10)},{decrement (default={padding zeros}1)}.<br />
+				,{start (default=1)},{end (incl., default=10)},{decrement (default={padding zeros}1)},{suffix}.<br />
 				Example with padding zeros: options=',0,59,05' will give values: 00, 05, 10, ..., 55
-				(like you would use it for minutes in a time-field)<br />
+				(like you would use it for minutes in a time-field). The suffix get's added to the label of each option.<br />
 			<b>select-dow</b>:<br />
 				Select one or multiple weekdays, keys are as defined in MCAL_M_... (1=Sun, 2=Mon, 4=Tue, ...)<br />
 			<b>select-app</b>:<br />
