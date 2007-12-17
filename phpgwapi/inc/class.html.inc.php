@@ -433,6 +433,10 @@ class html
 				return $this->ua_version >= 5.5;
 			case 'mozilla':
 				return $this->ua_version >= 1.3;
+            case 'safari':
+            	return $this->ua_version >= 523.12;
+            case 'opera':
+            	return $this->ua_version >= 9.5;	
 			default:
 				return False;
 		}
@@ -474,6 +478,7 @@ class html
 
 		$oFCKeditor = new FCKeditor($_name) ;
 		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
+		$oFCKeditor->Config['CustomConfigurationsPath'] = $oFCKeditor->BasePath . 'fckeditor.egwconfig.js' ;
 		$oFCKeditor->Value	= $_content;
 		$oFCKeditor->Width	= str_replace('px','',$_width);	// FCK adds px if width contains no %
 		$oFCKeditor->Height	= str_replace('px','',$_height);
@@ -486,8 +491,8 @@ class html
 		// Activate the image browser+upload, if $_base_href exists and is browsable by the webserver
 		if ($_base_href && is_dir($_SERVER['DOCUMENT_ROOT'].$_base_href) && file_exists($_SERVER['DOCUMENT_ROOT'].$_base_href.'/.'))
 		{
-			// Only images for now
-			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=images&Connector=connectors/php/connector.php';
+			// Only images for now					
+			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=Image&Connector='.$oFCKeditor->BasePath.'editor/filemanager/connectors/php/connector.php';
 			$oFCKeditor->Config['ImageBrowser'] = true;
 			$oFCKeditor->Config['ImageUpload'] = is_writable($_SERVER['DOCUMENT_ROOT'].$_base_href);
 		}
@@ -535,6 +540,7 @@ class html
 
 		$oFCKeditor		= new FCKeditor($_name) ;
 		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
+		$oFCKeditor->Config['CustomConfigurationsPath'] = $oFCKeditor->BasePath . 'fckeditor.egwconfig.js' ;
 		$oFCKeditor->Value	= $_content;
 		$oFCKeditor->Width	= str_replace('px','',$_width);		// FCK adds px if width contains no %
 		$oFCKeditor->Height	= str_replace('px','',$_height);
