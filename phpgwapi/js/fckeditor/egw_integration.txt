@@ -1,0 +1,25 @@
+16/12/2007 (jgordor) - 2.5 Migration
+ - Moved own config (not controlled by the php config object) to external file: fckeditor.egwconfig.js
+ - Changes in the fckeditor code:
+ 	- Enable/configure the connector in (now is controlled by only one file):
+   		- editor/filemanager/connectors/php/config.php
+			- Enable connector
+			- Get and set ServerPath var to configure userdir path
+
+--------------------------------------------------------
+Changes made to fckeditor to work properly on egroupware
+ - fckconfig.js
+    - Added egw_* toolbars
+ - editor/filemanager/browser/default/connectors/php/connector.php
+    - Change hardcoded image dir from Image -> images (to respect the actual behavior in sitemgr)
+ - editor/filemanager/browser/default/frmresourcetype.html
+    - Again change Image -> images
+ - editor/filemanager/browser/default/connectors/php/config.php
+    - Commented hardcoded Userdir path
+    - Enable the browser
+ - editor/filemanager/upload/php/config.php
+    - Commented hardcoded Userdir path (is disabled by default)
+ - editor/filemanager/browser/default/connectors/php/io.php
+    - Remove the append of directory per type, example, for images the final url is base+serverpath+images (or type) 
+    
+  
