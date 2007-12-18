@@ -19,16 +19,20 @@ interface iface_notification {
 	 *
 	 * @param object $_sender
 	 * @param object $_recipient
+	 * @param object $_config
 	 * @param object $_preferences
 	 */
-	public function __construct( $_sender=false, $_recipient=false, $_config=false, $_preferences=false );
+	public function __construct($_sender, $_recipient, $_config = null, $_preferences = null);
 	
 	/**
 	 * sends notification
 	 *
-	 * @abstract NOTE, $_message contains some html-tags (<p><a><b><br>)
-	 * implementing class needs to handle them somehow.
-	 * @param string $_message
+	 * @abstract NOTE, $_messages is an array that contains
+	 * the notification message in plain and html
+	 * @param array $_messages
+	 * @param string $_subject
+	 * @param array $_links
+	 * @param array $_attachments
 	 */
-	public function send( $_subject = false, $_messages, $_attachments = false);
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false);
 }

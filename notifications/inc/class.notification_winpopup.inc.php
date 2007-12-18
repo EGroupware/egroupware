@@ -4,12 +4,12 @@
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
+ * @subpackage backends
  * @link http://www.egroupware.org
  * @author Christian Binder <christian@jaytraxx.de>
  */
 
 require_once('class.iface_notification.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.config.inc.php');
 
 /**
  * User notification via winpopup.
@@ -58,7 +58,7 @@ class notification_winpopup implements iface_notification {
 	 * holds the netbios command to be executed on notification
 	 *
 	 * @abstract 
-	 * Example: /bin/echo [MESSAGE] | /usr/bin/smbclient -M computer-[4] -I [IP] -U [SENDER]
+	 * Example: $netbios_command = "/bin/echo [MESSAGE] | /usr/bin/smbclient -M computer-[4] -I [IP] -U [SENDER]";
 	 *
 	 * Placeholders are:
 	 * [MESSAGE] is the notification message itself
@@ -66,7 +66,6 @@ class notification_winpopup implements iface_notification {
 	 * [IP] is the IP-Adress of the windows machine to notify
 	 * [SENDER] is the sender of the message
 	 * Note: the webserver-user needs execute rights for this command
-	 * Don't forget to enclose placeholders containing whitespaces with single apostrophes
 	 *
 	 * @var string
 	 */
@@ -80,53 +79,29 @@ class notification_winpopup implements iface_notification {
 	 * @param object $_config
 	 * @param object $_preferences
 	 */
-	public function __construct($_sender=false, $_recipient=false, $_config=false, $_preferences=false) {
-		// If we are called from class notification sender, recipient, config and prefs are objects.
-		// otherwise we have to fetch this objects for current user.
-		if (!is_object($_sender)) {
-			$this->sender = (object) $GLOBALS['egw']->accounts->read($_sender);
-		}
-		else {
-			$this->sender = $_sender;
-		}
-		if (!is_object($_recipient)) {
-			$this->recipient = (object) $GLOBALS['egw']->accounts->read($_recipient);
-		}
-		else {
-			$this->recipient = $_recipient;
-		}
-		if(!is_object($_config)) {
-			$config = new config(self::_appname);
-			$this->config = (object) $config->read_repository();
-		} else {
-			$this->config = $_config;
-		}
-		if(!is_object($_preferences)) {
-			$prefs = new preferences($this->recipient->account_id);
-			$preferences = $prefs->read();
-			$this->preferences = (object)$preferences[self::_appname ];
-		} else {
-			$this->preferences = $_preferences;
-		}
-	}
-	
-	/**
-	 * sends notification
-	 *
-	 * @param string $_subject
-	 * @param array $_messages
-	 * @param array $_attachments
-	 */
-	public function send( $_subject = false, $_messages, $_attachments = false) {
+	public function __construct($_sender, $_recipient, $_config = null, $_preferences = null) {
+		if(!is_object($_sender)) { throw new Exception("no sender given."); }
+		if(!is_object($_recipient)) { throw new Exception("no recipient given."); }
 		if(!$this->netbios_command) {
 			throw new Exception(	'Winpopup plugin not configured yet. Skipped sending notification message. '.
 									'Please check var "netbios_command" in winpopup backend '.
 									'('.EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.notification_winpopup.inc.php).');
 		}
-		if(!is_object($this->sender)) {
-			throw new Exception("No sender given.");
-		}
-		
+		$this->sender = $_sender;
+		$this->recipient = $_recipient;
+		$this->config = $_config;
+		$this->preferences = $_preferences;
+	}
+	
+	/**
+	 * sends notification
+	 *
+	 * @param array $_messages
+	 * @param string $_subject
+	 * @param array $_links
+	 * @param array $_attachments
+	 */
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
 		$sessions = $GLOBALS['egw']->session->list_sessions(0, 'asc', 'session_dla', true);
 		$user_sessions = array();
 		foreach ($sessions as $session) {
@@ -138,7 +113,7 @@ class notification_winpopup implements iface_notification {
 		}
 		if ( empty($user_sessions) ) throw new Exception("User #{$this->recipient->account_id} isn't online. Can't send notification via winpopup");
 		
-		$this->send_winpopup( $_messages['plain']['info_subject'].$_messages['plain']['text'], $user_sessions );
+		$this->send_winpopup( $this->render_infos($_subject).$_messages['plain'], $user_sessions );
 		return true;
 	}
 	
@@ -156,7 +131,7 @@ class notification_winpopup implements iface_notification {
 				if(strlen($ip_octet)==1) { $ip_octets[$id] = '00'.$ip_octet; }
 				if(strlen($ip_octet)==2) { $ip_octets[$id] = '0'.$ip_octet; }
 			}
-			$placeholders = array(	'/\[MESSAGE\]/' => escapeshellarg($_message), // XSS prevention
+			$placeholders = array(	'/\[MESSAGE\]/' => escapeshellarg($_message), // prevent code injection
 									'/\[1\]/' => $ip_octets[0],
 									'/\[2\]/' => $ip_octets[1],
 									'/\[3\]/' => $ip_octets[2],
@@ -180,5 +155,17 @@ class notification_winpopup implements iface_notification {
 	 */
 	private function valid_ip($_ip) {
 		return eregi('^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$',$_ip);
+	}
+	
+	/**
+	 * renders additional info from subject
+	 *
+	 * @param string $_subject
+	 * @return plain rendered info as complete string
+	 */
+	private function render_infos($_subject = false) {
+		$newline = "\n"; 
+		if(!empty($_subject)) { return $_subject.$newline; }
+		return false;
 	}
 }

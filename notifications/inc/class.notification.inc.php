@@ -9,7 +9,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.html.inc.php');
 require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.config.inc.php');
  
 /**
@@ -17,10 +16,12 @@ require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.config.inc.php');
  * 
  * @abstract NOTE: This is for instant notifications. If you need time dependend notifications use the 
  * asyncservices wrapper!
+ *
+ * This class takes care about the notification-routing. It chooses one or more backends for each
+ * given recipient depending on its prefs or falls back to self::_fallback 
  * 
- * The classes doing the notifications are called notification_<method> and should only be 
- * called from this class.
- * The <method> gets extractd out of the preferences labels.
+ * The classes doing the notifications are called notification_<backend> and should only be 
+ * called from this class. The backend's job is to deliver ONE message to ONE recipient.
  *
  */
 final class notification {
@@ -67,7 +68,7 @@ final class notification {
 	private $receivers = array();
 	
 	/**
-	 * objects of sender
+	 * object of sender
 	 * @var object
 	 */
 	private $sender;
@@ -101,14 +102,7 @@ final class notification {
 	 * @var array
 	 */
 	private $attachments = array();
-	
-	/**
-	 * holds html object to render elements
-	 *
-	 * @var object
-	 */
-	private $html;
-	
+		
 	/**
 	 * holds config object (sitewide configuration of app)
 	 *
@@ -121,7 +115,6 @@ final class notification {
 	 *
 	 */
 	public function __construct() {
-		$this->html = & html::singleton();
 		$config = new config(self::_appname);
 		$this->config = (object) $config->read_repository();
 	}
@@ -299,11 +292,14 @@ final class notification {
 	 * sends notification 
 	 */
 	public function send() {
-		if (empty($this->receivers) || (empty($this->message_plain) && empty($this->message_html))) {
-			throw new Exception('Error: Could not send notification. No receiver or no message where supplied');
+		if (!is_object($this->sender)) {
+			throw new Exception('Error: cannot send notification. No sender supplied');
 		}
-		if(!$messages = $this->create_messages($this->message_plain, $this->message_html, $this->links)) {
-			throw new Exception('Error: Could not send notification. Generating the messages failed');
+		if (!is_array($this->receivers) || count($this->receivers) == 0) {
+			throw new Exception('Error: cannot send notification. No receivers supplied');
+		}
+		if(!$messages = $this->create_messages($this->message_plain, $this->message_html)) {
+			throw new Exception('Error: cannot send notification. No valid messages supplied');
 		}
 		foreach ($this->receivers as $receiver) {
 			$user_notified = false;
@@ -352,7 +348,7 @@ final class notification {
 					 		throw new Exception($notification_backend. ' is no implementation of iface_notification');
 						}
 									
-						$obj->send($this->subject, $messages, $this->attachments);
+						$obj->send($messages, $this->subject, $this->links, $this->attachments);
 					}
 					catch (Exception $exception) {
 						$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();
@@ -382,33 +378,14 @@ final class notification {
 	}
 	
 	/**
-	 * gets message
-	 * 
-	 * @return string
-	 */
-	public function get_message() {
-		return $this->message;
-	}
-	
-	/**
-	 * gets receivers
-	 *
-	 * @return array of receiver objects
-	 */
-	public function get_receivers() {
-		return $this->receivers;
-	}
-	
-	/**
 	 * this function creates an array with the message as plaintext and html
-	 * including given links for internal usage or external mailers
 	 *
 	 * @param string $message_plain
 	 * @param string $message_html
 	 * @param array $links
 	 * @return array $messages
 	 */
-	private function create_messages($_message_plain = '', $_message_html = '', $_links = false) {
+	private function create_messages($_message_plain = '', $_message_html = '') {
 		if(empty($_message_plain) && empty($_message_html)) { return false; } // no message set
 		$messages = array();
 		$messages['plain'] = array();
@@ -416,64 +393,18 @@ final class notification {
 		
 		// create the messages
 		if(!empty($_message_plain)) {
-			$messages['plain']['text'] = $_message_plain;
+			$messages['plain'] = $_message_plain;
 		} else {
-			$messages['plain']['text'] = strip_tags($_message_html);
+			$messages['plain'] = strip_tags($_message_html);
 		}
 		
 		if(!empty($_message_html)) {
-			$messages['html']['text'] = $_message_html;
+			$messages['html'] = $_message_html;
 		} else {
-			$messages['html']['text'] = nl2br($_message_plain);
-		}
-
-		// create the links
-		if(is_array($_links)) {
-			foreach($_links as $link) {
-				$params = '';
-				foreach($link->params as $param => $value) {
-					$params.='&'.$param.'='.$value;
-				}
-				$url = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction='.$link->menuaction.$params;
-				$menuaction_arr = explode('.',$link->menuaction);
-				$application = $menuaction_arr[0];
-				$image = $application ? $this->html->image($application,'navbar',$link->text,'align="middle"').'&nbsp;' : '';
-				$messages['plain']['link_internal'] .= "\n".$url;
-				$messages['plain']['link_external'] .= "\n".$url.'&no_popup=1';
-				$messages['html']['link_internal'] .= '<br /><a href="'.$url.'" target="_blank">'.$image.$link->text.'</a>';
-				$messages['html']['link_external'] .= '<br /><a href="'.$url.'&no_popup=1" target="_blank">'.$link->text.'</a>';
-				$messages['html']['link_jspopup'] .= '<br /><div onclick="'.$this->popup($url).'">'.$image.$link->text.'</div>';
-			}
-		}
-		
-		// create additional formatted info for backends which do not use
-		// subject or sender as plain info
-		if(is_object($this->sender)) {
-			$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
-			$messages['plain']['info_sender'] = lang('Message from').': '.$sender."\n";
-			$messages['html']['info_sender'] = lang('Message from').': '.$sender.'<br />';
-		}
-		if(!empty($this->subject)) {
-			$messages['plain']['info_subject'] = $this->subject."\n";
-			$messages['html']['info_subject'] = $this->html->bold($this->subject).'<br />';
+			$messages['html'] = nl2br($_message_plain);
 		}
 		
 		return $messages;
-	}
-	
-	/**
-	 * returns javascript to open a popup window: window.open(...)
-	 *
-	 * @param string $link link or this.href
-	 * @param string $target='_blank' name of target or this.target
-	 * @param int $width=750 width of the window
-	 * @param int $height=400 height of the window
-	 * @return string javascript (using single quotes)
-	 */
-	private function popup($link,$target='_blank',$width=750,$height=410)
-	{
-		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
 	}
 	
 	/**

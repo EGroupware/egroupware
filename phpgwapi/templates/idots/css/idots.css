@@ -459,10 +459,21 @@ Preferences tabs
 }
 
 /*
-	Tables inside notification window
+	notification window
 */
 #notificationwindow_message > table
 {
-	font-size: 90%
+	font-size: 90%;
 }
-			    
+
+#notificationwindow_message hr
+{
+	border: none;
+	border-top: 1px solid black;
+	height: 1px;
+}
+
+#notificationwindow_message .jspopup
+{
+	cursor: pointer;
+}
