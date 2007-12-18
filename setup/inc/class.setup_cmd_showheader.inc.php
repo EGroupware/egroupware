@@ -25,12 +25,14 @@ class setup_cmd_showheader extends setup_cmd
 	 *                           false: the complete header vars, plus install_id and webserver_url from the config table,
 	 *                           null:  only the header vars
 	 */
-	function __construct($data=true)
+	function __construct($data=true,$header_admin_user=null,$header_admin_password=null)
 	{
 		if (!is_array($data))
 		{
 			$data = array(
 				'hash_only' => $data,
+				'header_admin_user' => $header_admin_user,
+				'header_admin_password' => $header_admin_password,
 			);
 		}
 		//echo __CLASS__.'::__construct()'; _debug_array($data);
@@ -131,7 +133,7 @@ class setup_cmd_showheader extends setup_cmd
 			$db->connect($data['db_name'],$data['db_host'],$data['db_port'],$data['db_user'],$data['db_pass'],$data['db_type']);
 			$db->set_app('phpgwapi');
 			$db->select('egw_config','config_name,config_value',array(
-				'config_name'=>array('install_id','webserver_url'),
+				'config_name'=>array('install_id','webserver_url','account_repository','allow_remote_admin','mail_suffix'),
 				'config_app'=>'phpgwapi',
 			),__LINE__,__FILE__);
 			while (($row = $db->row(true)))
@@ -149,5 +151,20 @@ class setup_cmd_showheader extends setup_cmd
 		$this->restore_db();
 		
 		return $config;
+	}
+	
+	/**
+	 * Saving the object to the database, reimplemented to only the save the command if it runs remote
+	 *
+	 * @param boolean $set_modifier=true set the current user as modifier or 0 (= run by the system)
+	 * @return boolean true on success, false otherwise
+	 */
+	function save($set_modifier=true)
+	{
+		if ($this->remote_id)
+		{
+			return parent::save($set_modifier);
+		}
+		return true;
 	}
 }
