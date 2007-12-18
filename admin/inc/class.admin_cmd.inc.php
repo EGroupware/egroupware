@@ -19,18 +19,21 @@ abstract class admin_cmd
 	const scheduled = 1;
 	const successful = 2;
 	const failed = 3;
+	const pending = 4;
+
 	/**
 	 * The status of the command, one of either scheduled, successful, failed or deleted
 	 * 
 	 * @var int
 	 */
-	private $status;
+	protected $status;
 
 	static $stati = array(
 		admin_cmd::scheduled  => 'scheduled',
 		admin_cmd::successful => 'successful',
 		admin_cmd::failed     => 'failed',
 		admin_cmd::deleted    => 'deleted',
+		admin_cmd::pending    => 'pending',
 	);
 
 	protected $created;
@@ -40,8 +43,8 @@ abstract class admin_cmd
 	private $modified;
 	private $modifier;
 	private $modifier_email;
-	private $error;
-	private $errno;
+	protected $error;
+	protected $errno;
 	public $requested;
 	public $requested_email;
 	public $comment;
@@ -167,7 +170,7 @@ abstract class admin_cmd
 				{
 					$ret = $this->remote_exec();
 				}
-				$this->status = admin_cmd::successful;
+				if (is_null($this->status)) $this->status = admin_cmd::successful;
 			}
 			catch (Exception $e) {
 				$this->error = $e->getMessage();
@@ -229,7 +232,10 @@ abstract class admin_cmd
 		);
 		$url = $remote['remote_url'].'/admin/remote.php?domain='.urlencode($remote['remote_domain']).'&secret='.urlencode($secret);
 		//echo "sending command to $url\n"; _debug_array($opts);
-		$message = file_get_contents($url, false, stream_context_create($opts));
+		if (!($message = @file_get_contents($url, false, stream_context_create($opts))))
+		{
+			throw new egw_exception(lang('Could not remote execute the command').': '.$http_response_header[0]);
+		}
 		//echo "got: $message\n";
 		
 		if (($value = unserialize($message)) !== false && $message !== serialize(false))
@@ -283,7 +289,7 @@ abstract class admin_cmd
 		{
 			return false;
 		}
-		if (is_null($this->id))
+		if (!$this->id)
 		{
 			$this->id = admin_cmd::$sql->data['id'];
 			// if the cmd has no uid yet, we create one from our id and the install-id of this eGW instance
@@ -428,6 +434,12 @@ abstract class admin_cmd
 		if (property_exists('admin_cmd',$property))
 		{
 			return $this->$property;	// making all (non static) class vars readonly available
+		}
+		switch($property)
+		{
+			case 'accounts':
+				self::_instanciate_accounts();
+				return self::$accounts;
 		}
 		return $this->data[$property];
 	}
@@ -658,7 +670,7 @@ abstract class admin_cmd
 	 * @todo accounts class instanciation for setup
 	 * @throws egw_exception_assertion_failed(lang('%1 class not instanciated','accounts'),999);
 	 */
-	protected function _instanciate_accounts()
+	static function _instanciate_accounts()
 	{
 		if (!is_object(admin_cmd::$accounts))
 		{
@@ -857,7 +869,7 @@ abstract class admin_cmd
 		{
 			$data['remote_hash'] = self::remote_hash($data['install_id'],$data['config_passwd']);
 		}
-		elseif ($data['install_id'] || $data['config_passwd'] || !$data['remote_hash'])
+		elseif (!$data['remote_hash'] && !($data['install_id'] && $data['config_passwd']))
 		{
 			throw new egw_exception_wrong_userinput(lang('Either Install ID AND config password needed OR the remote hash!'));
 		}
@@ -914,4 +926,41 @@ abstract class admin_cmd
 	{
 		return preg_match('/^[0-9a-f]{32}$/',$str);
 	}
+	
+	/**
+	 * Check if the current command has the right crediential to be excuted remotely
+	 * 
+	 * Command can reimplement that method, to allow eg. anonymous execution.
+	 *
+	 * This default implementation use a secret to authenticate with the installation, 
+	 * which is a md5 hash build from the uid of the command (to not allow to send new 
+	 * commands with an earsdroped secret) and the md5 hash of the md5 hash of the 
+	 * config password and the install_id (egw_admin_remote.remote_hash)
+	 * 
+	 * @param string $secret hash used to authenticate the command (
+	 * @param string $config_passwd of the current domain
+	 * @throws egw_exception_no_permission
+	 */
+	function check_remote_access($secret,$config_passwd)
+	{
+		// as a security measure remote administration need to be enabled under Admin > Site configuration
+		list(,$remote_admin_install_id) = explode('-',$this->uid);
+		$allowed_remote_admin_ids = $GLOBALS['egw_info']['server']['allow_remote_admin'] ? explode(',',$GLOBALS['egw_info']['server']['allow_remote_admin']) : array();
+		
+		// to authenticate with the installation we use a secret, which is a md5 hash build from the uid 
+		// of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash 
+		// of the md5 hash of the config password and the install_id (egw_admin_remote.remote_hash)
+		if (is_null($config_passwd) || is_numeric($this->uid) || !in_array($remote_admin_install_id,$allowed_remote_admin_ids) ||
+			$secret != ($md5=md5($this->uid.$this->remote_hash($GLOBALS['egw_info']['server']['install_id'],$config_passwd))))
+		{
+			//die("secret='$secret' != '$md5', is_null($config_passwd)=".is_null($config_passwd).", uid=$this->uid, remote_install_id=$remote_admin_install_id, allowed: ".implode(', ',$allowed_remote_admin_ids));
+			$msg = lang('Permission denied!');
+			if (!in_array($remote_admin_install_id,$allowed_remote_admin_ids))
+			{
+				$msg .= "\n".lang('Remote administration need to be enabled in the remote instance under Admin > Site configuration!');
+			}
+			throw new egw_exception_no_permission($msg,0);
+		}
+	}
 }
+admin_cmd::_instanciate_accounts();
