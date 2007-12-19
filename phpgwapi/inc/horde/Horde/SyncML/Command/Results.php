@@ -40,19 +40,7 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 						break;
 						
 					case 'DevID':
-						$devid = trim($this->_chars);
-						$this->_deviceInfo['deviceID'] = $devid;
-						switch ($devid)
-						{
-							case 'fmz-thunderbird-plugin':
-								if (empty($this->_devinceInfo['manufacturer']))
-									$this->_deviceInfo['manufacturer'] = 'funambol';
-								if (empty($this->_devinceInfo['model']))
-									$this->_deviceInfo['model'] = 'thunderbird';
-								if (empty($this->_devinceInfo['softwareVersion']))
-									$this->_deviceInfo['softwareVersion']	= '0.3';
-								break;
-						}
+						$this->_deviceInfo['deviceID'] = trim($this->_chars);
 						break;
 						
 					case 'DevTyp':
@@ -146,6 +134,50 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 		
 		parent::endElement($uri, $element);
 	}
+
+	function finalizeDeviceInfo()
+	{
+		// get some more information about the device from out of band data
+
+		$ua = $_SERVER['HTTP_USER_AGENT'];
+
+		if (preg_match("/^\s*Funambol (.*) (\d+\.\d+\.\d+)\s*$/i", $ua, $matches))
+		{
+			if (!isset($this->_deviceInfo['manufacturer']))
+				$this->_deviceInfo['manufacturer'] = 'Funambol';
+			if (!isset($this->_deviceInfo['model']))
+				$this->_deviceInfo['model'] = 'Funambol ' . trim($matches[1]);
+			if (!isset($this->_deviceInfo['softwareVersion']))
+				$this->_deviceInfo['softwareVersion'] = $matches[2];
+
+			if (!isset($this->_deviceInfo['deviceType']))
+			{
+				switch (strtolower(trim($matches[1])))
+				{
+					case 'outlook plug-in'
+					default:
+						$this->_deviceInfo['deviceType'] = 'workstation';
+						break;
+					case 'pocket pc plug-in'
+						$this->_deviceInfo['deviceType'] = 'windowsmobile';
+						break;
+				}
+			}
+		}
+
+		$devid = $this->_deviceInfo['deviceID'];
+		switch (strtolower($devid))
+		{
+			case 'fmz-thunderbird-plugin':
+				if (empty($this->_devinceInfo['manufacturer']))
+					$this->_deviceInfo['manufacturer'] = 'Funambol';
+				if (empty($this->_devinceInfo['model']))
+					$this->_deviceInfo['model'] = 'ThunderBird';
+				if (empty($this->_devinceInfo['softwareVersion']))
+					$this->_deviceInfo['softwareVersion']	= '0.3';
+				break;
+		}
+	}
 	
 	function output($currentCmdID, &$output) {
 		if(!isset($this->_locSourceURI)) {
@@ -160,6 +192,7 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 			$status->setSourceRef($ref);
 			
 			if($state->isAuthorized()) {
+				$this->finalizeDeviceInfo();
 				if(count((array)$this->_deviceInfo) > 0) {
 					$state->setClientDeviceInfo($this->_deviceInfo);
 					$state->writeClientDeviceInfo();
