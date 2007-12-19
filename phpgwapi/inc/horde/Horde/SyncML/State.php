@@ -670,62 +670,47 @@ class Horde_SyncML_State {
 			$res['ContentType'] = $ctype;
 		}
 
+        $deviceInfo = $this->getClientDeviceInfo();
+
+        if (isset($deviceInfo['manufacturer']))
+        {
+            switch (strtolower($deviceInfo['manufacturer']))
+            {
+                case 'funambol':
+                    if (strtolower($deviceInfo['model']) == 'thunderbird')
+                    {
+                        $res['mayFragment'] = 1;
+                    }
+
+                    if (isset($deviceInfo['softwareVersion'])
+                        && $deviceInfo['softwareVersion']{0} == '3')
+                    {
+						// anything beyond 6.0 supports fragmentation
+                        $res['mayFragment'] = 0;
+                    }
+                    else
+                    {
+                        $res['mayFragment'] = 1;
+                    }
+                    break;
+            }
+        }
+
+        if (!isset($res['mayFragment']))
+        {
+            $res['mayFragment'] = 1;
+        }
+
+
+		// the funambol specific types need to be encoded in base 64
 		switch(strtolower($ctype))
 		{
-			case 'text/x-vcard':
-			case 'text/x-vcalendar':
-			case 'text/x-vnote':
-			case 'text/calendar':
-			case 'text/plain':
-				$res['mayFragment'] = 1;
-				break;
-
 			case 'text/x-s4j-sifc':
 			case 'text/x-s4j-sife':
 			case 'text/x-s4j-sift':
 			case 'text/x-s4j-sifn':
 				$res['ContentFormat'] = 'b64';
-				$res['mayFragment'] = 0;
 				break;
-
-			default:
-   				Horde::logMessage("SyncML: unrecognized content type '$ctype'", __FILE__, __LINE__, PEAR_LOG_ERR);
-				break;
-		}
-
-		if ($target != null)
-		{
-			$_target = str_replace('./','',$target);
-			switch(strtolower($_target))
-			{
-				case 'calendar':
-				case 'tasks':
-				case 'caltasks':
-				case 'notes':
-				case 'contacts':
-					$res['mayFragment'] = 1;
-					break;
-
-				case 'sifcalendar':
-				case 'siftasks':
-				case 'sifnotes':
-				case 'sifcontacts':
-				case 'scard':
-				case 'scal':
-				case 'stask':
-				case 'snote':
-					$res['mayFragment'] = 0;
-					break;
-
-				default:
-					Horde::logMessage("SyncML: unrecognized target '$_target'", __FILE__, __LINE__, PEAR_LOG_ERR);
-					break;
-			}
-		}
-
-		if (!isset($res['mayFragment']))
-		{
-			$res['mayFragment'] = 0;
 		}
 
 		return $res;
