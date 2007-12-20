@@ -105,7 +105,8 @@
 					'data_format'	=> $data_format,
 				);
 			}
-			if (!$value)
+			// for date-(time|hour)only widgets we distinct between between 0 and ''/null timestamps
+			if (!$value && ($type != 'date-timeonly' && $type != 'date-houronly' || (string)$value === ''))
 			{
 				$value = array(
 					'Y' => '',
@@ -200,7 +201,7 @@
 				);
 				for ($str='',$n = substr($type,-4) == 'only' ? 3 : 0; $n < count($format); ++$n)
 				{
-					if ($value[$format[$n]] && $n < 3 || $n >= 3 && ($value[$format[3]] || $value[$format[4]]))
+					if ($value[$format[$n]] && $n < 3 || $n >= 3 && ($value[$format[3]] !== '' || $value[$format[4]] !== ''))
 					{
 						if (!$n && $options & 16 )
 						{
