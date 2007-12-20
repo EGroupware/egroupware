@@ -83,6 +83,35 @@ $data['creator'] = 0;	// remote
 if (isset($data['modifier'])) $data['modifier'] = 0;
 if (isset($data['requested'])) $data['requested'] = 0;
 
+if (get_magic_quotes_gpc())
+{
+	$data = array_stripslashes($data);
+}
+
+/**
+ * Strip all slashes from an array
+ *
+ * @param mixed $subject
+ * @return mixed
+ */
+function array_stripslashes($subject) 
+{
+	if (is_string($subject)) 
+	{
+		return stripslashes($subject);
+	}
+	if (!is_array($subject)) 
+	{
+		return ($subject);
+	}
+	$ret = array();
+	foreach ($subject as $key => $value) 
+	{
+		$ret[$key] = array_stripslashes($value);
+	}
+	return $ret;
+}
+
 // instanciate comand and run it
 $cmd = admin_cmd::instanciate($data);
 
