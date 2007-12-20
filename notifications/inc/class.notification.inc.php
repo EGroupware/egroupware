@@ -416,7 +416,7 @@ final class notification {
 	 */
 	 private function get_addresspart($_address, $_part='email') {
 	 	if(strpos($_address,'<')) { // _address contains a fullname part
-	 		ereg('^(.*)[:space:]{0,1}<(.*)>',$_address,&$parts);
+	 		ereg('^(.*)[:space:]{0,1}<(.*)>',$_address, $parts);
 	 		$fullname = trim(trim($parts[1]),'\"');
 	 		$email = $parts[2];
 	 	} else {
