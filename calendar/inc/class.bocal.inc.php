@@ -478,7 +478,12 @@ class bocal
 			$this->debug_message('bocal::check_move_horizont(%1) horizont=%2',true,$new_horizont,$this->config['horizont']);
 		}
 		$new_horizont = $this->date2ts($new_horizont,true);	// now we are in server-time, where this function operates
-
+		
+		if ($new_horizont > time()+1000*DAY_s)		// some user tries to "look" more then 1000 days in the future
+		{
+			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 new horizont more then 1000 days from now --> ignoring it',true,$new_horizont,$this->config['horizont']);
+			return;
+		}
 		if ($new_horizont <= $this->config['horizont'])	// no move necessary
 		{
 			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,$this->config['horizont']);
