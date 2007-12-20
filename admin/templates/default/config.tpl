@@ -115,6 +115,23 @@
      <input name="newsettings[link_list_thumbnail]" value="{value_link_list_thumbnail}" size="5">
     </td>
    </tr>
+   
+   <tr class="row_on">
+    <td>{lang_Enable_the_spellcheck_in_the_ritch_text_editor_?}:</td>
+    <td>
+     <select name="newsettings[enabled_spellcheck]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_enabled_spellcheck_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>   
+
+   <tr class="row_off">
+    <td>{lang_Complete_path_to_aspell_program}:</td>
+    <td>
+     <input name="newsettings[aspell_path]" value="{value_aspell_path}" size="40">
+    </td>
+   </tr>
 
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_security}</b></td>
