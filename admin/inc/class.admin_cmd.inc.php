@@ -341,7 +341,7 @@ abstract class admin_cmd
 		{
 			$data['data'] = unserialize($data['data']);
 		}
-		if (!class_exists($class = $data['type']))
+		if (!class_exists($class = $data['type']) || $class == 'admin_cmd')
 		{
 			throw new egw_exception_wrong_parameter(lang('Unknown command %1!',$class),0);
 		}
@@ -876,6 +876,12 @@ abstract class admin_cmd
 		//_debug_array($data);
 		admin_cmd::$remote->init($data);
 		
+		// check if a unique key constrain would be violated by saving the entry
+		if (($num = admin_cmd::$remote->not_unique()))
+		{
+			$col = admin_cmd::$remote->table_def['uc'][$num];
+			throw new egw_exception_db_not_unique(lang('Value for column %1 is not unique!',$col),$num);
+		}
 		if (admin_cmd::$remote->save() != 0)
 		{
 			throw new egw_exception_db(lang('Error saving to db:').' '.$this->sql->db->Error.' ('.$this->sql->db->Errno.')',$this->sql->db->Errno);
@@ -963,4 +969,3 @@ abstract class admin_cmd
 		}
 	}
 }
-admin_cmd::_instanciate_accounts();
