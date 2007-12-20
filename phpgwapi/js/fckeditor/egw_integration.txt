@@ -5,6 +5,8 @@
    		- editor/filemanager/connectors/php/config.php
 			- Enable connector
 			- Get and set ServerPath var to configure userdir path
+	- Enable/configure aspell on (for spellchecker):
+		- editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php
 
 --------------------------------------------------------
 Changes made to fckeditor to work properly on egroupware

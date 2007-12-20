@@ -503,20 +503,50 @@ class html
 		}
 		// switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
 		$oFCKeditor->Config['ProcessHTMLEntities'] = false;
-		 
+		// Now setting the admin settings
+		$spell = '';
+		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
+		{
+			$spell = '_spellcheck';
+			$oFCKeditor->Config['SpellChecker'] = 'SpellerPages';
+			$oFCKeditor->Config['SpellerPagesServerScript'] = 'server-scripts/spellchecker.php?enabled=1';
+			if (isset($GLOBALS['egw_info']['server']['aspell_path']))
+			{
+				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&aspell_path='.$GLOBALS['egw_info']['server']['aspell_path'];
+			}
+			if (isset($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']))
+			{
+				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&spellchecker_lang='.$GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'];
+			}
+			else
+			{
+				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&spellchecker_lang='.$GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			}			
+			$oFCKeditor->Config['FirefoxSpellChecker'] = false;
+		}		
+		// Now setting the user preferences
+		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode']))
+		{
+			$oFCKeditor->Config['EnterMode'] = $GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode'];
+		}
+		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_skin']))
+		{
+			$oFCKeditor->Config['SkinPath'] = $oFCKeditor->BasePath.'editor/skins/'.$GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'].'/';
+		}	
+
 		switch($_mode) {
 			case 'simple':
-				$oFCKeditor->ToolbarSet = 'egw_simple';
+				$oFCKeditor->ToolbarSet = 'egw_simple'.$spell;
 				$oFCKeditor->Config['ContextMenu'] = false;
 				break;
 
 			default:
 			case 'extended':
-				$oFCKeditor->ToolbarSet = 'egw_extended';
+				$oFCKeditor->ToolbarSet = 'egw_extended'.$spell;
 				break;
 
 			case 'advanced':
-				$oFCKeditor->ToolbarSet = 'egw_advanced';
+				$oFCKeditor->ToolbarSet = 'egw_advanced'.$spell;
 				break;						
 		}
 		return $oFCKeditor->CreateHTML();
