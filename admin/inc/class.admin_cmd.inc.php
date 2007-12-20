@@ -281,8 +281,18 @@ abstract class admin_cmd
 			$this->modifier = $set_modifier ? $GLOBALS['egw_info']['user']['account_id'] : 0;
 			if ($set_modifier) $this->modifier_email = admin_cmd::user_email();
 		}
-		$vars = get_object_vars($this);
-		$vars['data'] = serialize($vars['data']);	// data is stored serialized
+		if (version_compare(PHP_VERSION,'5.1.2','>'))
+		{
+			$vars = get_object_vars($this);	// does not work in php5.1.2 due a bug
+		}
+		else
+		{
+			foreach(array_keys(get_class_vars(__CLASS__)) as $name)
+			{
+				$vars[$name] = $this->$name;
+			}
+		}
+		$vars['data'] = serialize($this->data);	// data is stored serialized
 
 		admin_cmd::$sql->init($vars);
 		if (admin_cmd::$sql->save() != 0)
@@ -488,7 +498,17 @@ abstract class admin_cmd
 	 */
 	function as_array()
 	{
-		$vars = get_object_vars($this);
+		if (version_compare(PHP_VERSION,'5.1.2','>'))
+		{
+			$vars = get_object_vars($this);	// does not work in php5.1.2 due a bug
+		}
+		else
+		{
+			foreach(array_keys(get_class_vars(__CLASS__)) as $name)
+			{
+				$vars[$name] = $this->$name;
+			}
+		}
 		unset($vars['data']);
 		if ($this->data) $vars += $this->data;
 		
@@ -879,8 +899,8 @@ abstract class admin_cmd
 		// check if a unique key constrain would be violated by saving the entry
 		if (($num = admin_cmd::$remote->not_unique()))
 		{
-			$col = admin_cmd::$remote->table_def['uc'][$num];
-			throw new egw_exception_db_not_unique(lang('Value for column %1 is not unique!',$col),$num);
+			$col = admin_cmd::$remote->table_def['uc'][$num-1];	// $num is 1 based!
+			throw new egw_exception_db_not_unique(lang('Value for column %1 is not unique!',$this->table_name.'.'.$col),$num);
 		}
 		if (admin_cmd::$remote->save() != 0)
 		{
