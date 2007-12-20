@@ -1017,4 +1017,13 @@ class accounts_ldap
 		}
 		return $sign * $account_id;
 	}
+	
+	/**
+	 * __wakeup function gets called by php while unserializing the object to reconnect with the ldap server
+	 */
+	function __wakeup()
+	{
+		$this->ds = $this->ldap->ldapConnect($this->frontend->config['ldap_host'],
+			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
+	}
 }

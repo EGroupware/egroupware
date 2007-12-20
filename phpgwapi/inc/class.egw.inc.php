@@ -32,20 +32,34 @@
 	{
 		/**
 		 * Turn on debug mode. Will output additional data for debugging purposes.
-		 * @var	string	$debug
+		 * @var	string
 		 * @access	public
 		 */
 		var $debug = 0;		// This will turn on debugging information.
 		/**
-		 * @var egw_db-object $db instance of the db-object
+		 * Instance of the db-object
+		 * 
+		 * @var egw_db
 		 */
 		var $db;
 		var $config_table = 'egw_config';
+		/**
+		 * Instance of the account object
+		 *
+		 * @var accounts
+		 */
+		var $accounts;
+		/**
+		 * Instace of the common object
+		 *
+		 * @var common
+		 */
+		var $common;
 
 		/**
-		* tplsav2  savant2 templating object
+		 * savant2 templating object
 		 * 
-		 * @var object 
+		 * @var tplsavant2 
 		 */
 		var $tplsav2;
 
@@ -205,11 +219,6 @@
 				{
 					$this->$class->db->Link_ID =& $this->db->Link_ID;
 				}
-			}
-			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
-			{
-				// reconnect the LDAP server, unfortunally this does not work via accounts::__wakeup() as the common-object is not yet available
-				$this->accounts->ds = $this->common->ldapConnect();
 			}
 			$this->define_egw_constants();
 		}
