@@ -73,6 +73,18 @@
 		'24' => lang('24 hour')
 	);
 
+	$html_enter_mode = array(
+		'p'		=> lang('p: Paragraph'),
+		'div'	=> lang('div'),
+		'br'	=> lang('br')
+	);
+
+	$rich_text_editor_skins = array(		
+		'default'    => lang ('Default theme'),
+		'office2003' => lang ('Office 2003 theme'),
+		'silver'     => lang ('Silver theme')
+	);
+
 	$langs = $GLOBALS['egw']->translation->get_installed_langs();
 
 	$user_apps = array();
@@ -200,6 +212,33 @@
 			'help'   => 'Select the language of texts and messages within eGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.',
 			'xmlrpc' => True,
 			'admin'  => False
+		),
+		'spellchecker_lang' => array(
+			'type'   => 'select',
+			'label'  => 'Spellchecker language',
+			'name'   => 'spellchecker_lang',
+			'values' => $langs,
+			'help'   => 'Select the language of the spellchecker integrated into the rich text editor.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'rte_enter_mode' => array(
+			'type'   => 'select',
+			'label'  => 'Rich text editor enter mode',
+			'name'   => 'rte_enter_mode',
+			'values' => $html_enter_mode,
+			'help'   => 'Select how the rich text editor will generate the enter (linebreak) tag.',
+			'xmlrpc' => True,
+			'admin'  => False		
+		),
+		'rte_skin' => array(
+			'type'   => 'select',
+			'label'  => 'Rich text editor theme',
+			'name'   => 'rte_skin',
+			'values' => $rich_text_editor_skins,
+			'help'   => 'Select the theme (visualization) of the rich text editor.',
+			'xmlrpc' => True,
+			'admin'  => False			
 		),
 		'show_currentusers' => array(
 			'type'  => 'check',
