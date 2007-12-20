@@ -26,7 +26,7 @@
  */
 class egw_exception extends Exception
 {
-	// nothing yet
+	// nothing fancy yet
 }
 
 /**
@@ -39,7 +39,7 @@ class egw_exception_no_permission extends egw_exception
 	 * Constructor
 	 *
 	 * @param string $msg=null message, default "Permission denied!"
-	 * @param int $code=99 numerical code, default 100
+	 * @param int $code=100 numerical code, default 100
 	 */
 	function __construct($msg=null,$code=100)
 	{
@@ -65,6 +65,7 @@ class egw_exception_no_permission_app extends egw_exception_no_permission
 			}
 			else
 			{
+				$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 				$app = isset($GLOBALS['egw_info']['apps'][$currentapp]['title']) ? 
 					$GLOBALS['egw_info']['apps'][$currentapp]['title'] : $msg;
 
@@ -157,3 +158,9 @@ class egw_exception_db extends egw_exception
 		parent::__construct($msg,$code);
 	}
 }
+
+/**
+ * Storing the row violates a unique key constrain
+ *
+ */
+class egw_exception_db_not_unique extends egw_exception_db { }
