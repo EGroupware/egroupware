@@ -603,9 +603,10 @@
 		 * - cat's of other user
 		 *
 		 * @param string $cat_name cat-name
+		 * @param boolean $strip=false if true, strips 'X-' from category names added by some SyncML clients
 		 * @return int cat-id or 0 if not found
 		 */
-		function name2id($cat_name,$strip)
+		function name2id($cat_name,$strip=false)
 		{
 			static $cache = array();	// a litle bit of caching
 			
