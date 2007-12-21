@@ -697,7 +697,8 @@
 		 * Read the grants other users gave $this->account_id for $app, group ACL is taken into account
 		 *
 		 * @param string $app optional defaults to $GLOBALS['egw_info']['flags']['currentapp']
-		 * @param boolean $enum_group_acls=true should group acls be returned for all members of that group, default yes
+		 * @param boolean/array $enum_group_acls=true should group acls be returned for all members of that group, default yes
+		 * 	if an array of group-id's is given, that id's will NOT be enumerated!
 		 * @return array with account-ids (of owners) and granted rights as values
 		 */
 		function get_grants($app='',$enum_group_acls=true)
@@ -729,7 +730,8 @@
 				$grants[$grantor] |= $rights;
 				
 				// if the right is granted from a group and we enummerated group ACL's
-				if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls)
+				if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls &&
+					(!is_array($enum_group_acls) || in_array($grantor,$enum_group_acls)))
 				{
 					// return the grant for each member of the group
 					foreach((array)$GLOBALS['egw']->accounts->member($grantor) as $member)
