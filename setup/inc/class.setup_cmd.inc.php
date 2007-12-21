@@ -29,12 +29,21 @@ abstract class setup_cmd extends admin_cmd
 	 */
 	protected function _check_header_access()
 	{
-		if ($this->header_secret != ($secret = $this->_calc_header_secret($GLOBALS['egw_info']['server']['header_admin_user'],
-				$GLOBALS['egw_info']['server']['header_admin_password'])))
+		if (!$this->header_secret && $this->header_admin_user)	// no secret specified but header_admin_user/password
 		{
-			//echo "header_secret='$this->header_secret' != '$secret'=_calc_header_secret({$GLOBALS['egw_info']['server']['header_admin_user']},{$GLOBALS['egw_info']['server']['header_admin_password']})\n";
+			if (!$this->uid) $this->uid = true;
+			$this->set_header_secret($this->header_admin_user,$this->header_admin_password);
+		}
+		$secret = $this->_calc_header_secret($GLOBALS['egw_info']['server']['header_admin_user'],
+				$GLOBALS['egw_info']['server']['header_admin_password']);
+		if ($this->uid === true) unset($this->uid);
+		
+		if ($this->header_secret != $secret)
+		{
+			//echo "_check_header_access: header_secret='$this->header_secret' != '$secret'=_calc_header_secret({$GLOBALS['egw_info']['server']['header_admin_user']},{$GLOBALS['egw_info']['server']['header_admin_password']})\n";
 			throw new Exception (lang('Wrong credentials to access the header.inc.php file!'),2);
 		}
+		
 	}
 	
 	/**
@@ -109,7 +118,8 @@ abstract class setup_cmd extends admin_cmd
 		self::$egw_setup = $GLOBALS['egw_setup'];
 		self::$egw_setup->ConfigDomain = $domain;
 
-		if (isset($GLOBALS['egw_info']['server']['header_admin_user']) && !isset($GLOBALS['egw_domain']))
+		if (isset($GLOBALS['egw_info']['server']['header_admin_user']) && !isset($GLOBALS['egw_domain']) &&
+			is_object($GLOBALS['egw']) && $GLOBALS['egw'] instanceof egw)
 		{
 			// we run inside eGW, not setup --> read egw_domain array from the header via the showheader cmd
 			$cmd = new setup_cmd_showheader(null);	// null = only header, no db stuff, no hashes
@@ -205,7 +215,7 @@ abstract class setup_cmd extends admin_cmd
 	 * @param boolean $verbose=false echo messages as they happen, instead returning them
 	 * @return array with translated messages
 	 */
-	function check_installed($domain='',$stop=0,$verbose=false)
+	static function check_installed($domain='',$stop=0,$verbose=false)
 	{
 		self::_setup_enviroment($domain);
 
