@@ -90,8 +90,9 @@ class setup_cmd_showheader extends setup_cmd
 			if ($this->hash_only)
 			{
 				$data = array(
-					'remote_hash' => $data['remote_hash'],
+					'remote_hash'   => $data['remote_hash'],
 					'webserver_url' => $data['webserver_url'],
+					'install_id'     => $data['install_id'],
 				)+($data['error'] ? array(
 					'error' => $data['error'],				
 				) : array());
