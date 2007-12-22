@@ -3,6 +3,7 @@
 %1 created in %2.	setup	pt-br	%1 criado em %2.
 %1 does not exist !!!	setup	pt-br	%1 não existe!!!
 %1 is %2%3 !!!	setup	pt-br	%1 é %2%3 !!!
+%1 is needed by: %2.	setup	pt-br	%1 é utilizado por: %2.
 %1, %2 or %3 the configuration file.	setup	pt-br	%1, %2 ou %3 o arquivo de configuração.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	pt-br	'%1' não é permitido como argumento %2 da opção %3 !!!
 (searching accounts and changing passwords)	setup	pt-br	(procurando contas e alterando senhas)
@@ -92,6 +93,7 @@ because it depends upon	setup	pt-br	pois depende de
 because it is not a user application, or access is controlled via acl	setup	pt-br	porque não é uma aplicação de usuário ou o acesso é controlado através das regras de acesso
 because it requires manual table installation, <br />or the table definition was incorrect	setup	pt-br	porque requer instalação das tabelas do banco de dados manualmente, <br />ou a definição da tabela está incorreta
 because it was manually disabled	setup	pt-br	porque foi desabilitado manualmente
+because its sources are missing	setup	pt-br	porque sua fonte está faltando
 because of a failed upgrade or install	setup	pt-br	devido a uma falha na atualização ou instalação
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	pt-br	devido a uma falha na atualização, ou a base de dados é mais nova que a versão instalada desta aplicação
 because the enable flag for this app is set to 0, or is undefined	setup	pt-br	porque o campo de habilitação (flag) desta aplicação está definido como 0, ou está indefinido
@@ -519,6 +521,7 @@ the first step in installing egroupware is to ensure your environment has the ne
 the following applications need to be upgraded:	setup	pt-br	As seguintes aplicações precisam ser atualizadas:
 the function %1 is needed from: %2.	setup	pt-br	A função %1 é necessária para: %2
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	pt-br	A função imagecreatefromjpeg é fornecida pela extensão gd (compilada com suporte jpeg!). Ela é necessária para fazer upload de fotos dos contatos.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	pt-br	A extensão ldap é necessária, se você usa ldap como repositório de contas ou contatos, autenticação via ldap ou active directory. Não é necessária para instalação padrão SQL.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	As extensões mbstring são necessárias para suporte unicode (utf-8) completo ou para outros conjuntos de carácteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	A opção 'mbstring.func_overload = 7' é necessária para total suporte unicode (utf-8) ou outros caracteres multibyte.
 the session extension is needed to use php sessions (db-sessions work without).	setup	pt-br	A extensão 'session' é necessária para usar sessões php (sessões db funciona sem ela)

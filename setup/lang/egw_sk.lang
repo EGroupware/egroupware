@@ -3,6 +3,7 @@
 %1 created in %2.	setup	sk	%1 bolo vytvorené v %2.
 %1 does not exist !!!	setup	sk	%1 neexistuje !!!
 %1 is %2%3 !!!	setup	sk	%1 je %2%3 !!!
+%1 is needed by: %2.	setup	sk	%1 je vyžadované: %2
 %1, %2 or %3 the configuration file.	setup	sk	%1, %2 alebo %3 konfiguračný súbor.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	sk	'%1' nie je povolené ako %2. argumenty k voľbe %3 !!!
 (searching accounts and changing passwords)	setup	sk	(prehľadávanie účtov a zmena hesiel)
@@ -241,7 +242,7 @@ file type, size, version, etc.	setup	sk	typ súboru, veľkosť, verzia, atď.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	sk	Odovzdávanie súborov je vypnuté: NEmôžete používať žiadneho správcu súborov, ani priložiť súbory v niektorých aplikáciách!
 filename	setup	sk	názov súboru
 filesystem	setup	sk	Súborový systém
-force selectbox	setup	sk	Vynúť menu pre výber
+force selectbox	setup	sk	Vynúť ponuku pre výber
 found existing configuration file. loading settings from the file...	setup	sk	Našiel som existujúci konfiguračný súbor. Načítavam z neho nastavenia...
 give admin access to all installed apps	setup	sk	Dať správcovi prístup ku všetkým nainštalovaným aplikáciám
 gives further options	setup	sk	dáva ďalšie možnosti
@@ -299,6 +300,7 @@ languages updated.	setup	sk	Jazyky aktualizované.
 ldap accounts configuration	setup	sk	Konfigurácia LDAP účtov
 ldap default shell (e.g. /bin/bash)	setup	sk	LDAP predvolený shell (napr. /bin/bash)
 ldap encryption type	setup	sk	LDAP typ kryptovania
+ldap host	setup	sk	LDAP hostiteľ
 ldap import	setup	sk	LDAP Import
 ldap root password	setup	sk	LDAP root heslo
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sk	LDAP vyhľadávací filter pre účty, predvolený: "(uid=%user)", %domain=eGW-domain
@@ -397,6 +399,7 @@ pop/imap mail server hostname or ip address	setup	sk	Názov (hostname) alebo IP 
 possible reasons	setup	sk	Možné príčiny
 possible solutions	setup	sk	Možné riešenia
 post-install dependency failure	setup	sk	Poinštalačné zlyhanie závislostí
+postfix with ldap: [yes(user edit forwarding)]	setup	sk	Postfix s LDAP: [yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	sk	Postgres: Ak ponecháte prázdne, použijú sa uprednostnené unix domain socket-y namiesto tcp/ip spojenia
 potential problem	setup	sk	Možný problém
 preferences	setup	sk	Predvoľby
@@ -452,14 +455,14 @@ select which user(s) will be imported	setup	sk	Vyberte, ktorí používatelia sa
 select which user(s) will be modified	setup	sk	Vyberte, ktorí používatelia sa upravia
 select which user(s) will have admin privileges	setup	sk	Vyberte, ktorí používatelia dostanú správcovské oprávnenia
 select your old version	setup	sk	Vyberte vašu starú verziu
-selectbox	setup	sk	Výberové menu
+selectbox	setup	sk	Ponuka pre výber
 sessions type	setup	sk	Typ sedenia
 set	setup	sk	nastav
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	sk	Nastavte na "staré" pre verzie <2.4, ináč zadajte presnú verziu mcrypt-u akú používate.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sk	Nastavenie kódovej stránky na UTF-8 (unicode) umožňuje koexistenciu dát z rôznych jazykov, používajúcich rozličné kódové stránky.
 settings	setup	sk	Nastavenia
 setup	setup	sk	Inštalátor
-setup main menu	setup	sk	Hlavné menu Inštalátora
+setup main menu	setup	sk	Hlavná ponuka Inštalátora
 setup the database	setup	sk	Inštalácia databázy
 setup/config admin login	setup	sk	Prihlásenie Správcu Inštalátora/Konfigurácie
 should be the same as server root unless you know what you are doing.	setup	sk	Musí byť totožné so Server Root, ak nie ste guru s inými plánmi.
@@ -499,6 +502,7 @@ the first step in installing egroupware is to ensure your environment has the ne
 the following applications need to be upgraded:	setup	sk	Nasledovné aplikácie potrebujú aktualizáciu:
 the function %1 is needed from: %2.	setup	sk	Funkcia %1 je vyžadovaná od: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	sk	Funkcia imagecreatefromjpeg je zabezpečená rozšírením gd (kompilovaným s podporou jpeg!). Je potrebná pre odosielanie fotiek ku kontaktom.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	sk	Je potrebné rozšírenie ldap, ak používate ldap ako zdroj účtov alebo kontaktov, overujete sa voči ldap alebo active directory. Nie je potrebné pre štandardnú SQL inštaláciu.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	Rozšírenie mbstring je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	mbstring.func_overload = 7 je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the session extension is needed to use php sessions (db-sessions work without).	setup	sk	Rozšírenie sedenia je potrebné pre použitie php sedení (db sedenia fungujú aj bez neho).

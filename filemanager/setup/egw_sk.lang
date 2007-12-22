@@ -4,6 +4,9 @@ back to file manager	filemanager	sk	Naspäť na Správcu Súborov
 cancel editing %1 without saving	filemanager	sk	Zrušiť úpravu %1 bez uloženia zmien
 cannot create directory because it begins or ends in a space	filemanager	sk	Nemôžem vytvoriť adresár, pretože začína alebo končí medzerou
 cannot replace %1 because it is a directory	filemanager	sk	Nemôžem prepísať %1 pretože je to adresár
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	sk	Ak vyberiete dátumy kde dátum konca je menší než dátum začiatku, výsledkom vyhľadávania budú všetky záznamy OKREM tých, ktoré ležia medzi zadanými dátumami
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	sk	Ak vyberiete iba jeden dátum (od/do), výsledkom vyhľadávania budú všetky záznamy staršie/novšie než zadaný dátum
+clear search	filemanager	sk	vyčistiť hľadanie
 command sucessfully run	filemanager	sk	Príkaz bol úspešne spustený
 comment	filemanager	sk	Komentár
 comments cannot contain "%1"	filemanager	sk	Komentáre nemôžu obsahovať %1
@@ -24,6 +27,7 @@ create folder	filemanager	sk	Vytvoriť priečinok
 created	filemanager	sk	vytvorené
 created %1	filemanager	sk	%1 bolo vytvorené
 created %1,%2	filemanager	sk	%1, %2 bolo vytvorené
+created between	filemanager	sk	vytvorené medzi
 created by	filemanager	sk	Vytvoril
 created directory %1	filemanager	sk	Bol vytvorený adresár %1
 date	filemanager	sk	Dátum
@@ -45,6 +49,7 @@ fake base dir did not exist, egroupware created a new one.	filemanager	sk	Faloš
 file	filemanager	sk	Súbor
 file %1 already exists. please edit it or delete it first.	filemanager	sk	Súbor %1 už existuje. Prosím upravte ho alebo najprv odstráňte.
 file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvoriť.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	sk	Súbor %1 je možno priveľký. Kontaktujte svojho správcu systému pre ďalšie informácie.
 file name	filemanager	sk	Názov súboru
 file names cannot contain  or /	filemanager	sk	Názvy súborov nesmú obsahovať \ alebo /
 file names cannot contain "%1"	filemanager	sk	Názvý súborov nesmú obsahovať "%1"
@@ -66,6 +71,7 @@ location	filemanager	sk	Umiestnenie
 locked	filemanager	sk	Zamknuté
 mime type	filemanager	sk	MIME typ
 modified	filemanager	sk	Zmenené
+modified between	filemanager	sk	Zmenené medzi
 modified by	filemanager	sk	Zmenené (kým)
 move to	filemanager	sk	Presunúť do
 move to:	filemanager	sk	Presunúť do:
@@ -88,6 +94,7 @@ save %1, and go back to file listing	filemanager	sk	Uložiť %1, a vrátiť sa n
 save all	filemanager	sk	Uložiť všetko
 save changes	filemanager	sk	Uložiť zmeny
 saved %1	filemanager	sk	%1 bolo uložené
+searchstring	filemanager	sk	Hľadaný reťazec
 show	filemanager	sk	Ukázať
 show ..	filemanager	sk	Ukázať ..
 show .files	filemanager	sk	Ukázať .súbory
@@ -95,6 +102,7 @@ show command line (experimental. dangerous.)	filemanager	sk	Ukázať príkazový
 show help	filemanager	sk	Ukáž Pomoc
 size	filemanager	sk	Veľkosť
 sort by:	filemanager	sk	Triediť podľa:
+start search	filemanager	sk	Hľadaj
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	sk	Budúci Správca Súborov, zatiaľ LEN PRE TESTOVACIE ÚČELY, prosím posielajte správy o chybách
 total files	filemanager	sk	Súborov celkovo
 unknown mime-type defaults to text/plain when viewing	filemanager	sk	Neznámy MIME typ sa predvolene chápe ako text/plain pri pokuse o zobrazenie

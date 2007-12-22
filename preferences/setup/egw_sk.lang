@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	sk	Zmeniť vaše heslo
 change your profile	preferences	sk	Zmeniť váš profil
 change your settings	preferences	sk	Zmeniť vaše nastavenia
+charset for the csv export	addressbook	sk	Znaková sada pre export CSV
 click to select a color	preferences	sk	Ak chcete vybrať farbu, kliknite sem
 color	preferences	sk	Farba
 country	preferences	sk	Krajina
@@ -32,7 +33,7 @@ hours	preferences	sk	hodín
 how do you like to display accounts	preferences	sk	Ako sa majú zobrazovať používateľské účty
 how do you like to select accounts	preferences	sk	Ako sa majú vyberať používateľské účty
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sk	O kolľko hodín sa Vaša časová zóna líši od času serveru.<br>Ak ste v rovnakej zóne ako server, zvoľte 0, inak zvoľte Váš miestny čas.
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sk	Koľko ikoniek sa má zobrazovať v navigačnom paneli navrchu stránky. Nadbytočné ikony sa skryjú do rozbaľovacieho menu na pravej strane navigačného panelu.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sk	Koľko ikoniek sa má zobrazovať v navigačnom paneli navrchu stránky. Nadbytočné ikony sa skryjú do rozbaľovacej ponuky na pravej strane navigačného panelu.
 how should egroupware display dates for you.	preferences	sk	Ako má eGroupWare zobrazovať dátumy.
 icon	preferences	sk	Ikona
 icons and text	preferences	sk	Ikony s textom
@@ -67,7 +68,7 @@ show_more_apps	common	sk	Zobraziť ďalšie aplikácie
 text only	preferences	sk	Iba text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do eGroupWare alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.
 the old password is not correct	preferences	sk	Staré heslo bolo zadané chybne
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sk	Výberové menu zobrazí všetkých dostupných používateľov (môže to veľmi spomaľovať, ak ich máte v systéme väčšie množstvo). Vyhľadávanie umožňuje nájsť používateľa podľa mena alebo skupiny.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sk	Ponuka pre výber zobrazí všetkých dostupných používateľov (môže to veľmi spomaľovať, ak ich máte v systéme väčšie množstvo). Vyhľadávanie umožňuje nájsť používateľa podľa mena alebo skupiny.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	sk	Posledné 2 voľby obmedzujú viditeľnosť iných používateľov. Preto by mali byť vynucované a NIKDY nie aplikované na správcov.
 the two passwords are not the same	preferences	sk	Heslá sa nezhodujú
 theme (colors/fonts) selection	preferences	sk	Výber témy (farby / písma)
@@ -76,6 +77,7 @@ time format	preferences	sk	Formát času
 use default	preferences	sk	Použiť predvolené
 users choice	preferences	sk	Používateľova voľba
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sk	Ak odpoviete [ Áno ], tlačítka [ Domov ] a [ Odhlásiť ] budú vyzerať rovnako ako aplikácie v hlavnom paneli aplikácií navrchu stránky.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii eGroupWare.
 which currency symbol or name should be used in egroupware.	preferences	sk	Ktorý symbol alebo názov meny sa má používať v eGroupWare.
 write prefs for the specified application.	preferences	sk	Zapísať predvoľby pre vybranú aplikáciu.
 you can show the applications as icons only, icons with app-name or both.	preferences	sk	Aplikácie môžu byť zobrazované ako ikonky, ikonky s názvami alebo obidvoje.
@@ -83,5 +85,3 @@ you do not have permission to set acl's in this mode!	preferences	sk	Nemáte opr
 you must enter a password	preferences	sk	Musíte zadať heslo
 your current theme is: %1	preferences	sk	Vaša súčasná farebná téma je: <b>%1</b>
 your preferences	preferences	sk	Vaše predvoľby
-charset for the csv export	addressbook	sk	Znaková sada pre export CSV
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii eGroupWare.

@@ -19,7 +19,9 @@ add a new list	addressbook	pt-br	Adicionar uma nova lista
 add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os campos.
 add business email of whole distribution list?	addressbook	pt-br	Adicionar e-mail comercial para uma lista de distribuição inteira ?
 add custom field	addressbook	pt-br	Adicionar campo personalizado
+add emails of whole distribution list?	addressbook	pt-br	Adicionar emails de toda lista de distribuição?
 add to distribution list:	addressbook	pt-br	Adicionar a uma lista de distribuição
+added	addressbook	pt-br	adicionado
 added by synchronisation	addressbook	pt-br	adicionado por sincronização
 added to distribution list	addressbook	pt-br	adicionado a uma lista de distribuição
 additional information about using ldap as contact repository	admin	pt-br	Informação adicional sobre usar LDAP como respositório de contas
@@ -108,10 +110,12 @@ custom	addressbook	pt-br	Personalizado
 custom etemplate for the contactform	addressbook	pt-br	eModelo personalizado para o formulário de contatos
 custom fields	addressbook	pt-br	Campos personalizados
 debug output in browser	addressbook	pt-br	Depurar saída no navegador
+default	addressbook	pt-br	padrão
 default address format	addressbook	pt-br	Formato padrão de endereço
 default addressbook for adding contacts	addressbook	pt-br	Livro de Contatos padrão para inclusão
 default document to insert contacts	addressbook	pt-br	Documento padão para incluir contados
 default filter	addressbook	pt-br	Filtro padrão
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	pt-br	Define qual endereço de email (comercial ou pessoal) usar como padrão para listas de distribuição no aplicativo de email.
 delete a single entry by passing the id.	addressbook	pt-br	Remover um única entrada informando o ID.
 delete selected distribution list!	addressbook	pt-br	Remover a lista de distribuição selecionada
 delete this contact	addressbook	pt-br	Remover este contato
@@ -185,6 +189,7 @@ home address, birthday, ...	addressbook	pt-br	Endereço residencial, Aniversári
 home city	addressbook	pt-br	Cidade
 home country	addressbook	pt-br	País
 home email	addressbook	pt-br	E-mail pessoal
+home email if given, else work email	addressbook	pt-br	Email pessoal se informado, senão email comercial
 home phone	addressbook	pt-br	Telefone residencial
 home state	addressbook	pt-br	Estado
 home street	addressbook	pt-br	Rua, Av, Trav., etc.
@@ -228,6 +233,7 @@ list created	addressbook	pt-br	Lista criada
 list creation failed, no rights!	addressbook	pt-br	Criação da lista falhou. Sem direitos suficientes!
 load sample file	addressbook	pt-br	Carregar arquivo exemplo
 load vcard	addressbook	pt-br	Carregar VCard
+location	addressbook	pt-br	Localização
 locations	addressbook	pt-br	Localizações
 manage mapping	addressbook	pt-br	Gerenciar mapeamento
 mark records as private	addressbook	pt-br	Marcar registos como particulares
@@ -263,6 +269,7 @@ other phone	addressbook	pt-br	Outro telefone
 own sorting	addressbook	pt-br	ordem própria
 pager	common	pt-br	Pager
 parcel	addressbook	pt-br	Parcial
+participants	addressbook	pt-br	Participantes
 permission denied !!!	addressbook	pt-br	Permissão negada !!!
 phone number	common	pt-br	Número de telefone
 phone numbers	common	pt-br	Números de telefone
@@ -272,7 +279,9 @@ please select only one category	addressbook	pt-br	Por favor selecione apenas uma
 please update the templatename in your customfields section!	addressbook	pt-br	Por favor, atualize o nome do modelo na seção de seus campos personalizados!
 postal	common	pt-br	Cx Postal
 pref	addressbook	pt-br	pref
+preferred email address to use in distribution lists	addressbook	pt-br	Endereço de email padrão para uso em listas de distribuição
 preferred phone	addressbook	pt-br	telefone preferencial
+preferred type of email address to add for distribution lists	addressbook	pt-br	Tipo de endereço de email padrão para adicionar em listas de distribuição
 prefix	addressbook	pt-br	Prefixo
 public key	addressbook	pt-br	Chave pública
 publish into groups:	addressbook	pt-br	Publicar nos grupos:
@@ -284,6 +293,7 @@ record access	addressbook	pt-br	Acesso ao registro
 record owner	addressbook	pt-br	Dono do registro
 remove selected contacts from distribution list	addressbook	pt-br	Remover contatos selecionados da lista de distribuição
 removed from distribution list	addressbook	pt-br	removido da lista de distribuição
+repetition	addressbook	pt-br	Repetição
 replacements for inserting contacts into documents	addressbook	pt-br	Substituições para incluir contatos em documentos
 required fields *	addressbook	pt-br	campos requeridos *
 role	addressbook	pt-br	Função
@@ -333,6 +343,7 @@ tomorrow is %1's birthday.	common	pt-br	Amanhã é o aniversário de %1.
 translation	addressbook	pt-br	Tradução
 type	addressbook	pt-br	Tipo
 update a single entry by passing the fields.	addressbook	pt-br	Atualizar uma única entrada informando os campos
+updated	addressbook	pt-br	Atualizado
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pt-br	URL para linkar números de telefones (use %1 = número a ser chamado, %u = nome da conta, %t = número do telefone)
 use an extra category tab?	addressbook	pt-br	Usar uma tab extra para categoria ?
@@ -349,11 +360,13 @@ warning: all contacts found will be deleted!	addressbook	pt-br	AVISO: Todos os c
 warning: template "%1" not found, using default template instead.	addressbook	pt-br	AVISO: Modelo "%1" não encontrado, utilizando modelo padrão.
 weekday	addressbook	pt-br	Dia da semana
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pt-br	O que deverá ser exibido pelos links para o Livro de Contatos que estão em outros aplicativos. Valores vazios serão desconsiderados. Você precisará fazer novo login ser alterar esta configuração!
+where to add the email address	addressbook	pt-br	onde adicionar o endereço de email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	pt-br	Qual formato de endereço deverá ser usado para países onde o formato padrão não é conhecido. Se o formato de endereço de um país for conhecido, este será usado independente desta configuração.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	pt-br	Qual Livro de Contatos deverá ser selecionado quando estiver incluindo um contato E você não tiver permissão de inclusão.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pt-br	Que codificação de caracter deverá ser usado para exportação CSV. O padrão é a codificação desta instalação do eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	pt-br	Quais campos devem ser exportados. Todos significa qualquer campo registrado no Livro de Contatos, incluindo os campos personalizados. Os endereços residencial ou comercial somente contêm nome, empresa e o endereço selecionado.
 whole query	addressbook	pt-br	toda a consulta
+work email if given, else home email	addressbook	pt-br	Email comercial se informado, senão email pessoal
 work phone	addressbook	pt-br	Telefone de trabalho
 write (update or add) a single entry by passing the fields.	addressbook	pt-br	Gravar (atualizar ou adicionar) uma única entrada informando os campos.
 wrong - try again ...	addressbook	pt-br	Errado - tente novamente ...

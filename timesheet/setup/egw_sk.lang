@@ -37,6 +37,7 @@ saves the changes made	timesheet	sk	Uloží vykonané zmeny
 saves this entry and add a new one	timesheet	sk	Uloží túto položku a pridá novú
 select a price	timesheet	sk	Vyberte cenu
 select a project	timesheet	sk	Vyberte projekt
+show a quantity sum (eg. to sum up negative overtime)	admin	sk	Zobraziť kvantitatívnu sumu (napríklad na spočítanie negatívneho meškania)
 start	timesheet	sk	Začiatok
 starttime	timesheet	sk	Čas začiatku
 starttime has to be before endtime !!!	timesheet	sk	Čas začiatku musí byť skôr než čas konca !!!

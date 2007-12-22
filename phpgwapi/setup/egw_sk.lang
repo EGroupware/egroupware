@@ -57,10 +57,10 @@ august	common	sk	August
 australia	common	sk	AUSTRÁLIA
 austria	common	sk	RAKÚSKO
 author	common	sk	Autor
-autohide sidebox menu's	common	sk	Automaticky skrývať Sidebox menu
-autohide sidebox menus	common	sk	Automaticky skrývať Sidebox menu
-automatically hide the sidebox menu's?	common	sk	Automaticky skrývať Sidebox menu?
-automatically hide the sidebox menus?	common	sk	Skrývať Sidebox menu automaticky?
+autohide sidebox menu's	common	sk	Automaticky skrývať ponuku bočného panelu
+autohide sidebox menus	common	sk	Automaticky skrývať ponuku bočného panelu
+automatically hide the sidebox menu's?	common	sk	Automaticky skrývať ponuku bočného panelu?
+automatically hide the sidebox menus?	common	sk	Automaticky skrývať ponuku bočného panelu?
 autosave default category	common	sk	Automaticky ukladať štandardnú kategóriu
 azerbaijan	common	sk	AZERBAJDŽÁN
 back	common	sk	Naspäť
@@ -115,8 +115,8 @@ christmas island	common	sk	VIANOČNÉ OSTROVY
 clear	common	sk	Vyčistiť
 clear form	common	sk	Vyčistiť formulár
 click	common	sk	Klik
-click or mouse over to show menus	common	sk	Ak chcete zobraziť menu, kliknite alebo ukážte myšou
-click or mouse over to show menus?	common	sk	Ak chcete zobraziť menu, kliknete alebo ukážete myšou
+click or mouse over to show menus	common	sk	Ak chcete zobraziť ponuku, kliknite alebo ukážte myšou
+click or mouse over to show menus?	common	sk	Ak chcete zobraziť ponuku, kliknete alebo ukážete myšou
 close	common	sk	Zavrieť
 close sidebox	common	sk	Zavrieť Sidebox
 cocos (keeling) islands	common	sk	KOKOSOVÉ OSTROVY
@@ -156,7 +156,7 @@ direction left to right	common	sk	Tok zľava doprava
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sk	Adresár neexistuje, nie je čitateľný webserverom, alebo nesúvisí s koreňovým adresárom dokumentov!
 disable internet explorer png-image-bugfix	common	sk	Vypnúť opravu chyby pre obrázky PNG v Internet Explorer-i
 disable slider effects	common	sk	Vypnúť efekty posuvníka
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnúť animované efekty posuvníka, keď sa zobrazujú alebo skrývajú menu na stránke? Používatelia Opery a Konquerer-a to pravdepodobne musia zvoliť.
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnúť animované efekty posuvníka, keď sa zobrazujú alebo skrývajú ponuky na stránke? Používatelia Opery a Konquerer-a to pravdepodobne musia zvoliť.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť opravný skript pre Internet Explorer 5.5 a novšie pre zobrazenie priesvitnosti v obrázkoch PNG?
 disabled	common	sk	Vypnuté
 display %s first	jscalendar	sk	Zobraziť %s najskôr
@@ -212,7 +212,7 @@ first page	common	sk	Prvá strana
 firstname	common	sk	Krstné meno
 fixme!	common	sk	OPRAV MA!
 folder already exists.	common	sk	Priečinok už existuje.
-force selectbox	common	sk	Otvor výberové menu
+force selectbox	common	sk	Otvor výberovú ponuku
 france	common	sk	FRANCÚZSKO
 french polynesia	common	sk	FRANCÚZSKA POLYNÉZIA
 friday	common	sk	Piatok
@@ -220,7 +220,7 @@ ftp	common	sk	FTP
 fullname	common	sk	Plné meno
 fullscreen mode	common	sk	Celoobrazovkový režim
 gambia	common	sk	GAMBIA
-general menu	common	sk	Základné menu
+general menu	common	sk	Základná ponuka
 georgia	common	sk	GRUZÍNSKO
 german	common	sk	Nemecké
 germany	common	sk	NEMECKO
@@ -253,7 +253,7 @@ home	common	sk	Domov
 home email	common	sk	domáci E-mail
 honduras	common	sk	HONDURAS
 hong kong	common	sk	HONG KONG
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sk	Koľko ikoniek sa má zobraziť v navigačnom paneli (vrch stránky). Ostatné ikony budú umiestnené do rozbaľovacieho menu, ktoré bude dostupné na celkom pravom okraji navigačného panelu.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sk	Koľko ikoniek sa má zobraziť v navigačnom paneli (vrch stránky). Ostatné ikony budú umiestnené do rozbaľovacej ponuky, ktorá bude dostupná na celkom pravom okraji navigačného panelu.
 hungary	common	sk	MAĎARSKO
 iceland	common	sk	ISLAND
 iespell not detected. click ok to go to download page.	common	sk	ieSpell sa nenašiel. Kliknutím na OK sa presuniete na stránku, odkiaľ ho môžete stiahnuť.
@@ -336,7 +336,7 @@ mauritius	common	sk	MAURÍCIUS
 max number of icons in navbar	common	sk	Maximálny počet ikoniek v navigačnom paneli
 may	common	sk	Máj
 medium	common	sk	Stredná
-menu	common	sk	Menu
+menu	common	sk	Ponuka
 message	common	sk	Správa
 mexico	common	sk	MEXIKO
 minute	common	sk	Minúta
@@ -360,9 +360,9 @@ new main category	common	sk	Nová hlavná kategória
 new value	common	sk	Nová hodnota
 new zealand	common	sk	NOVÝ ZÉLAND
 next	common	sk	Ďalší
-next month (hold for menu)	jscalendar	sk	Ďalší mesiac
+next month (hold for menu)	jscalendar	sk	Ďalší mesiac (podržaním zobrazíte ponuku)
 next page	common	sk	Ďalšia stránka
-next year (hold for menu)	jscalendar	sk	Ďalší rok (ak chcete menu, podržte)
+next year (hold for menu)	jscalendar	sk	Ďalší rok (podržaním zobrazíte ponuku)
 nicaragua	common	sk	NIKARAGUA
 nigeria	common	sk	NIGÉRIA
 no	common	sk	Nie
@@ -388,7 +388,7 @@ only private	common	sk	iba súkromné
 only yours	common	sk	iba vaše
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
-open sidebox	common	sk	Otvor bočné menu
+open sidebox	common	sk	Otvor bočnú ponuku
 ordered list	common	sk	Zoradený zoznam
 original	common	sk	Originál
 other	common	sk	Iné
@@ -430,8 +430,8 @@ powered by	common	sk	Beží na
 powered by egroupware version %1	common	sk	Beží na <a href="http://www.egroupware.org">eGroupWare</a> verzie %1
 preferences	common	sk	Predvoľby
 preferences for the idots template set	common	sk	Predvoľby pre idots šablónu boli nastavené
-prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržte pre menu)
-prev. year (hold for menu)	jscalendar	sk	Predch. rok (podržte pre menu)
+prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržaním zobrazíte ponuku)
+prev. year (hold for menu)	jscalendar	sk	Predch. rok (podržaním zobrazíte ponuku)
 previous page	common	sk	Predchádzajúca stránka
 print	common	sk	Tlač
 priority	common	sk	Priorita
@@ -489,13 +489,13 @@ server contacted. waiting for response...	common	sk	Pripájam sa na server. Čak
 server name	common	sk	Meno servera
 session has been killed	common	sk	Relácia bola ukončená
 setup	common	sk	Inštalácia
-setup main menu	common	sk	Hlavné menu Inštalácie
+setup main menu	common	sk	Hlavná inštalačná ponuka
 show all	common	sk	Ukázať všetko
 show all categorys	common	sk	Ukázať všetky kategórie
 show clock?	common	sk	Ukázať hodinky?
 show home and logout button in main application bar?	common	sk	Ukázať tlačítko Domovskej stránky a tlačítko Odhlásenia v hlavnom paneli aplikácií?
 show logo's on the desktop.	common	sk	Na desktope zobrazovať logá.
-show menu	common	sk	ukázať menu
+show menu	common	sk	ukázať ponuku
 show page generation time	common	sk	Ukázať čas generovania stránky
 show page generation time on the bottom of the page?	common	sk	Ukázať čas generovania stránky na jej spodku?
 show page generation time?	common	sk	Ukázať čas generovania stránky?

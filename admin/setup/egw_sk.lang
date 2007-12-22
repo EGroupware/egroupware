@@ -209,7 +209,7 @@ file space must be an integer	admin	sk	Priestor pre súbory musí byť celé č�
 find and register all application hooks	admin	sk	Nájdi a zaregistruj všetky aplikácie
 for the times above	admin	sk	pre vyššieuvedené časy
 for the times below (empty values count as '*', all empty = every minute)	admin	sk	pre nižšieuvedené časy (prázdne hodnoty sa berú ako '*', všetky prázdne = každú minútu)
-force selectbox	admin	sk	Vynúť výberové menu
+force selectbox	admin	sk	Vynútiť ponuku pre výber
 forward also to	admin	sk	Preposlať ešte (komu)
 forward emails to	admin	sk	Preposlať správy (komu)
 forward only	admin	sk	Iba preposlať
@@ -226,6 +226,7 @@ home directory	admin	sk	Domovský adresár
 host information	admin	sk	Informácie o serveri
 hour<br>(0-23)	admin	sk	Hodina<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sk	Koľko dní má záznam ostávať v Prístupových Záznamoch než sa zmaže? (predvolené: 90)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	sk	Koľko záznamov majú povolené exportovať používatelia, ktorí nie sú správcami? (prázdne = bez obmedzení, no = žiaden export)
 how many minutes should an account or ip be blocked (default 30) ?	admin	sk	Koľko minút má trvať zablokovanie účtu alebo IP? (predvolené: 30)
 how should email addresses for new users be constructed?	admin	sk	Ako sa majú vytvárať E-mailové adresy pre nových používateľov?
 icon	admin	sk	Ikona
@@ -292,7 +293,7 @@ no permission to add groups	admin	sk	nemáte oprávnenie pridávať skupiny
 no permission to add users	admin	sk	nemáte oprávnenie pridávať používateľov
 no permission to create groups	admin	sk	nemáte oprávnenie vytvárať skupiny
 note: ssl available only if php is compiled with curl support	admin	sk	Upozornenie: SSL je dostupné iba v prípade, že PHP bolo skompilované s podporou curl
-number of row for a multiline inputfield or line of a multi-select-box	admin	sk	počet riadkov vo viacriadkovom vstupnom poli alebo vo výberovom menu
+number of row for a multiline inputfield or line of a multi-select-box	admin	sk	počet riadkov vo viacriadkovom vstupnom poli alebo v ponuke pre výber
 order	admin	sk	Poradie
 outbound	admin	sk	odchodzie
 passthrough	admin	sk	prechádzajúce
@@ -341,7 +342,7 @@ select users for inclusion	admin	sk	Vyberte používateľov pre zaradenie
 select where you want to store/retrieve filesystem information	admin	sk	Vyberte, kde chcete ukladať/získavať informácie o súborovom systéme
 select where you want to store/retrieve user accounts	admin	sk	Vyberte, kde chcete ukladať/získavať informácie o používateľských účtoch
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	sk	Vyberte, na ktorom mieste sa má táto aplikácia zobrazovať v navigačnom paneli, nižšie (doľava) alebo vyššie (vpravo)
-selectbox	admin	sk	Výberové menu
+selectbox	admin	sk	Ponuka pre výber
 server %1 has been updated	admin	sk	Server %1 bol upravený
 server list	admin	sk	Zoznam serverov
 server password	admin	sk	Heslo servera
