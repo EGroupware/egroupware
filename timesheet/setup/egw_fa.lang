@@ -1,0 +1,78 @@
+'1%' has an invalid format !!!	timesheet	fa	'1%' دارای قالب صحیح نیست !!!
+2 month ago	timesheet	fa	دو ماه قبل
+2 years ago	timesheet	fa	دو سال قبل
+3 years ago	timesheet	fa	سه سال قبل
+a pattern to be searched for	timesheet	fa	الگوئی که می خواهید جستجو شود
+actions	timesheet	fa	فعالیتها
+am	timesheet	fa	صبح
+applies the changes made	timesheet	fa	تغییرات ذخیره شده را اعمال می کند
+attach	timesheet	fa	پیوست
+attach file	timesheet	fa	پیوست پرونده
+by	timesheet	fa	بوسیله
+click here to attach the file	timesheet	fa	برای پیوست پرونده اینجا کلیک کنید
+click here to start the search	timesheet	fa	برای شروع جستجو اینجا کلیک کنید
+click to order after that criteria	timesheet	fa	برای مرتب شدن بر اساس شرط، کلیک کنید
+closes the window without saving the changes	timesheet	fa	پنجره را بدون ذخیره تغییرات می بندد
+comment	timesheet	fa	شرح
+create new links	timesheet	fa	ایجاد پیوندهای جدید
+custom	timesheet	fa	بازه سفارشی...
+delete this entry	timesheet	fa	حذف این ورودی
+duration	timesheet	fa	مدت
+edit this entry	timesheet	fa	ویراستن این ورودی
+empty if identical to duration	timesheet	fa	خالی بگذارید اگر به مدت بستگی دارد
+end	timesheet	fa	اتمام
+enter a search pattern	timesheet	fa	یک الگوی جستجو وارد کنید
+entry deleted	timesheet	fa	ورودی حذف شد
+entry saved	timesheet	fa	ورودی ذخیره شد
+error deleting the entry!!!	timesheet	fa	خطای حذف ورودی!!!
+error saving the entry!!!	timesheet	fa	خطای ذخیره ورودی!!!
+existing links	timesheet	fa	پیوندهای موجود
+field must not be empty !!!	timesheet	fa	فیلد نباید خالی باشد !!!
+first	timesheet	fa	اولین
+general	timesheet	fa	عمومی
+go to the first entry	timesheet	fa	رفتن به صفحه اول ورودیها
+go to the last entry	timesheet	fa	رفتن به صفحه آخر ورودیها
+go to the next page of entries	timesheet	fa	رفتن به صفحه بعدی ورودیها
+go to the previous page of entries	timesheet	fa	رفتن به صفحه قبلی ورودیها
+hour	timesheet	fa	ساعت
+hours	timesheet	fa	ساعت
+how many entries should the list show	timesheet	fa	تعداد مواردی که باید لیست نمایش دهد
+last	timesheet	fa	آخرین
+last modified	timesheet	fa	آخرین تغییرات
+last month	timesheet	fa	ماه گذشته
+last week	timesheet	fa	هفته گذشته
+last year	timesheet	fa	سال گذشته
+leave it empty for a full week	timesheet	fa	برای یک هفته کامل خالی بگذارید
+link	timesheet	fa	پیوند
+links	timesheet	fa	پیوندها
+minutes	timesheet	fa	دقیقه
+new search	timesheet	fa	جستجوی جدید
+no details	timesheet	fa	بدون جزئیات
+of	timesheet	fa	از
+optional note about the link	timesheet	fa	یادداشت دلخواه برای پیوند
+permission denied!!!	timesheet	fa	دسترسی ممنوع!!!
+pm	timesheet	fa	عصر
+price	timesheet	fa	قیمت
+quantity	timesheet	fa	کمیت
+remove this link (not the entry itself)	timesheet	fa	برداشتن پیوند (نه خود ورودی)
+save & new	timesheet	fa	ذخیره و جدید
+saves the changes made	timesheet	fa	ذخیره کردن تغییرات ایجاد شده
+saves this entry and add a new one	timesheet	fa	ذخیره کردن این ورودی و اضافه کردن جدید
+select a category	timesheet	fa	یک دسته را انتخاب کنید
+select a price	timesheet	fa	قیمت را انتخاب کنید
+select a project	timesheet	fa	پروژه را انتخاب کنید
+select an app to search in	timesheet	fa	کاربرد را برای جستجو در آن انتخاب کنید
+select which values to show	timesheet	fa	انتخاب کنید کدام مقدارها باید نمایش داده شوند
+showing	timesheet	fa	نمایش
+start	timesheet	fa	شروع
+sum %1:	timesheet	fa	جمع %1:
+this month	timesheet	fa	این ماه
+this week	timesheet	fa	این هفته
+this year	timesheet	fa	امسال
+timesheet	common	fa	گزارش کار
+to start the search	timesheet	fa	شروع جستجو
+unitprice	timesheet	fa	واحد قیمت
+view this entry	timesheet	fa	دیدن این ورودی
+view this linked entry in its application	timesheet	fa	دیدن ورودی پیوند شده در کاربرد خودش
+week	timesheet	fa	هفته
+yesterday	timesheet	fa	دیروز

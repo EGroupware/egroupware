@@ -1,0 +1,563 @@
+%1 already exists in ldap.	setup	fa	%1 قبلا در LDAP موجود بوده است
+%1 created in ldap.	setup	fa	%1 در LDAP ایجاد شد
+%1 does not exist !!!	setup	fa	%1 وجود ندارد!!!
+%1 is %2%3 !!!	setup	fa	%1 هست %2%3 !!!
+(searching accounts and changing passwords)	setup	fa	جستجوی حسابها و تغییر گذرواژه ها
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fa	پایگاه داده خود را در زمان نصب بهنگام سازی نکنید، این ممکن است با max_execution_time باعث ایجاد وقفه شده و پایگاه داده شما را غیر قابل بازیابی نماید (و اطلاعات خود را از دست بدهید!!!)
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fa	شما مجبورید که تغییرات را بصورت دستی در پرونده php.ini خود اعمال کنید(غالبا در لینوکس در مسیر etc/ قرار دارد) تا گروه افزار بطور کامل کار کند
+00 (disable)	setup	fa	00 (غیر فعال/پیشنهاد می شود)
+13 (ntp)	setup	fa	13 (ntp)
+80 (http)	setup	fa	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	fa	<b>مجموعه کاراکتر مورد استفاده</b> ( درصورتی که میخواهید زبانهای مختلفی را بکار گیرید ، از utf-8 استفاده کنید):
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	fa	<b>این باعث میشود تا یک حساب کاربری مدیر و سه حساب کاربری آزمایشی ایجاد شود</b> <br /> نام کاربری و گذرواژه های آزمایشی: demo/guest, demo2/guest و demo3/guest  هستند.
+accounts existing	setup	fa	حساب کاربری وجود دارد
+actions	setup	fa	فعالیتها
+activate save password check	setup	fa	فعالسازی گزینه ذخیره کردن گذرواژه
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fa	کاربران ساخته شده خود کار به این گروه افزوده میشوند( اگر خالی باشد «گروه پیش فرض» در نظر گرفته خواهد شد)
+add new database instance (egw domain)	setup	fa	افزودن یک نمونه پایگاه داده جدید (حوزه گروه افزار)
+additional settings	setup	fa	تنظیمات بیشتر
+admin first name	setup	fa	نام مدیر
+admin last name	setup	fa	نام خانوادگی مدیر
+admin password	setup	fa	گذرواژه مدیر
+admin password to header manager	setup	fa	گذرواژه مدیر برای مدیریت سرآیند
+admin user for header manager	setup	fa	نام کاربری مدیر برای مدیریت سرآیند
+admin username	setup	fa	نام کاربری مدیر
+admins	setup	fa	مدیران
+after backing up your tables first.	setup	fa	پس از اولین پشتیبان گرفتن از جداولتان
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fa	پس از دریافت پرونده آنرا در محل پرونده header.inc.php قرار دهید. سپس برروی «ادامه» کلیک کنید.
+all applications	setup	fa	همه کاربردها
+all core tables and the admin and preferences applications	setup	fa	همه جداول اصلی و مدیریت و تنظیمات کاربردها
+all languages (incl. not listed ones)	setup	fa	همه زبانها(بهمراه همه لیست نشده ها)
+all users	setup	fa	همه کاربران
+allow authentication via cookie	setup	fa	اجازه تصدیق کاربران از طریق کوکی
+allow password migration	setup	fa	اجازه مهاجرت گذرواژه
+allowed migration types (comma-separated)	setup	fa	انواع مجاز مهاجرت (با ویرگول جدا کنید)
+analysis	setup	fa	تحلیل
+and reload your webserver, so the above changes take effect !!!	setup	fa	و کارگزار وب خود را بارگیری مجدد کنید تا تغییرات فوق اعمال شود
+app details	setup	fa	افزودن جزئیات
+app install/remove/upgrade	setup	fa	افزودن/حذف/بهنگام سازی کاربرد
+app process	setup	fa	پروسه کاربرد
+application data	setup	fa	داده های کاربرد
+application list	setup	fa	فهرست کاربرد
+application management	setup	fa	مدیریت کاربرد
+application name and status	setup	fa	وضعیت و نام کاربرد
+application name and status information	setup	fa	اطلاعات نام و وضعیت کاربرد
+application title	setup	fa	عنوان کاربرد
+application: %1, file: %2, line: "%3"	setup	fa	کابرد: %1 ، پرونده: %2 ، خط: "%3"
+are you sure you want to delete your existing tables and data?	setup	fa	آیا مطمئنید که می خواهید جداول موجود و داده های داخل آنها را حذف کنید؟
+are you sure?	setup	fa	آیا مطمئنید؟
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	fa	بر اساس درخواست شما، این قسمت تلاش میکند تا پایگاه داده را بسازد و کاربر پایگاه داده و حقوق مربوط به آن را اعمال کند.
+at your request, this script is going to attempt to install a previous backup	setup	fa	بر اساس درخواست شما، این قسمت تلاش میکند تا پشتیبان تهیه شده قبلی را نصب کند
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	fa	بر اساس درخواست شما، این قسمت تلاش میکند تا جداول پایه و مدیر و تنظیمات کاربردها را برای شما را نصب کند
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	fa	بر اساس درخواست شما، این قسمت تلاش میکند تا کاربردهای قدیمی شما را به نسخه جدید بهنگام سازی نماید
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	fa	بر اساس درخواست شما، این قسمت تلاش میکند تا جداول قدیمی شما را به قالب جدید بهنگام سازی نماید
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	fa	بر اساس درخواست شما، این قسمت تلاش میکند تا بیرحمانه جداول موجود را حذف نموده وآنها را با قالب بندی جدید بسازد
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fa	بر اساس درخواست شما، این قسمت تلاش میکند تا بیرحمانه کاربردها را عزل نماید که باعث میشود جداول موجود و داده ها از بین بروند
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	fa	تلاش برای استفاده از نوع مایم صحیح برای FTP بجای نوع پیش فرض 'application/octet-stream'
+authentication / accounts	setup	fa	حسابهای کاربری / تصدیق
+auto create account records for authenticated users	setup	fa	بطور خودکار برای کاربران تصدیق شده حساب کاربری ساخته شود
+auto login anonymous user	setup	fa	کاربر بی نام بطور خودکار وارد شود
+auto-created user accounts expire	setup	fa	انقضای کابرانی که حساب کاربریشان بطورخودکار ایجاد شده
+available version	setup	fa	نسخه موجود
+back to the previous screen	setup	fa	بازگشت به صفحه قبل
+back to user login	setup	fa	بازگشت به صفحه ورود کاربر
+back's up your db now, this might take a few minutes	setup	fa	همین حالا از پایگاه داده شما پشتیبان تهیه میکند، ممکن است چند ثانیه بطول بیانجامد
+backup '%1' deleted	setup	fa	پشتیبان '%1' حذف شد
+backup '%1' renamed to '%2'	setup	fa	پشتیبان '%1' به '%2' تغییر نام یافت
+backup '%1' restored	setup	fa	پشتیبان '%1'  بازگردانده شد
+backup and restore	setup	fa	پشتیبانی و بازگرداندن
+backup failed	setup	fa	تهیه پشتیبان نا موفق بود
+backup finished	setup	fa	تهیه پشتیبان تمام شد
+backup now	setup	fa	حالا پشتیبان گیری شود
+backup sets	setup	fa	مجموعه پشتیبان ها
+backup started, this might take a few minutes ...	setup	fa	پشتیبان گیری شروع شد، ممکن است چند دقیقه طول بکشد...
+because an application it depends upon was upgraded	setup	fa	چون کاربردی که به آن وابسته است بهنگام سازی شده
+because it depends upon	setup	fa	چون به آن وابسته است
+because it is not a user application, or access is controlled via acl	setup	fa	چون یک کاربر کاربرد نیست یا دسترسی آن توسط فهرست کنترل دسترسی ، کنترل شده
+because it requires manual table installation, <br />or the table definition was incorrect	setup	fa	چون آن به نصب دستی جدول نیازمند است.<br /> یا تعریف جداول صحیح نیست
+because it was manually disabled	setup	fa	چون آن بطور دستی غیر فعال شده
+because of a failed upgrade or install	setup	fa	چون نصب یا بهنگام سازی ناموفق بوده
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	fa	به دلیل بهنگام سازی ناموفق، یا جدیدتربودن پایگاه داده نسبت به آنکه کاربرد روی آن نصب بوده
+because the enable flag for this app is set to 0, or is undefined	setup	fa	چون علامت فعال شدن برای این کاربرد صفر یا تعریف نشده است
+bottom	setup	fa	پائین
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fa	اما ما <u>قویا پیشنهاد میکنیم تا پشتیبان بگیرید</u> از جداول خود، چون این قسمت ممکن است آسیبهائی به داده های شما وارد کند.<br /> <strong>این قسمت خودکار ممکن است به راحتی اطلاعات شما را خراب کند</strong>
+cancel	setup	fa	لغو
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	fa	ناتوان از ایجادheader.inc.php بخاطر محدودیت مجور دسترسی.<br /> بجاش آن شما می توانید پرونده را %1
+change system-charset	setup	fa	تغییر مجموعه کاراکتر سیستم
+charset	setup	fa	utf-8
+charset to convert to	setup	fa	مجموعه کاراکتر برای تبدیل به
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	fa	بازرسی فقط وقتی انجام می شود که از طریق یک کارگزار وب صورت گرفته باشد، الان نام کاربری کارگزار وب ناشناخته است
+check installation	setup	fa	بررسی نصب
+check ip address of all sessions	setup	fa	بررسی نشانی ip برای همه نشستها
+checking extension %1 is loaded or loadable	setup	fa	بررسی الحاقیه %1 برای بار بودن یا قابل بارگذاری بودن
+checking file-permissions of %1 for %2 %3: %4	setup	fa	بررسی مجوزهای پرونده از %1 برای %2 %3: %4
+checking for gd support...	setup	fa	بررسی برای پشتیبانی از GD...
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	fa	بررسی اینکه تنظیمات php.ini برای setting session.save_path='%1' قابل نوشتن توسط کارگزار وب می باشد یا خیر
+checking pear%1 is installed	setup	fa	بررسی نصب PEAR%1
+checking php.ini	setup	fa	بررسی php.ini
+checking required php version %1 (recommended %2)	setup	fa	بررسی نسخه مورد نیاز PHP %1 ( نسخه %2 توصیه می شود)
+checking the egroupware installation	setup	fa	بررسی نصب گروه افزار
+click <a href="index.php">here</a> to return to setup.	setup	fa	<a href="index.php">اینجا کلیک کنید</a>برای اجرای نصب.
+click here	setup	fa	اینجا کلیک کنید
+click here to re-run the installation tests	setup	fa	برای دوباره انجام شدن آزمایشات نصب اینجا کلیک کنید
+completed	setup	fa	تمام شد
+config password	setup	fa	گذرواژه پیکربندی
+config username	setup	fa	نام کاربری پیکربندی
+configuration	setup	fa	پیکربندی
+configuration completed	setup	fa	پیکربندی تمام شد
+configuration password	setup	fa	گذرواژه پیکربندی
+configuration user	setup	fa	کاربر پیکربندی
+configure now	setup	fa	حالا پیکربندی کن
+confirm to delete this backup?	setup	fa	حذف این پشتیبانی تهیه شده را تأیید میکنید؟
+contain	setup	fa	شامل
+continue	setup	fa	ادامه
+continue to the header admin	setup	fa	ادامه به سمت مدیریت سرآید
+convert	setup	fa	تبدیل
+convert backup to charset selected above	setup	fa	تبدیل پشتیبان تهیه شده به مجموعه کاراکتر انتخاب شده فوق
+could not open header.inc.php for writing!	setup	fa	ناتوان از باز کردن پرونده header.inc.php برای نوشتن!
+country selection	setup	fa	انتخاب کشور
+create	setup	fa	ایجاد
+create a backup before upgrading the db	setup	fa	ایجاد پشتیبان قبل از بهنگام سازی پایگاه داده
+create admin account	setup	fa	ایجاد حساب کاربری مدیر
+create database	setup	fa	ایجاد پایگاه داده
+create demo accounts	setup	fa	ایجاد حساب کاربری نمایشی
+create one now	setup	fa	الان یکی بساز
+create the empty database -	setup	fa	ایجاد پایگاه داده خالی -
+create the empty database and grant user permissions -	setup	fa	ایجاد پایگاه داده خالی و اعطاء مجوز کاربر -
+create your header.inc.php	setup	fa	ایجاد header.inc.php
+created	setup	fa	ایجاد شد
+created header.inc.php!	setup	fa	پرونده header.inc.php ایجاد شد!
+creating tables	setup	fa	ایجاد جداول
+creation of %1 failed !!!	setup	fa	ایجاد %1 ناموفق بود!
+creation of %1 in ldap failed !!!	setup	fa	ایجاد %1 در LDAP ناموفق بود!
+current system-charset	setup	fa	مجموعه کاراکتر جاری سیستم
+current system-charset is %1.	setup	fa	مجموعه کاراکتر جاری %1 هست
+current version	setup	fa	نسخه جاری
+currently installed languages: %1 <br />	setup	fa	زبانهای نصب شده فعلی%1 <br />
+database instance (egw domain)	setup	fa	نمونه پایگاه داده (حوزه گروه افزار)
+database successfully converted from '%1' to '%2'	setup	fa	پایگاه داده با موفقیت از '%1' به '%2' تبدیل شد
+datebase	setup	fa	پایگاه داده
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	fa	درگاه تاریخ و زمان.<br />اگر از درگاه 13 استفاده میکنید لطفا قبل از ثبت این صفحه از طریق دیوار آتش دسترسی به آنرا باز کنید
+day	setup	fa	روز
+day of week<br />(0-6, 0=sunday)	setup	fa	روز هفته <br />(0-6, 0=یکشنبه)
+db backup and restore	setup	fa	پشتیبان گیری و بازگرداندن پایگاه داده
+db host	setup	fa	میزبان پایگاه داده
+db name	setup	fa	نام پایگاه داده
+db password	setup	fa	گذرواژه پایگاه داده
+db port	setup	fa	درگاه پایگاه داده
+db root password	setup	fa	گذرواژه root پایگاه داده
+db root username	setup	fa	نام کاربری root پایگاه داده
+db type	setup	fa	نوع پایگاه داده
+db user	setup	fa	کاربر پایگاه داده
+default	setup	fa	پیش فرض پیشنهادی
+default file system space per user/group ?	setup	fa	فضای سیستم پرونده پیش فرض در کاربر/گروه؟
+delete	setup	fa	حذف
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	fa	حذف همه حسابهای کاربری SQL و گروهها و حقوق دسترسی و تنظیمات انجام شود؟(در حالت عادی لازم نیست)
+delete all my tables and data	setup	fa	حذف همه جداول و داده های من
+delete all old languages and install new ones	setup	fa	حذف همه زبانهای قبلی و نصب زبان جدید
+deleting tables	setup	fa	درحال حذف جداول
+demo server setup	setup	fa	نصب کارگزار نمایشی
+deny access	setup	fa	دسترسی ممنوع
+deny all users access to grant other users access to their entries ?	setup	fa	ممنوعیت همه کاربران برای دسترسی دادن به کاربران دیگر درمورد ورودیهای خودشان
+dependency failure	setup	fa	خطای وابستگی
+deregistered	setup	fa	از ثبت نام خارج شده
+details for admin account	setup	fa	جزئیات حساب مدیر
+developers' table schema toy	setup	fa	اسباب مدل سازی جدول برای توسعه دهندگان
+did not find any valid db support!	setup	fa	هیچ پشتیبانی معتبری از پایگاه داده پیدا نشد!
+do you want persistent connections (higher performance, but consumes more resources)	setup	fa	آیا شما اتصال دائمی می خواهید(عملکرد بهتر ، اما منابع بیشتری مصرف میکند)
+do you want to manage homedirectory and loginshell attributes?	setup	fa	آیا میخواهید پوشه خانه و پوسته ورود را مدیریت کنید؟
+does not exist	setup	fa	وجود ندارد
+domain	setup	fa	حوزه
+domain name	setup	fa	نام حوزه
+domain select box on login	setup	fa	جعبه انتخاب حوزه در ورود
+dont touch my data	setup	fa	به داده ها دست نزن
+download	setup	fa	دریافت
+edit current configuration	setup	fa	ویرایش پیکربندی فعلی
+edit your existing header.inc.php	setup	fa	ویرایش header.inc.php موجود
+edit your header.inc.php	setup	fa	ویرایش header.inc.php
+egroupware administration manual	setup	fa	راهنمای مدیریت گروه افزار
+enable for extra debug-messages	setup	fa	فعال سازی برای پیامهای رفع اشکال اضافی
+enable ldap version 3	setup	fa	فعال سازی نسخه ۳ از LDAP
+enable mcrypt	setup	fa	فعالسازی MCrypt
+enter some random text for app session encryption	setup	fa	کمی متن تصادفی برای رمزگذاری نشست وارد کنید
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	fa	کمی متن تصادفی وارد کنید برای رمزگذاری app_session <br /> (mcrypt لازم دارد)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fa	مسیر کامل پرونده های موقت را وارد کنید مثلا: tmp, C:\TEMP/
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fa	مسیر کامل پرونده های موقت را وارد کنید مثلا: tmp, C:\TEMP/
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	fa	مسیر کامل پرونده های گروهها و کاربران را وارد کنید مثلا: files, E:\FILES/
+enter the full path for users and group files.<br />examples: /files, e:files	setup	fa	مسیر کامل پرونده های گروهها و کاربران را وارد کنید مثلا: files, E:\FILES/
+enter the full path to the backup directory.<br />if empty: files directory	setup	fa	مسیر کامل پوشه پشتیبان گیری را وارد کنید. اگر خالی باشد مسیر پرونده ها در نظر گرفته میشود
+enter the hostname of the machine on which this server is running	setup	fa	نام میزبانی را که کارگزار بر روی آن درحال اجراست وارد کنید
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fa	مسیر نشانی گروه افزار را وارد کنید مثلا: http://www.domain.com/egroupware   or   /egroupware<br /><b>بدون ممیز در ادامه</b>
+enter the site password for peer servers	setup	fa	گذرواژه سایت برای اتصال به کارگزار دیگر را وارد کنید
+enter the site username for peer servers	setup	fa	نام کاربری سایت برای اتصال به کارگزار دیگر را وارد کنید
+enter the title for your site	setup	fa	عنوان سایت خود را وارد کنید
+enter your default ftp server	setup	fa	کارگزار پیش فرض FTP خود را وارد کنید
+enter your http proxy server	setup	fa	کارگزار پیش فرض HTTP Proxy خود را وارد کنید
+enter your http proxy server password	setup	fa	گذرواژه کارگزار HTTP Proxy را وارد کنید
+enter your http proxy server port	setup	fa	درگاه کارگزار HTTP Proxy را وارد کنید
+enter your http proxy server username	setup	fa	نام کاربری کارگزار HTTP Proxy را وارد کنید
+error in admin-creation !!!	setup	fa	خطا در ایجاد مدیر!!!
+error in group-creation !!!	setup	fa	خطا در ایجاد گروه !!!
+export egroupware accounts from sql to ldap	setup	fa	صادر کردن حسابهای گروه افزار از SQL به LDAP
+export has been completed!  you will need to set the user passwords manually.	setup	fa	صدور کامل شد! شما باید گذرواژه ها را دستی تنظیم کنید
+export sql users to ldap	setup	fa	صدور SQL به LDAP
+false	setup	fa	نادرست
+file	setup	fa	پرونده
+file type, size, version, etc.	setup	fa	نوع پرونده، اندازه، نسخه وغیره
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	fa	ارسال پرونده خاموش شده است: شما نمیتوانید از مدیر پرونده ها استفاده کنید و همچنین نمی توانید پرونده ای را در کاربردهای متفاوت پیوست نمائید
+filename	setup	fa	نام پرونده
+filesystem	setup	fa	سیستم پرونده
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	fa	برای نصب جدید واردات را انتخاب کنید. برای تبدیل حسابهای SQL موجود به LDAP ، صادرات را انتخاب کنید
+force selectbox	setup	fa	اجبار به استفاده از جعبه انتخاب
+found existing configuration file. loading settings from the file...	setup	fa	پرونده پیکربندی قبلی پیدا شد. تنظیمات از آن پرونده خوانده خواهد شد...
+go back	setup	fa	برگشت به عقب
+go to	setup	fa	برو به
+grant access	setup	fa	دسترسی دادن
+has a version mismatch	setup	fa	ناهماهنگی نسخه وجود دارد
+header admin login	setup	fa	ورود مدیر سرآیند
+header password	setup	fa	گذرواژه سرآیند
+header username	setup	fa	نام کاربری سرآیند
+historylog removed	setup	fa	تاریخچه ثبت اتفاقات حذف شد
+hooks deregistered	setup	fa	هوکها خارج از ثبت شدند
+hooks registered	setup	fa	هوکها ثبت شدند
+host information	setup	fa	اطلاعات میزبان
+host/ip domain controler	setup	fa	نشانی IP یا نام میزبان کنترل کننده حوزه
+hostname/ip of database server	setup	fa	نشانی IP یا نام میزبان کارگزار پایگاه داده
+hour (0-24)	setup	fa	ساعت (0-24)
+however, the application is otherwise installed	setup	fa	کاربرد طور دیگری قبلا نصب شده
+however, the application may still work	setup	fa	کاربرد ممکن از هنوز کارکند
+if no acl records for user or any group the user is a member of	setup	fa	اگر هیچ لیست حق دسترسی برای کاربر یا هیچ گروهی نباشد کابر عضوی خواهد بود از
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fa	اگر safe_mode روشن باشد، گروه افزار نمی تواند تغییرات را در زمان اجرا اعمال کند و همچنین نمی توانیم پیمانه های بارگذاری نشده را بارگذاری کنیم
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	fa	اگر کاربرد جداول تعریف شده ای نداشته باشد
+if using ads (active directory) authentication	setup	fa	اگر از تصدیق بر اساس ADS(Active Directory) استفاده میکنید
+if using ldap	setup	fa	اگر از LDAP استفاده می کنید
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	fa	اگر از LDAP  استفاده می کنید ، آیا می خواهید مشخصات پوشه خانه و پوسته ورود را تنظیم نمائید؟
+if you did not receive any errors, your applications have been	setup	fa	اگر شما هیچ پیام خطائی دریافت نکردید کاربرد شما
+if you did not receive any errors, your tables have been	setup	fa	اگر شما هیچ پیام خطائی در یافت نکر دید جداول شما
+if you running this the first time, don't forget to manualy %1 !!!	setup	fa	اگر برای اولین بار است که این را اجرا می کنید، فراموش نکنید که بصور دستی %1 !!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	fa	اگر شما فقط از یک مجموعه کاراکتر مشابه (مانند western european دیگری) استفاده میکنید نیازی به تنظیم مجموعه کاراکتر سیستم ندارید
+image type selection order	setup	fa	ترتیب انتخاب نوع تصویر
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	fa	واردات حسابهای کاربری از LDAP به جداول حساب کاربری گروه افزار
+import has been completed!	setup	fa	ورادات تکمیل شد!
+import ldap users/groups	setup	fa	واردات کاربران/گروههای LDAP
+importing old settings into the new format....	setup	fa	واردات تنظیمات قبلی به قالب جدبد...
+include root (this should be the same as server root unless you know what you are doing)	setup	fa	ریشه اضافه شود(این باید دقیقا شبیه ریشه کارگزار باشد، مگر آنکه واقعا بدانید که چه می کنید
+include_path need to contain "." - the current directory	setup	fa	include_path نیاز دارد که شامل «.» باشد - پوشه فعلی
+install	setup	fa	نصب
+install all	setup	fa	نصب همه
+install applications	setup	fa	نصب کاربردها
+install backup	setup	fa	نصب پشتیبان
+install language	setup	fa	نصب زبان
+installed	setup	fa	نصب شده
+instructions for creating the database in %1:	setup	fa	دستورالعملها برای ایجاد پایگاه داده در %1
+invalid ip address	setup	fa	نشانی IP نامعتبر
+invalid mcrypt algorithm/mode combination	setup	fa	الگوریتم/سبک ترکیب Mcrypt نامعتبر
+invalid password	setup	fa	گذرواژه نامعتبر
+is broken	setup	fa	قطع شده
+is disabled	setup	fa	غیر فعال شده
+is in the webservers docroot	setup	fa	در ریشه مستندات کارگزارهای وب هست
+is not writeable by the webserver	setup	fa	توسط کارگزار وب قابل نوشتن نیست
+ldap account import/export	setup	fa	واردات/صادرات حساب کاربری LDAP
+ldap accounts configuration	setup	fa	پیکربندی حسابهای LDAP
+ldap accounts context	setup	fa	موقعیت حسابهای LDAP
+ldap config	setup	fa	پیکربندی LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	fa	پیشوند پیش فرض LDAP برای پوشه خانه(مانند home/ برای home/username/)
+ldap default shell (e.g. /bin/bash)	setup	fa	پوسته پیش فرض LDAP ( مثل bin/bash/)
+ldap encryption type	setup	fa	نوع رمزگذاری LDAP
+ldap export	setup	fa	صادرات LDAP
+ldap export users	setup	fa	صادرات کاربران LDAP
+ldap groups context	setup	fa	موقعیت گروههای LDAP
+ldap host	setup	fa	میزبان LDAP
+ldap import	setup	fa	واردات LDAP
+ldap import users	setup	fa	واردات کاربران LDAP
+ldap modify	setup	fa	تغییرات LDAP
+ldap root password	setup	fa	گذرواژه کاربر ارشد (root)  برای LDAP
+ldap rootdn	setup	fa	LDAP rootdn
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fa	صافی جستجو LDAP برای حسابهای کاربری ، پیش فرض: "(uid=%user)", %domain=حوزه گروه افزار
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	fa	دسترسی به برنامه نصب را به نشانی های IP یا نام میزبانها یا شبکه های زیر محدود کن.(مانند: 127.0.0.1,10.1.1,myhost.dnydns.org)
+login as user postgres, eg. by using su as root	setup	fa	ورود بعنوان کاربر postgres مثلا استفاده از su بجای root
+login to mysql -	setup	fa	ورود به mysql
+logout	setup	fa	خروج
+mail domain (for virtual mail manager)	setup	fa	حوزه رایانامه (برای مدیریت رایانامه مجازی)
+mail server login type	setup	fa	نوع ورود به کارگزار رایانامه
+mail server protocol	setup	fa	قرارداد کارگزار رایانامه
+make sure that your database is created and the account permissions are set	setup	fa	مطمئن شوید که پایگاه داده شما ایجاد و مجوزهای حساب کاربری تنظیم شده است
+manage applications	setup	fa	مدیریت کاربردها
+manage languages	setup	fa	مدیریا زبانها
+manual / help	setup	fa	راهنما/کمک
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fa	max_execution_time برای کمتر از 30 ثانیه  تنظیم شده است. گروه افزار برخی وارد زمان بیشتری برای اجرا لازم دارد.خطاهای ناگهانی پیش می آید
+maximum account id (e.g. 65535 or 1000000)	setup	fa	حداکثر کدکاربری(مثلا: 65535 یا 1000000)
+may be broken	setup	fa	شاید قطع شده باشد
+mcrypt algorithm (default tripledes)	setup	fa	الگوریتم Mcrypt (پیش فرض TRIPLEDES است)
+mcrypt initialization vector	setup	fa	بردار مقداردهی اولیه MCrypt
+mcrypt mode (default cbc)	setup	fa	سبک  Mcrypt (پیش فرض CBC است)
+mcrypt settings (requires mcrypt php extension)	setup	fa	تنظیمات Mcrypt (به الحاقیه mcrypt PHP نیاز دارد)
+mcrypt version	setup	fa	نسخه MCrypt
+memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fa	memory_limit کمتر از 16M تنظیم شده است: برخی از کاربردهای گروه افزار به حافظه ای بیش از اندازه پیش فرض 8M نیاز دارند. خطاهای ناگهانی پیش می آید
+minimum account id (e.g. 500 or 100, etc.)	setup	fa	حداقل کدکاربری(مثلا: 500 یا 100)
+minute	setup	fa	دقیقه
+missing or uncomplete mailserver configuration	setup	fa	پیکربندی کارگزار رایانامه نیست یا غلط است
+modifications have been completed!	setup	fa	تغییرات کامل شد!
+modify	setup	fa	تغییر
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	fa	ایجاد تغییرات در حساب موجود LDAP برای استفاده توسط گروه افزار (برای نصب جدید از حسابهای LDAP استفاده می شود)
+month	setup	fa	ماه
+multi-language support setup	setup	fa	نصب با پشتیبانی از چند زبانگی
+name of database	setup	fa	نام پایگاه داده
+name of db user egroupware uses to connect	setup	fa	نام کاربرپایگاه داده گروه افزار که برای اتصال استفاده می شود
+never	setup	fa	هرگز
+new	setup	fa	جدید
+next run	setup	fa	اجرای بعدی
+no	setup	fa	هیچ
+no %1 support found. disabling	setup	fa	پشتیبانی از %1 یافت نشد. غیرفعال شد.
+no accounts existing	setup	fa	هیچ حساب کاربری موجود نیست
+no algorithms available	setup	fa	هیچ الگوریتمی موجود نیست
+no modes available	setup	fa	هیچ سبکی موجود نیست
+no xml support found. disabling	setup	fa	پشتیبانی از XML یافت نشد. غیرفعال شد.
+not	setup	fa	نه
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fa	هیچکدام از الگوریتم ها و سبکهای mcrypt با گروه افزار کار نمیکنند. اگر شما این مشکلات را تجربه کرده اید سعی کنیداین قابلیت را خاموش کنید
+not complete	setup	fa	کامل نشد
+not completed	setup	fa	کامل نشد
+not ready for this stage yet	setup	fa	هنوز برای این مرحله حاضر نیستید
+not set	setup	fa	تنظیم نیست
+note: you will be able to customize this later	setup	fa	توجه: شما بعدا می توانید این را سفارشی کنید
+now guessing better values for defaults...	setup	fa	درحال یافتن بهترین مقدار پیش فرض ...
+odbc / maxdb: dsn (data source name) to use	setup	fa	اتصال ODBC / MaxDB: DSN (data source name) برای استفاده
+ok	setup	fa	تأیید
+once the database is setup correctly	setup	fa	وقتی پایگاه داده درست نصب شد
+one month	setup	fa	یک ماه
+one week	setup	fa	یک هفته
+only add languages that are not in the database already	setup	fa	فقط زبانهائی را اضافه کن که در پایگاه داده موجود نیستند
+only add new phrases	setup	fa	فقط عبارات جدید افزوده شود
+or	setup	fa	یا
+or %1continue to the header admin%2	setup	fa	%2 یا %1 ادامه برای مدیریت سرآیند
+or http://webdav.domain.com (webdav)	setup	fa	یا http://webdav.domain.com (WebDAV)
+or we can attempt to create the database for you:	setup	fa	یا: ما میتوانیم برای شما پایگاه داده را ایجاد کنیم
+or you can install a previous backup.	setup	fa	یا شما می توانید پشتیبان تهیه شده از قبل را نصب کنید
+password for smtp-authentication	setup	fa	گذرواژه برای تصدیق SMTP
+password needed for configuration	setup	fa	گذرواژه برای پیکربندی لازم است
+password of db user	setup	fa	گذرواژه برای کاربر پایگاه داده
+passwords did not match, please re-enter	setup	fa	گذرواژه ها شبیه هم نیستند، لطفا دوباره وارد کنید
+path information	setup	fa	اطلاعات مسیر
+path to user and group files has to be outside of the webservers document-root!!!	setup	fa	مسیر پرونده های کاربران و گروهها باید خارج از پوشه ریشه کارگزار وب باشد!!!
+pear is needed by syncml or the ical import+export of calendar.	setup	fa	PEAR توسط SyncML برای واردات و صادرات iCal از تقویم لازم است
+pear::log is needed by syncml.	setup	fa	PEAR:: ثبت رویداد برای  SyncML لازم است
+persistent connections	setup	fa	اتصالات دائمی
+php plus restore	setup	fa	PHP بعلاوه بازگرداندن
+php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	fa	PHP بعلاوه بازگرداندن ، باعث عملکرد فوق العاده ای می شود، چون محیط گروه افزار را در نشست ذخیره می کند
+please check for sql scripts within the application's directory	setup	fa	لطفا قسمت sql را در داخل پوشه کاربرد بررسی کنید
+please check read/write permissions on directories, or back up and use another option.	setup	fa	لطفا مجوزهای خواندن و نوشتن بر روی پوشه ها را بررسی کنید، یا پشتیبان تهیه کنید و از گزینه دیگری استفاده کنید
+please configure egroupware for your environment	setup	fa	لطفا گروه افزار را برای محیط خودتان پیکربندی کنید
+please consult the %1.	setup	fa	لطفا با %1 مشورت کنید
+please fix the above errors (%1) and warnings(%2)	setup	fa	لطفا خطاهای فوق را اصلاح کنید(%1 ) و (%2) هشدار
+please install	setup	fa	لطفا نصب کنید
+please login	setup	fa	لطفا وارد شوید
+please login to egroupware and run the admin application for additional site configuration	setup	fa	لطفا وارد گروه افزار شوید و کاربرد مدیر را برای پیکربندی بیشتر سایت اجرا کنید
+please make the following change in your php.ini	setup	fa	لطفا تغییرات زیر را روی پرونده php.ini انجام دهید
+please wait...	setup	fa	لطفا صبر کنید...
+pnu	setup	fa	اطلاعات پایه
+pop/imap mail server hostname or ip address	setup	fa	نشانی  IP یا نام میزبان کارگزار POP/IMAP
+possible reasons	setup	fa	دلایل ممکن
+possible solutions	setup	fa	راه حلهای ممکن
+post-install dependency failure	setup	fa	وابستگیهای پس از نصب با اشکال مواجه شد
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	fa	Postgres: این را خالی بگذارید تا از سوکتهای حوزه یونیکسی بجای اتصال TCP/IP استفاده شود
+potential problem	setup	fa	اشکالات بالقوه
+preferences	setup	fa	تنظیمات
+problem resolution	setup	fa	تحلیل مشکل
+process	setup	fa	پروسه
+re-check my database	setup	fa	بررسی مجدد پایگاه داده
+re-check my installation	setup	fa	بازرسی مجدد نصب
+re-enter password	setup	fa	ورود مجدد گذرواژه
+read translations from	setup	fa	خواندن ترجمه ها از
+readable by the webserver	setup	fa	قابل خواندن توسط کارگزار وب
+really uninstall all applications	setup	fa	واقعا تمام کاربردها را عزل کنم
+recommended: filesystem	setup	fa	پیشنهاد شده: سیستم پرونده
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fa	register_globals روشن است. گروه افزار به آن نیازی ندارد و امنیت بیشتر است اگر خاموشش کنید
+registered	setup	fa	ثبت شده
+rejected lines	setup	fa	خطوط برگشت خورده
+remove	setup	fa	حذف
+remove all	setup	fa	حذف همه
+rename	setup	fa	تغییرنام
+requires reinstall or manual repair	setup	fa	نصب مجدد یا تعمیر دستی لازم دارد
+requires upgrade	setup	fa	به روز رسانی لازم دارد
+resolve	setup	fa	حل کردن
+restore	setup	fa	بازگرداندن
+restore failed	setup	fa	ناموفق در بازگرداندن
+restore finished	setup	fa	بازگرداندن تمام شد
+restore started, this might take a few minutes ...	setup	fa	بازگرداندن شروع شد، این ممکن است چند دقیقه طول بکشد
+restoring a backup will delete/replace all content in your database. are you sure?	setup	fa	بازگرداندن یک پشتیبانی همه محتویات پایگاه داده شما را حذف/رونویسی می کند. آیا مطمئنید؟
+return to setup	setup	fa	بازگشت به نصب
+run installation tests	setup	fa	اجرای آزمایشات نصب
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	fa	safe_mode روشن است، این عموما خوب است چون نصب شما را امن تر می کند
+sample configuration not found. using built in defaults	setup	fa	پیکربندی نمونه یافت نشد. از پیش فرضهای درونی استفاده می شود
+save	setup	fa	ذخیره
+save this text as contents of your header.inc.php	setup	fa	این متن را بعنوان محتوای پرونده header.inc.php خود ذخیره کنید
+schedule	setup	fa	برنامه ریزی
+scheduled backups	setup	fa	برنامه ریزی پشتیبان گیری
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	fa	یک کاربرد را انتخاب کنید، سپس نسخه مقصد را وارد کنید و بعد ثبت کنید تا آن نسخه پردازش شود.<br /> اگر شما نسخه ای وارد نکنید فقط جداول پایه برای کاربرد نصب خواهند شد. <br /> <blink>این باعث می شود که همه جداول کاربرد ابتدا حذف شوند</blink>
+select one...	setup	fa	انتخاب یکی...
+select the default applications to which your users will have access	setup	fa	کاربرد پیش فرض را برای دسترسی کاربرانتان انتخاب کنید
+select the desired action(s) from the available choices	setup	fa	فعالیت(های) دلخواه را از میان انتخابها برگزینید
+select to download file	setup	fa	برای دریافت پرونده انتخاب کنید
+select where you want to store/retrieve file contents	setup	fa	انتخاب کنید که شما میخواهید کجا محتوای پرونده ها ذخیره و بازیابی شوند
+select where you want to store/retrieve filesystem information	setup	fa	انتخاب کنید که شما میخواهید کجا اطلاعات سیستم پرونده ذخیره و بازیابی شوند
+select where you want to store/retrieve user accounts	setup	fa	انتخاب کنید که شما میخواهید کجا حسابهای کاربری ذخیره و بازیابی شوند
+select which group(s) will be exported (group membership will be maintained)	setup	fa	انتخاب کنید که شما میخواهید کدام گروه(ها) صادر شوند (عضویت در گروهها درنظر گرفته می شود)
+select which group(s) will be imported (group membership will be maintained)	setup	fa	انتخاب کنید که شما میخواهید کدام گروه(ها) وارد شوند (عضویت در گروهها درنظر گرفته می شود)
+select which group(s) will be modified (group membership will be maintained)	setup	fa	انتخاب کنید که شما میخواهید کدام گروه(ها) تغییر کنند (عضویت در گروهها درنظر گرفته می شود)
+select which languages you would like to use	setup	fa	انتخاب کنید کدامیک از زبانها را میخواهید استفاده کنید
+select which method of upgrade you would like to do	setup	fa	انتخاب کنید که شما میخواهید کدام سبک بهنگام سازی را انجام دهید
+select which type of authentication you are using	setup	fa	انتخاب کنید کدامیک از انواع تصدیق را استفاده میکنید
+select which user(s) will also have admin privileges	setup	fa	انتخاب کنید که شما میخواهید کدام کاربر(ان) حقوق مدیریتی داشته باشند
+select which user(s) will be exported	setup	fa	انتخاب کنید کدامیک از کاربران باید صادر شوند
+select which user(s) will be imported	setup	fa	انتخاب کنید کدامیک از کاربران باید وارد شوند
+select which user(s) will be modified	setup	fa	انتخاب کنید کدامیک از کاربران باید تغییر کنند
+select which user(s) will have admin privileges	setup	fa	انتخاب کنید کدامیک از کاربران باید حق مدیریت داشته باشند
+select your old version	setup	fa	نسخه قدیمی خود را انتخاب کنید
+selectbox	setup	fa	جعبه انتخاب
+server root	setup	fa	پوشه ریشه کارگزار
+sessions type	setup	fa	نوع نشستها
+set	setup	fa	مجموعه
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fa	برای نسخه های قبل از 2.4 ، این را روی «قدیمی» تنظیم کنید، در غیر اینصورت نسخه دقیق mcrypt که شما استفاده می کنید
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fa	تنظیم کردن مجموعه کاراکتر سیستم به UTF-8 (یونیکد) اجازه میدهد که داده ها به زبانهای گوناگون موجود باشند
+settings	setup	fa	تنظیمات
+setup	setup	fa	نصب
+setup demo accounts in ldap	setup	fa	ایجاد حسابهای کاربری آزمایشی در LDAP
+setup main menu	setup	fa	فهرست اصلی نصب
+setup the database	setup	fa	نصب پایگاه داده
+setup/config admin login	setup	fa	تنظیم/پیکربندی ورود مدیر
+show 'powered by' logo on	setup	fa	نمایش نشان «پشتیبانی بوسیله» در
+size	setup	fa	اندازه
+skip the installation tests (not recommended)	setup	fa	پرش از آزمایشهای قبل از نصب(پیشنهاد نمی شود)
+smtp server hostname or ip address	setup	fa	نشانی IP یا نام میزبان کارگزار SMTP
+smtp server port	setup	fa	درگاه کارگزار SMTP
+some or all of its tables are missing	setup	fa	همه یا بخشی از جداول آن مفقود شده
+sql encryption type	setup	fa	نوع رمزنگاری SQL برای گذرواژه ها(پیش فرض md5 است)
+standard (login-name identical to egroupware user-name)	setup	fa	استاندارد( نام ورود که برای نام کاربر گروه افزار شناخته شده است)
+standard mailserver settings (used for mail authentication too)	setup	fa	تنظیمات کارگزار رایانامه استاندارد( برای تصدیق رایانامه نیز استفاده می شود)
+start the postmaster	setup	fa	آغاز postmaster
+status	setup	fa	وضعیت
+step %1 - admin account	setup	fa	مرحله %1 - حساب کاربری مدیر
+step %1 - advanced application management	setup	fa	مرحله %1 - مدیریت پیشرفته کاربردها
+step %1 - configuration	setup	fa	مرحله %1 - پیکربندی
+step %1 - db backup and restore	setup	fa	مرحله %1 - پشتیبانگیری و بازگرداندن پایگاه داده
+step %1 - language management	setup	fa	مرحله %1 - مدیریت زبان
+step %1 - simple application management	setup	fa	مرحله %1 - مدیریت ساده کاربردها
+succesfully uploaded file %1	setup	fa	پرونده %1 با موفقیت ارسال شد
+table change messages	setup	fa	پیامهای تغییرات جدول
+tables dropped	setup	fa	جداول حذف شد
+tables installed, unless there are errors printed above	setup	fa	جداول نصب شده، مگر اینکه خطائی در خطوط فوق نمایش داده شده باشد
+tables upgraded	setup	fa	جداول بهنگام شد
+target version	setup	fa	نسخه مقصد
+tcp port number of database server	setup	fa	درگاه  TCP کارگزار پایگاه داده
+text entry	setup	fa	ورودی متنی
+the %1 extension is needed, if you plan to use a %2 database.	setup	fa	الحاقیه  %1 مورد نیاز است، اگر شما قصد استفاده از پایگاه داده %2 را دارید
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fa	db_type در حالت پیش فرض(%1) توسط این کارگزار پشتیبانی نمی شود. از اولین نوع مورد پشتیبانی استفاده می شود
+the file	setup	fa	پرونده
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fa	اولین قدم در نصب گروه افزار این است که مطمئن شوید که تنظیمات محیطی شما برای اجرای کاربرد صحیح است
+the following applications need to be upgraded:	setup	fa	کاربردهای ذیل نیاز به بهنگام سازی دارند
+the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	fa	الحاقیه imap برای کاربردهای رایانامه مورد نیاز است(حتی اگر شما از رایانامه با پروتکل pop3 استفاده می کنید)
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fa	الحاقیه mbstring برای پشتیبانی کامل از یونیکد (utf-8) و بقیه مجموعه کاراکترهای چند بایتی مورد نیاز است
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fa	تنظیم mbstring.func_overload = 7 در پرونده php.ini باید انجام شود تا پشتیبانی کامل  از یونیکد (utf-8) و بقیه مجموعه کاراکترهای چند بایتی انجام شود
+the session extension is needed to use php sessions (db-sessions work without).	setup	fa	الحاقیه session برای کارکردن نشست های php مورد نیاز است(db-sessions بدون آن کار میکند)
+the table definition was correct, and the tables were installed	setup	fa	تعاریف جدول درست است و جداول نصب شده اند
+the tables	setup	fa	جداول
+there was a problem trying to connect to your ldap server. <br />	setup	fa	خطائی در اتصال به کارگزار LDAP شما وجود دارد.<br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	fa	خطائی در اتصال به کارگزار LDAP شما وجود دارد.<br /> لطفا پیکربندی کارگزار LDAP خود را بررسی کنید
+this has to be outside the webservers document-root!!!	setup	fa	این باید بیرون از پوشه ریشه کارگزار وب باشد!!!
+this might take a while, please wait ...	setup	fa	این ممکن است مدتی طول بکشد. لطفا منتظر بمانید...
+this program lets you backup your database, schedule a backup or restore it.	setup	fa	این برنامه به شما اجازه می دهد تا از پایگاه داده خود پشتیبان تهیه کنید، یک پشتیبان گیری را برنامه ریزی نموده یا باز گردانید
+this program will convert your database to a new system-charset.	setup	fa	این برنامه پایگاه داده شما را به مجموعه کاراکتر جدید تبدیل میکند
+this program will help you upgrade or install different languages for egroupware	setup	fa	این برنامه به شما کمک می کند تا زبانهای گوناگون را برای گروه افزار نصب یا بهنگام سازی نمائید
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	fa	این بخش به شما کمک می کند تا کاربران و گروهها را از جدول حسابهای گروه افزار به درخت LDAP صادر کنید
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	fa	این بخش به شما کمک می کند تا کاربران و گروهها را از درخت LDAP به جدول حسابهای گروه افزار وارد کنید
+this section will help you setup your ldap accounts for use with egroupware	setup	fa	این بخش به شما کمک می کند تا حسابهای کاربری مبتنی بر LDAP را برای استفاده گروه افزار تنظیم کنید
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fa	این باید حدود 30 بایت طول داشته باشد.<br /> بخاطر داشته باشید: پیش فرض بطور تصادفی ایجاد می شود
+this stage is completed<br />	setup	fa	این مرحله کامل شد<br />
+to a version it does not know about	setup	fa	به نسخه ای که شناختی در موردش نیست
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	fa	برای تصدیق شدن خط زیر را به پرونده pg_hba.conf بیافزائید(در بالای همه خطوط) وpostgres  را مجددا راه اندازی کنید
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	fa	برای تغییر مجموعه کاراکتر: از پایگاه داده خود پشتیبان تهیه کنید، همه کاربردها را عزل کنید و دوباره پشتیبان تهیه شده را با فعال کردن گزینه «تبدیل پشتیبان به مجموعه کاراکتر انتخاب شده» نصب کنید
+to setup 1 admin account and 3 demo accounts.	setup	fa	به ایجاد یک حساب کاربری مدیر و سه حساب کاربری آزمایشی
+top	setup	fa	بالا
+translations added	setup	fa	ترجمه ها افزوده شد
+translations removed	setup	fa	ترجمه ها برداشته شد
+translations upgraded	setup	fa	ترجمه ها بهنگام شد
+true	setup	fa	درست
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fa	سعی کنید php خود را برای پشتیبانی از یکی از انواع DBMS های فوق تنظیم کنید، یا گروه افزار را دستی نصب کنید
+two weeks	setup	fa	دو هفته
+unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	fa	متأسفانه برخی از بسته های PHP/Apache مشکلاتی با آن دارند.( Apache ایستاد و شما نمی توانید دیگر وارد شوید)
+uninstall	setup	fa	عزل
+uninstall all applications	setup	fa	عزل همه کاربردها
+uninstalled	setup	fa	عزل شد
+upgrade	setup	fa	بهنگام
+upgrade all	setup	fa	بهنگام سازی همه
+upgraded	setup	fa	بهنگام شد
+upgrading tables	setup	fa	بهنگام سازی جداول
+upload backup	setup	fa	ارسال پشتیبان
+uploads a backup and installs it on your db	setup	fa	نسخه پشتیبان را ارسال کرده و آنرا روی پایگاه داده شما نصب میکند
+uploads a backup to the backup-dir, from where you can restore it	setup	fa	یک پشتیبان را به پوشه پشتیبان ارسال می کند، جائی که شما می توانید آنرا برگردانید
+use cookies to pass sessionid	setup	fa	از کوکیها برای ردوبدل کردن شناسه نشست استفاده شود
+use pure html compliant code (not fully working yet)	setup	fa	استفاده از کدهای HTML خالص(هنوز کامل کار نمی کند)
+user account prefix	setup	fa	از پیشوند حساب کاربری استفاده شود
+user for smtp-authentication (leave it empty if no auth required)	setup	fa	کاربر برای تصدیق SMTP(اگر تصدیق لازم نیستخالی بگذارید)
+usernames are casesensitive	setup	fa	نامهای کاربری حساس به حروف اند
+users choice	setup	fa	انتخاب کاربران
+utf-8 (unicode)	setup	fa	یونیکد(utf-8)
+version	setup	fa	نسخه
+version mismatch	setup	fa	نسخه ناهمگون است
+view	setup	fa	نما
+virtual mail manager (login-name includes domain)	setup	fa	مدیریت رایانامه مجازی(نام ورود به حوزه افزوده میشود)
+warning!	setup	fa	هشدار!
+we can proceed	setup	fa	میتوانیم شروع کنیم
+we will automatically update your tables/records to %1	setup	fa	ما بطور خودکار جداول / رکوردهای شما را به %1 بهنگام سازی می نمائیم
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fa	ما یک سری آزمایش را اجرا خواهیم کرد که ممکن است چند دقیقه طول بکشد. پیوند زیر را بفشارید تا رهسپار شویم...
+welcome to the egroupware installation	setup	fa	به برنامه نصب گروه افزار خوش آمدید
+what type of sessions management do you want to use (php session management may perform better)?	setup	fa	کدام نوع از مدیریت نشست را میخواهید استفاده کنید؟(PHP session ممکن است عملکرد بهتری داشته باشد)
+which database type do you want to use with egroupware?	setup	fa	چه نوع پایگاه داده ای را میخواهید که در گروه افزار استفاده کنید
+world readable	setup	fa	قابل خواندن توسط همه
+world writable	setup	fa	قابل نوشتن توسط همه
+would you like egroupware to cache the phpgw info array ?	setup	fa	آیا میخواهید که گروه افزار آرایه های phpgw را نگهداری کند؟
+would you like egroupware to check for a new version<br />when admins login ?	setup	fa	آیا میخواهید که گروه افزار برای نسخه جدید بررسی انجام دهد<br /> وقتی مدیر وارد می شود
+would you like to show each application's upgrade status ?	setup	fa	آیا میخواهید وضعیت بهنگام سازی هر کاربرد نمایش داده شود؟
+writable by the webserver	setup	fa	قابل نوشتن توسط کارگزار وب
+write config	setup	fa	پیکربندی وب
+year	setup	fa	سال
+yes	setup	fa	بله
+yes, with lowercase usernames	setup	fa	بله، نامهای کاربری با حروف کوچک
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fa	به نظر می رسد که شما در حال اجرای یک نسخه قبل از بتا از گروه افزار هستید.<br /> این نسخه ها هیچ پشتیبانی ندارند و قابل بهنگام سازی از طریق برنامه نصب نیستند.<br /> شما ممکن است بخواهید اول به نسخه 0.9.10 (آخرین نسخه ای که قبل از بتا ها را بهنگام سازی میکند) بهنگام سازی شوید.<br /> وسپس از آنجا به نسخه فعلی بهنگام سازی کنید
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fa	به نظر میرسد که شما از نسخه قدیمی PHP استفاده می کنید.<br /> این توصیه می شود که شما به نسخه های جدید بهنگام سازی کنید.<br /> نسخه های قدیمی تر PHP ممکن از به درستی گروه افزار را اجرا نکنند. با این همه <br /><br /> لطفا حداقل به نسخه %1 بهنگام سازی کنید
+you appear to be running version %1 of egroupware	setup	fa	به نظر میرسد شما از نسخه %1  گروه افزار استفاده میکنید
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	fa	به نظر می رسد که شما از PHP نسخه پائینتر از 4.1.0 استفاده می کنید. گروه افزار به نسخه 4.1.0 یا بالاتر نیاز دارد
+you appear to have %1 support.	setup	fa	به نظر می رسد شما %1 را پشتیبانی میکنید
+you appear to have php session support. enabling php sessions.	setup	fa	به نظر می رسد شما پشتیبانی از PHP session را دارید. پس PHP sessions فعال می شود
+you appear to have xml support enabled	setup	fa	به نظر میرسد شما از  XML پشتیبانی می کنید
+you are ready for this stage, but this stage is not yet written.<br />	setup	fa	شما برای این مرحله حاضرید، اما این مرحله هنوز نوشته نشده است.<br />
+you can install it by running:	setup	fa	شما میتوانید آنرا نصب کنید با اجرای:
+you didn't enter a config password for domain %1	setup	fa	شما گذرواژه ای برای پیکربندی حوزه %1 وارد نکردید
+you didn't enter a config username for domain %1	setup	fa	شما نام کاربری برای پیکربندی حوزه %1 وارد نکردید
+you didn't enter a header admin password	setup	fa	شما گذرواژه ای برای مدیریت سرآیند وارد نکردید
+you didn't enter a header admin username	setup	fa	شما نام کاربری برای مدیریت سرآیند وارد نکردید
+you do not have any languages installed. please install one now <br />	setup	fa	شما هنوز هیچ زبانی را نصب نکرده اید. لطفا یکی را نصب کنید.<br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	fa	شما هنوز پرونده header.inc.php خود را ایجاد نکرده اید!<br /> شما الان می توانید آنرا بسازید
+you have successfully logged out	setup	fa	شما با موفقیت خارج شدید
+you must enter a username for the admin	setup	fa	شما باید یک نام کاربری برای مدیر وارد کنید
+you need to add some domains to your header.inc.php.	setup	fa	شما باید حوزه ای به header.inc.php خود بیافزائید
+you need to select your current charset!	setup	fa	شما باید یک مجموعه کاراکتر صحیح انتخاب کنید!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	fa	شما مجبورید عزل کنید و مجددا نصب کنید یا برای تعمیر دستی اقدام کنید
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	fa	شما باید یک الگوی صحیح به کارگزار ldap بارگذاری کنید. پرونده phpgwapi/doc/ldap/README را ببینید
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	fa	شما نخواهید توانست با استفاده از PHP sessions به گروه افزار وارد شوید «نشست قابل بررسی نیست»!!!
+you're using an old configuration file format...	setup	fa	شما درحال استفاده یک قالب قدیمی از پیکربندی هستید...
+you're using an old header.inc.php version...	setup	fa	شما درحال استفاده از یک نسخه قدیمی از header.inc.php هستید...
+your applications are current	setup	fa	کاربردهای شما به روزهستند
+your backup directory '%1' %2	setup	fa	پوشه پشتیبان شما '%1' %2 است
+your database does not exist	setup	fa	پایگاه داده شما وجود ندارد
+your database is not working!	setup	fa	پایگاه داده شما کار نمی کند!
+your database is working, but you dont have any applications installed	setup	fa	پایگاه داده کار میکند، اما شما هیچ کاربردی هنوز نصب نکرده اید
+your egroupware api is current	setup	fa	API گروه افزار شما به روز است
+your files directory '%1' %2	setup	fa	پوشه پرونده های شما '%1' %2 است
+your header admin password is not set. please set it now!	setup	fa	گذرواژه مدیر سرآیند هنوز تنظیم نشده است. لطفا آنرا تنظیم کنید
+your header.inc.php needs upgrading.	setup	fa	پرونده header.inc.php نیاز به بهنگام سازی دارد
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	fa	پرونده header.inc.php شما به بهنگام سازی نیاز دارد. <br /><blink><b class="msg">هشدار!</b></blink><br /><b>پشتیبان تهیه کنید!</b
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	fa	PHP نصب شده شما از GD پشتیبانی نمیکند. شما به کتابخانه gd نسخه 1.8 یا جدید تر نیاز دارید تا بتوانید نمودارهای گانت در پروژه ها را ببینید
+your tables are current	setup	fa	جداول شما به روز هستند
+your tables will be dropped and you will lose data	setup	fa	جداول شما حذف شده و اطلاعات را از دست می دهید!!!
+your temporary directory '%1' %2	setup	fa	پوشه موقت شما '%1' %2 است
