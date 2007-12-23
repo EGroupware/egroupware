@@ -566,25 +566,14 @@ class html
 	*/
 	function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') 
 	{
-		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
-
-		$oFCKeditor		= new FCKeditor($_name) ;
-		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
-		$oFCKeditor->Config['CustomConfigurationsPath'] = $oFCKeditor->BasePath . 'fckeditor.egwconfig.js' ;
-		$oFCKeditor->Value	= $_content;
-		$oFCKeditor->Width	= str_replace('px','',$_width);		// FCK adds px if width contains no %
-		$oFCKeditor->Height	= str_replace('px','',$_height);
-		switch($_mode) {
-			case 'ascii':
-				return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";
-				break;
-			case 'simple':
-				$oFCKeditor->Config['ContextMenu'] = false;
-				$oFCKeditor->ToolbarSet = 'egw_simple';
-				return $oFCKeditor->CreateHTML() ;
-				break;
+		if (!$this->htmlarea_availible() || $_mode == 'ascii')
+		{
+			return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";		
 		}
-
+		else
+		{
+			return $this->fckEditor($_name, $_content, $_mode, array(), $_height='400px', $_width='100%');
+		}			
 	}
 	
 	/**
