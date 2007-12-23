@@ -572,7 +572,7 @@ class html
 		}
 		else
 		{
-			return $this->fckEditor($_name, $_content, $_mode, array(), $_height='400px', $_width='100%');
+			return $this->fckEditor($_name, $_content, $_mode, array(), $_height, $_width);
 		}			
 	}
 	
