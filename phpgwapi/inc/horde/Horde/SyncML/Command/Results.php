@@ -154,11 +154,11 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 			{
 				switch (strtolower(trim($matches[1])))
 				{
-					case 'outlook plug-in'
+					case 'outlook plug-in':
 					default:
 						$this->_deviceInfo['deviceType'] = 'workstation';
 						break;
-					case 'pocket pc plug-in'
+					case 'pocket pc plug-in':
 						$this->_deviceInfo['deviceType'] = 'windowsmobile';
 						break;
 				}
