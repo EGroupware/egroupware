@@ -50,11 +50,11 @@ if (!isset($GLOBALS['egw_info']['flags']['currentapp']))
 	echo '!!! PLEASE CORRECT THIS SITUATION !!!</b></p>';
 }
 
-include(EGW_API_INC.'/common_functions.inc.php');
+include_once(EGW_API_INC.'/common_functions.inc.php');
 
 if (extension_loaded('memcache') && ini_get('session.save_handler') == 'memcache')
 {
-	include(EGW_API_INC.'/memcache.inc.php');
+	include_once(EGW_API_INC.'/memcache.inc.php');
 }
 // check if we can restore the eGW enviroment from the php-session
 if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUEST['sessionid'])

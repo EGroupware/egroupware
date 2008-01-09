@@ -113,12 +113,12 @@
 				$this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__);
 				if ($this->db->next_record())
 				{
-					echo '<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir . '">update eGroupWare</a> before you can continue using it.</center>';
+					throw new Exception('<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir . '">update eGroupWare</a> before you can continue using it.</center>',999);
 				}
 				else
 				{
-					echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
-						.'eGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
+					throw new Exception('<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
+						.'eGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>',999);
 				}
 				exit;
 			}

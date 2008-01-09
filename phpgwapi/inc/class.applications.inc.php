@@ -50,7 +50,7 @@
 		 */
 		function applications($account_id = '')
 		{
-			if (is_object($GLOBALS['egw_setup']))
+			if (is_object($GLOBALS['egw_setup']) && is_object($GLOBALS['egw_setup']->db))
 			{
 				$this->db = clone($GLOBALS['egw_setup']->db);
 			}
