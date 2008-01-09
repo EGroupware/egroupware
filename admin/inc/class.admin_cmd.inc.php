@@ -15,11 +15,12 @@
  */
 abstract class admin_cmd
 {
-	const deleted = 0;
-	const scheduled = 1;
+	const deleted    = 0;
+	const scheduled  = 1;
 	const successful = 2;
-	const failed = 3;
-	const pending = 4;
+	const failed     = 3;
+	const pending    = 4;
+	const queued     = 5;	// command waits to be fetched from remote
 
 	/**
 	 * The status of the command, one of either scheduled, successful, failed or deleted
@@ -34,6 +35,7 @@ abstract class admin_cmd
 		admin_cmd::failed     => 'failed',
 		admin_cmd::deleted    => 'deleted',
 		admin_cmd::pending    => 'pending',
+		admin_cmd::queued     => 'queued',
 	);
 
 	protected $created;
@@ -203,11 +205,9 @@ abstract class admin_cmd
 	 * @return string sussess message
 	 * @throws Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997) or other Exceptions reported from remote
 	 */
-	private function remote_exec()
+	protected function remote_exec()
 	{
-		admin_cmd::_instanciate_remote();
-		
-		if (!($remote = admin_cmd::$remote->read($this->remote_id)))
+		if (!($remote = $this->read_remote($this->remote_id)))
 		{
 			throw new egw_exception_wrong_userinput(lang('Invalid remote id or name "%1"!',$id_or_name),997);
 		}
@@ -217,7 +217,11 @@ abstract class admin_cmd
 		}
 		$secret = md5($this->uid.$remote['remote_hash']);
 		
-		$postdata = $GLOBALS['egw']->translation->convert($this->as_array(),$GLOBALS['egw']->translation->charset(),'utf-8');
+		$postdata = $this->as_array();
+		if (is_object($GLOBALS['egw']->translation))
+		{
+			$postdata = $GLOBALS['egw']->translation->convert($postdata,$GLOBALS['egw']->translation->charset(),'utf-8');
+		}
 		// dont send the id's which have no meaning on the remote install
 		foreach(array('id','creator','modifier','requested','remote_id') as $name)
 		{
@@ -242,8 +246,10 @@ abstract class admin_cmd
 		{
 			$message = $value;
 		}
-		$message = $GLOBALS['egw']->translation->convert($message,'utf-8');
-		
+		if (is_object($GLOBALS['egw']->translation))
+		{
+			$message = $GLOBALS['egw']->translation->convert($message,'utf-8');
+		}
 		if (is_string($message) && preg_match('/^([0-9]+) (.*)$/',$message,$matches))
 		{
 			throw new egw_exception($matches[2],(int)$matches[1]);
@@ -275,6 +281,11 @@ abstract class admin_cmd
 	{
 		admin_cmd::_instanciate_sql();
 		
+		// check if uid already exists --> set the id to not try to insert it again (resulting in SQL error)
+		if (!$this->id && $this->uid && (list($other) = self::$sql->search(array('cmd_uid' => $this->uid))))
+		{
+			$this->id = $other['id'];
+		}
 		if (!is_null($this->id))
 		{
 			$this->modified = time();
@@ -510,7 +521,7 @@ abstract class admin_cmd
 			}
 		}
 		unset($vars['data']);
-		if ($this->data) $vars += $this->data;
+		if ($this->data) $vars = array_merge($this->data,$vars);
 		
 		return $vars;
 	}
