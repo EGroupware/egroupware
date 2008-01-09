@@ -1,5 +1,3 @@
-
-<!--
 /**
 *	Javascript file for AJAX select widget
 *	
@@ -16,7 +14,6 @@
 *
 *   @version $Id$
 */
--->
 
 //xajaxDebug = 1;
 var current_app = 'etemplate';
@@ -61,6 +58,11 @@ function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
 		results.id = widget_id + '[results]';
 		results.className = 'resultBox';
 		results.style.position = 'absolute';
+		// check if IE, if it is, fix the position
+		if (document.all) {
+			results.style.marginLeft = 0 - widget.offsetWidth - 2 * widget.offsetLeft - 1;
+			results.style.marginTop = widget.offsetHeight + 1;
+		}
 		results.style.zIndex = 50;
 		results.options = options;
 		results.innerHTML = "";
