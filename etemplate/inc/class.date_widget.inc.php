@@ -50,6 +50,7 @@
 			'date-timeonly' => 'Time',	// time
 			'date-houronly' => 'Hour',	// hour
 			'date-duration' => 'Duration', // duration
+			'date-since'    => 'Time since',	// time past since given time
 		);
 		var $dateformat;	// eg. Y-m-d, d-M-Y
 		var $timeformat;	// 12 or 24
@@ -89,14 +90,15 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$type = $cell['type'];
-			if ($type == 'date-duration')
+			switch ($type)
 			{
-				return $this->pre_process_duration($name,$value,$cell,$readonlys,$extension_data,$tmpl);
+				case 'date-duration':
+					return $this->pre_process_duration($name,$value,$cell,$readonlys,$extension_data,$tmpl);
 			}
 			list($data_format,$options,$options2) = explode(',',$cell['size']);
 			if ($type == 'date-houronly' && empty($data_format)) $data_format = 'H';
 			
-			$readonly = $cell['readonly'] || $readonlys;
+			$readonly = $cell['readonly'] || $readonlys || $type == 'date-since';
 
 			if (!$readonly)	// dont set extension-data on readonly, it's not needed and can conflict with other widgets
 			{
@@ -157,6 +159,10 @@
 					'H' => (int) adodb_date('H',$value),
 					'i' => (int) adodb_date('i',$value)
 				);
+			}
+			if ($type == 'date-since')
+			{
+				return $this->pre_process_since($value,$cell);
 			}
 			$time_0h0 = !(int)$value['H'] && !(int)$value['i'];
 
@@ -444,6 +450,62 @@
 				}
 			}
 			return True;	// extra Label is ok
+		}
+
+		/**
+		 * pre-processing of the time since extension
+		 *
+		 * @param array &$value value / existing content, can be modified
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @return boolean true if extra label is allowed, false otherwise
+		 */
+		function pre_process_since(&$value,&$cell)
+		{
+			static $unit2label = array(
+				'Y' => 'years',
+				'm' => 'month',
+				'd' => 'days',
+				'H' => 'hours',
+				'i' => 'minutes',
+				's' => 'seconds',
+			);
+			static $unit2s = array(
+				'Y' => 31536000,
+				'm' => 2628000,
+				'd' => 86400,
+				'H' => 3600,
+				'i' => 60,
+				's' => 1,
+			);
+			$cell = etemplate::empty_cell('label','',array('label'=>$cell['label']));
+
+			if ((string)$value['Y'] !== '')
+			{
+				if (!is_object($GLOBALS['egw']->datetime))
+				{
+					$GLOBALS['egw']->datetime = new egw_datetime();
+				}
+				$now_s = time() + $GLOBALS['egw']->datetime->tz_offset;	// time() is server-time and we need a user-time
+				
+				$val_s = mktime($value['H'],$value['i'],$value['s'],$value['m'],$value['d'],$value['Y']);
+				
+				$diff_s = $now_s - $val_s;
+			
+				foreach($unit2s as $unit => $unit_s)
+				{
+					if ($diff_s >= $unit_s || $unit == 's')
+					{
+						$value = round($diff_s/$unit_s,1).' '.lang($unit2label[$unit]);
+						break;
+					}
+					//echo "<p>$unit: diff_s=$diff_s >= $unit_s --> continue</p>\n";
+				}
+			}
+			else
+			{
+				$value = '';
+			}
+			return true;
 		}
 
 		/**
