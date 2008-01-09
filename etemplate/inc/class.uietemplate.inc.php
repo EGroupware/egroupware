@@ -1761,10 +1761,13 @@ foreach($sess as $key => $val)
 		}
 
 		/**
-		 * Resolve javascript pseudo functions: 
+		 * Resolve javascript pseudo functions in onclick or onchange: 
 		 * - egw::link('$l','$p') calls $egw->link($l,$p)
-		 * - form::name('name') returns expanded name/id taking into account the name at that point of the template hierashy
+		 * - form::name('name') returns expanded name/id taking into account the name at that point of the template hierarchy
+		 * - egw::lang('Message ...') translate the message
 		 * - confirm('message') translates 'message' and adds a '?' if not present
+		 * - window.open() replaces it with egw_openWindowCentered2()
+		 * - xajax_doXMLHTTP('etemplate. replace ajax calls in widgets with special handler not requiring etemplate run rights
 		 * 
 		 * @param string $on onclick, onchange, ... action
 		 * @param string $cname name-prefix / name-space
@@ -1772,32 +1775,39 @@ foreach($sess as $key => $val)
 		 */
 		function js_pseudo_funcs($on,$cname)
 		{
-			if (preg_match("/egw::link\\('([^']+)','(.+?)'\\)/",$on,$matches))	// the ? alters the expression to shortest match
-			{                                                                 	// this way we can correctly parse ' in the 2. argument
-				$url = $GLOBALS['egw']->link($matches[1],$matches[2]);
-				$on = str_replace($matches[0],'\''.$url.'\'',$on);
-			}
-			
-			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches)) {
-				foreach($matches[1] as $n => $matche_name) {
-					$matches[1][$n] = '\''.$this->form_name($cname,$matche_name).'\'';
+			if (strpos($on,'::') !== false)	// avoid the expensive regular expresions, for performance reasons
+			{
+				if (preg_match("/egw::link\\('([^']+)','(.+?)'\\)/",$on,$matches))	// the ? alters the expression to shortest match
+				{                                                                 	// this way we can correctly parse ' in the 2. argument
+					$url = $GLOBALS['egw']->link($matches[1],$matches[2]);
+					$on = str_replace($matches[0],'\''.$url.'\'',$on);
 				}
-				$on = str_replace($matches[0],$matches[1],$on);
+				
+				if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches)) {
+					foreach($matches[1] as $n => $matche_name) {
+						$matches[1][$n] = '\''.$this->form_name($cname,$matche_name).'\'';
+					}
+					$on = str_replace($matches[0],$matches[1],$on);
+				}
+				
+				if (preg_match('/egw::lang\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {
+					$str = lang($matches[1]);
+					$on = str_replace($matches[0],'\''.addslashes($str).'\'',$on);
+				}
 			}
-			
-			if (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {
+			if (strpos($on,'confirm(') !== false && preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {
 				$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
 				$on = str_replace($matches[0],'confirm(\''.addslashes($question).'\')',$on);
 				//$on = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$on);
 			}
 			
-			if (preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches)) {
+			if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches)) {
 				$on = str_replace($matches[0], "egw_openWindowCentered2('{$matches[1]}', '{$matches[2]}', '{$matches[3]}', '{$matches[4]}', '{$matches[5]}')", $on);
 			}
 			
 			// replace xajax calls to code in widgets, with the "etemplate" handler,
 			// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
-			if (strpos($on,"xajax_doXMLHTTP('etemplate.")!==false) {
+			if (strpos($on,"xajax_doXMLHTTP('etemplate.") !== false) {
 				$on = preg_replace("/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/",'xajax_doXMLHTTP(\''.$GLOBALS['egw_info']['flags']['currentapp'].'.\\1.etemplate\'',$on);
 			}
 			
