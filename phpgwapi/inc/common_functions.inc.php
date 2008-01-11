@@ -1306,8 +1306,9 @@
  */
 function __autoload($class)
 {
-	list($app,$baseclass) = explode('_',$class);
-	
+	$components = explode('_',$class);
+	$app =array_shift($components);
+	$baseclass = implode('_', $components);
 	// classes using the new naming schema app_class_name, eg. admin_cmd
 	if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
 		// classes using the new naming schema app_class_name, eg. admin_cmd
@@ -1323,6 +1324,13 @@ function __autoload($class)
 	{
 		//error_log("autoloaded class $class from $file");
 		include_once($file);
+	} else {
+		foreach($GLOBALS['egw_info']['apps'] as $lapp=>$appvalue){
+			if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$lapp.'/inc/class.'.$class.'.inc.php')){
+				#echo "$lapp,$class<br>";
+				include_once($file);
+			}
+		}
 	}
 }
 	
