@@ -42,9 +42,19 @@ include('inc/functions.inc.php');
 $GLOBALS['egw_setup']->translation->no_translation_marker = '';
 $GLOBALS['egw_setup']->system_charset = $charset;
 
+/**
+ * Echo the exception message and exit the script with a numeric code, does NOT return
+ *
+ * @param Exception $e
+ */
 function cli_exception_handler(Exception $e)
 {
-	fail($e->getCode(),$e->getMessage());
+	echo $e->getMessage()."\n";
+//	if ($e instanceof egw_exception_assertion_failed && !($e instanceof egw_exception_wrong_userinput))
+	{
+		echo $e->getTraceAsString()."\n";
+	}
+	exit($e->getCode() ? $e->getCode() : 9999);	// always give a non-zero exist status
 }
 set_exception_handler('cli_exception_handler');
 
@@ -109,7 +119,27 @@ switch($action)
 		break;
 
 	default:
-		fail(90,lang("Unknown option '%1' !!!",$action));
+		// we allow to call admin_cmd classes directly, if they define the constant SETUP_CLI_CALLABLE
+		if (substr($action,0,2) == '--' && class_exists($class = str_replace('-','_',substr($action,2))) &&
+			is_subclass_of($class,'admin_cmd') && constant($class.'::SETUP_CLI_CALLABLE'))
+		{
+			$args = null;
+			foreach($arguments as $arg)
+			{
+				list($name,$value) = explode('=',$arg,2);
+				if(property_exists('admin_cmd',$name))		// dont allow to overwrite admin_cmd properties
+				{
+					throw new egw_exception_wrong_userinput(lang("Invalid argument '%1' !!!",$arg),90);
+				}
+				$args[$name] = $value;
+			}
+			$cmd = new $class($args);
+			$msg = $cmd->run();
+			if (is_array($msg)) $msg = print_r($msg,true);
+			echo "$msg\n";
+			break;
+		}
+		throw new egw_exception_wrong_userinput(lang("Unknown option '%1' !!!",$action),90);
 }
 exit(0);
 
@@ -402,14 +432,7 @@ function do_header($create,&$arguments)
 	array_unshift($arguments,$create ? '--create-header' : '--edit-header');
 
 	$cmd = new setup_cmd_header($create?'create':'edit',$arguments);
-	try {
-		$msg = $cmd->run();
-	}
-	catch(Exception $e) {
-		fail($e->getCode(),$e->getMessage());
-	}
-	echo "\n$msg\n\n";
-	exit(0);
+	echo $cmd->run()."\n";
 }
 
 /**

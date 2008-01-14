@@ -16,6 +16,11 @@
 class setup_cmd_database extends setup_cmd 
 {
 	/**
+	 * Allow to run this command via setup-cli
+	 */
+	const SETUP_CLI_CALLABLE = true;
+
+	/**
 	 * Instance of egw_db to connect or create the db
 	 *
 	 * @var egw_db

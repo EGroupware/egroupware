@@ -19,6 +19,11 @@
 class setup_cmd_showheader extends setup_cmd 
 {
 	/**
+	 * Allow to run this command via setup-cli
+	 */
+	const SETUP_CLI_CALLABLE = true;
+	
+	/**
 	 * Constructor
 	 *
 	 * @param boolean $data=true true: send only the remote_hash, domain and webserver_url, 

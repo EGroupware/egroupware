@@ -16,6 +16,11 @@
 class setup_cmd_ldap extends setup_cmd 
 {
 	/**
+	 * Allow to run this command via setup-cli
+	 */
+	const SETUP_CLI_CALLABLE = true;
+
+	/**
 	 * Instance of ldap object
 	 *
 	 * @var ldap
