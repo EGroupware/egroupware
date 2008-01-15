@@ -27,7 +27,10 @@
 				'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'cal_modifier' => array('type' => 'int','precision' => '4'),
 				'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0'),
-				'cal_special' => array('type' => 'int','precision' => '2','default' => '0')
+				'cal_special' => array('type' => 'int','precision' => '2','default' => '0'),
+				'cal_etag' => array('type' => 'int','precision' => '4'),
+				'cal_edit_user' => array('type' => 'int','precision' => '4'),
+				'cal_edit_time' => array('type' => 'int','precision' => '8')
 			),
 			'pk' => array('cal_id'),
 			'fk' => array(),

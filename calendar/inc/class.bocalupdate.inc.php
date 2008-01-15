@@ -703,6 +703,11 @@ class bocalupdate extends bocal
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
 		}
+		// Lock realized with a counter, that is checked and incremented as we save the entry
+		$check_etag = $event['etag'];
+		if (!$check_etag){
+			$check_etag=$check_etag+1;
+		}	
 		// same with the recur exceptions
 		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 		{
@@ -719,7 +724,7 @@ class bocalupdate extends bocal
 				$event['alarm'][$id]['time'] = $this->date2ts($alarm['time'],true);
 			}
 		}
-		if (($cal_id = $this->so->save($event,$set_recurrences)) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
+		if (($cal_id = $this->so->save($event,$set_recurrences,NULL,$check_etag)) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$save_event['id'] = $cal_id;
 			$this->set_recurrences($save_event);
@@ -1103,4 +1108,17 @@ class bocalupdate extends bocal
 		return $cat_list;
 	}
 
+	/**
+	 * updates the edit user information for timelocking an event 
+	 *
+	 * @param array &$event2update event-array, on return some values might be changed due to set defaults
+	 * 	this is a wrapper for the socal function
+	 * 	cal_edit_time is set to current timestamp
+	 * @return the returnvalue of so->save_edit_user (0 (someone else modified the entry), true (saved) or false (could not save)))
+	 */
+	function update_edit_user(&$event2update)
+	{
+		$event2update['cal_edit_time']=$this->now_su;
+		return $this->so->save_edit_user($event2update);		
+	}
 }

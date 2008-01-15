@@ -32,6 +32,14 @@
      </select>
     </td>
    </tr>
+   <!--- lock setting -->
+   <tr bgcolor="{row_off}">
+   <td>{lang_setting_lock_time_calender}:</td>
+    <td><input name="newsettings[Lock_Time_Calender]" value="{value_Lock_Time_Calender}" size="40"></td>
+    
+   
+    </td>
+   </tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->

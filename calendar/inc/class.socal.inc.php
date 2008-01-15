@@ -491,8 +491,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param boolean &$set_recurrences on return: true if the recurrences need to be written, false otherwise
 	 * @param int $change_since=0 time from which on the repetitions should be changed, default 0=all
 	 * @return boolean/int false on error, cal_id otherwise
+	 * @return int $check_etag check etag from GUI, if there is any Change since the last save   SB:Lock for etag 
 	 */
-	function save($event,&$set_recurrences,$change_since=0)
+	function save($event,&$set_recurrences,$change_since=0,$check_modified=0)
 	{
 		//echo "<p>socal::save(,$change_since) event="; _debug_array($event);
 
@@ -512,6 +513,30 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		if (is_array($event['cal_category'])) $event['cal_category'] = implode(',',$event['cal_category']);
 
+		// while saving handle the etag as condition for the update, to check if an entry was saved before this action occured
+		$check_etag = $event['cal_etag'];  
+		if ($cal_id) 
+		{
+			
+			$event['cal_etag']=$check_etag+1;
+			$event['cal_edit_user']=NULL;
+			$event['cal_edit_time']=NULL;
+			$where = array('cal_id' => $cal_id);
+			if ($check_etag) $where['cal_etag'] = $check_etag;
+			if (!$this->db->update($this->cal_table,$event,$where,__LINE__,__FILE__))
+			{
+				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning false");
+				return false;	// Error
+			}
+			//echo $this->db->affected_rows()."##";
+			if ($check_etag && $this->db->affected_rows() < 1)
+			{
+				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning 0 (nothing updated, eg. condition not met)");
+				return 0;	// someone else updated the modtime or deleted the entry
+			}
+			
+		}
+		
 		if ($cal_id)
 		{
 			$this->db->update($this->cal_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__);
@@ -1113,5 +1138,43 @@ ORDER BY cal_user_type, cal_usre_id
 			// now change participant in the rest to contain new user instead of old user
 			$this->db->update($this->user_table,array('cal_user_id' => $new_user),array('cal_user_type' => 'u','cal_user_id' => $old_user),__LINE__,__FILE__);
 		}
+	}
+	
+	/**
+	 * Save actually User, who is working on the Calenar Data if there is no user set or the timestamp is "expired"
+	 *
+	 * @param array $event
+	 *
+	 * @return (0 (someone else modified the entry), true (saved) or false (could not save)))
+	 */
+	function save_edit_user($event2update) {
+	
+		$cal_id = (int) $event2update['id'];
+		//unset($event2update['id']);
+
+		
+		if ($cal_id && $event2update['cal_edit_user'] && $event2update['cal_edit_time']) 
+		{
+			$locktime = ($GLOBALS['egw_info']['server']['Lock_Time_Calender'] ? $GLOBALS['egw_info']['server']['Lock_Time_Calender'] : 1);
+			$where = array('cal_id' => $cal_id,'cal_edit_user is NULL or cal_edit_time<'.$event2update['cal_edit_time']-$locktime);
+			if (!$this->db->update($this->cal_table,$event2update,$where,__LINE__,__FILE__))
+			{
+				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning false");
+				return false;	// Error
+			}
+			//echo $this->db->affected_rows()."##";
+			if ($this->db->affected_rows() < 1)
+			{
+				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning 0 (nothing updated, eg. condition not met)");
+				return 0;	// someone else updated the modtime or deleted the entry
+			}
+			else  
+			{
+				return true;	
+			}
+			
+		}
+		
+		
 	}
 }

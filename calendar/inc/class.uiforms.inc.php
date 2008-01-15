@@ -54,6 +54,13 @@ class uiforms extends uical
 	var $tabs = 'general|description|participants|recurrence|custom|links|alarms';
 	
 	/**
+	 * default timelock for entries, that are opened by another user
+	 *
+	 * @var time in secomdas
+	 */
+	var $locktime_default=1;
+
+	/**
 	 * Constructor
 	 */
 	function uiforms()
@@ -315,6 +322,7 @@ class uiforms extends uical
 			'no_popup'    => $content['no_popup'],
 			$this->tabs   => $content[$this->tabs],
 		);
+		$noerror=true;
 		switch((string)$button)
 		{
 		case 'exception':	// create an exception in a recuring event
@@ -407,7 +415,19 @@ class uiforms extends uical
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
-			elseif($conflicts)	// true and non-array means Ok ;-)
+			elseif ($conflicts ==0) 
+			{
+				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
+								'menuaction' => 'calendar.uiforms.edit',
+									'cal_id'    => $content['id'],
+									'referer'    => $referer,
+									))).'">','</a>');
+				$noerror=false;
+								
+			}
+			elseif ($conflicts>0) 
 			{
 				$msg .= ($msg ? ', ' : '') . lang('Event saved');
 
@@ -502,7 +522,7 @@ class uiforms extends uical
 			}
 			break;
 		}
-		if (in_array($button,array('cancel','save','delete')))
+		if (in_array($button,array('cancel','save','delete')) && $noerror)
 		{
 			if ($content['no_popup'])
 			{
@@ -848,6 +868,25 @@ class uiforms extends uical
 		
 		$content['cancel_needs_refresh'] = (bool)$_GET['cancel_needs_refresh'];
 		
+		// time locking for entries 		
+		$locktime = $GLOBALS['egw_info']['server']['Lock_Time_Calender'];
+		if ($locktime == '') {
+			//default Lock Time
+			$locktime=$GLOBALS['egw_info']['server']['Lock_Time_Calender']=$this->locktime_default;
+		} 
+		
+		if (($this->bo->now_su>($event['edit_time']+$locktime)) || ($event['edit_time']==''))
+		{
+			//echo "write Lock!!->DB";
+			$event2update['id']=$event['id'];
+			$event2update['cal_edit_user']=$this->user;
+			$event2update['cal_edit_time']=''; // this is set in bo->update_edit_user
+			$this->bo->update_edit_user($event2update);
+		}
+		else 
+		{
+			if ($event['edit_user'] && $event['edit_user']!=$this->user) $content['msg'].=" ".lang('This entry is opened by user: ').$GLOBALS['egw']->accounts->id2name($event['edit_user']);			
+		}
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
 		{

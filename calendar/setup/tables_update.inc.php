@@ -1526,4 +1526,23 @@
 	{
 		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.4';
 	}
+
+	$test[] = '1.4';
+	function calendar_upgrade1_4()
+	{
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_etag',array(
+			'type' => 'int',
+			'precision' => '4'
+		));
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_edit_user',array(
+			'type' => 'int',
+			'precision' => '4'
+		));
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_edit_time',array(
+			'type' => 'int',
+			'precision' => '8'
+		));
+
+		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.5';
+	}
 ?>
