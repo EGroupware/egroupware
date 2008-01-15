@@ -454,6 +454,24 @@ class uiinfolog
 		//echo "<p>readonlys = "; _debug_array($readonlys);
 		//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 		
+		// if filtered by type, show only the stati of the filtered type
+		if ($query['col_filter']['info_type'] && isset($this->bo->status[$query['col_filter']['info_type']]))
+		{
+			$rows['sel_options']['info_status'] = $this->bo->status[$query['col_filter']['info_type']];
+		}
+		else	// show all stati
+		{
+			$rows['sel_options']['info_status'] = array();
+			foreach($this->bo->status as $typ => $stati)
+			{
+				if ($typ != 'defaults') $rows['sel_options']['info_status'] += $stati;
+			}
+		}
+		if ($this->bo->history)
+		{
+			$rows['sel_options']['info_status']['deleted'] = 'deleted';
+		}
+
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog')
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog');
@@ -663,15 +681,6 @@ class uiinfolog
 		$persist['own_referer'] = $own_referer;
 		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
 
-		$all_stati = array();
-		foreach($this->bo->status as $typ => $stati)
-		{
-			if ($typ != 'defaults') $all_stati += $stati;
-		}
-		if ($this->bo->history)
-		{
-			$all_stati['deleted'] = 'deleted';
-		}
 		if (!$called_as)
 		{
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
@@ -682,7 +691,6 @@ class uiinfolog
 		}
 		return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
 			'info_type'     => $this->bo->enums['type'],
-			'info_status'   => $all_stati
 		),$readonlys,$persist,$return_html ? -1 : 0);
 	}
 
