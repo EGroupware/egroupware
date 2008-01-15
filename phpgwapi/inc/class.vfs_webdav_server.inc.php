@@ -392,6 +392,57 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 	}
 
 	/**
+	 * PROPPATCH method handler
+	 * 
+	 * The current version only allows Webdrive to set creation and modificaton dates.
+	 * They are not stored as (arbitrary) WebDAV properties with their own namespace and name,
+	 * but in the regular vfs attributes.
+	 *
+	 * @todo Store a properties in the DB and retrieve them in PROPFIND again.
+	 * @param  array  general parameter passing array
+	 * @return bool   true on success
+	 */
+	function PROPPATCH(&$options) 
+	{
+		foreach ($options["props"] as $key => $prop) {
+			if ($prop["ns"] == "DAV:") {
+				$options["props"][$key]['status'] = "403 Forbidden";
+			} else {
+				$attributes = array();
+				switch($prop['ns'])
+				{
+					// allow Webdrive (Novel) to set creation and modification time
+					case 'http://www.southrivertech.com/':
+						switch($prop['name'])
+						{
+							case 'srt_modifiedtime':
+							case 'getlastmodified':
+								 $attributes['modified'] = strtotime($prop['val']);
+								 break;
+							case 'srt_creationtime':
+								 $attributes['created'] = strtotime($prop['val']);
+								 break;
+						}
+						break;
+				}
+				if ($attributes)
+				{
+					$vfs_data = array(
+						'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
+						'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+						'attributes'=> $attributes,
+					);
+					$this->vfs->set_attributes($vfs_data);
+				}
+			}
+			if ($this->debug) $props[] = '('.$prop["ns"].')'.$prop['name'].'='.$prop['val'];
+		}
+		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": path=$options[path],props=".implode(', ',$props));
+		
+		return "";	// this is as the filesystem example handler does it, no true or false ...
+	}
+
+    /**
 	 * auth check in the session creation in dav.php, to avoid being redirected to login.php
 	 *
 	 * @param string $type
