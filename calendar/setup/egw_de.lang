@@ -50,6 +50,7 @@ close the window	calendar	de	Schließt das Fenster
 compose a mail to all participants after the event is saved	calendar	de	Schreibe eine Mail an alle Teilnehmer nachdem der Termin gespeichert wurde
 copy of:	calendar	de	Kopie von:
 copy this event	calendar	de	Kopiert diesen Termin
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 countries	calendar	de	Länder
 country	calendar	de	Land
 create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
@@ -101,6 +102,7 @@ error: importing the ical	calendar	de	Fehler: beim Importieren des iCal
 error: no participants selected !!!	calendar	de	Fehler: keine Teilnehmer ausgewählt !!!
 error: saving the event !!!	calendar	de	Fehler: beim Speichern des Termins !!!
 error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muß vor Endzeit liegen !!!
+error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
 event copied - the copy can now be edited	calendar	de	Termin kopiert - die Kopie kann jetzt bearbeitet werden
 event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen

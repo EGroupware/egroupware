@@ -50,6 +50,7 @@ close the window	calendar	en	Close the window
 compose a mail to all participants after the event is saved	calendar	en	compose a mail to all participants after the event is saved
 copy of:	calendar	en	Copy of:
 copy this event	calendar	en	Copy this event
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
 countries	calendar	en	Countries
 country	calendar	en	Country
 create an exception for the given date	calendar	en	Create an exception for the given date
@@ -101,6 +102,7 @@ error: importing the ical	calendar	en	Error: importing the iCal
 error: no participants selected !!!	calendar	en	Error: no participants selected !!!
 error: saving the event !!!	calendar	en	Error: saving the event !!!
 error: starttime has to be before the endtime !!!	calendar	en	Error: Starttime has to be before the endtime !!!
+error: the entry has been updated since you opened it for editing!	calendar	en	Error: the entry has been updated since you opened it for editing!
 event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited
 event deleted	calendar	en	Event deleted
 event details follow	calendar	en	Event Details follow

@@ -156,6 +156,7 @@ class uiforms extends uical
 	 */
 	function process_edit($content)
 	{
+		$referer=$this->view_menuaction;
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
 		unset($content['button']); unset($content['action']);
@@ -298,7 +299,7 @@ class uiforms extends uical
 									if (!$preserv['no_popup'])
 									{
 										$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-											'menuaction' => $content['referer'],
+											'menuaction' => $referer,
 											'msg' => $msg,
 										))).'\';';
 									}
@@ -318,7 +319,7 @@ class uiforms extends uical
 			'view'        => $view,
 			'edit_single' => $content['edit_single'],
 			'actual_date' => $content['actual_date'],
-			'referer'     => $content['referer'],
+			'referer'     => $referer,
 			'no_popup'    => $content['no_popup'],
 			$this->tabs   => $content[$this->tabs],
 		);
@@ -422,7 +423,7 @@ class uiforms extends uical
 								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
 								'menuaction' => 'calendar.uiforms.edit',
 									'cal_id'    => $content['id'],
-									'referer'    => $content['referer'],
+									'referer'    => $referer,
 									))).'">','</a>');
 				$noerror=false;
 								
@@ -437,7 +438,7 @@ class uiforms extends uical
 					$this->link->link('calendar',$event['id'],$content['link_to']['to_id']);
 				}
 				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $content['referer'],
+					'menuaction' => $referer,
 					'msg' => $msg,
 				))).'\';';
 
@@ -456,7 +457,7 @@ class uiforms extends uical
 			if($content['cancel_needs_refresh'])
 			{
 				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $content['referer'],
+					'menuaction' => $referer,
 					'msg' => $msg,
 				))).'\';';
 			}
@@ -467,7 +468,7 @@ class uiforms extends uical
 			{
 				$msg = lang('Event deleted');
 				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $content['referer'],
+					'menuaction' => $referer,
 					'msg' => $msg,
 				))).'\';';
 			}
@@ -527,7 +528,7 @@ class uiforms extends uical
 			if ($content['no_popup'])
 			{
 				$GLOBALS['egw']->redirect_link('/index.php',array(
-					'menuaction' => $content['referer'],
+					'menuaction' => $referer,
 					'msg'        => $msg,
 				));
 			}
