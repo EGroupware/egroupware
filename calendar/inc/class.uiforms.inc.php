@@ -422,7 +422,7 @@ class uiforms extends uical
 								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
 								'menuaction' => 'calendar.uiforms.edit',
 									'cal_id'    => $content['id'],
-									'referer'    => $referer,
+									'referer'    => $content['referer'],
 									))).'">','</a>');
 				$noerror=false;
 								
