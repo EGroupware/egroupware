@@ -1610,24 +1610,27 @@ class bocal
 			$this->cached_holidays[$year] = $this->holidays->read_holiday();
 			
 			// search for birthdays
-			$contacts =& CreateObject('phpgwapi.contacts');
-			$bdays =& $contacts->read(0,0,array('id','n_family','n_given','n_prefix','n_middle','bday'),'',"bday=!'',n_family=!''",'ASC','bday');
-			if ($bdays)
+			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
 			{
-				// sort by month and day only
-				usort($bdays,create_function('$a,$b','return (int) $a[\'bday\'] == (int) $b[\'bday\'] ? strcmp($a[\'bday\'],$b[\'bday\']) : (int) $a[\'bday\'] - (int) $b[\'bday\'];'));
-				foreach($bdays as $pers)
+				$contacts =& CreateObject('phpgwapi.contacts');
+				$bdays =& $contacts->read(0,0,array('id','n_family','n_given','n_prefix','n_middle','bday'),'',"bday=!'',n_family=!''",'ASC','bday');
+				if ($bdays)
 				{
-					list($m,$d,$y) = explode('/',$pers['bday']);
-					if ($y > $year) continue; 	// not yet born
-					$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
-						'day'       => $d,
-						'month'     => $m,
-						'occurence' => 0,
-						'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
-							$pers['n_family'].($y ? ' ('.$y.')' : ''),
-						'birthyear' => $y,	// this can be used to identify birthdays from holidays
-					);
+					// sort by month and day only
+					usort($bdays,create_function('$a,$b','return (int) $a[\'bday\'] == (int) $b[\'bday\'] ? strcmp($a[\'bday\'],$b[\'bday\']) : (int) $a[\'bday\'] - (int) $b[\'bday\'];'));
+					foreach($bdays as $pers)
+					{
+						list($m,$d,$y) = explode('/',$pers['bday']);
+						if ($y > $year) continue; 	// not yet born
+						$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
+							'day'       => $d,
+							'month'     => $m,
+							'occurence' => 0,
+							'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
+								$pers['n_family'].($y && !$GLOBALS['egw_info']['server']['hide_birthdays'] ? ' ('.$y.')' : ''),
+							'birthyear' => $y,	// this can be used to identify birthdays from holidays
+						);
+					}
 				}
 			}
 			// store holidays and birthdays in the session		

@@ -1,20 +1,20 @@
 <!-- BEGIN header -->
 <form method="POST" action="{action_url}">
 <table border="0" align="center">
-   <tr bgcolor="{th_bg}">
+   <tr class="th">
     <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
    </tr>
 <!-- END header -->
 
 <!-- BEGIN body -->
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td colspan="2"><b>{lang_Calendar_settings}</b></td>
    </tr>
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Do_you_wish_to_autoload_calendar_holidays_files_dynamically?}</td>
     <td>
      <select name="newsettings[auto_load_holidays]">
@@ -23,7 +23,7 @@
      </select>
     </td>
    </tr>
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Location_to_autoload_from}:</td>
     <td>
      <select name="newsettings[holidays_url_path]">
@@ -33,17 +33,27 @@
     </td>
    </tr>
    <!--- lock setting -->
-   <tr bgcolor="{row_off}">
+   <tr class="row_on">
    <td>{lang_setting_lock_time_calender}:</td>
     <td><input name="newsettings[Lock_Time_Calender]" value="{value_Lock_Time_Calender}" size="40"></td>
-    
-   
+   </tr>
+   <tr class="row_off">
+    <td colspan="2"><b>{lang_Birthdays}</b></td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_Show_birthdays_from_addressbook}:</td>
+    <td>
+     <select name="newsettings[hide_birthdays]">
+      <option value="">{lang_Yes}</option>
+      <option value="date_only"{selected_hide_birthdays_date_only}>{lang_Show_only_the_date,_not_the_year}</option>
+      <option value="yes"{selected_hide_birthdays_yes}>{lang_No}</option>
+     </select>
     </td>
    </tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
     <td colspan="2">
 &nbsp;
     </td>
