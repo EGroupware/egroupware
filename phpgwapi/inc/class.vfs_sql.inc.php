@@ -1970,6 +1970,18 @@
 						$edited_comment = 1;
 					}
 					$to_write[$this->vfs_column_prefix.$attribute] = $data['attributes'][$attribute];
+					
+					if ($this->file_actions)
+					{
+						switch($attribute)
+						{
+							// if the modification time get's set, we also set it in the filesystem, as 
+							// the next reload reset it again to the modification time of the filesystem
+							case 'modified':
+								touch($p->real_full_path,$data['attributes'][$attribute]);
+								break;
+						}
+					}
 				}
 			}
 

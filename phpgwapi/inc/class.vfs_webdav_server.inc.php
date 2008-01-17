@@ -405,39 +405,54 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 	function PROPPATCH(&$options) 
 	{
 		foreach ($options["props"] as $key => $prop) {
-			if ($prop["ns"] == "DAV:") {
-				$options["props"][$key]['status'] = "403 Forbidden";
-			} else {
-				$attributes = array();
-				switch($prop['ns'])
-				{
-					// allow Webdrive (Novel) to set creation and modification time
-					case 'http://www.southrivertech.com/':
-						switch($prop['name'])
-						{
-							case 'srt_modifiedtime':
-							case 'getlastmodified':
-								 $attributes['modified'] = strtotime($prop['val']);
-								 break;
-							case 'srt_creationtime':
-								 $attributes['created'] = strtotime($prop['val']);
-								 break;
-						}
-						break;
-				}
-				if ($attributes)
-				{
-					$vfs_data = array(
-						'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-						'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-						'attributes'=> $attributes,
-					);
-					$this->vfs->set_attributes($vfs_data);
-				}
+			$attributes = array();
+			switch($prop['ns'])
+			{
+				// allow Webdrive to set creation and modification time
+				case 'http://www.southrivertech.com/':
+					switch($prop['name'])
+					{
+						case 'srt_modifiedtime':
+						case 'getlastmodified':
+							$attributes['modified'] = strtotime($prop['val']);
+							break;
+						case 'srt_creationtime':
+							$attributes['created'] = strtotime($prop['val']);
+							break;
+					}
+					break;
+					
+				case 'DAV:':
+					switch($prop['name'])
+					{
+						// allow netdrive to change the modification time
+						case 'getlastmodified':
+							$attributes['modified'] = strtotime($prop['val']);
+							break;
+						// not sure why, the filesystem example of the WebDAV class does it ...
+						default:
+							$options["props"][$key]['status'] = "403 Forbidden";
+							break;
+					}
+					break;
 			}
 			if ($this->debug) $props[] = '('.$prop["ns"].')'.$prop['name'].'='.$prop['val'];
 		}
-		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": path=$options[path],props=".implode(', ',$props));
+		if ($attributes)
+		{
+			$vfs_data = array(
+				'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
+				'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+				'attributes'=> $attributes,
+			);
+			$this->vfs->set_attributes($vfs_data);
+		}
+		if ($this->debug)
+		{
+			error_log(__CLASS__.'::'.__METHOD__.": path=$options[path], props=".implode(', ',$props));
+			if ($attributes) error_log(__CLASS__.'::'.__METHOD__.": path=$options[path], set attributes=".str_replace("\n",' ',print_r($attributes,true)));
+		}
+
 		
 		return "";	// this is as the filesystem example handler does it, no true or false ...
 	}
