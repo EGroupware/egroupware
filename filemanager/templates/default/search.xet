@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.search.rows" template="" lang="" group="0" version="1.4.001">
+	<template id="filemanager.search.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" height="auto">
 			<columns>
 				<column width="20"/>
+				<column/>
+				<column/>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -22,9 +25,12 @@
 					<nextmatch-sortheader label="Directory" id="vfs_directory"/>
 					<nextmatch-sortheader label="name" id="vfs_name"/>
 					<nextmatch-header label="mime type" id="mime_type"/>
+					<nextmatch-sortheader label="Size" id="vfs_size"/>
 					<nextmatch-sortheader label="comment" id="vfs_comment"/>
 					<nextmatch-sortheader label="created" id="vfs_created"/>
+					<nextmatch-accountfilter options="Created by" id="vfs_createdby_id"/>
 					<nextmatch-sortheader label="modified" id="vfs_modified"/>
+					<nextmatch-accountfilter options="Modified by" id="vfs_modifiedby_id"/>
 				</row>
 				<row class="row">
 					<image label="$row_cont[vfs_mime_type]" src="${row}[icon]" align="center"/>
@@ -33,9 +39,16 @@
 					<description id="${row}[vfs_directory]" no_lang="1" options=",$row_cont[dir_link]"/>
 					<description id="${row}[vfs_name]" no_lang="1" options=",$row_cont[file_link]"/>
 					<description id="${row}[vfs_mime_type]"/>
+					<description id="${row}[vfs_size]" align="right"/>
 					<description id="${row}[vfs_comment]" no_lang="1"/>
-					<description id="${row}[vfs_created]" no_lang="1"/>
-					<description id="${row}[vfs_modified]" no_lang="1"/>
+					<date-time id="${row}[vfs_created]" options="Y-m-d H:i:s" readonly="true"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[vfs_createdby_id]" readonly="true"/>
+					</menulist>
+					<date-time id="${row}[vfs_modified]" options="Y-m-d H:i:s" readonly="true"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[vfs_modifiedby_id]" readonly="true"/>
+					</menulist>
 				</row>
 			</rows>
 		</grid>
