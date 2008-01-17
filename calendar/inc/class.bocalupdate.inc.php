@@ -101,6 +101,7 @@ class bocalupdate extends bocal
 		{
 			return false;
 		}
+
 		if (!$event['id'])	// some defaults for new entries
 		{
 			// if no owner given, set user to owner
@@ -138,6 +139,7 @@ class bocalupdate extends bocal
 			}
 			return false;
 		}
+
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
 		if (!$ignore_conflicts && !$event['non_blocking'] && isset($event['start']) && isset($event['end']))
 		{
@@ -258,6 +260,7 @@ class bocalupdate extends bocal
 				return $conflicts;
 			}					
 		}
+
 		// save the event to the database
 		if ($touch_modified)
 		{
@@ -278,6 +281,7 @@ class bocalupdate extends bocal
 		{
 			return $cal_id;
 		}
+
 		$event = $this->read($cal_id);	// we re-read the event, in case only partial information was update and we need the full info for the notifies
 		//echo "new $cal_id="; _debug_array($event);
 
@@ -293,6 +297,7 @@ class bocalupdate extends bocal
 		else // update existing event
 		{
 			$this->check4update($event,$old_event);
+
 		}
 		// notify the link-class about the update, as other apps may be subscribt to it
 		$this->link->notify_update('calendar',$cal_id,$event);
@@ -693,6 +698,7 @@ class bocalupdate extends bocal
 		{
 			return false;
 		}
+
 		// invalidate the read-cache if it contains the event we store now
 		if ($event['id'] && $event['id'] == $this->cached_event['id']) $this->cached_event = array();
 
@@ -704,10 +710,8 @@ class bocalupdate extends bocal
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
 		}
 		// Lock realized with a counter, that is checked and incremented as we save the entry
-		$check_etag = $event['etag'];
-		if (!$check_etag){
-			$check_etag=$check_etag+1;
-		}	
+		$check_etag = ($event['etag'] ? $event['etag']:1);
+
 		// same with the recur exceptions
 		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 		{
@@ -1118,7 +1122,7 @@ class bocalupdate extends bocal
 	 */
 	function update_edit_user(&$event2update)
 	{
-		$event2update['cal_edit_time']=$this->now_su;
+		$event2update['edit_time']=$this->now_su;
 		return $this->so->save_edit_user($event2update);		
 	}
 }

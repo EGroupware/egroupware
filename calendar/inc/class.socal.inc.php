@@ -499,7 +499,6 @@ ORDER BY cal_user_type, cal_usre_id
 
 		$cal_id = (int) $event['id'];
 		unset($event['id']);
-
 		$set_recurrences = !$cal_id && $event['recur_type'] != MCAL_RECUR_NONE;
 
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
@@ -514,15 +513,16 @@ ORDER BY cal_user_type, cal_usre_id
 		if (is_array($event['cal_category'])) $event['cal_category'] = implode(',',$event['cal_category']);
 
 		// while saving handle the etag as condition for the update, to check if an entry was saved before this action occured
-		$check_etag = $event['cal_etag'];  
+		$check_etag = ($check_modified ? $check_modified : $event['cal_etag']);  
 		if ($cal_id) 
 		{
 			
 			$event['cal_etag']=$check_etag+1;
 			$event['cal_edit_user']=NULL;
 			$event['cal_edit_time']=NULL;
-			$where = array('cal_id' => $cal_id);
-			if ($check_etag) $where['cal_etag'] = $check_etag;
+			// cal_etag will be set on first save (if not set)
+			$where = array('cal_id' => $cal_id,'cal_etag'=>$check_etag);
+			#if ($check_etag) $where['cal_etag'] = $check_etag;
 			if (!$this->db->update($this->cal_table,$event,$where,__LINE__,__FILE__))
 			{
 				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning false");
@@ -535,6 +535,8 @@ ORDER BY cal_user_type, cal_usre_id
 				return 0;	// someone else updated the modtime or deleted the entry
 			}
 			
+		} else {
+			$event['cal_etag']=$check_modified;
 		}
 		
 		if ($cal_id)
@@ -1152,6 +1154,15 @@ ORDER BY cal_user_type, cal_usre_id
 		$cal_id = (int) $event2update['id'];
 		//unset($event2update['id']);
 
+		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
+		foreach($event2update as $col => $val)
+		{
+			if ($col{0} != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm')
+			{
+				$event2update['cal_'.$col] = $val;
+				unset($event2update[$col]);
+			}
+		}
 		
 		if ($cal_id && $event2update['cal_edit_user'] && $event2update['cal_edit_time']) 
 		{

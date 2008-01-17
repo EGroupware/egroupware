@@ -416,7 +416,7 @@ class uiforms extends uical
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
-			elseif ($conflicts ==0) 
+			elseif ($conflicts ===0) 
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
@@ -871,22 +871,22 @@ class uiforms extends uical
 		
 		// time locking for entries 		
 		$locktime = $GLOBALS['egw_info']['server']['Lock_Time_Calender'];
-		if ($locktime == '') {
-			//default Lock Time
-			$locktime=$GLOBALS['egw_info']['server']['Lock_Time_Calender']=$this->locktime_default;
-		} 
-		
-		if (($this->bo->now_su>($event['edit_time']+$locktime)) || ($event['edit_time']==''))
-		{
-			//echo "write Lock!!->DB";
-			$event2update['id']=$event['id'];
-			$event2update['cal_edit_user']=$this->user;
-			$event2update['cal_edit_time']=''; // this is set in bo->update_edit_user
-			$this->bo->update_edit_user($event2update);
-		}
-		else 
-		{
-			if ($event['edit_user'] && $event['edit_user']!=$this->user) $content['msg'].=" ".lang('This entry is opened by user: ').$GLOBALS['egw']->accounts->id2name($event['edit_user']);			
+		if ($locktime) {
+			// the warning and the saving of edit_user and time will only be performed, if there is a lock time set
+			if (($this->bo->now_su>($event['edit_time']+$locktime)) || ($event['edit_time']==''))
+			{
+				//echo "write Lock!!->DB";
+				$event2update['id']=$event['id'];
+				$event2update['edit_user']=$this->user;
+				$event2update['edit_time']=''; // this is set in bo->update_edit_user
+				$this->bo->update_edit_user($event2update);
+			}
+			else 
+			{
+				if ($event['edit_user'] && $event['edit_user']!=$this->user) $content['msg'].=" ".lang('This entry is opened by user: ').$GLOBALS['egw']->accounts->id2name($event['edit_user']);			
+			}
+		} else {
+
 		}
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
