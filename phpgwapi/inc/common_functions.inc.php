@@ -1307,8 +1307,8 @@
 function __autoload($class)
 {
 	$components = explode('_',$class);
-	$app =array_shift($components);
-	$baseclass = implode('_', $components);
+	$app = array_shift($components);
+	$baseclass = $components[0];
 	// classes using the new naming schema app_class_name, eg. admin_cmd
 	if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
 		// classes using the new naming schema app_class_name, eg. admin_cmd
@@ -1324,9 +1324,13 @@ function __autoload($class)
 	{
 		//error_log("autoloaded class $class from $file");
 		include_once($file);
-	} else {
-		foreach($GLOBALS['egw_info']['apps'] as $lapp=>$appvalue){
-			if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$lapp.'/inc/class.'.$class.'.inc.php')){
+	} 
+	else
+	{
+		foreach($GLOBALS['egw_info']['apps'] as $lapp => $appvalue)
+		{
+			if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$lapp.'/inc/class.'.$class.'.inc.php'))
+			{
 				#echo "$lapp,$class<br>";
 				include_once($file);
 			}
@@ -1355,13 +1359,22 @@ function egw_exception_handler(Exception $e)
 	{
 		$headline = lang('An error happend');
 	}
-	$GLOBALS['egw']->framework->render(
-		'<h3>'.$headline."</h3>\n".
+	$message = '<h3>'.$headline."</h3>\n".
 		'<pre><b>'.$e->getMessage()."</b>\n\n".
-		$e->getTraceAsString()."</pre>\n".
-		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.lang('Click here to resume your eGroupWare Session.').'</a>',
-		$headline);
+		$e->getTraceAsString()."</pre>\n";
 
+	if (is_object($GLOBALS['egw']) && is_object($GLOBALS['egw']->session))
+	{
+		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.lang('Click here to resume your eGroupWare Session.').'</a></p>';	
+	}
+	if (is_object($GLOBALS['egw']) && is_object($GLOBALS['egw']->framework))
+	{
+		$GLOBALS['egw']->framework->render($message,$headline);
+	}
+	else
+	{
+		echo "<html>\n<head>\n<title>$headline</title>\n</head>\n<body>\n$message\n</body>\n</html>\n";
+	}
 	$GLOBALS['egw']->common->egw_exit();
 }
 		
