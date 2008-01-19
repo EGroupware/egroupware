@@ -52,7 +52,7 @@ class uicontacts extends bocontacts
 	 *
 	 * @var string
 	 */
-	var $tabs = 'general|cats|home|details|links|custom';
+	var $tabs = 'general|cats|home|details|links|custom|custom_private';
 
 	function uicontacts($contact_app='addressbook')
 	{
@@ -265,23 +265,23 @@ class uicontacts extends bocontacts
 		{
 			$sel_options['action']['infolog'] = lang('View linked InfoLog entries');
 		}
-		//$sel_options['action'] += $this->get_addressbooks(EGW_ACL_ADD);
-		foreach($this->get_addressbooks(EGW_ACL_ADD) as $uid => $label)
-		{
-			$sel_options['action'][$uid] = lang('Move to addressbook:').' '.$label;
-		}
+		$sel_options['action'][lang('Move to addressbook:')] = $this->get_addressbooks(EGW_ACL_ADD);
+
 		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
 		{
+			$lists = array();
 			foreach ($add_lists as $list_id => $label)
 			{
-				$sel_options['action']['to_list_'.$list_id] = lang('Add to distribution list:').' '.$label;
+				$lists['to_list_'.$list_id] = $label;
 			}
+			$sel_options['action'][lang('Add to distribution list:')] = $lists;
+			unset($lists);
 			$sel_options['action']['remove_from_list'] = lang('Remove selected contacts from distribution list');
 			$sel_options['action']['delete_list'] = lang('Delete selected distribution list!');
 		}
 		if ($this->prefs['document_dir'])
 		{
-			$sel_options['action'] += $this->get_document_actions();
+			$sel_options['action'][lang('Insert in document').':'] = $this->get_document_actions();
 		}
 		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 		
@@ -821,6 +821,11 @@ class uicontacts extends bocontacts
 					$order = "org_name<>'' DESC,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				default:
+					if ($query['order'][0] == '#')	// we order by a custom field
+					{
+						$order = "$query[order]<>'' DESC,$query[order] $sort,org_name $sort,n_family $sort,n_given $sort";
+						break;
+					}
 					$query['order'] = 'n_family';
 				case 'n_family':
 					$order = "n_family<>'' DESC,n_family $sort,n_given $sort,org_name $sort";
@@ -994,7 +999,7 @@ class uicontacts extends bocontacts
 			if (!$homeaddress) $rows['no_home'] = true;
 		}
 		// disable customfields column, if we have no customefield(s)
-		if (!$this->customfields || !$this->prefs['no_auto_hide'] && !$customfields) $rows['no_customfields'] = true;
+		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
@@ -1355,7 +1360,10 @@ class uicontacts extends bocontacts
 		}
 		// disable not needed tabs
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys[$this->tabs]['custom'] = !$this->customfields;		
+		$readonlys[$this->tabs]['custom'] = !$this->customfields;
+		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
+				
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->is_admin($content))
 		{
@@ -1606,6 +1614,8 @@ $readonlys['button[vcard]'] = true;
 		// disable not needed tabs
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys[$this->tabs]['custom'] = !$this->customfields;
+		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 	
 		// last and next calendar date
 		list(,$dates) = each($this->read_calendar(array($content['id']),false));
@@ -1798,6 +1808,7 @@ $readonlys['button[vcard]'] = true;
 				copyvalues(form,"tel_home","tel_home2");
 				copyvalues(form,"tel_work","tel_work2");
 				copyvalues(form,"tel_cell","tel_cell2");
+				copyvalues(form,"tel_fax","tel_fax2");
 			}
 		}
 		
@@ -1807,6 +1818,7 @@ $readonlys['button[vcard]'] = true;
 				copyvalues(form,"tel_home2","tel_home");
 				copyvalues(form,"tel_work2","tel_work");
 				copyvalues(form,"tel_cell2","tel_cell");
+				copyvalues(form,"tel_fax2","tel_fax");
 			}
 		}
 		
@@ -1978,7 +1990,7 @@ $readonlys['button[vcard]'] = true;
 					// As browsers not always return the right mime_type, you could use a negative list instead
 					//if ($file['mime_type'] == 'Directory' || substr($file['mime_type'],0,6) == 'image/') continue;
 
-					$actions['document-'.$file['directory'].'/'.$file['name']] = lang('Insert in document').': '.$file['name'];
+					$actions['document-'.$file['directory'].'/'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
 				}
 			}
 			$GLOBALS['egw']->session->appsession('document_actions','addressbook',$actions);

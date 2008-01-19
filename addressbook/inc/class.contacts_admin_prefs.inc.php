@@ -104,6 +104,7 @@ class contacts_admin_prefs
 				$file['Custom fields'] = $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'admin.customfields.edit',
 					'appname'    => $appname,
+					'use_private'=> 1,
 				));
 			}
 			if ($location == 'admin')

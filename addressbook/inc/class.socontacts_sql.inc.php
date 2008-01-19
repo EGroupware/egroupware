@@ -30,6 +30,8 @@ class socontacts_sql extends so_sql
 	 */
 	var $extra_table = 'egw_addressbook_extra';
 	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
+	var $extra_join_order = ' LEFT JOIN egw_addressbook_extra extra_order ON egw_addressbook.contact_id=extra_order.contact_id';
+	var $extra_join_filter = ' JOIN egw_addressbook_extra extra_filter ON egw_addressbook.contact_id=extra_filter.contact_id';
 	var $account_repository = 'sql';
 	var $contact_repository = 'sql';
 	var $grants;
@@ -240,7 +242,7 @@ class socontacts_sql extends so_sql
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		if ((int) $this->debug >= 4) echo "<p>socontacts_sql::search(".print_r($criteria,true).",".print_r($only_keys,true).",'$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
-		
+
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
@@ -297,6 +299,26 @@ class socontacts_sql extends so_sql
 		if ($search_customfields)	// search the custom-fields
 		{
 			$join .= $this->extra_join;
+		}
+		// do we order by a cf?
+		if ($order_by[0] == '#')
+		{
+			list($val) = explode("<>''",$order_by);
+			$order_by = str_replace($val,'extra_order.contact_value',$order_by);
+			$join .= $this->extra_join_order.' AND extra_order.contact_name='.$this->db->quote(substr($val,1));
+		}
+		// do we filter by a cf?
+		foreach($filter as $name => $val)
+		{
+			if ($name[0] == '#')
+			{
+				if (!empty($val))	// empty -> dont filter
+				{
+					$join .= $this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($name,1)).
+						' AND extra_filter.contact_value='.$this->db->quote($val);
+				}
+				unset($filter[$name]);
+			}
 		}
 		if (isset($filter['list']))
 		{

@@ -48,6 +48,15 @@
     </td>
    </tr>
    <tr class="row_off">
+    <td>&nbsp;{lang_Use_an_extra_tab_for_private_custom_fields?}</td>
+    <td>
+     <select name="newsettings[private_cf_tab]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_private_cf_tab_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_on">
     <td>&nbsp;<b>{lang_Security}</b>: {lang_How_many_contacts_should_non-admins_be_able_to_export_(empty_=_no_limit)}:</td>
     <td><input name="newsettings[contact_export_limit]" value="{value_contact_export_limit}" size="5"></td>
    </tr>

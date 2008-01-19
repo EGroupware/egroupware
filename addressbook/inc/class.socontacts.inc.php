@@ -251,12 +251,10 @@ class socontacts
 		// ToDo: it should be the other way arround, the backend should set the grants it uses
 		$this->somain->grants =& $this->grants;
 
-		$this->soextra =& CreateObject('etemplate.so_sql');
-		$this->soextra->so_sql('phpgwapi',$this->extra_table);
+		$this->soextra = new so_sql('phpgwapi',$this->extra_table);
 			
-		$custom =& CreateObject('admin.customfields',$contact_app);
-		$this->customfields = $custom->get_customfields();
-		$this->content_types = $custom->get_content_types();
+		$this->customfields = config::get_customfields('addressbook');
+		$this->content_types = config::get_content_types('addressbook');
 		if (!$this->content_types)
 		{
 			$this->content_types = $custom->content_types = array('n' => array(
@@ -265,7 +263,6 @@ class socontacts
 					'template' => 'addressbook.edit',
 					'icon' => 'navbar.png'
 			)));
-			$custom->save_repository();
 		}
 	}
 	
@@ -301,7 +298,10 @@ class socontacts
 		if (!$ids) return array();	// nothing to do, eg. all these contacts are in ldap
 
 		$fields = array();
-		foreach((array)$this->soextra->search(array($this->extra_id => $ids),false) as $data)
+		foreach((array)$this->soextra->search(array(
+			$this->extra_id => $ids,
+			$this->extra_key => array_keys($this->customfields),
+		),false) as $data)
 		{
 			if ($data) $fields[$data[$this->extra_id]][$data[$this->extra_key]] = $data[$this->extra_value];
 		}
@@ -462,6 +462,7 @@ class socontacts
 		{
 			$customfields = $this->soextra->search(array(
 				$this->extra_id => $contact['id'],
+				$this->extra_key => array_keys($this->customfields),
 			),false);
 			foreach ((array)$customfields as $field)
 			{

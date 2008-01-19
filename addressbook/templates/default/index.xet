@@ -14,7 +14,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.001">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.002">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -53,7 +53,7 @@
 							<row>
 								<nextmatch-sortheader id="org_name" label="Organisation" span="all"/>
 							</row>
-							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created)$/">
+							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
 								<nextmatch-sortheader id="n_family" label="Name"/>
 								<nextmatch-sortheader id="n_given" label="Firstname" class="leftPad5"/>
 							</row>
@@ -74,25 +74,14 @@
 						<nextmatch-header id="tel_work" label="Business phone"/>
 						<nextmatch-header label="Mobile phone" id="tel_cell"/>
 						<nextmatch-header id="tel_home" label="Home phone"/>
+						<description value="Fax"/>
 					</vbox>
 					<vbox options="0,0">
 						<nextmatch-header id="url" label="Url"/>
 						<nextmatch-header label="Business email" id="email"/>
 						<nextmatch-header id="email_home" label="Home email"/>
 					</vbox>
-					<vbox options="0,0">
-						<nextmatch-header id="customfields" options="Custom fields"/>
-						<grid spacing="0" padding="0">
-							<columns>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<description no_lang="1" id="customfields[$row][label]"/>
-								</row>
-							</rows>
-						</grid>
-					</vbox>
+					<nextmatch-customfields id="customfields"/>
 					<vbox options="0,0">
 						<nextmatch-header label="Last date" id="calendar"/>
 						<nextmatch-header label="Next date" id="calendar"/>
@@ -106,7 +95,7 @@
 						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
 					</hbox>
 				</row>
-				<row class="row" valign="top">
+				<row class="$row_cont[cat_id]" valign="top">
 					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
 					<vbox options="0,0" id="${row}[id]">
 						<description id="${row}[line1]" no_lang="1"/>
@@ -143,6 +132,7 @@
 						<description no_lang="1" id="${row}[tel_work]" class="telNumbers" options=",$row_cont[tel_work_link],,,calling,$cont[call_popup]"/>
 						<description id="${row}[tel_cell]" no_lang="1" class="telNumbers" options=",$row_cont[tel_cell_link],,,calling,$cont[call_popup]"/>
 						<description id="${row}[tel_home]" no_lang="1" class="telNumbers" options=",$row_cont[tel_home_link],,,calling,$cont[call_popup]"/>
+						<description id="${row}[tel_fax]" no_lang="1"/>
 						<description id="${row}[tel_prefered]" no_lang="1" options=",$row_cont[tel_prefered_link],,,calling,$cont[call_popup]"/>
 					</vbox>
 					<vbox options="0,0">
