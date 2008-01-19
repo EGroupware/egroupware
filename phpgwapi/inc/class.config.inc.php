@@ -1,162 +1,284 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Application configuration in a centralized location     *
-	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
-	* Copyright (C) 2000, 2001 Joseph Engo                                     *
-	* -------------------------------------------------------------------------*
-	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org/api                                            * 
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
+/**
+ * eGW's application configuration in a centralized location
+ *
+ * This allows eGroupWare to use php or database sessions
+ *
+ * @link www.egroupware.org
+ * @author Joseph Engo <jengo@phpgroupware.org> original class Copyright (C) 2000, 2001 Joseph Engo 
+ * @author Ralf Becker <ralfbecker@outdoor-training.de>
+ * @version $Id$
+ */
 
-	/* $Id$ */
+/**
+ * eGW's application configuration in a centralized location
+ */
+class config
+{
+	/**
+	 * Name of the config table
+	 *
+	 */
+	const TABLE = 'egw_config';
+	/**
+	 * Instance of the db class
+	 *
+	 * @var egw_db
+	 */
+	static private $db;
+	/**
+	 * Cache for the config data shared by all instances of this class
+	 *
+	 * @var array
+	 */
+	static private $configs = array();
+	
+	/**
+	 * app the particular config class is instanciated for
+	 *
+	 * @var string
+	 */
+	private $appname;
+	/**
+	 * actual config-data of the instanciated class
+	 *
+	 * @deprecated dont use direct
+	 * @var array
+	 */
+	public $config_data;
 
-	class config
+	function __construct($appname = '')
 	{
-		var $db;
-		var $appname;
-		var $config_data;	// actual config-data
-		var $read_data;		// config-data as read from db
-		var $table = 'egw_config';
-
-		function config($appname = '')
+		if (!$appname)
 		{
-			if (! $appname)
-			{
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-			}
-			if (is_object($GLOBALS['egw']->db))
-			{
-				$this->db = clone($GLOBALS['egw']->db);
-			}
-			else
-			{
-				$this->db = clone($GLOBALS['egw_setup']->db);
-			}
-			$this->db->set_app('phpgwapi');
-			$this->appname = $appname;
+			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		}
+		$this->appname = $appname;
+	}
 
-		/**
-		 * reads the whole repository for $this->appname, appname has to be set via the constructor
-		 *
-		 * the whole config-array for that app
-		 */
-		function read_repository()
+	/**
+	 * reads the whole repository for $this->appname, appname has to be set via the constructor
+	 * 
+	 * You can also use the static config::read($app) method, without instanciating the class.
+	 *
+	 * @return array the whole config-array for that app
+	 */
+	function read_repository()
+	{
+		$this->config_data = self::read($this->appname);
+		
+		//echo __CLASS__.'::'.__METHOD__."() this->appname=$this->appname\n"; _debug_array($this->config_data);
+		
+		return $this->config_data;
+	}
+
+	/**
+	 * updates the whole repository for $this->appname, you have to call read_repository() before (!)
+	 */
+	function save_repository()
+	{
+		if (is_array($this->config_data))
 		{
-			$this->config_data = array();
-
-			$this->db->select($this->table,'*',array('config_app'=>$this->appname),__LINE__,__FILE__);
-			while ($this->db->next_record())
+			self::$db->lock(array(config::TABLE));
+			foreach($this->config_data as $name => $value)
 			{
-				$test = @unserialize($this->db->f('config_value'));
-				if(is_array($test))
+				$this->save_value($name,$value);
+			}
+			foreach(self::$configs[$this->appname] as $name => $value)
+			{
+				if (!isset($this->config_data[$name]))	// has been deleted
 				{
-					$this->config_data[$this->db->f('config_name')] = $test;
-				}
-				else
-				{
-					$this->config_data[$this->db->f('config_name')] = $this->db->f('config_value');
+					self::$db->delete(config::TABLE,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
 				}
 			}
-			return $this->read_data = $this->config_data;
-		}
+			self::$db->unlock();
 
-		/**
-		 * updates the whole repository for $this->appname, you have to call read_repository() before (!)
-		 */
-		function save_repository()
-		{
-			if (is_array($this->config_data))
+			if ($this->appname == 'phpgwapi' && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 			{
-				$this->db->lock(array($this->table));
-				foreach($this->config_data as $name => $value)
-				{
-					$this->save_value($name,$value);
-				}
-				foreach($this->read_data as $name => $value)
-				{
-					if (!isset($this->config_data[$name]))	// has been deleted
-					{
-						$this->db->delete($this->table,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
-					}
-				}
-				$this->db->unlock();
-
-				if ($this->appname == 'phpgwapi' && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
-				{
-					$GLOBALS['egw']->invalidate_session_cache();	// in case egw_info is cached in the session (phpgwapi is in egw_info[server])
-				}
+				$GLOBALS['egw']->invalidate_session_cache();	// in case egw_info is cached in the session (phpgwapi is in egw_info[server])
 			}
-			$this->read_data = $this->config_data;
-		}
-
-		/**
-		 * updates or insert a single config-value
-		 *
-		 * @param $name string name of the config-value
-		 * @param $value mixed content
-		 * @param $app string app-name, defaults to $this->appname set via the constructor
-		 */
-		function save_value($name,$value,$app=False)
-		{
-			//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
-			if (!$app || $app == $this->appname)
-			{
-				$app = $this->appname;
-				$this->config_data[$name] = $value;
-			}
-			if ($app == $this->appname && isset($this->read_data[$name]) && $this->read_data[$name] == $value)
-			{
-				return True;	// no change ==> exit
-			}
-			//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
-
-			if(is_array($value))
-			{
-				$value = serialize($value);
-			}
-			return $this->db->insert($this->table,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
-		}
-
-		/**
-		 * deletes the whole repository for $this->appname, appname has to be set via the constructor
-		 *
-		 */
-		function delete_repository()
-		{
-			$this->db->delete($this->table,array('config_app' => $this->appname),__LINE__,__FILE__);
-		}
-
-		/**
-		 * deletes a single value from the repository, you need to call save_repository after
-		 *
-		 * @param $variable_name string name of the config
-		 */
-		function delete_value($variable_name)
-		{
-			unset($this->config_data[$variable_name]);
-		}
-
-		/**
-		 * sets a single value in the repositry, you need to call save_repository after
-		 *
-		 * @param $variable_name string name of the config
-		 * @param $variable_data mixed the content
-		 */
-		function value($variable_name,$variable_data)
-		{
-			$this->config_data[$variable_name] = $variable_data;
+			self::$configs[$this->appname] = $this->config_data;
 		}
 	}
+
+	/**
+	 * updates or insert a single config-value direct into the database
+	 *
+	 * Can be used static, if $app given!
+	 * 
+	 * @param $name string name of the config-value
+	 * @param $value mixed content
+	 * @param $app string app-name, defaults to $this->appname set via the constructor
+	 */
+	/* static */ function save_value($name,$value,$app=False)
+	{
+		if (!$app && !isset($this))
+		{
+			throw new egw_exception_assertion_failed('$app parameter required for static call of config::save_value($name,$value,$app)!');
+		}
+		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
+		if (!$app || $app == $this->appname)
+		{
+			$app = $this->appname;
+			$this->config_data[$name] = $value;
+		}
+		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
+		if (isset(self::$configs[$app][$name]) && self::$configs[$app][$name] === $value)
+		{
+			return True;	// no change ==> exit
+		}
+
+		if (isset(self::$configs[$app]))
+		{
+			self::$configs[$app] = $value;
+		}
+		if(is_array($value))
+		{
+			$value = serialize($value);
+		}
+		return self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+	}
+
+	/**
+	 * deletes the whole repository for $this->appname, appname has to be set via the constructor
+	 *
+	 */
+	function delete_repository()
+	{
+		self::$db->delete(config::TABLE,array('config_app' => $this->appname),__LINE__,__FILE__);
+
+		unset(self::$configs[$this->appname]);
+	}
+
+	/**
+	 * deletes a single value from the repository, you need to call save_repository after
+	 *
+	 * @param $variable_name string name of the config
+	 */
+	function delete_value($variable_name)
+	{
+		unset($this->config_data[$variable_name]);
+	}
+
+	/**
+	 * sets a single value in the repositry, you need to call save_repository after
+	 *
+	 * @param $variable_name string name of the config
+	 * @param $variable_data mixed the content
+	 */
+	function value($variable_name,$variable_data)
+	{
+		$this->config_data[$variable_name] = $variable_data;
+	}
+	
+	/**
+	 * Reads the configuration for an applications
+	 * 
+	 * Does some caching to not read it twice (in the same request)
+	 *
+	 * @param string $app
+	 * @return array
+	 */
+	static function read($app)
+	{
+		$config =& self::$configs[$app];
+		
+		if (!isset($config))
+		{
+			$config = array();
+			self::$db->select(config::TABLE,'*',array('config_app' => $app),__LINE__,__FILE__);
+			while (self::$db->next_record())
+			{
+				$name = self::$db->f('config_name');
+				$value = self::$db->f('config_value');
+
+				$test = @unserialize($value);
+				
+				$config[self::$db->f('config_name')] = is_array($test) ? $test : $value;
+			}
+		}
+		return $config;
+	}
+	
+	/**
+	 * get customfield array of an application
+	 *
+	 * @param string $app 
+	 * @param boolean $all_private_too=false should all the private fields be returned too, default no
+	 * @return array with customfields
+	 */
+	static function get_customfields($app,$all_private_too=false)
+	{
+		$config = self::read($app);
+		$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
+		
+		$cfs = is_array($config[$config_name]) ? $config[$config_name] : array();
+
+		if (!$all_private_too)
+		{
+			foreach($cfs as $name => $field)
+			{
+				if ($field['private'] && !self::_check_private_cf($field['private']))
+				{
+					unset($cfs[$name]);
+				}
+			}
+		}
+		return $cfs;
+	}
+
+	/**
+	 * Check if user is allowed to see a certain private cf
+	 *
+	 * @param string $private comma-separated list of user- or group-id's
+	 * @return boolean true if user has access, false otherwise
+	 */
+	private static function _check_private_cf($private)
+	{
+		static $user_and_memberships;
+		
+		if (!$private)
+		{
+			return true;
+		}
+		if (is_null($user_and_memberships))
+		{
+			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+			$user_and_memberships[] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		if (!is_array($private)) $private = explode(',',$private);
+
+		return (boolean) array_intersect($private,$user_and_memberships);
+	}
+	
+	/**
+	 * get_content_types of using application
+	 *
+	 * @param string $app 
+	 * @return array with content-types
+	 */
+	function get_content_types($app)
+	{
+		$config = self::read($app);
+
+		return is_array($config['types']) ? $config['types'] : array();
+	}
+
+	/**
+	 * Initialise our static vars
+	 *
+	 */
+	static function init_static()
+	{
+		if (is_object($GLOBALS['egw']->db))
+		{
+			config::$db = clone($GLOBALS['egw']->db);
+		}
+		else
+		{
+			config::$db = clone($GLOBALS['egw_setup']->db);
+		}
+		config::$db->set_app('phpgwapi');
+	}
+}
+config::init_static();
