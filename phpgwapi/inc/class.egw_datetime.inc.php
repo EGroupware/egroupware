@@ -583,7 +583,7 @@
 		 */
 		function egw_datetime()
 		{
-			$this->tz_offset = 3600 * (int)@$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+			$this->tz_offset = 3600 * @$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 			print_debug('datetime::datetime::gmtnow',$this->gmtnow,'api');
 
 			$error_occured = True;
