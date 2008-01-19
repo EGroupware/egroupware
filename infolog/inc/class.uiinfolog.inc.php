@@ -137,9 +137,8 @@ class uiinfolog
 		// read the duration format from project-manager
 		if ($GLOBALS['egw_info']['apps']['projectmanager'])
 		{
-			$pm_config =& CreateObject('phpgwapi.config','projectmanager');
-			$pm_config->read_repository();
-			$this->duration_format = str_replace(',','',$pm_config->config_data['duration_units']).','.$pm_config->config_data['hours_per_workday'];
+			$pm_config = config::read('projectmanager');
+			$this->duration_format = str_replace(',','',$pm_config['duration_units']).','.$pm_config['hours_per_workday'];
 			unset($pm_config);
 		}
 		/* these are just for testing of the notifications
@@ -344,63 +343,16 @@ class uiinfolog
 		//_debug_array($columselection);
 		if ($columselection) 
 		{
-			$query['selectcols']=$columselection; 
+			$query['selectcols'] = $columselection; 
 			$columselection = explode(',',$columselection);
-		} else {
-			if (isset($query['selectcols']))
-			{
-				 $columselection =explode(',',$query['selectcols']);
-			} else {
-				$columselection=array();
-			}
-		}
-		$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->bo->customfields;
-		$lv_customfields=array(); // used to set the visible columns
-		$showallcustfields=0;  // control the switching on and off, of the customfields
-		if ((stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ) $showallcustfields=1;
-		if ( $show_custom_fields ||  $query['custom_fields'] )  
+		} 
+		else 
 		{
-			if ($query['col_filter']['info_type'])
-			{
-				foreach ($this->bo->customfields as $cf=>$cfa)
-				{
-					if (isset($cfa['type2'])&& trim($cfa['type2'])!=='') // type specific fields
-					{
-						if ((stripos($cfa['type2'], $query['col_filter']['info_type'] )) !== FALSE && 
-							(in_array('#'.$cf,$columselection)||$showallcustfields==1)) 
-						{
-							$lv_customfields[$cf]=$cfa;
-							$lv_customfields[$cf]['name']='#'.$cf;
-							$readonlys['#'.$cf] = true;
-						}
-					} else {
-						if ($showallcustfields==1 || in_array('#'.$cf,$columselection)) {
-							$lv_customfields[$cf]=$cfa;
-							$lv_customfields[$cf]['name']='#'.$cf;
-							$readonlys['#'.$cf] = true;
-						}
-					}
-					// set the array for the available cust-cols
-					$query['options-selectcols']['#'.$cf]=$cfa['label'];
-				}
-			} else {
-				// set the columns to be available for selections
-				$cvp=array();
-				foreach($this->bo->customfields as $name => $value)
-				{
-					 if ($showallcustfields==1 || in_array('#'.$name,$columselection)) {
-						$lv_customfields[$name]=$value;
-						$lv_customfields[$name]['name']='#'.$name;
-						//echo $name."->". $value['label']."<br>";
-						$readonlys['#'.$name] = true;
-					}
-					//set the array for the available cust-cols
-					$cvp['#'.$name] = $value['label'];
-				}
-				$query['options-selectcols']=$cvp;
-			}
-			$query['custom_fields'] =true;
+			$columselection = $query['selectcols'] ? explode(',',$query['selectcols']) : array();
 		}
+		// do we need to query the cf's
+		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
+
 		$ids = $this->bo->search($query);
 		if (!is_array($ids))
 		{
@@ -440,10 +392,10 @@ class uiinfolog
 		if ($query['no_actions']) $rows['no_actions'] = true;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 		$rows['duration_format'] = ','.$this->duration_format.',,1';
-		if ( $show_custom_fields ||  $query['custom_fields'] )
-		{
-			$rows['customfields'] = array_values($lv_customfields);
-		}
+		
+		// switch cf column off, if we have no cf's
+		if (!$query['custom_fields']) $rows['no_customfields'] = true;
+
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{

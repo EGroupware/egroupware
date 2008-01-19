@@ -669,16 +669,20 @@ class soinfolog 				// DB-Layer
 			}
 		}
 		$sortbycf='';
-		if (!empty($query['order']) && (eregi('^[a-z_0-9, ]+$',$query['order']) || stripos($query['order'],'#')!==FALSE ) && (empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
+		if (!empty($query['order']) && (eregi('^[a-z_0-9, ]+$',$query['order']) || stripos($query['order'],'#')!==FALSE ) && 
+			(empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
 		{
 			$order = array();
 			foreach(explode(',',$query['order']) as $val)
 			{
 				$val = trim($val);
-				if (substr($val,0,1)=='#') {
-					$sortbycf=substr($val,1);
-					$val="cfsortcrit";
-				} else {
+				if ($val[0] == '#') 
+				{
+					$sortbycf = substr($val,1);
+					$val = "cfsortcrit";
+				}
+				else 
+				{
 					$val = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
 					if ($val == 'info_des' && $this->db->capabilities['order_on_text'] !== true)
 					{
@@ -720,8 +724,13 @@ class soinfolog 				// DB-Layer
 						$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
 					}	
 				}
-				if (substr($col,0,1)=='#' &&  $query['custom_fields'] && $data) {
-					$filtermethod.=" and main.info_id in (select distinct info_id from $this->extra_table"." where (info_extra_name='".substr($col,1)."' and info_extra_value='".$data."')) ";
+				if ($col[0] == '#' &&  $query['custom_fields'] && $data) 
+				{
+					$filtermethod .= " AND main.info_id IN (SELECT DISTINCT info_id FROM $this->extra_table WHERE ".
+						$this->db->expression($this->extra_table,array(
+							'info_extra_name'  => substr($col,1),
+							'info_extra_value' => $data,
+						)).')';
 					$cfcolfilter++;
 				}
 			}
@@ -751,9 +760,9 @@ class soinfolog 				// DB-Layer
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
 		}
-		if ($query['search'] || $query['custom_fields'] )
+		if ($query['search'] || $query['custom_fields'])
 		{
-			$join = ($cfcolfilter>0 ? '':"LEFT")." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
+			$join = ($cfcolfilter>0 ? '':'LEFT')." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 		}
@@ -778,11 +787,12 @@ class soinfolog 				// DB-Layer
 			}
 			if ($this->db->capabilities['sub_queries'])
 			{
-				$count_subs = ",(SELECT count(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
+				$count_subs = ",(SELECT COUNT(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
 			}
-			$info_customfield = "";
-			if ($sortbycf!='') {
-				$info_customfield = ", (select distinct info_extra_value from $this->extra_table sub2 where sub2.info_id=main.info_id and info_extra_name='".$sortbycf."') AS cfsortcrit ";
+			$info_customfield = '';
+			if ($sortbycf != '') 
+			{
+				$info_customfield = ", (SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 where sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).") AS cfsortcrit ";
 			}
 			//echo "SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod"."<br>";
 			$this->db->query($sql="SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,

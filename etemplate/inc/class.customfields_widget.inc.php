@@ -11,6 +11,12 @@
 
 	/**
 	 * This widget generates a template for customfields based on definitions in egw_config table
+	 * 
+	 * All widgets here have 2 comma-separated options ($cell[size]):
+	 * - sub-type to display only the cf's without subtype or with a matching one
+	 * - use-private to display only (non-)private cf's (0=regular ones, 1=private ones, default both)
+	 * 
+	 * Private cf's the user has no right to see (neither him nor his memberships are mentioned) are never displayed.
 	 *
 	 * @package etemplate
 	 * @subpackage extensions
@@ -28,7 +34,6 @@
 			'customfields-types' => 'custom field types',
 			'customfields-list'  => 'custom field list',
 			'customfields-no-label' => 'custom fields without label',
-			'customfields-header' => 'Header for custom fields',
 		);
 		
 		/**
@@ -82,15 +87,9 @@
 		function customfields_widget($ui,$appname=null)
 		{
 			$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
-			$this->config =& CreateObject('phpgwapi.config',$this->appname);
-			$this->config->appname = $this->appname;
-			$config = $this->config->read_repository();
-			//merge old config_name in egw_config table
-			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
-			$this->customfields = $config[$config_name];
-			$this->types = $config['types'];
+			$this->customfields = config::get_customfields($this->appname);
+			$this->types = config::get_content_types($this->appname);
 			$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
-
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
@@ -100,10 +99,19 @@
 				list($app) = explode('.',$tmpl->name);
 				if ($app && $app != $this->appname) $this->customfields_widget(null,$app);
 			}
-			$type2 = $cell['size'];
+			list($type2,$use_private) = explode(',',$cell['size']);
 			$fields_with_vals=array();
 
 			$fields = $this->customfields;
+			
+			// remove private or non-private cf's, if only one kind should be displayed
+			foreach((array)$fields as $key => $field)
+			{
+				if ((string)$use_private !== '' && (boolean)$field['private'] != (boolean)$use_private)
+				{
+					unset($fields[$key]);
+				}
+			}
 			// check if name refers to a single custom field --> show only that
 			if (($pos=strpos($cell['name'],$this->prefix)) !== false && // allow the prefixed name to be an array index too
 				preg_match("/$this->prefix([^\]]+)/",$cell['name'],$matches) && isset($fields[$name=$matches[1]]))
@@ -138,8 +146,6 @@
 						//$stop_at_field = $name;
 					}
 					break;
-				case 'customfields-header':
-					return $this->pre_process_cf_header($name,$cell,$fields);
 				default:
 					foreach(array_reverse($fields) as $lname => $field)
 					{
@@ -182,7 +188,7 @@
 				} elseif ($type == 'customfields-list') {
 					if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') {
 						etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
-							array('label'=>lang("custom fields").": ".$field['label'],'width'=>"16px",
+							array('label'=>/*lang("custom fields").": ".*/$field['label'],'width'=>"16px",
 								'onclick'=>"return alert('".lang("custom fields").": ".$field['label']."');")));
 					}
 				}
@@ -393,60 +399,5 @@
 			include($path);
 
 			return $options;
-		}
-
-		/**
-		 * pre_process_cf_header
-		 * function to display the customfields in a nextmatch table-header with the functionality of sorting and selecting
-		 * by customfields. Of cource you need to adapt the source of your get_rows or search functionality to do the
-		 * actual sorting and selecting
-		 * You can pass the allowed/wanted fields to the header by passing an array of the wanted fields to the widget
-		 * through the options parameter (see the eTemplate editor for fields/cells). This array is passed on through
-		 * $cell['size']. By now the array passed through is only working, if it is the only entry in the optionsparameter.
-		 * The allowed fields array assumes an numerical indexed array of (an) array(s) with ['name'] tag(s) set. 
-		 * The name provided assumes a preceding #. (e.g.: $allowed_fields[x]['name']='#MyCustomField')
-		 * @param string $name -> the name  of the particular field/cell object of that etemplate
-		 * @param array $cell -> values passed from the the cell definition of the particular field/cell object of that etemplate 
-		 * @param array $fields -> the customfields of the current app
-		 * @return false -> no extra label
-		 */
-		function pre_process_cf_header($name,&$cell,$fields)
-		{
-			$allowed_fields = $cell[size] ? (is_array($cell[size])?$cell[size]:explode(',',$cell[size])):false;
-			#_debug_array($allowed_fields);
-			$afs='';
-			if (is_array($allowed_fields)) {
-				foreach ($allowed_fields as $lidx => $afa)
-				{
-					$afs.=$afa['name'].",";
-				}
-			}
-			$cell['type'] = 'vbox';
-			$cell['name'] = '';
-			$cell['size'] = '0,,0,0';
-
-			foreach($fields as $lname => $field)
-			{
-				if (stripos($afs,"#".$lname)!==FALSE)
-				{
-					if($field['type'] == 'select')
-					{
-						$header =& etemplate::empty_cell('nextmatch-filterheader',$this->prefix.$lname,array(
-							'sel_options' => $field['values'],
-							'size'        => $field['label'],
-							'no_lang'     => True,
-						));
-					}
-					else
-					{
-						$header =& etemplate::empty_cell('nextmatch-sortheader',$this->prefix.$lname,array(
-							'label'       => $field['label'],
-						));
-					}
-					etemplate::add_child($cell,$header);
-					unset($header);
-				}
-			}
-			return false;	// no extra label
 		}
 	}

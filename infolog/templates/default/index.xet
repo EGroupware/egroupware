@@ -13,11 +13,12 @@
 			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.3.003">
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.4.002">
 		<grid>
 			<columns>
 				<column width="2%"/>
 				<column/>
+				<column disabled="@no_customfields"/>
 				<column width="120"/>
 				<column disabled="@no_info_used_time_info_planned_time"/>
 				<column width="8%" disabled="@no_info_onwer_info_responsible"/>
@@ -35,6 +36,19 @@
 					<vbox rows="2" cols="1" options="2">
 						<description value="Subject"/>
 						<description value="Description"/>
+					</vbox>
+					<vbox options="0,0">
+						<description id="customfields" options="Custom fields"/>
+						<grid spacing="0" padding="0">
+							<columns>
+								<column disabled="@no_customfields"/>
+							</columns>
+							<rows>
+								<row>
+									<description no_lang="1" id="customfields[$row][label]" options="Custom fields"/>
+								</row>
+							</rows>
+						</grid>
 					</vbox>
 					<vbox options="0,0">
 						<description value="Startdate"/>
@@ -69,6 +83,7 @@
 						<description options=",,1" no_lang="1" id="${row}[info_des]"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
+					<customfields-list class="customfields" id="$row" readonly="true"/>
 					<vbox options="0,0,1" rows="3" cols="1">
 						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="fixedHeight"/>
 						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
@@ -106,11 +121,12 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.3.002">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.5.001">
 		<grid>
 			<columns>
 				<column width="2%"/>
 				<column/>
+				<column disabled="@no_customfields"/>
 				<column/>
 				<column width="120"/>
 				<column/>
@@ -146,6 +162,7 @@
 							</row>
 						</rows>
 					</grid>
+					<nextmatch-customfields id="customfields"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<vbox options="0,0">
 						<nextmatch-sortheader label="Startdate" id="info_startdate"/>
@@ -180,6 +197,7 @@
 						<description no_lang="1" id="${row}[info_des]" options=",,1"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
+					<customfields-list class="customfields" id="$row"/>
 					<menulist>
 						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
 					</menulist>

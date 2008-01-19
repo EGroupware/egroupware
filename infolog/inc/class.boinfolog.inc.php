@@ -79,12 +79,6 @@ class boinfolog
 	 */
 	var $timestamps = array('info_startdate','info_enddate','info_datemodified','info_datecompleted');
 	/**
-	 * instance of the config class for infolog
-	 * 
-	 * @var config
-	 */
-	var $config;
-	/**
 	 * fields the responsible user can change
 	 * 
 	 * @var array
@@ -133,7 +127,7 @@ class boinfolog
 	 * @var int
 	 */
 	var $max_line_chars = 40;
-	
+
 	/**
 	 * Constructor Infolog BO
 	 *
@@ -188,37 +182,34 @@ class boinfolog
 		}
 		$this->link =& $GLOBALS['egw']->link;
 
-		$this->config =& CreateObject('phpgwapi.config','infolog');
-		$this->config->read_repository();
-
-		if ($this->config->config_data)
+		if (($config_data = config::read('infolog')))
 		{
-			$this->link_pathes   = $this->config->config_data['link_pathes'];
-			$this->send_file_ips = $this->config->config_data['send_file_ips'];
+			$this->link_pathes   = $config_data['link_pathes'];
+			$this->send_file_ips = $config_data['send_file_ips'];
 
-			if (isset($this->config->config_data['status']) && is_array($this->config->config_data['status']))
+			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
-				foreach($this->config->config_data['status'] as $key => $data)
+				foreach($config_data['status'] as $key => $data)
 				{
 					if (!is_array($this->status[$key]))
 					{
 						$this->status[$key] = array();
 					}
-					$this->status[$key] = array_merge($this->status[$key],$this->config->config_data['status'][$key]);
+					$this->status[$key] = array_merge($this->status[$key],$config_data['status'][$key]);
 				}
 			}
-			if (isset($this->config->config_data['types']) && is_array($this->config->config_data['types']))
+			if (isset($config_data['types']) && is_array($config_data['types']))
 			{
 				//echo "stock-types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
-				//echo "config-types:<pre>"; print_r($this->config->config_data['types']); echo "</pre>\n";
-				$this->enums['type'] += $this->config->config_data['types'];
+				//echo "config-types:<pre>"; print_r($config_data['types']); echo "</pre>\n";
+				$this->enums['type'] += $config_data['types'];
 				//echo "types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
 			}
-			if ($this->config->config_data['group_owners']) $this->group_owners = $this->config->config_data['group_owners'];
+			if ($config_data['group_owners']) $this->group_owners = $config_data['group_owners'];
 
-			if (isset($this->config->config_data['customfields']) && is_array($this->config->config_data['customfields']))
+			$this->customfields = config::get_customfields('infolog');
+			if ($this->customfields)
 			{
-				if (!($this->customfields = $this->config->config_data['customfields'])) $this->customfields = array();
 				foreach($this->customfields as $name => $field)
 				{
 					// old infolog customefield record
@@ -230,21 +221,21 @@ class boinfolog
 						else $field['type'] = 'label'; // header-row
 						$field['type2'] = $field['typ'];
 						unset($field['typ']);
-						$this->customfields[$name] = $this->config->config_data['customfields'][$name] = $field;
+						$this->customfields[$name] = $field;
 						$save_config = true;
 					}
 				}
-				if ($save_config) $this->config->save_repository();
+				if ($save_config) config::save_value('customfields',$this->customfields,'infolog');
 			}
-			if (is_array($this->config->config_data['responsible_edit']))
+			if (is_array($config_data['responsible_edit']))
 			{
-				$this->responsible_edit = array_merge($this->responsible_edit,$this->config->config_data['responsible_edit']);
+				$this->responsible_edit = array_merge($this->responsible_edit,$config_data['responsible_edit']);
 			}
-			if ($this->config->config_data['implicit_rights'] == 'edit')
+			if ($config_data['implicit_rights'] == 'edit')
 			{
 				$this->implicit_rights = 'edit';
 			}
-			$this->history = $this->config->config_data['history'];
+			$this->history = $config_data['history'];
 		}
 		// sort types by there translation
 		foreach($this->enums['type'] as $key => $val)

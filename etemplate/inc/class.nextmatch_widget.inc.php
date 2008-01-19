@@ -63,6 +63,12 @@
 	 */
 	class nextmatch_widget
 	{
+		/**
+		 * Prefix for custom field names
+		 *
+		 */
+		const CF_PREFIX = '#';
+
 		/** 
 		 * exported methods of this class
 		 * @var array
@@ -82,7 +88,9 @@
 			'nextmatch-accountfilter' => 'Nextmatch Accountfilter',
 			'nextmatch-customfilter'  => 'Nextmatch Custom Filterheader',
 			'nextmatch-header'        => 'Nextmatch Header',
+			'nextmatch-customfields'  => 'Nextmatch Custom Fields Header',
 		);
+
 		/**
 		 * Turn on debug messages (mostly in post_process)
 		 *
@@ -90,6 +98,15 @@
 		 */
 		var $debug = false;
 
+		/**
+		 * Vars used to comunicated for the custom field header
+		 *
+		 * @var unknown_type
+		 */
+		private $selectcols;
+		public $cf_header;
+		private $cfs;
+		
 		/**
 		 * Constructor of the extension
 		 *
@@ -124,7 +141,7 @@
 		 * @param etemplate &$tmpl reference to the template we belong too
 		 * @return boolean true if extra label is allowed, false otherwise
 		 */
-		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
+		function pre_process($name,&$value,array &$cell,&$readonlys,&$extension_data,etemplate &$tmpl)
 		{
 			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'];
 			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): value = "; _debug_array($value);
@@ -189,6 +206,9 @@
 					$cell['span'] = implode(',',$parts);
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
 					return True;
+				
+				case 'nextmatch-customfields':
+					return $this->_pre_process_cf_header($cell,$tmpl);
 			}
 			// presetting the selectboxes with their default values, to NOT loop, because post-process thinks they changed
 			if (!isset($value['cat_id'])) $value['cat_id'] = '';
@@ -367,57 +387,62 @@
 				$cell['name'] = $nextmatch->name;
 			}
 			// preset everything for the column selection
-			if (!$value['no_columnselection'] &&	// fetching column-names & -labels from the template
-				$this->_cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows']))
+			if (!$value['no_columnselection'])
 			{
-				//_debug_array($name2col);
-				//_debug_array($value['options-selectcols']);
-				// getting the selected colums from the prefs (or if not set a given default or all)
 				$name = is_object($value['template']) ? $value['template']->name : $value['template'];
 				list($app) = explode('.',$name);
 				if (isset($value['columnselection_pref'])) $name = $value['columnselection_pref'];
-				if (!($value['selectcols'] = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-'.$name]))
+				$this->selectcols = $value['selectcols'] = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-'.$name];
+				// fetching column-names & -labels from the template
+				if($this->_cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows'],$value['selectcols']))
 				{
-					$value['selectcols'] = array_keys($value['options-selectcols']);
-					if (isset($value['default_cols']))
+					//_debug_array($name2col);
+					//_debug_array($value['options-selectcols']);
+					// getting the selected colums from the prefs (or if not set a given default or all)
+					if (!$value['selectcols'])
 					{
-						if ($value['default_cols']{0} == '!')
+						$value['selectcols'] = array_keys($value['options-selectcols']);
+						if (isset($value['default_cols']))
 						{
-							$value['selectcols'] = array_diff($value['selectcols'],explode(',',substr($value['default_cols'],1)));
+							if ($value['default_cols']{0} == '!')
+							{
+								$value['selectcols'] = array_diff($value['selectcols'],explode(',',substr($value['default_cols'],1)));
+							}
+							else
+							{
+								$value['selectcols'] = $value['default_cols'];
+							}
 						}
-						else
+						$this->selectcols = $value['selectcols'];
+					}
+					if (!is_array($value['selectcols'])) $value['selectcols'] = explode(',',$value['selectcols']);
+					foreach(array_keys($value['options-selectcols']) as $name)
+					{
+						// set 'no_'.$col for each column-name to true, if the column is not selected 
+						// (and the value is not set be the get_rows function / programmer!) 
+						if (!isset($value['rows']['no_'.$name])) $value['rows']['no_'.$name] = !in_array($name,$value['selectcols']);
+						// setting '@no_'.$name as disabled attr for each column, that has only a single nextmatch-header
+						if (is_object($value['template']))
 						{
-							$value['selectcols'] = $value['default_cols'];
+							$col = $name2col[$name];
+							list(,$disabled) = $value['template']->set_column_attributes($col);
+							//echo "<p>$col: $name: $disabled</p>\n";
+							if (!isset($disabled)) $value['template']->set_column_attributes($col,0,'@no_'.$name);
 						}
 					}
-				}
-				if (!is_array($value['selectcols'])) $value['selectcols'] = explode(',',$value['selectcols']);
-				foreach(array_keys($value['options-selectcols']) as $name)
-				{
-					// set 'no_'.$col for each column-name to true, if the column is not selected 
-					// (and the value is not set be the get_rows function / programmer!) 
-					if (!isset($value['rows']['no_'.$name])) $value['rows']['no_'.$name] = !in_array($name,$value['selectcols']);
-					// setting '@no_'.$name as disabled attr for each column, that has only a single nextmatch-header
-					if (is_object($value['template']))
+					//_debug_array($value);
+					if (is_object($nextmatch))
 					{
-						$col = $name2col[$name];
-						list(,$disabled) = $value['template']->set_column_attributes($col);
-						//echo "<p>$col: $name: $disabled</p>\n";
-						if (!isset($disabled)) $value['template']->set_column_attributes($col,0,'@no_'.$name);
+						$size =& $nextmatch->get_cell_attribute('selectcols','size');
+						if ($size > count($value['options-selectcols'])) $size = '0'.count($value['options-selectcols']);
+						if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+						{
+							$nextmatch->disable_cells('default_prefs');
+						}
 					}
+					// should reset on each submit
+					unset($value['default_prefs']);
 				}
-				//_debug_array($value);
-				if (is_object($nextmatch))
-				{
-					$size =& $nextmatch->get_cell_attribute('selectcols','size');
-					if ($size > count($value['options-selectcols'])) $size = '0'.count($value['options-selectcols']);
-					if (!$GLOBALS['egw_info']['user']['apps']['admin'])
-					{
-						$nextmatch->disable_cells('default_prefs');
-					}
-				}
-				// should reset on each submit
-				unset($value['default_prefs']);
 			}
 			$cell['type'] = 'template';
 			$cell['label'] = $cell['help'] = '';
@@ -432,15 +457,66 @@
 		}
 		
 		/**
+		 * Preprocess for the custom fields header
+		 *
+		 * @param array &$cell
+		 */
+		private function _pre_process_cf_header(array &$cell,etemplate $tmpl)
+		{
+			//echo __CLASS__.'::'.__METHOD__."() selectcols=$this->selectcols\n";
+			if (is_null($this->cfs))
+			{
+				list($app) = explode('.',$tmpl->name);
+				
+				$this->cfs = config::get_customfields($app);
+			}
+			$cell['type'] = 'vbox';
+			$cell['name'] = '';
+			$cell['size'] = '0,,0,0';
+			
+			if ($this->selectcols)
+			{
+				foreach(explode(',',$this->selectcols) as $col)
+				{
+					if ($col[0] == self::CF_PREFIX) $allowed[] = $col;
+				}
+			}
+			foreach($this->cfs as $name => $field)
+			{
+				if (!$allowed || in_array(self::CF_PREFIX.$name,$allowed))
+				{
+					if($field['type'] == 'select')
+					{
+						$header =& etemplate::empty_cell('nextmatch-filterheader',self::CF_PREFIX.$name,array(
+							'sel_options' => $field['values'],
+							'size'        => $field['label'],
+							'no_lang'     => True,
+						));
+					}
+					else
+					{
+						$header =& etemplate::empty_cell('nextmatch-sortheader',self::CF_PREFIX.$name,array(
+							'label'       => $field['label'],
+						));
+					}
+					etemplate::add_child($cell,$header);
+					unset($header);
+				}
+			}
+			return false;	// no extra label
+		}
+		
+		/**
 		 * Extract the column names and labels from the template
 		 *
 		 * @param etemplate &$tmpl
 		 * @param array &$cols here we add the column-name/-label
 		 * @param array &$name2col
 		 * @param array $content nextmatch content, to be able to resolve labels with @name
+		 * @param array $selectcols selected colums
 		 * @return int columns found, count($cols)
 		 */
-		function _cols_from_tpl(&$tmpl,&$cols,&$name2col,&$content)
+		function _cols_from_tpl(etemplate $tmpl,&$cols,&$name2col,&$content,$selectcols)
 		{
 			//_debug_array($cols); 
 			// fetching column-names & -labels from the template
@@ -474,6 +550,25 @@
 					$name2col[$name] = $col;
 				}
 				$cols[$name] = $label;
+
+				// we are behind the column of a custom fields header --> add the individual fields
+				if ($name == $this->cf_header && (!$selectcols || 
+					in_array($this->cf_header,explode(',',$selectcols))))
+				{
+					$cols[$name] .= ':';
+					list($app) = explode('.',$tmpl->name);
+					if (($this->cfs = config::get_customfields($app)))
+					{
+						foreach($this->cfs as $name => $field)
+						{
+							$cols[self::CF_PREFIX.$name] = '- '.$field['label'];
+						}
+					}
+					else
+					{
+						unset($cols[$name]);	// no cf's defined -> no header
+					}
+				}
 			}
 			//_debug_array($cols);
 			return count($cols);
@@ -489,6 +584,13 @@
 		function _cols_from_tpl_walker(&$widget,&$cols,$path)
 		{
 			list($type,$subtype) = explode('-',$widget['type']);
+
+			if ($subtype == 'customfields')
+			{
+				if (!$widget['name']) $widget['name'] = 'customfields';
+				if (!$widget['label']) $widget['label'] = 'Custom fields';
+				$this->cf_header = $widget['name'];
+			}
 			if ($type != 'nextmatch' || !$subtype || !$widget['name'] || $widget['disabled'])
 			{
 				return;
