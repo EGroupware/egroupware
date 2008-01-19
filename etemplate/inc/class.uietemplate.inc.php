@@ -633,6 +633,46 @@ foreach($sess as $key => $val)
 			}
 			return $html."<!-- END eTemplate $this->name -->\n\n";
 		}
+		
+		/**
+		 * Get the color of a category
+		 * 
+		 * For multiple cats, the first with a color is used
+		 *
+		 * @param int/string $cats multiple comma-separated cat_id's
+		 * @return string
+		 */
+		function cats2color($cats)
+		{
+			static $cat2color;
+			
+			if (!$cats) return null;
+			
+			if (isset($cat2color[$cats]))
+			{
+				return $cat2color[$cats];
+			}
+			
+			foreach(explode(',',$cats) as $cat)
+			{
+				if (isset($cat2color[$cat]))
+				{
+					return $cat2color[$cat];
+				}
+				if (!is_object($GLOBALS['egw']->categories))
+				{
+					$GLOBALS['egw']->categories = new categories();
+				}
+				$data = unserialize($GLOBALS['egw']->categories->id2name($cat,'data'));
+				
+				if (($color = $data['color']))
+				{
+					//echo "<p>cats2color($cats)=$color</p>\n";
+					return $cat2color[$cats] = $cat2color[$cat] = $color;
+				}
+			}
+			return null;
+		}
 			
 		/**
 		 * creates HTML from an eTemplate
@@ -715,6 +755,15 @@ foreach($sess as $key => $val)
 				if ($cl == '@' || $cl && strpos($cl,'$') !== false)
 				{
 					$cl = $this->expand_name($cl,0,$r,$content['.c'],$content['.row'],$content);
+					
+					if (!$cl || preg_match('/^[0-9,]*$/',$cl))
+					{
+						if (($color = $this->cats2color($cl)))
+						{
+							$rows[".$row"] .= ' style="background-color: '.$color.';"';
+						}
+						$cl = 'row';
+					}
 				}
 				if ($cl == 'nmr' || substr($cl,0,3) == 'row')	// allow to have further classes behind row
 				{
