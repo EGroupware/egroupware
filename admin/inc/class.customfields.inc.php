@@ -42,13 +42,20 @@
 		var $public_functions = array(
 			'edit' => True
 		);
+		/**
+		 * Instance of the config class for the instancated applications
+		 *
+		 * @var config
+		 */
+		var $config;
 
 		function customfields($appname='')
 		{
-			$this->config =& CreateObject('phpgwapi.config',$this->appname=$appname);
+			$this->config =& new config($this->appname=$appname);
+
 			if ($appname)
 			{
-				$this->fields = $this->get_customfields();
+				$this->fields = $this->get_customfields(true);
 				$this->content_types = $this->get_content_types();
 			}
 		}
@@ -73,7 +80,7 @@
 			// do we manage content-types?
 			if($this->tmpl->read($this->appname.'.admin.types')) $this->manage_content_types = true;
 			
-			$this->fields = $this->get_customfields();
+			$this->fields = $this->get_customfields(true);
 			$this->tmpl->read('admin.customfields');
 			
 			if($this->manage_content_types) $this->content_types = $this->get_content_types();
@@ -126,6 +133,7 @@
 					$content_types = array_keys($this->content_types);
 					$this->content_type = $content_types[0];
 				}
+				$content['use_private'] = (boolean)$_GET['use_private'];
 
 				$referer = $GLOBALS['egw']->common->get_referer();
 			}
@@ -151,7 +159,7 @@
 			}
 			
 			//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
-			$content['fields'] = array();
+			$content['fields'] = array('use_private' => $content['use_private']);
 			$n = 0;
 			foreach($this->fields as $name => $data)
 			{
@@ -178,6 +186,7 @@
 			}
 			$content['fields'][++$n] = array('name'=>'','order' => 10 * $n);	// new line for create
 			if($this->manage_content_types) $content['fields']['type2'] = 'enable';
+
 			$readonlys['fields']["delete[]"] = True;
 			//echo '<p>uicustomfields.edit(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
 			//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
@@ -188,6 +197,7 @@
 				'fields' => $preserv_fields,
 				'appname' => $this->appname,
 				'referer' => $referer,
+				'use_private' => $content['use_private'],
 			));
 		}
 
@@ -236,8 +246,9 @@
 					'help'  => $field['help'],
 					'values'=> $values,
 					'len'   => $field['len'],
-					'rows'  => intval($field['rows']),
-					'order' => intval($field['order'])
+					'rows'  => (int)$field['rows'],
+					'order' => (int)$field['order'],
+					'private' => $field['private'],
 				);
 				if(!$this->fields[$name]['type2'] && $this->manage_content_types)
 				{
@@ -345,29 +356,26 @@
 		/**
 		* get customfields of using application
 		*
+		* @deprecated use config::get_customfields() direct, no need to instanciate this UI class
 		* @author Cornelius Weiss
+		* @param boolean $all_private_too=false should all the private fields be returned too
 		* @return array with customfields
 		*/
-		function get_customfields()
+		function get_customfields($all_private_too=false)
 		{
-			$config = $this->config->read_repository();
-			//merge old config_name in phpgw_config table
-			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
-			
-			return is_array($config[$config_name]) ? $config[$config_name] : array();
+			return config::get_customfields($this->appname,$all_private_too);
 		}
 		
 		/**
 		* get_content_types of using application
 		*
+		* @deprecated use config::get_content_types() direct, no need to instanciate this UI class
 		* @author Cornelius Weiss
 		* @return array with content-types
 		*/
 		function get_content_types()
 		{
-			$config = $this->config->read_repository();
-
-			return is_array($config['types']) ? $config['types'] : array();
+			return config::get_content_types($this->appname);
 		}
 
 	}

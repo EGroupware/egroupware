@@ -25,13 +25,14 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.4.001">
+	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.5.001">
 		<grid>
 			<columns>
 				<column/>
 				<column/>
 				<column disabled="!@type2"/>
 				<column/>
+				<column disabled="!@use_private"/>
 				<column/>
 				<column/>
 				<column/>
@@ -43,6 +44,7 @@
 					<description value="Label"/>
 					<description value="Subtype"/>
 					<description value="Type"/>
+					<description value="Private"/>
 					<description value="Options" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]"/>
 					<description value="Length&lt;br&gt;Rows"/>
 					<description value="Order"/>
@@ -58,6 +60,7 @@
 						<menupopup options="All" id="${row}[type2]" no_lang="1"/>
 					</menulist>
 					<customfields-types id="{$row}[type]" statustext="Type of customfield"/>
+					<checkbox id="${row}[private]" statustext="Should this custom field only be available if you have private rights" align="center"/>
 					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like id[=label]"/>
 					<vbox>
 						<textbox size="5" id="${row}[len]" statustext="max length of the input [, length of the inputfield (optional)]"/>
