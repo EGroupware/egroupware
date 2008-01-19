@@ -60,7 +60,7 @@
 						<menupopup options="All" id="${row}[type2]" no_lang="1"/>
 					</menulist>
 					<customfields-types id="{$row}[type]" statustext="Type of customfield"/>
-					<checkbox id="${row}[private]" statustext="Should this custom field only be available if you have private rights" align="center"/>
+					<listbox type="select-account" id="${row}[private]" statustext="Select accounts for which the custom field should be visible" align="center" rows="3" options="both"/>
 					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like id[=label]"/>
 					<vbox>
 						<textbox size="5" id="${row}[len]" statustext="max length of the input [, length of the inputfield (optional)]"/>
