@@ -232,7 +232,7 @@ class uilist extends uical
 				{
 					$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
 					$this->last = $this->bo->date2array($this->first);
-					$this->last['day'] += (int) $this->planner_days - 1;
+					$this->last['day'] += (int) $this->listview_days - 1;
 					$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
 					unset($this->last['raw']);
 					$this->last = $this->bo->date2ts($this->last);
