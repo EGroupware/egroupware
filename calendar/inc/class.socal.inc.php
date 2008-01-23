@@ -514,14 +514,14 @@ ORDER BY cal_user_type, cal_usre_id
 
 		// while saving handle the etag as condition for the update, to check if an entry was saved before this action occured
 		$check_etag = ($check_modified ? $check_modified : $event['cal_etag']);  
-		if ($cal_id) 
+		if ($cal_id && $check_etag) 
 		{
 			
 			$event['cal_etag']=$check_etag+1;
 			$event['cal_edit_user']=NULL;
 			$event['cal_edit_time']=NULL;
 			// cal_etag will be set on first save (if not set)
-			$where = array('cal_id' => $cal_id,'cal_etag'=>$check_etag);
+			$where = array('cal_id' => $cal_id,'cal_etag is NULL or cal_etag='.$check_etag);
 			#if ($check_etag) $where['cal_etag'] = $check_etag;
 			if (!$this->db->update($this->cal_table,$event,$where,__LINE__,__FILE__))
 			{
@@ -536,7 +536,7 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			
 		} else {
-			$event['cal_etag']=$check_modified;
+			$event['cal_etag']=($check_etag?$check_etag:1);
 		}
 		
 		if ($cal_id)
