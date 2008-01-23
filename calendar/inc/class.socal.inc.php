@@ -517,13 +517,13 @@ ORDER BY cal_user_type, cal_usre_id
 		if ($cal_id && $check_etag) 
 		{
 			
-			$event['cal_etag']=$check_etag+1;
-			$event['cal_edit_user']=NULL;
-			$event['cal_edit_time']=NULL;
+			$event2update['cal_etag']= $event['cal_etag']=$check_etag+1;
+			$event2update['cal_edit_user']= $event['cal_edit_user']=NULL;
+			$event2update['cal_edit_time']= $event['cal_edit_time']=NULL;
 			// cal_etag will be set on first save (if not set)
-			$where = array('cal_id' => $cal_id,'cal_etag is NULL or cal_etag='.$check_etag);
+			$where = array('cal_id' => $cal_id,'(cal_etag is NULL or cal_etag='.$check_etag.')');
 			#if ($check_etag) $where['cal_etag'] = $check_etag;
-			if (!$this->db->update($this->cal_table,$event,$where,__LINE__,__FILE__))
+			if (!$this->db->update($this->cal_table,$event2update,$where,__LINE__,__FILE__))
 			{
 				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning false");
 				return false;	// Error
