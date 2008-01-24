@@ -1163,11 +1163,11 @@ ORDER BY cal_user_type, cal_usre_id
 				unset($event2update[$col]);
 			}
 		}
-		
 		if ($cal_id && $event2update['cal_edit_user'] && $event2update['cal_edit_time']) 
 		{
 			$locktime = ($GLOBALS['egw_info']['server']['Lock_Time_Calender'] ? $GLOBALS['egw_info']['server']['Lock_Time_Calender'] : 1);
-			$where = array('cal_id' => $cal_id,'cal_edit_user is NULL or cal_edit_time<'.$event2update['cal_edit_time']-$locktime);
+			$lockborder=$event2update['cal_edit_time']-$locktime;
+			$where = array('cal_id' => $cal_id,'(cal_edit_user is NULL or cal_edit_time<'.$lockborder.')');
 			if (!$this->db->update($this->cal_table,$event2update,$where,__LINE__,__FILE__))
 			{
 				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning false");
