@@ -80,13 +80,14 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUE
 			// including the necessary class-definitions
 			foreach($_SESSION['egw_included_files'] as $file)
 			{
+				 if (basename($file) == 'class.config.inc.php') continue;
 				//echo "<p>about to include $file</p>\n";
 				include_once($file);
-
-				if (basename($file) == 'class.egw_framework.inc.php') break;	// the rest is not needed and makes only problems
+				//if (basename($file) == 'class.egw_framework.inc.php') break;	// the rest is not needed and makes only problems
 			}
 			$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
-			
+			include_once(EGW_API_INC.'/class.config.inc.php');
+
 			if (is_object($GLOBALS['egw']))
 			{
 				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
@@ -199,7 +200,7 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $GLOBAL
 	{
 		switch(basename($file))
 		{
-			case 'head.inc.php':	// needs EGW_TEMPLATE_DIR and is included anyway by common::egw_header()
+			case 'header.inc.php':	// needs EGW_TEMPLATE_DIR and is included anyway by common::egw_header()
 			case 'functions.inc.php': // not needed/wanted at all
 				break;
 			default:
