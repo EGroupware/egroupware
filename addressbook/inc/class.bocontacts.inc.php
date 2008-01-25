@@ -135,9 +135,9 @@ class bocontacts extends socontacts
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 		
 		// get the default addressbook from the users prefs
-		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook'],-1) == 'p';
-		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook'] ? 
-			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook'] : $this->user;
+		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ? 
+			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] : $this->user;
+		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'],-1) == 'p';		
 		if ($this->default_addressbook > 0 && $this->default_addressbook != $this->user &&
 			($this->default_private || 
 			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default']) ||
