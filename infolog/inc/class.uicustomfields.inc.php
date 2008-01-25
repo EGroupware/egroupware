@@ -35,7 +35,7 @@ class uicustomfields
 	 * 
 	 * @var config
 	 */
-	var $config;
+	var $config_data;
 	/**
 	 * Group owners for certain types read from the infolog config                      
 	 *
@@ -49,7 +49,7 @@ class uicustomfields
 		$this->tmpl =& CreateObject('etemplate.etemplate');
 		$this->types  = &$this->bo->enums['type'];
 		$this->status = &$this->bo->status;
-		$this->config = &$this->bo->config;
+		$this->config_data = config::read('infolog');
 		$this->fields = &$this->bo->customfields;
 		$this->group_owners =& $this->bo->group_owners;
 	}
@@ -359,18 +359,14 @@ class uicustomfields
 			$content['type2'] = $new_name;	// show the new entry
 		}
 	}
-
 	function save_repository()
 	{
 		// save changes to repository
-		$this->config->value('types',$this->types);
+		config::save_value('types',$this->types,'infolog');
 		//echo '<p>uicustomfields::save_repository() \$this->status=<pre style="text-aling: left;">'; print_r($this->status); echo "</pre>\n";
-		$this->config->value('status',$this->status);
+		config::save_value('status',$this->status,'infolog');
 		//echo '<p>uicustomfields::save_repository() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
-		$this->config->value('customfields',$this->fields);
-		
-		$this->config->value('group_owners',$this->group_owners);
-
-		$this->config->save_repository();
+		config::save_value('customfields',$this->fields,'infolog');
+		config::save_value('group_owners',$this->group_owners,'infolog');
 	}
 }
