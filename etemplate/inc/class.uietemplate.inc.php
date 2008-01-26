@@ -1490,6 +1490,15 @@ foreach($sess as $key => $val)
 						}
 						if (!isset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
 						{
+							// fix for optgroup's
+							foreach($sels as $key => $val)
+							{
+								if (is_array($val))
+								{
+									$sels += array_keys($val);
+									unset($sels[$key]);
+								}
+							}
 							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
 								'type'    => $cell['type'],
 								'needed'  => $cell['needed'],
