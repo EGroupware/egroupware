@@ -83,7 +83,7 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUE
 				 if (basename($file) == 'class.config.inc.php') continue;
 				//echo "<p>about to include $file</p>\n";
 				include_once($file);
-				//if (basename($file) == 'class.egw_framework.inc.php') break;	// the rest is not needed and makes only problems
+				if (basename($file) == 'class.egw_framework.inc.php') break;	// the rest is not needed and makes only problems
 			}
 			$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
 			include_once(EGW_API_INC.'/class.config.inc.php');
