@@ -100,7 +100,9 @@ interface iface_stream_wrapper
  	 * See fseek() for more information about these parameters. 
  	 * 
  	 * @param integer $offset
- 	 * @param integer $whence
+ 	 * @param integer $whence	SEEK_SET - Set position equal to offset bytes
+ 	 * 							SEEK_CUR - Set position to current location plus offset.
+ 	 * 							SEEK_END - Set position to end-of-file plus offset. (To move to a position before the end-of-file, you need to pass a negative value in offset.)
  	 * @return boolean TRUE if the position was updated, FALSE otherwise.
  	 */
 	function stream_seek ( $offset, $whence );
@@ -139,7 +141,7 @@ interface iface_stream_wrapper
 	 * @param string $path
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function unlink ( $path );
+	static function unlink ( $path );
 
 	/**
 	 * This method is called in response to rename() calls on URL paths associated with the wrapper.

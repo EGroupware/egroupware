@@ -26,6 +26,20 @@ require_once(EGW_API_INC.'/class.iface_stream_wrapper.inc.php');
 class oldvfs_stream_wrapper implements iface_stream_wrapper 
 {
 	/**
+	 * If this class should do the operations direct in the filesystem, instead of going through the vfs
+	 *
+	 */
+	const USE_FILESYSTEM_DIRECT = true;
+	/**
+	 * How much should be logged to the apache error-log
+	 *
+	 * 0 = Nothing
+	 * 1 = only errors
+	 * 2 = all function calls and errors
+	 */
+	const LOG_LEVEL = 1;
+	
+	/**
 	 * optional context param when opening the stream, null if no context passed
 	 *
 	 * @var mixed
@@ -52,6 +66,18 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	protected $opened_mode;
 	/**
+	 * Content of the opened file, as the old vfs can only read/write the whole file
+	 *
+	 * @var string
+	 */
+	protected $opened_data;
+	/**
+	 * Position in the opened file
+	 *
+	 * @var int
+	 */
+	protected $opened_pos;
+	/**
 	 * Global vfs::ls() cache
 	 *
 	 * @var array
@@ -71,14 +97,18 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function __construct()
 	{
-		error_log('oldvfs_stream_wrapper::__construct()');
-		if (!is_object($this->old_vfs)) $this->old_vfs = new vfs_home();
+		if (self::LOG_LEVEL > 1) error_log('oldvfs_stream_wrapper::__construct()');
+
+		if (!is_object(self::$old_vfs))
+		{
+			self::$old_vfs =& new vfs_home();
+		}
 	}
 
 	/**
 	 * This method is called immediately after your stream object is created.
 	 * 
-	 * @param string $path URL that was passed to fopen() and that this object is expected to retrieve
+	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
 	 * @param string $mode mode used to open the file, as detailed for fopen()
 	 * @param int $options additional flags set by the streams API (or'ed together): 
 	 * - STREAM_USE_PATH      If path is relative, search for the resource using the include_path.
@@ -87,9 +117,67 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * @param string $opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
 	 * @return boolean true if the ressource was opened successful, otherwise false
 	 */
-	function stream_open ( $path, $mode, $options, &$opened_path )
+	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 		
+		$path = parse_url($url,PHP_URL_PATH);
+		
+		$this->opened_path = $path;
+		$this->opened_mode = $mode;
+		$this->opened_data = null;
+		
+		if (!self::$old_vfs->file_exists($data = array(	// file does not exists
+			'string'    	=> $path,
+			'relatives'		=> array(RELATIVE_ROOT),
+		)) || $mode[0] == 'x')							// or file should NOT exist
+		{
+			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
+				$mode[0] == 'x' ||	// or file should not exist, but does
+				!self::$old_vfs->acl_check($data+array(	// or we are not allowed to 																																			create it
+					'operation'		=> EGW_ACL_ADD,
+				)))
+			{
+				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
+				$this->opened_data = $this->opened_path = $this->opened_mode = null;
+				return false;
+			}
+			// new file
+			$this->opened_data = '';
+			$this->opened_pos = 0;
+		}
+		else
+		{
+			if ($mode != 'r' && !self::$old_vfs->acl_check($data+array(	// we are not allowed to edit it
+				'operation'		=> EGW_ACL_EDIT,
+			)))
+			{
+				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
+				$this->opened_data = $this->opened_path = $this->opened_mode = null;
+				return false;				
+			}
+			if ($mode[0] == 'w')		// w or w+ truncates the file to 0 size
+			{
+				$this->opened_data = '';
+				$this->opened_pos = 0;			
+			}
+		}
+		// can we operate directly on a filesystem stream?
+		if (self::$old_vfs->file_actions && self::USE_FILESYSTEM_DIRECT)
+		{
+			$p = self::$old_vfs->path_parts($data);
+			
+			if (!($this->opened_data = fopen($p->real_full_path,$mode,false)))
+			{
+				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file $p->real_full_path can not be opened!");
+				return false;
+			}
+		}
+		if ($mode[0] == 'a')	// append modes: a, a+
+		{
+			$this->stream_seek(0,SEEK_END);
+		}
+		return true;
 	}
 	
 	/**
@@ -99,7 +187,38 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_close ( )
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."()");
 		
+		if (is_null($this->opened_path)) return false;
+		
+		$ret = true;
+		if (is_resource($this->opened_data))
+		{
+			$ret = fclose($this->opened_data);
+			
+			if ($this->opened_mode != 'r')
+			{
+				// touch creates file (if necessary) and sets the modification or creation time and owner
+				self::$old_vfs->touch($data = array(
+					'string'    	=> $this->opened_path,
+					'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+				));
+				// we read the size from the filesystem and write it to our db-based metadata
+				$p = self::$old_vfs->path_parts($data);
+				$data['attributes'] = array(
+					'size' => filesize($p->real_full_path),
+				);
+				self::$old_vfs->set_attributes($data);
+			}
+		}
+		elseif ($this->opened_mode != 'r')
+		{
+			// store the changes
+			self::$old_vfs->write($this->opened_data);
+		}
+		$this->opened_data = $this->opened_path = $this->opened_mode = null;
+
+		return $ret;
 	}
 	
 	/**
@@ -115,7 +234,30 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_read ( $count )
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($count) pos=$this->opened_pos");
 		
+		if (is_resource($this->opened_data))
+		{
+			return fread($this->opened_data,$count);
+		}
+		if (is_null($this->opened_data))
+		{
+			if (($this->opened_data = self::$old_vfs->read(array(
+				'string'    	=> $this->opened_path,
+				'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+			))) === false)
+			{
+				return false;
+			}
+			$this->opened_pos = 0;
+		}
+		if ($this->stream_eof()) return false;	// nothing more to read
+
+		$start = $this->opened_pos;
+		$this->opened_pos += $count;
+		
+		// multibyte save substr!
+		return self::substr($this->opened_data,$start,$count);
 	}
 
 	/**
@@ -131,7 +273,19 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_write ( $data ) 
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($data)");
 		
+		if (is_resource($this->opened_data))
+		{
+			return fwrite($this->opened_data,$data);
+		}
+		$len = bytes($data);
+		// multibyte save substr!
+		self::substr($this->opened_data,$this->opened_pos);
+		
+		$this->opened_pos += $len;
+		
+		return $len;
 	}
 
  	/**
@@ -148,7 +302,18 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
  	 */
 	function stream_eof ( ) 
 	{
+		if (is_resource($this->opened_data))
+		{
+			return feof($this->opened_data);
+		}
+		if (!is_null($this->opened_data))
+		{
+			$len = bytes($this->opened_data);
+			$eof = $this->opened_pos >= $len;
+		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."() pos=$this->opened_pos >= $len=len --> ".($eof ? 'true' : 'false'));
 		
+		return $eof;
 	}
 
 	/**
@@ -158,7 +323,13 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
  	function stream_tell ( ) 
  	{
- 		
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."()");
+		
+		if (is_resource($this->opened_data))
+		{
+			return ftell($this->opened_data);
+		}
+		return $this->opened_pos;
  	}
 
  	/**
@@ -168,12 +339,35 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
  	 * See fseek() for more information about these parameters. 
  	 * 
  	 * @param integer $offset
- 	 * @param integer $whence
+ 	 * @param integer $whence	SEEK_SET - Set position equal to offset bytes
+ 	 * 							SEEK_CUR - Set position to current location plus offset.
+ 	 * 							SEEK_END - Set position to end-of-file plus offset. (To move to a position before the end-of-file, you need to pass a negative value in offset.)
  	 * @return boolean TRUE if the position was updated, FALSE otherwise.
  	 */
 	function stream_seek ( $offset, $whence )
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($offset,$whence)");
 		
+		if (is_resource($this->opened_data))
+		{
+			return fseek($this->opened_data,$offset,$whence);
+		}
+		if (is_null($this->opened_path)) return false;
+		
+		switch($whence)
+		{
+			default:
+			case SEEK_SET:
+				$this->opened_pos = $offset;
+				break;
+			case SEEK_END:
+				$this->opened_pos = bytes($this->opened_data);
+				// fall through
+			case SEEK_CUR:
+				$this->opened_pos += $offset;
+				break;
+		}
+		return true;
 	}
 
 	/**
@@ -185,7 +379,13 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_flush ( )
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."()");
 		
+		if (is_resource($this->opened_data))
+		{
+			return fflush($this->opened_data);
+		}
+		return true;
 	}
 
 	/**
@@ -204,7 +404,9 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_stat ( )
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_path)");
 		
+		return $this->url_stat($this->opened_path,0);
 	}
 
 	/**
@@ -216,9 +418,26 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * @param string $path
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function unlink ( $path )
+	static function unlink ( $path )
 	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path)");
 		
+		if (!is_object(self::$old_vfs))
+		{
+			self::$old_vfs =& new vfs_home();
+		}
+		$data=array(
+			'string'    	=> $path,
+			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+		);
+		if (!self::$old_vfs->acl_check($data+array(
+				'operation' => EGW_ACL_DELETE
+			)) /*|| ($type = self::$old_vfs->file_type($data)) === 'Directory'*/)
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($path) (type=$type) permission denied!");
+			return false;	// no permission or file does not exist
+		}
+		return self::$old_vfs->rm($data);
 	}
 
 	/**
@@ -233,6 +452,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function rename ( $path_from, $path_to )
 	{
+		error_log(__METHOD__."($path_from, $path_to) not yet implemented!");
 		
 	}
 
@@ -249,6 +469,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function mkdir ( $path, $mode, $options )
 	{
+		error_log(__METHOD__."($path, $mode, $options) not yet implemented!");
 		
 	}
 
@@ -264,6 +485,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function rmdir ( $path, $options )
 	{
+		error_log(__METHOD__."($path, $options) not yet implemented!");
 		
 	}
 
@@ -271,19 +493,20 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir(). 
 	 * 
 	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
+	 * @param $options
 	 * @return booelan 
 	 */
 	function dir_opendir ( $url, $options )
 	{
-		error_log("oldvfs_stream_wrapper::dir_opendir('$path',$options)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$options)");
 
-		if (!is_object($GLOBALS['egw']->vfs))
+		if (!is_object(self::$old_vfs))
 		{
-			$GLOBALS['egw']->vfs =& new vfs_home();
+			self::$old_vfs =& new vfs_home();
 		}
 		$path = parse_url($url,PHP_URL_PATH);
 
-		$this->opened_dir = $GLOBALS['egw']->vfs->ls(array(
+		$this->opened_dir = self::$old_vfs->ls(array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
 			'checksubdirs'	=> false,
@@ -291,7 +514,10 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			//'orderby'       => '',
 			//'mime_type'     => '',
 		));
-		if (!is_array($this->opened_dir))
+		if (!is_array($this->opened_dir) || 
+			// we also need to return false, if $url is not a directory!
+			count($this->opened_dir) == 1 && $path == $this->opened_dir[0]['directory'].'/'.$this->opened_dir[0]['name'] &&
+			$this->opened_dir[0]['mime_type'] != 'Directory')
 		{
 			$this->opened_dir = null;
 			return false;
@@ -329,7 +555,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function url_stat ( $url, $flags )
 	{
-		error_log("oldvfs_stream_wrapper::url_stat('$url',$flags)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags)");
 
 		/*return array(
 			'mode' => 0100666,
@@ -341,13 +567,13 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			'mtime' => time(),
 		);*/
 		
-		if (!is_object($GLOBALS['egw']->vfs))
+		if (!is_object(self::$old_vfs))
 		{
-			$GLOBALS['egw']->vfs =& new vfs_home();
+			self::$old_vfs =& new vfs_home();
 		}
 		$path = parse_url($url,PHP_URL_PATH);
 
-		list($info) = $GLOBALS['egw']->vfs->ls(array(
+		list($info) = self::$old_vfs->ls(array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
 			'checksubdirs'	=> false,
@@ -369,7 +595,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_readdir ( )
 	{
-		error_log("oldvfs_stream_wrapper::dir_readdir($this->opened_dir_path)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_dir_path)");
 
 		if (!is_array($this->opened_dir)) return false;
 		
@@ -388,7 +614,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_rewinddir ( ) 
 	{
-		error_log("oldvfs_stream_wrapper::dir_rewinddir($this->opened_dir_path)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_dir_path)");
 		
 		if (!is_array($this->opened_dir)) return false;
 		
@@ -406,7 +632,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_closedir ( )
 	{
-		error_log("oldvfs_stream_wrapper::dir_closedir($this->opened_dir_path)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_dir_path)");
 		
 		if (!is_array($this->opened_dir)) return false;
 		
@@ -436,6 +662,23 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		);
 		//print_r($stat);
 		return $stat;
+	}
+
+	/**
+	 * Multibyte save substr
+	 *
+	 * @param string $str
+	 * @param int $start
+	 * @param int $length=null
+	 * @return string
+	 */
+	static function substr($str,$start,$length=null)
+	{
+		static $func_overload;
+		
+		if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
+		
+		return $func_overload & 2 ? mb_substr($str,$start,$length,'ascii') : substr($str,$start,$length);
 	}
 }
 
