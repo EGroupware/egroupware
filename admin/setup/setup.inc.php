@@ -43,6 +43,10 @@ $setup_info['admin']['hooks'] = array(
 	'sidebox_menu',
 	'topmenu_info'
 );
+$setup_info['admin']['hooks']['preferences'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['admin']['hooks']['settings'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.settings';
+$setup_info['admin']['hooks']['admin'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['admin']['hooks']['sidebox_menu'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
 
 /* Dependencies for this app to work */
 $setup_info['admin']['depends'][] = array(
@@ -53,4 +57,3 @@ $setup_info['admin']['depends'][] = array(
 	'appname' => 'etemplate',
 	'versions' => Array('1.4','1.5')
 );
-
