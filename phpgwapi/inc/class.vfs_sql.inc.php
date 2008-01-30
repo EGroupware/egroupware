@@ -604,6 +604,7 @@
 		 */
 		function acl_check ($data)
 		{
+			//error_log(__METHOD__.'('.print_r($data,true).')');
 			if (!is_array ($data))
 			{
 				$data = array ();
@@ -928,7 +929,8 @@
 
 			$default_values = array
 				(
-					'relatives'	=> array (RELATIVE_CURRENT)
+					'relatives'	=> array (RELATIVE_CURRENT),
+					'time' => $this->now,
 				);
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
@@ -950,7 +952,7 @@
 					 PHP's touch function will automatically decide whether to
 					 create the file or set the modification time
 				*/
-				$rr = @touch ($p->real_full_path);
+				$rr = @touch ($p->real_full_path,$data['time']);
 
 				if ($p->outside)
 				{
@@ -979,7 +981,7 @@
 						'relatives'	=> array ($p->mask),
 						'attributes'	=> array(
 									'modifiedby_id' => $account_id,
-									'modified' => $this->now
+									'modified' => $data['time'],
 								)
 						)
 					);
@@ -1007,7 +1009,7 @@
 					'relatives'	=> array ($p->mask),
 					'attributes'	=> array (
 								'createdby_id' => $account_id,
-								'created' => $this->now,
+								'created' => $data['time'],
 								'size' => 0,
 								'deleteable' => 'Y',
 								'app' => $currentapp
