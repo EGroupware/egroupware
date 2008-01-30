@@ -6,25 +6,31 @@
  * @package notifications
  * @subpackage backends
  * @link http://www.egroupware.org
- * @author Cornelius Weiss <nelius@cwtech.de>
+ * @author Cornelius Weiss <nelius@cwtech.de>, Christian Binder <christian@jaytraxx.de>
  * @version $Id$
  */
-
-require_once('class.iface_notification.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.html.inc.php');
 
 /**
  * Instant user notification with egroupware popup.
  *
  * @abstract egwpopup is a two stage notification. In the first stage 
- * notification is written into self::_notification_egwpopup
- * table. In the second stage a request from the client reads
+ * notification is written into self::_notification_table.
+ * In the second stage a request from the client reads
  * out the table to look if there is a notificaton for this 
  * client. The second stage is done in class.ajaxnotifications.inc.php
+ *
+ * Todo:
+ * - save the messages by uid instead of sessionid into the notification table, this
+ * has several advantages (users poll the messages via ajax from multiple logins, and
+ * do not have to read one message twice, poll after re-login with different sessionid)
+ * - delete message from the table only if the user has really seen it
+ * - if the above things are done we should get rid of rendering the links here,
+ * instead it should be done by the ajax class, so sessionids in links could be possible then
+ *
  * (multidisplay is supported)
  *
  */
-class notification_popup implements iface_notification {
+class notifications_popup implements notifications_iface {
 	
 	/**
 	 * Appname
@@ -79,7 +85,7 @@ class notification_popup implements iface_notification {
 	private $html;
 	
 	/**
-	 * constructor of notification_egwpopup
+	 * constructor of notifications_egwpopup
 	 *
 	 * @param object $_sender
 	 * @param object $_recipient
@@ -95,7 +101,7 @@ class notification_popup implements iface_notification {
 		$this->preferences = $_preferences;
 		$this->db = &$GLOBALS['egw']->db;
 		$this->db->set_app( self::_appname );
-		$this->html = & html::singleton();
+		$this->html = html::singleton();
 	}
 	
 	/**
@@ -126,8 +132,7 @@ class notification_popup implements iface_notification {
 	}
 		
 	/**
-	 * saves notification into database so that the client can fetch it from 
-	 * there via notification->get
+	 * saves notification into database so that the client can fetch it from there
 	 *
 	 * @param string $_message
 	 * @param array $_user_sessions
@@ -145,24 +150,41 @@ class notification_popup implements iface_notification {
 	
 	/**
 	 * renders plaintext/html links from given link array
+	 * should be moved to the ajax class later - like mentioned in the Todo
 	 *
 	 * @param array $_links
-	 * @return html rendered link(s) as complete string (jspopup)
+	 * @return html rendered link(s) as complete string with jspopup or a new window
 	 */
 	private function render_links($_links = false) {
 		if(!is_array($_links) || count($_links) == 0) { return false; }
-		$newline = "<br />"; 
+		$newline = "<br />";
 		
-		$link_array = array();
+		$rendered_links = array();
 		foreach($_links as $link) {
-			$url = $this->html->link('/index.php?menuaction='.$link->menuaction, $link->params);
-			$menuaction_arr = explode('.',$link->menuaction);
-			$application = $menuaction_arr[0];
-			$image = $application ? $this->html->image($application,'navbar',$link->text,'align="middle" style="width: 24px; margin-right: 0.5em;"') : '';
-			$link_array[] = $this->html->div($image.$link->text,'onclick="'.$this->jspopup($url).'"','jspopup');
+			if(!$link->popup) { $link->view['no_popup'] = 1; }
+			
+			$url = $this->html->link('/index.php', $link->view);
+			// do not expose sensitive data
+			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
+			// extract application-icon from menuaction
+			if($link->view['menuaction']) {
+				$menuaction_arr = explode('.',$link->view['menuaction']);
+				$application = $menuaction_arr[0];
+				$image = $application ? $this->html->image($application,'navbar',$link->text,'align="middle" style="width: 24px; margin-right: 0.5em;"') : '';
+			} else {
+				$image = '';
+			}
+			if($link->popup) {
+				$dimensions = explode('x', $link->popup);
+				$rendered_links[] = $this->html->div($image.$link->text,'onclick="'.$this->jspopup($url, '_blank', $dimensions[0], $dimensions[1]).'"','link');
+			} else {
+				$rendered_links[] = $this->html->div($this->html->a_href($image.$link->text, $url, false, 'target="_blank"'),'','link');
+			} 
+			
 		}
-
-		return $this->html->bold(lang('Linked entries:')).$newline.implode($newline,$link_array);
+		if(count($rendered_links) > 0) {
+			return $this->html->bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
+		}
 	}
 		
 	/**

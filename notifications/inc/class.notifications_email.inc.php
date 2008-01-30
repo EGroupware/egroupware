@@ -9,14 +9,10 @@
  * @author Christian Binder <christian@jaytraxx.de>
  */
 
-require_once('class.iface_notification.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.html.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.send.inc.php');
-
 /**
  * User notification via email.
  */
-class notification_email implements iface_notification {
+class notifications_email implements notifications_iface {
 
 	/**
 	 * Appname
@@ -66,7 +62,7 @@ class notification_email implements iface_notification {
 	private $html;
 	
 	/**
-	 * constructor of notification_email
+	 * constructor of notifications_email
 	 *
 	 * @param object $_sender
 	 * @param object $_recipient
@@ -84,7 +80,7 @@ class notification_email implements iface_notification {
 		{
 			$this->mail = new send();
 		}
-		$this->html = & html::singleton();
+		$this->html = html::singleton();
 	}
 	
 	/**
@@ -97,7 +93,7 @@ class notification_email implements iface_notification {
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
 		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient);
-		$body_html = "<html>\n<body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
+		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
 		
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();
@@ -118,7 +114,7 @@ class notification_email implements iface_notification {
 			throw new Exception("Failed sending notification message via email.$error");
 		}
 	}
-	
+		
 	/**
 	 * renders plaintext/html links from given link array
 	 *
@@ -134,18 +130,24 @@ class notification_email implements iface_notification {
 		// php distinguishes between missing and present(null) arguments
 		if(is_null($_render_html)) { $_render_html = false; }
 		if(is_null($_render_external)) { $_render_external = true; }
+		$newline = $_render_html ? "<br />" : "\n";
+		$hruler = $_render_html ? $this->html->hr() : '';
 		
-		$newline = $_render_html ? "<br />" : "\n";		
-		$link_array = array();
+		$rendered_links = array();
 		foreach($_links as $link) {
-			if($_render_external) {
-				$link->params['no_popup'] = 1;
+			if($_render_external || ! $link->popup) { $link->view['no_popup'] = 1; }
+			$url = $this->html->link('/index.php', $link->view);
+			// do not expose sensitive data
+			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
+			// complete missing protocol and domain part if needed
+			if ($url{0} == '/' && $_render_external) {
+				$url = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+					($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$url;
 			}
-			$url = $this->html->link('/index.php?menuaction='.$link->menuaction, $link->params);
-			$link_array[] = $_render_html ? $this->html->a_href($link->text, $url) : $url;
+			$rendered_links[] = $_render_html ? $this->html->a_href($link->text, $url, false, 'target="_blank"') : $url;
 		}
 
-		return lang('Linked entries:').$newline.implode($newline,$link_array);
+		return $hruler.$newline.lang('Linked entries:').$newline.implode($newline,$rendered_links);
 	}
 
 }

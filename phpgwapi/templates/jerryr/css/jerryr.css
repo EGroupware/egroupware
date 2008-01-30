@@ -646,7 +646,7 @@ body {
 */
 #notificationwindow_message > table
 {
-	font-size: 90%;
+	font-size: 95%;
 }
 
 #notificationwindow_message hr
@@ -656,7 +656,7 @@ body {
 	height: 1px;
 }
 
-#notificationwindow_message .jspopup
+#notificationwindow_message .link
 {
 	cursor: pointer;
 }

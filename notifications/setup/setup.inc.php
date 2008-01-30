@@ -27,7 +27,7 @@ $setup_info[NOTIFICATION_APP]['maintainer'] = array(
 );
 $setup_info[NOTIFICATION_APP]['license']  = 'GPL';
 $setup_info[NOTIFICATION_APP]['description'] = 
-'Instant norification of users via various channels.';
+'Instant notification of users via various channels.';
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'after_navbar';

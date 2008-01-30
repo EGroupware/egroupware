@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Notification - Preferences
+ * eGroupWare - Notifications - Preferences
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
@@ -8,29 +8,24 @@
  * @author Christian Binder <christian@jaytraxx.de>
  */
 
-$notification_chains = array(	'disable' => lang('do not notify me at all'),
-								'popup_only' => lang('eGroupware-Popup only'),
-								'winpopup_only' => lang('Windows-Popup only'),
-								'email_only' => lang('E-Mail only'),
-								'popup_or_email' => lang('eGroupware-Popup first, if that fails notify me by E-Mail'),
-								'winpopup_or_email' => lang('Windows-Popup first, if that fails notify me by E-Mail'),
-								'popup_and_email' => lang('eGroupware-Popup and E-Mail'),
-								'winpopup_and_email' => lang('Windows-Popup and E-Mail'),
-								'egwpopup_and_winpopup' => lang('eGroupware-Poupup and Windows-Popup'),
-								'all' => lang('all possible notification extensions'),
-								);
-$verbosity_values = array(	'low' => lang('low'),
-							'medium' => lang('medium'),
-							'high' => lang('high'),
-							);
+$notifications = new notifications();
+$available_chains = $notifications->get_available_chains('human');
+
+$verbosity_values = array(
+	'low' 		=> lang('low'),
+	'medium' 	=> lang('medium'),
+	'high' 		=> lang('high'),
+);
  
 $GLOBALS['settings'] = array(
 	'notification_chain' => array(
 		'type'   => 'select',
 		'label'  => 'Notify me by',
 		'name'   => 'notification_chain',
-		'values' => $notification_chains,
-		'help'   => 'Choose a notification-chain. You will be notified over the chosen extensions.',
+		'values' => $available_chains,
+		'help'   => 'Choose a notification-chain. You will be notified over the backends included in the chain.<br />'
+					.'Note: If a notification-chain is marked as "disabled", your Administrator does not allow one or'
+					.' more of the backends included in the chain and notifications falls back to "E-Mail" while notifying you.',
 		'xmlrpc' => True,
 		'admin'  => False
 	),

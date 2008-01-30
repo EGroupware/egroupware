@@ -8,10 +8,10 @@
 	 * @author Cornelius Weiss <nelius@cwtech.de>
 	 * @version $Id$
 	 */
-
-	$title = $appname;
 	
-	$file = Array(	'Preferences' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'preferences.uisettings.index','appname'=>'notifications')),
-								);
-	display_section($appname,$title,$file);
+	$file = Array(	'Preferences' => $GLOBALS['egw']->link('/index.php',array(
+		'menuaction'	=> 'preferences.uisettings.index',
+		'appname'		=> $appname,
+		)));
+	display_section($appname,$file);
 ?>

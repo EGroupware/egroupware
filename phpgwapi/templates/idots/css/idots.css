@@ -463,7 +463,7 @@ Preferences tabs
 */
 #notificationwindow_message > table
 {
-	font-size: 90%;
+	font-size: 95%;
 }
 
 #notificationwindow_message hr
@@ -473,7 +473,7 @@ Preferences tabs
 	height: 1px;
 }
 
-#notificationwindow_message .jspopup
+#notificationwindow_message .link
 {
 	cursor: pointer;
 }

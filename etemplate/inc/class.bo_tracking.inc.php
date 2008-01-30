@@ -22,7 +22,7 @@ require_once(EGW_API_INC.'/class.html.inc.php');
  *	1. set the required class-vars: app, id_field
  *	2. optional set class-vars: creator_field, assigned_field, check2prefs
  *	3. implement the required methods: get_config, get_details
- *	4. optionally re-implement: get_subject, get_body, get_attachments, get_link, get_message
+ *	4. optionally re-implement: get_title, get_subject, get_body, get_attachments, get_link, get_notification_link, get_message
  * They are all documented in this file via phpDocumentor comments.
  */
 class bo_tracking
@@ -370,16 +370,14 @@ class bo_tracking
 		if ($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
 			// send via notification_app
 			$receiver = is_numeric($user_or_lang) ? $user_or_lang : $email;
-			require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
 			try {
-				$notification = new notification();
+				$notification = new notifications();
 				$notification->set_receivers(array($receiver));
-				$notification->set_message($this->get_body(false,$data,$old)); // set message as plaintext
-				$notification->set_message($this->get_body(true,$data,$old)); // and html
+				$notification->set_message($this->get_body(false,$data,$old,false)); // set message as plaintext
+				$notification->set_message($this->get_body(true,$data,$old,false)); // and html
 				$notification->set_sender($this->get_sender($data,$old,true));
 				$notification->set_subject($this->get_subject($data,$old));
-				// does not work atm
-				//$notification->set_links(array($this->get_notification_link($data,$old)));
+				$notification->set_links(array($this->get_notification_link($data,$old)));
 				$attachments = $this->get_attachments($data,$old);
 				if(is_array($attachments)) { $notification->set_attachments($attachments); }
 				$notification->send();
@@ -389,7 +387,7 @@ class bo_tracking
 				return false;
 			}
 		} else {
-			error_log('tracking: cannot send any notifications because notification-app is not installed');
+			error_log('tracking: cannot send any notifications because notifications is not installed');
 		}
 		
 		return true;
@@ -449,6 +447,23 @@ class bo_tracking
 		}
 		//echo "<p>bo_tracking::get_sender()='".htmlspecialchars($sender)."'</p>\n";
 		return $sender;
+	}
+	
+	/**
+	 * Get the title for a given entry, can be reimplemented
+	 *
+	 * @param array $data
+	 * @param array $old
+	 * @return string
+	 */
+	function get_title($data,$old)
+	{
+		if (!is_object($GLOBALS['egw']->link))
+		{
+			require_once(EGW_API_INC.'/class.bolink.inc.php');
+			$GLOBALS['egw']->link =& new bolink();
+		}
+		return $GLOBALS['egw']->link->title($this->app,$data[$this->id_field]);
 	}
 
 	/**
@@ -532,7 +547,7 @@ class bo_tracking
 	}
 	
 	/**
-	 * Get a link for notifications to view the entry
+	 * Get a link for notifications to view the entry, can be reimplemented
 	 *
 	 * @param array $data
 	 * @param array $old
@@ -542,21 +557,16 @@ class bo_tracking
 	{
 		if (!is_object($GLOBALS['egw']->link))
 		{
-			require_once(EGW_API_INC.'/class.bolink.inc.php');
-			$GLOBALS['egw']->link =& new bolink();
+			$GLOBALS['egw']->link = new bolink();
 		}
 		if($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])) {
-			return array(	'menuaction' => $view['menuaction'],
-							'params' => array (	'action' => $view['action'],
-												'action_id' => $view['action_id'],
-												),
-							'text' => $data['info_subject'],
+			return array(	'text' 	=> $this->get_title($data,$old),
+							'view' 	=> $view,
+							'popup'	=> $GLOBALS['egw']->link->is_popup($this->app,'view'),
 							);
-		} else {
-			return false;
 		}
-	}
-		
+		return false;
+	}	
 	
 	/**
      * Get the body of the notification message, can be reimplemented
@@ -564,9 +574,10 @@ class bo_tracking
      * @param boolean $html_email
      * @param array $data
      * @param array $old
+     * @param boolean $integrate_link to have links embedded inside the body
      * @return string
      */
-    function get_body($html_email,$data,$old)
+    function get_body($html_email,$data,$old,$integrate_link = true)
     {
         $body = '';
         if ($html_email)
@@ -578,7 +589,7 @@ class bo_tracking
         {
             $body .= $this->format_line($html_email,'message',false,$message);
         }
-        if (($link = $this->get_link($data,$old)))
+        if ($integrate_link && ($link = $this->get_link($data,$old)))
         {
             $body .= $this->format_line($html_email,'link',false,lang('You can respond by visiting:'),$link);
         }
@@ -621,7 +632,7 @@ class bo_tracking
 			if (!$this->html_content_allow) $line = $this->html->htmlspecialchars($line);	// XSS
 
 			$color = $modified ? 'red' : false;
-			$size  = '120%';
+			$size  = '110%';
 			$bold = false;
 			$background = '#FFFFF1';
 			switch($type)
@@ -686,7 +697,7 @@ class bo_tracking
 	}
 	
 	/**
-	 * Get the attachments for a notification mail
+	 * Get the attachments for a notification
 	 *
 	 * @param array $data
 	 * @param array $old

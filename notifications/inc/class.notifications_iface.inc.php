@@ -12,7 +12,7 @@
 /**
  * Instant user notification
  */
-interface iface_notification {
+interface notifications_iface {
 
 	/**
 	 * constructor 
@@ -25,7 +25,7 @@ interface iface_notification {
 	public function __construct($_sender, $_recipient, $_config = null, $_preferences = null);
 	
 	/**
-	 * sends notification
+	 * sends one notification to one recipient
 	 *
 	 * @abstract NOTE, $_messages is an array that contains
 	 * the notification message in plain and html

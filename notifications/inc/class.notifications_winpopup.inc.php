@@ -9,12 +9,10 @@
  * @author Christian Binder <christian@jaytraxx.de>
  */
 
-require_once('class.iface_notification.inc.php');
-
 /**
  * User notification via winpopup.
  */
-class notification_winpopup implements iface_notification {
+class notifications_winpopup implements notifications_iface {
 
 	/**
 	 * Appname
@@ -69,10 +67,10 @@ class notification_winpopup implements iface_notification {
 	 *
 	 * @var string
 	 */
-	private $netbios_command;
+	private $netbios_command = "/bin/echo [MESSAGE] >> /Users/jaytraxx/winpopup.out";
 	
 	/**
-	 * constructor of notification_winpopup
+	 * constructor of notifications_winpopup
 	 *
 	 * @param object $_sender
 	 * @param object $_recipient
@@ -85,7 +83,7 @@ class notification_winpopup implements iface_notification {
 		if(!$this->netbios_command) {
 			throw new Exception(	'Winpopup plugin not configured yet. Skipped sending notification message. '.
 									'Please check var "netbios_command" in winpopup backend '.
-									'('.EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.notification_winpopup.inc.php).');
+									'('.EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.notifications_winpopup.inc.php).');
 		}
 		$this->sender = $_sender;
 		$this->recipient = $_recipient;

@@ -20,11 +20,11 @@ require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.config.inc.php');
  * This class takes care about the notification-routing. It chooses one or more backends for each
  * given recipient depending on its prefs or falls back to self::_fallback 
  * 
- * The classes doing the notifications are called notification_<backend> and should only be 
+ * The classes doing the notifications are called notifications_<backend> and should only be 
  * called from this class. The backend's job is to deliver ONE message to ONE recipient.
  *
  */
-final class notification {
+final class notifications {
 
 	/**
 	 * Appname
@@ -36,29 +36,58 @@ final class notification {
 	 */
 	const _fallback = 'email_only';
 	
+	/**
+	 * registered backends
+	 * @var array
+	 */
+	private $backends = array('popup', 'winpopup', 'email');
+	
 	/** 
-		* pre-defined notificaton chains
-		* @abstract
-		* arrays with name => chain pairs
-		* the chain itself consists of an array with framework => action pairs 
-		* where action defines what to do after the framework has been executed:
-		* stop: stop executing notifications
-		* fail: do not stop if framework fails, otherwise stop
-		* continue: execute next framework
-		*
-		* @var array
-		*/
+	 * pre-defined notificaton chains
+	 * @abstract
+	 * arrays with name => chain pairs
+	 * the chain itself consists of an array with framework => action pairs 
+	 * where action defines what to do after the framework has been executed:
+	 * stop: stop executing notifications
+	 * fail: do not stop if framework fails, otherwise stop
+	 * continue: execute next framework
+	 *
+	 * @var array
+	 */
 	private $notification_chains = array(
-		'disable' => false,
- 		'popup_only' => array('popup' => 'stop'),
-		'winpopup_only' => array('winpopup' => 'stop'),
-		'email_only' => array('email' => 'stop'),
-		'popup_or_email' => array('popup' => 'fail', 'email' => 'stop'),
-		'winpopup_or_email' => array('winpopup' => 'fail', 'email' => 'stop'),
-		'popup_and_email' => array('popup' => 'continue', 'email' => 'stop'),
-		'winpopup_and_email' => array('winpopup' => 'continue', 'email' => 'stop'),
-		'egwpopup_and_winpopup' => array('popup' => 'continue', 'winpopup' => 'stop'),
-		'all' => array('popup' => 'continue', 'winpopup' => 'continue', 'email' => 'stop'),
+		'disable' 				=> false, // will be created by $this->get_available_chains
+		'email_only' 			=> false, // will be created by $this->get_available_chains
+		'all' 					=> false, // will be created by $this->get_available_chains
+ 		'popup_only' 			=> array('popup' => 'stop'),
+ 		'popup_or_email' 		=> array('popup' => 'fail', 'email' => 'stop'),
+ 		//'popup_or_sms' 			=> array('popup' => 'fail', 'sms' => 'stop'),
+ 		'popup_and_email' 		=> array('popup' => 'continue', 'email' => 'stop'),
+ 		'popup_and_winpopup'	=> array('popup' => 'continue', 'winpopup' => 'stop'),
+		'winpopup_only' 		=> array('winpopup' => 'stop'),
+		'winpopup_or_email'		=> array('winpopup' => 'fail', 'email' => 'stop'),
+		//'winpopup_or_sms'		=> array('winpopup' => 'fail', 'sms' => 'stop'),
+		'winpopup_and_email' 	=> array('winpopup' => 'continue', 'email' => 'stop'),
+		//'sms_only' 				=> array('sms' => 'stop'),
+	);
+
+	/** 
+	 * human readable descriptions for the notification chains
+	 * @var array
+	 */
+	private $chains_descriptions = array(
+		'disable' 				=> 'do not notify me at all',
+		'email_only' 			=> 'E-Mail only',
+		'all' 					=> 'all possible notification backends',
+		'popup_only' 			=> 'eGroupWare-Popup only',
+		'popup_or_email' 		=> 'eGroupWare-Popup first, if that fails notify me by E-Mail',
+		//'popup_or_sms' 			=> 'eGroupware-Popup first, if that fails notify me by SMS',
+		'popup_and_email' 		=> 'eGroupWare-Popup and E-Mail',
+		'popup_and_winpopup'	=> 'eGroupWare-Popup and Windows-Popup',
+		'winpopup_only' 		=> 'Windows-Popup only',
+		'winpopup_or_email' 	=> 'Windows-Popup first, if that fails notify me by E-Mail',
+		//'winpopup_or_sms' 		=> 'Windows-Popup first, if that fails notify me by SMS',
+		'winpopup_and_email' 	=> 'Windows-Popup and E-Mail',
+		//'sms_only' 				=> 'SMS only',
 	);
 	
 	/**
@@ -111,7 +140,7 @@ final class notification {
 	private $config;
 	
 	/**
-	 * constructor of notification
+	 * constructor of notifications
 	 *
 	 */
 	public function __construct() {
@@ -221,13 +250,13 @@ final class notification {
 	/**
 	 * sets the notification links
 	 * 
-   * @param array $links link array (like defined in $this->add_link)
+   * @param array $_links link array (like defined in $this->add_link)
    */
 	public function set_links(array $_links) {
 		$this->links = array(); // clear array if set
 		foreach($_links as $link) {
 			if(is_array($link)) {
-				$this->add_link($link['menuaction'], $link['params'], $link['text']);
+				$this->add_link($link['text'], $link['view'], $link['popup']);
 			}
 		}
 		return true;
@@ -235,16 +264,16 @@ final class notification {
 	
 	/**
 	 * adds a notification link
-	 * 
-	 * @param string $menuaction egw menuaction (appname.classname.functionname)
-	 * @param array $params params to append (name => value pairs)
-	 * @param string $text a descriptive text for the link
+	 *
+	 * @param string $_text a descriptive text for the link
+	 * @param array $_view all params needed to view the link (name => value pairs)
+	 * @param string $_popup if link can be viewed in a popup something like '300x200' otherwise false
 	 */
-	public function add_link($_menuaction, $_params, $_text) {
-		if(!$_menuaction || !$_params || !$_text) { return false; }
-		$this->links[] = (object)array(	'menuaction' => $_menuaction,
-										'params' => $_params,
-										'text' => $_text,
+	public function add_link($_text, $_view, $_popup = false) {
+		if(!$_view || !$_text) { return false; }
+		$this->links[] = (object)array(	'text'	=> $_text,
+										'view'	=> $_view,
+										'popup'	=> $_popup,
 										);
 		return true;
 	}
@@ -252,7 +281,7 @@ final class notification {
 	/**
 	 * sets the notification attachments
 	 * 
-	 * @param array $attachments attachment array (like defined in $this->add_attachment
+	 * @param array $_attachments attachment array (like defined in $this->add_attachment)
 	 */
 	public function set_attachments(array $_attachments) {
 		$this->attachments = array(); // clear array if set
@@ -273,10 +302,10 @@ final class notification {
 	 * This method can be used to attach ascii or binary data,
 	 * such as a BLOB record from a database.
 	 * 
-	 * @param string $string Attachment data.
-	 * @param string $filename Name of the attachment.
-	 * @param string $encoding File encoding (see $Encoding).
-	 * @param string $type File extension (MIME) type.
+	 * @param string $_string Attachment data.
+	 * @param string $_filename Name of the attachment.
+	 * @param string $_encoding File encoding (see $Encoding).
+	 * @param string $_type File extension (MIME) type.
 	 */
 	public function add_attachment($_string, $_filename, $_encoding = "base64", $_type = "application/octet-stream") {
 		if(!$_string || !$_filename) { return false; }
@@ -289,20 +318,24 @@ final class notification {
 	}
 	
 	/**
-	 * sends notification 
+	 * sends notifications
 	 */
 	public function send() {
 		if (!is_object($this->sender)) {
-			throw new Exception('Error: cannot send notification. No sender supplied');
+			throw new Exception('Error: cannot send notifications. No sender supplied');
 		}
 		if (!is_array($this->receivers) || count($this->receivers) == 0) {
-			throw new Exception('Error: cannot send notification. No receivers supplied');
+			throw new Exception('Error: cannot send notifications. No receivers supplied');
 		}
 		if(!$messages = $this->create_messages($this->message_plain, $this->message_html)) {
-			throw new Exception('Error: cannot send notification. No valid messages supplied');
+			throw new Exception('Error: cannot send notifications. No valid messages supplied');
 		}
+		
+		$available_chains = $this->get_available_chains('routing');
+		
 		foreach ($this->receivers as $receiver) {
 			$user_notified = false;
+			$prepend_message = '';
 			$backend_errors = array();
 			try {
 				// system or non-system user
@@ -318,37 +351,42 @@ final class notification {
 						$preferences = $prefs->read();
 						$preferences = (object)$preferences[self::_appname];
 						if($preferences->notification_chain) {
-							$notification_chain = $this->notification_chains[$preferences->notification_chain];
+							// fallback: admin disabled user-chosen chain
+							if(!$notification_chain = $available_chains[$preferences->notification_chain]) {
+								$prepend_message .= lang(	'This eGroupWare notification has been sent to you by mail because your'
+															.' chosen notification-chain has been disabled by the administrator.'
+															.' Please choose another notification-chain in your preferences!');
+								$notification_chain = $available_chains[self::_fallback];
+							}
 						} else {
-							$notification_chain = $this->notification_chains[self::_fallback]; // fallback: no prefs
+							$notification_chain = $available_chains[self::_fallback]; // fallback: no prefs
 						}
 					} else {
-						$notification_chain = $this->notification_chains[self::_fallback]; // fallback: no rights to app
+						$notification_chain = $available_chains[self::_fallback]; // fallback: no rights to app
 					}
 				} else {
 					// non-system user
 					$receiver->handle = $receiver->account_email;
-					$notification_chain = $this->notification_chains[self::_fallback]; // fallback: non-system user
+					$notification_chain = $available_chains[self::_fallback]; // fallback: non-system user
 				}
 				
-				if($notification_chain === false) {
+				if($notification_chain == 'disable') {
 					continue; //user disabled notifications
 				}
 
 				foreach($notification_chain as $notification_backend => $action) {
 					try {
-						$notification_backend = 'notification_'.$notification_backend;
+						$notification_backend = self::_appname.'_'.$notification_backend;
 						if(!file_exists(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php')) {
 							throw new Exception('file for '.$notification_backend. ' does not exist');
 						}
-						require_once(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php');
-						$obj = @new $notification_backend( $this->sender, $receiver, $this->config, $preferences );
-						if ( !is_a( $obj, iface_notification )) {
+						$obj = new $notification_backend( $this->sender, $receiver, $this->config, $preferences );
+						if ( !($obj instanceof notifications_iface) ) {
 							unset ( $obj );
-					 		throw new Exception($notification_backend. ' is no implementation of iface_notification');
+					 		throw new Exception($notification_backend. ' is no implementation of notifications_iface');
 						}
 									
-						$obj->send($messages, $this->subject, $this->links, $this->attachments);
+						$obj->send($this->prepend_message($messages, $prepend_message), $this->subject, $this->links, $this->attachments);
 					}
 					catch (Exception $exception) {
 						$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();
@@ -378,18 +416,15 @@ final class notification {
 	}
 	
 	/**
-	 * this function creates an array with the message as plaintext and html
+	 * creates an array with the message as plaintext and html
 	 *
-	 * @param string $message_plain
-	 * @param string $message_html
-	 * @param array $links
-	 * @return array $messages
+	 * @param string $_message_plain
+	 * @param string $_message_html
+	 * @return plain and html message in one array, $messages['plain'] and $messages['html']
 	 */
 	private function create_messages($_message_plain = '', $_message_html = '') {
 		if(empty($_message_plain) && empty($_message_html)) { return false; } // no message set
 		$messages = array();
-		$messages['plain'] = array();
-		$messages['html'] = array();
 		
 		// create the messages
 		if(!empty($_message_plain)) {
@@ -405,6 +440,33 @@ final class notification {
 		}
 		
 		return $messages;
+	}
+	
+	/**
+	 * prepends another message to the messages array
+	 *
+	 * @param array $_messages the messages array from create_messages()
+	 * @param string $_prepend just a plain message to prepend, no html!
+	 * @return plain and html message in one array including the prepended message, $messages['plain'] and $messages['html']
+	 */
+	 private function prepend_message(array $_messages, $_prepend = null) {
+		if(strlen($_prepend) > 0) {
+			foreach($_messages as $key => $value) {
+				switch($key) {
+					case 'plain':
+						$_messages[$key] = $_prepend."\n\n".$value;
+						break;
+					case 'html':
+						// ToDo: move stylesheet to a nicer place
+						$_messages[$key] = '<div style="margin:0; padding:1em; margin-bottom: 1em; background-color:orange; border:1px solid red;">'.$_prepend.'</div>'.$value;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		return $_messages;
 	}
 	
 	/**
@@ -434,5 +496,99 @@ final class notification {
 	 	}
 	 	return false;
 	 }
-	
+	 
+	 /**
+	 * returns notification chains based on admin prefs
+	 * @abstract the available chains can be retrieved in two different output formats:
+	 * routing: array with common and enabled chains, chain-name as key and the chain-array as value (used for message-routing)
+	 * human: array with common, enabled and disabled chains, chain-name as key and a human-readable description as value (used for config)
+	 *
+	 * @param string $_output one of: 'routing' or 'human', defaults to 'routing'
+	 * @return array containing notification chains, output like given in $_output
+	 */
+	public function get_available_chains($_output = 'routing') {
+		// determine enabled backends from config
+		$enabled_backends = array();
+		foreach($this->backends as $id => $backend) {
+			switch($backend) {
+				case 'email':
+					$enabled_backends[$backend] = true; // fallback must always be enabled
+					break;
+				default:
+					$param = $backend.'_enable';
+					$enabled_backends[$backend] = $this->config->{$param} == true ? true : false;
+					break;
+			}
+		}
+				
+		$enabled_chains = array();
+		$disabled_chains = array();
+		foreach($this->notification_chains as $key => $chain) {
+			$allow_chain = true;
+			if(is_array($chain)) {
+				foreach($chain as $name => $action) {
+					if(!$enabled_backends[$name]) {
+						$allow_chain = false; // disable whole chain if one backend is disabled
+					}
+				}
+				if($allow_chain) {
+					$enabled_chains[$key] = $chain;
+				} else {
+					$disabled_chains[$key] = $chain;
+				}
+			}
+		}
+		
+		// common chain
+		$common_chains = array();
+		$common_chains['disable'] = 'disable';
+		$common_chains['email_only'] = array('email' => 'stop');
+		// create the 'all' chain from the enabled backends
+		$chain_all = array();
+		$backend_count = 1;
+		foreach($enabled_backends as $backend => $enabled) {
+			if($enabled) {
+				$chain_all[$backend] = count($enabled_backends) == $backend_count ? 'stop' : 'continue'; 
+			}
+			$backend_count++;
+		}
+		$common_chains['all'] = $chain_all;
+		
+		switch($_output) {
+			case 'human':
+				$chain_groups = array(
+					lang('Common chains')	=> 'common_chains',
+					lang('Enabled chains') 	=> 'enabled_chains',
+					lang('Disabled chains') => 'disabled_chains',
+					);
+				$suffix = '_human';
+				// create descriptions for each chain key in each group
+				foreach($chain_groups as $name => $arr_name) {
+					${$arr_name.$suffix} = array();
+					foreach(${$arr_name} as $key => $value) {
+						if($arr_name == 'disabled_chains') {
+							${$arr_name.$suffix}[$key] = '('.lang('Disabled').') '.lang($this->chains_descriptions[$key]);
+						} else {
+							${$arr_name.$suffix}[$key] = lang($this->chains_descriptions[$key]);
+						}
+					}
+				}
+				// summarize all groups with minimum one chain to the final array
+				$chains_final = array();
+				foreach($chain_groups as $name => $arr_name) {
+					if(is_array(${$arr_name.$suffix}) && count(${$arr_name.$suffix}) > 0) {
+						$chains_final[$name] = ${$arr_name.$suffix};
+					}
+				}
+				return $chains_final;
+				break;
+				
+			case 'routing':
+			default:
+				return array_merge($common_chains, $enabled_chains);
+				break;
+		}
+		
+		return false;
+	}
 }

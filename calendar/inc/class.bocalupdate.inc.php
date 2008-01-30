@@ -605,9 +605,8 @@ class bocalupdate extends bocal
 				}
 				// send via notification_app
 				if($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
-					require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
 					try {
-						$notification = new notification();
+						$notification = new notifications();
 						$notification->set_receivers(array($userid));
 						$notification->set_message($body);
 						$notification->set_sender($senderid);
@@ -621,7 +620,7 @@ class bocalupdate extends bocal
 						continue;
 					}
 				} else {
-					error_log('calendar: cannot send any notifications because notification-app is not installed');
+					error_log('calendar: cannot send any notifications because notifications is not installed');
 				}
 			}
 		}
@@ -869,13 +868,15 @@ class bocalupdate extends bocal
 		/* this is needed for notification-app
 		 * notification-app creates the link individual for
 		 * every user, so we must provide a neutral link-style
+		 * if calendar implements tracking in near future, this part can be deleted
 		 */
 		$link_arr = array();
-		$link_arr['menuaction'] = 'calendar.uiforms.edit';
-		$link_arr['params'] = array(	'cal_id' => $event['id'],
-										'date' => $eventStart_arr['full'],
-										);
 		$link_arr['text'] = $event['title'];
+		$link_arr['view'] = array(	'menuaction' => 'calendar.uiforms.edit',
+									'cal_id' => $event['id'],
+									'date' => $eventStart_arr['full'],
+									);
+		$link_arr['popup'] = '750x400';
 		$details['link_arr'] = $link_arr;
 		
 		$dis = array();
