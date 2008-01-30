@@ -14,7 +14,7 @@
  *
  * The interface is according to the docu on php.net
  *  
- * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
+ * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
 interface iface_stream_wrapper
 {
@@ -149,11 +149,13 @@ interface iface_stream_wrapper
 	 * It should attempt to rename the item specified by path_from to the specification given by path_to. 
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support renaming.
 	 *
+	 * The regular filesystem stream-wrapper returns an error, if $url_from and $url_to are not either both files or both dirs!
+	 *
 	 * @param string $path_from
 	 * @param string $path_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function rename ( $path_from, $path_to );
+	static function rename ( $path_from, $path_to );
 
 	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
@@ -166,7 +168,7 @@ interface iface_stream_wrapper
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function mkdir ( $path, $mode, $options );
+	static function mkdir ( $path, $mode, $options );
 
 	/**
 	 * This method is called in response to rmdir() calls on URL paths associated with the wrapper.
@@ -178,7 +180,7 @@ interface iface_stream_wrapper
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	function rmdir ( $path, $options );
+	static function rmdir ( $path, $options );
 
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir(). 
@@ -211,9 +213,10 @@ interface iface_stream_wrapper
 	 *                          This flag is set in response to calls to lstat(), is_link(), or filetype().
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set, 
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
+	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array 
 	 */
-	function url_stat ( $path, $flags );
+	static function url_stat ( $path, $flags );
 	
 	/**
 	 * This method is called in response to readdir().

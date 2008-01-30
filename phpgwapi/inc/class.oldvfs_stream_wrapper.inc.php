@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -31,11 +31,16 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	const USE_FILESYSTEM_DIRECT = true;
 	/**
+	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
+	 *
+	 */
+	const DIR_MIME_TYPE = 'Directory';
+	/**
 	 * How much should be logged to the apache error-log
 	 *
 	 * 0 = Nothing
 	 * 1 = only errors
-	 * 2 = all function calls and errors
+	 * 2 = all function calls and errors (contains passwords too!)
 	 */
 	const LOG_LEVEL = 1;
 	
@@ -78,20 +83,22 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	protected $opened_pos;
 	/**
-	 * Global vfs::ls() cache
+	 * Directory vfs::ls() of dir opened with dir_opendir()
+	 * 
+	 * This static var gets overwritten by each new dir_opendir, it helps to not read the entries twice.
+	 *
+	 * @var array $path => info-array pairs
+	 */
+	static private $stat_cache;
+	/**
+	 * Array with filenames of dir opened with dir_opendir
 	 *
 	 * @var array
-	 */
-	static protected $cache=array();
-	/**
-	 * Directory vfs::ls() of path opened with dir_opendir()
-	 *
-	 * @var string
 	 */
 	protected $opened_dir;
 	
 	/**
-	 * Constructor
+	 * Constructor, only called for the non-static stream_* methods!
 	 *
 	 * @return oldvfs_stream_wrapper
 	 */
@@ -138,7 +145,12 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 					'operation'		=> EGW_ACL_ADD,
 				)))
 			{
+				self::remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
+				if (!($options & STREAM_URL_STAT_QUIET))
+				{
+					trigger_error(__METHOD__."($url,$mode,$options) file does not exist or can not be created!",E_USER_WARNING);
+				}
 				$this->opened_data = $this->opened_path = $this->opened_mode = null;
 				return false;
 			}
@@ -152,7 +164,12 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 				'operation'		=> EGW_ACL_EDIT,
 			)))
 			{
+				self::remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
+				if (!($options & STREAM_URL_STAT_QUIET))
+				{
+					trigger_error(__METHOD__."($url,$mode,$options) file can not be edited!",E_USER_WARNING);
+				}
 				$this->opened_data = $this->opened_path = $this->opened_mode = null;
 				return false;				
 			}
@@ -311,8 +328,10 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			$len = bytes($this->opened_data);
 			$eof = $this->opened_pos >= $len;
 		}
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."() pos=$this->opened_pos >= $len=len --> ".($eof ? 'true' : 'false'));
-		
+		if (self::LOG_LEVEL > 1)
+		{
+			error_log(__METHOD__."() pos=$this->opened_pos >= $len=len --> ".($eof ? 'true' : 'false'));
+		}
 		return $eof;
 	}
 
@@ -385,6 +404,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return fflush($this->opened_data);
 		}
+		// we cant flush, as the old vfs can only write the whole data as once
 		return true;
 	}
 
@@ -415,13 +435,15 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * It should attempt to delete the item specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support unlinking!
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $path )
+	static function unlink ( $url )
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 		
+		$path = parse_url($url,PHP_URL_PATH);
+
 		if (!is_object(self::$old_vfs))
 		{
 			self::$old_vfs =& new vfs_home();
@@ -431,12 +453,16 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
 		);
 		if (!self::$old_vfs->acl_check($data+array(
-				'operation' => EGW_ACL_DELETE
-			)) /*|| ($type = self::$old_vfs->file_type($data)) === 'Directory'*/)
+				'operation'  => EGW_ACL_DELETE,
+				'must_exist' => true,
+			)) || ($type = self::$old_vfs->file_type($data)) === self::DIR_MIME_TYPE)
 		{
-			if (self::LOG_LEVEL) error_log(__METHOD__."($path) (type=$type) permission denied!");
+			self::remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url) (type=$type) permission denied!");
 			return false;	// no permission or file does not exist
 		}
+		unset(self::$stat_cache[$path]);
+
 		return self::$old_vfs->rm($data);
 	}
 
@@ -445,15 +471,67 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * 
 	 * It should attempt to rename the item specified by path_from to the specification given by path_to. 
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support renaming.
+	 * 
+	 * The regular filesystem stream-wrapper returns an error, if $url_from and $url_to are not either both files or both dirs!
 	 *
-	 * @param string $path_from
-	 * @param string $path_to
+	 * @param string $url_from
+	 * @param string $url_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function rename ( $path_from, $path_to )
+	static function rename ( $url_from, $url_to )
 	{
-		error_log(__METHOD__."($path_from, $path_to) not yet implemented!");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 		
+		$path_from = parse_url($url_from,PHP_URL_PATH);
+		$path_to = parse_url($url_to,PHP_URL_PATH);
+
+		if (!is_object(self::$old_vfs))
+		{
+			self::$old_vfs =& new vfs_home();
+		}
+		$data_from = array(
+			'string'	=> $path_from,
+			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+		);
+		if (!self::$old_vfs->acl_check($data_from+array(
+			'operation'	=> EGW_ACL_DELETE,
+			'must_exist'=> true,
+		)))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
+			return false;	// no permission or file does not exist
+		}
+		$data_to = array(
+			'string'    => $path_to,
+			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+		);
+		if (!self::$old_vfs->acl_check($data_to+array(
+			'operation'	=> EGW_ACL_ADD,
+		)))
+		{
+			self::remove_password($url_from);
+			self::remove_password($url_to);
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_to permission denied!");
+			return false;	// no permission or file does not exist
+		}
+		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
+		// for our vfs too, we give abort here with an error, like the filesystem one does
+		if (($type_to = self::$old_vfs->file_type($data_to)) && 
+			($type_to === self::DIR_MIME_TYPE) !== (self::$old_vfs->file_type($data_from) === self::DIR_MIME_TYPE))
+		{
+			$is_dir = $type_to === self::DIR_MIME_TYPE ? 'a' : 'no';
+			self::remove_password($url_from);
+			self::remove_password($url_to);
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) $path_to is $is_dir directory!");
+			return false;	// no permission or file does not exist
+		}
+		unset(self::$stat_cache[$path_from]);
+
+		return self::$old_vfs->mv(array(
+			'from' => $path_from,
+			'to' => $path_to,
+			'relatives' => array(RELATIVE_ROOT,RELATIVE_ROOT),
+		));
 	}
 
 	/**
@@ -462,15 +540,51 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * It should attempt to create the directory specified by path. 
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories. 
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @param int $mode
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function mkdir ( $path, $mode, $options )
+	static function mkdir ( $url, $mode, $options )
 	{
-		error_log(__METHOD__."($path, $mode, $options) not yet implemented!");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 		
+		$path = parse_url($url,PHP_URL_PATH);
+
+		if (!is_object(self::$old_vfs))
+		{
+			self::$old_vfs =& new vfs_home();
+		}
+		// check if we should also create all non-existing path components and our parent does not exist, 
+		// if yes call ourself recursive with the parent directory
+		if (($options & STREAM_MKDIR_RECURSIVE) && $path != '/' && !self::$old_vfs->file_exists(array(
+			'string' => dirname($path),
+			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+		)))
+		{
+			if (!self::mkdir(dirname($path),$mode,$options))
+			{
+				return false;
+			}
+		}
+		$data=array(
+			'string'    	=> $path,
+			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+		);
+		if (!self::$old_vfs->acl_check($data+array(
+				'operation'  => EGW_ACL_ADD,
+				'must_exist' => false,
+			)))
+		{
+			self::remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
+			if (!($options & STREAM_URL_STAT_QUIET))
+			{
+				trigger_error(__METHOD__."('$url',$mode,$options) permission denied!",E_USER_WARNING);
+			}
+			return false;	// no permission or file does not exist
+		}
+		return self::$old_vfs->mkdir($data);
 	}
 
 	/**
@@ -479,16 +593,80 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * It should attempt to remove the directory specified by path. 
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support removing directories.
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	function rmdir ( $path, $options )
+	static function rmdir ( $url, $options )
 	{
-		error_log(__METHOD__."($path, $options) not yet implemented!");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 		
+		$path = parse_url($url,PHP_URL_PATH);
+
+		if (!is_object(self::$old_vfs))
+		{
+			self::$old_vfs =& new vfs_home();
+		}
+		$data=array(
+			'string'    	=> $path,
+			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+		);
+		if (!self::$old_vfs->acl_check($data+array(
+				'operation'  => EGW_ACL_DELETE,
+				'must_exist' => true,
+			)) || ($type = self::$old_vfs->file_type($data)) !== self::DIR_MIME_TYPE)
+		{
+			self::remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$options) (type=$type) permission denied!");
+			if (!($options & STREAM_URL_STAT_QUIET))
+			{
+				trigger_error(__METHOD__."('$url',$options) (type=$type) permission denied!",E_USER_WARNING);
+			}
+			return false;	// no permission or file does not exist
+		}
+		// abort with an error, if the dir is not empty
+		// our vfs deletes recursive, while the stream-wrapper interface does not!
+		if (($files = self::$old_vfs->ls($data)))
+		{
+			self::remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$options) dir is not empty!");
+			if (!($options & STREAM_URL_STAT_QUIET))
+			{
+				trigger_error(__METHOD__."('$url',$options) dir is not empty!",E_USER_WARNING);
+			}
+			return false;
+		}
+		unset(self::$stat_cache[$path]);
+
+		return self::$old_vfs->rm($data);
 	}
 
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * @param string $url
+	 * @param int $time=null modification time (unix timestamp), default null = current time
+	 * @param int $atime=null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 */
+	static function touch($url,$time=null,$atime=null)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
+		
+		$path = parse_url($url,PHP_URL_PATH);
+
+		if (!is_object(self::$old_vfs))
+		{
+			self::$old_vfs =& new vfs_home();
+		}
+		$data=array(
+			'string'    	=> $path,
+			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+		);
+		if (!is_null($time)) $data['time'] = $time;
+
+		return self::$old_vfs->touch($data);
+	}
+	
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir(). 
 	 * 
@@ -499,6 +677,8 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	function dir_opendir ( $url, $options )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$options)");
+		
+		$this->opened_dir = null;
 
 		if (!is_object(self::$old_vfs))
 		{
@@ -506,21 +686,29 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$path = parse_url($url,PHP_URL_PATH);
 
-		$this->opened_dir = self::$old_vfs->ls(array(
+		$files = self::$old_vfs->ls(array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
 			'checksubdirs'	=> false,
 			'nofiles'		=> false,
-			//'orderby'       => '',
+			'orderby'       => 'name',
 			//'mime_type'     => '',
 		));
-		if (!is_array($this->opened_dir) || 
+		if (!is_array($files) || 
 			// we also need to return false, if $url is not a directory!
-			count($this->opened_dir) == 1 && $path == $this->opened_dir[0]['directory'].'/'.$this->opened_dir[0]['name'] &&
-			$this->opened_dir[0]['mime_type'] != 'Directory')
+			count($files) == 1 && $path == $files[0]['directory'].'/'.$files[0]['name'] &&
+			$files[0]['mime_type'] != self::DIR_MIME_TYPE)
 		{
+			self::remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$options) $url is not directory!");
 			$this->opened_dir = null;
 			return false;
+		}
+		self::$stat_cache = $this->opened_dir = array();
+		foreach($files as $file)
+		{
+			$this->opened_dir[] = $file['name'];
+			self::$stat_cache[$file['directory'].'/'.$file['name']] = $file;
 		}
 		//print_r($this->opened_dir);
 		reset($this->opened_dir);
@@ -551,39 +739,42 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 *                          This flag is set in response to calls to lstat(), is_link(), or filetype().
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set, 
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
+	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array 
 	 */
-	function url_stat ( $url, $flags )
+	static function url_stat ( $url, $flags )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags)");
-
-		/*return array(
-			'mode' => 0100666,
-			'name' => basename(parse_url($path,PHP_URL_PATH)),
-			'size' => strlen(basename(parse_url($path,PHP_URL_PATH))),
-			'nlink' => 1,
-			'uid' => 1000,
-			'gid' => 100,
-			'mtime' => time(),
-		);*/
 		
+		$path = parse_url($url,PHP_URL_PATH);
+		
+		// check if we already have the info from the last dir_open call, as the old vfs reads it anyway from the db
+		if (self::$stat_cache && isset(self::$stat_cache[$path]))
+		{
+			return self::_vfsinfo2stat(self::$stat_cache[$path]);
+		}
+
 		if (!is_object(self::$old_vfs))
 		{
 			self::$old_vfs =& new vfs_home();
 		}
-		$path = parse_url($url,PHP_URL_PATH);
-
 		list($info) = self::$old_vfs->ls(array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
 			'checksubdirs'	=> false,
 			'nofiles'		=> true,
-			//'orderby'       => '',
+			//'orderby'       => 'name',
 			//'mime_type'     => '',
 		));
 		//print_r($info);
+		if (!$info)
+		{
+			self::remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$flags) file or directory not found!");
+			return false;
+		}
 		
-		return $info ? $this->vfsinfo2stat($info) : false;
+		return self::_vfsinfo2stat($info);
 	}
 	
 	/**
@@ -595,13 +786,13 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_readdir ( )
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_dir_path)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( )");
 
 		if (!is_array($this->opened_dir)) return false;
 		
 		$file = current($this->opened_dir); next($this->opened_dir);
 		
-		return $file ? $file['name'] : false;
+		return $file ? $file : false;
 	}
 
 	/**
@@ -614,7 +805,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_rewinddir ( ) 
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_dir_path)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( )");
 		
 		if (!is_array($this->opened_dir)) return false;
 		
@@ -632,11 +823,11 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_closedir ( )
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_dir_path)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( )");
 		
 		if (!is_array($this->opened_dir)) return false;
 		
-		$this->opened_dir = $this->opened_dir_path = null;
+		$this->opened_dir = null;
 		
 		return true;
 	}
@@ -647,18 +838,20 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	 * @param array $info
 	 * @return array
 	 */
-	function vfsinfo2stat($info)
+	static private function _vfsinfo2stat($info)
 	{
 		$stat = array(
 			'ino'   => $info['file_id'],
 			'name'  => $info['name'],
-			'mode'  => $info['mime_type'] == 'Directory' ? 040700 : 0100600,
+			'mode'  => $info['owner_id'] > 0 ? 
+				($info['mime_type'] == self::DIR_MIME_TYPE ? 040700 : 0100600) :
+				($info['mime_type'] == self::DIR_MIME_TYPE ? 040070 : 0100060),
 			'size'  => $info['size'],
 			'uid'   => $info['owner_id'] > 0 ? $info['owner_id'] : 0,
 			'gid'   => $info['owner_id'] < 0 ? $info['owner_id'] : 0,
 			'mtime' => strtotime($info['modified'] ? $info['modified'] : $info['created']),
 			'ctime' => strtotime($info['created']),
-			'nlink' => $info['mime_type'] == 'Directory' ? 2 : 1,
+			'nlink' => $info['mime_type'] == self::DIR_MIME_TYPE ? 2 : 1,
 		);
 		//print_r($stat);
 		return $stat;
@@ -679,6 +872,22 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
 		
 		return $func_overload & 2 ? mb_substr($str,$start,$length,'ascii') : substr($str,$start,$length);
+	}
+	
+	/**
+	 * Replace the password of an url with '...' for error messages
+	 *
+	 * @param string &$url
+	 */
+	static private function remove_password(&$url)
+	{
+		$parts = parse_url($url);
+		
+		if ($parts['pass'] || $parts['scheme'])
+		{
+			$url = $parts['scheme'].'://'.($parts['user'] ? $parts['user'].($parts['pass']?':...':'').'@' : '').
+				$parts['host'].$parts['path'];
+		}
 	}
 }
 

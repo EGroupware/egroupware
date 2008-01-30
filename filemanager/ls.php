@@ -18,25 +18,6 @@ if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling ls as w
 	die('<h1>'.basename(__FILE__).' must NOT be called as web-page --> exiting !!!</h1>');
 }
 
-/*
-// this is kind of a hack, as the autocreate_session_callback can not change the type of the loaded account-class
-// so we need to make sure the right one is loaded by setting the domain before the header gets included.
-$arg0s = explode(',',@$arguments[0]);
-@list(,$_GET['domain']) = explode('@',$arg0s[0]);
-
-if (is_dir('/tmp')) ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
-
-$GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'currentapp' => 'admin',
-		'noheader' => true,
-		'autocreate_session_callback' => 'user_pass_from_argv',
-	)
-);
-
-include('../header.inc.php');
-*/
-
 /**
  * callback if the session-check fails, redirects via xajax to login.php
  * 
@@ -64,14 +45,19 @@ function user_pass_from_argv(&$account)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename(__FILE__);
-	echo "Usage: $cmd URL\n";
-	echo "\t$cmd --cat URL\n";
+	echo "Usage:\t$cmd URL [URL2 ...]\n";
+	echo "\t$cmd --cat URL [URL2 ...]\n";
 	echo "\t$cmd --cp URL-from URL-to\n";
-	echo "\t$cmd --cp URL-from1 [URL-from2 ...] URL-to-directory\n";
+	echo "\t$cmd --cp URL-from [URL-from2 ...] URL-to-directory\n";
+	echo "\t$cmd --rm URL [URL2 ...]\n";
+	echo "\t$cmd --mkdir [-p|--parents] URL [URL2 ...]\n";
+	echo "\t$cmd --rmdir URL [URL2 ...]\n";
+	echo "\t$cmd --touch [-d|--date time] URL [URL2 ...]\n";
+	echo "URL: oldvfs://user:password@domain/home/user/file, /dir/file, ...\n";
 	
 	exit;	
 }
-$long = $numeric = false;
+$long = $numeric = $recursive = false;
 $argv = $_SERVER['argv'];
 $cmd = basename(array_shift($argv),'.php');
 
@@ -97,9 +83,24 @@ foreach($argv as $key => $option)
 			$numeric = true;
 			continue 2;		// switch is counting too!
 
+		case '-r': case '--recursive':
+		case '-p': case '--parents':
+			$recursive = true;
+			continue 2;		// switch is counting too!
+			
+		case '-d': case '--date':
+			$time = strtotime($argv[$key+1]);
+			unset($argv[$key+1]);
+			break;
+
 		case '--cat':	// cat files (!) to stdout
-		case '--cp':	// cp files
-		case '--rm':	// rm files
+		case '--cp':	// copy files
+		case '--rm':	// remove files
+		case '--ls':	// list files
+		case '--rmdir':	// remove dirs
+		case '--mkdir':	// make directories
+		case '--rename':// rename
+		case '--touch':	// touch
 			$cmd = substr($option,2);
 			continue 2;		// switch is counting too!
 	}
@@ -113,49 +114,90 @@ switch($cmd)
 		do_cp($argv);
 		break;
 		
+	case 'rename':
+		if (count($argv) != 2) usage(null,3);
+		load_wrapper($argv[0]);
+		load_wrapper($argv[1]);
+		rename($argv[0],$argv[1]);
+		break;
+		
 	default:
 		while($url = array_shift($argv))
 		{
 			load_wrapper($url);
 			//echo "$cmd $url (long=".(int)$long.", numeric=".(int)$numeric.")\n";
 			
-			if ($cmd == 'rm')
+			switch($cmd)
 			{
-				unlink($url);
-			}
-			elseif (is_dir($url) && ($dir = opendir($url)))
-			{
-				if ($argc)
-				{
-					echo "\n".basename(parse_url($url,PHP_URL_PATH)).":\n";
-				}
-				while(($file = readdir($dir)) !== false)
-				{
-					do_stat($url.'/'.$file,$long,$numeric);
-				}
-				closedir($dir);
-			}
-			elseif ($cmd == 'cat')
-			{
-				if (!($f = fopen($url,'r')))
-				{
-					echo "File $url not found !!!\n\n";
-				}
-				else
-				{
-					if ($argc)
+				case 'rm':
+					unlink($url);
+					break;
+
+				case 'rmdir':
+					rmdir($url);
+					break;
+
+				case 'mkdir':
+					mkdir($url,null,$recursive);
+					break;
+					
+				case 'touch':
+					if (($scheme = parse_url($url,PHP_URL_SCHEME)))
 					{
-						echo "\n".basename(parse_url($url,PHP_URL_PATH)).":\n";
+						load_wrapper($url);
+						if (class_exists($class = $scheme.'_stream_wrapper') && method_exists($class,'touch'))
+						{
+							call_user_func(array($scheme.'_stream_wrapper','touch'),$url,$time);
+						}
+						else
+						{
+							die("Can't touch for scheme $scheme!\n");
+						}
 					}
-					fpassthru($f);
-					fclose($f);
-				}
+					else
+					{
+						touch($url,$time);
+					}
+					break;
+
+				case 'cat':
+				case 'ls':
+				default:
+					if (is_dir($url) && ($dir = opendir($url)))
+					{
+						if ($argc)
+						{
+							echo "\n".basename(parse_url($url,PHP_URL_PATH)).":\n";
+						}
+						while(($file = readdir($dir)) !== false)
+						{
+							do_stat($url.'/'.$file,$long,$numeric);
+						}
+						closedir($dir);
+					}
+					elseif ($cmd == 'cat')
+					{
+						if (!($f = fopen($url,'r')))
+						{
+							echo "File $url not found !!!\n\n";
+						}
+						else
+						{
+							if ($argc)
+							{
+								echo "\n".basename(parse_url($url,PHP_URL_PATH)).":\n";
+							}
+							fpassthru($f);
+							fclose($f);
+						}
+					}
+					else
+					{
+						do_stat($url,$long,$numeric);
+					}
+					if (!$long && $cmd == 'ls') echo "\n";
+					break;
 			}
-			else
-			{
-				do_stat($url,$long,$numeric);
-			}
-			if (!$long && $cmd == 'ls') echo "\n";
 		}
 }
 
@@ -166,12 +208,13 @@ switch($cmd)
  */
 function load_wrapper($url)
 {
-	switch(parse_url($url,PHP_URL_SCHEME))
+	switch($scheme = parse_url($url,PHP_URL_SCHEME))
 	{
 		case 'webdav':
 			require_once('HTTP/WebDAV/Client.php');
 			break;
 		case 'oldvfs':
+		case 'vfs':
 			if (!isset($GLOBALS['egw_info']))
 			{
 				$_GET['domain'] = parse_url($url,PHP_URL_HOST);
@@ -193,13 +236,16 @@ function load_wrapper($url)
 				
 				include('../header.inc.php');
 			}
-			require_once(EGW_API_INC.'/class.oldvfs_stream_wrapper.inc.php');
+			require_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
 			break;
-		case '':
-		case 'ftp':
+		case '':	// default scheme is file and alsways available
 			break;
 		default:
-			die("Unknown scheme in $url !!!\n\n");
+			if (!in_array($scheme,stream_get_wrappers()))
+			{
+				die("Unknown scheme '$scheme' in $url !!!\n\n");
+			}
+			break;
 	}
 }
 
@@ -215,9 +261,8 @@ function do_stat($url,$long=false,$numeric=false)
 	//echo "do_stat($url,$long,$numeric)\n";
 	$bname = basename(parse_url($url,PHP_URL_PATH));
 	
-	if ($long)
+	if ($long && ($stat = stat($url)))
 	{
-		$stat = stat($url);
 		//print_r($stat);
 		
 		$perms = verbosePerms($stat['mode']);
@@ -233,13 +278,13 @@ function do_stat($url,$long=false,$numeric=false)
 				$uid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name($stat['uid']) : posix_getpwuid($stat['uid']); 
 				if (is_array($uid)) $uid = $uid['name'];
 			}
-			if (!isset($uid)) $uid = 'none';
+			if (!isset($uid)) $uid = 'root';
 			if ($stat['gid'])
 			{
 				$gid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name($stat['gid']) : posix_getgrgid($stat['gid']); 
 				if (is_array($gid)) $gid = $gid['name'];
 			}
-			if (!isset($gid)) $gid = 'none';
+			if (!isset($gid)) $gid = 'root';
 		}
 		$size = hsize($stat['size']);
 		$mtime = date('Y-m-d H:i:s',$stat['mtime']);
@@ -322,7 +367,7 @@ function do_cp($argv)
 	
 	if (count($argv) > 1 && !is_dir($to))
 	{
-		die ("Usage: cp from-file to-file | cp file1 [file2 ...] dir\n\n");
+		usage(null,4);
 	}
 	if (count($argv) > 1)
 	{
@@ -337,7 +382,7 @@ function do_cp($argv)
 
 	if (!($from_fp = fopen($from,'r')))
 	{
-		die("File $from not found!");
+		die("File $from not found!\n");
 	}
 	if (is_dir($to))
 	{
@@ -346,7 +391,7 @@ function do_cp($argv)
 	}
 	if (!($to_fp = fopen($to,'w')))
 	{
-		die("Can't open $to from writing!");
+		die("Can't open $to for writing!\n");
 	}
 	$count = stream_copy_to_stream($from_fp,$to_fp);
 	
