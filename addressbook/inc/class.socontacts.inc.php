@@ -43,7 +43,7 @@ class socontacts
 	 * @var string
 	 */
 	var $extra_table = 'egw_addressbook_extra';
-	
+
 	/**
 	* @var string
 	*/
@@ -64,6 +64,33 @@ class socontacts
 	*/
 	var $extra_value = 'contact_value';
 	
+	/**
+	 * view for distributionlistsmembership
+	 * 
+	 * @var string
+	 */
+	var $distributionlist_view ='(SELECT contact_id, egw_addressbook_lists.list_id as list_id, egw_addressbook_lists.list_name as list_name, egw_addressbook_lists.list_owner as list_owner FROM egw_addressbook_lists, egw_addressbook2list where egw_addressbook_lists.list_id=egw_addressbook2list.list_id) d_view ';	
+
+	/**
+	* @var string
+	*/
+	var $distri_id = 'contact_id';
+	
+	/**
+	* @var string
+	*/
+	var $distri_owner = 'list_owner';
+
+	/**
+	* @var string
+	*/
+	var $distri_key = 'list_id';
+	
+	/**
+	* @var string
+	*/
+	var $distri_value = 'list_name';
+
 	/**
 	 * Contact repository in 'sql' or 'ldap'
 	 * 
@@ -172,9 +199,14 @@ class socontacts
 	 * @var so_sql
 	 */
 	var $soextra;
+	var $sodistrib_list;
+	var $backend;
 	
 	function socontacts($contact_app='addressbook')
 	{
+		$this->db     = clone($GLOBALS['egw']->db);
+		$this->db->set_app('infolog');
+
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
 
@@ -304,6 +336,38 @@ class socontacts
 		),false) as $data)
 		{
 			if ($data) $fields[$data[$this->extra_id]][$data[$this->extra_key]] = $data[$this->extra_value];
+		}
+		return $fields;
+	}
+
+	/**
+	 * Read all distributionlists of the given id's
+	 *
+	 * @param int/array $ids
+	 * @return array id => name => value
+	 */
+	function read_distributionlist($ids, $dl_allowed=array())
+	{
+		if ($this->contact_repository == 'ldap')
+		{
+			return array();	// ldap does not support distributionlists
+		}
+		foreach($ids as $key => $id)
+		{
+			if (!(int)$id) unset($ids[$key]);
+		}
+		if (!$ids) return array();	// nothing to do, eg. all these contacts are in ldap
+
+		$fields = array();
+		$filter[$this->distri_id]=$ids;
+		if (count($dl_allowed)) $filter[$this->distri_key]=$dl_allowed;
+		$this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__);
+		while ($row = $this->db->row(true))
+		{
+			if ((isset($row[$this->distri_id])&&strlen($row[$this->distri_value])>0))
+			{
+				$fields[$row[$this->distri_id]][$row[$this->distri_key]] = $row[$this->distri_value].' ('.$GLOBALS['egw']->common->grab_owner_name($row[$this->distri_owner]).')';
+			}
 		}
 		return $fields;
 	}
@@ -469,6 +533,8 @@ class socontacts
 				$contact['#'.$field[$this->extra_key]] = $field[$this->extra_value];
 			}
 		}
+		$dl_list=$this->read_distributionlist(array($contact['id']));
+		if (count($dl_list)) $contact['distrib_lists']=implode("\n",$dl_list[$contact['id']]);
 		return $this->db2data($contact);
 	}
 	

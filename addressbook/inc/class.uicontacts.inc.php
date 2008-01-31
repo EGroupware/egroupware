@@ -52,7 +52,7 @@ class uicontacts extends bocontacts
 	 *
 	 * @var string
 	 */
-	var $tabs = 'general|cats|home|details|links|custom|custom_private';
+	var $tabs = 'general|cats|home|details|links|distribution_list|custom_private';
 
 	function uicontacts($contact_app='addressbook')
 	{
@@ -784,7 +784,7 @@ class uicontacts extends bocontacts
 		}
 		// enable/disable distribution lists depending on backend
 		$query['no_filter2'] = !$this->lists_available($query['filter']);
-		
+	
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
 			unset($query['col_filter']['list']);	// does not work together
@@ -863,12 +863,14 @@ class uicontacts extends bocontacts
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields exist
 			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
+			$available_distib_lists=$this->get_lists(EGW_ACL_EDIT);
 			if ($columselection) $columselection = explode(',',$columselection);
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->customfields;
 				$show_calendar = !$columselection || in_array('calendar',$columselection);
-				if ($show_calendar || $show_custom_fields)
+				$show_distributionlist = !$columselection || in_array('distrib_lists',$columselection) ||count($available_distib_lists);
+				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
 					foreach($rows as $val)
 					{
@@ -876,6 +878,9 @@ class uicontacts extends bocontacts
 					}
 					if ($show_custom_fields) $customfields = $this->read_customfields($ids);
 					if ($show_calendar) $calendar = $this->read_calendar($ids);
+					// distributionlist memership for the entrys 
+					//_debug_array($this->get_lists(EGW_ACL_EDIT));
+					if ($show_distributionlist)	$distributionlist = $this->read_distributionlist($ids,array_keys($available_distib_lists));
 				}
 			}
 		}
@@ -970,6 +975,11 @@ class uicontacts extends bocontacts
 						$row['#'.$name] = $customfields[$row['id']][$name];
 					}
 				}
+				if (isset($distributionlist[$row['id']]))
+				{
+					$row['distrib_lists'] = implode("\n",array_values($distributionlist[$row['id']]));
+					//if ($show_distributionlist) $readonlys['distrib_lists'] =true;
+				}
 				if (isset($calendar[$row['id']]))
 				{
 					foreach($calendar[$row['id']] as $name => $data)
@@ -990,6 +1000,11 @@ class uicontacts extends bocontacts
 			// hide region for address format 'postcode_city'
 			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
 			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
+		}
+		if ($show_distributionlist) {
+			$readonlys['no_distrib_lists'] =true;
+		} else {
+			$readonlys['no_distrib_lists'] =false;
 		}
 		if (!$this->prefs['no_auto_hide'])
 		{

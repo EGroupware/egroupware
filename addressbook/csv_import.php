@@ -117,7 +117,6 @@
 	}
 
 	if ($_POST['next']) $_POST['action'] = 'next';
-
 	switch($_POST['action'])
 	{
 		case '':	// Start, ask Filename
@@ -375,7 +374,6 @@
 					$log .= "\t\t<td>$val</td>\n";
 				}
 				$empty = !count($values);
-
 				// convert the category name to an id
 				if ($values['cat_id'])
 				{
@@ -416,7 +414,7 @@
 				}
 				if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 				{
-					$GLOBALS['egw']->contacts->save($values);
+					$rvalue=$GLOBALS['egw']->contacts->save($values);
 					//echo "<p>adding: ".print_r($values,true)."</p>\n";
 				}
 			}

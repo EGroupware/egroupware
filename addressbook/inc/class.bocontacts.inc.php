@@ -133,7 +133,6 @@ class bocontacts extends socontacts
 		$this->now_su = time() + $this->tz_offset_s;
 
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
-		
 		// get the default addressbook from the users prefs
 		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ? 
 			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] : $this->user;
