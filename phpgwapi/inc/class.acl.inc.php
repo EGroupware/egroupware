@@ -731,7 +731,7 @@
 				
 				// if the right is granted from a group and we enummerated group ACL's
 				if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls &&
-					(!is_array($enum_group_acls) || in_array($grantor,$enum_group_acls)))
+					(!is_array($enum_group_acls) || !in_array($grantor,$enum_group_acls)))
 				{
 					// return the grant for each member of the group
 					foreach((array)$GLOBALS['egw']->accounts->member($grantor) as $member)
