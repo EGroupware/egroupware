@@ -463,7 +463,7 @@
 			{
 				return utf8_decode($data);
 			}
-			if ($this->mbstring)
+			if ($this->mbstring && mb_convert_encoding($data,$to,$from)!="")
 			{
 				return @mb_convert_encoding($data,$to,$from);
 			}
