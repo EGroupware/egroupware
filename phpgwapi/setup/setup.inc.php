@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'eGroupWare API';
-	$setup_info['phpgwapi']['version']   = '1.5.001';
+	$setup_info['phpgwapi']['version']   = '1.5.002';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
