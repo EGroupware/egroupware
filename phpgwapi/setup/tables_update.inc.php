@@ -31,3 +31,27 @@
 	{
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.001';
 	}
+
+    $test[] = '1.5.001';
+    function phpgwapi_upgrade1_5_001()
+    {
+        $GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','org_name',array(
+            'type' => 'varchar',
+            'precision' => '128',
+            'nullable' => true
+        ));
+        $GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_email',array(
+            'type' => 'varchar',
+            'precision' => '128',
+            'nullable' => true
+        ));
+        $GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_email_home',array(
+            'type' => 'varchar',
+            'precision' => '128',
+            'nullable' => true
+        ));
+
+        return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.002';
+    }
+
+
