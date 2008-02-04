@@ -33,9 +33,9 @@ function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
 				value.addEventListener('change', onchange, true);
 			} else {
 				var old = (value.onchange) ? value.onchange : function() {};
-				value.onchange = function() {
-					old();
-					onchange;
+				value.onchange = function(e) {
+					old(e);
+					onchange(e);
 				};
 			}
 		}
@@ -46,11 +46,13 @@ function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
 		widget.setAttribute('autocomplete', 'off');
 
 		if(widget.addEventListener) {
-			widget.addEventListener('keyup', change, true);
+			widget.addEventListener('keydown', checkKey, true);
+			widget.addEventListener('keyup', change, false);
 			widget.addEventListener('blur', hideBox, false);
 		} else {
 			widget.onkeyup = change;
 			widget.onblur = hideBox;
+			widget.onkeydown = checkKey;
 		}
 
 		// Set results
@@ -76,6 +78,107 @@ function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
 	}
 }
 
+function checkKey(e, value) {
+	if(!e) {
+		var e = window.event;
+	}
+	/*
+	 * We check for Tab, Up and Down
+	 */
+	if (e.keyCode != '9' // Tab
+		&& e.keyCode != '38' && e.keyCode != '63232' 	// Up
+		&& e.keyCode != '40' && e.keyCode != '63233'	// Down
+	) return; // The user has not pressed anything we're interested in
+	if(e.target) {
+		var target = e.target;
+	} else if (e.srcElement) {
+		var target = e.srcElement;
+	}
+	if(target) {
+		if (target.nodeType == 3) { // defeat Safari bug
+			target = target.parentNode;
+		}
+	}
+
+	var id = target.id;
+	var base_id = id.substr(0, id.lastIndexOf('['));
+	var results = document.getElementById(base_id + '[results]');
+	
+	// Consume event so search doesn't go
+	if(results.childNodes.length > 0) {
+		e.cancelBubble = true;
+		if(e.stopPropegation) e.stopPropegation();
+	} else {
+		return false;
+	}
+
+	// Up and down arrows
+	switch (e.keyCode) {
+		// Up
+		case 38:
+		case 63232:
+			if(results.current) {
+				results.current.className = 'resultBox';
+			}
+			if(results.current && results.current.previousSibling && results.current.previousSibling.childNodes.length > 2) {
+				results.current = results.current.previousSibling;
+			} else {
+				var elements = results.childNodes;
+				results.current = elements[elements.length - 1];
+			}
+			results.current.className += ' resultBoxSelected';
+		break;
+
+		// Down
+		case 40:
+		case 63233:
+			if(results.current) {
+				results.current.className = 'resultBox';
+			}
+			if(results.current && results.current.nextSibling && results.current.nextSibling.childNodes.length > 2) {
+				results.current = results.current.nextSibling;
+			} else {
+				var elements = results.childNodes;
+				for (var i = 0; i < elements.length; i++) {
+					elem = elements.item(i);
+					if (elem.value) {
+						results.current = elem;
+						break; // We have found the first selection
+					}
+				}
+			}
+			results.current.className += ' resultBoxSelected';
+		break;
+			
+	// Tab: Select current element 
+		case 9:
+			var elem;
+			if(results.current && results.current.value) {
+				elem = results.current;
+			} else {
+				var elements = document.getElementById(base_id + '[results]').childNodes;
+				for (var i = 0; i < elements.length; i++) {
+					elem = elements.item(i);
+					if (elem.value) {
+						break; // We have found the first selection
+					}
+				}
+			}
+			if (!elem) return;
+			var event;
+			if(document.createEvent && document.dispatchEvent) {
+				// Most
+				event = document.createEvent('MouseEvents');
+				event.initEvent('click', true, true);
+				elem.dispatchEvent(event);
+			} else {
+				// IE
+				event = document.createEventObject();
+				elem.fireEvent('onclick', event);
+			}
+		break;
+	}
+}
 
 function change(e, value) {
 	if(!e) {
@@ -105,6 +208,14 @@ function change(e, value) {
 	var base_id = id.substr(0, id.lastIndexOf('['));
 	if(document.getElementById(base_id + '[results]')) {
 		set_id = base_id + '[results]'; 
+		if(document.getElementById(set_id).style.display == 'block') {
+			// Tab and arrow keys don't trigger the search
+			if(e.keyCode == 9 
+				|| e.keyCode == 38 || e.keyCode == 40 
+				|| e.keyCode == 63232 || e.keyCode == 63233) {
+				return;
+			}
+		}
 	} else {
 		set_id = base_id + '[search]';
 	}
@@ -199,13 +310,16 @@ function select_result(e) {
 	}
 	if(search) {
 		search.value = target.value.value;
-		try {
-			value.onchange(e);
-		} catch (err) {
-			//no onchange;
-			var event = document.createEvent('HTMLEvents');
+		var event;
+		if(document.createEvent) {
+			// Most
+			event = document.createEvent('HTMLEvents');
 			event.initEvent('change', true, true);
-			value.dispatchEvent(event);
+			return value.dispatchEvent(event);
+		} else {
+			// IE
+			event = document.createEventObject();
+			return value.fireEvent('onchange', event);
 		}
 	}
 }
