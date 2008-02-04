@@ -118,7 +118,7 @@ function checkKey(e, value) {
 		case 38:
 		case 63232:
 			if(results.current) {
-				results.current.className = 'resultBox';
+				results.current.className = results.current.className.replace(' resultBoxSelected','');
 			}
 			if(results.current && results.current.previousSibling && results.current.previousSibling.childNodes.length > 2) {
 				results.current = results.current.previousSibling;
@@ -133,7 +133,7 @@ function checkKey(e, value) {
 		case 40:
 		case 63233:
 			if(results.current) {
-				results.current.className = 'resultBox';
+				results.current.className = results.current.className.replace(' resultBoxSelected','');
 			}
 			if(results.current && results.current.nextSibling && results.current.nextSibling.childNodes.length > 2) {
 				results.current = results.current.nextSibling;
