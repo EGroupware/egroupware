@@ -21,7 +21,7 @@
 	 *           &8 = dont show time for readonly and type date-time if time is 0:00, 
 	 *           &16 = prefix r/o display with dow
 	 *           &32 = prefix r/o display with week-number
-	 *
+	 *			 &48 = prefix r/o display with weeknumber and dow
 	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
 	 * Uses the adodb datelibary to overcome the windows-limitation to not allow dates before 1970
 	 *
@@ -216,6 +216,10 @@
 						if (!$n && $options & 32 )
 						{
 							$str = lang('Wk').adodb_date('W',adodb_mktime(12,0,0,$value['m'],$value['d'],$value['Y'])).' ';
+						}
+						if (!$n && $options & 64 )
+						{
+							$str = lang('Wk').adodb_date('W',adodb_mktime(12,0,0,$value['m'],$value['d'],$value['Y'])).' '.lang(adodb_date('l',adodb_mktime(12,0,0,$value['m'],$value['d'],$value['Y']))).' ';
 						}
 						$str .= ($str != '' ? $sep[$n] : '') . 
 							(is_numeric($value[$format[$n]]) ? sprintf('%02d',$value[$format[$n]]) : $value[$format[$n]]);
