@@ -21,7 +21,7 @@
 	 *           &8 = dont show time for readonly and type date-time if time is 0:00, 
 	 *           &16 = prefix r/o display with dow
 	 *           &32 = prefix r/o display with week-number
-	 *			 &48 = prefix r/o display with weeknumber and dow
+	 *			 &64 = prefix r/o display with weeknumber and dow
 	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
 	 * Uses the adodb datelibary to overcome the windows-limitation to not allow dates before 1970
 	 *
