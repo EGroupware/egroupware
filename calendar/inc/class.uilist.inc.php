@@ -108,6 +108,19 @@ class uilist extends uical
 				$msg = lang('Event deleted');
 			}
 		}
+		//Delete all selected Entrys
+		if (is_array($content) && $content['deleteall'])
+		{
+			//_debug_array($content);
+			
+			foreach($content['nm']['rows']['checked'] as $num => $id)
+			{
+				if ($this->bo->delete($id))
+				{
+					$msg .= lang('Event deleted');	
+				}
+			}
+		}
 		$content = array(
 			'nm'  => $GLOBALS['egw']->session->appsession('calendar_list','calendar'),
 			'msg' => $msg,
@@ -123,7 +136,7 @@ class uilist extends uical
 				'filter'         => 'after',
 				'order'          =>	'cal_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',// IO direction of the sort: 'ASC' or 'DESC'
-				'default_cols'   => '!week,cat_id,pm_id',
+				'default_cols'   => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
 				'filter_onchange' => "set_style_by_class('*','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'header_left'    => 'calendar.list.dates',
 			);
@@ -288,10 +301,23 @@ class uilist extends uical
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
 			$rows[] = $event;
 		}
+		$wv=0;
+		$dv=0;
 		$params['options-selectcols']['week'] = lang('Week');
-		if (substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,4) == 'week')
+		$params['options-selectcols']['weekday'] = lang('Weekday');
+		if ((substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,4) == 'week' && strlen($this->cal_prefs['nextmatch-calendar.list.rows'])==4) || substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,5) == 'week,')
 		{
 			$rows['format'] = '32';	// prefix date with week-number
+			$wv=1;
+		}
+        if (!(strpos($this->cal_prefs['nextmatch-calendar.list.rows'],'weekday')===FALSE))
+        {
+            $rows['format'] = '16';
+			$dv=1;
+        }
+		if ($wv&&$dv) 
+		{
+			$rows['format'] = '64';
 		}
 		if ($this->cat_id) $rows['no_cat_id'] = true;
 		if (!$GLOBALS['egw_info']['user']['apps']['projectmanager'])

@@ -251,7 +251,7 @@ select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten so
 selected range	calendar	de	Ausgewählter Zeitraum
 set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige/unregelmäßige Feiertage das Jahr angeben.
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
-setting lock time calender	calendar	de	Zeitintervall für Datensatzlock (default 1 sec.)
+setting lock time calender	admin	de	Zeitintervall für Datensatzlock (default 1 sec.)
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	de	Sollen Einladungen welche von Ihnen abgelehnt wurden in Ihrem Kalender angezeigt werden?<br> Sie können diese Einladungen dann später akzeptieren (z. B. wenn Sie eine Terminkolission gelöst haben), wenn Sie in Ihrem Kalender noch vorhanden sind!
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten an denen sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
@@ -304,6 +304,7 @@ view this event	calendar	de	Diesen Termin anzeigen
 views with fixed time intervals	calendar	de	Ansichten mit festen Zeitintervallen
 wed	calendar	de	Mi
 week	calendar	de	Woche
+weekday	calendar	de	Wochentag
 weekday starts on	calendar	de	Arbeitswoche beginnt am
 weekdays	calendar	de	Wochentage
 weekdays to use in search	calendar	de	Wochentage für die Suche
