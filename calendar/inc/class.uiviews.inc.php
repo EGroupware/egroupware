@@ -1212,7 +1212,7 @@ class uiviews extends uical
 		if ($event['recur_type']!= MCAL_RECUR_NONE) 
 		{
 			$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
-			$view_link_confirm_text=lang('Do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
+			$view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
 			$popup = $is_private ? '' : ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
 
 		}
