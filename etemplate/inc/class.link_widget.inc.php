@@ -632,9 +632,17 @@
 			else
 			{
 				$script = "var select = document.getElementById('$id_res');\nselect.options.length=0;\n";
-				foreach($found as $id => $title)
+				foreach($found as $id => $option)
 				{
-					$script .= "select.options[select.options.length] = new Option('".addslashes($title)."','$id');\n";
+					if (!is_array($option)) $option = array('label' => $option);
+					$script .= "opt = select.options[select.options.length] = new Option('".addslashes($option['label'])."','$id');\n";
+					if (count($option) > 1)
+					{
+						foreach($option as $name => $value)
+						{
+							if ($name != 'label') $script .= "opt.$name = '".addslashes($value)."';\n";
+						}
+					}
 				}
 				$script .= "select.options[select.options.length] = new Option('".addslashes(lang('New search').' ...')."','');\n";
 				foreach(explode(',',$id_show) as $id)
