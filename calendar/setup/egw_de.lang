@@ -35,8 +35,10 @@ before %1	calendar	de	Vor dem %1
 before current date	calendar	de	Vor dem aktuellen Datum
 before the event	calendar	de	vor dem Termin
 birthday	calendar	de	Geburtstag
+birthdays	admin	de	Geburtstage
 busy	calendar	de	belegt
 by	calendar	de	von
+calendar csv export	calendar	de	Kalender CSV Export
 calendar event	calendar	de	Kalender Aktualisierung
 calendar holiday management	admin	de	Feiertage verwalten
 calendar menu	calendar	de	Kalender Menü
@@ -85,6 +87,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 download	calendar	de	Herunterladen
 download this event as ical	calendar	de	Termin als iCal herunterladen
+du you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	de	Möchten Sie den Termin der Serie als Ausnahme bearbeiten? Klicken Sie OK um den Termin als Einzeltermin (Ausnahme) zu bearbeiten, Abbrechen um die Terminserie zu verändern.
 duration of the meeting	calendar	de	Dauer des Termins
 edit exception	calendar	de	Ausname bearbeiten
 edit series	calendar	de	Serie bearbeiten
@@ -160,6 +163,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 import csv-file	common	de	CSV-Datei importieren
+imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	de	Importieren von Terminen von einer CSV Datei. CSV bedeutet: Komma separierte Werte. Sie können in den Optionen des Import ebenso einen anderen Separator (Tab) wählen.
 interval	calendar	de	Intervall
 invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1" für Benutzer %2
 last	calendar	de	letzte
@@ -187,6 +191,7 @@ no filter	calendar	de	Kein Filter
 no matches found	calendar	de	Keine Treffer gefunden
 no response	calendar	de	Keine Antwort
 non blocking	calendar	de	nicht blockierend
+not	calendar	de	nicht
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
 notification messages for disinvited participants	calendar	de	Benachrichtigung für ausgeladene Teilnehmer
@@ -257,13 +262,16 @@ should new events created as private by default ?	calendar	de	Sollen neue Termin
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten an denen sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	de	Soll der Status (Zugesagt,Abgesagt ...)der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
+show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
 show default view on main screen	calendar	de	Standardansicht auf der Startseite anzeigen
 show empty rows in planner	calendar	de	Zeige leere Zeilen im Planer
 show invitations you rejected	calendar	de	Zeige Einladungen welche abgelehnt wurden an
 show list of upcoming events	calendar	de	Zeige eine Liste der kommenden Termine
+show only the date, not the year	admin	de	Zeige nur das Datum nicht das Jahr
 show this month	calendar	de	Diesen Monat anzeigen
 show this week	calendar	de	Diese Woche anzeigen
 single event	calendar	de	Einzelner Termin
+site configuration	calendar	de	Einstellungen der Site
 start	calendar	de	Start
 start date/time	calendar	de	Startdatum/-zeit
 startdate / -time	calendar	de	Startdatum / -zeit
@@ -286,6 +294,7 @@ this message is sent to disinvited participants.	calendar	de	Diese Nachricht wir
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine die Sie anlegen versandt, die Benachrichtigungen wünschen.<br>Sie können verschiedene Variablen verwenden, welche durch die Daten des Termins ersetzt werden. Die erste Zeite ist der Betreff der E-Mail.
 this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder absagen.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Meldung wird ihnen gesandt, wenn sie einen Alarm für einen Termin setzen. Nehmen sie alle Information darin auf, die sie benötigen.
+this module displays the current month	calendar	de	Dieses Modul zeikt den aktuellen Monat an
 three month	calendar	de	drei Monate
 thu	calendar	de	Do
 til	calendar	de	bis

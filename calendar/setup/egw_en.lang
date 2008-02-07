@@ -35,8 +35,10 @@ before %1	calendar	en	Before %1
 before current date	calendar	en	Before current date
 before the event	calendar	en	before the event
 birthday	calendar	en	Birthday
+birthdays	admin	en	Birthdays
 busy	calendar	en	busy
 by	calendar	en	by
+calendar csv export	calendar	en	Calendar CSV export
 calendar event	calendar	en	Calendar Event
 calendar holiday management	admin	en	Calendar Holiday Management
 calendar menu	calendar	en	Calendar Menu
@@ -85,6 +87,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
 download	calendar	en	Download
 download this event as ical	calendar	en	Download this event as iCal
+du you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	en	Do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial
 duration of the meeting	calendar	en	Duration of the meeting
 edit exception	calendar	en	Edit exception
 edit series	calendar	en	Edit series
@@ -160,6 +163,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	en	Ignore conflict
 import	calendar	en	Import
 import csv-file	common	en	Import CSV-File
+imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
 interval	calendar	en	Interval
 invalid email-address "%1" for user %2	calendar	en	Invalid email-address "%1" for user %2
 last	calendar	en	Last
@@ -187,6 +191,7 @@ no filter	calendar	en	No filter
 no matches found	calendar	en	no matches found
 no response	calendar	en	No response
 non blocking	calendar	en	non blocking
+not	calendar	en	not
 notification messages for added events	calendar	en	Notification messages for added events
 notification messages for canceled events	calendar	en	Notification messages for canceled events
 notification messages for disinvited participants	calendar	en	Notification messages for disinvited participants
@@ -255,15 +260,19 @@ setting lock time calender	admin	en	Setting Datalock Time for Calendar (default 
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	en	Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002" target="_blank">https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002" target="_blank">https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	en	Should the planner display an empty row for users or categories without any appointment.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	en	Should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?
+show birthdays from addressbook	admin	en	Show birthdays from addressbook
 show default view on main screen	calendar	en	show default view on main screen
 show empty rows in planner	calendar	en	Show empty rows in Planner
 show invitations you rejected	calendar	en	Show invitations you rejected
 show list of upcoming events	calendar	en	show list of upcoming events
+show only the date, not the year	admin	en	Show only the date, not the year
 show this month	calendar	en	show this month
 show this week	calendar	en	show this week
 single event	calendar	en	single event
+site configuration	calendar	en	site configuration
 start	calendar	en	Start
 start date/time	calendar	en	Start Date/Time
 startdate / -time	calendar	en	Startdate / -time
@@ -286,6 +295,7 @@ this message is sent to disinvited participants.	calendar	en	This message is sen
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	en	This message is sent to every participant of events you own, who has requested notifcations about new events.<br>You can use certain variables which get substituted with the data of the event. The first line is the subject of the email.
 this message is sent when you accept, tentative accept or reject an event.	calendar	en	This message is sent when you accept, tentative accept or reject an event.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	en	This message is sent when you set an Alarm for a certain event. Include all information you might need.
+this module displays the current month	calendar	en	This module displays the current month
 three month	calendar	en	three month
 thu	calendar	en	Thu
 til	calendar	en	til
