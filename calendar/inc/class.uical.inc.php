@@ -490,15 +490,33 @@ class uical
 	 * @param int $height=400 height of the window
 	 * @return string javascript (using single quotes)
 	 */
-	function popup($link,$target='_blank',$width=750,$height=410)
-	{
-		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-
-		return 'window.open('.($link == 'this.href' ? $link : "'".$link."'").','.
-			($target == 'this.target' ? $target : "'".$target."'").','.
-			"'dependent=yes,width=$width,height=$height,scrollbars=yes,status=yes')";
-	}
+	function popup($link,$target='_blank',$width=750,$height=410,$Link_confirm_abort='',$Link_confirm_text='')
+ 	{
+		//Handle Exception for Calandar  
+		if (($Link_confirm_abort) && ($Link_confirm_text))
+			{
+			$returnvalue = 'javascript:var check=confirm(\''.$Link_confirm_text.'\');';
+			$returnvalue .=' if (check==true) {';
+			// open confirm =0kay
+			$returnvalue .= 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
+			$returnvalue .= '}';	
+			//open confirm =Abort
+			$returnvalue .=' else {';
+			$returnvalue .= 'egw_openWindowCentered2('.($Link_confirm_abort == 'this.href' ? $Link_confirm_abort : "'".$Link_confirm_abort."'").','.
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
+			$returnvalue .= '}';
+		
+			return $returnvalue;
+			}
+		
+		else {
+		
+			return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
+			
+		}
+ 	}
 
 	/**
 	 * creates the content for the sidebox-menu, called as hook
