@@ -1848,7 +1848,9 @@ class uiviews extends uical
 				}
 				else
 				{
-					$day_percentage = ($time_of_day-$this->wd_start) / ($this->wd_end - $this->wd_start);		// between 0 and 1
+					$wd_lenght = $this->wd_end - $this->wd_start;
+					if ($wd_lenght <= 0) $wd_lenght = 24*60;
+					$day_percentage = ($time_of_day-$this->wd_start) / $wd_lenght;		// between 0 and 1
 				}
 				$days = ($end - $start) / DAY_s;
 				$percent += $day_percentage / $days;
