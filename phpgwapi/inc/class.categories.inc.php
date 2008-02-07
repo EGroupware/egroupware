@@ -648,7 +648,7 @@
 		 * We use a shared cache together with return_single
 		 *
 		 * @param int $cat_id=0 cat-id
-		 * @param string $item='name requested information
+		 * @param string $item='name requested information, 'path' = / delimited path of category names (incl. parents)
 		 * @return string information or '--' if not found or !$cat_id
 		 */
 		function id2name($cat_id=0, $item='name')
@@ -659,9 +659,18 @@
 			
 			if (!$item) $item = 'parent';
 
-			if ($this->cache_id2cat_data[$cat_id][$item])
+			$cat = $this->cache_id2cat_data[$cat_id];
+			if ($item == 'path')
 			{
-				return $this->cache_id2cat_data[$cat_id][$item];
+				if ($cat['parent'])
+				{
+					return $this->id2name($cat['parent'],'path').' / '.$cat['name'];
+				}
+				$item = 'name';
+			}
+			if ($cat[$item])
+			{
+				return $cat[$item];
 			}
 			elseif ($item == 'name')
 			{
