@@ -90,10 +90,12 @@ class addressbook_merge	// extends bo_merge
 							require_once(EGW_API_INC.'/class.categories.inc.php');
 							$GLOBALS['egw']->cats =& new categories;
 						}
+						// if cat-tree is displayed, we return a full category path not just the name of the cat
+						$use = $GLOBALS['egw_info']['server']['cat_tab'] == 'Tree' ? 'path' : 'name';
 						$cats = array();
 						foreach(is_array($value) ? $value : explode(',',$value) as $cat_id)
 						{
-							$cats[] = $GLOBALS['egw']->cats->id2name($cat_id);
+							$cats[] = $GLOBALS['egw']->cats->id2name($cat_id,$use);
 						}
 						$value = implode(', ',$cats);
 					}
@@ -121,30 +123,50 @@ class addressbook_merge	// extends bo_merge
 			}
 			if ($name != 'photo') $replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
 		}
+		// set all not yet set custom fields, as empty cf's are not stored!
+		foreach(array_keys($this->contacts->customfields) as $name)
+		{
+			if (!isset($replacements[$name]))
+			{
+				$replacements[$name] = '';
+			}
+		}
 		return $replacements;
 	}
 
 	/**
 	 * Return replacements for the calendar (next events) of a contact
 	 * 
-	 * ToDo: not yet implemented!!!
-	 *
 	 * @param int $contact contact-id
+	 * @param boolean $last_event_too=false also include information about the last event
 	 * @return array
 	 */
-	function calendar_replacements($id)
+	function calendar_replacements($id,$last_event_too=false)
 	{
 		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
 		$calendar =& new bocalupdate();
 		
-		$replacements = array(); $n = 1;
-		foreach($calendar->search(array(
+		// next events
+		$events = $calendar->search(array(
 			'start' => $calendar->now_su,
 			'users' => 'c'.$id,
 			'offset' => 0,
 			'num_rows' => 20,
 			'order' => 'cal_start',
-		)) as $event)
+		));
+		array_unshift($events,false); unset($events[0]);	// renumber the array to start with key 1, instead of 0
+		if ($last_event_too)
+		{
+			list($events['-1']) = $calendar->search(array(
+				'end' => $calendar->now_su,
+				'users' => 'c'.$id,
+				'offset' => 0,
+				'num_rows' => 1,
+				'order' => 'cal_start DESC',
+			));
+		}
+		$replacements = array();
+		foreach($events as $n => $event)
 		{
 			foreach($calendar->event2array($event) as $name => $data)
 			{
@@ -209,7 +231,7 @@ class addressbook_merge	// extends bo_merge
 		}
 		if (strpos($content,'$$calendar/') !== null)
 		{
-			$replacements += $this->calendar_replacements($id);
+			$replacements += $this->calendar_replacements($id,strpos($content,'$$calendar/-1/') !== null);
 		}
 		$replacements['$$date$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],time()+$this->contacts->tz_offset_s);
 		
