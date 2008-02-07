@@ -327,14 +327,7 @@ class uiforms extends uical
 		switch((string)$button)
 		{
 		case 'exception':	// create an exception in a recuring event
-			$event['end'] += $content['actual_date'] - $event['start'];
-			$event['start'] = $preserv['edit_single'] = $preserv['actual_date'];
-			$event['recur_type'] = MCAL_RECUR_NONE;
-			foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
-			{
-				unset($event[$name]);
-			}
-			$msg = lang('Exception created - you can now edit or delete it');
+			$msg = $this->_create_exception($event,$preserv);
 			break;
 
 		case 'copy':	// create new event with copied content, some content need to be unset to make a "new" event
@@ -538,6 +531,27 @@ class uiforms extends uical
 		}
 		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
+	
+	/**
+	 * Create an exception from the clicked event
+	 * 
+	 * It's not stored to the DB unless the user saves it!
+	 *
+	 * @param array &$event
+	 * @param array &$preserv
+	 * @return string message that exception was created
+	 */
+	function _create_exception(&$event,&$preserv)
+	{
+		$event['end'] += $preserv['actual_date'] - $event['start'];
+		$event['start'] = $preserv['edit_single'] = $preserv['actual_date'];
+		$event['recur_type'] = MCAL_RECUR_NONE;
+		foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
+		{
+			unset($event[$name]);
+		}
+		return lang('Exception created - you can now edit or delete it');
+	}
 
 	/**
 	 * return javascript to open felamimail compose window with preset content to mail all participants
@@ -668,6 +682,11 @@ class uiforms extends uical
 				{
 					$participants = array('participants' => $event['participants'], 'participant_types' => $event['participant_types']); // preserv participants of this event
 					$event = array_merge($this->bo->read($cal_id,0,true), $participants);	// recuring event --> read the series + concatenate with participants of the selected recurrence
+					// check if we should create an exception
+					if ($_GET['exception'])
+					{
+						$msg = $this->_create_exception($event,$preserv);
+					}
 				}
 			}
 			// set new start and end if given by $_GET
