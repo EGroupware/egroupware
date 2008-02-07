@@ -22,6 +22,10 @@
 class vfs_stream_wrapper implements iface_stream_wrapper
 {
 	/**
+	 * Scheme / protocoll used for this stream-wrapper
+	 */
+	const SCHEME = 'vfs';
+	/**
 	 * optional context param when opening the stream, null if no context passed
 	 *
 	 * @var mixed
@@ -35,7 +39,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @var array
 	 */
-	static $fstab = array(
+	protected static $fstab = array(
 		'/' => 'oldvfs://$user:$pass@$host/',
 //		'/files' => 'oldvfs://$user:$pass@$host/home/Default',
 //		'/images' => 'http://localhost/egroupware/phpgwapi/templates/idots/images',
@@ -520,6 +524,16 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return self::$wrappers;
 	}
+	
+	static function init_static()
+	{
+		stream_register_wrapper(self::SCHEME,__CLASS__);
+		
+		if ($GLOBALS['egw_info']['server']['vfs_fstab'] && is_array($GLOBALS['egw_info']['server']['vfs_fstab']))
+		{
+			self::$fstab = $GLOBALS['egw_info']['server']['vfs_fstab'];
+		}
+	}
 }
 
-stream_register_wrapper('vfs','vfs_stream_wrapper');
+vfs_stream_wrapper::init_static();
