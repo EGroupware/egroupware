@@ -131,13 +131,34 @@ class accounts
 	 * @var array
 	 */
 	var $config;
+	
+	/**
+	 * hold an instance of the accounts class
+	 *
+	 * @var accounts the instance of the accounts class
+	 */
+	private static $_instance = NULL;
+	
+	/**
+	 * the singleton passtern
+	 *
+	 * @return accounts
+	 */
+    public static function getInstance()
+    {
+        if (self::$_instance === NULL) {
+            self::$_instance = new accounts;
+        }
+
+        return self::$_instance;
+    }	
 
 	/**
 	 * Constructor
 	 * 
 	 * @param string|array $backend=null string with backend 'sql'|'ldap', or whole config array, default read from global egw_info
 	 */
-	function __construct($backend=null)
+	public function __construct($backend=null)
 	{
 		if (is_numeric($backend))	// depricated use with account_id
 		{
@@ -185,7 +206,19 @@ class accounts
 
 		$this->__construct();
 	}
-
+	
+	/**
+	 * set the accountId
+	 *
+	 * @param int $accountId
+	 */
+    function setAccountId($accountId)
+    {
+        if($accountId && is_numeric($accountId)) {
+            $this->account_id = (int)$accountId;
+        }
+    }
+    
 	/**
 	 * Searches / lists accounts: users and/or groups
 	 *
