@@ -793,7 +793,9 @@ class accounts_ldap
 			'account_email' => 'mail',
 			'account_fullname' => 'cn',
 		);
-		if (!isset($to_ldap[$which]) || $account_type === 'g') return False;
+		if (!isset($to_ldap[$which]) || $account_type === 'g') {
+		    return False;
+		}
 
 		$sri = ldap_search($this->ds, $this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))');
 
