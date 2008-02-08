@@ -869,6 +869,8 @@ class so_ldap
 				$contact['owner'] = 0;	
 				$contact['private'] = 0;
 			}
+			/*
+			 * this piece of code does not work, as the call accounts->name2id is wrong
 			foreach(array(
 				'creatorsname' => 'creator',
 				'modifiersname' => 'modifier',
@@ -879,6 +881,7 @@ class so_ldap
 					$contact[$egwFieldName] = $GLOBALS['egw']->accounts->name2id($matches[1],'u');
 				}
 			}
+            */
 			foreach(array(
 				'createtimestamp' => 'created',
 				'modifytimestamp' => 'modified',
