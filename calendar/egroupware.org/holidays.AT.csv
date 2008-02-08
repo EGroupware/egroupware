@@ -4,8 +4,6 @@ regular (year=0):
 AT	Neujahr	1	1	0	0	0
 AT	Hl. Drei Könige	6	1	0	0	0
 AT	Staatsfeiertag	1	5	0	0	0
-AT	Pfingstmontag	28	5	0	0	0
-AT	Fronleichnam	7	6	0	0	0
 AT	Maria Himmelfahrt	15	8	0	0	0
 AT	Nationalfeiertag	26	10	0	0	0
 AT	Allerheiligen	1	11	0	0	0
@@ -34,3 +32,14 @@ AT	Ostersonntag	8	4	2007	0	0
 AT	Ostermontag	9	4	2007	0	0
 AT	Christi Himmelfahrt	17	5	2007	0	0
 AT	Pfingstsonntag	27	5	2007	0	0
+
+2008:
+AT	Gründonnerstag	20	3	2008	0	0
+AT	Karfreitag	21	3	2008	0	0
+AT	Ostersonntag	23	3	2008	0	0
+AT	Ostermontag	24	3	2008	0	0
+AT	Christi Himmelfahrt	1	5	2008	0	0
+AT	Pfingstsonntag	11	5	2008	0	0
+AT	Pfingstmontag	12	5	2008	0	0
+AT	Fronleichnam	22	5	2008	0	0
+
