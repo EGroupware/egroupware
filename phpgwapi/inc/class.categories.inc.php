@@ -59,7 +59,13 @@
 			$this->app_name		= $app_name;
 			$this->db			= clone($GLOBALS['egw']->db);
 			$this->db->set_app('phpgwapi');
-			$this->grants		= $GLOBALS['egw']->acl->get_grants($app_name);
+			####################################################
+			# resolving the group members/grants is very slow with ldap accounts backend
+			# let's skip it for the addressbook, if we are using the ldap accounts backend
+			####################################################
+			if($app_name != 'addressbook' && $GLOBALS['egw_info']['server']['account_repository'] != 'ldap') {
+		        $this->grants		= $GLOBALS['egw']->acl->get_grants($app_name);
+			}
 		}
 
 		/**
