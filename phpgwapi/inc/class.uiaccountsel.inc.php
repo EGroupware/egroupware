@@ -51,7 +51,7 @@ class uiaccountsel extends accounts
 	 */
 	function uiaccountsel()
 	{
-		$this->accounts();			// call constructor of extended class
+		$this->accountsClass = accounts::getInstance();
 
 		$this->account_selection = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 		// admin group should NOT get limited by none or groupmembers, we use primary_group instead
@@ -97,7 +97,7 @@ class uiaccountsel extends accounts
 	 */
 	function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False,$nohtml=false)
 	{
-		//echo "<p align=right>uiaccountsel::selection('$name','$element_id',".print_r($selected,True).",'$use',rows=$lines,$not,'$options','$onchange',".print_r($select,True).") account_selection=$this->account_selection</p>\n";
+		//echo "<p align=right>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',rows=$lines,$not,'$options','$onchange',".print_r($select,True).") account_selection=$this->account_selection</p>\n";
 		$multi_size=4;
 		if ($lines < 0)
 		{
@@ -162,12 +162,12 @@ class uiaccountsel extends accounts
 				}
 				else
 				{
-					$memberships = $this->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+					$memberships = $this->accountsClass->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 				}
 				$select = count($selected) && !isset($selected[0]) ? array_keys($selected) : $selected;
 				foreach($memberships as $gid)
 				{
-					foreach($this->members($gid,true) as $member)
+					foreach($this->accountsClass->members($gid,true) as $member)
 					{
 						if (!in_array($member,$select)) $select[] = $member;			
 					}
@@ -176,7 +176,7 @@ class uiaccountsel extends accounts
 				{
 					if ($account_sel == 'primary_group')
 					{
-						$memberships = $this->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+						$memberships = $this->accountsClass->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 					}
 					$select = array_merge($select,$memberships);
 				}
@@ -207,7 +207,7 @@ class uiaccountsel extends accounts
 			{
 				$already_selected[$id] = $GLOBALS['egw']->common->grab_owner_name($id);
 			}
-			elseif ($this->get_type($id) == 'u')
+			elseif ($this->accountsClass->get_type($id) == 'u')
 			{
 				$users[$id] = !is_array($val) ? $GLOBALS['egw']->common->grab_owner_name($id) :
 					$GLOBALS['egw']->common->display_fullname(
@@ -437,9 +437,9 @@ function addOption(id,label,value,do_onchange)
 
 		if ($app)
 		{
-			$app_groups = $this->split_accounts($app,'groups');
+			$app_groups = $this->accountsClass->split_accounts($app,'groups');
 		}
-		$all_groups = $this->search(array(
+		$all_groups = $this->accountsClass->search(array(
 			'type' => 'groups',
 		));
 		foreach($all_groups as $group)
@@ -476,7 +476,7 @@ function addOption(id,label,value,do_onchange)
 		$link_data['group_id'] = $group_id;		// reset it
 
 // --------------------------------- nextmatch ---------------------------
-		$users = $this->search(array(
+		$users = $this->accountsClass->search(array(
 			'type' => $group_id ? $group_id : $use,
 			'app' => $app,
 			'start' => $start,
@@ -487,11 +487,11 @@ function addOption(id,label,value,do_onchange)
 		));
 
 		$GLOBALS['egw']->template->set_var(array(
-			'left'  => $this->nextmatchs->left('/index.php',$start,$this->total,$link_data+array('query'=>$query)),
-			'right' => $this->nextmatchs->right('/index.php',$start,$this->total,$link_data+array('query'=>$query)),
+			'left'  => $this->nextmatchs->left('/index.php',$start,$this->accountsClass->total,$link_data+array('query'=>$query)),
+			'right' => $this->nextmatchs->right('/index.php',$start,$this->accountsClass->total,$link_data+array('query'=>$query)),
 			'lang_showing' => ($group_id ? $GLOBALS['egw']->common->grab_owner_name($group_id).': ' : '').
-				($query ? lang("Search %1 '%2'",lang($this->query_types[$query_type]),$query).': ' : '')
-				.$this->nextmatchs->show_hits($this->total,$start),
+				($query ? lang("Search %1 '%2'",lang($this->accountsClass->query_types[$query_type]),$query).': ' : '')
+				.$this->nextmatchs->show_hits($this->accountsClass->total,$start),
 		));
 
 // -------------------------- end nextmatch ------------------------------------
@@ -520,7 +520,7 @@ function addOption(id,label,value,do_onchange)
 		}
 
 		$GLOBALS['egw']->template->set_var('accountsel_icon',$this->html->image('phpgwapi','users-big'));
-		$GLOBALS['egw']->template->set_var('query_type',is_array($this->query_types) ? $this->html->select('query_type',$query_type,$this->query_types) : '');
+		$GLOBALS['egw']->template->set_var('query_type',is_array($this->accountsClass->query_types) ? $this->html->select('query_type',$query_type,$this->accountsClass->query_types) : '');
 
 		$link_data['query_type'] = 'start';
 		$letters = lang('alphabet');
