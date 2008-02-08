@@ -869,16 +869,19 @@ class so_ldap
 				$contact['owner'] = 0;	
 				$contact['private'] = 0;
 			}
-			foreach(array(
-				'creatorsname' => 'creator',
-				'modifiersname' => 'modifier',
-			) as $ldapFieldName => $egwFieldName)
-			{
-				if (!empty($entry[$ldapFieldName][0]) && preg_match('/^cn=([^,]+),/',$entry[$ldapFieldName][0],$matches))
-				{
-					$contact[$egwFieldName] = $GLOBALS['egw']->accounts->name2id($matches[1],'u');
-				}
-			}
+			#########################################
+			## this piece of code could never have been working, as the call to $GLOBALS['egw']->accounts->name2id is wrong
+			#########################################
+			#foreach(array(
+			#	'creatorsname' => 'creator',
+			#	'modifiersname' => 'modifier',
+			#) as $ldapFieldName => $egwFieldName)
+			#{
+			#	if (!empty($entry[$ldapFieldName][0]) && preg_match('/^cn=([^,]+),/',$entry[$ldapFieldName][0],$matches))
+			#	{
+			#		$contact[$egwFieldName] = $GLOBALS['egw']->accounts->name2id($matches[1],'u');
+			#	}
+			#}
 			foreach(array(
 				'createtimestamp' => 'created',
 				'modifytimestamp' => 'modified',
