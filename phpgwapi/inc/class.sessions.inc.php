@@ -428,7 +428,7 @@
 			if ($fill_egw_info_and_repositories)
 			{
 				$GLOBALS['egw']->acl->acl($this->account_id);
-				$GLOBALS['egw']->accounts->accounts($this->account_id);
+				accounts::getInstance()->setAccountId($this->account_id);
 				$GLOBALS['egw']->preferences->preferences($this->account_id);
 				$GLOBALS['egw']->applications->applications($this->account_id);
 			}
@@ -1019,7 +1019,7 @@
 		function read_repositories($cached='',$write_cache=True)
 		{
 			$GLOBALS['egw']->acl->acl($this->account_id);
-			$GLOBALS['egw']->accounts->accounts($this->account_id);
+			accounts::getInstance()->setAccountId($this->account_id);
 			$GLOBALS['egw']->preferences->preferences($this->account_id);
 			$GLOBALS['egw']->applications->applications($this->account_id);
 
