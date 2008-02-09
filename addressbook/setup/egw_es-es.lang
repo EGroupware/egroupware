@@ -19,7 +19,9 @@ add a new list	addressbook	es-es	Añadir una lista nueva
 add a single entry by passing the fields.	addressbook	es-es	Añadir una entrada simple pasando los campos
 add business email of whole distribution list?	addressbook	es-es	¿Añadir el correo electrónico de la empresa de toda la lista de distribución?
 add custom field	addressbook	es-es	Añadir campo personalizado
+add emails of whole distribution list?	addressbook	es-es	¿Añadir los correos de toda la lista de distribución?
 add to distribution list:	addressbook	es-es	Añadir a la lista de distribución:
+added	addressbook	es-es	añadido
 added by synchronisation	addressbook	es-es	Añadido por sincronización
 added to distribution list	addressbook	es-es	Añadido a la lista de distribución
 additional information about using ldap as contact repository	admin	es-es	Información adicional acerca del uso de LDAP como repositorio de contactos
@@ -108,10 +110,12 @@ custom	addressbook	es-es	Personalizado
 custom etemplate for the contactform	addressbook	es-es	Plantilla personalizada para el formulario del contacto
 custom fields	addressbook	es-es	Campos personalizados
 debug output in browser	addressbook	es-es	Depurar salida en el navegador
+default	addressbook	es-es	predeterminado
 default address format	addressbook	es-es	Formato predeterminado de las drecciones
 default addressbook for adding contacts	addressbook	es-es	Libreta de direcciones predeterminada para añadir contactos
 default document to insert contacts	addressbook	es-es	Documento predeterminado para insertar contactos
 default filter	addressbook	es-es	Filtro predeterminado
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	es-es	Define qué dirección de correo electrónico (trabajo o particular) usar como la preferida para las listas de distribución en el correo.
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
 delete selected distribution list!	addressbook	es-es	Borrar la lista de distribución seleccionada
 delete this contact	addressbook	es-es	Borrar este contacto
@@ -185,6 +189,7 @@ home address, birthday, ...	addressbook	es-es	Domicilio particular, Cumpleaños,
 home city	addressbook	es-es	Ciudad de residencia
 home country	addressbook	es-es	País de residencia
 home email	addressbook	es-es	Correo electrónico personal
+home email if given, else work email	addressbook	es-es	Correo personal si se indica. Si no, correo del trabajo
 home phone	addressbook	es-es	Teléfono particular
 home state	addressbook	es-es	Provincia de residencia
 home street	addressbook	es-es	Domicilio personal
@@ -228,6 +233,7 @@ list created	addressbook	es-es	Se ha creado la lista
 list creation failed, no rights!	addressbook	es-es	Falló la creación de lista. No tiene privilegios suficientes.
 load sample file	addressbook	es-es	Cargar el fichero de ejemplo
 load vcard	addressbook	es-es	Cargar VCard
+location	addressbook	es-es	Ubicación
 locations	addressbook	es-es	ubicaciones
 manage mapping	addressbook	es-es	Administrar los mapeos
 mark records as private	addressbook	es-es	Marcar registros como privados
@@ -263,6 +269,7 @@ other phone	addressbook	es-es	Otro teléfono
 own sorting	addressbook	es-es	orden propio
 pager	common	es-es	Buscapersonas
 parcel	addressbook	es-es	Paquete
+participants	addressbook	es-es	Participantes
 permission denied !!!	addressbook	es-es	¡Permiso denegado!
 phone number	common	es-es	Número de teléfono
 phone numbers	common	es-es	Números de teléfono
@@ -272,7 +279,9 @@ please select only one category	addressbook	es-es	Por favor, seleccione sólo un
 please update the templatename in your customfields section!	addressbook	es-es	¡Por favor, actualice el nombre de la plantilla en la sección de campos personalizados!
 postal	common	es-es	Postal
 pref	addressbook	es-es	pref
+preferred email address to use in distribution lists	addressbook	es-es	Dirección de correo electrónica preferida para usar en las listas de distribución
 preferred phone	addressbook	es-es	teléfono preferido
+preferred type of email address to add for distribution lists	addressbook	es-es	Tipo preferido de dirección de correo electrónico para añadir a las listas de distribución
 prefix	addressbook	es-es	Prefijo
 public key	addressbook	es-es	Clave pública
 publish into groups:	addressbook	es-es	Publicar en los grupos:
@@ -284,6 +293,7 @@ record access	addressbook	es-es	Acceso al registro
 record owner	addressbook	es-es	Propietario del registro
 remove selected contacts from distribution list	addressbook	es-es	Eliminar los contactos seleccionados de la lista de distribución
 removed from distribution list	addressbook	es-es	eliminados de la lista de distribución
+repetition	addressbook	es-es	Repetición
 replacements for inserting contacts into documents	addressbook	es-es	Sustituciones para insertar contactos en los documetos
 required fields *	addressbook	es-es	Campos requeridos *
 role	addressbook	es-es	Rol
@@ -333,6 +343,7 @@ tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
 translation	addressbook	es-es	Traducción
 type	addressbook	es-es	Tipo
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos
+updated	addressbook	es-es	Actualizado
 upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	es-es	URL a la que enlazar los números de teléfono (use %1 = número para llamar, %u = nombre de la cuenta, %t = teléfono de la cuenta)
 use an extra category tab?	addressbook	es-es	¿Usar una pestaña extra para categorías?
@@ -349,11 +360,13 @@ warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se b
 warning: template "%1" not found, using default template instead.	addressbook	es-es	AVISO: No se encontró la plantilla "%1". Se usa la plantilla predeterminada en su lugar.
 weekday	addressbook	es-es	Día semanal
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	es-es	Qué deben mostrar los enlaces a la libreta de direcciones en otras aplicaciones. Los valores vacíos se ignorarán. Es necesario volver a iniciar la sesión si se cambia esta opción.
+where to add the email address	addressbook	es-es	dónde añadir la dirección de correo electrónico
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	es-es	Qué formato de dirección debe usar la libreta de direcciones para países de los que no conoce el formato de las direcciones. Si se conoce el formato de las direcciones, se usa independientemente de lo indicado en esta opción
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	es-es	Qué libreta de direcciones debe seleccionarse al añadir un contacto Y cuando no haya permiso de añadir en la libreta de direcciones actual.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	es-es	Qué campos deben exportarse. Indicar todos significa que cada campo almacenado en la libreta de direcciones, incluyendo los personalizados. La dirección del trabajo o particular sólo contiene el nombre, la empresa y la dirección seleccionada.
 whole query	addressbook	es-es	la consulta completa
+work email if given, else home email	addressbook	es-es	Correo del trabajo si se indica. Si no, correo particular
 work phone	addressbook	es-es	Teléfono del trabajo
 write (update or add) a single entry by passing the fields.	addressbook	es-es	Escribir (actualizar o añadir) una única entrada pasando los campos.
 wrong - try again ...	addressbook	es-es	Incorrecto. Vuelva a intentarlo...
