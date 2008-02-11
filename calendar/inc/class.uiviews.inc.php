@@ -964,7 +964,7 @@ class uiviews extends uical
 				$droppableID='drop_'.$droppableDateTime.'_O'.$owner;
 				
 				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
-					'%;" class="calAddEvent" onclick="??'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";				
+					'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";				
 
 				if(is_object($this->dragdrop) && $dropPermission)
 				{
