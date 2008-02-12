@@ -613,7 +613,7 @@ class accounts_backend
 		// if it's a limited query, check if the unlimited query is cached
 		$start = $param['start'];
 		if (!($maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatchs = 15;
-		if (!($offset = $param['offset'])) $offset = $maxmatchs;
+		if (!($offset = $param['offset'])) $offset = $start + $maxmatchs;
 		unset($param['start']);
 		unset($param['offset']);
 		$unl_serial = serialize($param);
@@ -658,22 +658,55 @@ class accounts_backend
 							break;
 					}
 				}
-				if (is_numeric($param['type']))	// return only group-members
-				{
-					if (!($members = $this->members($param['type']))) return array();
-					//echo "<p>accounts_backend::search() after members($param[type]): ".microtime()."</p>\n";
-					
-					$filter .= '(|(uid='.implode(')(uid=',$members).'))';
-				}
 				// add account_filter to filter (user has to be '*', as we otherwise only search uid's)
 				$filter .= $this->account_filter;
 				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				$filter .= ')';
 
+				// folw:
+				// - first query only few attributes for sorting and throwing away not needed results
+				// - throw away & sort
+				// - fetch relevant accounts with full information
+				// - map and resolve
+				$propertyMap = array(
+					'account_id'        => 'uidnumber',
+					'account_lid'       => 'uid',
+					'account_firstname' => 'givenname',
+					'account_lastname'  => 'sn',
+					'account_email'     => 'email'
+				);
+				$order = $propertyMap[$param['order']] ? $propertyMap[$param['order']] : 'uid';
+				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid', $order));
+				$fullSet = array();
+				foreach (ldap_get_entries($this->ds, $sri) as $entry) 
+				{
+					$fullSet[$entry['uid'][0]] = $entry[$order][0];
+				}
+
+				if (is_numeric($param['type'])) // return only group-members
+				{
+					$relevantAccounts = array();
+					$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
+					$group = ldap_get_entries($this->ds, $sri);
+					
+					if (isset($group[0]['memberuid']))
+					{
+						$fullSet = array_intersect_key($fullSet, array_flip($group[0]['memberuid']));
+					}
+				}
+				$totalcount = count($fullSet);
+				
+				$sortFn = $param['sort'] == 'DESC' ? 'arsort' : 'asort';
+				$sortFn($fullSet);	
+				$relevantAccounts = array_slice(array_keys($fullSet), $start, $offset);
+				
+				$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";	
+				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
+				
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
 				$allValues = ldap_get_entries($this->ds, $sri);
-	
+				
 				$utc_diff = date('Z');
 				while (list($null,$allVals) = @each($allValues))
 				{
@@ -729,7 +762,7 @@ class accounts_backend
 				$param['order'] = 'account_lid';
 			}
 			$account_search[$unl_serial]['data'] = $sortedAccounts = $arrayFunctions->arfsort($accounts,explode(',',$param['order']),$param['sort']);
-			$account_search[$unl_serial]['total'] = $this->total = count($accounts);
+			$account_search[$unl_serial]['total'] = $this->total = isset($totalcount) ? $totalcount : count($accounts);
 		}
 		//echo "<p>accounts_backend::search() found $this->total: ".microtime()."</p>\n";
 		// return only the wanted accounts
@@ -737,7 +770,7 @@ class accounts_backend
 		if(is_numeric($start) && is_numeric($offset))
 		{
 			$account_search[$serial]['total'] = $this->total;
-			return $account_search[$serial]['data'] = array_slice($sortedAccounts, $start, $offset);
+			return $account_search[$serial]['data'] = isset($totalcount) ? $sortedAccounts : array_slice($sortedAccounts, $start, $offset);
 		}
 		return $sortedAccounts;
 	}
@@ -985,3 +1018,20 @@ class accounts_backend
 		return $sign * $account_id;
 	}
 }
+
+if (!function_exists('array_intersect_key'))    // php5.1 function
+{
+	function array_intersect_key($array1,$array2)
+	{
+		$intersection = $keys = array();
+		foreach(func_get_args() as $arr)
+		{
+			$keys[] = array_keys((array)$arr);
+		}
+		foreach(call_user_func_array('array_intersect',$keys) as $key)
+		{
+			$intersection[$key] = $array1[$key];
+		}
+		return $intersection;
+	}
+	}
