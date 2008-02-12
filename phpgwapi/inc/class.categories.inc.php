@@ -63,8 +63,10 @@
 			# resolving the group members/grants is very slow with ldap accounts backend
 			# let's skip it for the addressbook, if we are using the ldap accounts backend
 			####################################################
-			if($app_name != 'addressbook' && $GLOBALS['egw_info']['server']['account_repository'] != 'ldap') {
-		        $this->grants		= $GLOBALS['egw']->acl->get_grants($app_name);
+			if($app_name == 'addressbook' && $GLOBALS['egw_info']['server']['account_repository'] == 'ldap') {
+				$this->grants = $GLOBALS['egw']->acl->get_grants($app_name, false);
+			} else {
+				$this->grants = $GLOBALS['egw']->acl->get_grants($app_name);
 			}
 		}
 
