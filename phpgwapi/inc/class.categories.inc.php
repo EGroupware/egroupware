@@ -59,8 +59,10 @@
 			$this->app_name		= $app_name;
 			$this->db			= clone($GLOBALS['egw']->db);
 			$this->db->set_app('phpgwapi');
-			if($app_name != 'addressbook' && $GLOBALS['egw_info']['server']['account_repository'] != 'ldap') {
-			     $this->grants		= $GLOBALS['egw']->acl->get_grants($app_name);
+			if($app_name == 'addressbook' && $GLOBALS['egw_info']['server']['account_repository'] == 'ldap') {
+				$this->grants = $GLOBALS['egw']->acl->get_grants($app_name, false);
+			} else {
+				$this->grants = $GLOBALS['egw']->acl->get_grants($app_name);
 			}
 		}
 
