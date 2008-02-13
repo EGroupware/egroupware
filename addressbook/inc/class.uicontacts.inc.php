@@ -52,7 +52,7 @@ class uicontacts extends bocontacts
 	 *
 	 * @var string
 	 */
-	var $tabs = 'general|cats|home|details|links|distribution_list|custom_private';
+	var $tabs = 'general|cats|home|details|links|distribution_list|custom|custom_private';
 
 	function uicontacts($contact_app='addressbook')
 	{
@@ -199,7 +199,7 @@ class uicontacts extends bocontacts
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
 				'do_email'       => $do_email,
-				'default_cols'   => '!cat_id,contact_created_contact_modified',
+				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list',
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 				'manual' => $do_email ? ' ' : false,	// space for the manual icon
 			);
@@ -1377,6 +1377,7 @@ class uicontacts extends bocontacts
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys[$this->tabs]['custom'] = !$this->customfields;
 		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		$readonlys[$this->tabs]['distribution_list'] = !$content['distrib_lists'];#false;
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 				
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
@@ -1630,6 +1631,7 @@ $readonlys['button[vcard]'] = true;
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys[$this->tabs]['custom'] = !$this->customfields;
 		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		$readonlys[$this->tabs]['distribution_list'] = !$content['distrib_lists'];#false;
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 	
 		// last and next calendar date
@@ -1753,7 +1755,9 @@ $readonlys['button[vcard]'] = true;
 		// disable not needed tabs
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys[$this->tabs]['custom'] = !$this->customfields;		
+		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys[$this->tabs]['links'] = true;
+		$readonlys[$this->tabs]['distribution_list'] = true;
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
 		$content['disable_change_org'] = true;
