@@ -1329,7 +1329,7 @@ foreach($sess as $key => $val)
 					if (!$readonly && $type != 'buttononly')	// input button, are never submitted back!
 					{
 						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-						if (strlen($name>0) {
+						if (strlen($name>0)) {
 							if ($name == 'cancel' || stripos($name,'[cancel]') !== false)
 							{
 								$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = 'cancel';
