@@ -126,6 +126,7 @@ class addressbook_merge	// extends bo_merge
 		// set all not yet set custom fields, as empty cf's are not stored!
 		foreach(array_keys($this->contacts->customfields) as $name)
 		{
+			$name = '$$#'.$name.'$$';
 			if (!isset($replacements[$name]))
 			{
 				$replacements[$name] = '';
