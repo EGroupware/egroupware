@@ -785,11 +785,19 @@ class bocontacts extends socontacts
 				$criteria[$col] = $pattern;
 			}
 		}
-		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given','','%',false,'OR')))
+		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR')))
 		{
 			foreach($contacts as $contact)
 			{
 				$result[$contact['id']] = $this->link_title($contact);
+				// show category color
+				if ($contact['cat_id'] && ($color = etemplate::cats2color($contact['cat_id'])))
+				{
+					$result[$contact['id']] = array(
+						'label' => $result[$contact['id']],
+						'style.backgroundColor' => $color,
+					);
+				}
 			}
 		}
 		return $result;
