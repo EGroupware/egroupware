@@ -155,16 +155,24 @@ class addressbook_merge	// extends bo_merge
 			'num_rows' => 20,
 			'order' => 'cal_start',
 		));
-		array_unshift($events,false); unset($events[0]);	// renumber the array to start with key 1, instead of 0
-		if ($last_event_too)
+		if ($events)
 		{
-			list($events['-1']) = $calendar->search(array(
+			array_unshift($events,false); unset($events[0]);	// renumber the array to start with key 1, instead of 0
+		}
+		else
+		{
+			$events = array();
+		}
+		if ($last_event_too=true)
+		{
+			$last = $calendar->search(array(
 				'end' => $calendar->now_su,
 				'users' => 'c'.$id,
 				'offset' => 0,
 				'num_rows' => 1,
 				'order' => 'cal_start DESC',
 			));
+			if ($last) $events['-1'] = array_shift($last);	// returned events are indexed by cal_id!
 		}
 		$replacements = array();
 		foreach($events as $n => $event)
@@ -311,7 +319,7 @@ class addressbook_merge	// extends bo_merge
 			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
 		}
 		$GLOBALS['egw']->translation->add_app('calendar');
-		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')." # = 1, 2, ..., 20</h3></td></tr>";
+		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')." # = 1, 2, ..., 20, -1</h3></td></tr>";
 		foreach(array(
 			'title' => lang('Title'),
 			'description' => lang('Description'),
