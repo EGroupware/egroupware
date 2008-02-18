@@ -59,6 +59,9 @@
  */
 class egw_vfs extends vfs_stream_wrapper
 {
+	const EXECUTABLE = 4;
+	const READABLE = 2;
+	const WRITABLE = 1;
 	/**
 	 * fopen working on just the eGW VFS
 	 *
@@ -129,7 +132,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
 		}
-		return self::url_stat($path);
+		return self::url_stat($path,0);
 	}
 	
 	
@@ -183,6 +186,96 @@ class egw_vfs extends vfs_stream_wrapper
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
 		
 		return true;
+	}
+	
+	/**
+	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
+	 * which is wrong in case of our vfs, as we use the current users id and memberships
+	 *
+	 * @param string $path
+	 * @param int $check=4 mode to check: 4 = read, 2 = write, 1 = executable
+	 * @return boolean
+	 */
+	static function is_readable($path,$check = 4)
+	{
+		if (!($stat = self::stat($path)))
+		{
+			return false;
+		}
+		return self::check_access($stat,$check);
+	}
+
+	/**
+	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
+	 * which is wrong in case of our vfs, as we use the current users id and memberships
+	 *
+	 * @param array $stat
+	 * @param int $check mode to check: 4 = read, 2 = write, 1 = executable
+	 * @return boolean
+	 */
+	static function check_access($stat,$check)
+	{
+		//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
+
+		if (!$stat)
+		{
+			//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no stat array!");
+			return false;	// file not found
+		}
+		// check if other rights grant access
+		if ($stat['mode'] & $check)
+		{
+			error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
+			return true;
+		}
+		// check if there's owner access and we are the owner
+		if (($stat['mode'] & ($check << 6)) && $stat['uid'] && $stat['uid'] == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via owner rights!");
+			return true;
+		}
+		// check if there's a group access and we have the right membership
+		if (($stat['mode'] & ($check << 3)) && $stat['gid'])
+		{
+			static $memberships;
+			if (is_null($memberships))
+			{
+				$memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+			}
+			if (in_array(-abs($stat['gid']),$memberships))
+			{
+				//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
+				return true;
+			}
+		}
+		// here could be a check for extended acls ...
+
+		//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no access!");
+		return false;
+	}
+	
+	/**
+	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
+	 * which is wrong in case of our vfs, as we use the current users id and memberships
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	static function is_writable($path)
+	{
+		return self::is_readable($path,2);
+	}
+	
+	/**
+	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
+	 * which is wrong in case of our vfs, as we use the current users id and memberships
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	static function is_executable($path)
+	{
+		return self::is_readable($path,1);
 	}
 	
 	/**

@@ -1,36 +1,39 @@
 <?php
 /**
- * eGroupWare API: VFS - WebDAV access
+ * eGroupWare API: VFS - WebDAV access using the new stream wrapper VFS interface
  *
- * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
+ * Using the PEAR HTTP/WebDAV/Server/Filesystem class (which need to be installed!)
  * 
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Hartmut Holzgraefe <hartmut@php.net> original HTTP/WebDAV/Server/Filesystem class, of which some code is used
  * @version $Id$
  */
 
-require_once('HTTP/WebDAV/Server.php');
-require_once(EGW_API_INC.'/class.vfs_home.inc.php');
+require_once('HTTP/WebDAV/Server/Filesystem.php');
+require_once(EGW_API_INC.'/class.egw_vfs.inc.php');
 
 /**
- * FileManger - WebDAV access
+ * FileManger - WebDAV access using the new stream wrapper VFS interface
  *
- * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
+ * Using the PEAR HTTP/WebDAV/Server/Filesystem class (which need to be installed!)
+ * 
+ * @todo table to store locks and properties
+ * @todo filesystem class uses PEAR's System::find which we dont require nor know if it works on custom streamwrapper
  */
-class vfs_webdav_server extends HTTP_WebDAV_Server
+class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem 
 {
-	/**
-	 * instance of the vfs class
-	 *
-	 * @var vfs_home
-	 */
-	var $vfs;
-
 	var $dav_powered_by = 'eGroupWare WebDAV server';
+	
+	/**
+	 * Base directory is the URL of our VFS root
+	 *
+	 * @var string
+	 */
+	var $base = 'vfs://default';
 	
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, eg. complete $_SERVER array
@@ -41,354 +44,151 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 	 */
 	var $debug = 0;
 
-	function vfs_webdav_server()
+	/**
+	* Serve a webdav request
+	* 
+	* Reimplemented to not check our vfs base path with realpath and connect to mysql DB
+	*
+	* @access public
+	* @param  string  
+	*/
+	function ServeRequest($base = false) 
 	{
-		if ($this->debug === 2) foreach($_SERVER as $name => $val) error_log("vfs_webdav_server: \$_SERVER[$name]='$val'");
-
-		parent::HTTP_WebDAV_Server();
+		// special treatment for litmus compliance test
+		// reply on its identifier header
+		// not needed for the test itself but eases debugging
+		foreach (apache_request_headers() as $key => $value) 
+		{
+			if (stristr($key, "litmus")) 
+			{
+				error_log("Litmus test $value");
+				header("X-Litmus-reply: ".$value);
+			}
+		}
 		
-		$this->vfs =& new vfs_home;
+		// let the base class do all the work
+		HTTP_WebDAV_Server::ServeRequest();
 	}
 	
-	/**
-	 * PROPFIND method handler
-	 *
-	 * @param  array  general parameter passing array
-	 * @param  array  return array for file properties
-	 * @return bool   true on success
-	 */
-	function PROPFIND(&$options, &$files) 
-	{
-		$vfs_data = array(
-			'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-			// at first only list the given path itself
-			'checksubdirs'	=> False,
-			'nofiles'	=> True
-		);
-		if (!($vfs_files = $this->vfs->ls($vfs_data)))	// path not found
-		{
-			// check if the users home-dir is just not yet created (should be done by the vfs-class!)
-			// ToDo: group-dirs
-			if ($vfs_data['string'] == '/home/'.$GLOBALS['egw_info']['user']['account_lid'])
-			{
-				$this->vfs->override_acl = true;	// user has no right to create dir in /home
-				$created = $this->vfs->mkdir(array(
-					'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-					'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-				));
-				$this->vfs->override_acl = false;
-				
-				if (!$created)
-				{
-					if ($this->debug) error_log("vfs_webdav_server::PROPFIND(path='$options[path]',depth=$options[depth]) could not create home dir");
-				}
-				$vfs_files = $this->vfs->ls($vfs_data);
-			}
-			if (!$vfs_files)
-			{
-				if ($this->debug) error_log("vfs_webdav_server::PROPFIND(path='$options[path]',depth=$options[depth]) return false (path not found)");
-				return false;	// path not found
-			}
-		}
-		// if depth > 0 and path is a directory => show it's contents
-		if (!empty($options['depth']) && $vfs_files[0]['mime_type'] == 'Directory')
-		{
-			$vfs_data['checksubdirs'] = (int) $options['depth'] != 1;
-			$vfs_data['nofiles'] = false;
+    /**
+     * DELETE method handler
+     *
+     * @param  array  general parameter passing array
+     * @return bool   true on success
+     */
+    function DELETE($options) 
+    {
+        $path = $this->base . "/" .$options["path"];
 
-			if ($vfs_files[0]['directory'] == '/')	// sub-dirs of the root?
-			{
-				$vfs_files = array();	// dont return the directory, it shows up double in konq
-			}
-			else	// return the dir itself with a trailing slash, otherwise empty dirs are reported as non-existent
-			{
-				$vfs_files[0]['name'] .= '/';
-			}
-			$vfs_files = array_merge($vfs_files,$this->vfs->ls($vfs_data));
-		}
-		if ($this->debug) error_log("vfs_webdav_server::PROPFIND(path='$options[path]',depth=$options[depth]) ".count($vfs_files).' files');
-	
-		$files['files'] = array();
-		$egw_charset = $GLOBALS['egw']->translation->charset();
-		foreach($vfs_files as $fileinfo)
-		{
-			if ($this->debug) error_log('dir="'.$fileinfo['directory'].'", name="'.$fileinfo['name'].'": '.$fileinfo['mime_type']);
-			foreach(array('modified','created') as $date)
-			{
-				// our vfs has no modified set, if never modified, use created
-				list($y,$m,$d,$h,$i,$s) = split("[- :]",$fileinfo[$date] ? $fileinfo[$date] : $fileinfo['created']);
-				$fileinfo[$date] = mktime((int)$h,(int)$i,(int)$s,(int)$m,(int)$d,(int)$y);
-			}
-			$info = array(
-            	'path'  => $GLOBALS['egw']->translation->convert($fileinfo['directory'].'/'.$fileinfo['name'],$egw_charset,'utf-8'),
-            	'props' => array(
-            		$this->mkprop('displayname',$GLOBALS['egw']->translation->convert($fileinfo['name'],$egw_charset,'utf-8')),
-            		$this->mkprop('creationdate',$fileinfo['created']),
-            		$this->mkprop('getlastmodified',$fileinfo['modified']),
-            	),
-            );
-            if ($fileinfo['mime_type'] == 'Directory')
+        if (!file_exists($path)) 
+        {
+            return "404 Not found";
+        }
+
+        if (is_dir($path)) 
+        {
+            /*$query = "DELETE FROM {$this->db_prefix}properties 
+                           WHERE path LIKE '".$this->_slashify($options["path"])."%'";
+            mysql_query($query); */
+            // recursive delete the directory
+            if ($dir = egw_vfs::dir_opendir($options["path"]))
             {
-            	$info['props'][] = $this->mkprop('resourcetype', 'collection');
-                $info['props'][] = $this->mkprop('getcontenttype', 'httpd/unix-directory');             
+            	while(($file = readdir($dir)))
+            	{
+            		if ($file == '.' || $file == '..') continue;
+
+            		if (is_dir($path.'/'.$file))
+            		{
+            			// recursivly call ourself with the dir
+            			$opts = $options;
+            			$opts['path'] .= '/'.$file;
+            			$this->DELETE($opts);
+            		}
+            		else
+            		{
+            			unlink($path.'/'.$file);
+            		}
+            	}
+            	closedir($dir);
             }
-            else
-            {
-            	$info['props'][] = $this->mkprop('resourcetype', '');
-                $info['props'][] = $this->mkprop('getcontenttype', $fileinfo['mime_type']);             
-            	$info['props'][] = $this->mkprop('getcontentlength', $fileinfo['size']);
-            }
-            $files['files'][] = $info;
-		}
-		if ($this->debug == 2) foreach($files['files'] as $info) error_log(print_r($info,true));
- 		// ok, all done
-		return true;
-	}
-	
-	/**
-	 * GET method handler
-	 * 
-	 * @param  array  parameter passing array
-	 * @return bool   true on success
-	 */
-	function GET(&$options) 
-	{
-		if ($this->debug) error_log('vfs_webdav_server::GET('.print_r($options,true).')');
-		
-		$vfs_data = array(
-			'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-			'checksubdirs'	=> False,
-			'nofiles'	=> True
-		);
-		// sanity check
-		if (!($vfs_file = $this->vfs->ls($vfs_data)))
-		{
-			return false;
-		}
-		$options['mimetype'] = $vfs_file[0]['mime_type'];
-		$options['size']     = $vfs_file[0]['size'];
-		
-		if (($options['data'] = $this->vfs->read($vfs_data)) === false)
-		{
-			return '403 Forbidden';		// not sure if this is the right code for access denied
-		}
-		return true;
-	}
+        } 
+        else 
+        {
+            unlink($path);
+        }
+        /*$query = "DELETE FROM {$this->db_prefix}properties 
+                       WHERE path = '$options[path]'";
+        mysql_query($query);*/
+
+        return "204 No Content";
+    }
+
+    /**
+     * Get properties for a single file/resource
+     *
+     * @param  string  resource path
+     * @return array   resource properties
+     */
+    function fileinfo($path) 
+    {
+		error_log(__METHOD__."($path)");
+        // map URI path to filesystem path
+        $fspath = $this->base . $path;
+
+        // create result array
+        $info = array();
+        // TODO remove slash append code when base clase is able to do it itself
+        $info["path"]  = is_dir($fspath) ? $this->_slashify($path) : $path; 
+        $info["props"] = array();
+            
+        // no special beautified displayname here ...
+        $info["props"][] = $this->mkprop("displayname", strtoupper($path));
+            
+        // creation and modification time
+        $info["props"][] = $this->mkprop("creationdate",    filectime($fspath));
+        $info["props"][] = $this->mkprop("getlastmodified", filemtime($fspath));
+
+        // type and size (caller already made sure that path exists)
+        if (is_dir($fspath)) {
+            // directory (WebDAV collection)
+            $info["props"][] = $this->mkprop("resourcetype", "collection");
+            $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");             
+        } else {
+            // plain file (WebDAV resource)
+            $info["props"][] = $this->mkprop("resourcetype", "");
+            if (egw_vfs::is_readable($path)) {
+                $info["props"][] = $this->mkprop("getcontenttype", egw_vfs::mime_content_type($path));
+            } else {
+				error_log(__METHOD__."($path) $fspath is not readable!");
+                $info["props"][] = $this->mkprop("getcontenttype", "application/x-non-readable");
+            }               
+            $info["props"][] = $this->mkprop("getcontentlength", filesize($fspath));
+        }
+/*
+        // get additional properties from database
+        $query = "SELECT ns, name, value 
+                        FROM {$this->db_prefix}properties 
+                       WHERE path = '$path'";
+        $res = mysql_query($query);
+        while ($row = mysql_fetch_assoc($res)) {
+            $info["props"][] = $this->mkprop($row["ns"], $row["name"], $row["value"]);
+        }
+        mysql_free_result($res);
+*/
+		//error_log(__METHOD__."($path) info=".print_r($info,true));
+        return $info;
+    }
 
 	/**
-	 * PUT method handler
-	 * 
-	 * @param  array  parameter passing array
-	 * @return bool   true on success
-	 */
-	function PUT(&$options) 
-	{
-		if ($this->debug) error_log('vfs_webdav_server::PUT('.print_r($options,true).')');
-
-		$vfs_data = array(
-			'string'    => dirname($GLOBALS['egw']->translation->convert($options['path'],'utf-8')),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-			'checksubdirs'	=> False,
-			'nofiles'	=> True
-		);
-		if (!($vfs_file = $this->vfs->ls($vfs_data)) || $vfs_file[0]['mime_type'] != 'Directory')
-		{
-			return '409 Conflict';
-		}
-		$vfs_data = array(
-			'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-		);
-		$options['new'] = !$this->vfs->file_exists($vfs_data);
-		
-		$vfs_data['content'] = '';
-		while(!feof($options['stream']))
-		{
-			$vfs_data['content'] .= fread($options['stream'],8192);
-		}
-		return $this->vfs->write($vfs_data);
-	}
-	
-	/**
-	 * MKCOL method handler
+	 * Used eg. by get
 	 *
-	 * @param  array  general parameter passing array
-	 * @return bool   true on success
+	 * @todo replace all calls to _mimetype with egw_vfs::mime_content_type()
+	 * @param string $path
+	 * @return string
 	 */
-	function MKCOL($options) 
-	{           
-		if ($this->debug) error_log('vfs_webdav_server::MKCOL('.print_r($options,true).')');
-
-		$vfs_data = array(
-			'string'    => dirname($GLOBALS['egw']->translation->convert($options['path'],'utf-8')),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-			'checksubdirs'	=> False,
-			'nofiles'	=> True
-		);
-		if (!($vfs_file = $this->vfs->ls($vfs_data)))
-		{
-			return '409 Conflict';
-		}
-		if ($this->debug) error_log(print_r($vfs_file,true));
-
-		if ($vfs_file[0]['mime_type'] != 'Directory')
-		{
-			return '403 Forbidden';
-		}
-		
-		$vfs_data = array(
-			'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-		);
-		if ($this->vfs->file_exists($vfs_data) ) 
-		{
-			return '405 Method not allowed';
-		}
-		
-		if (!empty($_SERVER['CONTENT_LENGTH']))  // no body parsing yet
-		{
-			return '415 Unsupported media type';
-		}
-		
-		if (!$this->vfs->mkdir($vfs_data))
-		{
-			return '403 Forbidden';                 
-		}
-		
-		return '201 Created';
-	}
-
-	/**
-	 * DELETE method handler
-	 *
-	 * @param  array  general parameter passing array
-	 * @return bool   true on success
-	 */
-	function DELETE($options) 
+	function _mimetype($path)
 	{
-		if ($this->debug) error_log('vfs_webdav_server::DELETE('.print_r($options,true).')');
-
-		$vfs_data = array(
-			'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-		);
-		if (!$this->vfs->file_exists($vfs_data))
-		{
-			return '404 Not found';
-		}
-		if (!$this->vfs->rm($vfs_data))
-		{
-			return '403 Forbidden';                 
-		}
-		return '204 No Content';
-	}
-
-	/**
-	 * MOVE method handler
-	 *
-	 * @param  array  general parameter passing array
-	 * @return bool   true on success
-	 */
-	function MOVE($options) 
-	{
-		return $this->COPY($options, true);
-	}
-	
-	/**
-	 * COPY method handler
-	 *
-	 * @param  array  general parameter passing array
-	 * @return bool   true on success
-	 */
-	function COPY($options, $del=false)
-	{
-		if ($this->debug) error_log('vfs_webdav_server::'.($del ? 'MOVE' : 'COPY').'('.print_r($options,true).')');
-		
-		// TODO Property updates still broken (Litmus should detect this?)
-		
-		if (!empty($_SERVER['CONTENT_LENGTH']))  // no body parsing yet
-		{
-			return '415 Unsupported media type';
-		}
-		
-		// no copying to different WebDAV Servers yet
-		if (isset($options['dest_url'])) 
-		{
-			return '502 bad gateway';
-		}
-		
-		$source = array(
-			'string' => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-		);
-		if (!$this->vfs->file_exists($source)) 
-		{
-			return '404 Not found';
-		}
-		
-		$dest = array(
-			'string' => $options['dest'],
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-		);
-		$new = !$this->vfs->file_exists($dest);
-		$existing_col = false;
-		
-		if (!$new) 
-		{
-			if ($del && $this->vfs->file_type($dest) == 'Directory') 
-			{
-				if (!$options['overwrite']) 
-				{
-					return '412 precondition failed';
-				}
-				$dest['string'] .= basename($GLOBALS['egw']->translation->convert($options['path'],'utf-8'));
-				if ($this->vfs->file_exists($dest)) 
-				{
-					$options['dest'] .= basename($GLOBALS['egw']->translation->convert($options['path'],'utf-8'));
-				} 
-				else 
-				{
-					$new = true;
-					$existing_col = true;
-				}
-			}
-		}
-		
-		if (!$new) 
-		{
-			if ($options['overwrite']) 
-			{
-				$stat = $this->DELETE(array('path' => $options['dest']));
-				if (($stat{0} != '2') && (substr($stat, 0, 3) != '404')) 
-				{
-					return $stat; 
-				}
-			} 
-			else 
-			{                
-				return '412 precondition failed';
-			}
-		}
-		
-		if ($this->vfs->file_type($source) == 'Directory' && ($options['depth'] != 'infinity')) 
-		{
-			// RFC 2518 Section 9.2, last paragraph
-			return '400 Bad request';
-		}
-		
-		$op = $del ? 'mv' : 'cp';
-		$vfs_data = array(
-			'from' => $source['string'],
-			'to'   => $dest['string'],
-			'relatives' => array(RELATIVE_ROOT,RELATIVE_ROOT)
-		);
-		if (!$this->vfs->$op($vfs_data))
-		{
-			return '500 Internal server error';
-		}
-		return ($new && !$existing_col) ? '201 Created' : '204 No Content';         
+		return egw_vfs::mime_content_type($path);
 	}
 
 	/**
@@ -404,6 +204,8 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 	 */
 	function PROPPATCH(&$options) 
 	{
+		$path = $GLOBALS['egw']->translation->convert($options['path'],'utf-8');
+
 		foreach ($options["props"] as $key => $prop) {
 			$attributes = array();
 			switch($prop['ns'])
@@ -414,10 +216,11 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 					{
 						case 'srt_modifiedtime':
 						case 'getlastmodified':
-							$attributes['modified'] = strtotime($prop['val']);
+							egw_vfs::touch($path,strtotime($prop['val']));
 							break;
 						case 'srt_creationtime':
-							$attributes['created'] = strtotime($prop['val']);
+							// not supported via the streamwrapper interface atm.
+							//$attributes['created'] = strtotime($prop['val']);
 							break;
 					}
 					break;
@@ -427,7 +230,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 					{
 						// allow netdrive to change the modification time
 						case 'getlastmodified':
-							$attributes['modified'] = strtotime($prop['val']);
+							egw_vfs::touch($path,strtotime($prop['val']));
 							break;
 						// not sure why, the filesystem example of the WebDAV class does it ...
 						default:
@@ -438,26 +241,147 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 			}
 			if ($this->debug) $props[] = '('.$prop["ns"].')'.$prop['name'].'='.$prop['val'];
 		}
-		if ($attributes)
-		{
-			$vfs_data = array(
-				'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-				'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-				'attributes'=> $attributes,
-			);
-			$this->vfs->set_attributes($vfs_data);
-		}
 		if ($this->debug)
 		{
-			error_log(__CLASS__.'::'.__METHOD__.": path=$options[path], props=".implode(', ',$props));
-			if ($attributes) error_log(__CLASS__.'::'.__METHOD__.": path=$options[path], set attributes=".str_replace("\n",' ',print_r($attributes,true)));
+			error_log(__METHOD__.": path=$options[path], props=".implode(', ',$props));
+			if ($attributes) error_log(__METHOD__.": path=$options[path], set attributes=".str_replace("\n",' ',print_r($attributes,true)));
 		}
 
-		
 		return "";	// this is as the filesystem example handler does it, no true or false ...
 	}
+	
+     /**
+     * LOCK method handler
+     *
+     * @param  array  general parameter passing array
+     * @return bool   true on success
+     */
+    function LOCK(&$options) 
+    {
+    	// behaving like LOCK is not implemented
+		return "412 Precondition failed";
+/*
+        // get absolute fs path to requested resource
+        $fspath = $this->base . $options["path"];
+
+        // TODO recursive locks on directories not supported yet
+        if (is_dir($fspath) && !empty($options["depth"])) {
+            return "409 Conflict";
+        }
+
+        $options["timeout"] = time()+300; // 5min. hardcoded
+
+        if (isset($options["update"])) { // Lock Update
+            $where = "WHERE path = '$options[path]' AND token = '$options[update]'";
+
+            $query = "SELECT owner, exclusivelock FROM {$this->db_prefix}locks $where";
+            $res   = mysql_query($query);
+            $row   = mysql_fetch_assoc($res);
+            mysql_free_result($res);
+
+            if (is_array($row)) {
+                $query = "UPDATE {$this->db_prefix}locks 
+                                 SET expires = '$options[timeout]' 
+                                   , modified = ".time()."
+                              $where";
+                mysql_query($query);
+
+                $options['owner'] = $row['owner'];
+                $options['scope'] = $row["exclusivelock"] ? "exclusive" : "shared";
+                $options['type']  = $row["exclusivelock"] ? "write"     : "read";
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+            
+        $query = "INSERT INTO {$this->db_prefix}locks
+                        SET token   = '$options[locktoken]'
+                          , path    = '$options[path]'
+                          , created = ".time()."
+                          , modified = ".time()."
+                          , owner   = '$options[owner]'
+                          , expires = '$options[timeout]'
+                          , exclusivelock  = " .($options['scope'] === "exclusive" ? "1" : "0")
+            ;
+        mysql_query($query);
+
+        return mysql_affected_rows() ? "200 OK" : "409 Conflict";*/
+    }
 
     /**
+     * UNLOCK method handler
+     *
+     * @param  array  general parameter passing array
+     * @return bool   true on success
+     */
+    function UNLOCK(&$options) 
+    {
+    	// behaving like LOCK is not implemented
+		return "405 Method not allowed";
+/*
+        $query = "DELETE FROM {$this->db_prefix}locks
+                      WHERE path = '$options[path]'
+                        AND token = '$options[token]'";
+        mysql_query($query);
+
+        return mysql_affected_rows() ? "204 No Content" : "409 Conflict";*/
+    }
+
+    /**
+     * checkLock() helper
+     *
+     * @param  string resource path to check for locks
+     * @return bool   true on success
+     */
+    function checkLock($path) 
+    {
+    	// behave like checkLock is not implemented
+		return false;
+/*		
+        $result = false;
+            
+        $query = "SELECT owner, token, created, modified, expires, exclusivelock
+                  FROM {$this->db_prefix}locks
+                 WHERE path = '$path'
+               ";
+        $res = mysql_query($query);
+
+        if ($res) {
+            $row = mysql_fetch_array($res);
+            mysql_free_result($res);
+
+            if ($row) {
+                $result = array( "type"    => "write",
+                                 "scope"   => $row["exclusivelock"] ? "exclusive" : "shared",
+                                 "depth"   => 0,
+                                 "owner"   => $row['owner'],
+                                 "token"   => $row['token'],
+                                 "created" => $row['created'],   
+                                 "modified" => $row['modified'],   
+                                 "expires" => $row['expires']
+                                 );
+            }
+        }
+
+        return $result;*/
+    }
+    
+    /**
+     * Remove not (yet) implemented LOCK methods, so we can use the mostly unchanged HTTP_WebDAV_Server_Filesystem class
+     *
+     * @return array
+     */
+    function _allow()
+    {
+    	$allow = parent::_allow();
+    	unset($allow['LOCK']);
+    	unset($allow['UNLOCK']);
+    	return $allow;
+    }
+
+   /**
 	 * auth check in the session creation in dav.php, to avoid being redirected to login.php
 	 *
 	 * @param string $type

@@ -9,7 +9,7 @@
  * @package filemanger
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id: class.boetemplate.inc.php 21437 2006-04-24 20:42:42Z ralfbecker $
+ * @version $Id$
  */
 
 /**
@@ -46,4 +46,9 @@ $GLOBALS['egw_info']['flags'] = array(
 // if you move this file somewhere else, you need to adapt the path to the header!
 include('../header.inc.php');
 
-ExecMethod('phpgwapi.vfs_webdav_server.ServeRequest');
+// only enable one of the following WebDAV server:
+// 1. this uses the old webdav class, using the old vfs classes direct (1.4 and current default)
+ExecMethod('phpgwapi.oldvfs_webdav_server.ServeRequest');
+
+// 2. this uses the new streamwrapper VFS interface
+//ExecMethod('phpgwapi.vfs_webdav_server.ServeRequest');

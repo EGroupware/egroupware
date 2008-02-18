@@ -11,9 +11,6 @@
  * @version $Id$
  */
 
-require_once(EGW_API_INC.'/class.vfs_home.inc.php');
-require_once(EGW_API_INC.'/class.iface_stream_wrapper.inc.php');
-
 /**
  * eGroupWare API: VFS -  old (until eGW 1.4 inclusive) VFS stream wrapper
  * 
@@ -27,14 +24,20 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 {
 	/**
 	 * If this class should do the operations direct in the filesystem, instead of going through the vfs
-	 *
 	 */
 	const USE_FILESYSTEM_DIRECT = true;
 	/**
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
-	 *
 	 */
 	const DIR_MIME_TYPE = 'Directory';
+	/**
+	 * Scheme / protocoll used for this stream-wrapper
+	 */
+	const SCHEME = 'oldvfs';
+	/**
+	 * Does url_stat returns a mime type, or has it to be determined otherwise (string with attribute name)
+	 */
+	const STAT_RETURN_MIME_TYPE = 'mime';
 	/**
 	 * How much should be logged to the apache error-log
 	 *
@@ -145,7 +148,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 					'operation'		=> EGW_ACL_ADD,
 				)))
 			{
-				self::remove_password($url);
+				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
 				if (!($options & STREAM_URL_STAT_QUIET))
 				{
@@ -164,7 +167,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 				'operation'		=> EGW_ACL_EDIT,
 			)))
 			{
-				self::remove_password($url);
+				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
 				if (!($options & STREAM_URL_STAT_QUIET))
 				{
@@ -457,7 +460,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 				'must_exist' => true,
 			)) || ($type = self::$old_vfs->file_type($data)) === self::DIR_MIME_TYPE)
 		{
-			self::remove_password($url);
+			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) (type=$type) permission denied!");
 			return false;	// no permission or file does not exist
 		}
@@ -509,8 +512,8 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			'operation'	=> EGW_ACL_ADD,
 		)))
 		{
-			self::remove_password($url_from);
-			self::remove_password($url_to);
+			self::_remove_password($url_from);
+			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_to permission denied!");
 			return false;	// no permission or file does not exist
 		}
@@ -520,8 +523,8 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			($type_to === self::DIR_MIME_TYPE) !== (self::$old_vfs->file_type($data_from) === self::DIR_MIME_TYPE))
 		{
 			$is_dir = $type_to === self::DIR_MIME_TYPE ? 'a' : 'no';
-			self::remove_password($url_from);
-			self::remove_password($url_to);
+			self::_remove_password($url_from);
+			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) $path_to is $is_dir directory!");
 			return false;	// no permission or file does not exist
 		}
@@ -576,7 +579,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 				'must_exist' => false,
 			)))
 		{
-			self::remove_password($url);
+			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			if (!($options & STREAM_URL_STAT_QUIET))
 			{
@@ -616,7 +619,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 				'must_exist' => true,
 			)) || ($type = self::$old_vfs->file_type($data)) !== self::DIR_MIME_TYPE)
 		{
-			self::remove_password($url);
+			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$options) (type=$type) permission denied!");
 			if (!($options & STREAM_URL_STAT_QUIET))
 			{
@@ -628,7 +631,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		// our vfs deletes recursive, while the stream-wrapper interface does not!
 		if (($files = self::$old_vfs->ls($data)))
 		{
-			self::remove_password($url);
+			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$options) dir is not empty!");
 			if (!($options & STREAM_URL_STAT_QUIET))
 			{
@@ -699,7 +702,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			count($files) == 1 && $path == $files[0]['directory'].'/'.$files[0]['name'] &&
 			$files[0]['mime_type'] != self::DIR_MIME_TYPE)
 		{
-			self::remove_password($url);
+			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$options) $url is not directory!");
 			$this->opened_dir = null;
 			return false;
@@ -769,7 +772,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		//print_r($info);
 		if (!$info)
 		{
-			self::remove_password($url);
+			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$flags) file or directory not found!");
 			return false;
 		}
@@ -848,12 +851,14 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 				($info['mime_type'] == self::DIR_MIME_TYPE ? 040070 : 0100060),
 			'size'  => $info['size'],
 			'uid'   => $info['owner_id'] > 0 ? $info['owner_id'] : 0,
-			'gid'   => $info['owner_id'] < 0 ? $info['owner_id'] : 0,
+			'gid'   => $info['owner_id'] < 0 ? -$info['owner_id'] : 0,
 			'mtime' => strtotime($info['modified'] ? $info['modified'] : $info['created']),
 			'ctime' => strtotime($info['created']),
 			'nlink' => $info['mime_type'] == self::DIR_MIME_TYPE ? 2 : 1,
+			// eGW addition to return the mime type
+			'mime'  => $info['mime_type'],
 		);
-		//print_r($stat);
+		//error_log(__METHOD__."($info[name]) = ".print_r($stat,true));
 		return $stat;
 	}
 
@@ -873,13 +878,13 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		
 		return $func_overload & 2 ? mb_substr($str,$start,$length,'ascii') : substr($str,$start,$length);
 	}
-	
+
 	/**
 	 * Replace the password of an url with '...' for error messages
 	 *
 	 * @param string &$url
 	 */
-	static private function remove_password(&$url)
+	static private function _remove_password(&$url)
 	{
 		$parts = parse_url($url);
 		
@@ -891,4 +896,4 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	}
 }
 
-stream_register_wrapper('oldvfs','oldvfs_stream_wrapper');
+stream_register_wrapper(oldvfs_stream_wrapper::SCHEME ,'oldvfs_stream_wrapper');

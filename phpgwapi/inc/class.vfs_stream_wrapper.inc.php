@@ -22,9 +22,13 @@
 class vfs_stream_wrapper implements iface_stream_wrapper
 {
 	/**
-	 * Scheme / protocoll used for this stream-wrapper
+	 * Scheme / protocol used for this stream-wrapper
 	 */
 	const SCHEME = 'vfs';
+	/**
+	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
+	 */
+	const DIR_MIME_TYPE = 'httpd/unix-directory';
 	/**
 	 * optional context param when opening the stream, null if no context passed
 	 *
@@ -40,7 +44,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @var array
 	 */
 	protected static $fstab = array(
-		'/' => 'oldvfs://$user:$pass@$host/',
+		'/' => 'sqlfs://$user:$pass@$host/',
+//		'/' => 'oldvfs://$user:$pass@$host/',
 //		'/files' => 'oldvfs://$user:$pass@$host/home/Default',
 //		'/images' => 'http://localhost/egroupware/phpgwapi/templates/idots/images',
 //		'/home/ralf/linux' => '/home/ralf',		// we probably need to forbid direct filesystem access for security reasons!
@@ -88,7 +93,17 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return $cache[$path];
 		}
-		$parts = parse_url($path);
+		// setting default user, passwd and domain, if it's not contained int the url
+		static $defaults;
+		if (is_null($defaults))
+		{
+			$defaults = array(
+				'user' => $GLOBALS['egw_info']['user']['account_lid'],
+				'pass' => $GLOBALS['egw_info']['user']['passwd'],
+				'host' => $GLOBALS['egw_info']['user']['domain'],
+			);
+		}
+		$parts = array_merge(parse_url($path),$defaults);
 
 		if (empty($parts['path'])) $parts['path'] = '/';
 		
@@ -319,7 +334,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		return mkdir($path,$mode,$options);
+		return mkdir($url,$mode,$options);
 	}
 
 	/**
@@ -338,7 +353,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		return rmdir($path,$options);
+		return rmdir($url);
 	}
 
 	/**
@@ -364,6 +379,60 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return call_user_func(array($scheme.'_stream_wrapper','touch'),$url,$time);
 		}
 		return touch($url,$time);
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * 
+	 * The methods use the following ways to get the mime type (in that order)
+	 * - directories (is_dir()) --> self::DIR_MIME_TYPE
+	 * - stream implemented by class defining the STAT_RETURN_MIME_TYPE constant --> use mime-type returned by url_stat
+	 * - for regular filesystem use mime_content_type function if available
+	 * - use eGW's mime-magic class
+	 *
+	 * @param string $path
+	 * @return string mime-type (self::DIR_MIME_TYPE for directories)
+	 */
+	static function mime_content_type($path)
+	{
+		if (!($url = self::resolve_url($path)))
+		{
+			return false;
+		}
+		if (is_dir($url))
+		{
+			$mime = self::DIR_MIME_TYPE;
+		}
+		if (!$mime && ($scheme = parse_url($url,PHP_URL_SCHEME)))
+		{
+			// check it it's an eGW stream wrapper returning mime-type via url_stat
+			if (class_exists($class = $scheme.'_stream_wrapper') && ($mime_attr = constant($class.'::STAT_RETURN_MIME_TYPE')))
+			{
+				$stat = call_user_func(array($scheme.'_stream_wrapper','url_stat'),parse_url($url,PHP_URL_PATH),0);
+				if ($stat[$mime_attr])
+				{
+					$mime = $stat[$mime_attr];
+				}
+			}
+		}
+		// if we operate on the regular filesystem and the mime_content_type function is available --> use it
+		if (!$mime && !$scheme && function_exists('mime_content_type'))
+		{
+			$mime = mime_content_type($path);
+		}
+		// using eGW's own mime magic
+		// ToDo: rework mime_magic as all methods cound be static!
+		if (!$mime)
+		{
+			static $mime_magic;
+			if (is_null($mime_magic))
+			{
+				$mime_magic = mime_magic();
+			}
+			$mime = $mime_magic->filename2mime(parse_url($url,PHP_URL_PATH));
+		}
+		//error_log(__METHOD__."($path) mime=$mime");
+		return $mime;
 	}
 
 	/**
@@ -431,6 +500,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		error_log(__METHOD__."('$path',$flags) calling stat($url)");
 		return stat($url);
 	}
 	
@@ -498,8 +568,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					self::$wrappers[] = 'webdav';
 					break;
 				case 'oldvfs':
-					require_once(EGW_API_INC.'/class.oldvfs_stream_wrapper.inc.php');
-					self::$wrappers[] = 'oldvfs';
+				case 'sqlfs':
+					require_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
+					self::$wrappers[] = $scheme;
 					break;
 				case '':
 					return true;	// default file, always loaded
