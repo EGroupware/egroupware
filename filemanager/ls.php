@@ -215,6 +215,7 @@ function load_wrapper($url)
 			break;
 		case 'oldvfs':
 		case 'vfs':
+		case 'sqlfs':
 			if (!isset($GLOBALS['egw_info']))
 			{
 				$_GET['domain'] = parse_url($url,PHP_URL_HOST);
@@ -281,7 +282,7 @@ function do_stat($url,$long=false,$numeric=false)
 			if (!isset($uid)) $uid = 'root';
 			if ($stat['gid'])
 			{
-				$gid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name($stat['gid']) : posix_getgrgid($stat['gid']); 
+				$gid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name(-abs($stat['gid'])) : posix_getgrgid($stat['gid']); 
 				if (is_array($gid)) $gid = $gid['name'];
 			}
 			if (!isset($gid)) $gid = 'root';
