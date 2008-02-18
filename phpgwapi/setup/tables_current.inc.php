@@ -548,5 +548,28 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'egw_sqlfs' => array(
+			'fd' => array(
+				'fs_id' => array('type' => 'auto','nullable' => False),
+				'fs_dir' => array('type' => 'int','precision' => '4','nullable' => False),
+				'fs_name' => array('type' => 'varchar','precision' => '200','nullable' => False),
+				'fs_mode' => array('type' => 'int','precision' => '2','nullable' => False),
+				'fs_uid' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'fs_gid' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'fs_created' => array('type' => 'timestamp','precision' => '8','nullable' => False,'default' => 'current_timestamp'),
+				'fs_modified' => array('type' => 'timestamp','precision' => '8','nullable' => False),
+				'fs_mime' => array('type' => 'varchar','precision' => '64','nullable' => False),
+				'fs_size' => array('type' => 'int','precision' => '8','nullable' => False),
+				'fs_creator' => array('type' => 'int','precision' => '4','nullable' => False),
+				'fs_modifier' => array('type' => 'int','precision' => '4'),
+				'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),
+				'fs_comment' => array('type' => 'varchar','precision' => '255'),
+				'fs_content' => array('type' => 'blob')
+			),
+			'pk' => array('fs_id'),
+			'fk' => array(),
+			'ix' => array(array('fs_dir','fs_active','fs_name')),
+			'uc' => array()
 		)
 	);
