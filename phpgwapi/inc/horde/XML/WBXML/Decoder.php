@@ -245,7 +245,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
     function retrieveStringTable($input)
     {
         $size = XML_WBXML::MBUInt32ToInt($input, $this->_strpos);
-        $this->_stringTable = substr($input, $this->_strpos, $size);
+        $this->_stringTable = $this->_substr($input, $this->_strpos, $size);
         $this->_strpos += $size;
         // print "stringtable($size):" . $this->_stringTable ."\n";
     }
@@ -371,7 +371,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
             // Section 5.8.4.6
             $size = XML_WBXML::MBUInt32ToInt($input, $this->_strpos);
             // print "opaque of size $size\n"; // @todo remove debug
-            $b = substr($input, $this->_strpos, $size);
+            $b = $this->_substr($input, $this->_strpos, $size);
             #$b = mb_substr($input, $this->_strpos, $size, 'ISO-8859-1');
             $this->_strpos += $size;
 
@@ -542,7 +542,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
             case XML_WBXML_GLOBAL_TOKEN_OPAQUE:
                 // Section 5.8.4.6
                 $size = XML_WBXML::MBUInt32ToInt($input, $this->_strpos);
-                $b = substr($input, $this->_strpos, $this->_strpos + $size);
+                $b = $this->_substr($input, $this->_strpos, $this->_strpos + $size);
                 $this->_strpos += $size;
 
                 $value .= $b;
@@ -663,6 +663,22 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
 
         return $str;
     }
+
+    /**
+     * imitate substr()
+     * This circumvents a bug in the mbstring overloading in some distributions,
+     * where the mbstring.func_overload=0 INI-setting does not work, if mod_php
+     * has another value for that setting in another directory-context
+     */
+     function _substr($input,$start,$size)
+     {
+         $ret = "";
+         if (!$input) return $ret;
+         for ($i = $start; $i < $start+$size; $i++) {
+             $ret .= $input[$i];
+         }
+         return $ret;
+     }
 
 }
 
