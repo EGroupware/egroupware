@@ -265,7 +265,15 @@ class uicontacts extends bocontacts
 		{
 			$sel_options['action']['infolog'] = lang('View linked InfoLog entries');
 		}
-		$sel_options['action'][lang('Move to addressbook:')] = $this->get_addressbooks(EGW_ACL_ADD);
+		if (($move2addressbooks=$this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
+		{
+			foreach ($move2addressbooks as $m2a_id => $m2alabel)
+			{
+				$m2a['move_to_'.$m2a_id] = $m2alabel;
+			}
+			$sel_options['action'][lang('Move to addressbook:')] = $m2a;
+		}
+		
 
 		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
 		{
@@ -450,7 +458,6 @@ class uicontacts extends bocontacts
 	{
 		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
 		$success = $failed = 0;
-		
 		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
 		{
 			// get the whole selection
@@ -485,6 +492,10 @@ class uicontacts extends bocontacts
 		if ($org_contacts) $checked = array_unique($checked ? array_merge($checked,$org_contacts) : $org_contacts);
 		//_debug_array($checked); exit;
 		
+		if (substr($action,0,8) == 'move_to_')
+		{
+			$action = (int)substr($action,8);
+		}
 		if (substr($action,0,7) == 'to_list')
 		{
 			$to_list = (int)substr($action,8);
@@ -654,7 +665,6 @@ class uicontacts extends bocontacts
 						$Ok = $this->add2list($id,$to_list) !== false;
 					}
 					break;
-					
 				default:	// move to an other addressbook
 					if (!(int)$action || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
 					{
@@ -701,7 +711,14 @@ class uicontacts extends bocontacts
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
 		$do_email = $query['do_email'];
-		$old_state = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
+		// is this wanted???
+		if ($query['sitemgr_display']) 
+		{
+			$old_state = $GLOBALS['egw']->session->appsession($query['sitemgr_display'],'addressbook');
+		} else {
+			$old_state = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
+		}
+
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
 		{
 			if (is_array($query['search'])) unset($query['search']);
@@ -734,7 +751,12 @@ class uicontacts extends bocontacts
 			{
 				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one organisation
 			}
-			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$query);
+			if ($query['sitemgr_display']) 
+			{
+				$old_state = $GLOBALS['egw']->session->appsession($query['sitemgr_display'],'addressbook',$query);
+			} else {
+				$GLOBALS['egw']->session->appsession(($do_email ? 'email' : 'index'),'addressbook',$query);
+			}
 			// save the state of the index in the user prefs
 			$state = serialize(array(
 				'filter'     => $query['filter'],
@@ -744,6 +766,12 @@ class uicontacts extends bocontacts
 				'col_filter' => array('tid' => $query['col_filter']['tid']),
 				'org_view'   => $query['org_view'],
 			));
+			if ($state != $this->prefs[($query['sitemgr_display'] ? $query['sitemgr_display'].'_state' : 'index_state')])
+			{
+				$GLOBALS['egw']->preferences->add('addressbook',($query['sitemgr_display'] ? $query['sitemgr_display'].'_state' : 'index_state'),$state);
+				// save prefs, but do NOT invalid the cache (unnecessary)
+				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+			}
 			if ($state != $this->prefs[$do_email ? 'email_state' : 'index_state'])
 			{
 				$GLOBALS['egw']->preferences->add('addressbook',$do_email ? 'email_state' : 'index_state',$state);
@@ -803,8 +831,12 @@ class uicontacts extends bocontacts
 		}
 		else	// contacts view
 		{
-			$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
-			
+			if ($query['sitemgr_display'])
+			{
+				$query['template'] = $query['sitemgr_display'].'.rows';
+			} else {
+				$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
+			}
 			if ($query['org_view'])	// view the contacts of one organisation only
 			{
 				foreach(explode('|||',$query['org_view']) as $part)
