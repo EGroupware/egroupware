@@ -130,7 +130,7 @@ class config
 
 		if (isset(self::$configs[$app]))
 		{
-			self::$configs[$app] = $value;
+			self::$configs[$app][$name] = $value;
 		}
 		if(is_array($value))
 		{
