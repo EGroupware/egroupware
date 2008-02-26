@@ -804,16 +804,24 @@ class soinfolog 				// DB-Layer
 
 				$ids[$info['info_id']] = $info;
 			}
-			if ($ids && $query['custom_fields'])
+			// prepare selected cols array
+			$sca=explode(',',$query['selectcols']);
+			if ($ids)
 			{
 				$this->db->select($this->extra_table,'*',array('info_id'=>array_keys($ids)),__LINE__,__FILE__);
 				while ($row = $this->db->row(true))
 				{
-					if ((isset($row['info_extra_value'])&&strlen($row['info_extra_value'])>0) && 
-						(stripos($query['selectcols'],'#'.$row['info_extra_name'])!==FALSE || !isset($query['selectcols']) || 
-						(stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ))
+					if ((isset($row['info_extra_value'])&&strlen($row['info_extra_value'])>0))
 					{
-						$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+						if ((in_array('#'.$row['info_extra_name'],$sca) || !isset($query['selectcols']) ||
+							(stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ))
+						{
+							$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+						} else {
+							if (!$query['custom_fields']) {
+								$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+							}
+						}
 					} else {
 						unset($ids[$row['info_id']]['#'.$row['info_extra_name']]);
 					}
