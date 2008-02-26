@@ -64,6 +64,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	private $opened_dir;
 	/**
+	 * URL of the opened dir, used to build the complete URL of files in the dir
+	 *
+	 * @var string
+	 */
+	private $opened_dir_url;
+	/**
+	 * Flag if opened dir is writable, in which case we return un-readable entries too
+	 *
+	 * @var boolean
+	 */
+	private $opened_dir_writable;
+	/**
 	 * Extra dirs from our fstab in the current opened dir
 	 *
 	 * @var array
@@ -357,28 +369,93 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * Allow to call methods of the underlying stream wrapper: touch, chmod, chgrp, chown, ...
+	 * 
+	 * We cant use a magic __call() method, as it does not work for static methods!
 	 *
-	 * @param string $path
-	 * @param int $time=null modification time (unix timestamp), default null = current time
-	 * @param int $atime=null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 * @param string $name
+	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
 	 */
-	static function touch($path,$time=null,$atime=null)
+	static private function _call_on_backend($name,$params)
 	{
-		if (!($url = self::resolve_url($path)))
+		$path = $params[0];
+		
+		if (!($url = self::resolve_url($params[0])))
 		{
 			return false;
 		}
 		if (($scheme = parse_url($url,PHP_URL_SCHEME)))
 		{
-			if (!class_exists($class = $scheme.'_stream_wrapper') || !method_exists($class,'touch'))
+			if (!class_exists($class = $scheme.'_stream_wrapper') || !method_exists($class,$name))
 			{
-				trigger_error("Can't touch for scheme $scheme!\n",E_USER_WARNING);
+				trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
 				return false;
 			}
-			return call_user_func(array($scheme.'_stream_wrapper','touch'),$url,$time);
+			$params[0] = $url;
+
+			return call_user_func_array(array($scheme.'_stream_wrapper',$name),$params);
 		}
-		return touch($url,$time);
+		// call the filesystem specific function
+		if (!function_exists($name))
+		{
+			return false;
+		}
+		return $name($url,$time);
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * @param string $path
+	 * @param int $time=null modification time (unix timestamp), default null = current time
+	 * @param int $atime=null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 * @return boolean true on success, false otherwise
+	 */
+	static function touch($path,$time=null,$atime=null)
+	{
+		return self::_call_on_backend('touch',array($path,$time,$atime));
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * Requires owner or root rights!
+	 *
+	 * @param string $path
+	 * @param string $mode mode string see egw_vfs::mode2int
+	 * @return boolean true on success, false otherwise
+	 */
+	static function chmod($path,$mode)
+	{
+		return self::_call_on_backend('chmod',array($path,$mode));
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * 
+	 * Requires root rights!
+	 *
+	 * @param string $path
+	 * @param int $owner numeric user id
+	 * @return boolean true on success, false otherwise
+	 */
+	static function chown($path,$owner)
+	{
+		return self::_call_on_backend('chown',array($path,$owner));
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * 
+	 * Requires owner or root rights!
+	 *
+	 * @param string $path
+	 * @param int $group numeric group id
+	 * @return boolean true on success, false otherwise
+	 */
+	static function chgrp($path,$group)
+	{
+		return self::_call_on_backend('chgrp',array($path,$group));
 	}
 
 	/**
@@ -434,7 +511,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		//error_log(__METHOD__."($path) mime=$mime");
 		return $mime;
 	}
-
+	
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir(). 
 	 * 
@@ -446,16 +523,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_dir = $this->extra_dirs = null;
 		$this->extra_dir_ptr = 0;
 		
-		if (!($url = self::resolve_url($path)))
+		if (!($this->opened_dir_url = self::resolve_url($path)))
 		{
 			return false;
 		}
-		if (!($this->opened_dir = opendir($url)))
+		if (!($this->opened_dir = opendir($this->opened_dir_url)))
 		{
 			return false;
 		}
+		$this->opened_dir_writable = ($stat = @stat($this->opened_dir_url)) && egw_vfs::check_access($stat,egw_vfs::WRITABLE);
+
 		// check our fstab if we need to add some of the mountpoints
-		$basepath = parse_url($url,PHP_URL_PATH);
+		$basepath = parse_url($this->opened_dir_url,PHP_URL_PATH);
 		foreach(self::$fstab as $mounted => $nul)
 		{
 			if (dirname($mounted) == $basepath)
@@ -500,14 +579,17 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		error_log(__METHOD__."('$path',$flags) calling stat($url)");
-		return stat($url);
+		//error_log(__METHOD__."('$path',$flags) calling stat($url)");
+		return @stat($url);	// suppressed the stat failed warnings
 	}
 	
 	/**
 	 * This method is called in response to readdir().
 	 * 
 	 * It should return a string representing the next filename in the location opened by dir_opendir().
+	 * 
+	 * Unless other filesystem, we only return files readable by the user, if the dir is not writable for him.
+	 * This is done to hide files and dirs not accessible by the user (eg. other peoples home-dirs in /home).
 	 * 
 	 * @return string
 	 */
@@ -517,7 +599,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return $this->extra_dirs[$this->extra_dir_ptr++];
 		}
-		return readdir($this->opened_dir);
+		// only return children readable by the user, if dir is not writable
+		do {
+			if (($file = readdir($this->opened_dir)) !== false && !$this->opened_dir_writable)
+			{
+				$stat = stat($this->opened_dir_url.'/'.$file);
+			}
+			//echo __METHOD__."() opened_dir_writable=$this->opened_dir_writable, file=$file, readable=".(int)egw_vfs::check_access($stat,egw_vfs::READABLE).", loop=".
+			//	(int)($file !== false && $stat && !egw_vfs::check_access($stat,egw_vfs::READABLE))."\n";
+		}
+		while($file !== false && $stat && !egw_vfs::check_access($stat,egw_vfs::READABLE));
+		
+		return $file;
 	}
 
 	/**

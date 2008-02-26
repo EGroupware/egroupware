@@ -13,6 +13,8 @@
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
+error_reporting(error_reporting() & ~E_NOTICE);
+
 if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling ls as web-page
 {
 	die('<h1>'.basename(__FILE__).' must NOT be called as web-page --> exiting !!!</h1>');
@@ -30,7 +32,7 @@ function user_pass_from_argv(&$account)
 	//print_r($account);
 	if (!($sessionid = $GLOBALS['egw']->session->create($account)))
 	{
-		echo "Wrong admin-account or -password !!!\n\n";
+		echo "Wrong user-account or -password !!!\n\n";
 		usage('',1);
 	}
 	return $sessionid;
@@ -45,19 +47,26 @@ function user_pass_from_argv(&$account)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename(__FILE__);
-	echo "Usage:\t$cmd URL [URL2 ...]\n";
+	echo "Usage:\t$cmd [-r|--recursive] URL [URL2 ...]\n";
 	echo "\t$cmd --cat URL [URL2 ...]\n";
-	echo "\t$cmd --cp URL-from URL-to\n";
-	echo "\t$cmd --cp URL-from [URL-from2 ...] URL-to-directory\n";
-	echo "\t$cmd --rm URL [URL2 ...]\n";
+	echo "\t$cmd --cp [-r|--recursive] [-p|--perms] URL-from URL-to\n";
+	echo "\t$cmd --cp [-r|--recursive] [-p|--perms] URL-from [URL-from2 ...] URL-to-directory\n";
+	echo "\t$cmd --rm [-r|--recursive] URL [URL2 ...]\n";
 	echo "\t$cmd --mkdir [-p|--parents] URL [URL2 ...]\n";
 	echo "\t$cmd --rmdir URL [URL2 ...]\n";
-	echo "\t$cmd --touch [-d|--date time] URL [URL2 ...]\n";
-	echo "URL: oldvfs://user:password@domain/home/user/file, /dir/file, ...\n";
+	echo "\t$cmd --touch [-r|--recursive] [-d|--date time] URL [URL2 ...]\n";
+	echo "\t$cmd --chmod [-r|--recursive] mode=[ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
+	echo "\t$cmd --chown [-r|--recursive] user URL [URL2 ...]\n";
+	echo "\t$cmd --chgrp [-r|--recursive] group URL [URL2 ...]\n";
+	echo "\t$cmd --find URL [URL2 ...] [options to come]\n";
+	
+	echo "\nURL: {vfs|sqlfs|oldvfs}://user:password@domain/home/user/file, /dir/file, ...\n";
+	
+	echo "\nUse root_{header-admin|config-user} as user and according password for root access (no user specific access control and chown).\n\n";
 	
 	exit;	
 }
-$long = $numeric = $recursive = false;
+$long = $numeric = $recursive = $perms = false;
 $argv = $_SERVER['argv'];
 $cmd = basename(array_shift($argv),'.php');
 
@@ -84,10 +93,20 @@ foreach($argv as $key => $option)
 			continue 2;		// switch is counting too!
 
 		case '-r': case '--recursive':
-		case '-p': case '--parents':
 			$recursive = true;
 			continue 2;		// switch is counting too!
 			
+		case '-p': case '--parents': case '--perms':
+			if ($cmd == 'cp')
+			{
+				$perms = true;
+			}
+			else
+			{
+				$recursive = true;
+			}
+			continue 2;		// switch is counting too!
+
 		case '-d': case '--date':
 			$time = strtotime($argv[$key+1]);
 			unset($argv[$key+1]);
@@ -101,6 +120,10 @@ foreach($argv as $key => $option)
 		case '--mkdir':	// make directories
 		case '--rename':// rename
 		case '--touch':	// touch
+		case '--chmod':	// chmod
+		case '--chown':	// chown (requires root)
+		case '--chgrp':	// chgrp
+		case '--find':
 			$cmd = substr($option,2);
 			continue 2;		// switch is counting too!
 	}
@@ -110,8 +133,12 @@ $argc = count($argv);
 
 switch($cmd)
 {
+	case 'find':
+		do_find($argv);
+		break;
+
 	case 'cp':
-		do_cp($argv);
+		do_cp($argv,$recursive,$perms);
 		break;
 		
 	case 'rename':
@@ -122,15 +149,26 @@ switch($cmd)
 		break;
 		
 	default:
-		while($url = array_shift($argv))
+		while($argv)
 		{
+			$url = array_shift($argv);
+
 			load_wrapper($url);
 			//echo "$cmd $url (long=".(int)$long.", numeric=".(int)$numeric.")\n";
 			
 			switch($cmd)
 			{
 				case 'rm':
-					unlink($url);
+					if ($recursive && class_exists('egw_vfs'))
+					{
+						array_unshift($argv,$url);
+						egw_vfs::remove($argv);
+						$argv = array();
+					}
+					else
+					{
+						unlink($url);
+					}
 					break;
 
 				case 'rmdir':
@@ -142,28 +180,106 @@ switch($cmd)
 					break;
 					
 				case 'touch':
+				case 'chmod':
+				case 'chown':
+				case 'chgrp':
+					switch($cmd)
+					{
+						case 'touch': 
+							$params = array($url,$time); 
+							break;
+						case 'chmod':
+							if (!isset($mode))
+							{
+								$mode = $url;	// first param is mode
+								$url = array_shift($argv);
+							}
+							if (parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// cant use stat or egw_vfs::mode2int otherwise!
+
+							if (strpos($mode,'+') !== false || strpos($mode,'-') !== false)
+							{
+								$stat = stat($url);
+								$set = $stat['mode'];
+							}
+							else
+							{
+								$set = 0;
+							}
+							if (!class_exists('egw_vfs'))
+							{
+								die("chmod only implemented for eGW streams!");	// dont want to repeat the code here
+							}
+							$set = egw_vfs::mode2int($mode,$set);
+							$params = array($url,$set);
+							break;
+						case 'chown':
+						case 'chgrp':
+							$type = $cmd == 'chgrp' ? 'group' : 'user';
+							if (!isset($owner))
+							{
+								$owner = $url;	// first param is owner/group
+								$url = array_shift($argv);
+								if (parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// we need the header loaded
+								if ($owner == 'root')
+								{
+									$owner = 0;
+								}
+								elseif (!is_numeric($owner))
+								{
+									if (!is_object($GLOBALS['egw']))
+									{
+										die("only numeric user/group-id's allowed for non eGW streams!");
+									}
+									if (!($owner = $GLOBALS['egw']->accounts->name2id($owner_was=$owner,'account_lid',$type[0])) || 
+										($owner < 0) != ($cmd == 'chgrp'))
+									{
+										die("Unknown $type '$owner_was'!");
+									}
+								}
+								elseif($owner && is_object($GLOBALS['egw']) && (!$GLOBALS['egw']->accounts->id2name($owner) ||
+										($owner < 0) != ($cmd == 'chgrp')))
+								{
+									die("Unknown $type '$owner_was'!");
+								}
+							}
+							$params = array($url,$owner);
+							break;
+					}
 					if (($scheme = parse_url($url,PHP_URL_SCHEME)))
 					{
 						load_wrapper($url);
 						if (class_exists($class = $scheme.'_stream_wrapper') && method_exists($class,'touch'))
 						{
-							call_user_func(array($scheme.'_stream_wrapper','touch'),$url,$time);
+							$cmd = array($scheme.'_stream_wrapper',$cmd);
 						}
 						else
 						{
-							die("Can't touch for scheme $scheme!\n");
+							die("Can't $cmd for scheme $scheme!\n");
 						}
 					}
-					else
+					if ($recursive && class_exists('egw_vfs'))
 					{
-						touch($url,$time);
+						array_unshift($argv,$url);
+						$params = array($argv,null,$cmd,$params[1]);
+						$cmd = array('egw_vfs','find');
+						$argv = array();	// we processed all url's
 					}
+					//echo "calling cmd=".print_r($cmd,true).", params=".print_r($params,true)."\n";
+					call_user_func_array($cmd,$params);
 					break;
 
 				case 'cat':
 				case 'ls':
 				default:
-					if (is_dir($url) && ($dir = opendir($url)))
+					// recursive ls atm only for vfs://
+					if ($cmd != 'cat' && $recursive && class_exists('egw_vfs'))
+					{
+						load_wrapper($url);
+						array_unshift($argv,$url);
+						egw_vfs::find($argv,array('dirs_last'=>true),'do_stat',array($long,$numeric,true));
+						$argv = array();
+					}
+					elseif (is_dir($url) && ($dir = opendir($url)))
 					{
 						if ($argc)
 						{
@@ -235,7 +351,29 @@ function load_wrapper($url)
 					)
 				);
 				
-				include('../header.inc.php');
+				if (substr($GLOBALS['egw_login_data']['login'],0,5) != 'root_')
+				{
+					include('../header.inc.php');
+				}
+				else
+				{
+					$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
+					include('../header.inc.php');
+				
+					if ($GLOBALS['egw_login_data']['login'] == 'root_'.$GLOBALS['egw_info']['server']['header_admin_user'] &&
+						_check_pw($GLOBALS['egw_info']['server']['header_admin_password'],$GLOBALS['egw_login_data']['passwd']) ||
+						$GLOBALS['egw_login_data']['login'] == 'root_'.$GLOBALS['egw_domain'][$_GET['domain']]['config_user'] &&
+						_check_pw($GLOBALS['egw_domain'][$_GET['domain']]['config_passwd'],$GLOBALS['egw_login_data']['passwd']))
+					{
+						echo "\nRoot access granted!\n";
+						egw_vfs::$is_root = true;
+					}
+					else
+					{
+						die("Unknown user or password!\n");
+					}
+					set_exception_handler('cli_exception_handler');	// otherwise we get html!
+				}
 			}
 			require_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
 			break;
@@ -251,22 +389,50 @@ function load_wrapper($url)
 }
 
 /**
+ * Check password against a md5 hash or cleartext password
+ *
+ * @param string $hash_or_cleartext
+ * @param string $pw
+ * @return boolean
+ */
+function _check_pw($hash_or_cleartext,$pw)
+{
+	//echo "_check_pw($hash_or_cleartext,$pw) md5=".md5($pw)."\n";
+	if (preg_match('/^[0-9a-f]{32}$/',$hash_or_cleartext))
+	{
+		return $hash_or_cleartext == md5($pw);
+	}
+	return $hash_or_cleartext == $pw;
+}
+
+/**
  * Give the stats for one file
  *
  * @param string $url
  * @param boolean $long=false true=long listing with owner,group,size,perms, default false only filename
  * @param boolean $numeric=false true=give numeric uid&gid, else resolve the id to a name
  */
-function do_stat($url,$long=false,$numeric=false)
+function do_stat($url,$long=false,$numeric=false,$full_path=false)
 {
-	//echo "do_stat($url,$long,$numeric)\n";
-	$bname = basename(parse_url($url,PHP_URL_PATH));
-	
+	//echo "do_stat($url,$long,$numeric,$full_path)\n";
+	$bname = parse_url($url,PHP_URL_PATH);
+
+	if (!$full_path)
+	{
+		$bname = basename($bname);
+	}
 	if ($long && ($stat = stat($url)))
 	{
-		//print_r($stat);
+		//echo $url; print_r($stat);
 		
-		$perms = verbosePerms($stat['mode']);
+		if (class_exists('egw_vfs'))
+		{
+			$perms = egw_vfs::int2mode($stat['mode']);
+		}
+		else
+		{
+			$perms = int2mode($stat['mode']);
+		}
 		if ($numeric)
 		{
 			$uid = $stat['uid'];
@@ -276,14 +442,18 @@ function do_stat($url,$long=false,$numeric=false)
 		{
 			if ($stat['uid'])
 			{
-				$uid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name($stat['uid']) : posix_getpwuid($stat['uid']); 
+				$uid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name($stat['uid']) : 
+					(function_exists('posix_getpwuid') ? posix_getpwuid($stat['uid']) : $stat['uid']); 
 				if (is_array($uid)) $uid = $uid['name'];
+				if (empty($uid)) $uid = $stat['uid'];
 			}
 			if (!isset($uid)) $uid = 'root';
 			if ($stat['gid'])
 			{
-				$gid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name(-abs($stat['gid'])) : posix_getgrgid($stat['gid']); 
+				$gid = isset($GLOBALS['egw']) ? $GLOBALS['egw']->accounts->id2name(-abs($stat['gid'])) : 
+					(function_exists('posix_getgrgid') ? posix_getgrgid($stat['gid']) : $stat['gid']); 
 				if (is_array($gid)) $gid = $gid['name'];
+				if (empty($gid)) $gid = $stat['gid'];
 			}
 			if (!isset($gid)) $gid = 'root';
 		}
@@ -306,33 +476,147 @@ function hsize($size)
 	return sprintf('%3.1lfM',(float)$size/(1024*1024));
 }
 
-function verbosePerms( $in_Perms )
+
+function do_cp($argv,$recursive=false,$perms=false)
 {
-	if($in_Perms & 0x1000)     // FIFO pipe
+	$to = array_pop($argv);
+	load_wrapper($to);
+
+	$to_exists = file_exists($to);
+
+	if (count($argv) > 1 && $to_exists && !is_dir($to))
+	{
+		usage(null,4);
+	}
+	foreach($argv as $from)
+	{
+		if (is_dir($from) && (!file_exists($to) || is_dir($to)) && $recursive && class_exists('egw_vfs'))
+		{
+			foreach(egw_vfs::find($from) as $f)
+			{
+				$t = $to.substr($f,strlen($from));
+				if (is_dir($f))
+				{
+					++$anz_dirs;
+					mkdir($t);
+				}
+				else
+				{
+					++$anz_files;
+					_cp($f,$t);
+				}
+				if ($perms) _cp_perms($f,$t);
+			}
+			echo ($anz_dirs?"$anz_dirs dir(s) created and ":'')."$anz_files file(s) copied.\n";
+		}
+		else
+		{
+			_cp($from,$to,true);
+			if ($perms) _cp_perms($from,$to);
+		}
+	}
+}
+
+function _cp($from,$to,$verbose=false,$perms=false)
+{
+	load_wrapper($from);
+
+	if (is_dir($to) || !file_exists($to) && is_dir($from) && $mkdir)
+	{
+		$path = parse_url($from,PHP_URL_PATH);
+		if (is_dir($to)) $to .= '/'.basename($path);
+	}
+	if (!($from_fp = fopen($from,'r')))
+	{
+		die("File $from not found!\n");
+	}
+	if (!($to_fp = fopen($to,'w')))
+	{
+		die("Can't open $to for writing!\n");
+	}
+	$count = stream_copy_to_stream($from_fp,$to_fp);
+	
+	if ($verbose) echo hsize($count)." bytes written to $to\n";
+	
+	fclose($from_fp);
+	
+	if (!fclose($to_fp))
+	{
+		die("Error closing $to!\n");
+	}
+}
+
+
+function _cp_perms($from,$to)
+{
+	if (($from_stat = stat($from)) && ($to_stat = stat($to)))
+	{
+		foreach(array(
+			'mode' => 'chmod',
+			'uid'  => 'chown',
+			'gid'  => 'chgrp',
+		) as $perm => $cmd)
+		{
+			if ($from_stat[$perm] != $to_stat[$perm])
+			{
+				//echo "egw_vfs::$cmd($to,{$from_stat[$perm]}\n";
+				call_user_func(array('egw_vfs',$cmd),$to,$from_stat[$perm]);
+			}
+		}
+	}
+}
+
+function do_find($bases)
+{
+	foreach($bases as $url)
+	{
+		load_wrapper($url);
+	}
+	foreach(egw_vfs::find($bases) as $path)
+	{
+		echo "$path\n";
+	}
+}
+
+function cli_exception_handler(Exception $e)
+{
+	echo $e->getMessage()."\n";
+	exit($e->getCode());
+}
+
+/**
+ * Convert a numerical mode to a symbolic mode-string
+ *
+ * @param int $mode
+ * @return string
+ */
+function int2mode( $mode )
+{
+	if($mode & 0x1000)     // FIFO pipe
 	{
 		$sP = 'p';
 	}
-	elseif($in_Perms & 0x2000) // Character special
+	elseif($mode & 0x2000) // Character special
 	{
 		$sP = 'c';
 	}
-	elseif($in_Perms & 0x4000) // Directory
+	elseif($mode & 0x4000) // Directory
 	{
 		$sP = 'd';
 	}
-	elseif($in_Perms & 0x6000) // Block special
+	elseif($mode & 0x6000) // Block special
 	{
 		$sP = 'b';
 	}
-	elseif($in_Perms & 0x8000) // Regular
+	elseif($mode & 0x8000) // Regular
 	{
 		$sP = '-';
 	}
-	elseif($in_Perms & 0xA000) // Symbolic Link
+	elseif($mode & 0xA000) // Symbolic Link
 	{
 		$sP = 'l';
 	}
-	elseif($in_Perms & 0xC000) // Socket
+	elseif($mode & 0xC000) // Socket
 	{
 		$sP = 's';
 	}
@@ -342,66 +626,22 @@ function verbosePerms( $in_Perms )
 	}
 
 	// owner
-	$sP .= (($in_Perms & 0x0100) ? 'r' : '-') .
-	(($in_Perms & 0x0080) ? 'w' : '-') .
-	(($in_Perms & 0x0040) ? (($in_Perms & 0x0800) ? 's' : 'x' ) :
-	(($in_Perms & 0x0800) ? 'S' : '-'));
+	$sP .= (($mode & 0x0100) ? 'r' : '-') .
+	(($mode & 0x0080) ? 'w' : '-') .
+	(($mode & 0x0040) ? (($mode & 0x0800) ? 's' : 'x' ) :
+	(($mode & 0x0800) ? 'S' : '-'));
 
 	// group
-	$sP .= (($in_Perms & 0x0020) ? 'r' : '-') .
-	(($in_Perms & 0x0010) ? 'w' : '-') .
-	(($in_Perms & 0x0008) ? (($in_Perms & 0x0400) ? 's' : 'x' ) :
-	(($in_Perms & 0x0400) ? 'S' : '-'));
+	$sP .= (($mode & 0x0020) ? 'r' : '-') .
+	(($mode & 0x0010) ? 'w' : '-') .
+	(($mode & 0x0008) ? (($mode & 0x0400) ? 's' : 'x' ) :
+	(($mode & 0x0400) ? 'S' : '-'));
 
 	// world
-	$sP .= (($in_Perms & 0x0004) ? 'r' : '-') .
-	(($in_Perms & 0x0002) ? 'w' : '-') .
-	(($in_Perms & 0x0001) ? (($in_Perms & 0x0200) ? 't' : 'x' ) :
-	(($in_Perms & 0x0200) ? 'T' : '-'));
+	$sP .= (($mode & 0x0004) ? 'r' : '-') .
+	(($mode & 0x0002) ? 'w' : '-') .
+	(($mode & 0x0001) ? (($mode & 0x0200) ? 't' : 'x' ) :
+	(($mode & 0x0200) ? 'T' : '-'));
+
 	return $sP;
-}
-
-function do_cp($argv)
-{
-	$to = array_pop($argv);
-	load_wrapper($to);
-	
-	if (count($argv) > 1 && !is_dir($to))
-	{
-		usage(null,4);
-	}
-	if (count($argv) > 1)
-	{
-		foreach($argv as $from)
-		{
-			do_cp(array($from,$to));
-		}
-		return;
-	}
-	$from = array_shift($argv);
-	load_wrapper($from);
-
-	if (!($from_fp = fopen($from,'r')))
-	{
-		die("File $from not found!\n");
-	}
-	if (is_dir($to))
-	{
-		$path = parse_url($from,PHP_URL_PATH);
-		$to .= '/'.basename($path);
-	}
-	if (!($to_fp = fopen($to,'w')))
-	{
-		die("Can't open $to for writing!\n");
-	}
-	$count = stream_copy_to_stream($from_fp,$to_fp);
-	
-	echo hsize($count)." bytes written to $to\n";
-	
-	fclose($from_fp);
-	
-	if (!fclose($to_fp))
-	{
-		die("Error closing $to!\n");
-	}
 }

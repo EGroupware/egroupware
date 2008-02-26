@@ -32,10 +32,6 @@
 class sqlfs_stream_wrapper implements iface_stream_wrapper 
 {
 	/**
-	 * If this class should do the operations direct in the filesystem, instead of going through the vfs
-	 */
-	const USE_FILESYSTEM_DIRECT = true;
-	/**
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */
 	const DIR_MIME_TYPE = 'httpd/unix-directory';
@@ -193,12 +189,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$values = array(
 				'fs_name' => basename($path),
 				'fs_dir'  => $dir_stat['ino'],
+				// we use the mode of the dir, so files in group dirs stay accessible by all members
 				'fs_mode' => $dir_stat['mode'] & 0666,
-				'fs_uid'  => $dir_stat['uid'],
+				// for the uid we use the uid of the dir if not 0=root or the current user otherwise
+				'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : egw_vfs::$user,
+				// we allways use the group of the dir
 				'fs_gid'  => $dir_stat['gid'],
 				'fs_created'  => self::_pdo_timestamp(time()),
 				'fs_modified' => self::_pdo_timestamp(time()),
-				'fs_creator'  => $GLOBALS['egw_info']['user']['account_id'],
+				'fs_creator'  => egw_vfs::$user,
 			);
 			foreach($values as $name => &$val)
 			{
@@ -529,8 +528,19 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 		
 		$path = parse_url($url,PHP_URL_PATH);
+		
+		if (self::url_stat($path,STREAM_URL_STAT_QUIET))
+		{
+			self::_remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) already exist!");
+			if (!($options & STREAM_URL_STAT_QUIET))
+			{
+				trigger_error(__METHOD__."('$url',$mode,$options) already exist!",E_USER_WARNING);
+			}
+			return false;
+		}
 
-		$parent = self::url_stat(dirname($path),0);
+		$parent = self::url_stat(dirname($path),STREAM_URL_STAT_QUIET);
 
 		// check if we should also create all non-existing path components and our parent does not exist, 
 		// if yes call ourself recursive with the parent directory
@@ -545,7 +555,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (!$parent || !egw_vfs::check_access($parent,egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url);
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
+			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) permission denied!");
 			if (!($options & STREAM_URL_STAT_QUIET))
 			{
 				trigger_error(__METHOD__."('$url',$mode,$options) permission denied!",E_USER_WARNING);
@@ -564,7 +574,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			':fs_mime' => self::DIR_MIME_TYPE,
 			':fs_created'  => self::_pdo_timestamp(time()),
 			':fs_modified' => self::_pdo_timestamp(time()),
-			':fs_creator'  => $GLOBALS['egw_info']['user']['account_id'],
+			':fs_creator'  => egw_vfs::$user,
 		))) && $operation == self::STORE2FS)
 		{
 			mkdir(self::_fs_path($path));
@@ -634,9 +644,20 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		
 		$path = parse_url($url,PHP_URL_PATH);
 		
-		if (!($stat = self::url_stat($path,0)))
+		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)))
 		{
-			return false;
+			// file does not exist --> create an empty one
+			if (($f = fopen(self::SCHEME.'://default'.$path,'w')) && fclose($f))
+			{
+				if (!is_null($time))
+				{
+					$stat = self::url_stat($path,0);
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_modified=:fs_modified WHERE fs_id=:fs_id');
 
@@ -645,10 +666,131 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			':fs_id' => $stat['ino'],
 		));
 	}
+
+	/**
+	 * Chown command, not yet a stream-wrapper function, but necessary
+	 *
+	 * @param string $url
+	 * @param int $owner
+	 * @return boolean
+	 */
+	static function chown($url,$owner)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
+		
+		$path = parse_url($url,PHP_URL_PATH);
+
+		if (!($stat = self::url_stat($path,0)))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no such file or directory!");
+			trigger_error("No such file or directory $url !",E_USER_WARNING);
+			return false;
+		}
+		if (!egw_vfs::$is_root)
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) only root can do that!");
+			trigger_error("Only root can do that!",E_USER_WARNING);
+			return false;
+		}
+		if ($owner < 0 || !$GLOBALS['egw']->accounts->id2name($owner))	// not a user
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) unknown (numeric) user id!");
+			trigger_error("Unknown (numeric) user id!",E_USER_WARNING);
+			return false;
+		}
+		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_uid=:fs_uid WHERE fs_id=:fs_id');
+
+		return $stmt->execute(array(
+			':fs_uid' => (int) $owner,
+			':fs_id' => $stat['ino'],
+		));
+	}
+
+	/**
+	 * Chgrp command, not yet a stream-wrapper function, but necessary
+	 *
+	 * @param string $url
+	 * @param int $group
+	 * @return boolean
+	 */
+	static function chgrp($url,$owner)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
+		
+		$path = parse_url($url,PHP_URL_PATH);
+
+		if (!($stat = self::url_stat($path,0)))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no such file or directory!");
+			trigger_error("No such file or directory $url !",E_USER_WARNING);
+			return false;
+		}
+		if (!egw_vfs::$is_root && $stat['uid'] != egw_vfs::$user)
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) only owner or root can do that!");
+			trigger_error("Only owner or root can do that!",E_USER_WARNING);
+			return false;
+		}
+		if ($owner < 0) $owner = -$owner;	// sqlfs uses a positiv group id's!
+
+		if ($owner && !$GLOBALS['egw']->accounts->id2name(-$owner))	// not a group
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) unknown (numeric) group id!");
+			trigger_error("Unknown (numeric) group id!",E_USER_WARNING);
+			return false;
+		}
+		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_gid=:fs_gid WHERE fs_id=:fs_id');
+
+		return $stmt->execute(array(
+			':fs_gid' => $owner,
+			':fs_id' => $stat['ino'],
+		));
+	}
 	
+	/**
+	 * Chmod command, not yet a stream-wrapper function, but necessary
+	 *
+	 * @param string $url
+	 * @param int $mode
+	 * @return boolean
+	 */
+	static function chmod($url,$mode)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
+		
+		$path = parse_url($url,PHP_URL_PATH);
+
+		if (!($stat = self::url_stat($path,0)))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no such file or directory!");
+			trigger_error("No such file or directory $url !",E_USER_WARNING);
+			return false;
+		}
+		if (!egw_vfs::$is_root && $stat['uid'] != egw_vfs::$user)
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) only owner or root can do that!");
+			trigger_error("Only owner or root can do that!",E_USER_WARNING);
+			return false;
+		}
+		if (!is_numeric($mode))	// not a mode
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no (numeric) mode!");
+			trigger_error("No (numeric) mode!",E_USER_WARNING);
+			return false;
+		}
+		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_mode=:fs_mode WHERE fs_id=:fs_id');
+
+		return $stmt->execute(array(
+			':fs_mode' => ((int) $mode) & 0777,		// we dont store the file and dir bits, give int overflow!
+			':fs_id' => $stat['ino'],
+		));
+	}
+
+
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir(). 
 	 * 
+	 * @ToDo check all parent dirs for readable (fastest would be with sql query) !!!
 	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
 	 * @param $options
 	 * @return booelan 
@@ -663,7 +805,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		
 		if (!($stat = self::url_stat($url,0)) || 		// dir not found
 			$stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
-			!egw_vfs::check_access($stat,egw_vfs::EXECUTABLE))	// no access
+			!egw_vfs::check_access($stat,egw_vfs::EXECUTABLE|egw_vfs::READABLE))	// no access
 		{
 			self::_remove_password($url);
 			$msg = $stat['mime'] != self::DIR_MIME_TYPE ? "$url is no directory" : 'permission denied';
@@ -672,7 +814,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		self::$stat_cache = $this->opened_dir = array();
-		$stmt = self::$pdo->prepare('SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_dir=?');
+		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_dir=?';
+		// only return readable files, if dir is not writable by user
+		if (!egw_vfs::check_access($stat,egw_vfs::WRITABLE))
+		{
+			$query .= ' AND '.self::_sql_readable();
+		}
+		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		if ($stmt->execute(array($stat['ino'])))
 		{
@@ -741,11 +889,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			if ($n == 0)
 			{
-				$query = 1;	// / always has fs_id == 1, no need to query it
+				$query = (int) ($path != '/');	// / always has fs_id == 1, no need to query it ($path=='/' needs fs_dir=0!)
 			}
 			elseif ($n < count($parts)-1)
 			{
 				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name='.self::$pdo->quote($name);
+
+				// if we are not root, we need to make sure the user has the right to tranverse all partent directories (read-rights)
+				if (!egw_vfs::$is_root)
+				{
+					$query .= ' AND '.$sql_read_acl;
+				}
 			}
 			else
 			{
@@ -757,12 +911,33 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
 		{
 			self::_remove_password($url);
-			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$flags) file or directory not found!");
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags) file or directory not found!");
 			return false;
 		}
 		self::$stat_cache[$path] = $info;
 
 		return self::_vfsinfo2stat($info);
+	}
+	
+	/**
+	 * Return readable check as sql (to be AND'ed into the query), only use if !egw_vfs::$is_root
+	 *
+	 * @return string
+	 */
+	private function _sql_readable()
+	{
+		static $sql_read_acl;
+
+		if (is_null($sql_read_acl))
+		{
+			foreach($GLOBALS['egw']->accounts->memberships(egw_vfs::$user,true) as $gid)
+			{
+				$memberships[] = abs($gid);	// sqlfs stores the gid's positiv
+			}
+			$sql_read_acl = '(fs_mode & 04 OR fs_mode & 0400 AND fs_uid='.(int)egw_vfs::$user.
+				' OR fs_mode & 040 AND fs_gid IN('.implode(',',$memberships).'))';
+		}
+		return $sql_read_acl;
 	}
 	
 	/**

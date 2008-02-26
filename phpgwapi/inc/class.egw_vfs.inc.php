@@ -59,9 +59,31 @@
  */
 class egw_vfs extends vfs_stream_wrapper
 {
-	const EXECUTABLE = 4;
-	const READABLE = 2;
-	const WRITABLE = 1;
+	/**
+	 * Readable bit, for dirs traversable
+	 */
+	const READABLE = 4;
+	/**
+	 * Writable bit, for dirs delete or create files in that dir
+	 */
+	const WRITABLE = 2;
+	/**
+	 * Excecutable bit, here only use to check if user is allowed to search dirs
+	 */
+	const EXECUTABLE = 1;
+	/**
+	 * Current user has root rights, no access checks performed!
+	 *
+	 * @var boolean
+	 */
+	static $is_root = false;
+	/**
+	 * Current user id, in case we ever change if away from $GLOBALS['egw_info']['user']['account_id']
+	 *
+	 * @var int
+	 */
+	static $user;
+
 	/**
 	 * fopen working on just the eGW VFS
 	 *
@@ -189,6 +211,131 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 	
 	/**
+	 * find = recursive search over the filesystem
+	 *
+	 * @param string/array $base base of the search
+	 * @param array $params=null
+	 * @param string/array/true $exec=null function to call with each found file or dir as first param or 
+	 * 	true to return file => stat pairs
+	 * @param array $exec_params=null further params for exec as array, path is always the first param!
+	 * @return array of pathes if no $exec, otherwise path => stat pairs
+	 */
+	function find($base,$params=null,$exec=null,$exec_params=null)
+	{
+		//error_log(__METHOD__."(".print_r($base,true).",".print_r($params,true).",".print_r($exec,true).",".print_r($exec_params,true).")\n");
+
+		$type = $params['type'];	// 'd' or 'f'
+		$dirs_last = $params['dirs_last'];	// list dirs after the files they contain
+
+		if (!is_array($base))
+		{
+			$base = array($base);
+		}
+		foreach($base as $path)
+		{
+			// check our fstab if we need to add some of the mountpoints
+			$basepath = parse_url($path,PHP_URL_PATH);
+			foreach(self::$fstab as $mounted => $src_url)
+			{
+				if (dirname($mounted) == $basepath)
+				{
+					$base[] = $mounted;
+				}
+			}
+		}
+		$result = array();
+		foreach($base as $path)
+		{
+/*			if (($scheme = parse_url($path,PHP_URL_SCHEME)))
+			{
+				self::load_wrapper();
+			}*/
+			if (!$type || ($type[0]=='d') == is_dir($path))
+			{
+				if (!($stat = self::url_stat($path,0))) continue;
+
+				if (!$dirs_last || !is_dir($path))
+				{
+					$result[$path] = $stat;
+				}
+			}
+			if (is_dir($path) && ($dir = opendir($path)))
+			{
+				while($file = readdir($dir))
+				{
+					$file = $path.'/'.$file;
+					if (!$type || ($type[0]=='d') == is_dir($file))
+					{
+						if (!($stat = self::url_stat($file,0))) continue;
+						$result[$file] = $stat;
+					}
+					if (is_dir($file))
+					{
+						foreach(self::find($file,$params,true) as $p => $s)
+						{
+							unset($result[$p]);
+							$result[$p] = $s;
+						}
+					}
+				}
+				closedir($dir);
+
+				if ($dirs_last)
+				{
+					$result[$path] = $stat;
+				}
+			}
+		}
+		//_debug_array($result);
+		if ($exec !== true && is_callable($exec))
+		{
+			if (!is_array($exec_params))
+			{
+				$exec_params = is_null($exec_params) ? array() : array($exec_params);
+			}
+			foreach($result as $path => &$stat)
+			{
+				$params = $exec_params;
+				array_unshift($params,$path);
+				//echo "calling ".print_r($exec,true).print_r($params,true)."\n";
+				$stat = call_user_func_array($exec,$params);
+			}
+			return $result;
+		}
+		if ($exec !== true)
+		{
+			return array_keys($result);
+		}
+		return $result;
+	}
+
+	/**
+	 * Recursiv remove all given url's, including it's content if they are files
+	 *
+	 * @param string/array $urls url or array of url's
+	 * @return array
+	 */
+	static function remove($urls)
+	{
+		return self::find($urls,array('dirs_last'=>true),array(__CLASS__,'_rm_rmdir'));
+	}
+	
+	/**
+	 * Helper function for remove: either rmdir or unlink given url (depending if it's a dir or file)
+	 *
+	 * @param string $url
+	 * @return boolean
+	 */
+	static function _rm_rmdir($url)
+	{
+		if (is_dir($url))
+		{
+			return rmdir($url);
+		}
+		return unlink($url);
+	}
+
+	/**
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
@@ -210,12 +357,17 @@ class egw_vfs extends vfs_stream_wrapper
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
 	 * @param array $stat
-	 * @param int $check mode to check: 4 = read, 2 = write, 1 = executable
+	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
 	 * @return boolean
 	 */
 	static function check_access($stat,$check)
 	{
 		//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
+		
+		if (self::$is_root)
+		{
+			return true;
+		}
 
 		if (!$stat)
 		{
@@ -223,24 +375,24 @@ class egw_vfs extends vfs_stream_wrapper
 			return false;	// file not found
 		}
 		// check if other rights grant access
-		if ($stat['mode'] & $check)
+		if (($stat['mode'] & $check) == $check)
 		{
-			error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
+			//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
 			return true;
 		}
 		// check if there's owner access and we are the owner
-		if (($stat['mode'] & ($check << 6)) && $stat['uid'] && $stat['uid'] == $GLOBALS['egw_info']['user']['account_id'])
+		if (($stat['mode'] & ($check << 6)) == ($check << 6) && $stat['uid'] && $stat['uid'] == self::$user)
 		{
 			//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via owner rights!");
 			return true;
 		}
 		// check if there's a group access and we have the right membership
-		if (($stat['mode'] & ($check << 3)) && $stat['gid'])
+		if (($stat['mode'] & ($check << 3)) == ($check << 3) && $stat['gid'])
 		{
 			static $memberships;
 			if (is_null($memberships))
 			{
-				$memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+				$memberships = $GLOBALS['egw']->accounts->memberships(self::$user,true);
 			}
 			if (in_array(-abs($stat['gid']),$memberships))
 			{
@@ -285,4 +437,131 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		
 	}
+	
+	/**
+	 * Convert a symbolic mode string or octal mode to an integer
+	 *
+	 * @param string/int $set comma separated mode string to set [ugo]+[+=-]+[rwx]+
+	 * @param int $mode=0 current mode of the file, necessary for +/- operation
+	 * @return int
+	 */
+	static function mode2int($set,$mode=0)
+	{
+		if (is_int($set))		// already an integer
+		{
+			return $set;
+		}
+		if (is_numeric($set))	// octal string
+		{
+			//error_log(__METHOD__."($set,$mode) returning ".(int)base_convert($set,8,10));
+			return (int)base_convert($set,8,10);	// convert octal to decimal
+		}
+		foreach(explode(',',$set) as $s)
+		{
+			if (!preg_match($use='/^([ugoa]*)([+=-]+)([rwx]+)$/',$s,$matches))
+			{
+				$use = str_replace(array('/','^','$','(',')'),'',$use);
+				throw new egw_exception_wrong_userinput("$s is not an allowed mode, use $use !");
+			}
+			$base = (strpos($matches[3],'r') !== false ? self::READABLE : 0) |
+				(strpos($matches[3],'w') !== false ? self::WRITABLE : 0) |
+				(strpos($matches[3],'x') !== false ? self::EXECUTABLE : 0);
+			
+			for($n = $m = 0; $n < strlen($matches[1]); $n++)
+			{
+				switch($matches[1][$n])
+				{
+					case 'o':
+						$m |= $base;
+						break;
+					case 'g':
+						$m |= $base << 3;
+						break;
+					case 'u':
+						$m |= $base << 6;
+						break;
+					default:
+					case 'a':
+						$m = $base | ($base << 3) | ($base << 6);
+				}
+			}
+			switch($matches[2])
+			{
+				case '+':
+					$mode |= $m;
+					break;
+				case '=':
+					$mode = $m;
+					break;
+				case '-':
+					$mode &= ~$m;
+			}
+		}
+		//error_log(__METHOD__."($set,) returning ".sprintf('%o',$mode));
+		return $mode;
+	}
+	
+	/**
+	 * Convert a numerical mode to a symbolic mode-string
+	 *
+	 * @param int $mode
+	 * @return string
+	 */
+	static function int2mode( $mode )
+	{
+		if($mode & 0x1000)     // FIFO pipe
+		{
+			$sP = 'p';
+		}
+		elseif($mode & 0x2000) // Character special
+		{
+			$sP = 'c';
+		}
+		elseif($mode & 0x4000) // Directory
+		{
+			$sP = 'd';
+		}
+		elseif($mode & 0x6000) // Block special
+		{
+			$sP = 'b';
+		}
+		elseif($mode & 0x8000) // Regular
+		{
+			$sP = '-';
+		}
+		elseif($mode & 0xA000) // Symbolic Link
+		{
+			$sP = 'l';
+		}
+		elseif($mode & 0xC000) // Socket
+		{
+			$sP = 's';
+		}
+		else                         // UNKNOWN
+		{
+			$sP = 'u';
+		}
+	
+		// owner
+		$sP .= (($mode & 0x0100) ? 'r' : '-') .
+		(($mode & 0x0080) ? 'w' : '-') .
+		(($mode & 0x0040) ? (($mode & 0x0800) ? 's' : 'x' ) :
+		(($mode & 0x0800) ? 'S' : '-'));
+	
+		// group
+		$sP .= (($mode & 0x0020) ? 'r' : '-') .
+		(($mode & 0x0010) ? 'w' : '-') .
+		(($mode & 0x0008) ? (($mode & 0x0400) ? 's' : 'x' ) :
+		(($mode & 0x0400) ? 'S' : '-'));
+	
+		// world
+		$sP .= (($mode & 0x0004) ? 'r' : '-') .
+		(($mode & 0x0002) ? 'w' : '-') .
+		(($mode & 0x0001) ? (($mode & 0x0200) ? 't' : 'x' ) :
+		(($mode & 0x0200) ? 'T' : '-'));
+
+		return $sP;
+	}
 }
+
+egw_vfs::$user = (int) $GLOBALS['egw_info']['user']['account_id'];
