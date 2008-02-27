@@ -62,6 +62,14 @@
 	$setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home.addGroup';
 	$setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home.deleteGroup';
 	$setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home.editGroup';
+
+	// hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
+	$setup_info['phpgwapi']['hooks']['addaccount']		= 'phpgwapi.vfs_home_hooks.addAccount';
+	$setup_info['phpgwapi']['hooks']['deleteaccount']	= 'phpgwapi.vfs_home_hooks.deleteAccount';
+	$setup_info['phpgwapi']['hooks']['editaccount']		= 'phpgwapi.vfs_home_hooks.editAccount';
+	$setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home_hooks.addGroup';
+	$setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home_hooks.deleteGroup';
+	$setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home_hooks.editGroup';
 	
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
