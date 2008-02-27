@@ -1493,18 +1493,24 @@ foreach($sess as $key => $val)
 						if (!isset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
 						{
 							// fix for optgroup's
+							$options=array();
 							foreach($sels as $key => $val)
 							{
+								# we want the key anyway, even if this allowes more values than wanted (the name/key of the optgroup if there is one, 
+								# the keys of the arrays in case you have key/value pair(s) as value for the value of your option ).
+								$options[$key]=$key;
 								if (is_array($val))
 								{
-									$sels += array_keys($val);
-									unset($sels[$key]);
-								}
+									foreach(array_keys($val) as $key2)
+									{
+										$options[$key2]=$key2;
+									}
+								} 
 							}
 							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
 								'type'    => $cell['type'],
 								'needed'  => $cell['needed'],
-								'allowed' => array_keys($sels),
+								'allowed' => array_keys($options),
 								'multiple'=> $multiple,
 							);
 						}
