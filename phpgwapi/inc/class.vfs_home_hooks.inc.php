@@ -48,7 +48,7 @@ class vfs_home_hooks
 	 * @param string $data['account_lid'] new account-name
 	 * @param string $data['old_loginid'] old account-name
 	 */
-	function editAccount($data)
+	static function editAccount($data)
 	{
 		if ($data['account_lid'] == $data['old_loginid']) return;	// nothing to do here
 		
@@ -66,7 +66,7 @@ class vfs_home_hooks
 	 * @param string $data['account_lid'] account-name
 	 * @param int $data['new_owner'] account-id of new owner, or false if data should get deleted
 	 */
-	function deleteAccount($data)
+	static function deleteAccount($data)
 	{
 		if ($data['new_owner'])
 		{
@@ -86,7 +86,7 @@ class vfs_home_hooks
 	 * @param int $data['account_id'] numerical id
 	 * @param string $data['account_name'] group-name
 	 */
-	function addGroup($data)
+	static function addGroup($data)
 	{
 		// create a group-dir
 		egw_vfs::$is_root = true;
@@ -105,7 +105,7 @@ class vfs_home_hooks
 	 * @param string $data['account_name'] new group-name
 	 * @param string $data['old_name'] old account-name
 	 */
-	function editGroup($data)
+	static function editGroup($data)
 	{
 		if ($data['account_name'] == $data['old_name']) return;	// nothing to do here
 		
@@ -122,7 +122,7 @@ class vfs_home_hooks
 	 * @param int $data['account_id'] numerical id
 	 * @param string $data['account_name'] account-name
 	 */
-	function deleteGroup($data)
+	static function deleteGroup($data)
 	{
 		// delete the group-directory
 		egw_vfs::$is_root = true;
