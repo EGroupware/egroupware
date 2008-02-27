@@ -17,7 +17,7 @@ class setup_detection
 		$d = dir(EGW_SERVER_ROOT);
 		while($entry=$d->read())
 		{
-			if($entry != ".." && !ereg('setup',$entry) && is_dir(EGW_SERVER_ROOT . '/' . $entry))
+			if($entry != ".." && $entry != 'setup' && is_dir(EGW_SERVER_ROOT . '/' . $entry))
 			{
 				$f = EGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
 				if (@file_exists ($f))
