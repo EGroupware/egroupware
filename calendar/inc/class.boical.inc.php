@@ -282,7 +282,8 @@
 										{
 											$recur_enddate += 86400;
 										}
-										$rrule['UNTIL'] = date('Ymd',$recur_enddate);
+										# append T and the Endtime, since the RRULE seems not to be understood by the client without it
+										$rrule['UNTIL'] = date('Ymd',$recur_enddate).'T'.date('His',($event['end']?$event['end']:$event['start'])) ;
 									}
 									else
 									{
