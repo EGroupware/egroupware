@@ -898,7 +898,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				// if we are not root, we need to make sure the user has the right to tranverse all partent directories (read-rights)
 				if (!egw_vfs::$is_root)
 				{
-					$query .= ' AND '.$sql_read_acl;
+					$query .= ' AND '.self::_sql_readable();
 				}
 			}
 			else
