@@ -537,7 +537,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$basepath = parse_url($this->opened_dir_url,PHP_URL_PATH);
 		foreach(self::$fstab as $mounted => $nul)
 		{
-			if (dirname($mounted) == $basepath)
+			if (dirname($mounted) == $basepath && $mounted != '/')
 			{
 				$this->extra_dirs[] = basename($mounted);
 			}
@@ -693,9 +693,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		stream_register_wrapper(self::SCHEME,__CLASS__);
 		
-		if ($GLOBALS['egw_info']['server']['vfs_fstab'] && is_array($GLOBALS['egw_info']['server']['vfs_fstab']))
+		if ($GLOBALS['egw_info']['server']['vfs_fstab'] && 
+			is_array($fstab = unserialize($GLOBALS['egw_info']['server']['vfs_fstab'])))
 		{
-			self::$fstab = $GLOBALS['egw_info']['server']['vfs_fstab'];
+			self::$fstab = $fstab;				
 		}
 	}
 }

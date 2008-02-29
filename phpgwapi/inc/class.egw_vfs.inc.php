@@ -173,6 +173,10 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			return self::$fstab;
 		}
+		if (!self::$is_root)
+		{
+			return false;	// only root can mount
+		}
 		if (isset(self::$fstab[$path]))
 		{
 			return true;	// already mounted
@@ -198,6 +202,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function umount($path)
 	{
+		if (!self::$is_root)
+		{
+			return false;	// only root can mount
+		}
 		if (!isset(self::$fstab[$path]) && ($path = array_search($path,self::$fstab)) === false)
 		{
 			return false;	// $path not mounted
@@ -214,18 +222,59 @@ class egw_vfs extends vfs_stream_wrapper
 	 * find = recursive search over the filesystem
 	 *
 	 * @param string/array $base base of the search
-	 * @param array $params=null
+	 * @param array $options=null the following keys are allowed:
+	 * - type => {d|f} d=dirs, f=files, default both
+	 * - dirs_last => {true|false(default)} put the dirs behind the files they contain
+	 * - name,path => pattern with *,? wildcards, eg. "*.php"
+	 * - name_preg,path_preg => preg regular expresion, eg. "/(vfs|wrapper)/"
+	 * - uid,user,gid,group,nouser,nogroup file belongs to user/group with given name or (numerical) id
+	 * - mime => type[/subtype]
+	 * - empty,size => (+|-|)N
+	 * - cmin/mmin => (+|-|)N file/dir create/modified in the last N minutes
+	 * - ctime/mtime => (+|-|)N file/dir created/modified in the last N days
 	 * @param string/array/true $exec=null function to call with each found file or dir as first param or 
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
 	 */
-	function find($base,$params=null,$exec=null,$exec_params=null)
+	function find($base,$options=null,$exec=null,$exec_params=null)
 	{
-		//error_log(__METHOD__."(".print_r($base,true).",".print_r($params,true).",".print_r($exec,true).",".print_r($exec_params,true).")\n");
+		//error_log(__METHOD__."(".print_r($base,true).",".print_r($options,true).",".print_r($exec,true).",".print_r($exec_params,true).")\n");
 
-		$type = $params['type'];	// 'd' or 'f'
-		$dirs_last = $params['dirs_last'];	// list dirs after the files they contain
+		$type = $options['type'];	// 'd' or 'f'
+		$dirs_last = $options['dirs_last'];	// list dirs after the files they contain
+
+		// process some of the options (need to be done only once)
+		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
+		{
+			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'])).'$/';
+		}
+		if (isset($options['path']) && !isset($options['preg_path']))	// change from simple *,? wildcards to preg regular expression once
+		{
+			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'])).'$/';
+		}
+		if (!isset($options['uid']))
+		{
+			if (isset($options['user']))
+			{
+				$options['uid'] = $GLOBALS['egw']->accounts->name2id($options['user'],'account_lid','u');
+			}
+			elseif (isset($options['nouser']))
+			{
+				$options['uid'] = 0;
+			}
+		}
+		if (!isset($options['gid']))
+		{
+			if (isset($options['group']))
+			{
+				$options['gid'] = abs($GLOBALS['egw']->accounts->name2id($options['group'],'account_lid','g'));
+			}
+			elseif (isset($options['nogroup']))
+			{
+				$options['gid'] = 0;
+			}
+		}
 
 		if (!is_array($base))
 		{
@@ -246,32 +295,23 @@ class egw_vfs extends vfs_stream_wrapper
 		$result = array();
 		foreach($base as $path)
 		{
-/*			if (($scheme = parse_url($path,PHP_URL_SCHEME)))
+			$is_dir = is_dir($path);
+			
+			if (!$dirs_last || !$is_dir)
 			{
-				self::load_wrapper();
-			}*/
-			if (!$type || ($type[0]=='d') == is_dir($path))
-			{
-				if (!($stat = self::url_stat($path,0))) continue;
-
-				if (!$dirs_last || !is_dir($path))
-				{
-					$result[$path] = $stat;
-				}
+				self::_check_add($options,$path,$result);
 			}
-			if (is_dir($path) && ($dir = opendir($path)))
+			if ($is_dir && ($dir = opendir($path)))
 			{
 				while($file = readdir($dir))
 				{
 					$file = $path.'/'.$file;
-					if (!$type || ($type[0]=='d') == is_dir($file))
-					{
-						if (!($stat = self::url_stat($file,0))) continue;
-						$result[$file] = $stat;
-					}
+					
+					self::_check_add($options,$file,$result);
+
 					if (is_dir($file))
 					{
-						foreach(self::find($file,$params,true) as $p => $s)
+						foreach(self::find($file,$options,true) as $p => $s)
 						{
 							unset($result[$p]);
 							$result[$p] = $s;
@@ -282,7 +322,7 @@ class egw_vfs extends vfs_stream_wrapper
 
 				if ($dirs_last)
 				{
-					$result[$path] = $stat;
+					self::_check_add($options,$path,$result);
 				}
 			}
 		}
@@ -295,10 +335,10 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			foreach($result as $path => &$stat)
 			{
-				$params = $exec_params;
-				array_unshift($params,$path);
-				//echo "calling ".print_r($exec,true).print_r($params,true)."\n";
-				$stat = call_user_func_array($exec,$params);
+				$options = $exec_params;
+				array_unshift($options,$path);
+				//echo "calling ".print_r($exec,true).print_r($options,true)."\n";
+				$stat = call_user_func_array($exec,$options);
 			}
 			return $result;
 		}
@@ -307,6 +347,75 @@ class egw_vfs extends vfs_stream_wrapper
 			return array_keys($result);
 		}
 		return $result;
+	}
+	
+	/**
+	 * Function carying out the various (optional) checks, before files&dirs get returned as result of find
+	 *
+	 * @param array $options options, see egw_vfs::find(,$options)
+	 * @param string $path name of path to add
+	 * @param array &$result here we add the stat for the key $path, if the checks are successful
+	 */
+	private function _check_add($options,$path,&$result)
+	{
+		$type = $options['type'];	// 'd' or 'f'
+		
+		if ($type && ($type == 'd') !== is_dir($path))
+		{
+			return;	// wrong type
+		}
+		if (!($stat = self::url_stat($path,0)))
+		{
+			return;	// not found, should not happen
+		}
+		if (isset($options['name_preg']) && !preg_match($options['name_preg'],basename($path)) ||
+			isset($options['path_preg']) && !preg_match($options['path_preg'],$path))
+		{
+			return;	// wrong name or path
+		}
+		if (isset($options['gid']) && $stat['gid'] != $options['gid'] ||
+			isset($options['uid']) && $stat['uid'] != $options['uid'])
+		{
+			return;	// wrong user or group
+		}
+		if (isset($options['mime']) && $options['mime'] != ($mime = self::mime_content_type($path)))
+		{
+			list($type,$subtype) = explode('/',$options['mime']);
+			// no subtype (eg. 'image') --> check only the main type
+			if ($sub_type || substr($mime,0,strlen($type)+1) != $type.'/')
+			{
+				return;	// wrong mime-type
+			}
+		}
+		if (isset($options['size']) && !self::_check_num($stat['size'],$options['size']) ||
+			(isset($options['empty']) && !!$options['empty'] !== !$stat['size']))
+		{
+			return;	// wrong size
+		}
+		if (isset($options['cmin']) && !self::_check_num(round((time()-$stat['ctime'])/60),$options['cmin']) ||
+			isset($options['mmin']) && !self::_check_num(round((time()-$stat['mtime'])/60),$options['mmin']) ||
+			isset($options['ctime']) && !self::_check_num(round((time()-$stat['ctime'])/86400),$options['ctime']) ||
+			isset($options['mtime']) && !self::_check_num(round((time()-$stat['ctime'])/86400),$options['mtime']))
+		{
+			return;	// not create/modified in the spezified time
+		}
+		$result[$path] = $stat;
+	}
+	
+	private function _check_num($value,$argument)
+	{
+		if (is_int($argument) && $argument >= 0 || $argument[0] != '-' && $argument[0] != '+')
+		{
+			//echo "_check_num($value,$argument) check = == ".(int)($value == $argument)."\n";
+			return $value == $argument;
+		}
+		if ($argument < 0)
+		{
+			//echo "_check_num($value,$argument) check < == ".(int)($value < abs($argument))."\n";
+			return $value < abs($argument);
+		}
+		//echo "_check_num($value,$argument) check > == ".(int)($value > (int)substr($argument,1))."\n";
+		return $value > (int) substr($argument,1);
 	}
 
 	/**
