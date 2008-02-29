@@ -117,7 +117,7 @@ class config
 			throw new egw_exception_assertion_failed('$app parameter required for static call of config::save_value($name,$value,$app)!');
 		}
 		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
-		if (!$app || $app == $this->appname)
+		if (!$app || isset($this) && $app == $this->appname)
 		{
 			$app = $this->appname;
 			$this->config_data[$name] = $value;
