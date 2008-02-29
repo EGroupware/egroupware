@@ -13,7 +13,7 @@
 /**
  * Class containing admin, preferences and sidebox-menus (used as hooks)
  */
-class admin_prefs_sidebox_hooks
+class infolog_prefs_sidebox_hooks
 {
 	function all_hooks($args)
 	{

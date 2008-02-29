@@ -47,10 +47,10 @@ $setup_info['infolog']['note'] =
 	<a href="http://www.egroupware.org/wiki/infolog" target="_blank">InfoLog page on our Website</a>.</p>';
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info['infolog']['hooks']['preferences'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['infolog']['hooks']['preferences'] = 'infolog.infolog_prefs_sidebox_hooks.all_hooks';
 $setup_info['infolog']['hooks'][] = 'settings';
-$setup_info['infolog']['hooks']['verify_settings'] = 'infolog.admin_prefs_sidebox_hooks.verify_settings';
-$setup_info['infolog']['hooks']['admin'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['infolog']['hooks']['verify_settings'] = 'infolog.infolog_prefs_sidebox_hooks.verify_settings';
+$setup_info['infolog']['hooks']['admin'] = 'infolog.infolog_prefs_sidebox_hooks.all_hooks';
 $setup_info['infolog']['hooks'][] = 'deleteaccount';
 $setup_info['infolog']['hooks'][] = 'home';
 $setup_info['infolog']['hooks']['addressbook_view'] = 'infolog.uiinfolog.hook_view';
@@ -59,7 +59,7 @@ $setup_info['infolog']['hooks']['calendar_view']    = 'infolog.uiinfolog.hook_vi
 $setup_info['infolog']['hooks']['infolog']          = 'infolog.uiinfolog.hook_view';
 $setup_info['infolog']['hooks']['calendar_include_events'] = 'infolog.boinfolog.cal_to_include';
 $setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.boinfolog.cal_to_include';
-$setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog.infolog_prefs_sidebox_hooks.all_hooks';
 $setup_info['infolog']['hooks']['search_link'] = 'infolog.infolog_link_registry.search_link';
 $setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.boinfolog.pm_icons';
 
