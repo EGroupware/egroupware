@@ -47,18 +47,20 @@ function user_pass_from_argv(&$account)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename(__FILE__);
-	echo "Usage:\t$cmd [-r|--recursive] URL [URL2 ...]\n";
-	echo "\t$cmd --cat URL [URL2 ...]\n";
-	echo "\t$cmd --cp [-r|--recursive] [-p|--perms] URL-from URL-to\n";
-	echo "\t$cmd --cp [-r|--recursive] [-p|--perms] URL-from [URL-from2 ...] URL-to-directory\n";
-	echo "\t$cmd --rm [-r|--recursive] URL [URL2 ...]\n";
-	echo "\t$cmd --mkdir [-p|--parents] URL [URL2 ...]\n";
-	echo "\t$cmd --rmdir URL [URL2 ...]\n";
-	echo "\t$cmd --touch [-r|--recursive] [-d|--date time] URL [URL2 ...]\n";
-	echo "\t$cmd --chmod [-r|--recursive] mode=[ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
-	echo "\t$cmd --chown [-r|--recursive] user URL [URL2 ...]\n";
-	echo "\t$cmd --chgrp [-r|--recursive] group URL [URL2 ...]\n";
-	echo "\t$cmd --find URL [URL2 ...] [options to come]\n";
+	echo "Usage:\t$cmd ls [-r|--recursive] URL [URL2 ...]\n";
+	echo "\t$cmd cat URL [URL2 ...]\n";
+	echo "\t$cmd cp [-r|--recursive] [-p|--perms] URL-from URL-to\n";
+	echo "\t$cmd cp [-r|--recursive] [-p|--perms] URL-from [URL-from2 ...] URL-to-directory\n";
+	echo "\t$cmd rm [-r|--recursive] URL [URL2 ...]\n";
+	echo "\t$cmd mkdir [-p|--parents] URL [URL2 ...]\n";
+	echo "\t$cmd rmdir URL [URL2 ...]\n";
+	echo "\t$cmd touch [-r|--recursive] [-d|--date time] URL [URL2 ...]\n";
+	echo "\t$cmd chmod [-r|--recursive] mode=[ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
+	echo "\t$cmd chown [-r|--recursive] user URL [URL2 ...]\n";
+	echo "\t$cmd chgrp [-r|--recursive] group URL [URL2 ...]\n";
+	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-dirs_last][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n)\n";
+	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
+	echo "\t$cmd umount URL|path\n";
 	
 	echo "\nURL: {vfs|sqlfs|oldvfs}://user:password@domain/home/user/file, /dir/file, ...\n";
 	
@@ -69,32 +71,66 @@ function usage($action=null,$ret=0)
 $long = $numeric = $recursive = $perms = false;
 $argv = $_SERVER['argv'];
 $cmd = basename(array_shift($argv),'.php');
+if ($argv[0][0] != '-' && $argv[0][0] != '/' && strpos($argv[0],'://') === false)
+{
+	$cmd = array_shift($argv);
+}
 
 if (!$argv) $argv = array('-h');
 
-foreach($argv as $key => $option)
+$args = $find_options = array();
+while(!is_null($option = array_shift($argv)))
 {
-	if ($option[0] != '-') continue;
-	
-	unset($argv[$key]);
+	if ($option[0] != '-')	// no option --> argument
+	{
+		$args[] = $option;
+		continue;
+	}
 
 	switch($option)
 	{
 		default:
+			if ($cmd == 'find')
+			{
+				if (!in_array($option,array('-type','-dirs_last','-name','-path',
+					'-uid','-user','-nouser','-gid','-group','-nogroup','-mime',
+					'-empty','-size','-cmin','-ctime','-mmin','-mtime')))
+				{
+					usage();
+				}
+				if (in_array($option,array('-empty','-dirs_last','-nouser','-nogroup')))
+				{
+					$find_options[substr($option,1)] = true;
+				}
+				else
+				{
+					$find_options[substr($option,1)] = array_shift($argv);
+				}
+				break;
+			}
+			// multiple options, eg. -rp --> -r -p
+			elseif($option[0] == '-' && $option[1] != '-' && strlen($option) > 2)
+			{
+				for($i = 1; $i < strlen($option); ++$i)
+				{
+					array_unshift($argv,'-'.$option[$i]);
+				}
+				break;
+			}
 		case '-h': case '--help':
 			usage();
 
 		case '-l': case '--long':
 			$long = true;
-			continue 2;		// switch is counting too!
+			break;
 
 		case '-n': case '--numeric':
 			$numeric = true;
-			continue 2;		// switch is counting too!
+			break;
 
 		case '-r': case '--recursive':
 			$recursive = true;
-			continue 2;		// switch is counting too!
+			break;
 			
 		case '-p': case '--parents': case '--perms':
 			if ($cmd == 'cp')
@@ -105,36 +141,52 @@ foreach($argv as $key => $option)
 			{
 				$recursive = true;
 			}
-			continue 2;		// switch is counting too!
-
-		case '-d': case '--date':
-			$time = strtotime($argv[$key+1]);
-			unset($argv[$key+1]);
 			break;
 
-		case '--cat':	// cat files (!) to stdout
-		case '--cp':	// copy files
-		case '--rm':	// remove files
-		case '--ls':	// list files
-		case '--rmdir':	// remove dirs
-		case '--mkdir':	// make directories
-		case '--rename':// rename
-		case '--touch':	// touch
-		case '--chmod':	// chmod
-		case '--chown':	// chown (requires root)
-		case '--chgrp':	// chgrp
-		case '--find':
-			$cmd = substr($option,2);
-			continue 2;		// switch is counting too!
+		case '-d': case '--date':
+			$time = strtotime(array_shift($argv));
+			break;
 	}
 }
-$argv = array_values($argv);
+$argv = $args;
 $argc = count($argv);
 
 switch($cmd)
 {
+	case 'mount':
+		if ($argc > 2)
+		{
+			usage();
+		}
+		load_wrapper($url=$argv[0]);
+		$fstab = egw_vfs::mount($url,$path=$argv[1]);
+		if (is_array($fstab))
+		{
+			foreach($fstab as $path => $url)
+			{
+				echo "$url\t$path\n";
+			}
+		}
+		elseif ($fstab === false)
+		{
+			echo "URL '$url' not found!\n";
+		}
+		else
+		{
+			echo "$url successful mounted to $path\n";
+		}
+		break;
+
+	case 'umount':
+		if ($argc != 1)
+		{
+			usage();
+		}
+		egw_vfs::umount($argv[0]);
+		break;
+
 	case 'find':
-		do_find($argv);
+		do_find($argv,$find_options);
 		break;
 
 	case 'cp':
@@ -283,7 +335,12 @@ switch($cmd)
 					{
 						if ($argc)
 						{
-							echo "\n".basename(parse_url($url,PHP_URL_PATH)).":\n";
+							if (!($name = basename(parse_url($url,PHP_URL_PATH)))) $name = '/';
+							echo "\n$name:\n";
+						}
+						if (substr($url,-1) == '/')
+						{
+							$url = substr($url,0,-1);
 						}
 						while(($file = readdir($dir)) !== false)
 						{
@@ -566,13 +623,13 @@ function _cp_perms($from,$to)
 	}
 }
 
-function do_find($bases)
+function do_find($bases,$options)
 {
 	foreach($bases as $url)
 	{
 		load_wrapper($url);
 	}
-	foreach(egw_vfs::find($bases) as $path)
+	foreach(egw_vfs::find($bases,$options) as $path)
 	{
 		echo "$path\n";
 	}
