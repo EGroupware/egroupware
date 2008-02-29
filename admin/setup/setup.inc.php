@@ -33,14 +33,12 @@ $setup_info['admin']['description'] = 'eGroupWare administration application';
 $setup_info['admin']['hooks'] = array(
 	'acl_manager',
 	'add_def_pref',
-	'admin',
 	'after_navbar',
 	'config',
 	'deleteaccount',
 	'view_user' => 'admin.uiaccounts.edit_view_user_hook',
 	'edit_user' => 'admin.uiaccounts.edit_view_user_hook',
 	'group_manager' => 'admin.uiaccounts.edit_group_hook',
-	'sidebox_menu',
 	'topmenu_info'
 );
 $setup_info['admin']['hooks']['preferences'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';

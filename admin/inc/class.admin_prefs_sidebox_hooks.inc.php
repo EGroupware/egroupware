@@ -43,20 +43,14 @@ class admin_prefs_sidebox_hooks
 			if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 			{
 				$file['Site Configuration']         = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
-			}	
-			
-			/*
+			}
+
+		/* disabled it, til it does something useful
 			if (! $GLOBALS['egw']->acl->check('peer_server_access',1,'admin'))
 			{
 				$file['Peer Servers']               = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiserver.list_servers');
-				}
-			*/
-			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
-			{
-				$file['User Accounts']              = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
 			}
-
-		
+		*/
 			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
 			{
 				$file['User Accounts']              = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
@@ -86,7 +80,7 @@ class admin_prefs_sidebox_hooks
 			{
 				$file['View Sessions'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
 			}
-
+			
 			if (! $GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
 			{
 				$file['View Access Log'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
@@ -114,8 +108,10 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('info_access',1,'admin'))
 			{
-				$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['egw']->link('/admin/phpinfo.php') . "')";
+				$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['egw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['egw']->link('/admin/phpinfo.php');
 			}
+			$file['Admin queue and history'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.admin_cmds.index');
+			$file['Remote administration instances'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.admin_cmds.remotes');
 
 			if ($location == 'admin')
 			{
