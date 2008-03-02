@@ -257,7 +257,8 @@ class so_ldap
 				$GLOBALS['egw_info']['server']['ldap_contact_host'],
 				$GLOBALS['egw_info']['user']['account_dn'],
 				$GLOBALS['egw_info']['user']['passwd']
-		);
+			);
+		}
 	}
 	
 	/**
