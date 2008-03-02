@@ -215,6 +215,31 @@ class so_ldap
 		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
 		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
 		
+		$this->connect();
+		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_contact_host']);
+		
+		foreach($this->schema2egw as $schema => $attributes)
+		{
+			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
+		}
+		$this->all_attributes = array_values(array_unique($this->all_attributes));
+		
+		$this->charset = $GLOBALS['egw']->translation->charset();
+	}
+	
+	/**
+	 * __wakeup function gets called by php while unserializing the object to reconnect with the ldap server
+	 */
+	function __wakeup()
+	{
+		$this->connect();
+	}
+
+	/**
+	 * connect to LDAP server
+	 */
+	function connect()
+	{
 		if (!is_object($GLOBALS['egw']->ldap))
 		{
 			$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
@@ -232,17 +257,7 @@ class so_ldap
 				$GLOBALS['egw_info']['server']['ldap_contact_host'],
 				$GLOBALS['egw_info']['user']['account_dn'],
 				$GLOBALS['egw_info']['user']['passwd']
-			);
-		}
-		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_contact_host']);
-		
-		foreach($this->schema2egw as $schema => $attributes)
-		{
-			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
-		}
-		$this->all_attributes = array_values(array_unique($this->all_attributes));
-		
-		$this->charset = $GLOBALS['egw']->translation->charset();
+		);
 	}
 	
 	/**
