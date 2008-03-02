@@ -21,7 +21,7 @@ if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling ls as w
 }
 
 /**
- * callback if the session-check fails, redirects via xajax to login.php
+ * callback if the session-check fails, creates session from user/passwd in $GLOBALS['egw_login_data']
  * 
  * @param array &$account account_info with keys 'login', 'passwd' and optional 'passwd_type'
  * @return boolean/string true if we allow the access and account is set, a sessionid or false otherwise
@@ -58,7 +58,7 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd chmod [-r|--recursive] mode=[ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
 	echo "\t$cmd chown [-r|--recursive] user URL [URL2 ...]\n";
 	echo "\t$cmd chgrp [-r|--recursive] group URL [URL2 ...]\n";
-	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-dirs_last][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n)\n";
+	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n)\n";
 	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
 	echo "\t$cmd umount URL|path\n";
 	
@@ -92,13 +92,13 @@ while(!is_null($option = array_shift($argv)))
 		default:
 			if ($cmd == 'find')
 			{
-				if (!in_array($option,array('-type','-dirs_last','-name','-path',
+				if (!in_array($option,array('-type','-depth','-mindepth','-maxdepth','-name','-path',
 					'-uid','-user','-nouser','-gid','-group','-nogroup','-mime',
 					'-empty','-size','-cmin','-ctime','-mmin','-mtime')))
 				{
 					usage();
 				}
-				if (in_array($option,array('-empty','-dirs_last','-nouser','-nogroup')))
+				if (in_array($option,array('-empty','-depth','-nouser','-nogroup')))
 				{
 					$find_options[substr($option,1)] = true;
 				}
@@ -328,7 +328,7 @@ switch($cmd)
 					{
 						load_wrapper($url);
 						array_unshift($argv,$url);
-						egw_vfs::find($argv,array('dirs_last'=>true),'do_stat',array($long,$numeric,true));
+						egw_vfs::find($argv,array('url'=>true,),'do_stat',array($long,$numeric,true));
 						$argv = array();
 					}
 					elseif (is_dir($url) && ($dir = opendir($url)))
@@ -430,6 +430,12 @@ function load_wrapper($url)
 						die("Unknown user or password!\n");
 					}
 					set_exception_handler('cli_exception_handler');	// otherwise we get html!
+				}
+				$cmd = $GLOBALS['cmd'];
+				if (!in_array($cmd,array('ls','find','mount','umount')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
+				{
+					echo "\nError: eGroupWare's files directory {$GLOBALS['egw_info']['server']['files_dir']} is NOT writable by the user running ".basename(__FILE__)."!\n".
+						"--> Please run it as the same user the webserver uses or root, otherwise the $cmd command will fail!\n\n";
 				}
 			}
 			require_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
@@ -549,7 +555,7 @@ function do_cp($argv,$recursive=false,$perms=false)
 	{
 		if (is_dir($from) && (!file_exists($to) || is_dir($to)) && $recursive && class_exists('egw_vfs'))
 		{
-			foreach(egw_vfs::find($from) as $f)
+			foreach(egw_vfs::find($from,array('url' => true)) as $f)
 			{
 				$t = $to.substr($f,strlen($from));
 				if (is_dir($f))
@@ -629,6 +635,8 @@ function do_find($bases,$options)
 	{
 		load_wrapper($url);
 	}
+	$options['url'] = true;	// we use url's not vfs pathes in filemanager/cli.php
+
 	foreach(egw_vfs::find($bases,$options) as $path)
 	{
 		echo "$path\n";

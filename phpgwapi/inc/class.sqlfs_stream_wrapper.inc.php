@@ -177,14 +177,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			// new file --> create it in the DB
 			if ($this->operation == self::STORE2FS)
 			{
-				$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator'.
+				$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator)');
 			}
 			else
 			{
-				$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_content'.
+				$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_content'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_content)');
-				$stmt->bindParam(':fs_content',$this->open_stream,PDO::PARAM_LOB);
+				$stmt->bindParam(':fs_content',$this->opened_stream,PDO::PARAM_LOB);
 			}
 			$values = array(
 				'fs_name' => basename($path),
@@ -203,8 +203,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				$stmt->bindParam(':'.$name,$val);
 			}
-			$stmt->execute();
-			$this->opened_fs_id = self::$pdo->lastInsertId('fs_id');
+			if (!$stmt->execute() || !($this->opened_fs_id = self::$pdo->lastInsertId('fs_id')))
+			{
+				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
+				echo self::$pdo->errorInfo()."\n";
+				return false;
+			}
 		}
 		else
 		{
@@ -242,7 +246,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."()");
 		
-		if (is_null($this->opened_path) || !is_resource($this->opened_stream))
+		if (is_null($this->opened_path) || !is_resource($this->opened_stream) || !$this->opened_fs_id)
 		{
 			return false;
 		}
@@ -813,13 +817,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$this->opened_dir = null;
 			return false;
 		}
-		self::$stat_cache = $this->opened_dir = array();
+		$this->opened_dir = array();
 		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_dir=?';
 		// only return readable files, if dir is not writable by user
 		if (!egw_vfs::check_access($stat,egw_vfs::WRITABLE))
 		{
 			$query .= ' AND '.self::_sql_readable();
 		}
+		$query = "/* sqlfs::dir_opendir($path) */ ".$query;
+
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		if ($stmt->execute(array($stat['ino'])))
@@ -906,6 +912,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$query = str_replace('fs_name=?','fs_name='.self::$pdo->quote($name),$base_query).'('.$query.')';
 			}
 		}
+		$query = "/* sqlfs::url_stat($path) */ ".$query;
 		//echo "query=$query\n";
 		
 		if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
@@ -954,8 +961,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (!is_array($this->opened_dir)) return false;
 		
 		$file = current($this->opened_dir); next($this->opened_dir);
-		
-		return $file ? $file : false;
+
+		return $file;
 	}
 
 	/**
@@ -1036,7 +1043,24 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$dsn = $server['db_type'].':host='.$server['db_host'].';dbname='.$server['db_name'];
 				break;
 		}
-		return self::$pdo = new PDO($dsn,$server['db_user'],$server['db_pass']);
+		self::$pdo = new PDO($dsn,$server['db_user'],$server['db_pass']);
+		
+		// set client charset of the connection
+		$charset = $GLOBALS['egw']->translation->charset();
+		switch($server['db_type'])
+		{
+			case 'mysql':
+				if (isset($GLOBALS['egw']->db->Link_ID->charset2mysql[$charset])) $charset = $GLOBALS['egw']->db->Link_ID->charset2mysql[$charset];
+				// fall throught
+			case 'pgsql':
+				$query = "SET NAMES '$charset'";
+				break;
+		}
+		if ($query)
+		{
+			self::$pdo->exec($query);
+		}
+		return self::$pdo;
 	}
 	
 	/**

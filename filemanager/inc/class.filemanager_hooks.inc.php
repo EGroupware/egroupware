@@ -28,7 +28,8 @@ class filemanager_hooks
 					'Search',
 					'text' => 'Search',
 					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.uifilemanager.index', 'action'=>'search')),
-				)
+				),
+				'New GUI' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index')),
 			);
 			display_sidebox($appname,$title,$file);
 		}

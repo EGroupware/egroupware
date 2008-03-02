@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.5.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column width="30%"/>
+				<column/>
+				<column width="120"/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="Type" id="type" align="center"/>
+					<nextmatch-sortheader label="Name" id="name"/>
+					<nextmatch-sortheader label="Size" id="size"/>
+					<nextmatch-sortheader label="Modified" id="mtime"/>
+					<nextmatch-sortheader label="Permissions" id="mode"/>
+					<nextmatch-sortheader id="uid" label="Owner"/>
+					<nextmatch-sortheader id="gid" label="Group"/>
+					<nextmatch-header label="Comment" id="comment"/>
+					<hbox options="0,0">
+						<description value="Actions"/>
+						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<image label="$row_cont[mime]" src="${row}[icon]" align="center"/>
+					<description options=",$row_cont[link]" id="${row}[name]" no_lang="1"/>
+					<description id="${row}[hsize]" align="right"/>
+					<date-time id="${row}[mtime]" readonly="true"/>
+					<description value="$row_cont[perms]" class="perms"/>
+					<description id="${row}[user]" no_lang="1"/>
+					<description id="${row}[group]" no_lang="1"/>
+					<description id="${row}[comment]"/>
+					<hbox align="right">
+						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership"/>
+						<button id="delete[$row_cont[path]]" image="delete" label="Delete" statustext="Delete this file or directory" onclick="return confirm('Delete this file or directory');" align="center"/>
+						<checkbox id="checked[]" align="right" options="$row_cont[path]"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.index" template="" lang="" group="0" version="1.5.001">
+		<grid>
+			<columns>
+				<column width="250"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description span="all" class="redItalic" id="nm[msg]"/>
+					<description/>
+				</row>
+				<row>
+					<hbox span="all">
+						<button image="goup" label="Up" id="button[up]"/>
+						<button id="button[home]" image="gohome" label="Go to home directory"/>
+						<textbox id="nm[path]" size="80" label="Path" onchange="1" class="address"/>
+						<button id="button[go]" image="key_enter" label="Go to"/>
+						<image src="buttonseparator"/>
+						<button id="button[createdir]" image="button_createdir" label="Create directory" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;"/>
+						<button id="button[paste]" image="editpaste" label="Paste" statustext="Paste cut or copied files to current directory"/>
+					</hbox>
+				</row>
+				<row>
+					<nextmatch options="filemanager.index.rows" span="all" id="nm"/>
+				</row>
+				<row>
+					<hbox>
+						<file id="upload" statustext="Select file to upload in current directory"/>
+						<button label="Upload" id="button[upload]"/>
+					</hbox>
+					<hbox align="right">
+						<menulist>
+							<menupopup id="action" options="Select action..." onchange="1"/>
+						</menulist>
+						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

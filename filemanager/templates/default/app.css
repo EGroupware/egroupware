@@ -1,3 +1,10 @@
+/**
+ * CSS for new eTemplate filemanager UI
+ */
+
+.perms { font-family: monospace; font-weight: bold; }
+.address input { font-size: 140%; font-weight: bold; }
+
 /*
 	CSS for the filemanager
 */

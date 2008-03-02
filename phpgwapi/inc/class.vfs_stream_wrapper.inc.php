@@ -504,7 +504,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			static $mime_magic;
 			if (is_null($mime_magic))
 			{
-				$mime_magic = mime_magic();
+				$mime_magic = new mime_magic();
 			}
 			$mime = $mime_magic->filename2mime(parse_url($url,PHP_URL_PATH));
 		}

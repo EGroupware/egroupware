@@ -59,6 +59,7 @@
  */
 class egw_vfs extends vfs_stream_wrapper
 {
+	const PREFIX = 'vfs://default';
 	/**
 	 * Readable bit, for dirs traversable
 	 */
@@ -97,7 +98,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			throw new egw_exception_assertion_failed("Filename '$path' is not an absolute path!");
 		}
-		return fopen(self::SCHEME.'://default'.$path);
+		return fopen(self::SCHEME.'://default'.$path,$mode);
 	}
 	
 	/**
@@ -129,7 +130,7 @@ class egw_vfs extends vfs_stream_wrapper
 		if (($from_fp = self::fopen($from,'r')) && 
 			($to_fp = self::fopen($to,'w')))
 		{
-			$ret = stream_copy_to_stream($from,$to) !== false;
+			$ret = stream_copy_to_stream($from_fp,$to_fp) !== false;
 		}
  		if ($from_fp)
  		{
@@ -154,7 +155,22 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
 		}
-		return self::url_stat($path,0);
+		if (($stat = self::url_stat($path,0)))
+		{
+			$stat = array_slice($stat,13);	// remove numerical indices 0-12
+		}
+		return $stat;
+	}
+	
+	/**
+	 * is_dir() version working only inside the vfs
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	static function is_dir($path)
+	{
+		return $path[0] == '/' && is_dir(self::SCHEME.'://default'.$path);
 	}
 	
 	
@@ -224,7 +240,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param string/array $base base of the search
 	 * @param array $options=null the following keys are allowed:
 	 * - type => {d|f} d=dirs, f=files, default both
-	 * - dirs_last => {true|false(default)} put the dirs behind the files they contain
+	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
+	 * - mindepth,maxdepth minimal or maximal depth to be returned
 	 * - name,path => pattern with *,? wildcards, eg. "*.php"
 	 * - name_preg,path_preg => preg regular expresion, eg. "/(vfs|wrapper)/"
 	 * - uid,user,gid,group,nouser,nogroup file belongs to user/group with given name or (numerical) id
@@ -232,18 +249,20 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - empty,size => (+|-|)N
 	 * - cmin/mmin => (+|-|)N file/dir create/modified in the last N minutes
 	 * - ctime/mtime => (+|-|)N file/dir created/modified in the last N days
+	 * - depth => (+|-)N
+	 * - url => false(default),true allow (and return) full URL's instead of VFS pathes (only set it, if you know what you doing securitywise!)
 	 * @param string/array/true $exec=null function to call with each found file or dir as first param or 
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
 	 */
-	function find($base,$options=null,$exec=null,$exec_params=null)
+	static function find($base,$options=null,$exec=null,$exec_params=null)
 	{
 		//error_log(__METHOD__."(".print_r($base,true).",".print_r($options,true).",".print_r($exec,true).",".print_r($exec_params,true).")\n");
 
 		$type = $options['type'];	// 'd' or 'f'
-		$dirs_last = $options['dirs_last'];	// list dirs after the files they contain
-
+		$dirs_last = $options['depth'];	// put content of dirs before the dir itself
+		
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
 		{
@@ -275,6 +294,7 @@ class egw_vfs extends vfs_stream_wrapper
 				$options['gid'] = 0;
 			}
 		}
+		$url = $options['url'];
 
 		if (!is_array($base))
 		{
@@ -295,23 +315,30 @@ class egw_vfs extends vfs_stream_wrapper
 		$result = array();
 		foreach($base as $path)
 		{
+			if (!$url) $path = egw_vfs::PREFIX . $path;
+
 			$is_dir = is_dir($path);
 			
-			if (!$dirs_last || !$is_dir)
+			if ((int)$options['mindepth'] == 0 && (!$dirs_last || !$is_dir))
 			{
 				self::_check_add($options,$path,$result);
 			}
-			if ($is_dir && ($dir = opendir($path)))
+			if ($is_dir && (!isset($options['maxdepth']) || $options['maxdepth'] > 0) && ($dir = @opendir($path)))
 			{
 				while($file = readdir($dir))
 				{
 					$file = $path.'/'.$file;
 					
-					self::_check_add($options,$file,$result);
-
-					if (is_dir($file))
+					if ((int)$options['mindepth'] <= 1)
 					{
-						foreach(self::find($file,$options,true) as $p => $s)
+						self::_check_add($options,$file,$result,1);
+					}
+					if (is_dir($file) && (!isset($options['maxdepth']) || $options['maxdepth'] > 1))
+					{
+						$opts = $options;
+						if ($opts['mindepth']) $opts['mindepth']--;
+						if ($opts['maxdepth']) $opts['maxdepth']++;
+						foreach(self::find($options['url']?$file:parse_url($file,PHP_URL_PATH),$opts,true) as $p => $s)
 						{
 							unset($result[$p]);
 							$result[$p] = $s;
@@ -319,14 +346,13 @@ class egw_vfs extends vfs_stream_wrapper
 					}
 				}
 				closedir($dir);
-
-				if ($dirs_last)
-				{
-					self::_check_add($options,$path,$result);
-				}
+			}
+			if ($is_dir && (int)$options['mindepth'] == 0 && $dirs_last)
+			{
+				self::_check_add($options,$path,$result);
 			}
 		}
-		//_debug_array($result);
+		//echo $path; _debug_array($result);
 		if ($exec !== true && is_callable($exec))
 		{
 			if (!is_array($exec_params))
@@ -342,6 +368,7 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			return $result;
 		}
+		//echo "egw_vfs::find($path)="; _debug_array(array_keys($result));
 		if ($exec !== true)
 		{
 			return array_keys($result);
@@ -356,7 +383,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param string $path name of path to add
 	 * @param array &$result here we add the stat for the key $path, if the checks are successful
 	 */
-	private function _check_add($options,$path,&$result)
+	private static function _check_add($options,$path,&$result)
 	{
 		$type = $options['type'];	// 'd' or 'f'
 		
@@ -368,7 +395,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			return;	// not found, should not happen
 		}
-		if (isset($options['name_preg']) && !preg_match($options['name_preg'],basename($path)) ||
+		if (isset($options['name_preg']) && !preg_match($options['name_preg'],self::basename($path)) ||
 			isset($options['path_preg']) && !preg_match($options['path_preg'],$path))
 		{
 			return;	// wrong name or path
@@ -399,10 +426,15 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			return;	// not create/modified in the spezified time
 		}
+		// do we return url or just vfs pathes
+		if (!$options['url'])
+		{
+			$path = parse_url($path,PHP_URL_PATH);
+		}
 		$result[$path] = $stat;
 	}
 	
-	private function _check_num($value,$argument)
+	private static function _check_num($value,$argument)
 	{
 		if (is_int($argument) && $argument >= 0 || $argument[0] != '-' && $argument[0] != '+')
 		{
@@ -417,7 +449,7 @@ class egw_vfs extends vfs_stream_wrapper
 		//echo "_check_num($value,$argument) check > == ".(int)($value > (int)substr($argument,1))."\n";
 		return $value > (int) substr($argument,1);
 	}
-
+	
 	/**
 	 * Recursiv remove all given url's, including it's content if they are files
 	 *
@@ -426,7 +458,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function remove($urls)
 	{
-		return self::find($urls,array('dirs_last'=>true),array(__CLASS__,'_rm_rmdir'));
+		return self::find($urls,array('depth'=>true),array(__CLASS__,'_rm_rmdir'));
 	}
 	
 	/**
@@ -670,6 +702,32 @@ class egw_vfs extends vfs_stream_wrapper
 		(($mode & 0x0200) ? 'T' : '-'));
 
 		return $sP;
+	}
+	
+	/**
+	 * Human readable size values in k or M
+	 *
+	 * @param int $size
+	 * @return string
+	 */
+	static function hsize($size)
+	{
+		if ($size < 1024) return $size;
+		if ($size < 1024*1024) return sprintf('%3.1lfk',(float)$size/1024);
+		return sprintf('%3.1lfM',(float)$size/(1024*1024));
+	}
+
+	/**
+	 * like basename($path), but also working if the 1. char of the basename is non-ascii
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	static function basename($path)
+	{
+		$parts = explode('/',$path);
+		
+		return array_pop($parts);
 	}
 }
 
