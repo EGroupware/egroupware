@@ -8,6 +8,7 @@
 				<column width="30%"/>
 				<column/>
 				<column width="120"/>
+				<column width="120"/>
 				<column/>
 				<column/>
 				<column/>
@@ -16,10 +17,11 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="Type" id="type" align="center"/>
+					<nextmatch-sortheader label="Type" id="mime" align="center"/>
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Size" id="size"/>
 					<nextmatch-sortheader label="Modified" id="mtime"/>
+					<nextmatch-sortheader label="Created" id="ctime"/>
 					<nextmatch-sortheader label="Permissions" id="mode"/>
 					<nextmatch-sortheader id="uid" label="Owner"/>
 					<nextmatch-sortheader id="gid" label="Group"/>
@@ -34,6 +36,7 @@
 					<description options=",$row_cont[link]" id="${row}[name]" no_lang="1"/>
 					<description id="${row}[hsize]" align="right"/>
 					<date-time id="${row}[mtime]" readonly="true"/>
+					<date-time id="${row}[ctime]" readonly="true"/>
 					<description value="$row_cont[perms]" class="perms"/>
 					<description id="${row}[user]" no_lang="1"/>
 					<description id="${row}[group]" no_lang="1"/>

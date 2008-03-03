@@ -3,7 +3,7 @@
  * Filemanager - user interface
  *
  * @link http://www.egroupware.org
- * @package admin
+ * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -42,33 +42,15 @@ class filemanager_ui
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'filemanager.filemanager_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-//					'filter_label'   =>	// I  label for filter    (optional)
-//					'filter_help'    =>	// I  help-msg for filter (optional)
 					'no_filter'      => True,	// I  disable the 1. filter
 					'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
 					'no_cat'         => True,	// I  disable the cat-selectbox
-//					'cat_app'        =>     // I  application the cat's should be from, default app in get_rows
-//					'template'       =>	// I  template to use for the rows, if not set via options
-//					'header_left'    =>	// I  template to show left of the range-value, left-aligned (optional)
-//					'header_right'   =>	// I  template to show right of the range-value, right-aligned (optional)
-//					'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
-//					'never_hide'     => True,	// I  never hide the nextmatch-line if less then maxmatch entrie
 //					'lettersearch'   => True,	// I  show a lettersearch
 					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 					'start'          =>	0,	// IO position in list
-//					'num_rows'       =>	// IO number of rows to show, defaults to maxmatches from the general prefs
-//					'cat_id'         =>	// IO category, if not 'no_cat' => True
-//					'search'         =>	// IO search pattern
 					'order'          =>	'name',	// IO name of the column to sort after (optional for the sortheaders)
 					'sort'           =>	'ASC',	// IO direction of the sort: 'ASC' or 'DESC'
-//					'col_filter'     =>	// IO array of column-name value pairs (optional for the filterheaders)
-//					'filter'         =>	// IO filter, if not 'no_filter' => True
-//					'filter_no_lang' => True// I  set no_lang for filter (=dont translate the options)
-//					'filter_onchange'=> 'this.form.submit();'// I onChange action for filter, default: this.form.submit();
-//					'filter2'        =>	// IO filter2, if not 'no_filter2' => True
-//					'filter2_no_lang'=> True// I  set no_lang for filter2 (=dont translate the options)
-//					'filter2_onchange'=> 'this.form.submit();'// I onChange action for filter, default: this.form.submit();
-					'default_cols'   => '!comment',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames, 
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'path' => '/home/'.$GLOBALS['egw_info']['user']['account_lid'],
@@ -336,12 +318,13 @@ class filemanager_ui
 		$dir_is_writable = egw_vfs::is_writable($query['path']);
 
 		$rows = array();
-		foreach(egw_vfs::find($query['path'],array('mindepth'=>1,'maxdepth'=>1)) as $path)
+		foreach(egw_vfs::find($query['path'],array(
+			'mindepth' => 1, 'maxdepth' => 1,	// no recursion into subdirs
+			'order' => $query['order'], 'sort' => $query['sort'],
+			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
+			'need_mime' => true,
+		),true) as $path => $row)
 		{
-			$row = egw_vfs::stat($path);
-			$row['name'] = egw_vfs::basename($path);
-			$row['path'] = $path;
-			$row['mime'] = egw_vfs::mime_content_type($path);
 			$row['icon'] = self::mime_icon($row['mime']);
 			$row['perms'] = egw_vfs::int2mode($row['mode']);
 			// only show link if we have access to the file or dir
@@ -371,6 +354,6 @@ class filemanager_ui
 			}
 		}
 		//_debug_array($readonlys);
-		return count($rows);
+		return egw_vfs::$find_total;
 	}
 }

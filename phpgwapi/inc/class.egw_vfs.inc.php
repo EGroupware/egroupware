@@ -84,6 +84,12 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @var int
 	 */
 	static $user;
+	/**
+	 * Total of last find call
+	 *
+	 * @var int
+	 */
+	static $find_total;
 
 	/**
 	 * fopen working on just the eGW VFS
@@ -251,6 +257,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - ctime/mtime => (+|-|)N file/dir created/modified in the last N days
 	 * - depth => (+|-)N
 	 * - url => false(default),true allow (and return) full URL's instead of VFS pathes (only set it, if you know what you doing securitywise!)
+	 * - need_mime => false(default),true should we return the mime type
+	 * - order => name order rows by name column
+	 * - sort => (ASC|DESC) sort, default ASC
+	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
 	 * @param string/array/true $exec=null function to call with each found file or dir as first param or 
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param!
@@ -293,6 +303,10 @@ class egw_vfs extends vfs_stream_wrapper
 			{
 				$options['gid'] = 0;
 			}
+		}
+		if ($options['order'] == 'mime')
+		{
+			$options['need_mime'] = true;	// we need to return the mime colum
 		}
 		$url = $options['url'];
 
@@ -338,6 +352,8 @@ class egw_vfs extends vfs_stream_wrapper
 						$opts = $options;
 						if ($opts['mindepth']) $opts['mindepth']--;
 						if ($opts['maxdepth']) $opts['maxdepth']++;
+						unset($opts['order']);
+						unset($opts['limit']);
 						foreach(self::find($options['url']?$file:parse_url($file,PHP_URL_PATH),$opts,true) as $p => $s)
 						{
 							unset($result[$p]);
@@ -350,6 +366,47 @@ class egw_vfs extends vfs_stream_wrapper
 			if ($is_dir && (int)$options['mindepth'] == 0 && $dirs_last)
 			{
 				self::_check_add($options,$path,$result);
+			}
+		}
+		// ordering of the rows
+		if (isset($options['order']))
+		{
+			$sort = strtolower($options['sort']) == 'desc' ? '-' : '';
+			switch($options['order'])
+			{
+				// sort numerical
+				case 'size':
+				case 'uid':
+				case 'gid':
+				case 'mode':
+				case 'ctime':
+				case 'mtime':
+					uasort($result,create_function('$a,$b',$c='return '.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);'));
+					break;
+					
+				// sort alphanumerical
+				default:
+					$options['order'] = 'name';
+					// fall throught
+				case 'name':
+				case 'mime':
+				case 'comment': 	// ToDo: fetch it for sqlfs or oldvfs
+					uasort($result,create_function('$a,$b',$c='return '.$sort.'strcasecmp($a[\''.$options['order'].'\'],$b[\''.$options['order'].'\']);'));
+					break;
+			}
+			//echo "order='$options[order]', sort='$options[sort]' --> '$c'<br>\n";
+		}
+		// limit resultset
+		self::$find_total = count($result);
+		if (isset($options['limit']))
+		{
+			list($limit,$start) = explode(',',$options['limit']);
+			if (!$limit && !($limit = $GLOBALS['egw_info']['user']['preferences']['comman']['maxmatches'])) $limit = 15;
+			//echo "total=".egw_vfs::$find_total.", limit=$options[limit] --> start=$start, limit=$limit<br>\n";
+			
+			if ((int)$start || self::$find_total > $limit)
+			{
+				$result = array_slice($result,(int)$start,(int)$limit,true);
 			}
 		}
 		//echo $path; _debug_array($result);
@@ -394,8 +451,16 @@ class egw_vfs extends vfs_stream_wrapper
 		if (!($stat = self::url_stat($path,0)))
 		{
 			return;	// not found, should not happen
+		}			
+		$stat = array_slice($stat,13);	// remove numerical indices 0-12
+		$stat['name'] = self::basename($path);
+		$stat['path'] = $path;
+		if ($options['mime'] || $options['need_mime'])
+		{
+			$stat['mime'] = self::mime_content_type($path);
 		}
-		if (isset($options['name_preg']) && !preg_match($options['name_preg'],self::basename($path)) ||
+
+		if (isset($options['name_preg']) && !preg_match($options['name_preg'],$stat['name']) ||
 			isset($options['path_preg']) && !preg_match($options['path_preg'],$path))
 		{
 			return;	// wrong name or path
@@ -405,7 +470,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			return;	// wrong user or group
 		}
-		if (isset($options['mime']) && $options['mime'] != ($mime = self::mime_content_type($path)))
+		if (isset($options['mime']) && $options['mime'] != $stat['mime'])
 		{
 			list($type,$subtype) = explode('/',$options['mime']);
 			// no subtype (eg. 'image') --> check only the main type

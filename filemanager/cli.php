@@ -4,7 +4,7 @@
  * Filemanager - Command line interface: ls
  *
  * @link http://www.egroupware.org
- * @package admin
+ * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -58,7 +58,7 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd chmod [-r|--recursive] mode=[ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
 	echo "\t$cmd chown [-r|--recursive] user URL [URL2 ...]\n";
 	echo "\t$cmd chgrp [-r|--recursive] group URL [URL2 ...]\n";
-	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n)\n";
+	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n) [-limit N[,n]][-order (name|size|...)][-sort (ASC|DESC)]\n";
 	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
 	echo "\t$cmd umount URL|path\n";
 	
@@ -94,7 +94,7 @@ while(!is_null($option = array_shift($argv)))
 			{
 				if (!in_array($option,array('-type','-depth','-mindepth','-maxdepth','-name','-path',
 					'-uid','-user','-nouser','-gid','-group','-nogroup','-mime',
-					'-empty','-size','-cmin','-ctime','-mmin','-mtime')))
+					'-empty','-size','-cmin','-ctime','-mmin','-mtime','-limit','-order','-sort')))
 				{
 					usage();
 				}
