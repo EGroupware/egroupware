@@ -24,12 +24,9 @@ class filemanager_hooks
 		{
 			$title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 			$file = Array(
-				array(
-					'Search',
-					'text' => 'Search',
-					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.uifilemanager.index', 'action'=>'search')),
-				),
-				'New GUI' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index')),
+				'New interface' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index')),
+				'Old interface' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.uifilemanager.index')),
+				'Search' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.uifilemanager.index', 'action'=>'search')),
 			);
 			display_sidebox($appname,$title,$file);
 		}

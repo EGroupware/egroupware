@@ -276,11 +276,11 @@ class egw_vfs extends vfs_stream_wrapper
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'])).'$/';
+			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'])).'$/i';
 		}
 		if (isset($options['path']) && !isset($options['preg_path']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'])).'$/';
+			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'])).'$/i';
 		}
 		if (!isset($options['uid']))
 		{
@@ -332,7 +332,10 @@ class egw_vfs extends vfs_stream_wrapper
 			if (!$url) $path = egw_vfs::PREFIX . $path;
 
 			$is_dir = is_dir($path);
-			
+			if (!isset($options['remove']))
+			{
+				$options['remove'] = count($base) == 1 ? ($path == '/' ? 1 : strlen($path)+1) : 0;
+			}
 			if ((int)$options['mindepth'] == 0 && (!$dirs_last || !$is_dir))
 			{
 				self::_check_add($options,$path,$result);
@@ -439,8 +442,9 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param array $options options, see egw_vfs::find(,$options)
 	 * @param string $path name of path to add
 	 * @param array &$result here we add the stat for the key $path, if the checks are successful
+	 * @param int $remove=0 how many leading chars to remove from path to get name, default 0 = use basename
 	 */
-	private static function _check_add($options,$path,&$result)
+	private static function _check_add($options,$path,&$result,$remove=0)
 	{
 		$type = $options['type'];	// 'd' or 'f'
 		
@@ -453,8 +457,8 @@ class egw_vfs extends vfs_stream_wrapper
 			return;	// not found, should not happen
 		}			
 		$stat = array_slice($stat,13);	// remove numerical indices 0-12
-		$stat['name'] = self::basename($path);
-		$stat['path'] = $path;
+		$stat['name'] = $options['remove'] > 0 ? substr($path,$options['remove']) : self::basename($path);
+		$stat['path'] = parse_url($path,PHP_URL_PATH);
 		if ($options['mime'] || $options['need_mime'])
 		{
 			$stat['mime'] = self::mime_content_type($path);

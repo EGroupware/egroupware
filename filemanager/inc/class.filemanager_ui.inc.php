@@ -42,10 +42,10 @@ class filemanager_ui
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'filemanager.filemanager_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'no_filter'      => True,	// I  disable the 1. filter
+					'filter'         => '1',	// current dir only
 					'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
 					'no_cat'         => True,	// I  disable the cat-selectbox
-//					'lettersearch'   => True,	// I  show a lettersearch
+					'lettersearch'   => True,	// I  show a lettersearch
 					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 					'start'          =>	0,	// IO position in list
 					'order'          =>	'name',	// IO name of the column to sort after (optional for the sortheaders)
@@ -77,6 +77,7 @@ class filemanager_ui
 			unset($content['nm']['rows']);
 		}
 		$clipboard_files = $GLOBALS['egw']->session->appsession('clipboard_files','filemanager');
+		$clipboard_type = $GLOBALS['egw']->session->appsession('clipboard_type','filemanager');
 
 		if ($content['button'])
 		{
@@ -116,7 +117,6 @@ class filemanager_ui
 					}
 					break;
 				case 'paste':
-					$clipboard_type = $GLOBALS['egw']->session->appsession('clipboard_type','filemanager');
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
 					break;
 				case 'upload':
@@ -142,15 +142,21 @@ class filemanager_ui
 		{
 			$dir_is_writable = egw_vfs::is_writable($content['nm']['path']);
 		}
+		$content['paste_tooltip'] = '<p><b>'.lang('%1 the following files into current directory',
+			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>';
 		//_debug_array($content);
 		$readonlys['button[paste]'] = !$clipboard_files;
 		$readonlys['button[createdir]'] = !$dir_is_writable;
-		$readonlys['button[upload]'] = !$dir_is_writable;
+		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
 		
-		if ($dir_is_writable) $sel_options['action']['delete'] = lang('Delete');
+		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['delete'] = lang('Delete');
 		$sel_options['action']['copy'] = lang('Copy to clipboard');
-		if ($dir_is_writable) $sel_options['action']['cut'] = lang('Cut to clipboard');
-
+		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['cut'] = lang('Cut to clipboard');
+		
+		$sel_options['filter'] = array(
+			'1' => 'Current directory',
+			''  => 'All subdirectories',
+		);
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 	
@@ -315,14 +321,31 @@ class filemanager_ui
 			$rows = array();
 			$query['total'] = 0;
 		}
-		$dir_is_writable = egw_vfs::is_writable($query['path']);
-
-		$rows = array();
+		$rows = $dir_is_writable = array();
+		if($query['searchletter'] && !empty($query['search']))
+		{
+			$namefilter = '/^'.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
+			if ($query['searchletter'] == strtolower($query['search'][0]))
+			{
+				$namefilter = '/^('.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'|'.
+					str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).')/i';
+			}
+		}
+		elseif ($query['searchletter'])
+		{
+			$namefilter = '/^'.$query['searchletter'].'/i';
+		}
+		elseif(!empty($query['search']))
+		{
+			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
+		}
 		foreach(egw_vfs::find($query['path'],array(
-			'mindepth' => 1, 'maxdepth' => 1,	// no recursion into subdirs
+			'mindepth' => 1, 
+			'maxdepth' => $query['filter'] ? $query['filter'] : null,
 			'order' => $query['order'], 'sort' => $query['sort'],
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
 			'need_mime' => true,
+			'name_preg' => $namefilter,
 		),true) as $path => $row)
 		{
 			$row['icon'] = self::mime_icon($row['mime']);
@@ -348,7 +371,12 @@ class filemanager_ui
 
 			$rows[++$n] = $row;
 			
-			if (!$dir_is_writable)
+			$dir = dirname($path);
+			if (!isset($dir_is_writable[$dir]))
+			{
+				$dir_is_writable[$dir] = egw_vfs::is_writable($dir);
+			}
+			if (!$dir_is_writable[$dir])
 			{
 				$readonlys["delete[$path]"] = true;	// no rights to delete the file
 			}
