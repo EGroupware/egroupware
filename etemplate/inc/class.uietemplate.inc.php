@@ -1855,8 +1855,8 @@ foreach($sess as $key => $val)
 					}
 					$on = str_replace($matches[0],$matches[1],$on);
 				}
-				
-				if (preg_match('/egw::lang\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {
+				// we need to search ungready (shortest possible match), to avoid catching to much
+				if (preg_match('/egw::lang\(["\']{1}(.*)["\']{1}\)/U',$on,$matches)) {
 					$str = lang($matches[1]);
 					$on = str_replace($matches[0],'\''.addslashes($str).'\'',$on);
 				}
