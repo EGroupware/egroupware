@@ -44,8 +44,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @var array
 	 */
 	protected static $fstab = array(
-		'/' => 'sqlfs://$user:$pass@$host/',
-//		'/' => 'oldvfs://$user:$pass@$host/',
+//		'/' => 'sqlfs://$user:$pass@$host/',
+		'/' => 'oldvfs://$user:$pass@$host/',
 //		'/files' => 'oldvfs://$user:$pass@$host/home/Default',
 //		'/images' => 'http://localhost/egroupware/phpgwapi/templates/idots/images',
 //		'/home/ralf/linux' => '/home/ralf',		// we probably need to forbid direct filesystem access for security reasons!
@@ -692,7 +692,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	static function init_static()
 	{
 		stream_register_wrapper(self::SCHEME,__CLASS__);
-		
+
 		if ($GLOBALS['egw_info']['server']['vfs_fstab'] && 
 			is_array($fstab = unserialize($GLOBALS['egw_info']['server']['vfs_fstab'])))
 		{
