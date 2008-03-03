@@ -60,15 +60,16 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd chgrp [-r|--recursive] group URL [URL2 ...]\n";
 	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n) [-limit N[,n]][-order (name|size|...)][-sort (ASC|DESC)]\n";
 	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
-	echo "\t$cmd umount URL|path\n";
+	echo "\t$cmd umount [-a|--all (restores default mounts)] URL|path\n";
 	
+	echo "\nCommon options: --user user --password password [--domain domain] can be used to pass eGW credentials without using the URL writing.\n";
 	echo "\nURL: {vfs|sqlfs|oldvfs}://user:password@domain/home/user/file, /dir/file, ...\n";
 	
 	echo "\nUse root_{header-admin|config-user} as user and according password for root access (no user specific access control and chown).\n\n";
 	
 	exit;	
 }
-$long = $numeric = $recursive = $perms = false;
+$long = $numeric = $recursive = $perms = $all = false;
 $argv = $_SERVER['argv'];
 $cmd = basename(array_shift($argv),'.php');
 if ($argv[0][0] != '-' && $argv[0][0] != '/' && strpos($argv[0],'://') === false)
@@ -146,19 +147,66 @@ while(!is_null($option = array_shift($argv)))
 		case '-d': case '--date':
 			$time = strtotime(array_shift($argv));
 			break;
+			
+		case '-a': case '--all':
+			$all = true;
+			break;
+			
+		case '--user':
+			$user = array_shift($argv);
+			break;
+		case '--password':
+		case '--passwd':
+			$passwd = array_shift($argv);
+			break;
+		case '--domain':
+			$domain = array_shift($argv);
+			break;
 	}
+}
+if ($user && $passwd)
+{
+	load_egw($user,$passwd,$domain ? $domain : 'default');
 }
 $argv = $args;
 $argc = count($argv);
 
 switch($cmd)
 {
+	case 'umount':
+		if ($argc != 1 && !$all)
+		{
+			usage();
+		}
+		if (($url = $argv[0])) load_wrapper($url);
+		if(!egw_vfs::$is_root)
+		{
+			die("You need to be root to do that!\n");
+		}
+		if ($all)
+		{
+			config::save_value('vfs_fstab',$GLOBALS['egw_info']['server']['vfs_fstab']='','phpgwapi');
+			echo "Restored default mounts:\n";
+		}
+		elseif (!egw_vfs::umount($url))
+		{
+			die("$url is NOT mounted!\n");
+		}
+		else
+		{
+			echo "Successful unmounted $url:\n";
+		}
+		// fall trough to output current mount table
 	case 'mount':
 		if ($argc > 2)
 		{
 			usage();
 		}
 		load_wrapper($url=$argv[0]);
+		if($argc > 1 && !egw_vfs::$is_root)
+		{
+			die("You need to be root to do that!\n");
+		}
 		$fstab = egw_vfs::mount($url,$path=$argv[1]);
 		if (is_array($fstab))
 		{
@@ -169,7 +217,7 @@ switch($cmd)
 		}
 		elseif ($fstab === false)
 		{
-			echo "URL '$url' not found!\n";
+			echo "URL '$url' not found or permission denied (are your root?)!\n";
 		}
 		else
 		{
@@ -177,13 +225,6 @@ switch($cmd)
 		}
 		break;
 
-	case 'umount':
-		if ($argc != 1)
-		{
-			usage();
-		}
-		egw_vfs::umount($argv[0]);
-		break;
 
 	case 'find':
 		do_find($argv,$find_options);
@@ -391,52 +432,7 @@ function load_wrapper($url)
 		case 'sqlfs':
 			if (!isset($GLOBALS['egw_info']))
 			{
-				$_GET['domain'] = parse_url($url,PHP_URL_HOST);
-				$GLOBALS['egw_login_data'] = array(
-					'login'  => parse_url($url,PHP_URL_USER),
-					'passwd' => parse_url($url,PHP_URL_PASS),
-					'passwd_type' => 'text',
-				);
-				
-				if (is_dir('/tmp')) ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
-				
-				$GLOBALS['egw_info'] = array(
-					'flags' => array(
-						'currentapp' => 'filemanager',
-						'noheader' => true,
-						'autocreate_session_callback' => 'user_pass_from_argv',
-					)
-				);
-				
-				if (substr($GLOBALS['egw_login_data']['login'],0,5) != 'root_')
-				{
-					include('../header.inc.php');
-				}
-				else
-				{
-					$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
-					include('../header.inc.php');
-				
-					if ($GLOBALS['egw_login_data']['login'] == 'root_'.$GLOBALS['egw_info']['server']['header_admin_user'] &&
-						_check_pw($GLOBALS['egw_info']['server']['header_admin_password'],$GLOBALS['egw_login_data']['passwd']) ||
-						$GLOBALS['egw_login_data']['login'] == 'root_'.$GLOBALS['egw_domain'][$_GET['domain']]['config_user'] &&
-						_check_pw($GLOBALS['egw_domain'][$_GET['domain']]['config_passwd'],$GLOBALS['egw_login_data']['passwd']))
-					{
-						echo "\nRoot access granted!\n";
-						egw_vfs::$is_root = true;
-					}
-					else
-					{
-						die("Unknown user or password!\n");
-					}
-					set_exception_handler('cli_exception_handler');	// otherwise we get html!
-				}
-				$cmd = $GLOBALS['cmd'];
-				if (!in_array($cmd,array('ls','find','mount','umount')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
-				{
-					echo "\nError: eGroupWare's files directory {$GLOBALS['egw_info']['server']['files_dir']} is NOT writable by the user running ".basename(__FILE__)."!\n".
-						"--> Please run it as the same user the webserver uses or root, otherwise the $cmd command will fail!\n\n";
-				}
+				load_egw(parse_url($url,PHP_URL_USER),parse_url($url,PHP_URL_PASS),parse_url($url,PHP_URL_HOST));
 			}
 			require_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
 			break;
@@ -448,6 +444,64 @@ function load_wrapper($url)
 				die("Unknown scheme '$scheme' in $url !!!\n\n");
 			}
 			break;
+	}
+}
+
+/**
+ * Start the eGW session, exits on wrong credintials
+ *
+ * @param string $user
+ * @param string $passwd
+ * @param string $domain
+ */
+function load_egw($user,$passwd,$domain='default')
+{
+	echo "load_egw($user,$passwd,$domain)\n";
+	$_GET['domain'] = $domain;
+	$GLOBALS['egw_login_data'] = array(
+		'login'  => $user,
+		'passwd' => $passwd,
+		'passwd_type' => 'text',
+	);
+	
+	if (is_dir('/tmp')) ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
+	
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'filemanager',
+			'noheader' => true,
+			'autocreate_session_callback' => 'user_pass_from_argv',
+		)
+	);
+	
+	if (substr($user,0,5) != 'root_')
+	{
+		include('../header.inc.php');
+	}
+	else
+	{
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
+		include('../header.inc.php');
+	
+		if ($user == 'root_'.$GLOBALS['egw_info']['server']['header_admin_user'] &&
+			_check_pw($GLOBALS['egw_info']['server']['header_admin_password'],$passwd) ||
+			$user == 'root_'.$GLOBALS['egw_domain'][$_GET['domain']]['config_user'] &&
+			_check_pw($GLOBALS['egw_domain'][$_GET['domain']]['config_passwd'],$passwd))
+		{
+			echo "\nRoot access granted!\n";
+			egw_vfs::$is_root = true;
+		}
+		else
+		{
+			die("Unknown user or password!\n");
+		}
+		set_exception_handler('cli_exception_handler');	// otherwise we get html!
+	}
+	$cmd = $GLOBALS['cmd'];
+	if (!in_array($cmd,array('ls','find','mount','umount')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
+	{
+		echo "\nError: eGroupWare's files directory {$GLOBALS['egw_info']['server']['files_dir']} is NOT writable by the user running ".basename(__FILE__)."!\n".
+			"--> Please run it as the same user the webserver uses or root, otherwise the $cmd command will fail!\n\n";
 	}
 }
 
