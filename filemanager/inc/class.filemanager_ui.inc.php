@@ -19,6 +19,7 @@ class filemanager_ui
 	 */
 	var $public_functions = array(
 		'index' => true,
+		'file' => true,
 	);
 	
 	/**
@@ -27,7 +28,7 @@ class filemanager_ui
 	 * @param array $content=null
 	 * @param string $msg=null
 	 */
-	function index($content=null,$msg=null)
+	function index(array $content=null,$msg=null)
 	{
 		$tpl = new etemplate('filemanager.index');
 
@@ -60,6 +61,7 @@ class filemanager_ui
 			{
 				$content['nm']['path'] = $path;
 			}
+			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 		}
 		$content['nm']['msg'] = $msg;
 
@@ -145,6 +147,7 @@ class filemanager_ui
 		$content['paste_tooltip'] = '<p><b>'.lang('%1 the following files into current directory',
 			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>';
 		//_debug_array($content);
+
 		$readonlys['button[paste]'] = !$clipboard_files;
 		$readonlys['button[createdir]'] = !$dir_is_writable;
 		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
@@ -359,8 +362,7 @@ class filemanager_ui
 				}
 				else
 				{
-					$row['link'] = '/index.php?menuaction=filemanager.uifilemanager.view&path='.base64_encode(dirname($path)).'&file='.base64_encode(egw_vfs::basename($path));
-//					$row['link'] = '/filemanager/webdav.php'.$path;
+					$row['link'] = self::download_url($path);
 				}
 			}
 			$row['user'] = $row['uid'] ? $GLOBALS['egw']->accounts->id2name($row['uid']) : 'root';
@@ -383,5 +385,179 @@ class filemanager_ui
 		}
 		//_debug_array($readonlys);
 		return egw_vfs::$find_total;
+	}
+	
+	/**
+	 * URL to download the file
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	private static function download_url($path)
+	{
+		return '/index.php?menuaction=filemanager.uifilemanager.view&path='.base64_encode(dirname($path)).'&file='.base64_encode(egw_vfs::basename($path));
+		// better use webdav url, if we recognice the session cookie of the browser
+//		return '/filemanager/webdav.php'.$path;
+	}
+	
+	/**
+	 * Preferences of a file/directory
+	 *
+	 * @param array $content=null
+	 */
+	function file(array $content=null)
+	{
+		$tpl = new etemplate('filemanager.file');
+		
+		if (!is_array($content))
+		{
+			if (!($stat = egw_vfs::stat($path = $_GET['path'])))
+			{
+				$content['msg'] = lang('File or directory not found!');
+			}
+			else
+			{
+				$content = $stat;
+				$content['name'] = egw_vfs::basename($path);
+				$content['dir'] = dirname($path);
+				$content['path'] = $path;
+				$content['hsize'] = egw_vfs::hsize($stat['size']);
+				$content['mime'] = egw_vfs::mime_content_type($path);
+				$content['icon'] = self::mime_icon($content['mime']);
+				$content['gid'] *= -1;	// our widgets use negative gid's
+			}
+			if (!($content['is_dir'] = egw_vfs::is_dir($path)))
+			{
+				$content['perms']['executable'] = (int)!!($content['mode'] & 0111);
+				$mask = 6;
+				$content['link'] = $GLOBALS['egw']->link(self::download_url($path));
+				if (preg_match('/^text/',$content['mime']) && $content['size'] < 100000)
+				{
+					$content['text_content'] = file_get_contents(egw_vfs::PREFIX.$path);
+				}
+			}
+			else
+			{
+				$content['perms']['sticky'] = (int)!!($content['mode'] & 0x201);
+				$mask = 7;
+			}
+			foreach(array('owner' => 6,'group' => 3,'other' => 0) as $name => $shift)
+			{
+				$content['perms'][$name] = ($content['mode'] >> $shift) & $mask;
+			}
+		}
+		else
+		{
+			$path = $content['path'];
+			foreach($content['old'] as $name => $old_value)
+			{
+				if (isset($content[$name]) && $old_value != $content[$name])
+				{
+					switch($name)
+					{
+						case 'name':
+							if (egw_vfs::rename($path,$to = $content['dir'].'/'.$content['name']))
+							{
+								$msg = lang('Renamed %1 to %2.',$path,$to).' ';
+							}
+							$path = $to;
+							break;
+						default:
+							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
+							$cmd = array('egw_vfs',$name2cmd[$name]);
+							$value = $name == 'perms' ? self::perms2mode($content['perms']) : $content[$name];
+							if ($content['modify_subs'] && $name == 'perms')
+							{
+								egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
+								egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
+							}
+							elseif ($content['modify_subs'])
+							{
+								egw_vfs::find($path,null,$cmd,array($value));
+							}
+							else
+
+							{
+								call_user_func_array($cmd,array($path,$value));
+							}
+							$msg .= lang('Permissions changed for %1.',$path.($content['modify_subs']?' '.lang('and all it\'s childeren'):''));
+							break;
+					}
+				}
+			}
+			// refresh opender and close our window
+			$link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index','msg'=>$msg));
+			$js = "opener.location.href='$link'; window.close();";
+			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
+			$GLOBALS['egw']->common->egw_exit();
+		}
+		if (($readonlys['uid'] = !egw_vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
+		// only owner can change group & perms
+		if (($readonlys['gid'] = !egw_vfs::$is_root && $content['uid'] != egw_vfs::$user ||
+			parse_url(egw_vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
+		{
+			if (!$content['gid']) $content['ro_gid_root'] = 'root';
+			foreach($content['perms'] as $name => $value)
+			{
+				$readonlys['perms['.$name.']'] = true;
+			}
+		}
+		$readonlys['name'] = !egw_vfs::is_writable($content['dir']);
+		
+		if (parse_url(egw_vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs')
+		{
+			
+		}
+
+		if ($content['is_dir'])
+		{
+			$sel_options['owner']=$sel_options['group']=$sel_options['other'] = array(
+				7 => lang('Display and modification of content'),
+				5 => lang('Display of content'),
+				0 => lang('No access'),
+			);
+		}
+		else
+		{
+			$sel_options['owner']=$sel_options['group']=$sel_options['other'] = array(
+				6 => lang('Read & write access'),
+				4 => lang('Read access only'),
+				0 => lang('No access'),
+			);			
+		}
+		$preserve = $content;
+		if (!isset($preserve['old']))
+		{
+			$preserve['old'] = array(
+				'perms' => $content['perms'],
+				'name'  => $content['name'],
+				'uid'   => $content['uid'],
+				'gid'   => $content['gid'],
+			);
+		}
+		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.$path;
+
+		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
+	}
+	
+	/**
+	 * Convert perms array back to integer mode
+	 *
+	 * @param array $perms with keys owner, group, other, executable, sticky
+	 * @return int
+	 */
+	private function perms2mode(array $perms)
+	{
+		$mode = $perms['owner'] << 6 | $perms['group'] << 3 | $prems['other'];
+		if ($mode['executable'])
+		{
+			$mode |= 0111;
+		}
+		if ($mode['sticky'])
+		{
+			$mode |= 0x201;
+		}
+		return $mode;
 	}
 }

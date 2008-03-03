@@ -42,7 +42,7 @@
 					<description id="${row}[group]" no_lang="1"/>
 					<description id="${row}[comment]"/>
 					<hbox align="right">
-						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership"/>
+						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=400,scrollbars=yes,status=yes'); return false;"/>
 						<button id="delete[$row_cont[path]]" image="delete" label="Delete" statustext="Delete this file or directory" onclick="return confirm('Delete this file or directory');" align="center"/>
 						<checkbox id="checked[]" align="right" options="$row_cont[path]"/>
 					</hbox>
@@ -57,7 +57,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row disabled="!@nm[msg]">
 					<description span="all" class="redItalic" id="nm[msg]"/>
 					<description/>
 				</row>
