@@ -395,15 +395,16 @@ class filemanager_ui
 	
 	/**
 	 * URL to download the file
+	 * 
+	 * We use our webdav handler as download url instead of an own download method. 
+	 * The webdav hander (filemanager/webdav.php) recognices eGW's session cookie and of cause understands regular GET requests.
 	 *
 	 * @param string $path
 	 * @return string
 	 */
 	private static function download_url($path)
 	{
-		return '/index.php?menuaction=filemanager.uifilemanager.view&path='.base64_encode(dirname($path)).'&file='.base64_encode(egw_vfs::basename($path));
-		// better use webdav url, if we recognice the session cookie of the browser
-//		return '/filemanager/webdav.php'.$path;
+		return '/filemanager/webdav.php'.$path;
 	}
 	
 	/**
