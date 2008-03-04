@@ -456,25 +456,4 @@ class oldvfs_webdav_server extends HTTP_WebDAV_Server
 		
 		return "";	// this is as the filesystem example handler does it, no true or false ...
 	}
-
-    /**
-	 * auth check in the session creation in dav.php, to avoid being redirected to login.php
-	 *
-	 * @param string $type
-	 * @param string $login account_lid or account_lid@domain
-	 * @param string $password this is checked in the session creation
-	 * @return boolean true if authorized or false otherwise
-	 */
-	function checkAuth($type,$login,$password)
-	{
-		list($account_lid,$domain) = explode('@',$login);
-		
-		$auth = ($login === $GLOBALS['egw_info']['user']['account_lid'] ||
-			($account_lid === $GLOBALS['egw_info']['user']['account_lid'] && $domain === $GLOBALS['egw']->session->account_domain)) &&
-			$GLOBALS['egw_info']['user']['apps']['filemanager'];
-
-		if ($this->debug) error_log("vfs_webdav_server::checkAuth('$type','$login','\$password'): account_lid='$account_lid', domain='$domain' ==> ".(int)$auth);
-
-		return $auth;
-	}
 }
