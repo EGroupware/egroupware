@@ -82,6 +82,7 @@ custom contact-address, leave empty to use information from most recent link	inf
 custom contact-information, leave emtpy to use information from most recent link	infolog	en	Custom contact-information, leave emtpy to use information from most recent link
 custom fields	infolog	en	Custom Fields
 custom fields, typ and status	common	en	Custom fields, type and status
+custom from	infolog	en	Custom from
 custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type
 customfields	infolog	en	Customfields
@@ -90,6 +91,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	en	date created
 dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
+default categorie for new infolog entries	infolog	en	Default categorie for new Infolog entries
 default filter for infolog	infolog	en	Default Filter for InfoLog
 default status for a new log entry	infolog	en	default status for a new log entry
 delegated	infolog	en	delegated
@@ -140,6 +142,7 @@ error: saving the entry	infolog	en	Error: saving the entry
 error: the entry has been updated since you opened it for editing!	infolog	en	Error: the entry has been updated since you opened it for editing!
 existing links	infolog	en	Existing links
 fax	infolog	en	Fax
+field must not be empty !!!	infolog	en	Field must not be empty !!!
 fieldseparator	infolog	en	Fieldseparator
 finish	infolog	en	finish
 for which types should this field be used	infolog	en	for which types should this field be used
@@ -223,6 +226,7 @@ own	infolog	en	own
 own open	infolog	en	own open
 own overdue	infolog	en	own overdue
 own upcoming	infolog	en	own upcoming
+parent	infolog	en	Parent
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	path on (web-)serverside<br>eg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	infolog	en	pattern for search in Addressbook
@@ -235,6 +239,8 @@ phonecall	infolog	en	Phone Call
 planned	infolog	en	planned
 planned time	infolog	en	planned time
 price	infolog	en	Price
+pricelist	infolog	en	Pricelist
+primary link	infolog	en	primary link
 priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
@@ -303,6 +309,7 @@ status ...	infolog	en	Status ...
 sub	infolog	en	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	en	Sub-entries become subs of the parent or main entries, if there's no parent
 subject	infolog	en	Subject
+sum	infolog	en	Sum
 task	infolog	en	ToDo
 template	infolog	en	Template
 test import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
@@ -349,6 +356,7 @@ yes, noone can purge deleted items	infolog	en	Yes, noone can purge deleted items
 yes, only admins can purge deleted items	infolog	en	Yes, only admins can purge deleted items
 yes, with larger fontsize	infolog	en	Yes, with larger fontsize
 yes, with purging of deleted items possible	infolog	en	Yes, with purging of deleted items possible
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	en	You can choose a categorie to be preselected, when you create a new Infolog entry
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
 you have entered an invalid ending date	infolog	en	You have entered an invalid due date
 you have entered an invalid starting date	infolog	en	You have entered an invalid starting date

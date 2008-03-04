@@ -36,6 +36,28 @@ $show_details = array(
 	1 => lang('Yes'),
 	2 => lang('Only for details'),
 );
+/**
+ * Return InoLog Categories (used for setting )
+ *
+ * @return array
+ */
+function all_cats()
+{
+	$categories = new categories('','infolog');
+			
+	foreach((array)$categories->return_sorted_array(0,False,'','','',true) as $cat)
+	{
+		$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
+
+		if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
+		{
+			$s .= ' &#9830;';
+		}
+		$sel_options[$cat['id']] = $s;	// 0.9.14 only
+	}
+	return $sel_options;
+}
+
 /* Settings array for this app */
 $GLOBALS['settings'] = array(
 	'defaultFilter' => array(
@@ -121,6 +143,16 @@ $GLOBALS['settings'] = array(
 		'xmlrpc' => True,
 		'admin'  => False
 	),
+	'cat_add_default' => array(
+		'type'   => 'select',
+		'label'  => 'Default categorie for new Infolog entries',
+		'name'   => 'cat_add_default',
+		'values' => all_cats(),
+		'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',
+		'xmlrpc' => True,
+		'admin'  => False
+	),
+	
 );
 unset($ui);
 unset($show_home);
@@ -196,3 +228,4 @@ $GLOBALS['settings']['notify_start_responsible'] = array(
 	'xmlrpc' => True,
 	'admin'  => False,
 );
+
