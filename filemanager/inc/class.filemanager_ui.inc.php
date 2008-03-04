@@ -9,7 +9,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
+error_log(__FILE__);
 class filemanager_ui
 {
 	/**
@@ -62,6 +62,14 @@ class filemanager_ui
 				$content['nm']['path'] = $path;
 			}
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
+		}
+		// check if we have a failed upload AND upload_max_filesize >= post_max_size --> no $_POST array
+		if ($_GET['post_empty'] && self::km2int(ini_get('upload_max_filesize')) >= self::km2int(ini_get('post_max_size')) ||
+			// or size bigger as upload_max_filesize
+			$content['button']['upload'] && (!is_array($content['upload']) || !is_uploaded_file($content['upload']['tmp_name'])))
+		{
+			$msg = lang('Error uploading file!')."\n".self::max_upload_size_message();
+			unset($content['button']);
 		}
 		$content['nm']['msg'] = $msg;
 
@@ -145,8 +153,8 @@ class filemanager_ui
 			$dir_is_writable = egw_vfs::is_writable($content['nm']['path']);
 		}
 		$content['paste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
-			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' :
-			'';
+			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
+		$content['upload_size'] = self::max_upload_size_message();
 		//_debug_array($content);
 
 		$readonlys['button[paste]'] = !$clipboard_files;
@@ -163,7 +171,47 @@ class filemanager_ui
 		);
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
-	
+
+	/**
+	 * Convert numbers like '32M' or '512k' to integers
+	 *
+	 * @param string $size
+	 * @return int
+	 */
+	private static function km2int($size)
+	{
+		if (!is_numeric($size))
+		{
+			switch(strtolower(substr($size,-1)))
+			{
+				case 'm':
+					$size = 1024*1024*(int)$size;
+					break;
+				case 'k':
+					$size = 1024*(int)$size;
+					break;
+			}
+		}
+		return (int)$size;
+	}
+
+	/**
+	 * Message containing the max Upload size from the current php.ini settings
+	 * 
+	 * We have to take the smaler one of upload_max_filesize AND post_max_size-2800 into account.
+	 * memory_limit does NOT matter any more, because of the stream-interface of the vfs.
+	 *
+	 * @return string
+	 */
+	static function max_upload_size_message()
+	{
+		$upload_max_filesize = ini_get('upload_max_filesize');
+		$post_max_size = ini_get('post_max_size');
+		$max_upload = min(self::km2int($upload_max_filesize),self::km2int($post_max_size)-2800);
+		
+		return lang('Maximum size for uploads: %1 (php.ini: upload_max_filesize=%2, post_max_size=%3)',egw_vfs::hsize($max_upload),$upload_max_filesize,$post_max_size);
+	}
+
 	/**
 	 * Run a certain action with the selected file
 	 *
