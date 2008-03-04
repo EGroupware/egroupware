@@ -429,7 +429,7 @@ foreach($sess as $key => $val)
 				if ($this->sitemgr) return false;
 				//echo "uitemplate::process_exec() id='$_POST[etemplate_exec_id]' invalid session-data !!!"; _debug_array($_SESSION);
 				// this prevents an empty screen, if the sessiondata gets lost somehow
-				$this->location(array('menuaction' => $_GET['menuaction']));
+				$this->location(array('menuaction' => $_GET['menuaction'],'post_empty' => (int)!$_POST));
 			}
 			$this->name_vars = $session_data['name_vars'];
 			if (isset($submit_button) && !empty($submit_button))
