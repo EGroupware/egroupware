@@ -144,8 +144,9 @@ class filemanager_ui
 		{
 			$dir_is_writable = egw_vfs::is_writable($content['nm']['path']);
 		}
-		$content['paste_tooltip'] = '<p><b>'.lang('%1 the following files into current directory',
-			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>';
+		$content['paste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
+			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' :
+			'';
 		//_debug_array($content);
 
 		$readonlys['button[paste]'] = !$clipboard_files;
@@ -220,7 +221,7 @@ class filemanager_ui
 					if (!egw_vfs::is_dir($path))
 					{
 						$to = $dir.'/'.egw_vfs::basename($path);
-						if (egw_vfs::copy($path,$to))
+						if ($path != $to && egw_vfs::copy($path,$to))
 						{
 							++$files;
 						}
@@ -235,6 +236,11 @@ class filemanager_ui
 						foreach(egw_vfs::find($path) as $p)
 						{
 							$to = $dir.substr($p,$len);
+							if ($to == $p)	// cant copy into itself!
+							{
+								++$errs;
+								continue;
+							}
 							if (($is_dir = egw_vfs::is_dir($p)) && egw_vfs::mkdir($to,null,STREAM_MKDIR_RECURSIVE))
 							{
 								++$dirs;
@@ -260,7 +266,7 @@ class filemanager_ui
 				foreach($selected as $path)
 				{
 					$to = $dir.'/'.egw_vfs::basename($path);
-					if (egw_vfs::rename($path,$to))
+					if ($path != $to && egw_vfs::rename($path,$to))
 					{
 						++$files;
 					}
