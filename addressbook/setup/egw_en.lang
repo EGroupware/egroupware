@@ -343,6 +343,7 @@ tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
 translation	addressbook	en	Translation
 type	addressbook	en	Type
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
+update fields by edited organisations?	admin	en	Update Fields by edited organisations?
 updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)

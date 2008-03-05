@@ -246,8 +246,12 @@ class bocontacts extends socontacts
 		{
 			$this->own_account_acl = array_merge($this->own_account_acl,array('n_prefix','n_given','n_middle','n_family','n_suffix'));
 		}
+		if ($GLOBALS['egw_info']['server']['org_fileds_to_update'])
+		{
+			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
+		}
 	}
-
+	
 	/**
 	 * calculate the file_as string from the contact and the file_as type
 	 *
@@ -615,8 +619,8 @@ class bocontacts extends socontacts
 			list($name,$value) = explode(':',$part);
 			$org[$name] = $value;
 		}
+				
 		$contacts = parent::search('',$this->org_fields,'','','',false,'AND',false,$org);
-		
 		if (!$contacts) return false;
 		
 		// create a statistic about the commonness of each fields values
@@ -625,7 +629,12 @@ class bocontacts extends socontacts
 		{
 			foreach($contact as $name => $value)
 			{
-				$fields[$name][$value]++;
+				if ($name != 'cat_id') $fields[$name][$value]++;
+			}
+			foreach(explode(',',$contact['cat_id']) as $part)
+			{
+				list($name) = explode(',',$part);
+				$fields['cat_id'][$name]++;
 			}
 		}
 		foreach($fields as $name => $values)
@@ -633,16 +642,28 @@ class bocontacts extends socontacts
 			if (!in_array($name,$this->org_fields)) continue;
 
 			arsort($values,SORT_NUMERIC);
-
 			list($value,$num) = each($values);
 			//echo "<p>$name: '$value' $num/".count($contacts)."=".($num / (double) count($contacts))." >= $this->org_common_factor = ".($num / (double) count($contacts) >= $this->org_common_factor ? 'true' : 'false')."</p>\n";
 			if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
 			{
-				$org[$name] = $value;
+				if ($name != 'cat_id')
+				{
+					$org[$name] = $value;
+				}
+				else
+				{
+					$org[$name] = array();
+					foreach ($values as $catid => $catvalue)
+					{
+						if ($catid && $catvalue / (double) count($values) >= $this->org_common_factor)
+						{
+							$org[$name][] = $catid;
+						}
+					}
+					$org[$name] = implode(',',$org[$name]);
+				}
 			}
 		}
-		//echo $org_id; _debug_array($org);
-		
 		return $org;
 	}
 	

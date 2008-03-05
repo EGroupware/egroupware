@@ -343,6 +343,7 @@ tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 translation	addressbook	de	Übersetzung
 type	addressbook	de	Typ
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
+update fields by edited organisations?	admin	de	Welche Felder sollen  beim Bearbeiten von Organisationen aktualisiert werden?
 updated	addressbook	de	Aktualisiert
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (verwenden Sie %1 = anzurufende Nummer, %u = Benutzernamen, %t = Telefon des Benutzers)

@@ -48,6 +48,12 @@
     </td>
    </tr>
    <tr class="row_off">
+    <td>&nbsp;{lang_Update_Fields_by_edited_organisations?}</td>
+    <td>
+    {hook_org_fileds_to_update}
+    </td>
+   </tr>
+   <tr class="row_on">
     <td>&nbsp;{lang_Use_an_extra_tab_for_private_custom_fields?}</td>
     <td>
      <select name="newsettings[private_cf_tab]">
