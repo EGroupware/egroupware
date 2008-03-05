@@ -200,6 +200,8 @@ class infolog_widget
 				}
 				break;
 		}
+		$cell['id'] = ($cell['id'] ? $cell['id'] : $cell['name'])."[$type]";
+
 		return True;	// extra label ok
 	}
 	

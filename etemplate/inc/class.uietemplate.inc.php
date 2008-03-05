@@ -615,8 +615,8 @@ foreach($sess as $key => $val)
 			}
 			// make the content availible as class-var for extensions
 			$this->content =& $content;
-
-			$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n\n";
+			
+			$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n<div id=\"$this->name\">\n\n";
 			if (!$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name])
 			{
 				$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name] = True;
@@ -631,7 +631,7 @@ foreach($sess as $key => $val)
 					$child['align'],
 				),'class,align')) : $h;
 			}
-			return $html."<!-- END eTemplate $this->name -->\n\n";
+			return $html."\n</div>\n<!-- END eTemplate $this->name -->\n\n";
 		}
 		
 		/**
@@ -1118,7 +1118,7 @@ foreach($sess as $key => $val)
 					if ($value != '' && $style && strpos($style,'b')!==false) $value = $this->html->bold($value);
 					if ($value != '' && $style && strpos($style,'i')!==false) $value = $this->html->italic($value);
 					// if the label has a name, use it as id in a span, to allow addressing it via javascript
-					$html .= ($name ? '<span id="'.$name.'">' : '').$value.($name ? '</span>' : '');
+					$html .= ($name ? '<span id="'.($cell['id']?$cell['id']:$name).'">' : '').$value.($name ? '</span>' : '');
 					if ($help)
 					{
 						$class = array(
@@ -1859,6 +1859,13 @@ foreach($sess as $key => $val)
 				if (preg_match('/egw::lang\(["\']{1}(.*)["\']{1}\)/U',$on,$matches)) {
 					$str = lang($matches[1]);
 					$on = str_replace($matches[0],'\''.addslashes($str).'\'',$on);
+				}
+				
+				// inserts the styles of a named template
+				if (preg_match('/template::styles\(["\']{1}(.*)["\']{1}\)/U',$on,$matches))
+				{
+					$tpl = $matches[1] == $this->name ? $this : new etemplate($matches[1]);
+					$on = str_replace($matches[0],"'<style>".str_replace(array("\n","\r"),'',$tpl->style)."</style>'",$on);
 				}
 			}
 			if (strpos($on,'confirm(') !== false && preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {

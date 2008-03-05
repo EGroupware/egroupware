@@ -80,7 +80,7 @@ class contact_widget
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
 		//echo "<p>contact_widget::pre_process('$name','$value',".print_r($cell,true).",...)</p>\n";
-		switch($cell['type'])
+		switch($type = $cell['type'])
 		{
 			case 'contact-fields':
 				$GLOBALS['egw']->translation->add_app('addressbook');
@@ -158,6 +158,8 @@ class contact_widget
 				}
 				break;
 		}
+		$cell['id'] = ($cell['id'] ? $cell['id'] : $cell['name'])."[$type]";
+
 		return True;	// extra label ok
 	}
 }
