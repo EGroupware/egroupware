@@ -286,7 +286,12 @@ class socontacts_sql extends so_sql
 				if ($col{0} == '#')	// search for a value in a certain custom field
 				{
 					unset($criteria[$col]);
-					$criteria[] = $this->db->expression($this->extra_table,'(',array('contact_name'=>substr($col,1),'contact_value'=>$val),')');
+					if ($op=='AND') {
+						$criteria[] =$this->extra_table.'.contact_id in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
+						"(contact_name='".substr($col,1)."' AND contact_value".($wildcard?' LIKE ':'=')."'".$wildcard.$val.$wildcard."'))";
+					} else {
+						$criteria[] = $this->db->expression($this->extra_table,'(',array('contact_name'=>substr($col,1),'contact_value'.($wildcard?' LIKE ':'=')."'".$wildcard.$val.$wildcard."'"),')');
+					}
 					$search_customfields = true;
 				}
 				elseif($col == 'cat_id')	// search in comma-sep. cat-column
