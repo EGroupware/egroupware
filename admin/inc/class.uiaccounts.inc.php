@@ -716,16 +716,9 @@
 			// the account can have special chars/white spaces, if it is a ldap dn
 			$account_id = rawurlencode($_GET['account_id']);
 
-			// Find out who the new owner is of the deleted users records...
-			$users = $GLOBALS['egw']->accounts->get_list('accounts');
-			$c_users = count($users);
-			$str = '';
-			for($i=0;$i<$c_users;$i++)
-			{
-				$str .= '<option value='.$users[$i]['account_id'].'>'.$GLOBALS['egw']->common->display_fullname($users[$i]['account_lid'],$users[$i]['account_firstname'],$users[$i]['account_lastname']).'</option>'."\n";
-			}
 			$var['lang_new_owner'] = lang('Who would you like to transfer ALL records owned by the deleted user to?');
-			$var['new_owner_select'] = '<select name="new_owner" size="5">'."\n".'<option value=0 selected>'.lang('Delete All Records').'</option>'."\n".$str.'</select>'."\n";
+			$accountsel = new uiaccountsel();
+			$var['new_owner_select'] = $accountsel->selection('new_owner','new_owner',array(''),'accounts',0,$account_id,'size="15"','',lang('Delete all records'));
 			$var['cancel'] = lang('cancel');
 			$var['delete'] = lang('delete');
 			$t->set_var($var);
