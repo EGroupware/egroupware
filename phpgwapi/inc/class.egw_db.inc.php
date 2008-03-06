@@ -1695,9 +1695,10 @@ class egw_db
 	* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @param int $fetchmode=ADODB_FETCH_BOTH ADODB_FETCH_BOTH (default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False)
+	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=ADODB_FETCH_BOTH)
 	{
 		if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app',$num_rows,'$join')</p>\n";
 
@@ -1723,7 +1724,7 @@ class egw_db
 		{
 			return $sql;
 		}
-		return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows,false,ADODB_FETCH_ASSOC);
+		return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows,false,$fetchmode);
 	}
 
 	/**
