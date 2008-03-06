@@ -21,7 +21,7 @@ class config
 	 */
 	const TABLE = 'egw_config';
 	/**
-	 * Instance of the db class
+	 * Reference to the global db class
 	 *
 	 * @var egw_db
 	 */
@@ -47,6 +47,11 @@ class config
 	 */
 	public $config_data;
 
+	/**
+	 * Constructor for the old non-static use
+	 *
+	 * @param string $appname
+	 */
 	function __construct($appname = '')
 	{
 		if (!$appname)
@@ -77,6 +82,10 @@ class config
 	 */
 	function save_repository()
 	{
+		if (!is_object(self::$db))
+		{
+			self::init_db();
+		}
 		if (is_array($this->config_data))
 		{
 			self::$db->lock(array(config::TABLE));
@@ -136,6 +145,10 @@ class config
 		{
 			$value = serialize($value);
 		}
+		if (!is_object(self::$db))
+		{
+			self::init_db();
+		}
 		return self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 	}
 
@@ -145,6 +158,10 @@ class config
 	 */
 	function delete_repository()
 	{
+		if (!is_object(self::$db))
+		{
+			self::init_db();
+		}
 		self::$db->delete(config::TABLE,array('config_app' => $this->appname),__LINE__,__FILE__);
 
 		unset(self::$configs[$this->appname]);
@@ -185,16 +202,19 @@ class config
 		
 		if (!isset($config))
 		{
-			$config = array();
-			self::$db->select(config::TABLE,'*',array('config_app' => $app),__LINE__,__FILE__);
-			while (self::$db->next_record())
+			if (!is_object(self::$db))
 			{
-				$name = self::$db->f('config_name');
-				$value = self::$db->f('config_value');
+				self::init_db();
+			}
+			$config = array();
+			foreach(self::$db->select(config::TABLE,'*',array('config_app' => $app),__LINE__,__FILE__) as $row)
+			{
+				$name = $row['config_name'];
+				$value = $row['config_value'];
 
 				$test = @unserialize($value);
 				
-				$config[self::$db->f('config_name')] = is_array($test) ? $test : $value;
+				$config[$name] = is_array($test) ? $test : $value;
 			}
 		}
 		return $config;
@@ -257,7 +277,7 @@ class config
 	 * @param string $app 
 	 * @return array with content-types
 	 */
-	function get_content_types($app)
+	static function get_content_types($app)
 	{
 		$config = self::read($app);
 
@@ -265,20 +285,20 @@ class config
 	}
 
 	/**
-	 * Initialise our static vars
+	 * Initialise our db
+	 * 
+	 * We use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!
 	 *
 	 */
-	static function init_static()
+	private static function init_db()
 	{
 		if (is_object($GLOBALS['egw']->db))
 		{
-			config::$db = clone($GLOBALS['egw']->db);
+			config::$db = $GLOBALS['egw']->db;
 		}
 		else
 		{
-			config::$db = clone($GLOBALS['egw_setup']->db);
+			config::$db = $GLOBALS['egw_setup']->db;
 		}
-		config::$db->set_app('phpgwapi');
 	}
 }
-config::init_static();
