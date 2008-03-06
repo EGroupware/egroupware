@@ -33,7 +33,7 @@ else
 $arg0s = explode(',',@array_shift($arguments));
 @list(,$_GET['domain']) = explode('@',$arg0s[0]);
 
-if (!is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
+if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
 {
 	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
 }

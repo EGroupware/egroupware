@@ -32,6 +32,10 @@ else
 $_POST['ConfigLang'] = get_lang($charset);
 create_http_enviroment();	// guessing the docroot etc.
 
+if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
+{
+	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
+}
 // setting up the $GLOBALS['egw_setup'] object AND including the header.inc.php if it exists
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
