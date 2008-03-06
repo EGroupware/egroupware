@@ -1255,36 +1255,38 @@ class uiinfolog
 		);
 		if($_POST['save'] || $_POST['apply'])
 		{
+			$config =& CreateObject('phpgwapi.config','infolog');
+			$config->read_repository();
 			if (get_magic_quotes_gpc())
 			{
-				$_POST = self::array_stripslashes($_POST);
+			        $_POST = self::array_stripslashes($_POST);
 			}
-			$this->bo->config->config_data['link_pathes'] = $this->bo->link_pathes = array();
-			$this->bo->config->config_data['send_file_ips'] = $this->bo->send_file_ips = array();
+			$config->config_data['link_pathes'] = $this->bo->link_pathes = array();
+			$config->config_data['send_file_ips'] = $this->bo->send_file_ips = array();
 
 			$valid = get_var('valid',Array('POST'));
 			$trans = get_var('trans',Array('POST'));
 			$ip = get_var('ip',Array('POST'));
 			foreach($valid as $key => $val)
 			{
-				if($val)
-				{
-					$this->bo->config->config_data['link_pathes'][$val] = $this->bo->link_pathes[$val] = $trans[$key];
-					$this->bo->config->config_data['send_file_ips'][$val] = $this->bo->send_file_ips[$val] = $ip[$key];
-				}
+			        if($val)
+			        {
+			                $config->config_data['link_pathes'][$val] = $this->bo->link_pathes[$val] = $trans[$key];
+			                $config->config_data['send_file_ips'][$val] = $this->bo->send_file_ips[$val] = $ip[$key];
+			        }
 			}
 			$this->bo->responsible_edit = array('info_status','info_percent','info_datecompleted');
 
-			if ($_POST['responsible_edit']) 
+			if ($_POST['responsible_edit'])
 			{
-				$extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
-				$this->bo->config->config_data['responsible_edit'] = $this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
+			        $extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
+			        $config->config_data['responsible_edit'] = $this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 			}
-			$this->bo->config->config_data['implicit_rights'] = $this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
-			
-			$this->bo->config->config_data['history'] = $this->bo->history = $_POST['history'];
+			$config->config_data['implicit_rights'] = $this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
 
-			$this->bo->config->save_repository(True);
+			$config->config_data['history'] = $this->bo->history = $_POST['history'];
+
+			$config->save_repository(True);
 		}
 		if($_POST['cancel'] || $_POST['save'])
 		{
