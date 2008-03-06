@@ -760,7 +760,7 @@ class soinfolog 				// DB-Layer
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
 		}
-		if ($query['search'] || $query['custom_fields'])
+		if ($query['search'])
 		{
 			$join = ($cfcolfilter>0 ? '':'LEFT')." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
@@ -778,12 +778,15 @@ class soinfolog 				// DB-Layer
 		{
 			$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid $sql_query) $link_extra";
 			
-			$this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__);
-			$query['total'] = $this->db->num_rows();
-
-			if (isset($query['start']) && $query['start'] > $query['total'])
+			if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
 			{
-				$query['start'] = 0;
+				$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
+				unset($query['total']);
+			}
+			else
+			{
+				$this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__);
+				$query['total'] = $this->db->num_rows();
 			}
 			if ($this->db->capabilities['sub_queries'])
 			{
@@ -795,36 +798,43 @@ class soinfolog 				// DB-Layer
 				$info_customfield = ", (SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 where sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).") AS cfsortcrit ";
 			}
 			//echo "SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod"."<br>";
-			$this->db->query($sql="SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
-				(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1);
-			//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
-			while (($info =& $this->db->row(true)))
+			do
+			{
+				if (isset($query['start']) && isset($query['total']) && $query['start'] > $query['total'])
+				{
+					$query['start'] = 0;
+				}
+				$rs = $this->db->query($sql="SELECT $mysql_calc_rows $distinct main.* $count_subs $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
+					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1);
+				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
+
+				if ($mysql_calc_rows)
+				{
+					$query['total'] = $this->db->Link_ID->GetOne('SELECT FOUND_ROWS()');
+				}
+			}
+			// check if start is behind total --> loop to set start=0
+			while (isset($query['start']) && $query['start'] > $query['total']);
+			
+			foreach($rs as $info)
 			{			
 				$info['info_responsible'] = $info['info_responsible'] ? explode(',',$info['info_responsible']) : array();
 
 				$ids[$info['info_id']] = $info;
 			}
-			// prepare selected cols array
-			$sca=explode(',',$query['selectcols']);
-			if ($ids)
+			if ($ids && $query['custom_fields'] && strchr($query['selectcols'],'#') !== false)
 			{
-				$this->db->select($this->extra_table,'*',array('info_id'=>array_keys($ids)),__LINE__,__FILE__);
-				while ($row = $this->db->row(true))
+				$names = array();
+				foreach(explode(',',$query['selectcols']) as $col)
 				{
-					if ((isset($row['info_extra_value'])&&strlen($row['info_extra_value'])>0))
-					{
-						if ((in_array('#'.$row['info_extra_name'],$sca) || !isset($query['selectcols']) ||
-							(stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ))
-						{
-							$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
-						} else {
-							if (!$query['custom_fields']) {
-								$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
-							}
-						}
-					} else {
-						unset($ids[$row['info_id']]['#'.$row['info_extra_name']]);
-					}
+					if ($col[0] == '#') $names[] = substr($col,1);
+				}
+				foreach($this->db->select($this->extra_table,'*',array(
+					'info_id' => array_keys($ids),
+					'info_extra_name' => $names,
+				),__LINE__,__FILE__) as $row)
+				{
+					$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
 				}
 			}
 		}
