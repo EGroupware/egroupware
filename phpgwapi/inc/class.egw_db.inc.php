@@ -582,10 +582,6 @@ class egw_db
 			$this->halt('next_record called with no query pending.');
 			return 0;
 		}
-		if ($this->Link_ID->fetchMode != $fetch_mode)
-		{
-			$this->Link_ID->SetFetchMode($fetch_mode);
-		}
 		if ($this->Row)	// first row is already fetched
 		{
 			$this->Query_ID->MoveNext();
@@ -615,6 +611,14 @@ class egw_db
 						$this->Record += array_values($this->Record);
 					}
 					break;
+			}
+		}
+		// fix the result if it was fetched ASSOC and now NUM OR BOTH is required, as default for select() is now ASSOC
+		elseif ($this->Link_ID->fetchMode != $fetch_mode)
+		{
+			if (!isset($this->Record[0]))
+			{
+				$this->Record += array_values($this->Record);
 			}
 		}
 		return True;
@@ -1695,10 +1699,10 @@ class egw_db
 	* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
-	* @param int $fetchmode=ADODB_FETCH_BOTH ADODB_FETCH_BOTH (default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
+	* @param int $fetchmode=ADODB_FETCH_ASSOC ADODB_FETCH_BOTH (default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=ADODB_FETCH_BOTH)
+	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=ADODB_FETCH_ASSOC)
 	{
 		if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app',$num_rows,'$join')</p>\n";
 
