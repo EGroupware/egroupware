@@ -904,10 +904,9 @@
 				if (!is_object($GLOBALS['egw']->accounts)) $GLOBALS['egw']->accounts = $this->accounts;
 				$this->accounts->cache_invalidate();	// the cache is shared for all instances of the class
 
-				if(($GLOBALS['egw_info']['server']['account_repository'] == 'ldap') &&
-					!$this->accounts->ds)
+				if($this->accounts->backend instanceof accounts_ldap && !$this->accounts->backend->ds)
 				{
-					printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['egw_info']['server']['ldap_host']);
+					printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$config['ldap_host']);
 					return false;
 				}
 			}

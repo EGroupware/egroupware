@@ -77,9 +77,9 @@ if (!is_object($GLOBALS['egw_setup']->db))
 	$GLOBALS['egw_setup']->loaddb();
 }
 // Load configuration values account_repository and auth_type, a setup has not yet done so
-$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',
-	array('config_name'=>array('account_repository','auth_type')),__LINE__,__FILE__);
-while(($row = $GLOBALS['egw_setup']->db->row(true)))
+foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',
+	"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",
+	__LINE__,__FILE__) as $row)
 {
 	$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
 }
@@ -98,7 +98,7 @@ if (!$_POST['migrate'])
 {
 	// fetch and display the accounts of the NOT set $from repository
 	$GLOBALS['egw_info']['server']['account_repository'] = $from;
-	$GLOBALS['egw_setup']->setup_account_object();
+	$GLOBALS['egw_setup']->setup_account_object($GLOBALS['egw_info']['server']);
 	
 	// fetch all users and groups
 	$accounts = $GLOBALS['egw_setup']->accounts->search(array(
@@ -174,7 +174,7 @@ if (!$_POST['migrate'])
 else	// do the migration
 {
 	$GLOBALS['egw_info']['server']['account_repository'] = $to;
-	$GLOBALS['egw_setup']->setup_account_object();
+	$GLOBALS['egw_setup']->setup_account_object($GLOBALS['egw_info']['server']);
 
 	$target = strtoupper($to);
 	$accounts =& $_SESSION['all_accounts'];
