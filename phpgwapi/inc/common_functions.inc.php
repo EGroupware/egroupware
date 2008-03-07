@@ -1327,12 +1327,14 @@ function __autoload($class)
 	} 
 	else
 	{
-		foreach($GLOBALS['egw_info']['apps'] as $lapp => $appvalue)
-		{
-			if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$lapp.'/inc/class.'.$class.'.inc.php'))
+		if (is_array($GLOBALS['egw_info']['apps'])) {
+			foreach($GLOBALS['egw_info']['apps'] as $lapp => $appvalue)
 			{
-				#echo "$lapp,$class<br>";
-				include_once($file);
+				if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$lapp.'/inc/class.'.$class.'.inc.php'))
+				{
+					#echo "$lapp,$class<br>";
+					include_once($file);
+				}
 			}
 		}
 	}
