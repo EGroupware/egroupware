@@ -79,6 +79,7 @@
 			}
 
 			// Get Options
+			$options = array();
 			if(!is_array($cell['size'])) {
 				list(
 					$options['get_rows'],
@@ -110,6 +111,7 @@
 			} elseif($value[$options['id_field']]) {
 				$current_value = $value[$options['id_field']];
 			}
+			$extension_data['old_value'] = $value;
 
 			list($title_app, $title_class, $title_method) = explode('.', $options['get_title']);
 			if($title_app && $title_class) {
@@ -150,9 +152,12 @@
 			// Link if readonly & link is set
 			$search =& $widget->get_widget_by_name('search');
 			if(($cell['readonly'] || $readonlys['search']) && $options['link']) {
+				$cell['readonly'] = false;
+				$readonlys['search'] = true;
 				$search['type'] = 'label';
 				$search['no_lang'] = 1;
 				$search['size'] = ',' . $options['link'];
+				$extension_data['readonly'] = true;
 			} else {
 				$search['type'] = 'text';
 				$search['size'] = '';
@@ -165,8 +170,8 @@
 			$cell['obj'] = &$widget;
 
 			// Save options for post_processing
-			$extension_data = $options;
-			$extension_data['required'] = $cell['required'];
+			$extension_data['options'] = $options;
+			$extension_data['needed'] = $cell['needed'];
 
 			// xajax
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
@@ -189,14 +194,14 @@
 
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			//echo "<p>ajax_select_widget.post_process: $name = "; _debug_array($value_in);
+			//echo "<p>ajax_select_widget.post_process: $name = "; _debug_array($value_in);_debug_array($extension_data);
 			if(!is_array($value_in)) {
-				$value_in = array();
+				$value_in = $extension_data['old_value'];
 			}
 
 			// They typed something in, but didn't choose a result
 			if(!$value_in['value'] && $value_in['search']) {
-				list($get_rows_app, $get_rows_class, $get_rows_method) = explode('.', $extension_data['get_rows']);
+				list($get_rows_app, $get_rows_class, $get_rows_method) = explode('.', $extension_data['options']['get_rows']);
 				if($get_rows_app && $get_rows_class) {
 					if (is_object($GLOBALS[$get_rows_class])) {       // use existing instance (put there by a previous CreateObject)
 						$get_rows_obj =& $GLOBALS[$get_rows_class];
@@ -207,11 +212,11 @@
 					if(!is_object($get_rows_obj) || !method_exists($get_rows_obj, $get_rows_method)) {
 						echo "$get_rows_app.$get_rows_class.$get_rows_method is not a valid method for getting the rows";
 					} else {
-						$query = array_merge($extension_data, $value_in);
+						$query = array_merge($extension_data['options'], $value_in);
 						$count = $get_rows_obj->$get_rows_method($query, $results);
 
 						if($count == 1) {
-							$value = $results[0][$extension_data['id_field']];
+							$value = $results[0][$extension_data['options']['id_field']];
 							return true;
 						} elseif ($count > 1) {
 							$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = lang("More than 1 match for '%1'",$value_in['search']);
@@ -223,11 +228,28 @@
 						}
 					}
 				}
+			} elseif ($extension_data['readonly']) {
+				$value = $extension_data['old_value'];
+				return true;
 			} elseif ($value_in['search'] == '') {
 				// They're trying to clear the form
 				$value = null;
-				$loop = $GLOBALS['egw_info']['etemplate']['loop'] || $extension_data['required'];
-				return !$extension_data['required'];
+
+				// True if not needed, false if needed and they gave no value
+				$return = !($extension_data['needed'] && trim($value_in['value']) == '');
+
+				if(!$return) {
+					$value = $extension_data['old_value'];
+					$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = lang('Required');
+				}
+
+				// Loop if some other widget wants to loop, or if this is required and they gave no value
+				$loop = $GLOBALS['egw_info']['etemplate']['loop'] || !$return;
+
+				if($this->debug && $loop) {
+					echo 'Looping...<br />Returning ' . $return . '<br />';
+				}
+				return $return;
 			} else {
 				$value = $value_in['value'];
 				$loop = $GLOBALS['egw_info']['etemplate']['loop'] ||  false;

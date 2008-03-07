@@ -206,6 +206,7 @@
 				'content' => $GLOBALS['egw_info']['etemplate']['content'],
 				'hook_content' => $GLOBALS['egw_info']['etemplate']['hook_content'],
 				'hook_app' => $GLOBALS['egw_info']['etemplate']['hook_app'],
+				'extension_data' => $GLOBALS['egw_info']['etemplate']['extension_data']
 			);
 //echo "<p>hooked=".(int)!!$GLOBALS['egw_info']['etemplate']['hooked'].", content=".(int)!!$GLOBALS['egw_info']['etemplate']['content'].", hook_content=".(int)!!$GLOBALS['egw_info']['etemplate']['hook_content'].", hook_app={$GLOBALS['egw_info']['etemplate']['hook_app']}</p>\n";
 			$this->name_form =& $GLOBALS['egw_info']['etemplate']['name_form'];
