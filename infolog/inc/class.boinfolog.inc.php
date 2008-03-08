@@ -999,7 +999,7 @@ class boinfolog
 	function link_titles( array $ids )
 	{
 		$titles = array();
-		foreach($this->search(array(
+		foreach($this->search($params=array(
 			'col_filter' => array('info_id' => $ids),
 		)) as $info)
 		{
