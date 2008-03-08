@@ -41,12 +41,6 @@ class uiinfolog
 	 */
 	var $bo;
 	/**
-	 * reference to instance of the link-class of bo
-	 * 
-	 * @var bolink
-	 */
-	var $link;
-	/**
 	 * instance of the etemplate class
 	 *
 	 * @var etemplate
@@ -125,10 +119,8 @@ class uiinfolog
 	{
 		$this->bo =& new boinfolog();
 
-		$this->link = &$this->bo->link;
-		
-		$this->tmpl =& CreateObject('etemplate.etemplate');
-		$this->html =& $this->tmpl->html;
+		$this->tmpl = new etemplate();
+		$this->html = $this->tmpl->html;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		
@@ -207,15 +199,15 @@ class uiinfolog
 
 		if (($show_links != 'none' && $show_links != 'no_describtion' || 
 			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) && 
-			($links = $this->link->get_links('infolog',$info['info_id'])))
+			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id']))))
 		{
 			$timesheets = array();
-			foreach ($links as $link)
+			foreach ($info['links'] as $link)
 			{
 				if ($show_links != 'none' && $show_links != 'no_describtion' &&
 					$link['link_id'] != $info['info_link_id'] &&
 				    ($link['app'] != $action || $link['id'] != $action_id) &&
-					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != $this->link->vfs_appname)))
+					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != egw_link::VFS_APPNAME)))
 				{
 					$info['filelinks'][] = $link;
 				}
@@ -225,7 +217,7 @@ class uiinfolog
 				}
 				if ($link['app'] == 'timesheet') $timesheets[] = $link['id'];
 				
-				if ($link['app'] != 'timesheet' && $link['app'] != $this->link->vfs_appname)
+				if ($link['app'] != 'timesheet' && $link['app'] != egw_link::VFS_APPNAME)
 				{
 					$info['extra_links'] .= '&link_app[]='.$link['app'].'&link_id[]='.$link['id'];
 				}
@@ -353,10 +345,10 @@ class uiinfolog
 		// do we need to query the cf's
 		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
 
-		$ids = $this->bo->search($query);
-		if (!is_array($ids))
+		$infos = $this->bo->search($query);
+		if (!is_array($infos))
 		{
-			$ids = array( );
+			$infos = array( );
 		}
 		$details = $query['filter2'] == 'all';
 		// add a '-details' to the name of the columnselection pref
@@ -373,11 +365,17 @@ class uiinfolog
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets
 		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
 
+		// query all links in one go
+		if ($infos && !$query['csv_export'])
+		{
+			$links = bolink::get_links_multiple('infolog',array_keys($infos));
+		}
 		$readonlys = $rows = array();
-		foreach($ids as $id => $info)
+		foreach($infos as $id => $info)
 		{
 			if (!$query['csv_export'])
 			{
+				$info['links'] =& $links[$id];
 				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
 
 				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
@@ -388,6 +386,8 @@ class uiinfolog
 			}
 			$rows[] = $info;
 		}
+		unset($links);
+
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['no_actions']) $rows['no_actions'] = true;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
@@ -431,7 +431,7 @@ class uiinfolog
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
 			}
-			if ($query['action'] && ($title = $query['action_title'] ? $query['action_title'] : $this->link->title($query['action'],$query['action_id'])))
+			if ($query['action'] && ($title = $query['action_title'] ? $query['action_title'] : egw_link::title($query['action'],$query['action_id'])))
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
@@ -784,8 +784,8 @@ class uiinfolog
 					{
 						$old_link_id = (int)$content['info_link_id'];
 						list($app,$id) = explode(':',$content['info_contact']);
-						$content['info_link_id'] = (int)($info_link_id = $this->link->link('infolog',$content['link_to']['to_id'],$app,$id));
-						if ($old_link_id && $old_link_id != $content['info_link_id']) $this->link->unlink($old_link_id);
+						$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
+						if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
 					}
 					if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 					{
@@ -822,7 +822,7 @@ class uiinfolog
 						if ($content['pm_id'])
 						{
 							//echo "<p>this->link->link('infolog',{$content['link_to']['to_id']},'projectmanager',{$content['pm_id']});</p>";
-							$this->link->link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
+							egw_link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
 							// making the project the selected link, if no other link selected
 							if (!$info_link_id || $info_link_id == 'projectmanager:'.$content['old_pm_id'])
 							{
@@ -832,7 +832,7 @@ class uiinfolog
 						if ($content['old_pm_id'])
 						{
 							//echo "<p>this->link->unlink2(0,infolog,{$content['link_to']['to_id']},0,'projectmanager',{$content['old_pm_id']});</p>\n";
-							$this->link->unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
+							egw_link::unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
 							$content['old_pm_id'] = $content['pm_id'];
 						}
 					}
@@ -840,13 +840,13 @@ class uiinfolog
 					if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))	
 					{
 						//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
-						$this->link->link('infolog',$info_id,$content['link_to']['to_id']);
+						egw_link::link('infolog',$info_id,$content['link_to']['to_id']);
 						$content['link_to']['to_id'] = $info_id;
 					}
 					if ($info_link_id && strpos($info_link_id,':') !== false)	// updating info_link_id if necessary
 					{
 						list($app,$id) = explode(':',$info_link_id);
-						$link = $this->link->get_link('infolog',$info_id,$app,$id);
+						$link = egw_link::get_link('infolog',$info_id,$app,$id);
 						if ((int) $content['info_link_id'] != (int) $link['link_id'])
 						{
 							$content['info_link_id'] = $link['link_id'];
@@ -929,7 +929,7 @@ class uiinfolog
 				case 'datetime':      $set_startdate = $this->bo->user_time_now; break;
 				case 'empty':         $set_startdate = 0; break;
 			}
-			if ((int)$content['info_link_id'] > 0 && !$this->link->get_link($content['info_link_id']))
+			if ((int)$content['info_link_id'] > 0 && !egw_link::get_link($content['info_link_id']))
 			{
 				$content['info_link_id'] = 0;	// link has been deleted
 				if (!$content['info_custom_link']) $content['info_from'] = '';
@@ -993,10 +993,10 @@ class uiinfolog
 			switch ($action)
 			{
 				case 'sp':
-					$links = $this->link->get_links('infolog',$parent['info_id'],'!'.$this->link->vfs_appname);
+					$links = egw_link::get_links('infolog',$parent['info_id'],'!'.egw_link::VFS_APPNAME);
 					foreach($links as $link)
 					{
-						$link_id = $this->link->link('infolog',$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
+						$link_id = egw_link::link('infolog',$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
 
 						if ($parent['info_link_id'] == $link['link_id'])
 						{
@@ -1012,14 +1012,14 @@ class uiinfolog
 				case 'calendar':
 				default:	// to allow other apps to participate
 					$content['info_contact'] = $action.':'.$action_id;
-					$content['blur_title']   = $this->link->title($action,$action_id);
+					$content['blur_title']   = egw_link::title($action,$action_id);
 
 				case '':
 					if ($info_id)
 					{
 						if (!isset($pm_links))
 						{
-							$pm_links = $this->link->get_links('infolog',$info_id,'projectmanager');
+							$pm_links = egw_link::get_links('infolog',$info_id,'projectmanager');
 						}
 						break;	// normal edit
 					}

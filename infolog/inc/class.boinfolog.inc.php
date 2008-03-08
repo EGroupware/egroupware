@@ -27,12 +27,6 @@ class boinfolog
 	 * @var soinfolog
 	 */
 	var $so;
-	/**
-	 * Instance of the link class
-	 *
-	 * @var bolink
-	 */
-	var $link;
 	var $vfs;
 	var $vfs_basedir='/infolog';
 	var $link_pathes = array();
@@ -299,7 +293,7 @@ class boinfolog
 		
 		if (is_null($link_types))
 		{
-			$link_types = array_keys($this->link->app_list());
+			$link_types = array_keys(egw_link::app_list());
 			$link_types[] = 'link-entry';
 		}
 		return $link_types;
@@ -383,10 +377,21 @@ class boinfolog
 	{
 		//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id]', from='$info[info_from]', not_app='$not_app', not_id='$not_id')";
 		if ($info['info_link_id'] > 0 &&
-			 ($link = $this->link->get_link($info['info_link_id'])) !== False)
+			(isset($info['links']) && ($link = $info['links'][$info['info_link_id']]) ||	// use supplied links info
+			 !isset($info['links']) && ($link = egw_link::get_link($info['info_link_id'])) !== False))
 		{
-			$nr = $link['link_app1'] == 'infolog' && $link['link_id1'] == $info['info_id'] ? '2' : '1';
-			$title = $this->link->title($link['link_app'.$nr],$link['link_id'.$nr]);
+			if (isset($info['links']))
+			{
+				$app = $link['app'];
+				$id  = $link['id'];
+			}
+			else
+			{
+				$nr = $link['link_app1'] == 'infolog' && $link['link_id1'] == $info['info_id'] ? '2' : '1';
+				$app = $link['link_app'.$nr];
+				$id  = $link['link_id'.$nr];
+			}
+			$title = egw_link::title($app,$id);
 
 			if ((string)$info['info_custom_from'] === '')	// old entry
 			{
@@ -397,33 +402,31 @@ class boinfolog
 				$info['info_from'] = '';
 				$info['info_custom_from'] = 0;
 			}
-			if ($link['link_app'.$nr] == $not_app && $link['link_id'.$nr] == $not_id)
+			if ($app == $not_app && $id == $not_id)
 			{
 				return False;
 			}
 			$info['info_link'] = array(
-				'app'   => $link['link_app'.$nr],
-				'id'    => $link['link_id'.$nr],
+				'app'   => $app,
+				'id'    => $id,
 				'title' => (!empty($info['info_from']) ? $info['info_from'] : $title),
 			);
-			$info['info_contact'] = $link['link_app'.$nr].':'.$link['link_id'.$nr];
+			$info['info_contact'] = $app.':'.$id;
 
 			//echo " title='$title'</p>\n";
 			return $info['blur_title'] = $title;
 		}
-		else
-		{
-			$info['info_link'] = array('title' => $info['info_from']);
-			$info['info_link_id'] = 0;	// link might have been deleted
-			$info['info_custom_from'] = (int)!!$info['info_from'];
-		}
+		$info['info_link'] = array('title' => $info['info_from']);
+		$info['info_link_id'] = 0;	// link might have been deleted
+		$info['info_custom_from'] = (int)!!$info['info_from'];
+
 		return False;
 	}
 
 	/**
 	 * Create a subject from a description: truncate it and add ' ...'
 	 */
-	function subject_from_des($des)
+	static function subject_from_des($des)
 	{
 		return substr($des,0,60).' ...';
 	}
@@ -544,13 +547,13 @@ class boinfolog
 
 			$this->so->write($deleted);
 
-			$this->link->unlink(0,'infolog',$info_id,'','!file');	// keep the file attachments, only delete the rest
+			egw_link::unlink(0,'infolog',$info_id,'','!file');	// keep the file attachments, only delete the rest
 		}
 		else
 		{
 			$this->so->delete($info_id,false);	// we delete the children via bo to get all notifications!
 			
-			$this->link->unlink(0,'infolog',$info_id);
+			egw_link::unlink(0,'infolog',$info_id);
 		}
 		if ($info['info_status'] != 'deleted')	// dont notify of final purge of already deleted items
 		{
@@ -741,7 +744,7 @@ class boinfolog
 			$this->update_customfield_links($values,$old);
 
 			// notify the link-class about the update, as other apps may be subscribt to it
-			$this->link->notify_update('infolog',$info_id,$values);
+			egw_link::notify_update('infolog',$info_id,$values);
 			
 			// send email notifications and do the history logging
 			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
@@ -782,7 +785,7 @@ class boinfolog
 					$app = $data['type'];
 					$id = $old['#'.$name];
 				}
-				$this->link->unlink(false,'infolog',$values['info_id'],'',$app,$id);
+				egw_link::unlink(false,'infolog',$values['info_id'],'',$app,$id);
 			}
 			if ($data['type'] == 'link-entry')
 			{
@@ -795,7 +798,7 @@ class boinfolog
 			}
 			if ($id)	// create new link, does nothing for already existing links 
 			{
-				$this->link->link('infolog',$values['info_id'],$app,$id);
+				egw_link::link('infolog',$values['info_id'],$app,$id);
 			}
 		}
 	}
@@ -923,7 +926,7 @@ class boinfolog
 			// create the rest a "ordinary" links
 			foreach ($contacts as $contact)
 			{
-				$this->link->link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
+				egw_link::link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
 			}
 		}
 		if (is_array($_attachments))
@@ -932,7 +935,7 @@ class boinfolog
 			{
 				if(is_readable($attachment['tmp_name']))
 				{
-					$this->link->link('infolog',$info['link_to']['to_id'],'file',$attachment);
+					egw_link::link('infolog',$info['link_to']['to_id'],'file',$attachment);
 				}
 			}
 		}
@@ -950,6 +953,7 @@ class boinfolog
 		return array(
 			'query'      => 'infolog.boinfolog.link_query',
 			'title'      => 'infolog.boinfolog.link_title',
+			'titles'     => 'infolog.boinfolog.link_titles',
 			'view'       => array(
 				'menuaction' => 'infolog.uiinfolog.index',
 				'action' => 'sp'
@@ -984,7 +988,28 @@ class boinfolog
 			return $info;
 		}
 		return !empty($info['info_subject']) ? $info['info_subject'] :
-			$this->subject_from_des($info['info_descr']);
+			self::subject_from_des($info['info_descr']);
+	}
+	
+	/**
+	 * Return multiple titles fetched by a single query
+	 *
+	 * @param array $ids
+	 */
+	function link_titles( array $ids )
+	{
+		$titles = array();
+		foreach($this->search(array(
+			'col_filter' => array('info_id' => $ids),
+		)) as $info)
+		{
+			$titles[$info['id']] = $this->link_title($info);
+		}
+		foreach(array_diff($ids,array_keys($titles)) as $id)
+		{
+			$titles[$id] = false;	// we assume every not returned entry to be not readable, as we notify the link class about all deletes
+		}
+		return $titles;
 	}
 
 	/**
@@ -1068,7 +1093,7 @@ class boinfolog
 				}*/
 				$title = ($do_events?$GLOBALS['egw']->common->formattime(adodb_date('H',$info['info_startdate']),adodb_date('i',$info['info_startdate'])).' ':'').
 					$info['info_subject'];
-				$view = $this->link->view('infolog',$info['info_id']);
+				$view = egw_link::view('infolog',$info['info_id']);
 				$content=array();
 				foreach($icons = array(
 					$info['info_type']   => 'infolog',

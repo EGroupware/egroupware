@@ -32,12 +32,6 @@ class soinfolog 				// DB-Layer
 	 */
 	var $db;
 	/**
-	 * Instance of the solink class
-	 *
-	 * @var solink
-	 */
-	var $links;
-	/**
 	 * Grants from other users
 	 *
 	 * @var array
@@ -105,8 +99,6 @@ class soinfolog 				// DB-Layer
 		$this->db->set_app('infolog');
 		$this->grants =& $grants;
 		$this->user   = $GLOBALS['egw_info']['user']['account_id'];
-
-		$this->links =& new solink();
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 		$this->soextra =& CreateObject('etemplate.so_sql');
@@ -459,7 +451,7 @@ class soinfolog 				// DB-Layer
 		}
 		$this->db->delete($this->info_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		$this->db->delete($this->extra_table,array('info_id'=>$info_id),__LINE__,__FILE__);
-		$this->links->unlink(0,'infolog',$info_id);
+		egw_link::unlink(0,'infolog',$info_id);
 
 		if ($this->data['info_id'] == $info_id)
 		{
@@ -661,7 +653,7 @@ class soinfolog 				// DB-Layer
 
 		if ($action != '')
 		{
-			$links = $this->links->get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
+			$links = egw_link::get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
 
 			if (count($links))
 			{
