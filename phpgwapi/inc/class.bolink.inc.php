@@ -28,6 +28,10 @@ class bolink extends egw_link
 	 * @deprecated use egw_link::VFS_APPNAME
 	 */
 	var $vfs_appname = egw_link::VFS_APPNAME;
+	/**
+	 * @deprecated use solink::TABLE
+	 */
+	var $link_table = solink::TABLE;
 	
 	/**
 	 * Overwrite private constructor of egw_links, to allow (depricated) instancated usage
