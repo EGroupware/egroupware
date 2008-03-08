@@ -323,9 +323,12 @@ class egw_link extends solink
 	 * @ToDo also query the attachments in a single query, eg. via a directory listing of /apps/$app
 	 * @param string $app
 	 * @param array $ids
+	 * @param boolean $cache_titles=true should all titles be queryed and cached (allows to query each link app only once!)
+	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+	 * @param string $order='link_lastmod DESC' defaults to newest links first
 	 * @return array of $id => array($links) pairs
 	 */
-	static function get_links_multiple($app,array $ids,$only_app='',$order='link_lastmod DESC' )
+	static function get_links_multiple($app,array $ids,$cache_titles=true,$only_app='',$order='link_lastmod DESC' )
 	{
 		$links = solink::get_links($app,$ids,$only_app,$order);
 
@@ -343,6 +346,22 @@ class egw_link extends solink
 				{
 					$links[$id] += $vfs_ids;
 				}
+			}
+		}
+		if ($cache_titles)
+		{
+			// agregate links by app
+			$app_ids = array();
+			foreach($links as $src_id => &$targets)
+			{
+				foreach($targets as $link)
+				{
+					$app_ids[$link['app']][] = $link['id'];
+				}
+			}
+			foreach($app_ids as $app => $a_ids)
+			{
+				self::titles($app,$a_ids);
 			}
 		}
 		return $links;
@@ -577,6 +596,10 @@ class egw_link extends solink
 	 */
 	static function titles($app,array $ids)
 	{
+		if (self::DEBUG)
+		{
+			echo "<p>".__METHOD__."($app,".implode(',',$ids).")</p>\n";
+		}
 		$titles = $ids_to_query = array();
 		foreach($ids as $id)
 		{
@@ -591,11 +614,14 @@ class egw_link extends solink
 					self::title($app,$id);	// no titles method --> fallback to query each link separate
 				}
 			}
-			$titles[$id] = $title_cache[$app.':'.$id];
+			$titles[$id] = self::$title_cache[$app.':'.$id];
 		}
 		if ($ids_to_query)
 		{
-			$titles = array_merge($titles,ExecMethod(self::$app_register[$app]['titles'],$ids_to_query));
+			foreach(ExecMethod(self::$app_register[$app]['titles'],$ids_to_query) as $id => $title)
+			{
+				$titles[$id] = self::$title_cache[$app.':'.$id] = $title;
+			}
 		}
 		return $titles;
 	}
