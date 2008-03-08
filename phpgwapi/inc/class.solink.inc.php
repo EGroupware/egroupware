@@ -8,6 +8,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright 2001-2008 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
@@ -18,43 +19,31 @@
  * generalized linking between entries of eGroupware apps - SO layer
  *
  * All vars passed to this class get correct escaped to prevent query insertion.
+ * 
+ * All methods are now static!
  */
 class solink
 {
 	/**
-	 * Instance of the db-class
+	 * Name of the links table
+	 */
+	const TABLE = 'egw_links';
+	/**
+	 * Turns on debug-messages
+	 */
+	const DEBUG = false;
+	/**
+	 * Reference to the global db-class
 	 *
 	 * @var egw_db
 	 */
-	var $db;
+	private static $db;
 	/**
-	 * Current user
+	 * Reference to current user from $GLOBALS['egw_info']['user']['account_id']
 	 *
 	 * @var int
 	 */
-	var $user;
-	/**
-	 * Name of the links table
-	 *
-	 * @var string
-	 */
-	var $link_table = 'egw_links';
-	/**
-	 * Turns on debug-messages
-	 *
-	 * @var boolean
-	 */
-	var $debug;
-
-	/**
-	 * constructor
-	 */
-	function solink( )
-	{
-		$this->db     = clone($GLOBALS['egw']->db);
-		$this->db->set_app('phpgwapi');
-		$this->user   = $GLOBALS['egw_info']['user']['account_id'];
-	}
+	protected static $user;
 
 	/**
 	 * creats a link between $app1,$id1 and $app2,$id2
@@ -67,9 +56,9 @@ class solink
 	 * @param int $owner=0 Owner of the link (defaults to user)
 	 * @return boolean/int False (for db or param-error) or link_id for success
 	 */
-	function link( $app1,$id1,$app2,$id2,$remark='',$owner=0,$lastmod=0 )
+	static function link( $app1,$id1,$app2,$id2,$remark='',$owner=0,$lastmod=0 )
 	{
-		if ($this->debug)
+		if (self::DEBUG)
 		{
 			echo "<p>solink.link('$app1',$id1,'$app2',$id2,'$remark',$owner)</p>\n";
 		}
@@ -88,9 +77,9 @@ class solink
 		}
 		if (!$owner)
 		{
-			$owner = $this->user;
+			$owner = self::$user;
 		}
-		return $this->db->insert($this->link_table,array(
+		return self::$db->insert(self::TABLE,array(
 				'link_app1'		=> $app1,
 				'link_id1'		=> $id1,
 				'link_app2'		=> $app2,
@@ -98,7 +87,7 @@ class solink
 				'link_remark'	=> $remark,
 				'link_lastmod'	=> $lastmod ? $lastmod : time(),
 				'link_owner'	=> $owner,
-			),False,__LINE__,__FILE__) ? $this->db->get_last_insert_id($this->link_table,'link_id') : false;
+			),False,__LINE__,__FILE__) ? self::$db->get_last_insert_id(self::TABLE,'link_id') : false;
 	}
 	
 	/**
@@ -108,9 +97,9 @@ class solink
 	 * @param string $remark new text for the remark
 	 * @return boolean true on success, else false
 	 */
-	function update_remark($link_id,$remark)
+	static function update_remark($link_id,$remark)
 	{
-		return $this->db->update($this->link_table,array(
+		return self::$db->update(self::TABLE,array(
 				'link_remark'	=> $remark,
 				'link_lastmod'	=> time(),
 			),array(
@@ -122,44 +111,38 @@ class solink
 	 * returns array of links to $app,$id
 	 *
 	 * @param string $app appname 
-	 * @param string $id id in $app
+	 * @param string/array $id id(s) in $app
 	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 	 * @param string $order defaults to newest links first
-	 * @return array of links (only_app: ids) or empty array if no matching links found
+	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
+	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
 	{
-		if ($this->debug)
+		if (self::DEBUG)
 		{
-			echo "<p>solink.get_links($app,$id,$only_app,$order)</p>\n";
+			echo "<p>solink.get_links($app,".print_r($id,true).",$only_app,$order)</p>\n";
+		}
+		if ($not_only = $only_app[0] == '!')
+		{
+			$only_app = substr($only_app,1);
 		}
 		$links = array();
-
-		$this->db->select($this->link_table,'*',$this->db->expression($this->link_table,'(',array(
+		foreach(self::$db->select(self::TABLE,'*',self::$db->expression(self::TABLE,'(',array(
 					'link_app1'	=> $app,
 					'link_id1'	=> $id,
 				),') OR (',array(
 					'link_app2'	=> $app,
 					'link_id2'	=> $id,
 				),')'
-			),__LINE__,__FILE__,False,$order ? " ORDER BY $order" : '');
-
-		$this->db->query($sql,__LINE__,__FILE__);
-
-		if ($not_only = $only_app[0] == '!')
+			),__LINE__,__FILE__,False,$order ? " ORDER BY $order" : '') as $row)
 		{
-			$only_app = substr($only_app,1);
-		}
-		while ($this->db->next_record())
-		{
-			$row = $this->db->Record;
-
-			if ($row['link_app1'] == $app AND $row['link_id1'] == $id)
+			if ($row['link_app1'] == $app && in_array($row['link_id1'],(array)$id))
 			{
 				$link = array(
 					'app'  => $row['link_app2'],
 					'id'   => $row['link_id2']
 				);
+				$app_id = $row['link_id1'];
 			}
 			else
 			{
@@ -167,20 +150,21 @@ class solink
 					'app'  => $row['link_app1'],
 					'id'   => $row['link_id1']
 				);
+				$app_id = $row['link_id1'];
 			}
 			if ($only_app && $not_only == ($link['app'] == $only_app) ||
 				 !$GLOBALS['egw_info']['user']['apps'][$link['app']])
 			{
 				continue;
 			}
-			$link['remark']  = $row['link_remark'];
-			$link['owner']   = $row['link_owner'];
-			$link['lastmod'] = $row['link_lastmod'];
-			$link['link_id'] = $row['link_id'];
-
-			$links[$row['link_id']] = $only_app && !$not_only ? $link['id'] : $link;
+			$links[$app_id][$row['link_id']] = $only_app && !$not_only ? $link['id'] : $link+array(
+				'remark'  => $row['link_remark'],
+				'owner'   => $row['link_owner'],
+				'lastmod' => $row['link_lastmod'],
+				'link_id' => $row['link_id'],
+			);
 		}
-		return $links;
+		return is_array($id) ? $links : ($links[$id] ? $links[$id] : array());
 	}
 	
 	/**
@@ -192,9 +176,9 @@ class solink
 	 * @param string $id2='' id in $app2, if no integer link_id given in $app_link_id
 	 * @return array with link-data or False
 	 */
-	function get_link($app_link_id,$id='',$app2='',$id2='')
+	static function get_link($app_link_id,$id='',$app2='',$id2='')
 	{
-		if ($this->debug)
+		if (self::DEBUG)
 		{
 			echo "<p>solink.get_link('$app_link_id',$id,'$app2','$id2')</p>\n";
 		}
@@ -208,12 +192,7 @@ class solink
 			{
 				return False;
 			}
-			$vars2addslashes = array('app_link_id','id','app2','id2');
-			foreach ($vars2addslashes as $var)
-			{
-				$$var = $this->db->db_addslashes($$var);
-			}
-			$where = $this->db->expression($this->link_table,'(',array(
+			$where = self::$db->expression(self::TABLE,'(',array(
 					'link_app1'	=> $app_link_id,
 					'link_id1'	=> $id,
 					'link_app2'	=> $app2,
@@ -225,15 +204,13 @@ class solink
 					'link_id1'	=> $id2,
 				),')');
 		}
-		$this->db->select($this->link_table,'*',$where,__LINE__,__FILE__);
-
-		if ($this->db->next_record())
+		foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
 		{
-			if ($this->debug)
+			if (self::DEBUG)
 			{
-				_debug_array($this->db->Record);
+				_debug_array($row);
 			}
-			return $this->db->Record;
+			return $row;
 		}
 		return False;
 	}
@@ -249,9 +226,9 @@ class solink
 	 * @param string $id2='' id in $app2
 	 * @return array with deleted links
 	 */
-	function &unlink($link_id,$app='',$id='',$owner=0,$app2='',$id2='')
+	static function &unlink($link_id,$app='',$id='',$owner=0,$app2='',$id2='')
 	{
-		if ($this->debug)
+		if (self::DEBUG)
 		{
 			echo "<p>solink.unlink($link_id,$app,$id,$owner,$app2,$id2)</p>\n";
 		}
@@ -274,11 +251,11 @@ class solink
 					$check1['link_id1'] = $id;
 					$check2['link_id2'] = $id;
 				}
-				$where = $this->db->expression($this->link_table,'((',$check1,') OR (',$check2,'))');
+				$where = self::$db->expression(self::TABLE,'((',$check1,') OR (',$check2,'))');
 			}
 			elseif ($app != '' && $app2 != '')
 			{
-				$where = $this->db->expression($this->link_table,'(',array(
+				$where = self::$db->expression(self::TABLE,'(',array(
 						'link_app1'	=> $app,
 						'link_id1'	=> $id,
 						'link_app2'	=> $app2,
@@ -296,13 +273,12 @@ class solink
 				$where['link_owner'] = $owner;
 			}
 		}
-		$this->db->select($this->link_table,'*',$where,__LINE__,__FILE__);
 		$deleted = array();
-		while (($row = $this->db->row(true)))
+		foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
 		{
 			$deleted[] = $row;
 		}			
-		$this->db->delete($this->link_table,$where,__LINE__,__FILE__);
+		self::$db->delete(self::TABLE,$where,__LINE__,__FILE__);
 
 		return $deleted;
 	}
@@ -317,15 +293,15 @@ class solink
 	 * @param int $new_owner account_id of new owner
 	 * @return int number of links changed
 	 */
-	function chown($owner,$new_owner)
+	static function chown($owner,$new_owner)
 	{
 		if ((int)$owner <= 0 || (int) $new_owner <= 0)
 		{
 			return 0;
 		}
-		$this->db->update($this->link_table,array('owner'=>$new_owner),array('owner'=>$owner),__LINE__,__FILE__);
+		self::$db->update(self::TABLE,array('owner'=>$new_owner),array('owner'=>$owner),__LINE__,__FILE__);
 
-		return $this->db->affected_rows();
+		return self::$db->affected_rows();
 	}
 	
 	/**
@@ -342,53 +318,58 @@ class solink
 	 * bolink::get_3links('timesheet','projectmanager',$pm_id) returns the links (c) between the timesheet and the project, 
 	 * plus the other app/id in the keys 'app3' and 'id3'
 	 * 
-	 * Please note / ToDo: 
-	 * at the moment only those links are returned, who are initiated by $app1, means for whom link_app1=$app1
-	 * 
 	 * @param string $app app the returned links are linked on one side (atm. this must be link_app1!)
 	 * @param string $target_app app the returned links other side link also to
 	 * @param string/array $target_id=null id(s) the returned links other side link also to
 	 * @return array with links from entries from $app to $target_app/$target_id plus the other (b) link_id/app/id in the keys 'link3'/'app3'/'id3'
 	 */
-	function get_3links($app,$target_app,$target_id=null)
+	static function get_3links($app,$target_app,$target_id=null)
 	{
-		$links = array();
-		$table_def = $this->db->get_table_definitions('phpgwapi',$this->link_table);
+		$table = self::TABLE;
 		$arrayofselects=array(
 			// retrieve the type of links, where the relation is realized as timesheet->infolog/tracker via infolog->projectmanager to timesheet->projectmanager
-			array('table'=>$this->link_table,
+			array('table'=>self::TABLE,
 				'cols'=>'c.*,b.link_app1 AS app3,b.link_id1 AS id3,b.link_id AS link3',
-				'where'=>'a.link_app1='.$this->db->quote($app).' AND c.link_app2='.$this->db->quote($target_app).
-                        		(!$target_id ? '' : $this->db->expression($this->link_table,' AND c.',array('link_id2' => $target_id))),
+				'where'=>'a.link_app1='.self::$db->quote($app).' AND c.link_app2='.self::$db->quote($target_app).
+                        		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND c.',array('link_id2' => $target_id))),
                         	'join'=>" a
-                        		JOIN $this->link_table b ON a.link_id2=b.link_id1 AND a.link_app2=b.link_app1
-                       			JOIN $this->link_table c ON a.link_id1=c.link_id1 AND a.link_app1=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app2 AND c.link_id2=b.link_id2",
-				'table_def'=>$table_def
+                        		JOIN $table b ON a.link_id2=b.link_id1 AND a.link_app2=b.link_app1
+                       			JOIN $table c ON a.link_id1=c.link_id1 AND a.link_app1=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app2 AND c.link_id2=b.link_id2",
 			),
 			// retrieve the type of links, where the relation is realized as timesheet->infolog/tracker and projectmanager->timesheet
-			array('table'=>$this->link_table,
+			array('table'=>self::TABLE,
 				'cols'=>'b.link_id, b.link_app2 as app1, b.link_id2 as id1, b.link_app1 as app2, b.link_id1 as id2, b.link_remark,b.link_lastmod,b.link_owner,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
-                       		'where'=>'a.link_app1='.$this->db->quote($app).' AND b.link_app1='.$this->db->quote($target_app).
-                        		(!$target_id ? '' : $this->db->expression($this->link_table,' AND b.',array('link_id1' => $target_id))),
+                       		'where'=>'a.link_app1='.self::$db->quote($app).' AND b.link_app1='.self::$db->quote($target_app).
+                        		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND b.',array('link_id1' => $target_id))),
                         	'join'=>" a 
-                        		JOIN $this->link_table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
-                        		JOIN egw_links c ON a.link_id2=c.link_id1 AND a.link_app2=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app1 AND c.link_id2=b.link_id1",
-				'table_def'=>$table_def),
+                        		JOIN $table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
+                        		JOIN $table c ON a.link_id2=c.link_id1 AND a.link_app2=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app1 AND c.link_id2=b.link_id1",
+			),
 			// retrieve the type of links, where the relation is realized as timesheet->projectmanager and infolog->timesheet
-			array('table'=>$this->link_table,
+			array('table'=>self::TABLE,
 				'cols'=>'a.*,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
-                     		'where'=>'a.link_app1='.$this->db->quote($app).' AND a.link_app2='.$this->db->quote($target_app).
-                        		(!$target_id ? '' : $this->db->expression($this->link_table,' AND a.',array('link_id2' => $target_id))),
+                     		'where'=>'a.link_app1='.self::$db->quote($app).' AND a.link_app2='.self::$db->quote($target_app).
+                        		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND a.',array('link_id2' => $target_id))),
                        		'join'=>" a 
-                       			JOIN $this->link_table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
-                        		JOIN egw_links c ON a.link_id2=c.link_id2 AND a.link_app2=c.link_app2 AND a.link_id!=c.link_id AND c.link_app1=b.link_app1 AND c.link_id1=b.link_id1",
-				'table_def'=>$table_def),
+                       			JOIN $table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
+                        		JOIN $table c ON a.link_id2=c.link_id2 AND a.link_app2=c.link_app2 AND a.link_id!=c.link_id AND c.link_app1=b.link_app1 AND c.link_id1=b.link_id1",
+			),
 		);
-		$this->db->union($arrayofselects,__LINE__,__FILE__);
-                while (($row = $this->db->row(true,'link_')))
-                {
-                        $links[] = $row;
-                }
+		$links = array();
+		foreach(self::$db->union($arrayofselects,__LINE__,__FILE__) as $row)
+		{
+			$links[] = egw_db::strip_array_keys($row,'link_');
+		}
  		return $links;
 	}
+
+	/**
+	 * constructor
+	 */
+	static function init_static( )
+	{
+		self::$db     = $GLOBALS['egw']->db;
+		self::$user   =& $GLOBALS['egw_info']['user']['account_id'];
+	}
 }
+solink::init_static();
