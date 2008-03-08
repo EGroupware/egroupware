@@ -183,8 +183,11 @@ class egw_db
 	}
 
 	/**
-	* @return int id of current query
-	*/
+	 * Return the result-object of the last query
+	 * 
+	 * @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
+	 * @return ADORecordSet
+	 */
 	function query_id()
 	{
 		return $this->Query_ID;
@@ -476,8 +479,10 @@ class egw_db
 	}
 
 	/**
-	* Discard the current query result
-	*/
+	 * Discard the current query result
+	 * 
+	 * @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
+	 */
 	function free()
 	{
 		unset($this->Query_ID);	// else copying of the db-object does not work
@@ -572,6 +577,7 @@ class egw_db
 	*
 	* Specifying a fetch_mode only works for newly fetched rows, the first row always gets fetched by query!!!
 	*
+	* @deprecated use foreach(query() or foreach(select() to loop over the query using the global db object
 	* @param int $fetch_mode ADODB_FETCH_BOTH = numerical+assoc keys (eGW default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
 	* @return bool was another row found?
 	*/
@@ -627,6 +633,7 @@ class egw_db
 	/**
 	* Move to position in result set
 	*
+	* @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
 	* @param int $pos required row (optional), default first row
 	* @return boolean true if sucessful or false if not found
 	*/
@@ -748,6 +755,7 @@ class egw_db
 	/**
 	* Number of rows in current result set
 	*
+	* @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
 	* @return int number of rows
 	*/
 	function num_rows()
@@ -758,6 +766,7 @@ class egw_db
 	/**
 	* Number of fields in current row
 	*
+	* @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
 	* @return int number of fields
 	*/
 	function num_fields()
@@ -813,6 +822,7 @@ class egw_db
 	/**
 	* Returns a query-result-row as an associative array (no numerical keys !!!)
 	*
+	* @deprecated use foreach(query() or foreach(select() to loop over the query using the global db object
 	* @param bool $do_next_record should next_record() be called or not (default not)
 	* @param string $strip='' string to strip of the column-name, default ''
 	* @return array/bool the associative array or False if no (more) result-row is availible
@@ -823,17 +833,7 @@ class egw_db
 		{
 			return False;
 		}
-		$result = array();
-		foreach($this->Record as $column => $value)
-		{
-			if (!is_numeric($column))
-			{
-				if ($strip) $column = str_replace($strip,'',$column);
-
-				$result[$column] = $value;
-			}
-		}
-		return $result;
+		return $strip ? self::strip_array_keys($this->Record,$strip) : $this->Record;
 	}
 
 	/**
@@ -1773,5 +1773,20 @@ class egw_db
 		if ($this->Debug) echo "<p>sql='$sql'</p>";
 
 		return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows,false,ADODB_FETCH_ASSOC);
+	}
+	
+	/**
+	 * Strip eg. a prefix from the keys of an array
+	 *
+	 * @param array $arr
+	 * @param string/array $strip
+	 * @return array
+	 */
+	static function strip_array_keys($arr,$strip)
+	{
+		$keys = array_keys($arr);
+
+		return array_walk($keys,create_function('&$v,$k,$strip','$v = str_replace($strip,\'\',$v);'),$strip) ?
+			array_combine($keys,$arr) : $arr;
 	}
 }
