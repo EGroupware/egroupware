@@ -80,12 +80,6 @@
 		 * @var boolean $debug switches debug-messages on and off
 		 */
 		var $debug = False;
-		/**
-		 * reference to the link class
-		 * 
-		 * @var bolink
-		 */
-		var $link;
 
 		/**
 		 * Constructor of the extension
@@ -94,11 +88,7 @@
 		 */
 		function link_widget($ui='')
 		{
-			if (!is_object($GLOBALS['egw']->link))
-			{
-				$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
-			}
-			$this->link =& $GLOBALS['egw']->link;
+
 		}
 
 		/**
@@ -157,13 +147,13 @@
 				}
 				if ($value['app'] && $value['id'])
 				{
-					$view = $this->link->view($value['app'],$value['id']);
+					$view = egw_link::view($value['app'],$value['id']);
 					$link = $view['menuaction']; unset($view['menuaction']);
 					foreach($view as $var => $val)
 					{
 						$link .= '&'.$var.'='.$val;
 					}
-					if (!($popup = $this->link->is_popup($value['app'],'view')) &&
+					if (!($popup = egw_link::is_popup($value['app'],'view')) &&
 						$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
 					{
 						$target = '_blank';
@@ -184,7 +174,7 @@
 				//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
 				list($cell['size']) = explode(',',$cell['size']);
 				$cell['size'] .= ','.$link.',,,'.$target.','.$popup.','.$value['extra_title'];
-				$value = $value['title'] ? $value['title'] : $this->link->title($value['app'],$value['id']);
+				$value = $value['title'] ? $value['title'] : egw_link::title($value['app'],$value['id']);
 				return true;
 
 			case 'link-string':
@@ -196,7 +186,7 @@
 				}
 				if ($value['to_id'] && $value['to_app'])
 				{
-					$value = $this->link->get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app']);
+					$value = egw_link::get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app']);
 					if ($only_app)
 					{
 						foreach($value as $key => $id)
@@ -214,7 +204,7 @@
 					{
 						$options .= " onMouseOver=\"self.status='".addslashes($tmpl->html->htmlspecialchars($help))."'; return true;\"";
 						$options .= " onMouseOut=\"self.status=''; return true;\"";
-						if (($popup = $this->link->is_popup($link['app'],'view')))
+						if (($popup = egw_link::is_popup($link['app'],'view')))
 						{
 							list($w,$h) = explode('x',$popup);
 							$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
@@ -224,8 +214,8 @@
 							$options = ' target="_blank"';
 						}
 						$str .= ($str !== '' ? ', ' : '') . $tmpl->html->a_href(
-							$tmpl->html->htmlspecialchars($this->link->title($link['app'],$link['id'])),
-							'/index.php',$this->link->view($link['app'],$link['id'],$link),$options);
+							$tmpl->html->htmlspecialchars(egw_link::title($link['app'],$link['id'])),
+							'/index.php',egw_link::view($link['app'],$link['id'],$link),$options);
 					}
 				}
 				$cell['type'] = 'html';
@@ -234,7 +224,7 @@
 				return True;
 
 			case 'link-add':
-				$apps = $this->link->app_list($type == 'link-add' ? 'add_app' : 'query');
+				$apps = egw_link::app_list($type == 'link-add' ? 'add_app' : 'query');
 				if (!$apps || !$value['to_id'] || is_array($value['to_id']))	// cant do an add without apps or already created entry
 				{
 					$cell = $tmpl->empty_cell();
@@ -244,9 +234,9 @@
 				$value['options-add_app'] = array();
 				foreach($apps as $app => $label)
 				{
-					$link = $GLOBALS['egw']->link('/index.php',$this->link->add($app,$value['to_app'],$value['to_id'])+
+					$link = $GLOBALS['egw']->link('/index.php',egw_link::add($app,$value['to_app'],$value['to_id'])+
 						(is_array($value['extra']) ? $value['extra'] : array()));
-					if (($popup = $this->link->is_popup($app,'add')))
+					if (($popup = egw_link::is_popup($app,'add')))
 					{
 						list($w,$h) = explode('x',$popup);
 						$action = "window.open('$link','_blank','width=$w,height=$h,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');";
@@ -271,7 +261,7 @@
 				if ($value['search_label']) $tpl->set_cell_attribute('search','label',$value['search_label']);
 				/* old request code
 				$value['msg'] = '';
-				if ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
+				if ($value['button'] == 'search' && count($ids = egw_link::query($value['app'],$value['query'])))
 				{
 					$extension_data['app'] = $value['app'];
 
@@ -295,7 +285,7 @@
 						$extension_data = $value;
 					}
 					$value = array_merge($extension_data,$value);
-					$value['options-app'] = $this->link->app_list('query');
+					$value['options-app'] = egw_link::app_list('query');
 					asort($value['options-app']);	// sort them alphabetic
 
 					$tpl =& new etemplate('etemplate.link_widget.search');
@@ -317,9 +307,9 @@
 				}
 				if (!isset($value['title']))
 				{
-					$value['title'] = $this->link->title($app,$id);
+					$value['title'] = egw_link::title($app,$id);
 				}
-				$links = $this->link->get_links($app,$id);
+				$links = egw_link::get_links($app,$id);
 				$value['anz_links'] = count($links);
 				$extension_data = $value;
 
@@ -334,18 +324,18 @@
 				for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 				{
 					$value[$row] = $link;
-					$value[$row]['title'] = $this->link->title($link['app'],$link['id'],$link);
+					$value[$row]['title'] = egw_link::title($link['app'],$link['id'],$link);
 					$value[$row]['mime_icon'] = '';
 					if (!is_array($link['id']))
 					{
-						$value[$row]['view']  = $this->link->view($link['app'],$link['id'],$link);
-						if (!($value[$row]['popup'] = $this->link->is_popup($link['app'],'view')) &&
+						$value[$row]['view']  = egw_link::view($link['app'],$link['id'],$link);
+						if (!($value[$row]['popup'] = egw_link::is_popup($link['app'],'view')) &&
 							$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
 						{
 							$value[$row]['target'] = '_blank';		// we create a new window as the linked page is no popup
 						}
 					}
-					if ($link['app'] == $this->link->vfs_appname)
+					if ($link['app'] == egw_link::vfs_appname)
 					{
 						$value[$row]['label'] = 'Delete';
 						$value[$row]['help'] = lang('Delete this file');
@@ -360,7 +350,7 @@
 								$value[$row]['thumbnail'] = '<img src="' . 
 									$GLOBALS['egw_info']['server']['webserver_url']. 
 									'/etemplate/inc/thumbnail.inc.php?image=' . 
-									$this->link->vfs_path(
+									egw_link::vfs_path(
 										$value[$row]['view']['app'], $value[$row]['view']['id'], $value[$row]['view']['filename']
 									) . '" />';
 							}
@@ -401,7 +391,7 @@
 					$titles = array();
 					foreach(explode(',',$id) as $id)
 					{
-						if ($id && ($title = $this->link->title($app,$id)))
+						if ($id && ($title = egw_link::title($app,$id)))
 						{
 							$titles[$id] = $title;
 						}
@@ -436,7 +426,7 @@
 				{
 					$tpl->set_cell_attribute('app','type','select');
 					$tpl->set_cell_attribute('app','no_lang',true);
-					$apps = $this->link->app_list('query');
+					$apps = egw_link::app_list('query');
 					asort($apps);	// sort them alphabetic
 					foreach($apps as $app => $label)
 					{
@@ -447,7 +437,7 @@
 				break;
 				
 			case 'link-apps':
-				$apps = $this->link->app_list($cell['size'] ? $cell['size'] : 'query');
+				$apps = egw_link::app_list($cell['size'] ? $cell['size'] : 'query');
 				if (!$apps)	// cant do an add without apps or already created entry
 				{
 					$cell = $tmpl->empty_cell();
@@ -541,7 +531,7 @@
 				case 'create':
 					if ($value['to_app'])						// make the link
 					{
-						$link_id = $this->link->link($value['to_app'],$value['to_id'],
+						$link_id = egw_link::link($value['to_app'],$value['to_id'],
 							$value['app'],$value['id'],$value['remark']);
 						$value['remark'] = $value['query'] = '';
 
@@ -566,8 +556,8 @@
 							move_uploaded_file($value['file']['tmp_name'],$value['file']['tmp_name'].'+');
 							$value['file']['tmp_name'] .= '+';
 						}
-						$link_id = $this->link->link($value['to_app'],$value['to_id'],
-							$this->link->vfs_appname,$value['file'],$value['remark']);
+						$link_id = egw_link::link($value['to_app'],$value['to_id'],
+							egw_link::vfs_appname,$value['file'],$value['remark']);
 						$value['remark'] = '';
 
 						if (isset($value['primary']) && !$value['anz_links'] )
@@ -591,7 +581,7 @@
 						//echo "<p>unlink(link-id=$unlink,$value[to_app],$value[to_id])</p>\n";
 						if (is_array($value['to_id'])) _debug_array($value['to_id']);
 					}
-					$this->link->unlink2($unlink,$value['to_app'],$value['to_id']);
+					egw_link::unlink2($unlink,$value['to_app'],$value['to_id']);
 					if (is_array($value['to_id']))
 					{
 						$extension_data['to_id'] = $value['to_id'];	// else changes from unlink get lost
@@ -623,7 +613,7 @@
 			$response = new xajaxResponse();
 			//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("','",$args)."')");
 			
-			if (!($found = $this->link->query($app,$pattern == lang('Search') ? '' : $pattern)))	// ignore the blur-text
+			if (!($found = egw_link::query($app,$pattern == lang('Search') ? '' : $pattern)))	// ignore the blur-text
 			{
 				$GLOBALS['egw']->translation->add_app('etemplate');
 				$response->addAlert(lang('Nothing found - try again !!!'));
