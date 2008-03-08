@@ -368,20 +368,15 @@ class egw_framework
 	 */
 	function _get_quick_add()
 	{
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			require_once(EGW_API_INC.'/class.bolink.inc.php');
-			$GLOBALS['egw']->link =& new bolink();
-		}
-		$apps = $GLOBALS['egw']->link->app_list('add');
+		$apps = egw_link::app_list('add');
 		asort($apps);	// sort them alphabetic
 		
 		$options = array(lang('Add').' ...');
 		foreach($apps as $app => $label)
 		{
-			$link = $GLOBALS['egw']->link('/index.php',$GLOBALS['egw']->link->add($app,$GLOBALS['egw_info']['flags']['currentapp'],$GLOBALS['egw_info']['flags']['currentid'])+
+			$link = $GLOBALS['egw']->link('/index.php',egw_link::add($app,$GLOBALS['egw_info']['flags']['currentapp'],$GLOBALS['egw_info']['flags']['currentid'])+
 				(is_array($GLOBALS['egw_info']['flags']['quick_add']) ? $GLOBALS['egw_info']['flags']['quick_add'] : array()));
-			if (($popup = $GLOBALS['egw']->link->is_popup($app,'add')))
+			if (($popup = egw_link::is_popup($app,'add')))
 			{
 				list($w,$h) = explode('x',$popup);
 				$action = "window.open('$link','_blank','width=$w,height=$h,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');";
@@ -394,7 +389,6 @@ class egw_framework
 		}
 		if (!is_object($GLOBALS['egw']->html))
 		{
-			require_once(EGW_API_INC.'/class.html.inc.php');
 			$GLOBALS['egw']->html =& new html();
 		}
 		return $GLOBALS['egw']->html->select('quick_add','',$options,true,$options=' onchange="eval(this.value); this.value=0; return false;"');		
@@ -403,7 +397,6 @@ class egw_framework
 	function _get_notification_bell() {
 		if (!is_object($GLOBALS['egw']->html))
 		{
-			require_once(EGW_API_INC.'/class.html.inc.php');
 			$GLOBALS['egw']->html =& new html();
 		}
 		return $GLOBALS['egw']->html->div(	$GLOBALS['egw']->html->a_href(	$GLOBALS['egw']->html->image('notifications','notificationbell',lang('notifications')),
