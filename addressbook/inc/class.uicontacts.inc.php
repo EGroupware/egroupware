@@ -1180,14 +1180,6 @@ class uicontacts extends bocontacts
 	*/
 	function edit($content=null)
 	{
-		if (!is_object($this->link))
-		{
-			if (!is_object($GLOBALS['egw']->link))
-			{
-				$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
-			}
-			$this->link =& $GLOBALS['egw']->link;
-		}
 		if (is_array($content))
 		{
 			list($button) = @each($content['button']);
@@ -1242,7 +1234,7 @@ class uicontacts extends bocontacts
 					// writing links for new entry, existing ones are handled by the widget itself
 					if ($links && $content['id'])	
 					{
-						$this->link->link('addressbook',$content['id'],$links);
+						egw_link::link('addressbook',$content['id'],$links);
 					}
 					if ($button == 'save')
 					{
@@ -1344,7 +1336,7 @@ class uicontacts extends bocontacts
 			if($content && $_GET['makecp'])	// copy the contact
 			{
 				$content['link_to']['to_id'] = 0;
-				$this->link->link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
+				egw_link::link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
 					lang('Copied by %1, from record #%2.',$GLOBALS['egw']->common->display_fullname('',
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
@@ -1368,7 +1360,7 @@ class uicontacts extends bocontacts
 					$link_id = $link_ids[$n];
 					if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// gard against XSS
 					{
-						$this->link->link('addressbook',$content['link_to']['to_id'],$link_app,$link_id);
+						egw_link::link('addressbook',$content['link_to']['to_id'],$link_app,$link_id);
 					}
 				}
 			}

@@ -432,18 +432,13 @@ class bocontacts extends socontacts
 		{
 			$contact = array($contact);
 		}
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			require_once(EGW_API_INC.'/class.bolink.inc.php');
-			$GLOBALS['egw']->link =& new bolink();
-		}
 		foreach($contact as $c)
 		{
 			$id = is_array($c) ? $c['id'] : $c;
 
 			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete) && parent::delete($id))
 			{
-				$GLOBALS['egw']->link->unlink(0,'addressbook',$id);
+				egw_link::unlink(0,'addressbook',$id);
 				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 			}
 			else
@@ -766,8 +761,7 @@ class bocontacts extends socontacts
 	 * Is called as hook to participate in the linking. The format is determined by the link_title preference.
 	 *
 	 * @param int/string/array $contact int/string id or array with contact
-	 * @param string/boolean string with the title, null if contact does not exitst, false if no perms to view it
-	 * @return string
+	 * @return string/boolean string with the title, null if contact does not exitst, false if no perms to view it
 	 */
 	function link_title($contact)
 	{
@@ -786,6 +780,35 @@ class bocontacts extends socontacts
 			$type = null;
 		}
 		return $this->fileas($contact,$type);
+	}
+
+	/**
+	 * get title for multiple contacts identified by $ids
+	 * 
+	 * Is called as hook to participate in the linking. The format is determined by the link_title preference.
+	 *
+	 * @param array $ids array with contact-id's
+	 * @return array with titles, see link_title
+	 */
+	function link_titles(array $ids)
+	{
+		$titles = array();
+		if (($contacts =& $this->search(array('contact_id' => $ids),false)))
+		{
+			foreach($contacts as $contact)
+			{
+				$titles[$contact['id']] = $this->link_title($contact);
+			}
+		}
+		// we assume all not returned contacts are not readable for the user (as we report all deleted contacts to egw_link)
+		foreach($ids as $id)
+		{
+			if (!isset($titles[$id]))
+			{
+				$titles[$id] = false;
+			}
+		}
+		return $titles;
 	}
 
 	/**
@@ -835,6 +858,7 @@ class bocontacts extends socontacts
 		return array(
 			'query' => 'addressbook.bocontacts.link_query',
 			'title' => 'addressbook.bocontacts.link_title',
+			'titles' => 'addressbook.bocontacts.link_titles',
 			'view' => array(
 				'menuaction' => 'addressbook.uicontacts.view'
 			),
@@ -995,9 +1019,9 @@ class bocontacts extends socontacts
 			{
 				continue;
 			}
-			foreach($GLOBALS['egw']->link->get_links('addressbook',$contact['id']) as $data)
+			foreach(egw_link::get_links('addressbook',$contact['id']) as $data)
 			{
-				$GLOBALS['egw']->link->link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
+				egw_link::link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
 			}
 			if ($this->delete($contact['id'])) $success++;
 		}
