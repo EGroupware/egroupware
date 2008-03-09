@@ -5,12 +5,11 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005/6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$ 
  */
 
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.uietemplate.inc.php');
 require_once('class.botimesheet.inc.php');
 
 /**
@@ -41,10 +40,8 @@ class uitimesheet extends botimesheet
 	{
 		$this->botimesheet();
 		
-		$config =& CreateObject('phpgwapi.config',TIMESHEET_APP);
-		$config->read_repository();
-		$this->pm_integration = $config->config_data['pm_integration'];
-		$this->ts_viewtype = $config->config_data['ts_viewtype'];
+		$this->pm_integration = $this->config_data['pm_integration'];
+		$this->ts_viewtype = $this->config_data['ts_viewtype'];
 
 		// our javascript
 		// to be moved in a seperate file if rewrite is over
@@ -167,17 +164,17 @@ class uitimesheet extends botimesheet
 							// update links accordingly
 							if ($this->data['pm_id'])
 							{
-								$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],'projectmanager',$this->data['pm_id']);
+								egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],'projectmanager',$this->data['pm_id']);
 							}
 							if ($this->data['old_pm_id'])
 							{
-								$this->link->unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
+								egw_link::unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
 								unset($this->data['old_pm_id']);
 							}
 						}
 						if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 						{
-							$this->link->link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
+							egw_link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
 						}
 					}
 					$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',array(
@@ -192,9 +189,9 @@ class uitimesheet extends botimesheet
 						if (!is_array($content['link_to']['to_id']))	// set links again, so new entry gets the same links as the existing one
 						{
 							$content['link_to']['to_id'] = 0;
-							foreach($this->link->get_links(TIMESHEET_APP,$this->data['ts_id'],'!'.$this->link->vfs_appname) as $link)
+							foreach(egw_link::get_links(TIMESHEET_APP,$this->data['ts_id'],'!'.egw_link::vfs_appname) as $link)
 							{
-								$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
+								egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
 							}
 						}
 						// create a new entry
@@ -258,7 +255,7 @@ class uitimesheet extends botimesheet
 				$link_id = $link_ids[$n];
 				if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// gard against XSS
 				{
-					$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
+					egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
 					switch ($link_app)
 					{
 						case 'projectmanager':
@@ -266,7 +263,7 @@ class uitimesheet extends botimesheet
 							break;
 						case 'infolog':
 							// a preserved title blur is only set for other (non-project) links, it stays with Save&New!
-							$preserv['ts_title_blur'] = $this->link->title('infolog',$link_id);
+							$preserv['ts_title_blur'] = egw_link::title('infolog',$link_id);
 							break;
 					}
 				}
@@ -274,7 +271,7 @@ class uitimesheet extends botimesheet
 		}
 		elseif ($this->data['ts_id'])
 		{
-			$links = $this->link->get_links(TIMESHEET_APP,$this->data['ts_id'],'projectmanager');
+			$links = egw_link::get_links(TIMESHEET_APP,$this->data['ts_id'],'projectmanager');
 		}
 		// make all linked projects availible for the pm-pricelist widget, to be able to choose prices from all
 		$content['all_pm_ids'] = array_values($links);
@@ -290,7 +287,7 @@ class uitimesheet extends botimesheet
 		}
 		if ($content['pm_id'])
 		{
-			$preserv['ts_project_blur'] = $content['ts_project_blur'] = $this->link->title('projectmanager',$content['pm_id']);
+			$preserv['ts_project_blur'] = $content['ts_project_blur'] = egw_link::title('projectmanager',$content['pm_id']);
 		}
 		if ($this->pm_integration == 'full')
 		{
@@ -414,7 +411,7 @@ class uitimesheet extends botimesheet
 		// PM project filter for the PM integration
 		if ((string)$query['col_filter']['pm_id'] != '')
 		{
-			//$query['col_filter']['ts_id'] = $this->link->get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
+			//$query['col_filter']['ts_id'] = egw_link::get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
 			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
@@ -503,23 +500,24 @@ class uitimesheet extends botimesheet
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
 		
+		$ids = array();
+		foreach($rows as $row)
+		{
+			$ids[] = $row['ts_id'];
+		}
 		if ($id_only)
 		{
-			foreach($rows as $n => $row)
-			{
-				$rows[$n] = $row['ts_id'];
-			}
+			$rows = $ids;
 			return $this->total;	// no need to set other fields or $readonlys
 		}
+		$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids);
 
 		unset($query['col_filter'][0]);
 		
 		$readonlys = array();
 		$have_cats = false;
-		foreach($rows as $n => $val)
+		foreach($rows as &$row)
 		{
-			$row =& $rows[$n];
-			
 			if ($row['cat_id']) $have_cats = true;
 
 			$row['class'] = 'row';
@@ -561,16 +559,17 @@ class uitimesheet extends botimesheet
 			{
 				unset($row['ts_project']);	// dont need or want to show it
 			}
-			else
+			elseif ($links[$row['ts_id']])
 			{
-				if (($links = $this->link->get_links(TIMESHEET_APP,$row['ts_id'],'projectmanager')))
+				foreach($links[$row['ts_id']] as $link)
 				{
-					$row['ts_link'] = array(
-						'app' => 'projectmanager',
-						'id'  => array_shift($links),
-					);
+					if ($link['app'] == 'projectmanager')
+					{
+						$row['ts_link'] = $link;
+						$row['ts_link']['title'] = $row['ts_project'];
+						break;
+					}
 				}
-				$row['ts_link']['title'] = $row['ts_project'];
 			}
 			if (!$query['filter2'])
 			{

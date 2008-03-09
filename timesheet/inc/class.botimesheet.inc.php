@@ -5,12 +5,10 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005/6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$ 
  */
-
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 if (!defined('TIMESHEET_APP'))
 {
@@ -24,14 +22,6 @@ if (!defined('TIMESHEET_APP'))
  */
 class botimesheet extends so_sql
 {
-	/**
-	 * Timesheets config data
-	 * 
-	 * @var array
-	 */
-	var $config = array();
-
-
 	/**
 	 * Timesheets config data
 	 *
@@ -90,12 +80,6 @@ class botimesheet extends so_sql
 		'3 years ago' => array(-3,0,0,0, -2,0,0,0),
 	);
 	/**
-	 * Reference to the (bo)link class instanciated at $GLOBALS['egw']->link
-	 * 
-	 * @var bolink
-	 */
-	var $link;
-	/**
 	 * Grants: $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
 	 * 
 	 * @var array
@@ -120,9 +104,7 @@ class botimesheet extends so_sql
 	{
 		$this->so_sql(TIMESHEET_APP,'egw_timesheet');
 
-		$this->config =& CreateObject('phpgwapi.config',TIMESHEET_APP);
-		$this->config->read_repository();
-		$this->config_data =& $this->config->config_data;
+		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
 
 		if (isset($this->config_data['customfields']) && is_array($this->config_data['customfields']))
@@ -143,13 +125,6 @@ class botimesheet extends so_sql
 		{
 			$GLOBALS['botimesheet'] =& $this;
 		}
-		// instanciation of link-class has to be after making us globaly availible, as it calls us to get the search_link
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
-		}
-		$this->link =& $GLOBALS['egw']->link;
-		
 		$this->grants = $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
 	}
 	
@@ -441,7 +416,7 @@ class botimesheet extends so_sql
 			$this->save_extra();
 
 			// notify the link-class about the update, as other apps may be subscribt to it
-			$this->link->notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
+			egw_link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
 		return $err;
 	}
@@ -507,7 +482,7 @@ class botimesheet extends so_sql
 			$this->delete_extra($ts_id);
 
 			// delete all links to timesheet entry $ts_id
-			$this->link->unlink(0,TIMESHEET_APP,$ts_id);
+			egw_link::unlink(0,TIMESHEET_APP,$ts_id);
 		}
 		return $ret;
 	}
@@ -588,7 +563,7 @@ class botimesheet extends so_sql
 	}
 	
 	/**
-	 * get title for an timesheet entry identified by $entry
+	 * get title for a timesheet entry identified by $entry
 	 * 
 	 * Is called as hook to participate in the linking
 	 *
@@ -611,6 +586,35 @@ class botimesheet extends so_sql
 			$format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i');
 		}
 		return date($format,$entry['ts_start']).': '.$entry['ts_title'];
+	}
+
+	/**
+	 * get title for multiple timesheet entries identified by $ids
+	 * 
+	 * Is called as hook to participate in the linking
+	 *
+	 * @param array $ids array with ts_id's
+	 * @return array with titles, see link_title
+	 */
+	function link_titles( array $ids )
+	{
+		$titles = array();
+		if (($entries = $this->search(array('ts_id' => $ids),'ts_id,ts_title,ts_start')))
+		{
+			foreach($entries as $entry)
+			{
+				$titles[$entry['ts_id']] = $this->link_title($entry);
+			}
+		}
+		// we assume all not returned entries are not readable by the user, as we notify egw_link about all deletes
+		foreach($ids as $id)
+		{
+			if (!isset($titles[$id]))
+			{
+				$titles[$id] = false;
+			}
+		}
+		return $titles;
 	}
 
 	/**
@@ -647,6 +651,7 @@ class botimesheet extends so_sql
 		return array(
 			'query' => TIMESHEET_APP.'.botimesheet.link_query',
 			'title' => TIMESHEET_APP.'.botimesheet.link_title',
+			'titles'=> TIMESHEET_APP.'.botimesheet.link_titles',
 			'view'  => array(
 				'menuaction' => TIMESHEET_APP.'.uitimesheet.view',
 			),
@@ -671,7 +676,7 @@ class botimesheet extends so_sql
 	 */
 	function cumulate($param)
 	{
-		$links = $this->link->get_3links(TIMESHEET_APP,'projectmanager',$param['pm_id']);
+		$links = egw_link::get_3links(TIMESHEET_APP,'projectmanager',$param['pm_id']);
 		
 		$rows = array();
 		foreach($links as $link)
