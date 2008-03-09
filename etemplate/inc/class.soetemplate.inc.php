@@ -687,7 +687,7 @@ class soetemplate
 	 * @param boolean $remove_all_objs if true unset all objs, on false use as_array to save only the data of objs
 	 * @return array
 	 */
-	static function compress_array($arr,$remove_objs=false)
+	function compress_array($arr,$remove_objs=false)
 	{
 		if (!is_array($arr))
 		{
@@ -701,7 +701,7 @@ class soetemplate
 			}
 			elseif (is_array($val))
 			{
-				$arr[$key] = self::compress_array($val,$remove_objs);
+				$arr[$key] = $this->compress_array($val,$remove_objs);
 			}
 			elseif (!$remove_objs && $key == 'obj' && is_object($val) && method_exists($val,'as_array') &&
 				// this test prevents an infinit recursion of templates calling itself, atm. etemplate.editor.new
