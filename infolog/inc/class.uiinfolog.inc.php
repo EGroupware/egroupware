@@ -47,12 +47,6 @@ class uiinfolog
 	 */
 	var $tmpl;
 	/**
-	 * reference to the html object of etemplate
-	 *
-	 * @var html
-	 */
-	var $html;
-	/**
 	 * allowed units and hours per day, can be overwritten by the projectmanager configuration, default all units, 8h
 	 * 
 	 * @var string
@@ -120,7 +114,6 @@ class uiinfolog
 		$this->bo =& new boinfolog();
 
 		$this->tmpl = new etemplate();
-		$this->html = $this->tmpl->html;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		
@@ -1209,7 +1202,7 @@ class uiinfolog
 				$alt = $id;
 			}
 		}
-		return $icon ? $this->html->image('infolog',$icon,lang($alt),'border=0') : lang($alt);
+		return $icon ? html::image('infolog',$icon,lang($alt),'border=0') : lang($alt);
 	}
 
 	/**
@@ -1303,23 +1296,23 @@ class uiinfolog
 		$GLOBALS['egw']->template->set_var(Array(
 			'lang_responsible_rights' => lang('Rights for the responsible'),
 			'lang_implicit_rights' => lang('Which implicit ACL rights should the responsible get?'),
-			'implicit_rights' => $this->html->select('implicit_rights',$this->bo->implicit_rights,array(
+			'implicit_rights' => html::select('implicit_rights',$this->bo->implicit_rights,array(
 				'read' => 'read rights (default)',
 				'edit' => 'edit rights (full edit rights incl. making someone else responsible!)',
 			)),
 			'lang_responsible_edit' => lang('Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.'),
-			'responsible_edit' => $this->html->checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',11),
+			'responsible_edit' => html::checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',11),
 			'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
-			'action_url'  => $this->html->link('/index.php',$this->menuaction('admin')),
-			'save_button' => $this->html->submit_button('save','Save'),
-			'apply_button' => $this->html->submit_button('apply','Apply'),
-			'cancel_button' => $this->html->submit_button('cancel','Cancel'),
+			'action_url'  => html::link('/index.php',$this->menuaction('admin')),
+			'save_button' => html::submit_button('save','Save'),
+			'apply_button' => html::submit_button('apply','Apply'),
+			'cancel_button' => html::submit_button('cancel','Cancel'),
 			'lang_valid'  => lang('valid path on clientside<br>eg. \\\\Server\\Share or e:\\'),
 			'lang_trans'  => lang('path on (web-)serverside<br>eg. /var/samba/Share'),
 			'lang_ip'     => lang('reg. expr. for local IP\'s<br>eg. ^192\\.168\\.1\\.'),
 			'lang_history'=> lang('History logging'),
 			'lang_history2'=> lang('History logging and deleting of items'),
-			'history'     => $this->html->select('history',$this->bo->history,array(
+			'history'     => html::select('history',$this->bo->history,array(
 				'' => lang('No'),
 				'history' => lang('Yes, with purging of deleted items possible'),
 				'history_admin_delete' => lang('Yes, only admins can purge deleted items'),
@@ -1337,9 +1330,9 @@ class uiinfolog
 			$GLOBALS['egw']->template->set_var(array(
 				'tr_color'  => $i & 1 ? 'row_off' : 'row_on',
 				'num'       => $i+1,
-				'val_valid' => $this->html->input("valid[$i]",$valid),
-				'val_trans' => $this->html->input("trans[$i]",$trans),
-				'val_ip'    => $this->html->input("ip[$i]",$this->bo->send_file_ips[$valid])
+				'val_valid' => html::input("valid[$i]",$valid),
+				'val_trans' => html::input("trans[$i]",$trans),
+				'val_ip'    => html::input("ip[$i]",$this->bo->send_file_ips[$valid])
 			));
 			$GLOBALS['egw']->template->parse('admin_lines','admin_line',True);
 			++$i;
