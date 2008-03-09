@@ -17,6 +17,8 @@ include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
  *
  * To prevent an invinit recursion, it has to be outside the boinfolog class, 
  * which itself instanciats the link class by default.
+ * 
+ * @todo delete after next infolog update
  */
 class infolog_link_registry
 {

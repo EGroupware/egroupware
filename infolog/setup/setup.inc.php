@@ -60,7 +60,7 @@ $setup_info['infolog']['hooks']['infolog']          = 'infolog.uiinfolog.hook_vi
 $setup_info['infolog']['hooks']['calendar_include_events'] = 'infolog.boinfolog.cal_to_include';
 $setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.boinfolog.cal_to_include';
 $setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog.infolog_prefs_sidebox_hooks.all_hooks';
-$setup_info['infolog']['hooks']['search_link'] = 'infolog.infolog_link_registry.search_link';
+$setup_info['infolog']['hooks']['search_link'] = 'infolog.boinfolog.search_link';
 $setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.boinfolog.pm_icons';
 
 /* Dependencies for this app to work */
@@ -72,4 +72,3 @@ $setup_info['infolog']['depends'][] = array(
 	'appname' => 'etemplate',
 	'versions' => Array('1.3','1.4','1.5')
 );
-
