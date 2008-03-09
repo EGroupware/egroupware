@@ -1,4 +1,13 @@
 <?php
+/**
+* eGroupWare - eTemplates
+*
+* @link http://www.egroupware.org
+* @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+* @author Nathan Gray
+* @package etemplate
+* @version $Id$
+*/
 	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp'	=>	'infolog',
 		'noheader'	=>	true,
@@ -177,4 +186,3 @@
 		$gd_ver = $match[0];
 		return $match[0];
 	}
-?>

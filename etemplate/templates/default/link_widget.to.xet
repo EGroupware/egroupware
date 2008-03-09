@@ -7,7 +7,7 @@
 				<hbox>
 					<link-apps id="app" statustext="Select application to search" label="@search_label"/>
 					<textbox id="query" blur="Search"/>
-					<button id="query" label="&gt;" statustext="Click here to start the search" onclick="xajax_doXMLHTTP('etemplate.link_widget.ajax_search',document.getElementById(form::name('app')).value,document.getElementById(form::name('query')).value,form::name('id'),form::name('search_line'),form::name('remark')+','+form::name('select_line'),form::name('query')); return false;"/>
+					<button id="start_search" label="&gt;" statustext="Click here to start the search" onclick="xajax_doXMLHTTP('etemplate.link_widget.ajax_search',document.getElementById(form::name('app')).value,document.getElementById(form::name('query')).value,form::name('id'),form::name('search_line'),form::name('remark')+','+form::name('select_line'),form::name('query')); return false;"/>
 				</hbox>
 				<grid>
 					<columns>

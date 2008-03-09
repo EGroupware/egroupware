@@ -123,7 +123,7 @@ class tree_widget
 		// creating a div-id and var-name for the tree-object by replacing brackets with underscores and removing exec or evtl. cont parts
 		$tree_id = str_replace(array('exec[cont][','exec[','[',']'),array('','','_',''),$name);
 		$onNodeSelect = 'onNodeSelect_'.$tree_id;
-		$script = $tmpl->html->input_hidden($name,$value,false)."<script type='text/javascript'>";
+		$script = html::input_hidden($name,$value,false)."<script type='text/javascript'>";
 		if (($onclick = $cell['onclick']))
 		{
 			if (strpos($onclick,'$') !== false || $onclick{0} == '@')
@@ -159,7 +159,7 @@ class tree_widget
 		$script .= "</script>\n";
 
 		list(,$class) = explode(',',$cell['span']);
-		$value = $script.$tmpl->html->tree($tmpl->_sel_options($cell,$name),$value,false,$onNodeSelect,$tree_id,$class,'',$onCheck);
+		$value = $script.html::tree($tmpl->_sel_options($cell,$name),$value,false,$onNodeSelect,$tree_id,$class,'',$onCheck);
 
 		$cell = etemplate::empty_cell('html',$cell['name']);
 

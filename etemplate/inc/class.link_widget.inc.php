@@ -202,7 +202,7 @@
 				{
 					foreach ($value as $link)
 					{
-						$options .= " onMouseOver=\"self.status='".addslashes($tmpl->html->htmlspecialchars($help))."'; return true;\"";
+						$options .= " onMouseOver=\"self.status='".addslashes(html::htmlspecialchars($help))."'; return true;\"";
 						$options .= " onMouseOut=\"self.status=''; return true;\"";
 						if (($popup = egw_link::is_popup($link['app'],'view')))
 						{
@@ -213,8 +213,8 @@
 						{
 							$options = ' target="_blank"';
 						}
-						$str .= ($str !== '' ? ', ' : '') . $tmpl->html->a_href(
-							$tmpl->html->htmlspecialchars(egw_link::title($link['app'],$link['id'])),
+						$str .= ($str !== '' ? ', ' : '') . html::a_href(
+							html::htmlspecialchars(egw_link::title($link['app'],$link['id'])),
 							'/index.php',egw_link::view($link['app'],$link['id'],$link),$options);
 					}
 				}
@@ -335,7 +335,7 @@
 							$value[$row]['target'] = '_blank';		// we create a new window as the linked page is no popup
 						}
 					}
-					if ($link['app'] == egw_link::vfs_appname)
+					if ($link['app'] == egw_link::VFS_APPNAME)
 					{
 						$value[$row]['label'] = 'Delete';
 						$value[$row]['help'] = lang('Delete this file');
@@ -360,7 +360,7 @@
 					{
 						if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') )) {
 							// Hardcoded sizes to match the mimetype icons.  Uses the navbar image and CSS to resize.
-							$value[$row]['mime_icon'] = $tmpl->html->image($value[$row]['app'], 'navbar', $value[$row]['app'], 'style="width: 16px; height: 16px;"');
+							$value[$row]['mime_icon'] = html::image($value[$row]['app'], 'navbar', $value[$row]['app'], 'style="width: 16px; height: 16px;"');
 						}
 						$value[$row]['label'] = 'Unlink';
 						$value[$row]['help'] = lang('Remove this link (not the entry itself)');
@@ -557,7 +557,7 @@
 							$value['file']['tmp_name'] .= '+';
 						}
 						$link_id = egw_link::link($value['to_app'],$value['to_id'],
-							egw_link::vfs_appname,$value['file'],$value['remark']);
+							egw_link::VFS_APPNAME,$value['file'],$value['remark']);
 						$value['remark'] = '';
 
 						if (isset($value['primary']) && !$value['anz_links'] )

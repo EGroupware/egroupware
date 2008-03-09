@@ -363,7 +363,7 @@
 			}
 			list($span,$class) = explode(',',$cell['span']);	// msie (at least 5.5) shows nothing with div overflow=auto
 			// we dont want to use up the full space for the table created, so we skip the line below
-			//$cell['size'] = '100%,100%,0,'.$class.','.(in_array($type,array('customfields-list','customfields-no-label'))?'0,0':',').($tmpl->html->user_agent != 'msie' ? ',auto' : '');
+			//$cell['size'] = '100%,100%,0,'.$class.','.(in_array($type,array('customfields-list','customfields-no-label'))?'0,0':',').(html::$user_agent != 'msie' ? ',auto' : '');
 
 			return True;	// extra Label is ok
 		}
