@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -169,13 +169,6 @@ class boinfolog
 				'ongoing' => 'ongoing',			// iCal has no status on notes
 				'done' => 'done' ),
 		);
-
-		if (!is_object($GLOBALS['egw']->link) && $instanciate_link)
-		{
-			$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
-		}
-		$this->link =& $GLOBALS['egw']->link;
-
 		if (($config_data = config::read('infolog')))
 		{
 			$this->link_pathes   = $config_data['link_pathes'];
@@ -1517,4 +1510,3 @@ class boinfolog
 		return 'ongoing';
 	}
 }
-
