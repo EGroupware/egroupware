@@ -67,11 +67,11 @@ class solink
 		{
 			return False;	// dont link to self or other nosense
 		}
-		if ($link = $this->get_link($app1,$id1,$app2,$id2))
+		if ($link = self::get_link($app1,$id1,$app2,$id2))
 		{
 			if ($link['link_remark'] != $remark)
 			{
-				$this->update_remark($link['link_id'],$remark);
+				self::update_remark($link['link_id'],$remark);
 			}
 			return $link['link_id'];	// link alread exist
 		}
