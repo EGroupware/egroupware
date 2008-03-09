@@ -1106,7 +1106,7 @@ class soetemplate
 			$templ =& new soetemplate(".$app",'','##');
 			if ($templ->lang != '##' || $templ->modified < $time) // need to import
 			{
-				$ret = $this->import_dump($app);
+				$ret = self::import_dump($app);
 				$templ->modified = $time;
 				$templ->save('.'.$app,'','##');
 			}
