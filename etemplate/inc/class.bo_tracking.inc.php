@@ -121,12 +121,6 @@ class bo_tracking
 	 */
 	var $tz_offset_s;
 	/**
-	 * Reference to the html class
-	 *
-	 * @var html
-	 */
-	var $html;
-	/**
 	 * Should the class allow html content (for notifications)
 	 * 
 	 * @var boolean
@@ -140,7 +134,7 @@ class bo_tracking
 	 */
 	function bo_tracking()
 	{
-		$this->html =& html::singleton();
+
 	}
 
 	/**
@@ -629,7 +623,7 @@ class bo_tracking
 		
 		if ($html_mail)
 		{
-			if (!$this->html_content_allow) $line = $this->html->htmlspecialchars($line);	// XSS
+			if (!$this->html_content_allow) $line = html::htmlspecialchars($line);	// XSS
 
 			$color = $modified ? 'red' : false;
 			$size  = '110%';
@@ -682,7 +676,7 @@ class bo_tracking
 			{
 				// the link is often too long for html boxes
 				// chunk-split allows to break lines if needed
-				$content .= $this->html->a_href(chunk_split($link,40,'&#8203'),$link,'','target="_blank"');
+				$content .= html::a_href(chunk_split($link,40,'&#8203'),$link,'','target="_blank"');
 			}
 			else
 			{

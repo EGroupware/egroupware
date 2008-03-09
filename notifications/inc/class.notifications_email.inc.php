@@ -55,13 +55,6 @@ class notifications_email implements notifications_iface {
 	private $mail;
 	
 	/**
-	 * holds html object to render elements
-	 *
-	 * @var object
-	 */
-	private $html;
-	
-	/**
 	 * constructor of notifications_email
 	 *
 	 * @param object $_sender
@@ -80,7 +73,6 @@ class notifications_email implements notifications_iface {
 		{
 			$this->mail = new send();
 		}
-		$this->html = html::singleton();
 	}
 	
 	/**
@@ -131,12 +123,12 @@ class notifications_email implements notifications_iface {
 		if(is_null($_render_html)) { $_render_html = false; }
 		if(is_null($_render_external)) { $_render_external = true; }
 		$newline = $_render_html ? "<br />" : "\n";
-		$hruler = $_render_html ? $this->html->hr() : '';
+		$hruler = $_render_html ? html::hr() : '';
 		
 		$rendered_links = array();
 		foreach($_links as $link) {
 			if($_render_external || ! $link->popup) { $link->view['no_popup'] = 1; }
-			$url = $this->html->link('/index.php', $link->view);
+			$url = html::link('/index.php', $link->view);
 			// do not expose sensitive data
 			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
 			// complete missing protocol and domain part if needed
@@ -144,7 +136,7 @@ class notifications_email implements notifications_iface {
 				$url = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
 					($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$url;
 			}
-			$rendered_links[] = $_render_html ? $this->html->a_href($link->text, $url, false, 'target="_blank"') : $url;
+			$rendered_links[] = $_render_html ? html::a_href($link->text, $url, false, 'target="_blank"') : $url;
 		}
 
 		return $hruler.$newline.lang('Linked entries:').$newline.implode($newline,$rendered_links);

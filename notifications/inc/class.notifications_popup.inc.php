@@ -78,13 +78,6 @@ class notifications_popup implements notifications_iface {
 	private $db;
 	
 	/**
-	 * holds html object to render elements
-	 *
-	 * @var object
-	 */
-	private $html;
-	
-	/**
 	 * constructor of notifications_egwpopup
 	 *
 	 * @param object $_sender
@@ -100,8 +93,6 @@ class notifications_popup implements notifications_iface {
 		$this->config = $_config;
 		$this->preferences = $_preferences;
 		$this->db = &$GLOBALS['egw']->db;
-		$this->db->set_app( self::_appname );
-		$this->html = html::singleton();
 	}
 	
 	/**
@@ -123,9 +114,9 @@ class notifications_popup implements notifications_iface {
 		if ( empty($user_sessions) ) throw new Exception("User {$this->recipient->account_lid} isn't online. Can't send notification via popup");
 		
 		$message = 	$this->render_infos($_subject)
-					.$this->html->hr()
+					.html::hr()
 					.$_messages['html']
-					.$this->html->hr()
+					.html::hr()
 					.$this->render_links($_links);
 					
 		$this->save( $message, $user_sessions );
@@ -143,7 +134,7 @@ class notifications_popup implements notifications_iface {
 				'account_id'	=> $this->recipient->account_id,
 				'session_id'	=> $user_session,
 				'message'		=> $_message
-				), false,__LINE__,__FILE__);
+				), false,__LINE__,__FILE__,self::_appname);
 		}
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 	}
@@ -163,27 +154,27 @@ class notifications_popup implements notifications_iface {
 		foreach($_links as $link) {
 			if(!$link->popup) { $link->view['no_popup'] = 1; }
 			
-			$url = $this->html->link('/index.php', $link->view);
+			$url = html::link('/index.php', $link->view);
 			// do not expose sensitive data
 			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
 			// extract application-icon from menuaction
 			if($link->view['menuaction']) {
 				$menuaction_arr = explode('.',$link->view['menuaction']);
 				$application = $menuaction_arr[0];
-				$image = $application ? $this->html->image($application,'navbar',$link->text,'align="middle" style="width: 24px; margin-right: 0.5em;"') : '';
+				$image = $application ? html::image($application,'navbar',$link->text,'align="middle" style="width: 24px; margin-right: 0.5em;"') : '';
 			} else {
 				$image = '';
 			}
 			if($link->popup) {
 				$dimensions = explode('x', $link->popup);
-				$rendered_links[] = $this->html->div($image.$link->text,'onclick="'.$this->jspopup($url, '_blank', $dimensions[0], $dimensions[1]).'"','link');
+				$rendered_links[] = html::div($image.$link->text,'onclick="'.$this->jspopup($url, '_blank', $dimensions[0], $dimensions[1]).'"','link');
 			} else {
-				$rendered_links[] = $this->html->div($this->html->a_href($image.$link->text, $url, false, 'target="_blank"'),'','link');
+				$rendered_links[] = html::div(html::a_href($image.$link->text, $url, false, 'target="_blank"'),'','link');
 			} 
 			
 		}
 		if(count($rendered_links) > 0) {
-			return $this->html->bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
+			return html::bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
 		}
 	}
 		
@@ -214,7 +205,7 @@ class notifications_popup implements notifications_iface {
 		
 		$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
 		$infos[] = lang('Message from').': '.$sender;
-		if(!empty($_subject)) { $infos[] = $this->html->bold($_subject); }
+		if(!empty($_subject)) { $infos[] = html::bold($_subject); }
 		return implode($newline,$infos);
 	}
 }

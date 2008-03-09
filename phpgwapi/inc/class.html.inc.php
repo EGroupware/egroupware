@@ -1,21 +1,22 @@
 <?php
 /**
- * generates html with methods representing html-tags or higher widgets
+ * eGroupWare API: generates html with methods representing html-tags or higher widgets
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and earlier modifications
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author RalfBecker-AT-outdoor-training.de
+ * @copyright 2001-2008 by RalfBecker@outdoor-training.de
+ * @package api
+ * @subpackage html
  * @version $Id$
  */
 
 /**
- * generates html with methods representing html-tags or higher widgets
+ * Generates html with methods representing html-tags or higher widgets
  *
- * @package api
- * @subpackage html
- * @access public
- * @author RalfBecker-AT-outdoor-training.de
- * @license GPL
+ * The class has only static methods now, so there's no need to instanciate the object anymore!
+ *
  */
 class html
 {
@@ -23,56 +24,57 @@ class html
 	 * user-agent: 'mozilla','msie','konqueror', 'safari', 'opera'
 	 * @var string
 	 */
-	var $user_agent;
+	static $user_agent;
 	/**
 	 * version of user-agent as specified by browser
 	 * @var string
 	 */
-	var $ua_version;
+	static $ua_version;
 	/**
 	 * what attribute to use for the title of an image: 'title' for everything but netscape4='alt'
 	 * @var string
 	 */
-	var $prefered_img_title;
+	static $netscape4;
+	static private $prefered_img_title;
 	/**
 	 * charset used by the page, as returned by $GLOBALS['egw']->translation->charset()
 	 * @var string
 	 */
-	var $charset;
+	static $charset;
 	/**
 	 * URL (NOT path) of the js directory in the api
 	 * @var string
 	 */
-	var $phpgwapi_js_url;
+	static $api_js_url;
 	/**
 	 * do we need to set the wz_tooltip class, to be included at the end of the page
 	 * @var boolean
 	 */
-	var $wz_tooltip_included = False;
+	static private $wz_tooltip_included = False;
 
 	/**
-	 * Constructor: initialised the class-vars
+	 * initialise our static vars
 	 */
-	function html()
+	static function _init_static()
 	{
 		// should be Ok for all HTML 4 compatible browsers
-		if (!eregi('(Safari)/([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts) &&
-			!eregi('compatible; ([a-z_]+)[/ ]+([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts))
+		if (!preg_match('/(Safari)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts) &&
+			!preg_match('/compatible; ([a-z_]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts))
 		{
-			eregi('^([a-z_]+)/([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts);
+			preg_match('/^([a-z_]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts);
 		}
-		list(,$this->user_agent,$this->ua_version) = $parts;
-		$this->user_agent = strtolower($this->user_agent);
+		list(,self::$user_agent,self::$ua_version) = $parts;
+		self::$user_agent = strtolower(self::$user_agent);
 
-		$this->netscape4 = $this->user_agent == 'mozilla' && $this->ua_version < 5;
-		$this->prefered_img_title = $this->netscape4 ? 'alt' : 'title';
-		//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
+		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
+		self::$prefered_img_title = self::$netscape4 ? 'alt' : 'title';
+		//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: 'self::$user_agent', Version: 'self::$ua_version', img_title: 'self::$prefered_img_title'</p>\n";
 
 		if ($GLOBALS['egw']->translation)
 		{
-			$this->charset = $GLOBALS['egw']->translation->charset();
+			self::$charset = $GLOBALS['egw']->translation->charset();
 		}
-		$this->phpgwapi_js_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js';
+		self::$api_js_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js';
 	}
 
 	/**
@@ -85,13 +87,13 @@ class html
 	* @param string $title tooltip/title for the picker-activation-icon
 	* @return string the html
 	*/
-	function inputColor($name,$value='',$title='')
+	static function inputColor($name,$value='',$title='')
 	{
 		$id = str_replace(array('[',']'),array('_',''),$name).'_colorpicker';
-		$onclick = "javascript:window.open('".$this->phpgwapi_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+document.getElementById('$id').value,'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
-		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.$this->htmlspecialchars($value).'" /> '.
+		$onclick = "javascript:window.open('".self::$api_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+document.getElementById('$id').value,'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
+		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.self::htmlspecialchars($value).'" /> '.
 			'<a href="#" onclick="'.$onclick.'">'.
-			'<img src="'.$this->phpgwapi_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.$this->htmlspecialchars($title).'"' : '')." /></a>";
+			'<img src="'.self::$api_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.self::htmlspecialchars($title).'"' : '')." /></a>";
 	}
 
 	/**
@@ -105,17 +107,17 @@ class html
 	* @param array $options param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
 	*  title (string) gives extra title-row, width (int,'auto') , padding (int), above (bool), bgcolor (color), bgimg (URL)
 	*  For a complete list and description see http://www.walterzorn.com/tooltip/tooltip_e.htm
-	* @return string to be included in any tag, like '<p'.$html->tooltip('Hello <b>Ralf</b>').'>Text with tooltip</p>'
+	* @return string to be included in any tag, like '<p'.html::tooltip('Hello <b>Ralf</b>').'>Text with tooltip</p>'
 	*/
-	function tooltip($text,$do_lang=False,$options=False)
+	static function tooltip($text,$do_lang=False,$options=False)
 	{
-		if (!$this->wz_tooltip_included)
+		if (!self::$wz_tooltip_included)
 		{
 			if (strpos($GLOBALS['egw_info']['flags']['need_footer'],'wz_tooltip')===false)
 			{
-				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$this->phpgwapi_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
+				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.self::$api_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
 			}
-			$this->wz_tooltip_included = True;
+			self::$wz_tooltip_included = True;
 		}
 		if ($do_lang) $text = lang($text);
 
@@ -139,8 +141,10 @@ class html
 	 * @param string $content text containing URLs
 	 * @return string html with activated links
 	 */
-	function activate_links($content)
+	static function activate_links($content)
 	{
+		if (!$content || strlen($content) < 20) return $content;	// performance
+
 		// Exclude everything which is already a link
 		$NotAnchor = '(?<!"|href=|href\s=\s|href=\s|href\s=)';
 
@@ -158,7 +162,7 @@ class html
 		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
 
 		//  Now match things beginning with www.
-		$NotHTTP = '(?<!:\/\/)';
+		$NotHTTP = '(?<!:\/\/|" target=\"_blank\">)';	//	avoid running again on http://www links already handled above
 		$Domain = 'www(\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . '/i';
@@ -177,10 +181,10 @@ class html
 	 * @param string $str string to escape
 	 * @return string
 	 */
-	function htmlspecialchars($str)
+	static function htmlspecialchars($str)
 	{
 		// add @ by lkneschke to supress warning about unknown charset
-		$str = @htmlspecialchars($str,ENT_COMPAT,$this->charset);
+		$str = @htmlspecialchars($str,ENT_COMPAT,self::$charset);
 
 		// we need '&#' unchanged, so we translate it back
 		$str = str_replace(array('&amp;#','&amp;nbsp;','&amp;lt;','&amp;gt;'),array('&#','&nbsp;','&lt;','&gt;'),$str);
@@ -199,7 +203,7 @@ class html
 	 * @param int $multiple number of lines for a multiselect, default 0 = no multiselect, < 0 sets size without multiple
 	 * @return string to set for a template or to echo into html page
 	 */
-	function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0)
+	static function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0)
 	{
 		if (!is_array($arr))
 		{
@@ -228,7 +232,7 @@ class html
 		{
 			if (!is_array($data) || count($data) == 2 && isset($data['label']) && isset($data['title']))
 			{
-				$out .= $this->select_option($k,is_array($data)?$data['label']:$data,$key,$no_lang,
+				$out .= self::select_option($k,is_array($data)?$data['label']:$data,$key,$no_lang,
 					is_array($data)?$data['title']:'');
 			}
 			else
@@ -238,11 +242,11 @@ class html
 					$k = $data['lable'];
 					unset($data['lable']);
 				}
-				$out .= '<optgroup label="'.$this->htmlspecialchars($no_lang || $k == '' ? $k : lang($k))."\">\n";
+				$out .= '<optgroup label="'.self::htmlspecialchars($no_lang || $k == '' ? $k : lang($k))."\">\n";
 
 				foreach($data as $k => $label)
 				{
-					$out .= $this->select_option($k,is_array($label)?$label['label']:$label,$key,$no_lang,
+					$out .= self::select_option($k,is_array($label)?$label['label']:$label,$key,$no_lang,
 						is_array($label)?$lable['title']:'');
 				}
 				$out .= "</optgroup>\n";
@@ -269,7 +273,7 @@ class html
 	 * @param string $style='' extra style settings like "width: 100%", default '' none
 	 * @return string to set for a template or to echo into html page
 	 */
-	function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='')
+	static function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='')
 	{
 		//echo "<p align=right>checkbox_multiselect('$name',".print_r($key,true).",".print_r($arr,true).",$no_lang,'$options',$multiple,$selected_first,'$style')</p>\n";
 		if (!is_array($arr))
@@ -324,16 +328,16 @@ class html
 
 			if (strlen($label) > $max_len) $max_len = strlen($label);
 
-			$html .= $this->label($this->checkbox($name,in_array($val,$key),$val,$options_no_id.
-				' id="'.$base_name.'['.$val.']'.'"').$this->htmlspecialchars($label),
-				$base_name.'['.$val.']','',($title ? 'title="'.$this->htmlspecialchars($title).'" ':''))."<br />\n";
+			$html .= self::label(self::checkbox($name,in_array($val,$key),$val,$options_no_id.
+				' id="'.$base_name.'['.$val.']'.'"').self::htmlspecialchars($label),
+				$base_name.'['.$val.']','',($title ? 'title="'.self::htmlspecialchars($title).'" ':''))."<br />\n";
 		}
 		if ($style && substr($style,-1) != ';') $style .= '; ';
 		if (strpos($style,'height')===false) $style .= 'height: '.(1.7*$multiple).'em; ';
-		if (strpos($style,'width')===false)  $style .= 'width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.55)).'em; ';
+		if (strpos($style,'width')===false)  $style .= 'width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.6)).'em; ';
 		$style .= 'background-color: white; overflow: auto; border: lightgray 2px inset; text-align: left;';
 
-		return $this->div($html,$options,'',$style);
+		return self::div($html,$options,'',$style);
 	}
 
 	/**
@@ -345,7 +349,7 @@ class html
 	 * @param boolean $no_lang NOT running the label through lang(), default false=use lang()
 	 * @return string html
 	 */
-	function select_option($value,$label,$selected,$no_lang=0,$title='')
+	static function select_option($value,$label,$selected,$no_lang=0,$title='')
 	{
 		// the following compares strict as strings, to archive: '0' == 0 != ''
 		// the first non-strict search via array_search, is for performance reasons, to not always search the whole array with php
@@ -357,9 +361,9 @@ class html
 				if ($found = (((string) $value) === ((string) $selected[$key]))) break;
 			}
 		}
-		return '<option value="'.$this->htmlspecialchars($value).'"'.($found  ? ' selected="selected"' : '') .
-			($title ? ' title="'.$this->htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') . '>'.
-			$this->htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
+		return '<option value="'.self::htmlspecialchars($value).'"'.($found  ? ' selected="selected"' : '') .
+			($title ? ' title="'.self::htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') . '>'.
+			self::htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
 	}
 
 	/**
@@ -371,7 +375,7 @@ class html
 	 * @param string $style css-styles attribute, default ''=none
 	 * @return string html
 	 */
-	function div($content,$options='',$class='',$style='')
+	static function div($content,$options='',$class='',$style='')
 	{
 		if ($class) $options .= ' class="'.$class.'"';
 		if ($style) $options .= ' style="'.$style.'"';
@@ -387,7 +391,7 @@ class html
 	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
 	 * @param string html
 	 */
-	function input_hidden($vars,$value='',$ignore_empty=True)
+	static function input_hidden($vars,$value='',$ignore_empty=True)
 	{
 		if (!is_array($vars))
 		{
@@ -401,7 +405,7 @@ class html
 			}
 			if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
-				$html .= "<input type=\"hidden\" name=\"$name\" value=\"".$this->htmlspecialchars($value)."\" />\n";
+				$html .= "<input type=\"hidden\" name=\"$name\" value=\"".self::htmlspecialchars($value)."\" />\n";
 			}
 		}
 		return $html;
@@ -415,9 +419,9 @@ class html
 	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
 	 * @param string html
 	 */
-	function textarea($name,$value='',$options='' )
+	static function textarea($name,$value='',$options='' )
 	{
-		return "<textarea name=\"$name\" $options>".$this->htmlspecialchars($value)."</textarea>\n";
+		return "<textarea name=\"$name\" $options>".self::htmlspecialchars($value)."</textarea>\n";
 	}
 
 	/**
@@ -425,39 +429,39 @@ class html
 	 *
 	 * @return boolean
 	 */
-	function htmlarea_availible()
+	static function htmlarea_availible()
 	{
-		switch($this->user_agent)
+		switch(self::$user_agent)
 		{
 			case 'msie':
-				return $this->ua_version >= 5.5;
+				return self::$ua_version >= 5.5;
 			case 'mozilla':
-				return $this->ua_version >= 1.3;
+				return self::$ua_version >= 1.3;
             case 'safari':
-            	return $this->ua_version >= 523.12;
+            	return self::$ua_version >= 523.12;
             case 'opera':
-            	return $this->ua_version >= 9.5;	
+            	return self::$ua_version >= 9.5;	
 			default:
 				return False;
 		}
 	}
 
 	/**
-	 * compability function for former used htmlarea. Please use function fckeditor now!
+	 * compability static function for former used htmlarea. Please use static function fckeditor now!
 	 *
 	 * creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
 	 */
-	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
+	static function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
-		if (!$this->htmlarea_availible())
+		if (!self::htmlarea_availible())
 		{
-			return $this->textarea($name,$content,'style="'.$style.'"');
+			return self::textarea($name,$content,'style="'.$style.'"');
 		}
-		return $this->fckEditor($name, $content, 'extended', array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
+		return self::fckEditor($name, $content, 'extended', array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
 	}
 
 	/**
-	* this function is a wrapper for fckEditor to create some reuseable layouts
+	* this static function is a wrapper for fckEditor to create some reuseable layouts
 	*
 	* @param string $_name name and id of the input-field
 	* @param string $_content of the tinymce (will be run through htmlspecialchars !!!), default ''	
@@ -468,11 +472,11 @@ class html
 	* @param string $base_href='' if passed activates the browser for image at absolute path passed
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='') 
+	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='') 
 	{
-		if (!$this->htmlarea_availible() || $_mode == 'ascii')
+		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
-			return $this->textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';"');
+			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';"');
 		}
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
 
@@ -553,9 +557,9 @@ class html
 	}
 
 	/**
-	* this function is a wrapper for tinymce to create some reuseable layouts
+	* this static function is a wrapper for tinymce to create some reuseable layouts
 	*
-	* Please note: if you did not run init_tinymce already you this function need to be called before the call to phpgw_header() !!!
+	* Please note: if you did not run init_tinymce already you this static function need to be called before the call to phpgw_header() !!!
 	*
 	* @param string $_name name and id of the input-field
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
@@ -564,15 +568,15 @@ class html
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') 
+	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') 
 	{
-		if (!$this->htmlarea_availible() || $_mode == 'ascii')
+		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
 			return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";		
 		}
 		else
 		{
-			return $this->fckEditor($_name, $_content, $_mode, array(), $_height, $_width);
+			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width);
 		}			
 	}
 	
@@ -584,13 +588,13 @@ class html
 	 * @param string $type type, default ''=not specified = text
 	 * @param string $options attributes for the tag, default ''=none
 	 */
-	function input($name,$value='',$type='',$options='' )
+	static function input($name,$value='',$type='',$options='' )
 	{
 		if ($type)
 		{
 			$type = 'type="'.$type.'"';
 		}
-		return "<input $type name=\"$name\" value=\"".$this->htmlspecialchars($value)."\" $options />\n";
+		return "<input $type name=\"$name\" value=\"".self::htmlspecialchars($value)."\" $options />\n";
 	}
 
 	/**
@@ -606,10 +610,10 @@ class html
 	 * @param string $buttontype which type of html button (button|submit), default ='submit'
 	 * @return string html
 	 */
-	function submit_button($name,$label,$onClick='',$no_lang=false,$options='',$image='',$app='phpgwapi', $buttontype='submit')
+	static function submit_button($name,$label,$onClick='',$no_lang=false,$options='',$image='',$app='phpgwapi', $buttontype='submit')
 	{
 		// workaround for idots and IE button problem (wrong cursor-image)
-		if ($this->user_agent == 'msie')
+		if (self::$user_agent == 'msie')
 		{
 			$options .= ' style="cursor: pointer;"';
 		}
@@ -641,12 +645,12 @@ class html
 		}
 		if ($onClick) $options .= ' onclick="'.str_replace('"','\\"',$onClick).'"';
 
-		// <button> is not working in all cases if ($this->user_agent == 'mozilla' && $this->ua_version < 5 || $image)
+		// <button> is not working in all cases if (self::$user_agent == 'mozilla' && self::$ua_version < 5 || $image)
 		{
-			return $this->input($name,$label,$image != '' ? 'image' : $buttontype,$options.$image);
+			return self::input($name,$label,$image != '' ? 'image' : $buttontype,$options.$image);
 		}
 		return '<button type="'.$buttontype.'" name="'.$name.'" value="'.$label.'" '.$options.' />'.
-			($image != '' ? /*$this->image($app,$image,$label,$options)*/"<img$image $this->prefered_img_title=\"$label\"> " : '').
+			($image != '' ? /*self::image($app,$image,$label,$options)*/"<img$image self::$prefered_img_title=\"$label\"> " : '').
 			($image == '' || $accesskey ? $label_u : '').'</button>';
 	}
 
@@ -660,7 +664,7 @@ class html
 	 * @param array/string $vars query or array ('name' => 'value', ...) with query
 	 * @return string absolut link already run through $phpgw->link
 	 */
-	function link($url,$vars='')
+	static function link($url,$vars='')
 	{
 		//echo "<p>html::link(url='$url',vars='"; print_r($vars); echo "')</p>\n";
 		if (!is_array($vars))
@@ -685,9 +689,9 @@ class html
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string html
 	 */
-	function checkbox($name,$checked=false,$value='True',$options='')
+	static function checkbox($name,$checked=false,$value='True',$options='')
 	{
-		return '<input type="checkbox" name="'.$name.'" value="'.$this->htmlspecialchars($value).'"' .($checked ? ' checked="1"' : '') . "$options />\n";
+		return '<input type="checkbox" name="'.$name.'" value="'.self::htmlspecialchars($value).'"' .($checked ? ' checked="1"' : '') . "$options />\n";
 	}
 
 	/**
@@ -696,17 +700,17 @@ class html
 	 * @param string $content of the form, if '' only the opening tag gets returned
 	 * @param array $hidden_vars array with name-value pairs for hidden input fields
 	 * @param string $url eGW relative URL, will be run through the link function, if empty the current url is used
-	 * @param string/array $url_vars parameters for the URL, send to link function too
+	 * @param string/array $url_vars parameters for the URL, send to link static function too
 	 * @param string $name name of the form, defaul ''=none
 	 * @param string $options attributes for the tag, default ''=none
 	 * @param string $method method of the form, default 'POST'
 	 * @return string html
 	 */
-	function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
+	static function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
 	{
-		$url = $url ? $this->link($url,$url_vars) : $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+		$url = $url ? self::link($url,$url_vars) : $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"$url\" $options>\n";
-		$html .= $this->input_hidden($hidden_vars);
+		$html .= self::input_hidden($hidden_vars);
 
 		if ($content)
 		{
@@ -723,15 +727,15 @@ class html
 	 * @param string $label label of the button
 	 * @param array $hidden_vars array with name-value pairs for hidden input fields
 	 * @param string $url eGW relative URL, will be run through the link function
-	 * @param string/array $url_vars parameters for the URL, send to link function too
+	 * @param string/array $url_vars parameters for the URL, send to link static function too
 	 * @param string $options attributes for the tag, default ''=none
 	 * @param string $form_name name of the form, defaul ''=none
 	 * @param string $method method of the form, default 'POST'
 	 * @return string html
 	 */
-	function form_1button($name,$label,$hidden_vars,$url,$url_vars='',$form_name='',$method='POST')
+	static function form_1button($name,$label,$hidden_vars,$url,$url_vars='',$form_name='',$method='POST')
 	{
-		return $this->form($this->submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,'',$method);
+		return self::form(self::submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
 
 	/**
@@ -751,7 +755,7 @@ class html
 	 * @param boolean $no_table_tr dont return the table- and outmost tr-tabs, default false=return table+tr
 	 * @return string with html-code of the table
 	 */
-	function table($rows,$options = '',$no_table_tr=False)
+	static function table($rows,$options = '',$no_table_tr=False)
 	{
 		$html = $no_table_tr ? '' : "<table $options>\n";
 
@@ -802,12 +806,12 @@ class html
 	 * @param boolean $no_script if true generate a submit-button if javascript is off
 	 * @return string html
 	 */
-	function sbox_submit( $sbox,$no_script=false )
+	static function sbox_submit( $sbox,$no_script=false )
 	{
 		$html = str_replace('<select','<select onchange="this.form.submit()" ',$sbox);
 		if ($no_script)
 		{
-			$html .= '<noscript>'.$this->submit_button('send','>').'</noscript>';
+			$html .= '<noscript>'.self::submit_button('send','>').'</noscript>';
 		}
 		return $html;
 	}
@@ -823,15 +827,15 @@ class html
 	 * @param string $height height, default 5px
 	 * @return string html
 	 */
-	function progressbar( $percent,$title='',$options='',$width='',$color='',$height='' )
+	static function progressbar( $percent,$title='',$options='',$width='',$color='',$height='' )
 	{
 		$percent = (int) $percent;
 		if (!$width) $width = '30px';
 		if (!$height)$height= '5px';
 		if (!$color) $color = '#D00000';
-		$title = $title ? $this->htmlspecialchars($title) : $percent.'%';
+		$title = $title ? self::htmlspecialchars($title) : $percent.'%';
 
-		if ($this->netscape4)
+		if (self::$netscape4)
 		{
 			return $title;
 		}
@@ -855,7 +859,7 @@ class html
 	 * @param string $options further options for the tag, default '' = none
 	 * @return string the html
 	 */
-	function image( $app,$name,$title='',$options='' )
+	static function image( $app,$name,$title='',$options='' )
 	{
 		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
 		{
@@ -900,18 +904,18 @@ class html
 				// if the image-name is a percentage, use a progressbar
 				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
 				{
-					return $this->progressbar($percent,$title);
+					return self::progressbar($percent,$title);
 				}
 				return $title;
 			}
 		}
 		if ($title)
 		{
-			$options .= " $this->prefered_img_title=\"".$this->htmlspecialchars($title).'"';
+			$options .= " self::$prefered_img_title=\"".self::htmlspecialchars($title).'"';
 		}
 
 		// This block makes pngfix.js useless, adding a check on disable_pngfix to have pngfix.js do its thing
-		if ($this->user_agent == 'msie' && $this->ua_version >= 5.5 && substr($url,-4) == '.png' && ($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'] || !isset($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])))
+		if (self::$user_agent == 'msie' && self::$ua_version >= 5.5 && substr($url,-4) == '.png' && ($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'] || !isset($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])))
 		{
 			$extra_styles = "display: inline-block; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$url',sizingMethod='image'); width: 1px; height: 1px;";
 			if (false!==strpos($options,'style="'))
@@ -932,11 +936,11 @@ class html
 	 *
 	 * @param string $content of the link, if '' only the opening tag gets returned
 	 * @param string $url eGW relative URL, will be run through the link function
-	 * @param string/array $vars parameters for the URL, send to link function too
+	 * @param string/array $vars parameters for the URL, send to link static function too
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string the html
 	 */
-	function a_href( $content,$url,$vars='',$options='')
+	static function a_href( $content,$url,$vars='',$options='')
 	{
 		if (is_array($url))
 		{
@@ -953,9 +957,9 @@ class html
 		}
 		if ($url{0} == '/')		// link relative to eGW
 		{
-			$url = $this->link($url,$vars);
+			$url = self::link($url,$vars);
 		}
-		//echo "<p>html::a_href('".htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".$this->link($url,$vars)."</p>";
+		//echo "<p>html::a_href('".htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".self::link($url,$vars)."</p>";
 		return '<a href="'.$url.'" '.$options.'>'.$content.'</a>';
 	}
 
@@ -965,7 +969,7 @@ class html
 	 * @param string $content of the link, if '' only the opening tag gets returned
 	 * @return string the html
 	 */
-	function bold($content)
+	static function bold($content)
 	{
 		return '<b>'.$content.'</b>';
 	}
@@ -976,7 +980,7 @@ class html
 	 * @param string $content of the link, if '' only the opening tag gets returned
 	 * @return string the html
 	 */
-	function italic($content)
+	static function italic($content)
 	{
 		return '<i>'.$content.'</i>';
 	}
@@ -988,7 +992,7 @@ class html
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string the html
 	 */
-	function hr($width='',$options='')
+	static function hr($width='',$options='')
 	{
 		if ($width) $options .= " width=\"$width\"";
 
@@ -1004,7 +1008,7 @@ class html
 	 * @param mixed $names String (or Array) with the option-names eg. 'WIDTH,HEIGHT,BORDER'
 	 * @return string with options/attributes
 	 */
-	function formatOptions($options,$names)
+	static function formatOptions($options,$names)
 	{
 		if (!is_array($options)) $options = explode(',',$options);
 		if (!is_array($names))   $names   = explode(',',$names);
@@ -1025,9 +1029,9 @@ class html
 	 * @deprecated  included now always by the framework
 	 * @return string classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
 	 */
-	function themeStyles()
+	static function themeStyles()
 	{
-		return $this->style($this->theme2css());
+		return self::style(self::theme2css());
 	}
 
 	/**
@@ -1036,7 +1040,7 @@ class html
 	 * @deprecated included now always by the framework
 	 * @return string classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
 	 */
-	function theme2css()
+	static function theme2css()
 	{
 		return ".th { background: ".$GLOBALS['egw_info']['theme']['th_bg']."; }\n".
 			".row_on,.th_bright { background: ".$GLOBALS['egw_info']['theme']['row_on']."; }\n".
@@ -1049,7 +1053,7 @@ class html
 	 * @param string $styles css-style definitions
 	 * @return string html
 	 */
-	function style($styles)
+	static function style($styles)
 	{
 		return $styles ? "<style type=\"text/css\">\n<!--\n$styles\n-->\n</style>" : '';
 	}
@@ -1063,7 +1067,7 @@ class html
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string the html
 	 */
-	function label($content,$id='',$accesskey='',$options='')
+	static function label($content,$id='',$accesskey='',$options='')
 	{
 		if ($id != '')
 		{
@@ -1084,9 +1088,9 @@ class html
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string the html
 	 */
-	function fieldset($content,$legend='',$options='')
+	static function fieldset($content,$legend='',$options='')
 	{
-		$html = "<fieldset $options>".($legend ? '<legend>'.$this->htmlspecialchars($legend).'</legend>' : '')."\n";
+		$html = "<fieldset $options>".($legend ? '<legend>'.self::htmlspecialchars($legend).'</legend>' : '')."\n";
 
 		if ($content)
 		{
@@ -1105,7 +1109,7 @@ class html
 	* @param array $_folders array of folders: pairs path => node (string label or array with keys: label, (optional) image, (optional) title, (optional) checked)
 	* @param string $_selected path of selected folder
 	* @param mixed $_topFolder=false node of topFolder or false for none
-	* @param string $_onNodeSelect='alert' js function to call if node gets selected
+	* @param string $_onNodeSelect='alert' js static function to call if node gets selected
 	* @param string $_tree='foldertree' id of the div and name of the variable containing the tree object
 	* @param string $_divClass='' css class of the div
 	* @param string $_leafImage='' default image of a leaf-node, ''=default of foldertree, set it eg. 'folderClosed.gif' to show leafs as folders
@@ -1115,14 +1119,14 @@ class html
 	*
 	* @return string the html code, to be added into the template
 	*/
-	function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$tree='foldertree',$_divClass='',$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null)
+	static function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$tree='foldertree',$_divClass='',$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null)
 	{
 		if(is_null($folderImageDir))
 		{
 			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
 		}
 
-		$html = $this->div("\n",'id="'.$tree.'"',$_divClass);
+		$html = self::div("\n",'id="'.$tree.'"',$_divClass);
 
 		static $tree_initialised=false;
 		if (!$tree_initialised)
@@ -1226,22 +1230,5 @@ class html
 		
 		return $html;
 	}
-	
-	/**
-	 * html-class singleton, return a referenze to the global instanciated html object in $GLOBALS['egw']->html
-	 *
-	 * Please use that static method in all new code, instead of instanciating an own html object:
-	 * 	$my_html =& html::singleton();
-	 * 
-	 * @static 
-	 * @return html
-	 */
-	function &singleton()
-	{
-		if (!is_object($GLOBALS['egw']->html))
-		{
-			$GLOBALS['egw']->html = new html;
-		}
-		return $GLOBALS['egw']->html;
-	}
 }
+html::_init_static();

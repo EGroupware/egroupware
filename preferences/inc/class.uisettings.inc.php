@@ -515,9 +515,6 @@
 			}
 			//echo "<p>uisettings::create_select_box('$label','$name',".print_r($values,true).",,'$default',$run_lang,$multiple)</p>\n";
 
-			require_once(EGW_API_INC.'/class.html.inc.php');
-			$html = html::singleton();
-
 			if (!$multiple)
 			{
 				switch($GLOBALS['type'])
@@ -534,13 +531,13 @@
 				}
 				if ($extra) $values = array_merge((array)$extra , (array)$values);
 
-				$select = $html->select($GLOBALS['type'].'['.$name.']',$default,$values,true);
+				$select = html::select($GLOBALS['type'].'['.$name.']',$default,$values,true);
 			}
 			else
 			{
 				if (!is_array($default)) $default = explode(',',$default);
-				$select = $html->input_hidden($GLOBALS['type'].'['.$name.']','',false);	// causes bosettings not to ignore unsetting all
-				$select .= $html->checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',5);
+				$select = html::input_hidden($GLOBALS['type'].'['.$name.']','',false);	// causes bosettings not to ignore unsetting all
+				$select .= html::checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',5);
 			}
 			if($GLOBALS['type'] == 'user' && $GLOBALS['egw']->preferences->default[$_appname][$name])
 			{
