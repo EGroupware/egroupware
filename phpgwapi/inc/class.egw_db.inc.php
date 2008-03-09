@@ -14,7 +14,7 @@
 /**
  * Database abstraction library
  *
- * This allows eGroupWare to use multiple database backends via ADOdb
+ * This allows eGroupWare to use multiple database backends via ADOdb or in future with PDO
  * 
  * You only need to clone the global database object $GLOBALS['egw']->db if:
  * - you use the old methods f(), next_record(), row(), num_fields(), num_rows()
@@ -29,6 +29,12 @@
  * b) foreach($db->select($api_table,'*',$where,__LINE__,__FILE__) as $row)
  *
  * c) foreach($db->select($table,'*',$where,__LINE__,__FILE__,false,'',$app) as $row)
+ *
+ * To fetch only single column (of the next row):
+ *		$cnt = $db->query("SELECT COUNT(*) FROM ...")->fetchSingle();
+ *
+ * To fetch a next (single) row, you can use:
+ *		$row = $db->query("SELECT COUNT(*) FROM ...")->fetch($fetchmod=null);
  */
 
 // some constanst for pre php4.3
@@ -48,6 +54,20 @@ include_once(EGW_API_INC.'/adodb/adodb.inc.php');
 
 class egw_db
 {
+	/**
+	 * Fetchmode to fetch only as associative array with $colname => $value pairs
+	 * 
+	 * Use the FETCH_* constants to be compatible, if we replace ADOdb ...
+	 */
+	const FETCH_ASSOC = ADODB_FETCH_ASSOC;
+	/**
+	 * Fetchmode to fetch only as (numeric indexed) array: array($val1,$val2,...)
+	 */
+	const FETCH_NUM = ADODB_FETCH_NUM;
+	/**
+	 * Fetchmode to have both numeric and column-name indexes
+	 */
+	const FETCH_BOTH = ADODB_FETCH_BOTH;
 	/**
 	* @var string $type translated database type: mysqlt+mysqli ==> mysql, same for odbc-types
 	*/
@@ -498,10 +518,10 @@ class egw_db
 	* @param int $offset row to start from, default 0
 	* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
 	* @param array/boolean $inputarr array for binding variables to parameters or false (default)
-	* @param int $fetchmode=ADODB_FETCH_BOTH ADODB_FETCH_BOTH (default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
+	* @param int $fetchmode=egw_db::FETCH_BOTH egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1,$inputarr=false,$fetchmode=ADODB_FETCH_BOTH)
+	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1,$inputarr=false,$fetchmode=egw_db::FETCH_BOTH)
 	{
 		if ($Query_String == '')
 		{
@@ -578,10 +598,10 @@ class egw_db
 	* Specifying a fetch_mode only works for newly fetched rows, the first row always gets fetched by query!!!
 	*
 	* @deprecated use foreach(query() or foreach(select() to loop over the query using the global db object
-	* @param int $fetch_mode ADODB_FETCH_BOTH = numerical+assoc keys (eGW default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
+	* @param int $fetch_mode egw_db::FETCH_BOTH = numerical+assoc keys (eGW default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
 	* @return bool was another row found?
 	*/
-	function next_record($fetch_mode=ADODB_FETCH_BOTH)
+	function next_record($fetch_mode=egw_db::FETCH_BOTH)
 	{
 		if (!$this->Query_ID)
 		{
@@ -604,10 +624,10 @@ class egw_db
 		{
 			switch($fetch_mode)
 			{
-				case ADODB_FETCH_ASSOC:
+				case egw_db::FETCH_ASSOC:
 					$this->Record = array_change_key_case($this->Record);
 					break;
-				case ADODB_FETCH_NUM:
+				case egw_db::FETCH_NUM:
 					$this->Record = array_values($this->Record);
 					break;
 				default:
@@ -755,7 +775,7 @@ class egw_db
 	/**
 	* Number of rows in current result set
 	*
-	* @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
+	* @deprecated use the result-object returned by query/select()->NumRows(), so you can use the global db-object and not a clone
 	* @return int number of rows
 	*/
 	function num_rows()
@@ -793,6 +813,7 @@ class egw_db
 	/**
 	* Return the value of a column
 	*
+	* @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
 	* @param string/integer $Name name of field or positional index starting from 0
 	* @param bool $strip_slashes string escape chars from field(optional), default false
 	*	depricated param, as correctly quoted values dont need any stripslashes!
@@ -829,7 +850,7 @@ class egw_db
 	*/
 	function row($do_next_record=False,$strip='')
 	{
-		if ($do_next_record && !$this->next_record(ADODB_FETCH_ASSOC) || !is_array($this->Record))
+		if ($do_next_record && !$this->next_record(egw_db::FETCH_ASSOC) || !is_array($this->Record))
 		{
 			return False;
 		}
@@ -1699,10 +1720,10 @@ class egw_db
 	* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
-	* @param int $fetchmode=ADODB_FETCH_ASSOC ADODB_FETCH_BOTH (default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
+	* @param int $fetchmode=egw_db::FETCH_ASSOC egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=ADODB_FETCH_ASSOC)
+	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=egw_db::FETCH_ASSOC)
 	{
 		if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app',$num_rows,'$join')</p>\n";
 
@@ -1743,9 +1764,10 @@ class egw_db
 	* @param string $order_by ORDER BY statement for the union
 	* @param int/bool $offset offset for a limited query or False (default)
 	* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
+	* @param int $fetchmode=egw_db::FETCH_ASSOC egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function union($selects,$line,$file,$order_by='',$offset=false,$num_rows=0)
+	function union($selects,$line,$file,$order_by='',$offset=false,$num_rows=0,$fetchmode=egw_db::FETCH_ASSOC)
 	{
 		if ($this->Debug) echo "<p>db::union(".print_r($selects,True).",$line,$file,$order_by,$offset,$num_rows)</p>\n";
 
@@ -1772,7 +1794,7 @@ class egw_db
 
 		if ($this->Debug) echo "<p>sql='$sql'</p>";
 
-		return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows,false,ADODB_FETCH_ASSOC);
+		return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows,false,$fetchmode);
 	}
 	
 	/**
