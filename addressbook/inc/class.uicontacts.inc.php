@@ -718,6 +718,12 @@ class uicontacts extends bocontacts
 		} else {
 			$old_state = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
 		}
+		if (!isset($this->org_views[(string) $query['org_view']]))   // we dont have an org view, unset the according col_filters
+		{
+			if (isset($query['col_filter']['org_name'])) unset($query['col_filter']['org_name']);
+			if (isset($query['col_filter']['adr_one_locality'])) unset($query['col_filter']['adr_one_locality']);
+			if (isset($query['col_filter']['org_unit'])) unset($query['col_filter']['org_unit']);
+		}
 
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
 		{
