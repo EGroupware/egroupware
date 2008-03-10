@@ -1417,11 +1417,11 @@ class egw_db
 	{
 		if ($app === true && $table && isset($GLOBALS['egw_info']['apps']))
 		{
-			foreach($GLOBALS['egw_info']['apps'] as $app => $app_data)
+			foreach($GLOBALS['egw_info']['apps'] as $app => &$app_data)
 			{
-				if (isset($data['table_defs'][$table]))
+				if (isset($app_data['table_defs'][$table]))
 				{
-					return $data['table_defs'][$table];
+					return $app_data['table_defs'][$table];
 				}
 			}
 			$app = false;
@@ -1452,8 +1452,10 @@ class egw_db
 		}
 		if ($table && (!$this->app_data['table_defs'] || !isset($this->app_data['table_defs'][$table])))
 		{
+			if ($this->Debug) echo "<p>!!!get_table_definitions($app,$table) failed!!!</p>\n";
 			return False;
 		}
+		if ($this->Debug) echo "<p>get_table_definitions($app,$table) succeeded</p>\n";
 		return $table ? $this->app_data['table_defs'][$table] : $this->app_data['table_defs'];
 	}
 
