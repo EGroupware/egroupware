@@ -613,7 +613,7 @@ class soetemplate
 	/**
 	 *  test if we have an old/original template-format and fixes it to the new format
 	 */
-	private function fix_old_template_format()
+	function fix_old_template_format()
 	{
 		if (!is_array($this->children)) $this->children = array();
 		
