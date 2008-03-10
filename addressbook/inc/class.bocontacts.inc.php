@@ -480,7 +480,7 @@ class bocontacts extends socontacts
 				}
 			}
 		}
-		if (!$isUpdate) 
+		else
 		{
 			// if no owner/addressbook set use the setting of the add_default prefs (if set, otherwise the users personal addressbook)
 			if (!isset($contact['owner'])) $contact['owner'] = $this->default_addressbook;
@@ -490,6 +490,10 @@ class bocontacts extends socontacts
 			if (!$contact['created'] || !$this->is_admin($contact)) $contact['created'] = $this->now_su;
 			
 			if (!$contact['tid']) $contact['tid'] = 'n';
+		}
+		if (!$contact['owner'])
+		{
+			$contact['private'] = 0;	// accounts are never private!
 		}
 		if(!$ignore_acl && !$this->check_perms($isUpdate ? EGW_ACL_EDIT : EGW_ACL_ADD,$contact))
 		{
