@@ -1763,7 +1763,7 @@ class etemplate extends boetemplate
 	* @param array $content=array();
 	* @return array
 	*/
-	private function _sel_options($cell,$name,$content=array())
+	function _sel_options($cell,$name,$content=array())
 	{
 		$sels = array();
 
