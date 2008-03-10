@@ -286,11 +286,10 @@ class egw_link extends solink
 			$ids = array();
 			if (is_array($id))
 			{
-				if ($not_only = $only_app[0])
+				if (($not_only = $only_app[0] == '!'))
 				{
 					$only_app = substr(1,$only_app);
 				}
-				end($id);
 				foreach (array_reverse($id) as $link) 
 				{
 					if (is_array($link)  // check for unlink-marker
@@ -303,7 +302,6 @@ class egw_link extends solink
 			return $ids;
 		}
 		$ids = solink::get_links($app,$id,$only_app,$order);
-
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
 		    ($only_app[0] == '!' && $only_app != '!'.self::VFS_APPNAME))
 		{
@@ -361,7 +359,7 @@ class egw_link extends solink
 			}
 			foreach($app_ids as $app => $a_ids)
 			{
-				self::titles($app,$a_ids);
+				self::titles($app,array_unique($a_ids));
 			}
 		}
 		return $links;
@@ -544,6 +542,7 @@ class egw_link extends solink
 		{
 			return self::$title_cache[$app.':'.$id];
 		}
+		//echo "<p>".__METHOD__."('$app','$id')</p>\n";
 		if ($app == self::VFS_APPNAME)
 		{
 			if (is_array($id) && $link)
