@@ -441,6 +441,9 @@
 					break;
 				case 'us-ascii':
 				case 'macroman':
+				case 'iso8859-1':
+				case 'windows-1258':
+				case 'windows-1252':
 					$from = 'iso-8859-1';
 					break;
 				case 'windows-1250':
