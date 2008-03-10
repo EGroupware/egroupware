@@ -650,11 +650,9 @@ class soinfolog 				// DB-Layer
 		);
 		$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
 		$action_id = ( strpos($query['action_id'],',')!==false) ? explode(',',$query['action_id']) : $query['action_id'];
-
 		if ($action != '')
 		{
 			$links = egw_link::get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
-
 			if (count($links))
 			{
 				$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
@@ -777,8 +775,7 @@ class soinfolog 				// DB-Layer
 			}
 			else
 			{
-				$this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__);
-				$query['total'] = $this->db->num_rows();
+				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__)->NumRows();
 			}
 			if ($this->db->capabilities['sub_queries'])
 			{
@@ -797,7 +794,7 @@ class soinfolog 				// DB-Layer
 					$query['start'] = 0;
 				}
 				$rs = $this->db->query($sql="SELECT $mysql_calc_rows $distinct main.* $count_subs $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
-					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1);
+					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,egw_db::FETCH_ASSOC);
 				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 
 				if ($mysql_calc_rows)
