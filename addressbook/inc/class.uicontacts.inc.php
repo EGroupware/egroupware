@@ -32,6 +32,7 @@ class uicontacts extends bocontacts
 		'photo'		=> True,
 		'emailpopup'=> True,
 		'migrate2ldap' => True,
+		'cat_add' => True,
 	);
 	/**
 	 * use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
@@ -260,6 +261,7 @@ class uicontacts extends bocontacts
 			'csv'    => lang('Export as CSV'), 
 			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
 			'merge'  => lang('Merge into first or account, deletes all other!'),
+			'cat_add' => lang('Add or delete Categoies'), // add a categirie to multible addresses
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
@@ -273,8 +275,6 @@ class uicontacts extends bocontacts
 			}
 			$sel_options['action'][lang('Move to addressbook:')] = $m2a;
 		}
-		
-
 		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
 		{
 			$lists = array();
@@ -287,6 +287,8 @@ class uicontacts extends bocontacts
 			$sel_options['action']['remove_from_list'] = lang('Remove selected contacts from distribution list');
 			$sel_options['action']['delete_list'] = lang('Delete selected distribution list!');
 		}
+		
+		
 		if ($this->prefs['document_dir'])
 		{
 			$sel_options['action'][lang('Insert in document').':'] = $this->get_document_actions();
@@ -545,8 +547,8 @@ class uicontacts extends bocontacts
 				ExecMethod('addressbook.vcaladdressbook.export',$checked);
 				// does not return!
 				$Ok = false;
-				break;
-				
+				break;		
+						
 			case 'infolog':
 				$GLOBALS['egw']->redirect_link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.index',
@@ -583,6 +585,56 @@ class uicontacts extends bocontacts
 			case 'document':
 				$msg = $this->download_document($checked,$document);
 				return false;
+				
+			case 'cat_add':
+				foreach($checked as $id)
+				{
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_EDIT,$contact)))
+					{
+						$action_msg = lang('categorie');
+						$cat_ids = explode(",",$contact['cat_id']);   //existing categiries
+						if (!is_array($cat_ids_new) && $cat_ids_new) $cat_ids_new = explode(",",$cat_ids_new);
+						//categarie add
+						if ((!($cat_ids_new = $GLOBALS['egw']->session->appsession('cat_add','addressbook')) && !($cat_ids_new = $GLOBALS['egw']->session->appsession('cat_delete','addressbook'))))
+						{
+							$action_msg = lang('no categories selected');						
+						}
+						if ($GLOBALS['egw']->session->appsession('cat_add','addressbook'))
+						{
+							if (is_array($cat_ids_new) && ($ids_to_add = array_diff($cat_ids_new,$cat_ids)))
+							{
+								$cat_ids = array_merge($cat_ids,$ids_to_add);
+								$contact['cat_id'] = implode(",",$cat_ids);
+								$Ok = $this->save($contact);
+								$success++;
+								$action_msg = lang('categorie added');
+							}
+							else
+							{
+								$failed++;
+							}
+						}
+						//categories delete
+						if ($GLOBALS['egw']->session->appsession('cat_delete','addressbook'))
+						{
+							if (is_array($cat_ids_new) && ($ids_to_delete = array_diff($cat_ids,$cat_ids_new)) or ($cat_ids = $cat_ids_new))
+							{
+								$contact['cat_id'] = implode(",",$ids_to_delete);
+								$action_msg = lang('categorie delete');
+								$Ok = $this->save($contact);
+								$success++;
+							}
+							else
+							{
+								$failed++;
+							}
+						}
+					}
+				}
+				$checked = array();	// to not start the single actions
+				$GLOBALS['egw']->session->appsession('cat_add','addressbook','');      //delete stored categories to add
+				$GLOBALS['egw']->session->appsession('cat_delete','addressbook','');    //delete stored categories to delete
+				break;
 		}
 		foreach($checked as $id)
 		{
@@ -2126,6 +2178,38 @@ $readonlys['button[vcard]'] = true;
 		//_debug_array($calendars);
 		return $calendars;
 	}
+
+	/**
+	* add a new categorie to any addressbock entry
+	*
+	* @author Stefan Becker <StefanBecker-AT-outdoor-training.de>
+	* @param array $content=null
+	*/
+	function cat_add($content=null)
+	{
+		if (is_array($content))
+		{
+			if ($content['cat_id'])   //add categorie  
+			{
+				if ($content['cat_add'])
+				{
+					$GLOBALS['egw']->session->appsession('cat_add','addressbook',$content['cat_id']);
+					$js = "opener.document.getElementById('exec[action]').value='cat_add'; opener.document.forms.eTemplate.submit();";
+				}
+				if ($content['cat_delete'])   //delete categorie
+				{
+					$GLOBALS['egw']->session->appsession('cat_delete','addressbook',$content['cat_id']);
+					$js = "opener.document.getElementById('exec[action]').value='cat_add'; opener.document.forms.eTemplate.submit();";
+				}
+			}
+			echo "<html><head><script>$js window.close();</script></head><html>\n";
+			$GLOBALS['egw']->common->egw_exit();
+		}
+		$content['cat_tab'] = $this->config['cat_tab'];				
+
+		$this->tmpl->read('addressbook.index.cat_add');
+		return $this->tmpl->exec('addressbook.uicontacts.cat_add',$content,$sel_options,$readonlys,$content, 2);
+	}
 }
 
 if (!function_exists('array_intersect_key'))	// php5.1 function
@@ -2143,5 +2227,5 @@ if (!function_exists('array_intersect_key'))	// php5.1 function
 		}
 		return $intersection;
 	}
+	
 }
-

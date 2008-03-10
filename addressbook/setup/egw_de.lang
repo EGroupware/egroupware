@@ -20,6 +20,7 @@ add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einze
 add business email of whole distribution list?	addressbook	de	E-Mail geschäftl. der kompletten Liste hinzufügen?
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add emails of whole distribution list?	addressbook	de	E-Mails der gesamten Verteilerliste hinzufügen?
+add or delete categoies	addressbook	de	Kategorien hinzufügen oder löschen
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
 added	addressbook	de	hinzugefügt
 added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation
@@ -66,6 +67,9 @@ calendar fields:	addressbook	de	Kalender Felder:
 calendar uri	addressbook	de	Kalender URI
 can be changed via setup >> configuration	admin	de	Kann über Setup >> Konfiguration geändert werden
 car phone	addressbook	de	Autotelefon
+categorie	addressbook	de	Kategorie
+categorie added	addressbook	de	Kategorie (n) hinzugefügt
+categorie delete	addressbook	de	Kategorie (n) gelöscht
 categories, notes, ...	addressbook	de	Kategorien, Notizen, ...
 category tree	admin	de	Kategoriebaum
 cell phone	addressbook	de	Mobiltelefon
@@ -125,6 +129,7 @@ deletes the photo	addressbook	de	Löscht das Foto
 department	common	de	Abteilung
 departments	addressbook	de	Abteilungen
 directory with documents to insert contacts	addressbook	de	Verzeichnis mit Dokumenten zum Einfügen von Kontakten
+display contact	addressbook	de	Kontakte Anzeigen
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie eGroupWare betreten oder auf das Startseiten Icon (Haus) klicken.
 distribution list deleted	addressbook	de	Verteiler gelöscht
 distribution lists	addressbook	de	Verteilerlisten
@@ -256,6 +261,7 @@ name of current user, all other contact fields are valid too	addressbook	de	Name
 name, address	addressbook	de	Name, Adresse
 new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
 next date	addressbook	de	Nächster Termin
+no categories selected	addressbook	de	keine Kategorien ausgewählt
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)

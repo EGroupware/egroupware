@@ -20,6 +20,7 @@ add a single entry by passing the fields.	addressbook	en	Add a single entry by p
 add business email of whole distribution list?	addressbook	en	Add business email of whole distribution list?
 add custom field	addressbook	en	Add Custom Field
 add emails of whole distribution list?	addressbook	en	Add emails of whole distribution list?
+add or delete categoies	addressbook	en	Add or delete Categoies
 add to distribution list:	addressbook	en	Add to distribution list:
 added	addressbook	en	added
 added by synchronisation	addressbook	en	added by synchronisation
@@ -66,6 +67,9 @@ calendar fields:	addressbook	en	Calendar fields:
 calendar uri	addressbook	en	Calendar URI
 can be changed via setup >> configuration	admin	en	Can be changed via Setup >> Configuration
 car phone	addressbook	en	Car Phone
+categorie	addressbook	en	categorie
+categorie added	addressbook	en	categorie added
+categorie delete	addressbook	en	categorie delete
 categories, notes, ...	addressbook	en	Categories, Notes, ...
 category tree	admin	en	Category tree
 cell phone	addressbook	en	Mobile phone
@@ -125,6 +129,7 @@ deletes the photo	addressbook	en	Deletes the photo
 department	common	en	Department
 departments	addressbook	en	departments
 directory with documents to insert contacts	addressbook	en	Directory with documents to insert contacts
+display contact	addressbook	en	Display Contact
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Displays a remider for birthdays on the startpage (page you get when you enter eGroupWare or click on the homepage icon).
 distribution list deleted	addressbook	en	Distribution list deleted
 distribution lists	addressbook	en	Distribution lists
@@ -256,6 +261,7 @@ name of current user, all other contact fields are valid too	addressbook	en	Name
 name, address	addressbook	en	Name, Address
 new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at %2
 next date	addressbook	en	Next date
+no categories selected	addressbook	en	no categories selected
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
