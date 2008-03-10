@@ -464,7 +464,7 @@ class boetemplate extends soetemplate
 	 *	the $name might be "$name.$app" to give a app-name (default is the current app,or template-name)
 	 * @return string/boolean human readable name or false if not found/loadable
 	 */
-	protected function loadExtension($type)
+	function loadExtension($type)
 	{
 		list($class,$app) = explode('.',$type);
 		$class .= '_widget';

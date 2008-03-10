@@ -375,7 +375,7 @@
 					$link = $this->etemplate->as_array(-1);
 					$link['menuaction'] = 'etemplate.editor.edit';
 					$link['version'] = $newest_version;
-					$msg = lang("newer version '%1' exists !!!",$this->etemplate->html->a_href($newest_version,$link));
+					$msg = lang("newer version '%1' exists !!!",html::a_href($newest_version,$link));
 				}
 			}
 			if (!is_array($this->extensions))
@@ -460,7 +460,7 @@
 			$new_content = $this->etemplate->as_array() + array(
 				'msg' => $msg,
 				'xml_label' => $xml_label,
-				'xml' => $xml ? '<pre>'.$this->etemplate->html->htmlspecialchars($xml)."</pre>\n" : '',
+				'xml' => $xml ? '<pre>'.html::htmlspecialchars($xml)."</pre>\n" : '',
 			);
 
 			$editor =& new etemplate('etemplate.editor.new');
@@ -495,7 +495,7 @@
 				</script>';
 				if ($app != 'etemplate' && file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
 				{
-					$new_content['onclick'] .= $editor->html->style('@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/'.$app.'/templates/default/app.css);');
+					$new_content['onclick'] .= html::style('@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/'.$app.'/templates/default/app.css);');
 				}
 				$editor->data[$editor->rows]['A']['obj'] = &$this->etemplate;
 				$vals = $content['vals'];
