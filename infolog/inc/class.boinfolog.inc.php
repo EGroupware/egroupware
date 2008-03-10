@@ -369,9 +369,10 @@ class boinfolog
 	function link_id2from(&$info,$not_app='',$not_id='')
 	{
 		//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id]', from='$info[info_from]', not_app='$not_app', not_id='$not_id')";
+
 		if ($info['info_link_id'] > 0 &&
 			(isset($info['links']) && ($link = $info['links'][$info['info_link_id']]) ||	// use supplied links info
-			 !isset($info['links']) && ($link = egw_link::get_link($info['info_link_id'])) !== False))
+			 ($link = egw_link::get_link($info['info_link_id'])) !== False))	// if link not found in supplied links, we always search!
 		{
 			if (isset($info['links']))
 			{
