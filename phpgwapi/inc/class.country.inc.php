@@ -25,6 +25,7 @@ class country
 	 * @var array
 	 */
 	var $country_array = array(
+		'AX' => 'AALAND ISLANDS',
 		'AF' => 'AFGHANISTAN', 
 		'AL' => 'ALBANIA', 
 		'DZ' => 'ALGERIA', 
@@ -86,7 +87,7 @@ class country
 		'DJ' => 'DJIBOUTI', 
 		'DM' => 'DOMINICA', 
 		'DO' => 'DOMINICAN REPUBLIC', 
-		'TP' => 'EAST TIMOR', 
+		'TP' => 'FORMER EAST TIMOR', 
 		'EC' => 'ECUADOR', 
 		'EG' => 'EGYPT', 
 		'SV' => 'EL SALVADOR', 
@@ -214,6 +215,7 @@ class country
 		'ST' => 'SAO TOME AND PRINCIPE', 
 		'SA' => 'SAUDI ARABIA', 
 		'SN' => 'SENEGAL', 
+		'CS' =>	'SERBIA AND MONTENEGRO', 
 		'SC' => 'SEYCHELLES', 
 		'SL' => 'SIERRA LEONE', 
 		'SG' => 'SINGAPORE', 
@@ -235,7 +237,8 @@ class country
 		'TW' => 'TAIWAN', 
 		'TJ' => 'TAJIKISTAN', 
 		'TZ' => 'TANZANIA, UNITED REPUBLIC OF', 
-		'TH' => 'THAILAND', 
+		'TH' => 'THAILAND',
+		'TL' =>	'TIMOR-LESTE',  
 		'TG' => 'TOGO', 
 		'TK' => 'TOKELAU', 
 		'TO' => 'TONGA', 
@@ -261,7 +264,7 @@ class country
 		'WF' => 'WALLIS AND FUTUNA', 
 		'EH' => 'WESTERN SAHARA', 
 		'YE' => 'YEMEN', 
-		'YU' => 'YUGOSLAVIA', 
+		'YU' => 'FORMER YUGOSLAVIA', 
 		'ZM' => 'ZAMBIA', 
 		'ZW' => 'ZIMBABWE'
 	);
