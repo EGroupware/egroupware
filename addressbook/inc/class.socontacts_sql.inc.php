@@ -285,12 +285,23 @@ class socontacts_sql extends so_sql
 			{
 				if ($col{0} == '#')	// search for a value in a certain custom field
 				{
-					unset($criteria[$col]);
-					if ($op=='AND') {
-						$criteria[] =$this->extra_table.'.contact_id in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
-						"(contact_name='".substr($col,1)."' AND contact_value".($wildcard?' LIKE ':'=')."'".$wildcard.$val.$wildcard."'))";
+					$valarray=array();
+					# val may be a list of values, constructed by multiple select fields, to be able to do the contains feature of adv-search
+					# we split the value and search for each part individually
+					if ($wildcard !='') {
+						$valarray=explode(',',$val);
 					} else {
-						$criteria[] = $this->db->expression($this->extra_table,'(',array('contact_name'=>substr($col,1),'contact_value'.($wildcard?' LIKE ':'=')."'".$wildcard.$val.$wildcard."'"),')');
+						$valarray[]=$val;
+					}
+					unset($criteria[$col]);
+					foreach ($valarray as $vkey => $part)
+					{
+						if ($op=='AND') {
+							$criteria[] =$this->extra_table.'.contact_id in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
+							"(contact_name='".substr($col,1)."' AND contact_value".($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'))";
+						} else {
+							$criteria[] = $this->db->expression($this->extra_table,'(',array('contact_name'=>substr($col,1),'contact_value'.($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'"),')');
+						}
 					}
 					$search_customfields = true;
 				}
