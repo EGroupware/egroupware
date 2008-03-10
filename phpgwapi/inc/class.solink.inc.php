@@ -122,7 +122,7 @@ class solink
 		{
 			echo "<p>solink.get_links($app,".print_r($id,true).",$only_app,$order)</p>\n";
 		}
-		if ($not_only = $only_app[0] == '!')
+		if (($not_only = $only_app[0] == '!'))
 		{
 			$only_app = substr($only_app,1);
 		}
@@ -150,7 +150,7 @@ class solink
 					'app'  => $row['link_app1'],
 					'id'   => $row['link_id1']
 				);
-				$app_id = $row['link_id1'];
+				$app_id = $row['link_id2'];
 			}
 			if ($only_app && $not_only == ($link['app'] == $only_app) ||
 				 !$GLOBALS['egw_info']['user']['apps'][$link['app']])
