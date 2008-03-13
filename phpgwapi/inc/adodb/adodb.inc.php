@@ -3408,7 +3408,7 @@
 	/**
 	 * PDO compatibility function: fetch the next row
 	 *
-	 * @return string
+	 * @return array/boolean false if there's nothing to fetch
 	 */
 	function &fetch($fetchmode=null)
 	{
@@ -3428,12 +3428,12 @@
 	/**
 	 * PDO compatibility function: fetch the first column of the next row
 	 *
-	 * @return string
+	 * @return string/boolean false if there's nothing to fetch
 	 */
 	function fetchSingle()
 	{
 		$row = $this->FetchRow();
-		return array_shift($row);
+		return is_array($row) ? array_shift($row) : false;
 	}
 } // end class ADORecordSet
 	
