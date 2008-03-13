@@ -204,8 +204,7 @@ class socontacts
 	
 	function socontacts($contact_app='addressbook')
 	{
-		$this->db     = clone($GLOBALS['egw']->db);
-		$this->db->set_app('infolog');
+		$this->db     = $GLOBALS['egw']->db;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
@@ -361,8 +360,7 @@ class socontacts
 		$fields = array();
 		$filter[$this->distri_id]=$ids;
 		if (count($dl_allowed)) $filter[$this->distri_key]=$dl_allowed;
-		$this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__);
-		while ($row = $this->db->row(true))
+		foreach($this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__) as $row)
 		{
 			if ((isset($row[$this->distri_id])&&strlen($row[$this->distri_value])>0))
 			{
@@ -717,7 +715,7 @@ class socontacts
 		else
 		{
 			$this->somain->change_owner($account_id,$new_owner);
-			$this->soextra->db->update($this->soextra->table_name,array(
+			$this->db->update($this->soextra->table_name,array(
 				$this->extra_owner => $new_owner
 			),array(
 				$this->extra_owner => $account_id
@@ -756,7 +754,7 @@ class socontacts
 	 */
 	function get_fields($type='all',$contact_id=null,$owner=null)
 	{
-		$def = $this->soextra->db->get_table_definitions('phpgwapi','egw_addressbook');
+		$def = $this->db->get_table_definitions('phpgwapi','egw_addressbook');
 		
 		$all_fields = array();
 		foreach($def['fd'] as $field => $data)
