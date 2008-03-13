@@ -102,7 +102,7 @@ class botimesheet extends so_sql
 	
 	function botimesheet()
 	{
-		$this->so_sql(TIMESHEET_APP,'egw_timesheet');
+		$this->so_sql(TIMESHEET_APP,'egw_timesheet',null,'',true);	// true = use global db object!
 
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
@@ -267,6 +267,7 @@ class botimesheet extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false,$only_summary=false)
 	{
+		//echo "<p>".__METHOD__."(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 		// postgres can't round from double precission, only from numeric ;-)
 		$total_sql = $this->db->Type != 'pgsql' ? "round(ts_quantity*ts_unitprice,2)" : "round(cast(ts_quantity*ts_unitprice AS numeric),2)";
 
@@ -381,10 +382,8 @@ class botimesheet extends so_sql
 		strlen($value) > 0 ? $where = ' and ts_extra_value ='.$this->db->quote($value) : '';
 		strlen($name) > 0 ? $where .= ' and ts_extra_name ='.$this->db->quote($name) : '';
 
-		$this->db->select('egw_timesheet_extra', 'ts_extra_name, ts_extra_value',$query,__LINE__,__FILE__,False,'',False,0,'where ts_id='.$this->data['ts_id'].$where);
-		$row = $this->db->row(true);
-
-		return $row;
+		return $this->db->select('egw_timesheet_extra', 'ts_extra_name, ts_extra_value',$query,__LINE__,__FILE__,False,'',
+			TIMESHEET_APP,0,'where ts_id='.$this->data['ts_id'].$where)->fetch();
 	}
 	
 	/**
@@ -434,26 +433,28 @@ class botimesheet extends so_sql
 		if($updateNames) {
 			$keys = array('ts_extra_name' => $oldname);
 			$fieldAssign = array('ts_extra_name' => $name);
-			$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__);
+			$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__,TIMESHEET_APP);
 			return true;
 		}
 		else {
-			foreach($this->customfields as $namecf => $valuecf) {
+			foreach($this->customfields as $namecf => $valuecf) 
+			{
 				//if entry not exist => insert
-				if(!$this->read_extra($namecf)) {
+				if(!$this->read_extra($namecf)) 
+				{
 					$fieldAssign = array('ts_id' => $this->data['ts_id'],'ts_extra_name' => $namecf,'ts_extra_value' => $this->data['#'.$namecf]);
-					$this->db->insert('egw_timesheet_extra',$fieldAssign,false,__LINE__,__FILE__);
+					$this->db->insert('egw_timesheet_extra',$fieldAssign,false,__LINE__,__FILE__,TIMESHEET_APP);
 				}
 				//otherwise update existing dataset
-				else {
+				else 
+				{
 					$keys = array('ts_extra_name' => $namecf, 'ts_id' => $this->data['ts_id']);
 					$fieldAssign = array('ts_extra_value' => $this->data['#'.$namecf]);
-					$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__);
+					$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__,TIMESHEET_APP);
 				}
 			}
 			return true;
 		}
-
 		return false;
 	}
 	
@@ -500,10 +501,10 @@ class botimesheet extends so_sql
 		strlen($ts_id) > 0 ? $where['ts_id'] = $ts_id : '';
 		strlen($ts_extra_name) > 0 ? $where['ts_extra_name'] = $ts_extra_name : '';
 
-		if(count($where) > 0) {
-			return $this->db->delete('egw_timesheet_extra', $where,__LINE__,__FILE__);
+		if(count($where) > 0) 
+		{
+			return $this->db->delete('egw_timesheet_extra', $where,__LINE__,__FILE__,TIMESHEET_APP);
 		}
-
 		return false;
 	}
 
@@ -705,14 +706,17 @@ class botimesheet extends so_sql
 	 */
 	 function update_ts_project($oldtitle='', $newtitle='')
 	 {
-		if(strlen($oldtitle) > 0 && strlen($newtitle) > 0) {
-			$keys = array('ts_project' => $oldtitle);
-			$fieldAssign = array('ts_project' => $newtitle,'ts_title' => $newtitle);
-			$this->db->update('egw_timesheet',$fieldAssign,$keys,__LINE__,__FILE__);
+		if(strlen($oldtitle) > 0 && strlen($newtitle) > 0) 
+		{
+			$this->db->update('egw_timesheet',array(
+				'ts_project' => $newtitle,
+				'ts_title' => $newtitle,
+			),array(
+				'ts_project' => $oldtitle,
+			),__LINE__,__FILE__,TIMESHEET_APP);
 
 			return true;
 		}
-
 		return false;
 	 }
 
@@ -722,30 +726,19 @@ class botimesheet extends so_sql
 	 * @param int $pm_id ID of selected project
 	 * @return array containing link_id and ts_id
 	 */	
-	function get_ts_links($pm_id=0) {
-		$tslist = array();		
-		if(strlen($pm_id) > 0) {
-			if(isset($GLOBALS['egw_info']['user']['apps']['projectmanager'])) {	
-				$bo_pm = CreateObject('projectmanager.boprojectmanager');
-				$childs = $bo_pm->children($pm_id);
-				$childs[] = $pm_id;
-				$pmChilds = implode(",",$childs);
-				$this->db->select(	'egw_links','link_id, link_id1',$query,
-							__LINE__,__FILE__,False,
-							'',False,0,
-							'JOIN egw_pm_projects ON (pm_id = link_id2)
-							 WHERE 
-								link_app1 = \'timesheet\' AND
-								link_app2 = \'projectmanager\' AND
-								link_id2 IN ('.$pmChilds.')');
-					
-				while($row = $this->db->row(true)) {
-					$tslist[$row['link_id']] = $row['link_id1'];
-				}
-					
+	function get_ts_links($pm_id=0) 
+	{
+		if($pm_id && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
+		{	
+			$pm_ids = ExecMethod('projectmanager.boprojectmanager.children',$pm_id);
+			$pm_ids[] = $pm_id;
+			$links = solink::get_links('projectmanager',$pm_ids,'timesheet');	// solink::get_links not egw_links::get_links!
+			if ($links)
+			{
+				$links = array_unique(call_user_func_array('array_merge',$links));
 			}
-
-		} 
-		return $tslist;
+			return $links;
+		}
+		return array();
 	}
 }
