@@ -84,14 +84,12 @@ class accounts_sql
 
 		if (is_object($GLOBALS['egw_setup']->db))
 		{
-			$this->db = clone($GLOBALS['egw_setup']->db);
+			$this->db = $GLOBALS['egw_setup']->db;
 		}
 		else
 		{
-			$this->db = clone($GLOBALS['egw']->db);
+			$this->db = $GLOBALS['egw']->db;
 		}
-		$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
-
 		if (!is_object($GLOBALS['egw']->acl))
 		{
 			$GLOBALS['egw']->acl =& CreateObject('phpgwapi.acl');
@@ -121,10 +119,8 @@ class accounts_sql
 				$this->contacts_table.'.contact_id AS person_id,';
 			$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
 		}
-		$this->db->select($this->table,$extra_cols.$this->table.'.*',$this->table.'.account_id='.abs($account_id),
-			__LINE__,__FILE__,false,'',false,0,$join);
-		
-		if (!($data = $this->db->row(true)))
+		if (!($data = $this->db->select($this->table,$extra_cols.$this->table.'.*',$this->table.'.account_id='.abs($account_id),
+			__LINE__,__FILE__,false,'',false,0,$join)->fetch()))
 		{
 			return false;
 		}
@@ -464,10 +460,10 @@ class accounts_sql
 		{
 			$where[] = 'account_id IS NOT NULL';	// otherwise contacts with eg. the same email hide the accounts!	
 		}
-		$this->db->select($table,$cols,$where,__LINE__,__FILE__);
+		if (!($row = $this->db->select($table,$cols,$where,__LINE__,__FILE__)->fetch())) return false;
 		if(!$this->db->next_record()) return false;
 		
-		return ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id');
+		return ($row['account_type'] == 'g' ? -1 : 1) * $row['account_id'];
 	}
 	
 	/**
@@ -493,8 +489,7 @@ class accounts_sql
 	 */
 	function update_lastlogin($account_id, $ip)
 	{
-		$this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__);
-		$previous_login = $this->db->next_record() ? $this->db->f('account_lastlogin') : false;
+		$previous_login = $this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__)->fetchSingle();
 
 		$this->db->update($this->table,array(
 			'account_lastloginfrom' => $ip,
