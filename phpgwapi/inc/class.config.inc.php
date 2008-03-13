@@ -115,11 +115,11 @@ class config
 	 *
 	 * Can be used static, if $app given!
 	 * 
-	 * @param $name string name of the config-value
-	 * @param $value mixed content
-	 * @param $app string app-name, defaults to $this->appname set via the constructor
+	 * @param string $name name of the config-value
+	 * @param mixed $value content, empty or null values are not saved, but deleted
+	 * @param string $app=null app-name, defaults to $this->appname set via the constructor
 	 */
-	/* static */ function save_value($name,$value,$app=False)
+	/* static */ function save_value($name,$value,$app=null)
 	{
 		if (!$app && !isset($this))
 		{
@@ -148,6 +148,11 @@ class config
 		if (!is_object(self::$db))
 		{
 			self::init_db();
+		}
+		if (empty($value))
+		{
+			if (isset(self::$configs[$app])) unset(self::$configs[$app][$name]);
+			return self::$db->delete(config::TABLE,array('config_value'=>$value),__LINE__,__FILE__);
 		}
 		return self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 	}
