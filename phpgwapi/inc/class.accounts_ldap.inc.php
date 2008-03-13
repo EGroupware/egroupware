@@ -699,7 +699,7 @@ class accounts_ldap
 				$fullSet = array();
 				foreach (ldap_get_entries($this->ds, $sri) as $key => $entry) 
 				{
-					if ($key != 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
+					if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
 				}
 
 				if (is_numeric($param['type'])) // return only group-members
