@@ -321,9 +321,10 @@ class solink
 	 * @param string $app app the returned links are linked on one side (atm. this must be link_app1!)
 	 * @param string $target_app app the returned links other side link also to
 	 * @param string/array $target_id=null id(s) the returned links other side link also to
+	 * @param boolean $just_app_ids=false return array with link_id => app_id pairs, not the full link record
 	 * @return array with links from entries from $app to $target_app/$target_id plus the other (b) link_id/app/id in the keys 'link3'/'app3'/'id3'
 	 */
-	static function get_3links($app,$target_app,$target_id=null)
+	static function get_3links($app,$target_app,$target_id=null,$just_app_ids=false)
 	{
 		$table = self::TABLE;
 		$arrayofselects=array(
@@ -358,7 +359,21 @@ class solink
 		$links = array();
 		foreach(self::$db->union($arrayofselects,__LINE__,__FILE__) as $row)
 		{
-			$links[] = egw_db::strip_array_keys($row,'link_');
+			if ($just_app_ids)
+			{
+				if ($row['link_app1'] == $target_app && (is_null($target_id) || in_array($row['link_id1'],(array)$target_id)))
+				{
+					$links[$row['link_id']] = $row['link_id2'];
+				}
+				else
+				{
+					$links[$row['link_id']] = $row['link_id1'];
+				}
+			}
+			else
+			{
+				$links[] = egw_db::strip_array_keys($row,'link_');
+			}
 		}
  		return $links;
 	}
