@@ -6,6 +6,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright 2002-8 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -61,11 +62,11 @@ class so_sql
 	 */
 	var $total = false;
 	/**
-	 * privat instance of the db-object
+	 * protected instance or reference (depeding on $no_clone param of constructor) of the db-object
 	 * 
 	 * @var egw_db
 	 */
-	var $db;
+	protected $db;
 	/**
 	 * unique keys/index, set by derived class or via so_sql($app,$table)
 	 * 
@@ -94,6 +95,12 @@ class so_sql
 	 * @var array
 	 */
 	var $table_def = array();
+	/**
+	 * Appname to use in all queries, set via constructor
+	 *
+	 * @var string
+	 */
+	var $app;
 	/**
 	 * holds the content of all columns
 	 * 
@@ -129,17 +136,28 @@ class so_sql
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
+	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no 
+	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
 	 * 
 	 * @return so_sql
 	 */
-	function so_sql($app='',$table='',$db=null,$column_prefix='')
+	function so_sql($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
 	{
-		$this->db = is_object($db) ? clone($db) : clone($GLOBALS['egw']->db);
+		if ($no_clone)
+		{
+			$this->db = is_object($db) ? $db : $GLOBALS['egw']->db;
+		}
+		else
+		{
+			$this->db = is_object($db) ? clone($db) : clone($GLOBALS['egw']->db);
+		}
 		$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
 		if ($app)
 		{
-			$this->db->set_app($app);
+			$this->app = $app;
+			
+			if (!$no_clone) $this->db->set_app($app);
 
 			if ($table) $this->setup_table($app,$table,$column_prefix);
 		}
@@ -369,41 +387,39 @@ class so_sql
 				unset($query[$col]);
 			}
 		}
-		$this->db->select($this->table_name,'*'.($extra_cols?','.(is_array($extra_cols)?implode(',',$extra_cols):$extra_cols):''),
-			$query,__LINE__,__FILE__,False,'',False,0,$join);
-
-		if (!($row = $this->db->row(true)))
+		foreach($this->db->select($this->table_name,'*'.($extra_cols?','.(is_array($extra_cols)?implode(',',$extra_cols):$extra_cols):''),
+			$query,__LINE__,__FILE__,False,'',$this->app,0,$join) as $row)
 		{
-			if ($this->autoinc_id)
+			$cols = $this->db_cols;
+			if ($extra_cols)	// extra columns to report
 			{
-				unset($this->data[$this->db_key_cols[$this->autoinc_id]]);
+				foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
+				{
+					if (FALSE!==stripos($col,' as ')) $col = preg_replace('/^.* as *([a-z0-9_]+) *$/i','\\1',$col);
+					$cols[$col] = $col;
+				}
 			}
-			if ((int) $this->debug >= 4) echo "nothing found !!!</p>\n";
-
+			foreach ($cols as $db_col => $col)
+			{
+				$this->data[$col] = $row[$db_col];
+			}
 			$this->db2data();
-
-			return False;
-		}
-		$cols = $this->db_cols;
-		if ($extra_cols)	// extra columns to report
-		{
-			foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
+	
+			if ((int) $this->debug >= 4)
 			{
-				if (FALSE!==stripos($col,' as ')) $col = preg_replace('/^.* as *([a-z0-9_]+) *$/i','\\1',$col);
-				$cols[$col] = $col;
+				echo "data =\n"; _debug_array($this->data);
 			}
+			return $this->data;
 		}
-		foreach ($cols as $db_col => $col)
+		if ($this->autoinc_id)
 		{
-			$this->data[$col] = $row[$db_col];
+			unset($this->data[$this->db_key_cols[$this->autoinc_id]]);
 		}
+		if ((int) $this->debug >= 4) echo "nothing found !!!</p>\n";
+
 		$this->db2data();
 
-		if ((int) $this->debug >= 4)
-		{
-			echo "data =\n"; _debug_array($this->data);
-		}
-		return $this->data;
+		return False;
 	}
 
 	/**
@@ -435,7 +451,7 @@ class so_sql
 					$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 				}
 			}
-			$this->db->insert($this->table_name,$data,false,__LINE__,__FILE__);
+			$this->db->insert($this->table_name,$data,false,__LINE__,__FILE__,$this->app);
 
 			if ($this->autoinc_id)
 			{
@@ -478,11 +494,11 @@ class so_sql
 			}
 			if (!$this->autoinc_id)	// always try an insert if we have no autoinc_id, as we dont know if the data exists
 			{
-				$this->db->insert($this->table_name,$data,$keys,__LINE__,__FILE__);
+				$this->db->insert($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app);
 			}
 			else
 			{
-				$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__);
+				$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app);
 			}
 		}
 		$this->db2data();
@@ -554,7 +570,7 @@ class so_sql
 		{
 			$query[$db_col] = $data[$col];
 		}
-		$this->db->delete($this->table_name,$query,__LINE__,__FILE__);
+		$this->db->delete($this->table_name,$query,__LINE__,__FILE__,$this->app);
 
 		return $this->db->affected_rows();
 	}
@@ -620,8 +636,16 @@ class so_sql
 						list($table,$only_col) = explode('.',$db_col);
 						
 						$table_def = $this->db->get_table_definitions(true,$table);
-						
-						$query[] = $db_col.(is_array($val) ? ' IN ' : '=').$this->db->quote($val,$table_def['fd'][$only_col]);
+
+						if (is_array($val) && count($val) > 1)
+						{
+							array_walk($val,array($this->db,'quote'),$table_def['fd'][$only_col]['type']);
+							$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
+						}
+						else
+						{
+							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$table_def['fd'][$only_col]['type']);
+						}
 					}
 					else
 					{
@@ -739,11 +763,10 @@ class so_sql
 				}
 				else	// cant do a count, have to run the query without limit
 				{
-					$this->db->union($union,__LINE__,__FILE__);
-					$this->total = $this->db->num_rows();
+					$this->total = $this->db->union($union,__LINE__,__FILE__)->NumRows();
 				}
 			}
-			$this->db->union($union,__LINE__,__FILE__,$order_by,$start,$num_rows);
+			$rs = $this->db->union($union,__LINE__,__FILE__,$order_by,$start,$num_rows);
 
 			$cols = $union_cols;
 			$union = $union_cols = array();
@@ -758,17 +781,15 @@ class so_sql
 				}
 				elseif (!$need_full_no_count && (!$join || stripos($join,'LEFT JOIN')!==false))
 				{
-					$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',false,0,$join);
-					$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
+					$this->total = $this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',$this->app,0,$join)->fetchSingle();
 				}
 				else	// cant do a count, have to run the query without limit
 				{
-					$this->db->select($this->table_name,$colums,$query,__LINE__,__FILE__,false,$order_by,false,0,$join);
-					$this->total = $this->db->num_rows();
+					$this->total = $this->db->select($this->table_name,$colums,$query,__LINE__,__FILE__,false,$order_by,false,0,$join)->NumRows();
 				}
 			}
-			$this->db->select($this->table_name,$mysql_calc_rows.$colums,$query,__LINE__,__FILE__,
-				$start,$order_by,false,$num_rows,$join);
+			$rs = $this->db->select($this->table_name,$mysql_calc_rows.$colums,$query,__LINE__,__FILE__,
+				$start,$order_by,$this->app,$num_rows,$join);
 
 			$cols = $this->_get_columns($only_keys,$extra_cols);
 		}
@@ -776,10 +797,10 @@ class so_sql
 
 		if ($mysql_calc_rows)
 		{
-			$this->total = $this->db->Link_ID->GetOne('SELECT FOUND_ROWS()');
+			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchSingle();
 		}
 		$arr = array();
-		for ($n = 0; ($row = $this->db->row(true)); ++$n)
+		if ($rs) foreach($rs as $row)
 		{
 			$data = array();
 			foreach($cols as $db_col => $col)
@@ -787,6 +808,7 @@ class so_sql
 				$data[$col] = $row[$db_col];
 			}
 			$arr[] = $this->db2data($data);
+			$n++;
 		}
 		return $n ? $arr : False;
 	}
@@ -857,9 +879,10 @@ class so_sql
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param mixed $only_keys=false, see search
 	 * @return int total number of rows
 	 */
-	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false)
+	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false)
 	{
 		if ((int) $this->debug >= 4)
 		{
@@ -873,7 +896,7 @@ class so_sql
 				$criteria[$col] = $query['search'];
 			}
 		}
-		$rows = $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
+		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',
 			'','%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
 			$query['col_filter'],$join,$need_full_no_count);
 			
@@ -975,16 +998,5 @@ class so_sql
 			}
 		}
 		return $cache[$cache_key] =& $ret;
-	}
-}
-
-if (!function_exists("stripos")) 
-{
-	/**
-	 * stripos for php < 5
-	 */
-	function stripos($str,$needle,$offset=0)
-	{
-		return strpos(strtolower($str),strtolower($needle),$offset);
 	}
 }
