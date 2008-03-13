@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.display.rows" template="" lang="" group="0" version="1.5.001">
+		<grid width="100%" overflow="auto">
+			<columns>
+				<column/>
+				<column disabled="!@show[org_name]"/>
+				<column disabled="!@show[org_unit]"/>
+				<column disabled="!@show[n_fn]"/>
+				<column disabled="!@show[email]"/>
+				<column disabled="!@show[tel_work]"/>
+				<column disabled="!@show[tel_cell]"/>
+				<column disabled="!@show[tel_fax]"/>
+				<column disabled="!@show[org_home]"/>
+				<column disabled="!@show[url]"/>
+				<column disabled="!@show[adr_one_street]"/>
+				<column disabled="!@show[adr_one_postalcode]"/>
+				<column disabled="!@show[adr_one_locality]"/>
+				<column disabled="!@show[adr_one_region]"/>
+				<column disabled="!@show[custom1]"/>
+				<column disabled="!@show[custom2]"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header id="type"/>
+					<nextmatch-header label="Company" id="org_name"/>
+					<nextmatch-header label="Department" id="org_unit"/>
+					<nextmatch-header label="Contact" id="n_fn"/>
+					<nextmatch-header label="Email" id="email"/>
+					<nextmatch-header label="Business phone" id="tel_work"/>
+					<nextmatch-header label="Mobile phone" id="tel_cell"/>
+					<nextmatch-header id="tel_fax" label="Fax"/>
+					<nextmatch-header label="Home phone" id="tel_home"/>
+					<nextmatch-header label="Internet" id="url"/>
+					<nextmatch-header label="Street" id="adr_one_street"/>
+					<nextmatch-sortheader label="ZIP Code" id="adr_one_postalcode"/>
+					<nextmatch-header label="City" id="adr_one_locality"/>
+					<nextmatch-header label="Region" id="adr_one_region"/>
+					<nextmatch-header label="@customlabel[1]" id="custom1"/>
+					<nextmatch-header label="@customlabel[2]" id="custom2"/>
+					<vbox options="0,0">
+						<nextmatch-header label="select country" id="country"/>
+						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
+					</vbox>
+				</row>
+				<row class="row" valign="top">
+					<image options="1" src="${row}[type]" readonly="true" label="$row_cont[type_label]"/>
+					<description id="${row}[org_name]"/>
+					<description id="${row}[org_unit]"/>
+					<description id="${row}[line1]"/>
+					<description id="${row}[email]"/>
+					<description id="${row}[tel_work]"/>
+					<description id="${row}[tel_cell]"/>
+					<description id="${row}[tel_fax]"/>
+					<description id="${row}[tel_home]"/>
+					<description id="${row}[url]"/>
+					<vbox>
+						<description id="${row}[adr_one_street]"/>
+						<description id="${row}[adr_one_street2]"/>
+					</vbox>
+					<description id="${row}[adr_one_postalcode]"/>
+					<description id="${row}[adr_one_locality]"/>
+					<description id="${row}[adr_one_region]"/>
+					<description id="${row}[custom1]"/>
+					<description id="${row}[custom2]"/>
+					<description id="${row}[adr_one_countryname]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.display" template="" lang="" group="0" version="1.5.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
+					<description/>
+				</row>
+				<row disabled="1">
+					<description/>
+					<description/>
+				</row>
+				<row>
+					<nextmatch options="addressbook.display.rows" id="nm1" span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
