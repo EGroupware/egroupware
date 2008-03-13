@@ -461,7 +461,6 @@ class accounts_sql
 			$where[] = 'account_id IS NOT NULL';	// otherwise contacts with eg. the same email hide the accounts!	
 		}
 		if (!($row = $this->db->select($table,$cols,$where,__LINE__,__FILE__)->fetch())) return false;
-		if(!$this->db->next_record()) return false;
 		
 		return ($row['account_type'] == 'g' ? -1 : 1) * $row['account_id'];
 	}
