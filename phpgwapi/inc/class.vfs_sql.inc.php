@@ -725,7 +725,7 @@
 			{
 				return True;
 			}
-			elseif (!$rights && $group_ok)
+			elseif (!$rights)
 			{
 				return $GLOBALS['egw_info']['server']['acl_default'] == 'grant';
 			}
