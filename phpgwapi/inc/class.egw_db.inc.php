@@ -1674,7 +1674,7 @@ class egw_db
 	 */
 	function expression($table_def,$args)
 	{
-		if (!is_array($table_def)) $table_def = $this->get_table_definitions('',$table_def);
+		if (!is_array($table_def)) $table_def = $this->get_table_definitions(true,$table_def);
 		$sql = '';
 		$ignore_next = 0;
 		foreach(func_get_args() as $n => $arg)
