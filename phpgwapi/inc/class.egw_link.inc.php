@@ -106,7 +106,7 @@ class egw_link extends solink
 	private static $title_cache = array();
 
 	/**
-	 * Private constructor to forbide instanciated use
+	 * Private constructor to forbid instanciated use
 	 *
 	 */
 	private function __construct()
@@ -328,6 +328,11 @@ class egw_link extends solink
 	 */
 	static function get_links_multiple($app,array $ids,$cache_titles=true,$only_app='',$order='link_lastmod DESC' )
 	{
+		//echo "<p>".__METHOD__."('$app',".print_r($ids,true).",$cache_titles,'$only_app','$order')</p>\n";
+		if (!$ids)
+		{
+			return array();		// no ids are linked to nothing
+		}
 		$links = solink::get_links($app,$ids,$only_app,$order);
 
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
@@ -542,7 +547,6 @@ class egw_link extends solink
 		{
 			return self::$title_cache[$app.':'.$id];
 		}
-		//echo "<p>".__METHOD__."('$app','$id')</p>\n";
 		if ($app == self::VFS_APPNAME)
 		{
 			if (is_array($id) && $link)
