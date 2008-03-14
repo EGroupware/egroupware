@@ -314,18 +314,6 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$base = array($base);
 		}
-		foreach($base as $path)
-		{
-			// check our fstab if we need to add some of the mountpoints
-			$basepath = parse_url($path,PHP_URL_PATH);
-			foreach(self::$fstab as $mounted => $src_url)
-			{
-				if (dirname($mounted) == $basepath)
-				{
-					$base[] = $mounted;
-				}
-			}
-		}
 		$result = array();
 		foreach($base as $path)
 		{
