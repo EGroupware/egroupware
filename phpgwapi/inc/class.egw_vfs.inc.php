@@ -798,6 +798,22 @@ class egw_vfs extends vfs_stream_wrapper
 		
 		return array_pop($parts);
 	}
+
+	/**
+	 * URL to download a file
+	 * 
+	 * We use our webdav handler as download url instead of an own download method. 
+	 * The webdav hander (filemanager/webdav.php) recognices eGW's session cookie and of cause understands regular GET requests.
+	 * 
+	 * Please note: If you dont use eTemplate or the html class, you have to run this url throught egw::link() to get a full url
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	static function download_url($path)
+	{
+		return '/filemanager/webdav.php'.$path;
+	}
 }
 
 egw_vfs::$user = (int) $GLOBALS['egw_info']['user']['account_id'];
