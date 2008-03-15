@@ -37,14 +37,12 @@ class asyncservice
 	{
 		if (is_object($GLOBALS['egw']->db))
 		{
-			$this->db = clone($GLOBALS['egw']->db);
+			$this->db = $GLOBALS['egw']->db;
 		}
 		else
 		{
-			$this->db = clone($GLOBALS['egw_setup']->db);
+			$this->db = $GLOBALS['egw_setup']->db;
 		}
-		$this->db->set_app('phpgwapi');
-			
 		$this->cronline = EGW_SERVER_ROOT . '/phpgwapi/cron/asyncservices.php '.$GLOBALS['egw_info']['user']['domain'];
 		
 		$this->only_fallback = substr(php_uname(), 0, 7) == "Windows";	// atm cron-jobs dont work on win
@@ -460,22 +458,12 @@ class asyncservice
 		{
 			$where = array('async_id' => $id);
 		}
-		$this->db->select($this->db_table,'*',$where,__LINE__,__FILE__);
-
 		$jobs = array();
-		while ($this->db->next_record())
+		foreach($this->db->select($this->db_table,'*',$where,__LINE__,__FILE__) as $row)
 		{
-			$id = $this->db->f('async_id');
-
-			$jobs[$id] = array(
-				'id'     => $id,
-				'next'   => $this->db->f('async_next'),
-				'times'  => unserialize($this->db->f('async_times')),
-				'method' => $this->db->f('async_method'),
-				'data'   => unserialize($this->db->f('async_data')),
-				'account_id'   => $this->db->f('async_account_id')
-			);
-			//echo "job id='$id'<pre>"; print_r($jobs[$id]); echo "</pre>\n";
+			$row['async_times'] = unserialize($row['async_times']);
+			$row['async_data'] = unserialize($row['async_data']);
+			$jobs[$row['async_id']] = egw_db::strip_array_keys($row,'async_');
 		}
 		if (!count($jobs))
 		{
