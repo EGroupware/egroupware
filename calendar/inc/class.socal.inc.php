@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -97,8 +97,7 @@ class socal
 			}
 			$this->$my =& $GLOBALS['egw']->$class;
 		}
-		$this->db = clone($GLOBALS['egw']->db);
-		$this->db->set_app('calendar');
+		$this->db = $GLOBALS['egw']->db;
 
 		$this->all_tables = array($this->cal_table);
 		foreach(array('extra','repeats','user','dates') as $name)
@@ -145,21 +144,19 @@ class socal
 		{
 			$where[] = 'cal_start >= '.(int)$recur_date;
 		}
-		$this->db->select($this->cal_table,"$this->repeats_table.*,$this->cal_table.*,MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end",
-			$where,__LINE__,__FILE__,false,'GROUP BY '.$group_by_cols,false,0,
+		$events = array();
+		foreach($this->db->select($this->cal_table,"$this->repeats_table.*,$this->cal_table.*,MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end",
+			$where,__LINE__,__FILE__,false,'GROUP BY '.$group_by_cols,'calendar',0,
 			",$this->dates_table LEFT JOIN $this->repeats_table ON $this->dates_table.cal_id=$this->repeats_table.cal_id".
-			" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id");
-
-		$events = false;
-		while (($row = $this->db->row(true,'cal_')))
+			" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id") as $row)
 		{
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 			if (!$row['recur_type']) $row['recur_type'] = MCAL_RECUR_NONE;
 			$row['alarm'] = array();
-			$events[$row['id']] = $row;
+			$events[$row['cal_id']] = egw_db::strip_array_keys($row,'cal_');
 
 			// if a uid was supplied, convert it for the further code to an id
-			if (!is_array($ids) && !is_numeric($ids)) $ids = $row['id'];
+			if (!is_array($ids) && !is_numeric($ids)) $ids = $row['cal_id'];
 		}
 		if (!$events) return false;
 
@@ -178,11 +175,10 @@ class socal
 		}
 
 		// participants, if a recur_date give, we read that recurance, else the one users from the default entry with recur_date=0
-		$this->db->select($this->user_table,'*',array(
+		foreach($this->db->select($this->user_table,'*',array(
 			'cal_id'      => $ids,
 			'cal_recur_date' => $recur_date,
-		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC');	// DESC puts users before resources and contacts
-		while (($row = $this->db->row(true)))
+		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC','calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// if the type is not an ordinary user (eg. contact or resource)...
 			if ($row['cal_user_type'] && $row['cal_user_type'] != 'u')
@@ -201,8 +197,7 @@ class socal
 		}
 
 		// custom fields
-		$this->db->select($this->extra_table,'*',array('cal_id'=>$ids),__LINE__,__FILE__);
-		while (($row = $this->db->row(true)))
+		foreach($this->db->select($this->extra_table,'*',array('cal_id'=>$ids),__LINE__,__FILE__,false,'','calendar') as $row)
 		{
 			$events[$row['cal_id']]['#'.$row['cal_extra_name']] = $row['cal_extra_value'];
 		}
@@ -309,9 +304,10 @@ class socal
 				}
 			}
 			$to_or = array();
+			$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 			foreach($users_by_type as $type => $ids)
 			{
-				$to_or[] = $this->db->expression($this->user_table,array(
+				$to_or[] = $this->db->expression($table_def,array(
 					'cal_user_type' => $type,
 					'cal_user_id'   => $ids,
 				));
@@ -337,6 +333,7 @@ class socal
 				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id",
 				'cols'  => "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
 				'where' => $where,
+				'app'   => 'calendar',
 			);
 			$selects = array($select,$select);
 			$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
@@ -347,12 +344,11 @@ class socal
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 				$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 
-				$this->db->union($selects,__LINE__,__FILE__);
-				$this->total = $this->db->num_rows();
+				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 
 				$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
 			}
-			$this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
+			$rs = $this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
@@ -362,21 +358,19 @@ class socal
 			if (is_numeric($offset))	// get the total too
 			{
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-				$this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
-					$where,__LINE__,__FILE__,false,'',false,0,
-					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
-
-				$this->total = $this->db->num_rows();
+				$this->total = $this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
+					$where,__LINE__,__FILE__,false,'','calendar',0,
+					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
 			}
-			$this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').
+			$rs = $this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').
 				"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
-				$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,false,$num_rows,
+				$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,'calendar',$num_rows,
 				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
 		}
 		$events = $ids = $recur_dates = $recur_ids = array();
-		while (($row =& $this->db->row(true,'cal_')))
+		foreach($rs as $row)
 		{
-			$ids[] = $id = $row['id'];
+			$ids[] = $id = $row['cal_id'];
 			if ($row['recur_date'])
 			{
 				$id .= '-'.$row['recur_date'];
@@ -385,7 +379,7 @@ class socal
 			$row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
-			$events[$id] = $row;
+			$events[$id] = egw_db::strip_array_keys($row,'cal_');
 		}
 
 		if (count($events))
@@ -393,12 +387,10 @@ class socal
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
-			$this->db->select($this->user_table,'*',array(
+			foreach($this->db->select($this->user_table,'*',array(
 				'cal_id' => array_unique($ids),
 				'cal_recur_date' => $recur_dates,
-			),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC');	// DESC puts users before resources and contacts
-
-			while (($row = $this->db->row(true)))
+			),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC','calendar') as $row)	// DESC puts users before resources and contacts
 			{
 				$id = $row['cal_id'];
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
@@ -408,8 +400,7 @@ class socal
 				$events[$id]['participants'][$this->combine_user($row['cal_user_type'],$row['cal_user_id'])] = $row['cal_status'];
 			}
 /*			custom fields are not shown in the regular views, so we can ignore them here for the moment
-			$this->db->select($this->extra_table,'*',array('cal_id'=>$ids),__LINE__,__FILE__);
-			while (($row = $this->db->row(true)))
+			foreach($this->db->select($this->extra_table,'*',array('cal_id'=>$ids),__LINE__,__FILE__,false,'','calendar') as $row)
 			{
 				$set_ids = array($row['cal_id']);
 				if (isset($recur_ids[$row['cal_id']])) $set_ids += $recur_ids[$row['cal_id']];
@@ -514,16 +505,16 @@ ORDER BY cal_user_type, cal_usre_id
 
 		// while saving handle the etag as condition for the update, to check if an entry was saved before this action occured
 		$check_etag = ($check_modified ? $check_modified : $event['cal_etag']);  
-		if ($cal_id && $check_etag) 
+		if ($cal_id && $check_etag /*&& $check_modified*/) 
 		{
-			
+			//$event2update[]= 'cal_etag=cal_etag+1';
 			$event2update['cal_etag']= $event['cal_etag']=$check_etag+1;
 			$event2update['cal_edit_user']= $event['cal_edit_user']=NULL;
 			$event2update['cal_edit_time']= $event['cal_edit_time']=NULL;
 			// cal_etag will be set on first save (if not set)
 			$where = array('cal_id' => $cal_id,'(cal_etag is NULL or cal_etag='.$check_etag.')');
 			#if ($check_etag) $where['cal_etag'] = $check_etag;
-			if (!$this->db->update($this->cal_table,$event2update,$where,__LINE__,__FILE__))
+			if (!$this->db->update($this->cal_table,$event2update,$where,__LINE__,__FILE__,'calendar'))
 			{
 				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning false");
 				return false;	// Error
@@ -541,7 +532,7 @@ ORDER BY cal_user_type, cal_usre_id
 		
 		if ($cal_id)
 		{
-			$this->db->update($this->cal_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__);
+			$this->db->update($this->cal_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 		}
 		else
 		{
@@ -558,7 +549,7 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!$event['cal_uid'] || $event['cal_reference'] && strpos($event['cal_uid'],'cal-'.$event['calreference'].'-') !== false)
 			{
 				$event['cal_uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$cal_id);
-				$this->db->update($this->cal_table,array('cal_uid' => $event['cal_uid']),array('cal_id' => $cal_id),__LINE__,__FILE__);
+				$this->db->update($this->cal_table,array('cal_uid' => $event['cal_uid']),array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 			}
 			// new events need to have at least one participant, default to the owner
 			if (!isset($event['cal_participants']))
@@ -572,8 +563,8 @@ ORDER BY cal_user_type, cal_usre_id
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']) && count($event['recur_exception']))
 			{
 				// delete execeptions from the user and dates table, it could be the first time
-				$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date' => $event['recur_exception']),__LINE__,__FILE__);
-				$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start' => $event['recur_exception']),__LINE__,__FILE__);
+				$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
+				$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
 
 				$event['recur_exception'] = implode(',',$event['recur_exception']);
 			}
@@ -584,8 +575,7 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!$set_recurrences)
 			{
 				// check if the recure-information changed
-				$this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__);
-				$old_recur = $this->db->row(true);
+				$old_recur = $this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
 				$old_exceptions = $old_recur['recur_exception'] ? explode(',',$old_recur['recur_exception']) : array();
 				$exceptions = $event['recur_exception'] ? explode(',',$event['recur_exception']) : array();
 				$set_recurrences = $event['recur_type'] != $old_recur['recur_type'] || $event['recur_data'] != $old_recur['recur_data'] ||
@@ -594,27 +584,26 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__);
+				$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 			}
 			else
 			{
-				$this->db->delete($this->repeats_table,array('cal_id' => $cal_id),__LINE__,__FILE__);
+				$this->db->delete($this->repeats_table,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 			}
 			if ($set_recurrences)
 			{
 				// delete all, but the lowest dates record
-				$this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__);
-				$min = $this->db->next_record() ? $this->db->f(0) : 0;
+				$min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchSingle();
 
 				$this->db->delete($this->dates_table,array(
 					'cal_id' => $cal_id,
 					'cal_start > '.(int)$min,
-				),__LINE__,__FILE__);
+				),__LINE__,__FILE__,'calendar');
 				// delete all user-records, with recur-date != 0
 				$this->db->delete($this->user_table,array(
 					'cal_id' => $cal_id,
 					'cal_recur_date != 0',
-				),__LINE__,__FILE__);
+				),__LINE__,__FILE__,'calendar');
 			}
 		}
 		// update start- and endtime if present in the event-array, evtl. we need to move all recurrences
@@ -639,14 +628,14 @@ ORDER BY cal_user_type, cal_usre_id
 					),array(
 						'cal_id'			=> $cal_id,
 						'cal_extra_name'	=> substr($name,1),
-					),__LINE__,__FILE__);
+					),__LINE__,__FILE__,'calendar');
 				}
 				else
 				{
 					$this->db->delete($this->extra_table,array(
 						'cal_id'			=> $cal_id,
 						'cal_extra_name'	=> substr($name,1),
-					),__LINE__,__FILE__);
+					),__LINE__,__FILE__,'calendar');
 				}
 			}
 		}
@@ -685,16 +674,16 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if (!$old_start)
 		{
-			if ($change_since !== false) $this->db->select($this->dates_table,'MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end',
-				array('cal_id'=>$cal_id),__LINE__,__FILE__);
+			if ($change_since !== false) $row = $this->db->select($this->dates_table,'MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end',
+				array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
 			// if no recurrence found, create one with the new dates
-			if ($change_since === false || !($row = $this->db->row(true)) || !$row['cal_start'] || !$row['cal_end'])
+			if ($change_since === false || !$row || !$row['cal_start'] || !$row['cal_end'])
 			{
 				$this->db->insert($this->dates_table,array(
 					'cal_id'    => $cal_id,
 					'cal_start' => $start,
 					'cal_end'   => $end,
-				),false,__LINE__,__FILE__);
+				),false,__LINE__,__FILE__,'calendar');
 
 				return 1;
 			}
@@ -706,19 +695,19 @@ ORDER BY cal_user_type, cal_usre_id
 			$move_start = (int) ($start-$old_start);
 			$move_end   = (int) ($end-$old_end);
 		}
-		$where = $this->db->expression($this->cal_table,array('cal_id' => $cal_id));
+		$where = 'cal_id='.(int)$cal_id;
 
 		if ($move_start)
 		{
 			// move the recur-date of the participants
 			$this->db->query("UPDATE $this->user_table SET cal_recur_date=cal_recur_date+$move_start WHERE $where AND cal_recur_date ".
-				((int)$change_since ? '>= '.(int)$change_since : '!= 0'));
+				((int)$change_since ? '>= '.(int)$change_since : '!= 0'),__LINE__,__FILE__);
 		}
 		if ($move_start || $move_end)
 		{
 			// move the event and it's recurrences
 			$this->db->query("UPDATE $this->dates_table SET cal_start=cal_start+$move_start,cal_end=cal_end+$move_end WHERE $where".
-				((int) $change_since ? ' AND cal_start >= '.(int) $change_since : ''));
+				((int) $change_since ? ' AND cal_start >= '.(int) $change_since : ''),__LINE__,__FILE__);
 		}
 		return $this->db->affected_rows();
 	}
@@ -791,8 +780,8 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			// delete not longer set participants
 			$deleted = array();
-			$this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id,cal_quantity',$where,__LINE__,__FILE__);
-			while (($row = $this->db->row(true)))
+			foreach($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id,cal_quantity',$where,
+				__LINE__,__FILE__,false,'','calendar') as $row)
 			{
 				$uid = $this->combine_user($row['cal_user_type'],$row['cal_user_id']);
 				if (!isset($participants[$uid]))	// delete group-invitations
@@ -808,14 +797,15 @@ ORDER BY cal_user_type, cal_usre_id
 			if (count($deleted))
 			{
 				$to_or = array();
+				$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 				foreach($deleted as $type => $ids)
 				{
-					$to_or[] = $this->db->expression($this->user_table,array(
+					$to_or[] = $this->db->expression($table_def,array(
 						'cal_user_type' => $type,
 						'cal_user_id'   => $ids,
 					));
 				}
-				$this->db->delete($this->user_table,$where + array('('.implode(' OR ',$to_or).')'),__LINE__,__FILE__);
+				$this->db->delete($this->user_table,$where + array('('.implode(' OR ',$to_or).')'),__LINE__,__FILE__,'calendar');
 			}
 		}
 		if (count($participants))	// these are NEW participants now
@@ -824,8 +814,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$recurrences = array();
 			if ($change_since !== false)	// existing entries only
 			{
-				$this->db->select($this->user_table,'DISTINCT cal_recur_date',$where,__LINE__,__FILE__);
-				while(($row = $this->db->row(true)))
+				foreach($this->db->select($this->user_table,'DISTINCT cal_recur_date',$where,__LINE__,__FILE__,false,'','calendar') as $row)
 				{
 					$recurrences[] = $row['cal_recur_date'];
 				}
@@ -845,7 +834,7 @@ ORDER BY cal_user_type, cal_usre_id
 						'cal_recur_date'  => $recur_date,
 						'cal_user_type'   => $type,
 						'cal_user_id' 	  => $id,
-					),__LINE__,__FILE__);
+					),__LINE__,__FILE__,'calendar');
 				}
 			}
 		}
@@ -889,13 +878,13 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		if ($status == 'G')		// remove group invitations, as we dont store them in the db
 		{
-			$this->db->delete($this->user_table,$where,__LINE__,__FILE__);
+			$this->db->delete($this->user_table,$where,__LINE__,__FILE__,'calendar');
 		}
 		else
 		{
 			$this->db->insert($this->user_table,array(
 				'cal_status'     => $status,
-			),$where,__LINE__,__FILE__);
+			),$where,__LINE__,__FILE__,'calendar');
 		}
 		return $this->db->affected_rows();
 	}
@@ -916,7 +905,7 @@ ORDER BY cal_user_type, cal_usre_id
 		),array(
 			'cal_id' => $cal_id,
 			'cal_start'  => $start,
-		),__LINE__,__FILE__);
+		),__LINE__,__FILE__,'calendar');
 
 		foreach($participants as $uid => $status)
 		{
@@ -931,7 +920,7 @@ ORDER BY cal_user_type, cal_usre_id
 				'cal_recur_date' => $start,
 				'cal_user_type'  => $type,
 				'cal_user_id' 	 => $id,
-			),__LINE__,__FILE__);
+			),__LINE__,__FILE__,'calendar');
 		}
 	}
 
@@ -943,12 +932,11 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function unfinished_recuring($time)
 	{
-		$this->db->select($this->repeats_table,"$this->repeats_table.cal_id,MAX(cal_start) AS cal_start",array(
+		$ids = array();
+		foreach($this->db->select($this->repeats_table,"$this->repeats_table.cal_id,MAX(cal_start) AS cal_start",array(
 			"$this->repeats_table.cal_id = $this->dates_table.cal_id",
 			'(recur_enddate = 0 OR recur_enddate IS NULL OR recur_enddate > '.(int)$time.')',
-		),__LINE__,__FILE__,false,"GROUP BY $this->repeats_table.cal_id",false,0,','.$this->dates_table);
-		$ids = array();
-		while (($row = $this->db->Row(true)))
+		),__LINE__,__FILE__,false,"GROUP BY $this->repeats_table.cal_id",'calendar',0,','.$this->dates_table) as $row)
 		{
 			$ids[$row['cal_id']] = $row['cal_start'];
 		}
@@ -968,7 +956,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		foreach($this->all_tables as $table)
 		{
-			$this->db->delete($table,array('cal_id'=>$cal_id),__LINE__,__FILE__);
+			$this->db->delete($table,array('cal_id'=>$cal_id),__LINE__,__FILE__,'calendar');
 		}
 	}
 
@@ -1089,15 +1077,9 @@ ORDER BY cal_user_type, cal_usre_id
 
 			if ($user_type == 'u')	// only accounts can be owners of events
 			{
-				$ids = array();
-				$this->db->select($this->cal_table,'cal_id',array('cal_owner' => $old_user),__LINE__,__FILE__);
-				while(($row = $this->db->row(true)))
+				foreach($this->db->select($this->cal_table,'cal_id',array('cal_owner' => $old_user),__LINE__,__FILE__,false,'','calendar') as $row)
 				{
-					$ids[] = $row['cal_id'];
-				}
-				foreach($ids as $cal_id)
-				{
-					$this->delete($cal_id);
+					$this->delete($row['cal_id']);
 				}
 			}
 			$this->db->delete($this->user_table,array(
@@ -1106,29 +1088,22 @@ ORDER BY cal_user_type, cal_usre_id
 			),__LINE__,__FILE__);
 
 			// delete calendar entries without participants (can happen if the deleted user is the only participants, but not the owner)
-			$ids = array();
-			$this->db->select($this->cal_table,"DISTINCT $this->cal_table.cal_id",'cal_user_id IS NULL',__LINE__,__FILE__,
-				False,'',False,0,"LEFT JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id");
-			while(($row = $this->db->row(true)))
+			foreach($this->db->select($this->cal_table,"DISTINCT $this->cal_table.cal_id",'cal_user_id IS NULL',__LINE__,__FILE__,
+				False,'','calendar',0,"LEFT JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id") as $row)
 			{
-				$ids[] = $row['cal_id'];
-			}
-			foreach($ids as $cal_id)
-			{
-				$this->delete($cal_id);
+				$this->delete($row['cal_id']);
 			}
 		}
 		else
 		{
-			$this->db->update($this->cal_table,array('cal_owner' => $new_user),array('cal_owner' => $old_user),__LINE__,__FILE__);
+			$this->db->update($this->cal_table,array('cal_owner' => $new_user),array('cal_owner' => $old_user),__LINE__,__FILE__,'calendar');
 			// delete participation of old user, if new user is already a participant
-			$this->db->select($this->user_table,'cal_id',array(		// MySQL does NOT allow to run this as delete!
+			$ids = array();
+			foreach($this->db->select($this->user_table,'cal_id',array(		// MySQL does NOT allow to run this as delete!
 				'cal_user_type' => 'u',
 				'cal_user_id' => $old_user,
 				"cal_id IN (SELECT cal_id FROM $this->user_table other WHERE other.cal_id=cal_id AND other.cal_user_id=".(int)$new_user." AND cal_user_type='u')",
-			),__LINE__,__FILE__);
-			$ids = array();
-			while(($row = $this->db->row(true)))
+			),__LINE__,__FILE__,false,'','calendar') as $row)
 			{
 				$ids[] = $row['cal_id'];
 			}
@@ -1136,21 +1111,26 @@ ORDER BY cal_user_type, cal_usre_id
 				'cal_user_type' => 'u',
 				'cal_user_id' => $old_user,
 				'cal_id' => $ids,
-			),__LINE__,__FILE__);
+			),__LINE__,__FILE__,'calendar');
 			// now change participant in the rest to contain new user instead of old user
-			$this->db->update($this->user_table,array('cal_user_id' => $new_user),array('cal_user_type' => 'u','cal_user_id' => $old_user),__LINE__,__FILE__);
+			$this->db->update($this->user_table,array(
+				'cal_user_id' => $new_user,
+			),array(
+				'cal_user_type' => 'u',
+				'cal_user_id' => $old_user,
+			),__LINE__,__FILE__,'calendar');
 		}
 	}
 	
 	/**
 	 * Save actually User, who is working on the Calenar Data if there is no user set or the timestamp is "expired"
 	 *
-	 * @param array $event
+	 * @param array $event2update
 	 *
 	 * @return (0 (someone else modified the entry), true (saved) or false (could not save)))
 	 */
-	function save_edit_user($event2update) {
-	
+	function save_edit_user($event2update) 
+	{
 		$cal_id = (int) $event2update['id'];
 		//unset($event2update['id']);
 
@@ -1168,7 +1148,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$locktime = ($GLOBALS['egw_info']['server']['Lock_Time_Calender'] ? $GLOBALS['egw_info']['server']['Lock_Time_Calender'] : 1);
 			$lockborder=$event2update['cal_edit_time']-$locktime;
 			$where = array('cal_id' => $cal_id,'(cal_edit_user is NULL or cal_edit_time<'.$lockborder.')');
-			if (!$this->db->update($this->cal_table,$event2update,$where,__LINE__,__FILE__))
+			if (!$this->db->update($this->cal_table,$event2update,$where,__LINE__,__FILE__,'calendar'))
 			{
 				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning false");
 				return false;	// Error
@@ -1179,13 +1159,7 @@ ORDER BY cal_user_type, cal_usre_id
 				//error_log("### socal::write(".print_r($event,true).") where=".print_r($where,true)." returning 0 (nothing updated, eg. condition not met)");
 				return 0;	// someone else updated the modtime or deleted the entry
 			}
-			else  
-			{
-				return true;	
-			}
-			
+			return true;	
 		}
-		
-		
 	}
 }
