@@ -540,7 +540,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 			if (!$event['cal_id'] && !isset($event['cal_uid'])) $event['cal_uid'] = '';	// uid is NOT NULL!
 
-			$this->db->insert($this->cal_table,$event,false,__LINE__,__FILE__);
+			$this->db->insert($this->cal_table,$event,false,__LINE__,__FILE__,'calendar');
 			if (!($cal_id = $this->db->get_last_insert_id($this->cal_table,'cal_id')))
 			{
 				return false;
@@ -1085,7 +1085,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->db->delete($this->user_table,array(
 				'cal_user_type' => $user_type,
 				'cal_user_id'   => $user_id,
-			),__LINE__,__FILE__);
+			),__LINE__,__FILE__,'calendar');
 
 			// delete calendar entries without participants (can happen if the deleted user is the only participants, but not the owner)
 			foreach($this->db->select($this->cal_table,"DISTINCT $this->cal_table.cal_id",'cal_user_id IS NULL',__LINE__,__FILE__,
