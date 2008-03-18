@@ -16,6 +16,15 @@
  *
  * The new vfs stream wrapper uses a kind of fstab to mount different filesystems / stream wrapper types
  * together for eGW's virtual file system.
+ * 
+ * @ToDo extended ACL with inheritance and specific rights for users or groups
+ * 	Backends can implement them, in which case they get stored independent of the current mount-points.
+ *  If the backend does not implement them, they get stored by the VFS under the final URL of the backend,
+ *  to also allow mounts to change. The URL's to these extended attributes need to be renamed, when the
+ *  file or an underlaying directory get's renamed. That's the task of the backend, if it chooses to
+ *  implement extended ACL itself.
+ * @ToDo storage for WebDAV properties
+ * @ToDo implement the necessary function of WebDAV locks
  *  
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
