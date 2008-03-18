@@ -9,7 +9,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-error_log(__FILE__);
+
 class filemanager_ui
 {
 	/**
