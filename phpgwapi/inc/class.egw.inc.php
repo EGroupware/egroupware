@@ -131,8 +131,7 @@
 			$this->common         =& CreateObject('phpgwapi.common');
 			$this->hooks          =& CreateObject('phpgwapi.hooks');
 			$this->auth           =& CreateObject('phpgwapi.auth');
-			include_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.accounts.inc.php');
-			$this->accounts       = accounts::getInstance();
+			$this->accounts       =& CreateObject('phpgwapi.accounts');
 			$this->acl            =& CreateObject('phpgwapi.acl');
 			/* Do not create the session object if called by the sessions class.  This way
 			 * we ensure the correct db based on the user domain.
