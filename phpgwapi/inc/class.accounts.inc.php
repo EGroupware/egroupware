@@ -124,28 +124,6 @@ class accounts extends accounts_backend
 		'start' => 'start with',
 		'exact' => 'exact',
 	);
-    
-	/**
-	 * the instance of the accounts class
-	 *
-	 * @var accounts
-	 */
-	static $_instance = NULL;
- 
-	/**
-	 * the singleton pattern
-	 *
-	 * @return accounts
-	 */
-    static function getInstance()
-    {
-        if (self::$_instance === NULL) {
-            self::$_instance = new accounts;
-        }
- 
-        return self::$_instance;
-    }
-	
 	/**
 	 * Constructor
 	 * 
@@ -158,18 +136,6 @@ class accounts extends accounts_backend
 		$this->accounts_backend();	// call constructor of extended class
 	}
 
-	/**
-	 * set the accountId used by this class
-	 *
-	 * @param int $accountId
-	 */
-    function setAccountId($accountId)
-    {
-        if($accountId && is_numeric($accountId)) {
-            $this->account_id = (int)$accountId;
-        }
-    }
-	
 	/**
 	 * Searches / lists accounts: users and/or groups
 	 *
