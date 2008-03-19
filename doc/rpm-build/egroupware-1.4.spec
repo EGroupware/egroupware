@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
 %define egwversion 1.4
-%define packaging 002
+%define packaging 003
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -91,7 +91,6 @@ Buildarch: noarch
 AutoReqProv: no
                                                                                                                              
 Vendor: eGroupWare
-#Packager: Lars Kneschke <l.kneschke@metaways.de>
 Packager: Ralf Becker <RalfBecker@outdoor-training.de>
 
 %description
@@ -715,6 +714,9 @@ ln -s sitemgr/sitemgr-link
 
 
 %changelog
+* Mon Mar 19 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.003
+- eGroupWare 1.4.003 security & maintainace release
+
 * Mon Sep 24 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.002
 - eGroupWare 1.4.002 bugfix & maintainace release
 
