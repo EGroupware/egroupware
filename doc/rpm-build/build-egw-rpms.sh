@@ -143,16 +143,16 @@ find $NOSVNDIR -name .svn | xargs rm -rf
 
 cd $NOSVNDIR
 echo -n "building tar.gz ... "								>> $LOGFILE 2>&1
-tar czf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING.tar.gz $EXCLUDE_CONTRIB egroupware  	2>&1 | tee -a $LOGFILE
+tar --owner=root --group=root -czf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING.tar.gz $EXCLUDE_CONTRIB egroupware  	2>&1 | tee -a $LOGFILE
 for CONTRIBMODULE in $EXTRAPACKAGES; do
-	tar czf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING.tar.gz egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
+	tar --owner=root --group=root -czf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING.tar.gz egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
 done
 echo "done"										>> $LOGFILE 2>&1
 
 echo -n "building tar.bz2 ... "						     		>> $LOGFILE 2>&1
-tar cjf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING.tar.bz2 $EXCLUDE_CONTRIB egroupware	>> $LOGFILE 2>&1
+tar --owner=root --group=root -cjf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING.tar.bz2 $EXCLUDE_CONTRIB egroupware	>> $LOGFILE 2>&1
 for CONTRIBMODULE in $EXTRAPACKAGES; do
-	tar cjf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING.tar.bz2 egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
+	tar --owner=root --group=root -cjf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING.tar.bz2 egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
 done
 echo "done"										>> $LOGFILE 2>&1
 
