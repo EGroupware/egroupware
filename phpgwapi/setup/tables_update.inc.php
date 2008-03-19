@@ -813,3 +813,10 @@
 		// 1.4.002 bugfix/maintainance release
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.4.002';
 	}
+
+	$test[] = '1.4.002';
+	function phpgwapi_upgrade1_4_002()
+	{
+		// 1.4.003 security+bugfix release
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.4.003';
+	}
