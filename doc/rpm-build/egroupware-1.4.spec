@@ -32,6 +32,26 @@
 	%define extra_requires httpd 
 	%define cron crontabs
 %endif
+%if 0%{?rhel_version}
+	%define httpdroot /var/www/html
+	%define httpdconfd /etc/httpd/conf.d
+	%define osversion %{?rhel_version}
+	%define source5 egroupware_fedora.tar.bz2
+	%define distribution Red Head %{?rhel_version}
+	%define php php
+	%define extra_requires httpd
+	%define cron crontabs
+%endif
+%if 0%{?centos_version}
+	%define httpdroot /var/www/html
+	%define httpdconfd /etc/httpd/conf.d
+	%define osversion %{?centos_version}
+	%define source5 egroupware_fedora.tar.bz2
+	%define distribution CentOS %{?centos_version}
+	%define php php
+	%define extra_requires httpd
+	%define cron crontabs
+%endif
 
 %define addressbook addressbook
 %define bookmarks bookmarks
@@ -75,10 +95,10 @@ License: GPL/LGPL
 URL: http://www.egroupware.org/
 Source0: %{packagename}-%{egwversion}.%{packaging}.tar.bz2
 Source1: %{packagename}-egw-pear-%{egwversion}.%{packaging}.tar.bz2
-Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
+#Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
 Source4: %{packagename}-gallery-%{egwversion}.%{packaging}.tar.bz2
 Source5: %{?source5}
-Patch0: manageheader.php.patch
+#Patch0: manageheader.php.patch
 Patch1: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
 Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
@@ -115,7 +135,7 @@ Conflicts: %{packagename}
 %description core
 This package provides the eGroupWare contrib applications.
 %post core
-%if 0%{?fedora_version}
+%if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon "user_u:object_r:httpd_sys_content_t" /var/lib/egroupware -Rc
 %endif
 
@@ -428,11 +448,11 @@ This is the %{wiki} app for eGroupWare.
 %prep
 %setup0 -c -n %{egwdirname}
 %setup1 -T -D -a 1 -n %{egwdirname}
-%setup2 -T -D -a 2 -n %{egwdirname}
+#%setup2 -T -D -a 2 -n %{egwdirname}
 #%setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
-%patch0 -p 0
+#%patch0 -p 0
 %patch1 -p 0
 
 %build
@@ -463,7 +483,7 @@ ln -s sitemgr/sitemgr-link
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %post
-%if 0%{?fedora_version}
+%if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon "user_u:object_r:httpd_sys_content_t" /var/lib/egroupware -Rc
 %endif
 %postun
@@ -533,7 +553,7 @@ ln -s sitemgr/sitemgr-link
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/sessions
 	%config %attr(0640,wwwrun,www) /var/lib/egroupware/header.inc.php
 %endif
-%if 0%{?fedora_version}
+%if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
@@ -585,7 +605,7 @@ ln -s sitemgr/sitemgr-link
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/sessions
 	%config %attr(0640,wwwrun,www) /var/lib/egroupware/header.inc.php
 %endif
-%if 0%{?fedora_version}
+%if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
@@ -728,3 +748,4 @@ ln -s sitemgr/sitemgr-link
 
 * Mon Apr 30 2007 Lars Kneschke <l.kneschke@metaways.de> 1.3.019
 - eGroupWare 1.4 Beta 5
+
