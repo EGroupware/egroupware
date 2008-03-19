@@ -678,9 +678,9 @@ class accounts_backend
 				$order = $propertyMap[$param['order']] ? $propertyMap[$param['order']] : 'uid';
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid', $order));
 				$fullSet = array();
-				foreach (ldap_get_entries($this->ds, $sri) as $entry) 
+				foreach (ldap_get_entries($this->ds, $sri) as $key => $entry) 
 				{
-					$fullSet[$entry['uid'][0]] = $entry[$order][0];
+					if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
 				}
 
 				if (is_numeric($param['type'])) // return only group-members
@@ -698,8 +698,8 @@ class accounts_backend
 				
 				$sortFn = $param['sort'] == 'DESC' ? 'arsort' : 'asort';
 				$sortFn($fullSet);	
-				$relevantAccounts = array_slice(array_keys($fullSet), $start, $offset);
-				
+				$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
+
 				$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";	
 				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				
