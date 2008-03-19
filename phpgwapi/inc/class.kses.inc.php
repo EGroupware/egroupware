@@ -513,13 +513,12 @@
 		###############################################################################
 		function _bad_protocol_once($string)
 		{
-			return preg_replace(
-				'/^((&[^;]*;|[\sA-Za-z0-9])*)'.
-				'(:|&#58;|&#[Xx]3[Aa];)\s*/e',
-				'\$this->_bad_protocol_once2("\\1")',
-				$string
-			);
-			return $string;
+			$string2 = preg_split('/:|&#58;|&#x3a;/i', $string, 2);
+			if(isset($string2[1]) && !preg_match('%/\?%',$string2[0]))
+			{
+				return $this->_bad_protocol_once2($string2[0]).trim($string2[1]);
+			}
+			return '';
 		} # function _bad_protocol_once
 
 
