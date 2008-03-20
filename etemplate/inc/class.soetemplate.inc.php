@@ -1,36 +1,33 @@
 <?php
 /**
-	* eGroupWare EditableTemplates - Storage Objects
-	*
-	* @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-	* @package etemplate
-	* @link http://www.egroupware.org
-	* @author Ralf Becker <RalfBecker@outdoor-training.de>
-	* @version $Id$
-	*/
+ * eGroupWare EditableTemplates - Storage Objects
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @version $Id$
+ */
 
 /**
-	* Storage Objects: Everything to store and retrive and eTemplate.
-	*
-	* eTemplates are stored in the db in table 'phpgw_etemplate' and gets distributed
-	* through the file 'etemplates.inc.php' in the setup dir of each app. That file gets
-	* automatically imported in the db, whenever you show a eTemplate of the app. For
-	* performace reasons the timestamp of the file is stored in the db, so 'new'
-	* eTemplates need to have a newer file. The distribution-file is generated with the
-	* function dump, usually by pressing a button in the editor.
-	* writeLangFile writes an lang-file with all Labels, incorporating an existing one.
-	* Beside a name eTemplates use the following keys to find the most suitable template
-	* for an user (in order of precedence):
-	*  1) User-/Group-Id (not yet implemented)
-	*  2) preferd languages of the user (templates for all langs have $lang='')
-	*  3) selected template: verdilak, ... (the default is called '' in the db, not default)
-	*  4) a version-number of the form, eg: '0.9.13.001' (filled up with 0 same size)
-	*
-	* @package etemplate
-	* @subpackage api
-	* @author RalfBecker-AT-outdoor-training.de
-	* @license GPL
-	*/
+ * Storage Objects: Everything to store and retrive and eTemplate.
+ *
+ * eTemplates are stored in the db in table 'phpgw_etemplate' and gets distributed
+ * through the file 'etemplates.inc.php' in the setup dir of each app. That file gets
+ * automatically imported in the db, whenever you show a eTemplate of the app. For
+ * performace reasons the timestamp of the file is stored in the db, so 'new'
+ * eTemplates need to have a newer file. The distribution-file is generated with the
+ * function dump, usually by pressing a button in the editor.
+ * writeLangFile writes an lang-file with all Labels, incorporating an existing one.
+ * Beside a name eTemplates use the following keys to find the most suitable template
+ * for an user (in order of precedence):
+ *  1) User-/Group-Id (not yet implemented)
+ *  2) preferd languages of the user (templates for all langs have $lang='')
+ *  3) selected template: verdilak, ... (the default is called '' in the db, not default)
+ *  4) a version-number of the form, eg: '0.9.13.001' (filled up with 0 same size)
+ */
 class soetemplate
 {
 	var $debug;		// =1 show some debug-messages, = 'app.name' show messages only for eTemplate 'app.name'

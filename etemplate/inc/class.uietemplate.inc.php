@@ -81,6 +81,13 @@ class etemplate extends boetemplate
 	* @var boolean
 	*/
 	var $sitemgr=false;
+	/**
+	 * Javascript to be called, when a widget get's double-clicked (used only by the editor)
+	 * A '%p' gets replace with the colon ':' separated template-name, -version and path of the clicked widget.
+	 *
+	 * @var string
+	 */
+	var $onclick_handler;
 
 	/**
 	* constructor of etemplate class, reads an eTemplate if $name is given
@@ -955,7 +962,7 @@ class etemplate extends boetemplate
 	{
 		if ($this->debug && (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type']))
 		{
-			echo "<p>etemplate.show_cell($this->name,name='${cell['name']}',type='${cell['type']}',cname='$cname')</p>\n";
+			echo "<p>etemplate.show_cell($this->name,name='${cell['name']}',type='${cell['type']}',cname='$cname',...,'$path')</p>\n";
 		}
 		list($span) = explode(',',$cell['span']);	// evtl. overriten later for type template
 
@@ -1742,7 +1749,7 @@ class etemplate extends boetemplate
 		}
 		// generate an extra div, if we have an onclick handler and NO children or it's an extension
 		//echo "<p>$this->name($this->onclick_handler:$this->no_onclick:$this->onclick_proxy): $cell[type]/$cell[name]</p>\n";
-		if ($this->onclick_handler && !isset($this->widgets_with_children[$cell['type']]))
+		if ($this->onclick_handler && !isset(self::$widgets_with_children[$cell['type']]))
 		{
 			$handler = str_replace('%p',$this->no_onclick ? $this->onclick_proxy : $this->name.':'.$this->version.':'.$path,
 				$this->onclick_handler);

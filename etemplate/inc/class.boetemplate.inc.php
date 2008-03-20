@@ -1,15 +1,15 @@
 <?php
 /**
-	* eGroupWare EditableTemplates - Business Objects
-	*
-	* @link http://www.egroupware.org
-	* @author Ralf Becker <RalfBecker@outdoor-training.de>
-	* @copyright 2002-8 by RalfBecker@outdoor-training.de
-	* @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-	* @package etemplate
-	* @subpackage api
-	* @version $Id$
-	*/
+ * eGroupWare EditableTemplates - Business Objects
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @version $Id$
+ */
 
 /**
 	* Business Object for eTemplates, extending the Storage Object
