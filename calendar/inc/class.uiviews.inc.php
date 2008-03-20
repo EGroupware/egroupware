@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -33,6 +33,7 @@ class uiviews extends uical
 		'day'   => True,
 		'day4'  => True,
 		'week'  => True,
+		'weekN' => True,
 		'month' => True,
 		'planner' => True,
 	);
@@ -284,6 +285,18 @@ class uiviews extends uical
 		}
 		return $content;
 	}
+	
+	/**
+	 * Displays a multiple week-view
+	 *
+	 * @param boolean $home=false if true return content suitable for home-page
+	 */
+	function &weekN($home=false)
+	{
+		if (($num = (int)$this->cal_prefs['multiple_weeks']) < 2) $num = 3;	// default 3 weeks
+
+		return $this->month($num,$home);
+	}
 
 	/**
 	 * Displays the monthview or a multiple week-view
@@ -299,8 +312,8 @@ class uiviews extends uical
 
 		if ($weeks)
 		{
-			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day=1);
-			$this->last = $this->first + $weeks * 7 * DAY_s - 1;
+			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
+			$this->last = strtotime("+$weeks weeks",$this->first) - 1;
 		}
 		else
 		{
@@ -317,12 +330,12 @@ class uiviews extends uical
 
 		$content = '';
 		// we add DAY_s/2 to $this->first (using 12h), to deal with daylight saving changes
-		for ($week_start = $this->first+DAY_s/2; $week_start < $this->last; $week_start += WEEK_s)
+		for ($week_start = $this->first; $week_start < $this->last; $week_start = strtotime("+1 week",$week_start))
 		{
 			$week = array();
 			for ($i = 0; $i < 7; ++$i)
 			{
-				$day_ymd = $this->bo->date2string($week_start+$i*DAY_s);
+				$day_ymd = $this->bo->date2string($i ? strtotime("+$i days",$week_start) : $week_start);
 				$week[$day_ymd] = array_shift($days);
 			}
 			$week_view = array(
@@ -332,7 +345,7 @@ class uiviews extends uical
 			$title = lang('Wk').' '.adodb_date('W',$week_start);
 			$title = $this->html->a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
 
-			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
+			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
 		if (!$home)
 		{
@@ -414,7 +427,7 @@ class uiviews extends uical
 		if ($days == 4)		// next 4 days view
 		{
 			$wd_start = $this->first = $this->bo->date2ts($this->date);
-			$this->last = $this->first + $days * DAY_s - 1;
+			$this->last = strtotime("+$days days",$this->first) - 1;
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
 		}
 		else
@@ -425,14 +438,14 @@ class uiviews extends uical
 				switch($this->cal_prefs['weekdaystarts'])
 				{
 					case 'Saturday':
-						$this->first += DAY_s;
-						// fall through
+						$this->first = strtotime("+2 days",$this->first);
+						break;
 					case 'Sunday':
-						$this->first += DAY_s;
+						$this->first = strtotime("+1 day",$this->first);
 						break;
 				}
 			}
-			$this->last = $this->first + $days * DAY_s - 1;
+			$this->last = strtotime("+$days days",$this->first) - 1; 
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 
@@ -1155,6 +1168,7 @@ class uiviews extends uical
 
 		$tpl->set_var(array(
 			// event-content, some of it displays only if it really has content or is needed
+			'owner' => $GLOBALS['egw']->common->grab_owner_name($event['owner']),
 			'header_icons' => $small ? '' : implode("",$icons),
 			'body_icons' => $small ? implode("\n",$icons) : '',
 			'icons' => implode('',$icons),
