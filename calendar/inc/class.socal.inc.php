@@ -371,17 +371,16 @@ class socal
 		foreach($rs as $row)
 		{
 			$ids[] = $id = $row['cal_id'];
-			if ($row['recur_date'])
+			if ($row['cal_recur_date'])
 			{
-				$id .= '-'.$row['recur_date'];
-				$recur_dates[] = $row['recur_date'];
+				$id .= '-'.$row['cal_recur_date'];
+				$recur_dates[] = $row['cal_recur_date'];
 			}
 			$row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
 			$events[$id] = egw_db::strip_array_keys($row,'cal_');
 		}
-
 		if (count($events))
 		{
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
