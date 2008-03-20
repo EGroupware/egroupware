@@ -282,8 +282,10 @@
 			}
 			$query['search'] = $value;
 
+			$result_list = array();
+			$readonlys = array();
 			if(is_object($this->bo)) {
-				$count = $this->bo->$method($query, $result_list);
+				$count = $this->bo->$method($query, $result_list, $readonlys);
 			}
 			if(is_array($count)) {
 				$count = count($result_list);
@@ -309,7 +311,7 @@
 
 					$data = ($query['nextmatch_template']) ? array(1=>$row) : $row;
 					$widget =& CreateObject('etemplate.etemplate', $query['template']);
-					$html = addslashes(str_replace("\n", '', $widget->show($data)));
+					$html = addslashes(str_replace("\n", '', $widget->show($data, '', $readonlys)));
 					$row['title'] = htmlspecialchars(addslashes($row['title']));
 					$response->addScript("add_ajax_result('$result_id', '${row[$query['id_field']]}', '" . $row['title'] . "', '$html');");
 					$count++;
