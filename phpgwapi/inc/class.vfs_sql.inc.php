@@ -1980,7 +1980,11 @@
 							// if the modification time get's set, we also set it in the filesystem, as 
 							// the next reload reset it again to the modification time of the filesystem
 							case 'modified':
-								touch($p->real_full_path,$data['attributes'][$attribute]);
+								// we only set it if the file already exists, as otherwise renames of directories fail
+								if (file_exists($p->real_full_path) && $data['attributes'][$attribute])
+								{
+									touch($p->real_full_path,$data['attributes'][$attribute]);
+								}
 								break;
 						}
 					}
