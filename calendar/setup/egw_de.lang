@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	de	%1 %2 im %3
 %1 records imported	calendar	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, sie können zurück gehen und Test Import ausschalten)
+%1 weeks	calendar	de	%1 Wochen
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	de	<b>Bitte beachten</b>: Der Kalender verwendet die Feiertages Ihres Landes, welches auf %1 eingestellt ist. Das können Sie in Ihren %2 ändern.<br />Feiertage werden %3 automatisch von %4 installiert, was in %5 änderbar ist.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
@@ -152,6 +153,7 @@ holidays	calendar	de	Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
 how many minutes should each interval last?	calendar	de	Wie viele Minute soll jedes Interval dauern?
+how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
 ical export	calendar	de	iCal Export
@@ -185,6 +187,7 @@ monthly	calendar	de	Monatlich
 monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 monthview	calendar	de	Monatsansicht
+multiple week view	calendar	de	Mehrwochenansicht
 new search with the above parameters	calendar	de	neue Suche mit den obigen Parametern
 no events found	calendar	de	Keine Termine gefunden
 no filter	calendar	de	Kein Filter
@@ -318,6 +321,7 @@ weekday starts on	calendar	de	Arbeitswoche beginnt am
 weekdays	calendar	de	Wochentage
 weekdays to use in search	calendar	de	Wochentage für die Suche
 weekly	calendar	de	Wöchentlich
+weeks in multiple week view	calendar	de	Wochen in der Mehrwochenansicht
 weekview	calendar	de	Wochenansicht
 weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende

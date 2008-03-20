@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	en	%1 %2 in %3
 %1 records imported	calendar	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
+%1 weeks	calendar	en	%1 weeks
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	en	<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can changed it in %5.
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
 accept or reject an invitation	calendar	en	Accept or reject an invitation
@@ -152,6 +153,7 @@ holidays	calendar	en	Holidays
 hours	calendar	en	hours
 how far to search (from startdate)	calendar	en	how far to search (from startdate)
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
+how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / rfc2445
 ical export	calendar	en	iCal Export
@@ -185,6 +187,7 @@ monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly (by date)
 monthly (by day)	calendar	en	Monthly (by day)
 monthview	calendar	en	Monthview
+multiple week view	calendar	en	Multiple week view
 new search with the above parameters	calendar	en	new search with the above parameters
 no events found	calendar	en	No events found
 no filter	calendar	en	No filter
@@ -260,7 +263,6 @@ setting lock time calender	admin	en	Setting Datalock Time for Calendar (default 
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	en	Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002" target="_blank">https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002" target="_blank">https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	en	Should the planner display an empty row for users or categories without any appointment.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	en	Should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?
 show birthdays from addressbook	admin	en	Show birthdays from addressbook
@@ -319,6 +321,7 @@ weekday starts on	calendar	en	weekday starts on
 weekdays	calendar	en	Weekdays
 weekdays to use in search	calendar	en	Weekdays to use in search
 weekly	calendar	en	Weekly
+weeks in multiple week view	calendar	en	Weeks in multiple week view
 weekview	calendar	en	Weekview
 weekview with weekend	calendar	en	Weekview with weekend
 weekview without weekend	calendar	en	Weekview without weekend

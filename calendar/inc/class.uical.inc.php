@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -586,6 +586,11 @@ class uical
 				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] == 5,
 			),
 			array(
+				'text' => lang('Multiple week view'),
+				'value' => 'menuaction=calendar.uiviews.weekN',
+				'selected' => $this->view == 'weekN',
+			),
+			array(
 				'text' => lang('monthview'),
 				'value' => 'menuaction=calendar.uiviews.month',
 				'selected' => $this->view == 'month',
@@ -640,6 +645,10 @@ class uical
 					case 'month': $link_vars[$this->view.'_days'] = 0; break;
 				}
 				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the planner
+			}
+			elseif(substr($this->view,0,4) == 'week' && $view == 'week')
+			{
+				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the N-week-view
 			}
 			elseif ($view == 'day' && $this->view == 'day4')
 			{

@@ -1,19 +1,16 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - Calendar Preferences                                        *
-	* http://www.egroupware.org                                                *
-	* Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
-	*          http://www.radix.net/~cknudsen                                  *
-	* Modified by Mark Peters <skeeter@phpgroupware.org>                       *
-	* Modified by Ralf Becker <ralfbecker@outdoor-training.de>                 *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
-
-	/* $Id$ */
+/**
+ * eGroupWare - Calendar Preferences
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Mark Peters <skeeter@phpgroupware.org> 
+ *	Originally based on Webcalendar by Craig Knudsen <cknudsen@radix.net>
+ *	http://www.radix.net/~cknudsen
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 	$bocal =& CreateObject('calendar.bocal');
 	$bocal->check_set_default_prefs();
@@ -22,6 +19,7 @@
 		'day'          => lang('Dayview'),
 		'day4'         => lang('Four days view'),
 		'week'         => lang('Weekview'),
+		'weekN'        => lang('Multiple week view'),
 		'month'        => lang('Monthview'),
 		'planner_cat'  => lang('Planner by category'),
 		'planner_user' => lang('Planner by user'),
@@ -94,6 +92,11 @@
 	{
 		$times[$i] = $GLOBALS['egw']->common->formattime($i,'00');
 	}
+	
+	for ($i = 2; $i <= 9; ++$i)
+	{
+		$muliple_weeks[$i.' weeks'] = lang('%1 weeks',$i);
+	}
 
 	$intervals = array(
 		5	=> '5',
@@ -141,6 +144,15 @@
 			'name'   => 'days_in_weekview',
 			'values' => $week_view,
 			'help'   => 'Do you want a weekview with or without weekend?',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'multiple_weeks' => array(
+			'type'   => 'select',
+			'label'  => 'Weeks in multiple week view',
+			'name'   => 'multiple_weeks',
+			'values' => $muliple_weeks,
+			'help'   => 'How many weeks should the multiple week view show?',
 			'xmlrpc' => True,
 			'admin'  => False
 		),
@@ -228,7 +240,7 @@
 			'label'  => 'Show empty rows in Planner',
 			'name'   => 'planner_show_empty_rows',
 			'values' => array(
-				'' => lang('no'),
+				0 => lang('no'),
 				'user' => lang('Planner by user'),
 				'cat'  => lang('Planner by category'),
 				'both' => lang('All'),
