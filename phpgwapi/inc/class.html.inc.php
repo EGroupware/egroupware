@@ -650,7 +650,7 @@ class html
 			return self::input($name,$label,$image != '' ? 'image' : $buttontype,$options.$image);
 		}
 		return '<button type="'.$buttontype.'" name="'.$name.'" value="'.$label.'" '.$options.' />'.
-			($image != '' ? /*self::image($app,$image,$label,$options)*/"<img$image self::$prefered_img_title=\"$label\"> " : '').
+			($image != '' ? /*self::image($app,$image,$label,$options)*/'<img'.$image.' '.self::$prefered_img_title.'="'.$label.'"> ' : '').
 			($image == '' || $accesskey ? $label_u : '').'</button>';
 	}
 
@@ -911,7 +911,7 @@ class html
 		}
 		if ($title)
 		{
-			$options .= " self::$prefered_img_title=\"".self::htmlspecialchars($title).'"';
+			$options .= ' '.self::$prefered_img_title.'="'.self::htmlspecialchars($title).'"';
 		}
 
 		// This block makes pngfix.js useless, adding a check on disable_pngfix to have pngfix.js do its thing
