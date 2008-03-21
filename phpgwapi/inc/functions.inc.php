@@ -66,27 +66,23 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUE
 
 	if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 	{
-		if (is_array($_SESSION['egw_info_cache']) && is_array($_SESSION['egw_included_files']) && $_SESSION['egw_object_cache'])
+		if (is_array($_SESSION['egw_info_cache']) && $_SESSION['egw_object_cache'])
 		{
-			// marking the context as restored from the session, used by session->verify to not read the date from the db again
+			// marking the context as restored from the session, used by session->verify to not read the data from the db again
 			$GLOBALS['egw_info']['flags']['restored_from_session'] = true;
 
 			// restoring the egw_info-array
-			$flags = $GLOBALS['egw_info']['flags'];
-			$GLOBALS['egw_info'] = $_SESSION['egw_info_cache'];
-			$GLOBALS['egw_info']['flags'] = $flags;
-			unset($flags);
+			$GLOBALS['egw_info'] = array_merge($_SESSION['egw_info_cache'],array('flags' => $GLOBALS['egw_info']['flags']));
 
-			// including the necessary class-definitions
-			foreach($_SESSION['egw_included_files'] as $file)
+			// include required class-definitions
+			if (is_array($_SESSION['egw_required_files']))	// all classes, which can not be autoloaded
 			{
-				 if (basename($file) == 'class.config.inc.php') continue;
-				//echo "<p>about to include $file</p>\n";
-				include_once($file);
-				if (basename($file) == 'class.egw_framework.inc.php') break;	// the rest is not needed and makes only problems
+				foreach($_SESSION['egw_required_files'] as $file)
+				{
+					require_once($file);
+				}
 			}
 			$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
-			include_once(EGW_API_INC.'/class.config.inc.php');
 
 			if (is_object($GLOBALS['egw']))
 			{
@@ -100,7 +96,7 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUE
 			$GLOBALS['egw_info'] = array('flags'=>$GLOBALS['egw_info']['flags']);
 			unset($GLOBALS['egw_info']['flags']['restored_from_session']);
 			unset($_SESSION['egw_info_cache']);
-			unset($_SESSION['egw_included_files']);
+			unset($_SESSION['egw_required_files']);
 			unset($_SESSION['egw_object_cache']);
 		}
 		//echo "<p>could not restore egw_info and the egw-object!!!</p>\n";
@@ -108,7 +104,7 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUE
 	else	// destroy the session-cache if called by login or logout
 	{
 		unset($_SESSION['egw_info_cache']);
-		unset($_SESSION['egw_included_files']);
+		unset($_SESSION['egw_required_files']);
 		unset($_SESSION['egw_object_cache']);
 	}
 }
@@ -177,7 +173,7 @@ else
 print_debug('domain',@$GLOBALS['egw_info']['user']['domain'],'api');
 
 // the egw-object instanciates all sub-classes (eg. $GLOBALS['egw']->db) and the egw_info array
-$GLOBALS['egw'] =& CreateObject('phpgwapi.egw',array_keys($GLOBALS['egw_domain']));
+$GLOBALS['egw'] = new egw(array_keys($GLOBALS['egw_domain']));
 
 if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 {
@@ -194,18 +190,5 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $GLOBAL
 	$_SESSION['egw_info_cache'] = $GLOBALS['egw_info'];
 	unset($_SESSION['egw_info_cache']['flags']);	// dont save the flags, they change on each request
 
-	// exclude 1: caller, 2: the header.inc.php, 3: phpgwapi/setup/setup.inc.php, 4: phpgwapi/inc/functions.inc.php (this file) 
-	$_SESSION['egw_included_files'] = array();
-	foreach(array_slice(get_included_files(),4) as $file)
-	{
-		switch(basename($file))
-		{
-			case 'header.inc.php':	// needs EGW_TEMPLATE_DIR and is included anyway by common::egw_header()
-			case 'functions.inc.php': // not needed/wanted at all
-				break;
-			default:
-				$_SESSION['egw_included_files'][] = $file;
-		}
-	}
 	$_SESSION['egw_object_cache'] = serialize($GLOBALS['egw']);
 }

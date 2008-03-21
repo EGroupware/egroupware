@@ -312,36 +312,6 @@
 			exit;
 		}
 
-		function egw_final()
-		{
-			if (!defined('EGW_FINAL'))
-			{
-				define('EGW_FINAL',True);
-
-				if (is_object($GLOBALS['egw']->accounts))
-				{
-					$GLOBALS['egw']->accounts->save_session_cache();
-				}
-				if (is_object($GLOBALS['egw']->link))
-				{
-					$GLOBALS['egw']->link->save_session_cache();
-				}
-				// call the asyncservice check_run function if it is not explicitly set to cron-only
-				//
-				if (!$GLOBALS['egw_info']['server']['asyncservice'])	// is default
-				{
-					ExecMethod('phpgwapi.asyncservice.check_run','fallback');
-				}
-				/* Clean up mcrypt */
-				if (@is_object($GLOBALS['egw']->crypto))
-				{
-					$GLOBALS['egw']->crypto->cleanup();
-					unset($GLOBALS['egw']->crypto);
-				}
-				$GLOBALS['egw']->db->disconnect();
-			}
-		}
-
 		/**
 		 * return a random string of size $size
 		 *

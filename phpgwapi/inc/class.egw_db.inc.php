@@ -255,7 +255,6 @@ class egw_db
 		{
 			$this->Type = $GLOBALS['egw_info']['server']['db_type'];
 		}
-
 		if (!$this->Link_ID)
 		{
 			foreach(array('Host','Database','User','Password') as $name)
@@ -368,6 +367,7 @@ class egw_db
 					ini_set('mssql.textlimit',2147483647);
 					ini_set('mssql.sizelimit',2147483647);
 				}
+				$new_connection = true;
 			}
 			else
 			{
@@ -377,8 +377,26 @@ class egw_db
 		// next ADOdb version: if (!$this->Link_ID->isConnected()) $this->Link_ID->Connect();
 		if (!$this->Link_ID->_connectionID) $this->Link_ID->Connect();
 
+		if ($new_connection && $GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore')
+		{
+			foreach(get_included_files() as $file)
+			{
+				if (strpos($file,'adodb') !== false && !in_array($file,(array)$_SESSION['egw_required_files']))
+				{
+					$_SESSION['egw_required_files'][] = $file;
+				}
+			}
+		}
 		//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
 		return $this->Link_ID;
+	}
+	
+	/**
+	 * Magic method to re-connect with the database, if the object get's restored from the session
+	 */
+	function __wakeup()
+	{
+		$this->connect();	// we need to re-connect
 	}
 
 	/**

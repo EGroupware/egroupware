@@ -58,7 +58,7 @@ class egw_framework
 
 		if (!is_object($GLOBALS['egw']->framework))
 		{
-			$GLOBALS['egw']->framework =& $this;
+			$GLOBALS['egw']->framework = $this;
 		}
 	}
 	
@@ -387,25 +387,20 @@ class egw_framework
 			}
 			$options[$action] = $label;
 		}
-		if (!is_object($GLOBALS['egw']->html))
-		{
-			$GLOBALS['egw']->html =& new html();
-		}
-		return $GLOBALS['egw']->html->select('quick_add','',$options,true,$options=' onchange="eval(this.value); this.value=0; return false;"');		
+		return html::select('quick_add','',$options,true,$options=' onchange="eval(this.value); this.value=0; return false;"');		
 	}
 	
-	function _get_notification_bell() {
-		if (!is_object($GLOBALS['egw']->html))
-		{
-			$GLOBALS['egw']->html =& new html();
-		}
-		return $GLOBALS['egw']->html->div(	$GLOBALS['egw']->html->a_href(	$GLOBALS['egw']->html->image('notifications','notificationbell',lang('notifications')),
-																					'javascript: notificationwindow_display();'
-																					),
-													'id="notificationbell"', // options
-													'', // class
-													'display: none' //style
-													);	
+	function _get_notification_bell() 
+	{
+		return html::div(
+			html::a_href(
+				html::image('notifications','notificationbell',lang('notifications')),
+				'javascript: notificationwindow_display();'
+			),
+			'id="notificationbell"', // options
+			'', // class
+			'display: none' //style
+		);	
 	}
 	
 
@@ -597,11 +592,6 @@ class egw_framework
 	{
 		$java_script = '';
 		
-		if(!@is_object($GLOBALS['egw']->js))
-		{
-			$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-		}
-		
 		// always include javascript helper functions
 		$GLOBALS['egw']->js->validate_file('jsapi','jsapi');
 
@@ -715,5 +705,3 @@ if (!function_exists('display_sidebox'))
 		$GLOBALS['egw']->framework->sidebox($appname,$menu_title,$file);
 	}
  }
-
-

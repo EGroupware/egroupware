@@ -90,10 +90,6 @@ class accounts_sql
 		{
 			$this->db = $GLOBALS['egw']->db;
 		}
-		if (!is_object($GLOBALS['egw']->acl))
-		{
-			$GLOBALS['egw']->acl =& CreateObject('phpgwapi.acl');
-		}
 	}
 
 	/**
@@ -162,10 +158,6 @@ class accounts_sql
 		// encrypt password if given or unset it if not
 		if ($data['account_passwd'])
 		{
-			if (!is_object($GLOBALS['egw']->auth))
-			{
-				$GLOBALS['egw']->auth =& CreateObject('phpgwapi.auth');
-			}
 			// if password it's not already entcrypted, do so now
 			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']) && 
 				!preg_match('/^[0-9a-f]{32}$/',$data['account_passwd']))	// md5 hash
@@ -222,10 +214,6 @@ class accounts_sql
 		}
 		if ($contact_id)
 		{
-			if (!is_object($GLOBALS['egw']->contacts))
-			{
-				$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
-			}
 			$GLOBALS['egw']->contacts->delete($contact_id,false);	// false = allow to delete accounts (!)
 		}
 		return true;
@@ -332,10 +320,6 @@ class accounts_sql
 	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='')
 	{
 		//echo "<p>accounts_sql($_type,$start,$sort,$order,$query,$offset,$query_type)</p>\n";
-		if (!is_object($GLOBALS['egw']->contacts))
-		{
-			$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
-		}
 		static $order2contact = array(
 			'account_firstname' => 'n_given',
 			'account_lastname'  => 'n_family',

@@ -686,22 +686,32 @@
 		if (class_exists($classname))
 		{
 			$args = func_get_args();
-			if(count($args) == 1)
+			switch(count($args))
 			{
-				$obj =& new $classname;
-			}
-			else
-			{
-				$code = '$obj =& new ' . $classname . '(';
-				foreach($args as $n => $arg)
-				{
-					if ($n)
+				case 1:
+					$obj =& new $classname;
+					break;
+				case 2:
+					$obj =& new $classname($args[1]);
+					break;
+				case 3:
+					$obj =& new $classname($args[1],$args[2]);
+					break;
+				case 4:
+					$obj =& new $classname($args[1],$args[2],$args[3]);
+					break;
+				default:
+					$code = '$obj =& new ' . $classname . '(';
+					foreach($args as $n => $arg)
 					{
-						$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
+						if ($n)
+						{
+							$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
+						}
 					}
-				}
-				$code .= ');';
-				eval($code);
+					$code .= ');';
+					eval($code);
+					break;
 			}
 		}
 		if (!is_object($obj))
@@ -724,7 +734,6 @@
 		list($app,$class,$method) = explode('.',$acm);
 		if (!is_object($obj =& $GLOBALS[$class]))
 		{
-			$newobj = 1;
 			$obj =& CreateObject($acm);
 		}
 		
@@ -736,18 +745,8 @@
 		
 		$args = func_get_args();
 		unset($args[0]);
-		$code = '$return =& $obj->'.$method.'(';
-		foreach	($args as $n => $arg)
-		{
-			if ($n)
-			{
-				$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
-			}
-		}		
-		
-		eval($code.');');
-		if($newobj) unset($obj);
-		return $return;
+
+		return call_user_func_array(array($obj,$method),$args);
 	}
 
 	/**
@@ -791,12 +790,10 @@
 			{
 				return $GLOBALS[$classname]->$functionname($functionparams);
 			}
-			else
-			{
-				return $GLOBALS[$classname]->$functionname();
-			}
+			return $GLOBALS[$classname]->$functionname();
 		}
 		/* if the $method includes a parent class (multi-dimensional) then we have to work from it */
+/* RalfBecker: let's check if this is still in use, I don't think so: 
 		elseif ($partscount >= 3)
 		{
 			$GLOBALS['methodparts'] = explode(".", $method);
@@ -804,14 +801,13 @@
 			$appname = $GLOBALS['methodparts'][0];
 			$classname = $GLOBALS['methodparts'][$classpartnum];
 			$functionname = $GLOBALS['methodparts'][$partscount];
-			/* Now we clear these out of the array so that we can do a proper */
-			/* loop and build the $parentobject */
+			// Now we clear these out of the array so that we can do a proper
+			// loop and build the $parentobject
 			unset ($GLOBALS['methodparts'][0]);
 			unset ($GLOBALS['methodparts'][$classpartnum]);
 			unset ($GLOBALS['methodparts'][$partscount]);
 			reset ($GLOBALS['methodparts']);
 			$firstparent = 'True';
-//			while (list ($key, $val) = each ($GLOBALS['methodparts']))
 			foreach($GLOBALS['methodparts'] as $val)
 			{
 				if ($firstparent == 'True')
@@ -857,10 +853,8 @@
 				return $returnval;
 			}
 		}
-		else
-		{
-			return "<p>ExecMethod('$method'): error in parts!<br />".function_backtrace()."</p>\n";
-		}
+*/
+		return "<p>ExecMethod('$method'): error in parts!<br />".function_backtrace()."</p>\n";
 	}
 
 	/**
@@ -1170,7 +1164,7 @@
 				if ($remove-- < 0)
 				{
 					$ret[] = (isset($level['class'])?$level['class'].'::':'').$level['function'].
-						(!$level['class'] ? '('.str_replace(EGW_SERVER_ROOT,'',$level['args'][0]).')' : '');
+						(!$level['class'] && !is_object($level['args'][0]) ? '('.str_replace(EGW_SERVER_ROOT,'',$level['args'][0]).')' : '');
 				}
 			}
 			if (is_array($ret))

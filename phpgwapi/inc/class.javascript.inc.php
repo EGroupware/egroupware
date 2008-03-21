@@ -220,7 +220,7 @@
 		{
 			if ($browser)
 			{
-				$browser_folder = strtolower(ExecMethod('phpgwapi.browser.get_agent'));
+				$browser_folder = html::$user_agent;
 			}
 			else
 			{
