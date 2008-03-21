@@ -97,15 +97,11 @@ class etemplate extends boetemplate
 	*/
 	function etemplate($name='',$load_via='')
 	{
-		if (!is_object($GLOBALS['egw']->template))
-		{
-			$GLOBALS['egw']->template =& CreateObject('phpgwapi.Template');
-		}
 		$this->boetemplate($name,$load_via);
 
-		$this->xslt = is_object($GLOBALS['egw']->xslttpl);
+		//$this->xslt = is_object($GLOBALS['egw']->xslttpl);
 		
-		$this->sitemgr = is_object($GLOBALS['Common_BO']);
+		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);
 		
 		if (($this->innerWidth = (int) $_POST['innerWidth']))
 		{
@@ -235,8 +231,8 @@ class etemplate extends boetemplate
 		}
 		elseif (!$this->xslt)
 		{
-			$hooked = isset($GLOBALS['egw_info']['etemplate']['content']) ? $GLOBALS['egw_info']['etemplate']['content'] :
-				$GLOBALS['egw']->template->get_var('phpgw_body');
+			$hooked = isset($GLOBALS['egw_info']['etemplate']['content']) || !isset($GLOBALS['egw']->template) ? 
+				$GLOBALS['egw_info']['etemplate']['content'] : $GLOBALS['egw']->template->get_var('phpgw_body');
 
 			if (!@$GLOBALS['egw_info']['etemplate']['hooked'] && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
 			{
@@ -498,10 +494,6 @@ class etemplate extends boetemplate
 			$GLOBALS['egw_info']['flags']['java_script'] .= $session_data['java_script_from_flags'];
 			if (!empty($session_data['java_script_body_tags']))
 			{
-				if( !is_object($GLOBALS['egw']->js))
-				{
-					$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-				}
 				foreach ($session_data['java_script_body_tags'] as $tag => $code)
 				{
 					//error_log($GLOBALS['egw']->js->body[$tag]);
@@ -510,10 +502,6 @@ class etemplate extends boetemplate
 			}
 			if (is_array($session_data['java_script_files']))
 			{
-				if( !is_object($GLOBALS['egw']->js))
-				{
-					$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-				}
 				$GLOBALS['egw']->js->files = !is_array($GLOBALS['egw']->js->files) ? $session_data['java_script_files'] :
 					$this->complete_array_merge($GLOBALS['egw']->js->files,$session_data['java_script_files']);
 			}
@@ -649,10 +637,6 @@ class etemplate extends boetemplate
 			if (isset($cat2color[$cat]))
 			{
 				return $cat2color[$cat];
-			}
-			if (!is_object($GLOBALS['egw']->categories))
-			{
-				$GLOBALS['egw']->categories = new categories();
 			}
 			$data = unserialize($GLOBALS['egw']->categories->id2name($cat,'data'));
 			
