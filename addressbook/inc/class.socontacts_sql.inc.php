@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$ 
  */
@@ -14,11 +14,6 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 /**
  * SQL storage object of the adressbook
- *
- * @package addressbook
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
 class socontacts_sql extends so_sql 
@@ -58,7 +53,7 @@ class socontacts_sql extends so_sql
 	
 	function socontacts_sql()
 	{
-		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_');	// calling the constructor of the extended class
+		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_',true);	// true = using the global db object, no clone!
 
 		if ($GLOBALS['egw_info']['server']['account_repository'])
 		{
@@ -462,11 +457,9 @@ class socontacts_sql extends so_sql
 	function get_lists($uids)
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
-		$this->db->select($this->lists_table,'*',array('list_owner'=>$uids),__LINE__,__FILE__,
-			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name');
-			
 		$lists = array();
-		while(($row = $this->db->row(true)))
+		foreach($this->db->select($this->lists_table,'*',array('list_owner'=>$uids),__LINE__,__FILE__,
+			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name') as $row)
 		{
 			$lists[$row['list_id']] = $row;
 		}
@@ -489,7 +482,7 @@ class socontacts_sql extends so_sql
 		if ($this->db->select($this->lists_table,'list_id',array(
 			'list_name' => $name,
 			'list_owner' => $owner,
-		),__LINE__,__FILE__) && $this->db->next_record())
+		),__LINE__,__FILE__)->fetchSingle())
 		{
 			return true;	// return existing list-id
 		}
@@ -524,7 +517,7 @@ class socontacts_sql extends so_sql
 		if ($this->db->select($this->ab2list_table,'list_id',array(
 			'contact_id' => $contact,
 			'list_id' => $list,
-		),__LINE__,__FILE__) && $this->db->next_record())
+		),__LINE__,__FILE__)->fetchSingle())
 		{
 			return true;	// no need to insert it, would give sql error
 		}
@@ -581,8 +574,6 @@ class socontacts_sql extends so_sql
 	{
 		if (!$list) return false;
 		
-		$this->db->select($this->lists_table,'*',array('list_id'=>$list),__LINE__,__FILE__);
-		
-		return $this->db->row(true);
+		return $this->db->select($this->lists_table,'*',array('list_id'=>$list),__LINE__,__FILE__)->fetch();
 	}	
 }
