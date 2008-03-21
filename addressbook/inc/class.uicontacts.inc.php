@@ -59,18 +59,8 @@ class uicontacts extends bocontacts
 	{
 		$this->bocontacts($contact_app);
 
-		foreach(array(
-			'tmpl'    => 'etemplate.etemplate',
-		) as $my => $app_class)
-		{
-			list(,$class) = explode('.',$app_class);
+		$this->tmpl = new etemplate();
 
-			if (!is_object($GLOBALS['egw']->$class))
-			{
-				$GLOBALS['egw']->$class =& CreateObject($app_class);
-			}
-			$this->$my = &$GLOBALS['egw']->$class;
-		}
 		$this->private_addressbook = $this->contact_repository == 'sql' && $this->prefs['private_addressbook'];
 
 		$this->org_views = array(
