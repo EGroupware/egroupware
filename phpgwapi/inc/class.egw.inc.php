@@ -527,7 +527,7 @@ class egw
 	 */
 	function __get($name)
 	{
-		error_log(__METHOD__."($name)".function_backtrace());
+		//error_log(__METHOD__."($name)".function_backtrace());
 		
 		if (isset($this->$name))
 		{
