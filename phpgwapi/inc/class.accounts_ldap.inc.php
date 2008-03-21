@@ -134,11 +134,7 @@ class accounts_ldap
 		$this->ds = $this->ldap->ldapConnect($this->frontend->config['ldap_host'],
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
 
-		if(!@is_object($GLOBALS['egw']->translation))
-		{
-			$GLOBALS['egw']->translation =& new translation();
-		}
-		$this->translation =& $GLOBALS['egw']->translation;
+		$this->translation = $GLOBALS['egw']->translation;
 
 		$this->user_context  = $this->frontend->config['ldap_context'];
 		$this->account_filter = $this->frontend->config['ldap_search_filter'];

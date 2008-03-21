@@ -182,8 +182,6 @@
 
 			$this->egw_domains = $domain_names;
 
-			/* Create the crypto object */
-			$GLOBALS['egw']->crypto =& CreateObject('phpgwapi.crypto');
 			if ($GLOBALS['egw_info']['server']['usecookies'])
 			{
 				$this->egw_set_cookiedomain();

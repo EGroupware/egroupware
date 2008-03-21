@@ -14,8 +14,6 @@
 	
 	/* $Id$ */
 	
-	include_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.ldapserverinfo.inc.php');
-
 	/*!
 	 @class contacts
 	 @abstract Contact List System
@@ -89,7 +87,7 @@
 			if(!function_exists('ldap_connect'))
 			{
 				/* log does not exist in setup(, yet) */
-				if(is_object($GLOBALS['egw']->log))
+				if(isset($GLOBALS['egw']->log))
 				{
 					$GLOBALS['egw']->log->message('F-Abort, LDAP support unavailable');
 					$GLOBALS['egw']->log->commit();
@@ -117,7 +115,7 @@
 			if(!$this->ds = ldap_connect($host))
 			{
 				/* log does not exist in setup(, yet) */
-				if(is_object($GLOBALS['egw']->log))
+				if(isset($GLOBALS['egw']->log))
 				{
 					$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server');
 					$GLOBALS['egw']->log->commit();
@@ -209,7 +207,7 @@
 			}
 
 			if(!@ldap_bind($this->ds, $dn, $passwd)) {
-				if(is_object($GLOBALS['egw']->log)) {
+				if(isset($GLOBALS['egw']->log)) {
 					$GLOBALS['egw']->log->message('F-Abort, Failed binding to LDAP server');
 					$GLOBALS['egw']->log->commit();
 				}
@@ -237,7 +235,7 @@
 		 */
 		function restoreSessionData() 
 		{
-			if (is_object($GLOBALS['egw']->session))	// no availible in setup
+			if (isset($GLOBALS['egw']->session))	// no availible in setup
 			{
 				$this->ldapServerInfo = $GLOBALS['egw']->session->appsession('ldapServerInfo');
 			}
@@ -247,7 +245,7 @@
 		 */
 		function saveSessionData() 
 		{
-			if (is_object($GLOBALS['egw']->session))	// no availible in setup
+			if (isset($GLOBALS['egw']->session))	// no availible in setup
 			{
 				$GLOBALS['egw']->session->appsession('ldapServerInfo','',$this->ldapServerInfo);
 			}
