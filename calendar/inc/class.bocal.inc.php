@@ -27,6 +27,8 @@ define('WEEK_s',7*DAY_s);
  */
 define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
 
+require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.socal.inc.php');
+
 /**
  * Class to access all calendar data
  *
@@ -45,7 +47,6 @@ define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of this class !!!
  */
-
 class bocal
 {
 	/**
@@ -155,21 +156,10 @@ class bocal
 	function bocal()
 	{
 		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
+		
+		$this->so = new socal();
+		$this->datetime = $GLOBALS['egw']->datatime;
 
-		foreach(array(
-			'so'    	=> 'calendar.socal',
-			'datetime'  => 'phpgwapi.datetime',
-		) as $my => $app_class)
-		{
-			list(,$class) = explode('.',$app_class);
-
-			if (!is_object($GLOBALS['egw']->$class))
-			{
-				//echo "<p>calling CreateObject($app_class)</p>\n".str_repeat(' ',4096);
-				$GLOBALS['egw']->$class = CreateObject($app_class);
-			}
-			$this->$my = &$GLOBALS['egw']->$class;
-		}
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
 
@@ -199,9 +189,7 @@ class bocal
 		}	
 		//echo "registered resources="; _debug_array($this->resources);
 
-		$config =& CreateObject('phpgwapi.config','calendar');
-		$this->config =& $config->read_repository();
-		unset($config);
+		$this->config = config::read('calendar');
 	}
 
 	/**

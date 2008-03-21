@@ -343,7 +343,7 @@ class uiviews extends uical
 				'date' => $this->bo->date2string($week_start),
 			);
 			$title = lang('Wk').' '.adodb_date('W',$week_start);
-			$title = $this->html->a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
+			$title = html::a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
 
 			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
@@ -453,12 +453,12 @@ class uiviews extends uical
         #
 	#	// add navigation for previous and next
 	#	// prev. week
-	#	$GLOBALS['egw_info']['flags']['app_header'] = $this->html->a_href($this->html->image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
+	#	$GLOBALS['egw_info']['flags']['app_header'] = html::a_href(html::image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
 	#		'menuaction' => $this->view_menuaction,
 	#		'date'       => date('Ymd',$this->first-$days*DAY_s),
 	#		)) . ' &nbsp; <b>'.$GLOBALS['egw_info']['flags']['app_header'];
 	#	// next week
-	#	$GLOBALS['egw_info']['flags']['app_header'] .= '</b> &nbsp; '.$this->html->a_href($this->html->image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
+	#	$GLOBALS['egw_info']['flags']['app_header'] .= '</b> &nbsp; '.html::a_href(html::image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
 	#		'menuaction' => $this->view_menuaction,
 	#		'date'       => date('Ymd',$this->last+$days*DAY_s),
 	#		));
@@ -552,17 +552,17 @@ class uiviews extends uical
 				{
 					foreach(array('task','phone','note') as $type)
 					{
-						$todo_label .= '&nbsp;'.$this->html->a_href( $this->html->image('infolog',$type,lang('Add')),'infolog.uiinfolog.edit',array(
+						$todo_label .= '&nbsp;'.html::a_href( html::image('infolog',$type,lang('Add')),'infolog.uiinfolog.edit',array(
 							'type' => $type,
 							'start_time' => $ts,
 						),' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=590,scrollbars=yes,status=yes\'); return false;"');
 					}
 				}
-				$cols[1] = $this->html->div(
-					$this->html->div($todo_label,'','calDayTodosHeader th')."\n".
-					$this->html->div($todos,'','calDayTodosTable'),'','calDayTodos');
+				$cols[1] = html::div(
+					html::div($todo_label,'','calDayTodosHeader th')."\n".
+					html::div($todos,'','calDayTodosTable'),'','calDayTodos');
 				$cols['.1'] = 'width=30%';
-				echo $this->html->table(array(
+				echo html::table(array(
 					0 => $cols,
 					'.0' => 'valign="top"'
 				),'class="calDayView"');
@@ -735,9 +735,9 @@ class uiviews extends uical
 		// determine if the browser supports scrollIntoView: IE4+, firefox1.0+ and safari2.0+ does
 		// then show all hours in a div of the size of the workday and scroll to the workday start
 		// still disabled, as things need to be re-aranged first, to that the column headers are not scrolled
-		$this->scroll_to_wdstart = false;/*$this->use_time_grid && ($this->html->user_agent == 'msie' || 
-			$this->html->user_agent == 'mozilla' && $this->html->ua_version >= 5.0 ||
-			$this->html->user_agent == 'safari' && $this->html->ua_version >= 2.0);*/
+		$this->scroll_to_wdstart = false;/*$this->use_time_grid && (html::$user_agent == 'msie' || 
+			html::$user_agent == 'mozilla' && html::ua_version >= 5.0 ||
+			html::$user_agent == 'safari' && html::ua_version >= 2.0);*/
 	
 		if ($this->scroll_to_wdstart)
 		{
@@ -810,7 +810,7 @@ class uiviews extends uical
 			$html .= $indent."\t".'<div id="calDayCols" class="calDayCols'.
 				($this->use_time_grid ? ($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '') : 'NoTime').'">'."\n";
 
-			if ($this->html->user_agent == 'msie')	// necessary IE hack - stupid thing ...
+			if (html::$user_agent == 'msie')	// necessary IE hack - stupid thing ...
 			{
 				// Lars Kneschke 2005-08-28
 				// why do we use a div in a div which has the same height and width???
@@ -840,7 +840,7 @@ class uiviews extends uical
 					$dayColWidth,$indent."\t\t",$short_title,++$on_off & 1,$col_owner);
 				++$n;
 			}
-			if ($this->html->user_agent == 'msie') $html .= "</div>\n";
+			if (html::$user_agent == 'msie') $html .= "</div>\n";
 
 			$html .= $indent."\t</div>\n";	// calDayCols
 		}
@@ -932,16 +932,16 @@ class uiviews extends uical
 
 		if ($short_title === true)
 		{
-			$title = $this->html->a_href($title,$day_view,'',
+			$title = html::a_href($title,$day_view,'',
 				!isset($this->holidays[$day_ymd])?' title="'.lang('Dayview').'"':'');
 		}
 		elseif ($short_title === false)
 		{
 			// add arrows to go to the previous and next day (dayview only)
 			$day_view['date'] = $this->bo->date2string($ts -= 12*HOUR_s);
-			$title = $this->html->a_href($this->html->image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
+			$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
 			$day_view['date'] = $this->bo->date2string($ts += 48*HOUR_s);
-			$title .= ' &nbsp; '.$this->html->a_href($this->html->image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+			$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
 		}
 		$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.($holidays ? ' title="'.$holidays.'"':'').'>'.
 			$title."</div>\n";
@@ -1103,6 +1103,7 @@ class uiviews extends uical
 		if (!$tpl)
 		{
 			$tpl = $GLOBALS['egw']->template;
+			
 			$tpl->set_root($GLOBALS['egw']->common->get_tpl_dir('calendar'));
 			$tpl->set_file('event_widget_t','event_widget.tpl');
 			$tpl->set_block('event_widget_t','event_widget');
@@ -1127,7 +1128,7 @@ class uiviews extends uical
 		}
 		$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
 
-		$icons = !$is_private ? $this->event_icons($event) : array($this->html->image('calendar','private',lang('private')));
+		$icons = !$is_private ? $this->event_icons($event) : array(html::image('calendar','private',lang('private')));
 		$cats  = $this->bo->categories($event['category'],$color);
 
 		// these values control varius aspects of the geometry of the eventWidget
@@ -1173,9 +1174,9 @@ class uiviews extends uical
 			'body_icons' => $small ? implode("\n",$icons) : '',
 			'icons' => implode('',$icons),
 			'timespan' => $timespan,
-			'title' => ($title = !$is_private ? $this->html->htmlspecialchars($event['title']) : lang('private')),
+			'title' => ($title = !$is_private ? html::htmlspecialchars($event['title']) : lang('private')),
 			'header' => $small_height ? $title : $timespan,
-			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])) : '',
+			'description' => !$is_private ? nl2br(html::htmlspecialchars($event['description'])) : '',
 			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
 			'participants' => $participants,
 			'times' => !$event['multiday'] ? $this->add_nonempty($this->bo->timespan($event['start_m'],$event['end_m'],true),lang('Time')) :
@@ -1186,7 +1187,7 @@ class uiviews extends uical
 				$this->add_nonempty($this->bo->format_date($event['end']),lang('End')),
 			'category' => !$is_private ? $this->add_nonempty($cats,lang('Category')) : '',
 			// the tooltip is based on the content of the actual widget, this way it takes no extra bandwidth/volum
-//			'tooltip' => $this->html->tooltip(False,False,array('BorderWidth'=>0,'Padding'=>0)),
+//			'tooltip' => html::tooltip(False,False,array('BorderWidth'=>0,'Padding'=>0)),
 			// various aspects of the geometry or style
 			'corner_radius'  => $corner_radius.'px',
 			'header_height' => $header_height.'px',
@@ -1218,7 +1219,7 @@ class uiviews extends uical
 		}
 */
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
-		$tpl->set_var('tooltip',$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)));
+		$tpl->set_var('tooltip',html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)));
 		$html = $tpl->fp('out',$block);
 
 		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
@@ -1249,10 +1250,10 @@ class uiviews extends uical
 			);
 		}
 		$ie_fix = '';
-        if ($this->html->user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
+        if (html::$user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
         {
-			$ie_fix = $indent."\t".$this->html->image('calendar','transparent.gif','',
-				$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+			$ie_fix = $indent."\t".html::image('calendar','transparent.gif','',
+				html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
 				' style="top:0px; left:0px; position:absolute; height:100%; width:100%; z-index:1"') . "\n";
         }
 		if ($this->use_time_grid)
@@ -1276,7 +1277,7 @@ class uiviews extends uical
 
 		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
-			$popup.' '.$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+			$popup.' '.html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
 			'>'."\n".$ie_fix.$html."\n".
 			$indent."</div>"."\n";
 
@@ -1296,8 +1297,8 @@ class uiviews extends uical
 						'eventId'=>$event['id'],
 						'eventOwner'=>$event['owner'],
 						'calendarOwner'=>$owner,
-						'errorImage'=>addslashes($this->html->image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
-						'loaderImage'=>addslashes($this->html->image('phpgwapi','ajax-loader')),
+						'errorImage'=>addslashes(html::image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
+						'loaderImage'=>addslashes(html::image('phpgwapi','ajax-loader')),
 					),
 					'calendar.dragDropFunctions.dragEvent',
 					'calendar.dragDropFunctions.dropEvent',
@@ -1325,7 +1326,7 @@ class uiviews extends uical
 		{
 			return '<span class="calEventLabel">'.$label.'</span>:'.
 				($one_per_line ? '<br>' : ' ').
-				nl2br($this->html->htmlspecialchars($content)).'<br>';
+				nl2br(html::htmlspecialchars($content)).'<br>';
 		}
 		return '';
 	}
@@ -1578,11 +1579,11 @@ class uiviews extends uical
 					if ($this->day >= 15) $prev = $t_arr;		// we stay in the same month
 					$prev['day'] = $this->day < 15 ? 15 : 1;
 					$half = $this->bo->date2string($prev);
-					$title = $this->html->a_href($this->html->image('phpgwpai','first',lang('back one month'),$options=' alt="<<"'),array(
+					$title = html::a_href(html::image('phpgwpai','first',lang('back one month'),$options=' alt="<<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $full,
 					)) . ' &nbsp; '.
-					$this->html->a_href($this->html->image('phpgwpai','left',lang('back half a month'),$options=' alt="<"'),array(
+					html::a_href(html::image('phpgwpai','left',lang('back half a month'),$options=' alt="<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $half,
 					)) . ' &nbsp; '.$title;
@@ -1604,11 +1605,11 @@ class uiviews extends uical
 					if ($this->day < 15) $next = $t_arr;		// we stay in the same month
 					$next['day'] = $this->day < 15 ? 15 : 1;
 					$half = $this->bo->date2string($next);
-					$title .= ' &nbsp; '.$this->html->a_href($this->html->image('phpgwpai','right',lang('forward half a month'),$options=' alt=">>"'),array(
+					$title .= ' &nbsp; '.html::a_href(html::image('phpgwpai','right',lang('forward half a month'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $half,
 					)). ' &nbsp; '.
-					$this->html->a_href($this->html->image('phpgwpai','last',lang('forward one month'),$options=' alt=">>"'),array(
+					html::a_href(html::image('phpgwpai','last',lang('forward one month'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $full,
 					));
@@ -1645,21 +1646,21 @@ class uiviews extends uical
 			$title = lang('Week').' '.date('W',$t);
 			if ($days > 7)
 			{
-				$title = $this->html->a_href($title,array(
+				$title = html::a_href($title,array(
 					'menuaction' => 'calendar.uiviews.planner',
 					'planner_days' => 7,
 					'date'       => date('Ymd',$t),
-				),false,' title="'.$this->html->htmlspecialchars(lang('Weekview')).'"');
+				),false,' title="'.html::htmlspecialchars(lang('Weekview')).'"');
 			}
 			else
 			{
 				// prev. week
-				$title = $this->html->a_href($this->html->image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
+				$title = html::a_href(html::image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',$t-7*DAY_s),
 				)) . ' &nbsp; <b>'.$title;
 				// next week
-				$title .= '</b> &nbsp; '.$this->html->a_href($this->html->image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
+				$title .= '</b> &nbsp; '.html::a_href(html::image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',$t+7*DAY_s),
 				));
@@ -1703,31 +1704,31 @@ class uiviews extends uical
 			}
 			if ($days > 1)
 			{
-				$title = $this->html->a_href($title,array(
+				$title = html::a_href($title,array(
 					'menuaction'   => 'calendar.uiviews.planner',
 					'planner_days' => 1,
 					'date'         => date('Ymd',$t),
-				),false,strpos($class,'calHoliday') !== false || strpos($class,'calBirthday') !== false ? '' : ' title="'.$this->html->htmlspecialchars(lang('Dayview')).'"');
+				),false,strpos($class,'calHoliday') !== false || strpos($class,'calBirthday') !== false ? '' : ' title="'.html::htmlspecialchars(lang('Dayview')).'"');
 			}
 			if ($days < 5)
 			{
 				if (!$i)	// prev. day only for the first day
 				{
-					$title = $this->html->a_href($this->html->image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
+					$title = html::a_href(html::image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => date('Ymd',$start-DAY_s),
 					)) . ' &nbsp; '.$title;
 				}
 				if ($i == $days-1)	// next day only for the last day
 				{
-					$title .= ' &nbsp; '.$this->html->a_href($this->html->image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
+					$title .= ' &nbsp; '.html::a_href(html::image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => date('Ymd',$start+DAY_s),
 					));
 				}
 			}
 			$content .= $indent."\t".'<div class="plannerDayScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;"'.
-				($holidays ? ' title="'.$this->html->htmlspecialchars($holidays).'"' : '').'>'.$title."</div>\n";
+				($holidays ? ' title="'.html::htmlspecialchars($holidays).'"' : '').'>'.$title."</div>\n";
 		}
 		$content .= $indent."</div>\n";		// end of plannerScale
 
@@ -1915,7 +1916,7 @@ class uiviews extends uical
 		
 		return $indent.'<div class="plannerEvent'.($data['private'] ? 'Private' : '').'" style="left: '.$left.
 			'%; width: '.$width.'%; background-color: '.$color.';"'.$data['popup'].' '.
-			$this->html->tooltip($data['tooltip'],False,array('BorderWidth'=>0,'Padding'=>0)).'>'."\n".$data['html'].$indent."</div>\n";
+			html::tooltip($data['tooltip'],False,array('BorderWidth'=>0,'Padding'=>0)).'>'."\n".$data['html'].$indent."</div>\n";
 	}
 
 	/**

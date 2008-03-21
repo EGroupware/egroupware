@@ -84,19 +84,7 @@ class socal
 	 */
 	function socal()
 	{
-		foreach(array(
-			'async' => 'phpgwapi.asyncservice',
-		) as $my => $app_class)
-		{
-			list(,$class) = explode('.',$app_class);
-
-			if (!is_object($GLOBALS['egw']->$class))
-			{
-				//echo "<p>calling CreateObject($app_class)</p>\n".str_repeat(' ',4096);
-				$GLOBALS['egw']->$class =& CreateObject($app_class);
-			}
-			$this->$my =& $GLOBALS['egw']->$class;
-		}
+		$this->async = $GLOBALS['egw']->asyncservice;
 		$this->db = $GLOBALS['egw']->db;
 
 		$this->all_tables = array($this->cal_table);

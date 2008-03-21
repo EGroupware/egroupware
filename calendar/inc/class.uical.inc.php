@@ -134,25 +134,20 @@ class uical
 	 */
 	function uical($use_bocalupdate=false,$set_states=NULL)
 	{
-		foreach(array(
-			'bo'    => $use_bocalupdate ? 'calendar.bocalupdate' : 'calendar.bocal',
-			'jscal' => 'phpgwapi.jscalendar',	// for the sidebox-menu
-			'html'  => 'phpgwapi.html',
-			'datetime' => 'phpgwapi.datetime',
-			'accountsel' => 'phpgwapi.uiaccountsel',
-		) as $my => $app_class)
-		{
-			list(,$class) = explode('.',$app_class);
+		$bo_class = $use_bocalupdate ? 'bocalupdate' : 'bocal';
+		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.'.$bo_class.'.inc.php');
+		$this->bo = new $bo_class();
+		$this->jscal = $GLOBALS['egw']->jscalendar;
+		$this->datetime = $GLOBALS['egw']->datetime;
+		$this->accountsel = $GLOBALS['egw']->uiaccountsel;
 
-			if (!is_object($GLOBALS['egw']->$class))
-			{
-				$GLOBALS['egw']->$class =& CreateObject($app_class);
-			}
-			$this->$my = &$GLOBALS['egw']->$class;
-		}
-		if (!is_object($this->cats))
+		if ($GLOBALS['egw']->categories->app_name != 'calendar')
 		{
-			$this->cats =& CreateObject('phpgwapi.categories','','calendar');	// we need an own instance to get the calendar cats
+			$this->cats = new categories('','calendar');	// we need an own instance to get the calendar cats
+		}
+		else
+		{
+			$this->cats = $GLOBALS['egw']->categories;
 		}
 		$this->common_prefs	= &$GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs	= &$GLOBALS['egw_info']['user']['preferences']['calendar'];
@@ -231,7 +226,7 @@ class uical
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		$GLOBALS['egw']->common->egw_header();
 		
-		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.$this->html->htmlspecialchars($_GET['msg'])."</p>\n";
+		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";
 
 		if ($this->group_warning) echo '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
 	}
@@ -386,11 +381,11 @@ class uical
 		{
 			if($event['priority'] == 3)
 			{
-				$icons[] = $this->html->image('calendar','high',lang('high priority'));
+				$icons[] = html::image('calendar','high',lang('high priority'));
 			}
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$icons[] = $this->html->image('calendar','recur',lang('recurring event'));
+				$icons[] = html::image('calendar','recur',lang('recurring event'));
 			}
 			// icons for single user, multiple users or group(s) and resources
 			foreach($event['participants'] as  $uid => $status)
@@ -400,16 +395,16 @@ class uical
 					if (isset($icons['single']) || $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 					{
 						unset($icons['single']);
-						$icons['multiple'] = $this->html->image('calendar','users');
+						$icons['multiple'] = html::image('calendar','users');
 					}
 					elseif (!isset($icons['multiple']))
 					{
-						$icons['single'] = $this->html->image('calendar','single');
+						$icons['single'] = html::image('calendar','single');
 					}
 				}					
 				elseif(!isset($icons[$uid{0}]) && isset($this->bo->resources[$uid{0}]) && isset($this->bo->resources[$uid{0}]['icon']))
 				{
-				 	$icons[$uid{0}] = $this->html->image($this->bo->resources[$uid{0}]['app'],
+				 	$icons[$uid{0}] = html::image($this->bo->resources[$uid{0}]['app'],
 				 		($this->bo->resources[$uid{0}]['icon'] ? $this->bo->resources[$uid{0}]['icon'] : 'navbar'),
 				 		lang($this->bo->resources[$uid{0}]['app']),
 				 		'width="16px" height="16px"');
@@ -418,15 +413,15 @@ class uical
 		}
 		if($event['non_blocking'])
 		{
-			$icons[] = $this->html->image('calendar','nonblocking',lang('non blocking'));
+			$icons[] = html::image('calendar','nonblocking',lang('non blocking'));
 		}
 		if($event['public'] == 0)
 		{
-			$icons[] = $this->html->image('calendar','private',lang('private'));
+			$icons[] = html::image('calendar','private',lang('private'));
 		}
 		if(isset($event['alarm']) && count($event['alarm']) >= 1 && !$is_private)
 		{
-			$icons[] = $this->html->image('calendar','alarm',lang('alarm'));
+			$icons[] = html::image('calendar','alarm',lang('alarm'));
 		}
 		return $icons;
 	}
@@ -477,7 +472,7 @@ class uical
 			$vars['hour'] = $hour;
 			$vars['minute'] = $minute;
 		}
-		return $this->html->a_href($content,'/index.php',$vars,' target="_blank" title="'.$this->html->htmlspecialchars(lang('Add')).
+		return html::a_href($content,'/index.php',$vars,' target="_blank" title="'.html::htmlspecialchars(lang('Add')).
 			'" onclick="'.$this->popup('this.href','this.target').'; return false;"');
 	}
 	
@@ -553,8 +548,8 @@ class uical
 			$title = array_shift($data);
 			$vars = array_merge($link_vars,$data);
 
-			$icon = $this->html->image('calendar',$icon,lang($title));
-			$link = $view == 'add' ? $this->add_link($icon) : $this->html->a_href($icon,'/index.php',$vars);
+			$icon = html::image('calendar',$icon,lang($title));
+			$link = $view == 'add' ? $this->add_link($icon) : html::a_href($icon,'/index.php',$vars);
 
 			$views .= '<td align="center">'.$link."</td>\n";
 		}
@@ -614,15 +609,15 @@ class uical
 			),
 		) as $data)
 		{
-			$options .= '<option value="'.$data['value'].'"'.($data['selected'] ? ' selected="1"' : '').'>'.$this->html->htmlspecialchars($data['text'])."</option>\n";
+			$options .= '<option value="'.$data['value'].'"'.($data['selected'] ? ' selected="1"' : '').'>'.html::htmlspecialchars($data['text'])."</option>\n";
 		}
 		$file[++$n] = $this->_select_box('displayed view','view',$options,$GLOBALS['egw']->link('/index.php'));
 
 		// Search
-		$blur = addslashes($this->html->htmlspecialchars(lang('Search').'...'));
-		$value = @$_POST['keywords'] ? $this->html->htmlspecialchars($_POST['keywords']) : $blur;
+		$blur = addslashes(html::htmlspecialchars(lang('Search').'...'));
+		$value = @$_POST['keywords'] ? html::htmlspecialchars($_POST['keywords']) : $blur;
 		$file[++$n] = array(
-			'text' => $this->html->form('<input name="keywords" value="'.$value.'" style="width: 185px;"'.
+			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 185px;"'.
 				' onFocus="if(this.value==\''.$blur.'\') this.value=\'\';"'.
 				' onBlur="if(this.value==\'\') this.value=\''.$blur.'\';" title="'.lang('Search').'">',
 				'','/index.php',array('menuaction'=>'calendar.uilist.listview')),
@@ -720,7 +715,7 @@ function load_cal(url,id) {
 		}
 		// Import & Export
 		$file[] = array(
-			'text' => lang('Export').': '.$this->html->a_href(lang('iCal'),'calendar.uiforms.export',$this->first ? array(
+			'text' => lang('Export').': '.html::a_href(lang('iCal'),'calendar.uiforms.export',$this->first ? array(
 				'start' => $this->bo->date2string($this->first),
 				'end'   => $this->bo->date2string($this->last),
 			) : false),
@@ -728,8 +723,8 @@ function load_cal(url,id) {
 			'link' => False,
 		);
 		$file[] = array(
-			'text' => lang('Import').': '.$this->html->a_href(lang('iCal'),'calendar.uiforms.import').
-				' &amp; '.$this->html->a_href(lang('CSV'),'/calendar/csv_import.php'),
+			'text' => lang('Import').': '.html::a_href(lang('iCal'),'calendar.uiforms.import').
+				' &amp; '.html::a_href(lang('CSV'),'/calendar/csv_import.php'),
 			'no_lang' => True,
 			'link' => False,
 		);
