@@ -58,9 +58,6 @@
 		'flags' => array(
 			'noheader'   => True,
 			'nonavbar'   => True,
-			'enable_network_class'    => True,
-			'enable_contacts_class'   => True,
-			'enable_nextmatchs_class' => True,
 			'currentapp' => $app
 		)
 	);
@@ -111,9 +108,6 @@
 		$GLOBALS['egw_info']['flags'] = array(
 			'noheader'   => False,
 			'nonavbar'   => False,
-			'enable_network_class'    => True,
-			'enable_contacts_class'   => True,
-			'enable_nextmatchs_class' => True,
 			'currentapp' => 'eGroupWare'
 		);
 		$GLOBALS['egw']->common->egw_header();
@@ -127,10 +121,11 @@
 			$app = 'phpgwapi';
 		}
 
-		$GLOBALS[$class] = CreateObject($app.'.'.$class);	// dont use =& with $GLOBALS, it does NOT behave as expected
-		if((is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions[$method]) && !$invalid_data)
+		require_once(EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php');
+		$obj = new $class();
+		if((is_array($obj->public_functions) && $obj->public_functions[$method]) && !$invalid_data)
 		{
-			execmethod($_GET['menuaction']);
+			$obj->$method();
 			unset($app);
 			unset($class);
 			unset($method);
@@ -177,4 +172,3 @@
 			$GLOBALS['egw']->common->egw_footer();
 		}
 	}
-?>
