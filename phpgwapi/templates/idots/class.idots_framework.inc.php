@@ -680,12 +680,6 @@ class idots_framework extends egw_framework
 			{
 				$content .= "</body>\n</html>\n";	// close body and html tag, eg. for popups
 			}
-			if (DEBUG_TIMER)
-			{
-				$totaltime = sprintf('%4.2lf',microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']); 
-				
-				$content .= lang('Page was generated in %1 seconds',$totaltime);
-			}
 			return $content;
 		}
 	}

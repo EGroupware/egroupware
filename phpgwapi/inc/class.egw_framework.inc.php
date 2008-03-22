@@ -165,9 +165,15 @@ class egw_framework
 		);
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
 		{
-			$totaltime = sprintf('%4.2lf',perfgetmicrotime() - $GLOBALS['egw_info']['flags']['page_start_time']); 
+			$totaltime = sprintf('%4.2lf',microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']); 
 
-			$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime).'</span></div>';
+			$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime);
+			if ($GLOBALS['egw_info']['flags']['session_restore_time'])
+			{
+				$var['page_generation_time'] .= ' '.lang('(session restored in %1 seconds)',
+					sprintf('%4.2lf',$GLOBALS['egw_info']['flags']['session_restore_time']));
+			}
+			$var['page_generation_time'] .= '</span></div>';
 		}
 		$var['powered_by'] = lang('Powered by').' <a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php">eGroupWare</a> '.lang('version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
 		$var['activate_tooltips'] = '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>';

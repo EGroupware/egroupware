@@ -89,6 +89,7 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUE
 				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
 
 				//printf("<p style=\"position: absolute; right: 0px; top: 0px;\">egw-enviroment restored in %d ms</p>\n",1000*(perfgetmicrotime()-$GLOBALS['egw_info']['flags']['page_start_time']));
+				$GLOBALS['egw_info']['flags']['session_restore_time'] = microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time'];
 				if (is_object($GLOBALS['egw']->translation)) return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
 			}
 			// egw object could NOT be restored from the session, create a new one
