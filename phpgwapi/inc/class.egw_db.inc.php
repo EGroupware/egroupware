@@ -1405,6 +1405,18 @@ class egw_db
 	{
 		$this->column_definitions=$column_definitions;
 	}
+	
+	/**
+	 * Application name used by the API
+	 *
+	 */
+	const API_APPNAME = 'phpgwapi';
+	/**
+	 * Default app, if no app specified in select, insert, delete, ...
+	 *
+	 * @var string
+	 */
+	private $app=self::API_APPNAME;
 
 	/**
 	 * Sets the application in which the db-class looks for table-defintions
@@ -1416,6 +1428,11 @@ class egw_db
 	 */
 	function set_app($app)
 	{
+		if ($this === $GLOBALS['egw']->db && $app != self::API_APPNAME)
+		{
+			// prevent that anyone switches the global db object to an other app
+			throw new egw_exception_wrong_parameter('You are not allowed to call set_app for $GLOBALS[egw]->db or a refence to it, you have to clone it!');
+		}
 		$this->app = $app;
 	}
 
