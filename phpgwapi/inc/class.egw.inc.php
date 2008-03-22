@@ -29,7 +29,7 @@
  * }
  * You can now simply use $GLOBALS['egw']->datetime, and the egw class instanciates it for you on demand.
  */
-class egw
+class egw extends egw_minimal
 {
 	/**
 	 * Turn on debug mode. Will output additional data for debugging purposes.
@@ -37,12 +37,6 @@ class egw
 	 * @access	public
 	 */
 	var $debug = 0;		// This will turn on debugging information.
-	/**
-	 * Instance of the db-object
-	 * 
-	 * @var egw_db
-	 */
-	var $db;
 	/**
 	 * Instance of the account object
 	 *
@@ -55,12 +49,6 @@ class egw
 	 * @var common
 	 */
 	var $common;
-	/**
-	 * Current app at the instancation of the class
-	 *
-	 * @var string
-	 */
-	var $currentapp;
 
 	/**
 	 * Constructor: Instantiates the sub-classes
@@ -491,6 +479,32 @@ class egw
 			$this->db->disconnect();
 		}
 	}
+}
+
+/**
+ * Minimal eGW object used in setup, does not instanciate anything by default
+ *
+ */
+class egw_minimal
+{
+	/**
+	 * Instance of the db-object
+	 * 
+	 * @var egw_db
+	 */
+	var $db;
+	/**
+	 * Current app at the instancation of the class
+	 *
+	 * @var string
+	 */
+	var $currentapp;
+	/**
+	 * Global ADOdb object, need to be defined here, to not call magic __get method
+	 *
+	 * @var ADOConnection
+	 */
+	var $ADOdb;
 
 	/**
 	 * Classes which get instanciated in a different name
@@ -536,7 +550,7 @@ class egw
 		
 		if (!isset(self::$sub_objects[$name]) && !class_exists($name))
 		{
-			error_log(__METHOD__.": There's NO $name object!");
+			error_log(__METHOD__.": There's NO $name object! ".function_backtrace());
 			return null;
 		}
 		switch($name)
