@@ -144,8 +144,7 @@ final class notifications {
 	 *
 	 */
 	public function __construct() {
-		$config = new config(self::_appname);
-		$this->config = (object) $config->read_repository();
+		$this->config = (object) config::read(self::_appname);
 	}
 	
 	/**
