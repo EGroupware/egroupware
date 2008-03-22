@@ -48,7 +48,7 @@ class db_tools
 	 */
 	function db_tools()
 	{
-		$this->editor = new etemplate.etemplate('etemplate.db-tools.edit');
+		$this->editor = new etemplate('etemplate.db-tools.edit');
 		$this->data = array();
 
 		if (!is_array($GLOBALS['egw_info']['apps']) || !count($GLOBALS['egw_info']['apps']))
