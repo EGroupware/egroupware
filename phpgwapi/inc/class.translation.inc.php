@@ -583,6 +583,11 @@
 								}
 								$message_id = substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH);
 								$app_name = chop($app_name);
+								// convert new files from utf-8
+								if ($appfile != $old_appfile && isset($raw['common']['charset']) && $raw['common']['charset'] != 'utf-8')
+								{
+									$content = $this->convert($content,'utf-8',$raw['common']['charset']);
+								}
 								$raw[$app_name][$message_id] = $content;
 							}
 							if ($GLOBALS['egw_info']['server']['lang_ctimes'] && !is_array($GLOBALS['egw_info']['server']['lang_ctimes']))
