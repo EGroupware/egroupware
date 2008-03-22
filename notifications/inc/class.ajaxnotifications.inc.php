@@ -45,7 +45,7 @@ class ajaxnotifications {
 	private $preferences;
 	
 	/**
-	 * holds db object of SQL database
+	 * reference to global db object
 	 *
 	 * @var egw_db
 	 */
@@ -66,8 +66,7 @@ class ajaxnotifications {
 		$preferences = $prefs->read();
 		$this->preferences = (object)$preferences[self::_appname];
 
-		$this->db = &$GLOBALS['egw']->db;
-		$this->db->set_app(self::_appname);
+		$this->db = $GLOBALS['egw']->db;
 	}
 	
 	/**
@@ -80,20 +79,20 @@ class ajaxnotifications {
 		$response =& new xajaxResponse();
 		$session_id = $GLOBALS['egw_info']['user']['sessionid'];
 		$message = '';
-		$this->db->select(self::_notification_table, 
+		$rs = $this->db->select(self::_notification_table, 
 			'*', array(
 				'account_id' => $this->recipient->account_id,
 				'session_id' => $session_id,
 			),
-			__LINE__,__FILE__);
-		if ($this->db->num_rows() != 0)	{
-			while ($notification = $this->db->row(true)) {
+			__LINE__,__FILE__,false,'',self::_appname);
+		if ($rs->NumRows() > 0)	{
+			foreach ($rs as $notification) {
 				$response->addScriptCall('append_notification_message',$notification['message']);
 			}
 			$myval=$this->db->delete(self::_notification_table,array(
 				'account_id' => $this->recipient->account_id,
 				'session_id' => $session_id,
-			),__LINE__,__FILE__);
+			),__LINE__,__FILE__,self::_appname);
 			
 			switch($this->preferences->egwpopup_verbosity) {
 				case 'low':
