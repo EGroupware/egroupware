@@ -158,7 +158,7 @@ class bocal
 		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
 		
 		$this->so = new socal();
-		$this->datetime = $GLOBALS['egw']->datatime;
+		$this->datetime = $GLOBALS['egw']->datetime;
 
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
