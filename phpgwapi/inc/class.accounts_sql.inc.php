@@ -130,7 +130,7 @@ class accounts_sql
 			$data['account_lastname'] = $data['account_type'] == 'g' ? 'Group' : 'User';
 			// if we call lang() before the translation-class is correctly setup,
 			// we can't switch away from english language anymore!
-			if ($GLOBALS['egw']->translations->lang_arr)
+			if ($GLOBALS['egw']->translation->lang_arr)
 			{
 				$data['account_lastname'] = lang($data['account_lastname']);
 			}
@@ -377,6 +377,7 @@ class accounts_sql
 			}
 		}
 		$accounts = array();
+if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
 		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,"account_lid,account_type,$this->table.account_id",
 			$wildcard,false,'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
 			$filter,$this->contacts_join)))
