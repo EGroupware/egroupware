@@ -240,10 +240,6 @@ class so_ldap
 	 */
 	function connect()
 	{
-		if (!is_object($GLOBALS['egw']->ldap))
-		{
-			$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
-		}
 		// if ldap is NOT the contact repository, we only do accounts and need to use the account-data
 		if (substr($GLOBALS['egw_info']['server']['contact_repository'],-4) != 'ldap')	// not (ldap or sql-ldap)
 		{

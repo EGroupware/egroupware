@@ -87,10 +87,6 @@
 		{
 			return '';
 		}
-		if(!is_object($GLOBALS['egw']->categories))
-		{
-			$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-		}
 		$ids = array();
 		foreach(split(' *[,;] *',$cats) as $cat)
 		{

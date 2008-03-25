@@ -37,6 +37,13 @@ class boaddressbook
 	 * @var array
 	 */
 	var $mapping=array();
+	
+	/**
+	 * User agent: 'KDE-AddressBook', 'eGWOSync', ...
+	 *
+	 * @var string
+	 */
+	var $user_agent;
 
 	/**
 	 * Contstructor
@@ -45,11 +52,7 @@ class boaddressbook
 	 */
 	function boaddressbook()
 	{
-		if (!is_object($GLOBALS['egw']->contacts))
-		{
-			$GLOBALS['egw']->contacts =& new contacts();
-		}
-		$this->contacts =& $GLOBALS['egw']->contacts;
+		$this->contacts = $GLOBALS['egw']->contacts;
 
 		// are we called via xmlrpc?
 		if (!is_object($GLOBALS['server']) || !$GLOBALS['server']->last_method)
@@ -152,7 +155,7 @@ class boaddressbook
 	function set_mapping_for_user_agent()
 	{
 		//error_log("set_mapping_for_user_agent(): HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]'");
-		switch($_SERVER['HTTP_USER_AGENT'])
+		switch($this->user_agent = $_SERVER['HTTP_USER_AGENT'])
 		{
 			case 'KDE-AddressBook':
 				$this->mapping = array(
@@ -353,7 +356,14 @@ class boaddressbook
 	{
 		$read_customfields = !isset($param['customfields']) || $param['customfields'];
 		
-		return $this->data2xmlrpc($this->contacts->old_read(
+		$extra_accounts = array();
+		if ($this->user_agent == 'KDE-AddressBook' && strpos($this->contacts->contact_repository,$this->contacts->account_repository) === false)
+		{
+			$extra_accounts = $this->contacts->search(array(),false,'','','',false,'AND',false,array(
+				'contact_owner' => 0,
+			));
+		}
+		return $this->data2xmlrpc(array_merge($this->contacts->old_read(
 			(int) $param['start'],
 			(int) $param['limit'],
 			$param['fields'],
@@ -363,7 +373,7 @@ class boaddressbook
 			$param['order'],
 			$param['lastmod'] ? $param['lastmod'] : -1,
 			$param['cquery']
-		),$read_customfields);
+		),$extra_accounts),$read_customfields);
 	}
 
 	/**

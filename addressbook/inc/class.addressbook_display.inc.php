@@ -39,9 +39,9 @@ function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 		$query['template'] = $query['sitemgr_display'].'.rows';
 		
 		foreach($query['fields'] as $name)
-			{
+		{
 			$rows['show'][$name]=true;
-			}
+		}
 			
 		return $total;
 
@@ -88,7 +88,7 @@ function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 				'csv_fields'     => false,
 			);
 		
-		$content['nm1']['fields'] = $fields;
+			$content['nm1']['fields'] = $fields;
 		}
 		
 		return $tpl->exec('addressbook.addressbook_display.display',$content,$sel_options,$readonlys,$preserv);

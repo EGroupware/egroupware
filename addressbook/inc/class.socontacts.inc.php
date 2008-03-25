@@ -561,10 +561,6 @@ class socontacts
 		// the nextmatch custom-filter-header country-select returns a 2 letter country-code
 		if (isset($filter['adr_one_countryname']) && strlen($filter['adr_one_countryname']) == 2)
 		{
-			if (!is_object($GLOBALS['egw']->country))
-			{
-				$GLOBALS['egw']->country =& CreateObject('phpgwapi.country');
-			}
 			$filter['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($filter['adr_one_countryname']);
 		}
 		$backend =& $this->get_backend(null,$filter['owner']);

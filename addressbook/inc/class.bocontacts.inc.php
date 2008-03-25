@@ -1011,11 +1011,6 @@ class bocontacts extends socontacts
 		}
 		if (!$this->save($target)) return 0;
 		
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			require_once(EGW_API_INC.'/class.bolink.inc.php');
-			$GLOBALS['egw']->link =& new bolink();
-		}
 		$success = 1;
 		foreach($contacts as $contact)
 		{
@@ -1133,11 +1128,6 @@ class bocontacts extends socontacts
 	 */
 	function addr_format_by_country($country)
 	{
-		if (!is_object($GLOBALS['egw']->country))
-		{
-			require_once(EGW_API_INC.'/class.country.inc.php');
-			$GLOBALS['egw']->country =& new country;
-		}
 		$code = $GLOBALS['egw']->country->country_code($country);
 
 		switch($code)

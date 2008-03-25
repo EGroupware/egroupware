@@ -114,10 +114,6 @@ class csv_export
 		}
 		if ($data['tel_prefer']) $data['tel_prefer'] = $fields[$data['tel_prefer']];
 		
-		if (!is_object($GLOBALS['egw']->categories))
-		{
-			$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories','addressbook');
-		}		
 		$cats = array();
 		foreach(explode(',',$data['cat_id']) as $cat_id)
 		{

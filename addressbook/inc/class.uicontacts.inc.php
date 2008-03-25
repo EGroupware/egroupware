@@ -674,7 +674,6 @@ class uicontacts extends bocontacts
 						}
 						if($email)
 						{
-							if(!@is_object($GLOBALS['egw']->js)) $GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 							$GLOBALS['egw']->js->set_onload("addEmail('".addslashes(
 								$contact['n_fn'] ? $contact['n_fn'].' <'.$email.'>' : $email)."');");
 							$Ok = true;
@@ -1120,10 +1119,6 @@ class uicontacts extends bocontacts
 		}
 		if ($query['cat_id'])
 		{
-			if (!is_object($GLOBALS['egw']->categories))
-			{
-				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-			}
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Category').' '.$GLOBALS['egw']->categories->id2name($query['cat_id']);
 		}
 		if ($query['searchletter'])
@@ -1343,11 +1338,6 @@ class uicontacts extends bocontacts
 				}
 				elseif ($GLOBALS['egw_info']['user']['preferences']['common']['country'])
 				{
-					if (!is_object($GLOBALS['egw']->country))
-					{
-						require_once(EGW_API_INC.'/class.country.inc.php');
-						$GLOBALS['egw']->country =& new country;
-					}
 					$content['adr_one_countryname'] = 
 						$GLOBALS['egw']->country->get_full_name($GLOBALS['egw_info']['user']['preferences']['common']['country']);
 				}
@@ -1466,7 +1456,7 @@ class uicontacts extends bocontacts
 			{
 				$sel_options['tid'][$type] = $data['name'];
 			}
-			$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+			$content['typegfx'] = html::image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
 		}
 		else
 		{
@@ -1664,7 +1654,7 @@ $readonlys['button[vcard]'] = true;
 			{
 				$sel_options['tid'][$type] = $data['name'];
 			}
-			$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+			$content['typegfx'] = html::image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
 		}
 		else
 		{

@@ -51,11 +51,7 @@ function own_account_acl($config)
 			$fields['#'.$name] = $data['label'];
 		}
 	}
-	if (!is_object($GLOBALS['egw']->html))
-	{
-		$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-	}
-	return $GLOBALS['egw']->html->checkbox_multiselect('newsettings[own_account_acl]',$config['own_account_acl'],$fields,true,'',4);
+	return html::checkbox_multiselect('newsettings[own_account_acl]',$config['own_account_acl'],$fields,true,'',4);
 }
 
 function org_fileds_to_update($config)
@@ -85,6 +81,6 @@ function org_fileds_to_update($config)
 	{
 		$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 	}
-	return $GLOBALS['egw']->html->checkbox_multiselect('newsettings[org_fileds_to_update]',
+	return html::checkbox_multiselect('newsettings[org_fileds_to_update]',
 		$config['org_fileds_to_update'] ? $config['org_fileds_to_update'] : $bocontacts->org_fields,$fields,true,'',4);
 }
