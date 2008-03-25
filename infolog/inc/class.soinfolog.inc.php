@@ -799,12 +799,12 @@ class soinfolog 				// DB-Layer
 
 				$ids[$info['info_id']] = $info;
 			}
-			if ($ids && $query['custom_fields'])
+			if ($ids && ($query['custom_fields'] || $query['csv_export']))
 			{
 				$this->db->select($this->extra_table,'*',array('info_id'=>array_keys($ids)),__LINE__,__FILE__);
 				while ($row = $this->db->row(true))
 				{
-					if ((isset($row['info_extra_value'])&&strlen($row['info_extra_value'])>0) && 
+					if ($query['csv_export'] || (isset($row['info_extra_value'])&&strlen($row['info_extra_value'])>0) && 
 						(stripos($query['selectcols'],'#'.$row['info_extra_name'])!==FALSE || !isset($query['selectcols']) || 
 						(stripos($query['selectcols'],'#')===FALSE && stripos($query['selectcols'],'customfields')!==FALSE) ))
 					{
