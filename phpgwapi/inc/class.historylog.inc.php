@@ -26,8 +26,13 @@
  */
 class historylog
 {
+	/**
+	 * Reference to the global db object
+	 *
+	 * @var egw_db
+	 */
 	var $db;
-	var $table = 'egw_history_log';
+	const TABLE = 'egw_history_log';
 	/**
 	 * App.name this class is instanciated for / working on
 	 *
@@ -66,17 +71,11 @@ class historylog
 		
 		if (is_object($GLOBALS['egw_setup']->db))
 		{
-			$this->db = clone($GLOBALS['egw_setup']->db);
+			$this->db = $GLOBALS['egw_setup']->db;
 		}
 		else
 		{
-			$this->db = clone($GLOBALS['egw']->db);
-		}
-		$this->db->set_app('phpgwapi');
-
-		if (!is_object($GLOBALS['egw']->datetime))
-		{
-			$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
+			$this->db = $GLOBALS['egw']->db;
 		}
 		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
 	}
@@ -95,7 +94,7 @@ class historylog
 		{
 			$where['history_record_id'] = $record_id;
 		}
-		$this->db->delete($this->table,$where,__LINE__,__FILE__);
+		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
 
 		return $this->db->affected_rows();
 	}
@@ -112,7 +111,7 @@ class historylog
 	{
 		if ($new_value != $old_value)
 		{
-			$this->db->insert($this->table,array(
+			$this->db->insert(self::TABLE,array(
 				'history_record_id' => $record_id,
 				'history_appname'   => $this->appname,
 				'history_owner'     => $GLOBALS['egw_info']['user']['account_id'],
@@ -155,12 +154,11 @@ class historylog
 		}
 		if (!isset($filter['history_appname'])) $filter['history_appname'] = $this->appname;
 
-		$this->db->select($this->table,'*',$filter,__LINE__,__FILE__,false,$orderby);
 		$rows = array();
-		while(($row = $this->db->row(true,'history_')))
+		foreach($this->db->select(self::TABLE,'*',$filter,__LINE__,__FILE__,false,$orderby) as $row)
 		{
-			$row['user_ts'] = $this->db->from_timestamp($row['timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-			$rows[] = $row;
+			$row['user_ts'] = $this->db->from_timestamp($row['history_timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+			$rows[] = egw_db::strip_array_keys($row,'history_');
 		}
 		return $rows;
 	}
@@ -209,17 +207,16 @@ class historylog
 			$where[] = '('.implode(' OR ',$to_or).')';
 		}
 		
-		$this->db->select($this->table,'*',$where,__LINE__,__FILE__,false,$orderby);
-		while ($this->db->next_record())
+		foreach($this->db->select(self::TABLE,'*',$where,__LINE__,__FILE__,false,$orderby) as $row)
 		{
 			$return_values[] = array(
-				'id'         => $this->db->f('history_id'),
-				'record_id'  => $this->db->f('history_record_id'),
-				'owner'      => $GLOBALS['egw']->accounts->id2name($this->db->f('history_owner')),
-				'status'     => str_replace(' ','',$this->db->f('history_status')),
-				'new_value'  => $this->db->f('history_new_value'),
-				'old_value'  => $this->db->f('history_old_value'),
-				'datetime'   => $this->db->from_timestamp($this->db->f('history_timestamp'))
+				'id'         => $row['history_id'],
+				'record_id'  => $row['history_record_id'],
+				'owner'      => $GLOBALS['egw']->accounts->id2name($row['history_owner']),
+				'status'     => str_replace(' ','',$row['history_status']),
+				'new_value'  => $row['history_new_value'],
+				'old_value'  => $row['history_old_value'],
+				'datetime'   => $this->db->from_timestamp($row['history_timestamp']),
 			);
 		}
 		return $return_values;
