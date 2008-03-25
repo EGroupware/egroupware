@@ -58,7 +58,7 @@ class auth extends auth_
 	 *
 	 * @param $password password to encrypt
 	 */
-	function encrypt_password($password,$sql=False)
+	static function encrypt_password($password,$sql=False)
 	{
 		if($sql)
 		{
