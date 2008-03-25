@@ -431,11 +431,7 @@
 			$GLOBALS['egw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
 				. ($cat['access'] == 'private' ? ' checked' : '') . '>');
 
-			if (!is_object($GLOBALS['egw']->html))
-			{
-				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-			}
-			$GLOBALS['egw']->template->set_var('color',$GLOBALS['egw']->html->inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
+			$GLOBALS['egw']->template->set_var('color',html::inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
 
 			$options = '<option value=""'.(!$cat['data']['icon'] ? ' selected="1"':'').'>'.lang('none')."</options>\n";
 			foreach ($this->icons as $icon)
