@@ -428,10 +428,6 @@ class uitimesheet extends botimesheet
 		// category filter: cat_id or ''=All cats or 0=No cat
 		if ($query['cat_id'])
 		{
-			if (!is_object($GLOBALS['egw']->categories))
-			{
-				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-			}
 			$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
 			$query['col_filter']['cat_id'] = count($cats) > 1 ? $cats : $query['cat_id'];
 		}
@@ -491,10 +487,6 @@ class uitimesheet extends botimesheet
 			}
 			if ($query['filter'] == 'custom')	// show the custome dates
 			{
-				if (!is_object($GLOBALS['egw']->js))
-				{
-					$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-				}
 				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
 			}
 		}
