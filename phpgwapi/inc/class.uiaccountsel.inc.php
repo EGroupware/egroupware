@@ -38,11 +38,11 @@ class uiaccountsel extends accounts
 	 */
 	var $account_selection;
 	/**
-	 * Reference to the html-class
+	 * Reference to global accounts object
 	 *
-	 * @var html
+	 * @var accounts
 	 */
-	var $html;
+	var $accounts;
 
 	/**
 	 * Constructor
@@ -51,7 +51,7 @@ class uiaccountsel extends accounts
 	 */
 	function uiaccountsel()
 	{
-		$this->accountsClass = accounts::getInstance();
+		$this->accounts = $GLOBALS['egw']->accounts;
 
 		$this->account_selection = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 		// admin group should NOT get limited by none or groupmembers, we use primary_group instead
@@ -60,11 +60,6 @@ class uiaccountsel extends accounts
 		{
 			$this->account_selection = 'primary_group';
 		}
-		if (!is_object($GLOBALS['egw']->html))
-		{
-			$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-		}
-		$this->html = $GLOBALS['egw']->html;
 	}
 
 	/**
@@ -106,7 +101,7 @@ class uiaccountsel extends accounts
 		}
 		if ($this->account_selection == 'none')	// dont show user-selection at all!
 		{
-			return $this->html->input_hidden($name,$selected);
+			return html::input_hidden($name,$selected);
 		}
 		if (!is_array($selected))
 		{
@@ -162,12 +157,12 @@ class uiaccountsel extends accounts
 				}
 				else
 				{
-					$memberships = $this->accountsClass->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+					$memberships = $this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 				}
 				$select = count($selected) && !isset($selected[0]) ? array_keys($selected) : $selected;
 				foreach($memberships as $gid)
 				{
-					foreach($this->accountsClass->members($gid,true) as $member)
+					foreach($this->accounts->members($gid,true) as $member)
 					{
 						if (!in_array($member,$select)) $select[] = $member;			
 					}
@@ -176,7 +171,7 @@ class uiaccountsel extends accounts
 				{
 					if ($account_sel == 'primary_group')
 					{
-						$memberships = $this->accountsClass->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+						$memberships = $this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 					}
 					$select = array_merge($select,$memberships);
 				}
@@ -207,7 +202,7 @@ class uiaccountsel extends accounts
 			{
 				$already_selected[$id] = $GLOBALS['egw']->common->grab_owner_name($id);
 			}
-			elseif ($this->accountsClass->get_type($id) == 'u')
+			elseif ($this->accounts->get_type($id) == 'u')
 			{
 				$users[$id] = !is_array($val) ? $GLOBALS['egw']->common->grab_owner_name($id) :
 					$GLOBALS['egw']->common->display_fullname(
@@ -278,13 +273,13 @@ class uiaccountsel extends accounts
 			);	
 		}
 		//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
-		$html = $this->html->select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
+		$html = html::select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
 
 		if (!$only_groups && ($lines > 0 && $this->account_selection == 'popup' || $lines > 1 && $this->account_selection == 'primary_group'))
 		{
 			$js = "window.open('$link','uiaccountsel','$popup_options'); return false;";
-			$html .= $this->html->submit_button('search','Search accounts',$js,false,
-				' title="'.$this->html->htmlspecialchars(lang('Search accounts')).'"','search','phpgwapi');
+			$html .= html::submit_button('search','Search accounts',$js,false,
+				' title="'.html::htmlspecialchars(lang('Search accounts')).'"','search','phpgwapi');
 			$need_js_popup = True;
 		}
 		elseif (!$only_groups && ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group'))
@@ -293,7 +288,7 @@ class uiaccountsel extends accounts
 			if (!in_array($this->account_selection,array('groupmembers','selectbox')))	// no popup!
 			{
 				$js .= " this.src='".$GLOBALS['egw']->common->image('phpgwapi','search')."'; this.title='".
-					$this->html->htmlspecialchars(lang('Search accounts'))."';} else {window.open('$link','uiaccountsel','$popup_options');";
+					html::htmlspecialchars(lang('Search accounts'))."';} else {window.open('$link','uiaccountsel','$popup_options');";
 				$need_js_popup = True;
 			}
 			else
@@ -301,8 +296,8 @@ class uiaccountsel extends accounts
 				$js .= " this.style.display='none'; selectBox.style.width='100%';";
 			}
 			$js .= "} return false;";
-			$html .= $this->html->submit_button('search','Select multiple accounts',$js,false,
-				' title="'.$this->html->htmlspecialchars(lang('Select multiple accounts')).'"','users','phpgwapi');
+			$html .= html::submit_button('search','Select multiple accounts',$js,false,
+				' title="'.html::htmlspecialchars(lang('Select multiple accounts')).'"','users','phpgwapi');
 		}
 		if($need_js_popup && !$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'])
 		{
@@ -397,10 +392,6 @@ function addOption(id,label,value,do_onchange)
 
 		if ($multiple >= 1)
 		{
-			if (!is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->set_onload("copyOptions('$element_id');");
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('search or select accounts');
@@ -437,9 +428,9 @@ function addOption(id,label,value,do_onchange)
 
 		if ($app)
 		{
-			$app_groups = $this->accountsClass->split_accounts($app,'groups');
+			$app_groups = $this->accounts->split_accounts($app,'groups');
 		}
-		$all_groups = $this->accountsClass->search(array(
+		$all_groups = $this->accounts->search(array(
 			'type' => 'groups',
 		));
 		foreach($all_groups as $group)
@@ -476,7 +467,7 @@ function addOption(id,label,value,do_onchange)
 		$link_data['group_id'] = $group_id;		// reset it
 
 // --------------------------------- nextmatch ---------------------------
-		$users = $this->accountsClass->search(array(
+		$users = $this->accounts->search(array(
 			'type' => $group_id ? $group_id : $use,
 			'app' => $app,
 			'start' => $start,
@@ -487,11 +478,11 @@ function addOption(id,label,value,do_onchange)
 		));
 
 		$GLOBALS['egw']->template->set_var(array(
-			'left'  => $this->nextmatchs->left('/index.php',$start,$this->accountsClass->total,$link_data+array('query'=>$query)),
-			'right' => $this->nextmatchs->right('/index.php',$start,$this->accountsClass->total,$link_data+array('query'=>$query)),
+			'left'  => $this->nextmatchs->left('/index.php',$start,$this->accounts->total,$link_data+array('query'=>$query)),
+			'right' => $this->nextmatchs->right('/index.php',$start,$this->accounts->total,$link_data+array('query'=>$query)),
 			'lang_showing' => ($group_id ? $GLOBALS['egw']->common->grab_owner_name($group_id).': ' : '').
-				($query ? lang("Search %1 '%2'",lang($this->accountsClass->query_types[$query_type]),$query).': ' : '')
-				.$this->nextmatchs->show_hits($this->accountsClass->total,$start),
+				($query ? lang("Search %1 '%2'",lang($this->accounts->query_types[$query_type]),$query).': ' : '')
+				.$this->nextmatchs->show_hits($this->accounts->total,$start),
 		));
 
 // -------------------------- end nextmatch ------------------------------------
@@ -519,8 +510,8 @@ function addOption(id,label,value,do_onchange)
 			$GLOBALS['egw']->template->fp('list','accounts_list',True);
 		}
 
-		$GLOBALS['egw']->template->set_var('accountsel_icon',$this->html->image('phpgwapi','users-big'));
-		$GLOBALS['egw']->template->set_var('query_type',is_array($this->accountsClass->query_types) ? $this->html->select('query_type',$query_type,$this->accountsClass->query_types) : '');
+		$GLOBALS['egw']->template->set_var('accountsel_icon',html::image('phpgwapi','users-big'));
+		$GLOBALS['egw']->template->set_var('query_type',is_array($this->accounts->query_types) ? html::select('query_type',$query_type,$this->accounts->query_types) : '');
 
 		$link_data['query_type'] = 'start';
 		$letters = lang('alphabet');
@@ -563,8 +554,8 @@ function addOption(id,label,value,do_onchange)
 		if ($multiple)
 		{
 			$GLOBALS['egw']->template->set_var(array(
-				'selection' => $this->html->select('selected',False,array(),True,' id="uiaccountsel_popup_selection" style="width: 100%;"',13),
-				'remove' => $this->html->submit_button('remove','remove',
+				'selection' => html::select('selected',False,array(),True,' id="uiaccountsel_popup_selection" style="width: 100%;"',13),
+				'remove' => html::submit_button('remove','remove',
 					"removeSelectedOptions('$element_id'); return false;",True,' title="'.lang('Remove selected accounts').'"','delete'),
 			));
 		}
