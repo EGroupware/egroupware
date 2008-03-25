@@ -137,10 +137,6 @@
 					break;
 
 				case 'select-country':	// #Row|Extralabel,1=use country name, 0=use 2 letter-code
-					if (!is_object($GLOBALS['egw']->country))
-					{
-						$GLOBALS['egw']->country =& CreateObject('phpgwapi.country');
-					}
 					$cell['sel_options'] = $GLOBALS['egw']->country->countries();
 
 					if (($extension_data['country_use_name'] = $type) && $value)
@@ -155,19 +151,11 @@
 					break;
 
 				case 'select-state':
-					if (!is_object($GLOBALS['egw']->country))
-					{
-						$GLOBALS['egw']->country =& CreateObject('phpgwapi.country');
-					}
 					$cell['sel_options'] = $GLOBALS['egw']->country->us_states();
 					$cell['no_lang'] = True;
 					break;
 
 				case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app
-					if (!is_object($GLOBALS['egw']->categories))
-					{
-						$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-					}
 					if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 					{
 						$cell['no_lang'] = True;
@@ -242,11 +230,6 @@
 					}
 					if ($this->ui == 'html' && $type != 'groups')	// use eGW's new account-selection (html only)
 					{
-						if (!is_object($GLOBALS['egw']->uiaccountsel))
-						{
-							require_once(EGW_API_INC.'/class.uiaccountsel.inc.php');
-							$GLOBALS['egw']->uiaccountsel =& new uiaccountsel;
-						}
 						$not = array_slice(explode(',',$cell['size']),4);
 						$help = (int)$cell['no_lang'] < 2 ? lang($cell['help']) : $cell['help'];
 						$onFocus = "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
@@ -556,10 +539,6 @@
 				case 'select-country':
 					if ($extension_data['country_use_name'] && $value_in)
 					{
-						if (!is_object($GLOBALS['egw']->country))
-						{
-							$GLOBALS['egw']->country =& CreateObject('phpgwapi.country');
-						}
 						if (($value = $GLOBALS['egw']->country->get_full_name($value_in)))
 						{
 							break;

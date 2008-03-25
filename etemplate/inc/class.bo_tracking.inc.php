@@ -452,12 +452,7 @@ class bo_tracking
 	 */
 	function get_title($data,$old)
 	{
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			require_once(EGW_API_INC.'/class.bolink.inc.php');
-			$GLOBALS['egw']->link =& new bolink();
-		}
-		return $GLOBALS['egw']->link->title($this->app,$data[$this->id_field]);
+		return egw_link::title($this->app,$data[$this->id_field]);
 	}
 
 	/**
@@ -471,12 +466,7 @@ class bo_tracking
 	 */
 	function get_subject($data,$old)
 	{
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			require_once(EGW_API_INC.'/class.bolink.inc.php');
-			$GLOBALS['egw']->link =& new bolink();
-		}
-		return $GLOBALS['egw']->link->title($this->app,$data[$this->id_field]);
+		return egw_link::title($this->app,$data[$this->id_field]);
 	}
 
 	/**
@@ -514,15 +504,10 @@ class bo_tracking
 		}
 		else
 		{
-			if (!is_object($GLOBALS['egw']->link))
-			{
-				require_once(EGW_API_INC.'/class.bolink.inc.php');
-				$GLOBALS['egw']->link =& new bolink();
-			}
-			if (($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])))
+			if (($view = egw_link::view($this->app,$data[$this->id_field])))
 			{
 				$link = $GLOBALS['egw']->link('/index.php',$view);
-				$popup = $GLOBALS['egw']->link->is_popup($this->app,'view');
+				$popup = egw_link::is_popup($this->app,'view');
 			}
 		}
 		if ($link{0} == '/')
@@ -553,10 +538,10 @@ class bo_tracking
 		{
 			$GLOBALS['egw']->link = new bolink();
 		}
-		if($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])) {
+		if($view = egw_link::view($this->app,$data[$this->id_field])) {
 			return array(	'text' 	=> $this->get_title($data,$old),
 							'view' 	=> $view,
-							'popup'	=> $GLOBALS['egw']->link->is_popup($this->app,'view'),
+							'popup'	=> egw_link::is_popup($this->app,'view'),
 							);
 		}
 		return false;

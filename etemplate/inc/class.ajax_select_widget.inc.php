@@ -177,9 +177,6 @@
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 			
 			// JavaScript
-			if(!is_object($GLOBALS['egw']->js)) {
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$options = $GLOBALS['egw']->js->convert_phparray_jsarray("options['$name']", $options, true);
 			$GLOBALS['egw']->js->set_onload("if(!options) { 
 					var options = new Object();

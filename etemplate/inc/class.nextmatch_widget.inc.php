@@ -972,10 +972,6 @@
 							case 'select-cat':
 								if ($val)
 								{
-									if (!is_object($GLOBALS['egw']->categories))
-									{
-										$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-									}
 									$value[$key] = $GLOBALS['egw']->categories->id2name($val);
 								}
 								break;

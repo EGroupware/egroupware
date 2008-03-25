@@ -68,10 +68,6 @@ class historylog_widget
 		}
 		else // compatibilty code for 1.2, can be removed after
 		{
-			if (!is_object($GLOBALS['egw']->datetime))
-			{
-				$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
-			}
 			$value = $historylog->return_array('','','history_id','DESC',$id);
 			foreach($value as $key => $val)
 			{

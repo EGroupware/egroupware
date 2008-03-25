@@ -66,10 +66,6 @@ class tree_widget
 		switch ($cell['type'])
 		{
 			case 'tree-cat':	// !$type == globals cats too, $type2: not used, $type3: application, if not current-app
-				if (!is_object($GLOBALS['egw']->categories))
-				{
-					$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-				}
 				if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 				{
 					$cell['no_lang'] = True;

@@ -64,10 +64,6 @@
 		{
 			if ($ui == 'html')
 			{
-				if (!is_object($GLOBALS['egw']->jscalendar))
-				{
-					$GLOBALS['egw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
-				}
 				$this->jscal =& $GLOBALS['egw']->jscalendar;
 			}
 			$this->timeformat = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];

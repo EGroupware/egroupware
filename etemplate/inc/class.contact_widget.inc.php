@@ -57,10 +57,7 @@ class contact_widget
 	function contact_widget($ui)
 	{
 		$this->ui = $ui;
-		if (!is_object($GLOBALS['egw']->contacts))
-		{
-			$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
-		}
+
 		$this->contacts =& $GLOBALS['egw']->contacts;
 	}
 
