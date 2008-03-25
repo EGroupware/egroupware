@@ -1364,11 +1364,7 @@ class bocal
 		{
 			if (!is_numeric($id))
 			{
-				if (!is_object($GLOBALS['egw']->link))
-				{
-					$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
-				}
-				$id2lid[$id] = $GLOBALS['egw']->link->title($this->resources[$id{0}]['app'],substr($id,1));
+				$id2lid[$id] = egw_link::title($this->resources[$id{0}]['app'],substr($id,1));
 			}
 			else
 			{
@@ -1396,23 +1392,19 @@ class bocal
 
 			if (!$long_status)
 			{
-				if (!is_object($GLOBALS['egw']->html))
-				{
-					$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-				}
 				switch($status)
 				{
 					case 'A':	// accepted
-						$status = $GLOBALS['egw']->html->image('calendar','agt_action_success',$this->verbose_status[$status]);
+						$status = html::image('calendar','agt_action_success',$this->verbose_status[$status]);
 						break;
 					case 'R':	// rejected
-						$status = $GLOBALS['egw']->html->image('calendar','agt_action_fail',$this->verbose_status[$status]);
+						$status = html::image('calendar','agt_action_fail',$this->verbose_status[$status]);
 						break;
 					case 'T':	// tentative
-						$status = $GLOBALS['egw']->html->image('calendar','tentative',$this->verbose_status[$status]);
+						$status = html::image('calendar','tentative',$this->verbose_status[$status]);
 						break;
 					case 'U':	// no response = unknown
-						$status = $GLOBALS['egw']->html->image('calendar','cnr-pending',$this->verbose_status[$status]);
+						$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
 						break;
 					case 'G':	// group invitation
 						// Todo: Image, seems not to be used

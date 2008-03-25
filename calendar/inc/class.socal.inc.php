@@ -219,10 +219,6 @@ class socal
 		{
 			if (!is_array($cat_ids) && !@$GLOBALS['egw_info']['user']['preferences']['common']['cats_no_subs'])
 			{
-				if (!is_object($GLOBALS['egw']->categories))
-				{
-					$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-				}
 				$cats = $GLOBALS['egw']->categories->return_all_children($cat_id);
 			}
 			else
