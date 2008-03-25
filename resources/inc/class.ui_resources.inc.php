@@ -33,15 +33,10 @@ class ui_resources
 	function ui_resources()
 	{
 // 		print_r($GLOBALS['egw_info']); die();
-		$this->tmpl	=& CreateObject('etemplate.etemplate','resources.show');
+		$this->tmpl	= new etemplate('resources.show');
 		$this->bo	=& CreateObject('resources.bo_resources');
-		$this->html	=& $GLOBALS['egw']->html;
 // 		$this->calui	= CreateObject('resources.ui_calviews');
 		
-		if(!@is_object($GLOBALS['egw']->js))
-		{
-			$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-		}
 	}
 
 	/**
@@ -541,7 +536,7 @@ class ui_resources
 				$resources['r'.$data['res_id']] = $data['name'];
 			}
 		}		
-		$selectbox = $this->html->select(
+		$selectbox = html::select(
 			'owner',
 			$selected,
 			array_merge($resources,$res_cats),
