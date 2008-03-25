@@ -1049,10 +1049,6 @@ class boinfolog
 		{
 			return False;
 		}
-		if (!is_object($GLOBALS['egw']->html))
-		{
-			$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-		}
 		$GLOBALS['egw']->translation->add_app('infolog');
 
 		$do_events = $args['location'] == 'calendar_include_events';
@@ -1094,10 +1090,10 @@ class boinfolog
 					$this->status[$info['info_type']][$info['info_status']] => 'infolog',
 				) as $name => $app)
 				{
-					$content[] = $GLOBALS['egw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
+					$content[] = html::image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
 				}
-				$content[] = $GLOBALS['egw']->html->a_href($title,$view);
-				$content = $GLOBALS['egw']->html->table(array(1 => $content));
+				$content[] = html::a_href($title,$view);
+				$content = html::table(array(1 => $content));
 
 				$to_include[] = array(
 					'starttime' => $info['info_startdate'],

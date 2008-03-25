@@ -730,10 +730,6 @@ class soinfolog 				// DB-Layer
 		if ((int)$query['cat_id'])
 		{
 			//$filtermethod .= ' AND info_cat='.intval($query['cat_id']).' ';
-			if (!is_object($GLOBALS['egw']->categories))
-			{
-				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-			}
 			$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
 			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 		}
