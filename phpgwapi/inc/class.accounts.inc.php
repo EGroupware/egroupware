@@ -409,10 +409,6 @@ class accounts
 			{
 				if (!$data['person_id']) $data['person_id'] = $old['person_id'];
 
-				if (!is_object($GLOBALS['egw']->contacts))
-				{
-					$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
-				}
 				$contact = array(
 					'n_given'    => $data['account_firstname'],
 					'n_family'   => $data['account_lastname'],
