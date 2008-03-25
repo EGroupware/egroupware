@@ -548,13 +548,9 @@ class accounts_ldap
 		
 		if (isset($data['account_passwd']) && $data['account_passwd'])
 		{
-			if(!@is_object($GLOBALS['egw']->auth))
-			{
-				$GLOBALS['egw']->auth =& CreateObject('phpgwapi.auth');
-			}
 			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']))	// if it's not already entcrypted, do so now
 			{
-				$data['account_passwd'] = $GLOBALS['egw']->auth->encrypt_ldap($data['account_passwd']);
+				$data['account_passwd'] = auth::encrypt_ldap($data['account_passwd']);
 			}
 			$to_write['userpassword'] = $data['account_passwd'];
 		}
