@@ -85,17 +85,12 @@ class addressbook_merge	// extends bo_merge
 				case 'cat_id':
 					if ($value)
 					{
-						if (!is_object($GLOBALS['egw']->cats))
-						{
-							require_once(EGW_API_INC.'/class.categories.inc.php');
-							$GLOBALS['egw']->cats =& new categories;
-						}
 						// if cat-tree is displayed, we return a full category path not just the name of the cat
 						$use = $GLOBALS['egw_info']['server']['cat_tab'] == 'Tree' ? 'path' : 'name';
 						$cats = array();
 						foreach(is_array($value) ? $value : explode(',',$value) as $cat_id)
 						{
-							$cats[] = $GLOBALS['egw']->cats->id2name($cat_id,$use);
+							$cats[] = $GLOBALS['egw']->categories->id2name($cat_id,$use);
 						}
 						$value = implode(', ',$cats);
 					}
