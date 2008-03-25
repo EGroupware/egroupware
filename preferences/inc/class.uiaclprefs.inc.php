@@ -18,16 +18,6 @@
 
 		var $public_functions = array('index' => True);
 
-		function uiaclprefs()
-		{
-			$GLOBALS['egw']->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
-
-			if (!is_object($GLOBALS['egw']->html))
-			{
-				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-			}
-		}
-
 		function index()
 		{
 			$query_types = array(
@@ -190,7 +180,7 @@
 				'lang_save'   => lang('Save'),
 				'lang_apply'  => lang('Apply'),
 				'lang_cancel' => lang('Cancel'),
-				'common_hidden_vars_form' => $GLOBALS['egw']->html->input_hidden($common_hidden_vars)
+				'common_hidden_vars_form' => html::input_hidden($common_hidden_vars)
 			);
 			$this->template->set_var($var);
 
@@ -257,15 +247,15 @@
 				'owner'			=> $owner,
 				'referer'       => $referer,
 				'search_type' => is_array($query_types) ? $search_type : '',
-				'search_value' => isset($query) && $query ? $GLOBALS['egw']->html->htmlspecialchars($query) : '',
-				'query' => isset($query) && $query ? $GLOBALS['egw']->html->htmlspecialchars($query) : '',
+				'search_value' => isset($query) && $query ? html::htmlspecialchars($query) : '',
+				'query' => isset($query) && $query ? html::htmlspecialchars($query) : '',
 			);
 			$var = Array(
 				'nml'          => $GLOBALS['egw']->nextmatchs->left('/index.php',$start,$totalentries,$extra_parms),
 				'nmr'          => $GLOBALS['egw']->nextmatchs->right('/index.php',$start,$totalentries,$extra_parms),
 				'lang_groups' => lang('showing %1 - %2 of %3',$start+1,$start+$shownentries,$totalentries),
-				'search_type' => is_array($query_types) ? $GLOBALS['egw']->html->select('search_type',$search_type,$query_types) : '',				
-				'search_value' => isset($query) && $query ? $GLOBALS['egw']->html->htmlspecialchars($query) : '',
+				'search_type' => is_array($query_types) ? html::select('search_type',$search_type,$query_types) : '',				
+				'search_value' => isset($query) && $query ? html::htmlspecialchars($query) : '',
 				'search'       => lang('search'),
 				'processed'    => urlencode(serialize($processed))
 			);
