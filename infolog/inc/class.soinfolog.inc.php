@@ -659,8 +659,8 @@ class soinfolog 				// DB-Layer
 			}
 		}
 		$sortbycf='';
-		if (!empty($query['order']) && (eregi('^[a-z_0-9, ]+$',$query['order']) || stripos($query['order'],'#')!==FALSE ) && 
-			(empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
+		if (!empty($query['order']) && (preg_match('/^[a-z_0-9, ]+$/i',$query['order']) || stripos($query['order'],'#')!==FALSE ) && 
+			(empty($query['sort']) || preg_match('/^(DESC|ASC)$/i',$query['sort'])))
 		{
 			$order = array();
 			foreach(explode(',',$query['order']) as $val)
@@ -698,7 +698,7 @@ class soinfolog 				// DB-Layer
 			foreach($query['col_filter'] as $col => $data)
 			{
 				if (substr($col,0,5) != 'info_' && substr($col,0,1)!='#') $col = 'info_'.$col;
-				if (!empty($data) && eregi('^[a-z_0-9]+$',$col))
+				if (!empty($data) && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
 					if ($col == 'info_responsible')
 					{
@@ -811,17 +811,18 @@ class soinfolog 				// DB-Layer
 
 				$ids[$info['info_id']] = $info;
 			}
-			if ($ids && $query['custom_fields'] && strchr($query['selectcols'],'#') !== false)
+			if ($ids && ($query['custom_fields'] && strchr($query['selectcols'],'#') !== false || $query['csv_export']))
 			{
-				$names = array();
-				foreach(explode(',',$query['selectcols']) as $col)
+				$where = array('info_id' => array_keys($ids));
+				if (!$query['csv_export'])
 				{
-					if ($col[0] == '#') $names[] = substr($col,1);
+					$where['info_extra_name'] = array();
+					foreach(explode(',',$query['selectcols']) as $col)
+					{
+						if ($col[0] == '#') $where['info_extra_name'][] = substr($col,1);
+					}
 				}
-				foreach($this->db->select($this->extra_table,'*',array(
-					'info_id' => array_keys($ids),
-					'info_extra_name' => $names,
-				),__LINE__,__FILE__) as $row)
+				foreach($this->db->select($this->extra_table,'*',$where,__LINE__,__FILE__) as $row)
 				{
 					$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
 				}
