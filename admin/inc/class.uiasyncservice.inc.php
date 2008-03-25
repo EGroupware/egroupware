@@ -27,13 +27,6 @@
 		var $public_functions = array(
 			'index' => True,
 		);
-		function uiasyncservice()
-		{
-			if (!is_object($GLOBALS['egw']->asyncservice))
-			{
-				$GLOBALS['egw']->asyncservice =& CreateObject('phpgwapi.asyncservice');
-			}
-		}
 
 		function index()
 		{
@@ -42,10 +35,7 @@
 				$GLOBALS['egw']->redirect_link('/index.php');
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Asynchronous timed services');
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
+
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
@@ -211,10 +201,6 @@
 		
 		function test($to)
 		{
-			if (!is_object($GLOBALS['egw']->send))
-			{
-				$GLOBALS['egw']->send =& CreateObject('phpgwapi.send');
-			}
 			$returncode = $GLOBALS['egw']->send->msg('email',$to,$subject='Asynchronous timed services','Greatings from cron ;-)');
 
 			if (!$returncode)	// not nice, but better than failing silently

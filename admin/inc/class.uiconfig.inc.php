@@ -145,10 +145,6 @@
 				$t->set_var('th_err',$GLOBALS['egw_info']['theme']['th_bg']);
 			}
 
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 
 			// set currentapp to our calling app, to show the right sidebox-menu

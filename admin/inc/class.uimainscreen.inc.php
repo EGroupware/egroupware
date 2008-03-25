@@ -15,11 +15,6 @@
 	{
 		var $public_functions = array('index' => True);
 
-		function uimainscreen()
-		{
-			$GLOBALS['egw']->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
-		}
-
 		function index()
 		{
 
@@ -70,10 +65,6 @@
 				default:
 					$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Main screen message');
 					break;
-			}
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 			}
 			if (empty($section))
 			{

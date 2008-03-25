@@ -126,10 +126,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['admin']['title'].' - '.
 				lang('User groups');
@@ -237,8 +233,8 @@
 				'sort'       => $sort
 			);
 			$p->set_var(array(
-				'query' => $GLOBALS['egw']->html->htmlspecialchars($GLOBALS['query']),
-				'query_type' => is_array($query_types) ? $GLOBALS['egw']->html->select('query_type',$_REQUEST['query_type'],$query_types) : '',
+				'query' => html::htmlspecialchars($GLOBALS['query']),
+				'query_type' => is_array($query_types) ? html::select('query_type',$_REQUEST['query_type'],$query_types) : '',
 				//'lang_group' => lang('group'),
 				//'group' => $uiaccountsel->selection('group_id','admin_uiaccount_listusers_group_id',$_REQUEST['group_id'],'groups',0,False,'','this.form.submit();',lang('all')),
 				'accounts_url' => $GLOBALS['egw']->link('/index.php',$link_data),
@@ -288,13 +284,8 @@
 		{
 			if ($GLOBALS['egw']->acl->check('account_access',1,'admin'))
 			{
-				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/admin/index.php'));
+				$GLOBALS['egw']->redirect_link('/admin/index.php');
 			}
-			if (!is_object($GLOBALS['egw']->html))
-			{
-				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-			}
-
 			if($param_cd)
 			{
 				$cd = $param_cd;
@@ -338,10 +329,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['admin']['title'].' - '.
 				lang('User accounts');
@@ -383,7 +370,7 @@
 				'left_next_matchs'   => $this->nextmatchs->left('/index.php',$start,$total,$link_data),
 				'lang_showing' => ($_REQUEST['group_id'] ? $GLOBALS['egw']->common->grab_owner_name($_REQUEST['group_id']).': ' : '').
 					($GLOBALS['query'] ? lang("Search %1 '%2'",lang($uiaccountsel->query_types[$_REQUEST['query_type']]),
-					$GLOBALS['egw']->html->htmlspecialchars($GLOBALS['query'])).': ' : '')
+					html::htmlspecialchars($GLOBALS['query'])).': ' : '')
 					.$this->nextmatchs->show_hits($total,$start),
 				'right_next_matchs'  => $this->nextmatchs->right('/index.php',$start,$total,$link_data),
 				'lang_loginid'       => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data),
@@ -400,8 +387,8 @@
 				'sort'       => $sort,
 			);
 			$p->set_var(array(
-				'query' => $GLOBALS['egw']->html->htmlspecialchars($GLOBALS['query']),
-				'query_type' => is_array($uiaccountsel->query_types) ? $GLOBALS['egw']->html->select('query_type',$_REQUEST['query_type'],$uiaccountsel->query_types) : '',
+				'query' => html::htmlspecialchars($GLOBALS['query']),
+				'query_type' => is_array($uiaccountsel->query_types) ? html::select('query_type',$_REQUEST['query_type'],$uiaccountsel->query_types) : '',
 				'lang_group' => lang('group'),
 				'group' => $uiaccountsel->selection('group_id','admin_uiaccount_listusers_group_id',$_REQUEST['group_id'],'groups',0,False,'','this.form.submit();',lang('all')),
 				'accounts_url' => $GLOBALS['egw']->link('/index.php',$link_data),
@@ -613,10 +600,7 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
+
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
@@ -695,10 +679,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
@@ -949,10 +929,6 @@
 			}
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
@@ -1147,10 +1123,6 @@
 		{
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
@@ -1161,10 +1133,6 @@
 //fix from Maanus 280105
 			$accounts =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 
-			if (!is_object($GLOBALS['egw']->uiaccountsel))
-			{
-				$GLOBALS['egw']->uiaccountsel =& CreateObject('phpgwapi.uiaccountsel');
-			}
 			$p->set_var('accounts',$GLOBALS['egw']->uiaccountsel->selection('account_user[]','admin_uiaccounts_user',$group_info['account_user'],'accounts',min(3+count($group_info['account_user']),10),false,'style="width: 300px;"'));
 
 			$var = Array(
@@ -1199,7 +1167,7 @@
 			{
 				$p->set_var(array(
 					'lang_email' => lang('Email'),
-					'email' => $GLOBALS['egw']->html->input('account_email',$group_repository['account_email'],'',' style="width: 100%;"'),
+					'email' => html::input('account_email',$group_repository['account_email'],'',' style="width: 100%;"'),
 				));
 			}
 			reset($GLOBALS['egw_info']['apps']);
@@ -1264,10 +1232,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 
 			$GLOBALS['egw']->common->egw_header();
@@ -1478,7 +1442,7 @@
 			{
 				array_push($selarray,$value['account_id']);
 			}
-			$t->set_var('groups_select','<div id="groupselector">' .$GLOBALS['egw']->html->checkbox_multiselect('account_groups[]',$selarray,$allGroupsSorted,true,'',min(3+count($allGroupsSorted),10),' style="width: 300px; text-align:left" ').'</div>');
+			$t->set_var('groups_select','<div id="groupselector">' .html::checkbox_multiselect('account_groups[]',$selarray,$allGroupsSorted,true,'',min(3+count($allGroupsSorted),10),' style="width: 300px; text-align:left" ').'</div>');
 
 			/* create list of available apps */
 			$apps =& CreateObject('phpgwapi.applications',$_account_id);
@@ -1589,10 +1553,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
@@ -1630,7 +1590,7 @@
 		{
 			if($GLOBALS['egw']->acl->check('group_access',16,'admin') || $_POST['cancel'])
 			{
-				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+				$GLOBALS['egw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_groups');
 				$GLOBALS['egw']->common->egw_exit();
 			}
 			elseif($_POST['submit'])

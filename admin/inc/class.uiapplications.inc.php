@@ -41,10 +41,6 @@
 			$can_delete = !$GLOBALS['egw']->acl->check('applications_access',8,'admin');
 			
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Installed applications');
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
@@ -220,10 +216,6 @@
 			}
 
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Add new application');
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
@@ -302,10 +294,6 @@
 			}
 
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Edit application');
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
@@ -364,10 +352,6 @@
 
 			$GLOBALS['egw']->template->set_file(array('body' => 'delete_common.tpl'));
 
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
@@ -386,10 +370,6 @@
 			if ($GLOBALS['egw']->acl->check('applications_access',16,'admin'))
 			{
 				$GLOBALS['egw']->redirect_link('/index.php');
-			}
-			if (!is_object($GLOBALS['egw']->hooks))
-			{
-				$GLOBALS['egw']->hooks =& CreateObject('phpgwapi.hooks');
 			}
 			$GLOBALS['egw']->hooks->register_all_hooks();
 			

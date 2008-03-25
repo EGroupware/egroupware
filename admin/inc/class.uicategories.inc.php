@@ -52,10 +52,6 @@
 			$this->acl_delete = !$GLOBALS['egw']->acl->check('global_categories_access',32,'admin');
 			$this->acl_add_sub= !$GLOBALS['egw']->acl->check('global_categories_access',64,'admin');
 
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 
 			$this->appname = get_var('appname',array('GET','POST'));
@@ -418,11 +414,7 @@
 			$this->template->set_var('cat_description',$GLOBALS['egw']->strip_html($cat['description']));
 			$this->template->set_var('category_list',$this->bo->cats->formatted_list(array('selected' => $cat['parent'],'self' => $this->cat_id)));
 
-			if (!is_object($GLOBALS['egw']->html))
-			{
-				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-			}
-			$this->template->set_var('color',$GLOBALS['egw']->html->inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
+			$this->template->set_var('color',html::inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
 
 			//$options = '<option value=""'.(!$cat['data']['icon'] ? ' selected="1"':'').'>'.lang('none')."</options>\n";
 
@@ -517,10 +509,6 @@
 			));
 
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang('Delete category');
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();

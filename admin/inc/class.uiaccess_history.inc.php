@@ -46,10 +46,6 @@
 			$order = get_var('order',array('POST'),0);
 			
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('View access log');
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
