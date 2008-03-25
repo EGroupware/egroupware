@@ -260,22 +260,19 @@
 		 * It's actually a PHP-Bug, that we have to escape space.
 		 * For all other Characters, refer to RFC2254.
 		 * 
+		 * @deprecated use ldap::quote()
 		 * @param $string either a string to be escaped, or an array of values to be escaped
 		 * @return string
 		 */
 		function ldap_addslashes($string='')
 		{
-			// use Lars new ldap class
-			if (!is_object($GLOBALS['egw']->ldap))
-			{
-				$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
-			}
 			return ldap::quote($string);
 		}
 
 		/**
 		 * connect to the ldap server and return a handle
 		 *
+		 * @deprecated use ldap::ldapConnect()
 		 * @param $host ldap host
 		 * @param $dn ldap_root_dn
 		 * @param $passwd ldap_root_pw
@@ -284,10 +281,6 @@
 		function ldapConnect($host='', $dn='', $passwd='')
 		{
 			// use Lars new ldap class
-			if (!is_object($GLOBALS['egw']->ldap))
-			{
-				$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
-			}
 			return $GLOBALS['egw']->ldap->ldapConnect($host,$dn,$passwd);
 		}
 
@@ -1146,15 +1139,12 @@
 		 *
 		 * uses the encryption type set in setup and calls the appropriate encryption functions
 		 *
+		 * @deprecated use auth::encrypt_password()
 		 * @param $password password to encrypt
 		 */
 		function encrypt_password($password,$sql=False)
 		{
-			if(!@is_object($GLOBALS['egw']->auth))
-			{
-				$GLOBALS['egw']->auth =& CreateObject('phpgwapi.auth');
-			}
-			return $GLOBALS['egw']->auth->encrypt_password($password,$sql);
+			return auth::encrypt_password($password,$sql);
 		}
 
 		/**
@@ -1232,11 +1222,6 @@
 		 */
 		function show_date($t = 0, $format = '', $adjust_to_usertime=true)
 		{
-			if(!is_object($GLOBALS['egw']->datetime))
-			{
-				$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
-			}
-
 			if (!$t)
 			{
 				$t = $GLOBALS['egw']->datetime->gmtnow;
