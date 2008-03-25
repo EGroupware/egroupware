@@ -468,10 +468,6 @@ class uiforms extends uical
 			break;
 			
 		case 'freetime':
-			if (!is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			// the "click" has to be in onload, to make sure the button is already created
 			$GLOBALS['egw']->js->set_onload("document.getElementsByName('exec[freetime]')[0].click();");
 			break;
@@ -1290,7 +1286,6 @@ class uiforms extends uical
 			}
 			else
 			{
-				$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
 				$GLOBALS['egw']->browser->content_header('event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				$GLOBALS['egw']->common->egw_exit();
@@ -1313,7 +1308,6 @@ class uiforms extends uical
 			else
 			{
 				$ical =& ExecMethod2('calendar.boical.exportVCal',$events,'2.0'/*$content['version']*/);
-				$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
 				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				$GLOBALS['egw']->common->egw_exit();

@@ -66,12 +66,6 @@ class bocalupdate extends bocal
 
 		$this->bocal();	// calling the parent constructor
 		
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
-		}
-		$this->link =& $GLOBALS['egw']->link;
-
 		if ($this->debug > 0) $this->debug_message('bocalupdate::bocalupdate() finished',True);
 	}
 
@@ -300,7 +294,7 @@ class bocalupdate extends bocal
 
 		}
 		// notify the link-class about the update, as other apps may be subscribt to it
-		$this->link->notify_update('calendar',$cal_id,$event);
+		egw_link::notify_update('calendar',$cal_id,$event);
 
 		return $cal_id;
 	}
@@ -824,7 +818,7 @@ class bocalupdate extends bocal
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
 						
 			// delete all links to the event
-			$this->link->unlink(0,'calendar',$cal_id);
+			egw_link::unlink(0,'calendar',$cal_id);
 		}
 		else
 		{
@@ -908,10 +902,6 @@ class bocalupdate extends bocal
 			'data'	=> $event['description']
 		);
 
-		if (!is_object($GLOBALS['egw']->categories))
-		{
-			$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-		}
 		foreach(explode(',',$event['category']) as $cat_id)
 		{
 			list($cat) = $GLOBALS['egw']->categories->return_single($cat_id);

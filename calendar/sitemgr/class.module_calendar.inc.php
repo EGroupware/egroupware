@@ -23,10 +23,6 @@ class module_calendar extends Module
 
 	function get_content(&$arguments,$properties)
 	{
-		if (!is_object($GLOBALS['egw']->jscalendar))
-		{
-			$GLOBALS['egw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
-		}
 		return $GLOBALS['egw']->jscalendar->flat('#');
 	}
 }

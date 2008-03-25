@@ -231,10 +231,6 @@ class uilist extends uical
 				$label = lang('Before %1',$this->bo->long_date($this->date));
 				break;
 			case 'custom':
-				if (!is_object($GLOBALS['egw']->js))
-				{
-					$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-				}
 				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
 				$this->first = $search_params['start'] = $params['startdate'];
 				$this->last  = $search_params['end'] = $params['enddate'];

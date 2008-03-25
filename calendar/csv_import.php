@@ -99,10 +99,6 @@
 			}
 			else
 			{
-				if (!is_object($GLOBALS['egw']->categories))
-				{
-					$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories','','calendar');
-				}
 				if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
 				{
 					$cat2id[$cat] = $ids[$cat] = $cat;
@@ -121,11 +117,6 @@
 		return implode( ',',$ids );
 	}
 
-	if (!is_object($GLOBALS['egw']->html))
-	{
-		$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-	}
-
 	if ($_POST['next']) $_POST['action'] = 'next';
 	switch ($_POST['action'])
 	{
@@ -135,7 +126,7 @@
 		$GLOBALS['egw']->template->set_var('lang_charset',lang('Charset of file'));
 		$GLOBALS['egw']->template->set_var('lang_help',lang('Please note: You can configure the field assignments AFTER you uploaded the file.'));
 		$GLOBALS['egw']->template->set_var('select_charset',
-			$GLOBALS['egw']->html->select('charset','',
+			html::select('charset','',
 			$GLOBALS['egw']->translation->get_installed_charsets()+
 			array('utf-8' => 'utf-8 (Unicode)'),True));
 		$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
@@ -157,8 +148,8 @@
 		$GLOBALS['egw']->template->set_var('lang_info_fieldname',lang('calendar-Fieldname'));
 		$GLOBALS['egw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
 		$GLOBALS['egw']->template->set_var('submit',
-			$GLOBALS['egw']->html->submit_button('convert','Import') . '&nbsp;'.
-			$GLOBALS['egw']->html->submit_button('cancel','Cancel'));
+			html::submit_button('convert','Import') . '&nbsp;'.
+			html::submit_button('cancel','Cancel'));
 		$GLOBALS['egw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
 		$GLOBALS['egw']->template->parse('rows','fheader');
 
@@ -227,7 +218,7 @@
 		$GLOBALS['egw']->template->parse('rows','ffooter',True);
 		fclose($fp);
 
-		$hiddenvars = $GLOBALS['egw']->html->input_hidden(array(
+		$hiddenvars = html::input_hidden(array(
 			'action'  => 'import',
 			'fieldsep'=> $_POST['fieldsep'],
 			'charset' => $_POST['charset']
@@ -272,7 +263,7 @@
 		$_POST['trans']       = unserialize(stripslashes($_POST['trans']));
 		// fall-through
 	case 'import':
-		$hiddenvars = $GLOBALS['egw']->html->input_hidden(array(
+		$hiddenvars = html::input_hidden(array(
 			'action'  => 'continue',
 			'fieldsep'=> $_POST['fieldsep'],
 			'charset' => $_POST['charset'],
@@ -495,9 +486,9 @@
 			lang('%1 records read (not yet imported, you may go back and uncheck Test Import)',
 			$anz,'','') :
 			lang('%1 records imported',$anz)). '&nbsp;'.
-			(!$_POST['debug'] && $fields ? $GLOBALS['egw']->html->submit_button('next','Import next set') . '&nbsp;':'').
-			$GLOBALS['egw']->html->submit_button('continue','Back') . '&nbsp;'.
-			$GLOBALS['egw']->html->submit_button('cancel','Cancel'));
+			(!$_POST['debug'] && $fields ? html::submit_button('next','Import next set') . '&nbsp;':'').
+			html::submit_button('continue','Back') . '&nbsp;'.
+			html::submit_button('cancel','Cancel'));
 		$GLOBALS['egw']->template->set_var('log',$log);
 		$GLOBALS['egw']->template->parse('rows','imported');
 		break;
