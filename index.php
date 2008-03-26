@@ -122,7 +122,7 @@
 		}
 
 		require_once(EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php');
-		$obj = new $class();
+		$GLOBALS[$class] = $obj = new $class();
 		if((is_array($obj->public_functions) && $obj->public_functions[$method]) && !$invalid_data)
 		{
 			$obj->$method();
