@@ -428,7 +428,7 @@ class uiforms extends uical
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))	
 				{
-					$this->link->link('calendar',$event['id'],$content['link_to']['to_id']);
+					egw_link::link('calendar',$event['id'],$content['link_to']['to_id']);
 				}
 				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => $referer,
@@ -697,7 +697,7 @@ class uiforms extends uical
 			if (!$add_link && !$event['id'] && isset($_GET['link_app']) && isset($_GET['link_id']) &&
 				preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$_GET['link_app'].':'.$_GET['link_id']))	// gard against XSS
 			{
-				$this->link->link('calendar',$link_to_id,$_GET['link_app'],$_GET['link_id']);
+				egw_link::link('calendar',$link_to_id,$_GET['link_app'],$_GET['link_id']);
 			}
 		}
 		$view = $preserv['view'] = $preserv['view'] || $event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event);
@@ -737,7 +737,7 @@ class uiforms extends uical
 				$readonlys[$row.'[status]'] = $readonlys[$row.'[status_recurrence]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 				$content['participants'][$row++]['title'] = $name == 'accounts' ? 
-					$GLOBALS['egw']->common->grab_owner_name($id) : $this->link->title($name,$id);
+					$GLOBALS['egw']->common->grab_owner_name($id) : egw_link::title($name,$id);
 					
 				// enumerate group-invitations, so people can accept/reject them
 				if ($name == 'accounts' && $GLOBALS['egw']->accounts->get_type($id) == 'g' &&
