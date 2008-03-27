@@ -398,6 +398,7 @@ class vcaladdressbook extends bocontacts
 				break;
 
 			case 'nexthaus corporation':
+			case 'nexthaus corp':
 				switch(strtolower($_productName))
 				{
 					case 'syncje outlook edition':

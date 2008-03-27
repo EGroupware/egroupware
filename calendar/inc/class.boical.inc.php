@@ -942,6 +942,7 @@
 			switch(strtolower($_productManufacturer))
 			{
 				case 'nexthaus corporation':
+				case 'nexthaus corp':
 					switch(strtolower($_productName))
 					{
 						default:
@@ -1190,7 +1191,8 @@
 								$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
 								break;
 							case 'PRIORITY':
-								if ($this->productManufacturer == 'nexthaus corporation')
+								if ($this->productManufacturer == 'nexthaus corporation'
+									|| $this->productManufacturer == 'nexthaus corp')
 								{
 									$vcardData['priority'] = $attributes['value'] == 1 ? 3 : 2; // 1=high, 2=normal
 								}
