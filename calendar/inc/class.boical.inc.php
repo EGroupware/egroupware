@@ -387,10 +387,47 @@
 				
 				foreach($event['alarm'] as $alarmID => $alarmData)
 				{
-					$attributes['DALARM'] = $vcal->_exportDateTime($alarmData['time']);
-					$attributes['AALARM'] = $vcal->_exportDateTime($alarmData['time']);
-					// lets take only the first alarm
-					break;
+					if ($version == '1.0')
+					{
+						$attributes['DALARM'] = $vcal->_exportDateTime($alarmData['time']);
+						$attributes['AALARM'] = $vcal->_exportDateTime($alarmData['time']);
+						// lets take only the first alarm
+						break;
+					}
+					else
+					{
+						// VCalendar 2.0 / RFC 2445
+
+						// skip over alarms that don't have the minimum required info
+						if (!$alarmData['offset'] && !$alarmData['time'])
+						{
+							error_log("Couldn't add VALARM (no alarm time info)");
+							continue;
+						}
+
+						// RFC requires DESCRIPTION for DISPLAY
+						if (!$event['title'] && !$event['description'])
+						{
+							error_log("Couldn't add VALARM (no description)");
+							continue;
+						}
+
+						$valarm = Horde_iCalendar::newComponent('VALARM',$vevent);
+						if ($alarmData['offset'])
+						{
+							$valarm->setAttribute('TRIGGER', -$alarmData['offset'],
+									array('VALUE' => 'DURATION', 'RELATED' => 'START'));
+						}
+						else
+						{
+							$valarm->setAttribute('TRIGGER', $alarmData['time'],
+									array('VALUE' => 'DATE-TIME'));
+						}
+
+						$valarm->setAttribute('ACTION','DISPLAY');
+						$valarm->setAttribute('DESCRIPTION',$event['title'] ? $event['title'] : $event['description']);
+						$vevent->addComponent($valarm);
+					}
 				}
 				
 				$attributes['UID'] = $eventGUID;
@@ -869,6 +906,14 @@
 						$eventID =& $Ok;
 
 						// handle the alarms
+						foreach ($component->getComponents() as $valarm)
+						{
+							if (is_a($valarm, 'Horde_iCalendar_valarm'))
+							{
+								$this->valarm2egw($alarms,$valarm);
+							}
+						}
+
 						if(count($alarms) > 0 || (isset($this->supportedFields['alarms'])  && count($alarms) == 0))
 						{
 							// delete the old alarms
@@ -889,6 +934,51 @@
 				}
 			}
 			return $Ok;
+		}
+
+		function valarm2egw(&$alarms, &$valarm)
+		{
+			$count = 0;
+			foreach($valarm->_attributes as $vattr)
+			{
+				switch($vattr['name'])
+				{
+					case 'TRIGGER':
+						$vtype = (isset($vattr['params']['VALUE']))
+							? $vattr['params']['VALUE'] : 'DURATION'; //default type
+						switch ($vtype)
+						{
+							case 'DURATION':
+								if (isset($vattr['params']['RELATED'])
+									&& $vattr['params']['RELATED'] != 'START')
+								{
+									error_log("Unsupported VALARM offset anchor ".$vattr['params']['RELATED']);
+								}
+								else
+								{
+									$alarms[] = array('offset' => -$vattr['value']);
+									$count++;
+								}
+								break;
+							case 'DATE-TIME':
+								$alarms[] = array('time' => $vattr['value']);
+								$count++;
+								break;
+							default:
+								// we should also do ;RELATED=START|END
+								error_log('VALARM/TRIGGER: unsupported value type:' . $vtype);
+						}
+						break;
+					// case 'ACTION':
+					// 	break;
+					// case 'DISPLAY':
+					// 	break;
+
+					default:
+						error_log('VALARM field:' .$vattr['name'] .':' . print_r($vattrval,true) . ' HAS NO CONVERSION YET');
+				}
+			}
+			return $count;
 		}
 
 		function setSupportedFields($_productManufacturer='file', $_productName='')
