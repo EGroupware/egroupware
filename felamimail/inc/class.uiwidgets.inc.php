@@ -341,9 +341,9 @@
 				$this->t->set_var('message_uid', $header['uid']);
 
 				if ($dateToday == date('Y-m-d', $header['date'])) {
-					$this->t->set_var('date', date('H:i:s', $header['date']));
+					$this->t->set_var('date', $GLOBALS['egw']->common->show_date($header['date'],'H:i:s'));
 				} else {
-					$this->t->set_var('date', date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $header['date']));
+					$this->t->set_var('date', $GLOBALS['egw']->common->show_date($header['date'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']));
 				}
 				
 				$this->t->set_var('size', $this->show_readable_size($header['size']));
