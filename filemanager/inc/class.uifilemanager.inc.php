@@ -101,16 +101,9 @@
 			//KL begin 200703 searchtemplate
 			// etemplate stuff
 			$this->tmpl =& CreateObject('etemplate.etemplate');
-			$this->html =& $GLOBALS['egw']->html;
-			// this may be needed using etemplates
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-			   $GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
 			//KL end 200703 searchtemplate
 			
 			//			error_reporting(8);
-			$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
 
 			$this->dateformat=$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
