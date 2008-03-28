@@ -76,7 +76,7 @@
 						if(!empty($email) && !isset($jsArray[$email])) {
 							$i++;
 							$str = $GLOBALS['egw']->translation->convert(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>', $this->charset, 'utf-8');
-							$innerHTML .= '<div class="inactiveResultRow" onclick="selectSuggestion('. $i .')">'.
+							$innerHTML .= '<div class="inactiveResultRow" onmousedown="keypressed(13,1)" onmouseover="selectSuggestion('.($i-1).')">'.
 								htmlentities($str, ENT_QUOTES, 'utf-8') .'</div>';
 							$jsArray[$email] = addslashes(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>');
 						}
