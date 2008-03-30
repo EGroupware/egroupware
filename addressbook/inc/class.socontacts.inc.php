@@ -314,24 +314,27 @@ class socontacts
 	 * Read all customfields of the given id's
 	 *
 	 * @param int/array $ids
+	 * @param array $field_names=null custom fields to read, default all
 	 * @return array id => name => value
 	 */
-	function read_customfields($ids)
+	function read_customfields($ids,$field_names=null)
 	{
 		if ($this->contact_repository == 'ldap')
 		{
 			return array();	// ldap does not support custom-fields (non-nummeric uid)
 		}
+		if (is_null($fields)) $fields = array_keys($this->customfields);
+
 		foreach($ids as $key => $id)
 		{
 			if (!(int)$id) unset($ids[$key]);
 		}
-		if (!$ids) return array();	// nothing to do, eg. all these contacts are in ldap
+		if (!$ids || !$field_names) return array();	// nothing to do, eg. all these contacts are in ldap
 
 		$fields = array();
 		foreach((array)$this->soextra->search(array(
 			$this->extra_id => $ids,
-			$this->extra_key => array_keys($this->customfields),
+			$this->extra_key => $field_names,
 		),false) as $data)
 		{
 			if ($data) $fields[$data[$this->extra_id]][$data[$this->extra_key]] = $data[$this->extra_value];

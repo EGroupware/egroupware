@@ -618,9 +618,54 @@ class bocontacts extends socontacts
 			list($name,$value) = explode(':',$part);
 			$org[$name] = $value;
 		}
-				
-		$contacts = parent::search('',$this->org_fields,'','','',false,'AND',false,$org);
+		$csvs = array('cat_id');	// fields with comma-separated-values
+
+		// split regular fields and custom fields
+		$custom_fields = $regular_fields = array();
+		foreach($this->org_fields as $name)
+		{
+			if ($name[0] != '#')
+			{
+				$regular_fields[] = $name;
+			}
+			else
+			{
+				$custom_fields[] = $name = substr($name,1);
+				$regular_fields['id'] = 'id';
+				if (substr($this->customfields[$name]['type'],0,6)=='select' && $this->customfields[$name]['rows'] ||	// multiselection
+					$this->customfields[$name]['type'] == 'radio')
+				{
+					$csvs[] = '#'.$name;
+				}
+			}
+		}
+		// read the regular fields
+		$contacts = parent::search('',$regular_fields,'','','',false,'AND',false,$org);
 		if (!$contacts) return false;
+
+		// if we have custom fields, read and merge them in
+		if ($custom_fields)
+		{
+			foreach($contacts as $contact)
+			{
+				$ids[] = $contact['id'];
+			}
+			if (($cfs = $this->read_customfields($ids,$custom_fields)))
+			{
+				foreach ($contacts as &$contact)
+				{
+					$id = $contact['id'];
+					if (isset($cfs[$id]))
+					{
+						foreach($cfs[$id] as $name => $value)
+						{
+							$contact['#'.$name] = $value;
+						}
+					}
+				}
+				unset($contact);
+			}
+		}
 		
 		// create a statistic about the commonness of each fields values
 		$fields = array();
@@ -628,12 +673,18 @@ class bocontacts extends socontacts
 		{
 			foreach($contact as $name => $value)
 			{
-				if ($name != 'cat_id') $fields[$name][$value]++;
-			}
-			foreach(explode(',',$contact['cat_id']) as $part)
-			{
-				list($name) = explode(',',$part);
-				$fields['cat_id'][$name]++;
+				if (!in_array($name,$csvs))
+				{
+					$fields[$name][$value]++;
+				}
+				else
+				{
+					// for comma separated fields, we have to use each single value
+					foreach(explode(',',$value) as $val)
+					{
+						$fields[$name][$val]++;
+					}
+				}
 			}
 		}
 		foreach($fields as $name => $values)
@@ -645,18 +696,18 @@ class bocontacts extends socontacts
 			//echo "<p>$name: '$value' $num/".count($contacts)."=".($num / (double) count($contacts))." >= $this->org_common_factor = ".($num / (double) count($contacts) >= $this->org_common_factor ? 'true' : 'false')."</p>\n";
 			if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
 			{
-				if ($name != 'cat_id')
+				if (!in_array($name,$csvs))
 				{
 					$org[$name] = $value;
 				}
 				else
 				{
 					$org[$name] = array();
-					foreach ($values as $catid => $catvalue)
+					foreach ($values as $value => $num)
 					{
-						if ($catid && $catvalue / (double) count($values) >= $this->org_common_factor)
+						if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
 						{
-							$org[$name][] = $catid;
+							$org[$name][] = $value;
 						}
 					}
 					$org[$name] = implode(',',$org[$name]);
