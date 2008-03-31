@@ -652,9 +652,10 @@ class soinfolog 				// DB-Layer
 		$action_id = ( strpos($query['action_id'],',')!==false) ? explode(',',$query['action_id']) : $query['action_id'];
 		if ($action != '')
 		{
-			$links = egw_link::get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
+			$links = solink::get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
 			if (count($links))
 			{
+				$links = call_user_func_array('array_merge',$links);    // flatten the array
 				$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
 			}
 		}
