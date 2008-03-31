@@ -959,7 +959,10 @@ class uicontacts extends bocontacts
 					if ($show_calendar) $calendar = $this->read_calendar($ids);
 					// distributionlist memership for the entrys 
 					//_debug_array($this->get_lists(EGW_ACL_EDIT));
-					if ($show_distributionlist)	$distributionlist = $this->read_distributionlist($ids,array_keys($available_distib_lists));
+					if ($show_distributionlist && $available_distib_lists)
+					{
+						$distributionlist = $this->read_distributionlist($ids,array_keys($available_distib_lists));
+					}
 				}
 			}
 		}
