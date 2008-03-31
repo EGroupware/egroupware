@@ -588,4 +588,26 @@
 
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.5.001';
 	}
-?>
+
+	$test[] = '1.5.001';
+	/**
+	 * Fix missing info_from values, caused by a (fixed) bug
+	 *
+	 * @return string version
+	 */
+	function infolog_upgrade1_5_001()
+	{
+		foreach($GLOBALS['egw_setup']->db->select('egw_infolog','info_id,info_link_id,org_name,adr_one_locality,n_family,n_given',array(
+			'info_from' => '',
+			'info_link_id > 0',
+		),__LINE__,__FILE__,false,'','infolog',0,
+		" JOIN egw_links ON info_link_id=link_id AND link_app2='addressbook'".
+		" JOIN egw_addressbook ON contact_id=link_id2") as $row)
+		{
+			$from = ($row['org_name'] ? $row['org_name'].', '.$row['adr_one_locality'].': ' : '').
+				$row['n_family'].($row['n_given'] ? ', '.$row['n_given'] : '');
+			$GLOBALS['egw_setup']->db->update('egw_infolog',array('info_from' => $from),
+				array('info_id' => $row['info_id']),__LINE__,__FILE__,'infolog');
+		}
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.5.002';
+	}
