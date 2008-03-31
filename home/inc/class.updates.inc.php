@@ -45,8 +45,6 @@
 			if (isset($GLOBALS['egw_info']['user']['apps']['admin']) && $GLOBALS['egw_info']['user']['apps']['admin'] &&
 				isset($GLOBALS['egw_info']['server']['checkfornewversion']) && $GLOBALS['egw_info']['server']['checkfornewversion'])
 			{
-				$GLOBALS['egw']->network =& CreateObject('phpgwapi.network');
-
 				$GLOBALS['egw']->network->set_addcrlf(False);
 				$lines = $GLOBALS['egw']->network->gethttpsocketfile('http://www.egroupware.org/currentversion');
 				for($i=0; $i<count($lines); $i++)
