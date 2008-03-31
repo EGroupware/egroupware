@@ -664,10 +664,9 @@ class soinfolog 				// DB-Layer
 			'event'       => 'calendar'
 		);
 		$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
-		$action_id = ( strpos($query['action_id'],',')!==false) ? explode(',',$query['action_id']) : $query['action_id'];
 		if ($action != '')
 		{
-			$links = solink::get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
+			$links = solink::get_links($action=='sp'?'infolog':$action,explode(',',$query['action_id']),'infolog');
 			if (count($links))
 			{
 				$links = call_user_func_array('array_merge',$links);    // flatten the array
