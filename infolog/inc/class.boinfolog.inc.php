@@ -374,7 +374,7 @@ class boinfolog
 			(isset($info['links']) && ($link = $info['links'][$info['info_link_id']]) ||	// use supplied links info
 			 ($link = egw_link::get_link($info['info_link_id'])) !== False))	// if link not found in supplied links, we always search!
 		{
-			if (isset($info['links']))
+			if (isset($info['links']) && isset($link['app']))
 			{
 				$app = $link['app'];
 				$id  = $link['id'];
