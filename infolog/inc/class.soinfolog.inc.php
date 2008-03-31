@@ -578,6 +578,7 @@ class soinfolog 				// DB-Layer
 		//echo "<p>soinfolog.write values= "; _debug_array($values);
 
 		// write customfields now
+		$to_delete = array();
 		foreach($values as $key => $val)
 		{
 			if ($key[0] != '#')
@@ -586,11 +587,25 @@ class soinfolog 				// DB-Layer
 			}
 			$this->data[$key] = $val;	// update internal data
 
-			$this->db->insert($this->extra_table,array(
-					'info_extra_value'=>$val
-				),array(
+			if ($val)
+			{
+				$this->db->insert($this->extra_table,array(
+						'info_extra_value'=>$val
+					),array(
+						'info_id'			=> $info_id,
+						'info_extra_name'	=> substr($key,1),
+					),__LINE__,__FILE__);
+			}
+			else
+			{
+				$to_delete[] = substr($key,1);
+			}
+		}
+		if ($to_delete)
+		{
+			$this->db->delete($this->extra_table,array(
 					'info_id'			=> $info_id,
-					'info_extra_name'	=> substr($key,1),
+					'info_extra_name'	=> $to_delete,
 				),__LINE__,__FILE__);
 		}
 		// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
