@@ -529,7 +529,8 @@
 						$extra = array('**NULL**' => lang('Users choice'));
 						break;
 				}
-				if ($extra) $values = $extra + $values;
+				#if ($extra) $values = $extra + $values;
+				if (is_array($extra)) $values = $extra + (is_array($values)?$values:array($values));
 
 				$select = html::select($GLOBALS['type'].'['.$name.']',$default,$values,true);
 			}
