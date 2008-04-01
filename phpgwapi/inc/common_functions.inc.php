@@ -1279,17 +1279,37 @@
 		 */
 		function lang($key,$vars=null)
 		{
-			static $varnames = array('%1','%2','%3','%4');
-
 			if(!is_array($vars))
 			{
 				$vars = func_get_args();
 				array_shift($vars);	// remove $key
 			}
-			return is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->translations) ? 
-				$GLOBALS['egw']->translation->translate($key,$vars) :
-				str_replace($varnames,$vars,$key);
+			return $GLOBALS['egw']->translation->translate($key,$vars);
 		}
+	}
+	
+	/**
+	 * Translate message only if translation object is already loaded
+	 * 
+	 * This function is usefull for exception handlers or early stages of the initialisation of the egw object,
+	 * as calling lang would try to load the translations, evtl. cause more errors, eg. because there's no db-connection.
+	 *
+	 * @param string $key message in englich with %1, %2, ... placeholders
+	 * @param string $vars=null multiple values to replace the placeholders
+	 * @return string translated message with placeholders replaced
+	 */
+	function try_lang($key,$vars=null)
+	{
+		static $varnames = array('%1','%2','%3','%4');
+
+		if(!is_array($vars))
+		{
+			$vars = func_get_args();
+			array_shift($vars);	// remove $key
+		}
+		return is_object($GLOBALS['egw'])  && isset($GLOBALS['egw']->translations) ? 
+			$GLOBALS['egw']->translation->translate($key,$vars) :
+			str_replace($varnames,$vars,$key);
 	}
 
 /**
@@ -1349,15 +1369,15 @@ function egw_exception_handler(Exception $e)
 {
 	if ($e instanceof egw_exception_no_permission)
 	{
-		$headline = lang('Permission denied!');
+		$headline = try_lang('Permission denied!');
 	}
 	elseif ($e instanceof egw_exception_db)
 	{
-		$headline = lang('Database error');
+		$headline = try_lang('Database error');
 	}
 	else
 	{
-		$headline = lang('An error happend');
+		$headline = try_lang('An error happend');
 	}
 	$message = '<h3>'.$headline."</h3>\n".
 		'<pre><b>'.$e->getMessage()."</b>\n\n".
@@ -1365,7 +1385,7 @@ function egw_exception_handler(Exception $e)
 
 	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session))
 	{
-		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.lang('Click here to resume your eGroupWare Session.').'</a></p>';	
+		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';	
 	}
 	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->framework))
 	{
