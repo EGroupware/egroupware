@@ -1279,12 +1279,16 @@
 		 */
 		function lang($key,$vars=null)
 		{
+			static $varnames = array('%1','%2','%3','%4');
+
 			if(!is_array($vars))
 			{
 				$vars = func_get_args();
 				array_shift($vars);	// remove $key
 			}
-			return $GLOBALS['egw']->translation->translate($key,$vars);
+			return is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->translations) ? 
+				$GLOBALS['egw']->translation->translate($key,$vars) :
+				str_replace($varnames,$vars,$key);
 		}
 	}
 
@@ -1359,11 +1363,11 @@ function egw_exception_handler(Exception $e)
 		'<pre><b>'.$e->getMessage()."</b>\n\n".
 		$e->getTraceAsString()."</pre>\n";
 
-	if (is_object($GLOBALS['egw']) && is_object($GLOBALS['egw']->session))
+	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session))
 	{
 		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.lang('Click here to resume your eGroupWare Session.').'</a></p>';	
 	}
-	if (is_object($GLOBALS['egw']) && is_object($GLOBALS['egw']->framework))
+	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->framework))
 	{
 		$GLOBALS['egw']->framework->render($message,$headline);
 	}
@@ -1371,7 +1375,11 @@ function egw_exception_handler(Exception $e)
 	{
 		echo "<html>\n<head>\n<title>$headline</title>\n</head>\n<body>\n$message\n</body>\n</html>\n";
 	}
-	$GLOBALS['egw']->common->egw_exit();
+	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->common))
+	{
+		$GLOBALS['egw']->common->egw_exit();
+	}
+	exit;
 }
 		
 set_exception_handler('egw_exception_handler');

@@ -81,24 +81,29 @@ class egw extends egw_minimal
 		}
 		$this->db->set_app('phpgwapi');
 
-		$this->db->Halt_On_Error = 'no';
-		$this->db->connect(
-			$GLOBALS['egw_info']['server']['db_name'],
-			$GLOBALS['egw_info']['server']['db_host'],
-			$GLOBALS['egw_info']['server']['db_port'],
-			$GLOBALS['egw_info']['server']['db_user'],
-			$GLOBALS['egw_info']['server']['db_pass'],
-			$GLOBALS['egw_info']['server']['db_type']
-		);
 		// check if eGW is already setup, if not redirect to setup/
-		if (!$this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
+		try {
+			$this->db->connect(
+				$GLOBALS['egw_info']['server']['db_name'],
+				$GLOBALS['egw_info']['server']['db_host'],
+				$GLOBALS['egw_info']['server']['db_port'],
+				$GLOBALS['egw_info']['server']['db_user'],
+				$GLOBALS['egw_info']['server']['db_pass'],
+				$GLOBALS['egw_info']['server']['db_type']
+			);
+		}
+		catch(Exception $e) {
+			//echo "<pre>Connection to DB failed (".$e->getMessage().")!\n".$e->getTraceAsString();
+		}
+		if ($e || !$this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
 		{
 			$setup_dir = str_replace($_SERVER['PHP_SELF'],'index.php','setup/');
 
 			// we check for the old table too, to not scare updating users ;-)
-			if ($this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
+			if (!$e && $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
 			{
-				throw new Exception('<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir . '">update eGroupWare</a> before you can continue using it.</center>',999);
+				throw new Exception('<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir . 
+					'">update eGroupWare</a> before you can continue using it.</center>',999);
 			}
 			else
 			{
@@ -107,8 +112,6 @@ class egw extends egw_minimal
 			}
 			exit;
 		}
-		$this->db->Halt_On_Error = 'yes';
-
 		// Set the DB's client charset if a system-charset is set
 		$system_charset = $this->db->select(config::TABLE,'config_value',array(
 			'config_app'  => 'phpgwapi',
