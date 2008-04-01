@@ -136,35 +136,38 @@ class solink
 				),')'
 			),__LINE__,__FILE__,False,$order ? " ORDER BY $order" : '') as $row)
 		{
+			// check if left side (1) is one of our targets --> add it
 			if ($row['link_app1'] == $app && in_array($row['link_id1'],(array)$id))
 			{
-				$link = array(
-					'app'  => $row['link_app2'],
-					'id'   => $row['link_id2']
-				);
-				$app_id = $row['link_id1'];
+				self::_add2links($row,true,$only_app,$not_only,$links);
 			}
-			else
+			// check if right side (2) is one of our targets --> add it (both can be true for multiple targets!)
+			if ($row['link_app2'] == $app && in_array($row['link_id2'],(array)$id))
 			{
-				$link = array(
-					'app'  => $row['link_app1'],
-					'id'   => $row['link_id1']
-				);
-				$app_id = $row['link_id2'];
+				self::_add2links($row,false,$only_app,$not_only,$links);
 			}
-			if ($only_app && $not_only == ($link['app'] == $only_app) ||
-				 !$GLOBALS['egw_info']['user']['apps'][$link['app']])
-			{
-				continue;
-			}
-			$links[$app_id][$row['link_id']] = $only_app && !$not_only ? $link['id'] : $link+array(
-				'remark'  => $row['link_remark'],
-				'owner'   => $row['link_owner'],
-				'lastmod' => $row['link_lastmod'],
-				'link_id' => $row['link_id'],
-			);
 		}
 		return is_array($id) ? $links : ($links[$id] ? $links[$id] : array());
+	}
+
+	private function _add2links($row,$left,$only_app,$not_only,array &$links)
+	{
+		$linked_app = $left ? $row['link_app2'] : $row['link_app1'];
+		$linked_id  = $left ? $row['link_id2'] : $row['link_id1'];
+		$app_id = $left ? $row['link_id1'] : $row['link_id2'];
+
+		if ($only_app && $not_only == ($linked_app == $only_app) || !$GLOBALS['egw_info']['user']['apps'][$linked_app])
+		{
+			return;
+		}
+		$links[$app_id][$row['link_id']] = $only_app && !$not_only ? $linked_id : array(
+			'app'     => $linked_app,
+			'id'      => $linked_id,
+			'remark'  => $row['link_remark'],
+			'owner'   => $row['link_owner'],
+			'lastmod' => $row['link_lastmod'],
+			'link_id' => $row['link_id'],
+		);
 	}
 	
 	/**
@@ -379,7 +382,7 @@ class solink
 	}
 
 	/**
-	 * constructor
+	 * Initialise our static vars
 	 */
 	static function init_static( )
 	{
