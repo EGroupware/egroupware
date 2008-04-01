@@ -279,7 +279,7 @@ class egw_link extends solink
 	 */
 	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
 	{
-		//echo "<p>egw_link::get_links(app='$app',id='$id',only_app='$only_app',order='$order')</p>\n";
+		if (self::DEBUG) echo "<p>egw_link::get_links(app='$app',id='$id',only_app='$only_app',order='$order')</p>\n";
 
 		if (is_array($id) || !$id)
 		{
@@ -328,7 +328,8 @@ class egw_link extends solink
 	 */
 	static function get_links_multiple($app,array $ids,$cache_titles=true,$only_app='',$order='link_lastmod DESC' )
 	{
-		//echo "<p>".__METHOD__."('$app',".print_r($ids,true).",$cache_titles,'$only_app','$order')</p>\n";
+		if (self::DEBUG) echo "<p>".__METHOD__."('$app',".print_r($ids,true).",$cache_titles,'$only_app','$order')</p>\n";
+
 		if (!$ids)
 		{
 			return array();		// no ids are linked to nothing
@@ -383,7 +384,10 @@ class egw_link extends solink
 	 */ 
 	static function get_link($app_link_id,$id='',$app2='',$id2='')
 	{
-		//echo '<p>'.__METHOD__."($app_link_id,$id,$app2,$id2)</p>\n"; echo function_backtrace();
+		if (self::DEBUG)
+		{
+			echo '<p>'.__METHOD__."($app_link_id,$id,$app2,$id2)</p>\n"; echo function_backtrace(); 
+		}
 		if (is_array($id))
 		{
 			if (strpos($app_link_id,':') === false) $app_link_id = self::temp_link_id($app2,$id2);	// create link_id of temporary link, if not given
@@ -537,14 +541,11 @@ class egw_link extends solink
 	 */
 	static function title($app,$id,$link=null)
 	{
-		if (self::DEBUG)
-		{
-			echo "<p>egw_link::title('$app','$id')</p>\n";
-		}
 		if (!$id) return '';
 		
 		if (isset(self::$title_cache[$app.':'.$id]))
 		{
+			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='".self::$title_cache[$app.':'.$id]."' (from cache)</p>\n";
 			return self::$title_cache[$app.':'.$id];
 		}
 		if ($app == self::VFS_APPNAME)
@@ -574,6 +575,7 @@ class egw_link extends solink
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['title']))
 		{
+			if (self::DEBUG) echo "<p>".__METHOD__."('$app','$id') something is wrong!!!</p>\n";
 			return array();
 		}
 		$method = $reg['title'];
@@ -583,8 +585,11 @@ class egw_link extends solink
 		if ($id && is_null($title))	// $app,$id has been deleted ==> unlink all links to it
 		{
 			self::unlink(0,$app,$id);
+			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id') unlinked, as $method returned null</p>\n";
 			return False;
 		}
+		if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (from $method)</p>\n";
+
 		return self::$title_cache[$app.':'.$id] = $title;
 	}
 	
