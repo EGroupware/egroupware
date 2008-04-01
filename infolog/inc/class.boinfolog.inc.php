@@ -997,7 +997,7 @@ class boinfolog
 			'col_filter' => array('info_id' => $ids),
 		)) as $info)
 		{
-			$titles[$info['id']] = $this->link_title($info);
+			$titles[$info['info_id']] = $this->link_title($info);
 		}
 		foreach(array_diff($ids,array_keys($titles)) as $id)
 		{
