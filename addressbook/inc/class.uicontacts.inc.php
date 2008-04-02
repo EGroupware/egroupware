@@ -955,7 +955,14 @@ class uicontacts extends bocontacts
 					{
 						$ids[] = $val['id'];
 					}
-					if ($show_custom_fields) $customfields = $this->read_customfields($ids);
+					if ($show_custom_fields)
+					{
+						foreach($columselection as $col)
+						{
+							if ($col[0] == '#') $selected_cfs[] = substr($col,1);
+						}
+						$customfields = $this->read_customfields($ids,$selected_cfs);
+					}
 					if ($show_calendar) $calendar = $this->read_calendar($ids);
 					// distributionlist memership for the entrys 
 					//_debug_array($this->get_lists(EGW_ACL_EDIT));
