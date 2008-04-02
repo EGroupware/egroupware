@@ -323,7 +323,7 @@ class socontacts
 		{
 			return array();	// ldap does not support custom-fields (non-nummeric uid)
 		}
-		if (is_null($fields)) $fields = array_keys($this->customfields);
+		if (is_null($field_names)) $field_names = array_keys($this->customfields);
 
 		foreach($ids as $key => $id)
 		{
