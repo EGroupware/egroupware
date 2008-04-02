@@ -15,7 +15,6 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 /**
  * SQL storage object of the adressbook
  */
-
 class socontacts_sql extends so_sql 
 {
 	/**
@@ -319,15 +318,25 @@ class socontacts_sql extends so_sql
 			$join .= $this->extra_join_order.' AND extra_order.contact_name='.$this->db->quote(substr($val,1));
 		}
 		// do we filter by a cf?
+		$extra_filter = '';
 		foreach($filter as $name => $val)
 		{
 			if ($name[0] == '#')
 			{
 				if (!empty($val))	// empty -> dont filter
 				{
-					$join .= $this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($name,1)).
-						' AND extra_filter.contact_value='.$this->db->quote($val);
+					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($name,1)).
+						' AND extra_filter.contact_value='.$this->db->quote($val));
+					++$extra_filter;
 				}
+				unset($filter[$name]);
+			}
+			elseif($val[0] == '#')	// lettersearch: #cfname like 's%'
+			{
+				list($cf) = explode(' ',$val);
+				$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($cf,1)).
+					' AND '.str_replace($cf,'extra_filter.contact_value',$val));
+				++$extra_filter;
 				unset($filter[$name]);
 			}
 		}
