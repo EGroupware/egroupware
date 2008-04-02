@@ -517,7 +517,12 @@
 			if(isset($string2[1]) && !preg_match('%/\?%',$string2[0]))
 			{
 				return $this->_bad_protocol_once2($string2[0]).trim($string2[1]);
-			}
+			} else {
+				if (!isset($string2[1]))
+				{
+					return $string2[0];
+				}
+ 			}
 			return '';
 		} # function _bad_protocol_once
 
