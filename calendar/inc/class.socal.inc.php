@@ -488,7 +488,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		// while saving handle the etag as condition for the update, to check if an entry was saved before this action occured
 		$check_etag = ($check_modified ? $check_modified : $event['cal_etag']);  
-		if ($cal_id && $check_etag /*&& $check_modified*/) 
+		if ($cal_id && $check_etag && $check_modified) 
 		{
 			//$event2update[]= 'cal_etag=cal_etag+1';
 			$event2update['cal_etag']= $event['cal_etag']=$check_etag+1;
