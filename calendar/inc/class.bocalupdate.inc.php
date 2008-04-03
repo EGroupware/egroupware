@@ -703,7 +703,7 @@ class bocalupdate extends bocal
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
 		}
 		// Lock realized with a counter, that is checked and incremented as we save the entry
-		$check_etag = ($event['etag'] ? $event['etag']:1);
+		$check_etag = ($event['etag'] ? $event['etag']:0);
 
 		// same with the recur exceptions
 		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
