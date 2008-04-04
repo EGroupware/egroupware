@@ -5,7 +5,8 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$ 
@@ -15,12 +16,6 @@ require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
 
 /**
  * General user interface object of the adressbook
- *
- * @package addressbook
- * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class uicontacts extends bocontacts
 {
@@ -1450,6 +1445,7 @@ class uicontacts extends bocontacts
 		$readonlys[$this->tabs]['custom'] = !$this->customfields;
 		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys[$this->tabs]['distribution_list'] = !$content['distrib_lists'];#false;
+		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 				
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
