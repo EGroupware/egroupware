@@ -308,8 +308,11 @@ class socontacts_sql extends so_sql
 				}
 				elseif($col == 'contact_value')
 				{
-					$criteria =array_merge($criteria,array('extra_order.contact_value'=>$val));
-					unset($criteria[$col]);
+					if ($order_by[0] == '#')
+					{
+						$criteria =array_merge($criteria,array('extra_order.contact_value'=>$val));
+						unset($criteria[$col]);
+					}
 				}
 			}
 		}
