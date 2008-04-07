@@ -235,6 +235,7 @@ class socontacts_sql extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
+$this->debug=5;
 		if ((int) $this->debug >= 4) echo "<p>socontacts_sql::search(".print_r($criteria,true).",".print_r($only_keys,true).",'$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
@@ -302,6 +303,11 @@ class socontacts_sql extends so_sql
 				elseif($col == 'cat_id')	// search in comma-sep. cat-column
 				{
 					$criteria = array_merge($criteria,$this->_cat_search($val));
+					unset($criteria[$col]);
+				}
+				elseif($col == 'contact_value')
+				{
+					$criteria =array_merge($criteria,array('extra_order.contact_value'=>$val));
 					unset($criteria[$col]);
 				}
 			}
