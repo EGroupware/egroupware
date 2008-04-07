@@ -235,7 +235,6 @@ class socontacts_sql extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-$this->debug=5;
 		if ((int) $this->debug >= 4) echo "<p>socontacts_sql::search(".print_r($criteria,true).",".print_r($only_keys,true).",'$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
@@ -293,9 +292,11 @@ $this->debug=5;
 					{
 						if ($op=='AND') {
 							$criteria[] =$this->extra_table.'.contact_id in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
-							"(contact_name='".substr($col,1)."' AND contact_value".($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'))";
+							"(".$this->extra_table.".contact_name='".substr($col,1)."' AND ".$this->extra_table.".contact_value".($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'))";
 						} else {
-							$criteria[] = $this->db->expression($this->extra_table,'(',array('contact_name'=>substr($col,1),'contact_value'.($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'"),')');
+							$criteria[] = $this->db->expression($this->extra_table,'(',array(
+								$this->extra_table.'.contact_name='."'".substr($col,1)."'",
+								$this->extra_table.'.contact_value'.($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'"),')');
 						}
 					}
 					$search_customfields = true;
