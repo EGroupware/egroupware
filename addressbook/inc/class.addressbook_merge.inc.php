@@ -208,47 +208,62 @@ class addressbook_merge	// extends bo_merge
 	 */
 	function merge($document,$ids,&$err)
 	{
-		if (count($ids) > 1)
-		{
-			$err = 'Inserting more then one contact in a document is not yet implemented!';
-			return false;
-		}
-		$id = $ids[0];
-
 		if (!($content = $this->vfs->read(array(
-				'string' => $document,
-				'relatives' => RELATIVE_ROOT,
-			))))
+					'string' => $document,
+					'relatives' => RELATIVE_ROOT,
+				))))
 		{
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
 		}
-		// generate replacements
-		if (!($replacements = $this->contact_replacements($id)))
+		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+		if (count($ids) > 1 && !$contentrepeat)
 		{
-			$err = lang('Contact not found!');
+			$err = lang('for more then one contact in a document use the tag pagerepeat!');
 			return false;
 		}
-		if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
-		{
-			$replacements += $this->contact_replacements($user,'user');
+		foreach ($ids as $id) 
+		{	
+			if ($contentrepeat)   $content = $contentrepeat;   //content to repeat
+			// generate replacements
+			if (!($replacements = $this->contact_replacements($id)))
+			{
+				$err = lang('Contact not found!');
+				return false;
+			}
+			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
+			{
+				$replacements += $this->contact_replacements($user,'user');
+			}
+			if (strpos($content,'$$calendar/') !== null)
+			{
+				$replacements += $this->calendar_replacements($id,strpos($content,'$$calendar/-1/') !== null);
+			}
+			$replacements['$$date$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],time()+$this->contacts->tz_offset_s);
+			
+			if ($this->contacts->prefs['csv_charset'])	// if we have an export-charset defined, use it here to
+			{
+				$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$this->contacts->prefs['csv_charset']);
+			}
+			$content = str_replace(array_keys($replacements),array_values($replacements),$content);
+			
+			if (strpos($content,'$$calendar/') !== null)	// remove not existing event-replacements
+			{
+				$content = preg_replace('/\$\$calendar\/[0-9]+\/[a-z_]+\$\$/','',$content);
+			}
+			if ($contentrepeat) $contentrep[$id] = $content;
 		}
-		if (strpos($content,'$$calendar/') !== null)
+		if ($contentrepeat) 
 		{
-			$replacements += $this->calendar_replacements($id,strpos($content,'$$calendar/-1/') !== null);
-		}
-		$replacements['$$date$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],time()+$this->contacts->tz_offset_s);
-		
-		if ($this->contacts->prefs['csv_charset'])	// if we have an export-charset defined, use it here to
-		{
-			$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$this->contacts->prefs['csv_charset']);
-		}
-		$content = str_replace(array_keys($replacements),array_values($replacements),$content);
-		
-		if (strpos($content,'$$calendar/') !== null)	// remove not existing event-replacements
-		{
-			$content = preg_replace('/\$\$calendar\/[0-9]+\/[a-z_]+\$\$/','',$content);
-		}
+			$content = "";
+			foreach ($contentrep as $idrep => $repvalue)
+			{
+				$counter++;
+				$content .= $repvalue;
+				if (each($contentrep) != false) $content .= "\par \page\pard\plain";  // page break			
+			}
+			$content = $contentstart.$content.$contentend;
+		}				
 		return $content;
 	}
 	
@@ -309,6 +324,7 @@ class addressbook_merge	// extends bo_merge
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),
+			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.')
 		) as $name => $label)
 		{
 			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";

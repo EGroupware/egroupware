@@ -177,7 +177,9 @@ fields for the csv export	addressbook	en	Fields for the CSV export
 fields the user is allowed to edit himself	admin	en	Fields the user is allowed to edit himself
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Fieldseparator
+for more then one contact in a document use the tag pagerepeat!	addressbook	en	for more then one contact in a document use the tag pagerepeat!
 for read only ldap	admin	en	for read only LDAP
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 freebusy uri	addressbook	en	Freebusy URI
 full name	addressbook	en	Full Name
 general	addressbook	en	General

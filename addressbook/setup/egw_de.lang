@@ -177,7 +177,9 @@ fields for the csv export	addressbook	de	Felder für den CSV Export
 fields the user is allowed to edit himself	admin	de	Felder die der Benutzer selbst bearbeiten darf
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
+for more then one contact in a document use the tag pagerepeat!	addressbook	de	Um mehr als eine Adresse in ein Dokument einzufügen, benutzen Sie das pagerepeat Tag in Ihrer Vorlage. Damit Können Sie Serienbriefe erstellen
 for read only ldap	admin	de	für nur lesendes LDAP
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	de	Wenn Sie Serienbriefe erzeugen wollen, dann benutzen Sie dieses Tag. Setzen Sie den Inhalt, der wiederholt werden soll (Anschriftstags und Briefinhalt) zwischen zwei pagerepeat Tags.
 freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
 general	addressbook	de	Allgemein
