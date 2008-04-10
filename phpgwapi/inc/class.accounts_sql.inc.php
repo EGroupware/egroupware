@@ -112,7 +112,9 @@ class accounts_sql
 				$this->contacts_table.'.n_family AS account_lastname,'.
 				$this->contacts_table.'.contact_email AS account_email,'.
 				$this->contacts_table.'.n_fn AS account_fullname,'.
-				$this->contacts_table.'.contact_id AS person_id,';
+				$this->contacts_table.'.contact_id AS person_id,'.
+				$this->contacts_table.'.contact_created AS account_created,'.
+				$this->contacts_table.'.contact_modified AS account_modified,';
 			$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
 		}
 		if (!($data = $this->db->select($this->table,$extra_cols.$this->table.'.*',$this->table.'.account_id='.abs($account_id),
@@ -377,8 +379,8 @@ class accounts_sql
 			}
 		}
 		$accounts = array();
-if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
-		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,"account_lid,account_type,$this->table.account_id",
+		if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
+		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,"account_lid,account_type,account_status,$this->table.account_id",
 			$wildcard,false,'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
 			$filter,$this->contacts_join)))
 		{
@@ -392,6 +394,9 @@ if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]
 					'account_lastname'  => $contact['n_family'],
 					'account_email'     => $contact['email'],
 					'person_id'         => $contact['id'],
+					'account_status'	=> $contact['account_status'],
+					'account_created'	=> $contact['created'],
+					'account_modified'	=> $contact['modified'],
 				);
 			}
 		}
