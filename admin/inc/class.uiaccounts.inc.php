@@ -456,7 +456,7 @@
 						$account['account_status'] = '<font color="red">' . lang('Disabled') . '</font>';
 					}
 					if (isset($account['account_created'])) 
-						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['accoount_created'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_created'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 					if (isset($account['account_modified'])) 
 						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_modified'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 
