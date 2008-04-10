@@ -57,6 +57,7 @@
     <td width="20%">{lang_lastname}</td>
     <td width="20%">{lang_firstname}</td>
     <td>{lang_email}</td>
+	<td>{lang_account_active}</td>
     <td class="narrow_column">{lang_edit}</td>
     <td class="narrow_column">{lang_delete}</td>
     <td class="narrow_column">{lang_view}</td>
@@ -68,6 +69,7 @@
     <td>{account_lastname}</td>
     <td>{account_firstname}</td>
     <td>{account_email}</td>
+	<td>{account_status}</td>
     <td>{row_edit}</td>
     <td>{row_delete}</td>
     <td>{row_view}</td>

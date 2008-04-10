@@ -358,7 +358,7 @@
 			}
 			$account_info = $GLOBALS['egw']->accounts->search($search_param);
 			$total = $GLOBALS['egw']->accounts->total;
-
+			
 			$link_data = array(
 				'menuaction' => 'admin.uiaccounts.list_users',
 				'group_id'   => $_REQUEST['group_id'],
@@ -377,6 +377,7 @@
 				'lang_lastname'      => $this->nextmatchs->show_sort_order($sort,'account_lastname',$order,'/index.php',lang('last name'),$link_data),
 				'lang_firstname'     => $this->nextmatchs->show_sort_order($sort,'account_firstname',$order,'/index.php',lang('first name'),$link_data),
 				'lang_email'         => $this->nextmatchs->show_sort_order($sort,'account_email',$order,'/index.php',lang('email'),$link_data),
+				'lang_account_active'   => lang('Account active')."<br>".lang('Created')."<br>".lang('Modified'),
 				'lang_edit'    => lang('edit'),
 				'lang_delete'  => lang('delete'),
 				'lang_view'    => lang('view'),
@@ -446,6 +447,19 @@
 				foreach($account_info as $account)
 				{
 					$p->set_var('class',$this->nextmatchs->alternate_row_color('',True));
+					if ($account['account_status']=='A')
+					{
+						$account['account_status'] = lang('Enabled');
+					}
+					else
+					{
+						$account['account_status'] = '<font color="red">' . lang('Disabled') . '</font>';
+					}
+					if (isset($account['account_created'])) 
+						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['accoount_created'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+					if (isset($account['account_modified'])) 
+						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_modified'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+
 
 					$p->set_var($account);
 
@@ -981,6 +995,9 @@
 			{
 				$var['account_status'] = '<b>' . lang('Disabled') . '</b>';
 			}
+			if (isset($userData['account_created'])) $var['account_status'].= '<br>'.lang('Created').': '.$GLOBALS['egw']->common->show_date($userData['account_created']);
+			if (isset($userData['account_modified'])) $var['account_status'].= '<br>'.lang('Modified').': '.$GLOBALS['egw']->common->show_date($userData['account_modified']);
+
 
 			// Last login time
 			if ($userData['lastlogin'])
