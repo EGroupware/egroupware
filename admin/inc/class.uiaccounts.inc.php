@@ -1416,6 +1416,9 @@
 				'account_file_space' => $account_file_space,
 				'account_id'        => (int) $userData['account_id']
 			);
+            if (isset($userData['account_created'])) $var['account_status'].= '<br>'.lang('Created').': '.$GLOBALS['egw']->common->show_date($userData['account_created']);
+            if (isset($userData['account_modified'])) $var['account_status'].= '<br>'.lang('Modified').': '.$GLOBALS['egw']->common->show_date($userData['account_modified']);
+
 
 			if($userData['expires'] == -1)
 			{
