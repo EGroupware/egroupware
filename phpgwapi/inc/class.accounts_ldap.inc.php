@@ -460,8 +460,8 @@ class accounts_ldap
 	{
 		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.'))',
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword',
-			'shadowexpire','shadowlastchange','homedirectory','loginshell'));
-		
+				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'));
+	
 		$data = ldap_get_entries($this->ds, $sri);
 		if (!$data['count'])
 		{
@@ -493,6 +493,8 @@ class accounts_ldap
 			// 'account_lastlogin' => $data['phpgwaccountlastlogin'][0],
 			// 'account_lastloginfrom' => $data['phpgwaccountlastloginfrom'][0],
 			'person_id'         => $data['uid'][0],	// id of associated contact
+			'account_created' => isset($data['createtimestamp'][0]) ? $this->accounts_ldap2ts($data['createtimestamp'][0]) : null,
+			'account_modified' => isset($data['modifytimestamp'][0]) ? $this->accounts_ldap2ts($data['modifytimestamp'][0]) : null,
 		);
 		//echo "<p align=right>accounts_ldap::_read_user($account_id): shadowexpire={$data['shadowexpire'][0]} --> account_expires=$user[account_expires]=".date('Y-m-d H:i',$user['account_expires'])."</p>\n";
 		if ($this->frontend->config['ldap_extra_attributes'])
@@ -714,7 +716,7 @@ class accounts_ldap
 				$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";	
 				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				
-				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire'));
+				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
 				$allValues = ldap_get_entries($this->ds, $sri);
 				
@@ -733,6 +735,9 @@ class accounts_ldap
 							'account_lastname'  => $GLOBALS['egw']->translation->convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
 							'account_email'     => $allVals['mail'][0],
+							'account_created' => isset($data['createtimestamp'][0]) ? $this->accounts_ldap2ts($data['createtimestamp'][0]) : null,
+							'account_modified' => isset($data['modifytimestamp'][0]) ? $this->accounts_ldap2ts($data['modifytimestamp'][0]) : null,
+ 
 						);
 					}
 				}
@@ -784,6 +789,23 @@ class accounts_ldap
 			return $account_search[$serial]['data'] = isset($totalcount) ? $sortedAccounts : array_slice($sortedAccounts, $start, $offset);
 		}
 		return $sortedAccounts;
+	}
+
+	/**
+	 * Creates a timestamp from the date returned by the ldap server
+	 *
+	 * @internal
+	 * @param string $date YYYYmmddHHiiss
+	 * @return int
+	 */
+	function accounts_ldap2ts($date)
+	{
+		if (isset($date) && strlen($date)>0)
+		{ 
+			return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2),
+				substr($date,4,2),substr($date,6,2),substr($date,0,4));
+		}
+		return NULL;
 	}
 
 	/**
