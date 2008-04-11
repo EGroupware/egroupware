@@ -260,7 +260,7 @@ class addressbook_merge	// extends bo_merge
 			{
 				$counter++;
 				$content .= $repvalue;
-				if (each($contentrep) != false) $content .= "\par \page\pard\plain";  // page break			
+				if (each($contentrep) != false && count($contentrep) !=1) $content .= "\par \page\pard\plain";  // page break			
 			}
 			$content = $contentstart.$content.$contentend;
 		}				
