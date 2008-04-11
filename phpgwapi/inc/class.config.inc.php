@@ -152,7 +152,7 @@ class config
 		if (empty($value))
 		{
 			if (isset(self::$configs[$app])) unset(self::$configs[$app][$name]);
-			return self::$db->delete(config::TABLE,array('config_value'=>$value),__LINE__,__FILE__);
+			return self::$db->delete(config::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 		return self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 	}
