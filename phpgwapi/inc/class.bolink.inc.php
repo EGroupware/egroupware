@@ -21,9 +21,6 @@
  */
 class bolink extends egw_link
 {
-	var $public_functions = array(
-		'get_file' => true,
-	);
 	/**
 	 * @deprecated use egw_link::VFS_APPNAME
 	 */
@@ -39,51 +36,6 @@ class bolink extends egw_link
 	 */
 	function __construct()
 	{
-		
+		error_log('Call to depricated bolink class from '.function_backtrace(1));
 	}
-
-	/**
-	 * Download an attached file
-	 *
-	 * @todo replace it with egw_vfs::download_url, once egw_vfs/webdav supports the attachments
-	 * @param array $link=null
-	 * @return array with params (eg. menuaction) for download link
-	 */
-	function get_file(array $link=null)
-	{
-		if (is_array($link))
-		{
-			return array(
-				'menuaction' => 'phpgwapi.bolink.get_file',
-				'app' => $link['app2'],
-				'id'  => $link['id2'],
-				'filename' => $link['id']
-			);
-		}
-		$app = $_GET['app'];
-		$id  = $_GET['id'];
-		$filename = $_GET['filename'];
-
-		if (empty($app) || empty($id) || empty($filename) || !$this->title($app,$id))
-		{
-			$GLOBALS['egw']->framework->render('<h1 style="text-align: center; color: red;">'.lang('Access not permitted')." !!!</h1>\n",
-				lang('Access not permitted'),true);
-			$GLOBALS['egw']->common->egw_exit();
-		}
-		$browser = new browser();
-
-		$local = $this->attached_local($app,$id,$filename,$_SERVER['REMOTE_ADDR'],$browser->is_windows());
-
-		if ($local)
-		{
-			Header('Location: ' . $local);
-		}
-		else
-		{
-			$info = $this->info_attached($app,$id,$filename);
-			$browser->content_header($filename,$info['type']);
-			echo $this->read_attached($app,$id,$filename);
-		}
-		$GLOBALS['egw']->common->egw_exit();
-	}	
 }

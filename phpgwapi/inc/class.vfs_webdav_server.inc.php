@@ -14,7 +14,6 @@
  */
 
 require_once('HTTP/WebDAV/Server/Filesystem.php');
-require_once(EGW_API_INC.'/class.egw_vfs.inc.php');
 
 /**
  * FileManger - WebDAV access using the new stream wrapper VFS interface
@@ -33,7 +32,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 *
 	 * @var string
 	 */
-	var $base = 'vfs://default';
+	var $base = egw_vfs::PREFIX;
 	
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, eg. complete $_SERVER array

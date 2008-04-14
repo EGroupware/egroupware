@@ -85,6 +85,12 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static $user;
 	/**
+	 * Current user is an eGW admin
+	 *
+	 * @var boolean
+	 */
+	static $is_admin = false;
+	/**
 	 * Total of last find call
 	 *
 	 * @var int
@@ -322,7 +328,7 @@ class egw_vfs extends vfs_stream_wrapper
 			$is_dir = is_dir($path);
 			if (!isset($options['remove']))
 			{
-				$options['remove'] = count($base) == 1 ? ($path == '/' ? 1 : strlen($path)+1) : 0;
+				$options['remove'] = count($base) == 1 ? strlen($path)+(int)(substr($path,-1)!='/') : 0;
 			}
 			if ((int)$options['mindepth'] == 0 && (!$dirs_last || !$is_dir))
 			{
@@ -332,8 +338,8 @@ class egw_vfs extends vfs_stream_wrapper
 			{
 				while($file = readdir($dir))
 				{
-					$file = $path.'/'.$file;
-					
+					$file = self::concat($path,$file);
+				
 					if ((int)$options['mindepth'] <= 1)
 					{
 						self::_check_add($options,$file,$result,1);
@@ -416,7 +422,7 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			return $result;
 		}
-		//echo "egw_vfs::find($path)="; _debug_array(array_keys($result));
+		//error_log("egw_vfs::find($path)=".print_r(array_keys($result),true));
 		if ($exec !== true)
 		{
 			return array_keys($result);
@@ -511,11 +517,13 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Recursiv remove all given url's, including it's content if they are files
 	 *
 	 * @param string/array $urls url or array of url's
+	 * @param boolean $allow_urls=false allow to use url's, default no only pathes (to stay within the vfs)
 	 * @return array
 	 */
-	static function remove($urls)
+	static function remove($urls,$allow_urls=false)
 	{
-		return self::find($urls,array('depth'=>true),array(__CLASS__,'_rm_rmdir'));
+		//error_log(__METHOD__.'('.print_r($urls).')');
+		return self::find($urls,array('depth'=>true,'url'=>$allow_urls),array(__CLASS__,'_rm_rmdir'));
 	}
 	
 	/**
@@ -543,45 +551,52 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function is_readable($path,$check = 4)
 	{
-		if (!($stat = self::stat($path)))
-		{
-			return false;
-		}
-		return self::check_access($stat,$check);
+		return self::check_access($path,$check);
 	}
 
 	/**
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param array $stat
+	 * @param array/string $path stat array or path
 	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
+	 * @param array $stat=null stat array, to not query it again
 	 * @return boolean
 	 */
-	static function check_access($stat,$check)
+	static function check_access($path,$check,$stat=null)
 	{
-		//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
-		
 		if (self::$is_root)
 		{
 			return true;
 		}
+		
+		// throw exception if stat array is used insead of path, can be removed soon
+		if (is_array($path))
+		{
+			throw new egw_exception_wrong_parameter('path has to be string, use check_acces($path,$check,$stat=null)!');
+		}
+		// query stat array, if not given
+		if (is_null($stat))
+		{
+			$stat = self::url_stat($path,0);
+		}
+		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
 
 		if (!$stat)
 		{
-			//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no stat array!");
+			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no stat array!");
 			return false;	// file not found
 		}
 		// check if other rights grant access
 		if (($stat['mode'] & $check) == $check)
 		{
-			//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
+			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
 			return true;
 		}
 		// check if there's owner access and we are the owner
 		if (($stat['mode'] & ($check << 6)) == ($check << 6) && $stat['uid'] && $stat['uid'] == self::$user)
 		{
-			//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via owner rights!");
+			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via owner rights!");
 			return true;
 		}
 		// check if there's a group access and we have the right membership
@@ -594,14 +609,15 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			if (in_array(-abs($stat['gid']),$memberships))
 			{
-				//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
+				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
 				return true;
 			}
 		}
-		// here could be a check for extended acls ...
+		// check backend for extended acls (only if path given)
+		$ret = $path && self::_call_on_backend('check_extended_acl',array($path,$check),true);	// true = fail silent if backend does not support
 
-		//error_log(__METHOD__."(stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no access!");
-		return false;
+		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) ".($ret ? 'backend extended acl granted access.' : 'no access!!!'));
+		return $ret;
 	}
 	
 	/**
@@ -628,6 +644,38 @@ class egw_vfs extends vfs_stream_wrapper
 		return self::is_readable($path,1);
 	}
 	
+	/**
+	 * Set or delete extended acl for a given path and owner (or delete  them if is_null($rights)
+	 * 
+	 * Does NOT check if user has the rights to set the extended acl for the given url/path!
+	 *
+	 * @param string $path string with path
+	 * @param int $rights=null rights to set, or null to delete the entry
+	 * @param int/boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @return boolean true if acl is set/deleted, false on error
+	 */
+	static function eacl($url,$rights=null,$owner=null)
+	{
+		$params = func_get_args();
+
+		return self::_call_on_backend('eacl',$params);
+	}
+
+	/**
+	 * Get all ext. ACL set for a path
+	 * 
+	 * Calls itself recursive, to get the parent directories
+	 *
+	 * @param string $path
+	 * @return array/boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
+	 */
+	static function get_eacl($path)
+	{
+		$params = func_get_args();
+
+		return self::_call_on_backend('get_eacl',$params);		
+	}
+
 	/**
 	 * Private constructor to prevent instanciating this class, only it's static methods should be used
 	 */
@@ -786,6 +834,59 @@ class egw_vfs extends vfs_stream_wrapper
 		
 		return array_pop($parts);
 	}
+	
+	/**
+	 * Get the directory / parent of a given path or url(!), return false for '/'!
+	 *
+	 * @param string $path path or url
+	 * @return string/boolean parent or false if there's none ($path == '/')
+	 */
+	static function dirname($url)
+	{
+		if ($url == '/' || $url[0] != '/' && parse_url($url,PHP_URL_PATH) == '/')
+		{
+			return false;
+		}
+		$parts = explode('/',$url);
+		if (substr($url,-1) == '/') array_pop($parts);
+		array_pop($parts);
+		if ($url[0] != '/' && count($parts) == 3)
+		{
+			array_push($parts,'');	// scheme://host is wrong (no path), has to be scheme://host/
+		}
+		//error_log(__METHOD__."($url)=".implode('/',$parts));
+		return implode('/',$parts);
+	}
+	
+	/**
+	 * Check if the current use has owner rights for the given path or stat
+	 * 
+	 * We define all eGW admins the owner of the group directories!
+	 *
+	 * @param string $path
+	 * @param array $stat=null stat for path, default queried by this function
+	 * @return boolean
+	 */
+	static function has_owner_rights($path,array $stat=null)
+	{
+		if (!$stat) $stat = self::url_stat($path,0);
+		
+		return $stat['uid'] == self::$user ||	// user is the owner
+			self::$is_root ||					// class runs with root rights
+			!$stat['uid'] && $stat['gid'] && self::$is_admin;	// group directory and user is an eGW admin
+	}
+	
+	/**
+	 * Concat a relative path to an url, taking into account, that the url might already end with a slash
+	 *
+	 * @param string $url base url or path, might end in a /
+	 * @param string $relative relative path to add to $url
+	 * @return string
+	 */
+	static function concat($url,$relative)
+	{
+		return substr($url,-1) == '/' ? $url.$relative : $url.'/'.$relative;
+	}
 
 	/**
 	 * URL to download a file
@@ -802,6 +903,15 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		return '/filemanager/webdav.php'.$path;
 	}
+	
+	/**
+	 * Initialise our static vars
+	 */
+	static function init_static()
+	{
+		self::$user = (int) $GLOBALS['egw_info']['user']['account_id'];
+		self::$is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
+	}
 }
 
-egw_vfs::$user = (int) $GLOBALS['egw_info']['user']['account_id'];
+egw_vfs::init_static();

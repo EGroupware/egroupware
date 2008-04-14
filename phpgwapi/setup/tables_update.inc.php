@@ -95,7 +95,10 @@
 	{
 		// import the current egw_vfs into egw_sqlfs
 		// ToDo: moving /infolog and /infolog/$app to /apps in the files dir!!!
-		$debug = true;
+		$debug = $GLOBALS['DEBUG'];
+
+		// delete the table in case this update runs multiple times
+		$GLOBALS['egw_setup']->db->delete('egw_vfs',false,__LINE__,__FILE__);
 
 		$query = $GLOBALS['egw_setup']->db->select('egw_vfs','*',"vfs_mime_type != 'journal' AND vfs_mime_type != 'journal-deleted'",__LINE__,__FILE__,false,'ORDER BY length(vfs_directory) ASC','phpgwapi');
 		if ($debug) echo "rows=<pre>\n";
@@ -184,3 +187,67 @@
 		}
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.004';
 	}
+
+	$test[] = '1.5.004';
+	function phpgwapi_upgrade1_5_004()
+	{
+		// convert the filemanager group grants into extended ACL
+		
+		// delete all sqlfs entries from the ACL table, in case we run multiple times
+		$GLOBALS['egw_setup']->db->delete('egw_acl',array('acl_appname' => sqlfs_stream_wrapper::EACL_APPNAME),__LINE__,__FILE__);
+		
+		$GLOBALS['egw_setup']->setup_account_object();
+		$accounts = $GLOBALS['egw_setup']->accounts;
+		$accounts = new accounts();
+		
+		egw_vfs::$is_root = true;	// we need root rights to set the extended acl, without being the owner
+
+		foreach($GLOBALS['egw_setup']->db->select('egw_acl','*',array(
+			'acl_appname' => 'filemanager',
+			"acl_location != 'run'",
+		),__LINE__,__FILE__) as $row)
+		{
+			$rights = egw_vfs::READABLE | egw_vfs::EXECUTABLE; 
+			if($row['acl_rights'] > 1) $rights |= egw_vfs::WRITABLE;
+			
+			if (($lid = $accounts->id2name($row['acl_account'])) && $accounts->exists($row['acl_location']))
+			{
+				$ret = sqlfs_stream_wrapper::eacl('/home/'.$lid,$rights,(int)$row['acl_location']);
+				//echo "<p>sqlfs_stream_wrapper::eacl('/home/$lid',$rights,$row[acl_location])=$ret</p>\n";
+			}
+		}
+		egw_vfs::$is_root = false;
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.005';
+	}
+
+	$test[] = '1.5.005';
+	function phpgwapi_upgrade1_5_005()
+	{
+		// move /infolog/$app to /apps/$app and /infolog to /apps/infolog
+		
+		$files_dir = $GLOBALS['egw_setup']->db->select('egw_config','config_value',array(
+			'config_name' => 'files_dir',
+			'config_app' => 'phpgwapi',
+		),__LINE__,__FILE__)->fetchSingle();
+		
+		if ($files_dir && file_exists($files_dir) && file_exists($files_dir.'/infolog'))
+		{
+			mkdir($files_dir.'/apps',0700,true);
+			if (($dir = opendir($files_dir.'/infolog')))
+			{
+				while(($app = readdir($dir)))
+				{
+					if (!is_numeric($app) && $app[0] != '.')	// ingore infolog entries and . or ..
+					{
+						rename($files_dir.'/infolog/'.$app,$files_dir.'/apps/'.$app);
+					}
+				}
+				closedir($dir);
+				rename($files_dir.'/infolog',$files_dir.'/apps/infolog');
+			}
+		}
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.006';
+	}
+

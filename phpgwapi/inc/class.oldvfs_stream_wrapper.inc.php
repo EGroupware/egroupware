@@ -101,21 +101,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 	protected $opened_dir;
 	
 	/**
-	 * Constructor, only called for the non-static stream_* methods!
-	 *
-	 * @return oldvfs_stream_wrapper
-	 */
-	function __construct()
-	{
-		if (self::LOG_LEVEL > 1) error_log('oldvfs_stream_wrapper::__construct()');
-
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
-	}
-
-	/**
 	 * This method is called immediately after your stream object is created.
 	 * 
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
@@ -447,10 +432,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		
 		$path = parse_url($url,PHP_URL_PATH);
 
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
 		$data=array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
@@ -488,10 +469,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		$path_from = parse_url($url_from,PHP_URL_PATH);
 		$path_to = parse_url($url_to,PHP_URL_PATH);
 
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
 		$data_from = array(
 			'string'	=> $path_from,
 			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
@@ -554,10 +531,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		
 		$path = parse_url($url,PHP_URL_PATH);
 
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
 		// check if we should also create all non-existing path components and our parent does not exist, 
 		// if yes call ourself recursive with the parent directory
 		if (($options & STREAM_MKDIR_RECURSIVE) && $path != '/' && !self::$old_vfs->file_exists(array(
@@ -606,10 +579,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		
 		$path = parse_url($url,PHP_URL_PATH);
 
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
 		$data=array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
@@ -657,10 +626,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		
 		$path = parse_url($url,PHP_URL_PATH);
 
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
 		$data=array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
@@ -683,10 +648,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		
 		$this->opened_dir = null;
 
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
 		$path = parse_url($url,PHP_URL_PATH);
 
 		$files = self::$old_vfs->ls(array(
@@ -699,7 +660,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		));
 		if (!is_array($files) || 
 			// we also need to return false, if $url is not a directory!
-			count($files) == 1 && $path == $files[0]['directory'].'/'.$files[0]['name'] &&
+			count($files) == 1 && $path == egw_vfs::concat($files[0]['directory'],$files[0]['name']) &&
 			$files[0]['mime_type'] != self::DIR_MIME_TYPE)
 		{
 			self::_remove_password($url);
@@ -711,7 +672,7 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 		foreach($files as $file)
 		{
 			$this->opened_dir[] = $file['name'];
-			self::$stat_cache[$file['directory'].'/'.$file['name']] = $file;
+			self::$stat_cache[egw_vfs::concat($file['directory'],$file['name'])] = $file;
 		}
 		//print_r($this->opened_dir);
 		reset($this->opened_dir);
@@ -757,10 +718,6 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 			return self::_vfsinfo2stat(self::$stat_cache[$path]);
 		}
 
-		if (!is_object(self::$old_vfs))
-		{
-			self::$old_vfs =& new vfs_home();
-		}
 		list($info) = self::$old_vfs->ls(array(
 			'string'    	=> $path,
 			'relatives'		=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
@@ -894,6 +851,21 @@ class oldvfs_stream_wrapper implements iface_stream_wrapper
 				$parts['host'].$parts['path'];
 		}
 	}
+	
+	/**
+	 * Initialise our static vars
+	 *
+	 */
+	function init_static()
+	{
+		stream_register_wrapper(self::SCHEME ,__CLASS__);
+
+		if (!is_object(self::$old_vfs))
+		{
+			self::$old_vfs =& new vfs_home();
+			self::$old_vfs->override_acl =& egw_vfs::$is_root;
+		}		
+	}
 }
 
-stream_register_wrapper(oldvfs_stream_wrapper::SCHEME ,'oldvfs_stream_wrapper');
+oldvfs_stream_wrapper::init_static();

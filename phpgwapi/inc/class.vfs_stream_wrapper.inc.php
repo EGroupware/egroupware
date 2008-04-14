@@ -39,6 +39,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	const DIR_MIME_TYPE = 'httpd/unix-directory';
 	/**
+	 * Should unreadable entries in a not writable directory be hidden, default yes
+	 */
+	const HIDE_UNREADABLES = true;
+	
+	/**
 	 * optional context param when opening the stream, null if no context passed
 	 *
 	 * @var mixed
@@ -53,8 +58,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @var array
 	 */
 	protected static $fstab = array(
-//		'/' => 'sqlfs://$user:$pass@$host/',
-		'/' => 'oldvfs://$user:$pass@$host/',
+		'/' => 'sqlfs://$user:$pass@$host/',
+		'/apps' => 'links://$user:$pass@$host/apps',
+//		'/' => 'oldvfs://$user:$pass@$host/',
 //		'/files' => 'oldvfs://$user:$pass@$host/home/Default',
 //		'/images' => 'http://localhost/egroupware/phpgwapi/templates/idots/images',
 //		'/home/ralf/linux' => '/home/ralf',		// we probably need to forbid direct filesystem access for security reasons!
@@ -126,11 +132,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$parts = array_merge(parse_url($path),$defaults);
 
+		if (!empty($parts['scheme']) && $parts['scheme'] != self::SCHEME)
+		{
+			return $path;	// path is already a non-vfs url --> nothing to do
+		}
 		if (empty($parts['path'])) $parts['path'] = '/';
 		
 		foreach(array_reverse(self::$fstab) as $mounted => $url)
 		{
-			if ($mounted == substr($parts['path'],0,strlen($mounted)))
+			if ($mounted == '/' || $mounted == $parts['path'] || $mounted.'/' == substr($parts['path'],0,strlen($mounted)+1))
 			{
 				$scheme = parse_url($url,PHP_URL_SCHEME);
 				if (is_null(self::$wrappers) || !in_array($scheme,self::$wrappers))
@@ -140,6 +150,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				$url .= substr($parts['path'],strlen($mounted));
 
 				$url = str_replace(array('$user','$pass','$host'),array($parts['user'],$parts['pass'],$parts['host']),$url);
+				
+				if ($parts['query']) $url .= '?'.$parts['query'];
+				if ($parts['fragment']) $url .= '#'.$parts['fragment'];
 				
 				//error_log(__METHOD__."($path) = $url");
 				return $cache[$path] = $url;
@@ -384,8 +397,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string $name
 	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
+	 * @param boolean $fail_silent=false should only false be returned if function is not supported by the backend, 
+	 * 	or should an E_USER_WARNING error be triggered (default)
+	 * @return mixed return value of backend or false if function does not exist on backend
 	 */
-	static private function _call_on_backend($name,$params)
+	static protected function _call_on_backend($name,$params,$fail_silent=false)
 	{
 		$path = $params[0];
 		
@@ -397,7 +413,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			if (!class_exists($class = $scheme.'_stream_wrapper') || !method_exists($class,$name))
 			{
-				trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
+				if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
 				return false;
 			}
 			$params[0] = $url;
@@ -540,7 +556,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		$this->opened_dir_writable = ($stat = @stat($this->opened_dir_url)) && egw_vfs::check_access($stat,egw_vfs::WRITABLE);
+		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
 
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = parse_url($this->opened_dir_url,PHP_URL_PATH);
@@ -589,7 +605,16 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		//error_log(__METHOD__."('$path',$flags) calling stat($url)");
-		return @stat($url);	// suppressed the stat failed warnings
+		return $stat = @stat($url);	// suppressed the stat failed warnings
+
+		// Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
+		// Problem: this does NOT stop (calles itself infinit recursive)!
+		if (self::HIDE_UNREADABLES && !egw_vfs::check_access($path,egw_vfs::READABLE,$stat) &&
+			!egw_vfs::check_access(dirname($path,egw_vfs::WRITABLE)))
+		{
+			return false;
+		}
+		return $stat;
 	}
 	
 	/**
@@ -610,14 +635,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		// only return children readable by the user, if dir is not writable
 		do {
-			if (($file = readdir($this->opened_dir)) !== false && !$this->opened_dir_writable)
-			{
-				$stat = stat($this->opened_dir_url.'/'.$file);
-			}
-			//echo __METHOD__."() opened_dir_writable=$this->opened_dir_writable, file=$file, readable=".(int)egw_vfs::check_access($stat,egw_vfs::READABLE).", loop=".
-			//	(int)($file !== false && $stat && !egw_vfs::check_access($stat,egw_vfs::READABLE))."\n";
+			$file = readdir($this->opened_dir);
 		}
-		while($file !== false && $stat && !egw_vfs::check_access($stat,egw_vfs::READABLE));
+		while($file !== false && self::HIDE_UNREADABLES && !$this->opened_dir_writable && 
+			!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE));
 		
 		return $file;
 	}
@@ -669,16 +690,19 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					require_once('HTTP/WebDAV/Client.php');
 					self::$wrappers[] = 'webdav';
 					break;
-				case 'oldvfs':
-				case 'sqlfs':
-					require_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
-					self::$wrappers[] = $scheme;
-					break;
 				case '':
-					return true;	// default file, always loaded
+					break;	// default file, always loaded
 				default:
-					trigger_error("Can't load stream-wrapper for scheme '$scheme'!",E_USER_WARNING);
-					return false;
+					// check if scheme is buildin in php or one of our own stream wrappers
+					if (in_array($scheme,stream_get_wrappers()) || class_exists($scheme.'_stream_wrapper'))
+					{
+						self::$wrappers[] = $scheme;
+					}
+					else
+					{
+						trigger_error("Can't load stream-wrapper for scheme '$scheme'!",E_USER_WARNING);
+						return false;
+					}
 			}
 		}
 		return true;

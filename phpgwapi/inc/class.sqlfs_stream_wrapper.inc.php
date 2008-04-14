@@ -22,7 +22,7 @@
  * 
  * I use the PDO DB interface, as it allows to access BLOB's as streams (avoiding to hold them complete in memory).
  * 
- * The interface is according to the docu on php.net
+ * The stream wrapper interface is according to the docu on php.net
  *  
  * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
  * @ToDo compare (and optimize) performance with old vfs system (eg. via webdav)
@@ -152,18 +152,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 		
 		$path = parse_url($url,PHP_URL_PATH);
+		$dir = egw_vfs::dirname($url);
 		
 		$this->opened_path = $path;
 		$this->opened_mode = $mode;
 		$this->opened_stream = null;
 		
-		$stat = self::url_stat($url,0);
-		
 		if (!($stat = self::url_stat($path,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' ||	// or file should not exist, but does
-				!egw_vfs::check_access(($dir_stat = self::url_stat(dirname($path),0)),egw_vfs::WRITABLE))	// or we are not allowed to 																																			create it
+				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))	// or we are not allowed to 																																			create it
 			{
 				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
@@ -212,7 +211,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		else
 		{
-			if ($mode != 'r' && !egw_vfs::check_access($stat,egw_vfs::WRITABLE))	// we are not allowed to edit it
+			if ($mode != 'r' && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))	// we are not allowed to edit it
 			{
 				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
@@ -440,8 +439,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		
 		$path = parse_url($url,PHP_URL_PATH);
 		
-		if (!($stat = self::url_stat($path,0)) || !($dir_stat = self::url_stat(dirname($path),0)) ||
-			!egw_vfs::check_access($dir_stat,egw_vfs::WRITABLE))
+		if (!($stat = self::url_stat($path,0)) || !egw_vfs::check_access(dirname($path),egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) (type=$type) permission denied!");
@@ -475,16 +473,16 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		
 		$path_from = parse_url($url_from,PHP_URL_PATH);
 		$path_to = parse_url($url_to,PHP_URL_PATH);
+		$to_dir = dirname($path_to);
 		
-		if (!($from_stat = self::url_stat($path_from,0)) ||
-			!($from_dir_stat = self::url_stat(dirname($path_from),0)) || !egw_vfs::check_access($from_dir_stat,egw_vfs::WRITABLE))
+		if (!($from_stat = self::url_stat($path_from,0)) || !egw_vfs::check_access(dirname($path_from),egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!($to_dir_stat = self::url_stat(dirname($path_to),0)) || !egw_vfs::check_access($to_dir_stat,egw_vfs::WRITABLE))
+		if (!egw_vfs::check_access($to_dir,egw_vfs::WRITABLE,$to_dir_stat = self::url_stat($to_dir,0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -544,19 +542,19 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 
-		$parent = self::url_stat(dirname($path),STREAM_URL_STAT_QUIET);
+		$parent = self::url_stat($parent_path=dirname($path),STREAM_URL_STAT_QUIET);
 
 		// check if we should also create all non-existing path components and our parent does not exist, 
 		// if yes call ourself recursive with the parent directory
 		if (($options & STREAM_MKDIR_RECURSIVE) && $path != '/' && !$parent)
 		{
-			if (!self::mkdir(dirname($path),$mode,$options))
+			if (!self::mkdir($parent_path,$mode,$options))
 			{
 				return false;
 			}
-			$parent = self::url_stat(dirname($path),0);
+			$parent = self::url_stat($parent_path=dirname($path),0);
 		}
-		if (!$parent || !egw_vfs::check_access($parent,egw_vfs::WRITABLE))
+		if (!$parent || !egw_vfs::check_access($parent_path,egw_vfs::WRITABLE,$parent))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) permission denied!");
@@ -601,9 +599,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 		
 		$path = parse_url($url,PHP_URL_PATH);
+		$parent = dirname($path);
 		
 		if (!($stat = self::url_stat($path,0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
-			!($parent = self::url_stat(dirname($path),0)) || !egw_vfs::check_access($parent,egw_vfs::WRITABLE))
+			!egw_vfs::check_access($parent,egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$options) (type=$type) permission denied!");
@@ -630,6 +629,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=?');
 		if (($ret = $stmt->execute(array($stat['ino']))) &&  $operation == self::STORE2FS)
 		{
+			self::eacl($path,null,false,$stat['ino']);	// remove all (=false) evtl. existing extended acl for that dir
 			rmdir(self::_fs_path($path));
 		}
 		return $ret;
@@ -651,17 +651,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)))
 		{
 			// file does not exist --> create an empty one
-			if (($f = fopen(self::SCHEME.'://default'.$path,'w')) && fclose($f))
-			{
-				if (!is_null($time))
-				{
-					$stat = self::url_stat($path,0);
-				}
-			}
-			else
+			if (!($f = fopen(self::SCHEME.'://default'.$path,'w')) || !fclose($f))
 			{
 				return false;
 			}
+			if (is_null($time))
+			{
+				return true;	// new (empty) file created with current mod time
+			}
+			$stat = self::url_stat($path,0);
 		}
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_modified=:fs_modified WHERE fs_id=:fs_id');
 
@@ -801,15 +799,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_opendir ( $url, $options )
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$options)");
-		
 		$this->opened_dir = null;
 
 		$path = parse_url($url,PHP_URL_PATH);
 		
 		if (!($stat = self::url_stat($url,0)) || 		// dir not found
 			$stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
-			!egw_vfs::check_access($stat,egw_vfs::EXECUTABLE|egw_vfs::READABLE))	// no access
+			!egw_vfs::check_access($url,egw_vfs::EXECUTABLE|egw_vfs::READABLE,$stat))	// no access
 		{
 			self::_remove_password($url);
 			$msg = $stat['mime'] != self::DIR_MIME_TYPE ? "$url is no directory" : 'permission denied';
@@ -819,12 +815,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$this->opened_dir = array();
 		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_dir=?';
+		
 		// only return readable files, if dir is not writable by user
-		if (!egw_vfs::check_access($stat,egw_vfs::WRITABLE))
+		/* to value/check the extended acl later on, we have to return all files!
+		if (egw_vfs::HIDE_UNREADABLES && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))
 		{
 			$query .= ' AND '.self::_sql_readable();
-		}
-		$query = "/* sqlfs::dir_opendir($path) */ ".$query;
+		}*/
+		//$query = "/* sqlfs::dir_opendir($path) */ ".$query;
 
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -833,9 +831,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			foreach($stmt as $file)
 			{
 				$this->opened_dir[] = $file['fs_name'];
-				self::$stat_cache[$path.'/'.$file['fs_name']] = $file;
+				self::$stat_cache[egw_vfs::concat($path,$file['fs_name'])] = $file;
 			}
 		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$options): ".implode(', ',$this->opened_dir));
 		//print_r($this->opened_dir);
 		reset($this->opened_dir);
 
@@ -866,12 +865,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set, 
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
+	 * @param boolean $eacl_access=null allows extending classes to pass the value of their check_extended_acl() method (no lsb!)
 	 * @return array 
 	 */
-	static function url_stat ( $url, $flags )
+	static function url_stat ( $url, $flags, $eacl_access=null )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags)");
-		
+	
 		$path = parse_url($url,PHP_URL_PATH);
 		
 		// webdav adds a trailing slash to dirs, which causes url_stat to NOT find the file otherwise
@@ -891,6 +891,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_name=? AND fs_dir=';
 		$parts = explode('/',$path);
+
+		// if we have extendes acl access to the url, we dont need and can NOT include the sql for the readable check
+		if (is_null($eacl_access))
+		{
+			$eacl_access = self::check_extended_acl($path,egw_vfs::READABLE);	// should be static::check_extended_acl, but no lsb!
+		}
 		foreach($parts as $n => $name)
 		{
 			if ($n == 0)
@@ -901,9 +907,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name='.self::$pdo->quote($name);
 
-				// if we are not root, we need to make sure the user has the right to tranverse all partent directories (read-rights)
-				if (!egw_vfs::$is_root)
+				// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
+				if (!egw_vfs::$is_root && !$eacl_access)
 				{
+					if (!egw_vfs::$user)
+					{
+						self::_remove_password($url);
+						if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags) permission denied, no user-id and not root!");
+						return false;
+					}
 					$query .= ' AND '.self::_sql_readable();
 				}
 			}
@@ -912,7 +924,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$query = str_replace('fs_name=?','fs_name='.self::$pdo->quote($name),$base_query).'('.$query.')';
 			}
 		}
-		$query = "/* sqlfs::url_stat($path) */ ".$query;
+		//$query = "/* sqlfs::url_stat($path) */ ".$query;
 		//echo "query=$query\n";
 		
 		if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
@@ -923,6 +935,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		self::$stat_cache[$path] = $info;
 
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags)=".str_replace("\n",'',print_r($info,true)));
 		return self::_vfsinfo2stat($info);
 	}
 	
@@ -964,7 +977,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		return $file;
 	}
-
+	
 	/**
 	 * This method is called in response to rewinddir().
 	 * 
@@ -1002,6 +1015,223 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		return true;
 	}
 	
+	private static $extended_acl;
+
+	/**
+	 * Check if extendes ACL (stored in eGW's ACL table) grants access
+	 * 
+	 * The extended ACL is inherited, so it's valid for all subdirs and the included files!
+	 * The used algorithm break on the first match. It could be used, to disallow further access.
+	 *
+	 * @param string $url url to check
+	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
+	 * @return boolean
+	 */
+	static function check_extended_acl($url,$check)
+	{
+		$url_path = parse_url($url,PHP_URL_PATH);
+		
+		if (is_null(self::$extended_acl))
+		{
+			self::_read_extended_acl();
+		}
+		$access = false;
+		foreach(self::$extended_acl as $path => $rights)
+		{
+			if ($path == $url_path || substr($url_path,0,strlen($path)+1) == $path.'/')
+			{
+				$access = ($rights & $check) == $check;
+				break;
+			}
+		}
+		//error_log(__METHOD__."($url,$check) ".($access?"access granted by $path=$rights":'no access!!!'));
+		return $access;
+	}
+	
+	/**
+	 * Read the extended acl via acl::get_grants('sqlfs')
+	 *
+	 */
+	private static function _read_extended_acl()
+	{
+		if ((self::$extended_acl = $GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME)) != false)
+		{
+			return;		// ext. ACL read from session.
+		}
+		self::$extended_acl = array();
+		if (($rights = $GLOBALS['egw']->acl->get_all_location_rights(egw_vfs::$user,self::EACL_APPNAME)))
+		{
+			$pathes = self::id2path(array_keys($rights));
+		}
+		foreach($rights as $fs_id => $right)
+		{
+			$path = $pathes[$fs_id];
+			if (isset($path))
+			{
+				self::$extended_acl[$path] = (int)$right;
+			}
+		}
+		// sort by length descending, to allow more specific pathes to have precedence
+		uksort(self::$extended_acl,create_function('$a,$b','return strlen($b)-strlen($a);'));
+		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);
+		//echo __METHOD__; print_r(self::$extended_acl);
+	}
+	
+	/**
+	 * Appname used with the acl class to store the extended acl
+	 */
+	const EACL_APPNAME = 'sqlfs';
+
+	/**
+	 * Set or delete extended acl for a given path and owner (or delete  them if is_null($rights)
+	 * 
+	 * Only root, the owner of the path or an eGW admin (only if there's no owner but a group) are allowd to set eACL's!
+	 *
+	 * @param string $path string with path
+	 * @param int $rights=null rights to set, or null to delete the entry
+	 * @param int/boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param int $fs_id=null fs_id to use, to not query it again (eg. because it's already deleted)
+	 * @return boolean true if acl is set/deleted, false on error
+	 */
+	static function eacl($path,$rights=null,$owner=null,$fs_id=null)
+	{
+		if ($path[0] != '/')
+		{
+			$path = parse_url($path,PHP_URL_PATH);
+		}
+		if (is_null($fs_id))
+		{
+			if (!($stat = self::url_stat($path,0)))
+			{
+				error_log(__METHOD__."($path,$rights,$owner,$fs_id) no such file or directory!");
+				return false;	// $path not found
+			}
+			if (!egw_vfs::has_owner_rights($path,$stat))		// not group dir and user is eGW admin
+			{
+				error_log(__METHOD__."($path,$rights,$owner,$fs_id) permission denied!");
+				return false;	// permission denied
+			}
+			$fs_id = $stat['ino'];
+		}
+		if (is_null($owner))
+		{
+			$owner = egw_vfs::$user;
+		}
+		if (is_null($rights) || $owner === false)
+		{
+			// delete eacl
+			if (is_null($owner) || $owner == egw_vfs::$user)
+			{
+				unset(self::$extended_acl[$path]);
+			}
+			$ret = $GLOBALS['egw']->acl->delete_repository(self::EACL_APPNAME,$fs_id,(int)$owner);
+		}
+		else
+		{
+			if (isset(self::$extended_acl) && ($owner == egw_vfs::$user || 
+				$owner < 0 && egw_vfs::$user && in_array($owner,$GLOBALS['egw']->accounts->memberships(egw_vfs::$user,true))))
+			{
+				// set rights for this class, if applicable
+				self::$extended_acl[$path] = $rights;
+			}
+			$ret = $GLOBALS['egw']->acl->add_repository(self::EACL_APPNAME,$fs_id,$owner,$rights);
+		}
+		if ($ret)
+		{
+			$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);			
+		}
+		//error_log(__METHOD__."($path,$rights,$owner,$fs_id)=".(int)$ret);
+		return $ret;
+	}
+	
+	/**
+	 * Get all ext. ACL set for a path
+	 * 
+	 * Calls itself recursive, to get the parent directories
+	 *
+	 * @param string $path
+	 * @return array/boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
+	 */
+	function get_eacl($path)
+	{
+		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)))
+		{
+			return false;	// not found
+		}
+		$eacls = array();
+		foreach($GLOBALS['egw']->acl->get_all_rights($stat['ino'],self::EACL_APPNAME) as $owner => $rights)
+		{
+			$eacls[] = array(
+				'path'   => $path,
+				'owner'  => $owner,
+				'rights' => $rights,
+				'ino'    => $stat['ino'],
+			);
+		}
+		if (($path = egw_vfs::dirname($path)))
+		{
+			return array_merge(self::get_eacl($path),$eacls);
+		}
+		// sort by length descending, to show precedence
+		usort($eacls,create_function('$a,$b','return strlen($b["path"])-strlen($a["path"]);'));
+
+		return $eacls;
+	}
+	
+	/**
+	 * Return the path of given fs_id(s)
+	 * 
+	 * Calls itself recursive to to determine the path of the parent/directory
+	 *
+	 * @param int/array $fs_ids integer fs_id or array of them
+	 * @return string/array path or array or pathes indexed by fs_id
+	 */
+	static function id2path($fs_ids)
+	{
+		//error_log(__METHOD__.'('.print_r($fs_id,true).')');
+
+		$ids = (array)$fs_ids;
+		if (count($ids) > 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
+		$query = 'SELECT fs_id,fs_dir,fs_name FROM '.self::TABLE.' WHERE fs_id'.
+			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')');
+		
+		if (!is_object(self::$pdo))
+		{
+			self::_pdo();
+		}
+		//$query = '/* sqlfs::id2path('.implode(',',$ids).') */ '.$query;
+		$stmt = self::$pdo->prepare($query);
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		if (!$stmt->execute())
+		{
+			return false;	// not found
+		}
+		$parents = array();
+		foreach($stmt as $row)
+		{
+			if ($row['fs_dir'] > 1 && !in_array($row['fs_dir'],$parents))
+			{
+				$parents[] = $row['fs_dir'];
+			}
+			$rows[$row['fs_id']] = $row;
+		}
+		unset($stmt);
+		
+		if ($parents && !($parents = self::id2path($parents)))
+		{
+			return false;	// parent not found, should never happen ...
+		}
+		$pathes = array();
+		foreach($rows as $fs_id => $row)
+		{
+			$parent = $row['fs_dir'] > 1 ? $parents[$row['fs_dir']] : '';
+			
+			$pathes[$fs_id] = $parent . '/' . $row['fs_name'];
+		}
+		//error_log(__METHOD__.'('.print_r($fs_ids,true).')='.print_r($pathes,true));
+		return is_array($fs_ids) ? $pathes : array_shift($pathes);
+	}
+
 	/**
 	 * Convert a sqlfs-file-info into a stat array
 	 *
@@ -1035,22 +1265,22 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static private function _pdo()
 	{
-		$server =& $GLOBALS['egw_info']['server'];
+		$egw_db = isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 		
-		switch($server['db_type'])
+		switch($egw_db->Type)
 		{
 			default:
-				$dsn = $server['db_type'].':host='.$server['db_host'].';dbname='.$server['db_name'];
+				$dsn = $egw_db->Type.':host='.$egw_db->Host.';dbname='.$egw_db->Database;
 				break;
 		}
-		self::$pdo = new PDO($dsn,$server['db_user'],$server['db_pass']);
+		self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password);
 		
 		// set client charset of the connection
 		$charset = $GLOBALS['egw']->translation->charset();
 		switch($server['db_type'])
 		{
 			case 'mysql':
-				if (isset($GLOBALS['egw']->db->Link_ID->charset2mysql[$charset])) $charset = $GLOBALS['egw']->db->Link_ID->charset2mysql[$charset];
+				if (isset($egw_db->Link_ID->charset2mysql[$charset])) $charset = $egw_db->Link_ID->charset2mysql[$charset];
 				// fall throught
 			case 'pgsql':
 				$query = "SET NAMES '$charset'";

@@ -863,14 +863,7 @@ class html
 	{
 		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
 		{
-			$parts = explode('/',substr($name,4));
-			$file = array_pop($parts);
-			$path = implode('/',$parts);
-			$name = array(
-				'menuaction' => 'filemanager.uifilemanager.view',
-				'path'       => rawurlencode(base64_encode($path)),
-				'file'       => rawurlencode(base64_encode($file)),
-			);
+			$name = egw_vfs::download_url(substr($name,4));
 		}
 		if (is_array($name))	// menuaction and other get-vars
 		{

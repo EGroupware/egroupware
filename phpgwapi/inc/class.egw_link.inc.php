@@ -46,7 +46,8 @@
  *			'add_id'     => 'link_id',				// --------------------- " ------------------- id
  *          'add_popup' => '400x300',				// size of popup (XxY), if add is in popup 
  *			'notify' => 'app.class.method',			// method to be called if an other applications liks or unlinks with app: notify(array $data)
- *		);
+ * 			'file_access' => 'app.class.method',	// method to be called to check file access rights, see links_stream_wrapper class
+ *		);											// boolean file_access(string $id,int $check,string $rel_path)
  *	}
  * All entries are optional, thought you only get conected functionality, if you implement them ...
  *
@@ -62,12 +63,6 @@
  */
 class egw_link extends solink
 {
-	/**
-	 * Basepath for attached files
-	 * 
-	 * @todo change to '/apps' once the new vfs is complete
-	 */
-	const VFS_BASEDIR = '/infolog';
 	/**
 	 * appname used for returned attached files (!= 'filemanager'!)
 	 */
@@ -91,14 +86,6 @@ class egw_link extends solink
 		),
 	);
 	/**
-	 * Instance of the vfs class
-	 *
-	 * @var vfs
-	 */
-	private static $vfs;
-	private static $link_pathes = array();
-	private static $send_file_ips = array();
-	/**
 	 * Caches link titles for a better performance
 	 *
 	 * @var array
@@ -119,11 +106,6 @@ class egw_link extends solink
 	 */
 	static function init_static( )
 	{
-		self::$vfs = new vfs();
-
-		self::$link_pathes   =& $GLOBALS['egw_info']['server']['link_pathes'];
-		self::$send_file_ips =& $GLOBALS['egw_info']['server']['send_file_ips'];
-		
 		// other apps can participate in the linking by implementing a search_link hook, which
 		// has to return an array in the format of an app_register entry
 		// for performance reasons, we do it only once / cache it in the session
@@ -557,19 +539,7 @@ class egw_link extends solink
 			}
 			if (is_array($link))
 			{
-				$size = $link['size'];
-				if ($size_k = (int)($size / 1024))
-				{
-					if ((int)($size_k / 1024))
-					{
-						$size = sprintf('%3.1dM',doubleval($size_k)/1024.0);
-					}
-					else
-					{
-						$size = $size_k.'k';
-					}
-				}
-				$extra = ': '.$link['type'] . ' '.$size;
+				$extra = ': '.$link['type'] . ' '.egw_vfs::hsize($link['size']);
 			}
 			return self::$title_cache[$app.':'.$id] = $id.$extra;
 		}
@@ -662,7 +632,6 @@ class egw_link extends solink
 	/**
 	 * view entry $id of $app
 	 *
-	 * @ToDo use webdav url of new vfs, once ACL for /apps is ready
 	 * @param string $app appname
 	 * @param string $id id in $app 
 	 * @param array $link=null link-data for file-attachments
@@ -672,12 +641,7 @@ class egw_link extends solink
 	{
 		if ($app == self::VFS_APPNAME && !empty($id) && is_array($link))
 		{
-			return array(
-				'menuaction' => 'phpgwapi.bolink.get_file',
-				'app' => $link['app2'],
-				'id'  => $link['id2'],
-				'filename' => $link['id']
-			);
+			return egw_vfs::download_url(parse_url(self::vfs_path($link['app2'],$link['id2'],$link['id']),PHP_URL_PATH));
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['view']) || !isset($reg['view_id']))
 		{
@@ -710,11 +674,21 @@ class egw_link extends solink
 	 */
 	static function is_popup($app,$action='view')
 	{
-		if (!($reg = self::$app_register[$app]) || !$reg[$action.'_popup'])
-		{
-			return false;
-		}
-		return $reg[$action.'_popup'];
+		return self::get_registry($app,$action.'_popup');
+	}	
+
+	/**
+	 * Check if $app is in the registry and has an entry for $name
+	 *
+	 * @param string $app app-name
+	 * @param string $name name / key in the registry, eg. 'view'
+	 * @return boolean/string false if $app is not registered, otherwise string with the value for $name
+	 */
+	static function get_registry($app,$name)
+	{
+		$reg = self::$app_register[$app];
+
+		return isset($reg) ? $reg[$name] : false;
 	}	
 
 	/**
@@ -723,26 +697,30 @@ class egw_link extends solink
 	 * All link-files are based in the vfs-subdir '/infolog'. For other apps
 	 * separate subdirs with name app are created.
 	 *
-	 * @ToDo change to new VFS_BASEDIR /apps (incl. /apps/infolog)
 	 * @param string $app appname
 	 * @param string $id='' id in $app 
 	 * @param string $file='' filename
-	 * @param boolean/array $relatives=False return path as array with path in string incl. relatives
 	 * @return string/array path or array with path and relatives, depending on $relatives
 	 */
-	static function vfs_path($app,$id='',$file='',$relatives=False)
+	static function vfs_path($app,$id='',$file='')
 	{
-		$path = self::VFS_BASEDIR . ($app == '' || $app == 'infolog' ? '' : '/'.$app) .
-			($id != '' ? '/' . $id : '') . ($file != '' ? '/' . $file : '');
-		
-		if (self::DEBUG)
+		$path = links_stream_wrapper::BASEURL;
+		if ($app)
 		{
-			echo "<p>egw_link::vfs_path('$app','$id','$file') = '$path'</p>\n";
+			$path .= '/'.$app;
+			
+			if ($id)
+			{
+				$path .= '/'.$id;
+				
+				if ($file)
+				{
+					$path .= '/'.$file;
+				}
+			}
 		}
-		return $relatives ? array(
-			'string' => $path,
-			'relatives' => is_array($relatives) ? $relatives : array($relatives)
-		) : $path;
+		//error_log(__METHOD__."($app,$id,$file)=$path");
+		return $path;
 	}
 
 	/**
@@ -757,7 +735,8 @@ class egw_link extends solink
 	 * 	$file['path'] path of the file on the client computer
 	 * 	$file['ip'] of the client (path and ip are only needed if u want a symlink (if possible))
 	 * @param string $comment='' comment to add to the link
-	 * @return int negative id of phpgw_vfs table as negative link-id's are for vfs attachments
+	 * @todo remark/comment from the vfs
+	 * @return int negative id of egw_sqlfs table as negative link-id's are for vfs attachments
 	 */
 	static function attach_file($app,$id,$file,$comment='')
 	{
@@ -765,73 +744,35 @@ class egw_link extends solink
 		{
 			echo "<p>attach_file: app='$app', id='$id', tmp_name='$file[tmp_name]', name='$file[name]', size='$file[size]', type='$file[type]', path='$file[path]', ip='$file[ip]', comment='$comment'</p>\n";
 		}
-		// create the root for attached files in infolog, if it does not exists
-		$vfs_data = array('string'=>self::VFS_BASEDIR,'relatives'=>array(RELATIVE_ROOT));
-		if (!(self::$vfs->file_exists($vfs_data)))
-		{
-			self::$vfs->override_acl = 1;
-			self::$vfs->mkdir($vfs_data);
-			self::$vfs->override_acl = 0;
-		}
+		$app_dir = self::vfs_path($app);
 
-		$vfs_data = self::vfs_path($app,False,False,RELATIVE_ROOT);
-		if (!(self::$vfs->file_exists($vfs_data)))
-		{
-			self::$vfs->override_acl = 1;
-			self::$vfs->mkdir($vfs_data);
-			self::$vfs->override_acl = 0;
-		}
-		$vfs_data = self::vfs_path($app,$id,False,RELATIVE_ROOT);
-		if (!(self::$vfs->file_exists($vfs_data)))
-		{
-			self::$vfs->override_acl = 1;
-			self::$vfs->mkdir($vfs_data);
-			self::$vfs->override_acl = 0;
-		}
-		$fname = self::vfs_path($app,$id,$file['name']);
-		$tfname = '';
-		if (!empty($file['path']) && is_array(self::$link_pathes) && count(self::$link_pathes))
-		{
-			$file['path'] = str_replace('\\\\','/',$file['path']);	// vfs uses only '/'
-			@reset(self::$link_pathes);
-			while ((list($valid,$trans) = @each(self::$link_pathes)) && !$tfname)
-			{  // check case-insensitive for WIN etc.
-				$check = $valid[0] == '\\' || strpos(':',$valid) !== false ? 'eregi' : 'ereg';
-				$valid2 = str_replace('\\','/',$valid);
-				//echo "<p>attach_file: ereg('".self::$send_file_ips[$valid]."', '$file[ip]')=".ereg(self::$send_file_ips[$valid],$file['ip'])."</p>\n";
-				if ($check('^('.$valid2.')(.*)$',$file['path'],$parts) &&
-				    ereg(self::$send_file_ips[$valid],$file['ip']) &&     // right IP
-				    self::$vfs->file_exists(array('string'=>$trans.$parts[2],'relatives'=>array(RELATIVE_NONE|VFS_REAL))))
-				{
-					$tfname = $trans.$parts[2];
-				}
-				//echo "<p>attach_file: full_fname='$file[path]', valid2='$valid2', trans='$trans', check=$check, tfname='$tfname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
-			}
-			if ($tfname && !self::$vfs->securitycheck(array('string'=>$tfname)))
-			{
-				return False; //lang('Invalid filename').': '.$tfname;
-			}
-		}
-		self::$vfs->override_acl = 1;
-		self::$vfs->cp(array(
-			'symlink' => !!$tfname,		// try a symlink
-			'from' => $tfname ? $tfname : $file['tmp_name'],
-			'to'   => $fname,
-			'relatives' => array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT),
-		));
-		self::$vfs->set_attributes(array(
-			'string' => $fname,
-			'relatives' => array (RELATIVE_ROOT),
-			'attributes' => array (
-				'mime_type' => $file['type'],
-				'comment' => stripslashes ($comment),
-				'app' => $app
-		)));
-		self::$vfs->override_acl = 0;
+		// we dont want an owner, as this would give rights independent of the apps ACL
+		$current_user = egw_vfs::$user; egw_vfs::$user = 0;
 
-		$link = self::info_attached($app,$id,$file['name']);
-
-		return is_array($link) ? $link['link_id'] : False;
+		$Ok = true;
+		if (!file_exists($app_dir))
+		{
+			egw_vfs::$is_root = true;
+			$Ok = mkdir($app_dir,0700,true);
+			if (!$Ok) echo "<p>Can't mkdir($app_dir,0700,true)!</p>\n";
+			egw_vfs::$is_root = false;
+		}
+		
+		$entry_dir = self::vfs_path($app,$id);
+		if ($Ok && !file_exists($entry_dir))
+		{
+			$Ok = mkdir($entry_dir,0700);
+		}
+		egw_vfs::$user = $current_user;
+		
+		if ($Ok)
+		{
+			$Ok = copy($file['tmp_name'],$fname = $entry_dir.'/'.$file['name']) &&
+				($stat = links_stream_wrapper::url_stat($fname,0));
+		}	
+		// todo: set comment
+		
+		return $Ok ? -$stat['ino'] : false;
 	}
 
 	/**
@@ -845,34 +786,24 @@ class egw_link extends solink
 	{
 		if ((int)$app > 0)	// is file_id
 		{
-			$link  = self::fileinfo2link($file_id=$app);
-			$app   = $link['app2'];
-			$id    = $link['id2'];
-			$fname = $link['id'];
+			$url = links_stream_wrapper::PREFIX.links_stream_wrapper::id2path($app);
+		}
+		else
+		{
+			if (empty($app) || empty($id))
+			{
+				return False;	// dont delete more than all attachments of an entry
+			}
+			$url = self::vfs_path($app,$id,$fname);
 		}
 		if (self::DEBUG)
 		{
-			echo "<p>egw_link::delete_attached('$app','$id','$fname') file_id=$file_id</p>\n";
+			echo "<p>egw_link::delete_attached('$app','$id','$fname') url=$url</p>\n";
 		}
-		if (empty($app) || empty($id))
+		if (($Ok = egw_vfs::remove($url,true)) && ((int)$app > 0 || $fname))
 		{
-			return False;	// dont delete more than all attachments of an entry
-		}
-		$vfs_data = self::vfs_path($app,$id,$fname,RELATIVE_ROOT);
-		
-		$Ok = false;
-		if (self::$vfs->file_exists($vfs_data))
-		{
-			self::$vfs->override_acl = 1;
-			$Ok = self::$vfs->delete($vfs_data);
-			self::$vfs->override_acl = 0;
-		}
-		// if filename given (and now deleted) check if dir is empty and remove it in that case
-		if ($fname && !count(self::$vfs->ls($vfs_data=self::vfs_path($app,$id,'',RELATIVE_ROOT))))
-		{
-			self::$vfs->override_acl = 1;
-			self::$vfs->delete($vfs_data);
-			self::$vfs->override_acl = 0;
+			// try removing the dir, in case it's empty
+			@rmdir(egw_vfs::dirname($url));
 		}
 		return $Ok;
 	}
@@ -887,52 +818,44 @@ class egw_link extends solink
 	 */
 	static function info_attached($app,$id,$filename)
 	{
-		self::$vfs->override_acl = 1;
-		$attachments = self::$vfs->ls(self::vfs_path($app,$id,$filename,RELATIVE_NONE));
-		self::$vfs->override_acl = 0;
-
-		if (!count($attachments) || !$attachments[0]['name'])
+		$url = self::vfs_path($app,$id,$filename);
+		if (!($stat = links_stream_wrapper::url_stat($url,STREAM_URL_STAT_QUIET)))
 		{
-			return False;
+			return false;
 		}
-		return self::fileinfo2link($attachments[0]);
+		return self::fileinfo2link($stat,$url);
 	}
 
 	/**
 	 * converts a fileinfo (row in the vfs-db-table) in a link
 	 *
 	 * @param array/int $fileinfo a row from the vfs-db-table (eg. returned by the vfs ls static function) or a file_id of that table
+	 * @todo remark/comment from the vfs
 	 * @return array a 'kind' of link-array
 	 */
-	static function fileinfo2link($fileinfo)
+	static function fileinfo2link($fileinfo,$url=null)
 	{
 		if (!is_array($fileinfo))
 		{
-			$fileinfo = self::$vfs->ls(array('file_id' => $fileinfo));
-			list(,$fileinfo) = each($fileinfo);
-
-			if (!is_array($fileinfo))
+			$url = links_stream_wrapper::id2path($fileinfo);
+			if (!($fileinfo = links_stream_wrapper::url_stat($url,STREAM_URL_STAT_QUIET)))
 			{
-				return False;
+				return false;
 			}
 		}
-		$lastmod = $fileinfo[!empty($fileinfo['modified']) ? 'modified' : 'created'];
-		list($y,$m,$d) = explode('-',$lastmod);
-		$lastmod = mktime(0,0,0,$m,$d,$y);
-
-		$dir_parts = array_reverse(explode('/',$fileinfo['directory']));
+		list(,,,,$app,$id) = explode('/',$url);	// links://apps/$app/$id
 
 		return array(
 			'app'       => self::VFS_APPNAME,
 			'id'        => $fileinfo['name'],
-			'app2'      => $dir_parts[1],
-			'id2'       => $dir_parts[0],
-			'remark'    => $fileinfo['comment'],
-			'owner'     => $fileinfo['owner_id'],
-			'link_id'   => -$fileinfo['file_id'],
-			'lastmod'   => $lastmod,
+			'app2'      => $app,
+			'id2'       => $id,
+			'remark'    => '',
+			'owner'     => $fileinfo['uid'],
+			'link_id'   => -$fileinfo['ino'],
+			'lastmod'   => $fileinfo['mtime'],
 			'size'      => $fileinfo['size'],
-			'type'      => $fileinfo['mime_type']
+			'type'      => $fileinfo['mime'],
 		);
 	}
 
@@ -945,95 +868,16 @@ class egw_link extends solink
 	 */
 	static function list_attached($app,$id)
 	{
-		self::$vfs->override_acl = 1;
-		$attachments = self::$vfs->ls(self::vfs_path($app,$id,False,RELATIVE_ROOT));
-		self::$vfs->override_acl = 0;
+		$url = self::vfs_path($app,$id);
+		//error_log(__METHOD__."($app,$id) url=$url");
 
-		if (!count($attachments) || !$attachments[0]['name'])
+		$attached = array();
+		foreach(egw_vfs::find($url,array('url'=>true,'need_mime'=>true,'type'=>'f'),true) as $url => $fileinfo)
 		{
-			return False;
-		}
-		foreach($attachments as $fileinfo)
-		{
-			$link = self::fileinfo2link($fileinfo);
+			$link = self::fileinfo2link($fileinfo,$url);
 			$attached[$link['link_id']] = $link;
 		}
 		return $attached;
-	}
-
-	/**
-	 * checks if path starts with a '\\' or has a ':' in it
-	 *
-	 * @param string $path path to check
-	 * @return boolean true if windows path, false otherwise
-	 */
-	static function is_win_path($path)
-	{
-		return $path{0} == '\\' || $path{1} == ':';
-	}
-
-	/**
-	 * reads the attached file and returns the content
-	 *
-	 * @param string $app appname
-	 * @param string $id id in app
-	 * @param string $filename filename
-	 * @return string/boolean content of the attached file, null if $id not found, false if no view perms
-	 */
-	static function read_attached($app,$id,$filename)
-	{
-		$ret = null;
-		if (empty($app) || !$id || empty($filename) || !($ret = self::title($app,$id)))
-		{
-			return $ret;
-		}
-		self::$vfs->override_acl = 1;
-		$data = self::$vfs->read(self::vfs_path($app,$id,$filename,RELATIVE_ROOT));
-		self::$vfs->override_acl = 0;
-
-		return $data;
-	}
-
-	/**
-	 * Checks if filename should be local availible and if so returns
-	 *
-	 * @param string $app appname
-	 * @param string $id id in app
-	 * @param string $filename filename
-	 * @param string $id ip-address of user
-	 * @param boolean $win_user true if user is on windows, otherwise false
-	 * @return string 'file:/path' for HTTP-redirect else return False
-	 */
-	static function attached_local($app,$id,$filename,$ip,$win_user)
-	{
-		//echo "<p>attached_local(app=$app, id='$id', filename='$filename', ip='$ip', win_user='$win_user', count(send_file_ips)=".count(self::$send_file_ips).")</p>\n";
-
-		if (!$id || !$filename || /* !self::check_access($info_id,EGW_ACL_READ) || */
-		    !count(self::$send_file_ips))
-		{
-			return False;
-		}
-		$link = self::$vfs->ls(self::vfs_path($app,$id,$filename,RELATIVE_ROOT)+array('readlink'=>True));
-		$link = @$link[0]['symlink'];
-
-		if ($link && is_array(self::$link_pathes))
-		{
-			reset(self::$link_pathes); $fname = '';
-			while ((list($valid,$trans) = each(self::$link_pathes)) && !$fname)
-			{
-				if (!self::is_win_path($valid) == !$win_user && // valid for this OS
-				    $win_user &&                                 // only for IE/windows atm
-				    eregi('^'.$trans.'(.*)$',$link,$parts)  &&   // right path
-				    ereg(self::$send_file_ips[$valid],$ip))      // right IP
-				{
-					$fname = $valid . $parts[1];
-					$fname = !$win_user ? str_replace('\\','/',$fname) : str_replace('/','\\',$fname);
-					return 'file:'.($win_user ? '//' : '' ).$fname;
-				}
-				//echo "<p>attached_local: link=$link, valid=$valid, trans='$trans', fname='$fname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
-			}
-		}
-		return False;
 	}
 
 	/**
