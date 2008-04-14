@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.file.general" template="" lang="" group="0" version="1.5.001">
+		<grid width="450" height="300" spacing="10">
+			<columns>
+				<column width="80"/>
+				<column/>
+			</columns>
+			<rows>
+				<row height="60">
+					<image src="icon" class="mimeHuge" align="center"/>
+					<textbox id="name" needed="1" class="fileName"/>
+				</row>
+				<row>
+					<hrule span="all"/>
+				</row>
+				<row>
+					<description value="Type"/>
+					<description id="mime"/>
+				</row>
+				<row>
+					<description value="Directory"/>
+					<description id="dir"/>
+				</row>
+				<row>
+					<description value="Size"/>
+					<description id="hsize" value="%s ($cont[size]b)"/>
+				</row>
+				<row>
+					<description value="Created"/>
+					<date-time id="ctime" readonly="true"/>
+				</row>
+				<row>
+					<description value="Modified"/>
+					<date-time id="mtime" readonly="true"/>
+				</row>
+				<row>
+					<description/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.file.perms" template="" lang="" group="0" version="1.5.001">
+		<grid width="450" height="300" spacing="10">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<groupbox>
+						<caption label="Accessrights"/>
+						<grid>
+							<columns>
+								<column width="80"/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="Owner"/>
+									<menulist>
+										<menupopup id="perms[owner]"/>
+									</menulist>
+								</row>
+								<row>
+									<description value="Group"/>
+									<menulist>
+										<menupopup id="perms[group]"/>
+									</menulist>
+								</row>
+								<row>
+									<description value="Other"/>
+									<menulist>
+										<menupopup id="perms[other]"/>
+									</menulist>
+								</row>
+								<row disabled="@is_dir">
+									<description/>
+									<checkbox label="Executable" id="perms[executable]"/>
+								</row>
+								<row disabled="1">
+									<description/>
+									<checkbox label="Only owner can rename or delete the content" id="perms[sticky]"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="Owner"/>
+						<grid>
+							<columns>
+								<column width="80"/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="User"/>
+									<menulist>
+										<menupopup type="select-account" options="root,accounts" id="uid" label="@ro_uid_root"/>
+									</menulist>
+								</row>
+								<row>
+									<description value="Group"/>
+									<menulist>
+										<menupopup type="select-account" options="root,groups" id="gid" label="@ro_gid_root"/>
+									</menulist>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row disabled="!@is_dir">
+					<checkbox label="Modify all Subdirectories and their content" id="modify_subs"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.5.001">
+		<grid width="450" height="300" spacing="10">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<groupbox span="all">
+						<caption label="Extended access control list"/>
+						<grid width="100%" height="200" overflow="auto" id="eacl">
+							<columns>
+								<column width="80"/>
+								<column width="80"/>
+								<column width="20%"/>
+								<column width="16"/>
+							</columns>
+							<rows>
+								<row class="th">
+									<description value="Owner"/>
+									<description value="Rights"/>
+									<description value="Inherited"/>
+									<description/>
+								</row>
+								<row class="row" disabled="!@1">
+									<menulist>
+										<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+									</menulist>
+									<menulist>
+										<menupopup id="${row}[rights]" readonly="true"/>
+									</menulist>
+									<description id="${row}[path]"/>
+									<button image="delete" label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="return confirm('Delete this extended ACL');"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row valign="bottom" disabled="!@is_owner">
+					<menulist class="eaclAccount">
+						<menupopup type="select-account" options="select one,both" id="eacl[owner]" label="Owner"/>
+					</menulist>
+					<menulist class="eaclRights">
+						<menupopup id="eacl[rights]" label="Rights"/>
+					</menulist>
+					<button label="Add" id="button[eacl]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.file.preview" template="" lang="" group="0" version="1.5.001">
+		<grid width="450" height="300" spacing="10" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top" disabled="!@mime=/^image/">
+					<image src="link" class="previewImage"/>
+				</row>
+				<row valign="top" height="280" disabled="!@text_content">
+					<textbox multiline="true" id="text_content" class="previewText" readonly="true"/>
+				</row>
+				<row disabled="@mime=/^(image|text)/">
+					<description value="No preview available"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.file" template="" lang="" group="0" version="1.5.002">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" id="msg"/>
+				</row>
+				<row>
+					<tabbox span="all">
+						<tabs>
+							<tab label="General" statustext=""/>
+							<tab label="Permissions" statustext=""/>
+							<tab label="Extended ACL" statustext=""/>
+							<tab label="Preview" statustext=""/>
+						</tabs>
+						<tabpanels>
+							<template id="filemanager.file.general"/>
+							<template id="filemanager.file.perms"/>
+							<template id="filemanager.file.eacl"/>
+							<template id="filemanager.file.preview"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row>
+					<hbox>
+						<button label="Save" id="button[save]"/>
+						<button id="button[apply]" label="Apply"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.eaclAccount select,.eaclRights select { width: 160px; }
+		</styles>
+	</template>
+</overlay>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Filemanager - user interface
+ * eGroupWare - Filemanager - user interface
  *
  * @link http://www.egroupware.org
  * @package filemanager
@@ -112,7 +112,7 @@ class filemanager_ui
 					{
 						$ses = $GLOBALS['egw']->session->appsession('index','filemanager');
 						$old_path = $ses['path'];
-						$content['nm']['path'] = $old_path.'/'.$content['nm']['path'];
+						$content['nm']['path'] = egw_vfs::concat($old_path,$content['nm']['path']);
 					}
 					if (!@egw_vfs::mkdir($content['nm']['path'],null,STREAM_MKDIR_RECURSIVE))
 					{
@@ -130,7 +130,7 @@ class filemanager_ui
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
 					break;
 				case 'upload':
-					$to = $content['nm']['path'].'/'.$content['upload']['name'];
+					$to = egw_vfs::concat($content['nm']['path'],$content['upload']['name']);
 					if ($content['upload'] && is_uploaded_file($content['upload']['tmp_name']) && 
 						(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
 						copy($content['upload']['tmp_name'],egw_vfs::PREFIX.$to))
@@ -209,7 +209,8 @@ class filemanager_ui
 		$post_max_size = ini_get('post_max_size');
 		$max_upload = min(self::km2int($upload_max_filesize),self::km2int($post_max_size)-2800);
 		
-		return lang('Maximum size for uploads: %1 (php.ini: upload_max_filesize=%2, post_max_size=%3)',egw_vfs::hsize($max_upload),$upload_max_filesize,$post_max_size);
+		return lang('Maximum size for uploads').': '.egw_vfs::hsize($max_upload).
+			" (php.ini: upload_max_filesize=$upload_max_filesize, post_max_size=$post_max_size)";
 	}
 
 	/**
@@ -268,7 +269,7 @@ class filemanager_ui
 				{
 					if (!egw_vfs::is_dir($path))
 					{
-						$to = $dir.'/'.egw_vfs::basename($path);
+						$to = egw_vfs::concat($dir,egw_vfs::basename($path));
 						if ($path != $to && egw_vfs::copy($path,$to))
 						{
 							++$files;
@@ -313,7 +314,7 @@ class filemanager_ui
 			case 'cut_paste':
 				foreach($selected as $path)
 				{
-					$to = $dir.'/'.egw_vfs::basename($path);
+					$to = egw_vfs::concat($dir,egw_vfs::basename($path));
 					if ($path != $to && egw_vfs::rename($path,$to))
 					{
 						++$files;
@@ -338,9 +339,10 @@ class filemanager_ui
 	 *
 	 * @param string $mime_type
 	 * @param int $size=16
+	 * @param boolean $et_image=true return $app/$icon string for etemplate (default) or html image tag if false
 	 * @return string
 	 */
-	static private function mime_icon($mime_type, $size=16)
+	static function mime_icon($mime_type, $size=16)
 	{
 		if ($mime_type == egw_vfs::DIR_MIME_TYPE)
 		{
@@ -408,7 +410,7 @@ class filemanager_ui
 			$row['icon'] = self::mime_icon($row['mime']);
 			$row['perms'] = egw_vfs::int2mode($row['mode']);
 			// only show link if we have access to the file or dir
-			if (egw_vfs::check_access($row,egw_vfs::READABLE))
+			if (egw_vfs::check_access($path,egw_vfs::READABLE))
 			{
 				if ($row['mime'] == egw_vfs::DIR_MIME_TYPE)
 				{
@@ -416,7 +418,7 @@ class filemanager_ui
 				}
 				else
 				{
-					$row['link'] = self::download_url($path);
+					$row['link'] = egw_vfs::download_url($path);
 				}
 			}
 			$row['user'] = $row['uid'] ? $GLOBALS['egw']->accounts->id2name($row['uid']) : 'root';
@@ -442,26 +444,15 @@ class filemanager_ui
 	}
 	
 	/**
-	 * URL to download the file
-	 * 
-	 * We use our webdav handler as download url instead of an own download method. 
-	 * The webdav hander (filemanager/webdav.php) recognices eGW's session cookie and of cause understands regular GET requests.
-	 *
-	 * @param string $path
-	 * @return string
-	 */
-	private static function download_url($path)
-	{
-		return '/filemanager/webdav.php'.$path;
-	}
-	
-	/**
 	 * Preferences of a file/directory
 	 *
 	 * @param array $content=null
+	 * @param string $msg=''
 	 */
-	function file(array $content=null)
+	function file(array $content=null,$msg='')
 	{
+		static $tabs = 'general|perms|eacl|preview';
+		
 		$tpl = new etemplate('filemanager.file');
 		
 		if (!is_array($content))
@@ -485,7 +476,7 @@ class filemanager_ui
 			{
 				$content['perms']['executable'] = (int)!!($content['mode'] & 0111);
 				$mask = 6;
-				$content['link'] = $GLOBALS['egw']->link(self::download_url($path));
+				$content['link'] = $GLOBALS['egw']->link(egw_vfs::download_url($path));
 				if (preg_match('/^text/',$content['mime']) && $content['size'] < 100000)
 				{
 					$content['text_content'] = file_get_contents(egw_vfs::PREFIX.$path);
@@ -493,62 +484,92 @@ class filemanager_ui
 			}
 			else
 			{
-				$content['perms']['sticky'] = (int)!!($content['mode'] & 0x201);
+				//currently not implemented in backend $content['perms']['sticky'] = (int)!!($content['mode'] & 0x201);
 				$mask = 7;
 			}
 			foreach(array('owner' => 6,'group' => 3,'other' => 0) as $name => $shift)
 			{
 				$content['perms'][$name] = ($content['mode'] >> $shift) & $mask;
 			}
+			$content['is_owner'] = egw_vfs::has_owner_rights($path,$content);
 		}
 		else
 		{
+			//_debug_array($content);
 			$path = $content['path'];
-			foreach($content['old'] as $name => $old_value)
+			
+			list($button) = @each($content['button']); unset($content['button']);
+			if (in_array($button,array('save','apply')))
 			{
-				if (isset($content[$name]) && $old_value != $content[$name])
+				foreach($content['old'] as $name => $old_value)
 				{
-					switch($name)
+					if (isset($content[$name]) && $old_value != $content[$name])
 					{
-						case 'name':
-							if (egw_vfs::rename($path,$to = $content['dir'].'/'.$content['name']))
-							{
-								$msg = lang('Renamed %1 to %2.',$path,$to).' ';
-							}
-							$path = $to;
-							break;
-						default:
-							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
-							$cmd = array('egw_vfs',$name2cmd[$name]);
-							$value = $name == 'perms' ? self::perms2mode($content['perms']) : $content[$name];
-							if ($content['modify_subs'] && $name == 'perms')
-							{
-								egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
-								egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
-							}
-							elseif ($content['modify_subs'])
-							{
-								egw_vfs::find($path,null,$cmd,array($value));
-							}
-							else
-
-							{
-								call_user_func_array($cmd,array($path,$value));
-							}
-							$msg .= lang('Permissions changed for %1.',$path.($content['modify_subs']?' '.lang('and all it\'s childeren'):''));
-							break;
+						switch($name)
+						{
+							case 'name':
+								if (egw_vfs::rename($path,$to = egw_vfs::concat($content['dir'],$content['name'])))
+								{
+									$msg = lang('Renamed %1 to %2.',$path,$to).' ';
+								}
+								$path = $to;
+								break;
+							default:
+								static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
+								$cmd = array('egw_vfs',$name2cmd[$name]);
+								$value = $name == 'perms' ? self::perms2mode($content['perms']) : $content[$name];
+								if ($content['modify_subs'] && $name == 'perms')
+								{
+									egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
+									egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
+								}
+								elseif ($content['modify_subs'])
+								{
+									egw_vfs::find($path,null,$cmd,array($value));
+								}
+								else
+								{
+									call_user_func_array($cmd,array($path,$value));
+								}
+								$msg .= lang('Permissions changed for %1.',$path.($content['modify_subs']?' '.lang('and all it\'s childeren'):''));
+								break;
+						}
+					}
+				}
+			}
+			elseif ($content['eacl'] && $content['is_owner'])
+			{
+				if ($content['eacl']['delete'])
+				{
+					list($ino_owner) = each($content['eacl']['delete']);
+					list($ino,$owner) = explode('-',$ino_owner);
+					$msg .= egw_vfs::eacl($path,null,$owner) ? lang('ACL deleted.') : lang('Error deleting the ACL entry!');
+				}
+				elseif ($button == 'eacl')
+				{
+					if (!$content['eacl']['owner'])
+					{
+						$msg .= lang('You need to select an owner!');
+					}
+					else
+					{
+						$msg .= egw_vfs::eacl($path,$content['eacl']['rights'],$content['eacl']['owner']) ?
+							lang('ACL added.') : lang('Error adding the ACL!');
 					}
 				}
 			}
 			// refresh opender and close our window
 			$link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index','msg'=>$msg));
-			$js = "opener.location.href='$link'; window.close();";
+			$js = "opener.location.href='$link';";
+			if ($button == 'save') $js .= "window.close();";
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
-			$GLOBALS['egw']->common->egw_exit();
+			if ($button == 'save')$GLOBALS['egw']->common->egw_exit();
 		}
+		$content['msg'] = $msg;
+
 		if (($readonlys['uid'] = !egw_vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
 		// only owner can change group & perms
-		if (($readonlys['gid'] = !egw_vfs::$is_root && $content['uid'] != egw_vfs::$user ||
+		if (($readonlys['gid'] = !$content['is_owner'] ||
 			parse_url(egw_vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
 		{
 			if (!$content['gid']) $content['ro_gid_root'] = 'root';
@@ -559,18 +580,27 @@ class filemanager_ui
 		}
 		$readonlys['name'] = !egw_vfs::is_writable($content['dir']);
 		
-		if (parse_url(egw_vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs')
-		{
-			
-		}
-
+		$readonlys[$tabs]['eacl'] = true;	// eacl off by default
 		if ($content['is_dir'])
 		{
-			$sel_options['owner']=$sel_options['group']=$sel_options['other'] = array(
+			$readonlys[$tabs]['preview'] = true;	// no preview tab for dirs
+			$sel_options['rights']=$sel_options['owner']=$sel_options['group']=$sel_options['other'] = array(
 				7 => lang('Display and modification of content'),
 				5 => lang('Display of content'),
 				0 => lang('No access'),
 			);
+			if(($content['eacl'] = egw_vfs::get_eacl($content['path'])) !== false)	// backend supports eacl
+			{
+				unset($readonlys[$tabs]['eacl']);	// --> switch the tab on again
+				foreach($content['eacl'] as &$eacl)
+				{
+					$eacl['path'] = parse_url($eacl['path'],PHP_URL_PATH);
+					$readonlys['delete['.$eacl['ino'].'-'.$eacl['owner'].']'] = $eacl['ino'] != $content['ino'] || 
+						$eacl['path'] != $content['path'] || !$content['is_owner'];
+				}
+				array_unshift($content['eacl'],false);	// make the keys start with 1, not 0
+				$content['eacl']['rights'] = $content['eacl']['owner'] = 0;
+			}
 		}
 		else
 		{
@@ -578,7 +608,7 @@ class filemanager_ui
 				6 => lang('Read & write access'),
 				4 => lang('Read access only'),
 				0 => lang('No access'),
-			);			
+			);
 		}
 		$preserve = $content;
 		if (!isset($preserve['old']))

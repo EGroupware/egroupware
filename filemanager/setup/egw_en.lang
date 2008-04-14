@@ -1,4 +1,3 @@
-%1 already exists as a file	filemanager	en	%1 already exists as a file
 %1 directories and %2 files copied.	filemanager	en	%1 directories and %2 files copied.
 %1 directories and %2 files deleted.	filemanager	en	%1 directories and %2 files deleted.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	en	%1 errors copying (%2 diretories and %3 files copied)!
@@ -7,170 +6,69 @@
 %1 files copied.	filemanager	en	%1 files copied.
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
-%1 starts with '%2'	filemanager	en	%1 starts with '%2'
 %1 the following files into current directory	filemanager	en	%1 the following files into current directory
 %1 urls %2 to clipboard.	filemanager	en	%1 URLs %2 to clipboard.
 accessrights	filemanager	en	Accessrights
+acl added.	filemanager	en	ACL added.
+acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
+all subdirectories	filemanager	en	All subdirectories
 and all it's childeren	filemanager	en	and all it's childeren
-application	filemanager	en	Application
-back to file manager	filemanager	en	Back to file manager
-cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
-cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
-cannot replace %1 because it is a directory	filemanager	en	Cannot replace %1 because it is a directory
 check all	filemanager	en	Check all
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	en	Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	en	Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date
 clear search	filemanager	en	clear search
-command sucessfully run	filemanager	en	Command sucessfully run
-comment	filemanager	en	Comment
-comments cannot contain "%1"	filemanager	en	Comments cannot contain "%1"
 copied	filemanager	en	copied
-copied %1 to %2	filemanager	en	Copied %1 to %2
-copy to	filemanager	en	Copy To
 copy to clipboard	filemanager	en	Copy to clipboard
-copy to:	filemanager	en	Copy to:
-could not copy %1 to %2	filemanager	en	Could not copy %1 to %2
-could not copy file because no destination directory is given	filemanager	en	Could not copy file because no destination directory is given
-could not create %1	filemanager	en	Could not create %1
-could not create directory %1	filemanager	en	Could not create directory %1
-could not delete %1	filemanager	en	Could not delete %1
-could not move %1 to %2	filemanager	en	Could not move %1 to %2
-could not move file because no destination directory is given	filemanager	en	Could not move file because no destination directory is given
-could not rename %1 to %2	filemanager	en	Could not rename %1 to %2
-could not save %1	filemanager	en	Could not save %1
 create directory	filemanager	en	Create directory
-create file	filemanager	en	Create File
-create folder	filemanager	en	Create Folder
-created	filemanager	en	Created
-created %1	filemanager	en	Created %1
-created %1,%2	filemanager	en	Created %1,%2
+created	filemanager	en	created
 created between	filemanager	en	created between
-created by	filemanager	en	Created by
-created directory %1	filemanager	en	Created directory %1
+current directory	filemanager	en	Current directory
 cut	filemanager	en	cut
 cut to clipboard	filemanager	en	Cut to clipboard
-date	filemanager	en	Date
-debug	filemanager	en	Debug
-debuginfos	filemanager	en	Debuginfos
-default number of upload fields to show	filemanager	en	Default number of upload fields to show
-delete	filemanager	en	Delete
 delete this file or directory	filemanager	en	Delete this file or directory
-deleted %1	filemanager	en	Deleted %1
 directory	filemanager	en	Directory
-directory %1 already exists	filemanager	en	Directory %1 already exists
-directory %1 does not exist	filemanager	en	Directory %1 does not exist
-directory names cannot contain "%1"	filemanager	en	Directory names cannot contain "%1"
 directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
 display and modification of content	filemanager	en	Display and modification of content
-display attributes	filemanager	en	Display attributes
 display of content	filemanager	en	Display of content
-download	filemanager	en	Download
-edit	filemanager	en	Edit
-edit comments	filemanager	en	Edit comments
 edit settings	filemanager	en	Edit settings
-error running command	filemanager	en	Error running command
+error adding the acl!	filemanager	en	Error adding the ACL!
+error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
 error uploading file!	filemanager	en	Error uploading file!
 executable	filemanager	en	Executable
-execute	filemanager	en	Execute
-failed to create directory	filemanager	en	failed to create directory
+extended access control list	filemanager	en	Extended access control list
+extended acl	filemanager	en	Extended ACL
 failed to create directory!	filemanager	en	Failed to create directory!
-fake base dir did not exist, egroupware created a new one.	filemanager	en	Fake Base Dir did not exist, eGroupWare created a new one.
-file	filemanager	en	File
-file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
-file %1 could not be created.	filemanager	en	File %1 could not be created.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 may be too big. Contact your Systemadministrator for further info
 file deleted.	filemanager	en	File deleted.
-file name	filemanager	en	File Name
-file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
-file names cannot contain \ or /	filemanager	en	File names cannot contain \ or /
 file or directory not found!	filemanager	en	File or directory not found!
 file successful uploaded.	filemanager	en	File successful uploaded.
-filemanager	common	en	Filemanager
-filemanager preferences	filemanager	en	FileManager preferences
-files	filemanager	en	Files
-files in this directory	filemanager	en	Files in this directory
-folder	filemanager	en	Folder
-folder up	filemanager	en	Folder Up
 general	filemanager	en	General
-go home	filemanager	en	go home
-go to	filemanager	en	Go To
-go to %1	filemanager	en	Go to %1
+go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
-go to:	filemanager	en	Go to:
-go up	filemanager	en	go up
-home	filemanager	en	Home
 id	filemanager	en	Id
-location	filemanager	en	Location
-locked	filemanager	en	Locked
-mime type	filemanager	en	MIME Type
-modified	filemanager	en	Modified
+inherited	filemanager	en	Inherited
+maximum size for uploads	filemanager	en	Maximum size for uploads
+mime type	filemanager	en	mime type
+modified	filemanager	en	modified
 modified between	filemanager	en	modified between
-modified by	filemanager	en	Modified by
 modify all subdirectories and their content	filemanager	en	Modify all Subdirectories and their content
 move	filemanager	en	Move
-move to	filemanager	en	Move To
-move to:	filemanager	en	Move to:
-moved %1 to %2	filemanager	en	Moved %1 to %2
 no access	filemanager	en	No access
-no files in this directory.	filemanager	en	No files in this directory.
 no preview available	filemanager	en	No preview available
-no version history for this file/directory	filemanager	en	No version history for this file/directory
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content
-operation	filemanager	en	Operation
-other settings	filemanager	en	Other settings
-owner	filemanager	en	Owner
 permission denied!	filemanager	en	Permission denied!
 permissions	filemanager	en	Permissions
 permissions changed for %1.	filemanager	en	Permissions changed for %1.
-please select a file to delete.	filemanager	en	Please select a file to delete.
 preview	filemanager	en	Preview
-preview %1	filemanager	en	Preview %1
-preview of %1	filemanager	en	Preview of %1
-quick jump to	filemanager	en	Quick jump to
 read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
-reload	filemanager	en	reload
-rename	filemanager	en	Rename
 rename, change permissions or ownership	filemanager	en	Rename, change permissions or ownership
-renamed %1 to %2	filemanager	en	Renamed %1 to %2
 renamed %1 to %2.	filemanager	en	Renamed %1 to %2.
-replaced %1	filemanager	en	Replaced %1
+rights	filemanager	en	Rights
 root	filemanager	en	root
-save %1	filemanager	en	Save %1
-save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing
-save all	filemanager	en	Save all
-save changes	filemanager	en	Save changes
-saved %1	filemanager	en	Saved %1
-search for '%1'	filemanager	en	Search for '%1'
 searchstring	filemanager	en	searchstring
 select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current directory
-show	filemanager	en	Show
-show ..	filemanager	en	Show ..
-show .files	filemanager	en	Show .files
-show command line (experimental. dangerous.)	filemanager	en	Show command line (EXPERIMENTAL. DANGEROUS.)
-show help	filemanager	en	Show help
 size	filemanager	en	Size
-sort by:	filemanager	en	Sort by:
 start search	filemanager	en	start search
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	en	The future filemanager, now for TESTING PURPOSES ONLY, please send bugreports
-total files	filemanager	en	Total Files
-unknown mime-type defaults to text/plain when viewing	filemanager	en	Unknown MIME-type defaults to text/plain when viewing
-unused space	filemanager	en	Unused space
 up	filemanager	en	Up
-update	filemanager	en	Update
-updated comment for %1	filemanager	en	Updated comment for %1
-upload	filemanager	en	Upload
-upload fields	filemanager	en	upload fields
-upload files	filemanager	en	Upload files
-use new experimental filemanager?	filemanager	en	Use new experimental Filemanager?
-used space	filemanager	en	Used Space
-users	filemanager	en	Users
-version	filemanager	en	Version
-view documents in new window	filemanager	en	View documents in new window
-view documents on server (if available)	filemanager	en	View documents on server (if available)
-who	filemanager	en	Who
-you do not have access to %1	filemanager	en	You do not have access to %1
+you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
-your home dir did not exist, egroupware created a new one.	filemanager	en	Your Home Dir did not exist, eGroupWare created a new one.

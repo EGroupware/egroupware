@@ -1,12 +1,12 @@
 #!/usr/bin/php -qC 
 <?php
 /**
- * Filemanager - Command line interface: ls
+ * Filemanager - Command line interface
  *
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -61,6 +61,7 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n) [-limit N[,n]][-order (name|size|...)][-sort (ASC|DESC)]\n";
 	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
 	echo "\t$cmd umount [-a|--all (restores default mounts)] URL|path\n";
+	echo "\t$cmd eacl URL [rwx-] [user or group]\n";
 	
 	echo "\nCommon options: --user user --password password [--domain domain] can be used to pass eGW credentials without using the URL writing.\n";
 	echo "\nURL: {vfs|sqlfs|oldvfs}://user:password@domain/home/user/file, /dir/file, ...\n";
@@ -82,7 +83,7 @@ if (!$argv) $argv = array('-h');
 $args = $find_options = array();
 while(!is_null($option = array_shift($argv)))
 {
-	if ($option[0] != '-')	// no option --> argument
+	if ($option == '-' || $option[0] != '-')	// no option --> argument
 	{
 		$args[] = $option;
 		continue;
@@ -225,6 +226,9 @@ switch($cmd)
 		}
 		break;
 
+	case 'eacl':
+		do_eacl($argv);
+		break;
 
 	case 'find':
 		do_find($argv,$find_options);
@@ -252,10 +256,14 @@ switch($cmd)
 			switch($cmd)
 			{
 				case 'rm':
-					if ($recursive && class_exists('egw_vfs'))
+					if ($recursive)
 					{
+						if (!class_exists('egw_vfs'))
+						{
+							die("rm -r only implemented for eGW streams!");	// dont want to repeat the code here
+						}
 						array_unshift($argv,$url);
-						egw_vfs::remove($argv);
+						egw_vfs::remove($argv,true);
 						$argv = array();
 					}
 					else
@@ -422,32 +430,33 @@ switch($cmd)
  */
 function load_wrapper($url)
 {
-	switch($scheme = parse_url($url,PHP_URL_SCHEME))
+	$scheme = parse_url($url,PHP_URL_SCHEME);
+	
+	if (!in_array($scheme,stream_get_wrappers()))
 	{
-		case 'webdav':
-			require_once('HTTP/WebDAV/Client.php');
-			break;
-		case 'smb':
-			require_once('../phpgwapi/inc/class.smb_stream_wrapper.inc.php');
-			break;
-		case 'oldvfs':
-		case 'vfs':
-		case 'sqlfs':
-			if (!isset($GLOBALS['egw_info']))
-			{
-				load_egw(parse_url($url,PHP_URL_USER),parse_url($url,PHP_URL_PASS),parse_url($url,PHP_URL_HOST));
-			}
-			require_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
-			break;
-		case '':	// default scheme is file and alsways available
-			break;
-		default:
-			if (!in_array($scheme,stream_get_wrappers()))
-			{
-				die("Unknown scheme '$scheme' in $url !!!\n\n");
-			}
-			break;
+		switch($scheme)
+		{
+			case 'webdav':
+				require_once('HTTP/WebDAV/Client.php');
+				break;
+			case '':	// default scheme is file and alsways available
+				break;
+			default:
+				if (!isset($GLOBALS['egw']) && !in_array($scheme,array('smb','imap')))
+				{
+					load_egw(parse_url($url,PHP_URL_USER),parse_url($url,PHP_URL_PASS),parse_url($url,PHP_URL_HOST));
+				}
+				// as eGW might not be loaded, we have to require the class exlicit
+				@include_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
+
+				if (!class_exists($scheme.'_stream_wrapper'))
+				{
+					die("Unknown scheme '$scheme' in $url !!!\n\n");
+				}
+				break;
+		}
 	}
+	//print_r(stream_get_wrappers());
 }
 
 /**
@@ -504,7 +513,7 @@ function load_egw($user,$passwd,$domain='default')
 		set_exception_handler('cli_exception_handler');	// otherwise we get html!
 	}
 	$cmd = $GLOBALS['cmd'];
-	if (!in_array($cmd,array('ls','find','mount','umount')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
+	if (!in_array($cmd,array('ls','find','mount','umount','eacl')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
 	{
 		echo "\nError: eGroupWare's files directory {$GLOBALS['egw_info']['server']['files_dir']} is NOT writable by the user running ".basename(__FILE__)."!\n".
 			"--> Please run it as the same user the webserver uses or root, otherwise the $cmd command will fail!\n\n";
@@ -529,6 +538,59 @@ function _check_pw($hash_or_cleartext,$pw)
 }
 
 /**
+ * Set, delete or show the extended acl for a given path
+ *
+ * @param array $argv
+ */
+function do_eacl(array $argv)
+{
+	$argc = count($argv);
+
+	if ($argc < 1 || $argc > 3)
+	{
+		usage();
+	}
+	load_wrapper($url = $argv[0]);
+	if (!class_exists('egw_vfs'))
+	{
+		die('eacl only implemented for eGW streams!');
+	}
+	if (!file_exists($url))
+	{
+		die("$url: no such file our directory!\n");
+	}
+	if ($argc == 1)
+	{
+		foreach(egw_vfs::get_eacl($url) as $acl)
+		{
+			$mode = ($acl['rights'] & egw_vfs::READABLE ? 'r' : '-').
+				($acl['rights'] & egw_vfs::WRITABLE ? 'w' : '-').
+				($acl['rights'] & egw_vfs::EXECUTABLE ? 'x' : '-');
+			echo $acl['path']."\t$mode\t".$GLOBALS['egw']->accounts->id2name($acl['owner'])."\n";
+		}
+		return;
+	}
+	if ($argc > 1 && !is_numeric($argv[1]))
+	{
+		$mode=$argv[1];
+		$argv[1] = null;
+		for($i = 0; $mode[$i]; ++$i)
+		{
+			switch($mode[$i])
+			{
+				case 'x': $argv[1] |= egw_vfs::EXECUTABLE; break;
+				case 'w': $argv[1] |= egw_vfs::WRITABLE; break;
+				case 'r': $argv[1] |= egw_vfs::READABLE; break;
+			}
+		}
+	}
+	if (!egw_vfs::eacl($url,$argv[1],$argc > 2 && !is_numeric($argv[2]) ? $GLOBALS['egw']->accounts->name2id($argv[2]) : $argv[2]))
+	{
+		echo "Error setting extended acl for $argv[0]!\n";
+	}
+}
+
+/**
  * Give the stats for one file
  *
  * @param string $url
@@ -544,7 +606,11 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false)
 	{
 		$bname = basename($bname);
 	}
-	if ($long && ($stat = stat($url)))
+	if (!file_exists($url) || !($stat = stat($url)))
+	{
+		echo "$bname: no such file or directory!\n";
+	}
+	elseif ($long)
 	{
 		//echo $url; print_r($stat);
 		
@@ -657,6 +723,7 @@ function _cp($from,$to,$verbose=false,$perms=false)
 	{
 		die("Can't open $to for writing!\n");
 	}
+	//stream_filter_append($from_fp,'convert.base64-decode');
 	$count = stream_copy_to_stream($from_fp,$to_fp);
 	
 	if ($verbose) echo hsize($count)." bytes written to $to\n";

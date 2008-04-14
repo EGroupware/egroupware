@@ -1,4 +1,3 @@
-%1 already exists as a file	filemanager	de	Es gibt bereits eine Datei %1
 %1 directories and %2 files copied.	filemanager	de	%1 Verzeichnisse und %2 Dateien kopiert.
 %1 directories and %2 files deleted.	filemanager	de	%1 Verzeichnisse und %2 Dateien gelöscht.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	de	%1 Fehler beim Kopieren (%2 Verzeichnisse und %3 Dateien kopiert)!
@@ -7,169 +6,69 @@
 %1 files copied.	filemanager	de	%1 Dateien kopiert.
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht.
 %1 files moved.	filemanager	de	%1 Dateien verschoben.
-%1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
 %1 the following files into current directory	filemanager	de	Die foldenden Dateien in das aktuelle Verzeichnis %1
 %1 urls %2 to clipboard.	filemanager	de	%1 Adressen in die Zwischenablage %2.
 accessrights	filemanager	de	Zugangsberechtigungen
+acl added.	filemanager	de	Zugrifsrecht hinzugefügt.
+acl deleted.	filemanager	de	Zugrifsrecht gelöscht.
 actions	filemanager	de	Befehle
+all subdirectories	filemanager	de	Alle Unterverzeichnisse
 and all it's childeren	filemanager	de	und alle seine Kinder
-application	filemanager	de	Anwendung
-back to file manager	filemanager	de	Zurück zur Dateiverwaltung
-cancel editing %1 without saving	filemanager	de	Bearbeiten abbrechen %1 ohne zu speichern
-cannot create directory because it begins or ends in a space	filemanager	de	Kann Verzeichnis nicht anlegen, da der Name mit einem Leerzeichen endet
-cannot replace %1 because it is a directory	filemanager	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
 check all	filemanager	de	Alle auswählen
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	de	Wenn Sie das bis Datum kleiner als das von Datum wählen, finden Sie alle Einträge, ausser denen, deren Datum im Zeitraum der beiden Daten liegt.
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	de	Wenn Sie nur ein Datum (von/bis) wählen, finden Sie alle Einträge deren Bezugsdatum älter, bzw. jünger als das jeweilige angegebene Datum ist
 clear search	filemanager	de	Suchfelder zurücksetzen
-command sucessfully run	filemanager	de	Kommando erfolgreich ausgeführt
-comment	filemanager	de	Kommentar
-comments cannot contain "%1"	filemanager	de	Kommentare dürfen kein "%1" enthalten
 copied	filemanager	de	kopiert
-copied %1 to %2	filemanager	de	%1 nach %2 kopiert
-copy to	filemanager	de	Kopieren nach
 copy to clipboard	filemanager	de	Kopieren in die Zwischenablage
-copy to:	filemanager	de	Kopieren nach:
-could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
-could not copy file because no destination directory is given	filemanager	de	Konnte Datei nicht kopieren, da kein Zielverzeichnis angegeben wurde
-could not create %1	filemanager	de	Konnte %1 nicht anlegen
-could not create directory %1	filemanager	de	Konnte Verzeichnis %1 nicht anlegen
-could not delete %1	filemanager	de	Konnte %1 nicht löschen
-could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
-could not move file because no destination directory is given	filemanager	de	Konnte Datei nicht verschieben, da kein Zielverzeichnis angegeben wurde
-could not rename %1 to %2	filemanager	de	Konnte %1 nicht nach %2 umbenennen
-could not save %1	filemanager	de	Konnte %1 nicht speichern
 create directory	filemanager	de	Verzeichnis anlegen
-create file	filemanager	de	Neue Datei
-create folder	filemanager	de	Neues Verzeichnis
 created	filemanager	de	Erstellt
-created %1	filemanager	de	%1 erstellt
-created %1,%2	filemanager	de	%1,%2 erstellt
 created between	filemanager	de	erstellt zwischen
-created by	filemanager	de	Erstellt von
-created directory %1	filemanager	de	Verzeichnis %1 erstellt
+current directory	filemanager	de	Aktuelles Verzeichnis
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
-date	filemanager	de	Datum
-default number of upload fields to show	filemanager	de	Vorgabe für Anzahl Felder zum Hochladen
-delete	filemanager	de	Löschen
 delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
-deleted %1	filemanager	de	%1 gelöscht
 directory	filemanager	de	Verzeichnis
-directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
-directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
-directory names cannot contain "%1"	filemanager	de	Verzeichnisnamen dürfen kein "%1" enthalten
 directory not found or no permission to access it!	filemanager	de	Verzeichnis nicht gefunden oder keine Rechte darauf zuzugreifen!
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
-display attributes	filemanager	de	Anzeigeattribute
 display of content	filemanager	de	Anzeigen des Inhaltes
-download	filemanager	de	Herunterladen
-edit	filemanager	de	Bearbeiten
-edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Einstellungen bearbeiten
-error running command	filemanager	de	Fehler beim Ausführen des Kommandos
+error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
+error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 executable	filemanager	de	Ausführbar
-execute	filemanager	de	Ausführen
-failed to create directory	filemanager	de	Verzeichnis konnte nicht erstellt werden
+extended access control list	filemanager	de	Erweiterte Zugriffsrechte
+extended acl	filemanager	de	Erweiterte ACL
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
-fake base dir did not exist, egroupware created a new one.	filemanager	de	Dateimanager Wurzelverzeichnis existierte nicht, eGroupWare hat es jetzt angelegt.
-file	filemanager	de	Datei
-file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte zuerst bearbeiten oder löschen.
-file %1 could not be created.	filemanager	de	Datei %1 konnte nicht erstellt werden.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Datei %1 ist möglicherweise zu gross. Kontaktieren Sie Ihren Systemadministrator um weitergehende Informationen zu erhalten
 file deleted.	filemanager	de	Datei gelöscht.
-file name	filemanager	de	Dateiname
-file names cannot contain  or /	filemanager	de	Dateinamen dürfen kein \ oder / enthalten
-file names cannot contain "%1"	filemanager	de	Dateinamen dürfen kein "%1" enthalten
-file names cannot contain \ or /	filemanager	de	Dateinamen dürfen kein \ oder / enthalten
 file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
-filemanager	common	de	Dateiverwaltung
-filemanager preferences	filemanager	de	Dateiverwaltungs-Einstellungen
-files	filemanager	de	Dateien
-files in this directory	filemanager	de	Dateien in diesem Verzeichnis
-folder	filemanager	de	Verzeichnisse
-folder up	filemanager	de	Ein Verzeichnis nach oben
 general	filemanager	de	Allgemein
-go home	filemanager	de	Zum Heimverzeichnis wechseln
 go to	filemanager	de	Gehe zu
-go to %1	filemanager	de	Gehe zu %1
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
-go to:	filemanager	de	Gehe zu:
-go up	filemanager	de	einen Ordner nach oben
-home	filemanager	de	Home
 id	filemanager	de	Id
-location	filemanager	de	Pfad
-locked	filemanager	de	Gesperrt
+inherited	filemanager	de	Geerbt
+maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	Verändert
 modified between	filemanager	de	verändert zwischen
-modified by	filemanager	de	Verändert von
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterverzeichnisse und ihre Inhalte anwenden
 move	filemanager	de	Verschieben
-move to	filemanager	de	Verschieben nach
-move to:	filemanager	de	Verschieben nach:
-moved %1 to %2	filemanager	de	%1 nach %2 verschoben
 no access	filemanager	de	Kein Zugriff
-no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis vorhanden
 no preview available	filemanager	de	Keine Vorschau verfügbar
-no version history for this file/directory	filemanager	de	Keine Versionshistorie für dies Datei / Verzeichnis
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
-operation	filemanager	de	Operation
-other settings	filemanager	de	Weitere Einstellungen
-owner	filemanager	de	Eigentümer
 permission denied!	filemanager	de	Zugriff verweigert!
 permissions	filemanager	de	Zugriffsrechte
 permissions changed for %1.	filemanager	de	Zugriffsrechte für %1 geändert.
-please select a file to delete.	filemanager	de	Bitte wählen Sie die Datei aus welche Sie löschen möchten
 preview	filemanager	de	Vorschau
-preview %1	filemanager	de	Vorschau %1
-preview of %1	filemanager	de	Vorschau von %1
-quick jump to	filemanager	de	Sprung zu
 read & write access	filemanager	de	Lese- und Schreibzugriff
 read access only	filemanager	de	Nur Lesezugriff
-reload	filemanager	de	aktualisieren
-rename	filemanager	de	Umbenennen
 rename, change permissions or ownership	filemanager	de	Umbennen, Zugriffsrechte oder Besitzer ändern
-renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
 renamed %1 to %2.	filemanager	de	%1 nach %2 umbenannt.
-replaced %1	filemanager	de	%1 ersetzt
+rights	filemanager	de	Rechte
 root	filemanager	de	root
-save %1	filemanager	de	%1 speichern
-save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Übersicht wechseln
-save all	filemanager	de	Alles speichern
-save changes	filemanager	de	Änderungen speichern
-saved %1	filemanager	de	%1 gespeichert
-search for '%1'	filemanager	de	Suche nach '%1'
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen
-show	filemanager	de	Anzeigen
-show ..	filemanager	de	Anzeigen ...
-show .files	filemanager	de	.Dateien anzeigen
-show command line (experimental. dangerous.)	filemanager	de	Kommando anzeigen (EXPERIMENTELL / GEFÄHRLICH)
-show help	filemanager	de	Hilfe anzeigen
 size	filemanager	de	Größe
-sort by:	filemanager	de	Sortieren nach:
 start search	filemanager	de	Suche starten
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	de	Der neue Dateimanager, jetzt NUR ZUM TESTEN, bitte Fehlermeldungen senden
-total files	filemanager	de	Anzahl Dateien
-unknown mime-type defaults to text/plain when viewing	filemanager	de	Zum Anzeigen von unbekannte MIME-Typen text/plain verwenden
-unused space	filemanager	de	Unbenutzer Speicherplatz
 up	filemanager	de	Nach oben
-update	filemanager	de	Aktualisieren
-updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
-upload	filemanager	de	Hochladen
-upload fields	filemanager	de	Felder zum Hochladen
-upload files	filemanager	de	Dateien hochladen
-use new experimental filemanager?	filemanager	de	Neuen experimentellen Dateimanager benutzen?
-used space	filemanager	de	Benutzter Speicherplatz
-users	filemanager	de	Benutzer
-version	filemanager	de	Version
-view documents in new window	filemanager	de	Dokumente in neuem Fenster anzeigen
-view documents on server (if available)	filemanager	de	Dokument auf Server anzeigen (falls verfügbar)
-who	filemanager	de	Wer
-you do not have access to %1	filemanager	de	Sie haben keinen Zugang zu %1
+you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!
-your home dir did not exist, egroupware created a new one.	filemanager	de	Ihre Benutzerverzeichnis existierte nicht, eGroupWare hat es jetzt angelegt.

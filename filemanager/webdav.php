@@ -8,7 +8,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package filemanger
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -37,18 +37,18 @@ function check_access(&$account)
 	return $sessionid;
 }
 
+// if we are called with a /apps/$app path, use that $app as currentapp, to not require filemanager rights for the links
+$parts = explode('/',$_SERVER['PATH_INFO']);
+$app = count($parts) > 3 && $parts[1] == 'apps' ? $parts[2] : 'filemanager';
+
 $GLOBALS['egw_info']['flags'] = array(
 	'disable_Template_class' => True,
 	'noheader'  => True,
-	'currentapp' => 'filemanager',
+	'currentapp' => $app,
 	'autocreate_session_callback' => 'check_access',
 );
 // if you move this file somewhere else, you need to adapt the path to the header!
 include('../header.inc.php');
 
-// only enable one of the following WebDAV server:
-// 1. this uses the old webdav class, using the old vfs classes direct (1.4 and current default)
-ExecMethod('phpgwapi.oldvfs_webdav_server.ServeRequest');
-
-// 2. this uses the new streamwrapper VFS interface
-//ExecMethod('phpgwapi.vfs_webdav_server.ServeRequest');
+$webdav_server = new vfs_webdav_server();
+$webdav_server->ServeRequest();
