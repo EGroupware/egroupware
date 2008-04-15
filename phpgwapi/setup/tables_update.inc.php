@@ -38,6 +38,12 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.001';
 	}
 
+	$test[] = '1.4.004';
+	function phpgwapi_upgrade1_4_004()
+	{
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.001';
+	}
+
 	$test[] = '1.5.001';
 	function phpgwapi_upgrade1_5_001()
 	{
@@ -117,14 +123,14 @@
 			$nrow = array(
 				'fs_dir'  => $dirs[$row['vfs_directory']],
 				'fs_name' => $row['vfs_name'],
-				'fs_mode' => $row['vfs_owner_id'] > 0 ? 
+				'fs_mode' => $row['vfs_owner_id'] > 0 ?
 					($row['vfs_mime_type'] == 'Directory' ? 0700 : 0600) :
 					($row['vfs_mime_type'] == 'Directory' ? 0070 : 0060),
 				'fs_uid' => $row['vfs_owner_id'] > 0 ? $row['vfs_owner_id'] : 0,
 				'fs_gid' => $row['vfs_owner_id'] < 0 ? -$row['vfs_owner_id'] : 0,
 				'fs_created' => $row['vfs_created'],
 				'fs_modified' => $row['vfs_modified'] ? $row['vfs_modified'] : $row['vfs_created'],
-				'fs_mime' => $row['vfs_mime_type'] == 'Directory' ? 'httpd/unix-directory' : 
+				'fs_mime' => $row['vfs_mime_type'] == 'Directory' ? 'httpd/unix-directory' :
 					($row['vfs_mime_type'] ? $row['vfs_mime_type'] : 'application/octet-stream'),
 				'fs_size' => $row['vfs_size'],
 				'fs_creator' => $row['vfs_createdby_id'],
@@ -192,14 +198,14 @@
 	function phpgwapi_upgrade1_5_004()
 	{
 		// convert the filemanager group grants into extended ACL
-		
+
 		// delete all sqlfs entries from the ACL table, in case we run multiple times
 		$GLOBALS['egw_setup']->db->delete('egw_acl',array('acl_appname' => sqlfs_stream_wrapper::EACL_APPNAME),__LINE__,__FILE__);
-		
+
 		$GLOBALS['egw_setup']->setup_account_object();
 		$accounts = $GLOBALS['egw_setup']->accounts;
 		$accounts = new accounts();
-		
+
 		egw_vfs::$is_root = true;	// we need root rights to set the extended acl, without being the owner
 
 		foreach($GLOBALS['egw_setup']->db->select('egw_acl','*',array(
@@ -207,9 +213,9 @@
 			"acl_location != 'run'",
 		),__LINE__,__FILE__) as $row)
 		{
-			$rights = egw_vfs::READABLE | egw_vfs::EXECUTABLE; 
+			$rights = egw_vfs::READABLE | egw_vfs::EXECUTABLE;
 			if($row['acl_rights'] > 1) $rights |= egw_vfs::WRITABLE;
-			
+
 			if (($lid = $accounts->id2name($row['acl_account'])) && $accounts->exists($row['acl_location']))
 			{
 				$ret = sqlfs_stream_wrapper::eacl('/home/'.$lid,$rights,(int)$row['acl_location']);
@@ -225,12 +231,12 @@
 	function phpgwapi_upgrade1_5_005()
 	{
 		// move /infolog/$app to /apps/$app and /infolog to /apps/infolog
-		
+
 		$files_dir = $GLOBALS['egw_setup']->db->select('egw_config','config_value',array(
 			'config_name' => 'files_dir',
 			'config_app' => 'phpgwapi',
 		),__LINE__,__FILE__)->fetchSingle();
-		
+
 		if ($files_dir && file_exists($files_dir) && file_exists($files_dir.'/infolog'))
 		{
 			mkdir($files_dir.'/apps',0700,true);
