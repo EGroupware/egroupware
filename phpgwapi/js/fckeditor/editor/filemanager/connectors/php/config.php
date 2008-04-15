@@ -27,8 +27,22 @@ global $Config ;
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").
 // WARNING: don't just set "$Config['Enabled'] = true ;", you must be sure that only 
 //		authenticated users can access this file or use some kind of session checking.
-$Config['Enabled'] = true ;
+//$Config['Enabled'] = false ;
 
+function deny_no_egw_session(&$account)
+{
+	die('Access denied!');
+}
+$GLOBALS['egw_info'] = array(
+	'flags' => array(
+		'currentapp' => 'sitemgr',
+		'noheader' => true,
+		'autocreate_session_callback' => 'deny_no_egw_session',
+	)
+);
+// will not continue, unless the header get's included, there is a valid eGW session and the user has sitemgr rights
+require('../../../../../../../header.inc.php');
+$Config['Enabled'] = $GLOBALS['egw']->session->session_flags == 'N';	// disallow anonymous users
 
 // Path to user files relative to the document root.
 //$Config['UserFilesPath'] = '' ;
@@ -51,7 +65,7 @@ $Config['SecureImageUploads'] = true;
 $Config['ConfigAllowedCommands'] = array('QuickUpload', 'FileUpload', 'GetFolders', 'GetFoldersAndFiles', 'CreateFolder') ;
 
 // Allowed Resource Types
-$Config['ConfigAllowedTypes'] = array('images','File', 'Image', 'Flash', 'Media') ;
+$Config['ConfigAllowedTypes'] = array('File', 'Image', 'Flash', 'Media') ;
 
 // For security, HTML is allowed in the first Kb of data for files having the
 // following extensions only.
