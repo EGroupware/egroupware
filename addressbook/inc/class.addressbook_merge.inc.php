@@ -251,6 +251,13 @@ class addressbook_merge	// extends bo_merge
 			{
 				$content = preg_replace('/\$\$calendar\/[0-9]+\/[a-z_]+\$\$/','',$content);
 			}
+			
+			$this->replacements = $replacements;
+			if (strpos($content,'$$IF'))
+			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
+				$content = preg_replace_callback('/\$\$IF ([0-9a-z_-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
+			}
+			
 			if ($contentrepeat) $contentrep[$id] = $content;
 		}
 		if ($contentrepeat) 
@@ -267,6 +274,13 @@ class addressbook_merge	// extends bo_merge
 		return $content;
 	}
 	
+
+	function replace_callback($param)
+	{
+		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
+		return $replace;
+	} 
+
 	/**
 	 * Download document merged with contact(s)
 	 *
@@ -324,8 +338,9 @@ class addressbook_merge	// extends bo_merge
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),
-			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.')
-		) as $name => $label)
+			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
+			'IF fieldname' => lang('Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
+			) as $name => $label)
 		{
 			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
 		}
