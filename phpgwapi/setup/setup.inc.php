@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'eGroupWare API';
-	$setup_info['phpgwapi']['version']   = '1.4.003';
+	$setup_info['phpgwapi']['version']   = '1.4.004';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -61,7 +61,7 @@
 	$setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home.addGroup';
 	$setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home.deleteGroup';
 	$setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home.editGroup';
-	
+
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
 	$setup_info['notifywindow']['title']     = 'Notify Window';

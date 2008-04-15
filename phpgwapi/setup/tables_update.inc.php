@@ -24,7 +24,7 @@
 	{
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.001';
 	}
-	
+
 	$test[] = '1.2.008';
 	function phpgwapi_upgrade1_2_008()
 	{
@@ -80,14 +80,14 @@
 		// 6. 1.2 bugfix-release
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
 	}
-							 
+
  	$test[] = '1.2.107';
         function phpgwapi_upgrade1_2_107()
 	{
 		// 1.2.107 security update
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
 	}
-							 
+
 	// updates in HEAD / 1.3
 	$test[] = '1.3.001';
 	function phpgwapi_upgrade1_3_001()
@@ -97,7 +97,7 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.002';
 	}
-	
+
 	$test[] = '1.3.002';
 	function phpgwapi_upgrade1_3_002()
 	{
@@ -108,7 +108,7 @@
 		{
 			echo "<br>\n<b>initiating to create the default type 'contact' for addressbook";
 		}
-		
+
 		$newconf = array('n' => array(
 			'name' => 'contact',
 			'options' => array(
@@ -122,7 +122,7 @@
 			echo " DONE!</b>";
 		}
 		/*************************************************************************/
-		
+
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.003';
 	}
 
@@ -202,11 +202,11 @@
 
 				$sri = ldap_search($ds,$context,'(objectclass=phpgwaccount)',
 					array_merge(array('gidnumber','objectclass'),$phpgwAccountAttributes));
-				
+
 				foreach(ldap_get_entries($ds, $sri) as $key => $entry)
 				{
 					if ($key === 'count') continue;
-					
+
 					// remove the phpgwAccounts objectclass
 					$objectclass = $entry['objectclass'];
 					unset($objectclass['count']);
@@ -233,9 +233,9 @@
 						// store the important values of the phpgwaccount schema in the shadowAccount schema
 						if (!$entry['phpgwaccountstatus'][0] || $entry['phpgwaccountexpires'][0] != -1)
 						{
-							$to_write['shadowexpire'] = $entry['phpgwaccountexpires'][0] != -1 && 
-								($entry['phpgwaccountstatus'][0] || 
-								!$entry['phpgwaccountstatus'][0] && $entry['phpgwaccountexpires'][0] < time()) ? 
+							$to_write['shadowexpire'] = $entry['phpgwaccountexpires'][0] != -1 &&
+								($entry['phpgwaccountstatus'][0] ||
+								!$entry['phpgwaccountstatus'][0] && $entry['phpgwaccountexpires'][0] < time()) ?
 								$entry['phpgwaccountexpires'][0] / (24*3600) : 0;
 						}
 						if ($entry['phpgwlastpasswdchange'][0])
@@ -260,12 +260,12 @@
 
 	/**
 	 * Updates the addressbook table to the new addressbook in 1.3
-	 * 
+	 *
 	 * The addressbook table was moved to the addressbook, but has to be moved back,
 	 * as the addressdata of the accounts is no stored only in the addressbook!
-	 * 
-	 * It is called, if needed, from phpgwap_upgrade1_3_007 function 
-	 * 
+	 *
+	 * It is called, if needed, from phpgwap_upgrade1_3_007 function
+	 *
 	 * + changes / renamed fields in 1.3+:
 	 *   - access           --> private (already done by Ralf)
 	 *   - tel_msg          --> tel_assistent
@@ -418,7 +418,7 @@
 			" OR contact_value='' OR contact_value IS NULL".
 			($db2->capabilities['subqueries'] ? " OR contact_id NOT IN (SELECT contact_id FROM egw_addressbook)" : ''),
 			__LINE__,__FILE__);
-			
+
 		// change the m/d/Y birthday format to Y-m-d
 		$GLOBALS['egw_setup']->db->select('egw_addressbook','contact_id,contact_bday',"contact_bday != ''",
 			__LINE__,__FILE__);
@@ -603,7 +603,7 @@
 			'acl_appname'  => 'preferences',
 			'acl_location' => 'changepassword',
 		),__LINE__,__FILE__);
-		
+
 		// set the acl now for everyone NOT allowed to change the password
 		foreach(array_diff($accounts,$change_passwd_acls) as $account_id)
 		{
@@ -638,7 +638,7 @@
 			'precision' => '4'
 		));
 		$GLOBALS['egw_setup']->db->query('UPDATE egw_addressbook SET account_id=NULL WHERE account_id=0',__LINE__,__FILE__);
-		
+
 		$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook',array('account_id'),true);
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.011';
@@ -819,4 +819,11 @@
 	{
 		// 1.4.003 security+bugfix release
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.4.003';
+	}
+
+	$test[] = '1.4.003';
+	function phpgwapi_upgrade1_4_003()
+	{
+		// 1.4.004 FCKeditor update+security release
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.4.004';
 	}

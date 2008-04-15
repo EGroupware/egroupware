@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
 %define egwversion 1.4
-%define packaging 003
+%define packaging 004
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -9,7 +9,7 @@
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2-mod_php5 
+	%define extra_requires apache2-mod_php5
 	%define cron cron
 %endif
 %if 0%{?fedora_version}
@@ -29,7 +29,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Mandriva %{?mandriva_version}
 	%define php php
-	%define extra_requires httpd 
+	%define extra_requires httpd
 	%define cron crontabs
 %endif
 %if 0%{?rhel_version}
@@ -89,7 +89,7 @@ Release:
 #Epoch: %{epoch}
 Summary: eGroupWare is a web-based groupware suite written in php.
 Distribution: %{distribution}
-                                                                                                                             
+
 Group: Web/Database
 License: GPL/LGPL
 URL: http://www.egroupware.org/
@@ -105,25 +105,25 @@ Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requi
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
 Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{icalsrv} %{packagename}-%{infolog} %{packagename}-%{importexport} %{packagename}-%{manual} %{packagename}-%{mydms} %{packagename}-%{news_admin} %{packagename}-%{notifications} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
 Obsoletes: %{packagename}-%{icalsrv}
-                                                                                                                             
+
 Prefix: /usr/share
 Buildarch: noarch
 AutoReqProv: no
-                                                                                                                             
+
 Vendor: eGroupWare
 Packager: Ralf Becker <RalfBecker@outdoor-training.de>
 
 %description
-eGroupWare is a web-based groupware suite written in PHP. 
+eGroupWare is a web-based groupware suite written in PHP.
 
 This package provides the eGroupWare default applications:
 
-egroupware core with: admin, api, docs, etemplate, prefereces and setup, 
-addressbook, bookmarks, calendar, translation-tools, emailadmin, felamimail, 
-filemanager, infolog, manual, mydms, news admin, knowledgebase, polls, 
+egroupware core with: admin, api, docs, etemplate, prefereces and setup,
+addressbook, bookmarks, calendar, translation-tools, emailadmin, felamimail,
+filemanager, infolog, manual, mydms, news admin, knowledgebase, polls,
 projectmanager, resources, sambaadmin, sitemgr, syncml, timesheet, tracker, wiki
 
-It also provides an API for developing additional applications. 
+It also provides an API for developing additional applications.
 
 Further contributed applications are avalible in single packages.
 
@@ -150,7 +150,7 @@ Provides: egw-%{addressbook}
 %description %{addressbook}
 Contact manager with Vcard support.
 %{addressbook} is the egroupware default contact application.
-It makes use of the egroupware contacts class to store and retrieve 
+It makes use of the egroupware contacts class to store and retrieve
 contact information via SQL, LDAP or Active Directory.
 
 %package %{bookmarks}
@@ -170,7 +170,7 @@ Conflicts: %{packagename}
 AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}
 %description %{calendar}
-Powerful calendar with meeting request system, Alarms, ICal and E-Mail support, 
+Powerful calendar with meeting request system, Alarms, ICal and E-Mail support,
 and ACL security.
 
 %package %{developer_tools}
@@ -181,8 +181,8 @@ Conflicts: %{packagename}
 AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}
 %description %{developer_tools}
-The TranslationTools allow to create and extend translations-files for eGroupWare. 
-They can search the sources for new / added phrases and show you the ones missing in your language. 
+The TranslationTools allow to create and extend translations-files for eGroupWare.
+They can search the sources for new / added phrases and show you the ones missing in your language.
 
 %package egw-pear
 Version: %{egwversion}.%{packaging}
@@ -203,7 +203,7 @@ Conflicts: %{packagename}
 AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}, %{packagename}-egw-pear = %{egwversion}.%{packaging}, php-openssl
 %description %{emailadmin}
-EmailAdmin allow to maintain User email accounts 
+EmailAdmin allow to maintain User email accounts
 
 %package %{felamimail}
 Version: %{egwversion}.%{packaging}
@@ -240,7 +240,7 @@ Version: %{egwversion}.%{packaging}
 Summary: The eGroupWare %{icalsrv} application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging} 
+Requires: egw-core = %{egwversion}.%{packaging}
 %description %{icalsrv}
 This is the %{icalsrv} app for eGroupWare.
 
@@ -299,7 +299,7 @@ Summary: The eGroupWare %{news_admin} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging} 
+Requires: egw-core = %{egwversion}.%{packaging}
 %description %{news_admin}
 This is the %{news_admin} app for eGroupWare.
 
@@ -309,7 +309,7 @@ Summary: The eGroupWare %{notifications} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging} 
+Requires: egw-core = %{egwversion}.%{packaging}
 %description %{notifications}
 This is the %{notifications} app for eGroupWare.
 
@@ -414,7 +414,7 @@ AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}
 %description %{timesheet}
 Simple timesheet application, which allow to record and report
-the times and other expenses. It can be uses as well standalone 
+the times and other expenses. It can be uses as well standalone
 as together with the ProjectManager application.
 
 %package %{tracker}
@@ -734,6 +734,9 @@ ln -s sitemgr/sitemgr-link
 
 
 %changelog
+* Mon Apr 15 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.004
+- eGroupWare 1.4.004 FCKeditor update (2.6) & security release
+
 * Mon Mar 19 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.003
 - eGroupWare 1.4.003 security & maintainace release
 
