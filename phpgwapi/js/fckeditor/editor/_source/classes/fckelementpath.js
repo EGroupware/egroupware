@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -18,11 +18,9 @@
  *
  * == END LICENSE ==
  *
- * Manages the DOM anscensors element list of a specific DOM node
+ * Manages the DOM ascensors element list of a specific DOM node
  * (limited to body, inclusive).
  */
-
-// TODO: Implement IE cleanup.
 
 var FCKElementPath = function( lastNode )
 {
@@ -40,6 +38,8 @@ var FCKElementPath = function( lastNode )
 				this.LastElement = e ;
 
 			var sElementName = e.nodeName.toLowerCase() ;
+			if ( FCKBrowserInfo.IsIE && e.scopeName != 'HTML' )
+				sElementName = e.scopeName.toLowerCase() + ':' + sElementName ;
 
 			if ( !eBlockLimit )
 			{
@@ -47,7 +47,14 @@ var FCKElementPath = function( lastNode )
 					eBlock = e ;
 
 				if ( FCKListsLib.PathBlockLimitElements[ sElementName ] != null )
-					eBlockLimit = e ;
+				{
+					// DIV is considered the Block, if no block is available (#525)
+					// and if it doesn't contain other blocks.
+					if ( !eBlock && sElementName == 'div' && !FCKElementPath._CheckHasBlock( e ) )
+						eBlock = e ;
+					else
+						eBlockLimit = e ;
+				}
 			}
 
 			aElements.push( e ) ;
@@ -63,4 +70,20 @@ var FCKElementPath = function( lastNode )
 	this.Elements = aElements ;
 }
 
+/**
+ * Check if an element contains any block element.
+ */
+FCKElementPath._CheckHasBlock = function( element )
+{
+	var childNodes = element.childNodes ;
 
+	for ( var i = 0, count = childNodes.length ; i < count ; i++ )
+	{
+		var child = childNodes[i] ;
+
+		if ( child.nodeType == 1 && FCKListsLib.BlockElements[ child.nodeName.toLowerCase() ] )
+			return true ;
+	}
+
+	return false ;
+}

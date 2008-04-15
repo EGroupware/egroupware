@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -36,7 +36,7 @@ var FCKW3CRange = function( parentDocument )
 
 FCKW3CRange.CreateRange = function( parentDocument )
 {
-	// We could opt to use the Range implentation of the browsers. The problem
+	// We could opt to use the Range implementation of the browsers. The problem
 	// is that every browser have different bugs on their implementations,
 	// mostly related to different interpretations of the W3C specifications.
 	// So, for now, let's use our implementation and pray for browsers fixings
@@ -196,7 +196,7 @@ FCKW3CRange.prototype =
 		return docFrag ;
 	},
 
-	// The selection may be lost when clonning (due to the splitText() call).
+	// The selection may be lost when cloning (due to the splitText() call).
 	cloneContents : function()
 	{
 		var docFrag = new FCKDocumentFragment( this._Document ) ;
@@ -261,19 +261,23 @@ FCKW3CRange.prototype =
 		{
 			// If the start container has children and the offset is pointing
 			// to a child, then we should start from its previous sibling.
-			if ( startNode.childNodes.length > 0 &&  startOffset <= startNode.childNodes.length - 1 )
+
+			// If the offset points to the first node, we don't have a
+			// sibling, so let's use the first one, but mark it for removal.
+			if ( startOffset == 0 )
 			{
-				// If the offset points to the first node, we don't have a
-				// sibling, so let's use the first one, but mark it for removal.
-				if ( startOffset == 0 )
-				{
-					// Let's create a temporary node and mark it for removal.
-					startNode = startNode.insertBefore( this._Document.createTextNode(''), startNode.firstChild ) ;
-					removeStartNode = true ;
-				}
-				else
-					startNode = startNode.childNodes[ startOffset ].previousSibling ;
+				// Let's create a temporary node and mark it for removal.
+				startNode = startNode.insertBefore( this._Document.createTextNode(''), startNode.firstChild ) ;
+				removeStartNode = true ;
 			}
+			else if ( startOffset > startNode.childNodes.length - 1 )
+			{
+				// Let's create a temporary node and mark it for removal.
+				startNode = startNode.appendChild( this._Document.createTextNode('') ) ;
+				removeStartNode = true ;
+			}
+			else
+				startNode = startNode.childNodes[ startOffset ].previousSibling ;
 		}
 
 		// Get the parent nodes tree for the start and end boundaries.
@@ -290,7 +294,7 @@ FCKW3CRange.prototype =
 
 			// The compared nodes will match until we find the top most
 			// siblings (different nodes that have the same parent).
-			// "i" will hold the index in the parants array for the top
+			// "i" will hold the index in the parents array for the top
 			// most element.
 			if ( topStart != topEnd )
 				break ;
@@ -323,7 +327,7 @@ FCKW3CRange.prototype =
 				// Cache the next sibling.
 				currentSibling = currentNode.nextSibling ;
 
-				// If clonning, just clone it.
+				// If cloning, just clone it.
 				if ( action == 2 )	// 2 = Clone
 					clone.appendChild( currentNode.cloneNode( true ) ) ;
 				else
@@ -371,7 +375,7 @@ FCKW3CRange.prototype =
 					// Cache the next sibling.
 					currentSibling = currentNode.previousSibling ;
 
-					// If clonning, just clone it.
+					// If cloning, just clone it.
 					if ( action == 2 )	// 2 = Clone
 						clone.insertBefore( currentNode.cloneNode( true ), clone.firstChild ) ;
 					else
@@ -417,7 +421,16 @@ FCKW3CRange.prototype =
 			// If a node has been partially selected, collapse the range between
 			// topStart and topEnd. Otherwise, simply collapse it to the start. (W3C specs).
 			if ( topStart && topEnd && ( startNode.parentNode != topStart.parentNode || endNode.parentNode != topEnd.parentNode ) )
-				this.setStart( topEnd.parentNode, FCKDomTools.GetIndexOf( topEnd ) ) ;
+			{
+				var endIndex = FCKDomTools.GetIndexOf( topEnd ) ;
+
+				// If the start node is to be removed, we must correct the
+				// index to reflect the removal.
+				if ( removeStartNode && topEnd.parentNode == startNode.parentNode )
+					endIndex-- ;
+
+				this.setStart( topEnd.parentNode, endIndex ) ;
+			}
 
 			// Collapse it to the start.
 			this.collapse( true ) ;
@@ -434,15 +447,5 @@ FCKW3CRange.prototype =
 	cloneRange : function()
 	{
 		return FCKW3CRange.CreateFromRange( this._Document, this ) ;
-	},
-
-	toString : function()
-	{
-		var docFrag = this.cloneContents() ;
-
-		var tmpDiv = this._Document.createElement( 'div' ) ;
-		docFrag.AppendTo( tmpDiv ) ;
-
-		return tmpDiv.textContent || tmpDiv.innerText ;
 	}
 } ;

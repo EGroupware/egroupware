@@ -1,7 +1,7 @@
-﻿[//lasso
+[//lasso
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -43,7 +43,7 @@
 	var('myeditor') = fck_editor(
 		-instancename='FCKeditor1',
 		-basepath=$basepath,
-		-initialvalue='This is some <strong>sample text</strong>. You are using <a href="http://www.fckeditor.net/">FCKeditor</a>.'
+		-initialvalue='<p>This is some <strong>sample text</strong>. You are using <a href="http://www.fckeditor.net/">FCKeditor</a>.</p>'
 	);
 
 	$myeditor->create;

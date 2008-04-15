@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -21,67 +21,82 @@
  * FCKXml Class: class to load and manipulate XML files.
  */
 
-var FCKXml = function()
-{}
-
-FCKXml.prototype.LoadUrl = function( urlToCall )
+FCKXml.prototype =
 {
-	this.Error = false ;
-	var oFCKXml = this ;
-
-	var oXmlHttp = FCKTools.CreateXmlObject( 'XmlHttp' ) ;
-	oXmlHttp.open( "GET", urlToCall, false ) ;
-	oXmlHttp.send( null ) ;
-
-	if ( oXmlHttp.status == 200 || oXmlHttp.status == 304 )
-		this.DOMDocument = oXmlHttp.responseXML ;
-	else if ( oXmlHttp.status == 0 && oXmlHttp.readyState == 4 )
-		this.DOMDocument = oXmlHttp.responseXML ;
-	else
-		this.DOMDocument = null ;
-
-	if ( this.DOMDocument == null || this.DOMDocument.firstChild == null )
+	LoadUrl : function( urlToCall )
 	{
-		this.Error = true ;
-		if (window.confirm( 'Error loading "' + urlToCall + '"\r\nDo you want to see more info?' ) )
-			alert( 'URL requested: "' + urlToCall + '"\r\n' +
-						'Server response:\r\nStatus: ' + oXmlHttp.status + '\r\n' +
-						'Response text:\r\n' + oXmlHttp.responseText ) ;
+		this.Error = false ;
 
-	}
-}
+		var oXml ;
+		var oXmlHttp = FCKTools.CreateXmlObject( 'XmlHttp' ) ;
+		oXmlHttp.open( 'GET', urlToCall, false ) ;
+		oXmlHttp.send( null ) ;
 
-FCKXml.prototype.SelectNodes = function( xpath, contextNode )
-{
-	if ( this.Error )
-		return new Array() ;
+		if ( oXmlHttp.status == 200 || oXmlHttp.status == 304 )
+			oXml = oXmlHttp.responseXML ;
+		else if ( oXmlHttp.status == 0 && oXmlHttp.readyState == 4 )
+			oXml = oXmlHttp.responseXML ;
+		else
+			oXml = null ;
 
-	var aNodeArray = new Array();
-
-	var xPathResult = this.DOMDocument.evaluate( xpath, contextNode ? contextNode : this.DOMDocument,
-			this.DOMDocument.createNSResolver(this.DOMDocument.documentElement), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null) ;
-	if ( xPathResult )
-	{
-		var oNode = xPathResult.iterateNext() ;
-		while( oNode )
+		if ( oXml )
 		{
-			aNodeArray[aNodeArray.length] = oNode ;
-			oNode = xPathResult.iterateNext();
+			// Try to access something on it.
+			try
+			{
+				var test = oXml.firstChild ;
+			}
+			catch (e)
+			{
+				// If document.domain has been changed (#123), we'll have a security
+				// error at this point. The workaround here is parsing the responseText:
+				// http://alexander.kirk.at/2006/07/27/firefox-15-xmlhttprequest-reqresponsexml-and-documentdomain/
+				oXml = (new DOMParser()).parseFromString( oXmlHttp.responseText, 'text/xml' ) ;
+			}
 		}
+
+		if ( !oXml || !oXml.firstChild )
+		{
+			this.Error = true ;
+			if ( window.confirm( 'Error loading "' + urlToCall + '" (HTTP Status: ' + oXmlHttp.status + ').\r\nDo you want to see the server response dump?' ) )
+				alert( oXmlHttp.responseText ) ;
+		}
+
+		this.DOMDocument = oXml ;
+	},
+
+	SelectNodes : function( xpath, contextNode )
+	{
+		if ( this.Error )
+			return new Array() ;
+
+		var aNodeArray = new Array();
+
+		var xPathResult = this.DOMDocument.evaluate( xpath, contextNode ? contextNode : this.DOMDocument,
+				this.DOMDocument.createNSResolver(this.DOMDocument.documentElement), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null) ;
+		if ( xPathResult )
+		{
+			var oNode = xPathResult.iterateNext() ;
+			while( oNode )
+			{
+				aNodeArray[aNodeArray.length] = oNode ;
+				oNode = xPathResult.iterateNext();
+			}
+		}
+		return aNodeArray ;
+	},
+
+	SelectSingleNode : function( xpath, contextNode )
+	{
+		if ( this.Error )
+			return null ;
+
+		var xPathResult = this.DOMDocument.evaluate( xpath, contextNode ? contextNode : this.DOMDocument,
+				this.DOMDocument.createNSResolver(this.DOMDocument.documentElement), 9, null);
+
+		if ( xPathResult && xPathResult.singleNodeValue )
+			return xPathResult.singleNodeValue ;
+		else
+			return null ;
 	}
-	return aNodeArray ;
-}
-
-FCKXml.prototype.SelectSingleNode = function( xpath, contextNode )
-{
-	if ( this.Error )
-		return null ;
-
-	var xPathResult = this.DOMDocument.evaluate( xpath, contextNode ? contextNode : this.DOMDocument,
-			this.DOMDocument.createNSResolver(this.DOMDocument.documentElement), 9, null);
-
-	if ( xPathResult && xPathResult.singleNodeValue )
-		return xPathResult.singleNodeValue ;
-	else
-		return null ;
-}
+} ;

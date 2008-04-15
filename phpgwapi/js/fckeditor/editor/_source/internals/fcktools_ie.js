@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -30,6 +30,17 @@ FCKTools.CancelEvent = function( e )
 FCKTools._AppendStyleSheet = function( documentElement, cssFileUrl )
 {
 	return documentElement.createStyleSheet( cssFileUrl ).owningElement ;
+}
+
+// Appends a CSS style string to a document.
+FCKTools.AppendStyleString = function( documentElement, cssStyles )
+{
+	if ( !cssStyles )
+		return null ;
+
+	var s = documentElement.createStyleSheet( "" ) ;
+	s.cssText = cssStyles ;
+	return s ;
 }
 
 // Removes all attributes and values from the element.
@@ -63,6 +74,9 @@ FCKTools.CreateXmlObject = function( object )
 	switch ( object )
 	{
 		case 'XmlHttp' :
+			// Try the native XMLHttpRequest introduced with IE7.
+			try { return new XMLHttpRequest() ; } catch (e) {}
+
 			aObjs = [ 'MSXML2.XmlHttp', 'Microsoft.XmlHttp' ] ;
 			break ;
 
@@ -162,7 +176,7 @@ FCKTools.GetViewPaneSize = function( win )
 	if ( oDoc && oDoc.clientWidth )				// IE6 Strict Mode
 		oSizeSource = oDoc ;
 	else
-		oSizeSource = top.document.body ;		// Other IEs
+		oSizeSource = win.document.body ;		// Other IEs
 
 	if ( oSizeSource )
 		return { Width : oSizeSource.clientWidth, Height : oSizeSource.clientHeight } ;
@@ -172,6 +186,8 @@ FCKTools.GetViewPaneSize = function( win )
 
 FCKTools.SaveStyles = function( element )
 {
+	var data = FCKTools.ProtectFormStyles( element ) ;
+
 	var oSavedStyles = new Object() ;
 
 	if ( element.className.length > 0 )
@@ -188,13 +204,16 @@ FCKTools.SaveStyles = function( element )
 		element.style.cssText = '' ;
 	}
 
+	FCKTools.RestoreFormStyles( element, data ) ;
 	return oSavedStyles ;
 }
 
 FCKTools.RestoreStyles = function( element, savedStyles )
 {
+	var data = FCKTools.ProtectFormStyles( element ) ;
 	element.className		= savedStyles.Class || '' ;
 	element.style.cssText	= savedStyles.Inline || '' ;
+	FCKTools.RestoreFormStyles( element, data ) ;
 }
 
 FCKTools.RegisterDollarFunction = function( targetWindow )

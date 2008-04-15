@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -45,6 +45,7 @@ InsertLinkLbl		: "Odkaz",
 InsertLink			: "Vložiť/zmeniť odkaz",
 RemoveLink			: "Odstrániť odkaz",
 Anchor				: "Vložiť/zmeniť kotvu",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Obrázok",
 InsertImage			: "Vložiť/zmeniť obrázok",
 InsertFlashLbl		: "Flash",
@@ -70,6 +71,7 @@ RightJustify		: "Zarovnať vpravo",
 BlockJustify		: "Zarovnať do bloku",
 DecreaseIndent		: "Zmenšiť odsadenie",
 IncreaseIndent		: "Zväčšiť odsadenie",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Späť",
 Redo				: "Znovu",
 NumberedListLbl		: "Číslovanie",
@@ -103,20 +105,27 @@ SelectionField	: "Rozbaľovací zoznam",
 ImageButton		: "Obrázkové tlačidlo",
 
 FitWindow		: "Maximalizovať veľkosť okna editora",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Zmeniť odkaz",
 CellCM				: "Bunka",
 RowCM				: "Riadok",
 ColumnCM			: "Stĺpec",
-InsertRow			: "Vložiť riadok",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Vymazať riadok",
-InsertColumn		: "Vložiť stĺpec",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Zmazať stĺpec",
-InsertCell			: "Vložiť bunku",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Vymazať bunky",
 MergeCells			: "Zlúčiť bunky",
-SplitCell			: "Rozdeliť bunku",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Vymazať tabuľku",
 CellProperties		: "Vlastnosti bunky",
 TableProperties		: "Vlastnosti tabuľky",
@@ -134,7 +143,7 @@ SelectionFieldProp	: "Vlastnosti rozbaľovacieho zoznamu",
 TextareaProp		: "Vlastnosti textovej oblasti",
 FormProp			: "Vlastnosti formulára",
 
-FontFormats			: "Normálny;Formátovaný;Adresa;Nadpis 1;Nadpis 2;Nadpis 3;Nadpis 4;Nadpis 5;Nadpis 6;Odsek (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Normálny;Formátovaný;Adresa;Nadpis 1;Nadpis 2;Nadpis 3;Nadpis 4;Nadpis 5;Nadpis 6;Odsek (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "Prebieha spracovanie XHTML. Čakajte prosím...",
@@ -229,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Vybrať kotvu",
 DlgLnkAnchorByName	: "Podľa mena kotvy",
 DlgLnkAnchorById	: "Podľa Id objektu",
-DlgLnkNoAnchors		: "<V stránke nie je definovaná žiadna kotva>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(V stránke nie je definovaná žiadna kotva)",
 DlgLnkEMail			: "E-Mailová adresa",
 DlgLnkEMailSubject	: "Predmet správy",
 DlgLnkEMailBody		: "Telo správy",
@@ -322,6 +331,9 @@ DlgCellBackColor	: "Farba pozadia",
 DlgCellBorderColor	: "Farba ohraničenia",
 DlgCellBtnSelect	: "Výber...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "Hľadať",
 DlgFindFindBtn		: "Hľadať",
@@ -347,7 +359,6 @@ DlgPasteMsg2	: "Prosím vložte nasledovný rámček použitím klávesnice (<ST
 DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "Ignorovať nastavenia typu písma",
 DlgPasteRemoveStyles	: "Odstrániť formátovanie",
-DlgPasteCleanBox		: "Vyčistiť schránku",
 
 // Color Picker
 ColorAutomatic	: "Automaticky",

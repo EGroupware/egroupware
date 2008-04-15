@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -50,3 +50,7 @@ var FCK_SPACER_PATH = 'images/spacer.gif' ;
 var CTRL	= 1000 ;
 var SHIFT	= 2000 ;
 var ALT		= 4000 ;
+
+var FCK_STYLE_BLOCK		= 0 ;
+var FCK_STYLE_INLINE	= 1 ;
+var FCK_STYLE_OBJECT	= 2 ;

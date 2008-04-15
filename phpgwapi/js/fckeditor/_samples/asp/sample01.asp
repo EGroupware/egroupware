@@ -2,7 +2,7 @@
 <% Option Explicit %>
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -52,7 +52,7 @@ sBasePath = Left( sBasePath, InStrRev( sBasePath, "/_samples" ) )
 Dim oFCKeditor
 Set oFCKeditor = New FCKeditor
 oFCKeditor.BasePath	= sBasePath
-oFCKeditor.Value	= "This is some <strong>sample text</strong>. You are using <a href=""http://www.fckeditor.net/"">FCKeditor</a>."
+oFCKeditor.Value	= "<p>This is some <strong>sample text</strong>. You are using <a href=""http://www.fckeditor.net/"">FCKeditor</a>."
 oFCKeditor.Create "FCKeditor1"
 		%>
 		<br />

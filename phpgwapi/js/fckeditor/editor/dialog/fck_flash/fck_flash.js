@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -21,21 +21,23 @@
  * Scripts related to the Flash dialog window (see fck_flash.html).
  */
 
-var oEditor		= window.parent.InnerDialogLoaded() ;
+var dialog		= window.parent ;
+var oEditor		= dialog.InnerDialogLoaded() ;
 var FCK			= oEditor.FCK ;
 var FCKLang		= oEditor.FCKLang ;
 var FCKConfig	= oEditor.FCKConfig ;
+var FCKTools	= oEditor.FCKTools ;
 
 //#### Dialog Tabs
 
 // Set the dialog tabs.
-window.parent.AddTab( 'Info', oEditor.FCKLang.DlgInfoTab ) ;
+dialog.AddTab( 'Info', oEditor.FCKLang.DlgInfoTab ) ;
 
 if ( FCKConfig.FlashUpload )
-	window.parent.AddTab( 'Upload', FCKLang.DlgLnkUpload ) ;
+	dialog.AddTab( 'Upload', FCKLang.DlgLnkUpload ) ;
 
 if ( !FCKConfig.FlashDlgHideAdvanced )
-	window.parent.AddTab( 'Advanced', oEditor.FCKLang.DlgAdvancedTag ) ;
+	dialog.AddTab( 'Advanced', oEditor.FCKLang.DlgAdvancedTag ) ;
 
 // Function called when a dialog tag is selected.
 function OnDialogTabChange( tabCode )
@@ -46,7 +48,7 @@ function OnDialogTabChange( tabCode )
 }
 
 // Get the selected flash embed (if available).
-var oFakeImage = FCK.Selection.GetSelectedElement() ;
+var oFakeImage = dialog.Selection.GetSelectedElement() ;
 var oEmbed ;
 
 if ( oFakeImage )
@@ -72,17 +74,17 @@ window.onload = function()
 	if ( FCKConfig.FlashUpload )
 		GetE('frmUpload').action = FCKConfig.FlashUploadURL ;
 
-	window.parent.SetAutoSize( true ) ;
+	dialog.SetAutoSize( true ) ;
 
 	// Activate the "OK" button.
-	window.parent.SetOkButton( true ) ;
+	dialog.SetOkButton( true ) ;
+
+	SelectField( 'txtUrl' ) ;
 }
 
 function LoadSelection()
 {
 	if ( ! oEmbed ) return ;
-
-	var sUrl = GetAttribute( oEmbed, 'src', '' ) ;
 
 	GetE('txtUrl').value    = GetAttribute( oEmbed, 'src', '' ) ;
 	GetE('txtWidth').value  = GetAttribute( oEmbed, 'width', '' ) ;
@@ -105,7 +107,7 @@ function LoadSelection()
 	else
 	{
 		GetE('txtAttClasses').value = oEmbed.getAttribute('class',2) || '' ;
-		GetE('txtAttStyle').value = oEmbed.getAttribute('style',2) ;
+		GetE('txtAttStyle').value = oEmbed.getAttribute('style',2) || '' ;
 	}
 
 	UpdatePreview() ;
@@ -116,7 +118,7 @@ function Ok()
 {
 	if ( GetE('txtUrl').value.length == 0 )
 	{
-		window.parent.SetSelectedTab( 'Info' ) ;
+		dialog.SetSelectedTab( 'Info' ) ;
 		GetE('txtUrl').focus() ;
 
 		alert( oEditor.FCKLang.DlgAlertUrl ) ;
@@ -124,6 +126,7 @@ function Ok()
 		return false ;
 	}
 
+	oEditor.FCKUndo.SaveUndoStep() ;
 	if ( !oEmbed )
 	{
 		oEmbed		= FCK.EditorDocument.createElement( 'EMBED' ) ;
@@ -135,12 +138,10 @@ function Ok()
 	{
 		oFakeImage	= oEditor.FCKDocumentProcessor_CreateFakeImage( 'FCK__Flash', oEmbed ) ;
 		oFakeImage.setAttribute( '_fckflash', 'true', 0 ) ;
-		oFakeImage	= FCK.InsertElementAndGetIt( oFakeImage ) ;
+		oFakeImage	= FCK.InsertElement( oFakeImage ) ;
 	}
-	else
-		oEditor.FCKUndo.SaveUndoStep() ;
 
-	oEditor.FCKFlashProcessor.RefreshView( oFakeImage, oEmbed ) ;
+	oEditor.FCKEmbedAndObjectProcessor.RefreshView( oFakeImage, oEmbed ) ;
 
 	return true ;
 }
@@ -150,7 +151,7 @@ function UpdateEmbed( e )
 	SetAttribute( e, 'type'			, 'application/x-shockwave-flash' ) ;
 	SetAttribute( e, 'pluginspage'	, 'http://www.macromedia.com/go/getflashplayer' ) ;
 
-	e.src = GetE('txtUrl').value ;
+	SetAttribute( e, 'src', GetE('txtUrl').value ) ;
 	SetAttribute( e, "width" , GetE('txtWidth').value ) ;
 	SetAttribute( e, "height", GetE('txtHeight').value ) ;
 
@@ -202,10 +203,10 @@ function UpdatePreview()
 		var oDoc	= ePreview.ownerDocument || ePreview.document ;
 		var e		= oDoc.createElement( 'EMBED' ) ;
 
-		e.src		= GetE('txtUrl').value ;
-		e.type		= 'application/x-shockwave-flash' ;
-		e.width		= '100%' ;
-		e.height	= '100%' ;
+		SetAttribute( e, 'src', GetE('txtUrl').value ) ;
+		SetAttribute( e, 'type', 'application/x-shockwave-flash' ) ;
+		SetAttribute( e, 'width', '100%' ) ;
+		SetAttribute( e, 'height', '100%' ) ;
 
 		ePreview.appendChild( e ) ;
 	}
@@ -230,7 +231,7 @@ function SetUrl( url, width, height )
 
 	UpdatePreview() ;
 
-	window.parent.SetSelectedTab( 'Info' ) ;
+	dialog.SetSelectedTab( 'Info' ) ;
 }
 
 function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )
@@ -255,6 +256,9 @@ function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )
 		case 203 :
 			alert( "Security error. You probably don't have enough permissions to upload. Please check your server." ) ;
 			return ;
+		case 500 :
+			alert( 'The connector is disabled' ) ;
+			break ;
 		default :
 			alert( 'Error on file upload. Error number: ' + errorNumber ) ;
 			return ;

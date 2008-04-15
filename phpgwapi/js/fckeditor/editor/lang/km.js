@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -45,6 +45,7 @@ InsertLinkLbl		: "ឈ្នាប់",
 InsertLink			: "បន្ថែម/កែប្រែ ឈ្នាប់",
 RemoveLink			: "លប់ឈ្នាប់",
 Anchor				: "បន្ថែម/កែប្រែ យុថ្កា",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "រូបភាព",
 InsertImage			: "បន្ថែម/កែប្រែ រូបភាព",
 InsertFlashLbl		: "Flash",
@@ -70,6 +71,7 @@ RightJustify		: "តំរឹមស្តាំ",
 BlockJustify		: "តំរឹមសងខាង",
 DecreaseIndent		: "បន្ថយការចូលបន្ទាត់",
 IncreaseIndent		: "បន្ថែមការចូលបន្ទាត់",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "សារឡើងវិញ",
 Redo				: "ធ្វើឡើងវិញ",
 NumberedListLbl		: "បញ្ជីជាអក្សរ",
@@ -103,20 +105,27 @@ SelectionField	: "ជួរជ្រើសរើស",
 ImageButton		: "ប៉ូតុនរូបភាព",
 
 FitWindow		: "Maximize the editor size",	//MISSING
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "កែប្រែឈ្នាប់",
 CellCM				: "Cell",	//MISSING
 RowCM				: "Row",	//MISSING
 ColumnCM			: "Column",	//MISSING
-InsertRow			: "បន្ថែមជួរផ្តេក",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "លប់ជួរផ្តេក",
-InsertColumn		: "បន្ថែមជួរឈរ",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "លប់ជួរឈរ",
-InsertCell			: "បន្ថែម សែល",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "លប់សែល",
 MergeCells			: "បញ្ជូលសែល",
-SplitCell			: "ផ្តាច់សែល",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "លប់តារាង",
 CellProperties		: "ការកំណត់សែល",
 TableProperties		: "ការកំណត់តារាង",
@@ -134,7 +143,7 @@ SelectionFieldProp	: "ការកំណត់ជួរជ្រើសរើស"
 TextareaProp		: "ការកំណត់កន្លែងសរសេរអត្ថបទ",
 FormProp			: "ការកំណត់បែបបទ",
 
-FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6;Normal (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6;Normal (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "កំពុងដំណើរការ XHTML ។ សូមរងចាំ...",
@@ -229,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "ជ្រើសរើសយុថ្កា",
 DlgLnkAnchorByName	: "តាមឈ្មោះរបស់យុថ្កា",
 DlgLnkAnchorById	: "តាម Id",
-DlgLnkNoAnchors		: "<ពុំមានយុថ្កានៅក្នុងឯកសារនេះទេ>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(No anchors available in the document)",	//MISSING
 DlgLnkEMail			: "អ៊ីមែល",
 DlgLnkEMailSubject	: "ចំណងជើងអត្ថបទ",
 DlgLnkEMailBody		: "អត្ថបទ",
@@ -322,6 +331,9 @@ DlgCellBackColor	: "ពណ៌ផ្នែកខាងក្រោម",
 DlgCellBorderColor	: "ពណ៌ស៊ុម",
 DlgCellBtnSelect	: "ជ្រើសរើស...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "ស្វែងរក",
 DlgFindFindBtn		: "ស្វែងរក",
@@ -347,7 +359,6 @@ DlgPasteMsg2	: "សូមចំលងអត្ថបទទៅដាក់ក្�
 DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "មិនគិតអំពីប្រភេទពុម្ភអក្សរ",
 DlgPasteRemoveStyles	: "លប់ម៉ូត",
-DlgPasteCleanBox		: "លប់អត្ថបទចេញពីប្រអប់",
 
 // Color Picker
 ColorAutomatic	: "ស្វ័យប្រវត្ត",

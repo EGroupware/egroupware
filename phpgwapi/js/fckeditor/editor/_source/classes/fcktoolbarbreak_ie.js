@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -19,7 +19,7 @@
  * == END LICENSE ==
  *
  * FCKToolbarBreak Class: breaks the toolbars.
- * It makes it possible to force the toolbar to brak to a new line.
+ * It makes it possible to force the toolbar to break to a new line.
  * This is the IE specific implementation.
  */
 

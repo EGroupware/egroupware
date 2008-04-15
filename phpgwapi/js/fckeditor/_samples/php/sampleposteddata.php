@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -56,7 +56,7 @@ foreach ( $postArray as $sForm => $value )
 ?>
 			<tr>
 				<td valign="top" nowrap><b><?=$sForm?></b></td>
-				<td width="100%"><?=$postedValue?></td>
+				<td width="100%" style="white-space:pre"><?=$postedValue?></td>
 			</tr>
 <?php
 }

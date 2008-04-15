@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -65,7 +65,7 @@
 ' cases, no processing must be done, and the data is saved as posted.
 Function ModifyForOutput( value )
 
-	ModifyForOutput = Server.HTMLEncode( Request.Form(sForm) )
+	ModifyForOutput = Server.HTMLEncode( value )
 
 End Function
 

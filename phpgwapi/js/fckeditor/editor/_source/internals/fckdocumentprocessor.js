@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -33,14 +33,17 @@ FCKDocumentProcessor.AppendNew = function()
 
 FCKDocumentProcessor.Process = function( document )
 {
+	var bIsDirty = FCK.IsDirty() ;
 	var oProcessor, i = 0 ;
 	while( ( oProcessor = this._Items[i++] ) )
 		oProcessor.ProcessDocument( document ) ;
+	if ( !bIsDirty )
+		FCK.ResetIsDirty() ;
 }
 
 var FCKDocumentProcessor_CreateFakeImage = function( fakeClass, realElement )
 {
-	var oImg = FCK.EditorDocument.createElement( 'IMG' ) ;
+	var oImg = FCKTools.GetElementDocument( realElement ).createElement( 'IMG' ) ;
 	oImg.className = fakeClass ;
 	oImg.src = FCKConfig.FullBasePath + 'images/spacer.gif' ;
 	oImg.setAttribute( '_fckfakelement', 'true', 0 ) ;
@@ -64,7 +67,7 @@ if ( FCKBrowserInfo.IsIE || FCKBrowserInfo.IsOpera )
 			if ( oLink.name.length > 0 )
 			{
 				//if the anchor has some content then we just add a temporary class
-				if ( oLink.innerHTML != '' )
+				if ( oLink.innerHTML !== '' )
 				{
 					if ( FCKBrowserInfo.IsIE )
 						oLink.className += ' FCK__AnchorC' ;
@@ -118,68 +121,62 @@ FCKPageBreaksProcessor.ProcessDocument = function( document )
 */
 }
 
-// Flash Embeds.
-var FCKFlashProcessor = FCKDocumentProcessor.AppendNew() ;
-FCKFlashProcessor.ProcessDocument = function( document )
+// EMBED and OBJECT tags.
+FCKEmbedAndObjectProcessor = (function()
 {
-	/*
-	Sample code:
-	This is some <embed src="/UserFiles/Flash/Yellow_Runners.swf"></embed><strong>sample text</strong>. You are&nbsp;<a name="fred"></a> using <a href="http://www.fckeditor.net/">FCKeditor</a>.
-	*/
+	var customProcessors = [] ;
 
-	var aEmbeds = document.getElementsByTagName( 'EMBED' ) ;
-
-	var oEmbed ;
-	var i = aEmbeds.length - 1 ;
-	while ( i >= 0 && ( oEmbed = aEmbeds[i--] ) )
+	var processElement = function( el )
 	{
-		// IE doesn't return the type attribute with oEmbed.type or oEmbed.getAttribute("type") 
-		// But it turns out that after accessing it then it doesn't gets copied later
-		var oType = oEmbed.attributes[ 'type' ] ;
+		var clone = el.cloneNode( true ) ;
+		var replaceElement ;
+		var fakeImg = replaceElement = FCKDocumentProcessor_CreateFakeImage( 'FCK__UnknownObject', clone ) ;
+		FCKEmbedAndObjectProcessor.RefreshView( fakeImg, el ) ;
 
-		// Check the extension and the type. Now it should be enough with just the type
-		// Opera doesn't return oEmbed.src so oEmbed.src.EndsWith will fail
-		if ( (oEmbed.src && oEmbed.src.EndsWith( '.swf', true )) || ( oType && oType.nodeValue == 'application/x-shockwave-flash' ) )
-		{
-			var oCloned = oEmbed.cloneNode( true ) ;
+		for ( var i = 0 ; i < customProcessors.length ; i++ )
+			replaceElement = customProcessors[i]( el, replaceElement ) || replaceElement ;
 
-			// On IE, some properties are not getting clonned properly, so we
-			// must fix it. Thanks to Alfonso Martinez.
-			if ( FCKBrowserInfo.IsIE )
-			{
-				var aAttributes = [ 'scale', 'play', 'loop', 'menu', 'wmode', 'quality' ] ;
-				for ( var iAtt = 0 ; iAtt < aAttributes.length ; iAtt++ )
-				{
-					var oAtt = oEmbed.getAttribute( aAttributes[iAtt] ) ;
-					if ( oAtt ) oCloned.setAttribute( aAttributes[iAtt], oAtt ) ;
-				}
-				// It magically gets lost after reading it in oType
-				oCloned.setAttribute( 'type', oType.nodeValue ) ;
-			}
+		if ( replaceElement != fakeImg )
+			FCKTempBin.RemoveElement( fakeImg.getAttribute( '_fckrealelement' ) ) ;
 
-			var oImg = FCKDocumentProcessor_CreateFakeImage( 'FCK__Flash', oCloned ) ;
-			oImg.setAttribute( '_fckflash', 'true', 0 ) ;
-
-			FCKFlashProcessor.RefreshView( oImg, oEmbed ) ;
-
-			oEmbed.parentNode.insertBefore( oImg, oEmbed ) ;
-			oEmbed.parentNode.removeChild( oEmbed ) ;
-
-//			oEmbed.setAttribute( '_fcktemp', 'true', 0) ;
-//			oEmbed.style.display = 'none' ;
-//			oEmbed.hidden = true ;
-		}
+		el.parentNode.replaceChild( replaceElement, el ) ;
 	}
-}
 
-FCKFlashProcessor.RefreshView = function( placholderImage, originalEmbed )
-{
-	if ( originalEmbed.width > 0 )
-		placholderImage.style.width = FCKTools.ConvertHtmlSizeToStyle( originalEmbed.width ) ;
+	return FCKTools.Merge( FCKDocumentProcessor.AppendNew(),
+		       {
+				ProcessDocument : function( doc )
+				{
+					// Firefox 3 would sometimes throw an unknown exception while accessing EMBEDs and OBJECTs
+					// without the setTimeout().
+					FCKTools.RunFunction( function()
+						{
+							// Process OBJECTs first, since EMBEDs can sometimes go inside OBJECTS (e.g. Flash).
+							var aObjects = doc.getElementsByTagName( 'object' );
+							for ( var i = aObjects.length - 1 ; i >= 0 ; i-- )
+								processElement( aObjects[i] ) ;
 
-	if ( originalEmbed.height > 0 )
-		placholderImage.style.height = FCKTools.ConvertHtmlSizeToStyle( originalEmbed.height ) ;
-}
+							// Now process any EMBEDs left.
+							var aEmbeds = doc.getElementsByTagName( 'embed' ) ;
+							for ( var i = aEmbeds.length - 1 ; i >= 0 ; i-- )
+								processElement( aEmbeds[i] ) ;
+						} ) ;
+				},
+
+				RefreshView : function( placeHolder, original )
+				{
+					if ( original.getAttribute( 'width' ) > 0 )
+						placeHolder.style.width = FCKTools.ConvertHtmlSizeToStyle( original.getAttribute( 'width' ) ) ;
+
+					if ( original.getAttribute( 'height' ) > 0 )
+						placeHolder.style.height = FCKTools.ConvertHtmlSizeToStyle( original.getAttribute( 'height' ) ) ;
+				},
+
+				AddCustomHandler : function( func )
+				{
+					customProcessors.push( func ) ;
+				}
+			} ) ;
+} )() ;
 
 FCK.GetRealElement = function( fakeElement )
 {
@@ -213,7 +210,7 @@ if ( FCKBrowserInfo.IsIE )
 			// Create the replacement HR.
 			var newHR = document.createElement( 'hr' ) ;
 			newHR.mergeAttributes( eHR, true ) ;
-			
+
 			// We must insert the new one after it. insertBefore will not work in all cases.
 			FCKDomTools.InsertAfterNode( eHR, newHR ) ;
 
@@ -241,3 +238,12 @@ FCKDocumentProcessor.AppendNew().ProcessDocument = function( document )
 		}
 	}
 }
+
+// Flash handler.
+FCKEmbedAndObjectProcessor.AddCustomHandler( function( el, fakeImg )
+	{
+		if ( ! ( el.nodeName.IEquals( 'embed' ) && ( el.type == 'application/x-shockwave-flash' || /\.swf($|#|\?)/i.test( el.src ) ) ) )
+			return ;
+		fakeImg.className = 'FCK__Flash' ;
+		fakeImg.setAttribute( '_fckflash', 'true', 0 );
+	} ) ;

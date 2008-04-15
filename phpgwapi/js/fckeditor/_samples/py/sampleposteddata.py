@@ -1,8 +1,8 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 
 """
 FCKeditor - The text editor for Internet - http://www.fckeditor.net
-Copyright (C) 2003-2007 Frederico Caldeira Knabben
+Copyright (C) 2003-2008 Frederico Caldeira Knabben
 
 == BEGIN LICENSE ==
 
@@ -65,7 +65,7 @@ for key in form.keys():
 		print """
 				<tr>
 					<td valign="top" nowrap><b>%s</b></td>
-					<td width="100%%">%s</td>
+					<td width="100%%" style="white-space:pre">%s</td>
 				</tr>
 			""" % (key, value)
 	except Exception, e:

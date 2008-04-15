@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -34,6 +34,8 @@ var FCKToolbarButton = function( commandName, label, tooltip, style, sourceView,
 		this.IconPath = FCKConfig.SkinPath + 'toolbar/' + commandName.toLowerCase() + '.gif' ;
 	else if ( typeof( icon ) == 'number' )
 		this.IconPath = [ FCKConfig.SkinPath + 'fck_strip.gif', 16, icon ] ;
+	else
+		this.IconPath = icon ;
 }
 
 FCKToolbarButton.prototype.Create = function( targetElement )
@@ -46,14 +48,19 @@ FCKToolbarButton.prototype.Create = function( targetElement )
 
 FCKToolbarButton.prototype.RefreshState = function()
 {
+	var uiButton = this._UIButton ;
+
+	if ( !uiButton )
+		return ;
+
 	// Gets the actual state.
 	var eState = FCK.ToolbarSet.CurrentInstance.Commands.GetCommand( this.CommandName ).GetState() ;
 
 	// If there are no state changes than do nothing and return.
-	if ( eState == this._UIButton.State ) return ;
+	if ( eState == uiButton.State ) return ;
 
 	// Sets the actual state.
-	this._UIButton.ChangeState( eState ) ;
+	uiButton.ChangeState( eState ) ;
 }
 
 FCKToolbarButton.prototype.Click = function()

@@ -1,8 +1,8 @@
-﻿#!/usr/bin/env perl
+#!/usr/bin/env perl
 
 #####
 #  FCKeditor - The text editor for Internet - http://www.fckeditor.net
-#  Copyright (C) 2003-2007 Frederico Caldeira Knabben
+#  Copyright (C) 2003-2008 Frederico Caldeira Knabben
 #
 #  == BEGIN LICENSE ==
 #
@@ -94,7 +94,7 @@ _HTML_TAG_
 		print <<"_HTML_TAG_";
 			<tr>
 				<td valign="top" nowrap><b>$key</b></td>
-				<td width="100%">$postedValue</td>
+				<td width="100%" style="white-space:pre">$postedValue</td>
 			</tr>
 _HTML_TAG_
 	}

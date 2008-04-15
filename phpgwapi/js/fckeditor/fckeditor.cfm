@@ -1,7 +1,7 @@
-﻿<cfsetting enablecfoutputonly="Yes">
+<cfsetting enablecfoutputonly="Yes">
 <!---
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -45,6 +45,7 @@
 <cfparam name="attributes.basePath" 	type="string" default="/fckeditor/">
 <cfparam name="attributes.checkBrowser" type="boolean" default="true">
 <cfparam name="attributes.config" 		type="struct" default="#structNew()#">
+<cfinclude template="fckutils.cfm">
 
 <!--- ::
 	 * check browser compatibility via HTTP_USER_AGENT, if checkBrowser is true
@@ -53,35 +54,7 @@
 <cfscript>
 if( attributes.checkBrowser )
 {
-	sAgent = lCase( cgi.HTTP_USER_AGENT );
-	isCompatibleBrowser = false;
-
-	// check for Internet Explorer ( >= 5.5 )
-	if( find( "msie", sAgent ) and not find( "mac", sAgent ) and not find( "opera", sAgent ) )
-	{
-		// try to extract IE version
-		stResult = reFind( "msie ([5-9]\.[0-9])", sAgent, 1, true );
-		if( arrayLen( stResult.pos ) eq 2 )
-		{
-			// get IE Version
-			sBrowserVersion = mid( sAgent, stResult.pos[2], stResult.len[2] );
-			if( sBrowserVersion GTE 5.5 )
-				isCompatibleBrowser = true;
-		}
-	}
-	// check for Gecko ( >= 20030210+ )
-	else if( find( "gecko/", sAgent ) )
-	{
-		// try to extract Gecko version date
-		stResult = reFind( "gecko/(200[3-9][0-1][0-9][0-3][0-9])", sAgent, 1, true );
-		if( arrayLen( stResult.pos ) eq 2 )
-		{
-			// get Gecko build (i18n date)
-			sBrowserVersion = mid( sAgent, stResult.pos[2], stResult.len[2] );
-			if( sBrowserVersion GTE 20030210 )
-				isCompatibleBrowser = true;
-		}
-	}
+	isCompatibleBrowser = FCKeditor_IsCompatibleBrowser();
 }
 else
 {
@@ -117,12 +90,26 @@ else
 		 * changed 20041206 hk@lwd.de (improvements are welcome!)
 		 */
 		lConfigKeys = "";
-		lConfigKeys = lConfigKeys & "CustomConfigurationsPath,EditorAreaCSS,DocType,BaseHref,FullPage,Debug,SkinPath,PluginsPath,AutoDetectLanguage,DefaultLanguage,ContentLangDirection,EnableXHTML,EnableSourceXHTML,ProcessHTMLEntities,IncludeLatinEntities,IncludeGreekEntities";
-		lConfigKeys = lConfigKeys & ",FillEmptyBlocks,FormatSource,FormatOutput,FormatIndentator,GeckoUseSPAN,StartupFocus,ForcePasteAsPlainText,ForceSimpleAmpersand,TabSpaces,ShowBorders,UseBROnCarriageReturn";
-		lConfigKeys = lConfigKeys & ",ToolbarStartExpanded,ToolbarCanCollapse,ToolbarSets,ContextMenu,FontColors,FontNames,FontSizes,FontFormats,StylesXmlPath,SpellChecker,IeSpellDownloadUrl,MaxUndoLevels";
-		lConfigKeys = lConfigKeys & ",LinkBrowser,LinkBrowserURL,LinkBrowserWindowWidth,LinkBrowserWindowHeight";
-		lConfigKeys = lConfigKeys & ",LinkUpload,LinkUploadURL,LinkUploadWindowWidth,LinkUploadWindowHeight,LinkUploadAllowedExtensions,LinkUploadDeniedExtensions";
-		lConfigKeys = lConfigKeys & ",ImageBrowser,ImageBrowserURL,ImageBrowserWindowWidth,ImageBrowserWindowHeight,SmileyPath,SmileyImages,SmileyColumns,SmileyWindowWidth,SmileyWindowHeight";
+		lConfigKeys = lConfigKeys & "CustomConfigurationsPath,EditorAreaCSS,ToolbarComboPreviewCSS,DocType";
+		lConfigKeys = lConfigKeys & ",BaseHref,FullPage,Debug,AllowQueryStringDebug,SkinPath";
+		lConfigKeys = lConfigKeys & ",PreloadImages,PluginsPath,AutoDetectLanguage,DefaultLanguage,ContentLangDirection";
+		lConfigKeys = lConfigKeys & ",ProcessHTMLEntities,IncludeLatinEntities,IncludeGreekEntities,ProcessNumericEntities,AdditionalNumericEntities";
+		lConfigKeys = lConfigKeys & ",FillEmptyBlocks,FormatSource,FormatOutput,FormatIndentator";
+		lConfigKeys = lConfigKeys & ",StartupFocus,ForcePasteAsPlainText,AutoDetectPasteFromWord,ForceSimpleAmpersand";
+		lConfigKeys = lConfigKeys & ",TabSpaces,ShowBorders,SourcePopup,ToolbarStartExpanded,ToolbarCanCollapse";
+		lConfigKeys = lConfigKeys & ",IgnoreEmptyParagraphValue,PreserveSessionOnFileBrowser,FloatingPanelsZIndex,TemplateReplaceAll,TemplateReplaceCheckbox";
+		lConfigKeys = lConfigKeys & ",ToolbarLocation,ToolbarSets,EnterMode,ShiftEnterMode,Keystrokes";
+		lConfigKeys = lConfigKeys & ",ContextMenu,BrowserContextMenuOnCtrl,FontColors,FontNames,FontSizes";
+		lConfigKeys = lConfigKeys & ",FontFormats,StylesXmlPath,TemplatesXmlPath,SpellChecker,IeSpellDownloadUrl";
+		lConfigKeys = lConfigKeys & ",SpellerPagesServerScript,FirefoxSpellChecker,MaxUndoLevels,DisableObjectResizing,DisableFFTableHandles";
+		lConfigKeys = lConfigKeys & ",LinkDlgHideTarget	,LinkDlgHideAdvanced,ImageDlgHideLink	,ImageDlgHideAdvanced,FlashDlgHideAdvanced";
+		lConfigKeys = lConfigKeys & ",ProtectedTags,BodyId,BodyClass,DefaultLinkTarget,CleanWordKeepsStructure";
+		lConfigKeys = lConfigKeys & ",LinkBrowser,LinkBrowserURL,LinkBrowserWindowWidth,LinkBrowserWindowHeight,ImageBrowser";
+		lConfigKeys = lConfigKeys & ",ImageBrowserURL,ImageBrowserWindowWidth,ImageBrowserWindowHeight,FlashBrowser,FlashBrowserURL";
+		lConfigKeys = lConfigKeys & ",FlashBrowserWindowWidth ,FlashBrowserWindowHeight,LinkUpload,LinkUploadURL,LinkUploadWindowWidth";
+		lConfigKeys = lConfigKeys & ",LinkUploadWindowHeight,LinkUploadAllowedExtensions,LinkUploadDeniedExtensions,ImageUpload,ImageUploadURL";
+		lConfigKeys = lConfigKeys & ",ImageUploadAllowedExtensions,ImageUploadDeniedExtensions,FlashUpload,FlashUploadURL,FlashUploadAllowedExtensions";
+		lConfigKeys = lConfigKeys & ",FlashUploadDeniedExtensions,SmileyPath,SmileyImages,SmileyColumns,SmileyWindowWidth,SmileyWindowHeight";
 
 		sConfig = "";
 
@@ -143,11 +130,9 @@ else
 	</cfscript>
 
 	<cfoutput>
-	<div>
 	<input type="hidden" id="#attributes.instanceName#" name="#attributes.instanceName#" value="#HTMLEditFormat(attributes.value)#" style="display:none" />
 	<input type="hidden" id="#attributes.instanceName#___Config" value="#sConfig#" style="display:none" />
 	<iframe id="#attributes.instanceName#___Frame" src="#sURL#" width="#attributes.width#" height="#attributes.height#" frameborder="0" scrolling="no"></iframe>
-	</div>
 	</cfoutput>
 
 <cfelse>
@@ -166,9 +151,7 @@ else
 
 	<!--- Fixed Bug ##1075166. hk@lwd.de 20041206 --->
 	<cfoutput>
-	<div>
 	<textarea name="#attributes.instanceName#" rows="4" cols="40" style="WIDTH: #attributes.width#; HEIGHT: #attributes.height#">#HTMLEditFormat(attributes.value)#</textarea>
-	</div>
 	</cfoutput>
 
 </cfif>

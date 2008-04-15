@@ -1,6 +1,6 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -35,25 +35,25 @@ function InitializeAPI()
 		// available if the editor instance is removed ("Can't execute code
 		// from a freed script" error).
 
-		// Note: we check the existence of oEditor.GetParentForm because some external 
-		// code (like JSON) can extend the Object protype and we get then extra oEditor 
+		// Note: we check the existence of oEditor.GetParentForm because some external
+		// code (like JSON) can extend the Object prototype and we get then extra oEditor
 		// objects that aren't really FCKeditor instances.
 		var sScript =
-			'var FCKeditorAPI = {' +
-				'Version : "2.4.1",' +
-				'VersionBuild : "14797",' +
-				'__Instances : new Object(),' +
+			'window.FCKeditorAPI = {' +
+				'Version : "2.6",' +
+				'VersionBuild : "18638",' +
+				'Instances : new Object(),' +
 
 				'GetInstance : function( name )' +
 				'{' +
-					'return this.__Instances[ name ];' +
+					'return this.Instances[ name ];' +
 				'},' +
 
 				'_FormSubmit : function()' +
 				'{' +
-					'for ( var name in FCKeditorAPI.__Instances )' +
+					'for ( var name in FCKeditorAPI.Instances )' +
 					'{' +
-						'var oEditor = FCKeditorAPI.__Instances[ name ] ;' +
+						'var oEditor = FCKeditorAPI.Instances[ name ] ;' +
 						'if ( oEditor.GetParentForm && oEditor.GetParentForm() == this )' +
 							'oEditor.UpdateLinkedField() ;' +
 					'}' +
@@ -111,9 +111,13 @@ function InitializeAPI()
 				// following seams to work well.
 				eval.call( oParentWindow, sScript ) ;
 			}
-			else if ( FCKBrowserInfo.IsSafari )
+			else if( FCKBrowserInfo.IsAIR )
 			{
-				// oParentWindow.eval in Safari executes in the calling window
+				FCKAdobeAIR.FCKeditorAPI_Evaluate( oParentWindow, sScript ) ;
+			}
+			else if ( FCKBrowserInfo.IsSafari || FCKBrowserInfo.IsGecko19 )
+			{
+				// oParentWindow.eval in Safari and Gran Paradiso executes in the calling window
 				// environment, instead of the parent one. The following should make it work.
 				var oParentDocument = oParentWindow.document ;
 				var eScript = oParentDocument.createElement('script') ;
@@ -125,10 +129,14 @@ function InitializeAPI()
 		}
 
 		FCKeditorAPI = oParentWindow.FCKeditorAPI ;
+
+		// The __Instances properly has been changed to the public Instances,
+		// but we should still have the "deprecated" version of it.
+		FCKeditorAPI.__Instances = FCKeditorAPI.Instances ;
 	}
 
 	// Add the current instance to the FCKeditorAPI's instances collection.
-	FCKeditorAPI.__Instances[ FCK.Name ] = FCK ;
+	FCKeditorAPI.Instances[ FCK.Name ] = FCK ;
 }
 
 // Attach to the form onsubmit event and to the form.submit().
@@ -156,6 +164,13 @@ function _AttachFormSubmitToAPI()
 
 function FCKeditorAPI_Cleanup()
 {
-	delete FCKeditorAPI.__Instances[ FCK.Name ] ;
+	if ( ! window.FCKUnloadFlag )
+		return ;
+	delete FCKeditorAPI.Instances[ FCK.Name ] ;
 }
-FCKTools.AddEventListener( window, 'unload', FCKeditorAPI_Cleanup ) ;	
+function FCKeditorAPI_ConfirmCleanup()
+{
+	window.FCKUnloadFlag = true ;
+}
+FCKTools.AddEventListener( window, 'unload', FCKeditorAPI_Cleanup ) ;
+FCKTools.AddEventListener( window, 'beforeunload', FCKeditorAPI_ConfirmCleanup) ;

@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -23,9 +23,15 @@
 
 FCKTableHandler.GetSelectedCells = function()
 {
+	if ( FCKSelection.GetType() == 'Control' )
+	{
+		var td = FCKSelection.MoveToAncestorNode( 'TD' ) ;
+		return td ? [ td ] : [] ;
+	}
+
 	var aCells = new Array() ;
 
-	var oRange = FCK.EditorDocument.selection.createRange() ;
+	var oRange = FCKSelection.GetSelection().createRange() ;
 //	var oParent = oRange.parentElement() ;
 	var oParent = FCKSelection.GetParentElement() ;
 
@@ -41,7 +47,7 @@ FCKTableHandler.GetSelectedCells = function()
 			// and then add it to the selected cells collection.
 			for ( var i = 0 ; i < oParent.cells.length ; i++ )
 			{
-				var oCellRange = FCK.EditorDocument.selection.createRange() ;
+				var oCellRange = FCK.EditorDocument.body.createTextRange() ;
 				oCellRange.moveToElementText( oParent.cells[i] ) ;
 
 				if ( oRange.inRange( oCellRange )

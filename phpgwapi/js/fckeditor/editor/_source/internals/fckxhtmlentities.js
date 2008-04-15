@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -133,6 +133,12 @@ FCKXHtmlEntities.Initialize = function()
 			'⊗':'otimes',
 			'⊥':'perp',
 			'⋅':'sdot',
+			'\u2308':'lceil',
+			'\u2309':'rceil',
+			'\u230a':'lfloor',
+			'\u230b':'rfloor',
+			'\u2329':'lang',
+			'\u232a':'rang',
 			'◊':'loz',
 			'♠':'spades',
 			'♣':'clubs',
@@ -308,7 +314,10 @@ FCKXHtmlEntities.Initialize = function()
 				'φ':'phi',
 				'χ':'chi',
 				'ψ':'psi',
-				'ω':'omega'
+				'ω':'omega',
+				'\u03d1':'thetasym',
+				'\u03d2':'upsih',
+				'\u03d6':'piv'
 			} ;
 
 			for ( e in oEntities )

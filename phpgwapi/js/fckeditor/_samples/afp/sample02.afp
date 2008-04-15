@@ -1,6 +1,6 @@
 <%
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -17,7 +17,7 @@
  *    http://www.mozilla.org/MPL/MPL-1.1.html
  *
  * == END LICENSE ==
- * 
+ *
  * This page is a basic Sample for FCKeditor integration in the AFP script language (www.afpages.de)
  *
 %>
@@ -97,7 +97,7 @@
 				oFCKeditor.aconfig[2,2]=lcLanguage
 			ENDIF
 
-			lcText=[This is some <strong>sample text</strong>. You are using ]
+			lcText=[<p>This is some <strong>sample text</strong>. You are using ]
 			lcText=lcText+[<a href='http://www.fckeditor.net/'>FCKeditor</a>.]
 
 			oFCKeditor.BasePath	= sBasePath

@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -45,6 +45,7 @@ InsertLinkLbl		: "Liên kết",
 InsertLink			: "Chèn/Sửa Liên kết",
 RemoveLink			: "Xoá Liên kết",
 Anchor				: "Chèn/Sửa Neo",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Hình ảnh",
 InsertImage			: "Chèn/Sửa Hình ảnh",
 InsertFlashLbl		: "Flash",
@@ -70,6 +71,7 @@ RightJustify		: "Canh phải",
 BlockJustify		: "Canh đều",
 DecreaseIndent		: "Dịch ra ngoài",
 IncreaseIndent		: "Dịch vào trong",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Khôi phục thao tác",
 Redo				: "Làm lại thao tác",
 NumberedListLbl		: "Danh sách có thứ tự",
@@ -103,20 +105,27 @@ SelectionField	: "Ô chọn",
 ImageButton		: "Nút hình ảnh",
 
 FitWindow		: "Mở rộng tối đa kích thước trình biên tập",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Sửa Liên kết",
 CellCM				: "Ô",
 RowCM				: "Hàng",
 ColumnCM			: "Cột",
-InsertRow			: "Chèn Hàng",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Xoá Hàng",
-InsertColumn		: "Chèn Cột",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Xoá Cột",
-InsertCell			: "Chèn Ô",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Xoá Ô",
 MergeCells			: "Trộn Ô",
-SplitCell			: "Chia Ô",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Xóa Bảng",
 CellProperties		: "Thuộc tính Ô",
 TableProperties		: "Thuộc tính Bảng",
@@ -134,7 +143,7 @@ SelectionFieldProp	: "Thuộc tính Ô chọn",
 TextareaProp		: "Thuộc tính Vùng văn bản",
 FormProp			: "Thuộc tính Biểu mẫu",
 
-FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6;Normal (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6;Normal (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "Đang xử lý XHTML. Vui lòng đợi trong giây lát...",
@@ -229,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Chọn một Neo",
 DlgLnkAnchorByName	: "Theo Tên Neo",
 DlgLnkAnchorById	: "Theo Định danh Element",
-DlgLnkNoAnchors		: "<Không có Neo nào trong tài liệu>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Không có Neo nào trong tài liệu)",
 DlgLnkEMail			: "Thư điện tử",
 DlgLnkEMailSubject	: "Tiêu đề Thông điệp",
 DlgLnkEMailBody		: "Nội dung Thông điệp",
@@ -322,6 +331,9 @@ DlgCellBackColor	: "Màu nền",
 DlgCellBorderColor	: "Màu viền",
 DlgCellBtnSelect	: "Chọn...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "Tìm kiếm",
 DlgFindFindBtn		: "Tìm kiếm",
@@ -347,7 +359,6 @@ DlgPasteMsg2	: "Hãy dán nội dung vào trong khung bên dưới, sử dụng 
 DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "Chấp nhận các định dạng phông",
 DlgPasteRemoveStyles	: "Gỡ bỏ các định dạng Styles",
-DlgPasteCleanBox		: "Xóa nội dung",
 
 // Color Picker
 ColorAutomatic	: "Tự động",

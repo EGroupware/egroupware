@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -46,6 +46,7 @@ InsertLinkLbl		: "Esteka",
 InsertLink			: "Txertatu/Editatu Esteka",
 RemoveLink			: "Kendu Esteka",
 Anchor				: "Aingura",
+AnchorDelete		: "Ezabatu Aingura",
 InsertImageLbl		: "Irudia",
 InsertImage			: "Txertatu/Editatu Irudia",
 InsertFlashLbl		: "Flasha",
@@ -71,6 +72,7 @@ RightJustify		: "Lerrokatu Eskuman",
 BlockJustify		: "Justifikatu",
 DecreaseIndent		: "Txikitu Koska",
 IncreaseIndent		: "Handitu Koska",
+Blockquote			: "Aipamen blokea",
 Undo				: "Desegin",
 Redo				: "Berregin",
 NumberedListLbl		: "Zenbakidun Zerrenda",
@@ -104,20 +106,27 @@ SelectionField	: "Hautespen Eremua",
 ImageButton		: "Irudi Botoia",
 
 FitWindow		: "Maximizatu editorearen tamaina",
+ShowBlocks		: "Blokeak erakutsi",
 
 // Context Menu
 EditLink			: "Aldatu Esteka",
 CellCM				: "Gelaxka",
 RowCM				: "Errenkada",
 ColumnCM			: "Zutabea",
-InsertRow			: "Txertatu Errenkada",
+InsertRowAfter		: "Txertatu Lerroa Ostean",
+InsertRowBefore		: "Txertatu Lerroa Aurretik",
 DeleteRows			: "Ezabatu Errenkadak",
-InsertColumn		: "Txertatu Zutabea",
+InsertColumnAfter	: "Txertatu Zutabea Ostean",
+InsertColumnBefore	: "Txertatu Zutabea Aurretik",
 DeleteColumns		: "Ezabatu Zutabeak",
-InsertCell			: "Txertatu Gelaxka",
+InsertCellAfter		: "Txertatu Gelaxka Ostean",
+InsertCellBefore	: "Txertatu Gelaxka Aurretik",
 DeleteCells			: "Kendu Gelaxkak",
 MergeCells			: "Batu Gelaxkak",
-SplitCell			: "Zatitu Gelaxka",
+MergeRight			: "Elkartu Eskumara",
+MergeDown			: "Elkartu Behera",
+HorizontalSplitCell	: "Banatu Gelaxkak Horizontalki",
+VerticalSplitCell	: "Banatu Gelaxkak Bertikalki",
 TableDelete			: "Ezabatu Taula",
 CellProperties		: "Gelaxkaren Ezaugarriak",
 TableProperties		: "Taularen Ezaugarriak",
@@ -135,7 +144,7 @@ SelectionFieldProp	: "Hautespen Eremuaren Ezaugarriak",
 TextareaProp		: "Testu-arearen Ezaugarriak",
 FormProp			: "Formularioaren Ezaugarriak",
 
-FontFormats			: "Arrunta;Formateatua;Helbidea;Izenburua 1;Izenburua 2;Izenburua 3;Izenburua 4;Izenburua 5;Izenburua 6;Paragrafoa (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Arrunta;Formateatua;Helbidea;Izenburua 1;Izenburua 2;Izenburua 3;Izenburua 4;Izenburua 5;Izenburua 6;Paragrafoa (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "XHTML Prozesatzen. Itxaron mesedez...",
@@ -230,7 +239,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Aingura bat hautatu",
 DlgLnkAnchorByName	: "Aingura izenagatik",
 DlgLnkAnchorById	: "Elementuaren ID-gatik",
-DlgLnkNoAnchors		: "<Ez daude aingurak eskuragarri dokumentuan>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Ez daude aingurak eskuragarri dokumentuan)",
 DlgLnkEMail			: "ePosta Helbidea",
 DlgLnkEMailSubject	: "Mezuaren Gaia",
 DlgLnkEMailBody		: "Mezuaren Gorputza",
@@ -263,7 +272,7 @@ DlgLnkPopTop		: "Goiko Posizioa",
 DlnLnkMsgNoUrl		: "Mesedez URL esteka idatzi",
 DlnLnkMsgNoEMail	: "Mesedez ePosta helbidea idatzi",
 DlnLnkMsgNoAnchor	: "Mesedez aingura bat aukeratu",
-DlnLnkMsgInvPopName	: "The popup name must begin with an alphabetic character and must not contain spaces",	//MISSING
+DlnLnkMsgInvPopName	: "Popup lehioaren izenak karaktere alfabetiko batekin hasi behar du eta eta ezin du zuriunerik izan",
 
 // Color Dialog
 DlgColorTitle		: "Kolore Aukeraketa",
@@ -323,6 +332,9 @@ DlgCellBackColor	: "Atzeko Kolorea",
 DlgCellBorderColor	: "Ertzako Kolorea",
 DlgCellBtnSelect	: "Aukertau...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Bilatu eta Ordeztu",
+
 // Find Dialog
 DlgFindTitle		: "Bilaketa",
 DlgFindFindBtn		: "Bilatu",
@@ -345,10 +357,9 @@ PasteAsText		: "Testu Arrunta bezala Itsatsi",
 PasteFromWord	: "Word-etik itsatsi",
 
 DlgPasteMsg2	: "Mesedez teklatua erabilita (<STRONG>Ctrl+V</STRONG>) ondorego eremuan testua itsatsi eta <STRONG>OK</STRONG> sakatu.",
-DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
+DlgPasteSec		: "Nabigatzailearen segurtasun ezarpenak direla eta, editoreak ezin du arbela zuzenean erabili. Leiho honetan berriro itsatsi behar duzu.",
 DlgPasteIgnoreFont		: "Letra Motaren definizioa ezikusi",
 DlgPasteRemoveStyles	: "Estilo definizioak kendu",
-DlgPasteCleanBox		: "Testu-eremua Garbitu",
 
 // Color Picker
 ColorAutomatic	: "Automatikoa",
@@ -382,9 +393,9 @@ IeSpellDownload			: "Zuzentzaile ortografikoa ez dago instalatuta. Deskargatu na
 // Button Dialog
 DlgButtonText		: "Testua (Balorea)",
 DlgButtonType		: "Mota",
-DlgButtonTypeBtn	: "Button",	//MISSING
-DlgButtonTypeSbm	: "Submit",	//MISSING
-DlgButtonTypeRst	: "Reset",	//MISSING
+DlgButtonTypeBtn	: "Botoia",
+DlgButtonTypeSbm	: "Bidali",
+DlgButtonTypeRst	: "Garbitu",
 
 // Checkbox and Radio Button Dialogs
 DlgCheckboxName		: "Izena",
@@ -433,7 +444,7 @@ DlgHiddenValue	: "Balorea",
 // Bulleted List Dialog
 BulletedListProp	: "Buletdun Zerrendaren Ezarpenak",
 NumberedListProp	: "Zenbakidun Zerrendaren Ezarpenak",
-DlgLstStart			: "Start",	//MISSING
+DlgLstStart			: "Hasiera",
 DlgLstType			: "Mota",
 DlgLstTypeCircle	: "Zirkulua",
 DlgLstTypeDisc		: "Diskoa",
@@ -456,16 +467,16 @@ DlgDocLangDirLTR	: "Ezkerretik eskumara (LTR)",
 DlgDocLangDirRTL	: "Eskumatik ezkerrera (RTL)",
 DlgDocLangCode		: "Hizkuntzaren Kodea",
 DlgDocCharSet		: "Karaktere Multzoaren Kodeketa",
-DlgDocCharSetCE		: "Central European",	//MISSING
-DlgDocCharSetCT		: "Chinese Traditional (Big5)",	//MISSING
-DlgDocCharSetCR		: "Cyrillic",	//MISSING
-DlgDocCharSetGR		: "Greek",	//MISSING
-DlgDocCharSetJP		: "Japanese",	//MISSING
-DlgDocCharSetKR		: "Korean",	//MISSING
-DlgDocCharSetTR		: "Turkish",	//MISSING
-DlgDocCharSetUN		: "Unicode (UTF-8)",	//MISSING
-DlgDocCharSetWE		: "Western European",	//MISSING
-DlgDocCharSetOther	: "Beste Karaktere Multzoaren Kodeketa",
+DlgDocCharSetCE		: "Erdialdeko Europakoa",
+DlgDocCharSetCT		: "Txinatar Tradizionala (Big5)",
+DlgDocCharSetCR		: "Zirilikoa",
+DlgDocCharSetGR		: "Grekoa",
+DlgDocCharSetJP		: "Japoniarra",
+DlgDocCharSetKR		: "Korearra",
+DlgDocCharSetTR		: "Turkiarra",
+DlgDocCharSetUN		: "Unicode (UTF-8)",
+DlgDocCharSetWE		: "Mendebaldeko Europakoa",
+DlgDocCharSetOther	: "Beste Karaktere Multzoko Kodeketa",
 
 DlgDocDocType		: "Document Type Goiburua",
 DlgDocDocTypeOther	: "Beste Document Type Goiburua",
@@ -494,7 +505,7 @@ DlgTemplatesTitle	: "Eduki Txantiloiak",
 DlgTemplatesSelMsg	: "Mesedez txantiloia aukeratu editorean kargatzeko<br>(orain dauden edukiak galduko dira):",
 DlgTemplatesLoading	: "Txantiloiak kargatzen. Itxaron mesedez...",
 DlgTemplatesNoTpl	: "(Ez dago definitutako txantiloirik)",
-DlgTemplatesReplace	: "Replace actual contents",	//MISSING
+DlgTemplatesReplace	: "Ordeztu oraingo edukiak",
 
 // About Dialog
 DlgAboutAboutTab	: "Honi buruz",

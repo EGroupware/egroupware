@@ -1,8 +1,8 @@
-﻿#!/usr/bin/env perl
+#!/usr/bin/env perl
 
 #####
 #  FCKeditor - The text editor for Internet - http://www.fckeditor.net
-#  Copyright (C) 2003-2007 Frederico Caldeira Knabben
+#  Copyright (C) 2003-2008 Frederico Caldeira Knabben
 #
 #  == BEGIN LICENSE ==
 #
@@ -134,7 +134,7 @@ _HTML_TAG_
 	if($FORM{'Toolbar'} ne "") {
 		$ToolbarSet = &specialchar_cnv( $FORM{'Toolbar'} );
 	}
-	$Value = 'This is some <strong>sample text</strong>. You are using <a href="http://www.fckeditor.net/">FCKeditor</a>.' ;
+	$Value = '<p>This is some <strong>sample text</strong>. You are using <a href="http://www.fckeditor.net/">FCKeditor</a>.</p>' ;
 	&Create();
 
 	print <<"_HTML_TAG_";
@@ -159,6 +159,8 @@ my $dir;
 			$dir  = $ENV{'PATH_INFO'};
 		} elsif($ENV{'FILEPATH_INFO'}) {
 			$dir  = $ENV{'FILEPATH_INFO'};
+		} elsif($ENV{'REQUEST_URI'}) {
+			$dir  = $ENV{'REQUEST_URI'};
 		}
 	}
 	return($dir);

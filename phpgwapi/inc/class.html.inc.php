@@ -422,15 +422,10 @@ class html
 	 */
 	function htmlarea_availible()
 	{
-		switch($this->user_agent)
-		{
-			case 'msie':
-				return $this->ua_version >= 5.5;
-			case 'mozilla':
-				return $this->ua_version >= 1.3;
-			default:
-				return False;
-		}
+		require_once(EGW_INCLUDE_ROOT.'/phpgwapi/js/fckeditor/fckeditor.php');
+
+		// use FCKeditor's own check
+		return FCKeditor_IsCompatibleBrowser();
 	}
 
 	/**
@@ -451,7 +446,7 @@ class html
 	* this function is a wrapper for fckEditor to create some reuseable layouts
 	*
 	* @param string $_name name and id of the input-field
-	* @param string $_content of the tinymce (will be run through htmlspecialchars !!!), default ''	
+	* @param string $_content of the tinymce (will be run through htmlspecialchars !!!), default ''
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
 	* @param array  $_options (toolbar_expanded true/false)
 	* @param string $_height='400px'
@@ -459,7 +454,7 @@ class html
 	* @param string $base_href='' if passed activates the browser for image at absolute path passed
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='') 
+	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='')
 	{
 		if (!$this->htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -469,20 +464,25 @@ class html
 
 		$oFCKeditor = new FCKeditor($_name) ;
 		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
+		$oFCKeditor->Config['CustomConfigurationsPath'] = $oFCKeditor->BasePath . 'fckeditor.egwconfig.js' ;
 		$oFCKeditor->Value	= $_content;
 		$oFCKeditor->Width	= str_replace('px','',$_width);	// FCK adds px if width contains no %
 		$oFCKeditor->Height	= str_replace('px','',$_height);
-		
+
 		// by default switch all browsers and uploads off
 		$oFCKeditor->Config['LinkBrowser'] = $oFCKeditor->Config['LinkUpload'] = false;
 		$oFCKeditor->Config['FlashBrowser'] = $oFCKeditor->Config['FlashUpload'] = false;
 		$oFCKeditor->Config['ImageBrowser'] = $oFCKeditor->Config['ImageUpload'] = false;
-		
+
 		// Activate the image browser+upload, if $_base_href exists and is browsable by the webserver
 		if ($_base_href && is_dir($_SERVER['DOCUMENT_ROOT'].$_base_href) && file_exists($_SERVER['DOCUMENT_ROOT'].$_base_href.'/.'))
 		{
 			// Only images for now
-			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=images&Connector=connectors/php/connector.php';
+			if (substr($_base_href,-1) != '/') $_base_href .= '/' ;
+			// store the path and application in the session, to make sure it can't be called with arbitrary pathes
+			$GLOBALS['egw']->session->appsession($_base_href,'FCKeditor',$GLOBALS['egw_info']['flags']['currentapp']);
+
+			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=Image&Connector='.$oFCKeditor->BasePath.'editor/filemanager/connectors/php/connector.php';
 			$oFCKeditor->Config['ImageBrowser'] = true;
 			$oFCKeditor->Config['ImageUpload'] = is_writable($_SERVER['DOCUMENT_ROOT'].$_base_href);
 		}
@@ -493,21 +493,51 @@ class html
 		}
 		// switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
 		$oFCKeditor->Config['ProcessHTMLEntities'] = false;
-		 
+		// Now setting the admin settings
+		$spell = '';
+		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
+		{
+			$spell = '_spellcheck';
+			$oFCKeditor->Config['SpellChecker'] = 'SpellerPages';
+			$oFCKeditor->Config['SpellerPagesServerScript'] = 'server-scripts/spellchecker.php?enabled=1';
+			if (isset($GLOBALS['egw_info']['server']['aspell_path']))
+			{
+				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&aspell_path='.$GLOBALS['egw_info']['server']['aspell_path'];
+			}
+			if (isset($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']))
+			{
+				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&spellchecker_lang='.$GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'];
+			}
+			else
+			{
+				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&spellchecker_lang='.$GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			}
+			$oFCKeditor->Config['FirefoxSpellChecker'] = false;
+		}
+		// Now setting the user preferences
+		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode']))
+		{
+			$oFCKeditor->Config['EnterMode'] = $GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode'];
+		}
+		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_skin']))
+		{
+			$oFCKeditor->Config['SkinPath'] = $oFCKeditor->BasePath.'editor/skins/'.$GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'].'/';
+		}
+
 		switch($_mode) {
 			case 'simple':
-				$oFCKeditor->ToolbarSet = 'egw_simple';
+				$oFCKeditor->ToolbarSet = 'egw_simple'.$spell;
 				$oFCKeditor->Config['ContextMenu'] = false;
 				break;
 
 			default:
 			case 'extended':
-				$oFCKeditor->ToolbarSet = 'egw_extended';
+				$oFCKeditor->ToolbarSet = 'egw_extended'.$spell;
 				break;
 
 			case 'advanced':
-				$oFCKeditor->ToolbarSet = 'egw_advanced';
-				break;						
+				$oFCKeditor->ToolbarSet = 'egw_advanced'.$spell;
+				break;
 		}
 		return $oFCKeditor->CreateHTML();
 	}
@@ -524,7 +554,7 @@ class html
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') 
+	function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%')
 	{
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
 
@@ -545,7 +575,7 @@ class html
 		}
 
 	}
-	
+
 	/**
 	 * represents html's input tag
 	 *
@@ -864,7 +894,7 @@ class html
 			{
 				$path = EGW_SERVER_ROOT.$url;
 			}
-			
+
 			if (is_null($path) || !@is_readable($path))
 			{
 				// if the image-name is a percentage, use a progressbar
@@ -911,10 +941,10 @@ class html
 			$vars = $url;
 			$url = '/index.php';
 		}
-		elseif (strpos($url,'/')===false && 
-			count(explode('.',$url)) >= 3 && 
-			!(strpos($url,'mailto:')!==false || 
-			strpos($url,'://')!==false || 
+		elseif (strpos($url,'/')===false &&
+			count(explode('.',$url)) >= 3 &&
+			!(strpos($url,'mailto:')!==false ||
+			strpos($url,'://')!==false ||
 			strpos($url,'javascript:')!==false))
 		{
 			$url = "/index.php?menuaction=$url";
@@ -1063,7 +1093,7 @@ class html
 		}
 		return $html;
 	}
-	
+
 	/**
 	* tree widget using dhtmlXtree
 	*
@@ -1109,7 +1139,7 @@ class html
 			$html .= "tree.enableCheckBoxes(1);\n";
 			$html .= "tree.setOnCheckHandler('$_onCheckHandler');\n";
 		}
-		
+
 		$top = 0;
 		if ($_topFolder)
 		{
@@ -1126,7 +1156,7 @@ class html
 			else
 			{
 				$label = $_topFolder;
-			}	
+			}
 			$html .= "\ntree.insertNewItem(0,'$top','".addslashes($label)."',$_onNodeSelect,'$topImage','$topImage','$topImage','CHILD,TOP');\n";
 
 			if (is_array($_topFolder) && isset($_topFolder['title']))
@@ -1150,15 +1180,15 @@ class html
 			// evtl. remove leading delimiter
 			if ($path{0} == $delimiter) $path = substr($path,1);
 			$folderParts = explode($delimiter,$path);
-			
+
 			//get rightmost folderpart
 			$label = array_pop($folderParts);
 			if (isset($data['label'])) $label = $data['label'];
-			
+
 			// the rest of the array is the name of the parent
 			$parentName = implode((array)$folderParts,$delimiter);
 			if(empty($parentName)) $parentName = $top;
-			
+
 			$entryOptions = 'CHILD,CHECKED';
 			// highlight currently item
 			if ($_selected === $path)
@@ -1179,17 +1209,17 @@ class html
 		$html .= "tree.closeAllItems(0);\n";
 		$html .= "tree.openItem('".($_selected ? addslashes($_selected) : $top)."');\n";
 		$html .= "</script>\n";
-		
+
 		return $html;
 	}
-	
+
 	/**
 	 * html-class singleton, return a referenze to the global instanciated html object in $GLOBALS['egw']->html
 	 *
 	 * Please use that static method in all new code, instead of instanciating an own html object:
 	 * 	$my_html =& html::singleton();
-	 * 
-	 * @static 
+	 *
+	 * @static
 	 * @return html
 	 */
 	function &singleton()

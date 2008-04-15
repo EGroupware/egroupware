@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -30,9 +30,11 @@ FCKTools.CancelEvent = function( e )
 FCKTools.DisableSelection = function( element )
 {
 	if ( FCKBrowserInfo.IsGecko )
-		element.style.MozUserSelect	= 'none' ;	// Gecko only.
+		element.style.MozUserSelect		= 'none' ;	// Gecko only.
+	else if ( FCKBrowserInfo.IsSafari )
+		element.style.KhtmlUserSelect	= 'none' ;	// WebKit only.
 	else
-		element.style.userSelect	= 'none' ;	// CSS3 (not supported yet).
+		element.style.userSelect		= 'none' ;	// CSS3 (not supported yet).
 }
 
 // Appends a CSS file to a document.
@@ -43,6 +45,18 @@ FCKTools._AppendStyleSheet = function( documentElement, cssFileUrl )
 	e.type	= 'text/css' ;
 	e.href	= cssFileUrl ;
 	documentElement.getElementsByTagName("HEAD")[0].appendChild( e ) ;
+	return e ;
+}
+
+// Appends a CSS style string to a document.
+FCKTools.AppendStyleString = function( documentElement, cssStyles )
+{
+	if ( !cssStyles )
+		return null ;
+
+	var e = documentElement.createElement( "STYLE" ) ;
+	e.appendChild( documentElement.createTextNode( cssStyles ) ) ;
+	documentElement.getElementsByTagName( "HEAD" )[0].appendChild( e ) ;
 	return e ;
 }
 
@@ -102,8 +116,15 @@ FCKTools.CreateXmlObject = function( object )
 	{
 		case 'XmlHttp' :
 			return new XMLHttpRequest() ;
+
 		case 'DOMDocument' :
-			return document.implementation.createDocument( '', '', null ) ;
+			// Originaly, we were had the following here:
+			// return document.implementation.createDocument( '', '', null ) ;
+			// But that doesn't work if we're running under domain relaxation mode, so we need a workaround.
+			// See http://ajaxian.com/archives/xml-messages-with-cross-domain-json about the trick we're using.
+			var doc = ( new DOMParser() ).parseFromString( '<tmp></tmp>', 'text/xml' ) ;
+			FCKDomTools.RemoveNode( doc.firstChild ) ;
+			return doc ;
 	}
 	return null ;
 }
@@ -144,6 +165,8 @@ FCKTools.GetViewPaneSize = function( win )
 
 FCKTools.SaveStyles = function( element )
 {
+	var data = FCKTools.ProtectFormStyles( element ) ;
+
 	var oSavedStyles = new Object() ;
 
 	if ( element.className.length > 0 )
@@ -160,24 +183,27 @@ FCKTools.SaveStyles = function( element )
 		element.setAttribute( 'style', '', 0 ) ;	// 0 : Case Insensitive
 	}
 
+	FCKTools.RestoreFormStyles( element, data ) ;
 	return oSavedStyles ;
 }
 
 FCKTools.RestoreStyles = function( element, savedStyles )
 {
+	var data = FCKTools.ProtectFormStyles( element ) ;
 	element.className = savedStyles.Class || '' ;
 
 	if ( savedStyles.Inline )
 		element.setAttribute( 'style', savedStyles.Inline, 0 ) ;	// 0 : Case Insensitive
 	else
 		element.removeAttribute( 'style', 0 ) ;
+	FCKTools.RestoreFormStyles( element, data ) ;
 }
 
 FCKTools.RegisterDollarFunction = function( targetWindow )
 {
 	targetWindow.$ = function( id )
 	{
-		return this.document.getElementById( id ) ;
+		return targetWindow.document.getElementById( id ) ;
 	} ;
 }
 
@@ -198,6 +224,7 @@ FCKTools.GetElementPosition = function( el, relativeWindow )
 
 	var oOwnerWindow = FCKTools.GetElementWindow( el ) ;
 
+	var previousElement = null ;
 	// Loop throw the offset chain.
 	while ( el )
 	{
@@ -208,9 +235,28 @@ FCKTools.GetElementPosition = function( el, relativeWindow )
 		if ( sPosition && sPosition != 'static' && el.style.zIndex != FCKConfig.FloatingPanelsZIndex )
 			break ;
 
+		/*
+		FCKDebug.Output( el.tagName + ":" + "offset=" + el.offsetLeft + "," + el.offsetTop + "  "
+				+ "scroll=" + el.scrollLeft + "," + el.scrollTop ) ;
+		*/
+
 		c.X += el.offsetLeft - el.scrollLeft ;
 		c.Y += el.offsetTop - el.scrollTop  ;
 
+		// Backtrack due to offsetParent's calculation by the browser ignores scrollLeft and scrollTop.
+		// Backtracking is not needed for Opera
+		if ( ! FCKBrowserInfo.IsOpera )
+		{
+			var scrollElement = previousElement ;
+			while ( scrollElement && scrollElement != el )
+			{
+				c.X -= scrollElement.scrollLeft ;
+				c.Y -= scrollElement.scrollTop ;
+				scrollElement = scrollElement.parentNode ;
+			}
+		}
+
+		previousElement = el ;
 		if ( el.offsetParent )
 			el = el.offsetParent ;
 		else
@@ -218,6 +264,7 @@ FCKTools.GetElementPosition = function( el, relativeWindow )
 			if ( oOwnerWindow != oWindow )
 			{
 				el = oOwnerWindow.frameElement ;
+				previousElement = null ;
 				if ( el )
 					oOwnerWindow = FCKTools.GetElementWindow( el ) ;
 			}
