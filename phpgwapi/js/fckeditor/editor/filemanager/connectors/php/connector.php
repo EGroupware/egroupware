@@ -1,7 +1,7 @@
 <?php
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -34,32 +34,6 @@ require('./phpcompat.php') ;
 if ( !$Config['Enabled'] )
 	SendError( 1, 'This connector is disabled. Please check the "editor/filemanager/connectors/php/config.php" file' ) ;
 
-// Get the "UserFiles" path.
-//$GLOBALS["UserFilesPath"] = '' ;
-//
-//if ( isset( $Config['UserFilesPath'] ) )
-//	$GLOBALS["UserFilesPath"] = $Config['UserFilesPath'] ;
-//else if ( isset( $_GET['ServerPath'] ) )
-//	$GLOBALS["UserFilesPath"] = $_GET['ServerPath'] ;
-//else
-//	$GLOBALS["UserFilesPath"] = '/userfiles/' ;
-//
-//if ( ! ereg( '/$', $GLOBALS["UserFilesPath"] ) )
-//	$GLOBALS["UserFilesPath"] .= '/' ;
-//
-//if ( strlen( $Config['UserFilesAbsolutePath'] ) > 0 )
-//{
-//	$GLOBALS["UserFilesDirectory"] = $Config['UserFilesAbsolutePath'] ;
-//
-//	if ( ! ereg( '/$', $GLOBALS["UserFilesDirectory"] ) )
-//		$GLOBALS["UserFilesDirectory"] .= '/' ;
-//}
-//else
-//{
-//	// Map the "UserFiles" path to a local directory.
-//	$GLOBALS["UserFilesDirectory"] = GetRootPath() . $GLOBALS["UserFilesPath"] ;
-//}
-
 DoResponse() ;
 
 function DoResponse()
@@ -75,8 +49,8 @@ function DoResponse()
 	$sResourceType	= $_GET['Type'] ;
 	$sCurrentFolder	= GetCurrentFolder() ;
 
-	// Check if it is an allowed command 
-	if ( ! IsAllowedCommand( $sCommand ) ) 
+	// Check if it is an allowed command
+	if ( ! IsAllowedCommand( $sCommand ) )
 		SendError( 1, 'The "' . $sCommand . '" command isn\'t allowed' ) ;
 
 	// Check if it is an allowed type.

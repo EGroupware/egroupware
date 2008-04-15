@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -28,8 +28,8 @@ FCK.Description = "FCKeditor for Gecko Browsers" ;
 FCK.InitializeBehaviors = function()
 {
 	// When calling "SetData", the editing area IFRAME gets a fixed height. So we must recalculate it.
-	if ( FCKBrowserInfo.IsGecko )		// Not for Safari/Opera.
-		Window_OnResize() ;
+	if ( window.onresize )		// Not for Safari/Opera.
+		window.onresize() ;
 
 	FCKFocusManager.AddWindow( this.EditorWindow ) ;
 
@@ -45,6 +45,7 @@ FCK.InitializeBehaviors = function()
 			FCK.MouseDownFlag = false ;
 			return ;
 		}
+
 		if ( FCKConfig.ForcePasteAsPlainText )
 		{
 			if ( evt.dataTransfer )
@@ -56,11 +57,10 @@ FCK.InitializeBehaviors = function()
 			}
 			else if ( FCKConfig.ShowDropDialog )
 				FCK.PasteAsPlainText() ;
+
+			evt.preventDefault() ;
+			evt.stopPropagation() ;
 		}
-		else if ( FCKConfig.ShowDropDialog )
-			FCKDialog.OpenDialog( 'FCKDialog_Paste', FCKLang.Paste, 'dialog/fck_paste.html', 400, 330, 'Security' ) ;
-		evt.preventDefault() ;
-		evt.stopPropagation() ;
 	}
 
 	this._ExecCheckCaret = function( evt )
@@ -88,7 +88,7 @@ FCK.InitializeBehaviors = function()
 
 		var moveCursor = function()
 		{
-			var selection = FCK.EditorWindow.getSelection() ;
+			var selection = FCKSelection.GetSelection() ;
 			var range = selection.getRangeAt(0) ;
 			if ( ! range || ! range.collapsed )
 				return ;
@@ -104,7 +104,7 @@ FCK.InitializeBehaviors = function()
 
 			// only perform the patched behavior if we're in an <a> tag, or the End key is pressed.
 			var parentTag = node.parentNode.tagName.toLowerCase() ;
-			if ( ! (  parentTag == 'a' ||
+			if ( ! (  parentTag == 'a' || String(node.parentNode.contentEditable) == 'false' ||
 					( ! ( FCKListsLib.BlockElements[parentTag] || FCKListsLib.NonEmptyBlockElements[parentTag] )
 					  && keyCode == 35 ) ) )
 				return ;
@@ -172,7 +172,7 @@ FCK.InitializeBehaviors = function()
 						}
 
 						var stopTag = stopNode.tagName.toLowerCase() ;
-						if ( FCKListsLib.BlockElements[stopTag] || FCKListsLib.EmptyElements[stopTag] 
+						if ( FCKListsLib.BlockElements[stopTag] || FCKListsLib.EmptyElements[stopTag]
 							|| FCKListsLib.NonEmptyBlockElements[stopTag] )
 							break ;
 						stopNode = stopNode.nextSibling ;
@@ -301,10 +301,7 @@ FCK.GetNamedCommandState = function( commandName )
 FCK.RedirectNamedCommands =
 {
 	Print	: true,
-	Paste	: true,
-
-	Cut	: true,
-	Copy	: true
+	Paste	: true
 } ;
 
 // ExecuteNamedCommand overload for Gecko.
@@ -326,14 +323,6 @@ FCK.ExecuteRedirectedNamedCommand = function( commandName, commandParameter )
 					FCK.ExecuteNamedCommand( 'Paste', null, true ) ;
 			}
 			catch (e)	{ FCKDialog.OpenDialog( 'FCKDialog_Paste', FCKLang.Paste, 'dialog/fck_paste.html', 400, 330, 'Security' ) ; }
-			break ;
-		case 'Cut' :
-			try			{ FCK.ExecuteNamedCommand( 'Cut', null, true ) ; }
-			catch (e)	{ alert(FCKLang.PasteErrorCut) ; }
-			break ;
-		case 'Copy' :
-			try			{ FCK.ExecuteNamedCommand( 'Copy', null, true ) ; }
-			catch (e)	{ alert(FCKLang.PasteErrorCopy) ; }
 			break ;
 		default :
 			FCK.ExecuteNamedCommand( commandName, commandParameter ) ;
@@ -371,6 +360,8 @@ FCK.InsertHtml = function( html )
 	// Insert the HTML code.
 	this.EditorDocument.execCommand( 'inserthtml', false, html ) ;
 	this.Focus() ;
+
+	FCKDocumentProcessor.Process( FCK.EditorDocument ) ;
 
 	// For some strange reason the SaveUndoStep() call doesn't activate the undo button at the first InsertHtml() call.
 	this.Events.FireEvent( "OnSelectionChange" ) ;
@@ -457,7 +448,7 @@ FCK._FillEmptyBlock = function( emptyBlockNode )
 FCK._ExecCheckEmptyBlock = function()
 {
 	FCK._FillEmptyBlock( FCK.EditorDocument.body.firstChild ) ;
-	var sel = FCK.EditorWindow.getSelection() ;
+	var sel = FCKSelection.GetSelection() ;
 	if ( !sel || sel.rangeCount < 1 )
 		return ;
 	var range = sel.getRangeAt( 0 );

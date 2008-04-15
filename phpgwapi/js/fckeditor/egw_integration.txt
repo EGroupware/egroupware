@@ -1,31 +1,44 @@
 2008/04/15 (RalfBecker)
+ - update to FCK 2.6
  - editor/filemanager/connectors/php/io.php line 168:
 -		return $info->filename . $info->path_info ;
 +		// RalfBecker 2008/04/15: remove index.{html|php} added by apache
 +		return str_replace(array('/index.html','/index.php'),'',$info->filename) . $info->path_info ;
 
  - editor/filemanager/browser/default/connectors/php/config.php line 30:
--//$Config['Enabled'] = false ;
-+
+$Config['Enabled'] = false ;
+
 +function deny_no_egw_session(&$account)
 +{
 +	die('Access denied!');
 +}
 +$GLOBALS['egw_info'] = array(
 +	'flags' => array(
-+		'currentapp' => 'sitemgr',
++		'currentapp' => 'home',
 +		'noheader' => true,
 +		'autocreate_session_callback' => 'deny_no_egw_session',
 +	)
 +);
-+
-+// will not continue, unless the header get's included, there is a valid eGW session and the user has sitemgr rights
++// will not continue, unless the header get's included and there is a valid eGW session
 +require('../../../../../../../header.inc.php');
-+$Config['Enabled'] = $GLOBALS['egw']->session->session_flags == 'N';	// disallow anonymous users
++
++if ($GLOBALS['egw']->session->session_flags == 'N' &&	// allow only non anonymous sessions,
++	($app=$GLOBALS['egw']->session->appsession($_GET['ServerPath'],'FCKeditor')) &&	// check if path is stored in the session and
++	isset($GLOBALS['egw_info']['user']['apps'][$app]))	// user has access to the stored application (as we can only check of home above)
++{
++	$Config['UserFilesPath'] = $_GET['ServerPath'];
++	$Config['Enabled'] = true;
++}
++else
+// Path to user files relative to the document root.
+$Config['UserFilesPath'] = '/userfiles/' ;
 
  - editor/filemanager/browser/default/connectors/php/config.php reverted to the original FCK version of ConfigAllowedTypes
--$Config['ConfigAllowedTypes'] = array('images','File', 'Image', 'Flash', 'Media') ;
-+$Config['ConfigAllowedTypes'] = array('File', 'Image', 'Flash', 'Media') ;
+-$Config['ConfigAllowedTypes'] = array('File', 'Image', 'Flash', 'Media') ;
++$Config['ConfigAllowedTypes'] = array('Image');	//array('File', 'Image', 'Flash', 'Media') ;
+
+-$Config['FileTypesPath']['Image']		= $Config['UserFilesPath'] . 'image/' ;
++$Config['FileTypesPath']['Image']		= $Config['UserFilesPath'];	// . 'image/' ;
 
 2007/12/16 (jgordor) - 2.5 Migration
  - Moved own config (not controlled by the php config object) to external file: fckeditor.egwconfig.js
@@ -51,6 +64,5 @@ Changes made to fckeditor to work properly on egroupware
  - editor/filemanager/upload/php/config.php
     - Commented hardcoded Userdir path (is disabled by default)
  - editor/filemanager/browser/default/connectors/php/io.php
-    - Remove the append of directory per type, example, for images the final url is base+serverpath+images (or type) 
-    
-  
+    - Remove the append of directory per type, example, for images the final url is base+serverpath+images (or type)
+
