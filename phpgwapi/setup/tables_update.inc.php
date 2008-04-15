@@ -104,7 +104,7 @@
 		$debug = $GLOBALS['DEBUG'];
 
 		// delete the table in case this update runs multiple times
-		$GLOBALS['egw_setup']->db->query('DELETE FROM egw_vfs',__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->db->query('DELETE FROM egw_sqlfs',__LINE__,__FILE__);
 
 		$query = $GLOBALS['egw_setup']->db->select('egw_vfs','*',"vfs_mime_type != 'journal' AND vfs_mime_type != 'journal-deleted'",__LINE__,__FILE__,false,'ORDER BY length(vfs_directory) ASC','phpgwapi');
 		if ($debug) echo "rows=<pre>\n";
