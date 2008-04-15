@@ -431,19 +431,10 @@ class html
 	 */
 	static function htmlarea_availible()
 	{
-		switch(self::$user_agent)
-		{
-			case 'msie':
-				return self::$ua_version >= 5.5;
-			case 'mozilla':
-				return self::$ua_version >= 1.3;
-            case 'safari':
-            	return self::$ua_version >= 523.12;
-            case 'opera':
-            	return self::$ua_version >= 9.5;	
-			default:
-				return False;
-		}
+		require_once(EGW_INCLUDE_ROOT.'/phpgwapi/js/fckeditor/fckeditor.php');
+
+		// use FCKeditor's own check
+		return FCKeditor_IsCompatibleBrowser();
 	}
 
 	/**
@@ -464,7 +455,7 @@ class html
 	* this static function is a wrapper for fckEditor to create some reuseable layouts
 	*
 	* @param string $_name name and id of the input-field
-	* @param string $_content of the tinymce (will be run through htmlspecialchars !!!), default ''	
+	* @param string $_content of the tinymce (will be run through htmlspecialchars !!!), default ''
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
 	* @param array  $_options (toolbar_expanded true/false)
 	* @param string $_height='400px'
@@ -472,7 +463,7 @@ class html
 	* @param string $base_href='' if passed activates the browser for image at absolute path passed
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='') 
+	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='')
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -486,16 +477,20 @@ class html
 		$oFCKeditor->Value	= $_content;
 		$oFCKeditor->Width	= str_replace('px','',$_width);	// FCK adds px if width contains no %
 		$oFCKeditor->Height	= str_replace('px','',$_height);
-		
+
 		// by default switch all browsers and uploads off
 		$oFCKeditor->Config['LinkBrowser'] = $oFCKeditor->Config['LinkUpload'] = false;
 		$oFCKeditor->Config['FlashBrowser'] = $oFCKeditor->Config['FlashUpload'] = false;
 		$oFCKeditor->Config['ImageBrowser'] = $oFCKeditor->Config['ImageUpload'] = false;
-		
+
 		// Activate the image browser+upload, if $_base_href exists and is browsable by the webserver
 		if ($_base_href && is_dir($_SERVER['DOCUMENT_ROOT'].$_base_href) && file_exists($_SERVER['DOCUMENT_ROOT'].$_base_href.'/.'))
 		{
-			// Only images for now					
+			// Only images for now
+			if (substr($_base_href,-1) != '/') $_base_href .= '/' ;
+			// store the path and application in the session, to make sure it can't be called with arbitrary pathes
+			$GLOBALS['egw']->session->appsession($_base_href,'FCKeditor',$GLOBALS['egw_info']['flags']['currentapp']);
+
 			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=Image&Connector='.$oFCKeditor->BasePath.'editor/filemanager/connectors/php/connector.php';
 			$oFCKeditor->Config['ImageBrowser'] = true;
 			$oFCKeditor->Config['ImageUpload'] = is_writable($_SERVER['DOCUMENT_ROOT'].$_base_href);
@@ -525,9 +520,9 @@ class html
 			else
 			{
 				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&spellchecker_lang='.$GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-			}			
+			}
 			$oFCKeditor->Config['FirefoxSpellChecker'] = false;
-		}		
+		}
 		// Now setting the user preferences
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode']))
 		{
@@ -536,7 +531,7 @@ class html
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_skin']))
 		{
 			$oFCKeditor->Config['SkinPath'] = $oFCKeditor->BasePath.'editor/skins/'.$GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'].'/';
-		}	
+		}
 
 		switch($_mode) {
 			case 'simple':
@@ -551,7 +546,7 @@ class html
 
 			case 'advanced':
 				$oFCKeditor->ToolbarSet = 'egw_advanced'.$spell;
-				break;						
+				break;
 		}
 		return $oFCKeditor->CreateHTML();
 	}
@@ -568,18 +563,18 @@ class html
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') 
+	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%')
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
-			return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";		
+			return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";
 		}
 		else
 		{
 			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width);
-		}			
+		}
 	}
-	
+
 	/**
 	 * represents html's input tag
 	 *
@@ -891,7 +886,7 @@ class html
 			{
 				$path = EGW_SERVER_ROOT.$url;
 			}
-			
+
 			if (is_null($path) || !@is_readable($path))
 			{
 				// if the image-name is a percentage, use a progressbar
@@ -940,10 +935,10 @@ class html
 			$vars = $url;
 			$url = '/index.php';
 		}
-		elseif (strpos($url,'/')===false && 
-			count(explode('.',$url)) >= 3 && 
-			!(strpos($url,'mailto:')!==false || 
-			strpos($url,'://')!==false || 
+		elseif (strpos($url,'/')===false &&
+			count(explode('.',$url)) >= 3 &&
+			!(strpos($url,'mailto:')!==false ||
+			strpos($url,'://')!==false ||
 			strpos($url,'javascript:')!==false))
 		{
 			$url = "/index.php?menuaction=$url";
@@ -1092,7 +1087,7 @@ class html
 		}
 		return $html;
 	}
-	
+
 	/**
 	* tree widget using dhtmlXtree
 	*
@@ -1138,7 +1133,7 @@ class html
 			$html .= "$tree.enableCheckBoxes(1);\n";
 			$html .= "$tree.setOnCheckHandler('$_onCheckHandler');\n";
 		}
-		
+
 		$top = 0;
 		if ($_topFolder)
 		{
@@ -1155,7 +1150,7 @@ class html
 			else
 			{
 				$label = $_topFolder;
-			}	
+			}
 			$html .= "\n$tree.insertNewItem(0,'$top','".addslashes($label)."',$_onNodeSelect,'$topImage','$topImage','$topImage','CHILD,TOP');\n";
 
 			if (is_array($_topFolder) && isset($_topFolder['title']))
@@ -1179,15 +1174,15 @@ class html
 			// evtl. remove leading delimiter
 			if ($path{0} == $delimiter) $path = substr($path,1);
 			$folderParts = explode($delimiter,$path);
-			
+
 			//get rightmost folderpart
 			$label = array_pop($folderParts);
 			if (isset($data['label'])) $label = $data['label'];
-			
+
 			// the rest of the array is the name of the parent
 			$parentName = implode((array)$folderParts,$delimiter);
 			if(empty($parentName)) $parentName = $top;
-			
+
 			$entryOptions = 'CHILD';
 			if ($_onCheckHandler && $_selected)	// check selected items on multi selection
 			{
@@ -1220,7 +1215,7 @@ class html
 				$html .= "$tree.openItem('$top');\n";
 		}
 		$html .= "</script>\n";
-		
+
 		return $html;
 	}
 }
