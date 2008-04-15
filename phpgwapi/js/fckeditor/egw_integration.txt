@@ -1,4 +1,33 @@
-16/12/2007 (jgordor) - 2.5 Migration
+2008/04/15 (RalfBecker)
+ - editor/filemanager/connectors/php/io.php line 168:
+-		return $info->filename . $info->path_info ;
++		// RalfBecker 2008/04/15: remove index.{html|php} added by apache
++		return str_replace(array('/index.html','/index.php'),'',$info->filename) . $info->path_info ;
+
+ - editor/filemanager/browser/default/connectors/php/config.php line 30:
+-//$Config['Enabled'] = false ;
++
++function deny_no_egw_session(&$account)
++{
++	die('Access denied!');
++}
++$GLOBALS['egw_info'] = array(
++	'flags' => array(
++		'currentapp' => 'sitemgr',
++		'noheader' => true,
++		'autocreate_session_callback' => 'deny_no_egw_session',
++	)
++);
++
++// will not continue, unless the header get's included, there is a valid eGW session and the user has sitemgr rights
++require('../../../../../../../header.inc.php');
++$Config['Enabled'] = $GLOBALS['egw']->session->session_flags == 'N';	// disallow anonymous users
+
+ - editor/filemanager/browser/default/connectors/php/config.php reverted to the original FCK version of ConfigAllowedTypes
+-$Config['ConfigAllowedTypes'] = array('images','File', 'Image', 'Flash', 'Media') ;
++$Config['ConfigAllowedTypes'] = array('File', 'Image', 'Flash', 'Media') ;
+
+2007/12/16 (jgordor) - 2.5 Migration
  - Moved own config (not controlled by the php config object) to external file: fckeditor.egwconfig.js
  - Changes in the fckeditor code:
  	- Enable/configure the connector in (now is controlled by only one file):
