@@ -105,11 +105,39 @@
 
 		// delete the table in case this update runs multiple times
 		$GLOBALS['egw_setup']->db->query('DELETE FROM egw_sqlfs',__LINE__,__FILE__);
-
+		if ($GLOBALS['egw_setup']->db->Type == 'mysql')
+		{
+			$GLOBALS['egw_setup']->db->query('ALTER TABLE egw_sqlfs  AUTO_INCREMENT=1',__LINE__,__FILE__);
+		}
+		// make sure the required dirs are there and have the following id's
+		$dirs = array(
+			'/' => 1,
+			'/home' => 2,
+			'/apps' => 3,
+		);
+		foreach($dirs as $path => $id)
+		{
+			$nrow = array(
+				'fs_id' => $id,
+				'fs_dir'  => $path == '/' ? 0 : $dirs['/'],
+				'fs_name' => substr($path,1),
+				'fs_mode' => 05,
+				'fs_uid' => 0,
+				'fs_gid' => 0,
+				'fs_created' => time(),
+				'fs_modified' => time(),
+				'fs_mime' => 'httpd/unix-directory',
+				'fs_size' => 0,
+				'fs_creator' => 0,
+				'fs_modifier' => 0,
+				'fs_comment' => null,
+				'fs_content' => null,
+			);
+			$GLOBALS['egw_setup']->db->insert('egw_sqlfs',$nrow,false,__LINE__,__FILE__,'phpgwapi');
+		}
 		$query = $GLOBALS['egw_setup']->db->select('egw_vfs','*',"vfs_mime_type != 'journal' AND vfs_mime_type != 'journal-deleted'",__LINE__,__FILE__,false,'ORDER BY length(vfs_directory) ASC','phpgwapi');
 		if ($debug) echo "rows=<pre>\n";
 
-		$dirs = array();
 		foreach($query as $row)
 		{
 			// rename the /infolog dir to /apps/infolog and /infolog/$app /apps/$app
@@ -119,6 +147,10 @@
 				//$parts[1] = is_numeric($parts[2]) ? 'apps/infolog' : 'apps';
 				$parts[1] = $row['vfs_directory']=='/infolog' && is_numeric($row['vfs_name']) ? 'apps/infolog' : 'apps';
 				$row['vfs_directory'] = implode('/',$parts);
+			}
+			elseif ($row['vfs_directory'] == '/' && $row['vfs_name'] == 'infolog')
+			{
+				$row['vfs_directory'] = '/apps';
 			}
 			$nrow = array(
 				'fs_dir'  => $dirs[$row['vfs_directory']],
@@ -138,17 +170,6 @@
 				'fs_comment' => $row['vfs_comment'] ? $row['vfs_comment'] : null,
 				'fs_content' => $row['vfs_content'],
 			);
-			// rename the /infolog dir to /apps/infolog (create /apps)
-			if ($nrow['fs_dir'] == 1 && $nrow['fs_name'] == 'infolog')
-			{
-				$nrow['fs_name'] = 'apps';
-				$GLOBALS['egw_setup']->db->insert('egw_sqlfs',$nrow,false,__LINE__,__FILE__,'phpgwapi');
-				$dir = '/apps';
-				$nrow['fs_dir'] = $dirs[$dir] = $GLOBALS['egw_setup']->db->get_last_insert_id('egw_sqlfs','fs_id');
-				if ($debug) echo "<b>$dir = {$dirs[$dir]}</b>\n";
-				$nrow['fs_name'] = 'infolog';
-				$row['vfs_directory'] = '/apps';
-			}
 			if ($debug)
 			{
 				foreach($row as $key => $val)
@@ -164,12 +185,6 @@
 
 				if (!isset($dirs[$dir]))	// ignoring doublicate dirs, my devel box has somehow many of them specially /home
 				{
-					// fix some common perms
-					if(in_array($dir,array('/','/home')))
-					{
-						$nrow['fs_mode'] = 05;	// everyone (other rights) can read the / and /home
-						$nrow['uid'] = $nrow['gid'] = 0;	// owner root != any eGW user
-					}
 					$GLOBALS['egw_setup']->db->insert('egw_sqlfs',$nrow,false,__LINE__,__FILE__,'phpgwapi');
 					$dirs[$dir] = $GLOBALS['egw_setup']->db->get_last_insert_id('egw_sqlfs','fs_id');
 					if ($debug) echo "<b>$dir = {$dirs[$dir]}</b>\n";
