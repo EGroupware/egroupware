@@ -5,12 +5,11 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$ 
  */
 
-require_once(EGW_API_INC.'/class.vfs.inc.php');
 require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
 
 /**
@@ -25,12 +24,6 @@ class addressbook_merge	// extends bo_merge
 	 */
 	var $public_functions = array('show_replacements' => true);
 	/**
-	 * Instance of the vfs class
-	 *
-	 * @var vfs
-	 */
-	var $vfs;
-	/**
 	 * Instance of the bocontacts class
 	 *
 	 * @var bocontacts
@@ -44,7 +37,6 @@ class addressbook_merge	// extends bo_merge
 	 */
 	function addressbook_merge()
 	{
-		$this->vfs =& new vfs();
 		$this->contacts =& new bocontacts();
 	}
 	
@@ -208,10 +200,7 @@ class addressbook_merge	// extends bo_merge
 	 */
 	function merge($document,$ids,&$err)
 	{
-		if (!($content = $this->vfs->read(array(
-					'string' => $document,
-					'relatives' => RELATIVE_ROOT,
-				))))
+		if (!($content = file_get_contents(egw_vfs::PREFIX.$document)))
 		{
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
@@ -294,10 +283,7 @@ class addressbook_merge	// extends bo_merge
 		{
 			return $err;
 		}
-		$mime_type = $this->vfs->file_type(array(
-			'string' => $document,
-			'relatives' => RELATIVE_ROOT,
-		));
+		$mime_type = egw_vfs::mime_content_type($document);
 		ExecMethod2('phpgwapi.browser.content_header',basename($document),$mime_type);
 		echo $merged;
 

@@ -2027,18 +2027,15 @@ $readonlys['button[vcard]'] = true;
 	 */
 	function download_document($ids,$document='')
 	{
-		if (!$document) $document = $this->prefs['default_document'];
-		
-		require_once(EGW_API_INC.'/class.vfs.inc.php');
-		$vfs =& new vfs();
-		if (!$document || $document != $this->prefs['default_document'] && 
-				substr($document,0,1+strlen($this->prefs['document_dir'])) != $this->prefs['document_dir'].'/' ||
-			!$vfs->acl_check(array(
-				'string' => $document,
-				'relatives' => RELATIVE_ROOT,
-				'operation' => EGW_ACL_READ,
-				'must_exist' => true,
-			)))
+		if (!$document)
+		{
+			$document = $this->prefs['default_document'];
+		}
+		else
+		{
+			$document = $this->prefs['document_dir'].'/'.$document;
+		}
+		if (!@egw_vfs::stat($document))
 		{
 			return lang("Document '%1' does not exist or is not readable for you!",$document);
 		}
@@ -2056,28 +2053,22 @@ $readonlys['button[vcard]'] = true;
 	function get_document_actions()
 	{
 		if (!$this->prefs['document_dir']) return array();
-		
+
 		if (!is_array($actions = $GLOBALS['egw']->session->appsession('document_actions','addressbook')))
 		{
-			require_once(EGW_API_INC.'/class.vfs.inc.php');
-			$vfs =& new vfs;
-			
 			$actions = array();
-			if (($files = $vfs->ls(array(
-				'string' => $this->prefs['document_dir'],
-				'relatives' => RELATIVE_ROOT,
-			))))
+			if (($files = egw_vfs::find($this->prefs['document_dir'],array('need_mime'=>true),true)))
 			{
 				foreach($files as $file)
 				{
 					// return only the mime-types we support
-					if (!($file['mime_type'] == 'application/rtf' || 
-						$file['mime_type'] == 'application/msword' && !strcasecmp(substr($file['name'],-4),'.rtf') ||
-						substr($file['mime_type'],0,5) == 'text/')) continue;
+					if (!($file['mime'] == 'application/rtf' || 
+						$file['mime'] == 'application/msword' && !strcasecmp(substr($file['name'],-4),'.rtf') ||
+						substr($file['mime'],0,5) == 'text/')) continue;
 					// As browsers not always return the right mime_type, you could use a negative list instead
-					//if ($file['mime_type'] == 'Directory' || substr($file['mime_type'],0,6) == 'image/') continue;
+					//if ($file['mime'] == egw_vfs::DIR_MIME_TYPE  || substr($file['mime'],0,6) == 'image/') continue;
 
-					$actions['document-'.$file['directory'].'/'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
+					$actions['document-'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
 				}
 			}
 			$GLOBALS['egw']->session->appsession('document_actions','addressbook',$actions);
@@ -2196,22 +2187,4 @@ $readonlys['button[vcard]'] = true;
 		$this->tmpl->read('addressbook.index.cat_add');
 		return $this->tmpl->exec('addressbook.uicontacts.cat_add',$content,$sel_options,$readonlys,$content, 2);
 	}
-}
-
-if (!function_exists('array_intersect_key'))	// php5.1 function
-{
-	function array_intersect_key($array1,$array2)
-	{
-		$intersection = $keys = array();
-		foreach(func_get_args() as $arr)
-		{
-			$keys[] = array_keys((array)$arr);
-		}
-		foreach(call_user_func_array('array_intersect',$keys) as $key)
-		{
-			$intersection[$key] = $array1[$key];
-		}
-		return $intersection;
-	}
-	
 }
