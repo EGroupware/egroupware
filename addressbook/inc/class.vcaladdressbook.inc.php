@@ -110,13 +110,16 @@ class vcaladdressbook extends bocontacts
 						if(!empty($value))
 						{
 							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet, 'utf-8');
-							$options['CHARSET'] = 'UTF-8';
 
-							if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
+							if(preg_match('/([\177-\377])/',$valueData))
+							{
+								$options['CHARSET'] = 'UTF-8';
+								$options['ENCODING'] = 'QUOTED-PRINTABLE';
+							}
+							elseif(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
 							{
 								$options['ENCODING'] = 'QUOTED-PRINTABLE';
 							}
-
 							$hasdata++;
 						}
 						break;
@@ -358,7 +361,8 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'      => array('url'),
 			'URL'           => array('url_home'),
 		);
-		$defaultFields[7] = array(
+
+		$defaultFields[7] = array(	// SyncEvolution
 			'N'=>		array('n_family','n_given','n_middle','n_prefix','n_suffix'),
 			'TITLE'		=> array('title'),
 			'ROLE'		=> array('role'),
@@ -383,6 +387,11 @@ class vcaladdressbook extends bocontacts
 			'PHOTO'		=> array('jpegphoto'),
 		);
 
+		$defaultFields[8] = array_merge($defaultFields[1],array(	// KDE Addressbook, only changes from all=1
+			'ORG' => array('org_name'),
+			'X-KADDRESSBOOK-X-Department' => array('org_unit'),
+			'PHOTO'		=> array('jpegphoto'),
+		));
 
 		//error_log("Client: $_productManufacturer $_productName");
 		switch(strtolower($_productManufacturer))
@@ -492,6 +501,10 @@ class vcaladdressbook extends bocontacts
 
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
 				$this->supportedFields = $defaultFields[1];
+				break;
+
+			case 'kde':		// KDE Addressbook via GroupDAV
+				$this->supportedFields = $defaultFields[8];
 				break;
 
 			// the fallback for SyncML
@@ -627,7 +640,14 @@ class vcaladdressbook extends bocontacts
 				{
 					if(!empty($fieldName))
 					{
-						$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+						if ($fieldName == 'jpegphoto' || $vcardValues[$vcardKey]['params']['ENCODING'] == 'b')
+						{
+							$value = base64_decode($vcardValues[$vcardKey]['values'][$fieldKey]);
+						}
+						else
+						{
+							$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+						}
 						//error_log("$fieldName=$vcardKey[$fieldKey]='$value'");
 						switch($fieldName)
 						{
