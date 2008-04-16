@@ -8,19 +8,22 @@
 * @package etemplate
 * @version $Id$
 */
+
+if (!preg_match('/^[a-z0-9_-]+$/i',$_GET['app'])) die('Stop');	// just to prevent someone doing nasty things
+
 	$GLOBALS['egw_info']['flags'] = array(
-		'currentapp'	=>	'infolog',
+		'currentapp'	=>	$_GET['app'],
 		'noheader'	=>	true,
 		'nonavbar'	=>	true
 	);
 	include ('../../header.inc.php');
 
-	$file = $_GET['image'];
-	$g_srcfile = $GLOBALS['egw_info']['server']['files_dir'] . $file;
-	$g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . $file;
+	$g_srcfile = egw_link::vfs_path($_GET['app'],$_GET['id'],$_GET['file']);
+	$g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw-thumbs/'.$_GET['app'].'/'.$_GET['id'].'/'.$_GET['file'];
 
 	// Check for existing thumbnail
 	if(file_exists($g_dstfile) && filemtime($g_dstfile) >= filemtime($g_srcfile)) {
+		header('Content-Type: image/png');
 		readfile($g_dstfile);
 		return;
 	}
@@ -46,8 +49,12 @@
 	*
 	* @author Nathan Gray
 	*/
-	function get_thumbnail($file, $return_data = true) {
-		$max_width = $max_height =	$GLOBALS['egw_info']['server']['link_list_thumbnail'];
+	function get_thumbnail($file, $return_data = true) 
+	{
+		global $g_srcfile,$g_dstfile;
+
+		$max_width = $max_height = $GLOBALS['egw_info']['server']['link_list_thumbnail'];
+
 		if($max_width == 0) {
 			// thumbnailing disabled
 			return false;
@@ -59,28 +66,9 @@
 		// Quality
 		$g_imgcomp=55;
 
-		$g_srcfile = $GLOBALS['egw_info']['server']['files_dir'] . $file;
-		$g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . $file;
-
-		$dir_array = explode(DIRECTORY_SEPARATOR, $g_dstfile);
-		array_pop($dir_array);
-		$dest_dir = implode(DIRECTORY_SEPARATOR, $dir_array);
-		@mkdir($dest_dir, 0700, true);
-
-		if(file_exists($g_srcfile)) {
-			$bolink = CreateObject('phpgwapi.bolink');
-			$read = $bolink->vfs->acl_check(array(
-				'string'	=>	$file,
-				'relatives'	=>	array (),
-				'operation'	=>	EGW_ACL_READ
-			));
-			if(!$read) {
-				$im = @imagecreatetruecolor(strlen(lang('access not permitted')) * 7, 20);
-				$text_color = imagecolorallocate($im, 233, 14, 91);
-				imagestring($im, 2,5,3, lang('access not permitted'), $text_color);
-				return $return_data ? $im : false;
-			}
-
+		$dst_dir = dirname($g_dstfile);
+		// files dont exist, if you have no access permission
+		if((file_exists($dst_dir) || mkdir($dst_dir, 0700, true)) && file_exists($g_srcfile)) {
 			$g_is=getimagesize($g_srcfile);
 			if($g_is[0] < $max_width && $g_is[1] < $max_height) {
 				$g_iw = $g_is[0];
@@ -94,10 +82,7 @@
 			}
 
 			// Get mime type
-			$info = $bolink->vfs->ls(array(
-				'string'	=>	$file
-			));
-			list($type, $image_type) = explode('/', $info[0]['mime_type']);
+			list($type, $image_type) = explode('/',egw_vfs::mime_content_type($g_srcfile));
 			if($type != 'image') {
 				return false;
 			}
@@ -134,9 +119,6 @@
 			imagepng($img_dst, $g_dstfile);
 			return $return_data ? $img_dst : $g_dstfile;
 		} else {
-			if(file_exists($g_dstfile)) {
-				unlink($g_dstfile);
-			}
 			return false;
 		}
 	}
