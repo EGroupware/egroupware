@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 require_once EGW_SERVER_ROOT.'/addressbook/inc/class.bocontacts.inc.php';
@@ -15,10 +15,10 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 
 class vcaladdressbook extends bocontacts
 {
-	
+
 	/**
 	* import a vard into addressbook
-	* 
+	*
 	* @param string	$_vcard		the vcard
 	* @param int/string	$_abID=null		the internal addressbook id or !$_abID for a new enty
 	* @return int contact id
@@ -28,7 +28,7 @@ class vcaladdressbook extends bocontacts
 		if(!$contact = $this->vcardtoegw($_vcard)) {
 			return false;
 		}
-		
+
 		if($_abID) {
 			// update entry
 			$contact['id'] = $_abID;
@@ -59,7 +59,7 @@ class vcaladdressbook extends bocontacts
 		}
 
 		$this->fixup_contact($entry);
-		
+
 		foreach($this->supportedFields as $vcardField => $databaseFields)
 		{
 			$values = array();
@@ -92,8 +92,11 @@ class vcaladdressbook extends bocontacts
 					case 'jpegphoto':
 						if(!empty($value))
 						{
-							error_log("PHOTO='".$value."'");
-							$hasdata++;
+							//error_log("PHOTO='".$value."'");
+							$options['ENCODING'] = 'BASE64';
+							$options['TYPE'] = 'JPEG';
+							$value = base64_encode($value);
+ 							$hasdata++;
 						}
 						break;
 
@@ -137,18 +140,18 @@ class vcaladdressbook extends bocontacts
 			$vCard->setAttribute($vcardField, implode(';', $values));
 			$vCard->setParameter($vcardField, $options);
 		}
-		
+
 		$result = $vCard->exportvCalendar();
 
 		return $result;
 	}
 
-	function search($_vcard) 
+	function search($_vcard)
 	{
 		if(!($contact = $this->vcardtoegw($_vcard))) {
 			return false;
 		}
-		
+
 		unset($contact['private']);
 		unset($contact['note']);
 		unset($contact['n_fn']);
@@ -156,7 +159,7 @@ class vcaladdressbook extends bocontacts
 		unset($contact['email_home']);
 		unset($contact['url']);
 		unset($contact['url_home']);
-		
+
 		// some clients cut the values, because they do not support the same length of data like eGW
 		// at least the first 10 characters must match
 		$maybeCuttedFields = array('org_unit', 'org_name','title');
@@ -165,9 +168,9 @@ class vcaladdressbook extends bocontacts
 				$contact[$fieldName] .= '*';
 			}
 		}
-		
+
 		//error_log(print_r($contact, true));
-		
+
 		#if($foundContacts = parent::search($contact, true, '', '', '%')) {
 		if($foundContacts = parent::search($contact)) {
 			return $foundContacts[0]['id'];
@@ -178,7 +181,7 @@ class vcaladdressbook extends bocontacts
 	function setSupportedFields($_productManufacturer='file', $_productName='')
 	{
 		/**
-		 * ToDo Lars: 
+		 * ToDo Lars:
 		 * + changes / renamed fields in 1.3+:
 		 *   - access           --> private (already done by Ralf)
 		 *   - tel_msg          --> tel_assistent
@@ -244,6 +247,7 @@ class vcaladdressbook extends bocontacts
 			'ROLE'		=> array('role'),
 			'URL;HOME'	=> array('url_home'),
 			'FBURL'		=> array('freebusy_uri'),
+			'PHOTO'		=> array('jpegphoto'),
 		);
 
 		$defaultFields[2] = array(	// sony ericson
@@ -376,7 +380,7 @@ class vcaladdressbook extends bocontacts
 			'CATEGORIES'	=> array('cat_id'),
 			'NOTE'		=> array('note'),
 			'X-EVOLUTION-ASSISTANT'		=> array('assistent'),
-			// segmentation fault ? 'PHOTO;JPEG'		=> array('jpegphoto'),
+			'PHOTO'		=> array('jpegphoto'),
 		);
 
 
@@ -426,7 +430,7 @@ class vcaladdressbook extends bocontacts
 						break;
 				}
 				break;
-				
+
 
 			// multisync does not provide anymore information then the manufacturer
 			// we suppose multisync with evolution
@@ -451,7 +455,7 @@ class vcaladdressbook extends bocontacts
 						break;
 				}
 				break;
-				
+
 			case 'sonyericsson':
 			case 'sony ericsson':
 				switch(strtolower($_productName))
@@ -466,7 +470,7 @@ class vcaladdressbook extends bocontacts
 						break;
 				}
 				break;
-				
+
 			case 'synthesis ag':
 				switch(strtolower($_productName))
 				{
@@ -481,7 +485,7 @@ class vcaladdressbook extends bocontacts
 						break;
 				}
 				break;
-				
+
 			case 'patrick ohly':	// SyncEvolution
 				$this->supportedFields = $defaultFields[7];
 				break;
@@ -497,8 +501,8 @@ class vcaladdressbook extends bocontacts
 				break;
 		}
 	}
-	
-	function vcardtoegw($_vcard) 
+
+	function vcardtoegw($_vcard)
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 
@@ -509,7 +513,7 @@ class vcaladdressbook extends bocontacts
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
 		$vCard = Horde_iCalendar::newComponent('vcard', $container);
-		
+
 		// Unfold any folded lines.
 		$vCardUnfolded = preg_replace ('/(\r|\n)+ /', ' ', $_vcard);
 
@@ -521,11 +525,11 @@ class vcaladdressbook extends bocontacts
 		#print "<pre>$_vcard</pre>";
 
 		#error_log(print_r($vcardValues, true));
-		
+
 		foreach($vcardValues as $key => $vcardRow)
 		{
 			$rowName  = $vcardRow['name'];
-			
+
 			if(isset($vcardRow['params']['INTERNET']))
 			{
 				$rowName .= ";INTERNET";
@@ -603,7 +607,7 @@ class vcaladdressbook extends bocontacts
 
 				case 'VERSION':
 					break;
-					
+
 				default:
 					$finalRowNames[$rowName] = $vcardKey;
 					break;
@@ -632,11 +636,11 @@ class vcaladdressbook extends bocontacts
 									$contact[$fieldName] = date('Y-m-d', $value);
 								}
 								break;
-								
+
 							case 'private':
 								$contact[$fieldName] = (int) ($value == 'PRIVATE');
 								break;
-								
+
 							case 'cat_id':
 								$contact[$fieldName] = implode(',',$this->find_or_add_categories(explode(',',$value)));
 								break;
@@ -654,11 +658,11 @@ class vcaladdressbook extends bocontacts
 				}
 			}
 		}
-		
+
 		$this->fixup_contact($contact);
 		return $contact;
 	}
-	
+
 	/**
 	 * Exports some contacts: download or write to a file
 	 *
@@ -681,11 +685,11 @@ class vcaladdressbook extends bocontacts
 			fwrite($fp,$this->getVCard($id));
 		}
 		fclose($fp);
-		
+
 		if (!$file)
 		{
 			$GLOBALS['egw']->common->egw_exit();
-		}		
+		}
 		return true;
 	}
 }
