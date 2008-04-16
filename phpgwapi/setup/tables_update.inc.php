@@ -145,7 +145,8 @@
 			{
 				$parts = explode('/',$row['vfs_directory']);	// 0 = '', 1 = 'infolog', 2 = app or info_id
 				//$parts[1] = is_numeric($parts[2]) ? 'apps/infolog' : 'apps';
-				$parts[1] = $row['vfs_directory']=='/infolog' && is_numeric($row['vfs_name']) ? 'apps/infolog' : 'apps';
+				$parts[1] = $row['vfs_directory']=='/infolog' && is_numeric($row['vfs_name']) ||
+					$parts[1]=='infolog' && is_numeric($parts[2]) ? 'apps/infolog' : 'apps';
 				$row['vfs_directory'] = implode('/',$parts);
 			}
 			elseif ($row['vfs_directory'] == '/' && $row['vfs_name'] == 'infolog')
