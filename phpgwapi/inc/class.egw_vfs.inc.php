@@ -14,9 +14,9 @@
 /**
  * Class containing static methods to use the new eGW virtual file system
  *
- * This extension of the vfs stream-wrapper allows to use the following static functions, 
+ * This extension of the vfs stream-wrapper allows to use the following static functions,
  * which only allow access to the eGW VFS and need no 'vfs://default' prefix for filenames:
- * 
+ *
  * - resource egw_vfs::fopen($path,$mode) like fopen, returned resource can be used with fwrite etc.
  * - resource egw_vfs::opendir($path) like opendir, returned resource can be used with readdir etc.
  * - boolean egw_vfs::copy($from,$to) like copy
@@ -25,35 +25,35 @@
  * - boolean egw_vfs::rmdir($path) removing (an empty) directory
  * - boolean egw_vfs::unlink($path) removing a file
  * - boolean egw_vfs::touch($path,$mtime=null) touch a file
- * - boolean egw_vfs::stat($path) returning status of file like stat(), but only with string keys (no numerical indexes)! 
- * 
- * With the exception of egw_vfs::touch() (not yet part of the stream_wrapper interface) 
+ * - boolean egw_vfs::stat($path) returning status of file like stat(), but only with string keys (no numerical indexes)!
+ *
+ * With the exception of egw_vfs::touch() (not yet part of the stream_wrapper interface)
  * you can always use the standard php functions, if you add a 'vfs://default' prefix
  * to every filename or path. Be sure to always add the prefix, as the user otherwise gains
  * access to the real filesystem of the server!
- * 
+ *
  * The two following methods can be used to persitently mount further filesystems (without editing the code):
- * 
+ *
  * - boolean/array egw_vfs::mount($url,$path) to mount $ur on $path or to return the fstab when called without argument
  * - boolean egw_vfs::umount($path) to unmount a path or url
- * 
- * The stream wrapper interface allows to access hugh files in junks to not be limited by the 
+ *
+ * The stream wrapper interface allows to access hugh files in junks to not be limited by the
  * memory_limit setting of php. To do you should path a resource to the opened file and not the content:
- * 
+ *
  * 		$file = egw_vfs::fopen('/home/user/somefile','r');
  * 		$content = fread($file,1024);
- * 
- * You can also attach stream filters, to eg. base64 encode or compress it on the fly, 
- * without the need to hold the content of the whole file in memmory. 
- * 
- * If you want to copy a file, you can use stream_copy_to_stream to do a copy of a file far bigger then 
+ *
+ * You can also attach stream filters, to eg. base64 encode or compress it on the fly,
+ * without the need to hold the content of the whole file in memmory.
+ *
+ * If you want to copy a file, you can use stream_copy_to_stream to do a copy of a file far bigger then
  * php's memory_limit:
- * 
+ *
  * 		$from = egw_vfs::fopen('/home/user/fromfile','r');
  * 		$to = egw_vfs::fopen('/home/user/tofile','w');
- * 
+ *
  * 		stream_copy_to_stream($from,$to);
- * 
+ *
  * The static egw_vfs::copy() method does exactly that, but you have to do it eg. on your own, if
  * you want to copy eg. an uploaded file into the vfs.
  */
@@ -112,7 +112,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		return fopen(self::SCHEME.'://default'.$path,$mode);
 	}
-	
+
 	/**
 	 * opendir working on just the eGW VFS
 	 *
@@ -139,7 +139,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		$ret = false;
 
-		if (($from_fp = self::fopen($from,'r')) && 
+		if (($from_fp = self::fopen($from,'r')) &&
 			($to_fp = self::fopen($to,'w')))
 		{
 			$ret = stream_copy_to_stream($from_fp,$to_fp) !== false;
@@ -152,7 +152,7 @@ class egw_vfs extends vfs_stream_wrapper
  		{
  			fclose($to_fp);
  		}
- 		return $ret;		
+ 		return $ret;
 	}
 
 	/**
@@ -173,7 +173,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		return $stat;
 	}
-	
+
 	/**
 	 * is_dir() version working only inside the vfs
 	 *
@@ -184,11 +184,11 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		return $path[0] == '/' && is_dir(self::SCHEME.'://default'.$path);
 	}
-	
-	
+
+
 	/**
 	 * Mounts $url under $path in the vfs, called without parameter it returns the fstab
-	 * 
+	 *
 	 * The fstab is stored in the eGW configuration and used for all eGW users.
 	 *
 	 * @param string $url=null url of the filesystem to mount, eg. oldvfs://default/
@@ -214,15 +214,15 @@ class egw_vfs extends vfs_stream_wrapper
 			return false;	// url does not exist
 		}
 		self::$fstab[$path] = $url;
-		
+
 		uksort(self::$fstab,create_function('$a,$b','return strlen($a)-strlen($b);'));
-		
+
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Unmounts a filesystem part of the vfs
 	 *
@@ -242,10 +242,10 @@ class egw_vfs extends vfs_stream_wrapper
 
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * find = recursive search over the filesystem
 	 *
@@ -267,7 +267,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - order => name order rows by name column
 	 * - sort => (ASC|DESC) sort, default ASC
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
-	 * @param string/array/true $exec=null function to call with each found file or dir as first param or 
+	 * @param string/array/true $exec=null function to call with each found file or dir as first param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
@@ -278,7 +278,7 @@ class egw_vfs extends vfs_stream_wrapper
 
 		$type = $options['type'];	// 'd' or 'f'
 		$dirs_last = $options['depth'];	// put content of dirs before the dir itself
-		
+
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
 		{
@@ -339,7 +339,7 @@ class egw_vfs extends vfs_stream_wrapper
 				while($file = readdir($dir))
 				{
 					$file = self::concat($path,$file);
-				
+
 					if ((int)$options['mindepth'] <= 1)
 					{
 						self::_check_add($options,$file,$result,1);
@@ -380,7 +380,7 @@ class egw_vfs extends vfs_stream_wrapper
 				case 'mtime':
 					uasort($result,create_function('$a,$b',$c='return '.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);'));
 					break;
-					
+
 				// sort alphanumerical
 				default:
 					$options['order'] = 'name';
@@ -400,7 +400,7 @@ class egw_vfs extends vfs_stream_wrapper
 			list($limit,$start) = explode(',',$options['limit']);
 			if (!$limit && !($limit = $GLOBALS['egw_info']['user']['preferences']['comman']['maxmatches'])) $limit = 15;
 			//echo "total=".egw_vfs::$find_total.", limit=$options[limit] --> start=$start, limit=$limit<br>\n";
-			
+
 			if ((int)$start || self::$find_total > $limit)
 			{
 				$result = array_slice($result,(int)$start,(int)$limit,true);
@@ -429,7 +429,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Function carying out the various (optional) checks, before files&dirs get returned as result of find
 	 *
@@ -441,7 +441,7 @@ class egw_vfs extends vfs_stream_wrapper
 	private static function _check_add($options,$path,&$result,$remove=0)
 	{
 		$type = $options['type'];	// 'd' or 'f'
-		
+
 		if ($type && ($type == 'd') !== is_dir($path))
 		{
 			return;	// wrong type
@@ -449,7 +449,7 @@ class egw_vfs extends vfs_stream_wrapper
 		if (!($stat = self::url_stat($path,0)))
 		{
 			return;	// not found, should not happen
-		}			
+		}
 		$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		$stat['name'] = $options['remove'] > 0 ? substr($path,$options['remove']) : self::basename($path);
 		$stat['path'] = parse_url($path,PHP_URL_PATH);
@@ -496,7 +496,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		$result[$path] = $stat;
 	}
-	
+
 	private static function _check_num($value,$argument)
 	{
 		if (is_int($argument) && $argument >= 0 || $argument[0] != '-' && $argument[0] != '+')
@@ -512,7 +512,7 @@ class egw_vfs extends vfs_stream_wrapper
 		//echo "_check_num($value,$argument) check > == ".(int)($value > (int)substr($argument,1))."\n";
 		return $value > (int) substr($argument,1);
 	}
-	
+
 	/**
 	 * Recursiv remove all given url's, including it's content if they are files
 	 *
@@ -525,7 +525,7 @@ class egw_vfs extends vfs_stream_wrapper
 		//error_log(__METHOD__.'('.print_r($urls).')');
 		return self::find($urls,array('depth'=>true,'url'=>$allow_urls),array(__CLASS__,'_rm_rmdir'));
 	}
-	
+
 	/**
 	 * Helper function for remove: either rmdir or unlink given url (depending if it's a dir or file)
 	 *
@@ -569,7 +569,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			return true;
 		}
-		
+
 		// throw exception if stat array is used insead of path, can be removed soon
 		if (is_array($path))
 		{
@@ -619,7 +619,7 @@ class egw_vfs extends vfs_stream_wrapper
 		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) ".($ret ? 'backend extended acl granted access.' : 'no access!!!'));
 		return $ret;
 	}
-	
+
 	/**
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
@@ -631,7 +631,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		return self::is_readable($path,2);
 	}
-	
+
 	/**
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
@@ -643,10 +643,10 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		return self::is_readable($path,1);
 	}
-	
+
 	/**
 	 * Set or delete extended acl for a given path and owner (or delete  them if is_null($rights)
-	 * 
+	 *
 	 * Does NOT check if user has the rights to set the extended acl for the given url/path!
 	 *
 	 * @param string $path string with path
@@ -663,7 +663,7 @@ class egw_vfs extends vfs_stream_wrapper
 
 	/**
 	 * Get all ext. ACL set for a path
-	 * 
+	 *
 	 * Calls itself recursive, to get the parent directories
 	 *
 	 * @param string $path
@@ -673,7 +673,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		$params = func_get_args();
 
-		return self::_call_on_backend('get_eacl',$params);		
+		return self::_call_on_backend('get_eacl',$params);
 	}
 
 	/**
@@ -681,9 +681,9 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	private function __construct()
 	{
-		
+
 	}
-	
+
 	/**
 	 * Convert a symbolic mode string or octal mode to an integer
 	 *
@@ -712,7 +712,7 @@ class egw_vfs extends vfs_stream_wrapper
 			$base = (strpos($matches[3],'r') !== false ? self::READABLE : 0) |
 				(strpos($matches[3],'w') !== false ? self::WRITABLE : 0) |
 				(strpos($matches[3],'x') !== false ? self::EXECUTABLE : 0);
-			
+
 			for($n = $m = 0; $n < strlen($matches[1]); $n++)
 			{
 				switch($matches[1][$n])
@@ -746,7 +746,7 @@ class egw_vfs extends vfs_stream_wrapper
 		//error_log(__METHOD__."($set,) returning ".sprintf('%o',$mode));
 		return $mode;
 	}
-	
+
 	/**
 	 * Convert a numerical mode to a symbolic mode-string
 	 *
@@ -787,19 +787,19 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$sP = 'u';
 		}
-	
+
 		// owner
 		$sP .= (($mode & 0x0100) ? 'r' : '-') .
 		(($mode & 0x0080) ? 'w' : '-') .
 		(($mode & 0x0040) ? (($mode & 0x0800) ? 's' : 'x' ) :
 		(($mode & 0x0800) ? 'S' : '-'));
-	
+
 		// group
 		$sP .= (($mode & 0x0020) ? 'r' : '-') .
 		(($mode & 0x0010) ? 'w' : '-') .
 		(($mode & 0x0008) ? (($mode & 0x0400) ? 's' : 'x' ) :
 		(($mode & 0x0400) ? 'S' : '-'));
-	
+
 		// world
 		$sP .= (($mode & 0x0004) ? 'r' : '-') .
 		(($mode & 0x0002) ? 'w' : '-') .
@@ -808,7 +808,40 @@ class egw_vfs extends vfs_stream_wrapper
 
 		return $sP;
 	}
-	
+
+	/**
+	 * Get the closest mime icon
+	 *
+	 * @param string $mime_type
+	 * @param boolean $et_image=true return $app/$icon string for etemplate (default) or html img tag if false
+	 * @param int $size=16
+	 * @return string
+	 */
+	static function mime_icon($mime_type, $et_image=true, $size=16)
+	{
+		if ($mime_type == egw_vfs::DIR_MIME_TYPE)
+		{
+			$mime_type = 'Directory';
+		}
+		if(!$mime_type)
+		{
+			$mime_type = 'unknown';
+		}
+		$mime_full = strtolower(str_replace	('/','_',$mime_type));
+		list($mime_part) = explode('_',$mime_type);
+
+		if (!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_full)) &&
+			!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_part)))
+		{
+			$img = $GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_unknown');
+		}
+		if ($et_image)
+		{
+			return 'filemanager/'.$icon;
+		}
+		return html::image('filemanager',$icon,lang($mime_type));
+	}
+
 	/**
 	 * Human readable size values in k or M
 	 *
@@ -831,10 +864,10 @@ class egw_vfs extends vfs_stream_wrapper
 	static function basename($path)
 	{
 		$parts = explode('/',$path);
-		
+
 		return array_pop($parts);
 	}
-	
+
 	/**
 	 * Get the directory / parent of a given path or url(!), return false for '/'!
 	 *
@@ -857,10 +890,10 @@ class egw_vfs extends vfs_stream_wrapper
 		//error_log(__METHOD__."($url)=".implode('/',$parts));
 		return implode('/',$parts);
 	}
-	
+
 	/**
 	 * Check if the current use has owner rights for the given path or stat
-	 * 
+	 *
 	 * We define all eGW admins the owner of the group directories!
 	 *
 	 * @param string $path
@@ -870,12 +903,12 @@ class egw_vfs extends vfs_stream_wrapper
 	static function has_owner_rights($path,array $stat=null)
 	{
 		if (!$stat) $stat = self::url_stat($path,0);
-		
+
 		return $stat['uid'] == self::$user ||	// user is the owner
 			self::$is_root ||					// class runs with root rights
 			!$stat['uid'] && $stat['gid'] && self::$is_admin;	// group directory and user is an eGW admin
 	}
-	
+
 	/**
 	 * Concat a relative path to an url, taking into account, that the url might already end with a slash
 	 *
@@ -890,20 +923,22 @@ class egw_vfs extends vfs_stream_wrapper
 
 	/**
 	 * URL to download a file
-	 * 
-	 * We use our webdav handler as download url instead of an own download method. 
+	 *
+	 * We use our webdav handler as download url instead of an own download method.
 	 * The webdav hander (filemanager/webdav.php) recognices eGW's session cookie and of cause understands regular GET requests.
-	 * 
+	 *
 	 * Please note: If you dont use eTemplate or the html class, you have to run this url throught egw::link() to get a full url
 	 *
 	 * @param string $path
+	 * @param boolean $force_download=false add header('Content-disposition: filename="' . basename($path) . '"'), currently not supported!
+	 * @todo get $force_download working through webdav
 	 * @return string
 	 */
-	static function download_url($path)
+	static function download_url($path,$force_download=false)
 	{
 		return '/filemanager/webdav.php'.$path;
 	}
-	
+
 	/**
 	 * Initialise our static vars
 	 */

@@ -21,7 +21,7 @@ class filemanager_ui
 		'index' => true,
 		'file' => true,
 	);
-	
+
 	/**
 	 * Main filemanager page
 	 *
@@ -33,7 +33,7 @@ class filemanager_ui
 		$tpl = new etemplate('filemanager.index');
 
 		//_debug_array($content);
-		
+
 		if (!is_array($content))
 		{
 			$content = array(
@@ -52,7 +52,7 @@ class filemanager_ui
 					'order'          =>	'name',	// IO name of the column to sort after (optional for the sortheaders)
 					'sort'           =>	'ASC',	// IO direction of the sort: 'ASC' or 'DESC'
 					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames, 
+					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'path' => '/home/'.$GLOBALS['egw_info']['user']['account_lid'],
 				);
@@ -131,7 +131,7 @@ class filemanager_ui
 					break;
 				case 'upload':
 					$to = egw_vfs::concat($content['nm']['path'],$content['upload']['name']);
-					if ($content['upload'] && is_uploaded_file($content['upload']['tmp_name']) && 
+					if ($content['upload'] && is_uploaded_file($content['upload']['tmp_name']) &&
 						(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
 						copy($content['upload']['tmp_name'],egw_vfs::PREFIX.$to))
 					{
@@ -160,11 +160,11 @@ class filemanager_ui
 		$readonlys['button[paste]'] = !$clipboard_files;
 		$readonlys['button[createdir]'] = !$dir_is_writable;
 		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
-		
+
 		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['delete'] = lang('Delete');
 		$sel_options['action']['copy'] = lang('Copy to clipboard');
 		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['cut'] = lang('Cut to clipboard');
-		
+
 		$sel_options['filter'] = array(
 			'1' => 'Current directory',
 			''  => 'All subdirectories',
@@ -197,7 +197,7 @@ class filemanager_ui
 
 	/**
 	 * Message containing the max Upload size from the current php.ini settings
-	 * 
+	 *
 	 * We have to take the smaler one of upload_max_filesize AND post_max_size-2800 into account.
 	 * memory_limit does NOT matter any more, because of the stream-interface of the vfs.
 	 *
@@ -208,7 +208,7 @@ class filemanager_ui
 		$upload_max_filesize = ini_get('upload_max_filesize');
 		$post_max_size = ini_get('post_max_size');
 		$max_upload = min(self::km2int($upload_max_filesize),self::km2int($post_max_size)-2800);
-		
+
 		return lang('Maximum size for uploads').': '.egw_vfs::hsize($max_upload).
 			" (php.ini: upload_max_filesize=$upload_max_filesize, post_max_size=$post_max_size)";
 	}
@@ -257,13 +257,13 @@ class filemanager_ui
 					return lang('%1 directories and %2 files deleted.',$dirs,$files);
 				}
 				return $files == 1 ? lang('File deleted.') : lang('%1 files deleted.',$files);
-				
+
 			case 'copy':
 			case 'cut':
 				$GLOBALS['egw']->session->appsession('clipboard_files','filemanager',$selected);
 				$GLOBALS['egw']->session->appsession('clipboard_type','filemanager',$action);
 				return lang('%1 URLs %2 to clipboard.',count($selected),$action=='copy'?lang('copied'):lang('cut'));
-				
+
 			case 'copy_paste':
 				foreach($selected as $path)
 				{
@@ -310,7 +310,7 @@ class filemanager_ui
 					return lang('%1 errors copying (%2 diretories and %3 files copied)!',$errs,$dirs,$files);
 				}
 				return $dirs ? lang('%1 directories and %2 files copied.',$dirs,$files) : lang('%1 files copied.',$files);
-				
+
 			case 'cut_paste':
 				foreach($selected as $path)
 				{
@@ -332,35 +332,6 @@ class filemanager_ui
 				return lang('%1 files moved.',$files);
 		}
 		return "Unknown action '$action'!";
-	}
-
-	/**
-	 * Get the closest mime icon
-	 *
-	 * @param string $mime_type
-	 * @param int $size=16
-	 * @param boolean $et_image=true return $app/$icon string for etemplate (default) or html image tag if false
-	 * @return string
-	 */
-	static function mime_icon($mime_type, $size=16)
-	{
-		if ($mime_type == egw_vfs::DIR_MIME_TYPE)
-		{
-			$mime_type = 'Directory';
-		}
-		if(!$mime_type)
-		{
-			$mime_type='unknown';
-		}
-		$mime_type=	strtolower(str_replace	('/','_',$mime_type));
-		list($mime_part) = explode('_',$mime_type);
-
-		if (!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_type)) &&
-			!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_part)))
-		{
-			$img = $GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_unknown');
-		}
-		return 'filemanager/'.$icon;
 	}
 
 	/**
@@ -399,7 +370,7 @@ class filemanager_ui
 			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
 		}
 		foreach(egw_vfs::find($query['path'],array(
-			'mindepth' => 1, 
+			'mindepth' => 1,
 			'maxdepth' => $query['filter'] ? $query['filter'] : null,
 			'order' => $query['order'], 'sort' => $query['sort'],
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
@@ -407,7 +378,7 @@ class filemanager_ui
 			'name_preg' => $namefilter,
 		),true) as $path => $row)
 		{
-			$row['icon'] = self::mime_icon($row['mime']);
+			$row['icon'] = egw_vfs::mime_icon($row['mime']);
 			$row['perms'] = egw_vfs::int2mode($row['mode']);
 			// only show link if we have access to the file or dir
 			if (egw_vfs::check_access($path,egw_vfs::READABLE))
@@ -424,11 +395,11 @@ class filemanager_ui
 			$row['user'] = $row['uid'] ? $GLOBALS['egw']->accounts->id2name($row['uid']) : 'root';
 			$row['group'] = $row['gid'] ? $GLOBALS['egw']->accounts->id2name(-$row['gid']) : 'root';
 			$row['hsize'] = egw_vfs::hsize($row['size']);
-			
+
 			//echo $path; _debug_array($row);
 
 			$rows[++$n] = $row;
-			
+
 			$dir = dirname($path);
 			if (!isset($dir_is_writable[$dir]))
 			{
@@ -442,7 +413,7 @@ class filemanager_ui
 		//_debug_array($readonlys);
 		return egw_vfs::$find_total;
 	}
-	
+
 	/**
 	 * Preferences of a file/directory
 	 *
@@ -452,9 +423,9 @@ class filemanager_ui
 	function file(array $content=null,$msg='')
 	{
 		static $tabs = 'general|perms|eacl|preview';
-		
+
 		$tpl = new etemplate('filemanager.file');
-		
+
 		if (!is_array($content))
 		{
 			if (!($stat = egw_vfs::stat($path = $_GET['path'])))
@@ -469,7 +440,7 @@ class filemanager_ui
 				$content['path'] = $path;
 				$content['hsize'] = egw_vfs::hsize($stat['size']);
 				$content['mime'] = egw_vfs::mime_content_type($path);
-				$content['icon'] = self::mime_icon($content['mime']);
+				$content['icon'] = egw_vfs::mime_icon($content['mime']);
 				$content['gid'] *= -1;	// our widgets use negative gid's
 			}
 			if (!($content['is_dir'] = egw_vfs::is_dir($path)))
@@ -497,7 +468,7 @@ class filemanager_ui
 		{
 			//_debug_array($content);
 			$path = $content['path'];
-			
+
 			list($button) = @each($content['button']); unset($content['button']);
 			if (in_array($button,array('save','apply')))
 			{
@@ -579,7 +550,7 @@ class filemanager_ui
 			}
 		}
 		$readonlys['name'] = !egw_vfs::is_writable($content['dir']);
-		
+
 		$readonlys[$tabs]['eacl'] = true;	// eacl off by default
 		if ($content['is_dir'])
 		{
@@ -595,7 +566,7 @@ class filemanager_ui
 				foreach($content['eacl'] as &$eacl)
 				{
 					$eacl['path'] = parse_url($eacl['path'],PHP_URL_PATH);
-					$readonlys['delete['.$eacl['ino'].'-'.$eacl['owner'].']'] = $eacl['ino'] != $content['ino'] || 
+					$readonlys['delete['.$eacl['ino'].'-'.$eacl['owner'].']'] = $eacl['ino'] != $content['ino'] ||
 						$eacl['path'] != $content['path'] || !$content['is_owner'];
 				}
 				array_unshift($content['eacl'],false);	// make the keys start with 1, not 0
@@ -625,7 +596,7 @@ class filemanager_ui
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
 	}
-	
+
 	/**
 	 * Convert perms array back to integer mode
 	 *
