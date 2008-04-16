@@ -205,15 +205,15 @@
 
 			$this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__);
 			$this->total_records = $this->db->next_record() ? $this->db->f(0) : 0;
-			
+
 			if (!$this->total_records) return false;
-			
+
 			$this->db->select($this->table,'*',$where,__LINE__,__FILE__,$limit ? (int) $start : false,$ordermethod);
 			while (($cat = $this->db->row(true,'cat_')))
 			{
 				$cat['app_name'] = $cat['appname'];
 				$this->cache_id2cat_data[$cat['id']] = $cat;
-				
+
 				if ($column)
 				{
 					$cats[] = array($column => isset($cat[$column]) ? $cat[$column] : $cat['id']);
@@ -287,7 +287,7 @@
 			{
 				$cat['app_name'] = $cat['appname'];
 				$this->cache_id2cat_data[$cat['id']] = $cat;
-				
+
 				$cats[] = $cat;
 				$parents[] = $cat['id'];
 			}
@@ -300,7 +300,7 @@
 				{
 					$cat['app_name'] = $cat['appname'];
 					$this->cache_id2cat_data[$cat['id']] = $cat;
-					
+
 					$parents[] = $cat['id'];
 					$children[$cat['parent']][] = $cat;
 				}
@@ -323,7 +323,7 @@
 				}
 			}
 			$this->total_records = count($cats);
-			
+
 			if ($limit)
 			{
 				return array_slice($cats,(int)$start,$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
@@ -344,7 +344,7 @@
 			if (!isset($this->cache_id2cat_data[$id]))
 			{
 				$this->db->select($this->table,'*',array('cat_id' => $id),__LINE__,__FILE__);
-	
+
 				if(($cat = $this->db->row(true,'cat_')))
 				{
 					$cat['app_name'] = $cat['appname'];
@@ -421,7 +421,7 @@
 						$s .= '</option>' . "\n";
 					}
 					break;
-					
+
 				case 'list':
 					$space = '&nbsp;&nbsp;';
 
@@ -484,7 +484,7 @@
 				'cat_description' => $values['descr'],
 				'cat_data'    => $values['data'],
 				'cat_main'    => $values['main'],
-				'cat_level'   => $values['level'], 
+				'cat_level'   => $values['level'],
 				'last_mod'    => time(),
 			),(int)$values['id'] > 0 ? array('cat_id' =>  $values['id']) : array(),__LINE__,__FILE__);
 
@@ -515,8 +515,8 @@
 					if ($cat['level'] == 1)
 					{
 						$this->db->update($this->table,array(
-							'cat_level'  => 0, 
-							'cat_parent' => 0, 
+							'cat_level'  => 0,
+							'cat_parent' => 0,
 							'cat_main'   => $cat['id'],
 						),array(
 							'cat_id' => $cat['id'],
@@ -528,7 +528,7 @@
 					else
 					{
 						$update = array('cat_level' => $cat['level']-1);
-						
+
 						if ($new_main) $update['cat_main'] = $new_main;
 
 						if ($cat['parent'] == $cat_id) $update['cat_parent'] = $new_parent;
@@ -593,13 +593,13 @@
 				'cat_id' => $values['id'],
 				'cat_appname' => $this->app_name,
 			),__LINE__,__FILE__);
-			
+
 			return (int)$values['id'];
 		}
 
 		/**
 		 * return category id for a given name
-		 * 
+		 *
 		 * Cat's with the given name are returned in this order:
 		 * - personal cats first
 		 * - then application global categories
@@ -613,7 +613,7 @@
 		function name2id($cat_name,$strip=false)
 		{
 			static $cache = array();	// a litle bit of caching
-			
+
 			if (isset($cache[$cat_name])) return $cache[$cat_name];
 
 			if ($strip === true)
@@ -632,13 +632,13 @@
 				}
 				$cats[] = $stripped_cat_name;
 			}
-				
+
 
 			$this->db->select($this->table,array('cat_name','cat_id'),array(
 				'cat_name' => $cats,
 				'cat_appname' => array($this->app_name, 'phpgw'),
 			),__LINE__,__FILE__,0,
-			"ORDER BY cat_name!='$cat_name',(CASE cat_owner WHEN ".(int)$this->account_id." THEN 1 WHEN -1 THEN 2 ELSE 3 END),cat_appname='phpgw'",
+			'ORDER BY cat_name<>'.$this->db->quote($cat_name).',(CASE cat_owner WHEN '.(int)$this->account_id." THEN 1 WHEN -1 THEN 2 ELSE 3 END),cat_appname='phpgw'",
 			false,1);
 
 			if (!$this->db->next_record()) return 0;	// cat not found, dont cache it, as it might be created in this request
@@ -658,9 +658,9 @@
 		function id2name($cat_id=0, $item='name')
 		{
 			if(!$cat_id) return '--';
-			
+
 			if (!isset($this->cache_id2cat_data[$cat_id])) $this->return_single($cat_id);
-			
+
 			if (!$item) $item = 'parent';
 
 			if ($this->cache_id2cat_data[$cat_id][$item])
@@ -700,13 +700,13 @@
 			static $cache = array();	// a litle bit of caching
 
 			if (isset($cache[$type][$cat_name][$cat_id])) return $cache[$type][$cat_name][$cat_id];
- 
+
 			$where = array($this->filter($type));
 
 			if ($cat_name)
 			{
 				$where['cat_name'] = $cat_name;
-				
+
 				if ($cat_id) $where[] = 'cat_id != '.(int)$cat_id;
 			}
 			elseif ($cat_id)
@@ -719,7 +719,7 @@
 
 			return $cache[$type][$cat_name][$cat_id] = $this->db->next_record() && $this->db->f(0);
 		}
-		
+
 		/**
 		 * Change the owner of all cats owned by $owner to $to OR deletes them if !$to
 		 *
@@ -730,7 +730,7 @@
 		function change_owner($owner,$to=0,$app='')
 		{
 			$where = array('cat_owner' => $owner);
-			
+
 			if ($app) $where['cat_appname'] = $app;
 
 			if ((int)$to)
