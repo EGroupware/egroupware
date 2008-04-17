@@ -56,8 +56,9 @@ class addressbook_merge	// extends bo_merge
 		if (!is_array($contact)) return array();
 
 		$replacements = array();
-		foreach($contact as $name => $value)
+		foreach(array_keys($this->contacts->contact_fields) as $name)
 		{
+			$value = $contact[$name];
 			switch($name)
 			{
 				case 'created': case 'modified':
