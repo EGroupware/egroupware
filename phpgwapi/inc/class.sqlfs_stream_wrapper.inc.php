@@ -13,23 +13,23 @@
 
 /**
  * eGroupWare API: VFS - new DB based VFS stream wrapper
- * 
+ *
  * The sqlfs stream wrapper has 3 operation modi:
  * - content of files is stored in the filesystem (eGW's files_dir) (default)
  * - content of files is stored as BLOB in the DB
  * - content of files is versioned (and stored in the DB) NOT YET IMPLEMENTED
  * In the future it will be possible to activate eg. versioning in parts of the filesystem, via mount options in the vfs
- * 
+ *
  * I use the PDO DB interface, as it allows to access BLOB's as streams (avoiding to hold them complete in memory).
- * 
+ *
  * The stream wrapper interface is according to the docu on php.net
- *  
+ *
  * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
  * @ToDo compare (and optimize) performance with old vfs system (eg. via webdav)
  * @ToDo pass $operation parameter via context from vfs stream-wrappers mount table, to eg. allow to mount parts with(out) versioning
  * @ToDo versioning
  */
-class sqlfs_stream_wrapper implements iface_stream_wrapper 
+class sqlfs_stream_wrapper implements iface_stream_wrapper
 {
 	/**
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
@@ -63,7 +63,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * 2 = all function calls and errors (contains passwords too!)
 	 */
 	const LOG_LEVEL = 1;
-	
+
 	/**
 	 * We do versioning AND store the content in the db, NOT YET IMPLEMENTED
 	 */
@@ -82,14 +82,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	const DEFAULT_OPERATION = 2;
 
 	var $operation = self::DEFAULT_OPERATION;
-	
+
 	/**
 	 * optional context param when opening the stream, null if no context passed
 	 *
 	 * @var mixed
 	 */
 	var $context;
-	
+
 	/**
 	 * Path off the file opened by stream_open
 	 *
@@ -116,7 +116,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	protected $opened_fs_id;
 	/**
 	 * Directory vfs::ls() of dir opened with dir_opendir()
-	 * 
+	 *
 	 * This static var gets overwritten by each new dir_opendir, it helps to not read the entries twice.
 	 *
 	 * @var array $path => info-array pairs
@@ -134,15 +134,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @var array
 	 */
 	protected $opened_dir;
-	
+
 	/**
 	 * This method is called immediately after your stream object is created.
-	 * 
+	 *
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
 	 * @param string $mode mode used to open the file, as detailed for fopen()
-	 * @param int $options additional flags set by the streams API (or'ed together): 
+	 * @param int $options additional flags set by the streams API (or'ed together):
 	 * - STREAM_USE_PATH      If path is relative, search for the resource using the include_path.
-	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream. 
+	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream.
 	 *                        If this flag is not set, you should not raise any errors.
 	 * @param string $opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
 	 * @return boolean true if the ressource was opened successful, otherwise false
@@ -150,14 +150,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
 		$dir = egw_vfs::dirname($url);
-		
+
 		$this->opened_path = $path;
 		$this->opened_mode = $mode;
 		$this->opened_stream = null;
-		
+
 		if (!($stat = self::url_stat($path,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
@@ -220,7 +220,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 					trigger_error(__METHOD__."($url,$mode,$options) file can not be edited!",E_USER_WARNING);
 				}
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
-				return false;				
+				return false;
 			}
 			$this->opened_fs_id = $stat['fs_id'];
 		}
@@ -235,25 +235,25 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return is_resource($this->opened_stream);
 	}
-	
+
 	/**
-	 * This method is called when the stream is closed, using fclose(). 
-	 * 
+	 * This method is called when the stream is closed, using fclose().
+	 *
 	 * You must release any resources that were locked or allocated by the stream.
 	 */
 	function stream_close ( )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."()");
-		
+
 		if (is_null($this->opened_path) || !is_resource($this->opened_stream) || !$this->opened_fs_id)
 		{
 			return false;
 		}
-		
+
 		if ($this->opened_mode != 'r')
 		{
 			$this->stream_seek(0,SEEK_END);
-			
+
 			static $mime_magic;
 			if (is_null($mime_magic))
 			{
@@ -268,7 +268,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				':fs_id'   => $this->opened_fs_id,
 			);
 			$ret = fclose($this->opened_stream);
-			
+
 			$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=:fs_size,fs_mime=:fs_mime WHERE fs_id=:fs_id');
 			$stmt->execute($values);
 		}
@@ -280,13 +280,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		return $ret;
 	}
-	
+
 	/**
 	 * This method is called in response to fread() and fgets() calls on the stream.
-	 * 
-	 * You must return up-to count bytes of data from the current read/write position as a string. 
-	 * If there are less than count bytes available, return as many as are available. 
-	 * If no more data is available, return either FALSE or an empty string. 
+	 *
+	 * You must return up-to count bytes of data from the current read/write position as a string.
+	 * If there are less than count bytes available, return as many as are available.
+	 * If no more data is available, return either FALSE or an empty string.
 	 * You must also update the read/write position of the stream by the number of bytes that were successfully read.
 	 *
 	 * @param int $count
@@ -295,7 +295,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	function stream_read ( $count )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($count) pos=$this->opened_pos");
-		
+
 		if (is_resource($this->opened_stream))
 		{
 			return fread($this->opened_stream,$count);
@@ -305,19 +305,19 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to fwrite() calls on the stream.
-	 * 
-	 * You should store data into the underlying storage used by your stream. 
-	 * If there is not enough room, try to store as many bytes as possible. 
-	 * You should return the number of bytes that were successfully stored in the stream, or 0 if none could be stored. 
+	 *
+	 * You should store data into the underlying storage used by your stream.
+	 * If there is not enough room, try to store as many bytes as possible.
+	 * You should return the number of bytes that were successfully stored in the stream, or 0 if none could be stored.
 	 * You must also update the read/write position of the stream by the number of bytes that were successfully written.
 	 *
 	 * @param string $data
 	 * @return integer
 	 */
-	function stream_write ( $data ) 
+	function stream_write ( $data )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($data)");
-		
+
 		if (is_resource($this->opened_stream))
 		{
 			return fwrite($this->opened_stream,$data);
@@ -327,17 +327,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
  	/**
  	 * This method is called in response to feof() calls on the stream.
- 	 * 
+ 	 *
  	 * Important: PHP 5.0 introduced a bug that wasn't fixed until 5.1: the return value has to be the oposite!
- 	 * 
+ 	 *
  	 * if(version_compare(PHP_VERSION,'5.0','>=') && version_compare(PHP_VERSION,'5.1','<'))
   	 * {
  	 * 		$eof = !$eof;
  	 * }
-  	 * 
+  	 *
  	 * @return boolean true if the read/write position is at the end of the stream and no more data availible, false otherwise
  	 */
-	function stream_eof ( ) 
+	function stream_eof ( )
 	{
 		if (is_resource($this->opened_stream))
 		{
@@ -348,13 +348,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to ftell() calls on the stream.
-	 * 
+	 *
 	 * @return integer current read/write position of the stream
 	 */
- 	function stream_tell ( ) 
+ 	function stream_tell ( )
  	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."()");
-		
+
 		if (is_resource($this->opened_stream))
 		{
 			return ftell($this->opened_stream);
@@ -365,9 +365,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
  	/**
  	 * This method is called in response to fseek() calls on the stream.
  	 *
- 	 * You should update the read/write position of the stream according to offset and whence. 
- 	 * See fseek() for more information about these parameters. 
- 	 * 
+ 	 * You should update the read/write position of the stream according to offset and whence.
+ 	 * See fseek() for more information about these parameters.
+ 	 *
  	 * @param integer $offset
  	 * @param integer $whence	SEEK_SET - Set position equal to offset bytes
  	 * 							SEEK_CUR - Set position to current location plus offset.
@@ -377,7 +377,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	function stream_seek ( $offset, $whence )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($offset,$whence)");
-		
+
 		if (is_resource($this->opened_stream))
 		{
 			return fseek($this->opened_stream,$offset,$whence);
@@ -387,15 +387,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to fflush() calls on the stream.
-	 * 
+	 *
 	 * If you have cached data in your stream but not yet stored it into the underlying storage, you should do so now.
-	 * 
+	 *
 	 * @return booelan TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
 	 */
 	function stream_flush ( )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."()");
-		
+
 		if (is_resource($this->opened_stream))
 		{
 			return fflush($this->opened_stream);
@@ -405,28 +405,28 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to fstat() calls on the stream.
-	 * 
-	 * If you plan to use your wrapper in a require_once you need to define stream_stat().  
+	 *
+	 * If you plan to use your wrapper in a require_once you need to define stream_stat().
 	 * If you plan to allow any other tests like is_file()/is_dir(), you have to define url_stat().
-	 * stream_stat() must define the size of the file, or it will never be included.  
+	 * stream_stat() must define the size of the file, or it will never be included.
 	 * url_stat() must define mode, or is_file()/is_dir()/is_executable(), and any of those functions affected by clearstatcache() simply won't work.
-	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.  
-	 * If you wish the file to be executable, use 7s instead of 6s.  
-	 * The last 3 digits are exactly the same thing as what you pass to chmod.  
-	 * 040000 defines a directory, and 0100000 defines a file.  
+	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.
+	 * If you wish the file to be executable, use 7s instead of 6s.
+	 * The last 3 digits are exactly the same thing as what you pass to chmod.
+	 * 040000 defines a directory, and 0100000 defines a file.
 	 *
 	 * @return array containing the same values as appropriate for the stream.
 	 */
 	function stream_stat ( )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_path)");
-		
+
 		return $this->url_stat($this->opened_path,0);
 	}
 
 	/**
 	 * This method is called in response to unlink() calls on URL paths associated with the wrapper.
-	 * 
+	 *
 	 * It should attempt to delete the item specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support unlinking!
 	 *
@@ -436,9 +436,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function unlink ( $url,$operation=self::DEFAULT_OPERATION )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
-		
+
 		if (!($stat = self::url_stat($path,0)) || !egw_vfs::check_access(dirname($path),egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url);
@@ -457,10 +457,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to rename() calls on URL paths associated with the wrapper.
-	 * 
-	 * It should attempt to rename the item specified by path_from to the specification given by path_to. 
+	 *
+	 * It should attempt to rename the item specified by path_from to the specification given by path_to.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support renaming.
-	 * 
+	 *
 	 * The regular filesystem stream-wrapper returns an error, if $url_from and $url_to are not either both files or both dirs!
 	 *
 	 * @param string $url_from
@@ -470,11 +470,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function rename ( $url_from, $url_to, $operation=self::DEFAULT_OPERATION )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
-		
+
 		$path_from = parse_url($url_from,PHP_URL_PATH);
 		$path_to = parse_url($url_to,PHP_URL_PATH);
 		$to_dir = dirname($path_to);
-		
+
 		if (!($from_stat = self::url_stat($path_from,0)) || !egw_vfs::check_access(dirname($path_from),egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url_from);
@@ -491,7 +491,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
 		// for our vfs too, we abort here with an error, like the filesystem one does
-		if (($to_stat = self::url_stat($path_to,0)) && 
+		if (($to_stat = self::url_stat($path_to,0)) &&
 			($to_stat['mime'] === self::DIR_MIME_TYPE) !== ($from_stat['mime'] === self::DIR_MIME_TYPE))
 		{
 			self::_remove_password($url_from);
@@ -516,9 +516,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
-	 * 
-	 * It should attempt to create the directory specified by path. 
-	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories. 
+	 *
+	 * It should attempt to create the directory specified by path.
+	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories.
 	 *
 	 * @param string $url
 	 * @param int $mode
@@ -528,9 +528,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function mkdir ( $url, $mode, $options, $operation=self::DEFAULT_OPERATION )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
-		
+
 		if (self::url_stat($path,STREAM_URL_STAT_QUIET))
 		{
 			self::_remove_password($url);
@@ -544,7 +544,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		$parent = self::url_stat($parent_path=dirname($path),STREAM_URL_STAT_QUIET);
 
-		// check if we should also create all non-existing path components and our parent does not exist, 
+		// check if we should also create all non-existing path components and our parent does not exist,
 		// if yes call ourself recursive with the parent directory
 		if (($options & STREAM_MKDIR_RECURSIVE) && $path != '/' && !$parent)
 		{
@@ -586,8 +586,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to rmdir() calls on URL paths associated with the wrapper.
-	 * 
-	 * It should attempt to remove the directory specified by path. 
+	 *
+	 * It should attempt to remove the directory specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support removing directories.
 	 *
 	 * @param string $url
@@ -597,10 +597,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function rmdir ( $url, $options, $operation=self::DEFAULT_OPERATION )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
 		$parent = dirname($path);
-		
+
 		if (!($stat = self::url_stat($path,0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
 			!egw_vfs::check_access($parent,egw_vfs::WRITABLE))
 		{
@@ -645,9 +645,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function touch($url,$time=null,$atime=null)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
-		
+
 		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)))
 		{
 			// file does not exist --> create an empty one
@@ -679,7 +679,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function chown($url,$owner)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,0)))
@@ -718,7 +718,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function chgrp($url,$owner)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,0)))
@@ -748,7 +748,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			':fs_id' => $stat['ino'],
 		));
 	}
-	
+
 	/**
 	 * Chmod command, not yet a stream-wrapper function, but necessary
 	 *
@@ -759,7 +759,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function chmod($url,$mode)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
-		
+
 		$path = parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,0)))
@@ -790,19 +790,19 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 
 	/**
-	 * This method is called immediately when your stream object is created for examining directory contents with opendir(). 
-	 * 
+	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
+	 *
 	 * @ToDo check all parent dirs for readable (fastest would be with sql query) !!!
 	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
 	 * @param $options
-	 * @return booelan 
+	 * @return booelan
 	 */
 	function dir_opendir ( $url, $options )
 	{
 		$this->opened_dir = null;
 
 		$path = parse_url($url,PHP_URL_PATH);
-		
+
 		if (!($stat = self::url_stat($url,0)) || 		// dir not found
 			$stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
 			!egw_vfs::check_access($url,egw_vfs::EXECUTABLE|egw_vfs::READABLE,$stat))	// no access
@@ -815,7 +815,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$this->opened_dir = array();
 		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_dir=?';
-		
+
 		// only return readable files, if dir is not writable by user
 		/* to value/check the extended acl later on, we have to return all files!
 		if (egw_vfs::HIDE_UNREADABLES && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))
@@ -843,37 +843,37 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to stat() calls on the URL paths associated with the wrapper.
-	 * 
-	 * It should return as many elements in common with the system function as possible. 
+	 *
+	 * It should return as many elements in common with the system function as possible.
 	 * Unknown or unavailable values should be set to a rational value (usually 0).
-	 * 
-	 * If you plan to use your wrapper in a require_once you need to define stream_stat().  
+	 *
+	 * If you plan to use your wrapper in a require_once you need to define stream_stat().
 	 * If you plan to allow any other tests like is_file()/is_dir(), you have to define url_stat().
-	 * stream_stat() must define the size of the file, or it will never be included.  
+	 * stream_stat() must define the size of the file, or it will never be included.
 	 * url_stat() must define mode, or is_file()/is_dir()/is_executable(), and any of those functions affected by clearstatcache() simply won't work.
-	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.  
-	 * If you wish the file to be executable, use 7s instead of 6s.  
-	 * The last 3 digits are exactly the same thing as what you pass to chmod.  
-	 * 040000 defines a directory, and 0100000 defines a file.  
+	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.
+	 * If you wish the file to be executable, use 7s instead of 6s.
+	 * The last 3 digits are exactly the same thing as what you pass to chmod.
+	 * 040000 defines a directory, and 0100000 defines a file.
 	 *
 	 * @param string $path
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
-	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward, 
-	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned, 
-	 *                          not the resource pointed to by the link. 
+	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward,
+	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned,
+	 *                          not the resource pointed to by the link.
 	 *                          This flag is set in response to calls to lstat(), is_link(), or filetype().
-	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set, 
+	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @param boolean $eacl_access=null allows extending classes to pass the value of their check_extended_acl() method (no lsb!)
-	 * @return array 
+	 * @return array
 	 */
 	static function url_stat ( $url, $flags, $eacl_access=null )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags)");
-	
+
 		$path = parse_url($url,PHP_URL_PATH);
-		
+
 		// webdav adds a trailing slash to dirs, which causes url_stat to NOT find the file otherwise
 		if ($path != '/' && substr($path,-1) == '/')
 		{
@@ -926,7 +926,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		//$query = "/* sqlfs::url_stat($path) */ ".$query;
 		//echo "query=$query\n";
-		
+
 		if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
 		{
 			self::_remove_password($url);
@@ -938,7 +938,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags)=".str_replace("\n",'',print_r($info,true)));
 		return self::_vfsinfo2stat($info);
 	}
-	
+
 	/**
 	 * Return readable check as sql (to be AND'ed into the query), only use if !egw_vfs::$is_root
 	 *
@@ -959,12 +959,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return $sql_read_acl;
 	}
-	
+
 	/**
 	 * This method is called in response to readdir().
-	 * 
+	 *
 	 * It should return a string representing the next filename in the location opened by dir_opendir().
-	 * 
+	 *
 	 * @return string
 	 */
 	function dir_readdir ( )
@@ -972,54 +972,54 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( )");
 
 		if (!is_array($this->opened_dir)) return false;
-		
+
 		$file = current($this->opened_dir); next($this->opened_dir);
 
 		return $file;
 	}
-	
+
 	/**
 	 * This method is called in response to rewinddir().
-	 * 
-	 * It should reset the output generated by dir_readdir(). i.e.: 
+	 *
+	 * It should reset the output generated by dir_readdir(). i.e.:
 	 * The next call to dir_readdir() should return the first entry in the location returned by dir_opendir().
-	 * 
+	 *
 	 * @return boolean
 	 */
-	function dir_rewinddir ( ) 
+	function dir_rewinddir ( )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( )");
-		
+
 		if (!is_array($this->opened_dir)) return false;
-		
+
 		reset($this->opened_dir);
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * This method is called in response to closedir().
-	 * 
-	 * You should release any resources which were locked or allocated during the opening and use of the directory stream. 
-	 * 
+	 *
+	 * You should release any resources which were locked or allocated during the opening and use of the directory stream.
+	 *
 	 * @return boolean
 	 */
 	function dir_closedir ( )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( )");
-		
+
 		if (!is_array($this->opened_dir)) return false;
-		
+
 		$this->opened_dir = null;
-		
+
 		return true;
 	}
-	
+
 	private static $extended_acl;
 
 	/**
 	 * Check if extendes ACL (stored in eGW's ACL table) grants access
-	 * 
+	 *
 	 * The extended ACL is inherited, so it's valid for all subdirs and the included files!
 	 * The used algorithm break on the first match. It could be used, to disallow further access.
 	 *
@@ -1030,7 +1030,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function check_extended_acl($url,$check)
 	{
 		$url_path = parse_url($url,PHP_URL_PATH);
-		
+
 		if (is_null(self::$extended_acl))
 		{
 			self::_read_extended_acl();
@@ -1047,7 +1047,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		//error_log(__METHOD__."($url,$check) ".($access?"access granted by $path=$rights":'no access!!!'));
 		return $access;
 	}
-	
+
 	/**
 	 * Read the extended acl via acl::get_grants('sqlfs')
 	 *
@@ -1076,7 +1076,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);
 		//echo __METHOD__; print_r(self::$extended_acl);
 	}
-	
+
 	/**
 	 * Appname used with the acl class to store the extended acl
 	 */
@@ -1084,7 +1084,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * Set or delete extended acl for a given path and owner (or delete  them if is_null($rights)
-	 * 
+	 *
 	 * Only root, the owner of the path or an eGW admin (only if there's no owner but a group) are allowd to set eACL's!
 	 *
 	 * @param string $path string with path
@@ -1128,7 +1128,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		else
 		{
-			if (isset(self::$extended_acl) && ($owner == egw_vfs::$user || 
+			if (isset(self::$extended_acl) && ($owner == egw_vfs::$user ||
 				$owner < 0 && egw_vfs::$user && in_array($owner,$GLOBALS['egw']->accounts->memberships(egw_vfs::$user,true))))
 			{
 				// set rights for this class, if applicable
@@ -1138,15 +1138,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if ($ret)
 		{
-			$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);			
+			$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);
 		}
 		//error_log(__METHOD__."($path,$rights,$owner,$fs_id)=".(int)$ret);
 		return $ret;
 	}
-	
+
 	/**
 	 * Get all ext. ACL set for a path
-	 * 
+	 *
 	 * Calls itself recursive, to get the parent directories
 	 *
 	 * @param string $path
@@ -1177,10 +1177,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		return $eacls;
 	}
-	
+
 	/**
 	 * Return the path of given fs_id(s)
-	 * 
+	 *
 	 * Calls itself recursive to to determine the path of the parent/directory
 	 *
 	 * @param int/array $fs_ids integer fs_id or array of them
@@ -1194,7 +1194,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (count($ids) > 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
 		$query = 'SELECT fs_id,fs_dir,fs_name FROM '.self::TABLE.' WHERE fs_id'.
 			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')');
-		
+
 		if (!is_object(self::$pdo))
 		{
 			self::_pdo();
@@ -1216,7 +1216,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$rows[$row['fs_id']] = $row;
 		}
 		unset($stmt);
-		
+
 		if ($parents && !($parents = self::id2path($parents)))
 		{
 			return false;	// parent not found, should never happen ...
@@ -1225,7 +1225,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		foreach($rows as $fs_id => $row)
 		{
 			$parent = $row['fs_dir'] > 1 ? $parents[$row['fs_dir']] : '';
-			
+
 			$pathes[$fs_id] = $parent . '/' . $row['fs_name'];
 		}
 		//error_log(__METHOD__.'('.print_r($fs_ids,true).')='.print_r($pathes,true));
@@ -1243,7 +1243,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stat = array(
 			'ino'   => $info['fs_id'],
 			'name'  => $info['fs_name'],
-			'mode'  => $info['fs_mode'] | 
+			'mode'  => $info['fs_mode'] |
 				($info['fs_mime'] == self::DIR_MIME_TYPE ? self::MODE_DIR : self::MODE_FILE),	// required by the stream wrapper
 			'size'  => $info['fs_size'],
 			'uid'   => $info['fs_uid'],
@@ -1257,7 +1257,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		//error_log(__METHOD__."($info[name]) = ".print_r($stat,true));
 		return $stat;
 	}
-	
+
 	/**
 	 * Create pdo object / connection, as long as pdo is not generally used in eGW
 	 *
@@ -1266,15 +1266,19 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static private function _pdo()
 	{
 		$egw_db = isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
-		
+
 		switch($egw_db->Type)
 		{
+			case 'mysqlt':
+				$dsn = 'mysql:host='.$egw_db->Host.';dbname='.$egw_db->Database;
+				break;
+
 			default:
 				$dsn = $egw_db->Type.':host='.$egw_db->Host.';dbname='.$egw_db->Database;
 				break;
 		}
 		self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password);
-		
+
 		// set client charset of the connection
 		$charset = $GLOBALS['egw']->translation->charset();
 		switch($server['db_type'])
@@ -1292,7 +1296,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return self::$pdo;
 	}
-	
+
 	/**
 	 * Just a little abstration 'til I know how to organise stuff like that with PDO
 	 *
@@ -1307,7 +1311,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return $time;
 	}
-	
+
 	/**
 	 * Return the path of the stored content of a file if $this->operation == self::STORE2FS
 	 *
@@ -1327,7 +1331,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static private function _remove_password(&$url)
 	{
 		$parts = parse_url($url);
-		
+
 		if ($parts['pass'] || $parts['scheme'])
 		{
 			$url = $parts['scheme'].'://'.($parts['user'] ? $parts['user'].($parts['pass']?':...':'').'@' : '').
