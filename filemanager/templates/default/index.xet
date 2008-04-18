@@ -33,7 +33,7 @@
 				</row>
 				<row class="row">
 					<image label="$row_cont[mime]" src="${row}[icon]" align="center"/>
-					<description options=",$row_cont[link]" id="${row}[name]" no_lang="1"/>
+					<description options=",@${row}[link]" id="${row}[name]" no_lang="1"/>
 					<description id="${row}[hsize]" align="right"/>
 					<date-time id="${row}[mtime]" readonly="true"/>
 					<date-time id="${row}[ctime]" readonly="true"/>
@@ -64,7 +64,7 @@
 				<row>
 					<hbox span="all">
 						<button image="goup" label="Up" id="button[up]"/>
-						<button id="button[home]" image="gohome" label="Go to home directory"/>
+						<button id="button[home]" image="gohome" label="Go to your home directory"/>
 						<textbox id="nm[path]" size="80" label="Path" onchange="1" class="address"/>
 						<button id="button[go]" image="key_enter" label="Go to"/>
 						<image src="buttonseparator"/>
