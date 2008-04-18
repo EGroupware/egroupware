@@ -1270,15 +1270,25 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		switch($egw_db->Type)
 		{
 			case 'mysqlt':
-				$dsn = 'mysql:host='.$egw_db->Host.';dbname='.$egw_db->Database;
+				$type = 'mysql';
 				break;
-
 			default:
-				$dsn = $egw_db->Type.':host='.$egw_db->Host.';dbname='.$egw_db->Database;
+				$type = $egw_db->Type;
 				break;
 		}
-		self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password);
-
+		switch($type)
+		{
+			default:
+				$dsn = $egw_db->Type.':host='.$egw_db->Host.';port='.$egw_db->Port.';dbname='.$egw_db->Database;
+				break;
+		}
+		$egw_db->Password .= 'x';
+		try {
+			self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password);
+		} catch(Exception $e) {
+			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
+			self::$pdo = new PDO($dsn,$egw_db->User,'$egw_db->Password');
+		}
 		// set client charset of the connection
 		$charset = $GLOBALS['egw']->translation->charset();
 		switch($server['db_type'])
