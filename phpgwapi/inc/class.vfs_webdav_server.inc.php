@@ -3,7 +3,7 @@
  * eGroupWare API: VFS - WebDAV access using the new stream wrapper VFS interface
  *
  * Using the PEAR HTTP/WebDAV/Server/Filesystem class (which need to be installed!)
- * 
+ *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
@@ -19,24 +19,24 @@ require_once('HTTP/WebDAV/Server/Filesystem.php');
  * FileManger - WebDAV access using the new stream wrapper VFS interface
  *
  * Using the PEAR HTTP/WebDAV/Server/Filesystem class (which need to be installed!)
- * 
+ *
  * @todo table to store locks and properties
  * @todo filesystem class uses PEAR's System::find which we dont require nor know if it works on custom streamwrapper
  */
-class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem 
+class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 {
 	var $dav_powered_by = 'eGroupWare WebDAV server';
-	
+
 	/**
 	 * Base directory is the URL of our VFS root
 	 *
 	 * @var string
 	 */
 	var $base = egw_vfs::PREFIX;
-	
+
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, eg. complete $_SERVER array
-	 * 
+	 *
 	 * The debug messages are send to the apache error_log
 	 *
 	 * @var integer
@@ -45,48 +45,50 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
 	/**
 	* Serve a webdav request
-	* 
+	*
 	* Reimplemented to not check our vfs base path with realpath and connect to mysql DB
 	*
 	* @access public
-	* @param  string  
+	* @param  string
 	*/
-	function ServeRequest($base = false) 
+	function ServeRequest($base = false)
 	{
 		// special treatment for litmus compliance test
 		// reply on its identifier header
 		// not needed for the test itself but eases debugging
-		foreach (apache_request_headers() as $key => $value) 
+		if (function_exists('apache_request_headers'))
 		{
-			if (stristr($key, "litmus")) 
+			foreach (apache_request_headers() as $key => $value)
 			{
-				error_log("Litmus test $value");
-				header("X-Litmus-reply: ".$value);
+				if (stristr($key, "litmus"))
+				{
+					error_log("Litmus test $value");
+					header("X-Litmus-reply: ".$value);
+				}
 			}
 		}
-		
 		// let the base class do all the work
 		HTTP_WebDAV_Server::ServeRequest();
 	}
-	
+
     /**
      * DELETE method handler
      *
      * @param  array  general parameter passing array
      * @return bool   true on success
      */
-    function DELETE($options) 
+    function DELETE($options)
     {
         $path = $this->base . "/" .$options["path"];
 
-        if (!file_exists($path)) 
+        if (!file_exists($path))
         {
             return "404 Not found";
         }
 
-        if (is_dir($path)) 
+        if (is_dir($path))
         {
-            /*$query = "DELETE FROM {$this->db_prefix}properties 
+            /*$query = "DELETE FROM {$this->db_prefix}properties
                            WHERE path LIKE '".$this->_slashify($options["path"])."%'";
             mysql_query($query); */
             // recursive delete the directory
@@ -110,12 +112,12 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             	}
             	closedir($dir);
             }
-        } 
-        else 
+        }
+        else
         {
             unlink($path);
         }
-        /*$query = "DELETE FROM {$this->db_prefix}properties 
+        /*$query = "DELETE FROM {$this->db_prefix}properties
                        WHERE path = '$options[path]'";
         mysql_query($query);*/
 
@@ -128,7 +130,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
      * @param  string  resource path
      * @return array   resource properties
      */
-    function fileinfo($path) 
+    function fileinfo($path)
     {
 		error_log(__METHOD__."($path)");
         // map URI path to filesystem path
@@ -137,12 +139,12 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
         // create result array
         $info = array();
         // TODO remove slash append code when base clase is able to do it itself
-        $info["path"]  = is_dir($fspath) ? $this->_slashify($path) : $path; 
+        $info["path"]  = is_dir($fspath) ? $this->_slashify($path) : $path;
         $info["props"] = array();
-            
+
         // no special beautified displayname here ...
         $info["props"][] = $this->mkprop("displayname", strtoupper($path));
-            
+
         // creation and modification time
         $info["props"][] = $this->mkprop("creationdate",    filectime($fspath));
         $info["props"][] = $this->mkprop("getlastmodified", filemtime($fspath));
@@ -151,7 +153,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
         if (is_dir($fspath)) {
             // directory (WebDAV collection)
             $info["props"][] = $this->mkprop("resourcetype", "collection");
-            $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");             
+            $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");
         } else {
             // plain file (WebDAV resource)
             $info["props"][] = $this->mkprop("resourcetype", "");
@@ -160,13 +162,13 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             } else {
 				error_log(__METHOD__."($path) $fspath is not readable!");
                 $info["props"][] = $this->mkprop("getcontenttype", "application/x-non-readable");
-            }               
+            }
             $info["props"][] = $this->mkprop("getcontentlength", filesize($fspath));
         }
 /*
         // get additional properties from database
-        $query = "SELECT ns, name, value 
-                        FROM {$this->db_prefix}properties 
+        $query = "SELECT ns, name, value
+                        FROM {$this->db_prefix}properties
                        WHERE path = '$path'";
         $res = mysql_query($query);
         while ($row = mysql_fetch_assoc($res)) {
@@ -192,7 +194,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
 	/**
 	 * PROPPATCH method handler
-	 * 
+	 *
 	 * The current version only allows Webdrive to set creation and modificaton dates.
 	 * They are not stored as (arbitrary) WebDAV properties with their own namespace and name,
 	 * but in the regular vfs attributes.
@@ -201,7 +203,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 * @param  array  general parameter passing array
 	 * @return bool   true on success
 	 */
-	function PROPPATCH(&$options) 
+	function PROPPATCH(&$options)
 	{
 		$path = $GLOBALS['egw']->translation->convert($options['path'],'utf-8');
 
@@ -223,7 +225,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 							break;
 					}
 					break;
-					
+
 				case 'DAV:':
 					switch($prop['name'])
 					{
@@ -248,14 +250,14 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
 		return "";	// this is as the filesystem example handler does it, no true or false ...
 	}
-	
+
      /**
      * LOCK method handler
      *
      * @param  array  general parameter passing array
      * @return bool   true on success
      */
-    function LOCK(&$options) 
+    function LOCK(&$options)
     {
     	// behaving like LOCK is not implemented
 		return "412 Precondition failed";
@@ -279,8 +281,8 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             mysql_free_result($res);
 
             if (is_array($row)) {
-                $query = "UPDATE {$this->db_prefix}locks 
-                                 SET expires = '$options[timeout]' 
+                $query = "UPDATE {$this->db_prefix}locks
+                                 SET expires = '$options[timeout]'
                                    , modified = ".time()."
                               $where";
                 mysql_query($query);
@@ -294,7 +296,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
                 return false;
             }
         }
-            
+
         $query = "INSERT INTO {$this->db_prefix}locks
                         SET token   = '$options[locktoken]'
                           , path    = '$options[path]'
@@ -315,7 +317,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
      * @param  array  general parameter passing array
      * @return bool   true on success
      */
-    function UNLOCK(&$options) 
+    function UNLOCK(&$options)
     {
     	// behaving like LOCK is not implemented
 		return "405 Method not allowed";
@@ -334,13 +336,13 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
      * @param  string resource path to check for locks
      * @return bool   true on success
      */
-    function checkLock($path) 
+    function checkLock($path)
     {
     	// behave like checkLock is not implemented
 		return false;
-/*		
+/*
         $result = false;
-            
+
         $query = "SELECT owner, token, created, modified, expires, exclusivelock
                   FROM {$this->db_prefix}locks
                  WHERE path = '$path'
@@ -357,8 +359,8 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
                                  "depth"   => 0,
                                  "owner"   => $row['owner'],
                                  "token"   => $row['token'],
-                                 "created" => $row['created'],   
-                                 "modified" => $row['modified'],   
+                                 "created" => $row['created'],
+                                 "modified" => $row['modified'],
                                  "expires" => $row['expires']
                                  );
             }
@@ -366,7 +368,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
         return $result;*/
     }
-    
+
     /**
      * Remove not (yet) implemented LOCK methods, so we can use the mostly unchanged HTTP_WebDAV_Server_Filesystem class
      *
