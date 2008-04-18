@@ -38,9 +38,9 @@
 	function bytes($str)
 	{
 		static $func_overload;
-		
+
 		if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
-		
+
 		return $func_overload & 2 ? mb_strlen($str,'ascii') : strlen($str);
 	}
 
@@ -67,7 +67,7 @@
 	 * print debug data only when debugging mode is turned on.
 	 *
 	 * @author seek3r
-	 * This function is used to debugging data. 
+	 * This function is used to debugging data.
 	 * print_debug('this is some debugging data',$somevar);
 	 */
 	function print_debug($message,$var = 'messageonly',$part = 'app', $level = 3)
@@ -169,7 +169,7 @@
 	  *
 	  * @author seek3r
 	  * This function is used to validate param data as well as offer flexible function usage.
-	  * 
+	  *
 		function somefunc()
 		{
 			$expected_args[0] = Array('name'=>'fname','default'=>'joe', 'type'=>'string');
@@ -181,21 +181,21 @@
 			//default result would be:
 			// Full name: joe hick bob<br>
 		}
-		
+
 		Using this it is possible to use the function in any of the following ways
 		somefunc('jack','city','brown');
 		or
 		somefunc(array('fname'=>'jack','mname'=>'city','lname'=>'brown'));
 		or
 		somefunc(array('lname'=>'brown','fname'=>'jack','mname'=>'city'));
-		
+
 		For the last one, when using named params in an array you dont have to follow any order
 		All three would result in - Full name: jack city brown<br>
-		
+
 		When you use this method of handling params you can secure your functions as well offer
 		flexibility needed for both normal use and web services use.
 		If you have params that are required just set the default as ##REQUIRED##
-		Users of your functions can also use ##DEFAULT## to use your default value for a param 
+		Users of your functions can also use ##DEFAULT## to use your default value for a param
 		when using the standard format like this:
 		somefunc('jack','##DEFAULT##','brown');
 		This would result in - Full name: jack hick brown<br>
@@ -210,7 +210,7 @@
 		/* This array will contain all types for sanatization checking */
 		/* only used when an array is passed as the first arg          */
 		$types = Array();
-		
+
 		/* start by looping thru the expected list and set params with */
 		/* the default values                                          */
 		$num = count($expected);
@@ -221,9 +221,9 @@
 			{
 				$required[$expected[$i]['name']] = True;
 			}
-			$types[$expected[$i]['name']] = $expected[$i]['type']; 
+			$types[$expected[$i]['name']] = $expected[$i]['type'];
 		}
-		
+
 		/* Make sure they passed at least one param */
 		if(count($recieved) != 0)
 		{
@@ -252,7 +252,7 @@
 			{
 				for ($i = 0; $i < $num; $i++)
 				{
-					$types[$expected[$i]['name']] = $expected[$i]['type']; 
+					$types[$expected[$i]['name']] = $expected[$i]['type'];
 				}
 				while(list($key,$val) = each($recieved[0]))
 				{
@@ -287,7 +287,7 @@
 	 * Validate data.
 	 *
 	 * @author seek3r
-	 * This function is used to validate input data. 
+	 * This function is used to validate input data.
 	 * sanitize('number',$somestring);
 	 */
 	function sanitize($string,$type)
@@ -387,7 +387,7 @@
 				{
 					$pass_verify_non_alpha = True;
 				}
-				
+
 				if(@isset($GLOBALS['egw_info']['server']['pass_require_numbers']) && $GLOBALS['egw_info']['server']['pass_require_numbers'] == True)
 				{
 					$pass_verify_num = False;
@@ -405,7 +405,7 @@
 				{
 					$pass_verify_special_char = True;
 				}
-				
+
 				if ($password_length >= $min_length)
 				{
 					for ($i=0; $i != $password_length; $i++)
@@ -439,7 +439,7 @@
 					{
 						$GLOBALS['egw_info']['flags']['msgbox_data']['Password requires at least one special character (non-letter and non-number)']=False;
 					}
-					
+
 					if ($pass_verify_num == True && $pass_verify_special_char == True)
 					{
 						return True;
@@ -649,7 +649,7 @@
 	 * retrieve a value from either a POST, GET, COOKIE, SERVER or from a class variable.
 	 *
 	 * @author skeeter
-	 * This function is used to retrieve a value from a user defined order of methods. 
+	 * This function is used to retrieve a value from a user defined order of methods.
 	 * $this->id = get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
 	 * @param $variable name
 	 * @param $method ordered array of methods to search for supplied variable
@@ -667,7 +667,7 @@
 	/**
 	 * Load a class and include the class file if not done so already.
 	 *
-	 * This function is used to create an instance of a class, and if the class file has not been included it will do so. 
+	 * This function is used to create an instance of a class, and if the class file has not been included it will do so.
 	 * $GLOBALS['egw']->acl =& CreateObject('phpgwapi.acl');
 	 *
 	 * @author RalfBecker@outdoor-training.de
@@ -678,7 +678,7 @@
 	function &CreateObject($class)
 	{
 		list($appname,$classname) = explode('.',$class);
-		
+
 		if ($classname == 'datetime') $classname = 'egw_datetime';	// php5.2 fix
 
 		include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
@@ -736,13 +736,13 @@
 		{
 			$obj =& CreateObject($acm);
 		}
-		
+
 		if (!method_exists($obj,$method))
 		{
 			echo "<p><b>".function_backtrace()."</b>: no methode '$method' in class '$class'</p>\n";
 			return False;
 		}
-		
+
 		$args = func_get_args();
 		unset($args[0]);
 
@@ -793,7 +793,7 @@
 			return $GLOBALS[$classname]->$functionname();
 		}
 		/* if the $method includes a parent class (multi-dimensional) then we have to work from it */
-/* RalfBecker: let's check if this is still in use, I don't think so: 
+/* RalfBecker: let's check if this is still in use, I don't think so:
 		elseif ($partscount >= 3)
 		{
 			$GLOBALS['methodparts'] = explode(".", $method);
@@ -861,7 +861,7 @@
 	  * duplicates the result of copying an object under php3/4 even when using php5
 	  *
 	  * This is critical when looping on db object output and updating or inserting to the database using a copy of the db object.  This was first added to GroupWhere
-	  * 
+	  *
 	  * @deprecated use $copy = clone($obj);
 	  * @author milosch
 	  * @param $a   - Source Object
@@ -950,7 +950,7 @@
 	function _debug_array($array,$print=True)
 	{
 		$output = '<pre>'.print_r($array,true)."</pre>\n";
-		
+
 		if ($print)
 		{
 			echo $output;
@@ -1128,7 +1128,7 @@
 			return False;
 		}
 	}
-	
+
 	/**
 	 * prepend a prefix to an array of table names
 	 *
@@ -1164,7 +1164,8 @@
 				if ($remove-- < 0)
 				{
 					$ret[] = (isset($level['class'])?$level['class'].'::':'').$level['function'].
-						(!$level['class'] && !is_object($level['args'][0]) ? '('.str_replace(EGW_SERVER_ROOT,'',$level['args'][0]).')' : '');
+						(!$level['class'] && !is_object($level['args'][0]) && $level['function'] != 'unserialize' ?
+						'('.substr(str_replace(EGW_SERVER_ROOT,'',$level['args'][0]),0,64).')' : '');
 				}
 			}
 			if (is_array($ret))
@@ -1178,7 +1179,7 @@
 	/**
 	 * check $_REQUEST data for XSS, vars containing script tags are moved to $GLOBALS['egw_unset_vars']
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$var reference of array to check
 	 * @param string $name='' name of the array
 	 */
@@ -1206,7 +1207,7 @@
 			reset($var);
 		}
 	}
-		
+
 	foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)
 	{
 		$pregs = array(
@@ -1287,10 +1288,10 @@
 			return $GLOBALS['egw']->translation->translate($key,$vars);
 		}
 	}
-	
+
 	/**
 	 * Translate message only if translation object is already loaded
-	 * 
+	 *
 	 * This function is usefull for exception handlers or early stages of the initialisation of the egw object,
 	 * as calling lang would try to load the translations, evtl. cause more errors, eg. because there's no db-connection.
 	 *
@@ -1307,7 +1308,7 @@
 			$vars = func_get_args();
 			array_shift($vars);	// remove $key
 		}
-		return is_object($GLOBALS['egw'])  && isset($GLOBALS['egw']->translations) ? 
+		return is_object($GLOBALS['egw'])  && isset($GLOBALS['egw']->translations) ?
 			$GLOBALS['egw']->translation->translate($key,$vars) :
 			str_replace($varnames,$vars,$key);
 	}
@@ -1342,7 +1343,7 @@ function __autoload($class)
 	{
 		//error_log("autoloaded class $class from $file");
 		include_once($file);
-	} 
+	}
 	else
 	{
 		if (is_array($GLOBALS['egw_info']['apps'])) {
@@ -1357,10 +1358,10 @@ function __autoload($class)
 		}
 	}
 }
-	
+
 /**
  * Fail a little bit more gracefully then an uncought exception
- * 
+ *
  * Does NOT return
  *
  * @param Exception $e
@@ -1385,7 +1386,7 @@ function egw_exception_handler(Exception $e)
 
 	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session))
 	{
-		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';	
+		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';
 	}
 	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->framework))
 	{
@@ -1401,5 +1402,5 @@ function egw_exception_handler(Exception $e)
 	}
 	exit;
 }
-		
+
 set_exception_handler('egw_exception_handler');
