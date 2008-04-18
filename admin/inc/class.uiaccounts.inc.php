@@ -38,7 +38,12 @@
 			'calendar'    => True,
 			'projects'    => True,
 			'infolog'     => True,
-			'filemanager' => True,
+			'filemanager' => array(
+				'menuaction' => 'filemanager.filemanager_ui.file',
+				'path' => '/home/$account_lid',
+				'tabs' => 'eacl',
+				'popup' => '495x400',
+			),
 			'tts'         => True,
 			'bookmarks'   => True,
 			'img'         => True,
@@ -358,7 +363,7 @@
 			}
 			$account_info = $GLOBALS['egw']->accounts->search($search_param);
 			$total = $GLOBALS['egw']->accounts->total;
-			
+
 			$link_data = array(
 				'menuaction' => 'admin.uiaccounts.list_users',
 				'group_id'   => $_REQUEST['group_id'],
@@ -455,9 +460,9 @@
 					{
 						$account['account_status'] = '<font color="red">' . lang('Disabled') . '</font>';
 					}
-					if (isset($account['account_created'])) 
+					if (isset($account['account_created']))
 						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_created'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
-					if (isset($account['account_modified'])) 
+					if (isset($account['account_modified']))
 						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_modified'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 
 
@@ -754,7 +759,7 @@
 					}
 				}
 				@reset($account_apps);
-	
+
 				$group_info = Array(
 					'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
 					'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
@@ -1215,11 +1220,13 @@
 					$tr_class = $this->nextmatchs->alternate_row_color('',True);
 					$perm_html .= '<tr class="'.$tr_class.'">';
 				}
+				$acl_action = self::_acl_action($app,$group_info['account_id'],$group_info['account_name'],$options);
+
 				$perm_html .= '<td>' . $perm_display[$i][1] . '</td>'
 					. '<td><input type="checkbox" name="account_apps['
 					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'> '
-					. ($this->apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$group_info['account_id'])
-					. '"><img src="'.$GLOBALS['egw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
+					. ($acl_action?'<a href="'.$acl_action.'"'.$options
+					. '><img src="'.$GLOBALS['egw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
 					. lang('Grant Access').': '.lang("edit group ACL's").'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
 			}
 			if($i & 1)
@@ -1239,6 +1246,39 @@
 			$p->set_var('select','');
 			$p->set_var('popwin','');
 			$p->pfp('out','edit');
+		}
+
+		private function _acl_action($app,$account_id,$account_lid,&$options)
+		{
+			$options = '';
+			if (!($acl_action = $this->apps_with_acl[$app]) || !$account_id)
+			{
+				return false;
+			}
+			if ($acl_action === true)
+			{
+				$acl_action = array(
+					'menuaction' => 'preferences.uiaclprefs.index',
+					'acl_app' => '$app',
+					'owner'   => '$account_id',
+				);
+			}
+			$replacements = array(
+				'$app' => $app,
+				'$account_id' => $account_id,
+				'$account_lid' => $account_lid,
+			);
+			foreach($acl_action as $name => &$value)
+			{
+				$value = str_replace(array_keys($replacements),array_values($replacements),$value);
+			}
+			if ($acl_action['popup'])
+			{
+				list($w,$h) = explode('x',$acl_action['popup']);
+				$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+				unset($acl_action['popup']);
+			}
+			return $GLOBALS['egw']->link('/index.php',$acl_action);
 		}
 
 		function create_edit_user($_account_id,$_userData='',$_errors='')
@@ -1480,10 +1520,11 @@
 					continue;
 				}
 				$checked = (@$userData['account_permissions'][$app] || @$db_perms[$app]) && $_account_id ? ' checked="1"' : '';
+				$acl_action = self::_acl_action($app,$_account_id,$userData['account_lid'],$options);
 				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s>',
 					$data['title'],$app,$checked).
-					($this->apps_with_acl[$app] && $_account_id?'<a href="'.$GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$_account_id)
-					. '"><img src="'.$GLOBALS['egw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
+					($acl_action?'<a href="'.$acl_action.'"'.$options
+					. '><img src="'.$GLOBALS['egw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
 					. lang('Grant Access').'"></a>':'&nbsp;').'</td>';
 
 				if ($i & 1)
