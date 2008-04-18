@@ -40,6 +40,7 @@ failed to create directory!	filemanager	en	Failed to create directory!
 file deleted.	filemanager	en	File deleted.
 file or directory not found!	filemanager	en	File or directory not found!
 file successful uploaded.	filemanager	en	File successful uploaded.
+filemanager	common	en	Filemanager
 general	filemanager	en	General
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory

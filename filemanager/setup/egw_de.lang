@@ -40,6 +40,7 @@ failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
 file deleted.	filemanager	de	Datei gelöscht.
 file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
+filemanager	common	de	Dateimanager
 general	filemanager	de	Allgemein
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
