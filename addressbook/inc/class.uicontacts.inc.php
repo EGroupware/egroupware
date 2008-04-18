@@ -9,7 +9,7 @@
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
@@ -31,7 +31,7 @@ class uicontacts extends bocontacts
 	);
 	/**
 	 * use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
-	 * 
+	 *
 	 * @var boolean
 	 */
 	var $private_addressbook = false;
@@ -72,12 +72,12 @@ class uicontacts extends bocontacts
 		}
 		$this->config =& $GLOBALS['egw_info']['server'];
 	}
-	
+
 	/**
 	 * List contacts of an addressbook
 	 *
 	 * @param array $content=null submitted content
-	 * @param string $msg=null	message to show	
+	 * @param string $msg=null	message to show
 	 * @param boolean $do_email=false do an email-selection popup or the regular index-page
 	 */
 	function index($content=null,$msg=null,$do_email=false)
@@ -243,7 +243,7 @@ class uicontacts extends bocontacts
 		}
 		$sel_options['action'] += array(
 			'delete' => lang('Delete'),
-			'csv'    => lang('Export as CSV'), 
+			'csv'    => lang('Export as CSV'),
 			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
 			'merge'  => lang('Merge into first or account, deletes all other!'),
 			'cat_add' => lang('Add or delete Categoies'), // add a categirie to multible addresses
@@ -272,14 +272,14 @@ class uicontacts extends bocontacts
 			$sel_options['action']['remove_from_list'] = lang('Remove selected contacts from distribution list');
 			$sel_options['action']['delete_list'] = lang('Delete selected distribution list!');
 		}
-		
-		
+
+
 		if ($this->prefs['document_dir'])
 		{
 			$sel_options['action'][lang('Insert in document').':'] = $this->get_document_actions();
 		}
 		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
-		
+
 		// dont show tid-selection if we have only one content_type
 		if (count($this->content_types) <= 1)
 		{
@@ -305,26 +305,26 @@ class uicontacts extends bocontacts
 			foreach(explode('|||',$content['nm']['org_view']) as $part)
 			{
 				list(,$name) = explode(':',$part,2);
-				if ($name) $org_name[] = $name; 
+				if ($name) $org_name[] = $name;
 			}
 			$org_name = implode(': ',$org_name);
 			$sel_options['org_view'][(string) $content['nm']['org_view']] = $org_name;
 		}
 		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
-		
+
 		$this->tmpl->read(/*$do_email ? 'addressbook.email' :*/ 'addressbook.index');
 		return $this->tmpl->exec($do_email ? 'addressbook.uicontacts.emailpopup' : 'addressbook.uicontacts.index',
 			$content,$sel_options,$readonlys,$preserv,$do_email ? 2 : 0);
 	}
-	
+
 	/**
 	 * Email address-selection popup
 	 *
 	 * @param array $content=null submitted content
-	 * @param string $msg=null	message to show	
+	 * @param string $msg=null	message to show
 	 */
 	function emailpopup($content=null,$msg=null)
-	{	
+	{
 		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'addEmail') === false)
 		{
 			if ($_GET['compat'])	// 1.2 felamimail or old email
@@ -342,11 +342,11 @@ class uicontacts extends bocontacts
 			$GLOBALS['egw_info']['flags']['java_script'].= "
 <script>
 	window.focus();
-		
+
 	function addEmail(email)
 	{
 		var to = 'to';
-		if (document.getElementById('exec[nm][to][cc]').checked == true) 
+		if (document.getElementById('exec[nm][to][cc]').checked == true)
 		{
 			to = 'cc';
 		}
@@ -364,7 +364,7 @@ class uicontacts extends bocontacts
 		}
 		return $this->index($content,$msg,true);
 	}
-	
+
 	/**
 	 * Show the infologs of an whole organisation
 	 *
@@ -399,7 +399,7 @@ class uicontacts extends bocontacts
 			'action_title' => $org,
 		));
 	}
-	
+
 	function ajax_add_whole_list($list, $email_type = 'email')
 	{
 		$query = $GLOBALS['egw']->session->appsession('email','addressbook');
@@ -428,7 +428,7 @@ class uicontacts extends bocontacts
 		}
 		return $response->getXML();
 	}
-	
+
 	/**
 	 * apply an action to multiple contacts
 	 *
@@ -443,13 +443,13 @@ class uicontacts extends bocontacts
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
 	{
-		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
+		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
 		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
 		{
 			// get the whole selection
 			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession($session_name,'addressbook');
-			
+
 			if ($use_all)
 			{
 				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
@@ -474,11 +474,11 @@ class uicontacts extends bocontacts
 				unset($query['filter2']);
 				$this->get_rows($query,$extra,$readonlys,true);	// true = only return the id's
 				if ($extra[0]) $org_contacts = array_merge($org_contacts,$extra);
-			}		
+			}
 		}
 		if ($org_contacts) $checked = array_unique($checked ? array_merge($checked,$org_contacts) : $org_contacts);
 		//_debug_array($checked); exit;
-		
+
 		if (substr($action,0,8) == 'move_to_')
 		{
 			$action = (int)substr($action,8);
@@ -494,7 +494,7 @@ class uicontacts extends bocontacts
 			$action = 'document';
 		}
 		// Security: stop non-admins to export more then the configured number of contacts
-		if (in_array($action,array('csv','vcard')) && (int)$this->config['contact_export_limit'] && 
+		if (in_array($action,array('csv','vcard')) && (int)$this->config['contact_export_limit'] &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']) && count($checked) > $this->config['contact_export_limit'])
 		{
 			$action_msg = lang('exported');
@@ -532,8 +532,8 @@ class uicontacts extends bocontacts
 				ExecMethod('addressbook.vcaladdressbook.export',$checked);
 				// does not return!
 				$Ok = false;
-				break;		
-						
+				break;
+
 			case 'infolog':
 				$GLOBALS['egw']->redirect_link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.index',
@@ -542,7 +542,7 @@ class uicontacts extends bocontacts
 					'action_title' => count($checked) > 1 ? lang('selected contacts') : '',
 				));
 				break;
-				
+
 			case 'merge':
 				$success = $this->merge($checked,$error_msg);
 				$failed = count($checked) - (int)$success;
@@ -566,11 +566,11 @@ class uicontacts extends bocontacts
 					$GLOBALS['egw']->session->appsession($session_name,'addressbook',$query);
 				}
 				return false;
-			
+
 			case 'document':
 				$msg = $this->download_document($checked,$document);
 				return false;
-				
+
 			case 'cat_add':
 				foreach($checked as $id)
 				{
@@ -582,7 +582,7 @@ class uicontacts extends bocontacts
 						//categarie add
 						if ((!($cat_ids_new = $GLOBALS['egw']->session->appsession('cat_add','addressbook')) && !($cat_ids_new = $GLOBALS['egw']->session->appsession('cat_delete','addressbook'))))
 						{
-							$action_msg = lang('no categories selected');						
+							$action_msg = lang('no categories selected');
 						}
 						if ($GLOBALS['egw']->session->appsession('cat_add','addressbook'))
 						{
@@ -634,7 +634,7 @@ class uicontacts extends bocontacts
 							$Ok = $this->delete($id);
 						}
 						// delete single account --> redirect to admin
-						elseif (count($checked) == 1 && $contact['account_id'])	
+						elseif (count($checked) == 1 && $contact['account_id'])
 						{
 							$GLOBALS['egw']->redirect_link('/index.php',array(
 								'menuaction' => 'admin.uiaccounts.delete_user',
@@ -648,7 +648,7 @@ class uicontacts extends bocontacts
 						}
 					}
 					break;
-					
+
 				case 'email':
 				case 'email_home':
 					$action == 'email' ? $action_fallback = 'email_home' : $action_fallback = 'email';
@@ -675,7 +675,7 @@ class uicontacts extends bocontacts
 						}
 					}
 					break;
-					
+
 				case 'remove_from_list':
 					$action_msg = lang('removed from distribution list');
 					if (!$query['filter2'])
@@ -688,7 +688,7 @@ class uicontacts extends bocontacts
 						$Ok = $this->remove_from_list($id,$query['filter2']) !== false;
 					}
 					break;
-					
+
 				case 'to_list':
 					$action_msg = lang('added to distribution list');
 					if (!$to_list)
@@ -737,7 +737,7 @@ class uicontacts extends bocontacts
 	/**
 	 * rows callback for index nextmatch
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$query
 	 * @param array &$rows returned rows/cups
 	 * @param array &$readonlys eg. to disable buttons based on acl
@@ -748,7 +748,7 @@ class uicontacts extends bocontacts
 	{
 		$do_email = $query['do_email'];
 		// is this wanted???
-		if ($query['sitemgr_display']) 
+		if ($query['sitemgr_display'])
 		{
 			$old_state = $GLOBALS['egw']->session->appsession($query['sitemgr_display'],'addressbook');
 		} else {
@@ -770,7 +770,7 @@ class uicontacts extends bocontacts
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
-		if ($do_email && $GLOBALS['egw_info']['etemplate']['loop'] && is_object($GLOBALS['egw']->js))	
+		if ($do_email && $GLOBALS['egw_info']['etemplate']['loop'] && is_object($GLOBALS['egw']->js))
 		{	// remove previous addEmail() calls, otherwise they will be run again
 			$GLOBALS['egw']->js->body['onLoad'] = preg_replace('/addEmail\([^)]+\);/','',$GLOBALS['egw']->js->body['onLoad']);
 		}
@@ -793,7 +793,7 @@ class uicontacts extends bocontacts
 			{
 				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one organisation
 			}
-			if ($query['sitemgr_display']) 
+			if ($query['sitemgr_display'])
 			{
 				$old_state = $GLOBALS['egw']->session->appsession($query['sitemgr_display'],'addressbook',$query);
 			} else {
@@ -854,7 +854,7 @@ class uicontacts extends bocontacts
 		}
 		// enable/disable distribution lists depending on backend
 		$query['no_filter2'] = !$this->lists_available($query['filter']);
-	
+
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
 			unset($query['col_filter']['list']);	// does not work together
@@ -868,7 +868,7 @@ class uicontacts extends bocontacts
 				$query['order'] = 'org_name';
 			}
 			$rows = parent::organisations($query);
-			
+
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualAddressbookIndexOrga');
 		}
 		else	// contacts view
@@ -938,7 +938,7 @@ class uicontacts extends bocontacts
 			// do we need to read the custom fields, depends on the column is enabled and customfields exist
 			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
 			$available_distib_lists=$this->get_lists(EGW_ACL_EDIT);
-			if ($columselection) $columselection = explode(',',$columselection);
+			$columselection = $columselection ? explode(',',$columselection) : array();
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->customfields;
@@ -959,7 +959,7 @@ class uicontacts extends bocontacts
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
 					if ($show_calendar) $calendar = $this->read_calendar($ids);
-					// distributionlist memership for the entrys 
+					// distributionlist memership for the entrys
 					//_debug_array($this->get_lists(EGW_ACL_EDIT));
 					if ($show_distributionlist && $available_distib_lists)
 					{
@@ -979,13 +979,13 @@ class uicontacts extends bocontacts
 			return $this->total;	// no need to set other fields or $readonlys
 		}
 		$order = $query['order'];
-		
+
 		$readonlys = array();
 		$photos = $homeaddress = false;
 		foreach($rows as $n => $val)
 		{
 			$row =& $rows[$n];
-			
+
 			$given = $row['n_given'] ? $row['n_given'] : ($row['n_prefix'] ? $row['n_prefix'] : '');
 
 			switch($order)
@@ -1012,14 +1012,14 @@ class uicontacts extends bocontacts
 			{
 				$row['type'] = 'home';
 				$row['type_label'] = lang('Organisation');
-				
+
 				$readonlys["delete[$row[id]]"] = $query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE);
 				$readonlys["infolog[$row[id]]"] = !$GLOBALS['egw_info']['user']['apps']['infolog'];
 			}
 			else
 			{
 				$this->type_icon($row['owner'],$row['private'],$row['tid'],$row['type'],$row['type_label']);
-				
+
 				static $tel2show = array('tel_work','tel_cell','tel_home');
 				foreach($tel2show as $name)
 				{
@@ -1049,9 +1049,9 @@ class uicontacts extends bocontacts
 				}
 				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row);
 				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
-				
+
 				if ($row['photo']) $photos = true;
-				
+
 				if (isset($customfields[$row['id']]))
 				{
 					foreach($this->customfields as $name => $data)
@@ -1103,13 +1103,13 @@ class uicontacts extends bocontacts
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
 		$rows['customfields'] = array_values($this->customfields);
-		
+
 		// full app-header with all search criteria specially for the print
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('addressbook');
 		if ($query['filter'] !== '' && !isset($this->org_views[$query['org_view']]))
-		{ 
+		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' '.($query['filter'] == '0' ? lang('accounts') :
-				($GLOBALS['egw']->accounts->get_type($query['filter']) == 'g' ? 
+				($GLOBALS['egw']->accounts->get_type($query['filter']) == 'g' ?
 					lang('Group %1',$GLOBALS['egw']->accounts->id2name($query['filter'])) :
 					$GLOBALS['egw']->common->grab_owner_name((int)$query['filter']).
 						(substr($query['filter'],-1) == 'p' ? ' ('.lang('private').')' : '')));
@@ -1118,7 +1118,7 @@ class uicontacts extends bocontacts
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$query['org_view_label'];
 		}
-		if($query['advanced_search']) 
+		if($query['advanced_search'])
 		{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Advanced search');
 		}
@@ -1142,7 +1142,7 @@ class uicontacts extends bocontacts
 	 * Get addressbook type icon from owner, private and tid
 	 *
 	 * @param int $owner user- or group-id or 0 for accounts
-	 * @param boolean $private 
+	 * @param boolean $private
 	 * @param string $tid 'n' for regular addressbook
 	 * @param string &$icon icon-name
 	 * @param string &$label translated label
@@ -1174,7 +1174,7 @@ class uicontacts extends bocontacts
 		{
 			$icon = 'personal';
 			$label = $owner == $this->user ? lang('personal') : $GLOBALS['egw']->common->grab_owner_name($owner);
-		}					
+		}
 	}
 
 	/**
@@ -1183,7 +1183,7 @@ class uicontacts extends bocontacts
 	 * @param int $required=EGW_ACL_READ required rights on the addressbook
 	 * @param string $extra_label first label if given (already translated)
 	 * @return array with owner => label pairs
-	 */ 
+	 */
 	function get_addressbooks($required=EGW_ACL_READ,$extra_label=null)
 	{
 		//echo "uicontacts::get_addressbooks($required,$include_all) grants="; _debug_array($this->grants);
@@ -1220,7 +1220,7 @@ class uicontacts extends bocontacts
 	}
 
 	/**
-	* Edit a contact 
+	* Edit a contact
 	*
 	* @param array $content=null submitted content
 	* @param int $_GET['contact_id'] contact_id manly for popup use
@@ -1240,7 +1240,7 @@ class uicontacts extends bocontacts
 				case 'save':
 				case 'apply':
 					if ($content['delete_photo']) $content['jpegphoto'] = null;
-					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) && 
+					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) &&
 						$content['upload_photo']['tmp_name'] != 'none')
 					{
 						$content['jpegphoto'] = $this->resize_photo($content['upload_photo']);
@@ -1280,7 +1280,7 @@ class uicontacts extends bocontacts
 						$button = 'apply';	// to not leave the dialog
 					}
 					// writing links for new entry, existing ones are handled by the widget itself
-					if ($links && $content['id'])	
+					if ($links && $content['id'])
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
@@ -1303,7 +1303,7 @@ class uicontacts extends bocontacts
 						var referer = opener.location;
 						opener.location.href = referer+(referer.search?'&':'?')+'msg=".addslashes(urlencode($content['msg']))."';</script>";
 					break;
-					
+
 				case 'delete':
 					if($this->action('delete',array($content['id'])))
 					{
@@ -1343,7 +1343,7 @@ class uicontacts extends bocontacts
 				}
 				elseif ($GLOBALS['egw_info']['user']['preferences']['common']['country'])
 				{
-					$content['adr_one_countryname'] = 
+					$content['adr_one_countryname'] =
 						$GLOBALS['egw']->country->get_full_name($GLOBALS['egw_info']['user']['preferences']['common']['country']);
 				}
 				if (isset($_GET['owner']) && $_GET['owner'] !== '')
@@ -1417,7 +1417,7 @@ class uicontacts extends bocontacts
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
-		
+
 		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
@@ -1447,7 +1447,7 @@ class uicontacts extends bocontacts
 		$readonlys[$this->tabs]['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
-				
+
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->is_admin($content))
 		{
@@ -1478,7 +1478,7 @@ class uicontacts extends bocontacts
 		if ($content['private']) $content['owner'] .= 'p';
 
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		
+
 		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template']))
 		{
 			$content['msg']  = lang('WARNING: Template "%1" not found, using default template instead.', $this->content_types[$content['tid']]['options']['template'])."\n";
@@ -1487,7 +1487,7 @@ class uicontacts extends bocontacts
 		}
 		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$content, 2);
 	}
-	
+
 	/**
 	 * Set the readonlys for non-admins editing their own account
 	 *
@@ -1504,9 +1504,9 @@ class uicontacts extends bocontacts
 				$readonlys[$field] = true;
 				switch($field)
 				{
-					case 'tel_work': 
-					case 'tel_cell': 
-					case 'tel_home': 
+					case 'tel_work':
+					case 'tel_cell':
+					case 'tel_home':
 						$readonlys[$field.'2'] = true;
 						break;
 					case 'n_fileas':
@@ -1532,7 +1532,7 @@ class uicontacts extends bocontacts
 			$readonlys['link_to'] = true;
 		}
 	}
-			
+
 	function ajax_setFileasOptions($n_prefix,$n_given,$n_middle,$n_family,$n_suffix,$org_name)
 	{
 		$names = array(
@@ -1548,7 +1548,7 @@ class uicontacts extends bocontacts
 
 		return $response->getXML();
 	}
-	
+
 	/**
 	 * resizes the uploaded photo to 60*80 pixel and returns it
 	 *
@@ -1576,7 +1576,7 @@ class uicontacts extends bocontacts
 		if (!$upload) return null;
 
 		list($src_w,$src_h) = getimagesize($file['tmp_name']);
-		
+
 		// scale the image to a width of 60 and a height according to the proportion of the source image
 		$photo = imagecreatetruecolor($dst_w = 60,$dst_h = round($src_h * 60 / $src_w));
 		imagecopyresized($photo,$upload,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);
@@ -1589,10 +1589,10 @@ class uicontacts extends bocontacts
 
 		imagedestroy($photo);
 		imagedestroy($upload);
-		
+
 		return $jpeg;
-	}		
-	
+	}
+
 	function view($content=null)
 	{
 		if(is_array($content))
@@ -1630,7 +1630,7 @@ class uicontacts extends bocontacts
 			{
 				$readonlys[$key.'2'] = true;
 				$content[$key.'2'] = $content[$key];
-			}				
+			}
 		}
 		$content['view'] = true;
 		$content['link_to'] = array(
@@ -1648,7 +1648,7 @@ $readonlys['button[vcard]'] = true;
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
-		
+
 		$sel_options['fileas_type'][$content['fileas_type']] = $this->fileas($content);
 		$sel_options['owner'] = $this->get_addressbooks();
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
@@ -1701,7 +1701,7 @@ $readonlys['button[vcard]'] = true;
 		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys[$this->tabs]['distribution_list'] = !$content['distrib_lists'];#false;
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
-	
+
 		// last and next calendar date
 		list(,$dates) = each($this->read_calendar(array($content['id']),false));
 		if(is_array($dates)) $content += $dates;
@@ -1716,7 +1716,7 @@ $readonlys['button[vcard]'] = true;
 			'ab_id'    => $content['id']
 		));
 	}
-	
+
 	/**
 	 * convert email-address in compose link
 	 *
@@ -1754,11 +1754,11 @@ $readonlys['button[vcard]'] = true;
 	{
 		if(!empty($_content)) {
 			$response = new xajaxResponse();
-			
+
 			$query = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
-			
+
 			$query['advanced_search'] = array_intersect_key($_content,array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
-			foreach ($query['advanced_search'] as $key => $value) 
+			foreach ($query['advanced_search'] as $key => $value)
 			{
 				if(!$value) unset($query['advanced_search'][$key]);
 			}
@@ -1769,7 +1769,7 @@ $readonlys['button[vcard]'] = true;
 
 			// store the advanced search in the session to call it again
 			$GLOBALS['egw']->session->appsession('advanced_search','addressbook',$query['advanced_search']);
-			
+
 			$response->addScript("
 				var link = opener.location.href;
 				link = link.replace(/#/,'');
@@ -1779,21 +1779,21 @@ $readonlys['button[vcard]'] = true;
 			return $response->getXML();
 		}
 		else {
-			
+
 		}
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.focus()</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
-		
+
 		// initialize etemplate arrays
 		$sel_options = $readonlys = $preserv = array();
 		$content = $GLOBALS['egw']->session->appsession('advanced_search','addressbook');
-		
+
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
 		$sel_options['tid'][] = lang('all');
 		//foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
-		
+
 		// configure search options
 		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ,lang('all'));
 		$sel_options['operator'] =  array(
@@ -1822,7 +1822,7 @@ $readonlys['button[vcard]'] = true;
 		$readonlys['button'] = true;
 		// disable not needed tabs
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys[$this->tabs]['custom'] = !$this->customfields;		
+		$readonlys[$this->tabs]['custom'] = !$this->customfields;
 		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys[$this->tabs]['links'] = true;
 		$readonlys[$this->tabs]['distribution_list'] = true;
@@ -1840,9 +1840,9 @@ $readonlys['button[vcard]'] = true;
 	function photo()
 	{
 		ob_start();
-		$contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] : 
+		$contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] :
 			(isset($_GET['account_id']) ? 'account:'.$_GET['account_id'] : 0);
-		
+
 		if (substr($contact_id,0,8) == 'account:')
 		{
 			$contact_id = $GLOBALS['egw']->accounts->id2name(substr($contact_id,8),'person_id');
@@ -1859,10 +1859,10 @@ $readonlys['button[vcard]'] = true;
 			exit;
 		}
 	}
-	
+
 	/**
 	 * returns link to call the given phonenumber
-	 * 
+	 *
 	 * replaces '%1' with the phonenumber to call, '%u' with the user's account_lid and '%t' with his work-phone-number
 	 *
 	 * @param string $number phone number
@@ -1888,8 +1888,8 @@ $readonlys['button[vcard]'] = true;
 	function js()
 	{
 		return '<script LANGUAGE="JavaScript">
-		
-		function showphones(form) 
+
+		function showphones(form)
 		{
 			if (form) {
 				copyvalues(form,"tel_home","tel_home2");
@@ -1898,8 +1898,8 @@ $readonlys['button[vcard]'] = true;
 				copyvalues(form,"tel_fax","tel_fax2");
 			}
 		}
-		
-		function hidephones(form) 
+
+		function hidephones(form)
 		{
 			if (form) {
 				copyvalues(form,"tel_home2","tel_home");
@@ -1908,7 +1908,7 @@ $readonlys['button[vcard]'] = true;
 				copyvalues(form,"tel_fax2","tel_fax");
 			}
 		}
-		
+
 		function copyvalues(form,src,dst){
 			var srcelement = getElement(form,src);  //ById("exec["+src+"]");
 			var dstelement = getElement(form,dst);  //ById("exec["+dst+"]");
@@ -1916,7 +1916,7 @@ $readonlys['button[vcard]'] = true;
 				dstelement.value = srcelement.value;
 			}
 		}
-		
+
 		function getElement(form,pattern){
 			for (i = 0; i < form.length; i++){
 				if(form.elements[i].name){
@@ -1927,7 +1927,7 @@ $readonlys['button[vcard]'] = true;
 				}
 			}
 		}
-		
+
 		function setName(input)
 		{
 			var prefix = document.getElementById("exec[n_prefix]").value;
@@ -1936,9 +1936,9 @@ $readonlys['button[vcard]'] = true;
 			var family = document.getElementById("exec[n_family]").value;
 			var suffix = document.getElementById("exec[n_suffix]").value;
 			var org    = document.getElementById("exec[org_name]").value;
-			
+
 			var name = document.getElementById("exec[n_fn]");
-			
+
 			name.value = "";
 			if (prefix) name.value += prefix+" ";
 			if (given) name.value += given+" ";
@@ -1948,10 +1948,10 @@ $readonlys['button[vcard]'] = true;
 
 			xajax_doXMLHTTP("addressbook.uicontacts.ajax_setFileasOptions",prefix,given,middle,family,suffix,org);
 		}
-		
+
 		function add_whole_list(list)
 		{
-			if (document.getElementById("exec[nm][email_type][email_home]").checked == true) 
+			if (document.getElementById("exec[nm][email_type][email_home]").checked == true)
 			{
 				email_type = "email_home";
 			}
@@ -1961,7 +1961,7 @@ $readonlys['button[vcard]'] = true;
 			}
 			xajax_doXMLHTTP("addressbook.uicontacts.ajax_add_whole_list",list,email_type);
 		}
-		
+
 		function setOptions(options_str)
 		{
 			var options = options_str.split("\\\\b");
@@ -1972,20 +1972,20 @@ $readonlys['button[vcard]'] = true;
 				selbox.options[i].text = options[i];
 			}
 		}
-		
+
 		function adb_get_selection(form)
 		{
 			var use_all = document.getElementById("exec[use_all]");
 			var action = document.getElementById("exec[action]");
 			egw_openWindowCentered(
-				"'. $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=addressbook'). 
+				"'. $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=addressbook').
 					'&selection="+( use_all.checked  ? "use_all" : get_selected(form,"[rows][checked][]")),
-				"Export",400,400); 
+				"Export",400,400);
 			action.value="";
 			use_all.checked = false;
-			return false;  
+			return false;
 		}
-		
+
 		function add_new_list(owner)
 		{
 			var name = window.prompt("'.lang('Name for the distribution list').'");
@@ -1999,13 +1999,13 @@ $readonlys['button[vcard]'] = true;
 		}
 		</script>';
 	}
-	
+
 	function migrate2ldap()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Migration to LDAP');
 		$GLOBALS['egw']->common->egw_header();
 		parse_navbar();
-		
+
 		if (!$this->is_admin())
 		{
 			echo '<h1>'.lang('Permission denied !!!')."</h1>\n";
@@ -2017,7 +2017,7 @@ $readonlys['button[vcard]'] = true;
 		}
 		$GLOBALS['egw']->common->egw_footer();
 	}
-	
+
 	/**
 	 * Download a document with inserted contact(s)
 	 *
@@ -2044,7 +2044,7 @@ $readonlys['button[vcard]'] = true;
 
 		return $document_merge->download($document,$ids);
 	}
-	
+
 	/**
 	 * Returning document actions / files from the document_dir
 	 *
@@ -2062,7 +2062,7 @@ $readonlys['button[vcard]'] = true;
 				foreach($files as $file)
 				{
 					// return only the mime-types we support
-					if (!($file['mime'] == 'application/rtf' || 
+					if (!($file['mime'] == 'application/rtf' ||
 						$file['mime'] == 'application/msword' && !strcasecmp(substr($file['name'],-4),'.rtf') ||
 						substr($file['mime'],0,5) == 'text/')) continue;
 					// As browsers not always return the right mime_type, you could use a negative list instead
@@ -2075,7 +2075,7 @@ $readonlys['button[vcard]'] = true;
 		}
 		return $actions;
 	}
-	
+
 	/**
 	 * Read the next and last event of given contacts
 	 *
@@ -2086,7 +2086,7 @@ $readonlys['button[vcard]'] = true;
 	function read_calendar($ids,$extra_title=true)
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return null;
-		
+
 		$uids = array();
 		foreach($ids as $id)
 		{
@@ -2101,7 +2101,7 @@ $readonlys['button[vcard]'] = true;
 			'enum_recuring' => true,
 		));
 		if (!$events) return array();
-		
+
 		//_debug_array($events);
 		$calendars = array();
 		foreach($events as $event)
@@ -2148,7 +2148,7 @@ $readonlys['button[vcard]'] = true;
 							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
 						}
 						$calendars[$id]['next_link'] = $link;
-					}					
+					}
 				}
 			}
 		}
@@ -2166,7 +2166,7 @@ $readonlys['button[vcard]'] = true;
 	{
 		if (is_array($content))
 		{
-			if ($content['cat_id'])   //add categorie  
+			if ($content['cat_id'])   //add categorie
 			{
 				if ($content['cat_add'])
 				{
@@ -2182,7 +2182,7 @@ $readonlys['button[vcard]'] = true;
 			echo "<html><head><script>$js window.close();</script></head><html>\n";
 			$GLOBALS['egw']->common->egw_exit();
 		}
-		$content['cat_tab'] = $this->config['cat_tab'];				
+		$content['cat_tab'] = $this->config['cat_tab'];
 
 		$this->tmpl->read('addressbook.index.cat_add');
 		return $this->tmpl->exec('addressbook.uicontacts.cat_add',$content,$sel_options,$readonlys,$content, 2);
