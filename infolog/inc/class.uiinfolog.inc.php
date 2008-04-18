@@ -36,7 +36,7 @@ class uiinfolog
 	var $prefs;
 	/**
 	 * instance of the bo-class
-	 * 
+	 *
 	 * @var boinfolog
 	 */
 	var $bo;
@@ -48,11 +48,11 @@ class uiinfolog
 	var $tmpl;
 	/**
 	 * allowed units and hours per day, can be overwritten by the projectmanager configuration, default all units, 8h
-	 * 
+	 *
 	 * @var string
 	 */
 	var $duration_format = ',';	// comma is necessary!
-	
+
 	var $icons = array(
 		'type' => array(
 			'task'      => 'task.gif',      'task_alt'      => 'Task',
@@ -116,9 +116,9 @@ class uiinfolog
 		$this->tmpl = new etemplate();
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
-		
+
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['infolog'];
-		
+
 		// read the duration format from project-manager
 		if ($GLOBALS['egw_info']['apps']['projectmanager'])
 		{
@@ -174,13 +174,13 @@ class uiinfolog
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 		$info['info_percent'] = (int) $info['info_percent'].'%';
-		
+
 		$readonlys["edit[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || // edit rights or more then standard responsible rights
 			$this->bo->is_responsible($info) && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')));
-		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = 
+		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
 			!($this->bo->check_access($info,EGW_ACL_EDIT) || $this->bo->is_responsible($info)));
-		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] = 
-			!$this->bo->check_access($info,EGW_ACL_EDIT) && !$this->bo->is_responsible($info) && 
+		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] =
+			!$this->bo->check_access($info,EGW_ACL_EDIT) && !$this->bo->is_responsible($info) &&
 			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
 		$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
 		$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
@@ -190,8 +190,8 @@ class uiinfolog
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 
-		if (($show_links != 'none' && $show_links != 'no_describtion' || 
-			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) && 
+		if (($show_links != 'none' && $show_links != 'no_describtion' ||
+			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
 			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id']))))
 		{
 			$timesheets = array();
@@ -209,7 +209,7 @@ class uiinfolog
 					$info['pm_id'] = $link['id'];
 				}
 				if ($link['app'] == 'timesheet') $timesheets[] = $link['id'];
-				
+
 				if ($link['app'] != 'timesheet' && $link['app'] != egw_link::VFS_APPNAME)
 				{
 					$info['extra_links'] .= '&link_app[]='.$link['app'].'&link_id[]='.$link['id'];
@@ -222,9 +222,9 @@ class uiinfolog
 			}
 		}
 		$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
-		$info['info_status_label'] = isset($this->bo->status[$info['info_type']][$info['info_status']]) ? 
+		$info['info_status_label'] = isset($this->bo->status[$info['info_type']][$info['info_status']]) ?
 			$this->bo->status[$info['info_type']][$info['info_status']] : $info['info_status'];
-		
+
 		if (!$this->prefs['show_percent'] || $this->prefs['show_percent'] == 2 && !$details)
 		{
 			if ($info['info_status'] == 'ongoing' && $info['info_type'] != 'phone')
@@ -326,12 +326,12 @@ class uiinfolog
         $details = $query['filter2'] == 'all';
 		$columselection = $this->prefs['nextmatch-infolog.index.rows'.($details?'-details':'')];
 		//_debug_array($columselection);
-		if ($columselection) 
+		if ($columselection)
 		{
-			$query['selectcols'] = $columselection; 
+			$query['selectcols'] = $columselection;
 			$columselection = explode(',',$columselection);
-		} 
-		else 
+		}
+		else
 		{
 			$columselection = $query['selectcols'] ? explode(',',$query['selectcols']) : array();
 		}
@@ -385,7 +385,7 @@ class uiinfolog
 		if ($query['no_actions']) $rows['no_actions'] = true;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 		$rows['duration_format'] = ','.$this->duration_format.',,1';
-		
+
 		// switch cf column off, if we have no cf's
 		if (!$query['custom_fields']) $rows['no_customfields'] = true;
 
@@ -398,7 +398,7 @@ class uiinfolog
 		}
 		//echo "<p>readonlys = "; _debug_array($readonlys);
 		//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
-		
+
 		// if filtered by type, show only the stati of the filtered type
 		if ($query['col_filter']['info_type'] && isset($this->bo->status[$query['col_filter']['info_type']]))
 		{
@@ -523,7 +523,7 @@ class uiinfolog
 				unset($session['action']);
 				unset($session['action_id']);
 				$this->save_sessiondata($session);
-				$this->tmpl->location($own_referer);					
+				$this->tmpl->location($own_referer);
 			}
 			else
 			{
@@ -602,7 +602,7 @@ class uiinfolog
 			{
 				$values['main']['no_'.$name] = strpos($this->prefs[$pref],$name) === false;
 			}
-			if (!$values['main']['no_customfields']) 
+			if (!$values['main']['no_customfields'])
 			{
 				// set the column-header of the main table for the customfields.
 				foreach($this->bo->customfields as $lname => $data)
@@ -617,7 +617,7 @@ class uiinfolog
 			$values['nm']['header_left'] = 'infolog.index.header_left';
 		}
 		$values['nm']['bottom_too'] = True;
-		$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ? 
+		$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ?
 			$this->prefs['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
 		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
@@ -643,7 +643,7 @@ class uiinfolog
 	{
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 		$referer = is_array($values) ? $values['referer'] : $referer;
-		
+
 		if ($info_id)
 		{
 			$values = array(
@@ -653,7 +653,7 @@ class uiinfolog
 				'info_datecompleted' => $this->bo->now_su,
 			);
 			$this->bo->write($values);
-			
+
 			$query = array('action'=>'sp','action_id'=>$info_id);
 			foreach((array)$this->bo->search($query) as $info)
 			{
@@ -670,7 +670,7 @@ class uiinfolog
 	{
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 		$referer = is_array($values) ? $values['referer'] : $referer;
-		
+
 		if (!is_array($values) && $info_id > 0 && !$this->bo->anzSubs($info_id))	// entries without subs get confirmed by javascript
 		{
 			$values = array('delete' => true);
@@ -709,15 +709,15 @@ class uiinfolog
 			'options-filter' => $this->filters,
 			'get_rows'       => 'infolog.uiinfolog.get_rows',
 			'no_filter2'     => True,
-			'never_hide'     => isset($this->prefs['never_hide']) ? 
-				$this->prefs['never_hide'] : 
+			'never_hide'     => isset($this->prefs['never_hide']) ?
+				$this->prefs['never_hide'] :
 				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15,
 		);
 		$values['main']['no_actions'] = $values['nm']['no_actions'] = True;
 
 		$persist['info_id'] = $info_id;
 		$persist['referer'] = $referer;
-		$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];				
+		$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];
 		$persist['called_by'] = $called_by;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
@@ -725,7 +725,7 @@ class uiinfolog
 
 		$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
 	}
-	
+
 	/**
 	 * Edit/Create an InfoLog Entry
 	 *
@@ -748,7 +748,7 @@ class uiinfolog
 			$referer   = $content['referer'];   unset($content['referer']);
 			$no_popup  = $content['no_popup'];  unset($content['no_popup']);
 			$caller    = $content['caller'];    unset($content['caller']);
-			
+
 			// convert custom from to 0 or 1, it's unset if not checked, which starts the detection
 			$content['info_custom_from'] = (int)$content['info_custom_from'];
 
@@ -830,7 +830,7 @@ class uiinfolog
 						}
 					}
 					// writing links for a new entry
-					if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))	
+					if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 					{
 						//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
 						egw_link::link('infolog',$info_id,$content['link_to']['to_id']);
@@ -907,12 +907,12 @@ class uiinfolog
 			//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
-			
+
 			if (is_numeric($_REQUEST['cat_id']))
 			{
 				$content['info_cat'] = (int) $_REQUEST['cat_id'];
 			}
-			if (!$content) 
+			if (!$content)
 			{
 				$content['info_cat'] = $this->prefs['cat_add_default'];
 			}
@@ -963,7 +963,7 @@ class uiinfolog
 			}
 			else
 			{
-				if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && 
+				if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) &&
 					!($undelete = $this->bo->check_access($info_id,EGW_ACL_UNDELETE)) &&
 					!$this->bo->is_responsible($content))
 				{
@@ -1133,7 +1133,7 @@ class uiinfolog
 					'Ca' => 'select-cat',
 					'Pr' => $this->bo->enums['priority'],
 					'Ow' => 'select-account',
-					//'Ac',	//	info_access: private||public 
+					//'Ac',	//	info_access: private||public
 					'St' => $this->bo->status[$content['info_type']]+array('deleted' => 'deleted'),
 					'Pe' => 'select-percent',
 					'Co' => 'date-time',
@@ -1208,7 +1208,7 @@ class uiinfolog
 	/**
 	 * stripping slashes from an array
 	 *
-	 * @static 
+	 * @static
 	 * @param array $arr
 	 * @return array
 	 */
@@ -1248,38 +1248,19 @@ class uiinfolog
 		);
 		if($_POST['save'] || $_POST['apply'])
 		{
-			$config =& CreateObject('phpgwapi.config','infolog');
-			$config->read_repository();
 			if (get_magic_quotes_gpc())
 			{
-			        $_POST = self::array_stripslashes($_POST);
-			}
-			$config->config_data['link_pathes'] = $this->bo->link_pathes = array();
-			$config->config_data['send_file_ips'] = $this->bo->send_file_ips = array();
-
-			$valid = get_var('valid',Array('POST'));
-			$trans = get_var('trans',Array('POST'));
-			$ip = get_var('ip',Array('POST'));
-			foreach($valid as $key => $val)
-			{
-			        if($val)
-			        {
-			                $config->config_data['link_pathes'][$val] = $this->bo->link_pathes[$val] = $trans[$key];
-			                $config->config_data['send_file_ips'][$val] = $this->bo->send_file_ips[$val] = $ip[$key];
-			        }
+				$_POST = self::array_stripslashes($_POST);
 			}
 			$this->bo->responsible_edit = array('info_status','info_percent','info_datecompleted');
 
 			if ($_POST['responsible_edit'])
 			{
-			        $extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
-			        $config->config_data['responsible_edit'] = $this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
+				$extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
+				config::save_value('responsible_edit',$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra),'infolog');
 			}
-			$config->config_data['implicit_rights'] = $this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
-
-			$config->config_data['history'] = $this->bo->history = $_POST['history'];
-
-			$config->save_repository(True);
+			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
+			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
 		}
 		if($_POST['cancel'] || $_POST['save'])
 		{
@@ -1307,9 +1288,6 @@ class uiinfolog
 			'save_button' => html::submit_button('save','Save'),
 			'apply_button' => html::submit_button('apply','Apply'),
 			'cancel_button' => html::submit_button('cancel','Cancel'),
-			'lang_valid'  => lang('valid path on clientside<br>eg. \\\\Server\\Share or e:\\'),
-			'lang_trans'  => lang('path on (web-)serverside<br>eg. /var/samba/Share'),
-			'lang_ip'     => lang('reg. expr. for local IP\'s<br>eg. ^192\\.168\\.1\\.'),
 			'lang_history'=> lang('History logging'),
 			'lang_history2'=> lang('History logging and deleting of items'),
 			'history'     => html::select('history',$this->bo->history,array(
@@ -1320,41 +1298,16 @@ class uiinfolog
 			))
 		));
 
-		if (!is_array($this->bo->send_file_ips))
-		{
-			$this->bo->send_file_ips = $this->bo->link_pathes = array();
-		}
-		$i = 0; @reset($this->bo->link_pathes);
-		do {
-			list($valid,$trans) = @each($this->bo->link_pathes);
-			$GLOBALS['egw']->template->set_var(array(
-				'tr_color'  => $i & 1 ? 'row_off' : 'row_on',
-				'num'       => $i+1,
-				'val_valid' => html::input("valid[$i]",$valid),
-				'val_trans' => html::input("trans[$i]",$trans),
-				'val_ip'    => html::input("ip[$i]",$this->bo->send_file_ips[$valid])
-			));
-			$GLOBALS['egw']->template->parse('admin_lines','admin_line',True);
-			++$i;
-		} while ($valid);
-
-		if (!$this->tmpl->xslt)
-		{
-			echo parse_navbar();
-			$GLOBALS['egw']->template->pfp('phpgw_body','info_admin');
-		}
-		else
-		{
-			$GLOBALS['egw']->template->fp('phpgw_body','info_admin');
-		}
+		echo parse_navbar();
+		$GLOBALS['egw']->template->pfp('phpgw_body','info_admin');
 	}
-	
+
 	/**
 	 * imports a mail as infolog
-	 * two possible calls: 
+	 * two possible calls:
 	 * 1. with function args set. (we come from send mail)
 	 * 2. with $_GET['uid] = someuid (we come from display mail)
-	 * 
+	 *
 	 * @author Cornelius Weiss <nelius@cwtech.de>
 	 * @param string $_to_emailAddress
 	 * @param string $_subject
@@ -1366,7 +1319,7 @@ class uiinfolog
 	{
 		$uid = $_GET['uid'];
 		$mailbox = $_GET['mailbox'];
-		
+
 		if (!empty($_to_emailAddress))
 		{
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
@@ -1385,7 +1338,7 @@ class uiinfolog
 					);
 				}
 			}
-			
+
 			$body = strip_tags($_body);
 			$this->edit($this->bo->import_mail(
 				implode(',',$_to_emailAddress),$_subject,$body,$attachments,''
@@ -1398,17 +1351,17 @@ class uiinfolog
 			$bopreferences =& CreateObject('felamimail.bopreferences');
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
-			
+
 			$headers = $bofelamimail->getMessageHeader($uid);
 			$bodyParts = $bofelamimail->getMessageBody($uid,'text/plain');
 			$attachments = $bofelamimail->getMessageAttachments($uid);
-			
+
 			if ($mailbox == 'Sent') $mailaddress = $bofelamimail->decode_header($headers['TO']);
 			elseif (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
 			elseif (isset($headers['SENDER'])) $mailaddress = $bofelamimail->decode_header($headers['SENDER']);
-			
+
 			$subject = $bofelamimail->decode_header($headers['SUBJECT']);
-			
+
 			for($i=0; $i<count($bodyParts); $i++)
 			{
 				// add line breaks to $bodyParts
@@ -1433,7 +1386,7 @@ class uiinfolog
 					if (isset($attachments[$num]['charset'])) {
 						$GLOBALS['egw']->translation->convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
 					}
-					$attachments[$num]['type'] = $attachments[$num]['mimeType'];					
+					$attachments[$num]['type'] = $attachments[$num]['mimeType'];
 					$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 					$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
 					fwrite($tmpfile,$attachments[$num]['attachment']);
@@ -1441,7 +1394,7 @@ class uiinfolog
 					unset($attachments[$num]['attachment']);
 				}
 			}
-			
+
 			return $this->edit($this->bo->import_mail(
 				$mailaddress,
 				$subject,
@@ -1455,7 +1408,7 @@ class uiinfolog
 		$GLOBALS['egw']->common->egw_exit();
 		exit;
 	}
-	
+
 	/**
 	 * shows infolog in other applications
 	 *
@@ -1512,7 +1465,7 @@ class uiinfolog
 		),True);
 		unset($GLOBALS['egw_info']['etemplate']['hooked']);
 	}
-	
+
 	/**
 	 * Defines the fields for the csv export
 	 *
