@@ -7,10 +7,10 @@
  * @package timesheet
  * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
-require_once('class.botimesheet.inc.php');
+require_once(EGW_INCLUDE_ROOT.'/timesheet/inc/class.botimesheet.inc.php');
 
 /**
  * User interface object of the TimeSheet
@@ -33,13 +33,13 @@ class uitimesheet extends botimesheet
 	 * TimeSheet view type: 'short' or 'normal'
 	 *
 	 * @var string
-	 */	
+	 */
 	var $ts_viewtype;
-	
+
 	function uitimesheet()
 	{
 		$this->botimesheet();
-		
+
 		$this->pm_integration = $this->config_data['pm_integration'];
 		$this->ts_viewtype = $this->config_data['ts_viewtype'];
 
@@ -52,7 +52,7 @@ class uitimesheet extends botimesheet
 	{
 		$this->edit(null,true);
 	}
-	
+
 	function edit($content = null,$view = false)
 	{
 		$tabs = 'general|notes|links|customfields';
@@ -82,7 +82,7 @@ class uitimesheet extends botimesheet
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 				);
 			}
-			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] : 
+			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
 				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.uiinfolog.index' : TIMESHEET_APP.'.uitimesheet.index');
 		}
 		else
@@ -116,7 +116,7 @@ class uitimesheet extends botimesheet
 				case 'edit':
 					if ($this->check_acl(EGW_ACL_EDIT)) $view = false;
 					break;
-					
+
 				case 'save':
 				case 'save_new':
 				case 'apply':
@@ -134,14 +134,14 @@ class uitimesheet extends botimesheet
 					}
 					//echo "<p>ts_start=$content[ts_start], start_time=$content[start_time], end_time=$content[end_time], ts_duration=$content[ts_duration], ts_quantity=$content[ts_quantity]</p>\n";
 					if (!$this->data['ts_project']) $this->data['ts_project'] = $this->data['ts_project_blur'];
-					// set ts_title to ts_project if short viewtype (title is not editable) 
-					if($this->ts_viewtype == 'short') 
+					// set ts_title to ts_project if short viewtype (title is not editable)
+					if($this->ts_viewtype == 'short')
 					{
-						$this->data['ts_title'] = $this->data['ts_project'];							
+						$this->data['ts_title'] = $this->data['ts_project'];
 					}
 					if (!$this->data['ts_title'])
 					{
-						$this->data['ts_title'] = $this->data['ts_title_blur'] ? 
+						$this->data['ts_title'] = $this->data['ts_title_blur'] ?
 							$this->data['ts_title_blur'] : $this->data['ts_project_blur'];
 
 						if (!$this->data['ts_title'])
@@ -275,13 +275,13 @@ class uitimesheet extends botimesheet
 		}
 		// make all linked projects availible for the pm-pricelist widget, to be able to choose prices from all
 		$content['all_pm_ids'] = array_values($links);
-        
+
 		// set old id, pm selector (for later removal)
-		if (count($links) > 0) 
-		{  
+		if (count($links) > 0)
+		{
 			$preserv['old_pm_id'] = array_shift($links);
 		}
-		if (!isset($this->data['pm_id']) && $preserv['old_pm_id']) 
+		if (!isset($this->data['pm_id']) && $preserv['old_pm_id'])
 		{
 			$content['pm_id'] = $preserv['old_pm_id'];
 		}
@@ -319,25 +319,25 @@ class uitimesheet extends botimesheet
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.
 			($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
-		
+
 		// supress unknow widget 'projectmanager-*', if projectmanager is not installed or old
 		if (!@file_exists(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.projectmanager_widget.inc.php'))
 		{
 			$etpl->set_cell_attribute('pm_id','disabled',true);
 			$etpl->set_cell_attribute('pl_id','disabled',true);
-		}		
+		}
 
-		if($this->ts_viewtype == 'short') 
+		if($this->ts_viewtype == 'short')
 		{
 			$content['ts_viewtype'] = $readonlys[$tabs]['notes'] = true;
 		}
 		if (!$this->customfields) $readonlys[$tabs]['customfields'] = true;	// suppress tab if there are not customfields
-						
+
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.edit',$content,array(
 			'ts_owner' => $edit_grants,
 		),$readonlys,$preserv,2);
 	}
-	
+
 	/**
 	 * Calculate the time from a timestamp containing date & time
 	 *
@@ -368,10 +368,10 @@ class uitimesheet extends botimesheet
 		if ($query_in['filter'])
 		{
 			$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate']);
-			
+
 			$start = explode('-',date('Y-m-d',$query_in['startdate']+12*60*60));
 			$end   = explode('-',date('Y-m-d',$query_in['enddate'] ? $query_in['enddate'] : $query_in['startdate']+7.5*24*60*60));
-			
+
 			// show year-sums, if we are year-aligned (show full years)?
 			if ((int)$start[2] == 1 && (int)$start[1] == 1 && (int)$end[2] == 31 && (int)$end[1] == 12)
 			{
@@ -416,7 +416,7 @@ class uitimesheet extends botimesheet
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
 		unset($query['col_filter']['pm_id']);
-		
+
 		// filter for no project
 		if ((string)$query['col_filter']['ts_project'] == '0') $query['col_filter']['ts_project'] = null;
 
@@ -451,7 +451,7 @@ class uitimesheet extends botimesheet
 		if ($query['filter'])
 		{
 			$query['col_filter'][0] = $date_filter;
-			
+
 			// generate a meaningful app-header / report title
 			if ($this->show_sums['month'])
 			{
@@ -491,7 +491,7 @@ class uitimesheet extends botimesheet
 			}
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
-		
+
 		$ids = array();
 		foreach($rows as $row)
 		{
@@ -505,7 +505,7 @@ class uitimesheet extends botimesheet
 		$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids);
 
 		unset($query['col_filter'][0]);
-		
+
 		$readonlys = array();
 		$have_cats = false;
 		foreach($rows as &$row)
@@ -532,7 +532,7 @@ class uitimesheet extends botimesheet
 					case -3:	// year-sum
 						$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
 						break;
-				}	
+				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
 				$row['class'] = 'th';
@@ -584,8 +584,8 @@ class uitimesheet extends botimesheet
 		if($this->ts_viewtype == 'short') {
 			$rows['ts_viewtype'] = true;
 		}
-		
-		return $total;		
+
+		return $total;
 	}
 
 	/**
@@ -597,9 +597,9 @@ class uitimesheet extends botimesheet
 	function index($content = null,$msg='')
 	{
 		$etpl =& new etemplate('timesheet.index');
-		
+
 		if ($_GET['msg']) $msg = $_GET['msg'];
-		
+
 		if ($content['nm']['rows']['delete'])
 		{
 			list($ts_id) = each($content['nm']['rows']['delete']);
@@ -615,7 +615,7 @@ class uitimesheet extends botimesheet
 		$content = array(
 			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
 			'msg' => $msg,
-		);		
+		);
 		if (!is_array($content['nm']))
 		{
 			$date_filters = array('All');
@@ -639,7 +639,7 @@ class uitimesheet extends botimesheet
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
-		
+
 		$sel_options = array(
 			'ts_owner'   => $read_grants,
 			'pm_id'      => array(lang('No project')),
