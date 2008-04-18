@@ -1282,7 +1282,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$dsn = $egw_db->Type.':host='.$egw_db->Host.';port='.$egw_db->Port.';dbname='.$egw_db->Database;
 				break;
 		}
-		$egw_db->Password .= 'x';
 		try {
 			self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password);
 		} catch(Exception $e) {
