@@ -33,7 +33,7 @@ class vfs_home_hooks
 	{
 		// create a user-dir
 		egw_vfs::$is_root = true;
-		egw_vfs::mkdir($dir='/home/'.$data['account_lid']);
+		egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0);
 		egw_vfs::chown($dir,$data['account_id']);
 		egw_vfs::chgrp($dir,0);
 		egw_vfs::chmod($dir,0700);	// only user has access
@@ -96,7 +96,7 @@ class vfs_home_hooks
 	{
 		// create a group-dir
 		egw_vfs::$is_root = true;
-		egw_vfs::mkdir($dir='/home/'.$data['account_name']);
+		egw_vfs::mkdir($dir='/home/'.$data['account_name'],070,0);
 		egw_vfs::chown($dir,0);
 		egw_vfs::chgrp($dir,$data['account_id']);
 		egw_vfs::chmod($dir,0070);	// only group has access
