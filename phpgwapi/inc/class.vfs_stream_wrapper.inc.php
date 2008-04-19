@@ -16,7 +16,7 @@
  *
  * The new vfs stream wrapper uses a kind of fstab to mount different filesystems / stream wrapper types
  * together for eGW's virtual file system.
- * 
+ *
  * @ToDo extended ACL with inheritance and specific rights for users or groups
  * 	Backends can implement them, in which case they get stored independent of the current mount-points.
  *  If the backend does not implement them, they get stored by the VFS under the final URL of the backend,
@@ -25,7 +25,7 @@
  *  implement extended ACL itself.
  * @ToDo storage for WebDAV properties
  * @ToDo implement the necessary function of WebDAV locks
- *  
+ *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
 class vfs_stream_wrapper implements iface_stream_wrapper
@@ -42,30 +42,26 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * Should unreadable entries in a not writable directory be hidden, default yes
 	 */
 	const HIDE_UNREADABLES = true;
-	
+
 	/**
 	 * optional context param when opening the stream, null if no context passed
 	 *
 	 * @var mixed
 	 */
 	var $context;
-	
+
 	/**
 	 * Our fstab in the form mount-point => url
-	 * 
+	 *
 	 * The entry for root has to be the first, or more general if you mount into subdirs the parent has to be before!
 	 *
 	 * @var array
 	 */
 	protected static $fstab = array(
-		'/' => 'sqlfs://$user:$pass@$host/',
-		'/apps' => 'links://$user:$pass@$host/apps',
-//		'/' => 'oldvfs://$user:$pass@$host/',
-//		'/files' => 'oldvfs://$user:$pass@$host/home/Default',
-//		'/images' => 'http://localhost/egroupware/phpgwapi/templates/idots/images',
-//		'/home/ralf/linux' => '/home/ralf',		// we probably need to forbid direct filesystem access for security reasons!
+		'/' => 'sqlfs://$host/',
+		'/apps' => 'links://$host/apps',
 	);
-	
+
 	/**
 	 * stream / ressouce this class is opened for by stream_open
 	 *
@@ -102,7 +98,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @var int
 	 */
 	private $extra_dir_ptr;
-	
+
 	private static $wrappers;
 
 	/**
@@ -114,7 +110,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	static function resolve_url($path)
 	{
 		static $cache = array();
-		
+
 		// we do some caching here
 		if (isset($cache[$path]))
 		{
@@ -137,7 +133,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return $path;	// path is already a non-vfs url --> nothing to do
 		}
 		if (empty($parts['path'])) $parts['path'] = '/';
-		
+
 		foreach(array_reverse(self::$fstab) as $mounted => $url)
 		{
 			if ($mounted == '/' || $mounted == $parts['path'] || $mounted.'/' == substr($parts['path'],0,strlen($mounted)+1))
@@ -150,10 +146,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				$url .= substr($parts['path'],strlen($mounted));
 
 				$url = str_replace(array('$user','$pass','$host'),array($parts['user'],$parts['pass'],$parts['host']),$url);
-				
+
 				if ($parts['query']) $url .= '?'.$parts['query'];
 				if ($parts['fragment']) $url .= '#'.$parts['fragment'];
-				
+
 				//error_log(__METHOD__."($path) = $url");
 				return $cache[$path] = $url;
 			}
@@ -162,15 +158,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		trigger_error(__METHOD__."($path) can't resolve path!\n",E_USER_WARNING);
 		return false;
 	}
-	
+
 	/**
 	 * This method is called immediately after your stream object is created.
-	 * 
+	 *
 	 * @param string $path URL that was passed to fopen() and that this object is expected to retrieve
 	 * @param string $mode mode used to open the file, as detailed for fopen()
-	 * @param int $options additional flags set by the streams API (or'ed together): 
+	 * @param int $options additional flags set by the streams API (or'ed together):
 	 * - STREAM_USE_PATH      If path is relative, search for the resource using the include_path.
-	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream. 
+	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream.
 	 *                        If this flag is not set, you should not raise any errors.
 	 * @param string $opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
 	 * @return boolean true if the ressource was opened successful, otherwise false
@@ -189,10 +185,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return true;
 	}
-	
+
 	/**
-	 * This method is called when the stream is closed, using fclose(). 
-	 * 
+	 * This method is called when the stream is closed, using fclose().
+	 *
 	 * You must release any resources that were locked or allocated by the stream.
 	 */
 	function stream_close ( )
@@ -200,16 +196,16 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$ret = fclose($this->opened_stream);
 
 		$this->opened_stream = null;
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * This method is called in response to fread() and fgets() calls on the stream.
-	 * 
-	 * You must return up-to count bytes of data from the current read/write position as a string. 
-	 * If there are less than count bytes available, return as many as are available. 
-	 * If no more data is available, return either FALSE or an empty string. 
+	 *
+	 * You must return up-to count bytes of data from the current read/write position as a string.
+	 * If there are less than count bytes available, return as many as are available.
+	 * If no more data is available, return either FALSE or an empty string.
 	 * You must also update the read/write position of the stream by the number of bytes that were successfully read.
 	 *
 	 * @param int $count
@@ -222,10 +218,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to fwrite() calls on the stream.
-	 * 
-	 * You should store data into the underlying storage used by your stream. 
-	 * If there is not enough room, try to store as many bytes as possible. 
-	 * You should return the number of bytes that were successfully stored in the stream, or 0 if none could be stored. 
+	 *
+	 * You should store data into the underlying storage used by your stream.
+	 * If there is not enough room, try to store as many bytes as possible.
+	 * You should return the number of bytes that were successfully stored in the stream, or 0 if none could be stored.
 	 * You must also update the read/write position of the stream by the number of bytes that were successfully written.
 	 *
 	 * @param string $data
@@ -238,14 +234,14 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
  	/**
  	 * This method is called in response to feof() calls on the stream.
- 	 * 
+ 	 *
  	 * Important: PHP 5.0 introduced a bug that wasn't fixed until 5.1: the return value has to be the oposite!
- 	 * 
+ 	 *
  	 * if(version_compare(PHP_VERSION,'5.0','>=') && version_compare(PHP_VERSION,'5.1','<'))
   	 * {
  	 * 		$eof = !$eof;
  	 * }
-  	 * 
+  	 *
  	 * @return boolean true if the read/write position is at the end of the stream and no more data availible, false otherwise
  	 */
 	function stream_eof ( )
@@ -255,7 +251,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to ftell() calls on the stream.
-	 * 
+	 *
 	 * @return integer current read/write position of the stream
 	 */
  	function stream_tell ( )
@@ -266,9 +262,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
  	/**
  	 * This method is called in response to fseek() calls on the stream.
  	 *
- 	 * You should update the read/write position of the stream according to offset and whence. 
- 	 * See fseek() for more information about these parameters. 
- 	 * 
+ 	 * You should update the read/write position of the stream according to offset and whence.
+ 	 * See fseek() for more information about these parameters.
+ 	 *
  	 * @param integer $offset
  	 * @param integer $whence	SEEK_SET - Set position equal to offset bytes
  	 * 							SEEK_CUR - Set position to current location plus offset.
@@ -282,9 +278,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to fflush() calls on the stream.
-	 * 
+	 *
 	 * If you have cached data in your stream but not yet stored it into the underlying storage, you should do so now.
-	 * 
+	 *
 	 * @return booelan TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
 	 */
 	function stream_flush ( )
@@ -294,15 +290,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to fstat() calls on the stream.
-	 * 
-	 * If you plan to use your wrapper in a require_once you need to define stream_stat().  
+	 *
+	 * If you plan to use your wrapper in a require_once you need to define stream_stat().
 	 * If you plan to allow any other tests like is_file()/is_dir(), you have to define url_stat().
-	 * stream_stat() must define the size of the file, or it will never be included.  
+	 * stream_stat() must define the size of the file, or it will never be included.
 	 * url_stat() must define mode, or is_file()/is_dir()/is_executable(), and any of those functions affected by clearstatcache() simply won't work.
-	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.  
-	 * If you wish the file to be executable, use 7s instead of 6s.  
-	 * The last 3 digits are exactly the same thing as what you pass to chmod.  
-	 * 040000 defines a directory, and 0100000 defines a file.  
+	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.
+	 * If you wish the file to be executable, use 7s instead of 6s.
+	 * The last 3 digits are exactly the same thing as what you pass to chmod.
+	 * 040000 defines a directory, and 0100000 defines a file.
 	 *
 	 * @return array containing the same values as appropriate for the stream.
 	 */
@@ -313,7 +309,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to unlink() calls on URL paths associated with the wrapper.
-	 * 
+	 *
 	 * It should attempt to delete the item specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support unlinking!
 	 *
@@ -331,8 +327,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to rename() calls on URL paths associated with the wrapper.
-	 * 
-	 * It should attempt to rename the item specified by path_from to the specification given by path_to. 
+	 *
+	 * It should attempt to rename the item specified by path_from to the specification given by path_to.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support renaming.
 	 *
 	 * The regular filesystem stream-wrapper returns an error, if $url_from and $url_to are not either both files or both dirs!
@@ -353,9 +349,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
-	 * 
-	 * It should attempt to create the directory specified by path. 
-	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories. 
+	 *
+	 * It should attempt to create the directory specified by path.
+	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories.
 	 *
 	 * @param string $path
 	 * @param int $mode
@@ -373,8 +369,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to rmdir() calls on URL paths associated with the wrapper.
-	 * 
-	 * It should attempt to remove the directory specified by path. 
+	 *
+	 * It should attempt to remove the directory specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support removing directories.
 	 *
 	 * @param string $path
@@ -392,19 +388,19 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * Allow to call methods of the underlying stream wrapper: touch, chmod, chgrp, chown, ...
-	 * 
+	 *
 	 * We cant use a magic __call() method, as it does not work for static methods!
 	 *
 	 * @param string $name
 	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
-	 * @param boolean $fail_silent=false should only false be returned if function is not supported by the backend, 
+	 * @param boolean $fail_silent=false should only false be returned if function is not supported by the backend,
 	 * 	or should an E_USER_WARNING error be triggered (default)
 	 * @return mixed return value of backend or false if function does not exist on backend
 	 */
 	static protected function _call_on_backend($name,$params,$fail_silent=false)
 	{
 		$path = $params[0];
-		
+
 		if (!($url = self::resolve_url($params[0])))
 		{
 			return false;
@@ -457,7 +453,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
-	 * 
+	 *
 	 * Requires root rights!
 	 *
 	 * @param string $path
@@ -471,7 +467,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
-	 * 
+	 *
 	 * Requires owner or root rights!
 	 *
 	 * @param string $path
@@ -485,7 +481,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
-	 * 
+	 *
 	 * The methods use the following ways to get the mime type (in that order)
 	 * - directories (is_dir()) --> self::DIR_MIME_TYPE
 	 * - stream implemented by class defining the STAT_RETURN_MIME_TYPE constant --> use mime-type returned by url_stat
@@ -536,18 +532,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		//error_log(__METHOD__."($path) mime=$mime");
 		return $mime;
 	}
-	
+
 	/**
-	 * This method is called immediately when your stream object is created for examining directory contents with opendir(). 
-	 * 
+	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
+	 *
 	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
-	 * @return booelan 
+	 * @return booelan
 	 */
 	function dir_opendir ( $path, $options )
 	{
 		$this->opened_dir = $this->extra_dirs = null;
 		$this->extra_dir_ptr = 0;
-		
+
 		if (!($this->opened_dir_url = self::resolve_url($path)))
 		{
 			return false;
@@ -572,29 +568,29 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 	/**
 	 * This method is called in response to stat() calls on the URL paths associated with the wrapper.
-	 * 
-	 * It should return as many elements in common with the system function as possible. 
+	 *
+	 * It should return as many elements in common with the system function as possible.
 	 * Unknown or unavailable values should be set to a rational value (usually 0).
-	 * 
-	 * If you plan to use your wrapper in a require_once you need to define stream_stat().  
+	 *
+	 * If you plan to use your wrapper in a require_once you need to define stream_stat().
 	 * If you plan to allow any other tests like is_file()/is_dir(), you have to define url_stat().
-	 * stream_stat() must define the size of the file, or it will never be included.  
+	 * stream_stat() must define the size of the file, or it will never be included.
 	 * url_stat() must define mode, or is_file()/is_dir()/is_executable(), and any of those functions affected by clearstatcache() simply won't work.
-	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.  
-	 * If you wish the file to be executable, use 7s instead of 6s.  
-	 * The last 3 digits are exactly the same thing as what you pass to chmod.  
-	 * 040000 defines a directory, and 0100000 defines a file.  
+	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.
+	 * If you wish the file to be executable, use 7s instead of 6s.
+	 * The last 3 digits are exactly the same thing as what you pass to chmod.
+	 * 040000 defines a directory, and 0100000 defines a file.
 	 *
 	 * @param string $path
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
-	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward, 
-	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned, 
-	 *                          not the resource pointed to by the link. 
+	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward,
+	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned,
+	 *                          not the resource pointed to by the link.
 	 *                          This flag is set in response to calls to lstat(), is_link(), or filetype().
-	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set, 
+	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
-	 * @return array 
+	 * @return array
 	 */
 	static function url_stat ( $path, $flags )
 	{
@@ -605,7 +601,21 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		//error_log(__METHOD__."('$path',$flags) calling stat($url)");
-		return $stat = @stat($url);	// suppressed the stat failed warnings
+		$stat = @stat($url);	// suppressed the stat failed warnings
+
+		// check if a failed url_stat was for a home dir, in that case silently create it
+		if (!$stat && dirname(parse_url($path,PHP_URL_PATH)) == '/home' && ($id = $GLOBALS['egw']->accounts->name2id(basename($path))))
+		{
+			$hook_data = array(
+				'location' => $GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'addgroup' : 'addaccount',
+				'account_id' => $id,
+				'account_lid' => basename($path),
+				'account_name' => basename($path),
+			);
+			call_user_func(array('vfs_home_hooks',$hook_data['location']),$hook_data);
+			$stat = @stat($url);
+		}
+		return $stat;
 
 		// Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
 		// Problem: this does NOT stop (calles itself infinit recursive)!
@@ -616,15 +626,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return $stat;
 	}
-	
+
 	/**
 	 * This method is called in response to readdir().
-	 * 
+	 *
 	 * It should return a string representing the next filename in the location opened by dir_opendir().
-	 * 
+	 *
 	 * Unless other filesystem, we only return files readable by the user, if the dir is not writable for him.
 	 * This is done to hide files and dirs not accessible by the user (eg. other peoples home-dirs in /home).
-	 * 
+	 *
 	 * @return string
 	 */
 	function dir_readdir ( )
@@ -637,18 +647,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		do {
 			$file = readdir($this->opened_dir);
 		}
-		while($file !== false && self::HIDE_UNREADABLES && !$this->opened_dir_writable && 
+		while($file !== false && self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
 			!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE));
-		
+
 		return $file;
 	}
 
 	/**
 	 * This method is called in response to rewinddir().
-	 * 
-	 * It should reset the output generated by dir_readdir(). i.e.: 
+	 *
+	 * It should reset the output generated by dir_readdir(). i.e.:
 	 * The next call to dir_readdir() should return the first entry in the location returned by dir_opendir().
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function dir_rewinddir ( )
@@ -657,23 +667,23 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 		return rewinddir($this->opened_dir);
 	}
-	
+
 	/**
 	 * This method is called in response to closedir().
-	 * 
-	 * You should release any resources which were locked or allocated during the opening and use of the directory stream. 
-	 * 
+	 *
+	 * You should release any resources which were locked or allocated during the opening and use of the directory stream.
+	 *
 	 * @return boolean
 	 */
 	function dir_closedir ( )
 	{
 		$ret = closedir($this->opened_dir);
-		
+
 		$this->opened_dir = $this->extra_dirs = null;
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Load stream wrapper for a given schema
 	 *
@@ -707,7 +717,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Return already loaded stream wrappers
 	 *
@@ -721,15 +731,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return self::$wrappers;
 	}
-	
+
 	static function init_static()
 	{
 		stream_register_wrapper(self::SCHEME,__CLASS__);
 
-		if ($GLOBALS['egw_info']['server']['vfs_fstab'] && 
+		if ($GLOBALS['egw_info']['server']['vfs_fstab'] &&
 			is_array($fstab = unserialize($GLOBALS['egw_info']['server']['vfs_fstab'])) && count($fstab))
 		{
-			self::$fstab = $fstab;				
+			self::$fstab = $fstab;
 		}
 	}
 }
