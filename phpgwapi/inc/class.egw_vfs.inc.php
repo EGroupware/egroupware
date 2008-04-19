@@ -534,6 +534,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function _rm_rmdir($url)
 	{
+		if ($url[0] == '/')
+		{
+			$url = self::PREFIX . $url;
+		}
 		if (is_dir($url))
 		{
 			return rmdir($url);
