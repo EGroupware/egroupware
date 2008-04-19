@@ -39,7 +39,7 @@ class vfs_home_hooks
 		egw_vfs::chmod($dir,0700);	// only user has access
 		egw_vfs::$is_root = false;
 	}
-	
+
 	/**
 	 * Hook called after accounts has been modified
 	 *
@@ -51,13 +51,13 @@ class vfs_home_hooks
 	static function editAccount($data)
 	{
 		if ($data['account_lid'] == $data['old_loginid']) return;	// nothing to do here
-		
+
 		// rename the user-dir
 		egw_vfs::$is_root = true;
 		egw_vfs::rename('/home/'.$data['old_loginid'],'/home/'.$data['account_lid']);
 		egw_vfs::$is_root = false;
 	}
-	
+
 	/**
 	 * Hook called before an account get deleted
 	 *
@@ -68,14 +68,20 @@ class vfs_home_hooks
 	 */
 	static function deleteAccount($data)
 	{
-		if ($data['new_owner'])
-		{
-			// ToDo: copy content of user-dir to new owner's user-dir
-			
-		}
-		// delete the user-directory
 		egw_vfs::$is_root = true;
-		egw_vfs::remove('/home/'.$data['account_lid']);
+		if ($data['new_owner'] && ($new_lid = $GLOBALS['egw']->accounts->id2name($data['new_owner'])))
+		{
+			// copy content of user-dir to new owner's user-dir as old-home-$name
+			for ($i=''; file_exists(egw_vfs::PREFIX.($new_dir = '/home/'.$new_lid.'/old-home-'.$data['account_lid'].$i)); $i++);
+			egw_vfs::rename('/home/'.$data['account_lid'],$new_dir);
+			// make the new owner the owner of the dir and it's content
+			egw_vfs::find($new_dir,array(),array('egw_vfs','chown'),$data['new_owner']);
+		}
+		else
+		{
+			// delete the user-directory
+			egw_vfs::remove('/home/'.$data['account_lid']);
+		}
 		egw_vfs::$is_root = false;
 	}
 
@@ -96,7 +102,7 @@ class vfs_home_hooks
 		egw_vfs::chmod($dir,0070);	// only group has access
 		egw_vfs::$is_root = false;
 	}
-	
+
 	/**
 	 * Hook called after group has been modified
 	 *
@@ -108,13 +114,13 @@ class vfs_home_hooks
 	static function editGroup($data)
 	{
 		if ($data['account_name'] == $data['old_name']) return;	// nothing to do here
-		
+
 		// rename the group-dir
 		egw_vfs::$is_root = true;
 		egw_vfs::rename('/home/'.$data['old_name'],'/home/'.$data['account_name']);
 		egw_vfs::$is_root = false;
 	}
-	
+
 	/**
 	 * Hook called before a group get deleted
 	 *
