@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -216,14 +216,14 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.004';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
-	
+
 	$test[] = '0.9.15.004';
 	function infolog_upgrade0_9_15_004()
 	{
 		// this update correctes wrong escapes of ' and " in the past
 		//
 		$db2 = $GLOBALS['phpgw_setup']->db;	// we need a 2. result-set
-		
+
 		$to_correct = array('info_from','info_subject','info_des');
 		foreach ($to_correct as $col)
 		{
@@ -234,7 +234,7 @@
 					"' WHERE info_id=".$GLOBALS['phpgw_setup']->oProc->f('info_id'));
 			}
 		}
-		
+
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.005';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
@@ -320,13 +320,13 @@
 			'ix' => array(array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
 			'uc' => array()
 		));
-		
+
 		// we dont need to do update 0.9.15.008, as UpdateSequenze is called now by RefreshTable
 		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
 
-	
+
 	$test[] = '0.9.15.008';
 	function infolog_upgrade0_9_15_008()
 	{
@@ -395,7 +395,7 @@
 			'nullable' => False,
 			'default' => '0'
 		));
-		
+
 		// setting numerical priority 3=urgent, 2=high, 1=normal, 0=
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_infolog','info_priority',array(
 			'type' => 'int',
@@ -433,7 +433,7 @@
 			'ix' => array(array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
 			'uc' => array()
 		),'info_pri');
-		
+
 		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_infolog','egw_infolog');
 		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_infolog_extra','egw_infolog_extra');
 		// only rename links table, if it has not been moved into the API and therefor been already renamed by the API update
@@ -502,7 +502,7 @@
 			'type' => 'varchar',
 			'precision' => '255'
 		));
-		
+
 		// all not explicit named stati have the default percent 0
 		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_percent=10 WHERE info_status='ongoing'",__LINE__,__FILE__);
 		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_percent=50 WHERE info_status='will-call'",__LINE__,__FILE__);
@@ -513,7 +513,7 @@
 				"' WHERE info_status = '$p%'",__LINE__,__FILE__);
 		}
 		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_datecompleted=info_datemodified,info_percent=100 WHERE info_status IN ('done','billed','100%')",__LINE__,__FILE__);
-		
+
 		// remove the percentages from the custom stati, if they exist
 		$config =& CreateObject('phpgwapi.config','infolog');
 		$config->read_repository();
@@ -530,10 +530,10 @@
 	$test[] = '1.2.002';
 	function infolog_upgrade1_2_002()
 	{
-		// change the phone-status: call --> not-started, will-call --> ongoing to be able to sync them 
+		// change the phone-status: call --> not-started, will-call --> ongoing to be able to sync them
 		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_status='not-started' WHERE info_status='call'",__LINE__,__FILE__);
 		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_status='ongoing' WHERE info_status='will-call'",__LINE__,__FILE__);
-		
+
 		// remove the call and will-call from the custom stati, if they exist
 		$config =& CreateObject('phpgwapi.config','infolog');
 		$config->read_repository();
@@ -610,4 +610,25 @@
 				array('info_id' => $row['info_id']),__LINE__,__FILE__,'infolog');
 		}
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.5.002';
+	}
+
+	$test[] = '1.5.002';
+	/**
+	 * make customfield names varchar(64) and values text
+	 *
+	 * @return string version
+	 */
+	function infolog_upgrade1_5_002()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog_extra','info_extra_name',array(
+			'type' => 'varchar',
+			'precision' => '64',
+			'nullable' => False
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog_extra','info_extra_value',array(
+			'type' => 'text',
+			'nullable' => False
+		));
+
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.5.003';
 	}

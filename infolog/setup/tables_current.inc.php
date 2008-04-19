@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -51,8 +51,8 @@
 		'egw_infolog_extra' => array(
 			'fd' => array(
 				'info_id' => array('type' => 'int','precision' => '4','nullable' => False),
-				'info_extra_name' => array('type' => 'varchar','precision' => '32','nullable' => False),
-				'info_extra_value' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '')
+				'info_extra_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
+				'info_extra_value' => array('type' => 'text','nullable' => False)
 			),
 			'pk' => array('info_id','info_extra_name'),
 			'fk' => array(),
