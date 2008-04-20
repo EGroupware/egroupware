@@ -12,7 +12,7 @@
 /* $Id$ */
 
 //$oProc->m_odb->Halt_On_Error = 'yes';
- 
+
 foreach(array(
 	'aa' => 'Afar',
 	'ab' => 'Abkhazian',
@@ -156,7 +156,7 @@ foreach(array(
 {
 	$oProc->insert($GLOBALS['egw_setup']->languages_table,array('lang_name' => $name),array('lang_id' => $id),__LINE__,__FILE__);
 }
-	
+
 foreach(array(
 	'sessions_checkip' => 'True',
 	'image_type'       => '1',
@@ -177,25 +177,6 @@ $oProc->query("INSERT INTO egw_interserv(server_name,server_host,server_url,trus
 $oProc->query ("INSERT INTO egw_vfs (vfs_owner_id, vfs_createdby_id, vfs_modifiedby_id, vfs_created, vfs_modified, vfs_size, vfs_mime_type, vfs_deleteable, vfs_comment, vfs_app, vfs_directory, vfs_name, vfs_link_directory, vfs_link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','', NULL, NULL)");
 $oProc->query ("INSERT INTO egw_vfs (vfs_owner_id, vfs_createdby_id, vfs_modifiedby_id, vfs_created, vfs_modified, vfs_size, vfs_mime_type, vfs_deleteable, vfs_comment, vfs_app, vfs_directory, vfs_name, vfs_link_directory, vfs_link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','home', NULL, NULL)");
 
-// Create Addressbook for Default group, by setting a group ACL from the group to itself for all rights: add, read, edit and delete	
+// Create Addressbook for Default group, by setting a group ACL from the group to itself for all rights: add, read, edit and delete
 $defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 $GLOBALS['egw_setup']->add_acl('addressbook',$defaultgroup,$defaultgroup,1|2|4|8);
-
-/*************************************************************************\
- *                    Default Records for VFS v2                         *
-\*************************************************************************/
-if ($GLOBALS['DEBUG'])
-{
-	echo "<br>\n<b>initiating to create the default records for VFS SQL2...";
-}
-
-include EGW_INCLUDE_ROOT.'/phpgwapi/setup/default_records_mime.inc.php';
-
-$oProc->query("INSERT INTO phpgw_vfs2_files (mime_id,owner_id,createdby_id,size,directory,name)
-			   SELECT mime_id,0,0,4096,'/','' FROM phpgw_vfs2_mimetypes WHERE mime='Directory'");
-
-if ($GLOBALS['DEBUG'])
-{
-	echo " DONE!</b>";
-}
-/*************************************************************************/
