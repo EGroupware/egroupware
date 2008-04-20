@@ -579,7 +579,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			':fs_creator'  => egw_vfs::$user,
 		))) && $operation == self::STORE2FS)
 		{
-			mkdir(self::_fs_path($path));
+			mkdir(self::_fs_path($path),0700,true);		// we create all missing parent dirs, as eg. /home might not yet exist
 		}
 		return $ret;
 	}

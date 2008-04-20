@@ -173,9 +173,32 @@ foreach(array(
 
 $oProc->query("INSERT INTO egw_interserv(server_name,server_host,server_url,trust_level,trust_rel,server_mode) VALUES ('eGW demo',NULL,'http://www.egroupware.org/egroupware/xmlrpc.php',99,0,'xmlrpc')");
 
-// insert the VFS basedir /home
-$oProc->query ("INSERT INTO egw_vfs (vfs_owner_id, vfs_createdby_id, vfs_modifiedby_id, vfs_created, vfs_modified, vfs_size, vfs_mime_type, vfs_deleteable, vfs_comment, vfs_app, vfs_directory, vfs_name, vfs_link_directory, vfs_link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','', NULL, NULL)");
-$oProc->query ("INSERT INTO egw_vfs (vfs_owner_id, vfs_createdby_id, vfs_modifiedby_id, vfs_created, vfs_modified, vfs_size, vfs_mime_type, vfs_deleteable, vfs_comment, vfs_app, vfs_directory, vfs_name, vfs_link_directory, vfs_link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','home', NULL, NULL)");
+// make sure the required sqlfs dirs are there and have the following id's
+$dirs = array(
+	'/' => 1,
+	'/home' => 2,
+	'/apps' => 3,
+);
+foreach($dirs as $path => $id)
+{
+	$nrow = array(
+		'fs_id' => $id,
+		'fs_dir'  => $path == '/' ? 0 : $dirs['/'],
+		'fs_name' => substr($path,1),
+		'fs_mode' => 05,
+		'fs_uid' => 0,
+		'fs_gid' => 0,
+		'fs_created' => time(),
+		'fs_modified' => time(),
+		'fs_mime' => 'httpd/unix-directory',
+		'fs_size' => 0,
+		'fs_creator' => 0,
+		'fs_modifier' => 0,
+		'fs_comment' => null,
+		'fs_content' => null,
+	);
+	$GLOBALS['egw_setup']->db->insert('egw_sqlfs',$nrow,false,__LINE__,__FILE__,'phpgwapi');
+}
 
 // Create Addressbook for Default group, by setting a group ACL from the group to itself for all rights: add, read, edit and delete
 $defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
