@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * eGroupWare - resources
-	 * http://www.egroupware.org 
+	 * http://www.egroupware.org
 	 *
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 * @package resources
@@ -10,7 +10,7 @@
 	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
 	 * @version $Id$
 	 */
-	
+
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'Resources';
 	$setup_info['resources']['version']	= '1.4';
@@ -18,15 +18,15 @@
 	$setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 	$setup_info['resources']['enable']	= 1;
 
-	$setup_info['resources']['author']	= 'Cornelius Weiss'; 
-	$setup_info['resources']['license']	= 'GPL'; 
+	$setup_info['resources']['author']	= 'Cornelius Weiss';
+	$setup_info['resources']['license']	= 'GPL';
 	$setup_info['resources']['description'] = 'A resource management and booking system, which integrates into eGroupWare\'s calendar.';
 	$setup_info['resources']['note']	= '';
-	$setup_info['resources']['maintainer']	= array( 
-		'name' => 'Cornelius Weiss', 
-		'email' => 'egw@von-und-zu-weiss.de' 
-	); 
-		
+	$setup_info['resources']['maintainer']	= array(
+		'name' => 'Cornelius Weiss',
+		'email' => 'egw@von-und-zu-weiss.de'
+	);
+
 	$setup_info['resources']['hooks']['preferences']	= 'resources.resources_hooks.admin_prefs_sidebox';
 	$setup_info['resources']['hooks']['admin']		= 'resources.resources_hooks.admin_prefs_sidebox';
 	$setup_info['resources']['hooks']['sidebox_menu']	= 'resources.resources_hooks.admin_prefs_sidebox';
@@ -41,9 +41,5 @@
 	);
 	$setup_info['resources']['depends'][]	= array( // cause eTemplates is not in the api yet
 		 'appname' => 'etemplate',
-		 'versions' => Array('1.3','1.4','1.5')
-	);
-	$setup_info['resources']['depends'][]	= array( // cause of vfs psuedoprotocol is not fully in the api yet
-		 'appname' => 'filemanager',
 		 'versions' => Array('1.3','1.4','1.5')
 	);

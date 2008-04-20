@@ -29,18 +29,14 @@ class bo_resources
 	 * @var so_resources
 	 */
 	var $so;
-	
+
 	function bo_resources()
 	{
 		$this->so =& CreateObject('resources.so_resources');
 		$this->acl =& CreateObject('resources.bo_acl');
 		$this->cats = $this->acl->egw_cats;
-		$this->vfs =& CreateObject('phpgwapi.vfs');
-		$this->link =& CreateObject('phpgwapi.bolink');
-		$this->conf =& CreateObject('phpgwapi.config');
-		$this->conf->read_repository();
-		
-		$this->cal_right_transform = array(	
+
+		$this->cal_right_transform = array(
 			EGW_ACL_CALREAD 	=> EGW_ACL_READ,
 			EGW_ACL_DIRECT_BOOKING 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
 			EGW_ACL_CAT_ADMIN 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
@@ -58,7 +54,7 @@ class bo_resources
 		$query['search'] = $query['search'] ? $query['search'] : '*';
 		$criteria = array('name' => $query['search'], 'short_description' => $query['search'], 'inventory_number' => $query['search']);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
-		
+
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
  		$filter = array('accessory_of' => $accessory_of);
 		if ($query['filter'])
@@ -73,10 +69,10 @@ class bo_resources
 		if($query['show_bookable']) $filter = $filter + array('bookable' => true);
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
-		
+
 		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','%',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
 		$nr = $this->so->total;
-		
+
 		// we are called to serve bookable resources (e.g. calendar-dialog)
 		if($query['show_bookable'])
 		{
@@ -88,7 +84,7 @@ class bo_resources
 			// we don't need all the following testing
 			return $nr;
 		}
-		
+
 		foreach((array)$rows as $num => $resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
@@ -117,7 +113,7 @@ class bo_resources
 				$readonlys["buyable[$resource[res_id]]"] = true;
 			}
 			$readonlys["view_acc[$resource[res_id]]"] = true;
-			$links = $this->link->get_links('resources',$resource['res_id']);
+			$links = egw_link::get_links('resources',$resource['res_id']);
 			if(count($links) != 0 && $accessory_of == -1)
 			{
 				foreach ($links as $link_num => $link)
@@ -154,7 +150,7 @@ class bo_resources
 		}
 		return $this->so->read(array('res_id' => $res_id));
 	}
-	
+
 	/**
 	 * saves a resource. pictures are saved in vfs
 	 *
@@ -168,7 +164,7 @@ class bo_resources
 		{
 			return lang('You are not permitted to edit this reource!');
 		}
-		
+
 		// we need an id to save pictures and make links...
 		if(!$resource['res_id'])
 		{
@@ -178,13 +174,12 @@ class bo_resources
 		switch ($resource['picture_src'])
 		{
 			case 'own_src':
-				$vfs_data = array('string' => $this->pictures_dir.$resource['res_id'].'.jpg','relatives' => array(RELATIVE_ROOT));
 				if($resource['own_file']['size'] > 0)
 				{
 					$msg = $this->save_picture($resource['own_file'],$resource['res_id']);
 					break;
 				}
-				elseif($this->vfs->file_exists($vfs_data))
+				elseif(@egw_vfs::stat($this->pictures_dir.$resource['res_id'].'.jpg'))
 				{
 					break;
 				}
@@ -210,7 +205,7 @@ class bo_resources
 		{
 			return $msg;
 		}
-		
+
 		// delete old pictures
 		if($resource['picture_src'] != 'own_src')
 		{
@@ -220,13 +215,13 @@ class bo_resources
 		// save links
 		if(is_array($resource['link_to']['to_id']))
 		{
-			$this->link->link('resources',$resource['res_id'],$resource['link_to']['to_id']);
+			egw_link::link('resources',$resource['res_id'],$resource['link_to']['to_id']);
 		}
 		if($resource['accessory_of'] != -1)
 		{
-			$this->link->link('resources',$resource['res_id'],'resources',$resource['accessory_of']);
+			egw_link::link('resources',$resource['res_id'],'resources',$resource['accessory_of']);
 		}
-		
+
 		if(!empty($resource['res_id']) && $this->so->get_value("cat_id",$resource['res_id']) != $resource['cat_id'] && $resource['accessory_of'] == -1)
 		{
 			$accessories = $this->get_acc_list($resource['res_id']);
@@ -238,7 +233,7 @@ class bo_resources
 				$this->so->save();
 			}
 		}
-		
+
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
 	}
 
@@ -254,18 +249,18 @@ class bo_resources
 		{
 			return lang('You are not permitted to delete this reource!');
 		}
-		
+
 		if ($this->so->delete(array('res_id'=>$res_id)))
 		{
 			$this->remove_picture($res_id);
-	 		$this->link->unlink(0,'resources',$res_id);
+	 		egw_link::unlink(0,'resources',$res_id);
 	 		// delete the resource from the calendar
 	 		ExecMethod('calendar.socal.change_delete_user','r'.$res_id);
 	 		return false;
 		}
 		return lang('Something went wrong by deleting resource');
 	}
-	
+
 	/**
 	 * gets list of accessories for resource
 	 *
@@ -283,12 +278,12 @@ class bo_resources
 		}
 		return $acc_list;
 	}
-	
+
 	/**
 	 * returns info about resource for calender
 	 * @author Cornelius Weiss<egw@von-und-zu-weiss.de>
 	 * @param int/array $res_id single id or array $num => $res_id
-	 * @return array 
+	 * @return array
 	 */
 	function get_calendar_info($res_id)
 	{
@@ -296,7 +291,7 @@ class bo_resources
 		if(!is_array($res_id) && $res_id < 1) return;
 
 		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,name,useable');
-		
+
 		foreach($data as $num => $resource)
 		{
 			$data[$num]['rights'] = false;
@@ -311,12 +306,12 @@ class bo_resources
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * returns status for a new calendar entry depending on resources ACL
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $res_id single id
-	 * @return array 
+	 * @return array
 	 */
 	function get_calendar_new_status($res_id)
 	{
@@ -324,7 +319,7 @@ class bo_resources
 		if($data[0]['bookable'] == 0) return 'x';
 		return $this->acl->is_permitted($data[0]['cat_id'],EGW_ACL_DIRECT_BOOKING) ? A : U;
 	}
-	
+
 	/**
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * query infolog for entries matching $pattern
@@ -345,7 +340,7 @@ class bo_resources
 		}
 		return $list;
 	}
-		
+
 	/**
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * get title for an infolog entry identified by $res_id
@@ -362,7 +357,7 @@ class bo_resources
 
 		return $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 	}
-	
+
 	/**
 	 * resizes and saves an pictures in vfs
 	 *
@@ -371,22 +366,17 @@ class bo_resources
 	 * @param int $resource_id
 	 * @return mixed string with msg if somthing went wrong; nothing if all right
 	 * TODO make thumb an picture sizes choosable by preferences
-	 */	
+	 */
 	function save_picture($file,$resouce_id)
 	{
 		// test upload dir
-		$vfs_data = array('string'=>$this->vfs_basedir,'relatives'=>array(RELATIVE_ROOT));
-		if (!($this->vfs->file_exists($vfs_data)))
+		if (!is_dir(egw_vfs::PREFIX.$this->vfs_basedir))
 		{
-			$this->vfs->override_acl = 1;
-			$this->vfs->mkdir($vfs_data);
-			$vfs_data['string'] = $this->pictures_dir;
-			$this->vfs->mkdir($vfs_data);
-			$vfs_data['string'] = $this->thumbs_dir;
-			$this->vfs->mkdir($vfs_data);
-			$this->vfs->override_acl = 0;
+			egw_vfs::$is_root = true;
+			egw_vfs::mkdir($this->pictures_dir,0777,STREAM_MKDIR_RECURSIVE);
+			egw_vfs::mkdir($this->thumbs_dir,0777,STREAM_MKDIR_RECURSIVE);
+			egw_vfs::$is_root = false;
 		}
-		
 		switch($file['type'])
 		{
 			case 'image/gif':
@@ -403,11 +393,11 @@ class bo_resources
 			default:
 				return lang('Picture type is not supported, sorry!');
 		}
-		
+
 		$src_img_size = getimagesize($file['tmp_name']);
 		$dst_img_size = array( 0 => 320, 1 => 240);
 		$thumb_size = array( 0 => 64, 1 => 48);
-		
+
 		$tmp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
 		if($src_img_size[0] > 64 || $src_img_size[1] > 48)
 		{
@@ -436,38 +426,13 @@ class bo_resources
 				imagejpeg($src_img,$tmp_dir.$resouce_id.'.thumb.jpg');
 		}
 		imagedestroy($src_img);
-			
-		$this->vfs->override_acl = 1;
-		$this->vfs->cp(array(
-			'from' => $tmp_dir.$resouce_id.'.jpg',
-			'to'   => $this->pictures_dir.$resouce_id.'.jpg',
-			'relatives' => array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT)
-		));
-		$this->vfs->set_attributes(array(
-			'string' => $this->pictures_dir.$resouce_id.'.jpg',
-			'relatives' => array (RELATIVE_ROOT),
-			'attributes' => array (
-				'mime_type' => 'image/jpeg',
-				'comment' => 'picture of resource no.'.$resouce_id,
-				'app' => $GLOBALS['egw_info']['flags']['currentapp']
-		)));
-		$this->vfs->cp(array(
-			'from' => $tmp_dir.$resouce_id.'.thumb.jpg',
-			'to'   => $this->thumbs_dir.$resouce_id.'.jpg',
-			'relatives' => array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT)
-			));
-		$this->vfs->set_attributes(array(
-			'string' => $this->thumbs_dir.$resouce_id.'.jpg',
-			'relatives' => array (RELATIVE_ROOT),
-			'attributes' => array (
-				'mime_type' => 'image/jpeg',
-				'comment' => 'thumbnail of resource no.'.$resouce_id,
-				'app' => $GLOBALS['egw_info']['flags']['currentapp']
-		)));
-		$this->vfs->override_acl = 0;
-		return;
+
+		egw_vfs::$is_root = true;
+		copy($tmp_dir.$resouce_id.'.jpg',egw_vfs::PREFIX.$this->pictures_dir.$resouce_id.'.jpg');
+		copy($tmp_dir.$resouce_id.'.thumb.jpg',egw_vfs::PREFIX.$this->thumbs_dir.$resouce_id.'.jpg');
+		egw_vfs::$is_root = false;
 	}
-	
+
 	/**
 	 * get resource picture either from vfs or from symlink
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
@@ -484,8 +449,7 @@ class bo_resources
 		switch($src)
 		{
 			case 'own_src':
-				$picture = $this->conf->config_data['dont_use_vfs'] ? $GLOBALS['egw_info']['server']['webserver_url'] : 'vfs:';
-				$picture .= $size ? $this->pictures_dir.$res_id.'.jpg' : $this->thumbs_dir.$res_id.'.jpg';
+				$picture = egw::link(egw_vfs::download_url($size ? $this->pictures_dir.$res_id.'.jpg' : $this->thumbs_dir.$res_id.'.jpg'));
 				break;
 			case 'cat_src':
 				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$res_id));
@@ -502,7 +466,7 @@ class bo_resources
 		}
 		return $picture;
 	}
-	
+
 	/**
 	 * remove_picture
 	 * removes picture from vfs
@@ -513,15 +477,10 @@ class bo_resources
 	 */
 	function remove_picture($res_id)
 	{
-		$vfs_data = array('string' => $this->pictures_dir.$res_id.'.jpg','relatives' => array(RELATIVE_ROOT));
-		$this->vfs->override_acl = 1;
-		if($this->vfs->file_exists($vfs_data))
-		{
-			$this->vfs->rm($vfs_data);
-			$vfs_data['string'] = $this->thumbs_dir.$res_id.'.jpg';
-			$this->vfs->rm($vfs_data);
-		}
-		$this->vfs->override_acl = 0;
+		egw_vfs::$is_root = true;
+		egw_vfs::unlink($this->pictures_dir.$res_id.'.jpg');
+		egw_vfs::unlink($this->thumbs_dir.$res_id.'.jpg');
+		egw_vfs::$is_root = false;
 	}
 
 	/**

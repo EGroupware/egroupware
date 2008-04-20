@@ -22,7 +22,6 @@ class ui_resources
 		'edit'		=> True,
 		'show'		=> True,
 		'select'	=> True,
-		'admin'		=> True,
 		'writeLangFile'	=> True
 		);
 
@@ -36,7 +35,7 @@ class ui_resources
 		$this->tmpl	= new etemplate('resources.show');
 		$this->bo	=& CreateObject('resources.bo_resources');
 // 		$this->calui	= CreateObject('resources.ui_calviews');
-		
+
 	}
 
 	/**
@@ -44,7 +43,7 @@ class ui_resources
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $content content from eTemplate callback
-	 * 
+	 *
 	 * FIXME don't translate cats in nextmach
 	 */
 	function index($content='')
@@ -54,7 +53,7 @@ class ui_resources
 			$sessiondata = $content['nm'];
 			unset($sessiondata['rows']);
 			$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
-			
+
 			if (isset($content['back']))
 			{
 				unset($sessiondata['view_accs_of']);
@@ -72,7 +71,7 @@ class ui_resources
 				}
 				return $this->index($msg);
 			}
-			
+
 			foreach($content['nm']['rows'] as $row)
 			{
 				if(isset($row['delete']))
@@ -91,7 +90,7 @@ class ui_resources
 		$msg = $content;
 		$content = array();
 		$content['msg'] = $msg;
-		
+
 		$content['nm']['header_left']	= 'resources.resource_select.header';
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
@@ -103,14 +102,14 @@ class ui_resources
 		$content['nm']['bottom_too']	= true;
 		$content['nm']['order']		= 'name';
 		$content['nm']['sort']		= 'ASC';
-		
+
 		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		if($nm_session_data)
 		{
 			$content['nm'] = $nm_session_data;
 		}
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
-		
+
 		// check if user is permitted to add resources
 		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))
 		{
@@ -119,12 +118,12 @@ class ui_resources
 		$no_button['back'] = true;
 		$no_button['add_sub'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
-		
+
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
 			function js_btn_book_selected(form)
 			{
 				resources = '';
-				
+
 				el = form.getElementsByTagName(\"input\");
 				for (var i = 0; i < el.length; i++)
 				{
@@ -172,7 +171,7 @@ class ui_resources
 	 * @param $content   Content from the eTemplate Exec call or id on inital call
 	 */
 	function edit($content=0,$accessory_of = -1)
-	{	
+	{
 		if (is_array($content))
 		{
 			if(isset($content['save']) || isset($content['delete']))
@@ -192,7 +191,7 @@ class ui_resources
 					unset($content['delete']);
 					$content['msg'] = $this->bo->delete($content['res_id']);
 				}
-				
+
 				if($content['msg'])
 				{
 					return $this->edit($content);
@@ -210,7 +209,7 @@ class ui_resources
 			if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 			if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
 			$content = array('res_id' => $res_id);
-			
+
 			if ($res_id > 0)
 			{
 				$content = $this->bo->read($res_id);
@@ -221,17 +220,17 @@ class ui_resources
 					'to_app' => 'resources'
 				);
 			}
-			
+
 		}
 		// some presetes
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
-		
+
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
-		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] : 
+		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] :
 			$content['cat_id'] ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
 		if($accessory_of > 0 || $content['accessory_of'] > 0)
 		{
@@ -239,37 +238,13 @@ class ui_resources
 			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
-		
+
 // 		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
 		return $this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv,2);
-		
-	}
-	
-	/**
-	 * adminsection of resources
-	 *
-	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 */
-	function admin($content='')
-	{
-		if(is_array($content))
-		{
-			if(isset($content['save']))
-			{
-				$this->bo->conf->read_repository();
-				$this->bo->conf->save_value('dont_use_vfs',$content['dont_use_vfs']);
-			}
-			else
-			{
-				return $GLOBALS['egw']->redirect_link('/admin/index.php');
-			}
-		}
-		$content = $this->bo->conf->read_repository();
-		$this->tmpl->read('resources.admin');
-		$this->tmpl->exec('resources.ui_resources.admin',$content,$sel_options,$no_button,$preserv);
+
 	}
 
 	/**
@@ -299,7 +274,7 @@ class ui_resources
 			{
 				return $this->edit($content['res_id']);
 			}
-			
+
 		}
 		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 
@@ -311,23 +286,23 @@ class ui_resources
 				'to_id' => $res_id,
 				'to_app' => 'resources'
 		);
-	
+
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
-		
+
 		$content['quantity'] = ($content['useable'] == $content['quantity']) ? $content['quantity'] : $content['quantity'].' ('.lang('useable').' '.$content['useable'].')';
-		
+
 		//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
-				
+
 		$content['cat_name'] =  $this->bo->acl->get_cat_name($content['cat_id']);
 		$content['cat_admin'] = $this->bo->acl->get_cat_admin($content['cat_id']);
-		
+
 /*		if($content['accessory_of'] > 0)
 		{
 			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
-		} 
+		}
 */
 		$content['description'] = chop($content['long_description']) ? $content['long_description'] : (chop($content['short_description']) ? $content['short_description'] : lang("no description available"));
 		$content['description'] = $content['description'] ? $content['description'] : lang('no description available');
@@ -346,9 +321,9 @@ class ui_resources
 		$preserv = $content;
 		$this->tmpl->read('resources.showdetails');
 		return $this->tmpl->exec('resources.ui_resources.show',$content,$sel_options,$no_button,$preserv,2);
-		
+
 	}
-	
+
 	/**
 	 * select resources
 	 *
@@ -361,13 +336,13 @@ class ui_resources
 			$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
 		}
 		$GLOBALS['phpgw']->js->set_onload("copyOptions('exec[resources][selectbox]');");
-		
+
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
 			window.focus();
-			
+
 			openerid='resources_selectbox';
 			id='exec[nm][rows][selectbox]';
-		
+
 			function addOption(label,value,button_id,useable)
 			{
 				quantity = document.getElementById(button_id+'[default_qty]').value;
@@ -396,8 +371,8 @@ class ui_resources
 					for (i=0; i < selectBox.length; i++) {
 						var selectvalue = selectBox.options[i].value.split(':');
 						if (selectvalue[0] == resource_value[0]) {
-							selectBox.options[i] = null; 
-							selectBox.options[selectBox.length] = new Option(label,value,false,true);	
+							selectBox.options[i] = null;
+							selectBox.options[selectBox.length] = new Option(label,value,false,true);
 							break;
 						}
 					}
@@ -406,7 +381,7 @@ class ui_resources
 					}
 				}
 			}
-		
+
 			function removeSelectedOptions()
 			{
 				openerSelectBox = opener.document.getElementById(openerid);
@@ -423,7 +398,7 @@ class ui_resources
 					}
 				}
 			}
-		
+
 			function copyOptions()
 			{
 				openerSelectBox = opener.document.getElementById(openerid);
@@ -436,12 +411,12 @@ class ui_resources
 					}
 				}
 			}
-			
+
 			function oneLineSubmit()
 			{
 			/*
 				openerSelectBox = opener.document.getElementById(openerid);
-		
+
 				if (openerSelectBox) {
 					if (openerSelectBox.selectedIndex >= 0) {
 						selected = openerSelectBox.options[openerSelectBox.selectedIndex].value;
@@ -456,13 +431,13 @@ class ui_resources
 									break;
 								}
 							}
-						}	
+						}
 					}
 				}
 			*/
 				window.close();
 			}</script>";
-		
+
 		$content['nm']['header_left'] = 'resources.resource_select.header';
 		$content['nm']['show_bookable'] = true;
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
@@ -480,7 +455,7 @@ class ui_resources
 		$this->tmpl->read('resources.resource_select');
 		return $this->tmpl->exec('resources.ui_resources.select',$content,$sel_options,$no_button,$preserv,2);
 	}
-	
+
 	/**
 	 * get_calendar_sidebox
 	 * get data für calendar sidebox
@@ -493,14 +468,14 @@ class ui_resources
 	{
 		$cats = $this->bo->acl->get_cats(EGW_ACL_READ);
 		if (!$cats) return array();
-		
+
 		$owners = explode(',',$param['owner']);
 		unset($param['owner']);
 		$res_cats = $selected = array();
 
 		// this gets the resource-ids of the cats and implodes them to the array-key of the selectbox,
 		// so it is possible to select all resources of a category
-		foreach($cats as $cat_id => $cat_name) 
+		foreach($cats as $cat_id => $cat_name)
 		{
 			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id'))
 			{
@@ -510,7 +485,7 @@ class ui_resources
 					$keys[] = 'r'.$res['res_id'];
 				}
 				$res_cats[implode(',',$keys)] = $cat_name;
-				
+
 				if (count(array_intersect($keys,$owners)) == count($keys))
 				{
 					$selected[] = implode(',',$keys);
@@ -535,7 +510,7 @@ class ui_resources
 			{
 				$resources['r'.$data['res_id']] = $data['name'];
 			}
-		}		
+		}
 		$selectbox = html::select(
 			'owner',
 			$selected,

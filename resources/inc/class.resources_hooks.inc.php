@@ -20,10 +20,10 @@ class resources_hooks
 	function admin_prefs_sidebox($args)
 	{
 		$this->acl =& CreateObject('resources.bo_acl');
-		
+
 		$appname = 'resources';
 		$location = is_array($args) ? $args['location'] : $args;
-		
+
 		if ($location == 'sidebox_menu')
 		{
 			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
@@ -31,14 +31,14 @@ class resources_hooks
 					'text' => lang('resources list'),
 					'no_lang' => true,
 					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.index' )),
-// 					'icon' => 
+// 					'icon' =>
 			);
-			
+
 			if($this->acl->get_cats(EGW_ACL_ADD))
 			{
 				$file[] = array(
 					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.edit')).
-						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=800,height=600,scrollbars=yes,status=yes\'); 
+						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=800,height=600,scrollbars=yes,status=yes\');
 						return false;">'.lang('add resource').'</a>',
 					'no_lang' => true,
 					'link' => false
@@ -48,7 +48,7 @@ class resources_hooks
 // 					'text' => lang('planer'),
 // 					'no_lang' => true,
 // 					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_calviews.planer' )),
-// 					'icon' => 
+// 					'icon' =>
 // 			);
 			display_sidebox($appname,$title,$file);
 		}
@@ -73,8 +73,6 @@ class resources_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Site configuration' => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'resources.ui_resources.admin' )),
 				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
@@ -83,7 +81,6 @@ class resources_hooks
 					'menuaction=resources.ui_acl.acllist'),
 				'Custom Fields'=>$GLOBALS['egw']->link('/index.php',
 					'menuaction=admin.customfields.edit&appname=resources'),
-// 				'CSV-Import'         => $GLOBALS['egw']->link('/infolog/csv_import.php')
 			);
 			if ($location == 'admin')
 			{
@@ -95,7 +92,7 @@ class resources_hooks
 			}
 		}
 	}
-	
+
 	function search_link($args)
 	{
 		return array(
@@ -110,20 +107,20 @@ class resources_hooks
 				'menuaction' => 'resources.ui_resources.edit',
 			),
 			'add_app'    => 'link_app',
-			'add_id'     => 'link_id',	
+			'add_id'     => 'link_id',
 			'add_popup'  => '800x600',
 		);
 	}
 
 	function calendar_resources($args)
 	{
-		return array(	
+		return array(
 			'widget' => 'resources_select',// widget to use for the selection of resources
 			'info' => 'resources.bo_resources.get_calendar_info',// info method, returns array with id, type & name for a given id
 			'max_quantity' => 'useable',// if set, key for max. quantity in array returned by info method
 			'new_status' => 'resources.bo_resources.get_calendar_new_status',// method returning the status for new items, else 'U' is used
 			'type' => 'r',// one char type-identifiy for this resources
-			'icon' => 'calicon',//icon 
+			'icon' => 'calicon',//icon
 			'participants_header' => lang('resources'), // header of participants from this type
 			'cal_sidebox' => array(
 				'menu_title' => lang('Select resources'),
@@ -132,5 +129,3 @@ class resources_hooks
 		);
 	}
 }
-
-?>
