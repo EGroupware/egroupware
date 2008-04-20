@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Applications
- * 
+ *
  * @link http://www.egroupware.org
  * This file was originaly written by Dan Kuykendall and Joseph Engo
  * Copyright (C) 2000, 2001 Dan Kuykendall
@@ -19,7 +19,7 @@
  * (egw-object and egw_info-array) in a php-session and restore it from
  * there instead of creating it completly new on each page-request.
  * The enviroment gets now created by the egw-class
- * 
+ *
  * Use now a php5 getter method to create the usuall subobject on demand, to allow a quicker
  * header include on sites not useing php4-restore.
  * This also makes a lot of application code, like the following, unnecessary:
@@ -102,7 +102,7 @@ class egw extends egw_minimal
 			// we check for the old table too, to not scare updating users ;-)
 			if (!$e && $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
 			{
-				throw new Exception('<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir . 
+				throw new Exception('<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir .
 					'">update eGroupWare</a> before you can continue using it.</center>',999);
 			}
 			else
@@ -150,7 +150,7 @@ class egw extends egw_minimal
 		{
 			$this->verify_session();
 			$this->applications->read_installed_apps();	// to get translated app-titles, has to be after verify_session
-			
+
 			$this->define_egw_constants();
 
 			$this->check_app_rights();
@@ -173,7 +173,7 @@ class egw extends egw_minimal
 		$GLOBALS['egw'] =& $this;	// we need to be immediately available there for the other classes we instantiate
 		// for the migration: reference us to the old phpgw object
 		$GLOBALS['phpgw'] =& $this;
-		
+
 		if ($GLOBALS['egw_info']['server']['system_charset'])
 		{
 			$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['server']['system_charset']);
@@ -357,7 +357,7 @@ class egw extends egw_minimal
 	 * Needs to be called if user-preferences, system-config or enabled apps of the current user have been changed and
 	 * the change should have immediate effect
 	 */
-	function invalidate_session_cache()
+	static function invalidate_session_cache()
 	{
 		unset($_SESSION['egw_info_cache']);
 		unset($_SESSION['egw_object_cache']);
@@ -369,7 +369,7 @@ class egw extends egw_minimal
 	 * @param string $s
 	 * @return string The string with html special characters replaced with entities
 	 */
-	function strip_html($s)
+	static function strip_html($s)
 	{
 		return htmlspecialchars(stripslashes($s));
 	}
@@ -381,9 +381,9 @@ class egw extends egw_minimal
 	 * @param string/array	$extravars	Extra params to be passed to the url
 	 * @return string	The full url after processing
 	 */
-	function link($url = '', $extravars = '')
+	static function link($url = '', $extravars = '')
 	{
-		return $this->session->link($url, $extravars);
+		return $GLOBALS['egw']->session->link($url, $extravars);
 	}
 
 	/**
@@ -393,9 +393,9 @@ class egw extends egw_minimal
 	 * @param string/array	$extravars	Extra params to be passed to the url
 	 * @return string	The full url after processing
 	 */
-	function redirect_link($url = '',$extravars='')
+	static function redirect_link($url = '',$extravars='')
 	{
-		$this->redirect($this->session->link($url, $extravars));
+		self::redirect($GLOBALS['egw']->session->link($url, $extravars));
 	}
 
 	/**
@@ -405,7 +405,7 @@ class egw extends egw_minimal
 	 *
 	 * @param  string The url ro redirect to
 	 */
-	function redirect($url = '')
+	static function redirect($url = '')
 	{
 		/* global $HTTP_ENV_VARS; */
 
@@ -449,7 +449,7 @@ class egw extends egw_minimal
 		}
 		return $this->translation->translate($key,$args);
 	}
-	
+
 	/**
 	 * eGW's shutdown handler
 	 */
@@ -492,7 +492,7 @@ class egw_minimal
 {
 	/**
 	 * Instance of the db-object
-	 * 
+	 *
 	 * @var egw_db
 	 */
 	var $db;
@@ -535,7 +535,7 @@ class egw_minimal
 		//error_log(__METHOD__."($name)");
 		return isset($this->$name);
 	}
-	
+
 	/**
 	 * Magic function to return a sub-object
 	 *
@@ -545,12 +545,12 @@ class egw_minimal
 	function __get($name)
 	{
 		//error_log(__METHOD__."($name)".function_backtrace());
-		
+
 		if (isset($this->$name))
 		{
 			return $this->$name;
 		}
-		
+
 		if (!isset(self::$sub_objects[$name]) && !class_exists($name))
 		{
 			error_log(__METHOD__.": There's NO $name object! ".function_backtrace());
