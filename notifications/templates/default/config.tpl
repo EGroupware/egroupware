@@ -34,7 +34,6 @@
      </select>
     </td>
    </tr>
-   <!-- future SMS backend - currently disabled
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_SMS_backend}</b></td>
    </tr>
@@ -57,7 +56,6 @@
      </select>
     </td>
    </tr>
-   -->
    <!-- END body -->
 <!-- BEGIN footer -->
   <tr valign="bottom" style="height: 30px;">
