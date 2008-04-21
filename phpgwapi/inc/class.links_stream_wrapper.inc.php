@@ -168,14 +168,14 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 		$ret = false;
 		if ($apps == 'apps' && $app && !$id || self::check_extended_acl($path,egw_vfs::WRITABLE))	// app directory itself is allways ok
 		{
-			egw_vfs::$is_root = true;
+			$current_is_root = egw_vfs::$is_root; egw_vfs::$is_root = true;
 			$current_user = egw_vfs::$user; egw_vfs::$user = 0;
 
 			$ret = parent::mkdir($path,0,$options|STREAM_MKDIR_RECURSIVE);
 			if ($id) parent::chmod($path,0);	// no other rights
 
 			egw_vfs::$user = $current_user;
-			egw_vfs::$is_root = false;
+			egw_vfs::$is_root = $current_is_root;
 		}
 		//error_log(__METHOD__."($path,$mode,$options) apps=$apps, app=$app, id=$id: returning $ret");
 		return $ret;
