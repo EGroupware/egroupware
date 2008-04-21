@@ -13,21 +13,21 @@
 
 /**
  * eGroupWare API: stream wrapper for linked files
- * 
+ *
  * The files stored by the sqlfs_stream_wrapper in a /apps/$app/$id directory
- * 
+ *
  * The links stream wrapper extends the sqlfs one, to implement an own ACL based on the access
  * of the entry the files are linked to.
- * 
+ *
  * Applications can define a 'file_access' method in the link registry with the following signature:
- * 
+ *
  * 		boolean function file_access(string $id,int $check,string $rel_path)
- * 
+ *
  * If the do not implement such a function the title function is used to test if the user has
  * at least read access to an entry, and if true full (write) access to the files is granted.
- * 
+ *
  * The stream wrapper interface is according to the docu on php.net
- *  
+ *
  * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
  */
 class links_stream_wrapper extends sqlfs_stream_wrapper
@@ -51,7 +51,7 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 
 	/**
 	 * Implements ACL based on the access of the user to the entry the files are linked to.
-	 * 
+	 *
 	 * @param string $url url to check
 	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
 	 * @return boolean
@@ -59,7 +59,7 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 	static function check_extended_acl($url,$check)
 	{
 		$path = parse_url($url,PHP_URL_PATH);
-		
+
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
 
 		if ($apps != 'apps')
@@ -95,19 +95,19 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 
 	/**
 	 * This method is called in response to stat() calls on the URL paths associated with the wrapper.
-	 * 
+	 *
 	 * Reimplemented from sqlfs, as we have to pass the value of check_extends_acl(), due to the lack of late static binding.
-	 * 
+	 *
 	 * @param string $path
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
-	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward, 
-	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned, 
-	 *                          not the resource pointed to by the link. 
+	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward,
+	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned,
+	 *                          not the resource pointed to by the link.
 	 *                          This flag is set in response to calls to lstat(), is_link(), or filetype().
-	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set, 
+	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
-	 * @return array 
+	 * @return array
 	 */
 	static function url_stat ( $url, $flags )
 	{
@@ -116,7 +116,7 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 
 	/**
 	 * Set or delete extended acl for a given path and owner (or delete  them if is_null($rights)
-	 * 
+	 *
 	 * Reimplemented, to NOT call the sqlfs functions, as we dont allow to modify the ACL (defined by the apps)
 	 *
 	 * @param string $path string with path
@@ -129,10 +129,10 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Get all ext. ACL set for a path
-	 * 
+	 *
 	 * Reimplemented, to NOT call the sqlfs functions, as we dont allow to modify the ACL (defined by the apps)
 	 *
 	 * @param string $path
@@ -141,6 +141,44 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 	function get_eacl($path)
 	{
 		return false;
+	}
+
+	/**
+	 * mkdir for links
+	 *
+	 * Reimplemented as we have no static late binding to allow the extended sqlfs to call our eacl and to set no default rights for entry dirs
+	 *
+	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
+	 *
+	 * It should attempt to create the directory specified by path.
+	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories.
+	 *
+	 * @param string $path
+	 * @param int $mode not used(!), we inherit 005 for /apps/$app and set 000 for /apps/$app/$id
+	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE, we allways use recursive!
+	 * @return boolean TRUE on success or FALSE on failure
+	 */
+	static function mkdir($path,$mode,$options)
+	{
+
+		if($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
+
+		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
+
+		$ret = false;
+		if ($apps == 'apps' && $app && !$id || self::check_extended_acl($path,egw_vfs::WRITABLE))	// app directory itself is allways ok
+		{
+			egw_vfs::$is_root = true;
+			$current_user = egw_vfs::$user; egw_vfs::$user = 0;
+
+			$ret = parent::mkdir($path,0,$options|STREAM_MKDIR_RECURSIVE);
+			if ($id) parent::chmod($path,0);	// no other rights
+
+			egw_vfs::$user = $current_user;
+			egw_vfs::$is_root = false;
+		}
+		//error_log(__METHOD__."($path,$mode,$options) apps=$apps, app=$app, id=$id: returning $ret");
+		return $ret;
 	}
 }
 

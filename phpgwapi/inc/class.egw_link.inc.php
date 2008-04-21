@@ -17,11 +17,11 @@
 
 /**
  * Generalized linking between entries of eGroupware apps
- * 
+ *
  * Please note: this class can NOT and does not need to be initialised, all methods are static
- * 
+ *
  * To participate in the linking an applications has to implement the following hooks:
- * 
+ *
  * 	/**
  *	 * Hook called by link-class to include app in the appregistry of the linkage
  *	 *
@@ -38,13 +38,13 @@
  *				'menuaction' => 'app.class.method',
  *			),
  *			'view_id' => 'app_id',					// name of get parameter of the id
- *          'view_popup' => '400x300',				// size of popup (XxY), if view is in popup 
+ *          'view_popup' => '400x300',				// size of popup (XxY), if view is in popup
  *			'add' => array(							// get parameter to add an empty entry to app
  *				'menuaction' => 'app.class.method',
  *			),
  *			'add_app'    => 'link_app',				// name of get parameter to add links to other app
  *			'add_id'     => 'link_id',				// --------------------- " ------------------- id
- *          'add_popup' => '400x300',				// size of popup (XxY), if add is in popup 
+ *          'add_popup' => '400x300',				// size of popup (XxY), if add is in popup
  *			'notify' => 'app.class.method',			// method to be called if an other applications liks or unlinks with app: notify(array $data)
  * 			'file_access' => 'app.class.method',	// method to be called to check file access rights, see links_stream_wrapper class
  *		);											// boolean file_access(string $id,int $check,string $rel_path)
@@ -54,7 +54,7 @@
  * The BO-layer implementes some extra features on top of the so-layer:
  * 1) It handles links to not already existing entries. This is used by the eTemplate link-widget, which allows to
  *    setup links even for new / not already existing entries, before they get saved.
- * 	  In that case you have to set the first id to 0 for the link-static function and pass the array returned in that id 
+ * 	  In that case you have to set the first id to 0 for the link-static function and pass the array returned in that id
  * 	  (not the return-value) after saveing your new entry again to the link static function.
  * 2) Attaching files: they are saved in the vfs and not the link-table (!).
  *    Attached files are stored under $vfs_basedir='/infolog' in the vfs!
@@ -74,7 +74,7 @@ class egw_link extends solink
 	/**
 	 * other apps can participate in the linking by implementing a 'search_link' hook, which
 	 * has to return an array in the format of an app_register entry below
-	 * 
+	 *
 	 * @var array
 	 */
 	static $app_register = array(
@@ -98,7 +98,7 @@ class egw_link extends solink
 	 */
 	private function __construct()
 	{
-		
+
 	}
 
 	/**
@@ -129,7 +129,7 @@ class egw_link extends solink
 			self::$title_cache = array();
 		}
 	}
-	
+
 	/**
 	 * Called by egw::egw_final to store the title-cache in the session
 	 *
@@ -138,7 +138,7 @@ class egw_link extends solink
 	{
 		$GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi',self::$title_cache);
 	}
-	
+
 	/**
 	 * creats a link between $app1,$id1 and $app2,$id2 - $id1 does NOT need to exist yet
 	 *
@@ -146,7 +146,7 @@ class egw_link extends solink
 	 * File-attachments return a negative link-id !!!
 	 *
 	 * @param string $app1 app of $id1
-	 * @param string/array &$id1 id of item to linkto or 0 if item not yet created or array with links 
+	 * @param string/array &$id1 id of item to linkto or 0 if item not yet created or array with links
 	 * 	of not created item or $file-array if $app1 == self::VFS_APPNAME (see below).
 	 * 	If $id==0 it will be set on return to an array with the links for the new item.
 	 * @param string/array $app2 app of 2.linkend or array with links ($id2 not used)
@@ -214,7 +214,7 @@ class egw_link extends solink
 				{
 					$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
 						$link['remark'],$link['owner'],$link['lastmod']);
-					
+
 					// notify both sides
 					if (!($no_notify&2)) self::notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
 					if (!($no_notify&1)) self::notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
@@ -234,7 +234,7 @@ class egw_link extends solink
 
 		if (!($no_notify&2)) self::notify('link',$app2,$id2,$app1,$id1,$link_id);
 		if (!($no_notify&1)) self::notify('link',$app1,$id1,$app2,$id2,$link_id);
-		
+
 		return $link_id;
 	}
 
@@ -272,7 +272,7 @@ class egw_link extends solink
 				{
 					$only_app = substr(1,$only_app);
 				}
-				foreach (array_reverse($id) as $link) 
+				foreach (array_reverse($id) as $link)
 				{
 					if (is_array($link)  // check for unlink-marker
 						&&  !($only_app && $not_only == ($link['app'] == $only_app)))
@@ -296,7 +296,7 @@ class egw_link extends solink
 
 		return $ids;
 	}
-	
+
 	/**
 	 * Query the links of multiple entries of one application
 	 *
@@ -363,17 +363,17 @@ class egw_link extends solink
 	 * @param string $app2='' second app
 	 * @param string $id2='' id in $app2
 	 * @return array with link-data or False
-	 */ 
+	 */
 	static function get_link($app_link_id,$id='',$app2='',$id2='')
 	{
 		if (self::DEBUG)
 		{
-			echo '<p>'.__METHOD__."($app_link_id,$id,$app2,$id2)</p>\n"; echo function_backtrace(); 
+			echo '<p>'.__METHOD__."($app_link_id,$id,$app2,$id2)</p>\n"; echo function_backtrace();
 		}
 		if (is_array($id))
 		{
 			if (strpos($app_link_id,':') === false) $app_link_id = self::temp_link_id($app2,$id2);	// create link_id of temporary link, if not given
-			
+
 			if (isset($id[$app_link_id]) && is_array($id[$app_link_id]))	// check for unlinked-marker
 			{
 				return $id[$app_link_id];
@@ -449,7 +449,7 @@ class egw_link extends solink
 				unset(self::$title_cache[$app.':'.$id]);
 			}
 			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2);
-			
+
 			// only notify on real links, not the one cached for writing or fileattachments
 			self::notify_unlink($deleted);
 
@@ -517,14 +517,14 @@ class egw_link extends solink
 	 * returns the title (short description) of entry $id and $app
 	 *
 	 * @param string $app appname
-	 * @param string $id id in $app 
+	 * @param string $id id in $app
 	 * @param array $link=null link-data for file-attachments
 	 * @return string/boolean string with title, null if $id does not exist in $app or false if no perms to view it
 	 */
 	static function title($app,$id,$link=null)
 	{
 		if (!$id) return '';
-		
+
 		if (isset(self::$title_cache[$app.':'.$id]))
 		{
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='".self::$title_cache[$app.':'.$id]."' (from cache)</p>\n";
@@ -562,10 +562,10 @@ class egw_link extends solink
 
 		return self::$title_cache[$app.':'.$id] = $title;
 	}
-	
+
 	/**
 	 * Query the titles off multiple id's of one app
-	 * 
+	 *
 	 * Apps can implement that hook, if they have a quicker (eg. less DB queries) method to query the title of multiple entries.
 	 * If it's not implemented, we call the regular title method multiple times.
 	 *
@@ -609,7 +609,7 @@ class egw_link extends solink
 	 *
 	 * @param string $app appname of entry to create
 	 * @param string $to_app appname to link the new entry to
-	 * @param string $to_id id in $to_app 
+	 * @param string $to_id id in $to_app
 	 * @return array/boolean with name-value pairs for link to add-methode of $app or false if add not supported
 	 */
 	static function add($app,$to_app='',$to_id='')
@@ -620,7 +620,7 @@ class egw_link extends solink
 			return false;
 		}
 		$params = $reg['add'];
-		
+
 		if ($reg['add_app'] && $to_app && $reg['add_id'] && $to_id)
 		{
 			$params[$reg['add_app']] = $to_app;
@@ -633,7 +633,7 @@ class egw_link extends solink
 	 * view entry $id of $app
 	 *
 	 * @param string $app appname
-	 * @param string $id id in $app 
+	 * @param string $id id in $app
 	 * @param array $link=null link-data for file-attachments
 	 * @return array with name-value pairs for link to view-methode of $app to view $id
 	 */
@@ -675,7 +675,7 @@ class egw_link extends solink
 	static function is_popup($app,$action='view')
 	{
 		return self::get_registry($app,$action.'_popup');
-	}	
+	}
 
 	/**
 	 * Check if $app is in the registry and has an entry for $name
@@ -689,7 +689,7 @@ class egw_link extends solink
 		$reg = self::$app_register[$app];
 
 		return isset($reg) ? $reg[$name] : false;
-	}	
+	}
 
 	/**
 	 * path to the attached files of $app/$ip or the directory for $app if no $id,$file given
@@ -698,7 +698,7 @@ class egw_link extends solink
 	 * separate subdirs with name app are created.
 	 *
 	 * @param string $app appname
-	 * @param string $id='' id in $app 
+	 * @param string $id='' id in $app
 	 * @param string $file='' filename
 	 * @return string/array path or array with path and relatives, depending on $relatives
 	 */
@@ -708,11 +708,11 @@ class egw_link extends solink
 		if ($app)
 		{
 			$path .= '/'.$app;
-			
+
 			if ($id)
 			{
 				$path .= '/'.$id;
-				
+
 				if ($file)
 				{
 					$path .= '/'.$file;
@@ -727,7 +727,7 @@ class egw_link extends solink
 	 * Put a file to the corrosponding place in the VFS and set the attributes
 	 *
 	 * @param string $app appname to linke the file to
-	 * @param string $id id in $app 
+	 * @param string $id id in $app
 	 * @param array $file informations about the file in format of the etemplate file-type
 	 * 	$file['name'] name of the file (no directory)
 	 * 	$file['type'] mine-type of the file
@@ -744,34 +744,18 @@ class egw_link extends solink
 		{
 			echo "<p>attach_file: app='$app', id='$id', tmp_name='$file[tmp_name]', name='$file[name]', size='$file[size]', type='$file[type]', path='$file[path]', ip='$file[ip]', comment='$comment'</p>\n";
 		}
-		$app_dir = self::vfs_path($app);
-
-		// we dont want an owner, as this would give rights independent of the apps ACL
-		$current_user = egw_vfs::$user; egw_vfs::$user = 0;
-
-		$Ok = true;
-		if (!file_exists($app_dir))
-		{
-			egw_vfs::$is_root = true;
-			$Ok = mkdir($app_dir,0700,true);
-			if (!$Ok) echo "<p>Can't mkdir($app_dir,0700,true)!</p>\n";
-			egw_vfs::$is_root = false;
-		}
-		
 		$entry_dir = self::vfs_path($app,$id);
-		if ($Ok && !file_exists($entry_dir))
-		{
-			$Ok = mkdir($entry_dir,0700);
-		}
-		egw_vfs::$user = $current_user;
-		
-		if ($Ok)
+		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
 			$Ok = copy($file['tmp_name'],$fname = $entry_dir.'/'.$file['name']) &&
 				($stat = links_stream_wrapper::url_stat($fname,0));
-		}	
+		}
+		else
+		{
+			error_log(__METHOD__."($app,$id,$file,$comment) Can't mkdir $entry_dir!");
+		}
 		// todo: set comment
-		
+
 		return $Ok ? -$stat['ino'] : false;
 	}
 
@@ -781,6 +765,7 @@ class egw_link extends solink
 	 * @param int/string $app > 0: file_id of an attchemnt or $app/$id entry which linked to
 	 * @param string $id='' id in app
 	 * @param string $fname filename
+	 * @return boolean/array false on error ($app or $id not found), array with path as key and boolean result of delete
 	 */
 	static function delete_attached($app,$id='',$fname = '')
 	{
@@ -912,7 +897,7 @@ class egw_link extends solink
 	 *
 	 * Please note: not all apps supply update notifications
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string $type 'link' for new links, 'unlink' for unlinked entries, 'update' of content in linked entries
 	 * @param string $notify_app app to notify
 	 * @param string $notify_id id in $notify_app
@@ -938,7 +923,7 @@ class egw_link extends solink
 	/**
 	 * notifies about unlinked links
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$links unlinked links from the database
 	 */
 	static private function notify_unlink(&$links)
@@ -948,7 +933,7 @@ class egw_link extends solink
 			// we notify both sides of the link, as the unlink command NOT clearly knows which side initiated the unlink
 			self::notify('unlink',$link['link_app1'],$link['link_id1'],$link['link_app2'],$link['link_id2'],$link['link_id']);
 			self::notify('unlink',$link['link_app2'],$link['link_id2'],$link['link_app1'],$link['link_id1'],$link['link_id']);
-		}	
+		}
 	}
 }
 egw_link::init_static();
