@@ -295,7 +295,7 @@ function phpgwapi_upgrade1_5_006()
 	{
 		foreach($filescenter_tables as $table)
 		{
-			schema_proc::DropTable($table);
+			$GLOBALS['egw_setup']->oProc->DropTable($table);
 		}
 		if ($filescenter_app)	// app installed, but no sources --> deinstall it
 		{
