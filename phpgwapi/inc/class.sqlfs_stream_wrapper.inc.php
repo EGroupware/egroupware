@@ -579,7 +579,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			':fs_creator'  => egw_vfs::$user,
 		))) && $operation == self::STORE2FS)
 		{
-			mkdir(self::_fs_path($path),0700,true);		// we create all missing parent dirs, as eg. /home might not yet exist
+			$ok = mkdir($dir = self::_fs_path($path),0700,true);		// we create all missing parent dirs, as eg. /home might not yet exist
 		}
 		return $ret;
 	}
@@ -1329,6 +1329,20 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static private function _fs_path($path)
 	{
+		if (!isset($GLOBALS['egw_info']['server']['files_dir']) || $GLOBALS['egw_info']['server']['files_dir'])
+		{
+			if (is_object($GLOBALS['egw_setup']->db))	// if we run under setup, query the db for the files dir
+			{
+				$GLOBALS['egw_info']['server']['files_dir'] = $GLOBALS['egw_setup']->db->select('egw_config','config_value',array(
+					'config_name' => 'files_dir',
+					'config_app' => 'phpgwapi',
+				),__LINE__,__FILE__)->fetchSingle();
+			}
+			if (!$GLOBALS['egw_info']['server']['files_dir'])
+			{
+				throw  new egw_exception_assertion_failed("\$GLOBALS['egw_info']['server']['files_dir'] not set!");
+			}
+		}
 		return $GLOBALS['egw_info']['server']['files_dir'].$path;
 	}
 
