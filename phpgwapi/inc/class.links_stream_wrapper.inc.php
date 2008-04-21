@@ -58,6 +58,10 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 	 */
 	static function check_extended_acl($url,$check)
 	{
+		if (egw_vfs::$is_root)
+		{
+			return true;
+		}
 		$path = parse_url($url,PHP_URL_PATH);
 
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);

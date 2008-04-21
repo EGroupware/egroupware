@@ -760,14 +760,14 @@ class egw_link extends solink
 	}
 
 	/**
-	 * deletes an attached file
+	 * deletes a single or all attached files of an entry (for all there's no acl check, as the entry probably not exists any more!)
 	 *
 	 * @param int/string $app > 0: file_id of an attchemnt or $app/$id entry which linked to
 	 * @param string $id='' id in app
-	 * @param string $fname filename
+	 * @param string $fname='' filename
 	 * @return boolean/array false on error ($app or $id not found), array with path as key and boolean result of delete
 	 */
-	static function delete_attached($app,$id='',$fname = '')
+	static function delete_attached($app,$id='',$fname='')
 	{
 		if ((int)$app > 0)	// is file_id
 		{
@@ -780,6 +780,12 @@ class egw_link extends solink
 				return False;	// dont delete more than all attachments of an entry
 			}
 			$url = self::vfs_path($app,$id,$fname);
+
+			if (!$fname || !$id)	// we delete the whole entry (or all entries), which probably not exist anymore
+			{
+				$current_is_root = egw_vfs::$is_root;
+				egw_vfs::$is_root = true;
+			}
 		}
 		if (self::DEBUG)
 		{
@@ -789,6 +795,10 @@ class egw_link extends solink
 		{
 			// try removing the dir, in case it's empty
 			@rmdir(egw_vfs::dirname($url));
+		}
+		if (!is_null($current_is_root))
+		{
+			egw_vfs::$is_root = $current_is_root;
 		}
 		return $Ok;
 	}
