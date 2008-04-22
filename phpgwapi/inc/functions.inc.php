@@ -6,7 +6,7 @@
  * (egw-object and egw_info-array) in a php-session and restore it from
  * there instead of creating it completly new on each page-request.
  * The enviroment gets now created by the egw-class
- * 
+ *
  * This file was originaly written by Dan Kuykendall and Joseph Engo
  * Copyright (C) 2000, 2001 Dan Kuykendall
  *
@@ -26,7 +26,7 @@ if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_
 	die("eGroupWare requires PHP $egw_min_php_version or greater.<br />Please contact your System Administrator to upgrade PHP!");
 }
 // check if eGW's pear repository is installed and prefer it over the other ones
-if (is_dir(EGW_SERVER_ROOT.'/egw-pear'))	
+if (is_dir(EGW_SERVER_ROOT.'/egw-pear'))
 {
 	set_include_path(EGW_SERVER_ROOT.'/egw-pear'.PATH_SEPARATOR.get_include_path());
 	//echo "<p align=right>include_path='".get_include_path()."'</p>\n";
@@ -66,7 +66,7 @@ if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUE
 
 	if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 	{
-		if (is_array($_SESSION['egw_info_cache']) && $_SESSION['egw_object_cache'])
+		if (is_array($_SESSION['egw_info_cache']) && $_SESSION['egw_object_cache'] && $_SESSION['egw_required_files'])
 		{
 			// marking the context as restored from the session, used by session->verify to not read the data from the db again
 			$GLOBALS['egw_info']['flags']['restored_from_session'] = true;
