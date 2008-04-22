@@ -27,7 +27,7 @@
  *	entry was successfuly created, bolink::link($app,$new_id,$arr) has to be called to create the links!
  * - link-list: Widget to show the links to an entry in a table with an unlink icon for each link. Needs the same
  *	pair of variables as link-to widget and needs to have the same id, as the data is shared with link-to.
- * - link-string: comma-separated list of link-titles with a link to its view method, value is like get_links() 
+ * - link-string: comma-separated list of link-titles with a link to its view method, value is like get_links()
  *	or array with keys to_app and to_id (widget calls then get_links itself)
  * - link-add:    Add a new entry of the select app, which is already linked to a given entry
  * - link-entry:  Allow to select an entry of a selectable or in options specified app
@@ -52,7 +52,7 @@
  */
 class link_widget
 {
-	/** 
+	/**
 	 * @var array exported methods of this class
 	 */
 	var $public_functions = array(
@@ -94,7 +94,7 @@ class link_widget
 	 *
 	 * @param string $name form-name of the control
 	 * @param mixed &$value value / existing content, can be modified
-	 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 	 * @param array &$readonlys names of widgets as key, to be made readonly
 	 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 	 * @param object &$tmpl reference to the template we belong too
@@ -164,7 +164,7 @@ class link_widget
 			{
 				$cell = $tmpl->empty_cell();
 				$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
-				return;			
+				return;
 			}
 			$cell['type'] = 'label';
 			//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
@@ -200,7 +200,7 @@ class link_widget
 				{
 					$options .= " onMouseOver=\"self.status='".addslashes(html::htmlspecialchars($help))."'; return true;\"";
 					$options .= " onMouseOut=\"self.status=''; return true;\"";
-					
+
 					if (($popup = egw_link::is_popup($link['app'],'view')))
 					{
 						list($w,$h) = explode('x',$popup);
@@ -303,17 +303,17 @@ class link_widget
 					$value[$row]['help'] = lang('Delete this file');
 
 					// Get mimetype and thumbnail
-					if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') )) 
+					if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') ))
 					{
-						list(,$icon) = explode('/',filemanager_ui::mime_icon($value[$row]['type']));
+						list(,$icon) = explode('/',egw_vfs::mime_icon($value[$row]['type']));
 						$value[$row]['mime_icon'] = html::image('filemanager',$icon,lang('File').': '.$value[$row]['type']);
 					}
-					if($GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] && $GLOBALS['egw_info']['server']['link_list_thumbnail'] > 0) 
+					if($GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] && $GLOBALS['egw_info']['server']['link_list_thumbnail'] > 0)
 					{
 						list($image) = explode('/', $value[$row]['type']);
-						if($image == 'image') 
+						if($image == 'image')
 						{
-							$value[$row]['thumbnail'] = '<img src="' . 
+							$value[$row]['thumbnail'] = '<img src="' .
 								$GLOBALS['egw']->link('/etemplate/inc/thumbnail.inc.php',array(
 									'app' => $link['app2'],
 									'id' => $link['id2'],
@@ -324,7 +324,7 @@ class link_widget
 				}
 				else
 				{
-					if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') )) 
+					if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') ))
 					{
 						// Hardcoded sizes to match the mimetype icons.  Uses the navbar image and CSS to resize.
 						$value[$row]['mime_icon'] = html::image($value[$row]['app'], 'navbar', lang($value[$row]['app']), 'style="width: 16px; height: 16px;"');
@@ -333,7 +333,7 @@ class link_widget
 					$value[$row]['help'] = lang('Remove this link (not the entry itself)');
 				}
 				// Remove appname if they only want icons
-				if($value[$row]['mime_icon'] && $GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'] == 'icons') 
+				if($value[$row]['mime_icon'] && $GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'] == 'icons')
 				{
 					$value[$row]['app'] = '';
 				}
@@ -380,7 +380,7 @@ class link_widget
 			}
 			if ($extension_data['app'])	// no app-selection, using app given in first option
 			{
-				$tpl->disable_cells('app');	
+				$tpl->disable_cells('app');
 				$onchange =& $tpl->get_cell_attribute('search','onclick');
 				$onchange = str_replace("document.getElementById(form::name('app')).value",'\''.$cell['size'].'\'',$onchange);
 				unset($onchange);
@@ -403,7 +403,7 @@ class link_widget
 				$value['options-app'] = $apps;
 			}
 			break;
-			
+
 		case 'link-apps':
 			$apps = egw_link::app_list($cell['size'] ? $cell['size'] : 'query');
 			if (!$apps)	// cant do an add without apps or already created entry
@@ -422,7 +422,7 @@ class link_widget
 		$cell['name'] = $tpl->name;
 		$cell['obj'] =& $tpl;
 		// keep the editor away from the generated tmpls
-		$tpl->no_onclick = true;			
+		$tpl->no_onclick = true;
 
 		if ($this->debug)
 		{
@@ -462,7 +462,7 @@ class link_widget
 				}
 				$value = $extension_data['app'] ? $value_in['id'] : $value['app'].':'.$value_in['id'];
 				return !!$value_in['id'];
-				
+
 			case 'link-apps':
 				if (!$value_in && $extension_data['needed'])
 				{
@@ -565,7 +565,7 @@ class link_widget
 		}
 		return True;
 	}
-	
+
 	/**
 	 * ajax callback to search in $app for $pattern, result is displayed in $id
 	 *
@@ -580,7 +580,7 @@ class link_widget
 	{
 		$response = new xajaxResponse();
 		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("','",$args)."')");
-		
+
 		if (!($found = egw_link::query($app,$pattern == lang('Search') ? '' : $pattern)))	// ignore the blur-text
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');
