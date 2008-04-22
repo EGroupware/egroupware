@@ -1609,7 +1609,7 @@ class uicontacts extends bocontacts
 				case 'delete':
 					$GLOBALS['egw']->redirect_link('/index.php',array(
 						'menuaction' => 'addressbook.uicontacts.index',
-						'msg' => $this->delete($content) ? lang('Error deleting the contact !!!') : lang('Contact deleted'),
+						'msg' => $this->delete($content) ? lang('Contact deleted') : lang('Error deleting the contact !!!'),
 					));
 			}
 		}
