@@ -40,10 +40,10 @@ class vcaladdressbook extends bocontacts
 	* return a vcard
 	*
 	* @param int/string	$_id the id of the contact
-	* @param int $_vcardProfile	profile id for mapping from vcard values to egw addressbook
+	* @param string $_charset='utf-8' encoding of the vcard, default utf-8
 	* @return string containing the vcard
 	*/
-	function getVCard($_id)
+	function getVCard($_id,$_charset='utf-8')
 	{
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
@@ -109,11 +109,11 @@ class vcaladdressbook extends bocontacts
 					default:
 						if(!empty($value))
 						{
-							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet, 'utf-8');
+							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet,$_charset);
 
 							if(preg_match('/([\177-\377])/',$valueData))
 							{
-								$options['CHARSET'] = 'UTF-8';
+								$options['CHARSET'] = $_charset;
 								$options['ENCODING'] = 'QUOTED-PRINTABLE';
 							}
 							elseif(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
