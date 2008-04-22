@@ -31,7 +31,7 @@ class etemplate extends boetemplate
 	* integer debug-level or template-name or cell-type or '' = off
 	* 1=calls to show and process_show, 2=content after process_show,
 	* 3=calls to show_cell and process_show_cell
-	* 
+	*
 	* @var int/string
 	*/
 	var $debug;
@@ -40,36 +40,36 @@ class etemplate extends boetemplate
 	var $public_functions = array('process_exec' => True);
 	/**
 	* Inner width of browser window
-	* 
+	*
 	* @var int
 	*/
 	var $innerWidth;
 	/**
 	* Reference to the content-param of the last call to show, for extensions to use
-	* 
+	*
 	* @var array
 	*/
 	var $content;
 	/**
 	* Reference to the sel_options-param of the last call to show, for extensions to use
-	* 
+	*
 	* @var array
 	*/
 	var $sel_options;
 	/**
 	* Name of the currently processed etemplate, reference to $GLOBALS['egw_info']['etemplate']['name_form']
-	* 
+	*
 	* @var string
 	*/
 	var $name_form;
 	/**
 	* Used form-names in this request, reference to $GLOBALS['egw_info']['etemplate']['name_forms']
-	* 
+	*
 	* @var array
 	*/
 	var $name_forms;
 	/**
-	* Basename of the variables (content) in $_POST and id's, usually 'exec', 
+	* Basename of the variables (content) in $_POST and id's, usually 'exec',
 	* if there's not more then one eTemplate on the page (then it will be exec, exec2, exec3, ...
 	*
 	* @var string
@@ -100,9 +100,9 @@ class etemplate extends boetemplate
 		$this->boetemplate($name,$load_via);
 
 		//$this->xslt = is_object($GLOBALS['egw']->xslttpl);
-		
+
 		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);
-		
+
 		if (($this->innerWidth = (int) $_POST['innerWidth']))
 		{
 			$GLOBALS['egw']->session->appsession('innerWidth','etemplate',$this->innerWidth);
@@ -122,7 +122,7 @@ class etemplate extends boetemplate
 	*
 	* In other UI's than html this needs to call the methode, defined by menuaction or
 	* open a browser-window for any other links.
-	* 
+	*
 	* @param string/array $params url or array with get-params incl. menuaction
 	*/
 	static function location($params='')
@@ -207,11 +207,11 @@ class etemplate extends boetemplate
 			$this->name_vars .= 1+count($this->name_forms);
 		}
 		$this->name_forms[] = $this->name_form;
-		
+
 		$GLOBALS['egw_info']['etemplate']['output_mode'] = $output_mode;	// let extensions "know" they are run eg. in a popup
 		$GLOBALS['egw_info']['etemplate']['form_options'] = '';	// might be set in show
 		$GLOBALS['egw_info']['etemplate']['to_process'] = array();
-		
+
 		$html = html::form($this->include_java_script(1).
 				html::input_hidden(array(
 					'submit_button' => '',
@@ -223,15 +223,15 @@ class etemplate extends boetemplate
 				'',$this->name_form,$GLOBALS['egw_info']['etemplate']['form_options'].
 				// dont set the width of popups!
 				($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
-				//echo "to_process="; _debug_array($GLOBALS['egw_info']['etemplate']['to_process']); 
-		
+				//echo "to_process="; _debug_array($GLOBALS['egw_info']['etemplate']['to_process']);
+
 		if ($this->sitemgr)
 		{
 			$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
 		}
 		elseif (!$this->xslt)
 		{
-			$hooked = isset($GLOBALS['egw_info']['etemplate']['content']) || !isset($GLOBALS['egw']->template) ? 
+			$hooked = isset($GLOBALS['egw_info']['etemplate']['content']) || !isset($GLOBALS['egw']->template) ?
 				$GLOBALS['egw_info']['etemplate']['content'] : $GLOBALS['egw']->template->get_var('phpgw_body');
 
 			if (!@$GLOBALS['egw_info']['etemplate']['hooked'] && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
@@ -292,7 +292,7 @@ class etemplate extends boetemplate
 				echo $GLOBALS['egw_info']['etemplate']['hook_content'].$html;
 
 				if (!$GLOBALS['egw_info']['etemplate']['hooked'] &&
-						(!isset($_GET['menuaction']) || 
+						(!isset($_GET['menuaction']) ||
 								strpos($_SERVER['PHP_SELF'],'process_exec.php')!==false))
 				{
 					if((int) $output_mode == 2)
@@ -378,7 +378,7 @@ class etemplate extends boetemplate
 			if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
 
 			// treat $ignoare_validation only as regular expression, if it starts with a slash
-			if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) || 
+			if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) ||
 				$ignore_validation[0] != '/' && $ignore_validation != $name)
 			{
 				//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
@@ -395,7 +395,7 @@ class etemplate extends boetemplate
 	* This function is only to submit forms to, create with exec.
 	* All eTemplates / forms executed with exec are submited to this function
 	* via /etemplate/process_exec.php?menuaction=<callback>. We cant use the global index.php as
-	* it would set some constants to etemplate instead of the calling app. 
+	* it would set some constants to etemplate instead of the calling app.
 	* process_exec then calls process_show for the eTemplate (to adjust the content of the _POST) and
 	* ExecMethod's the given callback from the app with the content of the form as first argument.
 	*
@@ -444,7 +444,7 @@ class etemplate extends boetemplate
 			$this->validation_errors($session_data['ignore_validation']);	// set by process_show
 
 		// If a tab has an error on it, change to that tab
-		foreach($GLOBALS['egw_info']['etemplate']['validation_errors'] as $form_name => $msg) 
+		foreach($GLOBALS['egw_info']['etemplate']['validation_errors'] as $form_name => $msg)
 		{
 			$name = $this->template_name($form_name);
 			if (!$this->get_widget_by_name($name))
@@ -490,7 +490,7 @@ class etemplate extends boetemplate
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] = $session_data['app_header'];
 			}
-			
+
 			$GLOBALS['egw_info']['flags']['java_script'] .= $session_data['java_script_from_flags'];
 			if (!empty($session_data['java_script_body_tags']))
 			{
@@ -505,7 +505,7 @@ class etemplate extends boetemplate
 				$GLOBALS['egw']->js->files = !is_array($GLOBALS['egw']->js->files) ? $session_data['java_script_files'] :
 					$this->complete_array_merge($GLOBALS['egw']->js->files,$session_data['java_script_files']);
 			}
-			
+
 			//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 			return $this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
 				$session_data['readonlys'],$session_data['preserv'],$session_data['output_mode'],
@@ -594,7 +594,7 @@ class etemplate extends boetemplate
 		}
 		// make the content availible as class-var for extensions
 		$this->content =& $content;
-		
+
 		$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n<div id=\"$this->name\">\n\n";
 		if (!$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name])
 		{
@@ -612,10 +612,10 @@ class etemplate extends boetemplate
 		}
 		return $html."\n</div>\n<!-- END eTemplate $this->name -->\n\n";
 	}
-	
+
 	/**
 	* Get the color of a category
-	* 
+	*
 	* For multiple cats, the first with a color is used
 	*
 	* @param int/string $cats multiple comma-separated cat_id's
@@ -624,14 +624,14 @@ class etemplate extends boetemplate
 	static function cats2color($cats)
 	{
 		static $cat2color;
-		
+
 		if (!$cats) return null;
-		
+
 		if (isset($cat2color[$cats]))
 		{
 			return $cat2color[$cats];
 		}
-		
+
 		foreach(explode(',',$cats) as $cat)
 		{
 			if (isset($cat2color[$cat]))
@@ -639,7 +639,7 @@ class etemplate extends boetemplate
 				return $cat2color[$cat];
 			}
 			$data = unserialize($GLOBALS['egw']->categories->id2name($cat,'data'));
-			
+
 			if (($color = $data['color']))
 			{
 				//echo "<p>cats2color($cats)=$color</p>\n";
@@ -648,7 +648,7 @@ class etemplate extends boetemplate
 		}
 		return null;
 	}
-		
+
 	/**
 	* creates HTML from an eTemplate
 	*
@@ -730,7 +730,7 @@ class etemplate extends boetemplate
 			if ($cl == '@' || $cl && strpos($cl,'$') !== false)
 			{
 				$cl = $this->expand_name($cl,0,$r,$content['.c'],$content['.row'],$content);
-				
+
 				if (!$cl || preg_match('/^[0-9,]*$/',$cl))
 				{
 					if (($color = $this->cats2color($cl)))
@@ -844,7 +844,7 @@ class etemplate extends boetemplate
 						}
 					}
 					$cl = $cl['class'];
-				}										
+				}
 				$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 					$c,$r,$show_c,$show_row,$content);
 				// else the class is set twice, in the table and the table-cell, which is not good for borders
@@ -874,11 +874,11 @@ class etemplate extends boetemplate
 		}
 		return "\n\n<!-- BEGIN grid $grid[name] -->\n$html<!-- END grid $grid[name] -->\n\n";
 	}
-	
+
 	/**
 	* build the name of a form-element from a basename and name
 	*
-	* name and basename can contain sub-indices in square bracets, eg. basename="base[basesub1][basesub2]" 
+	* name and basename can contain sub-indices in square bracets, eg. basename="base[basesub1][basesub2]"
 	* and name = "name[sub]" gives "base[basesub1][basesub2][name][sub]"
 	*
 	* @param string $cname basename
@@ -907,10 +907,10 @@ class etemplate extends boetemplate
 	* This function removes the prefix of form_name().  It takes a name like base[basesub1][basesub2][name][sub]
 	* and gives basesub1[basesub2][name][sub]
 	*
-	* @param string form_name 
+	* @param string form_name
 	* @return string name without prefix
 	*/
-	static private function template_name($form_name) 
+	static private function template_name($form_name)
 	{
 		$parts = explode('[',str_replace(']','',$form_name));
 
@@ -1001,7 +1001,7 @@ class etemplate extends boetemplate
 
 			if ($cell['type'] == $type.'-'.$sub_type) break;	// stop if no further type-change
 
-			list($type,$sub_type) = explode('-',$cell['type']);				
+			list($type,$sub_type) = explode('-',$cell['type']);
 		}
 		list(,$class) = explode(',',$cell['span']);	// might be set by extension
 		if (strchr($class,'$') || $class{0} == '@')
@@ -1169,9 +1169,9 @@ class etemplate extends boetemplate
 				break;
 			case 'htmlarea':	// Multiline formatted Text Input, size: {simple|extended|advanced},height,width,toolbar-expanded,upload-path
 				list($mode,$height,$width,$toolbar,$baseref,$convertnl) = explode(',',$cell_options);
-				
+
 				if ($convertnl == 1) $value = nl2br($value);
-				
+
 				if (!$readonly)
 				{
 					$mode = $mode ? $mode : 'simple';
@@ -1181,7 +1181,7 @@ class etemplate extends boetemplate
 						'toolbar_expanded' => $toolbar,
 					);
 					$html .= html::fckEditor($form_name,$value,$mode,$fckoptions,$height,$width,$baseref);
-					
+
 					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
 						'type'      => $cell['type'],
 						'needed'    => $cell['needed'],
@@ -1221,7 +1221,7 @@ class etemplate extends boetemplate
 						$options = str_replace('id="'.$form_name,'id="'.substr($form_name,0,-2)."[$set_val]",$options);
 					}
 					$html .= html::input($form_name,$set_val,'checkbox',$options);
-					
+
 					if ($multiple) $form_name = $this->form_name($cname,substr($cell['name'],0,-2));
 
 					if (!isset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
@@ -1273,9 +1273,9 @@ class etemplate extends boetemplate
 				if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 				{
 					$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
-						(((string)$cell['onchange'] === '1' || $img) ? 
+						(((string)$cell['onchange'] === '1' || $img) ?
 						"return submitit($this->name_form,'".addslashes($form_name)."');" : $cell['onchange']).'; return false;';
-					
+
 					if (!html::$netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 					{
 						$html .= html::progressbar($percent,$title,'onclick="'.$onclick.'" '.$options);
@@ -1401,7 +1401,7 @@ class etemplate extends boetemplate
 					$cell['obj']->size = implode(',',$grid_size);
 				}
 				$html = $cell['obj']->show($content,$this->sel_options,$readonlys,$cname,$show_c,$show_row);
-				
+
 				if ($set_readonlys_all) unset($readonlys['__ALL__']);
 				break;
 			case 'select':	// size:[linesOnMultiselect|emptyLabel,extraStyleMulitselect]
@@ -1435,7 +1435,7 @@ class etemplate extends boetemplate
 							$option_title = '';
 						}
 						if (!$cell['no_lang']) $option_label = lang($option_label);
-						
+
 						if ($html) $html .= "<br>\n";
 
 						if ($option_title)
@@ -1471,7 +1471,7 @@ class etemplate extends boetemplate
 						$options=array();
 						foreach($sels as $key => $val)
 						{
-							# we want the key anyway, even if this allowes more values than wanted (the name/key of the optgroup if there is one, 
+							# we want the key anyway, even if this allowes more values than wanted (the name/key of the optgroup if there is one,
 							# the keys of the arrays in case you have key/value pair(s) as value for the value of your option ).
 							$options[$key]=$key;
 							if (is_array($val))
@@ -1480,7 +1480,7 @@ class etemplate extends boetemplate
 								{
 									$options[$key2]=$key2;
 								}
-							} 
+							}
 						}
 						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
 							'type'    => $cell['type'],
@@ -1573,7 +1573,7 @@ class etemplate extends boetemplate
 								}
 							}
 							$cl = $cl['class'];
-						}										
+						}
 						$box_item_class = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 							$show_c,$show_row,$content['.c'],$content['.row'],$content);
 						$rows[$box_row]['.'.$box_col] .= html::formatOptions($box_item_class,'class');
@@ -1634,7 +1634,7 @@ class etemplate extends boetemplate
 				}
 				$html = html::input_hidden($form_name,$value);
 				$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  $cell['type'];
-						
+
 				for ($n = 1; $n <= $cell_options; ++$n)
 				{
 					$child = $cell[$n];	// first param is a var_param now!
@@ -1657,7 +1657,7 @@ class etemplate extends boetemplate
 				break;
 		}
 		// extension-processing need to be after all other and only with diff. name
-		if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))	
+		if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))
 		{	// unset it first, if it is already set, to be after the other widgets of the ext.
 			$to_process = 'ext-'.$ext_type;
 			if (is_array($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
@@ -1694,7 +1694,7 @@ class etemplate extends boetemplate
 			}
 			if ($label && !$readonly && ($accesskey || $label_for || $type != 'label' && $cell['name']))
 			{
-				$label = html::label($label,$label_for ? $this->form_name($cname,$label_for) : 
+				$label = html::label($label,$label_for ? $this->form_name($cname,$label_for) :
 					$form_name.($set_val?"[$set_val]":''),$accesskey);
 			}
 			if ($type == 'radio' || $type == 'checkbox' || $label && strpos($label,'%s')!==false)	// default for radio is label after the button
@@ -1802,14 +1802,14 @@ class etemplate extends boetemplate
 	}
 
 	/**
-	* Resolve javascript pseudo functions in onclick or onchange: 
+	* Resolve javascript pseudo functions in onclick or onchange:
 	* - egw::link('$l','$p') calls $egw->link($l,$p)
 	* - form::name('name') returns expanded name/id taking into account the name at that point of the template hierarchy
 	* - egw::lang('Message ...') translate the message
 	* - confirm('message') translates 'message' and adds a '?' if not present
 	* - window.open() replaces it with egw_openWindowCentered2()
 	* - xajax_doXMLHTTP('etemplate. replace ajax calls in widgets with special handler not requiring etemplate run rights
-	* 
+	*
 	* @param string $on onclick, onchange, ... action
 	* @param string $cname name-prefix / name-space
 	* @return string
@@ -1818,12 +1818,15 @@ class etemplate extends boetemplate
 	{
 		if (strpos($on,'::') !== false)	// avoid the expensive regular expresions, for performance reasons
 		{
-			if (preg_match("/egw::link\\('([^']+)','(.+?)'\\)/",$on,$matches))	// the ? alters the expression to shortest match
-			{                                                                 	// this way we can correctly parse ' in the 2. argument
-				$url = $GLOBALS['egw']->link($matches[1],$matches[2]);
-				$on = str_replace($matches[0],'\''.$url.'\'',$on);
+			if (preg_match_all("/egw::link\\('([^']+)','(.+?)'\\)/",$on,$matches))	// the ? alters the expression to shortest match
+			{
+				foreach(array_keys($matches[1]) as $n)                         	// this way we can correctly parse ' in the 2. argument
+				{
+					$url = $GLOBALS['egw']->link($matches[1][$n],$matches[2][$n]);
+					$on = str_replace($matches[0][$n],'\''.$url.'\'',$on);
+				}
 			}
-			
+
 			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches)) {
 				foreach($matches[1] as $n => $matche_name) {
 					$matches[1][$n] = '\''.$this->form_name($cname,$matche_name).'\'';
@@ -1835,7 +1838,7 @@ class etemplate extends boetemplate
 				$str = lang($matches[1]);
 				$on = str_replace($matches[0],'\''.addslashes($str).'\'',$on);
 			}
-			
+
 			// inserts the styles of a named template
 			if (preg_match('/template::styles\(["\']{1}(.*)["\']{1}\)/U',$on,$matches))
 			{
@@ -1848,24 +1851,24 @@ class etemplate extends boetemplate
 			$on = str_replace($matches[0],'confirm(\''.addslashes($question).'\')',$on);
 			//$on = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$on);
 		}
-		
+
 		if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches)) {
 			$on = str_replace($matches[0], "egw_openWindowCentered2('{$matches[1]}', '{$matches[2]}', '{$matches[3]}', '{$matches[4]}', '{$matches[5]}')", $on);
 		}
-		
+
 		// replace xajax calls to code in widgets, with the "etemplate" handler,
 		// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
 		if (strpos($on,"xajax_doXMLHTTP('etemplate.") !== false) {
 			$on = preg_replace("/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/",'xajax_doXMLHTTP(\''.$GLOBALS['egw_info']['flags']['currentapp'].'.\\1.etemplate\'',$on);
 		}
-		
+
 		return $on;
 	}
 
 	/**
 	* applies stripslashes recursivly on each element of an array
-	* 
-	* @param array &$var 
+	*
+	* @param array &$var
 	* @return array
 	*/
 	static function array_stripslashes($var)
@@ -1928,7 +1931,7 @@ class etemplate extends boetemplate
 			// The comment below does only aplay to normal posts, not for xajax. Files are not supported anyway by xajax atm.
 			// not checked checboxes are not returned in HTML and file is in $_FILES and not in $content_in
 			if($value === false && $type == 'xajaxResponse' /*!in_array($type,array('checkbox','file'))*/) continue;
-			
+
 			if (isset($attr['blur']) && $attr['blur'] == $value)
 			{
 				$value = '';	// blur-values is equal to emtpy
@@ -1944,7 +1947,7 @@ class etemplate extends boetemplate
 						//echo "\n<p><b>unsetting content[$form_name] !!!</b></p>\n";
 						$this->unset_array($content,$form_name);
 					}
-					// this else should NOT be unnecessary as $_cont is a reference to the index 
+					// this else should NOT be unnecessary as $_cont is a reference to the index
 					// $form_name of $content, but under some circumstances a set/changed $_cont
 					// does not result in a change in $content -- RalfBecker 2004/09/18
 					// seems to depend on the number of (not existing) dimensions of the array -- -- RalfBecker 2005/04/06
@@ -2090,7 +2093,7 @@ class etemplate extends boetemplate
 		}
 		return count($GLOBALS['egw_info']['etemplate']['validation_errors']);
 	}
-	
+
 	/**
 	* Sets a validation error, to be displayed in the next exec
 	*
@@ -2103,7 +2106,7 @@ class etemplate extends boetemplate
 		if (is_null($cname)) $cname = $this->name_vars;
 		//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
 		if ($cname) $name = $this->form_name($cname,$name);
-		
+
 		if ($GLOBALS['egw_info']['etemplate']['validation_errors'][$name])
 		{
 			$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] .= ', ';
@@ -2116,14 +2119,14 @@ class etemplate extends boetemplate
 	*
 	* this should be tested by the api at login
 	*
-	* @return boolean true if javascript is enabled or not yet tested and $consider_not_tested_as_enabled 
+	* @return boolean true if javascript is enabled or not yet tested and $consider_not_tested_as_enabled
 	*/
 	function java_script($consider_not_tested_as_enabled = True)
 	{
 		$ret = !!$GLOBALS['egw_info']['etemplate']['java_script'] ||
 			$consider_not_tested_as_enabled && !isset($GLOBALS['egw_info']['etemplate']['java_script']);
 		//echo "<p>java_script($consider_not_tested_as_enabled)='$ret', java_script='".$GLOBALS['egw_info']['etemplate']['java_script']."', isset(java_script)=".isset($GLOBALS['egw_info']['etemplate']['java_script'])."</p>\n";
-		
+
 		return $ret;
 		return !!$GLOBALS['egw_info']['etemplate']['java_script'] ||
 			$consider_not_tested_as_enabled &&
@@ -2134,7 +2137,7 @@ class etemplate extends boetemplate
 	/**
 	* returns the javascript to be included by exec
 	*
-	* @param int $what &1 = returns the test, note: has to be included in the body, not the header, 
+	* @param int $what &1 = returns the test, note: has to be included in the body, not the header,
 	*		&2 = returns the common functions, best to be included in the header
 	* @return string javascript
 	*/
