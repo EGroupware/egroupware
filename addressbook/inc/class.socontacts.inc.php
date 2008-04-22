@@ -13,18 +13,18 @@
 
 /**
  * General storage object of the adressbook
- * 
+ *
  * The contact storage has 3 operation modi (contact_repository):
  * - sql: contacts are stored in the SQL table egw_addressbook & egw_addressbook_extra (custom fields)
  * - ldap: contacts are stored in LDAP (accounts have to be stored in LDAP too!!!).
  *   Custom fields are not availible in that case!
  * - sql-ldap: contacts are read and searched in SQL, but saved to both SQL and LDAP.
  *   Other clients (Thunderbird, ...) can use LDAP readonly. The get maintained via eGroupWare only.
- * 
+ *
  * The accounts can be stored in SQL or LDAP too (account_repository):
  * If the account-repository is different from the contacts-repository, the filter all (no owner set)
  * will only search the accounts and NOT the contacts! Only the filter accounts (owner=0) shows accounts.
- * 
+ *
  * If sql-ldap is used as contact-storage (LDAP is managed from eGroupWare) the filter all, searches
  * the accounts in the SQL contacts-table too. Change in made in LDAP, are not detected in that case!
  *
@@ -39,7 +39,7 @@ class socontacts
 {
 	/**
 	 * name of customefields table
-	 * 
+	 *
 	 * @var string
 	 */
 	var $extra_table = 'egw_addressbook_extra';
@@ -48,7 +48,7 @@ class socontacts
 	* @var string
 	*/
 	var $extra_id = 'contact_id';
-	
+
 	/**
 	* @var string
 	*/
@@ -58,24 +58,24 @@ class socontacts
 	* @var string
 	*/
 	var $extra_key = 'contact_name';
-	
+
 	/**
 	* @var string
 	*/
 	var $extra_value = 'contact_value';
-	
+
 	/**
 	 * view for distributionlistsmembership
-	 * 
+	 *
 	 * @var string
 	 */
-	var $distributionlist_view ='(SELECT contact_id, egw_addressbook_lists.list_id as list_id, egw_addressbook_lists.list_name as list_name, egw_addressbook_lists.list_owner as list_owner FROM egw_addressbook_lists, egw_addressbook2list where egw_addressbook_lists.list_id=egw_addressbook2list.list_id) d_view ';	
+	var $distributionlist_view ='(SELECT contact_id, egw_addressbook_lists.list_id as list_id, egw_addressbook_lists.list_name as list_name, egw_addressbook_lists.list_owner as list_owner FROM egw_addressbook_lists, egw_addressbook2list where egw_addressbook_lists.list_id=egw_addressbook2list.list_id) d_view ';
 
 	/**
 	* @var string
 	*/
 	var $distri_id = 'contact_id';
-	
+
 	/**
 	* @var string
 	*/
@@ -85,7 +85,7 @@ class socontacts
 	* @var string
 	*/
 	var $distri_key = 'list_id';
-	
+
 	/**
 	* @var string
 	*/
@@ -93,34 +93,34 @@ class socontacts
 
 	/**
 	 * Contact repository in 'sql' or 'ldap'
-	 * 
+	 *
 	 * @var string
 	 */
 	var $contact_repository = 'sql';
-	
+
 	/**
 	 * Grants as  account_id => rights pairs
-	 * 
+	 *
 	 * @var array
 	 */
 	var $grants;
 
 	/**
 	 *  userid of current user
-	 * 
+	 *
 	 * @var int
 	 */
 	var $user;
-	
+
 	/**
 	 * memberships of the current user
-	 * 
+	 *
 	 * @var array
 	 */
 	var $memberships;
-	
+
 	/**
-	 * LDAP searches only a limited set of attributes for performance reasons, 
+	 * LDAP searches only a limited set of attributes for performance reasons,
 	 * you NEED an index for that columns, ToDo: make it configurable
 	 * minimum: $this->columns_to_search = array('n_family','n_given','org_name','email');
 	 */
@@ -138,46 +138,46 @@ class socontacts
 	);
 	/**
 	 * columns to search, if we search for a single pattern
-	 * 
+	 *
 	 * @var array
 	 */
 	var $columns_to_search = array();
 	/**
 	 * extra columns to search if accounts are included, eg. account_lid
-	 * 
+	 *
 	 * @var array
 	 */
 	var $account_extra_search = array();
 	/**
 	 * columns to search for accounts, if stored in different repository
-	 * 
+	 *
 	 * @var array
 	 */
 	var $account_cols_to_search = array();
-	
+
 	/**
 	 * customfields name => array(...) pairs
-	 * 
+	 *
 	 * @var array
 	 */
 	var $customfields = array();
 	/**
 	 * content-types as name => array(...) pairs
-	 * 
+	 *
 	 * @var array
 	 */
 	var $content_types = array();
-	
+
 	/**
 	 * total number of matches of last search
-	 * 
+	 *
 	 * @var int
 	 */
 	var $total;
-	
+
 	/**
 	 * storage object: sql (socontacts_sql) or ldap (so_ldap) backend class
-	 * 
+	 *
 	 * @var socontacts_sql
 	 */
 	var $somain;
@@ -195,13 +195,13 @@ class socontacts
 	var $account_repository = 'sql';
 	/**
 	 * custom fields backend
-	 * 
+	 *
 	 * @var so_sql
 	 */
 	var $soextra;
 	var $sodistrib_list;
 	var $backend;
-	
+
 	function socontacts($contact_app='addressbook')
 	{
 		$this->db     = $GLOBALS['egw']->db;
@@ -244,8 +244,8 @@ class socontacts
 			$this->somain =& CreateObject('addressbook.socontacts_sql');
 
 			if ($this->user)	// not set eg. in setup
-			{			
-				// group grants are now grants for the group addressbook and NOT grants for all its members, 
+			{
+				// group grants are now grants for the group addressbook and NOT grants for all its members,
 				// therefor the param false!
 				$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
 			}
@@ -257,14 +257,14 @@ class socontacts
 			if ($this->account_repository != $this->contact_repository)
 			{
 				$this->so_accounts =& CreateObject('addressbook.so_ldap');
-				$this->account_cols_to_search = $this->ldap_search_attributes; 
+				$this->account_cols_to_search = $this->ldap_search_attributes;
 			}
 			else
 			{
 				$this->account_extra_search = array('uid');
 			}
 		}
-		// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access, 
+		// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access,
 		// if he has not set the hide_accounts preference
 		// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
 		if (!in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'],array('none','groupmembers')))
@@ -278,12 +278,12 @@ class socontacts
 			if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $this->grants[0] |= EGW_ACL_EDIT;
 			// no add at the moment if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $this->grants[0] |= EGW_ACL_ADD;
 			if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $this->grants[0] |= EGW_ACL_DELETE;
-		} 
+		}
 		// ToDo: it should be the other way arround, the backend should set the grants it uses
 		$this->somain->grants =& $this->grants;
 
 		$this->soextra = new so_sql('phpgwapi',$this->extra_table);
-			
+
 		$this->customfields = config::get_customfields('addressbook');
 		$this->content_types = config::get_content_types('addressbook');
 		if (!$this->content_types)
@@ -296,10 +296,10 @@ class socontacts
 			)));
 		}
 	}
-	
+
 	/**
 	 * Check if the user is an admin (can unconditionally edit accounts)
-	 * 
+	 *
 	 * We check now the admin ACL for edit users, as the admin app does it for editing accounts.
 	 *
 	 * @param array $contact=null for future use, where admins might not be admins for all accounts
@@ -309,7 +309,7 @@ class socontacts
 	{
 		return isset($GLOBALS['egw_info']['user']['apps']['admin']) && !$GLOBALS['egw']->acl->check('account_access',16,'admin');
 	}
-	
+
 	/**
 	 * Read all customfields of the given id's
 	 *
@@ -372,14 +372,14 @@ class socontacts
 		}
 		return $fields;
 	}
-	
+
 	/**
 	 * changes the data from the db-format to your work-format
 	 *
 	 * it gets called everytime when data is read from the db
 	 * This function needs to be reimplemented in the derived class
 	 *
-	 * @param array $data 
+	 * @param array $data
 	 */
 	function db2data($data)
 	{
@@ -411,10 +411,10 @@ class socontacts
 
 		// delete mainfields
 		if ($this->somain->delete($contact))
-		{		
+		{
 			// delete customfields, can return 0 if there are no customfields
 			$this->soextra->delete(array($this->extra_id => $contact));
-			
+
 			// delete from distribution list(s)
 			$this->remove_from_list($contact);
 
@@ -422,7 +422,7 @@ class socontacts
 			{
 				if ($contact['account_id'])
 				{
-					// LDAP uses the uid attributes for the contact-id (dn), 
+					// LDAP uses the uid attributes for the contact-id (dn),
 					// which need to be the account_lid for accounts!
 					$contact['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 				}
@@ -432,9 +432,9 @@ class socontacts
 		}
 		return false;
 	}
-	
+
 	/**
-	* saves contact data including custiom felds
+	* saves contact data including custom fields
 	*
 	* @param array &$contact contact data from etemplate::exec
 	* @return bool false on success, errornumber on failure
@@ -453,14 +453,14 @@ class socontacts
 		else
 		{
 			// contact_repository sql-ldap (accounts in ldap) the person_id is the uid (account_lid)
-			// for the sql write here we need to find out the existing contact_id 
-			if ($this->contact_repository == 'sql-ldap' && $contact['id'] && !is_numeric($contact['id']) && 
+			// for the sql write here we need to find out the existing contact_id
+			if ($this->contact_repository == 'sql-ldap' && $contact['id'] && !is_numeric($contact['id']) &&
 				$contact['account_id'] && ($old = $this->somain->read(array('account_id' => $contact['account_id']))))
 			{
 				$contact['id'] = $old['id'];
 			}
 			$this->somain->data = $this->data2db($contact);
-			
+
 			if (!($error_nr = $this->somain->save()))
 			{
 				$contact['id'] = $this->somain->data['id'];
@@ -470,7 +470,7 @@ class socontacts
 					$data = $this->somain->data;
 					if ($contact['account_id'])
 					{
-						// LDAP uses the uid attributes for the contact-id (dn), 
+						// LDAP uses the uid attributes for the contact-id (dn),
 						// which need to be the account_lid for accounts!
 						$data['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 					}
@@ -503,7 +503,7 @@ class socontacts
 		}
 		return false;	// no error
 	}
-	
+
 	/**
 	 * reads contact data including custom fields
 	 *
@@ -538,7 +538,7 @@ class socontacts
 		if (count($dl_list)) $contact['distrib_lists']=implode("\n",$dl_list[$contact['id']]);
 		return $this->db2data($contact);
 	}
-	
+
 	/**
 	 * searches db for rows matching searchcriteria
 	 *
@@ -560,7 +560,7 @@ class socontacts
 	{
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 		//error_log("socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
-		
+
 		// the nextmatch custom-filter-header country-select returns a 2 letter country-code
 		if (isset($filter['adr_one_countryname']) && strlen($filter['adr_one_countryname']) == 2)
 		{
@@ -568,13 +568,13 @@ class socontacts
 		}
 		$backend =& $this->get_backend(null,$filter['owner']);
 		// single string to search for --> create so_sql conformant search criterial for the standard search columns
-		if ($criteria && !is_array($criteria))	
+		if ($criteria && !is_array($criteria))
 		{
 			$op = 'OR';
 			$wildcard = '%';
 			$search = $criteria;
 			$criteria = array();
-			
+
 			if ($backend === $this->somain)
 			{
 				$cols = $this->columns_to_search;
@@ -618,7 +618,7 @@ class socontacts
 		}
 		return $rows;
 	}
-	
+
 	/**
 	 * Query organisations by given parameters
 	 *
@@ -631,7 +631,7 @@ class socontacts
 	 * @var int $param[num_rows]
 	 * @var string $param[sort] ASC or DESC
 	 * @return array or arrays with keys org_name,count and evtl. adr_one_location or org_unit
-	 */ 
+	 */
 	function organisations($param)
 	{
 		if (!method_exists($this->somain,'organisations'))
@@ -639,7 +639,7 @@ class socontacts
 			$this->total = 0;
 			return false;
 		}
-		if ($param['search'] && !is_array($param['search']))	
+		if ($param['search'] && !is_array($param['search']))
 		{
 			$search = $param['search'];
 			$param['search'] = array();
@@ -681,7 +681,7 @@ class socontacts
 
  	/**
 	 * gets all contact fields from database
-	 * 
+	 *
 	 * @return array of (internal) field-names
 	 */
 	function get_contact_columns()
@@ -693,7 +693,7 @@ class socontacts
 		}
 		return $fields;
 	}
-	
+
 	/**
 	 * delete / move all contacts of an addressbook
 	 *
@@ -705,7 +705,7 @@ class socontacts
 	{
 		$account_id = $data['account_id'];
 		$new_owner =  $data['new_owner'];
-		
+
 		if (!$new_owner)
 		{
 			$this->somain->delete(array('owner' => $account_id));
@@ -721,7 +721,7 @@ class socontacts
 			),__LINE__,__FILE__);
 		}
 	}
-	
+
 	/**
 	 * return the backend, to be used for the given $contact_id
 	 *
@@ -754,7 +754,7 @@ class socontacts
 	function get_fields($type='all',$contact_id=null,$owner=null)
 	{
 		$def = $this->db->get_table_definitions('phpgwapi','egw_addressbook');
-		
+
 		$all_fields = array();
 		foreach($def['fd'] as $field => $data)
 		{
@@ -765,10 +765,10 @@ class socontacts
 			return $all_fields;
 		}
 		$backend =& $this->get_backend($contact_id,$owner);
-		
+
 		$supported_fields = method_exists($backend,supported_fields) ? $backend->supported_fields() : $all_fields;
 		//echo "supported fields=";_debug_array($supported_fields);
-		
+
 		if ($type == 'supported')
 		{
 			return $supported_fields;
@@ -776,7 +776,7 @@ class socontacts
 		//echo "unsupported fields=";_debug_array(array_diff($all_fields,$supported_fields));
 		return array_diff($all_fields,$supported_fields);
 	}
-	
+
 	/**
 	 * Migrates an SQL contact storage to LDAP or SQL-LDAP
 	 *
@@ -834,7 +834,7 @@ class socontacts
 					$contact['id'] = $old['id'];
 				}
 				$sql_contacts->data = $contact;
-				
+
 				$n++;
 				if (!($err = $sql_contacts->save()))
 				{
@@ -849,18 +849,18 @@ class socontacts
 			}
 		}
 	}
-	
+
 	/**
 	 * Get the availible distribution lists for a user
 	 *
 	 * @param int $required=EGW_ACL_READ required rights on the list
 	 * @param string $extra_labels=null first labels if given (already translated)
 	 * @return array with id => label pairs or false if backend does not support lists
-	 */ 
+	 */
 	function get_lists($required=EGW_ACL_READ,$extra_labels=null)
 	{
 		if (!method_exists($this->somain,'get_lists')) return false;
-		
+
 		$uids = array();
 		foreach($this->grants as $uid => $rights)
 		{
@@ -894,10 +894,10 @@ class socontacts
 	function add_list($name,$owner,$contacts=array())
 	{
 		if (!method_exists($this->somain,'add_list')) return false;
-		
+
 		return $this->somain->add_list($name,$owner,$contacts);
 	}
-	
+
 	/**
 	 * Adds one contact to a distribution list
 	 *
@@ -908,10 +908,10 @@ class socontacts
 	function add2list($contact,$list)
 	{
 		if (!method_exists($this->somain,'add2list')) return false;
-		
+
 		return $this->somain->add2list($contact,$list);
 	}
-	
+
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
@@ -922,7 +922,7 @@ class socontacts
 	function remove_from_list($contact,$list=null)
 	{
 		if (!method_exists($this->somain,'remove_from_list')) return false;
-		
+
 		return $this->somain->remove_from_list($contact,$list);
 	}
 
@@ -935,10 +935,10 @@ class socontacts
 	function delete_list($list)
 	{
 		if (!method_exists($this->somain,'delete_list')) return false;
-		
+
 		return $this->somain->delete_list($list);
 	}
-	
+
 	/**
 	 * Read data of a distribution list
 	 *
@@ -948,10 +948,10 @@ class socontacts
 	function read_list($list)
 	{
 		if (!method_exists($this->somain,'read_list')) return false;
-		
-		return $this->somain->read_list($list);		
+
+		return $this->somain->read_list($list);
 	}
-	
+
 	/**
 	 * Check if distribution lists are availible for a given addressbook
 	 *
@@ -961,7 +961,7 @@ class socontacts
 	function lists_available($owner='')
 	{
 		$backend =& $this->get_backend(null,$owner);
-		
+
 		return method_exists($backend,'read_list');
 	}
 }
