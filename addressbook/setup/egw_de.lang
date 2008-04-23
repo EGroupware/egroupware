@@ -15,6 +15,7 @@ actions	addressbook	de	Befehle
 add %1	addressbook	de	%1 hinzufügen
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
+add a new infolog	addressbook	de	Neuen Infolog Eintrag hinzufügen
 add a new list	addressbook	de	Neuen Verteiler hinzufügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add business email of whole distribution list?	addressbook	de	E-Mail geschäftl. der kompletten Liste hinzufügen?
@@ -36,6 +37,7 @@ addressbook csv export	addressbook	de	Adressbuch CSV Export
 addressbook menu	addressbook	de	Adressbuch Menü
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in das der Kontakt gespeichert werden soll
+addressbook the contact should be shown	addressbook	de	Adressbuch in dem der Kontakt angezeit werden soll
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
@@ -263,6 +265,7 @@ name for the distribution list	addressbook	de	Name für die Verteilerliste
 name of current user, all other contact fields are valid too	addressbook	de	Name des aktuellen Benutzers, auch alle anderen Kontaktfelder sind erlaubt
 name, address	addressbook	de	Name, Adresse
 new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
+new window opened to edit infolog for your selection	addressbook	de	Es wird ein neues Fenster zum erstellen des Infolog Eintrags geöffnet
 next date	addressbook	de	Nächster Termin
 no categories selected	addressbook	de	keine Kategorien ausgewählt
 no vcard	addressbook	de	Keine VCard
@@ -340,9 +343,11 @@ thank you for contacting us.	addressbook	de	Danke das Sie uns kontaktierten.
 that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt!
 the anonymous user has probably no add rights for this addressbook.	addressbook	de	Der anonyme Benutzer hat vermutlich keine Hinzufügen Rechte für diese Adressbuch.
 the anonymous user needs add rights for it!	addressbook	de	Der anonyme Benutzer benötigt Hinzufügen Rechte dafür!
+the anonymous user needs read it!	addressbook	de	Der Anonymous Benutzer muss dies lesen können
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	de	Das Dokument kann Platzhalter wie $$n_fn$$ enthalten, die mit den Kontaktdaten ersetzt werden (%1komplette Liste der Platzhalter%2).
 there was an error saving your data :-(	addressbook	de	Beim Speichern ihrer Daten ist ein Fehler aufgetreten :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	de	Diese Module ist ein Kontaktformular, das direkt in das Adressbuch speichert.
+this module displays block from a adddressbook group.	addressbook	de	Dieses Modul zeigt einen Block vom Adressbuch an.
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch.
 timezone	addressbook	de	Zeitzone
@@ -357,6 +362,7 @@ updated	addressbook	de	Aktualisiert
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (verwenden Sie %1 = anzurufende Nummer, %u = Benutzernamen, %t = Telefon des Benutzers)
 use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?
+use an extra tab for private custom fields?	admin	de	Soll ein extra Tab für private Benutzerdefinierte Felder benutzt werden?
 use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
 used for links and for the own sorting of the list	addressbook	de	wird für Verküpfungen und die eigene Sortierung der Liste benützt

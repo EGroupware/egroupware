@@ -15,6 +15,7 @@ actions	addressbook	en	Actions
 add %1	addressbook	en	Add %1
 add a contact to this organisation	addressbook	en	Add a contact to this organisation
 add a new contact	addressbook	en	Add a new contact
+add a new infolog	addressbook	en	Add a new Infolog
 add a new list	addressbook	en	Add a new list
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add business email of whole distribution list?	addressbook	en	Add business email of whole distribution list?
@@ -36,6 +37,7 @@ addressbook csv export	addressbook	en	Addressbook CSV export
 addressbook menu	addressbook	en	Addressbook menu
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
+addressbook the contact should be shown	addressbook	en	Addressbook the contact should be shown
 addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
 advanced search	addressbook	en	Advanced search
@@ -263,6 +265,7 @@ name for the distribution list	addressbook	en	Name for the distribution list
 name of current user, all other contact fields are valid too	addressbook	en	Name of current user, all other contact fields are valid too
 name, address	addressbook	en	Name, Address
 new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at %2
+new window opened to edit infolog for your selection	addressbook	en	New window opened to edit Infolog for your selection
 next date	addressbook	en	Next date
 no categories selected	addressbook	en	no categories selected
 no vcard	addressbook	en	No VCard
@@ -340,9 +343,11 @@ thank you for contacting us.	addressbook	en	Thank you for contacting us.
 that field name has been used already !	addressbook	en	That field name has been used already !
 the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has probably no add rights for this addressbook.
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights for it!
+the anonymous user needs read it!	addressbook	en	The anonymous user needs read it!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	en	The document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).
 there was an error saving your data :-(	addressbook	en	There was an error saving your data :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contactform, that stores direct into the addressbook.
+this module displays block from a adddressbook group.	addressbook	en	This module displays Block from a Adddressbook Group.
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
 timezone	addressbook	en	Timezone
@@ -357,6 +362,7 @@ updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)
 use an extra category tab?	addressbook	en	Use an extra category tab?
+use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields?
 use country list	addressbook	en	Use Country List
 use setup for a full account-migration	admin	en	use setup for a full account-migration
 used for links and for the own sorting of the list	addressbook	en	used for links and for the own sorting of the list

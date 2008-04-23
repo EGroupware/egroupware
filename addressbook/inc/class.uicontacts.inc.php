@@ -247,6 +247,7 @@ class uicontacts extends bocontacts
 			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
 			'merge'  => lang('Merge into first or account, deletes all other!'),
 			'cat_add' => lang('Add or delete Categoies'), // add a categirie to multible addresses
+			'infolog_add' => lang('Add a new Infolog'),
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
@@ -570,6 +571,10 @@ class uicontacts extends bocontacts
 			case 'document':
 				$msg = $this->download_document($checked,$document);
 				return false;
+	
+			case 'infolog_add':
+				$msg = lang('New window opened to edit Infolog for your selection ');
+				return false;	
 
 			case 'cat_add':
 				foreach($checked as $id)
