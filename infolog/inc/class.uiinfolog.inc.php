@@ -778,7 +778,7 @@ class uiinfolog
 						$old_link_id = (int)$content['info_link_id'];
 						list($app,$id) = explode(':',$content['info_contact']);
 						$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
-						if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
+							if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
 					}
 					if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 					{
@@ -907,7 +907,6 @@ class uiinfolog
 			//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
-
 			if (is_numeric($_REQUEST['cat_id']))
 			{
 				$content['info_cat'] = (int) $_REQUEST['cat_id'];
@@ -983,7 +982,7 @@ class uiinfolog
 				'to_id' => $info_id,
 				'to_app' => 'infolog',
 			);
-			switch ($action)
+				switch ($action)
 			{
 				case 'sp':
 					$links = egw_link::get_links('infolog',$parent['info_id'],'!'.egw_link::VFS_APPNAME);
@@ -1004,6 +1003,13 @@ class uiinfolog
 				case 'projects':
 				case 'calendar':
 				default:	// to allow other apps to participate
+					if (strpos($action_id,',') !== false)
+					{
+						foreach (explode(',',$action_id) as $id)
+						{
+							egw_link::link('infolog',$content['link_to']['to_id'],$action,$id);
+						}
+					}
 					$content['info_contact'] = $action.':'.$action_id;
 					$content['blur_title']   = egw_link::title($action,$action_id);
 
