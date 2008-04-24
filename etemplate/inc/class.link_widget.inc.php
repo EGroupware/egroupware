@@ -521,8 +521,16 @@ class link_widget
 				{
 					if (!$value['to_id'] || is_array($value['to_id']))	// otherwise the webserver deletes the file
 					{
-						move_uploaded_file($value['file']['tmp_name'],$value['file']['tmp_name'].'+');
-						$value['file']['tmp_name'] .= '+';
+						if (is_dir($GLOBALS['egw_info']['server']['tmp_dir']) && is_writable($GLOBALS['egw_info']['server']['tmp_dir']))
+						{
+							$new_file = tempnam($GLOBALS['egw_info']['server']['tmp_dir'],'egw_');
+						}
+						else
+						{
+							$new_file = $value['file']['tmp_name'].'+';
+						}
+						move_uploaded_file($value['file']['tmp_name'],$new_file);
+						$value['file']['tmp_name'] = $new_file;
 					}
 					$link_id = egw_link::link($value['to_app'],$value['to_id'],
 						egw_link::VFS_APPNAME,$value['file'],$value['remark']);
