@@ -521,9 +521,9 @@ class link_widget
 				{
 					if (!$value['to_id'] || is_array($value['to_id']))	// otherwise the webserver deletes the file
 					{
-						if (is_dir($GLOBALS['egw_info']['server']['tmp_dir']) && is_writable($GLOBALS['egw_info']['server']['tmp_dir']))
+						if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 						{
-							$new_file = tempnam($GLOBALS['egw_info']['server']['tmp_dir'],'egw_');
+							$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
 						}
 						else
 						{
