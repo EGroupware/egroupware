@@ -625,6 +625,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		unset(self::$stat_cache[$path]);
+		unset($stmt);	// free statement object, on some installs a new prepare fails otherwise!
 
 		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=?');
 		if (($ret = $stmt->execute(array($stat['ino']))) &&  $operation == self::STORE2FS)
