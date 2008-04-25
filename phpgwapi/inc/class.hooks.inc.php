@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Hooks
- * 
+ *
  * @link http://www.egroupware.org
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -16,18 +16,20 @@
  * class which gives ability for applications to set and use hooks to communicate with each other
  *
  * Hooks need to be declared in the app's setup.inc.php file and they have to be registered
- * (copied into the database) by 
- *	- installing or updating the app via setup or 
+ * (copied into the database) by
+ *	- installing or updating the app via setup or
  *	- running Admin >> register all hooks
  * As the hooks-class can get cached in the session (session-type PHP_RESTORE), you also have to log
  * out and in again, that your changes take effect.
  *
- * Hooks can either have two formats
- *	- new method hooks (prefered), which are methods of a class. You can pass parameters to the call and
- *	  they can return values. They get declared in setup.inc.php as: 
+ * Hooks can have one of the following formats:
+ *  - static class method hooks are declared as:
+ *	  $setup_info['appname']['hooks']['location'] = 'class::method';
+ *	- method hooks, which are methods of a class. You can pass parameters to the call and
+ *	  they can return values. They get declared in setup.inc.php as:
  *	  $setup_info['appname']['hooks']['location'] = 'app.class.method';
  *	- old type, which are included files. Values can only be passed by global values and they cant return anything.
- *	  Old declaration in setup.inc.php: 
+ *	  Old declaration in setup.inc.php:
  *	  $setup_info['appname']['hooks'][] = 'location';
  */
 class hooks
@@ -56,17 +58,17 @@ class hooks
 		}
 		//_debug_array($this->found_hooks);
 	}
-	
+
 	/**
-	 * executes all the hooks (the user has rights to) for a given location 
+	 * executes all the hooks (the user has rights to) for a given location
 	 *
-	 * @param string/array $args location-name as string or array with keys location, order and 
+	 * @param string/array $args location-name as string or array with keys location, order and
 	 *	further data to be passed to the hook, if its a new method-hook
 	 * @param array $order appnames (as value), which should be executes first
 	 * @param boolean $no_permission_check if True execute all hooks, not only the ones a user has rights to
 	 *	$no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 	 * @return array with results of each hook call (with appname as key) and value:
-	 *	- False if no hook exists, 
+	 *	- False if no hook exists,
 	 *	- True if old hook exists and
 	 * 	- whatever the new method-hook returns (can be True or False too!).
 	 */
@@ -75,7 +77,7 @@ class hooks
 		//echo "<p>hooks::process("; print_r($args); echo ")</p>\n";
 		if ($order == '')
 		{
-			$order = is_array($args) && isset($args['order']) ? $args['order'] : 
+			$order = is_array($args) && isset($args['order']) ? $args['order'] :
 				array($GLOBALS['egw_info']['flags']['currentapp']);
 		}
 
@@ -114,7 +116,7 @@ class hooks
 	/**
 	 * executes a single hook of a given location and application
 	 *
-	 * @param string/array $args location-name as string or array with keys location, appname and 
+	 * @param string/array $args location-name as string or array with keys location, appname and
 	 *	further data to be passed to the hook, if its a new method-hook
 	 * @param string $appname name of the app, which's hook to execute, if empty the current app is used
 	 * @param boolean $no_permission_check if True execute all hooks, not only the ones a user has rights to
@@ -143,9 +145,15 @@ class hooks
 		if (isset($this->found_hooks[$appname][$location]) || $try_unregistered)
 		{
 			$parts = explode('.',$method = $this->found_hooks[$appname][$location]);
-			
-			if (count($parts) != 3 || ($parts[1] == 'inc' && $parts[2] == 'php'))
+
+			if (strpos($method,'::') !== false || count($parts) == 3 && $parts[1] != 'inc' && $parts[2] != 'php')
 			{
+				// new style hook with method string or static method (eg. 'class::method')
+				return ExecMethod($method,$args);
+			}
+			else
+			{
+				// old style hook, with an include file
 				if ($try_unregistered && empty($method))
 				{
 					$method = 'hook_'.$location.'.inc.php';
@@ -161,10 +169,6 @@ class hooks
 				{
 					return False;
 				}
-			}
-			else	// new style method-hook
-			{
-				return ExecMethod($method,$args);
 			}
 		}
 		else
@@ -191,7 +195,7 @@ class hooks
 		}
 		return $count;
 	}
-	
+
 	/**
 	 * @deprecated currently not being used
 	 */
@@ -209,7 +213,7 @@ class hooks
 	 *
 	 * First all existing hooks of $appname get deleted in the db and then the given ones get registered.
 	 *
-	 * @param string $appname Application 'name' 
+	 * @param string $appname Application 'name'
 	 * @param array $hooks=null hooks to register, eg $setup_info[$app]['hooks'] or not used for only deregister the hooks
 	 * @return boolean false on error, true otherwise
 	 */
@@ -248,16 +252,16 @@ class hooks
 		return True;
 	}
 
-	
+
 	/**
 	 * Register the hooks of all applications (used by admin)
 	 */
 	function register_all_hooks()
 	{
 		$SEP = filesystem_separator();
-		
+
 		foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
-		{			
+		{
 			$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'setup' . $SEP . 'setup.inc.php';
 			if(@file_exists($f))
 			{

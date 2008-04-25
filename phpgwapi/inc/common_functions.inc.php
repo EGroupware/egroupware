@@ -731,22 +731,25 @@
 	 */
 	function &ExecMethod2($acm)
 	{
-		list($app,$class,$method) = explode('.',$acm);
-		if (!is_object($obj =& $GLOBALS[$class]))
+		if (!is_callable($acm))
 		{
-			$obj =& CreateObject($acm);
-		}
+			list($app,$class,$method) = explode('.',$acm);
+			if (!is_object($obj =& $GLOBALS[$class]))
+			{
+				$obj =& CreateObject($acm);
+			}
 
-		if (!method_exists($obj,$method))
-		{
-			echo "<p><b>".function_backtrace()."</b>: no methode '$method' in class '$class'</p>\n";
-			return False;
+			if (!method_exists($obj,$method))
+			{
+				echo "<p><b>".function_backtrace()."</b>: no methode '$method' in class '$class'</p>\n";
+				return False;
+			}
+			$acm = array($obj,$method);
 		}
-
 		$args = func_get_args();
 		unset($args[0]);
 
-		return call_user_func_array(array($obj,$method),$args);
+		return call_user_func_array($acm,$args);
 	}
 
 	/**
@@ -756,16 +759,16 @@
 	 *
 	 * @author seek3r
 	 * @param $method to execute
-	 * @param $functionparams function param should be an array
+	 * @param $functionparam function param should be an array
 	 * @param $loglevel developers choice of logging level
 	 * @param $classparams params to be sent to the contructor
 	 * @return mixed returnvalue of method
 	 */
-	function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
+	function ExecMethod($method, $functionparam = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 	{
 		/* Need to make sure this is working against a single dimensional object */
 		$partscount = count(explode('.',$method)) - 1;
-		if ($partscount == 2)
+		if (!is_callable($method) && $partscount == 2)
 		{
 			list($appname,$classname,$functionname) = explode(".", $method);
 			if (!is_object($GLOBALS[$classname]))
@@ -786,6 +789,12 @@
 				echo "<p><b>".function_backtrace()."</b>: no methode '$functionname' in class '$classname'</p>\n";
 				return False;
 			}
+			$method = array($GLOBALS[$classname],$functionname);
+		}
+		if (is_callable($method))
+		{
+			return $functionparam != '_UNDEF_' ? call_user_func($method,$functionparam) : call_user_func($method);
+
 			if ((is_array($functionparams) || $functionparams != '_UNDEF_') && ($functionparams || $functionparams != 'True'))
 			{
 				return $GLOBALS[$classname]->$functionname($functionparams);
