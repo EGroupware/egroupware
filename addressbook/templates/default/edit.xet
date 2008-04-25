@@ -53,7 +53,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.3.005">
+	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.5.002">
 		<grid height="258">
 			<columns>
 				<column/>
@@ -98,7 +98,7 @@
 				<row>
 					<image src="home"/>
 					<description value="Organisation"/>
-					<textbox id="org_name" size="45" maxlength="64" onchange="setName(this);"/>
+					<textbox id="org_name" size="45" maxlength="128" onchange="setName(this);"/>
 				</row>
 				<row>
 					<description/>
@@ -326,6 +326,30 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.5.001">
+		<grid width="100%" height="258" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Distribution lists"/>
+				</row>
+				<row>
+					<grid>
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<description span="all" id="distrib_lists"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" height="258" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
@@ -443,7 +467,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.002">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.003">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -451,7 +475,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" id="msg" no_lang="1"/>
+					<htmlarea span="all" class="redItalic" id="msg" no_lang="1" readonly="true"/>
 					<description/>
 				</row>
 				<row>
@@ -481,6 +505,7 @@
 							<tab label="Private" statustext="Home address, Birthday, ..."/>
 							<tab label="Details" statustext="Categories, Notes, ..."/>
 							<tab label="Links" statustext="Links"/>
+							<tab label="Distribution lists" statustext="Distribution lists, ..."/>
 							<tab label="Extra" statustext="Custom fields"/>
 							<tab label="Extra private" statustext="Private custom fields"/>
 						</tabs>
@@ -490,6 +515,7 @@
 							<template id="addressbook.edit.home"/>
 							<template id="addressbook.edit.details"/>
 							<template id="addressbook.edit.links"/>
+							<template id="addressbook.edit.distribution_list"/>
 							<template id="addressbook.edit.custom"/>
 							<template id="addressbook.edit.custom_private"/>
 						</tabpanels>
@@ -561,12 +587,12 @@
 									<row>
 										<image src="email.png"/>
 										<description value="email" options=",,,email"/>
-										<textbox id="email" size="28" maxlength="64"/>
+										<textbox id="email" size="28" maxlength="128"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Private" options=",,,email_home"/>
-										<textbox id="email_home" size="28" maxlength="64"/>
+										<textbox id="email_home" size="28" maxlength="128"/>
 									</row>
 								</rows>
 							</grid>

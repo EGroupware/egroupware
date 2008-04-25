@@ -8,7 +8,7 @@
  * @package addressbook
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.socontacts.inc.php');
@@ -34,12 +34,12 @@ class bocontacts extends socontacts
 	 * @var int $now_su actual user (!) time
 	 */
 	var $now_su;
-	
+
 	/**
 	 * @var array $timestamps timestamps
 	 */
 	var $timestamps = array('modified','created');
-	
+
 	/**
 	 * @var array $fileas_types
 	 */
@@ -61,7 +61,7 @@ class bocontacts extends socontacts
 		'n_family, n_prefix',
 		'n_fn',
 	);
-	
+
 	/**
 	 * @var array $org_fields fields belonging to the (virtual) organisation entry
 	 */
@@ -95,7 +95,7 @@ class bocontacts extends socontacts
 	 * @var double $org_common_factor minimum percentage of the contacts with identical values to construct the "common" (virtual) org-entry
 	 */
 	var $org_common_factor = 0.6;
-	
+
 	var $contact_fields = array();
 	var $business_contact_fields = array();
 	var $home_contact_fields = array();
@@ -128,17 +128,17 @@ class bocontacts extends socontacts
 	function bocontacts($contact_app='addressbook')
 	{
 		$this->socontacts($contact_app);
-		
+
 		$this->tz_offset_s = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 		$this->now_su = time() + $this->tz_offset_s;
 
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 		// get the default addressbook from the users prefs
-		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ? 
+		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ?
 			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] : $this->user;
-		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'],-1) == 'p';		
+		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'],-1) == 'p';
 		if ($this->default_addressbook > 0 && $this->default_addressbook != $this->user &&
-			($this->default_private || 
+			($this->default_private ||
 			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default'] ||
 			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->default['addressbook']['add_default']))
 		{
@@ -251,7 +251,7 @@ class bocontacts extends socontacts
 			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
 		}
 	}
-	
+
 	/**
 	 * calculate the file_as string from the contact and the file_as type
 	 *
@@ -263,13 +263,13 @@ class bocontacts extends socontacts
 	{
 		if (is_null($type)) $type = $contact['fileas_type'];
 		if (!$type) $type = $this->fileas_types[0];
-		
+
 		if (strpos($type,'n_fn') !== false) $contact['n_fn'] = $this->fullname($contact);
-		
+
 		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality'),
 			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],
 				$contact['n_fn'],$contact['org_name'],$contact['org_unit'],$contact['adr_one_locality']),$type);
-				
+
 		// removing empty delimiters, caused by empty contact fields
 		$fileas = str_replace(array(', , : ',', : ',': , ',', , ',': : '),array(': ',': ',': ',', ',': '),$fileas);
 		while ($fileas{0} == ':' ||  $fileas{0} == ',') $fileas = substr($fileas,2);
@@ -289,7 +289,7 @@ class bocontacts extends socontacts
 	function fileas_type($contact,$file_as=null)
 	{
 		if (is_null($file_as)) $file_as = $contact['n_fileas'];
-		
+
 		if ($file_as)
 		{
 			foreach($this->fileas_types as $type)
@@ -355,7 +355,7 @@ class bocontacts extends socontacts
 	 * it gets called everytime when data is read from the db
 	 * This function needs to be reimplemented in the derived class
 	 *
-	 * @param array $data 
+	 * @param array $data
 	 */
 	function db2data($data)
 	{
@@ -368,7 +368,7 @@ class bocontacts extends socontacts
 			}
 		}
 		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto']);
-		
+
 		// set freebusy_uri for accounts
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
 		{
@@ -378,7 +378,7 @@ class bocontacts extends socontacts
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * src for photo: returns array with linkparams if jpeg exists or the $default image-name if not
 	 * @param int $id contact_id
@@ -448,7 +448,7 @@ class bocontacts extends socontacts
 		}
 		return true;
 	}
-	
+
 	/**
 	* saves contact to db
 	*
@@ -488,7 +488,7 @@ class bocontacts extends socontacts
 			// allow admins to import contacts with creator / created date set
 			if (!$contact['creator'] || !$this->is_admin($contact)) $contact['creator'] = $this->user;
 			if (!$contact['created'] || !$this->is_admin($contact)) $contact['created'] = $this->now_su;
-			
+
 			if (!$contact['tid']) $contact['tid'] = 'n';
 		}
 		if (!$contact['owner'])
@@ -529,8 +529,9 @@ class bocontacts extends socontacts
 		if(!($this->error = parent::save($to_write)) && is_object($GLOBALS['egw']->contenthistory))
 		{
 			$contact['id'] = $to_write['id'];
+			$contact['etag'] = $to_write['etag'];
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
-			
+
 			if ($contact['account_id'])	// invalidate the cache of the accounts class
 			{
 				$GLOBALS['egw']->accounts->cache_invalidate($contact['account_id']);
@@ -545,11 +546,11 @@ class bocontacts extends socontacts
 
 		return $this->error ? false : $contact['id'];
 	}
-	
+
 	/**
 	* reads contacts matched by key and puts all cols in the data array
 	*
-	* @param int/string $contact_id 
+	* @param int/string $contact_id
 	* @return array/boolean array with contact data, null if not found or false on no view perms
 	*/
 	function read($contact_id)
@@ -564,10 +565,10 @@ class bocontacts extends socontacts
 		}
 		// determine the file-as type
 		$data['fileas_type'] = $this->fileas_type($data);
-		
+
 		return $data;
 	}
-	
+
 	/**
 	* Checks if the current user has the necessary ACL rights
 	*
@@ -581,13 +582,13 @@ class bocontacts extends socontacts
 	*/
 	function check_perms($needed,$contact,$deny_account_delete=false)
 	{
-		if ((!is_array($contact) || !isset($contact['owner'])) && 
+		if ((!is_array($contact) || !isset($contact['owner'])) &&
 			!($contact = parent::read(is_array($contact) ? $contact['id'] : $contact)))
 		{
 			return null;
 		}
 		$owner = $contact['owner'];
-		
+
 		// allow the user to edit his own account
 		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $this->user && $this->own_account_acl)
 		{
@@ -598,10 +599,10 @@ class bocontacts extends socontacts
 		{
 			return false;
 		}
-		return ($this->grants[$owner] & $needed) && 
+		return ($this->grants[$owner] & $needed) &&
 			(!$contact['private'] || ($this->grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$this->memberships));
 	}
-	
+
 	/**
 	 * Read (virtual) org-entry (values "common" for most contacts in the given org)
 	 *
@@ -611,7 +612,7 @@ class bocontacts extends socontacts
 	function read_org($org_id)
 	{
 		if (!$org_id) return false;
-		
+
 		$org = array();
 		foreach(explode('|||',$org_id) as $part)
 		{
@@ -666,7 +667,7 @@ class bocontacts extends socontacts
 				unset($contact);
 			}
 		}
-		
+
 		// create a statistic about the commonness of each fields values
 		$fields = array();
 		foreach($contacts as $contact)
@@ -716,7 +717,7 @@ class bocontacts extends socontacts
 		}
 		return $org;
 	}
-	
+
 	/**
 	 * Return all org-members with same content in one or more of the given fields (only org_fields are counting)
 	 *
@@ -736,7 +737,7 @@ class bocontacts extends socontacts
 		}
 		return parent::search($criteria,false,'n_family,n_given','','',false,'OR',false,array('org_name'=>$org_name));
 	}
-	
+
 	/**
 	 * Return the changed fields from two versions of a contact (not modified or modifier)
 	 *
@@ -761,7 +762,7 @@ class bocontacts extends socontacts
 		}
 		return $changed;
 	}
-	
+
 	/**
 	 * Change given fields in all members of the org with identical content in the field
 	 *
@@ -770,7 +771,7 @@ class bocontacts extends socontacts
 	 * @param array $to changed/new version of the contact
 	 * @param array $members=null org-members to change, default null --> function queries them itself
 	 * @return array/boolean (changed-members,changed-fields,failed-members) or false if no org_fields changed or no (other) members matching that fields
-	 */ 
+	 */
 	function change_org($org_name,$from,$to,$members=null)
 	{
 		if (!($changed = $this->changed_fields($from,$to,true))) return false;
@@ -780,7 +781,7 @@ class bocontacts extends socontacts
 			$members = $this->org_similar($org_name,$changed);
 		}
 		if (!$members) return false;
-		
+
 		$changed_members = $changed_fields = $failed_members = 0;
 		foreach($members as $member)
 		{
@@ -812,7 +813,7 @@ class bocontacts extends socontacts
 
 	/**
 	 * get title for a contact identified by $contact
-	 * 
+	 *
 	 * Is called as hook to participate in the linking. The format is determined by the link_title preference.
 	 *
 	 * @param int/string/array $contact int/string id or array with contact
@@ -839,7 +840,7 @@ class bocontacts extends socontacts
 
 	/**
 	 * get title for multiple contacts identified by $ids
-	 * 
+	 *
 	 * Is called as hook to participate in the linking. The format is determined by the link_title preference.
 	 *
 	 * @param array $ids array with contact-id's
@@ -901,61 +902,22 @@ class bocontacts extends socontacts
 		}
 		return $result;
 	}
-	
-	/**
-	 * Hook called by link-class to include calendar in the appregistry of the linkage
-	 *
-	 * @param array/string $location location and other parameters (not used)
-	 * @return array with method-names
-	 */
-	function search_link($location)
-	{
-		return array(
-			'query' => 'addressbook.bocontacts.link_query',
-			'title' => 'addressbook.bocontacts.link_title',
-			'titles' => 'addressbook.bocontacts.link_titles',
-			'view' => array(
-				'menuaction' => 'addressbook.uicontacts.view'
-			),
-			'view_id' => 'contact_id',
-			'add' => array(
-				'menuaction' => 'addressbook.uicontacts.edit'
-			),
-			'add_app'    => 'link_app',
-			'add_id'     => 'link_id',	
-			'add_popup'  => '850x440',
-		);
-	}
 
-	/**
-	 * Register contacts as calendar resources (items which can be sheduled by the calendar)
-	 *
-	 * @param array $args hook-params (not used)
-	 * @return array
-	 */
-	function calendar_resources($args)
-	{
-		return array(	
-			'type' => 'c',// one char type-identifiy for this resources
-			'info' => 'addressbook.bocontacts.calendar_info',// info method, returns array with id, type & name for a given id
-		);
-	}
-	
 	/**
 	 * returns info about contacts for calender
 	 *
 	 * @param int/array $ids single contact-id or array of id's
-	 * @return array 
+	 * @return array
 	 */
 	function calendar_info($ids)
 	{
 		if (!$ids) return null;
-		
+
 		$data = array();
 		foreach(!is_array($ids) ? array($ids) : $ids as $id)
 		{
 			if (!($contact = $this->read($id))) continue;
-			
+
 			$data[] = array(
 				'res_id' => $id,
 				'email' => $contact['email'] ? $contact['email'] : $contact['email_home'],
@@ -980,7 +942,7 @@ class bocontacts extends socontacts
 
 	/**
 	 * Called by edit-account hook, when an account get edited --> not longer used
-	 * 
+	 *
 	 * This function is still there, to not give a fatal error, if the hook still exists.
 	 * Can be removed after the next db-update, which also reloads the hooks. RalfBecker 2006/09/18
 	 *
@@ -992,10 +954,10 @@ class bocontacts extends socontacts
 		include(EGW_INCLUDE_ROOT.'/addressbook/setup/setup.inc.php');
 		$GLOBALS['egw']->hooks->register_hooks('addressbook',$setup_info['addressbook']['hooks']);
 	}
-	
+
 	/**
 	 * Merges some given addresses into the first one and delete the others
-	 * 
+	 *
 	 * If one of the other addresses is an account, everything is merged into the account.
 	 * If two accounts are in $ids, the function fails (returns false).
 	 *
@@ -1012,7 +974,7 @@ class bocontacts extends socontacts
 				if (!is_null($account))
 				{
 					echo $this->error = 'Can not merge more then one account!';
-					return false;	// we dont deal with two accounts! 
+					return false;	// we dont deal with two accounts!
 				}
 				$account = $contact;
 				continue;
@@ -1053,7 +1015,7 @@ class bocontacts extends socontacts
 						if (!is_array($target['cat_id'])) $target['cat_id'] = $target['cat_id'] ? explode(',',$target['cat_id']) : array();
 						$target['cat_id'] = array_unique(array_merge($target['cat_id'],is_array($value)?$value:explode(',',$value)));
 						break;
-						
+
 					default:
 						if (!$target[$name]) $target[$name] = $value;
 						break;
@@ -1061,7 +1023,7 @@ class bocontacts extends socontacts
 			}
 		}
 		if (!$this->save($target)) return 0;
-		
+
 		$success = 1;
 		foreach($contacts as $contact)
 		{
@@ -1077,7 +1039,7 @@ class bocontacts extends socontacts
 		}
 		return $success;
 	}
-	
+
 	/**
 	 * Check if user has required rights for a list or list-owner
 	 *
@@ -1089,12 +1051,12 @@ class bocontacts extends socontacts
 	function check_list($list,$required,$owner=null)
 	{
 		if ($list && ($list_data = $this->read_list($list)))
-		{			
+		{
 			$owner = $list_data['list_owner'];
 		}
 		return !!($this->grants[$owner] & $required);
 	}
-	
+
 	/**
 	 * Adds a distribution list
 	 *
@@ -1106,10 +1068,10 @@ class bocontacts extends socontacts
 	function add_list($name,$owner,$contacts=array())
 	{
 		if (!$this->check_list(null,EGW_ACL_ADD,$owner)) return false;
-		
+
 		return parent::add_list($name,$owner,$contacts);
 	}
-	
+
 	/**
 	 * Adds one contact to a distribution list
 	 *
@@ -1120,10 +1082,10 @@ class bocontacts extends socontacts
 	function add2list($contact,$list)
 	{
 		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
-		
+
 		return parent::add2list($contact,$list);
 	}
-	
+
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
@@ -1134,7 +1096,7 @@ class bocontacts extends socontacts
 	function remove_from_list($contact,$list=null)
 	{
 		if ($list && !$this->check_list($list,EGW_ACL_EDIT)) return false;
-		
+
 		return parent::remove_from_list($contact,$list);
 	}
 
@@ -1147,10 +1109,10 @@ class bocontacts extends socontacts
 	function delete_list($list)
 	{
 		if (!$this->check_list($list,EGW_ACL_DELETE)) return false;
-		
+
 		return parent::delete_list($list);
 	}
-	
+
 	/**
 	 * Read data of a distribution list
 	 *
@@ -1160,20 +1122,20 @@ class bocontacts extends socontacts
 	function read_list($list)
 	{
 		static $cache;
-		
+
 		if (isset($cache[$list])) return $cache[$list];
-		
-		return $cache[$list] = parent::read_list($list);		
+
+		return $cache[$list] = parent::read_list($list);
 	}
-	
+
 	/**
 	 * Get the address-format of a country
 	 *
 	 * This is a good reference where I got nearly all information, thanks to mikaelarhelger-AT-gmail.com
 	 * http://www.bitboost.com/ref/international-address-formats.html
-	 * 
+	 *
 	 * Mail me (RalfBecker-AT-outdoor-training.de) if you want your nation added or fixed.
-	 * 
+	 *
 	 * @param string $country
 	 * @return string 'city_state_postcode' (eg. US) or 'postcode_city' (eg. DE)
 	 */
@@ -1200,7 +1162,7 @@ class bocontacts extends socontacts
 			case 'US':
 				$adr_format = 'city_state_postcode';
 				break;
-				
+
 			case 'AR':
 			case 'AT':
 			case 'BE':
@@ -1229,7 +1191,7 @@ class bocontacts extends socontacts
 			case 'SE':
 				$adr_format = 'postcode_city';
 				break;
-				
+
 			default:
 				$adr_format = $this->prefs['addr_format'] ? $this->prefs['addr_format'] : 'postcode_city';
 		}
@@ -1305,7 +1267,7 @@ class bocontacts extends socontacts
 		{
 			$contact['n_fn'] = $this->fullname($contact);
 		}
-		
+
 		if (!isset($contact['n_fileas']) || empty($contact['n_fileas']))
 		{
 			$contact['n_fileas'] = $this->fileas($contact);

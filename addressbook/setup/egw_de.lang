@@ -106,6 +106,7 @@ contacts to ldap, account contact-data to sql	admin	de	Kontakte nach LDAP, Konta
 contains	addressbook	de	beinhaltet
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 copy a contact and edit the copy	addressbook	de	Kopiert einen Kontakt und bearbeitet dann die Kopie
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	de	Kopieren Sie Ihre Änderungen in die Zwischenablage, %1laden Sie den Eintrag neu%2 und fügen diese wieder ein.
 country	common	de	Land
 create new links	addressbook	de	Neue Verknüpfung erstellen
 created	addressbook	de	Angelegt
@@ -158,6 +159,7 @@ end	addressbook	de	Ende
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
+error: the entry has been updated since you opened it for editing!	addressbook	de	Fehler: der Eintrag wurde geändert, seit Sie ihn zum Bearbeiten geöffnet haben!
 example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "$$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte"
 existing links	addressbook	de	Bestehende Verknüpfungen
 export	addressbook	de	Export
@@ -362,7 +364,7 @@ updated	addressbook	de	Aktualisiert
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (verwenden Sie %1 = anzurufende Nummer, %u = Benutzernamen, %t = Telefon des Benutzers)
 use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?
-use an extra tab for private custom fields?	admin	de	Soll ein extra Tab für private Benutzerdefinierte Felder benutzt werden?
+use an extra tab for private custom fields?	admin	de	Separaten Reiter für private benutzerdefinierte Felder verwenden?
 use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
 used for links and for the own sorting of the list	addressbook	de	wird für Verküpfungen und die eigene Sortierung der Liste benützt

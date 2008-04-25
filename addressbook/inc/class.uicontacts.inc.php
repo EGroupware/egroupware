@@ -1278,6 +1278,16 @@ class uicontacts extends bocontacts
 							}
 						}
 					}
+					elseif($this->error === true)
+					{
+						$content['msg'] = lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
+									'menuaction' => 'addressbook.uicontacts.edit',
+									'contact_id' => $content['id'],
+								))).'">','</a>');
+						break;	// dont refresh the list
+					}
 					else
 					{
 						$content['msg'] = lang('Error saving the contact !!!').

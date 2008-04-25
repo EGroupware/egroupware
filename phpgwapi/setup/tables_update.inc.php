@@ -364,3 +364,28 @@ function phpgwapi_upgrade1_5_007()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.008';
 }
+
+$test[] = '1.5.008';
+function phpgwapi_upgrade1_5_008()
+{
+	// add UID and etag columns to addressbook, required eg. for CardDAV
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook','contact_etag',array(
+		'type' => 'int',
+		'precision' => '4',
+		'default' => '0',
+	));
+
+	// add UID column to addressbook, required eg. for CardDAV
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook','contact_uid',array(
+		'type' => 'varchar',
+		'precision' => '255'
+	));
+
+	$GLOBALS['egw_setup']->db->query("SELECT config_value FROM egw_config WHERE config_app='phpgwapi' AND config_name='install_id'",__LINE__,__FILE__);
+	$install_id = $GLOBALS['egw_setup']->db->next_record() ? $GLOBALS['egw_setup']->db->f(0) : md5(time());
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_addressbook SET contact_uid='.$GLOBALS['egw_setup']->db->concat("'addressbook-'",'contact_id',"'-$install_id'"),__LINE__,__FILE__);
+
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook',array('contact_uid'),false);
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.009';
+}

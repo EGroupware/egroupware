@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
 $setup_info['phpgwapi']['title']     = 'eGroupWare API';
-$setup_info['phpgwapi']['version']   = '1.5.008';
+$setup_info['phpgwapi']['version']   = '1.5.009';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
@@ -44,9 +44,9 @@ $setup_info['phpgwapi']['tables'][]  = 'egw_addressbook_extra';
 $setup_info['phpgwapi']['tables'][]  = 'egw_addressbook_lists';
 $setup_info['phpgwapi']['tables'][]  = 'egw_addressbook2list';
 $setup_info['phpgwapi']['tables'][]  = 'egw_sqlfs';
+$setup_info['phpgwapi']['tables'][]  = 'egw_index_keywords';
 $setup_info['phpgwapi']['tables'][]  = 'egw_index';
 $setup_info['phpgwapi']['tables'][]  = 'egw_cat2entry';
-$setup_info['phpgwapi']['tables'][]  = 'egw_index_keywords';
 
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
 $setup_info['phpgwapi']['hooks']['addaccount']		= 'phpgwapi.vfs_home_hooks.addAccount';
@@ -64,3 +64,4 @@ $setup_info['notifywindow']['enable']    = 2;
 $setup_info['notifywindow']['app_order'] = 1;
 $setup_info['notifywindow']['tables']    = '';
 $setup_info['notifywindow']['hooks'][]   = 'home';
+

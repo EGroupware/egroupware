@@ -7,7 +7,7 @@
  * @package addressbook
  * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
@@ -15,11 +15,11 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 /**
  * SQL storage object of the adressbook
  */
-class socontacts_sql extends so_sql 
+class socontacts_sql extends so_sql
 {
 	/**
 	 * name of customefields table
-	 * 
+	 *
 	 * @var string
 	 */
 	var $extra_table = 'egw_addressbook_extra';
@@ -29,7 +29,7 @@ class socontacts_sql extends so_sql
 	var $account_repository = 'sql';
 	var $contact_repository = 'sql';
 	var $grants;
-	
+
 	/**
 	 * internal name of the id, gets mapped to uid
 	 *
@@ -49,7 +49,7 @@ class socontacts_sql extends so_sql
 	 * @var string
 	 */
 	var $ab2list_table = 'egw_addressbook2list';
-	
+
 	function socontacts_sql()
 	{
 		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_',true);	// true = using the global db object, no clone!
@@ -67,7 +67,7 @@ class socontacts_sql extends so_sql
 			$this->contact_repository = $GLOBALS['egw_info']['server']['contact_repository'];
 		}
 	}
-	
+
 	/**
 	 * Query organisations by given parameters
 	 *
@@ -82,7 +82,7 @@ class socontacts_sql extends so_sql
 	 * @var int $param[num_rows]
 	 * @var string $param[sort] ASC or DESC
 	 * @return array or arrays with keys org_name,count and evtl. adr_one_location or org_unit
-	 */ 
+	 */
 	function organisations($param)
 	{
 		$filter = is_array($param['col_filter']) ? $param['col_filter'] : array();
@@ -104,7 +104,7 @@ class socontacts_sql extends so_sql
 			if ($param['owner'])
 			{
 				if (!$this->grants[(int) $filter['owner']]) return false;	// we have no access to that addressbook
-				
+
 				$filter['owner'] = $param['owner'];
 				$filter['private'] = 0;
 			}
@@ -142,7 +142,7 @@ class socontacts_sql extends so_sql
 		else	// by adr_one_location or org_unit
 		{
 			// org total for more then one $by
-			$by_expr = $by == 'org_unit_count' ? "COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END)" : 
+			$by_expr = $by == 'org_unit_count' ? "COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END)" :
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END)";
 			$append = "GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort";
 			parent::search($param['search'],array('org_name'),$append,array(
@@ -165,7 +165,7 @@ class socontacts_sql extends so_sql
 		}
 		$rows = parent::search($param['search'],array('org_name'),$append,$extra,'%',false,'OR',
 			array($param['start'],$param['num_rows']),$filter);
-			
+
 		if (!$rows) return false;
 
 		// query the values for *_count == 1, to display them instead
@@ -177,10 +177,10 @@ class socontacts_sql extends so_sql
 				$filter['org_name'][$row['org_name']] = $row['org_name'];	// use as key too to have every org only once
 			}
 			$org_key = $row['org_name'].($by ? '|||'.($row[$by] || $row[$by.'_count']==1 ? $row[$by] : '|||') : '');
-			$orgs[$org_key] = $row; 
+			$orgs[$org_key] = $row;
 		}
 		unset($rows);
-		
+
 		if (count($filter['org_name']))
 		{
 			foreach((array) parent::search($criteria,array('org_name','org_unit','adr_one_locality'),'GROUP BY org_name,org_unit,adr_one_locality',
@@ -219,7 +219,7 @@ class socontacts_sql extends so_sql
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or 
+	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
@@ -228,7 +228,7 @@ class socontacts_sql extends so_sql
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return boolean/array of matching rows (the row is an array of the cols) or False
@@ -250,7 +250,7 @@ class socontacts_sql extends so_sql
 			$filter[] = $this->_cat_filter((int)$filter['cat_id'],$not);
 			unset($filter['cat_id']);
 		}
-		
+
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if (isset($this->grants) && !(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
@@ -258,7 +258,7 @@ class socontacts_sql extends so_sql
 			if (isset($filter['owner']))
 			{
 				if (!$this->grants[(int) $filter['owner']]) return false;	// we have no access to that addressbook
-				
+
 				$filter['private'] = 0;
 			}
 			else	// search all addressbooks, incl. accounts
@@ -400,16 +400,16 @@ class socontacts_sql extends so_sql
 			}
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
-		
+
 		if ($start === false) $this->total = is_array($rows) ? count($rows) : 0;	// so_sql sets total only for $start !== false!
-		
+
 		return $rows;
 	}
-	
+
 	/**
 	 * fix cat_id filter to search in comma-separated multiple cats and return subcats
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 * @param int $cat_id
 	 * @return string sql to filter by given cat
 	 */
@@ -430,11 +430,11 @@ class socontacts_sql extends so_sql
 		}
 		return $cfilter;
 	}
-	
+
 	/**
 	 * fix cat_id criteria to search in comma-separated multiple cats
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 * @param int/array $cats
 	 * @return array of sql-strings to be OR'ed or AND'ed together
 	 */
@@ -447,7 +447,7 @@ class socontacts_sql extends so_sql
 		}
 		return $cat_filter;
 	}
-	
+
 	/**
 	 * Change the ownership of contacts owned by a given account
 	 *
@@ -472,7 +472,7 @@ class socontacts_sql extends so_sql
 	 *
 	 * @param array $uids user or group id's
 	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
-	 */ 
+	 */
 	function get_lists($uids)
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
@@ -485,7 +485,7 @@ class socontacts_sql extends so_sql
 		//echo "<p>socontacts_sql::get_lists(".print_r($uids,true).")</p>\n"; _debug_array($lists);
 		return $lists;
 	}
-	
+
 	/**
 	 * Adds a distribution list
 	 *
@@ -497,7 +497,7 @@ class socontacts_sql extends so_sql
 	function add_list($name,$owner,$contacts=array())
 	{
 		if (!$name || !(int)$owner) return false;
-		
+
 		if ($this->db->select($this->lists_table,'list_id',array(
 			'list_name' => $name,
 			'list_owner' => $owner,
@@ -511,7 +511,7 @@ class socontacts_sql extends so_sql
 			'list_created' => time(),
 			'list_creator' => $GLOBALS['egw_info']['user']['account_id'],
 		),array(),__LINE__,__FILE__)) return false;
-		
+
 		if ((int)($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')) && $contacts)
 		{
 			foreach($contacts as $contact)
@@ -521,7 +521,7 @@ class socontacts_sql extends so_sql
 		}
 		return $list_id;
 	}
-	
+
 	/**
 	 * Adds one contact to a distribution list
 	 *
@@ -547,7 +547,7 @@ class socontacts_sql extends so_sql
 			'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
 		),array(),__LINE__,__FILE__);
 	}
-	
+
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
@@ -558,7 +558,7 @@ class socontacts_sql extends so_sql
 	function remove_from_list($contact,$list=null)
 	{
 		if (!(int)$list && !is_null($list) || !(int)$contact) return false;
-		
+
 		$where = array(
 			'contact_id' => $contact,
 		);
@@ -566,7 +566,7 @@ class socontacts_sql extends so_sql
 
 		return $this->db->delete($this->ab2list_table,$where,__LINE__,__FILE__);
 	}
-	
+
 	/**
 	 * Deletes a distribution list (incl. it's members)
 	 *
@@ -576,13 +576,65 @@ class socontacts_sql extends so_sql
 	function delete_list($list)
 	{
 		if (!$this->db->delete($this->lists_table,array('list_id' => $list),__LINE__,__FILE__)) return false;
-		
+
 		$this->db->delete($this->ab2list_table,array('list_id' => $list),__LINE__,__FILE__);
-		
-		return $this->db->affected_rows();		
+
+		return $this->db->affected_rows();
 	}
-	
-	
+
+	/**
+	 * Reads a contact, reimplemented to use the uid, if a non-numeric key is given
+	 *
+	 * @param int|string|array $keys
+	 * @param string|array $extra_cols
+	 * @param string $join
+	 * @return array|boolean
+	 */
+	function read($keys,$extra_cols='',$join='')
+	{
+		if (!is_array($keys) && !is_numeric($keys))
+		{
+			$keys = array('contact_uid' => $keys);
+		}
+		return parent::read($keys,$extra_cols,$join);
+	}
+
+	/**
+	 * Saves a contact, reimplemented to check a given etag and set a uid
+	 *
+	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
+	 * @param string|array $extra_where=null extra where clause, eg. to check the etag, returns 'nothing_affected' if not affected rows
+	 * @return int 0 on success and errno != 0 else
+	 */
+	function save($keys=null)
+	{
+		if (is_array($keys) && count($keys)) $this->data_merge($keys);
+
+		if (isset($this->data['etag']))
+		{
+			$etag = $this->data['etag'];
+			unset($this->data['etag']);
+			if (!($err = parent::save(array('contact_etag=contact_etag+1'),array('contact_etag' => $etag))))
+			{
+				$this->data['etag'] = $etag+1;
+			}
+			else
+			{
+				$this->data['etag'] = $etag;
+			}
+		}
+		else
+		{
+			$err = parent::save();
+		}
+		if (!$err && !$this->data['uid'])
+		{
+			$this->update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
+		}
+		return $err;
+	}
+
+
 	/**
 	 * Read data of a distribution list
 	 *
@@ -592,7 +644,7 @@ class socontacts_sql extends so_sql
 	function read_list($list)
 	{
 		if (!$list) return false;
-		
+
 		return $this->db->select($this->lists_table,'*',array('list_id'=>$list),__LINE__,__FILE__)->fetch();
-	}	
+	}
 }
