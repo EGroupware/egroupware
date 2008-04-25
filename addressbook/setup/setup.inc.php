@@ -10,7 +10,7 @@
 /* Basic information about this app */
 $setup_info['addressbook']['name']      = 'addressbook';
 $setup_info['addressbook']['title']     = 'Addressbook';
-$setup_info['addressbook']['version']   = '1.5';
+$setup_info['addressbook']['version']   = '1.5.001';
 $setup_info['addressbook']['app_order'] = 4;
 $setup_info['addressbook']['enable']    = 1;
 
@@ -20,7 +20,7 @@ $setup_info['addressbook']['description'] =
 	'Contact manager with Vcard support.<br />
 	 Always have your address book available for updates or look ups from anywhere. <br />
 	 Share address book contact information with others. <br />
-	 Link contacts to calendar events or InfoLog entires like phonecalls.<br /> 
+	 Link contacts to calendar events or InfoLog entires like phonecalls.<br />
 	 Addressbook is the eGroupWare default contact application. <br />
 	 It stores contact information via SQL or LDAP and provides contact services via the eGroupWare API.';
 
@@ -30,15 +30,15 @@ $setup_info['addressbook']['maintainer_email'] = 'egroupware-developers@lists.so
 $setup_info['addressbook']['tables']  = array();	// addressbook tables are in the API!
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info['addressbook']['hooks']['admin'] = 'addressbook.contacts_admin_prefs.all_hooks';
-$setup_info['addressbook']['hooks']['preferences'] = 'addressbook.contacts_admin_prefs.all_hooks';
-$setup_info['addressbook']['hooks']['sidebox_menu'] = 'addressbook.contacts_admin_prefs.all_hooks';
-$setup_info['addressbook']['hooks']['settings'] = 'addressbook.contacts_admin_prefs.settings';
+$setup_info['addressbook']['hooks']['admin'] = 'addressbook_hooks::all_hooks';
+$setup_info['addressbook']['hooks']['preferences'] = 'addressbook_hooks::all_hooks';
+$setup_info['addressbook']['hooks']['sidebox_menu'] = 'addressbook_hooks::all_hooks';
+$setup_info['addressbook']['hooks']['settings'] = 'addressbook_hooks::settings';
 $setup_info['addressbook']['hooks'][] = 'home';
 $setup_info['addressbook']['hooks']['deleteaccount'] = 'addressbook.bocontacts.deleteaccount';
-$setup_info['addressbook']['hooks']['search_link'] = 'addressbook.bocontacts.search_link';
-$setup_info['addressbook']['hooks']['calendar_resources'] = 'addressbook.bocontacts.calendar_resources';
-$setup_info['addressbook']['hooks']['edit_user']    = 'addressbook.contacts_admin_prefs.edit_user';
+$setup_info['addressbook']['hooks']['search_link'] = 'addressbook_hooks::search_link';
+$setup_info['addressbook']['hooks']['calendar_resources'] = 'addressbook_hooks::calendar_resources';
+$setup_info['addressbook']['hooks']['edit_user']    = 'addressbook_hooks::edit_user';
 $setup_info['addressbook']['hooks'][] = 'config';
 
 /* Dependencies for this app to work */
