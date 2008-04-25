@@ -53,7 +53,7 @@
 		 * @param $str1
 		 * @param $str2
 		 */
-		function cmp_version($str1,$str2,$debug=False)
+		static function cmp_version($str1,$str2,$debug=False)
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
@@ -84,7 +84,7 @@
 		 * @param $str1
 		 * @param $str2
 		 */
-		function cmp_version_long($str1,$str2,$debug=False)
+		static function cmp_version_long($str1,$str2,$debug=False)
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str2,$regs2);
@@ -114,91 +114,37 @@
 		}
 
 		/**
-		 * Convert an array into the format needed for the access column
-		 *
-		 * @param $access
-		 * @param $array
-		 */
-		function array_to_string($access,$array)
-		{
-			$this->debug_info[] = 'array_to_string() is a depreciated function - use ACL instead';
-			$s = '';
-			if ($access == 'group' || $access == 'public' || $access == 'none')
-			{
-				if (count($array))
-				{
-					while (($t = each($array)))
-					{
-						$s .= ',' . $t[1];
-					}
-					$s .= ',';
-				}
-				if (! count($array) && $access == 'none')
-				{
-					$s = '';
-				}
-			}
-			return $s;
-		}
-		
-		/**
 		* generate a unique id, which can be used for syncronisation
 		*
 		* @param string $_appName the appname
 		* @param string $_eventID the id of the content
 		* @return string the unique id
 		*/
-		function generate_uid($_appName, $_eventID)
+		static function generate_uid($_appName, $_eventID)
 		{
 			if(empty($_appName) || empty($_eventID)) return false;
-			
+
 			$suffix = $GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'local';
 			$prefix = $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
-			
+
 			return $prefix;
 		}
-		
+
 		/**
 		* get the local content id from a global UID
 		*
 		* @param sting $_globalUid the global UID
 		* @return int local egw content id
 		*/
-		function get_egwId($_globalUid)
+		static function get_egwId($_globalUid)
 		{
 			if(empty($_globalUid)) return false;
-			
+
 			$globalUidParts = explode('-',$_globalUid);
 			array_shift($globalUidParts);	// remove the app name
 			array_pop($globalUidParts);		// remove the install_id
-			
-			return implode('-',$globalUidParts);	// return the rest, allowing to have dashs in the id, can happen with LDAP!
-		}
 
-		// This is used for searching the access fields
-		/**
-		 * this function is used for searching the access fields
-		 *
-		 * @param $table
-		 * @param $owner
-		 */
-		function sql_search($table,$owner=0)
-		{
-			$this->debug_info[] = 'sql_search() is a deprecated function - use ACL instead';
-			$s = '';
-			if (!$owner)
-			{
-				$owner = $GLOBALS['egw_info']['user']['account_id'];
-			}
-			$groups = $GLOBALS['egw']->accounts->membership((int)$owner);
-			if(@is_array($groups))
-			{
-				while ($group = each($groups))
-				{
-					$s .= " OR $table LIKE '%," . $group[2] . ",%'";
-				}
-			}
-			return $s;
+			return implode('-',$globalUidParts);	// return the rest, allowing to have dashs in the id, can happen with LDAP!
 		}
 
 		/**
@@ -206,7 +152,7 @@
 		 *
 		 * @return $installedLanguages; an array containing the installed languages
 		 */
-		function getInstalledLanguages()
+		static function getInstalledLanguages()
 		{
 			$GLOBALS['egw']->db->query('SELECT DISTINCT lang FROM egw_lang');
 			while (@$GLOBALS['egw']->db->next_record())
@@ -218,16 +164,17 @@
 		}
 
 		/**
-		 * return the preferred langugae of the users
+		 * get preferred language of the users
 		 *
-		 * it uses HTTP_ACCEPT_LANGUAGE (from the users browser) <br>
-		 * and .... to find out which languages are installed
+		 * Uses HTTP_ACCEPT_LANGUAGE (from the browser) and getInstalledLanguages to find out which languages are installed
+		 *
+		 * @return string
 		 */
-		function getPreferredLanguage()
+		static function getPreferredLanguage()
 		{
 			// create a array of languages the user is accepting
 			$userLanguages = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
-			$supportedLanguages = $this->getInstalledLanguages();
+			$supportedLanguages = self::getInstalledLanguages();
 
 			// find usersupported language
 			foreach($userLanguages as $key => $value)
@@ -259,12 +206,12 @@
 		 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
 		 * It's actually a PHP-Bug, that we have to escape space.
 		 * For all other Characters, refer to RFC2254.
-		 * 
+		 *
 		 * @deprecated use ldap::quote()
 		 * @param $string either a string to be escaped, or an array of values to be escaped
 		 * @return string
 		 */
-		function ldap_addslashes($string='')
+		static function ldap_addslashes($string='')
 		{
 			return ldap::quote($string);
 		}
@@ -278,7 +225,7 @@
 		 * @param $passwd ldap_root_pw
 		 * @return resource
 		 */
-		function ldapConnect($host='', $dn='', $passwd='')
+		static function ldapConnect($host='', $dn='', $passwd='')
 		{
 			// use Lars new ldap class
 			return $GLOBALS['egw']->ldap->ldapConnect($host,$dn,$passwd);
@@ -380,7 +327,7 @@
 				$lastname  = $GLOBALS['egw_info']['user']['lastname'];
 			}
 			$is_group = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g';
-			
+
 			if (empty($firstname)) $firstname = $lid;
 			if (empty($lastname) || $is_group)
 			{
@@ -396,7 +343,7 @@
 			{
 				$delimiter = '';
 			}
-			
+
 			$name = '';
 			switch($display)
 			{
@@ -439,10 +386,10 @@
 		 * create tabs
 		 *
 		 * @param array $tabs an array repersenting the tabs you wish to display, each element
-		 * 		 * 		 * 	 in the array is an array of 3 elements, 'label' which is the 
-		 * 		 * 		 * 	 text displaed on the tab (you should pass translated string, 
-		 * 		 * 		 * 	 create_tabs will not do <code>lang()</code> for you), 'link' 
-		 * 		 * 		 * 	 which is the uri, 'target', the frame name or '_blank' to show 
+		 * 		 * 		 * 	 in the array is an array of 3 elements, 'label' which is the
+		 * 		 * 		 * 	 text displaed on the tab (you should pass translated string,
+		 * 		 * 		 * 	 create_tabs will not do <code>lang()</code> for you), 'link'
+		 * 		 * 		 * 	 which is the uri, 'target', the frame name or '_blank' to show
 		 * 		 * 		 * 	 page in a new browser window.
 		 * @param mixed $selected the tab whos key is $selected will be displayed as current tab
 		 * @param $fontsize optional
@@ -672,7 +619,7 @@
 		 * get template dir of an application
 		 *
 		 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		 * @static 
+		 * @static
 		 * @return string/boolean dir or false if no dir is found
 		 */
 		function get_tpl_dir($appname = '')
@@ -843,12 +790,12 @@
 		function find_image($appname,$image)
 		{
 			$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
-			
+
 			if (!@is_array($this->found_files[$appname]))
 			{
 				$imagedir_olddefault = '/'.$appname.'/templates/default/images';
 				$imagedir_default    = '/'.$appname.'/templates/idots/images';
-				
+
 				if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_olddefault))
 				{
 					$d = dir(EGW_INCLUDE_ROOT.$imagedir_olddefault);
@@ -888,7 +835,7 @@
 					$d->close();
 				}
 			}
-			
+
 			if (!$GLOBALS['egw_info']['server']['image_type'])
 			{
 				// priority: GIF->JPG->PNG
@@ -1027,7 +974,7 @@
 
 		/**
 	 	 * prepare an array with variables used to render the navbar
-		 * 
+		 *
 		 * @deprecated inherit from egw_framework class in your template and use egw_framework::_navbar_vars()
 		 */
 		function navbar()
@@ -1038,7 +985,7 @@
 		/**
 		 * load header.inc.php for an application
 		 *
-		 * @deprecated 
+		 * @deprecated
 		 */
 		function app_header()
 		{
@@ -1056,7 +1003,7 @@
 		function egw_header()
 		{
 			echo $GLOBALS['egw']->framework->header();
-			
+
 			if (!$GLOBALS['egw_info']['flags']['nonavbar'])
 			{
 			   echo $GLOBALS['egw']->framework->navbar();
@@ -1318,7 +1265,7 @@
 
 			return $h12.':'.$min.$sec.$ampm;
 		}
-		
+
 		/**
 		 * Format an email address according to the system standard
 		 *
@@ -1338,7 +1285,7 @@
 				'&szlig;' => 'ss',
 				' ' => '',
 			);
-			foreach (array('first','last','account') as $name) 
+			foreach (array('first','last','account') as $name)
 			{
 				$$name = htmlentities($$name,ENT_QUOTES,$GLOBALS['egw']->translation->charset());
 				$$name = str_replace(array_keys($extra),array_values($extra),$$name);
@@ -1369,7 +1316,7 @@
 				'@'.$domain;
 			//echo " = '$email'</p>\n";
 			return $email;
-		}			
+		}
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
 		/**
@@ -1744,7 +1691,7 @@
 			system("grep -r '^[ \t]*function' *");
 			echo '</pre>';
 		}
-		
+
 		var $nextid_table = 'egw_nextid';
 
 		/**
@@ -1770,7 +1717,7 @@
 				return False;
 			}
 			++$id;
-			
+
 			if($id < $min) $id = $min;
 
 			$GLOBALS['egw']->db->insert($this->nextid_table,array('id' => $id),array('appname' => $appname),__LINE__,__FILE__);
@@ -1806,7 +1753,7 @@
 			}
 			return (int)$id;
 		}
-		
+
 		/**
 		 * gets an eGW conformat referer from $_SERVER['HTTP_REFERER'], suitable for direct use in the link function
 		 *
@@ -1817,7 +1764,7 @@
 		function get_referer($default='',$referer='')
 		{
 			if (!$referer) $referer = $_SERVER['HTTP_REFERER'];
-			
+
 			$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
 			if (empty($webserver_url) || $webserver_url{0} == '/')	// url is just a path
 			{
@@ -1830,7 +1777,7 @@
 			$referer = str_replace('/etemplate/process_exec.php','/index.php',$referer);
 
 			if (empty($referer)) $referer = $default;
-			
+
 			return $referer;
 		}
 
@@ -1844,12 +1791,12 @@
 		{
 			$this->egw_final();
 		}
-		
+
 		function phpgw_header()
 		{
 			$this->egw_header();
 		}
-		
+
 		function phpgw_footer()
 		{
 			$this->egw_footer();
