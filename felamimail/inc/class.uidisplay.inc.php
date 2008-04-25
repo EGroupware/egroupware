@@ -951,7 +951,7 @@
 			);
 			$this->kses->AddHTML(
 				'img',array(
-					"src"		=> array("minlen" =>   4, 'maxlen' =>  60, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
+					"src"		=> array("minlen" =>   4, 'maxlen' =>  200, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
 					"align"		=> array("minlen" =>   1),
 					"border"	=> array('maxlen' => 30),
 				)
