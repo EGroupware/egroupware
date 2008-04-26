@@ -25,63 +25,63 @@
  */
 class so_sql
 {
- 	/** 
- 	 * need to be set in the derived class to the db-table-name 
- 	 * 
+ 	/**
+ 	 * need to be set in the derived class to the db-table-name
+ 	 *
  	 * @var string
  	 */
 	var $table_name;
  	/**
  	 * db-col-name of autoincrement id or ''
- 	 * 
+ 	 *
  	 * @var string
  	 */
 	var $autoinc_id = '';
 	/**
 	 * all cols in data which are not (direct)in the db, for data_merge
-	 * 
+	 *
 	 * @var array
 	 */
 	var $non_db_cols = array();
 	/**
 	 * 4 turns on the so_sql debug-messages, default 0
-	 * 
+	 *
 	 * @var int
 	 */
 	var $debug = 0;
 	/**
 	 * string to be written to db if a col-value is '', eg. "''" or 'NULL' (default)
-	 * 
+	 *
 	 * @var string
 	 */
 	var $empty_on_write = 'NULL';
 	/**
 	 * total number of entries of last search with start != false
-	 * 
+	 *
 	 * @var int/boolean
 	 */
 	var $total = false;
 	/**
 	 * protected instance or reference (depeding on $no_clone param of constructor) of the db-object
-	 * 
+	 *
 	 * @var egw_db
 	 */
 	protected $db;
 	/**
 	 * unique keys/index, set by derived class or via so_sql($app,$table)
-	 * 
+	 *
 	 * @var array
 	 */
 	var $db_uni_cols = array();
 	/**
 	 * db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table)
-	 * 
+	 *
 	 * @var array
 	 */
 	var $db_key_cols = array();
 	/**
-	 * db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table) 
-	 * 
+	 * db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table)
+	 *
 	 * @var array
 	 */
 	var $db_data_cols = array();
@@ -91,7 +91,7 @@ class so_sql
 	var $db_cols = array();
 	/**
 	 * eGW table definition
-	 * 
+	 *
 	 * @var array
 	 */
 	var $table_def = array();
@@ -103,26 +103,26 @@ class so_sql
 	var $app;
 	/**
 	 * holds the content of all columns
-	 * 
+	 *
 	 * @var array
 	 */
 	var $data = array();
 	/**
 	 * Timestaps that need to be adjusted to user-time on reading or saving
-	 * 
+	 *
 	 * @var array
 	 */
 	var $timestamps = array();
 	/**
-	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time 
+	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time
 	 * or substracted from a user-time to get the server-time
-	 * 
+	 *
 	 * @var int
 	 */
 	var $tz_offset_s;
 	/**
 	 * Current time as timestamp in user-time
-	 * 
+	 *
 	 * @var int
 	 */
 	var $now;
@@ -136,9 +136,9 @@ class so_sql
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
-	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no 
+	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
-	 * 
+	 *
 	 * @return so_sql
 	 */
 	function so_sql($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
@@ -156,7 +156,7 @@ class so_sql
 		if ($app)
 		{
 			$this->app = $app;
-			
+
 			if (!$no_clone) $this->db->set_app($app);
 
 			if ($table) $this->setup_table($app,$table,$column_prefix);
@@ -317,7 +317,7 @@ class so_sql
 		$this->db2data();
 
 		$this->data_merge($keys);
-		
+
 		return $this->data;
 	}
 
@@ -326,7 +326,7 @@ class so_sql
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
 	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $join sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 * @param string $join sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 * @return array/boolean data if row could be retrived else False
 	 */
 	function read($keys,$extra_cols='',$join='')
@@ -335,8 +335,8 @@ class so_sql
 		{
 			$pk = array_values($this->db_key_cols);
 			if ($pk) $keys = array($pk[0] => $keys);
-		}	
-		
+		}
+
 		$this->init($keys);
 		$this->data2db();
 
@@ -400,7 +400,7 @@ class so_sql
 				$this->data[$col] = $row[$db_col];
 			}
 			$this->db2data();
-	
+
 			if ((int) $this->debug >= 4)
 			{
 				echo "data =\n"; _debug_array($this->data);
@@ -422,9 +422,10 @@ class so_sql
 	 * saves the content of data to the db
 	 *
 	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
+	 * @param string|array $extra_where=null extra where clause, eg. to check the etag, returns 'nothing_affected' if not affected rows
 	 * @return int 0 on success and errno != 0 else
 	 */
-	function save($keys=null)
+	function save($keys=null,$extra_where=null)
 	{
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
@@ -478,7 +479,7 @@ class so_sql
 					$data[] = $keys[$n];
 				}
 			}
-			$keys = '';
+			$keys = $extra_where;
 			foreach($this->db_key_cols as $db_col => $col)
 			{
 				$keys[$db_col] = $this->data[$col];
@@ -499,12 +500,12 @@ class so_sql
 		}
 		$this->db2data();
 
-		return $this->db->Errno;
+		return $this->db->Errno ? $this->db->Errno : ($extra_where && !$this->db->affected_rows() ? true : 0);
 	}
 
 	/**
 	 * Update only the given fields, if the primary key is not given, it will be taken from $this->data
-	 * 
+	 *
 	 * @param array $fields
 	 * @param boolean $merge=true if true $fields will be merged with $this->data (after update!), otherwise $this->data will be just $fields
 	 * @return int 0 on success, errno != 0 otherwise
@@ -527,7 +528,7 @@ class so_sql
 		$this->init($fields);
 
 		$ret = $this->save();
-		
+
 		if ($merge)
 		{
 			$this->init($backup_data);
@@ -535,7 +536,7 @@ class so_sql
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
@@ -579,7 +580,7 @@ class so_sql
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or 
+	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
@@ -630,7 +631,7 @@ class so_sql
 					elseif (strpos($db_col,'.')!==false)	// we have a table-name specified
 					{
 						list($table,$only_col) = explode('.',$db_col);
-						
+
 						$table_def = $this->db->get_table_definitions(true,$table);
 
 						if (is_array($val) && count($val) > 1)
@@ -659,13 +660,13 @@ class so_sql
 				echo function_backtrace()."<br/>\n";
 				echo "filter=";_debug_array($filter);
 				echo "data2db(filter)=";_debug_array($data2db_filter);
-			}	
+			}
 			foreach($data2db_filter as $col => $val)
 			{
 				if ($val !== '')
 				{
 					// check if a db-internal name conversation necessary
-					if (!is_int($col) && ($c = array_search($col,$this->db_cols))) 
+					if (!is_int($col) && ($c = array_search($col,$this->db_cols)))
 					{
 						$col = $c;
 					}
@@ -683,13 +684,13 @@ class so_sql
 					}
 				}
 			}
-			if ($query) 
+			if ($query)
 			{
 				if ($op != 'AND')
 				{
 					$db_filter[] = '('.$this->db->column_data_implode(' '.$op.' ',$query).')';
 				}
-				else 
+				else
 				{
 					$db_filter = array_merge($db_filter,$query);
 				}
@@ -726,7 +727,7 @@ class so_sql
 
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
-		
+
 		if ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false)
 		{
 			$order_by = 'ORDER BY '.$order_by;
@@ -812,11 +813,11 @@ class so_sql
 	/**
 	 * extract the requested columns from $only_keys and $extra_cols param of a search
 	 *
-	 * @internal 
+	 * @internal
 	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @return array with columns as db-name => internal-name pairs
-	 */	 
+	 */
 	function _get_columns($only_keys,$extra_cols)
 	{
 		//echo "_get_columns() only_keys="; _debug_array($only_keys); echo "extra_cols="; _debug_array($extra_cols);
@@ -872,7 +873,7 @@ class so_sql
 	 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
 	 * @param array &$rows returned rows/competitions
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @param mixed $only_keys=false, see search
@@ -895,12 +896,12 @@ class so_sql
 		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',
 			'','%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
 			$query['col_filter'],$join,$need_full_no_count);
-			
+
 		if (!$rows) $rows = array();	// otherwise false returned from search would be returned as array(false)
 
 		return $this->total;
 	}
-		
+
 	/**
 	 * Check if values for unique keys are unique
 	 *
@@ -934,7 +935,7 @@ class so_sql
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Query DB for a list / array with one colum as key and an other one(s) as value, eg. id => title pairs
 	 *
@@ -950,20 +951,20 @@ class so_sql
 	function query_list($value_col,$key_col='',$filter=array(),$order='')
 	{
 		static $cache = array();
-		
+
 		$cache_key = serialize($value_col).'-'.$key_col.'-'.serialize($filter).'-'.$order;
-		
+
 		if (isset($cache[$cache_key]))
 		{
 			return $cache[$cache_key];
 		}
 		if (!is_array($value_col)) $value_col = array($value_col);
-		
+
 		$cols = array();
 		foreach($value_col as $key => $col)
 		{
 			$cols[$key] = preg_match('/AS ([a-z_0-9]+)$/i',$col,$matches) ? $matches[1] : $col;
-		}			
+		}
 		if (!$order) $order = current($cols);
 
 		if (($search =& $this->search(array(),($key_col ? $key_col.',' : 'DISTINCT ').implode(',',$value_col),$order,'','',false,'AND',false,$filter)))
