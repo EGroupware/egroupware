@@ -571,10 +571,10 @@ class uicontacts extends bocontacts
 			case 'document':
 				$msg = $this->download_document($checked,$document);
 				return false;
-	
+
 			case 'infolog_add':
 				$msg = lang('New window opened to edit Infolog for your selection ');
-				return false;	
+				return false;
 
 			case 'cat_add':
 				foreach($checked as $id)
@@ -1320,7 +1320,7 @@ class uicontacts extends bocontacts
 					break;
 
 				case 'delete':
-					if($this->action('delete',array($content['id'])))
+					if($this->action('delete',array($content['id']),false,$success,$failed,$action_msg,'',$content['msg']))
 					{
 						echo "<html><body><script>var referer = opener.location; opener.location.href = referer+(referer.search?'&':'?')+'msg=".
 							addslashes(urlencode(lang('Contact deleted')))."';window.close();</script></body></html>\n";
