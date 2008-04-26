@@ -610,7 +610,7 @@ class socontacts_sql extends so_sql
 	{
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
-		if (isset($this->data['etag']))
+		if (isset($this->data['etag']))		// do we have an etag in the data to write
 		{
 			$etag = $this->data['etag'];
 			unset($this->data['etag']);
@@ -625,11 +625,17 @@ class socontacts_sql extends so_sql
 		}
 		else
 		{
-			$err = parent::save();
+			$new_entry = !$this->data['id'];
+			if (!($err = parent::save(array('contact_etag=contact_etag+1'))) && $new_entry)
+			{
+				$this->data['etag'] = 0;
+			}
 		}
 		if (!$err && !$this->data['uid'])
 		{
-			$this->update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
+			parent::update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
+			$this->data['etag']++;
+			//echo "<p>set uid={$this->data['uid']}, etag={$this->data['etag']}</p>";
 		}
 		return $err;
 	}

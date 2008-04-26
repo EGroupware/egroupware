@@ -464,6 +464,7 @@ class socontacts
 			if (!($error_nr = $this->somain->save()))
 			{
 				$contact['id'] = $this->somain->data['id'];
+				$contact['uid'] = $this->somain->data['uid'];
 				$contact['etag'] = $this->somain->data['etag'];
 
 				if ($this->contact_repository == 'sql-ldap')

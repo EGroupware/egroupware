@@ -529,6 +529,7 @@ class bocontacts extends socontacts
 		if(!($this->error = parent::save($to_write)) && is_object($GLOBALS['egw']->contenthistory))
 		{
 			$contact['id'] = $to_write['id'];
+			$contact['uid'] = $to_write['uid'];
 			$contact['etag'] = $to_write['etag'];
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 
