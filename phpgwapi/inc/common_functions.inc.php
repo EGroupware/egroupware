@@ -731,6 +731,12 @@
 	 */
 	function &ExecMethod2($acm)
 	{
+		// class::method is php5.2.3+
+		if (strpos($acm,'::') !== false && version_compare(PHP_VERSION,'5.2.3','<'))
+		{
+			list($class,$method) = explode('::',$acm);
+			$acm = array($class,$method);
+		}
 		if (!is_callable($acm))
 		{
 			list($app,$class,$method) = explode('.',$acm);
@@ -768,6 +774,13 @@
 	{
 		/* Need to make sure this is working against a single dimensional object */
 		$partscount = count(explode('.',$method)) - 1;
+
+		// class::method is php5.2.3+
+		if (strpos($method,'::') !== false && version_compare(PHP_VERSION,'5.2.3','<'))
+		{
+			list($class,$method) = explode('::',$method);
+			$method = array($class,$method);
+		}
 		if (!is_callable($method) && $partscount == 2)
 		{
 			list($appname,$classname,$functionname) = explode(".", $method);
