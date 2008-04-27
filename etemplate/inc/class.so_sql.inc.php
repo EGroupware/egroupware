@@ -489,13 +489,10 @@ class so_sql
 				$data = $keys;
 				$keys = False;
 			}
-			if (!$this->autoinc_id)	// always try an insert if we have no autoinc_id, as we dont know if the data exists
+			// always try an insert if we have no autoinc_id, as we dont know if the data exists
+			if (!$this->autoinc_id || !$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app) || !$this->db->affected_rows())
 			{
 				$this->db->insert($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app);
-			}
-			else
-			{
-				$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app);
 			}
 		}
 		$this->db2data();
