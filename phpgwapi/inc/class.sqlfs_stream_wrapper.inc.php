@@ -1280,7 +1280,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		switch($type)
 		{
 			default:
-				$dsn = $egw_db->Type.':host='.$egw_db->Host.';port='.$egw_db->Port.';dbname='.$egw_db->Database;
+				$dsn = $type.':host='.$egw_db->Host.';port='.$egw_db->Port.';dbname='.$egw_db->Database;
 				break;
 		}
 		try {
@@ -1291,7 +1291,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		// set client charset of the connection
 		$charset = $GLOBALS['egw']->translation->charset();
-		switch($server['db_type'])
+		switch($type)
 		{
 			case 'mysql':
 				if (isset($egw_db->Link_ID->charset2mysql[$charset])) $charset = $egw_db->Link_ID->charset2mysql[$charset];
