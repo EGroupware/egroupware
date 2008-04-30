@@ -1,4 +1,0 @@
-To create a new package, use egw-sanitize-tarball first.
-
-The interdependencies between the eGroupWare applications can be read
-from APPNAME/setup/setup.inc.php.

@@ -1,2 +1,0 @@
-debian/etc/apache.conf etc/egroupware/
-*.php header.inc.php.template usr/share/egroupware/

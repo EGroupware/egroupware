@@ -1,3 +1,0 @@
-version=3
-opts=dversionmangle=s/\.dfsg$// \
-http://sf.net/egroupware/eGroupWare-([0-9.-]+)\.tar\.gz
