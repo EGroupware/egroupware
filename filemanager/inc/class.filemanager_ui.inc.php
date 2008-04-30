@@ -443,6 +443,7 @@ class filemanager_ui
 				$content['icon'] = egw_vfs::mime_icon($content['mime']);
 				$content['gid'] *= -1;	// our widgets use negative gid's
 			}
+			$content[$tabs] = $_GET['tabs'];
 			if (!($content['is_dir'] = egw_vfs::is_dir($path)))
 			{
 				$content['perms']['executable'] = (int)!!($content['mode'] & 0111);
@@ -481,7 +482,7 @@ class filemanager_ui
 							case 'name':
 								if (egw_vfs::rename($path,$to = egw_vfs::concat($content['dir'],$content['name'])))
 								{
-									$msg = lang('Renamed %1 to %2.',$path,$to).' ';
+									$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
 								}
 								$path = $to;
 								break;
@@ -530,8 +531,7 @@ class filemanager_ui
 				}
 			}
 			// refresh opender and close our window
-			$link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index','msg'=>$msg));
-			$js = "opener.location.href='$link';";
+			$js = "opener.location.href=opener.location.href+'&msg=".urlencode(addslashes($msg))."'; ";
 			if ($button == 'save') $js .= "window.close();";
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
 			if ($button == 'save')$GLOBALS['egw']->common->egw_exit();
