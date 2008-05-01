@@ -73,6 +73,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	const EXECUTABLE = 1;
 	/**
+	 * Name of the lock table
+	 */
+	const LOCK_TABLE = 'egw_locks';
+	/**
 	 * Current user has root rights, no access checks performed!
 	 *
 	 * @var boolean
@@ -96,6 +100,12 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @var int
 	 */
 	static $find_total;
+	/**
+	 * Reference to the global db object
+	 *
+	 * @var egw_db
+	 */
+	static $db;
 
 	/**
 	 * fopen working on just the eGW VFS
@@ -948,12 +958,166 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * We cache locks within a request, as HTTP_WebDAV_Server generates so many, that it can be a bottleneck
+	 *
+	 * @var array
+	 */
+	static protected $lock_cache;
+
+	/**
+	 * lock a ressource/path
+	 *
+	 * @param string $path path or url
+	 * @param string $token
+	 * @param int &$timeout
+	 * @param string &$owner
+	 * @param string &$scope
+	 * @param string &$type
+	 * @param boolean $update=false
+	 * @param boolean $check_writable=true should we check if the ressource is writable, before granting locks, default yes
+	 * @return boolean true on success
+	 */
+	function lock($path,$token,&$timeout,&$owner,&$scope,&$type,$update=false,$check_writable=true)
+	{
+		// we require write rights to lock/unlock a resource
+		if (!$path || $update && !$token || $check_writable && !egw_vfs::is_writable($path))
+		{
+			return false;
+		}
+    	// remove the lock info evtl. set in the cache
+    	unset(self::$lock_cache[$path]);
+
+		if ($update)	// Lock Update
+		{
+			if (($ret = (boolean)($row = self::$db->select(self::LOCK_TABLE,array('lock_owner','lock_exclusive','lock_write'),array(
+				'lock_path' => $path,
+				'lock_token' => $token,
+			)))))
+			{
+				$owner = $row['lock_owner'];
+				$scope = egw_db::from_bool($row['lock_exclusive']) ? 'exclusive' : 'shared';
+				$type  = egw_db::from_bool($row['lock_write']) ? 'write' : 'read';
+
+				self::$db->update(self::LOCK_TABLE,array(
+					'lock_expires' => $timeout,
+					'lock_modified' => time(),
+				),array(
+					'path' => $path,
+					'token' => $token,
+				),__LINE__,__FILE__);
+			}
+		}
+		// HTTP_WebDAV_Server does this check before calling LOCK, but we want to be complete and usable outside WebDAV
+		elseif(($lock = self::checkLock($path)) && ($lock['scope'] == 'exclusive' || $scope == 'exclusive'))
+		{
+			$ret = false;	// there's alread a lock
+		}
+		else
+		{
+			// HTTP_WebDAV_Server sets owner and token, but we want to be complete and usable outside WebDAV
+			if (!$owner || $owner == 'unknown')
+			{
+				$owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
+			}
+			if (!$token)
+			{
+				$token = HTTP_WebDAV_Server::_new_locktoken();
+			}
+			try {
+				self::$db->insert(self::LOCK_TABLE,array(
+					'lock_token' => $token,
+					'lock_path'  => $path,
+					'lock_created' => time(),
+					'lock_modified' => time(),
+					'lock_owner' => $owner,
+					'lock_expires' => $timeout,
+					'lock_exclusive' => $scope == 'exclusive',
+					'lock_write' => $type == 'write',
+				),false,__LINE__,__FILE__);
+				$ret = true;
+			}
+			catch(egw_exception_db $e) {
+				$ret = false;	// there's already a lock
+			}
+		}
+		error_log(__METHOD__."($path,$token,$timeout,$owner,$scope,$type,$update,$check_writable) returns ".($ret ? 'true' : 'false'));
+		return $ret;
+	}
+
+    /**
+     * unlock a ressource/path
+     *
+     * @param string $path path to unlock
+     * @param string $token locktoken
+	 * @param boolean $check_writable=true should we check if the ressource is writable, before granting locks, default yes
+     * @return boolean true on success
+     */
+    function unlock($path,$token,$check_writable=true)
+    {
+		// we require write rights to lock/unlock a resource
+		if ($check_writable && !egw_vfs::is_writable($path))
+		{
+			return false;
+		}
+        if (($ret = self::$db->delete(self::LOCK_TABLE,array(
+        	'lock_path' => $path,
+        	'lock_token' => $token,
+        ),__LINE__,__FILE__) && self::$db->affected_rows()))
+        {
+        	// remove the lock from the cache too
+        	unset(self::$lock_cache[$path]);
+        }
+		error_log(__METHOD__."($path,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
+		return $ret;
+    }
+
+	/**
+	 * checkLock() helper
+	 *
+	 * @param  string resource path to check for locks
+	 * @return array|boolean false if there's no lock, else array with lock info
+	 */
+	function checkLock($path)
+	{
+		if (isset(self::$lock_cache[$path]))
+		{
+			error_log(__METHOD__."($path) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$path],true)));
+			return self::$lock_cache[$path];
+		}
+		$where = 'lock_path='.self::$db->quote($path);
+		// ToDo: additional check parent dirs for locks and children of the requested directory
+		//$where .= ' OR '.self::$db->quote($path).' LIKE '.self::$db->concat('lock_path',"'%'").' OR lock_path LIKE '.self::$db->quote($path.'%');
+		// ToDo: shared locks can return multiple rows
+		if (($result = self::$db->select(self::LOCK_TABLE,'*',$where,__LINE__,__FILE__)->fetch()))
+		{
+			$result = egw_db::strip_array_keys($result,'lock_');
+			$result['type']  = egw_db::from_bool($result['write']) ? 'write' : 'read';
+			$result['scope'] = egw_db::from_bool($result['exclusive']) ? 'exclusive' : 'shared';
+			$result['depth'] = egw_db::from_bool($result['recursive']) ? 'infinite' : 0;
+		}
+		if ($result && $result['expires'] < time())	// lock is expired --> remove it
+		{
+	        self::$db->delete(self::LOCK_TABLE,array(
+	        	'lock_path' => $result['path'],
+	        	'lock_token' => $result['token'],
+	        ),__LINE__,__FILE__);
+
+			error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
+	        $result = false;
+		}
+		error_log(__METHOD__."($path) returns ".($result?str_replace(array("\n",'    '),'',print_r($result,true)):'false'));
+		return self::$lock_cache[$path] = $result;
+	}
+
+	/**
 	 * Initialise our static vars
 	 */
 	static function init_static()
 	{
 		self::$user = (int) $GLOBALS['egw_info']['user']['account_id'];
 		self::$is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
+		self::$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
+		self::$lock_cache = array();
 	}
 }
 

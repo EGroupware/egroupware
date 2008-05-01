@@ -389,3 +389,27 @@ function phpgwapi_upgrade1_5_008()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.009';
 }
+
+$test[] = '1.5.009';
+function phpgwapi_upgrade1_5_009()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_locks',array(
+		'fd' => array(
+			'lock_token' => array('type' => 'varchar','precision' => '255','nullable' => False),
+			'lock_path' => array('type' => 'varchar','precision' => '255','nullable' => False),
+			'lock_expires' => array('type' => 'int','precision' => '8','nullable' => False),
+			'lock_owner' => array('type' => 'varchar','precision' => '255'),
+			'lock_recursive' => array('type' => 'bool','nullable' => False,'default' => '0'),
+			'lock_write' => array('type' => 'bool','nullable' => False,'default' => '0'),
+			'lock_exclusive' => array('type' => 'bool','nullable' => False,'default' => '0'),
+			'lock_created' => array('type' => 'int','precision' => '8','default' => '0'),
+			'lock_modified' => array('type' => 'int','precision' => '8','default' => '0')
+		),
+		'pk' => array('lock_token'),
+		'fk' => array(),
+		'ix' => array('lock_path','lock_expires'),
+		'uc' => array()
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.010';
+}

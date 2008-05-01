@@ -60,10 +60,10 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		{
 			foreach (apache_request_headers() as $key => $value)
 			{
-				if (stristr($key, "litmus"))
+				if (stristr($key, 'litmus'))
 				{
 					error_log("Litmus test $value");
-					header("X-Litmus-reply: ".$value);
+					header('X-Litmus-reply: '.$value);
 				}
 			}
 		}
@@ -71,114 +71,110 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		HTTP_WebDAV_Server::ServeRequest();
 	}
 
-    /**
-     * DELETE method handler
-     *
-     * @param  array  general parameter passing array
-     * @return bool   true on success
-     */
-    function DELETE($options)
-    {
-        $path = $this->base . "/" .$options["path"];
+	/**
+	* DELETE method handler
+	*
+	* @param  array  general parameter passing array
+	* @return bool   true on success
+	*/
+	function DELETE($options)
+	{
+		$path = $this->base . $options['path'];
 
-        if (!file_exists($path))
-        {
-            return "404 Not found";
-        }
+		if (!file_exists($path))
+		{
+			return '404 Not found';
+		}
 
-        if (is_dir($path))
-        {
-            /*$query = "DELETE FROM {$this->db_prefix}properties
-                           WHERE path LIKE '".$this->_slashify($options["path"])."%'";
-            mysql_query($query); */
-            // recursive delete the directory
-            if ($dir = egw_vfs::dir_opendir($options["path"]))
-            {
-            	while(($file = readdir($dir)))
-            	{
-            		if ($file == '.' || $file == '..') continue;
+		if (is_dir($path))
+		{
 
-            		if (is_dir($path.'/'.$file))
-            		{
-            			// recursivly call ourself with the dir
-            			$opts = $options;
-            			$opts['path'] .= '/'.$file;
-            			$this->DELETE($opts);
-            		}
-            		else
-            		{
-            			unlink($path.'/'.$file);
-            		}
-            	}
-            	closedir($dir);
-            }
-        }
-        else
-        {
-            unlink($path);
-        }
-        /*$query = "DELETE FROM {$this->db_prefix}properties
-                       WHERE path = '$options[path]'";
-        mysql_query($query);*/
+			/*$query = "DELETE FROM {$this->db_prefix}properties
+			WHERE path LIKE '".$this->_slashify($options["path"])."%'";
+			mysql_query($query); */
 
-        return "204 No Content";
-    }
+			// recursive delete the directory
+			egw_vfs::remove($options['path']);
+		}
+		else
+		{
+			unlink($path);
+		}
+		/*$query = "DELETE FROM {$this->db_prefix}properties
+		WHERE path = '$options[path]'";
+		mysql_query($query);*/
 
-    /**
-     * Get properties for a single file/resource
-     *
-     * @param  string  resource path
-     * @return array   resource properties
-     */
-    function fileinfo($path)
-    {
-		error_log(__METHOD__."($path)");
-        // map URI path to filesystem path
-        $fspath = $this->base . $path;
+		return '204 No Content';
+	}
 
-        // create result array
-        $info = array();
-        // TODO remove slash append code when base clase is able to do it itself
-        $info["path"]  = is_dir($fspath) ? $this->_slashify($path) : $path;
-        $info["props"] = array();
+	/**
+	* Get properties for a single file/resource
+	*
+	* @param  string  resource path
+	* @return array   resource properties
+	*/
+	function fileinfo($path)
+	{
+		//error_log(__METHOD__."($path)");
+		// map URI path to filesystem path
+		$fspath = $this->base . $path;
 
-        // no special beautified displayname here ...
-        $info["props"][] = $this->mkprop("displayname", strtoupper($path));
+		// create result array
+		$info = array();
+		// TODO remove slash append code when base class is able to do it itself
+		$info['path']  = is_dir($fspath) ? $this->_slashify($path) : $path;
+		$info['props'] = array();
 
-        // creation and modification time
-        $info["props"][] = $this->mkprop("creationdate",    filectime($fspath));
-        $info["props"][] = $this->mkprop("getlastmodified", filemtime($fspath));
+		// no special beautified displayname here ...
+		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', strtoupper($path));
 
-        // type and size (caller already made sure that path exists)
-        if (is_dir($fspath)) {
-            // directory (WebDAV collection)
-            $info["props"][] = $this->mkprop("resourcetype", "collection");
-            $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");
-        } else {
-            // plain file (WebDAV resource)
-            $info["props"][] = $this->mkprop("resourcetype", "");
-            if (egw_vfs::is_readable($path)) {
-                $info["props"][] = $this->mkprop("getcontenttype", egw_vfs::mime_content_type($path));
-            } else {
+		// creation and modification time
+		$info['props'][] = HTTP_WebDAV_Server::mkprop	('creationdate',    filectime($fspath));
+		$info['props'][] = HTTP_WebDAV_Server::mkprop	('getlastmodified', filemtime($fspath));
+
+		// type and size (caller already made sure that path exists)
+		if (is_dir($fspath)) {
+			// directory (WebDAV collection)
+			$info['props'][] = HTTP_WebDAV_Server::mkprop	('resourcetype', 'collection');
+			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', 'httpd/unix-directory');
+		} else {
+			// plain file (WebDAV resource)
+			$info['props'][] = HTTP_WebDAV_Server::mkprop	('resourcetype', '');
+			if (egw_vfs::is_readable($path)) {
+				$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', egw_vfs::mime_content_type($path));
+			} else {
 				error_log(__METHOD__."($path) $fspath is not readable!");
-                $info["props"][] = $this->mkprop("getcontenttype", "application/x-non-readable");
-            }
-            $info["props"][] = $this->mkprop("getcontentlength", filesize($fspath));
-        }
+				$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', 'application/x-non-readable');
+			}
+			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontentlength', filesize($fspath));
+		}
+		// supportedlock property
+		$info['props'][] = HTTP_WebDAV_Server::mkprop('supportedlock','
+      <D:lockentry>
+       <D:lockscope><D:exclusive/></D:lockscope>
+       <D:locktype><D:write/></D:lockscope>
+      </D:lockentry>
+      <D:lockentry>
+       <D:lockscope><D:shared/></D:lockscope>
+       <D:locktype><D:write/></D:lockscope>
+      </D:lockentry>');
+
+		// ToDo: etag from inode and modification time
+
 /*
-        // get additional properties from database
-        $query = "SELECT ns, name, value
-                        FROM {$this->db_prefix}properties
-                       WHERE path = '$path'";
-        $res = mysql_query($query);
-        while ($row = mysql_fetch_assoc($res)) {
-            $info["props"][] = $this->mkprop($row["ns"], $row["name"], $row["value"]);
-        }
-        mysql_free_result($res);
+		// get additional properties from database
+		$query = "SELECT ns, name, value
+		FROM {$this->db_prefix}properties
+		WHERE path = '$path'";
+		$res = mysql_query($query);
+		while ($row = mysql_fetch_assoc($res)) {
+		$info["props"][] = HTTP_WebDAV_Server::mkprop	($row["ns"], $row["name"], $row["value"]);
+		}
+		mysql_free_result($res);
 */
 		//error_log(__METHOD__."($path) info=".print_r($info,true));
-        return $info;
-    }
+		return $info;
+	}
 
 	/**
 	 * Used eg. by get
@@ -207,7 +203,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	{
 		$path = $GLOBALS['egw']->translation->convert($options['path'],'utf-8');
 
-		foreach ($options["props"] as $key => $prop) {
+		foreach ($options['props'] as $key => $prop) {
 			$attributes = array();
 			switch($prop['ns'])
 			{
@@ -235,12 +231,12 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 							break;
 						// not sure why, the filesystem example of the WebDAV class does it ...
 						default:
-							$options["props"][$key]['status'] = "403 Forbidden";
+							$options['props'][$key]['status'] = '403 Forbidden';
 							break;
 					}
 					break;
 			}
-			if ($this->debug) $props[] = '('.$prop["ns"].')'.$prop['name'].'='.$prop['val'];
+			if ($this->debug) $props[] = '('.$prop['ns'].')'.$prop['name'].'='.$prop['val'];
 		}
 		if ($this->debug)
 		{
@@ -248,137 +244,55 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			if ($attributes) error_log(__METHOD__.": path=$options[path], set attributes=".str_replace("\n",' ',print_r($attributes,true)));
 		}
 
-		return "";	// this is as the filesystem example handler does it, no true or false ...
+		return '';	// this is as the filesystem example handler does it, no true or false ...
 	}
 
-     /**
-     * LOCK method handler
-     *
-     * @param  array  general parameter passing array
-     * @return bool   true on success
-     */
-    function LOCK(&$options)
-    {
-    	// behaving like LOCK is not implemented
-		return "412 Precondition failed";
-/*
-        // get absolute fs path to requested resource
-        $fspath = $this->base . $options["path"];
-
+	/**
+	* LOCK method handler
+	*
+	* @param  array  general parameter passing array
+	* @return bool   true on success
+	*/
+	function LOCK(&$options)
+	{
+		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
         // TODO recursive locks on directories not supported yet
-        if (is_dir($fspath) && !empty($options["depth"])) {
-            return "409 Conflict";
+		if (is_dir($this->base . $options['path']) && !empty($options['depth']))
+        {
+            return '409 Conflict';
         }
+        $options['timeout'] = time()+300; // 5min. hardcoded
 
-        $options["timeout"] = time()+300; // 5min. hardcoded
+        // dont know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which get's passed unchanged to checkLock/PROPFIND
+        // that's wrong according to the standard and cadaver does not show it on discover --> strip_tags removes eventual tags
+        if (($ret = egw_vfs::lock($options['path'],$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
+        	$options['scope'],$options['type'],isset($options['update']))) && !isset($options['update']))
+    	{
+    		return $ret ? '200 OK' : '409 Conflict';
+    	}
+    	return $ret;
+	}
 
-        if (isset($options["update"])) { // Lock Update
-            $where = "WHERE path = '$options[path]' AND token = '$options[update]'";
+	/**
+	* UNLOCK method handler
+	*
+	* @param  array  general parameter passing array
+	* @return bool   true on success
+	*/
+	function UNLOCK(&$options)
+	{
+		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
+		return egw_vfs::unlock($options['path'],$options['token']) ? '204 No Content' : '409 Conflict';
+	}
 
-            $query = "SELECT owner, exclusivelock FROM {$this->db_prefix}locks $where";
-            $res   = mysql_query($query);
-            $row   = mysql_fetch_assoc($res);
-            mysql_free_result($res);
-
-            if (is_array($row)) {
-                $query = "UPDATE {$this->db_prefix}locks
-                                 SET expires = '$options[timeout]'
-                                   , modified = ".time()."
-                              $where";
-                mysql_query($query);
-
-                $options['owner'] = $row['owner'];
-                $options['scope'] = $row["exclusivelock"] ? "exclusive" : "shared";
-                $options['type']  = $row["exclusivelock"] ? "write"     : "read";
-
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        $query = "INSERT INTO {$this->db_prefix}locks
-                        SET token   = '$options[locktoken]'
-                          , path    = '$options[path]'
-                          , created = ".time()."
-                          , modified = ".time()."
-                          , owner   = '$options[owner]'
-                          , expires = '$options[timeout]'
-                          , exclusivelock  = " .($options['scope'] === "exclusive" ? "1" : "0")
-            ;
-        mysql_query($query);
-
-        return mysql_affected_rows() ? "200 OK" : "409 Conflict";*/
-    }
-
-    /**
-     * UNLOCK method handler
-     *
-     * @param  array  general parameter passing array
-     * @return bool   true on success
-     */
-    function UNLOCK(&$options)
-    {
-    	// behaving like LOCK is not implemented
-		return "405 Method not allowed";
-/*
-        $query = "DELETE FROM {$this->db_prefix}locks
-                      WHERE path = '$options[path]'
-                        AND token = '$options[token]'";
-        mysql_query($query);
-
-        return mysql_affected_rows() ? "204 No Content" : "409 Conflict";*/
-    }
-
-    /**
-     * checkLock() helper
-     *
-     * @param  string resource path to check for locks
-     * @return bool   true on success
-     */
-    function checkLock($path)
-    {
-    	// behave like checkLock is not implemented
-		return false;
-/*
-        $result = false;
-
-        $query = "SELECT owner, token, created, modified, expires, exclusivelock
-                  FROM {$this->db_prefix}locks
-                 WHERE path = '$path'
-               ";
-        $res = mysql_query($query);
-
-        if ($res) {
-            $row = mysql_fetch_array($res);
-            mysql_free_result($res);
-
-            if ($row) {
-                $result = array( "type"    => "write",
-                                 "scope"   => $row["exclusivelock"] ? "exclusive" : "shared",
-                                 "depth"   => 0,
-                                 "owner"   => $row['owner'],
-                                 "token"   => $row['token'],
-                                 "created" => $row['created'],
-                                 "modified" => $row['modified'],
-                                 "expires" => $row['expires']
-                                 );
-            }
-        }
-
-        return $result;*/
-    }
-
-    /**
-     * Remove not (yet) implemented LOCK methods, so we can use the mostly unchanged HTTP_WebDAV_Server_Filesystem class
-     *
-     * @return array
-     */
-    function _allow()
-    {
-    	$allow = parent::_allow();
-    	unset($allow['LOCK']);
-    	unset($allow['UNLOCK']);
-    	return $allow;
-    }
+	/**
+	* checkLock() helper
+	*
+	* @param  string resource path to check for locks
+	* @return bool   true on success
+	*/
+	function checkLock($path)
+	{
+    	return egw_vfs::checkLock($path);
+	}
 }

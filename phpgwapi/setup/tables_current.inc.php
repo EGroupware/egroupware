@@ -486,5 +486,22 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array('cat_id'),
 		'uc' => array()
+	),
+	'egw_locks' => array(
+		'fd' => array(
+			'lock_token' => array('type' => 'varchar','precision' => '255','nullable' => False),
+			'lock_path' => array('type' => 'varchar','precision' => '255','nullable' => False),
+			'lock_expires' => array('type' => 'int','precision' => '8','nullable' => False),
+			'lock_owner' => array('type' => 'varchar','precision' => '255'),
+			'lock_recursive' => array('type' => 'bool','nullable' => False,'default' => '0'),
+			'lock_write' => array('type' => 'bool','nullable' => False,'default' => '0'),
+			'lock_exclusive' => array('type' => 'bool','nullable' => False,'default' => '0'),
+			'lock_created' => array('type' => 'int','precision' => '8','default' => '0'),
+			'lock_modified' => array('type' => 'int','precision' => '8','default' => '0')
+		),
+		'pk' => array('lock_token'),
+		'fk' => array(),
+		'ix' => array('lock_path','lock_expires'),
+		'uc' => array()
 	)
 );
