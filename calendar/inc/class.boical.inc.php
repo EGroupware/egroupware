@@ -28,7 +28,7 @@
 		 * @var array $supportedFields array containing the supported fields of the importing device
 		 */
 		var $supportedFields;
-		
+
 		var $recur_days_1_0 = array(
 			MCAL_M_MONDAY    => 'MO',
 			MCAL_M_TUESDAY   => 'TU',
@@ -57,7 +57,7 @@
 			'DECLINED'     => 'R',
 			'TENTATIVE'    => 'T',
 		);
-		
+
 		/**
 		 * @var array $status_ical2egw conversation of the priority egw => ical
 		 */
@@ -76,7 +76,7 @@
 			5 => 2,		// normal
 			4 => 3, 2 => 3, 3 => 3, 1 => 3,	// high
 		);
-		
+
 		/**
 		 * @var array $recur_egw2ical_2_0 converstaion of egw recur-type => ical FREQ
 		 */
@@ -98,7 +98,7 @@
 			MCAL_RECUR_MONTHLY_WDAY => 'MP',	// BYDAY={1..5}{MO..SO}
 			MCAL_RECUR_YEARLY       => 'YM',
 		);
-		
+
 		/**
 		 * manufacturer and name of the sync-client
 		 *
@@ -111,10 +111,13 @@
 		 * Exports one calendar event to an iCalendar item
 		 *
 		 * @param int/array $events (array of) cal_id or array of the events
+		 * @param string $version='1.0' could be '2.0' too
 		 * @param string $method='PUBLISH'
+		 * @param boolean $force_own_uid=true ignore the stored and maybe from the client transfered uid and generate a new one
+		 * RalfBecker: GroupDAV/CalDAV requires to switch that non RFC conform behavior off, dont know if SyncML still needs it
 		 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
 		 */
-		function &exportVCal($events,$version='1.0', $method='PUBLISH')
+		function &exportVCal($events,$version='1.0', $method='PUBLISH',$force_own_uid=true)
 		{
 			$egwSupportedFields = array(
 				'CLASS'			=> array('dbName' => 'public'),
@@ -135,12 +138,12 @@
 			{
 				$this->setSupportedFields();
 			}
-			
+
 			if($this->productManufacturer == '' )
 			{	// syncevolution is broken
 				$version = "2.0";
 			}
-			
+
 			$palm_enddate_workaround=False;
 			if($this->productManufacturer == 'Synthesis AG'
 				&& strpos($this->productName, "PalmOS") )
@@ -148,7 +151,7 @@
 				// This workaround adds 1 day to the recur_enddate if it exists, to fix a palm bug
 				$palm_enddate_workaround=True;
 			}
-			
+
 			$vcal = &new Horde_iCalendar;
 			$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 				strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
@@ -156,7 +159,7 @@
 			$vcal->setAttribute('METHOD',$method);
 
 			if (!is_array($events)) $events = array($events);
-			
+
 			foreach($events as $event)
 			{
 				if (!is_array($event) && !($event = $this->read($event,null,false,'server')))	// server = timestamp in server-time(!)
@@ -175,10 +178,10 @@
 				$event['end']	= $event['end'] + $DSTCorrection;
 				*/
 				$eventGUID = $GLOBALS['egw']->common->generate_uid('calendar',$event['id']);
-				
+
 				$vevent = Horde_iCalendar::newComponent('VEVENT',$vcal);
 				$parameters = $attributes = array();
-				
+
 				foreach($egwSupportedFields as $icalFieldName => $egwFieldInfo)
 				{
 					if($this->supportedFields[$egwFieldInfo['dbName']])
@@ -190,7 +193,7 @@
 								{
 									// ToDo, this needs to deal with resources too!!!
 									if (!is_numeric($uid)) continue;
-	
+
 									$mailto = $GLOBALS['egw']->accounts->id2name($uid,'account_email');
 									$cn = trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
 										$GLOBALS['egw']->accounts->id2name($uid,'account_lastname'));
@@ -219,19 +222,19 @@
 											break;
 									};
 									$parameters['ATTENDEE'][] = array(
-										'CN'       => $cn, 
-										'ROLE'     => $role, 
-										'PARTSTAT' => $status, 
+										'CN'       => $cn,
+										'ROLE'     => $role,
+										'PARTSTAT' => $status,
 										'CUTYPE'   => $cutype,
 										'RSVP'     => $rsvp,
 									);
 								}
 								break;
-								
+
 			            			case 'CLASS':
 			            				$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
 		        	    				break;
-		        	    				
+
 		            				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
 		            					if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
 		            					{
@@ -241,13 +244,13 @@
 										$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname'));
 		            					}
 								break;
-								
+
 							case 'DTEND':
 								if(date('H:i:s',$event['end']) == '23:59:59') $event['end']++;
 								if(date('H:i:s',$event['end']) == '23:59:00') $event['end']+=60; // needed by old eGW whole-day events
 		            					$attributes[$icalFieldName]	= $event['end'];
 		            					break;
-		            					
+
 							case 'RRULE':
 								if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
 								if ($version == '1.0') {
@@ -264,10 +267,10 @@
 		            								$rrule['BYDAY'] = implode(' ',$days);
 		            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
 		            								break;
-		            							
+
 	        	    							case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
 	            									break;
-	            								
+
 	             								case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
 	             									$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).'+ '.
 		             									strtoupper(substr(date('l',$event['start']),0,2));
@@ -303,11 +306,11 @@
 											}
 		            								$rrule['BYDAY'] = implode(',',$days);
 		            								break;
-		            							
+
 	        	    							case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
 	            									$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
 	            									break;
-	            								
+
 	             								case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
 	             									$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
 		             									strtoupper(substr(date('l',$event['start']),0,2));
@@ -326,7 +329,7 @@
 									$attributes['RRULE'] = implode(';',$attributes['RRULE']);
 								}
 								break;
-							
+
 							case 'EXDATE':
 								if ($event['recur_exception'])
 								{
@@ -339,11 +342,11 @@
 									$parameters['EXDATE']['VALUE'] = 'DATE';
 								}
 								break;
-								
+
 							case 'PRIORITY':
 	 							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
 	 							break;
-	 							
+
 	 						case 'TRANSP':
 								if ($version == '1.0') {
 									$attributes['TRANSP'] = $event['non_blocking'] ? 1 : 0;
@@ -351,7 +354,7 @@
 									$attributes['TRANSP'] = $event['non_blocking'] ? 'TRANSPARENT' : 'OPAQUE';
 								}
 								break;
-								
+
 							case 'CATEGORIES':
 								if ($event['category'])
 								{
@@ -368,7 +371,7 @@
 						}
 					}
 				}
-				
+
 				if(strtolower($this->productManufacturer) == 'nokia') {
 					if($event['special'] == '1') {
 						$attributes['X-EPOCAGENDAENTRYTYPE'] = 'ANNIVERSARY';
@@ -377,14 +380,14 @@
 						$attributes['X-EPOCAGENDAENTRYTYPE'] = 'APPOINTMENT';
 					}
 				}
-				
+
 				$modified = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify');
 				$created = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add');
 				if (!$created && !$modified) $created = $event['modified'];
 				if ($created) $attributes['CREATED'] = $created;
 				if (!$modified) $modified = $event['modified'];
 				if ($modified) $attributes['LAST-MODIFIED'] = $modified;
-				
+
 				foreach($event['alarm'] as $alarmID => $alarmData)
 				{
 					if ($version == '1.0')
@@ -429,8 +432,8 @@
 						$vevent->addComponent($valarm);
 					}
 				}
-				
-				$attributes['UID'] = $eventGUID;
+
+				$attributes['UID'] = $force_own_uid ? $eventGUID : $event['uid'];
 
 				foreach($attributes as $key => $value)
 				{
@@ -456,10 +459,10 @@
 				$vcal->addComponent($vevent);
 			}
 			//_debug_array($vcal->exportvCalendar());
-			
+
 			return $vcal->exportvCalendar();
 		}
-		
+
 		function importVCal($_vcalData, $cal_id=-1)
 		{
 			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
@@ -469,9 +472,9 @@
 			if(!$vcal->parsevCalendar($_vcalData)) {
 				return FALSE;
 			}
-			
+
 			$version = $vcal->getAttribute('VERSION');
-			
+
 			if(!is_array($this->supportedFields))
 			{
 				$this->setSupportedFields();
@@ -498,11 +501,11 @@
 						'recur_type'		=> MCAL_RECUR_NONE,
 						'recur_exception'	=> array(),
 					);
-					
+
 					// lets see what we can get from the vcard
-					foreach($component->_attributes as $attributes) 
+					foreach($component->_attributes as $attributes)
 					{
-						switch($attributes['name']) 
+						switch($attributes['name'])
 						{
 							case 'AALARM':
 							case 'DALARM':
@@ -605,7 +608,7 @@
 												date('Y',$vcardData['start']));
 										}
 										break;
-									
+
 									case 'D':	// 1.0
 										if(preg_match('/D(\d+) #(.\d)/', $recurence, $recurenceMatches)) {
 											$vcardData['recur_interval'] = $recurenceMatches[1];
@@ -669,7 +672,7 @@
 										}
 										break;
 									case 'MONTHLY':
-										$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ? 
+										$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ?
 											MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
 
 										if (!empty($vcardData['recur_count']))
@@ -679,7 +682,7 @@
 												date('d',$vcardData['start']),
 												date('Y',$vcardData['start']));
 										}
-										break;										
+										break;
 
 									case 'Y':		// 1.0
 										if(preg_match('/YM(\d+) #(.\d)/', $recurence, $recurenceMatches)) {
@@ -754,13 +757,13 @@
 								{
 	 								$vcardData['category'] = array();
 								}
-	 							break;	
+	 							break;
 	 						case 'ATTENDEE':
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
 	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
 	 							{
 	 								$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
-	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] : 
+	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] :
 	 									($uid == $event['owner'] ? 'A' : 'U');
 	 							}
 
@@ -769,15 +772,15 @@
 	 								$uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email');
 	 								if(!empty($uid)) {
 	 									$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
-	 										$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] : 
+	 										$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] :
 	 										($uid == $event['owner'] ? 'A' : 'U');
 									}
 	 							}
-	 							
+
 	 							if($attributes['value'] == 'Unknown') {
 	 								$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'A';
 	 							}
-	 							
+
 	 							break;
 	 						case 'ORGANIZER':	// will be written direct to the event
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
@@ -795,7 +798,7 @@
 						}
 					}
 
-					// check if the entry is a birthday 
+					// check if the entry is a birthday
 					// this field is only set from NOKIA clients
 					$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
 					if (!is_a($agendaEntryType, 'PEAR_Error')) {
@@ -805,18 +808,18 @@
 							$vcardData['end'] = $vcardData['start'] + 86399;
 						}
 					}
-					
+
 					if(!empty($vcardData['recur_enddate']))
 					{
 						// reset recure_enddate to 00:00:00 on the last day
-						$vcardData['recur_enddate'] = mktime(0, 0, 0, 
+						$vcardData['recur_enddate'] = mktime(0, 0, 0,
 							date('m',$vcardData['recur_enddate']),
 							date('d',$vcardData['recur_enddate']),
 							date('Y',$vcardData['recur_enddate'])
 						);
 					}
 					//echo "event=";_debug_array($vcardData);
-					
+
 					// now that we know what the vard provides, we merge that data with the information we have about the device
 					$event['priority']		= 2;
 					if($cal_id > 0)
@@ -856,7 +859,7 @@
 								break;
 						}
 					}
-					
+
 					// add ourself to new events as participant
 	 				if($cal_id == -1 && !isset($this->supportedFields['participants']))
 	 				{
@@ -881,7 +884,7 @@
 						// for each existing participant:
 						$egw_event = $this->read($cal_id);
 						if ( $egw_event )
-						{ 
+						{
 							foreach( $egw_event['participants'] as $uid => $status )
 							{
 								// Is it a resource?
@@ -897,7 +900,7 @@
 
 					#error_log('ALARMS');
 					#error_log(print_r($event, true));
-					
+
 					if (!($Ok = $this->update($event, TRUE))) {
 						break;	// stop with the first error
 					}
@@ -923,7 +926,7 @@
 								$this->delete_alarm($alarmID);
 							}
 						}
-						
+
 						foreach($alarms as $alarm)
 						{
 							$alarm['offset'] = $event['start'] - $alarm['time'];
@@ -998,7 +1001,7 @@
 				'recur_data'		=> 'recur_data',
 				'recur_enddate'		=> 'recur_enddate',
 				'title'				=> 'title',
-				'alarms'			=> 'alarms', 
+				'alarms'			=> 'alarms',
 			);
 
 			$defaultFields['basic'] = $defaultFields['minimal'] + array(
@@ -1009,12 +1012,12 @@
 			$defaultFields['nexthaus'] = $defaultFields['basic'] + array(
 				'participants'		=> 'participants',
 			);
-			
+
 			$defaultFields['synthesis'] = $defaultFields['basic'] + array(
 				'non_blocking'		=> 'non_blocking',
 				'category'			=> 'category',
 			);
-			
+
 			$defaultFields['evolution'] = $defaultFields['basic'] + array(
 				'participants'		=> 'participants',
 				'owner'				=> 'owner',
@@ -1027,8 +1030,8 @@
 				'category'			=> 'category',
 				'non_blocking'		=> 'non_blocking',
 			);
-			
-			
+
+
 			switch(strtolower($_productManufacturer))
 			{
 				case 'nexthaus corporation':
@@ -1079,7 +1082,7 @@
 							break;
 					}
 					break;
-					
+
 				case 'synthesis ag':
 					switch(strtolower($_productName))
 					{
@@ -1093,7 +1096,7 @@
 					}
 					break;
 
-				//Syncevolution compatibility	
+				//Syncevolution compatibility
 				case 'patrick ohly':
 					$this->supportedFields = $defaultFields['evolution'];
 					break;
@@ -1102,7 +1105,7 @@
 					error_log("No vendor name, assuming syncevolution 0.5");
 					$this->supportedFields = $defaultFields['evolution'];
 					break;
-					
+
 				case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
 					$this->supportedFields = $defaultFields['full'];
 					break;
@@ -1114,7 +1117,7 @@
 					break;
 			}
 		}
-		
+
 		function icaltoegw($_vcalData)
 		{
 			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
@@ -1142,7 +1145,7 @@
 					$event		= array();
 					$alarms		= array();
 					$vcardData	= array('recur_type' => 0);
-					
+
 					// lets see what we can get from the vcard
 					foreach($component->_attributes as $attributes)
 					{
@@ -1218,7 +1221,7 @@
 											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
 										}
 										break;
-									
+
 									case 'D':		// 1.0
 										if(!preg_match('/D(\d+) (.*)/',$recurence, $recurenceMatches)) break;
 										$vcardData['recur_interval'] = $recurenceMatches[1];
@@ -1248,9 +1251,9 @@
 										}
 										break;
 									case 'MONTHLY':
-										$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ? 
+										$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ?
 											MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
-										break;										
+										break;
 
 									case 'Y':		// 1.0
 										if(!preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches)) break;
@@ -1300,13 +1303,13 @@
 								{
 	 								$vcardData['category'] = array();
 								}
-	 							break;	
+	 							break;
 	 						case 'ATTENDEE':
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
 	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
 	 							{
 	 								$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
-	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] : 
+	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] :
 	 									($uid == $event['owner'] ? 'A' : 'U');
 	 							}
 	 							break;
@@ -1325,8 +1328,8 @@
 								break;
 						}
 					}
-					
-					// check if the entry is a birthday 
+
+					// check if the entry is a birthday
 					// this field is only set from NOKIA clients
 					$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
 					if (!is_a($agendaEntryType, 'PEAR_Error')) {
@@ -1335,18 +1338,18 @@
 							$vcardData['end'] = $vcardData['start'] + 86399;
 						}
 					}
-					
+
 					if(!empty($vcardData['recur_enddate']))
 					{
 						// reset recure_enddate to 00:00:00 on the last day
-						$vcardData['recur_enddate'] = mktime(0, 0, 0, 
+						$vcardData['recur_enddate'] = mktime(0, 0, 0,
 							date('m',$vcardData['recur_enddate']),
 							date('d',$vcardData['recur_enddate']),
 							date('Y',$vcardData['recur_enddate'])
 						);
 					}
 					//echo "event=";_debug_array($vcardData);
-					
+
 					while(($fieldName = array_shift($supportedFields)))
 					{
 						switch($fieldName)
@@ -1379,25 +1382,25 @@
 								break;
 						}
 					}
-					
+
 					return $event;
 				}
 			}
-			
+
 			return false;
 		}
 
-		function search($_vcalData) 
+		function search($_vcalData)
 		{
 			if(!$event = $this->icaltoegw($_vcalData)) {
 				return false;
 			}
-			
+
 			$query = array(
 				'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
 				'cal_end='.$this->date2ts($event['end'],true),
 			);
-			
+
 			#foreach(array('title','location','priority','public','non_blocking') as $name) {
 			foreach(array('title','location','public','non_blocking') as $name) {
 				if (isset($event[$name])) $query['cal_'.$name] = $event[$name];
@@ -1414,7 +1417,7 @@
 			}
 			return false;
 		}
-		
+
 		/**
 		 * Create a freebusy vCal for the given user(s)
 		 *
@@ -1425,7 +1428,7 @@
 		function freebusy($user,$end=null)
 		{
 			if (!$end) $end = $this->now_su + 100*DAY_s;	// default next 100 days
-			
+
 			$vcal = &new Horde_iCalendar;
 			$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 				strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
