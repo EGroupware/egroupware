@@ -420,9 +420,10 @@ class bocontacts extends socontacts
 	*
 	* @param mixed &$contact contact array with key id or (array of) id(s)
 	* @param boolean $deny_account_delete=true if true never allow to delete accounts
-	* @return boolean true on success or false on failiure
+	* @param int $check_etag=null
+	* @return boolean|int true on success or false on failiure, 0 if etag does not match
 	*/
-	function delete($contact,$deny_account_delete=true)
+	function delete($contact,$deny_account_delete=true,$check_etag=null)
 	{
 		if (is_array($contact) && isset($contact['id']))
 		{
@@ -436,14 +437,15 @@ class bocontacts extends socontacts
 		{
 			$id = is_array($c) ? $c['id'] : $c;
 
-			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete) && parent::delete($id))
+			$ok = false;
+			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete) && ($ok = parent::delete($id,$check_etag)))
 			{
 				egw_link::unlink(0,'addressbook',$id);
 				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 			}
 			else
 			{
-				return false;
+				return $ok;
 			}
 		}
 		return true;

@@ -403,14 +403,18 @@ class socontacts
 	* deletes contact entry including custom fields
 	*
 	* @param mixed $contact array with id or just the id
-	* @return boolean true on success or false on failiure
+	* @param int $check_etag=null
+	* @return boolean|int true on success or false on failiure, 0 if etag does not match
 	*/
-	function delete($contact)
+	function delete($contact,$check_etag=null)
 	{
 		if (is_array($contact)) $contact = $contact['id'];
 
+		$where = array('id' => $contact);
+		if ($check_etag) $where['etag'] = $check_etag;
+
 		// delete mainfields
-		if ($this->somain->delete($contact))
+		if ($this->somain->delete($where))
 		{
 			// delete customfields, can return 0 if there are no customfields
 			$this->soextra->delete(array($this->extra_id => $contact));
@@ -430,7 +434,7 @@ class socontacts
 			}
 			return true;
 		}
-		return false;
+		return $check_etag ? 0 : false;		// if etag given, we return 0 on failure, thought it could also mean the whole contact does not exist
 	}
 
 	/**
