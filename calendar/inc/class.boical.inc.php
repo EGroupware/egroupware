@@ -463,7 +463,15 @@
 			return $vcal->exportvCalendar();
 		}
 
-		function importVCal($_vcalData, $cal_id=-1)
+		/**
+		 * Import an iCal
+		 *
+		 * @param string $_vcalData
+		 * @param int $cal_id=-1 must be -1 for new entrys!
+		 * @param string $etag=null if an etag is given, it has to match the current etag or the import will fail
+		 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag
+		 */
+		function importVCal($_vcalData, $cal_id=-1,$etag=null)
 		{
 			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
 			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
@@ -901,7 +909,13 @@
 					#error_log('ALARMS');
 					#error_log(print_r($event, true));
 
-					if (!($Ok = $this->update($event, TRUE))) {
+					// if an etag is given, include it in the update
+					if (!is_null($etag))
+					{
+						$event['etag'] = $etag;
+					}
+					if (!($Ok = $this->update($event, TRUE)))
+					{
 						break;	// stop with the first error
 					}
 					else
