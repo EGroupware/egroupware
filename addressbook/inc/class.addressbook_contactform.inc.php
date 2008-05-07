@@ -7,7 +7,7 @@
  * @package addressbook
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.uietemplate.inc.php');
@@ -37,7 +37,9 @@ class addressbook_contactform
 
 		if (is_array($content))
 		{
-			if (isset($content['captcha_result']) && $content['captcha'] != $content['captcha_result'])
+			if (isset($content['captcha_result']) && $content['captcha'] != $content['captcha_result'] ||	// no correct captcha OR
+				time() - $content['start_time'] < 10 &&				// bot indicator (less then 10 sec to fill out the form and
+				!$GLOBALS['egw_info']['etemplate']['java_script'])	// javascript disabled)
 			{
 				$tpl->set_validation_error('captcha',lang('Wrong - try again ...'));
 			}
@@ -75,12 +77,12 @@ class addressbook_contactform
 					}
 					if ($tracking->do_notifications($content,null))
 					{
-						return '<p align="center">'.$content['msg'].'</p>';						
+						return '<p align="center">'.$content['msg'].'</p>';
 					}
 					else
 					{
 						return '<p align="center">'.lang('There was an error saving your data :-(').'<br />'.
-							lang('Either the configured email addesses are wrong or the mail configuration.').'</p>';						
+							lang('Either the configured email addesses are wrong or the mail configuration.').'</p>';
 					}
 				}
 			}
@@ -121,12 +123,13 @@ class addressbook_contactform
 					$content['show'][$name] = true;
 				}
 			}
+			$preserv['start_time'] = time();
 		}
 		$content['addr_format'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['addr_format'];
-		
+
 		if ($addressbook) $preserv['owner'] = $addressbook;
 		if ($msg) $preserv['msg'] = $msg;
-		
+
 		// a simple calculation captcha
 		$num1 = rand(1,99);
 		$num2 = rand(1,99);
