@@ -51,7 +51,7 @@ class bocalupdate extends bocal
 	 * @var mixed
 	 */
 	var $debug;
-	
+
 	/**
 	 * @var string/boolean $log_file filename to enable the login or false for no update-logging
 	 */
@@ -65,12 +65,12 @@ class bocalupdate extends bocal
 		if ($this->debug > 0) $this->debug_message('bocalupdate::bocalupdate() started',True);
 
 		$this->bocal();	// calling the parent constructor
-		
+
 		if ($this->debug > 0) $this->debug_message('bocalupdate::bocalupdate() finished',True);
 	}
 
 	/**
-	 * updates or creates an event, it (optionaly) checks for conflicts and sends the necessary notifications 
+	 * updates or creates an event, it (optionaly) checks for conflicts and sends the necessary notifications
 	 *
 	 * @param array &$event event-array, on return some values might be changed due to set defaults
 	 * @param boolean $ignore_conflicts=false just ignore conflicts or do a conflict check and return the conflicting events
@@ -81,6 +81,7 @@ class bocalupdate extends bocal
 	 */
 	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false)
 	{
+		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if ($this->debug > 1 || $this->debug == 'update')
 		{
 			$this->debug_message('bocalupdate::update(%1,ignore_conflict=%2,touch_modified=%3,ignore_acl=%4)',
@@ -90,7 +91,7 @@ class bocalupdate extends bocal
 		// - new events need start, end and title
 		// - updated events cant set start, end or title to empty
 		if (!$event['id'] && (!$event['start'] || !$event['end'] || !$event['title']) ||
-			$event['id'] && (isset($event['start']) && !$event['start'] || isset($event['end']) && !$event['end'] ||  
+			$event['id'] && (isset($event['start']) && !$event['start'] || isset($event['end']) && !$event['end'] ||
 			isset($event['title']) && !$event['title']))
 		{
 			return false;
@@ -104,7 +105,7 @@ class bocalupdate extends bocal
 			if (!$event['id'] && (!is_array($event['participants']) || !count($event['participants'])))
 			{
 				$event['participants'][$event['owner']] = 'U';
-			} 
+			}
 			// set the status of the current user to 'A' = accepted
 			if (isset($event['participants'][$this->user]) &&  $event['participants'][$this->user] != 'A')
 			{
@@ -113,7 +114,7 @@ class bocalupdate extends bocal
 		}
 		// check if user has the permission to update / create the event
 		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
-			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) && 
+			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
 			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
 			// Just update the status, if the user is in the event already
@@ -147,7 +148,7 @@ class bocalupdate extends bocal
 			foreach($event['participants'] as $uid => $status)
 			{
 				if ($status[0] == 'R') continue;	// ignore rejected participants
-				
+
 				if ($uid < 0)	// group, check it's members too
 				{
 					$users += $GLOBALS['egw']->accounts->members($uid,true);
@@ -187,7 +188,7 @@ class bocalupdate extends bocal
 				$common_parts = array_intersect($users,array_keys($overlap['participants']));
 				foreach($common_parts as $n => $uid)
 				{
-					if ($overlap['participants'][$uid]{0} == 'R') 
+					if ($overlap['participants'][$uid]{0} == 'R')
 					{
 						unset($common_parts[$uid]);
 						continue;
@@ -231,7 +232,7 @@ class bocalupdate extends bocal
 				}
 			}
 			unset($possible_quantity_conflicts);
-			
+
 			if (count($conflicts))
 			{
 				foreach($conflicts as $key => $conflict)
@@ -252,7 +253,7 @@ class bocalupdate extends bocal
 					$this->debug_message('bocalupdate::update() %1 conflicts found %2',false,count($conflicts),$conflicts);
 				}
 				return $conflicts;
-			}					
+			}
 		}
 
 		// save the event to the database
@@ -304,11 +305,11 @@ class bocalupdate extends bocal
 	 *
 	 * @param array $new_event the updated event
 	 * @param array $old_event the event before the update
-	 */ 
+	 */
 	function check4update($new_event,$old_event)
 	{
 		$modified = $added = $deleted = array();
-		
+
 		//echo "<p>bocalupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
 
 		// Find modified and deleted participants ...
@@ -509,7 +510,7 @@ class bocalupdate extends bocal
 			$notify_msg = $this->cal_prefs['notifyAdded'];	// use a default
 		}
 		$details = $this->_get_event_details($event,$action,$event_arr,$disinvited);
-		
+
 		// add all group-members to the notification, unless they are already participants
 		foreach($to_notify as $userid => $statusid)
 		{
@@ -532,7 +533,7 @@ class bocalupdate extends bocal
 			{
 				$res_info = $this->resource_info($userid);
 				$userid = $res_info['responsible'];
-				if (!isset($userid)) continue;	
+				if (!isset($userid)) continue;
 			}
 
 			if ($statusid == 'R' || $GLOBALS['egw']->accounts->get_type($userid) == 'g')
@@ -550,11 +551,11 @@ class bocalupdate extends bocal
 				}
 				$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
 				$details['to-fullname'] = $GLOBALS['egw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
-				
+
 				$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
 				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
 				$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
-					
+
 				$GLOBALS['egw']->datetime->tz_offset = 3600 * (int) $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
@@ -587,7 +588,7 @@ class bocalupdate extends bocal
 
 					case  'ical':
 						$ics = ExecMethod2('calendar.boical.exportVCal',$event['id'],'2.0',$method);
-						if ($method == 'REQUEST') 
+						if ($method == 'REQUEST')
 						{
 							$attachment = array(	'string' => $ics,
 													'filename' => 'cal.ics',
@@ -638,7 +639,7 @@ class bocalupdate extends bocal
 	 * Function called via async service, when an alarm is to be send
 	 *
 	 * @param array $alarm array with keys owner, cal_id, all
-	 * @return boolean 
+	 * @return boolean
 	 */
 	function send_alarm($alarm)
 	{
@@ -684,6 +685,7 @@ class bocalupdate extends bocal
 	 */
 	function save($event)
 	{
+		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$etag)");
 		// check if user has the permission to update / create the event
 		if ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
 			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']) &&
@@ -702,9 +704,6 @@ class bocalupdate extends bocal
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
 		}
-		// Lock realized with a counter, that is checked and incremented as we save the entry
-		$check_etag = ($event['etag'] ? $event['etag']:0);
-
 		// same with the recur exceptions
 		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 		{
@@ -721,7 +720,7 @@ class bocalupdate extends bocal
 				$event['alarm'][$id]['time'] = $this->date2ts($alarm['time'],true);
 			}
 		}
-		if (($cal_id = $this->so->save($event,$set_recurrences,NULL,$check_etag)) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
+		if (($cal_id = $this->so->save($event,$set_recurrences,NULL,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$save_event['id'] = $cal_id;
 			$this->set_recurrences($save_event);
@@ -730,10 +729,10 @@ class bocalupdate extends bocal
 
 		return $cal_id;
 	}
-	
+
 	/**
 	 * Check if the current user has the necessary ACL rights to change the status of $uid
-	 * 
+	 *
 	 * For contacts we use edit rights of the owner of the event (aka. edit rights of the event).
 	 *
 	 * @param int/string $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
@@ -804,19 +803,19 @@ class bocalupdate extends bocal
 	function delete($cal_id,$recur_date=0)
 	{
 		$event = $this->read($cal_id,$recur_date);
-		
+
 		if (!($event = $this->read($cal_id,$recur_date)) ||
 			!$this->check_perms(EGW_ACL_DELETE,$event))
 		{
 			return false;
 		}
 		$this->send_update(MSG_DELETED,$event['participants'],$event);
-		
+
 		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
 		{
 			$this->so->delete($cal_id);
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
-						
+
 			// delete all links to the event
 			egw_link::unlink(0,'calendar',$cal_id);
 		}
@@ -858,7 +857,7 @@ class bocalupdate extends bocal
 				$link;
 		}
 		$event_arr['link']['data'] = $details['link'] = $link;
-		
+
 		/* this is needed for notification-app
 		 * notification-app creates the link individual for
 		 * every user, so we must provide a neutral link-style
@@ -872,7 +871,7 @@ class bocalupdate extends bocal
 									);
 		$link_arr['popup'] = '750x400';
 		$details['link_arr'] = $link_arr;
-		
+
 		$dis = array();
 		foreach($disinvited as $uid)
 		{
@@ -1101,19 +1100,5 @@ class bocalupdate extends bocal
 		}
 
 		return $cat_list;
-	}
-
-	/**
-	 * updates the edit user information for timelocking an event 
-	 *
-	 * @param array &$event2update event-array, on return some values might be changed due to set defaults
-	 * 	this is a wrapper for the socal function
-	 * 	cal_edit_time is set to current timestamp
-	 * @return the returnvalue of so->save_edit_user (0 (someone else modified the entry), true (saved) or false (could not save)))
-	 */
-	function update_edit_user(&$event2update)
-	{
-		$event2update['edit_time']=$this->now_su;
-		return $this->so->save_edit_user($event2update);		
 	}
 }

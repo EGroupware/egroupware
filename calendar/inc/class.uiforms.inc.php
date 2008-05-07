@@ -38,21 +38,21 @@ class uiforms extends uical
 	 * @var bolink
 	 */
 	var $link;
-	
+
 	/**
 	 * Standard durations used in edit and freetime search
 	 *
 	 * @var array
 	 */
 	var $durations = array();
-	
+
 	/**
 	 * Name of the tabs used in edit
 	 *
 	 * @var string
 	 */
 	var $tabs = 'general|description|participants|recurrence|custom|links|alarms';
-	
+
 	/**
 	 * default timelock for entries, that are opened by another user
 	 *
@@ -66,20 +66,20 @@ class uiforms extends uical
 	function uiforms()
 	{
 		$this->uical(true);	// call the parent's constructor
-		
+
 		$this->link =& $this->bo->link;
-		
+
 		for ($n=15; $n <= 8*60; $n+=($n < 60 ? 15 : ($n < 240 ? 30 : 60)))
 		{
 			$this->durations[$n*60] = sprintf('%d:%02d',$n/60,$n%60);
 		}
 	}
-	
+
 	/**
 	 * Create a default event (adding a new event) by evaluating certain _GET vars
 	 *
 	 * @return array event-array
-	 */ 
+	 */
 	function &default_add_event()
 	{
 		$extra_participants = $_GET['participants'] ? explode(',',$_GET['participants']) : array();
@@ -93,7 +93,7 @@ class uiforms extends uical
 		{
 			$owner = $this->owner;
 		}
-		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' || 
+		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' ||
 			!$this->bo->check_perms(EGW_ACL_ADD,0,$owner))
 		{
 			if ($owner)	// make an owner who is no user or we have no add-rights a participant
@@ -113,7 +113,7 @@ class uiforms extends uical
 			'minute' => (int) $_GET['minute'],
 		));
 		//echo "<p>_GET[date]=$_GET[date], _GET[hour]=$_GET[hour], _GET[minute]=$_GET[minute], this->date=$this->date ==> start=$start=".date('Y-m-d H:i',$start)."</p>\n";
-		
+
 		$participant_types['u'] = $participant_types = $participants = array();
 		foreach($extra_participants as $uid)
 		{
@@ -130,7 +130,7 @@ class uiforms extends uical
 				$participants[$uid] = $participant_types[$uid{0}][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
 					((int) $quantity > 1 ? (int)$quantity : '');
 				// if new_status == 'x', resource is not bookable
-				if(strpos($participant_types[$uid{0}][$id],'x') !== false) 
+				if(strpos($participant_types[$uid{0}][$id],'x') !== false)
 				{
 					unset($participant_types[$uid{0}][$id]);
 					unset($participants[$uid]);
@@ -148,7 +148,7 @@ class uiforms extends uical
 			'alarm' => array(),
 		);
 	}
-	
+
 	/**
 	 * Process the edited event and evtl. call edit to redisplay it
 	 *
@@ -182,7 +182,7 @@ class uiforms extends uical
 		{
 			list($id) = each($content['alarm']['delete_alarm']);
 			//echo "delete alarm $id"; _debug_array($content['alarm']['delete_alarm']);
-			
+
 			if ($content['id'])
 			{
 				if ($this->bo->delete_alarm($id))
@@ -192,7 +192,7 @@ class uiforms extends uical
 				}
 				else
 				{
-					$msg = lang('Permission denied');				
+					$msg = lang('Permission denied');
 				}
 			}
 			else
@@ -256,7 +256,7 @@ class uiforms extends uical
 						{
 							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
-							if ($uid) $event['participants'][$uid] = $event['participant_types'][$type][$id] = 
+							if ($uid) $event['participants'][$uid] = $event['participant_types'][$type][$id] =
 								$status.((int) $quantity > 1 ? (int)$quantity : '');
 							break;
 						}
@@ -264,7 +264,7 @@ class uiforms extends uical
 					case 'account':
 						foreach(is_array($data) ? $data : explode(',',$data) as $uid)
 						{
-							if ($uid) $event['participants'][$uid] = $event['participant_types']['u'][$uid] = 
+							if ($uid) $event['participants'][$uid] = $event['participant_types']['u'][$uid] =
 								$uid == $this->bo->user ? 'A' : 'U';
 						}
 						break;
@@ -282,12 +282,12 @@ class uiforms extends uical
 						{
 							if (is_numeric($uid))
 							{
-								$id = $uid; 
+								$id = $uid;
 								$type = 'u';
 							}
 							else
 							{
-								$id = substr($uid,1); 
+								$id = substr($uid,1);
 								$type = $uid{0};
 							}
 							if ($data['old_status'] != $status)
@@ -307,7 +307,7 @@ class uiforms extends uical
 							}
 							if ($uid && $status != 'G')
 							{
-								$event['participants'][$uid] = $event['participant_types'][$type][$id] = 
+								$event['participants'][$uid] = $event['participant_types'][$type][$id] =
 									$status.((int) $quantity > 1 ? (int)$quantity : '');
 							}
 						}
@@ -344,7 +344,7 @@ class uiforms extends uical
 			$msg = lang('Event copied - the copy can now be edited');
 			$event['title'] = lang('Copy of:').' '.$event['title'];
 			break;
-			
+
 		case 'ignore':
 			$ignore_conflicts = true;
 			$button = $event['button_was'];	// save or apply
@@ -353,15 +353,15 @@ class uiforms extends uical
 		case 'mail':
 		case 'save':
 		case 'apply':
-			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event)) 
-			{ 
+			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
+			{
 				if ($button == 'mail')	// just mail without edit-rights is ok
 				{
 					$js = $this->custom_mail($event,false);
 					break;
 				}
-				$msg = lang('Permission denied'); 
-				break; 
+				$msg = lang('Permission denied');
+				break;
 			}
 			if ($event['start'] > $event['end'])
 			{
@@ -409,7 +409,7 @@ class uiforms extends uical
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
-			elseif ($conflicts ===0) 
+			elseif ($conflicts ===0)
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
@@ -419,14 +419,14 @@ class uiforms extends uical
 									'referer'    => $referer,
 									))).'">','</a>');
 				$noerror=false;
-								
+
 			}
-			elseif ($conflicts>0) 
+			elseif ($conflicts>0)
 			{
 				$msg .= ($msg ? ', ' : '') . lang('Event saved');
 
 				// writing links for new entry, existing ones are handled by the widget itself
-				if (!$content['id'] && is_array($content['link_to']['to_id']))	
+				if (!$content['id'] && is_array($content['link_to']['to_id']))
 				{
 					egw_link::link('calendar',$event['id'],$content['link_to']['to_id']);
 				}
@@ -445,7 +445,7 @@ class uiforms extends uical
 				$msg = lang('Error: saving the event !!!');
 			}
 			break;
-			
+
 		case 'cancel':
 			if($content['cancel_needs_refresh'])
 			{
@@ -466,12 +466,12 @@ class uiforms extends uical
 				))).'\';';
 			}
 			break;
-			
+
 		case 'freetime':
 			// the "click" has to be in onload, to make sure the button is already created
 			$GLOBALS['egw']->js->set_onload("document.getElementsByName('exec[freetime]')[0].click();");
 			break;
-			
+
 		case 'add_alarm':
 			if ($this->bo->check_perms(EGW_ACL_EDIT,!$content['new_alarm']['owner'] ? $event : 0,$content['new_alarm']['owner']))
 			{
@@ -492,7 +492,7 @@ class uiforms extends uical
 					{
 						$alarm['id'] = $alarm_id;
 						$event['alarm'][$alarm_id] = $alarm;
-						
+
 						$msg = lang('Alarm added');
 					}
 					else
@@ -514,6 +514,10 @@ class uiforms extends uical
 		}
 		if (in_array($button,array('cancel','save','delete')) && $noerror)
 		{
+			if ($content['lock_token'])	// remove an existing lock
+			{
+				egw_vfs::unlock(egw_vfs::app_entry_lock_path('calendar',$content['id']),$content['lock_token'],false);
+			}
 			if ($content['no_popup'])
 			{
 				$GLOBALS['egw']->redirect_link('/index.php',array(
@@ -527,10 +531,10 @@ class uiforms extends uical
 		}
 		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
-	
+
 	/**
 	 * Create an exception from the clicked event
-	 * 
+	 *
 	 * It's not stored to the DB unless the user saves it!
 	 *
 	 * @param array &$event
@@ -562,13 +566,13 @@ class uiforms extends uical
 		foreach($event['participants'] as $uid => $status)
 		{
 			if ($status == 'R' || $uid == $this->user) continue;
-			
+
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
 				if (!($email = $GLOBALS['egw']->accounts->id2name($uid,'account_email'))) continue;
 
 				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
-					 
+
 				$to[] = $firstname.' '.$lastname.' <'.$email.'>';
 			}
 			elseif ($uid < 0)
@@ -578,7 +582,7 @@ class uiforms extends uical
 					if (!($email = $GLOBALS['egw']->accounts->id2name($uid,'account_email'))) continue;
 
 					$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
-					 
+
 					$to[] = $firstname.' '.$lastname.' <'.$email.'>';
 				}
 			}
@@ -657,7 +661,7 @@ class uiforms extends uical
 
 			if (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id,$_GET['date'])) || !$this->bo->check_perms(EGW_ACL_READ,$event))
 			{
-				if ($cal_id) 
+				if ($cal_id)
 				{
 					if (!$preserv['no_popup'])
 					{
@@ -702,6 +706,39 @@ class uiforms extends uical
 		}
 		$view = $preserv['view'] = $preserv['view'] || $event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 		//echo "view=$view, event="; _debug_array($event);
+
+		// shared locking of entries to edit
+		if (!$view && ($locktime = $GLOBALS['egw_info']['server']['Lock_Time_Calender']) && $event['id'])
+		{
+			$lock_path = egw_vfs::app_entry_lock_path('calendar',$event['id']);
+			$lock_owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
+
+			if (($preserv['lock_token'] = $content['lock_token']))		// already locked --> refresh the lock
+			{
+				egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',true,false);
+			}
+			if (($lock = egw_vfs::checkLock($lock_path)) && $lock['owner'] != $lock_owner)
+			{
+				$msg .= ' '.lang('This entry is currently opened by %1!',
+					(($lock_uid = $GLOBALS['egw']->accounts->name2id(substr($lock['owner'],7),'account_email')) ?
+					$GLOBALS['egw']->common->grab_owner_name($lock_uid) : $lock['owner']));
+			}
+			elseif($lock)
+			{
+				$preserv['lock_token'] = $lock['token'];
+			}
+			elseif(egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',false,false))
+			{
+				// install ajax handler to unlock the entry again, if the window get's closed by the user
+				$GLOBALS['egw']->js->set_onunload("xajax_doXMLHTTP('calendar.uiforms.ajax_unlock',$event[id],'$preserv[lock_token]');");
+			}
+			else
+			{
+				$msg .= ' '.lang("Can't aquire lock!");		// eg. an exclusive lock via CalDAV ...
+				$view = true;
+			}
+			//echo "<p>lock_path=$lock_path, lock_owner=$lock_owner, lock_token=$preserv[lock_token], msg=$msg</p>\n";
+		}
 		$content = array_merge($event,array(
 			'link_to' => array(
 				'to_id'  => $link_to_id,
@@ -710,6 +747,7 @@ class uiforms extends uical
 			'edit_single' => $preserv['edit_single'],	// need to be in content too, as it is used in the template
 			$this->tabs   => $preserv[$this->tabs],
 			'view' => $view,
+			'msg' => $msg,
 		));
 		$content['duration'] = $content['end'] - $content['start'];
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
@@ -736,9 +774,9 @@ class uiforms extends uical
 				$readonlys[$row.'[quantity]'] = $type == 'u' || !isset($this->bo->resources[$type]['max_quantity']);
 				$readonlys[$row.'[status]'] = $readonlys[$row.'[status_recurrence]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
-				$content['participants'][$row++]['title'] = $name == 'accounts' ? 
+				$content['participants'][$row++]['title'] = $name == 'accounts' ?
 					$GLOBALS['egw']->common->grab_owner_name($id) : egw_link::title($name,$id);
-					
+
 				// enumerate group-invitations, so people can accept/reject them
 				if ($name == 'accounts' && $GLOBALS['egw']->accounts->get_type($id) == 'g' &&
 					($members = $GLOBALS['egw']->accounts->members($id,true)))
@@ -787,7 +825,7 @@ class uiforms extends uical
 				if ($minutes) $label[] = $minutes.' '.lang('Minutes');
 				$alarm['offset'] = implode(', ',$label);
 				$content['alarm'][] = $alarm;
-				
+
 				$readonlys['delete_alarm['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 			}
 		}
@@ -811,7 +849,7 @@ class uiforms extends uical
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['freetime'] = true;
 			$readonlys['link_to'] = $readonlys['customfields'] = true;
 			$readonlys['duration'] = true;
-			
+
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
@@ -821,10 +859,6 @@ class uiforms extends uical
 		}
 		else
 		{
-			if (!is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
-			}
 			// We hide the enddate if one of our predefined durations fits
 			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
@@ -868,7 +902,7 @@ class uiforms extends uical
 		$content['no_add_alarm'] = !count($sel_options['owner']);	// no rights to set any alarm
 		if (!$event['id'])
 		{
-			$etpl->set_cell_attribute('button[new_alarm]','type','checkbox');	
+			$etpl->set_cell_attribute('button[new_alarm]','type','checkbox');
 		}
 		if ($preserv['no_popup'])
 		{
@@ -878,31 +912,12 @@ class uiforms extends uical
 		//echo "preserv="; _debug_array($preserv);
  		//echo "readonlys="; _debug_array($readonlys);
  		//echo "sel_options="; _debug_array($sel_options);
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . (!$event['id'] ? lang('Add') : ($view ? lang('View') : 
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . (!$event['id'] ? lang('Add') : ($view ? lang('View') :
 			($content['edit_single'] ? lang('Create exception') : ($content['recur_type'] ? lang('Edit series') : lang('Edit')))));
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n$js\n</script>\n";
-		
-		$content['cancel_needs_refresh'] = (bool)$_GET['cancel_needs_refresh'];
-		
-		// time locking for entries 		
-		$locktime = $GLOBALS['egw_info']['server']['Lock_Time_Calender'];
-		if ($locktime) {
-			// the warning and the saving of edit_user and time will only be performed, if there is a lock time set
-			if (($this->bo->now_su>($event['edit_time']+$locktime)) || ($event['edit_time']==''))
-			{
-				//echo "write Lock!!->DB";
-				$event2update['id']=$event['id'];
-				$event2update['edit_user']=$this->user;
-				$event2update['edit_time']=''; // this is set in bo->update_edit_user
-				$this->bo->update_edit_user($event2update);
-			}
-			else 
-			{
-				if ($event['edit_user'] && $event['edit_user']!=$this->user) $content['msg'].=" ".lang('This entry is opened by user: ').$GLOBALS['egw']->accounts->id2name($event['edit_user']);			
-			}
-		} else {
 
-		}
+		$content['cancel_needs_refresh'] = (bool)$_GET['cancel_needs_refresh'];
+
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
 		{
@@ -917,20 +932,40 @@ class uiforms extends uical
 	}
 
 	/**
+	 * Remove (shared) lock via ajax, when edit popup get's closed
+	 *
+	 * @param int $id
+	 * @param string $token
+	 */
+	function ajax_unlock($id,$token)
+	{
+		$lock_path = egw_vfs::app_entry_lock_path('calendar',$id);
+		$lock_owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
+
+		if (($lock = egw_vfs::checkLock($lock_path)) && $lock['owner'] == $lock_owner || $lock['token'] == $token)
+		{
+			egw_vfs::unlock($lock_path,$token,false);
+		}
+		$response = new xajaxResponse();
+		$response->addScript('window.close();');
+		return $response->getXML();
+	}
+
+	/**
 	 * displays a sheduling conflict
 	 *
-	 * @param array $event 
+	 * @param array $event
 	 * @param array $conflicts array with conflicting events, the events are not garantied to be readable by the user!
 	 * @param array $preserv data to preserv
 	 */
 	function conflicts($event,$conflicts,$preserv)
 	{
 		$etpl =& CreateObject('etemplate.etemplate','calendar.conflicts');
-		
+
 		foreach($conflicts as $k => $conflict)
 		{
 			$is_readable = $this->bo->check_perms(EGW_ACL_READ,$conflict);
-			
+
 			$conflicts[$k] += array(
 				'icon_participants' => $is_readable ? (count($conflict['participants']) > 1 ? 'users' : 'single') : 'private',
 				'tooltip_participants' => $is_readable ? implode(', ',$this->bo->participants($conflict)) : '',
@@ -940,7 +975,7 @@ class uiforms extends uical
 				),true,true)),	// show group invitations too
 				'icon_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? 'recur' : '',
 				'text_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? lang('Recurring event') : ' ',
-			);		
+			);
 		}
 		$content = $event + array(
 			'conflicts' => array_values($conflicts),	// conflicts have id-start as key
@@ -1018,12 +1053,12 @@ class uiforms extends uical
 				$content['end_time'] = 0;	// no end-time limit, as duration would never fit
 			}
 			$content['weekdays'] = MCAL_M_WEEKDAYS;
-			
+
 			$content['search_window'] = 7 * DAY_s;
 			// pick a searchwindow fitting the duration (search for a 10 day slot in a one week window never succeeds)
 			foreach($sel_options['search_window'] as $window => $label)
 			{
-				if ($window > $content['duration']) 
+				if ($window > $content['duration'])
 				{
 					$content['search_window'] = $window;
 					break;
@@ -1032,8 +1067,8 @@ class uiforms extends uical
 		}
 		else
 		{
-			if (!$content['duration']) $content['duration'] = $content['end'] - $content['start']; 
-			
+			if (!$content['duration']) $content['duration'] = $content['end'] - $content['start'];
+
 			if (is_array($content['freetime']['select']))
 			{
 				list($selected) = each($content['freetime']['select']);
@@ -1059,7 +1094,7 @@ class uiforms extends uical
 						'exec[end][a]'		=> date('a',$end),
 					);
 				}
-				else	
+				else
 				{
 					$fields_to_set += array(
 						'exec[start][H]'	=> (int) date('H',$start),
@@ -1081,7 +1116,7 @@ class uiforms extends uical
 				}
 		}
 	}
-	window.close();	
+	window.close();
 </script>
 </html>\n";
 				exit;
@@ -1098,7 +1133,7 @@ class uiforms extends uical
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('freetime search');
 		// let the window popup, if its already there
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\nwindow.focus();\n</script>\n";
-		
+
 		if (!is_object($GLOBALS['egw']->js))
 		{
 			$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
@@ -1113,9 +1148,9 @@ class uiforms extends uical
 				'participants'	=> $content['participants'],
 				'cal_id'		=> $content['cal_id'],
 				'recur_type'	=> $content['recur_type'],
-			),2);		
+			),2);
 	}
-	
+
 	/**
 	 * calculate the freetime of given $participants in a certain time-span
 	 *
@@ -1139,7 +1174,7 @@ class uiforms extends uical
 		$busy[] = array(	// add end-of-search-date as event, to cope with empty search and get freetime til that date
 			'start'	=> $end,
 			'end'	=> $end,
-		);	
+		);
 		$ft_start = $start;
 		$freetime = array();
 		$n = 0;
@@ -1179,14 +1214,14 @@ class uiforms extends uical
 					'end'	=> $ft_end,
 				);
 				if ($this->debug > 1) echo "<p>freetime: ".date('D d.m.Y H:i',$ft_start)." - ".date('D d.m.Y H:i',$ft_end)."</p>\n";
-			}	
+			}
 			$ft_start = $event['end'];
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiforms::freetime(participants=%1, start=%2, end=%3, duration=%4, cal_id=%5) freetime=%6',true,$participants,$start,$end,$duration,$cal_id,$freetime);
-		
+
 		return $freetime;
 	}
-	
+
 	/**
 	 * split the freetime in daywise slot, taking into account weekdays, start- and stop-times
 	 *
@@ -1203,18 +1238,18 @@ class uiforms extends uical
 	function split_freetime_daywise($freetime,$duration,$weekdays,$start_time,$end_time,&$sel_options)
 	{
 		if ($this->debug > 1) $this->bo->debug_message('uiforms::split_freetime_daywise(freetime=%1, duration=%2, start_time=%3, end_time=%4)',true,$freetime,$duration,$start_time,$end_time);
-		
+
 		$freetime_daywise = array();
 		if (!is_array($sel_options)) $sel_options = array();
 		$time_format = $this->common_prefs['timeformat'] == 12 ? 'h:i a' : 'H:i';
-		
+
 		$start_time = (int) $start_time;	// ignore leading zeros
 		$end_time   = (int) $end_time;
 
 		// ignore the end_time, if duration would never fit
-		if (($end_time - $start_time)*HOUR_s < $duration) 
+		if (($end_time - $start_time)*HOUR_s < $duration)
 		{
-			$end_time = 0; 
+			$end_time = 0;
 			if ($this->debug > 1) $this->bo->debug_message('uiforms::split_freetime_daywise(, duration=%2, start_time=%3,..) end_time set to 0, it never fits durationn otherwise',true,$duration,$start_time);
 		}
 		$n = 0;
@@ -1224,7 +1259,7 @@ class uiforms extends uical
 			$daybegin['hour'] = $daybegin['minute'] = $daybegin['second'] = 0;
 			unset($daybegin['raw']);
 			$daybegin = $this->bo->date2ts($daybegin);
-			
+
 			for($t = $daybegin; $t < $ft['end']; $t += DAY_s,$daybegin += DAY_s)
 			{
 				$dow = date('w',$daybegin+DAY_s/2);	// 0=Sun, .., 6=Sat
@@ -1235,7 +1270,7 @@ class uiforms extends uical
 					continue;	// wrong day of week
 				}
 				$start = $t < $ft['start'] ? $ft['start'] : $t;
-				
+
 				if ($start-$daybegin < $start_time*HOUR_s)	// start earlier then start_time
 				{
 					$start = $daybegin + $start_time*HOUR_s;
@@ -1266,7 +1301,7 @@ class uiforms extends uical
 		}
 		return $freetime_daywise;
 	}
-	
+
 	/**
 	 * Export events as vCalendar version 2.0 files (iCal)
 	 *
@@ -1281,7 +1316,7 @@ class uiforms extends uical
 			if (!($ical =& ExecMethod2('calendar.boical.exportVCal',$cal_id,'2.0')))
 			{
 				$msg = lang('Permission denied');
-				
+
 				if ($return_error) return $msg;
 			}
 			else
@@ -1325,13 +1360,13 @@ class uiforms extends uical
 			);
 		}
 		$content['msg'] = $msg;
-		
+
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
 		$etpl =& CreateObject('etemplate.etemplate','calendar.export');
-		
+
 		$etpl->exec('calendar.uiforms.export',$content);
 	}
-	
+
 	/**
 	 * Import events as vCalendar version 2.0 files (iCal)
 	 *
@@ -1362,7 +1397,7 @@ class uiforms extends uical
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Import');
 		$etpl =& CreateObject('etemplate.etemplate','calendar.import');
-		
+
 		$etpl->exec('calendar.uiforms.import',$content);
 	}
 }

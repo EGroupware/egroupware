@@ -208,7 +208,7 @@
 				'uc' => array()
 			)
 		);
-	
+
 		$GLOBALS['egw_setup']->oProc->query('SELECT count(*) FROM webcal_entry',__LINE__,__FILE__);
 		$GLOBALS['egw_setup']->oProc->next_record();
 		if($GLOBALS['egw_setup']->oProc->f(0))
@@ -233,10 +233,10 @@
 					.'VALUES('.$cal_id.",'".$cal_owner."','".$cal_group."',".$datetime.",".$moddatetime.",".$cal_duration.",".$cal_priority.",'".$cal_type."','".$cal_access."','".$cal_name."','".$cal_description."')",__LINE__,__FILE__);
 			}
 		}
-	
+
 		$GLOBALS['egw_setup']->oProc->DropTable('webcal_entry_groups');
 		$GLOBALS['egw_setup']->oProc->DropTable('webcal_entry');
-	
+
 		$GLOBALS['egw_setup']->oProc->CreateTable('calendar_entry_user',
 			Array(
 				'fd' => array(
@@ -250,7 +250,7 @@
 				'uc' => array()
 			)
 		);
-	
+
 		$GLOBALS['egw_setup']->oProc->query('SELECT count(*) FROM webcal_entry_user',__LINE__,__FILE__);
 		$GLOBALS['egw_setup']->oProc->next_record();
 		if($GLOBALS['egw_setup']->oProc->f(0))
@@ -264,9 +264,9 @@
 				$db2->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) VALUES('.$cal_id.','.$cal_login.",'".$cal_status."')",__LINE__,__FILE__);
 			}
 		}
-	
+
 		$GLOBALS['egw_setup']->oProc->DropTable('webcal_entry_user');
-	
+
 		$GLOBALS['egw_setup']->oProc->CreateTable('calendar_entry_repeats',
 			Array(
 				'fd' => array(
@@ -283,7 +283,7 @@
 				'uc' => array()
 			)
 		);
-	
+
 		$GLOBALS['egw_setup']->oProc->query('SELECT count(*) FROM webcal_entry_repeats',__LINE__,__FILE__);
 		$GLOBALS['egw_setup']->oProc->next_record();
 		if($GLOBALS['egw_setup']->oProc->f(0))
@@ -308,10 +308,10 @@
 				$db2->query('INSERT INTO calendar_entry_repeats(cal_id,cal_type,cal_use_end,cal_end,cal_frequency,cal_days) VALUES('.$cal_id.",'".$cal_type."',".$useend.",".$enddate.",".$cal_frequency.",'".$cal_days."')",__LINE__,__FILE__);
 			}
 		}
-	
+
 		$GLOBALS['egw_setup']->oProc->DropTable('webcal_entry_repeats');
 		$GLOBALS['egw_setup']->oProc->query("UPDATE {$GLOBALS['egw_setup']->applications_table} SET app_tables='calendar_entry,calendar_entry_user,calendar_entry_repeats' WHERE app_name='calendar'",__LINE__,__FILE__);
-	
+
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.7pre2';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
@@ -320,7 +320,7 @@
 	function calendar_upgrade0_9_7pre2()
 	{
 		$db2 = $GLOBALS['egw_setup']->db;
-	
+
 		$GLOBALS['egw_setup']->oProc->RenameColumn('calendar_entry', 'cal_duration', 'cal_edatetime');
 		$GLOBALS['egw_setup']->oProc->query('SELECT cal_id,cal_datetime,cal_owner,cal_edatetime,cal_mdatetime FROM calendar_entry ORDER BY cal_id',__LINE__,__FILE__);
 		if($GLOBALS['egw_setup']->oProc->num_rows())
@@ -337,7 +337,7 @@
 				$db2->query('UPDATE calendar_entry SET cal_datetime='.$datetime.', cal_edatetime='.$edatetime.', cal_mdatetime='.$mdatetime.' WHERE cal_id='.$cal_id,__LINE__,__FILE__);
 			}
 		}
-	
+
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.7pre3';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
@@ -590,7 +590,7 @@
 			define(RECUR_MONTHLY_MDAY,3);
 			define(RECUR_MONTHLY_WDAY,4);
 			define(RECUR_YEARLY,5);
-	
+
 			define(M_SUNDAY,1);
 			define(M_MONDAY,2);
 			define(M_TUESDAY,4);
@@ -856,7 +856,7 @@
 		$GLOBALS['egw_setup']->oProc->CreateTable('phpgw_cal_alarm',
 			Array(
 				'fd' => array(
-					'alarm_id' => array('type' => 'auto','nullable' => False),		
+					'alarm_id' => array('type' => 'auto','nullable' => False),
 					'cal_id'   => array('type' => 'int', 'precision' => 8, 'nullable' => False),
 					'cal_owner'	=> array('type' => 'int', 'precision' => 8, 'nullable' => False),
 					'cal_time' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
@@ -900,7 +900,7 @@
 		@reset($calendar_data);
 		while($calendar_data && list($cal_id,$category) = each($calendar_data))
 		{
-			$GLOBALS['egw_setup']->oProc->query("UPDATE phpgw_cal SET category='".$category."' WHERE cal_id=".$cal_id,__LINE__,__FILE__);		
+			$GLOBALS['egw_setup']->oProc->query("UPDATE phpgw_cal SET category='".$category."' WHERE cal_id=".$cal_id,__LINE__,__FILE__);
 		}
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.006';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
@@ -1061,14 +1061,14 @@
 		// re-run the update as very old entries only have an empty uid
 		return calendar_upgrade0_9_16_005();
 	}
-	
-	
+
+
 	$test[] = '0.9.16.007';
 	function calendar_upgrade0_9_16_007()
 	{
 		// update the sequenzes for refreshed tables (postgres only)
 		$GLOBALS['egw_setup']->oProc->UpdateSequence('phpgw_cal_holidays','hol_id');
-		
+
 		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
@@ -1498,14 +1498,14 @@
 
 		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.2';
 	}
-	
+
 
 	$test[] = '1.2';
 	function calendar_upgrade1_2()
 	{
 		// get old alarms (saved before 1.2) working again
 		$GLOBALS['egw_setup']->db->query("UPDATE egw_async SET async_method ='calendar.bocalupdate.send_alarm' WHERE async_method ='calendar.bocalendar.send_alarm'",__LINE__,__FILE__);
-		
+
 		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.2.001';
 	}
 
@@ -1532,17 +1532,71 @@
 	{
 		$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_etag',array(
 			'type' => 'int',
-			'precision' => '4'
+			'precision' => '4',
+			'default' => '0'
 		));
-		$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_edit_user',array(
-			'type' => 'int',
-			'precision' => '4'
-		));
-		$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_edit_time',array(
-			'type' => 'int',
-			'precision' => '8'
-		));
+		// as we no longer create cal_edit_time|user and already set default 0 for cal_etag, we skip the 1.5 update
+		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.5.001';
+	}
 
-		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.5';
+
+	$test[] = '1.5';
+	function calendar_upgrade1_5()
+	{
+		$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'auto','nullable' => False),
+				'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'cal_category' => array('type' => 'varchar','precision' => '30'),
+				'cal_modified' => array('type' => 'int','precision' => '8'),
+				'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
+				'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1'),
+				'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
+				'cal_description' => array('type' => 'text'),
+				'cal_location' => array('type' => 'varchar','precision' => '255'),
+				'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cal_modifier' => array('type' => 'int','precision' => '4'),
+				'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0'),
+				'cal_special' => array('type' => 'int','precision' => '2','default' => '0'),
+				'cal_etag' => array('type' => 'int','precision' => '4'),
+				'cal_edit_time' => array('type' => 'int','precision' => '8')
+			),
+			'pk' => array('cal_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),'cal_edit_user');
+		$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'auto','nullable' => False),
+				'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'cal_category' => array('type' => 'varchar','precision' => '30'),
+				'cal_modified' => array('type' => 'int','precision' => '8'),
+				'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
+				'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1'),
+				'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
+				'cal_description' => array('type' => 'text'),
+				'cal_location' => array('type' => 'varchar','precision' => '255'),
+				'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cal_modifier' => array('type' => 'int','precision' => '4'),
+				'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0'),
+				'cal_special' => array('type' => 'int','precision' => '2','default' => '0'),
+				'cal_etag' => array('type' => 'int','precision' => '4')
+			),
+			'pk' => array('cal_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),'cal_edit_time');
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_etag',array(
+			'type' => 'int',
+			'precision' => '4',
+			'default' => '0'
+		));
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_etag=0 WHERE cal_etag IS NULL',__LINE__,__FILE__);
+
+		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.5.001';
 	}
 ?>
