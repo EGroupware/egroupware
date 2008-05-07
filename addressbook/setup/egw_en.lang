@@ -101,6 +101,7 @@ contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
 contactform	addressbook	en	Contactform
 contacts and account contact-data to ldap	admin	en	contacts and account contact-data to LDAP
+contacts and account contact-data to sql	admin	en	contacts and account contact-data to SQL
 contacts to ldap	admin	en	contacts to LDAP
 contacts to ldap, account contact-data to sql	admin	en	contacts to LDAP, account contact-data to SQL
 contains	addressbook	en	contains

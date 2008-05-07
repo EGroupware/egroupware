@@ -795,7 +795,7 @@ class socontacts
 
 		$start = $n = 0;
 		$num = 100;
-		while (($contacts = $sql_contacts->search(false,false,'n_family,n_given','','',false,'AND',
+		while ($type != 'sql' && ($contacts = $sql_contacts->search(false,false,'n_family,n_given','','',false,'AND',
 			array($start,$num),$type != 'contacts,accounts' ? array('contact_owner != 0') : false)))
 		{
 			// very worse hack, until Ralf finds a better solution
@@ -821,21 +821,21 @@ class socontacts
 			}
 			$start += $num;
 		}
-		if ($type == 'contacts,accounts-back')	// migrate the accounts to sql
+		if ($type == 'contacts,accounts-back' || $type == 'sql')  // migrate the accounts to sql
 		{
 			// very worse hack, until Ralf finds a better solution
 			// when migrating data, we need to bind as global ldap admin account
 			// and not as currently logged in user
 			$ldap_contacts->ds = $GLOBALS['egw']->ldap->ldapConnect();
 			foreach($ldap_contacts->search(false,false,'n_family,n_given','','',false,'AND',
-				false,array('owner' => 0)) as $contact)
+				false,$type == 'sql'?null:array('owner' => 0)) as $contact)
 			{
 				if ($contact['jpegphoto'])	// photo is NOT read by LDAP backend on search, need to do an extra read
 				{
 					$contact = $ldap_contacts->read($contact['id']);
 				}
 				unset($contact['id']);	// ldap uid/account_lid
-				if ($contact['account_id'] && ($old = $sql_contacts->read(array('account_id' => $contact['account_id']))))
+				if ($type != 'sql' && $contact['account_id'] && ($old = $sql_contacts->read(array('account_id' => $contact['account_id']))))
 				{
 					$contact['id'] = $old['id'];
 				}
@@ -845,7 +845,8 @@ class socontacts
 				if (!($err = $sql_contacts->save()))
 				{
 					echo '<p style="margin: 0px;">'.$n.': '.$contact['n_fn'].
-						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '')." --> SQL (".lang('User').")</p>\n";
+						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '')." --> SQL (".
+						($contact['owner']?lang('User'):lang('Contact')).")</p>\n";
 				}
 				else
 				{

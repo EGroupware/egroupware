@@ -101,6 +101,7 @@ contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
 contactform	addressbook	de	Kontaktformular
 contacts and account contact-data to ldap	admin	de	Kontakte und Kontaktdaten der Benutzer nach LDAP
+contacts and account contact-data to sql	admin	de	Kontakte und Kontaktdaten der Benutzer nach SQL
 contacts to ldap	admin	de	Kontakte nach LDAP
 contacts to ldap, account contact-data to sql	admin	de	Kontakte nach LDAP, Kontaktdaten der Benutzer nach SQL
 contains	addressbook	de	beinhaltet

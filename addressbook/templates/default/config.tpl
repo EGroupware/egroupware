@@ -100,7 +100,7 @@
    </tr>
    <tr class="th">
     <td colspan="2">
-    	&nbsp;{lang_Additional_information_about_using_LDAP_as_contact_repository}: 
+    	&nbsp;{lang_Additional_information_about_using_LDAP_as_contact_repository}:
     	<a href="addressbook/doc/README" target="_blank">README</a>
     </td>
    </tr>
@@ -112,7 +112,8 @@
       <option value="contacts" title="{lang_if_accounts_are_already_in_LDAP}">{lang_contacts_to_LDAP}</option>
       <option value="contacts,accounts" title="{lang_use_setup_for_a_full_account-migration}">{lang_contacts_and_account_contact-data_to_LDAP}</option>
       <option value="contacts,accounts-back" title="{lang_for_read_only_LDAP}">{lang_contacts_to_LDAP,_account_contact-data_to_SQL}</option>
-     </select>
+      <option value="sql" title="{lang_for_read_only_LDAP}">{lang_contacts_and_account_contact-data_to_SQL}</option>
+      </select>
      <input type="button" onclick="if (this.form.migrate.value) document.location.href='index.php?menuaction=addressbook.uicontacts.migrate2ldap&type='+this.form.migrate.value;" value="{lang_Start}" />
     </td>
    </tr>
