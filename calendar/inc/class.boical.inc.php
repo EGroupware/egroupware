@@ -197,7 +197,8 @@
 									$mailto = $GLOBALS['egw']->accounts->id2name($uid,'account_email');
 									$cn = trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
 										$GLOBALS['egw']->accounts->id2name($uid,'account_lastname'));
-									$attributes['ATTENDEE'][]	= $mailto ? 'MAILTO:'. $cn .'<'. $mailto .'>' : '';
+									// RB: MAILTO href contains only the email-address, NO cn!
+									$attributes['ATTENDEE'][]	= $mailto ? 'MAILTO:'.$mailto : '';
 									// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT} NOT used by eGW atm.
 									$role = $uid == $event['owner'] ? 'CHAIR' : 'REQ-PARTICIPANT';
 									// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
@@ -231,18 +232,18 @@
 								}
 								break;
 
-			            			case 'CLASS':
-			            				$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
-		        	    				break;
+	            			case 'CLASS':
+	            				$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
+        	    				break;
 
-		            				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-		            					if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
-		            					{
+            				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
+            					if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
+            					{
 									$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 									$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
 									$parameters['ORGANIZER']['CN'] = trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
 										$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname'));
-		            					}
+            					}
 								break;
 
 							case 'DTEND':
@@ -263,7 +264,7 @@
 	            									foreach($this->recur_days_1_0 as $id => $day)
 	            									{
 	            										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
-											}
+													}
 		            								$rrule['BYDAY'] = implode(' ',$days);
 		            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
 		            								break;
