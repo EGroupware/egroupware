@@ -986,7 +986,7 @@ class uicontacts extends bocontacts
 		$order = $query['order'];
 
 		$readonlys = array();
-		$photos = $homeaddress = false;
+		$photos = $homeaddress = $roles = false;
 		foreach($rows as $n => $val)
 		{
 			$row =& $rows[$n];
@@ -1056,7 +1056,7 @@ class uicontacts extends bocontacts
 				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
 
 				if ($row['photo']) $photos = true;
-
+				if ($row['role']) $roles = true;
 				if (isset($customfields[$row['id']]))
 				{
 					foreach($this->customfields as $name => $data)
@@ -1101,6 +1101,8 @@ class uicontacts extends bocontacts
 			if (!$photos) $rows['no_photo'] = true;
 			// disable homeaddress column, if we have no homeaddress(es)
 			if (!$homeaddress) $rows['no_home'] = true;
+			// disable roles column
+			if (!$roles) $rows['no_role'] = true;
 		}
 		// disable customfields column, if we have no customefield(s)
 		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
