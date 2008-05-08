@@ -926,6 +926,7 @@ class bocontacts extends socontacts
 				'email' => $contact['email'] ? $contact['email'] : $contact['email_home'],
 				'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
 				'name' => $this->link_title($contact),
+				'cn' => trim($contact['n_given'].' '.$contact['n_family']),
 			);
 		}
 		//echo "<p>calendar_info(".print_r($ids,true).")="; _debug_array($data);

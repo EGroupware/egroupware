@@ -219,7 +219,7 @@
 											break;
 									};
 									$parameters['ATTENDEE'][] = array(
-										'CN'       => $info['name'],
+										'CN'       => $info['cn'] ? $info['cn'] : $info['name'],
 										'ROLE'     => $role,
 										'PARTSTAT' => $status,
 										'CUTYPE'   => $cutype,
