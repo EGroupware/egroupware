@@ -690,8 +690,8 @@ ORDER BY cal_user_type, cal_usre_id
 	 * combines user_type and user_id into a single string or integer (for users)
 	 *
 	 * @param string $user_type 1-char type: 'u' = user, ...
-	 * @param int $user_id id
-	 * @return string/int combined id
+	 * @param string|int $user_id id
+	 * @return string|int combined id
 	 */
 	function combine_user($user_type,$user_id)
 	{
@@ -705,9 +705,9 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * splits the combined user_type and user_id into a single values
 	 *
-	 * @param string $user_type 1-char type: 'u' = user, ...
-	 * @param int $user_id id
-	 * @return string/int
+	 * @param string|int $uid
+	 * @param string &$user_type 1-char type: 'u' = user, ...
+	 * @param string|int &$user_id id
 	 */
 	function split_user($uid,&$user_type,&$user_id)
 	{
@@ -719,7 +719,7 @@ ORDER BY cal_user_type, cal_usre_id
 		else
 		{
 			$user_type = $uid[0];
-			$user_id = (int) substr($uid,1);
+			$user_id = substr($uid,1);
 		}
 	}
 

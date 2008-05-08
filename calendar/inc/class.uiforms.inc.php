@@ -123,16 +123,16 @@ class uiforms extends uical
 			{
 				$participants[$uid] = $participant_types['u'][$uid] = $uid == $this->user ? 'A' : 'U';
 			}
-			elseif (is_array($this->bo->resources[$uid{0}]))
+			elseif (is_array($this->bo->resources[$uid[0]]))
 			{
-				$res_data = $this->bo->resources[$uid{0}];
+				$res_data = $this->bo->resources[$uid[0]];
 				list($id,$quantity) = explode(':',substr($uid,1));
-				$participants[$uid] = $participant_types[$uid{0}][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
+				$participants[$uid] = $participant_types[$uid[0]][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
 					((int) $quantity > 1 ? (int)$quantity : '');
 				// if new_status == 'x', resource is not bookable
-				if(strpos($participant_types[$uid{0}][$id],'x') !== false)
+				if(strpos($participant_types[$uid[0]][$id],'x') !== false)
 				{
-					unset($participant_types[$uid{0}][$id]);
+					unset($participant_types[$uid[0]][$id]);
 					unset($participants[$uid]);
 				}
 			}
@@ -235,16 +235,38 @@ class uiforms extends uical
 			{
 				switch($key)
 				{
-					case 'add':
-						if (!$content['participants']['account'] && !$content['participants']['resource'])
-						{
-							$msg = lang('You need to select an account, contact or resource first!');
-						}
-						break;
-
 					case 'delete':		// handled in default
 					case 'quantity':	// handled in new_resource
 					case 'cal_resources':
+						break;
+
+					case 'add':
+						// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
+						// ToDo: get eTemplate to return that field
+						if (($email = $_POST['exec']['participants']['resource']['query']) &&
+							(preg_match('/^(.*<)?([a-z0-9_.@-]{8,})>?$/i',$email,$matches)))
+						{
+							// check if email belongs to account or contact --> prefer them over just emails
+							if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')))
+							{
+								$event['participants'][$data] = $event['participant_types']['u'][$data] = 'U';
+							}
+							elseif ((list($data) = ExecMethod2('addressbook.bocontacts.search',array(
+								'email' => $matches[2],
+								'email_home' => $matches[2],
+							),true,'','','',false,'OR')))
+							{
+								$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = 'U';
+							}
+							else
+							{
+								$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = 'U';
+							}
+						}
+						elseif (!$content['participants']['account'] && !$content['participants']['resource'])
+						{
+							$msg = lang('You need to select an account, contact or resource first!');
+						}
 						break;
 
 					case 'resource':
@@ -288,7 +310,7 @@ class uiforms extends uical
 							else
 							{
 								$id = substr($uid,1);
-								$type = $uid{0};
+								$type = $uid[0];
 							}
 							if ($data['old_status'] != $status)
 							{
@@ -563,6 +585,7 @@ class uiforms extends uical
 	function custom_mail($event,$added)
 	{
 		$to = array();
+
 		foreach($event['participants'] as $uid => $status)
 		{
 			if ($status == 'R' || $uid == $this->user) continue;
@@ -586,17 +609,9 @@ class uiforms extends uical
 					$to[] = $firstname.' '.$lastname.' <'.$email.'>';
 				}
 			}
-			elseif ($uid{0} == 'c' )
+			elseif(($info = $this->bo->resource_info($uid)))
 			{
-				if (!is_object($GLOBALS['egw']->contacts))
-				{
-					require_once(EGW_API_INC.'/class.contacts.inc.php');
-					$GLOBALS['egw']->contacts = new contacts();
-				}
-				if (($contact = $GLOBALS['egw']->contacts->read(substr($uid,1))) && ($contact['email'] || $contact['email_home']))
-				{
-					$to[] = $contact['n_fn'].' <'.($contact['email']?$contact['email']:$contact['email_home']).'>';
-				}
+				$to[] = $info['email'];
 			}
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
@@ -767,16 +782,26 @@ class uiforms extends uical
 				$preserv['participants'][$row] = $content['participants'][$row] = array(
 					'app'      => $name == 'accounts' ? ($GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'Group' : 'User') : $name,
 					'uid'      => $uid,
-					'status'   => $status{0},
-					'old_status' => $status{0},
+					'status'   => $status[0],
+					'old_status' => $status[0],
 					'quantity' => substr($status,1),
 				);
 				$readonlys[$row.'[quantity]'] = $type == 'u' || !isset($this->bo->resources[$type]['max_quantity']);
 				$readonlys[$row.'[status]'] = $readonlys[$row.'[status_recurrence]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
-				$content['participants'][$row++]['title'] = $name == 'accounts' ?
-					$GLOBALS['egw']->common->grab_owner_name($id) : egw_link::title($name,$id);
-
+				// todo: make the participants available as links with email as title
+				if ($name == 'accounts')
+				{
+					$content['participants'][$row++]['title'] = $GLOBALS['egw']->common->grab_owner_name($id);
+				}
+				elseif (($info = $this->bo->resource_info($uid)))
+				{
+					$content['participants'][$row++]['title'] = $info['name'] ? $info['name'] : $info['email'];
+				}
+				else
+				{
+					$content['participants'][$row++]['title'] = '#'.$uid;
+				}
 				// enumerate group-invitations, so people can accept/reject them
 				if ($name == 'accounts' && $GLOBALS['egw']->accounts->get_type($id) == 'g' &&
 					($members = $GLOBALS['egw']->accounts->members($id,true)))

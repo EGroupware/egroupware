@@ -1599,4 +1599,22 @@
 
 		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.5.001';
 	}
+
+
+	$test[] = '1.5.001';
+	function calendar_upgrade1_5_001()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_id',array(
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => False
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_user_id',array(
+			'type' => 'varchar',
+			'precision' => '128',
+			'nullable' => False
+		));
+
+		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.5.002';
+	}
 ?>

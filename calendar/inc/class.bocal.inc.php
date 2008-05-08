@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.socal.inc.php');
@@ -128,7 +128,7 @@ class bocal
 	 */
 	var $resources;
 	/**
-	 * @internal 
+	 * @internal
 	 * @var array $cached_event here we do some caching to read single events only once
 	 */
 	var $cached_event = array();
@@ -156,7 +156,7 @@ class bocal
 	function bocal()
 	{
 		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
-		
+
 		$this->so = new socal();
 		$this->datetime = $GLOBALS['egw']->datetime;
 
@@ -185,11 +185,47 @@ class bocal
 					$this->resources[$data['type']] = $data + array('app' => $app);
 				}
 			}
+			$this->resources['e'] = array(
+				'type' => 'e',
+				'info' => 'bocal::email_info',
+				'app'  => 'email',
+			);
 			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
-		}	
+		}
 		//echo "registered resources="; _debug_array($this->resources);
 
 		$this->config = config::read('calendar');
+	}
+
+	/**
+	 * returns info about email addresses as participants
+	 *
+	 * @param int/array $ids single contact-id or array of id's
+	 * @return array
+	 */
+	static function email_info($ids)
+	{
+		if (!$ids) return null;
+
+		$data = array();
+		foreach(!is_array($ids) ? array($ids) : $ids as $id)
+		{
+			$email = $id;
+			$name = '';
+			if (preg_match('/^(.*) *<([a-z0-9_.@-]{8,})>$/i',$email,$matches))
+			{
+				$name = $matches[1];
+				$email = $matches[2];
+			}
+			$data[] = array(
+				'res_id' => $id,
+				'email' => $email,
+				'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
+				'name' => $name,
+			);
+		}
+		//echo "<p>email_info(".print_r($ids,true).")="; _debug_array($data);
+		return $data;
 	}
 
 	/**
@@ -244,14 +280,14 @@ class bocal
 	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
-	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param) 
+	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
 	 *	or false if there are no read-grants from _any_ of the requested users
 	 */
 	function &search($params)
 	{
 		$params_in = $params;
 
-		if (!isset($params['users']) || !$params['users'] || 
+		if (!isset($params['users']) || !$params['users'] ||
 			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
 		{
 			// for a search use all account you have read grants from
@@ -288,7 +324,7 @@ class bocal
 					foreach($members as $member)
 					{
 						// use only members which gave the user a read-grant
-						if (!in_array($member['account_id'],$users) && 
+						if (!in_array($member['account_id'],$users) &&
 							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$member['account_id'])))
 						{
 							$users[] = $member['account_id'];
@@ -311,7 +347,7 @@ class bocal
 				}
 			}
 		}
-		// if we have no grants from the given user(s), we directly return no events / an empty array, 
+		// if we have no grants from the given user(s), we directly return no events / an empty array,
 		// as calling the so-layer without users would give the events of all users (!)
 		if (!count($users))
 		{
@@ -340,7 +376,7 @@ class bocal
 			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
 		$this->total = $this->so->total;
 		$this->db2data($events,isset($params['date_format']) ? $params['date_format'] : 'ts');
-		
+
 		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
 		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
 		$remove_rejected_by_user = !$show_rejected && count($params['users']) == 1 ? $params['users'][0] : false;
@@ -397,7 +433,7 @@ class bocal
 				if ($ymd != ($last = $this->date2string($e_end)))
 				{
 					$daysEvents[$last][] =& $events[$k];
-				}					
+				}
 			}
 			$events =& $daysEvents;
 			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
@@ -430,7 +466,7 @@ class bocal
 		}
 		return $events;
 	}
-	
+
 	/**
 	 * Clears all non-private info from a privat event
 	 *
@@ -452,7 +488,7 @@ class bocal
  			'non_blocking' => $event['non_blocking'],
 		);
 	}
-	
+
 	/**
 	 * check and evtl. move the horizont (maximum date for unlimited recuring events) to a new date
 	 *
@@ -466,7 +502,7 @@ class bocal
 			$this->debug_message('bocal::check_move_horizont(%1) horizont=%2',true,$new_horizont,$this->config['horizont']);
 		}
 		$new_horizont = $this->date2ts($new_horizont,true);	// now we are in server-time, where this function operates
-		
+
 		if ($new_horizont > time()+1000*DAY_s)		// some user tries to "look" more then 1000 days in the future
 		{
 			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 new horizont more then 1000 days from now --> ignoring it',true,$new_horizont,$this->config['horizont']);
@@ -500,7 +536,7 @@ class bocal
 		// update the horizont
 		$config =& CreateObject('phpgwapi.config','calendar');
 		$config->save_value('horizont',$this->config['horizont'],'calendar');
-		
+
 		if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,$this->config['horizont']);
 	}
 
@@ -523,7 +559,7 @@ class bocal
 			$event['participants'] = $event_read['participants'];
 		}
 		if (!$start) $start = $event['start'];
-		
+
 		$events = array();
 		$this->insert_all_repetitions($event,$start,$this->date2ts($this->config['horizont'],true),$events,null);
 
@@ -532,7 +568,7 @@ class bocal
 			$this->so->recurrence($event['id'],$this->date2ts($event['start'],true),$this->date2ts($event['end'],true),$event['participants']);
 		}
 	}
-	
+
 	/**
 	 * convert data read from the db, eg. convert server to user-time
 	 *
@@ -569,7 +605,7 @@ class bocal
 			}
 		}
 	}
-	
+
 	/**
 	 * convert a date from server to user-time
 	 *
@@ -579,7 +615,7 @@ class bocal
 	function date2usertime($ts,$date_format='ts')
 	{
 		if (empty($ts)) return $ts;
-		
+
 		switch ($date_format)
 		{
 			case 'ts':
@@ -612,7 +648,7 @@ class bocal
 
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
 		{
-			if (is_array($ids) || !isset($this->cached_event['id']) || $this->cached_event['id'] != $ids || 
+			if (is_array($ids) || !isset($this->cached_event['id']) || $this->cached_event['id'] != $ids ||
 				$this->cached_event_date_format != $date_format ||
 				$this->cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || $this->cached_event['start'] < $date))
 			{
@@ -621,7 +657,7 @@ class bocal
 				if ($events)
 				{
 					$this->db2data($events,$date_format);
-	
+
 					if (is_array($ids))
 					{
 						$return =& $events;
@@ -672,7 +708,7 @@ class bocal
 			$this->debug_message('bocal::insert_all_repitions(%1,%2,%3,&$event,%4)',true,$event,$start,$end,$recur_exceptions);
 		}
 		$start_in = $start; $end_in = $end;
-		
+
 		$start = $this->date2ts($start);
 		$end   = $this->date2ts($end);
 		$event_start_ts = $this->date2ts($event['start']);
@@ -684,7 +720,7 @@ class bocal
 		}
 		$id = $event['id'];
 		$event_start_arr = $this->date2array($event['start']);
-		// to be able to calculate the repetitions as difference to the start-date, 
+		// to be able to calculate the repetitions as difference to the start-date,
 		// both need to be calculated without daylight saving: mktime(,,,,,,0)
 		$event_start_daybegin_ts = adodb_mktime(0,0,0,$event_start_arr['month'],$event_start_arr['day'],$event_start_arr['year'],0);
 
@@ -710,7 +746,7 @@ class bocal
 			$search_date_ymd = (int)$this->date2string($ts);
 
 			$have_exception = !is_null($recur_exceptions) && isset($recur_exceptions[$search_date_ymd]);
-			
+
 			if (!$have_exception)	// no execption by an edited event => check the deleted ones
 			{
 				foreach((array)$event['recur_exception'] as $exception_ts)
@@ -731,7 +767,7 @@ class bocal
 			$search_date_month = adodb_date('m',$ts);
 			$search_date_day = adodb_date('d',$ts);
 			$search_date_dow = adodb_date('w',$ts);
-			// to be able to calculate the repetitions as difference to the start-date, 
+			// to be able to calculate the repetitions as difference to the start-date,
 			// both need to be calculated without daylight saving: mktime(,,,,,,0)
 			$search_beg_day = adodb_mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year,0);
 
@@ -879,10 +915,32 @@ class bocal
 	function resource_info($uid)
 	{
 		static $res_info_cache = array();
-		
+
 		if (!isset($res_info_cache[$uid]))
 		{
-			list($res_info_cache[$uid]) = $this->resources[$uid{0}]['info'] ? ExecMethod($this->resources[$uid{0}]['info'],substr($uid,1)) : false;
+			if (is_numeric($uid))
+			{
+				$info = array(
+					'res_id'    => $uid,
+					'email' => $GLOBALS['egw']->accounts->id2name($uid,'account_email'),
+					'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
+									$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
+					'type'  => $GLOBALS['egw']->accounts->get_type($uid),
+				);
+			}
+			else
+			{
+				list($info) = $this->resources[$uid[0]]['info'] ? ExecMethod($this->resources[$uid[0]]['info'],substr($uid,1)) : false;
+				if ($info)
+				{
+					$info['type'] = $uid[0];
+					if (!$info['email'] && $info['responsible'])
+					{
+						$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'],'account_email');
+					}
+				}
+			}
+			$res_info_cache[$uid] = $info;
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'resource_info'))
 		{
@@ -938,7 +996,7 @@ class bocal
 		}
 		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$grants = $this->grants[$owner];
-		
+
 		if (is_array($event) && $needed == EGW_ACL_READ)
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
@@ -946,7 +1004,7 @@ class bocal
 			//
 			foreach($event['participants'] as $uid => $accept)
 			{
-				if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true))) 
+				if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
 				{
 					// if we are a participant, we have an implicite READ and PRIVAT grant
 					$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
@@ -956,14 +1014,14 @@ class bocal
 				{
 					// if we have a READ grant from a participant, we dont give an implicit privat grant too
 					$grants |= EGW_ACL_READ;
-					// we cant break here, as we might be a participant too, and would miss the privat grant 
+					// we cant break here, as we might be a participant too, and would miss the privat grant
 				}
 				elseif (!is_numeric($uid))
 				{
 					// if we have a resource as participant
 					$resource = $this->resource_info($uid);
 					$grants |= $resource['rights'];
-				}	
+				}
 			}
 		}
 
@@ -1105,10 +1163,10 @@ class bocal
 		else
 		{
 			$date = $this->date2ts($date,False);
-			
+
 			// if timezone is requested, we dont need to convert to user-time
 			if (($tz_used = substr($format,-1)) == 'O' || $tz_used == 'Z') $server2user = false;
-			
+
 			if ($server2user && substr($format,-1) )
 			{
 				$date += $this->tz_offset_s;
@@ -1249,7 +1307,7 @@ class bocal
 
 		if ($display_day)
 		{
-			$range = lang(adodb_date('l',$first['raw'])).($this->common_prefs['dateformat']{0} != 'd' ? ' ' : ', ');
+			$range = lang(adodb_date('l',$first['raw'])).($this->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ');
 		}
 		for ($i = 0; $i < 5; $i += 2)
 		{
@@ -1319,7 +1377,7 @@ class bocal
 		}
 		return $range;
 	}
-	
+
 	/**
 	 * Displays a timespan, eg. $both ? "10:00 - 13:00: 3h" (10:00 am - 1 pm: 3h) : "10:00 3h" (10:00 am 3h)
 	 *
@@ -1334,7 +1392,7 @@ class bocal
 		$duration = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
 
 		$timespan = $t = $GLOBALS['egw']->common->formattime(sprintf('%02d',$start_m/60),sprintf('%02d',$start_m%60));
-		
+
 		if ($both)	// end-time too
 		{
 			$timespan .= ' - '.$GLOBALS['egw']->common->formattime(sprintf('%02d',$end_m/60),sprintf('%02d',$end_m%60));
@@ -1357,14 +1415,18 @@ class bocal
 	function participant_name($id,$use_type=false)
 	{
 		static $id2lid = array();
-		
+
 		if ($use_type && $use_type != 'u') $id = $use_type.$id;
 
 		if (!isset($id2lid[$id]))
 		{
 			if (!is_numeric($id))
 			{
-				$id2lid[$id] = egw_link::title($this->resources[$id{0}]['app'],substr($id,1));
+				$id2lid[$id] = '#'.$id;
+				if (($info = $this->resource_info($id)))
+				{
+					$id2lid[$id] = $info['name'] ? $info['name'] : $info['email'];
+				}
 			}
 			else
 			{
@@ -1507,12 +1569,12 @@ class bocal
 
 		return $users + $groups;	// users first and then groups, both alphabeticaly
 	}
-	
+
 	/**
 	 * Convert the recure-information of an event, into a human readable string
 	 *
 	 * @param array $event
-	 * @return string 
+	 * @return string
 	 */
 	function recure2string($event)
 	{
@@ -1588,7 +1650,7 @@ class bocal
 			}
 			$this->holidays->prepare_read_holidays($year);
 			$this->cached_holidays[$year] = $this->holidays->read_holiday();
-			
+
 			// search for birthdays
 			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
 			{
@@ -1613,7 +1675,7 @@ class bocal
 					}
 				}
 			}
-			// store holidays and birthdays in the session		
+			// store holidays and birthdays in the session
 			$this->cached_holidays = $GLOBALS['egw']->session->appsession('holidays','calendar',$this->cached_holidays);
 		}
 		if ((int) $this->debug >= 2 || $this->debug == 'read_holidays')
@@ -1622,10 +1684,10 @@ class bocal
 		}
 		return $this->cached_holidays[$year];
 	}
-	
+
 	/**
 	 * get title for an event identified by $event
-	 * 
+	 *
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param int/array $entry int cal_id or array with event
@@ -1661,7 +1723,7 @@ class bocal
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Hook called by link-class to include calendar in the appregistry of the linkage
 	 *
@@ -1682,7 +1744,7 @@ class bocal
 				'menuaction' => 'calendar.uiforms.edit',
 			),
 			'add_app'    => 'link_app',
-			'add_id'     => 'link_id',	
+			'add_id'     => 'link_id',
 			'add_popup'  => '750x400',
 		);
 	}
@@ -1744,7 +1806,7 @@ class bocal
 			$GLOBALS['egw']->preferences->save_repository(False,'default');
 		}
 	}
-	
+
 	/**
 	 * Get the freebusy URL of a user
 	 *
@@ -1755,7 +1817,7 @@ class bocal
 	{
 		if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
 
-		return (!$GLOBALS['egw_info']['server']['webserver_url'] || $GLOBALS['egw_info']['server']['webserver_url']{0} == '/' ?
+		return (!$GLOBALS['egw_info']['server']['webserver_url'] || $GLOBALS['egw_info']['server']['webserver_url'][0] == '/' ?
 			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
 			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
 			($pw ? '&password='.urlencode($pw) : '');

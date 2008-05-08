@@ -67,10 +67,10 @@
 		),
 		'egw_cal_user' => array(
 			'fd' => array(
-				'cal_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
 				'cal_recur_date' => array('type' => 'int','precision' => '8','default' => '0'),
 				'cal_user_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u'),
-				'cal_user_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cal_user_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
 				'cal_status' => array('type' => 'char','precision' => '1','default' => 'A'),
 				'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1')
 			),

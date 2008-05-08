@@ -191,14 +191,9 @@
 							case 'ATTENDEE':
 								foreach((array)$event['participants'] as $uid => $status)
 								{
-									// ToDo, this needs to deal with resources too!!!
-									if (!is_numeric($uid)) continue;
-
-									$mailto = $GLOBALS['egw']->accounts->id2name($uid,'account_email');
-									$cn = trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
-										$GLOBALS['egw']->accounts->id2name($uid,'account_lastname'));
+									if (!($info = $this->resource_info($uid))) continue;
 									// RB: MAILTO href contains only the email-address, NO cn!
-									$attributes['ATTENDEE'][]	= $mailto ? 'MAILTO:'.$mailto : '';
+									$attributes['ATTENDEE'][]	= $info['email'] ? 'MAILTO:'.$info['email'] : '';
 									// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT} NOT used by eGW atm.
 									$role = $uid == $event['owner'] ? 'CHAIR' : 'REQ-PARTICIPANT';
 									// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
@@ -206,7 +201,7 @@
 									// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
 									$status = $this->status_egw2ical[$status];
 									// CUTYPE={INDIVIDUAL|GROUP|RESOURCE|ROOM|UNKNOWN}
-									switch (is_numeric($uid) ? $GLOBALS['egw']->accounts->get_type($uid) : $uid{0})
+									switch ($info['type'])
 									{
 										case 'g':
 											$cutype = 'GROUP';
@@ -214,21 +209,22 @@
 										case 'r':
 											$cutype = 'RESOURCE';
 											break;
-										case 'u':
+										case 'u':	// account
+										case 'c':	// contact
+										case 'e':	// email address
 											$cutype = 'INDIVIDUAL';
 											break;
 										default:
 											$cutype = 'UNKNOWN';
-											$cutype = 'INDIVIDUAL';
 											break;
 									};
 									$parameters['ATTENDEE'][] = array(
-										'CN'       => $cn,
+										'CN'       => $info['name'],
 										'ROLE'     => $role,
 										'PARTSTAT' => $status,
 										'CUTYPE'   => $cutype,
 										'RSVP'     => $rsvp,
-									);
+									)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array());
 								}
 								break;
 
@@ -563,7 +559,7 @@
 								break;
 							case 'RRULE':
 								$recurence = $attributes['value'];
-								$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence{0};
+								$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence[0];
 								// vCard 2.0 values for all types
 								if (preg_match('/UNTIL=([0-9T]+)/',$recurence,$matches))
 								{
@@ -768,28 +764,46 @@
 								}
 	 							break;
 	 						case 'ATTENDEE':
-	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
-	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
+	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) ||
+	 								preg_match('/<([@.a-z0-9_-]+)>/i',$attributes['value'],$matches))
+ 								{
+ 									$email = $matches[1];
+ 								}
+ 								elseif(strpos($attributes['value'],'@') !== false)
+ 								{
+ 									$email = $attributes['value'];
+ 								}
+	 							if (($uid = $attributes['params']['X-EGROUPWARE-UID']) &&
+	 								($info = $this->resource_info($uid)) && $info['email'] == $email)
 	 							{
-	 								$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
+	 								// we use the (checked) X-EGROUPWARE-UID
+	 							}
+	 							/*elseif($attributes['params']['CUTYPE'] == 'RESOURCE')
+	 							{
+
+	 							}*/
+		 						elseif($attributes['value'] == 'Unknown')
+	 							{
+	 								$uid = $GLOBALS['egw_info']['user']['account_id'];
+	 							}
+	 							elseif (($uid = $GLOBALS['egw']->accounts->name2id($email,'account_email')))
+	 							{
+	 								// we use the account we found
+	 							}
+								elseif ((list($data) = ExecMethod2('addressbook.bocontacts.search',array(
+									'email' => $email,
+									'email_home' => $email,
+								),true,'','','',false,'OR')))
+								{
+									$uid = 'c'.$data['id'];
+								}
+	 							else
+	 							{
+	 								$uid = 'e'.($attributes['params']['CN'] ? $attributes['params']['CN'].' <'.$email.'>' : $email);
+	 							}
+	 							$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
 	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] :
 	 									($uid == $event['owner'] ? 'A' : 'U');
-	 							}
-
-	 							if (preg_match('/<([@.a-z0-9_-]+)>/i',$attributes['value'],$matches)) {
-	 								$uid = '';
-	 								$uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email');
-	 								if(!empty($uid)) {
-	 									$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
-	 										$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] :
-	 										($uid == $event['owner'] ? 'A' : 'U');
-									}
-	 							}
-
-	 							if($attributes['value'] == 'Unknown') {
-	 								$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'A';
-	 							}
-
 	 							break;
 	 						case 'ORGANIZER':	// will be written direct to the event
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
@@ -1195,7 +1209,7 @@
 								break;
 							case 'RRULE':
 								$recurence = $attributes['value'];
-								$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence{0};
+								$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence[0];
 								// vCard 2.0 values for all types
 								if (preg_match('/UNTIL=([0-9T]+)/',$recurence,$matches))
 								{

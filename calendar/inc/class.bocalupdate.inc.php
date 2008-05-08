@@ -155,7 +155,7 @@ class bocalupdate extends bocal
 					$users = array_unique($users);
 				}
 				$users[] = $uid;
-				if (in_array($uid{0},$types_with_quantity))
+				if (in_array($uid[0],$types_with_quantity))
 				{
 					$quantity[$uid] = max(1,(int) substr($status,2));
 				}
@@ -188,19 +188,19 @@ class bocalupdate extends bocal
 				$common_parts = array_intersect($users,array_keys($overlap['participants']));
 				foreach($common_parts as $n => $uid)
 				{
-					if ($overlap['participants'][$uid]{0} == 'R')
+					if ($overlap['participants'][$uid][0] == 'R')
 					{
 						unset($common_parts[$uid]);
 						continue;
 					}
-					if (is_numeric($uid) || !in_array($uid{0},$types_with_quantity))
+					if (is_numeric($uid) || !in_array($uid[0],$types_with_quantity))
 					{
 						continue;	// no quantity check: quantity allways 1 ==> conflict
 					}
 					if (!isset($max_quantity[$uid]))
 					{
 						$res_info = $this->resource_info($uid);
-						$max_quantity[$uid] = $res_info[$this->resources[$uid{0}]['max_quantity']];
+						$max_quantity[$uid] = $res_info[$this->resources[$uid[0]]['max_quantity']];
 					}
 					$quantity[$uid] += max(1,(int) substr($overlap['participants'][$uid],2));
 					if ($quantity[$uid] <= $max_quantity[$uid])
@@ -741,7 +741,7 @@ class bocalupdate extends bocal
 	 */
 	function check_status_perms($uid,$event)
 	{
-		if ($uid{0} == 'c')	// for contact we use the owner of the event
+		if ($uid[0] == 'c' || $uid['0'] == 'e')	// for contact we use the owner of the event
 		{
 			if (!is_array($event) && !($event = $this->read($event))) return false;
 
@@ -774,7 +774,7 @@ class bocalupdate extends bocal
 		{
 			return false;
 		}
-		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid{0},is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0)))
+		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0)))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
 
@@ -850,7 +850,7 @@ class bocalupdate extends bocal
 		$eventStart_arr = $this->date2array($event['start']); // give this as 'date' to the link to pick the right recurrence for the participants state
 		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.edit&cal_id='.$event['id'].'&date='.$eventStart_arr['full'].'&no_popup=1';
 		// if url is only a path, try guessing the rest ;-)
-		if ($link{0} == '/')
+		if ($link[0] == '/')
 		{
 			$link = ($GLOBALS['egw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
 				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).

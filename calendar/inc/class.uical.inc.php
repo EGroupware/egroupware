@@ -30,7 +30,7 @@ class uical
 	var $debug=false;
 	/**
 	 * instance of the bocal or bocalupdate class
-	 * 
+	 *
 	 * @var bocalupdate
 	 */
 	var $bo;
@@ -116,7 +116,7 @@ class uical
 	 * @var string $view menuaction of the selected view
 	 */
 	var $view_menuaction;
-	
+
 	/**
 	 * @var int $first first day of the shown view
 	 */
@@ -162,11 +162,11 @@ class uical
 		$this->manage_states($set_states);
 
 		$GLOBALS['uical'] = &$this;	// make us available for ExecMethod, else it creates a new instance
-		
+
 		// calendar does not work with hidden sidebox atm.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 	}
-	
+
 	/**
 	 * Checks and terminates (or returns for home) with a message if $this->owner include a user/resource we have no read-access to
 	 *
@@ -187,7 +187,7 @@ class uical
 					if (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$member))
 					{
 						$no_access_group[$member] = $this->bo->participant_name($member);
-					} 
+					}
 				}
 			}
 			elseif (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$owner))
@@ -198,7 +198,7 @@ class uical
 		if (count($no_access))
 		{
 			$msg = '<p class="redItalic" align="center">'.lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access))."</p>\n";
-		
+
 			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'home')
 			{
 				return $msg;
@@ -217,7 +217,7 @@ class uical
 		}
 		return false;
 	}
-	
+
 	/**
 	 * show the egw-framework plus possible messages ($_GET['msg'] and $this->group_warning from check_owner_access)
 	 */
@@ -225,7 +225,7 @@ class uical
 	{
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		$GLOBALS['egw']->common->egw_header();
-		
+
 		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";
 
 		if ($this->group_warning) echo '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
@@ -282,11 +282,11 @@ class uical
 					}
 					else	// change only the owners of the given type
 					{
-						$res_type = is_numeric($set_owners[0]) ? false : $set_owners[0]{0};
+						$res_type = is_numeric($set_owners[0]) ? false : $set_owners[0][0];
 						$owners = explode(',',$states['owner'] ? $states['owner'] : $default);
 						foreach($owners as $key => $owner)
 						{
-							if (!$res_type && is_numeric($owner) || $res_type && $owner{0} == $res_type)
+							if (!$res_type && is_numeric($owner) || $res_type && $owner[0] == $res_type)
 							{
 								unset($owners[$key]);
 							}
@@ -342,7 +342,7 @@ class uical
 			{
 				if ($this->cal_prefs['planner_start_with_group'] > 0) $this->cal_prefs['planner_start_with_group'] *= -1;	// fix old 1.0 pref
 
-				if (!$states_session && !$_GET['menuaction']) $this->view = '';		// first call to calendar 
+				if (!$states_session && !$_GET['menuaction']) $this->view = '';		// first call to calendar
 
 				if ($func == 'planner' && $this->view != 'planner' && $this->owner == $this->user)
 				{
@@ -390,7 +390,7 @@ class uical
 			// icons for single user, multiple users or group(s) and resources
 			foreach($event['participants'] as  $uid => $status)
 			{
-				if(is_numeric($uid) || $uid{0} == 'c')
+				if(is_numeric($uid) || !isset($this->bo->resources[$uid[0]]['icon']))
 				{
 					if (isset($icons['single']) || $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 					{
@@ -401,12 +401,12 @@ class uical
 					{
 						$icons['single'] = html::image('calendar','single');
 					}
-				}					
-				elseif(!isset($icons[$uid{0}]) && isset($this->bo->resources[$uid{0}]) && isset($this->bo->resources[$uid{0}]['icon']))
+				}
+				elseif(!isset($icons[$uid[0]]) && isset($this->bo->resources[$uid[0]]) && isset($this->bo->resources[$uid[0]]['icon']))
 				{
-				 	$icons[$uid{0}] = html::image($this->bo->resources[$uid{0}]['app'],
-				 		($this->bo->resources[$uid{0}]['icon'] ? $this->bo->resources[$uid{0}]['icon'] : 'navbar'),
-				 		lang($this->bo->resources[$uid{0}]['app']),
+				 	$icons[$uid[0]] = html::image($this->bo->resources[$uid[0]]['app'],
+				 		($this->bo->resources[$uid[0]]['icon'] ? $this->bo->resources[$uid[0]]['icon'] : 'navbar'),
+				 		lang($this->bo->resources[$uid[0]]['app']),
 				 		'width="16px" height="16px"');
 				}
 			}
@@ -475,7 +475,7 @@ class uical
 		return html::a_href($content,'/index.php',$vars,' target="_blank" title="'.html::htmlspecialchars(lang('Add')).
 			'" onclick="'.$this->popup('this.href','this.target').'; return false;"');
 	}
-	
+
 	/**
 	 * returns javascript to open a popup window: window.open(...)
 	 *
@@ -487,7 +487,7 @@ class uical
 	 */
 	function popup($link,$target='_blank',$width=750,$height=410,$Link_confirm_abort='',$Link_confirm_text='')
  	{
-		//Handle Exception for Calandar  
+		//Handle Exception for Calandar
 		if (($Link_confirm_abort) && ($Link_confirm_text))
 			{
 			$returnvalue = 'javascript:var check=confirm(\''.$Link_confirm_text.'\');';
@@ -495,21 +495,21 @@ class uical
 			// open confirm =0kay
 			$returnvalue .= 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
 				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-			$returnvalue .= '}';	
+			$returnvalue .= '}';
 			//open confirm =Abort
 			$returnvalue .=' else {';
 			$returnvalue .= 'egw_openWindowCentered2('.($Link_confirm_abort == 'this.href' ? $Link_confirm_abort : "'".$Link_confirm_abort."'").','.
 				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
 			$returnvalue .= '}';
-		
+
 			return $returnvalue;
 			}
-		
+
 		else {
-		
+
 			return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
 				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-			
+
 		}
  	}
 
@@ -631,7 +631,7 @@ class uical
 			'week'  => 'calendar.uiviews.week',
 			'month' => 'calendar.uiviews.month') as $view => $menuaction)
 		{
-			if ($this->view == 'planner' || $this->view == 'listview')	
+			if ($this->view == 'planner' || $this->view == 'listview')
 			{
 				switch($view)
 				{
@@ -743,12 +743,12 @@ function load_cal(url,id) {
 				)),
 				'target' => '_blank',
 			);
-		}				
+		}
 */
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
-		
+
 		// resources menu hooks
  		foreach ($this->bo->resources as $resource)
 		{
