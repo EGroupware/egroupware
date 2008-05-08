@@ -57,14 +57,8 @@ $setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home_hooks.addGrou
 $setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home_hooks.deleteGroup';
 $setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home_hooks.editGroup';
 
-/* Basic information about this app */
-$setup_info['notifywindow']['name']      = 'notifywindow';
-$setup_info['notifywindow']['title']     = 'Notify Window';
-$setup_info['notifywindow']['version']   = '1.0.0';
-$setup_info['notifywindow']['enable']    = 2;
-$setup_info['notifywindow']['app_order'] = 1;
-$setup_info['notifywindow']['tables']    = '';
-$setup_info['notifywindow']['hooks'][]   = 'home';
-
-
-
+/* CalDAV/CardDAV/GroupDAV app */
+$setup_info['groupdav']['name']      = 'groupdav';
+$setup_info['groupdav']['version']   = '1.6';
+$setup_info['groupdav']['enable']    = 2;
+$setup_info['groupdav']['app_order'] = 1;
