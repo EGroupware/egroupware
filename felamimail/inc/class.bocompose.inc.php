@@ -704,25 +704,22 @@
 		#	}
 
 			// add the attachments
+			$bofelamimail->openConnection();
 			foreach((array)$this->sessionData['attachments'] as $attachment) {
 				if(!empty($attachment['uid']) && !empty($attachment['folder'])) {
 					switch($attachment['type']) {
 						case 'MESSAGE/RFC822':
 							$rawHeader='';
-							$bofelamimail->openConnection();
 							$bofelamimail->reopen($attachment['folder']);
 							if (isset($attachment['partID'])) {
 								$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
 							}
 							$rawBody        = $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
-							$bofelamimail->closeConnection();
 							$_mailObject->AddStringAttachment($rawHeader.$rawBody, $attachment['name'], '7bit', 'message/rfc822');
 							break;
 						default:
-							$bofelamimail->openConnection();
 							$bofelamimail->reopen($attachment['folder']);
 							$attachmentData	= $bofelamimail->getAttachment($attachment['uid'], $attachment['partID']);
-							$bofelamimail->closeConnection();
 
 							$_mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], 'base64', $attachment['type']);
 			
@@ -738,6 +735,7 @@
 					);
 				}
 			}
+			$bofelamimail->closeConnection();
 		}
 
 		function saveAsDraft($_formData)
