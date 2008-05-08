@@ -968,7 +968,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * lock a ressource/path
 	 *
 	 * @param string $path path or url
-	 * @param string $token
+	 * @param string &$token
 	 * @param int &$timeout
 	 * @param string &$owner
 	 * @param string &$scope
@@ -977,7 +977,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param boolean $check_writable=true should we check if the ressource is writable, before granting locks, default yes
 	 * @return boolean true on success
 	 */
-	function lock($path,$token,&$timeout,&$owner,&$scope,&$type,$update=false,$check_writable=true)
+	static function lock($path,&$token,&$timeout,&$owner,&$scope,&$type,$update=false,$check_writable=true)
 	{
 		// we require write rights to lock/unlock a resource
 		if (!$path || $update && !$token || $check_writable && !egw_vfs::is_writable($path))
@@ -986,6 +986,11 @@ class egw_vfs extends vfs_stream_wrapper
 		}
     	// remove the lock info evtl. set in the cache
     	unset(self::$lock_cache[$path]);
+
+    	if ($timeout < 1000000)	// < 1000000 is a relative timestamp, so we add the current time
+    	{
+    		$timeout += time();
+    	}
 
 		if ($update)	// Lock Update
 		{
@@ -1021,6 +1026,7 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			if (!$token)
 			{
+				require_once('HTTP/WebDAV/Server.php');
 				$token = HTTP_WebDAV_Server::_new_locktoken();
 			}
 			try {
@@ -1052,7 +1058,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param boolean $check_writable=true should we check if the ressource is writable, before granting locks, default yes
      * @return boolean true on success
      */
-    function unlock($path,$token,$check_writable=true)
+    static function unlock($path,$token,$check_writable=true)
     {
 		// we require write rights to lock/unlock a resource
 		if ($check_writable && !egw_vfs::is_writable($path))
@@ -1077,7 +1083,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param  string resource path to check for locks
 	 * @return array|boolean false if there's no lock, else array with lock info
 	 */
-	function checkLock($path)
+	static function checkLock($path)
 	{
 		if (isset(self::$lock_cache[$path]))
 		{
@@ -1107,6 +1113,18 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		error_log(__METHOD__."($path) returns ".($result?str_replace(array("\n",'    '),'',print_r($result,true)):'false'));
 		return self::$lock_cache[$path] = $result;
+	}
+
+	/**
+	 * Mapps entries of applications to a path for the locking
+	 *
+	 * @param string $app
+	 * @param int|string $id
+	 * @return string
+	 */
+	static function app_entry_lock_path($app,$id)
+	{
+		return "/apps/$app/entry/$id";
 	}
 
 	/**

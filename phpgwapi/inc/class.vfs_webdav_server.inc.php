@@ -248,37 +248,37 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	}
 
 	/**
-	* LOCK method handler
-	*
-	* @param  array  general parameter passing array
-	* @return bool   true on success
-	*/
+	 * LOCK method handler
+	 *
+	 * @param  array  general parameter passing array
+	 * @return bool   true on success
+	 */
 	function LOCK(&$options)
 	{
 		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
-        // TODO recursive locks on directories not supported yet
+		// TODO recursive locks on directories not supported yet
 		if (is_dir($this->base . $options['path']) && !empty($options['depth']))
-        {
-            return '409 Conflict';
-        }
-        $options['timeout'] = time()+300; // 5min. hardcoded
+		{
+			return '409 Conflict';
+		}
+		$options['timeout'] = time()+300; // 5min. hardcoded
 
-        // dont know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which get's passed unchanged to checkLock/PROPFIND
-        // that's wrong according to the standard and cadaver does not show it on discover --> strip_tags removes eventual tags
-        if (($ret = egw_vfs::lock($options['path'],$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
-        	$options['scope'],$options['type'],isset($options['update']))) && !isset($options['update']))
-    	{
-    		return $ret ? '200 OK' : '409 Conflict';
-    	}
-    	return $ret;
+		// dont know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which get's passed unchanged to checkLock/PROPFIND
+		// that's wrong according to the standard and cadaver does not show it on discover --> strip_tags removes eventual tags
+		if (($ret = egw_vfs::lock($options['path'],$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
+			$options['scope'],$options['type'],isset($options['update']))) && !isset($options['update']))
+		{
+			return $ret ? '200 OK' : '409 Conflict';
+		}
+		return $ret;
 	}
 
 	/**
-	* UNLOCK method handler
-	*
-	* @param  array  general parameter passing array
-	* @return bool   true on success
-	*/
+	 * UNLOCK method handler
+	 *
+	 * @param  array  general parameter passing array
+	 * @return bool   true on success
+	 */
 	function UNLOCK(&$options)
 	{
 		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
@@ -286,13 +286,13 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	}
 
 	/**
-	* checkLock() helper
-	*
-	* @param  string resource path to check for locks
-	* @return bool   true on success
-	*/
+	 * checkLock() helper
+	 *
+	 * @param  string resource path to check for locks
+	 * @return bool   true on success
+	 */
 	function checkLock($path)
 	{
-    	return egw_vfs::checkLock($path);
+		return egw_vfs::checkLock($path);
 	}
 }
