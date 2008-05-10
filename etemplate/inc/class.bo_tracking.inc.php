@@ -8,16 +8,14 @@
  * @subpackage api
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
-
-require_once(EGW_API_INC.'/class.html.inc.php');
 
 /**
  * Abstract base class for trackering:
  *  - logging all modifications of an entry
  *  - notifying users about changes in an entry
- * 
+ *
  * You need to extend these class in your application:
  *	1. set the required class-vars: app, id_field
  *	2. optional set class-vars: creator_field, assigned_field, check2prefs
@@ -72,13 +70,13 @@ class bo_tracking
 	var $prefer_user_as_sender = true;
 	/**
 	 * Should the current user be email-notified (about change he made himself)
-	 * 
+	 *
 	 * Popup notifications are never send to the current user!
 	 *
 	 * @var boolean
 	 */
 	var $notify_current_user = false;
-	
+
 	/**
 	 * Array with error-messages if track($data,$old) returns false
 	 *
@@ -93,10 +91,10 @@ class bo_tracking
 	 * @var historylog
 	 */
 	var $historylog;
-	
+
 	/**
 	 * Current user, can be set via bo_tracking::track(,,$user)
-	 * 
+	 *
 	 * @access private
 	 * @var int;
 	 */
@@ -122,27 +120,32 @@ class bo_tracking
 	var $tz_offset_s;
 	/**
 	 * Should the class allow html content (for notifications)
-	 * 
+	 *
 	 * @var boolean
 	 */
 	var $html_content_allow = false;
-	
+
 	/**
 	 * Constructor
 	 *
 	 * @return bo_tracking
 	 */
-	function bo_tracking()
+	function __construct()
 	{
 
 	}
 
+	function bo_tracking()
+	{
+		self::__construct
+	}
+
 	/**
 	 * Get a config value, which can depend on $data and $old
-	 * 
+	 *
 	 * Need to be implemented in your extended tracking class!
 	 *
-	 * @abstract 
+	 * @abstract
 	 * @param string $what possible values are:
 	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
 	 *  - 'lang' string lang code for copy mail
@@ -153,9 +156,9 @@ class bo_tracking
 	 */
 	function get_config($name,$data,$old=null)
 	{
-		die('You need to extend the bo_tracking class, to be able to use it (abstract base class)!');		
+		die('You need to extend the bo_tracking class, to be able to use it (abstract base class)!');
 	}
-	
+
 	/**
 	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
 	 *
@@ -182,7 +185,7 @@ class bo_tracking
 		}
 		return $changes;
 	}
-	
+
 	/**
 	 * Save changes to the history log
 	 *
@@ -212,7 +215,7 @@ class bo_tracking
 		}
 		return $changes;
 	}
-	
+
 	/**
 	 * sending all notifications for the changed entry
 	 *
@@ -234,10 +237,10 @@ class bo_tracking
 
 		// entry creator
 		if ($this->creator_field && ($email = $GLOBALS['egw']->accounts->id2name($data[$this->creator_field],'account_email')) &&
-			!in_array($email, $email_sent)) 
+			!in_array($email, $email_sent))
 		{
 			$this->send_notification($data,$old,$email,$data[$this->creator_field],'notify_creator');
-			$email_sent[] = $email;	
+			$email_sent[] = $email;
 		}
 
 		// assigned / responsible users
@@ -247,12 +250,12 @@ class bo_tracking
 			$assignees = $old_assignees = array();
 			if ($data[$this->assigned_field])	// current assignments
 			{
-				$assignees = is_array($data[$this->assigned_field]) ? 
+				$assignees = is_array($data[$this->assigned_field]) ?
 					$data[$this->assigned_field] : explode(',',$data[$this->assigned_field]);
 			}
 			if ($old && $old[$this->assigned_field])
 			{
-				$old_assignees = is_array($old[$this->assigned_field]) ? 
+				$old_assignees = is_array($old[$this->assigned_field]) ?
 					$old[$this->assigned_field] : explode(',',$old[$this->assigned_field]);
 			}
 			foreach(array_unique(array_merge($assignees,$old_assignees)) as $assignee)
@@ -267,7 +270,7 @@ class bo_tracking
 					{
 						$this->send_notification($data,$old,$email,$assignee,'notify_assigned',
 							in_array($assignee,$assignees) !== in_array($assignee,$old_assignees) || $deleted);	// assignment changed
-						$email_sent[] = $email;	
+						$email_sent[] = $email;
 					}
 				}
 				else	// item assignee is a group
@@ -291,7 +294,7 @@ class bo_tracking
 			$lang = $this->get_config('lang',$data,$old);
 			foreach($copies as $email)
 			{
-				if (strchr($email,'@') !== false && !in_array($email, $email_sent)) 
+				if (strchr($email,'@') !== false && !in_array($email, $email_sent))
 				{
 					$this->send_notification($data,$old,$email,$lang,'notify_copy');
 					$email_sent[] = $email;
@@ -303,14 +306,14 @@ class bo_tracking
 		if ($this->save_prefs) $GLOBALS['egw_info']['user'] = $this->save_prefs; unset($this->save_prefs);
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != $GLOBALS['egw']->translation->userlang)
 		{
-			$GLOBALS['egw']->translation->init();			
+			$GLOBALS['egw']->translation->init();
 		}
 		return !count($this->errors);
 	}
 
 	/**
 	 * Sending a notification to the given email-address
-	 * 
+	 *
 	 * Called by track() or externally for sending async notifications
 	 *
 	 * @param array $data current entry
@@ -327,7 +330,7 @@ class bo_tracking
 		if (!$email) return false;
 
 		if (!$this->save_prefs) $this->save_prefs = $GLOBALS['egw_info']['user'];
-		
+
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
 			if ($user_or_lang != $this->user)
@@ -345,7 +348,7 @@ class bo_tracking
 				return false;	// only notification about changed assignment requested
 			}
 			if($this->user == $user_or_lang && !$this->notify_current_user)
-			{ 
+			{
 				return false;  // no popup for own actions
 			}
 		}
@@ -359,7 +362,7 @@ class bo_tracking
 		{
 			$GLOBALS['egw']->translation->init();
 		}
-		
+
 		// send over notification_app
 		if ($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
 			// send via notification_app
@@ -383,10 +386,10 @@ class bo_tracking
 		} else {
 			error_log('tracking: cannot send any notifications because notifications is not installed');
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Return date+time formatted for the currently notified user (prefs in $GLOBALS['egw_info']['user']['preferences'])
 	 *
@@ -406,13 +409,13 @@ class bo_tracking
 		//error_log("bo_tracking::datetime($timestamp,$do_time)=date('$format',$timestamp+$this->tz_offset_s)='".date($format,$timestamp+$this->tz_offset_s).'\')');
 		return date($format,$timestamp+3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
 	}
-	
+
 	/**
 	 * Get sender address
-	 * 
+	 *
 	 * The default implementation prefers depending on the prefer_user_as_sender class-var the user over
-	 * what is returned by get_config('sender'). 
-	 * 
+	 * what is returned by get_config('sender').
+	 *
 	 * @param int $user account_lid of user
 	 * @param array $data
 	 * @param array $old
@@ -424,11 +427,11 @@ class bo_tracking
 		$sender = $this->get_config('sender',$data,$old);
 		//echo "<p>bo_tracking::get_sender() get_config('sender',...)='".htmlspecialchars($sender)."'</p>\n";
 
-		if (($this->prefer_user_as_sender || !$sender) && $this->user && 
+		if (($this->prefer_user_as_sender || !$sender) && $this->user &&
 			($email = $GLOBALS['egw']->accounts->id2name($this->user,'account_email')))
 		{
 			$name = $GLOBALS['egw']->accounts->id2name($this->user,'account_fullname');
-			
+
 			if($prefer_id) {
 				$sender = $this->user;
 			} else {
@@ -442,7 +445,7 @@ class bo_tracking
 		//echo "<p>bo_tracking::get_sender()='".htmlspecialchars($sender)."'</p>\n";
 		return $sender;
 	}
-	
+
 	/**
 	 * Get the title for a given entry, can be reimplemented
 	 *
@@ -457,7 +460,7 @@ class bo_tracking
 
 	/**
 	 * Get the subject for a given entry, can be reimplemented
-	 * 
+	 *
 	 * Default implementation uses the link-title
 	 *
 	 * @param array $data
@@ -471,7 +474,7 @@ class bo_tracking
 
 	/**
 	 * Get the modified / new message (1. line of mail body) for a given entry, can be reimplemented
-	 * 
+	 *
 	 * Default implementation does nothing
 	 *
 	 * @param array $data
@@ -485,7 +488,7 @@ class bo_tracking
 
 	/**
 	 * Get a link to view the entry, can be reimplemented
-	 * 
+	 *
 	 * Default implementation checks get_config('link') (appending the id) or link::view($this->app,$id)
 	 *
 	 * @param array $data
@@ -519,12 +522,12 @@ class bo_tracking
 		{
 			// remove the session-id in the notification mail!
 			$link = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$link);
-			
+
 			if ($popup) $link .= '&nopopup=1';
 		}
 		return $allow_popup ? array($link,$popup) : $link;
 	}
-	
+
 	/**
 	 * Get a link for notifications to view the entry, can be reimplemented
 	 *
@@ -545,8 +548,8 @@ class bo_tracking
 							);
 		}
 		return false;
-	}	
-	
+	}
+
 	/**
      * Get the body of the notification message, can be reimplemented
      *
@@ -560,7 +563,7 @@ class bo_tracking
     {
         $body = '';
         if ($html_email)
-        {    
+        {
             $body = '<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
         }
         // new or modified message
@@ -579,7 +582,7 @@ class bo_tracking
             $modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
             //if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
             if (empty($detail['value']) && !$modified) continue;    // skip unchanged, empty values
-            
+
             $body .= $this->format_line($html_email,$detail['type'],$modified,
                 ($detail['label'] ? $detail['label'].': ':'').$detail['value']);
         }
@@ -587,14 +590,14 @@ class bo_tracking
         {
             $body .= "</table>\n";
         }
-        
+
         return $body;
     }
-	
+
 	/**
 	 * Format one line to the mail body
 	 *
-	 * @internal 
+	 * @internal
 	 * @param boolean $html_mail
 	 * @param string $type 'link', 'message', 'summary', 'multiline', 'reply' and ''=regular content
 	 * @param boolean $modified mark field as modified
@@ -605,7 +608,7 @@ class bo_tracking
 	function format_line($html_mail,$type,$modified,$line,$link=null)
 	{
 		$content = '';
-		
+
 		if ($html_mail)
 		{
 			if (!$this->html_content_allow) $line = html::htmlspecialchars($line);	// XSS
@@ -630,24 +633,24 @@ class bo_tracking
 				case 'multiline':
 					// Only Convert nl2br on non-html content
 					$pos = strpos($line, '<br');
-					if ($pos===false) 
+					if ($pos===false)
 					{
-						$line = nl2br($line);	
-					}				
+						$line = nl2br($line);
+					}
 					break;
 				case 'reply':
-					$background = '#F1F1F1';					
+					$background = '#F1F1F1';
 					break;
 				default:
 					$size = '100%';
 			}
 			$style = ($bold ? 'font-weight:bold;' : '').($size ? 'font-size:'.$size.';' : '').($color?'color:'.$color:'');
-			
+
 			$content = '<tr style="background-color: '.$background.';"><td style="'.$style.'">';
 		}
 		else	// text-mail
 		{
-			if ($type == 'reply') $content = str_repeat('-',64)."\n"; 
+			if ($type == 'reply') $content = str_repeat('-',64)."\n";
 
 			if ($modified) $content .= '> ';
 		}
@@ -656,7 +659,7 @@ class bo_tracking
 		if ($link)
 		{
 			$content .= ' ';
-			
+
 			if ($html_mail)
 			{
 				// the link is often too long for html boxes
@@ -669,12 +672,12 @@ class bo_tracking
 			}
 		}
 		if ($html_mail) $content .= '</td></tr>';
-		
+
 		$content .= "\n";
-		
+
 		return $content;
 	}
-	
+
 	/**
 	 * Get the attachments for a notification
 	 *

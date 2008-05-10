@@ -5,22 +5,15 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package api
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
 
 /**
  * contacts service provided by the addressbook application
- *
- * @package api
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-class contacts extends bocontacts
+class contacts extends addressbook_bo
 {
 	/**
 	 * @deprecated since 1.3 use total
@@ -36,20 +29,20 @@ class contacts extends bocontacts
 	/**
 	 * constructor calling the constructor of the extended class
 	 */
-	function contacts($contact_app='addressbook')
+	function __construct($contact_app='addressbook')
 	{
-		$this->bocontacts($contact_app);
-		
+		parent::__construct($contact_app);
+
 		$this->total_records =& $this->total;
 		$this->stock_contact_fields = array_keys($this->contact_fields);
 	}
-	
+
 	/**
 	* reads contacts matched by key and puts all cols in the data array
 	*
 	* reimplemented from bocontacts to call the old read function, if more then one param
 	*
-	* @param int/string $contact_id 
+	* @param int/string $contact_id
 	* @return array/boolean contact data or false on error
 	*/
 	function read($contact_id)
@@ -67,7 +60,7 @@ class contacts extends bocontacts
 	 *
 	 * They will be removed after one release, so dont use them in new code!!!
 	 */
-	
+
 	/**
 	 * Searches for contacts meating certain criteria and evtl. return only a range of them
 	 *
@@ -95,7 +88,7 @@ class contacts extends bocontacts
 			foreach(explode(',',$filter) as $expr)
 			{
 				list($col,$value) = explode('=',$expr);
-				
+
 				if ($col == 'access')	// text field access is renamed to private and using boolean 0/1
 				{
 					$col = 'private';
@@ -115,8 +108,8 @@ class contacts extends bocontacts
 			$fields2 = array_values($fields);
 			// check if the fields are in the keys with values true or 1
 			$fields = $fields2[0] === true || $fields2[0] === 1 ? array_keys($fields) : $fields2;
-			
-			
+
+
 			foreach($old2new as $old => $new)
 			{
 				if (($key = array_search($old,$fields)) !== false)
@@ -131,11 +124,11 @@ class contacts extends bocontacts
 		}
 		if (!$order) $order = $fields ? $fields[0] : 'org_name,n_family,n_given';
 		if ($order && strpos($order,'_') === false) $order = 'contact_'.$order;
-		
+
 		//echo '<p>contacts::search('.($cquery ? $cquery.'*' : $query).','.print_r($fields,true).",'$order $sort','','".($cquery ? '' : '%')."',false,'OR',".(!$limit ? 'false' : "array($start,$limit)").",".print_r($sfilter,true).");</p>\n";
 		$rows =& $this->search($cquery ? $cquery.'*' : $query,$fields,$order.($sort ? ' '.$sort : ''),'',
 			$cquery ? '' : '%',false,'OR',!$limit ? false : array((int)$start,(int)$limit),$sfilter);
-			
+
 		// return the old birthday format
 		if ($rows && (is_null($fields) || array_intersect($old2new,$fields)))
 		{
@@ -168,7 +161,7 @@ class contacts extends bocontacts
 	{
 		return $this->read($id);
 	}
-	
+
 	/**
 	 * add a contact
 	 *

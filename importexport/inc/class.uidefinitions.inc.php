@@ -60,12 +60,8 @@ class uidefinitions
 		$GLOBALS['egw_info']['flags']['currentapp'] = self::_appname;
 
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		if(!@is_object($GLOBALS['egw']->js))
-		{
-			$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-		}
 		$this->etpl =& new etemplate();
-		$this->clock = $GLOBALS['egw']->html->image(self::_appname,'clock');
+		$this->clock = html::image(self::_appname,'clock');
 		$this->steps = array(
 			'wizzard_step10' => lang('Choose an application'),
 			'wizzard_step20' => lang('Choose a plugin'),
@@ -232,7 +228,7 @@ class uidefinitions
 				$this->response->addAssign('exec[button][cancel]','style.display', 'none');
 			}
 			$this->response->addAssign('contentbox', 'innerHTML', $html);
-			if (is_object($GLOBALS['egw']->js) && $GLOBALS['egw']->js->body['onLoad'])
+			if (isset($GLOBALS['egw']->js) && $GLOBALS['egw']->js->body['onLoad'])
 			{
 				$this->response->addScript($GLOBALS['egw']->js->body['onLoad']);
 			}

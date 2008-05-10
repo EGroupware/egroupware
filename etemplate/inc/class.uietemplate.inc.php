@@ -983,6 +983,10 @@ class etemplate extends boetemplate
 		}
 		$extra_label = True;
 
+		if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
+		{
+			$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+		}
 		// the while loop allows to build extensions from other extensions
 		// please note: only the first extension's post_process function is called !!!
 		list($type,$sub_type) = explode('-',$cell['type']);
@@ -1069,10 +1073,10 @@ class etemplate extends boetemplate
 			}
 			if ($cell['onchange'] && !($cell['type'] == 'button' || $cell['type'] == 'buttononly'))
 			{
-				if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
+/*				if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
 				{
 					$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-				}
+				}*/
 				$options .= ' onChange="'.($cell['onchange'] == '1' ? 'this.form.submit();' : $this->js_pseudo_funcs($cell['onchange'],$cname)).'"';
 			}
 		}
