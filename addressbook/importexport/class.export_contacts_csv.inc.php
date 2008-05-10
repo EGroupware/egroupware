@@ -11,11 +11,9 @@
  * @version $Id: $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.export_csv.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_export_plugin.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/addressbook/importexport/class.egw_addressbook_record.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/addressbook/inc/class.uicontacts.inc.php');
 
 /**
  * export plugin of addressbook
@@ -30,7 +28,7 @@ class export_contacts_csv implements iface_export_plugin {
 	public function export( $_stream, definition $_definition) {
 		$options = $_definition->plugin_options;
 
-		$uicontacts = new uicontacts();
+		$uicontacts = new addressbook_ui();
 		$selection = array();
 		if ($options['selection'] == 'use_all') {
 			// uicontacts selection with checkbox 'use_all'
