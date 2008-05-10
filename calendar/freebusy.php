@@ -40,6 +40,12 @@
 		include ('../phpgwapi/inc/functions.inc.php');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 	}
+	// fix for SOGo connector, which does not decode the = in our f/b url
+	if (strpos($_SERVER['QUERY_STRING'],'=3D') !== false && substr($_GET['user'],0,2) == '3D')
+	{
+		$_GET['user'] = substr($_GET['user'],2);
+		if (isset($_GET['password'])) $_GET['password'] = substr($_GET['password'],2);
+	}
 	$user  = is_numeric($_GET['user']) ? (int) $_GET['user'] : $GLOBALS['egw']->accounts->name2id($_GET['user'],'account_lid','u');
 
 	if (!($username = $GLOBALS['egw']->accounts->id2name($user)))
