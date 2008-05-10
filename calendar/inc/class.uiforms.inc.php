@@ -251,7 +251,7 @@ class uiforms extends uical
 							{
 								$event['participants'][$data] = $event['participant_types']['u'][$data] = 'U';
 							}
-							elseif ((list($data) = ExecMethod2('addressbook.bocontacts.search',array(
+							elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
 								'email' => $matches[2],
 								'email_home' => $matches[2],
 							),true,'','','',false,'OR')))
