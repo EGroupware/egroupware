@@ -695,7 +695,7 @@ class bocalupdate extends bocal
 		}
 
 		// invalidate the read-cache if it contains the event we store now
-		if ($event['id'] && $event['id'] == $this->cached_event['id']) $this->cached_event = array();
+		if ($event['id'] && $event['id'] == self::$cached_event['id']) self::$cached_event = array();
 
 		$save_event = $event;
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats

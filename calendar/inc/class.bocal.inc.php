@@ -128,11 +128,10 @@ class bocal
 	 */
 	var $resources;
 	/**
-	 * @internal
 	 * @var array $cached_event here we do some caching to read single events only once
 	 */
-	var $cached_event = array();
-	var $cached_event_date_format = false;
+	protected static $cached_event = array();
+	protected static $cached_event_date_format = false;
 	/**
 	 * @var array $cached_holidays holidays plus birthdays (gets cached in the session for performance reasons)
 	 */
@@ -648,9 +647,9 @@ class bocal
 
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
 		{
-			if (is_array($ids) || !isset($this->cached_event['id']) || $this->cached_event['id'] != $ids ||
-				$this->cached_event_date_format != $date_format ||
-				$this->cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || $this->cached_event['start'] < $date))
+			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
+				self::$cached_event_date_format != $date_format ||
+				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || self::$cached_event['start'] < $date))
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
 
@@ -664,15 +663,15 @@ class bocal
 					}
 					else
 					{
-						$this->cached_event = array_shift($events);
-						$this->cached_event_date_format = $date_format;
-						$return =& $this->cached_event;
+						self::$cached_event = array_shift($events);
+						self::$cached_event_date_format = $date_format;
+						$return =& self::$cached_event;
 					}
 				}
 			}
 			else
 			{
-				$return =& $this->cached_event;
+				$return =& self::$cached_event;
 			}
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
