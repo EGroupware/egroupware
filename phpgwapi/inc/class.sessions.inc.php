@@ -18,7 +18,7 @@
 	* eGW's Session Management
 	*
 	* Baseclass for db- and php-sessions
-	* 
+	*
 	* @package api
 	* @subpackage sessions
 	*/
@@ -26,56 +26,56 @@
 	{
 		/**
 		* current user login (account_lid@domain)
-		* 
+		*
 		* @var string
 		*/
 		var $login;
 
 		/**
 		* current user password
-		* 
+		*
 		* @var string
 		*/
 		var $passwd;
 
 		/**
 		* current user db/ldap account id
-		* 
+		*
 		* @var int
 		*/
 		var $account_id;
 
 		/**
 		* current user account login id (without the eGW-domain/-instance part
-		* 
+		*
 		* @var string
 		*/
 		var $account_lid;
 
 		/**
 		* previous page call id - repost prevention, not used in eGW
-		* 
+		*
 		* @var string
 		*/
 		var $history_id;
 
 		/**
 		* domain for current user
-		* 
+		*
 		* @var string
 		*/
 		var $account_domain;
 
 		/**
 		* type flag, A - anonymous session, N - None, normal session
-		* 
+		*
 		* @var string
 		*/
 		var $session_flags;
 
 		/**
 		* current user session id
-		* 
+		*
 		* @var string
 		*/
 		var $sessionid;
@@ -83,46 +83,46 @@
 		/**
 		* an other session specific id (md5 from a random string),
 		* used together with the sessionid for xmlrpc basic auth and the encryption of session-data (if that's enabled)
-		* 
+		*
 		* @var string
 		*/
 		var $kp3;
 
 		/**
 		* encryption key for the encrption of the session-data, if enabled
-		* 
+		*
 		* @var string
 		*/
 		var $key;
 
 		/**
 		* mcrypt's iv
-		*  
+		*
 		* @var string
 		*/
 		var $iv;
 
 		/**
 		* session data
-		* 
+		*
 		* @var array
 		*/
 		var $data;
-        
+
 		/**
 		* instance of the database object
-		* 
+		*
 		* @var egw_db
 		*/
 		var $db;
-		
+
 		/**
 		 * name of access-log table
-		 * 
+		 *
 		 * @var string
 		 */
 		var $access_table = 'egw_access_log';
-        
+
 		/**
 		* @var array publicly available methods
 		*/
@@ -135,32 +135,32 @@
 
 		/**
 		* domain for cookies
-		* 
+		*
 		* @var string
 		*/
 		var $cookie_domain;
-		
+
 		/**
 		 * path for cookies
-		 * 
+		 *
 		 * @var string
 		 */
 		var $cookie_path;
 
 		/**
 		* name of XML-RPC/SOAP method called
-		* 
+		*
 		* @var string
 		*/
 		var $xmlrpc_method_called;
 
 		/**
 		* Array with the name of the system domains
-		* 
+		*
 		* @var array
 		*/
 		var $egw_domains;
-		
+
 		/**
 		 * Write debug messages about session verification to the error_log
 		 *
@@ -170,7 +170,7 @@
 
 		/**
 		* Constructor just loads up some defaults from cookies
-		* 
+		*
 		* @param $domain_names=null domain-names used in this install
 		*/
 		function sessions_($domain_names=null)
@@ -321,7 +321,7 @@
 			}
 
 			$this->session_flags = $session['session_flags'];
-			
+
 			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
 
 			/* This is to ensure that we authenticate to the correct domain (might not be default) */
@@ -452,14 +452,14 @@
 			{
 				if ($this->errorlog_debug) error_log("*** session::verify($sessionid) anon user entering not allowed app");
 				$this->destroy($sessionid,$kp3);
-				
+
 				/* Overwrite Cookie with empty user. For 2 weeks */
 				$this->egw_setcookie('sessionid','');
 				$this->egw_setcookie('kp3','');
 				$this->egw_setcookie('domain','');
 				$this->egw_setcookie('last_domain','');
-				$this->egw_setcookie('last_loginid', ''); 
-				
+				$this->egw_setcookie('last_loginid', '');
+
 				return False;
 			}
 			if ($this->errorlog_debug) error_log("--> session::verify($sessionid) SUCCESS");
@@ -470,7 +470,7 @@
 		/**
 		* Functions for creating and verifying the session
 		*/
-        
+
 		/**
 		* Get the ip address of current users
 		*
@@ -559,9 +559,10 @@
 		* @param string $login user login
 		* @param string $passwd user password
 		* @param string $passwd_type type of password being used, ie plaintext, md5, sha1
+		* @param boolean $no_session_needed=false dont create a real session, eg. for GroupDAV clients using only basic auth, no cookie support
 		* @return string session id
 		*/
-		function create($login,$passwd = '',$passwd_type = '')
+		function create($login,$passwd = '',$passwd_type = '',$no_session=false)
 		{
 			if (is_array($login))
 			{
@@ -638,17 +639,17 @@
 
 			$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 			$GLOBALS['egw']->accounts->accounts($this->account_id);
-			$this->sessionid = $this->new_session_id();
+			$this->sessionid = $no_session ? 'no-session' : $this->new_session_id();
 			$this->kp3       = md5($GLOBALS['egw']->common->randomstring(15));
 
-			if ($GLOBALS['egw_info']['server']['usecookies'])
+			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
 			{
 				$this->egw_setcookie('sessionid',$this->sessionid);
 				$this->egw_setcookie('kp3',$this->kp3);
 				$this->egw_setcookie('domain',$this->account_domain);
 			}
-			if ($GLOBALS['egw_info']['server']['usecookies'] || isset($_COOKIE['last_loginid']))
-			{ 
+			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
+			{
 				$this->egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
 				$this->egw_setcookie('last_domain',$this->account_domain,$now+1209600);
 			}
@@ -1074,7 +1075,7 @@
 				$this->appsession('phpgw_info_cache','phpgwapi',$this->user);
 			}
 		}
-        
+
 		/**
 		* This looks to be useless
 		* This will capture everything in the $GLOBALS['egw_info'] including server info,
@@ -1225,7 +1226,7 @@
 		/**
 		* Generate a url which supports url or cookies based sessions
 		*
-		* Please note, the values of the query get url encoded! 
+		* Please note, the values of the query get url encoded!
 		*
 		* @param string $url a url relative to the egroupware install root, it can contain a query too
 		* @param array/string $extravars query string arguements as string or array (prefered)
@@ -1234,7 +1235,7 @@
 		function link($url, $extravars = '')
 		{
 			//echo "<p>session::link(url='$url',extravars='".print_r($extravars,True)."')";
-			
+
 			if ($url{0} != '/')
 			{
 				$app = $GLOBALS['egw_info']['flags']['currentapp'];
@@ -1276,7 +1277,7 @@
 				$vars['kp3'] = $this->kp3;
 				$vars['domain'] = $this->account_domain;
 			}
-			
+
 			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
 			list($url,$othervars) = explode('?',$url);
 			if ($extravars && is_array($extravars))
@@ -1287,7 +1288,7 @@
 			else
 			{
 				if ($othervars) $extravars .= '&'.$othervars;
-			} 
+			}
 
 			// parse extravars string into the vars array
 			if ($extravars)
@@ -1372,7 +1373,7 @@
 			if(basename($_SERVER['SCRIPT_FILENAME']) == 'rpc.php' && session_id() != '') {
 				return session_id();
 			}
-			
+
 			return md5($GLOBALS['egw']->common->randomstring(15));
 		}
 
@@ -1408,7 +1409,7 @@
 		/**
 		* Functions for appsession data and session cache
 		*/
-        
+
 		/**
 		* Delete all data from the session cache for a user
 		*
@@ -1444,7 +1445,7 @@
 
 		/**
 		* Get the number of normal / non-anonymous sessions
-		* 
+		*
 		* @author ralfbecker
 		* @return int number of sessions
 		*/
