@@ -36,7 +36,7 @@
 		exit;
 	}
 	$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
-	
+
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
 	$GLOBALS['egw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
@@ -104,7 +104,7 @@
 		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 		{
 			$eGW_remember = explode('::::',get_magic_quotes_gpc() ? stripslashes($_COOKIE['eGW_remember']) : $_COOKIE['eGW_remember']);
-			
+
 			if($eGW_remember[0] && $eGW_remember[1] && $eGW_remember[2])
 			{
 				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember[0];
@@ -199,7 +199,7 @@
 				$login .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
 			}
 		}
-		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$passwd,$passwd_type,'u');
+		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$passwd,$passwd_type);
 
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
@@ -261,13 +261,13 @@
 			{
 				list($forward,$extra_vars) = explode('?',$forward,2);
 			}
-			
+
 			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
 				// login requuest does not come from login.php
 				// redirect to referer on logout
 				$GLOBALS['egw']->session->appsession('referer', 'login', $_SERVER['HTTP_REFERER']);
 			}
-			
+
 			// Check for save passwd
 			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') && $unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd))
 			{
@@ -275,7 +275,7 @@
 				$message = '<font color="red">'. lang('eGroupWare checked your password for saftyness. You have to change your password for the following reason:').'<br>';
 				$GLOBALS['egw']->redirect_link('/index.php', array('menuaction' => 'preferences.uipassword.change','message' => $message. $unsave_msg. '</font>'));
 			}
-			else 
+			else
 			{
 				$GLOBALS['egw']->redirect_link($forward,$extra_vars);
 			}
