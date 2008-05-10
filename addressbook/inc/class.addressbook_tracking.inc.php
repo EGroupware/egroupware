@@ -7,10 +7,8 @@
  * @package addressbook
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.bo_tracking.inc.php');
 
 /**
  * Addressbook - tracking object
@@ -56,7 +54,7 @@ class addressbook_tracking extends bo_tracking
 	var $prefer_user_as_sender = true;
 	/**
 	 * Instance of the bocontacts class calling us
-	 * 
+	 *
 	 * @access private
 	 * @var bocontacts
 	 */
@@ -68,13 +66,13 @@ class addressbook_tracking extends bo_tracking
 	 * @param bocontacts &$bocontacts
 	 * @return tracker_tracking
 	 */
-	function addressbook_tracking(&$bocontacts)
+	function __construct(&$bocontacts)
 	{
-		$this->bo_tracking();	// calling the constructor of the extended class
+		parent::__construct();	// calling the constructor of the extended class
 
 		$this->contacts =& $bocontacts;
 	}
-	
+
 	/**
 	 * Get a notification-config value
 	 *
@@ -97,7 +95,7 @@ class addressbook_tracking extends bo_tracking
 					return split(', ?',$data['email_contactform']);
 				}
 				break;
-				
+
 			case 'sender':
 				if ($data['is_contactform'])
 				{
@@ -108,10 +106,10 @@ class addressbook_tracking extends bo_tracking
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get the modified / new message (1. line of mail body) for a given entry, can be reimplemented
-	 * 
+	 *
 	 * @param array $data
 	 * @param array $old
 	 * @return string
@@ -128,10 +126,10 @@ class addressbook_tracking extends bo_tracking
 			$GLOBALS['egw']->common->grab_owner_name($data['modifier']),
 			$this->datetime($data['modified']-$this->tracker->tz_offset_s));
 	}
-	
+
 	/**
 	 * Get the subject of the notification
-	 * 
+	 *
 	 * @param array $data
 	 * @param array $old
 	 * @return string
@@ -144,10 +142,10 @@ class addressbook_tracking extends bo_tracking
 		}
 		return $prefix.$this->contacts->link_title($data);
 	}
-	
+
 	/**
 	 * Get the details of an entry
-	 * 
+	 *
 	 * @param array $data
 	 * @param string $datetime_format of user to notify, eg. 'Y-m-d H:i'
 	 * @param int $tz_offset_s offset in sec to be add to server-time to get the user-time of the user to notify

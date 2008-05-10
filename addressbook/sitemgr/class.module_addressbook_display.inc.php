@@ -7,31 +7,28 @@
  * @package addressbook
  * @copyright (c) 2008 by stefan Becker <StefanBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.module_addressbook_display.inc.php 24028 2008-02-18 09:04:36Z stefanbecker $ 
+ * @version $Id: class.module_addressbook_display.inc.php 24028 2008-02-18 09:04:36Z stefanbecker $
  */
-
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.sitemgr_module.inc.php');
 
 /**
  * SiteMgr contact form for the addressbook
- *
  */
-class module_addressbook_display extends sitemgr_module  
+class module_addressbook_display extends sitemgr_module
 {
 	/**
 	 * Constructor
 	 *
 	 * @return module_addressbook_showcontactblock
 	 */
-	function module_addressbook_display()
+	function __construct()
 	{
 		$this->arguments = array();	// get's set in get_user_interface
 		$this->title = lang('Display Contact');
 		$this->description = lang('This module displays Block from a Adddressbook Group.');
-		
+
 		$this->etemplate_method = 'addressbook.addressbook_display.display';
 	}
-	
+
 	/**
 	 * Reimplemented to add the addressbook translations and fetch the addressbooks only if needed for the user-interface
 	 *
@@ -41,8 +38,7 @@ class module_addressbook_display extends sitemgr_module
 	{
 		$GLOBALS['egw']->translation->add_app('addressbook');
 
-		include_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.uicontacts.inc.php');
-		$uicontacts = new uicontacts();
+		$uicontacts = new addressbook_ui();
 
 		$default = $fields = array(
 			'org_name'             => lang('Company'),
@@ -65,17 +61,17 @@ class module_addressbook_display extends sitemgr_module
 		{
 			$fields['#'.$name] = $data['label'];
 		}
-		
+
 		$this->arguments = array(
 			'arg1' => array(
-				'type' => 'select', 
+				'type' => 'select',
 				'label' => lang('Addressbook the contact should be shown').' ('.lang('The anonymous user needs read it!').')',
 				'options' => array(
 					'' => lang('All'),
 				)+$uicontacts->get_addressbooks(EGW_ACL_ADD)	// add to not show the accounts!
 			),
 			'arg2' => array(
-				'type' => 'select', 
+				'type' => 'select',
 				'label' => lang('Contact fields to show'),
 				'multiple' => true,
 				'options' => $fields,
@@ -83,12 +79,12 @@ class module_addressbook_display extends sitemgr_module
 				'params' => array('size' => 9),
 			),
 			'arg5' => array(
-				'type' => 'textfield', 
+				'type' => 'textfield',
 				'label' => lang('Custom eTemplate for the contactform'),
 				'params' => array('size' => 40),
 				'default' => 'addressbook.display',
 			),
-		);		
+		);
 		return parent::get_user_interface();
 	}
 }

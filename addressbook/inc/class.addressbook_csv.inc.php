@@ -4,19 +4,15 @@
  *
  * @link www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package addressbook
+ * @subpackage export
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * export to csv
- *
- * @package addressbook
- * @subpackage export
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class csv_export
 {
@@ -25,9 +21,9 @@ class csv_export
 	var $charset_out;
 	var $separator;
 
-	function csv_export($obj,$charset=null,$separator=';')
+	function __construct($obj,$charset=null,$separator=';')
 	{
-		$this->obj =& $obj;
+		$this->obj = $obj;
 		$this->separator = $separator;
 		$this->charset_out = $charset;
 		$this->charset = $GLOBALS['egw']->translation->charset();
@@ -37,7 +33,7 @@ class csv_export
 	 * Exports some contacts as CSV: download or write to a file
 	 *
 	 * @param array $ids contact-ids
-	 * @param array $fields 
+	 * @param array $fields
 	 * @param string $file filename or null for download
 	 */
 	function export($ids,$fields,$file=null)
@@ -46,7 +42,7 @@ class csv_export
 
 		if (!$file)
 		{
-			$browser =& CreateObject('phpgwapi.browser');
+			$browser = new browser();
 			$browser->content_header('addressbook.csv','text/comma-separated-values');
 		}
 		if (!($fp = fopen($file ? $file : 'php://output','w')))
@@ -66,14 +62,14 @@ class csv_export
 			fwrite($fp,$this->csv_encode($data,$fields)."\n");
 		}
 		fclose($fp);
-		
+
 		if (!$file)
 		{
 			$GLOBALS['egw']->common->egw_exit();
-		}		
+		}
 		return true;
 	}
-	
+
 	function csv_encode($data,$fields)
 	{
 		$out = array();
@@ -87,14 +83,14 @@ class csv_export
 			$out[] = $value;
 		}
 		$out = implode($this->separator,$out);
-		
+
 		if ($this->charset_out && $this->charset != $this->charset_out)
 		{
 			$out = $GLOBALS['egw']->translation->convert($out,$this->charset,$this->charset_out);
 		}
 		return $out;
 	}
-	
+
 	function csv_prepare(&$data,$fields)
 	{
 		foreach(array('owner','creator','modifier') as $name)
@@ -113,16 +109,16 @@ class csv_export
 			if ($data[$name]) $data[$name] = date('Y-m-d H:i:s',$data[$name]);
 		}
 		if ($data['tel_prefer']) $data['tel_prefer'] = $fields[$data['tel_prefer']];
-		
+
 		$cats = array();
 		foreach(explode(',',$data['cat_id']) as $cat_id)
 		{
 			if ($cat_id) $cats[] = $GLOBALS['egw']->categories->id2name($cat_id);
 		}
 		$data['cat_id'] = implode('; ',$cats);
-		
+
 		$data['private'] = $data['private'] ? lang('yes') : lang('no');
-		
+
 		$data['n_fileas'] = $this->obj->fileas($data);
 		$data['n_fn'] = $this->obj->fullname($data);
 	}

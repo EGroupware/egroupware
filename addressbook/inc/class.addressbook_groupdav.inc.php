@@ -11,8 +11,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
-
 /**
  * eGroupWare: GroupDAV access: addressbook handler
  */
@@ -21,7 +19,7 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * bo class of the application
 	 *
-	 * @var vcaladdressbook
+	 * @var addressbook_vcal
 	 */
 	var $bo;
 
@@ -43,7 +41,7 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		parent::__construct('addressbook',$debug);
 
-		$this->bo =& new bocontacts();
+		$this->bo =& new addressbook_bo();
 
 		// SoGo Connector for Thunderbird works only with iso-8859-1!
 		if (strpos($_SERVER['HTTP_USER_AGENT'],'Thunderbird') !== false) $charset = 'iso-8859-1';
@@ -262,12 +260,11 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Get the handler and set the supported fields
 	 *
-	 * @return vcaladdressbook
+	 * @return addressbook_vcal
 	 */
 	private function _get_handler()
 	{
-		include_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.vcaladdressbook.inc.php');
-		$handler =& new vcaladdressbook();
+		$handler =& new addressbook_vcal();
 		if (strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false)
 		{
 			$handler->setSupportedFields('KDE');

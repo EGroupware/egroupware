@@ -6,9 +6,9 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
- 
+
 function contact_repositories($config)
 {
 	$repositories = array('sql' => 'SQL');
@@ -29,7 +29,7 @@ function contact_repositories($config)
 
 function own_account_acl($config)
 {
-	$bocontacts =& CreateObject('addressbook.bocontacts');
+	$bocontacts = new addressbook_bo();
 	$supported_fields = $bocontacts->get_fields('supported',null,0);	// fields supported by the backend (ldap schemas!)
 	// get the list of account fields
 	$fields = array();
@@ -45,8 +45,7 @@ function own_account_acl($config)
 
 	if ($config['account_repository'] != 'ldap')	// no custom-fields in ldap
 	{
-		$custom =& CreateObject('admin.customfields','addressbook');
-		foreach($custom->get_customfields() as $name => $data)
+		foreach(config::get_customfields('addressbook') as $name => $data)
 		{
 			$fields['#'.$name] = $data['label'];
 		}
@@ -56,7 +55,7 @@ function own_account_acl($config)
 
 function org_fileds_to_update($config)
 {
-	$bocontacts =& CreateObject('addressbook.bocontacts');
+	$bocontacts = new addressbook_bo();
 	$supported_fields = $bocontacts->get_fields('supported',null,0);	// fields supported by the backend (ldap schemas!)
 	// get the list of account fields
 	$fields = array();
@@ -68,18 +67,13 @@ function org_fileds_to_update($config)
 			$fields[$field] = $label;
 		}
 	}
-	
+
 	if ($config['account_repository'] != 'ldap')	// no custom-fields in ldap
 	{
-		$custom =& CreateObject('admin.customfields','addressbook');
-		foreach($custom->get_customfields() as $name => $data)
+		foreach(config::get_customfields('addressbook') as $name => $data)
 		{
 			$fields['#'.$name] = $data['label'];
 		}
-	}
-	if (!is_object($GLOBALS['egw']->html))
-	{
-		$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 	}
 	return html::checkbox_multiselect('newsettings[org_fileds_to_update]',
 		$config['org_fileds_to_update'] ? $config['org_fileds_to_update'] : $bocontacts->org_fields,$fields,true,'',4);

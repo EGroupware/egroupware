@@ -6,23 +6,16 @@
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.socontacts.inc.php');
-
 /**
  * General business object of the adressbook
- *
- * @package addressbook
- * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-class bocontacts extends socontacts
+class addressbook_bo extends addressbook_so
 {
 	/**
 	 * @var int $tz_offset_s offset in secconds between user and server-time,
@@ -125,9 +118,9 @@ class bocontacts extends socontacts
 	 */
 	var $default_private;
 
-	function bocontacts($contact_app='addressbook')
+	function __construct($contact_app='addressbook')
 	{
-		$this->socontacts($contact_app);
+		parent::__construct($contact_app);
 
 		$this->tz_offset_s = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 		$this->now_su = time() + $this->tz_offset_s;
@@ -389,7 +382,7 @@ class bocontacts extends socontacts
 	function photo_src($id,$jpeg,$default='')
 	{
 		return $jpeg ? array(
-			'menuaction' => 'addressbook.uicontacts.photo',
+			'menuaction' => 'addressbook.addressbook_ui.photo',
 			'contact_id' => $id,
 		) : $default;
 	}
@@ -1209,7 +1202,7 @@ class bocontacts extends socontacts
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories =& CreateObject('phpgwapi.categories',$this->owner,'addressbook');
+			$this->categories = new categories($this->owner,'addressbook');
 		}
 
 		$cat_id_list = array();
@@ -1246,7 +1239,7 @@ class bocontacts extends socontacts
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories =& CreateObject('phpgwapi.categories',$this->owner,'addressbook');
+			$this->categories = new categories($this->owner,'addressbook');
 		}
 
 		if (!is_array($cat_id_list))

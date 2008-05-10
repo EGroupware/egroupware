@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -45,13 +45,11 @@ class addressbook_contactform
 			}
 			elseif ($content['submitit'])
 			{
-				require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
-				$contact = new bocontacts();
+				$contact = new addressbook_bo();
 				if ($content['owner'])	// save the contact in the addressbook
 				{
 					if ($content['email_contactform'])	// only necessary as long addressbook is not doing this itself
 					{
-						require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_tracking.inc.php');
 						$tracking = new addressbook_tracking($contact);
 					}
 					if ($contact->save($content))
@@ -103,8 +101,7 @@ class addressbook_contactform
 					static $contact;
 					if (is_null($contact))
 					{
-						require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
-						$contact = new bocontacts();
+						$contact = new addressbook_bo();
 					}
 					$content['show']['custom'.$custom] = true;
 					$content['customfield'][$custom] = $name;

@@ -114,7 +114,7 @@
       <option value="contacts,accounts-back" title="{lang_for_read_only_LDAP}">{lang_contacts_to_LDAP,_account_contact-data_to_SQL}</option>
       <option value="sql" title="{lang_for_read_only_LDAP}">{lang_contacts_and_account_contact-data_to_SQL}</option>
       </select>
-     <input type="button" onclick="if (this.form.migrate.value) document.location.href='index.php?menuaction=addressbook.uicontacts.migrate2ldap&type='+this.form.migrate.value;" value="{lang_Start}" />
+     <input type="button" onclick="if (this.form.migrate.value) document.location.href='index.php?menuaction=addressbook.addressbook_ui.migrate2ldap&type='+this.form.migrate.value;" value="{lang_Start}" />
     </td>
    </tr>
 <!-- END body -->

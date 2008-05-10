@@ -7,10 +7,8 @@
  * @package addressbook
  * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
 
 /**
  * Addressbook - document merge object
@@ -24,9 +22,9 @@ class addressbook_merge	// extends bo_merge
 	 */
 	var $public_functions = array('show_replacements' => true);
 	/**
-	 * Instance of the bocontacts class
+	 * Instance of the addressbook_bo class
 	 *
-	 * @var bocontacts
+	 * @var addressbook_bo
 	 */
 	var $contacts;
 
@@ -35,11 +33,11 @@ class addressbook_merge	// extends bo_merge
 	 *
 	 * @return addressbook_merge
 	 */
-	function addressbook_merge()
+	function __construct()
 	{
-		$this->contacts =& new bocontacts();
+		$this->contacts =& new addressbook_bo();
 	}
-	
+
 	/**
 	 * Return replacements for a contact
 	 *
@@ -125,7 +123,7 @@ class addressbook_merge	// extends bo_merge
 
 	/**
 	 * Return replacements for the calendar (next events) of a contact
-	 * 
+	 *
 	 * @param int $contact contact-id
 	 * @param boolean $last_event_too=false also include information about the last event
 	 * @return array
@@ -134,7 +132,7 @@ class addressbook_merge	// extends bo_merge
 	{
 		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
 		$calendar =& new bocalupdate();
-		
+
 		// next events
 		$events = $calendar->search(array(
 			'start' => $calendar->now_su,
@@ -212,8 +210,8 @@ class addressbook_merge	// extends bo_merge
 			$err = lang('for more then one contact in a document use the tag pagerepeat!');
 			return false;
 		}
-		foreach ($ids as $id) 
-		{	
+		foreach ($ids as $id)
+		{
 			if ($contentrepeat)   $content = $contentrepeat;   //content to repeat
 			// generate replacements
 			if (!($replacements = $this->contact_replacements($id)))
@@ -230,46 +228,46 @@ class addressbook_merge	// extends bo_merge
 				$replacements += $this->calendar_replacements($id,strpos($content,'$$calendar/-1/') !== null);
 			}
 			$replacements['$$date$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],time()+$this->contacts->tz_offset_s);
-			
+
 			if ($this->contacts->prefs['csv_charset'])	// if we have an export-charset defined, use it here to
 			{
 				$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$this->contacts->prefs['csv_charset']);
 			}
 			$content = str_replace(array_keys($replacements),array_values($replacements),$content);
-			
+
 			if (strpos($content,'$$calendar/') !== null)	// remove not existing event-replacements
 			{
 				$content = preg_replace('/\$\$calendar\/[0-9]+\/[a-z_]+\$\$/','',$content);
 			}
-			
+
 			$this->replacements = $replacements;
 			if (strpos($content,'$$IF'))
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
 				$content = preg_replace_callback('/\$\$IF ([0-9a-z_-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
 			}
-			
+
 			if ($contentrepeat) $contentrep[$id] = $content;
 		}
-		if ($contentrepeat) 
+		if ($contentrepeat)
 		{
 			$content = "";
 			foreach ($contentrep as $idrep => $repvalue)
 			{
 				$counter++;
 				$content .= $repvalue;
-				if (each($contentrep) != false && count($contentrep) !=1) $content .= "\par \page\pard\plain";  // page break			
+				if (each($contentrep) != false && count($contentrep) !=1) $content .= "\par \page\pard\plain";  // page break
 			}
 			$content = $contentstart.$content.$contentend;
-		}				
+		}
 		return $content;
 	}
-	
+
 
 	function replace_callback($param)
 	{
 		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
 		return $replace;
-	} 
+	}
 
 	/**
 	 * Download document merged with contact(s)
@@ -290,7 +288,7 @@ class addressbook_merge	// extends bo_merge
 
 		$GLOBALS['egw']->common->egw_exit();
 	}
-	
+
 	/**
 	 * Generate table with replacements for the preferences
 	 *

@@ -7,31 +7,29 @@
  * @package addressbook
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.sitemgr_module.inc.php');
 
 /**
  * SiteMgr contact form for the addressbook
  *
  */
-class module_addressbook_contactform extends sitemgr_module  
+class module_addressbook_contactform extends sitemgr_module
 {
 	/**
 	 * Constructor
 	 *
 	 * @return module_addressbook_contactform
 	 */
-	function module_addressbook_contactform()
+	function __construct()
 	{
 		$this->arguments = array();	// get's set in get_user_interface
 		$this->title = lang('Contactform');
 		$this->description = lang('This module displays a contactform, that stores direct into the addressbook.');
-		
+
 		$this->etemplate_method = 'addressbook.addressbook_contactform.display';
 	}
-	
+
 	/**
 	 * Reimplemented to add the addressbook translations and fetch the addressbooks only if needed for the user-interface
 	 *
@@ -41,8 +39,7 @@ class module_addressbook_contactform extends sitemgr_module
 	{
 		$GLOBALS['egw']->translation->add_app('addressbook');
 
-		require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.uicontacts.inc.php');
-		$uicontacts = new uicontacts();
+		$uicontacts = new addressbook_ui();
 
 		$default = $fields = array(
 			'org_name'             => lang('Company'),
@@ -69,29 +66,29 @@ class module_addressbook_contactform extends sitemgr_module
 			'sep4'                 => '----------------------------',
 			'note'                 => lang('message'),
 			'sep5'                 => '----------------------------',
-			'captcha'              => lang('Verification'),					
+			'captcha'              => lang('Verification'),
 		);
 		$this->arguments = array(
 			'arg1' => array(
-				'type' => 'select', 
+				'type' => 'select',
 				'label' => lang('Addressbook the contact should be saved to').' ('.lang('The anonymous user needs add rights for it!').')',
 				'options' => array(
 					'' => lang('None'),
 				)+$uicontacts->get_addressbooks(EGW_ACL_ADD)	// add to not show the accounts!
 			),
 			'arg4' => array(
-				'type' => 'textfield', 
+				'type' => 'textfield',
 				'label' => lang('Email addresses (comma separated) to send the contact data'),
 				'params' => array('size' => 80),
 			),
 			'arg6' => array(
-				'type' => 'textfield', 
+				'type' => 'textfield',
 				'label' => lang('Subject for email'),
 				'params' => array('size' => 80),
 				'default' => lang('Contactform'),
 			),
 			'arg2' => array(
-				'type' => 'select', 
+				'type' => 'select',
 				'label' => lang('Contact fields to show'),
 				'multiple' => true,
 				'options' => $fields,
@@ -99,18 +96,18 @@ class module_addressbook_contactform extends sitemgr_module
 				'params' => array('size' => 9),
 			),
 			'arg3' => array(
-				'type' => 'textfield', 
+				'type' => 'textfield',
 				'label' => lang('Message after submitting the form'),
 				'params' => array('size' => 80),
 				'default' => lang('Thank you for contacting us.'),
 			),
 			'arg5' => array(
-				'type' => 'textfield', 
+				'type' => 'textfield',
 				'label' => lang('Custom eTemplate for the contactform'),
 				'params' => array('size' => 40),
 				'default' => 'addressbook.contactform',
 			),
-		);		
+		);
 		return parent::get_user_interface();
 	}
 }

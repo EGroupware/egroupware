@@ -6,15 +6,31 @@
  * @author Lars Kneschke <lkneschke@egroupware.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
+ * @subpackage export
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
-require_once EGW_SERVER_ROOT.'/addressbook/inc/class.bocontacts.inc.php';
 require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 
-class vcaladdressbook extends bocontacts
+/**
+ * Addressbook - vCard parser
+ *
+ */
+class addressbook_vcal extends addressbook_bo
 {
+	/**
+	 * product manufacturer from setSupportedFields (lowercase!)
+	 *
+	 * @var string
+	 */
+	var $productManufacturer='file';
+	/**
+	 * product name from setSupportedFields (lowercase!)
+	 *
+	 * @var string
+	 */
+	var $productName;
 
 	/**
 	* import a vard into addressbook
@@ -114,7 +130,11 @@ class vcaladdressbook extends bocontacts
 							if(preg_match('/([\177-\377])/',$valueData))
 							{
 								$options['CHARSET'] = $_charset;
-								$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
+								if ($this->productManufacturer == 'kde')
+								{
+									$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								}
 							}
 							elseif(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
 							{
@@ -183,6 +203,10 @@ class vcaladdressbook extends bocontacts
 
 	function setSupportedFields($_productManufacturer='file', $_productName='')
 	{
+		// store product manufacturer and name, to be able to use it elsewhere
+		$this->productManufacturer = strtolower($_productManufacturer);
+		$this->productName = strtolower($_productName);
+
 		/**
 		 * ToDo Lars:
 		 * + changes / renamed fields in 1.3+:
@@ -394,10 +418,10 @@ class vcaladdressbook extends bocontacts
 		));
 
 		//error_log("Client: $_productManufacturer $_productName");
-		switch(strtolower($_productManufacturer))
+		switch($this->productManufacturer)
 		{
 			case 'funambol':
-				switch (strtolower($_productName))
+				switch ($this->productName)
 				{
 					case 'thunderbird':
 						$this->supportedFields = $defaultFields[6];
@@ -412,7 +436,7 @@ class vcaladdressbook extends bocontacts
 
 			case 'nexthaus corporation':
 			case 'nexthaus corp':
-				switch(strtolower($_productName))
+				switch($this->productName)
 				{
 					case 'syncje outlook edition':
 						$this->supportedFields = $defaultFields[1];
@@ -425,7 +449,7 @@ class vcaladdressbook extends bocontacts
 				break;
 
 			case 'nokia':
-				switch(strtolower($_productName))
+				switch($this->productName)
 				{
 					case 'e61':
 						$this->supportedFields = $defaultFields[5];
@@ -444,7 +468,7 @@ class vcaladdressbook extends bocontacts
 			// multisync does not provide anymore information then the manufacturer
 			// we suppose multisync with evolution
 			case 'the multisync project':
-				switch(strtolower($_productName))
+				switch($this->productName)
 				{
 					default:
 						$this->supportedFields = $defaultFields[0];
@@ -453,7 +477,7 @@ class vcaladdressbook extends bocontacts
 				break;
 
 			case 'siemens':
-				switch(strtolower($_productName))
+				switch($this->productName)
 				{
 					case 'sx1':
 						$this->supportedFields = $defaultFields[3];
@@ -467,7 +491,7 @@ class vcaladdressbook extends bocontacts
 
 			case 'sonyericsson':
 			case 'sony ericsson':
-				switch(strtolower($_productName))
+				switch($this->productName)
 				{
 					case 'd750i':
 						$this->supportedFields = $defaultFields[2];
@@ -481,7 +505,7 @@ class vcaladdressbook extends bocontacts
 				break;
 
 			case 'synthesis ag':
-				switch(strtolower($_productName))
+				switch($this->productName)
 				{
 					case 'sysync client pocketpc pro':
 					case 'sysync client pocketpc std':

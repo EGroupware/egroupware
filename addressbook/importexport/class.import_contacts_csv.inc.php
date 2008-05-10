@@ -18,18 +18,18 @@ require_once(EGW_INCLUDE_ROOT.'/importexport/inc/class.import_csv.inc.php');
  * class import_csv for addressbook
  */
 class import_contacts_csv implements iface_import_plugin  {
-	
+
 	private static $plugin_options = array(
 		'fieldsep', 		// char
 		'charset', 			// string
 		'contact_owner', 	// int
-		'update_cats', 			// string {override|add} overides record 
+		'update_cats', 			// string {override|add} overides record
 								// with cat(s) from csv OR add the cat from
 								// csv file to exeisting cat(s) of record
 		'num_header_lines', // int number of header lines
 		'field_conversion', // array( $csv_col_num => conversion)
 		'field_mapping',	// array( $csv_col_num => adb_filed)
-		'conditions',		/* => array containing condition arrays: 
+		'conditions',		/* => array containing condition arrays:
 				'type' => exists, // exists
 				'string' => '#kundennummer',
 				'true' => array(
@@ -37,49 +37,49 @@ class import_contacts_csv implements iface_import_plugin  {
 					'last' => true,
 				),
 				'false' => array(
-					'action' => insert, 
+					'action' => insert,
 					'last' => true,
 				),*/
-				
+
 	);
-	
+
 	/**
 	 * actions wich could be done to data entries
 	 */
 	private static $actions = array( 'none', 'update', 'insert', 'delete', );
-	
+
 	/**
 	 * conditions for actions
 	 *
 	 * @var array
 	 */
 	private static $conditions = array( 'exists', 'greater', 'greater or equal', );
-	
+
 	/**
 	 * @var definition
 	 */
 	private $definition;
-	
+
 	/**
 	 * @var bocontacts
 	 */
 	private $bocontacts;
-	
+
 	/**
 	 * @var bool
 	 */
 	private $dry_run = false;
-	
+
 	/**
 	 * @var bool is current user admin?
 	 */
 	private $is_admin = false;
-	
+
 	/**
 	 * @var int
 	 */
 	private $user = null;
-	
+
 	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
@@ -91,43 +91,43 @@ class import_contacts_csv implements iface_import_plugin  {
 			'fieldsep' => $_definition->plugin_options['fieldsep'],
 			'charset' => $_definition->plugin_options['charset'],
 		));
-		
+
 		$this->definition = $_definition;
-		
+
 		// user, is admin ?
 		$this->is_admin = isset( $GLOBALS['egw_info']['user']['apps']['admin'] ) && $GLOBALS['egw_info']['user']['apps']['admin'];
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
-		
+
 		// dry run?
-		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false; 
-		
+		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false;
+
 		// fetch the addressbook bo
-		$this->bocontacts = CreateObject('addressbook.bocontacts');
-		
+		$this->bocontacts = new addressbook_bo();
+
 		// set FieldMapping.
 		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
-		
+
 		// set FieldConversion
 		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
-		
+
 		//check if file has a header lines
 		if ( isset( $_definition->plugin_options['num_header_lines'] ) ) {
 			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
 		}
-		
+
 		// set eventOwner
-		$_definition->plugin_options['contact_owner'] = isset( $_definition->plugin_options['contact_owner'] ) ? 
+		$_definition->plugin_options['contact_owner'] = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
-		
+
 		while ( $record = $import_csv->get_record() ) {
 
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
-			
+
 			if ( $_definition->plugin_options['contact_owner'] != -1 ) {
 				$record['owner'] = $_definition->plugin_options['contact_owner'];
 			} else unset( $record['owner'] );
-			
+
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
@@ -137,7 +137,7 @@ class import_contacts_csv implements iface_import_plugin  {
 								array( $condition['string'] => $record[$condition['string']],),
 								$_definition->plugin_options['update_cats'] == 'add' ? false : true
 							);
-							
+
 							if ( is_array( $contacts ) && count( array_keys( $contacts ) >= 1 ) ) {
 								// apply action to all contacts matching this exists condition
 								$action = $condition['true'];
@@ -155,8 +155,8 @@ class import_contacts_csv implements iface_import_plugin  {
 								$this->action( $action['action'], $record );
 							}
 							break;
-						
-						// not supported action	
+
+						// not supported action
 						default :
 							die('condition / action not supported!!!');
 							break;
@@ -169,7 +169,7 @@ class import_contacts_csv implements iface_import_plugin  {
 			}
 		}
 	}
-	
+
 	/**
 	 * perform the required action
 	 *
@@ -191,7 +191,7 @@ class import_contacts_csv implements iface_import_plugin  {
 			case 'delete' :
 		}
 	}
-	
+
 	/**
 	 * returns translated name of plugin
 	 *
@@ -200,7 +200,7 @@ class import_contacts_csv implements iface_import_plugin  {
 	public static function get_name() {
 		return lang('Addressbook CSV export');
 	}
-	
+
 	/**
 	 * returns translated (user) description of plugin
 	 *
@@ -209,7 +209,7 @@ class import_contacts_csv implements iface_import_plugin  {
 	public static function get_description() {
 		return lang("Imports contacts into your Addressbook from a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.");
 	}
-	
+
 	/**
 	 * retruns file suffix(s) plugin can handle (e.g. csv)
 	 *
@@ -218,12 +218,12 @@ class import_contacts_csv implements iface_import_plugin  {
 	public static function get_filesuffix() {
 		return 'csv';
 	}
-	
+
 	/**
 	 * return etemplate components for options.
 	 * @abstract We can't deal with etemplate objects here, as an uietemplate
 	 * objects itself are scipt orientated and not "dialog objects"
-	 * 
+	 *
 	 * @return array (
 	 * 		name 		=> string,
 	 * 		content		=> array,
@@ -234,7 +234,7 @@ class import_contacts_csv implements iface_import_plugin  {
 	public function get_options_etpl() {
 		// lets do it!
 	}
-	
+
 	/**
 	 * returns etemplate name for slectors of this plugin
 	 *

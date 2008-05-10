@@ -30,7 +30,7 @@ class addressbook_hooks
 		{
 			$file = array(
 				array(
-					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'addressbook.uicontacts.edit')).
+					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit')).
 						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=850,height=440,scrollbars=yes,status=yes\');
 						return false;">'.lang('Add').'</a>',
 					'no_lang' => true,
@@ -38,7 +38,7 @@ class addressbook_hooks
 				),
 				array(
 					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array(
-						'menuaction' => 'addressbook.uicontacts.search',)).
+						'menuaction' => 'addressbook.addressbook_ui.search',)).
 						'" onclick="window.open(this.href,\'advanced_search\',\'dependent=yes,width=850,height=480,scrollbars=yes,status=yes\');
 						return false;">'.lang('Advanced search').'</a>',
 					'no_lang' => true,
@@ -113,7 +113,7 @@ class addressbook_hooks
 			'label'  => 'Default addressbook for adding contacts',
 			'name'   => 'add_default',
 			'help'   => 'Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.',
-			'values' => ExecMethod('addressbook.uicontacts.get_addressbooks',EGW_ACL_ADD),
+			'values' => ExecMethod('addressbook.addressbook_ui.get_addressbooks',EGW_ACL_ADD),
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
@@ -264,7 +264,7 @@ class addressbook_hooks
 		$menuData[] = array(
 			'description' => 'Addressbook',
 			'url'         => '/index.php',
-			'extradata'   => 'menuaction=addressbook.uicontacts.edit',
+			'extradata'   => 'menuaction=addressbook.addressbook_ui.edit',
 			'options'     => "onclick=\"window.open(this,'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;\"".
 				' title="'.htmlspecialchars(lang('Edit extra account-data in the addressbook')).'"',
 		);
@@ -279,15 +279,15 @@ class addressbook_hooks
 	static function search_link($location)
 	{
 		return array(
-			'query' => 'addressbook.bocontacts.link_query',
-			'title' => 'addressbook.bocontacts.link_title',
-			'titles' => 'addressbook.bocontacts.link_titles',
+			'query' => 'addressbook.addressbook_bo.link_query',
+			'title' => 'addressbook.addressbook_bo.link_title',
+			'titles' => 'addressbook.addressbook_bo.link_titles',
 			'view' => array(
-				'menuaction' => 'addressbook.uicontacts.view'
+				'menuaction' => 'addressbook.addressbook_ui.view'
 			),
 			'view_id' => 'contact_id',
 			'add' => array(
-				'menuaction' => 'addressbook.uicontacts.edit'
+				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
@@ -305,7 +305,7 @@ class addressbook_hooks
 	{
 		return array(
 			'type' => 'c',// one char type-identifiy for this resources
-			'info' => 'addressbook.bocontacts.calendar_info',// info method, returns array with id, type & name for a given id
+			'info' => 'addressbook.addressbook_bo.calendar_info',// info method, returns array with id, type & name for a given id
 		);
 	}
 }

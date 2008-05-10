@@ -7,7 +7,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-	
+
 if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 	($days = $GLOBALS['egw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays']))
 {
@@ -15,9 +15,8 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 
 	if (!(int) $days) $days = 1;	// old pref
 
-	include_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
-	$contacts =& new bocontacts();
-	
+	$contacts =& new addressbook_bo();
+
 	$month_start = date('*-m-*',$contacts->now_su);
 	$bdays =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family');
 
@@ -67,7 +66,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 					if (!$ab_lang_loaded++) $GLOBALS['egw']->translation->add_app('addressbook');
 					switch($n)
 					{
-						case 0: 
+						case 0:
 							$text = lang("Today is %1's birthday!", $contact['n_given'].' '.$contact['n_family']);
 							break;
 						case 1:
@@ -82,7 +81,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 					}
 					$portalbox->data[] = array(
 						'text' => $text,
-						'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.view&contact_id=' . $contact['id'])
+						'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.addressbook_ui.view&contact_id=' . $contact['id'])
 					);
 				}
 			}
@@ -91,7 +90,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 		{
 			echo $portalbox->draw();
 		}
-		unset($portalbox); 
+		unset($portalbox);
 		unset($days); unset($day);
 		unset($n); unset($y); unset($m); unset($d);
 	}

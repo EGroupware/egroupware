@@ -7,17 +7,14 @@
  * @package addressbook
  * @copyright (c) 2008 by Stefan Becker <StefanBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.addressbook_display.inc.php 24099 2008-02-18 16:29:06Z stefanbecker $ 
+ * @version $Id: class.addressbook_display.inc.php 24099 2008-02-18 16:29:06Z stefanbecker $
  */
-
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.uietemplate.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.uicontacts.inc.php');
 
 /**
  * SiteMgr Display form for the addressbook
  *
  */
-class addressbook_display extends uicontacts
+class addressbook_display extends addressbook_ui
 {
 	/**
 	 * Shows the Addressbook Entry and stores the submitted data
@@ -35,23 +32,23 @@ class addressbook_display extends uicontacts
 function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
 		$query['sitemgr_display'] = ($readonlys['sitemgr_display'] ?$readonlys['sitemgr_display']:'addressbook.display');
-		$total = parent::get_rows($query,$rows,$readonlys); 
+		$total = parent::get_rows($query,$rows,$readonlys);
 		$query['template'] = $query['sitemgr_display'].'.rows';
-		
+
 		foreach($query['fields'] as $name)
 		{
 			$rows['show'][$name]=true;
 		}
-			
+
 		return $total;
 
 	}
-	
+
 	function display($content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null)
 	{
 		$tpl_name=($tpl_name ? $tpl_name : 'addressbook.display');
-		$tpl = new etemplate($tpl_name);		
-	
+		$tpl = new etemplate($tpl_name);
+
 		$content = array(
 			'msg' => $msg ? $msg : $_GET['msg'],
 		);
@@ -87,10 +84,10 @@ function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 				'no_columnselection' => True,
 				'csv_fields'     => false,
 			);
-		
+
 			$content['nm1']['fields'] = $fields;
 		}
-		
+
 		return $tpl->exec('addressbook.addressbook_display.display',$content,$sel_options,$readonlys,$preserv);
 	}
 }

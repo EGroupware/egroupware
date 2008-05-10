@@ -12,12 +12,10 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
-
 /**
  * General user interface object of the adressbook
  */
-class uicontacts extends bocontacts
+class addressbook_ui extends addressbook_bo
 {
 	var $public_functions = array(
 		'search'	=> True,
@@ -50,9 +48,9 @@ class uicontacts extends bocontacts
 	 */
 	var $tabs = 'general|cats|home|details|links|distribution_list|custom|custom_private';
 
-	function uicontacts($contact_app='addressbook')
+	function __construct($contact_app='addressbook')
 	{
-		$this->bocontacts($contact_app);
+		parent::__construct($contact_app);
 
 		$this->tmpl = new etemplate();
 
@@ -166,7 +164,7 @@ class uicontacts extends bocontacts
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
-				'get_rows'       =>	'addressbook.uicontacts.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
+				'get_rows'       =>	'addressbook.addressbook_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
@@ -314,7 +312,7 @@ class uicontacts extends bocontacts
 		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
 
 		$this->tmpl->read(/*$do_email ? 'addressbook.email' :*/ 'addressbook.index');
-		return $this->tmpl->exec($do_email ? 'addressbook.uicontacts.emailpopup' : 'addressbook.uicontacts.index',
+		return $this->tmpl->exec($do_email ? 'addressbook.addressbook_ui.emailpopup' : 'addressbook.addressbook_ui.index',
 			$content,$sel_options,$readonlys,$preserv,$do_email ? 2 : 0);
 	}
 
@@ -1285,7 +1283,7 @@ class uicontacts extends bocontacts
 						$content['msg'] = lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
 								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
-									'menuaction' => 'addressbook.uicontacts.edit',
+									'menuaction' => 'addressbook.addressbook_ui.edit',
 									'contact_id' => $content['id'],
 								))).'">','</a>');
 						break;	// dont refresh the list
@@ -1307,7 +1305,7 @@ class uicontacts extends bocontacts
 							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
 /*
 						$link = $GLOBALS['egw']->link('/index.php',array(
-							'menuaction' => 'addressbook.uicontacts.view',
+							'menuaction' => 'addressbook.addressbook_ui.view',
 							'contact_id' => $content['id'],
 						));
 						echo "<html><body><script>opener.location.href = '$link&msg=".
@@ -1502,7 +1500,7 @@ class uicontacts extends bocontacts
 			$content['msg'] .= lang('Please update the templatename in your customfields section!');
 			$this->tmpl->read('addressbook.edit');
 		}
-		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$content, 2);
+		return $this->tmpl->exec('addressbook.addressbook_ui.edit',$content,$sel_options,$readonlys,$content, 2);
 	}
 
 	/**
@@ -1621,11 +1619,11 @@ class uicontacts extends bocontacts
 					$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
 
 				case 'cancel':
-					$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uicontacts.index');
+					$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index');
 
 				case 'delete':
 					$GLOBALS['egw']->redirect_link('/index.php',array(
-						'menuaction' => 'addressbook.uicontacts.index',
+						'menuaction' => 'addressbook.addressbook_ui.index',
 						'msg' => $this->delete($content) ? lang('Contact deleted') : lang('Error deleting the contact !!!'),
 					));
 			}
@@ -1635,7 +1633,7 @@ class uicontacts extends bocontacts
 			if(!$_GET['contact_id'] || !is_array($content = $this->read($_GET['contact_id'])))
 			{
 				$GLOBALS['egw']->redirect_link('/index.php',array(
-					'menuaction' => 'addressbook.uicontacts.index',
+					'menuaction' => 'addressbook.addressbook_ui.index',
 					'msg' => $content,
 				));
 			}
@@ -1726,7 +1724,7 @@ $readonlys['button[vcard]'] = true;
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
 
-		$this->tmpl->exec('addressbook.uicontacts.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
+		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 
 		$GLOBALS['egw']->hooks->process(array(
 			'location' => 'addressbook_view',
@@ -1848,7 +1846,7 @@ $readonlys['button[vcard]'] = true;
 		$content['disable_change_org'] = true;
 
 		$this->tmpl->read('addressbook.search');
-		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv,2);
+		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**
@@ -1963,7 +1961,7 @@ $readonlys['button[vcard]'] = true;
 			if (family) name.value += family+" ";
 			if (suffix) name.value += suffix;
 
-			xajax_doXMLHTTP("addressbook.uicontacts.ajax_setFileasOptions",prefix,given,middle,family,suffix,org);
+			xajax_doXMLHTTP("addressbook.addressbook_ui.ajax_setFileasOptions",prefix,given,middle,family,suffix,org);
 		}
 
 		function add_whole_list(list)
@@ -1976,7 +1974,7 @@ $readonlys['button[vcard]'] = true;
 			{
 				email_type = "email";
 			}
-			xajax_doXMLHTTP("addressbook.uicontacts.ajax_add_whole_list",list,email_type);
+			xajax_doXMLHTTP("addressbook.addressbook_ui.ajax_add_whole_list",list,email_type);
 		}
 
 		function setOptions(options_str)
@@ -2009,7 +2007,7 @@ $readonlys['button[vcard]'] = true;
 			if (name)
 			{
 				document.location.href = "'.$GLOBALS['egw']->link('/index.php',array(
-					'menuaction'=>$_GET['menuaction'],//'addressbook.uicontacts.index',
+					'menuaction'=>$_GET['menuaction'],//'addressbook.addressbook_ui.index',
 					'add_list'=>'',
 				)).'"+encodeURIComponent(name)+"&owner="+owner;
 			}
@@ -2202,6 +2200,6 @@ $readonlys['button[vcard]'] = true;
 		$content['cat_tab'] = $this->config['cat_tab'];
 
 		$this->tmpl->read('addressbook.index.cat_add');
-		return $this->tmpl->exec('addressbook.uicontacts.cat_add',$content,$sel_options,$readonlys,$content, 2);
+		return $this->tmpl->exec('addressbook.addressbook_ui.cat_add',$content,$sel_options,$readonlys,$content, 2);
 	}
 }

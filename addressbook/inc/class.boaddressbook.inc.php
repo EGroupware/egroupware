@@ -5,15 +5,15 @@
  * The original addressbook xmlrpc interface was written by Joseph Engo <jengo@phpgroupware.org>
  * and Miles Lott <milos@groupwhere.org>
  *
+ * Please note: dont use addressbook_... naming convention, as it would break the existing xmlrpc clients
+ *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
-
-require_once(EGW_API_INC.'/class.contacts.inc.php');
 
 /**
  * Class to access AND manipulate addressbook data via XMLRPC or SOAP
@@ -30,14 +30,14 @@ class boaddressbook
 	 * @var contacts
 	 */
 	var $contacts;
-	
+
 	/**
 	 * Field-mapping for certain user-agents
 	 *
 	 * @var array
 	 */
 	var $mapping=array();
-	
+
 	/**
 	 * User agent: 'KDE-AddressBook', 'eGWOSync', ...
 	 *
@@ -50,7 +50,7 @@ class boaddressbook
 	 *
 	 * @return boaddressbook
 	 */
-	function boaddressbook()
+	function __construct()
 	{
 		$this->contacts = $GLOBALS['egw']->contacts;
 
@@ -66,7 +66,7 @@ class boaddressbook
 	 * This handles introspection or discovery by the logged in client,
 	 * in which case the input might be an array.  The server always calls
 	 * this function to fill the server dispatch map using a string.
-	 * 
+	 *
 	 * @param string/array $_type='xmlrpc' xmlrpc or soap
 	 * @return array
 	 */
@@ -149,8 +149,8 @@ class boaddressbook
 
 	/**
 	 * Get field-mapping for user agents expecting old / other field-names
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 */
 	function set_mapping_for_user_agent()
 	{
@@ -173,7 +173,7 @@ class boaddressbook
 					'adr_two_type' => "'Home'",
 				);
 				break;
-				
+
 			case 'eGWOSync':	// no idea what is necessary
 				break;
 		}
@@ -181,8 +181,8 @@ class boaddressbook
 
 	/**
 	 * translate array of internal datas to xmlrpc, eg. format bday as iso8601
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 * @param array $datas array of contact arrays
 	 * @param boolean $read_customfields=false should the customfields be read, default no (contacts::read() does it already)
 	 * @return array
@@ -203,7 +203,7 @@ class boaddressbook
 			foreach($datas as $n => $nul)
 			{
 				$data =& $datas[$n];	// $n => &$data is php5 ;-)
-				
+
 				if ($customfields && isset($customfields[$data['id']]))
 				{
 					foreach($customfields[$data['id']] as $name => $value)
@@ -212,7 +212,7 @@ class boaddressbook
 					}
 				}
 				// remove empty or null elements, they dont need to be transfered
-				$data = array_diff($data,array('',null));	
+				$data = array_diff($data,array('',null));
 
 				// translate birthday to a iso8601 date
 				if(isset($data['bday']) && $data['bday'])
@@ -248,11 +248,11 @@ class boaddressbook
 						case 'grants[owner]':
 							$data[$to] = $this->contacts->grants[$data['owner']];
 							break;
-							
+
 						case 'private':
 							$data[$to] = $data['private'] ? 'private' : 'public';
 							break;
-							
+
 						default:
 							if ($to{0} == "'")	// constant value enclosed in single quotes
 							{
@@ -260,7 +260,7 @@ class boaddressbook
 							}
 							elseif(isset($data[$from]))
 							{
-								if ($to) $data[$to] =& $data[$from]; 
+								if ($to) $data[$to] =& $data[$from];
 								unset($data[$from]);
 							}
 							break;
@@ -273,8 +273,8 @@ class boaddressbook
 
 	/**
 	 * retranslate from xmlrpc / iso8601 to internal format
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 * @param array $data
 	 * @return array
 	 */
@@ -290,7 +290,7 @@ class boaddressbook
 					case 'private':
 						$data[$to] = $data['access'] == 'private';
 						break;
-						
+
 					default:
 						$data[$to] =& $data[$from]; unset($data[$from]);
 						break;
@@ -336,9 +336,9 @@ class boaddressbook
 
 	/**
 	 * Search the addressbook
-	 * 
+	 *
 	 * Todo: use contacts::search and all it's possebilities instead of the depricated contacts::old_read()
-	 * 
+	 *
 	 * @param array $param
 	 * @param int $param['start']=0 starting number of the range, if $param['limit'] != 0
 	 * @param int $param['limit']=0 max. number of entries to return, 0=all
@@ -355,7 +355,7 @@ class boaddressbook
 	function search($param)
 	{
 		$read_customfields = !isset($param['customfields']) || $param['customfields'];
-		
+
 		$extra_accounts = array();
 		if ($this->user_agent == 'KDE-AddressBook' && strpos($this->contacts->contact_repository,$this->contacts->account_repository) === false)
 		{
@@ -385,13 +385,13 @@ class boaddressbook
 	function read($id)
 	{
 		if(is_array($id)) $id = isset($id[0]) ? $id[0] : $id['id'];
-		
+
 		$data = $this->contacts->read($id);
 
 		if($data !== false)	// permission denied
 		{
 			$data = $this->data2xmlrpc(array($data));
-			
+
 			return $data[0];
 		}
 		$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
@@ -408,7 +408,7 @@ class boaddressbook
 		$data = $this->xmlrpc2data($data);
 
 		$id = $this->contacts->save($data);
-		
+
 		if($id) return $id;
 
 		$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
@@ -433,7 +433,7 @@ class boaddressbook
 
 	/**
 	 * return all addressbook categories
-	 * 
+	 *
 	 * @param boolean $complete complete cat-array or just the name
 	 * @param array with cat_id => name or cat_id => cat-array pairs
 	 */
@@ -444,7 +444,7 @@ class boaddressbook
 
 	/**
 	 * get or set addressbook customfields
-	 * 
+	 *
 	 * @param array $new_fields=null
 	 * @return array
 	 */

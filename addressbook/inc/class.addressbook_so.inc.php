@@ -6,7 +6,8 @@
  * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -27,15 +28,9 @@
  *
  * If sql-ldap is used as contact-storage (LDAP is managed from eGroupWare) the filter all, searches
  * the accounts in the SQL contacts-table too. Change in made in LDAP, are not detected in that case!
- *
- * @package addressbook
- * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-class socontacts
+class addressbook_so
 {
 	/**
 	 * name of customefields table
@@ -202,7 +197,7 @@ class socontacts
 	var $sodistrib_list;
 	var $backend;
 
-	function socontacts($contact_app='addressbook')
+	function __construct($contact_app='addressbook')
 	{
 		$this->db     = $GLOBALS['egw']->db;
 
@@ -222,7 +217,7 @@ class socontacts
 		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
 		{
 			$this->contact_repository = 'ldap';
-			$this->somain =& CreateObject('addressbook.so_ldap');
+			$this->somain =& new addressbook_ldap();
 
 			if ($this->user)	// not set eg. in setup
 			{
@@ -241,7 +236,7 @@ class socontacts
 			{
 				$this->contact_repository = 'sql-ldap';
 			}
-			$this->somain =& CreateObject('addressbook.socontacts_sql');
+			$this->somain =& new addressbook_sql();
 
 			if ($this->user)	// not set eg. in setup
 			{
@@ -256,7 +251,7 @@ class socontacts
 		{
 			if ($this->account_repository != $this->contact_repository)
 			{
-				$this->so_accounts =& CreateObject('addressbook.so_ldap');
+				$this->so_accounts = new addressbook_ldap();
 				$this->account_cols_to_search = $this->ldap_search_attributes;
 			}
 			else
@@ -790,8 +785,8 @@ class socontacts
 	 */
 	function migrate2ldap($type)
 	{
-		$sql_contacts  =& CreateObject('addressbook.socontacts_sql');
-		$ldap_contacts =& CreateObject('addressbook.so_ldap');
+		$sql_contacts  = new addressbook_sql();
+		$ldap_contacts = new addressbook_ldap();
 
 		$start = $n = 0;
 		$num = 100;

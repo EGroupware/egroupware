@@ -22,13 +22,8 @@ define('ADDRESSBOOK_GROUP',3);
  *
  * All values used to construct filters need to run through ldap::quote(),
  * to be save against LDAP query injection!!!
- *
- * @package addressbook
- * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
- * @author Lars Kneschke <l.kneschke-AT-metaways.de>
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
-class so_ldap
+class addressbook_ldap
 {
 	var $data;
 
@@ -207,7 +202,7 @@ class so_ldap
 	/**
 	 * constructor of the class
 	 */
-	function so_ldap()
+	function __construct()
 	{
 		//$this->db_data_cols 	= $this->stock_contact_fields + $this->non_contact_fields;
 		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];

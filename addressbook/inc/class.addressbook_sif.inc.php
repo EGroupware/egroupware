@@ -6,13 +6,12 @@
  * @author Lars Kneschke <lkneschke@egroupware.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
+ * @subpackage export
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
-require_once EGW_SERVER_ROOT.'/addressbook/inc/class.bocontacts.inc.php';
-
-class sifaddressbook extends bocontacts 
+class addressbook_sif extends addressbook_bo
 {
 	var $sifMapping = array(
 		'Anniversary'			=> '',
@@ -104,11 +103,11 @@ class sifaddressbook extends bocontacts
 		}
 		unset($this->sifData);
 	}
-	
+
 	function characterData($_parser, $_data) {
 		$this->sifData .= $_data;
 	}
-	
+
 	function siftoegw($_sifdata) {
 		$sifData	= base64_decode($_sifdata);
 
@@ -144,7 +143,7 @@ class sifaddressbook extends bocontacts
 						$finalContact[$key] = '';
 					}
 					break;
-					
+
 				case 'private':
 					$finalContact[$key] = (int) ($value > 0);	// eGW private is 0 (public) or 1 (private), SIF seems to use 0 and 2
 					break;
@@ -158,24 +157,24 @@ class sifaddressbook extends bocontacts
 		$this->fixup_contact($finalContact);
 		return $finalContact;
 	}
-	
+
 	/**
 	 * Search an exactly matching entry (used for slow sync)
 	 *
 	 * @param string $_sifdata
 	 * @return boolean/int/string contact-id or false, if not found
 	 */
-	function search($_sifdata) 
+	function search($_sifdata)
 	{
-		if(!$contact = $this->siftoegw($_sifdata)) 
+		if(!$contact = $this->siftoegw($_sifdata))
 		{
 			return false;
 		}
 		// patch from Di Guest says: we need to ignore the n_fileas
 		unset($contact['n_fileas']);
 		// we probably need to ignore even more as we do in vcaladdressbook
-		
-		if(($foundContacts = bocontacts::search($contact)))
+
+		if(($foundContacts = addressbook_bo::search($contact)))
 		{
 			error_log(print_r($foundContacts,true));
 			return $foundContacts[0]['id'];
@@ -194,7 +193,7 @@ class sifaddressbook extends bocontacts
 	{
 		#error_log('ABID: '.$_abID);
 		#error_log(base64_decode($_sifdata));
-		
+
 		if(!$contact = $this->siftoegw($_sifdata)) {
 			return false;
 		}
@@ -232,7 +231,7 @@ class sifaddressbook extends bocontacts
 		foreach($this->sifMapping as $sifField => $egwField)
 		{
 			if(empty($egwField)) continue;
-			
+
 			#error_log("$sifField => $egwField");
 			#error_log('VALUE1: '.$entry[0][$egwField]);
 			$value = $GLOBALS['egw']->translation->convert($entry[$egwField], $sysCharSet, 'utf-8');
@@ -246,19 +245,19 @@ class sifaddressbook extends bocontacts
 						$value = implode("; ", $this->get_categories($value));
 						$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 					}
-					$sifContact .= "<$sifField>$value</$sifField>";							
+					$sifContact .= "<$sifField>$value</$sifField>";
 					break;
-					
+
 				case 'Sensitivity':
 					$value = 2 * $value;	// eGW private is 0 (public) or 1 (private)
-					$sifContact .= "<$sifField>$value</$sifField>";							
+					$sifContact .= "<$sifField>$value</$sifField>";
 					break;
-					
+
 				case 'Folder':
 					# skip currently. This is the folder where Outlook stores the contact.
 					#$sifContact .= "<$sifField>/</$sifField>";
 					break;
-					
+
 				default:
 					$sifContact .= "<$sifField>".trim($value)."</$sifField>";
 					break;

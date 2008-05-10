@@ -15,7 +15,7 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 /**
  * SQL storage object of the adressbook
  */
-class socontacts_sql extends so_sql
+class addressbook_sql extends so_sql
 {
 	/**
 	 * name of customefields table
@@ -50,7 +50,7 @@ class socontacts_sql extends so_sql
 	 */
 	var $ab2list_table = 'egw_addressbook2list';
 
-	function socontacts_sql()
+	function __construct()
 	{
 		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_',true);	// true = using the global db object, no clone!
 
