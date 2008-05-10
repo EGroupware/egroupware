@@ -275,6 +275,7 @@ class addressbook_vcal extends addressbook_bo
 			'URL;HOME'	=> array('url_home'),
 			'FBURL'		=> array('freebusy_uri'),
 			'PHOTO'		=> array('jpegphoto'),
+			'UID'       => array('uid'),
 		);
 
 		$defaultFields[2] = array(	// sony ericson
