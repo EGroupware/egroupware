@@ -786,7 +786,7 @@ class Horde_iCalendar {
 		$value = str_replace(';', '\;', $value);
 		$value = str_replace(':', '\:', $value);
                 break;
-    	
+
             default:
                 break;
             }
@@ -802,7 +802,7 @@ class Horde_iCalendar {
                     . $this->_newline;
             } else {
 # JVL: prevent : for empty values
-#                $attr_string = "$name$params_str:$value";  
+#                $attr_string = "$name$params_str:$value";
                 $attr_string = "$name$params_str";
 		$attr_string .= (!empty($value)) ? ":$value" : ';';
 
@@ -905,7 +905,7 @@ class Horde_iCalendar {
             return $time;
         }
 
-		error_log("parseDateTime: ".$text." => ".print_r($time, true));
+		//error_log("parseDateTime: ".$text." => ".print_r($time, true));
 
         if ($time['zone'] == 'UTC') {
             return @gmmktime($time['hour'], $time['minute'], $time['second'],
@@ -1143,11 +1143,11 @@ class Horde_iCalendar {
 			  $foldedline .= (empty($foldedline))
 				?   substr($line, 0, $cutPoint)
 				:  $this->_newline . ' ' . substr($line, 0, $cutPoint);
-			  
+
 			  $line = (strlen($line) <= $cutPoint)
 				? ''
 				: substr($line, $cutPoint);
-	     
+
 			  if (strlen($line) < 75) {
 				$foldedline .=  $this->_newline . ' ' . $line;
 				$line = '';
@@ -1172,7 +1172,7 @@ class Horde_iCalendar {
     function _quotedPrintableEncode($input = '')
     {
     	return $this->EncodeQP($input);
-    
+
 	#$input = preg_replace('!(\r\n|\r|\n)!',"\n",$input);
 
         // If imap_8bit() is available, use it.
@@ -1201,7 +1201,7 @@ class Horde_iCalendar {
     var $LE              = "\r\n";
 
     /**
-     * Encode string to quoted-printable.  
+     * Encode string to quoted-printable.
      * @access private
      * @return string
      */
@@ -1231,7 +1231,7 @@ class Horde_iCalendar {
     /**
      * Wraps message for use with mailers that do not
      * automatically perform wrapping and for quoted-printable.
-     * Original written by philippe.  
+     * Original written by philippe.
      * @access private
      * @return string
      */
@@ -1293,7 +1293,7 @@ class Horde_iCalendar {
               else
               {
                 $buf_o = $buf;
-                $buf .= ($e == 0) ? $word : (" " . $word); 
+                $buf .= ($e == 0) ? $word : (" " . $word);
 
                 if (strlen($buf) > $length and $buf_o != "")
                 {
@@ -1310,7 +1310,7 @@ class Horde_iCalendar {
         return $message;
     }
     /**
-     * Changes every end of line from CR or LF to CRLF.  
+     * Changes every end of line from CR or LF to CRLF.
      * @access private
      * @return string
      */
@@ -1322,7 +1322,7 @@ class Horde_iCalendar {
     }
 
     /**
-     * Encode string to quoted-printable.  
+     * Encode string to quoted-printable.
      * @access private
      * @return string
      */
@@ -1350,7 +1350,7 @@ class Horde_iCalendar {
     /**
      * Wraps message for use with mailers that do not
      * automatically perform wrapping and for quoted-printable.
-     * Original written by philippe.  
+     * Original written by philippe.
      * @access private
      * @return string
      */
@@ -1413,7 +1413,7 @@ class Horde_iCalendar {
               else
               {
                 $buf_o = $buf;
-                $buf .= ($e == 0) ? $word : (" " . $word); 
+                $buf .= ($e == 0) ? $word : (" " . $word);
 
                 if (strlen($buf) > $length and $buf_o != "")
                 {
