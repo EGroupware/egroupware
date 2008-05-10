@@ -647,8 +647,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		do {
 			$file = readdir($this->opened_dir);
 		}
-		while($file !== false && self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
-			!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE));
+		while($file !== false && (is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) ||	// dont return mountpoints twice
+			self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
+			!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE)));
 
 		return $file;
 	}
