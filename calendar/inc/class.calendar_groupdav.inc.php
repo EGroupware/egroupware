@@ -262,8 +262,9 @@ class calendar_groupdav extends groupdav_handler
 		}
 
 		header('ETag: '.$this->get_etag($cal_id));
-		if (is_null($event) || $id != $cal_id)
+		if (is_null($event))
 		{
+			error_log(__METHOD__."(,$id,$user) cal_id=$cal_id, is_null(\$event)=".(int)is_null($event));
 			header('Location: '.$this->base_uri.'/calendar/'.$cal_id);
 			return '201 Created';
 		}
@@ -313,7 +314,7 @@ class calendar_groupdav extends groupdav_handler
 		// add a hash over the participants and their stati
 		ksort($entry['participants']);	// create a defined order
 		$etag .= ':'.md5(serialize($entry['participants']));
-		//error_log(__METHOD__."($entry[id]: $entry[title])=$etag");
+		//error_log(__METHOD__."($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
 		return $etag;
 	}
 
@@ -338,9 +339,9 @@ class calendar_groupdav extends groupdav_handler
 	static function extra_properties(array $props=array())
 	{
 		// calendaring URL of the current user
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/calendar/');
+		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/');
 		// email of the current user, see caldav-sheduling draft
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','mailto:'.$GLOBALS['egw_info']['user']['email']);
+		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$GLOBALS['egw_info']['user']['email']);
 
 		return $props;
 	}
