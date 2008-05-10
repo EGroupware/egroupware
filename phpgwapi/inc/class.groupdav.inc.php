@@ -198,6 +198,10 @@ class groupdav extends HTTP_WebDAV_Server
 		        	)),
 		        );
 			}
+			if (!$options['depth'] && !$id)
+			{
+				return true;	// depth 0 --> show only the self url
+			}
 			return $handler->propfind($options['path'],$options,$files,$user,$id);
 		}
 		return '501 Not Implemented';
