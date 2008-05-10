@@ -954,7 +954,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$path = parse_url($path,PHP_URL_PATH);
 		}
-		return '/filemanager/webdav.php'.$path;
+		return '/webdav.php'.$path;
 	}
 
 	/**
