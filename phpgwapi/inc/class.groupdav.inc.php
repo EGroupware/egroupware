@@ -137,13 +137,30 @@ class groupdav extends HTTP_WebDAV_Server
 
 		if (!$app)	// root folder containing apps
 		{
+			// self url
 			$files['files'][] = array(
-            	'path'  => '/',
-            	'props' => array(
-            		self::mkprop('displayname','eGroupWare'),
-            		self::mkprop('resourcetype','collection'),
-	            	// adding the calendar extra property (calendar-home-set, etc.) here, allows apple iCal to "autodetect" the URL
+				'path'  => '/',
+				'props' => array(
+					self::mkprop('displayname','eGroupWare'),
+					self::mkprop('resourcetype','collection'),
+					// adding the calendar extra property (calendar-home-set, etc.) here, allows apple iCal to "autodetect" the URL
 					self::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/calendar/'),
+				),
+			);
+			// principals collection
+			$files['files'][] = array(
+            	'path'  => '/principals/',
+            	'props' => array(
+            		self::mkprop('displayname',lang('Accounts')),
+            		self::mkprop('resourcetype','collection'),
+				),
+            );
+			// groups collection
+			$files['files'][] = array(
+            	'path'  => '/groups/',
+            	'props' => array(
+            		self::mkprop('displayname',lang('Groups')),
+            		self::mkprop('resourcetype','collection'),
 				),
             );
 
@@ -155,7 +172,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 				$files['files'][] = array(
 	            	'path'  => '/'.$app.'/',
-	            	'props' => call_user_func('groupdav_'.$app.'::extra_properties',array(
+	            	'props' => call_user_func($app.'_groupdav::extra_properties',array(
 	            		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
 	            		self::mkprop('resourcetype',$this->_resourcetype($app)),
 	            	)),
@@ -163,9 +180,9 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			return true;
 		}
-		if (!$GLOBALS['egw_info']['user']['apps'][$app])
+		if (!in_array($app,array('principals','groups')) && !$GLOBALS['egw_info']['user']['apps'][$app])
 		{
-			error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights");
+			error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights for '$app'");
 			return '403 Forbidden';	// no rights for the given app
 		}
 		if (($handler = groupdav_handler::app_handler($app,$this->debug)))
@@ -198,7 +215,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$resourcetype = array(
 			self::mkprop('collection','collection'),
 		);
-		if (!$no_extra_types)
+		if (!$no_extra_types && isset($this->root[$app]))
 		{
 			foreach($this->root[$app] as $ns => $type)
 			{
@@ -426,6 +443,13 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		$parts = explode('/',$path);
 
+		if (in_array($parts[1],array('principals','groups')))
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			list(,$app,$id) = $parts;
+			return true;
+		}
+
 		list($id) = explode('.',array_pop($parts));		// remove evtl. .ics extension
 
 		$app = array_pop($parts);
@@ -438,7 +462,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 		}
-		if (!($ok = $id && in_array($app,array('addressbook','calendar','infolog')) && $user))
+		if (!($ok = $id && in_array($app,array('addressbook','calendar','infolog','principals','groups')) && $user))
 		{
 			error_log(__METHOD__."('$path') returning false: id=$id, app='$app', user=$user");
 		}

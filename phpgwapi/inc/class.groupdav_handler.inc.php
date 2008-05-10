@@ -60,6 +60,12 @@ abstract class groupdav_handler
 	 */
 	var $http_if_match;
 
+	/**
+	 * Constructor
+	 *
+	 * @param string $app
+	 * @param int $debug=null
+	 */
 	function __construct($app,$debug=null)
 	{
 		$this->app = $app;
@@ -181,10 +187,10 @@ abstract class groupdav_handler
 	 */
 	function _common_get_put_delete($method,&$options,$id)
 	{
-		if (!$GLOBALS['egw_info']['user']['apps'][$this->app])
+		if (!in_array($this->app,array('principals','groups')) && !$GLOBALS['egw_info']['user']['apps'][$this->app])
 		{
-			if ($this->debug) error_log(__METHOD__."($method,,$id) 403 Forbidden: no app rights");
-			return '403 Forbidden';		// no calendar rights
+			if ($this->debug) error_log(__METHOD__."($method,,$id) 403 Forbidden: no app rights for '$this->app'");
+			return '403 Forbidden';		// no app rights
 		}
 		$extra_acl = $this->method2acl[$method];
 		if (!($entry = $this->read($id)) && ($method != 'PUT' || $event === false) ||
@@ -228,7 +234,7 @@ abstract class groupdav_handler
 		if (!array_key_exists($app,$handler_cache))
 		{
 			$class = $app.'_groupdav';
-			if (!class_exists($class)) return null;
+			if (!class_exists($class) && !class_exists($class = 'groupdav_'.$app)) return null;
 
 			$handler_cache[$app] = new $class($app);
 		}
