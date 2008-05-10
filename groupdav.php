@@ -28,7 +28,11 @@ function check_access(&$account)
 		'passwd' => $_SERVER['PHP_AUTH_PW'],
 		'passwd_type' => 'text',
 	);
-	if (!($sessionid = $GLOBALS['egw']->session->create($account)))
+	// no session for clients known to NOT use it (no cookie support)
+	$no_session = strpos($_SERVER['HTTP_USER_AGENT'],'DAVKit') !== false;	// Apple iCal
+	//error_log("GroupDAV PHP_AUTH_USER={$_SERVER['PHP_AUTH_USER']}, HTTP_USER_AGENT={$_SERVER['HTTP_USER_AGENT']} --> no_session=".(int)$no_session);
+
+	if (!($sessionid = $GLOBALS['egw']->session->create($account,'','',$no_session)))
 	{
 		header('WWW-Authenticate: Basic realm="'.groupdav::REALM.'"');
         header("HTTP/1.1 401 Unauthorized");
