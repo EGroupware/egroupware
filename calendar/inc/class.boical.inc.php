@@ -189,6 +189,7 @@
 						switch($icalFieldName)
 						{
 							case 'ATTENDEE':
+								//if (count($event['participants']) == 1 && isset($event['participants'][$this->user])) break;
 								foreach((array)$event['participants'] as $uid => $status)
 								{
 									if (!($info = $this->resource_info($uid))) continue;
@@ -245,8 +246,8 @@
 							case 'DTEND':
 								if(date('H:i:s',$event['end']) == '23:59:59') $event['end']++;
 								if(date('H:i:s',$event['end']) == '23:59:00') $event['end']+=60; // needed by old eGW whole-day events
-		            					$attributes[$icalFieldName]	= $event['end'];
-		            					break;
+								$attributes[$icalFieldName]	= $event['end'];
+								break;
 
 							case 'RRULE':
 								if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
@@ -790,7 +791,7 @@
 	 							{
 	 								// we use the account we found
 	 							}
-								elseif ((list($data) = ExecMethod2('addressbook.bocontacts.search',array(
+								elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
 									'email' => $email,
 									'email_home' => $email,
 								),true,'','','',false,'OR')))
