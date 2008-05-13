@@ -153,6 +153,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			}
 			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontentlength', filesize($fspath));
 		}
+/*		returning the supportedlock property causes Windows DAV provider and Konqueror to not longer work
 		// supportedlock property
 		$info['props'][] = HTTP_WebDAV_Server::mkprop('supportedlock','
       <D:lockentry>
@@ -163,7 +164,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
        <D:lockscope><D:shared/></D:lockscope>
        <D:locktype><D:write/></D:lockscope>
       </D:lockentry>');
-
+*/
 		// ToDo: etag from inode and modification time
 
 /*
