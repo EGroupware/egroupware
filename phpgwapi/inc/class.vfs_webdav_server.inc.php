@@ -25,7 +25,12 @@ require_once('HTTP/WebDAV/Server/Filesystem.php');
  */
 class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 {
-	var $dav_powered_by = 'eGroupWare WebDAV server';
+	/**
+	 * Realm of eGW's WebDAV server
+	 *
+	 */
+	const REALM = 'eGroupWare WebDAV server';
+	var $dav_powered_by = self::REALM;
 
 	/**
 	 * Base directory is the URL of our VFS root
