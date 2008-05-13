@@ -222,7 +222,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
 				return false;
 			}
-			$this->opened_fs_id = $stat['fs_id'];
+			$this->opened_fs_id = $stat['ino'];
 		}
 		// do we operate directly on the filesystem
 		if ($this->operation == self::STORE2FS)
