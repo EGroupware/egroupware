@@ -137,7 +137,7 @@ class bo_tracking
 
 	function bo_tracking()
 	{
-		self::__construct
+		self::__construct();
 	}
 
 	/**
