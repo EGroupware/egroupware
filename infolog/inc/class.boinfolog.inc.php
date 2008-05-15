@@ -897,7 +897,7 @@ class boinfolog
 			),
 		);
 		// find the addressbookentry to link with
-		$addressbook =& CreateObject('addressbook.bocontacts');
+		$addressbook = new addressbook_bo();
 		$contacts = array();
 		foreach ($email as $mailadr)
 		{
