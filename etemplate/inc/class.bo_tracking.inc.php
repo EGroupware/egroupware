@@ -537,10 +537,6 @@ class bo_tracking
 	 */
 	function get_notification_link($data,$old)
 	{
-		if (!is_object($GLOBALS['egw']->link))
-		{
-			$GLOBALS['egw']->link = new bolink();
-		}
 		if($view = egw_link::view($this->app,$data[$this->id_field])) {
 			return array(	'text' 	=> $this->get_title($data,$old),
 							'view' 	=> $view,
