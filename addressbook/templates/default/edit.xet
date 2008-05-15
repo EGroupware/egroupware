@@ -467,7 +467,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.003">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.004">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -601,8 +601,8 @@
 				</row>
 				<row disabled="@hidebuttons">
 					<hbox>
-						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
-						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 						<button label="vCard" id="button[vcard]" statustext="download this contact as vCard file"/>
 						<button label="Save" id="button[save]" accesskey="s"/>
 						<button label="Apply" id="button[apply]"/>
