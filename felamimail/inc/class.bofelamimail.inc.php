@@ -385,10 +385,12 @@
 					}
 					$string = str_replace('=?ISO8859-','=?ISO-8859-',$string);
 				}
-				return mb_decode_mimeheader($string);
+				$string = mb_decode_mimeheader($string);
+				return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
 			} elseif(function_exists(iconv_mime_decode)) {
 				// continue decoding also if an error occurs
-				return iconv_mime_decode($_string, 2, $this->displayCharset);
+				$string = @iconv_mime_decode($_string, 2, $this->displayCharset);
+				preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
 			} elseif(function_exists(imap_mime_header_decode)) {
 				$newString = '';
 
@@ -402,12 +404,12 @@
 					$tempString = $this->botranslation->convert($element->text,$element->charset);
 					$newString .= $tempString;
 				}
-				
-				return $newString;
+
+				return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);	
 			}
 			
 			// no decoding function available
-			return $_string;
+			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$_string); 
 		}
 		
 		function deleteAccount($_hookValues)
