@@ -151,7 +151,7 @@ class notifications_sms implements notifications_iface {
 		setlocale(LC_CTYPE, $old_locale);
 		//error_log("Restored old LC_CTYPE locale: ".setlocale(LC_CTYPE, '0'));
 
-		$addressbook =& CreateObject('addressbook.bocontacts');
+		$addressbook = new addressbook_bo();
 		$contact = $addressbook->read('account:'.$account_id);
 		$cell = $contact['tel_cell'];
 		// remove all characters that are non-digit and not a plus sign:
