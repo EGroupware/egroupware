@@ -552,6 +552,7 @@ ORDER BY cal_user_type, cal_usre_id
 					$event['recur_interval'] != $old_recur['recur_interval'] || $event['recur_enddate'] != $old_recur['recur_enddate'] ||
 					count(array_diff($old_exceptions,$exceptions));	// exception deleted or added
 			}
+			unset($event[0]);	// unset the 'etag=etag+1', as it's not in the repeats table
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
