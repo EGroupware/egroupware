@@ -81,7 +81,7 @@ class bocalupdate extends bocal
 	 */
 	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false)
 	{
-		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$ignore_conflicts,$touch_modified,$ignore_acl)");
+		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if ($this->debug > 1 || $this->debug == 'update')
 		{
 			$this->debug_message('bocalupdate::update(%1,ignore_conflict=%2,touch_modified=%3,ignore_acl=%4)',
@@ -117,21 +117,6 @@ class bocalupdate extends bocal
 			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
 			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
-			// Just update the status, if the user is in the event already
-			// is user is in both original and updated event
-			$egw_event = $this->read($event['id']);
-
-			if ( isset($egw_event['participants'][$this->user])
-				&& isset($event['participants'][$this->user]))
-			{
-				// Update their status in the event and say we're done.
-				// Admittedly, this is false, it's dropping any changes on the floor,
-				// But this will work better than dropping -everything- silently on
-				// the floor
-				$this->set_status($event['id'],'u',$this->user,$event['participants'][$this->user],0);
-				unset($egw_event);
-				return $event['id'];
-			}
 			return false;
 		}
 

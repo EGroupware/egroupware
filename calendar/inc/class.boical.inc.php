@@ -234,7 +234,8 @@
         	    				break;
 
             				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-            					if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
+            					if ($event['owner'] != $this->user)
+            					//if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
             					{
 									$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 									$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
@@ -475,7 +476,8 @@
 			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
 
 			$vcal = &new Horde_iCalendar;
-			if(!$vcal->parsevCalendar($_vcalData)) {
+			if(!$vcal->parsevCalendar($_vcalData))
+			{
 				return FALSE;
 			}
 
@@ -850,6 +852,10 @@
 					{
 						$event['id'] = $cal_id;
 					}
+					elseif($event['id'] && $cal_id <= 0)
+					{
+						$cal_id = $event['id'];		// event[id] set via uid
+					}
 					while(($fieldName = array_shift($supportedFields)))
 					{
 						switch($fieldName)
@@ -892,10 +898,9 @@
 
 					// If this is an updated meeting, and the client doesn't support
 					// participants, add them back
-					if( $cal_id >0 && !isset($this->supportedFields['participants']))
+					if( $cal_id > 0 && !isset($this->supportedFields['participants']))
 					{
-						$egw_event = $this->read($cal_id);
-						if ($egw_event)
+						if (($egw_event = $this->read($cal_id)))
 						{
 							$event['participants'] = $egw_event['participants'];
 							$event['participant_types'] = $egw_event['participant_types'];
@@ -906,20 +911,24 @@
 					if( $cal_id > 0 )
 					{
 						// for each existing participant:
-						$egw_event = $this->read($cal_id);
-						if ( $egw_event )
+						if (($egw_event = $this->read($cal_id)))
 						{
 							foreach( $egw_event['participants'] as $uid => $status )
 							{
-								// Is it a resource?
-								if ( preg_match("/^r(.*)/", $uid, $matches) )
+								// Is it a resource and not longer present in the event?
+								if ( $uid[0] == 'r' && !isset($event['participants'][$uid]) )
 								{
 									// Add it back in
-									$event['participants'][$uid] = 'A';
-									$event['participant_types']['r'][$matches[1]] = 'A';
+									$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
 								}
 							}
 						}
+					}
+
+					// check if iCal changes the organizer, which is not allowed
+					if ($cal_id > 0 && ($egw_event = $this->read($cal_id)) && $event['owner'] != $egw_event['owner'])
+					{
+						$event['owner'] = $egw_event['owner'];	// set it back to the original owner
 					}
 
 					#error_log('ALARMS');
@@ -932,6 +941,16 @@
 					}
 					if (!($Ok = $this->update($event, TRUE)))
 					{
+						// check if current user is an attendee and tried to change his status
+						if ($Ok === false && $cal_id && ($egw_event = $this->read($cal_id)) && isset($egw_event['participants'][$this->user]) &&
+							$egw_event['participants'][$this->user] !== $event['participants'][$this->user])
+						{
+							$this->set_status($egw_event,$this->user,
+								$status = $event['participants'][$this->user] ? $event['participants'][$this->user] : 'R');
+
+							$Ok = $cal_id;
+							continue;
+						}
 						break;	// stop with the first error
 					}
 					else

@@ -38,9 +38,16 @@ class calendar_groupdav extends groupdav_handler
 		//'RECURRENCE-ID'
 	);
 
-	function __construct($debug=null)
+	/**
+	 * Constructor
+	 *
+	 * @param string $app 'calendar', 'addressbook' or 'infolog'
+	 * @param int $debug=null debug-level to set
+	 * @param string $base_uri=null base url of handler
+	 */
+	function __construct($app,$debug=null,$base_uri=null)
 	{
-		parent::__construct('calendar',$debug);
+		parent::__construct($app,$debug,$base_uri);
 
 		$this->bo =& new bocalupdate();
 	}
@@ -57,7 +64,7 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		if ($this->debug > 2) error_log(__METHOD__."($path,".str_replace(array("\n",'    '),'',print_r($options,true)).",,$user,$id)");
+		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
 
 		// ToDo: add parameter to only return id & etag
 		$cal_filters = array(
@@ -68,7 +75,7 @@ class calendar_groupdav extends groupdav_handler
 			'daywise' => false,
 			'date_format' => 'server',
 		);
-		error_log(__METHOD__."($path,,,$user,$id) cal_filters=".str_replace(array("\n",'    '),'',print_r($cal_filters,true)));
+		if ($this->debug > 1) error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
 
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$cal_filters,$id))
@@ -131,13 +138,13 @@ class calendar_groupdav extends groupdav_handler
 				switch($filter['name'])
 				{
 					case 'comp-filter':
-						error_log(__METHOD__."($path,...) comp-filter='{$filter['attrs']['name']}'");
+						if ($this->debug > 1) error_log(__METHOD__."($path,...) comp-filter='{$filter['attrs']['name']}'");
 						switch($filter['attrs']['name'])
 						{
 							case 'VTODO':
 								return false;	// return nothing for now, todo: check if we can pass it on to the infolog handler
 								// todos are handled by the infolog handler
-								$infolog_handler = new infolog_groupdav();
+								$infolog_handler = new groupdav_infolog();
 								return $infolog_handler->propfind($path,$options,$files,$user,$method);
 							case 'VCALENDAR':
 							CASE 'VEVENT':
@@ -145,14 +152,14 @@ class calendar_groupdav extends groupdav_handler
 						}
 						break;
 					case 'prop-filter':
-						error_log(__METHOD__."($path,...) prop-filter='{$filter['attrs']['name']}'");
+						if ($this->debug > 1) error_log(__METHOD__."($path,...) prop-filter='{$filter['attrs']['name']}'");
 						$prop_filter = $filter['attrs']['name'];
 						break;
 					case 'text-match':
-						error_log(__METHOD__."($path,...) text-match: $prop_filter='{$filter['data']}'");
+						if ($this->debug > 1) error_log(__METHOD__."($path,...) text-match: $prop_filter='{$filter['data']}'");
 						if (!isset($this->filter_prop2cal[strtoupper($prop_filter)]))
 						{
-							error_log(__METHOD__."($path,".str_replace(array("\n",'    '),'',print_r($options,true)).",,$user) unknown property '$prop_filter' --> ignored");
+							if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user) unknown property '$prop_filter' --> ignored");
 						}
 						else
 						{
@@ -161,14 +168,15 @@ class calendar_groupdav extends groupdav_handler
 						unset($prop_filter);
 						break;
 					case 'param-filter':
-						error_log(__METHOD__."($path,...) param-filter='{$filter['attrs']['name']}'");
+						if ($this->debug) error_log(__METHOD__."($path,...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
-						error_log(__METHOD__."($path,...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
-
+						if ($this->debug > 1) error_log(__METHOD__."($path,...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
+						$cal_filters['start'] = $filter['attrs']['start'];
+						$cal_filters['end']   = $filter['attrs']['end'];
 						break;
 					default:
-						error_log(__METHOD__."($path,".str_replace(array("\n",'    '),'',print_r($options,true)).",,$user) unknown filter --> ignored");
+						if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user) unknown filter --> ignored");
 						break;
 				}
 			}
@@ -214,7 +222,7 @@ class calendar_groupdav extends groupdav_handler
 			{
 				$cal_filters['query'][] = 'egw_cal.cal_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 			}
-			//error_log(__METHOD__."($path,,,$user,$id) calendar-multiget: ids=".implode(',',$ids));
+			if ($this->debug) error_log(__METHOD__."($path,,,$user,$id) calendar-multiget: ids=".implode(',',$ids));
 		}
 		return true;
 	}
@@ -249,7 +257,8 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function put(&$options,$id,$user=null)
 	{
-		$event = $this->_common_get_put_delete('PUT',$options,$id);
+		$return_no_access=true;	// as handled by importVCal anyway and allows it to set the status for participants
+		$event = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 		if (!is_null($event) && !is_array($event))
 		{
 			return $event;
@@ -257,14 +266,14 @@ class calendar_groupdav extends groupdav_handler
 		if (!($cal_id = ExecMethod2('calendar.boical.importVCal',$options['content'],is_numeric($id) ? $id : -1,
 			self::etag2value($this->http_if_match))))
 		{
-			if ($this->debug) error_log(__METHOD__."(,$id) import_vevent($options[content]) returned false");
-			return false;	// something went wrong ...
+			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
+			return '403 Forbidden';
 		}
 
 		header('ETag: '.$this->get_etag($cal_id));
-		if (is_null($event))
+		if (is_null($event) || !$return_no_access)	// let lightning think the event is added
 		{
-			error_log(__METHOD__."(,$id,$user) cal_id=$cal_id, is_null(\$event)=".(int)is_null($event));
+			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id, is_null(\$event)=".(int)is_null($event));
 			header('Location: '.$this->base_uri.'/calendar/'.$cal_id);
 			return '201 Created';
 		}
@@ -274,14 +283,24 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * Handle delete request for an event
 	 *
+	 * If current user has no right to delete the event, but is an attendee, we reject the event for him.
+	 *
 	 * @param array &$options
 	 * @param int $id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function delete(&$options,$id)
 	{
-		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id)))
+		$return_no_access=true;	// to allow to check if current use is a participant and reject the event for him
+		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access)) || !$return_no_access)
 		{
+			if (!$return_no_access)
+			{
+				$ret = isset($event['participants'][$this->bo->user]) &&
+					$this->bo->set_status($event,$this->bo->user,'R') ? true : '403 Forbidden';
+				if ($this->debug) error_log(__METHOD__."(,$id) return_no_access=$return_no_access, event[participants]=".array2string($event['participants']).", user={$this->bo->user} --> return $ret");
+				return $ret;
+			}
 			return $event;
 		}
 		return $this->bo->delete($id);
@@ -306,16 +325,18 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function get_etag($entry)
 	{
+		$e_in = $entry;
 		if (!is_array($entry))
 		{
 			$entry = $this->read($entry);
 		}
+		if (!$entry['id'] || !isset($entry['etag']) || !isset($entry['participants'])) error_log(__METHOD__."($e_in): id=$entry[id], etag=$entry[etag], isset(participants)=".(int)isset($entry['participants']).", title=$entry[title]: id, etag or participants not set!!!");
 		$etag = $entry['id'].':'.$entry['etag'];
 		// add a hash over the participants and their stati
 		ksort($entry['participants']);	// create a defined order
 		$etag .= ':'.md5(serialize($entry['participants']));
 		//error_log(__METHOD__."($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
-		return $etag;
+		return $etag.'x';
 	}
 
 	/**
