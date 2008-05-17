@@ -23,7 +23,7 @@ abstract class groupdav_handler
 	 *
 	 * @var integer
 	 */
-	var $debug = 1;
+	var $debug = 0;
 
 	/**
 	 * eGW's charset
@@ -54,6 +54,12 @@ abstract class groupdav_handler
 	 */
 	var $app;
 	/**
+	 * Base url of handler, need to prefix all pathes not automatic handled by HTTP_WebDAV_Server
+	 *
+	 * @var string
+	 */
+	var $base_uri;
+	/**
 	 * HTTP_IF_MATCH / etag of current request / last call to _common_get_put_delete() method
 	 *
 	 * @var string
@@ -63,13 +69,15 @@ abstract class groupdav_handler
 	/**
 	 * Constructor
 	 *
-	 * @param string $app
-	 * @param int $debug=null
+	 * @param string $app 'calendar', 'addressbook' or 'infolog'
+	 * @param int $debug=null debug-level to set
+	 * @param string $base_uri=null base url of handler
 	 */
-	function __construct($app,$debug=null)
+	function __construct($app,$debug=null,$base_uri=null)
 	{
 		$this->app = $app;
 		if (!is_null($debug)) $this->debug = $debug;
+		$this->base_uri = is_null($base_uri) ? $base_uri : $_SERVER['SCRIPT_NAME'];
 
 		$this->translation =& $GLOBALS['egw']->translation;
 		$this->egw_charset = $this->translation->charset();
@@ -156,6 +164,7 @@ abstract class groupdav_handler
 		}
 		if (!is_array($entry) || !isset($entry['id']) || !(isset($entry['modified']) || isset($entry['etag'])))
 		{
+			error_log(__METHOD__."(".array2string($entry).") Cant create etag!");
 			return false;
 		}
 		return '"'.$entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']).'"';
@@ -183,9 +192,10 @@ abstract class groupdav_handler
 	 * @param string $method GET, PUT, DELETE
 	 * @param array &$options
 	 * @param int $id
+	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
 	 * @return array/string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
-	function _common_get_put_delete($method,&$options,$id)
+	function _common_get_put_delete($method,&$options,$id,&$return_no_access=false)
 	{
 		if (!in_array($this->app,array('principals','groups')) && !$GLOBALS['egw_info']['user']['apps'][$this->app])
 		{
@@ -196,8 +206,16 @@ abstract class groupdav_handler
 		if (!($entry = $this->read($id)) && ($method != 'PUT' || $event === false) ||
 			($extra_acl != EGW_ACL_READ && $this->check_access($extra_acl,$entry) === false))
 		{
-			if ($this->debug) error_log(__METHOD__."($method,,$id) 403 Forbidden/404 Not Found: read($id)==".($entry===false?'false':'null'));
-			return !is_null($entry) ? '403 Forbidden' : '404 Not Found';
+			if ($return_no_access && !is_null($entry))
+			{
+				if ($this->debug) error_log(__METHOD__."($method,,$id,$return_no_access) is_null(\$entry)=".(int)is_null($entry).", set to false");
+				$return_no_access = false;
+			}
+			else
+			{
+				if ($this->debug) error_log(__METHOD__."($method,,$id) 403 Forbidden/404 Not Found: read($id)==".($entry===false?'false':'null'));
+				return !is_null($entry) ? '403 Forbidden' : '404 Not Found';
+			}
 		}
 		if ($entry)
 		{
@@ -225,9 +243,10 @@ abstract class groupdav_handler
 	 * @static
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param int $debug=null debug-level to set
+	 * @param string $base_uri=null base url of handler
 	 * @return groupdav_handler
 	 */
-	static function &app_handler($app,$debug=null)
+	static function &app_handler($app,$debug=null,$base_uri=null)
 	{
 		static $handler_cache = array();
 
@@ -236,7 +255,7 @@ abstract class groupdav_handler
 			$class = $app.'_groupdav';
 			if (!class_exists($class) && !class_exists($class = 'groupdav_'.$app)) return null;
 
-			$handler_cache[$app] = new $class($app);
+			$handler_cache[$app] = new $class($app,$debug,$base_uri);
 		}
 		return $handler_cache[$app];
 	}

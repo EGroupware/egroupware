@@ -26,12 +26,13 @@ class groupdav_principals extends groupdav_handler
 	/**
 	 * Constructor
 	 *
-	 * @param string $app
-	 * @param int $debug=null
+	 * @param string $app 'calendar', 'addressbook' or 'infolog'
+	 * @param int $debug=null debug-level to set
+	 * @param string $base_uri=null base url of handler
 	 */
-	function __construct($app,$debug=null)
+	function __construct($app,$debug=null,$base_uri=null)
 	{
-		parent::__construct($app,$debug);
+		parent::__construct($app,$debug,$base_uri);
 
 		$this->accounts = $GLOBALS['egw']->accounts;
 	}
@@ -71,9 +72,8 @@ class groupdav_principals extends groupdav_handler
 	           	'path'  => '/principals/'.$account['account_lid'],
 	           	'props' => $props,
 			);
-			error_log(__METHOD__."($path) path=/principals/".$account['account_lid'].', props='.array2string($props));
+			if ($this->debug > 1) error_log(__METHOD__."($path) path=/principals/".$account['account_lid'].', props='.array2string($props));
 		}
-		//error_log(__METHOD__."($path,,,$user) files=".array2string($files['files']));
 		return true;
 	}
 

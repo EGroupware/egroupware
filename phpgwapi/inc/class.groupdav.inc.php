@@ -78,7 +78,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 	function __construct()
 	{
-		if ($this->debug > 2) foreach($_SERVER as $name => $val) error_log("groupdav: \$_SERVER[$name]='$val'");
+		if ($this->debug > 2) error_log('groupdav: $_SERVER='.array2string($_SERVER));
 
 		parent::HTTP_WebDAV_Server();
 
@@ -86,9 +86,15 @@ class groupdav extends HTTP_WebDAV_Server
 		$this->egw_charset = $this->translation->charset();
 	}
 
-	function _instancicate_handler($app)
+	/**
+	 * get the handler for $app
+	 *
+	 * @param string $app
+	 * @return groupdav_handler
+	 */
+	function app_handler($app)
 	{
-		$this->handler = groupdav_handler::app_handler($app);
+		return groupdav_handler::app_handler($app,$this->debug,$this->base_uri);
 	}
 
 	/**
@@ -123,7 +129,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function PROPFIND(&$options, &$files,$method='PROPFIND')
 	{
-		if ($this->debug) error_log(__CLASS__."::$method(".str_replace(array("\n",'    ',"\t"),'',print_r($options,true)).')');
+		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options,true).')');
 
 		// parse path in form [/account_lid]/app[/more]
 		if (!self::_parse_path($options['path'],$id,$app,$user) && $app && !$user)
@@ -185,10 +191,10 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if (!in_array($app,array('principals','groups')) && !$GLOBALS['egw_info']['user']['apps'][$app])
 		{
-			error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights for '$app'");
-			return '403 Forbidden';	// no rights for the given app
+			if ($this->debug) error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights for '$app'");
+			return "403 Forbidden: no app rights for '$app'";	// no rights for the given app
 		}
-		if (($handler = groupdav_handler::app_handler($app,$this->debug)))
+		if (($handler = self::app_handler($app)))
 		{
 			if ($method != 'REPORT' && !$id)	// no self URL for REPORT requests (only PROPFIND) or propfinds on an id
 			{
@@ -243,7 +249,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function REPORT(&$options, &$files)
 	{
-		if ($this->debug > 1) error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
+		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($options).')');
 
 		return $this->PROPFIND($options,$files,'REPORT');
 	}
@@ -266,13 +272,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function GET(&$options)
 	{
-		if ($this->debug) error_log(__METHOD__.'('.print_r($options,true).')');
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
 		if (!$this->_parse_path($options['path'],$id,$app,$user))
 		{
 			return '404 Not Found';
 		}
-		if (($handler = groupdav_handler::app_handler($app,$this->debug)))
+		if (($handler = self::app_handler($app)))
 		{
 			return $handler->get($options,$id);
 		}
@@ -296,13 +302,13 @@ class groupdav extends HTTP_WebDAV_Server
 				$options['content'] .= fread($options['stream'],8192);
 			}
 		}
-		if ($this->debug) error_log(__METHOD__.'('.print_r($options,true).')');
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
 		if (!$this->_parse_path($options['path'],$id,$app,$user))
 		{
 			return '404 Not Found';
 		}
-		if (($handler = groupdav_handler::app_handler($app,$this->debug)))
+		if (($handler = self::app_handler($app)))
 		{
 			$status = $handler->put($options,$id,$user);
 			// set default stati: true --> 204 No Content, false --> should be already handled
@@ -320,13 +326,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function DELETE($options)
 	{
-		if ($this->debug) error_log(__METHOD__.'('.print_r($options,true).')');
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
 		if (!$this->_parse_path($options['path'],$id,$app,$user))
 		{
 			return '404 Not Found';
 		}
-		if (($handler = groupdav_handler::app_handler($app,$this->debug)))
+		if (($handler = self::app_handler($app)))
 		{
 			$status = $handler->delete($options,$id);
 			// set default stati: true --> 204 No Content, false --> should be already handled
@@ -344,7 +350,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function MKCOL($options)
 	{
-		if ($this->debug) error_log(__METHOD__.'('.print_r($options,true).')');
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
 		return '501 Not Implemented';
 	}
@@ -357,7 +363,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function MOVE($options)
 	{
-		if ($this->debug) error_log(__METHOD__.'('.print_r($options,true).')');
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
 		return '501 Not Implemented';
 	}
@@ -370,7 +376,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function COPY($options, $del=false)
 	{
-		if ($this->debug) error_log('groupdav::'.($del ? 'MOVE' : 'COPY').'('.print_r($options,true).')');
+		if ($this->debug) error_log('groupdav::'.($del ? 'MOVE' : 'COPY').'('.array2string($options).')');
 
 		return '501 Not Implemented';
 	}
@@ -383,13 +389,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function LOCK(&$options)
 	{
-		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
-
 		self::_parse_path($options['path'],$id,$app,$user);
 		$path = egw_vfs::app_entry_lock_path($app,$id);
 
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
+
 		// get the app handler, to check if the user has edit access to the entry (required to make locks)
-		$handler = groupdav_handler::app_handler($app);
+		$handler = self::app_handler($app);
 
 		// TODO recursive locks on directories not supported yet
 		if (!$id || !empty($options['depth']) || !$handler->check_access(EGW_ACL_EDIT,$id))
@@ -419,7 +425,7 @@ class groupdav extends HTTP_WebDAV_Server
 		self::_parse_path($options['path'],$id,$app,$user);
 		$path = egw_vfs::app_entry_lock_path($app,$id);
 
-		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).") path=$path");
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
 		return egw_vfs::unlock($path,$options['token']) ? '204 No Content' : '409 Conflict';
 	}
 
@@ -471,7 +477,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if (!($ok = $id && in_array($app,array('addressbook','calendar','infolog','principals','groups')) && $user))
 		{
-			error_log(__METHOD__."('$path') returning false: id=$id, app='$app', user=$user");
+			if ($this->debug) error_log(__METHOD__."('$path') returning false: id=$id, app='$app', user=$user");
 		}
 		return $ok;
 	}

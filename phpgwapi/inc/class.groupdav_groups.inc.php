@@ -26,12 +26,13 @@ class groupdav_groups extends groupdav_handler
 	/**
 	 * Constructor
 	 *
-	 * @param string $app
-	 * @param int $debug=null
+	 * @param string $app 'calendar', 'addressbook' or 'infolog'
+	 * @param int $debug=null debug-level to set
+	 * @param string $base_uri=null base url of handler
 	 */
-	function __construct($app,$debug=null)
+	function __construct($app,$debug=null,$base_uri=null)
 	{
-		parent::__construct($app,$debug);
+		parent::__construct($app,$debug,$base_uri);
 
 		$this->accounts = $GLOBALS['egw']->accounts;
 	}
@@ -55,19 +56,19 @@ class groupdav_groups extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($account)),
 				HTTP_WebDAV_Server::mkprop('resourcetype','principal'),
 				HTTP_WebDAV_Server::mkprop('alternate-URI-set',''),
-				HTTP_WebDAV_Server::mkprop('principal-URL',$_SERVER['SCRIPT_NAME'].'/groups/'.$account['account_lid']),
-				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/calendar/'),
+				HTTP_WebDAV_Server::mkprop('principal-URL',$this->base_uri.'/groups/'.$account['account_lid']),
+				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$this->base_uri.'/calendar/'),
 			);
 			foreach($this->accounts->members($account['account_id']) as $uid => $user)
 			{
-				$props[] = HTTP_WebDAV_Server::mkprop('group-membership',$_SERVER['SCRIPT_NAME'].'/principals/'.$user);
+				$props[] = HTTP_WebDAV_Server::mkprop('group-membership',$this->base_uri.'/principals/'.$user);
 			}
 			$files['files'][] = array(
 	           	'path'  => '/groups/'.$account['account_lid'],
 	           	'props' => $props,
 			);
+			if ($this->debug > 1) error_log(__METHOD__."($path) path=/principals/".$account['account_lid'].', props='.array2string($props));
 		}
-		//error_log(__METHOD__."($path,,,$user) files=".array2string($files['files']));
 		return true;
 	}
 
@@ -85,7 +86,7 @@ class groupdav_groups extends groupdav_handler
 			return $account;
 		}
 		$options['data'] = 'Principal: '.$account['account_lid'].
-			"\nURL: ".$_SERVER['SCRIPT_NAME'].$options['path'].
+			"\nURL: ".$this->base_uri.$options['path'].
 			"\nName: ".lang('Group').' '.$account['account_lid'].
 			($account['account_email'] ? "\nEmail: ".$account['account_email'] : '').
 			"\nMembers: ".implode(', ',$this->accounts->members($id))."\n";
