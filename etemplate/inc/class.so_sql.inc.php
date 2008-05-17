@@ -422,8 +422,8 @@ class so_sql
 	 * saves the content of data to the db
 	 *
 	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
-	 * @param string|array $extra_where=null extra where clause, eg. to check the etag, returns 'nothing_affected' if not affected rows
-	 * @return int 0 on success and errno != 0 else
+	 * @param string|array $extra_where=null extra where clause, eg. to check an etag, returns true if no affected rows!
+	 * @return int|boolean 0 on success, or errno != 0 on error, or true if $extra_where is given and no rows affected
 	 */
 	function save($keys=null,$extra_where=null)
 	{
@@ -489,15 +489,23 @@ class so_sql
 				$data = $keys;
 				$keys = False;
 			}
+			if ($this->autoinc_id)
+			{
+				$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app);
+				if (($nothing_affected = !$this->db->Errno && !$this->db->affected_rows()) && $extra_where)
+				{
+					return true;	// extra_where not met, eg. etag wrong
+				}
+			}
 			// always try an insert if we have no autoinc_id, as we dont know if the data exists
-			if (!$this->autoinc_id || !$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app) || !$this->db->affected_rows())
+			if (!$this->autoinc_id || $nothing_affected)
 			{
 				$this->db->insert($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app);
 			}
 		}
 		$this->db2data();
 
-		return $this->db->Errno ? $this->db->Errno : ($extra_where && !$this->db->affected_rows() ? true : 0);
+		return $this->db->Errno;
 	}
 
 	/**

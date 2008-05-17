@@ -1006,6 +1006,7 @@ class addressbook_bo extends addressbook_so
 					case 'tid':
 					case 'owner':
 					case 'private':
+					case 'etag';
 						break;	// ignored
 
 					case 'cat_id':	// cats are all merged together

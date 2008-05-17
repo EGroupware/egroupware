@@ -625,6 +625,7 @@ class addressbook_sql extends so_sql
 		}
 		else
 		{
+			unset($this->data['etag']);
 			$new_entry = !$this->data['id'];
 			if (!($err = parent::save(array('contact_etag=contact_etag+1'))) && $new_entry)
 			{
