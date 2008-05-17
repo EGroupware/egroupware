@@ -133,7 +133,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if ($this->debug > 1) error_log(__CLASS__."::$method: user=$user, app='$app', id=$id");
 
-		$files = array();
+		$files = array('files' => array());
 
 		if (!$app)	// root folder containing apps
 		{
@@ -144,39 +144,42 @@ class groupdav extends HTTP_WebDAV_Server
 					self::mkprop('displayname','eGroupWare'),
 					self::mkprop('resourcetype','collection'),
 					// adding the calendar extra property (calendar-home-set, etc.) here, allows apple iCal to "autodetect" the URL
-					self::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/calendar/'),
+					self::mkprop(groupdav::CALDAV,'calendar-home-set',$this->base_uri.'/calendar/'),
 				),
 			);
-			// principals collection
-			$files['files'][] = array(
-            	'path'  => '/principals/',
-            	'props' => array(
-            		self::mkprop('displayname',lang('Accounts')),
-            		self::mkprop('resourcetype','collection'),
-				),
-            );
-			// groups collection
-			$files['files'][] = array(
-            	'path'  => '/groups/',
-            	'props' => array(
-            		self::mkprop('displayname',lang('Groups')),
-            		self::mkprop('resourcetype','collection'),
-				),
-            );
-
-			foreach($this->root as $app => $data)
+			if ($options['depth'])
 			{
-				if (!$GLOBALS['egw_info']['user']['apps'][$app]) continue;	// no rights for the given app
-
-				$extra_props = 'groupdav_'.$app.'::extra_properties';
-
+				// principals collection
 				$files['files'][] = array(
-	            	'path'  => '/'.$app.'/',
-	            	'props' => call_user_func($app.'_groupdav::extra_properties',array(
-	            		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
-	            		self::mkprop('resourcetype',$this->_resourcetype($app)),
-	            	)),
+	            	'path'  => '/principals/',
+	            	'props' => array(
+	            		self::mkprop('displayname',lang('Accounts')),
+	            		self::mkprop('resourcetype','collection'),
+					),
 	            );
+				// groups collection
+				$files['files'][] = array(
+	            	'path'  => '/groups/',
+	            	'props' => array(
+	            		self::mkprop('displayname',lang('Groups')),
+	            		self::mkprop('resourcetype','collection'),
+					),
+	            );
+
+				foreach($this->root as $app => $data)
+				{
+					if (!$GLOBALS['egw_info']['user']['apps'][$app]) continue;	// no rights for the given app
+
+					$extra_props = 'groupdav_'.$app.'::extra_properties';
+
+					$files['files'][] = array(
+		            	'path'  => '/'.$app.'/',
+		            	'props' => call_user_func($app.'_groupdav::extra_properties',array(
+		            		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
+		            		self::mkprop('resourcetype',$this->_resourcetype($app)),
+		            	)),
+		            );
+				}
 			}
 			return true;
 		}
