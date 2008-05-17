@@ -31,6 +31,17 @@ function bytes($str)
 }
 
 /**
+ * Format array or other types as (one-line) string, eg. for error_log statements
+ *
+ * @param mixed $arr
+ * @return string
+ */
+function array2string($arr)
+{
+	return str_replace(array("\n",'    '),'',print_r($arr,true));
+}
+
+/**
  * @internal Not to be used directly. Should only be used by print_debug()
  */
 function print_debug_subarray($array)
@@ -1350,6 +1361,11 @@ function __autoload($class)
 	{
 		//error_log("autoloaded class $class from $file");
 		include_once($file);
+	}
+	// allow apps to define onw autoload method
+	elseif (isset($GLOBALS['egw_info']['flags']['autoload']) && is_callable($GLOBALS['egw_info']['flags']['autoload']))
+	{
+		call_user_func($GLOBALS['egw_info']['flags']['autoload'],$class);
 	}
 	elseif (is_array($GLOBALS['egw_info']['apps']))
 	{
