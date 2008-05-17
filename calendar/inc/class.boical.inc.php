@@ -577,6 +577,11 @@
 									// 1 is invalid,, egw uses 0 for interval
 									$vcardData['recur_interval'] = (int) $matches[1] != 0 ? (int) $matches[1] : 0;
 								}
+								if (!isset($vcardData['start']))	// it might not yet be set, because the RRULE is before it
+								{
+									$vcardData['start'] = self::_get_attribute($component->_attributes,'DTSTART');
+									$vcardData['end'] = self::_get_attribute($component->_attributes,'DTEND');
+								}
 								$vcardData['recur_data'] = 0;
 								switch($type)
 								{
@@ -596,15 +601,20 @@
 											$days = explode(',',$recurenceMatches[1]);
 											$recur_days = $this->recur_days;
 										}
+										else	// no day given, use the day of dtstart
+										{
+											$vcardData['recur_data'] |= 1 << (int)date('w',$vcardData['start']);
+											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
+										}
 										if ($days)
 										{
 											foreach($recur_days as $id => $day)
-				            						{
-				            							if (in_array(strtoupper(substr($day,0,2)),$days))
-		            									{
-		            										$vcardData['recur_data'] |= $id;
-		            									}
-		            								}
+		            						{
+		            							if (in_array(strtoupper(substr($day,0,2)),$days))
+	        									{
+	        										$vcardData['recur_data'] |= $id;
+	        									}
+	        								}
 											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
 										}
 
@@ -742,7 +752,7 @@
 								$event['uid'] = $vcardData['uid'] = $attributes['value'];
 								if ($cal_id <= 0 && !empty($vcardData['uid']) && ($uid_event = $this->read($vcardData['uid'])))
 								{
-									$event['id'] = $uid_event['id'];
+									$cal_id = $event['id'] = $uid_event['id'];
 									unset($uid_event);
 								}
 								break;
@@ -851,10 +861,6 @@
 					if($cal_id > 0)
 					{
 						$event['id'] = $cal_id;
-					}
-					elseif($event['id'] && $cal_id <= 0)
-					{
-						$cal_id = $event['id'];		// event[id] set via uid
 					}
 					while(($fieldName = array_shift($supportedFields)))
 					{
@@ -988,7 +994,27 @@
 			return $Ok;
 		}
 
-		function valarm2egw(&$alarms, &$valarm)
+		/**
+		 * get the value of an attribute by its name
+		 *
+		 * @param array $attributes
+		 * @param string $name eg. 'DTSTART'
+		 * @param string $what='value'
+		 * @return mixed
+		 */
+		static function _get_attribute($components,$name,$what='value')
+		{
+			foreach($components as $attribute)
+			{
+				if ($attribute['name'] == $name)
+				{
+					return !$what ? $attribute : $attribute[$what];
+				}
+			}
+			return false;
+		}
+
+		static function valarm2egw(&$alarms, &$valarm)
 		{
 			$count = 0;
 			foreach($valarm->_attributes as $vattr)
