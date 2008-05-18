@@ -176,14 +176,17 @@ class groupdav extends HTTP_WebDAV_Server
 				{
 					if (!$GLOBALS['egw_info']['user']['apps'][$app]) continue;	// no rights for the given app
 
-					$extra_props = 'groupdav_'.$app.'::extra_properties';
-
+					$props = array(
+	            		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
+	            		self::mkprop('resourcetype',$this->_resourcetype($app)),
+					);
+					if (method_exists($app.'_groupdav','extra_properties'))
+					{
+						$props = ExecMethod($app.'_groupdav::extra_properties',$props);
+					}
 					$files['files'][] = array(
 		            	'path'  => '/'.$app.'/',
-		            	'props' => call_user_func($app.'_groupdav::extra_properties',array(
-		            		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
-		            		self::mkprop('resourcetype',$this->_resourcetype($app)),
-		            	)),
+		            	'props' => $props,
 		            );
 				}
 			}
