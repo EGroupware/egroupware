@@ -29,14 +29,21 @@ function check_access(&$account)
 		'passwd_type' => 'text',
 	);
 	// no session for clients known to NOT use it (no cookie support)
-	$no_session = strpos($_SERVER['HTTP_USER_AGENT'],'DAVKit') !== false;	// Apple iCal
+	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	foreach(array(
+		'davkit',	// Apple iCal
+		'bionicmessage.net',
+	) as $test)
+	{
+		if (($no_session = strpos($agent,$test) !== false)) break;
+	}
 	//error_log("GroupDAV PHP_AUTH_USER={$_SERVER['PHP_AUTH_USER']}, HTTP_USER_AGENT={$_SERVER['HTTP_USER_AGENT']} --> no_session=".(int)$no_session);
 
 	if (!($sessionid = $GLOBALS['egw']->session->create($account,'','',$no_session)))
 	{
 		header('WWW-Authenticate: Basic realm="'.groupdav::REALM.'"');
-        header("HTTP/1.1 401 Unauthorized");
-        header("X-WebDAV-Status: 401 Unauthorized", true);
+        header('HTTP/1.1 401 Unauthorized');
+        header('X-WebDAV-Status: 401 Unauthorized', true);
         exit;
 	}
 	return $sessionid;
