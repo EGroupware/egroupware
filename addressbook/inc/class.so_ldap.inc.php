@@ -19,8 +19,8 @@ define('ADDRESSBOOK_GROUP',3);
 /**
  * LDAP Backend for contacts, compatible with vars and parameters of eTemplate's so_sql.
  * Maybe one day this becomes a generalized ldap storage object :-)
- * 
- * All values used to construct filters need to run through ldap::quote(), 
+ *
+ * All values used to construct filters need to run through ldap::quote(),
  * to be save against LDAP query injection!!!
  *
  * @package addressbook
@@ -31,7 +31,7 @@ define('ADDRESSBOOK_GROUP',3);
 class so_ldap
 {
 	var $data;
-	
+
 	/**
 	 * internal name of the id, gets mapped to uid
 	 *
@@ -48,12 +48,12 @@ class so_ldap
 	* @var object $ldapServerInfo holds the information about the current used ldap server
 	*/
 	var $ldapServerInfo;
-	
+
 	/**
 	* @var int $ldapLimit how many rows to fetch from ldap server
 	*/
 	var $ldapLimit = 300;
-	
+
 	/**
 	* @var string $personalContactsDN holds the base DN for the personal addressbooks
 	*/
@@ -63,22 +63,22 @@ class so_ldap
 	* @var string $sharedContactsDN holds the base DN for the shared addressbooks
 	*/
 	var $sharedContactsDN;
-	
+
 	/**
 	* @var int $total holds the total count of found rows
 	*/
 	var $total;
-	
+
 	/**
 	 * Charset used by eGW
-	 * 
+	 *
 	 * @var string
 	 */
 	var $charset;
-	
+
 	/**
 	 * maps between diverse ldap schema and the eGW internal names
-	 * 
+	 *
 	 * The ldap attribute names have to be lowercase!!!
 	 *
 	 * @var array
@@ -156,7 +156,7 @@ class so_ldap
 		# mailer
 		# anniversary
 		# spouseName
-		# companyPhone 
+		# companyPhone
 		# otherFacsimileTelephoneNumber
 		# radio
 		# telex
@@ -178,8 +178,8 @@ class so_ldap
 			'tel_other'		=> 'otherphone',
 			'tel_cell_private' => 'callbackphone',	// not the best choice, but better then nothing
 		),
-		// additional schema can be added here, including special functions 
-		
+		// additional schema can be added here, including special functions
+
 		/**
 		 * still unsupported fields in LDAP:
 		 * --------------------------------
@@ -187,7 +187,7 @@ class so_ldap
 		 * geo
 		 */
 	);
-	
+
 	/**
 	 * additional schema required by one of the above schema
 	 *
@@ -203,7 +203,7 @@ class so_ldap
 	 * @var array
 	 */
 	var  $all_attributes = array();
-	
+
 	/**
 	 * constructor of the class
 	 */
@@ -211,10 +211,10 @@ class so_ldap
 	{
 		//$this->db_data_cols 	= $this->stock_contact_fields + $this->non_contact_fields;
 		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];
-		
+
 		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
 		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
-		
+
 		if (!is_object($GLOBALS['egw']->ldap))
 		{
 			$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
@@ -235,16 +235,16 @@ class so_ldap
 			);
 		}
 		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_contact_host']);
-		
+
 		foreach($this->schema2egw as $schema => $attributes)
 		{
 			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
 		}
 		$this->all_attributes = array_values(array_unique($this->all_attributes));
-		
+
 		$this->charset = $GLOBALS['egw']->translation->charset();
 	}
-	
+
 	/**
 	 * Returns the supported fields of this LDAP server (based on the objectclasses it supports)
 	 *
@@ -286,7 +286,7 @@ class so_ldap
 			$contact_id = ldap::quote(is_array($contact_id) ? $contact_id['id'] : $contact_id);
 			$filter = "(|(entryUUID=$contact_id)(uid=$contact_id))";
 		}
-		$rows = $this->_searchLDAP($GLOBALS['egw_info']['server']['ldap_contact_context'], 
+		$rows = $this->_searchLDAP($GLOBALS['egw_info']['server']['ldap_contact_context'],
 			$filter, $this->all_attributes, ADDRESSBOOK_ALL);
 
 		return $rows ? $rows[0] : false;
@@ -305,14 +305,14 @@ class so_ldap
 			$this->data = is_array($this->data) ? array_merge($this->data,$keys) : $keys;
 		}
 		$contactUID = '';
-		
+
 		$data =& $this->data;
 		$isUpdate = false;
 		$newObjectClasses = array();
 		$ldapContact = array();
-		
+
 		// generate addressbook dn
-		if((int)$data['owner']) 
+		if((int)$data['owner'])
 		{
 			// group address book
 			if(!($cn = strtolower($GLOBALS['egw']->accounts->id2name((int)$data['owner']))))
@@ -321,7 +321,7 @@ class so_ldap
 				return true;
 			}
 			$baseDN = 'cn='. ldap::quote($cn) .','.($data['owner'] < 0 ? $this->sharedContactsDN : $this->personalContactsDN);
-		} 
+		}
 		// only an admin or the user itself is allowed to change the data of an account
 		elseif ($data['account_id'] && ($GLOBALS['egw_info']['user']['apps']['admin'] ||
 			$data['account_id'] == $GLOBALS['egw_info']['user']['account_id']))
@@ -354,7 +354,7 @@ class so_ldap
 		$attributes = array('dn','cn','objectClass','uid','mail');
 		$contactUID	= $this->data[$this->contacts_id];
 		if(!empty($contactUID) &&
-			($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], 
+			($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'],
 				'(|(entryUUID='.ldap::quote($contactUID).')(uid='.ldap::quote($contactUID).'))', $attributes)) &&
 			($oldContactInfo = ldap_get_entries($this->ds, $result)) && $oldContactInfo['count'])
 		{
@@ -365,7 +365,7 @@ class so_ldap
 			}
 		   	$isUpdate = true;
 		}
-		if(!$contactUID) 
+		if(!$contactUID)
 		{
 			$this->data[$this->contacts_id] = $contactUID = md5($GLOBALS['egw']->common->randomstring(15));
 		}
@@ -376,8 +376,8 @@ class so_ldap
 		foreach($this->schema2egw as $objectclass => $mapping)
 		{
 			if(!$this->ldapServerInfo->supportsObjectClass($objectclass) || $objectclass == 'posixaccount') continue;
-			
-			if(!in_array($objectclass, $oldObjectclasses)) 
+
+			if(!in_array($objectclass, $oldObjectclasses))
 			{
 				$ldapContact['objectClass'][] = $objectclass;
 			}
@@ -385,21 +385,21 @@ class so_ldap
 			{
 				foreach($this->required_subs[$objectclass] as $sub)
 				{
-					if(!in_array($sub, $oldObjectclasses)) 
+					if(!in_array($sub, $oldObjectclasses))
 					{
 						$ldapContact['objectClass'][] = $sub;
 					}
 				}
 			}
-			foreach($mapping as $egwFieldName => $ldapFieldName) 
+			foreach($mapping as $egwFieldName => $ldapFieldName)
 			{
-				if(!empty($data[$egwFieldName])) 
+				if(!empty($data[$egwFieldName]))
 				{
 					// dont convert the (binary) jpegPhoto!
 					$ldapContact[$ldapFieldName] = $ldapFieldName == 'jpegphoto' ? $data[$egwFieldName] :
 						$GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
-				} 
-				elseif($isUpdate && isset($data[$egwFieldName])) 
+				}
+				elseif($isUpdate && isset($data[$egwFieldName]))
 				{
 					$ldapContact[$ldapFieldName] = array();
 				}
@@ -411,7 +411,7 @@ class so_ldap
 				$this->$egw2objectclass($ldapContact,$data,$isUpdate);
 			}
 		}
-		if($isUpdate) 
+		if($isUpdate)
 		{
 			// make sure multiple email-addresses in the mail attribute "survive"
 			if (isset($ldapContact['mail']) && $oldContactInfo[0]['mail']['count'] > 1)
@@ -428,17 +428,17 @@ class so_ldap
 			unset($ldapContact['uidnumber']);
 
 			// add missing objectclasses
-			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses)) 
+			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses))
 			{
-				if (!@ldap_mod_add($this->ds, $dn, array('objectClass' => $ldapContact['objectClass']))) 
+				if (!@ldap_mod_add($this->ds, $dn, array('objectClass' => $ldapContact['objectClass'])))
 				{
-					if(in_array(ldap_errno($this->ds),array(69,20))) 
+					if(in_array(ldap_errno($this->ds),array(69,20)))
 					{
 						// need to modify structural objectclass
 						$needRecreation = true;
-						
-					} 
-					else 
+
+					}
+					else
 					{
 						//echo "<p>ldap_mod_add($this->ds,'$dn',array(objectClass =>".print_r($ldapContact['objectClass'],true)."))</p>\n";
 						error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
@@ -446,17 +446,17 @@ class so_ldap
 					}
 				}
 			}
-			
+
 			// check if we need to rename the DN or need to recreate the contact
 			$newRDN = 'uid='. ldap::quote($contactUID);
 			$newDN = $newRDN .','. $baseDN;
-			if(strtolower($dn) != strtolower($newDN) || $needRecreation) 
+			if(strtolower($dn) != strtolower($newDN) || $needRecreation)
 			{
 				$result = ldap_read($this->ds, $dn, 'objectclass=*');
 				$oldContact = ldap_get_entries($this->ds, $result);
-				foreach($oldContact[0] as $key => $value) 
+				foreach($oldContact[0] as $key => $value)
 				{
-					if(is_array($value)) 
+					if(is_array($value))
 					{
 						unset($value['count']);
 						$newContact[$key] = $value;
@@ -464,17 +464,18 @@ class so_ldap
 				}
 				$newContact['uid'] = $contactUID;
 
-				if(is_array($ldapContact['objectClass']) && count($ldapContact['objectClass']) > 0) 
+				if(is_array($ldapContact['objectClass']) && count($ldapContact['objectClass']) > 0)
 				{
-					$newContact['objectclass'] = array_merge($newContact['objectclass'], $ldapContact['objectClass']);
+					$newContact['objectclass'] = array_unique(array_map('strtolower',	// objectclasses my have different case
+						array_merge($newContact['objectclass'], $ldapContact['objectClass'])));
 				}
 
-				if(!ldap_delete($this->ds, $dn)) 
+				if(!ldap_delete($this->ds, $dn))
 				{
 					error_log('class.so_ldap.inc.php ('. __LINE__ .') delete of old '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
 					return $this->_error(__LINE__);
 				}
-				if(!@ldap_add($this->ds, $newDN, $newContact)) 
+				if(!@ldap_add($this->ds, $newDN, $newContact))
 				{
 					//echo "<p>recreate: ldap_add($this->ds,'$newDN',".print_r($newContact,true).")</p>\n";
 					//print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';_debug_array($newContact);exit;
@@ -486,7 +487,7 @@ class so_ldap
 			}
 			unset($ldapContact['objectClass']);
 
-			if (!@ldap_modify($this->ds, $dn, $ldapContact)) 
+			if (!@ldap_modify($this->ds, $dn, $ldapContact))
 			{
 				//echo "<p>ldap_modify($this->ds,'$dn',".print_r($ldapContact,true).")</p>\n";
 				error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
@@ -497,7 +498,7 @@ class so_ldap
 		else
 		{
 			$dn = 'uid='. ldap::quote($ldapContact['uid']) .','. $baseDN;
-			
+
 			if (!@ldap_add($this->ds, $dn, $ldapContact))
 			{
 				//echo "<p>ldap_add($this->ds,'$dn',".print_r($ldapContact,true).")</p>\n";
@@ -519,8 +520,8 @@ class so_ldap
 	{
 		// single entry
 		if($keys[$this->contacts_id]) $keys = array( 0 => $keys);
-		
-		if(!is_array($keys)) 
+
+		if(!is_array($keys))
 		{
 			$keys = array( $keys);
 		}
@@ -532,11 +533,11 @@ class so_ldap
 		foreach($keys as $entry)
 		{
 			$entry = ldap::quote($entry);
-			if($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], 
-				"(|(entryUUID=$entry)(uid=$entry))", $attributes)) 
+			if($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'],
+				"(|(entryUUID=$entry)(uid=$entry))", $attributes))
 			{
 				$contactInfo = ldap_get_entries($this->ds, $result);
-				if(@ldap_delete($this->ds, $contactInfo[0]['dn'])) 
+				if(@ldap_delete($this->ds, $contactInfo[0]['dn']))
 				{
 					$ret++;
 				}
@@ -559,7 +560,7 @@ class so_ldap
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
@@ -576,12 +577,12 @@ class so_ldap
 		#$limit = $need_full_no_count ? 0 : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 		#return parent::read($start,$limit,$fields,$query,$filter,$sort,$order);
 
-		if((int)$filter['owner']) 
+		if((int)$filter['owner'])
 		{
 			if (!($accountName = $GLOBALS['egw']->accounts->id2name($filter['owner']))) return false;
 
 			$searchDN = 'cn='. ldap::quote(strtolower($accountName)) .',';
-			
+
 			if ($filter['owner'] < 0)
 			{
 				$searchDN .= $this->sharedContactsDN;
@@ -592,7 +593,7 @@ class so_ldap
 				$searchDN .= $this->personalContactsDN;
 				$addressbookType = ADDRESSBOOK_PERSONAL;
 			}
-		} 
+		}
 		elseif (!isset($filter['owner']))
 		{
 			$searchDN = $GLOBALS['egw_info']['server']['ldap_contact_context'];
@@ -603,9 +604,9 @@ class so_ldap
 			$searchDN = $GLOBALS['egw_info']['server']['ldap_context'];
 			$addressbookType = ADDRESSBOOK_ACCOUNTS;
 		}
-		
+
 		// create the search filter
-		switch($addressbookType) 
+		switch($addressbookType)
 		{
 			case ADDRESSBOOK_ALL:
 				$objectFilter = '(|(objectclass=inetorgperson)(objectclass=posixaccount))';
@@ -618,16 +619,16 @@ class so_ldap
 				break;
 		}
 
-		$searchFilter = '';		
-		if(is_array($criteria) && count($criteria) > 0) 
+		$searchFilter = '';
+		if(is_array($criteria) && count($criteria) > 0)
 		{
 			$wildcard = $wildcard === '%' ? '*' : '';
 			$searchFilter = '';
-			foreach($criteria as $egwSearchKey => $searchValue) 
+			foreach($criteria as $egwSearchKey => $searchValue)
 			{
 				foreach($this->schema2egw as $mapping)
 				{
-					if(($ldapSearchKey = $mapping[$egwSearchKey])) 
+					if(($ldapSearchKey = $mapping[$egwSearchKey]))
 					{
 						$searchString = $GLOBALS['egw']->translation->convert($searchValue,$this->charset,'utf-8');
 						$searchFilter .= '('.$ldapSearchKey.'='.$wildcard.ldap::quote($searchString).$wildcard.')';
@@ -635,11 +636,11 @@ class so_ldap
 					}
 				}
 			}
-			if($op == 'AND') 
+			if($op == 'AND')
 			{
 				$searchFilter = "(&$searchFilter)";
-			} 
-			else 
+			}
+			else
 			{
 				$searchFilter = "(|$searchFilter)";
 			}
@@ -689,7 +690,7 @@ class so_ldap
 		}
 		return $rows;
 	}
-	
+
 	/**
 	 * Process so_sql like filters (at the moment only a subset used by the addressbook UI
 	 *
@@ -710,7 +711,7 @@ class so_ldap
 				case 'owner':	// already handled
 				case 'tid':		// ignored
 					break;
-					
+
 				case 'account_id':
 					if (is_null($value))
 					{
@@ -719,7 +720,7 @@ class so_ldap
 					elseif ($value)
 					{
 						$filters .= '(uidNumber='.ldap::quote($value).')';
-						
+
 					}
 					break;
 
@@ -745,7 +746,7 @@ class so_ldap
 						if (count($cats) > 1) $filters .= ')';
 					}
 					break;
-				
+
 				default:
 					if (!is_int($key))
 					{
@@ -778,23 +779,23 @@ class so_ldap
 		}
 		return $filters;
 	}
-	
+
 	/**
 	 * Perform the actual ldap-search, retrieve and convert all entries
-	 * 
+	 *
 	 * Used be read and search
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string $_ldapContext
 	 * @param string $_filter
 	 * @param array $_attributes
 	 * @param int $_addressbooktype
 	 * @return array/boolean with eGW contacts or false on error
 	 */
-	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype) 
+	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype)
 	{
 		$this->total = 0;
-		
+
 		$_attributes[] = 'entryUUID';
 		$_attributes[] = 'uid';
 		$_attributes[] = 'uidNumber';
@@ -805,36 +806,36 @@ class so_ldap
 		$_attributes[] = 'modifiersName';
 
 		//echo "<p>ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit)</p>\n";
-		if($_addressbooktype == ADDRESSBOOK_ALL) 
+		if($_addressbooktype == ADDRESSBOOK_ALL)
 		{
 			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
-		} 
-		else 
+		}
+		else
 		{
 			$result = @ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
 		}
 		if(!$result) return array();
-		
+
 		$entries = ldap_get_entries($this->ds, $result);
 		$this->total = $entries['count'];
 		foreach($entries as $i => $entry)
 		{
 			if (!is_int($i)) continue;	// eg. count
-			
+
 			$contact = array(
 				'id'  => $entry['uid'][0] ? $entry['uid'][0] : $entry['entryuuid'][0],
 				'tid' => 'n',	// the type id for the addressbook
 			);
-			foreach($entry['objectclass'] as $ii => $objectclass) 
+			foreach($entry['objectclass'] as $ii => $objectclass)
 			{
 				$objectclass = strtolower($objectclass);
 				if (!is_int($ii) || !isset($this->schema2egw[$objectclass]))
 				{
 					continue;	// eg. count or unsupported objectclass
 				}
-				foreach($this->schema2egw[$objectclass] as $egwFieldName => $ldapFieldName) 
+				foreach($this->schema2egw[$objectclass] as $egwFieldName => $ldapFieldName)
 				{
-					if(!empty($entry[$ldapFieldName][0]) && !isset($contact[$egwFieldName])) 
+					if(!empty($entry[$ldapFieldName][0]) && !isset($contact[$egwFieldName]))
 					{
 						$contact[$egwFieldName] = $GLOBALS['egw']->translation->convert($entry[$ldapFieldName][0],'utf-8');
 					}
@@ -866,7 +867,7 @@ class so_ldap
 			else
 			{
 				// accounts
-				$contact['owner'] = 0;	
+				$contact['owner'] = 0;
 				$contact['private'] = 0;
 			}
 			/*
@@ -887,7 +888,7 @@ class so_ldap
 				'modifytimestamp' => 'modified',
 			) as $ldapFieldName => $egwFieldName)
 			{
-				if(!empty($entry[$ldapFieldName][0])) 
+				if(!empty($entry[$ldapFieldName][0]))
 				{
 					$contact[$egwFieldName] = $this->_ldap2ts($entry[$ldapFieldName][0]);
 				}
@@ -896,20 +897,20 @@ class so_ldap
 		}
 		return $contacts;
 	}
-	
+
 	/**
 	 * Creates a timestamp from the date returned by the ldap server
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string $date YYYYmmddHHiiss
 	 * @return int
 	 */
 	function _ldap2ts($date)
 	{
-		return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2), 
+		return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2),
 			substr($date,4,2),substr($date,6,2),substr($date,0,4));
 	}
-	
+
 	/**
 	 * check if $baseDN exists. If not create it
 	 *
@@ -923,14 +924,14 @@ class so_ldap
 		{
 			return false;
 		}
-		if(ldap_errno($this->ds) != 32 || substr($baseDN,0,3) != 'cn=') 
+		if(ldap_errno($this->ds) != 32 || substr($baseDN,0,3) != 'cn=')
 		{
 			return $this->_error(__LINE__);	// baseDN does NOT exist and we cant/wont create it
 		}
 		// create a admin connection to add the needed DN
 		$adminLDAP =& new ldap;
 		$adminDS = $adminLDAP->ldapConnect();
-		
+
 		list(,$ou) = explode(',',$baseDN);
 		foreach(array(
 			'ou=contacts,'.$GLOBALS['egw_info']['server']['ldap_contact_context'],
@@ -957,10 +958,10 @@ class so_ldap
 			}
 		}
 		$adminLDAP->ldapDisconnect();
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * error message for failed ldap operation
 	 *
@@ -974,20 +975,20 @@ class so_ldap
 
 	/**
 	 * Special handling for mapping of eGW contact-data to the evolutionPerson objectclass
-	 * 
+	 *
 	 * Please note: all regular fields are already copied!
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$ldapContact already copied fields according to the mapping
 	 * @param array $data eGW contact data
 	 * @param boolean $isUpdate
 	 */
 	function _egw2evolutionperson(&$ldapContact,$data,$isUpdate)
 	{
-		if(!empty($data['cat_id'])) 
+		if(!empty($data['cat_id']))
 		{
 			$ldapContact['category'] = array();
-			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat) 
+			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat)
 			{
 				$ldapContact['category'][] = $GLOBALS['egw']->translation->convert(
 					ExecMethod('phpgwapi.categories.id2name',$cat),$this->charset,'utf-8');
@@ -998,11 +999,11 @@ class so_ldap
 			'homepostaladdress' => $data['adr_two_street'] .'$'. $data['adr_two_locality'] .', '. $data['adr_two_region'] .'$'. $data['adr_two_postalcode'] .'$$'. $data['adr_two_countryname'],
 		) as $attr => $value)
 		{
-			if($value != '$, $$$') 
+			if($value != '$, $$$')
 			{
 				$ldapContact[$attr] = $GLOBALS['egw']->translation->convert($value,$this->charset,'utf-8');
-			} 
-			elseif($isUpdate) 
+			}
+			elseif($isUpdate)
 			{
 				$ldapContact[$attr] = array();
 			}
@@ -1020,10 +1021,10 @@ class so_ldap
 
 	/**
 	 * Special handling for mapping data of the evolutionPerson objectclass to eGW contact
-	 * 
+	 *
 	 * Please note: all regular fields are already copied!
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$contact already copied fields according to the mapping
 	 * @param array $data eGW contact data
 	 */
@@ -1032,10 +1033,10 @@ class so_ldap
 		if ($data['category'] && is_array($data['category']))
 		{
 			$contact['cat_id'] = array();
-			foreach($data['category'] as $iii => $cat) 
+			foreach($data['category'] as $iii => $cat)
 			{
 				if (!is_int($iii)) continue;
-				
+
 				$contact['cat_id'][] = ExecMethod('phpgwapi.categories.name2id',$cat);
 			}
 			if ($contact['cat_id']) $contact['cat_id'] = implode(',',$contact['cat_id']);
@@ -1049,10 +1050,10 @@ class so_ldap
 
 	/**
 	 * Special handling for mapping data of the inetOrgPerson objectclass to eGW contact
-	 * 
+	 *
 	 * Please note: all regular fields are already copied!
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$contact already copied fields according to the mapping
 	 * @param array $data eGW contact data
 	 */
@@ -1063,25 +1064,25 @@ class so_ldap
 			$parts = explode($data['sn'][0], $data['cn'][0]);
 			$contact['n_prefix'] = trim($parts[0]);
 			$contact['n_suffix'] = trim($parts[1]);
-		} 
-		else 
+		}
+		else
 		{
 			$parts = preg_split('/'. preg_quote($data['givenname'][0],'/') .'.*'. preg_quote($data['sn'][0],'/') .'/', $data['cn'][0]);
 			$contact['n_prefix'] = trim($parts[0]);
 			$contact['n_suffix'] = trim($parts[1]);
-			if(preg_match('/'. preg_quote($data['givenname'][0],'/') .' (.*) '. preg_quote($data['sn'][0],'/') .'/',$data['cn'][0], $matches)) 
+			if(preg_match('/'. preg_quote($data['givenname'][0],'/') .' (.*) '. preg_quote($data['sn'][0],'/') .'/',$data['cn'][0], $matches))
 			{
 				$contact['n_middle'] = $matches[1];
 			}
 		}
 	}
-	
+
 	/**
 	 * Special handling for mapping data of the mozillaAbPersonAlpha objectclass to eGW contact
-	 * 
+	 *
 	 * Please note: all regular fields are already copied!
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$contact already copied fields according to the mapping
 	 * @param array $data eGW contact data
 	 */
@@ -1095,10 +1096,10 @@ class so_ldap
 
 	/**
 	 * Special handling for mapping of eGW contact-data to the mozillaAbPersonAlpha objectclass
-	 * 
+	 *
 	 * Please note: all regular fields are already copied!
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$ldapContact already copied fields according to the mapping
 	 * @param array $data eGW contact data
 	 * @param boolean $isUpdate
@@ -1112,15 +1113,15 @@ class so_ldap
 		elseif ($isUpdate)
 		{
 			$ldapContact['c'] = array();
-		}		
+		}
 	}
-	
+
 	/**
 	 * Special handling for mapping data of the mozillaOrgPerson objectclass to eGW contact
-	 * 
+	 *
 	 * Please note: all regular fields are already copied!
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$contact already copied fields according to the mapping
 	 * @param array $data eGW contact data
 	 */
@@ -1134,10 +1135,10 @@ class so_ldap
 
 	/**
 	 * Special handling for mapping of eGW contact-data to the mozillaOrgPerson objectclass
-	 * 
+	 *
 	 * Please note: all regular fields are already copied!
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$ldapContact already copied fields according to the mapping
 	 * @param array $data eGW contact data
 	 * @param boolean $isUpdate
@@ -1151,7 +1152,7 @@ class so_ldap
 		elseif ($isUpdate)
 		{
 			$ldapContact['c'] = array();
-		}		
+		}
 	}
 
 	/**
