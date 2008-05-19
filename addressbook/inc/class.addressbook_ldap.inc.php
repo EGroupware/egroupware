@@ -473,7 +473,8 @@ class addressbook_ldap
 
 				if(is_array($ldapContact['objectClass']) && count($ldapContact['objectClass']) > 0)
 				{
-					$newContact['objectclass'] = array_merge($newContact['objectclass'], $ldapContact['objectClass']);
+					$newContact['objectclass'] = array_unique(array_map('strtolower',	// objectclasses my have different case
+						array_merge($newContact['objectclass'], $ldapContact['objectClass'])));
 				}
 
 				if(!ldap_delete($this->ds, $dn))
