@@ -77,7 +77,11 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		if ($user && $path != '/addressbook/') $filter = array('contact_owner' => $user);
+		$filter = array();
+		// show addressbook of a single user?
+		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
+		// should we hide the accounts addressbook
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
