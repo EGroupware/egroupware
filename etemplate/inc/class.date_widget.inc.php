@@ -18,7 +18,7 @@
 	 *  format: ''=timestamp, or eg. 'Y-m-d H:i' for 2002-12-31 23:59
 	 *  options: &1 = year is int-input not selectbox, &2 = show a [Today] button, (html-UI always uses jscal and dont care for &1+&2)
 	 *           &4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps),
-	 *           &8 = dont show time for readonly and type date-time if time is 0:00, 
+	 *           &8 = dont show time for readonly and type date-time if time is 0:00,
 	 *           &16 = prefix r/o display with dow
 	 *           &32 = prefix r/o display with week-number
 	 *			 &64 = prefix r/o display with weeknumber and dow
@@ -32,7 +32,7 @@
 	 */
 	class date_widget
 	{
-		/** 
+		/**
 		 * exported methods of this class
 		 * @var array
 		 */
@@ -77,7 +77,7 @@
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 		 * @param object &$tmpl reference to the template we belong too
@@ -93,7 +93,7 @@
 			}
 			list($data_format,$options,$options2) = explode(',',$cell['size']);
 			if ($type == 'date-houronly' && empty($data_format)) $data_format = 'H';
-			
+
 			$readonly = $cell['readonly'] || $readonlys || $type == 'date-since';
 
 			if (!$readonly)	// dont set extension-data on readonly, it's not needed and can conflict with other widgets
@@ -119,7 +119,7 @@
 				$date = split('[- /.:,]',$value);
 				//echo "date=<pre>"; print_r($date); echo "</pre>";
 				$mdy  = split('[- /.:,]',$data_format);
-				
+
 				if (count($mdy) == 1)	// no seperators, eg. YmdHi
 				{
 					for($n = $i = 0; $n < strlen($data_format); ++$n)
@@ -170,7 +170,7 @@
 				$timeformat += array(5 => 'a');
 			}
 			$format = split('[/.-]',$this->dateformat);
-			
+
 			// no time also if $options&8 and readonly and time=0h0
 			if ($type != 'date' && !($readonly && ($options & 8) && $time_0h0))
 			{
@@ -183,18 +183,18 @@
 				if (is_null($substr)) $substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
 				static $chars_shortcut;
 				if (is_null($chars_shortcut)) $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
-				
+
 				$value['M'] = lang($m = substr($month[$value['m']],0,3));	// check if we have a translation of the short-cut
 				if ($value['M'] == $m || $substr($value['M'],-1) == '*')	// if not generate one by truncating the translation of the long name
 				{
-					$value['M'] = $chars_shortcut > 0 ? $substr(lang($month[$value['m']]),0,$chars_shortcut) : 
+					$value['M'] = $chars_shortcut > 0 ? $substr(lang($month[$value['m']]),0,$chars_shortcut) :
 						$substr(lang($month[$value['m']]),$chars_shortcut);
 				}
 			}
 			if ($readonly)	// is readonly
 			{
 				if ($value['H'] === '') unset($value['a']);	// no am/pm if no hour set
-				
+
 				$sep = array(
 					1 => $this->dateformat[1],
 					2 => $this->dateformat[1],
@@ -217,7 +217,7 @@
 						{
 							$str = lang('Wk').adodb_date('W',adodb_mktime(12,0,0,$value['m'],$value['d'],$value['Y'])).' '.lang(adodb_date('l',adodb_mktime(12,0,0,$value['m'],$value['d'],$value['Y']))).' ';
 						}
-						$str .= ($str != '' ? $sep[$n] : '') . 
+						$str .= ($str != '' ? $sep[$n] : '') .
 							(is_numeric($value[$format[$n]]) ? sprintf('%02d',$value[$format[$n]]) : $value[$format[$n]]);
 					}
 					if ($type == 'date-houronly') ++$n;	// no minutes
@@ -270,7 +270,7 @@
 				$dcell = $tpl->empty_cell();
 				if ($cell['tabindex']) $dcell['tabindex'] = $cell['tabindex'];
 				if (!$i && $cell['accesskey']) $dcell['accesskey'] = $cell['accesskey'];
-				
+
 				// test if we can use jsCalendar
 				if ($n == 0 && $this->jscal && $tmpl->java_script())
 				{
@@ -295,7 +295,7 @@
 				$dcell['no_lang'] = 2;
 				$row[$tpl->num2chrs($i)] = &$dcell;
 				unset($dcell);
-				
+
 				if ($n == 2 && ($options & 2))	// Today button
 				{
 					$dcell = $tpl->empty_cell();
@@ -349,7 +349,7 @@
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 		 * @param object &$tmpl reference to the template we belong too
@@ -366,13 +366,14 @@
 				$input_format = str_replace('%','',$input_format);
 			}
 			if (!in_array($input_format,array('d','h','dh','m','hm','dhm'))) $input_format = 'dh'; // hours + days
-			
+
+			$unit = $input_format == 'd' ? 'd' : 'h';
 			if (!$readonly)	// dont set extension-data on readonly, it's not needed and can conflict with other widgets
 			{
 				$extension_data = array(
 					'type'			=> $cell['type'],
 					'data_format'	=> $data_format,
-					'unit'          => ($unit = $input_format == 'd' ? 'd' : 'h'),
+					'unit'          => $unit,
 					'input_format'  => $input_format,
 					'hours_per_day' => $hours_per_day,
 					'percent_allowed'=> $percent_allowed,
@@ -391,11 +392,11 @@
 						$value *= 60;
 						break;
 				}
-			}			
+			}
 			$cell['type'] = 'text';
 			$cell_name = $cell['name'];
 			$cell['name'] .= '[value]';
-			
+
 			if (strpos($input_format,'m') !== false && $value && $value < 60)
 			{
 				$unit = 'm';
@@ -404,7 +405,7 @@
 			{
 				$unit = 'd';
 			}
-			$value = $empty_not_0 && (string) $value === '' || !$empty_not_0 && !$value ? '' : 
+			$value = $empty_not_0 && (string) $value === '' || !$empty_not_0 && !$value ? '' :
 				($unit == 'm' ? (int) $value : round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3));
 
 			if (!$readonly && strlen($input_format) > 1) // selectbox to switch between hours and days
@@ -417,13 +418,13 @@
 				$tpl->init('*** generated fields for duration','','',0,'',0,0);	// make an empty template
 				// keep the editor away from the generated tmpls
 				$tpl->no_onclick = true;
-				
+
 				$selbox =& $tpl->empty_cell('select',$cell_name.'[unit]');
 				if (strpos($input_format,'m') !== false) $selbox['sel_options']['m'] = $short_labels ? 'm' : 'minutes';
 				if (strpos($input_format,'h') !== false) $selbox['sel_options']['h'] = $short_labels ? 'h' : 'hours';
 				if (strpos($input_format,'d') !== false) $selbox['sel_options']['d'] = $short_labels ? 'd' : 'days';
 				if ($cell['tabindex']) $selbox['tabindex'] = $cell['tabindex'];
-				
+
 				$tpl->data[0] = array();
 				$tpl->data[1] =array(
 					'A' => $cell,
@@ -431,7 +432,7 @@
 				);
 				$tpl->set_rows_cols();
 				$tpl->size = ',,,,0';
-	
+
 				unset($cell['size']);
 				$cell['type'] = 'template';
 				$cell['name'] = $tpl->name;
@@ -456,7 +457,7 @@
 		 * pre-processing of the time since extension
 		 *
 		 * @param array &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @return boolean true if extra label is allowed, false otherwise
 		 */
 		function pre_process_since(&$value,&$cell)
@@ -486,11 +487,11 @@
 					$GLOBALS['egw']->datetime = new egw_datetime();
 				}
 				$now_s = time() + $GLOBALS['egw']->datetime->tz_offset;	// time() is server-time and we need a user-time
-				
+
 				$val_s = mktime($value['H'],$value['i'],$value['s'],$value['m'],$value['d'],$value['Y']);
-				
+
 				$diff_s = $now_s - $val_s;
-			
+
 				foreach($unit2s as $unit => $unit_s)
 				{
 					if ($diff_s >= $unit_s || $unit == 's')
@@ -589,7 +590,7 @@
 				}
 				$value += $this->jscal->input2date($value_in['str'],False,'d','m','Y');
 			}
-			if ($value['d'] || $no_date && 
+			if ($value['d'] || $no_date &&
 				(isset($value['H']) && $value['H'] !== '' || isset($value['i']) && $value['i'] !== ''))
 			{
 				if ($value['d'])
