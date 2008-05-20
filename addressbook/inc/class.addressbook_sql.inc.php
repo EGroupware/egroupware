@@ -632,7 +632,8 @@ class addressbook_sql extends so_sql
 				$this->data['etag'] = 0;
 			}
 		}
-		if (!$err && !$this->data['uid'])
+		// enforce a minium uid strength
+		if (!$err && (strlen($this->data['uid']) < 20 || is_numeric($this->data['uid'])))
 		{
 			parent::update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
 			$this->data['etag']++;

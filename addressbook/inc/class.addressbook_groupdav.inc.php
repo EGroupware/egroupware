@@ -249,7 +249,7 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		// SOGo requires that we keep it's path, but sets a different name-part then the uid
 		// we use there name-part as UID, to be able to allow it to access the contact again with that path
-		elseif (strlen($id) > 10 && strpos($_SERVER['HTTP_USER_AGENT'],'Thunderbird'))
+		elseif (strlen($id) > 20 && strpos($_SERVER['HTTP_USER_AGENT'],'Thunderbird'))
 		{
 			$contact['uid'] = basename($id,'.vcf');
 		}
@@ -273,7 +273,7 @@ class addressbook_groupdav extends groupdav_handler
 		if (is_null($ok))
 		{
 			header($h='Location: '.$this->base_uri.self::get_path($contact));
-			error_log(__METHOD__."($method,,$id) header('$h'): 201 Created");
+			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): 201 Created");
 			return '201 Created';
 		}
 		return true;
@@ -307,7 +307,7 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			return $contact;
 		}
-		if ($this->bo->delete($contact['id'],self::etag2value($this->http_if_match)) === 0)
+		if (($Ok = $this->bo->delete($contact['id'],self::etag2value($this->http_if_match))) === 0)
 		{
 			return '412 Precondition Failed';
 		}

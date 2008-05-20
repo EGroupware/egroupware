@@ -42,6 +42,7 @@ class groupdav extends HTTP_WebDAV_Server
 	const REALM = 'eGroupWare CalDAV/CardDAV/GroupDAV server';
 
 	var $dav_powered_by = self::REALM;
+	var $http_auth_realm = self::REALM;
 
 	var $root = array(
 		'calendar' => array(self::GROUPDAV => 'vevent-collection', self::CALDAV => 'calendar'),
