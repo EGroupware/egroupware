@@ -101,11 +101,18 @@ class calendar_groupdav extends groupdav_handler
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($event)),
 					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/calendar'),
+					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
+					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
 				);
 				if ($calendar_data)
 				{
-					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',
-						ExecMethod2('calendar.boical.exportVCal',array($event),'2.0','PUBLISH',false));
+					$content = ExecMethod2('calendar.boical.exportVCal',array($event),'2.0','PUBLISH',false);
+					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
+					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
+				}
+				else
+				{
+					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
 				$files['files'][] = array(
 	            	'path'  => '/calendar/'.$event['id'],
