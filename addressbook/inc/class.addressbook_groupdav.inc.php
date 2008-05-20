@@ -114,10 +114,18 @@ class addressbook_groupdav extends groupdav_handler
  				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($contact)),
 					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/x-vcard'),
+					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
+					HTTP_WebDAV_Server::mkprop('getlastmodified', $contact['modified']),
 				);
 			 	if ($address_data)
 				{
-					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$handler->getVCard($contact,$this->charset));
+					$content = $handler->getVCard($contact,$this->charset);
+					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
+					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content=$handler->getVCard($contact,$this->charset));
+				}
+				else
+				{
+					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
 				$files['files'][] = array(
 	            	'path'  => self::get_path($contact),
@@ -255,10 +263,10 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
-		if (!($ok = $this->bo->save($contact)))
+		if (!($save_ok = $this->bo->save($contact)))
 		{
-			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$ok");
-			if ($ok === 0)
+			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$save_ok");
+			if ($save_ok === 0)
 			{
 				return '412 Precondition Failed';
 			}
