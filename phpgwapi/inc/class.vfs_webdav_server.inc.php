@@ -20,8 +20,8 @@ require_once('HTTP/WebDAV/Server/Filesystem.php');
  *
  * Using the PEAR HTTP/WebDAV/Server/Filesystem class (which need to be installed!)
  *
- * @todo table to store locks and properties
- * @todo filesystem class uses PEAR's System::find which we dont require nor know if it works on custom streamwrapper
+ * @todo table to store properties
+ * @todo filesystem class uses PEAR's System::find in COPY, which we dont require nor know if it works on custom stream wrappers
  */
 class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 {
@@ -31,6 +31,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	const REALM = 'eGroupWare WebDAV server';
 	var $dav_powered_by = self::REALM;
+	var $http_auth_realm = self::REALM;
 
 	/**
 	 * Base directory is the URL of our VFS root
@@ -154,6 +155,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontentlength', filesize($fspath));
 		}
 /*		returning the supportedlock property causes Windows DAV provider and Konqueror to not longer work
+		ToDo: return it only if explicitly requested ($options['props'])
 		// supportedlock property
 		$info['props'][] = HTTP_WebDAV_Server::mkprop('supportedlock','
       <D:lockentry>
