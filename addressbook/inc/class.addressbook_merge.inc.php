@@ -250,14 +250,7 @@ class addressbook_merge	// extends bo_merge
 		}
 		if ($contentrepeat)
 		{
-			$content = "";
-			foreach ($contentrep as $idrep => $repvalue)
-			{
-				$counter++;
-				$content .= $repvalue;
-				if (each($contentrep) != false && count($contentrep) !=1) $content .= "\par \page\pard\plain";  // page break
-			}
-			$content = $contentstart.$content.$contentend;
+			return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
 		}
 		return $content;
 	}
