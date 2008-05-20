@@ -214,7 +214,7 @@
 
 		// $_folderType 0: normal imap folder 1: sent folder 2: draft folder
 		// $_rowStyle felamimail or outlook
-		function messageTable($_headers, $_folderType, $_readInNewWindow, $_rowStyle='felamimail')
+		function messageTable($_headers, $_folderType, $_folderName, $_readInNewWindow, $_rowStyle='felamimail')
 		{
 			$this->t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->t->set_file(array("body" => 'mainscreen.tpl'));
@@ -352,7 +352,7 @@
 					$linkData = array (
 						'menuaction'    => 'felamimail.uicompose.composeFromDraft',
 						'icServer'	=> 0,
-						'folder'	=> base64_encode($GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder']),
+						'folder'	=> base64_encode($_folderName),
 						'uid'		=> $header['uid'],
 						'id'		=> $header['id'],
 					);
