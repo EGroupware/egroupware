@@ -571,6 +571,7 @@
 					$uiwidgets->messageTable(
 						$headers,
 						($userPreferences['sentFolder'] == $this->mailbox || $userPreferences['draftFolder'] == $this->mailbox),
+						$this->mailbox,
 						$userPreferences['message_newwindow'],
 						$userPreferences['rowOrderStyle']
 					)
