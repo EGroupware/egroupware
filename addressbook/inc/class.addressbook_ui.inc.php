@@ -504,7 +504,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			case 'csv':
 				$action_msg = lang('exported');
-				$csv_export =& CreateObject('addressbook.csv_export',$this,$this->prefs['csv_charset']);
+				$csv_export = new addressbook_csv($this,$this->prefs['csv_charset']);
 				switch ($this->prefs['csv_fields'])
 				{
 					case 'business':
