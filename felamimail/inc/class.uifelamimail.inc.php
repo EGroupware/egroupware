@@ -560,7 +560,7 @@
 					$headerCount = count($headers['header']);
 				}
 				
-				if ($userPreferences['sentFolder'] == $this->mailbox || $userPreferences['draftFolder'] == $this->mailbox) {
+				if ($this->bofelamimail->isSentFolder($this->mailbox) || $this->bofelamimail->isDraftFolder($this->mailbox)) {
 					$this->t->set_var('lang_from',lang("to"));
 				} else {
 					$this->t->set_var('lang_from',lang("from"));
@@ -570,7 +570,7 @@
 				$this->t->set_var('header_rows',
 					$uiwidgets->messageTable(
 						$headers,
-						($userPreferences['sentFolder'] == $this->mailbox || $userPreferences['draftFolder'] == $this->mailbox),
+						($this->bofelamimail->isSentFolder($this->mailbox) || $this->bofelamimail->isDraftFolder($this->mailbox)),
 						$this->mailbox,
 						$userPreferences['message_newwindow'],
 						$userPreferences['rowOrderStyle']
