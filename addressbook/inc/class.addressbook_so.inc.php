@@ -425,7 +425,7 @@ class addressbook_so
 					// which need to be the account_lid for accounts!
 					$contact['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 				}
-				ExecMethod('addressbook.so_ldap.delete',$contact);
+				ExecMethod('addressbook.addressbook_ldap.delete',$contact);
 			}
 			return true;
 		}
@@ -475,7 +475,7 @@ class addressbook_so
 						// which need to be the account_lid for accounts!
 						$data['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 					}
-					ExecMethod('addressbook.so_ldap.save',$data);
+					ExecMethod('addressbook.addressbook_ldap.save',$data);
 				}
 			}
 		}
