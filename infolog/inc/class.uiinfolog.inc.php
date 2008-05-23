@@ -1324,6 +1324,7 @@ class uiinfolog
 	function import_mail($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false)
 	{
 		$uid = $_GET['uid'];
+		$partid = $_GET['part'];
 		$mailbox = $_GET['mailbox'];
 
 		if (!empty($_to_emailAddress))
@@ -1358,9 +1359,9 @@ class uiinfolog
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
-			$headers = $bofelamimail->getMessageHeader($uid);
-			$bodyParts = $bofelamimail->getMessageBody($uid,'text/plain');
-			$attachments = $bofelamimail->getMessageAttachments($uid);
+			$headers = $bofelamimail->getMessageHeader($uid,$partid);
+			$bodyParts = $bofelamimail->getMessageBody($uid,'text/plain',$partid);
+			$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
 
 			if ($mailbox == 'Sent') $mailaddress = $bofelamimail->decode_header($headers['TO']);
 			elseif (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
