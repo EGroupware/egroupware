@@ -14,7 +14,7 @@
 /**
  * export to csv
  */
-class csv_export
+class addressbook_csv
 {
 	var $obj;
 	var $charset;
