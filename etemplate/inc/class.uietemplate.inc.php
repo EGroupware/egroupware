@@ -814,7 +814,7 @@ class etemplate extends boetemplate
 					$row_data[".$col"] .= ' onclick="'.$this->js_pseudo_funcs($onclick,$cname).'"' .
 						($cell['id'] ? ' id="'.$cell['id'].'"' : '');
 				}
-				$colspan = $span == 'all' ? $this->cols-$c : 0+$span;
+				$colspan = $span == 'all' ? $grid['cols']-$c : 0+$span;
 				if ($colspan > 1)
 				{
 					$row_data[".$col"] .= " colspan=\"$colspan\"";
