@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare  eTemplates - DB-Tools  
+ * eGroupWare  eTemplates - DB-Tools
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
@@ -122,10 +122,8 @@ class db_tools
 		elseif ($content['delete'])
 		{
 			list($col) = each($content['delete']);
-
 			@reset($this->data[$posted_table]['fd']);
-			while ($col-- > 0 && list($key,$data) = @each($this->data[$posted_table]['fd'])) ;
-
+			while ($col-- > 0 && list($key) = @each($this->data[$posted_table]['fd'])) ;
 			unset($this->data[$posted_table]['fd'][$key]);
 			$this->changes[$posted_table][$key] = '**deleted**';
 		}
@@ -205,7 +203,7 @@ class db_tools
 		$no_button = array( );
 		if (!$this->app || !$this->table)
 		{
-			$no_button += array('write_tables' => True);
+			$no_button['write_tables'] = True;
 		}
 		if ($this->debug)
 		{
@@ -352,8 +350,13 @@ class db_tools
 	 */
 	function table2content($table,&$columns,$extra_index=False)
 	{
+		if ($this->debug >= 3)
+		{
+			echo __METHOD__."(\$table,,$extra_index) \$table ="; _debug_array($table);
+		}
 		$content = $columns = array();
-		for ($n = 1; list($col_name,$col_defs) = each($table['fd']); ++$n)
+		$n = 1;
+		foreach($table['fd'] as $col_name => $col_defs)
 		{
 			$col_defs['name'] = $col_name;
 			$col_defs['pk'] = in_array($col_name,$table['pk']);
@@ -370,7 +373,7 @@ class db_tools
 
 			$content["Row$n"] = $col_defs;
 
-			$columns[$n] = $col_name;
+			$columns[$n++] = $col_name;
 		}
 		$n = 2;
 		foreach(array('uc','ix') as $type)
@@ -395,8 +398,8 @@ class db_tools
 		}
 		if ($this->debug >= 3)
 		{
-			echo "<p>table2content(,,'$extra_index'): content ="; _debug_array($content);
-			echo "<p>columns ="; _debug_array($columns);
+			echo "content ="; _debug_array($content);
+			echo "columns ="; _debug_array($columns);
 		}
 		return $content;
 	}
@@ -427,7 +430,7 @@ class db_tools
 		for (reset($content),$n = 1; isset($content["Row$n"]); ++$n)
 		{
 			$col = $content["Row$n"];
-			
+
 			if ($col['type'] == 'auto')	// auto columns are the primary key and not null!
 			{
 				$col['pk'] = $col['notnull'] = true;	// set it, in case the user forgot
@@ -461,8 +464,7 @@ class db_tools
 						case 'type':	// selectbox ensures type is not empty
 						case 'precision':
 						case 'scale':
-//							case 'nullable':
-							if ($val != '' || $prop == 'nullable')
+							if ($val != '')
 							{
 								$table['fd'][$name][$prop] = $prop=='default'&& $val=="''" ? '' : $val;
 							}
@@ -582,14 +584,10 @@ class db_tools
 		}
 		if ($depth)
 		{
-			$tabs = "\n";
-			for ($n = 0; $n < $depth; ++$n)
-			{
-				$tabs .= "\t";
-			}
+			$tabs = "\n".str_repeat("\t",$depth-1);
 			++$depth;
 		}
-		$def = "array($tabs".($tabs ? "\t" : '');
+		$def = 'array('.$tabs.($tabs ? "\t" : '');
 
 		$n = 0;
 		foreach($arr as $key => $val)
@@ -615,11 +613,11 @@ class db_tools
 			}
 			if ($n < count($arr)-1)
 			{
-				$def .= ",$tabs".($tabs ? "\t" : '');
+				$def .= ','.$tabs.($tabs ? "\t" : '');
 			}
 			++$n;
 		}
-		$def .= "$tabs)";
+		$def .= $tabs.')';
 
 		return $def;
 	}
@@ -667,7 +665,7 @@ class db_tools
 		{
 			return False;
 		}
-		$def .= "\t\$phpgw_baseline = ";
+		$def .= "\$phpgw_baseline = ";
 		$def .= $this->write_array($phpgw_baseline,1);
 		$def .= ";\n";
 
@@ -697,12 +695,12 @@ class db_tools
 		{
 			return False;
 		}
-		if (($new == '' || $setup_info[$app]['version'] == $new) &&	
+		if (($new == '' || $setup_info[$app]['version'] == $new) &&
 				(!$tables || $setup_info[$app]['tables'] && "'".implode("','",$setup_info[$app]['tables'])."'" == $tables))
 		{
-			return $setup_info[$app]['version'];	// no change requested or not necessary 
+			return $setup_info[$app]['version'];	// no change requested or not necessary
 		}
-		if ($new == '') 
+		if ($new == '')
 		{
 			$new = $setup_info[$app]['version'];
 		}
@@ -712,7 +710,7 @@ class db_tools
 		}
 		$fcontent = fread($f,filesize($file));
 		fclose ($f);
-		
+
 		$app_pattern = "'$app'";
 		if (preg_match("/define\('([^']+)',$app_pattern\)/",$fcontent,$matches))
 		{
@@ -728,7 +726,7 @@ class db_tools
 			rename($file,$old_file);
 		}
 		$fnew = preg_replace('/(.*\\$'."setup_info\\[$app_pattern\\]\\['version'\\][ \\t]*=[ \\t]*)'[^']*'(.*)/i","\\1'$new'\\2",$fcontent);
-		
+
 		if ($tables != '')
 		{
 			if (isset($setup_info[$app]['tables']))	// if there is already tables array, update it
@@ -759,7 +757,7 @@ class db_tools
 								{
 									$fnew .= $prefix . $table . ";\n";
 								}
-								$stage = 2; 
+								$stage = 2;
 							}
 							if (strpos($line,'?>') === False)	// dont write the closeing tag
 							{
@@ -803,15 +801,9 @@ class db_tools
 		{
 			return False;
 		}
-		$file_baseline = EGW_SERVER_ROOT."/$app/setup/tables_baseline.inc.php";
 		$file_current  = EGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
 		$file_update   = EGW_SERVER_ROOT."/$app/setup/tables_update.inc.php";
 
-		if (!file_exists($file_baseline) && !copy($file_current,$file_baseline))
-		{
-			//echo "<p>Can't copy $file_current to $file_baseline !!!</p>\n";
-			return False;
-		}
 		$old_version = $this->setup_version($app);
 		$old_version_ = str_replace('.','_',$old_version);
 
@@ -833,16 +825,15 @@ class db_tools
 			$update = $this->setup_header($this->app);
 		}
 		$update .= "
-	\$test[] = '$old_version';
-	function $app"."_upgrade$old_version_()
-	{\n";
+function $app"."_upgrade$old_version_()
+{\n";
 
 			$update .= $this->update_schema($app,$current,$tables);
 
 			$update .= "
-		return \$GLOBALS['setup_info']['$app']['currentver'] = '$version';
-	}
-?".">\n";
+	return \$GLOBALS['setup_info']['$app']['currentver'] = '$version';
+}
+\n";
 		if (!($f = fopen($file_update,'w')))
 		{
 			//echo "<p>Cant open '$update' for writing !!!</p>\n";
@@ -874,7 +865,7 @@ class db_tools
 	}
 
 	/**
-	 * creates an update-script 
+	 * creates an update-script
 	 *
 	 * @param string $app app-name
 	 * @param array $current new table-defintion
@@ -890,7 +881,7 @@ class db_tools
 		{
 			if (!isset($current[$name]))	// table $name droped
 			{
-				$update .= "\t\t\$GLOBALS['egw_setup']->oProc->DropTable('$name');\n";
+				$update .= "\t\$GLOBALS['egw_setup']->oProc->DropTable('$name');\n";
 			}
 			else
 			{
@@ -908,13 +899,13 @@ class db_tools
 							$this->remove_from_array($new_table_def['fk'],$col);
 							$this->remove_from_array($new_table_def['ix'],$col);
 							$this->remove_from_array($new_table_def['uc'],$col);
-							$update .= "\t\t\$GLOBALS['egw_setup']->oProc->DropColumn('$name',";
+							$update .= "\t\$GLOBALS['egw_setup']->oProc->DropColumn('$name',";
 							$update .= $this->write_array($new_table_def,2).",'$col');\n";
 						}
 						else	// column $col renamed
 						{
 							$new_col = $this->changes[$name][$col];
-							$update .= "\t\t\$GLOBALS['egw_setup']->oProc->RenameColumn('$name','$col','$new_col');\n";
+							$update .= "\t\$GLOBALS['egw_setup']->oProc->RenameColumn('$name','$col','$new_col');\n";
 						}
 					}
 				}
@@ -937,7 +928,7 @@ class db_tools
 			{
 				$tables .= ($tables ? ',' : '') . "'$name'";
 
-				$update .= "\t\t\$GLOBALS['egw_setup']->oProc->CreateTable('$name',";
+				$update .= "\t\$GLOBALS['egw_setup']->oProc->CreateTable('$name',";
 				$update .= $this->write_array($table_def,2).");\n";
 			}
 			else
@@ -955,14 +946,14 @@ class db_tools
 					if (($add = !isset($old[$name]['fd'][$col])) ||	// column $col added
 						 serialize($old_norm_fd[$col]) != serialize($new_norm_fd[$col])) // column definition altered
 					{
-						$update .= "\t\t".($do_refresh ? "/* done by RefreshTable() anyway\n\t\t" : '').
+						$update .= "\t".($do_refresh ? "/* done by RefreshTable() anyway\n\t" : '').
 							"\$GLOBALS['egw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
 						$update .= $this->write_array($col_def,2) . ');' . ($do_refresh ? '*/' : '') . "\n";
 					}
 				}
 				if ($do_refresh)
 				{
-					$update .= "\t\t\$GLOBALS['egw_setup']->oProc->RefreshTable('$name',";
+					$update .= "\t\$GLOBALS['egw_setup']->oProc->RefreshTable('$name',";
 					$update .= $this->write_array($table_def,2).");\n";
 				}
 			}
@@ -976,7 +967,7 @@ class db_tools
 
 	/**
 	 * orders the single-colum-indices after the columns and the multicolunm ones behind
-	 * 
+	 *
 	 * @param array $index array with indices
 	 * @param array $cols array with column-defs (col-name is the key)
 	 * @return array the new array of indices
@@ -1040,7 +1031,7 @@ class db_tools
 	 * @param array $a
 	 * @param array $b
 	 * @return boolean true if they are identical (would create an identical schema), false otherwise
-	 * 
+	 *
 	 */
 	function tables_identical($a,$b)
 	{
@@ -1052,25 +1043,24 @@ class db_tools
 
 		return $a == $b;
 	}
-		
+
 	/**
-	 * creates file header 
+	 * creates file header
 	 *
 	 */
 	function setup_header($app)
 	{
 		return '<?php
-
-	/**
-	 * eGroupWare - Setup
-	 * http://www.egroupware.org 
-	 * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de
-	 *
-	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-	 * @package '. $app. '
-	 * @subpackage setup
-	 * @version $Id'.'$
-	 */
+/**
+ * eGroupWare - Setup
+ * http://www.egroupware.org
+ * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package '. $app. '
+ * @subpackage setup
+ * @version $Id'.'$
+ */
 ';
 	}
 }
