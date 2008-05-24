@@ -14,7 +14,7 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-	
+
 	/* $Id$ */
 
 	/**
@@ -33,64 +33,65 @@
 		var $m_oTranslator;
 		/**
 		 * egw_db-object
-		 * 
+		 *
 		 * @var egw_db
 		 */
 		var $m_odb;
 		/**
 		 * reference to the global ADOdb object
-		 * 
+		 *
 		 * @var ADOConnection
 		 */
 		var $adodb;
 		/**
 		 * adodb's datadictionary object for the used db-type
-		 * 
+		 *
 		 * @var ADODB_DataDict
 		 */
 		var $dict;
 		/**
 		 * Debuglevel: 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
-		 * 
+		 *
 		 * @var int
 		 */
 		var $debug = 0;
 		/**
-		 * Arry with db => max. length of indexes pairs (if there is a considerable low limit for a db)
-		 * 
+		 * Array with db => max. length of indexes pairs (if there is a considerable low limit for a db)
+		 *
 		 * @var array
 		 */
 		var $max_index_length=array(
-			'maxdb' => 32,
+			'maxdb'  => 32,
 			'oracle' => 30,
+			'mysql'  => 122,
 		);
 		/**
 		 * type of the database, set by the the constructor: 'mysql','pgsql','mssql','maxdb'
-		 * 
+		 *
 		 * @var string
 		 */
 		var $sType;
 		/**
 		 *	maximum length of a varchar column, everything above get converted to text
-		 * 
+		 *
 		 *	@var int
 		 */
 		var $max_varchar_length = 255;
 		/**
 		 * system-charset if set
-		 * 
+		 *
 		 * @var string
 		 */
 		var $system_charset;
 		/**
 		 * reference to the capabilities array of the db-class
-		 * 
+		 *
 		 * @var array
 		 */
 		var $capabilities;
 		/**
 		 * preserve value of old sequences in PostgreSQL
-		 * 
+		 *
 		 * @var int
 		 */
 		var $pgsql_old_seq;
@@ -106,7 +107,7 @@
 		{
 		    if(is_object($db))
 			{
-		 	  $this->m_odb = $db; 
+		 	  $this->m_odb = $db;
 			  $this->adodb = &$this->m_odb->Link_ID;
 		    }
 		    else
@@ -123,10 +124,10 @@
 
 			// enable the debuging in ADOdb's datadictionary if the debug-level is greater then 1
 			if ($this->debug > 1) $this->dict->debug = True;
-			
+
 			// to allow some of the former translator-functions to be called, we assign ourself as the translator
 			$this->m_oTranslator = &$this;
-			
+
 			switch($this->sType)
 			{
 				case 'maxdb':
@@ -142,7 +143,7 @@
 				$this->system_charset = $GLOBALS['egw_info']['server']['system_charset'];
 			}
 		}
-		
+
 		/**
 		 * Check if the given $columns exist as index in the index array $indexes
 		 *
@@ -168,7 +169,7 @@
 			}
 			return false;
 		}
-		
+
 		/**
 		 * Created a table named $sTableName as defined in $aTableDef
 		 *
@@ -184,7 +185,7 @@
 				$this->debug_message('schema_proc::CreateTable(%1,%2)',False,$sTableName, $aTableDef);
 			}
 			// for mysql 4.0+ we set the charset for the table
-			if ($this->system_charset && substr($this->sType,0,5) == 'mysql' && 
+			if ($this->system_charset && substr($this->sType,0,5) == 'mysql' &&
 				(float) $this->m_odb->ServerInfo['version'] >= 4.0 && $this->m_odb->Link_ID->charset2mysql[$this->system_charset])
 			{
 				$set_table_charset = array($this->sType => 'CHARACTER SET '.$this->m_odb->Link_ID->charset2mysql[$this->system_charset]);
@@ -228,7 +229,7 @@
 						if (isset($mFields['options'][$this->sType]))
 						{
 							$options = $mFields['options'][$this->sType];	// db-specific options, eg. index-type
-							
+
 							if (!$options) continue;	// no index for our db-type
 						}
 						unset($mFields['options']);
@@ -238,7 +239,7 @@
 				{
 					// only create indexes on text-columns, if (db-)specifiy options are given or FULLTEXT for mysql
 					// most DB's cant do them and give errors
-					if ($aTableDef['fd'][$mFields]['type'] == 'text') 
+					if ($aTableDef['fd'][$mFields]['type'] == 'text')
 					{
 						if ($this->sType == 'mysql')
 						{
@@ -273,7 +274,7 @@
 			}
 			return $retVal;
 		}
-		
+
 		/**
 		 * Drops all tables in $aTables
 		 *
@@ -319,7 +320,7 @@
 			if ($this->sType == 'pgsql') $this->_PostgresTestDropOldSequence($sTableName);
 
 			$aSql = $this->dict->DropTableSql($sTableName);
-		
+
 			return $this->ExecuteSQLArray($aSql,2,'DropTable(%1) sql=%2',False,$sTableName,$aSql);
 		}
 
@@ -336,7 +337,7 @@
 		{
 			$table_def = $this->GetTableDefinition($sTableName);
 			unset($table_def['fd'][$sColumnName]);
-			
+
 			$aSql = $this->dict->DropColumnSql($sTableName,$sColumnName,$ado_table=$this->_egw2adodb_columndef($table_def));
 
 			return $this->ExecuteSQLArray($aSql,2,'DropColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sColumnName,$ado_table,$aSql);
@@ -351,7 +352,7 @@
 		 */
 		function RenameTable($sOldTableName, $sNewTableName)
 		{
-			// if we have an old postgres sequence or index (the ones not linked to the table), 
+			// if we have an old postgres sequence or index (the ones not linked to the table),
 			// we create a new table, copy the content and drop the old one
 			if ($this->sType == 'pgsql')
 			{
@@ -376,7 +377,7 @@
 
 			return $this->ExecuteSQLArray($aSql,2,'RenameTableSQL(%1,%2) sql=%3',False,$sOldTableName,$sNewTableName,$aSql);
 		}
-		
+
 		/**
 		 * Check if we have an old, not automaticaly droped sequence
 		 *
@@ -390,7 +391,7 @@
 
 			$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName\'::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 			$seq2 = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%$sTableName%_seq\'::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
-			
+
 			if ($seq && preg_match('/^nextval\(\'(.*)\'/',$seq,$matches))
 			{
 				if ($preserveValue) $this->pgsql_old_seq = $this->adodb->GetOne("SELECT last_value FROM " . $matches[1]);
@@ -458,7 +459,7 @@
 		{
 			$table_def = $this->GetTableDefinition($sTableName);
 			$old_def = array();
-			
+
 			if (isset($table_def['fd'][$sOldColumnName]))
 			{
 				$old_def = $table_def['fd'][$sOldColumnName];
@@ -478,7 +479,7 @@
 					'fd' => array($sNewColumnName => $old_def),
 					'pk' => array(),
 				));
-			
+
 			$aSql = $this->dict->RenameColumnSQL($sTableName,$sOldColumnName,$sNewColumnName,$col_def);
 
 			return $this->ExecuteSQLArray($aSql,2,'RenameColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sOldColumnName, $sNewColumnName,$aSql);
@@ -501,7 +502,7 @@
 
 			return $this->ExecuteSQLArray($aSql,2,'AlterColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sColumnName, $aColumnDef,$aSql);
 		}
-		
+
 		/**
 		 * Create an (unique) Index over one or more columns
 		 *
@@ -535,7 +536,7 @@
 		 */
 		function DropIndex($sTableName,$aColumnNames)
 		{
-			if (is_array($aColumnNames)) 
+			if (is_array($aColumnNames))
 			{
 				$indexes = $this->dict->MetaIndexes($sTableName);
 
@@ -568,7 +569,7 @@
 			$aSql = $this->dict->DropIndexSQL($sIdxName,$sTableName);
 
 			return $this->ExecuteSQLArray($aSql,2,'DropIndexSQL(%1(%2),%3) sql=%4',False,$sIdxName,$aColumnNames,$sTableName,$aSql);
-		}	
+		}
 
 		/**
 		 * Updating the sequence-value, after eg. copying data via RefreshTable
@@ -583,7 +584,7 @@
 					// identify the sequence name, ADOdb uses a different name or it might be renamed
 					$columns = $this->dict->MetaColumns($sTableName);
 					$seq_name = 'seq_'.$sTableName;
-					if (preg_match("/nextval\('([^']+)'::(text|regclass)\)/",$columns[strtoupper($sColumnName)]->default_value,$matches)) 
+					if (preg_match("/nextval\('([^']+)'::(text|regclass)\)/",$columns[strtoupper($sColumnName)]->default_value,$matches))
 					{
 						$seq_name = $matches[1];
 					}
@@ -609,7 +610,7 @@
 		function RefreshTable($sTableName, $aTableDef, $aDefaults=False)
 		{
 			if($this->debug) { echo "<p>schema_proc::RefreshTable('$sTableName',"._debug_array($aTableDef,False).")<p>$sTableName="._debug_array($old_table_def,False)."\n"; }
-			
+
 			$old_table_def = $this->GetTableDefinition($sTableName);
 
 			$tmp_name = 'tmp_'.$sTableName;
@@ -671,7 +672,7 @@
 				$select[] = $value;
 			}
 			$select = implode(',',$select);
-			
+
 			$extra = '';
 			$distinct = 'DISTINCT';
 			switch($this->sType)
@@ -679,11 +680,11 @@
 				case 'mssql':
 					if ($auto_column_included) $extra = "SET IDENTITY_INSERT $sTableName ON\n";
 					if ($blob_column_included) $distinct = '';	// no distinct on blob-columns
-					break;					
+					break;
 			}
-			// because of all the trouble with sequences and indexes in the global namespace, 
+			// because of all the trouble with sequences and indexes in the global namespace,
 			// we use an additional temp. table for postgres and not rename the existing one, but drop it.
-			if ($this->sType == 'pgsql')	
+			if ($this->sType == 'pgsql')
 			{
 				$Ok = $this->m_odb->query("SELEcT * INTO TEMPORARY TABLE $tmp_name FROM $sTableName",__LINE__,__FILE__) &&
 					$this->DropTable($sTableName);
@@ -807,7 +808,7 @@
 		{
 			return $this->m_odb->query($sQuery, $line, $file);
 		}
-		
+
 		/**
 		* Insert a row of data into a table or updates it if $where is given, all data is quoted according to it's type
 		*
@@ -823,8 +824,8 @@
 		function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false)
 		{
 			return $this->m_odb->insert($table,$data,$where,$line,$file,$app,$use_prepared_statement);
-		}		
-			
+		}
+
 		/**
 		 * Execute the Sql statements in an array and give diagnostics, if any error occures
 		 *
@@ -855,7 +856,7 @@
 				$debug_params = func_get_args();
 				array_shift($debug_params);
 				array_shift($debug_params);
-				call_user_method_array('debug_message',$this,$debug_params);		
+				call_user_method_array('debug_message',$this,$debug_params);
 				if ($retval < 2 && !$this->dict->debug)
 				{
 					echo '<p><b>'.$this->adodb->ErrorMsg()."</b></p>\n";
@@ -882,22 +883,22 @@
 //			if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32)
 //			{
 //				static $existing_indexes=array();
-//				
+//
 //				if (!isset($existing_indexes[$sTableName]) && method_exists($this->adodb,'MetaIndexes'))
 //				{
 //					$existing_indexes[$sTableName] = $this->adodb->MetaIndexes($sTableName);
-//				}	
-//				$i = 0; 
+//				}
+//				$i = 0;
 //				$firstCol = is_array($aColumnNames) ? $aColumnNames[0] : $aColumnNames;
-//				do 
+//				do
 //				{
 //					++$i;
 //					$name = $firstCol . ($i > 1  ? '_'.$i : '');
 //				}
 //				while (isset($existing_indexes[$sTableName][$name]) || isset($existing_indexes[strtoupper($sTableName)][strtoupper($name)]));
-//				
+//
 //				$existing_indexes[$sTableName][$name] = True;	// mark it as existing now
-//				
+//
 //				return $name;
 //			}
 			// This code creates longer index-names incl. the table-names and the used columns
@@ -906,25 +907,25 @@
 			$remove[] = $table.'_';
 			// also remove 3 or 4 letter shortcuts of the table- or app-name
 			$remove[] = substr($table,0,3).'_';
-			$remove[] = substr($table,0,4).'_';	
+			$remove[] = substr($table,0,4).'_';
 			// if the table-name consists of '_' limtied parts, remove occurences of these parts too
 			foreach (explode('_',$table) as $part)
 			{
 				$remove[] = $part.'_';
 			}
 			$aColumnNames = str_replace($remove,'',$aColumnNames);
-			
+
 			$name = $sTableName.'_'.(is_array($aColumnNames) ? implode('_',$aColumnNames) : $aColumnNames);
 
 			// this code creates a fixed short index-names (30 chars) from the long and unique name, eg. for MaxDB or Oracle
-			if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32 && strlen($name) > 30)
+			if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32 && strlen($name) > 30 ||
+				strlen($name) >= 64)	// even mysql has a limit here ;-)
 			{
 				$name = "i".substr(hash ('md5', $name),0,29);
 			}
-			
-			return $name;			
+			return $name;
 		}
-			
+
 		/**
 		 * Giving a non-fatal error-message
 		 */
@@ -941,7 +942,7 @@
 			echo "<p><b>Fatal Error:</b> $str</p>";
 			exit;
 		}
-		
+
 		/**
 		 * Gives out a debug-message with certain parameters
 		 *
@@ -966,7 +967,7 @@
 			for($i = 2; $i < func_num_args(); ++$i)
 			{
 				$param = func_get_arg($i);
-		
+
 				if (is_null($param))
 				{
 					$param='NULL';
@@ -1020,10 +1021,10 @@
 					case 'bool':
 						$ado_col = 'L';
 						break;
-					case 'char':	
+					case 'char':
 						// ADOdb does not differ between char and varchar
-					case 'varchar':		
-						$ado_col = "C";								
+					case 'varchar':
+						$ado_col = "C";
 						if(0 < $col_data['precision'] && $col_data['precision'] <= $this->max_varchar_length)
 						{
 							$ado_col .= "($col_data[precision])";
@@ -1099,10 +1100,10 @@
 			//print_r($aTableDef); echo implode(",\n",$ado_defs)."\n";
 			return implode(",\n",$ado_defs);
 		}
-		
+
 		/**
 		 * Translates an eGW type into the DB's native type
-		 * 
+		 *
 		 * @param string $egw_type eGW name of type
 		 * @param string/boolean DB's name of the type or false if the type could not be identified (should not happen)
 		 */
@@ -1113,7 +1114,7 @@
 				'pk' => array(),
 			));
 			return preg_match('/test ([A-Z0-9]+)/i',$ado_col,$matches) ? $this->dict->ActualType($matches[1]) : false;
-		}	
+		}
 
 		/**
 		 * Read the table-definition direct from the database
@@ -1144,9 +1145,9 @@
 			foreach($columns as $column)
 			{
 				$name = $this->capabilities['name_case'] == 'upper' ? strtolower($column->name) : $column->name;
-				
+
 				$type = method_exists($this->dict,'MetaType') ? $this->dict->MetaType($column) : strtoupper($column->type);
-				
+
 				static $ado_type2egw = array(
 					'C'		=> 'varchar',
 					'C2'	=> 'varchar',
@@ -1177,7 +1178,7 @@
 						$definition['fd'][$name]['type'] = 'varchar';
 						$definition['fd'][$name]['precision'] = $column->max_length;
 						break;
-					case 'B': 
+					case 'B':
 					case 'X': case 'XL': case 'X2':
 						// text or blob's need to be nullable for most databases
 						$column->not_null = false;
@@ -1247,7 +1248,7 @@
 					}
 					$definition['fd'][$name]['default'] = $column->default_value;
 				}
-				if ($column->not_null) 
+				if ($column->not_null)
 				{
 					$definition['fd'][$name]['nullable'] = False;
 				}
@@ -1257,7 +1258,7 @@
 				}
 			}
 			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaColumns(%1) = %2",False,$sTableName,$columns);
-			
+
 			// not all DB's (odbc) return the primary keys via MetaColumns
 			if (!count($definition['pk']) && method_exists($this->dict,'MetaPrimaryKeys') &&
 				is_array($primary = $this->dict->MetaPrimaryKeys($sTableName)) && count($primary))
@@ -1269,7 +1270,7 @@
 				$definition['pk'] = $primary;
 			}
 			if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion: MetaPrimaryKeys(%1) = %2",False,$sTableName,$primary);
-			
+
 			if (method_exists($this->dict,'MetaIndexes') &&
 				is_array($indexes = $this->dict->MetaIndexes($sTableName)) && count($indexes))
 			{
@@ -1306,20 +1307,20 @@
 			$this->sCol = $this->pk = $this->fk = $this->ix = $this->uc = array();
 
 			$tabledef = $this->GetTableDefinition($sTableName);
-			
+
 			$sColumns = implode(',',array_keys($tabledef['fd']));
-			
+
 			foreach($tabledef['fd'] as $column => $data)
 			{
 				$col_def = "'type' => '$data[type]'";
 				unset($data['type']);
 				foreach($data as $key => $val)
 				{
-					$col_def .= ", '$key' => ".(is_bool($val) ? ($val ? 'true' : 'false') : 
+					$col_def .= ", '$key' => ".(is_bool($val) ? ($val ? 'true' : 'false') :
 						(is_int($val) ? $val : "'$val'"));
 				}
 				$this->sCol[] = "\t\t\t\t'$column' => array($col_def),\n";
-			}					
+			}
 			foreach(array('pk','fk','ix','uc') as $kind)
 			{
 				$this->$kind = $tabledef[$kind];
