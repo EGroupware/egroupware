@@ -137,7 +137,7 @@ enter a search pattern	etemplate	nl	Geef een zoekpatroon
 enter filename to upload and attach, use [browse...] to search for it	etemplate	nl	Vul de bestandsnaam in die geupload en bijgevoegd moet worden, gebruik (Bladeren...] om het bestand op te zoeken
 enter the new version number here (> old_version), empty for no update-file	etemplate	nl	vul het nieuwe versienummer hierin (> old_version), leeg voor "geen update bestand"
 enter the new version number here (has to be > old_version)	etemplate	nl	vul het nieuwe versienummer hier in (moet > old_version zijn)
-entry saved	etemplate	nl	Record opgelagen
+entry saved	etemplate	nl	Record opgeslagen
 error: template not found !!!	etemplate	nl	Fout: Template niet gevonden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
 error: while saving !!!	etemplate	nl	Fout: tijdens het opslaan !!!
@@ -159,7 +159,7 @@ file contains more than one etemplate, last one is shown !!!	etemplate	nl	Bestan
 file writen	etemplate	nl	Bestand weggeschreven
 fileupload	etemplate	nl	Bestandsupload
 first	etemplate	nl	Eerste
-floating point	etemplate	nl	Drijvende Punt
+floating point	etemplate	nl	Drijvende komma
 foreign key	etemplate	nl	Foreign Key
 formatted text (html)	etemplate	nl	Opgemaakte tekst (HTML)
 go to the first entry	etemplate	nl	ga naar de eerste entry
