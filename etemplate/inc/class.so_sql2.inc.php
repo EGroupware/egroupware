@@ -6,10 +6,9 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright 2007/8 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 /**
  * generalized SQL Storage Object
@@ -18,9 +17,9 @@ require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
  * 1) by calling the constructor with an app and table-name or
  * 2) by setting the following documented class-vars in a class derifed from this one
  * Of cause can you derife the class and call the constructor with params.
- * 
+ *
  * The so_sql2 class uses a privat $data array and __get and __set methods to set its data.
- * Please note: 
+ * Please note:
  * You have to explicitly declare other object-properties of derived classes, which should NOT
  * be handled by that mechanism!
  *
@@ -33,7 +32,7 @@ class so_sql2 extends so_sql
 {
 	/**
 	 * Private array containing all the object-data
-	 * 
+	 *
 	 * Colides with the original definition in so_sql and I dont want to change it there at the moment.
 	 *
 	 * @var array
@@ -49,17 +48,27 @@ class so_sql2 extends so_sql
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
-	 * 
+	 *
 	 * @return so_sql2
+	 */
+	function __construct($app='',$table='',$db=null,$column_prefix='')
+	{
+		parent::__construct($app,$table,$db,$column_prefix);
+	}
+
+	/**
+	 * php4 constructor
+	 *
+	 * @deprecated use __construct
 	 */
 	function so_sql2($app='',$table='',$db=null,$column_prefix='')
 	{
-		$this->so_sql($app,$table,$db,$column_prefix);
+		self::__construct($app,$table,$db,$column_prefix);
 	}
 
 	/**
 	 * magic method to read a property from $this->data
-	 * 
+	 *
 	 * The special property 'id' always refers to the auto-increment id of the object, independent of its name.
 	 *
 	 * @param string $property
@@ -73,12 +82,12 @@ class so_sql2 extends so_sql
 				$property = $this->autoinc_id;
 				break;
 		}
-		if (in_array($property,$this->db_cols))
+		if (in_array($property,$this->db_cols) || in_array($property,$this->non_db_cols))
 		{
 			return $this->data[$property];
 		}
 	}
-	
+
 	/**
 	 * magic method to set a property in $this->data
 	 *
@@ -86,7 +95,6 @@ class so_sql2 extends so_sql
 	 *
 	 * @param string $property
 	 * @param mixed $value
-	 * @return mixed
 	 */
 	function __set($property,$value)
 	{
@@ -96,12 +104,12 @@ class so_sql2 extends so_sql
 				$property = $this->autoinc_id;
 				break;
 		}
-		if (in_array($property,$this->db_cols))
+		if (in_array($property,$this->db_cols) || in_array($property,$this->non_db_cols))
 		{
 			$this->data[$property] = $value;
 		}
 	}
-	
+
 	/**
 	 * Return the whole object-data as array, it's a cast of the object to an array
 	 *

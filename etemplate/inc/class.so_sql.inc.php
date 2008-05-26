@@ -141,7 +141,7 @@ class so_sql
 	 *
 	 * @return so_sql
 	 */
-	function so_sql($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
+	function __construct($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
 	{
 		if ($no_clone)
 		{
@@ -170,6 +170,16 @@ class so_sql
 		}
 		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
 		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
+	}
+
+	/**
+	 * php4 constructor
+	 *
+	 * @deprecated use __construct
+	 */
+	function so_sql($app='',$table='',$db=null,$column_prefix='')
+	{
+		self::__construct($app,$table,$db,$column_prefix);
 	}
 
 	/**
@@ -622,11 +632,11 @@ class so_sql
 					{
 						$db_col = $col;
 					}
-					if ($wildcard || $criteria[$col]{0} == '!' ||
+					if ($wildcard || $criteria[$col][0] == '!' ||
 						is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
 					{
 						$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
-						if ($criteria[$col]{0} == '!')
+						if ($criteria[$col][0] == '!')
 						{
 							$cmp_op = ' NOT'.$cmp_op;
 							$criteria[$col] = substr($criteria[$col],1);
