@@ -48,12 +48,14 @@ class so_sql2 extends so_sql
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
+	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
+	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
 	 *
 	 * @return so_sql2
 	 */
-	function __construct($app='',$table='',$db=null,$column_prefix='')
+	function __construct($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
 	{
-		parent::__construct($app,$table,$db,$column_prefix);
+		parent::__construct($app,$table,$db,$column_prefix,$no_clone);
 	}
 
 	/**
@@ -61,9 +63,9 @@ class so_sql2 extends so_sql
 	 *
 	 * @deprecated use __construct
 	 */
-	function so_sql2($app='',$table='',$db=null,$column_prefix='')
+	function so_sql2($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
 	{
-		self::__construct($app,$table,$db,$column_prefix);
+		self::__construct($app,$table,$db,$column_prefix,$no_clone);
 	}
 
 	/**

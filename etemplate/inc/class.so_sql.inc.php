@@ -177,9 +177,9 @@ class so_sql
 	 *
 	 * @deprecated use __construct
 	 */
-	function so_sql($app='',$table='',$db=null,$column_prefix='')
+	function so_sql($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
 	{
-		self::__construct($app,$table,$db,$column_prefix);
+		self::__construct($app,$table,$db,$column_prefix,$no_clone);
 	}
 
 	/**
