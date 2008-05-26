@@ -18,6 +18,14 @@
 //xajaxDebug = 1;
 var current_app = 'etemplate';
 
+/**
+ * Settings for the timeout to prevent flooding the server with requests
+ *
+ * Adjust ajax_select_timeout to change how long to wait before sending the request (in ms)
+ */
+var ajax_select_timer_id = 0;
+var ajax_select_timeout = 300;
+
 function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
 	current_app = currentapp;
 	if(onchange) {
@@ -47,10 +55,10 @@ function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
 
 		if(widget.addEventListener) {
 			widget.addEventListener('keydown', checkKey, true);
-			widget.addEventListener('keyup', change, false);
+			widget.addEventListener('keyup', timer_change, false);
 			widget.addEventListener('blur', hideBox, false);
 		} else {
-			widget.onkeyup = change;
+			widget.onkeyup = timer_change;
 			widget.onblur = hideBox;
 			widget.onkeydown = checkKey;
 		}
@@ -178,6 +186,23 @@ function checkKey(e, value) {
 			}
 		break;
 	}
+}
+
+/**
+ * Set a timeout to prevent user from flooding the server with requests as
+ * they type.  Waits to see if the user is still typing before sending the 
+ * request.  Adjust ajax_select_timeout to change how long to wait (in ms).
+ */
+function timer_change(e, value) {
+	if ( ajax_select_timer_id != 0) {
+		clearTimeout(ajax_select_timer_id);
+	}
+	ajax_select_timer_id = setTimeout(
+		function() {
+			change(e, value);
+		}, 
+		ajax_select_timeout
+	);
 }
 
 function change(e, value) {
