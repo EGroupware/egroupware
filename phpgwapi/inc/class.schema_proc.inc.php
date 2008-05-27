@@ -913,7 +913,7 @@ class schema_proc
 		if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32 && strlen($name) > 30 ||
 			strlen($name) >= 64)	// even mysql has a limit here ;-)
 		{
-			$name = "i".substr(hash ('md5', $name),0,29);
+			$name = "i".substr(md5($name),0,29);
 		}
 		return $name;
 	}
