@@ -1,17 +1,17 @@
 <?php
 /**
  * API - Record history logging
- * 
+ *
  * This class extends a backend class (at them moment SQL or LDAP) and implements some
  * caching on to top of the backend functions. The cache is share for all instances of
- * the accounts class and for LDAP it is persistent through the whole session, for SQL 
+ * the accounts class and for LDAP it is persistent through the whole session, for SQL
  * it's only on a per request basis.
  *
  * @link http://www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org>
  * @copyright 2001 by Joseph Engo <jengo@phpgroupware.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> new DB-methods and search
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage db
@@ -42,10 +42,11 @@ class historylog
 	/**
 	 * offset in secconds between user and server-time,
 	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
-	 * 
+	 *
 	 * @var int
 	 */
 	var $tz_offset_s;
+	var $user;
 	var $template;
 	var $nextmatchs;
 	var $types = array(
@@ -61,14 +62,11 @@ class historylog
 	 * @param string $appname app name this instance operates on
 	 * @return historylog
 	 */
-	function historylog($appname='')
+	function historylog($appname='',$user=null)
 	{
-		if (!$appname)
-		{
-			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-		}
-		$this->appname = $appname;
-		
+		$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
+		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
+
 		if (is_object($GLOBALS['egw_setup']->db))
 		{
 			$this->db = $GLOBALS['egw_setup']->db;
@@ -89,7 +87,7 @@ class historylog
 	function delete($record_id)
 	{
 		$where = array('history_appname' => $this->appname);
-		
+
 		if (is_array($record_id) || is_numeric($record_id))
 		{
 			$where['history_record_id'] = $record_id;
@@ -114,7 +112,7 @@ class historylog
 			$this->db->insert(self::TABLE,array(
 				'history_record_id' => $record_id,
 				'history_appname'   => $this->appname,
-				'history_owner'     => $GLOBALS['egw_info']['user']['account_id'],
+				'history_owner'     => $this->user,
 				'history_status'    => $status,
 				'history_new_value' => $new_value,
 				'history_old_value' => $old_value,
@@ -129,13 +127,13 @@ class historylog
 	 * @param array/int $filter array with filters, or int record_id
 	 * @param string $order='history_id' sorting after history_id is identical to history_timestamp
 	 * @param string $sort='ASC'
-	 * @return array of arrays with keys id, record_id, appname, owner (account_id), status, new_value, old_value, 
+	 * @return array of arrays with keys id, record_id, appname, owner (account_id), status, new_value, old_value,
 	 * 	timestamp (Y-m-d H:i:s in servertime), user_ts (timestamp in user-time)
 	 */
 	function search($filter,$order='history_id',$sort='DESC')
 	{
 		if (!is_array($filter)) $filter = (int)$filter ? array('history_record_id' => $filter) : array();
-		
+
 		if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
 		{
 			$orderby = 'ORDER BY history_id DESC';
@@ -176,7 +174,7 @@ class historylog
 	 */
 	function return_array($filter_out,$only_show,$_orderby,$sort, $record_id)
 	{
-		
+
 		if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
 		{
 			$orderby = 'ORDER BY history_timestamp,history_id';
@@ -206,13 +204,13 @@ class historylog
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 		}
-		
+
 		foreach($this->db->select(self::TABLE,'*',$where,__LINE__,__FILE__,false,$orderby) as $row)
 		{
 			$return_values[] = array(
 				'id'         => $row['history_id'],
 				'record_id'  => $row['history_record_id'],
-				'owner'      => $GLOBALS['egw']->accounts->id2name($row['history_owner']),
+				'owner'      => $row['history_owner'] ? $GLOBALS['egw']->accounts->id2name($row['history_owner']) : lang('eGroupWare'),
 				'status'     => str_replace(' ','',$row['history_status']),
 				'new_value'  => $row['history_new_value'],
 				'old_value'  => $row['history_old_value'],
@@ -221,7 +219,7 @@ class historylog
 		}
 		return $return_values;
 	}
-	
+
 	/**
 	 * Creates html to show the history-log of one record
 	 *

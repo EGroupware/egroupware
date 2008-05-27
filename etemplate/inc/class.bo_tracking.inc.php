@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package etemplate
  * @subpackage api
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -202,10 +202,9 @@ class bo_tracking
 		{
 			if ($old[$name] != $data[$name] && !(!$old[$name] && !$data[$name]))
 			{
-				if (!is_object($this->historylog))
+				if (!is_object($this->historylog) || $this->historylog->user != $this->user)
 				{
-					require_once(EGW_API_INC.'/class.historylog.inc.php');
-					$this->historylog =& new historylog($this->app);
+					$this->historylog = new historylog($this->app,$this->user);
 				}
 				$this->historylog->add($status,$data[$this->id_field],
 					is_array($data[$name]) ? implode(',',$data[$name]) : $data[$name],
@@ -229,7 +228,7 @@ class bo_tracking
 	{
 		$this->errors = $email_sent = array();
 
-		if (!$this->notify_current_user)		// should we notify the current user about his own changes
+		if (!$this->notify_current_user && $this->user)		// do we have a current user and should we notify the current user about his own changes
 		{
 			//error_log("do_notificaton() adding user=$this->user to email_sent, to not notify him");
 			$email_sent[] = $GLOBALS['egw']->accounts->id2name($this->user,'account_email');
