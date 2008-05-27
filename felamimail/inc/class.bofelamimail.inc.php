@@ -390,7 +390,7 @@
 			} elseif(function_exists(iconv_mime_decode)) {
 				// continue decoding also if an error occurs
 				$string = @iconv_mime_decode($_string, 2, $this->displayCharset);
-				preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
+				return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
 			} elseif(function_exists(imap_mime_header_decode)) {
 				$newString = '';
 
