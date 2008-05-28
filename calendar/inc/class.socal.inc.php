@@ -470,7 +470,7 @@ ORDER BY cal_user_type, cal_usre_id
 	function save($event,&$set_recurrences,$change_since=0,&$etag=null)
 	{
 		//echo "<p>socal::save(,$change_since) event="; _debug_array($event);
-		error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$set_recurrences,$change_since,$etag)");
+		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$set_recurrences,$change_since,$etag)");
 
 		$cal_id = (int) $event['id'];
 		unset($event['id']);
