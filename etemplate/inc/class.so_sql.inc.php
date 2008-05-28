@@ -223,9 +223,16 @@ class so_sql
 			{
 				$this->autoinc_id = $col;
 			}
-			if (in_array($name,$this->table_def['uc']))
+			foreach($this->table_def['uc'] as $k => $uni_index)
 			{
-				$this->db_uni_cols[$col] = $name;
+				if (is_array($uni_index) && in_array($name,$uni_index))
+				{
+					$this->db_uni_cols[$k][$col] = $name;
+				}
+				elseif($name === $uni_index)
+				{
+					$this->db_uni_cols[$col] = $name;
+				}
 			}
 		}
 	}
@@ -362,9 +369,23 @@ class so_sql
 		{
 			foreach($this->db_uni_cols as $db_col => $col)
 			{
-				if ($this->data[$col] != '')
+				if (!is_array($col) && $this->data[$col] != '')
 				{
 					$query[$db_col] = $this->data[$col];
+				}
+				elseif(is_array($col))
+				{
+					$q = array();
+					foreach($col as $db_c => $c)
+					{
+						if ($this->data[$col] == '')
+						{
+							$q = null;
+							break;
+						}
+						$q[$db_c] = $this->data[$c];
+					}
+					if ($q) $query += $q;
 				}
 			}
 		}
@@ -918,7 +939,7 @@ class so_sql
 	}
 
 	/**
-	 * Check if values for unique keys are unique
+	 * Check if values for unique keys and the primary keys are unique are unique
 	 *
 	 * @param array $data data-set to check, defaults to $this->data
 	 * @return int 0: all keys are unique, 1: first key not unique, 2: ...
@@ -930,9 +951,21 @@ class so_sql
 			$data = $this->data;
 		}
 		$n = 1;
-		foreach($this->db_uni_cols as $db_col => $col)
+		foreach(array_merge($this->db_uni_cols,array($this->db_key_cols)) as $db_col => $col)
 		{
-			if (list($other) = $this->search(array($db_col => $data[$col]),false,'','','',false,'AND',false,null,''))
+			if (is_array($col))
+			{
+				$query = array();
+				foreach($col as $db_c => $c)
+				{
+					$query[$db_c] = $data[$c];
+				}
+			}
+			else
+			{
+				$query = array($db_col => $data[$col]);
+			}
+			if (list($other) = $this->search($query,false,'','','',false,'AND',false,null,''))
 			{
 				foreach($this->db_key_cols as $db_key_col => $key_col)
 				{
