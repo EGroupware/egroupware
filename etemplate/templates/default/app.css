@@ -74,6 +74,7 @@
 	right: 0px;
 	top: 16px;
 	display: none;
+	z-index: 1;
 }
 
 /*
