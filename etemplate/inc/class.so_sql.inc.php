@@ -951,7 +951,13 @@ class so_sql
 			$data = $this->data;
 		}
 		$n = 1;
-		foreach(array_merge($this->db_uni_cols,array($this->db_key_cols)) as $db_col => $col)
+		$uni_keys = $this->db_uni_cols;
+		// add the primary key, only if it's NOT an auto id
+		if (!$this->autoinc_id)
+		{
+			$uni_keys[] = $this->db_key_cols;
+		}
+		foreach($uni_keys as $db_col => $col)
 		{
 			if (is_array($col))
 			{
@@ -971,9 +977,9 @@ class so_sql
 				{
 					if ($data[$key_col] != $other[$key_col])
 					{
-						if ((int) $this->debug >= 4)
+						//if ((int) $this->debug >= 4)
 						{
-							echo "<p>not_unique in '$col' as for '$key_col': '${data[$key_col]}' != '${other[$key_col]}'</p>\n";
+							echo "<p>not_unique in ".array2string($col)." as for '$key_col': '${data[$key_col]}' != '${other[$key_col]}'</p>\n";
 						}
 						return $n;	// different entry => $n not unique
 					}
