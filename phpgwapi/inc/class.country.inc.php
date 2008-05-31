@@ -356,11 +356,7 @@ class country
 	 */
 	function form_select($code,$name='country')
 	{
-		if (!is_object($GLOBALS['egw']->html))
-		{
-			$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
-		}
-		return $GLOBALS['egw']->html->select($name,strtoupper($code),$this->country_array);
+		return html::select($name,strtoupper($code),$this->country_array);
 	}
 
 	/**
