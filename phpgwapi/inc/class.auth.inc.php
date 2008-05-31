@@ -1,10 +1,10 @@
 <?php
 /**
  * eGroupWare API - Authentication baseclass
- * 
+ *
  * @link http://www.egroupware.org
  * @author Miles Lott <milos@groupwhere.org>
- * @copyright 2004 by Miles Lott <milos@groupwhere.org> 
+ * @copyright 2004 by Miles Lott <milos@groupwhere.org>
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
  * @subpackage authentication
@@ -19,10 +19,10 @@ include(EGW_API_INC.'/class.auth_'.$GLOBALS['egw_info']['server']['auth_type'].'
 
 /**
  * eGroupWare API - Authentication baseclass, password auth and crypt functions
- * 
+ *
  * Many functions based on code from Frank Thomas <frank@thomas-alfeld.de>
  * which can be seen at http://www.thomas-alfeld.de/frank/
- * 
+ *
  * Other functions from class.common.inc.php originally from phpGroupWare
  */
 class auth extends auth_
@@ -85,7 +85,7 @@ class auth extends auth_
 		{
 			$type = strtolower($matches[1]);
 			$encrypted = $matches[2];
-			
+
 			switch($type)	// some hashs are specially "packed" in ldap
 			{
 				case 'md5':
@@ -102,7 +102,7 @@ class auth extends auth_
 		}
 		switch($type)
 		{
-			case 'plain': 
+			case 'plain':
 				if(strcmp($cleartext,$encrypted) == 0)
 				{
 					return True;
@@ -146,6 +146,33 @@ class auth extends auth_
 				$_password  = crypt($password, $salt);
 				$e_password = '{crypt}'.$_password;
 				break;
+			case 'blowfish_crypt':
+				if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
+				{
+					$salt = '$2$' . self::randomstring(13);
+					$e_password = '{crypt}'.crypt($password,$salt);
+					break;
+				}
+				self::$error = 'no blowfish crypt';
+				break;
+			case 'md5_crypt':
+				if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
+				{
+					$salt = '$1$' . self::randomstring(9);
+					$e_password = '{crypt}'.crypt($password,$salt);
+					break;
+				}
+				self::$error = 'no md5 crypt';
+				break;
+			case 'ext_crypt':
+				if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
+				{
+					$salt = self::randomstring(9);
+					$e_password = '{crypt}'.crypt($password,$salt);
+					break;
+				}
+				self::$error = 'no ext crypt';
+				break;
 			case 'md5':
 				/* New method taken from the openldap-software list as recommended by
 				 * Kervin L. Pierre" <kervin@blueprint-tech.com>
@@ -184,7 +211,7 @@ class auth extends auth_
 		}
 		return $e_password;
 	}
-	
+
 	/**
 	 * Create an ldap hash from an sql hash
 	 *
@@ -216,7 +243,7 @@ class auth extends auth_
 
 	/**
 	 * Create a password for storage in the accounts table
-	 * 
+	 *
 	 * @param string $password
 	 * @return string hash
 	 */
@@ -339,7 +366,7 @@ class auth extends auth_
 
 	/**
 	 * compare SMD5-encrypted passwords for authentication
-	 * 
+	 *
 	 * @param string $form_val user input value for comparison
 	 * @param string $db_val stored value (from database)
 	 * @return boolean True on successful comparison
@@ -356,16 +383,12 @@ class auth extends auth_
 		$new_hash = mhash(MHASH_MD5,$form_val . $salt);
 		//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
 
-		if(strcmp($orig_hash,$new_hash) == 0)
-		{
-			return True;
-		}
-		return False;
+		return strcmp($orig_hash,$new_hash) == 0;
 	}
 
 	/**
 	 * compare SHA-encrypted passwords for authentication
-	 * 
+	 *
 	 * @param string $form_val user input value for comparison
 	 * @param string $db_val   stored value (from database)
 	 * @return boolean True on successful comparison
@@ -377,16 +400,12 @@ class auth extends auth_
 		$new_hash = mhash(MHASH_SHA1,$form_val);
 		//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
 
-		if(strcmp($hash,$new_hash) == 0)
-		{
-			return True;
-		}
-		return False;
+		return strcmp($hash,$new_hash) == 0;
 	}
 
 	/**
 	 * compare SSHA-encrypted passwords for authentication
-	 * 
+	 *
 	 * @param string $form_val user input value for comparison
 	 * @param string $db_val   stored value (from database)
 	 * @return boolean	 True on successful comparison
@@ -401,16 +420,12 @@ class auth extends auth_
 		$salt = substr($hash, 20);
 		$new_hash = mhash(MHASH_SHA1, $form_val . $salt);
 
-		if(strcmp($orig_hash,$new_hash) == 0)
-		{
-			return True;
-		}
-		return False;
+		return strcmp($orig_hash,$new_hash) == 0;
 	}
 
 	/**
 	 * compare crypted passwords for authentication whether des,ext_des,md5, or blowfish crypt
-	 * 
+	 *
 	 * @param string $form_val user input value for comparison
 	 * @param string $db_val   stored value (from database)
 	 * @param string $type     crypt() type
@@ -430,16 +445,12 @@ class auth extends auth_
 		$salt = substr($db_val, 0, (int)$saltlen[$type]);
 		$new_hash = crypt($form_val, $salt);
 
-		if(strcmp($db_val,$new_hash) == 0)
-		{
-			return True;
-		}
-		return False;
+		return strcmp($db_val,$new_hash) == 0;
 	}
 
 	/**
 	 * compare md5_hmac-encrypted passwords for authentication (see RFC2104)
-	 * 
+	 *
 	 * @param string $form_val user input value for comparison
 	 * @param string $db_val   stored value (from database)
 	 * @param string $key       key for md5_hmac-encryption (username for imported smf users)
@@ -449,10 +460,7 @@ class auth extends auth_
 	{
 		$key = str_pad(strlen($key) <= 64 ? $key : pack('H*', md5($key)), 64, chr(0x00));
 		$md5_hmac = md5(($key ^ str_repeat(chr(0x5c), 64)) . pack('H*', md5(($key ^ str_repeat(chr(0x36), 64)). $form_val)));
-		if(strcmp($md5_hmac,$db_val) == 0)
-		{
-			return True;
-		}
-		return False;
+
+		return strcmp($md5_hmac,$db_val) == 0;
 	}
 }

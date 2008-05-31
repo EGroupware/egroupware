@@ -121,6 +121,19 @@
 		$hashes += array(
 			'plain' => 'plain',
 		);
+		/* Check for available crypt methods based on what is defined by php */
+		if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
+		{
+			$hashes['blowish_crypt'] = 'blowish_crypt';
+		}
+		if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
+		{
+			$hashes['md5_crypt'] = 'md5_crypt';
+		}
+		if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
+		{
+			$hashes['ext_crypt'] = 'ext_crypt';
+		}
 
 		while(list($key, $value) = each($hashes))
 		{
@@ -145,14 +158,14 @@
 			'md5' => 'md5'
 		);
 
-		/* Check for available crypt methods based on what is defined by php */ 
+		/* Check for available crypt methods based on what is defined by php */
 		if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
 		{
 			$hashes['blowish_crypt'] = 'blowish_crypt';
 		}
 		if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
 		{
-			$hashes['md5_crypt'] = 'md5_crypt'; 
+			$hashes['md5_crypt'] = 'md5_crypt';
 		}
 		if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
 		{
