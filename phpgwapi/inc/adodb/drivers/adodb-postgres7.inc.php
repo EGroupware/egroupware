@@ -1,11 +1,11 @@
 <?php
 /*
  V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim#natsoft.com.my). All rights reserved.
-  Released under both BSD license and Lesser GPL library license. 
-  Whenever there is any discrepancy between the two licenses, 
+  Released under both BSD license and Lesser GPL library license.
+  Whenever there is any discrepancy between the two licenses,
   the BSD license will take precedence.
   Set tabs to 4.
-  
+
   Postgres7 support.
   28 Feb 2001: Currently indicate that we support LIMIT
   01 Dec 2001: dannym added support for default values
@@ -17,12 +17,12 @@ if (!defined('ADODB_DIR')) die();
 include_once(ADODB_DIR."/drivers/adodb-postgres64.inc.php");
 
 class ADODB_postgres7 extends ADODB_postgres64 {
-	var $databaseType = 'postgres7';	
+	var $databaseType = 'postgres7';
 	var $hasLimit = true;	// set to true for pgsql 6.5+ only. support pgsql/mysql SELECT * FROM TABLE LIMIT 10
 	var $ansiOuter = true;
 	var $charSet = true; //set to true for Postgres 7 and above - PG client supports encodings
-	
-	function ADODB_postgres7() 
+
+	function ADODB_postgres7()
 	{
 		$this->ADODB_postgres64();
 		if (ADODB_ASSOC_CASE !== 2) {
@@ -30,10 +30,10 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 		}
 	}
 
-	
-	// the following should be compat with postgresql 7.2, 
+
+	// the following should be compat with postgresql 7.2,
 	// which makes obsolete the LIMIT limit,offset syntax
-	 function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0) 
+	 function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0)
 	 {
 		 $offsetStr = ($offset >= 0) ? ' OFFSET '.(int)$offset : '';
 		 $limitStr  = ($nrows >= 0)  ? ' LIMIT '.(int)$nrows : '';
@@ -41,7 +41,7 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 		  	$rs =& $this->CacheExecute($secs2cache,$sql.$limitStr.$offsetStr,$inputarr);
 		 else
 		  	$rs =& $this->Execute($sql.$limitStr.$offsetStr,$inputarr);
-		
+
 		return $rs;
 	 }
  	/*
@@ -69,9 +69,9 @@ function MetaForeignKeys($table, $owner=false, $upper=false)
 	c.relname = \''.strtolower($table).'\'
 	ORDER BY
 		t.tgrelid';
-	
+
 	$rs = $this->Execute($sql);
-	
+
 	if ($rs && !$rs->EOF) {
 		$arr =& $rs->GetArray();
 		$a = array();
@@ -90,7 +90,7 @@ function MetaForeignKeys($table, $owner=false, $upper=false)
 }
 
 
-	
+
  	 // this is a set of functions for managing client encoding - very important if the encodings
 	// of your database and your output target (i.e. HTML) don't match
 	//for instance, you may have UNICODE database and server it on-site as WIN1251 etc.
@@ -108,7 +108,7 @@ function MetaForeignKeys($table, $owner=false, $upper=false)
 			return $this->charSet;
 		}
 	}
-	
+
 	// SetCharSet - switch the client encoding
 	function SetCharSet($charset_name)
 	{
@@ -121,8 +121,21 @@ function MetaForeignKeys($table, $owner=false, $upper=false)
 		} else return true;
 	}
 
+	// use pg_escape_string if available
+	function qstr($s,$magic_quotes=false)
+	{
+		if (!$magic_quotes && function_exists('pg_escape_string')) {
+			return "'".pg_escape_string($s)."'";
+		}
+		return parent::qstr($s,$magic_quotes);
+	}
+
+	function _insertid($table,$column)
+	{
+		return parent::_insertid($table,$column,false);	// dont try oid
+	}
 }
-	
+
 /*--------------------------------------------------------------------------------------
 	 Class Name: Recordset
 --------------------------------------------------------------------------------------*/
@@ -130,21 +143,21 @@ function MetaForeignKeys($table, $owner=false, $upper=false)
 class ADORecordSet_postgres7 extends ADORecordSet_postgres64{
 
 	var $databaseType = "postgres7";
-	
-	
-	function ADORecordSet_postgres7($queryID,$mode=false) 
+
+
+	function ADORecordSet_postgres7($queryID,$mode=false)
 	{
 		$this->ADORecordSet_postgres64($queryID,$mode);
 	}
-	
+
 	 	// 10% speedup to move MoveNext to child class
-	function MoveNext() 
+	function MoveNext()
 	{
 		if (!$this->EOF) {
 			$this->_currentRow++;
 			if ($this->_numOfRows < 0 || $this->_numOfRows > $this->_currentRow) {
 				$this->fields = @pg_fetch_array($this->_queryID,$this->_currentRow,$this->fetchMode);
-			
+
 				if (is_array($this->fields)) {
 					if ($this->fields && isset($this->_blobArr)) $this->_fixblobs();
 					return true;
@@ -154,43 +167,43 @@ class ADORecordSet_postgres7 extends ADORecordSet_postgres64{
 			$this->EOF = true;
 		}
 		return false;
-	}		
+	}
 
 }
 
 class ADORecordSet_assoc_postgres7 extends ADORecordSet_postgres64{
 
 	var $databaseType = "postgres7";
-	
-	
-	function ADORecordSet_assoc_postgres7($queryID,$mode=false) 
+
+
+	function ADORecordSet_assoc_postgres7($queryID,$mode=false)
 	{
 		$this->ADORecordSet_postgres64($queryID,$mode);
 	}
-	
+
 	function _fetch()
 	{
 		if ($this->_currentRow >= $this->_numOfRows && $this->_numOfRows >= 0)
         	return false;
 
 		$this->fields = @pg_fetch_array($this->_queryID,$this->_currentRow,$this->fetchMode);
-		
+
 		if ($this->fields) {
 			if (isset($this->_blobArr)) $this->_fixblobs();
 			$this->_updatefields();
 		}
-			
+
 		return (is_array($this->fields));
 	}
-	
+
 		// Create associative array
 	function _updatefields()
 	{
 		if (ADODB_ASSOC_CASE == 2) return; // native
-	
+
 		$arr = array();
 		$lowercase = (ADODB_ASSOC_CASE == 0);
-		
+
 		foreach($this->fields as $k => $v) {
 			if (is_integer($k)) $arr[$k] = $v;
 			else {
@@ -202,25 +215,25 @@ class ADORecordSet_assoc_postgres7 extends ADORecordSet_postgres64{
 		}
 		$this->fields = $arr;
 	}
-	
-	function MoveNext() 
+
+	function MoveNext()
 	{
 		if (!$this->EOF) {
 			$this->_currentRow++;
 			if ($this->_numOfRows < 0 || $this->_numOfRows > $this->_currentRow) {
 				$this->fields = @pg_fetch_array($this->_queryID,$this->_currentRow,$this->fetchMode);
-			
+
 				if (is_array($this->fields)) {
 					if ($this->fields) {
 						if (isset($this->_blobArr)) $this->_fixblobs();
-					
+
 						$this->_updatefields();
 					}
 					return true;
 				}
 			}
-			
-			
+
+
 			$this->fields = false;
 			$this->EOF = true;
 		}
