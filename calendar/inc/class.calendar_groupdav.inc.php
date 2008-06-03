@@ -83,7 +83,7 @@ class calendar_groupdav extends groupdav_handler
 			return false;
 		}
 		// check if we have to return the full calendar data or just the etag's
-		if (!($calendar_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CALDAV))
+		if (!($calendar_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
