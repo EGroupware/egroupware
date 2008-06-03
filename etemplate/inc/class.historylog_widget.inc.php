@@ -20,14 +20,14 @@
  *  - 'status-widgets' array with status-values as key and widget names or array with select-options as value,
  *       all not set stati are displayed via a label-widget - just as text
  * You can set $sel_options['status'] to translate the status-values to meaningful labels.
- * 
+ *
  * @package etemplate
  * @subpackage extensions
  * @author RalfBecker-At-outdoor-training.de
  */
 class historylog_widget
 {
-	/** 
+	/**
 	 * @var array exported methods of this class
 	 */
 	var $public_functions = array(
@@ -40,7 +40,7 @@ class historylog_widget
 		'historylog' => 'History Log',
 //		'historylog-helper' => '',
 	);
-	
+
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
 		$status_widgets =& $GLOBALS['egw_info']['flags']['etemplate']['historylog-helper'];
@@ -60,20 +60,11 @@ class historylog_widget
 		$app = is_array($value) ? $value['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
 		$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
 		$id = is_array($value) ? $value['id'] : $value;
-		
+
 		$historylog =& CreateObject('phpgwapi.historylog',$app);
 		if (!$id || method_exists($historylog,'search'))
 		{
 			$value = $id ? $historylog->search($id) : false;
-		}
-		else // compatibilty code for 1.2, can be removed after
-		{
-			$value = $historylog->return_array('','','history_id','DESC',$id);
-			foreach($value as $key => $val)
-			{
-				$value[$key]['owner'] = $GLOBALS['egw']->accounts->name2id($val['owner'],'account_lid','u');
-				$value[$key]['user_ts'] = $val['datetime'] + $GLOBALS['egw']->datetime->tz_offset;
-			}
 		}
 		unset($historylog);
 
@@ -88,7 +79,7 @@ class historylog_widget
 		$tpl->new_cell(1,'label','Changed');
 		$tpl->new_cell(1,'label','New value');
 		$tpl->new_cell(1,'label','Old value');
-		
+
 		if ($value)	// autorepeated data-row only if there is data
 		{
 			$tpl->new_cell(2,'date-time','','${row}[user_ts]',array('readonly' => true));
@@ -102,7 +93,7 @@ class historylog_widget
 			{
 				$tpl->new_cell(2,'label','','${row}[status]',array('no_lang' => true));
 			}
-			// if $value[status-widgets] is set, use them together with the historylog-helper 
+			// if $value[status-widgets] is set, use them together with the historylog-helper
 			// to display new_ & old_value in the specified widget, otherwise use a label
 			if ($status_widgets)
 			{
