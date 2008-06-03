@@ -566,8 +566,16 @@ class PHPMailer
         // Retry while there is no connection
         while($index < count($hosts) && $connection == false)
         {
-            if(strpos($hosts[$index], ":") !== false)
-                list($host, $port) = explode(":", $hosts[$index]);
+            if(strpos($hosts[$index], ":") !== false) 
+			{
+                $hostA = explode(":", $hosts[$index]);
+				if (is_numeric(end($hostA))) {
+					$port = array_pop($hostA);
+				} else {
+					$port = $this->Port;
+					$host = implode(':', $hostA);
+				}
+			}
             else
             {
                 $host = $hosts[$index];
