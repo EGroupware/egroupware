@@ -27,6 +27,8 @@ function notificationwindow_display() {
 	var notificationwindow_message;
 	var Browserwidth;
 	var Browserheight;
+	var notificationwindow_ok_button;
+	notificationwindow_ok_button = document.getElementById("notificationwindow_ok_button");
 	notificationwindow = document.getElementById("notificationwindow");
 	notificationwindow_message = document.getElementById("notificationwindow_message");
 	notificationwindow.style.display = "inline";
