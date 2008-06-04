@@ -1363,7 +1363,7 @@ class uiinfolog
 			$bodyParts = $bofelamimail->getMessageBody($uid,'text/plain',$partid);
 			$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
 
-			if ($mailbox == 'Sent') $mailaddress = $bofelamimail->decode_header($headers['TO']);
+			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $bofelamimail->decode_header($headers['TO']);
 			elseif (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
 			elseif (isset($headers['SENDER'])) $mailaddress = $bofelamimail->decode_header($headers['SENDER']);
 
