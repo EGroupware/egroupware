@@ -1325,7 +1325,7 @@ class uiinfolog
 	{
 		$uid = $_GET['uid'];
 		$partid = $_GET['part'];
-		$mailbox = $_GET['mailbox'];
+		$mailbox = base64_decode($_GET['mailbox']);
 
 		if (!empty($_to_emailAddress))
 		{
