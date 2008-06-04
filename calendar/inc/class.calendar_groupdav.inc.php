@@ -98,6 +98,7 @@ class calendar_groupdav extends groupdav_handler
 		{
 			foreach($events as $event)
 			{
+				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($event)),
 					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/calendar'),
@@ -187,7 +188,7 @@ class calendar_groupdav extends groupdav_handler
 						break;
 				}
 			}
-			if (count($cal_filters) != $num_filters)	// no filters set --> restore default start and end time
+			if (count($cal_filters) == $num_filters)	// no filters set --> restore default start and end time
 			{
 				$cal_filters['start'] = $cal_start;
 				$cal_filters['end']   = $cal_end;
