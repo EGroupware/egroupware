@@ -1052,19 +1052,28 @@ class bocal
 	{
 		$date_in = $date;
 
-
 		switch(gettype($date))
 		{
-			case 'string':	// YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss string
+			case 'string':	// YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss[Z|[+-]hh:mm] string
 				if (is_numeric($date) && $date > 21000000)
 				{
 					$date = (int) $date;	// this is already as timestamp
 					break;
 				}
-				// ToDo: evaluate evtl. added timezone
-
+				// evaluate evtl. added timezone
+				if (strlen($date) > 12)
+				{
+					if (substr($date,-1) == 'Z')
+					{
+						$time_offset = date('Z');
+					}
+					elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
+					{
+						$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
+					}
+				}
 				// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
-				$date = str_replace(array('-',':','T','Z',' '),'',$date);
+				$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
 				$date = array(
 					'year'   => (int) substr($date,0,4),
 					'month'  => (int) substr($date,4,2),
@@ -1094,6 +1103,11 @@ class bocal
 			default:		// eg. boolean, means now in user-time (!)
 				$date = $this->now_su;
 				break;
+		}
+		if ($time_offset)
+		{
+			$date += $time_offset;
+			if (!$user2server) $date += $this->tz_offset_s;	// we have to return user time!
 		}
 		if ($user2server)
 		{
