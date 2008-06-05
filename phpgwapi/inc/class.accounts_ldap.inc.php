@@ -1,28 +1,28 @@
 <?php
 /**
  * API - accounts LDAP backend
- * 
- * The LDAP backend of the accounts class now stores accounts, groups and the memberships completly in LDAP. 
+ *
+ * The LDAP backend of the accounts class now stores accounts, groups and the memberships completly in LDAP.
  * It does NO longer use the ACL class/table for group membership information.
  * Nor does it use the phpgwAcounts schema (part of that information is stored via shadowAccount now).
- * 
- * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class AND 
+ *
+ * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class AND
  * matches the LDAP search filter specified in setup >> configuration.
  * A group is recogniced by eGW, if it's in the group_context tree AND has the posixGroup object class.
  * The group members are stored as memberuid's.
- * 
- * The (positive) group-id's (gidnumber) of LDAP groups are mapped in this class to negative numeric 
+ *
+ * The (positive) group-id's (gidnumber) of LDAP groups are mapped in this class to negative numeric
  * account_id's to not conflict with the user-id's, as both share in eGW internaly the same numberspace!
- * 
+ *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006
- * 
- * This class replaces the former accounts_ldap class written by 
+ *
+ * This class replaces the former accounts_ldap class written by
  * Joseph Engo <jengo@phpgroupware.org>, Lars Kneschke <lkneschke@phpgw.de>,
  * Miles Lott <milos@groupwhere.org> and Bettina Gille <ceb@phpgroupware.org>.
  * Copyright (C) 2000 - 2002 Joseph Engo, Lars Kneschke
  * Copyright (C) 2003 Lars Kneschke, Bettina Gille
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
@@ -31,7 +31,7 @@
 
 /**
  * LDAP Backend for accounts
- * 
+ *
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
@@ -70,7 +70,7 @@ class accounts_ldap
 	 * @var int
 	 */
 	var $total;
-	
+
 	var $ldapServerInfo;
 
 	/**
@@ -98,18 +98,18 @@ class accounts_ldap
 	);
 	/**
 	 * reference to the translation class
-	 * 
+	 *
 	 * @var translation
 	 */
 	var $translation;
-	
+
 	/**
 	 * Reference to our frontend
 	 *
 	 * @var accounts
 	 */
 	private $frontend;
-	
+
 	/**
 	 * Instance of the ldap class
 	 *
@@ -138,7 +138,7 @@ class accounts_ldap
 
 		$this->user_context  = $this->frontend->config['ldap_context'];
 		$this->account_filter = $this->frontend->config['ldap_search_filter'];
-		$this->group_context = $this->frontend->config['ldap_group_context'] ? 
+		$this->group_context = $this->frontend->config['ldap_group_context'] ?
 			$this->frontend->config['ldap_group_context'] : $this->frontend->config['ldap_context'];
 	}
 
@@ -151,7 +151,7 @@ class accounts_ldap
 	function read($account_id)
 	{
 		if (!(int)$account_id) return false;
-		
+
 		if ($account_id < 0)
 		{
 			return $this->_read_group($account_id);
@@ -161,7 +161,7 @@ class accounts_ldap
 
 	/**
 	 * Saves / adds the data of one account
-	 * 
+	 *
 	 * If no account_id is set in data the account is added and the new id is set in $data.
 	 *
 	 * @param array $data array with account-data
@@ -173,7 +173,7 @@ class accounts_ldap
 
 		$data_utf8 = $this->translation->convert($data,$this->translation->charset(),'utf-8');
 		$members = $data['account_members'];
-				
+
 		if (!is_object($this->ldapServerInfo))
 		{
 			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
@@ -213,7 +213,7 @@ class accounts_ldap
 						$members = $old ? $old['memberuid'] : $this->members($data['account_id']);
 					}
 					// if dn has changed --> delete the old entry, as we cant rename the dn
-					$this->delete($data['account_id']);	
+					$this->delete($data['account_id']);
 					unset($old['dn']);
 					// removing the namedObject object-class, if it's included
 					if ($key !== false) unset($old['objectclass'][$key]);
@@ -252,7 +252,7 @@ class accounts_ldap
 		{
 			$to_write = $this->_merge_group($to_write,$data_utf8);
 			$data['account_type'] = 'g';
-			
+
 			$groupOfNames = in_array('groupofnames',$old ? $old['objectclass'] : $to_write['objectclass']);
 			if (!$old && $groupOfNames || $members)
 			{
@@ -274,7 +274,7 @@ class accounts_ldap
 						}
 						if ($objectclass != 'dbmailforwardingaddress') $to_write['uid'] = $data_utf8['account_lid'];
 						$to_write['mail'] = $data_utf8['account_email'];
-						
+
 						if (!$members) $members = $this->members($data['account_id']);
 						$to_write[$forward] = array();
 						foreach ($members as $member)
@@ -299,7 +299,7 @@ class accounts_ldap
 					break;
 				}
 			}
-		
+
 		}
 		else
 		{
@@ -313,7 +313,7 @@ class accounts_ldap
 			}
 			$data['account_type'] = 'u';
 		}
-		
+
 		// remove memberuid when adding a group
 		if(!$old && is_array($to_write['memberuid']) && empty($to_write['memberuid'])) {
 			unset($to_write['memberuid']);
@@ -360,7 +360,7 @@ class accounts_ldap
 		foreach($ldap as $var => $val)
 		{
 			if (is_int($var) || $var == 'count') continue;
-			
+
 			if (is_array($val) && $val['count'] == 1)
 			{
 				$arr[$var] = $val[0];
@@ -375,7 +375,7 @@ class accounts_ldap
 		return $arr;
 	}
 
-	
+
 	/**
 	 * Delete one account, deletes also all acl-entries for that account
 	 *
@@ -398,7 +398,7 @@ class accounts_ldap
 			$sri = ldap_search($this->ds, $this->user_context, 'uidnumber=' . $account_id);
 		}
 		if (!$sri) return false;
-		
+
 		$allValues = ldap_get_entries($this->ds, $sri);
 		if (!$allValues['count']) return false;
 
@@ -408,7 +408,7 @@ class accounts_ldap
 	/**
 	 * Reads the data of one group
 	 *
-	 * @internal 
+	 * @internal
 	 * @param int $account_id numeric account-id (< 0 as it's for a group)
 	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
@@ -416,14 +416,14 @@ class accounts_ldap
 	{
 		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
 			array('dn','gidnumber','cn','objectclass','mail'));
-		
+
 		$data = ldap_get_entries($this->ds, $sri);
 		if (!$data['count'])
 		{
 			return false;	// group not found
 		}
 		$data = $this->translation->convert($data[0],'utf-8');
-		
+
 		$group = array(
 			'account_dn'        => $data['dn'],
 			'account_id'        => -$data['gidnumber'][0],
@@ -452,7 +452,7 @@ class accounts_ldap
 	/**
 	 * Reads the data of one user
 	 *
-	 * @internal 
+	 * @internal
 	 * @param int $account_id numeric account-id
 	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
@@ -461,14 +461,14 @@ class accounts_ldap
 		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.'))',
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword',
 				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'));
-	
+
 		$data = ldap_get_entries($this->ds, $sri);
 		if (!$data['count'])
 		{
 			return false;	// user not found
 		}
 		$data = $this->translation->convert($data[0],'utf-8');
-		
+
 		$utc_diff = date('Z');
 		$user = array(
 			'account_dn'        => $data['dn'],
@@ -508,7 +508,7 @@ class accounts_ldap
 	/**
 	 * Merges the group releavant account data from $data into $to_write
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array $to_write data to write to ldap incl. objectclass ($data is NOT yet merged)
 	 * @param array $data array with account-data in utf-8
 	 * @return array merged data
@@ -520,11 +520,11 @@ class accounts_ldap
 
 		return $to_write;
 	}
-	
+
 	/**
 	 * Merges the user releavant account data from $data into $to_write
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array $to_write data to write to ldap incl. objectclass ($data is NOT yet merged)
 	 * @param array $data array with account-data in utf-8
 	 * @param boolean $new_entry
@@ -547,7 +547,7 @@ class accounts_ldap
 			$to_write['mail']  = $data['account_email'] ? $data['account_email'] : array();
 		}
 		$to_write['cn']        = $data['account_fullname'] ? $data['account_fullname'] : $data['account_firstname'].' '.$data['account_lastname'];
-		
+
 		if (isset($data['account_passwd']) && $data['account_passwd'])
 		{
 			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']))	// if it's not already entcrypted, do so now
@@ -565,15 +565,15 @@ class accounts_ldap
 		$shadowexpire = ($data['account_expires']-$utc_diff) / (24*3600);
 		$account_expire = $shadowexpire*3600*24+$utc_diff;
 		//echo "<p align=right>account_expires=".date('Y-m-d H:i',$data['account_expires'])." --> $shadowexpire --> ".date('Y-m-d H:i',$account_expire)."</p>\n";
-		$to_write['shadowexpire'] = !$data['account_status'] ? 	
+		$to_write['shadowexpire'] = !$data['account_status'] ?
 			($data['account_expires'] != -1 && $data['account_expires'] < time() ? round($shadowexpire) : 0) :
 			($data['account_expires'] != -1 ? round($shadowexpire) : array());	// array() = unset value
-		
+
 		if ($new_entry && is_array($to_write['shadowexpire']) && !count($to_write['shadowexpire']))
 		{
 			unset($to_write['shadowexpire']);	// gives protocoll error otherwise
 		}
-		
+
 		if ($data['account_lastpasswd_change']) $to_write['shadowlastchange'] = $data['lastpasswd_change']/(24*3600);
 
 		// lastlogin and lastlogin from are not availible via the shadowAccount object class
@@ -615,7 +615,7 @@ class accounts_ldap
 	{
 		//echo "<p>accounts_ldap::search(".print_r($param,true)."): ".microtime()."</p>\n";
 		$account_search = &$this->cache['account_search'];
-		
+
 		// check if the query is cached
 		$serial = serialize($param);
 		if (isset($account_search[$serial]))
@@ -638,7 +638,7 @@ class accounts_ldap
 		else	// we need to run the unlimited query
 		{
 			$query = ldap::quote(strtolower($param['query']));
-	
+
 			$accounts = array();
 			if($param['type'] != 'groups')
 			{
@@ -691,7 +691,7 @@ class accounts_ldap
 				$order = $propertyMap[$param['order']] ? $propertyMap[$param['order']] : 'uid';
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid', $order));
 				$fullSet = array();
-				foreach (ldap_get_entries($this->ds, $sri) as $key => $entry) 
+				foreach (ldap_get_entries($this->ds, $sri) as $key => $entry)
 				{
 					if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
 				}
@@ -701,25 +701,25 @@ class accounts_ldap
 					$relevantAccounts = array();
 					$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
 					$group = ldap_get_entries($this->ds, $sri);
-					
+
 					if (isset($group[0]['memberuid']))
 					{
 						$fullSet = array_intersect_key($fullSet, array_flip($group[0]['memberuid']));
 					}
 				}
 				$totalcount = count($fullSet);
-				
+
 				$sortFn = $param['sort'] == 'DESC' ? 'arsort' : 'asort';
-				$sortFn($fullSet);	
+				$sortFn($fullSet);
 				$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
 
-				$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";	
+				$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";
 				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
-				
+
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
 				$allValues = ldap_get_entries($this->ds, $sri);
-				
+
 				$utc_diff = date('Z');
 				while (list($null,$allVals) = @each($allValues))
 				{
@@ -737,7 +737,7 @@ class accounts_ldap
 							'account_email'     => $allVals['mail'][0],
 							'account_created' => isset($data['createtimestamp'][0]) ? $this->accounts_ldap2ts($data['createtimestamp'][0]) : null,
 							'account_modified' => isset($data['modifytimestamp'][0]) ? $this->accounts_ldap2ts($data['modifytimestamp'][0]) : null,
- 
+
 						);
 					}
 				}
@@ -801,7 +801,7 @@ class accounts_ldap
 	function accounts_ldap2ts($date)
 	{
 		if (isset($date) && strlen($date)>0)
-		{ 
+		{
 			return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2),
 				substr($date,4,2),substr($date,6,2),substr($date,0,4));
 		}
@@ -814,7 +814,7 @@ class accounts_ldap
 	 * Please note:
 	 * - if a group and an user have the same account_lid the group will be returned (LDAP only)
 	 * - if multiple user have the same email address, the returned user is undefined
-	 * 
+	 *
 	 * @param string $name value to convert
 	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type u = user, g = group, default null = try both
@@ -854,10 +854,10 @@ class accounts_ldap
 		}
 		return False;
 	}
-	
+
 	/**
 	 * Convert an numeric account_id to any other value of that account (account_lid, account_email, ...)
-	 * 
+	 *
 	 * Uses the read method to fetch all data.
 	 *
 	 * @param int $account_id numerica account_id
@@ -891,7 +891,7 @@ class accounts_ldap
 
 		return $allValues[0]['phpgwaccountlastlogin'][0];
 	}
-	
+
 	/**
 	 * Query memberships of a given account
 	 *
@@ -901,19 +901,19 @@ class accounts_ldap
 	function memberships($account_id)
 	{
 		if (!(int) $account_id || !($account_lid = $this->id2name($account_id))) return false;
-		
+
 		$sri = ldap_search($this->ds,$this->group_context,'(&(objectClass=posixGroup)(memberuid='.ldap::quote($account_lid).'))',array('cn','gidnumber'));
 		$memberships = array();
 		foreach(ldap_get_entries($this->ds, $sri) as $key => $data)
 		{
 			if ($key === 'count') continue;
-			
+
 			$memberships[(string) -$data['gidnumber'][0]] = $data['cn'][0];
 		}
 		//echo "accounts::memberships($account_id)"; _debug_array($memberships);
 		return $memberships;
 	}
-	
+
 	/**
 	 * Query the members of a group
 	 *
@@ -923,12 +923,12 @@ class accounts_ldap
 	function members($gid)
 	{
 		if (!is_numeric($gid)) return false;
-		
+
 		$gid = abs($gid);	// our gid is negative!
-		
+
 		$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=$gid))",array('memberuid'));
 		$group = ldap_get_entries($this->ds, $sri);
-		
+
 		$members = array();
 		if (isset($group[0]['memberuid']))
 		{
@@ -943,7 +943,7 @@ class accounts_ldap
 		//echo "accounts_ldap::members($gid)"; _debug_array($members);
 		return $members;
 	}
-	
+
 	/**
 	 * Sets the memberships of the given account
 	 *
@@ -975,10 +975,10 @@ class accounts_ldap
 			$this->set_members($members,$gid);
 		}
 	}
-	
+
 	/**
 	 * Set the members of a group
-	 * 
+	 *
 	 * @param array $members array with uidnumber or uid's
 	 * @param int $gid gidnumber of group to set
 	 * @param boolean $groupOfNames=null should we set the member attribute of groupOfNames (default detect it)
@@ -992,7 +992,7 @@ class accounts_ldap
 
 		// do that group is a groupOfNames?
 		if (is_null($groupOfNames)) $groupOfNames = $this->id2name($gid,'groupOfNames');
-		
+
 		$to_write = array('memberuid' => array());
 		foreach((array)$members as $key => $member)
 		{
@@ -1015,7 +1015,7 @@ class accounts_ldap
 		if ($this->id2name($gid,'account_email') &&	($objectclass = $this->id2name($gid,'mailAllowed')))
 		{
 			$forward = $this->group_mail_classes[$objectclass];
-			
+
 			$to_write[$forward] = array();
 			foreach($members as $key => $member)
 			{
@@ -1033,7 +1033,7 @@ class accounts_ldap
 	/**
 	 * Using the common functions next_id and last_id, find the next available account_id
 	 *
-	 * @internal 
+	 * @internal
 	 * @param $string $account_type='u' (optional, default to 'u')
 	 * @return int/boolean integer account_id (negative for groups) or false if none is free anymore
 	 */
@@ -1056,7 +1056,7 @@ class accounts_ldap
 		do
 		{
 			$account_id = (int) $GLOBALS['egw']->common->next_id($type,$min,$max);
-		} 
+		}
 		while ($account_id && $this->frontend->exists($sign * $account_id));	// check need to include the sign!
 
 		if	(!$account_id || $this->frontend->config['account_max_id'] &&
@@ -1066,7 +1066,7 @@ class accounts_ldap
 		}
 		return $sign * $account_id;
 	}
-	
+
 	/**
 	 * __wakeup function gets called by php while unserializing the object to reconnect with the ldap server
 	 */
@@ -1076,20 +1076,3 @@ class accounts_ldap
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
 	}
 }
-
-if (!function_exists('array_intersect_key'))    // php5.1 function
-{
-	function array_intersect_key($array1,$array2)
-	{
-		$intersection = $keys = array();
-		foreach(func_get_args() as $arr)
-		{
-			$keys[] = array_keys((array)$arr);
-		}
-		foreach(call_user_func_array('array_intersect',$keys) as $key)
-		{
-			$intersection[$key] = $array1[$key];
-		}
-		return $intersection;
-	}
-	}
