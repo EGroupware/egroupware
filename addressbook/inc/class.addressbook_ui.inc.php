@@ -185,8 +185,11 @@ class addressbook_ui extends addressbook_bo
 				'do_email'       => $do_email,
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list',
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
-				'manual' => $do_email ? ' ' : false,	// space for the manual icon
+				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 			);
+			$csv_export = new addressbook_csv($this);
+			$content['nm']['csv_fields'] = $csv_export->csv_fields(null,true);
+
 			if ($do_email)
 			{
 				$content['nm']['filter2_onchange'] = str_replace('this.form.submit();',
@@ -505,23 +508,7 @@ class addressbook_ui extends addressbook_bo
 			case 'csv':
 				$action_msg = lang('exported');
 				$csv_export = new addressbook_csv($this,$this->prefs['csv_charset']);
-				switch ($this->prefs['csv_fields'])
-				{
-					case 'business':
-						$fields = $this->business_contact_fields;
-						break;
-					case 'home':
-						$fields = $this->home_contact_fields;
-						break;
-					default:
-						$fields = $this->contact_fields;
-						foreach($this->customfields as $name => $data)
-						{
-							$fields['#'.$name] = $data['label'];
-						}
-						break;
-				}
-				$csv_export->export($checked,$fields);
+				$csv_export->export($checked,$csv_export->csv_fields($this->prefs['csv_fields']));
 				// does not return!
 				$Ok = true;
 				break;
@@ -2089,86 +2076,6 @@ $readonlys['button[vcard]'] = true;
 			$GLOBALS['egw']->session->appsession('document_actions','addressbook',$actions);
 		}
 		return $actions;
-	}
-
-	/**
-	 * Read the next and last event of given contacts
-	 *
-	 * @param array $ids contact_id's
-	 * @param boolean $extra_title=true if true, use a short date only title and put the full title as extra_title (tooltip)
-	 * @return array
-	 */
-	function read_calendar($ids,$extra_title=true)
-	{
-		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return null;
-
-		$uids = array();
-		foreach($ids as $id)
-		{
-			if (is_numeric($id)) $uids[] = 'c'.$id;
-		}
-		if (!$uids) return array();
-
-		include_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
-		$bocal = new bocal;
-		$events = $bocal->search(array(
-			'users' => $uids,
-			'enum_recuring' => true,
-		));
-		if (!$events) return array();
-
-		//_debug_array($events);
-		$calendars = array();
-		foreach($events as $event)
-		{
-			foreach($event['participants'] as $uid => $status)
-			{
-				if ($uid{0} != 'c' || ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected']))
-				{
-					continue;
-				}
-				$id = (int)substr($uid,1);
-
-				if ($event['start'] < $this->now_su)	// past event --> check for last event
-				{
-					if (!isset($calendars[$id]['last_event']) || $event['start'] > $calendars[$id]['last_event'])
-					{
-						$calendars[$id]['last_event'] = $event['start'];
-						$link = array(
-							'id' => $event['id'],
-							'app' => 'calendar',
-							'title' => $bocal->link_title($event),
-						);
-						if ($extra_title)
-						{
-							$link['extra_title'] = $link['title'];
-							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
-						}
-						$calendars[$id]['last_link'] = $link;
-					}
-				}
-				else	// future event --> check for next event
-				{
-					if (!isset($calendars[$id]['next_event']) || $event['start'] < $calendars[$id]['next_event'])
-					{
-						$calendars[$id]['next_event'] = $event['start'];
-						$link = array(
-							'id' => $event['id'],
-							'app' => 'calendar',
-							'title' => $bocal->link_title($event),
-						);
-						if ($extra_title)
-						{
-							$link['extra_title'] = $link['title'];
-							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
-						}
-						$calendars[$id]['next_link'] = $link;
-					}
-				}
-			}
-		}
-		//_debug_array($calendars);
-		return $calendars;
 	}
 
 	/**

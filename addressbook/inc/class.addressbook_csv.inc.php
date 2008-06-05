@@ -16,12 +16,29 @@
  */
 class addressbook_csv
 {
+	/**
+	 * Addressbook Instance
+	 *
+	 * @var addressbook_bo
+	 */
 	var $obj;
 	var $charset;
 	var $charset_out;
 	var $separator;
+	static $types = array(
+		'select-account' => array('owner','creator','modifier'),
+		'date-time' => array('modified','created','last_event','next_event'),
+		'select-cat' => array('cat_id'),
+	);
 
-	function __construct($obj,$charset=null,$separator=';')
+	/**
+	 * Constructor
+	 *
+	 * @param addressbook_bo $obj
+	 * @param string $charset
+	 * @param string $separator
+	 */
+	function __construct(addressbook_bo $obj,$charset=null,$separator=';')
 	{
 		$this->obj = $obj;
 		$this->separator = $separator;
@@ -33,13 +50,15 @@ class addressbook_csv
 	 * Exports some contacts as CSV: download or write to a file
 	 *
 	 * @param array $ids contact-ids
-	 * @param array $fields
+	 * @param array $fields=null default csv_fields() = all fields
 	 * @param string $file filename or null for download
 	 */
-	function export($ids,$fields,$file=null)
+	function export($ids,$fields=null,$file=null)
 	{
-		unset($fields['jpegphoto']);
-
+		if (is_null($fields))
+		{
+			$fields = $this->csv_fields();
+		}
 		if (!$file)
 		{
 			$browser = new browser();
@@ -51,11 +70,19 @@ class addressbook_csv
 		}
 		fwrite($fp,$this->csv_encode($fields,$fields)."\n");
 
+		if (isset($fields['last_event']) || isset($fields['next_event']))
+		{
+			$events = $this->obj->read_calendar($ids);
+		}
 		foreach($ids as $id)
 		{
 			if (!($data = $this->obj->read($id)))
 			{
 				return false;
+			}
+			if ($events && isset($events[$id]) && is_array($events[$id]))
+			{
+				$data += $events[$id];
 			}
 			$this->csv_prepare($data,$fields);
 
@@ -70,6 +97,13 @@ class addressbook_csv
 		return true;
 	}
 
+	/**
+	 * export and encode one row
+	 *
+	 * @param array $data
+	 * @param array $fields
+	 * @return string
+	 */
 	function csv_encode($data,$fields)
 	{
 		$out = array();
@@ -91,9 +125,15 @@ class addressbook_csv
 		return $out;
 	}
 
+	/**
+	 * Prepare a line of the export: replace id's and timestamps with more readable values
+	 *
+	 * @param array &$data
+	 * @param array $fields
+	 */
 	function csv_prepare(&$data,$fields)
 	{
-		foreach(array('owner','creator','modifier') as $name)
+		foreach(self::$types['select-account'] as $name)
 		{
 			if ($data[$name])
 			{
@@ -104,7 +144,7 @@ class addressbook_csv
 				$data[$name] = lang('Accounts');
 			}
 		}
-		foreach(array('modified','created') as $name)
+		foreach(self::$types['date-time'] as $name)
 		{
 			if ($data[$name]) $data[$name] = date('Y-m-d H:i:s',$data[$name]);
 		}
@@ -121,5 +161,53 @@ class addressbook_csv
 
 		$data['n_fileas'] = $this->obj->fileas($data);
 		$data['n_fn'] = $this->obj->fullname($data);
+	}
+
+	/**
+	 * Return the fields to export
+	 *
+	 * @param string $csv_pref 'home', 'business' or default all
+	 * @param boolean $include_type=false include type information for nextmatchs csv export
+	 * @return array with name => label pairs
+	 */
+	function csv_fields($csv_pref=null,$include_type=false)
+	{
+		switch ($csv_pref)
+		{
+			case 'business':
+				$fields = $this->obj->business_contact_fields;
+				break;
+			case 'home':
+				$fields = $this->obj->home_contact_fields;
+				break;
+			default:
+				$fields = $this->obj->contact_fields;
+				foreach($this->obj->customfields as $name => $data)
+				{
+					$fields['#'.$name] = $data['label'];
+				}
+				$fields['last_event'] = lang('Last date');
+				$fields['next_event'] = lang('Next date');
+				break;
+		}
+		unset($fields['jpegphoto']);
+
+		if ($include_type)
+		{
+			foreach(self::$types as $type => $names)
+			{
+				foreach($names as $name)
+				{
+					if (isset($fields[$name]))
+					{
+						$fields[$name] = array(
+							'type'  => $type,
+							'label' => $fields[$name],
+						);
+					}
+				}
+			}
+		}
+		return $fields;
 	}
 }

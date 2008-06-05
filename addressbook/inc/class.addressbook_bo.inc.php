@@ -927,6 +927,86 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Read the next and last event of given contacts
+	 *
+	 * @param array $ids contact_id's
+	 * @param boolean $extra_title=true if true, use a short date only title and put the full title as extra_title (tooltip)
+	 * @return array
+	 */
+	function read_calendar($ids,$extra_title=true)
+	{
+		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return null;
+
+		$uids = array();
+		foreach($ids as $id)
+		{
+			if (is_numeric($id)) $uids[] = 'c'.$id;
+		}
+		if (!$uids) return array();
+
+		include_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
+		$bocal = new bocal;
+		$events = $bocal->search(array(
+			'users' => $uids,
+			'enum_recuring' => true,
+		));
+		if (!$events) return array();
+
+		//_debug_array($events);
+		$calendars = array();
+		foreach($events as $event)
+		{
+			foreach($event['participants'] as $uid => $status)
+			{
+				if ($uid{0} != 'c' || ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected']))
+				{
+					continue;
+				}
+				$id = (int)substr($uid,1);
+
+				if ($event['start'] < $this->now_su)	// past event --> check for last event
+				{
+					if (!isset($calendars[$id]['last_event']) || $event['start'] > $calendars[$id]['last_event'])
+					{
+						$calendars[$id]['last_event'] = $event['start'];
+						$link = array(
+							'id' => $event['id'],
+							'app' => 'calendar',
+							'title' => $bocal->link_title($event),
+						);
+						if ($extra_title)
+						{
+							$link['extra_title'] = $link['title'];
+							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
+						}
+						$calendars[$id]['last_link'] = $link;
+					}
+				}
+				else	// future event --> check for next event
+				{
+					if (!isset($calendars[$id]['next_event']) || $event['start'] < $calendars[$id]['next_event'])
+					{
+						$calendars[$id]['next_event'] = $event['start'];
+						$link = array(
+							'id' => $event['id'],
+							'app' => 'calendar',
+							'title' => $bocal->link_title($event),
+						);
+						if ($extra_title)
+						{
+							$link['extra_title'] = $link['title'];
+							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
+						}
+						$calendars[$id]['next_link'] = $link;
+					}
+				}
+			}
+		}
+		//_debug_array($calendars);
+		return $calendars;
+	}
+
+	/**
 	 * Called by delete-account hook, when an account get deleted --> deletes/moves the personal addressbook
 	 *
 	 * @param array $data
