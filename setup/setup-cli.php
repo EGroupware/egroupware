@@ -189,7 +189,7 @@ function do_emailadmin()
 	}
 	$config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
 
-	$emailadmin =& CreateObject('emailadmin.bo',-1,false);	// false=no session stuff
+	$emailadmin = new emailadmin_bo(-1,false);	// false=no session stuff
 	$emailadmin->setDefaultProfile($config);
 	
 	echo "\n".lang('EMailAdmin profile updated:')."\n";
