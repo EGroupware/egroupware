@@ -189,7 +189,7 @@ class uitimesheet extends botimesheet
 						if (!is_array($content['link_to']['to_id']))	// set links again, so new entry gets the same links as the existing one
 						{
 							$content['link_to']['to_id'] = 0;
-							foreach(egw_link::get_links(TIMESHEET_APP,$this->data['ts_id'],'!'.egw_link::vfs_appname) as $link)
+							foreach(egw_link::get_links(TIMESHEET_APP,$this->data['ts_id'],'!'.egw_link::VFS_APPNAME) as $link)
 							{
 								egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
 							}
