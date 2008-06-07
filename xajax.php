@@ -15,7 +15,7 @@
 
 	/**
 	 * callback if the session-check fails, redirects via xajax to login.php
-	 * 
+	 *
 	 * @param array &$anon_account anon account_info with keys 'login', 'passwd' and optional 'passwd_type'
 	 * @return boolean/string true if we allow anon access and anon_account is set, a sessionid or false otherwise
 	 */
@@ -35,13 +35,13 @@
 
 	function doXMLHTTP()
 	{
-		$numargs = func_num_args(); 
-		if($numargs < 1) 
+		$numargs = func_num_args();
+		if($numargs < 1)
 			return false;
 
 		$argList	= func_get_args();
 		$arg0		= array_shift($argList);
-	
+
 		if(get_magic_quotes_gpc()) {
 			foreach($argList as $key => $value) {
 				if(is_array($value)) {
@@ -56,7 +56,7 @@
 		//error_log("xajax_doXMLHTTP('$arg0',...)");
 
 		@list($appName, $className, $functionName, $handler) = explode('.',$arg0);
-		
+
 		$GLOBALS['egw_info'] = array(
 			'flags' => array(
 				'currentapp'			=> $appName,
@@ -91,7 +91,8 @@
 				$arg0 = ($appName = 'etemplate').'.'.$className.'.'.$functionName;
 				break;
 		}
-		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
+		if(substr($className,0,4) != 'ajax' && substr($className,-4) != 'ajax' &&
+			$arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
 			!preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$arg0))
 		{
 			// stopped for security reasons
@@ -105,5 +106,5 @@
 	}
 
 	$xajax = new xajax($_SERVER['PHP_SELF']);
-	$xajax->registerFunction('doXMLHTTP');	
+	$xajax->registerFunction('doXMLHTTP');
 	$xajax->processRequests();
