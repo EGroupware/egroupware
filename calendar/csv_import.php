@@ -37,7 +37,7 @@
 		$GLOBALS['egw']->redirect_link('/admin/index.php');
 	}
 	$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Import CSV-File');
-	$cal =& CreateObject('calendar.uical',true);
+	$cal = new calendar_ui(true);
 	$GLOBALS['egw']->common->egw_header();
 
 	$GLOBALS['egw']->template->set_file(array('import_t' => 'csv_import.tpl'));
@@ -62,7 +62,7 @@
 
 	function addr_id( $n_family,$n_given,$org_name )
 	{		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
-		$contacts =& CreateObject('phpgwapi.contacts');
+		$contacts = new contacts();
 
 		$addrs = $contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name");
 		if(!count($addrs))
@@ -102,7 +102,7 @@
 				if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
 				{
 					$cat2id[$cat] = $ids[$cat] = $cat;
-				}	
+				}
 				elseif ($id = $GLOBALS['egw']->categories->name2id( addslashes($cat) ))
 				{	// cat exists
 					$cat2id[$cat] = $ids[$cat] = $id;
@@ -472,7 +472,7 @@
 				$action = $values['id'] ? 'updating' : 'adding';
 				//echo $action.'<pre>'.print_r($values,True)."</pre>\n";
 				$cal_id = $cal->bo->update($values,true,!$values['modified'],$is_admin);	// ignoring conflicts and ACL (for admins) on import
-				
+
 				$log .= "\t\t".'<td align="center">'.($cal_id ? $action." cal_id=$cal_id" : 'Error '.$action)."</td>\n\t</tr>\n";
 			}
 			else

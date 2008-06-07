@@ -1,10 +1,21 @@
+/**
+ * Calendar - dragNdrop
+ *
+ * @link http://www.egroupware.org
+ * @author Christian Binder <christian.binder@freakmail.de>
+ * @package calendar
+ * @copyright (c) 2006 by Christian Binder <christian.binder@freakmail.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
+
 function dragEvent()
 {
 	if(minOffset())
 	{
 		// make a snapshot of the old (original) innerHTML of the dragged event
 		if(!dd.obj.oldInnerHTML)
-		{	
+		{
 			dd.obj.oldInnerHTML = dd.obj.div.innerHTML;
 		}
 
@@ -26,10 +37,10 @@ function dragEvent()
 }
 
 function dropEvent()
-{	
+{
 	// minimum requirements for ajax call
-	if(	minOffset() && 
-		(dropTarget = dd.obj.getEltBelow()) && 
+	if(	minOffset() &&
+		(dropTarget = dd.obj.getEltBelow()) &&
 		(dropTarget.my_datetime) &&
 		(dd.obj.my_calendarOwner == dropTarget.my_owner)
 	)
@@ -37,7 +48,7 @@ function dropEvent()
 		dd.obj.div.innerHTML = '<div style="height: 100%; width: 100%; text-align: center;">' + dd.obj.my_loaderImage + '</div>';
 
 		xajax_doXMLHTTP(
-			'calendar.ajaxcalendar.moveEvent',
+			'calendar.calendar_ajax.moveEvent',
 			dd.obj.my_eventId,
 			dd.obj.my_calendarOwner,
 			dropTarget.my_datetime,
@@ -59,7 +70,7 @@ function minOffset()
 {
 	var offsetX = Math.abs(dd.obj.defx - dd.obj.x);
 	var offsetY = Math.abs(dd.obj.defy - dd.obj.y);
-	
+
 	if(offsetX > 5 || offsetY > 5) { return true; }
 	return false;
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit.general" template="" lang="" group="0" version="1.4.002">
+	<template id="calendar.edit.general" template="" lang="" group="0" version="1.5.001">
 		<hbox options="0,0">
 			<grid width="100%" height="200">
 				<columns>
@@ -27,7 +27,7 @@
 					</row>
 					<row>
 						<description/>
-						<buttononly label="Freetime search" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.freetimesearch')+values2url(this.form,'start,end,duration,participants,recur_type,whole_day'),'ft_search','dependent=yes,width=700,height=500,scrollbars=yes,status=yes'); return false;" width="0" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan"/>
+						<buttononly label="Freetime search" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.freetimesearch')+values2url(this.form,'start,end,duration,participants,recur_type,whole_day'),'ft_search','dependent=yes,width=700,height=500,scrollbars=yes,status=yes'); return false;" width="0" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan"/>
 					</row>
 					<row class="row">
 						<description options=",,,location" value="Location" width="0"/>
@@ -114,7 +114,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.3.001">
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.3.002">
 		<grid width="100%" height="200">
 			<columns>
 				<column width="95"/>
@@ -133,7 +133,7 @@
 					</menulist>
 					<description options=",,,recur_interval" value="Interval"/>
 					<menulist>
-						<menupopup type="select-number" id="recur_interval" statustext="repeating interval, eg. 2 to repeat every second week" options="None,2,10"/>
+						<menupopup type="select-number" id="recur_interval" statustext="repeating interval, eg. 2 to repeat every second week" options="None,2,31"/>
 					</menulist>
 				</row>
 				<row class="row" height="12">
@@ -258,7 +258,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.3.004">
+	<template id="calendar.edit" template="" lang="" group="0" version="1.3.005">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -267,7 +267,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
+					<html span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
 					<description/>
 					<description/>
 				</row>

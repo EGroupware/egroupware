@@ -2,15 +2,15 @@
 /**
  * eGroupWare - Calendar's XMLRPC or SOAP access
  *
+ * Please note: dont use addressbook_... naming convention, as it would break the existing xmlrpc clients
+ *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
 
 /**
  * Class to access AND manipulate calendar data via XMLRPC or SOAP
@@ -19,7 +19,7 @@ require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
  *
  * @link http://egroupware.org/wiki/xmlrpc
  */
-class bocalendar 
+class bocalendar
 {
 	var $xmlrpc_date_format = 'Y-m-d\\TH:i:s';
 	var $debug = false;	// log function call to the apache error_log
@@ -33,9 +33,9 @@ class bocalendar
 		'list_methods' => True,
 	);
 
-	function bocalendar()
+	function __construct()
 	{
-		$this->cal =& new bocalupdate();
+		$this->cal =& new calendar_boupdate();
 
 		if (is_object($GLOBALS['server']) && $GLOBALS['server']->simpledate)
 		{
@@ -112,7 +112,7 @@ class bocalendar
 						'out' => array('array')
 					),
 				);
-		}		
+		}
 		return array();
 	}
 
@@ -127,7 +127,7 @@ class bocalendar
 		if ($this->debug) error_log('bocalendar::read('.print_r($id,true).')');
 
 		$events =& $this->cal->read($id,null,true,$this->xmlrpc_date_format);	// true = ignore acl!!!
-	
+
 		if (!$events)	// only id not found, as ignore_acl=true
 		{
 			// xmlrpc_error does NOT return
@@ -217,7 +217,7 @@ class bocalendar
 					$user = $GLOBALS['egw']->accounts->name2id($data['email'],'account_email');
 				}
 				if (!$user) continue;
-				
+
 				$event['participants'][$user] = in_array($data['status'],array('U','A','R','T')) ? $data['status'] : 'U';
 			}
 		}
@@ -252,7 +252,7 @@ class bocalendar
 		unset($params['ignore_acl']);
 
 		$events =& $this->cal->search($params);
-		
+
 		foreach($events as $key => $event)
 		{
 			$events[$key] = $this->xmlrpc_prepare($event);
@@ -311,7 +311,7 @@ class bocalendar
 		}
 		// using access={public|private} in all modules via xmlrpc
 		$event['access'] = $event['public'] ? 'public' : 'private';
-		
+
 		// unset everything not known in version 1.0
 		foreach(array('public','participant_types') as $key)
 		{

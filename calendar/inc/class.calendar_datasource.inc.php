@@ -1,56 +1,50 @@
 <?php
-/**************************************************************************\
-* eGroupWare - ProjectManager - DataSource for InfoLog                     *
-* http://www.egroupware.org                                                *
-* Written and (c) 2005 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * DataSource for the Calendar
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author RalfBecker-AT-outdoor-training.de
+ * @copyright (c) 2005-8 by RalfBecker-AT-outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.datasource.inc.php');
 
 /**
  * DataSource for the Calendar
- *
- * @package calendar
- * @author RalfBecker-AT-outdoor-training.de
- * @copyright (c) 2005 by RalfBecker-AT-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-class datasource_calendar extends datasource
+class calendar_datasource extends datasource
 {
 	/**
 	 * Constructor
 	 */
-	function datasource_calendar()
+	function __construct()
 	{
 		$this->datasource('calendar');
-		
+
 		$this->valid = PM_PLANNED_START|PM_PLANNED_END|PM_PLANNED_TIME|PM_RESOURCES;
 	}
-	
+
 	/**
 	 * get an entry from the underlaying app (if not given) and convert it into a datasource array
-	 * 
+	 *
 	 * @param mixed $data_id id as used in the link-class for that app, or complete entry as array
 	 * @return array/boolean array with the data supported by that source or false on error (eg. not found, not availible)
 	 */
 	function get($data_id)
 	{
-		// we use $GLOBALS['bocal'] as an already running instance is availible there
-		if (!is_object($GLOBALS['bocal']))
+		// we use $cal as an already running instance is availible there
+		if (!is_object($GLOBALS['calendar_bo']))
 		{
-			include_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
-			$GLOBALS['bocal'] =& new bocal();
+			$GLOBALS['calendar_bo'] = new calendar_bo();
 		}
+		$cal = $GLOBALS['calendar_bo'];
+
 		if (!is_array($data_id))
 		{
-			if (!(int) $data_id || !($data = $GLOBALS['bocal']->read((int) $data_id)))
+			if (!(int) $data_id || !($data = $cal->read((int) $data_id)))
 			{
 				return false;
 			}
@@ -60,9 +54,9 @@ class datasource_calendar extends datasource
 			$data =& $data_id;
 		}
 		$ds = array(
-			'pe_title' => $GLOBALS['bocal']->link_title($data),
-			'pe_planned_start' => $GLOBALS['bocal']->date2ts($data['start']),
-			'pe_planned_end'   => $GLOBALS['bocal']->date2ts($data['end']),
+			'pe_title' => $cal->link_title($data),
+			'pe_planned_start' => $cal->date2ts($data['start']),
+			'pe_planned_end'   => $cal->date2ts($data['end']),
 			'pe_resources'     => array(),
 			'pe_details'       => $data['description'] ? nl2br($data['description']) : '',
 		);
@@ -74,14 +68,14 @@ class datasource_calendar extends datasource
 		{
 			foreach(array('start','end') as $name)
 			{
-				$$name = $GLOBALS['bocal']->date2array($ds['pe_planned_'.$name]);
+				$$name = $cal->date2array($ds['pe_planned_'.$name]);
 				${$name}['hour'] = 12;
 				${$name}['minute'] = ${$name}['second'] = 0;
 				unset(${$name}['raw']);
-				$$name = $GLOBALS['bocal']->date2ts($$name);
+				$$name = $cal->date2ts($$name);
 			}
 			$nights = round(($end - $start) / DAY_s);
-			
+
 			if (!is_array($this->pm_config))
 			{
 				$c =& CreateObject('phpgwapi.config','projectmanager');
@@ -103,7 +97,7 @@ class datasource_calendar extends datasource
 		$ds['pe_planned_time'] *= count($ds['pe_resources']);
 
 /*
-		// ToDO: this does not change automatically after the event is over, 
+		// ToDO: this does not change automatically after the event is over,
 		// maybe we need a flag for that in egw_pm_elements
 		if ($data['end']['raw'] <= time()+$GLOBALS['egw']->datetime->tz_offset)
 		{

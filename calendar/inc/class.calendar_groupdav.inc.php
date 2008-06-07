@@ -11,8 +11,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
-
 /**
  * eGroupWare: GroupDAV access: calendar handler
  */
@@ -21,7 +19,7 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * bo class of the application
 	 *
-	 * @var bocalupdate
+	 * @var calendar_boupdate
 	 */
 	var $bo;
 
@@ -49,7 +47,7 @@ class calendar_groupdav extends groupdav_handler
 	{
 		parent::__construct($app,$debug,$base_uri);
 
-		$this->bo =& new bocalupdate();
+		$this->bo =& new calendar_boupdate();
 	}
 
 	/**

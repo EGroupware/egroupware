@@ -366,7 +366,7 @@ class addressbook_bo extends addressbook_so
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
 		{
 			static $fb_url;
-			if (!$fb_url && @is_dir(EGW_SERVER_ROOT.'/calendar/inc')) $fb_url = ExecMethod('calendar.bocal.freebusy_url','');
+			if (!$fb_url && @is_dir(EGW_SERVER_ROOT.'/calendar/inc')) $fb_url = calendar_bo::freebusy_url('');
 			if ($fb_url) $data['freebusy_uri'] = $fb_url.urlencode($GLOBALS['egw']->accounts->id2name($data['account_id']));
 		}
 		return $data;
@@ -944,8 +944,7 @@ class addressbook_bo extends addressbook_so
 		}
 		if (!$uids) return array();
 
-		include_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
-		$bocal = new bocal;
+		$bocal = new calendar_bo();
 		$events = $bocal->search(array(
 			'users' => $uids,
 			'enum_recuring' => true,

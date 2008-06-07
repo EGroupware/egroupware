@@ -5,12 +5,10 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
 
 /**
  * Class to generate the calendar listview and the search
@@ -24,20 +22,20 @@ include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
  */
-class uilist extends uical
+class calendar_uilist extends calendar_ui
 {
 	var $public_functions = array(
 		'listview'  => True,
 	);
 	/**
 	 * integer level or string function- or widget-name
-	 * 
+	 *
 	 * @var mixed
 	 */
 	var $debug=false;
 	/**
 	 * Filternames
-	 * 
+	 *
 	 * @var array
 	 */
 	var $date_filters = array(
@@ -52,22 +50,22 @@ class uilist extends uical
 	 *
 	 * @param array $set_states=null to manualy set / change one of the states, default NULL = use $_REQUEST
 	 */
-	function uilist($set_states=null)
+	function __construct($set_states=null)
 	{
-		$this->uical(true,$set_states);	// call the parent's constructor
+		parent::__construct(true,$set_states);	// call the parent's constructor
 
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Listview').
 			// for a single owner we add it's name to the app-header
 			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
-		
+
 		foreach($this->date_filters as $name => $label)
 		{
 			$this->date_filters[$name] = lang($label);
 		}
-		
+
 		$this->check_owners_access();
 	}
-	
+
 	/**
 	 * Show the calendar on the home page
 	 *
@@ -82,13 +80,13 @@ class uilist extends uical
 			'filter'     => 'all',
 			'owner'      => $this->user,
 			'multiple'   => 0,
-			'view'       => $this->bo->cal_prefs['defaultcalendar'],			
+			'view'       => $this->bo->cal_prefs['defaultcalendar'],
 		));
 		$GLOBALS['egw']->session->appsession('calendar_list','calendar','');	// in case there's already something set
 
 		return $this->listview(null,'',true);
-	}	
-	
+	}
+
 	/**
 	 * Show the listview
 	 */
@@ -112,12 +110,12 @@ class uilist extends uical
 		if (is_array($content) && $content['deleteall'])
 		{
 			//_debug_array($content);
-			
+
 			foreach($content['nm']['rows']['checked'] as $num => $id)
 			{
 				if ($this->bo->delete($id))
 				{
-					$msg .= lang('Event deleted');	
+					$msg .= lang('Event deleted');
 				}
 			}
 		}
@@ -128,7 +126,7 @@ class uilist extends uical
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
-				'get_rows'       =>	'calendar.uilist.get_rows',
+				'get_rows'       =>	'calendar.calendar_uilist.get_rows',
 	 			'filter_no_lang' => True,	// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
 				'no_cat'         => True,	// I  disable the cat-selectbox
@@ -145,11 +143,11 @@ class uilist extends uical
 		{
 			$this->adjust_for_search($_REQUEST['keywords'],$content['nm']);
 		}
-		return $etpl->exec('calendar.uilist.listview',$content,array(
+		return $etpl->exec('calendar.calendar_uilist.listview',$content,array(
 			'filter' => &$this->date_filters,
 		),$readonlys,'',$home ? -1 : 0);
 	}
-	
+
 	/**
 	 * set filter for search, so that everything is shown
 	 */
@@ -174,7 +172,7 @@ class uilist extends uical
 	/**
 	 * query calendar for nextmatch in the listview
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$params parameters
 	 * @param array &$rows returned rows/events
 	 * @param array &$readonlys eg. to disable buttons based on acl
@@ -214,7 +212,7 @@ class uilist extends uical
 			$this->adjust_for_search($params['search'],$params);
 		}
 		$GLOBALS['egw']->session->appsession('calendar_list','calendar',$params);
-		
+
 		$search_params = array(
 			'cat_id'  => $this->cat_id,
 			'filter'  => $this->filter,
@@ -311,7 +309,7 @@ class uilist extends uical
             $rows['format'] = '16';
 			$dv=1;
         }
-		if ($wv&&$dv) 
+		if ($wv&&$dv)
 		{
 			$rows['format'] = '64';
 		}

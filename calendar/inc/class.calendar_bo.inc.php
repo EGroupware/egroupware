@@ -5,12 +5,10 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.socal.inc.php');
 
 if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_message methode
 {
@@ -26,8 +24,6 @@ define('WEEK_s',7*DAY_s);
  * Used be the addressbook.
  */
 define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
-
-require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.socal.inc.php');
 
 /**
  * Class to access all calendar data
@@ -47,7 +43,7 @@ require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.socal.inc.php');
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of this class !!!
  */
-class bocal
+class calendar_bo
 {
 	/**
 	 * @var int $debug name of method to debug or level of debug-messages:
@@ -152,11 +148,11 @@ class bocal
 	/**
 	 * Constructor
 	 */
-	function bocal()
+	function __construct()
 	{
 		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
 
-		$this->so = new socal();
+		$this->so = new calendar_so();
 		$this->datetime = $GLOBALS['egw']->datetime;
 
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
@@ -1738,31 +1734,6 @@ class bocal
 	}
 
 	/**
-	 * Hook called by link-class to include calendar in the appregistry of the linkage
-	 *
-	 * @param array/string $location location and other parameters (not used)
-	 * @return array with method-names
-	 */
-	function search_link($location)
-	{
-		return array(
-			'query' => 'calendar.bocal.link_query',
-			'title' => 'calendar.bocal.link_title',
-			'view'  => array(
-				'menuaction' => 'calendar.uiforms.edit',
-			),
-			'view_id'    => 'cal_id',
-			'view_popup' => '750x400',
-			'add'        => array(
-				'menuaction' => 'calendar.uiforms.edit',
-			),
-			'add_app'    => 'link_app',
-			'add_id'     => 'link_id',
-			'add_popup'  => '750x400',
-		);
-	}
-
-	/**
 	 * sets the default prefs, if they are not already set (on a per pref. basis)
 	 *
 	 * It sets a flag in the app-session-data to be called only once per session
@@ -1826,7 +1797,7 @@ class bocal
 	 * @param int/string $user account_id or account_lid
 	 * @param string $pw=null password
 	 */
-	function freebusy_url($user,$pw=null)
+	static function freebusy_url($user,$pw=null)
 	{
 		if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
 
@@ -1834,22 +1805,5 @@ class bocal
 			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
 			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
 			($pw ? '&password='.urlencode($pw) : '');
-	}
-}
-
-if (!function_exists('array_intersect_key'))	// php5.1 function
-{
-	function array_intersect_key($array1,$array2)
-	{
-		$intersection = $keys = array();
-		foreach(func_get_args() as $arr)
-		{
-			$keys[] = array_keys((array)$arr);
-		}
-		foreach(call_user_func_array('array_intersect',$keys) as $key)
-		{
-			$intersection[$key] = $array1[$key];
-		}
-		return $intersection;
 	}
 }

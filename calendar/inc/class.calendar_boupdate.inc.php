@@ -5,12 +5,10 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
 
 // types of messsages send by bocalupdate::send_update
 define('MSG_DELETED',0);
@@ -39,7 +37,7 @@ define('MSG_DISINVITE',7);
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
  */
 
-class bocalupdate extends bocal
+class calendar_boupdate extends calendar_bo
 {
 	/**
 	 * name of method to debug or level of debug-messages:
@@ -60,11 +58,11 @@ class bocalupdate extends bocal
 	/**
 	 * Constructor
 	 */
-	function bocalupdate()
+	function __construct()
 	{
 		if ($this->debug > 0) $this->debug_message('bocalupdate::bocalupdate() started',True);
 
-		$this->bocal();	// calling the parent constructor
+		parent::__construct();	// calling the parent constructor
 
 		if ($this->debug > 0) $this->debug_message('bocalupdate::bocalupdate() finished',True);
 	}

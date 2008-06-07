@@ -5,12 +5,10 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
 
 /**
  * calendar UserInterface forms: view and edit events, freetime search
@@ -24,7 +22,7 @@ include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
  */
-class uiforms extends uical
+class calendar_uiforms extends calendar_ui
 {
 	var $public_functions = array(
 		'freetimesearch'  => True,
@@ -32,12 +30,6 @@ class uiforms extends uical
 		'export' => true,
 		'import' => true,
 	);
-	/**
-	 * Reference to link-class of bocal
-	 *
-	 * @var bolink
-	 */
-	var $link;
 
 	/**
 	 * Standard durations used in edit and freetime search
@@ -63,11 +55,9 @@ class uiforms extends uical
 	/**
 	 * Constructor
 	 */
-	function uiforms()
+	function __construct()
 	{
-		$this->uical(true);	// call the parent's constructor
-
-		$this->link =& $this->bo->link;
+		parent::__construct(true);	// call the parent's constructor
 
 		for ($n=15; $n <= 8*60; $n+=($n < 60 ? 15 : ($n < 240 ? 30 : 60)))
 		{
@@ -436,7 +426,7 @@ class uiforms extends uical
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
 								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
-								'menuaction' => 'calendar.uiforms.edit',
+								'menuaction' => 'calendar.calendar_uiforms.edit',
 									'cal_id'    => $content['id'],
 									'referer'    => $referer,
 									))).'">','</a>');
@@ -745,7 +735,7 @@ class uiforms extends uical
 			elseif(egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',false,false))
 			{
 				// install ajax handler to unlock the entry again, if the window get's closed by the user
-				$GLOBALS['egw']->js->set_onunload("xajax_doXMLHTTP('calendar.uiforms.ajax_unlock',$event[id],'$preserv[lock_token]');");
+				$GLOBALS['egw']->js->set_onunload("xajax_doXMLHTTP('calendar.calendar_uiforms.ajax_unlock',$event[id],'$preserv[lock_token]');");
 			}
 			else
 			{
@@ -952,7 +942,7 @@ class uiforms extends uical
 		}
 		else
 		{
-			$etpl->exec('calendar.uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
+			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
 		}
 	}
 
@@ -1007,7 +997,7 @@ class uiforms extends uical
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
 
-		$etpl->exec('calendar.uiforms.process_edit',$content,false,false,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
+		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,false,false,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
 	}
 
 	/**
@@ -1169,7 +1159,7 @@ class uiforms extends uical
 		// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
 		$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
 
-		$etpl->exec('calendar.uiforms.freetimesearch',$content,$sel_options,'',array(
+		$etpl->exec('calendar.calendar_uiforms.freetimesearch',$content,$sel_options,'',array(
 				'participants'	=> $content['participants'],
 				'cal_id'		=> $content['cal_id'],
 				'recur_type'	=> $content['recur_type'],
@@ -1389,7 +1379,7 @@ class uiforms extends uical
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
 		$etpl =& CreateObject('etemplate.etemplate','calendar.export');
 
-		$etpl->exec('calendar.uiforms.export',$content);
+		$etpl->exec('calendar.calendar_uiforms.export',$content);
 	}
 
 	/**
@@ -1423,6 +1413,6 @@ class uiforms extends uical
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Import');
 		$etpl =& CreateObject('etemplate.etemplate','calendar.import');
 
-		$etpl->exec('calendar.uiforms.import',$content);
+		$etpl->exec('calendar.calendar_uiforms.import',$content);
 	}
 }

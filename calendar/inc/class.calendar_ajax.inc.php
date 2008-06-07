@@ -7,34 +7,26 @@
  * @package calendar
  * @copyright (c) 2006 by Christian Binder <christian.binder@freakmail.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.ajaxcalendar.inc.php 22777 2006-11-26 20:55:00Z jaytraxx $ 
+ * @version $Id: class.ajaxcalendar.inc.php 22777 2006-11-26 20:55:00Z jaytraxx $
  */
-
-require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
 
 /**
  * General object of the calendar ajax class
- *
- * @package calendar
- * @author Christian Binder <christian.binder@freakmail.de>
- * @copyright (c) 2006 by Christian Binder <christian.binder@freakmail.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
+class calendar_ajax {
 
-class ajaxcalendar {
-	
 	/**
 	 * calendar object to handle events
-	 * 
-	 * @var bocalupdate
+	 *
+	 * @var calendar_boupdate
 	 */
 	var $calendar;
 
-	function ajaxcalendar() 
+	function __construct()
 	{
-		$this->calendar = new bocalupdate;
+		$this->calendar = new calendar_boupdate();
 	}
-	
+
 	/**
 	 * moves an event to another date/time
 	 *
@@ -54,22 +46,22 @@ class ajaxcalendar {
 
 		$event=$this->calendar->read($eventId);
 		$duration=$event['end']-$event['start'];
-		
+
 		$event['start'] = $this->calendar->date2ts($targetDateTime);
 		$event['end'] = $event['start']+$duration;
-		
+
 		$conflicts=$this->calendar->update($event);
 
 		$response =& new xajaxResponse();
 		if(!is_array($conflicts))
 		{
-			$response->addRedirect($PHP_SELF);
+			$response->addRedirect('');
 		}
 		else
 		{
 			$response->addScriptCall(
 				'egw_openWindowCentered2',
-				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.edit
+				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
 					&cal_id='.$event['id']
 					.'&start='.$event['start']
 					.'&end='.$event['end']

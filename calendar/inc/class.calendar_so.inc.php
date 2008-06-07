@@ -58,7 +58,7 @@ define('ACCEPTED',3);
  *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
  *  SO operates only on server-time
  */
-class socal
+class calendar_so
 {
 	/**
 	 * name of the main calendar table and prefix for all other calendar tables
@@ -82,7 +82,7 @@ class socal
 	/**
 	 * Constructor of the socal class
 	 */
-	function socal()
+	function __construct()
 	{
 		$this->async = $GLOBALS['egw']->asyncservice;
 		$this->db = $GLOBALS['egw']->db;
@@ -1045,8 +1045,19 @@ ORDER BY cal_user_type, cal_usre_id
 		return $this->async->cancel_timer($id);
 	}
 
-	function change_delete_user($old_user,$new_user=false)
+	/**
+	 * Delete account hook
+	 *
+	 * @param array|int $old_user integer old user or array with keys 'account_id' and 'new_owner' as the deleteaccount hook uses it
+	 * @param int $new_user=null
+	 */
+	function deleteaccount($data)
 	{
+		if (is_array($old_user))
+		{
+			$new_user = $old_user['new_owner'];
+			$old_user = $old_user['account_id'];
+		}
 		if (!(int)$new_user)
 		{
 			$this->split_user($old_user,$user_type,$user_id);

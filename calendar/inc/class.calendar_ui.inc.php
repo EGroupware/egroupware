@@ -22,7 +22,7 @@
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
  */
-class uical
+class calendar_ui
 {
 	/**
 	 * @var $debug mixed integer level or string function-name
@@ -31,7 +31,7 @@ class uical
 	/**
 	 * instance of the bocal or bocalupdate class
 	 *
-	 * @var bocalupdate
+	 * @var calendar_boupdate
 	 */
 	var $bo;
 	/**
@@ -40,12 +40,6 @@ class uical
 	 * @var jscalendar
 	 */
 	var $jscal;
-	/**
-	 * Reference to global html class
-	 *
-	 * @var html
-	 */
-	var $html;
 	/**
 	 * Reference to global datetime class
 	 *
@@ -129,14 +123,19 @@ class uical
 	/**
 	 * Constructor
 	 *
-	 * @param boolean $use_bocalupdate use bocalupdate as parenent instead of bocal
+	 * @param boolean $use_boupdate use bocalupdate as parenent instead of bocal
 	 * @param array $set_states=null to manualy set / change one of the states, default NULL = use $_REQUEST
 	 */
-	function uical($use_bocalupdate=false,$set_states=NULL)
+	function __construct($use_boupdate=false,$set_states=NULL)
 	{
-		$bo_class = $use_bocalupdate ? 'bocalupdate' : 'bocal';
-		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.'.$bo_class.'.inc.php');
-		$this->bo = new $bo_class();
+		if ($use_boupdate)
+		{
+			$this->bo = new calendar_boupdate();
+		}
+		else
+		{
+			$this->bo = new calendar_bo();
+		}
 		$this->jscal = $GLOBALS['egw']->jscalendar;
 		$this->datetime = $GLOBALS['egw']->datetime;
 		$this->accountsel = $GLOBALS['egw']->uiaccountsel;
@@ -299,7 +298,7 @@ class uical
 					}
 				}
 				// for the uiforms class (eg. edit), dont store the (new) owner, as it might change the view
-				if (substr($_GET['menuaction'],0,16) == 'calendar.uiforms')
+				if (substr($_GET['menuaction'],0,16) == 'calendar.calendar_uiforms')
 				{
 					$this->owner = $set_states[$state];
 					continue;
@@ -359,7 +358,7 @@ class uical
 			}
 			$this->view = $states['view'] = $func;
 		}
-		$this->view_menuaction = $this->view == 'listview' ? 'calendar.uilist.listview' : 'calendar.uiviews.'.$this->view;
+		$this->view_menuaction = $this->view == 'listview' ? 'calendar.calendar_uilist.listview' : 'calendar.calendar_uiviews.'.$this->view;
 
 		if ($this->debug > 0 || $this->debug == 'manage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
 		// save the states in the session
@@ -464,7 +463,7 @@ class uical
 	function add_link($content,$date=null,$hour=null,$minute=0)
 	{
 		$vars = array(
-			'menuaction'=>'calendar.uiforms.edit',
+			'menuaction'=>'calendar.calendar_uiforms.edit',
 			'date' => $date ? $date : $this->date,
 		);
 		if (!is_null($hour))
@@ -537,11 +536,11 @@ class uical
 		$views = '<table style="width: 100%;"><tr>'."\n";
 		foreach(array(
 			'add' => array('icon'=>'new','text'=>'add'),
-			'day' => array('icon'=>'today','text'=>'Today','menuaction' => 'calendar.uiviews.day','date' => $this->bo->date2string($this->bo->now_su)),
-			'week' => array('icon'=>'week','text'=>'Weekview','menuaction' => 'calendar.uiviews.week'),
-			'month' => array('icon'=>'month','text'=>'Monthview','menuaction' => 'calendar.uiviews.month'),
-			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.uiviews.planner','sortby' => $this->sortby),
-			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.uilist.listview'),
+			'day' => array('icon'=>'today','text'=>'Today','menuaction' => 'calendar.calendar_uiviews.day','date' => $this->bo->date2string($this->bo->now_su)),
+			'week' => array('icon'=>'week','text'=>'Weekview','menuaction' => 'calendar.calendar_uiviews.week'),
+			'month' => array('icon'=>'month','text'=>'Monthview','menuaction' => 'calendar.calendar_uiviews.month'),
+			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.calendar_uiviews.planner','sortby' => $this->sortby),
+			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.calendar_uilist.listview'),
 		) as $view => $data)
 		{
 			$icon = array_shift($data);
@@ -562,49 +561,49 @@ class uical
 		foreach(array(
 			array(
 				'text' => lang('dayview'),
-				'value' => 'menuaction=calendar.uiviews.day',
+				'value' => 'menuaction=calendar.calendar_uiviews.day',
 				'selected' => $this->view == 'day',
 			),
 			array(
 				'text' => lang('four days view'),
-				'value' => 'menuaction=calendar.uiviews.day4',
+				'value' => 'menuaction=calendar.calendar_uiviews.day4',
 				'selected' => $this->view == 'day4',
 			),
 			array(
 				'text' => lang('weekview with weekend'),
-				'value' => 'menuaction=calendar.uiviews.week&days=7',
+				'value' => 'menuaction=calendar.calendar_uiviews.week&days=7',
 				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] != 5,
 			),
 			array(
 				'text' => lang('weekview without weekend'),
-				'value' => 'menuaction=calendar.uiviews.week&days=5',
+				'value' => 'menuaction=calendar.calendar_uiviews.week&days=5',
 				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] == 5,
 			),
 			array(
 				'text' => lang('Multiple week view'),
-				'value' => 'menuaction=calendar.uiviews.weekN',
+				'value' => 'menuaction=calendar.calendar_uiviews.weekN',
 				'selected' => $this->view == 'weekN',
 			),
 			array(
 				'text' => lang('monthview'),
-				'value' => 'menuaction=calendar.uiviews.month',
+				'value' => 'menuaction=calendar.calendar_uiviews.month',
 				'selected' => $this->view == 'month',
 			),
 			array(
 				'text' => lang('planner by category'),
-				'value' => 'menuaction=calendar.uiviews.planner&sortby=category'.
+				'value' => 'menuaction=calendar.calendar_uiviews.planner&sortby=category'.
 					($planner_days_for_view !== false ? '&planner_days='.$planner_days_for_view : ''),
 				'selected' => $this->view == 'planner' && $this->sortby != 'user',
 			),
 			array(
 				'text' => lang('planner by user'),
-				'value' => 'menuaction=calendar.uiviews.planner&sortby=user'.
+				'value' => 'menuaction=calendar.calendar_uiviews.planner&sortby=user'.
 					($planner_days_for_view !== false ? '&planner_days='.$planner_days_for_view : ''),
 				'selected' => $this->view == 'planner' && $this->sortby == 'user',
 			),
 			array(
 				'text' => lang('listview'),
-				'value' => 'menuaction=calendar.uilist.listview',
+				'value' => 'menuaction=calendar.calendar_uilist.listview',
 				'selected' => $this->view == 'listview',
 			),
 		) as $data)
@@ -620,16 +619,16 @@ class uical
 			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 185px;"'.
 				' onFocus="if(this.value==\''.$blur.'\') this.value=\'\';"'.
 				' onBlur="if(this.value==\'\') this.value=\''.$blur.'\';" title="'.lang('Search').'">',
-				'','/index.php',array('menuaction'=>'calendar.uilist.listview')),
+				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview')),
 			'no_lang' => True,
 			'link' => False,
 		);
 		// Minicalendar
 		$link = array();
 		foreach(array(
-			'day'   => 'calendar.uiviews.day',
-			'week'  => 'calendar.uiviews.week',
-			'month' => 'calendar.uiviews.month') as $view => $menuaction)
+			'day'   => 'calendar.calendar_uiviews.day',
+			'week'  => 'calendar.calendar_uiviews.week',
+			'month' => 'calendar.calendar_uiviews.month') as $view => $menuaction)
 		{
 			if ($this->view == 'planner' || $this->view == 'listview')
 			{
@@ -715,7 +714,7 @@ function load_cal(url,id) {
 		}
 		// Import & Export
 		$file[] = array(
-			'text' => lang('Export').': '.html::a_href(lang('iCal'),'calendar.uiforms.export',$this->first ? array(
+			'text' => lang('Export').': '.html::a_href(lang('iCal'),'calendar.calendar_uiforms.export',$this->first ? array(
 				'start' => $this->bo->date2string($this->first),
 				'end'   => $this->bo->date2string($this->last),
 			) : false),
@@ -723,15 +722,15 @@ function load_cal(url,id) {
 			'link' => False,
 		);
 		$file[] = array(
-			'text' => lang('Import').': '.html::a_href(lang('iCal'),'calendar.uiforms.import').
+			'text' => lang('Import').': '.html::a_href(lang('iCal'),'calendar.calendar_uiforms.import').
 				' &amp; '.html::a_href(lang('CSV'),'/calendar/csv_import.php'),
 			'no_lang' => True,
 			'link' => False,
 		);
 /*
 		$print_functions = array(
-			'calendar.uiviews.day'	=> 'calendar.pdfcal.day',
-			'calendar.uiviews.week'	=> 'calendar.pdfcal.week',
+			'calendar.calendar_uiviews.day'	=> 'calendar.pdfcal.day',
+			'calendar.calendar_uiviews.week'	=> 'calendar.pdfcal.week',
 		);
 		if (isset($print_functions[$_GET['menuaction']]))
 		{
