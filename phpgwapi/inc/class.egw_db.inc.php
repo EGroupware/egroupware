@@ -15,17 +15,17 @@
  * Database abstraction library
  *
  * This allows eGroupWare to use multiple database backends via ADOdb or in future with PDO
- * 
+ *
  * You only need to clone the global database object $GLOBALS['egw']->db if:
  * - you use the old methods f(), next_record(), row(), num_fields(), num_rows()
  * - you access an application table (non phpgwapi) and you want to call set_app()
- * 
+ *
  * Otherwise you can simply use $GLOBALS['egw']->db or a reference to it.
- * 
+ *
  * Avoiding next_record() or row() can be done by looping with the recordset returned by query() or select():
- * 
+ *
  * a) foreach($db->query("SELECT * FROM $table",__LINE__,__FILE__) as $row)
- * 
+ *
  * b) foreach($db->select($api_table,'*',$where,__LINE__,__FILE__) as $row)
  *
  * c) foreach($db->select($table,'*',$where,__LINE__,__FILE__,false,'',$app) as $row)
@@ -56,7 +56,7 @@ class egw_db
 {
 	/**
 	 * Fetchmode to fetch only as associative array with $colname => $value pairs
-	 * 
+	 *
 	 * Use the FETCH_* constants to be compatible, if we replace ADOdb ...
 	 */
 	const FETCH_ASSOC = ADODB_FETCH_ASSOC;
@@ -168,20 +168,78 @@ class egw_db
 	var $Query_ID = 0;
 
 	/**
-	 * @var array $capabilities, defaults will be changed be method set_capabilities($ado_driver,$db_version)
+	 * Can be used to transparently convert tablenames, eg. 'mytable' => 'otherdb.othertable'
+	 *
+	 * Can be set eg. at the *end* of header.inc.php.
+	 * Only works with new egw_db methods (select, insert, update, delete) not query!
+	 *
+	 * @var array
+	 */
+	static $tablealiases = array();
+
+	/**
+	 * db allows sub-queries, true for everything but mysql < 4.1
+	 *
+	 * use like: if ($db->capabilities[egw_db::CAPABILITY_SUB_QUERIES]) ...
+	 */
+	const CAPABILITY_SUB_QUERIES = 'sub_queries';
+	/**
+	 * db allows union queries, true for everything but mysql < 4.0
+	 */
+	const CAPABILITY_UNION = 'union';
+	/**
+	 * db allows an outer join, will be set eg. for postgres
+	 */
+	const CAPABILITY_OUTER_JOIN = 'outer_join';
+	/**
+	 * db is able to use DISTINCT on text or blob columns
+	 */
+	const CAPABILITY_DISTINCT_ON_TEXT =	'distinct_on_text';
+	/**
+	 * DB is able to use LIKE on text columns
+	 */
+	const CAPABILITY_LIKE_ON_TEXT =	'like_on_text';
+	/**
+	 * DB allows ORDER on text columns
+	 *
+	 * boolean or string for sprintf for a cast (eg. 'CAST(%s AS varchar)
+	 */
+	const CAPABILITY_ORDER_ON_TEXT = 'order_on_text';
+	/**
+	 * case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
+	 */
+	const CAPABILITY_NAME_CASE = 'name_case';
+	/**
+	 * does DB supports a changeable client-encoding
+	 */
+	const CAPABILITY_CLIENT_ENCODING = 'client_encoding';
+	/**
+	 * case insensitiv like statement (in $db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]), default LIKE, ILIKE for postgres
+	 */
+	const CAPABILITY_CASE_INSENSITIV_LIKE = 'case_insensitive_like';
+	/**
+	 * DB requires varchar columns to be truncated to the max. size (eg. Postgres)
+	 */
+	const CAPABILITY_REQUIRE_TRUNCATE_VARCHAR = 'require_truncate_varchar';
+	/**
+	 * default capabilities will be changed by method set_capabilities($ado_driver,$db_version)
+	 *
+	 * should be used with the CAPABILITY_* constants as key
+	 *
+	 * @var array
 	 */
 	var $capabilities = array(
-		'sub_queries'      => true,		// will be set to false for mysql < 4.1
-		'union'            => true, 	// will be set to false for mysql < 4.0
-		'outer_join'       => false,	// does the DB has an outer join, will be set eg. for postgres
-		'distinct_on_text' => true,		// is the DB able to use DISTINCT with a text or blob column
-		'like_on_text'     => true,		// is the DB able to use LIKE with text columns
-		'name_case'        => 'upper',	// case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
-		'client_encoding'  => false,	// db uses a changeable clientencoding
-		'case_insensitive_like' => 'LIKE',	// case insensitive version of like, eg. ILIKE for postgres
-		'require_truncate_varchar' => false,// DB requires varchar columns to be truncated to the max. size (eg. Postgres)
-		'order_on_text'    => true,		// is the DB able to order by a given text column, boolean or
-	);									// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
+		self::CAPABILITY_SUB_QUERIES      => true,
+		self::CAPABILITY_UNION            => true,
+		self::CAPABILITY_OUTER_JOIN       => false,
+		self::CAPABILITY_DISTINCT_ON_TEXT => true,
+		self::CAPABILITY_LIKE_ON_TEXT     => true,
+		self::CAPABILITY_ORDER_ON_TEXT    => true,
+		self::CAPABILITY_NAME_CASE        => 'upper',
+		self::CAPABILITY_CLIENT_ENCODING  => false,
+		self::CAPABILITY_CASE_INSENSITIV_LIKE => 'LIKE',
+		self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR => false,
+	);
 
 	var $prepared_sql = array();	// sql is the index
 
@@ -204,7 +262,7 @@ class egw_db
 
 	/**
 	 * Return the result-object of the last query
-	 * 
+	 *
 	 * @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
 	 * @return ADORecordSet
 	 */
@@ -390,7 +448,7 @@ class egw_db
 		//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
 		return $this->Link_ID;
 	}
-	
+
 	/**
 	 * Magic method to re-connect with the database, if the object get's restored from the session
 	 */
@@ -412,30 +470,30 @@ class egw_db
 			case 'mysql':
 			case 'mysqlt':
 			case 'mysqli':
-				$this->capabilities['sub_queries'] = (float) $db_version >= 4.1;
-				$this->capabilities['union'] = (float) $db_version >= 4.0;
-				$this->capabilities['name_case'] = 'preserv';
-				$this->capabilities['client_encoding'] = (float) $db_version >= 4.1;
+				$this->capabilities[self::CAPABILITY_SUB_QUERIES] = (float) $db_version >= 4.1;
+				$this->capabilities[self::CAPABILITY_UNION] = (float) $db_version >= 4.0;
+				$this->capabilities[self::CAPABILITY_NAME_CASE] = 'preserv';
+				$this->capabilities[self::CAPABILITY_CLIENT_ENCODING] = (float) $db_version >= 4.1;
 				break;
 
 			case 'postgres':
-				$this->capabilities['name_case'] = 'lower';
-				$this->capabilities['client_encoding'] = (float) $db_version >= 7.4;
-				$this->capabilities['outer_join'] = true;
-				$this->capabilities['case_insensitive_like'] = 'ILIKE';
-				$this->capabilities['require_truncate_varchar'] = true;
+				$this->capabilities[self::CAPABILITY_NAME_CASE] = 'lower';
+				$this->capabilities[self::CAPABILITY_CLIENT_ENCODING] = (float) $db_version >= 7.4;
+				$this->capabilities[self::CAPABILITY_OUTER_JOIN] = true;
+				$this->capabilities[self::CAPABILITY_CASE_INSENSITIV_LIKE] = 'ILIKE';
+				$this->capabilities[self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR] = true;
 				break;
 
 			case 'mssql':
-				$this->capabilities['distinct_on_text'] = false;
-				$this->capabilities['order_on_text'] = 'CAST (%s AS varchar)';
+				$this->capabilities[self::CAPABILITY_DISTINCT_ON_TEXT] = false;
+				$this->capabilities[self::CAPABILITY_ORDER_ON_TEXT] = 'CAST (%s AS varchar)';
 				break;
 
 			case 'maxdb':	// if Lim ever changes it to maxdb ;-)
 			case 'sapdb':
-				$this->capabilities['distinct_on_text'] = false;
-				$this->capabilities['like_on_text'] = $db_version >= 7.6;
-				$this->capabilities['order_on_text'] = false;
+				$this->capabilities[self::CAPABILITY_DISTINCT_ON_TEXT] = false;
+				$this->capabilities[self::CAPABILITY_LIKE_ON_TEXT] = $db_version >= 7.6;
+				$this->capabilities[self::CAPABILITY_ORDER_ON_TEXT] = false;
 				break;
 		}
 		//echo "db::set_capabilities('$adodb_driver',$db_version)"; _debug_array($this->capabilities);
@@ -518,7 +576,7 @@ class egw_db
 
 	/**
 	 * Discard the current query result
-	 * 
+	 *
 	 * @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
 	 */
 	function free()
@@ -638,7 +696,7 @@ class egw_db
 		{
 			return False;
 		}
-		if ($this->capabilities['name_case'] == 'upper')	// maxdb, oracle, ...
+		if ($this->capabilities[self::CAPABILITY_NAME_CASE] == 'upper')	// maxdb, oracle, ...
 		{
 			switch($fetch_mode)
 			{
@@ -744,6 +802,10 @@ class egw_db
 		if (!$this->Link_ID && !$this->connect())
 		{
 			return False;
+		}
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
 		}
 		$id = $this->Link_ID->PO_Insert_ID($table,$field);	// simulates Insert_ID with "SELECT MAX($field) FROM $table" if not native availible
 
@@ -1009,7 +1071,7 @@ class egw_db
 		{
 			foreach($tables as $table)
 			{
-				if ($this->capabilities['name_case'] == 'upper')
+				if ($this->capabilities[self::CAPABILITY_NAME_CASE] == 'upper')
 				{
 					$table = strtolower($table);
 				}
@@ -1134,7 +1196,7 @@ class egw_db
 		}
 		return call_user_func_array(array(&$this->Link_ID,'concat'),$args);
 	}
-	
+
 	/**
 	 * Convert a unix timestamp stored as integer in the db into a db timestamp, like MySQL: FROM_UNIXTIME(ts)
 	 *
@@ -1254,8 +1316,8 @@ class egw_db
 		switch($type)
 		{
 			case 'int':
-			case 'auto':	
-				// atm. (php5.2) php has only 32bit integers, it converts everything else to float. 
+			case 'auto':
+				// atm. (php5.2) php has only 32bit integers, it converts everything else to float.
 				// Casting it to int gives a negative number instead of the big 64bit integer!
 				// There for we have to keep it as float by using round instead the int cast.
 				return is_float($value) ? round($value) : (int) $value;
@@ -1335,7 +1397,7 @@ class egw_db
 		if ($this->Debug) echo "<p>db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre>\n";
 
 		// do we need to truncate varchars to their max length (INSERT and UPDATE on Postgres)
-		$truncate_varchar = $glue == ',' && $this->capabilities['require_truncate_varchar'];
+		$truncate_varchar = $glue == ',' && $this->capabilities[self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR];
 
 		$keys = $values = array();
 		foreach($array as $key => $data)
@@ -1352,7 +1414,7 @@ class egw_db
 				}
 				$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
 				$not_null = is_array($column_definitions) && isset($column_definitions[$key]['nullable']) ? !$column_definitions[$key]['nullable'] : false;
-				
+
 				if ($truncate_varchar)
 				{
 					$maxlength = $column_definitions[$key]['type'] == 'varchar' ? $column_definitions[$key]['precision'] : null;
@@ -1405,7 +1467,7 @@ class egw_db
 	{
 		$this->column_definitions=$column_definitions;
 	}
-	
+
 	/**
 	 * Application name used by the API
 	 *
@@ -1443,7 +1505,7 @@ class egw_db
 	*
 	* @author RalfBecker<at>outdoor-training.de
 	*
-	* @param bool/string $app name of the app or default False to use the app set by db::set_app or the current app, 
+	* @param bool/string $app name of the app or default False to use the app set by db::set_app or the current app,
 	*	true to search the already loaded table-definitions for $table
 	* @param bool/string $table if set return only defintions of that table, else return all defintions
 	* @return mixed array with table-defintions or False if file not found
@@ -1550,6 +1612,10 @@ class egw_db
 				}
 			}
 		}
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
+		}
 		$inputarr = false;
 		if ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB
 		{
@@ -1626,6 +1692,10 @@ class egw_db
 		}
 		$where = $this->column_data_implode(' AND ',$where,True,true,$table_def['fd']);
 
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
+		}
 		if (count($data))
 		{
 			$inputarr = false;
@@ -1683,6 +1753,11 @@ class egw_db
 	function delete($table,$where,$line,$file,$app=False,$table_def=False)
 	{
 		if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
+
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
+		}
 		$sql = "DELETE FROM $table WHERE ".
 			$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 
@@ -1773,6 +1848,10 @@ class egw_db
 		{
 			$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 		}
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
+		}
 		$sql = "SELECT $cols FROM $table $join";
 
 		// if we have a where clause, we need to add it together with the WHERE statement, if thats not in the join
@@ -1833,7 +1912,7 @@ class egw_db
 
 		return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows,false,$fetchmode);
 	}
-	
+
 	/**
 	 * Strip eg. a prefix from the keys of an array
 	 *
