@@ -57,9 +57,10 @@ class addressbook_vcal extends addressbook_bo
 	*
 	* @param int/string	$_id the id of the contact
 	* @param string $_charset='utf-8' encoding of the vcard, default utf-8
+	* @param boolean $extra_charset_attribute=true GroupDAV/CalDAV dont need the charset attribute and some clients have problems with it
 	* @return string containing the vcard
 	*/
-	function getVCard($_id,$_charset='utf-8')
+	function getVCard($_id,$_charset='utf-8',$extra_charset_attribute=true)
 	{
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
@@ -123,11 +124,11 @@ class addressbook_vcal extends addressbook_bo
 						}
 						// fall-through to the normal processing of string values
 					default:
-						if(!empty($value))
+						if(!empty($value) || in_array($vcardField,array('FN','ORG','N')))
 						{
 							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet,$_charset);
 
-							if(preg_match('/([\177-\377])/',$valueData))
+							if(($extra_charset_attribute || $this->productManufacturer == 'kde') && preg_match('/([\177-\377])/',$valueData))
 							{
 								$options['CHARSET'] = $_charset;
 								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
@@ -153,7 +154,7 @@ class addressbook_vcal extends addressbook_bo
 				$values[] = $value;
 			}
 
-			if ($hasdata <= 0 && !in_array($vcardField,array('FN','ORG','N')))
+			if ($hasdata <= 0)
 			{
 				// don't add the entry if there is no data for this field,
 				// except it's a mendatory field

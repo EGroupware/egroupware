@@ -119,9 +119,9 @@ class addressbook_groupdav extends groupdav_handler
 				);
 			 	if ($address_data)
 				{
-					$content = $handler->getVCard($contact,$this->charset);
+					$content = $handler->getVCard($contact,$this->charset,false);
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
-					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content=$handler->getVCard($contact,$this->charset));
+					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content);
 				}
 				else
 				{
