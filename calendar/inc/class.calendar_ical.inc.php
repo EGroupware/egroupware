@@ -109,9 +109,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $method='PUBLISH'
 	 * @param boolean $force_own_uid=true ignore the stored and maybe from the client transfered uid and generate a new one
 	 * RalfBecker: GroupDAV/CalDAV requires to switch that non RFC conform behavior off, dont know if SyncML still needs it
+	 * @param boolean $extra_charset_attribute=true GroupDAV/CalDAV dont need the charset attribute and some clients have problems with it
 	 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function &exportVCal($events,$version='1.0', $method='PUBLISH',$force_own_uid=true)
+	function &exportVCal($events,$version='1.0', $method='PUBLISH',$force_own_uid=true,$extra_charset_attribute=true)
 	{
 		$egwSupportedFields = array(
 			'CLASS'			=> array('dbName' => 'public'),
@@ -442,7 +443,7 @@ class calendar_ical extends calendar_boupdate
 					{
 						$options['ENCODING'] = 'QUOTED-PRINTABLE';
 					}
-					if(preg_match('/([\177-\377])/',$valueData))
+					if($extra_charset_attribute && preg_match('/([\177-\377])/',$valueData))
 					{
 						$options['CHARSET'] = 'UTF-8';
 					}

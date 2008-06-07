@@ -105,7 +105,7 @@ class calendar_groupdav extends groupdav_handler
 				);
 				if ($calendar_data)
 				{
-					$content = ExecMethod2('calendar.boical.exportVCal',array($event),'2.0','PUBLISH',false);
+					$content = ExecMethod2('calendar.boical.exportVCal',array($event),'2.0','PUBLISH',false,false);
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -246,7 +246,7 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return $event;
 		}
-		$options['data'] = ExecMethod2('calendar.boical.exportVCal',array($event),'2.0','PUBLISH',false);
+		$options['data'] = ExecMethod2('calendar.boical.exportVCal',array($event),'2.0','PUBLISH',false,false);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($event));
