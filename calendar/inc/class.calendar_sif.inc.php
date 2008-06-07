@@ -15,7 +15,7 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 /**
  * SIF Parser for SyncML
  */
-class sifcalendar extends calendar_boupdate
+class calendar_sif extends calendar_boupdate
 {
 	var $sifMapping = array(
 		'Start'				=> 'start',

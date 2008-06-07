@@ -16,7 +16,7 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 /**
  * iCal import and export via Horde iCalendar classes
  */
-class boical extends calendar_boupdate
+class calendar_ical extends calendar_boupdate
 {
 	/**
 	 * @var array $supportedFields array containing the supported fields of the importing device

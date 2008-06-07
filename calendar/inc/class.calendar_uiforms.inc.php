@@ -1328,7 +1328,7 @@ class calendar_uiforms extends calendar_ui
 	{
 		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
 		{
-			if (!($ical =& ExecMethod2('calendar.boical.exportVCal',$cal_id,'2.0')))
+			if (!($ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$cal_id,'2.0')))
 			{
 				$msg = lang('Permission denied');
 
@@ -1357,7 +1357,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$ical =& ExecMethod2('calendar.boical.exportVCal',$events,'2.0'/*$content['version']*/);
+				$ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$events,'2.0'/*$content['version']*/);
 				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				$GLOBALS['egw']->common->egw_exit();
@@ -1393,7 +1393,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (is_array($content['ical_file']) && is_uploaded_file($content['ical_file']['tmp_name']))
 			{
-				if (!ExecMethod('calendar.boical.importVCal',file_get_contents($content['ical_file']['tmp_name'])))
+				if (!ExecMethod('calendar.calendar_ical.importVCal',file_get_contents($content['ical_file']['tmp_name'])))
 				{
 					$msg = lang('Error: importing the iCal');
 				}
