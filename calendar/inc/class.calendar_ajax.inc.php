@@ -7,7 +7,7 @@
  * @package calendar
  * @copyright (c) 2006 by Christian Binder <christian.binder@freakmail.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.ajaxcalendar.inc.php 22777 2006-11-26 20:55:00Z jaytraxx $
+ * @version $Id$
  */
 
 /**
