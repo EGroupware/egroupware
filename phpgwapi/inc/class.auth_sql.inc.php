@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Authentication from SQL
- * 
+ *
  * @link http://www.egroupware.org
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
  * @author Joseph Engo <jengo@phpgroupware.org>
@@ -15,7 +15,7 @@
 /**
  * eGroupWare API - Authentication based on SQL table of accounts
  *
- * Encryption types other than md5() added by Miles Lott <milos@groupwhere.org> 
+ * Encryption types other than md5() added by Miles Lott <milos@groupwhere.org>
  * based on code from http://www.thomas-alfeld.de/frank/
  *
  * Massive code cleanup and added password migration by Cornelius Weiss <egw@von-und-zu-weiss.de
@@ -44,19 +44,26 @@ class auth_
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
-	 * @param string $passwd_type='text' 'text' for cleartext passwords (default) 
+	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
 		/* normal web form login */
+		$where = array(
+			'account_lid'    => $username,
+			'account_type'   => 'u',
+			'account_status' => 'A'
+		);
+		if (!$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
+		{
+			$where[] = 'account_lid '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
+			unset($where['account_lid']);
+		}
 		if($passwd_type == 'text')
 		{
-			if (!($row = $this->db->select($this->table,'account_lid,account_pwd,account_lastlogin',array(
-				'account_lid'    => $username,
-				'account_type'   => 'u',
-				'account_status' => 'A'
-			),__LINE__,__FILE__)->fetch()) || empty($row['account_pwd']) ||
+			if (!($row = $this->db->select($this->table,'account_lid,account_pwd,account_lastlogin',$where,__LINE__,__FILE__)->fetch()) ||
+				empty($row['account_pwd']) ||
 				$GLOBALS['egw_info']['server']['case_sensitive_username'] && $row['account_lid'] != $username)
 			{
 				return false;
@@ -80,7 +87,7 @@ class auth_
 					}
 				}
 				if (!$match)
-				{ 
+				{
 					return false;
 				}
 			}
@@ -88,12 +95,8 @@ class auth_
 		/* Auth via crypted password. NOTE: mail needs cleartext password to authenticate against mailserver! */
 		else
 		{
-			if (!($row = $this->db->select($this->table,'account_lid,account_lastlogin',array(
-				'account_lid' => $username,
-				'account_type'   => 'u',
-				'account_status' => 'A',
-				'account_pwd' => $passwd,
-			),__LINE__,__FILE__)->fetch()) ||
+			$where['account_pwd'] = $passwd;
+			if (!($row = $this->db->select($this->table,'account_lid,account_lastlogin',$where,__LINE__,__FILE__)->fetch()) ||
 				$GLOBALS['egw_info']['server']['case_sensitive_username'] && $row['account_lid'] != $username)
 			{
 				return false;
@@ -122,7 +125,7 @@ class auth_
 			$admin = False;
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 		}
-				
+
 		if (($pw = $this->db->select($this->table,'account_pwd',array(
 			'account_id'     => $account_id,
 			'account_type'   => 'u',
@@ -144,7 +147,7 @@ class auth_
 	/**
 	 * changes password in sql datababse
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string $encrypted_passwd
 	 * @param string $new_passwd cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
@@ -161,7 +164,7 @@ class auth_
 		),__LINE__,__FILE__);
 
 		if(!$this->db->affected_rows()) return false;
-		
+
 		if(!$admin)
 		{
 			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
