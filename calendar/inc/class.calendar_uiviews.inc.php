@@ -185,7 +185,7 @@ class calendar_uiviews extends calendar_ui
 	function &home()
 	{
 		// set some stuff for the home-page
-		$this->uiviews(array(
+		$this->__construct(array(
 			'date'       => $this->bo->date2string($this->bo->now_su),
 			'cat_id'     => 0,
 			'filter'     => 'all',
