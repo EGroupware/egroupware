@@ -496,5 +496,6 @@ class calendar_hooks
 				'admin'  => False
 			)
 		);
+		return true;
 	}
 }
