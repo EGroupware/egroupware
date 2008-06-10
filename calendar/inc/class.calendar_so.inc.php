@@ -1010,7 +1010,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		$alarm['cal_id'] = $cal_id;		// we need the back-reference
 
-		if (!$this->async->set_timer($alarm['time'],$id,'calendar.bocalupdate.send_alarm',$alarm))
+		if (!$this->async->set_timer($alarm['time'],$id,'calendar.calendar_boupdate.send_alarm',$alarm))
 		{
 			return False;
 		}
