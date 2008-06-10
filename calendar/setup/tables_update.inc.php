@@ -1617,5 +1617,15 @@ function calendar_upgrade1_5_001()
 
 function calendar_upgrade1_5_002()
 {
+	// update the alarm methods
+	$async = new asyncservice();
+	foreach((array)$async->read('cal:%') as $id => $job)
+	{
+		if ($job['method'] == 'calendar.bocalupdate.send_alarm')
+		{
+			$job['method'] = 'calendar.calendar_boupdate.send_alarm';
+			$async->write($job,true);
+		}
+	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.6';
 }
