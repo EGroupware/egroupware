@@ -143,6 +143,24 @@
 		}
 
 		/**
+		 * Return global storages shared within the parts of a nextmatch widget (including all nextmatch-* subwidgets)
+		 *
+		 * @param string $name
+		 * @param string $type
+		 * @return mixed reference to storage: use =& to assign!
+		 */
+		static private function &get_nm_global($name,$type)
+		{
+			static $nm_globals = array();
+
+			// extract the original nextmatch name from $name, taken into account the type of nextmatch-* subwidgets
+			$nm_global = implode('/',self::get_parts($name,1,$type == 'nextmatch' ? null : -2));
+			//echo '<p>'.__METHOD__."($name,$type) = $nm_global</p>\n";
+
+			return $nm_globals[$nm_global];
+		}
+
+		/**
 		 * pre-processing of the extension
 		 *
 		 * This function is called before the extension gets rendered
@@ -157,9 +175,7 @@
 		 */
 		function pre_process($name,&$value,array &$cell,&$readonlys,&$extension_data,etemplate &$tmpl)
 		{
-			// extract the original nextmatch name from $name, taken into account the nextmatch-* subwidgets
-			$nm_global = implode('/',self::get_parts($name,1,$cell['type']=='nextmatch' ? null : -2));
-			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'][$nm_global];
+			$nm_global =& self::get_nm_global($name,$cell['type']);
 			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): value = "; _debug_array($value);
 			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): nm_global = "; _debug_array($nm_global);
 
@@ -663,9 +679,7 @@
 		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			// extract the original nextmatch name from $name, taken into account the nextmatch-* subwidgets
-			$nm_global = implode('/',$cell['type']=='nextmatch' || !($parts = self::get_parts($name,1,-2)) ? self::get_parts($name,1) : $parts);
-			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'][$nm_global];
+			$nm_global =& self::get_nm_global($name,$extension_data['type']);
 
 			if ($this->debug) { echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in=".print_r($value_in,true).",order='$nm_global[order]'): value = "; _debug_array($value); }
 
