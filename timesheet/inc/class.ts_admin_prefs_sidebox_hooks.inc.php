@@ -69,14 +69,11 @@ class ts_admin_prefs_sidebox_hooks
 		{
 			$file = Array(
 				'Site Configuration' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
-//				'Custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname='.$appname),
+				'Custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname='.$appname),
 				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
-				'Custom fields'  => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'timesheet.uicustomfields.edit',
-					'appname'    => $appname)),		
 			);
 			if ($location == 'admin')
 			{
