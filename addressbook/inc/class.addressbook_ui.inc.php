@@ -1010,32 +1010,15 @@ class addressbook_ui extends addressbook_bo
 			{
 				$this->type_icon($row['owner'],$row['private'],$row['tid'],$row['type'],$row['type_label']);
 
-				static $tel2show = array('tel_work','tel_cell','tel_home');
+				static $tel2show = array('tel_work','tel_cell','tel_home','tel_fax');
 				foreach($tel2show as $name)
 				{
-					$this->call_link($row[$name],$row[$name.'_link']);
 					$row[$name] .= ' '.($row['tel_prefer'] == $name ? '&#9829;' : '');		// .' ' to NOT remove the field
 				}
 				// allways show the prefered phone, if not already shown
 				if (!in_array($row['tel_prefer'],$tel2show) && $row[$row['tel_prefer']])
 				{
-					$this->call_link($row[$row['tel_prefer']],$row['tel_prefered_link']);
 					$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
-				}
-				foreach(array('email','email_home') as $name)
-				{
-					if ($row[$name])
-					{
-						$row[$name.'_link'] = $this->email2link($row[$name]);
-						if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
-						{
-							$row[$name.'_popup'] = '700x750';
-						}
-					}
-					else
-					{
-						$row[$name] = ' ';	// to NOT remove the field
-					}
 				}
 				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row);
 				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
@@ -1860,31 +1843,6 @@ $readonlys['button[vcard]'] = true;
 			echo $contact['jpegphoto'];
 			exit;
 		}
-	}
-
-	/**
-	 * returns link to call the given phonenumber
-	 *
-	 * replaces '%1' with the phonenumber to call, '%u' with the user's account_lid and '%t' with his work-phone-number
-	 *
-	 * @param string $number phone number
-	 * @param string &$link returns the link
-	 * @return boolean true if we have a link, false if not
-	 */
-	function call_link($number,&$link)
-	{
-		if (!$number || !$this->config['call_link']) return false;
-
-		static $userphone;
-		if (is_null($userphone))
-		{
-			$user = $this->read('account:'.$GLOBALS['egw_info']['user']['account_id']);
-			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
-		}
-		$number = str_replace(array(' ','(',')','/','-'),'',$number);	// remove number formatting chars messing up the links
-
-		$link = str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
-			$this->config['call_link']);
 	}
 
 	function js()

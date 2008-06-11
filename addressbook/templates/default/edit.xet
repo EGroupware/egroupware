@@ -380,7 +380,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.editphones" template="" lang="" group="0" version="1.3.002">
+	<template id="addressbook.editphones" template="" lang="" group="0" version="1.5.001">
 		<grid class="editphones">
 			<columns>
 				<column/>
@@ -400,27 +400,27 @@
 				</row>
 				<row>
 					<description value="business" options=",,,tel_work2" class="bold"/>
-					<textbox size="30" id="tel_work2"/>
+					<url-phone options="30" id="tel_work2"/>
 					<radio options="tel_work,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
 					<description value="mobile phone" options=",,,tel_cell2"/>
-					<textbox size="30" id="tel_cell2"/>
+					<url-phone options="30" id="tel_cell2"/>
 					<radio options="tel_cell,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
 					<description value="fax" options=",,,tel_fax"/>
-					<textbox size="30" id="tel_fax2"/>
+					<url-phone options="30" id="tel_fax2"/>
 					<radio options="tel_fax,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
 					<description value="car phone" options=",,,tel_car"/>
-					<textbox size="30" id="tel_car"/>
+					<url-phone options="30" id="tel_car"/>
 					<radio options="tel_car,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
 					<description value="pager" options=",,,tel_pager"/>
-					<textbox size="30" id="tel_pager"/>
+					<url-phone options="30" id="tel_pager"/>
 					<radio options="tel_pager,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
@@ -432,7 +432,7 @@
 				</row>
 				<row>
 					<description value="number" options=",,,tel_assistent"/>
-					<textbox size="30" id="tel_assistent"/>
+					<url-phone options="30" id="tel_assistent"/>
 					<radio options="tel_assistent,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
@@ -440,17 +440,17 @@
 				</row>
 				<row>
 					<description value="Private" options=",,,tel_home2" class="bold"/>
-					<textbox size="30" id="tel_home2"/>
+					<url-phone options="30" id="tel_home2"/>
 					<radio options="tel_home,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
 					<description value="mobile phone" options=",,,tel_cell_private"/>
-					<textbox size="30" id="tel_cell_private"/>
+					<url-phone options="30" id="tel_cell_private"/>
 					<radio options="tel_cell_private,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
 					<description value="fax" options=",,,tel_fax_home"/>
-					<textbox size="30" id="tel_fax_home"/>
+					<url-phone options="30" id="tel_fax_home"/>
 					<radio options="tel_fax_home,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
@@ -458,7 +458,7 @@
 				</row>
 				<row>
 					<description value=" Other Phone" options=",,,tel_other"/>
-					<textbox size="30" id="tel_other"/>
+					<url-phone options="30" id="tel_other"/>
 					<radio options="tel_other,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
@@ -467,7 +467,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.004">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.005">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -535,25 +535,25 @@
 									<row>
 										<image src="phone"/>
 										<description value="business" options=",,,tel_work"/>
-										<textbox id="tel_work" size="24" maxlength="40" class="telNumbers"/>
+										<url-phone id="tel_work" options="24,40" class="telNumbers"/>
 										<radio options="tel_work,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 									</row>
 									<row>
 										<description/>
 										<description value="mobile phone" options=",,,tel_cell"/>
-										<textbox id="tel_cell" size="24" maxlength="40" class="telNumbers"/>
+										<url-phone id="tel_cell" options="24,40" class="telNumbers"/>
 										<radio options="tel_cell,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Private" options=",,,tel_home"/>
-										<textbox id="tel_home" size="24" maxlength="40" class="telNumbers"/>
+										<url-phone id="tel_home" options="24,40" class="telNumbers"/>
 										<radio options="tel_home,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Fax"/>
-										<textbox id="tel_fax" size="24" maxlength="40" class="telNumbers"/>
+										<url-phone id="tel_fax" options="24,40" class="telNumbers"/>
 										<radio options="tel_fax,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 									</row>
 									<row>
@@ -577,22 +577,22 @@
 									<row>
 										<image src="internet"/>
 										<description value="url" options=",,,url"/>
-										<textbox id="url" size="28" maxlength="128"/>
+										<url id="url" options="28,128"/>
 									</row>
 									<row>
 										<description/>
 										<description options=",,,url_home" value="Private"/>
-										<textbox id="url_home" size="28" maxlength="128"/>
+										<url id="url_home" options="28,128"/>
 									</row>
 									<row>
 										<image src="email.png"/>
 										<description value="email" options=",,,email"/>
-										<textbox id="email" size="28" maxlength="128"/>
+										<url-email id="email" options="28,128"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Private" options=",,,email_home"/>
-										<textbox id="email_home" size="28" maxlength="128"/>
+										<url-email id="email_home" options="28,128"/>
 									</row>
 								</rows>
 							</grid>

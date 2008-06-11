@@ -14,7 +14,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.005">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.006">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -134,16 +134,16 @@
 						<description id="${row}[adr_two_street2]" no_lang="1"/>
 					</vbox>
 					<vbox options="0,0">
-						<description no_lang="1" id="${row}[tel_work]" class="telNumbers" options=",$row_cont[tel_work_link],,,calling,$cont[call_popup]"/>
-						<description id="${row}[tel_cell]" no_lang="1" class="telNumbers" options=",$row_cont[tel_cell_link],,,calling,$cont[call_popup]"/>
-						<description id="${row}[tel_home]" no_lang="1" class="telNumbers" options=",$row_cont[tel_home_link],,,calling,$cont[call_popup]"/>
-						<description id="${row}[tel_fax]" no_lang="1"/>
+						<url-phone id="${row}[tel_work]" class="telNumbers" readonly="true"/>
+						<url-phone id="${row}[tel_cell]" class="telNumbers" readonly="true"/>
+						<url-phone id="${row}[tel_home]" class="telNumbers" readonly="true"/>
+						<url-phone id="${row}[tel_fax]" readonly="true"/>
 						<description id="${row}[tel_prefered]" no_lang="1" options=",$row_cont[tel_prefered_link],,,calling,$cont[call_popup]"/>
 					</vbox>
 					<vbox options="0,0">
-						<description options=",,1" class="fixedHeight" no_lang="1" id="${row}[url]"/>
-						<description options=",@${row}[email_link],,,_blank,$row_cont[email_popup]" class="fixedHeight" id="${row}[email]" no_lang="1"/>
-						<description options=",@${row}[email_home_link],,,_blank,$row_cont[email_home_popup]" class="fixedHeight" id="${row}[email_home]" no_lang="1"/>
+						<url class="fixedHeight" id="${row}[url]" readonly="true"/>
+						<url-email class="fixedHeight" id="${row}[email]" readonly="true"/>
+						<url-email class="fixedHeight" id="${row}[email_home]" readonly="true"/>
 					</vbox>
 					<customfields-list rows="1" cols="1" id="$row" class="customfields"/>
 					<description id="${row}[distrib_lists]"/>
