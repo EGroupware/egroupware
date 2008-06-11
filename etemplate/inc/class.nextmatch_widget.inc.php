@@ -10,7 +10,7 @@
 	 */
 
 	require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
-	
+
 	/**
 	 * eTemplate Extension: Widget that show only a certain number of data-rows and allows to modifiy the rows shown (scroll).
 	 *
@@ -53,7 +53,7 @@
 	 * 	'default_cols'   => 	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 	 * 	'options-selectcols' => // I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.
 	 *  'return'         =>     // IO allows to return something from the get_rows function if $query is a var-param!
-	 *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames, 
+	 *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 	 * or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 	 * );
 	 * @package etemplate
@@ -69,7 +69,7 @@
 		 */
 		const CF_PREFIX = '#';
 
-		/** 
+		/**
 		 * exported methods of this class
 		 * @var array
 		 */
@@ -106,7 +106,7 @@
 		private $selectcols;
 		public $cf_header;
 		private $cfs;
-		
+
 		/**
 		 * Constructor of the extension
 		 *
@@ -118,14 +118,28 @@
 
 		/**
 		 * returns last part of a form-name
-		 * 
-		 * @internal
-		 * @return string 
+		 *
+		 * @param string $name
+		 * @return string
 		 */
-		function last_part($name)
+		static private function last_part($name)
+		{
+			list($last) = self::get_parts($name,-1,1);
+			return $last;
+		}
+
+		/**
+		 * returns last part of a form-name
+		 *
+		 * @param string $name
+		 * @param int $offset positive or negative offset (negative is count from the end)
+		 * @param int $length=null positiv means return $length elements, negative return til negative offset in $length, default = null means all
+		 * @return array
+		 */
+		static private function get_parts($name,$offset,$length=null)
 		{
 			$parts = explode('[',str_replace(']','',$name));
-			return $parts[count($parts)-1];
+			return array_slice($parts,$offset,$length);
 		}
 
 		/**
@@ -135,7 +149,7 @@
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 		 * @param etemplate &$tmpl reference to the template we belong too
@@ -143,7 +157,9 @@
 		 */
 		function pre_process($name,&$value,array &$cell,&$readonlys,&$extension_data,etemplate &$tmpl)
 		{
-			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'];
+			// extract the original nextmatch name from $name, taken into account the nextmatch-* subwidgets
+			$nm_global = implode('/',self::get_parts($name,1,$cell['type']=='nextmatch' ? null : -2));
+			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'][$nm_global];
 			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): value = "; _debug_array($value);
 			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): nm_global = "; _debug_array($nm_global);
 
@@ -164,7 +180,7 @@
 					{
 						$cell['help'] = 'click to order after that criteria';
 					}
-					if ($this->last_part($name) == $nm_global['order'])	// we're the active column
+					if (self::last_part($name) == $nm_global['order'])	// we're the active column
 					{
 						$cell[1] = $cell;
 						unset($cell[1]['align']);
@@ -188,7 +204,7 @@
 					// fall through
 				case 'nextmatch-customfilter':	// Option: widget-name, options as for selectbox
 					list($type,$cell['size']) = explode(',',$cell['size'],2);
-					// fall through					
+					// fall through
 				case 'nextmatch-filterheader':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
 					if (!$type) $type = 'select';
 					$cell['type'] = $type;
@@ -204,9 +220,9 @@
 					$parts = explode(',',$cell['span']);
 					$parts[1] .= ($parts[1] ? ' ' : '').'filterheader';
 					$cell['span'] = implode(',',$parts);
-					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
+					$extension_data['old_value'] = $value = $nm_global['col_filter'][self::last_part($name)];
 					return True;
-				
+
 				case 'nextmatch-customfields':
 					return $this->_pre_process_cf_header($cell,$tmpl);
 			}
@@ -224,7 +240,7 @@
 			// save values in persistent extension_data to be able use it in post_process
 			$extension_data += $value;
 
-			$value['no_csv_export'] = $value['csv_fields'] === false || 
+			$value['no_csv_export'] = $value['csv_fields'] === false ||
 				$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']);
 
 			if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
@@ -262,7 +278,7 @@
 			if ($value['num_rows'] != $max)
 			{
 				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = (int)$value['num_rows'];
-			}				
+			}
 			if (!$value['no_columnselection'])
 			{
 				// presetting the options for selectcols empty, so the get_rows function can set it
@@ -333,7 +349,7 @@
 				$nextmatch =& new etemplate('etemplate.nextmatch_widget');
 				// keep the editor away from the generated tmpls
 				$nextmatch->no_onclick = true;
-				
+
 				if ($value['lettersearch'])
 				{
 					$lettersearch =& $nextmatch->get_widget_by_name('lettersearch');	// hbox for the letters
@@ -349,18 +365,18 @@
 						if (!$key) $letterbox =& $lettersearch[1];	// to re-use the first child
 						$letterbox = etemplate::empty_cell('label',$letter,array(
 							'label'   => $letter,
-							'span'    => ',lettersearch'.($letter == (string) $value['searchletter'] || 
+							'span'    => ',lettersearch'.($letter == (string) $value['searchletter'] ||
 								$key === 'all' && !$value['searchletter'] ? '_active' : ''),
 							'no_lang' => 2,
 							'align'   => $key == 'all' ? 'right' : '',
 							'onclick' => "return submitit($tmpl->name_form,'$form_name');",
 						));
 						// if not the first (re-used) child, add it to the parent
-						if ($key) etemplate::add_child($lettersearch,$letterbox); 
+						if ($key) etemplate::add_child($lettersearch,$letterbox);
 						unset($letterbox);
 					}
 					//_debug_array($GLOBALS['egw_info']['etemplate']['to_process']);
-				}				
+				}
 				if(isset($value['no_search'])) $value['no_start_search'] = $value['no_search'];
 				foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2', 'no_search' => 'search', 'no_start_search' => 'start_search' ) as $val_name => $cell_name)
 				{
@@ -418,8 +434,8 @@
 					if (!is_array($value['selectcols'])) $value['selectcols'] = explode(',',$value['selectcols']);
 					foreach(array_keys($value['options-selectcols']) as $name)
 					{
-						// set 'no_'.$col for each column-name to true, if the column is not selected 
-						// (and the value is not set be the get_rows function / programmer!) 
+						// set 'no_'.$col for each column-name to true, if the column is not selected
+						// (and the value is not set be the get_rows function / programmer!)
 						if (!isset($value['rows']['no_'.$name])) $value['rows']['no_'.$name] = !in_array($name,$value['selectcols']);
 						// setting '@no_'.$name as disabled attr for each column, that has only a single nextmatch-header
 						if (is_object($value['template']))
@@ -455,7 +471,7 @@
 
 			return False;	// NO extra Label
 		}
-		
+
 		/**
 		 * Preprocess for the custom fields header
 		 *
@@ -467,13 +483,13 @@
 			if (is_null($this->cfs))
 			{
 				list($app) = explode('.',$tmpl->name);
-				
+
 				$this->cfs = config::get_customfields($app);
 			}
 			$cell['type'] = 'vbox';
 			$cell['name'] = '';
 			$cell['size'] = '0,,0,0';
-			
+
 			if ($this->selectcols)
 			{
 				foreach(explode(',',$this->selectcols) as $col)
@@ -505,7 +521,7 @@
 			}
 			return false;	// no extra label
 		}
-		
+
 		/**
 		 * Extract the column names and labels from the template
 		 *
@@ -518,18 +534,18 @@
 		 */
 		function _cols_from_tpl(etemplate $tmpl,&$cols,&$name2col,&$content,$selectcols)
 		{
-			//_debug_array($cols); 
+			//_debug_array($cols);
 			// fetching column-names & -labels from the template
 			$cols['__content__'] =& $content;
 			$tmpl->widget_tree_walk(array($this,'_cols_from_tpl_walker'),$cols);
 			unset($cols['__content__']);
 			$name2col = is_array($cols['name2col']) ? $cols['name2col'] : array(); unset($cols['name2col']);
-			//_debug_array($cols); 
+			//_debug_array($cols);
 			foreach($cols as $name => $label)
 			{
 				if (!$label) unset($cols[$name]);
 			}
-			//_debug_array($cols); 
+			//_debug_array($cols);
 			//_debug_array($name2col);
 			// now we check if a column of the grid has more then one header
 			$col2names = array();
@@ -552,7 +568,7 @@
 				$cols[$name] = $label;
 
 				// we are behind the column of a custom fields header --> add the individual fields
-				if ($name == $this->cf_header && (!$selectcols || 
+				if ($name == $this->cf_header && (!$selectcols ||
 					in_array($this->cf_header,explode(',',$selectcols))))
 				{
 					$cols[$name] .= ':';
@@ -612,7 +628,7 @@
 			if (!isset($cols[$widget['name']]) && $label)
 			{
 				$label = substr($label,-3) == '...' ? lang(substr($label,0,-3)) : lang($label);
-				
+
 				if (!$sub)
 				{
 					$cols[$widget['name']] = $label;
@@ -624,7 +640,7 @@
 				}
 			}
 			$cols['name2col'][$widget['name']] = $col;
-			
+
 			//echo "<p>$path: $widget[name] $label</p>\n";
 		}
 
@@ -647,7 +663,9 @@
 		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'];
+			// extract the original nextmatch name from $name, taken into account the nextmatch-* subwidgets
+			$nm_global = implode('/',$cell['type']=='nextmatch' || !($parts = self::get_parts($name,1,-2)) ? self::get_parts($name,1) : $parts);
+			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'][$nm_global];
 
 			if ($this->debug) { echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in=".print_r($value_in,true).",order='$nm_global[order]'): value = "; _debug_array($value); }
 
@@ -655,11 +673,11 @@
 			{
 				case 'nextmatch':
 					break;
-					
+
 				case 'nextmatch-sortheader':
 					if ($value_in)
 					{
-						$nm_global['order'] = $this->last_part($name);
+						$nm_global['order'] = self::last_part($name);
 						$nm_global['default_sort'] = $extension_data['default_sort'];
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
@@ -669,11 +687,11 @@
 				case 'nextmatch-filterheader':
 					if ((string)$value_in != (string)$extension_data['old_value'])
 					{
-						if ($this->debug) echo "<p>setting nm_global[filter][".$this->last_part($name)."]='$value_in' (was '$extension_data[old_value]')</p>\n";
-						$nm_global['filter'][$this->last_part($name)] = $value_in;
+						if ($this->debug) echo "<p>setting nm_global[filter][".self::last_part($name)."]='$value_in' (was '$extension_data[old_value]')</p>\n";
+						$nm_global['filter'][self::last_part($name)] = $value_in;
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
-					
+
 				case 'nextmatch-header':
 					return False;	// nothing to report
 			}
@@ -717,7 +735,7 @@
 			// num_rows: use old value in extension data, if $value['num_rows'] is not set because nm-header is not shown
 			$value['num_rows'] = isset($value['num_rows']) ? (int) $value['num_rows'] : (int) $extension_data['num_rows'];
 			$max = $value['num_rows'] ? $value['num_rows'] : (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-			
+
 			if(strpos($value['search'],'xjxquery')) {
 				// We deal with advancedsearch
 				$aXml = $value['search'];
@@ -731,7 +749,7 @@
 				//$value['advsearch_cont'] = preg_replace("\]",'',$value['advsearch_cont']);
 				//print_r($value['advsearch_cont']);
 			}
-			
+
 			if ($value['start_search'] || $value['search'] != $old_value['search'] ||
 				isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
 				isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
@@ -803,7 +821,7 @@
 				list($app) = explode('.',$name);
 				if (isset($extension_data['columnselection_pref'])) $name = $extension_data['columnselection_pref'];
 				$pref = !$GLOBALS['egw_info']['user']['apps']['admin'] && $value['default_prefs'] ? 'default' : 'user';
-				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->add($app,'nextmatch-'.$name,is_array($value['selectcols']) ? 
+				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->add($app,'nextmatch-'.$name,is_array($value['selectcols']) ?
 					implode(',',$value['selectcols']) : $value['selectcols'],$pref);
 				$GLOBALS['egw']->preferences->save_repository(false,$pref);
 				$loop = True;
@@ -814,11 +832,11 @@
 			}
 			return True;
 		}
-		
+
 		var $separator = ';';
 		var $charset_out;
 		var $charset;
-		
+
 		/**
 		 * Export the list as csv file download
 		 *
@@ -888,7 +906,7 @@
 					fwrite($fp,$this->_csv_encode($row,$value['csv_fields'])."\n");
 				}
 				$value['start'] += $value['num_rows'];
-				
+
 				@set_time_limit(10);	// 10 more seconds
 			}
 			while($total > $value['start']);
@@ -907,7 +925,7 @@
 			}
 			return true;
 		}
-		
+
 		/**
 		 * Opens the csv output (download) and writes the header line
 		 *
@@ -925,7 +943,7 @@
 			$browser =& CreateObject('phpgwapi.browser');
 			$browser->content_header('export.csv','text/comma-separated-values');
 			//echo "<pre>";
-			
+
 			if (($fp = fopen('php://output','w')))
 			{
 				$labels = array();
@@ -938,7 +956,7 @@
 			}
 			return $fp;
 		}
-		
+
 		/**
 		 * CSV encode a single row, including some basic type conversation
 		 *
@@ -993,14 +1011,14 @@
 				$out[] = $value;
 			}
 			$out = implode($this->separator,$out);
-			
+
 			if ($this->charset_out && $this->charset != $this->charset_out)
 			{
 				$out = $GLOBALS['egw']->translation->convert($out,$this->charset,$this->charset_out);
 			}
 			return $out;
 		}
-		
+
 		/**
 		 * Try to autodetect the fields from the first data-row and the app-name
 		 *
@@ -1010,11 +1028,11 @@
 		function _autodetect_fields($row0,$app)
 		{
 			$fields = array_combine(array_keys($row0),array_keys($row0));
-			
+
 			foreach($fields as $name => $label)
 			{
 				// try to guess field-type from the fieldname
-				if (preg_match('/(modified|created|start|end)/',$name) && strpos($name,'by')===false && 
+				if (preg_match('/(modified|created|start|end)/',$name) && strpos($name,'by')===false &&
 					(!$row0[$name] || is_numeric($row0[$name])))	// only use for real timestamps
 				{
 					$fields[$name] = array('label' => $label,'type' => 'date-time');
@@ -1037,7 +1055,7 @@
 				include_once(EGW_API_INC.'/class.config.inc.php');
 				$config =& new config($app);
 				$config->read_repository();
-				
+
 				$customfields = isset($config->config_data['customfields']) ? $config->config_data['customfields'] : $config->config_data['custom_fields'];
 				if (is_array($customfields))
 				{
