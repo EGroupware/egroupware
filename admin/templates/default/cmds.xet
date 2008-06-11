@@ -30,13 +30,13 @@
 				</row>
 				<row class="row" disabled="!@1">
 					<description id="${row}[title]"/>
-					<email-address id="${row}[requested]" options="$row_cont[requested_email]"/>
+					<url-email id="${row}[requested]" options=",,,$row_cont[requested_email]" readonly="true"/>
 					<date-time id="${row}[scheduled]" readonly="true"/>
 					<menulist>
 						<menupopup id="${row}[remote_id]" readonly="true"/>
 					</menulist>
 					<date-time id="${row}[created]" readonly="true"/>
-					<email-address id="${row}[creator]" options="$row_cont[creator_email]"/>
+					<url-email id="${row}[creator]" options=",,,$row_cont[creator_email]" readonly="true"/>
 					<vbox options="0,0">
 						<menulist>
 							<menupopup id="${row}[status]" readonly="true"/>
@@ -44,7 +44,7 @@
 						<description id="${row}[error]" class="redItalic"/>
 					</vbox>
 					<date-time id="${row}[modified]" readonly="true"/>
-					<email-address id="${row}[modifier]" readonly="true" options="$row_cont[modifier_email]"/>
+					<url-email id="${row}[modifier]" readonly="true" options=",,,$row_cont[modifier_email]"/>
 					<button image="delete" label="Cancel" id="delete[$row_cont[id]]" statustext="Cancel this scheduled command" onclick="return confirm('Cancel this scheduled command');"/>
 				</row>
 			</rows>
