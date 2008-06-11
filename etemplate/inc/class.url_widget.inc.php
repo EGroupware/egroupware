@@ -165,7 +165,7 @@ class url_widget
 						$link = $GLOBALS['egw_info']['server']['webserver_url'].'/redirect.php?go='.$link;
 						if ($link[0] == '/') $link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$link;
 					}
-					$cell['size'] = ','.$link.',,,_blank';
+					$cell['size'] = ','.$link.',,,calling,'.$GLOBALS['egw_info']['server']['call_popup'];
 				}
 				break;
 		}
@@ -186,6 +186,7 @@ class url_widget
 
 		if($GLOBALS['egw_info']['user']['apps']['felamimail'])
 		{
+			//return 'felamimail.uicompose.compose&preset[to]='.($rfc822 ? $rfc822 : $email);
 			return 'felamimail.uicompose.compose&send_to='.base64_encode($rfc822 ? $rfc822 : $email);
 		}
 		if($GLOBALS['egw_info']['user']['apps']['email'])
@@ -213,7 +214,7 @@ class url_widget
 			$user = $GLOBALS['egw']->contacts->read('account:'.$GLOBALS['egw_info']['user']['account_id']);
 			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
 		}
-		$number = str_replace(array(' ','(',')','/','-'),'',$number);	// remove number formatting chars messing up the links
+		$number = preg_replace('/[^0-9+]+/','',$number);	// remove number formatting chars messing up the links
 
 		return str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
 			$GLOBALS['egw_info']['server']['call_link']);
