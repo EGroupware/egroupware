@@ -778,9 +778,23 @@ class addressbook_bo extends addressbook_so
 		}
 		if (!$members) return false;
 
+		$ids = array();
+		foreach($members as $member)
+		{
+			$ids[] = $member['id'];
+		}
+		$customfields = $this->read_customfields($ids);
+
 		$changed_members = $changed_fields = $failed_members = 0;
 		foreach($members as $member)
 		{
+			if (isset($customfields[$member['id']]))
+			{
+				foreach($this->customfields as $name => $data)
+				{
+					$member['#'.$name] = $customfields[$member['id']][$name];
+				}
+			}
 			$fields = 0;
 			foreach($changed as $name => $value)
 			{
