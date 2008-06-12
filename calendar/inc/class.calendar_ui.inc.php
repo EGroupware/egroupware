@@ -325,16 +325,20 @@ class calendar_ui
 			$states['view'] = $this->view = 'planner';
 		}
 		// set the actual view as return_to
-		if ($_GET['menuaction'])
+		if ($_GET['menuaction'] && $_GET['menuaction'])
 		{
 			list($app,$class,$func) = explode('.',$_GET['menuaction']);
+			if ($func == 'index')
+			{
+				$func = $this->view; $this->view = 'index';	// switch to the default view
+			}
 		}
 		else	// eg. calendar/index.php
 		{
 			$func = $this->view;
-			$class = $this->view == 'listview' ? 'uilist' : 'uiviews';
+			$class = $this->view == 'listview' ? 'calendar_uilist' : 'calendar_uiviews';
 		}
-		if ($class == 'uiviews' || $class == 'uilist')
+		if ($class == 'calendar_uiviews' || $class == 'calendar_uilist')
 		{
 			// if planner_start_with_group is set in the users prefs: switch owner for planner to planner_start_with_group and back
 			if ($this->cal_prefs['planner_start_with_group'])
