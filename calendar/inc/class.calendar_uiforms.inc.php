@@ -606,7 +606,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
 
-		$boical =& CreateObject('calendar.boical');
+		$boical = new calendar_ical();
 		$ics = $boical->exportVCal(array($event),'2.0','request');
 
 		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
