@@ -255,7 +255,7 @@ class bo_resources
 			$this->remove_picture($res_id);
 	 		egw_link::unlink(0,'resources',$res_id);
 	 		// delete the resource from the calendar
-	 		ExecMethod('calendar.socal.change_delete_user','r'.$res_id);
+	 		ExecMethod('calendar.calendar_so.deleteaccount','r'.$res_id);
 	 		return false;
 		}
 		return lang('Something went wrong by deleting resource');
