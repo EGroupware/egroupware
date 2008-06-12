@@ -252,23 +252,23 @@ class calendar_ical extends calendar_boupdate
 								$rrule = array('FREQ' => $this->recur_egw2ical_1_0[$event['recur_type']].$interval);
 								switch ($event['recur_type'])
 								{
-            								case MCAL_RECUR_WEEKLY:
-            									$days = array();
-            									foreach($this->recur_days_1_0 as $id => $day)
-            									{
-            										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
-												}
-	            								$rrule['BYDAY'] = implode(' ',$days);
-	            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
-	            								break;
+									case MCAL_RECUR_WEEKLY:
+										$days = array();
+										foreach($this->recur_days_1_0 as $id => $day)
+										{
+											if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
+										}
+										$rrule['BYDAY'] = implode(' ',$days);
+										$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+										break;
 
-        	    							case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
-            									break;
+									case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+										break;
 
-             								case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
-             									$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).'+ '.
-	             									strtoupper(substr(date('l',$event['start']),0,2));
-	            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+										case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+											$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).'+ '.
+												strtoupper(substr(date('l',$event['start']),0,2));
+										$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
 										break;
 								}
 
@@ -292,22 +292,22 @@ class calendar_ical extends calendar_boupdate
 								$rrule = array('FREQ' => $this->recur_egw2ical_2_0[$event['recur_type']]);
 								switch ($event['recur_type'])
 								{
-            								case MCAL_RECUR_WEEKLY:
-            									$days = array();
-            									foreach($this->recur_days as $id => $day)
-            									{
-            										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
+									case MCAL_RECUR_WEEKLY:
+										$days = array();
+										foreach($this->recur_days as $id => $day)
+										{
+											if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
 										}
-	            								$rrule['BYDAY'] = implode(',',$days);
-	            								break;
+										$rrule['BYDAY'] = implode(',',$days);
+										break;
 
-        	    							case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
-            									$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
-            									break;
+									case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+										$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
+										break;
 
-             								case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
-             									$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
-	             									strtoupper(substr(date('l',$event['start']),0,2));
+										case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+											$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
+												strtoupper(substr(date('l',$event['start']),0,2));
 										break;
 								}
 								if ($event['recur_interval'] > 1) $rrule['INTERVAL'] = $event['recur_interval'];
