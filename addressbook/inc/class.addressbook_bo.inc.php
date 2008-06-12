@@ -747,7 +747,7 @@ class addressbook_bo extends addressbook_so
 		$changed = array();
 		foreach($only_org_fields ? $this->org_fields : array_keys($this->contact_fields) as $name)
 		{
-			if (!isset($from[$name]) || in_array($name,array('modified','modifier')))	// never count these
+			if (in_array($name,array('modified','modifier')))	// never count these
 			{
 				continue;
 			}
