@@ -26,6 +26,11 @@ define('WEEK_s',7*DAY_s);
 define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
 
 /**
+ * Required (!) include, as we use the MCAL_* constants, BEFORE instanciating (and therefore autoloading) the class
+ */
+require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_so.inc.php');
+
+/**
  * Class to access all calendar data
  *
  * For updating calendar data look at the bocalupdate class, which extends this class.
