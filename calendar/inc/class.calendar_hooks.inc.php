@@ -121,7 +121,7 @@ class calendar_hooks
 	/**
 	 * Entries for calendar's preferences menu
 	 */
-	static function prefereneces()
+	static function preferences()
 	{
 		$file = array(
 			'Preferences'     => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=' . $appname),
