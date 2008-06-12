@@ -570,7 +570,7 @@ class calendar_boupdate extends calendar_bo
 						break;
 
 					case  'ical':
-						$ics = ExecMethod2('calendar.boical.exportVCal',$event['id'],'2.0',$method);
+						$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method);
 						if ($method == 'REQUEST')
 						{
 							$attachment = array(	'string' => $ics,
@@ -831,7 +831,7 @@ class calendar_boupdate extends calendar_bo
 
 		$event_arr['link']['field'] = lang('URL');
 		$eventStart_arr = $this->date2array($event['start']); // give this as 'date' to the link to pick the right recurrence for the participants state
-		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.edit&cal_id='.$event['id'].'&date='.$eventStart_arr['full'].'&no_popup=1';
+		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit&cal_id='.$event['id'].'&date='.$eventStart_arr['full'].'&no_popup=1';
 		// if url is only a path, try guessing the rest ;-)
 		if ($link[0] == '/')
 		{
@@ -848,7 +848,7 @@ class calendar_boupdate extends calendar_bo
 		 */
 		$link_arr = array();
 		$link_arr['text'] = $event['title'];
-		$link_arr['view'] = array(	'menuaction' => 'calendar.uiforms.edit',
+		$link_arr['view'] = array(	'menuaction' => 'calendar.calendar_uiforms.edit',
 									'cal_id' => $event['id'],
 									'date' => $eventStart_arr['full'],
 									);
