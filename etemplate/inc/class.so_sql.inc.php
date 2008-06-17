@@ -661,12 +661,14 @@ class so_sql
 						is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
 					{
 						$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
+						$negate = false;
 						if ($criteria[$col][0] == '!')
 						{
 							$cmp_op = ' NOT'.$cmp_op;
 							$criteria[$col] = substr($criteria[$col],1);
+							$negate = true;
 						}
-						$query[] = $db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard);
+						$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard).($negate ? ') ' : '');
 					}
 					elseif (strpos($db_col,'.')!==false)	// we have a table-name specified
 					{
