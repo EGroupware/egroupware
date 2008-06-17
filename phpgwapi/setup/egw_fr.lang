@@ -571,10 +571,10 @@ saturday	common	fr	Samedi
 saudi arabia	common	fr	ARABIE SAOUDITE
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fr	La version de Savant2 n'est pas identique à celle du package Savant2.
 save	common	fr	Enregistrer
-search	common	fr	Chercher
-search %1 '%2'	common	fr	Chercher %1 '%2'
-search or select accounts	common	fr	Chercher ou sélectionner des comptes
-search or select multiple accounts	common	fr	Chercher ou sélectionner des comptes multiples
+search	common	fr	Rechercher
+search %1 '%2'	common	fr	Rechercher %1 '%2'
+search or select accounts	common	fr	Rechercher ou sélectionner des comptes
+search or select multiple accounts	common	fr	Rechercher ou sélectionner des comptes multiples
 second	common	fr	seconde
 section	common	fr	Section
 select	common	fr	Sélectionner
