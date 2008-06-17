@@ -13,10 +13,10 @@ bookable	resources	fr	Réservable
 buy this article	resources	fr	Acheter cet article
 buy this resource	resources	fr	Acheter cette ressource
 buyable	resources	fr	Achetable
-categories admin	resources	fr	Catégories admin
+categories admin	resources	fr	Administrateur de la catégorie
 category:	resources	fr	Catégorie:
 check all	resources	fr	Vérifier tous
-choose categories admin	resources	fr	choisisser les catégories admin
+choose categories admin	resources	fr	choisissez les administrateurs de la catégorie
 clear selection	resources	fr	vider la selection
 configure access permissions	admin	fr	Configurer Les droits d'accès
 create new accessory for this resource	resources	fr	Créer de nouveaux accessoires pour cette ressource
@@ -35,8 +35,8 @@ how many of the resources are useable?	resources	fr	Combien de ces ressources so
 how many of them are useable?	resources	fr	Combien parmi elle sont utilisables?
 how many of this resource are usable	resources	fr	Combien sont utilisables
 how many of this resource exists	resources	fr	Combien en existe-t-il
-implies booking permission	resources	fr	implique la permission  de réserver
-implies read permission	resources	fr	implique la permission  d'écriture
+implies booking permission	resources	fr	implique la permission de réserver
+implies read permission	resources	fr	implique la permission de lecture
 information about storage	resources	fr	Informations sur le lieu
 informations about the location of resource	resources	fr	Informations sur le lieu de la ressource
 inventory number	resources	fr	Numéro d'inventaire
