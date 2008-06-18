@@ -44,17 +44,17 @@ class setup
 	 * @var setup_html
 	 */
 	var $html;
-	
+
 	var $system_charset;
 	var $lang;
-	
+
 	var $ConfigDomain;
 
 	/* table name vars */
 	var $tbl_apps;
 	var $tbl_config;
 	var $tbl_hooks;
-	
+
 	/**
 	 * @var float $required_php_version php version required by eGroupWare
 	 */
@@ -112,11 +112,11 @@ class setup
 			return;
 		}
 		$this->db->set_app('phpgwapi');
-		
+
 		if ($connect_and_setcharset)
 		{
 			$this->db->Halt_On_Error = 'no';	// table might not be created at that stage
-			
+
 			$this->set_table_names();		// sets/checks config- and applications-table-name
 
 			// Set the DB's client charset if a system-charset is set
@@ -141,7 +141,7 @@ class setup
 				{
 					$this->db->Link_ID->SetCharSet($this->system_charset);
 				}
-			}	
+			}
 			$this->db->Halt_On_Error = 'yes';	// setting the default again
 		}
 	}
@@ -349,7 +349,7 @@ class setup
     * check if username and password is valid
     *
     * this function compares the supplied and stored username and password
-	* as any of the passwords can be clear text or md5 we convert them to md5 
+	* as any of the passwords can be clear text or md5 we convert them to md5
 	* internal and compare always the md5 hashs
     *
     * @param string $user the user supplied username
@@ -371,16 +371,16 @@ class setup
 		{
 			$conf_pw = md5($conf_pw);
 		}
-		
+
 
 		// Verify that $pw is not already encoded as md5
 		if(!preg_match('/^[0-9a-f]{32}$/',$pw))
 		{
 			$pw = md5($pw);
 		}
-		
+
 		return $pw == $conf_pw;
-		 
+
 	}
 
 	function checkip($remoteip='')
@@ -679,7 +679,7 @@ class setup
 		{
 			return False;
 		}
-		
+
 		//echo "DELETING hooks for: " . $setup_info[$appname]['name'];
 		if (!is_object($this->hooks))
 		{
@@ -876,13 +876,11 @@ class setup
 	 * @var accounts
 	 */
 	var $accounts;
-	
+
 	function setup_account_object(array $config=array())
 	{
-error_log(__METHOD__."($config)");
 		if (!is_object($this->accounts) || $config)
 		{
-error_log(__METHOD__."($config) creating new this->accounts object");
 			if (!is_object($this->db))
 			{
 				$this->loaddb();
@@ -892,7 +890,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 				// load the configuration from the database
 				$this->db->select($this->config_table,'config_name,config_value',
 					"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",__LINE__,__FILE__);
-				
+
 				while(($row = $this->db->row(true)))
 				{
 					$config[$row['config_name']] = $row['config_value'];
@@ -922,7 +920,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 	 * @param $passwd string cleartext pw
 	 * @param string/boolean $primary_group Groupname for users primary group or False for a group, default 'Default'
 	 * @param boolean $changepw user has right to change pw, default False = Pw change NOT allowed
-	 * @param string $email 
+	 * @param string $email
 	 * @return int the numerical user-id
 	 */
 	function add_account($username,$first,$last,$passwd,$primary_group='Default',$changepw=False,$email='')
@@ -958,7 +956,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 			if($primary_group_id && !in_array($primary_group_id,$memberships))
 			{
 				$memberships[] = $primary_group_id;
-				
+
 				$this->accounts->set_memberships($memberships,$accountid);
 			}
 			if (!$changepw) $this->add_acl('preferences','nopasswordchange',$accountid);
@@ -966,7 +964,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 		//error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') successfull created accountid=$accountid");
 		return $accountid;
 	}
-	
+
 	/**
 	 * Set the memberships of an account
 	 *
@@ -976,10 +974,10 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 	function set_memberships($groups,$user)
 	{
 		$this->setup_account_object();
-		
+
 		return $this->accounts->set_memberships($groups,$user);
 	}
-	
+
 	/**
 	 * Check if accounts other then the automatically installed anonymous account exist
 	 *
@@ -996,7 +994,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 			'start'  => 0,
 			'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
 		));
-		
+
 		if (!$accounts || !is_array($accounts) || !count($accounts))
 		{
 			return false;
@@ -1016,7 +1014,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 	 * Add ACL rights
 	 *
 	 * Dont use it to set group-membership, use set_memberships instead!
-	 * 
+	 *
 	 * @param $app string/array with app-names
 	 * @param $locations string eg. run
 	 * @param $account int/string accountid or account_lid
@@ -1059,7 +1057,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 			}
 		}
 	}
-	
+
 	/**
 	 * checks if one of the given tables exist, returns the first match
 	 *
@@ -1069,12 +1067,12 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 	function table_exist($tables,$force_refresh=False)
 	{
 		static $table_names = False;
-		
+
 		if (!$table_names || $force_refresh) $table_names = $this->db->table_names();
-		
+
 		if (!$table_names) return false;
-		
-		foreach($table_names as $data)	
+
+		foreach($table_names as $data)
 		{
 			if (($key = array_search($data['table_name'],$tables)) !== false)
 			{
@@ -1083,7 +1081,7 @@ error_log(__METHOD__."($config) creating new this->accounts object");
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks and set the names of the tables, which get accessed before an update: eg. config- and applications-table
 	 *
