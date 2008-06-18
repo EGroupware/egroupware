@@ -563,7 +563,7 @@ class so_sql
 		}
 		$this->init($fields);
 
-		$ret = $this->save();
+		$ret = self::save();
 
 		if ($merge)
 		{
@@ -665,7 +665,7 @@ class so_sql
 						if ($criteria[$col][0] == '!')
 						{
 							$cmp_op = ' NOT'.$cmp_op;
-							$criteria[$col] = substr($criteria[$col],1);
+							$criteria[$col] = '('.substr($criteria[$col],1).' OR '.$criteria[$col].' IS NULL)';
 							$negate = true;
 						}
 						$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard).($negate ? ') ' : '');
