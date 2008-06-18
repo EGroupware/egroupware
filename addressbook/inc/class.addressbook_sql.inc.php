@@ -287,17 +287,14 @@ class addressbook_sql extends so_sql
 					} else {
 						$valarray[]=$val;
 					}
+					$negate = false;      //negate the search funktion
+					if ($criteria[$col][0] == '!') $negate = True;
 					unset($criteria[$col]);
 					foreach ($valarray as $vkey => $part)
 					{
-						if ($op=='AND') {
-							$criteria[] =$this->extra_table.'.contact_id in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
-							"(".$this->extra_table.".contact_name='".substr($col,1)."' AND ".$this->extra_table.".contact_value".($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'))";
-						} else {
-							$criteria[] = $this->db->expression($this->extra_table,'(',array(
-								$this->extra_table.'.contact_name='."'".substr($col,1)."'",
-								$this->extra_table.'.contact_value'.($wildcard?' LIKE ':'=')."'".$wildcard.$part.$wildcard."'"),')');
-						}
+						$criteria[] =$this->table_name.'.contact_id'.($negate ? ' not '  :'').' in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
+							"(".$this->extra_table.".contact_name='".substr($col,1)."' AND ".$this->extra_table.".contact_value".(!$wildcard?' = ':' LIKE ')."'".$wildcard.($negate?substr($part,1):$part).$wildcard."'"."))";
+
 					}
 					$search_customfields = true;
 				}
