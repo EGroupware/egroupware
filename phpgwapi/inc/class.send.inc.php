@@ -52,14 +52,30 @@
 				$lang = $nation;
 			}
 			$this->SetLanguage($lang,$lang_path);
-
 			$this->IsSmtp();
-			$this->Host = $GLOBALS['egw_info']['server']['smtp_server']?$GLOBALS['egw_info']['server']['smtp_server']:'localhost';
-			$this->Port = $GLOBALS['egw_info']['server']['smtp_port']?$GLOBALS['egw_info']['server']['smtp_port']:25;
-			$this->SMTPAuth = !empty($GLOBALS['egw_info']['server']['smtp_auth_user']);
-			$this->Username = $GLOBALS['egw_info']['server']['smtp_auth_user'];
-			$this->Password = $GLOBALS['egw_info']['server']['smtp_auth_passwd'];
 
+			$bopreferences    =& CreateObject('felamimail.bopreferences');
+			if ($bopreferences) {
+				$preferences  = $bopreferences->getPreferences();
+				if ($preferences) {
+					$ogServer = $preferences->getOutgoingServer(0);
+					if ($ogServer) {
+						$this->Host     = $ogServer->host;
+						$this->Port = $ogServer->port;
+						if($ogServer->smtpAuth) {
+							$this->SMTPAuth = true;
+							$this->Username = $ogServer->username;
+							$this->Password = $ogServer->password;
+						}
+					}
+				}
+			} else {
+				$this->Host = $GLOBALS['egw_info']['server']['smtp_server']?$GLOBALS['egw_info']['server']['smtp_server']:'localhost';
+				$this->Port = $GLOBALS['egw_info']['server']['smtp_port']?$GLOBALS['egw_info']['server']['smtp_port']:25;
+				$this->SMTPAuth = !empty($GLOBALS['egw_info']['server']['smtp_auth_user']);
+				$this->Username = $GLOBALS['egw_info']['server']['smtp_auth_user'];
+				$this->Password = $GLOBALS['egw_info']['server']['smtp_auth_passwd'];
+			}
 			$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
 		}
 
