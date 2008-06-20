@@ -191,11 +191,14 @@ class SMTP {
     }
 
     //Begin encrypted connection
-    if(!stream_socket_enable_crypto($this->smtp_conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-      return false;
-    }
-
-    return true;
+    $retval = stream_socket_enable_crypto($this->smtp_conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+	// if there are not enough data enable crypto may return 0, then we switch to blocking mode for the stream temporarily
+    if ($retval === 0) {
+		stream_set_blocking($this->smtp_conn, true);
+		$retval = stream_socket_enable_crypto($this_smtp_conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+		stream_set_blocking ($this->smtp_conn, false);
+	}
+	return $retval;
   }
 
   /**
@@ -763,7 +766,7 @@ class SMTP {
     }
 
     // send the quit command to the server
-    fputs($this->smtp_conn,"quit" . $this->CRLF);
+    fputs($this->smtp_conn,"QUIT" . $this->CRLF);
 
     // get any good-bye messages
     $byemsg = $this->get_lines();
