@@ -149,13 +149,16 @@
 					}
 					if ($this->last_part($name) == $nm_global['order'])	// we're the active column
 					{
-						$cell[1] = $cell;
-						unset($cell[1]['align']);
-						$cell[2] = $tmpl->empty_cell('image',$nm_global['sort'] != 'DESC' ? 'down' : 'up');
-						$cell['type'] = 'hbox';
-						$cell['size'] = '2,,0,0';
+						$sorting = $cell;
+						unset($sorting['align']);
+						unset($sorting['span']);
+						$cell = etemplate::empty_cell('hbox','',array(
+							'span' => $cell['span'],
+							'size' => '2,,0,0',
+							1 => $sorting,
+							2 => etemplate::empty_cell('image',$nm_global['sort'] != 'DESC' ? 'down' : 'up'),
+						));
 						$class = 'activ_sortcolumn';
-						$cell['name'] = $cell['label'] = '';
 					}
 					else
 					{

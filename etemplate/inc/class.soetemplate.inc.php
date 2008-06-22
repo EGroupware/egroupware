@@ -182,7 +182,7 @@
 			);
 			if ($attributes && is_array($attributes))
 			{
-				return array_merge($attributes,$cell);
+				$cell += $attributes;
 			}
 			return $cell;
 		}
