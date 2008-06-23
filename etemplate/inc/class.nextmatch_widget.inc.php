@@ -243,6 +243,11 @@ class nextmatch_widget
 			case 'nextmatch-customfields':
 				return $this->_pre_process_cf_header($cell,$tmpl);
 		}
+		// does NOT work with php5.2.6 ...
+		if (version_compare(PHP_VERSION,'5.2.6','>='))
+		{
+			$value['bottom_too'] = false;
+		}
 		// presetting the selectboxes with their default values, to NOT loop, because post-process thinks they changed
 		if (!isset($value['cat_id'])) $value['cat_id'] = '';
 		if (!isset($value['search'])) $value['search'] = '';
