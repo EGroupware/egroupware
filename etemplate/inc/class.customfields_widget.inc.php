@@ -227,9 +227,6 @@ class customfields_widget
 				case 'label' :
 					$row_class = 'th';
 					break;
-				case 'checkbox' :
-					$input =& etemplate::empty_cell('checkbox',$this->prefix.$lname);
-					break;
 				case 'radio' :
 					if (count($field['values']) == 1 && isset($field['values']['@']))
 					{
@@ -324,6 +321,12 @@ class customfields_widget
 						etemplate::add_child($input,$widget);
 						unset($widget);
 					}
+					break;
+				case 'url':		// other etemplate types, which are used just as is
+				case 'url-email':
+				case 'url-phone':
+				case 'checkbox' :
+					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname);
 					break;
 				case 'link-entry':
 				default :	// link-entry to given app
