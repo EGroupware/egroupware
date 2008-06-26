@@ -668,7 +668,10 @@ class so_sql
 							$criteria[$col] = substr($criteria[$col],1);
 							$negate = true;
 						}
-						$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard).($negate ? ') ' : '');
+						foreach(explode(' ',$criteria[$col]) as $crit)
+						{
+							$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).($negate ? ') ' : '');
+						}
 					}
 					elseif (strpos($db_col,'.')!==false)	// we have a table-name specified
 					{
