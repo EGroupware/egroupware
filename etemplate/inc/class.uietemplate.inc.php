@@ -962,7 +962,8 @@ class etemplate extends boetemplate
 		$value = $this->get_array($content,$name);
 
 		$options = '';
-		if ($readonly = $cell['readonly'] || @$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'])
+		if ($readonly = $cell['readonly'] && $readonlys[$name] !== false || 	// allow to overwrite readonly settings of a cell
+			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'])
 		{
 			$options .= ' readonly="readonly"';
 		}
@@ -1084,7 +1085,6 @@ class etemplate extends boetemplate
 		{
 			$options = 'id="'.($cell['id'] ? $cell['id'] : $form_name).'" '.$options;
 		}
-
 		switch ($type)
 		{
 			case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
@@ -1422,7 +1422,6 @@ class etemplate extends boetemplate
 					$multiple = 0;
 				}
 				$sels += $this->_sel_options($cell,$name,$content);
-
 				if ($multiple && !is_array($value)) $value = explode(',',$value);
 				if ($readonly || $cell['noprint'])
 				{
