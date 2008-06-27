@@ -365,7 +365,7 @@ class egw_db
 					if ($this->Port) $Host .= ':'.$this->Port;
 					break;
 			}
-			if (!isset($GLOBALS['egw']->ADOdb) ||	// we have no connection so far
+			if (!is_object($GLOBALS['egw']->ADOdb) ||	// we have no connection so far
 				(is_object($GLOBALS['egw']->db) &&	// we connect to a different db, then the global one
 					($this->Type != $GLOBALS['egw']->db->Type ||
 					$this->Database != $GLOBALS['egw']->db->Database ||
@@ -379,7 +379,7 @@ class egw_db
 					$this->halt("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
 					return null;	// in case error-reporting = 'no'
 				}
-				if (!isset($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
+				if (!is_object($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
 				{
 					$this->Link_ID = $GLOBALS['egw']->ADOdb;
 				}
