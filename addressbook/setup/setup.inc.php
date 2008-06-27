@@ -40,6 +40,7 @@ $setup_info['addressbook']['hooks']['search_link'] = 'addressbook_hooks::search_
 $setup_info['addressbook']['hooks']['calendar_resources'] = 'addressbook_hooks::calendar_resources';
 $setup_info['addressbook']['hooks']['edit_user']    = 'addressbook_hooks::edit_user';
 $setup_info['addressbook']['hooks'][] = 'config';
+$setup_info['addressbook']['hooks']['group_acl'] = 'addressbook_hooks::group_acl';
 
 /* Dependencies for this app to work */
 $setup_info['addressbook']['depends'][] = array(

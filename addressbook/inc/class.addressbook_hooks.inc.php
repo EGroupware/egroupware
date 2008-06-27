@@ -308,4 +308,15 @@ class addressbook_hooks
 			'info' => 'addressbook.addressbook_bo.calendar_info',// info method, returns array with id, type & name for a given id
 		);
 	}
+
+	/**
+	 * Register addressbook for group-acl
+	 *
+	 * @param array $args hook-params (not used)
+	 * @return boolean|string true=standard group acl link, of string with link
+	 */
+	static function group_acl($args)
+	{
+		return true;
+	}
 }
