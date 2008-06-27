@@ -33,7 +33,6 @@
 		var $bo;
 		var $nextmatchs;
 		var $apps_with_acl = array(
-			'addressbook' => True,
 			'todo'        => True,
 			'calendar'    => True,
 			'projects'    => True,
@@ -66,6 +65,10 @@
 			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap')
 			{
 				unset($this->apps_with_acl['addressbook']);
+			}
+			foreach($GLOBALS['egw']->hooks->process('group_acl','',true) as $app => $data)
+			{
+				if ($data) $this->apps_with_acl[$app] = $data;
 			}
 		}
 
