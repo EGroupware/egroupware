@@ -7,13 +7,13 @@
  * @package setup
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * setup command: create / change eGW configuration
  */
-class setup_cmd_config extends setup_cmd 
+class setup_cmd_config extends setup_cmd
 {
 	/**
 	 * Constructor
@@ -42,7 +42,7 @@ class setup_cmd_config extends setup_cmd
 
 	/**
 	 * run the command: write the configuration to the database
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
@@ -56,7 +56,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		// instanciate setup object and check authorisation
 		$this->check_setup_auth($this->config_user,$this->config_passwd,$this->domain);
-		
+
 		$this->check_installed($this->domain,15,$this->verbose);
 
 		$values = array();
@@ -82,14 +82,14 @@ class setup_cmd_config extends setup_cmd
 		if (count($values))
 		{
 			if ($save_ea_profile) $this->_save_ea_profile();
-			
+
 			return lang('Configuration changed.');
 		}
 		$this->restore_db();
 
 		return lang('Nothing to change.');
 	}
-	
+
 	/**
 	 * Return or echo the most common config options
 	 *
@@ -118,7 +118,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		return $config;
 	}
-	
+
 	/**
 	 * Available options and allowed arguments
 	 *
@@ -169,10 +169,10 @@ class setup_cmd_config extends setup_cmd
 		'--ldap-group-context' => 'ldap_group_context',
 		'--allow-remote-admin' => 'allow_remote_admin',
 	);
-	
+
 	/**
 	 * Parses properties from this object
-	 * 
+	 *
 	 * @param array &$value contains set values on return
 	 * @return boolean do we need to save the emailadmin profile
 	 */
@@ -187,9 +187,9 @@ class setup_cmd_config extends setup_cmd
 			foreach(is_array($option) ? $option : array($option) as $n => $data)
 			{
 				$name = is_array($data) ? $data['name'] : $data;
-				
+
 				if (isset($this->$name))
-				{				
+				{
 					$save_ea_profile |= $this->_parse_value($arg,$n,$option,$this->$name,$values);
 				}
 			}
@@ -199,7 +199,7 @@ class setup_cmd_config extends setup_cmd
 
 	/**
 	 * Parses command line arguments in $this->arguments
-	 * 
+	 *
 	 * @param array &$value contains set values on return
 	 * @return boolean do we need to save the emailadmin profile
 	 */
@@ -216,7 +216,7 @@ class setup_cmd_config extends setup_cmd
 				throw new egw_exception_wrong_userinput(lang("Unknown option '%1' !!!",$arg),90);
 			}
 			$options = is_array(self::$options[$arg]) ? explode(',',array_shift($args)) : array(array_shift($args));
-			
+
 			if ($arg == '--config')
 			{
 				foreach($options as $option)
@@ -234,7 +234,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		return $save_ea_profile;
 	}
-	
+
 	/**
 	 * Parses a single value
 	 *
@@ -247,9 +247,9 @@ class setup_cmd_config extends setup_cmd
 	private function _parse_value($arg,$n,$data,$value,array &$values)
 	{
 		if ($value === '' && is_array($data) && !isset($data[$n]['default'])) return false;
-				
+
 		$name = is_array($data) || $n ? $data[$n] : $data;
-		
+
 		if (is_array($name))
 		{
 			if (!$value && isset($name['default'])) $value = $name['default'];
@@ -264,7 +264,7 @@ class setup_cmd_config extends setup_cmd
 
 		return in_array($arg,array('--mailserver','--smtpserver','--cyrus','--postfix','--sieve'));
 	}
-	
+
 	/**
 	 * Updates the default EMailAdmin profile from the eGW config
 	 */
@@ -279,11 +279,10 @@ class setup_cmd_config extends setup_cmd
 			$config[$row['config_name']] = $row['config_value'];
 		}
 		$config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
-	
-		require_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.bo.inc.php');
-		$emailadmin = new bo(-1,false);	// false=no session stuff
+
+		$emailadmin = new emailadmin_bo(-1,false);	// false=no session stuff
 		$emailadmin->setDefaultProfile($config);
-		
+
 		if ($this->verbose)
 		{
 			echo "\n".lang('EMailAdmin profile updated:')."\n";
@@ -356,13 +355,13 @@ class setup_cmd_config extends setup_cmd
 		$defaults['mail_suffix'] = '$domain';
 		$defaults['imapAdminUsername'] = 'cyrus@$domain';
 		$defaults['imapAdminPW'] = self::randomstring();
-		
+
 		return $defaults;
 	}
 
 	/**
 	 * Merges the default into the current properties, if they are empty or contain placeholders
-	 * 
+	 *
 	 * Replacements like $domain, only work for values listed by self::defaults()
 	 */
 	private function _merge_defaults()
@@ -382,6 +381,6 @@ class setup_cmd_config extends setup_cmd
 					$this->domain,
 				),$this->$name);
 			}
-		}	
+		}
 	}
 }
