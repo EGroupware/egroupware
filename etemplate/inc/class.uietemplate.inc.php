@@ -1444,7 +1444,7 @@ foreach($sess as $key => $val)
 						list($extra_link,$extra_link_target,$imagemap,$extra_link_popup,$id) = explode(',',$cell['size']);
 					}
 					$html .= $this->html->image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
-						'border="0"'.($imagemap?' usemap="'.$this->html->htmlspecialchars($imagemap).'"':'').
+						'border="0"'.($imagemap?' usemap="#'.$this->html->htmlspecialchars($imagemap).'"':'').
 						($id || $value ? ' id="'.($id ? $id : $name).'"' : ''));
 					$extra_label = False;
 					break;
