@@ -322,9 +322,27 @@ class customfields_widget
 						unset($widget);
 					}
 					break;
-				case 'url':		// other etemplate types, which are used just as is
 				case 'url-email':
+					list($max,$shown,$validation_type,$default) = explode(',',$field['len'],4);
+					if (empty($max)) $max =128;
+					if (empty($shown)) $shown = 28;
+					if (empty($validation_type)) $validation_type = 1;
+					$field['len'] = implode(',',array($shown, $max, $validation_type, $default));
+					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
+						'size' => $field['len'] 
+					));
+					break;
+				case 'url':
 				case 'url-phone':
+					list($max,$shown,$validation_type) = explode(',',$field['len'],3);
+					if (empty($max)) $max =128;
+					if (empty($shown)) $shown = 28;
+					$field['len']=implode(',',array( $shown, $max, $validation_type));
+					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
+						 'size' => $field['len']
+					));
+					break;
+				// other etemplate types, which are used just as is
 				case 'checkbox' :
 					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname);
 					break;

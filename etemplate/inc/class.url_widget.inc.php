@@ -100,8 +100,8 @@ class url_widget
 							$cell['size'] .= '|[^<]+ ?<'.self::EMAIL_PREG.'>';
 						}
 						$cell['size'] .= ')$/i';
-					}
-					//_debug_array($cell);
+					} 
+					#_debug_array($cell);
 					break;
 				}
 				$rfc822 = $value;
@@ -118,17 +118,28 @@ class url_widget
 				}
 				elseif (strpos($email=$value,'@') !== false)
 				{
-					list($value) = explode('@',$value);	// cut the domain off to get a shorter name, we show the complete email as tooltip
-					$value .= '@...';
+					if (strpos($email=$value,'&') !== false) {
+						list($email,$addoptions) = explode('&',$value,2);
+						#echo $email."<br>";
+						$rfc822 = $value = $email;
+					}
+					// use size (if set) to show only a Part of the email, or ...
+					if (!empty($size)) {
+						$value = substr($value, 0, $size).(strlen($value)>$size ? '...' : '');
+					} else {
+						list($value) = explode('@',$value);	// cut the domain off to get a shorter name, we show the complete email as tooltip
+						$value .= '@...';
+					}
 				}
-				$link = $this->email2link($email,$rfc822);
-				//echo "<p>value='$value', email='$email', link=".print_r($link,true)."</p>\n";
+				$link = $this->email2link($email,$rfc822).($addoptions ? '&'.$addoptions : '');
+				#echo "<p>value='$value', email='$email', link=".print_r($link,true)."</p>\n";
 
 				$cell['type'] = 'label';
 				$cell['size'] = ','.$link.',,,,'.($link[0]=='f'?'700x750':'').($value != $email ? ','.$email : '');
 				break;
 
 			case 'url':		// options: [size[,max-size[,preg]]]
+				list($size,$max_size,$preg) = explode(',',$cell['size'],3); // 3 = allow default to contain commas
 				if (!$readonly)
 				{
 					$cell['type'] = 'text';
@@ -146,10 +157,13 @@ class url_widget
 					}
 					$cell['size'] = ','.$link.',,,_blank';
 				}
-				if (substr($value,0,7) == 'http://') $value = substr($value,7);	// cut off http:// in display
+				// cutting of the display in listview after 20 chars
+				if (substr($value,0,7) == 'http://') $value = substr($value,7,($size ? $size : 20)).(strlen($value)> ($size ? $size+7 : 27) ? '...': '');	// cut off http:// in display
+				else $value = substr($value,0, ($size ? $size : 20)).(strlen($value)> ($size ? $size : 20) ? '...': '');
 				break;
 
 			case 'url-phone':		// options: [size[,max-size[,preg]]]
+				list($size,$max_size,$preg) = explode(',',$cell['size'],3); // 3 = allow default to contain commas
 				if (!$readonly)
 				{
 					$cell['type'] = 'text';
