@@ -61,11 +61,6 @@
 			{
 				$_POST = $this->array_stripslashes($_POST);
 			}
-			// remove ACL from addressbook, if contacts-backend is LDAP, as the ACL can not be modified there
-			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap')
-			{
-				unset($this->apps_with_acl['addressbook']);
-			}
 			foreach($GLOBALS['egw']->hooks->process('group_acl','',true) as $app => $data)
 			{
 				if ($data) $this->apps_with_acl[$app] = $data;

@@ -317,6 +317,7 @@ class addressbook_hooks
 	 */
 	static function group_acl($args)
 	{
-		return true;
+		// addressbook uses group-acl, only if contacts-backend is NOT LDAP, as the ACL can not be modified there
+		return $GLOBALS['egw_info']['server']['contact_repository'] != 'ldap';
 	}
 }
