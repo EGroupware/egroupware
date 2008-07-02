@@ -309,8 +309,9 @@
 					$data = ($query['nextmatch_template']) ? array(1=>$row) : $row;
 					$widget =& CreateObject('etemplate.etemplate', $query['template']);
 					$html = addslashes(str_replace("\n", '', $widget->show($data, '', $readonlys)));
+					$row['id_field'] = htmlspecialchars(addslashes($row[$query['id_field']]));
 					$row['title'] = htmlspecialchars(addslashes($row['title']));
-					$response->addScript("add_ajax_result('$result_id', '${row[$query['id_field']]}', '" . $row['title'] . "', '$html');");
+					$response->addScript("add_ajax_result('$result_id', '${row['id_field']}', '" . $row['title'] . "', '$html');");
 					$count++;
 					if($count > $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) {
 						$response->addScript("add_ajax_result('$result_id', '', '" . lang("%1 more...", (count($result_list) - $count)) . "');");
