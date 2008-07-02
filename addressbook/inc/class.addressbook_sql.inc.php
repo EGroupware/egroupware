@@ -607,6 +607,8 @@ class addressbook_sql extends so_sql
 	{
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
+		$new_entry = !$this->data['id'];
+
 		if (isset($this->data['etag']))		// do we have an etag in the data to write
 		{
 			$etag = $this->data['etag'];
@@ -623,17 +625,15 @@ class addressbook_sql extends so_sql
 		else
 		{
 			unset($this->data['etag']);
-			$new_entry = !$this->data['id'];
 			if (!($err = parent::save(array('contact_etag=contact_etag+1'))) && $new_entry)
 			{
 				$this->data['etag'] = 0;
 			}
 		}
 		// enforce a minium uid strength
-		if (!$err && (strlen($this->data['uid']) < 20 || is_numeric($this->data['uid'])))
+		if (!$err && ($new_entry || isset($this->data['uid'])) && (strlen($this->data['uid']) < 20 || is_numeric($this->data['uid'])))
 		{
 			parent::update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
-			$this->data['etag']++;
 			//echo "<p>set uid={$this->data['uid']}, etag={$this->data['etag']}</p>";
 		}
 		return $err;
