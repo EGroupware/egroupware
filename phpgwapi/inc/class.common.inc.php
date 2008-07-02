@@ -567,6 +567,7 @@
 						$list[] = substr($file,0,strpos($file,'.'));
 					}
 				}
+                                closedir($dh);
 			}
 			if(!is_array($list))
 			{
@@ -578,8 +579,8 @@
 						$list[] = substr($file,0,strpos($file,'.'));
 					}
 				}
+				closedir($dh);
 			}
-			closedir($dh);
 			reset ($list);
 			return $list;
 		}
@@ -691,9 +692,11 @@
 					$ext = strtolower(strrchr($f,'.'));
 					if (($ext == '.gif' || $ext == '.png') && strpos($f,'navbar') === False)
 					{
+						closedir($d);
 						return True;
 					}
 				}
+				closedir($d);
 			}
 			return False;
 		}
