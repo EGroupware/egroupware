@@ -544,33 +544,48 @@ class so_sql
 	 *
 	 * @param array $fields
 	 * @param boolean $merge=true if true $fields will be merged with $this->data (after update!), otherwise $this->data will be just $fields
-	 * @return int 0 on success, errno != 0 otherwise
+	 * @return int|boolean 0 on success, or errno != 0 on error, or true if $extra_where is given and no rows affected
 	 */
 	function update($fields,$merge=true)
 	{
-		if ($merge) $backup_data = $this->data ? $this->data : array();
+		if ($merge) $this->data_merge($fields);
 
-		if ($this->autoinc_id && !isset($fields[$this->autoinc_id]) ||
-			$this->db_key_cols && count(array_intersect(array_keys($this->db_key_cols),array_keys($fields)) != count($this->db_key_cols)))
+		$fields = $this->data2db($fields);
+
+		// extract the keys from $fields or - if not set there - from $this->data
+		$keys = array();
+		foreach($this->db_key_cols as $col => $name)
 		{
-			foreach($this->db_key_cols as $col => $name)
+			$keys[$col] = isset($fields[$name]) ? $fields[$name] : $this->data[$name];
+			unset($fields[$name]);
+		}
+		// extract the data from $fields
+		$data = array();
+		foreach($this->db_data_cols as $col => $name)
+		{
+			if (array_key_exists($name,$fields))
 			{
-				if (!isset($fields[$name]))
-				{
-					$fields[$name] = $this->data[$name];
-				}
+				$data[$col] = $fields[$name];
+				unset($fields[$name]);
 			}
 		}
-		$this->init($fields);
-
-		$ret = self::save();
-
-		if ($merge)
+		// add direct sql like 'etag=etag+1' (it has integer keys)
+		foreach($fields as $key => $value)
 		{
-			$this->init($backup_data);
-			$this->data_merge($fields);
+			if (is_int($key))
+			{
+				$data[] = $value;
+			}
 		}
-		return $ret;
+		if (!$data)
+		{
+			return 0;	// nothing to update
+		}
+		if (!$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__,$this->app))
+		{
+			return $this->db->Errno;
+		}
+		return 0;
 	}
 
 	/**
