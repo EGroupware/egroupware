@@ -35,7 +35,7 @@ function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 		$total = parent::get_rows($query,$rows,$readonlys);
 		$query['template'] = $query['sitemgr_display'].'.rows';
 
-		foreach($query['fields'] as $name)
+		if (is_array($query['fields'])) foreach($query['fields'] as $name)
 		{
 			$rows['show'][$name]=true;
 		}
