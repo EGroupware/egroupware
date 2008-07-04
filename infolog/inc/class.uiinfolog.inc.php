@@ -1009,9 +1009,14 @@ class uiinfolog
 						{
 							egw_link::link('infolog',$content['link_to']['to_id'],$action,$id);
 						}
+						$content['blur_title']   = egw_link::title($action,'$id').",...";
+					} else {
+						if ($action_id) {
+							egw_link::link('infolog',$content['link_to']['to_id'],$action,$action_id);
+							$content['blur_title']   = egw_link::title($action,$action_id);
+						}
 					}
 					$content['info_contact'] = $action.':'.$action_id;
-					$content['blur_title']   = egw_link::title($action,$action_id);
 
 				case '':
 					if ($info_id)
