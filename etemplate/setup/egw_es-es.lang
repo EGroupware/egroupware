@@ -236,7 +236,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	es-es	Nombre de la tabla a añadir
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	es-es	Nombre de la plantilla. Debe estar en el formato aplicación.función[.subplantilla]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	es-es	Necesita ser única en la tabla y no ser palabra reservada SQL. Intente poner un prefijo común de dos caracteres para la aplicación, por ejemplo 'et_'
-new search	etemplate	es-es	Nueva búsqueda
+new search	common	es-es	Nueva búsqueda
 new table created	etemplate	es-es	Se ha creado una tabla nueva
 newer version '%1' exists !!!	etemplate	es-es	¡Existe una versión '%1' más reciente!
 nextmatch	etemplate	es-es	Control 'Nextmach' (Siguiente coincidencia)

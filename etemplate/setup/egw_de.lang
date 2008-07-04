@@ -236,7 +236,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	de	Name der zuzufügenden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
-new search	etemplate	de	Neue Suche
+new search	common	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch

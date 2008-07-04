@@ -226,7 +226,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	pt	Nome da tabela a adicionar
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pt	Nome do modelo Web, deve surgir no formulário application.function[.subTemplate].
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	pt	É necessário ser único na tabela e sem palavra reservada do SQL. É melhor definir todos os prefixos com dois digitos para a aplicação. Ex: 'et_'.
-new search	etemplate	pt	Nova pesquisa
+new search	common	pt	Nova pesquisa
 new table created	etemplate	pt	Nova tabela criada
 newer version '%1' exists !!!	etemplate	pt	Existe uma versão mais recente de '%1' !!!
 nextmatch	etemplate	pt	Ocorrência seguinte

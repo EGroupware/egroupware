@@ -230,7 +230,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	sv	Namnet på tabell
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sv	Namn på eTemplate, ska vara i formatet applikation.funktion[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sv	måste vara unikt för tabellen och inte ett reserverat SQL ord. Rekomenderas att använda 2 tecken prefix för aplikations namnet, ex. 'et_'
-new search	etemplate	sv	Ny sökning
+new search	common	sv	Ny sökning
 new table created	etemplate	sv	Tabell skapad
 newer version '%1' exists !!!	etemplate	sv	Nyare version '%1' existerar
 nextmatch	etemplate	sv	Nästa matchande

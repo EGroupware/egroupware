@@ -170,7 +170,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	hr	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	hr	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	hr	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
-new search	etemplate	hr	New search
+new search	common	hr	New search
 new table created	etemplate	hr	New table created
 newer version '%1' exists !!!	etemplate	hr	newer version '%1' exists !!!
 nextmatch	etemplate	hr	Nextmatch

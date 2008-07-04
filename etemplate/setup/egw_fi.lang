@@ -205,7 +205,7 @@ name	etemplate	fi	Nimi
 name of other table where column is a key from	etemplate	fi	toisen taulukon nimi missä sarake on avain
 name of table to add	etemplate	fi	Lisää taulukon nimi
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	fi	asiakirja mallin nimi, täytyy olla lomakkeessa sovellus.funktio[.alimalli]
-new search	etemplate	fi	Uusi etsintä
+new search	common	fi	Uusi etsintä
 new table created	etemplate	fi	Uusi taulukon nimi
 newer version '%1' exists !!!	etemplate	fi	uudempi versio %1 havaittu !!!
 no column to swap with !!!	etemplate	fi	ei saraketta johon voisi vaihtaa !!!

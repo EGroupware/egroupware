@@ -173,7 +173,7 @@ month	etemplate	eu	Hilabetea
 multicolumn indices	etemplate	eu	Zutabe askotako aurkibidea
 name	etemplate	eu	Izena
 name of table to add	etemplate	eu	Gehitu behar den taularen izena
-new search	etemplate	eu	Bilaketa berria
+new search	common	eu	Bilaketa berria
 new table created	etemplate	eu	Taula berri bat sortu da
 newer version '%1' exists !!!	etemplate	eu	Bertsio '%1' berriagoa dago!!!
 nextmatch	etemplate	eu	Hurrengo parekatzea

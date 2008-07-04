@@ -167,7 +167,7 @@ minute	etemplate	no	Minutt
 month	etemplate	no	Måned
 name	etemplate	no	Navn
 name of table to add	etemplate	no	Navn på tabell som skal legges til
-new search	etemplate	no	Nytt søk
+new search	common	no	Nytt søk
 new table created	etemplate	no	Ny tabell opprettet
 newer version '%1' exists !!!	etemplate	no	nyere versjon '%1' eksisterer!
 nextmatch	etemplate	no	Neste treff

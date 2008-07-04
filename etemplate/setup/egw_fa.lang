@@ -222,7 +222,7 @@ multicolumn indices	etemplate	fa	نمایه های چند ستونی
 name	etemplate	fa	نام
 name of other table where column is a key from	etemplate	fa	نام جدول دیگری که کلید ستون از آنجاست
 name of table to add	etemplate	fa	نام جدول برای افزودن
-new search	etemplate	fa	جستجوی جدید
+new search	common	fa	جستجوی جدید
 new table created	etemplate	fa	جدول جدید ایجاد شد!
 newer version '%1' exists !!!	etemplate	fa	نسخه جدیدتر '%1'  موجود است
 nextmatch	etemplate	fa	موردجور شده بعدی

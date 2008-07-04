@@ -159,7 +159,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	iw	שם הטבלה להוסיף
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	iw	[צריך להיות בצורה יישום.פונקציה[.תת-תבנית ,eTemplate-שם ה
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	iw	חייב להיות ייחודי בטבלה, ואסור להשתמש במילות מפתח של <br>
-new search	etemplate	iw	חיפוש חדש
+new search	common	iw	חיפוש חדש
 new table created	etemplate	iw	נוצרה טבלה חדשה
 newer version '%1' exists !!!	etemplate	iw	!קיימת גירסה חדשה יותר
 nextmatch	etemplate	iw	ההתאמה הבאה

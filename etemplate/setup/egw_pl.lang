@@ -192,7 +192,7 @@ name	etemplate	pl	Nazwa
 name of other table where column is a key from	etemplate	pl	nazwa innej tabeli, w której kolumna jest kluczem
 name of table to add	etemplate	pl	Nazwa tabeli do dodania
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pl	nazwa e-Szablonu powinna być w formie: application.function[.subTemplate]
-new search	etemplate	pl	Nowe wyszukiwanie
+new search	common	pl	Nowe wyszukiwanie
 new table created	etemplate	pl	Utworzono nową tabelę
 newer version '%1' exists !!!	etemplate	pl	nowsza wersja '%1' istnieje!
 no filename given or selected via browse...	etemplate	pl	nie podano nazwy pliku i nie wybrano jej
