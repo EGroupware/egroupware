@@ -160,7 +160,7 @@ name	etemplate	lv	Vārds
 name of other table where column is a key from	etemplate	lv	citas kolonnas, no kurienes ir atslēga, nosaukums
 name of table to add	etemplate	lv	Tabulas , kur pievienot, nosaukums
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	lv	eVeidnes nosaukumam jābūt application.function formā [.apakšveidne]
-new search	etemplate	lv	Jauna meklēšana
+new search	common	lv	Jauna meklēšana
 new table created	etemplate	lv	Izveidota jauna tabula
 newer version '%1' exists !!!	etemplate	lv	eksistē "%1"jaunāka versija!!!
 no file	etemplate	lv	nav datnes

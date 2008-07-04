@@ -53,7 +53,7 @@ minute	etemplate	hu	Perc
 minutes	etemplate	hu	Percek
 month	etemplate	hu	Hónap
 name	etemplate	hu	Név
-new search	etemplate	hu	Új keresés
+new search	common	hu	Új keresés
 not null	etemplate	hu	NOT NULL
 nothing	etemplate	hu	semmi
 options	etemplate	hu	Opciók

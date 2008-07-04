@@ -224,7 +224,7 @@ name of other table where column is a key from	etemplate	sk	názov inej tabuµky, 
 name of table to add	etemplate	sk	Názov tabuµky, ktorá sa má prida»
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sk	názov e©ablóny, mal by by» vo forme aplikácia.funkcia[pod©ablóna]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sk	musí by» v tabuµke jedineèné a nesmie by» rezervovaným slovom z SQL, najlep¹ie zaèa» v¹etky spoloèným 2-miestnou skratkou aplikácie, napr. 'et_'
-new search	etemplate	sk	Nové hµadanie
+new search	common	sk	Nové hµadanie
 new table created	etemplate	sk	Nová tabuµka vytvorená
 newer version '%1' exists !!!	etemplate	sk	nov¹ia verzia '%1' existuje!!!
 nextmatch	etemplate	sk	Ïal¹ia zhoda

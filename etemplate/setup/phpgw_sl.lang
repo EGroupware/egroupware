@@ -235,7 +235,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	sl	Ime tabele za dodati
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sl	Ime ePredloge mora biti v obliki application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sl	Mora biti enolično in ne sme biti beseda rezervirana za SQL. Najboljše, da vsem dodate predpono aplikacije, dolgo dva znaka, npr.: 'et_'
-new search	etemplate	sl	Novo iskanje
+new search	common	sl	Novo iskanje
 new table created	etemplate	sl	Nova tabela ustvarjena
 newer version '%1' exists !!!	etemplate	sl	Obstaja novejša različica '%1'
 nextmatch	etemplate	sl	Naslednji zadetek

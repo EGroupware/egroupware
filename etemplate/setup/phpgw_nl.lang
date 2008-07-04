@@ -230,7 +230,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	nl	Naam van de toe te voegen tabel
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	nl	naam van de eTemplate, moet voorkomen in de vorm van application,function[,subTemplate)
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	nl	moet uniek zijn in de tabel en mag geen gereserveerd woord van SQL zijn, het is verstandig om alles een prefix te geven van een 2 letterige afkorting voor de toepassing, bijvoorbeeld 'et_'
-new search	etemplate	nl	Nieuwe zoekopdracht
+new search	common	nl	Nieuwe zoekopdracht
 new table created	etemplate	nl	Nieuwe tabel gemaakt
 newer version '%1' exists !!!	etemplate	nl	niewere versie '%1' bestaat reeds !!!
 nextmatch	etemplate	nl	Volgende overeenkomst

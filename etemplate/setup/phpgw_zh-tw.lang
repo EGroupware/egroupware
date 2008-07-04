@@ -236,7 +236,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	zh-tw	新增表格的名稱
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	zh-tw	樣板名稱，必須在表單 application.function[.subTemplate] 中
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	zh-tw	在表格中必須是唯一的且不是SQL的保留字，最好加上兩個英文與一個底線當作前置字元來表示應用程式
-new search	etemplate	zh-tw	新的搜尋
+new search	common	zh-tw	新的搜尋
 new table created	etemplate	zh-tw	建立了新的表格
 newer version '%1' exists !!!	etemplate	zh-tw	更新的版本 '%1'！
 nextmatch	etemplate	zh-tw	下一個

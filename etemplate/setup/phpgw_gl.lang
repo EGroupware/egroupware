@@ -239,7 +239,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	gl	Nome da táboa a engadir
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	gl	Nome do modelo electrónico. Debe estar no formato aplicación.función[,submodelo]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	gl	É necesario que sexa única na táboa e non ser palabra reservada de SQL. Tente poñer un prefixo común de dous caracteres para a aplicación, por exemplo 'et_'
-new search	etemplate	gl	Nova busca
+new search	common	gl	Nova busca
 new table created	etemplate	gl	Creouse unha táboa
 newer version '%1' exists !!!	etemplate	gl	Existe unha versión '%1' máis recente!
 nextmatch	etemplate	gl	Seguinte coincidencia
