@@ -801,10 +801,7 @@ class Horde_iCalendar {
                     . $this->_quotedPrintableEncode($value)
                     . $this->_newline;
             } else {
-# JVL: prevent : for empty values
-#                $attr_string = "$name$params_str:$value";
-                $attr_string = "$name$params_str";
-		$attr_string .= (!empty($value)) ? ":$value" : ';';
+                $attr_string = "$name$params_str:$value";
 
                 $result .= $this->_foldLine($attr_string) . $this->_newline;
             }
