@@ -128,7 +128,7 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet,$_charset);
 
-							if(($extra_charset_attribute || $this->productManufacturer == 'kde') && preg_match('/([\177-\377])/',$valueData))
+							if(($extra_charset_attribute || $this->productManufacturer == 'kde') && preg_match('/([\177-\377])/',$value))
 							{
 								$options['CHARSET'] = $_charset;
 								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
