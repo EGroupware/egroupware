@@ -50,9 +50,18 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user)
 	{
-		$icalvc =& $this->_instanciate_icalvc($user);
 		// ToDo: add parameter to only return id & etag
-		if (($tasks = $this->bo->search($icalvc->_caldef['rscs']['infolog.boinfolog'])))
+		if (($tasks = $this->bo->search($params=array(
+			'order'		=> 'info_datemodified',
+			'sort'		=> 'DESC',
+			'filter'    => 'own',	// filter my: entries user is responsible for,
+									// filter own: entries the user own or is responsible for
+
+			// todo add a filter to limit how far back entries from the past get synced
+			'col_filter'	=> Array (
+				'info_type'	=> 'task',
+			),
+		))))
 		{
 			foreach($tasks as $task)
 			{
