@@ -106,7 +106,7 @@
 				if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
 				{
 					$cat2id[$cat] = $ids[$cat] = $cat;
-				}	
+				}
 				elseif ($id = $GLOBALS['egw']->categories->name2id( addslashes($cat) ))
 				{	// cat exists
 					$cat2id[$cat] = $ids[$cat] = $id;
@@ -182,7 +182,8 @@
 		$custom_fields = $config->read_repository();
 		unset($config);
 		//echo "custom-fields=<pre>".print_r($custom_fields,True)."</pre>";
-		foreach ($custom_fields as $name => $data)
+		if (is_array($custom_fields['customfields']))
+		foreach ($custom_fields['customfields'] as $name => $data)
 		{
 			$cal_names['#'.$name] = $data['label'].': Custom field ('.$data['type'].')';
 		}
@@ -481,7 +482,7 @@
 				$action = $values['id'] ? 'updating' : 'adding';
 				//echo $action.'<pre>'.print_r($values,True)."</pre>\n";
 				$cal_id = $cal->bo->update($values,true,!$values['modified'],$is_admin);	// ignoring conflicts and ACL (for admins) on import
-				
+
 				$log .= "\t\t".'<td align="center">'.($cal_id ? $action." cal_id=$cal_id" : 'Error '.$action)."</td>\n\t</tr>\n";
 			}
 			else
