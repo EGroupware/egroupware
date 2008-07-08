@@ -90,10 +90,9 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $task;
 		}
-		include_once(EGW_INCLUDE_ROOT.'/icalsrv/inc/class.boinfolog_vtodos.inc.php');
-		$handler =& new boinfolog_vtodos($this->bo);
-		$vtodo = $handler->export_vtodo($task,UMM_UID2UID);
-		$options['data'] = $handler->render_velt2vcal($vtodo);
+		include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.vcalinfolog.inc.php');
+		$handler = new vcalinfolog();
+		$options['data'] = $handler->exportVTODO($id,'2.0',false,false);	// keep UID the client set and no extra charset attributes
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($task));
@@ -115,13 +114,12 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $ok;
 		}
-		include_once(EGW_INCLUDE_ROOT.'/icalsrv/inc/class.boinfolog_vtodos.inc.php');
-		$handler =& new boinfolog_vtodos($this->bo);
-		$vcalelm =& $handler->parse_vcal2velt($options['content']);
-		if (!($info_id = $handler->import_vtodo($vcalelm, $uid_mapping_import=UMM_UID2UID, $reimport_missing_events=false, $id)) > 0)
+		include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.vcalinfolog.inc.php');
+		$handler = new vcalinfolog();
+		if (!($info_id = $handler->importVCal($options['content'],is_numeric($id) ? $id : -1)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
-			return false;	// something went wrong ...
+			return '403 Forbidden';
 		}
 		header('ETag: '.$this->get_etag($info_id));
 		if (is_null($ok) || $id != $info_id)
