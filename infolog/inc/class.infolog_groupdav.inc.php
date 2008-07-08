@@ -116,7 +116,7 @@ class infolog_groupdav extends groupdav_handler
 		}
 		include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.vcalinfolog.inc.php');
 		$handler = new vcalinfolog();
-		if (!($info_id = $handler->importVCal($options['content'],is_numeric($id) ? $id : -1)))
+		if (!($info_id = $handler->importVTODO($options['content'],is_numeric($id) ? $id : -1)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
 			return '403 Forbidden';
