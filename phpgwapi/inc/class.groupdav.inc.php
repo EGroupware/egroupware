@@ -108,7 +108,6 @@ class groupdav extends HTTP_WebDAV_Server
 	function OPTIONS($path, &$dav, &$allow)
 	{
 		list(,$app) = explode('/',$path);
-
 		switch($app)
 		{
 			case 'calendar':
@@ -206,8 +205,8 @@ class groupdav extends HTTP_WebDAV_Server
 		        	'path'  => '/'.$app.'/',
 		        	'props' => $handler->extra_properties(array(
 		            	self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
-		            	// Kontact doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
-		        		self::mkprop('resourcetype', $this->_resourcetype($app,strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false)),
+		            	// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
+		        		self::mkprop('resourcetype', $this->_resourcetype($app,$app=='addressbook'&&strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false)),
 		        	)),
 		        );
 			}
@@ -224,7 +223,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Return resourcetype(s) for a given app
 	 *
 	 * @param string $app
-	 * @param boolean $no_extra_types=false should the GroupDAV and CalDAV types be added (Kontact has problems with it in self URL)
+	 * @param boolean $no_extra_types=false should the GroupDAV and CalDAV types be added (KAddressbook has problems with it in self URL)
 	 * @return array or DAV properties generated via
 	 */
 	function _resourcetype($app,$no_extra_types=false)
@@ -239,6 +238,7 @@ class groupdav extends HTTP_WebDAV_Server
 				$resourcetype[] = self::mkprop($ns,'resourcetype', $type);
 			}
 		}
+		//error_log(__METHOD__."($app,$no_extra_types)=".array2string($resourcetype));
 		return $resourcetype;
 	}
 
