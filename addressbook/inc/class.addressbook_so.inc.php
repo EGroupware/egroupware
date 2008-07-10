@@ -320,6 +320,9 @@ class addressbook_so
 		}
 		if (is_null($field_names)) $field_names = array_keys($this->customfields);
 
+		if(!is_array($ids) && is_numeric($ids)) {
+			$ids = array((int)$ids);
+		}
 		foreach($ids as $key => $id)
 		{
 			if (!(int)$id) unset($ids[$key]);
