@@ -204,6 +204,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 			// check if we are withing the allowed quantity and if not add all events using that resource
+			// seems this function is doing very strange things, it gives empty conflicts
 			foreach($max_quantity as $uid => $max)
 			{
 				if ($quantity[$uid] > $max)
@@ -307,7 +308,7 @@ class calendar_boupdate extends calendar_bo
 				$deleted[$old_userid] = $old_status;
 			}
 		}
-		// Find new participatns ...
+		// Find new participants ...
 		foreach($new_event['participants'] as $new_userid => $new_status)
 		{
 			if(!isset($old_event['participants'][$new_userid]))
