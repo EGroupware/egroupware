@@ -1373,7 +1373,7 @@ function __autoload($class)
 		{
 			if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php'))
 			{
-				error_log("autoloaded class $class from $file");
+				//error_log("autoloaded class $class from $file");
 				include_once($file);
 			}
 		}
