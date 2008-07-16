@@ -24,6 +24,9 @@ $GLOBALS['egw_info'] = array(
 );
 include('./header.inc.php');
 
+// allow to use an authentication specific for SyncML
+$GLOBALS['egw_info']['flags']['currentapp'] = 'syncml';
+
 $errors = array();
 
 // SyncML works currently only with PHP sessions

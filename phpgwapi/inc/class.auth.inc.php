@@ -11,10 +11,17 @@
  * @version $Id$
  */
 
+// allow to set an application depending authentication type (eg. for syncml, groupdav, ...)
+if (isset($GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']]) &&
+	$GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']])
+{
+	$GLOBALS['egw_info']['server']['auth_type'] = $GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']];
+}
 if(empty($GLOBALS['egw_info']['server']['auth_type']))
 {
 	$GLOBALS['egw_info']['server']['auth_type'] = 'sql';
 }
+//error_log('using auth_type='.$GLOBALS['egw_info']['server']['auth_type'].', currentapp='.$GLOBALS['egw_info']['flags']['currentapp']);
 include(EGW_API_INC.'/class.auth_'.$GLOBALS['egw_info']['server']['auth_type'].'.inc.php');
 
 /**

@@ -244,51 +244,57 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
     }
 
-    function isAuthorized()
-    {
-	if (!$this->_isAuthorized) {
-
-		if(!isset($this->_locName) && !isset($this->_password))
+	function isAuthorized()
+	{
+		if (!$this->_isAuthorized) 
 		{
-			Horde::logMessage('SyncML: Authentication not yet possible currently. Username and password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			return FALSE;
+			if(!isset($this->_locName) && !isset($this->_password))
+			{
+				Horde::logMessage('SyncML: Authentication not yet possible currently. Username and password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				return FALSE;
+			}
+	
+			if(!isset($this->_password))
+			{
+				Horde::logMessage('SyncML: Authentication not yet possible currently. Password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				return FALSE;
+			}
+	
+			if(strpos($this->_locName,'@') === False)
+			{
+				$this->_locName .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
+			}
+	
+			#Horde::logMessage('SyncML: authenticate with username: ' . $this->_locName . ' and password: ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	
+			if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text'))
+			{
+				$this->_isAuthorized = true;
+				Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			}
+			else
+			{
+				$this->_isAuthorized = false;
+				Horde::logMessage('SyncML: Authentication of ' . $this->_locName . ' failed' , __FILE__, __LINE__, PEAR_LOG_INFO);
+			}
 		}
-
-		if(!isset($this->_password))
-		{
-			Horde::logMessage('SyncML: Authentication not yet possible currently. Password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			return FALSE;
-		}
-
-                if(strpos($this->_locName,'@') === False)
-                {
-                	$this->_locName .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
-                }
-
-		#Horde::logMessage('SyncML: authenticate with username: ' . $this->_locName . ' and password: ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-		if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text'))
-		{
-			$this->_isAuthorized = true;
-			Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		}
+		/*
+		 * RalfBecker 2008-07-16: commented out, as return value is NOT used anyway
+		 * It is not a security problem, as without a valid SyncML session
+		 * one is created anyway. The horde SyncML codes handles that on it's own.
+		 * Leaving it in gives problems with NTLM auth, as verify redirects there.
+		 *
 		else
 		{
-			$this->_isAuthorized = false;
-			Horde::logMessage('SyncML: Authentication of ' . $this->_locName . ' failed' , __FILE__, __LINE__, PEAR_LOG_INFO);
-		}
-	}
-	else
-	{
-		// store sessionID in a variable, because ->verify maybe resets that value
-		$sessionID = session_id();
-		if(!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3')) {
-			Horde::logMessage('SyncML_EGW: egw session(' .$sessionID. ') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		}
-	}
+			// store sessionID in a variable, because ->verify maybe resets that value
+			$sessionID = session_id();
+			if(!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3')) {
+				Horde::logMessage('SyncML_EGW: egw session(' .$sessionID. ') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			}
+		}*/
 
-        return $this->_isAuthorized;
-    }
+		return $this->_isAuthorized;
+	}
 
 	/**
 	* Removes all locid<->guid mappings for the given type.

@@ -131,7 +131,6 @@ class egw extends egw_minimal
 		// setup the other subclasses
 		$this->translation    = new translation();
 		$this->common         = new common();
-		$this->auth           = new auth();
 		$this->accounts       = accounts::getInstance();
 		$this->acl            = new acl();
 		/* Do not create the session object if called by the sessions class.  This way
@@ -277,7 +276,9 @@ class egw extends egw_minimal
 			}
 			// this removes the sessiondata if its saved in the URL
 			$query = preg_replace('/[&]?sessionid(=|%3D)[^&]+&kp3(=|%3D)[^&]+&domain=.*$/','',$_SERVER['QUERY_STRING']);
-			Header('Location: '.$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10&phpgw_forward='.urlencode($relpath.(!empty($query) ? '?'.$query : '')));
+			$redirect = '/login.php?cd=10&';
+			if ($GLOBALS['egw_info']['server']['http_auth_types']) $redirect = '/phpgwapi/ntlm/index.php?';
+			Header('Location: '.$GLOBALS['egw_info']['server']['webserver_url'].$redirect.'phpgw_forward='.urlencode($relpath.(!empty($query) ? '?'.$query : '')));
 			exit;
 		}
 	}

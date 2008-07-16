@@ -175,7 +175,7 @@
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
@@ -191,6 +191,46 @@
     </td>
    </tr>
 
+   <tr class="row_on">
+    <td>{lang_Authentication_type_for_application}: <b>SyncML</b></td>
+    <td>
+     <select name="newsettings[auth_type_syncml]">
+      <option value="">{lang_Standard,_as_defined_above}</option>
+      <option value="sql"{selected_auth_type_syncml_sql}>SQL</option>
+      <option value="sqlssl"{selected_auth_type_syncml_sqlssl}>SQL / SSL</option>
+      <option value="ldap"{selected_auth_type_syncml_ldap}>LDAP</option>
+      <option value="ads"{selected_auth_type_syncml_ads}>ADS</option>
+      <option value="mail"{selected_auth_type_syncml_mail}>Mail</option>
+      <option value="http"{selected_auth_type_syncml_http}>HTTP</option>
+      <option value="nis"{selected_auth_type_syncml_nis}>NIS</option>
+      <option value="pam"{selected_auth_type_syncml_pam}>PAM</option>
+     </select>
+    </td>
+   </tr>
+
+    <tr class="row_off">
+    <td>{lang_Authentication_type_for_application}: <b>GroupDAV/CalDAV/CardDAV</b></td>
+    <td>
+     <select name="newsettings[auth_type_groupdav]">
+      <option value="">{lang_Standard,_as_defined_above}</option>
+      <option value="sql"{selected_auth_type_groupdav_sql}>SQL</option>
+      <option value="sqlssl"{selected_auth_type_groupdav_sqlssl}>SQL / SSL</option>
+      <option value="ldap"{selected_auth_type_groupdav_ldap}>LDAP</option>
+      <option value="ads"{selected_auth_type_groupdav_ads}>ADS</option>
+      <option value="mail"{selected_auth_type_groupdav_mail}>Mail</option>
+      <option value="http"{selected_auth_type_groupdav_http}>HTTP</option>
+      <option value="nis"{selected_auth_type_groupdav_nis}>NIS</option>
+      <option value="pam"{selected_auth_type_groupdav_pam}>PAM</option>
+     </select>
+    </td>
+   </tr>
+
+  <tr class="row_on">
+    <td>{lang_HTTP_auth_types_(comma-separated)_to_use_without_login-page, eg. "NTLM"}:</td>
+    <td>
+      <input name="newsettings[http_auth_types]" value="{value_http_auth_types}" size="20" />
+    </td>
+   </tr>
 
    <tr class="row_off">
     <td>{lang_Select_where_you_want_to_store/retrieve_user_accounts}:</td>

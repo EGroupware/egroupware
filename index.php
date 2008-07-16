@@ -17,15 +17,6 @@
 		exit;
 	}
 
-	$GLOBALS['sessionid'] = isset($_GET['sessionid']) ? $_GET['sessionid'] : @$_COOKIE['sessionid'];
-	if(!$GLOBALS['sessionid'])
-	{
-		Header('Location: login.php'.
-			(isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) ?
-			'?phpgw_forward='.urlencode('/index.php?'.$_SERVER['QUERY_STRING']):''));
-		exit;
-	}
-
 	if(isset($_GET['hasupdates']) && $_GET['hasupdates'] == 'yes')
 	{
 		$hasupdates = True;

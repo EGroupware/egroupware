@@ -560,9 +560,10 @@
 		* @param string $passwd user password
 		* @param string $passwd_type type of password being used, ie plaintext, md5, sha1
 		* @param boolean $no_session_needed=false dont create a real session, eg. for GroupDAV clients using only basic auth, no cookie support
+		* @param boolean $auth_check=true if false, the user is loged in without checking his password (eg. for single sign on), default = true
 		* @return string session id
 		*/
-		function create($login,$passwd = '',$passwd_type = '',$no_session=false)
+		function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true)
 		{
 			if (is_array($login))
 			{
@@ -577,6 +578,7 @@
 				$this->passwd      = $passwd;
 				$this->passwd_type = $passwd_type;
 			}
+			//error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check)");
 
 			$this->clean_sessions();
 			$this->split_login_domain($login,$this->account_lid,$this->account_domain);
@@ -618,7 +620,7 @@
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
 				$GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid] ||
-				!$GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
+				$auth_check && !$GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
 				$this->account_id && $GLOBALS['egw']->accounts->get_type($this->account_id) == 'g')
 			{
 				$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
