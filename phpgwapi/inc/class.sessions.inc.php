@@ -162,7 +162,7 @@
 		var $egw_domains;
 
 		/**
-		 * Write debug messages about session verification to the error_log
+		 * Write debug messages about session verification and creation to the error_log
 		 *
 		 * @var boolean
 		 */
@@ -296,6 +296,7 @@
 		*/
 		function verify($sessionid='',$kp3='')
 		{
+			if ($this->errorlog_debug) error_log(__METHOD__."('$sessionid','$kp3') ".function_backtrace());
 			$fill_egw_info_and_repositories = !$GLOBALS['egw_info']['flags']['restored_from_session'];
 			if(empty($sessionid) || !$sessionid)
 			{
@@ -325,8 +326,9 @@
 			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
 
 			/* This is to ensure that we authenticate to the correct domain (might not be default) */
-			if($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
+			if($GLOBALS['egw_info']['user']['domain'] && $this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 			{
+				if ($this->errorlog_debug) error_log(__METHOD__."('$sessionid','$kp3') account_domain='$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'=egw_info[user][domain]");
 				$GLOBALS['egw']->ADOdb = null;
 				$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
 				// reset the db
@@ -578,7 +580,7 @@
 				$this->passwd      = $passwd;
 				$this->passwd_type = $passwd_type;
 			}
-			//error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check)");
+			if ($this->errorlog_debug) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check)");
 
 			$this->clean_sessions();
 			$this->split_login_domain($login,$this->account_lid,$this->account_domain);
@@ -705,6 +707,7 @@
 			$GLOBALS['egw']->db->transaction_commit();
 
 			//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
+			if ($this->errorlog_debug) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
 
 			return $this->sessionid;
 		}
