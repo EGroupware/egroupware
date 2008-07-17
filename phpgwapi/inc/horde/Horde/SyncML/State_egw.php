@@ -246,27 +246,27 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 	function isAuthorized()
 	{
-		if (!$this->_isAuthorized) 
+		if (!$this->_isAuthorized)
 		{
 			if(!isset($this->_locName) && !isset($this->_password))
 			{
 				Horde::logMessage('SyncML: Authentication not yet possible currently. Username and password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				return FALSE;
 			}
-	
+
 			if(!isset($this->_password))
 			{
 				Horde::logMessage('SyncML: Authentication not yet possible currently. Password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				return FALSE;
 			}
-	
+
 			if(strpos($this->_locName,'@') === False)
 			{
 				$this->_locName .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
 			}
-	
+
 			#Horde::logMessage('SyncML: authenticate with username: ' . $this->_locName . ' and password: ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-	
+
 			if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text'))
 			{
 				$this->_isAuthorized = true;
@@ -278,12 +278,6 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				Horde::logMessage('SyncML: Authentication of ' . $this->_locName . ' failed' , __FILE__, __LINE__, PEAR_LOG_INFO);
 			}
 		}
-		/*
-		 * RalfBecker 2008-07-16: commented out, as return value is NOT used anyway
-		 * It is not a security problem, as without a valid SyncML session
-		 * one is created anyway. The horde SyncML codes handles that on it's own.
-		 * Leaving it in gives problems with NTLM auth, as verify redirects there.
-		 *
 		else
 		{
 			// store sessionID in a variable, because ->verify maybe resets that value
@@ -291,7 +285,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			if(!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3')) {
 				Horde::logMessage('SyncML_EGW: egw session(' .$sessionID. ') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			}
-		}*/
+		}
 
 		return $this->_isAuthorized;
 	}
