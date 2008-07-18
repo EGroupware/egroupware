@@ -5,12 +5,10 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-include_once(EGW_API_INC.'/class.solink.inc.php');
 
 /**
  * storage object / db-layer for InfoLog
@@ -69,25 +67,6 @@ class soinfolog 				// DB-Layer
 	 var $tz_offset;
 
 	/**
-	 * custom fields backend
-	 *
-	 * @var so_sql
-	 */
-	var $soextra;
-	/**
-	 * customfields name => array(...) pairs
-	 *
-	 * @var array
-	 */
-	var $customfields = array();
-	/**
-	 * content-types as name => array(...) pairs
-	 *
-	 * @var array
-	 */
-	var $content_types = array();
-	
-	/**
 	 * Constructor
 	 *
 	 * @param array $grants
@@ -101,22 +80,6 @@ class soinfolog 				// DB-Layer
 		$this->user   = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-		$this->soextra =& CreateObject('etemplate.so_sql');
-		$this->soextra->so_sql('infolog',$this->extra_table);
-
-		$custom =& CreateObject('admin.customfields','infolog');
-		$this->customfields = $custom->get_customfields();
-		$this->content_types = $custom->get_content_types();
-		if (!$this->content_types)
-		{
-			$this->content_types = $custom->content_types = array('n' => array(
-					'name' => 'infolog',
-					'options' => array(
-					'template' => 'infolog.edit',
-					'icon' => 'navbar.png'
-				)));
-			$custom->save_repository();
-		}
 	}
 
 	/**
@@ -148,13 +111,13 @@ class soinfolog 				// DB-Layer
 	{
 		if (is_array($info))
 		{
-			
+
 		}
 		elseif ((int) $info != $this->data['info_id'])      	// already loaded?
 		{
 			// dont change our own internal data,
 			// dont use new as it changes $phpgw->db
-			$private_info = $this;                      
+			$private_info = $this;
 			$info = $private_info->read($info);
 		}
 		else
@@ -166,7 +129,7 @@ class soinfolog 				// DB-Layer
 			return False;
 		}
 		$owner = $info['info_owner'];
-		
+
 		$access_ok = $owner == $this->user ||	// user has all rights
 			// ACL only on public entrys || $owner granted _PRIVATE
 			(!!($this->grants[$owner] & $required_rights) ||
@@ -177,20 +140,20 @@ class soinfolog 				// DB-Layer
 		//echo "<p align=right>check_access(info_id=$info_id,requited=$required_rights,implicit_edit=$implicit_edit) owner=$owner, responsible=(".implode(',',$info['info_responsible'])."): access".($access_ok?"Ok":"Denied")."</p>\n";
 		return $access_ok;
 	}
-	
+
 	/**
 	 * Filter for a given responsible user: info_responsible either contains a the user or one of his memberships
 	 *
 	 * @param int $user
 	 * @return string
-	 * 
+	 *
 	 * @todo make the responsible a second table and that filter a join with the responsible table
 	 */
 	function responsible_filter($user)
 	{
 		if (!$user) return '0';
 
-		$responsible = $user > 0 ? $GLOBALS['egw']->accounts->memberships($user,true) : 
+		$responsible = $user > 0 ? $GLOBALS['egw']->accounts->memberships($user,true) :
 			$GLOBALS['egw']->accounts->members($user,true);
 
 		$responsible[] = $user;
@@ -206,8 +169,8 @@ class soinfolog 				// DB-Layer
 	 * generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
 	 *
 	 * @param string $filter: none|all - list all entrys user have rights to see<br>
-	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!), 
-	 *  responsible|my = entries the user is responsible for 
+	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!),
+	 *  responsible|my = entries the user is responsible for
 	 *  delegated = entries the user delegated to someone else
 	 * @return string the necesary sql
 	 */
@@ -223,7 +186,7 @@ class soinfolog 				// DB-Layer
 		}
 
 		$filtermethod = " (info_owner=$this->user"; // user has all rights
-		
+
 		if ($filter == 'my' || $filter == 'responsible')
 		{
 			$filtermethod .= " AND info_responsible='0'";
@@ -276,7 +239,7 @@ class soinfolog 				// DB-Layer
 				}
 			}
 			$filtermethod .= ') ';
-	
+
 			if ($filter == 'user' && $f_user > 0)
 			{
 				$filtermethod .= " AND (info_owner=$f_user AND info_responsible='0' OR ".$this->responsible_filter($f_user).')';
@@ -317,7 +280,7 @@ class soinfolog 				// DB-Layer
 	 * 	overdue: enddate < tomorrow
 	 *  date: today <= startdate && startdate < tomorrow
 	 *  enddate: today <= enddate && enddate < tomorrow
-	 * 	limitYYYY/MM/DD not older or open 
+	 * 	limitYYYY/MM/DD not older or open
 	 * @return string the necesary sql
 	 */
 	function dateFilter($filter = '')
@@ -407,7 +370,7 @@ class soinfolog 				// DB-Layer
 		}
 		return $this->data;
 	}
-	
+
 	/**
 	 * Read the status of the given infolog-ids
 	 *
@@ -433,7 +396,7 @@ class soinfolog 				// DB-Layer
 			$stati[$info['info_id']] = $status;
 		}
 		return $stati;
-	}	
+	}
 
 	/**
 	 * delete InfoLog entry $info_id AND the links to it
@@ -452,10 +415,11 @@ class soinfolog 				// DB-Layer
 		$this->db->delete($this->info_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		$this->db->delete($this->extra_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		egw_link::unlink(0,'infolog',$info_id);
+		egw_index::delete('infolog',$info_id);
 
 		if ($this->data['info_id'] == $info_id)
 		{
-			$this->init( );            
+			$this->init( );
 		}
 		// delete children, if they are owned by the user
 		if ($delete_children)
@@ -473,7 +437,7 @@ class soinfolog 				// DB-Layer
 		// set parent_id to $new_parent or 0 for all not deleted children
 		$this->db->update($this->info_table,array('info_id_parent'=>$new_parent),array('info_id_parent'=>$info_id),__LINE__,__FILE__);
 	}
-	
+
 	/**
 	 * Return array with children of $info_id as info_id => info_owner pairs
 	 *
@@ -485,7 +449,7 @@ class soinfolog 				// DB-Layer
 		$this->db->select($this->info_table,'info_id,info_owner',array(
 			'info_id_parent'	=> $info_id,
 		),__LINE__,__FILE__);
-		
+
 		$children = array();
 		while (($row = $this->db->row(true)))
 		{
@@ -568,7 +532,7 @@ class soinfolog 				// DB-Layer
 
 			$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
 			$info_id = $this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
-			
+
 			if (!$this->data['info_uid'])		// new entry without uid --> create one based on our info_id and save it
 			{
 				$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog',$info_id);
@@ -611,6 +575,10 @@ class soinfolog 				// DB-Layer
 		// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
 		//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning id=".$this->data['info_id']);
 
+		// update the index
+		egw_index::save('infolog',$this->data['info_id'],$this->data['info_owner'],$this->data,$this->data['info_cat'],
+			array('info_uid','info_type','info_status','info_confirm','info_access'));
+
 		return $this->data['info_id'];
 	}
 
@@ -637,7 +605,7 @@ class soinfolog 				// DB-Layer
 		//echo "<p>anzSubs($info_id) = ".$this->db->f(0)." ($sql)</p>\n";
 		return $this->db->f(0);
 	}
-	
+
 	/**
 	 * searches InfoLog for a certain pattern in $query
 	 *
@@ -669,24 +637,24 @@ class soinfolog 				// DB-Layer
 			$links = solink::get_links($action=='sp'?'infolog':$action,explode(',',$query['action_id']),'infolog');
 			if (count($links))
 			{
-				$links = call_user_func_array('array_merge',$links);    // flatten the array
+				$links = call_user_func_array('array_merge',$links);	// flatten the array
 				$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
 			}
 		}
 		$sortbycf='';
-		if (!empty($query['order']) && (preg_match('/^[a-z_0-9, ]+$/i',$query['order']) || stripos($query['order'],'#')!==FALSE ) && 
+		if (!empty($query['order']) && (preg_match('/^[a-z_0-9, ]+$/i',$query['order']) || stripos($query['order'],'#')!==FALSE ) &&
 			(empty($query['sort']) || preg_match('/^(DESC|ASC)$/i',$query['sort'])))
 		{
 			$order = array();
 			foreach(explode(',',$query['order']) as $val)
 			{
 				$val = trim($val);
-				if ($val[0] == '#') 
+				if ($val[0] == '#')
 				{
 					$sortbycf = substr($val,1);
 					$val = "cfsortcrit";
 				}
-				else 
+				else
 				{
 					$val = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
 					if ($val == 'info_des' && $this->db->capabilities['order_on_text'] !== true)
@@ -727,9 +695,9 @@ class soinfolog 				// DB-Layer
 					else
 					{
 						$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
-					}	
+					}
 				}
-				if ($col[0] == '#' &&  $query['custom_fields'] && $data) 
+				if ($col[0] == '#' &&  $query['custom_fields'] && $data)
 				{
 					$filtermethod .= " AND main.info_id IN (SELECT DISTINCT info_id FROM $this->extra_table WHERE ".
 						$this->db->expression($this->extra_table,array(
@@ -752,6 +720,23 @@ class soinfolog 				// DB-Layer
 		if ($query['query']) $query['search'] = $query['query'];	// allow both names
 		if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 		{
+			/* new code join the index
+			if (ctype_digit($query['search']))	// search by ticket-number (numbers get never indexed!)
+			{
+				$sql_query = 'AND info_id='.(int)$query['search'];
+			}
+			else
+			{
+				$join = egw_index::sql_join_ids_by_keyword($query['search'],'infolog','info_id');
+			}
+			*/
+			/* new code with info_id IN (subquery) --> way to slow
+			$sql_query .= 'AND info_id IN ('.
+				egw_index::sql_ids_by_keyword(explode(' ',$query['search']),egw_index::MATCH_CONTAINS,'infolog').
+				// add search string itself, if it is numeric, to allow to search for a info_id/ticket number
+				ctype_digit($query['search'] ? ' UNION (SELECT '.$this->db->quote($query['search']).')' : '').')';
+			*/
+			/* old code searching the table direct */
 			$pattern = $this->db->quote('%'.$query['search'].'%');
 
 			$columns = array('info_from','info_addr','info_location','info_subject','info_extra_value');
@@ -760,9 +745,7 @@ class soinfolog 				// DB-Layer
 
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
-		}
-		if ($query['search'])
-		{
+
 			$join = ($cfcolfilter>0 ? '':'LEFT')." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
@@ -778,7 +761,7 @@ class soinfolog 				// DB-Layer
 		if ($action == '' || $action == 'sp' || count($links))
 		{
 			$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid $sql_query) $link_extra";
-			
+
 			if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
 			{
 				$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
@@ -793,7 +776,7 @@ class soinfolog 				// DB-Layer
 				$count_subs = ",(SELECT COUNT(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
 			}
 			$info_customfield = '';
-			if ($sortbycf != '') 
+			if ($sortbycf != '')
 			{
 				$info_customfield = ", (SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 where sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).") AS cfsortcrit ";
 			}
@@ -815,9 +798,9 @@ class soinfolog 				// DB-Layer
 			}
 			// check if start is behind total --> loop to set start=0
 			while (isset($query['start']) && $query['start'] > $query['total']);
-			
+
 			foreach($rs as $info)
-			{			
+			{
 				$info['info_responsible'] = $info['info_responsible'] ? explode(',',$info['info_responsible']) : array();
 
 				$ids[$info['info_id']] = $info;
@@ -845,10 +828,10 @@ class soinfolog 				// DB-Layer
 		}
 		return $ids;
 	}
-	
+
 	/**
 	 * Query infolog for users with open entries, either own or responsible, with start or end within 4 days
-	 * 
+	 *
 	 * This functions tries to minimize the users really checked with the complete filters, as creating a
 	 * user enviroment and running the specific check costs ...
 	 *
@@ -857,7 +840,7 @@ class soinfolog 				// DB-Layer
 	function users_with_open_entries()
 	{
 		$users = array();
-		
+
 		$this->db->select($this->info_table,'DISTINCT info_owner',array(
 			str_replace(' AND ','',$this->statusFilter('open')),
 			'(ABS(info_startdate-'.time().')<'.(4*24*60*60).' OR '.	// start_day within 4 days
