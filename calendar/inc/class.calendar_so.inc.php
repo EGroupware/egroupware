@@ -78,6 +78,11 @@ class calendar_so
 	 * @var asyncservice
 	 */
 	var $async;
+	/**
+	 * SQL to sort by status U, T, A, R
+	 *
+	 */
+	const STATUS_SORT = "CASE cal_status WHEN 'U' THEN 1 WHEN 'T' THEN 2 WHEN 'A' THEN 3 WHEN 'R' THEN 4 ELSE 0 END ASC";
 
 	/**
 	 * Constructor of the socal class
@@ -166,7 +171,7 @@ class calendar_so
 		foreach($this->db->select($this->user_table,'*',array(
 			'cal_id'      => $ids,
 			'cal_recur_date' => $recur_date,
-		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC','calendar') as $row)	// DESC puts users before resources and contacts
+		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// if the type is not an ordinary user (eg. contact or resource)...
 			if ($row['cal_user_type'] && $row['cal_user_type'] != 'u')
@@ -373,7 +378,7 @@ class calendar_so
 			foreach($this->db->select($this->user_table,'*',array(
 				'cal_id' => array_unique($ids),
 				'cal_recur_date' => $recur_dates,
-			),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC','calendar') as $row)	// DESC puts users before resources and contacts
+			),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 			{
 				$id = $row['cal_id'];
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
