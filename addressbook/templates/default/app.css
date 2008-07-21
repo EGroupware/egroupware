@@ -49,12 +49,12 @@
 fieldset.phoneGroup {
   margin-top: 14px;
   font-size: 110%;
-  height: 120px;
+  height: 140px;
   border: solid black 2px;
   margin-bottom: 0px;
 }
 .phoneGroup table{
-  height: 102px;
+  height: 122px;
 }
 fieldset.emailGroup {
   margin-top: 4px;
