@@ -487,7 +487,7 @@ class uitimesheet extends botimesheet
 			}
 			if ($query['filter'] == 'custom')	// show the custome dates
 			{
-				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
+				$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
 			}
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
@@ -633,7 +633,7 @@ class uitimesheet extends botimesheet
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
 				'header_left'    => 'timesheet.index.dates',
 				'header_right'   => 'timesheet.index.add',
-				'filter_onchange' => "set_style_by_class('*','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);
 		}
