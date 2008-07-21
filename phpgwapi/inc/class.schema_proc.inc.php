@@ -99,19 +99,21 @@ class schema_proc
 	{
 	    if(is_object($db))
 		{
-	 	  $this->m_odb = $db;
-		  $this->adodb = &$this->m_odb->Link_ID;
+			$this->m_odb = $db;
 	    }
 	    else
 	    {
-			$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
-			$this->adodb = &$GLOBALS['egw']->ADOdb;
+			$this->m_odb = isset($GLOBALS['egw']->db) && is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
+	    }
+	    if (!($this->m_odb instanceof egw_db))
+	    {
+	    	throw new egw_exception_assertion_failed('no egw_db object!');
 	    }
 	    $this->m_odb->connect();
 		$this->capabilities =& $this->m_odb->capabilities;
 
 		$this->sType = $dbms ? $dmbs : $this->m_odb->Type;
-
+		$this->adodb = &$this->m_odb->Link_ID;
 		$this->dict = NewDataDictionary($this->adodb);
 
 		// enable the debuging in ADOdb's datadictionary if the debug-level is greater then 1
