@@ -903,7 +903,7 @@ class html
 		}
 
 		// This block makes pngfix.js useless, adding a check on disable_pngfix to have pngfix.js do its thing
-		if (self::$user_agent == 'msie' && self::$ua_version >= 5.5 && substr($url,-4) == '.png' && ($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'] || !isset($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])))
+		if (self::$user_agent == 'msie' && self::$ua_version < 7.0 && substr($url,-4) == '.png' && ($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'] || !isset($GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])))
 		{
 			$extra_styles = "display: inline-block; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$url',sizingMethod='image'); width: 1px; height: 1px;";
 			if (false!==strpos($options,'style="'))
