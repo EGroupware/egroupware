@@ -3,15 +3,15 @@
 	allowed attributes: font-family,font-size,color,font-weight
 */
 
-body,td
+body,td,textarea
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px; 
+	font-size: 11px;
 }
 
 select,input,button
 {
-	color: #006699; 
+	color: #006699;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size:110%;
 }
@@ -24,7 +24,7 @@ select
 a:link,a:visited
 {
 	cursor:pointer;
-	color: #006699; 
+	color: #006699;
 	text-decoration: none;
 }
 
@@ -60,16 +60,16 @@ a:hover,a:active
 	color: #ff0000;
 }
 
-#divPoweredBy 
+#divPoweredBy
 {
 	color: #000000;
 }
 
-/* 
+/*
 	other styling
 */
 
-body 
+body
 {
 	background-image:url(../images/body-background.png);
 }
@@ -100,7 +100,7 @@ input[type=submit],input[type=button],input[type=reset],button,.egwbutton
 	border:  outset 1px #b9d5e3;
 	margin:  1px;
 	padding: 1px;
-	cursor:  pointer; 
+	cursor:  pointer;
 	color:  #004e7d;
 }
 
@@ -126,7 +126,7 @@ input.egwbutton
 	border:  outset 1px #b9d5e3;
 	margin:  1px;
 	padding: 1px;
-	cursor:  pointer; 
+	cursor:  pointer;
 	color:  #004e7d;
 }
 
@@ -145,13 +145,13 @@ input.egwbutton:active
 
 input[type=image]
 {
-	cursor: pointer; 
+	cursor: pointer;
 	border: 0;
 }
 
 #thesideboxcolumn
 {
-	width: 177px; 
+	width: 177px;
 	position:relative;
 }
 
@@ -169,17 +169,17 @@ input[type=image]
 .divLoginbox
 {
 	position:relative;
-	width: 370px; 
-	border: #9c9c9c 1px solid; 
+	width: 370px;
+	border: #9c9c9c 1px solid;
 }
 
-.divSidebox 
+.divSidebox
 {
    position:relative;
-   border: #9c9c9c 1px solid; 
+   border: #9c9c9c 1px solid;
 }
 
-.divSideboxHeader,.divLoginboxHeader 
+.divSideboxHeader,.divLoginboxHeader
 {
 	text-align:center;
 	background-color:#dddddd;
@@ -211,8 +211,8 @@ a.textSidebox
 	padding-bottom:3px;
 	border-top: solid #aaaaaa 1px;
 }
-/* 
- ** make the sidebox entries consistently start with a capital letter 
+/*
+ ** make the sidebox entries consistently start with a capital letter
  */
 .textSidebox:first-letter {
 	text-transform:uppercase;
@@ -261,7 +261,7 @@ body {
 	margin: 8px;
 	border: solid 1px #7e7e7e;
 	padding-bottom: 0px;
-}	
+}
 
 #divLogo
 {
@@ -324,7 +324,7 @@ body {
 {
 	background-color:silver;
 	border:solid 1px #9c9c9c;
-	background-image: url(../images/background-icon-bar.png); 
+	background-image: url(../images/background-icon-bar.png);
 	background-repeat: repeat-x;
 	height: 45px;
 }
@@ -377,7 +377,7 @@ body {
 	border-right:solid 1px #9c9c9c;
 }
 
-#divGenTime,#divPoweredBy 
+#divGenTime,#divPoweredBy
 {
 	bottom:4px;
 	text-align:center;
@@ -387,16 +387,16 @@ body {
 /*
 	Table formatting
 */
-.th { 
-	color: black; background-color: #D3DCE3; 
+.th {
+	color: black; background-color: #D3DCE3;
 }
-.row_on { 
-	color: black; 
-	background-color: #F1F1F1; 
+.row_on {
+	color: black;
+	background-color: #F1F1F1;
 }
-.row_off { 
-	color: black; 
-	background-color: #ffffff; 
+.row_off {
+	color: black;
+	background-color: #ffffff;
 }
 .narrow_column { width: 1%; white-space: nowrap; }
 
@@ -418,7 +418,7 @@ body {
 }
 
 .portal_box_header {
-	height: 15px; 
+	height: 15px;
 	padding-top: 0px;
 }
 
