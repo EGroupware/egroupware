@@ -135,7 +135,7 @@ class calendar_uilist extends calendar_ui
 				'order'          =>	'cal_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',// IO direction of the sort: 'ASC' or 'DESC'
 				'default_cols'   => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
-				'filter_onchange' => "set_style_by_class('*','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'header_left'    => 'calendar.list.dates',
 			);
 		}
@@ -229,7 +229,7 @@ class calendar_uilist extends calendar_ui
 				$label = lang('Before %1',$this->bo->long_date($this->date));
 				break;
 			case 'custom':
-				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
+				$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
 				$this->first = $search_params['start'] = $params['startdate'];
 				$this->last  = $search_params['end'] = $params['enddate'];
 				$label = $this->bo->long_date($this->first,$this->last);
