@@ -10,7 +10,7 @@
 
 /**
  * Wrapper for the jsCalendar
- * 
+ *
  * The constructor loads the necessary javascript-files.
  *
  * @package api
@@ -91,7 +91,7 @@ class jscalendar
 				$short = lang($m = adodb_date('M',$ts));	// check if we have a translation of the short-cut
 				if ($short == $m || $substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
 				{
-					$short = $chars_shortcut > 0 ? $substr(lang(adodb_date('F',$ts)),0,$chars_shortcut) : 
+					$short = $chars_shortcut > 0 ? $substr(lang(adodb_date('F',$ts)),0,$chars_shortcut) :
 						$substr(lang(adodb_date('F',$ts)),$chars_shortcut);
 				}
 				$date = str_replace(adodb_date('M',$ts),$short,$date);
@@ -167,17 +167,20 @@ function monthClicked(calendar,monthstart) {
  window.location = "'.$monthUrl.'&date=" + monthstart.print("%Y%m%d");
 }
 ' : '').'
-Calendar.setup(
-{
-  flat         : "'.$id.'",
-  flatCallback : dateChanged'.($weekUrl ? ',
-  flatWeekCallback : weekClicked' : '').($weekTTip ? ',
-  flatWeekTTip : "'.addslashes($weekTTip).'"' : '').($monthUrl ? ',
-  flatMonthCallback : monthClicked' : '').($monthTTip ? ',
-  flatMonthTTip : "'.addslashes($monthTTip).'"' : '').($date ? ',
-  date : "'.$date.'"
-' : '').'    }
-);
+if (document.Calendar){
+	Calendar.setup(
+	{
+  		flat         : "'.$id.'",
+  		flatCallback : dateChanged'.($weekUrl ? ',
+  		flatWeekCallback : weekClicked' : '').($weekTTip ? ',
+  		flatWeekTTip : "'.addslashes($weekTTip).'"' : '').($monthUrl ? ',
+  		flatMonthCallback : monthClicked' : '').($monthTTip ? ',
+  		flatMonthTTip : "'.addslashes($monthTTip).'"' : '').($date ? ',
+ 		date : "'.$date.'"
+		' : '').'
+	}
+	);
+}
 </script>';
 	}
 
