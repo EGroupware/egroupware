@@ -12,8 +12,8 @@
 
 		-->
 
-		<!-- LAY-OUT BUGS 
-		
+		<!-- LAY-OUT BUGS
+
 		1. in IE no link cursor is displayed when png's are used for that link
 		2. tabs are ugly in preferences
 		3. spacers inside sidebox
@@ -40,13 +40,13 @@
 			.row_on { color: #000000; background-color: #eeeeee; }
 			.row_off { color: #000000; background-color: #e8f0f0; }
 			.th
-			{ 
-				color: #000000; 
-				background-color: #cccccc; 
+			{
+				color: #000000;
+				background-color: #cccccc;
 				font-weight:bold;
 				font-size:120%;
 			}
-			
+
 			td
 			{
 				/*font-size:12px;*/
@@ -63,7 +63,7 @@
 			.th th,
 			.th td
 			{
-				padding:3px;	
+				padding:3px;
 			}
 			.table_domains
 			{
@@ -72,13 +72,13 @@
 				margin-bottom:10px;
 			}
 
-			-->	
+			-->
 		</style>
 
 		<!--{java_script}-->
-		
-		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and higher --> 
-		<!--[if gte ie 5.5000]>
+
+		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and 6.0 -->
+		<!--[if lt IE 7.0]>
 		<script src="../phpgwapi/templates/idots/js/pngfix.js" type=text/javascript>
 		</script>
 		<![endif]-->
@@ -115,12 +115,12 @@
 				<!-- sidebox column -->
 				<td id="tdSidebox" valign="top">
 					<div id="thesideboxcolumn" style="width:203px">
-					
+
 					<div class="divSidebox">
 						<div class="divSideboxHeader"><span>{main_menu}</span></div>
 						<div>
 							<table width="100%" cellspacing="0" cellpadding="0">
-					
+
 								<tr class="divSideboxEntry">
 									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home/index.php">{user_login}</a></td>
 								</tr>
