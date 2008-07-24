@@ -551,7 +551,7 @@ class calendar_ui
 			$title = array_shift($data);
 			$vars = array_merge($link_vars,$data);
 
-			$icon = html::image('calendar',$icon,lang($title));
+			$icon = html::image('calendar',$icon,lang($title),"class=sideboxstar");  //to avoid jscadender from not displaying with pngfix
 			$link = $view == 'add' ? $this->add_link($icon) : html::a_href($icon,'/index.php',$vars);
 
 			$views .= '<td align="center">'.$link."</td>\n";
