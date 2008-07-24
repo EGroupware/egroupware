@@ -43,9 +43,13 @@ algeria	common	sk	ALŽÍRSKO
 all	common	sk	Všetko
 all fields	common	sk	všetky polia
 alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+american samoa	common	sk	AMERICKÁ SAMOA
 an existing and by the webserver readable directory enables the image browser and upload.	common	sk	Adresár, ktorý existuje a je čitateľný webserverom, umožňuje prehliadanie a odovzdávanie obrázkov.
 andorra	common	sk	ANDORA
 angola	common	sk	ANGOLA
+anguilla	common	sk	ANGUILLA
+antarctica	common	sk	ANTARKTÍDA
+antigua and barbuda	common	sk	ANTIQUA BARBUDA
 application	common	sk	Aplikácia
 apply	common	sk	Použiť
 april	common	sk	Apríl
@@ -53,6 +57,7 @@ are you sure you want to delete these entries ?	common	sk	Ste si istí, chcete z
 are you sure you want to delete this entry ?	common	sk	Ste si istí, chcete zmazať tento záznam?
 argentina	common	sk	ARGENTÍNA
 armenia	common	sk	ARMÉNSKO
+aruba	common	sk	ARUBA
 august	common	sk	August
 australia	common	sk	AUSTRÁLIA
 austria	common	sk	RAKÚSKO
@@ -70,18 +75,28 @@ bad login or password	common	sk	Chybné meno alebo heslo
 bahamas	common	sk	BAHAMY
 bahrain	common	sk	BAHRAIN
 bangladesh	common	sk	BANGLADÉŠ
+barbados	common	sk	BARBADOS
 bcc	common	sk	Skrytá kópia
 belarus	common	sk	BIELORUSKO
 belgium	common	sk	BELGICKO
+belize	common	sk	BELIZE
+benin	common	sk	BENIN
 bermuda	common	sk	BERMUDY
+bhutan	common	sk	BHUTÁN
 blocked, too many attempts	common	sk	Zablokované, príliš veľa pokusov
 bold	common	sk	Tučné
 bolivia	common	sk	BOLÍVIA
 border	common	sk	Okraj
 bosnia and herzegovina	common	sk	BOSNA A HERCEGOVINA
+botswana	common	sk	BOTSWANA
 bottom	common	sk	Spodný okraj
+bouvet island	common	sk	BOUVETOV OSTROV
 brazil	common	sk	BRAZÍLIA
+british indian ocean territory	common	sk	BRITSKÉ INDICKOOCEÁNSKE TERITÓRIUM
+brunei darussalam	common	sk	BRUNEJ DARUSSALAM
 bulgaria	common	sk	BULHARSKO
+burkina faso	common	sk	BOURKINA FASSO
+burundi	common	sk	BURUNDI
 calendar	common	sk	Kalendár
 cambodia	common	sk	KAMBODŽA
 cameroon	common	sk	KAMERUN
@@ -89,6 +104,7 @@ canada	common	sk	KANADA
 cancel	common	sk	Zrušiť
 cannot replace %1 because it is a directory	common	sk	Nemôžem prepísať %1 pretože je to adresár
 cant open '%1' for %2	common	sk	Nemôžem otvoriť '%1' pre %2
+cape verde	common	sk	KAPVERDY
 caption	common	sk	Titulok
 categories	common	sk	Kategórie
 categories for	common	sk	kategórie pre
@@ -99,10 +115,12 @@ cayman islands	common	sk	KAJMANSKÉ OSTROVY
 cc	common	sk	Kópia
 centered	common	sk	na stred
 central african republic	common	sk	STREDOAFRICKÁ REPUBLIKA
+chad	common	sk	ČAD
 change	common	sk	Zmeniť
 charset	common	sk	utf-8
 check installation	common	sk	Skontroluj inštaláciu
 check now	common	sk	Skontroluj - Teraz
+chile	common	sk	CHILE
 china	common	sk	ČÍNA
 choose a background color	common	sk	Vyberte farbu pozadia
 choose a background color for the icons	common	sk	Vyberte farbu pozadia ikoniek
@@ -126,7 +144,9 @@ company	common	sk	Spoločnosť
 congo	common	sk	KONGO
 congo, the democratic republic of the	common	sk	KONGO, DEMOKRATICKÁ REPUBLIKA
 contacting server...	common	sk	Pripájam sa na Server...
+cook islands	common	sk	COOKOVE OSTROVY
 copy	common	sk	Kopírovať
+costa rica	common	sk	KOSTARIKA
 could not contact server. operation timed out!	common	sk	Nedá sa pripojiť na server. Čas operácie vypršal!
 create	common	sk	Vytvoriť
 created by	common	sk	Vytvoril
@@ -160,12 +180,14 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť opravný skript pre Internet Explorer 5.5 a novšie pre zobrazenie priesvitnosti v obrázkoch PNG?
 disabled	common	sk	Vypnuté
 display %s first	jscalendar	sk	Zobraziť %s najskôr
+djibouti	common	sk	DŽIBUTSKO
 do you also want to delete all subcategories ?	common	sk	Chcete odstrániť aj všetky podkategórie?
 document properties	common	sk	Vlastnosti dokumentu
 document title:	common	sk	Nadpis dokumentu
 domain	common	sk	Doména
 domain name for mail-address, eg. "%1"	common	sk	názov domény pre mailovú adresu, napr. "%1"
 domestic	common	sk	Domáce
+dominica	common	sk	DOMINIKA
 dominican republic	common	sk	DOMINIKÁNSKA REPUBLIKA
 done	common	sk	Hotovo
 drag to move	jscalendar	sk	Potiahni pre presun
@@ -179,6 +201,7 @@ edit category	common	sk	Upraviť kategóriu
 egroupware api version %1	common	sk	eGroupWare API verzia %1
 egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre používateľa '%1', IP %2
 egypt	common	sk	EGYPT
+el salvador	common	sk	SALVADOR
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, napr. "%1"
 enabled	common	sk	Povolené
@@ -187,6 +210,7 @@ end time	common	sk	Čas ukončenia
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre eGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
 entry has been deleted sucessfully	common	sk	Položka bola úspešne odstránená
 entry updated sucessfully	common	sk	Položka bola úspešne upravená
+equatorial guinea	common	sk	ROVNÍKOVÁ GUINEA
 eritrea	common	sk	ERITREA
 error	common	sk	Chyba
 error creating %1 %2 directory	common	sk	Chyba počas vytvárania adresára %1 %2
@@ -198,6 +222,7 @@ everything	common	sk	Všetko
 exact	common	sk	presne
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sk	Nepodarilo sa pripojiť na server, alebo je odpoveď servera neplatná. Skúste sa znovu prihlásiť. Ak sa nepodarí, kontaktujte správcu systému.
 falkland islands (malvinas)	common	sk	FALKLANDY
+faroe islands	common	sk	FAERSKÉ OSTROVY
 fax number	common	sk	číslo faxu
 features of the editor?	common	sk	Možnosti editora?
 february	common	sk	Február
@@ -214,16 +239,21 @@ fixme!	common	sk	OPRAV MA!
 folder already exists.	common	sk	Priečinok už existuje.
 force selectbox	common	sk	Otvor výberovú ponuku
 france	common	sk	FRANCÚZSKO
+french guiana	common	sk	FRANCÚZSKA GUAYANA
 french polynesia	common	sk	FRANCÚZSKA POLYNÉZIA
+french southern territories	common	sk	FRANCÚZSKE JUŽNÉ ÚZEMIA
 friday	common	sk	Piatok
 ftp	common	sk	FTP
 fullname	common	sk	Plné meno
 fullscreen mode	common	sk	Celoobrazovkový režim
+gabon	common	sk	GABUN
 gambia	common	sk	GAMBIA
 general menu	common	sk	Základná ponuka
 georgia	common	sk	GRUZÍNSKO
 german	common	sk	Nemecké
 germany	common	sk	NEMECKO
+ghana	common	sk	GHANA
+gibraltar	common	sk	GIBRALTAR
 global	common	sk	Globálne
 global public	common	sk	Verejný pre všetkých
 go today	jscalendar	sk	Choď dnes
@@ -241,9 +271,14 @@ group public	common	sk	Verejný pre skupiny
 groups	common	sk	Skupiny
 groups with permission for %1	common	sk	Skupiny, kde máte prístup ku %1
 groups without permission for %1	common	sk	Skupiny, kde nemáte prístup ku %1
+guadeloupe	common	sk	GUADELOUPE
+guam	common	sk	GUAM
 guatemala	common	sk	GUATEMALA
 guinea	common	sk	GUINEA
+guinea-bissau	common	sk	GUINEA-BISSAU
+guyana	common	sk	GUAYANA
 haiti	common	sk	HAITI
+heard island and mcdonald islands	common	sk	HEARDOVE MCDONALDOVE OSTROVY
 height	common	sk	Výška
 help	common	sk	Pomocník
 high	common	sk	Vysoká
@@ -294,24 +329,31 @@ justify right	common	sk	Zarovnať vpRavo
 kazakstan	common	sk	KAZACHSTAN
 kenya	common	sk	KEŇA
 keywords	common	sk	Kľúčové slová
+kiribati	common	sk	KIRIBATI
 korea, democratic peoples republic of	common	sk	KÓREJSKÁ ĽUDOVODEMOKRATICKÁ REPUBLIKA
 korea, republic of	common	sk	KÓREJSKÁ REPUBLIKA
 kuwait	common	sk	KUVAJT
+kyrgyzstan	common	sk	KIRGIZSKO
 language	common	sk	Jazyk
 language_direction_rtl	common	sk	orientácia_jazyka_sprava_doľava
+lao peoples democratic republic	common	sk	LAOS
 last name	common	sk	Priezvisko
 last name of the user, eg. "%1"	common	sk	priezvisko používateľa, napr. "%1"
 last page	common	sk	posledná stránka
 lastname	common	sk	Priezvisko
+latvia	common	sk	LOTYŠSKO
 ldap-mgr	common	sk	Správca LDAP
 lebanon	common	sk	LIBANON
 left	common	sk	Vľavo
+lesotho	common	sk	LESOTHO
 liberia	common	sk	LIBÉRIA
+libyan arab jamahiriya	common	sk	LÍBIA
 license	common	sk	Licencia
 liechtenstein	common	sk	LICHTENŠTAJNSKO
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><B>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
 list	common	sk	Zoznam
 list members	common	sk	Zoznam členov
+lithuania	common	sk	LITVA
 local	common	sk	Lokálny
 login	common	sk	Prihlásiť
 loginid	common	sk	Prihlasovacie ID
@@ -319,18 +361,21 @@ logout	common	sk	Odhlásenie
 low	common	sk	Nízka
 lowest	common	sk	Najnižšia
 luxembourg	common	sk	LUXEMBURSKO
+macau	common	sk	MACAO
 macedonia, the former yugoslav republic of	common	sk	MACEDÓNSKO
 madagascar	common	sk	MADAGASKAR
 mail domain, eg. "%1"	common	sk	mailová doména, napr. "%1"
 main category	common	sk	Hlavná kategória
 main screen	common	sk	Hlavná stránka
 maintainer	common	sk	Správca-údržbár
+malawi	common	sk	MALAWI
 malaysia	common	sk	MALAJZIA
 maldives	common	sk	MALEDIVY
 mali	common	sk	MALI
 malta	common	sk	MALTA
 march	common	sk	Marec
 marshall islands	common	sk	MARSHALLOVE OSTROVY
+martinique	common	sk	MARTINIK
 mauritania	common	sk	MAURETÁNIA
 mauritius	common	sk	MAURÍCIUS
 max number of icons in navbar	common	sk	Maximálny počet ikoniek v navigačnom paneli
@@ -339,17 +384,22 @@ medium	common	sk	Stredná
 menu	common	sk	Ponuka
 message	common	sk	Správa
 mexico	common	sk	MEXIKO
+micronesia, federated states of	common	sk	MIKRÓNÉZIA
 minute	common	sk	Minúta
 moldova, republic of	common	sk	MOLDAVSKÁ REPUBLIKA
 monaco	common	sk	MONAKO
 monday	common	sk	Pondelok
 mongolia	common	sk	MONGOLSKO
+montenegro	common	sk	ČIERNA HORA
+montserrat	common	sk	MONSERRAT
 morocco	common	sk	MAROKO
 mozambique	common	sk	MOZAMBIK
 multiple	common	sk	viacero
+myanmar	common	sk	MYANMAR
 name	common	sk	Meno
 name of the user, eg. "%1"	common	sk	meno používateľa, napr. "%1"
 namibia	common	sk	NAMÍBIA
+nauru	common	sk	NAURU
 nepal	common	sk	NEPÁL
 netherlands	common	sk	HOLANDSKO
 netherlands antilles	common	sk	HOLANDSKÉ ANTILY
@@ -364,14 +414,18 @@ next month (hold for menu)	jscalendar	sk	Ďalší mesiac (podržaním zobrazíte
 next page	common	sk	Ďalšia stránka
 next year (hold for menu)	jscalendar	sk	Ďalší rok (podržaním zobrazíte ponuku)
 nicaragua	common	sk	NIKARAGUA
+niger	common	sk	NIGER
 nigeria	common	sk	NIGÉRIA
+niue	common	sk	NIUE
 no	common	sk	Nie
 no entries found, try again ...	common	sk	nič som nenašiel, skúste znovu...
 no history for this record	common	sk	Žiadna história pre tento záznam
 no savant2 template directories were found in:	common	sk	Žiadne adresáre šablóny Savant2 sa nenašli v:
 no subject	common	sk	Nebol uvedený Predmet
 none	common	sk	Žiadne
+norfolk island	common	sk	NORFOLK
 normal	common	sk	Normálna
+northern mariana islands	common	sk	SEVERNÉ MARIÁNSKE OSTROVY
 norway	common	sk	NÓRSKO
 not assigned	common	sk	nepriradené
 note	common	sk	Poznámka
@@ -382,6 +436,7 @@ november	common	sk	November
 october	common	sk	Október
 ok	common	sk	OK
 old value	common	sk	Stará hodnota
+oman	common	sk	OMÁN
 on *nix systems please type: %1	common	sk	Na *NIX systémoch prosím napíšte: %1
 on mouse over	common	sk	Pri namierení myši
 only private	common	sk	iba súkromné
@@ -397,8 +452,11 @@ owner	common	sk	Vlastník
 page	common	sk	Stránka
 page was generated in %1 seconds	common	sk	Stránka bola vygenerovaná za %1 sekúnd
 pakistan	common	sk	PAKISTAN
+palau	common	sk	PALAU
+palestinian territory, occupied	common	sk	PALESTÍNSKE ÚZEMIE, OKUPOVANÉ
 panama	common	sk	PANAMA
 papua new guinea	common	sk	PAPUA NOVÁ GUINEA
+paraguay	common	sk	PARAGUAY
 parcel	common	sk	Parcela
 parent category	common	sk	Rodičovská kategória
 password	common	sk	Heslo
@@ -416,6 +474,7 @@ peru	common	sk	PERU
 philippines	common	sk	FILIPÍNY
 phone number	common	sk	telefónne číslo
 phpgwapi	common	sk	eGroupWare API
+pitcairn	common	sk	PITCAIRNOVE OSTROVY
 please %1 by hand	common	sk	Prosím %1 ručne
 please enter a name	common	sk	Prosím zadajte meno!
 please run setup to become current	common	sk	Prosím spusťte setup pre aktualizáciu
@@ -439,6 +498,8 @@ private	common	sk	Súkromné
 programs	common	sk	Programy
 project	common	sk	Projekt
 public	common	sk	Verejné
+puerto rico	common	sk	PORTORIKO
+qatar	common	sk	KATAR
 read	common	sk	Čítať
 read this list of methods.	common	sk	Čítaj tento zoznam metód.
 reading	common	sk	Načítavam
@@ -452,12 +513,18 @@ replace with	common	sk	Zameniť za
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sk	Vráti úplný zoznam účtov v systéme. Upozornenie: môže byť pomerne rozsiahly
 returns an array of todo items	common	sk	Vracia pole úloh
 returns struct of users application access	common	sk	Vracia štruktúru používateľského prístupu k aplikáciám
+reunion	common	sk	RÉUNION
 right	common	sk	Vpravo
 romania	common	sk	RUMUNSKO
 russian federation	common	sk	RUSKÁ FEDERÁCIA
 rwanda	common	sk	RWANDA
 saint helena	common	sk	SVÄTÁ HELENA
+saint kitts and nevis	common	sk	SVÄTÝ KITTS A NEVIS
 saint lucia	common	sk	SVÄTÁ LUCIA
+saint pierre and miquelon	common	sk	SAINT PIERRE A MIQUELON
+saint vincent and the grenadines	common	sk	SVÄTÝ VINCENC A GRENADINY
+samoa	common	sk	ZÁPADNÁ SAMOA
+san marino	common	sk	SAN MARINO
 saturday	common	sk	Sobota
 saudi arabia	common	sk	SAUDSKÁ ARÁBIA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2. <br/>Táto verzia: %1 <br/>Verzia Savant: %2
@@ -481,6 +548,7 @@ select user	common	sk	Vyberte používateľa
 select work email address	common	sk	Vyberte pracovnú E-mailovú adresu
 selection	common	sk	Výber
 send	common	sk	Odoslať
+senegal	common	sk	SENEGAL
 september	common	sk	September
 serbia	common	sk	Srbsko
 server %1 has been added	common	sk	Server %1 bol pridaný
@@ -490,6 +558,7 @@ server name	common	sk	Meno servera
 session has been killed	common	sk	Relácia bola ukončená
 setup	common	sk	Inštalácia
 setup main menu	common	sk	Hlavná inštalačná ponuka
+seychelles	common	sk	SEYCHELLY
 show all	common	sk	Ukázať všetko
 show all categorys	common	sk	Ukázať všetky kategórie
 show clock?	common	sk	Ukázať hodinky?
@@ -503,6 +572,7 @@ show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazova�
 show_more_apps	common	sk	ukázať viacero aplikácií
 showing %1	common	sk	zobrazujem %1
 showing %1 - %2 of %3	common	sk	zobrazenujem %1 - %2 z %3
+sierra leone	common	sk	SIERRA LEONE
 simple	common	sk	Jednoduché
 singapore	common	sk	SINGAPUR
 slovakia	common	sk	SLOVENSKO
@@ -525,10 +595,14 @@ substitutions and their meanings:	common	sk	Substitúcie a ich významy:
 sudan	common	sk	SUDÁN
 sunday	common	sk	Nedeľa
 suriname	common	sk	SURINAM
+swaziland	common	sk	SVAZIJSKO
 sweden	common	sk	ŠVÉDSKO
 switzerland	common	sk	ŠVAJČIARSKO
+syrian arab republic	common	sk	SÝRIA
 table properties	common	sk	Nastavenia tabuľky
+taiwan	common	sk	TCHAJ-WAN
 tajikistan	common	sk	TADŽIKISTAN
+tanzania, united republic of	common	sk	TANZÁNIA
 text color:	common	sk	Farba písma:
 thailand	common	sk	THAJSKO
 the api is current	common	sk	API je aktuálne
@@ -551,20 +625,28 @@ to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">N
 today	common	sk	Dnes
 todays date, eg. "%1"	common	sk	dnešný dátum, napr. "%1"
 toggle first day of week	jscalendar	sk	Určiť prvý deň týždňa
+togo	common	sk	TOGO
+tokelau	common	sk	TOKELAU
+tonga	common	sk	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príliš veľa neúspešných pokusov o prihlásenie: %1 na používateľa '%2', %3 na IP %4
 top	common	sk	Vrch
 total	common	sk	celkovo
 transparant bg for the icons?	common	sk	Priesvitné pozadie ikon?
+trinidad and tobago	common	sk	TRINIDAD A TOBAGO
 tuesday	common	sk	Utorok
 tunisia	common	sk	TUNIS
 turkey	common	sk	TURECKO
 turkmenistan	common	sk	TURKMÉNSKO
+turks and caicos islands	common	sk	TURKS A CAICOS
+tuvalu	common	sk	TUVALU
 type	common	sk	Typ
 uganda	common	sk	UGANDA
 ukraine	common	sk	UKRAJINA
 underline	common	sk	Podčiarknuť
 united arab emirates	common	sk	SPOJENÉ ARABSKÉ EMIRÁTY
+united kingdom	common	sk	SPOJENÉ KRÁĽOVSTVO
 united states	common	sk	USA
+united states minor outlying islands	common	sk	MENŠIE ODĽAHLÉ OSTROVY USA
 unknown	common	sk	Neznámy
 update	common	sk	Aktualizácia
 update the clock per minute or per second	common	sk	Obnovovať hodinky po sekundách alebo po minútach
@@ -585,12 +667,14 @@ username	common	sk	Používateľské meno
 users	common	sk	používatelia
 users choice	common	sk	Používateľská Voľba
 uzbekistan	common	sk	UZBEKISTAN
+vanuatu	common	sk	VANUATU
 venezuela	common	sk	VENEZUELA
 version	common	sk	Verzia
 viet nam	common	sk	VIETNAM
 view	common	sk	Zobraziť
 virgin islands, british	common	sk	PANENSKÉ OSTROVY, BRITSKÉ
 virgin islands, u.s.	common	sk	PANENSKÉ OSTROVY, AMERICKÉ
+wallis and futuna	common	sk	WALLISOVE OSTROVY
 wednesday	common	sk	Streda
 welcome	common	sk	Vitajte
 western sahara	common	sk	ZÁPADNÁ SAHARA
@@ -625,4 +709,5 @@ your search returned 1 match	common	sk	našiel som 1 záznam
 your session could not be verified.	login	sk	Vaša relácia nie je platná.
 your settings have been updated	common	sk	Vaše nastavenia boli upravené
 zambia	common	sk	ZAMBIA
+zimbabwe	common	sk	ZIMBABWE
 zoom	common	sk	Lupa

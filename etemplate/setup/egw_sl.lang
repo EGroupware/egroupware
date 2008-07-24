@@ -52,6 +52,7 @@ cant delete a single widget from a grid !!!	etemplate	sl	Ne morete izbrisati edi
 cant delete the only column of a grid !!!	etemplate	sl	Ne morete izbrisati edinega stolpca v mreži
 cant delete the only row in a grid !!!	etemplate	sl	Ne morete izbrisati edine vrstice v mreži
 category	etemplate	sl	Kategorija
+category tree	etemplate	sl	Drevo kategorij
 cellpadding for the table-tag	etemplate	sl	Odmik od roba celice
 cells	etemplate	sl	Celice
 cellspacing for the table-tag	etemplate	sl	Razmik med celicami
@@ -367,6 +368,7 @@ to start the etemplate editor	etemplate	sl	Za zagon urejevalnika ePredloge
 to start the search	etemplate	sl	Za začetek iskanja
 today	etemplate	sl	Danes
 top	etemplate	sl	Na vrh
+tree	etemplate	sl	Drevo
 type	etemplate	sl	Vpišite
 type of the column	etemplate	sl	Vrsta stolpca
 type of the field (select label if field should be empty)	etemplate	sl	Vrsta polja (izberite Label, če naj bo polje prazno)

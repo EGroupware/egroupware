@@ -82,6 +82,7 @@ custom contact-address, leave empty to use information from most recent link	inf
 custom contact-information, leave emtpy to use information from most recent link	infolog	pt-br	Personalizar informações de contato, deixe vazio para utilizar a informação do link mais recente.
 custom fields	infolog	pt-br	Campos Personalizáveis
 custom fields, typ and status	common	pt-br	Campos Personalizáveis, tipo e status
+custom from	infolog	pt-br	Personalizar de
 custom regarding	infolog	pt-br	Personalizar Atenção
 custom status for typ	infolog	pt-br	Personalizar status por tipo
 customfields	infolog	pt-br	Campos Perssonalizáveis
@@ -90,6 +91,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	pt-br	data da criação
 dates, status, access	infolog	pt-br	Datas, Status, Acessos
 days	infolog	pt-br	dias
+default categorie for new infolog entries	infolog	pt-br	Categoria padrão para novos registros Tarefas
 default filter for infolog	infolog	pt-br	Filtro padrao
 default status for a new log entry	infolog	pt-br	status padrão para um novo registro
 delegated	infolog	pt-br	designado
@@ -140,6 +142,7 @@ error: saving the entry	infolog	pt-br	Erro salvando o registro
 error: the entry has been updated since you opened it for editing!	infolog	pt-br	Erro: o registro foi atualizado desde sua abertura, por você, para edição!
 existing links	infolog	pt-br	Links existentes
 fax	infolog	pt-br	Fax
+field must not be empty !!!	infolog	pt-br	O campo não pode estar vazio!!!
 fieldseparator	infolog	pt-br	Separador de Campos
 finish	infolog	pt-br	finalizar
 for which types should this field be used	infolog	pt-br	para quais tipos este campo deve ser utilizado
@@ -223,6 +226,7 @@ own	infolog	pt-br	Suas tarefas
 own open	infolog	pt-br	Suas tarefas abertas
 own overdue	infolog	pt-br	Suas tarefas em Atraso
 own upcoming	infolog	pt-br	Suas tarefas futuras
+parent	infolog	pt-br	Pai
 path on (web-)serverside<br>eg. /var/samba/share	infolog	pt-br	caminho (web-)serverside<br>ex. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	pt-br	O diretório para os arquivos de usuário ou grupo DEVE ESTAR FORA da raiz de documentos do servidor web!!!
 pattern for search in addressbook	infolog	pt-br	argumento de pesquisa em catálogo de endereços
@@ -235,6 +239,8 @@ phonecall	infolog	pt-br	Chamadas Telefônicas
 planned	infolog	pt-br	Planejada
 planned time	infolog	pt-br	Horas planejadas
 price	infolog	pt-br	Preço
+pricelist	infolog	pt-br	Lista de preços
+primary link	infolog	pt-br	Link primário
 priority	infolog	pt-br	Prioridade
 private	infolog	pt-br	Particular
 project	infolog	pt-br	Projeto
@@ -304,6 +310,7 @@ status ...	infolog	pt-br	Status ...
 sub	infolog	pt-br	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt-br	Sub-entradas tornam-se "filhas" da "entrada-pai" ou, se não houver "entrada-pai", da entrada principal
 subject	infolog	pt-br	Assunto
+sum	infolog	pt-br	Soma
 task	infolog	pt-br	Pendências
 template	infolog	pt-br	Modelo
 test import (show importable records <u>only</u> in browser)	infolog	pt-br	Teste de Importação (mostrará arquivos importados <u>apenas</u> no navegador)
@@ -352,6 +359,7 @@ yes, noone can purge deleted items	infolog	pt-br	Sim, ninguém pode limpar regis
 yes, only admins can purge deleted items	infolog	pt-br	Sim, somente administradores podem limpar registros removidos
 yes, with larger fontsize	infolog	pt-br	Sim, com fontes grandes
 yes, with purging of deleted items possible	infolog	pt-br	Sim, com possibilidade de limpeza de registros removidos
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	pt-br	Você pode selecionar uma categoria para ser pré-selecionada, quando você criar um novo registro.
 you can't delete one of the stock types !!!	infolog	pt-br	Você não pode apagar um destes tipos!!!
 you have entered an invalid ending date	infolog	pt-br	Você informou uma data final inválida
 you have entered an invalid starting date	infolog	pt-br	Você informou uma data inícial inválida

@@ -67,6 +67,7 @@ go to your home directory	filemanager	sk	Choď do svojho domovského adresára
 go to:	filemanager	sk	Choď na:
 go up	filemanager	sk	Choď vyššie
 home	filemanager	sk	Domov
+id	filemanager	sk	Id
 location	filemanager	sk	Umiestnenie
 locked	filemanager	sk	Zamknuté
 mime type	filemanager	sk	MIME typ

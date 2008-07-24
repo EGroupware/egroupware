@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	sl	%1 %2 v %3
 %1 records imported	calendar	sl	%1 zapisov uvoženih
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sl	%1 zapisov prebranih (niso še uvoženi, lahko greste nazaj in pregledate test uvoza)
+%1 weeks	calendar	sl	%1 tednov
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sl	<b>Opomba</b>: Koledar uporablja podatek o praznikih v vaši državi na podlagi področnih nastavitev, ki so nastavljene na %1. To lahko spremenite v %2.<br /> Podatki o praznikih se %3 samodejno namestijo z %4. To lahko spremenite v %5.
 a non blocking event will not conflict with other events	calendar	sl	Ne-blokirajoči dogodek ne bo v sporu z drugimi dogodki
 accept or reject an invitation	calendar	sl	Sprejmite ali zavrnite povabilo
@@ -35,8 +36,10 @@ before %1	calendar	sl	Pred %1
 before current date	calendar	sl	Pred trenutnim datumom
 before the event	calendar	sl	Pred dogodkom
 birthday	calendar	sl	Rojstni dan
+birthdays	admin	sl	Rojstni dnevi
 busy	calendar	sl	Zaposlen
 by	calendar	sl	od
+calendar csv export	calendar	sl	Izvoz CSV
 calendar event	calendar	sl	Koledarski dogodek
 calendar holiday management	admin	sl	Upravljanje praznikov na koledarju
 calendar menu	calendar	sl	Meni Koledar
@@ -50,6 +53,7 @@ close the window	calendar	sl	Zapri okno
 compose a mail to all participants after the event is saved	calendar	sl	Ko shranite dogodek, sestavite sporočilo vsem udeležencem.
 copy of:	calendar	sl	Kopija od:
 copy this event	calendar	sl	Kopiraj ta dogodek
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sl	Kopiraj spremembe v odložišče, %1ponovno naloži vnos%2 in ju spoji.
 countries	calendar	sl	Države
 country	calendar	sl	Država
 create an exception for the given date	calendar	sl	Ustvari izjemo za dani datum
@@ -179,12 +183,14 @@ monthly	calendar	sl	Mesečno
 monthly (by date)	calendar	sl	Mesečno (po datumu)
 monthly (by day)	calendar	sl	Mesečno (po dnevu)
 monthview	calendar	sl	Mesečni pogled
+multiple week view	calendar	sl	Pogled več tednov
 new search with the above parameters	calendar	sl	Novo iskanje z zgornjimi parametri
 no events found	calendar	sl	Noben dogodek ni bil najden
 no filter	calendar	sl	Brez filtra
 no matches found	calendar	sl	Ni zadetkov
 no response	calendar	sl	Ni odgovora
-non blocking	calendar	sl	ne-blokiran
+non blocking	calendar	sl	Ne-blokiran
+not	calendar	sl	Ne
 notification messages for added events	calendar	sl	Sporočilo ob dodanih dogodkih
 notification messages for canceled events	calendar	sl	Sporočilo ob preklicanih dogodkih
 notification messages for disinvited participants	calendar	sl	Sporočilo preklica povabila za udeležence
@@ -254,13 +260,16 @@ should new events created as private by default ?	calendar	sl	Ali naj bodo novi 
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sl	Dovolite, da uporabnik, ki ni prijavljen vidi vašo Prost/Zaseden informacijo? Za dostop do teh informacij lahko tudi določite geslo. Informacija Prost/Zaseden je v iCal obliki in vključuje samo termine, ko ste zasedeni, ne vključuje pa imena dogodkov, opisov in lokacij. URL za dostop do vaših Prost/Zaseden informacij je %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	sl	Naj načrtovalec prikaže prazno vrstico za uporabnike ali kategorije brez dogodkov?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sl	Ali naj bo status udeležencev dogodka (sprejet, zavrnjen,...) prikazan v oklepajih za imenom udeleženca?
+show birthdays from addressbook	admin	sl	Prikaži rojstni dan iz adresarja
 show default view on main screen	calendar	sl	Prikaži privzeti pogled na glavni strani
 show empty rows in planner	calendar	sl	Prikaži prazne vrstice v načrtovalcu
 show invitations you rejected	calendar	sl	Prikaži dobljena povabila
 show list of upcoming events	calendar	sl	Prikaži prihajajoče dogodke
+show only the date, not the year	admin	sl	Prikaži samo datum, brez leta
 show this month	calendar	sl	Prikaži ta mesec
 show this week	calendar	sl	Prikaži ta teden
 single event	calendar	sl	Pposamezen dogodek
+site configuration	calendar	sl	Konfiguracija strani
 start	calendar	sl	Začetek
 start date/time	calendar	sl	Začetni datum/čas
 startdate / -time	calendar	sl	Začetni datum /-čas
@@ -282,6 +291,7 @@ this message is sent to disinvited participants.	calendar	sl	To sporočilo se po
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sl	To sporočilo je poslano vsem udeležencem dogodka, ki sprejemajo obvestila o dogodkih.<br>V obvestilu lahko uporabite nekatere spremenljivke, ki se ob pošiljanju zamenjajo s podatki dogodka. Prva vrstica je naslov e-pošte.
 this message is sent when you accept, tentative accept or reject an event.	calendar	sl	To sporočilo se pošlje, ko sprejmete ali zavrnete dogodek.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sl	To sporočilo je poslano, ko nastavite opomnik za dogodek. Vključuje vse potrebne informacije.
+this module displays the current month	calendar	sl	Ta modul prikazuje trenutni mesec
 three month	calendar	sl	Trije meseci
 thu	calendar	sl	Čet
 til	calendar	sl	do
@@ -300,10 +310,12 @@ view this event	calendar	sl	Poglej ta dogodek
 views with fixed time intervals	calendar	sl	Pogledi s stalnimi časovnimi intervali
 wed	calendar	sl	Sre
 week	calendar	sl	Teden
+weekday	calendar	sl	Delovnik
 weekday starts on	calendar	sl	Teden se začne z dnem
 weekdays	calendar	sl	Dnevi tedna
 weekdays to use in search	calendar	sl	Dnevi tedna, ki jih uporabim pri iskanju
 weekly	calendar	sl	Tedensko
+weeks in multiple week view	calendar	sl	Število tednov v pogledu več tednov
 weekview	calendar	sl	Tedenski pogled
 weekview with weekend	calendar	sl	Tedenski pogled z vikendom
 weekview without weekend	calendar	sl	Tedenski pogled brez vikenda

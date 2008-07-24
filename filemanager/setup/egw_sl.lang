@@ -1,125 +1,28 @@
-%1 already exists as a file	filemanager	sl	%1 že obstaja kot datoteka.
-application	filemanager	sl	Aplikacija
-back to file manager	filemanager	sl	Nazaj v upravljalca datotek
-cancel editing %1 without saving	filemanager	sl	Prekini urejanje %1 brez shranjevanja
-cannot create directory because it begins or ends in a space	filemanager	sl	Ne morem ustvariti mape, če se njeno ime začne ali konča s presledkom.
-cannot replace %1 because it is a directory	filemanager	sl	Ne morem nadomestiti %1, ker je mapa.
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	sl	Če pri izbiri datumov izberete datum-do manjši od datum-od, bo iskanje vrnilo vse zadetke razen tistih, ki so v tem obdobju.
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	sl	Če izberete samo en datum (od ali do), bo iskanje vrnilo vse zadetke, ki so starejši/novejši od vnesenega datuma.
+%1 directories and %2 files copied.	filemanager	sl	%1 map in %2 datotek je bilo kopiranih.
+%1 directories and %2 files deleted.	filemanager	sl	%1 map in %2 datotek je bilo izbrisanih.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	sl	%1 napak med kopiranjem (%2 map in %3 datotek je bilo kopiranih).
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	sl	%1 napak med brisanjem (%2 map in %3 datotek je bilo izbrisanih).
+%1 errors moving (%2 files moved)!	filemanager	sl	%1 napak med premikanjem (%2 datotek je bilo premaknjenih).
+%1 files copied.	filemanager	sl	%1 datotek je bilo kopiranih.
+%1 files deleted.	filemanager	sl	%1 datotek je bilo izbrisanih.
+%1 files moved.	filemanager	sl	%1 datotek je bilo premaknjenih.
+actions	filemanager	sl	Dejanja
+check all	filemanager	sl	Preveri vse
 clear search	filemanager	sl	Izbriši iskanje
-command sucessfully run	filemanager	sl	Ukaz je bil uspešno izveden.
-comment	filemanager	sl	Komentar
-comments cannot contain "%1"	filemanager	sl	Komentarji ne smejo vsebovati "%1".
-copied %1 to %2	filemanager	sl	%1 prekopirano v %2.
-copy to	filemanager	sl	Kopiraj v
-copy to:	filemanager	sl	Kopiraj v:
-could not copy %1 to %2	filemanager	sl	Ne morem kopirati %1 v %2.
-could not copy file because no destination directory is given	filemanager	sl	Ne morem kopirati datoteke, ker ciljna mapa ni podana.
-could not create %1	filemanager	sl	Ne morem ustvariti %1
-could not create directory %1	filemanager	sl	Ne morem ustvariti mape %1
-could not delete %1	filemanager	sl	Ne morem izbrisati %1
-could not move %1 to %2	filemanager	sl	Ne morem prenesti %1 v %2
-could not move file because no destination directory is given	filemanager	sl	Ne morem prenesti datoteke, ker ciljna mapa ni podana.
-could not rename %1 to %2	filemanager	sl	Ne morem preimenovati %1 v %2
-could not save %1	filemanager	sl	Ne morem shraniti %1
-create file	filemanager	sl	Ustvari datoteko
-create folder	filemanager	sl	Ustvari mapo
 created	filemanager	sl	Ustvarjeno
-created %1	filemanager	sl	Ustvarjen %1
-created %1,%2	filemanager	sl	Ustvarjen %1,%2
 created between	filemanager	sl	Ustvarjeno med
-created by	filemanager	sl	Ustvaril
-created directory %1	filemanager	sl	Ustvarjena mapa %1
-date	filemanager	sl	Datum
-default number of upload fields to show	filemanager	sl	Privzeto število prikazanih polj za prenos
-delete	filemanager	sl	Izbriši
-deleted %1	filemanager	sl	Izbrisano %1
+cut	filemanager	sl	Izreži
 directory	filemanager	sl	Mapa
-directory %1 already exists	filemanager	sl	Mapa %1 že obstaja
-directory %1 does not exist	filemanager	sl	Mapa %1 ne obstaja
-directory names cannot contain "%1"	filemanager	sl	Imena map ne smejo vsebovati "%1"
-display attributes	filemanager	sl	Prikaži atribute
-download	filemanager	sl	Prenesi
-edit	filemanager	sl	Uredi
-edit comments	filemanager	sl	Uredi komentarje
-error running command	filemanager	sl	Napaka pri izvajanju ukaza
-execute	filemanager	sl	Izvedi
-failed to create directory	filemanager	sl	Napaka pri ustvarjanju mape
-fake base dir did not exist, egroupware created a new one.	filemanager	sl	Navidezna mapa še ni obstajala, zato je bila ustvarjena nova.
-file	filemanager	sl	Datoteka
-file %1 already exists. please edit it or delete it first.	filemanager	sl	Datoteka %1 že obstaja. Prosim, če uredite obstoječo različico, ali pa jo izbrišete.
-file %1 could not be created.	filemanager	sl	Ne morem ustvariti datoteke %1.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	sl	Datoteka %1 je morda prevelika. Za več informacij kontaktirajte sistemskega administratorja.
-file name	filemanager	sl	Ime datoteke
-file names cannot contain  or /	filemanager	sl	Imena datotek ne smejo vsebovati \ ali /
-file names cannot contain "%1"	filemanager	sl	Imena datotek ne smejo vsebovati "%1"
-file names cannot contain \ or /	filemanager	sl	Imena datotek ne smejo vsebovati \ ali /
 filemanager	common	sl	Upravljalec datotek
-filemanager preferences	filemanager	sl	Nastavitve Upravljalca datotek
-files	filemanager	sl	Datoteke
-files in this directory	filemanager	sl	Datoteke v mapi
-folder	filemanager	sl	Mapa
-folder up	filemanager	sl	Nadrejena mapa
-go home	filemanager	sl	Pojdi domov
+general	filemanager	sl	Splošno
 go to	filemanager	sl	Pojdi na
-go to %1	filemanager	sl	Pojdi na %1
 go to your home directory	filemanager	sl	Pojdi na domačo mapo
-go to:	filemanager	sl	Pojdi na:
-go up	filemanager	sl	pojdi navzgor
-home	filemanager	sl	Domov
 id	filemanager	sl	Šifra
-location	filemanager	sl	Položaj
-locked	filemanager	sl	Zaklenjen
 mime type	filemanager	sl	MIME tip
 modified	filemanager	sl	Spremenjeno
 modified between	filemanager	sl	Spremenjeno med
-modified by	filemanager	sl	Spremenil
-move to	filemanager	sl	Premakni v
-move to:	filemanager	sl	Premakni v:
-moved %1 to %2	filemanager	sl	%1 je bilo premaknjeno v %2
-no files in this directory.	filemanager	sl	V tej mapi ni datotek
-no version history for this file/directory	filemanager	sl	Ni zgodovine različic za to datoteko/mapo.
-operation	filemanager	sl	Operacija
-other settings	filemanager	sl	Druge nastavitve
-owner	filemanager	sl	Lastnik
-please select a file to delete.	filemanager	sl	Izberite datoteko za brisanje.
-preview %1	filemanager	sl	Predogled %1
-preview of %1	filemanager	sl	Predogled %1
-quick jump to	filemanager	sl	Hiter skok v
-reload	filemanager	sl	osveži
-rename	filemanager	sl	Preimenuj
-renamed %1 to %2	filemanager	sl	%1 je bilo preimenovano v %2
-replaced %1	filemanager	sl	Zamenjana %1
-save %1	filemanager	sl	Shrani %1
-save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na seznam datotek
-save all	filemanager	sl	Shrani vse
-save changes	filemanager	sl	Shrani spremembe
-saved %1	filemanager	sl	Shranjen %1
+move	filemanager	sl	Premakni
 searchstring	filemanager	sl	Iskani niz
-show	filemanager	sl	Prikaži
-show ..	filemanager	sl	Prikaži ..
-show .files	filemanager	sl	Prikaži .datoteke
-show command line (experimental. dangerous.)	filemanager	sl	Prikaži ukazno vrstico (POIZKUSNO. NEVARNO.)
-show help	filemanager	sl	Prikaži pomoč
 size	filemanager	sl	Velikost
-sort by:	filemanager	sl	Razvrsti po:
 start search	filemanager	sl	Začni iskanje
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	sl	LE ZA TESTIRANJE! Prosimo, sporočite hrošče in pripombe.
-total files	filemanager	sl	Vseh datotek
-unknown mime-type defaults to text/plain when viewing	filemanager	sl	Neznani MIME tip se pri pregledovanju obravnava kot text/plain
-unused space	filemanager	sl	Neuporabljen prostor
 up	filemanager	sl	Navzgor
-update	filemanager	sl	Posodobi
-updated comment for %1	filemanager	sl	Komentar za %1 je bil posodobljen
-upload	filemanager	sl	Prenesi
-upload fields	filemanager	sl	Polja za prenos
-upload files	filemanager	sl	Prenesi datoteke
-use new experimental filemanager?	filemanager	sl	Uporabljam nov, poskusni Upravljalec datotek?
-used space	filemanager	sl	Uporabljen prostor
-users	filemanager	sl	Uporabniki
-version	filemanager	sl	Različica
-view documents in new window	filemanager	sl	Preglej doumente v novem oknu
-view documents on server (if available)	filemanager	sl	Preglej dokument na strežniku (če je mogoče)
-who	filemanager	sl	Kdo
-you do not have access to %1	filemanager	sl	Nimate dostopa do %1
-your home dir did not exist, egroupware created a new one.	filemanager	sl	Vaša domača mapa ni obstajala, zato je bila ustvarjena nova.

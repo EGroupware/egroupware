@@ -37,6 +37,7 @@ saves the changes made	timesheet	pt-br	Salvar as alterações feitas
 saves this entry and add a new one	timesheet	pt-br	Salvar este registro e adicionar um novo
 select a price	timesheet	pt-br	Selecionar um preço
 select a project	timesheet	pt-br	Selecionar um projeto
+show a quantity sum (eg. to sum up negative overtime)	admin	pt-br	Exibir uma soma de quantidade (exemplo: para somar tempo extra negativo)
 start	timesheet	pt-br	Início
 starttime	timesheet	pt-br	Horário inicial
 starttime has to be before endtime !!!	timesheet	pt-br	Horário inicial deve ser anterior ao horário final !!!

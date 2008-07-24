@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	sk	%1 %2 v %3
 %1 records imported	calendar	sk	Naimportovaných bolo %1 záznamov
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sk	načítalo sa %1 záznamov (zatiaľ neboli naimportované, vraťte sa a ODznačte Test importu)
+%1 weeks	calendar	sk	%1 týždňov
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sk	<b>Upozornenie:</b>V Kalendári sa používajú sviatky, ktoré platia vo Vašej krajine. Tá je nastavená na %1. Môžete ju zmeniť vo vašom %2.<br />Sviatky sa %3 automaticky inštalujú z %4. Môžete to zmeniť v %5.
 a non blocking event will not conflict with other events	calendar	sk	Neblokujúca udalosť nebude v konflikte s ostatnými udalosťami
 accept or reject an invitation	calendar	sk	Prijať alebo odmietnuť pozvanie
@@ -35,8 +36,10 @@ before %1	calendar	sk	Pred %1
 before current date	calendar	sk	Pred súčasným dátumom
 before the event	calendar	sk	pred udalosťou
 birthday	calendar	sk	Narodeniny
+birthdays	admin	sk	Narodeniny
 busy	calendar	sk	zaneprázdnený
 by	calendar	sk	(kým)
+calendar csv export	calendar	sk	CSV export kalendára
 calendar event	calendar	sk	Udalosť v kalendári
 calendar holiday management	admin	sk	Správa sviatkov v kalendári
 calendar menu	calendar	sk	Ponuka Kalendára
@@ -50,6 +53,7 @@ close the window	calendar	sk	Zavrieť okno
 compose a mail to all participants after the event is saved	calendar	sk	po uložení udalosti napísať E-mail všetkým účastníkom
 copy of:	calendar	sk	Kópia (čoho):
 copy this event	calendar	sk	Kopírovať udalosť
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sk	Kopírovať vaše zmeny do schránky, %1znovunačítať záznam%2 a zlúčiť ich.
 countries	calendar	sk	Krajiny
 country	calendar	sk	Krajina
 create an exception for the given date	calendar	sk	Vytvoriť výnimku pre zadaný dátum
@@ -80,6 +84,7 @@ displayed view	calendar	sk	zobrazený pohľad
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	sk	Zobraziť predvolený kalendár na úvodnej stránke (tej, ktorá sa zobrazuje hneď po prihlásení do eGroupWare)?
 do you want a weekview with or without weekend?	calendar	sk	Želáte si týždenný pohľad s víkendom alebo bez?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sk	Chcete dostávať správy, ktoré Vás upovedomia o nových alebo zmenených udalostiach? Budete informovaní aj o zmenách ktoré sami urobíte.<br>Upovedomenia sa dajú aj obmedziť na určité typy zmien. Každý prvok obsahuje zároveň všetky predošlé upovedomenia. Všetky zmeny zahŕňajú zmeny titulku, opisu, účastníkov, ale nie odpovede účastníkov. Ak vlastník udalosti žiada akékoľvek správy o zmenách, dostane vždy aj odozvy účastníkov, napríklad prijatia a odmietnutia.
+do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	sk	Chcete upraviť sériovú udalosť ako výnimku? -Ok = Upraviť výnimku, Zrušiť = Upraviť sériu
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sk	Chcete dostávať E-mailom pravidelný súhrn vašich schôdzok?<br>Súhrn sa bude posielať na vašu bežnú adresu každé ráno, prípadne v pondelok pre týždenný súhrn.<br>Posiela sa len vtedy, ak máte plánované nejaké schôdzky na daný deň alebo týždeň.
 do you wish to autoload calendar holidays files dynamically?	admin	sk	Mám automaticky načítavať súbory sviatkov?
 download	calendar	sk	Stiahnuť
@@ -101,6 +106,7 @@ error: importing the ical	calendar	sk	Chyba: import iCal-u
 error: no participants selected !!!	calendar	sk	Chyba: Neboli vybraní účastníci!!!
 error: saving the event !!!	calendar	sk	Chyba: ukladanie udalosti!!!
 error: starttime has to be before the endtime !!!	calendar	sk	Chyba: Čas začiatku by mal byť PRED časom konca!!!
+error: the entry has been updated since you opened it for editing!	calendar	sk	Chyba: tento záznam bol aktualizovaný v čase, odkedy ho máte otvorený pre úpravy!
 event copied - the copy can now be edited	calendar	sk	Udalosť skopírovaná - kópia sa už dá upravovať
 event deleted	calendar	sk	Udalosť bola odstránená
 event details follow	calendar	sk	Podrobnosti o udalosti:
@@ -147,6 +153,7 @@ holidays	calendar	sk	Sviatky
 hours	calendar	sk	hodín
 how far to search (from startdate)	calendar	sk	ako ďaleko hľadať (od dátumu začiatku)
 how many minutes should each interval last?	calendar	sk	Koľko minút má trvať každý interval?
+how many weeks should the multiple week view show?	calendar	sk	Koľko týždňov sa má zobraziť vpohľade viacerých týždňov?
 ical	calendar	sk	iCal
 ical / rfc2445	calendar	sk	iCal - rfc2445
 ical export	calendar	sk	Export iCal
@@ -158,6 +165,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	sk	Ignorovať konflikt
 import	calendar	sk	Import
 import csv-file	common	sk	Importovať CSV súbor
+imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	sk	Importuje udalosti do vášho Kalendára zo súboru CSV. CSV znamená 'Comma Separated Values' čiže čiarkami oddelené hodnoty. Avšak v karte možností si môžete vybrať aj iné oddeľovače.
 interval	calendar	sk	Interval
 invalid email-address "%1" for user %2	calendar	sk	Chybná E-mailová adresa "%1" pre používateľa %2
 last	calendar	sk	Posledné
@@ -179,12 +187,14 @@ monthly	calendar	sk	Mesačne
 monthly (by date)	calendar	sk	Mesačne (podľa dátumu)
 monthly (by day)	calendar	sk	Mesačne (podľa dňa)
 monthview	calendar	sk	Mesačný pohľad
+multiple week view	calendar	sk	Pohľad viacerých týždňov
 new search with the above parameters	calendar	sk	nové vyhľadávanie s uvedenými parametrami
 no events found	calendar	sk	Žiadne udalosti sa nenašli
 no filter	calendar	sk	Žiadny Filter
 no matches found	calendar	sk	Nenašli sa žiadne záznamy
 no response	calendar	sk	Bez odozvy
 non blocking	calendar	sk	neblokujúce
+not	calendar	sk	nie
 notification messages for added events	calendar	sk	Tvar správy pre nové udalosti
 notification messages for canceled events	calendar	sk	Tvar správy pri zrušení udalosti
 notification messages for disinvited participants	calendar	sk	Tvar správy pre účastníkov so zrušením pozvánky
@@ -249,18 +259,22 @@ select who should get the alarm	calendar	sk	Vybrať kto dostane pripomienku
 selected range	calendar	sk	Vybraný rozsah
 set a year only for one-time / non-regular holidays.	calendar	sk	Rok nastavte iba pre jednorázové a nepravidelné udalosti.
 set new events to private	calendar	sk	Nastav nové udalosti ako súkromné
+setting lock time calender	admin	sk	Nastavenie Datalock času pre Kalendár (predvolené: 1 sek.)
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sk	Majú se odmietnuté pozvánky stále zobrazovať v kalendári?<br>Môžete ich prijať neskôr (napríklad keď sa vyrieši konflikt plánovania), ale len ak sú stále zobrazené vo vašom kalendári!
 should new events created as private by default ?	calendar	sk	Majú sa nové udalosti štandardne vytvárať ako súkromné?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sk	Chcete, aby informácie o Vašom zaneprázdnení či voľnom čase boli dostupné aj pre neprihlásené osoby? Ak chcete tieto údaje chrániť, môžete si nastaviť aj dodatočné heslo, odlišné od Vašeho bežného hesla. Údaje sú vo formáte iCal a obsahujú iba časy vašej zaneprázdnenosti, bez zbytočných podrobností ako napr. názvov udalostí, opisov alebo miest. Odkaz na tieto informácie je %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	sk	Chcete, aby plánovač zobrazoval prázdny riadok pri používateľoch, ktorí nemajú žiadnu udalosť?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sk	Má se za menom používateľa zobrazovať jeho vzťah k udalosti (prijal, odmietol, ...)?
+show birthdays from addressbook	admin	sk	Zobraziť narodeniny z Adresára
 show default view on main screen	calendar	sk	Zobraz predvolený pohľad na hlavnej stránke
 show empty rows in planner	calendar	sk	Zobraziť prázdne riadky v plánovači
 show invitations you rejected	calendar	sk	Zobraz odmietnuté pozvánky
 show list of upcoming events	calendar	sk	Zobraz zoznam nadchádzajúcich udalostí
+show only the date, not the year	admin	sk	Zobraziť iba dátum, nie rok
 show this month	calendar	sk	ukáž tento mesiac
 show this week	calendar	sk	ukáž tento týždeň
 single event	calendar	sk	samostatná udalosť
+site configuration	calendar	sk	konfigurácia stránky
 start	calendar	sk	Začiatok
 start date/time	calendar	sk	Dátum/čas začiatku
 startdate / -time	calendar	sk	Dátum/čas začiatku
@@ -275,6 +289,7 @@ test import (show importable records <u>only</u> in browser)	calendar	sk	Otestov
 this day is shown as first day in the week or month view.	calendar	sk	Tento deň sa zobrazuje ako prvý v týždennom či mesačnom pohľade.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sk	Touto hodinou sa končí denný pohľad. Udalosti po tejto hodine se zobrazia až za denným pohľadom.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sk	Touto hodinou sa začína denný pohľad. Udalosti pred touto hodinou se zobrazia pred denným pohľadom.<br>Zároveň sa táto hodina použije ako východzia pre nové udalosti.
+this entry is opened by user:	calendar	sk	Tento záznam bol otvorený počas nastaveného časového rozpätia používateľom:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sk	Táto skupina bude automaticky vybratá pri vstupe do plánovača. V plánovači ju môžete zmeniť podľa ľubovôle.
 this message is sent for canceled or deleted events.	calendar	sk	Táto správa se posiela pri zrušení či odstránení udalostí.
 this message is sent for modified or moved events.	calendar	sk	Táto správa sa posiela pri zmene či presune udalostí.
@@ -282,6 +297,7 @@ this message is sent to disinvited participants.	calendar	sk	Táto správa sa po
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sk	Táto správa sa posiela všetkým účastníkom Vášho stretnutia, ktorí požiadali o zasielanie pripomienok o nových udalostiach<br>Môžete použiť rôzné premenné, ktoré budú nahradené skutočnými údajmi o udalosti.<br>Prvý riadok je predmet správy.
 this message is sent when you accept, tentative accept or reject an event.	calendar	sk	Táto správa se posiela vtedy, keď prijmete, predbežne prijmete či odmietnete udalosť (stretnutie).
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sk	Táto správa se posiela vtedy, keď je nastavená pripomienka nejakej udalosti. Uveďte všetky údaje ktoré môžete potrebovať.
+this module displays the current month	calendar	sk	Tento modul zobrazuje súčasný mesiac
 three month	calendar	sk	tri mesiace
 thu	calendar	sk	Št
 til	calendar	sk	do
@@ -300,10 +316,12 @@ view this event	calendar	sk	Zobraziť túto udalosť
 views with fixed time intervals	calendar	sk	Pohľady s pevnými intervalmi zobrazenia
 wed	calendar	sk	St
 week	calendar	sk	Týždeň
+weekday	calendar	sk	Deň týždňa
 weekday starts on	calendar	sk	Týždeň začína dňom
 weekdays	calendar	sk	Dni v týždni
 weekdays to use in search	calendar	sk	Dni v týždni použité pri hľadaní
 weekly	calendar	sk	Týždne
+weeks in multiple week view	calendar	sk	Týždne v pohľade viacerých týždňov
 weekview	calendar	sk	Týždenný pohľad
 weekview with weekend	calendar	sk	Týždenný pohľad s víkendom
 weekview without weekend	calendar	sk	Týždenný pohľad bez víkendu

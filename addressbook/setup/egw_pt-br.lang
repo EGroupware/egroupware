@@ -20,6 +20,7 @@ add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única
 add business email of whole distribution list?	addressbook	pt-br	Adicionar e-mail comercial para uma lista de distribuição inteira ?
 add custom field	addressbook	pt-br	Adicionar campo personalizado
 add emails of whole distribution list?	addressbook	pt-br	Adicionar emails de toda lista de distribuição?
+add or delete categoies	addressbook	pt-br	Adicionar ou remover Categorias
 add to distribution list:	addressbook	pt-br	Adicionar a uma lista de distribuição
 added	addressbook	pt-br	adicionado
 added by synchronisation	addressbook	pt-br	adicionado por sincronização
@@ -66,6 +67,9 @@ calendar fields:	addressbook	pt-br	Campos da Agenda:
 calendar uri	addressbook	pt-br	URI do Agenda
 can be changed via setup >> configuration	admin	pt-br	Pode ser alterado via Setup >> Configuração
 car phone	addressbook	pt-br	Telefone no veículo
+categorie	addressbook	pt-br	categoria
+categorie added	addressbook	pt-br	categoria adicionada
+categorie delete	addressbook	pt-br	categoria removida
 categories, notes, ...	addressbook	pt-br	Categorias, Notas, ...
 category tree	admin	pt-br	Árvore de categorias
 cell phone	addressbook	pt-br	Telefone celular
@@ -125,6 +129,7 @@ deletes the photo	addressbook	pt-br	Remove a foto
 department	common	pt-br	Departamento
 departments	addressbook	pt-br	Departamentos
 directory with documents to insert contacts	addressbook	pt-br	Diretório com documentos para incluir contatos
+display contact	addressbook	pt-br	Exibir contato
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	pt-br	Exibe um lembrete para aniversários na Página Inicial (página que você vê quando entra no Grupo de Trabalho ou clica no ícone Página Inicial).
 distribution list deleted	addressbook	pt-br	Lista de distribuição removida
 distribution lists	addressbook	pt-br	Listas de distribuição
@@ -151,6 +156,7 @@ end	addressbook	pt-br	Fim
 enter the path to the exported file here	addressbook	pt-br	Entre aqui com o caminho do arquivo exportado
 error deleting the contact !!!	addressbook	pt-br	Erro removendo o contato !!!
 error saving the contact !!!	addressbook	pt-br	Erro salvando o contato !!!
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	pt-br	Exemplo: $$IF n_prefix~Sr~Olá Sr.~Olá Sra.$$ - procura no campo "n_prefix" por "Sr". Se encontrar, escreve "Olá Sr.", senão escreve "Olá Sra.".
 existing links	addressbook	pt-br	Links existentes
 export	addressbook	pt-br	exportar
 export as csv	addressbook	pt-br	Exportar como CSV
@@ -172,7 +178,9 @@ fields for the csv export	addressbook	pt-br	Campos para a exportação CSV
 fields the user is allowed to edit himself	admin	pt-br	Campos que ao usuário é permitir editar
 fields to show in address list	addressbook	pt-br	Campos a serem exibidos na lista de endereços
 fieldseparator	addressbook	pt-br	Separador de campos
+for more then one contact in a document use the tag pagerepeat!	addressbook	pt-br	para mais de um contato em um documento, use a tag pagerepeat!
 for read only ldap	admin	pt-br	para LDAP somente leitura
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 freebusy uri	addressbook	pt-br	URI para disponbilidade
 full name	addressbook	pt-br	Nome Completo
 general	addressbook	pt-br	Geral
@@ -256,6 +264,7 @@ name of current user, all other contact fields are valid too	addressbook	pt-br	N
 name, address	addressbook	pt-br	Nome, Endereço
 new contact submitted by %1 at %2	addressbook	pt-br	Novo contato informado por %1 em %2
 next date	addressbook	pt-br	Próxima data
+no categories selected	addressbook	pt-br	nenhuma categoria selecionada
 no vcard	addressbook	pt-br	Nenhum VCard
 number	addressbook	pt-br	Número
 number of records to read (%1)	addressbook	pt-br	Número de registros a ler (%1)
@@ -343,6 +352,7 @@ tomorrow is %1's birthday.	common	pt-br	Amanhã é o aniversário de %1.
 translation	addressbook	pt-br	Tradução
 type	addressbook	pt-br	Tipo
 update a single entry by passing the fields.	addressbook	pt-br	Atualizar uma única entrada informando os campos
+update fields by edited organisations?	admin	pt-br	Atualizar campos por organizações editadas
 updated	addressbook	pt-br	Atualizado
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pt-br	URL para linkar números de telefones (use %1 = número a ser chamado, %u = nome da conta, %t = número do telefone)
