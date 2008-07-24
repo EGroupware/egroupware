@@ -180,11 +180,14 @@ class egw_index implements IteratorAggregate
 		$keywords = array();
 		foreach($fields as $field)
 		{
-			foreach(preg_split(self::SEPERATORS,$field) as $keyword)
-			{
-				if (!in_array($keyword,$keywords) && strlen($keyword) >= self::MIN_KEYWORD_LEN && !is_numeric($keyword))
+			$tmpArray = @preg_split(self::SEPERATORS,$field);
+			if (is_array($tmpArray)) {
+				foreach($tmpArray as $keyword)
 				{
-					$keywords[] = $keyword;
+					if (!in_array($keyword,$keywords) && strlen($keyword) >= self::MIN_KEYWORD_LEN && !is_numeric($keyword))
+					{
+						$keywords[] = $keyword;
+					}
 				}
 			}
 		}
