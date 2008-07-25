@@ -1,9 +1,12 @@
 %1 already exists as a file	filemanager	nl	%1 bestaat reeds als een bestand.
 application	filemanager	nl	Toepassing
-back to file manager	filemanager	nl	Terug naar de Filemanager
+back to file manager	filemanager	nl	Terug naar Bestandsbeer
 cancel editing %1 without saving	filemanager	nl	Annuleer het bewerken van %1 zonder te bewaren
 cannot create directory because it begins or ends in a space	filemanager	nl	Can de directory niet aanmaken omdat deze begint of eindigt met een spatie
 cannot replace %1 because it is a directory	filemanager	nl	Kan %1 niet vervangen omdat het een directory is.
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	nl	Door een tot-datum te kiezen die eerder is dan de vanaf-datum wordt gezocht naar alle items die niet tussen de twee ingevulde datums inliggen
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	nl	Door slechts een datum in te vullen wordt gezocht naar alle items die ouder of jonger zijn dan de ingebulde datum
+clear search	filemanager	nl	Zoektekst wissen
 command sucessfully run	filemanager	nl	Commando met succes uitgevoerd.
 comment	filemanager	nl	Opmerking
 comments cannot contain "%1"	filemanager	nl	Opmerkingen kunnen geen "%1" bevatten.
@@ -24,6 +27,7 @@ create folder	filemanager	nl	Directory aanmaken
 created	filemanager	nl	Aangemaakt
 created %1	filemanager	nl	%1 aangemaakt.
 created %1,%2	filemanager	nl	%1,%2 aangemaakt
+created between	filemanager	nl	Aangemaakt tussen
 created by	filemanager	nl	Aangemaakt door
 created directory %1	filemanager	nl	Directory %1 aangemaakt.
 date	filemanager	nl	Datum
@@ -45,11 +49,13 @@ fake base dir did not exist, egroupware created a new one.	filemanager	nl	Fake B
 file	filemanager	nl	Bestand
 file %1 already exists. please edit it or delete it first.	filemanager	nl	Bestand %1 bestaat reeds.
 file %1 could not be created.	filemanager	nl	Bestand %1 kon niet worden aangemaakt.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	nl	Bestand %1 is misschien te groot. Neem contact op met de beheerder voor meer informatie.
 file name	filemanager	nl	Bestandsnaam
+file names cannot contain  or /	filemanager	nl	Bestanden kunnen geen "\" of "/" bevatten.
 file names cannot contain "%1"	filemanager	nl	Bestanden kunnen geen "%1" bevatten.
 file names cannot contain \ or /	filemanager	nl	Bestanden kunnen geen "\" of "/" bevatten.
-filemanager	common	nl	Filemanager
-filemanager preferences	filemanager	nl	Filemanager voorkeuren
+filemanager	common	nl	Bestanden
+filemanager preferences	filemanager	nl	Bestandsbeheer voorkeuren
 files	filemanager	nl	Bestanden
 files in this directory	filemanager	nl	Bestanden in deze folder
 folder	filemanager	nl	Directory
@@ -61,10 +67,12 @@ go to your home directory	filemanager	nl	Ga naar uw homedirectory
 go to:	filemanager	nl	Ga naar:
 go up	filemanager	nl	omhoog
 home	filemanager	nl	Home
+id	filemanager	nl	Id
 location	filemanager	nl	Locatie
 locked	filemanager	nl	Gesloten
 mime type	filemanager	nl	MIME-type
 modified	filemanager	nl	Gewijzigd
+modified between	filemanager	nl	gewijzigd tussen
 modified by	filemanager	nl	Gewijzigd door
 move to	filemanager	nl	Verplaatsen naar
 move to:	filemanager	nl	Verplaatsen naar:
@@ -87,6 +95,7 @@ save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar d
 save all	filemanager	nl	Alles opslaan
 save changes	filemanager	nl	Bewaar wijzigingen
 saved %1	filemanager	nl	%1 opgeslagen
+searchstring	filemanager	nl	Zoektekst
 show	filemanager	nl	Weergeven
 show ..	filemanager	nl	.. weergeven
 show .files	filemanager	nl	Verborgen bestanden weergeven
@@ -94,7 +103,8 @@ show command line (experimental. dangerous.)	filemanager	nl	Commandoinvoer weerg
 show help	filemanager	nl	Help weergeven
 size	filemanager	nl	Grootte
 sort by:	filemanager	nl	Sorteren op:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	nl	De toekomstige bestandsbeheerder, nu ALLEEN VOOR TEST DOELEINDEN, s.v.p. bugmeldingen insturen
+start search	filemanager	nl	Start zoeken
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	nl	Toekomstige versie van bestandsbeheer, nu ALLEEN VOOR TEST DOELEINDEN, s.v.p. bugmeldingen insturen
 total files	filemanager	nl	Totaal aantal bestanden
 unknown mime-type defaults to text/plain when viewing	filemanager	nl	Onbekend MIME-type standaard als text/plain weergeven
 unused space	filemanager	nl	Ongebruikte schijfruimte
@@ -104,7 +114,7 @@ updated comment for %1	filemanager	nl	Opmerking voor %1 bijgewerkt
 upload	filemanager	nl	Upload
 upload fields	filemanager	nl	uploadvelden
 upload files	filemanager	nl	Bestanden uploaden
-use new experimental filemanager?	filemanager	nl	Gebruik de nieuwe experimentele bestandsbeheerder?
+use new experimental filemanager?	filemanager	nl	Gebruik de nieuwe experimentele bestandsbeheerd?
 used space	filemanager	nl	Gebruikte schijfruimte
 users	filemanager	nl	Gebruikers
 version	filemanager	nl	Versie
