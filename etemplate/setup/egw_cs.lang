@@ -52,7 +52,7 @@ cant delete a single widget from a grid !!!	etemplate	cs	nemohu smazat jednotliv
 cant delete the only column of a grid !!!	etemplate	cs	nemohu smazat jediný sloupec ve mřížce !!!
 cant delete the only row in a grid !!!	etemplate	cs	nemohu smazat jediný řádek ve mřížce !!!
 category	etemplate	cs	Kategorie
-category tree	etemplate	cs	Strom kategorie
+category tree	etemplate	cs	Strom kategorií
 cellpadding for the table-tag	etemplate	cs	Vzdálenost mezi buňkou a jejím obsahem pro tag tabulky
 cells	etemplate	cs	Buňky
 cellspacing for the table-tag	etemplate	cs	Vzdálenost mezi buňkami pro tag tabulky
@@ -236,7 +236,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	cs	Název tabulky, která se má přidat
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	cs	název eŠablony, měl by být ve tvaru aplikace.funkce.[.podŠablona]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	cs	musí být unikátní v rámci tabulky a nesmí být rezervovaným slovem SQL, nejlepší je všechny opatřit společnou dvoupísmennou zkratkou aplikace, např. 'et_'
-new search	common	cs	Nové hledání
+new search	etemplate	cs	Nové hledání
 new table created	etemplate	cs	Nová tabulka vytvořena
 newer version '%1' exists !!!	etemplate	cs	existuje novější verze '%1'  !!!
 nextmatch	etemplate	cs	Nextmatch (Další shoda)

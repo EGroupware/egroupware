@@ -1,17 +1,34 @@
 %1 already exists as a file	filemanager	cs	%1 již existuje jako soubor
+%1 directories and %2 files copied.	filemanager	cs	Zkopírováno %1 adresářů a %2 souborů
+%1 directories and %2 files deleted.	filemanager	cs	Smazáno %1 adresářů a %2 souborů
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	cs	Během kopírování došlo k %1 chybám (zkopírováno %2 adresářů a %3 souborů)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	cs	Během mazání došlo k %1 chybám (smazáno %2 adresářů a %3 souborů)!
+%1 errors moving (%2 files moved)!	filemanager	cs	Během přesouvání došlo k %1 chybám (přesunuto %2 souborů)!
+%1 files copied.	filemanager	cs	Zkopírováno %1 souborů.
+%1 files deleted.	filemanager	cs	Smazáno %1 souborů.
+%1 files moved.	filemanager	cs	Přesunuto %1 souborů.
+%1 starts with '%2'	filemanager	cs	%1 začíná s '%2'
+%1 the following files into current directory	filemanager	cs	%1 následujících souborů do aktuálního adresáře
+%1 urls %2 to clipboard.	filemanager	cs	%1 URL %2 do clipboardu
+accessrights	filemanager	cs	Přístupová práva
+actions	filemanager	cs	Akce
+and all it's childeren	filemanager	cs	a všechny jeho potomky
 application	filemanager	cs	Aplikace
 back to file manager	filemanager	cs	Zpět na Správce souborů
 cancel editing %1 without saving	filemanager	cs	Ukončit editaci %1 bez uložení
 cannot create directory because it begins or ends in a space	filemanager	cs	Nemohu vytvořit adresář, protože začíná nebo končí mezerou
 cannot replace %1 because it is a directory	filemanager	cs	Nemohu přepsat %1 protože je to adresář
+check all	filemanager	cs	Označit vše
 choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	cs	Zvolíte-li koncové datum menší než počáteční datum, výsledkem hledání budou všechny záznamy kromě záznamů mezi uvedenými daty.
 choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	cs	Zvolíte-li jen jedno datum (od/do) výsledkem hledání budou všechny záznamy starší/mladší než zadané datum
 clear search	filemanager	cs	Nové hledání
 command sucessfully run	filemanager	cs	Příkaz úspěšně spuštěn
 comment	filemanager	cs	Komentář
 comments cannot contain "%1"	filemanager	cs	Komentáře nemohou obsahovat "%1"
+copied	filemanager	cs	zkopírováno
 copied %1 to %2	filemanager	cs	%1 zkopírováno do %2
 copy to	filemanager	cs	Kopírovat do
+copy to clipboard	filemanager	cs	Kopírovat do clipboardu
 copy to:	filemanager	cs	Kopírovat do:
 could not copy %1 to %2	filemanager	cs	Nepodařilo se zkopírovat %1 do %2
 could not copy file because no destination directory is given	filemanager	cs	Nepodařilo se zkopírovat soubor, protože nebyl zadán cílový adresář
@@ -22,6 +39,7 @@ could not move %1 to %2	filemanager	cs	Nepodařilo se přesunout %1 do %2
 could not move file because no destination directory is given	filemanager	cs	Nepodařilo se přesunout soubor, protože nebyl zadán cílový adresář
 could not rename %1 to %2	filemanager	cs	Nepodařilo se přejmenovat %1 na %2
 could not save %1	filemanager	cs	Nepodařilo se uložit %1
+create directory	filemanager	cs	Vytvořit adresář
 create file	filemanager	cs	Vytvořit soubor
 create folder	filemanager	cs	Vytvořit složku
 created	filemanager	cs	Vytvořeno
@@ -30,35 +48,51 @@ created %1,%2	filemanager	cs	Vytvořeno %1,%2
 created between	filemanager	cs	vytvořeno mezi
 created by	filemanager	cs	Vytvořil(a)
 created directory %1	filemanager	cs	Vytvořen adresář %1
+cut	filemanager	cs	Vyjmout
+cut to clipboard	filemanager	cs	Vyjmout do clipboardu
 date	filemanager	cs	Datum
+debug	filemanager	cs	Ladit
+debuginfos	filemanager	cs	Ladicí informace
 default number of upload fields to show	filemanager	cs	Výchozí počet zobrazovaných položek pro upload
 delete	filemanager	cs	Smazat
+delete this file or directory	filemanager	cs	Smazat tento soubor nebo adresář
 deleted %1	filemanager	cs	Smazáno %1
 directory	filemanager	cs	Adresář
 directory %1 already exists	filemanager	cs	Adresář %1 již existuje
 directory %1 does not exist	filemanager	cs	Adresář %1 neexistuje
 directory names cannot contain "%1"	filemanager	cs	Jména adresářů nesmí obsahovat "%1"
+directory not found or no permission to access it!	filemanager	cs	Adresář nebyl nalezen nebo chybí přístupové oprávnění!
+display and modification of content	filemanager	cs	Zobrazení a úprava obsahu
 display attributes	filemanager	cs	Zobrazit atributy
+display of content	filemanager	cs	Zobrazení obsahu
 download	filemanager	cs	Stáhnout
 edit	filemanager	cs	Editovat
 edit comments	filemanager	cs	Editovat komentáře
+edit settings	filemanager	cs	Editovat nastavení
 error running command	filemanager	cs	Chyba při spuštění příkazu
+error uploading file!	filemanager	cs	Chyba při uploadu souboru!
+executable	filemanager	cs	Spustitelný
 execute	filemanager	cs	Spustit
 failed to create directory	filemanager	cs	nepodařilo se vytvořit adresář
+failed to create directory!	filemanager	cs	Nepodařilo se vytvořit adresář!
 fake base dir did not exist, egroupware created a new one.	filemanager	cs	Virtuální základní adresář neexistoval, eGroupWare vytvořil nový
 file	filemanager	cs	Soubor
 file %1 already exists. please edit it or delete it first.	filemanager	cs	Soubor %1 již existuje. Buď ho nejprve smažte nebo ho zeditujte.
 file %1 could not be created.	filemanager	cs	Soubor %1 nemohl být vytvořen.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	cs	Soubor %1 je možná příliš velký. Kontaktujte Vašeho administrátora pro další informace.
+file deleted.	filemanager	cs	Soubor smazán.
 file name	filemanager	cs	Jméno souboru
-file names cannot contain  or /	filemanager	cs	Jména souborů nesmí obsahovat \ nebo /
+file names cannot contain  or /	filemanager	cs	Názvy souborů nesmí obsahovat \ nebo /
 file names cannot contain "%1"	filemanager	cs	Jména souborů nesmí obsahovat "%1"
+file or directory not found!	filemanager	cs	Soubor nebo adresář nebyl nalezen!
+file successful uploaded.	filemanager	cs	Soubor byl úspěšně uploadován.
 filemanager	common	cs	Správce souborů
 filemanager preferences	filemanager	cs	Předvolby Správce souborů
 files	filemanager	cs	Soubory
 files in this directory	filemanager	cs	Soubory v tomto adresáři
 folder	filemanager	cs	Složka
 folder up	filemanager	cs	O složku výše
+general	filemanager	cs	Obecné
 go home	filemanager	cs	zpět domů
 go to	filemanager	cs	Jít na
 go to %1	filemanager	cs	Jít na %1
@@ -73,28 +107,45 @@ mime type	filemanager	cs	MIME typ
 modified	filemanager	cs	Změněno
 modified between	filemanager	cs	změněno mezi
 modified by	filemanager	cs	Změnil(a)
+modify all subdirectories and their content	filemanager	cs	Změnit všechny podadresáře a jejich obsah
+move	filemanager	cs	Přesunout
 move to	filemanager	cs	Přesunout do
 move to:	filemanager	cs	Přesunout do:
 moved %1 to %2	filemanager	cs	%1přesunuto do %2
+no access	filemanager	cs	Přístup zakázán
 no files in this directory.	filemanager	cs	V tomto adresáři nejsou soubory.
+no preview available	filemanager	cs	Náhled není k dispozici
 no version history for this file/directory	filemanager	cs	Pro tento soubor/adresář neexistuje historie verzí
+only owner can rename or delete the content	filemanager	cs	Jen vlastník smí přejmenovávat nebo mazat obsah
 operation	filemanager	cs	Operace
 other settings	filemanager	cs	Ostatní nastavení
 owner	filemanager	cs	Vlastník
+permission denied!	filemanager	cs	Přístup zamítnut!
+permissions	filemanager	cs	Oprávnění
+permissions changed for %1.	filemanager	cs	Změněna oprávnění pro %1.
 please select a file to delete.	filemanager	cs	Vyberte prosím soubor ke smazání.
+preview	filemanager	cs	Náhled
 preview %1	filemanager	cs	Náhled %1
 preview of %1	filemanager	cs	Náhled (čeho) %1
 quick jump to	filemanager	cs	Rychlý skok na
+read & write access	filemanager	cs	Přístup pro čtení i zápis
+read access only	filemanager	cs	Přístup jen pro čtení
 reload	filemanager	cs	Načíst znovu
 rename	filemanager	cs	Přejmenovat
+rename, change permissions or ownership	filemanager	cs	Přejmenovat, změnit oprávnění nebo vlastníka
 renamed %1 to %2	filemanager	cs	%1 přejmenováno na %2
+renamed %1 to %2.	filemanager	cs	%1 přejmenováno na %2.
 replaced %1	filemanager	cs	%1nahrazeno
+root	filemanager	cs	kořen
 save %1	filemanager	cs	Uložit %1
 save %1, and go back to file listing	filemanager	cs	Uložit %1 a vrátit se zpět na seznam souborů
 save all	filemanager	cs	Uložit vše
 save changes	filemanager	cs	Uložit změny
 saved %1	filemanager	cs	%1 uloženo
+search for '%1'	filemanager	cs	Hledat '%1'
 searchstring	filemanager	cs	hledaný řetězec
+select action...	filemanager	cs	Vyberte akci...
+select file to upload in current directory	filemanager	cs	Vyberte soubor k uploadu do aktuálního adresáře
 show	filemanager	cs	Zobrazit
 show ..	filemanager	cs	Zobrazit ...
 show .files	filemanager	cs	Zobrazit skryté .soubory
@@ -121,4 +172,5 @@ view documents in new window	filemanager	cs	Zobrazovat dokumenty v novém okně
 view documents on server (if available)	filemanager	cs	Zobrazovat dokumenty na serveru (je-li k dispozici)
 who	filemanager	cs	Kdo
 you do not have access to %1	filemanager	cs	Nemáte přístup k %1
+you need to select some files first!	filemanager	cs	Nejprve musíte vybrat nějaké soubory!
 your home dir did not exist, egroupware created a new one.	filemanager	cs	Váš domovský adresář neexistoval, eGroupWare vytvořil nový.
