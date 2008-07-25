@@ -8,8 +8,10 @@ accepted	calendar	da	Accepteret
 access denied to the calendar of %1 !!!	calendar	da	Adgang nægtet til %1's kalender !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	da	Handlingen der forårsagede påmindelsen: Tilføjet, Annulleret, Accepteret, Forkastet, ...
 actions	calendar	da	Handlinger
+actions...	calendar	da	Handlinger...
 add alarm	calendar	da	Tilføj alarm
 added	calendar	da	Tilføjet
+after %1	calendar	da	Efter %1
 after current date	calendar	da	Efter aktuel dato
 alarm	calendar	da	Alarm
 alarm added	calendar	da	Alarm tilføjet
@@ -20,6 +22,7 @@ alarms	calendar	da	Alarmer
 all categories	calendar	da	Alle kategorier
 all day	calendar	da	Hele dagen
 all events	calendar	da	Alle aftaler
+all future	calendar	da	Al fremtid
 all participants	calendar	da	Alle deltagere
 allows to edit the event again	calendar	da	Tillader at redigere aftalen igen
 apply the changes	calendar	da	Acceptér ændringerne
@@ -27,6 +30,7 @@ are you sure you want to delete this country ?	calendar	da	Er du sikker på du vi
 are you sure you want to delete this holiday ?	calendar	da	Er du sikker på at du vil slette denne helligdag?
 back half a month	calendar	da	halv måned baglæns
 back one month	calendar	da	hel måned baglæns
+before %1	calendar	da	Før %1
 before current date	calendar	da	Før aktuel dato
 before the event	calendar	da	Før denne hændelse
 birthday	calendar	da	Fødselsdag
@@ -47,7 +51,7 @@ copy of:	calendar	da	Kopi fra:
 copy this event	calendar	da	Kopier denne aftale
 countries	calendar	da	Lande
 country	calendar	da	Land
-create an exception at this recuring event	calendar	da	Lav en undtagelse af denne tilbagevendende aftale
+create an exception for the given date	calendar	da	Lav en undtagelse for den givne dato
 create new links	calendar	da	Lav nye links
 csv	calendar	da	CSV
 csv-fieldname	calendar	da	CSV-Feltnavn
@@ -102,6 +106,7 @@ event saved	calendar	da	Aftale gemt
 event will occupy the whole day	calendar	da	Aftale vil vare hele dagen
 exception	calendar	da	Undtagelse
 exceptions	calendar	da	Undtagelser
+execute a further action for this entry	calendar	da	Udfør en yderligere handling
 existing links	calendar	da	Eksisterende links
 export	calendar	da	Exporter
 extended	calendar	da	Udvidet
@@ -203,6 +208,7 @@ participants	calendar	da	Deltagere
 participants disinvited from an event	calendar	da	Deltagere, af-inviteret fra en aftale
 participants, resources, ...	calendar	da	Deltagere, Resourcer, ...
 password for not loged in users to your freebusy information?	calendar	da	Adgangskode for brugere der ikke er logget ind, der skal kunne se din fri/optaget, information?
+people holiday	calendar	da	Folkets ferie
 permission denied	calendar	da	Adgang nægtet
 planner by category	calendar	da	Planlægger sorteret efter kategori
 planner by user	calendar	da	Planlægger sorteret efter bruger
@@ -212,6 +218,7 @@ previous	calendar	da	tidligere
 private and global public	calendar	da	privat og globalt offentlig
 private and group public	calendar	da	privat og gruppe offentlig
 private only	calendar	da	Kun private
+quantity	calendar	da	Antal
 re-edit event	calendar	da	Redigér igen
 receive email updates	calendar	da	Modtag e-mail opdateringer
 receive summary of appointments	calendar	da	Modtag opsummering af aftaler
@@ -236,13 +243,16 @@ select a %1	calendar	da	vælg en %1
 select a time	calendar	da	vælg et tidspunkt
 select resources	calendar	da	Vælg ressourcer
 select who should get the alarm	calendar	da	Vælg hvem der skal have sat alarm
+selected range	calendar	da	Valgt område
 set a year only for one-time / non-regular holidays.	calendar	da	Sæt et årstal, kun for engangs /ikke standard helligedage
 set new events to private	calendar	da	Marker nye aftaler som private
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	da	Skal invitationer du har forkastet stadig vises i din kalender?<br>Du kan kun acceptere dem senere (f.eks når din aftalekonflikt er fjernet), hvis de stadig vises i din kalender!
 should new events created as private by default ?	calendar	da	Skal nye aftaler markeres private som standard?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	da	Skal personer der ikke er logget ind have mulighed for at se din fri/optaget information? Du kan sætte en ekstra adgangskode, forskellig fra din standard adgangskode, for at skjule denne information. Fri/Optager informationen er i iCal formatet og inkludere tiderne hvor du er fri eller optaget. Det inkluderer ikke navnet på aftalen, beskrivelse eller stedet. Stien til din Fri/Optaget information er %1.
+should the planner display an empty row for users or categories without any appointment.	calendar	da	Skal planlæggeren vise en tom række for brugere eller kategorier uden en aftale.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	da	Skal status for deltagere (accepteret, forkastet...) vises i parentes efter hver deltagers navn?
 show default view on main screen	calendar	da	Vis standard visning på forsiden
+show empty rows in planner	calendar	da	Vis tomme rækker i planlæggeren
 show invitations you rejected	calendar	da	Vis invitationer du har forkastet
 show list of upcoming events	calendar	da	vis liste over kommende aftaler
 show this month	calendar	da	vis denne måned
@@ -282,6 +292,7 @@ two weeks	calendar	da	to uger
 updated	calendar	da	Opdateret
 use end date	calendar	da	brug slutdato
 use the selected time and close the popup	calendar	da	brug den valgte tid og luk pop-up
+user or group	calendar	da	Bruger eller gruppe
 view this event	calendar	da	Vis denne hændelse
 views with fixed time intervals	calendar	da	Views med faste tidsintervaller
 wed	calendar	da	Ons

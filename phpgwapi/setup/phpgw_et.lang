@@ -1,0 +1,323 @@
+%1 email addresses inserted	common	et	%1 email aadress sisestatud
+about	common	et	Üldiselt
+about %1	common	et	Üldiselt %1
+about egroupware	common	et	Üldiselt eGroupware
+about the calendar	jscalendar	et	Üldiselt kalender
+access	common	et	Ligipääs
+access not permitted	common	et	Ligipääs keelatud
+account has been created	common	et	Konto tehtud
+account has been deleted	common	et	Konto kustutatud
+account has been updated	common	et	Konto uuendatud
+account is expired	common	et	Konto on aegunud
+action	common	et	Tegevus
+active	common	et	Aktiivne
+add	common	et	Lisa
+add category	common	et	Lisa Kategooria
+add sub	common	et	Lisa alam
+addressbook	common	et	Aadressiraamat
+administration	common	et	Administreerimine
+all	common	et	Kõik
+all fields	common	et	kõik väljad
+andorra	common	et	ANDORRA
+angola	common	et	ANGOLA
+apply	common	et	Uuenda
+april	common	et	Aprill
+armenia	common	et	ARMEENIA
+august	common	et	August
+australia	common	et	AUSTRAALIA
+austria	common	et	AUSTRIA
+author	common	et	Autor
+back	common	et	Tagasi
+back to user login	common	et	Tagasi kasutaja logimise juurde
+background color:	common	et	Tausta värv:
+bad login or password	common	et	Vale kasutajanimi või parool
+belgium	common	et	BELGIA
+bermuda	common	et	BERMUDA
+bolivia	common	et	BOLIiVIA
+bosnia and herzegovina	common	et	BOSNIA JA HERZEGOVINA
+calendar	common	et	Kalender
+canada	common	et	KANADA
+cancel	common	et	Tühista
+categories	common	et	Kategooriad
+category	common	et	Kategooria
+change	common	et	Muuda
+charset	common	et	utf-8
+check installation	common	et	Kontrolli installeeritust
+check now	common	et	Kontrolli Nüüd
+china	common	et	HIINA
+choose a background color	common	et	Vali taustavärv
+choose a background color for the icons	common	et	Vali ikoonide taustavärv
+choose a background image.	common	et	Vali taustapilt.
+choose a background style.	common	et	Vali taustastiil
+choose a text color for the icons	common	et	Vali teksti värv ikoonidel
+choose the category	common	et	Vali kategooria
+choose the parent category	common	et	Vali ülem kategooria
+clear	common	et	Puhasta
+clear form	common	et	Puhasta vorm
+click	common	et	Vajuta
+close	common	et	Sule
+common preferences	common	et	Üldised eelistused
+company	common	et	Firma
+congo	common	et	Kongo
+copy	common	et	Kopeeri
+costa rica	common	et	KOSTARIIKA
+create	common	et	Loo
+created by	common	et	Loodud
+croatia	common	et	HORVAATIA
+cuba	common	et	KUUBA
+currency	common	et	Valuuta
+current	common	et	Käesolev
+current users	common	et	Aktiivseid kasutajaid
+cyprus	common	et	KÜPROS
+czech republic	common	et	TŠEHHOSLOVAKKIA
+date	common	et	Kuupäev
+date selection:	jscalendar	et	Kuupäeva valik:
+december	common	et	Detsember
+default category	common	et	Vaikimisi Kategooria
+default height for the windows	common	et	Vaikimisi akna kõrgus
+default width for the windows	common	et	Vaikimisi akna laius
+delete	common	et	Kustuta
+delete row	common	et	Kustuta rida
+denmark	common	et	TAANI
+description	common	et	Kirjeldus
+detail	common	et	Detail
+details	common	et	Detailselt
+disabled	common	et	Väljalülitatud
+display %s first	jscalendar	et	Kuva %s esmalt
+do you also want to delete all subcategories ?	common	et	Tahad kustutada samuti kõik alamkataloogid ?
+document properties	common	et	Dokumendi omadused
+document title:	common	et	Dokumendi pealkiri:
+domain	common	et	Doomeninimi
+domain name for mail-address, eg. "%1"	common	et	doomeninimi mail-aadressijaoks, nagu "%1"
+dominican republic	common	et	DOMINIKAANI VABARIIK
+done	common	et	Valmis
+e-mail	common	et	E-Mail
+edit	common	et	Muuda
+edit categories	common	et	Muuda Kategooriaid
+edit category	common	et	Muuda katekooria
+egroupware api version %1	common	et	eGroupWare API versioon %1
+egroupware: login blocked for user '%1', ip %2	common	et	eGroupWare: logimine plokeeritud kasutajale '%1', IP %2
+egypt	common	et	EGIPTUS
+email	common	et	E-Mail
+enabled	common	et	Lubatud
+end date	common	et	Lõpu kuupäev
+end time	common	et	Lõpu aeg
+entry has been deleted sucessfully	common	et	Kirje kustutatud täielikult
+entry updated sucessfully	common	et	Kirje uuendatud täielikult
+error	common	et	Viga
+estonia	common	et	EESTI
+everything	common	et	Kõik
+exact	common	et	täpne
+fax number	common	et	faksi number
+features of the editor?	common	et	fax number
+february	common	et	Veebruar
+fields	common	et	Väljad
+files	common	et	Failid
+filter	common	et	Filter
+finland	common	et	Soome
+first name	common	et	Eesnimi
+first page	common	et	Esimene leht
+firstname	common	et	Eesnimi
+fixme!	common	et	PARANDA MIND!
+folder already exists.	common	et	Kaust juba eksisteerib.
+france	common	et	PRANSUSMAA
+friday	common	et	Reede
+ftp	common	et	FTP
+fullname	common	et	Täisnimi
+fullscreen mode	common	et	Täisekraan vaade
+germany	common	et	SAKSAMAA
+global	common	et	Globaalne
+global public	common	et	Globaalne Publik
+go today	jscalendar	et	Mine Tänasele
+grant access	common	et	Luba Ligipääs
+greece	common	et	KREEKA
+greenland	common	et	GRÖÖNIMAA
+group	common	et	Grupp
+group access	common	et	Grupi Ligipääs
+group has been added	common	et	Grupp on lisatud
+group has been deleted	common	et	Grupp on kustutatud
+group has been updated	common	et	Grupp on uuendatud
+group name	common	et	grupi nimi
+groups	common	et	Grupid
+height	common	et	Kõrgus
+help	common	et	Abi
+high	common	et	Kõrge
+highest	common	et	Kõrgeim
+home	common	et	Kodu
+home email	common	et	kodu email
+honduras	common	et	HONDURAS
+hong kong	common	et	HONG KONG
+hungary	common	et	UNGARI
+iceland	common	et	ISLAND
+india	common	et	INDIA
+indonesia	common	et	INDONEESIA
+insert column after	common	et	Sisesta veerg enne
+insert column before	common	et	Sisesta veerg peale
+insert row after	common	et	Sisesta rida enne
+insert row before	common	et	Sisesta rida peale
+international	common	et	rahvusvaheline
+invalid filename	common	et	Vigane failinimi
+invalid ip address	common	et	Vigane IP aadress
+invalid password	common	et	Vigane parool
+ireland	common	et	IIRIMAA
+italy	common	et	ITAALIA
+january	common	et	Jaanuar
+japan	common	et	JAAPAN
+july	common	et	Juuli
+june	common	et	Juuni
+language	common	et	Keel
+last page	common	et	Viimane leht
+latvia	common	et	LÄTI
+left	common	et	Vasak
+liberia	common	et	LIBEERIA
+license	common	et	Litsents
+list	common	et	Nimekiri
+lithuania	common	et	LEEDU
+local	common	et	Lokaalne
+logout	common	et	Logi välja
+low	common	et	Madal
+lowest	common	et	Madalaim
+main category	common	et	Peamine kategooria
+malta	common	et	MALTA
+march	common	et	Märts
+may	common	et	Mai
+medium	common	et	Keskmine
+menu	common	et	Menüü
+message	common	et	Teade
+minute	common	et	minut
+monaco	common	et	MONACO
+monday	common	et	Esmaspäev
+mongolia	common	et	MONGOOLIA
+multiple	common	et	mitmik
+name	common	et	Nimi
+never	common	et	Mittekunagi
+new value	common	et	Uus Väärtus
+next	common	et	Järgmine
+next page	common	et	Järgmine leht
+no	common	et	Ei
+normal	common	et	Normaalne
+norway	common	et	NORRA
+november	common	et	November
+october	common	et	Oktoober
+ok	common	et	OK
+old value	common	et	Vana Väärtus
+only private	common	et	ainult privaatne
+only yours	common	et	ainult sinu
+open popup window	common	et	Ava hüpikaken
+overview	common	et	Ülevaade
+owner	common	et	Omanik
+page	common	et	Leht
+page was generated in %1 seconds	common	et	Leht genereeriti %1 sekundit
+password	common	et	Parool
+password has been updated	common	et	Parool on uuendatud
+personal	common	et	Personaalne
+phone number	common	et	telefoni number
+please enter a name	common	et	Palun sisesta nimi !
+please select	common	et	Palun Vali
+please set your global preferences	common	et	Palun sisesta oma globaalsed eelistused !
+please wait...	common	et	Palun Oota...
+poland	common	et	POOLA
+preferences	common	et	Eelistused
+previous page	common	et	Eelmine leht
+primary style-sheet:	common	et	Primaarne siilileht:
+print	common	et	Prindi
+priority	common	et	Prioriteet
+private	common	et	Privaatne
+programs	common	et	Programmid
+project	common	et	Projekt
+read	common	et	Lugema
+reading	common	et	loen
+regular	common	et	Regulaarne
+reject	common	et	Lükka tagasi
+remove selected accounts	common	et	eemalda märgitud kontod
+rename	common	et	Nimeta ümber
+replace	common	et	Asenda
+right	common	et	Parem
+russian federation	common	et	VENEMAA
+saturday	common	et	Laupäev
+save	common	et	Salvesta
+search	common	et	Otsi
+search %1 '%2'	common	et	Otsi %1 '%2'
+search accounts	common	et	Otsi kontosid
+second	common	et	teine
+select	common	et	Vali
+select all %1 %2 for %3	common	et	Vali kõik %1 %2 for %3
+select category	common	et	Vali Kategooria
+select date	common	et	Vali kuupäev
+select group	common	et	Vali grupp
+select home email address	common	et	Vali kodune email aadress
+select multiple accounts	common	et	Vali mitu kontot
+select one	common	et	Vali üks
+select user	common	et	Vali kasutaja
+select work email address	common	et	Vali töö email aadress
+selection	common	et	Valik
+send	common	et	Saada
+senegal	common	et	SENEGAL
+september	common	et	September
+serbia	common	et	Serbia
+server %1 has been added	common	et	Server %1 on lisatud
+server name	common	et	Serveri Nimi
+session has been killed	common	et	Sessioon tapeti
+show all	common	et	näita kõik
+show all categorys	common	et	Näita kõik kategooriad
+show clock?	common	et	Näita kella?
+show menu	common	et	näita menüüd
+show page generation time	common	et	Näita lehe genereerimise aega
+show page generation time?	common	et	Näita lehe genereerimise aega?
+showing %1	common	et	näitan %1
+simple	common	et	Lihtne
+singapore	common	et	SINGAPUR
+slovakia	common	et	SLOVAKIA
+slovenia	common	et	SLOVEENIA
+somalia	common	et	SOMAALIA
+sorry, your login has expired	login	et	Vabandust, sinu logimine on aegunud
+spain	common	et	HISPAANIA
+start date	common	et	Algus kuupäev
+start time	common	et	Algus aeg
+status	common	et	Staatus
+sunday	common	et	Pühapäev
+sweden	common	et	ROOTSI
+text color:	common	et	Teksti värv:
+this name has been used already	common	et	See nimi on juba kasutusel !
+thursday	common	et	Neljapäev
+time	common	et	Aeg
+time selection:	jscalendar	et	Aja valik:
+time zone	common	et	Ajavöönd
+title	common	et	Pealkiri
+today	common	et	Täna
+total	common	et	Kokku
+tuesday	common	et	Teisipäev
+tunisia	common	et	TUNEESIA
+turkey	common	et	TÜRGI
+ukraine	common	et	UKRAINA
+united kingdom	common	et	INGLISMAA
+united states	common	et	AMEERIKA ÜHENDRIIGID
+unknown	common	et	Tundmatu
+update	common	et	Uuenda
+upload	common	et	Lae üles
+uruguay	common	et	URUGUAI
+user	common	et	Kasutaja
+user accounts	common	et	kasutaja kontod
+user groups	common	et	kasutaja grupid
+username	common	et	Kasutajanimi
+users	common	et	kasutajad
+users choice	common	et	Kasutajate Valik
+version	common	et	Versioon
+view	common	et	Vaade
+wednesday	common	et	Kolmapäev
+welcome	common	et	Tere tulemast
+which groups	common	et	Millised grupid
+width	common	et	Laius
+wk	jscalendar	et	Nd
+work email	common	et	töö email
+writing	common	et	kirjutan
+written by:	common	et	Kirjutatud:
+year	common	et	Aasta
+yes	common	et	Jah
+you have been successfully logged out	login	et	Oled täielikult välja loginud
+you have not entered a title	common	et	Sa ei sisestanud pealkirja
+you have not entered a valid date	common	et	Sa ei sisestanud kehtivat kuupäeva
+you have selected an invalid date	common	et	Sisestasid vigase kuupäeva !
+you have selected an invalid main category	common	et	Sisestasid vigase pea kategooria !
+you have successfully logged out	common	et	Oled õnnelikult välja loginud
+your message has been sent	common	et	Sinu kiri on saadetud
