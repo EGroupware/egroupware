@@ -1,0 +1,102 @@
+account '%1' not found !!!	emailadmin	ru	Пользователь '%1' не найден !!!
+add new email address:	emailadmin	ru	Добавить новый email адрес :
+add profile	emailadmin	ru	Добавить Профиль
+admin dn	emailadmin	ru	Администратор DN
+admin password	emailadmin	ru	Пароль администратора
+admin username	emailadmin	ru	Логин администратора
+advanced options	emailadmin	ru	Дополнительные опции
+alternate email address	emailadmin	ru	Альтернативный email адрес
+any application	emailadmin	ru	Любое приложение
+any group	emailadmin	ru	Любая группа
+bad login name or password.	emailadmin	ru	Неправильное имя пользователя или пароль
+bad or malformed request. server responded: %s	emailadmin	ru	Неправильный или неверный запрос. Сервер ответил: %s
+bad request: %s	emailadmin	ru	Неправильный запрос: %s
+can be used by application	emailadmin	ru	Может использоваться приложением
+can be used by group	emailadmin	ru	Может использоваться группой
+connection dropped by imap server.	emailadmin	ru	Соединение сброшено IMAP сервером.
+could not complete request. reason given: %s	emailadmin	ru	Невозможно завершить запрос. Причина: %s.
+could not open secure connection to the imap server. %s : %s.	emailadmin	ru	Невозможно установить защищённое соединение с IMAP сервером. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	ru	Для поддержки CRAM-MD5 или DIGEST-MD5 требуется, чтобы был установлен пакет Auth_SASL.
+cyrus imap server	emailadmin	ru	Cyrus IMAP Сервер
+cyrus imap server administration	emailadmin	ru	Администрирование Cyrus IMAP сервером
+default	emailadmin	ru	по умолчанию
+do not validate certificate	emailadmin	ru	не проверять сертификат
+do you really want to delete this profile	emailadmin	ru	Вы действительно хотите удалить этот профиль
+domainname	emailadmin	ru	Доменное имя
+edit email settings	emailadmin	ru	Редактирование настроек электронной почты
+email account active	emailadmin	ru	Учетная запись активна
+email address	emailadmin	ru	Email адрес
+email settings	common	ru	Настройки электронной почты
+enable cyrus imap server administration	emailadmin	ru	разрешить управление сервером Cyrus IMAP
+enable sieve	emailadmin	ru	Включить Sieve
+encrypted connection	emailadmin	ru	шифрованное соединение
+encryption settings	emailadmin	ru	Настройки шифрования
+enter your default mail domain (from: user@domain)	emailadmin	ru	Введите название вашего почтового домена по умолчанию (от: user@domain)
+error connecting to imap server. %s : %s.	emailadmin	ru	Ошибка подключения к IMAP серверу. %s : %s.
+error connecting to imap server: [%s] %s.	emailadmin	ru	Ошибка подключения к IMAP серверу. [%s] : %s.
+forward also to	emailadmin	ru	Переслать также
+forward email's to	emailadmin	ru	Перенаправлять всю почту на адрес
+forward only	emailadmin	ru	Переслать только
+global options	emailadmin	ru	Общие настройки
+imap admin password	admin	ru	Пароль администратора IMAP сервера
+imap admin user	admin	ru	Логин администратора IMAP сервера
+imap c-client version < 2001	emailadmin	ru	IMAP C-Client Версия < 2001
+imap server closed the connection.	emailadmin	ru	IMAP сервер завершил соединение.
+imap server hostname or ip address	emailadmin	ru	Имя хоста или IP адрес IMAP сервера
+imap server logintyp	emailadmin	ru	Тип подключения к IMAP серверу
+imap server name	emailadmin	ru	имя сервера IMAP
+imap server port	emailadmin	ru	IMAP порт сервера
+imap/pop3 server name	emailadmin	ru	Имя сервера IMAP/POP3
+in mbyte	emailadmin	ru	в МегаБайтах
+ldap server	emailadmin	ru	LDAP сервер
+ldap server admin password	emailadmin	ru	Пароль администратора LDAP сервера
+ldap server hostname or ip address	emailadmin	ru	имя хоста или IP адрес LDAP сервера
+ldap settings	emailadmin	ru	LDAP настройки
+mail settings	admin	ru	Настройки почты
+name of organisation	emailadmin	ru	Название организации
+no alternate email address	emailadmin	ru	нет альтернативного email адреса
+no encryption	emailadmin	ru	нет шифрования
+no message returned.	emailadmin	ru	Нет возвращённых сообщений.
+order	emailadmin	ru	Сортировка
+organisation	emailadmin	ru	Организация
+plesk can't rename users --> request ignored	emailadmin	ru	Plesk не может переименовать пользователей --> запрос отклонен
+plesk imap server (courier)	emailadmin	ru	Plesk IMAP сервер (Courier)
+plesk mail script '%1' not found !!!	emailadmin	ru	Plesk почтовый скрипт '%1' не найден !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	ru	Plesk требует пароли имеющие не менее 5 символов и не не содержащие имя пользователя --> пароль НЕ установлен!!!
+pop3 server hostname or ip address	emailadmin	ru	Имя хоста или IP адрес сарвера POP3
+pop3 server port	emailadmin	ru	POP3 порт сервера
+postfix with ldap	emailadmin	ru	Postfix с поддержкой LDAP
+profile access rights	emailadmin	ru	права доступа профиля
+profile list	emailadmin	ru	Список профилей
+profile name	emailadmin	ru	Название профиля
+qouta size in mbyte	emailadmin	ru	Размер квоты в МБайтах
+quota settings	emailadmin	ru	Настройки квоты
+remove	emailadmin	ru	Удалить
+select type of imap server	emailadmin	ru	Выберите тип IMAP сервера
+select type of imap/pop3 server	emailadmin	ru	Выберите тип IMAP/POP3 сервера
+select type of smtp server	emailadmin	ru	Выберите тип SMTP сервера
+server settings	emailadmin	ru	Настройки сервера
+sieve server hostname or ip address	emailadmin	ru	Имя хоста или IP адрес сервера Sieve
+sieve server port	emailadmin	ru	Порт сервера Sieve
+sieve settings	emailadmin	ru	Настройки Sieve
+smtp authentication	emailadmin	ru	Аутентификация SMTP
+smtp options	emailadmin	ru	Опции SMTP
+smtp server name	emailadmin	ru	Имя сервера SMTP
+smtp settings	emailadmin	ru	Настройки SMTP
+smtp-server hostname or ip address	emailadmin	ru	Имя хоста или IP адрес SMTP сервера
+smtp-server port	emailadmin	ru	Порт сервера SMTP
+standard	emailadmin	ru	Стандартный
+standard imap server	emailadmin	ru	Стандартный IMAP сервер
+standard pop3 server	emailadmin	ru	Стандартный POP3 сервер
+standard smtp-server	emailadmin	ru	Стандартный SMTP сервер
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	ru	IMAP-сервер, видимо, не поддерживает выбранный метод аутентификации. Обратитесь к своему системному администратору.
+unexpected response from server to login command.	emailadmin	ru	Неожиданный ответ сервера на команду LOGIN.
+unsupported action '%1' !!!	emailadmin	ru	Неподдерживаемое действие '%1' !!!
+update current email address:	emailadmin	ru	Обновить текущий email адрес:
+use ldap defaults	emailadmin	ru	Использовать LDAP по умолчанию
+use smtp auth	emailadmin	ru	Использовать SMTP аутентификацию
+use tls authentication	emailadmin	ru	Использовать TLS аутентификацию
+use tls encryption	emailadmin	ru	Использовать TLS шифрование
+user can edit forwarding address	emailadmin	ru	Пользователь может изменять перенаправляемый адрес
+username (standard)	emailadmin	ru	имя пользователя (стандартное)
+users can define their own emailaccounts	emailadmin	ru	Пользователи могут настраивать собственные учётные записи
