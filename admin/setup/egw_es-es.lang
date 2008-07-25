@@ -226,6 +226,7 @@ home directory	admin	es-es	Directorio personal
 host information	admin	es-es	Información del servidor
 hour<br>(0-23)	admin	es-es	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	es-es	¿Cuántos días deben permanecer las entradas en el registro de acceso, antes de borrarlas? (por defecto, 90)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	es-es	¿Cuántas entradas deben poder exportar los usuarios que no son administradores (vacío=sin límite, no=no exportan)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	es-es	¿Cuántos minutos debe permanecer bloqueada una cuenta o una IP? (por defecto, 30)
 how should email addresses for new users be constructed?	admin	es-es	¿Cómo deben construirse las direcciones para los usuarios nuevos?
 icon	admin	es-es	Icono

@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	es-es	Cambiar su contraseña
 change your profile	preferences	es-es	Cambiar su perfil
 change your settings	preferences	es-es	Cambiar su configuración
+charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
 click to select a color	preferences	es-es	Pulse para seleccionar un color
 color	preferences	es-es	Color
 country	preferences	es-es	País
@@ -76,6 +77,7 @@ time format	preferences	es-es	Formato de la hora
 use default	preferences	es-es	Usar predeterminado
 users choice	preferences	es-es	Elegido por el usuario
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
 which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar eGroupWare
 write prefs for the specified application.	preferences	es-es	Escribir preferencias para la aplicación especificada
 you can show the applications as icons only, icons with app-name or both.	preferences	es-es	Puede ver las aplicaciones como iconos sólo, iconos con el nombre, o ambos.
@@ -83,5 +85,3 @@ you do not have permission to set acl's in this mode!	preferences	es-es	Usted no
 you must enter a password	preferences	es-es	Debe introducir una contraseña
 your current theme is: %1	preferences	es-es	Su actual tema es: %1
 your preferences	preferences	es-es	Sus preferencias
-charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.

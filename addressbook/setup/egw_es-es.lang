@@ -15,11 +15,13 @@ actions	addressbook	es-es	Acciones
 add %1	addressbook	es-es	Añadir %1
 add a contact to this organisation	addressbook	es-es	Añadir un contacto a esta organización
 add a new contact	addressbook	es-es	Añadir un contacto nuevo
+add a new infolog	addressbook	es-es	Añadir un nuevo registro de Infolog
 add a new list	addressbook	es-es	Añadir una lista nueva
 add a single entry by passing the fields.	addressbook	es-es	Añadir una entrada simple pasando los campos
 add business email of whole distribution list?	addressbook	es-es	¿Añadir el correo electrónico de la empresa de toda la lista de distribución?
 add custom field	addressbook	es-es	Añadir campo personalizado
 add emails of whole distribution list?	addressbook	es-es	¿Añadir los correos de toda la lista de distribución?
+add or delete categoies	addressbook	es-es	Añadir o borrar Categorías
 add to distribution list:	addressbook	es-es	Añadir a la lista de distribución:
 added	addressbook	es-es	añadido
 added by synchronisation	addressbook	es-es	Añadido por sincronización
@@ -35,6 +37,7 @@ addressbook csv export	addressbook	es-es	Exportar a CSV la libreta de direccione
 addressbook menu	addressbook	es-es	Menú de la libreta de direcciones
 addressbook preferences	addressbook	es-es	Preferencias de la libreta de direcciones
 addressbook the contact should be saved to	addressbook	es-es	Libreta de direcciones en la que guardar el contacto
+addressbook the contact should be shown	addressbook	es-es	Libreta de direcciones en la que mostrar el contacto
 addressbook-fieldname	addressbook	es-es	Campo - Libreta de direcciones
 addvcard	addressbook	es-es	Añadir tarjeta de visita
 advanced search	addressbook	es-es	Búsqueda avanzada
@@ -66,6 +69,9 @@ calendar fields:	addressbook	es-es	Campos del calendario:
 calendar uri	addressbook	es-es	URI del calendario
 can be changed via setup >> configuration	admin	es-es	Puede modificarse desde Instalación -> Configuración
 car phone	addressbook	es-es	Teléfono del coche
+categorie	addressbook	es-es	categoría
+categorie added	addressbook	es-es	categoría añadida
+categorie delete	addressbook	es-es	categoría borrada
 categories, notes, ...	addressbook	es-es	Categorías, Notas, ...
 category tree	admin	es-es	Arbol de categorías
 cell phone	addressbook	es-es	Teléfono móvil
@@ -95,11 +101,13 @@ contact saved	addressbook	es-es	Se ha guardado la entrada
 contact settings	admin	es-es	Configuración de los contactos
 contactform	addressbook	es-es	Formulario de contacto
 contacts and account contact-data to ldap	admin	es-es	Contactos y datos del contacto y la cuenta en LDAP
+contacts and account contact-data to sql	admin	es-es	contactos y datos del contacto de la cuenta a SQL
 contacts to ldap	admin	es-es	Contactos en LDAP
 contacts to ldap, account contact-data to sql	admin	es-es	Contactos en LDAP, datos del contacto y la cuenta en SQL
 contains	addressbook	es-es	contiene
 copied by %1, from record #%2.	addressbook	es-es	Copiado por %1, del registro %2
 copy a contact and edit the copy	addressbook	es-es	Copiar un contacto y editar la copia
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	es-es	Copiar sus cambios en el portapapeles, %1recargar la entrada%2 y mezclarlos.
 country	common	es-es	País
 create new links	addressbook	es-es	Crear enlaces nuevos
 created	addressbook	es-es	Creado
@@ -125,6 +133,7 @@ deletes the photo	addressbook	es-es	Borra la foto
 department	common	es-es	Departamento
 departments	addressbook	es-es	departamentos
 directory with documents to insert contacts	addressbook	es-es	Directorio con documentos para insertar contactos
+display contact	addressbook	es-es	Mostrar contacto
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	es-es	Muestra un recordatorio para los cumpleaños en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio).
 distribution list deleted	addressbook	es-es	Lista de distribución borrada
 distribution lists	addressbook	es-es	Listas de distribución
@@ -151,6 +160,8 @@ end	addressbook	es-es	Fin
 enter the path to the exported file here	addressbook	es-es	Introduzca aquí la ruta a los ficheros exportados
 error deleting the contact !!!	addressbook	es-es	¡Error al borrar el contacto!
 error saving the contact !!!	addressbook	es-es	¡Error al guardar el contacto!
+error: the entry has been updated since you opened it for editing!	addressbook	es-es	Error: la entrada se ha actualizado desde que la abrió para editar
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	es-es	Ejemplo $$IF prefijo_n~Sr~Hola Sr.~Hola Srta.$$ - busca el campo "prefijo_n", para "Sr". Si lo encuentra, escribe "Hola Sr.", si no, escribe "Hola Srta."
 existing links	addressbook	es-es	Enlaces existentes
 export	addressbook	es-es	exportar
 export as csv	addressbook	es-es	Exportar como CSV
@@ -172,7 +183,9 @@ fields for the csv export	addressbook	es-es	Campos para exportar a CSV
 fields the user is allowed to edit himself	admin	es-es	Campos que el propio usuario puede editar
 fields to show in address list	addressbook	es-es	Campos a mostrar en la lista de direcciones
 fieldseparator	addressbook	es-es	Separador de campos
+for more then one contact in a document use the tag pagerepeat!	addressbook	es-es	para más de un contacto en un documento use la etiqueta pagerepeat
 for read only ldap	admin	es-es	para LDAP de sólo lectura
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
 freebusy uri	addressbook	es-es	URI para disponibilidad
 full name	addressbook	es-es	Nombre completo
 general	addressbook	es-es	General
@@ -255,7 +268,9 @@ name for the distribution list	addressbook	es-es	Nombre para la lista de distrib
 name of current user, all other contact fields are valid too	addressbook	es-es	Nombre del usuario actual. Todos los demás campos del contacto también son válidos.
 name, address	addressbook	es-es	Nombre, Dirección
 new contact submitted by %1 at %2	addressbook	es-es	Nuevo contacto enviado por %1 en %2
+new window opened to edit infolog for your selection	addressbook	es-es	Se ha abierto una ventana nueva para editar la nota para su selección
 next date	addressbook	es-es	Fecha siguiente
+no categories selected	addressbook	es-es	no se seleccionaron categorías
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
@@ -331,9 +346,11 @@ thank you for contacting us.	addressbook	es-es	Gracias por ponerse en contacto c
 that field name has been used already !	addressbook	es-es	El nombre del campo ya ha sido usado
 the anonymous user has probably no add rights for this addressbook.	addressbook	es-es	El usuario anónimo probablemente no tiene derechos de añadir para esta libreta de direcciones.
 the anonymous user needs add rights for it!	addressbook	es-es	¡El usuario anónimo necesita derechos de añadir para esto!
+the anonymous user needs read it!	addressbook	es-es	¡El usuario anónimo necesita leerlo!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	es-es	El documento puede tener un contenedor como $$n_fn$$, para ser sustituido con los datos del contacto (%1lista completa de nombres del contenedor%2).
 there was an error saving your data :-(	addressbook	es-es	Ocurrió un error al guardar los datos
 this module displays a contactform, that stores direct into the addressbook.	addressbook	es-es	Este módulo muestra un formulario de contacto que se guarda directamente en la libreta de direcciones.
+this module displays block from a adddressbook group.	addressbook	es-es	Este módulo muestra el bloque de un grupo de libreta de direcciones
 this person's first name was not in the address book.	addressbook	es-es	El primer nombre de esta persona no estaba en la libreta de direcciones.
 this person's last name was not in the address book.	addressbook	es-es	El apellido de esta persona no estaba en la libreta de direcciones.
 timezone	addressbook	es-es	Zona horaria
@@ -343,10 +360,12 @@ tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
 translation	addressbook	es-es	Traducción
 type	addressbook	es-es	Tipo
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos
+update fields by edited organisations?	admin	es-es	¿Actualizar los campos por organizaciones editadas?
 updated	addressbook	es-es	Actualizado
 upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	es-es	URL a la que enlazar los números de teléfono (use %1 = número para llamar, %u = nombre de la cuenta, %t = teléfono de la cuenta)
 use an extra category tab?	addressbook	es-es	¿Usar una pestaña extra para categorías?
+use an extra tab for private custom fields?	admin	es-es	¿Usar una pestaña extra para campos personalizados privados?
 use country list	addressbook	es-es	Utilizar lista de países
 use setup for a full account-migration	admin	es-es	Use la instalación para una migración completa de las cuentas
 used for links and for the own sorting of the list	addressbook	es-es	utilizado para los enlaces y para el orden propio de la lista

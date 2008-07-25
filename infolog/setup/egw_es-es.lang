@@ -90,6 +90,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	es-es	fecha de creación
 dates, status, access	infolog	es-es	Fechas, estado, acceso
 days	infolog	es-es	días
+default categorie for new infolog entries	infolog	es-es	Categoría predeterminada para nuevas entradas del Registro
 default filter for infolog	infolog	es-es	Filtro predeterminado para el Registro
 default status for a new log entry	infolog	es-es	Estado predeterminado para una entrada nueva en el registro
 delegated	infolog	es-es	delegado
@@ -140,6 +141,7 @@ error: saving the entry	infolog	es-es	Error al guardar la entrada
 error: the entry has been updated since you opened it for editing!	infolog	es-es	Error: ¡La entrada ha sido actualizada desde que la abrió para editar!
 existing links	infolog	es-es	Enlaces existentes
 fax	infolog	es-es	Fax
+field must not be empty !!!	infolog	es-es	¡El campo no debe estar vacío!
 fieldseparator	infolog	es-es	Separador de campos
 finish	infolog	es-es	finalizar
 for which types should this field be used	infolog	es-es	para qué tipos se usa este campo
@@ -223,6 +225,7 @@ own	infolog	es-es	propio
 own open	infolog	es-es	propio abierto
 own overdue	infolog	es-es	propio vencido
 own upcoming	infolog	es-es	propio en camino
+parent	infolog	es-es	Superior
 path on (web-)serverside<br>eg. /var/samba/share	infolog	es-es	Ruta en el servidor ej. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	es-es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la estructura del servidor web!!
 pattern for search in addressbook	infolog	es-es	expresión a buscar en la Libreta de direcciones
@@ -235,6 +238,8 @@ phonecall	infolog	es-es	Llamada telefónica
 planned	infolog	es-es	planificada
 planned time	infolog	es-es	hora planificada
 price	infolog	es-es	Precio
+pricelist	infolog	es-es	Lista de precios
+primary link	infolog	es-es	enlace primario
 priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
@@ -349,6 +354,7 @@ yes, noone can purge deleted items	infolog	es-es	Si, nadie puede purgar los elem
 yes, only admins can purge deleted items	infolog	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
 yes, with larger fontsize	infolog	es-es	Sí, con un tamaño de letra más grande
 yes, with purging of deleted items possible	infolog	es-es	Sí, con la posibilidad de purgar los elementos borrados
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	es-es	Puede elegir una categoría para estar preseleccionada cuando cree una nueva entrada del Registro
 you can't delete one of the stock types !!!	infolog	es-es	¡¡No puede borrar uno de los tipos almacenados!!
 you have entered an invalid ending date	infolog	es-es	Ha introducido una fecha de finalización que no es válida
 you have entered an invalid starting date	infolog	es-es	Ha introducido una fecha de inicio que no es válida

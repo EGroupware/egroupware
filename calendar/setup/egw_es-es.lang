@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	es-es	%1 %2 en %3
 %1 records imported	calendar	es-es	%1 registros importados
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-es	%1 registros leídos (todavía sin importar, puede volver atrás y desmarcar Probar Importar)
+%1 weeks	calendar	es-es	%1 semanas
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	es-es	<b>Por favor, tenga en cuenta lo siguiente</b>: El calendario usa las fiestas de su país, que es %1. Puede cambiarlo en su %2.<br />Las vacaciones %3 se instalan automáticamente desde %4. Lo puede cambiar en %5.
 a non blocking event will not conflict with other events	calendar	es-es	Un evento que no bloquea no entrará en conflicto con otros eventos
 accept or reject an invitation	calendar	es-es	Aceptar o rechazar una invitación
@@ -152,6 +153,7 @@ holidays	calendar	es-es	Festivos
 hours	calendar	es-es	horas
 how far to search (from startdate)	calendar	es-es	cuánto buscar (desde la fecha de inicio)
 how many minutes should each interval last?	calendar	es-es	¿Cuántos minutos debe durar cada intervalo?
+how many weeks should the multiple week view show?	calendar	es-es	¿Cuántas semanas deben mostrarse en la vista de múltiples semanas?
 ical	calendar	es-es	iCal
 ical / rfc2445	calendar	es-es	iCal / rfc2445
 ical export	calendar	es-es	Exportar iCal
@@ -185,6 +187,7 @@ monthly	calendar	es-es	Mensualmente
 monthly (by date)	calendar	es-es	Mensual (por fecha)
 monthly (by day)	calendar	es-es	Mensual (por día)
 monthview	calendar	es-es	Vista mensual
+multiple week view	calendar	es-es	Vista de múltiples semanas
 new search with the above parameters	calendar	es-es	nueva búsqueda con los parámetros de arriba
 no events found	calendar	es-es	No se encontraron eventos
 no filter	calendar	es-es	Sin filtro
@@ -260,7 +263,6 @@ setting lock time calender	admin	es-es	Estableciendo el tiempo de bloqueo para e
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	es-es	¿Mostrar las invitaciones rechazadas por usted en el calendario?<br>Puede aceptarlas después (por ejemplo, cuando elimine el conflicto de calendario), si todavía se ven en su calendario.
 should new events created as private by default ?	calendar	es-es	¿Crear nuevos eventos como privados?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	es-es	¿Deben ver las personas que no inicien sesión la información de ocupación? Se puede poner una contraseña extra, distinta a la normal, para proteger esta información. La información de ocupación está en formato iCal y sólo incluye las horas en las que está ocupado. No incluye el nombre del evento, descripción o sitios. La URL para su información de ocupación es %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002" target="_blank">https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002</a>.	calendar	es-es	¿Deben poder ver la información de disponibilidad las personas que no hayan iniciado sesión? Puede establecer una contraseña extra, distinta de la contraseña normal, para proteger esta información. La información de disponibilidad está en formato iCal y sólo incluye las horas ocupadas. No incluye el nombre del evento, descripción ni ubicaciones. La URL para esta información es <a href="https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002" target="_blank">https://localhost/egroupware/calendar/freebusy.php?user=leithoff_net_002</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	es-es	¿Debe mostrarse en el planificador una fila vacía para los usuarios o categorías sin ninguna cita?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	es-es	¿Mostrar el estado de cada evento (aceptar, rechazar, etc) entre corchetes detrás del nombre de cada participante?
 show birthdays from addressbook	admin	es-es	Mostrar cumpleaños de la libreta de direcciones
@@ -319,6 +321,7 @@ weekday starts on	calendar	es-es	La semana empieza en
 weekdays	calendar	es-es	Días laborales
 weekdays to use in search	calendar	es-es	Días laborales a usar en la búsqueda
 weekly	calendar	es-es	Semanal
+weeks in multiple week view	calendar	es-es	Semanas en la vista de múltiples semanas
 weekview	calendar	es-es	Vista semanal
 weekview with weekend	calendar	es-es	vista semanal con fin de semana
 weekview without weekend	calendar	es-es	Vista semanal sin fin de semana
