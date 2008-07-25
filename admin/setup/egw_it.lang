@@ -92,6 +92,8 @@ check ip address of all sessions	admin	it	Controlla l'indirizzo IP di tutte le s
 check items to <b>%1</b> to %2 for %3	admin	it	Controlla voci a <b>%1</b> a %2 per %3
 click to select a color	admin	it	Clicca per selezionare un colore
 color	admin	it	Colore
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	it	Cookie del sito ( lasciando vuoto viene usato il nome intero del dominio, esempio con "domain.com" sarà permesso usare il cookie egw.domain.com e www.domain.com)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	it	Percorso del cookie ( eGW permette sessioni multiple con differenti cartelle , però con Sitemgr ci sono problemi )
 country selection	admin	it	Selezione Nazione
 create group	admin	it	Crea gruppo
 creates a new field	admin	it	crea un nuovo campo
@@ -144,6 +146,7 @@ do not delete the category and return back to the list	admin	it	NON eliminare la
 do you also want to delete all global subcategories ?	admin	it	Vuoi eliminare anche tutte le sotto-categorie globali ?
 do you want to delete all global subcategories ?	admin	it	Vuoi cancellare tutte le sotto-categorie globali ?
 do you want to move all global subcategories one level down ?	admin	it	Vuoi spostare tutte le sotto-categorie globali sotto di un livello ?
+document root (default)	admin	it	Directory di default del webserver
 each value is a line like <id>[=<label>]	admin	it	ogni valore è una linea come <id>[=<label>]
 each value is a line like id[=label]	admin	it	ogni valore è una linea come id[=label]
 edit account	admin	it	Modifica account
@@ -162,6 +165,7 @@ edit this group	admin	it	modifica questo gruppo
 edit this user	admin	it	modifica questo utente
 edit user	admin	it	modifica utente
 edit user account	admin	it	Modifica account dell'utente
+egroupware directory	admin	it	Directory di eGroupWare
 email account active	admin	it	account email attivo
 email address	admin	it	indirizzo email
 enable debug-messages	admin	it	Attiva i messaggi di debug
@@ -174,7 +178,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	it
 enter the background color for the login page	admin	it	Inserisci il colore di background per la pagina di login
 enter the background color for the site title	admin	it	Inserisci il colore di background per il titolo del sito
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	it	Inserisci l'hostname della macchina su cui sta girando questo server
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware   o   /egroupware<br><b>senza slash finale</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	it	Inserisci la stringa di ricerca. Per vedere tutta la lista, svuota il campo e premi ancora il pulsante INVIA
@@ -221,12 +227,14 @@ host information	admin	it	Informazioni host
 hour<br>(0-23)	admin	it	Ore<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30) ?
+how should email addresses for new users be constructed?	admin	it	Come deve essere strutturata la mail per i nuovi utenti ?
 icon	admin	it	Icona
 idle	admin	it	inattivo
 if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	it	Nel caso si utilizzi LDAP, vuoi gestire gli attributi di homedirectory e shell di login?
 in mbyte	admin	it	in MByte
 inbound	admin	it	in ingresso
+initial	admin	it	Iniziale
 install crontab	admin	it	Installa crontab
 installed applications	common	it	Applicazioni Installate
 installed crontab	admin	it	Crontab Installati
@@ -275,6 +283,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	it	ID minimo per l'account (es.
 minute	admin	it	Minuti
 mode	admin	it	Modalità
 month	admin	it	Mese
+more secure	admin	it	Molto sicuro
 name must not be empty !!!	admin	it	Il nome non può essere vuoto !!!
 new group name	admin	it	Nome nuovo gruppo
 new name	admin	it	nuovo nome
@@ -349,6 +358,7 @@ set preference values.	admin	it	Imposta i valori delle preferenze
 should the login page include a language selectbox (useful for demo-sites) ?	admin	it	Includere nella pagina di login un elenco a discesa per selezionare la lingua (utile per i siti-demo) ?
 show 'powered by' logo on	admin	it	Visualizza il logo 'creato con'
 show access log	admin	it	Visualizza i log di accesso
+show an asterisk (*) to mark untranslated strings	admin	it	Visualizza con un asterisco le righe non tradotte
 show current action	admin	it	Visualizza l'azione corrente
 show error log	admin	it	Visualizza i log di errore
 show phpinfo()	admin	it	Visualizza phpinfo()
@@ -405,7 +415,7 @@ use cookies to pass sessionid	admin	it	utilizza i cookie per passare l'id di ses
 use pure html compliant code (not fully working yet)	admin	it	Usa codice HTML compliant (non ancora completamente implementato)
 use theme	admin	it	Utilizza il tema
 user accounts	admin	it	Account utenti
-user data	admin	it	dati utente
+user data	common	it	dati utente
 user for smtp-authentication (leave it empty if no auth required)	admin	it	User per autenticazione SMTP (lascia vuoto se non è richiesta autenticazione)
 user groups	admin	it	Gruppi utenti
 userdata	admin	it	dati utente
@@ -435,5 +445,6 @@ you must enter an application name and title.	admin	it	Devi inserire un nome e u
 you must enter an application name.	admin	it	Devi inserire un nome per l'applicazione
 you must enter an application title.	admin	it	Devi inserire un titolo per l'applicazione
 you must select a file type	admin	it	Devi selezionare un tipo di file
+you must select at least one group member.	admin	it	Devi selezionare almeno un membro del gruppo.
 you will need to remove the subcategories before you can delete this category	admin	it	E' necessario rimuovere le sotto-categorie prima di cancellare questa categoria
 your session could not be verified.	admin	it	La sessione non può essere verificata.
