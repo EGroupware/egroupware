@@ -261,20 +261,27 @@ class db_backup
 			}
 			if ($table)	// do we already reached the data part
 			{
+				$import = true;
 				$data = $this->csv_split($line,$cols);
-
-				if (count($data) == count($cols))
-				{
-					if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
-					{
-						$translation->convert($data,$charset);
-					}
-					$this->db->insert($table,$data,False,__LINE__,__FILE__,'all-apps',true);
-				}
-				else
-				{
-					echo '<p>'.lang("Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
+				if ($table == 'egw_async' && in_array('##last-check-run##',$data)) {
+					echo '<p>'.lang("Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
 					echo 'data=<pre>'.print_r($data,true)."</pre>\n";
+					$import = false;
+				}
+				if ($import) {
+					if (count($data) == count($cols))
+					{
+						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
+						{
+							$translation->convert($data,$charset);
+						}
+						$this->db->insert($table,$data,False,__LINE__,__FILE__,'all-apps',true);
+					}
+					else
+					{
+						echo '<p>'.lang("Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
+						echo 'data=<pre>'.print_r($data,true)."</pre>\n";
+					}
 				}
 			}
 		}
