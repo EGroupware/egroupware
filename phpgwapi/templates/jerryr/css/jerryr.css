@@ -6,12 +6,12 @@
 body,td
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px; 
+	font-size: 11px;
 }
 
 select,input,button
 {
-	color: #006699; 
+	color: #006699;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size:110%;
 }
@@ -24,7 +24,7 @@ select
 a:link,a:visited
 {
 	cursor:pointer;
-	color: #727f8a; 
+	color: #727f8a;
 	text-decoration: none;
 }
 
@@ -48,16 +48,16 @@ a:hover,a:active
 	color: #ff0000;
 }
 
-#divPoweredBy 
+#divPoweredBy
 {
 	color: #000000;
 }
 
-/* 
+/*
 	other styling
 */
 
-body 
+body
 {
 	background-color:#9f9f9f;
 	padding: 0px;
@@ -92,7 +92,7 @@ input[type=submit],input[type=button],input[type=reset],button,.egwbutton
 	border: solid 1px #7e94a5;
 	margin:  1px;
 	padding: 1px;
-	cursor:  pointer; 
+	cursor:  pointer;
 	color: #17202b;
 }
 
@@ -120,7 +120,7 @@ input.egwbutton
 	border:  outset 1px #b9d5e3;
 	margin:  1px;
 	padding: 1px;
-	cursor:  pointer; 
+	cursor:  pointer;
 	color:  #004e7d;
 }
 
@@ -139,7 +139,7 @@ input.egwbutton:active
 
 input[type=image]
 {
-	cursor: pointer; 
+	cursor: pointer;
 	border: 0;
 }
 
@@ -170,18 +170,18 @@ input[type=image]
     z-index:9999;
 }
 
-.divLoginbox 
+.divLoginbox
 
 {
 	position:relative;
-	width: 370px; 
-	border: #9f9f9f 1px solid; 
+	width: 370px;
+	border: #9f9f9f 1px solid;
 }
 
-.divSidebox 
+.divSidebox
 {
 	position: relative;
-	border: 1px solid #9f9f9f; 
+	border: 1px solid #9f9f9f;
 }
 
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
@@ -197,7 +197,7 @@ input[type=image]
 	width: 20px;
 }
 
-.divSideboxHeader,.divLoginboxHeader 
+.divSideboxHeader,.divLoginboxHeader
 {
 	text-align:center;
 	background-image:url(../images/menuTitle.png);
@@ -256,7 +256,7 @@ a.textSidebox
 	background-color: #ede6d8;
 	background-repeat: repeat-x;
 	border-top: 1px solid #9f9f9f;
-	padding-left: 2px;	
+	padding-left: 2px;
 	font-size: 10px;
 }
 
@@ -419,7 +419,7 @@ body {
 	border-bottom: solid #5793ff 0px;
 	height:24px;
 	padding-top:4px ;
-        
+
 }
 #topmenu a
 {
@@ -427,7 +427,7 @@ body {
 }
 
 #topmenu_items
-{	
+{
 	float:left;
 }
 
@@ -584,7 +584,7 @@ body {
 	text-align:right;
 }
 
-#divGenTime,#divPoweredBy 
+#divGenTime,#divPoweredBy
 
 {
 	bottom:4px;
@@ -595,17 +595,17 @@ body {
 /*
 	Table formatting
 */
-.th { 
+.th {
 	color: black; background-color: #f9f4e2;
-	background-image: url(../images/hilitetest.png); 
+	background-image: url(../images/hilitetest.png);
 }
-.row_on { 
-	color: black; 
-	background-color: #ededed; 
+.row_on {
+	color: black;
+	background-color: #ededed;
 }
-.row_off { 
-	color: black; 
-	background-color: #fbf9f2; 
+.row_off {
+	color: black;
+	background-color: #fbf9f2;
 }
 .narrow_column { width: 1%; white-space: nowrap; }
 
@@ -627,7 +627,7 @@ body {
 }
 
 .portal_box_header {
-	height: 15px; 
+	height: 15px;
 	padding-top: 0px;
 }
 
@@ -660,3 +660,24 @@ body {
 {
 	cursor: pointer;
 }
+
+.selectbg
+{
+	position:absolute;
+	z-index:10;
+	overflow:hidden;/
+	width:250px;
+}
+.iframeforselectbox
+{
+	display:block;
+	height:250px;
+	left:10pt;
+	position:absolute;
+	top:10pt;
+	width:224px;
+	z-index:-1;
+	border: 0px;
+}
+
+.bdforselection{;padding:12px;}

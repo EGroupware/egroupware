@@ -69,7 +69,8 @@
 <!-- END navbar_header -->
 
 
-<!-- BEGIN appbox -->	
+<!-- BEGIN appbox -->
+</div><!--[if lte IE 6.5]><iframe frameborder="0" framespacing="0"  class="iframeforselectbox"></iframe><![endif]--></div>
 	<div id="divSubContainer">
 		<table width="100%" cellspacing="0" cellpadding="0">
 		<tr>
@@ -88,6 +89,7 @@
 	</div>
 
 	<div id="menu2Container">
+	<!--[if lte IE 6.5]><div class="selectbg" id="dd3"><div class="bdforselection"><![endif]-->
 		<div id="menu2Content" style="position: relative; left: 0; text-align: left;">
 			<table cellspacing="0" cellpadding="0">
 				<tr><td>
@@ -106,7 +108,7 @@
 <!-- END sidebox_hide_footer -->
 
 
-<!-- BEGIN navbar_footer -->	
+<!-- BEGIN navbar_footer -->
 {sideboxcolend}
 		<!-- End Sidebox Column -->
 
@@ -156,7 +158,7 @@
 
 
 <!-- BEGIN extra_blocks_footer -->
-		</table>	
+		</table>
 	</div>
 </div>
 

@@ -477,3 +477,24 @@ Preferences tabs
 {
 	cursor: pointer;
 }
+
+.selectbg
+{
+	position:absolute;
+	z-index:10;
+	overflow:hidden;
+	width:250px;
+}
+.iframeforselectbox
+{
+	display:block;
+	height:150px;
+	left:10pt;
+	position:absolute;
+	top:0pt;
+	width:235px;
+	z-index:-1;
+	border: 0px;
+}
+
+.bdforselection{;padding:12px;}
