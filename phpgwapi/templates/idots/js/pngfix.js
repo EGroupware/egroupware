@@ -22,11 +22,14 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
 				}
 			}
 			var strNewHTML = "<span " + imgID + imgClass + imgTitle
-			strNewHTML += " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+			var width  = img.width ? img.width : 16
+			var height = img.height ? img.height : 16
+			strNewHTML += " style=\"" + "width:" + width + "px; height:" + height + "px;" + imgStyle + ";"
 			strNewHTML += "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
 			strNewHTML += "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>"
 			if(img.className != 'sideboxstar') {
 				img.outerHTML = strNewHTML
+
 				i = i-1
 			}
 		}
