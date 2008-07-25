@@ -223,6 +223,7 @@ home directory	admin	cs	Domovský adresáø
 host information	admin	cs	Informace o serveru (host)
 hour<br>(0-23)	admin	cs	Hodina<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	cs	Kolik dní mají záznamy zùstat v pøístupovém protokolu, ne¾ budou smazány (výchozí 90) ?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	cs	Kolik polo¾ek smí u¾ivatelé bez práv administrátora exportovat (prázdné = bez omezení, ne = ¾ádný export)
 how many minutes should an account or ip be blocked (default 30) ?	admin	cs	Kolik minut mají být úèet nebo IP blokovány (výchozí 30) ?
 how should email addresses for new users be constructed?	admin	cs	Jak mají být sestaveny e-mailové adresy pro nové u¾ivatele?
 icon	admin	cs	Ikona

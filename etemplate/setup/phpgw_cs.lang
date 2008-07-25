@@ -52,6 +52,7 @@ cant delete a single widget from a grid !!!	etemplate	cs	nemohu smazat jednotliv
 cant delete the only column of a grid !!!	etemplate	cs	nemohu smazat jediný sloupec ve møí¾ce !!!
 cant delete the only row in a grid !!!	etemplate	cs	nemohu smazat jediný øádek ve møí¾ce !!!
 category	etemplate	cs	Kategorie
+category tree	etemplate	cs	Strom kategorií
 cellpadding for the table-tag	etemplate	cs	Vzdálenost mezi buòkou a jejím obsahem pro tag tabulky
 cells	etemplate	cs	Buòky
 cellspacing for the table-tag	etemplate	cs	Vzdálenost mezi buòkami pro tag tabulky
@@ -235,7 +236,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	cs	Název tabulky, která se má pøidat
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	cs	název e©ablony, mìl by být ve tvaru aplikace.funkce.[.pod©ablona]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	cs	musí být unikátní v rámci tabulky a nesmí být rezervovaným slovem SQL, nejlep¹í je v¹echny opatøit spoleènou dvoupísmennou zkratkou aplikace, napø. 'et_'
-new search	common	cs	Nové hledání
+new search	etemplate	cs	Nové hledání
 new table created	etemplate	cs	Nová tabulka vytvoøena
 newer version '%1' exists !!!	etemplate	cs	existuje novìj¹í verze '%1'  !!!
 nextmatch	etemplate	cs	Nextmatch (Dal¹í shoda)
@@ -367,6 +368,7 @@ to start the etemplate editor	etemplate	cs	pro start editoru e©ablon
 to start the search	etemplate	cs	pro start hledání
 today	etemplate	cs	Dnes
 top	etemplate	cs	Horní okraj
+tree	etemplate	cs	Strom
 type	etemplate	cs	Typ
 type of the column	etemplate	cs	typ sloupce
 type of the field (select label if field should be empty)	etemplate	cs	typ pole (vyberte Jmenovku, pokud má být pole prázdné)

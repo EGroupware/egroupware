@@ -4,6 +4,9 @@ back to file manager	filemanager	cs	Zpìt na Správce souborù
 cancel editing %1 without saving	filemanager	cs	Ukonèit editaci %1 bez ulo¾ení
 cannot create directory because it begins or ends in a space	filemanager	cs	Nemohu vytvoøit adresáø, proto¾e zaèíná nebo konèí mezerou
 cannot replace %1 because it is a directory	filemanager	cs	Nemohu pøepsat %1 proto¾e je to adresáø
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	cs	Zvolíte-li koncové datum men¹í ne¾ poèáteèní datum, výsledkem hledání budou v¹echny záznamy kromì záznamù mezi uvedenými daty.
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	cs	Zvolíte-li jen jedno datum (od/do) výsledkem hledání budou v¹echny záznamy star¹í/mlad¹í ne¾ zadané datum
+clear search	filemanager	cs	Nové hledání
 command sucessfully run	filemanager	cs	Pøíkaz úspì¹nì spu¹tìn
 comment	filemanager	cs	Komentáø
 comments cannot contain "%1"	filemanager	cs	Komentáøe nemohou obsahovat "%1"
@@ -24,6 +27,7 @@ create folder	filemanager	cs	Vytvoøit slo¾ku
 created	filemanager	cs	Vytvoøeno
 created %1	filemanager	cs	Vytvoøeno %1
 created %1,%2	filemanager	cs	Vytvoøeno %1,%2
+created between	filemanager	cs	vytvoøeno mezi
 created by	filemanager	cs	Vytvoøil(a)
 created directory %1	filemanager	cs	Vytvoøen adresáø %1
 date	filemanager	cs	Datum
@@ -45,6 +49,7 @@ fake base dir did not exist, egroupware created a new one.	filemanager	cs	Virtuá
 file	filemanager	cs	Soubor
 file %1 already exists. please edit it or delete it first.	filemanager	cs	Soubor %1 ji¾ existuje. Buï ho nejprve sma¾te nebo ho zeditujte.
 file %1 could not be created.	filemanager	cs	Soubor %1 nemohl být vytvoøen.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	cs	Soubor %1 je mo¾ná pøíli¹ velký. Kontaktujte Va¹eho administrátora pro dal¹í informace.
 file name	filemanager	cs	Jméno souboru
 file names cannot contain  or /	filemanager	cs	Jména souborù nesmí obsahovat \ nebo /
 file names cannot contain "%1"	filemanager	cs	Jména souborù nesmí obsahovat "%1"
@@ -61,10 +66,12 @@ go to your home directory	filemanager	cs	Jít do domovského adresáøe
 go to:	filemanager	cs	Jít na:
 go up	filemanager	cs	Jít vý¹e
 home	filemanager	cs	Domov
+id	filemanager	cs	ID
 location	filemanager	cs	Umístìní
 locked	filemanager	cs	Uzamèen
 mime type	filemanager	cs	MIME typ
 modified	filemanager	cs	Zmìnìno
+modified between	filemanager	cs	zmìnìno mezi
 modified by	filemanager	cs	Zmìnil(a)
 move to	filemanager	cs	Pøesunout do
 move to:	filemanager	cs	Pøesunout do:
@@ -87,6 +94,7 @@ save %1, and go back to file listing	filemanager	cs	Ulo¾it %1 a vrátit se zpìt n
 save all	filemanager	cs	Ulo¾it v¹e
 save changes	filemanager	cs	Ulo¾it zmìny
 saved %1	filemanager	cs	%1 ulo¾eno
+searchstring	filemanager	cs	hledaný øetìzec
 show	filemanager	cs	Zobrazit
 show ..	filemanager	cs	Zobrazit ...
 show .files	filemanager	cs	Zobrazit skryté .soubory
@@ -94,6 +102,7 @@ show command line (experimental. dangerous.)	filemanager	cs	Zobrazit pøíkazovou 
 show help	filemanager	cs	Zobrazit nápovìdu
 size	filemanager	cs	Velikost
 sort by:	filemanager	cs	Tøídit dle
+start search	filemanager	cs	Zahájit hledání
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	cs	Budoucí správce souborù, zatím JEN PRO TESTOVACÍ ÚÈELY. Posílejte prosím hlá¹ení o chybách.
 total files	filemanager	cs	Celkem souborù
 unknown mime-type defaults to text/plain when viewing	filemanager	cs	Neznámé MIME typy jsou standardnì zobrazovány jako prostý text

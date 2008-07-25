@@ -3,6 +3,7 @@
 %1 created in %2.	setup	cs	%1 vytvoøen v %2.
 %1 does not exist !!!	setup	cs	%1 neexistuje !!!
 %1 is %2%3 !!!	setup	cs	%1 je %2%3 !!!
+%1 is needed by: %2.	setup	cs	%1 je zapotøebí pro: %2.
 %1, %2 or %3 the configuration file.	setup	cs	%1, %2 nebo %3 konfiguraèní soubor.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	cs	'%1' není povoleno jako %2. argumenty volby %3 !!!
 (searching accounts and changing passwords)	setup	cs	(prohledávání úètù a zmìna hesel)
@@ -342,7 +343,7 @@ mcrypt initialization vector	setup	cs	Mcrypt inicializaèní vektor
 mcrypt mode (default cbc)	setup	cs	Mcyrpt  re¾im (výchozí CBC)
 mcrypt settings (requires mcrypt php extension)	setup	cs	Nastavení mcyrpt (vy¾aduje PHP roz¹íøení mcrypt)
 mcrypt version	setup	cs	Verze mcrypt
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	cs	Parametr memory_limit je nastaven na ménì ne¾ %1: nìkteré aplikace eGroupWaru vy¾adují více ne¾ doporuèených 8M, oèekávejte nahodilé chyby
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	cs	Parametr memory_limit je nastaven na ménì ne¾ %1: nìkteré aplikace eGroupWaru vy¾adují více pamìti ne¾ doporuèených 8M, mù¾ete proto oèekávat, ¾e bude docházet k náhodným chybám.
 migration between egroupware account repositories	setup	cs	Migrace mezi databázemi eGroupWare úètù
 minimum account id (e.g. 500 or 100, etc.)	setup	cs	Minimální id úètu (napø. 500 nebo 100, atp.)
 minute	setup	cs	minuta
@@ -518,6 +519,7 @@ the first step in installing egroupware is to ensure your environment has the ne
 the following applications need to be upgraded:	setup	cs	Následující aplikace potøebují aktualizovat:
 the function %1 is needed from: %2.	setup	cs	Funkce %1 je vy¾adována (èím): %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	cs	Funkce imagecreatefromjpeg je souèástí roz¹íøení gd (zkompilovaného s podporou jpeg!). Je zapotøebí pro uploady fotek ke kontaktùm.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	cs	Roz¹íøení pro LDAP je zapotøebí v pøípadì, pokud chcete LDAP pou¾ívat pro ukládání u¾ivatelských úètù nebo kontaktù nebo se chcete autentikovat vùèi LDAP èi Active Directory. Není potøeba pro standardní SQL instalaci.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Roz¹íøení mbstring je zapotøebí pro plnou podporu unicode (utf-8) a dal¹ích vícebajtových znakových sad.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Parametr mbstring.func_overload = 7 musí být nastaven pro plnou podporu unicode (utf-8) a dal¹ích vícebajtových znakových sad.
 the session extension is needed to use php sessions (db-sessions work without).	setup	cs	Roz¹íøení session je zapotøebí pro pou¾ití php relací (databázové relace fungují i bez nìj).

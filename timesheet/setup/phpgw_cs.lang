@@ -37,6 +37,7 @@ saves the changes made	timesheet	cs	Ulo¾í provedené zmìny
 saves this entry and add a new one	timesheet	cs	Ulo¾í aktuální záznam a pøidá nový
 select a price	timesheet	cs	Vybrat cenu
 select a project	timesheet	cs	Vybrat projekt
+show a quantity sum (eg. to sum up negative overtime)	admin	cs	Zobrazit souèet mno¾ství (napø. pro seètení záporného pøesèasu)
 start	timesheet	cs	Zaèátek
 starttime	timesheet	cs	Poèáteèní èas
 starttime has to be before endtime !!!	timesheet	cs	Poèáteèní èas musí pøedcházet èasu ukonèení !!!

@@ -1,8 +1,10 @@
 (no subject)	felamimail	cs	(¾ádný pøedmìt)
 (only cc/bcc)	felamimail	cs	(jen Kopie/Skrytá kopie)
+(separate multiple addresses by comma)	felamimail	cs	(více adres oddìlte èárkou)
 (unknown sender)	felamimail	cs	(neznámý odesílatel)
 activate	felamimail	cs	Aktivovat
 activate script	felamimail	cs	aktivovat skript
+activating by date requires a start- and end-date!	felamimail	cs	Aktivace datumem vy¾aduje nastavení poèáteèního A koncového data!
 add acl	felamimail	cs	pøidat acl
 add address	felamimail	cs	Pøidat adresu
 add rule	felamimail	cs	Pøidat pravidlo
@@ -38,6 +40,8 @@ bcc	felamimail	cs	Skrytá kopie
 before headers	felamimail	cs	Pøed hlavièkami
 between headers and message body	felamimail	cs	Mezi hlavièkami a tìlem zprávy
 body part	felamimail	cs	èást tìla
+by date	felamimail	cs	datumem
+can not send message. no recipient defined!	felamimail	cs	není mo¾né odeslat zprávu, pøíjemce nebyl definován!
 can't connect to inbox!!	felamimail	cs	nelze se pøipojit k INBOXu!!
 cc	felamimail	cs	Kopie
 change folder	felamimail	cs	Zmìnit slo¾ku
@@ -75,6 +79,7 @@ date(newest first)	felamimail	cs	Datum (od nejnovìj¹ího)
 date(oldest first)	felamimail	cs	Datum (od nejstar¹ího)
 days	felamimail	cs	dny
 deactivate script	felamimail	cs	deaktivace skriptu
+default	felamimail	cs	výchozí
 default signature	felamimail	cs	výchozí podpis
 default sorting order	felamimail	cs	Výchozí tøídìní
 delete all	felamimail	cs	smazat v¹e
@@ -163,6 +168,7 @@ follow	felamimail	cs	následovat
 for mail to be send - not functional yet	felamimail	cs	Pro odesílanou zprávu - zatím nefunkèní
 for received mail	felamimail	cs	Pro pøijatou po¹tu
 forward	felamimail	cs	Pøeposlat
+forward messages to	felamimail	cs	Pøeposlat zprávu (komu)
 forward to	felamimail	cs	pøeposlat (komu)
 forward to address	felamimail	cs	pøeposlat na adresu
 forwarding	felamimail	cs	Pøeposílání
@@ -266,6 +272,9 @@ no messages found...	felamimail	cs	nebyly nalezeny ¾ádné zprávy...
 no messages were selected.	felamimail	cs	Nebyly vybrány ¾ádné zprávy.
 no plain text part found	felamimail	cs	nebyla nalezena èást ve formì prostého textu
 no previous message	felamimail	cs	¾ádná pøedchozí zpráva
+no recipient address given!	felamimail	cs	Nebyla zadána adresa pøíjemce!
+no signature	felamimail	cs	bez podpisu
+no subject given!	felamimail	cs	Nebyl zadán pøedmìt!
 no supported imap authentication method could be found.	felamimail	cs	Nebyla nalezena podporovaná metoda IMAP autentikace.
 no valid emailprofile selected!!	felamimail	cs	Nebyl vybrán platný e-mailový profil!!
 none	felamimail	cs	®ádné
@@ -336,6 +345,7 @@ send	felamimail	cs	Odeslat
 send a reject message	felamimail	cs	odeslat zprávu se zamítnutím
 sent folder	felamimail	cs	Odeslané
 server supports mailfilter(sieve)	felamimail	cs	server podporuje po¹tovní filter (sieve)
+set as default	felamimail	cs	Nastavit jako výchozí
 show header	felamimail	cs	Zobrazit hlavièku
 show new messages on main screen	felamimail	cs	Zobrazovat nové zprávy na hlavní obrazovce
 sieve script name	felamimail	cs	Jméno sieve skriptu
@@ -359,6 +369,7 @@ subscribe	felamimail	cs	Pøihlásit
 subscribed	felamimail	cs	Pøihlá¹eno
 subscribed successfully!	felamimail	cs	Úspì¹nì pøihlá¹eno !
 sun	felamimail	cs	Ne
+system signature	felamimail	cs	systémový podpis
 table of contents	felamimail	cs	Obsah
 text only	felamimail	cs	Pouze text
 the connection to the imap server failed!!	felamimail	cs	Pøipojení k IMAP serveru selhalo!!
@@ -405,6 +416,7 @@ use smtp auth	admin	cs	Pou¾ít SMTP autentikaci
 users can define their own emailaccounts	admin	cs	U¾ivatelé smí definovat vlastní po¹tovní úèty
 vacation notice	common	cs	odpovìï v nepøítomnosti
 vacation notice is active	felamimail	cs	Odpovìï v nepøítomnosti je aktivní
+vacation start-date must be before the end-date!	felamimail	cs	Poèáteèní datum automatické odpovìdi musí PØEDCHÁZET koncovému datu!
 validate certificate	felamimail	cs	ovìøit certifikát
 view full header	felamimail	cs	Zobrazit celou hlavièku
 view header lines	felamimail	cs	Zobrazit øádky hlavièky
@@ -419,3 +431,4 @@ with message "%1"	felamimail	cs	se zprávou "%1"
 wrap incoming text at	felamimail	cs	Zarovnat pøíchozí text
 writing	felamimail	cs	psaní
 wrote	felamimail	cs	napsal
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	cs	Mù¾ete pou¾ít %1 pro poèáteèní datum a %2 pro koncové datum.

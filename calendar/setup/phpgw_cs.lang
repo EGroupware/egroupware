@@ -11,6 +11,7 @@ actions	calendar	cs	Akce
 actions...	calendar	cs	Akce...
 add alarm	calendar	cs	Pøidat pøipomínku
 added	calendar	cs	Pøidáno
+added by synchronisation	calendar	cs	pøidáno synchronizací
 after %1	calendar	cs	Po %1
 after current date	calendar	cs	Po aktuálním datu
 alarm	calendar	cs	Pøipomínka
@@ -52,6 +53,7 @@ copy this event	calendar	cs	Kopírovat tuto událost
 countries	calendar	cs	Zemì
 country	calendar	cs	Zemì
 create an exception for the given date	calendar	cs	Vytvoøit výjimku pro zadané datum
+create exception	calendar	cs	Vytvoøit výjimku
 create new links	calendar	cs	Vytvoøit nové odkazy
 csv	calendar	cs	CSV
 csv-fieldname	calendar	cs	Název CSV pole
@@ -105,6 +107,7 @@ event details follow	calendar	cs	Následují detaily události
 event saved	calendar	cs	Událost ulo¾ena
 event will occupy the whole day	calendar	cs	Událost zabere celý den
 exception	calendar	cs	Výjimka
+exception created - you can now edit or delete it	calendar	cs	Výjimka vytvoøena - nyní jí mù¾ete editovat nebo smazat
 exceptions	calendar	cs	Výjimky
 execute a further action for this entry	calendar	cs	Spustit dal¹í akci pro tento záznam
 existing links	calendar	cs	Stávající odkazy
@@ -317,6 +320,7 @@ you can only set a year or a occurence !!!	calendar	cs	Mù¾ete nastavit jen rok n
 you do not have permission to read this record!	calendar	cs	Nemáte oprávnìní ke ètení tohoto záznamu!
 you have a meeting scheduled for %1	calendar	cs	Máte naplánovano setkání na %1
 you have been disinvited from the meeting at %1	calendar	cs	Byla Vám zru¹ena pozvánka na setkání v %1
+you need to select an account, contact or resource first!	calendar	cs	Musíte nejprve vybrat úèet, kontakt nebo zdroj!
 you need to select an ical file first	calendar	cs	Nejprve musíte vybrat iCal soubor
 you need to set either a day or a occurence !!!	calendar	cs	Musíte nastavit buï den nebo výskyt !!!
 your meeting scheduled for %1 has been canceled	calendar	cs	Va¹e setkání plánované na %1 bylo zru¹eno
