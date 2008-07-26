@@ -3,6 +3,7 @@
 %1 etemplates for application '%2' dumped to '%3'	etemplate	en	%1 eTemplates for Application '%2' dumped to '%3'
 %1 etemplates found	etemplate	en	%1 eTemplates found
 %1 matches on search criteria	etemplate	en	%1 matches on search criteria
+%1 more...	etemplate	en	%1 more...
 %1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for Application '%2'
 %s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
@@ -10,9 +11,11 @@
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s readonly
 '%1' has an invalid format !!!	etemplate	en	'%1' has an invalid format !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	en	'%1' is no php file in the eGW server root (%2)!
 '%1' is not a valid date !!!	etemplate	en	'%1' is not a valid date !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floatingpoint number !!!
 '%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer !!!
+'%1' is not allowed ('%2')!	etemplate	en	'%1' is NOT allowed ('%2')!
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 accesskey	etemplate	en	Accesskey
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	en	Accesskeys can also be specified with an & in the label (eg. &Name)
@@ -225,10 +228,12 @@ linklist	etemplate	en	LinkList
 linkstring	etemplate	en	LinkString
 linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
+message ...	etemplate	en	Message ...
 middle	etemplate	en	Middle
 minute	etemplate	en	Minute
 minutes	etemplate	en	Minutes
 month	etemplate	en	Month
+more than 1 match for '%1'	etemplate	en	More than 1 match for '%1'
 multicolumn indices	etemplate	en	Multicolumn Indices
 name	etemplate	en	Name
 name of other table where column is a key from	etemplate	en	name of other table where column is a key from
@@ -248,6 +253,7 @@ nextmatch sortheader	etemplate	en	Nextmatch Sortheader
 no column to swap with !!!	etemplate	en	no column to swap with !!!
 no file	etemplate	en	no file
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
+no matches found	etemplate	en	No matches found
 no row to swap with !!!	etemplate	en	no row to swap with !!!
 not null	etemplate	en	NOT NULL
 nothing	etemplate	en	nothing
@@ -284,6 +290,7 @@ read etemplate from database (for the keys above)	etemplate	en	read eTemplate fr
 readonly	etemplate	en	readonly
 remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
+required	etemplate	en	Required
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
 row...	etemplate	en	Row...
@@ -403,3 +410,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	en	xml-file to import
 xslt template	etemplate	en	XSLT Template
 year	etemplate	en	Year
+you are not allowed to export more then %1 entries!	etemplate	en	You are not allowed to export more then %1 entries!
+you can respond by visiting:	etemplate	en	You can respond by visiting:

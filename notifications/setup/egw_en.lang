@@ -1,3 +1,23 @@
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	en	Choose a notification-chain. You will be notified over the backends included in the chain.<br />Note: If a notification-chain is marked as "disabled", your Administrator does not allow one or more of the backends included in the chain and notifications falls back to "E-Mail" while notifying you.
+common chains	notifications	en	Common chains
+disabled chains	notifications	en	Disabled chains
 don't notify me via popups in egroupware	notifications	en	Don't notify me via popups in eGroupWare
+egroupware has notifications for you	notifications	en	eGroupWare has notifications for you
+egroupware-popup backend	admin	en	eGroupware-Popup backend
+egroupware-popup verbosity	notifications	en	eGroupware-Popup verbosity
+enable egroupware-popup backend	admin	en	Enable eGroupWare-Popup backend
+enable sms backend	admin	en	Enable SMS backend
+enable windows-popup backend	admin	en	Enable Windows-Popup backend
+enabled chains	notifications	en	Enabled chains
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	en	How verbose should the eGroupware-Popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself
+if set, embedded links get rendered special for external clients	notifications	en	If set, embedded links get rendered special for external clients
+linked entries:	notifications	en	Linked entries:
+maximum sms messages per notification	admin	en	Maximum SMS messages per notification
+message from	notifications	en	Message from
 notification	common	en	Notification
+notify me by	notifications	en	Notify me by
+optimize e-mails for external mail client	notifications	en	Optimize E-Mails for external mail client
 preferences for notification	notifications	en	Preferences for notification
+sms backend	admin	en	SMS backend
+this egroupware notification has been sent to you by mail because your	notifications	en	This eGroupWare notification has been sent to you by mail because your
+windows-popup backend	admin	en	Windows-Popup backend

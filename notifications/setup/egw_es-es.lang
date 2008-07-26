@@ -1,3 +1,23 @@
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	es-es	Elija una cadena de notificación. Se le notiificará por los métodos incluidos en la cadena.<br />Nota: Si una cadena de notificación está marcada como "desactivada", su Administrador no permite una o más de los métodos incluidos en la cadena y la notificación falla volviendo a "Correo electrónico" mientras le notifica.
+common chains	notifications	es-es	Cadenas comunes
+disabled chains	notifications	es-es	Cadenas desactivadas
 don't notify me via popups in egroupware	notifications	es-es	No notificarme usando ventanas emergentes en eGroupWare
+egroupware has notifications for you	notifications	es-es	eGroupWare tiene notificaciones para usted
+egroupware-popup backend	admin	es-es	Método ventana emergente de eGroupWare
+egroupware-popup verbosity	notifications	es-es	Verbosidad de la ventana emergente de eGroupWare
+enable egroupware-popup backend	admin	es-es	Activar el método de ventanas emergentes de eGroupWare
+enable sms backend	admin	es-es	Activar el método SMS
+enable windows-popup backend	admin	es-es	Activar el método ventanas emergentes de Windows
+enabled chains	notifications	es-es	Cadenas activadas
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	es-es	Cómo debe ser el comportamiento de la ventana de eGroupWare sobre la cantidad de información enviada al usuario en una notificación:<br />baja: sólo muestra la campana de notificación en el menú superior (¡para lo que debe tener activado el menú superior!)<br />media: traer al frente la ventana de notiicación<br />alta: traer la ventana de notificación al frente y dejar al navegador que se anuncie por sus propios medios
+if set, embedded links get rendered special for external clients	notifications	es-es	Si está activado, los enlaces embebidos se visualizan de una forma especial para los clientes externos
+linked entries:	notifications	es-es	Entradas vinculadas:
+maximum sms messages per notification	admin	es-es	Número máximo de mensajes SMS por notificación
+message from	notifications	es-es	Mensaje desde
 notification	common	es-es	Notificaciones
+notify me by	notifications	es-es	Notificar por mí
+optimize e-mails for external mail client	notifications	es-es	Optimizar correos electrónicos para cliente de correos externo
 preferences for notification	notifications	es-es	Preferencias para la notificación
+sms backend	admin	es-es	Método SMS
+this egroupware notification has been sent to you by mail because your	notifications	es-es	Se le ha enviado por correo esta notificación de eGroupWare porque su
+windows-popup backend	admin	es-es	Método ventana emergente de Windows

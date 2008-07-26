@@ -82,6 +82,7 @@ custom contact-address, leave empty to use information from most recent link	inf
 custom contact-information, leave emtpy to use information from most recent link	infolog	es-es	Información de contacto personalizada. Dejar en blanco para usar la información del enlace más reciente
 custom fields	infolog	es-es	Campos personalizados
 custom fields, typ and status	common	es-es	Campos personalizados, tipo y estado
+custom from	infolog	es-es	Personalizado desde
 custom regarding	infolog	es-es	Recuerdos personales
 custom status for typ	infolog	es-es	Estado personalizado para el tipo
 customfields	infolog	es-es	Campos personalizados
@@ -152,6 +153,7 @@ high	infolog	es-es	alta
 history logging	infolog	es-es	Registro histórico
 history logging and deleting of items	infolog	es-es	Registro histórico y borrado de elementos
 id	infolog	es-es	Id
+id#	infolog	es-es	Id nº
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	es-es	Si un tipo tiene un propietario para el grupo, todas las entradas de ese tipo pertenecerán al grupo y NO al usuario que las creó.
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no hay valor inicial, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
 import	infolog	es-es	Importar
@@ -187,6 +189,7 @@ location	infolog	es-es	Ubicación
 longer textual description	infolog	es-es	descripción larga de la entrada
 low	infolog	es-es	baja
 max length of the input [, length of the inputfield (optional)]	infolog	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
+modifierer	infolog	es-es	Modificador
 name must not be empty !!!	infolog	es-es	¡El nombre no puede quedar vacío!
 name of new type to create	infolog	es-es	Nombre del nuevo tipo para crear
 never hide search and filters	infolog	es-es	No ocultar búsquedas y filtros
@@ -297,6 +300,7 @@ show last modified	infolog	es-es	Mostrar última modificación
 show status and percent done separate	infolog	es-es	Mostrar el estado y el porcentaje de finalización por separado
 show ticket id	infolog	es-es	Mostrar id del ticket?
 show times	infolog	es-es	Mostrar horas
+site configuration	infolog	es-es	Configuración del sitio
 small view	infolog	es-es	vista reducida
 start a new search, cancel this link	infolog	es-es	iniciar nueva búsqueda, cancelar este enlace
 startdate	infolog	es-es	Fecha de inicio
@@ -308,6 +312,7 @@ status ...	infolog	es-es	Estado...
 sub	infolog	es-es	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	es-es	Las subentradas quedan por debajo de las entradas del nivel superior o del principal, si no hay nivel superior.
 subject	infolog	es-es	Asunto
+sum	infolog	es-es	Suma
 task	infolog	es-es	Tareas pendientes
 template	infolog	es-es	Plantilla
 test import (show importable records <u>only</u> in browser)	infolog	es-es	Probar Importar (mostrar registros importables <u>sólo</u> en el navegador)

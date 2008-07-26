@@ -4,6 +4,7 @@
 %1 start	common	es-es	inicio de %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2<br />o dar a %3 permiso de escritura para el servidor web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
+(session restored in %1 seconds)	common	es-es	(la sesión se ha restaurado en %1 segundos)
 (shift-)click or drag to change value	jscalendar	es-es	Pulse mayúsculas o arrastre para cambiar el valor
 - click on any of the time parts to increase it	jscalendar	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	es-es	- Mantenga pulsando el botón del ratón en cualquiera de los botones de arriba para una selección más rápida.
@@ -12,6 +13,10 @@
 - use the %1, %2 buttons to select month	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el mes
 - use the %1, %2 buttons to select year	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el año
 00 (disable)	admin	es-es	00 (desactivar)
+1 day	common	es-es	1 día
+1 hour	common	es-es	1 hora
+1 month	common	es-es	1 mes
+1 week	common	es-es	1 semana
 13 (ntp)	admin	es-es	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del día
 3 number of chars for month-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del mes
@@ -26,6 +31,7 @@ account has been created	common	es-es	Se ha creado la cuenta
 account has been deleted	common	es-es	La cuenta ha sido borrada
 account has been updated	common	es-es	La cuenta ha sido actualizada
 account is expired	common	es-es	La cuenta ha expirado
+accounts	common	es-es	Cuentas
 acl	common	es-es	LCA
 action	common	es-es	Acción
 active	common	es-es	Activo
@@ -45,6 +51,7 @@ all fields	common	es-es	todos los campos
 alphabet	common	es-es	a,b,c,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	es-es	Hola de estilo alternativa:
 american samoa	common	es-es	AMERICAN SAMOA
+an error happend	common	es-es	Ha ocurrido un error
 an existing and by the webserver readable directory enables the image browser and upload.	common	es-es	Un directorio existente Y donde el servidor web pueda leer activa el navegar por imágenes, y también subirlas al servidor.
 andorra	common	es-es	ANDORRA
 angola	common	es-es	ANGOLA
@@ -72,6 +79,7 @@ azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
 back to user login	common	es-es	Volver al inicio de sesión del usuario
 background color:	common	es-es	Color de fondo:
+backupdir '%1' is not writeable by the webserver	common	es-es	El directorio de copia de seguridad '%1' no tiene permiso de escritura para el servidor web
 bad login or password	common	es-es	Nombre de usuario o contraseña incorrectas
 bahamas	common	es-es	BAHAMAS
 bahrain	common	es-es	BAHRAIN
@@ -134,8 +142,10 @@ christmas island	common	es-es	CHRISTMAS ISLAND
 clear	common	es-es	Limpiar
 clear form	common	es-es	Limpiar formulario
 click	common	es-es	Al pulsar
+click here to resume your egroupware session.	common	es-es	Pulse aquí para continuar su sesión de eGroupWare.
 click or mouse over to show menus	common	es-es	Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima
 click or mouse over to show menus?	common	es-es	¿Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima?
+click this image on the navbar: %1	common	es-es	Pulse esta imagen en la barra de navegación: %1
 close	common	es-es	Cerrar
 close sidebox	common	es-es	Cerrar caja lateral
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
@@ -160,6 +170,8 @@ current	common	es-es	Actual
 current users	common	es-es	Usuarios actuales
 cyprus	common	es-es	CHIPRE
 czech republic	common	es-es	REPUBLICA CHECHA
+database error	common	es-es	Error en la base de datos
+database error!	common	es-es	¡Error en la base de datos!
 date	common	es-es	Fecha
 date due	common	es-es	Fecha límite
 date selection:	jscalendar	es-es	Seleccionar fecha:
@@ -202,6 +214,8 @@ edit	common	es-es	Editar
 edit %1 category for	common	es-es	Editar %1 categoría para
 edit categories	common	es-es	Editar categorías
 edit category	common	es-es	Editar categoría
+egroupware	common	es-es	eGroupWare
+egroupware api version	common	es-es	Versión de la API eGroupWare
 egroupware api version %1	common	es-es	Versión de la API de eGroupWare: %1
 egroupware: login blocked for user '%1', ip %2	common	es-es	eGroupWare: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGIPTO
@@ -213,6 +227,7 @@ end date	common	es-es	Fecha de finalización
 end time	common	es-es	Hora de finalización
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare. <br>Ejemplo: http://www.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
+entry not found!	common	es-es	¡No se encontró la entrada!
 entry updated sucessfully	common	es-es	La entrada ha sido actualizada correctamente
 equatorial guinea	common	es-es	GUINEA ECUATORIAL
 eritrea	common	es-es	ERITREA
@@ -242,6 +257,7 @@ firstname	common	es-es	Nombre de pila
 fixme!	common	es-es	¡Corríjame!
 folder already exists.	common	es-es	La carpeta ya existe
 force selectbox	common	es-es	Forzar cuadro de selección
+forever	common	es-es	Para siempre
 france	common	es-es	FRANCIA
 french guiana	common	es-es	GUAYANA FRANCESA
 french polynesia	common	es-es	FRENCH POLYNESIA
@@ -293,6 +309,7 @@ home email	common	es-es	correo electrónico particular
 honduras	common	es-es	HONDURAS
 hong kong	common	es-es	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
+how to show the general egroupware menu ?	common	es-es	¿Cómo mostrar el menú general de eGroupWare?
 hungary	common	es-es	HUNGRÍA
 iceland	common	es-es	ISLANDIA
 iespell not detected. click ok to go to download page.	common	es-es	No se detectó ieSpell. Pulse Aceptar para ir a la página de descargas.
@@ -362,6 +379,8 @@ local	common	es-es	Local
 login	common	es-es	Entrar
 loginid	common	es-es	ID de usuario
 logout	common	es-es	Salir
+lost login id	common	es-es	Se ha perdido el id de sesion
+lost password	common	es-es	Se ha perdido la contraseña
 low	common	es-es	Baja
 lowest	common	es-es	La más baja
 luxembourg	common	es-es	LUXEMBURGO
@@ -432,9 +451,13 @@ norfolk island	common	es-es	NORFOLK ISLAND
 normal	common	es-es	Normal
 northern mariana islands	common	es-es	NORTHERN MARIANA ISLANDS
 norway	common	es-es	NORUEGA
+not	common	es-es	no
+not a user yet? register now	common	es-es	¿Todavía no es usuario? Regístrese ahora
 not assigned	common	es-es	sin asignar
+not readable %1 entry of user %2	common	es-es	No se puede leer la entrada %1 del usuario %2
 note	common	es-es	Nota
 notes	common	es-es	Notas
+notifications	common	es-es	notificaciones
 notify window	common	es-es	Ventana de notificación
 notify your administrator to correct this situation	common	es-es	Notifíquelo a su administrador para corregir esta situación
 november	common	es-es	Noviembre
@@ -446,6 +469,7 @@ on *nix systems please type: %1	common	es-es	En sistemas *nix, por favor, escrib
 on mouse over	common	es-es	Al mover el ratón por encima
 only private	common	es-es	sólo los privados
 only yours	common	es-es	sólo los suyos
+oops! you caught us in the middle of system maintainance.	common	es-es	¡Ups! Nos ha pillado en mitad del mantenimiento del sistema
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
 open sidebox	common	es-es	Abrir caja lateral
@@ -473,7 +497,9 @@ password must contain at least %1 special characters	common	es-es	La contraseña
 password must contain at least %1 uppercase letters	common	es-es	La contraseña debe contener al menos %1 letras mayúsculas
 password must have at least %1 characters	common	es-es	La contraseña debe tener al menos %1 caracteres
 path to user and group files has to be outside of the webservers document-root!!!	common	es-es	¡¡La ruta a los ficheros de usuario y grupos DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
+permission denied!	common	es-es	¡Permiso denegado!
 permissions to the files/users directory	common	es-es	permisos a los directorios de archivos/usuarios
+permisson denied!	common	es-es	¡Permiso denegado!
 personal	common	es-es	Personal
 peru	common	es-es	PERU
 philippines	common	es-es	FILIPINAS
@@ -487,6 +513,7 @@ please select	common	es-es	Por favor, seleccione
 please set your global preferences	common	es-es	Por favor, ponga sus preferencias globales
 please set your preferences for this application	common	es-es	Por favor, elija sus preferencias para esta aplicación
 please wait...	common	es-es	Por favor, espere...
+please, check back with us shortly.	common	es-es	Por favor, vuelva a comprobar dentro de un rato.
 poland	common	es-es	POLONIA
 portugal	common	es-es	PORTUGAL
 postal	common	es-es	Postal
@@ -509,8 +536,10 @@ qatar	common	es-es	QATAR
 read	common	es-es	Leer
 read this list of methods.	common	es-es	Leer esta lista de métodos
 reading	common	es-es	leyendo
+register	common	es-es	Registrar
 regular	common	es-es	Regular
 reject	common	es-es	Rechazar
+remember me	common	es-es	Recordarme
 remove selected accounts	common	es-es	borrar las cuentas seleccionadas
 remove shortcut	common	es-es	Eliminar acceso directo
 rename	common	es-es	Renombrar
@@ -539,6 +568,7 @@ save	common	es-es	Grabar
 search	common	es-es	Buscar
 search %1 '%2'	common	es-es	Buscar %1 '%2'
 search accounts	common	es-es	Buscar cuentas
+search or select accounts	common	es-es	buscar o seleccionar cuentas
 second	common	es-es	segundo
 section	common	es-es	Sección
 select	common	es-es	Seleccionar
@@ -568,8 +598,10 @@ setup main menu	common	es-es	Menú principal de instalación
 seychelles	common	es-es	SEYCHELLES
 show all	common	es-es	mostrar todo
 show all categorys	common	es-es	Mostrar todas las categorías
+show as topmenu	common	es-es	Mostrar como menú superior
 show clock?	common	es-es	¿Mostrar el reloj?
 show home and logout button in main application bar?	common	es-es	¿Mostrar los botones de inicio y salir en el barra de aplicaciones principal?
+show in sidebox	common	es-es	Mostrar en el menú lateral
 show logo's on the desktop.	common	es-es	Mostrar logo en el escritorio
 show menu	common	es-es	mostrar menú
 show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse la página
@@ -690,6 +722,7 @@ western sahara	common	es-es	SAHARA OCCIDENTAL
 what color should all the blank space on the desktop have	common	es-es	¿Qué color debe tener todo el espacio en blanco en el escritorio?
 what style would you like the image to have?	common	es-es	¿Qué estilo desea que tenga la imagen?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	es-es	Si dice que sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra principal de aplicaciones.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	es-es	Dónde y cómo mostrar los enlaces de egroupware com las preferencias, acerca de y salir.
 which groups	common	es-es	Qué grupos
 width	common	es-es	Anchura
 wk	jscalendar	es-es	wk
@@ -711,6 +744,8 @@ you have selected an invalid date	common	es-es	La fecha seleccionada no es váli
 you have selected an invalid main category	common	es-es	La categoría principal seleccionada no es válida
 you have successfully logged out	common	es-es	Ha terminado la sesión correctamente
 you need to add the webserver user '%1' to the group '%2'.	common	es-es	Necesita añadir el usuario del servidor web '%1' al grupo '%2'.
+you need to be an egroupware administrator to access this functionality!	common	es-es	¡Necesita ser administrador de eGroupWare para acceder a esta funcionalidad!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de eGroupWare %1, pero no tiene permiso para acceder a esta aplicación.
 your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>
 your message has been sent	common	es-es	Su mensaje ha sido enviado
 your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados

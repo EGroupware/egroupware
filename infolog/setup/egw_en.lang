@@ -153,6 +153,7 @@ high	infolog	en	high
 history logging	infolog	en	History logging
 history logging and deleting of items	infolog	en	History logging and deleting of items
 id	infolog	en	Id
+id#	infolog	en	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).
 import	infolog	en	Import
@@ -188,6 +189,7 @@ location	infolog	en	Location
 longer textual description	infolog	en	longer textual description
 low	infolog	en	low
 max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the inputfield (optional)]
+modifierer	infolog	en	Modifierer
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of new type to create	infolog	en	name of new type to create
 never hide search and filters	infolog	en	Never hide search and filters
@@ -298,6 +300,7 @@ show last modified	infolog	en	Show last modified
 show status and percent done separate	infolog	en	Show status and percent done separate
 show ticket id	infolog	en	Show ticket Id
 show times	infolog	en	Show times
+site configuration	infolog	en	Site configuration
 small view	infolog	en	small view
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Start Date

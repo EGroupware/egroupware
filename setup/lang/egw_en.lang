@@ -1,10 +1,12 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	en	%1 '%2' does NOT exist, is not readable by the webserver or contains no eGroupWare installation!
 %1 already exists in %2.	setup	en	%1 already exists in %2.
 %1 created in %2.	setup	en	%1 created in %2.
+%1 database %2 on %3 already contains the following tables:	setup	en	%1 database %2 on %3 already contains the following tables:
 %1 does not exist !!!	setup	en	%1 does not exist !!!
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !!!
 %1 is needed by: %2.	setup	en	%1 is needed by: %2.
 %1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
+'%1' is no valid domain name!	setup	en	'%1' is no valid domain name!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	en	'%1' is not allowed as %2. arguments of option %3 !!!
 (searching accounts and changing passwords)	setup	en	(searching accounts and changing passwords)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	en	*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!
@@ -71,6 +73,7 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	en	At your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 authentication / accounts	setup	en	Authentication / Accounts
+authentication type for application	setup	en	Authentication type for application
 auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
 auto login anonymous user	setup	en	Auto login anonymous user
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
@@ -99,6 +102,10 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
 bottom	setup	en	bottom
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>
+can not connect to %1 database %2 on host %3 using user %4!	setup	en	Can not connect to %1 database %2 on host %3 using user %4!
+can not connect to ldap server on host %1 using dn %2!	setup	en	Can not connect to LDAP server on host %1 using DN %2!
+can not create %1 database %2 on %3 for user %4!	setup	en	Can not create %1 database %2 on %3 for user %4!
+can not create dn %1!	setup	en	Can not create DN %1!
 cancel	setup	en	Cancel
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br /> Instead you can %1 or %2 the file.
 change system-charset	setup	en	Change system-charset
@@ -273,6 +280,7 @@ hour (0-24)	setup	en	hour (0-24)
 however the tables are still in the database	setup	en	However the tables are still in the database
 however, the application is otherwise installed	setup	en	However, the application is otherwise installed
 however, the application may still work	setup	en	However, the application may still work
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	en	HTTP auth types (comma-separated) to use without login-page, eg. "NTLM"
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
@@ -298,6 +306,7 @@ installation finished	setup	en	Installation finished
 installation started, this might take a few minutes ...	setup	en	Installation started, this might take a few minutes ...
 installed	setup	en	installed
 instructions for creating the database in %1:	setup	en	Instructions for creating the database in %1:
+invalid argument '%1' !!!	setup	en	Invalid argument '%1' !!!
 invalid ip address	setup	en	Invalid IP address
 invalid mcrypt algorithm/mode combination	setup	en	Invalid Mcrypt Algorithm/Mode combination
 invalid password	setup	en	Invalid password
@@ -373,6 +382,7 @@ not completed	setup	en	Not Completed
 not ready for this stage yet	setup	en	Not ready for this stage yet
 not set	setup	en	not set
 note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
+nothing to change.	setup	en	Nothing to change.
 now guessing better values for defaults...	setup	en	Now guessing better values for defaults...
 odbc / maxdb: dsn (data source name) to use	setup	en	ODBC / MaxDB: DSN (data source name) to use
 ok	setup	en	OK
@@ -493,6 +503,7 @@ sources deleted/missing	setup	en	Sources deleted/missing
 sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
 standard (login-name identical to egroupware user-name)	setup	en	standard (login-name identical to eGroupWare user-name)
 standard mailserver settings (used for mail authentication too)	setup	en	Standard mailserver settings (used for Mail authentication too)
+standard, as defined above	setup	en	Standard, as defined above
 start the postmaster	setup	en	Start the postmaster
 start updating languages %1 ...	setup	en	Start updating languages %1 ...
 start updating the database ...	setup	en	Start updating the database ...
@@ -504,6 +515,11 @@ step %1 - db backup and restore	setup	en	Step %1 - DB backup and restore
 step %1 - language management	setup	en	Step %1 - Language Management
 step %1 - simple application management	setup	en	Step %1 - Simple Application Management
 succesfully uploaded file %1	setup	en	succesfully uploaded file %1
+successful connected to %1 database %2 on %3 using user %4.	setup	en	Successful connected to %1 database %2 on %3 using user %4.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	en	Successful connected to %1 on %3 and created database %2 for user %4.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	en	Successful connected to LDAP server on %1 and created/checked required structur %2.
+successful connected to ldap server on %1 using dn %2.	setup	en	Successful connected to LDAP server on %1 using DN %2.
+supported node types:	setup	en	Supported node types:
 table change messages	setup	en	Table Change Messages
 tables dropped	setup	en	tables dropped
 tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above
@@ -516,6 +532,7 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	en	The %1 ex
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	en	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	en	the file
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	en	The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.
+the following applications are not installed:	setup	en	The following applications are NOT installed:
 the following applications need to be upgraded:	setup	en	The following applications need to be upgraded:
 the function %1 is needed from: %2.	setup	en	The function %1 is needed from: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	en	The imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). It's needed to upload photos for contacts.
@@ -595,6 +612,7 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	en	writable by the webserver
 write	setup	en	Write
+wrong credentials to access the header.inc.php file!	setup	en	Wrong credentials to access the header.inc.php file!
 year	setup	en	year
 yes	setup	en	Yes
 yes, with lowercase usernames	setup	en	Yes, with lowercase usernames
@@ -622,6 +640,7 @@ you need to configure egroupware:	setup	en	You need to configure eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	en	You need to fix the above errors, before the configuration file header.inc.php can be written!
 you need to save the settings you made here first!	setup	en	You need to save the settings you made here first!
 you need to select your current charset!	setup	en	You need to select your current charset!
+you need to specify a password!	setup	en	You need to specify a password!
 you should either install the sources or uninstall it, to get rid of the tables	setup	en	You should either install the sources or uninstall it, to get rid of the tables
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	en	You will NOT be able to log into eGroupWare using PHP sessions: "session could not be verified" !!!

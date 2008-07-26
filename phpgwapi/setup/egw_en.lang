@@ -4,6 +4,7 @@
 %1 start	common	en	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writeable by webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
+(session restored in %1 seconds)	common	en	(session restored in %1 seconds)
 (shift-)click or drag to change value	jscalendar	en	(Shift-)Click or drag to change value
 - click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	en	- Hold mouse button on any of the above buttons for faster selection.
@@ -12,6 +13,10 @@
 - use the %1, %2 buttons to select month	jscalendar	en	- Use the %1, %2 buttons to select month
 - use the %1, %2 buttons to select year	jscalendar	en	- Use the %1, %2 buttons to select year
 00 (disable)	admin	en	00 (disable)
+1 day	common	en	1 Day
+1 hour	common	en	1 Hour
+1 month	common	en	1 Month
+1 week	common	en	1 Week
 13 (ntp)	admin	en	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	en	3 number of chars for day-shortcut
 3 number of chars for month-shortcut	jscalendar	en	3 number of chars for month-shortcut
@@ -26,6 +31,7 @@ account has been created	common	en	Account has been created
 account has been deleted	common	en	Account has been deleted
 account has been updated	common	en	Account has been updated
 account is expired	common	en	Account is expired
+accounts	common	en	Accounts
 acl	common	en	ACL
 action	common	en	Action
 active	common	en	Active
@@ -45,6 +51,7 @@ all fields	common	en	all fields
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
 american samoa	common	en	AMERICAN SAMOA
+an error happend	common	en	An error happend
 an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the webserver readable directory enables the image browser and upload.
 andorra	common	en	ANDORRA
 angola	common	en	ANGOLA
@@ -72,6 +79,7 @@ azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
 background color:	common	en	Background color:
+backupdir '%1' is not writeable by the webserver	common	en	backupdir '%1' is not writeable by the webserver
 bad login or password	common	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
@@ -134,8 +142,10 @@ christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
 clear form	common	en	Clear Form
 click	common	en	Click
+click here to resume your egroupware session.	common	en	Click here to resume your eGroupWare Session.
 click or mouse over to show menus	common	en	Click or Mouse Over to show menus
 click or mouse over to show menus?	common	en	Click or Mouse Over to show menus?
+click this image on the navbar: %1	common	en	Click this image on the navbar: %1
 close	common	en	Close
 close sidebox	common	en	Close sidebox
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
@@ -160,6 +170,8 @@ current	common	en	Current
 current users	common	en	Current users
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
+database error	common	en	Database error
+database error!	common	en	Database error!
 date	common	en	Date
 date due	common	en	Date Due
 date selection:	jscalendar	en	Date selection:
@@ -202,6 +214,8 @@ edit	common	en	Edit
 edit %1 category for	common	en	Edit %1 category for
 edit categories	common	en	Edit Categories
 edit category	common	en	Edit category
+egroupware	common	en	eGroupWare
+egroupware api version	common	en	eGroupWare API version
 egroupware api version %1	common	en	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
@@ -213,6 +227,7 @@ end date	common	en	End date
 end time	common	en	End time
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
+entry not found!	common	en	Entry not found!
 entry updated sucessfully	common	en	Entry updated sucessfully
 equatorial guinea	common	en	EQUATORIAL GUINEA
 eritrea	common	en	ERITREA
@@ -242,6 +257,7 @@ firstname	common	en	Firstname
 fixme!	common	en	FIXME!
 folder already exists.	common	en	Folder already exists.
 force selectbox	common	en	Force SelectBox
+forever	common	en	Forever
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
 french polynesia	common	en	FRENCH POLYNESIA
@@ -293,6 +309,7 @@ home email	common	en	home email
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
+how to show the general egroupware menu ?	common	en	How to show the general eGroupWare menu ?
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
 iespell not detected. click ok to go to download page.	common	en	ieSpell not detected. Click OK to go to download page.
@@ -362,6 +379,8 @@ local	common	en	Local
 login	common	en	Login
 loginid	common	en	LoginID
 logout	common	en	Logout
+lost login id	common	en	Lost Login Id
+lost password	common	en	Lost password
 low	common	en	Low
 lowest	common	en	Lowest
 luxembourg	common	en	LUXEMBOURG
@@ -432,9 +451,13 @@ norfolk island	common	en	NORFOLK ISLAND
 normal	common	en	Normal
 northern mariana islands	common	en	NORTHERN MARIANA ISLANDS
 norway	common	en	NORWAY
+not	common	en	not
+not a user yet? register now	common	en	Not a user yet? Register now
 not assigned	common	en	not assigned
+not readable %1 entry of user %2	common	en	Not readable %1 entry of user %2
 note	common	en	Note
 notes	common	en	Notes
+notifications	common	en	notifications
 notify window	common	en	Notify Window
 notify your administrator to correct this situation	common	en	Notify your Administrator to correct this Situation
 november	common	en	November
@@ -446,6 +469,7 @@ on *nix systems please type: %1	common	en	On *nix systems please type: %1
 on mouse over	common	en	On Mouse Over
 only private	common	en	only private
 only yours	common	en	only yours
+oops! you caught us in the middle of system maintainance.	common	en	Oops! You caught us in the middle of system maintainance.
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
 open sidebox	common	en	Open sidebox
@@ -473,7 +497,9 @@ password must contain at least %1 special characters	common	en	Password must con
 password must contain at least %1 uppercase letters	common	en	Password must contain at least %1 uppercase letters
 password must have at least %1 characters	common	en	Password must have at least %1 characters
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
+permission denied!	common	en	Permission denied!
 permissions to the files/users directory	common	en	permissions to the files/users directory
+permisson denied!	common	en	Permisson denied!
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
@@ -487,6 +513,7 @@ please select	common	en	Please Select
 please set your global preferences	common	en	Please set your global preferences !
 please set your preferences for this application	common	en	Please set your preferences for this application !
 please wait...	common	en	Please Wait...
+please, check back with us shortly.	common	en	Please, check back with us shortly.
 poland	common	en	POLAND
 portugal	common	en	PORTUGAL
 postal	common	en	Postal
@@ -509,8 +536,10 @@ qatar	common	en	QATAR
 read	common	en	Read
 read this list of methods.	common	en	Read this list of methods.
 reading	common	en	reading
+register	common	en	Register
 regular	common	en	Regular
 reject	common	en	Reject
+remember me	common	en	Remember me
 remove selected accounts	common	en	remove selected accounts
 remove shortcut	common	en	Remove Shortcut
 rename	common	en	Rename
@@ -539,6 +568,7 @@ save	common	en	Save
 search	common	en	Search
 search %1 '%2'	common	en	Search %1 '%2'
 search accounts	common	en	Search accounts
+search or select accounts	common	en	search or select accounts
 second	common	en	second
 section	common	en	Section
 select	common	en	Select
@@ -568,8 +598,10 @@ setup main menu	common	en	Setup Main Menu
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
 show all categorys	common	en	Show all categorys
+show as topmenu	common	en	Show as Topmenu
 show clock?	common	en	Show clock?
 show home and logout button in main application bar?	common	en	Show home and logout button in main application bar?
+show in sidebox	common	en	Show in sidebox
 show logo's on the desktop.	common	en	Show logo's on the desktop.
 show menu	common	en	show menu
 show page generation time	common	en	Show page generation time
@@ -690,6 +722,7 @@ western sahara	common	en	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	en	What color should all the blank space on the desktop have
 what style would you like the image to have?	common	en	What style would you like the image to have?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the egroupware links like preferences, about and logout be displayed.
 which groups	common	en	Which groups
 width	common	en	Width
 wk	jscalendar	en	wk
@@ -711,6 +744,8 @@ you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 you have successfully logged out	common	en	You have successfully logged out
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the webserver user '%1' to the group '%2'.
+you need to be an egroupware administrator to access this functionality!	common	en	You need to be an eGroupWare administrator to access this functionality!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You've tried to open the eGroupWare application: %1, but you have no permission to access this application.
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent
 your search returned %1 matchs	common	en	your search returned %1 matches

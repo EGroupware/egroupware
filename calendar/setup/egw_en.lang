@@ -47,6 +47,7 @@ calendar preferences	calendar	en	Calendar preferences
 calendar settings	admin	en	Calendar settings
 calendar-fieldname	calendar	en	calendar-Fieldname
 can't add alarms in the past !!!	calendar	en	Can't add alarms in the past !!!
+can't aquire lock!	calendar	en	Can't aquire lock!
 canceled	calendar	en	Canceled
 charset of file	calendar	en	Charset of file
 close the window	calendar	en	Close the window
@@ -289,6 +290,7 @@ test import (show importable records <u>only</u> in browser)	calendar	en	Test Im
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	en	This defines the end of your dayview. Events after this time, are shown below the dayview.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	en	This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.
+this entry is currently opened by %1!	calendar	en	This entry is currently opened by %1!
 this entry is opened by user:	calendar	en	This entry was opened within the configured time interval by user:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner anytime you want.
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.

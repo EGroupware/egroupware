@@ -1,10 +1,12 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	es-es	¡%1 '%2' NO existe, no tiene permiso de lectura para el servidor web o no contiene ninguna instalación de eGroupWare!
 %1 already exists in %2.	setup	es-es	%1 ya existe en %2.
 %1 created in %2.	setup	es-es	%1 creado en %2.
+%1 database %2 on %3 already contains the following tables:	setup	es-es	La base de datos %1 %2 en %3 ya contiene las siguientes tablas:
 %1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
 %1 is %2%3 !!!	setup	es-es	¡¡%1 %2 es %3!!
 %1 is needed by: %2.	setup	es-es	%1 es necesario para: %2
 %1, %2 or %3 the configuration file.	setup	es-es	%1, %2 o %3 el fichero de configuración.
+'%1' is no valid domain name!	setup	es-es	'%1' no es un nombre válido de dominio
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡¡'%1' no está permitido como %2. argumentos de la opción %3 !!
 (searching accounts and changing passwords)	setup	es-es	(buscando cuentas y cambiando contraseñas)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	es-es	*** NO actualice su base de datos mediante esta instalación, ya que la actualización podría interrumpirse por el tiempo máximo de ejecución permitido, lo que deja su base de datos en un estado irrecuperable ¡¡(se pierden los datos)!!
@@ -71,6 +73,7 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	es-es	A petición suya, este script ejecutará la "malvada" acción de desinstalar todas sus aplicaciones, lo que eliminará todas sus tablas y datos actuales
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	es-es	Intentar usar el tipo MIME correcto para FTP en lugar del predeterminado 'application/octet-stream'
 authentication / accounts	setup	es-es	Identificación / Cuentas
+authentication type for application	setup	es-es	Tipo de identificación para la aplicación
 auto create account records for authenticated users	setup	es-es	Crear automáticamente registros para los usuarios identificados
 auto login anonymous user	setup	es-es	Inicio de sesión automático para el usuario anónimo
 auto-created user accounts expire	setup	es-es	Las cuentas creadas automáticamente para los usuarios expiran
@@ -99,6 +102,10 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	es-es	porque el indicador de "habilitada" de esta aplicación está a 0, o no está definido
 bottom	setup	es-es	parte inferior
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	es-es	pero le <u>recomendamos encarecidamente que haga copia de seguridad</u> de sus tablas en caso de que el script cause daños a su información.<br /><strong>Estos scripts automáticos pueden destruir su información fácilmente.</strong>
+can not connect to %1 database %2 on host %3 using user %4!	setup	es-es	¡No se puede conectar a la base de datos %1 %2 en el servidor %3 usando el usuario %4!
+can not connect to ldap server on host %1 using dn %2!	setup	es-es	¡No se puede conectar con LDAP en el servidor %1 usando el DN %2!
+can not create %1 database %2 on %3 for user %4!	setup	es-es	¡No se puede crear la base de datos %1 %2 en %3 para el usuario %4!
+can not create dn %1!	setup	es-es	¡No se puede crear el DN %1!
 cancel	setup	es-es	Cancelar
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	es-es	No se puede crear el fichero header.inc.php por problemas de permisos.<br />En su lugar, puede %1 o %2 el fichero.
 change system-charset	setup	es-es	Cambiar el juego de caracteres del sistema
@@ -275,6 +282,7 @@ hour (0-24)	setup	es-es	hora (0-24)
 however the tables are still in the database	setup	es-es	Sin embargo, las tablas todavía están en la base de datos
 however, the application is otherwise installed	setup	es-es	De todas formas, la aplicación fué instalada
 however, the application may still work	setup	es-es	Sin embargo, puede que la aplicación todavía funcione
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	es-es	Tipos de identificación HTTP (separados por comas) a usar sin página de inicio de sesión. Por ejemplo, "NTLM"
 if no acl records for user or any group the user is a member of	setup	es-es	Si no hay registros ACL ni grupo para el usuario, entonces es miembro de
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	es-es	Si está activado safe_mode, eGW no puede cambiar ciertas opciones en modo de ejecución, ni puede cargar ningún módulo que aún no sea cargable.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	es-es	Si la aplicación no ha definido tablas, seleccionando actualizar debería de remediar el problemas
@@ -300,6 +308,7 @@ installation finished	setup	es-es	La instalación ha finalizado
 installation started, this might take a few minutes ...	setup	es-es	La instalación ha empezado. Esto puede tardar unos minutos...
 installed	setup	es-es	instaladas
 instructions for creating the database in %1:	setup	es-es	Instrucciones para crear la base de datos en %1:
+invalid argument '%1' !!!	setup	es-es	¡El argumento '%1' no es válido!
 invalid ip address	setup	es-es	La dirección IP no es válida
 invalid mcrypt algorithm/mode combination	setup	es-es	La combinación del algoritmo mcrypt y el modo no es válida
 invalid password	setup	es-es	La contraseña no es correcta
@@ -375,6 +384,7 @@ not completed	setup	es-es	Sin completar
 not ready for this stage yet	setup	es-es	No está listo para esta fase todavía
 not set	setup	es-es	sin configurar
 note: you will be able to customize this later	setup	es-es	Nota: tendrá que personalizar esto después
+nothing to change.	setup	es-es	No hay nada que cambiar.
 now guessing better values for defaults...	setup	es-es	Buscando valores óptimos predeterminados...
 odbc / maxdb: dsn (data source name) to use	setup	es-es	ODBC / MaxDB: DSN (data source name) a usar
 ok	setup	es-es	Aceptar
@@ -495,6 +505,7 @@ sources deleted/missing	setup	es-es	El código fuente falta o ha sido borrado
 sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas (predeterminado - md5)
 standard (login-name identical to egroupware user-name)	setup	es-es	estándar (el usuario es idéntico al de eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	es-es	Configuración del servidor de correo estándar (también se usa para identificación de correo)
+standard, as defined above	setup	es-es	Estándar, como se ha definido arriba
 start the postmaster	setup	es-es	Iniciar el postmaster
 start updating languages %1 ...	setup	es-es	Inicio de la actualización de los idioomas %1 ...
 start updating the database ...	setup	es-es	Inicio de la actualización de la base de datos ...
@@ -506,6 +517,11 @@ step %1 - db backup and restore	setup	es-es	Paso %1 - Copia de seguridad y resta
 step %1 - language management	setup	es-es	Paso %1 - Administración de idiomas
 step %1 - simple application management	setup	es-es	Paso %1 - Administración simple de aplicaciones
 succesfully uploaded file %1	setup	es-es	se subió correctamente el fichero %1
+successful connected to %1 database %2 on %3 using user %4.	setup	es-es	Se ha conectado correctamente a la base de datos %1 %2 en %3 usando el usuario %4.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	es-es	Se ha conectado correctamente a %1 en %3 y creado la base de datos %2 para el usuario %4.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	es-es	Se ha conectado correctamente al servicio LDAP en el servidor %1 y creado/comprobado la estructura requerida %2.
+successful connected to ldap server on %1 using dn %2.	setup	es-es	Se ha conectado correctamente al servidor LDAP en el servidor %1 usando el DN %2.
+supported node types:	setup	es-es	Tipos de nodo soportados:
 table change messages	setup	es-es	Mensajes de cambios en las tablas
 tables dropped	setup	es-es	Las tablas han sido eliminadas
 tables installed, unless there are errors printed above	setup	es-es	Las tablas han sido instaladas, a no ser que haya errores impresos sobre estas líneas
@@ -518,6 +534,7 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	es-es	La ext
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	es-es	El tipo de base de datos en predeterminados (%1) no está soportado en este servidor. Usando el primer tipo soportado
 the file	setup	es-es	el fichero
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	es-es	El primer paso al instalar eGroupWare es asegurarse que el entorno tiene la configuración necesaria para ejecutar la aplicación correctamente.
+the following applications are not installed:	setup	es-es	Las siguients aplicaciones NO están instaladas:
 the following applications need to be upgraded:	setup	es-es	Las siguientes aplicaciones necesitan una actualización:
 the function %1 is needed from: %2.	setup	es-es	La función %1 se necesita para: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	es-es	La función imagecreatefromjpeg viene con la extensión gd (compilada con soporte jpeg). Se necesita para subir fotos para los contactos.
@@ -597,6 +614,7 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	es-es	¿Desea mostrar el estado de la actualización de cada aplicación?
 writable by the webserver	setup	es-es	escritura para el servidor web
 write	setup	es-es	Escribir
+wrong credentials to access the header.inc.php file!	setup	es-es	¡Las credencias para acceder al fichero header.inc.php son incorrectas!
 year	setup	es-es	año
 yes	setup	es-es	Sí
 yes, with lowercase usernames	setup	es-es	Sí, con los nombres de usuario en minúsculas
@@ -624,6 +642,7 @@ you need to configure egroupware:	setup	es-es	Necesita configurar eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	es-es	¡Necesita corregir los errores de arriba, antes de que se pueda escribir el fichero de configuración header.inc.php!
 you need to save the settings you made here first!	setup	es-es	¡Necesita guardar la configuración que ha hecho primero!
 you need to select your current charset!	setup	es-es	¡Necesita seleccionar el juego de caracteres!
+you need to specify a password!	setup	es-es	¡Necesita especificar una contraseña!
 you should either install the sources or uninstall it, to get rid of the tables	setup	es-es	Tiene que instalar el código fuente o desinstalarlo para deshacerse de las tablas
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	es-es	Usted puede desinstalarla y volverla a instalar, o puede intentar una reparación manual
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	es-es	¡¡NO podrá iniciar sesión en eGroupWare usando sesiones PHP: "la sesión no se pudo verificar"!!

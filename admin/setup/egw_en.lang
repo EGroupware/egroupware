@@ -1,12 +1,19 @@
 %1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
 %1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
 %1 acl records of not (longer) existing accounts deleted.	admin	en	%1 ACL records of not (longer) existing accounts deleted.
+%1 class not instanciated	admin	en	%1 class not instanciated
+%1 group %2	admin	en	%1 group %2
+%1 is no command!	admin	en	%1 is no command!
 %1 not found or not executable !!!	admin	en	%1 not found or not executable !!!
+%1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3
+%1 user %2	admin	en	%1 user %2
 (default no, leave it off if you dont use it)	admin	en	(default No, leave it off if you dont use it)
 (stored password will not be shown here)	admin	en	(Stored password will not be shown here)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
 -  type	admin	en	-  type
 accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
+account %1 %2	admin	en	Account %1 %2
+account '%1' deleted.	admin	en	Account '%1' deleted.
 account active	admin	en	Account active
 account has been created	common	en	Account has been created
 account has been deleted	common	en	Account has been deleted
@@ -14,6 +21,7 @@ account has been updated	common	en	Account has been updated
 account list	admin	en	Account list
 account permissions	admin	en	Account permissions
 account preferences	admin	en	Account Preferences
+account-id's have to be integers!	admin	en	Account-id's have to be integers!
 acl manager	admin	en	ACL Manager
 acl rights	common	en	ACL Rights
 action	admin	en	Action
@@ -45,6 +53,7 @@ aliases	admin	en	Aliases
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All Users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
+allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's (comma separated)
 alternate email address	admin	en	alternate email address
 anonymous user	admin	en	Anonymous user
 anonymous user (not shown in list sessions)	admin	en	Anonymous User (not shown in list sessions)
@@ -52,10 +61,12 @@ anonymous user does not exist!	admin	en	Anonymous user does NOT exist!
 anonymous user has no run-rights for the application!	admin	en	Anonymous user has NO run-rights for the application!
 appearance	admin	en	Appearance
 application	admin	en	Application
+application '%1' not found (maybe not installed or misspelled)!	admin	en	Application '%1' not found (maybe not installed or misspelled)!
 application name	admin	en	Application name
 application title	admin	en	Application title
 applications	admin	en	Applications
 applications list	admin	en	Applications list
+applications run rights updated.	admin	en	Applications run rights updated.
 applies the changes	admin	en	applies the changes
 are you sure you want to delete the application %1 ?	admin	en	Are you sure you want to delete the application %1 ?
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
@@ -85,17 +96,25 @@ cancel testjob!	admin	en	Cancel TestJob!
 categories list	admin	en	Categories list
 category %1 has been saved !	admin	en	Category %1 has been saved !
 category list	admin	en	Category list
+change account_id	admin	en	Change account_id
 change acl rights	admin	en	change ACL Rights
 change config settings	admin	en	Change config settings
 change main screen message	admin	en	Change main screen message
+change password for %1	admin	en	change password for %1
+check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
+command scheduled to run at %1	admin	en	Command scheduled to run at %1
+complete path to aspell program	admin	en	Complete path to aspell program
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain (default empty means use full domain name, for SiteMgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)
+could not remote execute the command	admin	en	Could not remote execute the command
 country selection	admin	en	Country Selection
 create group	admin	en	Create Group
+created	admin	en	Created
+created with id #%1	admin	en	created with id #%1
 creates a new field	admin	en	creates a new field
 crontab only (recomended)	admin	en	crontab only (recomended)
 custom fields	admin	en	Custom fields
@@ -109,6 +128,7 @@ default file system space per user	admin	en	Default file system space per user
 default file system space per user/group ?	admin	en	Default file system space per user/group ?
 deinstall crontab	admin	en	Deinstall crontab
 delete account	admin	en	Delete account
+delete account %1	admin	en	Delete account %1
 delete all records	admin	en	Delete All Records
 delete application	admin	en	Delete application
 delete category	admin	en	Delete category
@@ -166,10 +186,12 @@ edit this user	admin	en	edit this user
 edit user	admin	en	edit user
 edit user account	admin	en	Edit user account
 egroupware directory	admin	en	eGroupWare directory
+either install id and config password needed or the remote hash!	admin	en	Either Install ID AND config password needed OR the remote hash!
 email account active	admin	en	email account active
 email address	admin	en	email address
 enable debug-messages	admin	en	Enable debug-messages
 enable the soap service	admin	en	Enable the soap service
+enable the spellcheck in the ritch text editor ?	admin	en	Enable the spellcheck in the ritch text editor ?
 enable the xmlrpc service	admin	en	Enable the xmlrpc service
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup Window
@@ -195,12 +217,19 @@ enter your http proxy server port	admin	en	Enter your HTTP proxy server port
 enter your smtp server hostname or ip address	admin	en	Enter your SMTP server hostname or IP address
 enter your smtp server port	admin	en	Enter your SMTP server port
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set !!!
+error changing the password for % !!!	admin	en	Error changing the password for % !!!
+error changing the password for %1 !!!	admin	en	Error changing the password for %1 !!!
+error saving	admin	en	Error saving
+error saving account!	admin	en	Error saving account!
+error saving the command!	admin	en	Error saving the command!
+error saving to db:	admin	en	Error saving to db:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running !!!
 error! no appname found	admin	en	Error! No appname found
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error !!!
 expires	admin	en	Expires
 explanation of ldapman	admin	en	This module has been tested so far for POSTFIX,LDAP,Courier-IMAP and need the schemas  CORE and QMAIL (OID7914). More details about using and configuring this systrem can be found in README.ldapman in the doc folder of ADMIN.
 fallback (after each pageview)	admin	en	fallback (after each pageview)
+false	admin	en	false
 field '%1' already exists !!!	admin	en	Field '%1' already exists !!!
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
@@ -212,6 +241,7 @@ forward also to	admin	en	forward also to
 forward emails to	admin	en	forward emails to
 forward only	admin	en	forward only
 global categories	common	en	Global Categories
+grant	admin	en	Grant
 group ?	admin	en	group ?
 group has been added	common	en	Group has been added
 group has been deleted	common	en	Group has been deleted
@@ -223,6 +253,7 @@ hide php information	admin	en	hide php information
 home directory	admin	en	Home directory
 host information	admin	en	Host information
 hour<br>(0-23)	admin	en	Hour<br>(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	en	How big should thumbnails for linked images be (maximum in pixels) ?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	en	How many days should entries stay in the access log, before they get deleted (default 90) ?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	en	How many entries should non-admins be able to export (empty = no limit, no = no export)
 how many minutes should an account or ip be blocked (default 30) ?	admin	en	How many minutes should an account or IP be blocked (default 30) ?
@@ -238,6 +269,9 @@ install crontab	admin	en	Install crontab
 installed applications	common	en	Installed applications
 installed crontab	admin	en	Installed crontab
 interface	admin	en	Interface
+invalid formated date "%1"!	admin	en	Invalid formated date "%1"!
+invalid remote id or name "%1"!	admin	en	Invalid remote id or name "%1"!
+invalid value "%1" use yes or no!	admin	en	Invalid value "%1" use yes or no!
 ip	admin	en	IP
 jobs	admin	en	Jobs
 kill	admin	en	Kill
@@ -281,6 +315,7 @@ method	admin	en	Method
 minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account id (e.g. 500 or 100, etc.)
 minute	admin	en	Minute
 mode	admin	en	Mode
+modified	admin	en	Modified
 month	admin	en	Month
 more secure	admin	en	more secure
 name must not be empty !!!	admin	en	Name must not be empty !!!
@@ -301,14 +336,17 @@ note: ssl available only if php is compiled with curl support	admin	en	Note: SSL
 number of row for a multiline inputfield or line of a multi-select-box	admin	en	number of row for a multiline inputfield or line of a multi-select-box
 order	admin	en	Order
 outbound	admin	en	outbound
+own install id:	admin	en	Own install ID:
 passthrough	admin	en	passthrough
 password for smtp-authentication	admin	en	Password for SMTP-authentication
+password updated	admin	en	Password updated
 path information	admin	en	Path information
 peer server list	admin	en	Peer server list
 peer servers	admin	en	Peer servers
 percent of users that logged out	admin	en	Percent of users that logged out
 percent this user has logged out	admin	en	Percent this user has logged out
 permission denied	admin	en	Permission denied
+permission denied !!!	admin	en	Permission denied !!!
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 phpinfo	admin	en	PHP information
@@ -325,6 +363,8 @@ quota size in mbyte	admin	en	quota size in MByte
 re-enter password	admin	en	Re-enter password
 read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
+remote instance saved	admin	en	Remote instance saved
 remove	admin	en	remove
 remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group ?
@@ -406,12 +446,18 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	en
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds (default 14400 = 4 hours)
 times	admin	en	Times
 top	admin	en	top
+total of %1 id's changed.	admin	en	Total of %1 id's changed.
 total records	admin	en	Total records
+true	admin	en	true
 trust level	admin	en	Trust Level
 trust relationship	admin	en	Trust Relationship
 type '%1' already exists !!!	admin	en	type '%1' already exists !!!
 type of customfield	admin	en	Type of customfield
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the asyncservice %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page-view !!!
+unknown account: %1 !!!	admin	en	Unknown account: %1 !!!
+unknown command %1!	admin	en	Unknown command %1!
+unknown option %1	admin	en	Unknown option %1
+updated	admin	en	updated
 use cookies to pass sessionid	admin	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code (not fully working yet)
 use theme	admin	en	Use theme
@@ -421,6 +467,7 @@ user for smtp-authentication (leave it empty if no auth required)	admin	en	User 
 user groups	admin	en	User groups
 userdata	admin	en	userdata
 users choice	admin	en	Users Choice
+value for column %1 is not unique!	admin	en	Value for column %1 is not unique!
 view access log	admin	en	View access log
 view account	admin	en	View account
 view category	admin	en	View category
@@ -434,6 +481,8 @@ would you like egroupware to check for a new version<br>when admins login ?	admi
 would you like egroupware to check for new application versions when admins login ?	admin	en	Would you like eGroupWare to check for new application versions when admins login ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automatically load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
+wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2 !!!
+wrong admin-account or -password !!!	admin	en	Wrong admin-account or -password !!!
 xml-rpc	admin	en	XML-RPC
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
 you have to enter a name, to create a new field!!!	admin	en	You have to enter a name, to create a new field!!!
@@ -447,5 +496,6 @@ you must enter an application name.	admin	en	You must enter an application name.
 you must enter an application title.	admin	en	You must enter an application title.
 you must select a file type	admin	en	You must select a file type
 you must select at least one group member.	admin	en	You must select at least one group member.
+you need to enter install id and password!	admin	en	You need to enter Install ID AND Password!
 you will need to remove the subcategories before you can delete this category	admin	en	You will need to remove the subcategories before you can delete this category !
 your session could not be verified.	admin	en	Your session could not be verified.
