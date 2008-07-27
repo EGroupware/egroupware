@@ -448,7 +448,6 @@ class filemanager_ui
 			{
 				$content['perms']['executable'] = (int)!!($content['mode'] & 0111);
 				$mask = 6;
-				$content['link'] = $GLOBALS['egw']->link(egw_vfs::download_url($path));
 				if (preg_match('/^text/',$content['mime']) && $content['size'] < 100000)
 				{
 					$content['text_content'] = file_get_contents(egw_vfs::PREFIX.$path);
@@ -468,7 +467,7 @@ class filemanager_ui
 		else
 		{
 			//_debug_array($content);
-			$path = $content['path'];
+			$path =& $content['path'];
 
 			list($button) = @each($content['button']); unset($content['button']);
 			if (in_array($button,array('save','apply')))
@@ -483,8 +482,13 @@ class filemanager_ui
 								if (egw_vfs::rename($path,$to = egw_vfs::concat($content['dir'],$content['name'])))
 								{
 									$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
+									$content['old']['name'] = $content[$name];
+									$path = $to;
 								}
-								$path = $to;
+								else
+								{
+									$msg .= lang('Rename of %1 to %2 failed!',$path,$to).' ';
+								}
 								break;
 							default:
 								static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
@@ -531,11 +535,16 @@ class filemanager_ui
 				}
 			}
 			// refresh opender and close our window
-			$js = "opener.location.href=opener.location.href+'&msg=".urlencode(addslashes($msg))."'; ";
+			$link = egw::link('/index.php',array(
+				'menuaction' => 'filemanager.filemanager_ui.index',
+				'msg' => $msg,
+			));
+			$js = "opener.location.href='".addslashes($link)."'; ";
 			if ($button == 'save') $js .= "window.close();";
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
 			if ($button == 'save')$GLOBALS['egw']->common->egw_exit();
 		}
+		$content['link'] = $GLOBALS['egw']->link(egw_vfs::download_url($path));
 		$content['msg'] = $msg;
 
 		if (($readonlys['uid'] = !egw_vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';

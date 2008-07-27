@@ -500,6 +500,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) $path_to is $is_dir directory!");
 			return false;	// no permission or file does not exist
 		}
+		// if destination file already exists, delete it
+		if ($to_stat && !self::unlink($url_to,$operation))
+		{
+			self::_remove_password($url_to);
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
+			return false;
+		}
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_id=:fs_id');
 		if (($ret = $stmt->execute(array(
 			':fs_dir'  => $to_dir_stat['ino'],
