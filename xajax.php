@@ -33,6 +33,29 @@
 		$GLOBALS['egw']->common->egw_exit();
 	}
 
+	/**
+	 * Exception handler for xajax, return the message (and trace) as alert() to the user
+	 *
+	 * Does NOT return!
+	 *
+	 * @param Exception $e
+	 */
+	function ajax_exception_handler(Exception $e)
+	{
+		$response =& new xajaxResponse();
+		$response->addAlert($e->getMessage()."\n\n".$e->getTraceAsString());
+		header('Content-type: text/xml; charset='.(is_object($GLOBALS['egw'])?$GLOBALS['egw']->translation->charset():'utf-8'));
+		echo $response->getXML();
+		if (is_object($GLOBALS['egw']))
+		{
+			$GLOBALS['egw']->common->egw_exit();
+		}
+		exit;
+	}
+
+	// set our own exception handler, to not get the html from eGW's default one
+	set_exception_handler('ajax_exception_handler');
+
 	function doXMLHTTP()
 	{
 		$numargs = func_num_args();
@@ -55,7 +78,16 @@
 		}
 		//error_log("xajax_doXMLHTTP('$arg0',...)");
 
-		@list($appName, $className, $functionName, $handler) = explode('.',$arg0);
+		if (strpos($arg0,'::') !== false && strpos($arg0,'.') === false)	// static method name app_something::method
+		{
+			list($className,$functionName,$handler) = explode('::',$arg0);
+			list($appName) = explode('_',$className);
+		}
+		else
+		{
+			@list($appName, $className, $functionName, $handler) = explode('.',$arg0);
+		}
+		error_log("xajax.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
 
 		$GLOBALS['egw_info'] = array(
 			'flags' => array(
@@ -63,6 +95,7 @@
 				'noheader'			=> True,
 				'disable_Template_class'	=> True,
 				'autocreate_session_callback' => 'xajax_redirect',
+				'no_exception_handler' => true,	// we already installed our own
 			)
 		);
 		include('./header.inc.php');
@@ -93,10 +126,12 @@
 		}
 		if(substr($className,0,4) != 'ajax' && substr($className,-4) != 'ajax' &&
 			$arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
-			!preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$arg0))
+			!preg_match('/^[A-Za-z0-9_]+(\.[A-Za-z0-9_]+\.|::)[A-Za-z0-9_]+$/',$arg0))
 		{
 			// stopped for security reasons
 			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$arg0.' is not valid. class- or function-name must start with ajax!!!');
+			// send message also to the user
+			throw new Exception($_SERVER['PHP_SELF']. ' stopped for security reason. '.$arg0.' is not valid. class- or function-name must start with ajax!!!');
 			exit;
 		}
 		$ajaxClass =& CreateObject($appName.'.'.$className);

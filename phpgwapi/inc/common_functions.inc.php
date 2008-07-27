@@ -1424,4 +1424,7 @@ function egw_exception_handler(Exception $e)
 	exit;
 }
 
-set_exception_handler('egw_exception_handler');
+if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']) || !$GLOBALS['egw_info']['flags']['no_exception_handler'])
+{
+	set_exception_handler('egw_exception_handler');
+}
