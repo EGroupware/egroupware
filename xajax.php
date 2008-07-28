@@ -94,7 +94,7 @@ function doXMLHTTP()
 	{
 		@list($appName, $className, $functionName, $handler) = explode('.',$arg0);
 	}
-	error_log("xajax.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
+	//error_log("xajax.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
 
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
