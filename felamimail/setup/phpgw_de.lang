@@ -230,7 +230,7 @@ location of buttons when composing	felamimail	de	Ort der Knöpfe beim E-Mail schr
 mail server login type	admin	de	Typ der Mailserver Anmeldung
 mail settings	felamimail	de	E-Mail-Einstellungen
 mainmessage	felamimail	de	Hauptnachricht
-manage emailaccounts	preferences	de	E-Mail-Konten verwalten
+manage emailaccounts	common	de	E-Mail-Konten verwalten
 manage emailfilter / vacation	preferences	de	Verwalten der E-Mail-Filter und Abwesenheitsnotiz
 manage folders	common	de	Ordner verwalten
 manage sieve	common	de	Sieve Scripte verwalten
