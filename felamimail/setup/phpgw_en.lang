@@ -230,7 +230,7 @@ location of buttons when composing	felamimail	en	Location of buttons when compos
 mail server login type	admin	en	Mail server login type
 mail settings	felamimail	en	Mail Settings
 mainmessage	felamimail	en	mainmessage
-manage emailaccounts	preferences	en	Manage EMailaccounts
+manage emailaccounts	common	en	Manage EMailaccounts
 manage emailfilter / vacation	preferences	en	Manage EMailfilter / Vacation
 manage folders	common	en	Manage Folders
 manage sieve	common	en	Manage Sieve scripts
