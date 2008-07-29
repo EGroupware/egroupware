@@ -187,7 +187,7 @@ class calendar_bo
 			}
 			$this->resources['e'] = array(
 				'type' => 'e',
-				'info' => 'bocal::email_info',
+				'info' => __CLASS__.'::email_info',
 				'app'  => 'email',
 			);
 			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
