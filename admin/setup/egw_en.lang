@@ -44,6 +44,7 @@ add sub-category	admin	en	Add sub-category
 admin email	admin	en	Admin Email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)
 admin name	admin	en	Admin Name
+admin queue and history	admin	en	Admin queue and history
 administration	admin	en	Administration
 admins	admin	en	Admins
 advanced options	admin	en	advanced options
@@ -363,6 +364,7 @@ quota size in mbyte	admin	en	quota size in MByte
 re-enter password	admin	en	Re-enter password
 read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
+remote administration instances	admin	en	Remote administration instances
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	en	Remote instance saved
 remove	admin	en	remove

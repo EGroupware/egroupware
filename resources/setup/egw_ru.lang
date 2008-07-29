@@ -18,7 +18,7 @@ category:	resources	ru	Категория:
 check all	resources	ru	Отметить все
 choose categories admin	resources	ru	выбрать администратора категорий
 clear selection	resources	ru	очистить выбор
-configure access permissions	resources	ru	Настроить разрешения доступа
+configure access permissions	admin	ru	Настроить разрешения доступа
 create new accessory for this resource	resources	ru	Создать новое комплектующее для этого ресурса
 create new links	resources	ru	Создать новые ссылки
 delete selected resources	resources	ru	удалить выбранные ресурсы
@@ -94,8 +94,8 @@ view this entry	resources	ru	Показать эту запись
 web-page of resource	resources	ru	Веб-Страница ресурса
 web-site for this resource	resources	ru	Веб-Сайт этого ресурса
 where to find this resource?	resources	ru	Где искать этот ресурса
-which category does this resource belong to?	resources	ru	К какой категории относится этот ресурс
+which category does this resource belong to?	resources	ru	К какой категории относится этот ресурс?
 write permissions	resources	ru	Разрешение на запись
-you are not permitted to edit this reource!	resources	ru	Вам не разрешено редактировать этот ресурс
+you are not permitted to edit this reource!	resources	ru	Вам не разрешено редактировать этот ресурс!
 you are not permitted to get information about this resource!	resources	ru	Вам не разрешено получать информацию об этом ресурсе!
 you chose more resources than available	resources	ru	Вы выбрали больше ресурсов, чем возможно

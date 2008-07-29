@@ -44,6 +44,7 @@ add sub-category	admin	es-es	Añadir subcategoría
 admin email	admin	es-es	Correo electrónico del administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	es-es	Direcciones de correo de Administración (separadas por comas) para notificar los bloqueos (en blanco para no notificar)
 admin name	admin	es-es	Nombre del administrador
+admin queue and history	admin	es-es	Cola de administración e historial
 administration	admin	es-es	Administración
 admins	admin	es-es	Administradores
 advanced options	admin	es-es	opciones avanzadas
@@ -348,7 +349,6 @@ percent of users that logged out	admin	es-es	Porcentaje de usuarios que cerraron
 percent this user has logged out	admin	es-es	Porcentaje que este usuario ha cerrado la sesión
 permission denied	admin	es-es	Permiso denegado
 permission denied !!!	admin	es-es	¡Permiso denegado!
-permission denied!	admin	es-es	¡Permiso denegado!
 permissions	admin	es-es	Permisos
 permissions this group has	admin	es-es	Permisos que tiene este grupo
 phpinfo	admin	es-es	Información de PHP
@@ -365,6 +365,7 @@ quota size in mbyte	admin	es-es	tamaño de la cuota en MBytes
 re-enter password	admin	es-es	Confirmar contraseña
 read this list of methods.	admin	es-es	Leer esta lista de métodos
 register application hooks	admin	es-es	Registrar "hooks" de la aplicación
+remote administration instances	admin	es-es	Instancias de administración remota
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	es-es	¡La administración remota necesita estar activada en la instancia remota en Administración > Configuración del sitio!
 remote instance saved	admin	es-es	Se ha guardado la instancia remota
 remove	admin	es-es	borrar

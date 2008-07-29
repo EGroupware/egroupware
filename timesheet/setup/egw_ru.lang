@@ -37,6 +37,7 @@ saves the changes made	timesheet	ru	Сохраняет внесенные изм
 saves this entry and add a new one	timesheet	ru	Сохраняет эту запись и добавляет новую
 select a price	timesheet	ru	Выбрать цену
 select a project	timesheet	ru	Выбрать проект
+show a quantity sum (eg. to sum up negative overtime)	admin	ru	Показывать суммарное количество (напр. для суммирования перерасходов времени)
 start	timesheet	ru	Старт
 starttime	timesheet	ru	Время начала
 starttime has to be before endtime !!!	timesheet	ru	Время начала должно быть перед временем окончания !!!
@@ -49,4 +50,4 @@ unitprice	timesheet	ru	Цена за единицу
 view this entry	timesheet	ru	Показать эту запись
 week	timesheet	ru	Неделя
 yesterday	timesheet	ru	Вчера
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ru	ваша база данных устарела (%1 против %2), пожалуйста, запустите %3Установку%4 чтобы обновить вашу базу данных.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ru	Ваша база данных устарела (%1 вместо %2), пожалуйста, запустите %3Установку%4 чтобы обновить вашу базу данных.

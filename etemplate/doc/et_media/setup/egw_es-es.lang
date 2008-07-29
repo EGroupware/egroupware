@@ -1,0 +1,29 @@
+%d matches on search criteria	et_media	en	%d coincidencias en el criterio de búsqueda
+author	et_media	en	Autor
+book	et_media	en	Libro
+cancel	et_media	en	Cancelar
+clears the form, without changing anything	et_media	en	limpia el formulario, sin cambiar nada
+click here to edit the entry	et_media	en	pulse aquí para editar la entrada
+compact disc	et_media	en	Compact Disc
+delete	et_media	en	Borrar
+deletes an entry	et_media	en	borra una entrada
+description	et_media	en	Descripción
+dvd	et_media	en	DVD
+edit	et_media	en	Editar
+entry saved	et_media	en	Se ha guardado la entrada
+error: writeing !!!	et_media	en	¡¡Error al escribir!!!
+et_media	common	en	Base de datos de medios de eTemplate
+etemplates mediadb	et_media	en	Base de datos de medios de eTemplate
+here goes the name of the publication / record	et_media	en	Aquí va el nombre de la publicación o disco
+name	et_media	en	Nombre
+nothing matched search criteria !!!	et_media	en	¡¡No se han encontrado resultado para el criterio de búsqueda!!!
+please use name, first name	et_media	en	por favor, use Nombre, Primer apellido
+read	et_media	en	Leer
+reads or searches for entries matching the criteria above	et_media	en	lee o busca entradas que coincidan con el criterio indicado arriba
+save	et_media	en	Guardar
+saves the change to the db	et_media	en	guarda el cambio en la base de datos
+select one ...	et_media	en	Seleccionar uno...
+select the type fitting most	et_media	en	seleccione el tipo que coincida mejor
+type	et_media	en	Tipo
+video tape	et_media	en	Cinta de vídeo
+we have a fulltext search using that description	et_media	en	tenemos una búsqueda de texto completo usando esa descripción
