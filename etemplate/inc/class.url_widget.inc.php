@@ -100,7 +100,7 @@ class url_widget
 							$cell['size'] .= '|[^<]+ ?<'.self::EMAIL_PREG.'>';
 						}
 						$cell['size'] .= ')$/i';
-					} 
+					}
 					#_debug_array($cell);
 					break;
 				}
@@ -119,7 +119,7 @@ class url_widget
 				}
 				elseif (strpos($email=$value,'@') !== false)
 				{
-					if (strpos($email=$value,'&') !== false) 
+					if (strpos($email=$value,'&') !== false)
 					{
 						list($email,$addoptions) = explode('&',$value,2);
 						$rfc822 = $value = $email;
@@ -226,7 +226,7 @@ class url_widget
 		if (!$number || !$GLOBALS['egw_info']['server']['call_link']) return false;
 
 		static $userphone;
-		if (is_null($userphone) && strpos($GLOBALS['egw_info']['server']['call_link'],'%u') !== false)
+		if (is_null($userphone) && strpos($GLOBALS['egw_info']['server']['call_link'],'%t') !== false)
 		{
 			$user = $GLOBALS['egw']->contacts->read('account:'.$GLOBALS['egw_info']['user']['account_id']);
 			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
