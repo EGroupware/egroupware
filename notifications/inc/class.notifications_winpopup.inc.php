@@ -7,6 +7,7 @@
  * @subpackage backends
  * @link http://www.egroupware.org
  * @author Christian Binder <christian@jaytraxx.de>
+ * @version $Id$
  */
 
 /**
@@ -18,44 +19,44 @@ class notifications_winpopup implements notifications_iface {
 	 * Appname
 	 */
 	const _appname = 'notifications';
-	
+
 	/**
 	 * Login table in SQL database
 	 */
 	const _login_table = 'egw_access_log';
-	
+
 	/**
 	 * holds account object for user who sends the message
 	 *
 	 * @var object
 	 */
 	private $sender;
-	
+
 	/**
 	 * holds account object for user to notify
 	 *
 	 * @var object
 	 */
 	private $recipient;
-	
+
 	/**
 	 * holds config object (sitewide application config)
 	 *
 	 * @var object
 	 */
 	private $config;
-	
+
 	/**
 	 * holds preferences object of user to notify
 	 *
 	 * @var object
 	 */
 	private $preferences;
-	
+
 	/**
 	 * holds the netbios command to be executed on notification
 	 *
-	 * @abstract 
+	 * @abstract
 	 * Example: $netbios_command = "/bin/echo [MESSAGE] | /usr/bin/smbclient -M computer-[4] -I [IP] -U [SENDER]";
 	 *
 	 * Placeholders are:
@@ -68,7 +69,7 @@ class notifications_winpopup implements notifications_iface {
 	 * @var string
 	 */
 	private $netbios_command = "/bin/echo [MESSAGE] >> /Users/jaytraxx/winpopup.out";
-	
+
 	/**
 	 * constructor of notifications_winpopup
 	 *
@@ -90,7 +91,7 @@ class notifications_winpopup implements notifications_iface {
 		$this->config = $_config;
 		$this->preferences = $_preferences;
 	}
-	
+
 	/**
 	 * sends notification
 	 *
@@ -110,11 +111,11 @@ class notifications_winpopup implements notifications_iface {
 			}
 		}
 		if ( empty($user_sessions) ) throw new Exception("User #{$this->recipient->account_id} isn't online. Can't send notification via winpopup");
-		
+
 		$this->send_winpopup( $this->render_infos($_subject).$_messages['plain'], $user_sessions );
 		return true;
 	}
-	
+
 	/**
 	 * sends the winpopup message via command line string netbios_command specified above
 	 *
@@ -144,7 +145,7 @@ class notifications_winpopup implements notifications_iface {
 			}
 		}
 	}
-	
+
 	/**
 	 * checks for a valid IPv4-address without CIDR notation
 	 *
@@ -154,7 +155,7 @@ class notifications_winpopup implements notifications_iface {
 	private function valid_ip($_ip) {
 		return eregi('^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$',$_ip);
 	}
-	
+
 	/**
 	 * renders additional info from subject
 	 *
@@ -162,7 +163,7 @@ class notifications_winpopup implements notifications_iface {
 	 * @return plain rendered info as complete string
 	 */
 	private function render_infos($_subject = false) {
-		$newline = "\n"; 
+		$newline = "\n";
 		if(!empty($_subject)) { return $_subject.$newline; }
 		return false;
 	}

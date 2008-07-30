@@ -7,6 +7,7 @@
  * @subpackage backends
  * @link http://www.egroupware.org
  * @author Christian Binder <christian@jaytraxx.de>
+ * @version $Id$
  */
 
 /**
@@ -18,28 +19,28 @@ class notifications_email implements notifications_iface {
 	 * Appname
 	 */
 	const _appname = 'notifications';
-	
+
 	/**
 	 * holds account object for user who sends the message
 	 *
 	 * @var object
 	 */
 	private $sender;
-	
+
 	/**
 	 * holds account object for user to notify
 	 *
 	 * @var object
 	 */
 	private $recipient;
-	
+
 	/**
 	 * holds config object (sitewide application config)
 	 *
 	 * @var object
 	 */
 	private $config;
-	
+
 	/**
 	 * holds preferences object of user to notify
 	 *
@@ -53,7 +54,7 @@ class notifications_email implements notifications_iface {
 	 * @var object
 	 */
 	private $mail;
-	
+
 	/**
 	 * constructor of notifications_email
 	 *
@@ -74,7 +75,7 @@ class notifications_email implements notifications_iface {
 			$this->mail = new send();
 		}
 	}
-	
+
 	/**
 	 * sends notification
 	 *
@@ -86,7 +87,7 @@ class notifications_email implements notifications_iface {
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
 		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient);
 		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
-		
+
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();
 		$this->mail->IsHTML(true);
@@ -106,7 +107,7 @@ class notifications_email implements notifications_iface {
 			throw new Exception("Failed sending notification message via email.$error");
 		}
 	}
-		
+
 	/**
 	 * renders plaintext/html links from given link array
 	 *
@@ -117,14 +118,14 @@ class notifications_email implements notifications_iface {
 	 */
 	private function render_links($_links = false, $_render_html = false, $_render_external = true) {
 		if(!is_array($_links) || count($_links) == 0) { return false; }
-		
+
 		// provide defaults if given arguments are null
 		// php distinguishes between missing and present(null) arguments
 		if(is_null($_render_html)) { $_render_html = false; }
 		if(is_null($_render_external)) { $_render_external = true; }
 		$newline = $_render_html ? "<br />" : "\n";
 		$hruler = $_render_html ? html::hr() : '';
-		
+
 		$rendered_links = array();
 		foreach($_links as $link) {
 			if($_render_external || ! $link->popup) { $link->view['no_popup'] = 1; }
