@@ -646,17 +646,6 @@
 			$this->sessionid = $no_session ? 'no-session' : $this->new_session_id();
 			$this->kp3       = md5($GLOBALS['egw']->common->randomstring(15));
 
-			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
-			{
-				$this->egw_setcookie('sessionid',$this->sessionid);
-				$this->egw_setcookie('kp3',$this->kp3);
-				$this->egw_setcookie('domain',$this->account_domain);
-			}
-			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
-			{
-				$this->egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
-				$this->egw_setcookie('last_domain',$this->account_domain,$now+1209600);
-			}
 			unset($GLOBALS['egw_info']['server']['default_domain']); /* we kill this for security reasons */
 
 			/* init the crypto object */
@@ -689,16 +678,38 @@
 			$this->appsession('password','phpgwapi',base64_encode($this->passwd));
 			if ($GLOBALS['egw']->acl->check('anonymous',1,'phpgwapi'))
 			{
-				$session_flags = 'A';
+				$this->session_flags = 'A';
 			}
 			else
 			{
-				$session_flags = 'N';
+				$this->session_flags = 'N';
+			}
+
+			if (($hook_result = $GLOBALS['egw']->hooks->process(array(
+				'location'       => 'session_creation',
+				'sessionid'      => $this->sessionid,
+				'session_flags'  => $this->session_flags,
+				'account_id'     => $this->account_id,
+				'account_lid'    => $this->account_lid,
+				'passwd'         => $this->passwd,
+				'account_domain' => $this->account_domain,
+				'user_ip'        => $user_ip,
+			),'',true)))	// true = run hooks from all apps, not just the ones the current user has perms to run
+			{
+				foreach($hook_result as $app => $reason)
+				{
+					if ($reason)	// called hook requests to deny the session
+					{
+						$this->reason = $this->cd_reason = $reason;
+						$this->log_access($this->reason,$login,$user_ip,0);		// log unsuccessfull login
+						return False;
+					}
+				}
 			}
 
 			$GLOBALS['egw']->db->transaction_begin();
-			$this->register_session($this->login,$user_ip,$now,$session_flags);
-			if ($session_flags != 'A')		// dont log anonymous sessions
+			$this->register_session($this->login,$user_ip,$now,$this->session_flags);
+			if ($this->session_flags != 'A')		// dont log anonymous sessions
 			{
 				$this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
 			}
@@ -706,6 +717,17 @@
 			$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
 			$GLOBALS['egw']->db->transaction_commit();
 
+			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
+			{
+				$this->egw_setcookie('sessionid',$this->sessionid);
+				$this->egw_setcookie('kp3',$this->kp3);
+				$this->egw_setcookie('domain',$this->account_domain);
+			}
+			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
+			{
+				$this->egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
+				$this->egw_setcookie('last_domain',$this->account_domain,$now+1209600);
+			}
 			//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			if ($this->errorlog_debug) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
 
