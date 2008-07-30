@@ -1,5 +1,7 @@
 /* $Id$ */
 
+.inputFullWidth input { width: 100%; }
+
 /******************************************************************
  * CSS settings for the day, week and month view (timeGridWidget) *
  ******************************************************************/
