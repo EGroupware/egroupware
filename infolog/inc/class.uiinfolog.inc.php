@@ -1384,7 +1384,9 @@ class uiinfolog
 				reset($newBody);
 				while(list($key,$value) = @each($newBody))
 				{
-					$value .= "\n";
+					if (trim($value) != '') {
+						if ($value != "\r") $value .= "\n";
+					}
 					$bodyAppend = $bofelamimail->wordwrap($value,75,"\n");
 					$message .= $bodyAppend;
 				}
