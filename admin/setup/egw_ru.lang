@@ -398,7 +398,6 @@ show error log	admin	ru	Показать журнал ошибок
 show phpinfo()	admin	ru	Показать информацию php
 show session ip address	admin	ru	Показать адрес IP сеанса
 site	admin	ru	Сайт
-site configuration	common	ru	Конфигурация сайта
 soap	admin	ru	SOAP
 sorry, that group name has already been taken.	admin	ru	Извините. Такое имя группы уже существует.
 sorry, the above users are still a member of the group %1	admin	ru	Извините, но указанные выше пользователи являются членами группы %1

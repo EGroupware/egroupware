@@ -359,7 +359,6 @@ show error log	admin	fr	Montrer le journal des erreurs
 show phpinfo()	admin	fr	Montrer phpinfo()
 show session ip address	admin	fr	Montrer les adresses IP des sessions
 site	admin	fr	Site
-site configuration	common	fr	Configuration du site
 soap	admin	fr	SOAP
 sorry, that group name has already been taken.	admin	fr	Désolé, ce nom de groupe existe déjà.
 sorry, the above users are still a member of the group %1	admin	fr	Désolé, les utilisateurs ci-dessus sont toujours membre du groupe %1

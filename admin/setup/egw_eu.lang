@@ -270,7 +270,6 @@ show error log	admin	eu	Erroreen erregistroa erakutsi
 show phpinfo()	admin	eu	phpinfo( ) erakutsi
 show session ip address	admin	eu	Saioaren IP helbidea erakutsi
 site	admin	eu	Lekua
-site configuration	common	eu	Lekuaren konfigurazioa
 soap	admin	eu	SOAP
 sorry, that group name has already been taken.	admin	eu	Talde izen hau hartuta dago
 sorry, the follow users are still a member of the group %1	admin	eu	Ondorengo erabiltzaileak oraindik %1 taldeko kideak dira

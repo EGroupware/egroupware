@@ -274,7 +274,6 @@ show only the date, not the year	admin	cs	Zobrazit jen datum, ne rok
 show this month	calendar	cs	zobrazit tento měsíc
 show this week	calendar	cs	zobrazit tento týden
 single event	calendar	cs	jednotlivá událost
-site configuration	calendar	cs	konfigurace webu
 start	calendar	cs	Začátek
 start date/time	calendar	cs	Počáteční datum/čas
 startdate / -time	calendar	cs	Počáteční datum/čas

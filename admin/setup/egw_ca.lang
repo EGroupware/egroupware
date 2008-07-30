@@ -363,7 +363,6 @@ show error log	admin	ca	Mostrar registre d'errors
 show phpinfo()	admin	ca	Mostrar phpinfo()
 show session ip address	admin	ca	Mostar l'adreça IP de la sessió
 site	admin	ca	Llocs
-site configuration	common	ca	Configuració del Lloc
 soap	admin	ca	SOAP
 sorry, that group name has already been taken.	admin	ca	Aquest nom de grup ja es fa servir.
 sorry, the above users are still a member of the group %1	admin	ca	Els usuaris anteriors encara no són membres del grup %1

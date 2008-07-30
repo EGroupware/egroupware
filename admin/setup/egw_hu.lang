@@ -375,7 +375,6 @@ show error log	admin	hu	Hibanapló megjelenítése
 show phpinfo()	admin	hu	phpinfo() megjelenítése
 show session ip address	admin	hu	Session IP cím megjelenítése
 site	admin	hu	Oldal
-site configuration	common	hu	Webhely beállításai
 soap	admin	hu	SOAP
 sorry, that group name has already been taken.	admin	hu	Már létezik csoport ezen a néven
 sorry, the above users are still a member of the group %1	admin	hu	A fenti felhasználók már tagjai az alábbi csoportnak: %1

@@ -303,7 +303,6 @@ show error log	admin	tr	Hata kütüðünü göster
 show phpinfo()	admin	tr	phpinfo() görüntüle
 show session ip address	admin	tr	Oturum IP adreslerini görüntüle
 site	admin	tr	Site
-site configuration	common	tr	Site Ayarlarý
 soap	admin	tr	SOAP
 sorry, that group name has already been taken.	admin	tr	Üzgünüm, o group ismi kullanýmda
 sorry, the above users are still a member of the group %1	admin	tr	Üzgünüm, yukarýdaki kullanýcýlar hala %1 grubunun üyeleridir.

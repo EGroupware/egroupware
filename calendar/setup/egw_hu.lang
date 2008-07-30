@@ -263,7 +263,6 @@ show list of upcoming events	calendar	hu	Megmutatja a bejövő események listá
 show this month	calendar	hu	hónap mutatása
 show this week	calendar	hu	hét mutatása
 single event	calendar	hu	egyetlen esemény
-site configuration	calendar	hu	Webhely beállításai
 start	calendar	hu	Kezdés
 start date/time	calendar	hu	Kezdés dátuma/ideje
 startdate / -time	calendar	hu	Kezdés dátuma/ideje

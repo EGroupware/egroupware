@@ -288,7 +288,6 @@ show error log	admin	uk	Показати протокол помилок
 show phpinfo()	admin	uk	Показати phpinfo()
 show session ip address	admin	uk	Показати IP адреси сесій
 site	admin	uk	Сайт
-site configuration	common	uk	Конфігурація сайту
 soap	admin	uk	SOAP
 sorry, that group name has already been taken.	admin	uk	Вибачте, така назва групи вже зайнята,
 sorry, the above users are still a member of the group %1	admin	uk	Вибачте, вищевказані користувачі все ще члени групи %1

@@ -357,7 +357,6 @@ show error log	admin	fi	Näytä virheloki
 show phpinfo()	admin	fi	Näytä phpinfo()
 show session ip address	admin	fi	Näytä istunnon IP-osoite
 site	admin	fi	Palvelu
-site configuration	common	fi	Palvelun asetukset
 soap	admin	fi	SOAP
 sorry, that group name has already been taken.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
 sorry, the above users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1

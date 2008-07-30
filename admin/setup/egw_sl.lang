@@ -366,7 +366,6 @@ show error log	admin	sl	Pokaži seznam napak
 show phpinfo()	admin	sl	Pokaži phpinfo() informacije
 show session ip address	admin	sl	Pokaži IP naslov seje
 site	admin	sl	Strežnik
-site configuration	common	sl	Nastavitve strežnika
 soap	admin	sl	SOAP
 sorry, that group name has already been taken.	admin	sl	To ime skupine je že uporabljeno.
 sorry, the above users are still a member of the group %1	admin	sl	Zgornji uporabniki so še vedno člani skupine %1.

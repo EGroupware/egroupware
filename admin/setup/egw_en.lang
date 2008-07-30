@@ -406,7 +406,6 @@ show error log	admin	en	Show error log
 show phpinfo()	admin	en	Show phpinfo()
 show session ip address	admin	en	Show session IP address
 site	admin	en	Site
-site configuration	common	en	Site configuration
 soap	admin	en	SOAP
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
 sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1

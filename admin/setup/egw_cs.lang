@@ -364,7 +364,6 @@ show error log	admin	cs	Zobrazit chybový protokol
 show phpinfo()	admin	cs	Zobrazit phpinfo()
 show session ip address	admin	cs	Zobrazit IP adresu relace
 site	admin	cs	Web
-site configuration	common	cs	Konfigurace webu
 soap	admin	cs	SOAP
 sorry, that group name has already been taken.	admin	cs	Lituji, takové jméno skupiny už bylo použito.
 sorry, the above users are still a member of the group %1	admin	cs	Lituji, výše uvedení uživatelé jsou stále členy skupiny %1

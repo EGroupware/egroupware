@@ -359,7 +359,6 @@ show error log	admin	sv	Visa fellogg
 show phpinfo()	admin	sv	Visa phpinfo()
 show session ip address	admin	sv	Visa IP adress för sessionen
 site	admin	sv	Sajt
-site configuration	common	sv	Sajt alternativ
 soap	admin	sv	SOAP
 sorry, that group name has already been taken.	admin	sv	Beklagar, gruppnamnet är redan upptaget
 sorry, the above users are still a member of the group %1	admin	sv	Beklagar, användarna ovan är fortfarande medlemmar i gruppen %1

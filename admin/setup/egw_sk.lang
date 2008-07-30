@@ -359,7 +359,6 @@ show error log	admin	sk	Zobraziť záznamy o chybách
 show phpinfo()	admin	sk	Zobraziť phpinfo()
 show session ip address	admin	sk	Zobraziť IP adresu relácie
 site	admin	sk	Stránka
-site configuration	common	sk	Nastavenia stránky
 soap	admin	sk	SOAP
 sorry, that group name has already been taken.	admin	sk	Ľutujem, také meno skupiny tu už bolo.
 sorry, the above users are still a member of the group %1	admin	sk	Ľutujem, uvedení používatelia sú stále členmi skupiny %1

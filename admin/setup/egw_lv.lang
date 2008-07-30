@@ -295,7 +295,6 @@ show error log	admin	lv	Rādīt kļudas logu
 show phpinfo()	admin	lv	Rādīt phpinfo()
 show session ip address	admin	lv	Rādīt sesijas IP adresi
 site	admin	lv	Lapa(site)
-site configuration	common	lv	Lapas konfigurācija
 soap	admin	lv	SOAP
 sorry, that group name has already been taken.	admin	lv	Atvainojiet, šis grupas nosaukums jau ir aizņemts
 sorry, the above users are still a member of the group %1	admin	lv	Atvainojiet, iepriekšminētie lietotāji joprojām pieder grupai %1

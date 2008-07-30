@@ -611,7 +611,6 @@ show error log	admin	iw	הצג יומן שגיאות
 show phpinfo()	admin	iw	PHPINFO() הצג
 show session ip address	admin	iw	של המושב IP הצג כתובת
 site	admin	iw	אתר
-site configuration	common	iw	הגדרות אתר
 some or all of its tables are missing	setup	iw	לפחות חלק מהטבלאות חסרות
 sorry, that group name has already been taken.	admin	iw	.מצטער, שם קבוצה זה כבר תפוס
 sorry, the above users are still a member of the group %1	admin	iw	מצטער, המשתמשים הרשומים לעיל עדיין חברים בקבוצת %1

@@ -407,7 +407,6 @@ show error log	admin	es-es	Mostrar registro de errores
 show phpinfo()	admin	es-es	Mostrar phpinfo()
 show session ip address	admin	es-es	Mostar la dirección IP de la sesión
 site	admin	es-es	Sitio
-site configuration	common	es-es	Configuración del sitio
 soap	admin	es-es	SOAP
 sorry, that group name has already been taken.	admin	es-es	Este nombre de grupo ya está en uso.
 sorry, the above users are still a member of the group %1	admin	es-es	Lo siento, los usuarios de encima todavía son miembros del grupo %1

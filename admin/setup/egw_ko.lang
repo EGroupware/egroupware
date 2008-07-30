@@ -305,7 +305,6 @@ show error log	admin	ko	에러 기록을 보임
 show phpinfo()	admin	ko	phpinfo()를 보임
 show session ip address	admin	ko	세션 IP주소를 보임
 site	admin	ko	Site
-site configuration	common	ko	사이트 구성
 soap	admin	ko	SOAP
 sorry, that group name has already been taken.	admin	ko	죄송합니다, 입력하신 그룹이름은 이미 있습니다.
 sorry, the above users are still a member of the group %1	admin	ko	죄송합니다 위의 사용자는 아직 %1 그룹의 구성원입니다.

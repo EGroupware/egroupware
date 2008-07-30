@@ -365,7 +365,6 @@ show error log	admin	zh-tw	顯示錯誤紀錄
 show phpinfo()	admin	zh-tw	顯示PHP資訊
 show session ip address	admin	zh-tw	顯示處理?></td>  </tr>  <tr bgcolor=
 site	admin	zh-tw	網站
-site configuration	common	zh-tw	網站設定
 soap	admin	zh-tw	SOAP
 sorry, that group name has already been taken.	admin	zh-tw	抱歉，群組名稱已經存在
 sorry, the above users are still a member of the group %1	admin	zh-tw	抱歉，以上使用者仍然是群組%1的成員

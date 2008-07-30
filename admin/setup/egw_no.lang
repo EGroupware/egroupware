@@ -325,7 +325,6 @@ show error log	admin	no	Vis feillogg
 show phpinfo()	admin	no	Vis phpinfo()
 show session ip address	admin	no	Vis IP adresse for session
 site	admin	no	Nettsted
-site configuration	common	no	Konfigurasjon av nettsted
 soap	admin	no	SOAP
 sorry, that group name has already been taken.	admin	no	Desverre, det gruppenavnet er allerede i bruk
 sorry, the above users are still a member of the group %1	admin	no	Beklager, ovenstående bruker er fortsatt medlem av gruppe %1

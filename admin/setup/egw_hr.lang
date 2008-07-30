@@ -303,7 +303,6 @@ show error log	admin	hr	Prikaži listu zapisa grešaka
 show phpinfo()	admin	hr	Prikaži phpinfo()
 show session ip address	admin	hr	Show session IP address
 site	admin	hr	Site
-site configuration	common	hr	Site configuration
 soap	admin	hr	SOAP
 sorry, that group name has already been taken.	admin	hr	Nažalost, to ime grupe je već zauzeto
 sorry, the above users are still a member of the group %1	admin	hr	Nažalost, gornji korisnici su još uvijek pripadnici grupe %1

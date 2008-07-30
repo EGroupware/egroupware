@@ -286,7 +286,6 @@ show error log	admin	da	Vis fejllog
 show phpinfo()	admin	da	Vis phpinfo()
 show session ip address	admin	da	Vis session IP adresse
 site	admin	da	Site
-site configuration	common	da	Site konfiguration
 soap	admin	da	SOAP
 sorry, that group name has already been taken.	admin	da	Beklager, det gruppenavn er allerede brugt.
 sorry, the above users are still a member of the group %1	admin	da	Beklager, overstående brugere er stadig medlem af gruppen %1

@@ -364,7 +364,6 @@ show error log	admin	it	Visualizza i log di errore
 show phpinfo()	admin	it	Visualizza phpinfo()
 show session ip address	admin	it	Visualizza l'indirizzo IP della sessione
 site	admin	it	Sito
-site configuration	common	it	Configurazione per tutto il Sito
 soap	admin	it	SOAP
 sorry, that group name has already been taken.	admin	it	Spiacente, questo nome di gruppo è già stato utilizzato
 sorry, the above users are still a member of the group %1	admin	it	Spiacente, l'utente è ancora membro del gruppo %1

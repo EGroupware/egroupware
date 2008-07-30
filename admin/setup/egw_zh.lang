@@ -430,7 +430,6 @@ show error log	admin	zh	显示错误日志
 show phpinfo()	admin	zh	显示 phpinfo()
 show session ip address	admin	zh	显示会话IP地址
 site	admin	zh	站点
-site configuration	common	zh	站点配置
 size	admin	zh	大小
 soap	admin	zh	SOAP
 sorry, that group name has already been taken.	admin	zh	抱歉，该组名已被占用。

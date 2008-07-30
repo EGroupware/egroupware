@@ -323,7 +323,6 @@ show error log	admin	fa	نمایش ثبت خطا
 show phpinfo()	admin	fa	نمایش اطلاعات php
 show session ip address	admin	fa	نمایش نشانی IP نشست
 site	admin	fa	سایت
-site configuration	common	fa	پیکربندی سایت
 sorry, that group name has already been taken.	admin	fa	متأسفم، قبلا این نام برای گروه دیگری گرفته شده است
 sorry, the above users are still a member of the group %1	admin	fa	متأسفم، کاربران فوق هنوز عضو گروه %1 هستند
 sorry, the follow users are still a member of the group %1	admin	fa	متأسفم، کاربران ذیل هنوز عضو گروه %1 هستند

@@ -220,3 +220,4 @@ use cookies	login	ja	Cookie を使用
 username	login	ja	ユーザ名
 you have been successfully logged out	login	ja	ログアウトしました。
 your session could not be verified.	login	ja	Your session could not be verified.
+site configuration	common	ja	サイト環境設定

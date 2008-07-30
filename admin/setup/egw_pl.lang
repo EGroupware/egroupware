@@ -363,7 +363,6 @@ show error log	admin	pl	Wśywietl dziennik błędów
 show phpinfo()	admin	pl	Wyświetl phpinfo()
 show session ip address	admin	pl	Wyświetl adres IP sesji
 site	admin	pl	Serwis
-site configuration	common	pl	Konfiguracja serwisu
 soap	admin	pl	SOAP
 sorry, that group name has already been taken.	admin	pl	Niestety, ta nazwa grupy jest już używana
 sorry, the above users are still a member of the group %1	admin	pl	Niestety, następujący użytkownik wciąż jest członkiem grupy %1

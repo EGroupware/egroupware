@@ -299,7 +299,6 @@ show last modified	infolog	hu	Mutassa az utolsónak módosítottat
 show status and percent done separate	infolog	hu	Mutassa a státuszt és százalékos készültséged külön-külön
 show ticket id	infolog	hu	Mutassa a jegy azonosítóját
 show times	infolog	hu	Időtartamok megjelenítése
-site configuration	infolog	hu	Webhely beállításai
 small view	infolog	hu	kis nézet
 start a new search, cancel this link	infolog	hu	új keresés indítása, hivatkozás elhagyása
 startdate	infolog	hu	Kezdés dátuma

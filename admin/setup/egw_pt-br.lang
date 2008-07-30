@@ -366,7 +366,6 @@ show error log	admin	pt-br	Exibir registro de erros
 show phpinfo()	admin	pt-br	Exibir phpinfo()
 show session ip address	admin	pt-br	Exibir endereço IP das sessões
 site	admin	pt-br	Site
-site configuration	common	pt-br	Configuração do servidor
 soap	admin	pt-br	SOAP
 sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo já está em uso.
 sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usuários acima ainda são membros do grupo %1

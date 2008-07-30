@@ -225,7 +225,6 @@ show in the infolog list	infolog	zh	浏览事项时是否显示关联?
 show list of upcoming entries	infolog	zh	仅显示临近的事项
 show open entries: tasks/calls/notes on main screen	infolog	zh	在首页显示待决事项
 showing	infolog	zh	当前显示
-site configuration	infolog	zh	全局配置
 small view	infolog	zh	小视图查看
 start a new search, cancel this link	infolog	zh	不关联该条目, 重新开始搜索
 startdate	infolog	zh	起始日期

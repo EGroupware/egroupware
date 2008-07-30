@@ -359,7 +359,6 @@ show error log	admin	nl	Foutenlogboek weergeven
 show phpinfo()	admin	nl	De uitvoer van phpinfo() weergeven
 show session ip address	admin	nl	Geef  Sessie IP-adres weer
 site	admin	nl	Site
-site configuration	common	nl	Siteconfiguratie
 soap	admin	nl	SOAP
 sorry, that group name has already been taken.	admin	nl	Sorry, die groepsnaam bestaat al.
 sorry, the above users are still a member of the group %1	admin	nl	Excuses, de bovenstaande gebruikers zijn nog steeds lid van de groep %1.

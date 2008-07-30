@@ -356,7 +356,6 @@ show error log	admin	el	Εμφάνηση καταγραφή λαθών
 show phpinfo()	admin	el	Εμφάνηση phpinfo()
 show session ip address	admin	el	Εμφάνηση διεύθυνσης περιόδων IP
 site	admin	el	Ιστιοσελίδα
-site configuration	common	el	Διαμόρφωση ιστιοσελίδας
 soap	admin	el	SOAP
 sorry, that group name has already been taken.	admin	el	Συγνώμη, αυτό το όνομα ομάδας υπάρχει ήδη
 sorry, the above users are still a member of the group %1	admin	el	Συγνώμη, οι παραπάνω χρήστες είναι ακόμα μέλοι της ομάδας %1
