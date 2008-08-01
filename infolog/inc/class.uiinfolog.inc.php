@@ -1385,7 +1385,10 @@ class uiinfolog
 				while(list($key,$value) = @each($newBody))
 				{
 					if (trim($value) != '') {
-						if ($value != "\r") $value .= "\n";
+						#if ($value != "\r") $value .= "\n";
+					} else {
+						// if you want to strip all empty lines uncomment the following
+						#continue;
 					}
 					$bodyAppend = $bofelamimail->wordwrap($value,75,"\n");
 					$message .= $bodyAppend;
