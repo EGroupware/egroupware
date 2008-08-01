@@ -963,7 +963,8 @@ class etemplate extends boetemplate
 
 		$options = '';
 		if ($readonly = $cell['readonly'] && $readonlys[$name] !== false || 	// allow to overwrite readonly settings of a cell
-			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'])
+			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'] ||
+			($p = strrpos($name,'[')) !== false && ($parent=substr($name,0,$p)) && $readonlys[$parent])	// allow also set parent readonly (instead each child)
 		{
 			$options .= ' readonly="readonly"';
 		}
@@ -1001,7 +1002,8 @@ class etemplate extends boetemplate
 			if (!$ext_type) $ext_type = $type;
 			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$readonlys[$name]);
 
-			$readonly = $readonly || $cell['readonly'];	// might be set by extension
+			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension
+
 			$this->set_array($content,$name,$value);
 
 			if ($cell['type'] == $type.'-'.$sub_type) break;	// stop if no further type-change
@@ -1308,11 +1310,9 @@ class etemplate extends boetemplate
 				if (!$readonly && $type != 'buttononly')	// input button, are never submitted back!
 				{
 					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					if (strlen($name>0)) {
-						if ($name == 'cancel' || stripos($name,'[cancel]') !== false)
-						{
-							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = 'cancel';
-						}
+					if ($name == 'cancel' || stripos($name,'[cancel]') !== false)
+					{
+						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = 'cancel';
 					}
 				}
 				break;
