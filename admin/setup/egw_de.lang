@@ -1,12 +1,19 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
 %1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
+%1 class not instanciated	admin	de	%1 Klasse nicht instanziert
+%1 group %2	admin	de	%1 Gruppe %2
+%1 is no command!	admin	de	%1 ist kein Kommando!
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar!!!
+%1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3
+%1 user %2	admin	de	%1 Benutzer %2
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benützt)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 -  type	admin	de	-Typ
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
+account %1 %2	admin	de	Benutzerkonto %1 %2
+account '%1' deleted.	admin	de	Benutzerkonto '%1' gelöscht.
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
 account has been deleted	common	de	Konto wurde gelöscht
@@ -14,6 +21,7 @@ account has been updated	common	de	Konto wurde aktualisiert
 account list	admin	de	Benutzerkonten anzeigen
 account permissions	admin	de	Zugriffsrechte
 account preferences	admin	de	Einstellungen der Benutzerkonten
+account-id's have to be integers!	admin	de	Konten-Ids müssen vom Typ Integer (Zahl) sein!
 acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
 action	admin	de	Aktion
@@ -36,6 +44,7 @@ add sub-category	admin	de	Unterkategorie hinzufügen
 admin email	admin	de	E-Mail-Administration
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	E-Mail-Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen (leer für keine Benachrichtigung)
 admin name	admin	de	Admininistratorname
+admin queue and history	admin	de	Admin Queue und Historie
 administration	admin	de	Administration
 admins	admin	de	Administatoren
 advanced options	admin	de	erweiterte Optionen
@@ -45,6 +54,7 @@ aliases	admin	de	E-Mail-Alias
 all records and account information will be lost!	admin	de	Alle Datens&auml;tze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
+allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung  identifiziert durch folgende (Komma separierte) Install IDs
 alternate email address	admin	de	Alternative E-Mail-Adresse
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei Sitzungen anzeigen nicht angezeigt)
@@ -52,10 +62,12 @@ anonymous user does not exist!	admin	de	Anonymer Benutzer existiert NICHT!
 anonymous user has no run-rights for the application!	admin	de	Anonymer Benutzer hat KEINE Ausführungsrechte für die Anwendung!
 appearance	admin	de	Aussehen
 application	admin	de	Anwendung
+application '%1' not found (maybe not installed or misspelled)!	admin	de	Anwendung '%1' nicht gefunden. (eventuell nicht Installiert oder Falsch geschrieben)!
 application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 applications list	admin	de	Liste der Anwendungen
+applications run rights updated.	admin	de	Anwendungsrechte aktualisiert.
 applies the changes	admin	de	übernimmt Änderungen
 are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen wollen?
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen wollen?
@@ -85,17 +97,25 @@ cancel testjob!	admin	de	Testjob abbrechen!
 categories list	admin	de	Liste der Kategorien
 category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
 category list	admin	de	Kategorieliste
+change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
 change main screen message	admin	de	Nachricht der Startseite ändern
+change password for %1	admin	de	Ändern des Passworts für %1
+check acl for entries of not (longer) existing accounts	admin	de	Prüfe ACL Einträge auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
 color	admin	de	Farbe
+command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
+complete path to aspell program	admin	de	Vollständiger Pfad zum Programm ASPELL
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe leer bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
+could not remote execute the command	admin	de	Kann das Kommando nicht Remote ausführen.
 country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
+created	admin	de	Erstellt
+created with id #%1	admin	de	erstellt mit der ID #%1
 creates a new field	admin	de	erstellt ein neues Feld
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
 custom fields	admin	de	Benutzerdefinierte Felder
@@ -109,6 +129,7 @@ default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pr
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
 deinstall crontab	admin	de	Crontab deinstallieren
 delete account	admin	de	Benutzerkonto löschen
+delete account %1	admin	de	Löschen des Benutzerkontos %1
 delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
@@ -166,10 +187,13 @@ edit this user	admin	de	Diesen Benutzer bearbeiten
 edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 egroupware directory	admin	de	eGroupWare Verzeichnis
+either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Install ID oder das Konfigurationspasswort oder den Remote Hash
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
+emailadmin: user assigned profile	admin	de	eMailAdmin: Vordefiniertes Benutzerprofil
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enable the soap service	admin	de	soap Service einschalten
+enable the spellcheck in the ritch text editor ?	admin	de	Aktiviere die Rechtschreibprüfung im RichText Editor
 enable the xmlrpc service	admin	de	xmlrpc Service einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enabled - popup window	admin	de	Verfügbar, Popup-Fenster
@@ -197,6 +221,12 @@ enter your http proxy server port	admin	de	HTTP-Proxy-Server-Port
 enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
 enter your smtp server port	admin	de	SMTP-Server Port
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Testjobs, eventuell läuft gar keiner!!!
+error changing the password for % !!!	admin	de	Fehler beim Ändern des Passworts für % !!!
+error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1 !
+error saving	admin	de	Fehler beim Speichern
+error saving account!	admin	de	Fehler beim Speichern des Benutzerkontos!
+error saving the command!	admin	de	Fehler beim Speichern des Befehls!
+error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Testjobs, falsche Syntax oder es läuft schon einer!!!
 error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!!!
@@ -214,6 +244,7 @@ forward also to	admin	de	Zusätzlich weiterleiten an
 forward emails to	admin	de	E-Mails weiterleiten an
 forward only	admin	de	Nur weiterleiten
 global categories	common	de	Globale Kategorien
+grant	admin	de	Berechtigungen
 group ?	admin	de	Gruppe ?
 group has been added	common	de	Gruppe wurde hinzugefügt
 group has been deleted	common	de	Gruppe wurde gelöscht
@@ -225,6 +256,7 @@ hide php information	admin	de	PHP-Informationen ausblenden
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host-Information
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (maximum in Bildpunkten)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	de	Wie viele Einträge sollen nicht-Administratoren exportieren können (leer = kein Limit, Nein = kein Export)
 how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30)?
@@ -240,6 +272,9 @@ install crontab	admin	de	Crontab installieren
 installed applications	common	de	Installierte Anwendungen
 installed crontab	admin	de	Installierte Crontab
 interface	admin	de	Schnittstelle
+invalid formated date "%1"!	admin	de	Ungültig formatiertes Datum "%1"!
+invalid remote id or name "%1"!	admin	de	Ungültige RemoteID oder Name "%1"!
+invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein (yes/no)
 ip	admin	de	IP
 jobs	admin	de	Jobs
 kill	admin	de	Beenden
@@ -283,6 +318,7 @@ method	admin	de	Methode
 minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer ID (z.B. 500 oder 100)
 minute	admin	de	Minute
 mode	admin	de	Modus
+modified	admin	de	Geändert
 month	admin	de	Monat
 more secure	admin	de	sicherer
 name must not be empty !!!	admin	de	Name darf nicht leer sein !!!
@@ -303,14 +339,17 @@ note: ssl available only if php is compiled with curl support	admin	de	Notiz: SS
 number of row for a multiline inputfield or line of a multi-select-box	admin	de	Anzahl der Zeilen in einem mehrzeiligen Feld oder eine multi-select-box
 order	admin	de	Reihenfolge
 outbound	admin	de	ausgehend
+own install id:	admin	de	Eigene Install-ID
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
+password updated	admin	de	Passwort aktualisiert
 path information	admin	de	Pfad-Information
 peer server list	admin	de	Liste der Server im Verbund
 peer servers	admin	de	Server-Verbund
 percent of users that logged out	admin	de	Prozent der Benutzer, die sich korrekt abgemeldet haben
 percent this user has logged out	admin	de	Prozentsatz wie oft sich dieser Benutzer abgemeldet hat
 permission denied	admin	de	Zugriff verweigert
+permission denied !!!	admin	de	Zugriff verweigert !!!
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 phpinfo	admin	de	PHP-Informationen
@@ -327,6 +366,9 @@ quota size in mbyte	admin	de	Quotagröße in MByte
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
+remote administration instances	admin	de	Remote Administrations Instanzen
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung freigegeben werden.
+remote instance saved	admin	de	Remote Instanz gespeichert
 remove	admin	de	Entfernen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe
@@ -366,6 +408,7 @@ show error log	admin	de	Fehlerprotokoll anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen
 show session ip address	admin	de	IP-Adresse der Sitzung anzeigen
 site	admin	de	Site
+site configuration	admin	de	Site Konfiguration
 soap	admin	de	SOAP
 sorry, that group name has already been taken.	admin	de	Der Gruppenname wird bereits verwendet.
 sorry, the above users are still a member of the group %1	admin	de	Der Benutzer ist immer noch Mitglied der Gruppe %1.
@@ -407,12 +450,17 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	de
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
 times	admin	de	Zeiten
 top	admin	de	oben
+total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 Ids wurde geändert.
 total records	admin	de	Anzahl Datensätze insgesamt
 trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverhältnis
 type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits !!!
 type of customfield	admin	de	Typ des Benutzerdefinierten Feldes
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows muß der asynchrone Service %1von Hand%2 installiert werden oder es wird nur die Ausweichmöglichkeit benutzt. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft!!!
+unknown account: %1 !!!	admin	de	Unbekanntes Benutzerkonto: %1 !!!
+unknown command %1!	admin	de	Unbekanntes Kommando %1 !
+unknown option %1	admin	de	Unbekannte Option %1
+updated	admin	de	aktualisiert
 use cookies to pass sessionid	admin	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 use theme	admin	de	Benutztes Farbschema
@@ -422,6 +470,7 @@ user for smtp-authentication (leave it empty if no auth required)	admin	de	Benut
 user groups	admin	de	Benutzergruppen
 userdata	admin	de	Benutzerkonto
 users choice	admin	de	Benutzerauswahl
+value for column %1 is not unique!	admin	de	Wert für die Spalte %1 ist nicht eindeutig!
 view access log	admin	de	Zugangsprotokoll anzeigen
 view account	admin	de	Benutzerkonto anzeigen
 view category	admin	de	Kategorie anzeigen
@@ -435,6 +484,8 @@ would you like egroupware to check for a new version<br>when admins login ?	admi
 would you like egroupware to check for new application versions when admins login ?	admin	de	Soll eGroupWare auf neue Versionen der Anwendungen prüfen, wenn sich ein Administrator anmeldet ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
+wrong account type: %1 is no %2 !!!	admin	de	Falscher Konten Typ: %1 ist kein(e) %2 !!!
+wrong admin-account or -password !!!	admin	de	Falscher Admin-Account oder Passwort!!!
 xml-rpc	admin	de	XML-RPC
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
 you have to enter a name, to create a new field!!!	admin	de	Sie müssen einen Namen angeben um ein neues Feld anzulegen!!!
@@ -448,5 +499,6 @@ you must enter an application name.	admin	de	Sie müssen der Anwendung einen Nam
 you must enter an application title.	admin	de	Sie müssen der Anwendung einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Dateityp auswählen
 you must select at least one group member.	admin	de	Sie müssen mindestens ein Gruppenmitglied auswählen.
+you need to enter install id and password!	admin	de	Sie müssen die Install-ID UND das Passwort eingeben!
 you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können!
 your session could not be verified.	admin	de	Ihre Sitzung konnte nicht verifiziert werden.

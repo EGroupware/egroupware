@@ -823,7 +823,16 @@
 					'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
 				);
 			}
-
+            // not sure if this realy belongs here, or only in edit_user
+            if ($_GET['account_id'] &&  // can't set it on add
+                $GLOBALS['egw_info']['user']['apps']['emailadmin'])  // rights to access emailadmin
+            {
+                $GLOBALS['menuData'][] = array(
+                    'description' => 'eMailAdmin: User assigned Profile',
+                    'url'         => '/index.php',
+                    'extradata'   => 'menuaction=emailadmin.emailadmin_ui.listProfiles'
+                );
+            }
 			// NDEE210804
 			// added for different way of handling ldap entries inside account manager
 			// we show this only, if accounts are stored in ldap
