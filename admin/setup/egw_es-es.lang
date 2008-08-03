@@ -190,6 +190,7 @@ egroupware directory	admin	es-es	Directorio de eGroupWare
 either install id and config password needed or the remote hash!	admin	es-es	¡Tanto el ID de la instalación como la contraseña de configuración necesitan el hash remoto!
 email account active	admin	es-es	cuenta de correo activa
 email address	admin	es-es	dirección de correo electrónico
+emailadmin: user assigned profile	admin	es-es	eMailAdmin: perfil asignado al usuario
 enable debug-messages	admin	es-es	Activar mensajes de depuración
 enable the soap service	admin	es-es	Activar el servicio soap
 enable the spellcheck in the ritch text editor ?	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
@@ -220,6 +221,7 @@ enter your http proxy server port	admin	es-es	Introduzca el puerto de su servido
 enter your smtp server hostname or ip address	admin	es-es	Introduzca su servidor SMTP (nombre o IP)
 enter your smtp server port	admin	es-es	Introduzca el puerto del servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
+error changing the password for % !!!	admin	es-es	¡Error al cambiar la contraseña para %!
 error changing the password for %1 !!!	admin	es-es	¡Error al cambiar la contraseña para %1!
 error saving	admin	es-es	Error al guardar
 error saving account!	admin	es-es	¡Error al guardar la cuenta!
@@ -407,6 +409,7 @@ show error log	admin	es-es	Mostrar registro de errores
 show phpinfo()	admin	es-es	Mostrar phpinfo()
 show session ip address	admin	es-es	Mostar la dirección IP de la sesión
 site	admin	es-es	Sitio
+site configuration	admin	es-es	Configuración del sitio
 soap	admin	es-es	SOAP
 sorry, that group name has already been taken.	admin	es-es	Este nombre de grupo ya está en uso.
 sorry, the above users are still a member of the group %1	admin	es-es	Lo siento, los usuarios de encima todavía son miembros del grupo %1

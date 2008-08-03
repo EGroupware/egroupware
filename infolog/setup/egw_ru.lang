@@ -1,9 +1,14 @@
+%1 days in advance	infolog	ru	%1 дней(я) до
 %1 deleted	infolog	ru	%1 удален
 %1 deleted by %2 at %3	infolog	ru	%1 удален %2 в %3
 %1 modified	infolog	ru	%1 изменен
 %1 modified by %2 at %3	infolog	ru	%1 изменен %2 в %3
 %1 records imported	infolog	ru	%1 записей импортировано
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ru	%1 записей прочтено (но не импортировано, вы можете вернуться %2назад%3 и снять флаг с Тестировать Импорт)
+%1 you are responsible for is due at %2	infolog	ru	%1 за который вы отвечаете должен быть завершен в %2
+%1 you are responsible for is starting at %2	infolog	ru	%1 за который вы отвечаете должен начаться в %2
+%1 you delegated is due at %2	infolog	ru	%1 который вы назначили должен быть завершен в %2
+%1 you delegated is starting at %2	infolog	ru	%1 который вы назначили должен начаться в %2
 - subprojects from	infolog	ru	- Подпроект из
 0%	infolog	ru	0%
 10%	infolog	ru	10%
@@ -89,9 +94,11 @@ days	infolog	ru	дни
 default categorie for new infolog entries	infolog	ru	Категория по умолчанию для новых записей ИнфоЖурнала
 default filter for infolog	infolog	ru	Фильтр по Умолчанию для ИнфоЖурнала
 default status for a new log entry	infolog	ru	статус по умолчанию для новой записи журнала
-delegated	infolog	ru	Назначен
-delegated open	infolog	ru	Открытых назначенных
-delegation	infolog	ru	Делегирование
+delegated	infolog	ru	назначеные
+delegated open	infolog	ru	открытые назначенные
+delegated overdue	infolog	ru	просроченные назначенные
+delegated upcomming	infolog	ru	назначенные приближающиеся
+delegation	infolog	ru	Назначение
 delete	infolog	ru	Удалить
 delete one record by passing its id.	infolog	ru	Удалить одну запись по ее идентификатору
 delete the entry	infolog	ru	Удалить запись
@@ -107,8 +114,10 @@ disables a status without deleting it	infolog	ru	отключает состоя
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ru	хотите ли Вы подтверждения принятия под ответственность на: принятие, завершение задания или на оба.
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	ru	Вы желаете получать напоминания, при назначении вам заданий(записей) или при их изменении?
 do you want a notification, if items you are responsible for are about to start?	infolog	ru	Вы желаете получать напоминания при запуске задач(записей) за которые вы отвечаете?
+do you want a notification, if items you are responsible for are due?	infolog	ru	Вы желаете получать напоминания, если задачи за которые вы отвечаете должны быть уже завершены?
 do you want a notification, if items you created get updated?	infolog	ru	Вы желаете получать напоминания при изменении записей созданных вами?
 do you want a notification, if items you delegated are about to start?	infolog	ru	Вы желаете получать напоминания при запуске задач(записей) которые вам назначены?
+do you want a notification, if items you delegated are due?	infolog	ru	Вы желаете получать напоминания, если задачи которые вы назначили должны быть уже завершены?
 do you want to receive notifications as html-mails or plain text?	infolog	ru	Вы желаете получать напоминания в виде HTML или обычного текста?
 don't show infolog	infolog	ru	НЕ показывать ИнфоЖурнал
 done	infolog	ru	сделано
@@ -143,7 +152,7 @@ group owner for	infolog	ru	Группа-владелец для
 high	infolog	ru	высокий
 history logging	infolog	ru	Запись истории
 history logging and deleting of items	infolog	ru	Журналирование истории и удаление записей
-id	infolog	ru	Идентификатор
+id	infolog	ru	ИД
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ru	Если тип имеет группу-владельца, все записи этого типа будут иметь владельцем данную группу, а НЕ пользователя, который их создал!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ru	Если не установлено, строка с поиском и фильтрами скрыта для количества записей меньшего, чем "макс. совпадений на страницу" (как определено в ваших общих настройках)
 import	infolog	ru	Импорт
@@ -203,6 +212,7 @@ number of records to read (%1)	infolog	ru	количество записей к
 number of row for a multiline inputfield or line of a multi-select-box	infolog	ru	количество строк в многострочном поле ввода или списке с множественным выбором
 offer	infolog	ru	предложено
 one day after	infolog	ru	через один день
+one day in advance	infolog	ru	за один день до
 ongoing	infolog	ru	в работе
 only for details	infolog	ru	Только для подробностей
 only if i get assigned or removed	infolog	ru	Только если Я  присоединен или отсоединен
@@ -238,6 +248,8 @@ project settings: price, times	infolog	ru	Установки проекта: ц�
 re:	infolog	ru	Re:
 read one record by passing its id.	infolog	ru	Прочитать одну запись указанием её идентификатора
 read rights (default)	infolog	ru	права на чтение (по умолчанию)
+receive notifications about due entries you are responsible for	infolog	ru	Получать напоминания о необходимости завершения работ за которые вы отвечаете
+receive notifications about due entries you delegated	infolog	ru	Получать напоминания о необходимости завершения работ которые вы назначили
 receive notifications about items assigned to you	infolog	ru	Получать сообщения о записях соединенных с вами
 receive notifications about own items	infolog	ru	Получать сообщения о своих записях
 receive notifications about starting entries you are responsible for	infolog	ru	Получать сообщения о запуске записей за которые вы отвечаете

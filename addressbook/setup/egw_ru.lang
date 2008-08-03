@@ -107,6 +107,7 @@ contacts to ldap, account contact-data to sql	admin	ru	контакты в LDAP,
 contains	addressbook	ru	содержит
 copied by %1, from record #%2.	addressbook	ru	Скопировано %1, из записи #%2
 copy a contact and edit the copy	addressbook	ru	Копировать контакт и редактировать копию
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	ru	Скопируйте Ваши изменения в буфер обмена, %1перезагрузите запись%2 а объедините их.
 country	common	ru	Страна
 create new links	addressbook	ru	Создайте новые ссылки
 created	addressbook	ru	Создано
@@ -209,6 +210,8 @@ home zip code	addressbook	ru	Домашний почтовый индекс
 how many contacts should non-admins be able to export (empty = no limit)	admin	ru	Сколько контактов разрешается экспортировать не администраторам (псто - без ограничений)
 icon	addressbook	ru	Пиктограмма
 if accounts are already in ldap	admin	ru	если учетная запись уже в LDAP
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	ru	Если вы указываете каталог (полный путь vfs) здесь, адресная книга показывает действие для каждого документа. Это действие позволяет загрузить указанный документ со вставленными данными контакта.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	ru	Если вы указываете каталог (полный путь vfs) здесь, адресная книга дополнительную пиктограмму документа для каждого контакта. Эта пиктограмма позволяет загрузить указанный документ со вставленными данными контакта.
 import	addressbook	ru	Импорт
 import contacts	addressbook	ru	Импорт контактов
 import csv-file into addressbook	addressbook	ru	Импорт файл CSV в Адресную книгу
@@ -262,6 +265,7 @@ move to addressbook:	addressbook	ru	Перенести в адресную кн�
 moved	addressbook	ru	перенесено
 multiple vcard	addressbook	ru	Несколько VCard
 name for the distribution list	addressbook	ru	Имя для списка рассылки
+name of current user, all other contact fields are valid too	addressbook	ru	Имя текущего пользователя, все остальные поля контакта также действительны.
 name, address	addressbook	ru	Имя, Адрес
 new contact submitted by %1 at %2	addressbook	ru	Новый контакт отправлен %1 в %2
 new window opened to edit infolog for your selection	addressbook	ru	Новое окно открыто для редактирования записи ИнфоЖурнала по вашему выбору
@@ -304,6 +308,7 @@ record access	addressbook	ru	Доступ к Записи
 record owner	addressbook	ru	Владелец записи
 remove selected contacts from distribution list	addressbook	ru	Удалить выбранные контакты из списка рассылки
 removed from distribution list	addressbook	ru	удалено из списка рассылки
+repetition	addressbook	ru	Повторение
 replacements for inserting contacts into documents	addressbook	ru	Подстановки для контактов вставляемых в документы.
 required fields *	addressbook	ru	Требуемые поля *
 role	addressbook	ru	Роль
@@ -342,6 +347,7 @@ that field name has been used already !	addressbook	ru	Это имя поля у
 the anonymous user has probably no add rights for this addressbook.	addressbook	ru	Анонимныый пользователь обычно не имеет прав на добавление записей в эту адресную книгу.
 the anonymous user needs add rights for it!	addressbook	ru	Анонимному пользователю нужны права на добавление для этого!
 the anonymous user needs read it!	addressbook	ru	Анонимному пользователю нужно читать это!
+the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	ru	Документ может содержать заполнители типа $$n_fn$$, которые заменяются данными контакта (%1полный список названий заполнителей%2)
 there was an error saving your data :-(	addressbook	ru	Произошла ошибка при сохранении ваших данных :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	ru	Этот модуль показывает форму контакта, которая сохраняется сразу в адресную книгу.
 this module displays block from a adddressbook group.	addressbook	ru	Этот модуль показывает блок из Группы Адресной книги.

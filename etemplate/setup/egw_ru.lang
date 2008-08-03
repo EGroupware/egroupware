@@ -174,7 +174,7 @@ minutes	etemplate	ru	Минут(а,ы)
 month	etemplate	ru	Месяц
 name	etemplate	ru	Название
 name of table to add	etemplate	ru	Название таблицы для добавления
-new search	etemplate	ru	Новый поиск
+new search	common	ru	Новый поиск
 new table created	etemplate	ru	Новая таблица создана
 newer version '%1' exists !!!	etemplate	ru	существует более новая версия '%1' !!!
 nextmatch	etemplate	ru	Следующее совпадение
