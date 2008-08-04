@@ -781,7 +781,7 @@ class Horde_iCalendar {
 	    case 'DESCRIPTION':
 	    case 'COMMENT':
 		$value = str_replace('\\', '\\\\', $value);
-		$value = str_replace($this->_newline, '\n', $value);
+		#$value = str_replace($this->_newline, '\n', $value);
 		$value = str_replace(',', '\,', $value);
 		$value = str_replace(';', '\;', $value);
 		$value = str_replace(':', '\:', $value);
