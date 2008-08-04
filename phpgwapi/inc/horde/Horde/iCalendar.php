@@ -804,6 +804,11 @@ class Horde_iCalendar {
                 $attr_string = "$name$params_str:$value";
 
                 $result .= $this->_foldLine($attr_string) . $this->_newline;
+				if (!empty($params['ENCODING']) && $params['ENCODING'] == 'BASE64' &&
+					strlen(trim($value)) > 0)
+				{
+					$result .= $this->_newline;
+				}
             }
         }
 
