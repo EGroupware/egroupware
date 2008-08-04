@@ -684,7 +684,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'private':
-								$contact[$fieldName] = (int) ($value == 'PRIVATE');
+								$contact[$fieldName] = (int) ( strtoupper($value) == 'PRIVATE');								
 								break;
 
 							case 'cat_id':
