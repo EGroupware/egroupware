@@ -45,9 +45,18 @@ class groupdav extends HTTP_WebDAV_Server
 	var $http_auth_realm = self::REALM;
 
 	var $root = array(
-		'calendar' => array(self::GROUPDAV => 'vevent-collection', self::CALDAV => 'calendar'),
-		'addressbook' => array(self::GROUPDAV => 'vcard-collection', self::CARDDAV => 'addressbook'),
-		'infolog' => array(self::GROUPDAV => 'vtodo-collection'),
+		'calendar' => array(
+			'resourcetype' => array(self::GROUPDAV => 'vevent-collection', self::CALDAV => 'calendar'),
+			'component-set' => array(self::GROUPDAV => 'VEVENT'),
+		),
+		'addressbook' => array(
+			'resourcetype' => array(self::GROUPDAV => 'vcard-collection', self::CARDDAV => 'addressbook'),
+			'component-set' => array(self::GROUPDAV => 'VCARD'),
+		),
+		'infolog' => array(
+			'resourcetype' => array(self::GROUPDAV => 'vtodo-collection'),
+			'component-set' => array(self::GROUPDAV => 'VTODO'),
+		),
 	);
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, 3 = complete $_SERVER array
@@ -176,17 +185,9 @@ class groupdav extends HTTP_WebDAV_Server
 				{
 					if (!$GLOBALS['egw_info']['user']['apps'][$app]) continue;	// no rights for the given app
 
-					$props = array(
-	            		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
-	            		self::mkprop('resourcetype',$this->_resourcetype($app)),
-					);
-					if (method_exists($app.'_groupdav','extra_properties'))
-					{
-						$props = ExecMethod($app.'_groupdav::extra_properties',$props);
-					}
 					$files['files'][] = array(
 		            	'path'  => '/'.$app.'/',
-		            	'props' => $props,
+		            	'props' => $this->_properties($app),
 		            );
 				}
 			}
@@ -203,11 +204,8 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				$files['files'][] = array(
 		        	'path'  => '/'.$app.'/',
-		        	'props' => $handler->extra_properties(array(
-		            	self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
-		            	// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
-		        		self::mkprop('resourcetype', $this->_resourcetype($app,$app=='addressbook'&&strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false)),
-		        	)),
+					// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
+		        	'props' => $this->_properties($app,$app=='addressbook'&&strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false),
 		        );
 			}
 			if (!$options['depth'] && !$id)
@@ -220,26 +218,46 @@ class groupdav extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Return resourcetype(s) for a given app
+	 * Get the properties of a collection
 	 *
 	 * @param string $app
 	 * @param boolean $no_extra_types=false should the GroupDAV and CalDAV types be added (KAddressbook has problems with it in self URL)
-	 * @return array or DAV properties generated via
+	 * @return array of DAV properties
 	 */
-	function _resourcetype($app,$no_extra_types=false)
+	function _properties($app,$no_extra_types=false)
 	{
-		$resourcetype = array(
-			self::mkprop('collection','collection'),
-		);
-		if (!$no_extra_types && isset($this->root[$app]))
+		$props = array(
+    		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
+ 		);
+		foreach($this->root[$app] as $prop => $values)
 		{
-			foreach($this->root[$app] as $ns => $type)
+			if ($prop == 'resourcetype')
 			{
-				$resourcetype[] = self::mkprop($ns,'resourcetype', $type);
+				$resourcetype = array(
+					self::mkprop('collection','collection'),
+				);
+				if (!$no_extra_types)
+				{
+					foreach($this->root[$app]['resourcetype'] as $ns => $type)
+					{
+						$resourcetype[] = self::mkprop($ns,'resourcetype', $type);
+					}
+				}
+				$props[] = self::mkprop('resourcetype',$resourcetype);
+			}
+			else
+			{
+				foreach($values as $ns => $value)
+				{
+					$props[] = self::mkprop($ns,$prop,$value);
+				}
 			}
 		}
-		//error_log(__METHOD__."($app,$no_extra_types)=".array2string($resourcetype));
-		return $resourcetype;
+		if (method_exists($app.'_groupdav','extra_properties'))
+		{
+			$props = ExecMethod($app.'_groupdav::extra_properties',$props);
+		}
+		return $props;
 	}
 
 	/**

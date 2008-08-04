@@ -48,28 +48,34 @@ class infolog_groupdav extends groupdav_handler
 	 * @param int $user account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function propfind($path,$options,&$files,$user)
+	function propfind($path,$options,&$files,$user,$id='')
 	{
+		// todo add a filter to limit how far back entries from the past get synced
+		$filter = array(
+			'info_type'	=> 'task',
+		);
+		if ($id) $filter['info_id'] = $id;	// propfind on a single id
+
 		// ToDo: add parameter to only return id & etag
 		if (($tasks = $this->bo->search($params=array(
 			'order'		=> 'info_datemodified',
 			'sort'		=> 'DESC',
 			'filter'    => 'own',	// filter my: entries user is responsible for,
 									// filter own: entries the user own or is responsible for
-
-			// todo add a filter to limit how far back entries from the past get synced
-			'col_filter'	=> Array (
-				'info_type'	=> 'task',
-			),
+			'col_filter'	=> $filter,
 		))))
 		{
 			foreach($tasks as $task)
 			{
 				$files['files'][] = array(
-	            	'path'  => '/infolog/'.$task['info_id'],
+	            	'path'  => '/infolog/'.$task['info_id'].'.ics',
 	            	'props' => array(
 	            		HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
-	            		HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/calendar'),
+	            		HTTP_WebDAV_Server::mkprop('getcontenttype', strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') === false ?
+	            			'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar'),	// Konqueror (3.5) dont understand it otherwise
+						// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
+						HTTP_WebDAV_Server::mkprop('getlastmodified', $task['info_datemodified']),
+						HTTP_WebDAV_Server::mkprop('getcontentlength',''),
 	            	),
 				);
 			}

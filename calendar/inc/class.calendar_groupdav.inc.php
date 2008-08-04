@@ -99,7 +99,8 @@ class calendar_groupdav extends groupdav_handler
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($event)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/calendar'),
+					HTTP_WebDAV_Server::mkprop('getcontenttype', strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') === false ?
+	            			'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
 				);
@@ -114,7 +115,7 @@ class calendar_groupdav extends groupdav_handler
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
 				$files['files'][] = array(
-	            	'path'  => '/calendar/'.$event['id'],
+	            	'path'  => '/calendar/'.$event['id'].'.ics',
 	            	'props' => $props,
 				);
 			}
