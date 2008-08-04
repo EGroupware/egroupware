@@ -1,18 +1,26 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.3.001">
+	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" height="150">
 			<columns>
 				<column width="95"/>
 				<column width="120"/>
-				<column width="80"/>
-				<column/>
+				<column width="80" disabled="@ts_viewtype"/>
+				<column disabled="@ts_viewtype"/>
 			</columns>
 			<rows>
-				<row class="row">
+				<row class="row" disabled="@ts_viewtype">
 					<description options=",,,ts_title" value="Title"/>
-					<textbox size="65" maxlength="80" id="ts_title" blur="@ts_title_blur" span="all"/>
+					<textbox size="65" maxlength="80" id="ts_title" blur="@ts_title_blur" span="all" class="fullWidth"/>
+					<description/>
+					<description/>
+				</row>
+				<row class="row" disabled="!@ts_viewtype">
+					<description value="comment"/>
+					<textbox multiline="true" rows="5" cols="50" id="ts_description" span="all" class="fullWidth"/>
+					<description/>
+					<description/>
 				</row>
 				<row class="row">
 					<description options=",,,cat_id" value="Category"/>
@@ -32,21 +40,21 @@
 					<description value="or endtime" class="noWrap"/>
 					<date-timeonly id="end_time"/>
 				</row>
-				<row class="row">
+				<row class="row" disabled="@ts_viewtype">
 					<description options=",,,ts_quantity" value="Quantity"/>
 					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur" precision="3" span="all"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit.notes" template="" lang="" group="0" version="0.1.001">
+	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" height="150">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row class="row" valign="top">
-					<textbox multiline="true" rows="8" cols="70" id="ts_description"/>
+					<textbox multiline="true" rows="8" cols="70" id="ts_description" class="fullWidth"/>
 				</row>
 			</rows>
 		</grid>
@@ -73,7 +81,19 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.3.002">
+	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<customfields/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -98,15 +118,15 @@
 						</columns>
 						<rows>
 							<row disabled="@pm_integration=none">
-								<projectmanager-select options="None" id="pm_id" span="all" statustext="Select a project" onchange="1"/>
+								<projectmanager-select options="None" id="pm_id" span="all" class="fullWidth" statustext="Select a project" onchange="1"/>
 							</row>
 							<row disabled="@pm_integration=full">
-								<textbox id="ts_project" blur="@ts_project_blur" size="65" maxlength="80"/>
+								<textbox id="ts_project" blur="@ts_project_blur" size="65" maxlength="80" class="fullWidth"/>
 							</row>
 						</rows>
 					</grid>
 				</row>
-				<row class="row">
+				<row class="row" disabled="@ts_viewtype">
 					<description options=",,ts_unitprice" value="Unitprice"/>
 					<grid>
 						<columns>
@@ -115,7 +135,7 @@
 						</columns>
 						<rows>
 							<row>
-								<projectmanager-pricelist id="pl_id" options="None,all_pm_ids,ts_unitprice" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
+								<projectmanager-pricelist id="pl_id" options="None" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
 								<textbox type="float" id="ts_unitprice" span="all"/>
 							</row>
 						</rows>
@@ -127,11 +147,13 @@
 							<tab label="General" statustext=""/>
 							<tab label="Notes" statustext=""/>
 							<tab label="Links" statustext=""/>
+							<tab label="Custom Fields" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="timesheet.edit.general"/>
 							<template id="timesheet.edit.notes"/>
 							<template id="timesheet.edit.links"/>
+							<template id="timesheet.edit.customfields"/>
 						</tabpanels>
 					</tabbox>
 				</row>
@@ -159,5 +181,10 @@
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			.fullWidth select { widht: 100%; }
+.fullWidth input { widht: 100%; }
+.fullWidth textarea { widht: 100%; }
+		</styles>
 	</template>
 </overlay>
