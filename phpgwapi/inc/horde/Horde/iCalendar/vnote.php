@@ -1,6 +1,6 @@
 <?php
 
-require_once PHPGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
+require_once EGW_API_INC.'/horde/Horde/iCalendar.php';
 
 /**
  * Class representing vNotes.
