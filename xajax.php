@@ -103,6 +103,7 @@ function doXMLHTTP()
 			'disable_Template_class'	=> True,
 			'autocreate_session_callback' => 'xajax_redirect',
 			'no_exception_handler' => true,	// we already installed our own
+			'no_dla_update' => $appName == 'notifications',	// otherwise session never time out
 		)
 	);
 	include('./header.inc.php');

@@ -342,7 +342,11 @@
 			}
 			$GLOBALS['egw_info']['user']['kp3'] = $this->kp3;
 
-			$this->update_dla();
+			// allow xajax / notifications to not update the dla, so sessions can time out again
+			if (!isset($GLOBALS['egw_info']['flags']['no_dla_update']) || !$GLOBALS['egw_info']['flags']['no_dla_update'])
+			{
+				$this->update_dla();
+			}
 			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
 			if (!$this->account_id)
 			{
@@ -1431,7 +1435,22 @@
 		* @return bool did it suceed?
 		*/
 		function destroy($sessionid, $kp3)
-		{}
+		{
+			if (!$sessionid && $kp3)
+			{
+				return False;
+			}
+			$this->log_access($this->sessionid);	// log logout-time
+
+			error_log(__METHOD__."($sessionid,$kp3) parent::destroy()=$ret");
+
+			$GLOBALS['egw']->hooks->process(array(
+				'location'  => 'session_destroyed',
+				'sessionid' => $sessionid,
+			),'',true);	// true = run hooks from all apps, not just the ones the current user has perms to run
+
+			return true;
+		}
 
 		/**
 		* Functions for appsession data and session cache

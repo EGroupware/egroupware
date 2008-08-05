@@ -133,13 +133,10 @@ class sessions extends sessions_
 
 	function destroy($sessionid, $kp3)
 	{
-		if (!$sessionid && $kp3)
+		if (!parent::destroy($sessionid,$kp3))
 		{
-			return False;
+			return false;
 		}
-
-		$this->log_access($this->sessionid);	// log logout-time
-
 		// Only do the following, if where working with the current user
 		if ($sessionid == $GLOBALS['egw_info']['user']['sessionid'])
 		{
