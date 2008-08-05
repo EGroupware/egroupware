@@ -5,6 +5,8 @@
 %1 does not exist !!!	setup	en	%1 does not exist !!!
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !!!
 %1 is needed by: %2.	setup	en	%1 is needed by: %2.
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	en	%1 is set to %2, you will NOT be able to upload or attach files bigger then that!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	en	%1 is set to %2. This is NOT recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!
 %1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
 '%1' is no valid domain name!	setup	en	'%1' is no valid domain name!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	en	'%1' is not allowed as %2. arguments of option %3 !!!
@@ -406,6 +408,7 @@ path of egroupware install directory (default auto-detected)	setup	en	path of eG
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 path to various directories: have to exist and be writeable by the webserver	setup	en	path to various directories: have to exist and be writeable by the webserver
 pear (%1) is a php repository and is usually in a package called %2.	setup	en	PEAR (%1) is a PHP repository and is usually in a package called %2.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	en	PEAR extensions are required by many eGroupware applications, PEAR itself is the required basis for each extension!
 pear%1 is needed by: %2.	setup	en	PEAR%1 is needed by: %2.
 persistent connections	setup	en	Persistent connections
 php plus restore	setup	en	PHP plus restore
@@ -539,7 +542,9 @@ the imagecreatefromjpeg function is supplied by the gd extension (complied with 
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	en	The ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. It's not needed for a standard SQL installation.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	en	The PDO extension plus a database specific driver is needed by the VFS (virtual file system)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	en	The session extension is needed to use php sessions (db-sessions work without).
+the session extension is required!	setup	en	The session extension is required!
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	The username/passwords are: demo/guest, demo2/guest and demo3/guest.

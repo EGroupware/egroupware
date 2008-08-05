@@ -1,10 +1,14 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	de	%1 '%2' existiert NICHT, ist nicht vom Webserver lesbar oder enthält keine eGroupWare Installation!
 %1 already exists in %2.	setup	de	%1 existiert bereits in %2.
 %1 created in %2.	setup	de	%1 in %2 angelegt.
+%1 database %2 on %3 already contains the following tables:	setup	de	%1 Datenbank %2 auf %3 enthält bereits die folgenden Tabellen:
 %1 does not exist !!!	setup	de	%1 existiert nicht!!!
 %1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
 %1 is needed by: %2.	setup	de	%1 wird von benötigt von: %2.
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	de	%1 ist auf %2 gesetzt, Sie werden KEINE Dateien größer als das hochladen oder anhängen können!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	de	%1 ist auf %2 gesetzt. Das ist für Produktionssysteme NICHT empfohlen, das Fehlermeldungen Passworte oder andere sensible Daten enthalten können!
 %1, %2 or %3 the configuration file.	setup	de	%1, %2 oder %3 der Konfigurationsdatei.
+'%1' is no valid domain name!	setup	de	'%1' ist kein gültiger Domainname!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	de	'%1' ist nicht erlaubt als %2. Parameter für die Option %3 !!!
 (searching accounts and changing passwords)	setup	de	Benutzerkonten suchen und Passwörter ändern)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten Sie NICHT Ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (Ihre Daten sind VERLOREN)!!!
@@ -71,6 +75,7 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	de	Auf Ihre Anforderung hin wird dieses Skript die &uuml;ble Aktion auf sich nehmen, alle Ihre Applikationen zu deinstallieren, was ebenfalls Ihre existierenden Tabellen und Daten löschen wird!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert "application/octet-stream"
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
+authentication type for application	setup	de	Authentifizierungstyp für die Anwendung
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifizierte Benutzer automatisch anlegen
 auto login anonymous user	setup	de	Anonymen Benutzer automatisch einlogen
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab in
@@ -99,6 +104,10 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verfügbar-Eintrag für diese Applikation auf 0 gesetzt oder undefiniert ist
 bottom	setup	de	unten
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br /><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong>
+can not connect to %1 database %2 on host %3 using user %4!	setup	de	Kann nicht zur %1 Datenbank %2 auf Rechner %3 als Benutzer %4 verbinden!
+can not connect to ldap server on host %1 using dn %2!	setup	de	Kann nicht zu LDAP Server auf Rechner %1 als DN %2 verbinden!
+can not create %1 database %2 on %3 for user %4!	setup	de	Kann keine %1 Datenbank %2 auf Rechner %3 für Benutzer %4 anlegen!
+can not create dn %1!	setup	de	Kann DN %1 nicht anlegen!
 cancel	setup	de	Abbrechen
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br />Stattdessen können Sie die Datei %1 oder %2.
 change system-charset	setup	de	Systemzeichensatz wechseln
@@ -275,6 +284,7 @@ hour (0-24)	setup	de	Stunde (0-24)
 however the tables are still in the database	setup	de	Wie auch immer, die Tabellen sind noch immer in der Datenbank
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
 however, the application may still work	setup	de	Wie auch immer, die Anwendung mag denoch funktionieren
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	de	HTTP Authetifizierungs Typen (Komma-getrennt) die ohne Login Seite benutzt werden sollen, zB. "NTLM"
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann eGW verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Anwendung keine definierten Tabellen hat, wählen Sie überarbeiten. Das Problem sollte damit behoben werden.
@@ -300,6 +310,7 @@ installation finished	setup	de	Installation beendet
 installation started, this might take a few minutes ...	setup	de	Installation gestartet, das kann einige Minuten dauern ...
 installed	setup	de	installiert
 instructions for creating the database in %1:	setup	de	Anweisungen um eine Datenbank unter %1 anzulegen:
+invalid argument '%1' !!!	setup	de	Ungültiges Argument '%1' !!!
 invalid ip address	setup	de	Ungültige IP Adresse
 invalid mcrypt algorithm/mode combination	setup	de	Ungültige MCrypt Algorithmus/Modus Kombination
 invalid password	setup	de	Ungültiges Passwort
@@ -375,6 +386,7 @@ not completed	setup	de	Nicht komplett
 not ready for this stage yet	setup	de	Noch nicht bereit für diesen Schritt
 not set	setup	de	nicht gesetzt
 note: you will be able to customize this later	setup	de	Notiz: Sie können dies später anpassen
+nothing to change.	setup	de	Nichts zu Ändern!
 now guessing better values for defaults...	setup	de	Nun wird versucht bessere Werte für die Vorgaben zu finden ...
 odbc / maxdb: dsn (data source name) to use	setup	de	ODBC / MaxDB: DSN (data source name = Datenquellenname)
 ok	setup	de	OK
@@ -398,6 +410,7 @@ path of egroupware install directory (default auto-detected)	setup	de	Pfad des e
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 path to various directories: have to exist and be writeable by the webserver	setup	de	Pfade zu verschiedenen Verzeichnissen: Diese müssen vorhanden sein und vom Webserver beschreibbar
 pear (%1) is a php repository and is usually in a package called %2.	setup	de	PEAR (%1) ist eine PHP Sammlung und ist überlicherweise in einem Packet namens %2.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	de	PEAR Erweiterungen werden von vielen eGroupware Anwendungen benötigt, PEAR selbst ist die Basis für diese Erweiterungen!
 pear%1 is needed by: %2.	setup	de	PEAR%1 wird benötigt von: %2.
 persistent connections	setup	de	Permanente Verbindungen
 php plus restore	setup	de	PHP plus Wiederherstellen
@@ -495,6 +508,7 @@ sources deleted/missing	setup	de	Quellen gelöscht/fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
 standard (login-name identical to egroupware user-name)	setup	de	Standard (Loginname identisch zu eGroupWare Benutzername)
 standard mailserver settings (used for mail authentication too)	setup	de	Standard Mailserver Einstellungen (werden auch für die Mail Authentifizierung benutzt)
+standard, as defined above	setup	de	Standard, wie darüber definiert
 start the postmaster	setup	de	Starten Sie den postmaster
 start updating languages %1 ...	setup	de	Starte Aktualisierung der Sprachen %1 ...
 start updating the database ...	setup	de	Starte Aktualisierung der Datenbank ...
@@ -506,6 +520,11 @@ step %1 - db backup and restore	setup	de	Schritt %1 - DB Datensicherung und Wied
 step %1 - language management	setup	de	Schritt %1 - Verwaltung der Sprachen
 step %1 - simple application management	setup	de	Schritt %1 - Einfache Verwaltung der Anwendungen
 succesfully uploaded file %1	setup	de	Datei %1 erfolgreich hochgeladen
+successful connected to %1 database %2 on %3 using user %4.	setup	de	Erfolgreich zur %1 Datenbank %2 auf %3 mit Benutzer %4 verbunden.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	de	Erfolgreich zur %1 Datenbank auf %3 verbunden und Datenbank %2 für Benutzer %4 angelegt.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	de	Erfolgreich zu LDAP Server auf Rechner %1 verbunden und erforderliche Struktur %2 angelegt/überprüft.
+successful connected to ldap server on %1 using dn %2.	setup	de	Erfolgreich zu LDAP Server auf %1 als DN %2 verbunden.
+supported node types:	setup	de	Unterstützte Node Types:
 table change messages	setup	de	Tabellenänderungsmeldungen
 tables dropped	setup	de	Tabellen wurden gelöscht
 tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig;er oben sind Fehlermelungen zu sehen
@@ -518,13 +537,16 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Er
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
+the following applications are not installed:	setup	de	Die folgenden Anwendungen sind NICHT installiert:
 the following applications need to be upgraded:	setup	de	Die folgenden Anwendungen müssen aktualisiert werden:
 the function %1 is needed from: %2.	setup	de	Die Funktion %1 wird benötigt von: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	de	Die imagecreatefromjpeg Funktion wird bereitgestellt von der gd Erweiterung (compiliert mit jpeg Unterstützung!). Sie wird benötigt um Fotos für Kontakte hoch zu laden.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	de	Die ldap Erweiterung (php extension) wird benötigt für LDAP as Benutzer oder Addressen Speicher, um gegen LDAP oder Aktive Directory zu authetifizieren. Es wird nicht benötigt für eine standard SQL Installation.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	de	Die PDO Erweiterung plus ein Datenbank spezifischer Treiber werden vom VFS (virtuelem Datei System) benötigt!
 the session extension is needed to use php sessions (db-sessions work without).	setup	de	Die session Erweiterung (php extension) ist notwendig für PHP Sessions (Datenbank Sessions arbeiten ohne diese).
+the session extension is required!	setup	de	Die SESSION Erweiterung wird unbedingt benötigt!
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest
@@ -597,6 +619,7 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 writable by the webserver	setup	de	schreibar durch den Webserver
 write	setup	de	Schreiben
+wrong credentials to access the header.inc.php file!	setup	de	Falsche Zugangsdaten um auf die header.inc.php Datei zuzugreifen!
 year	setup	de	Jahr
 yes	setup	de	Ja
 yes, with lowercase usernames	setup	de	Ja, mit kleingeschriebenen Benutzernamen
@@ -624,6 +647,7 @@ you need to configure egroupware:	setup	de	Sie müssen eGroupWare konfigurieren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	de	Sie müssen die obigen Fehler beheben, bevor die Konfigurationsdatei header.inc.php gespeichert werden kann!
 you need to save the settings you made here first!	setup	de	Sie müssen die hier vorgenommenen Einstellungen zuerst speichern!
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
+you need to specify a password!	setup	de	Sie müssen ein Passwort angegen!
 you should either install the sources or uninstall it, to get rid of the tables	setup	de	Sie sollten entweder die Quellen installieren oder die Anwendung deinstallieren, um die Tabellen los zu werden.
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	de	Sie werden sich NICHT mit PHP Sitzungen in die eGroupWare einlogen: "Ihre Sitzung konnte nicht verifiziert werden" !!!
