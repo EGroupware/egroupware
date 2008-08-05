@@ -257,7 +257,7 @@ receive notifications about own items	infolog	es-es	Recibir notificaciones acerc
 receive notifications about starting entries you are responsible for	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan de las que usted es responsable
 receive notifications about starting entries you delegated	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan que usted ha delegado
 receive notifications as html-mails	infolog	es-es	Recibir notificaciones como correo html
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IPs locales<br>p. ej. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IPs locales<br>eg. ^192\.168\.1\.
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
 responsible	infolog	es-es	Responsable
@@ -338,7 +338,7 @@ upcoming	infolog	es-es	próxima
 urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 used time	infolog	es-es	tiempo utilizado
-valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el lado cliente<br>p. ej. \\servidor\recurso o e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el cliente<br>p. ej. \\seridor\recurso o e:\
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs

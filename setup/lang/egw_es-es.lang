@@ -5,6 +5,8 @@
 %1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
 %1 is %2%3 !!!	setup	es-es	¡¡%1 %2 es %3!!
 %1 is needed by: %2.	setup	es-es	%1 es necesario para: %2
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	es-es	¡%1 está establecido a %2, NO podrá subir o adjuntar ficheros mayores de ese valor!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	es-es	%1 está establecido en %2. ¡Esto NO se recomienda para un sistema en producción, ya que los mensajes de error pueden contener contraseñas o alguna otra información sensible!
 %1, %2 or %3 the configuration file.	setup	es-es	%1, %2 o %3 el fichero de configuración.
 '%1' is no valid domain name!	setup	es-es	'%1' no es un nombre válido de dominio
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡¡'%1' no está permitido como %2. argumentos de la opción %3 !!
@@ -408,6 +410,7 @@ path of egroupware install directory (default auto-detected)	setup	es-es	Ruta al
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
 path to various directories: have to exist and be writeable by the webserver	setup	es-es	ruta a varios directorios: tienen que existir y tener permiso de escritura para el servidor web
 pear (%1) is a php repository and is usually in a package called %2.	setup	es-es	PEAR (%1) es un repositorio PHP y normalmente está en un paquete llamado %2.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	es-es	Muchas aplicaciones eGroupWare requieren las extensiones PEAR, por lo que PEAR es una base requerida para cada extensión.
 pear%1 is needed by: %2.	setup	es-es	Se necesita PEAR para: %2.
 persistent connections	setup	es-es	Conexiones persistentes
 php plus restore	setup	es-es	PHP plus restore
@@ -541,7 +544,9 @@ the imagecreatefromjpeg function is supplied by the gd extension (complied with 
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	es-es	La extension LDAP es necesaria si usa LDAP como almacenamiento de cuentas o contactos, identificarse en un servidor LDAP o directorio activo. No es necesaria para una instalación SQL estándar.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	es-es	La extensión PDO junto a un controlador específico de base de datos es necesario para el VFS (sistema de ficheros virtual)
 the session extension is needed to use php sessions (db-sessions work without).	setup	es-es	La extensión de sesión es necesaria para usar sesiones php (las sesiones db funcionan sin ella).
+the session extension is required!	setup	es-es	¡La extensión de sesión es necesaria!
 the table definition was correct, and the tables were installed	setup	es-es	La definición de la tabla era correcta, y se instalaron las tablas
 the tables	setup	es-es	las tablas
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	Los nombres de usuario y contraseñas son: demo/guest, demo2/guest y demo3/guest.
