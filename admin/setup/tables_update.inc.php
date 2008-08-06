@@ -17,6 +17,7 @@ function admin_upgrade1_2()
 	return $GLOBALS['setup_info']['admin']['currentver'] = '1.4';		
 }
 
+$test[] = '1.4';
 function admin_upgrade1_4()
 {
 	$GLOBALS['egw_setup']->oProc->CreateTable('egw_admin_queue',array(
