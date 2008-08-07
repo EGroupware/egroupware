@@ -244,6 +244,29 @@ class egw_db
 	var $prepared_sql = array();	// sql is the index
 
 	/**
+	 * Constructor
+	 *
+	 * @param array $db_data=null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type'
+	 */
+	function __construct(array $db_data=null)
+	{
+		if (!is_null($db_data))
+		{
+			foreach(array(
+				'Database' => 'db_name',
+				'Host'     => 'db_host',
+				'Port'     => 'db_port',
+				'User'     => 'db_user',
+				'Password' => 'db_pass',
+				'Type'     => 'db_type',
+			) as $var => $key)
+			{
+				$this->$var = $db_data[$key];
+			}
+		}
+	}
+
+	/**
 	* @param string $query query to be executed (optional)
 	*/
 
