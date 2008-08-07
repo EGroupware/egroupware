@@ -78,13 +78,11 @@ class admin_cmd_change_account_id extends admin_cmd
 				'egw_cal_user'       => array(array('cal_user_id','cal_user_type' => 'u')),	// cal_user_id for cal_user_type='u'
 			),
 			'emailadmin' => array(
-				'egw_emailadmin'     => false,
+				'egw_emailadmin'     => array(array('ea_user','ea_user > 0'),array('ea_group','ea_group < 0')),
 			),
 			'felamimail' => array(
 				'egw_felamimail_accounts'      => 'fm_owner',
-				'egw_felamimail_cache'         => 'fmail_accountid',	// afaik not used in 1.4+
 				'egw_felamimail_displayfilter' => 'fmail_filter_accountid',
-				'egw_felamimail_folderstatus'  => 'fmail_accountid',	// afaik not used in 1.4+
 				'egw_felamimail_signatures'    => 'fm_accountid',
 			),
 			'infolog' => array(

@@ -190,7 +190,6 @@ egroupware directory	admin	de	eGroupWare Verzeichnis
 either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Install ID oder das Konfigurationspasswort oder den Remote Hash
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
-emailadmin: user assigned profile	admin	de	eMailAdmin: Vordefiniertes Benutzerprofil
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enable the soap service	admin	de	soap Service einschalten
 enable the spellcheck in the ritch text editor ?	admin	de	Aktiviere die Rechtschreibprüfung im RichText Editor

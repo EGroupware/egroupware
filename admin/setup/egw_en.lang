@@ -190,7 +190,6 @@ egroupware directory	admin	en	eGroupWare directory
 either install id and config password needed or the remote hash!	admin	en	Either Install ID AND config password needed OR the remote hash!
 email account active	admin	en	email account active
 email address	admin	en	email address
-emailadmin: user assigned profile	admin	en	eMailAdmin: User assigned Profile
 enable debug-messages	admin	en	Enable debug-messages
 enable the soap service	admin	en	Enable the soap service
 enable the spellcheck in the ritch text editor ?	admin	en	Enable the spellcheck in the ritch text editor ?
