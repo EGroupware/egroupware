@@ -78,7 +78,11 @@
 				$GLOBALS['egw']->session->egw_setcookie('domain');
 				return '<font color="red">' . lang('Your session could not be verified.') . '</font>';
 			default:
-				return '&nbsp;';
+				if (!$code)
+				{
+					return '&nbsp;';
+				}
+				return htmlspecialchars($code);
 		}
 	}
 
