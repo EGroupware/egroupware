@@ -85,6 +85,7 @@ class vcalinfolog extends boinfolog
 		$vevent->setAttribute('STATUS',$this->status2vtodo($taskData['info_status']));
 		// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
 		$vevent->setAttribute('X-INFOLOG-STATUS',$taskData['info_status']);
+		$vevent->setAttribute('PERCENT-COMPLETE',$taskData['info_percent']);
 		$vevent->setAttribute('PRIORITY',$this->egw_priority2vcal_priority[$taskData['info_priority']]);
 
 		if (!empty($taskData['info_cat']))
@@ -213,6 +214,9 @@ class vcalinfolog extends boinfolog
 								$taskData['info_id'] = $uid_task['id'];
 								unset($uid_task);
 							}
+							break;
+						case 'PERCENT-COMPLETE':
+							$taskData['info_percent'] = (int) $attributes['value'];
 							break;
 					}
 				}
