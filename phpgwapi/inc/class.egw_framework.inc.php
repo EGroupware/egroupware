@@ -299,13 +299,12 @@ class egw_framework
 		 }
 
 		// current users for admins
-			   $var['current_users'] = $this->_current_users();
+		$var['current_users'] = $this->_current_users();
 
 		// quick add selectbox
 		$var['quick_add'] = $this->_get_quick_add();
 
 		$var['user_info'] = $this->_user_time_info();
-
 
 		if($GLOBALS['egw_info']['user']['lastpasswd_change'] == 0)
 		{
@@ -362,7 +361,8 @@ class egw_framework
 	{
 	   if( $GLOBALS['egw_info']['user']['apps']['admin'] && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 	   {
-		  $current_users = '<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' . lang('Current users') . ': ' . $GLOBALS['egw']->session->total() . '</a>';
+		  $current_users = '<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' .
+		  	lang('Current users') . ': ' . $GLOBALS['egw']->session->session_count() . '</a>';
 		  return $current_users;
 	   }
 	}

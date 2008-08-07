@@ -52,16 +52,13 @@ if (!isset($GLOBALS['egw_info']['flags']['currentapp']))
 
 include_once(EGW_API_INC.'/common_functions.inc.php');
 
-if (extension_loaded('memcache') && ini_get('session.save_handler') == 'memcache')
-{
-	include_once(EGW_API_INC.'/memcache.inc.php');
-}
+// init eGW's sessions-handler
+egw_session::init_handler();
+
 // check if we can restore the eGW enviroment from the php-session
-if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUEST['sessionid'])
+if ($_REQUEST[egw_session::EGW_SESSION_NAME])
 {
-	session_name('sessionid');
-	ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
-	session_id($_REQUEST['sessionid']);
+	session_id($_REQUEST[egw_session::EGW_SESSION_NAME]);
 	session_start();
 
 	if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
@@ -114,79 +111,27 @@ print_debug('sane environment','messageonly','api');
 /****************************************************************************\
 * Multi-Domain support                                                       *
 \****************************************************************************/
+$GLOBALS['egw_info']['user']['domain'] = egw_session::search_instance($_POST['login'],$_REQUEST['domain'],
+	$GLOBALS['egw_info']['server']['default_domain'],$_SERVER['SERVER_NAME'],$GLOBALS['egw_domain']);
 
-if (!isset($GLOBALS['egw_info']['server']['default_domain']) ||	// allow to overwrite the default domain
-	!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]))
-{
-	if(isset($GLOBALS['egw_domain'][$_SERVER['SERVER_NAME']]))
-	{
-		$GLOBALS['egw_info']['server']['default_domain'] = $_SERVER['SERVER_NAME'];
-	}
-	else
-	{
-		$domain_part = explode('.',$_SERVER['SERVER_NAME']);
-		array_shift($domain_part);
-		$domain_part = implode('.',$domain_part);
-		if(isset($GLOBALS['egw_domain'][$domain_part]))
-		{
-			$GLOBALS['egw_info']['server']['default_domain'] = $domain_part;
-		}
-		else
-		{
-			reset($GLOBALS['egw_domain']);
-			list($GLOBALS['egw_info']['server']['default_domain']) = each($GLOBALS['egw_domain']);
-		}
-		unset($domain_part);
-	}
-}
-if (isset($_POST['login']))	// on login
-{
-	$GLOBALS['login'] = $_POST['login'];
-	if (strpos($GLOBALS['login'],'@') === False || count($GLOBALS['egw_domain']) == 1)
-	{
-		$GLOBALS['login'] .= '@' . get_var('logindomain',array('POST'),$GLOBALS['egw_info']['server']['default_domain']);
-	}
-	$parts = explode('@',$GLOBALS['login']);
-	$GLOBALS['egw_info']['user']['domain'] = array_pop($parts);
-}
-else	// on "normal" pageview
-{
-	$GLOBALS['egw_info']['user']['domain'] = get_var('domain',array('GET','COOKIE'),false);
-}
-if (@isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]))
-{
-	$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_host'];
-	$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_port'];
-	$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_name'];
-	$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_user'];
-	$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_pass'];
-	$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_type'];
-}
-else
-{
-	$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['db_host'];
-	$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['db_port'];
-	$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['db_name'];
-	$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['db_user'];
-	$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['db_pass'];
-	$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['db_type'];
-}
+$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_host'];
+$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_port'];
+$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_name'];
+$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_user'];
+$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_pass'];
+$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_type'];
 print_debug('domain',@$GLOBALS['egw_info']['user']['domain'],'api');
 
 // the egw-object instanciates all sub-classes (eg. $GLOBALS['egw']->db) and the egw_info array
 $GLOBALS['egw'] = new egw(array_keys($GLOBALS['egw_domain']));
 
-if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
+if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && !$GLOBALS['egw_info']['server']['show_domain_selectbox'])
 {
-	if (!$GLOBALS['egw_info']['server']['show_domain_selectbox'])
-	{
-		unset ($GLOBALS['egw_domain']); // we kill this for security reasons
-	}
-	//printf("<p style=\"position: absolute; right: 0px; top: 0px;\">egw-enviroment new created in %d ms</p>\n",1000*(perfgetmicrotime()-$GLOBALS['egw_info']['flags']['page_start_time']));
+	unset ($GLOBALS['egw_domain']); // we kill this for security reasons
 }
 
 // saving the the egw_info array and the egw-object in the session
-if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $GLOBALS['egw_info']['flags']['currentapp'] != 'login')
+if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 {
 	$_SESSION['egw_info_cache'] = $GLOBALS['egw_info'];
 	unset($_SESSION['egw_info_cache']['flags']);	// dont save the flags, they change on each request

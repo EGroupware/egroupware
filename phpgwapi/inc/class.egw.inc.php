@@ -74,7 +74,7 @@ class egw extends egw_minimal
 	function setup($domain_names,$createsessionobject=True)
 	{
 		// create the DB-object
-		$this->db = new egw_db();
+		$this->db = new egw_db($GLOBALS['egw_info']['server']);
 		if ($this->debug)
 		{
 			$this->db->Debug = 1;
@@ -83,14 +83,7 @@ class egw extends egw_minimal
 
 		// check if eGW is already setup, if not redirect to setup/
 		try {
-			$this->db->connect(
-				$GLOBALS['egw_info']['server']['db_name'],
-				$GLOBALS['egw_info']['server']['db_host'],
-				$GLOBALS['egw_info']['server']['db_port'],
-				$GLOBALS['egw_info']['server']['db_user'],
-				$GLOBALS['egw_info']['server']['db_pass'],
-				$GLOBALS['egw_info']['server']['db_type']
-			);
+			$this->db->connect();
 		}
 		catch(Exception $e) {
 			//echo "<pre>Connection to DB failed (".$e->getMessage().")!\n".$e->getTraceAsString();
@@ -138,7 +131,7 @@ class egw extends egw_minimal
 		 */
 		if($createsessionobject)
 		{
-			$this->session    = new sessions($domain_names);
+			$this->session    = new egw_session($domain_names);
 		}
 		$this->preferences    = new preferences();
 		$this->applications   = new applications();
@@ -520,7 +513,8 @@ class egw_minimal
 		'js'  => 'javascript',
 		'link' => 'bolink',		// depricated use static egw_link methods
 		'datetime' => 'egw_datetime',
-		'session' => 'sessions',
+//		'session' => 'sessions',
+		'session' => 'egw_session',
 		'framework' => true,	// special handling in __get()
 		'template' => 'Template',
 	);
