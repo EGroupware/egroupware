@@ -7,7 +7,7 @@
 		<div id="loginCdMessage">{cd}</div>
 		<form name="login_form" method="post" action="{login_url}">
 			<table class="divLoginbox divSideboxEntry" cellspacing="0" cellpadding="2" border="0" align="center">
-				<tr class="divLoginboxHeader"> 
+				<tr class="divLoginboxHeader">
 					<td colspan="3">{website_title}</td>
 				</tr>
 				<tr>
@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<td align="right">{lang_password}:&nbsp;</td>
-					<td><input name="passwd" type="password" onChange="this.form.submit()" size="30" /></td>
+					<td><input name="passwd" type="password" size="30" /></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -54,7 +54,7 @@
 <!-- BEGIN registration -->
 				<tr>
 					<td colspan="3" height="20" align="center">
-						{lostpassword_link} 
+						{lostpassword_link}
 						{lostid_link}
 						{register_link}
 					</td>
