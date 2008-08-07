@@ -150,12 +150,10 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
         // custom session id.
         session_destroy();
 
-		// we need to (re-)load our custom memcache session handler, as session_destroy unloads it somehow
-		if (extension_loaded('memcache') && ini_get('session.save_handler') == 'user')
-		{
-			session_set_save_handler("egw_memcache_open", "egw_memcache_close", "egw_memcache_read", "egw_memcache_write", "egw_memcache_destroy", "egw_memcache_gc");
-		}
-        // Reload the Horde SessionHandler if necessary.
+		// we need to (re-)load the eGW session-handler, as session_destroy unloads custom session-handlers
+		egw_session::init_handler();
+
+		// Reload the Horde SessionHandler if necessary.
         Horde::setupSessionHandler();
 
         // It would seem multisync does not send the user name once it
@@ -358,10 +356,10 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
        	$output->characters($this->_targetURI);
         $output->endElement($uri, 'LocURI');
         $output->endElement($uri, 'Source');
-        
+
 	if(session_id() != '' && !strpos($this->_targetURI,'syncml_sessionid')) {
 		$output->startElement($uri, 'RespURI', $attrs);
-		
+
 		// some clients don't send the whole URL as targetURI
 		if (strpos($this->_targetURI,$_SERVER['PHP_SELF']) === false) {
 			$output->characters($this->_targetURI . $_SERVER['PHP_SELF'] . '?syncml_sessionid=' . session_id());
@@ -459,7 +457,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 
             // <SyncML><SyncBody>
             $this->_output->startElement($uri, $element, $attrs);
-	    
+
 	    if($state->getLocName())
 	    {
             	// Right our status about the header.
@@ -471,7 +469,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             	// Request credentials if not sent so far
             	$status = &new Horde_SyncML_Command_Status(RESPONSE_MISSING_CREDENTIALS, 'SyncHdr');
             }
-            
+
             $status->setSourceRef($state->getSourceURI());
             $status->setTargetRef($state->getTargetURI());
             $status->setCmdRef(0);
@@ -499,7 +497,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
                 $this->_actionCommands = true;
                 Horde::logMessage('SyncML['. session_id() ."]: found action commands <$element> " . $this->_actionCommands, __FILE__, __LINE__, PEAR_LOG_DEBUG);
             }
-            
+
             switch($element)
             {
             	case 'Sync':
@@ -523,12 +521,12 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 				$state = & $_SESSION['SyncML.state'];
 
 				Horde::logMessage('SyncML['. session_id() .']: package ----------------------- done', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				
+
 				if($state->getSyncStatus() == CLIENT_SYNC_FINNISHED && $state->getAlert222Received() == true) {
 					$state->setSyncStatus(CLIENT_SYNC_ACKNOWLEDGED);
 					$state->setAlert222Received(false);
 				}
-				
+
 				// send the sync reply
 				// we do still have some data to send OR
 				// we should reply to the Sync command
@@ -536,18 +534,18 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 					$sync = &new Horde_SyncML_Command_Sync();
 					$this->_currentCmdID = $sync->syncToClient($this->_currentCmdID, $this->_output);
 				}
-				
+
 				// send the Final tag if possible
 				#if($state->getSyncStatus() != SERVER_SYNC_DATA_PENDING && $state->getSyncStatus() != CLIENT_SYNC_STARTED) {
 				if($state->getSyncStatus() >= SERVER_SYNC_FINNISHED || $state->_sendFinal) {
 					$final = &new Horde_SyncML_Command_Final();
 					$this->_currentCmdID = $final->output($this->_currentCmdID, $this->_output);
 				}
-				
+
 				$this->_output->endElement($uri, $element);
-				
+
 				Horde::logMessage('SyncML['. session_id() .']: syncStatus ' . $state->getSyncStatus() .'actionCommands: '.$this->_actionCommands, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				
+
 				if (!$this->_actionCommands && $state->getSyncStatus() == SERVER_SYNC_FINNISHED) {
 					// this packet did not contain any real actions, just status and map.
 					// This means, we're through! The session can be closed and
@@ -566,7 +564,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 				#	session_unset();
 				#	session_destroy();
 				}
-				
+
 				if (!$this->_actionCommands && $state->getSyncStatus() == SERVER_SYNC_ACKNOWLEDGED) {
 					// this packet did not contain any real actions, just status and map.
 					// This means, we're through! The session can be closed and
@@ -592,16 +590,16 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 				}
 
 				break;
-			
+
 			case 3:
 				// </[Command]></SyncBody></SyncML>
 				$state = & $_SESSION['SyncML.state'];
-				
+
 				// this should be moved to case 2:
 				if($element == 'Final')
 				{
 					// make sure that we request devinfo, if we not have them already
-            	
+
 /*            	if(!$state->getClientDeviceInfo())
             	{
             		$attrs = array();
@@ -610,7 +608,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             		$this->_output->characters($this->_currentCmdID);
             		$this->_currentCmdID++;
             		$this->_output->endElement($state->getURI(), 'CmdID');
-            		
+
             		$this->_output->startElement($state->getURI(), 'Meta', $attrs);
             		$this->_output->startElement($state->getURIMeta(), 'Type', $attrs);
             		if(is_a($this->_output, 'XML_WBXML_Encoder'))
@@ -619,7 +617,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
                           $this->_output->characters('application/vnd.syncml-devinf+xml');
             		$this->_output->endElement($state->getURIMeta(), 'Type');
             		$this->_output->endElement($state->getURI(), 'Meta');
-            		
+
             		$this->_output->startElement($state->getURI(), 'Item', $attrs);
             		$this->_output->startElement($state->getURI(), 'Target', $attrs);
             		$this->_output->startElement($state->getURI(), 'LocURI', $attrs);
@@ -627,35 +625,35 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             		$this->_output->endElement($state->getURI(), 'LocURI');
             		$this->_output->endElement($state->getURI(), 'Target');
             		$this->_output->endElement($state->getURI(), 'Item');
-            		
+
             		$this->_output->endElement($state->getURI(), 'Get');
             	} */
             			}
-            			
+
             			$this->_currentCommand->endElement($uri, $element);
-            			
+
             			switch($element) {
             				case 'Final':
             					if($state->getSyncStatus() == CLIENT_SYNC_STARTED) {
             						$state->setSyncStatus(CLIENT_SYNC_FINNISHED);
             						Horde::logMessage('SyncML['. session_id() .']: syncStatus(client sync finnished) ' . $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
             					}
-					
+
             					if($state->getSyncStatus() == SERVER_SYNC_FINNISHED) {
             						$state->setSyncStatus(SERVER_SYNC_ACKNOWLEDGED);
             						Horde::logMessage('SyncML['. session_id() .']: syncStatus(server sync acknowledged) ' . $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
             					}
-					
+
             					$this->_clientSentFinal = true;
             					#Horde::logMessage('SyncML['. session_id() .']: Sync _syncTag = '. $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_INFO);
-					
+
 						break;
-					
+
 					default:
 						$this->_currentCmdID = $this->_currentCommand->output($this->_currentCmdID, $this->_output);
 						break;
 				}
-				
+
 				unset($this->_currentCommand);
 				break;
 
@@ -664,10 +662,10 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 				$this->_currentCommand->endElement($uri, $element);
 				break;
 		}
-		
+
 		parent::endElement($uri, $element);
 	}
-	
+
 	function characters($str) {
 		if (isset($this->_currentCommand)) {
 			$this->_currentCommand->characters($str);
