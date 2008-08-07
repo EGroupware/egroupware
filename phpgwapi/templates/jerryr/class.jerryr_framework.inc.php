@@ -30,14 +30,12 @@ class jerryr_framework extends idots_framework
 		$this->idots_framework($template);
 	}
 
-	function topmenu()
+	function topmenu(array &$vars,array &$apps)
 	{
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();
 
-		$this->apps = $this->_get_navbar_apps();
-
-		$this->_add_topmenu_item('home');
+		$this->_add_topmenu_item($apps['home']);
 
 		/*if($GLOBALS['egw_info']['user']['apps']['manual'])
 		{
@@ -46,14 +44,14 @@ class jerryr_framework extends idots_framework
 		*/
 		if($GLOBALS['egw_info']['user']['apps']['preferences'])
 		{
-			$this->_add_topmenu_item('preferences');
+			$this->_add_topmenu_item($apps['preferences']);
 		}
-		if($GLOBALS['egw_info']['user']['apps']['manual'] && $this->apps['manual'])
+		if($GLOBALS['egw_info']['user']['apps']['manual'] && $apps['manual'])
 		{
-			$this->_add_topmenu_item('manual');
+			$this->_add_topmenu_item($apps['manual']);
 		}
 		//$this->_add_topmenu_item('about',lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
-		$this->_add_topmenu_item('logout');
+		$this->_add_topmenu_item($apps['logout']);
 
 		$this->tplsav2->assign('info_icons',$this->topmenu_icon_arr);
 
@@ -61,9 +59,9 @@ class jerryr_framework extends idots_framework
 		{
 			$this->_add_topmenu_info_item($this->_get_notification_bell());
 		}
-		$this->_add_topmenu_info_item($this->_user_time_info());
-		$this->_add_topmenu_info_item($this->_current_users());
-		$this->_add_topmenu_info_item($this->_get_quick_add());
+		$this->_add_topmenu_info_item($vars['user_info']);
+		$this->_add_topmenu_info_item($vars['current_users']);
+		$this->_add_topmenu_info_item($vars['quick_add']);
 
 		$this->tplsav2->display('topmenu.tpl.php');
 	}
