@@ -2,12 +2,21 @@
 /**
  * eGroupWare API: eGW session handling
  *
+ * This class is based on the old phpgwapi/inc/class.sessions(_php4).inc.php:
+ * (c) 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp
+ * (c) 2003 FreeSoftware Foundation
+ * Not sure how much the current code still has to do with it.
+ *
+ * Former authers were:
+ * - NetUSE AG Boris Erdmann, Kristian Koehntopp
+ * - Dan Kuykendall <seek3r@phpgroupware.org>
+ * - Joseph Engo <jengo@phpgroupware.org>
+ *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage session
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Ralf Becker <ralfbecker@outdoor-training.de> since 2003 on
  * @version $Id$
  */
 
@@ -904,14 +913,14 @@ class egw_session //extends sessions
 	 *
 	 * @var string
 	 */
-	private static $cookie_domain;
+	private static $cookie_domain = '';
 
 	/**
 	 * path for cookies
 	 *
 	 * @var string
 	 */
-	private static $cookie_path;
+	private static $cookie_path = '/';
 
 	/**
 	 * Set a cookie with eGW's cookie-domain and -path settings
