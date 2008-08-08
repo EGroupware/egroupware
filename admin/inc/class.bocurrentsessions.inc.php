@@ -22,12 +22,12 @@
 
 		function total()
 		{
-			return $GLOBALS['egw']->session->total();
+			return $GLOBALS['egw']->session->session_count();
 		}
 
 		function list_sessions($start,$order,$sort)
 		{
-			$values = $GLOBALS['egw']->session->list_sessions($start,$sort,$order);
+			$values = $GLOBALS['egw']->session->session_list($start,$sort,$order);
 
 			while (list(,$value) = @each($values))
 			{
