@@ -891,7 +891,7 @@ class egw_session //extends sessions
 			// do not decrypt and return if no data (decrypt returning garbage)
 			if(isset($_SESSION[self::EGW_APPSESSION_VAR][$appname]) && array_key_exists($location,$_SESSION[self::EGW_APPSESSION_VAR][$appname]))
 			{
-				return /*$GLOBALS['egw']->crypto->decrypt(*/$_SESSION[EGW_APPSESSION_VAR][$appname][$location];//);
+				return /*$GLOBALS['egw']->crypto->decrypt(*/$_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];//);
 			}
 			return false;
 		}
