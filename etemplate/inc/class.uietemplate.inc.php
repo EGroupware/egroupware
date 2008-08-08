@@ -964,7 +964,7 @@ class etemplate extends boetemplate
 		$options = '';
 		if ($readonly = $cell['readonly'] && $readonlys[$name] !== false || 	// allow to overwrite readonly settings of a cell
 			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'] ||
-			is_string($name) && ($p = strrpos($name,'[')) !== false && ($parent=substr($name,0,$p)) && $readonlys[$parent])	// allow also set parent readonly (instead each child)
+			!empty($name) && is_string($name) && ($p = strrpos($name,'[')) !== false && ($parent=substr($name,0,$p)) && $readonlys[$parent])	// allow also set parent readonly (instead each child)
 		{
 			$options .= ' readonly="readonly"';
 		}
