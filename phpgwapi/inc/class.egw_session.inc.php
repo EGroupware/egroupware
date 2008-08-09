@@ -749,7 +749,7 @@ class egw_session //extends sessions
 		}
 		else
 		{
-			$sessions = $this->list_sessions(0,'','',true);
+			$sessions = self::session_list(0,'','',true);
 
 			if (isset($sessions[$sessionid]) && session_module_name() == 'files')
 			{
