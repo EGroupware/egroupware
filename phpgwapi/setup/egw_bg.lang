@@ -185,7 +185,7 @@ delete row	common	bg	Изтриване на ред
 denmark	common	bg	Дания
 description	common	bg	Описание
 detail	common	bg	Детайл
-details	common	bg	Подробности
+details	common	bg	Детайли
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	bg	Да се забрани изпълнението на скрипта за корекция на грешки при показване на прозрачност при PNG изображения в IE 5.5 и по-високи?
 direction left to right	common	bg	Посока от ляво надясно
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	bg	Директорията не съществува, не е позволено четенето и от WEB сървъра или не е даден относителният път спрямо document root!
@@ -460,6 +460,7 @@ notify window	common	bg	Прозорец за известяване
 notify your administrator to correct this situation	common	bg	Съобщете на Вашия Администратор да коригира този проблем
 november	common	bg	Ноември
 october	common	bg	Октомври
+ok	common	bg	OK
 old value	common	bg	Стара стойност
 oman	common	bg	Оман
 on *nix systems please type: %1	common	bg	На *nix системи напишете: %1
@@ -572,7 +573,7 @@ select date	common	bg	Изберете дата
 select group	common	bg	Изберете група
 select home email address	common	bg	Изберете домашен e-mail адрес
 select multiple accounts	common	bg	изберете няколко акаунта
-select one	common	bg	Изберете едно
+select one	common	bg	Моля, изберете
 select the default height for the application windows	common	bg	Изберете височина по подразбиране за прозорците на приложението
 select the default width for the application windows	common	bg	Изберете ширина по подразбиране за прозорците на приложението
 select user	common	bg	Изберете потребител
@@ -652,7 +653,7 @@ time	common	bg	Време
 time selection:	jscalendar	bg	Избор на време:
 time zone	common	bg	Часови пояс
 time zone offset	common	bg	Отместване на часовия пояс
-title	common	bg	Заглавие
+title	common	bg	Титла
 to	common	bg	До
 to correct this error for the future you will need to properly set the	common	bg	За да отстраните тази грешка е необходимо правилно да настроите
 to go back to the msg list, click <a href= %1 >here</a>	common	bg	За връщане към списъка със съобщения, натиснете <a href="%1">тук</a>
@@ -686,6 +687,7 @@ update	common	bg	Обновяване
 update the clock per minute or per second	common	bg	Обновяване на часовника на всяка минута или секунда
 upload directory does not exist, or is not writeable by webserver	common	bg	Директорията за Upload не съществува или не е позволен запис за WEB сървъра
 upload requires the directory to be writable by the webserver!	common	bg	За Upload е необходим достъп за запис от WEB сървъра!
+url	common	bg	WEB адр.
 uruguay	common	bg	Уругвай
 use button to search for	common	bg	Използвайте бутона за търсене на
 use button to search for address	common	bg	Използвайте бутона за търсене на адрес
