@@ -1197,4 +1197,15 @@ class egw_session //extends sessions
 	{
 		session_write_close();
 	}
+
+	/**
+	 * Delete all data from the session cache for a user
+	 *
+	 * @param int $accountid user account id, defaults to current user (optional)
+	 * @deprecated not longer used / necessary
+	 */
+	function delete_cache($accountid='')
+	{
+
+	}
 }
