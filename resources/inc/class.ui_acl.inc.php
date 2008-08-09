@@ -36,7 +36,7 @@ class ui_acl
 		$this->sort = $this->bo->sort;
 		$this->cat_id = $this->bo->cat_id;
 	}
-	
+
 	function acllist()
 	{
 		if (!$GLOBALS['egw']->acl->check('run',1,'admin'))
@@ -79,7 +79,7 @@ class ui_acl
 
 		$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.uiacl.acllist');
 		$right = $this->nextmatchs->right('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.uiacl.acllist');
-		
+
 		$GLOBALS['egw']->template->set_var(array(
 			'left' => $left,
 			'right' => $right,
@@ -114,17 +114,34 @@ class ui_acl
 
 	function selectlist($right,$users_only=false)
 	{
-		foreach ($GLOBALS['egw']->accounts->get_list() as $num => $account)
+		switch($GLOBALS['egw_info']['user']['preferences']['common']['account_display'])
 		{
-			if(!($users_only && $account['account_lastname'] == 'Group'))
+				case 'firstname':
+				case 'firstall':
+					$order = 'n_given,n_family';
+					break;
+				case 'lastall':
+				case 'lastname':
+					$order = 'n_family,n_given';
+					break;
+				default:
+					$order = 'account_lid,n_family,n_given';
+					break;
+		}
+		foreach ($GLOBALS['egw']->accounts->search(array(
+			'type' => 'both',
+			'order' => $order,
+		)) as $num => $account)
+		{
+			if(!($users_only && $account['account_type'] == 'g'))
 			{
 				$selectlist .= '<option value="' . $account['account_id'] . '"';
-					if($this->rights[$account['account_id']] & $right)
+				if($this->rights[$account['account_id']] & $right)
 				{
 					$selectlist .= ' selected="selected"';
 				}
-				$selectlist .= '>' . $account['account_firstname'] . ' ' . $account['account_lastname']
-									. ' [ ' . $account['account_lid'] . ' ]' . '</option>' . "\n";
+				$selectlist .= '>' . $GLOBALS['egw']->common->display_fullname($account['account_lid'],$account['account_firstname'],
+					$account['account_lastname'],$account['account_id']) . '</option>' . "\n";
 			}
 		}
 		return $selectlist;
