@@ -235,10 +235,10 @@ fiji	common	hu	Fidzsi
 files	common	hu	Fájlok
 filter	common	hu	Szűrő
 finland	common	hu	Finnország
-first name	common	hu	Vezetéknév
-first name of the user, eg. "%1"	common	hu	A felhasználó vezetéktneve, pl. "%1"
+first name	common	hu	Keresztnév
+first name of the user, eg. "%1"	common	hu	A felhasználó keresztneve, pl. "%1"
 first page	common	hu	Első oldal
-firstname	common	hu	Vezetéknév
+firstname	common	hu	Keresztnév
 fixme!	common	hu	FIXME!
 folder already exists.	common	hu	A mappa már létezik.
 force selectbox	common	hu	Kényszerített selectbox
@@ -341,10 +341,10 @@ kyrgyzstan	common	hu	Kirgizisztán
 language	common	hu	Nyelv
 language_direction_rtl	common	hu	language_direction_rtl
 lao peoples democratic republic	common	hu	Lao Peoples Democratic Rebuplic
-last name	common	hu	Keresztnév
-last name of the user, eg. "%1"	common	hu	A felhasználó keresztneve, pl. "%1"
+last name	common	hu	Vezetéknév
+last name of the user, eg. "%1"	common	hu	A felhasználó vezetékneve, pl. "%1"
 last page	common	hu	Utolsó oldal
-lastname	common	hu	Keresztnév
+lastname	common	hu	Vezetéknév
 latvia	common	hu	Lettország
 ldap-mgr	common	hu	LDAP kezelő
 lebanon	common	hu	Libanon

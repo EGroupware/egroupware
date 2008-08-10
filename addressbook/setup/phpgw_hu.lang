@@ -306,8 +306,8 @@ that field name has been used already !	addressbook	hu	A mezőnév már használ
 the anonymous user has probably no add rights for this addressbook.	addressbook	hu	Az anonymous felhasználó alighanem nem rendelkezik hozzáadási jogosultsággal ehhez a címjegyzékhez.
 the anonymous user needs add rights for it!	addressbook	hu	Az anonymous felhasználónak hozzáadási jogosultsága kell legyen!
 there was an error saving your data :-(	addressbook	hu	Hiba történt az adatainak a mentése közben.
-this person's first name was not in the address book.	addressbook	hu	Ennek a személynek a vezetékneve nem szerepelt a címjegyzékben.
-this person's last name was not in the address book.	addressbook	hu	Ennek a személynek a keresztneve nem szerepelt a címjegyzékben.
+this person's first name was not in the address book.	addressbook	hu	Ennek a személynek a keresztneve nem szerepelt a címjegyzékben.
+this person's last name was not in the address book.	addressbook	hu	Ennek a személynek a vezetékneve nem szerepelt a címjegyzékben.
 timezone	addressbook	hu	Időzóna
 to many might exceed your execution-time-limit	addressbook	hu	Futtatási idő limit túllépés
 today is %1's birthday!	common	hu	Ma van %1 születésnapja!
@@ -319,8 +319,8 @@ upload or delete the photo	addressbook	hu	Fotó feltöltése vagy törlése
 use an extra category tab?	addressbook	hu	Használjunk egy extra kategória fület?
 use country list	addressbook	hu	Ország lista használata
 vcard	common	hu	vCard
-vcards require a first name entry.	addressbook	hu	A vCard igényel egy vezetéknév bejegyzést.
-vcards require a last name entry.	addressbook	hu	A vCard igényel egy keresztnév bejegyzést.
+vcards require a first name entry.	addressbook	hu	A vCard igényel egy keresztnév bejegyzést.
+vcards require a last name entry.	addressbook	hu	A vCard igényel egy vezetéknév bejegyzést.
 verification	addressbook	hu	Hitelesítés
 view linked infolog entries	addressbook	hu	Kapcsolat InfoLog bejegyzések megtekintése
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	hu	Figyelem!! Az LDAP csak akkor érvényes, ha felhasználói azonosítók tárolására NEM használjuk a kapcsolatokat!
