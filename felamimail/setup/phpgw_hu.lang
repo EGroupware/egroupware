@@ -1,8 +1,10 @@
 (no subject)	felamimail	hu	(nincs tárgy)
 (only cc/bcc)	felamimail	hu	(csak CC/BCC)
+(separate multiple addresses by comma)	felamimail	hu	(több címzett elválasztásához használja a vesszőt)
 (unknown sender)	felamimail	hu	(ismeretlen feladó)
 activate	felamimail	hu	Aktivál
 activate script	felamimail	hu	szkript aktiválás
+activating by date requires a start- and end-date!	felamimail	hu	Dátum alapján aktiváláshoz szükséges a kezdő és végdátum megadása is!
 add acl	felamimail	hu	ACL hozzáadása
 add address	felamimail	hu	Cím hozzáadása
 add rule	felamimail	hu	Szabály hozzáadása
@@ -37,7 +39,8 @@ based upon given criteria, incoming messages can have different background color
 bcc	felamimail	hu	BCC
 before headers	felamimail	hu	Fejlécek előtt
 between headers and message body	felamimail	hu	Feljécek és üzenet között
-body part	felamimail	hu	test rész
+body part	felamimail	hu	üzenet tartalma
+by date	felamimail	hu	dátum alapján
 can not send message. no recipient defined!	felamimail	hu	Üzenet kézbesítése nem  lehetséges, nincs megadva címzett!
 can't connect to inbox!!	felamimail	hu	nem tudok csatlakozni az INBOX-hoz!!!
 cc	felamimail	hu	CC
@@ -165,6 +168,7 @@ follow	felamimail	hu	követés
 for mail to be send - not functional yet	felamimail	hu	Elküldött levelekre - még nem működik
 for received mail	felamimail	hu	Bejövő levelekre
 forward	felamimail	hu	Továbbít
+forward messages to	felamimail	hu	Üzenetek továbbítása
 forward to	felamimail	hu	Továbbítás ide
 forward to address	felamimail	hu	Címzettnek továbbít
 forwarding	felamimail	hu	Továbbítás
@@ -268,6 +272,7 @@ no plain text part found	felamimail	hu	nem található egyszerű szöveges tarta
 no previous message	felamimail	hu	nincs előző üzenet
 no recipient address given!	felamimail	hu	Címzett nincs megadva!
 no signature	felamimail	hu	nincs aláírás
+no subject given!	felamimail	hu	Tárgy hiányzik!
 no supported imap authentication method could be found.	felamimail	hu	Nem található támogatott IMAP azonosítási eljárás.
 no valid emailprofile selected!!	felamimail	hu	Nincs érvényes email profil kiválasztva!!!
 none	felamimail	hu	Semmi
@@ -338,6 +343,7 @@ send	felamimail	hu	Küld
 send a reject message	felamimail	hu	Visszautasító levél küldése
 sent folder	felamimail	hu	'Elküldött' mappa
 server supports mailfilter(sieve)	felamimail	hu	a szerver támogatja a levélszűrőket (sieve)
+set as default	felamimail	hu	Beállítás alapértelmezettként.
 show header	felamimail	hu	fejléc megjelenítése
 show new messages on main screen	felamimail	hu	Új üzenetek megjelenítése a főképernyőn
 sieve script name	felamimail	hu	sieve szűrő szkript neve
@@ -361,6 +367,7 @@ subscribe	felamimail	hu	Feliratkozás
 subscribed	felamimail	hu	Feliratkozva
 subscribed successfully!	felamimail	hu	Sikeres feliratkozás!
 sun	felamimail	hu	Va
+system signature	felamimail	hu	rendszer aláírás
 table of contents	felamimail	hu	Tartalomjegyzék
 text only	felamimail	hu	Csak szöveg
 the connection to the imap server failed!!	felamimail	hu	Sikertelen csatlakozás az IMAP szerverhez!!
@@ -406,6 +413,7 @@ use smtp auth	admin	hu	SMTP hitelesítés használata
 users can define their own emailaccounts	admin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
 vacation notice	common	hu	szabadság értesítés
 vacation notice is active	felamimail	hu	Szabadság értesítő aktív
+vacation start-date must be before the end-date!	felamimail	hu	A szabadság kezdődátuma meg kell előzze a végdátumot!
 validate certificate	felamimail	hu	tanúsítvány ellenőrzése
 view full header	felamimail	hu	Teljes fejléc megjelenítése
 view header lines	felamimail	hu	fejléc tartalom megjelenítése
@@ -420,3 +428,4 @@ with message "%1"	felamimail	hu	"%1" üzenettel
 wrap incoming text at	felamimail	hu	Bejövő szöveg tördelése
 writing	felamimail	hu	írás
 wrote	felamimail	hu	írta
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	hu	Használja a %1-t a fenti kezdődátumhoz és %2-t a végdátumhoz.
