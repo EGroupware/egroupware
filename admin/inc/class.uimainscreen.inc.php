@@ -117,10 +117,10 @@
 			else
 			{
 				$current_message = $GLOBALS['egw']->translation->read($select_lang,$section,$section.'_message');
-				
-				if($_POST['htmlarea'])
+				if ($_POST['no-htmlarea']) $current_message = strip_tags($current_message);	
+				if($_POST['htmlarea'] || strlen($current_message) > strlen(strip_tags($current_message)))
 				{
-					 $text_or_htmlarea=$html->htmlarea('message',$html->htmlspecialchars($current_message),'advanced');
+					 $text_or_htmlarea=$html->htmlarea('message',$current_message,'advanced');
 					 $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WYSIWYG-editor').'">';
 				}
 				else
