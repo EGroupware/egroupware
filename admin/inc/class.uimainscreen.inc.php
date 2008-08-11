@@ -120,7 +120,7 @@
 				
 				if($_POST['htmlarea'])
 				{
-					 $text_or_htmlarea=$html->htmlarea('message',$html->htmlspecialchars($current_message));
+					 $text_or_htmlarea=$html->htmlarea('message',$html->htmlspecialchars($current_message),'advanced');
 					 $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WYSIWYG-editor').'">';
 				}
 				else
