@@ -35,8 +35,10 @@ class jerryr_framework extends idots_framework
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();
 
-		$this->_add_topmenu_item($apps['home']);
-
+		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
+		{
+			$this->_add_topmenu_item($apps['home']);
+		}
 		/*if($GLOBALS['egw_info']['user']['apps']['manual'])
 		{
 			$this->_add_topmenu_item('manual');
@@ -46,7 +48,7 @@ class jerryr_framework extends idots_framework
 		{
 			$this->_add_topmenu_item($apps['preferences']);
 		}
-		if($GLOBALS['egw_info']['user']['apps']['manual'] && $apps['manual'])
+		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
 			$this->_add_topmenu_item($apps['manual']);
 		}
