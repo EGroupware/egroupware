@@ -334,7 +334,12 @@ function select_result(e) {
 		value.value = target.value.key;
 	}
 	if(search) {
-		search.value = target.value.value;
+		var string = target.value.value;
+		string = string.replace(/&amp;/g, '&');
+		string = string.replace(/&lt;/g, '<');
+		string = string.replace(/&gt;/g, '>');
+
+		search.value = string;
 		var event;
 		if(document.createEvent) {
 			// Most
