@@ -769,7 +769,7 @@ class addressbook_ldap
 						}
 					}
 					// filter for letter-search
-					elseif (preg_match("/^([^ ]+) LIKE '(.*)%'$/",$value,$matches))
+					elseif (preg_match("/^([^ ]+) I?LIKE '(.*)%'$/",$value,$matches))
 					{
 						foreach($this->schema2egw as $mapping)
 						{
