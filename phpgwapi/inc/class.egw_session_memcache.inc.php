@@ -247,9 +247,10 @@ class egw_session_memcache
 	{
 		if (!self::_acquire_and_wait($id)) return false;
 
-		error_log("\n memcache destroy  $id:$n:");
-		for($n=0; self::$memcache->delete($id.($n?'-'.$n:'')); ++$n) ;
-
+		for($n=0; self::$memcache->delete($id.($n?'-'.$n:'')); ++$n)
+		{
+			if (self::DEBUG > 0) error_log("******* memcache destroy  $id:$n:");
+		}
 		self::_release($id);
 
 		return $n > 0;
