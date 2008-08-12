@@ -1015,6 +1015,23 @@ class ui_myapp {
 </pre>
 	</td>
 </tr>
+<tr>
+<td><b>Ajax Select</b></td>
+<td></td><td></td><td>ajax_select</td>
+<td>
+<p>The Ajax Select is a Combo Box.  It lets the user type anything they want, and choose from a list of options that are presented below.  The user is not limited to the choices, but there is
+some checking done.  If what they type returns several results, and they don't choose one, for example.  You can reject
+any values you don't like in your UI code.  It is best used where you might normally want to use a selectbox but your list of data is too large.  You can have several on one page, but the name 
+must be different for each.</p>
+<p><b>Options</b> can be found under the "AJAX Select options" section of the pop-up. </p>
+<p><b>Data Source</b>: the list options, can be any function that can provide data for a nextmatch widget.</p>
+<p><b>Title Source</b>: When an option from the list is selected, the text in the search function is replaced with the result of this function.  The ID Field is passed.  link_title() functions work well.</p>
+<p><b>ID Field</b>: Data Source is expected to return an array as for a nextmatch, with several columns.  This is the key of the column you actually want returned for a value.</p>
+<p><b>Result row template</b>: (Optional) You can provide a custom eTemplate to use for the list options.  It should be constructed similarly to a row template for a nextmatch, and will be repeated for each option.</p>
+<p><b>Link</b>: (Optional) If the field is read-only, and Link is provided, the widget will turn into a link.  Link should look like: perp_ap.ui_perp_supplier.edit&supplier_id=${cont[supplier_id]} where ID Field is supplier_id.</p>
+<p><b>Icon</b>: (Optional) An icon placed to the left of the search box, to help indicate what the user is searching (addresses, suppliers, etc.).  It will be automatically resized.</p>
+</td>
+</tr>
 </table>
 <h3>One remark about cross-site-scripting</h3>
 The following eTemplate Widgets are parsing its content before displaying through <b>htmlspecialchars()</b> to
