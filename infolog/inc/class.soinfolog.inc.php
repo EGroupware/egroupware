@@ -737,14 +737,14 @@ class soinfolog 				// DB-Layer
 				ctype_digit($query['search'] ? ' UNION (SELECT '.$this->db->quote($query['search']).')' : '').')';
 			*/
 			/* old code searching the table direct */
-			$pattern = $this->db->quote('%'.$query['search'].'%');
+			$pattern = ' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$query['search'].'%');
 
 			$columns = array('info_from','info_addr','info_location','info_subject','info_extra_value');
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
-				implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
+				implode($pattern.' OR ',$columns).$pattern.') ';
 
 			$join = ($cfcolfilter>0 ? '':'LEFT')." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
