@@ -1,18 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - API jsCalendar setup (set up jsCalendar with user prefs)    *
-* http://www.eGroupWare.org                                                *
-* Modified by Ralf Becker <RalfBecker@outdoor-training.de>                 *
-* This file is derived from jscalendar's calendar-setup.js file and the    *
-* english translation in lang/calendar-en.js.                              *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - API jsCalendar setup (set up jsCalendar with user prefs)
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package api
+ * @subpackage tools
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 $GLOBALS['egw_info'] = array(
 	'flags' => Array(
@@ -57,8 +53,6 @@ $jsLongDateFormat = '%a, '.($dayFirst ? '%e' : '%b').($dateformat[1] == '.' ? '.
  * modify this code to suit your needs (this is recommended and much better
  * than modifying calendar.js itself).
  */
-
-// $Id$
 
 /**
  *  This function "patches" an input field (or other element) to use a calendar
@@ -260,8 +254,12 @@ if(is_null($substr)) $substr = function_exists('mb_substr') ? 'mb_substr' : 'sub
 $chars_shortcut = (int) lang('3 number of chars for day-shortcut');		// < 0 to take the chars from the end
 foreach($day2int as $name => $n)
 {
-	echo "\n \"".($chars_shortcut > 0 ? $substr(lang($name),0,$chars_shortcut) : 
-		$substr(lang($name),$chars_shortcut)).'"'.($n < 6 ? ',' : '');
+	$short = lang($m = substr($name,0,3));	// test if our lang-file have a translation for the english short with 3 chars
+	if ($short == $m || $substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
+	{
+		$short = $chars_shortcut > 0 ? $substr(lang($name),0,$chars_shortcut) : $substr(lang($name),$chars_shortcut);
+	}
+	echo "\n \"".$short.'"'.($n < 6 ? ',' : '');
 }
 ?>);
 Calendar._SDN_len = <?php echo abs((int) lang('3 number of chars for day-shortcut')); ?>;
@@ -277,7 +275,6 @@ foreach($monthnames as $n => $name)
 
 Calendar._SMN = new Array
 (<?php // short month names
-$monthnames = array('January','February','March','April','May','June','July','August','September','October','November','December');
 $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 foreach($monthnames as $n => $name)
 {
