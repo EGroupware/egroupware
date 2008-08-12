@@ -9,9 +9,12 @@
  * chunks we add -2, -3, ... so other code (eg. the SyncML code from Horde) can
  * open the session, if it's size is < 1MB.
  *
- * To enable it, you need to set session.save_handler to 'memcache' and
+ * To enable it, you need to set session.save_handler to 'memcache',
  * session.save_path to 'tcp://host:port[,tcp://host2:port,...]',
- * as you have to do it with the original handler.
+ * as you have to do it with the original handler PLUS adding the following
+ * to your header.inc.php:
+ *
+ * $GLOBALS['egw_info']['server']['session_handler'] = 'egw_session_memcache';
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -75,11 +78,11 @@ class egw_session_memcache
 	 */
 	public static function open($save_path, $session_name)
 	{
-		self::$memchache = new Memcache;
+		self::$memcache = new Memcache;
 		foreach(explode(',',ini_get('session.save_path')) as $path)
 		{
 			$parts = parse_url($path);
-			self::$memchache->addServer($parts['host'],$parts['port']);	// todo parse query
+			self::$memcache->addServer($parts['host'],$parts['port']);	// todo parse query
 		}
 		return true;
 	}
@@ -91,7 +94,7 @@ class egw_session_memcache
 	 */
 	public static function close()
 	{
-		return is_object(self::$memchache) ? self::$memchache->close() : false;
+		return is_object(self::$memcache) ? self::$memcache->close() : false;
 	}
 
 	/**
@@ -113,9 +116,9 @@ class egw_session_memcache
 
 		if (!self::_acquire_and_wait($id)) return false;
 
-		for($data=false,$n=0; ($read = self::$memchache->get($id.($n?'-'.$n:''))); ++$n)
+		for($data=false,$n=0; ($read = self::$memcache->get($id.($n?'-'.$n:''))); ++$n)
 		{
-			if (self::DEBUG > 0) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." read $id:$n:".print_r(_bytes($read),true));
+			if (self::DEBUG > 0) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." read $id:$n:".print_r(self::_bytes($read),true));
 			$data .= $read;
 		}
 		self::_release($id);
@@ -143,17 +146,17 @@ class egw_session_memcache
 
 		if (!self::_acquire_and_wait($id)) return false;
 
-		for($n=$i=0,$len=_bytes($sess_data); $i < $len; $i += self::MEMCACHED_MAX_JUNK,++$n)
+		for($n=$i=0,$len=self::_bytes($sess_data); $i < $len; $i += self::MEMCACHED_MAX_JUNK,++$n)
 		{
-			if (self::DEBUG > 1) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." in :$n write $id:$i:".print_r(_bytes($sess_data),true));
+			if (self::DEBUG > 1) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." in :$n write $id:$i:".print_r(self::_bytes($sess_data),true));
 
-			if (!self::$memchache->set($id.($n?'-'.$n:''),self::_cut_bytes($sess_data,$i,self::MEMCACHED_MAX_JUNK),0,$lifetime)) {
+			if (!self::$memcache->set($id.($n?'-'.$n:''),self::_cut_bytes($sess_data,$i,self::MEMCACHED_MAX_JUNK),0,$lifetime)) {
 				self::_release($id);
 				return false;
 			}
 		}
 		if (self::DEBUG > 0) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." DELETE :$n");
-		for($n=$n; self::$memchache->delete($id.($n?'-'.$n:'')); ++$n) ;
+		for($n=$n; self::$memcache->delete($id.($n?'-'.$n:'')); ++$n) ;
 
 		self::_release($id);
 
@@ -172,7 +175,7 @@ class egw_session_memcache
 
 		$i=0;
 		// Acquire lock for 3 seconds, after that i should have done my job
-		while(!self::$memchache->add($id.'-lock',1,0,3))
+		while(!self::$memcache->add($id.'-lock',1,0,3))
 		{
 			if (self::DEBUG > 0) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." ACQUIRE Lock Loop :$id:$i");
 			usleep(100000);
@@ -204,7 +207,7 @@ class egw_session_memcache
 	{
 		if (self::DEBUG > 0) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." RELEASE :$id");
 
-		return self::$memchache->delete($id.'-lock');
+		return self::$memcache->delete($id.'-lock');
 	}
 
 	/**
@@ -245,7 +248,7 @@ class egw_session_memcache
 		if (!self::_acquire_and_wait($id)) return false;
 
 		error_log("\n memcache destroy  $id:$n:");
-		for($n=0; self::$memchache->delete($id.($n?'-'.$n:'')); ++$n) ;
+		for($n=0; self::$memcache->delete($id.($n?'-'.$n:'')); ++$n) ;
 
 		self::_release($id);
 
