@@ -458,13 +458,14 @@ class egw_db
 		// next ADOdb version: if (!$this->Link_ID->isConnected()) $this->Link_ID->Connect();
 		if (!$this->Link_ID->_connectionID) $this->Link_ID->Connect();
 
-		if ($new_connection && $GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore')
+		if ($new_connection)
 		{
 			foreach(get_included_files() as $file)
 			{
 				if (strpos($file,'adodb') !== false && !in_array($file,(array)$_SESSION['egw_required_files']))
 				{
 					$_SESSION['egw_required_files'][] = $file;
+					//error_log(__METHOD__."() egw_required_files[] = $file");
 				}
 			}
 		}
