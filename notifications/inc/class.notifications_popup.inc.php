@@ -13,10 +13,10 @@
 /**
  * Instant user notification with egroupware popup.
  *
- * @abstract egwpopup is a two stage notification. In the first stage 
+ * @abstract egwpopup is a two stage notification. In the first stage
  * notification is written into self::_notification_table.
  * In the second stage a request from the client reads
- * out the table to look if there is a notificaton for this 
+ * out the table to look if there is a notificaton for this
  * client. The second stage is done in class.ajaxnotifications.inc.php
  *
  * Todo:
@@ -31,52 +31,52 @@
  *
  */
 class notifications_popup implements notifications_iface {
-	
+
 	/**
 	 * Appname
 	 */
 	const _appname = 'notifications';
-	
+
 	/**
 	 * Notification table in SQL database
 	 */
 	const _notification_table = 'egw_notificationpopup';
-	
+
 	/**
 	 * holds account object for user who sends the message
 	 *
 	 * @var object
 	 */
 	private $sender;
-	
+
 	/**
 	 * holds account object for user to notify
 	 *
 	 * @var object
 	 */
 	private $recipient;
-	
+
 	/**
 	 * holds config object (sitewide application config)
 	 *
 	 * @var object
 	 */
 	private $config;
-	
+
 	/**
 	 * holds preferences object of user to notify
 	 *
 	 * @var object
 	 */
 	private $preferences;
-	
+
 	/**
 	 * holds db object of SQL database
 	 *
 	 * @var egw_db
 	 */
 	private $db;
-	
+
 	/**
 	 * constructor of notifications_egwpopup
 	 *
@@ -94,7 +94,7 @@ class notifications_popup implements notifications_iface {
 		$this->preferences = $_preferences;
 		$this->db = &$GLOBALS['egw']->db;
 	}
-	
+
 	/**
 	 * sends notification if user is online
 	 *
@@ -104,7 +104,7 @@ class notifications_popup implements notifications_iface {
 	 * @param array $_attachments
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
-		$sessions = $GLOBALS['egw']->session->list_sessions(0, 'asc', 'session_dla', true);
+		$sessions = egw_session::session_list(0, 'asc', 'session_dla');
 		$user_sessions = array();
 		foreach ($sessions as $session) {
 			if ($session['session_lid'] == $this->recipient->account_lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
@@ -112,16 +112,16 @@ class notifications_popup implements notifications_iface {
 			}
 		}
 		if ( empty($user_sessions) ) throw new Exception("User {$this->recipient->account_lid} isn't online. Can't send notification via popup");
-		
+
 		$message = 	$this->render_infos($_subject)
 					.html::hr()
 					.$_messages['html']
 					.html::hr()
 					.$this->render_links($_links);
-					
+
 		$this->save( $message, $user_sessions );
 	}
-		
+
 	/**
 	 * saves notification into database so that the client can fetch it from there
 	 *
@@ -138,7 +138,7 @@ class notifications_popup implements notifications_iface {
 		}
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 	}
-	
+
 	/**
 	 * renders plaintext/html links from given link array
 	 * should be moved to the ajax class later - like mentioned in the Todo
@@ -149,11 +149,11 @@ class notifications_popup implements notifications_iface {
 	private function render_links($_links = false) {
 		if(!is_array($_links) || count($_links) == 0) { return false; }
 		$newline = "<br />";
-		
+
 		$rendered_links = array();
 		foreach($_links as $link) {
 			if(!$link->popup) { $link->view['no_popup'] = 1; }
-			
+
 			$url = html::link('/index.php', $link->view);
 			// do not expose sensitive data
 			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
@@ -170,14 +170,14 @@ class notifications_popup implements notifications_iface {
 				$rendered_links[] = html::div($image.$link->text,'onclick="'.$this->jspopup($url, '_blank', $dimensions[0], $dimensions[1]).'"','link');
 			} else {
 				$rendered_links[] = html::div(html::a_href($image.$link->text, $url, false, 'target="_blank"'),'','link');
-			} 
-			
+			}
+
 		}
 		if(count($rendered_links) > 0) {
 			return html::bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
 		}
 	}
-		
+
 	/**
 	 * returns javascript to open a popup window: window.open(...)
 	 *
@@ -192,7 +192,7 @@ class notifications_popup implements notifications_iface {
 		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
 			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
 	}
-	
+
 	/**
 	 * renders additional infos from sender and subject
 	 *
@@ -201,8 +201,8 @@ class notifications_popup implements notifications_iface {
 	 */
 	private function render_infos($_subject = false) {
 		$infos = array();
-		$newline = "<br />"; 
-		
+		$newline = "<br />";
+
 		$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
 		$infos[] = lang('Message from').': '.$sender;
 		if(!empty($_subject)) { $infos[] = html::bold($_subject); }
