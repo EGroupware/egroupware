@@ -483,7 +483,7 @@ class addressbook_ui extends addressbook_bo
 
 		if (substr($action,0,8) == 'move_to_')
 		{
-			$action = (int)substr($action,8);
+			$action = (int)substr($action,8).(substr($action,-1) == 'p' ? 'p' : '');
 		}
 		if (substr($action,0,7) == 'to_list')
 		{
