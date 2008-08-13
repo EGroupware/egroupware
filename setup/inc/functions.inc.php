@@ -13,132 +13,139 @@
  * @version $Id$
  */
 
-	error_reporting(error_reporting() & ~E_NOTICE);
-	
-	// for an old header, we need to setup the reference before including it
-	$GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
+error_reporting(error_reporting() & ~E_NOTICE);
 
-	if(file_exists('../header.inc.php'))
+// for an old header, we need to setup the reference before including it
+$GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
+
+$GLOBALS['egw_info'] = array(
+	'flags' => array(
+		'noheader' => True,
+		'nonavbar' => True,
+		'currentapp' => 'setup',
+		'noapi' => True
+));
+if(file_exists('../header.inc.php'))
+{
+	include('../header.inc.php');
+}
+// for an old header we need to setup a reference for the domains
+if (!is_array($GLOBALS['egw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
+
+if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
+{
+	echo 'eGroupWare now requires PHP 4.1 or greater.<br>';
+	echo 'Please contact your System Administrator';
+	exit;
+}
+
+/*  If we included the header.inc.php, but it is somehow broken, cover ourselves... */
+if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))
+{
+	if (defined('PHPGW_SERVER_ROOT') && defined('PHPGW_INCLUDE_ROOT'))	// pre 1.2 install
 	{
-		include('../header.inc.php');
+		define('EGW_SERVER_ROOT',PHPGW_SERVER_ROOT);
+		define('EGW_INCLUDE_ROOT',PHPGW_INCLUDE_ROOT);
 	}
-	// for an old header we need to setup a reference for the domains
-	if (!is_array($GLOBALS['egw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
-
-	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
+	else	// no install
 	{
-		echo 'eGroupWare now requires PHP 4.1 or greater.<br>';
-		echo 'Please contact your System Administrator';
-		exit;
+		define('EGW_SERVER_ROOT','..');
+		define('EGW_INCLUDE_ROOT','..');
+		define('PHPGW_SERVER_ROOT','..');
+		define('PHPGW_INCLUDE_ROOT','..');
 	}
+	define('EGW_API_INC',EGW_SERVER_ROOT.'/phpgwapi/inc');
+}
 
-	/*  If we included the header.inc.php, but it is somehow broken, cover ourselves... */
-	if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))
+require_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
+
+define('SEP',filesystem_separator());
+
+/**
+ * function to handle multilanguage support
+ *
+ */
+function lang($key,$vars=null)
+{
+	if(!is_array($vars))
 	{
-		if (defined('PHPGW_SERVER_ROOT') && defined('PHPGW_INCLUDE_ROOT'))	// pre 1.2 install
-		{
-			define('EGW_SERVER_ROOT',PHPGW_SERVER_ROOT);
-			define('EGW_INCLUDE_ROOT',PHPGW_INCLUDE_ROOT);
-		}
-		else	// no install
-		{
-			define('EGW_SERVER_ROOT','..');
-			define('EGW_INCLUDE_ROOT','..');
-			define('PHPGW_SERVER_ROOT','..');
-			define('PHPGW_INCLUDE_ROOT','..');
-		}
-		define('EGW_API_INC',EGW_SERVER_ROOT.'/phpgwapi/inc');
+		$vars = func_get_args();
+		array_shift($vars);	// remove $key
 	}
+	return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
+}
 
-	require(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
-
-	define('SEP',filesystem_separator());
-
-	/**
-	 * function to handle multilanguage support
-	 *
-	 */
-	function lang($key,$vars=null)
+/**
+ * returns array of languages we support, with enabled set to True if the lang file exists
+ */
+function get_langs()
+{
+	$f = fopen('./lang/languages','rb');
+	while($line = fgets($f,200))
 	{
-		if(!is_array($vars))
-		{
-			$vars = func_get_args();
-			array_shift($vars);	// remove $key
-		}
-		return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
+		list($x,$y) = split("\t",$line);
+		$languages[$x]['lang']  = trim($x);
+		$languages[$x]['descr'] = trim($y);
+		$languages[$x]['available'] = False;
 	}
+	fclose($f);
 
-	/**
-	 * returns array of languages we support, with enabled set to True if the lang file exists
-	 */
-	function get_langs()
+	$d = dir('./lang');
+	while($file=$d->read())
 	{
-		$f = fopen('./lang/languages','rb');
-		while($line = fgets($f,200))
+		if(preg_match('/^(php|e)gw_([-a-z]+).lang$/i',$file,$matches))
 		{
-			list($x,$y) = split("\t",$line);
-			$languages[$x]['lang']  = trim($x);
-			$languages[$x]['descr'] = trim($y);
-			$languages[$x]['available'] = False;
+			$languages[$matches[2]]['available'] = True;
 		}
-		fclose($f);
+	}
+	$d->close();
 
-		$d = dir('./lang');
-		while($file=$d->read())
+	//print_r($languages);
+	return $languages;
+}
+
+function lang_select($onChange=False,$ConfigLang='')
+{
+	if (!$ConfigLang)
+	{
+		$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
+	}
+	$select = '<select name="ConfigLang"'.($onChange ? ' onchange="this.form.submit();"' : '').'>' . "\n";
+	$languages = get_langs();
+	usort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
+	foreach($languages as $data)
+	{
+		if($data['available'] && !empty($data['lang']))
 		{
-			if(preg_match('/^(php|e)gw_([-a-z]+).lang$/i',$file,$matches))
+			$short = substr($data['lang'],0,2);
+			if ($short == $ConfigLang || $data['lang'] == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
 			{
-				$languages[$matches[2]]['available'] = True;
+				$selected = ' selected';
 			}
-		}
-		$d->close();
-
-		//print_r($languages);
-		return $languages;
-	}
-
-	function lang_select($onChange=False,$ConfigLang='')
-	{
-		if (!$ConfigLang)
-		{
-			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
-		}
-		$select = '<select name="ConfigLang"'.($onChange ? ' onchange="this.form.submit();"' : '').'>' . "\n";
-		$languages = get_langs();
-		usort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
-		foreach($languages as $data)
-		{
-			if($data['available'] && !empty($data['lang']))
+			else
 			{
-				$short = substr($data['lang'],0,2);
-				if ($short == $ConfigLang || $data['lang'] == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
-				{
-					$selected = ' selected';
-				}
-				else
-				{
-					$selected = '';
-				}
-				$select .= '<option value="' . $data['lang'] . '"' . $selected . '>' . $data['descr'] . '</option>' . "\n";
+				$selected = '';
 			}
+			$select .= '<option value="' . $data['lang'] . '"' . $selected . '>' . $data['descr'] . '</option>' . "\n";
 		}
-		$select .= '</select>' . "\n";
-
-		return $select;
 	}
+	$select .= '</select>' . "\n";
 
-	if(file_exists(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'))
-	{
-		include(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); /* To set the current core version */
-		/* This will change to just use setup_info */
-		$GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
-	}
-	else
-	{
-		$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = 'Undetected';
-	}
+	return $select;
+}
 
-	$GLOBALS['egw_info']['server']['app_images'] = 'templates/default/images';
+if(file_exists(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'))
+{
+	include(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); /* To set the current core version */
+	/* This will change to just use setup_info */
+	$GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
+}
+else
+{
+	$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = 'Undetected';
+}
 
-	CreateObject('setup.setup',True,True);	// setup constuctor assigns itself to $GLOBALS['egw_setup'], doing it twice fails on some php4
-	$GLOBALS['phpgw_setup'] =& $GLOBALS['egw_setup'];
+$GLOBALS['egw_info']['server']['app_images'] = 'templates/default/images';
+
+CreateObject('setup.setup',True,True);	// setup constuctor assigns itself to $GLOBALS['egw_setup'], doing it twice fails on some php4
+$GLOBALS['phpgw_setup'] =& $GLOBALS['egw_setup'];
