@@ -57,7 +57,7 @@
 				$this->store_location($info);
 			}
 
-			if ($_REQUEST['start'] || $_REQUEST['sort'] || $_REQUEST['order'])
+			if (isset($_REQUEST['start']) || $_REQUEST['sort'] || $_REQUEST['order'])
 			{
 				if ($_REQUEST['start'] == 0 || $_REQUEST['start'] && $_REQUEST['start'] != $info['start'])
 				{
@@ -90,10 +90,9 @@
 
 			$total = $this->bo->total();
 
-			$this->template->set_var('bg_color',$GLOBALS['egw_info']['theme']['bg_color']);
 			$this->template->set_var('left_next_matchs',$this->nextmatchs->left('/admin/currentusers.php',$info['start'],$total));
 			$this->template->set_var('right_next_matchs',$this->nextmatchs->right('/admin/currentusers.php',$info['start'],$total));
-			$this->template->set_var('th_bg',$GLOBALS['egw_info']['theme']['th_bg']);
+			$this->template->set_var('start_total',$this->nextmatchs->show_hits($total,$info['start']));
 
 			$this->template->set_var('sort_loginid',$this->nextmatchs->show_sort_order($info['sort'],'session_lid',$info['order'],
 				'/admin/currentusers.php',lang('LoginID')));

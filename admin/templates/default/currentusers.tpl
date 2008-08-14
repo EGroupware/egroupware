@@ -3,10 +3,9 @@
 <table border="0" width="95%" align="center">
  <tr>
    {left_next_matchs}
-   <td>&nbsp;</td>
-   <td>&nbsp;</td>
+   <td align="center">{start_total}</td>
    {right_next_matchs}
- </tr> 
+ </tr>
 </td>
 
 <table border="0" width="95%" align="center">
