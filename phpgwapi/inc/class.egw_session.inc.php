@@ -371,7 +371,6 @@ class egw_session //extends sessions
 				}
 			}
 		}
-
 		$GLOBALS['egw']->db->transaction_begin();
 		$this->register_session($this->login,$user_ip,$now,$this->session_flags);
 		if ($this->session_flags != 'A')		// dont log anonymous sessions
@@ -1165,7 +1164,7 @@ class egw_session //extends sessions
 	{
 		if (method_exists(self::$session_handler,'session_list'))
 		{
-			return call_user_func(array(self::$session_handler,'session_list'),array($start,$sort,$order));
+			return call_user_func(array(self::$session_handler,'session_list'),$start,$sort,$order);
 		}
 		return array();
 	}
