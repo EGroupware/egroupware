@@ -10,4 +10,5 @@
  * @version $Id$
  */
 
-header('Location: ../index.php?menuaction=calendar.calendar_uiviews.index');
+header('Location: ../index.php?menuaction=calendar.calendar_uiviews.index'.
+	(isset($_GET['sessionid']) ? '&sessionid='.$_GET['sessionid'].'&kp3='.$_GET['kp3'] : ''));
