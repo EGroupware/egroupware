@@ -74,7 +74,7 @@ class calendar_uilist extends calendar_ui
 	function &home()
 	{
 		// set the defaults for the home-page
-		$this->uilist(array(
+		$this->__construct(array(
 			'date'       => $this->bo->date2string($this->bo->now_su),
 			'cat_id'     => 0,
 			'filter'     => 'all',
