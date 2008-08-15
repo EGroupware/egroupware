@@ -1062,7 +1062,7 @@ class egw_session //extends sessions
 	 * Read the diverse repositories / init classes with data from the just loged in user
 	 *
 	 */
-	private function read_repositories()
+	public function read_repositories()
 	{
 		$GLOBALS['egw']->acl->acl($this->account_id);
 		accounts::getInstance()->setAccountId($this->account_id);

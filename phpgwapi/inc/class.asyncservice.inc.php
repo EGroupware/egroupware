@@ -1,11 +1,11 @@
 <?php
 /**
  * API - Timed Asynchron Services for eGroupWare
- * 
+ *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @access public
@@ -29,7 +29,7 @@ class asyncservice
 	var $db;
 	var $db_table = 'egw_async';
 	var $debug = 0;
-	
+
 	/**
 	 * constructor of the class
 	 */
@@ -44,29 +44,29 @@ class asyncservice
 			$this->db = $GLOBALS['egw_setup']->db;
 		}
 		$this->cronline = EGW_SERVER_ROOT . '/phpgwapi/cron/asyncservices.php '.$GLOBALS['egw_info']['user']['domain'];
-		
+
 		$this->only_fallback = substr(php_uname(), 0, 7) == "Windows";	// atm cron-jobs dont work on win
 	}
 
 	/**
 	 * calculates the next run of the timer and puts that with the rest of the data in the db for later execution.
 	 *
-	 * @param int/array $times unix timestamp or array('min','hour','dow','day','month','year') with execution time. 
-	 * 	Repeated events are possible to shedule by setting the array only partly, eg. 
-	 * 	array('day' => 1) for first day in each month 0am or array('min' => '* /5', 'hour' => '9-17') 
+	 * @param int/array $times unix timestamp or array('min','hour','dow','day','month','year') with execution time.
+	 * 	Repeated events are possible to shedule by setting the array only partly, eg.
+	 * 	array('day' => 1) for first day in each month 0am or array('min' => '* /5', 'hour' => '9-17')
 	 * 	for every 5mins in the time from 9am to 5pm.
-	 * @param string $id unique id to cancel the request later, if necessary. Should be in a form like 
+	 * @param string $id unique id to cancel the request later, if necessary. Should be in a form like
 	 * 	eg. '<app><id>X' where id is the internal id of app and X might indicate the action.
-	 * @param string $method Method to be called via ExecMethod($method,$data). $method has the form 
+	 * @param string $method Method to be called via ExecMethod($method,$data). $method has the form
 	 * 	'<app>.<class>.<public function>'.
-	 * @param mixed $data This data is passed back when the method is called. It might simply be an 
+	 * @param mixed $data This data is passed back when the method is called. It might simply be an
 	 * 	integer id, but it can also be a complete array.
 	 * @param int $account_id account_id, under which the methode should be called or False for the actual user
-	 * @return boolean False if $id already exists, else True	
+	 * @return boolean False if $id already exists, else True
 	 */
 	function set_timer($times,$id,$method,$data,$account_id=False)
 	{
-		if (empty($id) || empty($method) || $this->read($id) || 
+		if (empty($id) || empty($method) || $this->read($id) ||
 				!($next = $this->next_run($times)))
 		{
 			return False;
@@ -84,7 +84,7 @@ class asyncservice
 			'account_id' => $account_id
 		);
 		$this->write($job);
-		
+
 		return True;
 	}
 
@@ -92,10 +92,10 @@ class asyncservice
 	 * calculates the next execution time for $times
 	 *
 	 * @param int/array $times unix timestamp or array('year'=>$year,'month'=>$month,'dow'=>$dow,'day'=>$day,'hour'=>$hour,'min'=>$min)
-	 * 	with execution time. Repeated execution is possible to shedule by setting the array only partly, 
-	 * 	eg. array('day' => 1) for first day in each month 0am or array('min' => '/5', 'hour' => '9-17') 
-	 * 	for every 5mins in the time from 9am to 5pm. All not set units before the smallest one set, 
-	 * 	are taken into account as every possible value, all after as the smallest possible value. 
+	 * 	with execution time. Repeated execution is possible to shedule by setting the array only partly,
+	 * 	eg. array('day' => 1) for first day in each month 0am or array('min' => '/5', 'hour' => '9-17')
+	 * 	for every 5mins in the time from 9am to 5pm. All not set units before the smallest one set,
+	 * 	are taken into account as every possible value, all after as the smallest possible value.
 	 * @param boolean $debug if True some debug-messages about syntax-errors in $times are echoed
 	 * @return int a unix timestamp of the next execution time or False if no more executions
 	 */
@@ -107,10 +107,10 @@ class asyncservice
 			$debug = True;	// enable syntax-error messages too
 		}
 		$now = time();
-		
+
 		// $times is unix timestamp => if it's not expired return it, else False
 		//
-		if (!is_array($times))	
+		if (!is_array($times))
 		{
 			$next = (int)$times;
 
@@ -143,8 +143,8 @@ class asyncservice
 			'year'  => date('Y')
 		);
 
-		// get the number of the first and last pattern set in $times, 
-		// as empty patterns get enumerated before the the last pattern and 
+		// get the number of the first and last pattern set in $times,
+		// as empty patterns get enumerated before the the last pattern and
 		// get set to the minimum after
 		//
 		$n = $first_set = $last_set = 0;
@@ -181,7 +181,7 @@ class asyncservice
 					if (strpos($t,'-') !== False && strpos($t,'/') === False)
 					{
 						list($min,$max) = $arr = explode('-',$t);
-						
+
 						if (count($arr) != 2 || !is_numeric($min) || !is_numeric($max) || $min > $max)
 						{
 							if ($debug) echo "<p>Syntax error in $u='$t', allowed is 'min-max', min <= max, min='$min', max='$max'</p>\n";
@@ -198,8 +198,8 @@ class asyncservice
 						if ($t == '*') $t = '*/1';
 
 						list($one,$inc) = $arr = explode('/',$t);
-						
-						if (!(is_numeric($one) && count($arr) == 1 || 
+
+						if (!(is_numeric($one) && count($arr) == 1 ||
 									count($arr) == 2 && is_numeric($inc)))
 						{
 							if ($debug) echo "<p>Syntax error in $u='$t', allowed is a number or '{*|range}/inc', inc='$inc'</p>\n";
@@ -244,7 +244,7 @@ class asyncservice
 			}
 		}
 		if ($this->debug) { echo "enumerated times=<pre>"; print_r($times); echo "</pre>\n"; }
-		
+
 		// now we have the times enumerated, lets find the first not expired one
 		//
 		$found = array();
@@ -276,7 +276,7 @@ class asyncservice
 						default:
 							$valid = $future || $unit_value >= $unit_now;
 							break;
-						
+
 					}
 					if ($valid && ($u != $next || $unit_value > $over))	 // valid and not over
 					{
@@ -291,7 +291,7 @@ class asyncservice
 					if (!isset($next[count($found)-1]))
 					{
 						if ($this->debug) echo "<p>Nothing found, exiting !!!</p>\n";
-						return False;							
+						return False;
 					}
 					$next = $next[count($found)-1];
 					$over = $found[$next];
@@ -318,7 +318,7 @@ class asyncservice
 	}
 
 	/**
-	 * checks when the last check_run was run or set the run-semaphore (async_next != 0) if $semaphore == True 
+	 * checks when the last check_run was run or set the run-semaphore (async_next != 0) if $semaphore == True
 	 *
 	 * @param boolean $semaphore if False only check, if true try to set/release the semaphore
 	 * @param boolean $release if $semaphore == True, tells if we should set or release the semaphore
@@ -338,7 +338,7 @@ class asyncservice
 		{
 			return $last_run['data'];
 		}
-		
+
 		$where = array();
 		if ($release)
 		{
@@ -375,7 +375,7 @@ class asyncservice
 	function check_run($run_by='')
 	{
 		flush();
-		
+
 		if (!$this->last_check_run(True,False,$run_by))
 		{
 			return False;	// cant obtain semaphore
@@ -396,9 +396,9 @@ class asyncservice
 					{
 						$GLOBALS['egw']->session->account_lid = $GLOBALS['egw']->accounts->id2name($job['account_id']);
 						$GLOBALS['egw']->session->account_domain = $domain;
-						$GLOBALS['egw']->session->read_repositories(False,False);
+						$GLOBALS['egw']->session->read_repositories();
 						$GLOBALS['egw_info']['user']  = $GLOBALS['egw']->session->user;
-						
+
 						if ($lang != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 						{
 							unset($GLOBALS['lang']);
@@ -413,13 +413,13 @@ class asyncservice
 				list($app) = explode('.',$job['method']);
 				$GLOBALS['egw']->translation->add_app($app);
 				ExecMethod($job['method'],$job['data']);
-				
+
 				// re-read job, in case it had been updated or even deleted in the method
 				$updated = $this->read($id);
 				if ($updated && isset($updated[$id]))
 				{
 					$job = $updated[$id];
-					
+
 					if ($job['next'] = $this->next_run($job['times']))
 					{
 						$this->write($job,True);
@@ -471,7 +471,7 @@ class asyncservice
 		}
 		return $jobs;
 	}
-	
+
 	/**
 	 * write a job / db-row to the db
 	 *
@@ -490,7 +490,7 @@ class asyncservice
 			'async_account_id'=> $job['account_id'],
 		);
 		if ($exists)
-		{ 
+		{
 			$this->db->update($this->db_table,$data,array('async_id' => $job['id']),__LINE__,__FILE__);
 		}
 		else
@@ -511,7 +511,7 @@ class asyncservice
 
 		return $this->db->affected_rows();
 	}
-	
+
 	function find_binarys()
 	{
 		static $run = False;
@@ -521,7 +521,7 @@ class asyncservice
 		}
 		$run = True;
 
-		if (substr(php_uname(), 0, 7) == "Windows") 
+		if (substr(php_uname(), 0, 7) == "Windows")
 		{
 			// ToDo: find php-cgi on windows
 		}
@@ -575,7 +575,7 @@ class asyncservice
 			}
 		}
 	}
-	
+
 	/**
 	 * checks if phpgwapi/cron/asyncservices.php is installed as cron-job
 	 *
@@ -588,7 +588,7 @@ class asyncservice
 			return 0;
 		}
 		$this->find_binarys();
-		
+
 		if (!is_executable($this->crontab))
 		{
 			//echo "<p>Error: $this->crontab not found !!!</p>";
@@ -603,14 +603,14 @@ class asyncservice
 				if ($this->debug) echo 'line '.++$n.": $line<br>\n";
 				$parts = split(' ',$line,6);
 
-				if ($line{0} == '#' || count($parts) < 6 || ($parts[5]{0} != '/' && substr($parts[5],0,3) != 'php')) 
+				if ($line{0} == '#' || count($parts) < 6 || ($parts[5]{0} != '/' && substr($parts[5],0,3) != 'php'))
 				{
 					// ignore comments
 					if ($line{0} != '#')
 					{
 						$times['error'] .= $line;
 					}
-				} 
+				}
 				elseif (strpos($line,$this->cronline) !== False)
 				{
 					$cron_units = array('min','hour','day','month','dow');
@@ -629,7 +629,7 @@ class asyncservice
 		}
 		return $times;
 	}
-	
+
 	/**
 	 * installs /phpgwapi/cron/asyncservices.php as cron-job
 	 *
