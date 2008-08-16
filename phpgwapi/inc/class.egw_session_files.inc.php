@@ -21,7 +21,7 @@ class egw_session_files
 	/**
 	 * Initialise the session-handler (session_set_save_handler()), if necessary
 	 */
-	static function init_session_handler()
+	public static function init_session_handler()
 	{
 		// nothing to do for 'files' or other stock handlers
 	}
@@ -36,7 +36,7 @@ class egw_session_files
 	 * @param string $order='ASC' ASC or DESC
 	 * @return array with sessions (values for keys as in $sort) or array() if not supported by session-handler
 	 */
-	function session_list($start,$sort='ASC',$order='session_dla',$all_no_sort = False)
+	public static function session_list($start,$sort='ASC',$order='session_dla',$all_no_sort = False)
 	{
 		if (session_module_name() != 'files')
 		{
@@ -143,7 +143,7 @@ class egw_session_files
 	 *
 	 * @return integer
 	 */
-	function session_count()
+	public static function session_count()
 	{
 		return count(self::session_list(0,'','',True));
 	}
