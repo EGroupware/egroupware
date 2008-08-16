@@ -57,14 +57,17 @@ class egw_session_memcache
 	{
 		self::$mbstring_func_overload = @extension_loaded('mbstring') && (ini_get('mbstring.func_overload') & 2);
 
-		session_set_save_handler(
-			array(__CLASS__,'open'),
-			array(__CLASS__,'close'),
-			array(__CLASS__,'read'),
-			array(__CLASS__,'write'),
-			array(__CLASS__,'destroy'),
-			array(__CLASS__,'gc'));
-
+		if (version_compare(PHP_VERSION,'5.2','>='))
+		{
+			$ret = session_set_save_handler(
+				array(__CLASS__,'open'),
+				array(__CLASS__,'close'),
+				array(__CLASS__,'read'),
+				array(__CLASS__,'write'),
+				array(__CLASS__,'destroy'),
+				array(__CLASS__,'gc'));
+			if (!$ret) error_log(__METHOD__.'() session_set_save_handler(...)='.(int)$ret.', session_module_name()='.session_module_name().' *******************************');
+		}
 		// session needs to be closed before objects get destroyed, as this session-handler is an object ;-)
 		register_shutdown_function('session_write_close');
 	}
@@ -79,7 +82,7 @@ class egw_session_memcache
 	public static function open($save_path, $session_name)
 	{
 		self::$memcache = new Memcache;
-		foreach(explode(',',ini_get('session.save_path')) as $path)
+		foreach(explode(',',$save_path) as $path)
 		{
 			$parts = parse_url($path);
 			self::$memcache->addServer($parts['host'],$parts['port']);	// todo parse query
@@ -265,4 +268,21 @@ class egw_session_memcache
 	{
 		// done by memcached itself
 	}
+}
+
+if (version_compare(PHP_VERSION,'5.2','<'))
+{
+	function init_session_handler()
+	{
+		$ses = 'egw_session_memcache';
+		$ret = session_set_save_handler(
+			array($ses,'open'),
+			array($ses,'close'),
+			array($ses,'read'),
+			array($ses,'write'),
+			array($ses,'destroy'),
+			array($ses,'gc'));
+		if (!$ret) error_log(__METHOD__.'() session_set_save_handler(...)='.(int)$ret.', session_module_name()='.session_module_name().' *******************************');
+	}
+	init_session_handler();
 }
