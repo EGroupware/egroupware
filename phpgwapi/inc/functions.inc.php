@@ -58,7 +58,9 @@ egw_session::init_handler();
 // check if we can restore the eGW enviroment from the php-session
 if ($_REQUEST[egw_session::EGW_SESSION_NAME])
 {
-	session_id($_REQUEST[egw_session::EGW_SESSION_NAME]);
+  	ini_set('session.use_cookies',0);
+	session_name(egw_session::EGW_SESSION_NAME);
+ 	session_id($_REQUEST[egw_session::EGW_SESSION_NAME]);
 	session_start();
 
 	if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
