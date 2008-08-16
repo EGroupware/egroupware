@@ -308,6 +308,11 @@ class egw_session //extends sessions
 		$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 		$GLOBALS['egw']->accounts->accounts($this->account_id);
 		session_start();
+		// set a new session-id, if not syncml (already done in Horde code and can NOT be changed)
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'syncml')
+		{
+			session_regenerate_id(true);
+		}
 		$this->sessionid = $no_session ? 'no-session' : session_id();
 		$this->kp3       = md5($GLOBALS['egw']->common->randomstring(15));
 
