@@ -137,7 +137,8 @@ class nextmatch_widget
 	static private function get_parts($name,$offset,$length=null)
 	{
 		$parts = explode('[',str_replace(']','',$name));
-		return array_slice($parts,$offset,$length);
+		// php5.1 seems to have a bug: array_slice($parts,$offeset) != array_slice($parts,$offeset,null)
+		return is_null($length) ? array_slice($parts,$offset) : array_slice($parts,$offset,$length);
 	}
 
 	/**
