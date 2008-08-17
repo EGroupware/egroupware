@@ -1290,9 +1290,23 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$dsn = $type.':host='.$egw_db->Host.';port='.$egw_db->Port.';dbname='.$egw_db->Database;
 				break;
 		}
+		// check once if pdo extension and DB specific driver is loaded or can be loaded
+		static $pdo_available;
+		if (is_null($pdo_available))
+		{
+			foreach(array('pdo','pdo_'.$type) as $ext)
+			{
+				if (!extension_loaded($ext) && function_exists('dl') && !dl($dl=PHP_SHLIB_PREFIX.$ext.'.'.PHP_SHLIB_SUFFIX))
+				{
+					throw new Exception ("PHP extension '$ext' not loaded AND can NOT be loaded via dl('$dl')!");
+				}
+			}
+			$pdo_available = true;
+		}
 		try {
 			self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password);
 		} catch(Exception $e) {
+
 			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
 			self::$pdo = new PDO($dsn,$egw_db->User,'$egw_db->Password');
 		}
