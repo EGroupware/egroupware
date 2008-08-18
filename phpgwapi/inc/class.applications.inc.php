@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Applications
- * 
+ *
  * @link http://www.egroupware.org
  * @author Mark Peters <skeeter@phpgroupware.org>
  * Copyright (C) 2001 Mark Peters
@@ -122,13 +122,7 @@ class applications
 		{
 			if (isset($apps[$app]) && $apps[$app])
 			{
-				$this->data[$app] = array(
-					'title'   => $GLOBALS['egw_info']['apps'][$app]['title'],
-					'name'    => $app,
-					'enabled' => True,
-					'status'  => $GLOBALS['egw_info']['apps'][$app]['status'],
-					'id'      => $GLOBALS['egw_info']['apps'][$app]['id']
-				);
+				$this->data[$app] =& $GLOBALS['egw_info']['apps'][$app];
 			}
 		}
 		return $this->data;
@@ -159,24 +153,12 @@ class applications
 		{
 			foreach($apps as $app)
 			{
-				$this->data[$app] = array(
-					'title'   => $GLOBALS['egw_info']['apps'][$app]['title'],
-					'name'    => $app,
-					'enabled' => True,
-					'status'  => $GLOBALS['egw_info']['apps'][$app]['status'],
-					'id'      => $GLOBALS['egw_info']['apps'][$app]['id']
-				);
+				$this->data[$app] =& $GLOBALS['egw_info']['apps'][$app];
 			}
 		}
 		elseif(gettype($apps))
 		{
-			$this->data[$apps] = array(
-				'title'   => $GLOBALS['egw_info']['apps'][$apps]['title'],
-				'name'    => $apps,
-				'enabled' => True,
-				'status'  => $GLOBALS['egw_info']['apps'][$apps]['status'],
-				'id'      => $GLOBALS['egw_info']['apps'][$apps]['id']
-			);
+			$this->data[$apps] =& $GLOBALS['egw_info']['apps'][$apps];
 		}
 		return $this->data;
 	}
@@ -253,13 +235,7 @@ class applications
 			{
 				if ($this->is_system_enabled($app))
 				{
-					$this->data[$app] = array(
-						'title'   => $GLOBALS['egw_info']['apps'][$app]['title'],
-						'name'    => $app,
-						'enabled' => True,
-						'status'  => $GLOBALS['egw_info']['apps'][$app]['status'],
-						'id'      => $GLOBALS['egw_info']['apps'][$app]['id']
-					);
+					$this->data[$app] =& $GLOBALS['egw_info']['apps'][$app];
 				}
 			}
 		}
@@ -292,6 +268,9 @@ class applications
 				'id'      => (int)$row['app_id'],
 				'order'   => (int)$row['app_order'],
 				'version' => $row['app_version'],
+				'index'   => $row['app_index'],
+				'icon'    => $row['app_icon'],
+				'icon_app'=> $row['app_icon_app'],
 			);
 		}
 	}

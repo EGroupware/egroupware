@@ -36,7 +36,7 @@
  * Copyright (C) 2000, 2001 Dan Kuykendall
  * Copyright (C) 2003 Lars Kneschke
  */
-class egw_framework
+abstract class egw_framework
 {
 	/**
 	 * Name of the template set, eg. 'idots'
@@ -93,20 +93,14 @@ class egw_framework
 	 *
 	 * @return string with html
 	 */
-	function header()
-	{
-		die('virtual, need to be reimplemented in the template!!!');
-	}
+	abstract function header();
 
 	/**
 	 * Returns the html from the body-tag til the main application area (incl. opening div tag)
 	 *
 	 * @return string with html
 	 */
-	function navbar()
-	{
-		die('virtual, need to be reimplemented in the template!!!');
-	}
+	abstract function navbar();
 
 	/**
 	 * Returns the content of one sidebox
@@ -115,20 +109,14 @@ class egw_framework
 	 * @param string $menu_title
 	 * @param array $file
 	 */
-	function sidebox($appname,$menu_title,$file)
-	{
-		die('virtual, need to be reimplemented in the template!!!');
-	}
+	abstract function sidebox($appname,$menu_title,$file);
 
 	/**
 	 * Returns the html from the closing div of the main application area to the closing html-tag
 	 *
 	 * @return string
 	 */
-	function footer()
-	{
-		die('virtual, need to be reimplemented in the template!!!');
-	}
+	abstract function footer();
 
 	/**
 	 * displays a login screen
@@ -136,28 +124,21 @@ class egw_framework
 	 * @string $extra_vars for login url
 	 * @return string
 	 */
-	function login_screen($extra_vars)
-	{
-		die('virtual, need to be reimplemented in the template!!!');
-	}
+	abstract function login_screen($extra_vars);
 
 	/**
 	 * displays a login denied message
 	 *
 	 * @return string
 	 */
-	function denylogin_screen()
-	{
-		die('virtual, need to be reimplemented in the template!!!');
-	}
+	abstract function denylogin_screen();
 
 	/**
 	 * Get footer as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
-	 * @internal PHP5 protected
 	 * @return array
 	 */
-	function _get_footer()
+	protected function _get_footer()
 	{
 		$var = Array(
 			'img_root'       => $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images',
@@ -186,7 +167,7 @@ class egw_framework
 	 *
 	 * @return string html
 	 */
-	function _get_app_footer()
+	protected static function _get_app_footer()
 	{
 		ob_start();
 		// Include the apps footer files if it exists
@@ -218,10 +199,9 @@ class egw_framework
 	/**
 	 * Get header as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
-	 * @internal PHP5 protected
 	 * @return array
 	 */
-	function _get_header()
+	protected function _get_header()
 	{
 		// get used language code
 		$lang_code = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
@@ -271,8 +251,8 @@ class egw_framework
 			'lang_code'			=> $lang_code,
 			'charset'       	=> $GLOBALS['egw']->translation->charset(),
 			'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
-			'body_tags'     	=> $this->_get_body_attribs(),
-			'java_script'   	=> $this->_get_js(),
+			'body_tags'     	=> self::_get_body_attribs(),
+			'java_script'   	=> self::_get_js(),
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 		);
@@ -281,11 +261,10 @@ class egw_framework
 	/**
 	 * Get navbar as array to eg. set as vars for a template (from idots' navbar.inc.php)
 	 *
-	 * @internal PHP5 protected
 	 * @param array $apps navbar apps from _get_navbar_apps
 	 * @return array
 	 */
-	function _get_navbar($apps)
+	protected function _get_navbar($apps)
 	{
 		$var['img_root'] = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images';
 
@@ -342,12 +321,11 @@ class egw_framework
 	}
 
 	/**
-	* Returns html with user and time
-	*
-	* @access protected
-	* @return void
-	*/
-	function _user_time_info()
+	 * Returns html with user and time
+	 *
+	 * @return void
+	 */
+	protected static function _user_time_info()
 	{
 	   $now = time();
 	   $user_info = '<b>'.$GLOBALS['egw']->common->display_fullname() .'</b>'. ' - '
@@ -357,7 +335,12 @@ class egw_framework
 	   return $user_info;
 	}
 
-	function _current_users()
+	/**
+	 * Prepare the current users
+	 *
+	 * @return string
+	 */
+	protected static function _current_users()
 	{
 	   if( $GLOBALS['egw_info']['user']['apps']['admin'] && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 	   {
@@ -372,7 +355,7 @@ class egw_framework
 	 *
 	 * @return string
 	 */
-	function _get_quick_add()
+	protected static function _get_quick_add()
 	{
 		$apps = egw_link::app_list('add');
 		asort($apps);	// sort them alphabetic
@@ -396,7 +379,12 @@ class egw_framework
 		return html::select('quick_add','',$options,true,$options=' onchange="eval(this.value); this.value=0; return false;"');
 	}
 
-	function _get_notification_bell()
+	/**
+	 * Prepare notification signal (blinking bell)
+	 *
+	 * @return string
+	 */
+	protected static function _get_notification_bell()
 	{
 		return html::div(
 			html::a_href(
@@ -409,17 +397,42 @@ class egw_framework
 		);
 	}
 
+	/**
+	 * Get the link to an application's index page
+	 *
+	 * @param string $app
+	 * @return string
+	 */
+	public function index($app)
+	{
+		$data =& $GLOBALS['egw_info']['user']['apps'][$app];
+		if (!isset($data))
+		{
+			throw new egw_exception_wrong_parameter("'$app' not a valid app for this user!");
+		}
+		$index = '/'.$app.'/index.php';
+		if (isset($data['index']))
+		{
+			if ($data['index'][0] == '/')
+			{
+				$index = $data['index'];
+			}
+			else
+			{
+				$index = '/index.php?menuaction='.$data['index'];
+			}
+		}
+		return $GLOBALS['egw']->link($index,$GLOBALS['egw_info']['flags']['params'][$app]);
+	}
 
 	/**
 	 * Prepare an array with apps used to render the navbar
 	 *
 	 * This is similar to the former common::navbar() method - though it returns the vars and does not place them in global scope.
 	 *
-	 * @internal PHP5 protected
-	 * @static
 	 * @return array
 	 */
-	function _get_navbar_apps()
+	protected static function _get_navbar_apps()
 	{
 		list($first) = each($GLOBALS['egw_info']['user']['apps']);
 		if(is_array($GLOBALS['egw_info']['user']['apps']['admin']) && $first != 'admin')
@@ -450,7 +463,7 @@ class egw_framework
 			if ($app == 'preferences' || $GLOBALS['egw_info']['apps'][$app]['status'] != 2 && $GLOBALS['egw_info']['apps'][$app]['status'] != 3)
 			{
 				$apps[$app]['title'] = $GLOBALS['egw_info']['apps'][$app]['title'];
-				$apps[$app]['url']   = $GLOBALS['egw']->link('/' . $app . '/index.php',$GLOBALS['egw_info']['flags']['params'][$app]);
+				$apps[$app]['url']   = self::index($app);
 				$apps[$app]['name']  = $app;
 
 				// create popup target
@@ -469,15 +482,17 @@ class egw_framework
 					$apps[$app]['target'] = '';
 				}
 
+				$icon = isset($data['icon']) ?  $data['icon'] : 'navbar';
+				$icon_app = isset($data['icon_app']) ? $data['icon_app'] : $app;
 				if ($app != $GLOBALS['egw_info']['flags']['currentapp'])
 				{
-					$apps[$app]['icon']  = $GLOBALS['egw']->common->image($app,Array('navbar','nonav'));
-					$apps[$app]['icon_hover']  = $GLOBALS['egw']->common->image_on($app,Array('navbar','nonav'),'-over');
+					$apps[$app]['icon']  = $GLOBALS['egw']->common->image($icon_app,Array($icon,'nonav'));
+					$apps[$app]['icon_hover']  = $GLOBALS['egw']->common->image_on($icon_app,Array($icon,'nonav'),'-over');
 				}
 				else
 				{
-					$apps[$app]['icon']  = $GLOBALS['egw']->common->image_on($app,Array('navbar','nonav'),'-over');
-					$apps[$app]['icon_hover']  = $GLOBALS['egw']->common->image($app,Array('navbar','nonav'));
+					$apps[$app]['icon']  = $GLOBALS['egw']->common->image_on($icon_app,Array($icon,'nonav'),'-over');
+					$apps[$app]['icon_hover']  = $GLOBALS['egw']->common->image($icon_app,Array($icon,'nonav'));
 				}
 			}
 		}
@@ -521,11 +536,10 @@ class egw_framework
 	 * 'theme_css' - url of the theme css file
 	 * 'print_css' - url of the print css file
 	 *
-	 * @internal PHP5 protected
 	 * @author Dave Hall (*based* on verdilak? css inclusion code)
 	 * @return array with keys 'app_css' from the css method of the menuaction-class and 'file_css' (app.css file of the application)
 	 */
-	function _get_css()
+	protected function _get_css()
 	{
 		$app_css = '';
 		if(isset($_GET['menuaction']))
@@ -590,11 +604,10 @@ class egw_framework
 	 * in eGW.  One change then all templates will support it (as long as they
 	 * include a call to this method).
 	 *
-	 * @internal PHP5 protected
 	 * @author Dave Hall (*vaguely based* on verdilak? css inclusion code)
 	 * @return string the javascript to be included
 	 */
-	function _get_js()
+	public static function _get_js()
 	{
 		$java_script = '';
 
@@ -666,11 +679,10 @@ class egw_framework
 	/**
 	 * Returns on(Un)Load attributes from js class
 	 *
-	 * @internal PHP5 protected
 	 * @author Dave Hall - skwashd at egroupware.org
 	 * @returns string body attributes
 	 */
-	function _get_body_attribs()
+	protected static function _get_body_attribs()
 	{
 		if(@is_object($GLOBALS['egw']->js))
 		{

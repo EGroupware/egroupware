@@ -563,7 +563,11 @@ class egw_minimal
 				}
 				break;
 			case 'template':	// need to be instancated for the current app
-				return $this->template = new Template($GLOBALS['egw']->common->get_tpl_dir($this->currentapp));
+				if (!($tpl_dir = $GLOBALS['egw']->common->get_tpl_dir($this->currentapp)))
+				{
+					return null;
+				}
+				return $this->template = new Template($tpl_dir);
 			default:
 				$class = isset(self::$sub_objects[$name]) ? self::$sub_objects[$name] : $name;
 				break;

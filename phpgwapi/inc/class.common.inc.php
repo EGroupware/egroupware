@@ -623,7 +623,7 @@
 		 * @static
 		 * @return string/boolean dir or false if no dir is found
 		 */
-		function get_tpl_dir($appname = '')
+		static function get_tpl_dir($appname = '')
 		{
 			if (!$appname)
 			{

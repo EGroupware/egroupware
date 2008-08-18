@@ -497,6 +497,9 @@ class setup
 					'app_order'		=> $setup_info[$appname]['app_order'],
 					'app_tables'	=> $tables,
 					'app_version'	=> $setup_info[$appname]['version'],
+					'app_index'     => $setup_info[$appname]['index'],
+					'app_icon'      => $setup_info[$appname]['icon'],
+					'app_icon_app'  => $setup_info[$appname]['icon_app'],
 				),False,__LINE__,__FILE__);
 
 			$this->clear_session_cache();
@@ -578,6 +581,9 @@ class setup
 					'app_order'		=> $setup_info[$appname]['app_order'],
 					'app_tables'	=> $tables,
 					'app_version'	=> $setup_info[$appname]['version'],
+					'app_index'     => $setup_info[$appname]['index'],
+					'app_icon'      => $setup_info[$appname]['icon'],
+					'app_icon_app'  => $setup_info[$appname]['icon_app'],
 				),array('app_name'=>$appname),__LINE__,__FILE__);
 		}
 	}
