@@ -151,15 +151,8 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
         session_destroy();
 
 		// we need to (re-)load the eGW session-handler, as session_destroy unloads custom session-handlers
-		// there seems to be a bug in php5.1 that calls from class methods to session_set_save_handler always fail ...
-		if (version_compare(PHP_VERSION,'5.2','<') && function_exists('init_session_handler'))
-		{
-			init_session_handler();
-		}
-		else
-		{
-			egw_session::init_handler();
-		}
+		init_session_handler();
+
 		// Reload the Horde SessionHandler if necessary.
         Horde::setupSessionHandler();
 
