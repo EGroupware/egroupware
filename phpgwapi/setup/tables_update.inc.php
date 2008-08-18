@@ -413,3 +413,22 @@ function phpgwapi_upgrade1_5_009()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.010';
 }
+
+function phpgwapi_upgrade1_5_010()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_applications','app_icon',array(
+		'type' => 'varchar',
+		'precision' => '32'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_applications','app_icon_app',array(
+		'type' => 'varchar',
+		'precision' => '25'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_applications','app_index',array(
+		'type' => 'varchar',
+		'precision' => '64'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.011';
+}
+

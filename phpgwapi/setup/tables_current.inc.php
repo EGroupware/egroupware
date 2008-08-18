@@ -30,7 +30,10 @@ $phpgw_baseline = array(
 			'app_enabled' => array('type' => 'int','precision' => '4','nullable' => False),
 			'app_order' => array('type' => 'int','precision' => '4','nullable' => False),
 			'app_tables' => array('type' => 'text','nullable' => False),
-			'app_version' => array('type' => 'varchar','precision' => '20','nullable' => False,'default' => '0.0')
+			'app_version' => array('type' => 'varchar','precision' => '20','nullable' => False,'default' => '0.0'),
+			'app_icon' => array('type' => 'varchar','precision' => '32'),
+			'app_icon_app' => array('type' => 'varchar','precision' => '25'),
+			'app_index' => array('type' => 'varchar','precision' => '64')
 		),
 		'pk' => array('app_id'),
 		'fk' => array(),
