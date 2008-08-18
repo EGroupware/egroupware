@@ -274,7 +274,7 @@
 						'1' => $attachment['name'],
 						'2' => $attachment['type'], '.2' => "style='text-align:center;'",
 						'3' => $attachment['size'],
-						'4' => "<img src='$imgClearLeft' onclick=\"fm_compose_deleteAttachmentRow(this,'$_composeID','$id')\">"
+						'4' => "<img src='$imgClearLeft' onclick=\"fm_compose_deleteAttachmentRow(this,'".$this->composeID."','$id')\">"
 					);
 					$tableRows[] = $tempArray;
 				}
@@ -460,22 +460,13 @@
 					"dir"	=> array("minlen" =>   1, 'maxlen' =>  10)
 				)
 			);
-			// strip comments out of the message completely
-			if ($_body) {
-				$begin_comment=stripos($_body,'<!--');
-				while ($begin_comment!==FALSE) {
-					//since there is a begin tag there should be an end tag, starting somewhere at least 4 chars further down
-					$end_comment=stripos($_body,'-->',$begin_comment+4);
-					if ($end_comment !== FALSE) {
-						$_body=substr($_body,0,$begin_comment-1).substr($_body,$end_comment+3);
-					} else {
-						//somehow there is a begin tag of a comment but no end tag. throw it away
-						$_body=str_replace('<!--','',$_body);
-					}
-					$begin_comment=stripos($_body,'<!--');
-					if (strlen($_body)<$begin_comment) break;
-				}
-			}
+			
+            // no scripts allowed
+            // clean out comments
+			$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
+				'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
+			);
+			$_body = preg_replace($search,"",$_body);
 			$body	= $kses->Parse($_body);
 
 			$body	= preg_replace($nonDisplayAbleCharacters, '', $body);
