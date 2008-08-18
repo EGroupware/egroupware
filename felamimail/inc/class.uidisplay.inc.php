@@ -1003,6 +1003,13 @@
 				}
 				else
 				{
+					// no scripts allowed
+					// clean out comments
+					$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
+						'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
+					);
+					$newBody = preg_replace($search,"",$newBody);
+					
 					$newBody	= $singleBodyPart['body'];
 					$newBody	= $this->highlightQuotes($newBody);
 					$newBody 	= $this->kses->Parse($newBody);
