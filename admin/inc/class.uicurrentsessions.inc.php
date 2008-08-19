@@ -51,7 +51,7 @@
 			{
 				$info = array(
 					'start' => 0,
-					'sort'  => 'asc',
+					'sort'  => 'DESC',
 					'order' => 'session_dla'
 				);
 				$this->store_location($info);

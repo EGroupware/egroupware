@@ -33,16 +33,16 @@ class egw_session_files
 	 *
 	 * @param int $start
 	 * @param string $sort='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
-	 * @param string $order='ASC' ASC or DESC
+	 * @param string $order='DESC' ASC or DESC
 	 * @return array with sessions (values for keys as in $sort) or array() if not supported by session-handler
 	 */
-	public static function session_list($start,$sort='ASC',$order='session_dla',$all_no_sort = False)
+	public static function session_list($start,$sort='DESC',$order='session_dla',$all_no_sort = False)
 	{
 		if (session_module_name() != 'files')
 		{
 			return array();
 		}
-		//echo '<p>'.__METHOD__."($start,'$order','$sort',$all)</p>\n";
+		//echo '<p>'.__METHOD__."($start,sort='$sort',order='$order',$all)</p>\n".function_backtrace();
 		$session_cache =& $_SESSION['egw_files_session_cache'];
 
 		$values = array();
@@ -68,6 +68,7 @@ class egw_session_files
 			{
 				continue;
 			}
+			//echo "<p>$path/$file: ".substr(file_get_contents($path . '/' . $file,'r'),0,256)."</p>\n";
 			if (isset($session_cache[$file]) && !$session_cache[$file])		// session is marked as not to list (not ours or anonymous)
 			{
 				continue;
@@ -89,19 +90,14 @@ class egw_session_files
 					$session_cache[$file] = false;	// dont try reading it again
 					continue;	// happens if webserver runs multiple user-ids
 				}
-				$session = '';
-				if (($fd = fopen ($path . '/' . $file,'r')))
-				{
-					$session = ($size = filesize ($path . '/' . $file)) ? fread ($fd, $size) : 0;
-					fclose ($fd);
-				}
-				if (substr($session,0,1+strlen(EGW_SESSION_VAR)) != EGW_SESSION_VAR.'|')
+				unset($session);
+				list(,$session) = explode(egw_session::EGW_SESSION_VAR.'|',file_get_contents($path . '/' . $file,'r'));
+				if (!$session || !($session = unserialize($session)))
 				{
 					$session_cache[$file] = false;	// dont try reading it again
 					continue;
 				}
-				$session = unserialize(substr($session,1+strlen(EGW_SESSION_VAR)));
-				unset($session['app_sessions']);	// not needed, saves memory
+				unset($session[egw_session::EGW_APPSESSION_VAR]);	// not needed, saves memory
 				$session['php_session_file'] = $path . '/' . $file;
 				$session_cache[$file] = $session;
 
@@ -131,8 +127,7 @@ class egw_session_files
 
 		if(!$all_no_sort)
 		{
-			uasort($values,create_function('$a,$b','return '.(strcasecmp($sort,'ASC') ? '' : '-').'strcasecmp($a['.$order.'],$b['.$order.']);'));
-
+			uasort($values,create_function('$a,$b','return '.(!strcasecmp($sort,'ASC') ? '' : '-').'strcasecmp($a['.$order.'],$b['.$order.']);'));
 			return array_slice($values,(int)$start,$maxmatchs);
 		}
 		return $values;

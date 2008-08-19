@@ -1162,10 +1162,10 @@ class egw_session //extends sessions
 	 *
 	 * @param int $start
 	 * @param string $sort='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
-	 * @param string $order='ASC' ASC or DESC
+	 * @param string $order='DESC' ASC or DESC
 	 * @return array with sessions (values for keys as in $sort) or array() if not supported by session-handler
 	 */
-	public static function session_list($start,$sort='ASC',$order='session_dla')
+	public static function session_list($start,$sort='DESC',$order='session_dla')
 	{
 		if (method_exists(self::$session_handler,'session_list'))
 		{
