@@ -151,8 +151,10 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
         session_destroy();
 
 		// we need to (re-)load the eGW session-handler, as session_destroy unloads custom session-handlers
-		init_session_handler();
-
+		if (function_exists('init_session_handler'))
+		{
+			init_session_handler();
+		}
 		// Reload the Horde SessionHandler if necessary.
         Horde::setupSessionHandler();
 
