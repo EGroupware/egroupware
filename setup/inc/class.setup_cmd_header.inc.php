@@ -5,17 +5,17 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * setup command: create or update the header.inc.php
- * 
+ *
  * @ToDo: incorporate setup_header here
  */
-class setup_cmd_header extends setup_cmd 
+class setup_cmd_header extends setup_cmd
 {
 	/**
 	 * Instance of setup's header object
@@ -47,7 +47,7 @@ class setup_cmd_header extends setup_cmd
 		}
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
 		admin_cmd::__construct($sub_command);
-		
+
 		// header is 2 levels lower then this command in setup/inc
 		$this->header_path = realpath(dirname(__FILE__).'/../../header.inc.php');
 
@@ -55,8 +55,8 @@ class setup_cmd_header extends setup_cmd
 	}
 
 	/**
-	 * test or create database
-	 * 
+	 * Create or update header.inc.php
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string serialized $GLOBALS defined in the header.inc.php
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
@@ -74,7 +74,7 @@ class setup_cmd_header extends setup_cmd
 			{
 				throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
 			}
-			$this->setup_header->defaults(false);
+			$this->defaults(false);
 		}
 		else
 		{
@@ -92,7 +92,7 @@ class setup_cmd_header extends setup_cmd
 			$GLOBALS['egw_info']['server']['server_root'] = EGW_SERVER_ROOT;
 			$GLOBALS['egw_info']['server']['include_root'] = EGW_INCLUDE_ROOT;
 		}
-		
+
 		if ($this->arguments)	// we have command line arguments
 		{
 			$this->_parse_cli_arguments();
@@ -105,7 +105,7 @@ class setup_cmd_header extends setup_cmd
 		{
 			$this->_parse_properties();
 		}
-		if (($errors = $this->setup_header->validation_errors($GLOBALS['egw_info']['server']['server_root'],
+		if (($errors = $this->validation_errors($GLOBALS['egw_info']['server']['server_root'],
 			$GLOBALS['egw_info']['server']['include_root'])))
 		{
 			if ($this->arguments)
@@ -120,8 +120,8 @@ class setup_cmd_header extends setup_cmd
 		{
 			return true;
 		}
-		$header = $this->setup_header->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain']);
-			
+		$header = $this->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain']);
+
 		if ($this->arguments)
 		{
 			echo $header;	// for cli, we echo the header
@@ -137,7 +137,22 @@ class setup_cmd_header extends setup_cmd
 		}
 		throw new egw_exception_no_permission(lang("Failed writing configuration file header.inc.php, check the permissions !!!"),24);
 	}
-	
+
+	/**
+	 * Magic method to allow to call all methods from setup_header, as if they were our own
+	 *
+	 * @param string $method
+	 * @param array $args=null
+	 * @return mixed
+	 */
+	protected function __call($method,array $args=null)
+	{
+		if (method_exists($this->setup_header,$method))
+		{
+			return call_user_func_array(array($this->setup_header,$method),$args);
+		}
+	}
+
 	/**
 	 * Available options and allowed arguments
 	 *
@@ -160,6 +175,12 @@ class setup_cmd_header extends setup_cmd
 			'sessions_type' => array(
 				'type' => 'egw_info/server/',
 				'allowed' => array('php'=>'php4','php4'=>'php4','php-restore'=>'php4-restore','php4-restore'=>'php4-restore','db'=>'db'),
+			),
+		),
+		'--session-handler' => array(
+			'session_handler' => array(
+				'type' => 'egw_info/server/',
+				'allowed' => array('files'=>'files','memcache'=>'memcache','db'=>'db'),
 			),
 		),
 		'--limit-access' => 'egw_info/server/setup_acl',	// name used in setup
@@ -197,7 +218,7 @@ class setup_cmd_header extends setup_cmd
 		),
 		'--delete-domain' => true,
 	);
-	
+
 	/**
 	 * Parses properties from this object
 	 */
@@ -212,7 +233,7 @@ class setup_cmd_header extends setup_cmd
 					$name = array_pop($parts = explode('/',$name));
 				}
 				if (isset($this->$name))
-				{				
+				{
 					$this->_parse_value($arg,$name,$data,$this->$name);
 				}
 			}
@@ -228,18 +249,18 @@ class setup_cmd_header extends setup_cmd
 		while(($arg = array_shift($arguments)))
 		{
 			$values = count($arguments) && substr($arguments[0],0,2) !== '--' ? array_shift($arguments) : 'on';
-			
+
 			if ($arg == '--delete-domain')
 			{
 				$this->_delete_domain($values);
 				continue;
 			}
-			
+
 			if (!isset(self::$options[$arg]))
 			{
 				throw new egw_exception_wrong_userinput(lang("Unknown option '%1' !!!",$arg),90);
 			}
-	
+
 			$option = self::$options[$arg];
 			$values = !is_array($option) ? array($values) : explode(',',$values);
 			if (!is_array($option)) $option = array($option => $option);
@@ -252,7 +273,7 @@ class setup_cmd_header extends setup_cmd
 			}
 		}
 	}
-	
+
 	/**
 	 * Delete a given domain/instance from the header
 	 *
@@ -281,7 +302,7 @@ class setup_cmd_header extends setup_cmd
 
 		if (!is_array($data)) $data = array('type' => $data);
 		$type = $data['type'];
-		
+
 		if (isset($data['allowed']))
 		{
 			if (!isset($data['allowed'][$value]))
@@ -295,7 +316,7 @@ class setup_cmd_header extends setup_cmd
 			$domain = $arg == '--domain' && !$value ? 'default' : $value;
 			if ($arg == '--domain' && (!isset($GLOBALS['egw_domain'][$domain]) || $this->sub_command == 'create'))
 			{
-				$GLOBALS['egw_domain'][$domain] = $this->setup_header->domain_defaults($GLOBALS['egw_info']['server']['header_admin_user'],$GLOBALS['egw_info']['server']['header_admin_password']);
+				$GLOBALS['egw_domain'][$domain] = $this->domain_defaults($GLOBALS['egw_info']['server']['header_admin_user'],$GLOBALS['egw_info']['server']['header_admin_password']);
 			}
 		}
 		elseif ($value !== '')
@@ -319,7 +340,7 @@ class setup_cmd_header extends setup_cmd
 	static private function _set_value(&$arr,$index,$name,$value)
 	{
 		if (substr($index,-1) == '/') $index .= $name;
-		
+
 		$var =& $arr;
 		foreach(explode('/',$index) as $name)
 		{
