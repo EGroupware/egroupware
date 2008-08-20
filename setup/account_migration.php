@@ -1,9 +1,9 @@
 <?php
 /**
- * Setup - Account migration between SQL <--> LDAP
- * 
+ * eGroupware Setup - Account migration between SQL <--> LDAP
+ *
  * The migration is done to the account-repository configured for eGroupWare!
- * 
+ *
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -11,13 +11,6 @@
  * @version $Id$
  */
 
-$GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'noheader'   => True,
-		'nonavbar'   => True,
-		'currentapp' => 'home',
-		'noapi'      => True
-));
 include('./inc/functions.inc.php');
 
 // Authorize the user to use setup app and load the database
@@ -49,7 +42,7 @@ $setup_tpl->set_file(array(
 function hash_sql2ldap($hash)
 {
 	$type = $GLOBALS['egw_info']['server']['sql_encryption_type'];
-	
+
 	if (preg_match('/^\\{(.*)\\}(.*)$/',$hash,$matches))
 	{
 		$type = $matches[1];
@@ -64,7 +57,7 @@ function hash_sql2ldap($hash)
 		case 'crypt':
 			$hash = '{crypt}' . $hash;
 			break;
-			
+
 		case 'plain':
 			break;
 	}
@@ -91,15 +84,15 @@ if (!$to && !($to = $GLOBALS['egw_info']['server']['auth_type']))
 $from = $to == 'sql' ? 'ldap' : 'sql';
 $direction = strtoupper($from).' --> '.strtoupper($to);
 
-$GLOBALS['egw_setup']->html->show_header($direction,False,'config',$GLOBALS['egw_setup']->ConfigDomain . 
+$GLOBALS['egw_setup']->html->show_header($direction,False,'config',$GLOBALS['egw_setup']->ConfigDomain .
 	'(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
-	
+
 if (!$_POST['migrate'])
 {
 	// fetch and display the accounts of the NOT set $from repository
 	$GLOBALS['egw_info']['server']['account_repository'] = $from;
 	$GLOBALS['egw_setup']->setup_account_object($GLOBALS['egw_info']['server']);
-	
+
 	// fetch all users and groups
 	$accounts = $GLOBALS['egw_setup']->accounts->search(array(
 		'type' => 'both',
@@ -127,14 +120,14 @@ if (!$_POST['migrate'])
 	// store the complete info in the session to be availible after user selected what to migrate
 	// we cant instanciate to account-repositories at the same time, as the backend-classes have identical names
 	$_SESSION['all_accounts'] =& $accounts;
-	
+
 	// now outputting the account selection
 	$setup_tpl->set_block('migration','header','header');
 	$setup_tpl->set_block('migration','user_list','user_list');
 	$setup_tpl->set_block('migration','group_list','group_list');
 	$setup_tpl->set_block('migration','submit','submit');
 	$setup_tpl->set_block('migration','footer','footer');
-	
+
 	foreach($accounts as $account_id => $account)
 	{
 		if ($account['account_type'] == 'g')
@@ -151,14 +144,14 @@ if (!$_POST['migrate'])
 	$setup_tpl->set_var('action_url','account_migration.php');
 	$setup_tpl->set_var('users',$user_list);
 	$setup_tpl->set_var('groups',$group_list);
-	
+
 	$setup_tpl->set_var('description',lang('Migration between eGroupWare account repositories').': '.$direction);
 	$setup_tpl->set_var('select_users',lang('Select which user(s) will be exported'));
 	$setup_tpl->set_var('select_groups',lang('Select which group(s) will be exported'));
 	$setup_tpl->set_var('memberships',lang('Group memberships will be migrated too.'));
 	$setup_tpl->set_var('migrate',$direction);
 	$setup_tpl->set_var('cancel',lang('Cancel'));
-	
+
 	$setup_tpl->pfp('out','header');
 	if($user_list)
 	{

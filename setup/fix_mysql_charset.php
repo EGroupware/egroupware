@@ -1,29 +1,19 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Setup - fixes a mysql DB to match our system_charset        *
-* http://www.eGroupWare.org                                                *
-* Written by RalfBecker@outdoor-training.de                                *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare Setup - fixes a mysql DB to match our system_charset
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 // if we are NOT called as part of an update script, behave like a regular setup script
-if (!isset($GLOBALS['egw_setup']) || !is_object($GLOBALS['egw_setup']))	
+if (!isset($GLOBALS['egw_setup']) || !is_object($GLOBALS['egw_setup']))
 {
 	$diagnostics = 1;	// can be set to 0=non, 1=some (default for now), 2=all
 
-	$GLOBALS['egw_info'] = array(
-		'flags' => array(
-			'noheader' => True,
-			'nonavbar' => True,
-			'currentapp' => 'home',
-			'noapi' => True
-	));
 	include('./inc/functions.inc.php');
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
@@ -53,7 +43,7 @@ $db_version = (float) $ServerInfo['version'];
 
 if ($running_standalone || $_REQUEST['debug']) echo "<p>DB-Type='<b>{$GLOBALS['egw_setup']->db->Type}</b>', DB-Version=<b>$db_version</b> ($ServerInfo[description]), eGroupWare system_charset='<b>{$GLOBALS['egw_setup']->system_charset}</b>', DB-connection charset was '<b>{$GLOBALS['egw_setup']->db_charset_was}</b>'</p>\n";
 
-$mysql_system_charset = isset($charset2mysql[$GLOBALS['egw_setup']->system_charset]) ? 
+$mysql_system_charset = isset($charset2mysql[$GLOBALS['egw_setup']->system_charset]) ?
 	$charset2mysql[$GLOBALS['egw_setup']->system_charset] : $GLOBALS['egw_setup']->system_charset;
 
 if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setup']->system_charset && $GLOBALS['egw_setup']->db_charset_was &&
@@ -85,7 +75,7 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 				$fulltext[$row['Column_name']] = $row['Key_name'];
 			}
 		}
-		
+
 		$alter_table = $alter_table_back = array();
 		foreach($columns as $column)
 		{
@@ -93,13 +83,13 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 			{
 				list(,$type,$size) = $matches;
 				list($charset) = explode('_',$column['Collation']);
-				
+
 				if (isset($mysql2charset[$charset])) $charset = $mysql2charset[$charset];
-				
+
 				if ($charset != $GLOBALS['egw_setup']->system_charset)
 				{
 					$col = $column['Field'];
-					
+
 					if ($type == 'varchar' || $type == 'char')	// old schema_proc (pre 1.0.1) used also char
 					{
 						$type = 'varchar('.$size.')';
@@ -110,10 +100,10 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 						$bintype = str_replace('text','blob',$type);
 					}
 					//echo "<p>$table.$col $type CHARACTER SET $charset $default $null</p>\n";
-					
+
 					$default = !is_null($column['Default']) ? "DEFAULT '".$column['Default']."'" : '';
 					$null = $column['Null'] ? 'NULL' : 'NOT NULL';
-					
+
 					if (isset($fulltext[$col]))
 					{
 						$idx_name = $fulltext[$col];
@@ -127,13 +117,13 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 							}
 						}
 						$fulltext_back[$idx_name] = $idx_cols;
-						$alter_table[] = " DROP INDEX `$idx_name`"; 
+						$alter_table[] = " DROP INDEX `$idx_name`";
 					}
 					$alter_table[] = " CHANGE `$col` `$col` $bintype $default $null";
 					$alter_table_back[] = " CHANGE `$col` `$col` $type CHARACTER SET $mysql_system_charset $default $null";
 				}
 			}
-		}		
+		}
 		list($charset) = explode('_',$collation);
 		if (isset($mysql2charset[$charset])) $charset = $mysql2charset[$charset];
 		if ($charset != $GLOBALS['egw_setup']->system_charset)
@@ -143,7 +133,7 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 		if (count($alter_table))
 		{
 			$alter_table = "ALTER TABLE $table\n".implode(",\n",$alter_table);
-			
+
 			if ($running_standalone || $_REQUEST['debug']) echo '<p>'.nl2br($alter_table)."</p>\n";
 			if (!$db->query($alter_table,__LINE__,__FILE__))
 			{
@@ -159,7 +149,7 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 			if (count($alter_table_back))
 			{
 				$alter_table_back = "ALTER TABLE $table\n".implode(",\n",$alter_table_back);
-				
+
 				if ($running_standalone || $_REQUEST['debug']) echo '<p>'.nl2br($alter_table_back)."</p>\n";
 				if (!$db->query($alter_table_back,__LINE__,__FILE__))
 				{

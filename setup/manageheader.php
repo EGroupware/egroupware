@@ -10,18 +10,10 @@
  * @version $Id$
  */
 
-$GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'nocachecontrol' => True,
-		'noheader' => True,
-		'nonavbar' => True,
-		'currentapp' => 'home',
-		'noapi' => True
-));
 include('./inc/functions.inc.php');
 
 require_once('./inc/class.setup_header.inc.php');
-$GLOBALS['egw_setup']->header =& new setup_header(); 
+$GLOBALS['egw_setup']->header =& new setup_header();
 
 $setup_tpl = CreateObject('phpgwapi.Template','./templates/default');
 $setup_tpl->set_file(array(
@@ -54,16 +46,16 @@ switch($GLOBALS['egw_info']['setup']['stage']['header'])
 		$GLOBALS['egw_info']['setup']['PageMSG'] = lang('You have not created your header.inc.php yet!<br /> You can create it now.');
 		break;
 	case '2':
-		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['PageMSG'] = 
+		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['PageMSG'] =
 			lang('Your header admin password is NOT set. Please set it now!');
 		break;
 	case '3':
-		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['PageMSG'] = 
-			$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = 
+		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['PageMSG'] =
+			$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] =
 			lang('You need to add at least one eGroupWare domain / database instance.');
 		break;
 	case '4':
-		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = 
+		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['HeaderLoginMSG'] =
 			lang('Your header.inc.php needs upgrading.');
 		$GLOBALS['egw_info']['setup']['PageMSG'] = lang('Your header.inc.php needs upgrading.<br /><blink><b class="msg">WARNING!</b></blink><br /><b>MAKE BACKUPS!</b>');
 		break;
@@ -75,7 +67,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['header'])
 
 if (!file_exists('../header.inc.php') || !is_readable('../header.inc.php'))
 {
-	$GLOBALS['egw_setup']->header->defaults();	
+	$GLOBALS['egw_setup']->header->defaults();
 }
 else
 {
@@ -174,7 +166,7 @@ function check_header_form()
 				break;
 		}
 	}
-	
+
 	// setting the domain settings from the posted content
 	foreach($_POST['domains'] as $key => $domain)
 	{
@@ -192,22 +184,22 @@ function check_header_form()
 			$GLOBALS['egw_domain'][$domain][$name] = $value;
 		}
 	}
-	
+
 	// validate the input and return errors
 	$validation_errors = $GLOBALS['egw_setup']->header->validation_errors(
 		$GLOBALS['egw_info']['server']['server_root'],
 		$GLOBALS['egw_info']['server']['include_root']);
-		
+
 	//echo "egw_info[server]=<pre>".print_r($GLOBALS['egw_info']['server'],true)."</pre>\n";
 	//echo "egw_domain=<pre>".print_r($GLOBALS['egw_domain'],true)."</pre>\n";
 	//if ($validation_errors) echo "validation_errors=<pre>".print_r($validation_errors,true)."</pre>\n";
-	
+
 	return $validation_errors;
 }
 
 /**
  * Display the form to edit the configuration
- * 
+ *
  * @param array $validation_errors to display
  */
 function show_header_form($validation_errors)
@@ -278,11 +270,11 @@ function show_header_form($validation_errors)
 		if(!isset($GLOBALS['egw_domain']))
 		{
 			$detected[] = lang('You need to add some domains to your header.inc.php.');
-			
+
 			$GLOBALS['egw_domain']['default'] = $GLOBALS['egw_setup']->header->domain_defaults(
 				$GLOBALS['egw_info']['server']['header_admin_user'],
 				$GLOBALS['egw_info']['server']['header_admin_password'],$supported_db);
-		}	
+		}
 		elseif(@$GLOBALS['egw_info']['server']['header_version'] != @$GLOBALS['egw_info']['server']['current_header_version'])
 		{
 			$detected[] = lang("You're using an old header.inc.php version...");
@@ -324,7 +316,7 @@ function show_header_form($validation_errors)
 	$options = array();
 	foreach($supported_sessions_type as $type => $label)
 	{
-		$options[] = '<option ' . ($type == $GLOBALS['egw_info']['server']['sessions_type'] ? 
+		$options[] = '<option ' . ($type == $GLOBALS['egw_info']['server']['sessions_type'] ?
 			'selected="selected" ' : '') . 'value="' . $type . '">' . $label . '</option>';
 	}
 	$setup_tpl->set_var('session_options',implode("\n",$options));
@@ -431,4 +423,4 @@ function show_header_form($validation_errors)
 	$setup_tpl->pfp('out','manageheader');
 
 	$GLOBALS['egw_setup']->html->show_footer();
-}			
+}

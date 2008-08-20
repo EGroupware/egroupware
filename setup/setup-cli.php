@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -73,18 +73,18 @@ switch($action)
 	case '--check':
 		setup_cmd::check_installed($arguments[0],0,true);
 		break;
-		
+
 	case '--create-header':
 	case '--edit-header':
 	case '--upgrade-header':
 	case '--update-header':
 		do_header($action == '--create-header',$arguments);
 		break;
-		
+
 	case '--install':
 		do_install($arguments[0]);
 		break;
-		
+
 	case '--config':
 		do_config($arguments);
 		break;
@@ -96,11 +96,11 @@ switch($action)
 	case '--language':
 		do_lang($arguments[0]);
 		break;
-		
+
 	case '--update':
 		do_update($arguments[0]);
 		break;
-		
+
 	case '--backup':
 		do_backup($arguments[0]);
 		break;
@@ -112,11 +112,11 @@ switch($action)
 	case '--charsets':
 		echo html_entity_decode(implode("\n",$GLOBALS['egw_setup']->translation->get_charsets(false)),ENT_COMPAT,'utf-8')."\n";
 		break;
-	
+
 	case '--exit-codes':
 		list_exit_codes();
 		break;
-		
+
 	case '--help':
 	case '--usage':
 		do_usage($arguments[0]);
@@ -159,16 +159,16 @@ function do_config($args)
 	$user = @array_shift($arg0);
 	$password = @array_shift($arg0);
 	_fetch_user_password($user,$password);
-	
+
 	if ($arg0)	// direct assignments (name=value,...) left
 	{
 		array_unshift($args,implode(',',$arg0));
 		array_unshift($args,'--config');
 	}
-	
+
 	$cmd = new setup_cmd_config($domain,$user,$password,$args,true);
 	echo $cmd->run()."\n\n";
-	
+
 	$cmd->get_config(true);
 }
 
@@ -191,7 +191,7 @@ function do_emailadmin()
 
 	$emailadmin = new emailadmin_bo(-1,false);	// false=no session stuff
 	$emailadmin->setDefaultProfile($config);
-	
+
 	echo "\n".lang('EMailAdmin profile updated:')."\n";
 	foreach($config as $name => $value)
 	{
@@ -208,7 +208,7 @@ function do_admin($arg)
 {
 	list($domain,$user,$password,$admin,$pw,$first,$last,$email) = explode(',',$arg);
 	_fetch_user_password($user,$password);
-	
+
 	$cmd = new setup_cmd_admin($domain,$user,$password,$admin,$pw,$first,$last,$email);
 	echo $cmd->run()."\n";
 }
@@ -231,11 +231,11 @@ function do_backup($arg,$quite_check=false)
 	foreach($domains as $domain => $data)
 	{
 		$options[0] = $domain;
-		
+
 		if ($quite_check) ob_start();
 		_check_auth_config(implode(',',$options),14);
 		if ($quite_check) ob_end_clean();
-		
+
 		if ($backup == 'no')
 		{
 			echo lang('Backup skipped!')."\n";
@@ -278,9 +278,9 @@ function do_update($arg)
 	{
 		$options[0] = $domain;
 		$arg = implode(',',$options);
-		
+
 		_check_auth_config($arg,14);
-		
+
 		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4)
 		{
 			echo lang('No update necessary, domain %1(%2) is up to date.',$domain,$data['db_type'])."\n";
@@ -288,16 +288,16 @@ function do_update($arg)
 		else
 		{
 			echo lang('Start updating the database ...')."\n";
-			
+
 			do_backup($arg,true);
-			
+
 			ob_start();
 			$GLOBALS['egw_setup']->process->init_process();	// we need a new schema-proc instance for each new domain
 			$GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',false);
 			$messages = ob_get_contents();
 			ob_end_clean();
 			if ($messages) echo strip_tags($messages)."\n";
-			
+
 			echo lang('Update finished.')."\n";
 		}
 	}
@@ -323,9 +323,9 @@ function do_lang($arg)
 	{
 		$options[0] = $domain;
 		$arg = implode(',',$options);
-		
+
 		$langs = _check_auth_config($arg,15,false);		// false = leave eGW's charset, dont set ours!!!
-		
+
 		$GLOBALS['egw_setup']->translation->setup_translation_sql();
 
 		if ($langs[0]{0} === '+' || !count($langs))	// update / add to existing languages
@@ -352,14 +352,14 @@ function do_lang($arg)
 		$GLOBALS['egw_setup']->translation->sql->install_langs($langs);
 		echo lang('Languages updated.')."\n";
 	}
-}		
+}
 
 /**
  * Check if eGW is installed according to $stop and we have the necessary authorization for config
- * 
+ *
  * The password can be specified as parameter, via the enviroment variable EGW_CLI_PASSWORD or
  * querier from the user. Specifying it as parameter can be security problem!
- * 
+ *
  * We allow the config user/pw of the domain OR the header admin user/pw!
  *
  * @param string $arg [domain(default)],[user(admin)],password
@@ -394,7 +394,7 @@ function do_install($args)
 {
 	list($domain,$user,$password,$backup,$charset) = explode(',',$args);
 	_fetch_user_password($user,$password);
-	
+
 	$cmd = new setup_cmd_install($domain,$user,$password,$backup,$charset,true);
 	echo $cmd->run()."\n";
 }
@@ -457,7 +457,7 @@ function get_lang(&$charset)
 	if (isset($languages[$lang.'-'.$nation])) return $lang.'-'.$nation;
 
 	if (isset($languages[$lang])) return $lang;
-	
+
 	return 'en';
 }
 
@@ -487,7 +487,7 @@ function create_http_enviroment()
 function do_usage($what='')
 {
 	echo lang('Usage: %1 command [additional options]',basename($_SERVER['argv'][0]))."\n\n";
-	
+
 	if (!$what)
 	{
 		echo '--check '.lang('checks eGroupWare\'s installed, it\'s versions and necessary upgrads (return values see --exit-codes)')."\n";
@@ -534,7 +534,7 @@ function do_usage($what='')
 		echo '--mcrypt '.lang('use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]')."\n";
 		echo '--db-persistent '.lang('use persistent db connections: {on(default) | off}')."\n";
 		echo '--domain-selectbox '.lang('{off(default) | on}')."\n";
-	
+
 		echo "\n".lang('Adding, editing or deleting an eGroupWare domain / database instance:')."\n";
 		echo '--domain '.lang('add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]')."\n";
 		echo '--delete-domain '.lang('domain-name')."\n";
@@ -565,9 +565,9 @@ function fail($exit_code,$message)
 /**
  * List all exit codes used by the command line interface
  *
- * The list is generated by "greping" this file for calls to the fail() function. 
+ * The list is generated by "greping" this file for calls to the fail() function.
  * Calls to fail() have to be in one line, to be recogniced!
- * 
+ *
  * @todo we need to grep for the exceptions too!
  */
 function list_exit_codes()
