@@ -22,6 +22,9 @@
 	);
 	include('./header.inc.php');
 
+	include_once(EGW_API_INC . '/xml_functions.inc.php');	// not sure that's neccessary, but I have no way to test
+	include_once(EGW_API_INC . '/soap_functions.inc.php');
+
 	$GLOBALS['server'] = CreateObject('phpgwapi.soap_server');
 	/* _debug_array($GLOBALS['server']);exit; */
 	/* include(EGW_API_INC . '/soaplib.soapinterop.php'); */

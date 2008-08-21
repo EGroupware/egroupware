@@ -22,7 +22,10 @@
 			'disable_Template_class' => True
 		)
 	);
-	include('header.inc.php');
+	include('./header.inc.php');
+
+	include_once(EGW_API_INC . '/xml_functions.inc.php');
+	include_once(EGW_API_INC . '/soap_functions.inc.php');	// not sure that's neccessary, but I have no way to test
 
 	//viniciuscb: a secure way to know if we're in a xmlrpc call...
 	$GLOBALS['egw_info']['server']['xmlrpc'] = true;
