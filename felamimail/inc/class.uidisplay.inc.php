@@ -1006,7 +1006,7 @@
 					// no scripts allowed
 					// clean out comments
 					$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
-						'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
+						'@<!--[\s\S]*?[ \t\n\r]*-->@'         // Strip multi-line comments including CDATA
 					);
 					$newBody = preg_replace($search,"",$newBody);
 					
