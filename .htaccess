@@ -5,7 +5,7 @@
 # 
 # to enable parsing off this file
 #
-php_value memory_limit 128M
+php_value memory_limit 32M
 php_value max_execution_time 60
 php_flag register_globals Off
 php_flag magic_quotes_gpc Off
