@@ -379,7 +379,7 @@ login	common	bg	Влизане (Login)
 logout	common	bg	Изход
 lost login id	common	bg	Загубен Login Id
 lost password	common	bg	Загубена парола
-low	common	bg	Ниско
+low	common	bg	Нисък
 lowest	common	bg	Най-ниско
 luxembourg	common	bg	Люксембург
 macau	common	bg	Макао
@@ -717,6 +717,7 @@ when you say yes the home and logout buttons are presented as applications in th
 where and how will the egroupware links like preferences, about and logout be displayed.	common	bg	Къде и как да се изобразяват връзките на eGroupWare като настройки, "относно" и Logout.
 which groups	common	bg	Кои групи
 width	common	bg	Ширина
+wk	jscalendar	bg	сед
 work email	common	bg	служебен e-mail
 would you like to display the page generation time at the bottom of every window?	common	bg	Желаете ли да се изобразява времето за генериране на страницата в долната част на всеки прозорец?
 writing	common	bg	запис
