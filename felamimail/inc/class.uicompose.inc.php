@@ -464,7 +464,7 @@
             // no scripts allowed
             // clean out comments
 			$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
-				'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
+				'@<!--[\s\S]*?[ \t\n\r]*-->@'         // Strip multi-line comments including CDATA
 			);
 			$_body = preg_replace($search,"",$_body);
 			$body	= $kses->Parse($_body);
