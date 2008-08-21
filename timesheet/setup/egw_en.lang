@@ -17,7 +17,7 @@ error deleting the entry!!!	timesheet	en	Error deleting the entry!!!
 error saving the entry!!!	timesheet	en	Error saving the entry!!!
 existing links	timesheet	en	Existing links
 export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	timesheet	en	Exports entries from your Timesheet into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you	can also choose other seperators.
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from your Timesheet into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
 field must not be empty !!!	timesheet	en	Field must not be empty !!!
 full: use only projectmanager	admin	en	Full: use only ProjectManager
 general	timesheet	en	General
