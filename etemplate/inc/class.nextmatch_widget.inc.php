@@ -370,6 +370,7 @@ class nextmatch_widget
 		else
 		{
 			$nextmatch =& new etemplate('etemplate.nextmatch_widget');
+			$nextmatch->read('etemplate.nextmatch_widget');
 			// keep the editor away from the generated tmpls
 			$nextmatch->no_onclick = true;
 
