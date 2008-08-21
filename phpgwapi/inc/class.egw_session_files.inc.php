@@ -127,7 +127,10 @@ class egw_session_files
 
 		if(!$all_no_sort)
 		{
-			if(!$order) $order = 'session_dla';
+			if(!$order || !in_array($order,array('session_lid','session_ip','session_logintime','session_action','session_dla')))
+			{
+				$order = 'session_dla';
+			}
 			uasort($values,create_function('$a,$b','return '.(!strcasecmp($sort,'ASC') ? '' : '-').'strcasecmp($a['.$order.'],$b['.$order.']);'));
 			return array_slice($values,(int)$start,$maxmatchs);
 		}
