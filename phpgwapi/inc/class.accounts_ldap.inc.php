@@ -735,8 +735,8 @@ class accounts_ldap
 							'account_lastname'  => $GLOBALS['egw']->translation->convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
 							'account_email'     => $allVals['mail'][0],
-							'account_created' => isset($data['createtimestamp'][0]) ? $this->accounts_ldap2ts($data['createtimestamp'][0]) : null,
-							'account_modified' => isset($data['modifytimestamp'][0]) ? $this->accounts_ldap2ts($data['modifytimestamp'][0]) : null,
+							'account_created' => isset($allVals['createtimestamp'][0]) ? $this->accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
+							'account_modified' => isset($allVals['modifytimestamp'][0]) ? $this->accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
 
 						);
 					}
