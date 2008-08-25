@@ -1611,7 +1611,7 @@ class addressbook_ui extends addressbook_bo
 		foreach(array_keys($this->contact_fields) as $key)
 		{
 			$readonlys[$key] = true;
-			if (in_array($key,array('tel_home','tel_work','tel_cell')))
+			if (in_array($key,array('tel_home','tel_work','tel_cell','tel_fax')))
 			{
 				$readonlys[$key.'2'] = true;
 				$content[$key.'2'] = $content[$key];
