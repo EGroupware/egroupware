@@ -1804,13 +1804,15 @@ $readonlys['button[vcard]'] = true;
 		$readonlys['change_photo'] = true;
 		$readonlys['fileas_type'] = true;
 		$readonlys['creator'] = true;
-		$readonlys['button'] = true;
+		// this setting will enable (and show) the search and cancel buttons, setting this to true will hide the before mentioned buttons completely
+		$readonlys['button'] = false;
 		// disable not needed tabs
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys[$this->tabs]['custom'] = !$this->customfields;
 		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys[$this->tabs]['links'] = true;
 		$readonlys[$this->tabs]['distribution_list'] = true;
+		// setting hidebuttons for content will hide the 'normal' addressbook edit dialog buttons
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
 		$content['disable_change_org'] = true;
