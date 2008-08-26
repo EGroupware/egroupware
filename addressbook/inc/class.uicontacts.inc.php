@@ -1681,7 +1681,7 @@ $readonlys['button[vcard]'] = true;
 		$readonlys['change_photo'] = true;
 		$readonlys['fileas_type'] = true;
 		$readonlys['creator'] = true;
-		$readonlys['button'] = true;
+		$readonlys['button'] = false;
 		// disable not needed tabs
 		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys[$this->tabs]['custom'] = !$this->customfields;		
