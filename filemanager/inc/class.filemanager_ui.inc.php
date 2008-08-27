@@ -60,6 +60,14 @@ class filemanager_ui
 			if (isset($_GET['path']) && ($path = $_GET['path']) && $path[0] == '/' && egw_vfs::is_dir($path))
 			{
 				$content['nm']['path'] = $path;
+			} 
+			else 
+			{
+				if (!empty($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) 
+					&& egw_vfs::is_dir($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']))
+				{
+					$content['nm']['path'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'];
+				}
 			}
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 		}
@@ -369,45 +377,116 @@ class filemanager_ui
 		{
 			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
 		}
-		foreach(egw_vfs::find($query['path'],array(
-			'mindepth' => 1,
-			'maxdepth' => $query['filter'] ? $query['filter'] : null,
-			'order' => $query['order'], 'sort' => $query['sort'],
-			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
-			'need_mime' => true,
-			'name_preg' => $namefilter,
-		),true) as $path => $row)
-		{
-			$row['icon'] = egw_vfs::mime_icon($row['mime']);
-			$row['perms'] = egw_vfs::int2mode($row['mode']);
-			// only show link if we have access to the file or dir
-			if (egw_vfs::check_access($path,egw_vfs::READABLE))
+		// if you want to have the folders on top, we must search for them first
+		if ((int)$GLOBALS['egw_info']['user']['preferences']['filemanager']['alwayssortfolderstotop']==1) {
+			$dirs = array();
+			$files = array();
+			foreach(egw_vfs::find($query['path'],array(
+				'type'=>'d',
+				'mindepth' => 1,
+				'maxdepth' => $query['filter'] ? $query['filter'] : null,
+				'order' => $query['order'], 'sort' => $query['sort'],
+				'limit' => (int)$query['num_rows'].','.(int)$query['start'],
+				'need_mime' => true,
+				'name_preg' => $namefilter,
+			),true) as $path => $row)
 			{
-				if ($row['mime'] == egw_vfs::DIR_MIME_TYPE)
-				{
-					$row['link'] = '/index.php?menuaction=filemanager.filemanager_ui.index&path='.$path;
-				}
-				else
-				{
-					$row['link'] = egw_vfs::download_url($path);
-				}
+				$row['icon'] = egw_vfs::mime_icon($row['mime']);
+				$row['perms'] = egw_vfs::int2mode($row['mode']);
+				// only show link if we have access to the file or dir
+				if (egw_vfs::check_access($path,egw_vfs::READABLE)) $row['link'] = '/index.php?menuaction=filemanager.filemanager_ui.index&path='.$path;
+				$row['user'] = $row['uid'] ? $GLOBALS['egw']->accounts->id2name($row['uid']) : 'root';
+				$row['group'] = $row['gid'] ? $GLOBALS['egw']->accounts->id2name(-$row['gid']) : 'root';
+				$row['hsize'] = egw_vfs::hsize($row['size']);
+
+				$dirs[] = $row;
+
+				$dir = dirname($path);
+				if (!isset($dir_is_writable[$dir])) $dir_is_writable[$dir] = egw_vfs::is_writable($dir);
+				if (!$dir_is_writable[$dir]) $readonlys["delete[$path]"] = true;	// no rights to delete the file
+				
 			}
-			$row['user'] = $row['uid'] ? $GLOBALS['egw']->accounts->id2name($row['uid']) : 'root';
-			$row['group'] = $row['gid'] ? $GLOBALS['egw']->accounts->id2name(-$row['gid']) : 'root';
-			$row['hsize'] = egw_vfs::hsize($row['size']);
-
-			//echo $path; _debug_array($row);
-
-			$rows[++$n] = $row;
-
-			$dir = dirname($path);
-			if (!isset($dir_is_writable[$dir]))
-			{
-				$dir_is_writable[$dir] = egw_vfs::is_writable($dir);
+			$numofdirs = egw_vfs::$find_total;
+			$dirsretrieved = count($dirs);
+			#echo "Dirs found:$numofdirs<br>"."Rows to query:".(int)$query['num_rows']." Start at:".(int)$query['start']."<br>";
+			$filesdontshowjet = 0;
+			if ($dirsretrieved >= (int)$query['num_rows']) {
+				$filesdontshowjet =1;
 			}
-			if (!$dir_is_writable[$dir])
+			// retrieve the files as well, since we need the total number of the search/listing
+			$numofrows = (int)$query['num_rows'] - $dirsretrieved;
+			$startatrow = 0;
+			if ($filesdontshowjet == 0 && (int)$query['start'] > $numofdirs) $startatrow = (int)$query['start']-$numofdirs;
+			#echo "Filessection:Dirs retrieved:$dirsretrieved<br>"."Rows to query:".$numofrows." Start at:".$startatrow."<br>";
+			foreach(egw_vfs::find($query['path'],array(
+				'type'=>'f',
+				'mindepth' => 1,
+				'maxdepth' => $query['filter'] ? $query['filter'] : null,
+				'order' => $query['order'], 'sort' => $query['sort'],
+				'limit' => $numofrows.','.$startatrow,
+				'need_mime' => true,
+				'name_preg' => $namefilter,
+			),true) as $path => $row)
 			{
-				$readonlys["delete[$path]"] = true;	// no rights to delete the file
+				$row['icon'] = egw_vfs::mime_icon($row['mime']);
+				$row['perms'] = egw_vfs::int2mode($row['mode']);
+				// only show link if we have access to the file or dir
+				if (egw_vfs::check_access($path,egw_vfs::READABLE)) $row['link'] = egw_vfs::download_url($path);
+				$row['user'] = $row['uid'] ? $GLOBALS['egw']->accounts->id2name($row['uid']) : 'root';
+				$row['group'] = $row['gid'] ? $GLOBALS['egw']->accounts->id2name(-$row['gid']) : 'root';
+				$row['hsize'] = egw_vfs::hsize($row['size']);
+
+				if ($filesdontshowjet == 0) $files[] = $row;
+
+				$dir = dirname($path);
+				if (!isset($dir_is_writable[$dir])) $dir_is_writable[$dir] = egw_vfs::is_writable($dir);
+				if (!$dir_is_writable[$dir]) $readonlys["delete[$path]"] = true;	// no rights to delete the file
+			}
+			$numoffiles = egw_vfs::$find_total;
+			$rows = array_merge($dirs,$files);
+			//_debug_array($readonlys);
+			return egw_vfs::$find_total = $numofdirs + $numoffiles;
+		} else {
+			foreach(egw_vfs::find($query['path'],array(
+				'type'=>'d',
+				'mindepth' => 1,
+				'maxdepth' => $query['filter'] ? $query['filter'] : null,
+				'order' => $query['order'], 'sort' => $query['sort'],
+				'limit' => (int)$query['num_rows'].','.(int)$query['start'],
+				'need_mime' => true,
+				'name_preg' => $namefilter,
+			),true) as $path => $row)
+			{
+				$row['icon'] = egw_vfs::mime_icon($row['mime']);
+				$row['perms'] = egw_vfs::int2mode($row['mode']);
+				// only show link if we have access to the file or dir
+				if (egw_vfs::check_access($path,egw_vfs::READABLE))
+				{
+					if ($row['mime'] == egw_vfs::DIR_MIME_TYPE)
+					{
+						$row['link'] = '/index.php?menuaction=filemanager.filemanager_ui.index&path='.$path;
+					}
+					else
+					{
+						$row['link'] = egw_vfs::download_url($path);
+					}
+				}
+				$row['user'] = $row['uid'] ? $GLOBALS['egw']->accounts->id2name($row['uid']) : 'root';
+				$row['group'] = $row['gid'] ? $GLOBALS['egw']->accounts->id2name(-$row['gid']) : 'root';
+				$row['hsize'] = egw_vfs::hsize($row['size']);
+
+				//echo $path; _debug_array($row);
+				$rows[++$n] = $row;
+
+				$dir = dirname($path);
+				if (!isset($dir_is_writable[$dir]))
+				{
+					$dir_is_writable[$dir] = egw_vfs::is_writable($dir);
+				}
+				if (!$dir_is_writable[$dir])
+				{
+					$readonlys["delete[$path]"] = true;	// no rights to delete the file
+				}
 			}
 		}
 		//_debug_array($readonlys);

@@ -15,6 +15,11 @@ $setup_info['filemanager']['app_order'] = 6;
 $setup_info['filemanager']['enable']  = 1;
 
 /* The hooks this app includes, needed for hooks registration */
+$setup_info['filemanager']['hooks']['preferences'] = 'filemanager_hooks::preferences';
+$setup_info['filemanager']['hooks']['settings'] = 'filemanager_hooks::settings';
+$setup_info['filemanager']['hooks']['sidebox_menu'] = 'filemanager_hooks::sidebox_menu';
+#$setup_info['filemanager']['hooks']['verify_settings'] = 'filemanager.filemanager_hooks.verify_settings';
+$setup_info['filemanager']['hooks']['admin'] = 'filemanager_hooks::admin';
 
 
 /* Dependencies for this app to work */
