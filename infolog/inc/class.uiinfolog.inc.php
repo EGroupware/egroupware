@@ -1451,7 +1451,7 @@ class uiinfolog
 				$app     = 'addressbook';
 				$view_id = 'ab_id';
 				$view_id2 = 'contact_id';
-				$view    = 'addressbook.uicontacts.view';
+				$view    = 'addressbook.addressbook_ui.view';
 				break;
 			case 'projects_view':
 				$app     = 'projects';
