@@ -57,19 +57,27 @@ class filemanager_ui
 					'path' => '/home/'.$GLOBALS['egw_info']['user']['account_lid'],
 				);
 			}
-			if (isset($_GET['path']) && ($path = $_GET['path']) && $path[0] == '/' && egw_vfs::is_dir($path))
+			if (isset($_GET['msg'])) $msg = $_GET['msg'];
+			if (isset($_GET['path']) && ($path = $_GET['path']) 
+				 && $path[0] == '/' && egw_vfs::is_dir($path)
+				 && egw_vfs::check_access($path,egw_vfs::READABLE))
 			{
 				$content['nm']['path'] = $path;
 			} 
 			else 
 			{
+				if (isset($_GET['path'])) $msg .= lang('The requested path ').$_GET['path'].lang(' is not available.');
 				if (!empty($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) 
-					&& egw_vfs::is_dir($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']))
+					&& egw_vfs::is_dir($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'])
+					&& egw_vfs::check_access($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'],egw_vfs::READABLE))
 				{
+					if (isset($_GET['path'])) $msg .= ' '.lang('You will be redirected to your Start Folder.');
 					$content['nm']['path'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'];
+				} else {
+					if (isset($_GET['path'])) $msg .= ' '.lang('You will be redirected to your Home Directory.');
+					$content['nm']['path'] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 				}
 			}
-			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 		}
 		// check if we have a failed upload AND upload_max_filesize >= post_max_size --> no $_POST array
 		if ($_GET['post_empty'] && self::km2int(ini_get('upload_max_filesize')) >= self::km2int(ini_get('post_max_size')) ||
@@ -154,7 +162,7 @@ class filemanager_ui
 		}
 		if (!egw_vfs::is_dir($content['nm']['path']))
 		{
-			$content['nm']['msg'] .= lang('Directory not found or no permission to access it!');
+			$content['nm']['msg'] .= ' '.lang('Directory not found or no permission to access it!');
 		}
 		else
 		{
@@ -352,12 +360,18 @@ class filemanager_ui
 	function get_rows($query,&$rows,&$readonlys)
 	{
 		$GLOBALS['egw']->session->appsession('index','filemanager',$query);
-		//_debug_array($query);
 
-		if (!egw_vfs::is_dir($query['path']))
+		if (!egw_vfs::is_dir($query['path'])
+			|| !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
 		{
 			$rows = array();
 			$query['total'] = 0;
+			// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give 
+			// an appropriate message
+			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
+						'path'=>$query['path'],
+						'msg' => lang('Directory not found or no permission to access it!'))));
+			
 		}
 		$rows = $dir_is_writable = array();
 		if($query['searchletter'] && !empty($query['search']))
@@ -378,7 +392,7 @@ class filemanager_ui
 			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
 		}
 		// if you want to have the folders on top, we must search for them first
-		if ((int)$GLOBALS['egw_info']['user']['preferences']['filemanager']['alwayssortfolderstotop']==1) {
+		if ($GLOBALS['egw_info']['user']['preferences']['filemanager']['alwayssortfolderstotop']=='yes') {
 			$dirs = array();
 			$files = array();
 			foreach(egw_vfs::find($query['path'],array(

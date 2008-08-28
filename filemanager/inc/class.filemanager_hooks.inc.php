@@ -35,7 +35,7 @@ class filemanager_hooks
 				# not sure if we want to offer a link to the base directory for default, this way i do that as preference
 				#'Base' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
 			);
-			if (!empty($file_prefs['showbase'])) $file['Base']= $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath));
+			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes') $file['Base']= $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath));
 			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder']));
 			for ($i=1; $i<=self::$foldercount;$i++) {
 				if (!empty($file_prefs['folderlink'.$i])) {
@@ -92,8 +92,8 @@ class filemanager_hooks
 			'30' => '30'
 		);
 		$yes_no = array(
-			'0'	=> 'No',
-			'1' => 'Yes'
+			'no'	=> lang('No'),
+			'yes' => lang('Yes')
 		);
 	
         $GLOBALS['settings'] = array(
@@ -101,9 +101,9 @@ class filemanager_hooks
 				'type'		=> 'select',
 				'name'		=> 'showbase',
 				'values'	=> $yes_no,
-				'label' 	=> 'Show link to filemanagers basedirectory (/) in side box menu?',
-				'help'		=> 'Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, 
-								or configure this paricular location as startfolder or folderlink.',
+				'label' 	=> lang('Show link to filemanagers basedirectory (/) in side box menu?'),
+				'help'		=> lang('Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, 
+								or configure this paricular location as startfolder or folderlink.'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			),
@@ -111,9 +111,9 @@ class filemanager_hooks
 				'type'		=> 'select',
 				'name'		=> 'alwayssortfolderstotop',
 				'values'	=> $yes_no,
-				'label' 	=> 'Sort folders always to the top?',
-				'help'		=> 'Default behavior is NO. If you set this to YES, folders will always appear at the top of the list, 
-								no matter what you sort by. It will slow your mustang down as well.',
+				'label' 	=> lang('Sort folders always to the top?'),
+				'help'		=> lang('Default behavior is NO. If you set this to YES, folders will always appear at the top of the list, 
+								no matter what you sort by. It will slow your mustang down as well.'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			),
@@ -122,9 +122,9 @@ class filemanager_hooks
 				'name'		=> 'startfolder',
 				'size'		=> 80,
 				'default'	=> '',
-				'label' 	=> 'Enter the complete VFS path to specify your desired start folder.',
-				'help'		=> 'If you leave this empty, the path does not exist or the user does not have permission to access the specified folder,
-								 the users startfolder will default to the users home folder.',
+				'label' 	=> lang('Enter the complete VFS path to specify your desired start folder.'),
+				'help'		=> lang('If you leave this empty, the path does not exist or the user does not have permission to access the specified folder,
+								 the users startfolder will default to the users home folder.'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			),
@@ -144,10 +144,10 @@ class filemanager_hooks
 				'name'		=> 'folderlink'.$i,
 				'size'		=> 80,
 				'default'	=> '',
-				'label' 	=> 'Enter the complete VFS path to specify a fast access link to a folder ('.$i.').',
-				'help'		=> 'If you leave this empty, the path does not exist or the user does not have permission to access the specified folder,
+				'label' 	=> lang('Enter the complete VFS path to specify a fast access link to a folder').' ('.$i.').',
+				'help'		=> lang('If you leave this empty, the path does not exist or the user does not have permission to access the specified folder,
 								 the link will lead the user to the start folder or users home folder (if the startfolder is either not configured, or
-								 not available to the user).',
+								 not available to the user).'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			);
