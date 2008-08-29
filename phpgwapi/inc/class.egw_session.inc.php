@@ -184,8 +184,10 @@ class egw_session //extends sessions
 		}
 		if (!isset($GLOBALS['egw_info']['server']['install_id']))
 		{
-			$GLOBALS['egw_info']['server']['install_id']  = md5($GLOBALS['egw']->common->randomstring(15));
-			$save_rep = true;
+			if (isset($GLOBALS['egw']->common)) {
+				$GLOBALS['egw_info']['server']['install_id']  = md5($GLOBALS['egw']->common->randomstring(15));
+				$save_rep = true;
+			}
 		}
 		if (!isset($GLOBALS['egw_info']['server']['sessions_timeout']))
 		{
@@ -276,7 +278,8 @@ class egw_session //extends sessions
 			$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$this->account_domain]['db_user'];
 			$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$this->account_domain]['db_pass'];
 			$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->account_domain]['db_type'];
-			$GLOBALS['egw']->setup('',false);*/
+			$GLOBALS['egw']->setup('',false);
+*/
 		}
 
 		//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
@@ -743,9 +746,16 @@ class egw_session //extends sessions
 		// Only do the following, if where working with the current user
 		if (!$GLOBALS['egw_info']['user']['sessionid'] || $sessionid == $GLOBALS['egw_info']['user']['sessionid'])
 		{
+			if (self::$errorlog_debug) error_log(__METHOD__." ********* about to call session_destroy!");
 			session_unset();
 			//echo '<p>'.__METHOD__.": session_destroy() returned ".(session_destroy() ? 'true' : 'false')."</p>\n";
 			@session_destroy();
+			// we need to (re-)load the eGW session-handler, as session_destroy unloads custom session-handlers
+			if (function_exists('init_session_handler'))
+			{
+				init_session_handler();
+			}
+
 			if ($GLOBALS['egw_info']['server']['usecookies'])
 			{
 				self::egw_setcookie(session_name());
