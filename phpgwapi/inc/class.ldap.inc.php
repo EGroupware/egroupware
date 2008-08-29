@@ -237,7 +237,7 @@
 		{
 			if (isset($GLOBALS['egw']->session))	// no availible in setup
 			{
-				$this->ldapServerInfo = $GLOBALS['egw']->session->appsession('ldapServerInfo');
+				$this->ldapServerInfo = (array) unserialize($GLOBALS['egw']->session->appsession('ldapServerInfo'));
 			}
 		}
 		/**
@@ -247,7 +247,7 @@
 		{
 			if (isset($GLOBALS['egw']->session))	// no availible in setup
 			{
-				$GLOBALS['egw']->session->appsession('ldapServerInfo','',$this->ldapServerInfo);
+				$GLOBALS['egw']->session->appsession('ldapServerInfo','',serialize($this->ldapServerInfo));
 			}
 		}
 		                                                        
