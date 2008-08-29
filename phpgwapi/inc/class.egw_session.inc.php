@@ -184,10 +184,7 @@ class egw_session //extends sessions
 		}
 		if (!isset($GLOBALS['egw_info']['server']['install_id']))
 		{
-			if (isset($GLOBALS['egw']->common)) {
-				$GLOBALS['egw_info']['server']['install_id']  = md5($GLOBALS['egw']->common->randomstring(15));
-				$save_rep = true;
-			}
+			$GLOBALS['egw_info']['server']['install_id']  = md5(common::randomstring(15));
 		}
 		if (!isset($GLOBALS['egw_info']['server']['sessions_timeout']))
 		{
