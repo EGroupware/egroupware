@@ -101,10 +101,14 @@ class egw_session_memcache
 	const MEMCACHED_MAX_JUNK = 1024000;
 
 	/**
-	 * Enter description here...
+	 * Read session data
 	 *
+	 * According to a commentary on php.net (session_set_save_handler) this function has to return
+	 * a string, if the session-id is NOT found, not false. Returning false terminates the script
+	 * with a fatal error!
+	 * 
 	 * @param string $id
-	 * @return string|boolean
+	 * @return string|boolean false on error, '' for not found session otherwise session data
 	 */
 	public static function read($id)
 	{
@@ -112,7 +116,7 @@ class egw_session_memcache
 
 		if (!self::_acquire_and_wait($id)) return false;
 
-		for($data=false,$n=0; ($read = self::$memcache->get($id.($n?'-'.$n:''))); ++$n)
+		for($data='',$n=0; ($read = self::$memcache->get($id.($n?'-'.$n:''))); ++$n)
 		{
 			if (self::DEBUG > 0) error_log("\n memcache ".$_SERVER["REQUEST_TIME"]." read $id:$n:".print_r(self::_bytes($read),true));
 			$data .= $read;
@@ -123,7 +127,7 @@ class egw_session_memcache
 	}
 
 	/**
-	 * Write session
+	 * Write session data
 	 *
 	 * @param string $id
 	 * @param string $sess_data
