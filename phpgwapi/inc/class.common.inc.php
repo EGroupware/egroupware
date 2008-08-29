@@ -257,7 +257,7 @@
 		 *
 		 * @param $size int-size of random string to return
 		 */
-		function randomstring($size)
+		static function randomstring($size)
 		{
 			$s = '';
 			srand((double)microtime()*1000000);
