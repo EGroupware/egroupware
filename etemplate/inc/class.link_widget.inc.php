@@ -58,7 +58,6 @@ class link_widget
 	var $public_functions = array(
 		'pre_process'  => True,
 		'post_process' => True,
-		'ajax_search'  => True,
 	);
 	/**
 	 * @var array availible extensions and there names for the editor
@@ -106,7 +105,7 @@ class link_widget
 		$extension_data['needed'] = $cell['needed'];
 		$help = $cell['help'] ? ($value['help'] ? $value['help'] : $cell['help']) : lang('view this linked entry in its application');
 
-		if (($type == 'link-to' || $type == 'link-add' || $type == 'link-entry' && !$value) && ($cell['readonly'] || $readonlys))
+		if ((in_array($type,array('link-to','link-add','link-entry')) && !$value) && ($cell['readonly'] || $readonlys))
 		{
 			//echo "<p>link-to is readonly, cell=".print_r($cell,true).", readonlys=".print_r($readonlys).", value='$value'</p>\n";
 			// readonly ==> omit the whole widget
@@ -575,7 +574,9 @@ class link_widget
 	}
 
 	/**
-	 * ajax callback to search in $app for $pattern, result is displayed in $id
+	 * Ajax callback to search in $app for $pattern, result is displayed in $id
+	 * 
+	 * Called via onClick from etemplate.link_widget.(to|entry)'s search button
 	 *
 	 * @param string $app app-name to search
 	 * @param string $pattern search-pattern
@@ -583,11 +584,14 @@ class link_widget
 	 * @param string $id_hide id(s) of the search-box/-line to hide after a successful search
 	 * @param string $id_show id(s) of the select-box/-line to show after a successful search
 	 * @param string $id_input id of the search input-field
+	 * @param string $etemplate_exec_id of the calling etemplate, to upate the allowed ids
+	 * @return string xajax xml response
 	 */
-	function ajax_search($app,$pattern,$id_res,$id_hide,$id_show,$id_input)
+	static function ajax_search($app,$pattern,$id_res,$id_hide,$id_show,$id_input,$etemplate_exec_id)
 	{
 		$response = new xajaxResponse();
 		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("','",$args)."')");
+		//$args = func_get_args(); error_log(__METHOD__."('".implode("','",$args)."')");
 
 		if (!($found = egw_link::query($app,$pattern == lang('Search') ? '' : $pattern)))	// ignore the blur-text
 		{
@@ -621,6 +625,14 @@ class link_widget
 			}
 			//$response->addAlert($script);
 			$response->addScript($script);
+		}
+		// store new allowed id's in the eT request
+		if ($etemplate_exec_id && ($et_request = etemplate_request::read($etemplate_exec_id)))
+		{
+			$data = $et_request->get_to_process($id_res);
+			//error_log($id_res.'='.array2string($data));
+			$data['allowed'] = $found ? array_keys($found) : array();
+			$et_request->set_to_process($id_res,$data);
 		}
 		return $response->getXML();
 	}

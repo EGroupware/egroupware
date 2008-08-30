@@ -30,6 +30,8 @@
  * 
  * Ajax request can use this object to open the original request by using the id, they have to transmitt back, 
  * and register further variables, modify the registered ones or delete them.
+ * 
+ * For an example look in link_widget::ajax_search()
  */
 class etemplate_request
 {
@@ -60,7 +62,7 @@ class etemplate_request
 	 */
 	function __construct($id=null)
 	{
-		if (!$id) $id = $this->request_id();
+		if (!$id) $id = self::request_id();
 		
 		$this->id = $id;
 	}
@@ -79,7 +81,7 @@ class etemplate_request
 	 * Read the request via it's id, returns a request_object or false
 	 *
 	 * @param string $id
-	 * @return etempalte_request/boolean the object or false if $id is not found
+	 * @return etempalte_request|boolean the object or false if $id is not found
 	 */
 	static function read($id)
 	{
@@ -174,7 +176,7 @@ class etemplate_request
 	 * 
 	 * @return string
 	 */
-	function _request_id()
+	static function request_id()
 	{
 		list($msec,$sec) = explode(' ',microtime());
 		$time = 100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
