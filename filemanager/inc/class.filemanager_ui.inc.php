@@ -462,7 +462,6 @@ class filemanager_ui
 			return egw_vfs::$find_total = $numofdirs + $numoffiles;
 		} else {
 			foreach(egw_vfs::find($query['path'],array(
-				'type'=>'d',
 				'mindepth' => 1,
 				'maxdepth' => $query['filter'] ? $query['filter'] : null,
 				'order' => $query['order'], 'sort' => $query['sort'],
