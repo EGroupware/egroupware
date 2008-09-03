@@ -37,6 +37,7 @@
 		
 		// the object storing the data about the incoming imap server
 		var $icServerID=0;
+		var $connectionStatus = false;
 		
 		function uifelamimail()
 		{
