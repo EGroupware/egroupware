@@ -95,7 +95,7 @@
 		
 		function getPreferences()
 		{
-			if(!is_a($this->profileData,'ea_preferences ')) {
+			if(!is_a($this->profileData,'ea_preferences')) {
 
 				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
 				$profileData		= $this->boemailadmin->getUserProfile('felamimail');
