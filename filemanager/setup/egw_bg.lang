@@ -1,0 +1,76 @@
+%1 directories and %2 files copied.	filemanager	bg	%1 директории и %2 файла са копирани.
+%1 directories and %2 files deleted.	filemanager	bg	%1 директории и %2 файла са изтрити.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	bg	%1 грешки при копиране (%2 директории и %3 файла са копирани)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	bg	%1 грешки при изтриване (%2 директории и %3 файла са изтрити)!
+%1 errors moving (%2 files moved)!	filemanager	bg	%1 грешки при преместване (%2 файл(а) преместен(и))!
+%1 files copied.	filemanager	bg	%1 файл(а) копиран(и).
+%1 files deleted.	filemanager	bg	%1 файл(а) изтрит(и).
+%1 files moved.	filemanager	bg	%1 файл(а) преместен(и).
+%1 the following files into current directory	filemanager	bg	%1 в текущата директория на
+%1 urls %2 to clipboard.	filemanager	bg	%1 файл(а). %2 в клипборд.
+accessrights	filemanager	bg	Права за достъп
+acl added.	filemanager	bg	Списъкът за контрол на достъпа е добавен.
+acl deleted.	filemanager	bg	Списъкът за контрол на достъпа е изтрит.
+actions	filemanager	bg	Действия
+all subdirectories	filemanager	bg	Всички поддиректории
+and all it's childeren	filemanager	bg	и всички подчинени
+check all	filemanager	bg	Маркирай всички
+clear search	filemanager	bg	изтриване на търсенето
+copied	filemanager	bg	копиран(и)
+copy to clipboard	filemanager	bg	Копиране в клипборд
+create directory	filemanager	bg	Създаване на директория
+created	filemanager	bg	създаден на
+created between	filemanager	bg	създадени между
+current directory	filemanager	bg	Текуща директория
+cut	filemanager	bg	преместен(и)
+cut to clipboard	filemanager	bg	Преместване в клипборд
+delete this file or directory	filemanager	bg	Изтриване на файла или директорията?
+directory	filemanager	bg	Директория
+directory not found or no permission to access it!	filemanager	bg	Директорията не съществува или нямате право на достъп!
+display and modification of content	filemanager	bg	Показване и промяна на съдържанието
+display of content	filemanager	bg	Показване на съдържанието
+edit settings	filemanager	bg	Редакция на атрибути
+error adding the acl!	filemanager	bg	Грешка при добавяне на ACL!
+error deleting the acl entry!	filemanager	bg	Грешка при изтриване на ACL записа
+error uploading file!	filemanager	bg	Грешка при качване на файла!
+executable	filemanager	bg	Изпълним
+extended access control list	filemanager	bg	Разширен списък за контрол на достъпа (ACL)
+extended acl	filemanager	bg	Разширен ACL
+failed to create directory!	filemanager	bg	Грешка при създаване на директория!
+file deleted.	filemanager	bg	Файлът е изтрит.
+file or directory not found!	filemanager	bg	Файлът или директорията не съществува!
+file successful uploaded.	filemanager	bg	Файлът е качен успешно.
+filemanager	common	bg	Файл мениджър
+general	filemanager	bg	Общи
+go to	filemanager	bg	промени в текущ
+go to your home directory	filemanager	bg	Към домшната (home) директория
+id	filemanager	bg	ИД
+inherited	filemanager	bg	Наследени
+maximum size for uploads	filemanager	bg	Максимален размер за качване
+mime type	filemanager	bg	MIME тип
+modified	filemanager	bg	променян на
+modified between	filemanager	bg	променян между
+modify all subdirectories and their content	filemanager	bg	Промяна на всички поддиректории и съдържанието им
+move	filemanager	bg	Преместване
+no access	filemanager	bg	Няма достъп
+no preview available	filemanager	bg	Няма възможност за преглед
+only owner can rename or delete the content	filemanager	bg	Само Собственикът може да преименува или изтрива съдържанието
+permission denied!	filemanager	bg	Достъпът отказан!
+permissions	filemanager	bg	Права
+permissions changed for %1.	filemanager	bg	Променени са правата за %1.
+preview	filemanager	bg	преглед
+read & write access	filemanager	bg	Достъп за четене и запис
+read access only	filemanager	bg	Достъп само за четене
+rename of %1 to %2 failed!	filemanager	bg	Преименуването на %1 в %2 неуспешно!
+rename, change permissions or ownership	filemanager	bg	Преименуване, промяна на права или собственост
+renamed %1 to %2.	filemanager	bg	%1 е преименуван(а) в %2.
+rights	filemanager	bg	Права
+root	filemanager	bg	root
+searchstring	filemanager	bg	низ за търсене
+select action...	filemanager	bg	Изберете действие...
+select file to upload in current directory	filemanager	bg	Изберете файл за качване в текущата директория
+size	filemanager	bg	Размер
+start search	filemanager	bg	търси
+up	filemanager	bg	Нагоре
+you need to select an owner!	filemanager	bg	Изберете собственик!
+you need to select some files first!	filemanager	bg	Първо изберете файлове!
