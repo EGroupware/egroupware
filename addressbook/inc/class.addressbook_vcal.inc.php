@@ -419,14 +419,94 @@ class addressbook_vcal extends addressbook_bo
 			'PHOTO'		=> array('jpegphoto'),
 		));
 
+		$defaultFields[9] = array(	// nokia e90
+			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+							'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+							'adr_two_postalcode','adr_two_countryname'),
+			'BDAY'		=> array('bday'),
+			'X-CLASS'	=> array('private'),
+			'EMAIL;INTERNET;WORK' => array('email'),
+			'EMAIL;INTERNET;HOME' => array('email_home'),
+			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+			'FN'		=> array('n_fn'),
+			'NOTE'		=> array('note'),
+			'ORG'		=> array('org_name','org_unit'),
+			'TEL;CELL;WORK'	=> array('tel_cell'),
+			'TEL;CELL;HOME'	=> array('tel_cell_private'),
+			'TEL;FAX;WORK'	=> array('tel_fax'),
+			'TEL;FAX;HOME'	=> array('tel_fax_home'),
+			'TEL;CAR'	=> array('tel_car'),
+			'TEL;PAGER;WORK' => array('tel_pager'),
+			'TEL;VOICE;WORK' => array('tel_work'),
+			'TEL;VOICE;HOME' => array('tel_home'),	  
+			'TITLE'		=> array('contact_role'),
+			'URL;WORK'	=> array('url'),
+			'URL;HOME'	=> array('url_home'),
+			'X-ASSISTANT'		=> array('assistent'),
+			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
+			'PHOTO'		=> array('jpegphoto'),
+		);
+		
+		$defaultFields[10] = array(	// nokia 9300
+			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+							'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+							'adr_two_postalcode','adr_two_countryname'),
+			'BDAY'		=> array('bday'),
+			'EMAIL;INTERNET' => array('email'),
+			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+			'FN'		=> array('n_fn'),
+			'NOTE'		=> array('note'),
+			'ORG'		=> array('org_name','org_unit'),
+			'TEL;CELL'	=> array('tel_cell'),
+			'TEL;WORK;FAX'	=> array('tel_fax'),
+			'TEL;FAX'	=> array('tel_fax_home'),
+			'TEL;PAGER' => array('tel_pager'),
+			'TEL;WORK;VOICE' => array('tel_work'),
+			'TEL;HOME;VOICE' => array('tel_home'),	  
+			'TITLE'		=> array('contact_role'),
+			'URL'	=> array('url'),
+		);
+
+
+		$defaultFields[11] = array(	// funambol: iphone
+			'ADR;WORK'      => array('','','adr_one_street','adr_one_locality','adr_one_region',
+									'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'      => array('','','adr_two_street','adr_two_locality','adr_two_region',
+									'adr_two_postalcode','adr_two_countryname'),
+			'EMAIL;INTERNET;WORK'         => array('email'),
+			'EMAIL;INTERNET;HOME'    => array('email_home'),
+			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+			'FN'			=> array('n_fn'),
+			'NOTE'          => array('note'),
+			'ORG'           => array('org_name','org_unit'),
+			'TEL;CELL'      => array('tel_cell'),
+			'TEL;HOME;FAX'  => array('tel_fax_home'),
+			'TEL;WORK;FAX'  => array('tel_fax'),
+			'TEL;VOICE;HOME' => array('tel_home'),
+			'TEL;VOICE;WORK' => array('tel_work'),
+			'TEL;PAGER'     => array('tel_pager'),
+			'TEL;CAR'     => array('tel_car'),			
+			'TITLE'         => array('title'),
+			'URL;WORK'      => array('url'),
+			'URL;HOME'           => array('url_home'),
+			'PHOTO'		=> array('jpegphoto'),
+		);
+
 		//error_log("Client: $_productManufacturer $_productName");
 		switch($this->productManufacturer)
 		{
 			case 'funambol':
+			case 'funambol inc.':
 				switch ($this->productName)
 				{
 					case 'thunderbird':
 						$this->supportedFields = $defaultFields[6];
+						break;
+
+					case 'iphone':
+						$this->supportedFields = $defaultFields[11];
 						break;
 
 					default:
@@ -455,6 +535,13 @@ class addressbook_vcal extends addressbook_bo
 				{
 					case 'e61':
 						$this->supportedFields = $defaultFields[5];
+						break;
+					case 'e51':
+					case 'e90':
+						$this->supportedFields = $defaultFields[9];
+						break;
+					case '9300':
+						$this->supportedFields = $defaultFields[10];
 						break;
 					case '6600':
 						$this->supportedFields = $defaultFields[4];
@@ -545,7 +632,8 @@ class addressbook_vcal extends addressbook_bo
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 
-		if(!is_array($this->supportedFields)) {
+		if(!is_array($this->supportedFields)) 
+		{
 			$this->setSupportedFields();
 		}
 
@@ -556,7 +644,8 @@ class addressbook_vcal extends addressbook_bo
 		// Unfold any folded lines.
 		$vCardUnfolded = preg_replace ('/(\r|\n)+ /', ' ', $_vcard);
 
-		if(!$vCard->parsevCalendar($vCardUnfolded, 'VCARD')) {
+		if(!$vCard->parsevCalendar($vCardUnfolded, 'VCARD')) 
+		{
 			return False;
 		}
 		$vcardValues = $vCard->getAllAttributes();
@@ -569,43 +658,25 @@ class addressbook_vcal extends addressbook_bo
 		{
 			$rowName  = $vcardRow['name'];
 
-			if(isset($vcardRow['params']['INTERNET']))
-			{
-				$rowName .= ";INTERNET";
-			}
-			$type = strtoupper($vcardRow['params']['TYPE']);			// vCard3 sets TYPE={work|home|cell|fax}!
+			$vcardElementCount = count($vcardRow['params'],COUNT_RECURSIVE);    
 
-			if(isset($vcardRow['params']['CELL']) || $type == 'CELL')
+			if( $vcardElementCount > 0 )
 			{
-				$rowName .= ';CELL';
-			}
-			if(isset($vcardRow['params']['FAX']) || $type == 'FAX')
-			{
-				$rowName .= ';FAX';
-			}
-			if(isset($vcardRow['params']['PAGER']) || $type == 'PAGER')
-			{
-				$rowName .= ';PAGER';
-			}
-			if(isset($vcardRow['params']['WORK']) || $type == 'WORK')
-			{
-				$rowName .= ';WORK';
-			}
-			if(isset($vcardRow['params']['HOME']) || $type == 'HOME')
-			{
-				$rowName .= ';HOME';
-			}
-			if(isset($vcardRow['params']['VOICE']) || $type == 'VOICE')
-			{
-				$rowName .= ';VOICE';
-			}
-			if(isset($vcardRow['params']['CAR']) || $type == 'CAR')
-			{
-				$rowName .= ';CAR';
-			}
-			//error_log("key: $key --> $rowName: name=$vcardRow[name], params=".print_r($vcardRow['params'],true));
+				foreach($vcardRow['params'] as $VKey => $vcardParam)
+				{
+					if( ! strlen($vcardParam) )
+					{
+						$rowName .= ';'.$VKey;
+					}
+					if( $VKey == 'TYPE' && in_array(strtoupper($vcardParam),array('CELL','FAX','PAGER','WORK','HOME','VOICE','CAR')))
+					{
+						$rowName .= ';'.strtoupper($vcardParam);
+					}
+				}
+        	}
 			$rowNames[$rowName] = $key;
 		}
+
 
 		#error_log(print_r($rowNames, true));
 
@@ -616,6 +687,7 @@ class addressbook_vcal extends addressbook_bo
 
 		foreach($rowNames as $rowName => $vcardKey)
 		{
+			
 			switch($rowName)
 			{
 				case 'ADR':
@@ -624,9 +696,34 @@ class addressbook_vcal extends addressbook_bo
 				case 'TEL;FAX':
 				case 'TEL;CELL':
 				case 'TEL;PAGER':
-					if(!isset($rowNames[$rowName. ';WORK']))
+				case 'TEL;VOICE':
+					if(!isset($rowNames[$rowName. ';WORK']) && array_key_exists($rowName. ';WORK', $this->supportedFields) ) 
 					{
 						$finalRowNames[$rowName. ';WORK'] = $vcardKey;
+					}
+					else   
+					{
+						$InvolvedValues = explode(';',$rowName.';WORK');
+						foreach($this->supportedFields as $suppFields => $suppFieldsValue )
+						{
+							$InvolvedHits = 0;
+							foreach($InvolvedValues as $hlparr => $hlparrKey )
+							{
+								if( ! stristr( $suppFields,$hlparrKey ) === FALSE )
+								{
+									$InvolvedHits++;
+								}
+							}
+							if( count($InvolvedValues) == $InvolvedHits && !isset($finalRowNames[$suppFields]) )
+							{
+								$finalRowNames[$suppFields] = $vcardKey;
+								break;   // if a combination of all words in $InvolvedValues were found
+							}
+						}
+						if( count($InvolvedValues) != $InvolvedHits  && ! isset($finalRowNames[$rowName]) &&  array_key_exists($rowName, $this->supportedFields) )
+						{
+							$finalRowNames[$rowName] = $vcardKey;
+						}
 					}
 					break;
 				case 'EMAIL':
@@ -652,7 +749,6 @@ class addressbook_vcal extends addressbook_bo
 					break;
 			}
 		}
-
 		#error_log(print_r($finalRowNames, true));
 
 		$contact = array();
@@ -674,7 +770,7 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
 						}
-						//error_log("$fieldName=$vcardKey[$fieldKey]='$value'");
+
 						switch($fieldName)
 						{
 							case 'bday':
@@ -684,7 +780,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'private':
-								$contact[$fieldName] = (int) ( strtoupper($value) == 'PRIVATE');								
+								$contact[$fieldName] = (int) ( strtoupper($value) == 'PRIVATE');
 								break;
 
 							case 'cat_id':
