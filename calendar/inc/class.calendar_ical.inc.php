@@ -370,6 +370,9 @@ class calendar_ical extends calendar_boupdate
 				if($event['special'] == '1') {
 					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'ANNIVERSARY';
 					$attributes['DTEND'] = $attributes['DTSTART'];
+				}
+				elseif ($event['special'] == '2') {
+					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'EVENT';
 				} else {
 					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'APPOINTMENT';
 				}
@@ -835,8 +838,13 @@ class calendar_ical extends calendar_boupdate
 				if (!is_a($agendaEntryType, 'PEAR_Error')) {
 					if(strtolower($agendaEntryType) == 'anniversary') {
 						$event['special'] = '1';
+						$event['non_blocking'] = '1';
 						// make it a whole day event for eGW
 						$vcardData['end'] = $vcardData['start'] + 86399;
+					 }
+					 elseif(strtolower($agendaEntryType) == 'event') {
+					 	$event['special'] = '2';
+					 	$event['non_blocking'] = '1';
 					}
 				}
 
@@ -1243,6 +1251,7 @@ class calendar_ical extends calendar_boupdate
 							$vcardData['end']		= $attributes['value'];
 							break;
 						case 'DTSTART':
+							//error_log (" CALENDAR ROBV DTSTART: ". $attributes['value']);
 							$vcardData['start']		= $attributes['value'];
 							break;
 						case 'LOCATION':
