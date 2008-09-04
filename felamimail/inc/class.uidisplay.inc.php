@@ -147,6 +147,8 @@
 			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid, $partID);
 			#_debug_array($attachments); exit;
 			$envelope	= $this->bofelamimail->getMessageEnvelope($this->uid, $partID);
+			// flagg the message as read/seen explizitly, since some servers dont do it upon reading
+			if (!empty($this->uid)) $this->bofelamimail->flagMessages('read', $this->uid);
 
 			$nextMessage	= $this->bofelamimail->getNextMessage($this->mailbox, $this->uid);
 
