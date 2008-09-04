@@ -48,7 +48,7 @@ class filemanager_ui
 					'no_cat'         => True,	// I  disable the cat-selectbox
 					'lettersearch'   => True,	// I  show a lettersearch
 					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
-					'start'          =>	0,	// IO position in list
+					'start'          =>	0,		// IO position in list
 					'order'          =>	'name',	// IO name of the column to sort after (optional for the sortheaders)
 					'sort'           =>	'ASC',	// IO direction of the sort: 'ASC' or 'DESC'
 					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
@@ -56,26 +56,23 @@ class filemanager_ui
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'path' => '/home/'.$GLOBALS['egw_info']['user']['account_lid'],
 				);
+				// check if user specified a valid startpath in his prefs --> use it
+				if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
+					$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path))
+				{
+					$content['nm']['path'] = $path;
+				} 
 			}
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
-			if (isset($_GET['path']) && ($path = $_GET['path']) 
-				 && $path[0] == '/' && egw_vfs::is_dir($path)
-				 && egw_vfs::check_access($path,egw_vfs::READABLE))
+			if (isset($_GET['path']) && ($path = $_GET['path']))
 			{
-				$content['nm']['path'] = $path;
-			} 
-			else 
-			{
-				if (isset($_GET['path'])) $msg .= lang('The requested path ').$_GET['path'].lang(' is not available.');
-				if (!empty($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) 
-					&& egw_vfs::is_dir($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'])
-					&& egw_vfs::check_access($GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'],egw_vfs::READABLE))
+				if ($path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path,egw_vfs::READABLE))
 				{
-					if (isset($_GET['path'])) $msg .= ' '.lang('You will be redirected to your Start Folder.');
-					$content['nm']['path'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'];
-				} else {
-					if (isset($_GET['path'])) $msg .= ' '.lang('You will be redirected to your Home Directory.');
-					$content['nm']['path'] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
+					$content['nm']['path'] = $path;
+				} 
+				else
+				{
+					$msg .= lang('The requested path %1 is not available.',$path);
 				}
 			}
 		}

@@ -17,6 +17,7 @@ actions	filemanager	de	Befehle
 all subdirectories	filemanager	de	Alle Unterverzeichnisse
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Konfigurationsoptionen im Setting für Links zu Verzeichnissen
 and all it's childeren	filemanager	de	und alle seine Kinder
+basedirectory	filemanager	de	Basisverzeichnis
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
 check all	filemanager	de	Alle auswählen
@@ -83,9 +84,10 @@ go home	filemanager	de	Heimatverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
+home directories	filemanager	de	Persönliche Verzeichnisse
 id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
-is not available.	filemanager	de	steht nicht zur Verfügung
+link %1: %2	filemanager	de	%1. Verknüpfung: %2
 location	filemanager	de	Ort
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
 maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
@@ -119,7 +121,6 @@ renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
 renamed %1 to %2.	filemanager	de	%1 nach %2 umbenannt.
 replaced %1	filemanager	de	%1 ersetzt
 rights	filemanager	de	Rechte
-root	filemanager	de	root
 save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern, und zurück zur Verzeichnisansicht
 save changes	filemanager	de	Änderungen speichern
@@ -133,7 +134,7 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zei
 size	filemanager	de	Größe
 sort folders always to the top?	filemanager	de	Sortiere Verzeichnisse immer an den Anfang der Verzeichnisansicht
 start search	filemanager	de	Suche starten
-the requested path	filemanager	de	Der angeforderte Verzeichnispfad
+the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
 total files	filemanager	de	Gesamtanzahl Dateien
 unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
@@ -145,3 +146,4 @@ you need to select some files first!	filemanager	de	Sie müssen zuerst die Datei
 you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem Heimatverzeichnis geleitet
 you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs/Startverzeichnis geleitet
 your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr Heimatverzeichnis hat nicht existiert. eGroupware hat ein neues für Sie angelegt
+your home directory	filemanager	de	Ihr persönliches Verzeichnis

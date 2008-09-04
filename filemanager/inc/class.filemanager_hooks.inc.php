@@ -16,11 +16,17 @@ class filemanager_hooks
 {
 	static $appname = 'filemanager';
 	static $foldercount = 1;
+	
+	/**
+	 * Data for Filemanagers sidebox menu
+	 *
+	 * @param array $args
+	 */
 	static function sidebox_menu($args)
 	{
 		$location = is_array($args) ? $args['location'] : $args;
-		$basepath = '/';
-		$rootpath = '/home';
+		$rootpath = '/';
+		$basepath = '/home';
 		$homepath = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 		//echo "<p>admin_prefs_sidebox_hooks::all_hooks(".print_r($args,True).") appname='$appname', location='$location'</p>\n";
 		$config = config::read(self::$appname);
@@ -29,20 +35,25 @@ class filemanager_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
-			$file = Array(
-				'Home' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath)),
-				'Root' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath)),
-				# not sure if we want to offer a link to the base directory for default, this way i do that as preference
-				#'Base' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
+			$file = array(
+				'Your home directory' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath)),
+				'Home directories' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
 			);
-			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes') $file['Base']= $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath));
+			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
+			{
+				$file['Basedirectory'] = $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath));
+			}
 			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder']));
-			for ($i=1; $i<=self::$foldercount;$i++) {
-				if (!empty($file_prefs['folderlink'.$i])) {
-					$foldername = array_pop(explode("/",$file_prefs['folderlink'.$i]));
-					$file['Link '.$i.($foldername?": ($foldername)":'(Base)')]= $GLOBALS['egw']->link('/index.php',array(
-						'menuaction'=>self::$appname.'.filemanager_ui.index',
-						'path'=>$file_prefs['folderlink'.$i]));
+			for ($i=1; $i<=self::$foldercount; $i++) 
+			{
+				if (!empty($file_prefs['folderlink'.$i])) 
+				{
+					$foldername = array_pop(explode('/',$file_prefs['folderlink'.$i]));
+					$file[lang('Link %1: %2',$i,$foldername)]= $GLOBALS['egw']->link('/index.php',array(
+						'menuaction' => self::$appname.'.filemanager_ui.index',
+						'path'       => $file_prefs['folderlink'.$i],
+						'nolang'     => true,
+					));
 				}
 			}
 			display_sidebox(self::$appname,$title,$file);

@@ -17,11 +17,10 @@ actions	filemanager	en	Actions
 all subdirectories	filemanager	en	All subdirectories
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	en	and all it's childeren
+basedirectory	filemanager	en	Basedirectory
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
 check all	filemanager	en	Check all
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	en	Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	en	Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date
 clear search	filemanager	en	clear search
 comment	filemanager	en	Comment
 comments cannot contain "%1"	filemanager	en	Comments cannot contain "%1"
@@ -68,7 +67,6 @@ executable	filemanager	en	Executable
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to create directory!	filemanager	en	Failed to create directory!
-fake base dir did not exist, egroupware created a new one.	filemanager	en	Fake Base Dir did not exist, eGroupWare created a new one.
 file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
@@ -86,9 +84,10 @@ go home	filemanager	en	go home
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	go up
+home directories	filemanager	en	Home directories
 id	filemanager	en	Id
 inherited	filemanager	en	Inherited
-is not available.	filemanager	en	is not available.
+link %1: %2	filemanager	en	Link %1: %2
 location	filemanager	en	Location
 max folderlinks	admin	en	max folderlinks
 maximum size for uploads	filemanager	en	Maximum size for uploads
@@ -122,7 +121,6 @@ renamed %1 to %2	filemanager	en	Renamed %1 to %2
 renamed %1 to %2.	filemanager	en	Renamed %1 to %2.
 replaced %1	filemanager	en	Replaced %1
 rights	filemanager	en	Rights
-root	filemanager	en	root
 save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing
 save changes	filemanager	en	Save changes
@@ -136,18 +134,16 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Sho
 size	filemanager	en	Size
 sort folders always to the top?	filemanager	en	Sort folders always to the top?
 start search	filemanager	en	start search
-the requested path	filemanager	en	The requested path
+the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
 total files	filemanager	en	Total Files
 unused space	filemanager	en	Unused space
 up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
-upload fields	filemanager	en	upload fields
-upload files	filemanager	en	Upload files
 used space	filemanager	en	Used space
-who	filemanager	en	Who
 you do not have access to %1	filemanager	en	You do not have access to %1
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
 you will be redirected to your home directory.	filemanager	en	You will be redirected to your Home Directory.
 you will be redirected to your start folder.	filemanager	en	You will be redirected to your Start Folder.
 your home dir did not exist, egroupware created a new one.	filemanager	en	Your Home Dir did not exist, eGroupWare created a new one.
+your home directory	filemanager	en	Your home directory
