@@ -58,7 +58,7 @@ class filemanager_ui
 				);
 				// check if user specified a valid startpath in his prefs --> use it
 				if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
-					$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path))
+					$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path, egw_vfs::READABLE))
 				{
 					$content['nm']['path'] = $path;
 				} 
