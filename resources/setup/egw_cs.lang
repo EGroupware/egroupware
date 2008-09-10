@@ -79,7 +79,6 @@ short description of resource	resources	cs	Stručný popis zdroje
 show calendar of resource	resources	cs	Zobrazit kalendář zdroje
 something went wrong by deleting resource	resources	cs	Během mazání zdroje se něco nezdařilo
 something went wrong by saving resource	resources	cs	Během ukládání zdroje se něco nezdařilo
-storage inforation	resources	cs	Informace o uskladnění
 storage information	resources	cs	Informace o uskladnění
 storage information:	resources	cs	Informace o uskladnění
 the calendar of this resource	resources	cs	Kalendář tohoto zdroje

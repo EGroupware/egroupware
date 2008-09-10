@@ -79,7 +79,6 @@ short description of resource	resources	hu	Az erőforrás rövid leírása
 show calendar of resource	resources	hu	Az erőforrás naptárjának megjelenítése
 something went wrong by deleting resource	resources	hu	Hiba történt az erőforrás törlésekor
 something went wrong by saving resource	resources	hu	Hiba történt az erőforrás mentésekor
-storage inforation	resources	hu	Információ a raktározásról
 storage information	resources	hu	Információ a raktározásról
 storage information:	resources	hu	Információ a raktározásról:
 the calendar of this resource	resources	hu	Ennek az erőforrásnak a Naptárja

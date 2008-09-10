@@ -79,7 +79,6 @@ short description of resource	resources	no	Kort beskivelse av ressursen
 show calendar of resource	resources	no	Vis kalender for ressursen
 something went wrong by deleting resource	resources	no	Noe gikk galt ved sletting av ressyrsen
 something went wrong by saving resource	resources	no	Noe gikk galt ved lagring av ressursen
-storage inforation	resources	no	Lagringsinformasjon
 storage information	resources	no	Lagringsinformasjon
 storage information:	resources	no	Lagringsinformasjon:
 the calendar of this resource	resources	no	Kalender for denne ressursen

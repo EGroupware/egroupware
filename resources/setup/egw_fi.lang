@@ -78,7 +78,6 @@ short description of resource	resources	fi	Resurssin lyhyt kuvaus
 show calendar of resource	resources	fi	Näytä resurssin kalenteri
 something went wrong by deleting resource	resources	fi	Virhe poistettaessa resurssia
 something went wrong by saving resource	resources	fi	Virhe tallentaessa resurssia
-storage inforation	resources	fi	Varaston tiedot
 storage information	resources	fi	Varaston tiedot
 storage information:	resources	fi	Varaston tiedot:
 the calendar of this resource	resources	fi	Tämän resurssin kalenteri

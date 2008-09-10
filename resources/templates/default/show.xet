@@ -28,7 +28,7 @@
 					</vbox>
 					<vbox>
 						<nextmatch-sortheader label="Location" id="location"/>
-						<description value="Storage Inforation"/>
+						<description value="Storage information"/>
 					</vbox>
 					<hbox align="right">
 						<description value="Actions"/>
