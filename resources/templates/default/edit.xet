@@ -62,7 +62,7 @@
 		</grid>
 	</template>
 	<template id="resources.edit_tabs" template="" lang="" group="0" version="">
-		<grid>
+		<grid height="380">
 			<columns>
 				<column width="700"/>
 				<column/>
@@ -94,7 +94,7 @@
 		</grid>
 	</template>
 	<template id="resources.edit_buttons" template="" lang="" group="0" version="">
-		<grid>
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
@@ -109,7 +109,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit" template="" lang="" group="0" version="">
+	<template id="resources.edit" template="" lang="" group="0" version="1.5.001">
 		<grid>
 			<columns>
 				<column width="700"/>
