@@ -234,7 +234,7 @@ class calendar_uiforms extends calendar_ui
 						// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
 						// ToDo: get eTemplate to return that field
 						if (($email = $_POST['exec']['participants']['resource']['query']) &&
-							(preg_match('/^(.*<)?([a-z0-9_.@-]{8,})>?$/i',$email,$matches)))
+							(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
 						{
 							// check if email belongs to account or contact --> prefer them over just emails
 							if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')))
