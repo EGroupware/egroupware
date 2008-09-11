@@ -262,7 +262,7 @@ class boinfolog
 	 */
 	function has_customfields($type,$links=false)
 	{
-		if ($links) $link_types = $this->get_customfield_link_types();
+		if ($links) $link_types = customfields_widget::get_customfield_link_types();
 
 		foreach($this->customfields as $name => $field)
 		{
@@ -275,23 +275,6 @@ class boinfolog
 		return False;
 	}
 
-	/**
-	 * Get the customfield types containing links
-	 *
-	 * @return array with customefield types as values
-	 */
-	function get_customfield_link_types()
-	{
-		static $link_types;
-		
-		if (is_null($link_types))
-		{
-			$link_types = array_keys(egw_link::app_list());
-			$link_types[] = 'link-entry';
-		}
-		return $link_types;
-	}
-	
 	/**
 	 * check's if user has the requiered rights on entry $info_id
 	 *
@@ -735,13 +718,12 @@ class boinfolog
 				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
 			}
 			// create (and remove) links in custom fields
-			$this->update_customfield_links($values,$old);
+			customfields_widget::update_customfield_links('infolog',$values,$old,'info_id');
 
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update('infolog',$info_id,$values);
 			
 			// send email notifications and do the history logging
-			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
 			if (!is_object($this->tracking))
 			{
 				$this->tracking =& new infolog_tracking($this);
@@ -751,50 +733,6 @@ class boinfolog
 		if ($info_from_set) $values['info_from'] = '';
 
 		return $info_id;
-	}
-
-	/**
-	 * Check if there are links in the custom fields and update them
-	 *
-	 * @param array $values new values including the custom fields
-	 * @param array $old=null old values before the update, if existing
-	 */
-	function update_customfield_links($values,$old=null)
-	{
-		$link_types = $this->get_customfield_link_types();
-		
-		foreach($this->customfields as $name => $data)
-		{
-			if (!in_array($data['type'],$link_types)) continue;
-			
-			// do we have a different old value --> delete that link
-			if ($old && $old['#'.$name] && $old['#'.$name] != $values['#'.$name])
-			{
-				if ($data['type'] == 'link-entry')
-				{
-					list($app,$id) = explode(':',$old['#'.$name]);
-				}
-				else
-				{
-					$app = $data['type'];
-					$id = $old['#'.$name];
-				}
-				egw_link::unlink(false,'infolog',$values['info_id'],'',$app,$id);
-			}
-			if ($data['type'] == 'link-entry')
-			{
-				list($app,$id) = explode(':',$values['#'.$name]);
-			}
-			else
-			{
-				$app = $data['type'];
-				$id = $values['#'.$name];
-			}
-			if ($id)	// create new link, does nothing for already existing links 
-			{
-				egw_link::link('infolog',$values['info_id'],$app,$id);
-			}
-		}
 	}
 
 	/**

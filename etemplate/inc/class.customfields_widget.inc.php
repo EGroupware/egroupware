@@ -329,7 +329,7 @@ class customfields_widget
 					if (empty($validation_type)) $validation_type = 1;
 					$field['len'] = implode(',',array($shown, $max, $validation_type, $default));
 					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
-						'size' => $field['len'] 
+						'size' => $field['len']
 					));
 					break;
 				case 'url':
@@ -419,5 +419,71 @@ class customfields_widget
 		include($path);
 
 		return $options;
+	}
+
+	/**
+	 * Get the customfield types containing links
+	 *
+	 * @return array with customefield types as values
+	 */
+	public static function get_customfield_link_types()
+	{
+		static $link_types;
+
+		if (is_null($link_types))
+		{
+			$link_types = array_keys(egw_link::app_list());
+			$link_types[] = 'link-entry';
+		}
+		return $link_types;
+	}
+
+	/**
+	 * Check if there are links in the custom fields and update them
+	 *
+	 * This function have to be called manually by an application, if cf's linking
+	 * to other entries should be stored as links too (beside as cf's).
+	 *
+	 * @param string $own_app own appname
+	 * @param array $values new values including the custom fields
+	 * @param array $old=null old values before the update, if existing
+	 * @param string $id_name='id' name/key of the (link-)id in $values
+	 */
+	public static function update_customfield_links($own_app,array $values,array $old=null,$id_name='id')
+	{
+		$link_types = self::get_customfield_link_types();
+
+		foreach(config::get_customfields($own_app) as $name => $data)
+		{
+			if (!in_array($data['type'],$link_types)) continue;
+
+			// do we have a different old value --> delete that link
+			if ($old && $old['#'.$name] && $old['#'.$name] != $values['#'.$name])
+			{
+				if ($data['type'] == 'link-entry')
+				{
+					list($app,$id) = explode(':',$old['#'.$name]);
+				}
+				else
+				{
+					$app = $data['type'];
+					$id = $old['#'.$name];
+				}
+				egw_link::unlink(false,$own_app,$values[$id_name],'',$app,$id);
+			}
+			if ($data['type'] == 'link-entry')
+			{
+				list($app,$id) = explode(':',$values['#'.$name]);
+			}
+			else
+			{
+				$app = $data['type'];
+				$id = $values['#'.$name];
+			}
+			if ($id)	// create new link, does nothing for already existing links
+			{
+				egw_link::link($own_app,$values[$id_name],$app,$id);
+			}
+		}
 	}
 }
