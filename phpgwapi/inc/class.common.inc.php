@@ -1316,7 +1316,7 @@
 			$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
 				array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
 				$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
-				'@'.$domain;
+				($domain ? '@'.$domain : '');
 			//echo " = '$email'</p>\n";
 			return $email;
 		}
