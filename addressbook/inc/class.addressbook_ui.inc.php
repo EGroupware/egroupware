@@ -1369,7 +1369,10 @@ class addressbook_ui extends addressbook_bo
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				foreach(array('id','modified','modifier','account_id') as $key) unset($content[$key]);
+				foreach(array('id','modified','modifier','account_id','uid') as $key)
+				{
+					unset($content[$key]);
+				}
 				$content['owner'] = $this->default_private ? $this->user.'p' : $this->default_addressbook;
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
