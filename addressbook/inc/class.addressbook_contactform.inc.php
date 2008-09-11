@@ -52,8 +52,16 @@ class addressbook_contactform
 					{
 						$tracking = new addressbook_tracking($contact);
 					}
-					if ($contact->save($content))
+					if (($id = $contact->save($content)))
 					{
+						// check for fileuploads and attach the found files
+						foreach($content as $name => $value)
+						{
+							if (is_array($value) && isset($value['tmp_name']) && is_readable($value['tmp_name']))
+							{
+								egw_link::link('addressbook',$id,egw_link::VFS_APPNAME,$value,$name);
+							}
+						}
 						unset($content['modified']); unset($content['modifier']);	// not interesting for new entries
 
 						$tracking->do_notifications($content,null);	// only necessary as long addressbook is not doing this itself
