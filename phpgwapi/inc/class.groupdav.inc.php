@@ -65,7 +65,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @var integer
 	 */
-	var $debug = 1;
+	var $debug = 0;
 
 	/**
 	 * eGW's charset
