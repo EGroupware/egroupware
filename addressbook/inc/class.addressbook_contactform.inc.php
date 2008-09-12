@@ -32,19 +32,25 @@ class addressbook_contactform
 	 */
 	function display($content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null)
 	{
-		//echo "<p>addressbook_contactform::display($content,$addressbook,".print_r($fields,true).",$msg)</p>\n";
+		#error_log( "<p>addressbook_contactform::display(".print_r($content,true).",$addressbook,".print_r($fields,true).",$msg,$tpl_name)</p>\n");
+		if (empty($tpl_name) && !empty($content['tpl_form_name'])) $tpl_name =$content['tpl_form_name'];
 		$tpl = new etemplate($tpl_name ? $tpl_name : 'addressbook.contactform');
-
+		// initializing some fields
+		if (!$fields) $fields = array('org_name','n_fn','email','tel_work','url','note','captcha');
+		$submitted = false;
+		// check if submitted
 		if (is_array($content))
 		{
-			if (isset($content['captcha_result']) && $content['captcha'] != $content['captcha_result'] ||	// no correct captcha OR
-				time() - $content['start_time'] < 10 &&				// bot indicator (less then 10 sec to fill out the form and
-				!$GLOBALS['egw_info']['etemplate']['java_script'])	// javascript disabled)
+			if ((isset($content['captcha_result']) && $content['captcha'] != $content['captcha_result']) ||	// no correct captcha OR
+				(time() - $content['start_time'] < 10 &&				// bot indicator (less then 10 sec to fill out the form and
+				!$GLOBALS['egw_info']['etemplate']['java_script']))	// javascript disabled)
 			{
+				$submitted = "truebutfalse";
 				$tpl->set_validation_error('captcha',lang('Wrong - try again ...'));
 			}
 			elseif ($content['submitit'])
 			{
+				$submitted = true;
 				$contact = new addressbook_bo();
 				if ($content['owner'])	// save the contact in the addressbook
 				{
@@ -93,14 +99,15 @@ class addressbook_contactform
 				}
 			}
 		}
-		else
+		if (!is_array($content))
 		{
+			$preserv['tpl_form_name'] = $tpl_name;
 			$preserv['owner'] = $addressbook;
 			$preserv['msg'] = $msg;
 			$preserv['is_contactform'] = true;
 			$preserv['email_contactform'] = $email;
 			$preserv['subject_contactform'] = $subject;
-			if (!$fields) $fields = array('org_name','n_fn','email','tel_work','url','note','captcha');
+			#if (!$fields) $fields = array('org_name','n_fn','email','tel_work','url','note','captcha');
 			$custom = 1;
 			foreach($fields as $name)
 			{
@@ -128,6 +135,37 @@ class addressbook_contactform
 					$content['show'][$name] = true;
 				}
 			}
+			$preserv['start_time'] = time();
+		}
+		if (is_array($content) && $submitted == 'truebutfalse') {
+			$preserv['tpl_form_name'] = $tpl_name;
+			unset($content['submitit']);
+			$custom = 1;
+			// fieldnames are "defined" by the commit attempt, that way, we do not have to remember them
+			foreach($content as $name => $value) {
+				$preserv[$name]=$value;
+				if ($name{0} == '#')     // custom field
+				{
+					static $contact;
+					if (is_null($contact)) $contact = new addressbook_bo();
+					$content['show']['custom'.$custom] = true;
+					$content['customfield'][$custom] = $name;
+					$content['customlabel'][$custom] = $contact->customfields[substr($name,1)]['label'];
+					++$custom;
+				}
+				elseif($name == 'adr_one_locality')
+				{
+					if (!($content['show'][$name] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['addr_format']))
+					{
+						$content['show'][$name] = 'postcode_city';
+					}
+				} 
+				else
+				{
+					$content['show'][$name] = true;
+				}
+			}
+			// reset the timestamp 
 			$preserv['start_time'] = time();
 		}
 		$content['addr_format'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['addr_format'];
