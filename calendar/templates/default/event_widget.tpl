@@ -1,5 +1,5 @@
 <!-- BEGIN event_widget -->
-{indent}<div class="calEventHeader{Small}" style="background-color: {bordercolor};">
+{indent}<div class="calEventHeader{Small}" style="background-color: {bordercolor}; color: {headercolor};">
 {indent}	{header}
 {indent}	<div class="calEventIcons">{icons}</div>
 {indent}</div>
@@ -15,7 +15,7 @@
 <!-- BEGIN event_tooltip -->
 <div class="calEventTooltip" style="border-color: {bordercolor}; background: {bodybackground};">
 	<div class="calEventHeaderSmall" style="background-color: {bordercolor};">
-		<font color="white"><b>{timespan}</b></font>
+		<font color="{headercolor}">{timespan}</font>
 		<div  class="calEventIcons">{icons}</div>
 	</div>
 	<div class="calEventBodySmall">

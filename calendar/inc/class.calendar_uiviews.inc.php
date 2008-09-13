@@ -1137,6 +1137,7 @@ class calendar_uiviews extends calendar_ui
 		//$body_height = max(0,$height - $header_height - $corner_radius);
 		$border=1;
 		$headerbgcolor = $color ? $color : '#808080';
+		$headercolor = self::brightness($headerbgcolor) > 128 ? 'black' : 'white';
 		// the body-colors (gradient) are calculated from the headercolor, which depends on the cat of an event
 		$bodybgcolor1 = $this->brighter($headerbgcolor,$headerbgcolor == '#808080' ? 100 : 170);
 		$bodybgcolor2 = $this->brighter($headerbgcolor,220);
@@ -1195,6 +1196,7 @@ class calendar_uiviews extends calendar_ui
 			'border' => $border,
 			'bordercolor' => $headerbgcolor,
 			'headerbgcolor' => $headerbgcolor,
+			'headercolor' => $headercolor,
 			'bodybackground' => ($background = 'url('.$GLOBALS['egw_info']['server']['webserver_url'].
 				'/calendar/inc/gradient.php?color1='.urlencode($bodybgcolor1).'&color2='.urlencode($bodybgcolor2).
 				'&width='.$width.') repeat-y '.$bodybgcolor2),
@@ -1336,7 +1338,7 @@ class calendar_uiviews extends calendar_ui
 	* @param $decr int value to add to each component, default 64
 	* @return string the brighter color
 	*/
-	function brighter($rgb,$decr=64)
+	static function brighter($rgb,$decr=64)
 	{
 		if (!preg_match('/^#?([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$/',$rgb,$components))
 		{
@@ -1351,6 +1353,26 @@ class calendar_uiviews extends calendar_ui
 		}
 		//echo "brighter($rgb=".print_r($components,True).")=$brighter</p>\n";
 		return $brighter;
+	}
+
+	/**
+	 * Calculates the brightness of a hexadecimal rgb color (median of the r, g and b components)
+	 *
+	 * @param string $rgb eg. #808080
+	 * @return int between 0 and 255
+	 */
+	static function brightness($rgb)
+	{
+		if ($rgb[0] != '#' || strlen($rgb) != 7)
+		{
+			return 128;	// no rgb color, return some default
+		}
+		$dec = hexdec(substr($rgb,1));
+		for($i = 0; $i < 24; $i += 8)
+		{
+			$sum += ($dec >> $i) & 255;
+		}
+		return (int)round($sum / 3.0, 0);
 	}
 
 
