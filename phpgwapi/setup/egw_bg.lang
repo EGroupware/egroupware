@@ -376,8 +376,9 @@ list members	common	bg	Списък с членове
 lithuania	common	bg	Литва
 local	common	bg	Локален
 login	common	bg	Влизане (Login)
+loginid	common	bg	Име на потребител
 logout	common	bg	Изход
-lost login id	common	bg	Загубен Login Id
+lost login id	common	bg	Загубено име на потребител
 lost password	common	bg	Загубена парола
 low	common	bg	Нисък
 lowest	common	bg	Най-ниско
@@ -473,7 +474,7 @@ open popup window	common	bg	Отваряне на "изскачащ" прозо�
 open sidebox	common	bg	Отваряне на страничната кутия
 ordered list	common	bg	Подреден списък
 original	common	bg	Оригинал
-other	common	bg	Друго
+other	common	bg	Други
 overview	common	bg	Преглед
 owner	common	bg	Собственик
 page	common	bg	Страница
@@ -502,6 +503,7 @@ personal	common	bg	Личен
 peru	common	bg	Перу
 philippines	common	bg	Филипини
 phone number	common	bg	телефонен номер
+pitcairn	common	bg	Острови Питкерн
 please %1 by hand	common	bg	Моля %1 ръчно
 please enter a name	common	bg	Моля въведете име!
 please run setup to become current	common	bg	Моля минете през "инсталация", за да обновите
@@ -529,11 +531,11 @@ project	common	bg	Проект
 public	common	bg	общ
 puerto rico	common	bg	Пуерто Рико
 qatar	common	bg	Катар
-read	common	bg	Прочетете
-read this list of methods.	common	bg	Прочетете този списък с методи.
+read	common	bg	Четене
+read this list of methods.	common	bg	Четене на списъкът с методи.
 reading	common	bg	четене
 register	common	bg	Регистрация
-regular	common	bg	Постоянен
+regular	common	bg	Стандартен
 reject	common	bg	Отхвърляне
 remember me	common	bg	Запомни ме
 remove selected accounts	common	bg	премахване на избраните акаунти
@@ -542,7 +544,7 @@ rename	common	bg	Преименуване
 replace	common	bg	Замяна
 replace with	common	bg	Замяна с
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	bg	Пълен списък на потребителите на системата. Внимание: списъкът може да бъде много дълъг!
-returns an array of todo items	common	bg	Връща масив с todo елементи
+returns an array of todo items	common	bg	Връща масив с Предстоящи
 returns struct of users application access	common	bg	Връща структура с достъпа на потребителите до приложенията
 reunion	common	bg	Реюнион
 right	common	bg	Дясно
@@ -685,6 +687,7 @@ united states minor outlying islands	common	bg	Малки далечни ост�
 unknown	common	bg	Неизвестен
 update	common	bg	Обновяване
 update the clock per minute or per second	common	bg	Обновяване на часовника на всяка минута или секунда
+upload	common	bg	Качване
 upload directory does not exist, or is not writeable by webserver	common	bg	Директорията за Upload не съществува или не е позволен запис за WEB сървъра
 upload requires the directory to be writable by the webserver!	common	bg	За Upload е необходим достъп за запис от WEB сървъра!
 url	common	bg	WEB адр.
