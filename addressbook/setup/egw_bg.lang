@@ -14,8 +14,8 @@ accounts	addressbook	bg	Акаунти
 actions	addressbook	bg	Действия
 add %1	addressbook	bg	Добавяне на %1
 add a contact to this organisation	addressbook	bg	Добавяне на контакт към тази организация
-add a new contact	addressbook	bg	Добавяне на нов контакт
-add a new infolog	addressbook	bg	Добавяне на нов Infolog
+add a new contact	addressbook	bg	Добавяне на контакт
+add a new infolog	addressbook	bg	Добавяне в Дневника
 add a new list	addressbook	bg	Добавяне на нов списък
 add a single entry by passing the fields.	addressbook	bg	Добавяне на единичен запис чрез предаване на полетата.
 add business email of whole distribution list?	addressbook	bg	Добавяне на служебен e-mail за целия пощенски списък?
@@ -260,7 +260,7 @@ name for the distribution list	addressbook	bg	Име на пощенския с�
 name of current user, all other contact fields are valid too	addressbook	bg	Име на текущия потребител, останалите полета на контакта също са валидни
 name, address	addressbook	bg	Име, Адрес
 new contact submitted by %1 at %2	addressbook	bg	Новият контакт е изпратен от %1 в %2
-new window opened to edit infolog for your selection	addressbook	bg	Отворен е нов призирец за редакция на Infolog за избраните елементи
+new window opened to edit infolog for your selection	addressbook	bg	Отворен е нов прoзoрец за редакция в Дневника на избраните елементи
 next date	addressbook	bg	Следваща дата
 no categories selected	addressbook	bg	не са избрани категории
 no vcard	addressbook	bg	Липсва VCard
@@ -320,7 +320,7 @@ selected contacts	addressbook	bg	избраните контакти
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	bg	Да се показват ли колоните за снимка и личен (домашен) адрес, независимо дали са празни или не.
 show	addressbook	bg	Покажи
 show birthday reminders on main screen	addressbook	bg	Напомняне за рождени дни на главния екран
-show infolog entries for this organisation	addressbook	bg	Показване на InfoLog записите за тази организация
+show infolog entries for this organisation	addressbook	bg	Показване на записите в Дневника за тази организация
 show the contacts of this organisation	addressbook	bg	Показване на контактите на тази организация
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	bg	Размер на "изскачащия" прозорец (ШxВ, напр. 400x300), ако ще се използва такъв
 start	admin	bg	Старт
@@ -359,7 +359,7 @@ vcard	common	bg	VCard
 vcards require a first name entry.	addressbook	bg	За VCard се изисква въвеждане на първо име.
 vcards require a last name entry.	addressbook	bg	За VCard се изисква въвеждане на фамилно име.
 verification	addressbook	bg	Проверка
-view linked infolog entries	addressbook	bg	Покзване на свързаните записи от InfoLog
+view linked infolog entries	addressbook	bg	Покзване на свързаните записи от Дневника
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	bg	ВНИМАНИЕ! LDAP е валиден избор само ако НЕ използвате контактите за съхранение и на потребителските акаунти!
 warning: all contacts found will be deleted!	addressbook	bg	ВНИМАНИЕ! Всички намерени контакти ще бъдат изтрити!
 warning: template "%1" not found, using default template instead.	addressbook	bg	ВНИМАНИЕ: Не е намерен шаблон "%1". Използва се шаблона по подразбиране.
