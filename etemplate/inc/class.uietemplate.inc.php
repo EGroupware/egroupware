@@ -807,7 +807,7 @@ class etemplate extends boetemplate
 				if (strlen($cell['onclick']) > 1)
 				{
 					$onclick = $cell['onclick'];
-					if (strpos($onclick,'$') !== false || $onclick{0} == '@')
+					if (strpos($onclick,'$') !== false || $onclick[0] == '@')
 					{
 						$onclick = $this->expand_name($onclick,$c,$r,$content['.c'],$content['.row'],$content);
 					}
@@ -950,7 +950,7 @@ class etemplate extends boetemplate
 		}
 		list($span) = explode(',',$cell['span']);	// evtl. overriten later for type template
 
-		if ($cell['name']{0} == '@' && $cell['type'] != 'template')
+		if ($cell['name'][0] == '@' && $cell['type'] != 'template')
 		{
 			$cell['name'] = $this->get_array($content,$this->expand_name(substr($cell['name'],1),
 				$show_c,$show_row,$content['.c'],$content['.row'],$content));
@@ -971,7 +971,7 @@ class etemplate extends boetemplate
 		if ((int) $cell['tabindex']) $options .= ' tabindex="'.(int)$cell['tabindex'].'"';
 		if ($cell['accesskey']) $options .= ' accesskey="'.html::htmlspecialchars($cell['accesskey']).'"';
 
-		if (strchr($cell['size'],'$') || $cell['size']{0} == '@')	// expand cell['size'] for the button-disabled-check now
+		if (strchr($cell['size'],'$') || $cell['size'][0] == '@')	// expand cell['size'] for the button-disabled-check now
 		{
 			$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
@@ -985,7 +985,7 @@ class etemplate extends boetemplate
 		}
 		$extra_label = True;
 
-		if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
+		if (strchr($cell['onchange'],'$') || $cell['onchange'][0] == '@')
 		{
 			$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
@@ -995,12 +995,16 @@ class etemplate extends boetemplate
 		while ((!$this->types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
 		{
 			//echo "<p>pre_process($cell[name]/$cell[type])</p>\n";
-			if (strchr($cell['size'],'$') || $cell['size']{0} == '@')
+			if (strchr($cell['size'],'$') || $cell['size'][0] == '@')
 			{
 				$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
+			if (strchr($cell['onchange'],'$') || $cell['onchange'][0] == '@')
+			{
+				$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+			}
 			if (!$ext_type) $ext_type = $type;
-			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$readonlys[$name]);
+			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$readonlys[$name] || $readonlys['__ALL__']);
 
 			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension
 
@@ -1011,7 +1015,7 @@ class etemplate extends boetemplate
 			list($type,$sub_type) = explode('-',$cell['type']);
 		}
 		list(,$class) = explode(',',$cell['span']);	// might be set by extension
-		if (strchr($class,'$') || $class{0} == '@')
+		if (strchr($class,'$') || $class[0] == '@')
 		{
 			$class = $this->expand_name($class,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
@@ -1020,22 +1024,22 @@ class etemplate extends boetemplate
 			$class .= ' inputRequired';
 		}
 		$cell_options = $cell['size'];
-		if (strchr($cell_options,'$') || $cell_options{0} == '@')
+		if (strchr($cell_options,'$') || $cell_options[0] == '@')
 		{
 			$cell_options = $this->expand_name($cell_options,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
 		$label = $cell['label'];
-		if (strchr($label,'$') || $label{0} == '@')
+		if (strchr($label,'$') || $label[0] == '@')
 		{
 			$label = $this->expand_name($label,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
 		$help = $cell['help'];
-		if (strchr($help,'$') || $help{0} == '@')
+		if (strchr($help,'$') || $help[0] == '@')
 		{
 			$no_lang_on_help = true;
 			$help = $this->expand_name($help,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
-		$blur = $cell['blur']{0} == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
+		$blur = $cell['blur'][0] == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
 			(strlen($cell['blur']) <= 1 ? $cell['blur'] : lang($cell['blur']));
 
 		if ($this->java_script())
@@ -1076,10 +1080,6 @@ class etemplate extends boetemplate
 			}
 			if ($cell['onchange'] && !($cell['type'] == 'button' || $cell['type'] == 'buttononly'))
 			{
-/*				if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
-				{
-					$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-				}*/
 				$options .= ' onChange="'.($cell['onchange'] == '1' ? 'this.form.submit();' : $this->js_pseudo_funcs($cell['onchange'],$cname)).'"';
 			}
 		}
@@ -1350,7 +1350,7 @@ class etemplate extends boetemplate
 				}
 				if (!is_object($cell['obj']))
 				{
-					if ($cell['name']{0} == '@')
+					if ($cell['name'][0] == '@')
 					{
 						$cell['obj'] = $this->get_array($content,substr($cell['name'],1));
 						$obj_read = is_object($cell['obj']) ? 'obj from content' : 'obj read, obj-name from content';
@@ -1461,7 +1461,7 @@ class etemplate extends boetemplate
 					if ($multiple && is_numeric($multiple))	// eg. "3+" would give a regular multiselectbox
 					{
 						$html .= html::checkbox_multiselect($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
-							$cell['no_lang'],$options,$multiple,$multiple{0}!=='0',$extraStyleMultiselect);
+							$cell['no_lang'],$options,$multiple,$multiple[0]!=='0',$extraStyleMultiselect);
 					}
 					else
 					{
