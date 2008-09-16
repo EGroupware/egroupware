@@ -172,8 +172,11 @@ class asyncservice
 			if ($this->debug) { echo "<p>n=$n, $u: isset(times[$u]="; print_r($times[$u]); echo ")=".(isset($times[$u])?'True':'False')."</p>\n"; }
 			if (isset($times[$u]))
 			{
-				$time = explode(',',$times[$u]);
-
+				if(is_array($times[$u])) {
+					$time = array_keys($times[$u]);
+				} else {
+					$time = explode(',',$times[$u]);
+				}
 				$times[$u] = array();
 
 				foreach($time as $t)
@@ -195,7 +198,7 @@ class asyncservice
 					}
 					else
 					{
-						if ($t == '*') $t = '*/1';
+						if ((string)$t == '*') 	$t = '*/1';
 
 						list($one,$inc) = $arr = explode('/',$t);
 
