@@ -1004,7 +1004,8 @@ class etemplate extends boetemplate
 				$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
 			if (!$ext_type) $ext_type = $type;
-			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$readonlys[$name] || $readonlys['__ALL__']);
+			$extension_readonly = $readonlys[$name] || $readonlys['__ALL__'];
+			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$extension_readonly);
 
 			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension
 
