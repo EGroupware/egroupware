@@ -1006,6 +1006,7 @@ class etemplate extends boetemplate
 			if (!$ext_type) $ext_type = $type;
 			$extension_readonly = $readonlys[$name] || $readonlys['__ALL__'];
 			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$extension_readonly);
+			$readonlys[$name] =& $extension_readonly;
 
 			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension
 
