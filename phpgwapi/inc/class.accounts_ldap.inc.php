@@ -712,6 +712,14 @@ class accounts_ldap
 				$sortFn = $param['sort'] == 'DESC' ? 'arsort' : 'asort';
 				$sortFn($fullSet);
 				$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
+				// if we do not have a start, or want the members of a certain group, we want all, that way we dont want to or the uids
+				// since if we have a whole lot of members, it slows the query down
+				// if you work with very big groups, it may present a problem 
+				if (is_numeric($start) || is_numeric($param['type'])) {
+					$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";
+				} else {
+					$filter = "(" . "&(objectclass=posixaccount)" . $this->account_filter . ")";
+				}
 
 				$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";
 				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
