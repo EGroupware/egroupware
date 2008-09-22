@@ -238,14 +238,14 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.4.001">
+	<template id="infolog.index" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="90%"/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row disabled="!@css">
 					<html span="all" id="css"/>
 				</row>
 				<row disabled="!@msg">
