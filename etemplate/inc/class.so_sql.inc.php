@@ -995,7 +995,7 @@ class so_sql
 			{
 				$query = array($db_col => $data[$col]);
 			}
-			if (list($other) = $this->search($query,false,'','','',false,'AND',false,null,''))
+			foreach($this->db->select($this->table_name,$this->db_key_cols,$query,__LINE__,__FILE__,false,'',$this->app) as $other)
 			{
 				foreach($this->db_key_cols as $db_key_col => $key_col)
 				{
