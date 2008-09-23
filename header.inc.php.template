@@ -86,7 +86,7 @@ include(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
 $GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
 $GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 unset($setup_info);
-$GLOBALS['egw_info']['server']['versions']['header'] = '1.29';
+$GLOBALS['egw_info']['server']['versions']['header'] = '1.28';
 
 // some not longer necessary defines
 if ($GLOBALS['egw_info']['flags']['phpgw_compatibility'])
