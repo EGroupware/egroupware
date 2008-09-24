@@ -575,7 +575,7 @@ class link_widget
 
 	/**
 	 * Ajax callback to search in $app for $pattern, result is displayed in $id
-	 * 
+	 *
 	 * Called via onClick from etemplate.link_widget.(to|entry)'s search button
 	 *
 	 * @param string $app app-name to search
@@ -605,7 +605,7 @@ class link_widget
 			foreach($found as $id => $option)
 			{
 				if (!is_array($option)) $option = array('label' => $option);
-				$script .= "opt = select.options[select.options.length] = new Option('".addslashes($option['label'])."','$id');\n";
+				$script .= "opt = select.options[select.options.length] = new Option('".addslashes($option['label'])."','".addslashes($id)."');\n";
 				if (count($option) > 1)
 				{
 					foreach($option as $name => $value)
