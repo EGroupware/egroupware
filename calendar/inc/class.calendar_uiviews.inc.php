@@ -213,6 +213,9 @@ class calendar_uiviews extends calendar_ui
 			case 'month':
 				return $group_warning.$this->month(0,true);
 
+			case 'weekN':
+				return $group_warning.$this->weekN(true);
+
 			default:
 			case 'week':
 				return $group_warning.$this->week(0,true);
