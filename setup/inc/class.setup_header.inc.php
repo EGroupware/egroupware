@@ -29,6 +29,7 @@ class setup_header
 		'pgsql'  => 'PostgreSQL',
 		'mysql'  => 'MySQL',
 		'mysqli' => 'MySQLi (php5)',
+		'mysqlt' => 'MySQL (with transactions)',
 		'mssql'  => 'MS SQL Server',
 		'odbc_mssql'  => 'MS SQL Server via ODBC',
 		'oracle' => 'Oracle',
@@ -43,6 +44,7 @@ class setup_header
 		'pgsql'  => 5432,
 		'mysql'  => 3306,
 		'mysqli' => 3306,
+		'mysqlt' => 3306,
 		'mssql'  => 1433,
 		'odbc_mssql'  => '',
 		'oracle' => 1521,
@@ -247,6 +249,7 @@ class setup_header
 			// short => array(extension,func_to_check,supported_db(s))
 			'mysql'  => array('mysql','mysql_connect','mysql'),
 			'mysqli' => array('mysql','mysqli_connect','mysqli'),
+			'mysqlt' => array('mysql','mysql_connect','mysqlt'),
 			'pgsql'  => array('pgsql','pg_connect','pgsql'),
 			'mssql'  => array('mssql','mssql_connect','mssql'),
 			'odbc'   => array('odbc',false,'sapdb','odbc_mssql','odbc_oracle'),
@@ -269,7 +272,7 @@ class setup_header
 		return $supported_db;
 	}
 	
-	function is_md5($str)
+	static function is_md5($str)
 	{
 		return  preg_match('/^[0-9a-f]{32}$/',$str);
 	}
