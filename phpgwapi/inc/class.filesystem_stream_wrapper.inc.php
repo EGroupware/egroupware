@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API: VFS - stream wrapper interface
+ * eGroupWare API: VFS - stream wrapper to access the regular filesystem (setting a given user, group and mode)
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -12,36 +12,37 @@
  */
 
 /**
- * eGroupWare API: VFS - stream wrapper interface
+ * eGroupWare API: VFS - stream wrapper to access the regular filesystem (setting a given user, group and mode)
  *
- * The new vfs stream wrapper uses a kind of fstab to mount different filesystems / stream wrapper types
- * together for eGW's virtual file system.
+ * This stream wrapper allows to mount parts of the regular filesystem, under specified permissions.
+ * You can eg. mount an directory in the docroot to allow the Admin group to upload files there.
  *
- * @ToDo extended ACL with inheritance and specific rights for users or groups
- * 	Backends can implement them, in which case they get stored independent of the current mount-points.
- *  If the backend does not implement them, they get stored by the VFS under the final URL of the backend,
- *  to also allow mounts to change. The URL's to these extended attributes need to be renamed, when the
- *  file or an underlaying directory get's renamed. That's the task of the backend, if it chooses to
- *  implement extended ACL itself.
- * @ToDo storage for WebDAV properties
- * @ToDo implement the necessary function of WebDAV locks
+ * This stream wrapper uses query parameters to pass certain options to it:
+ * - user:  uid or user-name owning the path, default root
+ * - group: gid or group-name owning the path, default root
+ * - mode:  mode bit for the path, default 0005 (read and execute for nobody)
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
-class vfs_stream_wrapper implements iface_stream_wrapper
+class filesystem_stream_wrapper implements iface_stream_wrapper
 {
 	/**
 	 * Scheme / protocol used for this stream-wrapper
 	 */
-	const SCHEME = 'vfs';
+	const SCHEME = 'filesystem';
 	/**
 	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */
-	const DIR_MIME_TYPE = 'httpd/unix-directory';
+	const DIR_MIME_TYPE = egw_vfs::DIR_MIME_TYPE ;
+
 	/**
-	 * Should unreadable entries in a not writable directory be hidden, default yes
+	 * mode-bits, which have to be set for files
 	 */
-	const HIDE_UNREADABLES = true;
+	const MODE_FILE = 0100000;
+	/**
+	 * mode-bits, which have to be set for directories
+	 */
+	const MODE_DIR =   040000;
 
 	/**
 	 * optional context param when opening the stream, null if no context passed
@@ -51,118 +52,46 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	var $context;
 
 	/**
-	 * Our fstab in the form mount-point => url
-	 *
-	 * The entry for root has to be the first, or more general if you mount into subdirs the parent has to be before!
-	 *
-	 * @var array
-	 */
-	protected static $fstab = array(
-		'/' => 'sqlfs://$host/',
-		'/apps' => 'links://$host/apps',
-	);
-
-	/**
 	 * stream / ressouce this class is opened for by stream_open
 	 *
 	 * @var ressource
 	 */
 	private $opened_stream;
+
+	/**
+	 * URL of the opened stream, used to build the complete URL of files in the dir
+	 *
+	 * @var string
+	 */
+	private $opened_stream_url;
+
 	/**
 	 * directory-ressouce this class is opened for by dir_open
 	 *
 	 * @var ressource
 	 */
 	private $opened_dir;
+
 	/**
 	 * URL of the opened dir, used to build the complete URL of files in the dir
 	 *
 	 * @var string
 	 */
 	private $opened_dir_url;
-	/**
-	 * Flag if opened dir is writable, in which case we return un-readable entries too
-	 *
-	 * @var boolean
-	 */
-	private $opened_dir_writable;
-	/**
-	 * Extra dirs from our fstab in the current opened dir
-	 *
-	 * @var array
-	 */
-	private $extra_dirs;
-	/**
-	 * Pointer in the extra dirs
-	 *
-	 * @var int
-	 */
-	private $extra_dir_ptr;
-
-	private static $wrappers;
 
 	/**
-	 * Resolve the given path according to our fstab
+	 * How much should be logged to the apache error-log
 	 *
-	 * @param string $path
-	 * @return string/boolean false if the url cant be relsolved, should not happen if fstab has a root entry
+	 * 0 = Nothing
+	 * 1 = only errors
+	 * 2 = all function calls and errors (contains passwords too!)
 	 */
-	static function resolve_url($path)
-	{
-		static $cache = array();
-
-		// we do some caching here
-		if (isset($cache[$path]))
-		{
-			return $cache[$path];
-		}
-		// setting default user, passwd and domain, if it's not contained int the url
-		static $defaults;
-		if (is_null($defaults))
-		{
-			$defaults = array(
-				'user' => $GLOBALS['egw_info']['user']['account_lid'],
-				'pass' => $GLOBALS['egw_info']['user']['passwd'],
-				'host' => $GLOBALS['egw_info']['user']['domain'],
-			);
-		}
-		$parts = array_merge(parse_url($path),$defaults);
-
-		if (!empty($parts['scheme']) && $parts['scheme'] != self::SCHEME)
-		{
-			return $path;	// path is already a non-vfs url --> nothing to do
-		}
-		if (empty($parts['path'])) $parts['path'] = '/';
-
-		foreach(array_reverse(self::$fstab) as $mounted => $url)
-		{
-			if ($mounted == '/' || $mounted == $parts['path'] || $mounted.'/' == substr($parts['path'],0,strlen($mounted)+1))
-			{
-				$scheme = parse_url($url,PHP_URL_SCHEME);
-				if (is_null(self::$wrappers) || !in_array($scheme,self::$wrappers))
-				{
-					self::load_wrapper($scheme);
-				}
-				$url = egw_vfs::concat($url,substr($parts['path'],strlen($mounted)));
-
-				$url = str_replace(array('$user','$pass','$host'),array($parts['user'],$parts['pass'],$parts['host']),$url);
-
-				if ($parts['query']) $url .= '?'.$parts['query'];
-				if ($parts['fragment']) $url .= '#'.$parts['fragment'];
-
-				//error_log(__METHOD__."($path) = $url");
-				return $cache[$path] = $url;
-			}
-		}
-		//error_log(__METHOD__."($path) can't resolve path!\n");
-		trigger_error(__METHOD__."($path) can't resolve path!\n",E_USER_WARNING);
-		return false;
-	}
+	const LOG_LEVEL = 1;
 
 	/**
 	 * This method is called immediately after your stream object is created.
 	 *
-	 * @param string $path URL that was passed to fopen() and that this object is expected to retrieve
+	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
 	 * @param string $mode mode used to open the file, as detailed for fopen()
 	 * @param int $options additional flags set by the streams API (or'ed together):
 	 * - STREAM_USE_PATH      If path is relative, search for the resource using the include_path.
@@ -171,18 +100,43 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param string $opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
 	 * @return boolean true if the ressource was opened successful, otherwise false
 	 */
-	function stream_open ( $path, $mode, $options, &$opened_path )
+	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
-		$this->opened_stream = null;
+		$this->opened_stream = $this->opened_stream_url = null;
 
-		if (!($url = self::resolve_url($path)))
+		// check access rights, based on the eGW mount perms
+		if (!($stat = self::url_stat($url,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
+		{
+			$dir = egw_vfs::dirname($url);
+			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
+				$mode[0] == 'x' ||	// or file should not exist, but does
+				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))	// or we are not allowed to 																																			create it
+			{
+				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
+				if (!($options & STREAM_URL_STAT_QUIET))
+				{
+					trigger_error(__METHOD__."($url,$mode,$options) file does not exist or can not be created!",E_USER_WARNING);
+				}
+				return false;
+			}
+		}
+		elseif ($mode != 'r' && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))	// we are not allowed to edit it
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
+			if (!($options & STREAM_URL_STAT_QUIET))
+			{
+				trigger_error(__METHOD__."($url,$mode,$options) file can not be edited!",E_USER_WARNING);
+			}
+			return false;
+		}
+
+		// open the "real" file
+		if (!($this->opened_stream = fopen(parse_url($url,PHP_URL_PATH),$mode,$options)))
 		{
 			return false;
 		}
-		if (!($this->opened_stream = fopen($url,$mode,$options)))
-		{
-			return false;
-		}
+		$this->opened_stream_url = $url;
+
 		return true;
 	}
 
@@ -304,7 +258,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_stat ( )
 	{
-		return fstat($this->opened_stream);
+		return self::url_stat($this->opened_stream_url,0);
 	}
 
 	/**
@@ -313,16 +267,20 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * It should attempt to delete the item specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support unlinking!
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $path )
+	static function unlink ( $url )
 	{
-		if (!($url = self::resolve_url($path)))
+		$path = parse_url($url,PHP_URL_PATH);
+
+		// check access rights (file need to exist and directory need to be writable
+		if (!file_exists($path) || is_dir($path) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
 		{
-			return false;
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
+			return false;	// no permission or file does not exist
 		}
-		return unlink($url);
+		return unlink($path);
 	}
 
 	/**
@@ -333,18 +291,42 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * The regular filesystem stream-wrapper returns an error, if $url_from and $url_to are not either both files or both dirs!
 	 *
-	 * @param string $path_from
-	 * @param string $path_to
+	 * @param string $url_from
+	 * @param string $url_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $path_from, $path_to )
+	static function rename ( $url_from, $url_to )
 	{
-		if (!($url_from = self::resolve_url($path_from)) ||
-			!($url_to = self::resolve_url($path_to)))
+		$from = parse_url($url_from);
+		$to   = parse_url($url_to);
+
+		// check access rights
+		if (!($from_stat = self::url_stat($url_from,0)) || !egw_vfs::check_access(egw_vfs::dirname($url_from),egw_vfs::WRITABLE))
 		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
+			return false;	// no permission or file does not exist
+		}
+		if (!egw_vfs::check_access($to_dir,egw_vfs::WRITABLE,$to_dir_stat = self::url_stat($to_dir,0)))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_to permission denied!");
+			return false;	// no permission or parent-dir does not exist
+		}
+		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
+		// for our vfs too, we abort here with an error, like the filesystem one does
+		if (($to_stat = self::url_stat($path_to,0)) &&
+			($to_stat['mime'] === self::DIR_MIME_TYPE) !== ($from_stat['mime'] === self::DIR_MIME_TYPE))
+		{
+			$is_dir = $to_stat['mime'] === self::DIR_MIME_TYPE ? 'a' : 'no';
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) $path_to is $is_dir directory!");
+			return false;	// no permission or file does not exist
+		}
+		// if destination file already exists, delete it
+		if ($to_stat && !self::unlink($url_to,$operation))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
 			return false;
 		}
-		return rename($url_from,$url_to);
+		return rename($from['path'],$to['path']);
 	}
 
 	/**
@@ -353,18 +335,31 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * It should attempt to create the directory specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories.
 	 *
-	 * @param string $path
-	 * @param int $mode
+	 * @param string $url
+	 * @param int $mode not used, as we dont allow to change mode
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ( $path, $mode, $options )
+	static function mkdir ( $url, $mode, $options )
 	{
-		if (!($url = self::resolve_url($path)))
+		$path = parse_url($url,PHP_URL_PATH);
+		$recursive = (bool)($options & STREAM_MKDIR_RECURSIVE);
+
+		// find the real parent (might be more then one level if $recursive!)
+		do {
+			$parent = dirname($parent ? $parent : $path);
+			$parent_url = egw_vfs::dirname($parent_url ? $parent_url : $url);
+		}
+		while ($recursive && $parent != '/' && !file_exists($parent));
+		//echo __METHOD__."($url,$mode,$options) path=$path, recursive=$recursive, parent=$parent, egw_vfs::check_access(parent_url=$parent_url,egw_vfs::WRITABLE)=".(int)egw_vfs::check_access($parent_url,egw_vfs::WRITABLE)."\n";
+
+		// check access rights (in real filesystem AND by mount perms)
+		if (file_exists($path) || !file_exists($parent) || !is_writable($parent) || !egw_vfs::check_access($parent_url,egw_vfs::WRITABLE))
 		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;
 		}
-		return mkdir($url,$mode,$options);
+		return mkdir($path,$mode=0700,$recursive);	// setting mode 0700 allows (only) apache to write into the dir
 	}
 
 	/**
@@ -373,55 +368,22 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * It should attempt to remove the directory specified by path.
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support removing directories.
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $path, $options )
+	static function rmdir ( $url, $options )
 	{
-		if (!($url = self::resolve_url($path)))
+		$path = parse_url($url,PHP_URL_PATH);
+		$parent = dirname($path);
+
+		// check access rights (in real filesystem AND by mount perms)
+		if (!file_exists($path) || !is_writable($parent) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
 		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;
 		}
-		return rmdir($url);
-	}
-
-	/**
-	 * Allow to call methods of the underlying stream wrapper: touch, chmod, chgrp, chown, ...
-	 *
-	 * We cant use a magic __call() method, as it does not work for static methods!
-	 *
-	 * @param string $name
-	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
-	 * @param boolean $fail_silent=false should only false be returned if function is not supported by the backend,
-	 * 	or should an E_USER_WARNING error be triggered (default)
-	 * @return mixed return value of backend or false if function does not exist on backend
-	 */
-	static protected function _call_on_backend($name,$params,$fail_silent=false)
-	{
-		$path = $params[0];
-
-		if (!($url = self::resolve_url($params[0])))
-		{
-			return false;
-		}
-		if (($scheme = parse_url($url,PHP_URL_SCHEME)))
-		{
-			if (!class_exists($class = $scheme.'_stream_wrapper') || !method_exists($class,$name))
-			{
-				if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
-				return false;
-			}
-			$params[0] = $url;
-
-			return call_user_func_array(array($scheme.'_stream_wrapper',$name),$params);
-		}
-		// call the filesystem specific function
-		if (!function_exists($name))
-		{
-			return false;
-		}
-		return $name($url,$time);
+		return rmdir($path);
 	}
 
 	/**
@@ -432,15 +394,24 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param int $atime=null access time (unix timestamp), default null = current time, not implemented in the vfs!
 	 * @return boolean true on success, false otherwise
 	 */
-	static function touch($path,$time=null,$atime=null)
+	static function touch($url,$time=null,$atime=null)
 	{
-		return self::_call_on_backend('touch',array($path,$time,$atime));
+		$path = parse_url($url,PHP_URL_PATH);
+		$parent = dirname($path);
+
+		// check access rights (in real filesystem AND by mount perms)
+		if (!file_exists($path) || !is_writable($parent) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
+			return false;
+		}
+		return touch($path,$time,$atime);
 	}
 
 	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
-	 * Requires owner or root rights!
+	 * Not supported, as it would require root rights!
 	 *
 	 * @param string $path
 	 * @param string $mode mode string see egw_vfs::mode2int
@@ -448,13 +419,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function chmod($path,$mode)
 	{
-		return self::_call_on_backend('chmod',array($path,$mode));
+		return false;
 	}
 
 	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
-	 * Requires root rights!
+	 * Not supported, as it would require root rights!
 	 *
 	 * @param string $path
 	 * @param int $owner numeric user id
@@ -462,13 +433,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function chown($path,$owner)
 	{
-		return self::_call_on_backend('chown',array($path,$owner));
+		return false;
 	}
 
 	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
-	 * Requires owner or root rights!
+	 * Not supported, as it would require root rights!
 	 *
 	 * @param string $path
 	 * @param int $group numeric group id
@@ -476,92 +447,29 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function chgrp($path,$group)
 	{
-		return self::_call_on_backend('chgrp',array($path,$group));
-	}
-
-	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
-	 *
-	 * The methods use the following ways to get the mime type (in that order)
-	 * - directories (is_dir()) --> self::DIR_MIME_TYPE
-	 * - stream implemented by class defining the STAT_RETURN_MIME_TYPE constant --> use mime-type returned by url_stat
-	 * - for regular filesystem use mime_content_type function if available
-	 * - use eGW's mime-magic class
-	 *
-	 * @param string $path
-	 * @return string mime-type (self::DIR_MIME_TYPE for directories)
-	 */
-	static function mime_content_type($path)
-	{
-		if (!($url = self::resolve_url($path)))
-		{
-			return false;
-		}
-		if (is_dir($url))
-		{
-			$mime = self::DIR_MIME_TYPE;
-		}
-		if (!$mime && ($scheme = parse_url($url,PHP_URL_SCHEME)))
-		{
-			// check it it's an eGW stream wrapper returning mime-type via url_stat
-			if (class_exists($class = $scheme.'_stream_wrapper') && ($mime_attr = @constant($class.'::STAT_RETURN_MIME_TYPE')))
-			{
-				$stat = call_user_func(array($scheme.'_stream_wrapper','url_stat'),parse_url($url,PHP_URL_PATH),0);
-				if ($stat[$mime_attr])
-				{
-					$mime = $stat[$mime_attr];
-				}
-			}
-		}
-		// if we operate on the regular filesystem and the mime_content_type function is available --> use it
-		if (!$mime && !$scheme && function_exists('mime_content_type'))
-		{
-			$mime = mime_content_type($path);
-		}
-		// using eGW's own mime magic
-		// ToDo: rework mime_magic as all methods cound be static!
-		if (!$mime)
-		{
-			static $mime_magic;
-			if (is_null($mime_magic))
-			{
-				$mime_magic = new mime_magic();
-			}
-			$mime = $mime_magic->filename2mime(parse_url($url,PHP_URL_PATH));
-		}
-		//error_log(__METHOD__."($path) mime=$mime");
-		return $mime;
+		return false;
 	}
 
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
 	 *
-	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
+	 * @param string $url URL that was passed to opendir() and that this object is expected to explore.
+	 * @param int $options
 	 * @return booelan
 	 */
-	function dir_opendir ( $path, $options )
+	function dir_opendir ( $url, $options )
 	{
-		$this->opened_dir = $this->extra_dirs = null;
-		$this->extra_dir_ptr = 0;
+		error_log(__METHOD__."($url,$options)");
 
-		if (!($this->opened_dir_url = self::resolve_url($path)))
+		$this->opened_dir = null;
+
+		$parts = parse_url($this->opened_dir_url = $url);
+
+		// ToDo: check access rights
+
+		if (!($this->opened_dir = opendir($parts['path'])))
 		{
 			return false;
-		}
-		if (!($this->opened_dir = opendir($this->opened_dir_url)))
-		{
-			return false;
-		}
-		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
-
-		// check our fstab if we need to add some of the mountpoints
-		$basepath = parse_url($this->opened_dir_url,PHP_URL_PATH);
-		foreach(self::$fstab as $mounted => $nul)
-		{
-			if (dirname($mounted) == $basepath && $mounted != '/')
-			{
-				$this->extra_dirs[] = basename($mounted);
-			}
 		}
 		return true;
 	}
@@ -581,7 +489,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * The last 3 digits are exactly the same thing as what you pass to chmod.
 	 * 040000 defines a directory, and 0100000 defines a file.
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
 	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward,
 	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned,
@@ -592,38 +500,25 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags )
+	static function url_stat ( $url, $flags )
 	{
-		//error_log(__METHOD__."('$path',$flags)");
+		$parts = parse_url($url);
 
-		if (!($url = self::resolve_url($path)))
-		{
-			return false;
-		}
 		//error_log(__METHOD__."('$path',$flags) calling stat($url)");
-		$stat = @stat($url);	// suppressed the stat failed warnings
+		$stat = @stat($parts['path']);	// suppressed the stat failed warnings
 
-		// check if a failed url_stat was for a home dir, in that case silently create it
-		if (!$stat && dirname(parse_url($path,PHP_URL_PATH)) == '/home' && ($id = $GLOBALS['egw']->accounts->name2id(basename($path))))
+		if ($stat)
 		{
-			$hook_data = array(
-				'location' => $GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'addgroup' : 'addaccount',
-				'account_id' => $id,
-				'account_lid' => basename($path),
-				'account_name' => basename($path),
-			);
-			call_user_func(array('vfs_home_hooks',$hook_data['location']),$hook_data);
-			$stat = @stat($url);
+			// set owner, group and mode from mount options
+			if (!self::parse_query($parts['query'],$uid,$gid,$mode))
+			{
+				return false;
+			}
+			$stat['uid'] = $stat[4] = $uid;
+			$stat['gid'] = $stat[5] = $gid;
+			$stat['mode'] = $stat[2] = $stat['mode'] & self::MODE_DIR ? self::MODE_DIR | $mode : self::MODE_FILE | ($mode & ~0111);
 		}
-		return $stat;
-
-		// Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
-		// Problem: this does NOT stop (calles itself infinit recursive)!
-		if (self::HIDE_UNREADABLES && !egw_vfs::check_access($path,egw_vfs::READABLE,$stat) &&
-			!egw_vfs::check_access(dirname($path,egw_vfs::WRITABLE)))
-		{
-			return false;
-		}
+		//echo __METHOD__."($url,$flags) path=$parts[path], mount_mode=".sprintf('0%o',$mode).", mode=".sprintf('0%o',$stat['mode']).'='.egw_vfs::int2mode($stat['mode'])."\n"; //print_r($stat);
 		return $stat;
 	}
 
@@ -639,19 +534,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_readdir ( )
 	{
-		if ($this->extra_dirs && count($this->extra_dirs) > $this->extra_dir_ptr)
-		{
-			return $this->extra_dirs[$this->extra_dir_ptr++];
-		}
-		// only return children readable by the user, if dir is not writable
-		do {
-			$file = readdir($this->opened_dir);
-		}
-		while($file !== false && (is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) ||	// dont return mountpoints twice
-			self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
-			!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE)));
-
-		return $file;
+		return readdir($this->opened_dir);
 	}
 
 	/**
@@ -664,8 +547,6 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_rewinddir ( )
 	{
-		$this->extra_dir_ptr = 0;
-
 		return rewinddir($this->opened_dir);
 	}
 
@@ -686,63 +567,82 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
-	 * Load stream wrapper for a given schema
+	 * parse a query containing mount parameters: user, uid, group, gid or mode
 	 *
-	 * @param string $scheme
-	 * @return boolean
+	 * @param string|array $query query string or array returned by parse_url (key 'query' holds the value)
+	 * @param int &$uid default if not set is 0=root
+	 * @param int &$gid default if not set is 0=root
+	 * @param int &$mode default if not set is 05 r-x for others
+	 * @return boolean true on successfull parse, false on error
 	 */
-	static function load_wrapper($scheme)
+	static function parse_query($query,&$uid,&$gid,&$mode)
 	{
-		if (!in_array($scheme,self::get_wrappers()))
+		parse_str(is_array($query) ? $query['query'] : $query,$params);
+
+		// setting the default perms root.root r-x for other
+		$uid = $gid = 0;
+		$mode = 05;
+
+		foreach($params as $name => $value)
 		{
-			switch($scheme)
+			switch($name)
 			{
-				case 'webdav':
-					require_once('HTTP/WebDAV/Client.php');
-					self::$wrappers[] = 'webdav';
-					break;
-				case '':
-					break;	// default file, always loaded
-				default:
-					// check if scheme is buildin in php or one of our own stream wrappers
-					if (in_array($scheme,stream_get_wrappers()) || class_exists($scheme.'_stream_wrapper'))
+				case 'user':
+					if (!is_numeric($value))
 					{
-						self::$wrappers[] = $scheme;
+						if ($name === 'root')
+						{
+							$value = 0;
+						}
+						elseif (($value = $GLOBALS['egw']->accounts->name2id($value,'account_lid','u')) === false)
+						{
+							error_log(__METHOD__."('$query') unknown user-name '$value'!");
+							return false;	// wrong user-name
+						}
 					}
-					else
+					// fall-through
+				case 'uid':
+					if (!is_numeric($value) || $value < 0 || !is_int($value) && !$GLOBALS['egw']->accounts->id2name($value))
 					{
-						trigger_error("Can't load stream-wrapper for scheme '$scheme'!",E_USER_WARNING);
+						error_log(__METHOD__."('$query') wrong numeric user-id '$value'!");
 						return false;
 					}
+					$uid = (int)$value;
+					break;
+				case 'group':
+					if (!is_numeric($value))
+					{
+						if ($name === 'root')
+						{
+							$value = 0;
+						}
+						elseif (($value = $GLOBALS['egw']->accounts->name2id($value,'account_lid','g')) === false)
+						{
+							error_log(__METHOD__."('$query') unknown group-name '$value'!");
+							return false;	// wrong group-name
+						}
+						$value = -$value;	// vfs uses positiv gid's!
+					}
+					// fall-through
+				case 'gid':
+					if (!is_numeric($value) || $value < 0 || !is_int($value) && !$GLOBALS['egw']->accounts->id2name(-$value))
+					{
+						error_log(__METHOD__."('$query') wrong numeric group-id '$value'!");
+						return false;
+					}
+					$gid = (int)$value;
+					break;
+				case 'mode':
+					$mode = egw_vfs::mode2int($value);
+					break;
+				default:
+					error_log(__METHOD__."('$query') unknown option '$name'!");
+					break;
 			}
 		}
+		//echo __METHOD__.'('.print_r($query,true).") uid=$uid, gid=$gid, mode=".sprintf('0%o',$mode)."\n";
 		return true;
-	}
-
-	/**
-	 * Return already loaded stream wrappers
-	 *
-	 * @return array
-	 */
-	static function get_wrappers()
-	{
-		if (is_null(self::$wrappers))
-		{
-			self::$wrappers = stream_get_wrappers();
-		}
-		return self::$wrappers;
-	}
-
-	static function init_static()
-	{
-		stream_register_wrapper(self::SCHEME,__CLASS__);
-
-		if ($GLOBALS['egw_info']['server']['vfs_fstab'] &&
-			is_array($fstab = unserialize($GLOBALS['egw_info']['server']['vfs_fstab'])) && count($fstab))
-		{
-			self::$fstab = $fstab;
-		}
 	}
 }
 
-vfs_stream_wrapper::init_static();
+stream_register_wrapper(filesystem_stream_wrapper::SCHEME ,'filesystem_stream_wrapper');

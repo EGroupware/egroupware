@@ -348,6 +348,8 @@ class egw_vfs extends vfs_stream_wrapper
 			{
 				while($file = readdir($dir))
 				{
+					if ($file == '.' || $file == '..') continue;	// ignore current and parent dir!
+
 					$file = self::concat($path,$file);
 
 					if ((int)$options['mindepth'] <= 1)
@@ -901,8 +903,9 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			array_push($parts,'');	// scheme://host is wrong (no path), has to be scheme://host/
 		}
-		//error_log(__METHOD__."($url)=".implode('/',$parts));
-		return implode('/',$parts);
+		list(,$query) = explode('?',$url,2);
+		//error_log(__METHOD__."($url)=".implode('/',$parts).($query ? '?'.$query : ''));
+		return implode('/',$parts).($query ? '?'.$query : '');
 	}
 
 	/**
@@ -932,7 +935,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function concat($url,$relative)
 	{
-		return substr($url,-1) == '/' ? $url.$relative : $url.'/'.$relative;
+		list($url,$query) = explode('?',$url,2);
+		return substr($url,-1) == '/' ? $url.$relative : $url.'/'.$relative.($query ? '?'.$query : '');
 	}
 
 	/**
