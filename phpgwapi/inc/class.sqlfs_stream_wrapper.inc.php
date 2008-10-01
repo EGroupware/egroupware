@@ -16,7 +16,12 @@
  *
  * The sqlfs stream wrapper has 3 operation modi:
  * - content of files is stored in the filesystem (eGW's files_dir) (default)
- * - content of files is stored as BLOB in the DB
+ * - content of files is stored as BLOB in the DB (can be enabled by mounting sqlfs://...?storage=db)
+ *   please note the current (php5.2.6) problems:
+ *   a) retriving files via streams does NOT work for PDO_mysql (bindColum(,,PDO::PARAM_LOB) does NOT work, string returned)
+ * 		(there's a workaround implemented, but it requires to allocate memory for the whole file!)
+ *   b) uploading/writing files > 1M fail on PDOStatement::execute() (setting PDO::MYSQL_ATTR_MAX_BUFFER_SIZE does NOT help)
+ *      (not sure if that's a bug in PDO/PDO_mysql or an accepted limitation)
  * - content of files is versioned (and stored in the DB) NOT YET IMPLEMENTED
  * In the future it will be possible to activate eg. versioning in parts of the filesystem, via mount options in the vfs
  *
@@ -25,8 +30,6 @@
  * The stream wrapper interface is according to the docu on php.net
  *
  * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
- * @ToDo compare (and optimize) performance with old vfs system (eg. via webdav)
- * @ToDo pass $operation parameter via context from vfs stream-wrappers mount table, to eg. allow to mount parts with(out) versioning
  * @ToDo versioning
  */
 class sqlfs_stream_wrapper implements iface_stream_wrapper
@@ -79,9 +82,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * default for operation, change that if you want to test with STORE2DB atm
 	 */
-	const DEFAULT_OPERATION = 2;
+	const DEFAULT_OPERATION = self::STORE2FS;
 
-	var $operation = self::DEFAULT_OPERATION;
+	/**
+	 * operation mode of the opened file
+	 *
+	 * @var int
+	 */
+	protected $operation = self::DEFAULT_OPERATION;
 
 	/**
 	 * optional context param when opening the stream, null if no context passed
@@ -152,6 +160,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 
 		$path = parse_url($url,PHP_URL_PATH);
+		$this->operation = self::url2operation($url);
 		$dir = egw_vfs::dirname($url);
 
 		$this->opened_path = $path;
@@ -174,17 +183,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 			// new file --> create it in the DB
-			if ($this->operation == self::STORE2FS)
-			{
-				$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator'.
-					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator)');
-			}
-			else
-			{
-				$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_content'.
-					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_content)');
-				$stmt->bindParam(':fs_content',$this->opened_stream,PDO::PARAM_LOB);
-			}
+			$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime'.
+				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime)');
 			$values = array(
 				'fs_name' => basename($path),
 				'fs_dir'  => $dir_stat['ino'],
@@ -197,6 +197,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				'fs_created'  => self::_pdo_timestamp(time()),
 				'fs_modified' => self::_pdo_timestamp(time()),
 				'fs_creator'  => egw_vfs::$user,
+				'fs_mime'     => 'application/octet-stream',	// required NOT NULL!
 			);
 			foreach($values as $name => &$val)
 			{
@@ -205,8 +206,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (!$stmt->execute() || !($this->opened_fs_id = self::$pdo->lastInsertId('fs_id')))
 			{
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
-				echo self::$pdo->errorInfo()."\n";
+				error_log(__METHOD__."($url,$mode,$options) execute() failed: ".self::$pdo->errorInfo());
 				return false;
+			}
+			if ($this->operation == self::STORE2DB)
+			{
+				// we buffer all write operations in a temporary file, which get's written on close
+				$this->opened_stream = tmpfile();
 			}
 		}
 		else
@@ -223,6 +229,25 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 			$this->opened_fs_id = $stat['ino'];
+
+			if ($this->operation == self::STORE2DB)
+			{
+				$stmt = self::$pdo->prepare($sql='SELECT fs_content FROM '.self::TABLE.' WHERE fs_id=?');
+				$stmt->execute(array($stat['ino']));
+				$stmt->bindColumn(1,$this->opened_stream,PDO::PARAM_LOB);
+				$stmt->fetch(PDO::FETCH_BOUND);
+				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
+				// PDOStatement::bindColumn(,,PDO::PARAM_LOB) is not working for MySQL, content is returned as string :-(
+				if (is_string($this->opened_stream))
+				{
+					$name = md5($url);
+					$GLOBALS[$name] =& $this->opened_stream; unset($this->opened_stream);
+					require_once(EGW_API_INC.'/class.global_stream_wrapper.inc.php');
+					$this->opened_stream = fopen('global://'.$name,'r');
+					unset($GLOBALS[$name]);	// unset it, so it does not use up memory, once the stream is closed
+				}
+				//echo 'gettype($this->opened_stream)='; var_dump($this->opened_stream);
+			}
 		}
 		// do we operate directly on the filesystem
 		if ($this->operation == self::STORE2FS)
@@ -233,6 +258,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$this->stream_seek(0,SEEK_END);
 		}
+		if (!is_resource($this->opened_stream)) error_log(__METHOD__."($url,$mode,$options) NO stream, returning false!");
+
 		return is_resource($this->opened_stream);
 	}
 
@@ -259,24 +286,37 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				$mime_magic = new mime_magic();
 			}
-
-			// we need to update the mime-type and size
+			// we need to update the mime-type, size and content (if STORE2DB)
 			$values = array(
 				':fs_size' => $this->stream_tell(),
 				// todo: analyse the file for the mime-type
 				':fs_mime' => $mime_magic->filename2mime($this->opened_path),
 				':fs_id'   => $this->opened_fs_id,
 			);
-			$ret = fclose($this->opened_stream);
 
-			$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=:fs_size,fs_mime=:fs_mime WHERE fs_id=:fs_id');
-			$stmt->execute($values);
+			if ($this->operation == self::STORE2FS)
+			{
+				$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=:fs_size,fs_mime=:fs_mime WHERE fs_id=:fs_id');
+			}
+			else
+			{
+				$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=:fs_size,fs_mime=:fs_mime,fs_content=:fs_content WHERE fs_id=:fs_id');
+				$this->stream_seek(0,SEEK_SET);	// rewind to the start
+				$stmt->bindParam(':fs_content', $this->opened_stream, PDO::PARAM_LOB);
+			}
+			foreach($values as $name => &$value)
+			{
+				$stmt->bindParam($name,$value);
+			}
+			if (!($ret = $stmt->execute()))
+			{
+				error_log(__METHOD__."() execute() failed! errorInfo()=".array2string(self::$pdo->errorInfo()));
+			}
 		}
-		else
-		{
-			$ret = fclose($this->opened_stream);
-		}
+		$ret = fclose($this->opened_stream) && $ret;
+
 		$this->opened_stream = $this->opened_path = $this->opened_mode = $this->opend_fs_id = null;
+		$this->operation = self::DEFAULT_OPERATION;
 
 		return $ret;
 	}
@@ -433,7 +473,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $url,$operation=self::DEFAULT_OPERATION )
+	static function unlink ( $url )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
@@ -448,7 +488,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
 		unset(self::$stat_cache[$path]);
 
-		if (($ret = $stmt->execute(array(':fs_id' => $stat['ino']))) && $operation == self::STORE2FS)
+		if (($ret = $stmt->execute(array(':fs_id' => $stat['ino']))) && self::url2operation($url) == self::STORE2FS)
 		{
 			unlink(self::_fs_path($path));
 		}
@@ -467,13 +507,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param string $url_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $url_from, $url_to, $operation=self::DEFAULT_OPERATION )
+	static function rename ( $url_from, $url_to )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 
 		$path_from = parse_url($url_from,PHP_URL_PATH);
 		$path_to = parse_url($url_to,PHP_URL_PATH);
 		$to_dir = dirname($path_to);
+		$operation = self::url2operation($url_from);
 
 		if (!($from_stat = self::url_stat($path_from,0)) || !egw_vfs::check_access(dirname($path_from),egw_vfs::WRITABLE))
 		{
@@ -532,7 +573,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ( $url, $mode, $options, $operation=self::DEFAULT_OPERATION )
+	static function mkdir ( $url, $mode, $options )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 
@@ -584,7 +625,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			':fs_created'  => self::_pdo_timestamp(time()),
 			':fs_modified' => self::_pdo_timestamp(time()),
 			':fs_creator'  => egw_vfs::$user,
-		))) && $operation == self::STORE2FS)
+		))) && self::url2operation($url) == self::STORE2FS)
 		{
 			$ok = mkdir($dir = self::_fs_path($path),0700,true);		// we create all missing parent dirs, as eg. /home might not yet exist
 		}
@@ -601,7 +642,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $url, $options, $operation=self::DEFAULT_OPERATION )
+	static function rmdir ( $url, $options )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
@@ -635,7 +676,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset($stmt);	// free statement object, on some installs a new prepare fails otherwise!
 
 		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=?');
-		if (($ret = $stmt->execute(array($stat['ino']))) &&  $operation == self::STORE2FS)
+		if (($ret = $stmt->execute(array($stat['ino']))) &&  self::url2operation($url) == self::STORE2FS)
 		{
 			self::eacl($path,null,false,$stat['ino']);	// remove all (=false) evtl. existing extended acl for that dir
 			rmdir(self::_fs_path($path));
@@ -823,14 +864,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$this->opened_dir = array();
 		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_dir=?';
-
-		// only return readable files, if dir is not writable by user
-		/* to value/check the extended acl later on, we have to return all files!
-		if (egw_vfs::HIDE_UNREADABLES && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))
-		{
-			$query .= ' AND '.self::_sql_readable();
-		}*/
-		//$query = "/* sqlfs::dir_opendir($path) */ ".$query;
 
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -1277,6 +1310,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		switch($egw_db->Type)
 		{
+			case 'mysqli':
 			case 'mysqlt':
 				$type = 'mysql';
 				break;
@@ -1382,6 +1416,34 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$url = $parts['scheme'].'://'.($parts['user'] ? $parts['user'].($parts['pass']?':...':'').'@' : '').
 				$parts['host'].$parts['path'];
 		}
+	}
+
+	/**
+	 * Get storage mode from url (get parameter 'storage', eg. ?storage=db)
+	 *
+	 * @param string|array $url complete url or array of url-parts from parse_url
+	 * @return int self::STORE2FS or self::STORE2DB
+	 */
+	static function url2operation($url)
+	{
+		$operation = self::DEFAULT_OPERATION;
+
+		if (strpos(is_array($url) ? $url['query'] : $url,'storage=') !== false)
+		{
+			parse_str(is_array($url) ? $url['query'] : parse_url($url,PHP_URL_QUERY),$query);
+			switch ($query['storage'])
+			{
+				case 'db':
+					$operation = self::STORE2DB;
+					break;
+				case 'fs':
+				default:
+					$operation = self::STORE2FS;
+					break;
+			}
+		}
+		//error_log(__METHOD__."('$url') = $operation (1=DB, 2=FS)");
+		return $operation;
 	}
 }
 
