@@ -927,7 +927,7 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
-	 * Concat a relative path to an url, taking into account, that the url might already end with a slash
+	 * Concat a relative path to an url, taking into account, that the url might already end with a slash or the path starts with one or is empty
 	 *
 	 * @param string $url base url or path, might end in a /
 	 * @param string $relative relative path to add to $url
@@ -936,7 +936,8 @@ class egw_vfs extends vfs_stream_wrapper
 	static function concat($url,$relative)
 	{
 		list($url,$query) = explode('?',$url,2);
-		return (substr($url,-1) == '/' ? $url.$relative : $url.'/'.$relative).($query ? '?'.$query : '');
+		if (substr($url,-1) == '/') $url = substr($url,0,-1);
+		return ($relative === '' || $relative[0] == '/' ? $url.$relative : $url.'/'.$relative).($query ? '?'.$query : '');
 	}
 
 	/**
