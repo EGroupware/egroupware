@@ -936,7 +936,7 @@ class egw_vfs extends vfs_stream_wrapper
 	static function concat($url,$relative)
 	{
 		list($url,$query) = explode('?',$url,2);
-		return substr($url,-1) == '/' ? $url.$relative : $url.'/'.$relative.($query ? '?'.$query : '');
+		return (substr($url,-1) == '/' ? $url.$relative : $url.'/'.$relative).($query ? '?'.$query : '');
 	}
 
 	/**
