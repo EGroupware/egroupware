@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API: VFS - stream wrapper interface
+ * eGroupWare API: VFS - stream wrapper for global variables
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -10,12 +10,14 @@
  */
 
 /**
- * eGroupWare API: stream wrapper for global variables,
+ * eGroupWare API: stream wrapper for global variables. It makes variables available as streams.
  *
  * Original from an expample on php.net:
  * @see http://de.php.net/manual/en/function.stream-wrapper-register.php
  *
- * Use as global://varname
+ * Use as global://varname (please note global://host/varname does NOT work, as parse_url() would return with a leading slash!)
+ *
+ * Streamwrapper is now mbstring.func_overload save.
  *
  * @todo: allow to use path to access arrays: global://varname/key1/key2 to access $string from $GLOBALS['varname'] = array('key1'=>array('key2'=>$string));
  */
@@ -34,19 +36,19 @@ class global_stream_wrapper
 
     public function stream_read($count)
     {
-        $p=&$this->pos;
-        $ret = substr($this->stream, $this->pos, $count);
-        $this->pos += strlen($ret);
+        $ret = self::_cut_bytes($this->stream, $this->pos, $count);
+    	//error_log(__METHOD__."($count) this->pos=$this->pos, self::_bytes(this->stream)=".self::_bytes($this->stream)." self::_bytes(ret)=".self::_bytes($ret));
+        $this->pos += self::_bytes($ret);
         return $ret;
     }
 
     public function stream_write($data)
     {
-        $l=strlen($data);
+        $l=self::_bytes($data);
         $this->stream =
-            substr($this->stream, 0, $this->pos) .
+            self::_cut_bytes($this->stream, 0, $this->pos) .
             $data .
-            substr($this->stream, $this->pos += $l);
+            self::_cut_bytes($this->stream, $this->pos += $l);
         return $l;
     }
 
@@ -57,12 +59,12 @@ class global_stream_wrapper
 
     public function stream_eof()
     {
-        return $this->pos >= strlen($this->stream);
+        return $this->pos >= self::_bytes($this->stream);
     }
 
     public function stream_seek($offset, $whence)
     {
-        $l=strlen($this->stream);
+        $l=self::_bytes($this->stream);
         switch ($whence)
         {
             case SEEK_SET: $newPos = $offset; break;
@@ -74,5 +76,47 @@ class global_stream_wrapper
         if ($ret) $this->pos=$newPos;
         return $ret;
     }
+
+	/**
+	 * are the string functions overloaded by their mbstring variants
+	 *
+	 * @var boolean
+	 */
+	private static $mbstring_func_overload;
+
+	/**
+	 * mbstring.func_overload safe strlen
+	 *
+	 * @param string &$data
+	 * @return int
+	 */
+	private static function _bytes(&$data)
+	{
+		return self::$mbstring_func_overload ? mb_strlen($data,'ascii') : strlen($data);
+	}
+
+	/**
+	 * mbstring.func_overload safe substr
+	 *
+	 * @param string &$data
+	 * @param int $offset
+	 * @param int $len
+	 * @return string
+	 */
+	private static function _cut_bytes(&$data,$offset,$len=null)
+	{
+		return self::$mbstring_func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
+	}
+
+	/**
+	 * Init the (static parts) of the stream-wrapper
+	 *
+	 */
+	public static function init()
+	{
+		self::$mbstring_func_overload = @extension_loaded('mbstring') && (ini_get('mbstring.func_overload') & 2);
+
+		stream_wrapper_register('global', 'global_stream_wrapper');
+	}
 }
-stream_wrapper_register('global', 'global_stream_wrapper');
+global_stream_wrapper::init();
