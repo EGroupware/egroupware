@@ -7,13 +7,13 @@
  * @package setup
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * setup command: test or create the database
  */
-class setup_cmd_database extends setup_cmd 
+class setup_cmd_database extends setup_cmd
 {
 	/**
 	 * Allow to run this command via setup-cli
@@ -26,7 +26,7 @@ class setup_cmd_database extends setup_cmd
 	 * @var egw_db
 	 */
 	private $test_db;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -65,7 +65,7 @@ class setup_cmd_database extends setup_cmd
 
 	/**
 	 * run the command: test or create database
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
@@ -78,7 +78,7 @@ class setup_cmd_database extends setup_cmd
 			throw new egw_exception_wrong_userinput(lang("'%1' is no valid domain name!",$this->domain));
 		}
 		if ($this->remote_id && $check_only) return true;	// further checks can only done locally
-		
+
 		$this->_merge_defaults();
 		//_debug_array($this->as_array());
 
@@ -101,14 +101,14 @@ class setup_cmd_database extends setup_cmd
 			// we catch the exception to properly restore the db
 		}
 		$this->restore_db();
-		
+
 		if ($e)
 		{
 			throw $e;
 		}
 		return $msg;
 	}
-	
+
 	/**
 	 * Connect to database
 	 *
@@ -124,7 +124,7 @@ class setup_cmd_database extends setup_cmd
 		if (is_null($name)) $name = $this->db_name;
 
 		$this->test_db = new egw_db();
-		
+
 		$error_rep = error_reporting();
 		error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
 		try {
@@ -134,7 +134,7 @@ class setup_cmd_database extends setup_cmd
 			// just give a nicer error, after switching error_reporting on again
 		}
 		error_reporting($error_rep);
-		
+
 		if ($e)
 		{
 			throw new egw_exception_wrong_userinput(lang('Can not connect to %1 database %2 on host %3 using user %4!',
@@ -143,12 +143,12 @@ class setup_cmd_database extends setup_cmd
 		return lang('Successful connected to %1 database %2 on %3 using user %4.',
 				$this->db_type,$name,$this->db_host.($this->db_port?':'.$this->db_port:''),$user);
 	}
-	
+
 	/**
 	 * Check and if does not yet exist create the new database and user
 	 *
 	 * The check will fail if the database exists, but already contains tables
-	 * 
+	 *
 	 * @return string with success message
 	 * @throws egw_exception_wrong_userinput
 	 */
@@ -186,7 +186,7 @@ class setup_cmd_database extends setup_cmd
 		}
 		return $msg;
 	}
-	
+
 	/**
 	 * Return default database settings for a given domain
 	 *
@@ -231,7 +231,7 @@ class setup_cmd_database extends setup_cmd
 				//echo "<p>setting $name='{$this->$name}' to it's default='$default'</p>\n";
 				$this->set_defaults[$name] = $this->$name = $default;
 			}
-			if (strpos($this->$name,'$domain'))
+			if (strpos($this->$name,'$domain') !== false)
 			{
 				$this->$name = str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name);
 			}
