@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 
 <!-- BEGIN header -->
- 
+
 <form method="post" action="{action_url}">
 <table align="center" cellspacing="0" border="5" width="90%" >
    <tr class="th">
@@ -12,30 +12,54 @@
 
 <!-- BEGIN body -->
    <tr class="th">
-    <td colspan="2"><b>{lang_Path_information}</b></td>
+    <td colspan="2"><b>{lang_Path_information}, {lang_Virtual_filesystem}</b></td>
    </tr>
-   
+
+   <tr class="row_on">
+    <td>{lang_Where_should_eGroupware_store_file_content}:</td>
+    <td>
+      <select name="newsettings[vfs_storage_mode]">
+{hook_vfs_storage_mode_options}
+      </select>
+    </td>
+   </tr>
+
    <tr class="row_off">
+    <td colspan="2"><b>{lang_Don't_change,_if_you_already_stored_files!_You_will_loose_them!}</b> There's currently no migration avaliable.</td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Enter_the_full_path_for_users_and_group_files.<br />Examples:_/files,_E:\FILES}</td>
+    <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="40" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2">
+    	<b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b><br />
+    	{lang_If_you_can_only_access_the_docroot_choose_<b>Database</b>_for_where_to_store_the_file_content_AND_use_same_path_as_for_temporäry_files.}
+    </td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Enter_the_full_path_to_the_backup_directory.<br />if_empty:_files_directory}/db_backup:</td>
+    <td><input name="newsettings[backup_dir]" value="{value_backup_dir}" size="40" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2"><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b></td>
+   </tr>
+
+   <tr class="row_on">
     <td>{lang_Enter_the_full_path_for_temporary_files.<br />Examples:_/tmp,_C:\TEMP}:</td>
     <td><input name="newsettings[temp_dir]" value="{value_temp_dir}" size="40" /></td>
    </tr>
 
-   <tr class="row_on">
-    <td>{lang_Enter_the_full_path_for_users_and_group_files.<br />Examples:_/files,_E:\FILES}:<br /><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b><br />{lang_or_http://webdav.domain.com_(WebDAV)}:</td>
-    <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="40" /></td>
-   </tr>
-   
    <tr class="row_off">
-    <td>{lang_Enter_the_full_path_to_the_backup_directory.<br />if_empty:_files_directory}/db_backup:<br /><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b></td>
-    <td><input name="newsettings[backup_dir]" value="{value_backup_dir}" size="40" /></td>
-   </tr>
-   
-   <tr class="row_on">
     <td>{lang_Enter_the_location_of_eGroupWare's_URL.<br />Example:_http://www.domain.com/egroupware_&nbsp;_or_&nbsp;_/egroupware<br /><b>No_trailing_slash</b>}:</td>
     <td><input name="newsettings[webserver_url]" value="{value_webserver_url}" size="40" /></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_ono">
     <td>{lang_Image_type_selection_order}:</td>
     <td>
      <select name="newsettings[image_type]">
@@ -259,7 +283,7 @@
       </select>
      </td>
     </tr>
-    
+
    <tr class="row_off">
     <td>{lang_Allow_authentication_via_cookie}:</td>
     <td>
@@ -268,8 +292,8 @@
          <option value="True" {selected_allow_cookie_auth_True}>{lang_Yes}</option>
        </select>
     </td>
-   </tr>  
-   
+   </tr>
+
    <tr class="row_on">
     <td>{lang_Auto_login_anonymous_user}:</td>
     <td>
@@ -434,7 +458,7 @@
       <li>{lang_You_need_to_save_the_settings_you_made_here_first!}</li>
     </td>
    </tr>
-   
+
    <tr class="th">
     <td colspan="2"><b>{lang_If_using_ADS_(Active_Directory)_authentication}:</b></td>
    </tr>
@@ -450,7 +474,7 @@
    <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
-
+<!--
    <tr class="th">
     <td colspan="2"><b>{lang_Mcrypt_settings_(requires_mcrypt_PHP_extension)}</b></td>
    </tr>
@@ -481,40 +505,7 @@
    <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
-   <tr class="th">
-    <td colspan="2"><b>{lang_Additional_settings}</b></td>
-   </tr>
-   <tr class="row_on">
-    <td>
-	{lang_Select_where_you_want_to_store/retrieve_filesystem_information}:
-	<br />
-	({lang_file_type,_size,_version,_etc.})
-    </td>
-    <td>
-     <select name="newsettings[file_repository]">
-      <option value="sql"{selected_file_repository_sql}>SQL ({lang_default})</option>
-      <option value="dav"{selected_file_repository_dav}>WebDAV</option>
-      <option value="sql2"{selected_file_repository_sql2}>SQL version 2 (EXPERIMENTAL, required and works only with FilesCenter)</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_off">
-    <td>
-	{lang_Select_where_you_want_to_store/retrieve_file_contents}:
-	<br />
-	({lang_Recommended:_Filesystem})
-    </td>
-    <td>
-     <select name="newsettings[file_store_contents]">
-      <option value="filesystem"{selected_file_store_contents_filesystem}>{lang_Filesystem}</option>
-      <option value="sql"{selected_file_store_contents_sql}>SQL</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_on">
-    <td colspan="2">&nbsp;</td>
-   </tr>
-
+-->
 <!-- end from admin -->
 
 <!-- END body -->

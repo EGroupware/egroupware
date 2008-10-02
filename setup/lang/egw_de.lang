@@ -169,6 +169,7 @@ current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
+custom set via %1	setup	de	Benutzerdefiniert über "%1" gesetzt
 cyrus imap: admin user,password	setup	de	Cyrus IMAP: Adminbenutzer,Passwort
 database	setup	de	Datenbank
 database instance (egw domain)	setup	de	Datenbankinstanz (eGW Domain)
@@ -212,6 +213,7 @@ domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_back
 domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	de	Domain(default),[Konfigurationsbenutzer(admin)],Passwort,[Backupdatei],[Zeichensatz(Vorgabe sprachabhänig)]
 domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	de	Domain(default),[Konfigurationsbenutzer(admin)],Passwort,[Name=Wert,...] setzt Konfigurationswerte neben:
 domain-name	setup	de	Domainname
+don't change, if you already stored files! you will loose them!	setup	de	Nicht ändern, wenn Sie bereits Dateien gespeichert haben! Sie werden Sie verlieren!
 dont touch my data	setup	de	Meine Daten nicht verändern
 download	setup	de	Herunterladen
 edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
@@ -257,6 +259,7 @@ file type, size, version, etc.	setup	de	Dateityp, Größe, Version usw.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	de	Dateiuploads sind ausgeschaltet. Sie können keinen der Dateimanager verwenden, noch können Sie in verschiedenen Anwendungen Dateien anhängen!
 filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
+filesystem (default)	setup	de	Dateisystem (Vorgabe)
 force selectbox	setup	de	Auswahl erzwingen
 found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationsdatei gefunden. Lade Einstellungen von der Datei ...
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
@@ -291,6 +294,7 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	de	Wenn Sie ADS (Active Directory) Authentifizierung benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporäry files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzern Sie hier den Pfad für temporäre Dateien.
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
@@ -441,7 +445,6 @@ re-enter password	setup	de	Passworteingabe wiederholen
 read translations from	setup	de	Lese Übersetzungen von
 readable by the webserver	setup	de	lesebar durch den Webserver
 really uninstall all applications	setup	de	WIRKLICH alle Anwendungen deinstallieren
-recommended: filesystem	setup	de	Empfohlen: Dateisystem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	de	register_globals ist eingeschaltet (On), eGroupWare benötigt das NICHT und es ist generell sicherer es auszuschalten (Off)
 registered	setup	de	registriert
 rejected lines	setup	de	Zurückgewiesende Zeilen
@@ -470,8 +473,6 @@ select one...	setup	de	Einen auswählen...
 select the default applications to which your users will have access	setup	de	Wählen Sie die voreingestellten Anwendungen, zu denen Ihre Benutzer Zugriff haben werden
 select the desired action(s) from the available choices	setup	de	Wählen Sie die verlangten Aktion(en) aus der verfügbaren Auswahl
 select to download file	setup	de	Auswähle um die Datei herunterzuladen
-select where you want to store/retrieve file contents	setup	de	Wählen Sie aus wo Sie Dateiinhalte speichern/lesen wollen
-select where you want to store/retrieve filesystem information	setup	de	Wo wollen Sie Datei Informationen ablegen/lesen
 select where you want to store/retrieve user accounts	setup	de	Wo wollen Sie die Benutzerkonten speichern
 select which group(s) will be exported	setup	de	Wählen Sie die zu exportierende(n) Gruppe(n)
 select which group(s) will be imported (group membership will be maintained)	setup	de	Wählen Sie die zu importierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
@@ -603,6 +604,7 @@ validation errors	setup	de	Fehler bei der Prüfung der Eingaben
 version	setup	de	Version
 version mismatch	setup	de	Versionen passen nicht zueinander
 view	setup	de	Anzeigen
+virtual filesystem	setup	de	Virtuelles Dateisystem
 virtual mail manager (login-name includes domain)	setup	de	Virtual Mail Manager (Loginname enthalten Domain)
 warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
@@ -611,6 +613,7 @@ we will automatically update your tables/records to %1	setup	de	Wir werden Ihre 
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur eGroupWare Installation
 what type of sessions management do you want to use (php session management may perform better)?	setup	de	Welches Session-Management wollen Sie verwenden (PHP Session-Management hat eine bessere Performanz)?
+where should egroupware store file content	setup	de	Wo soll eGroupware den Inhalt von Dateien speichern
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit eGroupWare verwenden?
 world readable	setup	de	lesbar von jedem (world readable)
 world writable	setup	de	schreibbar von jedem (world writeable)

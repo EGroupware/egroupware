@@ -169,6 +169,7 @@ current system-charset	setup	en	Current system-charset
 current system-charset is %1.	setup	en	Current system-charset is %1.
 current version	setup	en	Current Version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br />
+custom set via %1	setup	en	Custom set via %1
 cyrus imap: admin user,password	setup	en	Cyrus IMAP: Admin user,Password
 database	setup	en	Database
 database instance (egw domain)	setup	en	Database instance (eGW domain)
@@ -212,6 +213,7 @@ domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_back
 domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	en	domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]
 domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	en	domain(default),[config user(admin)],password,[name=value,...] sets config values beside:
 domain-name	setup	en	domain-name
+don't change, if you already stored files! you will loose them!	setup	en	Don't change, if you already stored files! You will loose them!
 dont touch my data	setup	en	Dont touch my data
 download	setup	en	Download
 edit current configuration	setup	en	Edit Current Configuration
@@ -255,6 +257,7 @@ file type, size, version, etc.	setup	en	file type, size, version, etc.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	en	File uploads are switched off: You can NOT use any of the filemanagers, nor can you attach files in several applications!
 filename	setup	en	filename
 filesystem	setup	en	Filesystem
+filesystem (default)	setup	en	Filesystem (default)
 force selectbox	setup	en	Force Selectbox
 found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
 give admin access to all installed apps	setup	en	Give admin access to all installed apps
@@ -289,6 +292,7 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	en	If using ADS (Active Directory) authentication
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporäry files.	setup	en	If you can only access the docroot choose <b>Database</b> for where to store the file content AND use same path as for temporäry files.
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
 if you running this the first time, don't forget to manualy %1 !!!	setup	en	If you running this the first time, don't forget to manualy %1 !!!
@@ -439,7 +443,6 @@ re-enter password	setup	en	Re-enter password
 read translations from	setup	en	Read translations from
 readable by the webserver	setup	en	readable by the webserver
 really uninstall all applications	setup	en	REALLY Uninstall all applications
-recommended: filesystem	setup	en	Recommended: Filesystem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	en	register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off
 registered	setup	en	registered
 rejected lines	setup	en	Rejected lines
@@ -468,8 +471,6 @@ select one...	setup	en	select one...
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	en	Select the desired action(s) from the available choices
 select to download file	setup	en	Select to download file
-select where you want to store/retrieve file contents	setup	en	Select where you want to store/retrieve file contents
-select where you want to store/retrieve filesystem information	setup	en	Select where you want to store/retrieve filesystem information
 select where you want to store/retrieve user accounts	setup	en	Select where you want to store/retrieve user accounts
 select which group(s) will be exported	setup	en	Select which group(s) will be exported
 select which group(s) will be imported (group membership will be maintained)	setup	en	Select which group(s) will be imported (group membership will be maintained)
@@ -601,6 +602,7 @@ validation errors	setup	en	Validation errors
 version	setup	en	version
 version mismatch	setup	en	Version Mismatch
 view	setup	en	View
+virtual filesystem	setup	en	Virtual filesystem
 virtual mail manager (login-name includes domain)	setup	en	Virtual mail manager (login-name includes domain)
 warning!	setup	en	Warning!
 we can proceed	setup	en	We can proceed
@@ -609,6 +611,7 @@ we will automatically update your tables/records to %1	setup	en	We will automati
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	en	We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.
 welcome to the egroupware installation	setup	en	Welcome to the eGroupWare Installation
 what type of sessions management do you want to use (php session management may perform better)?	setup	en	What type of sessions management do you want to use (PHP session management may perform better)?
+where should egroupware store file content	setup	en	Where should eGroupware store file content
 which database type do you want to use with egroupware?	setup	en	Which database type do you want to use with eGroupWare?
 world readable	setup	en	world readable
 world writable	setup	en	world writable
