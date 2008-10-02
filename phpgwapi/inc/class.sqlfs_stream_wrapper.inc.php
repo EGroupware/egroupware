@@ -589,8 +589,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			return false;
 		}
-
-		$parent = self::url_stat($parent_path=dirname($path),STREAM_URL_STAT_QUIET);
+		$parent_path = dirname($path);
+		if (($query = parse_url($url,PHP_URL_QUERY))) $parent_path .= '?'.$query;
+		$parent = self::url_stat($parent_path,STREAM_URL_STAT_QUIET);
 
 		// check if we should also create all non-existing path components and our parent does not exist,
 		// if yes call ourself recursive with the parent directory
@@ -600,7 +601,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				return false;
 			}
-			$parent = self::url_stat($parent_path=dirname($path),0);
+			$parent = self::url_stat($parent_path,0);
 		}
 		if (!$parent || !egw_vfs::check_access($parent_path,egw_vfs::WRITABLE,$parent))
 		{
