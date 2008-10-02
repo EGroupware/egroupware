@@ -68,6 +68,10 @@ class egw_link extends solink
 	 */
 	const VFS_APPNAME = 'file';		// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
 	/**
+	 * Baseurl for the attachments in the vfs
+	 */
+	const VFS_BASEURL = 'vfs://default/apps';
+	/**
 	 * Turns on debug-messages
 	 */
 	const DEBUG = false;
@@ -704,7 +708,8 @@ class egw_link extends solink
 	 */
 	static function vfs_path($app,$id='',$file='')
 	{
-		$path = links_stream_wrapper::BASEURL;
+		$path = self::VFS_BASEURL;
+
 		if ($app)
 		{
 			$path .= '/'.$app;
@@ -719,6 +724,7 @@ class egw_link extends solink
 				}
 			}
 		}
+		$path = egw_vfs::resolve_url($path);
 		//error_log(__METHOD__."($app,$id,$file)=$path");
 		return $path;
 	}
@@ -740,14 +746,14 @@ class egw_link extends solink
 	 */
 	static function attach_file($app,$id,$file,$comment='')
 	{
+		$entry_dir = self::vfs_path($app,$id);
 		if (self::DEBUG)
 		{
-			echo "<p>attach_file: app='$app', id='$id', tmp_name='$file[tmp_name]', name='$file[name]', size='$file[size]', type='$file[type]', path='$file[path]', ip='$file[ip]', comment='$comment'</p>\n";
+			echo "<p>attach_file: app='$app', id='$id', tmp_name='$file[tmp_name]', name='$file[name]', size='$file[size]', type='$file[type]', path='$file[path]', ip='$file[ip]', comment='$comment', entry_dir='$entry_dir'</p>\n";
 		}
-		$entry_dir = self::vfs_path($app,$id);
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
-			$Ok = copy($file['tmp_name'],$fname = $entry_dir.'/'.$file['name']) &&
+			$Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,$file['name'])) &&
 				($stat = links_stream_wrapper::url_stat($fname,0));
 		}
 		else

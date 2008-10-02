@@ -164,9 +164,11 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 	 */
 	static function mkdir($path,$mode,$options)
 	{
-
-		if($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
-
+		if($path[0] != '/')
+		{
+			if (strpos($path,'?') !== false) $query = parse_url($path,PHP_URL_QUERY);
+			$path = parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
+		}
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
 
 		$ret = false;
