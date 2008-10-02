@@ -338,7 +338,7 @@ class egw_vfs extends vfs_stream_wrapper
 			$is_dir = is_dir($path);
 			if (!isset($options['remove']))
 			{
-				$options['remove'] = count($base) == 1 ? strlen($path)+(int)(substr($path,-1)!='/') : 0;
+				$options['remove'] = count($base) == 1 ? count(explode('/',$path))-3+(int)(substr($path,-1)!='/') : 0;
 			}
 			if ((int)$options['mindepth'] == 0 && (!$dirs_last || !$is_dir))
 			{
@@ -354,7 +354,7 @@ class egw_vfs extends vfs_stream_wrapper
 
 					if ((int)$options['mindepth'] <= 1)
 					{
-						self::_check_add($options,$file,$result,1);
+						self::_check_add($options,$file,$result);
 					}
 					if (is_dir($file) && (!isset($options['maxdepth']) || $options['maxdepth'] > 1))
 					{
@@ -448,9 +448,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param array $options options, see egw_vfs::find(,$options)
 	 * @param string $path name of path to add
 	 * @param array &$result here we add the stat for the key $path, if the checks are successful
-	 * @param int $remove=0 how many leading chars to remove from path to get name, default 0 = use basename
 	 */
-	private static function _check_add($options,$path,&$result,$remove=0)
+	private static function _check_add($options,$path,&$result)
 	{
 		$type = $options['type'];	// 'd' or 'f'
 
@@ -463,8 +462,9 @@ class egw_vfs extends vfs_stream_wrapper
 			return;	// not found, should not happen
 		}
 		$stat = array_slice($stat,13);	// remove numerical indices 0-12
-		$stat['name'] = $options['remove'] > 0 ? substr($path,$options['remove']) : self::basename($path);
 		$stat['path'] = parse_url($path,PHP_URL_PATH);
+		$stat['name'] = $options['remove'] > 0 ? implode('/',array_slice(explode('/',$stat['path']),$options['remove'])) : self::basename($path);
+
 		if ($options['mime'] || $options['need_mime'])
 		{
 			$stat['mime'] = self::mime_content_type($path);
@@ -1051,7 +1051,7 @@ class egw_vfs extends vfs_stream_wrapper
 				$ret = false;	// there's already a lock
 			}
 		}
-		error_log(__METHOD__."($path,$token,$timeout,$owner,$scope,$type,$update,$check_writable) returns ".($ret ? 'true' : 'false'));
+		//error_log(__METHOD__."($path,$token,$timeout,$owner,$scope,$type,$update,$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
 	}
 
@@ -1078,7 +1078,7 @@ class egw_vfs extends vfs_stream_wrapper
         	// remove the lock from the cache too
         	unset(self::$lock_cache[$path]);
         }
-		error_log(__METHOD__."($path,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
+		//error_log(__METHOD__."($path,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
     }
 
@@ -1113,10 +1113,10 @@ class egw_vfs extends vfs_stream_wrapper
 	        	'lock_token' => $result['token'],
 	        ),__LINE__,__FILE__);
 
-			error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
+			//error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
 	        $result = false;
 		}
-		error_log(__METHOD__."($path) returns ".($result?str_replace(array("\n",'    '),'',print_r($result,true)):'false'));
+		//error_log(__METHOD__."($path) returns ".($result?array2string($result):'false'));
 		return self::$lock_cache[$path] = $result;
 	}
 
