@@ -432,3 +432,41 @@ function phpgwapi_upgrade1_5_010()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.011';
 }
 
+/**
+ * Move sqlfs files from their path based location to the new (hashed) id base one and removed the not longer used dirs
+ *
+ * @return string
+ */
+function phpgwapi_upgrade1_5_011()
+{
+	if ($GLOBALS['DEBUG']) echo "<pre style='text-align: left;'>\n";
+	egw_vfs::$is_root = true;
+	egw_vfs::load_wrapper('sqlfs');
+	egw_vfs::find('sqlfs://default/',array(
+		'url'  => true,
+		'depth' => true,
+	),create_function('$url,$stat','
+		$new_path = sqlfs_stream_wrapper::_fs_path($stat["ino"]);	// loads egw_info/server/files_dir (!)
+		if (file_exists($old_path = $GLOBALS["egw_info"]["server"]["files_dir"].($path=parse_url($url,PHP_URL_PATH))))
+		{
+			if (!is_dir($old_path))
+			{
+				if ($GLOBALS["DEBUG"]) echo "moving file $old_path --> $new_path\n";
+				if (!file_exists($parent = dirname($new_path))) mkdir($parent,0777,true);	// 777 because setup-cli might run eg. by root
+				rename($old_path,$new_path);
+			}
+			elseif($path != "/")
+			{
+				if ($GLOBALS["DEBUG"]) echo "removing directory $old_path\n";
+				rmdir($old_path);
+			}
+		}
+		else
+		{
+			echo "phpgwapi_upgrade1_5_011() $url: $old_path not found!\n";
+		}
+	'));
+	if ($GLOBALS['DEBUG']) echo "</pre>\n";
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.012';
+}

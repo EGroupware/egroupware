@@ -214,6 +214,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				// we buffer all write operations in a temporary file, which get's written on close
 				$this->opened_stream = tmpfile();
 			}
+			// create the hash-dirs, if they not yet exist
+			elseif(!file_exists($fs_dir=dirname(self::_fs_path($this->opened_fs_id))))
+			{
+				mkdir($fs_dir,0700,true);
+			}
 		}
 		else
 		{
@@ -252,7 +257,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		// do we operate directly on the filesystem
 		if ($this->operation == self::STORE2FS)
 		{
-			$this->opened_stream = fopen(self::_fs_path($path),$mode);
+			$this->opened_stream = fopen(self::_fs_path($this->opened_fs_id),$mode);
 		}
 		if ($mode[0] == 'a')	// append modes: a, a+
 		{
@@ -490,7 +495,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		if (($ret = $stmt->execute(array(':fs_id' => $stat['ino']))) && self::url2operation($url) == self::STORE2FS)
 		{
-			unlink(self::_fs_path($path));
+			unlink(self::_fs_path($stat['ino']));
 		}
 		return $ret;
 	}
@@ -548,18 +553,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
 			return false;
 		}
+		unset(self::$stat_cache[$path_from]);
+
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_id=:fs_id');
-		if (($ret = $stmt->execute(array(
+		return $stmt->execute(array(
 			':fs_dir'  => $to_dir_stat['ino'],
 			':fs_name' => basename($path_to),
 			':fs_id'   => $from_stat['ino'],
-		))) && $operation == self::STORE2FS)
-		{
-			rename(self::_fs_path($path_from),self::_fs_path($path_to));
-		}
-		unset(self::$stat_cache[$path_from]);
-
-		return $ret;
+		));
 	}
 
 	/**
@@ -615,7 +616,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
-		if (($ret = $stmt->execute(array(
+		return  $stmt->execute(array(
 			':fs_name' => basename($path),
 			':fs_dir'  => $parent['ino'],
 			':fs_mode' => $parent['mode'],
@@ -626,11 +627,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			':fs_created'  => self::_pdo_timestamp(time()),
 			':fs_modified' => self::_pdo_timestamp(time()),
 			':fs_creator'  => egw_vfs::$user,
-		))) && self::url2operation($url) == self::STORE2FS)
-		{
-			$ok = mkdir($dir = self::_fs_path($path),0700,true);		// we create all missing parent dirs, as eg. /home might not yet exist
-		}
-		return $ret;
+		));
 	}
 
 	/**
@@ -680,7 +677,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (($ret = $stmt->execute(array($stat['ino']))))
 		{
 			self::eacl($path,null,false,$stat['ino']);	// remove all (=false) evtl. existing extended acl for that dir
-			if (self::url2operation($url) == self::STORE2FS) rmdir(self::_fs_path($path));
 		}
 		return $ret;
 	}
@@ -1379,13 +1375,31 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
+	 * Maximum value for a single hash element (should be 10^N): 10, 100 (default), 1000, ...
+	 *
+	 * DONT change this value, once you have files stored, they will no longer be found!
+	 */
+	const HASH_MAX = 100;
+
+	/**
 	 * Return the path of the stored content of a file if $this->operation == self::STORE2FS
 	 *
-	 * @param string $path
+	 * To limit the number of files stored in one directory, we create a hash from the fs_id:
+	 * 	1     --> /1
+	 * 	34    --> /34
+	 * 	123   --> /01/123
+	 * 	4567  --> /45/4567
+	 * 	99999 --> /09/99/99999
+	 * --> so one directory contains maximum 2 * HASH_MAY entries (HASH_MAX dirs + HASH_MAX files)
+	 * @param int $id id of the file
 	 * @return string
 	 */
-	static private function _fs_path($path)
+	static function _fs_path($id)
 	{
+		if (!is_numeric($id))
+		{
+			throw new egw_exception_wrong_parameter(__METHOD__."(id=$id) id has to be an integer!");
+		}
 		if (!isset($GLOBALS['egw_info']['server']['files_dir']) || $GLOBALS['egw_info']['server']['files_dir'])
 		{
 			if (is_object($GLOBALS['egw_setup']->db))	// if we run under setup, query the db for the files dir
@@ -1400,6 +1414,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				throw  new egw_exception_assertion_failed("\$GLOBALS['egw_info']['server']['files_dir'] not set!");
 			}
 		}
+		$hash = array();
+		for ($n = $id; $n = (int) ($n / self::HASH_MAX); )
+		{
+			$hash[] = sprintf('%02d',$n % self::HASH_MAX);
+		}
+		array_unshift($hash,$id);
+
+		$path = '/sqlfs/'.implode('/',array_reverse($hash));
+		//error_log(__METHOD__."($id) = '$path'");
 		return $GLOBALS['egw_info']['server']['files_dir'].$path;
 	}
 
