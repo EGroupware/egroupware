@@ -677,10 +677,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset($stmt);	// free statement object, on some installs a new prepare fails otherwise!
 
 		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=?');
-		if (($ret = $stmt->execute(array($stat['ino']))) &&  self::url2operation($url) == self::STORE2FS)
+		if (($ret = $stmt->execute(array($stat['ino']))))
 		{
 			self::eacl($path,null,false,$stat['ino']);	// remove all (=false) evtl. existing extended acl for that dir
-			rmdir(self::_fs_path($path));
+			if (self::url2operation($url) == self::STORE2FS) rmdir(self::_fs_path($path));
 		}
 		return $ret;
 	}
