@@ -277,9 +277,9 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - order => name order rows by name column
 	 * - sort => (ASC|DESC) sort, default ASC
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
-	 * @param string/array/true $exec=null function to call with each found file or dir as first param or
+	 * @param string/array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
-	 * @param array $exec_params=null further params for exec as array, path is always the first param!
+	 * @param array $exec_params=null further params for exec as array, path is always the first param and stat the last!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
 	 */
 	static function find($base,$options=null,$exec=null,$exec_params=null)
@@ -429,6 +429,7 @@ class egw_vfs extends vfs_stream_wrapper
 			{
 				$options = $exec_params;
 				array_unshift($options,$path);
+				array_push($options,$stat);
 				//echo "calling ".print_r($exec,true).print_r($options,true)."\n";
 				$stat = call_user_func_array($exec,$options);
 			}
