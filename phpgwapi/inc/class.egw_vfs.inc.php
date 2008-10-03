@@ -844,7 +844,7 @@ class egw_vfs extends vfs_stream_wrapper
 			$mime_type = 'unknown';
 		}
 		$mime_full = strtolower(str_replace	('/','_',$mime_type));
-		list($mime_part) = explode('_',$mime_type);
+		list($mime_part) = explode('_',$mime_full);
 
 		if (!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_full)) &&
 			!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_part)))
