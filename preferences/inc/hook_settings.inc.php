@@ -79,7 +79,7 @@
 		'br'	=> lang('br')
 	);
 
-	$rich_text_editor_skins = array(		
+	$rich_text_editor_skins = array(
 		'default'    => lang ('Default theme'),
 		'office2003' => lang ('Office 2003 theme'),
 		'silver'     => lang ('Silver theme')
@@ -229,7 +229,7 @@
 			'values' => $html_enter_mode,
 			'help'   => 'Select how the rich text editor will generate the enter (linebreak) tag.',
 			'xmlrpc' => True,
-			'admin'  => False		
+			'admin'  => False
 		),
 		'rte_skin' => array(
 			'type'   => 'select',
@@ -238,7 +238,7 @@
 			'values' => $rich_text_editor_skins,
 			'help'   => 'Select the theme (visualization) of the rich text editor.',
 			'xmlrpc' => True,
-			'admin'  => False			
+			'admin'  => False
 		),
 		'show_currentusers' => array(
 			'type'  => 'check',
@@ -306,9 +306,11 @@
 			'type'   => 'select',
 			'label'  => 'Charset for the CSV export',
 			'name'   => 'csv_charset',
-			'values' => $GLOBALS['egw']->translation->get_installed_charsets()+array('utf-8' => 'utf-8 (Unicode)'),		
+			'values' => $GLOBALS['egw']->translation->get_installed_charsets()+array('utf-8' => 'utf-8 (Unicode)'),
 			'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
 			'xmlrpc' => True,
 			'admin'  => false,
 		),
 	);
+	// disable thumbnails, if no size configured by admin
+	if (!$GLOBALS['egw_info']['server']['link_list_thumbnail']) unset($GLOBALS['settings']['link_list_thumbnail']);

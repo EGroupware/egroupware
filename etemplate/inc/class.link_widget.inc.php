@@ -284,6 +284,7 @@ class link_widget
 			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
+				$value[$row]['class'] = 'mimeIcon';	// limit height to 16px
 				$value[$row]['title'] = egw_link::title($link['app'],$link['id'],$link);
 				if (!is_array($link['id']))
 				{
@@ -316,6 +317,7 @@ class link_widget
 								'id' => $link['id2'],
 								'file' => $link['id'],
 							));
+							unset($value[$row]['class']);	// use height of thumbnail
 						}
 					}
 				}
