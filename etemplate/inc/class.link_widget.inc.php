@@ -279,13 +279,12 @@ class link_widget
 				$value = '';
 				return True;
 			}
+			$value['link_list_format'] = $GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'];
 			$tpl =& new etemplate('etemplate.link_widget.list');
-			$tpl->data[0]['A'] = $tmpl->data[0]['A'];	// set width of first col like the tmpl. calling us
 			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
 				$value[$row]['title'] = egw_link::title($link['app'],$link['id'],$link);
-				$value[$row]['mime_icon'] = '';
 				if (!is_array($link['id']))
 				{
 					$value[$row]['view']  = egw_link::view($link['app'],$link['id'],$link);
@@ -300,41 +299,32 @@ class link_widget
 					$value[$row]['target'] = '_blank';
 					$value[$row]['label'] = 'Delete';
 					$value[$row]['help'] = lang('Delete this file');
-
-					// Get mimetype and thumbnail
-					if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') ))
+					if ($value['link_list_format'] != 'text')
 					{
-						list(,$icon) = explode('/',egw_vfs::mime_icon($value[$row]['type']));
-						$value[$row]['mime_icon'] = html::image('filemanager',$icon,lang('File').': '.$value[$row]['type']);
+						$value[$row]['title'] = preg_replace('/: ([^ ]+) /',': ',$value[$row]['title']);	// remove mime-type, it's alread in the icon
 					}
+					// Get mimetype and thumbnail
+					$value[$row]['mime_icon'] = egw_vfs::mime_icon($link['type']);
+					$value[$row]['mime_title'] = lang('File').': '.lang($value[$row]['type']);
 					if($GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] && $GLOBALS['egw_info']['server']['link_list_thumbnail'] > 0)
 					{
 						list($image) = explode('/', $value[$row]['type']);
 						if($image == 'image')
 						{
-							$value[$row]['thumbnail'] = '<img src="' .
-								$GLOBALS['egw']->link('/etemplate/inc/thumbnail.inc.php',array(
-									'app' => $link['app2'],
-									'id' => $link['id2'],
-									'file' => $link['id'],
-								)) . '" />';
+							$value[$row]['mime_icon'] = $GLOBALS['egw']->link('/etemplate/inc/thumbnail.inc.php',array(
+								'app' => $link['app2'],
+								'id' => $link['id2'],
+								'file' => $link['id'],
+							));
 						}
 					}
 				}
 				else
 				{
-					if(in_array($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'], array('icons', 'icons_and_text') ))
-					{
-						// Hardcoded sizes to match the mimetype icons.  Uses the navbar image and CSS to resize.
-						$value[$row]['mime_icon'] = html::image($value[$row]['app'], 'navbar', lang($value[$row]['app']), 'style="width: 16px; height: 16px;"');
-					}
+					$value[$row]['mime_icon'] = $value[$row]['app'].'/'.'navbar';
+					$value[$row]['mime_title'] = lang($value[$row]['app']);
 					$value[$row]['label'] = 'Unlink';
 					$value[$row]['help'] = lang('Remove this link (not the entry itself)');
-				}
-				// Remove appname if they only want icons
-				if($value[$row]['mime_icon'] && $GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'] == 'icons')
-				{
-					$value[$row]['app'] = '';
 				}
 			}
 			break;
