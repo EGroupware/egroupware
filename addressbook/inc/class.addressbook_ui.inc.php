@@ -1785,8 +1785,8 @@ $readonlys['button[vcard]'] = true;
 		// configure search options
 		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ,lang('all'));
 		$sel_options['operator'] =  array(
+			'AND' => 'AND',
 			'OR' => 'OR',
-			'AND' => 'AND'
 		);
 		$sel_options['meth_select'] = array(
 			'%'		=> lang('contains'),
