@@ -13,7 +13,8 @@
  */
 
 // allow to migrate from phpgw_info to egw_info
-if (!isset($GLOBALS['egw_info']) || isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) ||
+if (!isset($GLOBALS['egw_info']) ||
+	isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw_info']['flags']['phpgw_compatibility'] ||
 	in_array($GLOBALS['egw_info']['flags']['currentapp'],array('jinn','mydms','tts')))
 {
 	$GLOBALS['egw_info'] =& $GLOBALS['phpgw_info'];
@@ -89,7 +90,7 @@ unset($setup_info);
 $GLOBALS['egw_info']['server']['versions']['header'] = '1.28';
 
 // some not longer necessary defines
-if ($GLOBALS['egw_info']['flags']['phpgw_compatibility'])
+if (isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw_info']['flags']['phpgw_compatibility'])
 {
 	define('PHPGW_API_INC',EGW_API_INC);
 	define('PHPGW_SERVER_ROOT',EGW_SERVER_ROOT);
