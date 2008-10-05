@@ -189,13 +189,13 @@ class nextmatch_widget
 
 			case 'nextmatch-sortheader':	// Option: default sort: ASC(default) or DESC
 				$extension_data['default_sort'] = $cell['size']&&preg_match('/^(ASC|DESC)/i',$cell['size'],$matches) ? strtoupper($matches[1]) : 'ASC';
-				$cell['type'] = 'button';
+				$cell['type'] = $cell['readonly'] ? 'label' : 'button';
 				$cell['onchange'] = True;
 				if (!$cell['help'])
 				{
 					$cell['help'] = 'click to order after that criteria';
 				}
-				if (self::last_part($name) == $nm_global['order'])	// we're the active column
+				if (self::last_part($name) == $nm_global['order'] && !$cell['readonly'])	// we're the active column
 				{
 					$sorting = $cell;
 					unset($sorting['align']);
@@ -531,12 +531,14 @@ class nextmatch_widget
 						'sel_options' => $field['values'],
 						'size'        => $field['label'],
 						'no_lang'     => True,
+						'readonly'    => $cell['readonly'],
 					));
 				}
 				else
 				{
 					$header =& etemplate::empty_cell('nextmatch-sortheader',self::CF_PREFIX.$name,array(
 						'label'       => $field['label'],
+						'readonly'    => $cell['readonly'],
 					));
 				}
 				etemplate::add_child($cell,$header);
