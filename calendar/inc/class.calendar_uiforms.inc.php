@@ -607,7 +607,7 @@ class calendar_uiforms extends calendar_ui
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
 
 		$boical = new calendar_ical();
-		$ics = $boical->exportVCal(array($event),'2.0','request');
+		$ics = $boical->exportVCal(array($event),'2.0','request',false);
 
 		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
 		if(($f = fopen($ics_file,'w')))
@@ -1328,7 +1328,7 @@ class calendar_uiforms extends calendar_ui
 	{
 		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
 		{
-			if (!($ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$cal_id,'2.0')))
+			if (!($ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$cal_id,'2.0','PUBLISH',false)))
 			{
 				$msg = lang('Permission denied');
 
@@ -1357,7 +1357,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$events,'2.0'/*$content['version']*/);
+				$ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$events,'2.0'/*$content['version']*/,'PUBLISH',false);
 				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				$GLOBALS['egw']->common->egw_exit();

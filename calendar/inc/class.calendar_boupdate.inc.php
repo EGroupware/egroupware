@@ -571,7 +571,7 @@ class calendar_boupdate extends calendar_bo
 						break;
 
 					case  'ical':
-						$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method);
+						$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method,false);
 						if ($method == 'REQUEST')
 						{
 							$attachment = array(	'string' => $ics,
