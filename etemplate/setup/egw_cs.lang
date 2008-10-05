@@ -3,6 +3,7 @@
 %1 etemplates for application '%2' dumped to '%3'	etemplate	cs	%1 eŠablon pro aplikaci '%2' vytvořilo výpis do '%3'
 %1 etemplates found	etemplate	cs	%1 eŠablon nalezeno
 %1 matches on search criteria	etemplate	cs	%1 shod s kritériem vyhledávání
+%1 more...	etemplate	cs	%1 více...
 %1 new etemplates imported for application '%2'	etemplate	cs	%1 nových eŠablon importováno pro aplikaci '%2'
 %s disabled	etemplate	cs	%s zablokováno
 %s needed	etemplate	cs	%s zapotřebí
@@ -10,9 +11,11 @@
 %s onchange	etemplate	cs	%s onChange (při změně)
 %s readonly	etemplate	cs	%s jen ke čtení
 '%1' has an invalid format !!!	etemplate	cs	%1' má neplatný formát !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	cs	'%1' není php souborem v server root eGW (%2)!
 '%1' is not a valid date !!!	etemplate	cs	%1' není platné datum !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	cs	%1' není platné číslo s pohyblivou desetinnou čárkou !!!
 '%1' is not a valid integer !!!	etemplate	cs	%1' není platné celé číslo
+'%1' is not allowed ('%2')!	etemplate	cs	'%1' NENÍ povoleno ('%2')!
 a pattern to be searched for	etemplate	cs	hledaný výraz
 accesskey	etemplate	cs	Přístupový klíč
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	cs	Přístupové klíče mohou být specifikovány také s & v označení (např. &Name)
@@ -225,10 +228,12 @@ linklist	etemplate	cs	Seznam odkazů
 linkstring	etemplate	cs	Řetězec odkazu
 linkto	etemplate	cs	Odkaz na
 load this template into the editor	etemplate	cs	Načíst tuto šablonu do editoru
+message ...	etemplate	cs	Zpráva...
 middle	etemplate	cs	Prostřední
 minute	etemplate	cs	Minuta
 minutes	etemplate	cs	minut
 month	etemplate	cs	Měsíc
+more than 1 match for '%1'	etemplate	cs	Více než jeden záznam pro '%1'
 multicolumn indices	etemplate	cs	Vícesloupcové indexy
 name	etemplate	cs	Jméno
 name of other table where column is a key from	etemplate	cs	název jiné tabulky kde je skoupec klíčem
@@ -236,7 +241,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	cs	Název tabulky, která se má přidat
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	cs	název eŠablony, měl by být ve tvaru aplikace.funkce.[.podŠablona]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	cs	musí být unikátní v rámci tabulky a nesmí být rezervovaným slovem SQL, nejlepší je všechny opatřit společnou dvoupísmennou zkratkou aplikace, např. 'et_'
-new search	etemplate	cs	Nové hledání
+new search	common	cs	Nové hledání
 new table created	etemplate	cs	Nová tabulka vytvořena
 newer version '%1' exists !!!	etemplate	cs	existuje novější verze '%1'  !!!
 nextmatch	etemplate	cs	Nextmatch (Další shoda)
@@ -248,6 +253,7 @@ nextmatch sortheader	etemplate	cs	Další shoda setříděného záhlaví
 no column to swap with !!!	etemplate	cs	není sloupec, za který se dá prohodit !!!
 no file	etemplate	cs	žádný soubor
 no filename given or selected via browse...	etemplate	cs	nebyl zadán název souboru ani vybrán přes Procházet
+no matches found	etemplate	cs	Nenalezeny žádné záznamy
 no row to swap with !!!	etemplate	cs	není řádek, za který se dá prohodit !!!
 not null	etemplate	cs	NENÍ NULL
 nothing	etemplate	cs	nic
@@ -272,7 +278,7 @@ paste	etemplate	cs	Vložit
 path	etemplate	cs	Cesta
 please enter table-name first !!!	etemplate	cs	Zadejte prosím nejprve název tabulky !!!
 pm	etemplate	cs	pm
-popup	etemplate	cs	Překrývací
+popup	etemplate	cs	Překryvné
 precision	etemplate	cs	Přesnost
 primary key	etemplate	cs	Primární klíč
 primary key for the table, gets automaticaly indexed	etemplate	cs	Primární klíč tabulky, je automaticky indexován
@@ -284,6 +290,7 @@ read etemplate from database (for the keys above)	etemplate	cs	načíst eŠablon
 readonly	etemplate	cs	jen pro čtení
 remove row (can not be undone!!!)	etemplate	cs	odstranit řádek (nelze vrátit zpět!!!)
 remove this link (not the entry itself)	etemplate	cs	Odstranit tento odkaz (ne celý záznam)
+required	etemplate	cs	Vyžadováno
 returns savely, without deleting	etemplate	cs	vrátí bezpečně zpět, BEZ smazání
 right	etemplate	cs	Pravý
 row...	etemplate	cs	Řádek...
@@ -403,3 +410,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	cs	XML soubor pro import
 xslt template	etemplate	cs	XSLT šablona
 year	etemplate	cs	Rok
+you are not allowed to export more then %1 entries!	etemplate	cs	Nemáte oprávnění exportovat více než %1 záznamů!
+you can respond by visiting:	etemplate	cs	Můžete odpovědět navštívením:

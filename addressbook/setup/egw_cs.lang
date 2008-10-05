@@ -15,6 +15,7 @@ actions	addressbook	cs	Akce
 add %1	addressbook	cs	Přidat %1
 add a contact to this organisation	addressbook	cs	Přidat kontakt k této organizaci
 add a new contact	addressbook	cs	Přidat nový kontakt
+add a new infolog	addressbook	cs	Přidat nový Infolog
 add a new list	addressbook	cs	Přidat nový seznam
 add a single entry by passing the fields.	addressbook	cs	Přidat záznam vyplněním položek.
 add business email of whole distribution list?	addressbook	cs	Přidat firemní e-mail celého distribučního seznamu?
@@ -36,6 +37,7 @@ addressbook csv export	addressbook	cs	Export adresáře do CSV
 addressbook menu	addressbook	cs	Menu adresáře
 addressbook preferences	addressbook	cs	Předvolby adresáře
 addressbook the contact should be saved to	addressbook	cs	Kontakty adresáře by měly být uloženy do
+addressbook the contact should be shown	addressbook	cs	Kontakty adresáře by měly být zobrazeny
 addressbook-fieldname	addressbook	cs	Adresář - název položky
 addvcard	addressbook	cs	Přidat VCard
 advanced search	addressbook	cs	Rozšířené hledání
@@ -98,12 +100,14 @@ contact repository	admin	cs	Databáze kontaktů
 contact saved	addressbook	cs	Kontakt uložen
 contact settings	admin	cs	Nastavení kontaktu
 contactform	addressbook	cs	Formulář kontaktu
-contacts and account contact-data to ldap	admin	cs	kontakty a kontaktní data uživatelských  účtů do LDAP
+contacts and account contact-data to ldap	admin	cs	kontakty a kontaktní data uživatelských účtů do LDAP
+contacts and account contact-data to sql	admin	cs	kontakty a kontaktní data uživatelských účtů do SQL
 contacts to ldap	admin	cs	kontakty do LDAP
 contacts to ldap, account contact-data to sql	admin	cs	kontakty do LDAP, kontaktní data uživatelských účtů do SQL
 contains	addressbook	cs	obsahuje
 copied by %1, from record #%2.	addressbook	cs	Zkopírováno %1, ze záznamu #%2.
 copy a contact and edit the copy	addressbook	cs	Kopírovat kontakt a editovat kopii
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	cs	Zkopírujte Vaše změny do schránky (clipboardu), %1znovu načtěte záznam%2 a změny slučte.
 country	common	cs	Země
 create new links	addressbook	cs	Vytvořit nové odkazy
 created	addressbook	cs	Vytvořeno
@@ -150,12 +154,14 @@ edit phonenumbers -	addressbook	cs	Editovat telefonní čísla -
 either the configured email addesses are wrong or the mail configuration.	addressbook	cs	Nastavené e-mailové adresy nebo konfigurace e-mailu jsou chybné.
 email & internet	addressbook	cs	E-mail & Internet
 email addresses (comma separated) to send the contact data	addressbook	cs	E-mailové adresy (oddělené čárkou) na které mají být odeslána data kontaktu
-empty for all	addressbook	cs	prázdné pro všechny
+empty for all	addressbook	cs	prázdné znamená vše
 enable an extra private addressbook	addressbook	cs	Povolit dodatečný privátní adresář
 end	addressbook	cs	Konec
 enter the path to the exported file here	addressbook	cs	Zde vyplňte cestu pro exportovaný soubor
 error deleting the contact !!!	addressbook	cs	Chyba při mazání kontaktu
 error saving the contact !!!	addressbook	cs	Chyba při ukládání kontaktu
+error: the entry has been updated since you opened it for editing!	addressbook	cs	Chyba: záznam byl zaktualizován v době, kdy jste ho měl(a) otevřený k editaci!
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	cs	Příklad $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - prohledej pole "n_prefix", pokud nalezneš "Mr", napiš Hello Mr., v opačném případě napiš Hello Ms.
 existing links	addressbook	cs	Stávající odkazy
 export	addressbook	cs	export
 export as csv	addressbook	cs	Exportovat jako CSV
@@ -177,7 +183,9 @@ fields for the csv export	addressbook	cs	Položky k exportu do CSV
 fields the user is allowed to edit himself	admin	cs	Položky, které si smí editovat sami uživatelé
 fields to show in address list	addressbook	cs	Položky, které se zobrazují v seznamu adres
 fieldseparator	addressbook	cs	Oddělovač položek
+for more then one contact in a document use the tag pagerepeat!	addressbook	cs	pro více než jeden kontakt v dokumentu použijte štítek pagerepeat!
 for read only ldap	admin	cs	LDAP jen pro čtení
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
 freebusy uri	addressbook	cs	Volný / zaneprázdněn URI
 full name	addressbook	cs	Celé jméno
 general	addressbook	cs	Obecné
@@ -260,6 +268,7 @@ name for the distribution list	addressbook	cs	Název distribučního seznamu
 name of current user, all other contact fields are valid too	addressbook	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 name, address	addressbook	cs	Jméno, adresa
 new contact submitted by %1 at %2	addressbook	cs	Nový kontakt odeslal(a) %1 v %2
+new window opened to edit infolog for your selection	addressbook	cs	Otevřeno nové okno pro editaci Infologu na základě vašeho výběru
 next date	addressbook	cs	Následující datum
 no categories selected	addressbook	cs	nebyly vybrány žádné kategorie
 no vcard	addressbook	cs	Žádná VCard
@@ -322,7 +331,7 @@ show	addressbook	cs	Zobrazit
 show birthday reminders on main screen	addressbook	cs	Zobrazit upomínky na narozeniny na hlavní obrazovce
 show infolog entries for this organisation	addressbook	cs	Zobrazit záznamy InfoLogu pro tuto organizaci
 show the contacts of this organisation	addressbook	cs	Zobrazit kontakty této organizace
-size of popup (wxh, eg.400x300, if a popup should be used)	admin	cs	Velikost překrývacího okna (ŠxV, např. 400x300, pokud má být překrývací okno používáno)
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	cs	Velikost překryvného okna (ŠxV, např. 400x300, pokud má být překryvné okno používáno)
 start	admin	cs	Start
 startrecord	addressbook	cs	První záznam
 state	common	cs	Stát
@@ -337,9 +346,11 @@ thank you for contacting us.	addressbook	cs	Děkujeme, že jste nás kontaktoval
 that field name has been used already !	addressbook	cs	Tento název položky je již používán !
 the anonymous user has probably no add rights for this addressbook.	addressbook	cs	Anonymní uživatel patrně nemá práva k přidávání záznamů do adresáře.
 the anonymous user needs add rights for it!	addressbook	cs	Anonymní uživatel potřebuje práva k přidávání záznamů.
+the anonymous user needs read it!	addressbook	cs	Anonymní uživatel potřebuje právo pro čtení!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	cs	Dokument může obsahovat rezervovaná místa jako $$n_fn$$, která budou nahrazena daty kontaktu (%1kompletní seznam názvů rezervovaných míst%2).
 there was an error saving your data :-(	addressbook	cs	Došlo k chybě při ukládání Vašich dat :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	cs	Tento modul zobrazuje formulář kontaktu, který ukládá data přímo do adresáře.
+this module displays block from a adddressbook group.	addressbook	cs	Tento modul zobrazuje blok z adresářové skupiny.
 this person's first name was not in the address book.	addressbook	cs	Křestní jméno této osoby nebylo v adresáři.
 this person's last name was not in the address book.	addressbook	cs	Příjmení této osoby nebylo v adresáři.
 timezone	addressbook	cs	Časová zóna
@@ -354,6 +365,7 @@ updated	addressbook	cs	Aktualizováno
 upload or delete the photo	addressbook	cs	Upload nebo smazání fotografie
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	cs	URL na které má telefonní číslo odkazovat (použijte %1 = vytáčené telefonní číslo, %u = název účtu, %t = telefon účtu)
 use an extra category tab?	addressbook	cs	Použít extra založku pro kategorii?
+use an extra tab for private custom fields?	admin	cs	Použít extra založku pro soukromé uživatelsky definované položky?
 use country list	addressbook	cs	Použít seznam zemí
 use setup for a full account-migration	admin	cs	pro kompletní migraci účtů použijte setup
 used for links and for the own sorting of the list	addressbook	cs	použito pro odkazy a vlastní třídění seznamu

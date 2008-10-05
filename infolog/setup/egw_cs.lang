@@ -153,6 +153,7 @@ high	infolog	cs	Vysoká
 history logging	infolog	cs	Protokolování historie
 history logging and deleting of items	infolog	cs	Protokolování historie a mazání položek
 id	infolog	cs	Id
+id#	infolog	cs	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	cs	Pokud má typ skupinového vlastníka, všechny položky toho typu bude vlastnit daná skupina, nikoli uživatel, který je vytvořil!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	cs	Pokud není nastaveno, je řádek s filtry a hledáním skryt, je-li záznamů méně, než udává hodnota "maximum výsledků na stránku" (definovaná ve společných předvolbách).
 import	infolog	cs	Importovat
@@ -188,6 +189,7 @@ location	infolog	cs	Umístění
 longer textual description	infolog	cs	delší textový popis
 low	infolog	cs	Nízká
 max length of the input [, length of the inputfield (optional)]	infolog	cs	maximální délka vstupu (volitelné)
+modifierer	infolog	cs	Modifikátor
 name must not be empty !!!	infolog	cs	Název nemůže být prázdný !!!
 name of new type to create	infolog	cs	název nově vytvářeného typu
 never hide search and filters	infolog	cs	Nikdy neskrývat hledání a filtry

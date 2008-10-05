@@ -1,10 +1,14 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	cs	%1 '%2' neexistuje, není čitelné webovým serverem nebo neobsahuje žádnou instalaci eGroupWaru!
 %1 already exists in %2.	setup	cs	%1 již existuje v %2.
 %1 created in %2.	setup	cs	%1 vytvořen v %2.
+%1 database %2 on %3 already contains the following tables:	setup	cs	%1 databáze %2 na %3 již obsahuje následující tabulky:
 %1 does not exist !!!	setup	cs	%1 neexistuje !!!
 %1 is %2%3 !!!	setup	cs	%1 je %2%3 !!!
 %1 is needed by: %2.	setup	cs	%1 je zapotřebí pro: %2.
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	cs	%1 je nastaveno na %2, nebudete moci uploadovat nebo připojovat soubory větší než stanoví tento limit.
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	cs	%1 je nastaveno na %2. To se nedoporučuje pro produkční systém, jelikož zobrazená chybová hlášení mohou obsahovat hesla a jiné citlivé údaje.
 %1, %2 or %3 the configuration file.	setup	cs	%1, %2 nebo %3 konfigurační soubor.
+'%1' is no valid domain name!	setup	cs	'%1' není platné doménové jméno!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	cs	'%1' není povoleno jako %2. argumenty volby %3 !!!
 (searching accounts and changing passwords)	setup	cs	(prohledávání účtů a změna hesel)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	cs	*** Neaktualizujte Vaší databázi prostřednictvím Instalátoru, protože aktualizace by díky nastavení parametru max_execution_time mohla být přerušena a Vaše databáze by pak zůstala v neobnovitelném stavu (ztratil(a) by jste svá data) !!!
@@ -71,6 +75,7 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	cs	Na Vaši žádost tento skript podnikne ďábelskou akci spočívající v odinstalaci všech Vašich aplikací, smazání stávajících tabulek a dat.
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	cs	Pokusit se použít korektní MIME typ pro FTP místo výchozího 'application/octet-stream'
 authentication / accounts	setup	cs	Autentikace / Účty
+authentication type for application	setup	cs	Typ autentikace pro aplikaci
 auto create account records for authenticated users	setup	cs	Automaticky vytvořit záznamy pro autentikované uživatele
 auto login anonymous user	setup	cs	Automaticky přihlásit anonymního uživatele
 auto-created user accounts expire	setup	cs	Automaticky vytvořené uživatelské účty vyprší
@@ -99,6 +104,10 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	cs	protože příznak pro povolení této aplikace (enable flag) je nastaven na 0, nebo není definován
 bottom	setup	cs	Dolní okraj
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	cs	ale <u>důrazně doporučujeme zazálohování</u> Vašich tabulek pro případ, že skript způsobí poškození Vašich dat.<br /><strong>Tyto automatizované skripty mohou snadno poškodit Vaše data.</strong>
+can not connect to %1 database %2 on host %3 using user %4!	setup	cs	Nemohu se připojit k %1 databázi %2 na serveru %3 pod uživatelem %4!
+can not connect to ldap server on host %1 using dn %2!	setup	cs	Nemohu se připojit k LDAP serveru na počítači %1 jako DN %2!
+can not create %1 database %2 on %3 for user %4!	setup	cs	Nemohu vytvořit %1 databázi %2 na %3 pro uživatele %4!
+can not create dn %1!	setup	cs	Nemohu vytvořit DN %1!
 cancel	setup	cs	Storno
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	cs	Není možné vytvořit header.inc.php kvůli omezeným oprávněním.<br />Místo toho můžete soubor %1 nebo %2.
 change system-charset	setup	cs	Změnit znakovou sadu systému
@@ -160,6 +169,7 @@ current system-charset	setup	cs	Aktuální znaková sada systému
 current system-charset is %1.	setup	cs	Aktuální znaková sada systému je %1.
 current version	setup	cs	Aktuální verze
 currently installed languages: %1 <br />	setup	cs	Aktuálně instalované jazyky: %1 <br />
+custom set via %1	setup	cs	Uživatelské nastavení přes %1
 cyrus imap: admin user,password	setup	cs	Cyrus IMAP: Uživatelské jméno administrátora, heslo
 database	setup	cs	Databáze
 database instance (egw domain)	setup	cs	Instance databáze (eGW doména)
@@ -203,6 +213,7 @@ domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_back
 domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	cs	doména(výchozí),[administrátor konfigurace(admin)],heslo,[záloha instalace],[znaková sada(výchozí závisí na jazyku)]
 domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	cs	doména(výchozí),[administrátor konfigurace(admin)],heslo,[název=hodnota,...] nastaví konfigurační hodnoty pro:
 domain-name	setup	cs	název domény
+don't change, if you already stored files! you will loose them!	setup	cs	Neměňte pokud jste již ukládali soubory! Přijdete o ně!
 dont touch my data	setup	cs	Nedotýkej se mých dat
 download	setup	cs	Stáhnout
 edit current configuration	setup	cs	Editovat aktuální konfiguraci
@@ -246,6 +257,7 @@ file type, size, version, etc.	setup	cs	typ, velikost, verze souboru, atd.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	cs	Uploady souborů jsou vypnuty. NEmůžete použít žádný ze správců souborů ani připojovat soubory v nejrůznějších aplikacích.
 filename	setup	cs	jméno souboru
 filesystem	setup	cs	Souborový systém
+filesystem (default)	setup	cs	Souborový systém (výchozí)
 force selectbox	setup	cs	Vynutit rozbalovací nabídku
 found existing configuration file. loading settings from the file...	setup	cs	Nalezen stávající konfigurační soubor. Načítám nastavení z tohoto souboru...
 give admin access to all installed apps	setup	cs	Poskytnout admin. přístup ke všem instalovaným aplikacím
@@ -273,12 +285,14 @@ hour (0-24)	setup	cs	hodina (0-24)
 however the tables are still in the database	setup	cs	Nicméně tabulky jsou stále v databázi
 however, the application is otherwise installed	setup	cs	Nicméně aplikace je jinak nainstalovaná
 however, the application may still work	setup	cs	Nicméně aplikace stále může fungovat
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	cs	Typy HTTP autentikace (oddělené čárkami), které mají být použity bez přihlašovací stránky, např. "NTLM"
 if no acl records for user or any group the user is a member of	setup	cs	Pokud nejsou ACL záznamy pro uživatele nebo libovolnou skupinu, které je členem
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	cs	Pokud je zapnutý režim safe_mode, eGW nemůže za běhu měnit některá nastavení ani načítat dosud nenačtené moduly
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	cs	Pokud aplikace nemá definovány tabulky, aktualizace by měla problém napravit
 if using ads (active directory) authentication	setup	cs	Při použití ADS (Active Directory) autentikace
 if using ldap	setup	cs	Při použití LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	cs	Chcete při použití LDAP spravovat atributy pro domovský adresář a loginshell?
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporäry files.	setup	cs	Pokud máte přístup jen ke kořenovému adresáři dokumentů, zvolte <b>databázi</b> jako úložiště souborů a stejnou cestu použijte pro dočasné soubory.
 if you did not receive any errors, your applications have been	setup	cs	Pokud jste neobdrželi žádná chybová hlášení, Vaše aplikace byly
 if you did not receive any errors, your tables have been	setup	cs	Pokud jste neobdrželi žádná chybová hlášení, Vaše tabulky byly
 if you running this the first time, don't forget to manualy %1 !!!	setup	cs	Pokud toto spouštíte poprvé, nezapomeňte ručně %1 !!!
@@ -298,6 +312,7 @@ installation finished	setup	cs	Instalace dokončena
 installation started, this might take a few minutes ...	setup	cs	Instalace začala, může trvat několik minut ...
 installed	setup	cs	nainstalované
 instructions for creating the database in %1:	setup	cs	Instrukce pro vytvoření databáze v %1:
+invalid argument '%1' !!!	setup	cs	Neplatný argument '%1' !!!
 invalid ip address	setup	cs	Neplatná IP adresa
 invalid mcrypt algorithm/mode combination	setup	cs	Neplatná kombinace Mcrypt algoritmu/režimu
 invalid password	setup	cs	Neplatné heslo
@@ -373,6 +388,7 @@ not completed	setup	cs	Nedokončené
 not ready for this stage yet	setup	cs	Na tuto fázi ještě nejsme připraveni
 not set	setup	cs	není nastaveno
 note: you will be able to customize this later	setup	cs	Poznámka: toto můžete později upravit
+nothing to change.	setup	cs	Není třeba nic měnit.
 now guessing better values for defaults...	setup	cs	Snažím se odhadnout lepší hodnoty výchozích parametrů
 odbc / maxdb: dsn (data source name) to use	setup	cs	ODBC / MaxDB: Použít DSN (data source name)
 ok	setup	cs	OK
@@ -396,6 +412,7 @@ path of egroupware install directory (default auto-detected)	setup	cs	cesta k in
 path to user and group files has to be outside of the webservers document-root!!!	setup	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!!!
 path to various directories: have to exist and be writeable by the webserver	setup	cs	cesta k nejrůznějším adresářům: musí existovat a webový server pro ně musí mít oprávnění k zápisu
 pear (%1) is a php repository and is usually in a package called %2.	setup	cs	PEAR (%1) je PHP repositář a je obvykle obsažen v balíčku s názvem %2.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	cs	PEAR rozšíření (extensions) jsou zapotřebí pro mnohé aplikace eGroupWaru. PEAR jako takový je nutným základem pro všechna PEAR rozšíření.
 pear%1 is needed by: %2.	setup	cs	PEAR%1 je potřeba pro: %2.
 persistent connections	setup	cs	Trvalá spojení
 php plus restore	setup	cs	PHP plus restore
@@ -426,7 +443,6 @@ re-enter password	setup	cs	Zadejte heslo znovu
 read translations from	setup	cs	Načíst překlady z
 readable by the webserver	setup	cs	čitelné webovým serverem
 really uninstall all applications	setup	cs	OPRAVDU odinstalovat všechny aplikace
-recommended: filesystem	setup	cs	Doporučeno: souborový systém
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	cs	Parametr register_globals je zapnutý, přitom eGroupWare ho nepotřebuje a obecně je bezpečnější ho vypnout
 registered	setup	cs	zaregistrované
 rejected lines	setup	cs	Zamítnuté řádky
@@ -455,8 +471,6 @@ select one...	setup	cs	vybrat jeden...
 select the default applications to which your users will have access	setup	cs	Vyberte výchozí aplikace, do kterých budou mít uživatelé přístup
 select the desired action(s) from the available choices	setup	cs	Vyberte požadovanou akc(i/e) z dostupných voleb
 select to download file	setup	cs	Vyberte pro stažení souboru
-select where you want to store/retrieve file contents	setup	cs	Vyberte kam/odkud chcete ukládat/načítat obsah souboru
-select where you want to store/retrieve filesystem information	setup	cs	Vyberte kam/odkud chcete ukládat/načítat informace o souborovém systému
 select where you want to store/retrieve user accounts	setup	cs	Vyberte kam/odkud chcete ukládat/načítat uživatelské účty
 select which group(s) will be exported	setup	cs	Vyberte skupin(u/y) pro export
 select which group(s) will be imported (group membership will be maintained)	setup	cs	Vyberte skupin(u/y) pro import (členství ve skupinách zůstane zachováno)
@@ -493,6 +507,7 @@ sources deleted/missing	setup	cs	Zdrojové kódy jsou smazány (chybí)
 sql encryption type	setup	cs	Typ SQL šifrování pro hesla (výchozí md5)
 standard (login-name identical to egroupware user-name)	setup	cs	standardní (přihlašovací jméno se shoduje s uživatelským jménem v eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	cs	Nastavení standardního poštovního serveru (používá se také pro poštovní autentikaci)
+standard, as defined above	setup	cs	Standardní, jak je definováno výše
 start the postmaster	setup	cs	Spustit postmaster
 start updating languages %1 ...	setup	cs	Začátek aktualizace jazyků %1 ...
 start updating the database ...	setup	cs	Začátek aktualizace databáze ...
@@ -504,6 +519,11 @@ step %1 - db backup and restore	setup	cs	Krok %1 - Záloha a obnova databáze
 step %1 - language management	setup	cs	Krok %1 - Správa jazyků
 step %1 - simple application management	setup	cs	Krok %1 - Základní správa aplikací
 succesfully uploaded file %1	setup	cs	soubor %1 úspěšně uploadován
+successful connected to %1 database %2 on %3 using user %4.	setup	cs	Úspěšné připojení do %1 databáze %2 na %3 pod uživatelem %4.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	cs	Úspěšné připojení k %1 na %3 a vytvoření databáze %2 pro uživatele %4.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	cs	Úspěšné připojení k LDAP serveru na %1 a vytvoření/kontrola požadovaných struktur %2.
+successful connected to ldap server on %1 using dn %2.	setup	cs	Úspěšné připojení k LDAP serveru na počítači %1 jako DN %2.
+supported node types:	setup	cs	Podporované typy uzlů
 table change messages	setup	cs	Zprávy o změnách tabulek
 tables dropped	setup	cs	tabulky smazány
 tables installed, unless there are errors printed above	setup	cs	pokud výše nevidíte chybová hlášení, byly tabulky nainstalovány
@@ -516,13 +536,16 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	cs	Rozšíř
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	cs	Parametr db_type ve výchozích nastaveních (%1) není na tomto serveru podporován. Použiji první podporovaný typ.
 the file	setup	cs	soubor
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	cs	V prvním kroku instalace eGroupWaru je třeba zajistit, aby Vaše prostředí mělo všechny parametry potřebné pro běh aplikace.
+the following applications are not installed:	setup	cs	Následující aplikace NEJSOU nainstalovány:
 the following applications need to be upgraded:	setup	cs	Následující aplikace potřebují aktualizovat:
 the function %1 is needed from: %2.	setup	cs	Funkce %1 je vyžadována (čím): %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	cs	Funkce imagecreatefromjpeg je součástí rozšíření gd (zkompilovaného s podporou jpeg!). Je zapotřebí pro uploady fotek ke kontaktům.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	cs	Rozšíření pro LDAP je zapotřebí v případě, pokud chcete LDAP používat pro ukládání uživatelských účtů nebo kontaktů nebo se chcete autentikovat vůči LDAP či Active Directory. Není potřeba pro standardní SQL instalaci.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Rozšíření mbstring je zapotřebí pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Parametr mbstring.func_overload = 7 musí být nastaven pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	cs	Rozšíření PDO a databázový ovladač jsou zapotřebí pro VFS (virtuální souborový systém)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	cs	Rozšíření session je zapotřebí pro použití php relací (databázové relace fungují i bez něj).
+the session extension is required!	setup	cs	Je vyžadováno rozšíření session.
 the table definition was correct, and the tables were installed	setup	cs	Definice tabulek byla v pořádku, tabulky byly nainstalovány
 the tables	setup	cs	tabulky
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	cs	Uživatelská jména/hesla jsou: demo/guest, demo2/guest a demo3/guest.
@@ -579,6 +602,7 @@ validation errors	setup	cs	Chyby při ověřování
 version	setup	cs	verze
 version mismatch	setup	cs	Nesoulad verzí
 view	setup	cs	Pohled
+virtual filesystem	setup	cs	Virtuální souborový systém
 virtual mail manager (login-name includes domain)	setup	cs	Virtuální správce pošty (přihlašovací jména zahrnují doménu)
 warning!	setup	cs	Varování!
 we can proceed	setup	cs	Můžeme pokračovat
@@ -587,6 +611,7 @@ we will automatically update your tables/records to %1	setup	cs	Automaticky zakt
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	cs	Nyní spustíme sérii testů, které mohou trvat několik minut. Pro pokračování klikněte na odkaz níže.
 welcome to the egroupware installation	setup	cs	Vítejte v instalaci eGroupWaru
 what type of sessions management do you want to use (php session management may perform better)?	setup	cs	Jaký typ správy relací chcete používat (PHP správa relací může být výkonnější)?
+where should egroupware store file content	setup	cs	Kam by měl eGroupWare ukládat obsah souborů
 which database type do you want to use with egroupware?	setup	cs	Jaký typ databáze chcete pro eGroupWare používat?
 world readable	setup	cs	veřejně čitelné
 world writable	setup	cs	veřejně zapisovatelné
@@ -595,6 +620,7 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	cs	Chcete zobrazovat stav aktualizace každé z aplikací ?
 writable by the webserver	setup	cs	zapisovatelné webovým serverem
 write	setup	cs	Uložit
+wrong credentials to access the header.inc.php file!	setup	cs	Chybná oprávnění pro přístup k souboru header.inc.php!
 year	setup	cs	rok
 yes	setup	cs	Ano
 yes, with lowercase usernames	setup	cs	Ano, s uživatelskými jmény obsahujícími jen malá písmena
@@ -622,6 +648,7 @@ you need to configure egroupware:	setup	cs	Musíte nakonfigurovat eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	cs	Než bude konfigurační soubor header.inc.php zapsán, musíte opravit výše uvedené chyby!
 you need to save the settings you made here first!	setup	cs	Nejprve musíte uložit zde provedená nastavení!
 you need to select your current charset!	setup	cs	Musíte vybrat svou aktuální znakovou sadu!
+you need to specify a password!	setup	cs	Musíte zadat heslo!
 you should either install the sources or uninstall it, to get rid of the tables	setup	cs	Měl(a) by jste buď nainstalovat zdrojové kódy, nebo jí odinstalovat, aby jste se zbavil(a) tabulek
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	cs	Měl by jste ho buď odinstalovat a potom nainstalovat znovu nebo se pokusit o manuální opravu
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	cs	NEBUDETE se moci přihlásit do eGroupwaru pomocí PHP relací: "relace nemohla být ověřena" !!!

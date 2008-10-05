@@ -47,6 +47,7 @@ calendar preferences	calendar	cs	Předvolby kalendáře
 calendar settings	admin	cs	Nastavení kalendáře
 calendar-fieldname	calendar	cs	kalendář-jméno položky
 can't add alarms in the past !!!	calendar	cs	Není možné přidávat připomínky do minulosti !!!
+can't aquire lock!	calendar	cs	Není možné získat zámek!
 canceled	calendar	cs	Stornováno
 charset of file	calendar	cs	Znaková sada souboru
 close the window	calendar	cs	Zavřít okno
@@ -288,6 +289,7 @@ test import (show importable records <u>only</u> in browser)	calendar	cs	Testova
 this day is shown as first day in the week or month view.	calendar	cs	Tento den se zobrazí jako první v týdenním nebo měsíčním pohledu.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	cs	Tento čas ukončí Váš denní pohled. Následující události se zobrazí pod Vaším denním pohledem.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	cs	Tímto časem začne Váš denní pohled. Předcházející události se zobrazí nad Vaším denním pohledem.<br>Tento čas je také brán jako výchozí počáteční čas pro nové události.
+this entry is currently opened by %1!	calendar	cs	Tento záznam má aktuálně otevřen(a) %1!
 this entry is opened by user:	calendar	cs	Tento záznam byl v nastaveném intervalu otevřen uživatelem:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	cs	Tato skupina je přednastavena, když vstoupíte do plánovače. V plánovači jí můžete změnit kdykoli se Vám zlíbí.
 this message is sent for canceled or deleted events.	calendar	cs	Tato zpráva je zasílána v případě ukončených nebo smazaných událostí.
@@ -309,7 +311,7 @@ tue	calendar	cs	Út
 two weeks	calendar	cs	dva týdny
 updated	calendar	cs	Aktualizováno
 use end date	calendar	cs	použít koncové datum
-use the selected time and close the popup	calendar	cs	použít zvolený čas a zavřít okno
+use the selected time and close the popup	calendar	cs	použít zvolený čas a zavřít překryvné okno
 user or group	calendar	cs	Uživatel nebo skupina
 view this event	calendar	cs	Zobrazit událost
 views with fixed time intervals	calendar	cs	Pohledy s pevnými časovými intervaly
