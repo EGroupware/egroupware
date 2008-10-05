@@ -33,8 +33,8 @@ function check_access(&$account)
 	foreach(array(
 		'davkit',	// Apple iCal
 		'bionicmessage.net',
-		'ZideOne',
-		'Lightning',
+		'zideone',
+		'lightning',
 	) as $test)
 	{
 		if (($no_session = strpos($agent,$test) !== false)) break;
@@ -44,9 +44,9 @@ function check_access(&$account)
 	if (!($sessionid = $GLOBALS['egw']->session->create($account,'','',$no_session)))
 	{
 		header('WWW-Authenticate: Basic realm="'.groupdav::REALM.'"');
-        header('HTTP/1.1 401 Unauthorized');
-        header('X-WebDAV-Status: 401 Unauthorized', true);
-        exit;
+		header('HTTP/1.1 401 Unauthorized');
+		header('X-WebDAV-Status: 401 Unauthorized', true);
+		exit;
 	}
 	return $sessionid;
 }
