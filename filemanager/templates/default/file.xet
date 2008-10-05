@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.file.general" template="" lang="" group="0" version="1.5.001">
+	<template id="filemanager.file.general" template="" lang="" group="0" version="1.5.003">
 		<grid width="450" height="300" spacing="10">
 			<columns>
 				<column width="80"/>
@@ -10,7 +10,7 @@
 			<rows>
 				<row height="60">
 					<image src="icon" class="mimeHuge" align="center"/>
-					<textbox id="name" needed="1" class="fileName"/>
+					<textbox id="name" needed="1" class="fileName" onchange="xajax_doXMLHTTP('filemanager_ui::ajax_check_rename_target',document.location.href,this.value);"/>
 				</row>
 				<row>
 					<hrule span="all"/>
@@ -36,8 +36,8 @@
 					<date-time id="mtime" readonly="true"/>
 				</row>
 				<row>
-					<description/>
-					<description/>
+					<description options=",,,comment" value="Comment"/>
+					<textbox multiline="true" id="comment" class="comment"/>
 				</row>
 			</rows>
 		</grid>
@@ -187,7 +187,19 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.file" template="" lang="" group="0" version="1.5.002">
+	<template id="filemanager.file.custom" template="" lang="" group="0" version="1.5.001">
+		<grid width="450" height="300" spacing="10" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<customfields/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.file" template="" lang="" group="0" version="1.5.003">
 		<grid>
 			<columns>
 				<column/>
@@ -203,12 +215,14 @@
 							<tab label="Permissions" statustext=""/>
 							<tab label="Extended ACL" statustext=""/>
 							<tab label="Preview" statustext=""/>
+							<tab label="Custom fields" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="filemanager.file.general"/>
 							<template id="filemanager.file.perms"/>
 							<template id="filemanager.file.eacl"/>
 							<template id="filemanager.file.preview"/>
+							<template id="filemanager.file.custom"/>
 						</tabpanels>
 					</tabbox>
 				</row>

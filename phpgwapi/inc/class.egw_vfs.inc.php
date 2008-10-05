@@ -673,9 +673,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function eacl($url,$rights=null,$owner=null)
 	{
-		$params = func_get_args();
-
-		return self::_call_on_backend('eacl',$params);
+		return self::_call_on_backend('eacl',array($url,$rights,$owner));
 	}
 
 	/**
@@ -688,9 +686,38 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function get_eacl($path)
 	{
-		$params = func_get_args();
+		return self::_call_on_backend('get_eacl',array($path));
+	}
 
-		return self::_call_on_backend('get_eacl',$params);
+	/**
+	 * Store properties for a single ressource (file or dir)
+	 *
+	 * @param string $path string with path
+	 * @param array $props array or array with values for keys 'name', 'ns', 'value' (null to delete the prop)
+	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
+	 */
+	static function proppatch($path,array $props)
+	{
+		return self::_call_on_backend('proppatch',array($path,$props));
+	}
+
+	/**
+	 * Default namespace for properties set by eGroupware: comment or custom fields (leading #)
+	 *
+	 */
+	const DEFAULT_PROP_NAMESPACE = 'http://egroupware.org/';
+
+	/**
+	 * Read properties for a ressource (file, dir or all files of a dir)
+	 *
+	 * @param array|string $path (array of) string with path
+	 * @param string $ns='http://egroupware.org/' namespace if propfind should be limited to a single one, otherwise use null
+	 * @return array|boolean array with props (values for keys 'name', 'ns', 'value'), or path => array of props for is_array($path)
+	 * 	false if $path does not exist
+	 */
+	static function propfind($path,$ns=self::DEFAULT_PROP_NAMESPACE)
+	{
+		return self::_call_on_backend('propfind',array($path,$ns));
 	}
 
 	/**

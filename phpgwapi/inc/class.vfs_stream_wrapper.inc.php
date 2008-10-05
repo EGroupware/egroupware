@@ -399,8 +399,53 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function _call_on_backend($name,$params,$fail_silent=false)
 	{
-		$path = $params[0];
+		$pathes = $params[0];
 
+		$scheme2urls = array();
+		foreach(is_array($pathes) ? $pathes : array($pathes) as $path)
+		{
+			if (!($url = self::resolve_url($path)))
+			{
+				return false;
+			}
+			$scheme2urls[(string)parse_url($url,PHP_URL_SCHEME)][] = $url;
+		}
+		$ret = array();
+		foreach($scheme2urls as $scheme => $urls)
+		{
+			if ($scheme)
+			{
+				if (!class_exists($class = $scheme.'_stream_wrapper') || !method_exists($class,$name))
+				{
+					if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
+					return false;
+				}
+				if (!is_array($pathes))
+				{
+					$params[0] = $url;
+
+					return call_user_func_array(array($scheme.'_stream_wrapper',$name),$params);
+				}
+				$params[0] = $urls;
+				if (!is_array($r = call_user_func_array(array($scheme.'_stream_wrapper',$name),$params)))
+				{
+					return $r;
+				}
+				$ret += $r;
+			}
+			// call the filesystem specific function (dont allow to use arrays!)
+			elseif(!function_exists($name) || is_array($pathes))
+			{
+				return false;
+			}
+			else
+			{
+				return $name($url,$time);
+			}
+		}
+		return $ret;
+
+		// old, non array aware code
 		if (!($url = self::resolve_url($params[0])))
 		{
 			return false;

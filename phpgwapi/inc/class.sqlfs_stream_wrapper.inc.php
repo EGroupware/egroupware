@@ -51,6 +51,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	const TABLE = 'egw_sqlfs';
 	/**
+	 * Name of our property table
+	 */
+	const PROPS_TABLE = 'egw_sqlfs_props';
+	/**
 	 * mode-bits, which have to be set for files
 	 */
 	const MODE_FILE = 0100000;
@@ -129,7 +133,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @var array $path => info-array pairs
 	 */
-	static private $stat_cache;
+	static private $stat_cache = array();
 	/**
 	 * Reference to the PDO object we use
 	 *
@@ -494,9 +498,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
 		unset(self::$stat_cache[$path]);
 
-		if (($ret = $stmt->execute(array(':fs_id' => $stat['ino']))) && self::url2operation($url) == self::STORE2FS)
+		if (($ret = $stmt->execute(array(':fs_id' => $stat['ino']))))
 		{
-			unlink(self::_fs_path($stat['ino']));
+			if (self::url2operation($url) == self::STORE2FS) unlink(self::_fs_path($stat['ino']));
+			// delete props
+			unset($stmt);
+			$stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=?');
+			$stmt->execute(array($stat['ino']));
 		}
 		return $ret;
 	}
@@ -678,6 +686,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (($ret = $stmt->execute(array($stat['ino']))))
 		{
 			self::eacl($path,null,false,$stat['ino']);	// remove all (=false) evtl. existing extended acl for that dir
+			// delete props
+			unset($stmt);
+			$stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=?');
+			$stmt->execute(array($stat['ino']));
 		}
 		return $ret;
 	}
@@ -840,7 +852,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
 	 *
-	 * @ToDo check all parent dirs for readable (fastest would be with sql query) !!!
 	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
 	 * @param $options
 	 * @return booelan
@@ -1221,6 +1232,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * Return the path of given fs_id(s)
 	 *
+	 * Searches the stat_cache first and then the db.
 	 * Calls itself recursive to to determine the path of the parent/directory
 	 *
 	 * @param int/array $fs_ids integer fs_id or array of them
@@ -1229,8 +1241,23 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function id2path($fs_ids)
 	{
 		//error_log(__METHOD__.'('.print_r($fs_id,true).')');
-
 		$ids = (array)$fs_ids;
+		$pathes = array();
+		// first check our stat-cache for the ids
+		foreach(self::$stat_cache as $path => $stat)
+		{
+			if (($key = array_search($stat['fs_id'],$ids)) !== false)
+			{
+				$pathes[$stat['fs_id']] = $path;
+				unset($ids[$key]);
+				if (!$ids)
+				{
+					//error_log(__METHOD__.'('.print_r($fs_ids,true).')='.print_r($pathes,true).' *from stat_cache*');
+					return is_array($fs_ids) ? $pathes : array_shift($pathes);
+				}
+			}
+		}
+		// now search via the database
 		if (count($ids) > 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
 		$query = 'SELECT fs_id,fs_dir,fs_name FROM '.self::TABLE.' WHERE fs_id'.
 			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')');
@@ -1239,7 +1266,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			self::_pdo();
 		}
-		//$query = '/* sqlfs::id2path('.implode(',',$ids).') */ '.$query;
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		if (!$stmt->execute())
@@ -1261,7 +1287,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;	// parent not found, should never happen ...
 		}
-		$pathes = array();
 		foreach($rows as $fs_id => $row)
 		{
 			$parent = $row['fs_dir'] > 1 ? $parents[$row['fs_dir']] : '';
@@ -1298,6 +1323,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		return $stat;
 	}
 
+	private static $pdo_type;
+
 	/**
 	 * Create pdo object / connection, as long as pdo is not generally used in eGW
 	 *
@@ -1311,23 +1338,23 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			case 'mysqli':
 			case 'mysqlt':
-				$type = 'mysql';
+				self::$pdo_type = 'mysql';
 				break;
 			default:
-				$type = $egw_db->Type;
+				self::$pdo_type = $egw_db->Type;
 				break;
 		}
 		switch($type)
 		{
 			default:
-				$dsn = $type.':host='.$egw_db->Host.';port='.$egw_db->Port.';dbname='.$egw_db->Database;
+				$dsn = self::$pdo_type.':host='.$egw_db->Host.';port='.$egw_db->Port.';dbname='.$egw_db->Database;
 				break;
 		}
 		// check once if pdo extension and DB specific driver is loaded or can be loaded
 		static $pdo_available;
 		if (is_null($pdo_available))
 		{
-			foreach(array('pdo','pdo_'.$type) as $ext)
+			foreach(array('pdo','pdo_'.self::$pdo_type) as $ext)
 			{
 				if (!extension_loaded($ext) && function_exists('dl') && !dl($dl=PHP_SHLIB_PREFIX.$ext.'.'.PHP_SHLIB_SUFFIX))
 				{
@@ -1345,7 +1372,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		// set client charset of the connection
 		$charset = $GLOBALS['egw']->translation->charset();
-		switch($type)
+		switch(self::$pdo_type)
 		{
 			case 'mysql':
 				if (isset($egw_db->Link_ID->charset2mysql[$charset])) $charset = $egw_db->Link_ID->charset2mysql[$charset];
@@ -1470,6 +1497,123 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		//error_log(__METHOD__."('$url') = $operation (1=DB, 2=FS)");
 		return $operation;
+	}
+
+	/**
+	 * Store properties for a single ressource (file or dir)
+	 *
+	 * @param string|int $path string with path or integer fs_id
+	 * @param array $props array or array with values for keys 'name', 'ns', 'value' (null to delete the prop)
+	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
+	 */
+	static function proppatch($path,array &$props)
+	{
+		if (!is_numeric($path))
+		{
+			if (!($stat = self::url_stat($path,0)))
+			{
+				return false;
+			}
+			$id = $stat['ino'];
+		}
+		elseif(!($path = self::id2path($id=$path)))
+		{
+			return false;
+		}
+		if (!egw_vfs::check_access($path,EGW_ACL_EDIT,$stat))
+		{
+			return false;	// permission denied
+		}
+		foreach($props as &$prop)
+		{
+			if (!isset($prop['ns'])) $prop['ns'] = egw_vfs::DEFAULT_PROP_NAMESPACE;
+
+			if (!isset($prop['value']) || self::$pdo_type != 'mysql')	// for non mysql, we have to delete the prop anyway, as there's no REPLACE!
+			{
+				if (!isset($del_stmt))
+				{
+					$del_stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=:fs_id AND prop_namespace=:prop_namespace AND prop_name=:prop_name');
+					$del_stmt->bindParam(':fs_id',$id);
+				}
+				$del_stmt->bindParam(':prop_namespace',$prop['ns']);
+				$del_stmt->bindParam(':prop_name',$prop['name']);
+				$del_stmt->execute();
+			}
+			if (isset($prop['value']))
+			{
+				if (!isset($ins_stmt))
+				{
+					$ins_stmt = self::$pdo->prepare((self::$pdo_type == 'mysql' ? 'REPLACE' : 'INSERT').
+						' INTO '.self::PROPS_TABLE.' (fs_id,prop_namespace,prop_name,prop_value) VALUES (:fs_id,:prop_namespace,:prop_name,:prop_value)');
+					$ins_stmt->bindParam(':fs_id',$id);
+				}
+				$ins_stmt->bindParam(':prop_namespace',$prop['ns']);
+				$ins_stmt->bindParam(':prop_name',$prop['name']);
+				$ins_stmt->bindParam(':prop_value',$prop['value']);
+				if (!$ins_stmt->execute())
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Read properties for a ressource (file, dir or all files of a dir)
+	 *
+	 * @param array|string|int $path_ids (array of) string with path or integer fs_id
+	 * @param string $ns='http://egroupware.org/' namespace if propfind should be limited to a single one, use null for all
+	 * @return array|boolean false on error ($path_ids does not exist), array with props (values for keys 'name', 'ns', 'value'), or
+	 * 	fs_id/path => array of props for $depth==1 or is_array($path_ids)
+	 */
+	static function propfind($path_ids,$ns=egw_vfs::DEFAULT_PROP_NAMESPACE)
+	{
+		$ids = is_array($path_ids) ? $path_ids : array($path_ids);
+		foreach($ids as &$id)
+		{
+			if (!is_numeric($id))
+			{
+				if (!($stat = self::url_stat($id,0)))
+				{
+					error_log(__METHOD__."(".array2string($path_ids).",$depth,$ns) path '$id' not found!");
+					return false;
+				}
+				$id = $stat['ino'];
+			}
+		}
+		if (count($ids) > 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
+		$query = 'SELECT * FROM '.self::PROPS_TABLE.' WHERE (fs_id'.
+			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')').')'.
+			(!is_null($ns) ? ' AND prop_namespace=?' : '');
+
+		$stmt = self::$pdo->prepare($query);
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$stmt->execute(!is_null($ns) ? array($ns) : array());
+
+		$props = array();
+		foreach($stmt as $row)
+		{
+			$props[$row['fs_id']][] = array(
+				'value' => $row['prop_value'],
+				'name'  => $row['prop_name'],
+				'ns'    => $row['prop_namespace'],
+			);
+		}
+		if (!is_array($path_ids))
+		{
+			$props = $props[$row['fs_id']];
+		}
+		elseif ($props && isset($stat))	// need to map fs_id's to pathes
+		{
+			foreach(self::id2path(array_keys($props)) as $id => $path)
+			{
+				$props[$path] =& $props[$id];
+				unset($props[$id]);
+			}
+		}
+		foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
+		return $props;
 	}
 }
 

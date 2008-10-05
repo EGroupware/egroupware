@@ -23,6 +23,19 @@ class filemanager_ui
 	);
 
 	/**
+	 * Constructor
+	 *
+	 */
+	function __construct()
+	{
+		// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
+		if (get_magic_quotes_gpc() && $_GET)
+		{
+			$_GET = etemplate::array_stripslashes($_GET);
+		}
+	}
+
+	/**
 	 * Main filemanager page
 	 *
 	 * @param array $content=null
@@ -61,7 +74,7 @@ class filemanager_ui
 					$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path, egw_vfs::READABLE))
 				{
 					$content['nm']['path'] = $path;
-				} 
+				}
 			}
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 			if (isset($_GET['path']) && ($path = $_GET['path']))
@@ -69,7 +82,7 @@ class filemanager_ui
 				if ($path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path,egw_vfs::READABLE))
 				{
 					$content['nm']['path'] = $path;
-				} 
+				}
 				else
 				{
 					$msg .= lang('The requested path %1 is not available.',$path);
@@ -143,7 +156,8 @@ class filemanager_ui
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
 					break;
 				case 'upload':
-					$to = egw_vfs::concat($content['nm']['path'],$content['upload']['name']);
+					// strip '?', '/' and '#' from filenames, as they are forbidden for sqlfs / make problems
+					$to = egw_vfs::concat($content['nm']['path'],str_replace(array('?','/','#'),'',$content['upload']['name']));
 					if ($content['upload'] && is_uploaded_file($content['upload']['tmp_name']) &&
 						(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
 						copy($content['upload']['tmp_name'],egw_vfs::PREFIX.$to))
@@ -363,12 +377,12 @@ class filemanager_ui
 		{
 			$rows = array();
 			$query['total'] = 0;
-			// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give 
+			// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
 			// an appropriate message
 			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
 						'path'=>$query['path'],
 						'msg' => lang('Directory not found or no permission to access it!'))));
-			
+
 		}
 		$rows = $dir_is_writable = array();
 		if($query['searchletter'] && !empty($query['search']))
@@ -415,7 +429,7 @@ class filemanager_ui
 				$dir = dirname($path);
 				if (!isset($dir_is_writable[$dir])) $dir_is_writable[$dir] = egw_vfs::is_writable($dir);
 				if (!$dir_is_writable[$dir]) $readonlys["delete[$path]"] = true;	// no rights to delete the file
-				
+
 			}
 			$numofdirs = egw_vfs::$find_total;
 			$dirsretrieved = count($dirs);
@@ -457,7 +471,9 @@ class filemanager_ui
 			$rows = array_merge($dirs,$files);
 			//_debug_array($readonlys);
 			return egw_vfs::$find_total = $numofdirs + $numoffiles;
-		} else {
+		}
+		else
+		{
 			foreach(egw_vfs::find($query['path'],array(
 				'mindepth' => 1,
 				'maxdepth' => $query['filter'] ? $query['filter'] : null,
@@ -487,6 +503,7 @@ class filemanager_ui
 
 				//echo $path; _debug_array($row);
 				$rows[++$n] = $row;
+				$path2n[$path] = $n;
 
 				$dir = dirname($path);
 				if (!isset($dir_is_writable[$dir]))
@@ -496,6 +513,23 @@ class filemanager_ui
 				if (!$dir_is_writable[$dir])
 				{
 					$readonlys["delete[$path]"] = true;	// no rights to delete the file
+				}
+			}
+		}
+		// query comments and cf's for the displayed rows
+		$cols_to_show = explode(',',$GLOBALS['egw_info']['user']['preferences']['filemanager']['nextmatch-filemanager.index.rows']);
+		$cfs = config::get_customfields('filemanager');
+		$all_cfs = in_array('customfields',$cols_to_show) && $cols_to_show[count($cols_to_show)-1][0] != '#';
+		if ($path2n && (in_array('comment',$cols_to_show) || in_array('customfields',$cols_to_show)) &&
+			($path2props = egw_vfs::propfind(array_keys($path2n),'http://egroupware.org/')))
+		{
+			foreach($path2props as $path => $props)
+			{
+				$row =& $rows[$path2n[$path]];
+				foreach($props as $prop)
+				{
+					if (!$all_cfs && $prop['name'][0] == '#' && !in_array($prop['name'],$cols_to_show)) continue;
+					$row[$prop['name']] = strlen($prop['value']) < 64 ? $prop['value'] : substr($prop['value'],0,64).' ...';
 				}
 			}
 		}
@@ -511,7 +545,7 @@ class filemanager_ui
 	 */
 	function file(array $content=null,$msg='')
 	{
-		static $tabs = 'general|perms|eacl|preview';
+		static $tabs = 'general|perms|eacl|preview|custom';
 
 		$tpl = new etemplate('filemanager.file');
 
@@ -531,6 +565,10 @@ class filemanager_ui
 				$content['mime'] = egw_vfs::mime_content_type($path);
 				$content['icon'] = egw_vfs::mime_icon($content['mime']);
 				$content['gid'] *= -1;	// our widgets use negative gid's
+				if (($props = egw_vfs::propfind($path)))
+				{
+					foreach($props as $prop) $content[$prop['name']] = $prop['value'];
+				}
 			}
 			$content[$tabs] = $_GET['tabs'];
 			if (!($content['is_dir'] = egw_vfs::is_dir($path)))
@@ -561,44 +599,63 @@ class filemanager_ui
 			list($button) = @each($content['button']); unset($content['button']);
 			if (in_array($button,array('save','apply')))
 			{
+				$props = array();
 				foreach($content['old'] as $name => $old_value)
 				{
 					if (isset($content[$name]) && $old_value != $content[$name])
 					{
-						switch($name)
+						if ($name == 'name')
 						{
-							case 'name':
-								if (egw_vfs::rename($path,$to = egw_vfs::concat($content['dir'],$content['name'])))
-								{
-									$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
-									$content['old']['name'] = $content[$name];
-									$path = $to;
-								}
-								else
-								{
-									$msg .= lang('Rename of %1 to %2 failed!',$path,$to).' ';
-								}
-								break;
-							default:
-								static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
-								$cmd = array('egw_vfs',$name2cmd[$name]);
-								$value = $name == 'perms' ? self::perms2mode($content['perms']) : $content[$name];
-								if ($content['modify_subs'] && $name == 'perms')
-								{
-									egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
-									egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
-								}
-								elseif ($content['modify_subs'])
-								{
-									egw_vfs::find($path,null,$cmd,array($value));
-								}
-								else
-								{
-									call_user_func_array($cmd,array($path,$value));
-								}
-								$msg .= lang('Permissions changed for %1.',$path.($content['modify_subs']?' '.lang('and all it\'s childeren'):''));
-								break;
+							if (egw_vfs::rename($path,$to = egw_vfs::concat($content['dir'],$content['name'])))
+							{
+								$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
+								$content['old']['name'] = $content[$name];
+								$path = $to;
+							}
+							else
+							{
+								$msg .= lang('Rename of %1 to %2 failed!',$path,$to).' ';
+							}
 						}
+						elseif ($name[0] == '#' || $name == 'comment')
+						{
+							$props[] = array('name' => $name, 'value' => $content[$name] ? $content[$name] : null);
+						}
+						else
+						{
+							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
+							$cmd = array('egw_vfs',$name2cmd[$name]);
+							$value = $name == 'perms' ? self::perms2mode($content['perms']) : $content[$name];
+							if ($content['modify_subs'] && $name == 'perms')
+							{
+								egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
+								egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
+							}
+							elseif ($content['modify_subs'])
+							{
+								egw_vfs::find($path,null,$cmd,array($value));
+							}
+							else
+							{
+								call_user_func_array($cmd,array($path,$value));
+							}
+							$msg .= lang('Permissions changed for %1.',$path.($content['modify_subs']?' '.lang('and all it\'s childeren'):''));
+						}
+					}
+				}
+				if ($props)
+				{
+					if (egw_vfs::proppatch($path,$props))
+					{
+						foreach($props as $prop)
+						{
+							$content['old'][$prop['name']] = $prop['value'];
+						}
+						$msg .= lang('Properties saved.');
+					}
+					else
+					{
+						$msg .= lang('Saving properties failed!');
 					}
 				}
 			}
@@ -648,7 +705,19 @@ class filemanager_ui
 			}
 		}
 		$readonlys['name'] = !egw_vfs::is_writable($content['dir']);
+		$readonlys['comment'] = !egw_vfs::is_writable($path);
 
+		if (!($cfs = config::get_customfields('filemanager')))
+		{
+			$readonlys[$tabs]['custom'] = true;
+		}
+		elseif (!egw_vfs::is_writable($path))
+		{
+			foreach($cfs as $name => $data)
+			{
+				$readonlys['#'.$name] = true;
+			}
+		}
 		$readonlys[$tabs]['eacl'] = true;	// eacl off by default
 		if ($content['is_dir'])
 		{
@@ -687,12 +756,32 @@ class filemanager_ui
 				'name'  => $content['name'],
 				'uid'   => $content['uid'],
 				'gid'   => $content['gid'],
+				'comment' => (string)$content['comment'],
 			);
+			if ($cfs) foreach($cfs as $name => $data)
+			{
+				$preserve['old']['#'.$name] = (string)$content['#'.$name];
+			}
 		}
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.$path;
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
+	}
+
+	/**
+	 * Check if the rename target exists and would be overwritten
+	 *
+	 * @param string $source
+	 * @param string $target
+	 * @return string
+	 */
+	static public function ajax_check_rename_target($source,$target)
+	{
+		$response = new xajaxResponse();
+		$response->addAlert("source='$source' --> target='$target'");
+
+		return $response->getXML();
 	}
 
 	/**

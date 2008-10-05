@@ -111,6 +111,7 @@ please select a file to delete.	filemanager	de	Bitte wählen Sie eine Datei zum 
 preview	filemanager	de	Vorschau
 preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
+properties saved.	filemanager	de	Eigenschaften gespeichert.
 quick jump to	filemanager	de	Springe zu
 read & write access	filemanager	de	Lese- und Schreibzugriff
 read access only	filemanager	de	Nur Lesezugriff
@@ -125,6 +126,7 @@ save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern, und zurück zur Verzeichnisansicht
 save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
+saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschlagen!
 search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...

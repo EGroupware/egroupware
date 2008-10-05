@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package filemanager
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.filemanager_hooks.inc.php 25002 2008-03-03 12:16:11Z ralfbecker $ 
+ * @version $Id: class.filemanager_hooks.inc.php 25002 2008-03-03 12:16:11Z ralfbecker $
  */
 
 /**
@@ -16,7 +16,7 @@ class filemanager_hooks
 {
 	static $appname = 'filemanager';
 	static $foldercount = 1;
-	
+
 	/**
 	 * Data for Filemanagers sidebox menu
 	 *
@@ -44,9 +44,9 @@ class filemanager_hooks
 				$file['Basedirectory'] = $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath));
 			}
 			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder']));
-			for ($i=1; $i<=self::$foldercount; $i++) 
+			for ($i=1; $i<=self::$foldercount; $i++)
 			{
-				if (!empty($file_prefs['folderlink'.$i])) 
+				if (!empty($file_prefs['folderlink'.$i]))
 				{
 					$foldername = array_pop(explode('/',$file_prefs['folderlink'.$i]));
 					$file[lang('Link %1: %2',$i,$foldername)]= $GLOBALS['egw']->link('/index.php',array(
@@ -69,6 +69,7 @@ class filemanager_hooks
 	{
         $file = Array(
             'Site Configuration' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
+            'Custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
         );
 		if ($location == 'admin') {
         	display_section(self::$appname,$file);
@@ -76,13 +77,13 @@ class filemanager_hooks
 			display_sidebox(self::$appname,lang('Admin'),$file);
 		}
 	}
-	
-	static function preferences($location = 'preferences') 
+
+	static function preferences($location = 'preferences')
 	{
 		$file = array(
 			'Preferences' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname='.self::$appname),
 		);
-		if ($location == 'preferences') 
+		if ($location == 'preferences')
 		{
 			display_section(self::$appname,$file);
 		} else {
@@ -106,14 +107,14 @@ class filemanager_hooks
 			'no'	=> lang('No'),
 			'yes' => lang('Yes')
 		);
-	
+
         $GLOBALS['settings'] = array(
 			'showbase'	=> array(
 				'type'		=> 'select',
 				'name'		=> 'showbase',
 				'values'	=> $yes_no,
 				'label' 	=> lang('Show link to filemanagers basedirectory (/) in side box menu?'),
-				'help'		=> lang('Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, 
+				'help'		=> lang('Default behavior is NO. The link will not be shown, but you are still able to navigate to this location,
 								or configure this paricular location as startfolder or folderlink.'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
@@ -123,7 +124,7 @@ class filemanager_hooks
 				'name'		=> 'alwayssortfolderstotop',
 				'values'	=> $yes_no,
 				'label' 	=> lang('Sort folders always to the top?'),
-				'help'		=> lang('Default behavior is NO. If you set this to YES, folders will always appear at the top of the list, 
+				'help'		=> lang('Default behavior is NO. If you set this to YES, folders will always appear at the top of the list,
 								no matter what you sort by. It will slow your mustang down as well.'),
 				'xmlrpc'	=> True,
 				'amin'		=> False

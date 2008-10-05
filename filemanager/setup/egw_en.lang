@@ -111,6 +111,7 @@ please select a file to delete.	filemanager	en	Please select a file to delete.
 preview	filemanager	en	Preview
 preview %1	filemanager	en	Preview %1
 preview of %1	filemanager	en	Preview of %1
+properties saved.	filemanager	en	Properties saved.
 quick jump to	filemanager	en	Quick jump to
 read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
@@ -125,6 +126,7 @@ save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing
 save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1
+saving properties failed!	filemanager	en	Saving properties failed!
 search for '%1'	filemanager	en	Search for '%1'
 searchstring	filemanager	en	searchstring
 select action...	filemanager	en	Select action...

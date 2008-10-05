@@ -270,7 +270,7 @@ $phpgw_baseline = array(
 			'history_record_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'history_appname' => array('type' => 'varchar','precision' => '64','nullable' => False),
 			'history_owner' => array('type' => 'int','precision' => '4','nullable' => False),
-			'history_status' => array('type' => 'char','precision' => '2','nullable' => False),
+			'history_status' => array('type' => 'varchar','precision' => '64','nullable' => False),
 			'history_new_value' => array('type' => 'text','nullable' => False),
 			'history_timestamp' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
 			'history_old_value' => array('type' => 'text','nullable' => False)
@@ -440,14 +440,13 @@ $phpgw_baseline = array(
 			'fs_mode' => array('type' => 'int','precision' => '2','nullable' => False),
 			'fs_uid' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 			'fs_gid' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
-			'fs_created' => array('type' => 'timestamp','precision' => '8','nullable' => False,'default' => 'current_timestamp'),
+			'fs_created' => array('type' => 'timestamp','precision' => '8','nullable' => False),
 			'fs_modified' => array('type' => 'timestamp','precision' => '8','nullable' => False),
 			'fs_mime' => array('type' => 'varchar','precision' => '64','nullable' => False),
 			'fs_size' => array('type' => 'int','precision' => '8','nullable' => False),
 			'fs_creator' => array('type' => 'int','precision' => '4','nullable' => False),
 			'fs_modifier' => array('type' => 'int','precision' => '4'),
 			'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),
-			'fs_comment' => array('type' => 'varchar','precision' => '255'),
 			'fs_content' => array('type' => 'blob')
 		),
 		'pk' => array('fs_id'),
@@ -505,6 +504,18 @@ $phpgw_baseline = array(
 		'pk' => array('lock_token'),
 		'fk' => array(),
 		'ix' => array('lock_path','lock_expires'),
+		'uc' => array()
+	),
+	'egw_sqlfs_props' => array(
+		'fd' => array(
+			'fs_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'prop_namespace' => array('type' => 'varchar','precision' => '64','nullable' => False),
+			'prop_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
+			'prop_value' => array('type' => 'text')
+		),
+		'pk' => array('fs_id','prop_namespace','prop_name'),
+		'fk' => array(),
+		'ix' => array(),
 		'uc' => array()
 	)
 );

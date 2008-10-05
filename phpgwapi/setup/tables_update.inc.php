@@ -439,7 +439,7 @@ function phpgwapi_upgrade1_5_010()
  */
 function phpgwapi_upgrade1_5_011()
 {
-	if ($GLOBALS['DEBUG']) echo "<pre style='text-align: left;'>\n";
+	if ($GLOBALS['DEBUG'] && isset($_SERVER['HTTP_HOST'])) echo "<pre style='text-align: left;'>\n";
 	egw_vfs::$is_root = true;
 	egw_vfs::load_wrapper('sqlfs');
 	egw_vfs::find('sqlfs://default/',array(
@@ -466,7 +466,81 @@ function phpgwapi_upgrade1_5_011()
 			echo "phpgwapi_upgrade1_5_011() $url: $old_path not found!\n";
 		}
 	'));
-	if ($GLOBALS['DEBUG']) echo "</pre>\n";
+	if ($GLOBALS['DEBUG'] && isset($_SERVER['HTTP_HOST'])) echo "</pre>\n";
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.012';
 }
+
+function phpgwapi_upgrade1_5_012()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_sqlfs_props',array(
+		'fd' => array(
+			'fs_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'prop_namespace' => array('type' => 'varchar','precision' => '64','nullable' => False),
+			'prop_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
+			'prop_value' => array('type' => 'text')
+		),
+		'pk' => array('fs_id','prop_namespace','prop_name'),
+		'fk' => array(),
+		'ix' => array(),
+		'uc' => array()
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.013';
+}
+
+function phpgwapi_upgrade1_5_013()
+{
+	foreach($GLOBALS['egw_setup']->db->select('egw_sqlfs','fs_id,fs_comment',"fs_comment IS NOT NULL AND fs_comment != ''",__LINE__,__FILE__) as $row)
+	{
+		$GLOBALS['egw_setup']->db->insert('egw_sqlfs_props',array(
+			'fs_id' => $row['fs_id'],
+			'prop_namespace' => 'http://egroupware.org/',
+			'prop_name' => 'comment',
+			'prop_value' => $row['fs_comment'],
+		),false,__LINE__,__FILE__);
+	}
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_sqlfs',array(
+		'fd' => array(
+			'fs_id' => array('type' => 'auto','nullable' => False),
+			'fs_dir' => array('type' => 'int','precision' => '4','nullable' => False),
+			'fs_name' => array('type' => 'varchar','precision' => '200','nullable' => False),
+			'fs_mode' => array('type' => 'int','precision' => '2','nullable' => False),
+			'fs_uid' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+			'fs_gid' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+			'fs_created' => array('type' => 'timestamp','precision' => '8','nullable' => False,'default' => 'current_timestamp'),
+			'fs_modified' => array('type' => 'timestamp','precision' => '8','nullable' => False),
+			'fs_mime' => array('type' => 'varchar','precision' => '64','nullable' => False),
+			'fs_size' => array('type' => 'int','precision' => '8','nullable' => False),
+			'fs_creator' => array('type' => 'int','precision' => '4','nullable' => False),
+			'fs_modifier' => array('type' => 'int','precision' => '4'),
+			'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),
+			'fs_content' => array('type' => 'blob')
+		),
+		'pk' => array('fs_id'),
+		'fk' => array(),
+		'ix' => array(array('fs_dir','fs_active','fs_name')),
+		'uc' => array()
+	),'fs_comment');
+
+	// no automatic timestamp for created field, as it would update on every update
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sqlfs','fs_created',array(
+		'type' => 'timestamp',
+		'precision' => '8',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.014';
+}
+
+function phpgwapi_upgrade1_5_014()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_history_log','history_status',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.015';
+}
+
