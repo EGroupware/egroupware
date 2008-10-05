@@ -169,22 +169,57 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 */
 		// ToDo: etag from inode and modification time
 
-/*
-		// get additional properties from database
-		$query = "SELECT ns, name, value
-		FROM {$this->db_prefix}properties
-		WHERE path = '$path'";
-		$res = mysql_query($query);
-		while ($row = mysql_fetch_assoc($res)) {
-		$info["props"][] = HTTP_WebDAV_Server::mkprop	($row["ns"], $row["name"], $row["value"]);
-		}
-		mysql_free_result($res);
-*/
 		//error_log(__METHOD__."($path) info=".print_r($info,true));
 		return $info;
 	}
 
 	/**
+	 * PROPFIND method handler
+	 *
+	 * Reimplemented to fetch all extra property of a PROPFIND request in one go.
+	 *
+	 * @param  array  general parameter passing array
+	 * @param  array  return array for file properties
+	 * @return bool   true on success
+	 */
+	function PROPFIND(&$options, &$files)
+	{
+		if (!parent::PROPFIND($options,$files))
+		{
+			return false;
+		}
+		$path2n = array();
+		foreach($files['files'] as $n => $info)
+		{
+			if (!$n && substr($info['path'],-1) == '/')
+			{
+				$path2n[substr($info['path'],0,-1)] = $n;
+			}
+			else
+			{
+				$path2n[$info['path']] = $n;
+			}
+		}
+		if ($path2n && ($path2props = egw_vfs::propfind(array_keys($path2n),null)))
+		{
+			foreach($path2props as $path => $props)
+			{
+				$fileprops =& $files['files'][$path2n[$path]]['props'];
+				foreach($props as $prop)
+				{
+					if ($prop['ns'] == egw_vfs::DEFAULT_PROP_NAMESPACE && $prop['name'][0] == '#')	// eGW's customfields
+					{
+						$prop['ns'] .= 'customfields/';
+						$prop['name'] = substr($prop['name'],1);
+					}
+					$fileprops[] = $prop;
+				}
+			}
+		}
+		return true;
+	}
+
+ 	/**
 	 * Used eg. by get
 	 *
 	 * @todo replace all calls to _mimetype with egw_vfs::mime_content_type()
@@ -223,9 +258,12 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 						case 'getlastmodified':
 							egw_vfs::touch($path,strtotime($prop['val']));
 							break;
-						case 'srt_creationtime':
+						//case 'srt_creationtime':
 							// not supported via the streamwrapper interface atm.
 							//$attributes['created'] = strtotime($prop['val']);
+							//break;
+						default:
+							if (!egw_vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
 							break;
 					}
 					break;
@@ -242,6 +280,14 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 							$options['props'][$key]['status'] = '403 Forbidden';
 							break;
 					}
+					break;
+
+				case egw_vfs::DEFAULT_PROP_NAMESPACE.'customfields/':	// eGW's customfields
+					$prop['ns'] = egw_vfs::DEFAULT_PROP_NAMESPACE;
+					$prop['name'] = '#'.$prop['name'];
+					// fall through
+				default:
+					if (!egw_vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
 					break;
 			}
 			if ($this->debug) $props[] = '('.$prop['ns'].')'.$prop['name'].'='.$prop['val'];
@@ -263,7 +309,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function LOCK(&$options)
 	{
-		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
+		if ($this->debug) error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
 		// TODO recursive locks on directories not supported yet
 		if (is_dir($this->base . $options['path']) && !empty($options['depth']))
 		{
@@ -289,7 +335,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function UNLOCK(&$options)
 	{
-		error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
+		if ($this->debug) error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
 		return egw_vfs::unlock($options['path'],$options['token']) ? '204 No Content' : '409 Conflict';
 	}
 

@@ -1503,11 +1503,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Store properties for a single ressource (file or dir)
 	 *
 	 * @param string|int $path string with path or integer fs_id
-	 * @param array $props array or array with values for keys 'name', 'ns', 'value' (null to delete the prop)
+	 * @param array $props array or array with values for keys 'name', 'ns', 'val' (null to delete the prop)
 	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
 	 */
 	static function proppatch($path,array &$props)
 	{
+		//error_log(__METHOD__."(".array2string($path).','.array2string($props));
 		if (!is_numeric($path))
 		{
 			if (!($stat = self::url_stat($path,0)))
@@ -1528,7 +1529,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			if (!isset($prop['ns'])) $prop['ns'] = egw_vfs::DEFAULT_PROP_NAMESPACE;
 
-			if (!isset($prop['value']) || self::$pdo_type != 'mysql')	// for non mysql, we have to delete the prop anyway, as there's no REPLACE!
+			if (!isset($prop['val']) || self::$pdo_type != 'mysql')	// for non mysql, we have to delete the prop anyway, as there's no REPLACE!
 			{
 				if (!isset($del_stmt))
 				{
@@ -1539,7 +1540,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$del_stmt->bindParam(':prop_name',$prop['name']);
 				$del_stmt->execute();
 			}
-			if (isset($prop['value']))
+			if (isset($prop['val']))
 			{
 				if (!isset($ins_stmt))
 				{
@@ -1549,7 +1550,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				}
 				$ins_stmt->bindParam(':prop_namespace',$prop['ns']);
 				$ins_stmt->bindParam(':prop_name',$prop['name']);
-				$ins_stmt->bindParam(':prop_value',$prop['value']);
+				$ins_stmt->bindParam(':prop_value',$prop['val']);
 				if (!$ins_stmt->execute())
 				{
 					return false;
@@ -1595,9 +1596,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		foreach($stmt as $row)
 		{
 			$props[$row['fs_id']][] = array(
-				'value' => $row['prop_value'],
-				'name'  => $row['prop_name'],
-				'ns'    => $row['prop_namespace'],
+				'val'  => $row['prop_value'],
+				'name' => $row['prop_name'],
+				'ns'   => $row['prop_namespace'],
 			);
 		}
 		if (!is_array($path_ids))

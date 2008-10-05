@@ -693,7 +693,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Store properties for a single ressource (file or dir)
 	 *
 	 * @param string $path string with path
-	 * @param array $props array or array with values for keys 'name', 'ns', 'value' (null to delete the prop)
+	 * @param array $props array or array with values for keys 'name', 'ns', 'val' (null to delete the prop)
 	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
 	 */
 	static function proppatch($path,array $props)
@@ -712,7 +712,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param array|string $path (array of) string with path
 	 * @param string $ns='http://egroupware.org/' namespace if propfind should be limited to a single one, otherwise use null
-	 * @return array|boolean array with props (values for keys 'name', 'ns', 'value'), or path => array of props for is_array($path)
+	 * @return array|boolean array with props (values for keys 'name', 'ns', 'val'), or path => array of props for is_array($path)
 	 * 	false if $path does not exist
 	 */
 	static function propfind($path,$ns=self::DEFAULT_PROP_NAMESPACE)

@@ -521,7 +521,7 @@ class filemanager_ui
 		$cfs = config::get_customfields('filemanager');
 		$all_cfs = in_array('customfields',$cols_to_show) && $cols_to_show[count($cols_to_show)-1][0] != '#';
 		if ($path2n && (in_array('comment',$cols_to_show) || in_array('customfields',$cols_to_show)) &&
-			($path2props = egw_vfs::propfind(array_keys($path2n),'http://egroupware.org/')))
+			($path2props = egw_vfs::propfind(array_keys($path2n))))
 		{
 			foreach($path2props as $path => $props)
 			{
@@ -529,7 +529,7 @@ class filemanager_ui
 				foreach($props as $prop)
 				{
 					if (!$all_cfs && $prop['name'][0] == '#' && !in_array($prop['name'],$cols_to_show)) continue;
-					$row[$prop['name']] = strlen($prop['value']) < 64 ? $prop['value'] : substr($prop['value'],0,64).' ...';
+					$row[$prop['name']] = strlen($prop['val']) < 64 ? $prop['val'] : substr($prop['val'],0,64).' ...';
 				}
 			}
 		}
@@ -567,7 +567,7 @@ class filemanager_ui
 				$content['gid'] *= -1;	// our widgets use negative gid's
 				if (($props = egw_vfs::propfind($path)))
 				{
-					foreach($props as $prop) $content[$prop['name']] = $prop['value'];
+					foreach($props as $prop) $content[$prop['name']] = $prop['val'];
 				}
 			}
 			$content[$tabs] = $_GET['tabs'];
@@ -619,7 +619,7 @@ class filemanager_ui
 						}
 						elseif ($name[0] == '#' || $name == 'comment')
 						{
-							$props[] = array('name' => $name, 'value' => $content[$name] ? $content[$name] : null);
+							$props[] = array('name' => $name, 'val' => $content[$name] ? $content[$name] : null);
 						}
 						else
 						{
@@ -649,7 +649,7 @@ class filemanager_ui
 					{
 						foreach($props as $prop)
 						{
-							$content['old'][$prop['name']] = $prop['value'];
+							$content['old'][$prop['name']] = $prop['val'];
 						}
 						$msg .= lang('Properties saved.');
 					}
