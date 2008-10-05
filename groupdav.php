@@ -33,6 +33,8 @@ function check_access(&$account)
 	foreach(array(
 		'davkit',	// Apple iCal
 		'bionicmessage.net',
+		'ZideOne',
+		'Lightning',
 	) as $test)
 	{
 		if (($no_session = strpos($agent,$test) !== false)) break;
