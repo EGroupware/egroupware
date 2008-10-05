@@ -240,9 +240,22 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'DTEND':
-							if(date('H:i:s',$event['end']) == '23:59:59') $event['end']++;
-							if(date('H:i:s',$event['end']) == '23:59:00') $event['end']+=60; // needed by old eGW whole-day events
-							$attributes[$icalFieldName]	= $event['end'];
+							// write start + end of whole day events as dates
+							if (date('H:i:s',$event['start']) == '00:00:00' && in_array(date('H:i:s',$event['end']),array('23:59:59','23:59:00')))
+							{
+								$event['end'] += 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
+								foreach(array('start' => 'DTSTART','end' => 'DTEND') as $f => $t)
+								{
+									$arr = calendar_bo::date2array($event[$f]);
+									$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
+										array('VALUE' => 'DATE'));
+								}
+								unset($attributes['DTSTART']);
+							}
+							else
+							{
+								$attributes['DTEND']	= $event['end'];
+							}
 							break;
 
 						case 'RRULE':
@@ -431,10 +444,9 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			$attributes['UID'] = $force_own_uid ? $eventGUID : $event['uid'];
-
 			foreach($attributes as $key => $value)
 			{
-				foreach(is_array($value) ? $value : array($value) as $valueID => $valueData)
+				foreach(is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
 				{
 					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),'UTF-8');
 					$paramData = (array) $GLOBALS['egw']->translation->convert(is_array($value) ? $parameters[$key][$valueID] : $parameters[$key],
