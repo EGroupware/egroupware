@@ -111,3 +111,10 @@
 .nm_num_rows select {
 	width: 40px;
 }
+
+.vfsMode {
+	font-family: monospace; font-weight: bold;
+}
+.vfsMimeIcon img {
+	height: 16px;
+}

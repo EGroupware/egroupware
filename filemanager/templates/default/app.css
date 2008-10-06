@@ -2,7 +2,6 @@
  * CSS for new eTemplate filemanager UI
  */
 
-.perms { font-family: monospace; font-weight: bold; }
 .address input { font-size: 140%; font-weight: bold; }
 .mimeHuge img { width: 64px; height: 64px; }
 .fileName input { font-weight: bold; width: 100%; }

@@ -25,7 +25,7 @@
 				</row>
 				<row>
 					<description value="Size"/>
-					<description id="hsize" value="%s ($cont[size]b)"/>
+					<vfs-size id="size" options="1"/>
 				</row>
 				<row>
 					<description value="Created"/>

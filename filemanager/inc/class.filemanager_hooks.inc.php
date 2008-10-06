@@ -37,7 +37,7 @@ class filemanager_hooks
 			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
 			$file = array(
 				'Your home directory' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath)),
-				'Home directories' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
+				'User and groups' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
 			);
 			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
 			{
@@ -71,9 +71,12 @@ class filemanager_hooks
             'Site Configuration' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
             'Custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
         );
-		if ($location == 'admin') {
+		if ($location == 'admin')
+		{
         	display_section(self::$appname,$file);
-		} else {
+		}
+		else
+		{
 			display_sidebox(self::$appname,lang('Admin'),$file);
 		}
 	}
@@ -86,7 +89,9 @@ class filemanager_hooks
 		if ($location == 'preferences')
 		{
 			display_section(self::$appname,$file);
-		} else {
+		}
+		else
+		{
 			display_sidebox(self::$appname,lang('Preferences'),$file);
 		}
 	}
@@ -114,29 +119,17 @@ class filemanager_hooks
 				'name'		=> 'showbase',
 				'values'	=> $yes_no,
 				'label' 	=> lang('Show link to filemanagers basedirectory (/) in side box menu?'),
-				'help'		=> lang('Default behavior is NO. The link will not be shown, but you are still able to navigate to this location,
-								or configure this paricular location as startfolder or folderlink.'),
-				'xmlrpc'	=> True,
-				'amin'		=> False
-			),
-			'alwayssortfolderstotop'	=> array(
-				'type'		=> 'select',
-				'name'		=> 'alwayssortfolderstotop',
-				'values'	=> $yes_no,
-				'label' 	=> lang('Sort folders always to the top?'),
-				'help'		=> lang('Default behavior is NO. If you set this to YES, folders will always appear at the top of the list,
-								no matter what you sort by. It will slow your mustang down as well.'),
+				'help'		=> lang('Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			),
 			'startfolder'	=> array(
 				'type'		=> 'input',
 				'name'		=> 'startfolder',
-				'size'		=> 80,
+				'size'		=> 60,
 				'default'	=> '',
 				'label' 	=> lang('Enter the complete VFS path to specify your desired start folder.'),
-				'help'		=> lang('If you leave this empty, the path does not exist or the user does not have permission to access the specified folder,
-								 the users startfolder will default to the users home folder.'),
+				'help'		=> lang('The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			),
@@ -150,21 +143,18 @@ class filemanager_hooks
 #                'admin'  => False
 #            ),
 		);
-		for ($i=1;$i<=self::$foldercount;$i++) {
+		for ($i=1; $i <= self::$foldercount; $i++)
+		{
 			$GLOBALS['settings']['folderlink'.$i]	= array(
 				'type'		=> 'input',
 				'name'		=> 'folderlink'.$i,
-				'size'		=> 80,
+				'size'		=> 60,
 				'default'	=> '',
 				'label' 	=> lang('Enter the complete VFS path to specify a fast access link to a folder').' ('.$i.').',
-				'help'		=> lang('If you leave this empty, the path does not exist or the user does not have permission to access the specified folder,
-								 the link will lead the user to the start folder or users home folder (if the startfolder is either not configured, or
-								 not available to the user).'),
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			);
 		}
-
 		return true;
 	}
 }

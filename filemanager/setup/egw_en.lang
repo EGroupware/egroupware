@@ -14,7 +14,6 @@ accessrights	filemanager	en	Accessrights
 acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
-all subdirectories	filemanager	en	All subdirectories
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	en	and all it's childeren
 basedirectory	filemanager	en	Basedirectory
@@ -46,8 +45,10 @@ created directory %1	filemanager	en	Created directory %1
 current directory	filemanager	en	Current directory
 cut	filemanager	en	cut
 cut to clipboard	filemanager	en	Cut to clipboard
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.
 delete this file or directory	filemanager	en	Delete this file or directory
 deleted %1	filemanager	en	Deleted %1
+directories sorted in	filemanager	en	Directories sorted in
 directory	filemanager	en	Directory
 directory %1 already exists	filemanager	en	Directory %1 already exists
 directory %1 does not exist	filemanager	en	Directory %1 does not exist
@@ -77,6 +78,7 @@ file or directory not found!	filemanager	en	File or directory not found!
 file successful uploaded.	filemanager	en	File successful uploaded.
 filemanager	common	en	Filemanager
 filemanager configuration	admin	en	filemanager configuration
+files from subdirectories	filemanager	en	Files from subdirectories
 files in this directory	filemanager	en	Files in this directory
 folder up	filemanager	en	Folder Up
 general	filemanager	en	General
@@ -84,7 +86,6 @@ go home	filemanager	en	go home
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	go up
-home directories	filemanager	en	Home directories
 id	filemanager	en	Id
 inherited	filemanager	en	Inherited
 link %1: %2	filemanager	en	Link %1: %2
@@ -134,14 +135,15 @@ select file to upload in current directory	filemanager	en	Select file to upload 
 show	filemanager	en	Show
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to filemanagers basedirectory (/) in side box menu?
 size	filemanager	en	Size
-sort folders always to the top?	filemanager	en	Sort folders always to the top?
 start search	filemanager	en	start search
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
 total files	filemanager	en	Total Files
 unused space	filemanager	en	Unused space
 up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
 used space	filemanager	en	Used space
+users and groups	filemanager	en	Users and groups
 you do not have access to %1	filemanager	en	You do not have access to %1
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!

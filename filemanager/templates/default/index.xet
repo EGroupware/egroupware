@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.5.001">
+	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.5.002">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -34,14 +34,14 @@
 					</hbox>
 				</row>
 				<row class="row">
-					<image label="$row_cont[mime]" src="${row}[icon]" align="center"/>
-					<description options=",@${row}[link]" id="${row}[name]" no_lang="1"/>
-					<description id="${row}[hsize]" align="right"/>
+					<vfs-mime id="${row}[path]" align="center"/>
+					<vfs id="$row" no_lang="1"/>
+					<vfs-size id="${row}[size]" align="right"/>
 					<date-time id="${row}[mtime]" readonly="true"/>
 					<date-time id="${row}[ctime]" readonly="true"/>
-					<description value="$row_cont[perms]" class="perms"/>
-					<description id="${row}[user]" no_lang="1"/>
-					<description id="${row}[group]" no_lang="1"/>
+					<vfs-mode id="${row}[mode]"/>
+					<vfs-uid id="${row}[uid]" no_lang="1"/>
+					<vfs-gid id="${row}[gid]" no_lang="1"/>
 					<description id="${row}[comment]"/>
 					<customfields-list readonly="true" id="$row"/>
 					<hbox align="right">

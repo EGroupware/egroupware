@@ -14,8 +14,7 @@ accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugrifsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugrifsrecht gelöscht.
 actions	filemanager	de	Befehle
-all subdirectories	filemanager	de	Alle Unterverzeichnisse
-allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Konfigurationsoptionen im Setting für Links zu Verzeichnissen
+allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellunge für Verzeichnisverweise
 and all it's childeren	filemanager	de	und alle seine Kinder
 basedirectory	filemanager	de	Basisverzeichnis
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
@@ -46,8 +45,10 @@ created directory %1	filemanager	de	Verzeichis %1 erstellt
 current directory	filemanager	de	Aktuelles Verzeichnis
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe is NEIN. Der Verweis wird nicht angezeit, Sie können aber immer zu diesem Verzeichnis navigieren, oder Sie konfigurieren das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis.
 delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
 deleted %1	filemanager	de	%1 gelöscht
+directories sorted in	filemanager	de	Verzeichnisse einsortiert
 directory	filemanager	de	Verzeichnis
 directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
 directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
@@ -58,8 +59,8 @@ display of content	filemanager	de	Anzeigen des Inhaltes
 download	filemanager	de	Herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Einstellungen bearbeiten
-enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Link zu diesem Ordner im Seitenmenu zu erzeugen
-enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangs/Startverzeichnis ein
+enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
+enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
@@ -77,6 +78,7 @@ file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunde
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
 filemanager	common	de	Dateimanager
 filemanager configuration	admin	de	Dateimanager Konfiguration
+files from subdirectories	filemanager	de	Dateien von Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 folder up	filemanager	de	darüberliegendes Verzeichnis
 general	filemanager	de	Allgemein
@@ -84,7 +86,6 @@ go home	filemanager	de	Heimatverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
-home directories	filemanager	de	Persönliche Verzeichnisse
 id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
@@ -134,18 +135,19 @@ select file to upload in current directory	filemanager	de	Datei zum hochladen in
 show	filemanager	de	Zeige
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenu?
 size	filemanager	de	Größe
-sort folders always to the top?	filemanager	de	Sortiere Verzeichnisse immer an den Anfang der Verzeichnisansicht
 start search	filemanager	de	Suche starten
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr perönlicher Ordner. Die Vorgabe wird benutzt, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwending Zugriffsrechte fehlen.
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
 total files	filemanager	de	Gesamtanzahl Dateien
 unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
 updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
 used space	filemanager	de	Benutzter Platz
+users and groups	filemanager	de	Benutzer und Gruppen
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1
 you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!
 you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem Heimatverzeichnis geleitet
 you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs/Startverzeichnis geleitet
-your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr Heimatverzeichnis hat nicht existiert. eGroupware hat ein neues für Sie angelegt
+your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr Heimatverzeichnis hat nicht existiert. eGroupware hat ein neues für Sie angelegt.
 your home directory	filemanager	de	Ihr persönliches Verzeichnis

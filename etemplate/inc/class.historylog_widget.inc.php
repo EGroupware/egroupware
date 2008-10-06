@@ -61,7 +61,7 @@ class historylog_widget
 		$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
 		$id = is_array($value) ? $value['id'] : $value;
 
-		$historylog =& CreateObject('phpgwapi.historylog',$app);
+		$historylog =& new historylog($app);
 		if (!$id || method_exists($historylog,'search'))
 		{
 			$value = $id ? $historylog->search($id) : false;

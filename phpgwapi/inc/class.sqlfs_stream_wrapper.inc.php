@@ -873,7 +873,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		$this->opened_dir = array();
-		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_dir=?';
+		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE." WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
 
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -1508,7 +1508,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function proppatch($path,array &$props)
 	{
-		//error_log(__METHOD__."(".array2string($path).','.array2string($props));
+		error_log(__METHOD__."(".array2string($path).','.array2string($props));
 		if (!is_numeric($path))
 		{
 			if (!($stat = self::url_stat($path,0)))
@@ -1613,7 +1613,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				unset($props[$id]);
 			}
 		}
-		foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
+		//foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
 		return $props;
 	}
 }

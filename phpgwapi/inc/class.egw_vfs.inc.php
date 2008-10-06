@@ -263,6 +263,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param array $options=null the following keys are allowed:
 	 * - type => {d|f} d=dirs, f=files, default both
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
+	 * - dirsontop => {true(default)|false} allways return dirs before the files (two distinct blocks)
 	 * - mindepth,maxdepth minimal or maximal depth to be returned
 	 * - name,path => pattern with *,? wildcards, eg. "*.php"
 	 * - name_preg,path_preg => preg regular expresion, eg. "/(vfs|wrapper)/"
@@ -288,6 +289,8 @@ class egw_vfs extends vfs_stream_wrapper
 
 		$type = $options['type'];	// 'd' or 'f'
 		$dirs_last = $options['depth'];	// put content of dirs before the dir itself
+		// show dirs on top by default, if no recursive listing (allways disabled if $type specified, as unnecessary)
+		$dirsontop = !$type && (isset($options['dirsontop']) ? (boolean)$options['dirsontop'] : isset($options['maxdepth'])&&$options['maxdepth']>0);
 
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
@@ -377,6 +380,9 @@ class egw_vfs extends vfs_stream_wrapper
 				self::_check_add($options,$path,$result);
 			}
 		}
+		// sort code, to place directories before files, if $dirsontop enabled
+		$dirsfirst = $dirsontop ? '($a[mime]==\''.self::DIR_MIME_TYPE.'\')!==($b[mime]==\''.self::DIR_MIME_TYPE.'\')?'.
+			'($a[mime]==\''.self::DIR_MIME_TYPE.'\'?-1:1):' : '';
 		// ordering of the rows
 		if (isset($options['order']))
 		{
@@ -390,7 +396,7 @@ class egw_vfs extends vfs_stream_wrapper
 				case 'mode':
 				case 'ctime':
 				case 'mtime':
-					uasort($result,create_function('$a,$b',$c='return '.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);'));
+					uasort($result,create_function('$a,$b',$c='return '.$dirsfirst.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);'));
 					break;
 
 				// sort alphanumerical
@@ -399,8 +405,7 @@ class egw_vfs extends vfs_stream_wrapper
 					// fall throught
 				case 'name':
 				case 'mime':
-				case 'comment': 	// ToDo: fetch it for sqlfs or oldvfs
-					uasort($result,create_function('$a,$b',$c='return '.$sort.'strcasecmp($a[\''.$options['order'].'\'],$b[\''.$options['order'].'\']);'));
+					uasort($result,create_function('$a,$b',$c='return '.$dirsfirst.$sort.'strcasecmp($a[\''.$options['order'].'\'],$b[\''.$options['order'].'\']);'));
 					break;
 			}
 			//echo "order='$options[order]', sort='$options[sort]' --> '$c'<br>\n";
@@ -874,16 +879,16 @@ class egw_vfs extends vfs_stream_wrapper
 		$mime_full = strtolower(str_replace	('/','_',$mime_type));
 		list($mime_part) = explode('_',$mime_full);
 
-		if (!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_full)) &&
-			!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_part)))
+		if (!($img=$GLOBALS['egw']->common->image('etemplate',$icon='mime'.$size.'_'.$mime_full)) &&
+			!($img=$GLOBALS['egw']->common->image('etemplate',$icon='mime'.$size.'_'.$mime_part)))
 		{
-			$img = $GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_unknown');
+			$img = $GLOBALS['egw']->common->image('etemplate',$icon='mime'.$size.'_unknown');
 		}
 		if ($et_image)
 		{
-			return 'filemanager/'.$icon;
+			return 'etemplate/'.$icon;
 		}
-		return html::image('filemanager',$icon,lang($mime_type));
+		return html::image('etemplate',$icon,lang($mime_type));
 	}
 
 	/**

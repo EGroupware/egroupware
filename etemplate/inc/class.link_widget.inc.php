@@ -284,7 +284,6 @@ class link_widget
 			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
-				$value[$row]['class'] = 'mimeIcon';	// limit height to 16px
 				$value[$row]['title'] = egw_link::title($link['app'],$link['id'],$link);
 				if (!is_array($link['id']))
 				{
@@ -304,27 +303,11 @@ class link_widget
 					{
 						$value[$row]['title'] = preg_replace('/: ([^ ]+) /',': ',$value[$row]['title']);	// remove mime-type, it's alread in the icon
 					}
-					// Get mimetype and thumbnail
-					$value[$row]['mime_icon'] = egw_vfs::mime_icon($link['type']);
-					$value[$row]['mime_title'] = lang('File').': '.lang($value[$row]['type']);
-					if($GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] && $GLOBALS['egw_info']['server']['link_list_thumbnail'] > 0)
-					{
-						list($image) = explode('/', $value[$row]['type']);
-						if($image == 'image')
-						{
-							$value[$row]['mime_icon'] = $GLOBALS['egw']->link('/etemplate/inc/thumbnail.inc.php',array(
-								'app' => $link['app2'],
-								'id' => $link['id2'],
-								'file' => $link['id'],
-							));
-							unset($value[$row]['class']);	// use height of thumbnail
-						}
-					}
+					$value[$row]['icon'] = egw_link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
 				}
 				else
 				{
-					$value[$row]['mime_icon'] = $value[$row]['app'].'/'.'navbar';
-					$value[$row]['mime_title'] = lang($value[$row]['app']);
+					$value[$row]['icon'] = 'egw/'.$value[$row]['app'];
 					$value[$row]['label'] = 'Unlink';
 					$value[$row]['help'] = lang('Remove this link (not the entry itself)');
 				}

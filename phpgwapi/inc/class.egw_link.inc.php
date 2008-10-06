@@ -698,15 +698,15 @@ class egw_link extends solink
 	/**
 	 * path to the attached files of $app/$ip or the directory for $app if no $id,$file given
 	 *
-	 * All link-files are based in the vfs-subdir '/infolog'. For other apps
-	 * separate subdirs with name app are created.
+	 * All link-files are based in the vfs-subdir '/apps/'.$app
 	 *
 	 * @param string $app appname
 	 * @param string $id='' id in $app
 	 * @param string $file='' filename
+	 * @param boolean $just_the_path=false return url or just the vfs path
 	 * @return string/array path or array with path and relatives, depending on $relatives
 	 */
-	static function vfs_path($app,$id='',$file='')
+	static function vfs_path($app,$id='',$file='',$just_the_path=false)
 	{
 		$path = self::VFS_BASEURL;
 
@@ -724,7 +724,14 @@ class egw_link extends solink
 				}
 			}
 		}
-		$path = egw_vfs::resolve_url($path);
+		if ($just_the_path)
+		{
+			$path = parse_url($path,PHP_URL_PATH);
+		}
+		else
+		{
+			$path = egw_vfs::resolve_url($path);
+		}
 		//error_log(__METHOD__."($app,$id,$file)=$path");
 		return $path;
 	}
@@ -741,7 +748,6 @@ class egw_link extends solink
 	 * 	$file['path'] path of the file on the client computer
 	 * 	$file['ip'] of the client (path and ip are only needed if u want a symlink (if possible))
 	 * @param string $comment='' comment to add to the link
-	 * @todo remark/comment from the vfs
 	 * @return int negative id of egw_sqlfs table as negative link-id's are for vfs attachments
 	 */
 	static function attach_file($app,$id,$file,$comment='')
@@ -753,15 +759,16 @@ class egw_link extends solink
 		}
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
-			$Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,$file['name'])) &&
-				($stat = links_stream_wrapper::url_stat($fname,0));
+			if (($Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,$file['name'])) &&
+				($stat = links_stream_wrapper::url_stat($fname,0))) && $comment)
+			{
+				egw_vfs::proppatch(parse_url($fname,PHP_URL_PATH),array(array('name'=>'comment','val'=>$comment)));	// set comment
+			}
 		}
 		else
 		{
 			error_log(__METHOD__."($app,$id,$file,$comment) Can't mkdir $entry_dir!");
 		}
-		// todo: set comment
-
 		return $Ok ? -$stat['ino'] : false;
 	}
 
@@ -831,7 +838,6 @@ class egw_link extends solink
 	 * converts a fileinfo (row in the vfs-db-table) in a link
 	 *
 	 * @param array/int $fileinfo a row from the vfs-db-table (eg. returned by the vfs ls static function) or a file_id of that table
-	 * @todo remark/comment from the vfs
 	 * @return array a 'kind' of link-array
 	 */
 	static function fileinfo2link($fileinfo,$url=null)
@@ -851,7 +857,7 @@ class egw_link extends solink
 			'id'        => $fileinfo['name'],
 			'app2'      => $app,
 			'id2'       => $id,
-			'remark'    => '',
+			'remark'    => '',					// only list_attached currently sets the remark
 			'owner'     => $fileinfo['uid'],
 			'link_id'   => -$fileinfo['ino'],
 			'lastmod'   => $fileinfo['mtime'],
@@ -873,10 +879,26 @@ class egw_link extends solink
 		//error_log(__METHOD__."($app,$id) url=$url");
 
 		$attached = array();
-		foreach(egw_vfs::find($url,array('url'=>true,'need_mime'=>true,'type'=>'f'),true) as $url => $fileinfo)
+		if (($url2stats = egw_vfs::find($url,array('url'=>true,'need_mime'=>true,'type'=>'f'),true)))
 		{
-			$link = self::fileinfo2link($fileinfo,$url);
-			$attached[$link['link_id']] = $link;
+			$props = egw_vfs::propfind(array_keys($url2stats));	// get the comments
+			foreach($url2stats as $url => &$fileinfo)
+			{
+				$link = self::fileinfo2link($fileinfo,$url);
+				if (isset($props[$path = parse_url($url,PHP_URL_PATH)]))
+				{
+					foreach($props[$path] as $prop)
+					{
+						if ($prop['ns'] == egw_vfs::DEFAULT_PROP_NAMESPACE && $prop['name'] == 'comment')
+						{
+							$link['remark'] = $prop['val'];
+							break;
+						}
+					}
+				}
+				$attached[$link['link_id']] = $link;
+				$urls[] = $url;
+			}
 		}
 		return $attached;
 	}
