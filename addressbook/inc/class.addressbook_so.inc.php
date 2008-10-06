@@ -739,7 +739,7 @@ class addressbook_so
 
 		if ($this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
 			(!is_null($owner) && !$owner || !is_null($contact_id) &&
-			($this->contact_repository == 'sql' && !is_numeric($contact_id) ||
+			($this->contact_repository == 'sql' && (!is_numeric($contact_id) && !is_array($contact_id) )||
 			 $this->contact_repository == 'ldap' && is_numeric($contact_id))))
 		{
 			return $this->so_accounts;
