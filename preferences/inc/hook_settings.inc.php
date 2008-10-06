@@ -161,9 +161,13 @@
 			'admin'		=>	False
 		),
 		'link_list_thumbnail' => array(
-			'type'		=>	'check',
+			'type'		=>	'select',
 			'label'		=>	'Display thumbnails for linked images',
 			'name'		=>	'link_list_thumbnail',
+			'values'    =>  array(
+				'1'		=>  lang('Yes'),
+				'0'     =>	lang('No'),
+			),
 			'help'		=>	'Images linked to an entry can be displayed as thumbnails.  You can turn this off to speed up page display.',
 			'xmlrpc'	=>	True,
 			'admin'		=>	False
