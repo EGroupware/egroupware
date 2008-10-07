@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.uietemplate.inc.php');
-
 /**
  * SiteMgr contact form for the addressbook
  *
@@ -159,13 +157,13 @@ class addressbook_contactform
 					{
 						$content['show'][$name] = 'postcode_city';
 					}
-				} 
+				}
 				else
 				{
 					$content['show'][$name] = true;
 				}
 			}
-			// reset the timestamp 
+			// reset the timestamp
 			$preserv['start_time'] = time();
 		}
 		$content['addr_format'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['addr_format'];
