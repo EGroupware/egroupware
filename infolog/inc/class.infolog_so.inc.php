@@ -21,7 +21,7 @@
  * @copyright (c) by Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-class soinfolog 				// DB-Layer
+class infolog_so 				// DB-Layer
 {
 	/**
 	 * Instance of the db class
@@ -72,7 +72,7 @@ class soinfolog 				// DB-Layer
 	 * @param array $grants
 	 * @return soinfolog
 	 */
-	function soinfolog( &$grants )
+	function __construct( &$grants )
 	{
 		$this->db     = clone($GLOBALS['egw']->db);
 		$this->db->set_app('infolog');

@@ -10,10 +10,13 @@
  * @version $Id$
  */
 
-require_once EGW_SERVER_ROOT.'/infolog/inc/class.boinfolog.inc.php';
-require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
+require_once EGW_API_INC.'/horde/Horde/iCalendar.php';
 
-class vcalinfolog extends boinfolog
+/**
+ * InfoLog: Create and parse iCal's
+ *
+ */
+class infolog_ical extends infolog_bo
 {
 	var $egw_priority2vcal_priority = array(
 		0	=> 3,

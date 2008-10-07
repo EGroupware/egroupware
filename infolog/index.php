@@ -12,7 +12,7 @@
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp'	=> 'infolog', 
+		'currentapp'	=> 'infolog',
 		'noheader'		=> True,
 		'nonavbar'		=> True,
 	)
@@ -29,4 +29,4 @@ if ($setup_info['infolog']['version'] != $GLOBALS['egw_info']['apps']['infolog']
 }
 unset($setup_info);
 
-ExecMethod('infolog.uiinfolog.index','reset_action_view');
+ExecMethod('infolog.infolog_ui.index','reset_action_view');

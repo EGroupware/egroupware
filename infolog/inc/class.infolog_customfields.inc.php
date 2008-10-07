@@ -13,7 +13,7 @@
 /**
  * Administration of custom fields, type and status
  */
-class uicustomfields
+class infolog_customfields
 {
 	var $public_functions = array(
 		'edit' => True
@@ -32,21 +32,21 @@ class uicustomfields
 	var $tmpl;
 	/**
 	 * instance of the config class for infolog
-	 * 
+	 *
 	 * @var config
 	 */
 	var $config_data;
 	/**
-	 * Group owners for certain types read from the infolog config                      
+	 * Group owners for certain types read from the infolog config
 	 *
 	 * @var array
 	 */
 	var $group_owners;
 
-	function uicustomfields( )
+	function __construct( )
 	{
-		$this->bo =& CreateObject('infolog.boinfolog');
-		$this->tmpl =& CreateObject('etemplate.etemplate');
+		$this->bo = new infolog_bo();
+		$this->tmpl = new etemplate();
 		$this->types  = &$this->bo->enums['type'];
 		$this->status = &$this->bo->status;
 		$this->config_data = config::read('infolog');
@@ -147,13 +147,13 @@ class uicustomfields
 		}
 		$content['fields'][++$n] = array('type2'=>'','order' => 10 * $n);	// new line for create
 		$readonlys['fields']["delete[]"] = True;
-		
+
 		$content['group_owner'] = $this->group_owners[$content['type2']];
 
-		//echo '<p>uicustomfields.edit(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
+		//echo '<p>'.__METHOD__'.(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
 		//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
 		$this->tmpl->read('infolog.customfields');
-		$this->tmpl->exec('infolog.uicustomfields.edit',$content,array(
+		$this->tmpl->exec('infolog.infolog_customfields.edit',$content,array(
 			'type2'     => $this->types,
 		),$readonlys,array(
 			'status' => $preserv_status,
@@ -305,7 +305,7 @@ class uicustomfields
 	{
 		$this->update_status($content);
 		$this->update_fields($content);
-		
+
 		if ($content['group_owner'])
 		{
 			$this->group_owners[$content['type2']] = $content['group_owner'];
@@ -363,9 +363,9 @@ class uicustomfields
 	{
 		// save changes to repository
 		config::save_value('types',$this->types,'infolog');
-		//echo '<p>uicustomfields::save_repository() \$this->status=<pre style="text-aling: left;">'; print_r($this->status); echo "</pre>\n";
+		//echo '<p>'.__METHOD__.'() \$this->status=<pre style="text-aling: left;">'; print_r($this->status); echo "</pre>\n";
 		config::save_value('status',$this->status,'infolog');
-		//echo '<p>uicustomfields::save_repository() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
+		//echo '<p>'.__METHOD__.'() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
 		config::save_value('customfields',$this->fields,'infolog');
 		config::save_value('group_owners',$this->group_owners,'infolog');
 	}

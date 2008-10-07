@@ -12,7 +12,7 @@
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '1.5.004';
+$setup_info['infolog']['version']   = '1.6';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 $setup_info['infolog']['enable']    = 1;
@@ -44,29 +44,28 @@ $setup_info['infolog']['note'] =
 	<a href="http://www.egroupware.org/wiki/infolog" target="_blank">InfoLog page on our Website</a>.</p>';
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info['infolog']['hooks']['preferences'] = 'infolog.infolog_prefs_sidebox_hooks.all_hooks';
-$setup_info['infolog']['hooks'][] = 'settings';
-$setup_info['infolog']['hooks']['verify_settings'] = 'infolog.infolog_prefs_sidebox_hooks.verify_settings';
-$setup_info['infolog']['hooks']['admin'] = 'infolog.infolog_prefs_sidebox_hooks.all_hooks';
+$setup_info['infolog']['hooks']['preferences'] = 'infolog_hooks::all_hooks';
+$setup_info['infolog']['hooks']['settings'] = 'infolog_hooks::settings';
+$setup_info['infolog']['hooks']['verify_settings'] = 'infolog_hooks::verify_settings';
+$setup_info['infolog']['hooks']['admin'] = 'infolog_hooks::all_hooks';
 $setup_info['infolog']['hooks'][] = 'deleteaccount';
 $setup_info['infolog']['hooks'][] = 'home';
-$setup_info['infolog']['hooks']['addressbook_view'] = 'infolog.uiinfolog.hook_view';
-$setup_info['infolog']['hooks']['projects_view']    = 'infolog.uiinfolog.hook_view';
-$setup_info['infolog']['hooks']['calendar_view']    = 'infolog.uiinfolog.hook_view';
-$setup_info['infolog']['hooks']['infolog']          = 'infolog.uiinfolog.hook_view';
-$setup_info['infolog']['hooks']['calendar_include_events'] = 'infolog.boinfolog.cal_to_include';
-$setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.boinfolog.cal_to_include';
-$setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog.infolog_prefs_sidebox_hooks.all_hooks';
-$setup_info['infolog']['hooks']['search_link'] = 'infolog.boinfolog.search_link';
-$setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.boinfolog.pm_icons';
+$setup_info['infolog']['hooks']['addressbook_view'] = 'infolog.infolog_ui.hook_view';
+$setup_info['infolog']['hooks']['projects_view']    = 'infolog.infolog_ui.hook_view';
+$setup_info['infolog']['hooks']['calendar_view']    = 'infolog.infolog_ui.hook_view';
+$setup_info['infolog']['hooks']['infolog']          = 'infolog.infolog_ui.hook_view';
+$setup_info['infolog']['hooks']['calendar_include_events'] = 'infolog.infolog_bo.cal_to_include';
+$setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.infolog_bo.cal_to_include';
+$setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog_hooks::all_hooks';
+$setup_info['infolog']['hooks']['search_link'] = 'infolog_hooks::search_link';
+$setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.infolog_bo.pm_icons';
 
 /* Dependencies for this app to work */
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.3','1.4','1.5')
+	'versions' => Array('1.5','1.6','1.7')
 );
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.3','1.4','1.5')
+	'versions' => Array('1.5','1.6','1.7')
 );
-

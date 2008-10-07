@@ -9,22 +9,20 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-	
-include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.soinfolog.inc.php');
 
 define('EGW_ACL_UNDELETE',EGW_ACL_CUSTOM_1);	// undelete right
 
 /**
  * This class is the BO-layer of InfoLog, it also handles xmlrpc requests
  */
-class boinfolog
+class infolog_bo
 {
 	var $enums;
 	var $status;
 	/**
 	 * Instance of our so class
 	 *
-	 * @var soinfolog
+	 * @var infolog_so
 	 */
 	var $so;
 	var $vfs;
@@ -61,26 +59,26 @@ class boinfolog
 	/**
 	 * offset in secconds between user and server-time,
 	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
-	 * 
+	 *
 	 * @var int
 	 */
 	var $tz_offset_s = 0;
 	var $user_time_now;
 	/**
 	 * name of timestamps in an InfoLog entry
-	 * 
+	 *
 	 * @var array
 	 */
 	var $timestamps = array('info_startdate','info_enddate','info_datemodified','info_datecompleted');
 	/**
 	 * fields the responsible user can change
-	 * 
+	 *
 	 * @var array
 	 */
 	var $responsible_edit=array('info_status','info_percent','info_datecompleted');
 	/**
 	 * implicit ACL rights of the responsible user: read or edit
-	 * 
+	 *
 	 * @var string
 	 */
 	var $implicit_rights='read';
@@ -91,7 +89,7 @@ class boinfolog
 	 */
 	var $customfields=array();
 	/**
-	 * Group owners for certain types read from the infolog config                      
+	 * Group owners for certain types read from the infolog config
 	 *
 	 * @var array
 	 */
@@ -128,14 +126,14 @@ class boinfolog
 	 * @param int $info_id
 	 * @param boolean $instanciate_link=true should the link class be instanciated, used by the link-registry to prevent infinit recursion
 	 */
-	function boinfolog($info_id = 0,$instanciate_link=true)
+	function __construct($info_id = 0,$instanciate_link=true)
 	{
 		$this->enums = $this->stock_enums = array(
 			'priority' => array (
 				3 => 'urgent',
 				2 => 'high',
 				1 => 'normal',
-				0 => 'low' 
+				0 => 'low'
 			),
 			'confirm'   => array(
 				'not' => 'not','accept' => 'accept','finish' => 'finish',
@@ -238,7 +236,7 @@ class boinfolog
 		$this->user_time_now = time() + $this->tz_offset_s;
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-		$this->so =& new soinfolog($this->grants);
+		$this->so =& new infolog_so($this->grants);
 
 		// are we called via xmlrpc?
 		$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
@@ -285,9 +283,9 @@ class boinfolog
 	function check_access( $info,$required_rights )
 	{
 		static $cache = array();
-		
+
 		$info_id = is_array($info) ? $info['info_id'] : $info;
-		
+
 		if (isset($cache[$info_id][$required_rights]))
 		{
 			return $cache[$info_id][$required_rights];
@@ -296,8 +294,8 @@ class boinfolog
 		if ($this->history)
 		{
 			if (!is_array($info) && !($info = $this->so->read($info_id))) return false;
-			
-			if ($info['info_status'] == 'deleted' && 
+
+			if ($info['info_status'] == 'deleted' &&
 				($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
 				 $required_rights == EGW_ACL_ADD  ||		// no add rights for deleted entries
 				 $required_rights == EGW_ACL_DELETE && ($this->history == 'history_no_delete' || // no delete at all!
@@ -311,7 +309,7 @@ class boinfolog
 				{
 					return $cache[$info_id][$required_rights] = false;	// can only undelete deleted items
 				}
-				// undelete requires edit rights 
+				// undelete requires edit rights
 				return $cache[$info_id][$required_rights] = $this->so->check_access( $info,EGW_ACL_EDIT,$this->implicit_rights == 'edit' );
 			}
 		}
@@ -321,7 +319,7 @@ class boinfolog
 		}
 		return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit' );
 	}
-	
+
 	/**
 	 * Check if use is responsible for an entry: he or one of his memberships is in responsible
 	 *
@@ -412,7 +410,7 @@ class boinfolog
 	 * Read an infolog entry specified by $info_id
 	 *
 	 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
-	 * @param boolean $run_link_id2from=true should link_id2from run, default yes, 
+	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
 	 * @return array/boolean infolog entry, null if not found or false if no permission to read it
 	 */
@@ -511,7 +509,7 @@ class boinfolog
 			}
 		}
 		if (!($info = $this->read($info_id))) return false;			// should not happen
-		
+
 		$deleted = $info;
 		$deleted['info_status'] = 'deleted';
 		$deleted['info_datemodified'] = time();
@@ -529,13 +527,13 @@ class boinfolog
 		else
 		{
 			$this->so->delete($info_id,false);	// we delete the children via bo to get all notifications!
-			
+
 			egw_link::unlink(0,'infolog',$info_id);
 		}
 		if ($info['info_status'] != 'deleted')	// dont notify of final purge of already deleted items
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
-			
+
 			// send email notifications and do the history logging
 			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
 			if (!is_object($this->tracking))
@@ -546,14 +544,14 @@ class boinfolog
 		}
 		return True;
 	}
-	
+
 	/**
 	* writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
 	*
 	* checks and asures ACL
 	*
-	* @param array &$values values to write, if contains values for check_defaults and touch_modified, 
-	*	they have precedens over the parameters. The 
+	* @param array &$values values to write, if contains values for check_defaults and touch_modified,
+	*	they have precedens over the parameters. The
 	* @param boolean $check_defaults=true check and set certain defaults
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 	* @return int/boolean info_id on a successfull write or false
@@ -605,7 +603,7 @@ class boinfolog
 		}
 		if ($status_only && !$undelete)	// make sure only status gets writen
 		{
-			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set 
+			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set
 				(in_array($values['info_status'],array('done','billed','cancelled')) || (int)$values['info_percent'] == 100);
 
 			$backup_values = $values;	// to return the full values
@@ -627,7 +625,7 @@ class boinfolog
 		}
 		if ($check_defaults)
 		{
-			if (!$values['info_datecompleted'] && 
+			if (!$values['info_datecompleted'] &&
 				(in_array($values['info_status'],array('done','billed')) || (int)$values['info_percent'] == 100))
 			{
 				$values['info_datecompleted'] = $this->user_time_now;	// set date completed to today if status == done
@@ -699,7 +697,7 @@ class boinfolog
 			{
 				// update
 				$GLOBALS['egw']->contenthistory->updateTimeStamp(
-					'infolog_'.$values['info_type'], 
+					'infolog_'.$values['info_type'],
 					$info_id, 'modify', time()
 				);
 			}
@@ -707,7 +705,7 @@ class boinfolog
 			{
 				// add
 				$GLOBALS['egw']->contenthistory->updateTimeStamp(
-					'infolog_'.$values['info_type'], 
+					'infolog_'.$values['info_type'],
 					$info_id, 'add', time()
 				);
 			}
@@ -722,7 +720,7 @@ class boinfolog
 
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update('infolog',$info_id,$values);
-			
+
 			// send email notifications and do the history logging
 			if (!is_object($this->tracking))
 			{
@@ -738,7 +736,7 @@ class boinfolog
 	/**
 	 * Query the number of children / subs
 	 *
-	 * @param int $info_id id 
+	 * @param int $info_id id
 	 * @return int number of subs
 	 */
 	function anzSubs( $info_id )
@@ -763,7 +761,7 @@ class boinfolog
 	{
 		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
 		$ret = $this->so->search($query);
-		
+
 		// convert system- to user-time
 		if (is_array($ret) && $this->tz_offset_s)
 		{
@@ -789,7 +787,7 @@ class boinfolog
 		return $ret;
 	}
 
-	
+
 	/**
 	 * imports a mail identified by uid as infolog
 	 *
@@ -805,7 +803,7 @@ class boinfolog
 	function import_mail($_email_address,$_subject,$_message,$_attachments,$_date)
 	{
 		$address_array = imap_rfc822_parse_adrlist($_email_address,'');
-		foreach ((array)$address_array as $address) 
+		foreach ((array)$address_array as $address)
 		{
 			$email[] = $emailadr = sprintf('%s@%s',
 				trim($address->mailbox),
@@ -850,7 +848,7 @@ class boinfolog
 			$info['msg'] = lang('Attention: No Contact with address %1 found.',$info['info_addr']);
 			$info['info_custom_from'] = true;	// show the info_from line and NOT only the link
 		}
-		else 
+		else
 		{
 			// create the first address as info_contact
 			$contact = array_shift($contacts);
@@ -871,39 +869,12 @@ class boinfolog
 				}
 			}
 		}
-		return $info;			
-	}
-
-	/**
-	 * Hook called by link-class to include infolog in the appregistry of the linkage
-	 *
-	 * @param array/string $location location and other parameters (not used)
-	 * @return array with method-names
-	 */
-	function search_link($location)
-	{
-		return array(
-			'query'      => 'infolog.boinfolog.link_query',
-			'title'      => 'infolog.boinfolog.link_title',
-			'titles'     => 'infolog.boinfolog.link_titles',
-			'view'       => array(
-				'menuaction' => 'infolog.uiinfolog.index',
-				'action' => 'sp'
-			),
-			'view_id'    => 'action_id',
-			'add' => array(
-				'menuaction' => 'infolog.uiinfolog.edit',
-				'type'   => 'task'
-			),
-			'add_app'    => 'action',
-			'add_id'     => 'action_id',
-			'add_popup'  => '750x550',			
-		);
+		return $info;
 	}
 
 	/**
 	 * get title for an infolog entry identified by $info
-	 * 
+	 *
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param int/array $info int info_id or array with infolog entry
@@ -922,7 +893,7 @@ class boinfolog
 		return !empty($info['info_subject']) ? $info['info_subject'] :
 			self::subject_from_des($info['info_descr']);
 	}
-	
+
 	/**
 	 * Return multiple titles fetched by a single query
 	 *
@@ -972,6 +943,18 @@ class boinfolog
 	}
 
 	/**
+	 * Check access to the projects file store
+	 *
+	 * @param int $id id of entry
+	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @return boolean true if access is granted or false otherwise
+	 */
+	function file_access($id,$check,$rel_path)
+	{
+		return $this->check_access($id,$check);
+	}
+
+	/**
 	 * hook called be calendar to include events or todos in the cal-dayview
 	 *
 	 * @param int $args[year], $args[month], $args[day] date of the events
@@ -1012,7 +995,7 @@ class boinfolog
 			{
 				$time = (int) adodb_date('Hi',$info['info_startdate']);
 				$date = adodb_date('Y/m/d',$info['info_startdate']);
-				/* As event-like infologs are not showen in current calendar, 
+				/* As event-like infologs are not showen in current calendar,
 				we need to present all open infologs to the user! (2006-06-27 nelius)
 				if ($do_events && !$time ||
 				    !$do_events && $time && $date == $date_wanted)
@@ -1121,7 +1104,7 @@ class boinfolog
 	function data2xmlrpc($data)
 	{
 		$data['rights'] = $this->so->grants[$data['info_owner']];
-		
+
 		// translate timestamps
 		if($data['info_enddate'] == 0) unset($data['info_enddate']);
 		foreach($this->timestamps as $name)
@@ -1200,7 +1183,7 @@ class boinfolog
 	{
 		return $this->xmlrpc ? $GLOBALS['server']->categories($complete) : False;
 	}
-	
+
 	/**
 	 * Returm InfoLog (custom) status icons for projectmanager
 	 *
@@ -1297,7 +1280,7 @@ class boinfolog
 			return;
 		}
 		error_log("boinfolog::async_notification() users with open entries: ".implode(', ',$users));
-		
+
 		$save_account_id = $GLOBALS['egw_info']['user']['account_id'];
 		$save_prefs      = $GLOBALS['egw_info']['user']['preferences'];
 		foreach($users as $user)
@@ -1310,8 +1293,8 @@ class boinfolog
 			$GLOBALS['egw']->acl->acl($user);
 			$GLOBALS['egw']->acl->read_repository();
 			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-			$this->so =& new soinfolog($this->grants);	// so caches it's filters
-			
+			$this->so =& new infolog_so($this->grants);	// so caches it's filters
+
 			$notified_info_ids = array();
 			foreach(array(
 				'notify_due_responsible'   => 'open-responsible-enddate',
@@ -1321,16 +1304,16 @@ class boinfolog
 			) as $pref => $filter)
 			{
 				if (!($pref_value = $GLOBALS['egw_info']['user']['preferences']['infolog'][$pref])) continue;
-				
+
 				$filter .= date('Y-m-d',time()+24*60*60*(int)$pref_value);
 				error_log("boinfolog::async_notification() checking with filter '$filter' ($pref_value) for user $user ($email)");
-				
+
 				$params = array('filter' => $filter);
 				foreach($this->so->search($params) as $info)
 				{
 					// check if we already send a notification for that infolog entry, eg. starting and due on same day
 					if (in_array($info['info_id'],$notified_info_ids)) continue;
-					
+
 					if (is_null($tracking) || $tracking->user != $user)
 					{
 						require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
@@ -1357,7 +1340,7 @@ class boinfolog
 					}
 					error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
 					$tracking->send_notification($info,null,$email,$user,$pref);
-					
+
 					$notified_info_ids[] = $info['info_id'];
 				}
 			}
@@ -1365,7 +1348,7 @@ class boinfolog
 		$GLOBALS['egw_info']['user']['account_id']  = $save_account_id;
 		$GLOBALS['egw_info']['user']['preferences'] = $save_prefs;
 	}
-	
+
 	/** conversion of infolog status to vtodo status
 	 * @private
 	 * @var array
@@ -1384,7 +1367,7 @@ class boinfolog
 
 	/** conversion of vtodo status to infolog status
 	 * @private
-	 * @var array 
+	 * @var array
 	 */
 	var $_vtodo2status = array(
 		'NEEDS-ACTION' => 'not-started',
@@ -1392,7 +1375,7 @@ class boinfolog
 		'COMPLETED'    => 'done',
 		'CANCELLED'    => 'cancelled',
 	);
-		
+
 	/**
 	 * Converts an infolog status into a vtodo status
 	 *
@@ -1403,10 +1386,10 @@ class boinfolog
 	{
 		return isset($this->_status2vtodo[$status]) ? $this->_status2vtodo[$status] : 'NEEDS-ACTION';
 	}
-	
+
 	/**
 	 * Converts a vtodo status into an infolog status using the optional X-INFOLOG-STATUS
-	 * 
+	 *
 	 * X-INFOLOG-STATUS is only used, if translated to the vtodo-status gives the identical vtodo status
 	 * --> the user did not changed it
 	 *
@@ -1428,7 +1411,7 @@ class boinfolog
 		}
 		return $status;
 	}
-	
+
 	/**
 	 * Activates an InfoLog entry (setting it's status from template or inactive depending on the completed percentage)
 	 *

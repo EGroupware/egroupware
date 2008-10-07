@@ -41,7 +41,7 @@ if ($_POST['cancel'])
 $GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog - Import CSV-File');
 $GLOBALS['egw']->common->egw_header();
 
-$boinfolog = createobject('infolog.boinfolog');
+$infolog_bo = createobject('infolog.infolog_bo');
 
 $GLOBALS['egw']->template->set_file(array('import_t' => 'csv_import.tpl'));
 $GLOBALS['egw']->template->set_block('import_t','filename','filenamehandle');
@@ -222,9 +222,9 @@ case 'download':
 		'link_3'      => '3. link: appname:appid the entry should be linked to, eg.: addressbook:123',
 	);
 	// add custom fields
-	if ($boinfolog->customfields)
+	if ($infolog_bo->customfields)
 	{
-		foreach($boinfolog->customfields as $name => $field)
+		foreach($infolog_bo->customfields as $name => $field)
 		{
 			if ($field['type'] == 'label' || !count($field['values']) && $field['rows'] <= 1 && $field['len'] <= 0) continue;
 
@@ -506,7 +506,7 @@ case 'import':
 			{
 				$values['project_id'] = project_id($values['project_id']);
 			}
-			if (($id = $boinfolog->write($to_write,True,False)))
+			if (($id = $infolog_bo->write($to_write,True,False)))
 			{
 				$info_link_id = false;
 				foreach(array(
@@ -526,7 +526,7 @@ case 'import':
 								'info_id'      => $id,
 								'info_link_id' => $link_id,
 							);
-							$boinfolog->write($to_write);
+							$infolog_bo->write($to_write);
 							$info_link_id = true;
 						}
 					}

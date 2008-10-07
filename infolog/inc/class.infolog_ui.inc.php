@@ -10,15 +10,12 @@
  * @version $Id$
  */
 
-include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
-
 /**
  * This class is the UI-layer (user interface) of InfoLog
  */
-class uiinfolog
+class infolog_ui
 {
-	var $public_functions = array
-	(
+	var $public_functions = array(
 		'index'       => True,
 		'edit'        => True,
 		'delete'      => True,
@@ -107,11 +104,11 @@ class uiinfolog
 	/**
 	 * Constructor
 	 *
-	 * @return uiinfolog
+	 * @return infolog_ui
 	 */
-	function uiinfolog()
+	function __construct()
 	{
-		$this->bo =& new boinfolog();
+		$this->bo =& new infolog_bo();
 
 		$this->tmpl = new etemplate();
 
@@ -144,7 +141,7 @@ class uiinfolog
 			$this->filters['responsible-open-date'.date('Y-m-d',time()+$i*24*60*60)] = "responsible starting in $i day(s)";
 		}
 		*/
-		$GLOBALS['uiinfolog'] =& $this;	// make ourself availible for ExecMethod of get_rows function
+		$GLOBALS['infolog_ui'] =& $this;	// make ourself availible for ExecMethod of get_rows function
 	}
 
 	/**
@@ -252,7 +249,7 @@ class uiinfolog
 	function save_sessiondata($values)
 	{
 		$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
-		//echo "<p>$for: uiinfolog::save_sessiondata(".print_r($values,True).") called_by='$this->called_by', for='$for'<br />".function_backtrace()."</p>\n";
+		//echo "<p>$for: ".__METHOD__.'('.print_r($values,True).") called_by='$this->called_by', for='$for'<br />".function_backtrace()."</p>\n";
 		$GLOBALS['egw']->session->appsession($for.'session_data','infolog',array(
 			'search' => $values['search'],
 			'start'  => $values['start'],
@@ -283,7 +280,7 @@ class uiinfolog
 			$values['session_for'] = $this->called_by;
 			$this->save_sessiondata($values);
 		}
-		//echo "<p>called_by='$this->called_by': uiinfolog::read_sessiondata() = ".print_r($values,True)."</p>\n";
+		//echo "<p>called_by='$this->called_by': ".__METHOD__."() = ".print_r($values,True)."</p>\n";
 		return $values;
 	}
 
@@ -297,7 +294,7 @@ class uiinfolog
 	 */
 	function get_rows(&$query,&$rows,&$readonlys)
 	{
-		//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
+		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
 		if (!$query['csv_export'])
@@ -454,7 +451,7 @@ class uiinfolog
 		elseif ($own_referer === '')
 		{
 			$own_referer = $GLOBALS['egw']->common->get_referer();
-			if (strpos($own_referer,'menuaction=infolog.uiinfolog.edit') !== false)
+			if (strpos($own_referer,'menuaction=infolog.infolog_ui.edit') !== false)
 			{
 				$own_referer = $GLOBALS['egw']->session->appsession('own_session','infolog');
 			}
@@ -487,7 +484,7 @@ class uiinfolog
 				unset($session);
 			}
 		}
-		//echo "<p align=right>uiinfolog::index(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
+		//echo "<p align=right>infolog_ui::index(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 		if (!is_array($values))
 		{
 			$values = array('nm' => $this->read_sessiondata());
@@ -586,7 +583,7 @@ class uiinfolog
 		$this->tmpl->read('infolog.index');
 
 		$values['nm']['options-filter'] = $this->filters;
-		$values['nm']['get_rows'] = 'infolog.uiinfolog.get_rows';
+		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
 		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
 			''               => 'default',
 		)) + array(
@@ -634,7 +631,7 @@ class uiinfolog
 		{
 			$values['css'] = '<style type="text/css">@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/infolog/templates/default/app.css);'."</style>";
 		}
-		return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
+		return $this->tmpl->exec('infolog.infolog_ui.index',$values,array(
 			'info_type'     => $this->bo->enums['type'],
 		),$readonlys,$persist,$return_html ? -1 : 0);
 	}
@@ -675,7 +672,7 @@ class uiinfolog
 		{
 			$values = array('delete' => true);
 		}
-		//echo "<p>uiinfolog::delete(".print_r($values,true).",'$referer','$called_by') info_id=$info_id</p>\n";
+		//echo "<p>infolog_ui::delete(".print_r($values,true).",'$referer','$called_by') info_id=$info_id</p>\n";
 
 		if (is_array($values) || $info_id <= 0)
 		{
@@ -707,7 +704,7 @@ class uiinfolog
 			'action'         => 'sp',
 			'action_id'      => $info_id,
 			'options-filter' => $this->filters,
-			'get_rows'       => 'infolog.uiinfolog.get_rows',
+			'get_rows'       => 'infolog.infolog_ui.get_rows',
 			'no_filter2'     => True,
 			'never_hide'     => isset($this->prefs['never_hide']) ?
 				$this->prefs['never_hide'] :
@@ -723,7 +720,7 @@ class uiinfolog
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
 
-		$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
+		$this->tmpl->exec('infolog.infolog_ui.delete',$values,'',$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
 	}
 
 	/**
@@ -741,7 +738,7 @@ class uiinfolog
 
 		if (is_array($content))
 		{
-			//echo "uiinfolog::edit: content="; _debug_array($content);
+			//echo "infolog_ui::edit: content="; _debug_array($content);
 			$info_id   = $content['info_id'];
 			$action    = $content['action'];    unset($content['action']);
 			$action_id = $content['action_id']; unset($content['action_id']);
@@ -756,7 +753,7 @@ class uiinfolog
 			unset($content['button']);
 			if ($button)
 			{
-				//echo "<p>uiinfolog::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
+				//echo "<p>infolog_ui::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
 				if (($button == 'save' || $button == 'apply') && isset($content['info_subject']) && empty($content['info_subject']))
 				{
 					$this->tmpl->set_validation_error('info_subject',lang('Field must not be empty !!!'));
@@ -791,7 +788,7 @@ class uiinfolog
 							lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
 								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
-									'menuaction' => 'infolog.uiinfolog.edit',
+									'menuaction' => 'infolog.infolog_ui.edit',
 									'info_id'    => $content['info_id'],
 									'no_popup'   => $no_popup,
 									'referer'    => $referer,
@@ -861,7 +858,7 @@ class uiinfolog
 				elseif ($button == 'delete' && $info_id > 0)
 				{
 					if (!$referer && $action) $referer = array(
-						'menuaction' => 'infolog.uiinfolog.index',
+						'menuaction' => 'infolog.infolog_ui.index',
 						'action' => $action,
 						'action_id' => $action_id
 					);
@@ -895,16 +892,16 @@ class uiinfolog
 		}
 		else
 		{
-			//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
+			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 			$action    = $action    ? $action    : get_var('action',   array('POST','GET'));
 			$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 			$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 			$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
 			$ref=$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
-				$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.uiinfolog.index'));
+				$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.infolog_ui.index'));
 			$referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
 			$no_popup  = $_GET['no_popup'];
-			//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
+			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
 			if (is_numeric($_REQUEST['cat_id']))
@@ -1174,8 +1171,8 @@ class uiinfolog
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 			($content['status_only'] ? lang('Edit Status') : lang('Edit'));
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
-		//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
-		$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
+		//echo "<p>infolog_ui.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
+		$this->tmpl->exec('infolog.infolog_ui.edit',$content,array(
 			'info_type'     => $types,
 			'info_priority' => $this->bo->enums['priority'],
 			'info_confirm'  => $this->bo->enums['confirm'],
@@ -1465,7 +1462,7 @@ class uiinfolog
 		}
 		if (!is_array($args) || $args['debug'])
 		{
-			echo "<p>uiinfolog::hook_view("; print_r($args); echo "): app='$app', $view_id='$args[$view_id]', view='$view'</p>\n";
+			echo "<p>infolog_ui::hook_view("; print_r($args); echo "): app='$app', $view_id='$args[$view_id]', view='$view'</p>\n";
 		}
 		if (!isset($app) || !isset($args[$view_id]))
 		{

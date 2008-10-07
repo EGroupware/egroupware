@@ -10,13 +10,11 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
-
 /**
  * eTemplate Extension: InfoLog widget
  *
  * This widget can be used to display data from an InfoLog specified by it's id
- * 
+ *
  * The infolog-value widget takes 3 comma-separated arguments (beside the name) in the options/size field:
  * 1) name of the field (as provided by the infolog-fields widget)
  * 2) an optional compare value: if given the selected field is compared with its value and an X is printed on equality, nothing otherwise
@@ -25,9 +23,9 @@ require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
  */
 class infolog_widget
 {
-	/** 
+	/**
 	 * exported methods of this class
-	 * 
+	 *
 	 * @var array $public_functions
 	 */
 	var $public_functions = array(
@@ -44,7 +42,7 @@ class infolog_widget
 	);
 	/**
 	 * Instance of the boinfolog class
-	 * 
+	 *
 	 * @var boinfolog
 	 */
 	var $infolog;
@@ -53,7 +51,7 @@ class infolog_widget
 	 *
 	 * @var array
 	 */
-	
+
 	/**
 	 * Constructor of the extension
 	 *
@@ -62,7 +60,7 @@ class infolog_widget
 	function infolog_widget($ui)
 	{
 		$this->ui = $ui;
-		$this->infolog =& new boinfolog();
+		$this->infolog =& new infolog_bo();
 	}
 
 	/**
@@ -72,7 +70,7 @@ class infolog_widget
 	 *
 	 * @param string $name form-name of the control
 	 * @param mixed &$value value / existing content, can be modified
-	 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 	 * @param array &$readonlys names of widgets as key, to be made readonly
 	 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 	 * @param etemplate &$tmpl reference to the template we belong too
@@ -104,7 +102,7 @@ class infolog_widget
 				$cell['size'] = '';
 				$cell['no_lang'] = 1;
 				$cell['readonly'] = true;
-				
+
 				switch($type)
 				{
 					case '':	// Sum of the alternatives
@@ -123,31 +121,31 @@ class infolog_widget
 					case 'info_datecompleted':
 						$cell['type'] = 'date-time';
 						break;
-						
+
 					case 'info_enddate':
 						$cell['type'] = 'date';
 						break;
-						
+
 					case 'info_owner':
 					case 'info_responsible':
 						$cell['type'] = 'select-owner';
 						break;
-						
+
 					case 'info_cat':
 						$cell['type'] = 'select-cat';
 						break;
-						
+
 					case 'info_access':
 						$cell['type'] = 'select-access';
 						break;
-						
+
 					case 'info_type':
 					case 'info_priority':
 					case 'info_confirm':
 						$cell['sel_options'] = $this->infolog->enums[$type];
 						$cell['type'] = 'select';
 						break;
-						
+
 					case 'info_status':
 						$cell['sel_options'] = $this->infolog->status[$this->info['info_type']];
 						$cell['type'] = 'select';
@@ -204,13 +202,13 @@ class infolog_widget
 
 		return True;	// extra label ok
 	}
-	
+
 	function _get_info_fields()
 	{
 		static $fields;
-		
+
 		if (!is_null($fields)) return $fields;
-		
+
 		$fields = array(
 			'' => lang('Sum'),
 			'info_type' => lang('Type'),
@@ -243,7 +241,7 @@ class infolog_widget
 //			'info_id_parent' => lang('Parent'),
 //			'info_confirm' => lang('Confirm'),
 //			'info_custom_from' => lang('Custom from'),
-			
+
 		);
 		if ($this->infolog->customfields)
 		{

@@ -11,8 +11,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
-
 /**
  * eGroupWare: GroupDAV access: infolog handler
  */
@@ -21,7 +19,7 @@ class infolog_groupdav extends groupdav_handler
 	/**
 	 * bo class of the application
 	 *
-	 * @var boinfolog
+	 * @var infolog_bo
 	 */
 	var $bo;
 
@@ -36,7 +34,7 @@ class infolog_groupdav extends groupdav_handler
 	{
 		parent::__construct($app,$debug,$base_uri);
 
-		$this->bo =& new boinfolog();
+		$this->bo =& new infolog_bo();
 	}
 
 	/**
@@ -96,8 +94,7 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $task;
 		}
-		include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.vcalinfolog.inc.php');
-		$handler = new vcalinfolog();
+		$handler = new infolog_ical();
 		$options['data'] = $handler->exportVTODO($id,'2.0',false,false);	// keep UID the client set and no extra charset attributes
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
@@ -120,8 +117,7 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $ok;
 		}
-		include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.vcalinfolog.inc.php');
-		$handler = new vcalinfolog();
+		$handler = new infolog_ical();
 		if (!($info_id = $handler->importVTODO($options['content'],is_numeric($id) ? $id : -1)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
