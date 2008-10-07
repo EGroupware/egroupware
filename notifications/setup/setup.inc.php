@@ -15,18 +15,18 @@ if (!defined('NOTIFICATION_APP'))
 }
 
 $setup_info[NOTIFICATION_APP]['name']      = NOTIFICATION_APP;
-$setup_info[NOTIFICATION_APP]['version']   = '1.4';
+$setup_info[NOTIFICATION_APP]['version']   = '1.6';
 $setup_info[NOTIFICATION_APP]['app_order'] = 1;
 $setup_info[NOTIFICATION_APP]['tables']    = array('egw_notificationpopup');
 $setup_info[NOTIFICATION_APP]['enable']    = 2;
 
-$setup_info[NOTIFICATION_APP]['author'] = 
+$setup_info[NOTIFICATION_APP]['author'] = 'Cornelius Weiss';
 $setup_info[NOTIFICATION_APP]['maintainer'] = array(
-	'name'  => 'Cornelius Weiss',
-	'email' => 'nelius@cwtech.de'
+	'name'  => 'eGroupware coreteam',
+	'email' => 'egroupware-developers@lists.sf.net'
 );
 $setup_info[NOTIFICATION_APP]['license']  = 'GPL';
-$setup_info[NOTIFICATION_APP]['description'] = 
+$setup_info[NOTIFICATION_APP]['description'] =
 'Instant notification of users via various channels.';
 
 /* The hooks this app includes, needed for hooks registration */
@@ -42,10 +42,10 @@ $setup_info[NOTIFICATION_APP]['hooks'][] = 'admin';
 /* Dependencies for this app to work */
 $setup_info[NOTIFICATION_APP]['depends'][] = array(
 	 'appname' => 'phpgwapi',
-	 'versions' => Array('1.3','1.4','1.5')
+	 'versions' => Array('1.5','1.6','1.7')
 );
 $setup_info[NOTIFICATION_APP]['depends'][] = array(
 	 'appname' => 'etemplate',
-	 'versions' => Array('1.3','1.4','1.5')
+	 'versions' => Array('1.5','1.6','1.7')
 );
 
