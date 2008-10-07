@@ -1188,11 +1188,6 @@ class infolog_ui
 		),$no_popup ? 0 : 2);
 	}
 
-	function menuaction($action = 'get_list',$app='infolog')
-	{
-		return array( 'menuaction' => "$app.ui$app.$action" );
-	}
-
 	function icon($cat,$id,$status='')
 	{
 		if (!$status || !($icon = $this->icons[$cat][$id.'_'.$status]))
@@ -1292,7 +1287,7 @@ class infolog_ui
 			'lang_responsible_edit' => lang('Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.'),
 			'responsible_edit' => html::checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',11),
 			'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
-			'action_url'  => html::link('/index.php',$this->menuaction('admin')),
+			'action_url'  => html::link('/index.php',array('menuaction'=>'infolog.infolog_ui.admin')),
 			'save_button' => html::submit_button('save','Save'),
 			'apply_button' => html::submit_button('apply','Apply'),
 			'cancel_button' => html::submit_button('cancel','Cancel'),
