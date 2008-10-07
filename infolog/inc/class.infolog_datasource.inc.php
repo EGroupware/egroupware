@@ -35,9 +35,9 @@ class infolog_datasource extends datasource
 	/**
 	 * Constructor
 	 */
-	function datasource_infolog()
+	function __construct()
 	{
-		$this->datasource('infolog');
+		parent::__construct('infolog');
 
 		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_REPLANNED_TIME|PM_USED_TIME|PM_RESOURCES;
 
