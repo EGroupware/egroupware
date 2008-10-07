@@ -14,10 +14,10 @@
 
 function admin_upgrade1_2()
 {
-	return $GLOBALS['setup_info']['admin']['currentver'] = '1.4';		
+	return $GLOBALS['setup_info']['admin']['currentver'] = '1.4';
 }
 
-$test[] = '1.4';
+
 function admin_upgrade1_4()
 {
 	$GLOBALS['egw_setup']->oProc->CreateTable('egw_admin_queue',array(
@@ -45,38 +45,42 @@ function admin_upgrade1_4()
 		'ix' => array('cmd_status','cmd_scheduled'),
 		'uc' => array('cmd_uid')
 	));
-	return $GLOBALS['setup_info']['admin']['currentver'] = '1.5.001';		
+	return $GLOBALS['setup_info']['admin']['currentver'] = '1.5.001';
 }
 
-	$test[] = '1.5.001';
-	function admin_upgrade1_5_001()
-	{
-		$GLOBALS['egw_setup']->oProc->CreateTable('egw_admin_remote',array(
-			'fd' => array(
-				'remote_id' => array('type' => 'auto'),
-				'remote_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
-				'remote_hash' => array('type' => 'varchar','precision' => '32','nullable' => False),
-				'remote_url' => array('type' => 'varchar','precision' => '128','nullable' => False),
-				'remote_domain' => array('type' => 'varchar','precision' => '64','nullable' => False)
-			),
-			'pk' => array('remote_id'),
-			'fk' => array(),
-			'ix' => array(),
-			'uc' => array('remote_name')
-		));
 
-		return $GLOBALS['setup_info']['admin']['currentver'] = '1.5.002';
-	}
+function admin_upgrade1_5_001()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_admin_remote',array(
+		'fd' => array(
+			'remote_id' => array('type' => 'auto'),
+			'remote_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
+			'remote_hash' => array('type' => 'varchar','precision' => '32','nullable' => False),
+			'remote_url' => array('type' => 'varchar','precision' => '128','nullable' => False),
+			'remote_domain' => array('type' => 'varchar','precision' => '64','nullable' => False)
+		),
+		'pk' => array('remote_id'),
+		'fk' => array(),
+		'ix' => array(),
+		'uc' => array('remote_name')
+	));
+
+	return $GLOBALS['setup_info']['admin']['currentver'] = '1.5.002';
+}
 
 
-	$test[] = '1.5.002';
-	function admin_upgrade1_5_002()
-	{
-		$GLOBALS['egw_setup']->oProc->AddColumn('egw_admin_queue','remote_id',array(
-			'type' => 'int',
-			'precision' => '4'
-		));
+function admin_upgrade1_5_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_admin_queue','remote_id',array(
+		'type' => 'int',
+		'precision' => '4'
+	));
 
-		return $GLOBALS['setup_info']['admin']['currentver'] = '1.5.003';
-	}
-?>
+	return $GLOBALS['setup_info']['admin']['currentver'] = '1.5.003';
+}
+
+
+function admin_upgrade1_5_003()
+{
+	return $GLOBALS['setup_info']['admin']['currentver'] = '1.6';
+}
