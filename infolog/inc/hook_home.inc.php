@@ -19,7 +19,7 @@ if (($showevents = $GLOBALS['egw_info']['user']['preferences']['infolog']['homeS
 	$app_id = $GLOBALS['egw']->applications->name2id('infolog');
 	$GLOBALS['portal_order'][] = $app_id;
 
-	$infolog =& infolog_ui();
+	$infolog = new infolog_ui();
 	$infolog->called_by = 'home';
 
 	if (in_array($showevents,array('1','2'))) $showevents = 'own-open-today';
