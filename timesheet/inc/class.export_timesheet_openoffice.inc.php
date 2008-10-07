@@ -11,10 +11,7 @@
  * @version $Id: $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_export_plugin.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/timesheet/inc/class.uitimesheet.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/timesheet/inc/class.botimesheet.inc.php');
 
 /**
  * export plugin of addressbook
@@ -32,7 +29,7 @@ class export_timesheet_openoffice implements iface_export_plugin {
 
 		$options = $_definition->options;
 
-		$botimesheet = new botimesheet();
+		$botimesheet = new timesheet_bo();
 
 			// get current display selection
 

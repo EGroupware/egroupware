@@ -10,12 +10,10 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/timesheet/inc/class.botimesheet.inc.php');
-
 /**
  * User interface object of the TimeSheet
  */
-class uitimesheet extends botimesheet
+class timesheet_ui extends timesheet_bo
 {
 	var $public_functions = array(
 		'view' => true,
@@ -36,9 +34,13 @@ class uitimesheet extends botimesheet
 	 */
 	var $ts_viewtype;
 
-	function uitimesheet()
+	/**
+	 * Constructor
+	 *
+	 */
+	function __construct()
 	{
-		$this->botimesheet();
+		parent::__construct();
 
 		$this->pm_integration = $this->config_data['pm_integration'];
 		$this->ts_viewtype = $this->config_data['ts_viewtype'];
@@ -83,7 +85,7 @@ class uitimesheet extends botimesheet
 				);
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
-				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.uiinfolog.index' : TIMESHEET_APP.'.uitimesheet.index');
+				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.uiinfolog.index' : TIMESHEET_APP.'.timesheet_ui.index');
 		}
 		else
 		{
@@ -333,7 +335,7 @@ class uitimesheet extends botimesheet
 		}
 		if (!$this->customfields) $readonlys[$tabs]['customfields'] = true;	// suppress tab if there are not customfields
 
-		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.edit',$content,array(
+		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,array(
 			'ts_owner' => $edit_grants,
 		),$readonlys,$preserv,2);
 	}
@@ -626,7 +628,7 @@ class uitimesheet extends botimesheet
 			$date_filters['custom'] = 'custom';
 
 			$content['nm'] = array(
-				'get_rows'       =>	TIMESHEET_APP.'.uitimesheet.get_rows',
+				'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rows',
 				'options-filter' => $date_filters,
 				'options-filter2' => array('No details','Details'),
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
@@ -654,10 +656,8 @@ class uitimesheet extends botimesheet
 		// dont show [Export] button if app is not availible to the user or we are on php4
 		$readonlys['export'] = !$GLOBALS['egw_info']['user']['apps']['importexport'] || (int) phpversion() < 5;
 
-		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.index',$content,$sel_options,$readonlys,$preserv);
+		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
-
-
 
 	function js()
 	{
@@ -672,5 +672,4 @@ class uitimesheet extends botimesheet
 		}
 		</script>';
 	}
-
 }

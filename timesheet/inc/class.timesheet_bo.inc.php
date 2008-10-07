@@ -7,7 +7,7 @@
  * @package timesheet
  * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 if (!defined('TIMESHEET_APP'))
@@ -20,7 +20,7 @@ if (!defined('TIMESHEET_APP'))
  *
  * Uses eTemplate's so_sql as storage object (Table: egw_timesheet).
  */
-class botimesheet extends so_sql
+class timesheet_bo extends so_sql
 {
 	/**
 	 * Timesheets config data
@@ -36,34 +36,34 @@ class botimesheet extends so_sql
 	var $quantity_sum=false;
 	/**
 	 * Timestaps that need to be adjusted to user-time on reading or saving
-	 * 
+	 *
 	 * @var array
 	 */
 	var $timestamps = array(
 		'ts_start','ts_modified'
 	);
 	/**
-	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time 
+	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time
 	 * or substracted from a user-time to get the server-time
-	 * 
+	 *
 	 * @var int
 	 */
 	var $tz_offset_s;
 	/**
 	 * Current time as timestamp in user-time
-	 * 
+	 *
 	 * @var int
 	 */
 	var $now;
 	/**
 	 * Start of today in user-time
-	 * 
+	 *
 	 * @var int
 	 */
 	var $today;
 	/**
 	 * Filter for search limiting the date-range
-	 * 
+	 *
 	 * @var array
 	 */
 	var $date_filters = array(	// Start: year,month,day,week, End: year,month,day,week
@@ -81,28 +81,28 @@ class botimesheet extends so_sql
 	);
 	/**
 	 * Grants: $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
-	 * 
+	 *
 	 * @var array
-	 */	
+	 */
 	var $grants;
 	/**
 	 * Sums of the last search in keys duration and price
-	 * 
+	 *
 	 * @var array
 	 */
 	var $summary;
 	/**
 	 * Array with boolean values in keys 'day', 'week' or 'month', for the sums to return in the search
-	 * 
+	 *
 	 * @var array
 	 */
 	var $show_sums;
 
 	var $customfields=array();
-	
-	function botimesheet()
+
+	function __construct()
 	{
-		$this->so_sql(TIMESHEET_APP,'egw_timesheet',null,'',true);	// true = use global db object!
+		parent::__construct(TIMESHEET_APP,'egw_timesheet',null,'',true);	// true = use global db object!
 
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
@@ -116,14 +116,14 @@ class botimesheet extends so_sql
 		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
 		$this->today = mktime(0,0,0,date('m',$this->now),date('d',$this->now),date('Y',$this->now));
 
-		// save us in $GLOBALS['botimesheet'] for ExecMethod used in hooks
-		if (!is_object($GLOBALS['botimesheet']))
+		// save us in $GLOBALS['timesheet_bo'] for ExecMethod used in hooks
+		if (!is_object($GLOBALS['timesheet_bo']))
 		{
-			$GLOBALS['botimesheet'] =& $this;
+			$GLOBALS['timesheet_bo'] =& $this;
 		}
 		$this->grants = $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
 	}
-	
+
 	/**
 	 * get list of specified grants as uid => Username pairs
 	 *
@@ -144,7 +144,7 @@ class botimesheet extends so_sql
 
 		return $result;
 	}
-	
+
 	/**
 	 * checks if the user has enough rights for a certain operation
 	 *
@@ -165,14 +165,14 @@ class botimesheet extends so_sql
 			$save_data = $this->data;
 			$data = $this->read($data,true);
 			$this->data = $save_data;
-			
+
 			if (!$data) return null; 	// entry not found
 		}
 		$rights = $this->grants[$data['ts_owner']];
-		
+
 		return $data && !!($rights & $required);
 	}
-	
+
 	function date_filter($name,&$start,&$end_param)
 	{
 		$end = $end_param;
@@ -197,9 +197,9 @@ class botimesheet extends so_sql
 			$year  = (int) date('Y',$this->today);
 			$month = (int) date('m',$this->today);
 			$day   = (int) date('d',$this->today);
-	
+
 			list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) = $this->date_filters[$name];
-			
+
 			if ($syear || $eyear)
 			{
 				$start = mktime(0,0,0,1,1,$syear+$year);
@@ -236,7 +236,7 @@ class botimesheet extends so_sql
 			}
 			$end_param = $end - 24*60*60;
 		}
-		//echo "<p align='right'>date_filter($name,$start,$end) today=".date('l, Y-m-d H:i',$this->today)." ==> ".date('l, Y-m-d H:i:s',$start)." <= date < ".date('l, Y-m-d H:i:s',$end)."</p>\n"; 
+		//echo "<p align='right'>date_filter($name,$start,$end) today=".date('l, Y-m-d H:i',$this->today)." ==> ".date('l, Y-m-d H:i:s',$start)." <= date < ".date('l, Y-m-d H:i:s',$end)."</p>\n";
 		// convert start + end from user to servertime for the filter
 		return '('.($start-$this->tz_offset_s).' <= ts_start AND ts_start < '.($end-$this->tz_offset_s).')';
 	}
@@ -255,7 +255,7 @@ class botimesheet extends so_sql
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @param boolean $only_summary=false If true only return the sums as array with keys duration and price, default false
@@ -280,7 +280,7 @@ class botimesheet extends so_sql
 		else
 		{
 			if (!is_array($filter['ts_owner'])) $filter['ts_owner'] = array($filter['ts_owner']);
-			
+
 			foreach($filter['ts_owner'] as $key => $owner)
 			{
 				if (!isset($this->grants[$owner]))
@@ -299,7 +299,7 @@ class botimesheet extends so_sql
 			($this->quantity_sum ? ",SUM(ts_quantity) AS quantity" : ''),
 			'','',$wildcard,$empty,$op,false,$filter,$join);
 		$this->summary = $this->summary[0];
-		
+
 		if ($only_summary) return $this->summary;
 
 		if ($this->show_sums && strpos($order_by,'ts_start') !== false && 	// sums only make sense if ordered by ts_start
@@ -320,7 +320,7 @@ class botimesheet extends so_sql
 			}
 			// regular entries
 			parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
-			
+
 			$sort = substr($order_by,8);
 			$union_order = array();
 			$sum_ts_id = array('year' => -3,'month' => -2,'week' => -1,'day' => 0);
@@ -381,7 +381,7 @@ class botimesheet extends so_sql
 		return $this->db->select('egw_timesheet_extra', 'ts_extra_name, ts_extra_value',$query,__LINE__,__FILE__,False,'',
 			TIMESHEET_APP,0,'where ts_id='.$this->data['ts_id'].$where)->fetch();
 	}
-	
+
 	/**
 	 * saves a timesheet entry
 	 *
@@ -395,7 +395,7 @@ class botimesheet extends so_sql
 	function save($keys=null,$touch_modified=true,$ignore_acl=false)
 	{
 		if ($keys) $this->data_merge($keys);
-		
+
 		if (!$ignore_acl && $this->data['ts_id'] && !$this->check_acl(EGW_ACL_EDIT))
 		{
 			return true;
@@ -433,16 +433,16 @@ class botimesheet extends so_sql
 			return true;
 		}
 		else {
-			foreach($this->customfields as $namecf => $valuecf) 
+			foreach($this->customfields as $namecf => $valuecf)
 			{
 				//if entry not exist => insert
-				if(!$this->read_extra($namecf)) 
+				if(!$this->read_extra($namecf))
 				{
 					$fieldAssign = array('ts_id' => $this->data['ts_id'],'ts_extra_name' => $namecf,'ts_extra_value' => $this->data['#'.$namecf]);
 					$this->db->insert('egw_timesheet_extra',$fieldAssign,false,__LINE__,__FILE__,TIMESHEET_APP);
 				}
 				//otherwise update existing dataset
-				else 
+				else
 				{
 					$keys = array('ts_extra_name' => $namecf, 'ts_id' => $this->data['ts_id']);
 					$fieldAssign = array('ts_extra_value' => $this->data['#'.$namecf]);
@@ -453,7 +453,7 @@ class botimesheet extends so_sql
 		}
 		return false;
 	}
-	
+
 	/**
 	 * deletes a timesheet entry identified by $keys or the loaded one, reimplemented to notify the link class (unlink)
 	 *
@@ -468,7 +468,7 @@ class botimesheet extends so_sql
 			$keys = array('ts_id' => (int) $keys);
 		}
 		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
-		
+
 		if (!$this->check_acl(EGW_ACL_DELETE,$ts_id))
 		{
 			return false;
@@ -497,7 +497,7 @@ class botimesheet extends so_sql
 		strlen($ts_id) > 0 ? $where['ts_id'] = $ts_id : '';
 		strlen($ts_extra_name) > 0 ? $where['ts_extra_name'] = $ts_extra_name : '';
 
-		if(count($where) > 0) 
+		if(count($where) > 0)
 		{
 			return $this->db->delete('egw_timesheet_extra', $where,__LINE__,__FILE__,TIMESHEET_APP);
 		}
@@ -547,7 +547,7 @@ class botimesheet extends so_sql
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * Get the time- and pricesum for the given timesheet entries
 	 *
@@ -558,10 +558,10 @@ class botimesheet extends so_sql
 	{
 		return $this->search(array('ts_id'=>$ids),true,'','','',false,'AND',false,null,'',false,true);
 	}
-	
+
 	/**
 	 * get title for a timesheet entry identified by $entry
-	 * 
+	 *
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param int/array $entry int ts_id or array with timesheet entry
@@ -587,7 +587,7 @@ class botimesheet extends so_sql
 
 	/**
 	 * get title for multiple timesheet entries identified by $ids
-	 * 
+	 *
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param array $ids array with ts_id's
@@ -638,57 +638,20 @@ class botimesheet extends so_sql
 	}
 
 	/**
-	 * Hook called by link-class to include timesheet in the appregistry of the linkage
+	 * Check access to the projects file store
 	 *
-	 * @param array/string $location location and other parameters (not used)
-	 * @return array with method-names
-	 */
-	function search_link($location)
-	{
-		return array(
-			'query' => TIMESHEET_APP.'.botimesheet.link_query',
-			'title' => TIMESHEET_APP.'.botimesheet.link_title',
-			'titles'=> TIMESHEET_APP.'.botimesheet.link_titles',
-			'view'  => array(
-				'menuaction' => TIMESHEET_APP.'.uitimesheet.view',
-			),
-			'view_id' => 'ts_id',
-			'view_popup'  => '600x400',			
-			'add' => array(
-				'menuaction' => TIMESHEET_APP.'.uitimesheet.edit',
-			),
-			'add_app'    => 'link_app',
-			'add_id'     => 'link_id',		
-			'add_popup'  => '600x400',			
-		);
-	}
-	
-	/**
-	 * Return the timesheets linked with given project(s) AND with entries of other apps, which are also linked to the same project
-	 * 
-	 * Projectmanager will cumulate them in the other apps entries.
+	 * We currently map file access rights:
+	 *  - file read rights = project read rights
+	 *  - file write or delete rights = project edit rights
 	 *
-	 * @param array $param int/array $param['pm_id'] project-id(s)
-	 * @return array with pm_id, pe_id, pe_app('timesheet'), pe_app_id(ts_id), other_id, other_app, other_app_id
+	 * @ToDo Implement own acl rights for file access
+	 * @param int $id pm_id of project
+	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @return boolean true if access is granted or false otherwise
 	 */
-	function cumulate($param)
+	function file_access($id,$check,$rel_path)
 	{
-		$links = egw_link::get_3links(TIMESHEET_APP,'projectmanager',$param['pm_id']);
-		
-		$rows = array();
-		foreach($links as $link)
-		{
-			$rows[$link['id']] = array(
-				'pm_id'       => $link['id2'],
-				'pe_id'       => $link['id'],
-				'pe_app'      => $link['app1'],
-				'pe_app_id'   => $link['id1'],
-				'other_id'    => $link['link3'],
-				'other_app'   => $link['app3'],
-				'other_app_id'=> $link['id3'],
-			);
-		}
-		return $rows;
+		return $this->check_acl($check,$id);
 	}
 
 	/**
@@ -702,7 +665,7 @@ class botimesheet extends so_sql
 	 */
 	 function update_ts_project($oldtitle='', $newtitle='')
 	 {
-		if(strlen($oldtitle) > 0 && strlen($newtitle) > 0) 
+		if(strlen($oldtitle) > 0 && strlen($newtitle) > 0)
 		{
 			$this->db->update('egw_timesheet',array(
 				'ts_project' => $newtitle,
@@ -721,11 +684,11 @@ class botimesheet extends so_sql
 	 *
 	 * @param int $pm_id ID of selected project
 	 * @return array containing link_id and ts_id
-	 */	
-	function get_ts_links($pm_id=0) 
+	 */
+	function get_ts_links($pm_id=0)
 	{
 		if($pm_id && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
-		{	
+		{
 			$pm_ids = ExecMethod('projectmanager.boprojectmanager.children',$pm_id);
 			$pm_ids[] = $pm_id;
 			$links = solink::get_links('projectmanager',$pm_ids,'timesheet');	// solink::get_links not egw_links::get_links!

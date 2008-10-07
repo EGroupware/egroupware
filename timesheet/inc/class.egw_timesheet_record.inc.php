@@ -12,7 +12,6 @@
  */
 
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_egw_record.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/timesheet/inc/class.botimesheet.inc.php');
 
 /**
  * class egw_addressbook_record
@@ -35,7 +34,7 @@ class egw_timesheet_record implements iface_egw_record
 	 */
 	public function __construct( $_identifier='' ){
 		$this->identifier = $_identifier;
-		$this->botimesheet = new botimesheet();
+		$this->botimesheet = new timesheet_bo();
 		$this->timesheetentry = $this->botimesheet->read($this->identifier);
 	}
 
@@ -149,4 +148,3 @@ class egw_timesheet_record implements iface_egw_record
 	}
 
 } // end of egw_timesheet_record
-?>

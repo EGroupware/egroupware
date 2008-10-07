@@ -7,7 +7,7 @@
  * @package timesheet
  * @copyright (c) 2005 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 include_once('setup/setup.inc.php');
@@ -16,7 +16,7 @@ unset($setup_info);
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp'	=> TIMESHEET_APP, 
+		'currentapp'	=> TIMESHEET_APP,
 		'noheader'		=> True,
 		'nonavbar'		=> True
 ));
@@ -34,4 +34,4 @@ if ($ts_version != $GLOBALS['egw_info']['apps'][TIMESHEET_APP]['version'])
 
 //ExecMethod(TIMESHEET_APP.'.pm_admin_prefs_sidebox_hooks.check_set_default_prefs');
 
-$GLOBALS['egw']->redirect_link('/index.php',array('menuaction'=>TIMESHEET_APP.'.uitimesheet.index'));
+$GLOBALS['egw']->redirect_link('/index.php',array('menuaction'=>TIMESHEET_APP.'.timesheet_ui.index'));
