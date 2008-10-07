@@ -13,7 +13,7 @@
 define('EGW_ACL_UNDELETE',EGW_ACL_CUSTOM_1);	// undelete right
 
 /**
- * This class is the BO-layer of InfoLog, it also handles xmlrpc requests
+ * This class is the BO-layer of InfoLog
  */
 class infolog_bo
 {
@@ -29,31 +29,6 @@ class infolog_bo
 	var $vfs_basedir='/infolog';
 	var $link_pathes = array();
 	var $send_file_ips = array();
-
-	var $xmlrpc_methods = array();
-	var $soap_functions = array(
-		'read' => array(
-			'in'  => array('int'),
-			'out' => array('array')
-		),
-		'search' => array(
-			'in'  => array('array'),
-			'out' => array('array')
-		),
-		'write' => array(
-			'in'  => array('array'),
-			'out' => array()
-		),
-		'delete' => array(
-			'in'  => array('int'),
-			'out' => array()
-		),
-		'categories' => array(
-			'in'  => array('bool'),
-			'out' => array('array')
-		),
-	);
-	var $xmlrpc = False;	// called via xmlrpc
 
 	var $tz_offset = 0;
 	/**
@@ -238,9 +213,6 @@ class infolog_bo
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
 		$this->so =& new infolog_so($this->grants);
 
-		// are we called via xmlrpc?
-		$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
-
 		if ($info_id)
 		{
 			$this->read( $info_id );
@@ -423,20 +395,12 @@ class infolog_bo
 
 		if (($data = $this->so->read($info_id)) === False)
 		{
-			if ($this->xmlrpc)
-			{
-				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
-			}
 			return null;
 		}
 		$info_id = $data['info_id'];	// in case the uid was specified
 
 		if (!$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
 		{
-			if ($this->xmlrpc)
-			{
-				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
-			}
 			return False;
 		}
 
@@ -451,17 +415,13 @@ class infolog_bo
 		{
 			if ($data[$time]) $data[$time] += $this->tz_offset_s;
 		}
-		if ($this->xmlrpc)
-		{
-			$data = $this->data2xmlrpc($data);
-		}
 		return $data;
 	}
 
 	/**
 	 * Delete an infolog entry, evtl. incl. it's children / subs
 	 *
-	 * @param int/array $info_id int id or array with keys 'info_id', 'delete_children' and 'new_parent' setting all 3 params
+	 * @param int/array $info_id int id
 	 * @param boolean $delete_children should the children be deleted
 	 * @param int/boolean $new_parent parent to use for not deleted children if > 0
 	 * @return boolean True if delete was successful, False otherwise ($info_id does not exist or no rights)
@@ -470,24 +430,14 @@ class infolog_bo
 	{
 		if (is_array($info_id))
 		{
-			$delete_children = $info_id['delete_children'];
-			$new_parent = $info_id['new_parent'];
 			$info_id = (int)(isset($info_id[0]) ? $info_id[0] : (isset($info_id['info_id']) ? $info_id['info_id'] : $info_id['info_id']));
 		}
 		if ($this->so->read($info_id) === False)
 		{
-			if ($this->xmlrpc)
-			{
-				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
-			}
 			return False;
 		}
 		if (!$this->check_access($info_id,EGW_ACL_DELETE))
 		{
-			if ($this->xmlrpc)
-			{
-				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
-			}
 			return False;
 		}
 		// check if we have children and delete or re-parent them
@@ -550,8 +500,7 @@ class infolog_bo
 	*
 	* checks and asures ACL
 	*
-	* @param array &$values values to write, if contains values for check_defaults and touch_modified,
-	*	they have precedens over the parameters. The
+	* @param array &$values values to write
 	* @param boolean $check_defaults=true check and set certain defaults
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 	* @return int/boolean info_id on a successfull write or false
@@ -559,15 +508,6 @@ class infolog_bo
 	function write(&$values,$check_defaults=True,$touch_modified=True)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
-		// allow to (un)set check_defaults and touch_modified via values, eg. via xmlrpc
-		foreach(array('check_defaults','touch_modified') as $var)
-		{
-			if(isset($values[$var]))
-			{
-				$$var = $values[$var];
-				unset($values[$var]);
-			}
-		}
 		if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
 		{
 			if (!isset($values['info_responsible']))
@@ -591,15 +531,7 @@ class infolog_bo
 		if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
 		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
 		{
-			if ($this->xmlrpc)
-			{
-				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
-			}
 			return False;
-		}
-		if ($this->xmlrpc)
-		{
-			$values = $this->xmlrpc2data($values);
 		}
 		if ($status_only && !$undelete)	// make sure only status gets writen
 		{
@@ -668,7 +600,8 @@ class infolog_bo
 			// Should only an entry be updated which includes the original modification date?
 			// Used in the web-GUI to check against a modification by an other user while editing the entry.
 			// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
-			$check_modified = $values['info_datemodified'] && !$this->xmlrpc ? $values['info_datemodified']-$this->tz_offset_s : false;
+			$xmprpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
+			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $values['info_datemodified']-$this->tz_offset_s : false;
 			$values['info_datemodified'] = $this->user_time_now;
 		}
 		if ($touch_modified || !$values['info_modifier'])
@@ -771,16 +704,6 @@ class infolog_bo
 				{
 					if ($data[$time]) $ret[$id][$time] += $this->tz_offset_s;
 				}
-			}
-		}
-		if ($this->xmlrpc && is_array($ret))
-		{
-			$infos =& $ret;
-			unset($ret);
-			$ret = array();
-			foreach($infos as $id => $data)
-			{
-				$ret[] = $this->data2xmlrpc($data);
 			}
 		}
 		//echo "<p>boinfolog::search(".print_r($query,True).")=<pre>".print_r($ret,True)."</pre>\n";
@@ -1032,156 +955,6 @@ class infolog_bo
 		}
 		//echo "boinfolog::cal_to_include("; print_r($args); echo ")<pre>"; print_r($to_include); echo "</pre>\n";
 		return $to_include;
-	}
-
-	/**
-	 * handles introspection or discovery by the logged in client,
-	 *  in which case the input might be an array.  The server always calls
-	 *  this function to fill the server dispatch map using a string.
-	 *
-	 * @param string $_type='xmlrpc' xmlrpc or soap
-	 * @return array
-	 */
-	function list_methods($_type='xmlrpc')
-	{
-		if (is_array($_type))
-		{
-			$_type = $_type['type'] ? $_type['type'] : $_type[0];
-		}
-
-		switch($_type)
-		{
-			case 'xmlrpc':
-				$xml_functions = array(
-					'read' => array(
-						'function'  => 'read',
-						'signature' => array(array(xmlrpcInt,xmlrpcInt)),
-						'docstring' => lang('Read one record by passing its id.')
-					),
-					'search' => array(
-						'function'  => 'search',
-						'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-						'docstring' => lang('Returns a list / search for records.')
-					),
-					'write' => array(
-						'function'  => 'write',
-						'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-						'docstring' => lang('Write (add or update) a record by passing its fields.')
-					),
-					'delete' => array(
-						'function'  => 'delete',
-						'signature' => array(array(xmlrpcInt,xmlrpcInt)),
-						'docstring' => lang('Delete one record by passing its id.')
-					),
-					'categories' => array(
-						'function'  => 'categories',
-						'signature' => array(array(xmlrpcBoolean,xmlrpcBoolean)),
-						'docstring' => lang('List all categories')
-					),
-					'list_methods' => array(
-						'function'  => 'list_methods',
-						'signature' => array(array(xmlrpcStruct,xmlrpcString)),
-						'docstring' => lang('Read this list of methods.')
-					)
-				);
-				return $xml_functions;
-				break;
-			case 'soap':
-				return $this->soap_functions;
-				break;
-			default:
-				return array();
-				break;
-		}
-	}
-
-	/**
-	 * Convert an InfoLog entry into its xmlrpc representation, eg. convert timestamps to datetime.iso8601
-	 *
-	 * @param array $data infolog entry
-	 * @param array xmlrpc infolog entry
-	 */
-	function data2xmlrpc($data)
-	{
-		$data['rights'] = $this->so->grants[$data['info_owner']];
-
-		// translate timestamps
-		if($data['info_enddate'] == 0) unset($data['info_enddate']);
-		foreach($this->timestamps as $name)
-		{
-			if (isset($data[$name]))
-			{
-				$data[$name] = $GLOBALS['server']->date2iso8601($data[$name]);
-			}
-		}
-		$ret[$id]['info_percent'] = (int)$data['info_percent'].'%';
-
-		// translate cat_id
-		if (isset($data['info_cat']))
-		{
-			$data['info_cat'] = $GLOBALS['server']->cats2xmlrpc(array($data['info_cat']));
-		}
-		foreach($data as $name => $val)
-		{
-			if (substr($name,0,5) == 'info_')
-			{
-				unset($data[$name]);
-				$data[substr($name,5)] = $val;
-			}
-		}
-		// unsetting everything which could result in an typeless <value />
-		foreach($data as $key => $value)
-		{
-			if (is_null($value) || is_array($value) && !$value)
-			{
-				unset($data[$key]);
-			}
-		}
-		return $data;
-	}
-
-	/**
-	 * Convert an InfoLog xmlrpc representation into the internal one, eg. convert datetime.iso8601 to timestamps
-	 *
-	 * @param array $data infolog entry
-	 * @param array xmlrpc infolog entry
-	 */
-	function xmlrpc2data($data)
-	{
-		foreach($data as $name => $val)
-		{
-			if (substr($name,0,5) != 'info_')
-			{
-				unset($data[$name]);
-				$data['info_'.$name] = $val;
-			}
-		}
-		// translate timestamps
-		foreach($this->timestamps as $name)
-		{
-			if (isset($data[$name]))
-			{
-				$data[$name] = $GLOBALS['server']->iso86012date($data[$name],True);
-			}
-		}
-		// translate cat_id
-		if (isset($data['info_cat']))
-		{
-			$cats = $GLOBALS['server']->xmlrpc2cats($data['info_cat']);
-			$data['info_cat'] = (int)$cats[0];
-		}
-		return $data;
-	}
-
-	/**
-	 * return array with all infolog categories (for xmlrpc)
-	 *
-	 * @param boolean $complete true returns array with all data for each cat, else only the title is returned
-	 * @return array with cat_id / title or data pairs (see above)
-	 */
-	function categories($complete = False)
-	{
-		return $this->xmlrpc ? $GLOBALS['server']->categories($complete) : False;
 	}
 
 	/**
