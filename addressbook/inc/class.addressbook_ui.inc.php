@@ -395,7 +395,7 @@ class addressbook_ui extends addressbook_bo
 			$org = '';	// use infolog default of link-title
 		}
 		$GLOBALS['egw']->redirect_link('/index.php',array(
-			'menuaction' => 'infolog.uiinfolog.index',
+			'menuaction' => 'infolog.infolog_ui.index',
 			'action' => 'addressbook',
 			'action_id' => implode(',',$checked),
 			'action_title' => $org,
@@ -522,7 +522,7 @@ class addressbook_ui extends addressbook_bo
 
 			case 'infolog':
 				$GLOBALS['egw']->redirect_link('/index.php',array(
-					'menuaction' => 'infolog.uiinfolog.index',
+					'menuaction' => 'infolog.infolog_ui.index',
 					'action' => 'addressbook',
 					'action_id' => implode(',',$checked),
 					'action_title' => count($checked) > 1 ? lang('selected contacts') : '',

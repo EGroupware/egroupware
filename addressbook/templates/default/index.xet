@@ -14,7 +14,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.006">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.007">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -164,7 +164,7 @@
 					<hbox options="0" class="noPrint" orient="0">
 						<button id="document[$row_cont[id]]" image="new" label="Insert in document"/>
 						<image options="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]" label="View" src="view"/>
-						<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
+						<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
 						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this contact" onclick="return confirm('Delete this contact');"/>
 						<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
 					</hbox>
@@ -195,7 +195,7 @@
 					<hbox align="right">
 						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
 						<menulist>
-							<menupopup onchange="if (this.value != '') {if (this.value == 'infolog_add') {ids=get_selected(this.form,'[rows][checked][]');win=window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=task&amp;action=addressbook&amp;action_id=')+ids,'_blank','width=750,height=550,left=100,top=200'); win.focus();}if (this.value == 'cat_add'){win=window.open(egw::link('/etemplate/process_exec.php','menuaction=addressbook.addressbook_ui.cat_add'),'_blank','width=300,height=400,left=100,top=200'); win.focus();} else {this.form.submit(); } this.value=''; }" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
+							<menupopup onchange="if (this.value != '') {if (this.value == 'infolog_add') {ids=get_selected(this.form,'[rows][checked][]');win=window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=addressbook&amp;action_id=')+ids,'_blank','width=750,height=550,left=100,top=200'); win.focus();}if (this.value == 'cat_add'){win=window.open(egw::link('/etemplate/process_exec.php','menuaction=addressbook.addressbook_ui.cat_add'),'_blank','width=300,height=400,left=100,top=200'); win.focus();} else {this.form.submit(); } this.value=''; }" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
 						</menulist>
 						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
 					</hbox>
