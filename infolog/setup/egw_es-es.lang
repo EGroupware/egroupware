@@ -41,6 +41,7 @@ add:	infolog	es-es	Añadir:
 all	infolog	es-es	Todos
 all links and attachments	infolog	es-es	todos los enlaces y ficheros adjuntos
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	es-es	permite establecer el estado de una entrada, p.e. poner una tarea pendiente cono finalizada si está terminada (los valores dependen del tipo de entrada)
+applies the changes	infolog	es-es	Aplica los cambios
 apply the changes	infolog	es-es	Aplicar los cambios
 archive	infolog	es-es	archivar
 are you shure you want to delete this entry ?	infolog	es-es	¿Está seguro de querer borrar esta entrada?
@@ -56,6 +57,7 @@ cancel	infolog	es-es	Cancelar
 cancelled	infolog	es-es	Cancelado
 categories	infolog	es-es	Categorías
 category	infolog	es-es	Categoría
+change history	infolog	es-es	Cambiar historial
 change the status of an entry, eg. close it	infolog	es-es	Cambiar el estado de una entrada, p. ej. cerrarlo
 charset of file	infolog	es-es	Juego de caracteres del fichero
 check to set startday	infolog	es-es	marcar para establecer fecha de inicio
@@ -150,6 +152,7 @@ from	infolog	es-es	De
 general	infolog	es-es	General
 group owner for	infolog	es-es	Propietario de grupo para
 high	infolog	es-es	alta
+history	infolog	es-es	Historial
 history logging	infolog	es-es	Registro histórico
 history logging and deleting of items	infolog	es-es	Registro histórico y borrado de elementos
 id	infolog	es-es	Id
@@ -176,6 +179,7 @@ invalid filename	infolog	es-es	El nombre de archivo no es válido
 label<br>helptext	infolog	es-es	Etiqueta<br>Texto de ayuda
 last changed	infolog	es-es	Último cambio
 last modified	infolog	es-es	Última modificación
+leave blank to get the used time calculated by timesheet entries	infolog	es-es	Dejar en blanco para conseguir el tiempo acumulado por las hojas de presencia
 leave it empty	infolog	es-es	dejar en blanco
 leave without saveing the entry	infolog	es-es	abandonar sin guardar la entrada
 leaves without saveing	infolog	es-es	abandonar sin guardar
@@ -239,7 +243,7 @@ phone	infolog	es-es	Llamada telefónica
 phone/email	infolog	es-es	Teléfono o correo electrónico
 phonecall	infolog	es-es	Llamada telefónica
 planned	infolog	es-es	planificada
-planned time	infolog	es-es	hora planificada
+planned time	infolog	es-es	Tiempo Planificado
 price	infolog	es-es	Precio
 pricelist	infolog	es-es	Lista de precios
 primary link	infolog	es-es	enlace primario
@@ -247,6 +251,9 @@ priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
 project settings: price, times	infolog	es-es	Configuración del proyecto: precio, tiempos
+projectmanager	infolog	es-es	Administrador de Proyectos
+re-planned	infolog	es-es	Replanificado
+re-planned time	infolog	es-es	Tiempo Replanificado
 re:	infolog	es-es	Re:
 read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
 read rights (default)	infolog	es-es	derecho de lectura (predeterminado)
@@ -339,6 +346,7 @@ urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 used time	infolog	es-es	tiempo utilizado
 valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el cliente<br>p. ej. \\seridor\recurso o e:\
+valid path on clientside<br>eg. servershare or e:	infolog	es-es	ruta válida en el cliente<br>p. ej. \\seridor\recurso o e:\
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs

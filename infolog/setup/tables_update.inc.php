@@ -632,3 +632,21 @@
 
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.5.003';
 	}
+
+	$test[] = '1.5.003';
+	/**
+	 * Add re-planned time column
+	 *
+	 * @return string version
+	 */
+	function infolog_upgrade1_5_003()
+	{
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_replanned_time',array(
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => False,
+			'default' => '0'
+		));		
+
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.5.004';
+	}	

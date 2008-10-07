@@ -13,7 +13,7 @@
 			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.4.002">
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.5.004">
 		<grid>
 			<columns>
 				<column width="2%"/>
@@ -58,6 +58,7 @@
 					<vbox>
 						<description value="Times"/>
 						<description class="planned" value="planned"/>
+						<description class="replanned" value="Re-planned"/>
 					</vbox>
 					<vbox>
 						<description value="Owner"/>
@@ -90,9 +91,19 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
 					<vbox rows="3" cols="1">
-						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
-						<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
-						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+						<hbox options="1,0" id="l_used_time">
+							<image label="Times" src="timesheet"/>
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						</hbox>
+						<hbox options="1,0" id="lplanified">
+							<image label="planned time" src="k_alarm.png" readonly="true"/>
+							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+						</hbox>
+						<hbox options="1,0" id="replanified">
+							<image label="Re-planned time" src="agt_reload.png"/>
+							<date-duration id="${row}[info_replanned_time]" span="all" class="replanned" readonly="true" options="@duration_format"/>
+						</hbox>
 					</vbox>
 					<vbox options="0,0">
 						<menulist>
@@ -121,7 +132,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.5.001">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.5.004">
 		<grid>
 			<columns>
 				<column width="2%"/>
@@ -172,6 +183,7 @@
 					<vbox rows="2" cols="1" options="2">
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
 						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
+						<nextmatch-sortheader id="info_replanned_time" class="replanned" label="Re-planned"/>
 					</vbox>
 					<vbox options="0,0">
 						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner" class="user_filter"/>
@@ -207,9 +219,19 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
 					<vbox rows="3" cols="1">
-						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
-						<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
-						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+						<hbox options="1,0" id="r_used_time">
+							<image label="Times" src="timesheet"/>
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						</hbox>
+						<hbox options="1,0" id="planified">
+							<image label="planned time" src="k_alarm.png" readonly="true"/>
+							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+						</hbox>
+						<hbox options="1,0" id="replanified">
+							<image label="Re-planned time" src="agt_reload.png"/>
+							<date-duration id="${row}[info_replanned_time]" span="all" class="replanned" readonly="true" options="@duration_format"/>
+						</hbox>
 					</vbox>
 					<vbox options="0,0">
 						<menulist>
@@ -227,7 +249,7 @@
 						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
 						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
-						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit&amp;link_app[]=infolog&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
+						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit&amp;link_app[]=infolog&amp;cat_id=$row_cont[info_cat]&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
 					</vbox>
 					<hbox class="noPrint">
 						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
@@ -238,7 +260,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.5.001">
+	<template id="infolog.index" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="90%"/>

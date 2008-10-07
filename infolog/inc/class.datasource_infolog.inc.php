@@ -39,7 +39,7 @@ class datasource_infolog extends datasource
 	{
 		$this->datasource('infolog');
 		
-		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_USED_TIME|PM_RESOURCES;
+		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_REPLANNED_TIME|PM_USED_TIME|PM_RESOURCES;
 
 		// we use $GLOBALS['boinfolog'] as an already running instance might be availible there
 		if (!is_object($GLOBALS['boinfolog']))
@@ -75,6 +75,7 @@ class datasource_infolog extends datasource
 			'pe_planned_end'  => $data['info_enddate'] ? $data['info_enddate'] : null,
 			'pe_real_end'     => $data['info_datecompleted'] ? $data['info_datecompleted'] : null,
 			'pe_planned_time' => $data['info_planned_time'],
+			'pe_replanned_time' => $data['info_replanned_time'],
 			'pe_used_time'    => $data['info_used_time'],
 			'pe_resources'    => count($data['info_responsible']) ? $data['info_responsible'] : array($data['info_owner']),
 			'pe_details'      => $data['info_des'] ? nl2br($data['info_des']) : '',

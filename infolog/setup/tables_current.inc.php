@@ -29,6 +29,7 @@
 				'info_enddate' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
 				'info_id_parent' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'info_planned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_replanned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'info_used_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'info_status' => array('type' => 'varchar','precision' => '40','default' => 'done'),
 				'info_confirm' => array('type' => 'varchar','precision' => '10','default' => 'not'),
