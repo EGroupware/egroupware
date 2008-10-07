@@ -680,9 +680,11 @@ function &CreateObject($class)
 		static $replace = array(
 			'datetime'    => 'egw_datetime',
 			'uitimesheet' => 'timesheet_ui',
+			'uiinfolog'   => 'infolog_ui',
 		);
 		if (isset($replace[$classname]))
 		{
+			error_log(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
 			$classname = $replace[$classname];
 			include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
