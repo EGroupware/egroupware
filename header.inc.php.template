@@ -13,9 +13,7 @@
  */
 
 // allow to migrate from phpgw_info to egw_info
-if (!isset($GLOBALS['egw_info']) ||
-	isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw_info']['flags']['phpgw_compatibility'] ||
-	in_array($GLOBALS['egw_info']['flags']['currentapp'],array('jinn','mydms','tts')))
+if (!isset($GLOBALS['egw_info']))
 {
 	$GLOBALS['egw_info'] =& $GLOBALS['phpgw_info'];
 	$GLOBALS['egw_info']['flags']['phpgw_compatibility'] = true;
@@ -106,7 +104,7 @@ if (isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw
 if(!isset($GLOBALS['egw_info']['flags']['noapi']) || !$GLOBALS['egw_info']['flags']['noapi'])
 {
 	ob_start();	// to prevent error messages to be send before our headers
-	include(EGW_API_INC . '/functions.inc.php');
+	require_once(EGW_API_INC . '/functions.inc.php');
 }
 else
 {
