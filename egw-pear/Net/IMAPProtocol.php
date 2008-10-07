@@ -538,7 +538,7 @@ class Net_IMAPProtocol {
      */
     function _authDigest_MD5($uid , $pwd , $cmdid)
     {
-
+		class_exists('Auth_SASL') || require_once 'Auth/SASL.php';
         if ( PEAR::isError($error = $this->_putCMD( $cmdid ,"AUTHENTICATE" , "DIGEST-MD5") ) ) {
             return $error;
         }
@@ -596,7 +596,7 @@ class Net_IMAPProtocol {
     function _authCRAM_MD5($uid, $pwd, $cmdid)
     {
 
-
+		class_exists('Auth_SASL') || require_once 'Auth/SASL.php';
 
         if ( PEAR::isError($error = $this->_putCMD( $cmdid ,"AUTHENTICATE" , "CRAM-MD5") ) ) {
             return $error;
@@ -854,8 +854,11 @@ class Net_IMAPProtocol {
         $ret=$this->_genericCommand('EXAMINE', $mailbox_name);
         $parsed='';
         if(isset( $ret["PARSED"] ) ){
-            for($i=0;$i<count($ret["PARSED"]); $i++){ $command=$ret["PARSED"][$i]["EXT"];
-                    $parsed[key($command)]=$command[key($command)];
+            for($i=0;$i<count($ret["PARSED"]); $i++){
+				if (array_key_exists("EXT",$ret["PARSED"][$i]) && is_array($ret["PARSED"][$i]["EXT"])) {
+					$command=$ret["PARSED"][$i]["EXT"];
+					$parsed[key($command)]=$command[key($command)];
+				}
             }
         }
         return array("PARSED"=>$parsed,"RESPONSE"=>$ret["RESPONSE"]);
@@ -1204,7 +1207,7 @@ class Net_IMAPProtocol {
     function cmdExpunge()
     {
         $ret=$this->_genericCommand('EXPUNGE');
-
+		if (PEAR::isError($ret)) return new PEAR_Error('could not Expunge!');
         if(isset( $ret["PARSED"] ) ){
            $parsed=$ret["PARSED"];
             unset($ret["PARSED"]);
@@ -2343,12 +2346,16 @@ class Net_IMAPProtocol {
 		if ($str[$pos] !== '"') return false;	// start condition failed
 		
 		$pos++;	
-		
+		$delimCount=0;
 		while($str[$pos] !== '"' && $pos < $len) {
 			// this is a fix to stop before the delimiter, in broken string messages containing an odd number of double quotes
 			// the idea is to check for a stopDelimited followed by eiter a new startDelimiter or an other stopDelimiter
 			// that allows to have something like '"Name (Nick)" <email>' containing one delimiter
-			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  $str[$pos+1] === $stopDelim)) {
+			// if you have something like "Name ((something))" we must count the delimiters (and hope that they are not unbalanced too)
+			// and check if we have a negative amount of delimiters or no delimiters to meet the stop condition, before we run into a closing double quote 
+			if ($str[$pos] === $startDelim) $delimCount++;
+			if ($str[$pos] === $stopDelim) $delimCount--;
+			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  ($str[$pos+1] === $stopDelim && $delimCount<=0))) {
 				$pos--;	// stopDelimited need to be parsed outside!
 				return false;
 			}
@@ -2559,6 +2566,7 @@ class Net_IMAPProtocol {
             }
             break;
         }
+		#error_log("egw-pear::NET::IMAPProtocoll:_getNextToken:".$str);
         return $content_size;
     }
 
@@ -3065,7 +3073,7 @@ class Net_IMAPProtocol {
         }
 
         $this->_getNextToken($str, $token);
-
+		#error_log(" egw-pear::NET::IMAPProtocoll:_genericIMAPResponseParser: After retrieving the first token:".$token);
         while ($token != $cmdid && $str != '') {
             if ($token == '+' ) {
                 //if the token  is + ignore the line
@@ -3169,6 +3177,7 @@ class Net_IMAPProtocol {
         $cmdid = $this->_getCmdId();
         $this->_putCMD( $cmdid , $command , $params );
         $args=$this->_getRawResponse( $cmdid );
+		#error_log("egw-pear::NET::IMAPProtocoll:_genericCommand:".$command." result:".print_r($args,TRUE));
         return $this->_genericImapResponseParser( $args , $cmdid );
     }
 

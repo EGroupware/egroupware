@@ -381,19 +381,44 @@ class Net_IMAP extends Net_IMAPProtocol {
             $message_set="1:*";
         }
         if($uidFetch) {
-          $ret=$this->cmdUidFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE)])");
+		  #error_log("egw-pear::NET::IMAP:getSummary->fetch by UID ".$message_set);
+          $ret=$this->cmdUidFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
         } else {
-          $ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE)])");
+		  #error_log("egw-pear::NET::IMAP:getSummary->fetch message ".$message_set);
+          $ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
         }
+		#error_log(print_r($ret['PARSED'][0],true));
         #$ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY[1.MIME])");
-        if (PEAR::isError($ret)) {
-            return $ret;
+        if (PEAR::isError($ret) || strtoupper($ret["RESPONSE"]["CODE"]) != "OK") {
+			error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message(s):".$message_set." Trying to retrieve single messages.");
+			unset($ret);
+			# if there is an error, while retrieving the information for the whole list, try to retrieve the info one by one, to be more error tolerant
+			foreach (explode(',',$message_set) as $msgid) {
+				$retloop=$this->cmdUidFetch($msgid,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
+				if (PEAR::isError($retloop)|| strtoupper($retloop["RESPONSE"]["CODE"]) != "OK") {
+					# log the error, and create a dummy-message as placeholder, this may hold the possibility to read the message anyway
+					error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message with id:".$msgid);
+					error_log($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+					$ret['PARSED'][]=array('COMMAND'=>"FETCH",'EXT'=>array('UID'=>$msgid,'ENVELOPE'=>array('SUBJECT'=>"[FELAMIMAIL:ERROR]can not parse this message(header).",)));
+				} else {
+					#error_log(print_r($retloop['PARSED'][0],true));
+					# renew the response for every message retrieved, since the returnvalue is structured that way
+					$ret['RESPONSE']=$retloop['RESPONSE'];
+					$ret['PARSED'][]=$retloop['PARSED'][0];
+				}
+				unset($retloop);
+			}
+            #return $ret;
         }
-        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
-            return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
-        }
+		# this seems to be obsolet, since errors while retrieving header informations are 'covered' above
+        #if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
+		#	error_log("egw-pear::NET::IMAP:getSummary->ResponseCode not OK");
+        #    return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+        #}
 
-        #print "<hr>"; var_dump($ret["PARSED"]); print "<hr>";
+        #print "<hr>"; 
+		#error_log("egw-pear::NET::IMAP:getSummary->".print_r($ret["PARSED"],TRUE)); 
+		#print "<hr>";
 
         if(isset( $ret["PARSED"] ) ){
             for($i=0; $i<count($ret["PARSED"]) ; $i++){
@@ -403,14 +428,22 @@ class Net_IMAP extends Net_IMAPProtocol {
                 $a['FLAGS']=$ret["PARSED"][$i]['EXT']['FLAGS'];
                 $a['INTERNALDATE']=$ret["PARSED"][$i]['EXT']['INTERNALDATE'];
                 $a['SIZE']=$ret["PARSED"][$i]['EXT']['RFC822.SIZE'];
-                if(isset($ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE)]']['CONTENT'])) {
-                    if(preg_match('/^content-type: (.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE)]']['CONTENT'], $matches)) {
+                if(isset($ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)]']['CONTENT'])) {
+                    if(preg_match('/content-type: (.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)]']['CONTENT'], $matches)) {
                       $a['MIMETYPE']=strtolower($matches[1]);
                     }
-                } elseif (isset($ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS ("CONTENT-TYPE")]']['CONTENT'])) {
+					// fetch the priority [CONTENT] => X-Priority: 5\r\nContent-Type: multipart/alternative;\r\n\tboundary="b1_61838a67749ca51b425e42489adced98"\r\n\r\n\n
+                    if(preg_match('/x-priority: ([0-9])/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)]']['CONTENT'], $matches)) {
+                      $a['PRIORITY']=strtolower($matches[1]);
+                    }
+                } elseif (isset($ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS ("CONTENT-TYPE" "X-PRIORITY")]']['CONTENT'])) {
                     // some versions of cyrus send "CONTENT-TYPE" and CONTENT-TYPE only
-                    if (preg_match('/^content-type: (.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS ("CONTENT-TYPE")]']['CONTENT'], $matches)) {
+                    if (preg_match('/content-type: (.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS ("CONTENT-TYPE" "X-PRIORITY")]']['CONTENT'], $matches)) {
                         $a['MIMETYPE']=strtolower($matches[1]);
+                    }
+					//  fetch the priority [CONTENT] => X-Priority: 5\r\nContent-Type: multipart/alternative;\r\n\tboundary="b1_61838a67749ca51b425e42489adced98"\r\n\r\n\n
+                    if (preg_match('/x-priority: ([0-9])/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS ("CONTENT-TYPE" "X-PRIORITY")]']['CONTENT'], $matches)) {
+                        $a['PRIORITY']=strtolower($matches[1]);
                     }
                 }
                 $env[]=$a;
@@ -1218,7 +1251,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      * @param   string  $mailbox        mailbox name to append to (default is current mailbox)
      * @param   string  $flags_list     set flags appended message
      *
-     * @return  mixed   true on success / Pear_Error on failure
+     * @return  mixed   true (or the uid of the created message) on success / Pear_Error on failure
      *
      * @access  public
      * @since   1.0
@@ -1232,9 +1265,16 @@ class Net_IMAP extends Net_IMAPProtocol {
         if (PEAR::isError($ret)) {
             return $ret;
         }
+
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
+		// the expected response is something like that: [APPENDUID 1160024220 12] Completed
+		// the uid of the created message is the number just before the closing bracket
+		$retcode = explode(' ',$ret["RESPONSE"]["STR_CODE"]);
+		$retcode = explode(']',$retcode[2]);
+		if (intval($retcode[0]) > 0) return $retcode[0];
+		// this should never happen, exept the parsed response is not as expected
         return true;
     }
 
@@ -1636,7 +1676,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      * @access  public
      * @since   1.0
      */
-    function getFlags( $msg_id = null )
+    function getFlags( $msg_id = null , $uidStore = false)
     {
       // You can also provide an array of numbers to those emails
         if( $msg_id != null){
@@ -1648,9 +1688,13 @@ class Net_IMAP extends Net_IMAPProtocol {
         }else{
             $message_set="1:*";
         }
+		if ($uidStore == true ) {
+			$ret = $this->cmdUidFetch($message_set, 'FLAGS');
+		} else {
+			$ret = $this->cmdFetch($message_set, 'FLAGS');
+		}
 
-
-        if (PEAR::isError($ret = $this->cmdFetch($message_set, 'FLAGS'))) {
+		if (PEAR::isError($ret)) {
             return $ret;
         }
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
@@ -1686,6 +1730,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      */
     function setFlags($msg_id, $flags, $mod = 'set', $uidStore = false)
     {
+		#error_log("egw-pear::Net::setFlags");
         // you can also provide an array of numbers to those emails
         if ($msg_id == 'all') {
             $message_set = '1:*';
@@ -1719,7 +1764,7 @@ class Net_IMAP extends Net_IMAPProtocol {
                 return new PEAR_Error('wrong input $mod');
                 break;
         }
-        
+        #error_log("egw-pear::Net::setFlags for Message: ".print_r($message_set,true)."->".$flaglist); 
         if($uidStore == true) {
           $ret=$this->cmdUidStore($message_set, $dataitem, $flaglist);
         } else {
