@@ -681,6 +681,11 @@ function &CreateObject($class)
 			'datetime'    => 'egw_datetime',
 			'uitimesheet' => 'timesheet_ui',
 			'uiinfolog'   => 'infolog_ui',
+			'uiprojectmanager'  => 'projectmanager_ui',
+			'uiprojectelements' => 'projectmanager_elements_ui',
+			'uiroles'           => 'projectmanager_roles_ui',
+			'uimilestones'      => 'projectmanager_milestones_ui',
+			'uipricelist'       => 'projectmanager_pricelist_ui',
 		);
 		if (isset($replace[$classname]))
 		{
