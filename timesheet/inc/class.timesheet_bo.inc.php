@@ -640,12 +640,7 @@ class timesheet_bo extends so_sql
 	/**
 	 * Check access to the projects file store
 	 *
-	 * We currently map file access rights:
-	 *  - file read rights = project read rights
-	 *  - file write or delete rights = project edit rights
-	 *
-	 * @ToDo Implement own acl rights for file access
-	 * @param int $id pm_id of project
+	 * @param int $id id of entry
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
 	 * @return boolean true if access is granted or false otherwise
 	 */
