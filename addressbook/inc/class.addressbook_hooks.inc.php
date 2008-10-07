@@ -292,6 +292,7 @@ class addressbook_hooks
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
 			'add_popup'  => '850x440',
+			'file_access'=> 'addressbook.addressbook_bo.file_access',
 		);
 	}
 

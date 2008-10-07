@@ -914,6 +914,18 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Check access to the projects file store
+	 *
+	 * @param int $id id of entry
+	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @return boolean true if access is granted or false otherwise
+	 */
+	function file_access($id,$check,$rel_path)
+	{
+		return $this->check_perms($check,$id);
+	}
+
+	/**
 	 * returns info about contacts for calender
 	 *
 	 * @param int/array $ids single contact-id or array of id's
