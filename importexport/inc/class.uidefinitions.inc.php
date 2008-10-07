@@ -10,7 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.uietemplate.inc.php');
 require_once('class.bodefinitions.inc.php');
 
 /**
@@ -18,40 +17,40 @@ require_once('class.bodefinitions.inc.php');
  *
  * @package importexport
  */
-class uidefinitions 
+class uidefinitions
 {
 	const _debug = true;
-	
+
 	const _appname = 'importexport';
-	
+
 	public $public_functions = array(
 		'edit' => true,
 		'index' => true,
 		'wizzard' => true,
 		'import_definition' => true,
 	);
-	
+
 	/**
 	 * holds all available plugins
 	 *
 	 * @var array
 	 */
 	var $plugins;
-	
+
 	/**
 	 * holds user chosen plugin after step20
 	 *
 	 * @var object
 	 */
 	var $plugin;
-	
+
 	/**
 	 * xajax response object
 	 *
 	 * @var object
 	 */
 	var $response = true;
-	
+
 	function uidefinitions()
 	{
 		// we cant deal with notice and warnings, as we are on ajax!
@@ -72,7 +71,7 @@ class uidefinitions
 		//register plugins (depricated)
 		//$this->plugins = bodefinitions::plugins();
 	}
-	
+
 	/**
 	 * List defined {im|ex}ports
 	 *
@@ -96,7 +95,7 @@ class uidefinitions
 					case 'delete_selected' :
 						$bodefinitions->delete($selected);
 						break;
-					
+
 					case 'export_selected' :
 						$mime_type = ($GLOBALS['egw']->html->user_agent == 'msie' || $GLOBALS['egw']->html->user_agent == 'opera') ?
 							'application/octetstream' : 'application/octet-stream';
@@ -107,17 +106,17 @@ class uidefinitions
 						exit();
 
 						break;
-						
+
 					default:
 				}
 			}
-			
+
 		}
 		$etpl =& new etemplate(self::_appname.'.definition_index');
-		
+
 		// we need an offset because of autocontinued rows in etemplate ...
 		$definitions = array('row0');
-		
+
 		foreach ($bodefinitions->get_definitions() as $identifier) {
 			$definition = new definition($identifier);
 			$definitions[] = $definition->get_record_array();
@@ -126,7 +125,7 @@ class uidefinitions
 		$content = $definitions;
 		return $etpl->exec( self::_appname.'.uidefinitions.index', $content, array(), $readonlys, $preserv );
 	}
-	
+
 	function edit()
 	{
 		if(!$_definition = $_GET['definition'])
@@ -139,10 +138,10 @@ class uidefinitions
 		$definition['edit'] = true;
 		$this->wizzard($definition);
 	}
-	
+
 	function wizzard($content = null, $msg='')
-	{	
-		$GLOBALS['egw_info']['flags']['java_script'] .= 
+	{
+		$GLOBALS['egw_info']['flags']['java_script'] .=
 			"<script LANGUAGE='JavaScript'>
 				function xajax_eT_wrapper_init() {
 					window.resizeTo(document.documentElement.scrollWidth+20,document.documentElement.offsetHeight+40);
@@ -150,12 +149,12 @@ class uidefinitions
 						screen.availHeight/2 - window.outerHeight/2);
 				}
 			</script>";
-			
+
 		$this->etpl->read('importexport.wizzardbox');
-		$this->wizzard_content_template =& $this->etpl->children[0]['data'][1]['A'][2][1]['name'];	
+		$this->wizzard_content_template =& $this->etpl->children[0]['data'][1]['A'][2][1]['name'];
 
 		if(is_array($content) &&! $content['edit'])
-		{	
+		{
 			if(self::_debug) error_log('importexport.wizzard->$content '. print_r($content,true));
 			// fetch plugin object
 			if($content['plugin'] && $content['application'])
@@ -165,24 +164,24 @@ class uidefinitions
 				{
 					$wizzard_plugin = 'wizzard_'.$content['plugin'];
 				}
-				else 
+				else
 				{
 					$wizzard_plugin = $content['plugin'];
 				}
 				$this->plugin = is_object($GLOBALS['egw']->$wizzard_plugin) ? $GLOBALS['egw']->$wizzard_plugin : new $wizzard_plugin;
 				if(!is_object($GLOBALS['egw']->uidefinitions)) $GLOBALS['egw']->uidefinitions =& $this;
-			}	
+			}
 			// deal with buttons even if we are not on ajax
 			if(isset($content['button']) && array_search('pressed',$content['button']) === false && count($content['button']) == 1)
 			{
 				$button = array_keys($content['button']);
 				$content['button'] = array($button[0] => 'pressed');
 			}
-			
+
 			// post process submitted step
 			if(!key_exists($content['step'],$this->steps))
 				$next_step = $this->plugin->$content['step']($content);
-			else 
+			else
 				$next_step = $this->$content['step']($content);
 
 			// pre precess next step
@@ -207,7 +206,7 @@ class uidefinitions
 			$sel_options = $readonlys = $preserv = array();
 			if($content['edit'])
 				unset ($content['edit']);
-				
+
 			$this->wizzard_content_template = $this->wizzard_step10($content, $sel_options, $readonlys, $preserv);
 			$html = $this->etpl->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
 		}
@@ -215,12 +214,12 @@ class uidefinitions
 		if(class_exists('xajaxResponse'))
 		{
 			$this->response =& new xajaxResponse();
-			
+
 			if ($content['closewindow'])
 			{
 				$this->response->addScript("window.close();");
 				$this->response->addScript("opener.location.reload();");
-				// If Browser can't close window we display a "close" buuton and 
+				// If Browser can't close window we display a "close" buuton and
 				// need to disable normal buttons
 				$this->response->addAssign('exec[button][previous]','style.display', 'none');
 				$this->response->addAssign('exec[button][next]','style.display', 'none');
@@ -237,7 +236,7 @@ class uidefinitions
 
 			return $this->response->getXML();
 		}
-		else 
+		else
 		{
 			$GLOBALS['egw']->js->set_onload("document.getElementById('picturebox').style.display = 'none';");
 			$GLOBALS['egw']->common->egw_header();
@@ -261,15 +260,15 @@ class uidefinitions
 	}
 
 	/**
-	 * gets name of next step 
+	 * gets name of next step
 	 *
 	 * @param string  $curr_step
 	 * @param int $step_width
-	 * @return string containing function name of next step 
+	 * @return string containing function name of next step
 	 */
 	function get_step ($curr_step, $step_width)
 	{
-		/*if($content['plugin'] && $content['application']&& !is_object($this->plugin)) 
+		/*if($content['plugin'] && $content['application']&& !is_object($this->plugin))
 		{
 			$plugin_definition =  $this->plugins[$content['application']][$content['plugin']]['definition'];
 			if($plugin_definition) $this->plugin =& new $plugin_definition;
@@ -288,11 +287,11 @@ class uidefinitions
 		return (key_exists($nn,$step_keys)) ? $step_keys[$nn] : false;
 	}
 
-	
+
 	function wizzard_step10(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		if(self::_debug) error_log('addressbook.importexport.addressbook_csv_import::wizzard_step10->$content '.print_r($content,true));
-		
+
 		// return from step10
 		if ($content['step'] == 'wizzard_step10')
 		{
@@ -305,7 +304,7 @@ class uidefinitions
 				default :
 					return $this->wizzard_step10($content,$sel_options,$readonlys,$preserv);
 			}
-			
+
 		}
 		// init step10
 		else
@@ -318,9 +317,9 @@ class uidefinitions
 			unset ($preserv['button']);
 			return 'importexport.wizzard_chooseapp';
 		}
-		
+
 	}
-	
+
 	// get plugin
 	function wizzard_step20(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
@@ -354,10 +353,10 @@ class uidefinitions
 			unset ($preserv['button']);
 			return 'importexport.wizzard_chooseplugin';
 		}
-		
-		
+
+
 	}
-	
+
 	// allowed users
 	function wizzard_step80(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
@@ -367,7 +366,7 @@ class uidefinitions
 		if ($content['step'] == 'wizzard_step80')
 		{
 			$content['allowed_users'] = implode(',',$content['allowed_users']);
-			
+
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -390,7 +389,7 @@ class uidefinitions
 			return 'importexport.wizzard_chooseallowedusers';
 		}
 	}
-	
+
 	// name
 	function wizzard_step90(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
@@ -421,10 +420,10 @@ class uidefinitions
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][next]');");
 			return 'importexport.wizzard_choosename';
 		}
-		
-		
+
+
 	}
-	
+
 	function wizzard_finish(&$content)
 	{
 		if(self::_debug) error_log('importexport.uidefinitions::wizzard_finish->$content '.print_r($content,true));
@@ -445,7 +444,7 @@ class uidefinitions
 			// TODO make redirect here!
 			return $this->index();
 		}
-		else 
+		else
 		{
 			$etpl =& new etemplate(self::_appname.'.import_definition');
 			return $etpl->exec(self::_appname.'.uidefinitions.import_definition',$content,array(),$readonlys,$preserv);
