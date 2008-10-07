@@ -1739,6 +1739,18 @@ class calendar_bo
 	}
 
 	/**
+	 * Check access to the projects file store
+	 *
+	 * @param int $id id of entry
+	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @return boolean true if access is granted or false otherwise
+	 */
+	function file_access($id,$check,$rel_path)
+	{
+		return $this->check_perms($check,$id);
+	}
+
+	/**
 	 * sets the default prefs, if they are not already set (on a per pref. basis)
 	 *
 	 * It sets a flag in the app-session-data to be called only once per session

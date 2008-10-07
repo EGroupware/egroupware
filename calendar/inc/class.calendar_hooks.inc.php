@@ -37,6 +37,7 @@ class calendar_hooks
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
 			'add_popup'  => '750x400',
+			'file_access' => 'calendar.calendar_bo.file_access',
 		);
 	}
 
