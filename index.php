@@ -78,15 +78,7 @@
 		}
 		if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
 		{
-		   /** Test if our default app is available else open about.php */
-		   if(is_file('./'.$GLOBALS['egw_info']['user']['preferences']['common']['default_app'].'/index.php'))
-		   {
-			  $GLOBALS['egw']->redirect_link('/'.$GLOBALS['egw_info']['user']['preferences']['common']['default_app'].'/index.php');
-		   }
-		   else
-		   {
-			  $GLOBALS['egw']->redirect_link('/about.php');
-		   }
+			$GLOBALS['egw']->redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']));
 		}
 		else
 		{
@@ -112,8 +104,7 @@
 			$app = 'phpgwapi';
 		}
 
-		require_once(EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php');
-		$GLOBALS[$class] = $obj = new $class();
+		$obj = CreateObject($app.'.'.$class);
 		if((is_array($obj->public_functions) && $obj->public_functions[$method]) && !$invalid_data)
 		{
 			$obj->$method();

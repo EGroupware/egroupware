@@ -675,10 +675,18 @@ function &CreateObject($class)
 {
 	list($appname,$classname) = explode('.',$class);
 
-	if ($classname == 'datetime') $classname = 'egw_datetime';	// php5.2 fix
-
-	include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
-
+	if (!@include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
+	{
+		static $replace = array(
+			'datetime'    => 'egw_datetime',
+			'uitimesheet' => 'timesheet_ui',
+		);
+		if (isset($replace[$classname]))
+		{
+			$classname = $replace[$classname];
+			include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+		}
+	}
 	if (class_exists($classname))
 	{
 		$args = func_get_args();
