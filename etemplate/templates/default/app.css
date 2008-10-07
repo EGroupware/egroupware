@@ -118,3 +118,6 @@
 .vfsMimeIcon img {
 	height: 16px;
 }
+.vfsFilename {
+	white-space: nowrap;
+}

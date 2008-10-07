@@ -146,7 +146,11 @@ class vfs_widget
 							$target = ',,,_blank';
 						}
 					}
-					$comp = etemplate::empty_cell('label',$cell_name.'[c'.$n.']',array('size'  => ',@'.$cell_name.'[l'.$n.']'.$target));
+					$comp = etemplate::empty_cell('label',$cell_name.'[c'.$n.']',array(
+						'size'    => ',@'.$cell_name.'[l'.$n.']'.$target,
+						'no_lang' => true,
+						'span'    => ',vfsFilename'
+					));
 					etemplate::add_child($cell,$comp);
 					unset($comp);
 				}
