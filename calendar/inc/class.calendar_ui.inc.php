@@ -119,6 +119,11 @@ class calendar_ui
 	 * @var int $last last day of the shown view
 	 */
 	var $last;
+	
+	/**
+	 * @var array $states_to_save all states that will be saved to the user prefs
+	 */
+	var $states_to_save = array('owner');
 
 	/**
 	 * Constructor
@@ -247,6 +252,12 @@ class calendar_ui
 	function manage_states($set_states=NULL)
 	{
 		$states = $states_session = $GLOBALS['egw']->session->appsession('session_data','calendar');
+		
+		// retrieve saved states from prefs
+		if(!$states)
+		{
+			$states = unserialize($this->bo->cal_prefs['saved_states']);		
+		}
 
 		if (is_null($set_states))
 		{
@@ -367,6 +378,13 @@ class calendar_ui
 		if ($this->debug > 0 || $this->debug == 'manage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
 		// save the states in the session
 		$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
+		// save defined states into the user-prefs
+		if(!empty($states) && is_array($states))
+		{
+			$saved_states = array_intersect_key($states,array_flip($this->states_to_save));
+			$GLOBALS['egw']->preferences->add('calendar','saved_states',serialize($saved_states));
+			$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+		}
 	}
 
 	/**
