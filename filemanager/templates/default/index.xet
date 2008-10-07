@@ -54,7 +54,7 @@
 		</grid>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.5.002">
-		<grid>
+		<grid width="100%">
 			<columns>
 				<column width="250"/>
 				<column/>
