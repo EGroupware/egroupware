@@ -684,6 +684,7 @@ function &CreateObject($class)
 		);
 		if (isset($replace[$classname]))
 		{
+			//throw new Exception(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
 			error_log(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
 			$classname = $replace[$classname];
 			include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
@@ -1424,4 +1425,18 @@ function egw_exception_handler(Exception $e)
 if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']) || !$GLOBALS['egw_info']['flags']['no_exception_handler'])
 {
 	set_exception_handler('egw_exception_handler');
+}
+
+// some not longer necessary defines
+if (isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw_info']['flags']['phpgw_compatibility'])
+{
+	define('PHPGW_API_INC',EGW_API_INC);
+	define('PHPGW_SERVER_ROOT',EGW_SERVER_ROOT);
+	define('PHPGW_INCLUDE_ROOT',EGW_INCLUDE_ROOT);
+
+	/* debugging settings */
+	define('DEBUG_DATATYPES',  True);
+	define('DEBUG_LEVEL',  3);
+	define('DEBUG_OUTPUT', 2); /* 1 = screen,  2 = DB. For both use 3. */
+	define('DEBUG_TIMER', False);
 }

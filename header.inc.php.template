@@ -94,20 +94,6 @@ $GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpg
 unset($setup_info);
 $GLOBALS['egw_info']['server']['versions']['header'] = '1.28';
 
-// some not longer necessary defines
-if (isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw_info']['flags']['phpgw_compatibility'])
-{
-	define('PHPGW_API_INC',EGW_API_INC);
-	define('PHPGW_SERVER_ROOT',EGW_SERVER_ROOT);
-	define('PHPGW_INCLUDE_ROOT',EGW_INCLUDE_ROOT);
-
-	/* debugging settings */
-	define('DEBUG_DATATYPES',  True);
-	define('DEBUG_LEVEL',  3);
-	define('DEBUG_OUTPUT', 2); /* 1 = screen,  2 = DB. For both use 3. */
-	define('DEBUG_TIMER', False);
-}
-
 if(!isset($GLOBALS['egw_info']['flags']['noapi']) || !$GLOBALS['egw_info']['flags']['noapi'])
 {
 	ob_start();	// to prevent error messages to be send before our headers
