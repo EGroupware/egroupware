@@ -812,7 +812,7 @@ class so_sql
 				return true;	// waiting for further calls, before running the union-query
 			}
 			// running the union query now
-			if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
+			if ($start !== false)	// need to get the total too, saved in $this->total
 			{
 				if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
 				{
@@ -830,7 +830,7 @@ class so_sql
 		}
 		else	// no UNION
 		{
-			if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
+			if ($start !== false)	// need to get the total too, saved in $this->total
 			{
 				if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
 				{
