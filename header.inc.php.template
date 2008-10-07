@@ -13,9 +13,16 @@
  */
 
 // allow to migrate from phpgw_info to egw_info
-if (!isset($GLOBALS['egw_info']))
+if (!isset($GLOBALS['egw_info']) || in_array($GLOBALS['egw_info']['flags']['currentapp'],array('jinn','mydms','tts')))
 {
-	$GLOBALS['egw_info'] =& $GLOBALS['phpgw_info'];
+	if (!isset($GLOBALS['egw_info']))
+	{
+		$GLOBALS['egw_info'] =& $GLOBALS['phpgw_info'];
+	}
+	else
+	{
+		$GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
+	}
 	$GLOBALS['egw_info']['flags']['phpgw_compatibility'] = true;
 }
 
