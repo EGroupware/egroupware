@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare  eTemplates - Editor   
+ * eGroupWare  eTemplates - Editor
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
@@ -99,9 +99,9 @@ class editor
 		'styles'       => True,
 	);
 
-	function editor()
+	function __construct()
 	{
-		$this->etemplate =& CreateObject('etemplate.etemplate');
+		$this->etemplate = new etemplate();
 
 		$this->extensions = $GLOBALS['egw']->session->appsession('extensions','etemplate');
 	}
@@ -514,7 +514,7 @@ class editor
 	/**
 	 * initialises the children arrays for the new widget type, converts boxes <--> grids
 	 *
-	 * @internal 
+	 * @internal
 	 * @param array &$widget reference to the new widget data
 	 * @param array $old the old widget data
 	 */
@@ -569,7 +569,7 @@ class editor
 
 			case 'box':
 				$widget['size'] = 0;
-				
+
 				if ($old_type == 'grid')
 				{
 					if (preg_match('/,(vertical|horizontal)/',$widget['size'],$matches))
@@ -608,12 +608,12 @@ class editor
 		}
 		//_debug_array($widget);
 	}
-	
+
 	/**
 	 * returns array with path => type pairs for each parent of $path
 	 *
 	 * @param string $path path to the widget not the parent!
-	 * @return array 
+	 * @return array
 	 */
 	function path_components($path)
 	{
@@ -647,25 +647,25 @@ class editor
 			list(,$r,$c) = $matches;
 			// find the column-number (base 0) for $c (A, B, C, ...)
 			for($col = 0; etemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
-			
+
 			if ($col > 0) $left = $parent_path.'/'.$r.etemplate::num2chrs($col-1);
-			
+
 			if ($col < $parent['cols']-1) $right = $parent_path.'/'.$r.etemplate::num2chrs($col+1);
-			
+
 			if ($r > 1) $up = $parent_path.'/'.($r-1).$c;
-			
+
 			if ($r < $parent['rows']) $down = $parent_path.'/'.($r+1).$c;
 		}
 		elseif ($parent['type']) // any box
 		{
 			if ($child_id > 1) $previous = $parent_path.'/'.($child_id-1);
-			
+
 			if ($child_id < (int) $parent['size'])  $next = $parent_path.'/'.($child_id+1);
 		}
 		else // template
 		{
 			if ($child_id > 0) $previous = '/'.($child_id-1);
-			
+
 			if ($child_id < count($this->etemplate->children)-1)  $next = '/'.($child_id+1);
 		}
 		if ($widget['type'] == 'grid')
@@ -695,7 +695,7 @@ class editor
 	/**
 	 * functions of the edit-menu: paste, swap, cut, delete, copy
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string &$action row_delete, row_insert_above, row_insert_below, row_swap, row_prefs
 	 * @param array &$parent referece to the parent
 	 * @param array &$content reference to the content-array
@@ -776,7 +776,7 @@ class editor
 	/**
 	 * functions of the box-menu: insert-before, -behind und swap
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string &$action row_delete, row_insert_above, row_insert_below, row_swap, row_prefs
 	 * @param array &$parent referece to the parent
 	 * @param array &$content reference to the content-array
@@ -807,7 +807,7 @@ class editor
 				$child_id = $n;
 				if ($parent['type']) $parent['size'] = (1+$num) . ($options ? ','.$options : '');
 				break;
-				
+
 			case 'box_swap_next':
 				if (!$parent['type'])	// template
 				{
@@ -833,11 +833,11 @@ class editor
 
 		return '';
 	}
-					
+
 	/**
 	 * functions of the row-menu: insert, deleting & swaping of rows
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string &$action row_delete, row_insert_above, row_insert_below, row_swap_next, row_prefs
 	 * @param array &$grid grid
 	 * @param string $child_id id of a cell
@@ -866,7 +866,7 @@ class editor
 				$this->swap($opts['c'.$r],$opts['c'.(1+$r)]);
 				$this->swap($opts['h'.$r],$opts['h'.(1+$r)]);
 				break;
-				
+
 			case 'row_delete':
 				if ($rows <= 1)	// one row only => delete whole grid
 				{
@@ -875,15 +875,15 @@ class editor
 				}
 				for($i = $r; $i < $rows; ++$i)
 				{
-					$opts['c'.$i] = $opts['c'.(1+$i)]; 
-					$opts['h'.$i] = $opts['h'.(1+$i)]; 
+					$opts['c'.$i] = $opts['c'.(1+$i)];
+					$opts['h'.$i] = $opts['h'.(1+$i)];
 					$data[$i] = $data[1+$i];
 				}
 				unset($opts['c'.$rows]);
 				unset($opts['h'.$rows]);
 				unset($data[$rows--]);
 				break;
-				
+
 			case 'row_insert_above':
 				--$r;
 				// fall-through
@@ -893,9 +893,9 @@ class editor
 				for($i = $rows; $i > $r; --$i)
 				{
 					echo ($i+1)."=$i<br>\n";
-					$data[1+$i] = $data[$i]; 
-					$opts['c'.(1+$i)] = $opts['c'.$i]; 
-					$opts['h'.(1+$i)] = $opts['h'.$i]; 
+					$data[1+$i] = $data[$i];
+					$opts['c'.(1+$i)] = $opts['c'.$i];
+					$opts['h'.(1+$i)] = $opts['h'.$i];
 				}
 				for($i = 0; $i < $cols; ++$i)
 				{
@@ -915,7 +915,7 @@ class editor
 	/**
 	 * functions of the column-menu: insert, deleting & swaping of columns
 	 *
-	 * @internal 
+	 * @internal
 	 * @param string &$action column_delete, column_insert_before, column_insert_behind, column_swap_next, column_prefs
 	 * @param array &$grid grid
 	 * @param string $child_id id of a cell
@@ -927,7 +927,7 @@ class editor
 		$rows =& $grid['rows'];
 		$cols =& $grid['cols'];
 		$opts =& $data[0];
-		
+
 		if (preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches)) list(,$r,$c) = $matches;
 		// find the column-number (base 0) for $c (A, B, C, ...)
 		for($col = 0; etemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
@@ -950,7 +950,7 @@ class editor
 				$this->swap($opts[$c],$opts[$c_next]);
 				//_debug_array($grid); return '';
 				break;
-				
+
 			case 'column_insert_behind':
 				++$col;
 			case 'column_insert_before':
@@ -972,7 +972,7 @@ class editor
 				++$cols;
 				//_debug_array($grid); return '';
 				break;
-				
+
 			case 'column_delete':
 				if ($cols <= 1)
 				{
@@ -992,7 +992,7 @@ class editor
 					$opts[etemplate::num2chrs($i)] = $opts[etemplate::num2chrs($i+1)];
 				}
 				unset($opts[etemplate::num2chrs(--$cols)]);
-				break;		
+				break;
 		}
 		$action = 'save-no-merge';
 
@@ -1128,7 +1128,7 @@ class editor
 		{
 			$path = $content['goto'] ? $content['goto'] : ($content['goto2'] ? $content['goto2'] : $content['path']);
 			$Ok = $this->etemplate->read($content['name'],$content['template'],$content['lang'],0,$content['goto'] || $content['goto2'] ? $content['version'] : $content['old_version']);
-			
+
 			// build size from options array, if applicable
 			if (is_array($content['cell']['options']))
 			{
@@ -1161,7 +1161,7 @@ class editor
 		$parent_path = implode('/',$path_parts);
 		//echo "<p>path='$path': child_id='$child_id', parent_path='$parent_path'</p>\n";
 		$parent =& $this->etemplate->get_widget_by_path($parent_path);
-		
+
 		if (is_array($content))
 		{
 			foreach(array('save','apply','cancel','goto','goto2','edit_menu','box_menu','row_menu','column_menu') as $n => $name)
@@ -1170,7 +1170,7 @@ class editor
 				$name = '';
 			}
 			unset($content[$name]);
-			
+
 			//echo "<p>name='$name', parent-type='$parent[type]', action='$action'</p>\n";
 			if (($name == 'row_menu' || $name == 'column_menu') && $parent['type'] != 'grid' ||
 				$name == 'box_menu' && $parent['type'] == 'grid')
@@ -1183,7 +1183,7 @@ class editor
 				case 'edit_menu':
 					$msg .= $this->edit_actions($action,$parent,$content,$child_id);
 					break;
-					
+
 				case 'box_menu':
 					$msg .= $this->box_actions($action,$parent,$content,$child_id,$parent_path);
 					break;
@@ -1191,17 +1191,17 @@ class editor
 				case 'row_menu':
 					$msg .= $this->row_actions($action,$parent,$child_id);
 					break;
-					
+
 				case 'column_menu':
 					$msg .= $this->column_actions($action,$parent,$child_id);
 					break;
-					
+
 				case '':	// reload, eg. by changing the type
 					$widget = $content['cell'];
 					break;
 
-				default: 
-					// all menu's are (only) working on the parent, referencing widget is unnecessary 
+				default:
+					// all menu's are (only) working on the parent, referencing widget is unnecessary
 					// and gives unexpected results, if parent is changed (eg. content gets copied)
 					$widget =& $this->etemplate->get_widget_by_path($path);
 					break;
@@ -1216,7 +1216,7 @@ class editor
 					break;
 
 				case '':
-				case 'save': case 'apply': 
+				case 'save': case 'apply':
 					// initialise the children arrays if type is changed to a widget with children
 					//echo "<p>$content[path]: $widget[type] --> ".$content['cell']['type']."</p>\n";
 					if (isset(etemplate::$widgets_with_children[$content['cell']['type']]))
@@ -1270,7 +1270,7 @@ class editor
 					echo "<html><body><script>$js</script></body></html>\n";
 					$GLOBALS['egw']->common->egw_exit();
 					break;
-			}				
+			}
 			if ($js)
 			{
 				$content['java_script'] = "<script>$js</script>";
@@ -1279,12 +1279,12 @@ class editor
 		else
 		{
 			$widget =& $this->etemplate->get_widget_by_path($path);
-			
+
 			$content = $this->etemplate->as_array(-1);
 			$content['cell'] = $widget;
 			$this->fix_set_onclick($widget,$content['cell'],true);
 			$this->fix_set_onchange($widget,$content['cell'],true);
-			
+
 			foreach(etemplate::$db_key_cols as $var)
 			{
 				if (isset($_GET[$var]))
@@ -1294,7 +1294,7 @@ class editor
 			}
 		}
 		unset($content['cell']['obj']);	// just in case it contains a template-object
-		
+
 		if ($parent['type'] == 'grid' && preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches))
 		{
 			list(,$row,$col) = $matches;
@@ -1302,7 +1302,7 @@ class editor
 			$grid_row =& $content['grid_row'];
 			list($grid_row['height'],$grid_row['disabled']) = explode(',',$parent['data'][0]['h'.$row]);
 			list($grid_row['class'],$grid_row['valign']) = explode(',',$parent['data'][0]['c'.$row]);
-			
+
 			$grid_column =& $content['grid_column'];
 			list($grid_column['width'],$grid_column['disabled']) = explode(',',$parent['data'][0][$col]);
 			//echo "<p>grid_row($row)=".print_r($grid_row,true).", grid_column($col)=".print_r($grid_column,true)."</p>\n";
@@ -1316,7 +1316,7 @@ class editor
 		$content['msg'] = $msg;
 		$content['goto'] = $this->path_components($content['path']);
 		$content['goto2'] = $this->parent_navigation($parent,$parent_path,$child_id,$widget);
-		
+
 		$content['cell']['options'] = explode(',',$content['cell']['size']);
 
 		$editor =& new etemplate('etemplate.editor.widget');
@@ -1345,7 +1345,7 @@ class editor
 			'goto'        => $content['goto'],
 		);
 		unset($preserv['cell']['options']);	// otherwise we never know if content is returned via options array or size
-		
+
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 		$editor->exec('etemplate.editor.widget',$content,array(
@@ -1413,7 +1413,7 @@ class editor
 					}
 					@fclose($fp);
 				}
-			}					
+			}
 			else	// the templates own embeded styles;
 			{
 				$this->etemplate->style = $content['styles'];
@@ -1442,7 +1442,7 @@ class editor
 			$path = EGW_SERVER_ROOT.'/'.$content['from'];
 			$content['styles'] = file_exists($path) && is_readable($path) ? implode('',file($path)) : '';
 			if (!is_writable(dirname($path)) && (!file_exists($path) || !is_writable($path)))
-			{ 
+			{
 				$tmpl->set_cell_attribute('styles','readonly',true);
 			}
 		}
@@ -1482,9 +1482,9 @@ class editor
 	function scan_for_extensions($app='etemplate')
 	{
 		if (!is_array($this->extensions)) $this->extensions = array();
-		
+
 		if (isset($this->extensions['**loaded**'][$app])) return '';	// already loaded
-		
+
 		$labels = array();
 		$dir = @opendir(EGW_SERVER_ROOT.'/'.$app.'/inc');
 		while ($dir && ($file = readdir($dir)))
@@ -1511,10 +1511,10 @@ class editor
 		$apps_loaded[$app] = true;
 		$GLOBALS['egw']->session->appsession('apps_loaded','etemplate',$apps_loaded);
 		//_debug_array($this->extensions); _debug_array($apps_loaded);
-		
+
 		return implode(', ',$labels);
 	}
-	
+
 	/**
 	 * swap the values of $a and $b
 	 *
