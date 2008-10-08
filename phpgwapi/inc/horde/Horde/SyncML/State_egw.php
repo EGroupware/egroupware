@@ -20,7 +20,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	$mapID = $this->_locName . $this->_sourceURI . $type;
 
-    	$db = clone($GLOBALS['phpgw']->db);
+    	$db = clone($GLOBALS['egw']->db);
 
     	$cols = array('map_timestamp');
 

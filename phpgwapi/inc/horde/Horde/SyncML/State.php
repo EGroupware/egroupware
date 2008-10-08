@@ -150,64 +150,64 @@ define('MAX_ENTRIES',			10);
  * @package Horde_SyncML
  */
 class Horde_SyncML_State {
-	
+
 	var $_sessionID;
-	
+
 	var $_verProto;
-	
+
 	var $_msgID;
-	
+
 	var $_targetURI;
-	
+
 	var $_sourceURI;
-	
+
 	var $_version;
-	
+
 	var $_locName;
-	
+
 	var $_password;
-	
+
 	var $_isAuthorized;
-	
+
 	var $_uri;
-	
+
 	var $_uriMeta;
-	
+
 	var $_syncs = array();
-	
+
 	var $_clientAnchorNext = array(); // written to db after successful sync
-	
+
 	var $_serverAnchorLast = array();
-	
+
 	var $_serverAnchorNext = array(); // written to db after successful sync
-	
+
 	var $_clientDeviceInfo = array();
-	
+
 	// array list of changed items, which need to be synced to the client
 	var $_changedItems;
-	
+
 	// array list of deleted items, which need to be synced to the client
 	var $_deletedItems;
-	
+
 	// array list of added items, which need to be synced to the client
 	var $_addedItems;
-	
+
 	// bool flag that we need to more data
 	var $_syncStatus;
-	
+
 	var $_log = array();
-	
+
 	// stores if we received Alert 222 already
 	var $_receivedAlert222 = false;
-	
+
 	// stores if we already requested the deviceinfo
 	var $_devinfoRequested = false;
 
-	/* 
+	/*
 	 * store the mappings of egw uids to client uids
 	 */
 	var $_uidMappings	= array();
-	
+
     /**
      * Creates a new instance of Horde_SyncML_State.
      */
@@ -222,7 +222,7 @@ class Horde_SyncML_State {
 
         $this->isAuthorized = false;
     }
-    
+
     /**
      * store the sent global uid
      */
@@ -237,7 +237,7 @@ class Horde_SyncML_State {
     	if(isset($this->_uidMappings[$_sentEgwUid])) {
     		return $this->_uidMappings[$_sentEgwUid];
 	}
-	
+
 	return false;
     }
 
@@ -287,7 +287,7 @@ class Horde_SyncML_State {
     	{
     		return $this->_addedItems[$_type];
     	}
-    	
+
     	return false;
     }
 
@@ -297,20 +297,20 @@ class Horde_SyncML_State {
     	{
     		return $this->_changedItems[$_type];
     	}
-    	
+
     	return false;
     }
-    
+
     function &getDeletedItems($_type)
     {
     	if(isset($this->_deletedItems[$_type]))
     	{
     		return $this->_deletedItems[$_type];
     	}
-    	
+
     	return false;
     }
-    
+
     function getMoreDataPending()
     {
     	return $this->_moreDataPending;
@@ -330,7 +330,7 @@ class Horde_SyncML_State {
     {
         return !empty($this->_wbxml);
     }
-    
+
     function &getSyncStatus()
     {
     	return $this->_syncStatus;
@@ -398,7 +398,7 @@ class Horde_SyncML_State {
 	#Horde::logMessage('SyncML: syncState set to ==> ' . $_syncStatus, __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	$this->_syncStatus = $_syncStatus;
     }
-    
+
     function setTargetURI($targetURI)
     {
         $this->_targetURI = $targetURI;
@@ -427,15 +427,15 @@ class Horde_SyncML_State {
     function isAuthorized()
     {
 	if (!$this->_isAuthorized) {
-                
+
                 if(strstr($this->_locName,'@') === False)
                 {
-                	$this->_locName .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
+                	$this->_locName .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
                 }
 
 		#Horde::logMessage('SyncML: Authenticate ' . $this->_locName . ' - ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-                
-		if($GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($this->_locName,$this->_password,'text','u'))
+
+		if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text','u'))
 		{
 			$this->_isAuthorized = true;
 			#Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
@@ -450,13 +450,13 @@ class Horde_SyncML_State {
 	{
 		// store sessionID in a variable, because ->verify maybe resets that value
 		$sessionID = session_id();
-		if(!$GLOBALS['phpgw']->session->verify($sessionID, 'staticsyncmlkp3'))
+		if(!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3'))
 			Horde::logMessage('SyncML_EGW: egw session('.$sessionID. ') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
         return $this->_isAuthorized;
     }
-    
+
     function clearSync($target)
     {
     	unset($this->_syncs[$target]);
@@ -475,17 +475,17 @@ class Horde_SyncML_State {
             return false;
         }
     }
-    
+
     function getTargets()
     {
     	if(count($this->_syncs) < 1)
     		return FALSE;
-    		
+
     	foreach($this->_syncs as $target => $sync)
     	{
     		$targets[] = $target;
     	}
-    	
+
     	return $targets;
     }
 
@@ -728,23 +728,23 @@ class Horde_SyncML_State {
 			case 'notes':
 				return 'text/x-vnote';
 				break;
-				
+
 			case 'calendar':
 			case 'tasks':
 			case 'caltasks':
 				return 'text/x-vcalendar';
 				break;
-				
+
 			case 'sifcalendar':
 			case 'scal':
 				return 'text/x-s4j-sife';
 				break;
-				
+
 			case 'sifcontacts':
 			case 'scard':
 				return 'text/x-s4j-sifc';
 				break;
-				
+
 			case 'siftasks':
 			case 'stask':
 				return 'text/x-s4j-sift';
@@ -754,7 +754,7 @@ class Horde_SyncML_State {
 			case 'snote':
 				return 'text/x-s4j-sifn';
 				break;
-			
+
 			default:
 				Horde::logMessage("SyncML: unrecognized content type '$_type'", __FILE__, __LINE__, PEAR_LOG_ERR);
 				break;
@@ -769,15 +769,15 @@ class Horde_SyncML_State {
 			case 'contacts':
 				return 'contacts';
 				break;
-				
+
 			case 'notes':
 				return 'notes';
 				break;
-				
+
 			case 'tasks':
 				return 'tasks';
 				break;
-			
+
 			case 'calendar':
 			case 'caltasks':
 				return 'calendar';
@@ -789,12 +789,12 @@ class Horde_SyncML_State {
 			case 'scal':
 				return 'sifcalendar';
 				break;
-				
+
 			case 'sifcontacts':
 			case 'scard':
 				return 'sifcontacts';
 				break;
-				
+
 			case 'siftasks':
 			case 'stask':
 				return 'siftasks';
@@ -819,17 +819,17 @@ class Horde_SyncML_State {
 	*
 	* This is passed as an option to the Horde API export functions.
 	*/
-	
+
 	function getPreferedContentTypeClient($_sourceLocURI, $_targetLocURI = null) {
 		$deviceInfo = $this->getClientDeviceInfo();
-		
+
 		if(isset($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType']))
 		{
 			return $this->adjustContentType($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType'], $_targetLocURI);
 		}
-		
+
 		Horde::logMessage('SyncML: sourceLocURI ' . $_sourceLocURI .' not found', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		
+
 		if ($_targetLocURI != null)
 		{
 			return $this->adjustContentType($this->getPreferedContentType($_targetLocURI), $_targetLocURI);
@@ -905,7 +905,7 @@ class Horde_SyncML_State {
         }
 
 	$info = $dt->getObjectById($id);
-	
+
         return $info->get('ClientDeviceInfo');
     }
 
