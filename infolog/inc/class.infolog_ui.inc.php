@@ -214,7 +214,7 @@ class infolog_ui
 			}
 			if ($this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet']) && $timesheets)
 			{
-				$sum = ExecMethod('timesheet.botimesheet.sum',$timesheets);
+				$sum = ExecMethod('timesheet.timesheet_bo.sum',$timesheets);
 				$info['info_sum_timesheets'] = $sum['duration'];
 			}
 		}
