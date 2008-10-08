@@ -99,3 +99,16 @@ if ( FCKBrowserInfo.IsOpera )
 		return node ;
 	}
 }
+
+if ( FCKBrowserInfo.IsGecko )
+{
+	// #2162, some Firefox extensions might add references to internal links
+	FCKXHtml.TagProcessors['link'] = function( node, htmlNode )
+	{
+		if ( htmlNode.href.substr(0, 9).toLowerCase() == 'chrome://' )
+			return false ;
+
+		return node ;
+	}
+
+}

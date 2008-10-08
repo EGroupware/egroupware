@@ -67,7 +67,7 @@ window.onload = function()
 	dialog.SetOkButton( true ) ;
 	dialog.SetAutoSize( true ) ;
 
-	SelectField( 'txtStartPosition' ) ;
+	SelectField( sListType == 'OL' ? 'txtStartPosition' : 'selBulleted' ) ;
 }
 
 function Ok()

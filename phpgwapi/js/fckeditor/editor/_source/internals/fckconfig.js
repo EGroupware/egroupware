@@ -42,13 +42,12 @@ if ( document.location.protocol == 'file:' )
 		sFullProtocol += 'localhost/' ;
 
 	FCKConfig.BasePath = sFullProtocol + FCKConfig.BasePath.substring( 0, FCKConfig.BasePath.lastIndexOf( '/' ) + 1) ;
-	FCKConfig.FullBasePath = FCKConfig.BasePath ;
 }
 else
-{
-	FCKConfig.BasePath = document.location.pathname.substring( 0, document.location.pathname.lastIndexOf( '/' ) + 1) ;
-	FCKConfig.FullBasePath = document.location.protocol + '//' + document.location.host + FCKConfig.BasePath ;
-}
+	FCKConfig.BasePath = document.location.protocol + '//' + document.location.host +
+		document.location.pathname.substring( 0, document.location.pathname.lastIndexOf( '/' ) + 1) ;
+
+FCKConfig.FullBasePath = FCKConfig.BasePath ;
 
 FCKConfig.EditorPath = FCKConfig.BasePath.replace( /editor\/$/, '' ) ;
 

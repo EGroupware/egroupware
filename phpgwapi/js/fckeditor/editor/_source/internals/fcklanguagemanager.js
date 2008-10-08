@@ -50,6 +50,7 @@ var FCKLanguageManager = FCK.Language =
 		fr		: 'French',
 		'fr-ca'	: 'French (Canada)',
 		gl		: 'Galician',
+		gu		: 'Gujarati',
 		he		: 'Hebrew',
 		hi		: 'Hindi',
 		hr		: 'Croatian',

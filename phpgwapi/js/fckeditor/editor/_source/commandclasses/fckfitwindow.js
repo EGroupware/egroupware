@@ -37,6 +37,11 @@ FCKFitWindow.prototype.Execute = function()
 	var eBodyStyle			= eBody.style ;
 	var eParent ;
 
+	// Save the current selection and scroll position.
+	var oRange = new FCKDomRange( FCK.EditorWindow ) ;
+	oRange.MoveToSelection() ;
+	var oEditorScrollPos = FCKTools.GetScrollPosition( FCK.EditorWindow ) ;
+
 	// No original style properties known? Go fullscreen.
 	if ( !this.IsMaximized )
 	{
@@ -83,6 +88,7 @@ FCKFitWindow.prototype.Execute = function()
 		var oViewPaneSize = FCKTools.GetViewPaneSize( eMainWindow ) ;
 
 		eEditorFrameStyle.position	= "absolute";
+		eEditorFrame.offsetLeft ;		// Kludge for Safari 3.1 browser bug, do not remove. See #2066.
 		eEditorFrameStyle.zIndex	= FCKConfig.FloatingPanelsZIndex - 1;
 		eEditorFrameStyle.left		= "0px";
 		eEditorFrameStyle.top		= "0px";
@@ -159,6 +165,10 @@ FCKFitWindow.prototype.Execute = function()
 		FCK.EditingArea.MakeEditable() ;
 
 	FCK.Focus() ;
+
+	// Restore the selection and scroll position of inside the document.
+	oRange.Select() ;
+	FCK.EditorWindow.scrollTo( oEditorScrollPos.X, oEditorScrollPos.Y ) ;
 }
 
 FCKFitWindow.prototype.GetState = function()

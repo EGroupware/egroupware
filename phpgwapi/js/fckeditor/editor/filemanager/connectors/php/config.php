@@ -28,24 +28,23 @@ global $Config ;
 // WARNING: don't just set "$Config['Enabled'] = true ;", you must be sure that only
 //		authenticated users can access this file or use some kind of session checking.
 $Config['Enabled'] = false ;
-
 function deny_no_egw_session(&$account)
 {
-	die('Access denied!');
+   die('Access denied!');
 }
 $GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'currentapp' => 'home',
-		'noheader' => true,
-		'autocreate_session_callback' => 'deny_no_egw_session',
-	)
+   'flags' => array(
+       'currentapp' => 'home',
+       'noheader' => true,
+       'autocreate_session_callback' => 'deny_no_egw_session',
+   )
 );
 // will not continue, unless the header get's included and there is a valid eGW session
 require('../../../../../../../header.inc.php');
 
-if ($GLOBALS['egw']->session->session_flags == 'N' &&	// allow only non anonymous sessions,
-	($app=$GLOBALS['egw']->session->appsession($_GET['ServerPath'],'FCKeditor')) &&	// check if path is stored in the session and
-	isset($GLOBALS['egw_info']['user']['apps'][$app]))	// user has access to the stored application (as we can only check of home above)
+if ($GLOBALS['egw']->session->session_flags == 'N' &&  // allow only non anonymous sessions,
+   ($app=$GLOBALS['egw']->session->appsession($_GET['ServerPath'],'FCKeditor')) && // check if path is stored in the session and
+   isset($GLOBALS['egw_info']['user']['apps'][$app]))  // user has access to the stored application (as we can only check of home above)
 {
 	$Config['UserFilesPath'] = $_GET['ServerPath'];
 	$Config['Enabled'] = true;
@@ -72,7 +71,7 @@ $Config['SecureImageUploads'] = true;
 $Config['ConfigAllowedCommands'] = array('QuickUpload', 'FileUpload', 'GetFolders', 'GetFoldersAndFiles', 'CreateFolder') ;
 
 // Allowed Resource Types.
-$Config['ConfigAllowedTypes'] = array('Image');//array('File', 'Image', 'Flash', 'Media') ;
+$Config['ConfigAllowedTypes'] = array('Image');    //array('File', 'Image', 'Flash', 'Media') ;
 
 // For security, HTML is allowed in the first Kb of data for files having the
 // following extensions only.
@@ -150,7 +149,7 @@ $Config['QuickUploadAbsolutePath']['File']= $Config['UserFilesAbsolutePath'] ;
 
 $Config['AllowedExtensions']['Image']	= array('bmp','gif','jpeg','jpg','png') ;
 $Config['DeniedExtensions']['Image']	= array() ;
-$Config['FileTypesPath']['Image']		= $Config['UserFilesPath'];	// . 'image/' ;
+$Config['FileTypesPath']['Image']      = $Config['UserFilesPath']; // . 'image/' ;
 $Config['FileTypesAbsolutePath']['Image']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'image/' ;
 $Config['QuickUploadPath']['Image']		= $Config['UserFilesPath'] ;
 $Config['QuickUploadAbsolutePath']['Image']= $Config['UserFilesAbsolutePath'] ;

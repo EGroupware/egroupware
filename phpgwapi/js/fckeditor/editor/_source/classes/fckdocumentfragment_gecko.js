@@ -39,6 +39,13 @@ FCKDocumentFragment.prototype =
 		targetNode.appendChild( this.RootNode ) ;
 	},
 
+	AppendHtml : function( html )
+	{
+		var eTmpDiv = this.RootNode.ownerDocument.createElement( 'div' ) ;
+		eTmpDiv.innerHTML = html ;
+		FCKDomTools.MoveChildren( eTmpDiv, this.RootNode ) ;
+	},
+
 	InsertAfterNode : function( existingNode )
 	{
 		FCKDomTools.InsertAfterNode( existingNode, this.RootNode ) ;

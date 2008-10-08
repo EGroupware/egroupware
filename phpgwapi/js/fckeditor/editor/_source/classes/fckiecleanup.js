@@ -43,7 +43,7 @@ FCKIECleanup.prototype.AddItem = function( dirtyItem, cleanupFunction )
 
 function FCKIECleanup_Cleanup()
 {
-	if ( !this._FCKCleanupObj || !window.FCKUnloadFlag )
+	if ( !this._FCKCleanupObj || ( FCKConfig.MsWebBrowserControlCompat && !window.FCKUnloadFlag ) )
 		return ;
 
 	var aItems = this._FCKCleanupObj.Items ;

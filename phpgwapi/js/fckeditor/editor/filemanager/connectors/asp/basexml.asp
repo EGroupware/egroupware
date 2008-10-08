@@ -30,6 +30,7 @@ Sub SetXmlHeaders()
 	Response.CacheControl = "no-cache"
 
 	' Set the response format.
+	Response.CodePage 		= 65001
 	Response.CharSet		= "UTF-8"
 	Response.ContentType	= "text/xml"
 End Sub

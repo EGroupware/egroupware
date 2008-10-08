@@ -44,6 +44,23 @@ FCKShowBlockCommand.prototype.Execute = function()
 	else
 		body.className += ' FCK__ShowBlocks' ;
 
+	if ( FCKBrowserInfo.IsIE )
+	{
+		try
+		{
+			FCK.EditorDocument.selection.createRange().select() ;
+		}
+		catch ( e )
+		{}
+	}
+	else
+	{
+		var focus = FCK.EditorWindow.getSelection().focusNode ;
+		if ( focus.nodeType != 1 )
+			focus = focus.parentNode ;
+		FCKDomTools.ScrollIntoView( focus, false ) ;
+	}
+
 	FCK.Events.FireEvent( 'OnSelectionChange' ) ;
 }
 

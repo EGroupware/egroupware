@@ -550,7 +550,11 @@ FCKTableHandler.VerticalSplitCell = function()
 		// 1. Insert a new row.
 		var newCellRowIndex = currentRowIndex + 1 ;
 		var newRow = FCK.EditorDocument.createElement( 'tr' ) ;
-		currentCell.parentNode.parentNode.insertBefore( newRow, currentCell.parentNode.parentNode.rows[newCellRowIndex] ) ;
+		var tBody = currentCell.parentNode.parentNode ;
+		if ( tBody.rows.length > newCellRowIndex )
+			tBody.insertBefore( newRow, tBody.rows[newCellRowIndex] ) ;
+		else
+			tBody.appendChild( newRow ) ;
 
 		// 2. +1 to rowSpan for all cells crossing currentCell's row.
 		for ( var i = 0 ; i < tableMap[currentRowIndex].length ; )
@@ -677,6 +681,11 @@ FCKTableHandler._CreateTableMap = function( table )
 // This function is the inverse of _CreateTableMap - it takes in a table map and converts it to an HTML table.
 FCKTableHandler._InstallTableMap = function( tableMap, table )
 {
+	// Workaround for #1917 : MSIE will always report a cell's rowSpan as 1 as long
+	// as the cell is not attached to a row. So we'll need an alternative attribute
+	// for storing the calculated rowSpan in IE.
+	var rowSpanAttr = FCKBrowserInfo.IsIE ? "_fckrowspan" : "rowSpan" ;
+
 	// Clear the table of all rows first.
 	while ( table.rows.length > 0 )
 	{
@@ -692,7 +701,7 @@ FCKTableHandler._InstallTableMap = function( tableMap, table )
 			var cell = tableMap[i][j] ;
 			if ( cell.parentNode )
 				cell.parentNode.removeChild( cell ) ;
-			cell.colSpan = cell.rowSpan = 1 ;
+			cell.colSpan = cell[rowSpanAttr] = 1 ;
 		}
 	}
 
@@ -727,7 +736,7 @@ FCKTableHandler._InstallTableMap = function( tableMap, table )
 			if ( ! cell || cell._rowScanned === true )
 				continue ;
 			if ( tableMap[j-1] && tableMap[j-1][i] == cell )
-				cell.rowSpan++ ;
+				cell[rowSpanAttr]++ ;
 			if ( ! tableMap[j+1] || tableMap[j+1][i] != cell )
 				cell._rowScanned = true ;
 		}
@@ -765,6 +774,11 @@ FCKTableHandler._InstallTableMap = function( tableMap, table )
 				continue ;
 			}
 			rowObj.appendChild( cell ) ;
+			if ( rowSpanAttr != 'rowSpan' )
+			{
+				cell.rowSpan = cell[rowSpanAttr] ;
+				cell.removeAttribute( rowSpanAttr ) ;
+			}
 			j += cell.colSpan ;
 			if ( cell.colSpan == 1 )
 				cell.removeAttribute( 'colspan' ) ;

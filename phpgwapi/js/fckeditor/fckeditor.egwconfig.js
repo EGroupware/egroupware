@@ -5,7 +5,8 @@ FCKConfig.ToolbarSets["egw_simple"] = [
 	['FitWindow'],
 	'/',
 	['FontFormat','FontName','FontSize'],
-	['TextColor','BGColor']
+	['TextColor','BGColor'],
+	['ShowBlocks','-','About']
 ] ;
 FCKConfig.ToolbarSets["egw_simple_spellcheck"] = [
 	['Bold','Italic','Underline'],
@@ -14,7 +15,8 @@ FCKConfig.ToolbarSets["egw_simple_spellcheck"] = [
 	['FitWindow','SpellCheck'],
 	'/',
 	['FontFormat','FontName','FontSize'],
-	['TextColor','BGColor']
+	['TextColor','BGColor'],
+	['ShowBlocks','-','About']
 ] ;
 FCKConfig.ToolbarSets["egw_extended"] = [
 	['Bold','Italic','Underline'],
@@ -25,7 +27,8 @@ FCKConfig.ToolbarSets["egw_extended"] = [
 	['FitWindow','Image','Table'],
 	'/',
 	['FontFormat','FontName','FontSize'],
-	['TextColor','BGColor']
+	['TextColor','BGColor'],
+	['ShowBlocks','-','About']
 ] ;
 FCKConfig.ToolbarSets["egw_extended_spellcheck"] = [
 	['Bold','Italic','Underline'],
@@ -36,7 +39,8 @@ FCKConfig.ToolbarSets["egw_extended_spellcheck"] = [
 	['FitWindow','SpellCheck','Image','Table'],
 	'/',
 	['FontFormat','FontName','FontSize'],
-	['TextColor','BGColor']
+	['TextColor','BGColor'],
+	['ShowBlocks','-','About']
 ] ;
 FCKConfig.ToolbarSets["egw_advanced"] = [
 	['Source','DocProps','-','Save','NewPage','Preview','-','Templates'],
@@ -50,7 +54,8 @@ FCKConfig.ToolbarSets["egw_advanced"] = [
 	['FitWindow','Image',/*'Flash',*/'Table','Rule',/*'Smiley',*/'SpecialChar','PageBreak'], //,'UniversalKey'
 	'/',
 	['Style','FontFormat','FontName','FontSize'],
-	['TextColor','BGColor']
+	['TextColor','BGColor'],
+	['ShowBlocks','-','About']
 ] ;
 FCKConfig.ToolbarSets["egw_advanced_spellcheck"] = [
 	['Source','DocProps','-','Save','NewPage','Preview','-','Templates'],
@@ -64,5 +69,6 @@ FCKConfig.ToolbarSets["egw_advanced_spellcheck"] = [
 	['FitWindow','Image',/*'Flash',*/'Table','Rule',/*'Smiley',*/'SpecialChar','PageBreak'], //,'UniversalKey'
 	'/',
 	['Style','FontFormat','FontName','FontSize'],
-	['TextColor','BGColor']
+	['TextColor','BGColor'],
+	['ShowBlocks','-','About']
 ] ;

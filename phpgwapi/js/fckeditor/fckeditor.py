@@ -67,7 +67,7 @@ class FCKeditor(object):
 					self.InstanceName
 					)
 			if (self.ToolbarSet is not None):
-				Link += "&amp;ToolBar=%s" % self.ToolbarSet
+				Link += "&amp;Toolbar=%s" % self.ToolbarSet
 
 			# Render the linked hidden field
 			Html += "<input type=\"hidden\" id=\"%s\" name=\"%s\" value=\"%s\" style=\"display:none\" />" % (

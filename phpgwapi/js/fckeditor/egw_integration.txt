@@ -1,6 +1,6 @@
 2008/04/15 (RalfBecker)
- - update to FCK 2.6
- - editor/filemanager/connectors/php/io.php line 168:
+ - update to FCK 2.6.3
+ - editor/filemanager/connectors/php/io.php line 184:
 -		return $info->filename . $info->path_info ;
 +		// RalfBecker 2008/04/15: remove index.{html|php} added by apache
 +		return str_replace(array('/index.html','/index.php'),'',$info->filename) . $info->path_info ;

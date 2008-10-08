@@ -447,6 +447,10 @@ function SetUrl( url, width, height, alt )
 
 function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )
 {
+	// Remove animation
+	window.parent.Throbber.Hide() ;
+	GetE( 'divUpload' ).style.display  = '' ;
+
 	switch ( errorNumber )
 	{
 		case 0 :	// No errors
@@ -499,6 +503,10 @@ function CheckUpload()
 		OnUploadCompleted( 202 ) ;
 		return false ;
 	}
+
+	// Show animation
+	window.parent.Throbber.Show( 100 ) ;
+	GetE( 'divUpload' ).style.display  = 'none' ;
 
 	return true ;
 }

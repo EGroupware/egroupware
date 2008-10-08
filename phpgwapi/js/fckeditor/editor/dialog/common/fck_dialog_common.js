@@ -57,7 +57,7 @@
 // Attention: FCKConfig must be available in the page.
 function GetCommonDialogCss( prefix )
 {
-	// CSS minified by http://iceyboard.no-ip.org/projects/css_compressor
+	// CSS minified by http://iceyboard.no-ip.org/projects/css_compressor (see _dev/css_compression.txt).
 	return FCKConfig.BasePath + 'dialog/common/' + '|.ImagePreviewArea{border:#000 1px solid;overflow:auto;width:100%;height:170px;background-color:#fff}.FlashPreviewArea{border:#000 1px solid;padding:5px;overflow:auto;width:100%;height:170px;background-color:#fff}.BtnReset{float:left;background-position:center center;background-image:url(images/reset.gif);width:16px;height:16px;background-repeat:no-repeat;border:1px none;font-size:1px}.BtnLocked,.BtnUnlocked{float:left;background-position:center center;background-image:url(images/locked.gif);width:16px;height:16px;background-repeat:no-repeat;border:none 1px;font-size:1px}.BtnUnlocked{background-image:url(images/unlocked.gif)}.BtnOver{border:outset 1px;cursor:pointer;cursor:hand}' ;
 }
 
@@ -187,34 +187,7 @@ function OpenFileBrowser( url, width, height )
 	sOptions += ",left=" + iLeft ;
 	sOptions += ",top=" + iTop ;
 
-	// The "PreserveSessionOnFileBrowser" because the above code could be
-	// blocked by popup blockers.
-	if ( oEditor.FCKConfig.PreserveSessionOnFileBrowser && oEditor.FCKBrowserInfo.IsIE )
-	{
-		// The following change has been made otherwise IE will open the file
-		// browser on a different server session (on some cases):
-		// http://support.microsoft.com/default.aspx?scid=kb;en-us;831678
-		// by Simone Chiaretta.
-		var oWindow = oEditor.window.open( url, 'FCKBrowseWindow', sOptions ) ;
-
-		if ( oWindow )
-		{
-			// Detect Yahoo popup blocker.
-			try
-			{
-				var sTest = oWindow.name ; // Yahoo returns "something", but we can't access it, so detect that and avoid strange errors for the user.
-				oWindow.opener = window ;
-			}
-			catch(e)
-			{
-				alert( oEditor.FCKLang.BrowseServerBlocked ) ;
-			}
-		}
-		else
-			alert( oEditor.FCKLang.BrowseServerBlocked ) ;
-    }
-    else
-		window.open( url, 'FCKBrowseWindow', sOptions ) ;
+	window.open( url, 'FCKBrowseWindow', sOptions ) ;
 }
 
 /**

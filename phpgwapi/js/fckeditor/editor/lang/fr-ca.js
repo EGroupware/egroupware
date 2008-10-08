@@ -44,6 +44,7 @@ RemoveFormat		: "Supprimer le formatage",
 InsertLinkLbl		: "Lien",
 InsertLink			: "Insérer/modifier le lien",
 RemoveLink			: "Supprimer le lien",
+VisitLink			: "Suivre le lien",
 Anchor				: "Insérer/modifier l'ancre",
 AnchorDelete		: "Supprimer l'ancre",
 InsertImageLbl		: "Image",
@@ -72,6 +73,9 @@ BlockJustify		: "Texte justifié",
 DecreaseIndent		: "Diminuer le retrait",
 IncreaseIndent		: "Augmenter le retrait",
 Blockquote			: "Citation",
+CreateDiv			: "Créer Balise Div",
+EditDiv				: "Modifier Balise Div",
+DeleteDiv			: "Supprimer Balise Div",
 Undo				: "Annuler",
 Redo				: "Refaire",
 NumberedListLbl		: "Liste numérotée",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "La barre d'outils \"%1\" n'existe pas",
 NoActiveX			: "Les paramètres de sécurité de votre navigateur peuvent limiter quelques fonctionnalités de l'éditeur. Veuillez activer l'option \"Exécuter les contrôles ActiveX et les plug-ins\". Il se peut que vous rencontriez des erreurs et remarquiez quelques limitations.",
 BrowseServerBlocked : "Le navigateur n'a pas pu être ouvert. Assurez-vous que les bloqueurs de popups soient désactivés.",
 DialogBlocked		: "La fenêtre de dialogue n'a pas pu s'ouvrir. Assurez-vous que les bloqueurs de popups soient désactivés.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -511,5 +516,11 @@ DlgAboutAboutTab	: "Á propos de",
 DlgAboutBrowserInfoTab	: "Navigateur",
 DlgAboutLicenseTab	: "License",
 DlgAboutVersion		: "Version",
-DlgAboutInfo		: "Pour plus d'informations, visiter"
+DlgAboutInfo		: "Pour plus d'informations, visiter",
+
+// Div Dialog
+DlgDivGeneralTab	: "Général",
+DlgDivAdvancedTab	: "Avancé",
+DlgDivStyle		: "Style",
+DlgDivInlineStyle	: "Attribut Style"
 };

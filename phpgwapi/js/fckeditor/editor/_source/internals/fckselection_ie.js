@@ -147,7 +147,7 @@ FCKSelection.HasAncestorNode = function( nodeTagName )
 
 	while ( oContainer )
 	{
-		if ( oContainer.tagName == nodeTagName ) return true ;
+		if ( oContainer.nodeName.IEquals( nodeTagName ) ) return true ;
 		oContainer = oContainer.parentNode ;
 	}
 
@@ -209,10 +209,11 @@ FCKSelection.GetSelection = function()
 	return FCK.EditorDocument.selection ;
 }
 
-FCKSelection.Save = function()
+FCKSelection.Save = function( noFocus )
 {
 	// Ensures the editor has the selection focus. (#1801)
-	FCK.Focus() ;
+	if ( !noFocus )
+		FCK.Focus() ;
 
 	var editorDocument = FCK.EditorDocument ;
 
@@ -259,8 +260,11 @@ FCKSelection.Restore = function()
 		try
 		{
 			// Don't repeat the restore process if the editor document is already selected.
-			if ( this._GetSelectionDocument( FCK.EditorDocument.selection ) == FCK.EditorDocument )
+			if ( String( this._GetSelectionDocument( FCK.EditorDocument.selection ).body.contentEditable ) == 'true' )
+			{
+				FCK.IsSelectionChangeLocked = false ;
 				return ;
+			}
 			this.SelectionData.select() ;
 		}
 		catch ( e ) {}

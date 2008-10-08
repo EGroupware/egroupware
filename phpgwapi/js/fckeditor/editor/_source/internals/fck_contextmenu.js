@@ -128,6 +128,8 @@ function FCK_ContextMenu_GetListener( listenerName )
 						return ;
 
 					menu.AddSeparator() ;
+					menu.AddItem( 'VisitLink', FCKLang.VisitLink ) ;
+					menu.AddSeparator() ;
 					if ( bInsideLink )
 						menu.AddItem( 'Link', FCKLang.EditLink		, 34 ) ;
 					menu.AddItem( 'Unlink'	, FCKLang.RemoveLink	, 35 ) ;
@@ -292,6 +294,21 @@ function FCK_ContextMenu_GetListener( listenerName )
 					menu.AddItem( 'NumberedList', FCKLang.NumberedListProp, 26 ) ;
 				}
 			}} ;
+
+		case 'DivContainer':
+			return {
+			AddItems : function( menu, tag, tagName )
+			{
+				var currentBlocks = FCKDomTools.GetSelectedDivContainers() ;
+
+				if ( currentBlocks.length > 0 )
+				{
+					menu.AddSeparator() ;
+					menu.AddItem( 'EditDiv', FCKLang.EditDiv, 75 ) ;
+					menu.AddItem( 'DeleteDiv', FCKLang.DeleteDiv, 76 ) ;
+				}
+			}} ;
+
 	}
 	return null ;
 }

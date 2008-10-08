@@ -66,11 +66,12 @@ var FCKPanel = function( parentWindow )
 	else
 	{
 		var oIFrame = this._IFrame = this._Window.document.createElement('iframe') ;
+		FCKTools.ResetStyles( oIFrame );
 		oIFrame.src					= 'javascript:void(0)' ;
 		oIFrame.allowTransparency	= true ;
 		oIFrame.frameBorder			= '0' ;
 		oIFrame.scrolling			= 'no' ;
-		oIFrame.width = oIFrame.height = 0 ;
+		oIFrame.style.width = oIFrame.style.height = '0px' ;
 		FCKDomTools.SetElementStyles( oIFrame,
 			{
 				position	: 'absolute',
@@ -277,8 +278,8 @@ FCKPanel.prototype.Show = function( x, y, relElement, width, height )
 			{
 				var iWidth = eMainNode.offsetWidth || eMainNode.firstChild.offsetWidth ;
 				var iHeight = eMainNode.offsetHeight ;
-				me._IFrame.width = iWidth ;
-				me._IFrame.height = iHeight ;
+				me._IFrame.style.width = iWidth + 'px' ;
+				me._IFrame.style.height = iHeight + 'px' ;
 
 			}, 0 ) ;
 
@@ -303,7 +304,7 @@ FCKPanel.prototype.Hide = function( ignoreOnHide, ignoreFocusManagerUnlock )
 
 		// It is better to set the sizes to 0, otherwise Firefox would have
 		// rendering problems.
-		this._IFrame.width = this._IFrame.height = 0 ;
+		this._IFrame.style.width = this._IFrame.style.height = '0px' ;
 
 		this._IsOpened = false ;
 

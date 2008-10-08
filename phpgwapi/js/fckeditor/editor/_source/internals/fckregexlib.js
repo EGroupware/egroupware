@@ -78,6 +78,7 @@ ProtectUrlsArea	: /<area(?=\s).*?\shref=((?:(?:\s*)("|').*?\2)|(?:[^"'][^ >]+))/
 
 Html4DocType	: /HTML 4\.0 Transitional/i ,
 DocTypeTag		: /<!DOCTYPE[^>]*>/i ,
+HtmlDocType		: /DTD HTML/ ,
 
 // These regex are used to save the original event attributes in the HTML.
 TagsWithEvent	: /<[^\>]+ on\w+[\s\r\n]*=[\s\r\n]*?('|")[\s\S]+?\>/g ,
