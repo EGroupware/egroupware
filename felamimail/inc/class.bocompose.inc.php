@@ -715,13 +715,13 @@
 								$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
 							}
 							$rawBody        = $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
-							$_mailObject->AddStringAttachment($rawHeader.$rawBody, $attachment['name'], '7bit', 'message/rfc822');
+							$_mailObject->AddStringAttachment($rawHeader.$rawBody, $_mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
 							break;
 						default:
 							$bofelamimail->reopen($attachment['folder']);
 							$attachmentData	= $bofelamimail->getAttachment($attachment['uid'], $attachment['partID']);
 
-							$_mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], 'base64', $attachment['type']);
+							$_mailObject->AddStringAttachment($attachmentData['attachment'], $_mailObject->EncodeHeader($attachment['name']), 'base64', $attachment['type']);
 			
 							break;
 							
@@ -729,7 +729,7 @@
 				} else {
 					$_mailObject->AddAttachment (
 						$attachment['file'],
-						$attachment['name'],
+						$_mailObject->EncodeHeader($attachment['name']),
 						'base64',
 						$attachment['type']
 					);
