@@ -539,7 +539,7 @@ class addressbook_ldap
 
 		foreach($keys as $entry)
 		{
-			$entry = ldap::quote($entry);
+			$entry = ldap::quote(is_array($entry) ? $entry['id'] : $entry);
 			if($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'],
 				"(|(entryUUID=$entry)(uid=$entry))", $attributes))
 			{
