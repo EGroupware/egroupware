@@ -461,7 +461,7 @@ function phpgwapi_upgrade1_5_011()
 				rmdir($old_path);
 			}
 		}
-		else
+		elseif(!($stat["mode"] & sqlfs_stream_wrapper::MODE_DIR))
 		{
 			echo "phpgwapi_upgrade1_5_011() $url: $old_path not found!\n";
 		}
