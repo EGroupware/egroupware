@@ -467,12 +467,6 @@ class egw extends egw_minimal
 			{
 				ExecMethod('phpgwapi.asyncservice.check_run','fallback');
 			}
-			/* Clean up mcrypt */
-			if (isset($this->crypto))
-			{
-				$this->crypto->cleanup();
-				unset($this->crypto);
-			}
 			$this->db->disconnect();
 		}
 	}

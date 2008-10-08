@@ -50,7 +50,7 @@ if (!isset($GLOBALS['egw_info']['flags']['currentapp']))
 	echo '!!! PLEASE CORRECT THIS SITUATION !!!</b></p>';
 }
 
-include_once(EGW_API_INC.'/common_functions.inc.php');
+require_once(EGW_API_INC.'/common_functions.inc.php');
 
 // init eGW's sessions-handler
 egw_session::init_handler();
@@ -58,30 +58,25 @@ egw_session::init_handler();
 // check if we can restore the eGW enviroment from the php-session
 if ($_REQUEST[egw_session::EGW_SESSION_NAME])
 {
-  	ini_set('session.use_cookies',0);
-	session_name(egw_session::EGW_SESSION_NAME);
- 	session_id($_REQUEST[egw_session::EGW_SESSION_NAME]);
-	session_start();
-
 	if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 	{
-		if (is_array($_SESSION['egw_info_cache']) && $_SESSION['egw_object_cache'] && $_SESSION['egw_required_files'])
+		if (is_array($_SESSION[egw_session::EGW_INFO_CACHE]) && $_SESSION[egw_session::EGW_OBJECT_CACHE] && $_SESSION[egw_session::EGW_REQUIRED_FILES])
 		{
 			// marking the context as restored from the session, used by session->verify to not read the data from the db again
 			$GLOBALS['egw_info']['flags']['restored_from_session'] = true;
 
 			// restoring the egw_info-array
-			$GLOBALS['egw_info'] = array_merge($_SESSION['egw_info_cache'],array('flags' => $GLOBALS['egw_info']['flags']));
+			$GLOBALS['egw_info'] = array_merge($_SESSION[egw_session::EGW_INFO_CACHE],array('flags' => $GLOBALS['egw_info']['flags']));
 
 			// include required class-definitions
-			if (is_array($_SESSION['egw_required_files']))	// all classes, which can not be autoloaded
+			if (is_array($_SESSION[egw_session::EGW_REQUIRED_FILES]))	// all classes, which can not be autoloaded
 			{
-				foreach($_SESSION['egw_required_files'] as $file)
+				foreach($_SESSION[egw_session::EGW_REQUIRED_FILES] as $file)
 				{
 					require_once($file);
 				}
 			}
-			$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
+			$GLOBALS['egw'] = unserialize($_SESSION[egw_session::EGW_OBJECT_CACHE]);
 
 			if (is_object($GLOBALS['egw']))
 			{
@@ -95,17 +90,17 @@ if ($_REQUEST[egw_session::EGW_SESSION_NAME])
 			unset($GLOBALS['egw']);
 			$GLOBALS['egw_info'] = array('flags'=>$GLOBALS['egw_info']['flags']);
 			unset($GLOBALS['egw_info']['flags']['restored_from_session']);
-			unset($_SESSION['egw_info_cache']);
-			unset($_SESSION['egw_required_files']);
-			unset($_SESSION['egw_object_cache']);
+			unset($_SESSION[egw_session::EGW_INFO_CACHE]);
+			unset($_SESSION[egw_session::EGW_REQUIRED_FILES]);
+			unset($_SESSION[egw_session::EGW_OBJECT_CACHE]);
 		}
 		//echo "<p>could not restore egw_info and the egw-object!!!</p>\n";
 	}
 	else	// destroy the session-cache if called by login or logout
 	{
-		unset($_SESSION['egw_info_cache']);
-		unset($_SESSION['egw_required_files']);
-		unset($_SESSION['egw_object_cache']);
+		unset($_SESSION[egw_session::EGW_INFO_CACHE]);
+		unset($_SESSION[egw_session::EGW_REQUIRED_FILES]);
+		unset($_SESSION[egw_session::EGW_OBJECT_CACHE]);
 	}
 }
 print_debug('sane environment','messageonly','api');
@@ -135,8 +130,8 @@ if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && !$GLOBALS['egw_inf
 // saving the the egw_info array and the egw-object in the session
 if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 {
-	$_SESSION['egw_info_cache'] = $GLOBALS['egw_info'];
-	unset($_SESSION['egw_info_cache']['flags']);	// dont save the flags, they change on each request
+	$_SESSION[egw_session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
+	unset($_SESSION[egw_session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
 
-	$_SESSION['egw_object_cache'] = serialize($GLOBALS['egw']);
+	$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
 }

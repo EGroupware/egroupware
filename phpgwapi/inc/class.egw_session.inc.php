@@ -20,6 +20,16 @@
  * @version $Id$
  */
 
+// some constants for pre php4.3
+if (!defined('PHP_SHLIB_SUFFIX'))
+{
+	define('PHP_SHLIB_SUFFIX',$is_windows ? 'dll' : 'so');
+}
+if (!defined('PHP_SHLIB_PREFIX'))
+{
+	define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+}
+
 /**
  * eGW session handling
  *
@@ -29,7 +39,7 @@
  * which implement custom session handler or certain extra functionality, like eg. listing sessions,
  * not available in php's session extension.
  */
-class egw_session //extends sessions
+class egw_session
 {
 	/**
 	 * key of eGW's session-data in $_SESSION
@@ -40,6 +50,23 @@ class egw_session //extends sessions
 	 * key of eGW's application session-data in $_SESSION
 	 */
 	const EGW_APPSESSION_VAR = 'egw_app_session';
+
+	/**
+	 * key of eGW's required files in $_SESSION
+	 *
+	 * These files get set by egw_db and egw class, for classes which get not autoloaded (eg. ADOdb, idots_framework)
+	 */
+	const EGW_REQUIRED_FILES = 'egw_required_files';
+
+	/**
+	 * key of  eGW's egw_info cached in $_SESSION
+	 */
+	const EGW_INFO_CACHE = 'egw_info_cache';
+
+	/**
+	 * key of  eGW's egw object cached in $_SESSION
+	 */
+	const EGW_OBJECT_CACHE = 'egw_object_cache';
 
 	/**
 	 * Name of cookie or get-parameter with session-id
@@ -104,20 +131,6 @@ class egw_session //extends sessions
 	var $kp3;
 
 	/**
-	* encryption key for the encrption of the session-data, if enabled
-	*
-	* @var string
-	*/
-	var $key;
-
-	/**
-	* mcrypt's iv
-	*
-	* @var string
-	*/
-	var $iv;
-
-	/**
 	* name of XML-RPC/SOAP method called
 	*
 	* @var string
@@ -143,7 +156,7 @@ class egw_session //extends sessions
 	 *
 	 * @var array
 	 */
-	var $save_session_vars_start;
+	var $required_files;
 
 	/**
 	 * Constructor just loads up some defaults from cookies
@@ -152,7 +165,7 @@ class egw_session //extends sessions
 	 */
 	function __construct(array $domain_names=null)
 	{
-		$this->save_session_vars_start = $_SESSION;
+		$this->required_files = $_SESSION[self::EGW_REQUIRED_FILES];
 
 		$this->sessionid = $_REQUEST[self::EGW_SESSION_NAME];
 		$this->kp3       = $_REQUEST['kp3'];
@@ -211,11 +224,134 @@ class egw_session //extends sessions
 		}
 		self::set_cookiedomain();
       	ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
+
+		self::decrypt();
 	}
 
 	function __wakeup()
 	{
-       	ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
+		ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
+	}
+
+	function __destruct()
+	{
+		/* foreach($GLOBALS['egw'] as $name => &$value)
+		{
+			$len = strlen(serialize($value));
+			if ($len > 1000) error_log(__METHOD__."() strlen($name)=$len, diff=".($len-(int)$_SESSION['lens'][$name]));
+			$_SESSION['lens'][$name] = $len;
+			if ($name == 'session')
+			{
+				foreach($value as $n => &$v)
+				{
+					$len = strlen(serialize($v));
+					if ($len > 1000) error_log(__METHOD__."() strlen(session->$n)=$len, diff=".($len-(int)$_SESSION['lens-sess'][$n]));
+					$_SESSION['lens-sess'][$n] = $len;
+				}
+			}
+		}*/
+		self::encrypt($this->kp3);
+	}
+
+	/**
+	 * Keys of session variables which get encrypted
+	 *
+	 * @var array
+	 */
+	static $egw_session_vars = array(
+		//self::EGW_SESSION_VAR, no need to encrypt and required by the session list
+		self::EGW_APPSESSION_VAR,
+		self::EGW_INFO_CACHE,
+		self::EGW_OBJECT_CACHE,
+	);
+
+	static $mcrypt;
+
+	/**
+	 * Encrypt the variables in the session
+	 *
+	 * Is called by self::__destruct().
+	 */
+	static function encrypt($kp3)
+	{
+		if (self::init_crypt($kp3))
+		{
+			foreach(self::$egw_session_vars as $name)
+			{
+				if (isset($_SESSION[$name]))
+				{
+					$_SESSION[$name] = mcrypt_generic(self::$mcrypt,serialize($_SESSION[$name]));
+					//error_log(__METHOD__."() 'encrypting' session var: $name, len=".strlen($_SESSION[$name]));
+				}
+			}
+			mcrypt_generic_deinit(self::$mcrypt);
+			self::$mcrypt = null;
+		}
+	}
+
+	/**
+	 * Decrypt the variables in the session
+	 *
+	 * Is called by self::init_handler from phpgwapi/inc/functions.inc.php (called from the header.inc.php)
+	 * before the restore of the eGW enviroment takes place, so that the whole thing can be encrypted
+	 */
+	static function decrypt()
+	{
+		if (self::init_crypt($_REQUEST['kp3']))
+		{
+			foreach(self::$egw_session_vars as $name)
+			{
+				if (isset($_SESSION[$name]) && !is_array($_SESSION[$name]))
+				{
+					//error_log(__METHOD__."() 'decrypting' session var: $name");
+					$_SESSION[$name] = unserialize(trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])));
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check if session encryption is configured, possible and initialise it
+	 *
+	 * @param string $kp3 mcrypt key transported via cookie or get parameter like the session id,
+	 *	unlike the session id it's not know on the server, so only the client-request can decrypt the session!
+	 * @param string $algo='tripledes'
+	 * @param string $mode='ecb'
+	 * @return boolean true if encryption is used, false otherwise
+	 */
+	static private function init_crypt($kp3,$algo='tripledes',$mode='ecb')
+	{
+		if(!$GLOBALS['egw_info']['server']['mcrypt_enabled'])
+		{
+			return false;	// session encryption is switched off
+		}
+		if ($GLOBALS['egw_info']['currentapp'] == 'syncml' || !$kp3)
+		{
+			$kp3 = 'staticsyncmlkp3';	// syncml has no kp3!
+		}
+		if (is_null(self::$mcrypt))
+		{
+			if (!extension_loaded('mcrypt') && (!function_exists('dl') || !@dl(PHP_SHLIB_PREFIX.'mcrypt'.'.'.PHP_SHLIB_SUFFIX)))
+			{
+				error_log(__METHOD__."() required PHP extension mcrypt not loaded and can not be loaded, sessions get NOT encrypted!");
+				return false;
+			}
+			if (!(self::$mcrypt = mcrypt_module_open($algo, '', $mode, '')))
+			{
+				error_log(__METHOD__."() could not mcrypt_module_open(algo='$algo','',mode='$mode',''), sessions get NOT encrypted!");
+				return false;
+			}
+			$iv_size = mcrypt_enc_get_iv_size(self::$mcrypt);
+			$iv = !isset($GLOBALS['egw_info']['server']['mcrypt_iv']) || strlen($GLOBALS['egw_info']['server']['mcrypt_iv']) < $iv_size ?
+				mcrypt_create_iv ($iv_size, MCRYPT_RAND) : substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
+
+			if (mcrypt_generic_init(self::$mcrypt,$kp3, $iv) < 0)
+			{
+				error_log(__METHOD__."() could not initialise mcrypt, sessions get NOT encrypted!");
+				return self::$mcrypt = false;
+			}
+		}
+		return is_resource(self::$mcrypt);
 	}
 
 	/**
@@ -314,16 +450,11 @@ class egw_session //extends sessions
 			session_regenerate_id(true);
 		}
 		$this->sessionid = $no_session ? 'no-session' : session_id();
-		$this->kp3       = md5($GLOBALS['egw']->common->randomstring(15));
+		$this->kp3       = $GLOBALS['egw']->common->randomstring(24);
 
 		unset($GLOBALS['egw_info']['server']['default_domain']); // we kill this for security reasons
 
-		// init the crypto object
-		$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['egw_info']['server']['encryptkey']);
-		$this->iv  = $GLOBALS['egw_info']['server']['mcrypt_iv'];
-		$GLOBALS['egw']->crypto->init(array($this->key,$this->iv));
-
-		$this->read_repositories(false);
+		$this->read_repositories();
 		if ($GLOBALS['egw']->accounts->is_expired($this->user))
 		{
 			if(is_object($GLOBALS['egw']->log))
@@ -343,7 +474,6 @@ class egw_session //extends sessions
 		}
 
 		$GLOBALS['egw_info']['user']  = $this->user;
-		$GLOBALS['egw_info']['hooks'] = $this->hooks;
 
 		$this->appsession('password','phpgwapi',base64_encode($this->passwd));
 		if ($GLOBALS['egw']->acl->check('anonymous',1,'phpgwapi'))
@@ -414,14 +544,11 @@ class egw_session //extends sessions
 	private function register_session($login,$user_ip,$now,$session_flags)
 	{
 		// restore session vars set before session was started
-		if ($this->save_session_vars_start && is_array($this->save_session_vars_start))
+		if (is_array($this->require_files))
 		{
-			foreach($this->save_session_vars_start as $name => &$value)
-			{
-				//error_log(__METHOD__."() added $name=".array2string($value));
-				$_SESSION[$name] =& $value;
-			}
-			unset($this->save_session_vars_start);
+			$_SESSION[self::EGW_REQUIRED_FILES] = !is_array($_SESSION[self::EGW_REQUIRED_FILES]) ? $this->required_files :
+				array_unique(array_merge($_SESSION[self::EGW_REQUIRED_FILES],$this->required_files));
+			unset($this->require_files);
 		}
 		$_SESSION[self::EGW_SESSION_VAR] = array(
 			'session_id'     => $this->sessionid,
@@ -602,14 +729,9 @@ class egw_session //extends sessions
 
 		$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 
-		// init the crypto object before appsession call below
-		$this->key = md5($this->kp3 . $this->sessionid . @$GLOBALS['egw_info']['server']['encryptkey']);
-		$this->iv  = $GLOBALS['egw_info']['server']['mcrypt_iv'];
-		$GLOBALS['egw']->crypto->init(array($this->key,$this->iv));
-
 		if ($fill_egw_info_and_repositories)
 		{
-			$this->read_repositories($GLOBALS['egw_info']['server']['cache_phpgw_info']);
+			$this->read_repositories();
 		}
 
 		if ($this->user['expires'] != -1 && $this->user['expires'] < time())
@@ -630,7 +752,6 @@ class egw_session //extends sessions
 		if ($fill_egw_info_and_repositories)
 		{
 			$GLOBALS['egw_info']['user']  = $this->user;
-			$GLOBALS['egw_info']['hooks'] = $this->hooks;
 
 			$GLOBALS['egw_info']['user']['session_ip'] = $session['session_ip'];
 			$GLOBALS['egw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
@@ -902,11 +1023,11 @@ class egw_session //extends sessions
 			// do not decrypt and return if no data (decrypt returning garbage)
 			if(isset($_SESSION[self::EGW_APPSESSION_VAR][$appname]) && array_key_exists($location,$_SESSION[self::EGW_APPSESSION_VAR][$appname]))
 			{
-				return /*$GLOBALS['egw']->crypto->decrypt(*/$_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];//);
+				return $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];
 			}
 			return false;
 		}
-		return $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location] =& $data; //$GLOBALS['egw']->crypto->encrypt($data);
+		return $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location] =& $data;
 	}
 
 	/**
@@ -1098,8 +1219,6 @@ class egw_session //extends sessions
 		$this->user['account_lid'] = $this->account_lid;
 		$this->user['userid']      = $this->account_lid;
 		$this->user['passwd']      = @$this->passwd;
-
-		$this->hooks = $GLOBALS['egw']->hooks->read();
 	}
 
 	/**
@@ -1162,6 +1281,12 @@ class egw_session //extends sessions
 		}
 		ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
 		session_name(self::EGW_SESSION_NAME);
+		if ($_REQUEST[egw_session::EGW_SESSION_NAME])
+		{
+		 	session_id($_REQUEST[egw_session::EGW_SESSION_NAME]);
+			session_start();
+			egw_session::decrypt();
+		}
 	}
 
 	/**
