@@ -345,15 +345,15 @@ class infolog_ui
 		if ($details)
 		{
 			$query['columnselection_pref'] = (is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
-			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time,info_id';
+			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		else
 		{
 			$query['columnselection_pref'] = 'infolog.index.rows';
-			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_id';
+			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets
-		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
+		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time_info_replanned_time') !== false;
 
 		// query all links in one go
 		if ($infos && !$query['csv_export'])
@@ -595,7 +595,7 @@ class infolog_ui
 		if ($action == 'sp')
 		{
 			$pref = 'nextmatch-infolog.index.rows'.($values['nm']['filter2']=='all'?'-details':'');
-			foreach(array('info_used_time_info_planned_time','info_datemodified','info_owner_info_responsible','customfields') as $name)
+			foreach(array('info_used_time_info_planned_time_info_replanned_time','info_datemodified','info_owner_info_responsible','customfields') as $name)
 			{
 				$values['main']['no_'.$name] = strpos($this->prefs[$pref],$name) === false;
 			}
