@@ -466,7 +466,7 @@ class translation
 		{
 			return utf8_decode($data);
 		}
-		if ($this->mbstring && mb_convert_encoding($data,$to,$from)!="")
+		if ($this->mbstring && @mb_convert_encoding($data,$to,$from)!="")
 		{
 			return @mb_convert_encoding($data,$to,$from);
 		}
