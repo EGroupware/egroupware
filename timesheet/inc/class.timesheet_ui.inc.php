@@ -85,7 +85,7 @@ class timesheet_ui extends timesheet_bo
 				);
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
-				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.uiinfolog.index' : TIMESHEET_APP.'.timesheet_ui.index');
+				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
 		}
 		else
 		{
