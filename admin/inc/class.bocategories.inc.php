@@ -39,46 +39,16 @@
 
 			$this->read_sessiondata();
 
-			/* _debug_array($_POST); */
-			/* Might change this to '' at the end---> */
-			$start  = get_var('start',array('POST','GET'));
-			$query  = get_var('query',array('POST','GET'));
-			$sort   = get_var('sort', array('POST','GET'));
-			$order  = get_var('order',array('POST','GET'));
-			$cat_id = get_var('cat_id',array('POST','GET'));
-
-			if(!empty($start) || $start == '0' || $start == 0)
+			foreach(array('start','query','sort','order','cat_id') as $name)
 			{
-				if($this->debug) { echo '<br>overriding start: "' . $this->start . '" now "' . $start . '"'; }
-				$this->start = $start;
-			}
-			if((empty($query) && !empty($this->query)) || !empty($query))
-			{
-				if($this->debug) { echo '<br>setting query to: "' . $query . '"'; }
-				$this->query = $query;
-			}
-
-			if(isset($cat_id))
-			{
-				$this->cat_id = $cat_id;
-			}
-			if($cat_id == '0' || $cat_id == 0 || $cat_id == '')
-			{
-				unset($this->cat_id);
-			}
-			if(isset($sort) && !empty($sort))
-			{
-				$this->sort = $sort;
-			}
-			if(isset($order) && !empty($order))
-			{
-				$this->order = $order;
+				if (isset($_REQUEST[$name])) $this->$name = $_REQUEST[$name];
 			}
 		}
 
 		function save_sessiondata($data)
 		{
 			if($this->debug) { echo '<br>Save:'; _debug_array($data); }
+			//echo '<p>'.__METHOD__."() start=$this->start, sort=$this->sort, order=$this->order, query=$this->query</p>\n";
 			$GLOBALS['egw']->session->appsession('session_data','admin_cats',$data);
 		}
 
@@ -95,11 +65,13 @@
 			{
 				$this->cat_id = $data['cat_id'];
 			}
+			//echo '<p>'.__METHOD__."() start=$this->start, sort=$this->sort, order=$this->order, query=$this->query</p>\n";
 		}
 
 		function get_list()
 		{
 			if($this->debug) { echo '<br>querying: "' . $this->query . '"'; }
+			//echo '<p>'.__METHOD__."() start=$this->start, sort=$this->sort, order=$this->order, query=$this->query</p>\n";
 			return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,True);
 		}
 
