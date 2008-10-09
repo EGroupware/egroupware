@@ -13,7 +13,7 @@
 
 /**
  * Functions to manage the eGW config file header.inc.php
- * 
+ *
  * Used by manageheader.php and the new setup command line interface setup-cli.php
  *
  * @package setup
@@ -54,10 +54,10 @@ class setup_header
 
 	/**
 	 * Detect settings or set defaults for the header.inc.php file (used if it does not yet exist)
-	 * 
+	 *
 	 * Sets $GLOBALS['egw_info'], $GLOBALS['egw_domains'] and the defines EGW_SERVER_ROOT and EGW_INCLUDE_ROOT,
 	 * as if the header has been included
-	 * 
+	 *
 	 * @param string $domain='default' domain to set
 	 */
 	function defaults($domain='default')
@@ -66,13 +66,13 @@ class setup_header
 		$GLOBALS['egw_info']['server']['server_root'] = $GLOBALS['egw_info']['server']['include_root'] = $egw_root;
 		define('EGW_SERVER_ROOT',$egw_root);	// this is usally already defined by setup and cant be changed
 		define('EGW_INCLUDE_ROOT',$egw_root);
-		
+
 		$GLOBALS['egw_info']['server']['header_admin_user'] = 'admin';
 		$GLOBALS['egw_info']['server']['header_admin_password'] = '';
 		$GLOBALS['egw_info']['server']['setup_acl'] = '';
 
 		if ($domain) $GLOBALS['egw_domain'][$domain] = $this->domain_defaults();
-		
+
 		$GLOBALS['egw_info']['server']['show_domain_selectbox'] = false;
 		$GLOBALS['egw_info']['server']['db_persistent'] = True;
 		$GLOBALS['egw_info']['server']['sessions_type'] = !$this->check_load_extension('session') ? 'db' :'php4';
@@ -81,7 +81,7 @@ class setup_header
 		$GLOBALS['egw_info']['server']['versions']['mcrypt'] = '';
 		$GLOBALS['egw_info']['server']['mcrypt_iv'] = $this->generate_mcyrpt_iv();
 	}
-	
+
 	function domain_defaults($user='admin',$passwd='',$supported_db=null)
 	{
 		if (is_null($supported_db)) $supported_db = $this->check_db_support($null);
@@ -98,26 +98,21 @@ class setup_header
 			'config_passwd' => $passwd,
 		);
 	}
-	
+
 	/**
 	 * Checks the values of the (included) header.inc.php file
-	 * 
+	 *
 	 * The values are set in $GLOBALS['egw_info'], $GLOBALS['egw_domain'] and EGW_SERVER_ROOT
 	 *
 	 * @return array with errors or null if no errors
 	 */
-	function validation_errors($server_root=EGW_SERVER_ROOT,$include_root=EGW_INCLUDE_ROOT)
+	function validation_errors($path=EGW_SERVER_ROOT)
 	{
 		$errors = null;
 
-		foreach(array(
-			lang('Server root')  => $server_root,
-			lang('Include root') => $include_root) as $label => $path)
+		if (!is_dir($path) || !is_readable($path) || !is_dir($path.'/phpgwapi'))
 		{
-			if (!is_dir($path) || !is_readable($path) || !is_dir($path.'/phpgwapi'))
-			{
-				$errors[] = lang("%1 '%2' does NOT exist, is not readable by the webserver or contains no eGroupWare installation!",$label,$path);
-			}
+			$errors[] = lang("%1 '%2' does NOT exist, is not readable by the webserver or contains no eGroupWare installation!",lang('Server root'),$path);
 		}
 		if(!$GLOBALS['egw_info']['server']['header_admin_password'])
 		{
@@ -147,13 +142,13 @@ class setup_header
 		}
 		return $errors;
 	}
-	
+
 	/**
 	 * generate header.inc.php file from given values
 	 *
 	 * setup_header::generate($GLOBALS['egw_info'],$GLOBALS['egw_domains'])
 	 * should write an identical header.inc.php as the one include
-	 * 
+	 *
 	 * @param array $egw_info usual content (in server key) plus keys server_root and include_root
 	 * @param array $egw_domains info about the existing eGW domains / DB instances
 	 * @return string content of header.inc.php
@@ -183,7 +178,7 @@ class setup_header
 			$tpl->parse('domains','domain',True);
 		}
 		$tpl->set_var('domain','');
-		
+
 		$var = Array();
 		foreach($egw_info['server'] as $name => $value)
 		{
@@ -209,7 +204,7 @@ class setup_header
 
 		return $tpl->parse('out','header');
 	}
-	
+
 	/**
 	 * Gernerate a random mcrypt_iv vector
 	 *
@@ -241,7 +236,7 @@ class setup_header
 		return extension_loaded($extension) ||
 			function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
 	}
-	
+
 	function check_db_support(&$detected)
 	{
 		$supported_db = $detected = array();
@@ -271,12 +266,12 @@ class setup_header
 		}
 		return $supported_db;
 	}
-	
+
 	static function is_md5($str)
 	{
 		return  preg_match('/^[0-9a-f]{32}$/',$str);
 	}
-}	
+}
 
 // some constanst for pre php4.3
 if (!defined('PHP_SHLIB_SUFFIX'))

@@ -184,8 +184,7 @@ function check_header_form()
 	}
 
 	// validate the input and return errors
-	$validation_errors = $GLOBALS['egw_setup']->header->validation_errors(
-		$GLOBALS['egw_info']['server']['server_root'],$GLOBALS['egw_info']['server']['server_root']);
+	$validation_errors = $GLOBALS['egw_setup']->header->validation_errors($GLOBALS['egw_info']['server']['server_root']);
 
 	//echo "egw_info[server]=<pre>".print_r($GLOBALS['egw_info']['server'],true)."</pre>\n";
 	//echo "egw_domain=<pre>".print_r($GLOBALS['egw_domain'],true)."</pre>\n";

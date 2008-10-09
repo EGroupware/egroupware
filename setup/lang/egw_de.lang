@@ -51,7 +51,6 @@ allow authentication via cookie	setup	de	Erlaube Benutzerauthentifizierung über
 allow password migration	setup	de	Erlaube Password Migration
 allowed migration types (comma-separated)	setup	de	Erlauber Migrationstypen (Komma separiert)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	de	Auf Domains kann alternative auch durch Anmelden als <i>benutzer@domain</i> zugegriffen werden.
-analysis	setup	de	Analyse
 and is up to date	setup	de	und ist aktuell
 and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
 app details	setup	de	Details der Anwendung
@@ -169,6 +168,7 @@ current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
+custom handler: %1	setup	de	Eigener Sitzunghandler: %1
 custom set via %1	setup	de	Benutzerdefiniert über "%1" gesetzt
 cyrus imap: admin user,password	setup	de	Cyrus IMAP: Adminbenutzer,Passwort
 database	setup	de	Datenbank
@@ -261,7 +261,6 @@ filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
 filesystem (default)	setup	de	Dateisystem (Vorgabe)
 force selectbox	setup	de	Auswahl erzwingen
-found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationsdatei gefunden. Lade Einstellungen von der Datei ...
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
 gives further options	setup	de	gibt zusätzliche Optionen
 go back	setup	de	Zurück gehen
@@ -294,15 +293,13 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	de	Wenn Sie ADS (Active Directory) Authentifizierung benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
-if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporäry files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzern Sie hier den Pfad für temporäre Dateien.
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzern Sie hier den Pfad für temporäre Dateien.
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	de	Wenn Sie nur Sprachen des gleichen Zeichensatzes (zB. westeuropäische) benützen, brauchen Sie keinen Systemzeichensatz zu setzten!
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
 import has been completed!	setup	de	Import ist beendet!
-importing old settings into the new format....	setup	de	Importiere alte Einstellung in das neue Format ...
-include root	setup	de	Include-Root
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
 install	setup	de	Installieren
 install all	setup	de	Alle Installieren
@@ -359,7 +356,6 @@ mcrypt algorithm (default tripledes)	setup	de	MCrypt-Algorithmus (Vorgabe TRIPLE
 mcrypt initialization vector	setup	de	MCrypt-Initialisierungsvektor
 mcrypt mode (default cbc)	setup	de	MCrypt-Modus (Vorgabe CBC)
 mcrypt settings (requires mcrypt php extension)	setup	de	MCrypt-Einstellungen (benötigt die mcrypt Erweiterung von PHP)
-mcrypt version	setup	de	MCrypt-Version
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	de	memory_limit (maximale Speicher für ein Skript) ist auf weniger als %1 gesetzt: einige eGroupWare Anwendungen benötigen mehr als die empfohlenen 8M. Sie müssen mit gelegentlichen Fehlern rechnen.
 migration between egroupware account repositories	setup	de	Migration zwischen versch. Orten zur Speicherung von eGroupWare Benutzern
 minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer-ID (z.B. 500 oder 100)
@@ -417,8 +413,7 @@ pear (%1) is a php repository and is usually in a package called %2.	setup	de	PE
 pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	de	PEAR Erweiterungen werden von vielen eGroupware Anwendungen benötigt, PEAR selbst ist die Basis für diese Erweiterungen!
 pear%1 is needed by: %2.	setup	de	PEAR%1 wird benötigt von: %2.
 persistent connections	setup	de	Permanente Verbindungen
-php plus restore	setup	de	PHP plus Wiederherstellen
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	de	PHP plus Wiederherstellen gibt bei weitem die beste Performanze. Es speichert die eGW Umgebung komplett in der Session.
+php session handler enabled in php.ini	setup	de	PHP Sitzungshandler aus der php.ini
 please check for sql scripts within the application's directory	setup	de	Bitte suchen Sie ein SQL Skript im Verzeichnis der Anwendung
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen Sie die Lese/Schreib-Rechte der Verzeichnisse oder gehen Sie zurück und benutzen eine andere Option.
 please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
@@ -463,7 +458,6 @@ return to setup	setup	de	Zurück zum Setup
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	de	Führt eine Aktualisierung des Datenbank Schema aus (falls notwendig): Domain(alle),[Konfigurationsbenutzer(admin)],Passwort
 run installation tests	setup	de	Installationstests starten
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	de	safe_mode ist eingeschaltet, was ist generell gut, da es Ihre Installation sicherer macht.
-sample configuration not found. using built in defaults	setup	de	Beispiel Konfiguration nicht gefunden, benutze eingebaute Voreinstellungen
 save	setup	de	Speichern
 save this text as contents of your header.inc.php	setup	de	Speichern Sie diesen Text als Datei header.inc.php
 schedule	setup	de	planen
@@ -488,16 +482,15 @@ select which user(s) will have admin privileges	setup	de	Wählen Sie den/die Ben
 select your old version	setup	de	Wählen Sie Ihre alte Version
 selectbox	setup	de	Auswahlfeld
 server root	setup	de	Server-Root
-sessions type	setup	de	Session-Typ
+session handler class used.	setup	de	Benutze Sitzunghandler Klasse.
+sessions handler	setup	de	Sitzunghandler
 set	setup	de	gesetzt
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen Sie dies auf "old" für Versionen < 2.4, ansonsten auf die exakte MCrypt Version die Sie benutzen.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	de	Den Systemzeichensatz auf UTF-8 (unicode) zu setzten, erlaubt die Koexistenz von Daten in Sprachen mit verschiedenen Zeichensätzen.
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
 setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
-should be the same as server root unless you know what you are doing.	setup	de	Sollte das gleiche Verzeichnis wie die Server-Root sein, au&szlig;er Sie wissen was Sie tun.
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 sieve: host[,port(2000)]	setup	de	Sieve: Rechner[,Port(2000)]
 size	setup	de	Größe
@@ -572,7 +565,6 @@ translations upgraded	setup	de	Übersetzungen aktualisiert
 true	setup	de	Ja
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	de	Versuchen Sie Ihr PHP so zu konfigurieren, dass es eine der oben genannten Datenbanken unterstützt, oder installieren Sie eGroupWare von Hand.
 two weeks	setup	de	zwei Wochen
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	de	Leider haben einige PHP/Apache Packete Probleme damit (Der Apache stirbt und Sie können sich nicht mehr einlogen).
 uninstall	setup	de	deinstaliert
 uninstall all applications	setup	de	Alle Anwendungen deinstallieren
 uninstalled	setup	de	nicht installiert
@@ -612,7 +604,6 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur eGroupWare Installation
-what type of sessions management do you want to use (php session management may perform better)?	setup	de	Welches Session-Management wollen Sie verwenden (PHP Session-Management hat eine bessere Performanz)?
 where should egroupware store file content	setup	de	Wo soll eGroupware den Inhalt von Dateien speichern
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit eGroupWare verwenden?
 world readable	setup	de	lesbar von jedem (world readable)
@@ -630,7 +621,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br />Es ist notwendig auf eine neue Version zu aktualisieren.<br />Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br /><br />Biite aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of egroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von eGroupWare
 you appear to have %1 support.	setup	de	Sie scheinen %1 Unterstützung zu haben.
-you appear to have php session support. enabling php sessions.	setup	de	Sie scheinen PHP Session Unterstützung zu haben. PHP Sessions eingeschaltet.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
 you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	de	Sie benutzen die PHP Version %1. eGroupWare benötigt mindestens die Version %2, empfohlen ist PHP %3.
@@ -645,7 +635,6 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen für den Administrator eingeben!
 you need to add at least one egroupware domain / database instance.	setup	de	Sie müssen mindestens eine eGroupWare Domain / Datenbank Instanz hinzufügen.
-you need to add some domains to your header.inc.php.	setup	de	Sie müssen eine Domain zu ihrer header.inc.php hinzufügen.
 you need to configure egroupware:	setup	de	Sie müssen eGroupWare konfigurieren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	de	Sie müssen die obigen Fehler beheben, bevor die Konfigurationsdatei header.inc.php gespeichert werden kann!
 you need to save the settings you made here first!	setup	de	Sie müssen die hier vorgenommenen Einstellungen zuerst speichern!
@@ -655,7 +644,6 @@ you should either install the sources or uninstall it, to get rid of the tables	
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	de	Sie werden sich NICHT mit PHP Sitzungen in die eGroupWare einlogen: "Ihre Sitzung konnte nicht verifiziert werden" !!!
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
-you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell
 your backup directory '%1' %2	setup	de	Ihr Datensicherungsverzeichnis '%1' %2
 your database does not exist	setup	de	Ihre Datenbank existiert nicht

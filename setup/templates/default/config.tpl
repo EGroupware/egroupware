@@ -36,7 +36,7 @@
    <tr class="row_off">
     <td colspan="2">
     	<b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b><br />
-    	{lang_If_you_can_only_access_the_docroot_choose_<b>Database</b>_for_where_to_store_the_file_content_AND_use_same_path_as_for_temporäry_files.}
+    	{lang_If_you_can_only_access_the_docroot_choose_<b>Database</b>_for_where_to_store_the_file_content_AND_use_same_path_as_for_temporary_files.}
     </td>
    </tr>
 
