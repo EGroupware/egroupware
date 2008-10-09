@@ -61,7 +61,7 @@ function setDefaultDBPort(selectBox,portField)
 			</tr>
 			<tr class="row_off">
 				<td><strong>{lang_session}</strong><br />
-					<select name="setting[sessions_handler]">
+					<select name="setting[session_handler]">
 						{session_options}
 					</select>
 				</td>

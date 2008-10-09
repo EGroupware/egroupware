@@ -268,9 +268,9 @@ function show_header_form($validation_errors)
 	$supported_session_handler = array(
 		'egw_session_files' => lang('PHP session handler enabled in php.ini'),
 	);
-	if (!isset($supported_session_handler[$GLOBALS['egw_info']['server']['sessions_handler']]))
+	if ($GLOBALS['egw_info']['server']['session_handler'] && !isset($supported_session_handler[$GLOBALS['egw_info']['server']['session_handler']]))
 	{
-		$supported_session_handler[$GLOBALS['egw_info']['server']['sessions_handler']] = lang("Custom handler: %1",$GLOBALS['egw_info']['server']['sessions_handler']);
+		$supported_session_handler[$GLOBALS['egw_info']['server']['session_handler']] = lang("Custom handler: %1",$GLOBALS['egw_info']['server']['session_handler']);
 	}
 	$options = array();
 	foreach($supported_session_handler as $type => $label)
