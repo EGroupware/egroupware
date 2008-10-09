@@ -266,7 +266,6 @@ class egw_session
 	 */
 	function commit_session()
 	{
-		error_log(__METHOD__);
 		self::encrypt($this->kp3);
 
 		session_write_close();
