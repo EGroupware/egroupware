@@ -1,3 +1,32 @@
+2008/10/09 (KlausLeithoff)
+-editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php
+-SpellChecker integration (aspell configured path from egw)
+from line 6 on ...
+-----------------------------------------
+-$aspell_prog   = '"C:\Program Files\Aspell\bin\aspell.exe"';   // by FredCK (for Windows)
++//$aspell_prog = '"C:\Program Files\Aspell\bin\aspell.exe"';   // by FredCK (for Windows)
+ //$aspell_prog = 'aspell';                                                                             // by FredCK (for Linux)
+-
+-$lang                  = 'en_US';
++if ($_GET['aspell_path'])
++{
++       $aspell_prog = $_GET['aspell_path'];
++}
++else
++{
++       $aspell_prog = 'aspell';
++}
++                
++if ($_GET['spellchecker_lang'])
++{
++       $lang = $_GET['spellchecker_lang'];
++}
++else
++{
++       $lang                   = 'en_US';
++}
+ $aspell_opts   = "-a --lang=$lang --encoding=utf-8 -H --rem-sgml-check=alt";           // by FredCK
+---------------------------------------
 2008/04/15 (RalfBecker)
  - update to FCK 2.6.3
  - editor/filemanager/connectors/php/io.php line 184:
