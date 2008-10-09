@@ -38,7 +38,7 @@ class setup_detection
 	{
 		$tname = Array();
 		$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
-		
+
 		$GLOBALS['egw_setup']->set_table_names();
 
 		if($GLOBALS['egw_setup']->table_exist(array($GLOBALS['egw_setup']->applications_table)))
@@ -342,8 +342,8 @@ class setup_detection
 			$config_errors[] = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
 		}
 
-		if ((!isset($config['file_repository']) || $config['file_repository'] == 'sql') && 
-			(!isset($config['file_store_contents']) || $config['file_store_contents'] == 'filesystem') && 
+		if ((!isset($config['file_repository']) || $config['file_repository'] == 'sql') &&
+			(!isset($config['file_store_contents']) || $config['file_store_contents'] == 'filesystem') &&
 			!$this->check_dir($config['files_dir'],$error_msg,true))
 		{
 			$config_errors[] = lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
@@ -487,7 +487,7 @@ class setup_detection
 			return True;
 		}
 	}
-		
+
 	/**
 	 * Checks if a directory exists, is writable by the webserver and optionaly is in the docroot
 	 *
@@ -512,15 +512,15 @@ class setup_detection
 		{
 			$docroots = array(realpath(EGW_SERVER_ROOT),realpath($_SERVER['DOCUMENT_ROOT']));
 			$dir = realpath($dir);
-	
+
 			foreach ($docroots as $docroot)
 			{
 				$len = strlen($docroot);
-	
+
 				if ($docroot == substr($dir,0,$len) && $len>0)
 				{
 					$rest = substr($dir,$len);
-	
+
 					if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
 					{
 						$msg = lang('is in the webservers docroot');

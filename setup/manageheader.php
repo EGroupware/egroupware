@@ -31,6 +31,7 @@ $setup_tpl->set_block('T_setup_manage','domain','domain');
 
 // authentication phase
 $GLOBALS['egw_info']['setup']['stage']['header'] = $GLOBALS['egw_setup']->detection->check_header();
+
 if ($GLOBALS['egw_info']['setup']['stage']['header'] > 2 && !$GLOBALS['egw_setup']->auth('Header'))
 {
 	$GLOBALS['egw_setup']->html->show_header('Please login',True);
@@ -72,7 +73,6 @@ if (!file_exists('../header.inc.php') || !is_readable('../header.inc.php'))
 else
 {
 	$GLOBALS['egw_info']['server']['server_root'] = EGW_SERVER_ROOT;
-	$GLOBALS['egw_info']['server']['include_root'] = EGW_INCLUDE_ROOT;
 }
 if (isset($_POST['setting']))	// Post of the header-form
 {
@@ -159,8 +159,6 @@ function check_header_form()
 			case 'new_admin_password':
 				if ($value) $GLOBALS['egw_info']['server']['header_admin_password'] = md5($value);
 				break;
-			case 'mcrypt_version':
-				$GLOBALS['egw_info']['server']['versions']['mcrypt'] = $value;
 			default:
 				$GLOBALS['egw_info']['server'][$name] = $value;
 				break;
@@ -187,8 +185,7 @@ function check_header_form()
 
 	// validate the input and return errors
 	$validation_errors = $GLOBALS['egw_setup']->header->validation_errors(
-		$GLOBALS['egw_info']['server']['server_root'],
-		$GLOBALS['egw_info']['server']['include_root']);
+		$GLOBALS['egw_info']['server']['server_root'],$GLOBALS['egw_info']['server']['server_root']);
 
 	//echo "egw_info[server]=<pre>".print_r($GLOBALS['egw_info']['server'],true)."</pre>\n";
 	//echo "egw_domain=<pre>".print_r($GLOBALS['egw_domain'],true)."</pre>\n";
@@ -225,15 +222,6 @@ function show_header_form($validation_errors)
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
-	if((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
-	{
-		echo '<p align="center" class="msg"><b>' .
-			lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',
-			PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version) .
-			"</b></p>\n";
-		$GLOBALS['egw_setup']->html->show_footer();
-		exit;
-	}
 	$supported_db = $GLOBALS['egw_setup']->header->check_db_support($detected);
 
 	if (!count($supported_db))
@@ -253,40 +241,7 @@ function show_header_form($validation_errors)
 	}
 	$setup_tpl->set_var('js_default_db_ports',$js_default_db_ports);
 
-	// checking PHP session support
-	if ($GLOBALS['egw_setup']->header->check_load_extension('session'))
-	{
-		$detected[] = lang('You appear to have PHP session support. Enabling PHP sessions.');
-		$supported_sessions_type['php4'] = 'PHP';			// makeing php sessions the default
-		$supported_sessions_type['php4-restore'] = lang('PHP plus restore');	// php-sessions with restore of egw_info array and egw object from the session
-	}
-	$supported_sessions_type['db'] = lang('Database');
-
-	if (file_exists('../header.inc.php') && is_file('../header.inc.php') && is_readable('../header.inc.php'))
-	{
-		$detected[] = lang('Found existing configuration file. Loading settings from the file...');
-
-		// This code makes sure the newer multi-domain supporting header.inc.php is being used
-		if(!isset($GLOBALS['egw_domain']))
-		{
-			$detected[] = lang('You need to add some domains to your header.inc.php.');
-
-			$GLOBALS['egw_domain']['default'] = $GLOBALS['egw_setup']->header->domain_defaults(
-				$GLOBALS['egw_info']['server']['header_admin_user'],
-				$GLOBALS['egw_info']['server']['header_admin_password'],$supported_db);
-		}
-		elseif(@$GLOBALS['egw_info']['server']['header_version'] != @$GLOBALS['egw_info']['server']['current_header_version'])
-		{
-			$detected[] = lang("You're using an old header.inc.php version...");
-			$detected[] = lang('Importing old settings into the new format....');
-		}
-	}
-	else	// no config file found => using or detecting the defaults
-	{
-		$detected[] = lang('Sample configuration not found. Using built in defaults');
-	}
-	if ($validation_errors) $detected = $validation_errors;
-	$setup_tpl->set_var('detected','<ul><li>'.implode("</li>\n<li>",$detected)."</li>\n</ul>\n");
+	if ($validation_errors) $setup_tpl->set_var('detected','<ul><li>'.implode("</li>\n<li>",$validation_errors)."</li>\n</ul>\n");
 
 	if ($_POST['adddomain'])
 	{
@@ -305,18 +260,22 @@ function show_header_form($validation_errors)
 			case 'mcrypt_enabled':
 				$setup_tpl->set_var($name.($GLOBALS['egw_info']['server'][$name] ? '_yes' : '_no'),' selected="selected"');
 				break;
-			case 'versions':
-				$setup_tpl->set_var('mcrypt_version',htmlspecialchars($GLOBALS['egw_info']['server']['versions']['mcrypt']));
-				break;
 			default:
-				$setup_tpl->set_var($name,htmlspecialchars($value));
+				if (!is_array($value)) $setup_tpl->set_var($name,htmlspecialchars($value));
 				break;
 		}
 	}
-	$options = array();
-	foreach($supported_sessions_type as $type => $label)
+	$supported_session_handler = array(
+		'egw_session_files' => lang('PHP session handler enabled in php.ini'),
+	);
+	if (!isset($supported_session_handler[$GLOBALS['egw_info']['server']['sessions_handler']]))
 	{
-		$options[] = '<option ' . ($type == $GLOBALS['egw_info']['server']['sessions_type'] ?
+		$supported_session_handler[$GLOBALS['egw_info']['server']['sessions_handler']] = lang("Custom handler: %1",$GLOBALS['egw_info']['server']['sessions_handler']);
+	}
+	$options = array();
+	foreach($supported_session_handler as $type => $label)
+	{
+		$options[] = '<option ' . ($type == $GLOBALS['egw_info']['server']['session_handler'] ?
 			'selected="selected" ' : '') . 'value="' . $type . '">' . $label . '</option>';
 	}
 	$setup_tpl->set_var('session_options',implode("\n",$options));
@@ -367,15 +326,13 @@ function show_header_form($validation_errors)
 	));
 
 	$setup_tpl->set_var(array(
-		'lang_analysis'        => $validation_errors ? lang('Validation errors') : lang('Analysis'),
+		'lang_analysis'        => $validation_errors ? lang('Validation errors') : '',
 		'lang_settings'        => lang('Settings'),
 		'lang_domain'          => lang('Database instance (eGW domain)'),
 		'lang_delete'          => lang('Delete'),
 		'lang_adddomain'       => lang('Add new database instance (eGW domain)'),
 		'lang_serverroot'      => lang('Server Root'),
 		'lang_serverroot_descr'=> lang('Path (not URL!) to your eGroupWare installation.'),
-		'lang_includeroot'     => lang('Include Root'),
-		'lang_includeroot_descr'=>lang('Should be the same as Server Root unless you know what you are doing.'),
 		'lang_adminuser'       => lang('Header username'),
 		'lang_adminuser_descr' => lang('Admin user for header manager'),
 		'lang_adminpass'       => lang('Header password'),
@@ -403,14 +360,10 @@ function show_header_form($validation_errors)
 		'lang_passforconfig'   => lang('Password needed for domain configuration.'),
 		'lang_persist'         => lang('Persistent connections'),
 		'lang_persistdescr'    => lang('Do you want persistent connections (higher performance, but consumes more resources)'),
-		'lang_sesstype'        => lang('Sessions Type'),
-		'lang_sesstypedescr'   => lang('What type of sessions management do you want to use (PHP session management may perform better)?').
-			' '.lang('PHP plus restore gives by far the best performance, as it stores the eGW enviroment completly in the session.').
-			' '.lang('Unfortunally some PHP/Apache packages have problems with it (Apache dies and you cant login anymore).'),
+		'lang_session'         => lang('Sessions Handler'),
+		'lang_session_descr'   => lang('Session handler class used.'),
 		'lang_enablemcrypt'    => lang('Enable MCrypt'),
 		'lang_mcrypt_warning'  => lang('Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.'),
-		'lang_mcryptversion'   => lang('MCrypt version'),
-		'lang_mcryptversiondescr' => lang('Set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.'),
 		'lang_mcryptiv'        => lang('MCrypt initialization vector'),
 		'lang_mcryptivdescr'   => lang('This should be around 30 bytes in length.<br />Note: The default has been randomly generated.'),
 		'lang_domselect'       => lang('Domain select box on login'),

@@ -1,24 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<!--
-		HTML Coding Standards;
-
-		1. use lowercase if possible, because of xhtml validation
-		2. make your template validate either html 4.01 or xhtml 1
-		3. make your application validate both if possible
-		4. always use quotes ("") when possible
-		5. use png-graphics if possible, but keep in mind IE has a transparency bug when it renders png's
-
-		-->
-
-		<!-- LAY-OUT BUGS
-
-		1. in IE no link cursor is displayed when png's are used for that link
-		2. tabs are ugly in preferences
-		3. spacers inside sidebox
-
-		-->
 		<title>eGroupWare Setup - {lang_setup} {configdomain}</title>
 		<meta http-equiv="content-type" content="text/html; charset={charset}" />
 		<meta name="keywords" content="egroupware" />
@@ -49,29 +31,16 @@
 
 			td
 			{
-				/*font-size:12px;*/
 				line-height:170%;
 			}
 
 			/* some styles specially for setup */
 			#tbl_manage_header td
 			{
-				border:solid 0px green;
-				vertical-align:top;
-				padding-bottom:10px;
+				vertical-align: top;
+				padding-bottom: 3px;
+				padding-left: 5px;
 			}
-			.th th,
-			.th td
-			{
-				padding:3px;
-			}
-			.table_domains
-			{
-				border:solid 1px #cccccc;
-				width:100%;
-				margin-bottom:10px;
-			}
-
 			-->
 		</style>
 
