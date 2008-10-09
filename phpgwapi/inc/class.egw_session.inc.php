@@ -226,11 +226,19 @@ class egw_session
       	ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
 	}
 
+	/**
+	 * Magic function called when this class get's restored from the session
+	 *
+	 */
 	function __wakeup()
 	{
 		ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
 	}
 
+	/**
+	 * Destructor
+	 *
+	 */
 	function __destruct()
 	{
 		/* foreach($GLOBALS['egw'] as $name => &$value)
@@ -252,6 +260,19 @@ class egw_session
 	}
 
 	/**
+	 * commit the sessiondata to storage
+	 *
+	 * It's necessary to use this function instead of session_write_close() direct, as otherwise the session is not encrypted!
+	 */
+	function commit_session()
+	{
+		error_log(__METHOD__);
+		self::encrypt($this->kp3);
+
+		session_write_close();
+	}
+
+	/**
 	 * Keys of session variables which get encrypted
 	 *
 	 * @var array
@@ -266,13 +287,18 @@ class egw_session
 	static $mcrypt;
 
 	/**
+	 * Name of flag in session to signal it is encrypted or not
+	 */
+	const EGW_SESSION_ENCRYPTED = 'egw_session_encrypted';
+
+	/**
 	 * Encrypt the variables in the session
 	 *
 	 * Is called by self::__destruct().
 	 */
 	static function encrypt($kp3)
 	{
-		if (self::init_crypt($kp3))
+		if (!isset($_SESSION[self::EGW_SESSION_ENCRYPTED]) && self::init_crypt($kp3))
 		{
 			foreach(self::$egw_session_vars as $name)
 			{
@@ -282,6 +308,8 @@ class egw_session
 					//error_log(__METHOD__."() 'encrypting' session var: $name, len=".strlen($_SESSION[$name]));
 				}
 			}
+			$_SESSION[self::EGW_SESSION_ENCRYPTED] = true;	// flag session as encrypted
+
 			mcrypt_generic_deinit(self::$mcrypt);
 			self::$mcrypt = null;
 		}
@@ -295,16 +323,17 @@ class egw_session
 	 */
 	static function decrypt()
 	{
-		if (self::init_crypt($_REQUEST['kp3']))
+		if ($_SESSION[self::EGW_SESSION_ENCRYPTED] && self::init_crypt($_REQUEST['kp3']))
 		{
 			foreach(self::$egw_session_vars as $name)
 			{
-				if (isset($_SESSION[$name]) && $_SESSION[$name])
+				if (isset($_SESSION[$name]))
 				{
-					$_SESSION[$name] = unserialize($s = trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])));
-					//error_log(__METHOD__."() 'decrypting' session var: gettype(_SESSION[$name]) = ".gettype($_SESSION[$name]));
+					$_SESSION[$name] = unserialize(trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])));
+					//error_log(__METHOD__."() 'decrypting' session var $name: gettype($name) = ".gettype($_SESSION[$name]));
 				}
 			}
+			unset($_SESSION[self::EGW_SESSION_ENCRYPTED]);	// delete encryption flag
 		}
 	}
 
@@ -1028,6 +1057,17 @@ class egw_session
 		}
 		else
 		{
+			// check if the app-session is set to something else then an array, if that's the case set it to an empty array
+			// otherwise you get a PHP Fatal error: Cannot use string offset as an array (happens sometimes in felamimail)
+			if (isset($_SESSION[self::EGW_APPSESSION_VAR][$appname]) && !is_array($_SESSION[self::EGW_APPSESSION_VAR][$appname]))
+			{
+				error_log(__METHOD__."($location,$appname,$data) gettype(_SESSION[self::EGW_APPSESSION_VAR][$appname])=".gettype($_SESSION[self::EGW_APPSESSION_VAR][$appname]).' --> set to array()!');
+				if (isset($_SESSION[self::EGW_APPSESSION_VAR]) && !is_array($_SESSION[self::EGW_APPSESSION_VAR]))
+				{
+					$_SESSION[self::EGW_APPSESSION_VAR] = array();
+				}
+				$_SESSION[self::EGW_APPSESSION_VAR][$appname] = array();
+			}
 			$_SESSION[self::EGW_APPSESSION_VAR][$appname][$location] =& $data;
 			$ret =& $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];
 		}
@@ -1333,16 +1373,6 @@ class egw_session
 	/*
 	 * depricated functions, to be removed after 1.6
 	 */
-
-	/**
-	 * commit the sessiondata to storage
-	 *
-	 * @deprecated call session_write_close() direct, as we only support php sessions
-	 */
-	function commit_session()
-	{
-		session_write_close();
-	}
 
 	/**
 	 * Delete all data from the session cache for a user
