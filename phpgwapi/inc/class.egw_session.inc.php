@@ -1037,6 +1037,11 @@ class egw_session
 	 */
 	public static function &appsession($location = 'default', $appname = '', $data = '##NOTHING##')
 	{
+		if (isset($_SESSION[self::EGW_SESSION_ENCRYPTED]))
+		{
+			//error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			return false;	// can no longer store something in the session, eg. because commit_session() was called
+		}
 		if (!$appname)
 		{
 			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
@@ -1056,17 +1061,6 @@ class egw_session
 		}
 		else
 		{
-			// check if the app-session is set to something else then an array, if that's the case set it to an empty array
-			// otherwise you get a PHP Fatal error: Cannot use string offset as an array (happens sometimes in felamimail)
-			if (isset($_SESSION[self::EGW_APPSESSION_VAR][$appname]) && !is_array($_SESSION[self::EGW_APPSESSION_VAR][$appname]))
-			{
-				error_log(__METHOD__."($location,$appname,$data) gettype(_SESSION[self::EGW_APPSESSION_VAR][$appname])=".gettype($_SESSION[self::EGW_APPSESSION_VAR][$appname]).' --> set to array()!');
-				if (isset($_SESSION[self::EGW_APPSESSION_VAR]) && !is_array($_SESSION[self::EGW_APPSESSION_VAR]))
-				{
-					$_SESSION[self::EGW_APPSESSION_VAR] = array();
-				}
-				$_SESSION[self::EGW_APPSESSION_VAR][$appname] = array();
-			}
 			$_SESSION[self::EGW_APPSESSION_VAR][$appname][$location] =& $data;
 			$ret =& $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];
 		}
