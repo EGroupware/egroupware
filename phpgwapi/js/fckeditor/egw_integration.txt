@@ -1,7 +1,9 @@
 2008/10/09 (KlausLeithoff)
+-To use Speller Pages just set the following configuration in fckconfig.js or in your own Configuration File:
+ FCKConfig.SpellChecker = 'SpellerPages' ;
 -editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php
 -SpellChecker integration (aspell configured path from egw)
-from line 6 on ...
+ from line 6 on ...
 -----------------------------------------
 -$aspell_prog   = '"C:\Program Files\Aspell\bin\aspell.exe"';   // by FredCK (for Windows)
 +//$aspell_prog = '"C:\Program Files\Aspell\bin\aspell.exe"';   // by FredCK (for Windows)
