@@ -224,8 +224,6 @@ class egw_session
 		}
 		self::set_cookiedomain();
       	ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
-
-		self::decrypt();
 	}
 
 	function __wakeup()
@@ -301,10 +299,10 @@ class egw_session
 		{
 			foreach(self::$egw_session_vars as $name)
 			{
-				if (isset($_SESSION[$name]) && !is_array($_SESSION[$name]))
+				if (isset($_SESSION[$name]) && $_SESSION[$name])
 				{
-					//error_log(__METHOD__."() 'decrypting' session var: $name");
-					$_SESSION[$name] = unserialize(trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])));
+					$_SESSION[$name] = unserialize($s = trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])));
+					//error_log(__METHOD__."() 'decrypting' session var: gettype(_SESSION[$name]) = ".gettype($_SESSION[$name]));
 				}
 			}
 		}
@@ -476,6 +474,7 @@ class egw_session
 		$GLOBALS['egw_info']['user']  = $this->user;
 
 		$this->appsession('password','phpgwapi',base64_encode($this->passwd));
+
 		if ($GLOBALS['egw']->acl->check('anonymous',1,'phpgwapi'))
 		{
 			$this->session_flags = 'A';
@@ -1006,7 +1005,6 @@ class egw_session
 	 * @param string $location free lable to store the data
 	 * @param string $appname='' default current application (egw_info[flags][currentapp])
 	 * @param mixed $data='##NOTHING##' if given, data to store, if not specified
-	 * @todo enable session encryption again, but with the whole session data at once, not every single value, which would also solve mcrypts padding problem
 	 * @return mixed session data or false if no data stored for $appname/$location
 	 */
 	public static function &appsession($location = 'default', $appname = '', $data = '##NOTHING##')
@@ -1015,19 +1013,31 @@ class egw_session
 		{
 			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		}
-		//error_log(__METHOD__."($location,$appname,$data)");
 
 		// allow to store eg. '' as the value.
 		if ($data === '##NOTHING##')
 		{
-			// do not decrypt and return if no data (decrypt returning garbage)
 			if(isset($_SESSION[self::EGW_APPSESSION_VAR][$appname]) && array_key_exists($location,$_SESSION[self::EGW_APPSESSION_VAR][$appname]))
 			{
-				return $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];
+				$ret =& $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];
 			}
-			return false;
+			else
+			{
+				$ret = false;
+			}
 		}
-		return $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location] =& $data;
+		else
+		{
+			$_SESSION[self::EGW_APPSESSION_VAR][$appname][$location] =& $data;
+			$ret =& $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];
+		}
+		if (self::$errorlog_debug === 'appsession')
+		{
+			error_log(__METHOD__."($location,$appname,$data) === ".(is_scalar($ret) && strlen($ret) < 50 ?
+				(is_bool($ret) ? ($ret ? '(bool)true' : '(bool)false') : $ret) :
+				(strlen($r = array2string($ret)) < 50 ? $r : substr($r,0,50).' ...')));
+		}
+		return $ret;
 	}
 
 	/**
