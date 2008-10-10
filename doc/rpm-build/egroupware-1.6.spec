@@ -552,21 +552,18 @@ ln -s sitemgr/sitemgr-link
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/files
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/backup
-	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/sessions
 	%config %attr(0640,wwwrun,www) /var/lib/egroupware/header.inc.php
 %endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
-	%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
 	%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 %endif
 %if 0%{?mandriva_version}
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
-	%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
 	%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 %endif
 
@@ -605,21 +602,18 @@ ln -s sitemgr/sitemgr-link
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/files
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/backup
-	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/sessions
 	%config %attr(0640,wwwrun,www) /var/lib/egroupware/header.inc.php
 %endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
-	%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
 	%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 %endif
 %if 0%{?mandriva_version}
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
 	%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
-	%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
 	%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 %endif
 
