@@ -183,6 +183,7 @@ class addressbook_vcal extends addressbook_bo
 		unset($contact['email_home']);
 		unset($contact['url']);
 		unset($contact['url_home']);
+		unset($contact['n_fileas']);
 
 		// some clients cut the values, because they do not support the same length of data like eGW
 		// at least the first 10 characters must match
@@ -439,7 +440,7 @@ class addressbook_vcal extends addressbook_bo
 			'TEL;CAR'	=> array('tel_car'),
 			'TEL;PAGER;WORK' => array('tel_pager'),
 			'TEL;VOICE;WORK' => array('tel_work'),
-			'TEL;VOICE;HOME' => array('tel_home'),	  
+			'TEL;VOICE;HOME' => array('tel_home'),
 			'TITLE'		=> array('contact_role'),
 			'URL;WORK'	=> array('url'),
 			'URL;HOME'	=> array('url_home'),
@@ -447,7 +448,7 @@ class addressbook_vcal extends addressbook_bo
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'PHOTO'		=> array('jpegphoto'),
 		);
-		
+
 		$defaultFields[10] = array(	// nokia 9300
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
@@ -464,7 +465,7 @@ class addressbook_vcal extends addressbook_bo
 			'TEL;FAX'	=> array('tel_fax_home'),
 			'TEL;PAGER' => array('tel_pager'),
 			'TEL;WORK;VOICE' => array('tel_work'),
-			'TEL;HOME;VOICE' => array('tel_home'),	  
+			'TEL;HOME;VOICE' => array('tel_home'),
 			'TITLE'		=> array('contact_role'),
 			'URL'	=> array('url'),
 		);
@@ -487,7 +488,7 @@ class addressbook_vcal extends addressbook_bo
 			'TEL;VOICE;HOME' => array('tel_home'),
 			'TEL;VOICE;WORK' => array('tel_work'),
 			'TEL;PAGER'     => array('tel_pager'),
-			'TEL;CAR'     => array('tel_car'),			
+			'TEL;CAR'     => array('tel_car'),
 			'TITLE'         => array('title'),
 			'URL;WORK'      => array('url'),
 			'URL;HOME'           => array('url_home'),
@@ -632,7 +633,7 @@ class addressbook_vcal extends addressbook_bo
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 
-		if(!is_array($this->supportedFields)) 
+		if(!is_array($this->supportedFields))
 		{
 			$this->setSupportedFields();
 		}
@@ -644,7 +645,7 @@ class addressbook_vcal extends addressbook_bo
 		// Unfold any folded lines.
 		$vCardUnfolded = preg_replace ('/(\r|\n)+ /', ' ', $_vcard);
 
-		if(!$vCard->parsevCalendar($vCardUnfolded, 'VCARD')) 
+		if(!$vCard->parsevCalendar($vCardUnfolded, 'VCARD'))
 		{
 			return False;
 		}
@@ -658,7 +659,7 @@ class addressbook_vcal extends addressbook_bo
 		{
 			$rowName  = $vcardRow['name'];
 
-			$vcardElementCount = count($vcardRow['params'],COUNT_RECURSIVE);    
+			$vcardElementCount = count($vcardRow['params'],COUNT_RECURSIVE);
 
 			if( $vcardElementCount > 0 )
 			{
@@ -687,7 +688,7 @@ class addressbook_vcal extends addressbook_bo
 
 		foreach($rowNames as $rowName => $vcardKey)
 		{
-			
+
 			switch($rowName)
 			{
 				case 'ADR':
@@ -697,11 +698,11 @@ class addressbook_vcal extends addressbook_bo
 				case 'TEL;CELL':
 				case 'TEL;PAGER':
 				case 'TEL;VOICE':
-					if(!isset($rowNames[$rowName. ';WORK']) && array_key_exists($rowName. ';WORK', $this->supportedFields) ) 
+					if(!isset($rowNames[$rowName. ';WORK']) && array_key_exists($rowName. ';WORK', $this->supportedFields) )
 					{
 						$finalRowNames[$rowName. ';WORK'] = $vcardKey;
 					}
-					else   
+					else
 					{
 						$InvolvedValues = explode(';',$rowName.';WORK');
 						foreach($this->supportedFields as $suppFields => $suppFieldsValue )
