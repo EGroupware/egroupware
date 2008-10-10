@@ -882,7 +882,7 @@ class addressbook_bo extends addressbook_so
 	 *
 	 * Is called as hook to participate in the linking
 	 *
-	 * @param string $pattern pattern to search
+	 * @param string|array $pattern pattern to search, or an array with a 'search' key
 	 * @return array with id - title pairs of the matching entries
 	 */
 	function link_query($pattern)
@@ -892,7 +892,7 @@ class addressbook_bo extends addressbook_so
 		{
 			foreach($this->columns_to_search as $col)
 			{
-				$criteria[$col] = $pattern;
+				$criteria[$col] = is_array($pattern) ? $pattern['search'] : $pattern;
 			}
 		}
 		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR')))
