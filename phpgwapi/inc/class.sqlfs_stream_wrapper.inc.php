@@ -168,7 +168,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$dir = egw_vfs::dirname($url);
 
 		$this->opened_path = $path;
-		$this->opened_mode = $mode;
+		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
 
 		if (!($stat = self::url_stat($path,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
