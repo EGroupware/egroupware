@@ -232,6 +232,12 @@ class calendar_hooks
 			45	=> '45',
 			60	=> '60'
 		);
+		$defaultresource_sel = array(
+			'resources_conflict'    => lang('resources with conflict detection'),
+			'resources_without_conflict'    => lang('resources except conflicting ones'),
+			'resources'     => lang('resources'),
+			'addressbook'   => lang('addressbook')
+		);
 		$groups = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']);
 		$options = array('0' => lang('none'));
 		if (is_array($groups))
@@ -350,6 +356,15 @@ class calendar_hooks
 				'size'    => 3,
 				'xmlrpc' => True,
 				'admin'  => False
+			),
+			'defaultresource_sel' => array(
+				'type'		=> 'select',
+				'label'		=> 'default type of resources selection',
+				'name'		=> 'defaultresource_sel',
+				'values'	=> $defaultresource_sel,
+				'help'		=> 'Default type of resources application selected in the calendar particpants research form.',
+				'xmlrpc'	=> True,
+				'admin'		=> False,
 			),
 			'planner_start_with_group' => array(
 				'type'   => 'select',

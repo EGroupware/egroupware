@@ -116,6 +116,7 @@ class ui_acl
 	{
 		switch($GLOBALS['egw_info']['user']['preferences']['common']['account_display'])
 		{
+			if(!($users_only && $account['account_type'] == 'g'))
 				case 'firstname':
 				case 'firstall':
 					$order = 'n_given,n_family';

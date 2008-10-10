@@ -323,24 +323,140 @@ class bo_resources
 	/**
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * query infolog for entries matching $pattern
+	 * @param string|array $pattern if it's a string it is the string we will search for as a criteria, if it's an array we
+	 * 	will seach for 'search' key in this array to get the string criteria. others keys handled are actually used
+	 *	for calendar disponibility.
 	 *
 	 */
 	function link_query( $pattern )
 	{
-		$criteria = array('name' => $pattern, 'short_description' => $pattern);
-		$only_keys = 'res_id,name,short_description';
+		if (is_array($pattern))
+		{
+			$criteria =array('name' => $pattern['search']
+					,'short_description' => $pattern['search']);
+		}
+		else
+		{
+			$criteria = array('name' => $pattern
+				, 'short_description' => $pattern);
+		}
+		$only_keys = 'res_id,name,short_description,bookable,useable';
 		$filter = array(
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
 			//'accessory_of' => '-1'
 		);
 		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR',false,$filter);
-		foreach($data as $num => $resource)
+		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
+		$show_conflict=False;
+		if (is_array($pattern) && isset($pattern['exec']) )
 		{
-			$list[$resource['res_id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+			// we'll use a cache for resources info taken from database
+			static $res_info_cache = array();
+			$cal_info=$pattern['exec'];
+			if ( isset($cal_info['start']) && isset($cal_info['duration']))
+			{
+				//get a calendar objet for reservations
+				if ( (!isset($this->bocal)) || !(is_object($this->bocal)))
+				{
+					require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_bo.inc.php');
+					$this->bocal =& CreateObject('calendar.calendar_bo');
+				}
+
+				//get the real timestamps from infos we have on the event
+				//use etemplate date widget to handle date values
+				require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.jscalendar.inc.php');
+				$jscal=& CreateObject('phpgwapi.jscalendar');
+				$startarr= $jscal->input2date($cal_info['start']['str'],$raw='raw',$day='day',$month='month',$year='year');
+				if (isset($cal_info['whole_day'])) {
+					$startarr['hour'] = $startarr['minute'] = 0;
+					unset($startarr['raw']);
+					$start = $this->bocal->date2ts($startarr);
+					$end = $start + 86399;
+				} else {
+					$startarr['hour'] = $cal_info['start']['H'];
+					$startarr['minute'] = $cal_info['start']['i'];
+					unset($startarr['raw']);
+					$start = $this->bocal->date2ts($startarr);
+					$end = $start + ($cal_info['duration']);
+				}
+
+				// search events matching our timestamps
+ 				$resource_list=array();
+				foreach($data as $num => $resource) 
+				{
+					// we only need resources id for the search, but with a 'r' prefix
+					// now we take this loop to store a new resource array indexed with resource id
+					// and as we work for calendar we use only bookable resources
+					if ((isset($resource['bookable'])) && ($resource['bookable'])){
+						$res_info_cache[$resource['res_id']]=$resource;
+						$resource_list[]='r'.$resource['res_id'];
+					}
+				}
+				$overlapping_events =& $this->bocal->search(array(
+					'start' => $start,
+					'end'   => $end,
+					'users' => $resource_list,
+					'ignore_acl' => true,   // otherwise we get only events readable by the user
+					'enum_groups' => false,  // otherwise group-events would not block time
+				));
+
+				// parse theses overlapping events
+				foreach($overlapping_events as $event)
+				{
+					if ($event['non_blocking']) continue; // ignore non_blocking events
+					if (isset($cal_info['event_id']) && $event['id']==$cal_info['event_id']) {
+						continue; //ignore this event, it's the current edited event, no conflict by def
+					}
+					// now we are interested only on resources booked by theses events
+					if (isset($event['participants']) && is_array($event['participants'])){
+						foreach($event['participants'] as $part_key => $part_detail){
+							if ($part_key{0}=='r') 
+							{ //now we gatta resource here
+								//need to check the quantity of this resource
+								$resource_id=substr($part_key,1);
+								// if we do not find this resource in our indexed array it's certainly
+								// because it was unset, non bookable maybe
+								if (!isset($res_info_cache[$resource_id])) continue;
+								// to detect ressources with default to 1 quantity
+								if (!isset($res_info_cache[$resource_id]['useable'])) {
+									$res_info_cache[$resource_id]['useable'] = 1;
+								}
+								// now decrement this quantity usable
+								// TODO : decrement with real event quantity, not 1
+								// but this quantity is not given by calendar search, we should re-use a cal object
+								// to load specific cal infos, like quantity... lot of requests
+								$res_info_cache[$resource_id]['useable']--;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (isset($res_info_cache)) {
+			$show_conflict= (isset($pattern['exec']['show_conflict'])&& ($pattern['exec']['show_conflict']=='0'))? False:True;
+			// if we have this array indexed on resource id it means non-bookable resource are removed and we are working for calendar
+			// so we'll loop on this one and not $data
+			foreach($res_info_cache as $id => $resource) {
+				//maybe this resource is reserved
+				if ( ($resource['useable'] < 1) )
+				{	
+					if($show_conflict) {
+						$list[$id] = ' ('.lang('conflict').') '.$resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+					}
+				} else {
+				        $list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+				}
+			}
+		} else {
+			// we are not working for the calendar, we loop on the initial $data
+			foreach($data as $num => $resource)
+			{
+				$id=$resource['res_id'];
+				$list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+			}
 		}
 		return $list;
 	}
-
 	/**
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * get title for an infolog entry identified by $res_id

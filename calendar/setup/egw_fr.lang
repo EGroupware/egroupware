@@ -46,6 +46,7 @@ canceled	calendar	fr	Annulé
 charset of file	calendar	fr	Jeu de charactères du fichier
 close the window	calendar	fr	Fermer la fenêtre
 compose a mail to all participants after the event is saved	calendar	fr	écrire un email à tous les participants après l'enregistrement de l'événement
+conflict	calendar	fr	Conflit
 copy of:	calendar	fr	Copie de :
 copy this event	calendar	fr	Copier cet événement
 countries	calendar	fr	Pays
@@ -65,12 +66,15 @@ default appointment length (in minutes)	calendar	fr	Durée du rendez-vous par d�
 default calendar filter	calendar	fr	Filtre de calendrier par défaut
 default calendar view	calendar	fr	vue du calendrier par défaut
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	fr	Durée par défaut des nouveaux événements. La durée est en minutes, c'est-à-dire 60 vaut 1 heure.
+default type of resources application selected in the calendar particpants research form.	calendar	fr	Type d'application de ressource sélectionnée par défaut dans le formulaire de recherche des participants.
+default type of resources selection	calendar	fr	Type de sélection  de ressource par défaut
 default week view	calendar	fr	vue par défaut
 delete series	calendar	fr	Supprimer des occurences
 delete this alarm	calendar	fr	Supprimer cette alarme
 delete this event	calendar	fr	Supprimer cet événement
 delete this exception	calendar	fr	Supprimer cet exception
 delete this series of recuring events	calendar	fr	Supprimer ces occurences d'événements récurrents
+deny ressources reservation for private events	calendar fr	Interdire la réservation de ressources pour les rendez-vous privés
 disinvited	calendar	fr	Invitation annulée
 display status of events	calendar	fr	Afficher le statut des événements
 displayed view	calendar	fr	vue affichée
@@ -96,6 +100,7 @@ ends	calendar	fr	finit
 error adding the alarm	calendar	fr	Erreur lors de l'ajout de l'alarme
 error: importing the ical	calendar	fr	Erreur: lors de l'importation de l'iCal
 error: no participants selected !!!	calendar	fr	Erreur: aucun participant sélectionné
+error: ressources reservation in private events is not allowed!!!	calendar	fr	Erreur: la réservation de ressources sur les rendez-vous privés n'est pas autorisée !!!
 error: saving the event !!!	calendar	fr	Erreur: lors de l'enregistrement de l'événement !!!
 error: starttime has to be before the endtime !!!	calendar	fr	Erreur : le début doit être antérieur à la fin !!!
 event copied - the copy can now be edited	calendar	fr	Evénement copié - la copie peut maintenant être éditée
@@ -235,6 +240,8 @@ repetition	calendar	fr	Répétition
 repetitiondetails (or empty)	calendar	fr	Détails de répétition (ou vide)
 reset	calendar	fr	Réinitialiser
 resources	calendar	fr	Ressources
+resources except conflicting ones	calendar	fr	Ressources à l'exception de celles en conflit
+resources with conflict detection	calendar	fr	Ressources avec détection de conflits
 rule	calendar	fr	Règle
 sat	calendar	fr	Sam
 saves the changes made	calendar	fr	enregistre les modifications

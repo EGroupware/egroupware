@@ -200,7 +200,7 @@ class bo_acl
 			$rights = in_array($account_id,$calbookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING | EGW_ACL_CALREAD) : $rights;
 			$rights = in_array($account_id,$admincat) ? ($rights = 511) : $rights;
 			if ($rights)
-			{
+			{                           
 				$GLOBALS['egw']->acl->add_repository('resources','L'.$cat_id,$account_id,$rights);
 			}
 		}

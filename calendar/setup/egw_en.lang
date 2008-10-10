@@ -73,12 +73,15 @@ default appointment length (in minutes)	calendar	en	default appointment length (
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	default calendar view
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	en	Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.
+default type of resources application selected in the calendar particpants research form.	calendar	en	Default type of resources application selected in the calendar particpants research form.
+default type of resources selection	calendar	en	Default type of resources selection
 default week view	calendar	en	default week view
 delete series	calendar	en	Delete series
 delete this alarm	calendar	en	Delete this alarm
 delete this event	calendar	en	Delete this event
 delete this exception	calendar	en	Delete this exception
 delete this series of recuring events	calendar	en	Delete this series of recuring events
+deny ressources reservation for private events	calendar	en	Deny Resources reservation for private events
 disinvited	calendar	en	Disinvited
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	displayed view
@@ -105,6 +108,7 @@ ends	calendar	en	ends
 error adding the alarm	calendar	en	Error adding the alarm
 error: importing the ical	calendar	en	Error: importing the iCal
 error: no participants selected !!!	calendar	en	Error: no participants selected !!!
+error: ressources reservation in private events is not allowed!!!	calendar	en	Error: ressources reservation in private events is not allowed !!!
 error: saving the event !!!	calendar	en	Error: saving the event !!!
 error: starttime has to be before the endtime !!!	calendar	en	Error: Starttime has to be before the endtime !!!
 error: the entry has been updated since you opened it for editing!	calendar	en	Error: the entry has been updated since you opened it for editing!
@@ -248,6 +252,8 @@ repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetitiondetails (or empty)
 reset	calendar	en	Reset
 resources	calendar	en	Resources
+resources except conflicting ones	calendar	en	Resources except conflicting ones
+resources with conflict detection	calendar	en	Resources with conflict detection
 rule	calendar	en	Rule
 sat	calendar	en	Sat
 saves the changes made	calendar	en	saves the changes made

@@ -1792,6 +1792,7 @@ class calendar_bo
 			'planner_start_with_group' => $planner_start_with_group,
 			'defaultfilter'   => 'all',
 			'default_private' => '0',
+			'defaultresource_sel' => 'resources',
 		);
 		foreach($defaults as $var => $default)
 		{

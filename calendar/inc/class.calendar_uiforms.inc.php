@@ -260,7 +260,14 @@ class calendar_uiforms extends calendar_ui
 						break;
 
 					case 'resource':
-						list($app,$id) = explode(':',$data);
+						if (is_array($data) && isset($data['current']) )
+						{
+							list($app,$id) = explode(':',$data['current']);
+						}
+						else
+						{
+							list($app,$id) = explode(':',$data);
+						}
 						foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
 						$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
 						// check if new entry is no contact or no account
@@ -386,6 +393,19 @@ class calendar_uiforms extends calendar_ui
 				$msg = lang('Error: no participants selected !!!');
 				$button = '';
 				break;
+			}
+			// if private event with ressource reservation is forbidden
+			if (!$event['public'] && $GLOBALS['egw_info']['server']['no_ressources_private'])
+			{
+				foreach ($event['participants'] as $uid => $value)
+				{
+					if ($uid[0] == 'r') //ressource detection
+					{
+						$msg = lang('Error: ressources reservation in private events is not allowed!!!');
+						$button = '';
+						break 2; //break foreach and case
+					}
+				}
 			}
 			if ($content['edit_single'])	// we edited a single event from a series
 			{
@@ -814,7 +834,23 @@ class calendar_uiforms extends calendar_ui
 			}
 			// resouces / apps we shedule, atm. resources and addressbook
 			$content['participants']['cal_resources'] = '';
-			foreach($this->bo->resources as $data) $content['participants']['cal_resources'] .= ','.$data['app'];
+			foreach($this->bo->resources as $data)
+			{
+				$content['participants']['cal_resources'] .= ','.$data['app'];
+			}
+			// adding extra content for the resource link-entry widget to
+			// * select resources or addressbook as a default selection on the app selectbox based on prefs
+			$content['participants']['resource']['default_sel'] = $this->cal_prefs['defaultresource_sel'];
+			// * get informations from the event on the ajax callback
+			if (in_array($content['participants']['resource']['default_sel'],array('resources_conflict','resources_without_conflict')))
+			{
+				// fix real app string
+				$content['participants']['resource']['default_sel'] = 'resources';
+				// this will be used to get reservation information on the resource select list
+				$content['participants']['resource']['extra'] = "values2url(this.form,'start,end,duration,participants,recur_type,whole_day')".
+					"+'&exec[event_id]=".$content['id']."'"."+'&exec[show_conflict]=".
+					(($this->cal_prefs['defaultresource_sel'] == 'resources_without_conflict')? '0':'1')."'";
+			}
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
 		$content['participants']['hide_status_recurrence'] = $event['recur_type'] == MCAL_RECUR_NONE;
@@ -1203,8 +1239,8 @@ class calendar_uiforms extends calendar_ui
 			{
 				echo "<p>ft_start=".date('D d.m.Y H:i',$ft_start)."<br>\n";
 				echo "event[title]=$event[title]<br>\n";
-				echo "event[start]=".date('D d.m.Y H:i',$event['start']['raw'])."<br>\n";
-				echo "event[end]=".date('D d.m.Y H:i',$event['end']['raw'])."<br>\n";
+				echo "event[start]=".date('D d.m.Y H:i',$event['start'])."<br>\n";
+				echo "event[end]=".date('D d.m.Y H:i',$event['end'])."<br>\n";
 			}
 			// $events ends before our actual position ==> ignore it
 			if ($event['end'] < $ft_start)

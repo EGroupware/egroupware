@@ -47,6 +47,7 @@ calendar preferences	calendar	de	Kalender Einstellungen
 calendar settings	admin	de	Kalender Einstellungen
 calendar-fieldname	calendar	de	Kalender Feldname
 can't add alarms in the past !!!	calendar	de	Kann keine Alarme in der Vergangenheit setzen !!!
+can't aquire lock!	calendar	de	Kann Termin nicht sperren!
 canceled	calendar	de	Abgesagt
 charset of file	calendar	de	Zeichensatz der Datei
 close the window	calendar	de	Schließt das Fenster
@@ -72,12 +73,15 @@ default appointment length (in minutes)	calendar	de	Standardlänge eines neuen K
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendereinträgen. Die Länge ist in Minuten, zb. 60 für 1 Stunde.
+default type of resources application selected in the calendar particpants research form.	calendar	de	Vorgabe für die gewählte Anwendung bei der Ressourcensuche im Kartenreiter Teilnehmer
+default type of resources selection	calendar	de	Vorgabe für die Ressourcensuche
 default week view	calendar	de	Vorgabe Wochenansicht
 delete series	calendar	de	Serie löschen
 delete this alarm	calendar	de	Diesen Alarm löschen
 delete this event	calendar	de	Diesen Termin löschen
 delete this exception	calendar	de	Diese Ausnahme löschen
 delete this series of recuring events	calendar	de	Diese Serie von wiederholenden Terminen löschen
+deny ressources reservation for private events	calendar	de	Verbiete die Reservierung von Ressourcen für private Termine
 disinvited	calendar	de	Ausgeladen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
@@ -104,6 +108,7 @@ ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
 error: importing the ical	calendar	de	Fehler: beim Importieren des iCal
 error: no participants selected !!!	calendar	de	Fehler: keine Teilnehmer ausgewählt !!!
+error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
 error: saving the event !!!	calendar	de	Fehler: beim Speichern des Termins !!!
 error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muß vor Endzeit liegen !!!
 error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
@@ -247,6 +252,8 @@ repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 reset	calendar	de	Zurücksetzen
 resources	calendar	de	Ressourcen
+resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
+resources with conflict detection	calendar	de	Ressourcen mit bereits gebuchten
 rule	calendar	de	Regel
 sat	calendar	de	Sa
 saves the changes made	calendar	de	Speichert die Änderungen
@@ -288,6 +295,7 @@ test import (show importable records <u>only</u> in browser)	calendar	de	Test Im
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle späteren Einträge werden darunter dargestellt.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt.
+this entry is currently opened by %1!	calendar	de	Dieser Termin ist im Moment von %1 geöffnet!
 this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen Benutzer innerhalb des konfigurierten Zeitintervalls geöffnet worden:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versandt.

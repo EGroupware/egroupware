@@ -12,7 +12,7 @@
    </tr>
 
    <tr class="row_off">
-    <td colspan="2"><b>{lang_Calendar_settings}</b></td>
+    <td colspan="2"><b>{lang_Calendar} {lang_site_configuration}</b></td>
    </tr>
    <tr class="row_on">
     <td>{lang_Do_you_wish_to_autoload_calendar_holidays_files_dynamically?}</td>
@@ -38,9 +38,18 @@
     <td><input name="newsettings[Lock_Time_Calender]" value="{value_Lock_Time_Calender}" size="40"></td>
    </tr>
    <tr class="row_off">
-    <td colspan="2"><b>{lang_Birthdays}</b></td>
+    <td>{lang_Deny_Ressources_reservation_for_private_events}:</td>
+    <td>
+     <select name="newsettings[no_ressources_private]">
+      <option value="">{lang_No}</option>
+      <option value="yes"{selected_no_ressources_private_yes}>{lang_Yes}</option>
+     </select>
+    </td>
    </tr>
    <tr class="row_on">
+    <td colspan="2"><b>{lang_Birthdays}</b></td>
+   </tr>
+   <tr class="row_off">
     <td>{lang_Show_birthdays_from_addressbook}:</td>
     <td>
      <select name="newsettings[hide_birthdays]">
