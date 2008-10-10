@@ -47,7 +47,8 @@
  *          'add_popup' => '400x300',				// size of popup (XxY), if add is in popup
  *			'notify' => 'app.class.method',			// method to be called if an other applications liks or unlinks with app: notify(array $data)
  * 			'file_access' => 'app.class.method',	// method to be called to check file access rights, see links_stream_wrapper class
- *		);											// boolean file_access(string $id,int $check,string $rel_path)
+ *													// boolean file_access(string $id,int $check,string $rel_path)
+ *			'find_extra'  => array('name_preg' => '/^(?!.picture.jpg)$/')	// extra options to egw_vfs::find, to eg. remove some files from the list of attachments
  *	}
  * All entries are optional, thought you only get conected functionality, if you implement them ...
  *
@@ -878,8 +879,10 @@ class egw_link extends solink
 		$url = self::vfs_path($app,$id);
 		//error_log(__METHOD__."($app,$id) url=$url");
 
+		if (!($extra = self::get_registry($app,'find_extra'))) $extra = array();
+
 		$attached = array();
-		if (($url2stats = egw_vfs::find($url,array('url'=>true,'need_mime'=>true,'type'=>'f'),true)))
+		if (($url2stats = egw_vfs::find($url,array('url'=>true,'need_mime'=>true,'type'=>'f')+$extra,true)))
 		{
 			$props = egw_vfs::propfind(array_keys($url2stats));	// get the comments
 			foreach($url2stats as $url => &$fileinfo)
