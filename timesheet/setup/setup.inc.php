@@ -42,7 +42,7 @@ $setup_info[TIMESHEET_APP]['hooks']['settings'] = 'timesheet_hooks::settings';
 $setup_info[TIMESHEET_APP]['hooks']['admin'] = 'timesheet_hooks::all_hooks';
 $setup_info[TIMESHEET_APP]['hooks']['sidebox_menu'] = 'timesheet_hooks::all_hooks';
 $setup_info[TIMESHEET_APP]['hooks']['search_link'] = 'timesheet_hooks::search_link';
-$setup_info[TIMESHEET_APP]['hooks']['pm_cumulate'] = 'timesheet_hooks:cumulate';
+$setup_info[TIMESHEET_APP]['hooks']['pm_cumulate'] = 'timesheet_hooks::cumulate';
 
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(
