@@ -84,7 +84,7 @@
 		new ypSlideOutMenu("menu2", "right", 0, 105, 100, 200)
 	</script>
 
-	<div id="sideboxdragarea" style="position:absolute;left:0px;top:105px">
+	<div id="sideboxdragarea" style="z-index:100;position:absolute;left:0px;top:105px">
 		<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
