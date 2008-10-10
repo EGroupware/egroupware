@@ -18,9 +18,7 @@
  */
 class bo_resources
 {
-	var $vfs_basedir = '/resources/';
-	var $pictures_dir = '/resources/pictures/';
-	var $thumbs_dir = '/resources/pictures/thumbs/';
+	const PICTURE_NAME = '.picture.jpg';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
 	var $debug = 0;
 	/**
@@ -382,7 +380,7 @@ class bo_resources
 
 				// search events matching our timestamps
  				$resource_list=array();
-				foreach($data as $num => $resource) 
+				foreach($data as $num => $resource)
 				{
 					// we only need resources id for the search, but with a 'r' prefix
 					// now we take this loop to store a new resource array indexed with resource id
@@ -410,7 +408,7 @@ class bo_resources
 					// now we are interested only on resources booked by theses events
 					if (isset($event['participants']) && is_array($event['participants'])){
 						foreach($event['participants'] as $part_key => $part_detail){
-							if ($part_key{0}=='r') 
+							if ($part_key{0}=='r')
 							{ //now we gatta resource here
 								//need to check the quantity of this resource
 								$resource_id=substr($part_key,1);
@@ -439,7 +437,7 @@ class bo_resources
 			foreach($res_info_cache as $id => $resource) {
 				//maybe this resource is reserved
 				if ( ($resource['useable'] < 1) )
-				{	
+				{
 					if($show_conflict) {
 						$list[$id] = ' ('.lang('conflict').') '.$resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 					}
@@ -481,18 +479,9 @@ class bo_resources
 	 * @param array $file array with key => value
 	 * @param int $resource_id
 	 * @return mixed string with msg if somthing went wrong; nothing if all right
-	 * TODO make thumb an picture sizes choosable by preferences
 	 */
 	function save_picture($file,$resouce_id)
 	{
-		// test upload dir
-		if (!is_dir(egw_vfs::PREFIX.$this->vfs_basedir))
-		{
-			egw_vfs::$is_root = true;
-			egw_vfs::mkdir($this->pictures_dir,0777,STREAM_MKDIR_RECURSIVE);
-			egw_vfs::mkdir($this->thumbs_dir,0777,STREAM_MKDIR_RECURSIVE);
-			egw_vfs::$is_root = false;
-		}
 		switch($file['type'])
 		{
 			case 'image/gif':
@@ -512,51 +501,38 @@ class bo_resources
 
 		$src_img_size = getimagesize($file['tmp_name']);
 		$dst_img_size = array( 0 => 320, 1 => 240);
-		$thumb_size = array( 0 => 64, 1 => 48);
 
-		$tmp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
-		if($src_img_size[0] > 64 || $src_img_size[1] > 48)
+		$tmp_name = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'resources-picture');
+		if($src_img_size[0] > $dst_img_size[0] || $src_img_size[1] > $dst_img_size[1])
 		{
-			$f = $thumb_size[0] / $src_img_size[0];
-			$f = $thumb_size[1] / $src_img_size[1] < $f ? $thumb_size[1] / $src_img_size[1] : $f;
+			$f = $dst_img_size[0] / $src_img_size[0];
+			$f = $dst_img_size[1] / $src_img_size[1] < $f ? $dst_img_size[1] / $src_img_size[1] : $f;
 			$dst_img = imagecreatetruecolor($src_img_size[0] * $f, $src_img_size[1] * $f);
 			imagecopyresized($dst_img,$src_img,0,0,0,0,$src_img_size[0] * $f,$src_img_size[1] * $f,$src_img_size[0],$src_img_size[1]);
-			imagejpeg($dst_img,$tmp_dir.$resouce_id.'.thumb.jpg');
-			if($src_img_size[0] > $dst_img_size[0] || $src_img_size[1] > $dst_img_size[1])
-			{
-				$f = $dst_img_size[0] / $src_img_size[0];
-				$f = $dst_img_size[1] / $src_img_size[1] < $f ? $dst_img_size[1] / $src_img_size[1] : $f;
-				$dst_img = imagecreatetruecolor($src_img_size[0] * $f, $src_img_size[1] * $f);
-				imagecopyresized($dst_img,$src_img,0,0,0,0,$src_img_size[0] * $f,$src_img_size[1] * $f,$src_img_size[0],$src_img_size[1]);
-				imagejpeg($dst_img,$tmp_dir.$resouce_id.'.jpg');
-			}
-			else
-			{
-				imagejpeg($src_img,$tmp_dir.$resouce_id.'.jpg');
-			}
+			imagejpeg($dst_img,$tmp_name);
 			imagedestroy($dst_img);
 		}
 		else
 		{
-				imagejpeg($src_img,$tmp_dir.$resouce_id.'.jpg');
-				imagejpeg($src_img,$tmp_dir.$resouce_id.'.thumb.jpg');
+			imagejpeg($src_img,$tmp_name);
 		}
 		imagedestroy($src_img);
 
-		egw_vfs::$is_root = true;
-		copy($tmp_dir.$resouce_id.'.jpg',egw_vfs::PREFIX.$this->pictures_dir.$resouce_id.'.jpg');
-		copy($tmp_dir.$resouce_id.'.thumb.jpg',egw_vfs::PREFIX.$this->thumbs_dir.$resouce_id.'.jpg');
-		egw_vfs::$is_root = false;
+		egw_link::attach_file('resources',$resouce_id,array(
+			'tmp_name' => $tmp_name,
+			'name'     => self::PICTURE_NAME,
+			'type'     => 'image/jpeg',
+		));
 	}
 
 	/**
 	 * get resource picture either from vfs or from symlink
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $res_id id of resource
-	 * @param bool $size false = thumb, true = full pic
+	 * @param bool $fullsize false = thumb, true = full pic
 	 * @return string url of picture
 	 */
-	function get_picture($res_id=0,$size=false)
+	function get_picture($res_id=0,$fullsize=false)
 	{
 		if ($res_id > 0)
 		{
@@ -565,7 +541,15 @@ class bo_resources
 		switch($src)
 		{
 			case 'own_src':
-				$picture = egw::link(egw_vfs::download_url($size ? $this->pictures_dir.$res_id.'.jpg' : $this->thumbs_dir.$res_id.'.jpg'));
+				$picture = egw_link::vfs_path('resources',$res_id,self::PICTURE_NAME,true);	// vfs path
+				if ($fullsize)
+				{
+					$picture = egw::link(egw_vfs::download_url($picture));
+				}
+				else
+				{
+					$picture = egw::link('/etemplate/thumbnail.php',array('path' => $picture));
+				}
 				break;
 			case 'cat_src':
 				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$res_id));
@@ -593,10 +577,11 @@ class bo_resources
 	 */
 	function remove_picture($res_id)
 	{
-		egw_vfs::$is_root = true;
-		egw_vfs::unlink($this->pictures_dir.$res_id.'.jpg');
-		egw_vfs::unlink($this->thumbs_dir.$res_id.'.jpg');
-		egw_vfs::$is_root = false;
+		if (($arr = egw_link::delete_attached('resources',$res_id,self::PICTURE_NAME)))
+		{
+			return array_shift($arr);	// $arr = array($path => (bool)$ok);
+		}
+		return false;
 	}
 
 	/**
