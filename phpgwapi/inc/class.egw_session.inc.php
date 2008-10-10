@@ -571,11 +571,11 @@ class egw_session
 	private function register_session($login,$user_ip,$now,$session_flags)
 	{
 		// restore session vars set before session was started
-		if (is_array($this->require_files))
+		if (is_array($this->required_files))
 		{
 			$_SESSION[self::EGW_REQUIRED_FILES] = !is_array($_SESSION[self::EGW_REQUIRED_FILES]) ? $this->required_files :
 				array_unique(array_merge($_SESSION[self::EGW_REQUIRED_FILES],$this->required_files));
-			unset($this->require_files);
+			unset($this->required_files);
 		}
 		$_SESSION[self::EGW_SESSION_VAR] = array(
 			'session_id'     => $this->sessionid,
