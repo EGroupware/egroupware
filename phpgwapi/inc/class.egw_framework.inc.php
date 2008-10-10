@@ -549,6 +549,8 @@ abstract class egw_framework
 				$GLOBALS[$class]->public_functions['css'])
 			{
 				$app_css .= $GLOBALS[$class]->css();
+			} else {
+				error_log("Deprecated functionality. The setting of the GLOBALS Array on CreateObject in phpgwapi/inc/common_functions.inc.php is no longer supported");	
 			}
 		}
 		if (isset($GLOBALS['egw_info']['flags']['css']))
