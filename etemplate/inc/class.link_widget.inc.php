@@ -41,8 +41,9 @@
  *   'no_files'     => // I  boolean suppress attach-files, default no
  *   'search_label' => // I  string label to use instead of search
  *   'link_label'   => // I  string label for the link button, default 'Link'
- *  // optional only for the link-add widget
- *   'extra'        => // I  array with extra parameters, eg. array('cat_id' => 15)
+ *  // optional only for the link-add widget and link-entry widget
+ *   'extra'        => // I  array with extra parameters, eg. array('cat_id' => 15), or string to add in onclick search for link-entry
+ *   			//eg. ",values2url(this.form,'start,end,duration,participants,recur_type,whole_day')"
  *  // optional for link-string:
  *   'only_app'     => // I  string with appname, eg. 'projectmananager' to list only linked projects
  * );
@@ -318,17 +319,36 @@ class link_widget
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 			$tpl =& new etemplate('etemplate.link_widget.entry');
 			$options = $cell['size'] ? explode(',',$cell['size']) : array();
-			$app = $extension_data['app'] = array_shift($options);
+			$app = $extension_data['app'] = $options[0];
+			// handle extra args for onclick like: values2url(this.form,'start,end,duration,participants,recur_type,whole_day')+'&exec[event_id]=
+			if ( isset($value) && is_array($value) && isset($value['extra']) )
+			{
+				//echo '<p>extra='.htmlspecialchars($value['extra'])."</p>\n";
+				//something like: values2url(this.form,'start,end,duration,participants,recur_type,whole_day')+'&exec[event_id]=
+				$on_click_string =& $tpl->get_cell_attribute('search','onclick');
+				$on_click_string = str_replace(');',','.$value['extra'].');',$on_click_string);
+				//echo htmlspecialchars($on_click_string);
+			}
 			if ($value)	// show pre-selected entry in select-box and not the search
 			{
-				// add selected-entry plus "new search" to the selectbox-options
-				if (($app = $cell['size']))
+				if (is_array($value))
 				{
-					$id = $value;
+					if (isset($value['current']))
+					{
+						list($app,$id) = explode(':',$value['current']);
+					}
 				}
 				else
 				{
-					list($app,$id) = explode(':',$value);
+					// add selected-entry plus "new search" to the selectbox-options
+					if (!isset($app) || strpos($value,':') !== false)
+					{
+						list($app,$id) = explode(':',$value);
+					}
+					else
+					{
+						$id = $value;
+					}
 				}
 				$titles = array();
 				foreach(explode(',',$id) as $id)
@@ -352,15 +372,24 @@ class link_widget
 					unset($span);
 				}
 			}
-			if ($extension_data['app'])	// no app-selection, using app given in first option
+			if ($extension_data['app'] && count($options) <= 1)	// no app-selection, using app given in first option
 			{
 				$tpl->disable_cells('app');
 				$onchange =& $tpl->get_cell_attribute('search','onclick');
 				$onchange = str_replace("document.getElementById(form::name('app')).value",'\''.$cell['size'].'\'',$onchange);
 				unset($onchange);
 			}
+
+			// store now our values in extension_data to preserve them upon submits (after empty title submit for example)
+			$extension_data['default'] = $value;
+
+			// adding possibility to get a default selection on app select, use for resource in calendar edit.participant
+			if (isset($value) && is_array($value) && isset($value['default_sel']))
+			{
+				$selected=$value['default_sel'];
+			}
 			$value = array(
-				'app'        => $app,
+				'app'        => isset($selected)? $selected : $app,
 				'no_app_sel' => !!$extension_data['app'],
 				'id'         => $value,
 			);
@@ -434,7 +463,16 @@ class link_widget
 					$tmpl->set_validation_error($name,lang('Field must not be empty !!!'),'');
 					return true;
 				}
-				$value = $extension_data['app'] ? $value_in['id'] : $value['app'].':'.$value_in['id'];
+				if (isset($extension_data['default']))
+				{
+					$value = $extension_data['default'];
+					$value['current']=$value_in['app'].':'.$value_in['id'];
+				}
+				else
+				{
+					// this was the line before the default opt, not sure it works well in all case
+					$value = $extension_data['app'] ? $value_in['id'] : $value['app'].':'.$value_in['id'];
+				}
 				return !!$value_in['id'];
 
 			case 'link-apps':
@@ -560,15 +598,32 @@ class link_widget
 	 * @param string $id_show id(s) of the select-box/-line to show after a successful search
 	 * @param string $id_input id of the search input-field
 	 * @param string $etemplate_exec_id of the calling etemplate, to upate the allowed ids
+	 * @param string $extra optionnal extra search arguments
 	 * @return string xajax xml response
 	 */
-	static function ajax_search($app,$pattern,$id_res,$id_hide,$id_show,$id_input,$etemplate_exec_id)
+	static function ajax_search($app,$pattern,$id_res,$id_hide,$id_show,$id_input,$etemplate_exec_id,$extra=array())
 	{
+		$extra_array = array();
+		if (!empty($extra))
+		{
+			//parse $extra as a get url
+			parse_str($extra,$extra_array) ;
+			// securize entries as they were html encoded and so not checked on the first pass
+			_check_script_tag($extra_array,'extra_array');
+		}
+		if (empty($extra_array))
+		{
+			$search = ($pattern == lang('Search'))? '' : $pattern;
+		}
+		else
+		{
+			$extra_array['search']=($pattern == lang('Search'))? '' : $pattern;
+			$search = $extra_array;
+		}
 		$response = new xajaxResponse();
-		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("','",$args)."')");
+		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search )" );
 		//$args = func_get_args(); error_log(__METHOD__."('".implode("','",$args)."')");
-
-		if (!($found = egw_link::query($app,$pattern == lang('Search') ? '' : $pattern)))	// ignore the blur-text
+		if (!($found = egw_link::query($app,$search)))       // ignore the blur-text
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');
 			$response->addAlert(lang('Nothing found - try again !!!'));
