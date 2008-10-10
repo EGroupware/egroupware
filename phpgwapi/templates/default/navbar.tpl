@@ -81,7 +81,7 @@
 
 <!-- BEGIN sidebox_hide_header -->
 	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, 165, 160, 200)
+		new ypSlideOutMenu("menu2", "right", 0, 105, 100, 200)
 	</script>
 
 	<div id="sideboxdragarea" style="position:absolute;left:0px;top:105px">
