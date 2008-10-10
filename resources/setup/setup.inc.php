@@ -13,7 +13,7 @@
 
 $setup_info['resources']['name']	= 'resources';
 $setup_info['resources']['title']	= 'Resources';
-$setup_info['resources']['version']	= '1.4';
+$setup_info['resources']['version']	= '1.6';
 $setup_info['resources']['app_order']	= 5;
 $setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 $setup_info['resources']['enable']	= 1;
