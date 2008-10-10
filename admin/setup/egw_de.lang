@@ -407,7 +407,6 @@ show error log	admin	de	Fehlerprotokoll anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen
 show session ip address	admin	de	IP-Adresse der Sitzung anzeigen
 site	admin	de	Site
-site configuration	admin	de	Site Konfiguration
 soap	admin	de	SOAP
 sorry, that group name has already been taken.	admin	de	Der Gruppenname wird bereits verwendet.
 sorry, the above users are still a member of the group %1	admin	de	Der Benutzer ist immer noch Mitglied der Gruppe %1.
