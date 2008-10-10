@@ -1,7 +1,7 @@
 %define packagename eGroupware
 %define egwdirname egroupware
 %define egwversion 1.6
-%define packaging pre1
+%define packaging rc1
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -737,6 +737,9 @@ ln -s sitemgr/sitemgr-link
 
 
 %changelog
+* Fri Oct 10 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc1
+- eGroupware 1.6.rc1 first release candidate for 1.6 release
+
 * Tue Jul 22 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.pre1
 - eGroupware 1.6.pre1 first preview of upcomming 1.6 release
 
