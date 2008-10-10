@@ -1326,10 +1326,14 @@ class addressbook_ui extends addressbook_bo
 				{
 					$content = $this->read_org($state['org_view']);
 				}
-				elseif ($GLOBALS['egw_info']['user']['preferences']['common']['country'])
+				else
 				{
-					$content['adr_one_countryname'] =
-						$GLOBALS['egw']->country->get_full_name($GLOBALS['egw_info']['user']['preferences']['common']['country']);
+					if ($GLOBALS['egw_info']['user']['preferences']['common']['country'])
+					{
+						$content['adr_one_countryname'] =
+							$GLOBALS['egw']->country->get_full_name($GLOBALS['egw_info']['user']['preferences']['common']['country']);
+					}
+					if ($this->prefs['fileas_default']) $content['fileas_type'] = $this->prefs['fileas_default'];
 				}
 				if (isset($_GET['owner']) && $_GET['owner'] !== '')
 				{

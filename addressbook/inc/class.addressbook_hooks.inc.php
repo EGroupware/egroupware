@@ -202,6 +202,15 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
+		$GLOBALS['settings']['fileas_default'] = array(
+			'type'   => 'select',
+			'label'  => 'Default file as format',
+			'name'   => 'fileas_default',
+			'values' => ExecMethod('addressbook.addressbook_bo.fileas_options'),
+			'help'   => 'Default format for fileas, eg. for new entries.',
+			'xmlrpc' => True,
+			'admin'  => false,
+		);
 		$GLOBALS['settings']['hide_accounts'] = array(
 			'type'   => 'check',
 			'label'  => 'Hide accounts from addressbook',

@@ -122,7 +122,9 @@ default	addressbook	en	default
 default address format	addressbook	en	Default address format
 default addressbook for adding contacts	addressbook	en	Default addressbook for adding contacts
 default document to insert contacts	addressbook	en	Default document to insert contacts
+default file as format	addressbook	en	Default file as format
 default filter	addressbook	en	Default Filter
+default format for fileas, eg. for new entries.	addressbook	en	Default format for fileas, eg. for new entries.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	en	Defines which email address (business or home) to use as the preferred one for distribution lists in mail.
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 delete selected distribution list!	addressbook	en	Delete selected distribution list!

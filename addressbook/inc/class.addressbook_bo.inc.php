@@ -42,6 +42,7 @@ class addressbook_bo extends addressbook_so
 		'org_name: n_given n_family',
 		'org_name: n_fn',
 		'n_family, n_given: org_name',
+		'n_family, n_given (org_name)',
 		'n_family, n_prefix: org_name',
 		'n_given n_family: org_name',
 		'n_prefix n_family: org_name',
@@ -255,7 +256,7 @@ class addressbook_bo extends addressbook_so
 	function fileas($contact,$type=null)
 	{
 		if (is_null($type)) $type = $contact['fileas_type'];
-		if (!$type) $type = $this->fileas_types[0];
+		if (!$type) $type = $this->prefs['fileas_default'] ? $this->prefs['fileas_default'] : $this->fileas_types[0];
 
 		if (strpos($type,'n_fn') !== false) $contact['n_fn'] = $this->fullname($contact);
 
@@ -293,7 +294,7 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
-		return $this->fileas_types[0];
+		return $this->prefs['fileas_default'] ? $this->prefs['fileas_default'] : $this->fileas_types[0];
 	}
 
 	/**
