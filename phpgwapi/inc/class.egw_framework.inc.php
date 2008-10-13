@@ -545,12 +545,10 @@ abstract class egw_framework
 		if(isset($_GET['menuaction']))
 		{
 			list($app,$class,$method) = explode('.',$_GET['menuaction']);
-			if(is_array($GLOBALS[$class]->public_functions) &&
-				$GLOBALS[$class]->public_functions['css'])
+			if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
 			{
+				error_log("Deprecated functionality in $app class $class: using of public_function css, use \$GLOBALS['egw_info']['flags']['css'] or an app.css file!");
 				$app_css .= $GLOBALS[$class]->css();
-			} else {
-				error_log("Deprecated functionality. The setting of the GLOBALS Array on CreateObject in phpgwapi/inc/common_functions.inc.php is no longer supported");	
 			}
 		}
 		if (isset($GLOBALS['egw_info']['flags']['css']))
