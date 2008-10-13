@@ -9,7 +9,7 @@
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2-mod_php5
+	%define extra_requires apache2-mod_php5 mysql php5-mysql
 	%define cron cron
 %endif
 %if 0%{?fedora_version}
@@ -19,7 +19,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Fedora Core %{?fedora_version}
 	%define php php
-	%define extra_requires httpd
+	%define extra_requires httpd mysql-server php-mysql
 	%define cron crontabs
 %endif
 %if 0%{?mandriva_version}
@@ -29,7 +29,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Mandriva %{?mandriva_version}
 	%define php php
-	%define extra_requires httpd
+	%define extra_requires httpd mysql-server php-mysql
 	%define cron crontabs
 %endif
 %if 0%{?rhel_version}
@@ -39,7 +39,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Red Head %{?rhel_version}
 	%define php php
-	%define extra_requires httpd
+	%define extra_requires httpd mysql-server php-mysql
 	%define cron crontabs
 %endif
 %if 0%{?centos_version}
@@ -49,7 +49,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution CentOS %{?centos_version}
 	%define php php
-	%define extra_requires httpd
+	%define extra_requires httpd mysql-server php-mysql
 	%define cron crontabs
 %endif
 
@@ -59,6 +59,7 @@
 %define developer_tools developer_tools
 %define egw-pear egw-pear
 %define emailadmin emailadmin
+%define etemplate etemplate
 %define felamimail felamimail
 %define filemanager filemanager
 %define gallery gallery
@@ -98,8 +99,7 @@ Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
 Source3: %{packagename}-mydms-%{egwversion}.%{packaging}.tar.bz2
 Source4: %{packagename}-gallery-%{egwversion}.%{packaging}.tar.bz2
 Source5: %{?source5}
-#Patch0: manageheader.php.patch
-Patch1: class.uiasyncservice.inc.php.patch
+Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
 Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
@@ -454,8 +454,7 @@ This is the %{wiki} app for eGroupware.
 %setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
-#%patch0 -p 0
-%patch1 -p 0
+%patch0 -p 0
 
 %build
 
@@ -478,7 +477,6 @@ find $RPM_BUILD_ROOT%{prefix}/%{egwdirname} -name .svn | xargs rm -rf
 
 cd $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 ln -s ../../../var/lib/egroupware/header.inc.php
-ln -s sitemgr/sitemgr-link
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -541,7 +539,6 @@ ln -s sitemgr/sitemgr-link
 %{prefix}/%{egwdirname}/resources
 %{prefix}/%{egwdirname}/sambaadmin
 %{prefix}/%{egwdirname}/sitemgr
-%{prefix}/%{egwdirname}/sitemgr-link
 %{prefix}/%{egwdirname}/syncml
 %{prefix}/%{egwdirname}/timesheet
 %{prefix}/%{egwdirname}/tracker
