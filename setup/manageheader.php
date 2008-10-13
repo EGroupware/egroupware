@@ -66,7 +66,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['header'])
 		break;
 }
 
-if (!file_exists('../header.inc.php') || !is_readable('../header.inc.php'))
+if (!file_exists('../header.inc.php') || !is_readable('../header.inc.php') || !defined('EGW_SERVER_ROOT') || EGW_SERVER_ROOT == '..')
 {
 	$GLOBALS['egw_setup']->header->defaults();
 }
