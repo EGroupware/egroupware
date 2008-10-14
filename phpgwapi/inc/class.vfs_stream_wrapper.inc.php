@@ -127,6 +127,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			);
 		}
 		$parts = array_merge(parse_url($path),$defaults);
+		if (!$parts['host']) $parts['host'] = 'default';	// otherwise we get an invalid url (scheme:///path/to/something)!
 
 		if (!empty($parts['scheme']) && $parts['scheme'] != self::SCHEME)
 		{
