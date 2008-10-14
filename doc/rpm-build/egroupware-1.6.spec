@@ -136,7 +136,7 @@ Conflicts: %{packagename}
 This package provides the eGroupware core applications.
 %post core
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
-	chcon "user_u:object_r:httpd_sys_content_t" /var/lib/egroupware -Rc
+	chcon -R -u user_u -r object_r -t httpd_sys_content_t /var/lib/egroupware
 %endif
 
 %package %{addressbook}
