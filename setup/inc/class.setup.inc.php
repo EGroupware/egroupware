@@ -56,10 +56,17 @@ class setup
 	var $tbl_hooks;
 
 	/**
-	 * @var float $required_php_version php version required by eGroupWare
+	 * php version required by eGroupware
+	 *
+	 * @var float
 	 */
 	var $required_php_version = 5.1;
-	var $recommended_php_version = '5.1+';
+	/**
+	 * PHP Version recommended for eGroupware
+	 *
+	 * @var string
+	 */
+	var $recommended_php_version = '5.2+';
 
 	function setup($html=False, $translation=False)
 	{
