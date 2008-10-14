@@ -39,7 +39,7 @@ function vfs_storage_mode($settings)
 
 function mail_server($settings)
 {
-	if (!$settings['mail_server'] || !$settings['mail_server_type'] || !$settings['smtp_server'])
+	if (!$settings['smtp_server'])
 	{
 		$GLOBALS['config_error'] = lang('Missing or uncomplete mailserver configuration');
 	}
