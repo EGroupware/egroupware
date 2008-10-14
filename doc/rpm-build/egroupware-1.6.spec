@@ -9,7 +9,7 @@
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2-mod_php5 mysql php5-mysql
+	%define extra_requires apache2-mod_php5 mysql php5-mysql php5-dom
 	%define cron cron
 %endif
 %if 0%{?fedora_version}
@@ -19,7 +19,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Fedora Core %{?fedora_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql
+	%define extra_requires httpd mysql-server php-mysql php-xml
 	%define cron crontabs
 %endif
 %if 0%{?mandriva_version}
@@ -29,7 +29,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Mandriva %{?mandriva_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql
+	%define extra_requires httpd mysql-server php-mysql php-dom
 	%define cron crontabs
 %endif
 %if 0%{?rhel_version}
@@ -39,7 +39,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Red Head %{?rhel_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql
+	%define extra_requires httpd mysql-server php-mysql php-xml
 	%define cron crontabs
 %endif
 %if 0%{?centos_version}
@@ -49,7 +49,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution CentOS %{?centos_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql
+	%define extra_requires httpd mysql-server php-mysql php-xml
 	%define cron crontabs
 %endif
 
