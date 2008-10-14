@@ -29,6 +29,13 @@ class setup
 	var $cookie_domain;
 
 	/**
+	 * Instance of the hooks class
+	 *
+	 * @var hooks
+	 */
+	var $hooks;
+
+	/**
 	 * @var setup_detection
 	 */
 	var $detection;
@@ -960,6 +967,15 @@ class setup
 			{
 				error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') failed! accountid=$accountid");
 				return false;
+			}
+			// call add{account|group} hook to create the vfs-home-dirs
+			if ($primary_group)
+			{
+				vfs_home_hooks::addAccount($account);
+			}
+			else
+			{
+				vfs_home_hooks::addGroup($account);
 			}
 		}
 		if ($primary_group)	// only for users, NOT groups
