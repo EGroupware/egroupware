@@ -67,14 +67,8 @@ class filemanager_ui
 					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
-					'path' => '/home/'.$GLOBALS['egw_info']['user']['account_lid'],
 				);
-				// check if user specified a valid startpath in his prefs --> use it
-				if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
-					$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path, egw_vfs::READABLE))
-				{
-					$content['nm']['path'] = $path;
-				}
+				$content['nm']['path'] = self::get_home_dir();
 			}
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 			if (isset($_GET['path']) && ($path = $_GET['path']))
@@ -131,7 +125,7 @@ class filemanager_ui
 					}
 					break;
 				case 'home':
-					$content['nm']['path'] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
+					$content['nm']['path'] = self::get_home_dir();
 					break;
 				case 'createdir':
 					if ($content['nm']['path'][0] != '/')
@@ -198,6 +192,24 @@ class filemanager_ui
 			''  => 'Files from subdirectories',
 		);
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
+	}
+
+	/**
+	 * Get the configured start directory for the current user
+	 *
+	 * @return string
+	 */
+	static function get_home_dir()
+	{
+		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
+
+		// check if user specified a valid startpath in his prefs --> use it
+		if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
+			$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path, egw_vfs::READABLE))
+		{
+			$start = $path;
+		}
+		return $start;
 	}
 
 	/**
@@ -373,17 +385,14 @@ class filemanager_ui
 	{
 		$GLOBALS['egw']->session->appsession('index','filemanager',$query);
 
-		if (!egw_vfs::is_dir($query['path'])
-			|| !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
+		if (!egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
 		{
-			$rows = array();
-			$query['total'] = 0;
 			// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
 			// an appropriate message
-			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
-						'path'=>$query['path'],
-						'msg' => lang('Directory not found or no permission to access it!'))));
-
+			egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
+				'path' => self::get_home_dir(),
+				'msg' => lang('The requested path %1 is not available.',$query['path']),
+			));
 		}
 		$rows = $dir_is_writable = array();
 		if($query['searchletter'] && !empty($query['search']))
