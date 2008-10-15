@@ -81,8 +81,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="">
-		<grid>
+	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
+		<grid width="100%" height="150" overflow="auto">
 			<columns>
 				<column/>
 			</columns>

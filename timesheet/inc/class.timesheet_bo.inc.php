@@ -19,6 +19,8 @@ if (!defined('TIMESHEET_APP'))
  * Business object of the TimeSheet
  *
  * Uses eTemplate's so_sql as storage object (Table: egw_timesheet).
+ *
+ * @todo Implement sorting&filtering by and searching of custom fields
  */
 class timesheet_bo extends so_sql
 {
@@ -100,17 +102,18 @@ class timesheet_bo extends so_sql
 
 	var $customfields=array();
 
+	/**
+	 * Name of the timesheet table storing custom fields
+	 */
+	const EXTRA_TABLE = 'egw_timesheet_extra';
+
 	function __construct()
 	{
 		parent::__construct(TIMESHEET_APP,'egw_timesheet',null,'',true);	// true = use global db object!
 
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
-
-		if (isset($this->config_data['customfields']) && is_array($this->config_data['customfields']))
-		{
-			$this->customfields = $this->config_data['customfields'];
-		}
+		$this->customfields = config::get_customfields(TIMESHEET_APP);
 
 		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
 		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
@@ -156,14 +159,15 @@ class timesheet_bo extends so_sql
 	 */
 	function check_acl($required,$data=null)
 	{
-		if (!$data)
+		//error_log(__METHOD__."($required,".array2string($data).")");
+		if (is_null($data) || (int)$data == $this->data['ts_id'])
 		{
 			$data =& $this->data;
 		}
 		if (!is_array($data))
 		{
 			$save_data = $this->data;
-			$data = $this->read($data,true);
+			$data = $this->read($data,true,false);	// no need to read cf's
 			$this->data = $save_data;
 
 			if (!$data) return null; 	// entry not found
@@ -173,6 +177,14 @@ class timesheet_bo extends so_sql
 		return $data && !!($rights & $required);
 	}
 
+	/**
+	 * return SQL implementing filtering by date
+	 *
+	 * @param string $name
+	 * @param int &$start
+	 * @param int &$end_param
+	 * @return string
+	 */
 	function date_filter($name,&$start,&$end_param)
 	{
 		$end = $end_param;
@@ -263,6 +275,7 @@ class timesheet_bo extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false,$only_summary=false)
 	{
+		error_log(__METHOD__."(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
 		//echo "<p>".__METHOD__."(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 		// postgres can't round from double precission, only from numeric ;-)
 		$total_sql = $this->db->Type != 'pgsql' ? "round(ts_quantity*ts_unitprice,2)" : "round(cast(ts_quantity*ts_unitprice AS numeric),2)";
@@ -346,40 +359,55 @@ class timesheet_bo extends so_sql
 	 *
 	 * @param int $ts_id
 	 * @param boolean $ignore_acl=false should the acl be checked
+	 * @param boolean $read_cfs=true also read the custom fields
 	 * @return array/boolean array with timesheet entry, null if timesheet not found or false if no rights
 	 */
-	function read($ts_id,$ignore_acl=false)
+	function read($ts_id,$ignore_acl=false,$read_cfs=true)
 	{
-		$ret = null;
-		if (!(int)$ts_id || !$ignore_acl && !($ret = $this->check_acl(EGW_ACL_READ,$ts_id)) ||
-			$this->data['ts_id'] != (int)$ts_id && !parent::read((int)$ts_id))
+		error_log(__METHOD__."($ts_id,$ignore_acl) ".function_backtrace());
+		if (!(int)$ts_id || (int)$ts_id != $this->data['ts_id'] && !parent::read($ts_id))
 		{
-			return $ret;	// no read rights, or entry not found
+			return null;	// entry not found
 		}
-
-		//assign custom fields
-		foreach($this->customfields as $name => $value) {
-			$row = $this->read_extra($name);
-			$this->data['#'.$name] = $row['ts_extra_value'];
+		if (!$ignore_acl && !($ret = $this->check_acl(EGW_ACL_READ)))
+		{
+			return false;	// no read rights
 		}
-
+		if ($read_cfs && $this->customfields && ($cfs = $this->read_cfs($ts_id)))
+		{
+			$this->data += $cfs[$ts_id];
+		}
 		return $this->data;
 	}
 
 	/**
-	 * reads a timesheet extra entry of the current timesheet dataset
+	 * Read the cf's of the given ts_id's and evtl names
 	 *
-	 * @param int $name => name of the current timesheet extra entry
-	 * @param int $value => value of the current timesheet extra entry
-	 * @return array of resultset
+	 * @param int|array $ts_ids
+	 * @param array $names=null
+	 * @return array with ts_id => array(name => value) pairs
 	 */
-	function read_extra($name='',$value='')
+	function read_cfs($ts_ids,$names=null)
 	{
-		strlen($value) > 0 ? $where = ' and ts_extra_value ='.$this->db->quote($value) : '';
-		strlen($name) > 0 ? $where .= ' and ts_extra_name ='.$this->db->quote($name) : '';
-
-		return $this->db->select('egw_timesheet_extra', 'ts_extra_name, ts_extra_value',$query,__LINE__,__FILE__,False,'',
-			TIMESHEET_APP,0,'where ts_id='.$this->data['ts_id'].$where)->fetch();
+		error_log(__METHOD__."(".array2string($ts_ids).",".array2string($names).")");
+		if (!$this->customfields || !$ts_ids)
+		{
+			return array();
+		}
+		$where = array('ts_id' => $ts_ids);
+		if ($names)
+		{
+			foreach($names as $name)
+			{
+				if ($name[0] == '#') $where['ts_extra_name'][] = substr($name,1);
+			}
+		}
+		$cfs = array();
+		foreach($this->db->select(self::EXTRA_TABLE,'ts_id,ts_extra_name,ts_extra_value',$where,__LINE__,__FILE__,false,'',TIMESHEET_APP) as $row)
+		{
+			$cfs[$row['ts_id']]['#'.$row['ts_extra_name']] = $row['ts_extra_value'];
+		}
+		return $cfs;
 	}
 
 	/**
@@ -407,51 +435,26 @@ class timesheet_bo extends so_sql
 		}
 		if (!($err = parent::save()))
 		{
-			//saves data of custom fields in timesheet_extra
-			$this->save_extra();
+			if ($this->customfields)	//saves data of custom fields in timesheet_extra
+			{
+				$this->db->delete(self::EXTRA_TABLE,array('ts_id' => $this->data['ts_id']),__LINE__,__FILE__,TIMESHEET_APP);
 
+				foreach($this->customfields as $name => $data)
+				{
+					if (isset($this->data['#'.$name]) && !empty($this->data['#'.$name]))
+					{
+						$this->db->insert(self::EXTRA_TABLE,array(
+							'ts_id' => $this->data['ts_id'],
+							'ts_extra_name' => $name,
+							'ts_extra_value' => $this->data['#'.$name],
+						),false,__LINE__,__FILE__,TIMESHEET_APP);
+					}
+				}
+			}
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
 		return $err;
-	}
-
-	/**
-	 * saves a timesheet extra entry based one the "custom fields" settings
-	 *
-	 * @param boolean  $updateNames => if true "change timesheet extra name", otherwise update existing datasets or insert new ones
-	 * @param boolean  $oldname => original name of the timesheet extra entry
-	 * @param boolean  $name => new name of the timesheet extra entry
-	 * @return int true on success else false
-	 */
-	function save_extra($updateNames=False,$oldname='',$name='')
-	{
-		if($updateNames) {
-			$keys = array('ts_extra_name' => $oldname);
-			$fieldAssign = array('ts_extra_name' => $name);
-			$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__,TIMESHEET_APP);
-			return true;
-		}
-		else {
-			foreach($this->customfields as $namecf => $valuecf)
-			{
-				//if entry not exist => insert
-				if(!$this->read_extra($namecf))
-				{
-					$fieldAssign = array('ts_id' => $this->data['ts_id'],'ts_extra_name' => $namecf,'ts_extra_value' => $this->data['#'.$namecf]);
-					$this->db->insert('egw_timesheet_extra',$fieldAssign,false,__LINE__,__FILE__,TIMESHEET_APP);
-				}
-				//otherwise update existing dataset
-				else
-				{
-					$keys = array('ts_extra_name' => $namecf, 'ts_id' => $this->data['ts_id']);
-					$fieldAssign = array('ts_extra_value' => $this->data['#'.$namecf]);
-					$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__,TIMESHEET_APP);
-				}
-			}
-			return true;
-		}
-		return false;
 	}
 
 	/**
@@ -475,33 +478,14 @@ class timesheet_bo extends so_sql
 		}
 		if (($ret = parent::delete($keys)) && $ts_id)
 		{
-			//delete custom fields entries
-			$this->delete_extra($ts_id);
-
+			if ($this->customfields)	//delete custom fields entries
+			{
+				$this->db->delete(self::EXTRA_TABLE,array('ts_id' => $ts_id),__LINE__,__FILE__,TIMESHEET_APP);
+			}
 			// delete all links to timesheet entry $ts_id
 			egw_link::unlink(0,TIMESHEET_APP,$ts_id);
 		}
 		return $ret;
-	}
-
-
-	/**
-	 * deletes a timesheet extra entry identified by $ts_id and/or $ts_exra_name
-	 *
-	 * @param int $ts_id => number of timesheet
-	 * @param string ts_extra_name => certain custom field name
-	 * @return int false if an error
-	 */
-	function delete_extra($ts_id='',$ts_extra_name='')
-	{
-		strlen($ts_id) > 0 ? $where['ts_id'] = $ts_id : '';
-		strlen($ts_extra_name) > 0 ? $where['ts_extra_name'] = $ts_extra_name : '';
-
-		if(count($where) > 0)
-		{
-			return $this->db->delete('egw_timesheet_extra', $where,__LINE__,__FILE__,TIMESHEET_APP);
-		}
-		return false;
 	}
 
 	/**
@@ -571,7 +555,7 @@ class timesheet_bo extends so_sql
 	{
 		if (!is_array($entry))
 		{
-			$entry = $this->read( $entry );
+			$entry = $this->read( $entry,false,false );		// no need to read cfs
 		}
 		if (!$entry)
 		{
@@ -684,7 +668,7 @@ class timesheet_bo extends so_sql
 	{
 		if($pm_id && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
 		{
-			$pm_ids = ExecMethod('projectmanager.boprojectmanager.children',$pm_id);
+			$pm_ids = ExecMethod('projectmanager.projectmanager_bo.children',$pm_id);
 			$pm_ids[] = $pm_id;
 			$links = solink::get_links('projectmanager',$pm_ids,'timesheet');	// solink::get_links not egw_links::get_links!
 			if ($links)

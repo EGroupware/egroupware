@@ -487,7 +487,7 @@ class timesheet_ui extends timesheet_bo
 					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.$GLOBALS['egw']->common->show_date($query['enddate']+12*60*60,$df,false);
 				}
 			}
-			if ($query['filter'] == 'custom')	// show the custome dates
+			if ($query['filter'] == 'custom')	// show the custom dates
 			{
 				$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
 			}
@@ -504,10 +504,16 @@ class timesheet_ui extends timesheet_bo
 			$rows = $ids;
 			return $this->total;	// no need to set other fields or $readonlys
 		}
-		$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids);
+		$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
 
 		unset($query['col_filter'][0]);
 
+		// query cf's for the displayed rows
+		if ($ids && $this->customfields &&
+			in_array('customfields',$cols_to_show=explode(',',$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['nextmatch-timesheet.index.rows'])))
+		{
+			$cfs = $this->read_cfs($ids,$cols_to_show);
+		}
 		$readonlys = array();
 		$have_cats = false;
 		foreach($rows as &$row)
@@ -540,6 +546,10 @@ class timesheet_ui extends timesheet_bo
 				$row['class'] = 'th';
 				$row['titleClass'] = 'titleSum';
 				continue;
+			}
+			elseif($cfs && isset($cfs[$row['ts_id']]))
+			{
+				$row += $cfs[$row['ts_id']];
 			}
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
 			{
@@ -582,10 +592,7 @@ class timesheet_ui extends timesheet_bo
 			$rows += $this->summary;
 		}
 		$rows['pm_integration'] = $this->pm_integration;
-
-		if($this->ts_viewtype == 'short') {
-			$rows['ts_viewtype'] = true;
-		}
+		$rows['ts_viewtype'] = $this->ts_viewtype == 'short';
 
 		return $total;
 	}
