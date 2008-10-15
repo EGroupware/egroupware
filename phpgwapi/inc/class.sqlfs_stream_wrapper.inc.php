@@ -202,6 +202,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				'fs_modified' => self::_pdo_timestamp(time()),
 				'fs_creator'  => egw_vfs::$user,
 				'fs_mime'     => 'application/octet-stream',	// required NOT NULL!
+				'fs_size'     => 0,
 			);
 			foreach($values as $name => &$val)
 			{
