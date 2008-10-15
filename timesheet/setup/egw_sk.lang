@@ -16,6 +16,9 @@ entry saved	timesheet	sk	Položka bola uložená
 error deleting the entry!!!	timesheet	sk	Chyba pri odstraňovaní položky!!!
 error saving the entry!!!	timesheet	sk	Chyba pri ukladaní položky!!!
 existing links	timesheet	sk	Existujúce odkazy
+export to openoffice spreadsheet	timesheet	sk	Exportovať do zošita OpenOffice
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	sk	en
+field must not be empty !!!	timesheet	sk	Pole nesmie byť prázdne!!!
 full: use only projectmanager	admin	sk	Plné: použiť iba Projektovník
 general	timesheet	sk	Hlavné
 last modified	timesheet	sk	Naposledy upravené
@@ -46,6 +49,8 @@ this month	timesheet	sk	Tento mesiac
 this week	timesheet	sk	Tento týždeň
 this year	timesheet	sk	Tento rok
 timesheet	common	sk	Harmonogram
+timesheet csv export	timesheet	sk	Harmonogram - export do CSV
+timesheet openoffice export	timesheet	sk	Harmonogram - export do OpenOffice
 unitprice	timesheet	sk	Jednotková cena
 view this entry	timesheet	sk	Zobraziť položku
 week	timesheet	sk	Týždeň

@@ -1,10 +1,10 @@
-%1 days in advance	infolog	el	%1 ημέρες προκαταβολικά
+%1 days in advance	infolog	el	%1 ημέρες πριν
 %1 deleted	infolog	el	%1 διαγράφηκαν
 %1 deleted by %2 at %3	infolog	el	%1 διαγράφηκαν από %2 στις %3
 %1 modified	infolog	el	%1 επεξεργάστηκαν
 %1 modified by %2 at %3	infolog	el	%1 επεξεργάστηκαν από %2 στις %3
 %1 records imported	infolog	el	%1 εγγραφές εισήχθησαν
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	el	Έχουν διαβαστεί %1 εγγραφές(δεν έχουν ακόμα εισαχθεί,μπορείτε να πάτε %2πίσω%3 και να ξετσεκάρετε το Τεστ Εισαγωγής)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	el	Έχουν διαβαστεί %1 εγγραφές (δεν έχουν εισαχθεί ακόμη, μπορείτε να πάτε %2 πίσω %3 και να ξετσεκάρετε το Τεστ Εισαγωγής)
 - subprojects from	infolog	el	- Υποκατηγορίες σχεδίων από
 0%	infolog	el	0%
 10%	infolog	el	10%
@@ -81,8 +81,9 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	el	ορίστηκε συνάντηση
 dates, status, access	infolog	el	Συναντήσεις, Κατάσταση,Είσοδος
 days	infolog	el	ημέρες
+default categorie for new infolog entries	infolog	el	Προκαθορισμένη κατηγορία για νέες καταχωρήσεις στο InfoLog
 default filter for infolog	infolog	el	Προκαθορισμένο Φίλτρο για  το InfoLog
-default status for a new log entry	infolog	el	προκαθορισμένη κατάσταση για μια νέα είσοδο
+default status for a new log entry	infolog	el	προκαθορισμένη κατάσταση για νέες καταχωρήσεις
 delegated	infolog	el	εξουσιοδοτήθηκε
 delegated open	infolog	el	εξουσιοδοτημένα ανοικτά
 delegated overdue	infolog	el	εξουσιοδοτημένα καθυστερημένα
@@ -108,10 +109,9 @@ do you want a notification, if items you created get updated?	infolog	el	Επι�
 do you want a notification, if items you delegated are about to start?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε εξουσιοδοτημένος πρόκειται να ξεκινήσουν;
 do you want a notification, if items you delegated are due?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε εξουσιοδοτημένος έχουν καθυστερήσει;
 do you want to receive notifications as html-mails or plain text?	infolog	el	Επιθυμείτε να λαμβάνετε ειδοποιήσεις ως html-mails ή απλό κείμενο;
-do you want to see custom infolog types in the calendar?	infolog	el	Επιθυμείτε να βλέπετε τους προσαρμοσμένους Infolog τύπους στο ημερολόγιο;
 don't show infolog	infolog	el	ΜΗΝ εμφανίζετε το InfoLog
 done	infolog	el	ολοκληρώθηκε
-download	infolog	el	Φορτώστε
+download	infolog	el	Download
 duration	infolog	el	Διάρκεια
 each value is a line like <id>[=<label>]	infolog	el	κάθε αξία είναι μία γραμμή όπως <id>[=<label>]
 edit	infolog	el	Προσαρμογή
@@ -120,17 +120,18 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	el
 edit status	infolog	el	Επιμέλεια κατάστασης
 edit the entry	infolog	el	Επιμέλεια της καταχώρησης
 edit this entry	infolog	el	Επιμέλεια αυτής της καταχώρησης
-empty for all	infolog	el	άδειο για όλα
+empty for all	infolog	el	κενό για όλα
 enddate	infolog	el	Προθεσμία λήξης
 enddate can not be before startdate	infolog	el	Η προθεσμία λήξης δεν μπορεί να είναι προηγούμενη της  ημερομηνίας έναρξης
 enter a custom contact, leave empty if linked entry should be used	infolog	el	είσοδος σε μία προσαρμοσμένη επαφή, να μείνει κενή αν πρέπει να χρησιμοποιηθεί συνδεδεμένη καταχώρηση
 enter a custom phone/email, leave empty if linked entry should be used	infolog	el	είσοδος σε ένα προσαρμοσμένο τηλέφωνο/email, να μένει κενό αν πρέπει να χρησιμοποιηθεί συνδεδεμένη καταχώρηση
 enter a textual description of the log-entry	infolog	el	Πληκτρολογήστε μία περιγραφή κειμένου για την καταχώρηση
-enter the query pattern	infolog	el	Είσοδος στο πρότυπο αποριών
-error: saving the entry	infolog	el	Σφάλμα:κατά την αποθήκευση της καταχώρησης
+enter the query pattern	infolog	el	Enter the query pattern
+error: saving the entry	infolog	el	Σφάλμα: κατά την αποθήκευση της καταχώρησης
 error: the entry has been updated since you opened it for editing!	infolog	el	Σφάλμα:η καταχώρηση έχει ενημερωθεί από όταν την ανοίξατε για προσαρμογή!
 existing links	infolog	el	Υπάρχοντες σύνδεσμοι
 fax	infolog	el	Fax
+field must not be empty !!!	infolog	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
 fieldseparator	infolog	el	Διαχωριστής πεδίων
 finish	infolog	el	τέλος
 for which types should this field be used	infolog	el	για ποιους τύπους να χρησιμοποιηθεί αυτό το πεδίο
@@ -169,6 +170,7 @@ link	infolog	el	Σύνδεσμος
 links	infolog	el	Σύνδεσμοι
 links of this entry	infolog	el	Σύνδεσμοι αυτής της καταχώρησης
 list all categories	infolog	el	Να μπουν σε λίστα όλες οι κατηγορίες
+list no subs/childs	infolog	el	Να μην εμφανίζονται οι υπο- καταχωρήσεις
 location	infolog	el	Τοποθεσία
 longer textual description	infolog	el	εκτενέστερη περιγραφή κειμένου
 low	infolog	el	χαμηλή
@@ -186,6 +188,7 @@ no details	infolog	el	συνοπτικά
 no entries found, try again ...	infolog	el	δεν βρέθηκαν καταχωρήσεις, προσπαθήστε ξανά
 no filter	infolog	el	κανένα Φίλτρο
 no links or attachments	infolog	el	κανένα φίλτρο ή επισυνάψεις
+nonactive	infolog	el	ανενεργό
 none	infolog	el	Κανένα
 normal	infolog	el	κανονικό
 not	infolog	el	δεν
@@ -210,6 +213,7 @@ own	infolog	el	δικά μου
 own open	infolog	el	δικά μου ανοικτά
 own overdue	infolog	el	δικά μου καθυστερημένα
 own upcoming	infolog	el	δικά μου επερχόμενα
+parent	infolog	el	Μητρική
 path to user and group files has to be outside of the webservers document-root!!!	infolog	el	Το μονοπάτι προς τα αρχεία του χρήστη και των ομάδων ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ της πορείας των εγγράφων των webservers!!!
 pattern for search in addressbook	infolog	el	πρότυπο αναζήτησης στο βιβλίο διευθύνσεων
 pattern for search in projects	infolog	el	πρότυπο αναζήτησης στα σχέδια
@@ -221,6 +225,8 @@ phonecall	infolog	el	Κλήση τηλεφώνου
 planned	infolog	el	προγραμματίστηκε
 planned time	infolog	el	ώρα σχεδίου
 price	infolog	el	Τιμή
+pricelist	infolog	el	Τιμοκατάλογος
+primary link	infolog	el	κύριος σύνδεσμος
 priority	infolog	el	Προτεραιότητα
 private	infolog	el	Προσωπικό
 project	infolog	el	Σχέδιο
@@ -257,6 +263,7 @@ select a priority for this task	infolog	el	επιλέξτε προτεραιότ
 select a project	infolog	el	Επιλέξτε ένα έργο
 select a responsible user: a person you want to delegate this task	infolog	el	Επιλέξτε τον υπεύθυνο χρήστη: ένα άτομο στο οποίο θέλετε να αναθέσετε αυτό το έργο
 select a typ to edit it's status-values or delete it	infolog	el	επιλέξτε έναν τύπο για να επιμεληθείτε την κατάστασή του
+select an app to search in	infolog	el	Επελέξτε μία εφαρμογή στην οποία θα γίνει αναζήτηση
 select an entry to link with	infolog	el	Επελέξτε μία καταχώρηση προς σύνδεση
 select to filter by owner	infolog	el	Επιλογή φίλτρου σύμφωνα με τον ιδιοκτήτη
 select to filter by responsible	infolog	el	Επιλογή φίλτρου σύμφωνα με τον υπεύθυνο
@@ -265,7 +272,6 @@ should infolog show subtasks, -calls or -notes in the normal view or not. you ca
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζει τους συνδέσμους με άλλες εφαρμογές και/ή τις προσκολλήσεις αρχείου στην InfoLog λίστα (κανονική εμφάνιση όταν εισέρχεστε στο InfoLog).
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζεται στη βασική οθόνη και με ποιο φίλτρο.Λειτουργεί μόνο αν δεν επιλέξατε μία εφαρμογή για την βασική οθόνη (στις προτιμήσεις σας).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	el	Θα έπρεπε το InfoLog να χρησιμοποιεί ολόκληρα ονόματα (επώνυμα και οικογενειακά ονόματα) ή μόνο τα ονόματα εισόδου.
-should the calendar show custom types too	infolog	el	Θα έπρεπε το ημερολόγιο να δείχνει προσαρμοσμένους τύπους επίσης
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει ένα μοναδικό νούμερο Id, το οποίο να μπορεί να χρησιμοποιείται π.χ. ως Id εισιτηρίου.
 should the infolog list show the column "last modified".	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει τη στήλη "τελευταία τροποποίηση".
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει το ποσοστό ολοκλήρωσης μόνο για την κατάσταση τρέχων ή δύο ξεχωριστά εικονίδια.
@@ -288,7 +294,9 @@ status ...	infolog	el	Κατάσταση
 sub	infolog	el	Υπό
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	el	Υπό-καταχωρήσεις γίνονται υποκατηγορίες των μητρικών ή βασικών καταχωρήσεων, αν δεν υπάρχει μητρική
 subject	infolog	el	Θέμα
+sum	infolog	el	Σύνολο
 task	infolog	el	Εργασίες
+template	infolog	el	Πρότυπο
 test import (show importable records <u>only</u> in browser)	infolog	el	Έλεγχος Εισαγωγής (εμφάνιση εισαγώγιμων εγγραφών <u>only</> στο browser)
 the text displayed to the user	infolog	el	το κείμενο εμφανίζεται στο χρήστη
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	el	Αυτές είναι οι χρήσεις του InfoLog φίλτρου όταν εισέρχεστε στην εφαρμογή.Τα φίλτρα περιορίζουν τις καταχωρήσεις να εμφανίζονται στην πραγματική παρουσίαση.Υπάρχουν φίλτρα που παρουσιάζουν μόνο τα ολοκληρωμένα, τα τρέχοντα ή τις δικές σας μελλοντικές καταχωρήσεις ή και όλων των χρηστών.

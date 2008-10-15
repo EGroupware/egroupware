@@ -3,6 +3,7 @@
 %1 etemplates for application '%2' dumped to '%3'	etemplate	pt-br	%1 eModelo para a aplicação '%2' copiado para '%3'
 %1 etemplates found	etemplate	pt-br	%1 eModelo encontrados
 %1 matches on search criteria	etemplate	pt-br	%1 encontrados para os critérios da busca
+%1 more...	etemplate	pt-br	mais %1...
 %1 new etemplates imported for application '%2'	etemplate	pt-br	%1 novo eModelo importado para a aplicação '%2'
 %s disabled	etemplate	pt-br	%s inativo
 %s needed	etemplate	pt-br	%s necessário
@@ -10,9 +11,11 @@
 %s onchange	etemplate	pt-br	%s Sobre alteração
 %s readonly	etemplate	pt-br	%s apenas leitura
 '%1' has an invalid format !!!	etemplate	pt-br	'%1' está em um formato inválido !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	pt-br	'%1' não é um arquivo php na pasta raiz do servidor eGW (%2)!
 '%1' is not a valid date !!!	etemplate	pt-br	'%1' não é uma data válida !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	pt-br	%1' não é um número válido para o ponto flutuante!!!
 '%1' is not a valid integer !!!	etemplate	pt-br	%1' não é um inteiro válido!!!
+'%1' is not allowed ('%2')!	etemplate	pt-br	'%1' não é permitido ('%2')!
 a pattern to be searched for	etemplate	pt-br	um padrão a ser procurado
 accesskey	etemplate	pt-br	Tecla de atalho
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	pt-br	Teclas de atalho também pode ser especificadas com um '&' no rótulo (exemplo: &Nome).
@@ -225,10 +228,12 @@ linklist	etemplate	pt-br	Listar link
 linkstring	etemplate	pt-br	Texto para link
 linkto	etemplate	pt-br	Linkar para
 load this template into the editor	etemplate	pt-br	carregar este modelo para o editor
+message ...	etemplate	pt-br	Mensagem...
 middle	etemplate	pt-br	Meio
 minute	etemplate	pt-br	Minuto
 minutes	etemplate	pt-br	Minutos
 month	etemplate	pt-br	Mês
+more than 1 match for '%1'	etemplate	pt-br	mais de 1 combinação para '%1'
 multicolumn indices	etemplate	pt-br	Indices de multicolunas
 name	etemplate	pt-br	Nome
 name of other table where column is a key from	etemplate	pt-br	nome de outras tabelas onde a coluna é uma chave a partir de
@@ -248,6 +253,7 @@ nextmatch sortheader	etemplate	pt-br	Próximo campo - Classificar cabeçalho
 no column to swap with !!!	etemplate	pt-br	sem coluna para trocar !!!
 no file	etemplate	pt-br	sem arquivo
 no filename given or selected via browse...	etemplate	pt-br	sem nome de arquivo atribuído ou selecionado através do localizar...
+no matches found	etemplate	pt-br	Nenhuma combinação encontrada
 no row to swap with !!!	etemplate	pt-br	sem linha para trocar !!!
 not null	etemplate	pt-br	NÃO PODE SER VAZIO
 nothing	etemplate	pt-br	nada
@@ -284,6 +290,7 @@ read etemplate from database (for the keys above)	etemplate	pt-br	Ler eModelo da
 readonly	etemplate	pt-br	somente leitura
 remove row (can not be undone!!!)	etemplate	pt-br	remover Linha (NÃO pode ser desfeito!!!)
 remove this link (not the entry itself)	etemplate	pt-br	Remover este link (não a própria entrada)
+required	etemplate	pt-br	Requerido
 returns savely, without deleting	etemplate	pt-br	retornar ao documento salvo, SEM apagar
 right	etemplate	pt-br	Direita
 row...	etemplate	pt-br	Linha...
@@ -403,3 +410,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	pt-br	Importar arquivo xml
 xslt template	etemplate	pt-br	Modelo XSLT
 year	etemplate	pt-br	Ano
+you are not allowed to export more then %1 entries!	etemplate	pt-br	Você não tem permissão para exportar mais de %1 registros!
+you can respond by visiting:	etemplate	pt-br	Você pode responder acessando:

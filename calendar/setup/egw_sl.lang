@@ -47,6 +47,7 @@ calendar preferences	calendar	sl	Nastavitve koledarja
 calendar settings	admin	sl	Lastnosti koledarja
 calendar-fieldname	calendar	sl	Koledar - ime polja
 can't add alarms in the past !!!	calendar	sl	Ne morem dodati alarma v preteklosti!
+can't aquire lock!	calendar	sl	Ne morem zakleniti!
 canceled	calendar	sl	Razveljavljeno
 charset of file	calendar	sl	Kodna tabela datoteke
 close the window	calendar	sl	Zapri okno
@@ -105,6 +106,7 @@ error: importing the ical	calendar	sl	Napaka: pri uvozu v iCal
 error: no participants selected !!!	calendar	sl	Napaka: noben udeleženec ni izbran!
 error: saving the event !!!	calendar	sl	Napaka: pri shranjevanju dogodka!
 error: starttime has to be before the endtime !!!	calendar	sl	Napaka: čas začetka mora biti pred časom konca!
+error: the entry has been updated since you opened it for editing!	calendar	sl	Napaka: vnos je bil posodobljen odkar ste ga odprli za urejanje!
 event copied - the copy can now be edited	calendar	sl	Dogodek je bil kopiran - lahko uredite kopijo
 event deleted	calendar	sl	Dogodek zbrisan
 event details follow	calendar	sl	Sledijo podrobnosti dogodka
@@ -151,6 +153,7 @@ holidays	calendar	sl	Prazniki
 hours	calendar	sl	ure
 how far to search (from startdate)	calendar	sl	Kako daleč od začetnega datuma naj iščem
 how many minutes should each interval last?	calendar	sl	Koliko minut naj traja posamezen interval?
+how many weeks should the multiple week view show?	calendar	sl	Koliko tednov naj prikaže pogled več tednov?
 ical	calendar	sl	iCal
 ical / rfc2445	calendar	sl	iCal / rfc2445
 ical export	calendar	sl	Izvozi iCal
@@ -162,6 +165,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	sl	Prezri navzkrižje
 import	calendar	sl	Uvoz
 import csv-file	common	sl	Uvozi CSV datoteko
+imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	sl	Uvozi dogodke v vaš koledar iz datoteke CSV. CSV pomeni 'vrednosti, ločene z vejico'. Na zavihku Možnosti lahko izberete drugo ločilo polj.
 interval	calendar	sl	Interval
 invalid email-address "%1" for user %2	calendar	sl	Nepravilen elektronski naslov "%1" za uporabnika %2
 last	calendar	sl	Zadnji
@@ -283,6 +287,8 @@ test import (show importable records <u>only</u> in browser)	calendar	sl	Test uv
 this day is shown as first day in the week or month view.	calendar	sl	Ta dan je prikazan kot prvi dan v tednu ali v mesecu.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sl	To definira konec dnevnega pogleda. Dogodki po tem času so prikazani pod dnevnim ogledom.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sl	To definira začetek dnevnega pogleda. Dogodki pred tem so prikazani pred dnevnim pogledom.<br>Ta čas je tudi uporaben kot privzeti za nove dogodke.
+this entry is currently opened by %1!	calendar	sl	Ta vnos ima trenutno odprt uporabnik %1!
+this entry is opened by user:	calendar	sl	Ta vnos je med nastavljenim časom odprl uporabnik:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sl	Ta skupina je že označena, ko vstopite v načrtovalca. V načrtovalcu jo lahko spremenite kadarkoli želite.
 this message is sent for canceled or deleted events.	calendar	sl	Sporočilo je poslano ob preklicu ali brisanju dogodkov.
 this message is sent for modified or moved events.	calendar	sl	Sporočilo je poslano ob spremembi ali premiku dogodkov.

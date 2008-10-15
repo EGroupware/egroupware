@@ -1,3 +1,23 @@
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	sk	Vyberte si pripomienkovací reťazec. Budete upozornení cez mechanizmy, ktoré sú zahrnuté v tomto reťazci.<br />Upozornenie: Ak je pripomienkovací reťazec označený ako "zakázaný", váš správca nepovolil jeden alebo viacero mechanizmov v reťazci a pripomienky sa prepnú do režimu "E-Mail".
+common chains	notifications	sk	Časté reťazce
+disabled chains	notifications	sk	Zakázané reťazce
 don't notify me via popups in egroupware	notifications	sk	Neupozorňuj ma cez vyskakovacie okná v eGroupWare
+egroupware has notifications for you	notifications	sk	eGroupWare má pre vás pripomienky
+egroupware-popup backend	admin	sk	eGroupWare vyskakovací mechanizmus
+egroupware-popup verbosity	notifications	sk	Podrobnosť vyskakovacieho mechanizmu
+enable egroupware-popup backend	admin	sk	Povoliť vyskakovací mechanizmus eGroupWare
+enable sms backend	admin	sk	Povoliť SMS mechanizmus
+enable windows-popup backend	admin	sk	Povoliť Windows vyskakovací mechanizmus
+enabled chains	notifications	sk	Povolené reťazce
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sk	Do akých podrobností má eGroupware vyskakovací mechanizmus vystupovať, keď sa používateľovi posiela pripomienka:<br />nízka: iba zobraziť zvonček pripomienky vo vrchnej ponuke - táto musí byť povolená!<br />stredná: preniesť okno pripomienky do popredia<br />vysoká: preniesť okno pripomienky do popredia a spôsobiť, aby prehliadač na seba nejako upozornil
+if set, embedded links get rendered special for external clients	notifications	sk	Ak je nastavené, pripojené odkazy sa vykreslia špeciálne pre vonkajších klientov
+linked entries:	notifications	sk	Pripojené záznamy:
+maximum sms messages per notification	admin	sk	Maximálny počet SMS pre jednu pripomienku
+message from	notifications	sk	Správa od
 notification	common	sk	Pripomienka
+notify me by	notifications	sk	Pripomenúť mi pomocou
+optimize e-mails for external mail client	notifications	sk	Optimizovať E-Maily pre vonkajších poštových klientov
 preferences for notification	notifications	sk	Predvoľby pre Pripomienky
+sms backend	admin	sk	Mechanizmus SMS
+this egroupware notification has been sent to you by mail because your	notifications	sk	Táto pripomienka eGroupWare vám bola zaslaná prostredníctvom mailu, pretože váš
+windows-popup backend	admin	sk	Windows vyskakovací mechanizmus

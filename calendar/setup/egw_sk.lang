@@ -47,6 +47,7 @@ calendar preferences	calendar	sk	Predvoľby Kalendára
 calendar settings	admin	sk	Nastavenia Kalendára
 calendar-fieldname	calendar	sk	Kalendár - názov poľa
 can't add alarms in the past !!!	calendar	sk	Pripomienky sa nedajú zadávať do minulosti!!!
+can't aquire lock!	calendar	sk	Nepodarilo sa získať zámok!
 canceled	calendar	sk	Zrušené
 charset of file	calendar	sk	Znaková sada súboru
 close the window	calendar	sk	Zavrieť okno
@@ -288,6 +289,7 @@ test import (show importable records <u>only</u> in browser)	calendar	sk	Otestov
 this day is shown as first day in the week or month view.	calendar	sk	Tento deň sa zobrazuje ako prvý v týždennom či mesačnom pohľade.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sk	Touto hodinou sa končí denný pohľad. Udalosti po tejto hodine se zobrazia až za denným pohľadom.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sk	Touto hodinou sa začína denný pohľad. Udalosti pred touto hodinou se zobrazia pred denným pohľadom.<br>Zároveň sa táto hodina použije ako východzia pre nové udalosti.
+this entry is currently opened by %1!	calendar	sk	Tento záznam má práve otvorený používateľ %1!
 this entry is opened by user:	calendar	sk	Tento záznam bol otvorený počas nastaveného časového rozpätia používateľom:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sk	Táto skupina bude automaticky vybratá pri vstupe do plánovača. V plánovači ju môžete zmeniť podľa ľubovôle.
 this message is sent for canceled or deleted events.	calendar	sk	Táto správa se posiela pri zrušení či odstránení udalostí.

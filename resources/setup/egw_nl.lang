@@ -18,7 +18,7 @@ category:	resources	nl	Categorie:
 check all	resources	nl	Alles markeren
 choose categories admin	resources	nl	kies categorieën beheer
 clear selection	resources	nl	selectie wissen
-configure access permissions	resources	nl	Toegangsrechten configureren
+configure access permissions	admin	nl	Toegangsrechten configureren
 create new accessory for this resource	resources	nl	Nieuw toebehoren voor deze hulpbron aanmaken
 create new links	resources	nl	Nieuwe links aanmaken
 delete selected resources	resources	nl	verwijder de geselecteerde hulpbronnen
@@ -72,7 +72,7 @@ responsible:	resources	nl	Verantwoordelijk:
 saves entry and exits	resources	nl	Opslaan en sluiten
 select a category	resources	nl	Selecteer een categorie
 select resource	resources	nl	selecteer hulpbron
-select resources	resources	nl	Selecteer hulpbronnen
+select resources	common	nl	Selecteer hulpbronnen
 select/deselect all	resources	nl	alles (de)selecteren
 short description	resources	nl	Korte beschrijving
 short description of resource	resources	nl	Korte beschrijving van hulpbron
@@ -95,6 +95,7 @@ web-site for this resource	resources	nl	Website voor deze hulpbron
 where to find this resource?	resources	nl	Waar kun je deze hulpbron vinden?
 which category does this resource belong to?	resources	nl	Tot welke categorie behoort deze hulpbron?
 write permissions	resources	nl	Schrijfrechten
+you are not permitted to delete this reource!	resources	nl	U bent niet bevoegd deze hulpbron te verwijderen!
 you are not permitted to edit this reource!	resources	nl	U bent niet bevoegd deze hulpbron te wijzigen!
 you are not permitted to get information about this resource!	resources	nl	U bent niet bevoegd informatie over deze hulpbron op te vragen!
 you chose more resources than available	resources	nl	U koos meer hulpbronnen dan er beschikbaar zijn

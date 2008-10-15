@@ -1,125 +1,73 @@
-%1 already exists as a file	filemanager	sk	%1 už existuje ako súbor
-application	filemanager	sk	Aplikácia
-back to file manager	filemanager	sk	Naspäť na Správcu Súborov
-cancel editing %1 without saving	filemanager	sk	Zrušiť úpravu %1 bez uloženia zmien
-cannot create directory because it begins or ends in a space	filemanager	sk	Nemôžem vytvoriť adresár, pretože začína alebo končí medzerou
-cannot replace %1 because it is a directory	filemanager	sk	Nemôžem prepísať %1 pretože je to adresár
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	sk	Ak vyberiete dátumy kde dátum konca je menší než dátum začiatku, výsledkom vyhľadávania budú všetky záznamy OKREM tých, ktoré ležia medzi zadanými dátumami
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	sk	Ak vyberiete iba jeden dátum (od/do), výsledkom vyhľadávania budú všetky záznamy staršie/novšie než zadaný dátum
+%1 directories and %2 files copied.	filemanager	sk	%1 adresárov a %2 súborov bolo skopírovaných.
+%1 directories and %2 files deleted.	filemanager	sk	%1 adresárov a %2 súborov bolo odstránených.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	sk	%1 chýb počas kopírovania (%2 adresárov a %3 súborov bolo skopírovaných)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	sk	%1 chýb počas odstraňovania (%2 adresárov a %3 súborov bolo odstránených)!
+%1 errors moving (%2 files moved)!	filemanager	sk	%1 chýb počas presúvania (%2 súborov bolo presunutých)!
+%1 files copied.	filemanager	sk	%1 súborov bolo skopírovaných.
+%1 files deleted.	filemanager	sk	%1 súborov bolo odstránených.
+%1 files moved.	filemanager	sk	%1 súborov bolo presunutých.
+%1 the following files into current directory	filemanager	sk	%1 nasledovné súbory do súčasného adresára
+%1 urls %2 to clipboard.	filemanager	sk	%1 URL %2 do schránky.
+accessrights	filemanager	sk	Prístupové oprávnenia
+acl added.	filemanager	sk	ACL bolo pridané.
+acl deleted.	filemanager	sk	ACL bolo odstránené.
+actions	filemanager	sk	Akcie
+all subdirectories	filemanager	sk	Všetky podadresáre
+and all it's childeren	filemanager	sk	a všetkých jeho potomkov
+check all	filemanager	sk	Označiť všetko
 clear search	filemanager	sk	vyčistiť hľadanie
-command sucessfully run	filemanager	sk	Príkaz bol úspešne spustený
-comment	filemanager	sk	Komentár
-comments cannot contain "%1"	filemanager	sk	Komentáre nemôžu obsahovať %1
-copied %1 to %2	filemanager	sk	Skopíroval som %1 do %2
-copy to	filemanager	sk	Kopírovať do
-copy to:	filemanager	sk	Kopírovať do:
-could not copy %1 to %2	filemanager	sk	Nepodarilo sa skopírovať %1 do %2
-could not copy file because no destination directory is given	filemanager	sk	Nepodarilo sa skopírovať súbor, pretože nebol zadaný cieľový adresár
-could not create %1	filemanager	sk	Nepodarilo sa vytvoriť %1
-could not create directory %1	filemanager	sk	Nepodarilo sa vytvoriť adresár %1
-could not delete %1	filemanager	sk	Nepodarilo sa odstrániť %1
-could not move %1 to %2	filemanager	sk	Nepodarilo sa presunúť %1 do %2
-could not move file because no destination directory is given	filemanager	sk	Nepodarilo sa presunúť súbor, pretože nebol zadaný cieľový adresár
-could not rename %1 to %2	filemanager	sk	Nepodarilo sa premenovať %1 na %2
-could not save %1	filemanager	sk	Nepodarilo sa uložiť %1
-create file	filemanager	sk	Vytvoriť súbor
-create folder	filemanager	sk	Vytvoriť priečinok
+copied	filemanager	sk	skopírované
+copy to clipboard	filemanager	sk	Kopírovať do schránky
+create directory	filemanager	sk	Vytvoriť adresár
 created	filemanager	sk	vytvorené
-created %1	filemanager	sk	%1 bolo vytvorené
-created %1,%2	filemanager	sk	%1, %2 bolo vytvorené
 created between	filemanager	sk	vytvorené medzi
-created by	filemanager	sk	Vytvoril
-created directory %1	filemanager	sk	Bol vytvorený adresár %1
-date	filemanager	sk	Dátum
-default number of upload fields to show	filemanager	sk	Predvolený počet polí pre odovzdanie, ktoré sa zobrazia
-delete	filemanager	sk	Odstrániť
-deleted %1	filemanager	sk	%1 bolo odstránené
+current directory	filemanager	sk	Súčasný adresár
+cut	filemanager	sk	Vystrihnúť
+cut to clipboard	filemanager	sk	Vystrihnúť do schránky
+delete this file or directory	filemanager	sk	Odstrániť tento súbor alebo adresár
 directory	filemanager	sk	Adresár
-directory %1 already exists	filemanager	sk	Adresár %1 už existuje
-directory %1 does not exist	filemanager	sk	Adresár %1 neexistuje
-directory names cannot contain "%1"	filemanager	sk	Názov adresára nesmie obsahovať "%1"
-display attributes	filemanager	sk	Zobraziť atribúty
-download	filemanager	sk	Stiahnuť
-edit	filemanager	sk	Upraviť
-edit comments	filemanager	sk	Upraviť komentáre
-error running command	filemanager	sk	Chyba pri vykonávaní príkazu
-execute	filemanager	sk	Vykonať
-failed to create directory	filemanager	sk	Nepodarilo sa vytvoriť adresár
-fake base dir did not exist, egroupware created a new one.	filemanager	sk	Falošný základný adresár neexistoval, eGroupWare preto vytvoril nový.
-file	filemanager	sk	Súbor
-file %1 already exists. please edit it or delete it first.	filemanager	sk	Súbor %1 už existuje. Prosím upravte ho alebo najprv odstráňte.
-file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvoriť.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	sk	Súbor %1 je možno priveľký. Kontaktujte svojho správcu systému pre ďalšie informácie.
-file name	filemanager	sk	Názov súboru
-file names cannot contain  or /	filemanager	sk	Názvy súborov nesmú obsahovať \ alebo /
-file names cannot contain "%1"	filemanager	sk	Názvý súborov nesmú obsahovať "%1"
-file names cannot contain \ or /	filemanager	sk	Názvy súborov nesmú obsahovať \ alebo /
+directory not found or no permission to access it!	filemanager	sk	Adresár sa nenašiel alebo nemáme k nemu prístupové práva!
+display and modification of content	filemanager	sk	Zobrazenie a úprava obsahu
+display of content	filemanager	sk	Zobrazenie obsahu
+edit settings	filemanager	sk	Upraviť nastavenia
+error adding the acl!	filemanager	sk	Chyba počas pridávania ACL!
+error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
+error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
+executable	filemanager	sk	Spustiteľný
+extended access control list	filemanager	sk	Rozšírený zoznam prístupových oprávnení (ACL)
+extended acl	filemanager	sk	Rozšírený ACL
+failed to create directory!	filemanager	sk	Vytvorenie adresára sa nepodarilo!
+file deleted.	filemanager	sk	Súbor bol odstránený.
+file or directory not found!	filemanager	sk	Súbor alebo adresár sa nenašiel!
+file successful uploaded.	filemanager	sk	Súbor bol úspešne odovzdaný.
 filemanager	common	sk	Správca Súborov
-filemanager preferences	filemanager	sk	Predvoľby Správcu Súborov
-files	filemanager	sk	Súbory
-files in this directory	filemanager	sk	Súbory v tomto adresári
-folder	filemanager	sk	Priečinok
-folder up	filemanager	sk	O priečinok vyššie
-go home	filemanager	sk	domov
+general	filemanager	sk	Všeobecné
 go to	filemanager	sk	Choď na
-go to %1	filemanager	sk	Choď na %1
 go to your home directory	filemanager	sk	Choď do svojho domovského adresára
-go to:	filemanager	sk	Choď na:
-go up	filemanager	sk	Choď vyššie
-home	filemanager	sk	Domov
 id	filemanager	sk	Id
-location	filemanager	sk	Umiestnenie
-locked	filemanager	sk	Zamknuté
+maximum size for uploads	filemanager	sk	Maximálna veľkosť pre odovzdané súbory
 mime type	filemanager	sk	MIME typ
 modified	filemanager	sk	Zmenené
 modified between	filemanager	sk	Zmenené medzi
-modified by	filemanager	sk	Zmenené (kým)
-move to	filemanager	sk	Presunúť do
-move to:	filemanager	sk	Presunúť do:
-moved %1 to %2	filemanager	sk	Presunuté %1 do %2
-no files in this directory.	filemanager	sk	V tomto adresári nie sú žiadne súbory.
-no version history for this file/directory	filemanager	sk	Žiadna história verzií pre tento súbor / adresár
-operation	filemanager	sk	Operácia
-other settings	filemanager	sk	Iné nastavenia
-owner	filemanager	sk	Vlastník
-please select a file to delete.	filemanager	sk	Prosím vyberte súbor ktorý sa má odstrániť.
-preview %1	filemanager	sk	Náhľad %1
-preview of %1	filemanager	sk	Náhľad %1
-quick jump to	filemanager	sk	Rýchly skok na
-reload	filemanager	sk	znovunačítať
-rename	filemanager	sk	Premenovať
-renamed %1 to %2	filemanager	sk	Premenované %1 na %2
-replaced %1	filemanager	sk	Prepísané %1
-save %1	filemanager	sk	Uložiť %1
-save %1, and go back to file listing	filemanager	sk	Uložiť %1, a vrátiť sa na zoznam súborov
-save all	filemanager	sk	Uložiť všetko
-save changes	filemanager	sk	Uložiť zmeny
-saved %1	filemanager	sk	%1 bolo uložené
+modify all subdirectories and their content	filemanager	sk	Upraviť všetky podadresáre a ich obsah
+move	filemanager	sk	Presunúť
+no access	filemanager	sk	Bez prístupu
+no preview available	filemanager	sk	Nie je k dispozícii žiadny náhľad
+only owner can rename or delete the content	filemanager	sk	Iba vlastník môže premenovať alebo odstrániť obsah
+permission denied!	filemanager	sk	Prístup bol odopretý!
+permissions	filemanager	sk	Prístupové oprávnenia
+permissions changed for %1.	filemanager	sk	Prístupové oprávnenia sa zmenili pre %1.
+preview	filemanager	sk	Náhľad
+read & write access	filemanager	sk	Prístup na čítanie a zápis
+read access only	filemanager	sk	Prístup iba na čítanie
+rename, change permissions or ownership	filemanager	sk	Premenovať, zmeniť prístupové oprávnenia alebo vlastníctvo
+renamed %1 to %2.	filemanager	sk	Premenované %1 na %2.
+rights	filemanager	sk	Oprávnenia
 searchstring	filemanager	sk	Hľadaný reťazec
-show	filemanager	sk	Ukázať
-show ..	filemanager	sk	Ukázať ..
-show .files	filemanager	sk	Ukázať .súbory
-show command line (experimental. dangerous.)	filemanager	sk	Ukázať príkazový riadok (EXPERIMENTÁLNE. NEBEZPEČNÉ.)
-show help	filemanager	sk	Ukáž Pomoc
+select action...	filemanager	sk	Vyberte akciu...
+select file to upload in current directory	filemanager	sk	Vyberte súbor, ktorý sa má odovzdať, v súčasnom adresári
 size	filemanager	sk	Veľkosť
-sort by:	filemanager	sk	Triediť podľa:
 start search	filemanager	sk	Hľadaj
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	sk	Budúci Správca Súborov, zatiaľ LEN PRE TESTOVACIE ÚČELY, prosím posielajte správy o chybách
-total files	filemanager	sk	Súborov celkovo
-unknown mime-type defaults to text/plain when viewing	filemanager	sk	Neznámy MIME typ sa predvolene chápe ako text/plain pri pokuse o zobrazenie
-unused space	filemanager	sk	Nevyužitý priestor
 up	filemanager	sk	Hore
-update	filemanager	sk	Aktualizácia
-updated comment for %1	filemanager	sk	Aktualizovaný komentár pre %1
-upload	filemanager	sk	Nahrať
-upload fields	filemanager	sk	Nahrať položky
-upload files	filemanager	sk	Nahrať súbory
-use new experimental filemanager?	filemanager	sk	Použiť nového experimentálneho Správcu Súborov?
-used space	filemanager	sk	Použitý priestor
-users	filemanager	sk	Používatelia
-version	filemanager	sk	Verzia
-view documents in new window	filemanager	sk	Zobraziť dokumenty v novom okne
-view documents on server (if available)	filemanager	sk	Zobraziť dokumenty na serveri (ak sa dá)
-who	filemanager	sk	Kto
-you do not have access to %1	filemanager	sk	Nemáte prístup ku %1
-your home dir did not exist, egroupware created a new one.	filemanager	sk	Váš domovský adresár neexistoval, eGroupWare vytvoril nový.
+you need to select an owner!	filemanager	sk	Najprv musíte vybrať vlastníka!
+you need to select some files first!	filemanager	sk	Najprv musíte vybrať nejaké súbory!

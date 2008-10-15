@@ -4,6 +4,7 @@
 %1 start	common	sl	Zaženi %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sl	%1Izberite drugo mapo%2<br /> ali nastavite, da bo %3 zapisljiva za spletni strežnik
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1eGroupWare%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
+(session restored in %1 seconds)	common	sl	(seja je bila vzpostavljena v % sekundah)
 (shift-)click or drag to change value	jscalendar	sl	(Shift)-klik ali povleci-in-spusti za spremembo vrednosti.
 - click on any of the time parts to increase it	jscalendar	sl	- Kliknite na katerikoli del časa za njegovo povečanje.
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	sl	- Držite miškin gumb na kateremkoli od zgornjih gumbov za hitrejši izbor.
@@ -12,6 +13,10 @@
 - use the %1, %2 buttons to select month	jscalendar	sl	- Uporabite gumba %1, %2 za izbiro meseca
 - use the %1, %2 buttons to select year	jscalendar	sl	- Uporabite gumba %1, %2 za izbiro leta
 00 (disable)	admin	sl	00 (izklopi)
+1 day	common	sl	1 dan
+1 hour	common	sl	1 ura
+1 month	common	sl	1 mesec
+1 week	common	sl	1 teden
 13 (ntp)	admin	sl	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	sl	3 - število znakov za okrajšavo dneva
 3 number of chars for month-shortcut	jscalendar	sl	3 - število znakov za okrajšavo meseca
@@ -26,6 +31,7 @@ account has been created	common	sl	Uporabniški račun je bil ustvarjen
 account has been deleted	common	sl	Uporabniški račun je bil izbrisan
 account has been updated	common	sl	Uporabniški račun je bil posodobljen
 account is expired	common	sl	Uporabniški račun je potekel
+accounts	common	sl	Računi
 acl	common	sl	ACL
 action	common	sl	Dejanje
 active	common	sl	Aktiven
@@ -45,6 +51,7 @@ all fields	common	sl	vsa polja
 alphabet	common	sl	a,b,c,č,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,š,t,u,v,w,x,y,z,ž
 alternate style-sheet:	common	sl	Nadomestna (CSS) predloga
 american samoa	common	sl	AMERIŠKA SAMOA
+an error happend	common	sl	Pojavila se je napaka
 an existing and by the webserver readable directory enables the image browser and upload.	common	sl	Obstoječa IN s strani spletnega strežnika berljiva mapa omogoča brskanje in nalaganje slik.
 andorra	common	sl	ANDORA
 angola	common	sl	ANGOLA
@@ -72,6 +79,7 @@ azerbaijan	common	sl	AZARBEJDŽAN
 back	common	sl	Nazaj
 back to user login	common	sl	Nazaj na prijavno okno
 background color:	common	sl	Barva ozadja:
+backupdir '%1' is not writeable by the webserver	common	sl	Spletni strežnik ne more pisati v arhivsko mapo '%1'
 bad login or password	common	sl	Napačno uporabniško ime in/ali geslo
 bahamas	common	sl	BAHAMI
 bahrain	common	sl	BAHRAIN
@@ -134,8 +142,10 @@ christmas island	common	sl	BOŽIČNI OTOK
 clear	common	sl	Izprazni
 clear form	common	sl	Izprazni formo
 click	common	sl	Klikni
+click here to resume your egroupware session.	common	sl	Kliknite tukaj za vrnitev seje eGroupWare
 click or mouse over to show menus	common	sl	Klik ali prehod z mišjo za prikaz menijev
 click or mouse over to show menus?	common	sl	Klik ali prehod z mišjo za prikaz menijev?
+click this image on the navbar: %1	common	sl	Kliknite sliko v navbar: %1
 close	common	sl	Zapri
 close sidebox	common	sl	Zapri stranski meni
 cocos (keeling) islands	common	sl	KOKOSOVI (KEELINGOVI) OTOKI
@@ -160,6 +170,8 @@ current	common	sl	Trenutno
 current users	common	sl	Trenutni uporabniki
 cyprus	common	sl	CIPER
 czech republic	common	sl	ČEŠKA REPUBLIKA
+database error	common	sl	Napaka zbirke podatkov
+database error!	common	sl	Napaka zbirke podatkov!
 date	common	sl	Datum
 date due	common	sl	Rok
 date selection:	jscalendar	sl	Izbor datuma
@@ -202,6 +214,8 @@ edit	common	sl	Popravi
 edit %1 category for	common	sl	Popravi kategorijo %1 za
 edit categories	common	sl	Popravi kategorije
 edit category	common	sl	Popravi kategorijo
+egroupware	common	sl	eGroupWare
+egroupware api version	common	sl	Različica API eGroupWare
 egroupware api version %1	common	sl	eGroupWare API različica %1
 egroupware: login blocked for user '%1', ip %2	common	sl	eGroupWare: prijava uporabnika '%1' na IPju '%2' onemogočena.
 egypt	common	sl	EGIPT
@@ -213,6 +227,7 @@ end date	common	sl	Končni datum
 end time	common	sl	Končni čas
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL eGroupWare. Primer: http://www.domain.com/egroupware   ali   /egroupware<br><b>Brez zaključne poševnice!</b>
 entry has been deleted sucessfully	common	sl	Vnos je bil uspešno izbrisan
+entry not found!	common	sl	Ne najdem vnosa!
 entry updated sucessfully	common	sl	Vnos je bil uspešno osvežen
 equatorial guinea	common	sl	EKVATORIALNA GVINEJA
 eritrea	common	sl	ERITREJA
@@ -242,6 +257,7 @@ firstname	common	sl	Ime
 fixme!	common	sl	POPRAVI ME!
 folder already exists.	common	sl	Mapa že obstaja.
 force selectbox	common	sl	Vsili izbirna polja
+forever	common	sl	Za vedno
 france	common	sl	FRANCIJA
 french guiana	common	sl	FRANCOSKA GVAJANA
 french polynesia	common	sl	FRANCOSKA POLINEZIJA
@@ -293,6 +309,7 @@ home email	common	sl	Domači E-naslov
 honduras	common	sl	HONDURAS
 hong kong	common	sl	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sl	Koliko ikon naj se pokaže na orodni vrstici na vrhu strani? Preostale ikone gredo v dodaten meni, ki ga je moč priklicati s pomočjo ikone na desni strani orodne vrstice.
+how to show the general egroupware menu ?	common	sl	Kako naj bo prikazan splošni meni eGroupWare?
 hungary	common	sl	MADŽARSKA
 iceland	common	sl	ISLANDIJA
 iespell not detected. click ok to go to download page.	common	sl	ieSpell ni bil zaznan. Kliknite V redu za obisk spletne strani za prenos.
@@ -362,6 +379,8 @@ local	common	sl	Lokalno
 login	common	sl	Prijava
 loginid	common	sl	Uporabniško ime
 logout	common	sl	Odjava
+lost login id	common	sl	Pozabljeno uporabniško ime
+lost password	common	sl	Pozabljeno geslo
 low	common	sl	Nizko
 lowest	common	sl	Najnižje
 luxembourg	common	sl	LUKSEMBURG
@@ -432,9 +451,13 @@ norfolk island	common	sl	OTOK NORFOLK
 normal	common	sl	Običajno
 northern mariana islands	common	sl	SEVERNI MARIANSKI OTOKI
 norway	common	sl	NORVEŠKA
+not	common	sl	Ne
+not a user yet? register now	common	sl	Še niste uporabnik? Registrirajte se.
 not assigned	common	sl	Ni dodeljeno
+not readable %1 entry of user %2	common	sl	Zapisa %1 od uporabnika %2 ni mogoče prebrati
 note	common	sl	Opomba
 notes	common	sl	Opombe
+notifications	common	sl	Obvestila
 notify window	common	sl	Okno za opozorila
 notify your administrator to correct this situation	common	sl	Obvestite administratorja, da odpravi problem
 november	common	sl	November
@@ -446,6 +469,7 @@ on *nix systems please type: %1	common	sl	Na *nix sistemih vnesite: %1
 on mouse over	common	sl	Ob prehodu z miško
 only private	common	sl	Samo zasebno
 only yours	common	sl	Samo vaše
+oops! you caught us in the middle of system maintainance.	common	sl	Smo sredi vzdrževanja sistema.
 open notify window	common	sl	Odpri okno z opozorilom
 open popup window	common	sl	Odpri pojavno okno
 open sidebox	common	sl	Odpri stranski meni
@@ -473,7 +497,9 @@ password must contain at least %1 special characters	common	sl	Geslo mora vsebov
 password must contain at least %1 uppercase letters	common	sl	Geslo mora vsebovati najmanj %1 velikih črk
 password must have at least %1 characters	common	sl	Geslo mora imeti najmanj %1 znakov
 path to user and group files has to be outside of the webservers document-root!!!	common	sl	Pot do uporabniških in skupinskih datotek NE SME BITI podrejena korenski mapi spletišča.
+permission denied!	common	sl	Dostop zavrnjen!
 permissions to the files/users directory	common	sl	Dovoljenja do mape datotek/uporabnikov
+permisson denied!	common	sl	Dostop zavrnjen!
 personal	common	sl	Zasebno
 peru	common	sl	PERU
 philippines	common	sl	FILIPINI
@@ -487,6 +513,7 @@ please select	common	sl	Izberite
 please set your global preferences	common	sl	Vnesite splošne nastavitve.
 please set your preferences for this application	common	sl	Vnesite nastavitve za to aplikacijo!
 please wait...	common	sl	Prosimo, počakajte...
+please, check back with us shortly.	common	sl	Vrnite se pozneje.
 poland	common	sl	POLJSKA
 portugal	common	sl	PORTUGALSKA
 postal	common	sl	Poštno
@@ -509,8 +536,10 @@ qatar	common	sl	KATAR
 read	common	sl	Preberi
 read this list of methods.	common	sl	Preberi ta seznam postopkov
 reading	common	sl	Branje
+register	common	sl	Registriraj
 regular	common	sl	Občasno
 reject	common	sl	Zavrni
+remember me	common	sl	Zapomni se me
 remove selected accounts	common	sl	Odstrani izbrane račune
 remove shortcut	common	sl	Odstrani bližnjico
 rename	common	sl	Preimenuj
@@ -539,6 +568,7 @@ save	common	sl	Shrani
 search	common	sl	Išči
 search %1 '%2'	common	sl	Išči %1 '%2'
 search accounts	common	sl	Išči po računih
+search or select accounts	common	sl	Išči ali izberi uporabniške račune
 second	common	sl	Sekunda
 section	common	sl	Odsek
 select	common	sl	Izberi
@@ -568,8 +598,10 @@ setup main menu	common	sl	Glavni meni namestitve
 seychelles	common	sl	SEJEŠELI
 show all	common	sl	Prikaži vse
 show all categorys	common	sl	Prikaži vse kategorije
+show as topmenu	common	sl	Prikaži kot meni na vrhu
 show clock?	common	sl	Prikažem uro?
 show home and logout button in main application bar?	common	sl	Prikažem gumba Domov in Odjavi v glavni vrstici aplikacije?
+show in sidebox	common	sl	Prikaži v stranskem okviru
 show logo's on the desktop.	common	sl	Prikaži logotip na namizju.
 show menu	common	sl	Prikaži meni
 show page generation time	common	sl	Prikaži čas generiranja strani
@@ -689,6 +721,7 @@ western sahara	common	sl	ZAHODNA SAHARA
 what color should all the blank space on the desktop have	common	sl	Kakšne barve naj bo prazen prostor na namizju?
 what style would you like the image to have?	common	sl	Kakšen slog želite za sliko?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sl	Če odgovorite z Da, bosta gumba Domov in Odjavi v orodni vrstici aplikacij.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	sl	Kje in kako naj egroupware prikaže povezave za nastavitve in odjavo.
 which groups	common	sl	Katere skupine
 width	common	sl	Širina
 wk	jscalendar	sl	ted
@@ -710,6 +743,8 @@ you have selected an invalid date	common	sl	Izbrali ste napačen datum
 you have selected an invalid main category	common	sl	Izbrali ste napačno glavno kategorijo
 you have successfully logged out	common	sl	Bili ste uspešno odjavljeni
 you need to add the webserver user '%1' to the group '%2'.	common	sl	Uporabnika '%1' je potrebno dodati skupini '%2'.
+you need to be an egroupware administrator to access this functionality!	common	sl	Za dostop do te funkcionalnosti morate biti administrator!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sl	Poskusili ste odpreti aplikacijo %1 ampak nimate pravice dostopa.
 your message could <b>not</b> be sent!<br>	common	sl	Vaše sporočilo <b>NI<b> bilo poslano! <br>
 your message has been sent	common	sl	Vaše sporočilo je bilo poslano
 your search returned %1 matchs	common	sl	Najdenih %1 zadetkov

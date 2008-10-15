@@ -1,12 +1,19 @@
 %1 - %2 of %3 user accounts	admin	pt-br	%1 - %2 de %3 contas de usuários
 %1 - %2 of %3 user groups	admin	pt-br	%1 - %2 de %3 grupos de usuários
 %1 acl records of not (longer) existing accounts deleted.	admin	pt-br	%1 registro(s) ACL de contas inexistentes removido(s).
+%1 class not instanciated	admin	pt-br	Classe %1 não instanciada
+%1 group %2	admin	pt-br	%1 grupo %2
+%1 is no command!	admin	pt-br	%1 não é um comando!
 %1 not found or not executable !!!	admin	pt-br	%1 não encontrado ou não-executável !!!
+%1 rights for %2 and applications %3	admin	pt-br	%1 direitos para %2 e aplicativos %3
+%1 user %2	admin	pt-br	%1 usuário %2
 (default no, leave it off if you dont use it)	admin	pt-br	(padrão Não, deixe-o assim se você não o usa)
 (stored password will not be shown here)	admin	pt-br	(Senha salva não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos] !!!)
 -  type	admin	pt-br	- tipo
 accesslog and bruteforce defense	admin	pt-br	Registro de acesso e defesa de Força Bruta
+account %1 %2	admin	pt-br	Conta %1 %2
+account '%1' deleted.	admin	pt-br	Conta '%1' removida.
 account active	admin	pt-br	Conta ativa
 account has been created	common	pt-br	A conta foi criada
 account has been deleted	common	pt-br	A conta foi removida
@@ -14,6 +21,7 @@ account has been updated	common	pt-br	A conta foi atualizada
 account list	admin	pt-br	Lista de contas
 account permissions	admin	pt-br	Permissões da conta
 account preferences	admin	pt-br	Preferências da conta
+account-id's have to be integers!	admin	pt-br	Id da conta deve ser número inteiro!
 acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
 action	admin	pt-br	Ação
@@ -36,6 +44,7 @@ add sub-category	admin	pt-br	Adicionar subcategoria
 admin email	admin	pt-br	Email do Administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt-br	Endereços eletrônicos dos administradores (seprados por vírgula) a serem notificados em caso de bloqueio (em branco para não notificar)
 admin name	admin	pt-br	Nome do Administrador
+admin queue and history	admin	pt-br	Lista de administradores e histórico
 administration	admin	pt-br	Administração
 admins	admin	pt-br	Administradores
 advanced options	admin	pt-br	opções avançadas
@@ -45,6 +54,7 @@ aliases	admin	pt-br	Apelidos
 all records and account information will be lost!	admin	pt-br	Todos registros e informações de contas serão perdidos!
 all users	admin	pt-br	Todos usuários
 allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta aplicação
+allow remote administration from following install id's (comma separated)	admin	pt-br	Permitir administração remota dos seguintes IDS (separados por vírgulas)
 alternate email address	admin	pt-br	endereço de e-mail alternativo
 anonymous user	admin	pt-br	Usuário Anônimo
 anonymous user (not shown in list sessions)	admin	pt-br	Usuário Anônimo (não é exibido na lista de sessões)
@@ -52,10 +62,12 @@ anonymous user does not exist!	admin	pt-br	Usuário Anônimo não existe!
 anonymous user has no run-rights for the application!	admin	pt-br	Usuário Anônimo não tem acesso de execução para este aplicativo!
 appearance	admin	pt-br	Aparência
 application	admin	pt-br	Aplicativo
+application '%1' not found (maybe not installed or misspelled)!	admin	pt-br	Aplicativo '%1' não encontrado (talvez não esteja instalado ou nome mal informado)!
 application name	admin	pt-br	Nome do Aplicativo
 application title	admin	pt-br	Título do Aplicativo
 applications	admin	pt-br	Aplicativos
 applications list	admin	pt-br	Lista de Aplicativos
+applications run rights updated.	admin	pt-br	Direitos de execução dos aplicativos atualizados.
 applies the changes	admin	pt-br	aplicar as alterações
 are you sure you want to delete the application %1 ?	admin	pt-br	Você tem certeza que deseja remover o aplicativo %1 ?
 are you sure you want to delete this account ?	admin	pt-br	Você tem certeza que deseja remover esta conta?
@@ -85,17 +97,25 @@ cancel testjob!	admin	pt-br	Cancelar trabalhos de teste!
 categories list	admin	pt-br	Lista de Categorias
 category %1 has been saved !	admin	pt-br	Categoria %1 foi salva!
 category list	admin	pt-br	Lista de Categorias
+change account_id	admin	pt-br	Alterar id da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
 change config settings	admin	pt-br	Mudar parâmetros de configuração
 change main screen message	admin	pt-br	Alterar mensagem da tela principal
+change password for %1	admin	pt-br	alterar senha para %1
+check acl for entries of not (longer) existing accounts	admin	pt-br	Verificar registros ACL para contas não mais existentes.
 check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sessões
 check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
 click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
+command scheduled to run at %1	admin	pt-br	Comando agendado para rodar às %1
+complete path to aspell program	admin	pt-br	Caminho completo para o programa aspell
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie domínio (o padrão vazio significa usar o nome completo do domínio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo domínio para egw.dominio.com.br e www.dominio.com.br)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite múltiplas sessões eGW com diferentes diretórios, mas tem problemas com SiteMgr!)
+could not remote execute the command	admin	pt-br	Não foi possível executar remotamente o comando
 country selection	admin	pt-br	Seleção de País
 create group	admin	pt-br	Criar Grupo
+created	admin	pt-br	Criado
+created with id #%1	admin	pt-br	criado com id #%1
 creates a new field	admin	pt-br	criar um novo campo
 crontab only (recomended)	admin	pt-br	somente crontab (recomendado)
 custom fields	admin	pt-br	Campos personalizados
@@ -109,6 +129,7 @@ default file system space per user	admin	pt-br	Espaço em disco padrão por usu�
 default file system space per user/group ?	admin	pt-br	Espaço em disco padrão por usuário/grupo?
 deinstall crontab	admin	pt-br	Desinstalar crontab
 delete account	admin	pt-br	Remover conta
+delete account %1	admin	pt-br	Remover conta %1
 delete all records	admin	pt-br	Remover todos os registros
 delete application	admin	pt-br	Remover aplicativo
 delete category	admin	pt-br	Remover categoria
@@ -166,10 +187,12 @@ edit this user	admin	pt-br	editar este usuário
 edit user	admin	pt-br	editar usuário
 edit user account	admin	pt-br	Editar conta de usuário
 egroupware directory	admin	pt-br	Diretório eGroupWare
+either install id and config password needed or the remote hash!	admin	pt-br	Necessário ID de instalação E senha de configuração OU o hash remoto!
 email account active	admin	pt-br	conta de e-mail ativa
 email address	admin	pt-br	e-mail
 enable debug-messages	admin	pt-br	Habilitar menssagens de depuração
 enable the soap service	admin	pt-br	Habilitar o serviço soap
+enable the spellcheck in the ritch text editor ?	admin	pt-br	Habilitar o verificador ortográfico no editor de texto ?
 enable the xmlrpc service	admin	pt-br	Habilitar o serviço xmlrpc
 enabled - hidden from navbar	admin	pt-br	Habilitado - Escondido da barra de navegação
 enabled - popup window	admin	pt-br	Habilitar Janelas instantâneas
@@ -197,12 +220,19 @@ enter your http proxy server port	admin	pt-br	Digite a porta do servidor proxy H
 enter your smtp server hostname or ip address	admin	pt-br	Digite o endereço de seu servidor SMTP
 enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum está configurado !!!
+error changing the password for % !!!	admin	pt-br	Erro alterando a senha para % !!!
+error changing the password for %1 !!!	admin	pt-br	Erro alterando a senha para %1 !!!
+error saving	admin	pt-br	Erro salvando
+error saving account!	admin	pt-br	Erro salvando conta!
+error saving the command!	admin	pt-br	Erro salvando o comando!
+error saving to db:	admin	pt-br	Erro salvando no banco de dados:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado !!!
 error! no appname found	admin	pt-br	Erro: Nome de aplicativo não encontrado
 error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido !!!
 expires	admin	pt-br	Expira
 explanation of ldapman	admin	pt-br	Até o momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e precisa dos esquemas CORE e QMAIL (OID7914). Mais detalhes, sobre como usar e configurar este sistema, pode ser encontrato no arquivo README.ldapman na pasta doc de ADMIN.
 fallback (after each pageview)	admin	pt-br	recuperar (após cada página visualizada)
+false	admin	pt-br	falso
 field '%1' already exists !!!	admin	pt-br	Campo '%1' já existe !!!
 file space	admin	pt-br	Espaço para arquivos
 file space must be an integer	admin	pt-br	Espaço para arquivos deve ser um número inteiro
@@ -214,6 +244,7 @@ forward also to	admin	pt-br	encaminhar também para
 forward emails to	admin	pt-br	encaminhar e-mails para
 forward only	admin	pt-br	apenas encaminhar
 global categories	common	pt-br	Categorias globais
+grant	admin	pt-br	Conceder
 group ?	admin	pt-br	grupo?
 group has been added	common	pt-br	Grupo adicionado
 group has been deleted	common	pt-br	Grupo removido
@@ -225,6 +256,7 @@ hide php information	admin	pt-br	Esconder informações de PHP
 home directory	admin	pt-br	Diretório de instalação
 host information	admin	pt-br	Informações do servidor
 hour<br>(0-23)	admin	pt-br	Hora<br>(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	pt-br	Qual o tamanho das miniaturas para links de imagens (máximo em pixels)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt-br	Quantos dias as entradas devem ser mantidas no registro de acessos, antes de serem removidas (padrão 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	pt-br	Quantos registros usuários não administradores serão capazes de exportar (vazio = sem limites, no = nenhum)
 how many minutes should an account or ip be blocked (default 30) ?	admin	pt-br	Quantos minutos uma conta ou endereço IP devem ser bloqueados (padrão 30)?
@@ -240,6 +272,9 @@ install crontab	admin	pt-br	Instalar crontab
 installed applications	common	pt-br	Aplicativos Instalados
 installed crontab	admin	pt-br	Crontab instalado
 interface	admin	pt-br	Interface
+invalid formated date "%1"!	admin	pt-br	Data formatada inválida "%1"!
+invalid remote id or name "%1"!	admin	pt-br	ID remoto ou nome inválido "%1"!
+invalid value "%1" use yes or no!	admin	pt-br	Valor inválido "%1"! Use sim ou não!
 ip	admin	pt-br	IP
 jobs	admin	pt-br	Trabalhos
 kill	admin	pt-br	Terminar
@@ -283,6 +318,7 @@ method	admin	pt-br	Método
 minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	admin	pt-br	Minuto
 mode	admin	pt-br	Modo
+modified	admin	pt-br	Modificado
 month	admin	pt-br	Mês
 more secure	admin	pt-br	mais seguro
 name must not be empty !!!	admin	pt-br	Nome não pode estar vazio !!!
@@ -303,14 +339,17 @@ note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: 
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt-br	número de linhas para um campo de entrada ou linhas para uma caixa de seleção
 order	admin	pt-br	Ordem
 outbound	admin	pt-br	Saída
+own install id:	admin	pt-br	Próprio id de instalação:
 passthrough	admin	pt-br	Atravessar
 password for smtp-authentication	admin	pt-br	Senha para autenticação SMTP
+password updated	admin	pt-br	Senha atualizada
 path information	admin	pt-br	Informação de Path
 peer server list	admin	pt-br	Lista de servidores parceiros
 peer servers	admin	pt-br	Servidores parceiros
 percent of users that logged out	admin	pt-br	Percentual de usuários que desconectaram
 percent this user has logged out	admin	pt-br	Percentagem de vezes que este usuário desconectou
 permission denied	admin	pt-br	Permissão negada
+permission denied !!!	admin	pt-br	Permissão negada !!!
 permissions	admin	pt-br	Permissões
 permissions this group has	admin	pt-br	Permissões do grupo
 phpinfo	admin	pt-br	Informações do PHP
@@ -327,6 +366,9 @@ quota size in mbyte	admin	pt-br	tamanho da cota em MByte
 re-enter password	admin	pt-br	Redigite a senha
 read this list of methods.	admin	pt-br	Ler esta lista de métodos
 register application hooks	admin	pt-br	Registrar configurações das aplicações
+remote administration instances	admin	pt-br	Instâncias de administração remotas
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	pt-br	Administração remota deve ser habilitada na instância remoda em Administrador > Configuração do Servidor!
+remote instance saved	admin	pt-br	Instância remota salva
 remove	admin	pt-br	remover
 remove all users from this group	admin	pt-br	Remover todos os usuários deste grupo
 remove all users from this group ?	admin	pt-br	Remover todos os usuários desse grupo?
@@ -366,6 +408,7 @@ show error log	admin	pt-br	Exibir registro de erros
 show phpinfo()	admin	pt-br	Exibir phpinfo()
 show session ip address	admin	pt-br	Exibir endereço IP das sessões
 site	admin	pt-br	Site
+site configuration	admin	pt-br	Configuração do Servidor
 soap	admin	pt-br	SOAP
 sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo já está em uso.
 sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usuários acima ainda são membros do grupo %1
@@ -407,12 +450,18 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	pt
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt-br	Tempo para expiração da sessões em segundos (padrão 14400 = 4 horas)
 times	admin	pt-br	Horários
 top	admin	pt-br	topo
+total of %1 id's changed.	admin	pt-br	Total de %1 IDs alterada(s)
 total records	admin	pt-br	Total de registros
+true	admin	pt-br	verdadeiro
 trust level	admin	pt-br	Nível de confiança
 trust relationship	admin	pt-br	Relação de confiança
 type '%1' already exists !!!	admin	pt-br	tipo '%1' já existe !!
 type of customfield	admin	pt-br	Tipo do campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	No Windows você precisa instalar o asyncservide %1manualmente%2 ou usar o modo fallback. Fallback significa que os trabalhos serão verificados somente após cada visualização de página!!!
+unknown account: %1 !!!	admin	pt-br	Conta desconhecida: %1 !!!
+unknown command %1!	admin	pt-br	Comando desconhecido %1!
+unknown option %1	admin	pt-br	Opção desconhecida %1
+updated	admin	pt-br	atualizado
 use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sessão
 use pure html compliant code (not fully working yet)	admin	pt-br	Usar código HTML puro (não funciona totalmente ainda)
 use theme	admin	pt-br	Usar tema
@@ -422,6 +471,7 @@ user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Us
 user groups	admin	pt-br	Grupos de usuários
 userdata	admin	pt-br	Dados de usuário
 users choice	admin	pt-br	Escolha do usuário
+value for column %1 is not unique!	admin	pt-br	Valor da coluna %1 não é único!
 view access log	admin	pt-br	Exibir registro de acessos
 view account	admin	pt-br	Exibir conta
 view category	admin	pt-br	Exibir categoria
@@ -435,6 +485,8 @@ would you like egroupware to check for a new version<br>when admins login ?	admi
 would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o eGroupware verifique automaticamente novas versões de aplicativos quando administradores estiverem conectados?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localização sejam carragados automaticamente (ao entrar)
 would you like to show each application's upgrade status ?	admin	pt-br	Deseja exibir se cada aplicação está atualizada ?
+wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2 !!!
+wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -senha errada !!!
 xml-rpc	admin	pt-br	XML-RPC
 you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida
 you have to enter a name, to create a new field!!!	admin	pt-br	Você precisa informar um nome para criar um novo campo!!!
@@ -448,5 +500,6 @@ you must enter an application name.	admin	pt-br	Você deve digitar um nome para 
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
 you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo.
 you must select at least one group member.	admin	pt-br	Você deve selecionar ao menos um membro.
+you need to enter install id and password!	admin	pt-br	Você deve informar um ID de instalação E senha!
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as subcategorias antes de remover esta categoria !
 your session could not be verified.	admin	pt-br	Sua sessão não pôde ser verificada

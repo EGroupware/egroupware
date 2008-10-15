@@ -15,6 +15,7 @@ actions	addressbook	pt-br	Ações
 add %1	addressbook	pt-br	Adicionar %1
 add a contact to this organisation	addressbook	pt-br	Adicionar um contato para esta organização
 add a new contact	addressbook	pt-br	Adicionar um novo contato
+add a new infolog	addressbook	pt-br	Adicionar uma nova Tarefa
 add a new list	addressbook	pt-br	Adicionar uma nova lista
 add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os campos.
 add business email of whole distribution list?	addressbook	pt-br	Adicionar e-mail comercial para uma lista de distribuição inteira ?
@@ -36,6 +37,7 @@ addressbook csv export	addressbook	pt-br	Exportar Livro de Contatos em CSV
 addressbook menu	addressbook	pt-br	Menu do Livro de Contatos
 addressbook preferences	addressbook	pt-br	Preferências do Livro de Contatos
 addressbook the contact should be saved to	addressbook	pt-br	Livro de Contatos em que o contato deverá ser salvo
+addressbook the contact should be shown	addressbook	pt-br	Livro de Contatos em que o contato deverá ser exibido
 addressbook-fieldname	addressbook	pt-br	Livro de Contatos - Nome do Campo
 addvcard	addressbook	pt-br	Adicionar VCard
 advanced search	addressbook	pt-br	Pesquisa avançada
@@ -99,11 +101,13 @@ contact saved	addressbook	pt-br	Contato salvo
 contact settings	admin	pt-br	Preferências de Contatos
 contactform	addressbook	pt-br	Formulário de contatos
 contacts and account contact-data to ldap	admin	pt-br	contatos e dados da conta de contatos para LDAP
+contacts and account contact-data to sql	admin	pt-br	contatos e dados da conta de contatos para SQL
 contacts to ldap	admin	pt-br	contatos para LDAP
 contacts to ldap, account contact-data to sql	admin	pt-br	contatos para LDAP, dados da conta de contatos para SQL
 contains	addressbook	pt-br	contém
 copied by %1, from record #%2.	addressbook	pt-br	Copiado por %1, do registro #%2.
 copy a contact and edit the copy	addressbook	pt-br	Copiar um contato e editar a cópia
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pt-br	Copiar suas alterações para a área de transferência, %1recarregar o registro%2 e mesclá-los.
 country	common	pt-br	País
 create new links	addressbook	pt-br	Criar novos links
 created	addressbook	pt-br	Criado
@@ -156,6 +160,7 @@ end	addressbook	pt-br	Fim
 enter the path to the exported file here	addressbook	pt-br	Entre aqui com o caminho do arquivo exportado
 error deleting the contact !!!	addressbook	pt-br	Erro removendo o contato !!!
 error saving the contact !!!	addressbook	pt-br	Erro salvando o contato !!!
+error: the entry has been updated since you opened it for editing!	addressbook	pt-br	Erro: o registro foi atualizado desde que você o abriu para edição!
 example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	pt-br	Exemplo: $$IF n_prefix~Sr~Olá Sr.~Olá Sra.$$ - procura no campo "n_prefix" por "Sr". Se encontrar, escreve "Olá Sr.", senão escreve "Olá Sra.".
 existing links	addressbook	pt-br	Links existentes
 export	addressbook	pt-br	exportar
@@ -263,6 +268,7 @@ name for the distribution list	addressbook	pt-br	Nome da lista de distribuição
 name of current user, all other contact fields are valid too	addressbook	pt-br	Nome do usuário atual, todos outros campos são válidos também
 name, address	addressbook	pt-br	Nome, Endereço
 new contact submitted by %1 at %2	addressbook	pt-br	Novo contato informado por %1 em %2
+new window opened to edit infolog for your selection	addressbook	pt-br	Nova janela aberta para editar sua seleção de Tarefas
 next date	addressbook	pt-br	Próxima data
 no categories selected	addressbook	pt-br	nenhuma categoria selecionada
 no vcard	addressbook	pt-br	Nenhum VCard
@@ -340,9 +346,11 @@ thank you for contacting us.	addressbook	pt-br	Obrigado por entrar em contato co
 that field name has been used already !	addressbook	pt-br	Este nome de campo já está em uso !
 the anonymous user has probably no add rights for this addressbook.	addressbook	pt-br	O usuário anônimo provavelmente não tem permissão para adicionar neste Livro de Contatos.
 the anonymous user needs add rights for it!	addressbook	pt-br	O usuário anônimo precisa de permissão para adicioná-lo!
+the anonymous user needs read it!	addressbook	pt-br	O usuário anônimo precisa lê-lo!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	pt-br	O documento pode conter marcas como $$n_fn$$, para ser substituido com dados de contatos (%1lista completa de nomes de marcas%2).
 there was an error saving your data :-(	addressbook	pt-br	Ocorreu um erro ao salvar seus dados :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	pt-br	Este módulo exibe um formulário de contato, que salva diretamente no Livro de Contatos.
+this module displays block from a adddressbook group.	addressbook	pt-br	Este módulo exibe blocos de um Grupo do Livro de Contatos
 this person's first name was not in the address book.	addressbook	pt-br	O primeiro nome desta pessoa não estava nos Contatos.
 this person's last name was not in the address book.	addressbook	pt-br	O último nome dessa pessoa não está nos Contatos.
 timezone	addressbook	pt-br	Zona de horário
@@ -356,7 +364,8 @@ update fields by edited organisations?	admin	pt-br	Atualizar campos por organiza
 updated	addressbook	pt-br	Atualizado
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pt-br	URL para linkar números de telefones (use %1 = número a ser chamado, %u = nome da conta, %t = número do telefone)
-use an extra category tab?	addressbook	pt-br	Usar uma tab extra para categoria ?
+use an extra category tab?	addressbook	pt-br	Usar uma aba extra para categoria ?
+use an extra tab for private custom fields?	admin	pt-br	Usar uma aba extra para campos privados personalizados?
 use country list	addressbook	pt-br	Usar lista de países
 use setup for a full account-migration	admin	pt-br	usar setup para uma migração de contas completa
 used for links and for the own sorting of the list	addressbook	pt-br	usado para links e para a ordem própria da lista

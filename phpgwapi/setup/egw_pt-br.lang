@@ -4,6 +4,7 @@
 %1 start	common	pt-br	%1 iniciar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
+(session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
 (shift-)click or drag to change value	jscalendar	pt-br	(Shift-) Clique ou arraste para alterar o valor
 - click on any of the time parts to increase it	jscalendar	pt-br	- Clique sobre as horas para alterá-las
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	pt-br	- Segure mouse clicado e use o comando seta acima para avançar mais rápido
@@ -12,6 +13,10 @@
 - use the %1, %2 buttons to select month	jscalendar	pt-br	- Use os botões %1, %2 para selecionar o mês
 - use the %1, %2 buttons to select year	jscalendar	pt-br	- Use os botões %1, %2 para selecionar o ano
 00 (disable)	admin	pt-br	00 (desabilitado)
+1 day	common	pt-br	1 Dia
+1 hour	common	pt-br	1 Hora
+1 month	common	pt-br	1 Mês
+1 week	common	pt-br	1 Semana
 13 (ntp)	admin	pt-br	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	pt-br	3 números para atalho-dia
 3 number of chars for month-shortcut	jscalendar	pt-br	3 números para atalho-mês
@@ -26,6 +31,7 @@ account has been created	common	pt-br	A conta foi criada
 account has been deleted	common	pt-br	A conta foi removida
 account has been updated	common	pt-br	A conta foi atualizada
 account is expired	common	pt-br	A conta está expirada
+accounts	common	pt-br	Contas
 acl	common	pt-br	ACL
 action	common	pt-br	Ação
 active	common	pt-br	Ativo
@@ -45,6 +51,7 @@ all fields	common	pt-br	todos os campos
 alphabet	common	pt-br	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	pt-br	Estilo de folha alternativo
 american samoa	common	pt-br	SAMOA AMERICANA
+an error happend	common	pt-br	Um erro ocorreu
 an existing and by the webserver readable directory enables the image browser and upload.	common	pt-br	Um diretório existente e que o servidor web tenha direito de leitura habilita a navegação e upload de imagem.
 andorra	common	pt-br	ANDORRA
 angola	common	pt-br	ANGOLA
@@ -72,6 +79,7 @@ azerbaijan	common	pt-br	AZERBAIJÃO
 back	common	pt-br	Voltar
 back to user login	common	pt-br	Voltar a tela de login
 background color:	common	pt-br	Cor de fundo:
+backupdir '%1' is not writeable by the webserver	common	pt-br	O servidor web não pode escrever no diretório de backup '%1'
 bad login or password	common	pt-br	Login ou senha incorretos
 bahamas	common	pt-br	BAHAMAS
 bahrain	common	pt-br	BAHRAIN
@@ -134,8 +142,10 @@ christmas island	common	pt-br	CHRISTMAS ISLAND
 clear	common	pt-br	Limpar
 clear form	common	pt-br	Limpar Formulário
 click	common	pt-br	Clique
+click here to resume your egroupware session.	common	pt-br	Clique aqui para restaurar sua sessão eGroupWare
 click or mouse over to show menus	common	pt-br	Clique ou passe o mouse sobre os menús
 click or mouse over to show menus?	common	pt-br	Clicar ou passar o mouse sobre os menús?
+click this image on the navbar: %1	common	pt-br	Clique nesta imagem na barra de navegação: %1
 close	common	pt-br	Fechar
 close sidebox	common	pt-br	Fechar caixa lateral
 cocos (keeling) islands	common	pt-br	COCOS (KEELING) ISLANDS
@@ -160,6 +170,8 @@ current	common	pt-br	Atualizado
 current users	common	pt-br	Usuários ativos
 cyprus	common	pt-br	CHIPRE
 czech republic	common	pt-br	REPÚBLICA CHECA
+database error	common	pt-br	Erro de banco de dados
+database error!	common	pt-br	Erro de banco de dados!
 date	common	pt-br	Data
 date due	common	pt-br	Até data
 date selection:	jscalendar	pt-br	Seleção da data:
@@ -202,6 +214,8 @@ edit	common	pt-br	Editar
 edit %1 category for	common	pt-br	Editar para categoria %1
 edit categories	common	pt-br	Editar categorias
 edit category	common	pt-br	Editar categoria
+egroupware	common	pt-br	eGroupWare
+egroupware api version	common	pt-br	Versão da API eGroupWare
 egroupware api version %1	common	pt-br	API version %1
 egroupware: login blocked for user '%1', ip %2	common	pt-br	Extranet: login bloqueado para o usuário '%1', endereço IP %2
 egypt	common	pt-br	EGITO
@@ -212,7 +226,8 @@ enabled	common	pt-br	Habilitado
 end date	common	pt-br	Data do término
 end time	common	pt-br	Hora do término
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .<br>Exemplo: http://www.seudomínio.com.br/extranet   ou   /extranet<br><b>Não finalize com uma BARRA</b>
-entry has been deleted sucessfully	common	pt-br	Entrada removida com sucesso
+entry has been deleted sucessfully	common	pt-br	Registro removido com sucesso
+entry not found!	common	pt-br	Registro não localizado!
 entry updated sucessfully	common	pt-br	Entrada atualizada com sucesso
 equatorial guinea	common	pt-br	GUINÉ EQUATORIAL
 eritrea	common	pt-br	ERITREA
@@ -242,6 +257,7 @@ firstname	common	pt-br	Primeiro Nome
 fixme!	common	pt-br	ATUALIZE-ME!
 folder already exists.	common	pt-br	Pasta já existe.
 force selectbox	common	pt-br	Forçar caixa de seleção
+forever	common	pt-br	Para sempre
 france	common	pt-br	FRANÇA
 french guiana	common	pt-br	GUIANA FRANCESA
 french polynesia	common	pt-br	FRANÇA POLYNÉSIA
@@ -293,6 +309,7 @@ home email	common	pt-br	E-mail residencial
 honduras	common	pt-br	HONDURAS
 hong kong	common	pt-br	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt-br	Quantos ícones devem ser mostrados na barra de navegação (ao topo da página). Ícones adicionais serão colocados em um recurso adicional em forma de menú suspenso à direita da barra de navegação.
+how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do eGroupWare ?
 hungary	common	pt-br	HUNGRIA
 iceland	common	pt-br	ISLÂNDIA
 iespell not detected. click ok to go to download page.	common	pt-br	ieSpell não detectado. Clique Ok para ir para a página de download.
@@ -362,6 +379,8 @@ local	common	pt-br	Local
 login	common	pt-br	Conectar
 loginid	common	pt-br	ID Login
 logout	common	pt-br	Desconectar
+lost login id	common	pt-br	Login perdido
+lost password	common	pt-br	Senha perdida
 low	common	pt-br	Baixo
 lowest	common	pt-br	Mais baixo
 luxembourg	common	pt-br	LUXEMBOURG
@@ -432,9 +451,13 @@ norfolk island	common	pt-br	ILHAS NORFOLK
 normal	common	pt-br	Normal
 northern mariana islands	common	pt-br	NORTHERN MARIANA ISLANDS
 norway	common	pt-br	NORUEGA
+not	common	pt-br	não
+not a user yet? register now	common	pt-br	Ainda não é um usuário? Registre-se agora
 not assigned	common	pt-br	Não atribuído
+not readable %1 entry of user %2	common	pt-br	Registro %1 do usuário %2 não pode ser lido
 note	common	pt-br	Nota
 notes	common	pt-br	Notas
+notifications	common	pt-br	notificações
 notify window	common	pt-br	Janela de notificação
 notify your administrator to correct this situation	common	pt-br	Notificar seu administrador para corrigir esta situação
 november	common	pt-br	Novembro
@@ -446,6 +469,7 @@ on *nix systems please type: %1	common	pt-br	Sobre sistemas *nix tipo: %1
 on mouse over	common	pt-br	Passar o mouse
 only private	common	pt-br	Apenas particular
 only yours	common	pt-br	somente as suas
+oops! you caught us in the middle of system maintainance.	common	pt-br	Ôpa! Você nos pegou no meio de uma manutenção do sistema.
 open notify window	common	pt-br	Abrir janela de notificação
 open popup window	common	pt-br	Abrir janela
 open sidebox	common	pt-br	Abrir caixa lateral
@@ -473,7 +497,9 @@ password must contain at least %1 special characters	common	pt-br	Senha deve ter
 password must contain at least %1 uppercase letters	common	pt-br	Senha deve ter ao menos %1 caractere(s) maiúsculo(s)
 password must have at least %1 characters	common	pt-br	Senha deve ter ao menos %1 caractere(s)
 path to user and group files has to be outside of the webservers document-root!!!	common	pt-br	O caminho para usuários e grupos deve ser FORA do servidor da extranet.!!!
+permission denied!	common	pt-br	Permissão negada!
 permissions to the files/users directory	common	pt-br	Permissões do diretório para os arquivos/usuários
+permisson denied!	common	pt-br	Permissão negada!
 personal	common	pt-br	Pessoal
 peru	common	pt-br	PERU
 philippines	common	pt-br	FILIPINAS
@@ -487,6 +513,7 @@ please select	common	pt-br	Por favor selecione
 please set your global preferences	common	pt-br	Por favor configure suas preferências gerais
 please set your preferences for this application	common	pt-br	Configure suas preferências para este aplicativo
 please wait...	common	pt-br	Aguarde...
+please, check back with us shortly.	common	pt-br	Por favor, tente novamente mais tarde.
 poland	common	pt-br	POLÔNIA
 portugal	common	pt-br	PORTUGAL
 postal	common	pt-br	CEP
@@ -509,8 +536,10 @@ qatar	common	pt-br	QATAR
 read	common	pt-br	Leitura
 read this list of methods.	common	pt-br	Leia a lista de métodos.
 reading	common	pt-br	Lendo
+register	common	pt-br	Registrar
 regular	common	pt-br	Normal
 reject	common	pt-br	Rejeitar
+remember me	common	pt-br	Lembre-me
 remove selected accounts	common	pt-br	apagar contas selecionadas
 remove shortcut	common	pt-br	Remover tecla de atalho
 rename	common	pt-br	Renomear
@@ -539,6 +568,7 @@ save	common	pt-br	Salvar
 search	common	pt-br	Procura
 search %1 '%2'	common	pt-br	Procura %1 '%2'
 search accounts	common	pt-br	Procurar contas
+search or select accounts	common	pt-br	procurar ou selecionar contas
 second	common	pt-br	segundo
 section	common	pt-br	Seção
 select	common	pt-br	Selecionar
@@ -568,8 +598,10 @@ setup main menu	common	pt-br	Menu principal de configurações
 seychelles	common	pt-br	SEYCHELLES
 show all	common	pt-br	Exibir tudo
 show all categorys	common	pt-br	Mostrar todas as Categorias
+show as topmenu	common	pt-br	Exibir como menu superior
 show clock?	common	pt-br	Exibir relógio
 show home and logout button in main application bar?	common	pt-br	Exibir Página Inicial e Desconectar na barra de aplicativos principais?
+show in sidebox	common	pt-br	Exibir como caixa lateral
 show logo's on the desktop.	common	pt-br	Exibir logotipo na tela.
 show menu	common	pt-br	Mostrar menu
 show page generation time	common	pt-br	Mostrar tempo de criação da página
@@ -582,6 +614,7 @@ showing %1 - %2 of %3	common	pt-br	Exibindo %1 - %2 de %3
 sierra leone	common	pt-br	SERRA LEOA
 simple	common	pt-br	Simples
 singapore	common	pt-br	SINGAPURA
+site configuration	common	pt-br	Configuração do servidor
 slovakia	common	pt-br	ESLOVÁQUIA
 slovenia	common	pt-br	ESLOVÊNIA
 solomon islands	common	pt-br	ILHAS SOLOMON
@@ -690,6 +723,7 @@ western sahara	common	pt-br	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	pt-br	Que cor todo espaço em branco deve ter na tela?
 what style would you like the image to have?	common	pt-br	Que estilo você quer que a imagem tenha?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	pt-br	Onde e como os links como Preferências, Sobre e Desconectar serão exibidos.
 which groups	common	pt-br	Qual grupo
 width	common	pt-br	Largura
 wk	jscalendar	pt-br	wk
@@ -711,6 +745,8 @@ you have selected an invalid date	common	pt-br	Você selecionou uma data inváli
 you have selected an invalid main category	common	pt-br	Você selecionou uma categoria principal inválida !
 you have successfully logged out	common	pt-br	Você encerrou a sessão corretamente.
 you need to add the webserver user '%1' to the group '%2'.	common	pt-br	Você precisa adicionar o usuário webserver '%1' ao grupo '%2'.
+you need to be an egroupware administrator to access this functionality!	common	pt-br	Você precisa ser um administrador do eGroupWare para acessar esta funcionalidade!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pt-br	Você tentou abrir a aplicação: %1, mas você não possui permissão para acessá-la.
 your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!<br>
 your message has been sent	common	pt-br	Sua mensagem foi enviada.
 your search returned %1 matchs	common	pt-br	Sua pesquisa retornou %1 ocorrências
@@ -720,4 +756,3 @@ your settings have been updated	common	pt-br	Suas preferências foram atualizada
 zambia	common	pt-br	ZÂMBIA
 zimbabwe	common	pt-br	ZIMBABUE
 zoom	common	pt-br	Zoom
-site configuration	common	pt-br	Configuração do servidor

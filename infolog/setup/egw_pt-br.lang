@@ -153,6 +153,7 @@ high	infolog	pt-br	alta
 history logging	infolog	pt-br	Registro de histórico
 history logging and deleting of items	infolog	pt-br	Registro de histórico e remoção de itens
 id	infolog	pt-br	Id
+id#	infolog	pt-br	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pt-br	Se um tipo tem um grupo-proprietário, todas as entradas deste tipo terão como dono o grupo informado e não o usuário que as criou.
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	pt-br	Se não informado, a linha com Pesquisa e Filtros ficará oculta para menos registros que "número máximo de registro por página" (definido em suas preferências).
 import	infolog	pt-br	Importar
@@ -188,6 +189,7 @@ location	infolog	pt-br	Local
 longer textual description	infolog	pt-br	descrição detalhada
 low	infolog	pt-br	baixo
 max length of the input [, length of the inputfield (optional)]	infolog	pt-br	tamanho máximo para inclusão [, tamanho para o campo (opcional)]
+modifierer	infolog	pt-br	Modificador
 name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!!!
 name of new type to create	infolog	pt-br	nome para o novo tipo
 never hide search and filters	infolog	pt-br	Nunca ocultar Pesquisa e Filtros

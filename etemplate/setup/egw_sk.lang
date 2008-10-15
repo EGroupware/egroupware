@@ -3,6 +3,7 @@
 %1 etemplates for application '%2' dumped to '%3'	etemplate	sk	%1 eŠablón pre aplikáciu '%2' urobilo výpis do '%3'
 %1 etemplates found	etemplate	sk	Našlo sa %1 eŠablón.
 %1 matches on search criteria	etemplate	sk	Nájdených bolo %1 zhôd s vyhľadávacím kritériom
+%1 more...	etemplate	sk	O %1 viac...
 %1 new etemplates imported for application '%2'	etemplate	sk	Naimportovaných %1 nových eŠablón pre aplikáciu '%2'
 %s disabled	etemplate	sk	%s je vypnuté
 %s needed	etemplate	sk	%s je potrebné
@@ -10,9 +11,11 @@
 %s onchange	etemplate	sk	%s saMení
 %s readonly	etemplate	sk	%s lenNaČítanie
 '%1' has an invalid format !!!	etemplate	sk	'%1' má nesprávny formát !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	sk	'%1' nie je php súborom v root adresári eGW servera (%2)!
 '%1' is not a valid date !!!	etemplate	sk	'%1' nie je platný dátum !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	sk	'%1' nie je platné číslo s plávajúcou desatinnou čiarkou !!!
 '%1' is not a valid integer !!!	etemplate	sk	'%1' nie je platné celé číslo !!!
+'%1' is not allowed ('%2')!	etemplate	sk	'%1' NIE je dovolené ('%2')!
 a pattern to be searched for	etemplate	sk	hľadaný výraz
 accesskey	etemplate	sk	Prístupový kľúč
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	sk	Prístupový kľúč sa dá špecifikovať aj so znakom & v označení (napr. &Name)
@@ -215,10 +218,12 @@ linklist	etemplate	sk	Zoznam odkazov
 linkstring	etemplate	sk	Reťazec odkazu
 linkto	etemplate	sk	Odkázať Na
 load this template into the editor	etemplate	sk	načítať túto šablónu do editora
+message ...	etemplate	sk	Správa ...
 middle	etemplate	sk	Stred
 minute	etemplate	sk	Minúta
 minutes	etemplate	sk	Minút
 month	etemplate	sk	Mesiac
+more than 1 match for '%1'	etemplate	sk	Viac než 1 výskyt pre '%1'
 name	etemplate	sk	Meno
 name of other table where column is a key from	etemplate	sk	názov inej tabuľky, kde stĺpec je kľúčom z
 name of table to add	etemplate	sk	Názov tabuľky, ktorá sa má pridať
@@ -231,6 +236,7 @@ nextmatch	etemplate	sk	Ďalšia zhoda
 no column to swap with !!!	etemplate	sk	nemám žiadny stĺpec pre zámenu !!!
 no file	etemplate	sk	žiadny súbor
 no filename given or selected via browse...	etemplate	sk	nebol zadaný názov súboru, ani nebol vybratý pomocou "Prehľadávať"
+no matches found	etemplate	sk	Žiadna zhoda so zadaním vyhľadávania
 no row to swap with !!!	etemplate	sk	nemám žiadny riadok pre zámenu !!!
 not null	etemplate	sk	NIE NULL
 nothing	etemplate	sk	nič
@@ -257,6 +263,7 @@ popup	etemplate	sk	Vyskakovacie okno
 precision	etemplate	sk	Presnosť
 primary key	etemplate	sk	Primárny kľúč
 primary key for the table, gets automaticaly indexed	etemplate	sk	Primárny kľúč pre tabuľku, indexuje sa automaticky
+radiobutton	etemplate	sk	Tlačítko vypnutia
 read	etemplate	sk	Čítať
 read a list of entries.	etemplate	sk	Čítať zoznam záznamov
 read a single entry by passing the id and fieldlist.	etemplate	sk	Načítať jednotlivý záznam pomocou zadania id a zoznamu.
@@ -264,6 +271,7 @@ read etemplate from database (for the keys above)	etemplate	sk	načítať eŠabl
 readonly	etemplate	sk	iba na čítanie
 remove row (can not be undone!!!)	etemplate	sk	odstrániť Riadok (NEDÁ sa vrátiť späť!!!)
 remove this link (not the entry itself)	etemplate	sk	Odstrániť tento odkaz (nie záznam samotný)
+required	etemplate	sk	Vyžadované
 returns savely, without deleting	etemplate	sk	vracia sa BEZ odstraňovania
 right	etemplate	sk	Vpravo
 row...	etemplate	sk	Riadok...
@@ -377,3 +385,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	sk	xml súbor pre import
 xslt template	etemplate	sk	XSLT šablóna
 year	etemplate	sk	Rok
+you are not allowed to export more then %1 entries!	etemplate	sk	Nie je vám dovolené, exportovať viac než %1 záznamov!
+you can respond by visiting:	etemplate	sk	Odpovedať môžete na tejto adrese:

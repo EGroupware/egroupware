@@ -47,6 +47,7 @@ calendar preferences	calendar	pt-br	Preferências da Agenda
 calendar settings	admin	pt-br	Configurações da Agenda
 calendar-fieldname	calendar	pt-br	Agenda-Nome do Campo
 can't add alarms in the past !!!	calendar	pt-br	Não é possível incluir alarmes no passado !!
+can't aquire lock!	calendar	pt-br	Não foi possível acesso exclusivo ao registro!
 canceled	calendar	pt-br	Cancelado
 charset of file	calendar	pt-br	Charset do arquivo
 close the window	calendar	pt-br	Fechar a janela
@@ -259,6 +260,7 @@ select who should get the alarm	calendar	pt-br	Selecionar quem deverá receber o
 selected range	calendar	pt-br	Selecione período
 set a year only for one-time / non-regular holidays.	calendar	pt-br	Informar ano apenas para feriado flutuante/ocorrência única
 set new events to private	calendar	pt-br	Colocar novos itens como particular
+setting lock time calender	admin	pt-br	Definindo tempo de travamento de registros da Agenda (padrão 1 segundo)
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	pt-br	Os convites recusados devem permanecer na sua Agenda ?<br>Você poderá aceitá-los depois (ex. quando desfizer conflitos de horários), caso eles ainda estejam em sua Agenda.
 should new events created as private by default ?	calendar	pt-br	Novos eventos criados devem ser colocados como privados por padrão?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	pt-br	Usuários não logados podem ver sua informação de disponibilidade? Você pode especificar uma senha extra, diferente da senha normal, para proteger esta informação. A disponibilidade está em formato iCal  e somente inclue os horários em que você está ocupado(a). Não são incluídos o título, descrição ou local do evento. A URL para sua disponibilidade é %1.
@@ -287,6 +289,7 @@ test import (show importable records <u>only</u> in browser)	calendar	pt-br	Test
 this day is shown as first day in the week or month view.	calendar	pt-br	Esse dia será mostrado como primeiro dia da semana na visão semanal e mensal
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	pt-br	Isso define o último horário da visão diária. Eventos além desse horário são mostrados abaixo do dia.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	pt-br	Isso define o primeiro horário da visão diária. Eventos antes desse horário são mostrados acima do dia.<br>Esse horário também será o horário inicial para novos eventos.
+this entry is currently opened by %1!	calendar	pt-br	Este registro está atualmente aberto por %1!
 this entry is opened by user:	calendar	pt-br	Este registro foi aberto dentro do intervalo de tempo configurado pelo usuário:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	pt-br	Esse grupo é pré-selecionado ao entrar no organizador. Você poderá modificá-lo a qualquer tempo.
 this message is sent for canceled or deleted events.	calendar	pt-br	Essa mensagem é enviada para enventos cancelados ou apagados.
