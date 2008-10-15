@@ -12,11 +12,11 @@ first name	common	de	Vorname
 
 
 Filenames:
-phpgw_{LANG_CODE}.lang
+egw_{LANG_CODE}.lang
 
 e.g.
-English	phpgw_en.lang
-German	phpgw_de.lang
+English	egw_en.lang
+German	egw_de.lang
 
 Please look at the content of the 'languages' table for the correct
 setting of the {LANG_CODE}.
