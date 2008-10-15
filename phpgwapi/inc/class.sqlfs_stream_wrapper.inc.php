@@ -187,8 +187,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 			// new file --> create it in the DB
-			$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime'.
-				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime)');
+			$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size'.
+				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size)');
 			$values = array(
 				'fs_name' => basename($path),
 				'fs_dir'  => $dir_stat['ino'],
