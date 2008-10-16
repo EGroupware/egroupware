@@ -38,6 +38,11 @@ class addressbook_groupdav extends groupdav_handler
 	var $charset = 'utf-8';
 
 	/**
+	 * What attribute is used to construct the path, default id, can be uid too
+	 */
+	const PATH_ATTRIBUTE = 'id';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -49,9 +54,6 @@ class addressbook_groupdav extends groupdav_handler
 		parent::__construct($app,$debug,$base_uri);
 
 		$this->bo =& new addressbook_bo();
-
-		// SOGo Connector for Thunderbird has problems in some fields if charset is other then iso-8859-1!
-		if (strpos($_SERVER['HTTP_USER_AGENT'],'Thunderbird') !== false) $this->charset = 'iso-8859-1';
 	}
 
 	/**
@@ -62,7 +64,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	static function get_path($contact)
 	{
-		return '/addressbook/'.$contact['uid'].'.vcf';
+		return '/addressbook/'.$contact[self::PATH_ATTRIBUTE].'.vcf';
 	}
 
 	/**
@@ -198,12 +200,12 @@ class addressbook_groupdav extends groupdav_handler
 					if (($id = array_pop($parts))) $ids[] = basename($id,'.vcf');
 				}
 			}
-			if ($ids) $filters['uid'] = $ids;
+			if ($ids) $filters[self::PATH_ATTRIBUTE] = $ids;
 			if ($this->debug) error_log(__METHOD__."($path,,,$user) addressbook-multiget: ids=".implode(',',$ids));
 		}
 		elseif ($id)
 		{
-			$filters['uid'] = basename($id,'.vcf');
+			$filters[self::PATH_ATTRIBUTE] = basename($id,'.vcf');
 		}
 		return true;
 	}
@@ -254,12 +256,6 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['uid'] = $ok['uid'];
 			$contact['owner'] = $ok['owner'];
 			$contact['private'] = $ok['private'];
-		}
-		// SOGo requires that we keep it's path, but sets a different name-part then the uid
-		// we use there name-part as UID, to be able to allow it to access the contact again with that path
-		elseif (strlen($id) > 20 && strpos($_SERVER['HTTP_USER_AGENT'],'Thunderbird'))
-		{
-			$contact['uid'] = basename($id,'.vcf');
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
