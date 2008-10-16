@@ -96,7 +96,7 @@ class infolog_hooks
 					'appname'    => $appname,
 					'global_cats'=> True)),
 				'Custom fields, typ and status' => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'infolog_customfields.edit')),
+					'menuaction' => 'infolog.infolog_customfields.edit')),
 				'CSV-Import'         => $GLOBALS['egw']->link('/infolog/csv_import.php')
 			);
 			if ($location == 'admin')
