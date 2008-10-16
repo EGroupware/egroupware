@@ -169,7 +169,7 @@ class notifications_popup implements notifications_iface {
 				$dimensions = explode('x', $link->popup);
 				$rendered_links[] = html::div($image.$link->text,'onclick="'.$this->jspopup($url, '_blank', $dimensions[0], $dimensions[1]).'"','link');
 			} else {
-				$rendered_links[] = html::div(html::a_href($image.$link->text, $url, false, 'target="_blank"'),'','link');
+				$rendered_links[] = html::div('<a href="'.$url.'" target="_blank">'.$image.$link->text.'</a>','','link');
 			}
 
 		}
