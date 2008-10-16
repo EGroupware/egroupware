@@ -264,7 +264,8 @@ class nextmatch_widget
 		$extension_data += $value;
 
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
-			$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']);
+			$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']) &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 		if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';

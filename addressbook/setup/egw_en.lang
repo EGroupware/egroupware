@@ -7,6 +7,7 @@
 %1 starts with '%2'	addressbook	en	%1 starts with '%2'
 %s please calculate the result	addressbook	en	%s please calculate the result
 (e.g. 1969)	addressbook	en	(e.g. 1969)
+(empty = use global limit, no = no export at all)	admin	en	(empty = use global limit, no = no export at all)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
 account repository	admin	en	Account repository
@@ -209,7 +210,7 @@ home phone	addressbook	en	Home Phone
 home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
 home zip code	addressbook	en	Home ZIP Code
-how many contacts should non-admins be able to export (empty = no limit)	admin	en	How many contacts should non-admins be able to export (empty = no limit)
+how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export
 icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	if accounts are already in LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a directory (full vfs path) here, addressbook displays an action for each document. That action allows to download the specified document with the contact data inserted.

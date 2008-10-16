@@ -69,6 +69,16 @@ class addressbook_ui extends addressbook_bo
 			$GLOBALS['egw_info']['flags']['java_script'].= $this->js();
 		}
 		$this->config =& $GLOBALS['egw_info']['server'];
+
+		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
+		if (!$this->config['contact_export_limit'])
+		{
+			$this->config['export_limit'] = $this->config['contact_export_limit'];
+		}
+		else	// if not use the global one
+		{
+			$this->config['contact_export_limit'] = $this->config['export_limit'];
+		}
 	}
 
 	/**
@@ -244,8 +254,16 @@ class addressbook_ui extends addressbook_bo
 		}
 		$sel_options['action'] += array(
 			'delete' => lang('Delete'),
-			'csv'    => lang('Export as CSV'),
-			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
+		);
+		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
+		{
+			$sel_options['action'] += array(
+				'csv'    => lang('Export as CSV'),
+				'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
+			);
+		}
+		$sel_options['action'] += array(
 			'merge'  => lang('Merge into first or account, deletes all other!'),
 			'cat_add' => lang('Add or delete Categoies'), // add a categirie to multible addresses
 			'infolog_add' => lang('Add a new Infolog'),
@@ -496,8 +514,9 @@ class addressbook_ui extends addressbook_bo
 			$action = 'document';
 		}
 		// Security: stop non-admins to export more then the configured number of contacts
-		if (in_array($action,array('csv','vcard')) && (int)$this->config['contact_export_limit'] &&
-			!isset($GLOBALS['egw_info']['user']['apps']['admin']) && count($checked) > $this->config['contact_export_limit'])
+		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
+			(!is_numeric($this->config['contact_export_limit']) || count($checked) > $this->config['contact_export_limit']))
 		{
 			$action_msg = lang('exported');
 			$failed = count($checked);
