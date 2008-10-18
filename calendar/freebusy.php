@@ -44,9 +44,15 @@ if (strpos($_SERVER['QUERY_STRING'],'=3D') !== false && substr($_GET['user'],0,2
 	$_GET['user'] = substr($_GET['user'],2);
 	if (isset($_GET['password'])) $_GET['password'] = substr($_GET['password'],2);
 }
-$user  = is_numeric($_GET['user']) ? (int) $_GET['user'] : $GLOBALS['egw']->accounts->name2id($_GET['user'],'account_lid','u');
-
-if (!($username = $GLOBALS['egw']->accounts->id2name($user)))
+if (!is_numeric($user = $_GET['user']))
+{
+	// check if user contains the current domain --> remove it
+	list(,$domain) = explode('@',$user);
+	if ($domain === $GLOBALS['egw_info']['user']['domain'])
+	list($user) = explode('@',$user);
+	$user = $GLOBALS['egw']->accounts->name2id($user,'account_lid','u');
+}
+if ($user === false || !($username = $GLOBALS['egw']->accounts->id2name($user)))
 {
 	fail_exit(lang("freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!"." $username($user)",$_GET['user']));
 }
