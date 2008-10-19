@@ -83,15 +83,11 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 			$access = true;								// grant read&write access to /apps/$app
 		}
 		// allow applications to implement their own access control to the file storage
-		elseif(($method = egw_link::get_registry($app,'file_access')))
-		{
-			$access = ExecMethod2($method,$id,$check,$rel_path);
-		}
 		// otherwise use the title method to check if user has (at least read access) to the entry
 		// which gives him then read AND write access to the file store of the entry
 		else
 		{
-			$access = !!egw_link::title($app,$id);
+			$access = egw_link::file_access($app,$id,$check,$rel_path);
 		}
 		if (self::DEBUG) error_log(__METHOD__."($url,$check) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;

@@ -98,6 +98,13 @@ class egw_link extends solink
 	private static $title_cache = array();
 
 	/**
+	 * Cache file access permissions
+	 *
+	 * @var array
+	 */
+	private static $file_access_cache = array();
+
+	/**
 	 * Private constructor to forbid instanciated use
 	 *
 	 */
@@ -133,6 +140,11 @@ class egw_link extends solink
 		{
 			self::$title_cache = array();
 		}
+		if (!(self::$file_access_cache = $GLOBALS['egw']->session->appsession('link_file_access_cache','phpgwapi')))
+		{
+			self::$file_access_cache = array();
+		}
+		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
 	}
 
 	/**
@@ -141,7 +153,9 @@ class egw_link extends solink
 	 */
 	static function save_session_cache()
 	{
+		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
 		$GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi',self::$title_cache);
+		$GLOBALS['egw']->session->appsession('link_file_access_cache','phpgwapi',self::$file_access_cache);
 	}
 
 	/**
@@ -451,7 +465,7 @@ class egw_link extends solink
 			if (!$link_id && !$app2 && !$id2 && $app2 != '!'.self::VFS_APPNAME)
 			{
 				self::delete_attached($app,$id);	// deleting all attachments
-				unset(self::$title_cache[$app.':'.$id]);
+				self::delete_cache($app,$id);
 			}
 			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2);
 
@@ -530,23 +544,29 @@ class egw_link extends solink
 	{
 		if (!$id) return '';
 
-		if (isset(self::$title_cache[$app.':'.$id]))
+		$title =& self::get_cache($app,$id);
+		if (isset($title))
 		{
-			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='".self::$title_cache[$app.':'.$id]."' (from cache)</p>\n";
-			return self::$title_cache[$app.':'.$id];
+			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (from cache)</p>\n";
+			return $title;
 		}
 		if ($app == self::VFS_APPNAME)
 		{
 			if (is_array($id) && $link)
 			{
 				$link = $id;
-				$id = $link['name'];
+				$title = $link['name'];
+			}
+			else
+			{
+				$title = $id;
 			}
 			if (is_array($link))
 			{
-				$extra = ': '.$link['type'] . ' '.egw_vfs::hsize($link['size']);
+				$title .= ': '.$link['type'] . ' '.egw_vfs::hsize($link['size']);
 			}
-			return self::$title_cache[$app.':'.$id] = $id.$extra;
+			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (file)</p>\n";
+			return $title;
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['title']))
 		{
@@ -565,7 +585,7 @@ class egw_link extends solink
 		}
 		if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (from $method)</p>\n";
 
-		return self::$title_cache[$app.':'.$id] = $title;
+		return $title;
 	}
 
 	/**
@@ -586,7 +606,8 @@ class egw_link extends solink
 		$titles = $ids_to_query = array();
 		foreach($ids as $id)
 		{
-			if (!isset(self::$title_cache[$app.':'.$id]))
+			$title =& self::get_cache($app,$id);
+			if (!isset($title))
 			{
 				if (isset(self::$app_register[$app]['titles']))
 				{
@@ -594,16 +615,16 @@ class egw_link extends solink
 				}
 				else
 				{
-					self::title($app,$id);	// no titles method --> fallback to query each link separate
+					$title = self::title($app,$id);	// no titles method --> fallback to query each link separate
 				}
 			}
-			$titles[$id] = self::$title_cache[$app.':'.$id];
+			$titles[$id] = $title;
 		}
 		if ($ids_to_query)
 		{
 			foreach(ExecMethod(self::$app_register[$app]['titles'],$ids_to_query) as $id => $title)
 			{
-				$titles[$id] = self::$title_cache[$app.':'.$id] = $title;
+				$titles[$id] = $title;
 			}
 		}
 		return $titles;
@@ -930,7 +951,7 @@ class egw_link extends solink
 		{
 			self::notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
 		}
-		unset(self::$title_cache[$app.':'.$id]);
+		self::delete_cache($app,$id);
 	}
 
 	/**
@@ -975,6 +996,96 @@ class egw_link extends solink
 			self::notify('unlink',$link['link_app1'],$link['link_id1'],$link['link_app2'],$link['link_id2'],$link['link_id']);
 			self::notify('unlink',$link['link_app2'],$link['link_id2'],$link['link_app1'],$link['link_id1'],$link['link_id']);
 		}
+	}
+
+	/**
+	 * Get a reference to the cached value for $app/$id for $type
+	 *
+	 * @param string $app
+	 * @param string|int $id
+	 * @param string $type='title' 'title' or 'file_access'
+	 * @return int|string can be null, if cache not yet set
+	 */
+	private static function &get_cache($app,$id,$type = 'title')
+	{
+		switch($type)
+		{
+			case 'title':
+				return self::$title_cache[$app.':'.$id];
+			case 'file_access':
+				return self::$file_access_cache[$app.':'.$id];
+			default:
+				throw new egw_exception_wrong_parameter("Unknown type '$type'!");
+		}
+	}
+
+	/**
+	 * Set title and optional file_access cache for $app,$id
+	 *
+	 * Allows applications to set values for title and file access, eg. in their search method,
+	 * to not be called again. This offloads the need to cache from the app to the link class.
+	 * If there's no caching, items get read multiple times from the database!
+	 *
+	 * @param string $app
+	 * @param int|string $id
+	 * @param string $title title string or null
+	 * @param int $file_access=null EGW_ACL_READ, EGW_ACL_EDIT or both or'ed together
+	 */
+	public static function set_cache($app,$id,$title,$file_access=null)
+	{
+		error_log(__METHOD__."($app,$id,$title,$file_access)");
+		if (!is_null($file_access))
+		{
+			$cache =& self::get_cache($app,$id);
+			$cache = $title;
+		}
+		if (!is_null($file_access))
+		{
+			$cache =& self::get_cache($app,$id,'file_access');
+			$cache = $file_access;
+		}
+	}
+
+	/**
+	 * Delete the diverse caches for $app/$id
+	 *
+	 * @param string $app
+	 * @param int|string $id
+	 */
+	private static function delete_cache($app,$id)
+	{
+		unset(self::$title_cache[$app.':'.$id]);
+		unset(self::$file_access_cache[$app.':'.$id]);
+	}
+
+	/**
+	 * Check the file access perms for $app/id
+	 *
+	 * @ToDo $rel_path is not yet implemented, as no app use it currently
+	 * @param string $app
+	 * @param string|int $id id of entry
+	 * @param int $required=EGW_ACL_READ EGW_ACL_{READ|EDIT}
+	 * @param string $rel_path
+	 * @return boolean
+	 */
+	static function file_access($app,$id,$required=EGW_ACL_READ,$rel_path=null)
+	{
+		$cache =& self::get_cache($app,$id,'file_access');
+
+		if (!isset($cache) || $required == EGW_ACL_EDIT && !($cache & $required))
+		{
+			if(($method = self::get_registry($app,'file_access')))
+			{
+				$cache |= ExecMethod2($method,$id,$required,$rel_path) ? $required : 0;
+			}
+			else
+			{
+				$cache |= self::title($app,$id) ? EGW_ACL_READ|EGW_ACL_EDIT : 0;
+			}
+			//error_log(__METHOD__."($app,$id,$required,$rel_path) got $cache --> ".($cache & $required ? 'true' : 'false'));
+		}
+		//else error_log(__METHOD__."($app,$id,$required,$rel_path) using cached value $cache --> ".($cache & $required ? 'true' : 'false'));
+		return !!($cache & $required);
 	}
 }
 egw_link::init_static();
