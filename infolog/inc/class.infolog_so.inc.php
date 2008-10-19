@@ -15,13 +15,8 @@
  *
  * all values passed to this class are run either through intval or addslashes to prevent query-insertion
  * and for pgSql 7.3 compatibility
- *
- * @package infolog
- * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) by Ralf Becker <RalfBecker@outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-class infolog_so 				// DB-Layer
+class infolog_so
 {
 	/**
 	 * Instance of the db class
@@ -213,9 +208,10 @@ class infolog_so 				// DB-Layer
 				}
 				if (count($private_user_list))
 				{
-					$has_private_access = 'info_owner IN ('.implode(',',$private_user_list).')';
+					$has_private_access = $this->db->expression($this->info_table,array('info_owner' => $private_user_list));
 				}
 			}
+			$public_access = $this->db->expression($this->info_table,array('info_owner' => $public_user_list));
 			// implicit read-rights for responsible user
 			$filtermethod .= " OR (".$this->responsible_filter($this->user)." AND info_access='public')";
 
@@ -224,7 +220,7 @@ class infolog_so 				// DB-Layer
 			{
 				$filtermethod .= " OR (".$this->responsible_filter($this->user).
 					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
-						" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
+						" OR info_status = 'offer' AND $public_access" : '').")".
 				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
 			}
 			elseif ($filter != 'my' && $filter != 'responsible')	// none --> all entrys user has rights to see
@@ -235,7 +231,7 @@ class infolog_so 				// DB-Layer
 				}
 				if (count($public_user_list))
 				{
-					$filtermethod .= " OR (info_access='public' AND info_owner IN(" . implode(',',$public_user_list) . '))';
+					$filtermethod .= " OR (info_access='public' AND $public_access)";
 				}
 			}
 			$filtermethod .= ') ';
@@ -348,6 +344,7 @@ class infolog_so 				// DB-Layer
 	 */
 	function read($info_id)		// did _not_ ensure ACL
 	{
+		//echo "<p>read($info_id) ".function_backtrace()."</p>\n";
 		if ($info_id && ((int)$info_id == $this->data['info_id'] || $info_id == $this->data['info_uid']))
 		{
 			return $this->data;		// return the already read entry
@@ -587,29 +584,27 @@ class infolog_so 				// DB-Layer
 	 *
 	 * This is done now be search too (in key info_anz_subs), if DB can use sub-queries
 	 *
-	 * @param $info_id id of log-entry
-	 * @return int the number of sub-entries
+	 * @param int|array $info_id id(s) of log-entry
+	 * @return int|array the number of sub-entries or indexed by info_id, if array as param given
 	 */
 	function anzSubs( $info_id )
 	{
-		if (($info_id = intval($info_id)) <= 0)
+		if (!is_array($info_id) || !$info_id)
 		{
-			return 0;
+			if ((int)$info_id <= 0) return 0;
 		}
-		$this->db->select($this->info_table,'count(*)',array(
-				'info_id_parent' => $info_id,
-				$this->aclFilter()
-			),__LINE__,__FILE__);
-
-		$this->db->next_record();
-		//echo "<p>anzSubs($info_id) = ".$this->db->f(0)." ($sql)</p>\n";
-		return $this->db->f(0);
+		$counts = array();
+		foreach($this->db->select($this->info_table,'info_id_parent,COUNT(*) AS info_anz_subs',array('info_id_parent' => $info_id),__LINE__,__FILE__,
+			false,'GROUP BY info_id_parent','infolog') as $row)
+		{
+			$counts[$row['info_id_parent']] = (int)$row['info_anz_subs'];
+		}
+		//echo '<p>'.__METHOD__."($info_id) = ".array2string($counts)."</p>\n";
+		return is_array($info_id) ? $counts : (int)array_pop($counts);
 	}
 
 	/**
 	 * searches InfoLog for a certain pattern in $query
-	 *
-	 * If DB can use sub-queries, the number of subs are under the key info_anz_subs.
 	 *
 	 * @param $query[order] column-name to sort after
 	 * @param $query[sort] sort-order DESC or ASC
@@ -716,7 +711,7 @@ class infolog_so 				// DB-Layer
 			$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
 			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 		}
-		$join = $distinct = $count_subs = '';
+		$join = $distinct = '';
 		if ($query['query']) $query['search'] = $query['query'];	// allow both names
 		if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 		{
@@ -771,23 +766,19 @@ class infolog_so 				// DB-Layer
 			{
 				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__)->NumRows();
 			}
-			if ($this->db->capabilities['sub_queries'])
-			{
-				$count_subs = ",(SELECT COUNT(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
-			}
 			$info_customfield = '';
 			if ($sortbycf != '')
 			{
 				$info_customfield = ", (SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 where sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).") AS cfsortcrit ";
 			}
-			//echo "SELECT $distinct main.* $count_subs $info_customfield $sql_query $ordermethod"."<br>";
+			//echo "SELECT $distinct main.* $info_customfield $sql_query $ordermethod"."<br>";
 			do
 			{
 				if (isset($query['start']) && isset($query['total']) && $query['start'] > $query['total'])
 				{
 					$query['start'] = 0;
 				}
-				$rs = $this->db->query($sql="SELECT $mysql_calc_rows $distinct main.* $count_subs $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
+				$rs = $this->db->query($sql="SELECT $mysql_calc_rows $distinct main.* $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
 					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,egw_db::FETCH_ASSOC);
 				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 

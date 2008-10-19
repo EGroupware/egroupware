@@ -415,6 +415,9 @@ class infolog_bo
 		{
 			if ($data[$time]) $data[$time] += $this->tz_offset_s;
 		}
+		// pre-cache title and file access
+		self::set_link_cache($data);
+
 		return $data;
 	}
 
@@ -654,6 +657,9 @@ class infolog_bo
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update('infolog',$info_id,$values);
 
+			// pre-cache the new values
+			self::set_link_cache($values);
+
 			// send email notifications and do the history logging
 			if (!is_object($this->tracking))
 			{
@@ -667,10 +673,10 @@ class infolog_bo
 	}
 
 	/**
-	 * Query the number of children / subs
+	 * Query the number of children / subs for one or more info_id's
 	 *
-	 * @param int $info_id id
-	 * @return int number of subs
+	 * @param int|array $info_id id
+	 * @return int|array number of subs
 	 */
 	function anzSubs( $info_id )
 	{
@@ -696,20 +702,24 @@ class infolog_bo
 		$ret = $this->so->search($query);
 
 		// convert system- to user-time
-		if (is_array($ret) && $this->tz_offset_s)
+		if (is_array($ret))
 		{
-			foreach($ret as $id => $data)
+			foreach($ret as $id => &$data)
 			{
-				foreach($this->timestamps as $time)
+				if($this->tz_offset_s)
 				{
-					if ($data[$time]) $ret[$id][$time] += $this->tz_offset_s;
+					foreach($this->timestamps as $time)
+					{
+						if ($data[$time]) $data[$time] += $this->tz_offset_s;
+					}
 				}
+				// pre-cache title and file access
+				self::set_link_cache($data);
 			}
 		}
 		//echo "<p>boinfolog::search(".print_r($query,True).")=<pre>".print_r($ret,True)."</pre>\n";
 		return $ret;
 	}
-
 
 	/**
 	 * imports a mail identified by uid as infolog
@@ -868,13 +878,26 @@ class infolog_bo
 	/**
 	 * Check access to the projects file store
 	 *
-	 * @param int $id id of entry
+	 * @param int|array $id id of entry or entry array
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
 	 * @return boolean true if access is granted or false otherwise
 	 */
-	function file_access($id,$check,$rel_path)
+	function file_access($id,$check,$rel_path=null)
 	{
 		return $this->check_access($id,$check);
+	}
+
+	/**
+	 * Set the cache of the link class (title, file_access) for the given infolog entry
+	 *
+	 * @param array $info
+	 */
+	function set_link_cache(array $info)
+	{
+		egw_link::set_cache('infolog',$info['info_id'],
+			$this->link_title($info),
+			$this->file_access($info,EGW_ACL_EDIT) ? EGW_ACL_READ|EGW_ACL_EDIT :
+			($this->file_access($info,EGW_ACL_READ) ? EGW_ACL_READ : 0));
 	}
 
 	/**

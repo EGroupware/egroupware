@@ -355,10 +355,11 @@ class infolog_ui
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets
 		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time_info_replanned_time') !== false;
 
-		// query all links in one go
+		// query all links and sub counts in one go
 		if ($infos && !$query['csv_export'])
 		{
 			$links = bolink::get_links_multiple('infolog',array_keys($infos));
+			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$readonlys = $rows = array();
 		foreach($infos as $id => $info)
@@ -366,6 +367,7 @@ class infolog_ui
 			if (!$query['csv_export'])
 			{
 				$info['links'] =& $links[$id];
+				$info['info_anz_subs'] = (int)$anzSubs[$id];
 				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
 
 				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
