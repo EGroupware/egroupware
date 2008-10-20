@@ -115,10 +115,10 @@ class infolog_datasource extends datasource
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
-		$info['info_link_id'] = $this->infolog_bo->link->link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
+		$info['info_link_id'] = egw_link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
 		if (!$info['info_from'])
 		{
-			$info['info_from'] = $this->infolog_bo->link->title('projectmanager',$target);
+			$info['info_from'] = egw_link::title('projectmanager',$target);
 		}
 		if ($info['info_status'] == 'template')
 		{
@@ -127,14 +127,14 @@ class infolog_datasource extends datasource
 		$this->infolog_bo->write($info);
 
 		// creating again all links, beside the one to the source-project
-		foreach($this->infolog_bo->link->get_links('infolog',$element['pe_app_id']) as $link)
+		foreach(egw_link::get_links('infolog',$element['pe_app_id']) as $link)
 		{
 			if ($link['app'] == 'projectmanager' && $link['id'] == $element['pm_id'] ||		// ignoring the source project
-				$link['app'] == $this->infolog_bo->link->vfs_appname)					// ignoring files attachments for now
+				$link['app'] == egw_link::VFS_APPNAME)					// ignoring files attachments for now
 			{
 				continue;
 			}
-			$this->infolog_bo->link->link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
+			egw_link::link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
 		}
 		return array($info['info_id'],$info['info_link_id']);
 	}
@@ -153,7 +153,7 @@ class infolog_datasource extends datasource
 			$GLOBALS['infolog_bo'] =& new infolog_bo();
 		}
 		// dont delete infolog, which are linked to other elements, but their project
-		if (count($this->infolog_bo->link->get_links('infolog',$id)) > 1)
+		if (count(egw_link::get_links('infolog',$id)) > 1)
 		{
 			return false;
 		}
