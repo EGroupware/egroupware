@@ -343,7 +343,7 @@ class calendar_groupdav extends groupdav_handler
 		ksort($entry['participants']);	// create a defined order
 		$etag .= ':'.md5(serialize($entry['participants']));
 		//error_log(__METHOD__."($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
-		return $etag.'x';
+		return $etag;
 	}
 
 	/**
