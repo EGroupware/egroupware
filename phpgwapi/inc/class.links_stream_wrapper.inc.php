@@ -87,7 +87,9 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 		// which gives him then read AND write access to the file store of the entry
 		else
 		{
-			$access = egw_link::file_access($app,$id,$check,$rel_path);
+			// vfs & stream-wrapper use posix rights, egw_link::file_access uses EGW_ACL_{EDIT|READ}!
+			$required = $check & egw_vfs::WRITABLE ? EGW_ACL_EDIT : EGW_ACL_READ;
+			$access = egw_link::file_access($app,$id,$required,$rel_path);
 		}
 		if (self::DEBUG) error_log(__METHOD__."($url,$check) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;
