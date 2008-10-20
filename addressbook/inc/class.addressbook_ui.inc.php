@@ -577,6 +577,11 @@ class addressbook_ui extends addressbook_bo
 				return false;
 
 			case 'infolog_add':
+				if ($use_all)	// !$use_all is handled purely in javascript
+				{
+					$GLOBALS['egw']->js->set_onload(
+						"win=window.open('".egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').implode(',',$checked)."','_blank','width=750,height=550,left=100,top=200'); win.focus();");
+				}
 				$msg = lang('New window opened to edit Infolog for your selection ');
 				return false;
 
@@ -1873,6 +1878,11 @@ $readonlys['button[vcard]'] = true;
 		}
 	}
 
+	/**
+	 * Add javascript functions
+	 *
+	 * @return string
+	 */
 	function js()
 	{
 		return '<script LANGUAGE="JavaScript">
@@ -1985,7 +1995,23 @@ $readonlys['button[vcard]'] = true;
 				)).'"+encodeURIComponent(name)+"&owner="+owner;
 			}
 		}
-		</script>';
+
+		function do_action(selbox)
+		{
+			if (selbox.value != "") {
+				if (selbox.value == "infolog_add" && (ids = get_selected(selbox.form,"[rows][checked][]")) && !document.getElementById("exec[use_all]").checked) {
+					win=window.open("'.egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').'"+ids,"_blank","width=750,height=550,left=100,top=200");
+					win.focus();
+				} else if (this.value == "cat_add") {
+					win=window.open("'.egw::link('/etemplate/process_exec.php','menuaction=addressbook.addressbook_ui.cat_add').'","_blank","width=300,height=400,left=100,top=200");
+					win.focus();
+				} else {
+					selbox.form.submit();
+				}
+				selbox.value = "";
+			}
+		}
+</script>';
 	}
 
 	function migrate2ldap()

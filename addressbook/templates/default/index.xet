@@ -195,7 +195,7 @@
 					<hbox align="right">
 						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
 						<menulist>
-							<menupopup onchange="if (this.value != '') {if (this.value == 'infolog_add') {ids=get_selected(this.form,'[rows][checked][]');win=window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=addressbook&amp;action_id=')+ids,'_blank','width=750,height=550,left=100,top=200'); win.focus();}if (this.value == 'cat_add'){win=window.open(egw::link('/etemplate/process_exec.php','menuaction=addressbook.addressbook_ui.cat_add'),'_blank','width=300,height=400,left=100,top=200'); win.focus();} else {this.form.submit(); } this.value=''; }" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
+							<menupopup onchange="do_action(this);" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
 						</menulist>
 						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
 					</hbox>
