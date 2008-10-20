@@ -275,7 +275,7 @@ class timesheet_bo extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false,$only_summary=false)
 	{
-		error_log(__METHOD__."(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
+		//error_log(__METHOD__."(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
 		//echo "<p>".__METHOD__."(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 		// postgres can't round from double precission, only from numeric ;-)
 		$total_sql = $this->db->Type != 'pgsql' ? "round(ts_quantity*ts_unitprice,2)" : "round(cast(ts_quantity*ts_unitprice AS numeric),2)";
@@ -364,7 +364,7 @@ class timesheet_bo extends so_sql
 	 */
 	function read($ts_id,$ignore_acl=false,$read_cfs=true)
 	{
-		error_log(__METHOD__."($ts_id,$ignore_acl) ".function_backtrace());
+		//error_log(__METHOD__."($ts_id,$ignore_acl) ".function_backtrace());
 		if (!(int)$ts_id || (int)$ts_id != $this->data['ts_id'] && !parent::read($ts_id))
 		{
 			return null;	// entry not found
@@ -389,7 +389,7 @@ class timesheet_bo extends so_sql
 	 */
 	function read_cfs($ts_ids,$names=null)
 	{
-		error_log(__METHOD__."(".array2string($ts_ids).",".array2string($names).")");
+		//error_log(__METHOD__."(".array2string($ts_ids).",".array2string($names).")");
 		if (!$this->customfields || !$ts_ids)
 		{
 			return array();
