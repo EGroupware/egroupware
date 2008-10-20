@@ -54,7 +54,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.5.002">
-		<grid height="258">
+		<grid height="286">
 			<columns>
 				<column/>
 				<column/>
@@ -350,7 +350,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.5.001">
+	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.5.002">
 		<grid width="100%" height="258" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
@@ -360,12 +360,12 @@
 					<description value="Custom fields"/>
 				</row>
 				<row height="100%">
-					<customfields options=",$cont[no_private_cfs]"/>
+					<customfields options="$cont[tid],$cont[no_private_cfs]"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.5.001">
+	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.5.002">
 		<grid width="100%" height="258" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
@@ -375,7 +375,7 @@
 					<description value="Custom fields"/>
 				</row>
 				<row height="100%">
-					<customfields options=",1"/>
+					<customfields options="$cont[tid],1"/>
 				</row>
 			</rows>
 		</grid>
@@ -467,7 +467,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.005">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.006">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -601,7 +601,7 @@
 				</row>
 				<row disabled="@hidebuttons">
 					<hbox>
-						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 						<button label="vCard" id="button[vcard]" statustext="download this contact as vCard file"/>
 						<button label="Save" id="button[save]" accesskey="s"/>

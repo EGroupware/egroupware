@@ -139,12 +139,7 @@ class addressbook_ui extends addressbook_bo
 			{
 				$org_view = $content['nm']['org_view'];
 			}
-			if ($content['nm']['col_filter']['tid'])
-			{
-				$typeselection=$content['nm']['col_filter']['tid'] ;
-			} else {
-				$typeselection='n';
-			}
+			$typeselection = $content['nm']['col_filter']['tid'];
 		}
 		elseif($_GET['add_list'])
 		{
@@ -212,6 +207,8 @@ class addressbook_ui extends addressbook_bo
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
+		if (isset($typeselection)) $content['nm']['col_filter']['tid'] = $typeselection;
+
 		if ($this->lists_available())
 		{
 			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array('' => lang('none')));
@@ -293,7 +290,6 @@ class addressbook_ui extends addressbook_bo
 			$sel_options['action']['delete_list'] = lang('Delete selected distribution list!');
 		}
 
-
 		if ($this->prefs['document_dir'])
 		{
 			$sel_options['action'][lang('Insert in document').':'] = $this->get_document_actions();
@@ -308,7 +304,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		else
 		{
-			$content['nm']['col_filter']['tid'] = ($typeselection ? $typeselection : 'n');
+			if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = 'n';
 			$content['nm']['header_right'] = 'addressbook.index.right';
 			foreach($this->content_types as $tid => $data)
 			{
@@ -761,13 +757,10 @@ class addressbook_ui extends addressbook_bo
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
 		$do_email = $query['do_email'];
-		// is this wanted???
-		if ($query['sitemgr_display'])
-		{
-			$old_state = $GLOBALS['egw']->session->appsession($query['sitemgr_display'],'addressbook');
-		} else {
-			$old_state = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
-		}
+		$what = $query['sitemgr_display'] ? $query['sitemgr_display'] : ($do_email ? 'email' : 'index');
+
+		$old_state = $GLOBALS['egw']->session->appsession($what,'addressbook',$query);
+
 		if (!isset($this->org_views[(string) $query['org_view']]))   // we dont have an org view, unset the according col_filters
 		{
 			if (isset($query['col_filter']['org_name'])) unset($query['col_filter']['org_name']);
@@ -807,12 +800,6 @@ class addressbook_ui extends addressbook_bo
 			{
 				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one organisation
 			}
-			if ($query['sitemgr_display'])
-			{
-				$old_state = $GLOBALS['egw']->session->appsession($query['sitemgr_display'],'addressbook',$query);
-			} else {
-				$GLOBALS['egw']->session->appsession(($do_email ? 'email' : 'index'),'addressbook',$query);
-			}
 			// save the state of the index in the user prefs
 			$state = serialize(array(
 				'filter'     => $query['filter'],
@@ -822,15 +809,9 @@ class addressbook_ui extends addressbook_bo
 				'col_filter' => array('tid' => $query['col_filter']['tid']),
 				'org_view'   => $query['org_view'],
 			));
-			if ($state != $this->prefs[($query['sitemgr_display'] ? $query['sitemgr_display'].'_state' : 'index_state')])
+			if ($state != $this->prefs[$what.'_state'])
 			{
-				$GLOBALS['egw']->preferences->add('addressbook',($query['sitemgr_display'] ? $query['sitemgr_display'].'_state' : 'index_state'),$state);
-				// save prefs, but do NOT invalid the cache (unnecessary)
-				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
-			}
-			if ($state != $this->prefs[$do_email ? 'email_state' : 'index_state'])
-			{
-				$GLOBALS['egw']->preferences->add('addressbook',$do_email ? 'email_state' : 'index_state',$state);
+				$GLOBALS['egw']->preferences->add('addressbook',$what.'_state',$state);
 				// save prefs, but do NOT invalid the cache (unnecessary)
 				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 			}
@@ -1158,12 +1139,6 @@ class addressbook_ui extends addressbook_bo
 			$icon = 'private';
 			$label = lang('private');
 		}
-		elseif ($tid != 'n')
-		{
-			// ToDo Conny: tid-icons
-			$icon = '';
-			$label = $tid;
-		}
 		elseif ($GLOBALS['egw']->accounts->get_type($owner) == 'g')
 		{
 			$icon = 'group';
@@ -1173,6 +1148,12 @@ class addressbook_ui extends addressbook_bo
 		{
 			$icon = 'personal';
 			$label = $owner == $this->user ? lang('personal') : $GLOBALS['egw']->common->grab_owner_name($owner);
+		}
+		// show tid icon for tid!='n' AND only if one is defined
+		if ($tid != 'n' && $this->content_types[$tid]['options']['icon'])
+		{
+			$icon = $this->content_types[$tid]['options']['icon'];
+			$label = $this->content_types[$tid]['name'].' ('.$label.')';
 		}
 	}
 
@@ -1495,7 +1476,7 @@ class addressbook_ui extends addressbook_bo
 
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 
-		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template']))
+		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template'] ? $this->content_types[$content['tid']]['options']['template'] : 'addressbook.edit'))
 		{
 			$content['msg']  = lang('WARNING: Template "%1" not found, using default template instead.', $this->content_types[$content['tid']]['options']['template'])."\n";
 			$content['msg'] .= lang('Please update the templatename in your customfields section!');
@@ -1682,7 +1663,7 @@ $readonlys['button[vcard]'] = true;
 		{
 			$content['no_tid'] = true;
 		}
-		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template']))
+		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template'] ? $this->content_types[$content['tid']]['options']['template'] : 'addressbook.edit'))
 		{
 			$content['msg']  = lang('WARNING: Template "%1" not found, using default template instead.', $this->content_types[$content['tid']]['options']['template'])."\n";
 			$content['msg'] .= lang('Please update the templatename in your customfields section!');
