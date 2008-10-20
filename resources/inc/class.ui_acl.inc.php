@@ -60,10 +60,10 @@ class ui_acl
 					$_POST['inputcalread'][$cat_id],$_POST['inputcalbook'][$cat_id],$_POST['inputadmin'][$cat_id]);
 			}
 		}
-
-		$GLOBALS['egw']->template->set_file('acl', 'acl.tpl');
-		$GLOBALS['egw']->template->set_block('acl','cat_list','Cblock');
-		$GLOBALS['egw']->template->set_var(array(
+		$template            =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+		$template->set_file(array('acl' => 'acl.tpl'));
+		$template->set_block('acl','cat_list','Cblock');
+		$template->set_var(array(
 			'title' => $GLOBALS['egw_info']['apps']['resources']['title'] . ' - ' . lang('Configure Access Permissions'),
 			'lang_search' => lang('Search'),
 			'lang_save' => lang('Save'),
@@ -77,16 +77,16 @@ class ui_acl
 			'lang_cat_admin' => lang('Categories admin')
 		));
 
-		$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.uiacl.acllist');
-		$right = $this->nextmatchs->right('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.uiacl.acllist');
+		$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.ui_acl.acllist');
+		$right = $this->nextmatchs->right('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.ui_acl.acllist');
 
-		$GLOBALS['egw']->template->set_var(array(
+		$template->set_var(array(
 			'left' => $left,
 			'right' => $right,
 			'lang_showing' => $this->nextmatchs->show_hits($this->bo->catbo->total_records,$this->start),
 			'th_bg' => $GLOBALS['egw_info']['theme']['th_bg'],
 			'sort_cat' => $this->nextmatchs->show_sort_order(
-				$this->sort,'cat_name','cat_name','/index.php',lang('Category'),'&menuaction=resources.uiacl.acllist'
+				$this->sort,'cat_name','cat_name','/index.php',lang('Category'),'&menuaction=resources.ui_acl.acllist'
 			),
 			'query' => $this->query,
 		));
@@ -97,7 +97,7 @@ class ui_acl
 			$this->rights = $this->bo->get_rights($cat['id']);
 
 			$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
-			$GLOBALS['egw']->template->set_var(array(
+			$template->set_var(array(
 				'tr_color' => $tr_color,
 				'catname' => $cat['name'],
 				'catid' => $cat['id'],
@@ -107,27 +107,26 @@ class ui_acl
 				'calbook' =>$this->selectlist(EGW_ACL_DIRECT_BOOKING),
 				'admin' => '<option value="" selected="1">'.lang('choose categories admin').'</option>'.$this->selectlist(EGW_ACL_CAT_ADMIN,true)
 			));
-			$GLOBALS['egw']->template->parse('Cblock','cat_list',True);
+			$template->parse('Cblock','cat_list',True);
 		}
-		$GLOBALS['egw']->template->pfp('out','acl',True);
+		$template->pfp('out','acl',True);
 	}
 
 	function selectlist($right,$users_only=false)
 	{
 		switch($GLOBALS['egw_info']['user']['preferences']['common']['account_display'])
 		{
-			if(!($users_only && $account['account_type'] == 'g'))
-				case 'firstname':
-				case 'firstall':
-					$order = 'n_given,n_family';
-					break;
-				case 'lastall':
-				case 'lastname':
-					$order = 'n_family,n_given';
-					break;
-				default:
-					$order = 'account_lid,n_family,n_given';
-					break;
+			case 'firstname':
+			case 'firstall':
+				$order = 'n_given,n_family';
+				break;
+			case 'lastall':
+			case 'lastname':
+				$order = 'n_family,n_given';
+				break;
+			default:
+				$order = 'account_lid,n_family,n_given';
+				break;
 		}
 		foreach ($GLOBALS['egw']->accounts->search(array(
 			'type' => 'both',
