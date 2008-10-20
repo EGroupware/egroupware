@@ -1033,7 +1033,7 @@ class egw_link extends solink
 	 */
 	public static function set_cache($app,$id,$title,$file_access=null)
 	{
-		error_log(__METHOD__."($app,$id,$title,$file_access)");
+		//error_log(__METHOD__."($app,$id,$title,$file_access)");
 		if (!is_null($file_access))
 		{
 			$cache =& self::get_cache($app,$id);
