@@ -208,7 +208,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				$stmt->bindParam(':'.$name,$val);
 			}
-			if (!$stmt->execute() || !($this->opened_fs_id = self::$pdo->lastInsertId('fs_id')))
+			if (!$stmt->execute() || !($this->opened_fs_id = self::$pdo->lastInsertId('egw_sqlfs_fs_id_seq')))
 			{
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
 				error_log(__METHOD__."($url,$mode,$options) execute() failed: ".self::$pdo->errorInfo());
@@ -1415,8 +1415,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Return the path of the stored content of a file if $this->operation == self::STORE2FS
 	 *
 	 * To limit the number of files stored in one directory, we create a hash from the fs_id:
-	 * 	1     --> /1
-	 * 	34    --> /34
+	 * 	1     --> /00/1
+	 * 	34    --> /00/34
 	 * 	123   --> /01/123
 	 * 	4567  --> /45/4567
 	 * 	99999 --> /09/99/99999
@@ -1430,7 +1430,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			throw new egw_exception_wrong_parameter(__METHOD__."(id=$id) id has to be an integer!");
 		}
-		if (!isset($GLOBALS['egw_info']['server']['files_dir']) || $GLOBALS['egw_info']['server']['files_dir'])
+		if (!isset($GLOBALS['egw_info']['server']['files_dir']))
 		{
 			if (is_object($GLOBALS['egw_setup']->db))	// if we run under setup, query the db for the files dir
 			{
@@ -1439,16 +1439,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 					'config_app' => 'phpgwapi',
 				),__LINE__,__FILE__)->fetchSingle();
 			}
-			if (!$GLOBALS['egw_info']['server']['files_dir'])
-			{
-				throw  new egw_exception_assertion_failed("\$GLOBALS['egw_info']['server']['files_dir'] not set!");
-			}
+		}
+		if (!$GLOBALS['egw_info']['server']['files_dir'])
+		{
+			throw  new egw_exception_assertion_failed("\$GLOBALS['egw_info']['server']['files_dir'] not set!");
 		}
 		$hash = array();
 		for ($n = $id; $n = (int) ($n / self::HASH_MAX); )
 		{
 			$hash[] = sprintf('%02d',$n % self::HASH_MAX);
 		}
+		if (!$hash) $hash[] = '00';		// we need at least one directory, to not conflict with the dir-names
 		array_unshift($hash,$id);
 
 		$path = '/sqlfs/'.implode('/',array_reverse($hash));

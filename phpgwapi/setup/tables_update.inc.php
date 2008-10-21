@@ -544,3 +544,37 @@ function phpgwapi_upgrade1_5_014()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.015';
 }
 
+/**
+ * Move files created directly in the root of sqlfs (fs_id < 100) into a /00 directory,
+ * as they would conflict with dirnames in that directory.
+ *
+ * This update does nothing, if the files are already in the correct directory
+ */
+function phpgwapi_upgrade1_5_015()
+{
+	sqlfs_stream_wrapper::_fs_path(1);	// loads egw_info/server/files_dir (!)
+	$sqlfs_dir = $GLOBALS['egw_info']['server']['files_dir'].'/sqlfs';
+
+	if (file_exists($sqlfs_dir) && ($d = opendir($sqlfs_dir)))
+	{
+		while(($f = readdir($d)))
+		{
+			if (is_file($old_name = $sqlfs_dir.'/'.$f))
+			{
+				if (!$zero_dir)
+				{
+					if ($GLOBALS['DEBUG'] && isset($_SERVER['HTTP_HOST'])) echo "<pre style='text-align: left;'>\n";
+ 					mkdir($zero_dir = $sqlfs_dir.'/00',0777);
+					echo "created dir for files with fs_id < 100: $zero_dir\n";
+				}
+				$new_name = $zero_dir.'/'.$f;
+				if ($GLOBALS['DEBUG']) echo "moving file $old_name --> $new_name\n";
+				rename($old_name,$new_name);
+			}
+		}
+		closedir($d);
+		if ($GLOBALS['DEBUG'] && isset($_SERVER['HTTP_HOST']) && $zero_dir) echo "</pre>\n";
+	}
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.016';
+}
