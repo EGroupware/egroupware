@@ -48,7 +48,7 @@ if(@get_var('submit',Array('POST')) && @$newsettings)
 	/* Load hook file with functions to validate each config (one/none/all) */
 	$GLOBALS['egw_setup']->hook('config_validate','setup');
 
-	$datetime = CreateObject('phpgwapi.datetime');
+	$datetime = CreateObject('phpgwapi.egw_datetime');
 	switch((int)$newsettings['daytime_port'])
 	{
 		case 13:

@@ -55,7 +55,7 @@
 		 * @param string $type='new' defaults to new(install), could also be 'upgrade'
 		 * @param boolean $DEBUG=false print debugging info
 		 * @param boolean $force_en=false install english language files
-		 * @param string $system_charset=null charset to use	
+		 * @param string $system_charset=null charset to use
 		 * @param array $preset_config=array()
 		 */
 		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False,$preset_config=array())
@@ -196,7 +196,7 @@
 		function save_minimal_config(array $preset_config=array())
 		{
 			$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
-		
+
 			$current_config['site_title'] = 'eGroupWare';
 			$current_config['hostname']  = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : 'localhost';
 
@@ -223,21 +223,21 @@
 				}
 				$current_config['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
 				$current_config['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
-			} 
-			$datetime =& CreateObject('phpgwapi.datetime');
+			}
+			$datetime =& CreateObject('phpgwapi.egw_datetime');
 			$current_config['tz_offset'] = $datetime->getbestguess();
 			unset($datetime);
 
 			// RalfBecker: php.net recommend this for security reasons, it should be our default too
 			$current_config['usecookies'] = 'True';
-			
+
 			if ($GLOBALS['egw_setup']->system_charset)
 			{
 				$current_config['system_charset'] = $GLOBALS['egw_setup']->system_charset;
 			}
-			
+
 			$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
-			
+
 			if ($preset_config)
 			{
 				$current_config = array_merge($current_config,$preset_config);
@@ -529,9 +529,9 @@
 				}
 
 				/* if upgrade required, or if we are running again after an upgrade or dependency failure */
-				if($DEBUG) 
-				{ 
-					echo '<div style="text-align: left; border: thin dashed black; margin-top: 5px;">'."process->upgrade(): Incoming : appname: $appname, version: $appdata[currentver], status: $appdata[status]\n"; 
+				if($DEBUG)
+				{
+					echo '<div style="text-align: left; border: thin dashed black; margin-top: 5px;">'."process->upgrade(): Incoming : appname: $appname, version: $appdata[currentver], status: $appdata[status]\n";
 				}
 				if($appdata['status'] == 'U' || $appdata['status'] == 'D' ||$appdata['status'] == 'V' || $appdata['status'] == '') // TODO this is not getting set for api upgrade, sometimes ???
 				{
@@ -546,7 +546,7 @@
 							include ($appdir . 'tables_update.inc.php');
 							$this->updateincluded[$appname] = True;
 						}
-						while ($currentver && $currentver != $targetver && 
+						while ($currentver && $currentver != $targetver &&
 							function_exists($function = $appname . '_upgrade' . str_replace('.','_',$currentver)))
 						{
 							if($DEBUG)
@@ -570,7 +570,7 @@
 							}
 						}
 						if ($currentver == $targetver)	// upgrades succesful
-						{	
+						{
 							if($DEBUG)
 							{
 								echo "<br>process->upgrade(): Upgrade of $appname to $targetver is completed.\n";
@@ -610,7 +610,7 @@
 							$GLOBALS['egw_setup']->register_hooks($appname);
 						}
 					}
-					
+
 				}
 				else
 				{
