@@ -448,6 +448,7 @@ class filemanager_ui
 		{
 			foreach($path2props as $path => $props)
 			{
+				unset($row);	// fixes a weird problem with php5.1, does NOT happen with php5.2
 				$row =& $rows[$path2n[$path]];
 				foreach($props as $prop)
 				{
