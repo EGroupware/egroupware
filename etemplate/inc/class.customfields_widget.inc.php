@@ -128,7 +128,7 @@ class customfields_widget
 					$cell['sel_options'][$lname] = lang($label);
 					$fields_with_vals[]=$lname;
 				}
-				$link_types = ExecMethod('phpgwapi.bolink.app_list','');
+				$link_types = egw_link::app_list();
 				ksort($link_types);
 				foreach($link_types as $lname => $label) $cell['sel_options'][$lname] = '- '.$label;
 				$cell['no_lang'] = true;
