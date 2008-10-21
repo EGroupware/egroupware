@@ -64,7 +64,9 @@
 						$this->Port = $ogServer->port;
 						if($ogServer->smtpAuth) {
 							$this->SMTPAuth = true;
-							$this->Username = $ogServer->username;
+							list($username,$senderadress) = explode(';', $ogServer->username,2);
+							if (isset($senderadress) && !empty($senderadress)) $this->Sender = $senderadress;
+							$this->Username = $username;
 							$this->Password = $ogServer->password;
 						}
 					}
@@ -73,7 +75,9 @@
 				$this->Host = $GLOBALS['egw_info']['server']['smtp_server']?$GLOBALS['egw_info']['server']['smtp_server']:'localhost';
 				$this->Port = $GLOBALS['egw_info']['server']['smtp_port']?$GLOBALS['egw_info']['server']['smtp_port']:25;
 				$this->SMTPAuth = !empty($GLOBALS['egw_info']['server']['smtp_auth_user']);
-				$this->Username = $GLOBALS['egw_info']['server']['smtp_auth_user'];
+				list($username,$senderadress) = explode(';', $GLOBALS['egw_info']['server']['smtp_auth_user'],2);
+				if (isset($senderadress) && !empty($senderadress)) $this->Sender = $senderadress;
+				$this->Username = $username;
 				$this->Password = $GLOBALS['egw_info']['server']['smtp_auth_passwd'];
 			}
 			$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
