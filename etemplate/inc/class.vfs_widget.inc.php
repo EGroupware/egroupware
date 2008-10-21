@@ -137,7 +137,7 @@ class vfs_widget
 					{
 						if ($n < count($comps)-1 || $mime == egw_vfs::DIR_MIME_TYPE)
 						{
-							$value['l'.$n] = '/index.php?menuaction=filemanager.filemanager_ui.index&path='.$path;
+							$value['l'.$n] = '/index.php?menuaction=filemanager.filemanager_ui.index&path='.urlencode($path);
 							$target = '';
 						}
 						else
