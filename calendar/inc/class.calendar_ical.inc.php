@@ -125,8 +125,8 @@ class calendar_ical extends calendar_boupdate
 			'ATTENDEE'		=> array('dbName' => 'participants'),
 			'RRULE'			=> array('dbName' => 'recur_type'),
 			'EXDATE'		=> array('dbName' => 'recur_exception'),
-				'PRIORITY'		=> array('dbName' => 'priority'),
-				'TRANSP'		=> array('dbName' => 'non_blocking'),
+			'PRIORITY'		=> array('dbName' => 'priority'),
+			'TRANSP'		=> array('dbName' => 'non_blocking'),
 			'CATEGORIES'	=> array('dbName' => 'category'),
 		);
 		if(!is_array($this->supportedFields))
@@ -789,15 +789,22 @@ class calendar_ical extends calendar_boupdate
  						case 'ATTENDEE':
  							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) ||
  								preg_match('/<([@.a-z0-9_-]+)>/i',$attributes['value'],$matches))
-								{
-									$email = $matches[1];
-								}
-								elseif(strpos($attributes['value'],'@') !== false)
-								{
-									$email = $attributes['value'];
-								}
- 							if (($uid = $attributes['params']['X-EGROUPWARE-UID']) &&
- 								($info = $this->resource_info($uid)) && $info['email'] == $email)
+							{
+								$email = $matches[1];
+							}
+							elseif(strpos($attributes['value'],'@') !== false)
+							{
+								$email = $attributes['value'];
+							}
+							else
+							{
+								$email = false;	// no email given
+							}
+							$searcharray = array();
+							if ($email) $searcharray = array('email' => $email, 'email_home' => $email);
+							if (isset($attributes['params']['CN']) && $attributes['params']['CN']) $searcharray['n_fn'] = $attributes['params']['CN'];
+							if (($uid = $attributes['params']['X-EGROUPWARE-UID']) &&
+ 								($info = $this->resource_info($uid)) && (!$email || $info['email'] == $email))
  							{
  								// we use the (checked) X-EGROUPWARE-UID
  							}
@@ -809,19 +816,22 @@ class calendar_ical extends calendar_boupdate
  							{
  								$uid = $GLOBALS['egw_info']['user']['account_id'];
  							}
- 							elseif (($uid = $GLOBALS['egw']->accounts->name2id($email,'account_email')))
+ 							elseif ($email && ($uid = $GLOBALS['egw']->accounts->name2id($email,'account_email')))
  							{
  								// we use the account we found
  							}
-							elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
-								'email' => $email,
-								'email_home' => $email,
-							),true,'','','',false,'OR')))
+ 							elseif(!$searcharray)
+ 							{
+ 								continue;	// participants without email AND CN --> ignore it
+ 							}
+							elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',$searcharray,
+								'id,account_id,n_fn','account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC','','',false,'OR')))
 							{
-								$uid = 'c'.$data['id'];
+								$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
 							}
  							else
  							{
+ 								if (!$email) $email = 'no-email@egroupware.org';	// set dummy email to store the CN
  								$uid = 'e'.($attributes['params']['CN'] ? $attributes['params']['CN'].' <'.$email.'>' : $email);
  							}
  							$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
@@ -918,8 +928,8 @@ class calendar_ical extends calendar_boupdate
  				}
 
 				// If this is an updated meeting, and the client doesn't support
-				// participants, add them back
-				if( $cal_id > 0 && !isset($this->supportedFields['participants']))
+				// participants OR the event no longer contains participants, add them back
+				if( $cal_id > 0 && (!isset($this->supportedFields['participants']) || !count($event['participants'])))
 				{
 					if (($egw_event = $this->read($cal_id)))
 					{
@@ -947,9 +957,14 @@ class calendar_ical extends calendar_boupdate
 				}
 
 				// check if iCal changes the organizer, which is not allowed
-				if ($cal_id > 0 && ($egw_event = $this->read($cal_id)) && $event['owner'] != $egw_event['owner'])
+				if ($cal_id > 0 && ($egw_event = $this->read($cal_id)))
 				{
-					$event['owner'] = $egw_event['owner'];	// set it back to the original owner
+					$event['owner'] = $egw_event['owner'];	// do NOT change the original owner
+				}
+				// check for new events if an owner is set and the current user has add rights for that owners calendar
+				elseif (!isset($event['owner']) || $this->check_perms(EGW_ACL_ADD,0,$event['owner']))
+				{
+					$event['owner'] = $GLOBALS['egw_info']['user']['account_id'];	// if not set the current user
 				}
 
 				#error_log('ALARMS');
