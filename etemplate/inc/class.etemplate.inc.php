@@ -797,6 +797,7 @@ class etemplate extends boetemplate
 				{
 					continue;	// col is disabled
 				}
+				$align_was = $cell['align'];
 				$row_data[$col] = $this->show_cell($cell,$content,$readonlys,$cname,$c,$r,$span,$cl,$path.'/'.$r_key.$c_key);
 
 				if ($row_data[$col] == '' && $this->rows == 1)
@@ -832,7 +833,7 @@ class etemplate extends boetemplate
 						$opts[$col] = "0,$disable";
 					}
 				}
-				$row_data[".$col"] .= html::formatOptions($cell['align']?$cell['align']:'left','align');
+				$row_data[".$col"] .= html::formatOptions($cell['align']?$cell['align']:($align_was?$align_was:'left'),'align');
 				// allow to set further attributes in the tablecell, beside the class
 				if (is_array($cl))
 				{
