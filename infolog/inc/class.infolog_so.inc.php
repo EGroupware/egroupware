@@ -297,11 +297,11 @@ class infolog_so
 		switch ($filter)
 		{
 			case 'upcoming':
-				return " AND info_startdate >= '$tomorrow'";
+				return " AND info_startdate >= $tomorrow";
 			case 'today':
-				return " AND info_startdate < '$tomorrow'";
+				return " AND info_startdate < $tomorrow";
 			case 'overdue':
-				return " AND (info_enddate != 0 AND info_enddate < '$tomorrow')";
+				return " AND (info_enddate != 0 AND info_enddate < $tomorrow)";
 			case 'date':
 				if (!$today || !$tomorrow)
 				{
@@ -315,7 +315,7 @@ class infolog_so
 				}
 				return " AND ($today <= info_enddate AND info_enddate < $tomorrow)";
 			case 'limit':
-				return " AND (info_modified >= '$today' OR NOT (info_status IN ('done','billed','cancelled')))";
+				return " AND (info_modified >= $today OR NOT (info_status IN ('done','billed','cancelled')))";
 		}
 		return '';
 	}
