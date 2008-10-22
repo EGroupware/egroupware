@@ -64,14 +64,14 @@ class infolog_so
 	/**
 	 * Constructor
 	 *
-	 * @param array $grants
+	 * @param array $grants=array()
 	 * @return soinfolog
 	 */
-	function __construct( &$grants )
+	function __construct( $grants=array() )
 	{
 		$this->db     = clone($GLOBALS['egw']->db);
 		$this->db->set_app('infolog');
-		$this->grants =& $grants;
+		$this->grants = $grants;
 		$this->user   = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
@@ -458,26 +458,36 @@ class infolog_so
 	/**
 	 * changes or deletes entries with a spezified owner (for hook_delete_account)
 	 *
-	 * @param $owner old owner
-	 * @param $new_owner new owner or 0 if entries should be deleted
+	 * @param array $args hook arguments
+	 * @param int $args['account_id'] account to delete
+	 * @param int $args['new_owner']=0 new owner
 	 */
-	function change_delete_owner($owner,$new_owner=0)  // new_owner=0 means delete
+	function change_delete_owner(array $args)  // new_owner=0 means delete
 	{
-		if (!(int) $new_owner)
+		if (!(int) $args['new_owner'])
 		{
-			$db2 = clone($this->db);	// we need an extra result-set
-			$db2->select($this->info_table,'info_id',array('info_owner'=>$owner),__LINE__,__FILE__);
-			while($db2->next_record())
+			foreach($this->db->select($this->info_table,'info_id',array('info_owner'=>$args['account_id']),__LINE__,__FILE__,false,'','infolog') as $row)
 			{
-				$this->delete($this->db->f(0),False);
+				$this->delete($row['info_id'],False);
 			}
 		}
 		else
 		{
-			$this->db->update($this->info_table,array('info_owner'=>$new_owner),array('info_owner'=>$owner),__LINE__,__FILE__);
+			$this->db->update($this->info_table,array('info_owner'=>$args['new_owner']),array('info_owner'=>$args['account_id']),__LINE__,__FILE__,'infolog');
 		}
-		// ToDo: does not work with multiple owners!!!
-		$this->db->update($this->info_table,array('info_responsible'=>$new_owner),array('info_responsible'=>$owner),__LINE__,__FILE__);
+		foreach($this->db->select($this->info_table,'info_id,info_responsible',
+			$this->db->concat("','",'info_responsible',"','").' LIKE '.$this->db->quote('%,'.(int)$args['account_id'].',%'),
+			__LINE__,__FILE__,false,'','infolog') as $row)
+		{
+			$new_responsible = explode(',',$row['info_responsible']);
+			unset($new_responsible[array_search($args['account_id'],$new_responsible)]);
+			if ((int)$args['new_owner']) $new_responsible[] = (int)$args['new_owner'];
+			$new_responsible = implode(',',$new_responsible);
+			$this->db->update($this->info_table,array(
+				'info_responsible' => $new_responsible,
+			),array('info_id' => $row['info_id']),__LINE__,__FILE__,'infolog');
+		}
+
 	}
 
 	/**
