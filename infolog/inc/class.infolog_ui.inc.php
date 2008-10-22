@@ -294,7 +294,7 @@ class infolog_ui
 	 */
 	function get_rows(&$query,&$rows,&$readonlys)
 	{
-		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
+		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
 		if (!$query['csv_export'])
@@ -486,7 +486,7 @@ class infolog_ui
 				unset($session);
 			}
 		}
-		//echo "<p align=right>infolog_ui::index(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
+		//echo "<p>".__METHOD__."(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 		if (!is_array($values))
 		{
 			$values = array('nm' => $this->read_sessiondata());
@@ -624,7 +624,10 @@ class infolog_ui
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
-
+		$persist['nm'] = array(
+			'sort' => $values['nm']['sort'],
+			'order' => $values['nm']['order'],
+		);
 		if (!$called_as)
 		{
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
@@ -638,8 +641,15 @@ class infolog_ui
 		),$readonlys,$persist,$return_html ? -1 : 0);
 	}
 
+	/**
+	 * Closes an infolog
+	 *
+	 * @param int|array $values=0 info_id (default _GET[info_id])
+	 * @param string $referer=''
+	 */
 	function close($values=0,$referer='')
 	{
+		//echo "<p>".__METHOD__."($values,$referer)</p>\n";
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 		$referer = is_array($values) ? $values['referer'] : $referer;
 
@@ -665,6 +675,13 @@ class infolog_ui
 		if ($referer) $this->tmpl->location($referer);
 	}
 
+	/**
+	 * Deletes an InfoLog entry
+	 *
+	 * @param array|int $values=0 info_id (default _GET[info_id])
+	 * @param string $referer=''
+	 * @param string $called_by=''
+	 */
 	function delete($values=0,$referer='',$called_by='')
 	{
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
