@@ -1,7 +1,7 @@
 %define packagename eGroupware
 %define egwdirname egroupware
 %define egwversion 1.6
-%define packaging rc1
+%define packaging rc2
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -9,7 +9,7 @@
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2-mod_php5 mysql php5-mysql php5-dom
+	%define extra_requires apache2-mod_php5 php_any_db php5-dom
 	%define cron cron
 %endif
 %if 0%{?fedora_version}
@@ -19,7 +19,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Fedora Core %{?fedora_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml
 	%define cron crontabs
 %endif
 %if 0%{?mandriva_version}
@@ -29,7 +29,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Mandriva %{?mandriva_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql php-dom
+	%define extra_requires httpd php-mysql php-dom
 	%define cron crontabs
 %endif
 %if 0%{?rhel_version}
@@ -39,7 +39,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Red Head %{?rhel_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml
 	%define cron crontabs
 %endif
 %if 0%{?centos_version}
@@ -49,7 +49,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution CentOS %{?centos_version}
 	%define php php
-	%define extra_requires httpd mysql-server php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml
 	%define cron crontabs
 %endif
 
@@ -137,6 +137,7 @@ This package provides the eGroupware core applications.
 %post core
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon -R -u user_u -r object_r -t httpd_sys_content_t /var/lib/egroupware
+	setsebool -P httpd_can_network_connect=1
 %endif
 
 %package %{addressbook}
@@ -728,6 +729,9 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 
 
 %changelog
+* Wed Oct 22 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc2
+- eGroupware 1.6.rc2 2. release candidate for 1.6 release
+
 * Fri Oct 10 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc1
 - eGroupware 1.6.rc1 first release candidate for 1.6 release
 
