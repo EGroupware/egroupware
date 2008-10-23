@@ -88,12 +88,21 @@ class egw extends egw_minimal
 		catch(Exception $e) {
 			//echo "<pre>Connection to DB failed (".$e->getMessage().")!\n".$e->getTraceAsString();
 		}
-		if ($e || !$this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
+		$buff = $this->db->Halt_On_Error;
+		$this->db->Halt_On_Error = "report";
+		$retval=false;
+		if (is_object($this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__))) {
+			$retval = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle();
+		} else {
+			#echo config::TABLE. " does not exist";
+		}
+		if ($e || !$retval)
 		{
 			$setup_dir = str_replace($_SERVER['PHP_SELF'],'index.php','setup/');
 
 			// we check for the old table too, to not scare updating users ;-)
-			if (!$e && $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
+			if (!$e && is_object($this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)) && 
+				$this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle())
 			{
 				throw new Exception('<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir .
 					'">update eGroupWare</a> before you can continue using it.</center>',999);
@@ -105,6 +114,7 @@ class egw extends egw_minimal
 			}
 			exit;
 		}
+		$this->db->Halt_On_Error = $buff;
 		// Set the DB's client charset if a system-charset is set
 		$system_charset = $this->db->select(config::TABLE,'config_value',array(
 			'config_app'  => 'phpgwapi',
