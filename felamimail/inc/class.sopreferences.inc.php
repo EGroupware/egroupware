@@ -42,7 +42,7 @@
 				$where,__LINE__,__FILE__);
 				
 			while(($row = $this->db->row(true,'fm_'))) {
-				foreach(array('ic_validatecertificate','ic_enable_sieve','og_smtpauth') as $name)
+				foreach(array('active','ic_validatecertificate','ic_enable_sieve','og_smtpauth') as $name)
 				{
 					$row[$name] = $this->db->from_bool($row[$name]);
 				}
@@ -139,7 +139,7 @@
 		{
 			
 			$data = array(
-				'fm_active'			=> 0,
+				'fm_active'			=> false,
 				'fm_realname'			=> $_identity->realName,
 				'fm_organization'		=> $_identity->organization,
 				'fm_emailaddress'		=> $_identity->emailAddress,
@@ -203,7 +203,7 @@
 		function setProfileActive($_accountID, $_status)
 		{
 			$this->db->update($this->accounts_table,array(
-				'fm_active'			=> $_status,
+				'fm_active'			=> (bool)$_status,
 			),array(
 				'fm_owner'			=> $_accountID,
 			),__LINE__,__FILE__);	
