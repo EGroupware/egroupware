@@ -25,7 +25,7 @@ class so_resources extends so_sql
 	{
 		$this->so_sql('resources','egw_resources');
 		
-		$custom =& CreateObject('admin.customfields',$contact_app);
+		$custom =& CreateObject('admin.customfields','resources');
 		$this->customfields = $custom->get_customfields();
 		$this->soextra =& CreateObject('etemplate.so_sql');
 		$this->soextra->so_sql('resources','egw_resources_extra');

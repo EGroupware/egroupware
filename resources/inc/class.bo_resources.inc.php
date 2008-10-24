@@ -162,7 +162,6 @@ class bo_resources
 		{
 			return lang('You are not permitted to edit this reource!');
 		}
-
 		// we need an id to save pictures and make links...
 		if(!$resource['res_id'])
 		{
