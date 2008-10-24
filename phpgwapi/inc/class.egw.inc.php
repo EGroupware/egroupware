@@ -432,6 +432,7 @@ class egw extends egw_minimal
 			Header("Location: $url");
 			print("\n\n");
 		}
+		@ob_flush(); flush();
 		exit;
 	}
 
