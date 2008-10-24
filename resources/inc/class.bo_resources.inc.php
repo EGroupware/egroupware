@@ -177,7 +177,7 @@ class bo_resources
 					$msg = $this->save_picture($resource['own_file'],$resource['res_id']);
 					break;
 				}
-				elseif(@egw_vfs::stat($this->pictures_dir.$resource['res_id'].'.jpg'))
+				elseif(@egw_vfs::stat('/apps/resources/'.$resource['res_id'].'/'.self::PICTURE_NAME))
 				{
 					break;
 				}
@@ -538,6 +538,7 @@ class bo_resources
 		{
 			$src = $this->so->get_value('picture_src',$res_id);
 		}
+#echo $scr."<br>". $this->pictures_dir."<br>";
 		switch($src)
 		{
 			case 'own_src':
@@ -550,6 +551,8 @@ class bo_resources
 				{
 					$picture = egw::link('/etemplate/thumbnail.php',array('path' => $picture));
 				}
+				//$picture=$GLOBALS['egw_info']['server'].$picture;
+#echo $picture."<br>";
 				break;
 			case 'cat_src':
 				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$res_id));
