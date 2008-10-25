@@ -35,6 +35,15 @@
  *
  * To fetch a next (single) row, you can use:
  *		$row = $db->query("SELECT COUNT(*) FROM ...")->fetch($fetchmod=null);
+ *
+ * egw_db allows to use exceptions to catch sql-erros, not existing tables or failure to connect to the database, eg.:
+ *		try {
+ *			$this->db->connect();
+ *			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle();
+ *		}
+ *		catch(Exception $e) {
+ *			echo "Connection to DB failed (".$e->getMessage().")!\n";
+ *		}
  */
 
 // some constanst for pre php4.3
@@ -114,6 +123,7 @@ class egw_db
 	var $Debug         = 0;
 
 	/**
+	* @deprecated use exceptions (try/catch block) to handle failed connections or sql errors
 	* @var string $Halt_On_Error "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)
 	*/
 	var $Halt_On_Error = 'yes';
