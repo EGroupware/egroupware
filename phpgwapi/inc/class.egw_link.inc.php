@@ -622,9 +622,10 @@ class egw_link extends solink
 		}
 		if ($ids_to_query)
 		{
-			foreach(ExecMethod(self::$app_register[$app]['titles'],$ids_to_query) as $id => $title)
+			foreach(ExecMethod(self::$app_register[$app]['titles'],$ids_to_query) as $id => $t)
 			{
-				$titles[$id] = $title;
+				$title =& self::get_cache($app,$id);
+				$titles[$id] = $title = $t;
 			}
 		}
 		return $titles;
