@@ -10,9 +10,6 @@
  * @version $Id$
  */
 
-
-include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
-
 /**
  * General storage object for resources
  *
@@ -23,12 +20,10 @@ class so_resources extends so_sql
 {
 	function so_resources()
 	{
-		$this->so_sql('resources','egw_resources');
-		
-		$custom =& CreateObject('admin.customfields','resources');
-		$this->customfields = $custom->get_customfields();
-		$this->soextra =& CreateObject('etemplate.so_sql');
-		$this->soextra->so_sql('resources','egw_resources_extra');
+		parent::__construct('resources','egw_resources');
+
+		$this->customfields = config::get_customfields('resources');
+		$this->soextra = new so_sql('resources','egw_resources_extra');
 	}
 
 	/**
@@ -47,7 +42,7 @@ class so_resources extends so_sql
 		}
 		return false;
 	}
-	
+
 	/**
 	 * reads resource including custom fields
 	 *
@@ -58,7 +53,7 @@ class so_resources extends so_sql
 	{
 		// read main data
 		$resource = parent::read($res_id);
-		
+
 		// read customfields
 		$keys = array(
 			'extra_id' => $res_id,
@@ -75,7 +70,7 @@ class so_resources extends so_sql
 	/**
 	 * saves a resource including extra fields
 	 *
-	 * @param array $resource key => value 
+	 * @param array $resource key => value
 	 * @return mixed id of resource if all right, false if fale
 	 */
 	function save($resource)
@@ -83,7 +78,7 @@ class so_resources extends so_sql
 		$this->data = $resource;
 		if(parent::save() != 0) return false;
 		$res_id = $this->data['res_id'];
-		
+
 		// save customfields
 		foreach ($this->customfields as $field => $options)
 		{
@@ -100,5 +95,5 @@ class so_resources extends so_sql
 		}
 		return $res_id;
 	}
-	
+
 }
