@@ -88,7 +88,10 @@ class calendar_uiforms extends calendar_ui
 		{
 			if ($owner)	// make an owner who is no user or we have no add-rights a participant
 			{
-				$extra_participants += explode(',',$owner);
+				foreach(explode(',',$owner) as $uid)
+				{
+					if (is_numeric($uid)) $extra_participants[] = $uid;	// dont add eg. all resources of the displayed category
+				}
 			}
 			$owner = $this->user;
 		}
