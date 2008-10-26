@@ -491,6 +491,7 @@ function load_egw($user,$passwd,$domain='default')
 			'currentapp' => 'filemanager',
 			'noheader' => true,
 			'autocreate_session_callback' => 'user_pass_from_argv',
+			'no_exception_handler' => 'cli',
 		)
 	);
 
@@ -516,7 +517,6 @@ function load_egw($user,$passwd,$domain='default')
 			die("Unknown user or password!\n");
 		}
 	}
-	set_exception_handler('cli_exception_handler');	// otherwise we get html!
 
 	$cmd = $GLOBALS['cmd'];
 	if (!in_array($cmd,array('ls','find','mount','umount','eacl')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
@@ -778,12 +778,6 @@ function do_find($bases,$options)
 	{
 		echo "$path\n";
 	}
-}
-
-function cli_exception_handler(Exception $e)
-{
-	echo $e->getMessage()."\n";
-	exit($e->getCode());
 }
 
 /**
