@@ -975,7 +975,7 @@ class setup
 			}
 			else
 			{
-				vfs_home_hooks::addGroup($account);
+				vfs_home_hooks::addGroup($account+array('account_name' => $account['account_lid']));
 			}
 		}
 		if ($primary_group)	// only for users, NOT groups

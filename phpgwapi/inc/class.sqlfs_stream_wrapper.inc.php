@@ -596,6 +596,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) already exist!");
 			if (!($options & STREAM_URL_STAT_QUIET))
 			{
+				//throw new Exception(__METHOD__."('$url',$mode,$options) already exist!");
 				trigger_error(__METHOD__."('$url',$mode,$options) already exist!",E_USER_WARNING);
 			}
 			return false;
@@ -755,10 +756,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			trigger_error("Only root can do that!",E_USER_WARNING);
 			return false;
 		}
-		if ($owner < 0 || !$GLOBALS['egw']->accounts->id2name($owner))	// not a user
+		if ($owner < 0 || $owner && !$GLOBALS['egw']->accounts->id2name($owner))	// not a user (0 == root)
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) unknown (numeric) user id!");
-			trigger_error("Unknown (numeric) user id!",E_USER_WARNING);
+			trigger_error(__METHOD__."($url,$owner) Unknown (numeric) user id!",E_USER_WARNING);
+			//throw new Exception(__METHOD__."($url,$owner) Unknown (numeric) user id!");
 			return false;
 		}
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_uid=:fs_uid WHERE fs_id=:fs_id');
