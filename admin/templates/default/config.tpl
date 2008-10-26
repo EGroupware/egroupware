@@ -115,7 +115,7 @@
      <input name="newsettings[link_list_thumbnail]" value="{value_link_list_thumbnail}" size="5">
     </td>
    </tr>
-   
+
    <tr class="row_on">
     <td>{lang_Enable_the_spellcheck_in_the_ritch_text_editor_?}:</td>
     <td>
@@ -124,7 +124,7 @@
       <option value="True"{selected_enabled_spellcheck_True}>{lang_Yes}</option>
      </select>
     </td>
-   </tr>   
+   </tr>
 
    <tr class="row_off">
     <td>{lang_Complete_path_to_aspell_program}:</td>
@@ -213,21 +213,21 @@
      <input name="newsettings[num_unsuccessful_id]" value="{value_num_unsuccessful_id}" size="5">
     </td>
    </tr>
-   
+
    <tr class="row_off">
     <td>{lang_After_how_many_unsuccessful_attempts_to_login,_an_IP_should_be_blocked_(default_3)_?}:</td>
     <td>
      <input name="newsettings[num_unsuccessful_ip]" value="{value_num_unsuccessful_ip}" size="5">
     </td>
    </tr>
-   
+
    <tr class="row_on">
     <td>{lang_How_many_minutes_should_an_account_or_IP_be_blocked_(default_30)_?}:</td>
     <td>
      <input name="newsettings[block_time]" value="{value_block_time}" size="5">
     </td>
    </tr>
-   
+
    <tr class="row_off">
     <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)}:</td>
     <td>
@@ -272,6 +272,16 @@
    <tr class="row_off">
     <td>{lang_Allow_remote_administration_from_following_install_ID's_(comma_separated)}:<br />{lang_Own_install_ID:_}{value_install_id}</td>
     <td><input name="newsettings[allow_remote_admin]" value="{value_allow_remote_admin}" size="40"></td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_Should_exceptions_contain_a_trace_(including_function_arguments)}:</td>
+    <td>
+      <select name="newsettings[exception_show_trace]">
+         <option value="">{lang_No} - {lang_more_secure}</option>
+         <option value="True"{selected_exception_show_trace_True}>{lang_Yes}</option>
+       </select>
+    </td>
+   </tr>
    </tr>
 
 <!-- END body -->

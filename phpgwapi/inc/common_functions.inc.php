@@ -1404,21 +1404,48 @@ function egw_exception_handler(Exception $e)
 	{
 		$headline = try_lang('An error happend');
 	}
-	$message = '<h3>'.$headline."</h3>\n".
-		'<pre><b>'.$e->getMessage()."</b>\n\n".
-		$e->getTraceAsString()."</pre>\n";
+	// logging all exceptions to the error_log
+	error_log($headline.': '.$e->getMessage());
+	foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
 
-	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session) && method_exists($GLOBALS['egw'],'link'))
+	// exception handler for cli (command line interface) clients, no html
+	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
 	{
-		$message .= '<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';
+		echo $headline.': '.$e->getMessage()."\n";
+		echo $e->getTraceAsString()."\n";
+		exit($e->getCode() ? $e->getCode() : 9999);		// allways give a non-zero exit code
 	}
-	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->framework))
+	// regular GUI exception
+	elseif (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']))
 	{
-		$GLOBALS['egw']->framework->render($message,$headline);
+		$message = '<h3>'.$headline."</h3>\n".
+			'<pre><b>'.$e->getMessage()."</b>\n\n";
+
+		// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
+		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
+		{
+			$message .= $e->getTraceAsString();
+		}
+		$message .= "</pre>\n";
+		if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session) && method_exists($GLOBALS['egw'],'link'))
+		{
+			$message .= '<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';
+		}
+		if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->framework))
+		{
+			$GLOBALS['egw']->framework->render($message,$headline);
+		}
+		else
+		{
+			echo "<html>\n<head>\n<title>$headline</title>\n</head>\n<body>\n$message\n</body>\n</html>\n";
+		}
 	}
-	else
+	// exception handler sending message back to the client as basic auth message
+	elseif($GLOBALS['egw_info']['flags']['no_exception_handler'] == 'basic_auth')
 	{
-		echo "<html>\n<head>\n<title>$headline</title>\n</head>\n<body>\n$message\n</body>\n</html>\n";
+		header('WWW-Authenticate: Basic realm="'.$headline.' '.$e->getMessage().'"');
+		header('HTTP/1.1 401 Unauthorized');
+		header('X-WebDAV-Status: 401 Unauthorized', true);
 	}
 	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->common))
 	{
@@ -1427,7 +1454,7 @@ function egw_exception_handler(Exception $e)
 	exit;
 }
 
-if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']) || !$GLOBALS['egw_info']['flags']['no_exception_handler'])
+if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] !== true)
 {
 	set_exception_handler('egw_exception_handler');
 }

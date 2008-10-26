@@ -13,6 +13,8 @@
  * @version $Id$
  */
 
+$starttime = microtime(true);
+
 /**
  * check if the given user has access
  *
@@ -28,12 +30,14 @@ function check_access(&$account)
 		'passwd' => $_SERVER['PHP_AUTH_PW'],
 		'passwd_type' => 'text',
 	);
-	if (!($sessionid = $GLOBALS['egw']->session->create($account)))
+	if (!isset($_SERVER['PHP_AUTH_USER']) || !($sessionid = $GLOBALS['egw']->session->create($account)))
 	{
-		header('WWW-Authenticate: Basic realm="'.vfs_webdav_server::REALM.'"');
-        header("HTTP/1.1 401 Unauthorized");
-        header("X-WebDAV-Status: 401 Unauthorized", true);
-        exit;
+		header('WWW-Authenticate: Basic realm="'.vfs_webdav_server::REALM.
+			// if the session class gives a reason why the login failed --> append it to the REALM
+			($GLOBALS['egw']->session->reason ? ': '.$GLOBALS['egw']->session->reason : '').'"');
+		header("HTTP/1.1 401 Unauthorized");
+		header("X-WebDAV-Status: 401 Unauthorized", true);
+		exit;
 	}
 	return $sessionid;
 }
@@ -48,10 +52,14 @@ $GLOBALS['egw_info'] = array(
 		'noheader'  => True,
 		'currentapp' => $app,
 		'autocreate_session_callback' => 'check_access',
+		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 	)
 );
 // if you move this file somewhere else, you need to adapt the path to the header!
 include(dirname(__FILE__).'/header.inc.php');
 
+$headertime = microtime(true);
+
 $webdav_server = new vfs_webdav_server();
 $webdav_server->ServeRequest();
+//error_log(sprintf("GroupDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));

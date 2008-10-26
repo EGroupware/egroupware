@@ -41,26 +41,10 @@ $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'home',
 		'noapi' => true,
+		'no_exception_handler' => 'cli',
 ));
 include('inc/functions.inc.php');
-$GLOBALS['egw_setup']->translation->no_translation_marker = '';
 $GLOBALS['egw_setup']->system_charset = $charset;
-
-/**
- * Echo the exception message and exit the script with a numeric code, does NOT return
- *
- * @param Exception $e
- */
-function cli_exception_handler(Exception $e)
-{
-	echo $e->getMessage()."\n";
-//	if ($e instanceof egw_exception_assertion_failed && !($e instanceof egw_exception_wrong_userinput))
-	{
-		echo $e->getTraceAsString()."\n";
-	}
-	exit($e->getCode() ? $e->getCode() : 9999);	// always give a non-zero exist status
-}
-set_exception_handler('cli_exception_handler');
 
 if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 {

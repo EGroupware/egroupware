@@ -232,6 +232,7 @@ error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder a
 expires	admin	de	abgelaufen
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
+false	admin	de	Falsch
 field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits !!!
 file space	admin	de	Dateiraum
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
@@ -398,6 +399,7 @@ server type(mode)	admin	de	Server-Typ (Modus)
 server url	admin	de	Server-URL
 server username	admin	de	Server-Benutzername
 set preference values.	admin	de	Einstellungswert wurde geändert
+should exceptions contain a trace (including function arguments)	admin	de	Sollen Ausnahmefehler eine Rückverfolgung enthalten (einschl. Funktionsargumente)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten (nützlich für Demosites) ?
 show 'powered by' logo on	admin	de	Zeige "powered by" Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
@@ -450,6 +452,7 @@ times	admin	de	Zeiten
 top	admin	de	oben
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 Ids wurde geändert.
 total records	admin	de	Anzahl Datensätze insgesamt
+true	admin	de	Wahr
 trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverhältnis
 type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits !!!

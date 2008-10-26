@@ -1,4 +1,4 @@
-#!/usr/bin/php -qC 
+#!/usr/bin/php -qC
 <?php
 /**
  * Admin - Command line interface
@@ -43,47 +43,45 @@ $GLOBALS['egw_info'] = array(
 		'currentapp' => 'admin',
 		'noheader' => true,
 		'autocreate_session_callback' => 'user_pass_from_argv',
+		'no_exception_handler' => 'cli',
 	)
 );
 
 include('../header.inc.php');
 
-// set our own exception handler, to not get the html from eGW's default one
-set_exception_handler('admin_cli_exception_handler');
-
 switch($action)
 {
 	case '--edit-user':
 		return do_edit_user($arg0s);
-		
+
 	case '--change-pw':
 		return do_change_pw($arg0s);
 
 	case '--delete-user':
 		return do_delete_account($arg0s[2],$arg0s[3]);
-		
+
 	case '--edit-group':
 		return do_edit_group($arg0s);
-		
+
 	case '--delete-group':
 		return do_delete_account($arg0s[2],0,false);
-		
+
 	case '--allow-app':
 	case '--deny-app':
 		return do_account_app($arg0s,$action == '--allow-app');
-		
+
 	case '--change-account-id':
 		return do_change_account_id($arg0s);
-		
+
 	case '--subscribe-other':
 		return do_subscribe_other($arg0s[2],$arg0s[3]);
-		
+
 	case '--check-acl';
 		return do_check_acl();
-		
+
 	case '--show-header';
 		return run_command(new setup_cmd_showheader($arg0s[2]));
-		
+
 	case '--exit-codes':
 		return list_exit_codes();
 
@@ -95,7 +93,7 @@ exit(0);
 
 /**
  * run a command object, after checking for additional arguments: sheduled, requested or comment
- * 
+ *
  * Does not return! Echos success or error messsage and exits with either 0 (success) or the numerical error-code
  *
  * @param admin_cmd $cmd
@@ -103,7 +101,7 @@ exit(0);
 function run_command(admin_cmd $cmd)
 {
 	global $arguments;
-	
+
 	$skip_checks = false;
 	while ($arguments && ($extra = array_shift($arguments)))
 	{
@@ -112,24 +110,24 @@ function run_command(admin_cmd $cmd)
 			case '--schedule':	// schedule the command instead of running it directly
 				$time = admin_cmd::parse_date(array_shift($arguments));
 				break;
-				
+
 			case '--requested':	// note who requested to run the command
 				$cmd->requested = 0;
 				$cmd->requested_email = array_shift($arguments);
 				break;
-				
+
 			case '--comment':	// note a comment
 				$cmd->comment = array_shift($arguments);
 				break;
-				
+
 			case '--remote':	// run the command on a remote install
 				$cmd->remote_id = admin_cmd::parse_remote(array_shift($arguments));
 				break;
-				
+
 			case '--skip-checks':	//do not yet run the checks for scheduled local commands
 				$skip_checks = true;
 				break;
-				
+
 			case '--header-access':
 				if ($cmd instanceof setup_cmd)
 				{
@@ -154,7 +152,7 @@ function run_command(admin_cmd $cmd)
 
 /**
  * callback to authenticate with the user/pw specified on the commandline
- * 
+ *
  * @param array &$account account_info with keys 'login', 'passwd' and optional 'passwd_type'
  * @return boolean/string true if we allow the access and account is set, a sessionid or false otherwise
  */
@@ -191,7 +189,7 @@ function usage($action=null,$ret=0)
 {
 	$cmd = basename($_SERVER['argv'][0]);
 	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks]\n\n";
-	
+
 	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...]\n";
 	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!\n";
 	echo "--change-pw admin-account[@domain],admin-password,account,password\n";
@@ -212,7 +210,7 @@ function usage($action=null,$ret=0)
 	echo "--exit-codes admin-account[@domain],admin-password\n";
 	echo "	List all exit codes of the command line interface\n";
 
-	exit($ret);	
+	exit($ret);
 }
 
 /**
@@ -227,7 +225,7 @@ function do_account_app($args,$allow)
 	array_shift($args);	// admin-account
 	array_shift($args);	// admin-pw
 	$account = array_shift($args);
-	
+
 	include_once(EGW_INCLUDE_ROOT.'/admin/inc/class.admin_cmd_account_app.inc.php');
 	run_command(new admin_cmd_account_app($allow,$account,$args));
 }
@@ -242,7 +240,7 @@ function do_edit_group($args)
 	array_shift($args);	// admin-account
 	array_shift($args);	// admin-pw
 	list($account,$new_account_name) = explode('=',array_shift($args));	// account[=new-account-name]
-	
+
 	$data = array(
 		'account_lid' => $new_account_name,
 		'account_email' => array_shift($args),
@@ -265,7 +263,7 @@ function do_edit_group($args)
 
 /**
  * Change/Set Password for a given user
- *                    1:                     2:             3:      4: 
+ *                    1:                     2:             3:      4:
  * @param array $args admin-account[@domain],admin-password,account,password
  */
 function do_change_pw($args)
@@ -274,7 +272,7 @@ function do_change_pw($args)
 	array_shift($args);     // admin-pw
 	$account = array_shift($args);	// account
 	$password = array_shift($args);	// pw
-	
+
 	run_command(new admin_cmd_change_pw($account,$password));
 }
 
@@ -288,7 +286,7 @@ function do_edit_user($args)
 	array_shift($args);	// admin-account
 	array_shift($args);	// admin-pw
 	list($account,$new_account_name) = explode('=',array_shift($args));	// account[=new-account-name]
-	
+
 	$data = array(
 		'account_lid' => $new_account_name,
 		'account_firstname' => array_shift($args),
@@ -331,7 +329,7 @@ function do_delete_account($account,$new_user=0,$is_user=true)
 
 /**
  * Deletes ACL entries of not longer existing accounts
- * 
+ *
  * @return int 0 allways
  */
 function do_check_acl()
@@ -348,7 +346,7 @@ function do_check_acl()
 function do_change_account_id($args)
 {
 	if (count($args) < 4) usage();	// 4 means at least user,pw,from1,to1
-	
+
 	$ids2change = array();
 	for($n = 2; $n < count($args); $n += 2)
 	{
@@ -360,23 +358,11 @@ function do_change_account_id($args)
 }
 
 /**
- * Exit the script with a numeric exit code and an error-message, does NOT return
- *
- * @param int $exit_code
- * @param string $message
- */
-function admin_cli_exception_handler(Exception $e)
-{
-	echo $e->getMessage()."\n";
-	exit($e->getCode());
-}
-
-/**
  * List all exit codes used by the command line interface
  *
- * The list is generated by "greping" this file for calls to the fail() function. 
+ * The list is generated by "greping" this file for calls to the fail() function.
  * Calls to fail() have to be in one line, to be recogniced!
- * 
+ *
  * @ToDo adapt it to the exceptions
  */
 function list_exit_codes()
@@ -409,7 +395,7 @@ function do_subscribe_other($account_lid,$pw=null)
 {
 	if (!($account_id = $GLOBALS['egw']->accounts->name2id($account_lid)))
 	{
-		throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account_lid),15);		
+		throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account_lid),15);
 	}
 	$GLOBALS['egw_info']['user'] = array(
 		'account_id' => $account_id,
@@ -421,20 +407,20 @@ function do_subscribe_other($account_lid,$pw=null)
 	$emailadmin = new bo();
 	$user_profile = $emailadmin->getUserProfile('felamimail');
 	unset($emailadmin);
-	
+
 	$icServer = new cyrusimap();
 	//$icServer =& $user_profile->ic_server[0];
 	//print_r($icServer);
-	
+
 	$icServer->openConnection(!$pw);
-	
+
 	$delimiter = $icServer->getHierarchyDelimiter();
 
 	$mailboxes = $icServer->getMailboxes();
 	//print_r($mailboxes);
-	
+
 	$own_mbox = 'user'.$delimiter.$account_lid;
-	
+
 	foreach($mailboxes as $n => $mailbox)
 	{
 //		if ($n < 1) continue;

@@ -397,6 +397,7 @@ server type(mode)	admin	en	Server Type(mode)
 server url	admin	en	Server URL
 server username	admin	en	Server Username
 set preference values.	admin	en	Set preference values.
+should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace (including function arguments)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Should the login page include a language selectbox (useful for demo-sites) ?
 show 'powered by' logo on	admin	en	Show 'powered by' logo on
 show access log	admin	en	Show access log
