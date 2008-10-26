@@ -219,7 +219,7 @@ class egw_session
 			$config->value('num_unsuccessful_ip',$GLOBALS['egw_info']['server']['num_unsuccessful_ip']);
 			$config->value('install_id',$GLOBALS['egw_info']['server']['install_id']);
 			$config->value('sessions_timeout',$GLOBALS['egw_info']['server']['sessions_timeout']);
-			$config->value('sessions_app_timeout',$GLOBALS['egw_info']['server']['sessions_app_timeout']);
+			$config->value('max_history',$GLOBALS['egw_info']['server']['max_history']);
 			$config->save_repository();
 		}
 		self::set_cookiedomain();
@@ -414,12 +414,17 @@ class egw_session
 			$this->login .= '@'.$this->account_domain;
 		}
 		$now = time();
+		//error_log(__METHOD__."($login,$passwd,$passwd_type,$no_session,$auth_check) account_lid=$this->account_lid, account_domain=$this->account_domain, default_domain={$GLOBALS['egw_info']['server']['default_domain']}, user/domain={$GLOBALS['egw_info']['user']['domain']}");
 
 		// This is to ensure that we authenticate to the correct domain (might not be default)
 		// if no domain is given we use the default domain, so we dont need to re-create everything
 		if (!$GLOBALS['egw_info']['user']['domain'] && $this->account_domain == $GLOBALS['egw_info']['server']['default_domain'])
 		{
 			$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
+		}
+		elseif (!$this->account_domain && $GLOBALS['egw_info']['user']['domain'])
+		{
+			$this->account_domain = $GLOBALS['egw_info']['user']['domain'];
 		}
 		elseif($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
@@ -1154,7 +1159,7 @@ class egw_session
 	/**
 	 * Search the instance matching the request
 	 *
-	 * @param string $login on login $_POST['login']
+	 * @param string $login on login $_POST['login'], $_SERVER['PHP_AUTH_USER'] or $_SERVER['REMOTE_USER']
 	 * @param string $domain_requested usually $_REQUEST['domain']
 	 * @param string &$default_domain usually $default_domain get's set eg. by sitemgr
 	 * @param string $server_name usually $_SERVER['SERVER_NAME']

@@ -108,8 +108,9 @@ print_debug('sane environment','messageonly','api');
 /****************************************************************************\
 * Multi-Domain support                                                       *
 \****************************************************************************/
-$GLOBALS['egw_info']['user']['domain'] = egw_session::search_instance($_POST['login'],$_REQUEST['domain'],
-	$GLOBALS['egw_info']['server']['default_domain'],$_SERVER['SERVER_NAME'],$GLOBALS['egw_domain']);
+$GLOBALS['egw_info']['user']['domain'] = egw_session::search_instance(
+	isset($_POST['login']) ? $_POST['login'] : (isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : $_SERVER['REMOTE_USER']),
+	$_REQUEST['domain'],$GLOBALS['egw_info']['server']['default_domain'],$_SERVER['SERVER_NAME'],$GLOBALS['egw_domain']);
 
 $GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_host'];
 $GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_port'];
