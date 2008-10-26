@@ -1408,9 +1408,9 @@ function egw_exception_handler(Exception $e)
 		'<pre><b>'.$e->getMessage()."</b>\n\n".
 		$e->getTraceAsString()."</pre>\n";
 
-	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session))
+	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session) && method_exists($GLOBALS['egw'],'link'))
 	{
-		'<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';
+		$message .= '<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';
 	}
 	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->framework))
 	{
