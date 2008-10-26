@@ -118,7 +118,7 @@ else
 	}
 
 	// Group perms for the default group
-	$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','preferences','home','manual'),'run',$defaultgroupid);
+	$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','filemanager','preferences','home','manual','groupdav'),'run',$defaultgroupid);
 
 	$apps = array();
 	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled < 3',__LINE__,__FILE__);
@@ -130,7 +130,7 @@ else
 	// not yet set for the default group or development only apps like (etemplate, jinn, tt's)
 	if (!$_POST['admin_all_apps'])
 	{
-		$apps = array_intersect(array('admin','emailadmin','filemanager','mydms','news_admin','phpbrain','phpsysinfo','polls','projectmanager','resources','sambaadmin','sitemgr','timesheet','wiki'),$apps);
+		$apps = array_intersect(array('admin','emailadmin','mydms','news_admin','phpbrain','phpsysinfo','polls','projectmanager','resources','sambaadmin','sitemgr','timesheet','tracker','wiki'),$apps);
 	}
 	$GLOBALS['egw_setup']->add_acl($apps,'run',$admingroupid);
 
