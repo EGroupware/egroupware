@@ -1,11 +1,11 @@
 <?php
 /**
  * eGroupWare API - Exceptions
- * 
+ *
  * This file defines as set of Exceptions used in eGroupWare.
- * 
+ *
  * Applications having the need for further exceptions should extends the from one defined in this file.
- * 
+ *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -17,10 +17,10 @@
 
 /**
  * eGroupWare API - Exceptions
- * 
+ *
  * All eGroupWare exceptions should extended this class, so we are able to eg. add some logging later.
- * 
- * The messages for most exceptions should be translated and ready to be displayed to the user. 
+ *
+ * The messages for most exceptions should be translated and ready to be displayed to the user.
  * Only exception to this are exceptions like egw_exception_assertion_fails, egw_exception_wrong_parameter
  * or egw_exception_db, which are suppost to happen only during program development.
  */
@@ -30,10 +30,10 @@ class egw_exception extends Exception
 }
 
 /**
- * Base class for all exceptions about missing permissions 
+ * Base class for all exceptions about missing permissions
  *
  */
-class egw_exception_no_permission extends egw_exception 
+class egw_exception_no_permission extends egw_exception
 {
 	/**
 	 * Constructor
@@ -44,7 +44,7 @@ class egw_exception_no_permission extends egw_exception
 	function __construct($msg=null,$code=100)
 	{
 		if (is_null($msg)) $msg = lang('Permisson denied!');
-		
+
 		parent::__construct($msg,$code);
 	}
 }
@@ -53,7 +53,7 @@ class egw_exception_no_permission extends egw_exception
  * User lacks the right to run an application
  *
  */
-class egw_exception_no_permission_app extends egw_exception_no_permission 
+class egw_exception_no_permission_app extends egw_exception_no_permission
 {
 	function __construct($msg=null,$code=101)
 	{
@@ -66,11 +66,11 @@ class egw_exception_no_permission_app extends egw_exception_no_permission
 			else
 			{
 				$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
-				$app = isset($GLOBALS['egw_info']['apps'][$currentapp]['title']) ? 
+				$app = isset($GLOBALS['egw_info']['apps'][$currentapp]['title']) ?
 					$GLOBALS['egw_info']['apps'][$currentapp]['title'] : $msg;
 
-				$msg = lang('You\'ve tried to open the eGroupWare application: %1, but you have no permission to access this application.', 
-						'<i>'.$app.'</i>');
+				$msg = lang('You\'ve tried to open the eGroupWare application: %1, but you have no permission to access this application.',
+						'"'.$app.'"');
 			}
 		}
 		parent::__construct($msg,$code);
@@ -81,12 +81,12 @@ class egw_exception_no_permission_app extends egw_exception_no_permission
  * User is no eGroupWare admin (no right to run the admin application)
  *
  */
-class egw_exception_no_permission_admin extends egw_exception_no_permission_app 
+class egw_exception_no_permission_admin extends egw_exception_no_permission_app
 {
 	function __construct($msg=null,$code=102)
 	{
 		if (is_null($msg)) $msg = 'admin';
-		
+
 		parent::__construct($msg,$code);
 	}
 }
@@ -112,7 +112,7 @@ class egw_exception_not_found extends egw_exception
 	function __construct($msg=null,$code=2)
 	{
 		if (is_null($msg)) $msg = lang('Entry not found!');
-		
+
 		parent::__construct($msg,$code);
 	}
 }
@@ -141,8 +141,8 @@ class egw_exception_wrong_userinput extends egw_exception_assertion_failed { }
  * Exceptions thrown by the egw_db class
  *
  */
-class egw_exception_db extends egw_exception 
-{ 
+class egw_exception_db extends egw_exception
+{
 	/**
 	 * Constructor
 	 *
@@ -152,9 +152,9 @@ class egw_exception_db extends egw_exception
 	function __construct($msg=null,$code=100)
 	{
 		$this->query = $query;
-		
+
 		if (is_null($msg)) $msg = lang('Database error!');
-		
+
 		parent::__construct($msg,$code);
 	}
 }
