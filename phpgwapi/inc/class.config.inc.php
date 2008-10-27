@@ -5,7 +5,7 @@
  * This allows eGroupWare to use php or database sessions
  *
  * @link www.egroupware.org
- * @author Joseph Engo <jengo@phpgroupware.org> original class Copyright (C) 2000, 2001 Joseph Engo 
+ * @author Joseph Engo <jengo@phpgroupware.org> original class Copyright (C) 2000, 2001 Joseph Engo
  * @author Ralf Becker <ralfbecker@outdoor-training.de>
  * @version $Id$
  */
@@ -32,7 +32,7 @@ class config
 	 * @var array
 	 */
 	static private $configs = array();
-	
+
 	/**
 	 * app the particular config class is instanciated for
 	 *
@@ -63,7 +63,7 @@ class config
 
 	/**
 	 * reads the whole repository for $this->appname, appname has to be set via the constructor
-	 * 
+	 *
 	 * You can also use the static config::read($app) method, without instanciating the class.
 	 *
 	 * @return array the whole config-array for that app
@@ -71,9 +71,9 @@ class config
 	function read_repository()
 	{
 		$this->config_data = self::read($this->appname);
-		
+
 		//echo __CLASS__.'::'.__METHOD__."() this->appname=$this->appname\n"; _debug_array($this->config_data);
-		
+
 		return $this->config_data;
 	}
 
@@ -114,7 +114,7 @@ class config
 	 * updates or insert a single config-value direct into the database
 	 *
 	 * Can be used static, if $app given!
-	 * 
+	 *
 	 * @param string $name name of the config-value
 	 * @param mixed $value content, empty or null values are not saved, but deleted
 	 * @param string $app=null app-name, defaults to $this->appname set via the constructor
@@ -149,7 +149,7 @@ class config
 		{
 			self::init_db();
 		}
-		if (empty($value))
+		if (!isset($value) || $value === '')
 		{
 			if (isset(self::$configs[$app])) unset(self::$configs[$app][$name]);
 			return self::$db->delete(config::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
@@ -192,10 +192,10 @@ class config
 	{
 		$this->config_data[$variable_name] = $variable_data;
 	}
-	
+
 	/**
 	 * Reads the configuration for an applications
-	 * 
+	 *
 	 * Does some caching to not read it twice (in the same request)
 	 *
 	 * @param string $app
@@ -204,7 +204,7 @@ class config
 	static function read($app)
 	{
 		$config =& self::$configs[$app];
-		
+
 		if (!isset($config))
 		{
 			if (!is_object(self::$db))
@@ -218,17 +218,17 @@ class config
 				$value = $row['config_value'];
 
 				$test = @unserialize($value);
-				
+
 				$config[$name] = is_array($test) ? $test : $value;
 			}
 		}
 		return $config;
 	}
-	
+
 	/**
 	 * get customfield array of an application
 	 *
-	 * @param string $app 
+	 * @param string $app
 	 * @param boolean $all_private_too=false should all the private fields be returned too, default no
 	 * @return array with customfields
 	 */
@@ -236,7 +236,7 @@ class config
 	{
 		$config = self::read($app);
 		$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
-		
+
 		$cfs = is_array($config[$config_name]) ? $config[$config_name] : array();
 
 		if (!$all_private_too)
@@ -261,7 +261,7 @@ class config
 	private static function _check_private_cf($private)
 	{
 		static $user_and_memberships;
-		
+
 		if (!$private)
 		{
 			return true;
@@ -275,11 +275,11 @@ class config
 
 		return (boolean) array_intersect($private,$user_and_memberships);
 	}
-	
+
 	/**
 	 * get_content_types of using application
 	 *
-	 * @param string $app 
+	 * @param string $app
 	 * @return array with content-types
 	 */
 	static function get_content_types($app)
@@ -291,7 +291,7 @@ class config
 
 	/**
 	 * Initialise our db
-	 * 
+	 *
 	 * We use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!
 	 *
 	 */
