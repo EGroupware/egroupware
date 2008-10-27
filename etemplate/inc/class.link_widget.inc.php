@@ -463,10 +463,10 @@ class link_widget
 					$tmpl->set_validation_error($name,lang('Field must not be empty !!!'),'');
 					return true;
 				}
-				if (isset($extension_data['default']))
+				if (is_array($extension_data['default']))
 				{
 					$value = $extension_data['default'];
-					$value['current']=$value_in['app'].':'.$value_in['id'];
+					$value['current'] = $extension_data['app'] ? $value_in['id'] : $value_in['app'].':'.$value_in['id'];
 				}
 				else
 				{
