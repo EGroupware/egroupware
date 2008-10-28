@@ -55,7 +55,7 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd mkdir [-p|--parents] URL [URL2 ...]\n";
 	echo "\t$cmd rmdir URL [URL2 ...]\n";
 	echo "\t$cmd touch [-r|--recursive] [-d|--date time] URL [URL2 ...]\n";
-	echo "\t$cmd chmod [-r|--recursive] mode=[ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
+	echo "\t$cmd chmod [-r|--recursive] [ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
 	echo "\t$cmd chown [-r|--recursive] user URL [URL2 ...]\n";
 	echo "\t$cmd chgrp [-r|--recursive] group URL [URL2 ...]\n";
 	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n) [-limit N[,n]][-order (name|size|...)][-sort (ASC|DESC)]\n";
