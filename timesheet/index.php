@@ -5,12 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
-include_once('setup/setup.inc.php');
+include_once('./setup/setup.inc.php');
 $ts_version = $setup_info[TIMESHEET_APP]['version'];
 unset($setup_info);
 
