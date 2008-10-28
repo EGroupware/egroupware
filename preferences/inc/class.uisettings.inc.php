@@ -28,7 +28,7 @@
 			{
 				/* Don't use a global variable for this ... */
 				define('HAS_ADMIN_RIGHTS',1);
-				
+
 				if ((int) $_GET['account_id'])
 				{
 					$GLOBALS['egw']->preferences->account_id = (int) $_GET['account_id'];
@@ -37,14 +37,14 @@
 			}
 		}
 
-	
+
 		/**
 		 * add nation ACL tab to Admin >> Edit user
 		 */
 		function edit_user()
 		{
 			global $menuData;
-	
+
 			$menuData[] = array(
 				'description'   => 'Preferences',
 				'url'           => '/index.php',
@@ -119,7 +119,7 @@
 			{
 				$GLOBALS['type'] = 'user';
 			}
-			$this->show_help = $this->bo->session_data['show_help'] != '' && $this->bo->session_data['appname'] == $_GET['appname']
+			$this->show_help = isset($this->bo->session_data['show_help']) && $this->bo->session_data['appname'] == $_GET['appname']
 				? $this->bo->session_data['show_help']
 				: (int)$GLOBALS['egw_info']['user']['preferences']['common']['show_help'];
 
@@ -150,7 +150,7 @@
 				{
 					$error = $this->bo->process_array($GLOBALS['egw']->preferences->forced, $forced,$this->bo->session_data['notifies'],$GLOBALS['type']);
 				}
-				
+
 				if (is_array($error)) $error = false;	// process_array returns the prefs-array on success
 
 				if(!$this->is_admin() || $error)
