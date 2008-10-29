@@ -1,7 +1,19 @@
 <?php
+/**
+ * eGroupWare SyncML
+ *
+ * @link http://www.egroupware.org
+ * @author Lars Kneschke
+ * @package syncml
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 include_once dirname(__FILE__).'/State.php';
 
+/**
+ * The EGW_SyncML_State class provides a SyncML state object.
+ */
 class EGW_SyncML_State extends Horde_SyncML_State
 {
 	var $table_devinfo	= 'egw_syncmldevinfo';
@@ -20,27 +32,17 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	$mapID = $this->_locName . $this->_sourceURI . $type;
 
-    	$db = clone($GLOBALS['egw']->db);
-
-    	$cols = array('map_timestamp');
-
-    	$where = array
-    	(
-    		'map_id'	=> $mapID,
-    		'map_guid'	=> $guid,
-    	);
-
     	#Horde::logMessage('SyncML: getChangeTS for ' . $mapID .' / '. $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-    	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
-    	if($db->next_record())
-    	{
-    		#Horde::logMessage('SyncML: getChangeTS changets is ' . $db->from_timestamp($db->f('map_timestamp')), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    		return $db->from_timestamp($db->f('map_timestamp'));
-    	}
-
-    	return false;
+    	if ($ts = $GLOBALS['egw']->db->select('egw_contentmap', 'map_timestamp', array(
+    		'map_id'	=> $mapID,
+    		'map_guid'	=> $guid,
+    	), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle())
+	    {
+    		#Horde::logMessage('SyncML: getChangeTS changets is ' . $GLOBALS['egw']->db->from_timestamp($ts), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			return $GLOBALS['egw']->db->from_timestamp($ts);
+	    }
+     	return false;
     }
 
 	/**
@@ -50,23 +52,13 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	*
 	* a array containing all available infos about the device
 	*/
-	function getClientDeviceInfo() {
-		$db = clone($GLOBALS['egw']->db);
-
-		$cols = array(
-			'owner_devid',
-		);
-
-		$where = array (
+	function getClientDeviceInfo()
+	{
+		if(($deviceID = $GLOBALS['egw']->db->select('egw_syncmldeviceowner', 'owner_devid',array (
 			'owner_locname'		=> $this->_locName,
 			'owner_deviceid'	=> $this->_sourceURI,
-		);
-
-		$db->select('egw_syncmldeviceowner', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
-		if($db->next_record()) {
-			$deviceID = $db->f('owner_devid');
-
+		), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
+		{
 			$cols = array(
 				'dev_dtdversion',
 				'dev_numberofchanges',
@@ -86,25 +78,22 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				'dev_id'	=> $deviceID,
 			);
 
-			$db->select('egw_syncmldevinfo', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
-			if($db->next_record()) {
-				$devInfo = array (
-					'DTDVersion'			=> $db->f('dev_dtdversion'),
-					'supportNumberOfChanges'	=> $db->f('dev_numberofchanges'),
-					'supportLargeObjs'		=> $db->f('dev_largeobjs'),
-					'UTC'				=> $db->f('dev_utc'),
-					'softwareVersion'		=> $db->f('dev_swversion'),
-					'hardwareVersion'		=> $db->f('dev_hwversion'),
-					'firmwareVersion'		=> $db->f('dev_fwversion'),
-					'oem'				=> $db->f('dev_oem'),
-					'model'				=> $db->f('dev_model'),
-					'manufacturer'			=> $db->f('dev_manufacturer'),
-					'deviceType'			=> $db->f('dev_devicetype'),
-					'dataStore'			=> unserialize($db->f('dev_datastore')),
+			if (($row = $GLOBALS['egw']->db->select('egw_syncmldevinfo', $cols, $where, __LINE__, __FILE__, false, '', 'syncml')->fetch()))
+			{
+				return array (
+					'DTDVersion'			=> $row['dev_dtdversion'],
+					'supportNumberOfChanges'=> $row['dev_numberofchanges'],
+					'supportLargeObjs'		=> $row['dev_largeobjs'],
+					'UTC'					=> $row['dev_utc'],
+					'softwareVersion'		=> $row['dev_swversion'],
+					'hardwareVersion'		=> $row['dev_hwversion'],
+					'firmwareVersion'		=> $row['dev_fwversion'],
+					'oem'					=> $row['dev_oem'],
+					'model'					=> $row['dev_model'],
+					'manufacturer'			=> $row['dev_manufacturer'],
+					'deviceType'			=> $row['dev_devicetype'],
+					'dataStore'				=> unserialize($row['dev_datastore']),
 				);
-
-				return $devInfo;
 			}
 		}
 
@@ -118,25 +107,15 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	{
 		$mapID = $this->_locName . $this->_sourceURI . $type;
 
-		$db = clone($GLOBALS['egw']->db);
-
-    	$cols = array('map_guid');
-
-    	$where = array
-    	(
-    		'map_id'	=> $mapID,
-    		'map_expired'	=> 0,
-    	);
-
-    	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
     	$guids = array();
-    	while($db->next_record())
+    	foreach($GLOBALS['egw']->db->select('egw_contentmap', 'map_guid', array(
+    		'map_id'		=> $mapID,
+    		'map_expired'	=> 0,
+    	), __LINE__, __FILE__, false, '', 'syncml') as $row)
     	{
-    		$guids[] = $db->f('map_guid');
+    		$guids[] = $row['map_guid'];
     	}
-
-    	return empty($guids) ? false : $guids;
+    	return $guids ? $guids : false;
 	}
 
     /**
@@ -152,25 +131,11 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
     	#Horde::logMessage('SyncML: search GlobalUID for  ' . $mapID .' / '.$locid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-    	$db = clone($GLOBALS['egw']->db);
-
-    	$cols = array('map_guid');
-
-    	$where = array
-    	(
-    		'map_id'	=> $mapID,
+     	return $GLOBALS['egw']->db->select('egw_contentmap', 'map_guid', array(
+    		'map_id'		=> $mapID,
     		'map_locuid'	=> $locid,
     		'map_expired'	=> 0,
-    	);
-
-    	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
-    	if($db->next_record())
-    	{
-    		return $db->f('map_guid');
-    	}
-
-    	return false;
+    	), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle();
     }
 
     /**
@@ -183,25 +148,16 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	$mapID = $this->_locName . $this->_sourceURI . $type;
 
-    	$db = clone($GLOBALS['egw']->db);
+    	Horde::logMessage('SyncML: search LocID for  ' . $mapID .' / '.$guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-    	$cols = array('map_locuid');
-
-    	$where = array
-    	(
+    	if (($locuid = $GLOBALS['egw']->db->select('egw_contentmap', 'map_locuid', array(
     		'map_id'	=> $mapID,
     		'map_guid'	=> $guid
-    	);
-    	Horde::logMessage('SyncML: search LocID for  ' . $mapID .' / '.$guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
-    	if($db->next_record())
+    	), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
     	{
-    		Horde::logMessage('SyncML: found LocID: '.$db->f('map_locuid'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    		return $db->f('map_locuid');
+	   		Horde::logMessage('SyncML: found LocID: '.$locuid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	}
-
-    	return false;
+    	return $locuid;
     }
 
     /**
@@ -214,34 +170,22 @@ class EGW_SyncML_State extends Horde_SyncML_State
      */
     function getSyncSummary($type)
     {
-	$deviceID = $this->_locName . $this->_sourceURI;
+		$deviceID = $this->_locName . $this->_sourceURI;
 
-    	$db = clone($GLOBALS['egw']->db);
+		#Horde::logMessage("SyncML: get SYNCSummary for $deviceID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-    	$cols = array('sync_serverts','sync_clientts');
-
-    	$where = array
-    	(
+    	if (($row = $GLOBALS['egw']->db->select('egw_syncmlsummary', array('sync_serverts','sync_clientts'), array(
     		'dev_id'	=> $deviceID,
     		'sync_path'	=> $type
-    	);
-
-    	$db->select('egw_syncmlsummary', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
-	#Horde::logMessage("SyncML: get SYNCSummary for $deviceID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    	if($db->next_record())
+    	), __LINE__, __FILE__, false, '', 'syncml')->fetch()))
     	{
-		#Horde::logMessage("SyncML: get SYNCSummary for $deviceID serverts: ".$db->f('sync_serverts')."  clients: ".$db->f('sync_clientts'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    		$retData = array
-    		(
-    			'ClientAnchor'	=> $db->f('sync_clientts'),
-    			'ServerAnchor'	=> $db->f('sync_serverts'),
+			#Horde::logMessage("SyncML: get SYNCSummary for $deviceID serverts: ".$row['sync_serverts']."  clients: ".$row['sync_clientts'], __FILE__, __LINE__, PEAR_LOG_DEBUG);
+    		return array(
+    			'ClientAnchor'	=> $row['sync_clientts'],
+    			'ServerAnchor'	=> $row['sync_serverts'],
     		);
-    		return $retData;
     	}
-
     	return false;
-
     }
 
 	function isAuthorized()
@@ -298,17 +242,9 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	{
 		$mapID = $this->_locName . $this->_sourceURI . $type;
 
-		$db = clone($GLOBALS['egw']->db);
-
-		$cols = array('map_guid');
-
-		$where = array (
-			'map_id'	=> $mapID
-		);
-
 		Horde::logMessage("SyncML: state->removeAllUID(type=$type)", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-		$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
+		$GLOBALS['egw']->db->delete('egw_contentmap', array('map_id' => $mapID), __LINE__, __FILE__, 'syncml');
 
 		return true;
 	}
@@ -322,27 +258,20 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	{
 		$mapID = $this->_locName . $this->_sourceURI . $type;
 
-		$db = clone($GLOBALS['egw']->db);
-
-		$cols = array('map_guid');
-
 		$where = array (
 			'map_id'	=> $mapID,
 			'map_locuid'	=> $locid
 		);
 
-		$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
-
-		if(!$db->next_record()) {
+		if (!($guid = $GLOBALS['egw']->db->select('egw_contentmap', 'map_guid', $where, __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
+		{
 			Horde::logMessage("SyncML: state->removeUID(type=$type,locid=$locid) : nothing to remove", __FILE__, __LINE__, PEAR_LOG_INFO);
 			return false;
 		}
 
-		$guid = $db->f('map_guid');
-
 		Horde::logMessage("SyncML:  state->removeUID(type=$type,locid=$locid) : removing guid:$guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-		$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
+		$GLOBALS['egw']->db->delete('egw_contentmap', $where, __LINE__, __FILE__, 'syncml');
 
 		return $guid;
 	}
@@ -370,19 +299,17 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	// problem: entries created from client, come here with the (long) server guid,
     	// but getUIDMapping does not know them and can not map server-guid <--> client guid
     	$guid = $this->getUIDMapping($_guid);
-    	if($guid === false) {
+    	if($guid === false)
+    	{
     	    Horde::logMessage("SyncML: setUID $type, $locid, $guid something went wrong!!! Mapping not found.", __FILE__, __LINE__, PEAR_LOG_INFO);
     	    $guid = $_guid;
     	    //return false;
     	}
     	Horde::logMessage("SyncML: setUID $_guid => $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    	if($ts == 0) {
-    		$ts = time();
-    	}
 
-	Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+    	if(!$ts) $ts = time();
 
-    	$db = clone($GLOBALS['egw']->db);
+		Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
     	$mapID = $this->_locName . $this->_sourceURI . $type;
 
@@ -391,52 +318,47 @@ class EGW_SyncML_State extends Horde_SyncML_State
     		'map_id'	=> $mapID,
     		'map_locuid'	=> $locid,
     	);
-    	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
+    	$GLOBALS['egw']->db->delete('egw_contentmap', $where, __LINE__, __FILE__, 'syncml');
 
     	// delete all egw id's
     	$where = array(
     		'map_id'	=> $mapID,
     		'map_guid'	=> $guid,
     	);
-    	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
+    	$GLOBALS['egw']->db->delete('egw_contentmap', $where, __LINE__, __FILE__, 'syncml');
 
     	$data = $where + array(
     		'map_locuid'	=> $locid,
     		'map_timestamp'	=> $ts,
     		'map_expired'	=> 0,
     	);
-    	$db->insert('egw_contentmap', $data, $where, __LINE__, __FILE__, 'syncml');
+    	$GLOBALS['egw']->db->insert('egw_contentmap', $data, $where, __LINE__, __FILE__, 'syncml');
 
-	#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts $mapID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
+		#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts $mapID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
     }
 
 	/**
 	* writes clients deviceinfo into database
 	*/
-	function writeClientDeviceInfo() {
-		if (!isset($this->_clientDeviceInfo) || !is_array($this->_clientDeviceInfo)) {
+	function writeClientDeviceInfo()
+	{
+		if (!isset($this->_clientDeviceInfo) || !is_array($this->_clientDeviceInfo))
+		{
 			return false;
 		}
 
-		$db = clone($GLOBALS['egw']->db);
-		$db->set_app('syncml');
-
-		if(!isset($this->size_dev_hwversion)) {
+		if(!isset($this->size_dev_hwversion))
+		{
 			$tableDefDevInfo = $db->get_table_definitions('',$this->table_devinfo);
 			$this->size_dev_hwversion = $tableDefDevInfo['fd']['dev_hwversion']['precision'];
 			unset($tableDefDevInfo);
 		}
 
-		$cols = array(
-			'dev_id',
-		);
-
 		$softwareVersion = !empty($this->_clientDeviceInfo['softwareVersion']) ? $this->_clientDeviceInfo['softwareVersion'] : '';
 		$hardwareVersion = !empty($this->_clientDeviceInfo['hardwareVersion']) ? substr($this->_clientDeviceInfo['hardwareVersion'], 0, $this->size_dev_hwversion) : '';
 		$firmwareVersion = !empty($this->_clientDeviceInfo['firmwareVersion']) ? $this->_clientDeviceInfo['firmwareVersion'] : '';
 
-		$where = array (
+		$where = array(
 			'dev_model'		=> $this->_clientDeviceInfo['model'],
 			'dev_manufacturer'	=> $this->_clientDeviceInfo['manufacturer'],
 			'dev_swversion'		=> $softwareVersion,
@@ -444,17 +366,15 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			'dev_fwversion'		=> $firmwareVersion,
 		);
 
-		$db->select('egw_syncmldevinfo', $cols, $where, __LINE__, __FILE__, false);
-
-		if($db->next_record()) {
-			$deviceID = $db->f('dev_id');
-
+		if (($deviceID = $GLOBALS['egw']->db->select('egw_syncmldevinfo', 'dev_id', $where, __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
+		{
 			$data = array (
 				'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),
 			);
-			$db->update('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__);
-
-		} else {
+			$GLOBALS['egw']->db->update('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__, 'syncml');
+		}
+		else
+		{
 			$data = array (
 				'dev_dtdversion' 	=> $this->_clientDeviceInfo['DTDVersion'],
 				'dev_numberofchanges'	=> $this->_clientDeviceInfo['supportNumberOfChanges'] ? true : false,
@@ -469,9 +389,9 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				'dev_devicetype'	=> $this->_clientDeviceInfo['deviceType'],
 				'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),
 			);
-			$db->insert('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__);
+			$GLOBALS['egw']->db->insert('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__, 'syncml');
 
-			$deviceID = $db->get_last_insert_id('egw_syncmldevinfo', 'dev_id');
+			$deviceID = $GLOBALS['egw']->db->get_last_insert_id('egw_syncmldevinfo', 'dev_id');
 		}
 
 		$data = array (
@@ -479,13 +399,11 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			'owner_deviceid'	=> $this->_sourceURI,
 			'owner_devid'		=> $deviceID,
 		);
-
 		$where = array (
 			'owner_locname'		=> $this->_locName,
 			'owner_deviceid'	=> $this->_sourceURI,
 		);
-
-		$db->insert('egw_syncmldeviceowner', $data, $where, __LINE__, __FILE__);
+		$GLOBALS['egw']->db->insert('egw_syncmldeviceowner', $data, $where, __LINE__, __FILE__, 'syncml');
 	}
 
     /**
@@ -497,7 +415,8 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	#parent::writeSyncSummary();
 
-        if (!isset($this->_serverAnchorNext) || !is_array($this->_serverAnchorNext)) {
+        if (!isset($this->_serverAnchorNext) || !is_array($this->_serverAnchorNext))
+        {
             return;
         }
 
@@ -505,16 +424,14 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
         foreach((array)$this->_serverAnchorNext as $type => $a)
         {
-		Horde::logMessage("SyncML: write SYNCSummary for $deviceID $type serverts: $a clients: ".$this->_clientAnchorNext[$type], __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			Horde::logMessage("SyncML: write SYNCSummary for $deviceID $type serverts: $a clients: ".$this->_clientAnchorNext[$type], __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-        	$where = array
-        	(
+        	$where = array(
         		'dev_id'	=> $deviceID,
         		'sync_path'	=> $type,
         	);
 
-        	$data  = $where + array
-        	(
+        	$data  = array(
         		'sync_serverts' => $a,
         		'sync_clientts' => $this->_clientAnchorNext[$type]
         	);
@@ -522,8 +439,4 @@ class EGW_SyncML_State extends Horde_SyncML_State
         	$GLOBALS['egw']->db->insert('egw_syncmlsummary', $data, $where, __LINE__, __FILE__, 'syncml');
         }
     }
-
-
 }
-
-?>
