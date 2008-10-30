@@ -349,7 +349,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 		if(!isset($this->size_dev_hwversion))
 		{
-			$tableDefDevInfo = $db->get_table_definitions('',$this->table_devinfo);
+			$tableDefDevInfo = $GLOBALS['egw']->db->get_table_definitions('syncml',$this->table_devinfo);
 			$this->size_dev_hwversion = $tableDefDevInfo['fd']['dev_hwversion']['precision'];
 			unset($tableDefDevInfo);
 		}
