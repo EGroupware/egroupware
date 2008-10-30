@@ -22,7 +22,7 @@ class admin_cmd_change_account_id extends admin_cmd
 	 */
 	function __construct(array $change)
 	{
-		if (!is_set($change['change']))
+		if (!isset($change['change']))
 		{
 			$change = array(
 				'change' => $change,
