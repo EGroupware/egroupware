@@ -370,6 +370,7 @@ liberia	common	bg	Либерия
 libyan arab jamahiriya	common	bg	Либийска Арабска Джамахирия
 license	common	bg	Лиценз
 liechtenstein	common	bg	Лихтенщайн
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
 list	common	bg	Списък
 list members	common	bg	Списък с членове
@@ -655,7 +656,7 @@ time	common	bg	Време
 time selection:	jscalendar	bg	Избор на време:
 time zone	common	bg	Часови пояс
 time zone offset	common	bg	Отместване на часовия пояс
-title	common	bg	Титла
+title	common	bg	Заглавие
 to	common	bg	До
 to correct this error for the future you will need to properly set the	common	bg	За да отстраните тази грешка е необходимо правилно да настроите
 to go back to the msg list, click <a href= %1 >here</a>	common	bg	За връщане към списъка със съобщения, натиснете <a href="%1">тук</a>
