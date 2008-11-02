@@ -932,7 +932,7 @@ class addressbook_ui extends addressbook_bo
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields exist
 			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
-			$available_distib_lists=$this->get_lists(EGW_ACL_EDIT);
+			$available_distib_lists=$this->get_lists(EGW_ACL_READ);
 			$columselection = $columselection ? explode(',',$columselection) : array();
 			if (!$id_only && $rows)
 			{
