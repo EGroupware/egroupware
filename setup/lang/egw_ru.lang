@@ -1,10 +1,12 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	ru	%1 '%2' НЕ СУЩЕСТВУЕТ, не может быть прочитан веб-сервером или не содержит установленного eGroupWare!
 %1 already exists in %2.	setup	ru	%1 уже имеется в %2
 %1 created in %2.	setup	ru	%1 создан в %2
+%1 database %2 on %3 already contains the following tables:	setup	ru	%1 база данных %2 yf %3 уже содержит следующие таблицы:
 %1 does not exist !!!	setup	ru	%1 не  существует !!!
 %1 is %2%3 !!!	setup	ru	%1 это %2%3 !!!
 %1 is needed by: %2.	setup	ru	%1 нужен для: %2.
 %1, %2 or %3 the configuration file.	setup	ru	%1, %2 или %3 файл конфигурации
+'%1' is no valid domain name!	setup	ru	'%1' - неправильное имя домена!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	ru	'%1' недопустим как %2. аргумены операции %3 !!!
 (searching accounts and changing passwords)	setup	ru	(поиск акаунтов и смена паролей)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ru	*** НЕ обновляйте базу данных с помощью модуля установки, так-как обновление может быть прервано в связи с исчерпанием максимального времени запуска, что приведет вышу БД в невосстаноимое состояние (все данные будут утеряны) !!!
@@ -71,6 +73,7 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ru	По вашему требованию, этот скрипт собирается попытаться совершить болезненную операцию по удалению всех ваших приложений, уничтожающую все существующие таблицы и данные
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ru	Пытаться использовать корректный тип MIME для FTP вместо используемого обычно 'application/octet-stream'
 authentication / accounts	setup	ru	Авторизация / Учетные записи
+authentication type for application	setup	ru	Тип авторизации для приложения
 auto create account records for authenticated users	setup	ru	Автоматическое создание учетных записей для идентифицированных пользователей
 auto login anonymous user	setup	ru	Автоматический вход анонимных пользователей
 auto-created user accounts expire	setup	ru	Автоматически созданные учетные записи истекают
@@ -99,6 +102,10 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	ru	в связи с тем, что флаг включения этого приложения установлен в 0 либо не установлен вовсе
 bottom	setup	ru	низ
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	ru	но мы<u>крайне рекомендуем сделать резервную копию</u>ваших таблиц на случай если скрипт повредит ваши данные.<br /><strong>Этот автоматческий сценарий может с легкостью уничтожить все ваши данные.</strong>
+can not connect to %1 database %2 on host %3 using user %4!	setup	ru	Невозможно соединиться с %1 базой данных %2 на компьютере %3, используя пользователя %4!
+can not connect to ldap server on host %1 using dn %2!	setup	ru	Невозможно соединиться с сервером LDAP на компьютере %1, используя DN %2!
+can not create %1 database %2 on %3 for user %4!	setup	ru	Невозможно создать %1 базу данных %2 на %3 для пользователя %4!
+can not create dn %1!	setup	ru	Невозможно создать DN %1!
 cancel	setup	ru	Отменить
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	ru	Нет возможности создать header.inc.php в связи с ограничением доступа.<br />Взамен вы можете %1 или %2 файл.
 change system-charset	setup	ru	Изменить кодировку
@@ -275,6 +282,7 @@ hour (0-24)	setup	ru	часы (0-24)
 however the tables are still in the database	setup	ru	Однако таблицы все еще в базе данных
 however, the application is otherwise installed	setup	ru	Однако, приложение установлено
 however, the application may still work	setup	ru	однако, приложение может все-еще работать
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	ru	Типы авторизации HTTP (разделенные запятыми) для использования без страницы логина, напр. "NTLM"
 if no acl records for user or any group the user is a member of	setup	ru	Если нет записей ACL для пользователя или группы, пользователь входит в
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ru	Если безопасный режим включен, у eGW нет возможностии менять некоторые настройки при запуске так же как и нет возможности запускать любые еще не загруженные модули.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ru	Если приложение не имеет заранее определенных таблиц, выбор модернизации скорее всего вызовет ряд проблем
@@ -300,6 +308,7 @@ installation finished	setup	ru	Установк завершена
 installation started, this might take a few minutes ...	setup	ru	Установка запущена, может занять несколько минут ...
 installed	setup	ru	установлено
 instructions for creating the database in %1:	setup	ru	Инструкции по созданию базы данных в %1
+invalid argument '%1' !!!	setup	ru	Неправильный аргумент '%1' !!!
 invalid ip address	setup	ru	Неверный ipадрес
 invalid mcrypt algorithm/mode combination	setup	ru	Неверный Mcrypt Algorithm/комбинация типов
 invalid password	setup	ru	Неправильный пароль
@@ -375,6 +384,7 @@ not completed	setup	ru	Не Завершено
 not ready for this stage yet	setup	ru	Еще нет готовности к этой стадии
 not set	setup	ru	не установлено
 note: you will be able to customize this later	setup	ru	К сведению: У вас будет возможность настроить это позже
+nothing to change.	setup	ru	Нечего менять.
 now guessing better values for defaults...	setup	ru	А сейчас попробуем угадать наилучшие величины значений по умолчанию...
 odbc / maxdb: dsn (data source name) to use	setup	ru	ODBC / MaxDB: DSN (data source name - название источника данных) для использования
 ok	setup	ru	ОК
@@ -495,6 +505,7 @@ sources deleted/missing	setup	ru	Исходники удалены/отсутс�
 sql encryption type	setup	ru	Тип шифрования SQL Для пароля (по умолчанию - md5)
 standard (login-name identical to egroupware user-name)	setup	ru	стандарт (имя входа идентично имени пользователя eGroupWare
 standard mailserver settings (used for mail authentication too)	setup	ru	Стандартные настройки сервера почты (используются также для авторизации в почте)
+standard, as defined above	setup	ru	Стандарт, как определено выше
 start the postmaster	setup	ru	Запуск постмастера
 start updating languages %1 ...	setup	ru	Запуск обновления языков %1 ...
 start updating the database ...	setup	ru	Запуск обновления базы данных ...
@@ -506,6 +517,11 @@ step %1 - db backup and restore	setup	ru	Шаг %1 - Сохранение и в�
 step %1 - language management	setup	ru	Шаг %1 - Управление Переводами
 step %1 - simple application management	setup	ru	Шаг %1 - Простое Управление Приложениями
 succesfully uploaded file %1	setup	ru	успешно опубликован файл %1
+successful connected to %1 database %2 on %3 using user %4.	setup	ru	Успешное соединение с %1 базой данных %2 на %3 используя пользователя %4.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	ru	Успешное соединение с %1 на %3 и создание базы данных %2 для пользователя %4.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	ru	Успешное соединение с сервером LDAP на %1 и создание/проверка требуемой структуры %2.
+successful connected to ldap server on %1 using dn %2.	setup	ru	Успешное соединение с сервером LDAP на %1 используя DN %2.
+supported node types:	setup	ru	Поддерживаемые типы узлов:
 table change messages	setup	ru	Сообщения об Изменении Таблиц
 tables dropped	setup	ru	таблицы очищены
 tables installed, unless there are errors printed above	setup	ru	таблицы установлены, за исключением тех, что в ошибках указанных выше
@@ -518,6 +534,7 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	ru	Если 
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ru	Тип БД по умолчанию (%1) не поддерживается на этом сервере. Используем первый поддерживаемый тип.
 the file	setup	ru	файл
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ru	Первый шаг при установке eGroupWare заключается в проверке окружения на наличие корректно выставленных параметров и необходимых настроек для запуска приложения.
+the following applications are not installed:	setup	ru	Следующие приложения НЕ установлены:
 the following applications need to be upgraded:	setup	ru	Следующие приложения следует обновить:
 the function %1 is needed from: %2.	setup	ru	%2 нуждается в функции %1
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	ru	Функция создания изображения из jpeg предоставляется расширением GD (собранным с поддержкой jpeg). Они необходимы для публикации фотографий в контактах.
@@ -597,6 +614,7 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	ru	Желаете ли вы показывать статус обновления каждого приложения?
 writable by the webserver	setup	ru	Веб сервер может записывать
 write	setup	ru	Запись
+wrong credentials to access the header.inc.php file!	setup	ru	Неправильные права для доступа к файлу header.inc.php!
 year	setup	ru	год
 yes	setup	ru	Да
 yes, with lowercase usernames	setup	ru	Да, с именами пользователей маленькими буквами
@@ -624,6 +642,7 @@ you need to configure egroupware:	setup	ru	Вам нужно настроить 
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	ru	Вам необходимо исправить вышеуказанные ошибки, прежде чем файл настроек header.inc.php можно будет записывать!
 you need to save the settings you made here first!	setup	ru	Вам необходимо предварительно сохранить ранее сделанные настройки!
 you need to select your current charset!	setup	ru	Вы должны выбрать свою текущую кодировку!
+you need to specify a password!	setup	ru	Вы должны определить пароль!
 you should either install the sources or uninstall it, to get rid of the tables	setup	ru	Вы должны либо установить исходники, либо деинсталлировать их to get rid of the tables
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	ru	Вы должны либо деинсталлировать это а потом установить заново, либо попытаться внести исправления вручную
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	ru	У вас НЕТ возможноси войти в eGroupWare используя сеанс PHP: "сессия не может бать удостоверена"!!!

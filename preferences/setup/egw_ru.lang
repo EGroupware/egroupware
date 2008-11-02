@@ -1,3 +1,4 @@
+$label	preferences	ru	$метка
 %1 - preferences	preferences	ru	%1 Настройки
 %1 hours	preferences	ru	%1 часов
 12 hour	preferences	ru	12 часов
@@ -7,6 +8,7 @@ a theme defines the colors and fonts used by the template.	preferences	ru	Тем
 acl grants have been updated	preferences	ru	разрешения ACL обновлены
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ru	Любой список eGroupWare будет показывать вам это количество записей или строк на  странице.<br> Слишком большое количество может замедлить обновление страницы, слишком малое приведет к увеличенным затратам всего списка.
 are you sure you want to delete this category ?	preferences	ru	Вы уверены, что хотите удалить данную категорию?
+br	preferences	ru	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ru	Изменяет пароль пользователя при введении прежнего и нового пароля. Возвращает TRUE при успешном изменении, FALSE - пароль не изменен.
 change your password	preferences	ru	Изменить Ваш Пароль
 change your profile	preferences	ru	Изменить ваш профиль
@@ -19,10 +21,15 @@ date format	preferences	ru	Формат даты
 default	preferences	ru	по умолчанию
 default application	preferences	ru	Приложение по умолчанию
 default preferences	preferences	ru	Настройки по умолчанию
+default theme	preferences	ru	Тема по-умолчанию
 delete categories	preferences	ru	Удалить категории
 description can not exceed 255 characters in length !	preferences	ru	Описание не должно быть более 255 символов !
+display thumbnails for linked images	addressbook	ru	Показывать миниатюры связанных изображений
+div	preferences	ru	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ru	Какой временной формат вы предпочитаете: 24 часовой или 12 часовой.
 edit custom fields	preferences	ru	Редактировать дополн. поля
+enable drag and drop functionality (experimental)	addressbook	ru	Разрешить функциональность drug-n--drop (экспериментальное)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	ru	Разрешить или запретить функции drug-n-drop во всех приложениях. Если браузер не поддерживает drug-n-drop, это будет запрещено автоматически. Эта возможность - экспериментальная на данный момент.
 enter your new password	preferences	ru	Введите новый пароль
 enter your old password	preferences	ru	введите прежний пароль
 error: there was a problem finding the preference file for %1 in %2	preferences	ru	Ошибка: проблема поиска файла параметров для %1 в %2
@@ -38,6 +45,7 @@ how should egroupware display dates for you.	preferences	ru	Как eGroupWare  �
 icon	preferences	ru	Значок
 icons and text	preferences	ru	Значки и текст
 icons only	preferences	ru	только значки
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	addressbook	ru	Изображение, связанное с записью, может быть показано в виде миниатюры. Вы можете это выключить, чтобы увеличить скорость отображения страницы.
 in which country are you. this is used to set certain defaults for you.	preferences	ru	В какой вы стране. Используется для некоторых значений по умолчанию.
 interface/template selection	preferences	ru	Выбор Интерфейса/Шаблона
 language	preferences	ru	Язык
@@ -47,13 +55,20 @@ no default	preferences	ru	Нет умолчаний
 no user-selection at all	common	ru	Нет выбора пользователя вообще
 note: this feature does *not* change your email password. this will	preferences	ru	примечание: Эта настройка *не* изменит ваш пароль на электронной почте.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ru	Примечание: Эта настройка *не* изменит ваш пароль на электронной почте.Это нужно выполнить вручную.
+office 2003 theme	preferences	ru	Тема Офис 2003
+p: paragraph	preferences	ru	p: Параграф
 please, select a new theme	preferences	ru	Пожалуйста, выбирите новую тему
 popup with search	preferences	ru	Всплывающее окна поиска
 re-enter your password	preferences	ru	Введите пароль еще раз
 read prefs for the specified application.	preferences	ru	Прочтите настройки для указанных приложений
+rich text editor enter mode	addressbook	ru	Режим входа в расширенный редактор текста
+rich text editor theme	addressbook	ru	Тема расширенного редактора текста
 select different theme	preferences	ru	Выбирите другую тему
+select how the rich text editor will generate the enter (linebreak) tag.	addressbook	ru	Выберите - как расширенный редактор текста будет генерировать тэг перевода строки.
 select one	preferences	ru	Выберите одно
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ru	Выбирите язык текстов и сообщений в eGroupWare. Некоторые языки могут не содержать все сообщения, в этом случае вы увидите сообщение на английском языке.
+select the language of the spellchecker integrated into the rich text editor.	addressbook	ru	Выберите язык проверки орфографии, втроенной в расширенный редактор текста.
+select the theme (visualization) of the rich text editor.	addressbook	ru	Выберите тему (визуализацию) расширенного редактора текста.
 selectbox	preferences	ru	Выбор
 selectbox with groupmembers	common	ru	Выбор с представителями группы
 selectbox with primary group and search	preferences	ru	Выбор с первоначальной группы и поиск
@@ -61,10 +76,13 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	ru	Показывать число активных сессий все время.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	ru	Сообщения должны быть показаны, когда происходит изменение параметров, или только по запросу
 show helpmessages by default	preferences	ru	Показывать сообщения-подсказки по умолчанию
+show links between egroupware aps as	addressbook	ru	Показывать связи между приложениями eGroupWare как
 show navigation bar as	preferences	ru	Отображать строку навигации как
 show number of current users	preferences	ru	Показывать число текущих пользователей
 show text on navigation icons	preferences	ru	Показывать текст на значках навигации
 show_more_apps	common	ru	Показывать больше приложений
+silver theme	preferences	ru	Серебряная тема
+spellchecker language	addressbook	ru	Язык проверки орфографии
 text only	preferences	ru	Только текст
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ru	Приложение по умолчанию будет запущено когда вы входите в eGroupWare или кликните на значок Домой.<br>Также вы можете иметь не одно приложение на домашней странице (Домой), если вы не выбрали здесь определенного приложения (может быть настроено в свойствах каждого приложения).
 the old password is not correct	preferences	ru	Старый пароль неверен
@@ -81,6 +99,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	ru	Какой символ валюты или название должны использоваться в eGroupWare.
 write prefs for the specified application.	preferences	ru	Введите настройки для указанного приложения.
 you can show the applications as icons only, icons with app-name or both.	preferences	ru	Вы можете показывать приложения в как виде одних значков, так и в виде значков с названиями приложений.
+you can show the linked entries with icons only, icons with app-name or both.	addressbook	ru	Вы можете показать связанные записи как только пиктограммами, пиктограммами с названиями приложений или оба.
 you do not have permission to set acl's in this mode!	preferences	ru	у вас нет прав на установку ACL в этом режиме!
 you must enter a password	preferences	ru	Вы должны ввести пароль
 your current theme is: %1	preferences	ru	ваша текущая тема: %1

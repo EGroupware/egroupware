@@ -4,6 +4,7 @@
 %1 start	common	ru	%1 запуск
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
+(session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
 (shift-)click or drag to change value	jscalendar	ru	(Shift-)Клик или перетащите для изменения значения
 - click on any of the time parts to increase it	jscalendar	ru	- Кликните на любой части времени для увеличения
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	ru	- Удерживайте клавишу мыши на любой из иконок вверху для более быстрого выбора.
@@ -12,6 +13,10 @@
 - use the %1, %2 buttons to select month	jscalendar	ru	- Используйте кнопки %1, %2 для выбора месяца
 - use the %1, %2 buttons to select year	jscalendar	ru	- Используйте кнопки %1, %2 для выбора года
 00 (disable)	admin	ru	00 (выкл)
+1 day	common	ru	1 День
+1 hour	common	ru	1 Час
+1 month	common	ru	1 Месяц
+1 week	common	ru	1 Неделя
 13 (ntp)	admin	ru	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	ru	3 первых буквы сокращения дня недели
 3 number of chars for month-shortcut	jscalendar	ru	3 буквы сокращения месяца
@@ -26,6 +31,7 @@ account has been created	common	ru	Учетная запись создана
 account has been deleted	common	ru	Учетная запись удалена
 account has been updated	common	ru	Учетная запись обновлена
 account is expired	common	ru	Учетная запись просрочена
+accounts	common	ru	Учетные записи
 acl	common	ru	ACL
 action	common	ru	Действие
 active	common	ru	Активно
@@ -45,6 +51,7 @@ all fields	common	ru	все поля
 alphabet	common	ru	а,б,в,г,д,е,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я
 alternate style-sheet:	common	ru	Альтернативная таблица стилей:
 american samoa	common	ru	Американское Самоа
+an error happend	common	ru	Произошла ошибка
 an existing and by the webserver readable directory enables the image browser and upload.	common	ru	Существующий И читаемый веб-сервером каталог разрешает просмотр картинок и выгрузку
 andorra	common	ru	Андорра
 angola	common	ru	Ангола
@@ -72,6 +79,7 @@ azerbaijan	common	ru	Азербайджан
 back	common	ru	Назад
 back to user login	common	ru	Назад на Вход пользователя
 background color:	common	ru	Цвет фона:
+backupdir '%1' is not writeable by the webserver	common	ru	веб-сервер не может записывать в  папку резервного копирования '%1'
 bad login or password	common	ru	Неправильные Имя или Пароль
 bahamas	common	ru	Багамские о-ва
 bahrain	common	ru	Бахрейн
@@ -134,8 +142,10 @@ christmas island	common	ru	О-в Рождества
 clear	common	ru	Очистить
 clear form	common	ru	Очистить Форму
 click	common	ru	Щелкнуть
+click here to resume your egroupware session.	common	ru	Щелкните здесь для восстановления вашей сессии в eGroupWare
 click or mouse over to show menus	common	ru	Кликните, или наведите мышь для показа меню
 click or mouse over to show menus?	common	ru	Кликнуть или навести мышь для показа меню?
+click this image on the navbar: %1	common	ru	Щелкните это изображение на панели навигации: %1
 close	common	ru	Закрыть
 close sidebox	common	ru	Закрыть боковую панель
 cocos (keeling) islands	common	ru	Кокосовые О-ва
@@ -160,6 +170,8 @@ current	common	ru	Текущий
 current users	common	ru	Текущие пользователи
 cyprus	common	ru	Кипр
 czech republic	common	ru	Чехия
+database error	common	ru	Ошибка Базы Данных
+database error!	common	ru	Ошибка Базы Данных!
 date	common	ru	Дата
 date due	common	ru	Дата до
 date selection:	jscalendar	ru	Выбор даты:
@@ -202,6 +214,8 @@ edit	common	ru	Редактировать
 edit %1 category for	common	ru	Редактировать %1 категорию для
 edit categories	common	ru	Редактировать Категории
 edit category	common	ru	Редактировать категорию
+egroupware	common	ru	eGroupWare
+egroupware api version	common	ru	Версия API eGroupWare
 egroupware api version %1	common	ru	eGroupWare API версии %1
 egroupware: login blocked for user '%1', ip %2	common	ru	eGroupWare: вход для пользователя '%1', IP %2 заблокирован
 egypt	common	ru	Египет
@@ -213,6 +227,7 @@ end date	common	ru	Дата окончания
 end time	common	ru	Время окончания
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера eGroupWare.<br>Например: http://www.domain.com/egroupware   или   /egroupware<br><b>Без слэша на конце</b>
 entry has been deleted sucessfully	common	ru	Запись успешно удалена
+entry not found!	common	ru	Запись не найдена!
 entry updated sucessfully	common	ru	Запись успешно обновлена
 equatorial guinea	common	ru	Экваториальная Гвинея
 eritrea	common	ru	Эритрея
@@ -242,6 +257,7 @@ firstname	common	ru	Имя
 fixme!	common	ru	Исправить!
 folder already exists.	common	ru	Каталог уже существует.
 force selectbox	common	ru	Принудительно Список выбора
+forever	common	ru	Навсегда
 france	common	ru	Франция
 french guiana	common	ru	Французская Гвиана
 french polynesia	common	ru	Французская Полинезия
@@ -293,6 +309,7 @@ home email	common	ru	домашняя почта
 honduras	common	ru	Гондурас
 hong kong	common	ru	Гонконг
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ru	Сколько пиктограмм будет показываться на верхней панели. Дополнительные пиктограммы будут объединены в выпадающее меню, вызываемое пиктограммой в правом углу панели навигации.
+how to show the general egroupware menu ?	common	ru	Как показывать главное меню eGroupWare?
 hungary	common	ru	Венгрия
 iceland	common	ru	Исландия
 iespell not detected. click ok to go to download page.	common	ru	Словарь ieSpell не найден. Нажмите ОК для перехода на страницу загрузки.
@@ -362,6 +379,8 @@ local	common	ru	Локальный
 login	common	ru	Вход
 loginid	common	ru	LoginID
 logout	common	ru	Выход
+lost login id	common	ru	Идентификатор (ID) утерянного имени входа
+lost password	common	ru	Утерянный пароль
 low	common	ru	Нижний
 lowest	common	ru	Низший
 luxembourg	common	ru	Люксембург
@@ -432,9 +451,13 @@ norfolk island	common	ru	О-в Норфолк
 normal	common	ru	Нормальный
 northern mariana islands	common	ru	Северные Марианские острова
 norway	common	ru	Норвегия
+not	common	ru	не
+not a user yet? register now	common	ru	Еще не пользователь? Зарегистрируйтесь сейчас
 not assigned	common	ru	не назначено
+not readable %1 entry of user %2	common	ru	Запись %1 не может быть прочитана пользователем %2
 note	common	ru	Заметка
 notes	common	ru	Заметки
+notifications	common	ru	уведомления
 notify window	common	ru	Окно извещения
 notify your administrator to correct this situation	common	ru	Свяжитесь с Вашеим системным администратором для исправления этой ситуации.
 november	common	ru	Ноябрь
@@ -446,6 +469,7 @@ on *nix systems please type: %1	common	ru	В xNIX-системах пожалу�
 on mouse over	common	ru	При наведенном курсоре
 only private	common	ru	только личные
 only yours	common	ru	только Ваши
+oops! you caught us in the middle of system maintainance.	common	ru	Опс! Вы застукали нас прямо во время обслуживания системы.
 open notify window	common	ru	Открыть окно извещения
 open popup window	common	ru	Открыть всплывающее окно
 open sidebox	common	ru	Открыть боковое меню
@@ -473,7 +497,9 @@ password must contain at least %1 special characters	common	ru	Пароль до
 password must contain at least %1 uppercase letters	common	ru	Пароль должен содержать не менее %1 прописных букв
 password must have at least %1 characters	common	ru	Пароль должен содержать не менее %1 символов
 path to user and group files has to be outside of the webservers document-root!!!	common	ru	Путь к файлам пользователя и группы ДОЛЖЕН НАХОДИТЬСЯ ВНЕ главного каталога Веб-сервера (document-root)!!!
+permission denied!	common	ru	Доступ запрещен!
 permissions to the files/users directory	common	ru	разрешения для папки файлов/пользователей
+permisson denied!	common	ru	Доступ запрещен!
 personal	common	ru	Личные
 peru	common	ru	Перу
 philippines	common	ru	Филиппины
@@ -487,6 +513,7 @@ please select	common	ru	Пожалуйста Выберите
 please set your global preferences	common	ru	Пожалуйста, установите Ваши общие настройки!
 please set your preferences for this application	common	ru	Пожалуйста установите Ваши настройки для этого приложения !
 please wait...	common	ru	Пожалуйста подождите...
+please, check back with us shortly.	common	ru	Пожалуйста, заходите еще поскорее.
 poland	common	ru	Польша
 portugal	common	ru	Португалия
 postal	common	ru	Почтовый
@@ -509,8 +536,10 @@ qatar	common	ru	Катар
 read	common	ru	Читать
 read this list of methods.	common	ru	Читать этот список методов
 reading	common	ru	чтение
+register	common	ru	Зарегистрировать
 regular	common	ru	Периодический
 reject	common	ru	Отклонить
+remember me	common	ru	Запомнить меня
 remove selected accounts	common	ru	Удалить выбранные учетные записи
 remove shortcut	common	ru	Удалить Сокращение
 rename	common	ru	Переименовать
@@ -539,6 +568,7 @@ save	common	ru	Сохранить
 search	common	ru	Поиск
 search %1 '%2'	common	ru	Поиск %1 '%2'
 search accounts	common	ru	Поиск учетных зписей (аккаунтов)
+search or select accounts	common	ru	поиск или выбор учетных записей
 second	common	ru	секунд(второй?)
 section	common	ru	Секция
 select	common	ru	Выбрать
@@ -568,8 +598,10 @@ setup main menu	common	ru	Главное меню установки
 seychelles	common	ru	Сейшельские о-ва
 show all	common	ru	показать все
 show all categorys	common	ru	Показать все категории
+show as topmenu	common	ru	Показать меню наверху
 show clock?	common	ru	Показать часы?
 show home and logout button in main application bar?	common	ru	Показывать кнопки "Домой" и "Выход" на главной панели приложений?
+show in sidebox	common	ru	Показать сбоку
 show logo's on the desktop.	common	ru	Показать логотипы на рабочем столе.
 show menu	common	ru	показать меню
 show page generation time	common	ru	Показать время генерации страницы
@@ -582,6 +614,7 @@ showing %1 - %2 of %3	common	ru	показ %1 - %2 из %3
 sierra leone	common	ru	Сьерра Леоне
 simple	common	ru	Простой
 singapore	common	ru	Сингапур
+site configuration	common	ru	Конфигурирование сайта
 slovakia	common	ru	Словакия
 slovenia	common	ru	Словения
 solomon islands	common	ru	Соломоновы о-ва
@@ -690,6 +723,7 @@ western sahara	common	ru	Западная Сахара
 what color should all the blank space on the desktop have	common	ru	Какого цвета должны быть все пустые места рабочего стола
 what style would you like the image to have?	common	ru	Выберите стиль отображения
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	ru	Где и как eGroupWare будет показывать такие ссылки как Настройки, О Нас и Выход.
 which groups	common	ru	Какие группы
 width	common	ru	Ширина
 wk	jscalendar	ru	нед.
@@ -711,6 +745,8 @@ you have selected an invalid date	common	ru	Вы выбрали неправил
 you have selected an invalid main category	common	ru	Вы выбрали неправильную основную категорию !
 you have successfully logged out	common	ru	Вы успешно вышли
 you need to add the webserver user '%1' to the group '%2'.	common	ru	Вам необходимо добавить пользователя Веб-сервера '%1' в группу '%2'.
+you need to be an egroupware administrator to access this functionality!	common	ru	Для доступа к этим функциям вы должны быть администратором eGroupWare!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ru	Вы попытались открыть приложение eGroupWar: %1, но у вас нет прав на доступ к нему.
 your message could <b>not</b> be sent!<br>	common	ru	Ваше сообщение <b>не может</b> быть отправлено !<br>
 your message has been sent	common	ru	Ваше сообщение отправлено
 your search returned %1 matchs	common	ru	ваш поиск вернул %1 совпадений

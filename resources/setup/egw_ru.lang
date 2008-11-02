@@ -79,6 +79,7 @@ short description of resource	resources	ru	Краткое описание ру�
 show calendar of resource	resources	ru	Показать календарь ресурса
 something went wrong by deleting resource	resources	ru	Что-то пошло не так при удалении ресурса
 something went wrong by saving resource	resources	ru	Что-то пошло не так при сохранении ресурса
+storage inforation	resources	ru	Информация о Хранилище
 storage information	resources	ru	Информация о хранилище:
 storage information:	resources	ru	Информация о хранилище:
 the calendar of this resource	resources	ru	Календарь этого Ресурса
@@ -95,6 +96,7 @@ web-site for this resource	resources	ru	Веб-Сайт этого ресурс�
 where to find this resource?	resources	ru	Где искать этот ресурса
 which category does this resource belong to?	resources	ru	К какой категории относится этот ресурс
 write permissions	resources	ru	Разрешение на запись
+you are not permitted to delete this reource!	resources	ru	Вам не разрешено удалять этот ресурс!
 you are not permitted to edit this reource!	resources	ru	Вам не разрешено редактировать этот ресурс
 you are not permitted to get information about this resource!	resources	ru	Вам не разрешено получать информацию об этом ресурсе!
 you chose more resources than available	resources	ru	Вы выбрали больше ресурсов, чем возможно

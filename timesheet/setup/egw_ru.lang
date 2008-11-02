@@ -16,6 +16,9 @@ entry saved	timesheet	ru	Запись сохранена
 error deleting the entry!!!	timesheet	ru	Ошибка при удалении записи!!!
 error saving the entry!!!	timesheet	ru	Ошибка при сохранении записи!!!
 existing links	timesheet	ru	Существующие ссылки
+export to openoffice spreadsheet	timesheet	ru	Экспорт в электронную таблицу OpenOffice
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
+field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
 full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
 general	timesheet	ru	Общий
 last modified	timesheet	ru	Последнее изменение
@@ -46,6 +49,8 @@ this month	timesheet	ru	Этот месяц
 this week	timesheet	ru	Эта неделя
 this year	timesheet	ru	Этот год
 timesheet	common	ru	Табель учета времени
+timesheet csv export	timesheet	ru	Экспорт Табеля в CVS
+timesheet openoffice export	timesheet	ru	Экспорт Табеля в OpenOffice
 unitprice	timesheet	ru	Цена за единицу
 view this entry	timesheet	ru	Показать эту запись
 week	timesheet	ru	Неделя

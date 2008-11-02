@@ -152,7 +152,8 @@ group owner for	infolog	ru	Группа-владелец для
 high	infolog	ru	высокий
 history logging	infolog	ru	Запись истории
 history logging and deleting of items	infolog	ru	Журналирование истории и удаление записей
-id	infolog	ru	ИД
+id	infolog	ru	Ид
+id#	infolog	ru	Ид№
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ru	Если тип имеет группу-владельца, все записи этого типа будут иметь владельцем данную группу, а НЕ пользователя, который их создал!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ru	Если не установлено, строка с поиском и фильтрами скрыта для количества записей меньшего, чем "макс. совпадений на страницу" (как определено в ваших общих настройках)
 import	infolog	ru	Импорт
@@ -188,6 +189,7 @@ location	infolog	ru	Местоположение
 longer textual description	infolog	ru	более полное текстовое описание
 low	infolog	ru	низкий
 max length of the input [, length of the inputfield (optional)]	infolog	ru	максимальная длина ввода [, длина поля ввода (необязательно)]
+modifierer	infolog	ru	Кто изменил
 name must not be empty !!!	infolog	ru	Имя не должно быть пустым !!!
 name of new type to create	infolog	ru	имя вновь создаваемого типа
 never hide search and filters	infolog	ru	никогда не скрывать поиск и фильтры

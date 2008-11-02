@@ -47,6 +47,7 @@ calendar preferences	calendar	ru	Настройки Календаря
 calendar settings	admin	ru	Установки Календаря
 calendar-fieldname	calendar	ru	Календарь - Имя поля
 can't add alarms in the past !!!	calendar	ru	Невозможно добавлять сигнал к прошедшему(в конце?) !!!
+can't aquire lock!	calendar	ru	Невозможно приобрести блокировку!
 canceled	calendar	ru	Отменено
 charset of file	calendar	ru	Кодировка файла
 close the window	calendar	ru	Закрыть окно
@@ -274,7 +275,6 @@ show only the date, not the year	admin	ru	Показывать только да
 show this month	calendar	ru	показать этот месяц
 show this week	calendar	ru	показать эту неделю
 single event	calendar	ru	одно событие
-site configuration	calendar	ru	Конфигурирование сайта
 start	calendar	ru	начать
 start date/time	calendar	ru	Дата/время начала
 startdate / -time	calendar	ru	дата начала/ время
@@ -289,6 +289,7 @@ test import (show importable records <u>only</u> in browser)	calendar	ru	Тес�
 this day is shown as first day in the week or month view.	calendar	ru	Этот день показан как первый день недели или месяца.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	ru	Определяет завершение обзора за день. События после этого времени показаны ниже в обзоре дня.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	ru	Определяет запуск обзора за день. События до этого времени показаны выше обзора дня.<br>Это время также используется как время старта по умолчанию для новых событий.
+this entry is currently opened by %1!	calendar	ru	Эта запись сейчас открыта %1!
 this entry is opened by user:	calendar	ru	Эта запись была открыта в заданный интервал времени пользователем:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ru	Эта группа была и заранее выбрана когда вы вошли в планировщик. Вы можете изменить ее в планировщике в любое время.
 this message is sent for canceled or deleted events.	calendar	ru	Это сообщение было послано для отмененных или удаленных событий.
