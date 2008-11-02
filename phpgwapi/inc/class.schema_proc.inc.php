@@ -233,7 +233,7 @@ class schema_proc
 			{
 				// only create indexes on text-columns, if (db-)specifiy options are given or FULLTEXT for mysql
 				// most DB's cant do them and give errors
-				if ($aTableDef['fd'][$mFields]['type'] == 'text')
+				if (in_array($aTableDef['fd'][$mFields]['type'],array('text','longtext')))
 				{
 					if ($this->sType == 'mysql')
 					{
