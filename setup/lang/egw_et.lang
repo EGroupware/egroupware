@@ -1,0 +1,244 @@
+%1 already exists in %2.	setup	et	%1 juba eksisteerib %2.
+%1 created in %2.	setup	et	%1 loodud %2.
+%1 does not exist !!!	setup	et	%1 ei eksisteeri !!!
+13 (ntp)	setup	et	13 (ntp)
+80 (http)	setup	et	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	et	<b>millist charset kasutame</b> (kasuta utf-8 kui plaanid kasutada keeli millel on erinevad charset-id):
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	et	Lisa automaatselt tehtud kasutajad sellesse gruppi (selleks on 'Default' kui väli on tühi.)
+additional settings	setup	et	Täiendavad seadistused
+admin account successful created.	setup	et	Admin konto tehtud.
+admin email address	setup	et	Admin email aadress
+admin first name	setup	et	Admin eesnimi
+admin last name	setup	et	Admin perekonnanimi
+admin password	setup	et	Admin parool
+admin username	setup	et	Admin kasutajanimi
+all applications	setup	et	kõik rakendused
+all users	setup	et	Kõik kasutajad
+application list	setup	et	Rakenduste nimekiri
+application management	setup	et	Rakenduste Manageerimine
+application name and status	setup	et	Rakenduse Nimi ja Staatus
+application name and status information	setup	et	Rakenduse Nime ja Staatuse Informatsioon
+application title	setup	et	Rakenduse Pealkiri
+application: %1, file: %2, line: "%3"	setup	et	Rakendus: %1, Fail: %2, Rida: "%3"
+are you sure?	setup	et	OLED KINDEL?
+authentication / accounts	setup	et	Autentimine / Kontod
+auto login anonymous user	setup	et	Auto logi sisse anonymous kasutaja
+auto-created user accounts expire	setup	et	Automaatselt tehtud kasutajate kontod aeguvad
+available version	setup	et	Saadaolev Versioon
+back to user login	setup	et	Tagasi kasutaja sisselogimise juurde
+backup '%1' deleted	setup	et	tagavarakoopia '%1' kustutatud
+backup '%1' renamed to '%2'	setup	et	tagavarakoopia '%1' on ümber nimetatud '%2'
+backup '%1' restored	setup	et	tagavarakoopia '%1' taastatud
+backup and restore	setup	et	tagavarakoopia ja taastamine
+backup failed	setup	et	Tagavarakoopia ebaõnnestus
+backup finished	setup	et	Tagavarakoopia tehtud
+backup now	setup	et	tee tagavarakoopia nüüd
+backup started, this might take a few minutes ...	setup	et	Tagavarakoopia tegemine alustatud. see võib võtta mõne minuti ...
+because it is not a user application, or access is controlled via acl	setup	et	sellepärast, et see pole kasutaja rakendus, või ligipääs on kontrollitud acl abil
+because it requires manual table installation, <br />or the table definition was incorrect	setup	et	sellepärast, et see nõuab käsitsi tabeli installeerimist, <br />või tabeli definitsioon pole korrektne
+because it was manually disabled	setup	et	sellepärast, et see oli käsitsi välja lülitatud
+cancel	setup	et	Tühista
+change system-charset	setup	et	Muuda süsteemi charset
+charset	setup	et	utf-8
+charset to convert to	setup	et	Charset millesse konvertida
+charsets used by the different languages	setup	et	charset-id kasutatud erinevatel keeltel
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	et	Kontrollin kas php.ini seadistus session.save_path='%1' on kirjutatav veebiserveri jaoks
+checking pear%1 is installed	setup	et	Kontrollin kas PEAR%1 on installeritud
+checking php.ini	setup	et	Kontrollin php.ini
+click here	setup	et	Vajuta siia
+completed	setup	et	Lõpetatud
+configure now	setup	et	Konfigureeri nüüd
+confirm to delete this backup?	setup	et	Kinnitad selle tagavarakoopia kustutamise?
+contain	setup	et	sisaldab
+continue	setup	et	Jätka
+country selection	setup	et	Riigi Valik
+create	setup	et	Loo
+create a backup before upgrading the db	setup	et	Loo tagavarakoopia enne DB uuendamist
+create admin account	setup	et	Loo admin konto
+create database	setup	et	Loo Andmebaas
+create demo accounts	setup	et	Loo demao kontod
+create one now	setup	et	Loo üks nüüd
+create or edit the egroupware configuration file: header.inc.php:	setup	et	Loo või muuda eGroupWare konfiguratsiooni faili: header.inc.php:
+create the empty database -	setup	et	Loo tühi andmebaas -
+create the empty database and grant user permissions -	setup	et	Loo tühi andmebaas ja võimalda kasutaja õigused -
+create your header.inc.php	setup	et	Loo oma header.inc.php
+created	setup	et	loodud
+created header.inc.php!	setup	et	Tehtud header.inc.php!
+creating tables	setup	et	Loon Tabeleid
+current configuration:	setup	et	Käesolev konfiguratsioon
+current system-charset is %1.	setup	et	Käesolev süsteemi süsteemi charset on %1.
+current version	setup	et	Käesolev Versioon
+currently installed languages: %1 <br />	setup	et	Käesolevalt installeeritud keeled:  %1 <br />
+cyrus imap: admin user,password	setup	et	Cyrus IMAP: Admin kasutaja,Parool
+database	setup	et	Andmebaas
+day	setup	et	päev
+delete	setup	et	Kustuta
+delete all my tables and data	setup	et	Kustuta kõik minu tabelid ja andmed
+deleting tables	setup	et	Kustutan Tabeleid
+deny access	setup	et	Keela Ligipääs
+domain name	setup	et	Doomeni nimi
+download	setup	et	Lae alla
+edit current configuration	setup	et	Muuda Käesolevat Konfiguratsiooni
+edit your header.inc.php	setup	et	Muuda oma header.inc.php
+egroupware administration manual	setup	et	eGroupWare Administreerimise Manual
+emailadmin profile updated:	setup	et	EMailAdmin profiil uuendatud:
+enable mcrypt	setup	et	Luba MCrypt
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	et	Sisesta täis teekond ajutiste failidejaoks.<br />Näiteks: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	et	Sisesta täis teekond kasutajate ja gruppide failidejaoks.<br />Näiteks: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	et	Sisesta täis teekond tagavarakoopjate jaoks.<br />kui tühi: failide kaust
+enter the hostname of the machine on which this server is running	setup	et	Sisesta hostinimi kus see server töötab
+enter your default ftp server	setup	et	Sisesta oma vaikimisi FTP server
+enter your http proxy server	setup	et	Sisesta oma HTTP proksi server
+enter your http proxy server password	setup	et	Sisesta oma HTTP proksi serveri parool
+enter your http proxy server port	setup	et	Sisesta oma HTTP proksi serveri port
+enter your http proxy server username	setup	et	Sisesta oma HTTP proksi serveri kasutajanimi
+error in admin-creation !!!	setup	et	Viga admin-tegemisel !!!
+error in group-creation !!!	setup	et	Viga grupi-tegemisel !!!
+export has been completed!	setup	et	Eksportimine on lõpetatud !!!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	et	Ebaõnnestus konfig faili header.inc.php kirjutamine, kontrolli õigusi !!!
+file	setup	et	FAIL
+file type, size, version, etc.	setup	et	faili tüüp, suurus, versijoon, jne.
+filename	setup	et	failinimi
+filesystem	setup	et	Failisüsteem
+found existing configuration file. loading settings from the file...	setup	et	Leitud olemasolev konfiguratsiooni fail. Laen sisse seadistused sellest failist ...
+give admin access to all installed apps	setup	et	Luba admin ligipääs kõigile installeeritud rakendustele
+go back	setup	et	Mine tagasi
+grant access	setup	et	Luba Ligipääs
+group	setup	et	grupp
+host information	setup	et	Hosti informatsioon
+hostname/ip of database server	setup	et	Hostinimi/IP või andmebaasi server
+if using ads (active directory) authentication	setup	et	kui kasutad ADS (Active Directory) audentimist
+if using ldap	setup	et	kui kasutad LDAP
+image type selection order	setup	et	Piltide tüübi sisestamise järjekord
+import has been completed!	setup	et	Importimine on lõpetatud!
+importing old settings into the new format....	setup	et	Impordin vanad seadistused uute formaati ...
+install	setup	et	Installeri
+install all	setup	et	Installeeri kõik
+install applications	setup	et	Installeeri Rakendused
+install backup	setup	et	Installeeri tagavara
+install language	setup	et	Installeeri Keel
+installation finished	setup	et	Installeerimine lõpetatud
+installation started, this might take a few minutes ...	setup	et	Installeerimine alustatud, see võib kesta mõni minut ...
+installed	setup	et	Installeeritud
+invalid ip address	setup	et	Vigane IP aadress
+invalid password	setup	et	Vigane parool
+is broken	setup	et	on katki
+is disabled	setup	et	on väljalülitatud
+is in the webservers docroot	setup	et	asub vebserveri docroot
+is not writeable by the webserver	setup	et	pole kirjutatav veebiserveri jaoks
+languages updated.	setup	et	Keeled uuendatud.
+ldap accounts configuration	setup	et	LDAP Kontode Konfiguratsioon
+ldap encryption type	setup	et	LDAP krüptimise tüüp
+ldap root password	setup	et	LDAP root parool
+logout	setup	et	Logi välja
+mail server login type	setup	et	Mail serveri sisselogimise tüüp
+mail server protocol	setup	et	Mail serveri protokol
+manage applications	setup	et	Manageeri Rakendusi
+manage languages	setup	et	Manageeri Keeli
+manual / help	setup	et	Manual / Abi
+may be broken	setup	et	võibolla katki
+mcrypt algorithm (default tripledes)	setup	et	Mcrypt algoritm (vaikimisi TRIPLEDES)
+mcrypt settings (requires mcrypt php extension)	setup	et	Mcrypt Seadistused (nõutav mcrypt PHP laiendus)
+mcrypt version	setup	et	MCrypt versioon
+modify	setup	et	Muuda
+month	setup	et	kuu
+name of database	setup	et	Andmebaasi nimi
+never	setup	et	mittekunagi
+new	setup	et	Uus
+no	setup	et	Ei
+not	setup	et	pole
+not completed	setup	et	Pole Lõpetatud
+not set	setup	et	pole seatud
+ok	setup	et	OK
+one month	setup	et	üks kuu
+one week	setup	et	üks nädal
+only add languages that are not in the database already	setup	et	Lisa ainult keeled mis pole veel andmebaasis
+only add new phrases	setup	et	Lsa ainult uued fraasid
+or	setup	et	või
+password for smtp-authentication	setup	et	Parool SMTP-audentimiseks
+path information	setup	et	Teekonna informatsioon
+please install	setup	et	Palun Installeeri
+please login to egroupware and run the admin application for additional site configuration	setup	et	Palun logi sisse eGroupWare ja kasuta admin rakendust täiendavaks konfigureerimiseks
+please make the following change in your php.ini	setup	et	Palun tee järgmised muudatused oma php.ini failis
+please wait...	setup	et	Palun Oota...
+pop/imap mail server hostname or ip address	setup	et	POP/IMAP mail serveri hostinimi või IP aadress
+possible reasons	setup	et	Võimalikud Põhjused
+possible solutions	setup	et	Võimalikud Lahendused
+potential problem	setup	et	Potensiaalne Probleem
+preferences	setup	et	Eelistused
+problem resolution	setup	et	Probleemi lahendus
+re-check my database	setup	et	Kontrolli uuesti minu andmebaasi
+re-check my installation	setup	et	Kontrolli uuesti minu installatsiooni
+re-enter password	setup	et	Sisesta parool uuesti
+readable by the webserver	setup	et	loetav veebiserveri jaoks
+recommended: filesystem	setup	et	Soovitatav: Failisüsteem
+registered	setup	et	registreeritud
+remove	setup	et	Eemalda
+remove all	setup	et	Eemalda Kõik
+rename	setup	et	nimeta ümber
+requires reinstall or manual repair	setup	et	Nõuab uut installeerimist või parandamist käsitsi
+restore	setup	et	taasta
+restore failed	setup	et	Taastamine ebaõnnestus
+restore finished	setup	et	taastamine lõpetatud
+restore started, this might take a few minutes ...	setup	et	taastamine alustatud,see võib võtta mõne minuti ...
+restoring a backup will delete/replace all content in your database. are you sure?	setup	et	Taastamine tagavarast kustutab/asendab kogu andmebaasi sisu. Oled kindel?
+run installation tests	setup	et	Jooksuta installeerimise teste
+save	setup	et	Salvesta
+schedule	setup	et	ajastatud
+scheduled backups	setup	et	ajastatud tagavarad
+select one...	setup	et	vali üks...
+select where you want to store/retrieve file contents	setup	et	Vali kuhu soovid salvestada failid
+select where you want to store/retrieve filesystem information	setup	et	Vali kuhu sa tahad salvestada failisüsteemi informatsiooni
+select where you want to store/retrieve user accounts	setup	et	Vali kuhu sa tahad salvestada kasutaja kontosid
+select which group(s) will be exported	setup	et	Vali milli(ne)(sed) grupp(id) eksporditakse
+select which languages you would like to use	setup	et	Vali milliseid keeli soovid kasutada
+select which type of authentication you are using	setup	et	Vali millist tüüpi audentimist sa kasutad
+select which user(s) will also have admin privileges	setup	et	Vali milli(ne)(sed) kasutaja(d) oma(b)(vad) samuti admin privileege
+select which user(s) will be exported	setup	et	Vali milli(ne)(sed) kasutaja(d) eksporditakse
+select which user(s) will be imported	setup	et	Vali milli(ne)(sed) kasutaja(d) imporditakse
+select which user(s) will be modified	setup	et	Vali milli(ne)(sed) kasutaja(d) muudetakse
+select which user(s) will have admin privileges	setup	et	Vali milli(ne)(sed) kasutaja(d) omavad admin privileege
+select your old version	setup	et	Vali oma vana versioon
+server root	setup	et	Serveri Root
+sessions type	setup	et	Sessioonide Tüüp
+settings	setup	et	Seadistused
+size	setup	et	suurus
+skip the installation tests (not recommended)	setup	et	Jäta vahele installeerimise testid (pole soovitatav)
+smtp server hostname or ip address	setup	et	SMTP serveri hostinimi või IP aadress
+smtp server port	setup	et	SMTP serveri port
+some or all of its tables are missing	setup	et	Mõni või kõik tabelid puuduvad
+sql encryption type	setup	et	SQL krüpteeringu tüüp paroolidejaoks (vaikimisi - md5)
+standard (login-name identical to egroupware user-name)	setup	et	standartne (sisselogimise nimi identne eGroupWare kasutaja nimega)
+standard mailserver settings (used for mail authentication too)	setup	et	Standard mailserver seadistused (kautatakse samuti Mail audentimiseks)
+status	setup	et	Staatus
+succesfully uploaded file %1	setup	et	täielikult üleslaetud fail %1
+tables dropped	setup	et	tabelid hävitatud
+tables installed, unless there are errors printed above	setup	et	tabelid installeeritud, kui siin pole vigu kirjeldatud
+tables upgraded	setup	et	tabelid uuendatud
+target version	setup	et	Siht Versioon
+tcp port number of database server	setup	et	Andmebaasi serveri TCP pordi number
+the following applications need to be upgraded:	setup	et	Järgnevad rakendused vajavad uuendamis:
+this has to be outside the webservers document-root!!!	setup	et	See peab olema väljaspool weebiserverite document-root!!!
+this might take a while, please wait ...	setup	et	See võib võtta aega, palun oota ...
+this program lets you backup your database, schedule a backup or restore it.	setup	et	See programm võimaldab teha andmebaasi tagavara, ajastatud tagavara või taastada seda.
+translations added	setup	et	Tõlked Lisatud
+translations removed	setup	et	Tõlked Eemaldatud
+two weeks	setup	et	kaks nädalat
+user	setup	et	kasutaja
+user for smtp-authentication (leave it empty if no auth required)	setup	et	Kasutajanimi SMTP-autentimiseks (jäta see tühjaks kui pole nõutav)
+usernames are casesensitive	setup	et	Kasutajanimed on tõusutundlikud
+users choice	setup	et	Kasutajate Valik
+version	setup	et	versioon
+write	setup	et	Kirjuta
+year	setup	et	Aasta
+yes	setup	et	Jah
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	et	Sa pole veel teinud oma header.inc.php!<br /> sa saad teha selle nüüd.
+you have successfully logged out	setup	et	Oled täielikult välja loginud
+you need to save the settings you made here first!	setup	et	Pead salvestama esmalt seadistused mida sa tegid siin!
+you're using an old configuration file format...	setup	et	Sa kasutad vana konfiguratsiooni faili formaati...
+you're using an old header.inc.php version...	setup	et	Sa kasutad vana header.inc.php versiooni...
+your applications are current	setup	et	Sinu rakendused on kaasaegsed
+your database does not exist	setup	et	Sinu andmebaasi ei eksisteeri
+your database is not working!	setup	et	Sinu andmebaas ei tööta!
+your database is working, but you dont have any applications installed	setup	et	Sinu andmebaas töötab, aga sul pole installeeritud ühtki rakendust
+your temporary directory '%1' %2	setup	et	Sinu ajutine kaust '%1' %2
