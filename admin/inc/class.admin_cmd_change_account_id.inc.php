@@ -7,13 +7,13 @@
  * @package admin
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * admin command: change an account_id
  */
-class admin_cmd_change_account_id extends admin_cmd 
+class admin_cmd_change_account_id extends admin_cmd
 {
 	/**
 	 * Constructor
@@ -61,7 +61,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				'egw_nextid'         => false,
 				'egw_preferences'    => array(array('preference_owner','preference_owner > 0')),
 				'egw_sessions'       => false,	// only account_lid stored
-				'egw_vfs'            => array('vfs_owner_id','vfs_createdby_id','vfs_modifiedby_id'),	// 'vfs_directory' contains account_lid for /home/account 
+				'egw_sqlfs'          => array('fs_uid','fs_creator','fs_modifier',array('fs_gid','.type' => 'absgroup')),
 			),
 			'etemplate' => array(
 				'egw_etemplate'      => 'et_group',
@@ -173,10 +173,10 @@ class admin_cmd_change_account_id extends admin_cmd
 			// MyDMS	ToDo!!!
 			// VFS2		ToDo!!!
 		);
-		
+
 	/**
 	 * give or remove run rights from a given account and application
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws egw_exception_no_admin
@@ -199,7 +199,7 @@ class admin_cmd_change_account_id extends admin_cmd
 		{
 			$db = clone($GLOBALS['egw']->db);
 			$db->set_app($app);
-			
+
 			foreach($data as $table => $columns)
 			{
 				if (!$columns)
@@ -208,7 +208,7 @@ class admin_cmd_change_account_id extends admin_cmd
 					continue;	// noting to do for this table
 				}
 				if (!is_array($columns)) $columns = array($columns);
-				
+
 				foreach($columns as $column)
 				{
 					$type = $where = null;
@@ -219,7 +219,7 @@ class admin_cmd_change_account_id extends admin_cmd
 						$where = $column;
 						$column = array_shift($where);
 					}
-					$total += ($changed = self::_update_account_id($ids2change,$db,$table,$column,$where,$type));
+					$total += ($changed = self::_update_account_id($this->change,$db,$table,$column,$where,$type));
 					echo "$app: $table.$column $changed id's changed\n";
 				}
 			}
@@ -230,14 +230,20 @@ class admin_cmd_change_account_id extends admin_cmd
 	private static function _update_account_id($ids2change,$db,$table,$column,$where=null,$type=null)
 	{
 		static $update_sql;
-		
+		static $update_sql_abs;
+
 		if (is_null($update_sql))
 		{
 			foreach($ids2change as $from => $to)
 			{
 				$update_sql .= "WHEN $from THEN $to ";
+				if ($to < 0 && $from < 0)
+				{
+					$update_sql_abs .= 'WHEN '.abs($from).' THEN '.abs($to).' ';
+				}
 			}
-			$update_sql .= "END";
+			$update_sql .= 'END';
+			if ($update_sql_abs) $update_sql_abs .= 'END';
 		}
 		switch($type)
 		{
@@ -267,7 +273,19 @@ class admin_cmd_change_account_id extends admin_cmd
 					$changed += $db->affected_rows();
 				}
 				break;
-				
+
+			case 'absgroup':
+				if (!$update_sql_abs) break;	// no groups to change
+				if (!$where) $where = array();
+				$where[$column] = array();
+				foreach(array_keys($ids2change) as $id)
+				{
+					if ($id < 0) $where[$column][] = abs($id);
+				}
+				$db->update($table,$column.'= CASE '.$column.' '.$update_sql_abs,$where,__LINE__,__FILE__);
+				$changed = $db->affected_rows();
+				break;
+
 			case 'abs':
 				if (!$where) $where = array();
 				$where[$column] = array();
@@ -278,7 +296,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				$db->update($table,$column.'= CASE '.$column.' '.preg_replace('/-([0-9]+)/','\1',$update_sql),$where,__LINE__,__FILE__);
 				$changed = $db->affected_rows();
 				break;
-				
+
 			default:
 				if (!$where) $where = array();
 				$where[$column] = array_keys($ids2change);
