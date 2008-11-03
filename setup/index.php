@@ -190,7 +190,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 			case 'mysql':
 			case 'mysqli':
 			case 'mysqlt':
-				$set_charset = (float) $GLOBALS['egw_setup']->db->ServerInfo['version'] >= 4.1 ? ' DEFAULT CHARSET SET utf8' : '';
+				$set_charset = (float) $GLOBALS['egw_setup']->db->ServerInfo['version'] >= 4.1 ? ' DEFAULT CHARACTER SET utf8' : '';
 				$setup_tpl->set_var('instr',
 					'<b>'.lang("Instructions for creating the database in %1:",'MySql').'</b>'
 					. '<br />'.lang('Login to mysql -')
