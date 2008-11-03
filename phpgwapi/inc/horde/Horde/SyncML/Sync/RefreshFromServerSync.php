@@ -19,7 +19,6 @@ class Horde_SyncML_Sync_RefreshFromServerSync extends Horde_SyncML_Sync_TwoWaySy
 	function handleSync($currentCmdID, $hordeType, $syncType, &$output, $refts) {
 		global $registry;
 		
-		$history = $GLOBALS['egw']->contenthistory;
 		$state = &$_SESSION['SyncML.state'];
 		
 		$adds = &$state->getAddedItems($hordeType);

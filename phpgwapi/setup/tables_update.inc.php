@@ -578,3 +578,27 @@ function phpgwapi_upgrade1_5_015()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.016';
 }
+
+/**
+ * Drop no longer needed egw_api_content_history.sync_guid column
+ */
+function phpgwapi_upgrade1_5_016()
+{
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_api_content_history',array(
+		'fd' => array(
+			'sync_appname' => array('type' => 'varchar','precision' => '60','nullable' => False),
+			'sync_contentid' => array('type' => 'varchar','precision' => '60','nullable' => False),
+			'sync_added' => array('type' => 'timestamp'),
+			'sync_modified' => array('type' => 'timestamp'),
+			'sync_deleted' => array('type' => 'timestamp'),
+			'sync_id' => array('type' => 'auto','nullable' => False),
+			'sync_changedby' => array('type' => 'int','precision' => '4','nullable' => False)
+		),
+		'pk' => array('sync_id'),
+		'fk' => array(),
+		'ix' => array('sync_added','sync_modified','sync_deleted','sync_guid','sync_changedby',array('sync_appname','sync_contentid')),
+		'uc' => array()
+	),'sync_guid');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.017';
+}

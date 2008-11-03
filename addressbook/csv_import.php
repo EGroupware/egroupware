@@ -243,7 +243,8 @@ switch($_POST['action'])
 			'trans'   => $_POST['trans']
 		));
 		@set_time_limit(0);
-		$fp=fopen($csvfile,'rb');
+		ini_set('auto_detect_line_endings',true);	// to allow to import files created eg. on a mac
+		$fp=fopen($csvfile,'r');
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
 		$csv_fields = $GLOBALS['egw']->translation->convert($csv_fields,$_POST['charset']);
 		$csv_fields[] = 'no CSV 1'; // eg. for static assignments

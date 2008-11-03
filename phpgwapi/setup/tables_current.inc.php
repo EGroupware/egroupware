@@ -302,7 +302,6 @@ $phpgw_baseline = array(
 			'sync_modified' => array('type' => 'timestamp'),
 			'sync_deleted' => array('type' => 'timestamp'),
 			'sync_id' => array('type' => 'auto','nullable' => False),
-			'sync_guid' => array('type' => 'varchar','precision' => '120','nullable' => False),
 			'sync_changedby' => array('type' => 'int','precision' => '4','nullable' => False)
 		),
 		'pk' => array('sync_id'),

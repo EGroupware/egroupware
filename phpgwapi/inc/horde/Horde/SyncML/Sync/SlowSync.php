@@ -160,7 +160,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				$guid = $registry->call($hordeType . '/import',
 					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
 				if (!is_a($guid, 'PEAR_Error')) {
-					$ts = $history->getTSforAction($guid, 'add');
+					$ts = $state->getSyncTSforAction($guid, 'add');
 					$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
 					$state->log("Client-AddReplace");
 					Horde::logMessage('SyncML: r/ added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);

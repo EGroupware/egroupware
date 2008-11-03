@@ -60,7 +60,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		// handle changes
 		if(is_array($changes)) {
 			while($guid = array_shift($changes)) {
-				$guid_ts = $history->getTSforAction($guid, 'modify');
+				$guid_ts = $state->getSyncTSforAction($guid, 'modify');
 				$sync_ts = $state->getChangeTS($syncType, $guid);
 				Horde::logMessage("SyncML: timestamp modify guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				if ($sync_ts && $sync_ts == $guid_ts) {
@@ -115,7 +115,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		// handle deletes
 		if(is_array($deletes)) {
 			while($guid = array_shift($deletes)) {
-				$guid_ts = $history->getTSforAction($guid, 'delete');
+				$guid_ts = $state->getSyncTSforAction($guid, 'delete');
 				$sync_ts = $state->getChangeTS($syncType, $guid);
 				Horde::logMessage("SyncML: timestamp delete guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				if ($sync_ts && $sync_ts == $guid_ts) {
@@ -163,7 +163,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 
 		if(is_array($adds)) {
 			while($guid = array_shift($adds)) {
-				$guid_ts = $history->getTSforAction($guid, 'add');
+				$guid_ts = $state->getSyncTSforAction($guid, 'add');
 				$sync_ts = $state->getChangeTS($syncType, $guid);
 				Horde::logMessage("SyncML: timestamp add $guid guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				if ($sync_ts && $sync_ts == $guid_ts) {

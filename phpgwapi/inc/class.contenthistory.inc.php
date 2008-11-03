@@ -58,7 +58,7 @@ class contenthistory
 	 * @param string$_appName the appname example: infolog_notes
 	 * @param string $_action can be modify, add or delete
 	 * @param string $_ts timestamp where to start searching from 
-	 * @return array containing the global UID's
+	 * @return array containing contentIds with changes
 	 */
 	function getHistory($_appName, $_action, $_ts)
 	{
@@ -79,13 +79,13 @@ class contenthistory
 				// no valid $_action set
 				return array();
 		}
-		$guidList = array();
-		foreach($this->db->select(self::TABLE,'sync_guid',$where,__LINE__,__FILE__) as $row)
+		$idList = array();
+		foreach($this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__) as $row)
 		{
-			$guidList[] = $row['sync_guid'];
+			$idList[] = $row['sync_contentid'];
 		}
 		
-		return $guidList;
+		return $idList;
 	}
 	
 	/**
@@ -95,7 +95,7 @@ class contenthistory
 	 * @param $_action string can be add, delete or modify
 	 * @return string the last timestamp
 	 */
-	function getTSforAction($_guid, $_action)
+	function getTSforAction($_appName, $_id, $_action)
 	{
 		switch($_action)
 		{
@@ -112,7 +112,8 @@ class contenthistory
 				return false;
 		}
 		$where = array (
-			'sync_guid' => $_guid,
+			'sync_appname' => $_appName,
+			'sync_contentid' => $_id,
 		);
 
 		if (($ts = $this->db->select(self::TABLE,$col,$where,__LINE__,__FILE__)->fetchSingle()))
@@ -137,7 +138,6 @@ class contenthistory
 			'sync_appname'		=> $_appName,
 			'sync_contentid'	=> $_id,
 			'sync_added'		=> $this->db->to_timestamp($_ts),
-			'sync_guid'			=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
 			'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
 		);
 

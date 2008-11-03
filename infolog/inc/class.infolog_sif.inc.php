@@ -459,8 +459,8 @@ class infolog_sif extends infolog_bo
 		if($taskData['info_enddate'])
 			$vevent->setAttribute('DUE',$taskData['info_enddate']);
 		$vevent->setAttribute('DTSTAMP',time());
-		$vevent->setAttribute('CREATED',$GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'add'));
-		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'modify'));
+		$vevent->setAttribute('CREATED',$GLOBALS['phpgw']->contenthistory->getTSforAction('infolog_task',$_taskID,'add'));
+		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['phpgw']->contenthistory->getTSforAction('infolog_task',$_taskID,'modify'));
 		$vevent->setAttribute('UID',$taskGUID);
 		$vevent->setAttribute('CLASS',(($taskData['info_access'] == 'public')?'PUBLIC':'PRIVATE'));
 		$vevent->setAttribute('STATUS',(($taskData['info_status'] == 'completed')?'COMPLETED':'NEEDS-ACTION'));

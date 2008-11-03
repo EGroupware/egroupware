@@ -779,8 +779,11 @@ class Horde_SyncML_State {
 				break;
 
 			case 'calendar':
-			case 'caltasks':
 				return 'calendar';
+				break;
+
+			case 'caltasks':
+				return 'caltasks';
 				break;
 
 			# funambol related types

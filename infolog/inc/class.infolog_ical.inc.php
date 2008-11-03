@@ -81,9 +81,10 @@ class infolog_ical extends infolog_bo
 		if($taskData['info_datecompleted'])
 			$vevent->setAttribute('COMPLETED',$taskData['info_datecompleted']);
 		$vevent->setAttribute('DTSTAMP',time());
-		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add'));
-		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify'));
-		$vevent->setAttribute('UID',$force_own_uid ? $taskGUID : $taskData['info_uid']);
+		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'add'));
+		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'modify'));
+		//$vevent->setAttribute('UID',$force_own_uid ? $taskGUID : $taskData['info_uid']);
+		$vevent->setAttribute('UID',$taskData['info_uid']);
 		$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 		$vevent->setAttribute('STATUS',$this->status2vtodo($taskData['info_status']));
 		// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
@@ -253,8 +254,8 @@ class infolog_ical extends infolog_bo
 				$vnote->setAttribute('BODY',$note['info_des']);
 				if($note['info_startdate'])
 					$vnote->setAttribute('DCREATED',$note['info_startdate']);
-				$vnote->setAttribute('DCREATED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add'));
-				$vnote->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify'));
+				$vnote->setAttribute('DCREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'add'));
+				$vnote->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'modify'));
 				if (!empty($note['info_cat']))
 				{
 					$cats = $this->get_categories(array($note['info_cat']));

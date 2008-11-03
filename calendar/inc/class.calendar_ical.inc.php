@@ -391,8 +391,8 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			$modified = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify');
-			$created = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add');
+			$modified = $GLOBALS['egw']->contenthistory->getTSforAction('calendar',$event['id'],'modify');
+			$created = $GLOBALS['egw']->contenthistory->getTSforAction('calendar',$event['id'],'add');
 			if (!$created && !$modified) $created = $event['modified'];
 			if ($created) $attributes['CREATED'] = $created;
 			if (!$modified) $modified = $event['modified'];
@@ -443,7 +443,8 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			$attributes['UID'] = $force_own_uid ? $eventGUID : $event['uid'];
+			//$attributes['UID'] = $force_own_uid ? $eventGUID : $event['uid'];
+			$attributes['UID'] = $event['uid'];
 			foreach($attributes as $key => $value)
 			{
 				foreach(is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
@@ -1165,6 +1166,11 @@ class calendar_ical extends calendar_boupdate
 				{
 					case 'e61':
 						$this->supportedFields = $defaultFields['minimal'];
+						break;
+					case 'e51':
+					case 'e90':
+					case 'e71':
+						$this->supportedFields = $defaultFields['basic'];
 						break;
 					default:
 						error_log("Unknown Nokia phone '$_productName', assuming E61");

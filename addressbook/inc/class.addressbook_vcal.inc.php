@@ -421,9 +421,9 @@ class addressbook_vcal extends addressbook_bo
 		));
 
 		$defaultFields[9] = array(	// nokia e90
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+			'ADR;WORK'	=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+			'ADR;HOME'	=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
 							'adr_two_postalcode','adr_two_countryname'),
 			'BDAY'		=> array('bday'),
 			'X-CLASS'	=> array('private'),
@@ -441,7 +441,7 @@ class addressbook_vcal extends addressbook_bo
 			'TEL;PAGER;WORK' => array('tel_pager'),
 			'TEL;VOICE;WORK' => array('tel_work'),
 			'TEL;VOICE;HOME' => array('tel_home'),
-			'TITLE'		=> array('contact_role'),
+			'TITLE'		=> array('title'),
 			'URL;WORK'	=> array('url'),
 			'URL;HOME'	=> array('url_home'),
 			'X-ASSISTANT'		=> array('assistent'),
@@ -539,6 +539,7 @@ class addressbook_vcal extends addressbook_bo
 						break;
 					case 'e51':
 					case 'e90':
+					case 'e71':
 						$this->supportedFields = $defaultFields[9];
 						break;
 					case '9300':

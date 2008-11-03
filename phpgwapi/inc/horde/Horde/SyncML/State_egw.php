@@ -17,12 +17,67 @@ include_once dirname(__FILE__).'/State.php';
 class EGW_SyncML_State extends Horde_SyncML_State
 {
 	var $table_devinfo	= 'egw_syncmldevinfo';
-
+	
 	/*
 	 * store the mappings of egw uids to client uids
 	 */
 	var $uidMappings	= array();
 
+
+  /**
+		* get the local content id from a syncid
+		*
+		* @param sting $_syncid id used in syncml
+		* @return int local egw content id
+		*/
+	function get_egwID($_syncid)
+	{
+		$syncIDParts = explode('-',$_syncid);
+		array_shift($syncIDParts);
+		$_id = implode ('', $syncIDParts);
+		return $_id;
+	}			
+  
+  /**
+   * when got a entry last added/modified/deleted
+   *
+   * @param $_syncid containing appName-contentid
+   * @param $_action string can be add, delete or modify 
+   * @return string the last timestamp
+   */
+	function getSyncTSforAction($_syncid, $_action)
+	{
+		$syncIDParts = explode('-',$_syncid);
+		$_appName = array_shift($syncIDParts);
+		$_id = implode ('', $syncIDParts);
+		
+		$ts = $GLOBALS['egw']->contenthistory->getTSforAction($_appName, $_id, $_action);
+		
+		return $ts;
+	}			
+	
+	/**
+	 * get the timestamp for action
+	 *
+	 * find which content changed since $_ts for application $_appName
+	 *
+	 * @param string$_appName the appname example: infolog_notes
+	 * @param string $_action can be modify, add or delete
+	 * @param string $_ts timestamp where to start searching from 
+	 * @return array containing syncIDs with changes
+	 */
+	function getHistory($_appName, $_action, $_ts)
+	{
+		$guidList = array ();
+		$syncIdList = array ();
+		$idList = $GLOBALS['egw']->contenthistory->getHistory($_appName, $_action, $_ts);
+		foreach ($idList as $idItem)
+		{
+			$syncIdList[] = $_appName . '-' . $idItem;
+		}
+    return $syncIdList;	
+	}
+	
     /**
      * Returns the timestamp (if set) of the last change to the
      * obj:guid, that was caused by the client. This is stored to
@@ -257,7 +312,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	function removeUID($type, $locid)
 	{
 		$mapID = $this->_locName . $this->_sourceURI . $type;
-
+		
 		$where = array (
 			'map_id'	=> $mapID,
 			'map_locuid'	=> $locid
@@ -301,6 +356,9 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	$guid = $this->getUIDMapping($_guid);
     	if($guid === false)
     	{
+    	    // this message is not really usefull here because setUIDMapping is only called when adding content to the client,
+    	    // however setUID is called also when adding content from the client. So in all other conditions this 
+    	    // message will be logged. 
     	    Horde::logMessage("SyncML: setUID $type, $locid, $guid something went wrong!!! Mapping not found.", __FILE__, __LINE__, PEAR_LOG_INFO);
     	    $guid = $_guid;
     	    //return false;
