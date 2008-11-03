@@ -99,14 +99,15 @@ class calendar_groupdav extends groupdav_handler
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($event)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype', strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') === false ?
+					HTTP_WebDAV_Server::mkprop('getcontenttype', $this->agent != 'kde' ?
 	            			'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
 				);
 				if ($calendar_data)
 				{
-					$content = ExecMethod2('calendar.calendar_ical.exportVCal',array($event),'2.0','PUBLISH',false,false);
+					if (is_null($handler)) $handler = $this->_get_handler();
+					$content = $handler->exportVCal(array($event),'2.0','PUBLISH');
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -247,7 +248,8 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return $event;
 		}
-		$options['data'] = ExecMethod2('calendar.calendar_ical.exportVCal',array($event),'2.0','PUBLISH',false,false);
+		$handler = $this->_get_handler();
+		$options['data'] = $handler->exportVCal(array($event),'2.0','PUBLISH');
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($event));
@@ -270,7 +272,8 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return $event;
 		}
-		if (!($cal_id = ExecMethod2('calendar.calendar_ical.importVCal',$options['content'],is_numeric($id) ? $id : -1,
+		$handler = $this->_get_handler();
+		if (!($cal_id = $handler->importVCal($options['content'],is_numeric($id) ? $id : -1,
 			self::etag2value($this->http_if_match))))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
@@ -372,5 +375,18 @@ class calendar_groupdav extends groupdav_handler
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$GLOBALS['egw_info']['user']['email']);
 
 		return $props;
+	}
+
+	/**
+	 * Get the handler and set the supported fields
+	 *
+	 * @return calendar_ical
+	 */
+	private function _get_handler()
+	{
+		$handler =& new calendar_ical();
+		$handler->setSupportedFields('GroupDAV',$this->agent);
+
+		return $handler;
 	}
 }

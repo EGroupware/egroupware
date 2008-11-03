@@ -291,10 +291,8 @@ class addressbook_groupdav extends groupdav_handler
 	private function _get_handler()
 	{
 		$handler =& new addressbook_vcal();
-		if (strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false)
-		{
-			$handler->setSupportedFields('KDE');
-		}
+		$handler->setSupportedFields('GroupDAV',$this->agent);
+
 		return $handler;
 	}
 

@@ -128,11 +128,11 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet,$_charset);
 
-							if(($extra_charset_attribute || $this->productManufacturer == 'kde') && preg_match('/([\177-\377])/',$value))
+							if(($extra_charset_attribute || $this->productName == 'kde') && preg_match('/([\177-\377])/',$value))
 							{
 								$options['CHARSET'] = $_charset;
 								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
-								if ($this->productManufacturer == 'kde')
+								if ($this->productName == 'kde')
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
@@ -251,7 +251,7 @@ class addressbook_vcal extends addressbook_bo
 			'TITLE'		=> array('title'),
 		);
 
-		$defaultFields[1] = array(	// all entries, nexthaus corporation, ...
+		$defaultFields[1] = array(	// all entries, nexthaus corporation, groupdav, ...
 			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 							'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
@@ -618,8 +618,15 @@ class addressbook_vcal extends addressbook_bo
 				$this->supportedFields = $defaultFields[1];
 				break;
 
-			case 'kde':		// KDE Addressbook via GroupDAV
-				$this->supportedFields = $defaultFields[8];
+			case 'groupdav':		// all GroupDAV access goes through here
+				switch($this->productName)
+				{
+					case 'kde':		// KDE Addressbook
+						$this->supportedFields = $defaultFields[8];
+						break;
+					default:
+						$this->supportedFields = $defaultFields[1];
+				}
 				break;
 
 			// the fallback for SyncML

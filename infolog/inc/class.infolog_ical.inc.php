@@ -32,16 +32,22 @@ class infolog_ical extends infolog_bo
 	);
 
 	/**
+	 * manufacturer and name of the sync-client
+	 *
+	 * @var string
+	 */
+	var $productManufacturer = 'file';
+	var $productName = '';
+
+	/**
 	 * Exports one InfoLog tast to an iCalendar VTODO
 	 *
 	 * @param int $_taskID info_id
-	 * @param string $version='2.0' could be '1.0' too
-	 * @param boolean $force_own_uid=true ignore the stored and maybe from the client transfered uid and generate a new one
-	 * RalfBecker: GroupDAV/CalDAV requires to switch that non RFC conform behavior off, dont know if SyncML still needs it
-	 * @param boolean $extra_charset_attribute=true GroupDAV/CalDAV dont need the charset attribute and some clients have problems with it
+	 * @param string $_version='2.0' could be '1.0' too
+	 * @param string $_method='PUBLISH'
 	 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function exportVTODO($_taskID, $_version='2.0',$force_own_uid=true,$extra_charset_attribute=true)
+	function exportVTODO($_taskID, $_version='2.0',$_method='PUBLISH')
 	{
 		$taskData = $this->read($_taskID);
 
@@ -51,7 +57,7 @@ class infolog_ical extends infolog_bo
 
 		$vcal = &new Horde_iCalendar;
 		$vcal->setAttribute('VERSION',$_version);
-		$vcal->setAttribute('METHOD','PUBLISH');
+		$vcal->setAttribute('METHOD',$_method);
 
 		$vevent = Horde_iCalendar::newComponent('VTODO',$vcal);
 
@@ -68,7 +74,7 @@ class infolog_ical extends infolog_bo
 			{
 				$options['ENCODING'] = 'QUOTED-PRINTABLE';
 			}
-			if($extra_charset_attribute && preg_match('/([\177-\377])/',$value))
+			if($this->productManufacturer != 'GroupDAV' && preg_match('/([\177-\377])/',$value))
 			{
 				$options['CHARSET'] = 'UTF-8';
 			}
@@ -83,7 +89,6 @@ class infolog_ical extends infolog_bo
 		$vevent->setAttribute('DTSTAMP',time());
 		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'add'));
 		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'modify'));
-		//$vevent->setAttribute('UID',$force_own_uid ? $taskGUID : $taskData['info_uid']);
 		$vevent->setAttribute('UID',$taskData['info_uid']);
 		$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 		$vevent->setAttribute('STATUS',$this->status2vtodo($taskData['info_status']));
@@ -374,6 +379,21 @@ class infolog_ical extends infolog_bo
 				}
 		}
 		return FALSE;
+	}
+
+	/**
+	 * Set the supported fields
+	 *
+	 * Currently we only store manufacturer and name
+	 *
+	 * @param string $_productManufacturer
+	 * @param string $_productName
+	 */
+	function setSupportedFields($_productManufacturer='file', $_productName='')
+	{
+		// save them vor later use
+		$this->productManufacturer = $_productManufacturer;
+		$this->productName = $_productName;
 	}
 }
 

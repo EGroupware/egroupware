@@ -69,7 +69,7 @@ class infolog_groupdav extends groupdav_handler
 	            	'path'  => '/infolog/'.$task['info_id'].'.ics',
 	            	'props' => array(
 	            		HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
-	            		HTTP_WebDAV_Server::mkprop('getcontenttype', strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') === false ?
+	            		HTTP_WebDAV_Server::mkprop('getcontenttype',$this->agent != 'kde' ?
 	            			'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar'),	// Konqueror (3.5) dont understand it otherwise
 						// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 						HTTP_WebDAV_Server::mkprop('getlastmodified', $task['info_datemodified']),
@@ -94,7 +94,7 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $task;
 		}
-		$handler = new infolog_ical();
+		$handler = $this->_get_handler();
 		$options['data'] = $handler->exportVTODO($id,'2.0',false,false);	// keep UID the client set and no extra charset attributes
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
@@ -117,7 +117,7 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $ok;
 		}
-		$handler = new infolog_ical();
+		$handler = $this->_get_handler();
 		if (!($info_id = $handler->importVTODO($options['content'],is_numeric($id) ? $id : -1)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
@@ -188,5 +188,18 @@ class infolog_groupdav extends groupdav_handler
 			return false;
 		}
 		return '"'.$info['info_id'].':'.$info['info_datemodified'].'"';
+	}
+
+	/**
+	 * Get the handler and set the supported fields
+	 *
+	 * @return infolog_ical
+	 */
+	private function _get_handler()
+	{
+		$handler =& new infolog_ical();
+		$handler->setSupportedFields('GroupDAV',$this->agent);
+
+		return $handler;
 	}
 }

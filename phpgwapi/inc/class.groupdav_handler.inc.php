@@ -65,6 +65,12 @@ abstract class groupdav_handler
 	 * @var string
 	 */
 	var $http_if_match;
+	/**
+	 * Identified user agent
+	 *
+	 * @var string
+	 */
+	var $agent;
 
 	/**
 	 * Constructor
@@ -78,6 +84,7 @@ abstract class groupdav_handler
 		$this->app = $app;
 		if (!is_null($debug)) $this->debug = $debug;
 		$this->base_uri = is_null($base_uri) ? $base_uri : $_SERVER['SCRIPT_NAME'];
+		$this->agent = self::get_agent();
 
 		$this->translation =& $GLOBALS['egw']->translation;
 		$this->egw_charset = $this->translation->charset();
@@ -258,5 +265,42 @@ abstract class groupdav_handler
 			$handler_cache[$app] = new $class($app,$debug,$base_uri);
 		}
 		return $handler_cache[$app];
+	}
+
+	/**
+	 * Identify know GroupDAV agents by HTTP_USER_AGENT header
+	 *
+	 * @return string|boolean agent name or false
+	 */
+	static function get_agent()
+	{
+		static $agent;
+
+		if (is_null($agent))
+		{
+			$agent = false;
+			// identify the agent (GroupDAV client) from the HTTP_USER_AGENT header
+			$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+			foreach(array(
+				'davkit'            => 'davkit',	// Apple iCal
+				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
+				'zideone'           => 'zideone',	// zideone outlook plugin
+				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
+				'khtml'             => 'kde',		// KDE clients
+				'cadaver'           => 'cadaver',
+			) as $pattern => $name)
+			{
+				if (strpos($user_agent,$pattern) !== false)
+				{
+					$agent = $name;
+					break;
+				}
+			}
+			if (!$agent)
+			{
+				error_log("Unrecogniced GroupDAV client: HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]'!");
+			}
+		}
+		return $agent;
 	}
 }

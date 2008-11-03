@@ -107,12 +107,9 @@ class calendar_ical extends calendar_boupdate
 	 * @param int/array $events (array of) cal_id or array of the events
 	 * @param string $version='1.0' could be '2.0' too
 	 * @param string $method='PUBLISH'
-	 * @param boolean $force_own_uid=true ignore the stored and maybe from the client transfered uid and generate a new one
-	 * RalfBecker: GroupDAV/CalDAV requires to switch that non RFC conform behavior off, dont know if SyncML still needs it
-	 * @param boolean $extra_charset_attribute=true GroupDAV/CalDAV dont need the charset attribute and some clients have problems with it
-	 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
+	 * @return string/boolean string with iCal or false on error (eg. no permission to read the event)
 	 */
-	function &exportVCal($events,$version='1.0', $method='PUBLISH',$force_own_uid=true,$extra_charset_attribute=true)
+	function &exportVCal($events,$version='1.0', $method='PUBLISH')
 	{
 		$egwSupportedFields = array(
 			'CLASS'			=> array('dbName' => 'public'),
@@ -443,7 +440,6 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			//$attributes['UID'] = $force_own_uid ? $eventGUID : $event['uid'];
 			$attributes['UID'] = $event['uid'];
 			foreach($attributes as $key => $value)
 			{
@@ -459,7 +455,7 @@ class calendar_ical extends calendar_boupdate
 					{
 						$options['ENCODING'] = 'QUOTED-PRINTABLE';
 					}
-					if($extra_charset_attribute && preg_match('/([\177-\377])/',$valueData))
+					if($this->productManufacturer != 'GroupDAV' && preg_match('/([\177-\377])/',$valueData))
 					{
 						$options['CHARSET'] = 'UTF-8';
 					}
@@ -1219,6 +1215,14 @@ class calendar_ical extends calendar_boupdate
 
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
 				$this->supportedFields = $defaultFields['full'];
+				break;
+
+			case 'groupdav':		// all GroupDAV access goes through here
+				switch($this->productName)
+				{
+					default:
+						$this->supportedFields = $defaultFields['full'];
+				}
 				break;
 
 			// the fallback for SyncML
