@@ -403,6 +403,13 @@ switch($_POST['action'])
 			{
 				$values['private'] = (int) in_array($values['private'],array(lang('yes'),'yes','private','1','true'));
 			}
+			foreach(array('adr_one_countryname','adr_two_countryname') as $name)
+			{
+				if (strlen($values[$name]) == 2)
+				{
+					$values[$name] = $GLOBALS['egw']->country->get_full_name($values[$name]);
+				}
+			}
 			if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 			{
 				$rvalue=$GLOBALS['egw']->contacts->save($values);
