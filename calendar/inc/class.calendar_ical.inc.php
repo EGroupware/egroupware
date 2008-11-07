@@ -1016,6 +1016,7 @@ class calendar_ical extends calendar_boupdate
 						$this->save_alarm($eventID, $alarm);
 					}
 				}
+				$cal_id = -1;
 			}
 		}
 		return $Ok;
