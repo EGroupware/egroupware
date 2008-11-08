@@ -1669,25 +1669,6 @@ $readonlys['button[vcard]'] = true;
 			$content['msg'] .= lang('Please update the templatename in your customfields section!');
 			$this->tmpl->read('addressbook.edit');
 		}
-		foreach(array('email','email_home','url','url_home') as $name)
-		{
-			if ($content[$name] )
-			{
-				$url = substr($name,0,3) == 'url' ? $content[$name] : $this->email2link($content[$name]);
-				if (!is_array($url))
-				{
-					$this->tmpl->set_cell_attribute($name,'size','b,,1');
-				}
-				elseif ($url)
-				{
-					$content[$name.'_link'] = $url;
-					$this->tmpl->set_cell_attribute($name,'size','b,@'.$name.'_link,,,_blank'.
-						($GLOBALS['egw_info']['user']['apps']['felamimail']?',700x750':''));
-				}
-				$this->tmpl->set_cell_attribute($name,'type','label');
-				$this->tmpl->set_cell_attribute($name,'no_lang',true);
-			}
-		}
 		if ($this->private_addressbook && $content['private'] && $content['owner'] == $this->user)
 		{
 			$content['owner'] .= 'p';
