@@ -23,7 +23,7 @@
  *	4. optionally re-implement: get_title, get_subject, get_body, get_attachments, get_link, get_notification_link, get_message
  * They are all documented in this file via phpDocumentor comments.
  */
-class bo_tracking
+abstract class bo_tracking
 {
 	/**
 	 * Application we are tracking
@@ -145,7 +145,6 @@ class bo_tracking
 	 *
 	 * Need to be implemented in your extended tracking class!
 	 *
-	 * @abstract
 	 * @param string $what possible values are:
 	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
 	 *  - 'lang' string lang code for copy mail
@@ -156,7 +155,7 @@ class bo_tracking
 	 */
 	function get_config($name,$data,$old=null)
 	{
-		die('You need to extend the bo_tracking class, to be able to use it (abstract base class)!');
+		return null;
 	}
 
 	/**
@@ -501,7 +500,8 @@ class bo_tracking
 		{
 			if (strpos($link,$this->id_field.'=') === false)
 			{
-				$link .= '&'.$this->id_field.'='.$data[$this->id_field];
+				$link .= strpos($link,'?') === false ? '?' : '&';
+				$link .= $this->id_field.'='.$data[$this->id_field];
 			}
 		}
 		else
@@ -512,7 +512,7 @@ class bo_tracking
 				$popup = egw_link::is_popup($this->app,'view');
 			}
 		}
-		if ($link{0} == '/')
+		if ($link[0] == '/')
 		{
 			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
 				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;

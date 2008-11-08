@@ -84,7 +84,7 @@ class addressbook_tracking extends bo_tracking
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @return mixed
 	 */
-	function get_config($name,$data,$old)
+	function get_config($name,$data,$old=null)
 	{
 		//echo "<p>addressbook_tracking::get_config($name,".print_r($data,true).",...)</p>\n";
 		switch($name)

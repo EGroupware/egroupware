@@ -124,22 +124,6 @@ class infolog_tracking extends bo_tracking
 	}
 
 	/**
-	 * Get a notification-config value
-	 *
-	 * @param string $what
-	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
-	 *  - 'lang' string lang code for copy mail
-	 *  - 'sender' string send email address
-	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @return mixed
-	 */
-	function get_config($name,$data,$old)
-	{
-		return null;
-	}
-
-	/**
 	 * Get the subject for a given entry
 	 *
 	 * Reimpleneted to use a New|deleted|modified prefix.
