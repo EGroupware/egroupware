@@ -588,6 +588,7 @@ use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML 
 user	setup	de	Benutzer
 user account prefix	setup	de	Präfix für Benutzernamen
 user for smtp-authentication (leave it empty if no auth required)	setup	de	Benutzer für SMTP-Authentifizierung (leer lassen wenn keine notwendig ist)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	de	Benutzernamen (mit Komma getrennt) die VFS root Zugriff bekommen können (neben dem Setup Benutzer)
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	de	Normalerweise mehr ärgerlich als nützlich<br />

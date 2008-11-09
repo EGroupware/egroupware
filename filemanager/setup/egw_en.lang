@@ -4,6 +4,7 @@
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	en	%1 errors copying (%2 diretories and %3 files copied)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	en	%1 errors deleteting (%2 directories and %3 files deleted)!
 %1 errors moving (%2 files moved)!	filemanager	en	%1 errors moving (%2 files moved)!
+%1 failed, %2 succeded	filemanager	en	%1 failed, %2 succeded
 %1 files copied.	filemanager	en	%1 files copied.
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
@@ -59,6 +60,8 @@ display of content	filemanager	en	Display of content
 download	filemanager	en	Download
 edit comments	filemanager	en	Edit comments
 edit settings	filemanager	en	Edit settings
+enter setup user and password	filemanager	en	Enter setup user and password
+enter setup user and password to get root rights	filemanager	en	Enter setup user and password to get root rights
 enter the complete vfs path to specify a fast access link to a folder	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder
 enter the complete vfs path to specify your desired start folder.	filemanager	en	Enter the complete VFS path to specify your desired start folder.
 error adding the acl!	filemanager	en	Error adding the ACL!
@@ -67,6 +70,7 @@ error uploading file!	filemanager	en	Error uploading file!
 executable	filemanager	en	Executable
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
+failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
 failed to create directory!	filemanager	en	Failed to create directory!
 file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
@@ -90,6 +94,7 @@ id	filemanager	en	Id
 inherited	filemanager	en	Inherited
 link %1: %2	filemanager	en	Link %1: %2
 location	filemanager	en	Location
+log out as superuser	filemanager	en	Log out as superuser
 max folderlinks	admin	en	max folderlinks
 maximum size for uploads	filemanager	en	Maximum size for uploads
 mime type	filemanager	en	mime type
@@ -107,7 +112,7 @@ only owner can rename or delete the content	filemanager	en	Only owner can rename
 operation	filemanager	en	Operation
 permission denied!	filemanager	en	Permission denied!
 permissions	filemanager	en	Permissions
-permissions changed for %1.	filemanager	en	Permissions changed for %1.
+permissions of %1 changed.	filemanager	en	Permissions of %1 changed.
 please select a file to delete.	filemanager	en	Please select a file to delete.
 preview	filemanager	en	Preview
 preview %1	filemanager	en	Preview %1
@@ -123,6 +128,8 @@ renamed %1 to %2	filemanager	en	Renamed %1 to %2
 renamed %1 to %2.	filemanager	en	Renamed %1 to %2.
 replaced %1	filemanager	en	Replaced %1
 rights	filemanager	en	Rights
+root access granted.	filemanager	en	Root access granted.
+root access stoped.	filemanager	en	Root access stoped.
 save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing
 save changes	filemanager	en	Save changes
@@ -136,6 +143,7 @@ show	filemanager	en	Show
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to filemanagers basedirectory (/) in side box menu?
 size	filemanager	en	Size
 start search	filemanager	en	start search
+superuser	filemanager	en	Superuser
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
 total files	filemanager	en	Total Files
@@ -144,6 +152,7 @@ up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
 used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
+wrong username or password!	filemanager	en	Wrong username or password!
 you do not have access to %1	filemanager	en	You do not have access to %1
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!

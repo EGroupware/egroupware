@@ -586,6 +586,7 @@ use pure html compliant code (not fully working yet)	setup	en	Use pure HTML comp
 user	setup	en	user
 user account prefix	setup	en	User account prefix
 user for smtp-authentication (leave it empty if no auth required)	setup	en	User for SMTP-authentication (leave it empty if no auth required)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	en	Usernames (comma-separated) which can get VFS root access (beside setup user)
 usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	en	Usually more annoying.<br />Admins can use Admin >> Manage accounts or groups to give access to further apps.

@@ -4,6 +4,7 @@
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	de	%1 Fehler beim Kopieren (%2 Verzeichnisse und %3 Dateien kopiert)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	de	%1 Fehler beim Löschen (%2 Verzeichnisse und %3 Dateien gelöscht)!
 %1 errors moving (%2 files moved)!	filemanager	de	%1 Fehler beim Verschieben (%2 Dateien verschoben)!
+%1 failed, %2 succeded	filemanager	de	%1 fehlgeschlagen, %2 erfolgreich
 %1 files copied.	filemanager	de	%1 Dateien kopiert.
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht.
 %1 files moved.	filemanager	de	%1 Dateien verschoben.
@@ -59,6 +60,8 @@ display of content	filemanager	de	Anzeigen des Inhaltes
 download	filemanager	de	Herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Einstellungen bearbeiten
+enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
+enter setup user and password to get root rights	filemanager	de	Setup Benutzers und Passwort einzugeben um root Rechte zu bekommen
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
@@ -67,6 +70,7 @@ error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 executable	filemanager	de	Ausführbar
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte ACL
+failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
 file	filemanager	de	Datei
 file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte editieren Sie diese, oder löschen Sie sie.
@@ -90,6 +94,7 @@ id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
 location	filemanager	de	Ort
+log out as superuser	filemanager	de	Superuser abmelden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
 maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
 mime type	filemanager	de	MIME-Typ
@@ -107,7 +112,7 @@ only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann
 operation	filemanager	de	Vorgang
 permission denied!	filemanager	de	Zugriff verweigert!
 permissions	filemanager	de	Zugriffsrechte
-permissions changed for %1.	filemanager	de	Zugriffsrechte für %1 geändert.
+permissions of %1 changed.	filemanager	de	Zugriffsrechte von %1 geändert.
 please select a file to delete.	filemanager	de	Bitte wählen Sie eine Datei zum löschen aus
 preview	filemanager	de	Vorschau
 preview %1	filemanager	de	Vorschau %1
@@ -123,6 +128,8 @@ renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
 renamed %1 to %2.	filemanager	de	%1 nach %2 umbenannt.
 replaced %1	filemanager	de	%1 ersetzt
 rights	filemanager	de	Rechte
+root access granted.	filemanager	de	Root Zugriff gewährt.
+root access stoped.	filemanager	de	Root Zugriff gestopt.
 save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern, und zurück zur Verzeichnisansicht
 save changes	filemanager	de	Änderungen speichern
@@ -136,6 +143,7 @@ show	filemanager	de	Zeige
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenu?
 size	filemanager	de	Größe
 start search	filemanager	de	Suche starten
+superuser	filemanager	de	Superuser
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr perönlicher Ordner. Die Vorgabe wird benutzt, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwending Zugriffsrechte fehlen.
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
 total files	filemanager	de	Gesamtanzahl Dateien
@@ -144,6 +152,7 @@ up	filemanager	de	Nach oben
 updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
 used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
+wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1
 you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!

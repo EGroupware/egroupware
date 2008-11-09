@@ -33,6 +33,35 @@ class filemanager_ui
 		{
 			$_GET = etemplate::array_stripslashes($_GET);
 		}
+		// do we have root rights
+		if (egw_session::appsession('is_root','filemanager'))
+		{
+			egw_vfs::$is_root = true;
+		}
+	}
+
+	/**
+	 * Make the current user (vfs) root
+	 *
+	 * The user/pw is either the setup config user or a specially configured vfs_root user
+	 *
+	 * @param string $user='' setup config user to become root or '' to log off as root
+	 * @param string $password=null setup config password to become root
+	 */
+	private function sudo($user='',$password=null)
+	{
+		if (!$user)
+		{
+			$is_root = false;
+		}
+		else
+		{
+			$is_root = egw_session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'] ||	// config user&password
+				$GLOBALS['egw_info']['server']['vfs_root_user'] && 							// vfs root user from setup >> configuration
+				in_array($user,split(', *',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
+				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
+		}
+		return egw_session::appsession('is_root','filemanager',egw_vfs::$is_root = $is_root);
 	}
 
 	/**
@@ -521,6 +550,13 @@ class filemanager_ui
 			$path =& $content['path'];
 
 			list($button) = @each($content['button']); unset($content['button']);
+			if ($button == 'sudo' || $content['sudo']['user'])
+			{
+				$msg = $this->sudo($content['sudo']['user'],$content['sudo']['passwd']) ? lang('Root access granted.') :
+					($content['sudo']['user'] ? lang('Wrong username or password!') : lang('Root access stoped.'));
+				unset($content['sudo']);
+				$content['is_owner'] = egw_vfs::has_owner_rights($path);
+			}
 			if (in_array($button,array('save','apply')))
 			{
 				$props = array();
@@ -550,20 +586,47 @@ class filemanager_ui
 							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
 							$cmd = array('egw_vfs',$name2cmd[$name]);
 							$value = $name == 'perms' ? self::perms2mode($content['perms']) : $content[$name];
-							if ($content['modify_subs'] && $name == 'perms')
+							if ($content['modify_subs'])
 							{
-								egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
-								egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
+								if ($name == 'perms')
+								{
+									$changed = egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
+									$changed += egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
+								}
+								else
+								{
+									$changed = egw_vfs::find($path,null,$cmd,array($value));
+								}
+								$ok = $failed = 0;
+								foreach($changed as $p => $r)
+								{
+									if ($r)
+									{
+										++$ok;
+									}
+									else
+									{
+										++$failed;
+									}
+								}
+								if ($ok && !$failed)
+								{
+									$msg .= lang('Permissions of %1 changed.',$path.' '.lang('and all it\'s childeren'));
+								}
+								elseif($failed)
+								{
+									$msg .= lang('Failed to change permissions of %1!',$path.lang('and all it\'s childeren').
+										($ok ? ' ('.lang('%1 failed, %2 succeded',$failed,$ok).')' : ''));
+								}
 							}
-							elseif ($content['modify_subs'])
+							elseif (call_user_func_array($cmd,array($path,$value)))
 							{
-								egw_vfs::find($path,null,$cmd,array($value));
+								$msg .= lang('Permissions of %1 changed.',$path);
 							}
 							else
 							{
-								call_user_func_array($cmd,array($path,$value));
+								$msg .= lang('Failed to change permissions of %1!',$path);
 							}
-							$msg .= lang('Permissions changed for %1.',$path.($content['modify_subs']?' '.lang('and all it\'s childeren'):''));
 						}
 					}
 				}
@@ -628,8 +691,11 @@ class filemanager_ui
 				$readonlys['perms['.$name.']'] = true;
 			}
 		}
-		$readonlys['name'] = !egw_vfs::is_writable($content['dir']);
+		$readonlys['name'] = $path == '/' || !egw_vfs::is_writable($content['dir']);
 		$readonlys['comment'] = !egw_vfs::is_writable($path);
+
+		// if neither owner nor is writable --> disable save&apply
+		$readonlys['button[save]'] = $readonlys['button[apply]'] = !$content['is_owner'] && !egw_vfs::is_writable($path);
 
 		if (!($cfs = config::get_customfields('filemanager')))
 		{
@@ -687,6 +753,15 @@ class filemanager_ui
 				$preserve['old']['#'.$name] = (string)$content['#'.$name];
 			}
 		}
+		if (egw_vfs::$is_root)
+		{
+			$sudo_button =& $tpl->get_widget_by_name('sudo');
+			$sudo_button = etemplate::empty_cell('button','button[sudo]',array(
+				'label' => 'Logout',
+				'help'  => 'Log out as superuser',
+				'align' => 'right',
+			));
+		}
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.$path;
 
@@ -716,7 +791,7 @@ class filemanager_ui
 	 */
 	private function perms2mode(array $perms)
 	{
-		$mode = $perms['owner'] << 6 | $perms['group'] << 3 | $prems['other'];
+		$mode = $perms['owner'] << 6 | $perms['group'] << 3 | $perms['other'];
 		if ($mode['executable'])
 		{
 			$mode |= 0111;

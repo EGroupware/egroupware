@@ -199,7 +199,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.file" template="" lang="" group="0" version="1.5.003">
+	<template id="filemanager.file" template="" lang="" group="0" version="1.5.004">
 		<grid>
 			<columns>
 				<column/>
@@ -228,15 +228,52 @@
 				</row>
 				<row>
 					<hbox>
-						<button label="Save" id="button[save]"/>
-						<button id="button[apply]" label="Apply"/>
-						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
+						<hbox>
+							<button label="Save" id="button[save]"/>
+							<button id="button[apply]" label="Apply"/>
+							<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
+						</hbox>
+						<buttononly label="Superuser" align="right" statustext="Enter setup user and password to get root rights" onclick="set_style_by_class('fieldset','superuser','display','inline'); document.getElementById(form::name('sudo[user]')).focus();" id="sudo"/>
 					</hbox>
+				</row>
+				<row>
+					<groupbox class="superuser">
+						<caption label="Enter setup user and password"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="User" options=",,,sudo[user]"/>
+									<textbox id="sudo[user]"/>
+								</row>
+								<row>
+									<description value="Password" options=",,,sudo[passwd]"/>
+									<passwd id="sudo[passwd]"/>
+								</row>
+								<row>
+									<description/>
+									<button label="Submit" id="button[setup]"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
 				</row>
 			</rows>
 		</grid>
 		<styles>
 			.eaclAccount select,.eaclRights select { width: 160px; }
+.superuser { 
+  position: absolute; 
+  top: 130px; 
+  left: 120px; 
+  width: 200px; 
+  background-color: white;
+  z-index: 1;
+  display: none;
+}
 		</styles>
 	</template>
 </overlay>

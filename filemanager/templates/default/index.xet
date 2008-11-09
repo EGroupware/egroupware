@@ -45,7 +45,7 @@
 					<description id="${row}[comment]"/>
 					<customfields-list readonly="true" id="$row"/>
 					<hbox align="right">
-						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=400,scrollbars=yes,status=yes'); return false;"/>
+						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
 						<button id="delete[$row_cont[path]]" image="delete" label="Delete" statustext="Delete this file or directory" onclick="return confirm('Delete this file or directory');" align="center"/>
 						<checkbox id="checked[]" align="right" options="$row_cont[path]"/>
 					</hbox>
@@ -53,7 +53,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.5.002">
+	<template id="filemanager.index" template="" lang="" group="0" version="1.5.003">
 		<grid width="100%">
 			<columns>
 				<column width="250"/>
@@ -71,6 +71,7 @@
 						<textbox id="nm[path]" size="80" label="Path" onchange="1" class="address"/>
 						<button id="button[go]" image="key_enter" label="Go to"/>
 						<image src="buttonseparator"/>
+						<button image="edit" label="Edit settings" id="edit[{$cont[nm][path]}]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
 						<button id="button[createdir]" image="button_createdir" label="Create directory" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;"/>
 						<button id="button[paste]" image="editpaste" statustext="$cont[paste_tooltip]"/>
 					</hbox>
