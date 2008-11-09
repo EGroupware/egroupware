@@ -41,10 +41,16 @@ else
 {
 	$g_srcfile = egw_link::vfs_path($_GET['app'],$_GET['id'],$_GET['file']);
 }
+if (!file_exists($g_srcfile) || !egw_vfs::is_readable($g_srcfile))
+{
+	//error_log("file_exists('$g_srcfile')=".(int)file_exists($g_srcfile).", egw_vfs::is_readable('$g_srcfile')=".(int)egw_vfs::is_readable($g_srcfile));
+	header('404 Not found');
+	exit;
+}
 $g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw-thumbs'.parse_url($g_srcfile,PHP_URL_PATH);
 
 // Check for existing thumbnail
-if(file_exists($g_dstfile) && filemtime($g_dstfile) >= filemtime($g_srcfile)) {
+if(filemtime($g_dstfile) >= filemtime($g_srcfile)) {
 	header('Content-Type: image/png');
 	readfile($g_dstfile);
 	return;
