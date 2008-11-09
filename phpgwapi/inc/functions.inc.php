@@ -123,9 +123,15 @@ print_debug('domain',@$GLOBALS['egw_info']['user']['domain'],'api');
 // the egw-object instanciates all sub-classes (eg. $GLOBALS['egw']->db) and the egw_info array
 $GLOBALS['egw'] = new egw(array_keys($GLOBALS['egw_domain']));
 
+// store domain config user&pw as a hash (originals get unset)
+$GLOBALS['egw_info']['server']['config_hash'] = egw_session::user_pw_hash($GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['config_user'],
+	$GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['config_passwd'],true);
+
 if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && !$GLOBALS['egw_info']['server']['show_domain_selectbox'])
 {
-	unset ($GLOBALS['egw_domain']); // we kill this for security reasons
+	unset($GLOBALS['egw_domain']); // we kill this for security reasons
+	unset($GLOBALS['egw_info']['server']['header_admin_user']);
+	unset($GLOBALS['egw_info']['server']['header_admin_password']);
 }
 
 // saving the the egw_info array and the egw-object in the session

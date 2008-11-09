@@ -1301,6 +1301,27 @@ class egw_session
 		}
 	}
 
+	/**
+	 * Create a hash from user and pw
+	 *
+	 * Can be used to check setup config user/password inside egroupware:
+	 *
+	 * if (egw_session::user_pw_hash($user,$pw) === $GLOBALS['egw_info']['server']['config_hash'])
+	 *
+	 * @param string $user username
+	 * @param string $password password or md5 hash of password if $allow_password_md5
+	 * @param boolean $allow_password_md5=false can password alread be an md5 hash
+	 * @return string
+	 */
+	static function user_pw_hash($user,$password,$allow_password_md5=false)
+	{
+		$password_md5 = $allow_password_md5 && preg_match('/^[a-f0-9]{32}$/',$password) ? $password : md5($password);
+
+		$hash = sha1(strtolower($user).$password_md5);
+		//echo "<p>".__METHOD__."('$user','$password',$allow_password_md5) sha1('".strtolower($user)."$password_md5')='$hash'</p>\n";
+		return $hash;
+	}
+
 	/*
 	 * Funtions to access the used session-handler, specified in header.inc.php: $GLOBALS['egw_info']['server']['session_handler']
 	 */
