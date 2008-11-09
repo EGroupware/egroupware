@@ -227,13 +227,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		else
 		{
-			if ($mode != 'r' && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))	// we are not allowed to edit it
+			if ($mode == 'r' && !egw_vfs::check_access($url,egw_vfs::READABLE ,$stat) ||// we are not allowed to read
+				$mode != 'r' && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))	// or edit it
 			{
 				self::_remove_password($url);
-				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
+				$op = $mode == 'r' ? 'read' : 'edited';
+				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be $op!");
 				if (!($options & STREAM_URL_STAT_QUIET))
 				{
-					trigger_error(__METHOD__."($url,$mode,$options) file can not be edited!",E_USER_WARNING);
+					trigger_error(__METHOD__."($url,$mode,$options) file can not be $op!",E_USER_WARNING);
 				}
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
 				return false;
@@ -790,7 +792,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			trigger_error("No such file or directory $url !",E_USER_WARNING);
 			return false;
 		}
-		if (!egw_vfs::$is_root && $stat['uid'] != egw_vfs::$user)
+		if (!egw_vfs::has_owner_rights($path,$stat))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) only owner or root can do that!");
 			trigger_error("Only owner or root can do that!",E_USER_WARNING);
@@ -831,7 +833,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			trigger_error("No such file or directory $url !",E_USER_WARNING);
 			return false;
 		}
-		if (!egw_vfs::$is_root && $stat['uid'] != egw_vfs::$user)
+		if (!egw_vfs::has_owner_rights($path,$stat))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) only owner or root can do that!");
 			trigger_error("Only owner or root can do that!",E_USER_WARNING);
