@@ -1,7 +1,7 @@
 %define packagename eGroupware
 %define egwdirname egroupware
 %define egwversion 1.6
-%define packaging rc3
+%define packaging rc4
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -29,7 +29,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Mandriva %{?mandriva_version}
 	%define php php
-	%define extra_requires httpd php-mysql php-dom
+	%define extra_requires apache2 php-mysql php-dom
 	%define cron crontabs
 %endif
 %if 0%{?rhel_version}
@@ -484,7 +484,8 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 
 %post
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
-	chcon "user_u:object_r:httpd_sys_content_t" /var/lib/egroupware -Rc
+	chcon -R -u user_u -r object_r -t httpd_sys_content_t /var/lib/egroupware
+	setsebool -P httpd_can_network_connect=1
 %endif
 %postun
 
@@ -729,6 +730,9 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 
 
 %changelog
+* Sun Nov 9 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc4
+- eGroupware 1.6.rc4 4. release candidate for 1.6 release
+
 * Wed Oct 29 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc3
 - eGroupware 1.6.rc3 3. release candidate for 1.6 release
 
