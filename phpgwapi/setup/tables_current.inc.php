@@ -306,7 +306,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('sync_id'),
 		'fk' => array(),
-		'ix' => array('sync_added','sync_modified','sync_deleted','sync_guid','sync_changedby',array('sync_appname','sync_contentid')),
+		'ix' => array('sync_added','sync_modified','sync_deleted','sync_changedby',array('sync_appname','sync_contentid')),
 		'uc' => array()
 	),
 	'egw_links' => array(
