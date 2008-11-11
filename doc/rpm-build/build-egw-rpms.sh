@@ -82,19 +82,19 @@ then
 			svn checkout -r $SVNREVISION $SVNURL"$CONTRIBMODULE"
 		fi
 	done
-else											# updating an existing checkout in the build-root
+else
+	[ -z "$SVNREVISION" ] && SVNREVISION=HEAD
 	echo -n "Updating existing checkout ... "					>> $LOGFILE 2>&1
 	cd egroupware
-	svn update -r HEAD . *
+	svn update -r $SVNREVISION . *
 fi
 
 cd $ANONCVSDIR
 
 echo "done"										>> $LOGFILE 2>&1
 
-echo -n "Change directory rights back ... "						>> $LOGFILE 2>&1
-find . -type d -exec chmod 755 {} \;
-find . -type f -exec chmod 644 {} \;
+echo -n "Change directory rights back ... "		>> $LOGFILE 2>&1
+chmod -R u=rwX,g=rX,o=rX .						>> $LOGFILE 2>&1
 echo "done"										>> $LOGFILE 2>&1
 
 echo -n "Starting anti virus scan ... "							>> $LOGFILE 2>&1
@@ -121,11 +121,11 @@ done
 echo "done"										>> $LOGFILE 2>&1
 
 echo -n "building zip ... "								>> $LOGFILE 2>&1
-find $ONLY_CONTRIB > /tmp/exclude.list
-zip -q -r -9 $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING.zip egroupware -x@/tmp/exclude.list	>> $LOGFILE 2>&1
 for CONTRIBMODULE in $EXTRAPACKAGES; do
 	zip -q -r -9 $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING.zip egroupware/$CONTRIBMODULE 	>> $LOGFILE 2>&1
 done
+rm -rf $ONLY_CONTRIB >> $LOGFILE 2>&1
+zip -q -r -9 $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING.zip egroupware >> $LOGFILE 2>&1
 echo "done"										>> $LOGFILE 2>&1
 
 echo "Building tar.gz, tar.bz and zip archives finnished"				>> $LOGFILE 2>&1
