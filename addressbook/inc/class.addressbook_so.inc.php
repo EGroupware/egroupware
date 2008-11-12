@@ -128,7 +128,7 @@ class addressbook_so
 	 * In SQL we can search all columns, though a view make on real sense
 	 */
 	var $sql_cols_not_to_search = array(
-		'jpegphoto','owner','tid','private','id','cat_id',
+		'jpegphoto','owner','tid','private','id','cat_id','etag',
 		'modified','modifier','creator','created','tz','account_id',
 	);
 	/**
