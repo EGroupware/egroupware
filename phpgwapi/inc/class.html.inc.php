@@ -126,8 +126,8 @@ class html
 		{
 			foreach($options as $option => $value)
 			{
-				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_numeric($value)?$value:"'".str_replace(array("'",'"'),array("\\'",'&quot;'),$value)."'").'; ';
-
+				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_bool($value)?($value?'true':'false'):
+					(is_numeric($value)?$value:"'".str_replace(array("'",'"'),array("\\'",'&quot;'),$value)."'")).'; ';
 			}
 		}
 		if ($text === False) return ' onmouseover="'.$opt_out.'return escape(this.innerHTML);"';
