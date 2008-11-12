@@ -83,14 +83,23 @@ class calendar_uiforms extends calendar_ui
 		{
 			$owner = $this->owner;
 		}
+
 		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' ||
 			!$this->bo->check_perms(EGW_ACL_ADD,0,$owner))
 		{
 			if ($owner)	// make an owner who is no user or we have no add-rights a participant
 			{
-				foreach(explode(',',$owner) as $uid)
+				// if we come from ressources we don't need any users selected in calendar
+				if (!isset($_GET['participants']) || $_GET['participants'][0] != 'r')
 				{
-					if (is_numeric($uid)) $extra_participants[] = $uid;	// dont add eg. all resources of the displayed category
+					foreach(explode(',',$owner) as $uid)
+					{
+						// only add users or a single ressource, not all ressources displayed by a category
+						if (is_numeric($uid) || $owner == $uid)
+						{
+							$extra_participants[] = $uid;
+						}
+					}
 				}
 			}
 			$owner = $this->user;
