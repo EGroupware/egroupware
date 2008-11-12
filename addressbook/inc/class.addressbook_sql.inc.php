@@ -242,7 +242,7 @@ class addressbook_sql extends so_sql
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
 		if (($cats = $filter['cat_id']))
 		{
-			if ($filter['cat_id']{0} == '!')
+			if ($filter['cat_id'][0] == '!')
 			{
 				$filter['cat_id'] = substr($filter['cat_id'],1);
 				$not = 'NOT';
@@ -277,7 +277,7 @@ class addressbook_sql extends so_sql
 		{
 			foreach($criteria as $col => $val)
 			{
-				if ($col{0} == '#')	// search for a value in a certain custom field
+				if ($col[0] == '#')	// search for a value in a certain custom field
 				{
 					$valarray=array();
 					# val may be a list of values, constructed by multiple select fields, to be able to do the contains feature of adv-search
