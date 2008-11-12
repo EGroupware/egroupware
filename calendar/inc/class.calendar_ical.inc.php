@@ -212,7 +212,7 @@ class calendar_ical extends calendar_boupdate
 										break;
 								};
 								$parameters['ATTENDEE'][] = array(
-									'CN'       => $info['cn'] ? $info['cn'] : $info['name'],
+									'CN'       => '"'.($info['cn'] ? $info['cn'] : $info['name']).'"',
 									'ROLE'     => $role,
 									'PARTSTAT' => $status,
 									'CUTYPE'   => $cutype,
@@ -231,8 +231,8 @@ class calendar_ical extends calendar_boupdate
         					{
 								$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 								$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
-								$parameters['ORGANIZER']['CN'] = trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
-									$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname'));
+								$parameters['ORGANIZER']['CN'] = '"'.trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
+									$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')).'"';
         					}
 							break;
 
@@ -800,7 +800,14 @@ class calendar_ical extends calendar_boupdate
 							}
 							$searcharray = array();
 							if ($email) $searcharray = array('email' => $email, 'email_home' => $email);
-							if (isset($attributes['params']['CN']) && $attributes['params']['CN']) $searcharray['n_fn'] = $attributes['params']['CN'];
+							if (isset($attributes['params']['CN']) && $attributes['params']['CN'])
+							{
+								if($attributes['params']['CN'][0] == '"' && substr($attributes['params']['CN'],-1) == '"')
+								{
+									$attributes['params']['CN'] = substr($attributes['params']['CN'],1,-1);
+								}
+								$searcharray['n_fn'] = $attributes['params']['CN'];
+							}
 							if (($uid = $attributes['params']['X-EGROUPWARE-UID']) &&
  								($info = $this->resource_info($uid)) && (!$email || $info['email'] == $email))
  							{
