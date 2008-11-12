@@ -612,6 +612,7 @@ class filemanager_ui
 								if ($ok && !$failed)
 								{
 									$msg .= lang('Permissions of %1 changed.',$path.' '.lang('and all it\'s childeren'));
+									$content['old'][$name] = $content[$name];
 								}
 								elseif($failed)
 								{
@@ -622,6 +623,7 @@ class filemanager_ui
 							elseif (call_user_func_array($cmd,array($path,$value)))
 							{
 								$msg .= lang('Permissions of %1 changed.',$path);
+								$content['old'][$name] = $content[$name];
 							}
 							else
 							{
