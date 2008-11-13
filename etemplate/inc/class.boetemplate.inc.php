@@ -271,13 +271,11 @@ class boetemplate extends soetemplate
 	 */
 	protected function get_appsession($id)
 	{
-		$data = $GLOBALS['egw']->session->appsession($id,'etemplate');
+		$data = egw_session::appsession($id,'etemplate');
 		//echo "boetemplate::get_appsession('$id')"; _debug_array($data);
 
-		if (substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4')
-		{
-			self::php_session_garbage_collection($id);
-		}
+		self::php_session_garbage_collection($id);
+
 		return $data;
 	}
 
@@ -292,10 +290,8 @@ class boetemplate extends soetemplate
 	 */
 	static private function php_session_garbage_collection($id_used='')
 	{
-		if (!defined('EGW_SESSION_VAR')) return;	// for 1.0.0 compatibility
-
 		// now we are on php4 sessions and do a bit of garbage collection
-		$app_sessions =& $_SESSION[EGW_SESSION_VAR]['app_sessions']['etemplate'];
+		$app_sessions =& $_SESSION[egw_session::EGW_APPSESSION_VAR]['etemplate'];
 		$session_used =& $app_sessions['session_used'];
 
 		if ($id_used)
@@ -316,10 +312,10 @@ class boetemplate extends soetemplate
 
 			if (!$time) continue;	// other data, no session
 
-			//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".strlen($app_sessions[$id])."<br>\n";
+			//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".egw_vfs::hsize(strlen(serialize($app_sessions[$id])))."<br>\n";
 
 			if ($session_used[$id] == 1 && $time < $now - 10*6000 || // session used and older then 10min
-				$time < $now - 60*6000)	// session not used and older then 1h
+				$time < $now - 30*6000)	// session not used and older then 30min
 			{
 				//echo "<p>boetemplate::php_session_garbage_collection('$id_used'): unsetting session '$id' (now=$now)</p>\n";
 				unset($app_sessions[$id]);
