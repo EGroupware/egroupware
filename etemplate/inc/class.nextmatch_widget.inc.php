@@ -261,6 +261,7 @@ class nextmatch_widget
 			}
 		}
 		// save values in persistent extension_data to be able use it in post_process
+		unset($value['rows']);
 		$extension_data += $value;
 
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
@@ -308,6 +309,7 @@ class nextmatch_widget
 			// presetting the options for selectcols empty, so the get_rows function can set it
 			$value['options-selectcols'] = array();
 		}
+		$rows = array();
 		if (!is_object($obj) || !method_exists($obj,$method))
 		{
 			$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
@@ -315,24 +317,26 @@ class nextmatch_widget
 		else
 		{
 			if (!is_array($readonlys)) $readonlys = array();
-			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
-
-			// allow the get_rows function to override / set sel_options
-			if (isset($value['rows']['sel_options']) && is_array($value['rows']['sel_options']))
-			{
-				$tmpl->sel_options = array_merge($tmpl->sel_options,$value['rows']['sel_options']);
-				unset($value['rows']['sel_options']);
-			}
+			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
 		}
 		if ($method && $total && $value['start'] >= $total)
 		{
 			$value['start'] = 0;
-			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
 		}
-		if (is_array($value['rows'][0]))	// fixed 0 based arrays
+		// allow the get_rows function to override / set sel_options
+		if (isset($rows['sel_options']) && is_array($value['rows']['sel_options']))
 		{
-			array_unshift($value['rows'],false);
+			$tmpl->sel_options = array_merge($tmpl->sel_options,$rows['sel_options']);
+			unset($rows['sel_options']);
 		}
+		if (is_array($rows[0]))	// fixed 0 based arrays
+		{
+			array_unshift($rows,false);
+		}
+		$value['rows'] =& $rows;
+		unset($rows);
+
 		list($template,$options) = explode(',',$cell['size']);
 		if (!$value['template'] && $template)	// template name can be supplied either in $value['template'] or the options-field
 		{
