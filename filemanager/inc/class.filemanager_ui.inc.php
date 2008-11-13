@@ -653,7 +653,7 @@ class filemanager_ui
 				if ($content['eacl']['delete'])
 				{
 					list($ino_owner) = each($content['eacl']['delete']);
-					list($ino,$owner) = explode('-',$ino_owner);
+					list($ino,$owner) = explode('-',$ino_owner,2);	// $owner is a group and starts with a minus!
 					$msg .= egw_vfs::eacl($path,null,$owner) ? lang('ACL deleted.') : lang('Error deleting the ACL entry!');
 				}
 				elseif ($button == 'eacl')
