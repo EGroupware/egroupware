@@ -38,7 +38,7 @@ class boetemplate extends soetemplate
 		'html'	=> 'Html',			// Raw html in $content[$cell['name']]
 		'file'	=> 'FileUpload',	// show an input type='file', set the local name as ${name}_path
 		'vbox'	=> 'VBox',			// a (vertical) box to contain widgets in rows, size = # of rows
-		'hbox'	=> 'HBox',			// a (horizontal) box to contain widgets in cols, size = # of cols 
+		'hbox'	=> 'HBox',			// a (horizontal) box to contain widgets in cols, size = # of cols
 		'groupbox' => 'GroupBox',	// a box with a label containing other elements to group them (html: fieldset)
 		'box'	=> 'Box',			// just a container for widgets (html: div)
 		'grid'	=> 'Grid',			// tabular widget containing rows with columns of widgets
@@ -76,7 +76,7 @@ class boetemplate extends soetemplate
 	/**
 	 * checks if a grid row or column is disabled
 	 *
-	 * Expression: [!][@]val[=[@]check] 
+	 * Expression: [!][@]val[=[@]check]
 	 * Parts in square brackets are optional, a ! negates the expression, @val evaluates to $content['val']
 	 * if no =check is given all set non-empty and non-zero strings are true (standard php behavior)
 	 *
@@ -212,7 +212,7 @@ class boetemplate extends soetemplate
 			}
 			else
 			{
-				$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' || 
+				$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' ||
 					substr($pat,0,4) == 'row_');
 			}
 		}
@@ -280,7 +280,7 @@ class boetemplate extends soetemplate
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * a little bit of garbage collection for php4 sessions (their size is limited by memory_limit)
 	 *
@@ -297,7 +297,7 @@ class boetemplate extends soetemplate
 		// now we are on php4 sessions and do a bit of garbage collection
 		$app_sessions =& $_SESSION[EGW_SESSION_VAR]['app_sessions']['etemplate'];
 		$session_used =& $app_sessions['session_used'];
-		
+
 		if ($id_used)
 		{
 			//echo "session_used[$id_used]='".$session_used[$id_used]."'<br/>\n";
@@ -313,9 +313,9 @@ class boetemplate extends soetemplate
 		foreach(array_keys($app_sessions) as $id)
 		{
 			list($app,$time) = explode(':',$id);
-			
+
 			if (!$time) continue;	// other data, no session
-			
+
 			//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".strlen($app_sessions[$id])."<br>\n";
 
 			if ($session_used[$id] == 1 && $time < $now - 10*6000 || // session used and older then 10min
@@ -354,14 +354,14 @@ class boetemplate extends soetemplate
 
 		$extra = array(false,$name,$attr,$val);
 		$result =& $this->widget_tree_walk('set_cell_attribute_helper',$extra);
-		
+
 		if (is_null($val))
 		{
 			return $result;
 		}
 		return $extra[0];
 	}
-	
+
 	/**
 	 *  disables all cells with name == $name
 	 *
@@ -373,7 +373,7 @@ class boetemplate extends soetemplate
 	{
 		return $this->set_cell_attribute($name,'disabled',$disabled);
 	}
-	
+
 	/**
 	 * set one or more attibutes for row $n
 	 *
@@ -399,7 +399,7 @@ class boetemplate extends soetemplate
 		$valign = $valign !== 0 ? $valign : $old_valign;
 		$grid_attr["c$n"] = ($class !== 0 ? $class : $old_class).
 			($valign ? ','.$valign : '');
-			
+
 		list($height,$disabled) = explode(',',$grid_attr["h$n"]);
 		list($class,$valign) = explode(',',$grid_attr["c$n"]);
 		return array($height,$class,$valign,$disabled);
@@ -435,12 +435,12 @@ class boetemplate extends soetemplate
 		$grid =& $this->get_widget_by_path($path);
 		if (is_null($grid) || $grid['type'] != 'grid') return false;
 		$grid_attr =& $grid['data'][0];
-		
+
 		list($old_width,$old_disabled) = explode(',',$grid_attr[$c]);
 		$disabled = $disabled !== 0 ? $disabled : $old_disabled;
 		$grid_attr[$c] = ($width !== 0 ? $width : $old_width).
 			($disabled ? ','.$disabled : '');
-			
+
 		//echo "set_column_attributes('$c',,'$path'): ".$grid_attr[$c]."</p>\n"; _debug_array($grid_attr);
 		return explode(',',$grid_attr[$c]);
 	}
@@ -524,8 +524,13 @@ class boetemplate extends soetemplate
 		{
 			return False;
 		}
-		return $GLOBALS['egw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,
-			$GLOBALS['egw_info']['etemplate']['extension_data'][$name],$this);
+		// only supply extension data for non-readonly widgets or if it's already set
+		// otherwise lists store >10k unnecessary data in each etemplate-session
+		if (!($cell['readonly'] || $readonlys) || isset($GLOBALS['egw_info']['etemplate']['extension_data'][$name]))
+		{
+			$extension_data =& $GLOBALS['egw_info']['etemplate']['extension_data'][$name];
+		}
+		return $GLOBALS['egw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,$extension_data,$this);
 	}
 
 	/**
@@ -652,7 +657,7 @@ class boetemplate extends soetemplate
 		}
 		return $pos;
 	}
-	
+
 	/**
 	 * unsets $arr[$idx]
 	 *
@@ -681,7 +686,7 @@ class boetemplate extends soetemplate
 	/**
 	 * merges $old and $new, content of $new has precedence over $old
 	 *
-	 * THIS IS NOT THE SAME AS PHP's functions: 
+	 * THIS IS NOT THE SAME AS PHP's functions:
 	 * - array_merge, as it calls itself recursive for values which are arrays.
 	 * - array_merge_recursive accumulates values with the same index and $new does NOT overwrite $old
 	 *
@@ -710,11 +715,11 @@ class boetemplate extends soetemplate
 		}
 		return $old;
 	}
-	
+
 	/**
 	 * returns a reference to a widget in the widget's children tree spezified by a path
 	 *
-	 * The path get's generated by the widget_tree_walk() methode and consists of the keys of the children arrays. 
+	 * The path get's generated by the widget_tree_walk() methode and consists of the keys of the children arrays.
 	 * For the 3. Column in the 2. row of a grid which is the only widget in the children-tree it is eg.: "/0/2C"
 	 *
 	 * @param string $path path in the widget tree
@@ -887,7 +892,7 @@ class boetemplate extends soetemplate
 		else
 		{
 			$pname = &$name;
-		}	
+		}
 		if (empty($pname))
 		{
 			return False;
@@ -949,7 +954,7 @@ class boetemplate extends soetemplate
 
 		return soetemplate::delete();
 	}
-	
+
 	/**
 	 * initialise our static vars
 	 */
@@ -967,7 +972,7 @@ if (!function_exists('set_cell_attribute_helper'))
 		// extra = array(0=>n,1=>name,2=>attr,3=>value)
 		if ($widget['name'] == $extra[1])
 		{
-			if (is_null($extra[3])) 
+			if (is_null($extra[3]))
 			{
 				$extra['__RETURN_NOW__'] = true;	// wouldnt work otherwise, if attr is not yet set == null
 				return $widget[$extra[2]];
@@ -976,19 +981,19 @@ if (!function_exists('set_cell_attribute_helper'))
 			++$extra[0];
 		}
 	}
-	
+
 	function &get_widget_by_name_helper(&$widget,$extra)
 	{
 		if ($widget['name'] == $extra) return $widget;
 	}
-	
+
 	function &get_widget_by_path_helper(&$widget,$extra,$path)
 	{
 		//echo "<p>path_searched='$extra', widget-path($widget[type]:$widget[name])='$path'</p>\n";
 		if ($path == $extra) return $widget;
 	}
 
-	function &get_widgets_by_type_helper(&$widget, &$extra) 
+	function &get_widgets_by_type_helper(&$widget, &$extra)
 	{
 		//echo '<br />get_widgets_by_type_helper(' . $widget['name'] . ',' . $extra['type'] . ')<br />';
 		if($widget['type'] == $extra['type']) {
