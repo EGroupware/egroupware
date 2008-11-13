@@ -38,6 +38,13 @@ if (!defined('PHP_SHLIB_PREFIX'))
  * There are separate session-handler classes: egw_session_(files|memcache),
  * which implement custom session handler or certain extra functionality, like eg. listing sessions,
  * not available in php's session extension.
+ *
+ * If you want to analyse the memory usage in the session, you can uncomment the following call:
+ *
+ * 	static function encrypt($kp3)
+ *	{
+ *		// switch that on to analyse memory usage in the session
+ *		//self::log_session_usage($_SESSION[self::EGW_APPSESSION_VAR],'_SESSION['.self::EGW_APPSESSION_VAR.']',true,5000);
  */
 class egw_session
 {
@@ -241,21 +248,6 @@ class egw_session
 	 */
 	function __destruct()
 	{
-		/* foreach($GLOBALS['egw'] as $name => &$value)
-		{
-			$len = strlen(serialize($value));
-			if ($len > 1000) error_log(__METHOD__."() strlen($name)=$len, diff=".($len-(int)$_SESSION['lens'][$name]));
-			$_SESSION['lens'][$name] = $len;
-			if ($name == 'session')
-			{
-				foreach($value as $n => &$v)
-				{
-					$len = strlen(serialize($v));
-					if ($len > 1000) error_log(__METHOD__."() strlen(session->$n)=$len, diff=".($len-(int)$_SESSION['lens-sess'][$n]));
-					$_SESSION['lens-sess'][$n] = $len;
-				}
-			}
-		}*/
 		self::encrypt($this->kp3);
 	}
 
@@ -297,6 +289,9 @@ class egw_session
 	 */
 	static function encrypt($kp3)
 	{
+		// switch that on to analyse memory usage in the session
+		//self::log_session_usage($_SESSION[self::EGW_APPSESSION_VAR],'_SESSION['.self::EGW_APPSESSION_VAR.']',true,5000);
+
 		if (!isset($_SESSION[self::EGW_SESSION_ENCRYPTED]) && self::init_crypt($kp3))
 		{
 			foreach(self::$egw_session_vars as $name)
@@ -311,6 +306,36 @@ class egw_session
 
 			mcrypt_generic_deinit(self::$mcrypt);
 			self::$mcrypt = null;
+		}
+	}
+
+	/**
+	 * Log the usage of session-vars
+	 *
+	 * @param array &$arr
+	 * @param string $label
+	 * @param boolean $recursion=true if true call itself for every item > $limit
+	 * @param int $limit=1000 log only differences > $limit
+	 */
+	static function log_session_usage(&$arr,$label,$recursion=true,$limit=1000)
+	{
+		if (!is_array($arr)) return;
+
+		$sizes = array();
+		foreach($arr as $key => &$data)
+		{
+			$sizes[$key] = strlen(serialize($data));
+		}
+		arsort($sizes,SORT_NUMERIC);
+		foreach($sizes as $key => $size)
+		{
+			$diff = $size - (int)$_SESSION[$label.'-sizes'][$key];
+			$_SESSION[$label.'-sizes'][$key] = $size;
+			if ($diff > $limit)
+			{
+				error_log("strlen({$label}[$key])=".egw_vfs::hsize($size).", diff=".egw_vfs::hsize($diff));
+				if ($recursion) self::log_session_usage($arr[$key],$label.'['.$key.']',$recursion,$limit);
+			}
 		}
 	}
 
@@ -533,7 +558,7 @@ class egw_session
 				if ($reason)	// called hook requests to deny the session
 				{
 					$this->reason = $this->cd_reason = $reason;
-					$this->log_access($this->reason,$login,$user_ip,0);		// log unsuccessfull login
+					$this->log_access($this->reason,$login,$user_ip,0		);		// log unsuccessfull login
 					return false;
 				}
 			}
