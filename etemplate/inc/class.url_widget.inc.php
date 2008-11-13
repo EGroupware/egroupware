@@ -80,7 +80,7 @@ class url_widget
 	{
 		$readonly = $cell['readonly'] || $readonlys;
 
-		switch($extension_data = $cell['type'])
+		switch($cell['type'])
 		{
 			case 'url-email':	// size: size,max-size,{2=no validation,1=rfc822 name part allowed, default only email},default if value empty
 				list($size,$max_size,$validation_type,$default) = explode(',',$cell['size'],4);	// 4 = allow default to contain commas
