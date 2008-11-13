@@ -211,7 +211,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (!$stmt->execute() || !($this->opened_fs_id = self::$pdo->lastInsertId('egw_sqlfs_fs_id_seq')))
 			{
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
-				error_log(__METHOD__."($url,$mode,$options) execute() failed: ".self::$pdo->errorInfo());
+				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) execute() failed: ".self::$pdo->errorInfo());
 				return false;
 			}
 			if ($this->operation == self::STORE2DB)
@@ -891,7 +891,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$options): ".implode(', ',$this->opened_dir));
-		//print_r($this->opened_dir);
 		reset($this->opened_dir);
 
 		return true;
@@ -991,7 +990,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		self::$stat_cache[$path] = $info;
 
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags)=".str_replace("\n",'',print_r($info,true)));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags)=".array2string($info));
 		return self::_vfsinfo2stat($info);
 	}
 
@@ -1100,7 +1099,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				break;
 			}
 		}
-		//error_log(__METHOD__."($url,$check) ".($access?"access granted by $path=$rights":'no access!!!'));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$check) ".($access?"access granted by $path=$rights":'no access!!!'));
 		return $access;
 	}
 
@@ -1130,7 +1129,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		// sort by length descending, to allow more specific pathes to have precedence
 		uksort(self::$extended_acl,create_function('$a,$b','return strlen($b)-strlen($a);'));
 		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);
-		//echo __METHOD__; print_r(self::$extended_acl);
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'() '.array2string(self::$extended_acl));
 	}
 
 	/**
@@ -1245,7 +1244,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function id2path($fs_ids)
 	{
-		//error_log(__METHOD__.'('.print_r($fs_id,true).')');
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($fs_id).')');
 		$ids = (array)$fs_ids;
 		$pathes = array();
 		// first check our stat-cache for the ids
@@ -1257,7 +1256,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				unset($ids[$key]);
 				if (!$ids)
 				{
-					//error_log(__METHOD__.'('.print_r($fs_ids,true).')='.print_r($pathes,true).' *from stat_cache*');
+					if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($fs_ids).')='.array2string($pathes).' *from stat_cache*');
 					return is_array($fs_ids) ? $pathes : array_shift($pathes);
 				}
 			}
@@ -1298,7 +1297,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 			$pathes[$fs_id] = $parent . '/' . $row['fs_name'];
 		}
-		//error_log(__METHOD__.'('.print_r($fs_ids,true).')='.print_r($pathes,true));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($fs_ids).')='.array2string($pathes));
 		return is_array($fs_ids) ? $pathes : array_shift($pathes);
 	}
 
@@ -1324,7 +1323,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			// eGW addition to return the mime type
 			'mime'  => $info['fs_mime'],
 		);
-		//error_log(__METHOD__."($info[name]) = ".print_r($stat,true));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($info[name]) = ".array2string($stat));
 		return $stat;
 	}
 
@@ -1514,7 +1513,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function proppatch($path,array &$props)
 	{
-		error_log(__METHOD__."(".array2string($path).','.array2string($props));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."(".array2string($path).','.array2string($props));
 		if (!is_numeric($path))
 		{
 			if (!($stat = self::url_stat($path,0)))
@@ -1583,7 +1582,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				if (!($stat = self::url_stat($id,0)))
 				{
-					error_log(__METHOD__."(".array2string($path_ids).",$depth,$ns) path '$id' not found!");
+					if (self::LOG_LEVEL) error_log(__METHOD__."(".array2string($path_ids).",$depth,$ns) path '$id' not found!");
 					return false;
 				}
 				$id = $stat['ino'];
@@ -1619,7 +1618,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				unset($props[$id]);
 			}
 		}
-		//foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
+		if (self::LOG_LEVEL > 1) foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
 		return $props;
 	}
 }
