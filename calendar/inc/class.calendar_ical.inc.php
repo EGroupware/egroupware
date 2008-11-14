@@ -927,9 +927,10 @@ class calendar_ical extends calendar_boupdate
 				}
 
 				// add ourself to new events as participant
- 				if($cal_id == -1 && !isset($this->supportedFields['participants']))
+ 				if ($cal_id == -1 && (!isset($this->supportedFields['participants']) ||
+ 					!isset($event['participants'][$GLOBALS['egw_info']['user']['account_id']])))
  				{
-					$event['participants'] = array($GLOBALS['egw_info']['user']['account_id'] => 'A');
+					$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'A';
  				}
 
 				// If this is an updated meeting, and the client doesn't support
