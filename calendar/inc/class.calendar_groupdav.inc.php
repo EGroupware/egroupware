@@ -211,7 +211,7 @@ class calendar_groupdav extends groupdav_handler
 				}
 				else
 				{
-					$cal_filters['query']['uid'] = basename($id,'.ics');
+					$cal_filters['query']['cal_uid'] = basename($id,'.ics');
 				}
 
 			}
