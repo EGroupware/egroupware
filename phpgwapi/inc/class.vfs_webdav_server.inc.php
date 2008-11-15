@@ -132,7 +132,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		$info['props'] = array();
 
 		// no special beautified displayname here ...
-		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', strtoupper($path));
+		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', egw_vfs::basename(self::_unslashify($path)));
 
 		// creation and modification time
 		$info['props'][] = HTTP_WebDAV_Server::mkprop	('creationdate',    filectime($fspath));
