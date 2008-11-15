@@ -75,6 +75,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert "application/octet-stream"
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 authentication type for application	setup	de	Authentifizierungstyp für die Anwendung
+authentification mode:	setup	de	Art der Authentifizierung:
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifizierte Benutzer automatisch anlegen
 auto login anonymous user	setup	de	Anonymen Benutzer automatisch einlogen
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab in
@@ -103,12 +104,17 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verfügbar-Eintrag für diese Applikation auf 0 gesetzt oder undefiniert ist
 bottom	setup	de	unten
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br /><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong>
+ca certificate	setup	de	CA Zertifikat
 can not connect to %1 database %2 on host %3 using user %4!	setup	de	Kann nicht zur %1 Datenbank %2 auf Rechner %3 als Benutzer %4 verbinden!
 can not connect to ldap server on host %1 using dn %2!	setup	de	Kann nicht zu LDAP Server auf Rechner %1 als DN %2 verbinden!
 can not create %1 database %2 on %3 for user %4!	setup	de	Kann keine %1 Datenbank %2 auf Rechner %3 für Benutzer %4 anlegen!
 can not create dn %1!	setup	de	Kann DN %1 nicht anlegen!
 cancel	setup	de	Abbrechen
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br />Stattdessen können Sie die Datei %1 oder %2.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	de	CAS Server Host Name: (z.B.: sso-cas-univ-rennes1.fr):
+cas server port:<br />example: 443	setup	de	CAS Server Port (zB. 443):
+cas server uri:	setup	de	CAS Server URI:
+certificate (pem or ca):	setup	de	Zertifikat (PEM oder CA):
 change system-charset	setup	de	Systemzeichensatz wechseln
 charset	setup	de	utf-8
 charset to convert to	setup	de	Zeichensatz in den konvertiert werden soll
@@ -291,6 +297,7 @@ if no acl records for user or any group the user is a member of	setup	de	Wenn es
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann eGW verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Anwendung keine definierten Tabellen hat, wählen Sie überarbeiten. Das Problem sollte damit behoben werden.
 if using ads (active directory) authentication	setup	de	Wenn Sie ADS (Active Directory) Authentifizierung benutzen
+if using cas (central authentication service):	setup	de	Wenn Sie CAS (Central Authentication Service) benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzern Sie hier den Pfad für temporäre Dateien.
@@ -412,7 +419,10 @@ path to various directories: have to exist and be writeable by the webserver	set
 pear (%1) is a php repository and is usually in a package called %2.	setup	de	PEAR (%1) ist eine PHP Sammlung und ist überlicherweise in einem Packet namens %2.
 pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	de	PEAR Erweiterungen werden von vielen eGroupware Anwendungen benötigt, PEAR selbst ist die Basis für diese Erweiterungen!
 pear%1 is needed by: %2.	setup	de	PEAR%1 wird benötigt von: %2.
+pem certificate	setup	de	PEM Zertifikat
 persistent connections	setup	de	Permanente Verbindungen
+php client	setup	de	PHP Klient
+php proxy	setup	de	PHP Proxy
 php session handler enabled in php.ini	setup	de	PHP Sitzungshandler aus der php.ini
 please check for sql scripts within the application's directory	setup	de	Bitte suchen Sie ein SQL Skript im Verzeichnis der Anwendung
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen Sie die Lese/Schreib-Rechte der Verzeichnisse oder gehen Sie zurück und benutzen eine andere Option.
@@ -500,6 +510,7 @@ smtp server port	setup	de	SMTP Server Port
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sources deleted/missing	setup	de	Quellen gelöscht/fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
+ssl validation:	setup	de	SSL Validierung:
 standard (login-name identical to egroupware user-name)	setup	de	Standard (Loginname identisch zu eGroupWare Benutzername)
 standard mailserver settings (used for mail authentication too)	setup	de	Standard Mailserver Einstellungen (werden auch für die Mail Authentifizierung benutzt)
 standard, as defined above	setup	de	Standard, wie darüber definiert

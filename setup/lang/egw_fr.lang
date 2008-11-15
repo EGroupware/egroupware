@@ -638,3 +638,15 @@ your tables will be dropped and you will lose data	setup	fr	Vos tables seront su
 your temporary directory '%1' %2	setup	fr	Votre répertoire temporaire '%1' %2
 {db | php(default) | php-restore}	setup	fr	{db | php(par défaut) | php-restore}
 {off(default) | on}	setup	fr	{off(par défaut) | on}
+authentification mode:	setup	fr	Mode d'authentification :
+ca certificate	setup	fr	Certificat CA
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	fr	Nom du serveur CAS hôte :<br />Exemple : sso-cas.univ-rennes1.fr
+cas server port:<br />Example: 443	setup	fr	Port du serveur CAS :<br />Exemple : 443
+cas server uri:	setup	fr	URI du serveur CAS :
+certificate (pem or ca):	setup	fr	Certificat (PEM ou CA) :
+if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
+pem certificate	setup	fr	Certificat PEM
+php client	setup	fr	php Client
+php proxy	setup	fr	php Proxy
+ssl validation:	setup	fr	Validation SSL :
+

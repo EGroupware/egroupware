@@ -1,40 +1,92 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare login                                                         *
-	* http://www.egroupware.org                                                *
-	* Originaly written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	*                      Joseph Engo    <jengo@phpgroupware.org>             *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
+/**
+ * eGroupWare - Login
+ *
+ * @link http://www.egroupware.org
+ * @author Dan Kuykendall <seek3r@phpgroupware.org>
+ * @author Joseph Engo <jengo@phpgroupware.org>
+ * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
+ * @package api
+ * @subpackage authentication
+ * @version $Id$
+ */
 
-	/* $Id$ */
+$submit = False;			// set to some initial value
 
-	$submit = False;			// set to some initial value
+$GLOBALS['egw_info'] = array('flags' => array(
+	'disable_Template_class'  => True,
+	'login'                   => True,
+	'currentapp'              => 'login',
+));
 
-	$GLOBALS['egw_info'] = array('flags' => array(
-		'disable_Template_class'  => True,
-		'login'                   => True,
-		'currentapp'              => 'login',
-	));
-
-	if(file_exists('./header.inc.php'))
-	{
-		include('./header.inc.php');
-		if(!function_exists('CreateObject'))
-		{
-			Header('Location: setup/index.php');
-			exit;
-		}
-	}
-	else
+if(file_exists('./header.inc.php'))
+{
+	include('./header.inc.php');
+	if(!function_exists('CreateObject'))
 	{
 		Header('Location: setup/index.php');
 		exit;
 	}
+}
+else
+{
+	Header('Location: setup/index.php');
+	exit;
+}
+
+// CAS :
+if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
+{
+	ob_end_clean();
+
+	require_once('CAS/CAS.php');
+
+	//phpCAS::setDebug('/var/log/log_phpcas.php');
+
+	if($GLOBALS['egw_info']['server']['cas_authentication_mode'] == 'Proxy')
+	{
+		phpCAS::proxy(CAS_VERSION_2_0,
+			$GLOBALS['egw_info']['server']['cas_server_host_name'],
+			(int) $GLOBALS['egw_info']['server']['cas_server_port'],
+			$GLOBALS['egw_info']['server']['cas_server_uri'] );
+	}
+	else
+	{
+		phpCAS::client(CAS_VERSION_2_0,
+			$GLOBALS['egw_info']['server']['cas_server_host_name'],
+			(int) $GLOBALS['egw_info']['server']['cas_server_port'],
+			$GLOBALS['egw_info']['server']['cas_server_uri'] );
+	}
+
+	if($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'PEMCertificate')
+	{
+		// Set the certificate of the CAS server (PEM Certificate)
+		phpCAS::setCasServerCert($GLOBALS['egw_info']['server']['cas_cert']);
+	}
+	elseif($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'CACertificate')
+	{
+		// Set the CA certificate of the CAS server
+		phpCAS::setCasServerCACert($GLOBALS['egw_info']['server']['cas_cert']);
+	}
+	elseif($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'No')
+	{
+		// no SSL validation for the CAS server
+		phpCAS::setNoCasServerValidation();
+	}
+
+	phpCAS::forceAuthentication();
+
+	ob_start();
+
+	$login = phpCAS::getUser();
+	$password = phpCAS::retrievePT("imap://".$GLOBALS['egw_info']['server']['mail_server'],$err_code,$output);
+	$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$password,'text','u');
+
+	/* set auth_cookie */
+	$GLOBALS['egw']->redirect_link($forward,$extra_vars);
+}
+else
+{
 	$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
 
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
@@ -345,3 +397,4 @@
 	}
 
 	$GLOBALS['egw']->framework->login_screen($extra_vars);
+}

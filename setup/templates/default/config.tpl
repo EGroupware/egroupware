@@ -216,6 +216,7 @@
       <option value="http"{selected_auth_type_http}>HTTP</option>
       <option value="nis"{selected_auth_type_nis}>NIS</option>
       <option value="pam"{selected_auth_type_pam}>PAM</option>
+      <option value="cas"{selected_auth_type_cas}>CAS</option>
      </select>
     </td>
    </tr>
@@ -462,6 +463,55 @@
       <li>{lang_Account_repository_need_to_be_set_to_the_one_you_migrate_to!}</li>
       <li>{lang_You_need_to_save_the_settings_you_made_here_first!}</li>
     </td>
+   </tr>
+
+   <tr class="th">
+    <td colspan="2"><b>{lang_If_using_CAS_(Central_Authentication_Service):}</b></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_CAS_server_host_name:<br />Example:_sso-cas.univ-rennes1.fr}</td>
+    <td><input name="newsettings[cas_server_host_name]" value="{value_cas_server_host_name}" size="40" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_CAS_server_port:<br />Example:_443}</td>
+    <td><input name="newsettings[cas_server_port]" value="{value_cas_server_port}" size="40" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_CAS_server_uri:}</td>
+    <td><input name="newsettings[cas_server_uri]" value="{value_cas_server_uri}" size="40" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Authentification_mode:}</td>
+    <td>
+     <select name="newsettings[cas_authentication_mode]">
+      <option value="Client"{selected_cas_authentication_mode_Client}>{lang_php_Client}</option>
+      <option value="Proxy"{selected_cas_authentication_mode_Proxy}>{lang_php_Proxy}</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_SSL_validation:}</td>
+    <td>
+     <select name="newsettings[cas_ssl_validation]">
+      <option value="No"{selected_cas_ssl_validation_No}>{lang_No}</option>
+      <option value="PEMCertificate"{selected_cas_ssl_validation_PEMCertificate}>{lang_PEM_Certificate}</option>
+      <option value="CACertificate"{selected_cas_ssl_validation_CACertificate}>{lang_CA_Certificate}</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Certificate_(PEM_or_CA):}</td>
+    <td><input name="newsettings[cas_cert]" value="{value_cas_cert}" size="40" /></td>
+   </tr>
+
+   <tr class="row_on">
+    <td colspan="2">&nbsp;</td>
    </tr>
 
    <tr class="th">

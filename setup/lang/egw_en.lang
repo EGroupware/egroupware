@@ -75,6 +75,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 authentication / accounts	setup	en	Authentication / Accounts
 authentication type for application	setup	en	Authentication type for application
+authentification mode:	setup	en	Authentification mode:
 auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
 auto login anonymous user	setup	en	Auto login anonymous user
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
@@ -103,12 +104,17 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
 bottom	setup	en	bottom
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>
+ca certificate	setup	en	CA certificate
 can not connect to %1 database %2 on host %3 using user %4!	setup	en	Can not connect to %1 database %2 on host %3 using user %4!
 can not connect to ldap server on host %1 using dn %2!	setup	en	Can not connect to LDAP server on host %1 using DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	en	Can not create %1 database %2 on %3 for user %4!
 can not create dn %1!	setup	en	Can not create DN %1!
 cancel	setup	en	Cancel
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br /> Instead you can %1 or %2 the file.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	en	cas server host name:<br />example: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	en	cas server port:<br />Example: 443
+cas server uri:	setup	en	cas server uri:
+certificate (pem or ca):	setup	en	Certificate (PEM or CA):
 change system-charset	setup	en	Change system-charset
 charset	setup	en	utf-8
 charset to convert to	setup	en	Charset to convert to
@@ -289,6 +295,7 @@ if no acl records for user or any group the user is a member of	setup	en	If no A
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
 if using ads (active directory) authentication	setup	en	If using ADS (Active Directory) authentication
+if using cas (central authentication service):	setup	en	if using cas (Central Authentication Service):
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	en	If you can only access the docroot choose <b>Database</b> for where to store the file content AND use same path as for temporary files.
@@ -410,7 +417,10 @@ path to various directories: have to exist and be writeable by the webserver	set
 pear (%1) is a php repository and is usually in a package called %2.	setup	en	PEAR (%1) is a PHP repository and is usually in a package called %2.
 pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	en	PEAR extensions are required by many eGroupware applications, PEAR itself is the required basis for each extension!
 pear%1 is needed by: %2.	setup	en	PEAR%1 is needed by: %2.
+pem certificate	setup	en	PEM certificate
 persistent connections	setup	en	Persistent connections
+php client	setup	en	PHP client
+php proxy	setup	en	PHP proxy
 php session handler enabled in php.ini	setup	en	PHP session handler enabled in php.ini
 please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
@@ -498,6 +508,7 @@ smtp server port	setup	en	SMTP server port
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 sources deleted/missing	setup	en	Sources deleted/missing
 sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
+ssl validation:	setup	en	SSL validation:
 standard (login-name identical to egroupware user-name)	setup	en	standard (login-name identical to eGroupWare user-name)
 standard mailserver settings (used for mail authentication too)	setup	en	Standard mailserver settings (used for Mail authentication too)
 standard, as defined above	setup	en	Standard, as defined above
