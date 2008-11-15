@@ -1158,12 +1158,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			if (!($stat = self::url_stat($path,0)))
 			{
-				error_log(__METHOD__."($path,$rights,$owner,$fs_id) no such file or directory!");
+				if (self::LOG_LEVEL) error_log(__METHOD__."($path,$rights,$owner,$fs_id) no such file or directory!");
 				return false;	// $path not found
 			}
 			if (!egw_vfs::has_owner_rights($path,$stat))		// not group dir and user is eGW admin
 			{
-				error_log(__METHOD__."($path,$rights,$owner,$fs_id) permission denied!");
+				if (self::LOG_LEVEL) error_log(__METHOD__."($path,$rights,$owner,$fs_id) permission denied!");
 				return false;	// permission denied
 			}
 			$fs_id = $stat['ino'];
@@ -1195,7 +1195,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);
 		}
-		//error_log(__METHOD__."($path,$rights,$owner,$fs_id)=".(int)$ret);
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$rights,$owner,$fs_id)=".(int)$ret);
 		return $ret;
 	}
 
