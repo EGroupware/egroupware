@@ -566,7 +566,16 @@ class filemanager_ui
 					{
 						if ($name == 'name')
 						{
-							if (egw_vfs::rename($path,$to = egw_vfs::concat($content['dir'],$content['name'])))
+							$to = egw_vfs::concat($content['dir'],$content['name']);
+							if (file_exists(egw_vfs::PREFIX.$to) && $content['confirm_overwrite'] !== $to)
+							{
+								$tpl->set_validation_error('name',lang("There's already a file with that name!").'<br />'.
+									lang('To overwrite the existing file store again.',lang($button)));
+								$content['confirm_overwrite'] = $to;
+								if ($button == 'save') $button = 'apply';
+								continue;
+							}
+							if (egw_vfs::rename($path,$to))
 							{
 								$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
 								$content['old']['name'] = $content[$name];
@@ -768,21 +777,6 @@ class filemanager_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.$path;
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
-	}
-
-	/**
-	 * Check if the rename target exists and would be overwritten
-	 *
-	 * @param string $source
-	 * @param string $target
-	 * @return string
-	 */
-	static public function ajax_check_rename_target($source,$target)
-	{
-		$response = new xajaxResponse();
-		$response->addAlert("source='$source' --> target='$target'");
-
-		return $response->getXML();
 	}
 
 	/**

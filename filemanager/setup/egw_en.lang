@@ -146,6 +146,8 @@ start search	filemanager	en	start search
 superuser	filemanager	en	Superuser
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
+there's already a file with that name!	filemanager	en	There's already a file with that name!
+to overwrite the existing file store again.	filemanager	en	To overwrite the existing file store again.
 total files	filemanager	en	Total Files
 unused space	filemanager	en	Unused space
 up	filemanager	en	Up

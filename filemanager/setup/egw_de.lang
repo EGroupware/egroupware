@@ -146,6 +146,8 @@ start search	filemanager	de	Suche starten
 superuser	filemanager	de	Superuser
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr perönlicher Ordner. Die Vorgabe wird benutzt, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwending Zugriffsrechte fehlen.
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
+there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
+to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
 total files	filemanager	de	Gesamtanzahl Dateien
 unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
