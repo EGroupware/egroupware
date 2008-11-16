@@ -161,8 +161,7 @@ class Horde_SyncML_Sync {
 			if (is_a($command, 'Horde_SyncML_Command_Sync_Add')) {
 				$guid = $registry->call($hordeType . '/import',
 					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
-				
-				if (!is_a($guid, 'PEAR_Error')) {
+				if (!is_a($guid, 'PEAR_Error') && $guid != false) {
 					$ts = $state->getSyncTSforAction($guid, 'add');
 					$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
 					$state->log("Client-Add");
@@ -201,7 +200,6 @@ class Horde_SyncML_Sync {
 						$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
 						Horde::logMessage('SyncML: replaced entry due to client request guid: ' .$guid. ' ts: ' .$ts, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 						$state->log("Client-Replace");
-						error_log("done_replace");
 						$ok = true;
 					} else {
 						// Entry may have been deleted; try adding it.
