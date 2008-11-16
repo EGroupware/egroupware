@@ -128,10 +128,21 @@ class infolog_ical extends infolog_bo
 		return $this->write($taskData);
 	}
 
-	function searchVTODO($_vcalData)
+	function searchVTODO($_vcalData, $contentID=null)
 	{
 		if(!$egwData = $this->vtodotoegw($_vcalData)) {
 			return false;
+		}
+    
+		$myfilter = array('col_filter' => array('info_uid'=>$egwData['info_uid'])) ;
+		if ($egwData['info_uid'] && ($found=parent::search($myfilter)) && ($uidmatch = array_shift($found)))
+		{
+			return $uidmatch['info_id'];
+		};
+		unset($egwData['info_uid']);
+    		
+		if ($contentID) {
+			$egwData['info_id'] = $contentID;
 		}
 
 		#unset($egwData['info_priority']);
@@ -223,6 +234,12 @@ class infolog_ical extends infolog_bo
 								$taskData['info_id'] = $uid_task['id'];
 								unset($uid_task);
 							}
+							// not use weak uids that might come from syncml clients
+							if (isset($event['uid']) && (strlen($event['uid']) < 20 || is_numeric($event['uid'])))
+							{
+								unset ($event['uid']);
+							}	
+							
 							break;
 						case 'PERCENT-COMPLETE':
 							$taskData['info_percent'] = (int) $attributes['value'];
@@ -300,13 +317,16 @@ class infolog_ical extends infolog_bo
 		return $this->write($note);
 	}
 
-	function searchVNOTE($_vcalData, $_type)
+	function searchVNOTE($_vcalData, $_type, $contentID=null)
 	{
-		if(!$note = $this->vnotetoegw($_vcalData)) {
+		if(!$note = $this->vnotetoegw($_vcalData,$_type)) {
 			return false;
 		}
+		if ($contentID) {
+			$note['info_id'] = $contentID;
+		}
 
-		$filter = array('col_filter' => $egwData);
+		$filter = array('col_filter' => $note);
 		if($foundItems = $this->search($filter)) {
 			if(count($foundItems) > 0) {
 				$itemIDs = array_keys($foundItems);
@@ -335,6 +355,8 @@ class infolog_ical extends infolog_bo
 				}
 				else
 				{
+					// should better be imported as subject, but causes duplicates
+					// TODO: should be examined
 					$note['info_des'] = $txt;
 				}
 

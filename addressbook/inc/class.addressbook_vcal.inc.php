@@ -170,10 +170,14 @@ class addressbook_vcal extends addressbook_bo
 		return $result;
 	}
 
-	function search($_vcard)
+	function search($_vcard, $contentID=null)
 	{
 		if(!($contact = $this->vcardtoegw($_vcard))) {
 			return false;
+		}
+
+		if ($contentID) {
+			$contact['contact_id'] = $contentID;
 		}
 
 		unset($contact['private']);

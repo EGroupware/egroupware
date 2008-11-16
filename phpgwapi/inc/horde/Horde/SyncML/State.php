@@ -1000,7 +1000,7 @@ class Horde_SyncML_State {
         case 'text/x-vcalendar':
         case 'text/x-vevent':
         case 'text/x-vtodo':
-            $content = preg_replace('/^UID:.*\n/m', '', $content, 1);
+            // $content = preg_replace('/^UID:.*\n/m', '', $content, 1);
             break;
         }
 
@@ -1023,7 +1023,7 @@ class Horde_SyncML_State {
         case 'text/x-vcalendar':
         case 'text/x-vevent':
         case 'text/x-vtodo':
-            $content = preg_replace('/^UID:.*\n/m', '', $content, 1);
+            // $content = preg_replace('/^UID:.*\n/m', '', $content, 1);
             break;
         }
 

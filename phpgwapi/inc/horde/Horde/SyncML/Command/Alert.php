@@ -112,9 +112,9 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	    Horde::logMessage("SyncML: Anchor match, TwoWaySync since " . $clientlast, __FILE__, __LINE__, PEAR_LOG_DEBUG);
         	} else {
         	    Horde::logMessage("SyncML: Anchor mismatch, enforcing SlowSync clientlast $clientlast serverlast ".$this->_metaAnchorLast, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-        	    // Mismatch, enforce slow sync.
+        	    // Mismatch, enforce slow sync.  508=RESPONSE_REFRESH_REQUIRED 201=ALERT_SLOW_SYNC
         	    $this->_alert = 201;
-        	    $code = 508;
+        	    $code = 508;  
         	    // create new synctype
 		    $sync = &Horde_SyncML_Sync::factory($this->_alert);
 		    $sync->_targetLocURI = $this->_targetLocURI;
@@ -122,7 +122,9 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 		    if(isset($this->_targetLocURIParameters))
 		    	$sync->_targetLocURIParameters = $this->_targetLocURIParameters;
 		    $state->setSync($this->_targetLocURI, $sync);
-		    $state->removeAllUID($this->_targetLocURI);
+		    // PH : no longer delete entire content_map entries for client before SlowSync,
+		    //      use content_map to verify if content is mapped correctly
+		    //$state->removeAllUID($this->_targetLocURI);
         	}
 
         	$status = &new Horde_SyncML_Command_Status($code, 'Alert');

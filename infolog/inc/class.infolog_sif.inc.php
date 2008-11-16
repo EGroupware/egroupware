@@ -243,9 +243,12 @@ class infolog_sif extends infolog_bo
 		}
 	}
 
-	function searchSIF($_sifData, $_sifType) {
+	function searchSIF($_sifData, $_sifType, $contentID=null) {
 		if(!$egwData = $this->siftoegw($_sifData, $_sifType)) {
 			return false;
+		}
+		if ($contentID) {
+			$egwData['info_id'] = $contentID;
 		}
 
 		$filter = array('col_filter' => $egwData);

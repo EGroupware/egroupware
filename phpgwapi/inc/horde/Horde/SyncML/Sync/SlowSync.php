@@ -25,10 +25,12 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		$history = $GLOBALS['egw']->contenthistory;
 		$state = &$_SESSION['SyncML.state'];
 		
-		$adds = &$state->getAddedItems($hordeType);
-		
-		Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		$serverAnchorNext = $state->getServerAnchorNext($syncType);
+		
+		// now we remove all UID from contentmap that have not been verified in this slowsync
+		$state->removeOldUID($syncType, $serverAnchorNext);
+		$adds = &$state->getAddedItems($hordeType);
+		Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		$counter = 0;
 		
 		if(is_array($adds)) {
@@ -147,7 +149,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			$guid = false;
 			
 			$guid = $registry->call($hordeType . '/search',
-				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType, $state->getGlobalUID($type, $syncItem->getLocURI()) ));
 			
 			if ($guid) {
 				# entry exists in database already. Just update the mapping
@@ -156,10 +158,11 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				$state->log("Client-Replace");
 			} else {
 				# Entry does not exist in database: add a new one.
+				$state->removeUID($type, $syncItem->getLocURI());
 				Horde::logMessage('SyncML: try to add contentype ' . $contentType .' to '. $hordeType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				$guid = $registry->call($hordeType . '/import',
 					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
-				if (!is_a($guid, 'PEAR_Error')) {
+				if (!is_a($guid, 'PEAR_Error') && $guid != false) {
 					$ts = $state->getSyncTSforAction($guid, 'add');
 					$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
 					$state->log("Client-AddReplace");

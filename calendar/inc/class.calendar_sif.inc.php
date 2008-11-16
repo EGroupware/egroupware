@@ -205,7 +205,7 @@ class calendar_sif extends calendar_boupdate
 		return $finalEvent;
 	}
 
-	function search($_sifdata) {
+	function search($_sifdata, $contentID=null) {
 		if(!$event = $this->siftoegw($_sifdata)) {
 			return false;
 		}
@@ -214,7 +214,11 @@ class calendar_sif extends calendar_boupdate
 			'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
 			'cal_end='.$this->date2ts($event['end'],true),
 		);
-
+		
+		if ($contentID) {
+			$query[] = 'egw_cal.cal_id='.(int)$contentID;
+		}
+		
 		#foreach(array('title','location','priority','public','non_blocking') as $name) {
 		foreach(array('title','location','public','non_blocking') as $name) {
 			if (isset($event[$name])) $query['cal_'.$name] = $event[$name];

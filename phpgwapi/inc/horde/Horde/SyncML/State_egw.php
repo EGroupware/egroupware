@@ -302,6 +302,25 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		$GLOBALS['egw']->db->delete('egw_contentmap', array('map_id' => $mapID), __LINE__, __FILE__, 'syncml');
 
 		return true;
+	} 
+	
+	/**
+	* Used in SlowSync
+	* Removes all locid<->guid mappings for the given type,
+	* that are older than $ts. 
+	* 
+	* Returns always true.
+	*/
+	function removeOldUID($type, $ts)
+	{
+		$mapID = $this->_locName . $this->_sourceURI . $type;
+		$where[] = "map_id = '".$mapID."' AND map_timestamp < '".$GLOBALS['egw']->db->to_timestamp($ts)."'";
+
+		Horde::logMessage("SyncML: state->removeOldUID(type=$type)", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
+		$GLOBALS['egw']->db->delete('egw_contentmap', $where, __LINE__, __FILE__, 'syncml');
+
+		return true;
 	}
 
 	/**
@@ -325,7 +344,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		}
 
 		Horde::logMessage("SyncML:  state->removeUID(type=$type,locid=$locid) : removing guid:$guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
+    
 		$GLOBALS['egw']->db->delete('egw_contentmap', $where, __LINE__, __FILE__, 'syncml');
 
 		return $guid;
@@ -344,13 +363,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	#Horde::logMessage("SyncML: setUID ". $this->getUIDMapping($guid), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    	// fix $guid, it maybe was to long for some devices
-    	// format is appname-id-systemid
-    	#$guidParts = explode('-',$guid);
-    	#if(count($guidParts) == 3) {
-    	#	$guid = $GLOBALS['egw']->common->generate_uid($guidParts[0],$guidParts[1]);
-    	#}
-
+    	
     	// problem: entries created from client, come here with the (long) server guid,
     	// but getUIDMapping does not know them and can not map server-guid <--> client guid
     	$guid = $this->getUIDMapping($_guid);

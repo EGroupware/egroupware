@@ -169,7 +169,6 @@ class calendar_ical extends calendar_boupdate
 			$event['start']	= $event['start'] + $DSTCorrection;
 			$event['end']	= $event['end'] + $DSTCorrection;
 			*/
-			$eventGUID = $GLOBALS['egw']->common->generate_uid('calendar',$event['id']);
 
 			$vevent = Horde_iCalendar::newComponent('VEVENT',$vcal);
 			$parameters = $attributes = array();
@@ -440,7 +439,7 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			$attributes['UID'] = $event['uid'];
+			//$attributes['UID'] = $event['uid'];
 			foreach($attributes as $key => $value)
 			{
 				foreach(is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
@@ -490,7 +489,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$version = $vcal->getAttribute('VERSION');
-
+		
 		if(!is_array($this->supportedFields))
 		{
 			$this->setSupportedFields();
@@ -1298,7 +1297,6 @@ class calendar_ical extends calendar_boupdate
 							$vcardData['end']		= $attributes['value'];
 							break;
 						case 'DTSTART':
-							//error_log (" CALENDAR ROBV DTSTART: ". $attributes['value']);
 							$vcardData['start']		= $attributes['value'];
 							break;
 						case 'LOCATION':
@@ -1405,7 +1403,13 @@ class calendar_ical extends calendar_boupdate
 								$event['id'] = $uid_event['id'];
 								unset($uid_event);
 							}
-							break;
+							// not use weak uids that might come from syncml clients
+							if (isset($event['uid']) && (strlen($event['uid']) < 20 || is_numeric($event['uid'])))
+							{
+								error_log ("unset weak uid");
+								unset ($event['uid']);
+							}	
+						  break;
  						case 'TRANSP':
 							$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
 							break;
@@ -1516,16 +1520,24 @@ class calendar_ical extends calendar_boupdate
 		return false;
 	}
 
-	function search($_vcalData)
+	function search($_vcalData, $contentID=null)
 	{
 		if(!$event = $this->icaltoegw($_vcalData)) {
 			return false;
+		}
+		if ($event['uid'] && ($uidmatch = $this->read($event['uid'])))
+		{
+			return $uidmatch['id'];
 		}
 
 		$query = array(
 			'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
 			'cal_end='.$this->date2ts($event['end'],true),
 		);
+
+		if ($contentID) {
+			$query[] = 'egw_cal.cal_id='.(int)$contentID;
+		}
 
 		#foreach(array('title','location','priority','public','non_blocking') as $name) {
 		foreach(array('title','location','public','non_blocking') as $name) {

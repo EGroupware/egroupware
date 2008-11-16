@@ -164,11 +164,14 @@ class addressbook_sif extends addressbook_bo
 	 * @param string $_sifdata
 	 * @return boolean/int/string contact-id or false, if not found
 	 */
-	function search($_sifdata)
+	function search($_sifdata,$contentID=null)
 	{
 		if(!$contact = $this->siftoegw($_sifdata))
 		{
 			return false;
+		}
+		if ($contentID) {
+			$contact['contact_id'] = $contentID;
 		}
 		// patch from Di Guest says: we need to ignore the n_fileas
 		unset($contact['n_fileas']);
