@@ -1,7 +1,8 @@
-<div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}" /></a></div>
 
 <div id="loginMainDiv">
-	<div id="divAppIconBar"></div>
+	<div id="divAppIconBar" style="position:relative;">
+		<div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}" /></a></div>
+	</div>
 	<div id="centerBox">
 		<div id="loginScreenMessage">{lang_message}</div>
 		<div id="loginCdMessage">{cd}</div>

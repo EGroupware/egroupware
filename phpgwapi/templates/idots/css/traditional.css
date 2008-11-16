@@ -427,10 +427,10 @@ body {
 */
 #loginMainDiv {
 	padding-top: 24px;
-	height: 640px;	/* 95% does not work */
+	height: 700px;	/* 95% does not work */
 	position: relative;
 	background-repeat: no-repeat;
-	background-position: center center;
+	background-position: center 80px;
 	background-image: url(../images/login-background.jpg);
 }
 #loginScreenMessage {
