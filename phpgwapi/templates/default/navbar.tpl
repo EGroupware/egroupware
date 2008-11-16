@@ -38,7 +38,7 @@
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 7px">
 			<tr>
-				<td width="180"></td>
+				<td width="200"></td>
 				<td valign="bottom">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
