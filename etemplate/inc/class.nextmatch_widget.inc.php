@@ -325,7 +325,7 @@ class nextmatch_widget
 			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
 		}
 		// allow the get_rows function to override / set sel_options
-		if (isset($rows['sel_options']) && is_array($value['rows']['sel_options']))
+		if (isset($rows['sel_options']) && is_array($rows['sel_options']))
 		{
 			$tmpl->sel_options = array_merge($tmpl->sel_options,$rows['sel_options']);
 			unset($rows['sel_options']);
