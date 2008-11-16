@@ -37,7 +37,7 @@ class filemanager_hooks
 			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
 			$file = array(
 				'Your home directory' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath)),
-				'User and groups' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
+				'Users and groups' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
 			);
 			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
 			{
