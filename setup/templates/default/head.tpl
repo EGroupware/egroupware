@@ -55,7 +55,7 @@
 	</head>
 	<body>
 
-<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/idots/images/logo.png" border="0" alt="egroupware" /></a></div>
+<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/default/images/logo.png" border="0" alt="egroupware" /></a></div>
 
 <div id="divMain">
 	<div id="divAppIconBar">
