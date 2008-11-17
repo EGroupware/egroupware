@@ -439,7 +439,7 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			//$attributes['UID'] = $event['uid'];
+			$attributes['UID'] = $event['uid'];
 			foreach($attributes as $key => $value)
 			{
 				foreach(is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
@@ -489,7 +489,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$version = $vcal->getAttribute('VERSION');
-		
+
 		if(!is_array($this->supportedFields))
 		{
 			$this->setSupportedFields();
@@ -1408,7 +1408,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								error_log ("unset weak uid");
 								unset ($event['uid']);
-							}	
+							}
 						  break;
  						case 'TRANSP':
 							$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
