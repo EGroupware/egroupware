@@ -522,7 +522,7 @@ class boetemplate extends soetemplate
 		}
 		// only supply extension data for non-readonly widgets or if it's already set
 		// otherwise lists store >10k unnecessary data in each etemplate-session
-		if (!($cell['readonly'] || $readonlys) || isset($GLOBALS['egw_info']['etemplate']['extension_data'][$name]))
+		if (!($cell['readonly'] || $readonlys && !is_array($readonlys)) || isset($GLOBALS['egw_info']['etemplate']['extension_data'][$name]))
 		{
 			$extension_data =& $GLOBALS['egw_info']['etemplate']['extension_data'][$name];
 		}
