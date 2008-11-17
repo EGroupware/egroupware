@@ -60,7 +60,14 @@
 }
 
 #divUpperTabs {
-	display: none;	/* todo: place it somewhere else, it's for anonymous login */
+	position: absolute;
+	top: 69px;
+	right: 6px;
+}
+#divUpperTabs li
+{
+	border: 1px solid lightgray;
+	border-top: none;
 }
 
 #topmenu {
@@ -104,4 +111,23 @@ a:link, a:visited, select, input, textarea {
 
 .nextmatch_header table {
 	border: none !important;
+}
+
+/* login page */
+#loginMainDiv {
+	padding: 0px;
+	background-position: center 64px;
+	height: 720px;
+}
+
+.divLoginbox {
+	border: 1px solid lightgray;
+	border-top: none;
+}
+.divLoginbox td {
+	padding-left: 8px;
+}
+.divLoginboxHeader {
+	background-image: url(../images/gradient22.png);
+
 }
