@@ -95,6 +95,7 @@ echo "done"										>> $LOGFILE 2>&1
 
 echo -n "Change directory rights back ... "		>> $LOGFILE 2>&1
 chmod -R u=rwX,g=rX,o=rX .						>> $LOGFILE 2>&1
+chmod +x egroupware/*/*cli.php egroupware/phpgwapi/cron/*.php	>> $LOGFILE 2>&1
 echo "done"										>> $LOGFILE 2>&1
 
 echo -n "Starting anti virus scan ... "							>> $LOGFILE 2>&1
