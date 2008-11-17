@@ -14,6 +14,13 @@ $setup_info['filemanager']['version'] = '1.6';
 $setup_info['filemanager']['app_order'] = 6;
 $setup_info['filemanager']['enable']  = 1;
 
+$setup_info['infolog']['author'] =
+$setup_info['infolog']['maintainer'] = array(
+	'name'  => 'Ralf Becker',
+	'email' => 'ralfbecker@outdoor-training.de'
+);
+$setup_info['infolog']['license']  = 'GPL';
+
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['filemanager']['hooks']['preferences'] = 'filemanager_hooks::preferences';
 $setup_info['filemanager']['hooks']['settings'] = 'filemanager_hooks::settings';
