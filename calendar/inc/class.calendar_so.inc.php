@@ -624,7 +624,20 @@ ORDER BY cal_user_type, cal_usre_id
 			{
 				if (is_numeric($id)) unset($alarm['id']);	// unset the temporary id, to add the alarm
 
-				$alarm['time'] = $event['cal_start'] - $alarm['offset'];	// recalculate the offset, as the start-time might have changed
+				if(!isset($alarm['offset']))
+				{
+					$alarm['offset'] = $event['cal_start'] - $alarm['time'];
+				}
+				elseif (!isset($alarm['time']))
+				{
+					$alarm['time'] = $event['cal_start'] - $alarm['offset'];
+				}
+
+				//pgoerzen: don't add an alarm if it is before the current date.
+				if ($event['recur_type'] && ($tmp_event = $this->read($eventID, time() + $alarm['offset'])))
+				{
+					$alarm['time'] = $tmp_event['cal_start'] - $alarm['offset'];
+				}
 
 				$this->save_alarm($cal_id,$alarm);
 			}
