@@ -50,6 +50,28 @@ class calendar_groupdav extends groupdav_handler
 		$this->bo =& new calendar_boupdate();
 	}
 
+	const PATH_ATTRIBUTE = 'id';
+
+	/**
+	 * Create the path for an event
+	 *
+	 * @param array|int $event
+	 * @return string
+	 */
+	static function get_path($event)
+	{
+		if (is_numeric($event) && self::PATH_ATTRIBUTE == 'id')
+		{
+			$name = $event;
+		}
+		else
+		{
+			if (!is_array($event)) $event = $this->bo->read($event);
+			$name = $event[self::PATH_ATTRIBUTE];
+		}
+		return '/calendar/'.$name.'.ics';
+	}
+
 	/**
 	 * Handle propfind in the calendar folder
 	 *
@@ -116,7 +138,7 @@ class calendar_groupdav extends groupdav_handler
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
 				$files['files'][] = array(
-	            	'path'  => '/calendar/'.$event['id'].'.ics',
+	            	'path'  => self::get_path($event),
 	            	'props' => $props,
 				);
 			}
@@ -284,7 +306,7 @@ class calendar_groupdav extends groupdav_handler
 		if (is_null($event) || !$return_no_access)	// let lightning think the event is added
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id, is_null(\$event)=".(int)is_null($event));
-			header('Location: '.$this->base_uri.'/calendar/'.$cal_id);
+			header('Location: '.$this->base_uri.self::get_path($cal_id));
 			return '201 Created';
 		}
 		return true;

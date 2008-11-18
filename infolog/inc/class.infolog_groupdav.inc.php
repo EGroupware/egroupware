@@ -37,6 +37,28 @@ class infolog_groupdav extends groupdav_handler
 		$this->bo =& new infolog_bo();
 	}
 
+	const PATH_ATTRIBUTE = 'info_id';
+
+	/**
+	 * Create the path for an event
+	 *
+	 * @param array|int $info
+	 * @return string
+	 */
+	static function get_path($info)
+	{
+		if (is_numeric($info) && self::PATH_ATTRIBUTE == 'info_id')
+		{
+			$name = $info;
+		}
+		else
+		{
+			if (!is_array($info)) $info = $this->bo->read($info);
+			$name = $info[self::PATH_ATTRIBUTE];
+		}
+		return '/calendar/'.$name.'.ics';
+	}
+
 	/**
 	 * Handle propfind in the infolog folder
 	 *
@@ -66,7 +88,7 @@ class infolog_groupdav extends groupdav_handler
 			foreach($tasks as $task)
 			{
 				$files['files'][] = array(
-	            	'path'  => '/infolog/'.$task['info_id'].'.ics',
+	            	'path'  => self::get_path($task),
 	            	'props' => array(
 	            		HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
 	            		HTTP_WebDAV_Server::mkprop('getcontenttype',$this->agent != 'kde' ?
@@ -126,7 +148,7 @@ class infolog_groupdav extends groupdav_handler
 		header('ETag: '.$this->get_etag($info_id));
 		if (is_null($ok) || $id != $info_id)
 		{
-			header('Location: '.$this->base_uri.'/infolog/'.$info_id);
+			header('Location: '.$this->base_uri.self::get_path($info_id));
 			return '201 Created';
 		}
 		return true;
