@@ -7,13 +7,13 @@
  * @package setup
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * setup command: abstract baseclass for all setup commands, extending admin_cmd
  */
-abstract class setup_cmd extends admin_cmd 
+abstract class setup_cmd extends admin_cmd
 {
 	/**
 	 * Defaults set for empty options while running the command
@@ -37,15 +37,15 @@ abstract class setup_cmd extends admin_cmd
 		$secret = $this->_calc_header_secret($GLOBALS['egw_info']['server']['header_admin_user'],
 				$GLOBALS['egw_info']['server']['header_admin_password']);
 		if ($this->uid === true) unset($this->uid);
-		
+
 		if ($this->header_secret != $secret)
 		{
 			//echo "_check_header_access: header_secret='$this->header_secret' != '$secret'=_calc_header_secret({$GLOBALS['egw_info']['server']['header_admin_user']},{$GLOBALS['egw_info']['server']['header_admin_password']})\n";
 			throw new Exception (lang('Wrong credentials to access the header.inc.php file!'),2);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Set the user and pw required for any operation on the header file
 	 *
@@ -63,10 +63,10 @@ abstract class setup_cmd extends admin_cmd
 			throw new Exception ('failed to set header_secret!');
 		}
 	}
-	
+
 	/**
 	 * Calculate the header_secret used to access the header from this command
-	 * 
+	 *
 	 * It's an md5 over the uid, header-admin-user and -password.
 	 *
 	 * @param string $header_admin_user
@@ -81,7 +81,7 @@ abstract class setup_cmd extends admin_cmd
 		//echo "header_secret='$secret' = md5('$this->uid'.'$header_admin_user'.'$header_admin_password')\n";
 		return $secret;
 	}
-	
+
 	/**
 	 * Saving the object to the database, reimplemented to not do it in setup context
 	 *
@@ -96,16 +96,16 @@ abstract class setup_cmd extends admin_cmd
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Reference to the setup object, after calling check_setup_auth method
 	 *
 	 * @var setup
 	 */
 	static protected $egw_setup;
-	
+
 	static private $egw_accounts_backup;
-	
+
 	/**
 	 * Create the setup enviroment (for running within setup or eGW)
 	 */
@@ -113,6 +113,7 @@ abstract class setup_cmd extends admin_cmd
 	{
 		if (!is_object($GLOBALS['egw_setup']))
 		{
+			require_once(EGW_INCLUDE_ROOT.'/setup/inc/class.setup.inc.php');
 			$GLOBALS['egw_setup'] = new setup(true,true);
 		}
 		self::$egw_setup = $GLOBALS['egw_setup'];
@@ -125,7 +126,7 @@ abstract class setup_cmd extends admin_cmd
 			$cmd = new setup_cmd_showheader(null);	// null = only header, no db stuff, no hashes
 			$header = $cmd->run();
 			$GLOBALS['egw_domain'] = $header['egw_domain'];
-			
+
 			if (is_object($GLOBALS['egw']->accounts) && is_null(self::$egw_accounts_backup))
 			{
 				self::$egw_accounts_backup = $GLOBALS['egw']->accounts;
@@ -172,7 +173,7 @@ abstract class setup_cmd extends admin_cmd
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates a setup like enviroment and checks for the header user/pw or config_user/pw if domain given
 	 *
@@ -209,7 +210,7 @@ abstract class setup_cmd extends admin_cmd
 
 	/**
 	 * Check if eGW is installed, which versions and if an update is needed
-	 * 
+	 *
 	 * @param string $domain='' domain to check, default '' = all
 	 * @param int/array $stop=0 stop checks before given exit-code(s), default 0 = all checks
 	 * @param boolean $verbose=false echo messages as they happen, instead returning them
@@ -221,13 +222,13 @@ abstract class setup_cmd extends admin_cmd
 
 		global $setup_info;
 		static $header_checks=true;	// output the header checks only once
-		
+
 		$messages = array();
-		
+
 		if ($stop && !is_array($stop)) $stop = array($stop);
-	
+
 		$versions =& $GLOBALS['egw_info']['server']['versions'];
-	
+
 		if (!$versions['phpgwapi'])
 		{
 			if (!include('../phpgwapi/setup/setup.inc.php'))
@@ -243,15 +244,15 @@ abstract class setup_cmd extends admin_cmd
 		}
 		$header_stage = self::$egw_setup->detection->check_header();
 		if ($stop && in_array($header_stage,$stop)) return true;
-		
+
 		switch ($header_stage)
 		{
 			case 1: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
-				
+
 			case 2: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).'),2);
-	
+
 			case 3: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No eGroupWare domains / database instances exist! Use --edit-header --domain to add one (--usage gives more options).'),3);
-	
+
 			case 4: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('It needs upgrading to version %1! Use --update-header <password>[,<user>] to do so (--usage gives more options).',$versions['current_header']),4);
 		}
 		if ($header_checks)
@@ -260,12 +261,12 @@ abstract class setup_cmd extends admin_cmd
 				$versions['header'],' '.lang('and is up to date')));
 		}
 		$header_checks = false;	// no further output of the header checks
-	
+
 		$domains = $GLOBALS['egw_domain'];
 		if ($domain)	// domain to check given
 		{
 			if (!isset($GLOBALS['egw_domain'][$domain])) throw new egw_exception_wrong_userinput(lang("Domain '%1' does NOT exist !!!",$domain));
-			
+
 			$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
 		}
 		foreach($domains as $domain => $data)
@@ -283,9 +284,9 @@ abstract class setup_cmd extends admin_cmd
 				self::$egw_setup->db->disconnect();
 			}
 			self::$egw_setup->loaddb();
-			
+
 			$db = $data['db_type'].'://'.$data['db_user'].':'.$data['db_pass'].'@'.$data['db_host'].'/'.$data['db_name'];
-	
+
 			$db_stage =& $GLOBALS['egw_info']['setup']['stage']['db'];
 			if (($db_stage = self::$egw_setup->detection->check_db($setup_info)) != 1)
 			{
@@ -299,11 +300,11 @@ abstract class setup_cmd extends admin_cmd
 			switch($db_stage)
 			{
 				case 1: throw new egw_exception_wrong_userinput(lang('Your Database is not working!')." $db: ".self::$egw_setup->db->Error,11);
-	
+
 				case 3: throw new egw_exception_wrong_userinput(lang('Your database is working, but you dont have any applications installed')." ($db). ".lang("Use --install to install eGroupWare."),13);
-	
+
 				case 4: throw new egw_exception_wrong_userinput(lang('eGroupWare API needs a database (schema) update from version %1 to %2!',$setup_info['phpgwapi']['currentver'],$versions['phpgwapi']).' '.lang('Use --update to do so.'),14);
-				
+
 				case 10:	// also check apps of updates
 					$apps_to_upgrade = array();
 					$apps_to_install = array();
@@ -333,7 +334,7 @@ abstract class setup_cmd extends admin_cmd
 					break;
 			}
 			$messages[] = self::_echo_message($verbose,lang("database is version %1 and up to date.",$setup_info['phpgwapi']['currentver']));
-	
+
 			self::$egw_setup->detection->check_config();
 			if ($GLOBALS['egw_info']['setup']['config_errors'] && $stop && !in_array(15,$stop))
 			{

@@ -40,9 +40,10 @@ class setup_cmd_database extends setup_cmd
 	 * @param string $db_root=null
 	 * @param string $db_root_pw=null
 	 * @param string $sub_command='create_db' 'create_db', 'test_db', 'test_db_root'
+	 * @param string $db_grant_host='localhost' host/ip of webserver for grant
 	 */
 	function __construct($domain,$db_type=null,$db_host=null,$db_port=null,$db_name=null,$db_user=null,$db_pass=null,
-		$db_root=null,$db_root_pw=null,$sub_command='create_db')
+		$db_root=null,$db_root_pw=null,$sub_command='create_db',$db_grant_host='localhost')
 	{
 		if (!is_array($domain))
 		{
@@ -56,7 +57,8 @@ class setup_cmd_database extends setup_cmd
 				'db_pass' => $db_pass,
 				'db_root' => $db_root,
 				'db_root_pw' => $db_root_pw,
-				'sub_command' => $sub_command
+				'sub_command' => $sub_command,
+				'db_grant_host' => $db_grant_host,
 			);
 		}
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
@@ -160,7 +162,7 @@ class setup_cmd_database extends setup_cmd
 		catch (egw_exception_wrong_userinput $e) {
 			// db or user not working --> connect as root and create it
 			try {
-				$this->test_db->create_database($this->db_root,$this->db_root_pw,$this->db_charset);
+				$this->test_db->create_database($this->db_root,$this->db_root_pw,$this->db_charset,$this->db_grant_host);
 				$this->connect();
 			}
 			catch(egw_exception_wrong_userinput $e) {
@@ -216,6 +218,7 @@ class setup_cmd_database extends setup_cmd
 			'db_root_pw' => '',	// not really a default
 			'db_meta' => $meta_db,
 			'db_charset' => 'utf-8',
+			'db_grant_host' => 'localhost',
 		);
 	}
 

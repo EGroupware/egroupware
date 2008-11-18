@@ -1164,8 +1164,9 @@ class egw_db
 	* @param string $adminname name of database administrator user (optional)
 	* @param string $adminpasswd password for the database administrator user (optional)
 	* @param string $charset default charset for the database
+	* @param string $grant_host='localhost' host/ip of the webserver
 	*/
-	function create_database($adminname = '', $adminpasswd = '', $charset='')
+	function create_database($adminname = '', $adminpasswd = '', $charset='', $grant_host='localhost')
 	{
 		$currentUser = $this->User;
 		$currentPassword = $this->Password;
@@ -1186,7 +1187,7 @@ class egw_db
 					$create .= ' DEFAULT CHARACTER SET '.$this->Link_ID->charset2mysql[$charset].';';
 				}
 				$sqls[] = $create;
-				$sqls[] = "GRANT ALL ON `$currentDatabase`.* TO $currentUser@localhost IDENTIFIED BY ".$this->quote($currentPassword);
+				$sqls[] = "GRANT ALL ON `$currentDatabase`.* TO $currentUser@'$grant_host' IDENTIFIED BY ".$this->quote($currentPassword);
 				$meta_db = 'mysql';
 				break;
 			default:
