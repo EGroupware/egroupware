@@ -61,7 +61,7 @@ class addressbook_merge	// extends bo_merge
 			{
 				case 'created': case 'modified':
 					$value = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
-						($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i a':'H:i'));
+						($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i a':'H:i'),$value);
 					break;
 				case 'bday':
 					if ($value)
