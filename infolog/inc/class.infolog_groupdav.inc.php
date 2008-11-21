@@ -56,7 +56,7 @@ class infolog_groupdav extends groupdav_handler
 			if (!is_array($info)) $info = $this->bo->read($info);
 			$name = $info[self::PATH_ATTRIBUTE];
 		}
-		return '/calendar/'.$name.'.ics';
+		return '/infolog/'.$name.'.ics';
 	}
 
 	/**
