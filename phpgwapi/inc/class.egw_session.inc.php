@@ -484,7 +484,11 @@ class egw_session
 			$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
 			$this->cd_reason = $blocked ? 99 : 5;
 
-			$this->log_access($this->reason,$login,$user_ip,0);	// log unsuccessfull login
+			// we dont log anon users as it would block the website
+			if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($this->account_id,'anonymous','phpgwapi'))
+			{
+				$this->log_access($this->reason,$login,$user_ip,0);	// log unsuccessfull login
+			}
 			return false;
 		}
 
