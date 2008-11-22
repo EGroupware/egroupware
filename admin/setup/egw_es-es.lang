@@ -190,7 +190,6 @@ egroupware directory	admin	es-es	Directorio de eGroupWare
 either install id and config password needed or the remote hash!	admin	es-es	¡Tanto el ID de la instalación como la contraseña de configuración necesitan el hash remoto!
 email account active	admin	es-es	cuenta de correo activa
 email address	admin	es-es	dirección de correo electrónico
-emailadmin: user assigned profile	admin	es-es	eMailAdmin: perfil asignado al usuario
 enable debug-messages	admin	es-es	Activar mensajes de depuración
 enable the soap service	admin	es-es	Activar el servicio soap
 enable the spellcheck in the ritch text editor ?	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
@@ -400,6 +399,7 @@ server type(mode)	admin	es-es	Tipo (modo) del servidor
 server url	admin	es-es	URL del servidor
 server username	admin	es-es	Usuario del servidor
 set preference values.	admin	es-es	Establecer valores para las preferencias
+should exceptions contain a trace (including function arguments)	admin	es-es	Las excepciones deben contener una traza (incluyendo argumentos de funciones)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	es-es	¿Debe incluir la página de inicio de sesión un cuadro de selección de idioma (útil para sitios de demostración)?
 show 'powered by' logo on	admin	es-es	Mostrar logo de 'Diseñado con' en
 show access log	admin	es-es	Mostrar registro de acceso

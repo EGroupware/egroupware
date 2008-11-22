@@ -7,6 +7,7 @@
 %1 starts with '%2'	addressbook	es-es	%1 empieza por '%2'
 %s please calculate the result	addressbook	es-es	%s por favor, calcule el resultado
 (e.g. 1969)	addressbook	es-es	(p. ej. 1969)
+(empty = use global limit, no = no export at all)	admin	es-es	(vacío = usar limite global; no = no exportar nada)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	es-es	<b>No se encontró el tipo de conversión <none>.</b> Por favor, seleccione un tipo de conversión de la lista
 @-eval() is only availible to admins!!!	addressbook	es-es	¡@-eval está disponible sólo para los administradores!
 account repository	admin	es-es	Repositorio de cuentas
@@ -122,7 +123,9 @@ default	addressbook	es-es	predeterminado
 default address format	addressbook	es-es	Formato predeterminado de las drecciones
 default addressbook for adding contacts	addressbook	es-es	Libreta de direcciones predeterminada para añadir contactos
 default document to insert contacts	addressbook	es-es	Documento predeterminado para insertar contactos
+default file as format	addressbook	es-es	Fichero predeterminado como formato
 default filter	addressbook	es-es	Filtro predeterminado
+default format for fileas, eg. for new entries.	addressbook	es-es	Formato predeterminado para ficheros, p. ej. nuevas entradas.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	es-es	Define qué dirección de correo electrónico (trabajo o particular) usar como la preferida para las listas de distribución en el correo.
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
 delete selected distribution list!	addressbook	es-es	Borrar la lista de distribución seleccionada
@@ -207,7 +210,7 @@ home phone	addressbook	es-es	Teléfono particular
 home state	addressbook	es-es	Provincia de residencia
 home street	addressbook	es-es	Domicilio personal
 home zip code	addressbook	es-es	Código postal
-how many contacts should non-admins be able to export (empty = no limit)	admin	es-es	¿Cuántos contactos deben los no administradores ser capaces de exportar (vacío=sin límite)?
+how many contacts should non-admins be able to export	admin	es-es	Cuántos contactos deben poder exportar usuarios que no son administradores
 icon	addressbook	es-es	Icono
 if accounts are already in ldap	admin	es-es	si las cuentas ya están en LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	es-es	Si especifica un directorio (ruta completa vfs) aquí, la libreta de direcciones muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos del contacto insertados.

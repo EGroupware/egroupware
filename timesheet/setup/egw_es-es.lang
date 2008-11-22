@@ -17,7 +17,7 @@ error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
 error saving the entry!!!	timesheet	es-es	¡Se ha producido un error al guardar la entrada!
 existing links	timesheet	es-es	Enlaces existentes
 export to openoffice spreadsheet	timesheet	es-es	Exportar a hoja de cálculo de OpenOffice
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	timesheet	es-es	Exporta entradas de la Hoja de presencia en un fichero CSV. CSV significa 'Valores separados por comas'. Sin embargo, en la pestaña de opciones también puede elegir otros separadores.
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta entradas desde la hoja de tiempos en un fichero CSV (valores separados por comas). Sin embargo, también se pueden elegir otros separadores en la pestaña de opciones.
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
 full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
 general	timesheet	es-es	General

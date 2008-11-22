@@ -52,6 +52,7 @@ canceled	calendar	sl	Razveljavljeno
 charset of file	calendar	sl	Kodna tabela datoteke
 close the window	calendar	sl	Zapri okno
 compose a mail to all participants after the event is saved	calendar	sl	Ko shranite dogodek, sestavite sporočilo vsem udeležencem.
+conflict	calendar	sl	Spor
 copy of:	calendar	sl	Kopija od:
 copy this event	calendar	sl	Kopiraj ta dogodek
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sl	Kopiraj spremembe v odložišče, %1ponovno naloži vnos%2 in ju spoji.
@@ -73,18 +74,22 @@ default appointment length (in minutes)	calendar	sl	Privzeta dolžina sestanka (
 default calendar filter	calendar	sl	Privzeti koledarski filter
 default calendar view	calendar	sl	Privzeti pogled koledarja
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sl	Privzeta dolžina novih dogodkov. Dolžina se meri v minutah, npr. 60 minut za 1 uro.
+default type of resources application selected in the calendar particpants research form.	calendar	sl	Privzeta vrsta izbrane aplikacija sredstev v obrazcu udeležencev dogodka koledarja
+default type of resources selection	calendar	sl	Privzeta vrsta izbire sredstev
 default week view	calendar	sl	Privzeti tedenski pogled
 delete series	calendar	sl	Izbriši serijo
 delete this alarm	calendar	sl	Zbriši ta alarm
 delete this event	calendar	sl	Zbriši ta dogodek
 delete this exception	calendar	sl	Zbriši to izjemo
 delete this series of recuring events	calendar	sl	Izbriši to serijo ponovljivih dogodkov.
+deny ressources reservation for private events	calendar	sl	Prepovej rezervacijo sredstev za osebne dogodke
 disinvited	calendar	sl	Preklicano povabilo
 display status of events	calendar	sl	Pokaži statuse dogodkov
 displayed view	calendar	sl	Prikazan pogled
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	sl	Prikaži vaš privzeti koledar na začetni strani.
 do you want a weekview with or without weekend?	calendar	sl	Želite tedenski pogled z ali brez vikendov?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sl	Ali želite biti obveščeni o novih ali spremenjenih sestankih? O spremembah, ki jih naredite, ne boste obveščeni.<br>Obvestila lahko omejite samo na določene spremembe. Vsak element vključuje vsa obvestila našteta nad njimi. Vse spremembe vključujejo spremembo naslova, opisa, udeležencev, ne pa tudi odgovorov udeležencev. Če avtor dogodka zahteva katerokoli obvestilo, bo vedno dobil pozivne in negativne odgovore udeležencev.
+do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	sl	Želite urediti zaporedni dogodek ali izjemo? V redu = uredi izjemo, Prekini = uredi zaporedni dogodek
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sl	Ali želite prejemati povzetke sestankov po E-pošti?<br>Povzetki se pošiljajo na vaš običajni elektronski naslov vsako jutro tistega dne ali v ponedeljek v primeru tedenskih poročil.<br>Poslano je samo v primeru, če imate kake sestanke tisti dan oz. tisti teden.
 do you wish to autoload calendar holidays files dynamically?	admin	sl	Ali želite, da se dela prosti dnevi naložijo samodejno?
 download	calendar	sl	Prenos
@@ -104,6 +109,7 @@ ends	calendar	sl	Konča
 error adding the alarm	calendar	sl	Napaka pri dodajanju alarma
 error: importing the ical	calendar	sl	Napaka: pri uvozu v iCal
 error: no participants selected !!!	calendar	sl	Napaka: noben udeleženec ni izbran!
+error: ressources reservation in private events is not allowed!!!	calendar	sl	Napaka: razervacija sredstev za osebne dogodke ni dovoljena!
 error: saving the event !!!	calendar	sl	Napaka: pri shranjevanju dogodka!
 error: starttime has to be before the endtime !!!	calendar	sl	Napaka: čas začetka mora biti pred časom konca!
 error: the entry has been updated since you opened it for editing!	calendar	sl	Napaka: vnos je bil posodobljen odkar ste ga odprli za urejanje!
@@ -247,6 +253,8 @@ repetition	calendar	sl	Ponovitev
 repetitiondetails (or empty)	calendar	sl	Podrobnosti ponovitev (ali prazno)
 reset	calendar	sl	Ponastavi
 resources	calendar	sl	Sredstva
+resources except conflicting ones	calendar	sl	Sredstva brez spornih
+resources with conflict detection	calendar	sl	Sredstva z zaznanimi spori
 rule	calendar	sl	Pravilo
 sat	calendar	sl	Sob
 saves the changes made	calendar	sl	Shrani spremembe
@@ -259,6 +267,7 @@ select who should get the alarm	calendar	sl	Izberite, kdo naj dodi sporočilo al
 selected range	calendar	sl	Izbrani obseg
 set a year only for one-time / non-regular holidays.	calendar	sl	Nastavi leto samo za enkratne / ne-ponavljajoče praznike.
 set new events to private	calendar	sl	Novi dogodki naj bodo označeni kot zasebni
+setting lock time calender	admin	sl	Nastavitev časa Datalock za koledar (privzeto je 1 sekunda)
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sl	Ali naj bodo povabila, ki ste jih zavrnili, še vedno vidna v koledarju?<br>Kasneje jih lahko le potrdite (npr. ko so dogodki v navzkrižju odstranjeni), če so še vedno v koledarju.
 should new events created as private by default ?	calendar	sl	Ali naj bodo novi dogodki označeni kot zasebni?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sl	Dovolite, da uporabnik, ki ni prijavljen vidi vašo Prost/Zaseden informacijo? Za dostop do teh informacij lahko tudi določite geslo. Informacija Prost/Zaseden je v iCal obliki in vključuje samo termine, ko ste zasedeni, ne vključuje pa imena dogodkov, opisov in lokacij. URL za dostop do vaših Prost/Zaseden informacij je %1.

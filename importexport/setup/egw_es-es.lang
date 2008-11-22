@@ -9,7 +9,7 @@ export	importexport	es-es	Exportar
 export all selected definitions	importexport	es-es	Exportar TODAS las definiciones seleccionadas
 finish	importexport	es-es	Terminar
 general	importexport	es-es	General
-import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	es-es	Importar definiciones (¡¡Atención: se sobreescribirán las definciones existentes con el mismo nombre!!)
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	es-es	Importar definiciones (¡¡Atención: se sobreescribirán las definiciones existentes con el mismo nombre!!)
 importexport wizard finished successfully!	importexport	es-es	¡El asistente de Importar-Exportar finalizó correctamente!
 next	importexport	es-es	Siguiente
 preview	importexport	es-es	Vista previa

@@ -52,6 +52,7 @@ canceled	calendar	es-es	Cancelado
 charset of file	calendar	es-es	Juego de caracteres del fichero
 close the window	calendar	es-es	Cerrar la ventana
 compose a mail to all participants after the event is saved	calendar	es-es	redactar un correo para todos los participantes después de guardar el evento
+conflict	calendar	es-es	Conflicto
 copy of:	calendar	es-es	Copia de:
 copy this event	calendar	es-es	Copiar este evento
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	es-es	Copiar sus cambios al portapapeles, %1recargar la entrada%2 y mezclarla.
@@ -73,12 +74,15 @@ default appointment length (in minutes)	calendar	es-es	duración por defecto de 
 default calendar filter	calendar	es-es	Filtro por defecto del calendario
 default calendar view	calendar	es-es	Vista por defecto del calendario
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	es-es	Longitud predeterminada de los eventos nuevos. La longitud es en minutos, ej. 60 = 1 hora.
+default type of resources application selected in the calendar particpants research form.	calendar	es-es	Tipo predeterminado para la aplicación de recursos seleccionada en el formulario de búsqueda de participantes en el calendario.
+default type of resources selection	calendar	es-es	Tipo predeterminado de selección de recursos
 default week view	calendar	es-es	Vista semanal predeterminada
 delete series	calendar	es-es	Borrar series
 delete this alarm	calendar	es-es	Borrar esta alarma
 delete this event	calendar	es-es	Borrar este evento
 delete this exception	calendar	es-es	Borrar esta excepción
 delete this series of recuring events	calendar	es-es	Borrar esta serie de eventos recurrentes
+deny ressources reservation for private events	calendar	es-es	Denegar la reserva de recursos para eventos privados
 disinvited	calendar	es-es	Ya no está invitado
 display status of events	calendar	es-es	Mostrar estado de los eventos
 displayed view	calendar	es-es	vista mostrada
@@ -105,6 +109,7 @@ ends	calendar	es-es	acaba
 error adding the alarm	calendar	es-es	Error al añadir la alarma
 error: importing the ical	calendar	es-es	Error al importar el fichero iCal
 error: no participants selected !!!	calendar	es-es	Error: ¡No se seleccionó ningún participante!
+error: ressources reservation in private events is not allowed!!!	calendar	es-es	Error: ¡No se permite la reserva de recursos para eventos privados!
 error: saving the event !!!	calendar	es-es	Error al guardar el evento
 error: starttime has to be before the endtime !!!	calendar	es-es	Error :¡La hora de inicio tiene que ser anterior a la de final!
 error: the entry has been updated since you opened it for editing!	calendar	es-es	Error: ¡La entrada ha sido actualizada desde que la abrio para editar!
@@ -248,6 +253,8 @@ repetition	calendar	es-es	Repetición
 repetitiondetails (or empty)	calendar	es-es	Detalles de la repetición (o vacío)
 reset	calendar	es-es	Restablecer
 resources	calendar	es-es	Recursos
+resources except conflicting ones	calendar	es-es	Recursos excepto los que tienen conflicto
+resources with conflict detection	calendar	es-es	Recursos con detección de conflicto
 rule	calendar	es-es	Regla
 sat	calendar	es-es	Sáb
 saves the changes made	calendar	es-es	guarda los cambios realizados

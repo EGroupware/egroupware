@@ -7,8 +7,9 @@
 %1 starts with '%2'	addressbook	sl	%1 se začne z '%2'
 %s please calculate the result	addressbook	sl	%s izračunaj rezultat
 (e.g. 1969)	addressbook	sl	(npr. 1969)
+(empty = use global limit, no = no export at all)	admin	sl	(prazno = uporabi globalno omejitev, ne = izvoz ni dovoljen)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sl	<b>Ni tipa prevoda <noben> lahko je zaklenjen.</b> Izberite tip prevoda s seznama.
-@-eval() is only availible to admins!!!	addressbook	sl	Funkcija @-eval() je na voljo samo za oskrbniku!
+@-eval() is only availible to admins!!!	addressbook	sl	Funkcija @-eval() je na voljo samo oskrbnikom!
 account repository	admin	sl	Repozitorij z računi
 accounts	addressbook	sl	Računi
 actions	addressbook	sl	Dejanja
@@ -122,7 +123,9 @@ default	addressbook	sl	Privzeto
 default address format	addressbook	sl	Privzeta oblika naslovov
 default addressbook for adding contacts	addressbook	sl	Privzeti adresar za dodajanje stikov
 default document to insert contacts	addressbook	sl	Privzeti dokument za vstavljanje stikov
+default file as format	addressbook	sl	Privzeta datoteka kot oblika
 default filter	addressbook	sl	Privzeti filter
+default format for fileas, eg. for new entries.	addressbook	sl	Privzeta oblika za datoteke, npr za nove vnose.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	sl	Določa, kateri e-naslov (domači ali službeni) naj se uporabi kot privzeti za distribucijski seznam.
 delete a single entry by passing the id.	addressbook	sl	Izbriši zapis s podano šifro
 delete selected distribution list!	addressbook	sl	Izbriši izbrane distribucijske sezname!
@@ -207,7 +210,7 @@ home phone	addressbook	sl	Telefon
 home state	addressbook	sl	Država
 home street	addressbook	sl	Naslov
 home zip code	addressbook	sl	Poštna št.
-how many contacts should non-admins be able to export (empty = no limit)	admin	sl	Koliko stikov lahko izvozijo ne-administratorji (prazno pomeni brez omejitev)
+how many contacts should non-admins be able to export	admin	sl	Koliko stikov lahko izvozijo uporabniki, ki niso oskrbniki.
 icon	addressbook	sl	Ikona
 if accounts are already in ldap	admin	sl	Če je račun že v LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	sl	Če določite mapo (polna pot vfs), bo adresar prikazal dejanje za vsak dokument. To dejanje omogoča prenos določenih dokumentov z vstavljenimi podatki stika.
