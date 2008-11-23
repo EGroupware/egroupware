@@ -127,6 +127,7 @@ class setup_cmd_config extends setup_cmd
 	static $options = array(
 		'--config'     => array(),	// name=value,...
 		'--files-dir'  => 'files_dir',
+		'--vfs-root-user' => 'vfs_root_user',
 		'--backup-dir' => 'backup_dir',
 		'--temp-dir'   => 'temp_dir',
 		'--webserver-url' => 'webserver_url',
@@ -168,6 +169,7 @@ class setup_cmd_config extends setup_cmd
 		'--ldap-search-filter' => 'ldap_search_filter',
 		'--ldap-group-context' => 'ldap_group_context',
 		'--allow-remote-admin' => 'allow_remote_admin',
+		'--install-id' => 'install_id',
 	);
 
 	/**
