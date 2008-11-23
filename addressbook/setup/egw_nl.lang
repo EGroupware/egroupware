@@ -7,6 +7,7 @@
 %1 starts with '%2'	addressbook	nl	%1 begint met '%2'
 %s please calculate the result	addressbook	nl	%s bereken svp het resultaat
 (e.g. 1969)	addressbook	nl	(bijv. 1969)
+(empty = use global limit, no = no export at all)	admin	nl	(leeg = gebruik globale limiet, no = helemaal geen export)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	nl	<b>Geen conversietype <none&g; gevonden </b> Selecteer a.u.b. een conversietype uit de lijst.
 @-eval() is only availible to admins!!!	addressbook	nl	@-eval() is alleen beschikbaar voor beheerders
 account repository	admin	nl	Account databasegegevens
@@ -122,7 +123,9 @@ default	addressbook	nl	standaard
 default address format	addressbook	nl	Standaard adresformaat
 default addressbook for adding contacts	addressbook	nl	Standaardadresboek om contacten toe te voegen
 default document to insert contacts	addressbook	nl	Standaard document om contacten in te voegen
+default file as format	addressbook	nl	Standaard bestand als formaat
 default filter	addressbook	nl	Standaard filter
+default format for fileas, eg. for new entries.	addressbook	nl	Standaard formaat voor bestanden, bijvoorbeeld voor nieuwe invoer.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	nl	Bepaalt welk emailadres (zakelijk of prive) gebruikt moet worden als het voorkeursadres voor distributielijsten in email.
 delete a single entry by passing the id.	addressbook	nl	Verwijder een enkel record door het ID. te geven
 delete selected distribution list!	addressbook	nl	Verwijder de geselecteerde distributielijst!
@@ -207,7 +210,7 @@ home phone	addressbook	nl	Privé telefoon
 home state	addressbook	nl	Privé Provincie / Staat / Streek
 home street	addressbook	nl	Privé Straat
 home zip code	addressbook	nl	Privé Postcode
-how many contacts should non-admins be able to export (empty = no limit)	admin	nl	Hoeveel contacten moeten niet-beheerders kunnen exporteren (leeg = geen limiet)
+how many contacts should non-admins be able to export	admin	nl	Hoeveel contactpersonen moet een niet-beheerder kunnen exporteren
 icon	addressbook	nl	Icoon
 if accounts are already in ldap	admin	nl	indien accounts reeds in LDAP zitten
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	nl	Indien je hier een directory opgeeft (volledige vfs pad), dan toont het adresboek een actie voor ieder document. Die aktie biedt de mogelijkheid om het bewuste document te downloaden samen met de contactgegevens ingevoegd.

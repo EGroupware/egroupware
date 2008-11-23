@@ -41,6 +41,7 @@ add:	infolog	nl	Toevoegen:
 all	infolog	nl	Alles
 all links and attachments	infolog	nl	alle links en bijlagen
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	nl	Toestaan de status van een infolog te wijzigen, bijv. een taak op status klaar zetten (waarden zijn onafhankelijk van infolog-type)
+applies the changes	infolog	nl	wijzigingen doorvoeren
 apply the changes	infolog	nl	De wijzigingen doorvoeren
 archive	infolog	nl	archief
 are you shure you want to delete this entry ?	infolog	nl	Weet u zeker dat deze infolog wilt verwijderen
@@ -56,6 +57,7 @@ cancel	infolog	nl	Annuleren
 cancelled	infolog	nl	geannuleerd
 categories	infolog	nl	Categorieën
 category	infolog	nl	Categorie
+change history	infolog	nl	Historie van wijzigingen
 change the status of an entry, eg. close it	infolog	nl	Wijzig de status van een item, bijvoorbeeld afsluiten
 charset of file	infolog	nl	Karakterset van bestand
 check to set startday	infolog	nl	Markeer om startdag aan te geven
@@ -150,6 +152,7 @@ from	infolog	nl	Van
 general	infolog	nl	Algemeen
 group owner for	infolog	nl	Groepseigenaar
 high	infolog	nl	hoog
+history	infolog	nl	Historie
 history logging	infolog	nl	Historie vastleggen
 history logging and deleting of items	infolog	nl	Historie vastleggen en verwijdering van items
 id	infolog	nl	ID
@@ -176,6 +179,7 @@ invalid filename	infolog	nl	Ongeldige bestandsnaam
 label<br>helptext	infolog	nl	Label<br/>Helptekst
 last changed	infolog	nl	Laatst gewijzigd
 last modified	infolog	nl	Laatst gewijzigd
+leave blank to get the used time calculated by timesheet entries	infolog	nl	Laat het leeg om de gebruikte tijd uit de urenregistratie te verkrijgen
 leave it empty	infolog	nl	leeg laten
 leave without saveing the entry	infolog	nl	weggaan zonder op te slaan
 leaves without saveing	infolog	nl	weggaan zonder op te slaan
@@ -189,6 +193,7 @@ location	infolog	nl	Locatie
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
 max length of the input [, length of the inputfield (optional)]	infolog	nl	maximale lengte van de invoer [lengte van het invoerveld (optioneel)]
+modifierer	infolog	nl	Gewijzigd door
 name must not be empty !!!	infolog	nl	Naam mag niet leeg zijn !!!
 name of new type to create	infolog	nl	Naam van het nieuw te creëren type
 never hide search and filters	infolog	nl	Zoeken en filters niet verbergen
@@ -246,6 +251,9 @@ priority	infolog	nl	Prioriteit
 private	infolog	nl	Privé
 project	infolog	nl	Project
 project settings: price, times	infolog	nl	Project instellingen: prijs, tijden
+projectmanager	infolog	nl	Projectmanager
+re-planned	infolog	nl	Hergepland
+re-planned time	infolog	nl	Hergeplande tijd
 re:	infolog	nl	Re:
 read one record by passing its id.	infolog	nl	Lees één record door het id mee te geven.
 read rights (default)	infolog	nl	leesrechten (standaard)
@@ -340,7 +348,6 @@ urgent	infolog	nl	dringend
 used time	infolog	nl	gebruikte tijd
 valid path on clientside<br>eg. \\server\share or e:\	infolog	nl	geldig pad op de computer van de cliënt<br/>. Bijv. \\Server\Share of D:\
 valid path on clientside<br>eg. \servershare or e:	infolog	nl	geldig pad op de computer van de cliënt<br/>. Bijv. \\Server\Share of D:\
-valid path on clientside<br>eg. servershare or e:	infolog	nl	geldig pad op de computer van de cliënt<br/>. Bijv. \\Server\Share of D:\
 values for selectbox	infolog	nl	Waarden voor selectbox
 view all subs of this entry	infolog	nl	Alle sub's van deze infolog weergeven
 view other subs	infolog	nl	overige sub's weergeven

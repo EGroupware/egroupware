@@ -16,6 +16,9 @@ entry saved	timesheet	nl	Item opgeslagen
 error deleting the entry!!!	timesheet	nl	Fout bij verwijderen van het item !!!
 error saving the entry!!!	timesheet	nl	Fout bij opslaan van het item !!!
 existing links	timesheet	nl	Bestaande links
+export to openoffice spreadsheet	timesheet	nl	Export naar OpenOffice rekenblad
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
+field must not be empty !!!	timesheet	nl	Veld mag niet leeg zijn !!!
 full: use only projectmanager	admin	nl	Volledig: alleen de ProjectManager gebruiken
 general	timesheet	nl	Algemeen
 last modified	timesheet	nl	Laatst gewijzigd
@@ -37,6 +40,7 @@ saves the changes made	timesheet	nl	Bewaar de gemaakte wijzigingen
 saves this entry and add a new one	timesheet	nl	Bewaar dit item en maak een nieuwe
 select a price	timesheet	nl	Selecteer een tarief
 select a project	timesheet	nl	Selecteer een project
+show a quantity sum (eg. to sum up negative overtime)	admin	nl	Toont een optelling van hoeveelheid (bijvoorbeeld om negatieve overtijd op te tellen)
 start	timesheet	nl	Start
 starttime	timesheet	nl	Aanvangstijd
 starttime has to be before endtime !!!	timesheet	nl	Aanvangstijd moet voor de eindtijd liggen !!!
@@ -45,6 +49,8 @@ this month	timesheet	nl	Deze maand
 this week	timesheet	nl	Deze week
 this year	timesheet	nl	Dit jaar
 timesheet	common	nl	Urenregistratie
+timesheet csv export	timesheet	nl	Urenregistratie CSV export
+timesheet openoffice export	timesheet	nl	Urenregistratie OpenOffice export
 unitprice	timesheet	nl	Eenheidstarief
 view this entry	timesheet	nl	Dit item weergeven
 week	timesheet	nl	Week

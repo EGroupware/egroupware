@@ -1,5 +1,15 @@
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	nl	%1 '%2' bestaat niet, is niet leesbaar door de webserver of bevat geen eGroupWare installatie!
+%1 already exists in %2.	setup	nl	%1 bestaat reeds in %2.
+%1 created in %2.	setup	nl	%1 aangemaakt in %2.
+%1 database %2 on %3 already contains the following tables:	setup	nl	%1 database %2 op %3 bevat reeds de volgende tabellen:
 %1 does not exist !!!	setup	nl	%1 bestaat niet !!!
 %1 is %2%3 !!!	setup	nl	%1 is %2%3 !!!
+%1 is needed by: %2.	setup	nl	%1 is nodig voor: %2.
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	nl	%1 is ingesteld op %2, u kunt geen bestanden uploaden of bijlagen toevoegen die groter zijn dan deze waarde!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	nl	%1 is ingesteld op %2. Dit is NIET aanbevolen voor een productie omgeving aangezien weergegeven foutmeldingen wachtwoorden en andere vertrouwelijke informatie kunnen bevatten.
+%1, %2 or %3 the configuration file.	setup	nl	%1, %2 of %3 het configuratie bestand.
+'%1' is no valid domain name!	setup	nl	'%1' is geen geldige domeinnaam!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	nl	'%1' is niet toegestaan als %2. argumenten van optie %3 !!!
 (searching accounts and changing passwords)	setup	nl	(zoekt accounts en wijzigt wachtwoorden)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	nl	*** Werk uw database niet via Setup bij omdat de update mogelijk onderbroken kan worden door de max_execution_time van PHP. Dit laat uw database achter in een niet repareerbare staat en uw data zal verloren zijn.
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	nl	*** U heeft moet handmatig wijzigingen aanbrengen in uw php.ini om eGroupWare volledig aan het werk te krijkgen.
@@ -7,12 +17,22 @@
 13 (ntp)	setup	nl	13 (ntp)
 80 (http)	setup	nl	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	nl	<b>te gebruiken karakterset</b> (gebruik utf-8 indien u van plan bent om talen met verschillende karaktersets te gaan gebruiken):
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	nl	<b>Dit maakt 1 beheerdersaccount en 3 demo accounts</b><br />De gebruikersnamen/wachtwoorden zijn: demo/guest, demo2/guest and demo3/guest.
+[header-password],[header-user],[new-password],[new-user]	setup	nl	[header-password],[header-user],[new-password],[new-user]
+access denied: wrong username or password for manage-header !!!	setup	nl	Toegang geweigerd: verkeerde gebruikersnaam of wachtwoord voor header beheer !!!
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	nl	Toegang geweigerd: verkeerde gebruikersnaam of wachtwoord voor het configureren van het domein '%1(%2)' !!!
+account repository need to be set to the one you migrate to!	setup	nl	Account repository moet ingesteld worden op die waar u naar toe migreert!
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	nl	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	nl	Bestaande accounts
 actions	setup	nl	Acties
-add a domain	setup	nl	Een domein toevoegen
+activate safe password check	setup	nl	Activeer de veilige wachtwoorden controle
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	nl	Automatisch gecreërde gebruikers toevoegen aan deze groep ('Standaard' wordt gebruikt als dit veld leeg is)
+add new database instance (egw domain)	setup	nl	Voeg een nieuwe database instantie toe (eGW domein)
+add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	nl	Voeg toe of bewerk domein: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
+adding, editing or deleting an egroupware domain / database instance:	setup	nl	Toevoegen, bewerken of verwijderen van een eGroupWare domein / database instantie:
+additional options and there defaults (in brackets)	setup	nl	Additionele opties en hun standaardwaarden (tussen haken)
 additional settings	setup	nl	Overige instellingen
+admin account successful created.	setup	nl	Beheerders account succesvol aangemaakt.
+admin email address	setup	nl	Beheerders email adres
 admin first name	setup	nl	Voornaam beheerder
 admin last name	setup	nl	Achternaam beheerder
 admin password	setup	nl	Wachtwoord beheerder
@@ -24,12 +44,14 @@ after backing up your tables first.	setup	nl	Nadat u eerst een backup van uw tab
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	nl	Zet het bestand op de plek van header.inc.php als u het hebt ontvangen. Klik vervolgens op "doorgaan".
 all applications	setup	nl	alle toepassingen
 all core tables and the admin and preferences applications	setup	nl	Alle hoofdtabellen en de beheerder- en voorkeurentoepassingen
+all exit codes of the command line interface	setup	nl	alle exit codes van de command line interface
 all languages (incl. not listed ones)	setup	nl	alle talen (incl. de niet getoonde)
 all users	setup	nl	Alle gebruikers
 allow authentication via cookie	setup	nl	Authenticatie via cookie toestaan
 allow password migration	setup	nl	Wachtwoord migratie toestaan
 allowed migration types (comma-separated)	setup	nl	Toegestane migratietypes (komma gescheiden)
-analysis	setup	nl	Analyse
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	nl	Als alternatief kunnen domeinen worden benaderd door in te loggen met <i>gebruikersnaam@domein</i>.
+and is up to date	setup	nl	en is actueel
 and reload your webserver, so the above changes take effect !!!	setup	nl	EN herstart jouw webserver zodat de bovenstaande wijzigingen doorgevoerd worden !!!
 app details	setup	nl	Toep. details
 app install/remove/upgrade	setup	nl	Toep. installeren/verwijderen/bijwerken
@@ -52,7 +74,10 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	nl	Op uw verzoek gaat dit script proberen al uw applicaties te deinstalleren waarbij ook uw tabellen en gegevens verwijderd worden
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	nl	Poging om het correcte mimetype voor FTP te gebruiken in plaats van de standaard 'application/octet-stream'
 authentication / accounts	setup	nl	Authenticatie / Accounts
+authentication type for application	setup	nl	Authenticatie type voor toepassing
+authentification mode:	setup	nl	Authentificatie modus:
 auto create account records for authenticated users	setup	nl	Automatisch account records aanmaken voor geauthentificeerde gebruikers
+auto login anonymous user	setup	nl	Anonieme bezoeker automatisch inloggen
 auto-created user accounts expire	setup	nl	Automatisch aangemaakte gebruikers accounts verlopen
 available version	setup	nl	Beschikbare versie
 back to the previous screen	setup	nl	Terug naar het vorige scherm
@@ -66,39 +91,58 @@ backup failed	setup	nl	Backup is mislukt
 backup finished	setup	nl	backup voltooid
 backup now	setup	nl	backup nu
 backup sets	setup	nl	backup sets
+backup skipped!	setup	nl	Backup overgeslagen!
 backup started, this might take a few minutes ...	setup	nl	backup gestart, dit kan enkele minute duren ...
 because an application it depends upon was upgraded	setup	nl	omdat een toepassing waar het afhankelijk van is, is bijgewerkt
 because it depends upon	setup	nl	omdat het afhankelijk is van
 because it is not a user application, or access is controlled via acl	setup	nl	omdat het geen gebruikerstoepassing is, of omdat de toegang geregeld wordt via ACL
 because it requires manual table installation, <br />or the table definition was incorrect	setup	nl	omdat het een handmatige tabel installatie vereist,<br />of de tabeldefinitie was onjuist
 because it was manually disabled	setup	nl	omdat het handmatig was uitgeschakeld
+because its sources are missing	setup	nl	omdat de bronbestanden ontbreken
 because of a failed upgrade or install	setup	nl	als gevolg van een mislukte upgrade of installatie
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	nl	als gevolg van een mislukte upgrade of omdat de database nieuwer is dat de geinstalleerde versie van de toepassing
 because the enable flag for this app is set to 0, or is undefined	setup	nl	omdat de "inschakelen" markering voor deze toepassing op 0 is gezet of niet gedefinieerd is
 bottom	setup	nl	onderaan
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	nl	maar we <u>adviseren u ten zeerste om een backup</u> van uw tabellen te maken voor het geval het script uw gegevens beschadigt.<br /><strong>Deze automatische scripts kunnen uw gegevens gemakkelijk vernietigen.</strong><br /><em>Maak alstublieft een backup voordat u verder gaat!</em>
+ca certificate	setup	nl	CA certificaat
+can not connect to %1 database %2 on host %3 using user %4!	setup	nl	Kan niet verbinden met %1 database %2 op host %3 met gebruiker %4!
+can not connect to ldap server on host %1 using dn %2!	setup	nl	Kan niet verbindngen met LDAP server op host %1 via DN %2!
+can not create %1 database %2 on %3 for user %4!	setup	nl	Kan geen %1 database %2 aanmaken op %3 voor gebruiker %4!
+can not create dn %1!	setup	nl	Kan DN %1 niet aanmaken!
 cancel	setup	nl	Annuleren
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	nl	Kan de header.inc.php niet aanmaken als gevolg van te beperkte bestandstoegangsrechten.<br />Inplaats hiervan kunt u het bestand %1.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	nl	Kan het bestand header.inc.php niet aanmaken vanwege bestandsrechten beperkingen<br />In plaats hiervan kun u het bestand %1 of %2.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	nl	cas server host naam:<br />bijvoorbeeld: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	nl	cas server port:<br />Bijvoorbeeld: 443
+cas server uri:	setup	nl	cas server uri:
+certificate (pem or ca):	setup	nl	Certificaat (PEM of CA):
 change system-charset	setup	nl	Verander de systeemkarakterset
 charset	setup	nl	utf-8
 charset to convert to	setup	nl	Karakterset waarnaar geconverteerd moet worden
+charsets used by the different languages	setup	nl	karaktersets in gebruik in de verschillende pagina's
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	nl	Controle kan alleen worden uitgevoerd indien aangeroepen via een webserver omdat de gebruikers ID /-naam van de webserver onbekend is.
 check installation	setup	nl	Controleer installatie
 check ip address of all sessions	setup	nl	Controleer IPadres van alle sessies
 checking extension %1 is loaded or loadable	setup	nl	Controleert of extensie %1 geladen is of geladen kan worden
 checking file-permissions of %1 for %2 %3: %4	setup	nl	Controleert bestandsrechten van %1 voor %2 %3: %4
 checking for gd support...	setup	nl	Controleert op GD ondersteuning...
+checking function %1 exists	setup	nl	Controleert of functie %1 bestaat
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	nl	Gecontroleerd wordt of php.ini instelling session.save_path='%1' beschrijfbaar is voor de webserver
 checking pear%1 is installed	setup	nl	Controleert of PEAR%1 is geinstalleerd
 checking php.ini	setup	nl	Controleert php.ini
+checking required php version %1 (recommended %2)	setup	nl	Controleerrt de ereiste PHP versie %1 (%2 aanbevolen)
 checking the egroupware installation	setup	nl	Controleert de eGroupWare installatie
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	nl	controleert of eGroupWare is geinstalleerd, de versies en de benodigde upgrades (return values see --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	nl	Klik <a href="index.php">hier</a> om terug te gaan naar Setup.
 click here	setup	nl	Klik hier
 click here to re-run the installation tests	setup	nl	Klik hier om de installatie testen nogmaals uit te voeren
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	nl	komma gescheiden ip-adressen of hostnamen, standaard toegang tot setup vanaf iedere adres
 completed	setup	nl	Compleet
 config password	setup	nl	Configuratie wachtwoord
 config username	setup	nl	Configuratie gebruikersnaam
 configuration	setup	nl	Configuratie
+configuration changed.	setup	nl	Configuratie is gewijzigd.
 configuration completed	setup	nl	Configuratie voltooid
+configuration errors:	setup	nl	Configuratie fouten:
 configuration password	setup	nl	Configuratie wachtwoord
 configuration user	setup	nl	Configuratie gebruiker
 configure now	setup	nl	Nu configureren
@@ -107,6 +151,7 @@ contain	setup	nl	bevat
 continue	setup	nl	Doorgaan
 continue to the header admin	setup	nl	Doorgaan naar de Header beheerder
 convert	setup	nl	Converteren
+convert backup to charset selected above	setup	nl	Converteer backup naar de hierboven gekozen karakterset
 could not open header.inc.php for writing!	setup	nl	Kon header.inc.php niet openen met schrijfrechten!
 country selection	setup	nl	Land keuze
 create	setup	nl	Aanmaken
@@ -115,18 +160,27 @@ create admin account	setup	nl	Beheerdersaccount aanmaken
 create database	setup	nl	Database aanmaken
 create demo accounts	setup	nl	Demo accounts aanmaken
 create one now	setup	nl	Nu aanmaken
+create or edit the egroupware configuration file: header.inc.php:	setup	nl	Maak of bewerk het eGroupWare configuratie bestand: header.inc.php:
 create the empty database -	setup	nl	De leze database aanmaken -
 create the empty database and grant user permissions -	setup	nl	De lege databae aanmaken en gebruikersrechten instellen -
 create your header.inc.php	setup	nl	Uw header.inc.php aanmaken
 created	setup	nl	aangemaakt
 created header.inc.php!	setup	nl	Header.inc.php aangemaakt!
+creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	nl	maakt een beheerder gebruiker: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	nl	Tabellen aanmaken
+creation of %1 in %2 failed !!!	setup	nl	Aanmaken van %1 in %2 mislukt !!!
+current configuration:	setup	nl	Huidige configuratie:
 current system-charset	setup	nl	Huidige systeem karakterset
-current system-charset is %1, click %2here%3 to change it.	setup	nl	Huidige systeem karakterset is %1, klik %2hier%3 om dit te wijzigen.
+current system-charset is %1.	setup	nl	Huidige systeem karakterset is %1.
 current version	setup	nl	Huidige versie
 currently installed languages: %1 <br />	setup	nl	Op dit moment geinstalleerde talen: %1 <br />
+custom handler: %1	setup	nl	Custom handler: %1
+custom set via %1	setup	nl	Custom set via %1
+cyrus imap: admin user,password	setup	nl	Cyrus IMAP: Beheerder gebruiker, Wachtwoord
+database	setup	nl	Database
+database instance (egw domain)	setup	nl	Database instantie (eGW domein)
+database is version %1 and up to date.	setup	nl	database is versie %1 en actueel
 database successfully converted from '%1' to '%2'	setup	nl	Database is met succes geconverteerd van '%1' naar %'2'
-datebase	setup	nl	Database
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	nl	Datetime poort.<br />Indien poort 13 gebruikt wordt, stel a.u.b. de firewall regels hiervoor in voordat u deze pagina verzendt.<br />(Poort: 13 / Host: 129.6.15.28)
 day	setup	nl	dag
 day of week<br />(0-6, 0=sunday)	setup	nl	dag van de week<br />(0-6, 0=zondag)
@@ -139,6 +193,7 @@ db root password	setup	nl	DB root wachtwoord
 db root username	setup	nl	DB root gebruikersnaam
 db type	setup	nl	DB type
 db user	setup	nl	DB gebruiker
+default	setup	nl	aanbevolen standaardwaarde
 default file system space per user/group ?	setup	nl	Standaard bestandssysteem ruimte per gebruiker/groep
 delete	setup	nl	Verwijderen
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	nl	Verwijder alle aanwezige SQL accounts, groepen, ACL's en voorkeuren (normaliter niet nodig)?
@@ -157,21 +212,38 @@ do you want persistent connections (higher performance, but consumes more resour
 do you want to manage homedirectory and loginshell attributes?	setup	nl	Wilt u de homedirectory en loginshell attributen beheren?
 does not exist	setup	nl	bestaat niet
 domain	setup	nl	Domein
+domain '%1' does not exist !!!	setup	nl	Domein '%1' bestaat NIET !!!
 domain name	setup	nl	Domeinnaam
 domain select box on login	setup	nl	Domein keuzeveld op het loginscherm
+domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	nl	domein (all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]
+domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	nl	domein (default),[config user(admin)],password,[backup to install],[charset(default depends on language)]
+domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	nl	domein (default),[config user(admin)],password,[name=value,...] sets config values beside:
+domain-name	setup	nl	domeinnaam
+don't change, if you already stored files! you will loose them!	setup	nl	Niets wijzigen indien u reeds bestanden hebt opgeslagen! U raakt ze kwijt!
 dont touch my data	setup	nl	Kom niet aan mijn gegevens
 download	setup	nl	Downloaden
 edit current configuration	setup	nl	Huidige configuratie bewerken
 edit your existing header.inc.php	setup	nl	Uw huidige header.inc.php bewerken
 edit your header.inc.php	setup	nl	Uw header.inc.php bewerken
+eg. /egroupware or http://domain.com/egroupware, default: %1	setup	nl	bijvoorbeeld /egroupware of http://domein.com/egroupware, standaard: %1
 egroupware administration manual	setup	nl	eGroupWare Beheershandleiding
+egroupware api needs a database (schema) update from version %1 to %2!	setup	nl	eGroupWare API vereist een database (schema) update van versie %1 naar %2!
+egroupware api version %1 found.	setup	nl	eGroupWare API versie %1 gevonden.
+egroupware configuration file (header.inc.php) does not exist.	setup	nl	eGroupWare configuratie bestand (header.inc.php) bestaat NIET.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	nl	eGroupWare configuratie bestand (header.inc.php) versie %1 bestaat %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	nl	eGroupWare configuratie bestand header.inc.php bestaat reeds, u moet --edit-header gebruiken of het eerst verwijderen!
+egroupware domain/instance %1(%2):	setup	nl	eGroupWare domein/instantie %1(%2)
+egroupware is already installed!	setup	nl	eGroupWare is reeds geinstalleerd!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	nl	eGroupWare bronbestanden in '%1' zijn niet compleet, bestand '%2' ontbreekt !!!
+emailadmin profile updated:	setup	nl	Email beheerder profiel bijgewerkt:
 enable for extra debug-messages	setup	nl	inschakelen voor extra debug-messages
-enable ldap version 3	setup	nl	LDAP versie 3 inschakelen
 enable mcrypt	setup	nl	MCrypt inschakelen
 enter some random text for app session encryption	setup	nl	Vul wat willekeurige tekst in om de toepassingssessie te versleutelen
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	nl	Vul wat willekeurige tekst in om de toepassingssessie te <br />versleutelen (vereist MCrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	nl	Vul het volledige pad naar de tijdelijke bestanden in,<br />Voorbeeld: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	nl	Vul het volledige pad naar de tijdelijke bestanden in,<br />Voorbeeld: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	nl	Vul het volledige pad naar de gebruikers- en groepsbestanden in. <br />Voorbeelden: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	nl	Vul het volledige pad naar de gebruikers- en groepsbestanden in. <br />Voorbeelden: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	nl	Vul het volledige pad naar de backup directory in,<br />indien leeg: bestanden directory
 enter the hostname of the machine on which this server is running	setup	nl	Vul de hostnaam in van de machine waarop deze server draait
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	nl	Vul de locatie van eGroupWare's URL in.<br />Voorbeeld: http://www.domein.nl/egroupware  of  /egroupware<br /><b>Geen afsluitende slash<b>
@@ -185,83 +257,97 @@ enter your http proxy server port	setup	nl	Vul uw HTTP proxy server poort in
 enter your http proxy server username	setup	nl	Vul uw HTTP proxy server gebruikersnaam in
 error in admin-creation !!!	setup	nl	Fout bij aanmaken van admin !!!
 error in group-creation !!!	setup	nl	Fout bij aanmaken van groep !!!
-export egroupware accounts from sql to ldap	setup	nl	eGroupWare accounts exporteren van SQL naar LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	nl	Exporteren is voltooid! U moet de gebruikerswachtwoorden handmatig instellen.
-export sql users to ldap	setup	nl	SQL gebruikers exporteren naar LDAP
+export has been completed!	setup	nl	Export is voltooid!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	nl	Fout tijdens schrijven van het configuratiebestand header.inc.php, controleer de rechten !!!
 false	setup	nl	Niet waar
 file	setup	nl	BESTAND
 file type, size, version, etc.	setup	nl	bestandtype, grootte, versie, enz.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	nl	Bestandsuploads zijn uitgeschakeld: u kunt GEEN van de bestandsbeheerders gebruiken en ook u nergens in toepassingen bestanden bijvoegen.
 filename	setup	nl	bestandsnaam
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	nl	Voor een nieuwe installatie kiest u importeren. Om bestaande SQL accounts naar LDAP te converteren, kiest u exporteren
+filesystem	setup	nl	Bestandssysteem
+filesystem (default)	setup	nl	Bestandssysteem (standaard)
 force selectbox	setup	nl	Selectieveld forceren
-found existing configuration file. loading settings from the file...	setup	nl	Bestaand configuratiebestand gevonden. Instellingen worden uit dat bestand geladen...
+give admin access to all installed apps	setup	nl	Geef beheerders toegang tot alle geinstalleerde toepassingen
+gives further options	setup	nl	geeft meer opties
 go back	setup	nl	Ga terug
 go to	setup	nl	Ga naar
 grant access	setup	nl	Toegang verlenen
+group	setup	nl	groep
+group memberships will be migrated too.	setup	nl	Groep waarnaar de lidmaatschappen worden gemigreerd.
 has a version mismatch	setup	nl	versies komen niet overeen
 header admin login	setup	nl	Header beheerder login
 header password	setup	nl	Header wachtwoord
 header username	setup	nl	Header gebruikersnaam
+header-password[,header-user(admin)]	setup	nl	header-password[,header-user(admin)]
+header.inc.php successful written.	setup	nl	header.inc.php is succesvol geschreven.
 historylog removed	setup	nl	Historie log verwijderd
 hooks deregistered	setup	nl	hooks registraties verwijderd
 hooks registered	setup	nl	hooks geregistreerd
 host information	setup	nl	Host informatie
+host,[smtp port],[smtp user],[smtp password]	setup	nl	host,[smtp port],[smtp user],[smtp password]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	nl	host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]
 host/ip domain controler	setup	nl	Host/IP domein controller
 hostname/ip of database server	setup	nl	Hostnaam/IP van de database server
 hour (0-24)	setup	nl	uur (0-24)
+however the tables are still in the database	setup	nl	Hoewel de tabellen reeds in de database bestaan
 however, the application is otherwise installed	setup	nl	Hoewel, de toepassing is anderszins geinstalleerd
 however, the application may still work	setup	nl	Hoewel, de toepassing zal misschien werken
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	nl	HTTP auth types (komma gescheiden) die gebruikt moeten worden zonder loginpagina, bijvoorbeeld "NTLM"
 if no acl records for user or any group the user is a member of	setup	nl	Als er ACL records voor de gebruiker of een willekeurige groep zijn is de gebruiker lid van
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	nl	Indien safe_mode ingeschakeld is kan eGW bepaalde instellingen niet tijdens runtime wijzen, bovendien kunnen we geen enkele nog niet geladen module laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	nl	Indien de toepassing geen tabellen heeft gedefinieerd is het kiezen voor upgrade de oplossing voor dit problemen
 if using ads (active directory) authentication	setup	nl	Indien ADS (Active Directory) authenticatie gebruikt wordt
+if using cas (central authentication service):	setup	nl	indien cas gebruikt wordt (Centrale Authenticatie Service)
 if using ldap	setup	nl	Indien LDAP gebruikt wordt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	nl	Indien LDAP gebruikt wordt, wilt u dan de homedirectory en loginshell attributen beheren?
-if using mail authentication	setup	nl	Indien Mail authenticatie gebruikt wordt
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	nl	Indien u alleen de documentroot kunt benaderen kiest u <b>Database</b> om aan te geven waar u de bestandsinhoud wilt opslaan en gebruikt u hetzelfde pad als voor de tijdelijke bestanden.
 if you did not receive any errors, your applications have been	setup	nl	Indien u geen foutmeldingen kreeg, is uw toepassing
 if you did not receive any errors, your tables have been	setup	nl	Indien u geen foutmeldingen kreeg, zijn uw tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	nl	Indien u dit voor de eerste uitvoert, vergeet dan niet om handmatig %1 te doen !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	nl	Indien u alleen talen met dezelfde karakterset gebruikt (bijvoorbeeld west europese talen) hoeft u geen systeemkarakerset in te stellen!
 image type selection order	setup	nl	Afbeelding type selectie volgorde
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	nl	Accounts vanuit LDAP in de eGroupWare accounts tabel importeren (voor een nieuwe installatie die SQL accounts gebruikt)
 import has been completed!	setup	nl	Importeren is voltooid!
-import ldap users/groups	setup	nl	LDAP gebruikers/groepen importeren
-importing old settings into the new format....	setup	nl	Oude instellingen naar het nieuwe formaat importeren...
-include root (this should be the same as server root unless you know what you are doing)	setup	nl	Root meenemen (dit hoort hetzelfde te zijn als de Server Root tenzij u weet wat u doet)
 include_path need to contain "." - the current directory	setup	nl	include_path moet "." bevatten - de huidige directory
 install	setup	nl	Installeren
 install all	setup	nl	Alles installeren
 install applications	setup	nl	Toepassingen installeren
 install backup	setup	nl	backup installeren
 install language	setup	nl	Taal installeren
+install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	nl	installeer of update vertalingen:domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones
+installation finished	setup	nl	Installatie voltooid
+installation started, this might take a few minutes ...	setup	nl	Installatie is gestart, dit kan enkele minuten duren...
 installed	setup	nl	geinstalleerd
 instructions for creating the database in %1:	setup	nl	Instructies voor het aanmaken van de database in %1:
+invalid argument '%1' !!!	setup	nl	Ongeldig argument '%1' !!!
 invalid ip address	setup	nl	Ongeldig IP adres
+invalid mcrypt algorithm/mode combination	setup	nl	Ongeldig Mcrypt Algoritme/Modus combinatie
 invalid password	setup	nl	Ongeldig wachtwoord
 is broken	setup	nl	is kapot/verbroken
 is disabled	setup	nl	is uitgeschakeld
 is in the webservers docroot	setup	nl	is de docroot van de webserver
 is not writeable by the webserver	setup	nl	kan niet door de webserver beschreven worden
-ldap account import/export	setup	nl	LDAP account importeren/exporteren
+it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	nl	Het vereist upgraden aar versie %1! Gebruik --update-header <wachtwoord>[,gebruiker] om dit te doen (-usage geeft meer mogelijkheden).
+languages updated.	setup	nl	Talen bijgewerkt.
 ldap accounts configuration	setup	nl	LDAP accounts configuratie
 ldap accounts context	setup	nl	LDAP accounts context
 ldap config	setup	nl	LDAP configuratie
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	nl	LDAP standaard homedirectory prefix (voorbeeld /home voor /home/gebruikersnaam)
 ldap default shell (e.g. /bin/bash)	setup	nl	LDAP standaard shell (voorbeeld /bin/bash)
 ldap encryption type	setup	nl	LDAP encryptie type
-ldap export	setup	nl	LDAP exporteren
-ldap export users	setup	nl	LDAP gebruikers exporteren
 ldap groups context	setup	nl	LDAP gebruikers context
 ldap host	setup	nl	LDAP host
 ldap import	setup	nl	LDAP importeren
-ldap import users	setup	nl	LDAP gebruikers importeren
-ldap modify	setup	nl	LDAP bewerken
 ldap root password	setup	nl	LDAP root wachtwoord
 ldap rootdn	setup	nl	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	nl	LDAP zoekfilter voor accounts, standaard: "(uid=%user)", %domain=eGW-domain
+leave empty to keep current.	setup	nl	Laat leeg om huidige te behouden.
+limit access	setup	nl	Beperk toegang
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	nl	Limiteer toegang tot de setup tot de volgende adressen, netwerken of hostnamen (voorbeeld: 127.0.0.1,10.1.1,myhost.dnydns.org)
+list availible values	setup	nl	Toon beschikbare waarden
+list of availible translations	setup	nl	lijst van beschikbare talen
+login as user postgres, eg. by using su as root	setup	nl	Login als gebruiker postgress, bijvoorbeeld door su te gebruiken als root
 login to mysql -	setup	nl	Inloggen op mysql -
+loginname needed for domain configuration	setup	nl	Loginnaam nodig voor domein configuratie
 logout	setup	nl	Uitloggen
 mail domain (for virtual mail manager)	setup	nl	Mail domein (voor Virtual mail manager)
 mail server login type	setup	nl	Mailserver login type
@@ -269,6 +355,7 @@ mail server protocol	setup	nl	Mailserver protocol
 make sure that your database is created and the account permissions are set	setup	nl	Overtuig u ervan dat uw database is aangemaakt en dat de account rechten zijn ingesteld
 manage applications	setup	nl	Toepassingen beheren
 manage languages	setup	nl	Talen beheren
+manual / help	setup	nl	Handleiding / help
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	nl	max_execution_time is ingesteld op minder dan 30 (seconden): eGroupWare heeft somes een hogere execution_time, reken er dus op dat er af en toe fouten optreden
 maximum account id (e.g. 65535 or 1000000)	setup	nl	Maximum account id (voorbeeld 65535 of 1000000)
 may be broken	setup	nl	kan verbroken zijn
@@ -276,13 +363,13 @@ mcrypt algorithm (default tripledes)	setup	nl	MCrypt algoritme (standaard TRIPLE
 mcrypt initialization vector	setup	nl	MCrypt initialisatie vector
 mcrypt mode (default cbc)	setup	nl	MCrypt modus (standaard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	nl	MCrypt instellingen (vereist de mcrypt PHP extensie)
-mcrypt version	setup	nl	MCrypt versie
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	nl	memory_limit is ingesteld op minder dan %1; sommige toepassingen van eGroupWare hebben meer nodig dan de aanbevolen 8M, reken er dus op at er af en toe fouten optreden
+migration between egroupware account repositories	setup	nl	Migratie tussen eGroupWare account repositories
 minimum account id (e.g. 500 or 100, etc.)	setup	nl	Minimum account ID (voorbeeld: 500 of 100, enz.)
 minute	setup	nl	minuut
+missing or uncomplete mailserver configuration	setup	nl	Ontbrekende of incomplete mailserver configuratie
 modifications have been completed!	setup	nl	Aanpassingen zijn voltooid!
 modify	setup	nl	Aanpassen
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	nl	Een bestaande LDAP account store aanpassen voor gebruik met eGroupWare (t.b.v. een nieuwe installatie die LDAP accounts gebruikt)
 month	setup	nl	maand
 multi-language support setup	setup	nl	meertalige ondersteuning instellen
 name of database	setup	nl	Naam van de database
@@ -294,7 +381,10 @@ no	setup	nl	Nee
 no %1 support found. disabling	setup	nl	Geen %1 ondersteuning aangetroffen. Wordt uitgeschakeld
 no accounts existing	setup	nl	Geen bestaande accounts
 no algorithms available	setup	nl	geen algoritmes aanwezig
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	nl	Er bestaan geen eGroupWare domeinen / database instanties! Gebruik --edit-header --domain om er een aan te maken (--usage geeft meer opties).
+no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	nl	Er is geen beheerder wachtwoord ingesteld! Gebruik --edit-header <wachtwoord>[,<gebruiker>] om er een in te stellen (--usage geeft meer opties).
 no modes available	setup	nl	geen modi aanwezig
+no update necessary, domain %1(%2) is up to date.	setup	nl	Geen update nodig, domein %1(%2) is actueel.
 no xml support found. disabling	setup	nl	Geen XML ondersteuning aangetroffen. Wordt uitgeschakeld
 not	setup	nl	niet
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	nl	Niet alle MCrypt algoritmes en modi werken met eGroupWare. Als u problemen ervaart probeer dit dan uit te schakelen.
@@ -303,7 +393,9 @@ not completed	setup	nl	Niet voltooid
 not ready for this stage yet	setup	nl	Nog niet gereed voor deze fase
 not set	setup	nl	niet ingesteld
 note: you will be able to customize this later	setup	nl	Noot: U kunt dit later aanpassen
+nothing to change.	setup	nl	Niets te wijzigen.
 now guessing better values for defaults...	setup	nl	Nu worden er betere standaardwaardes bepaald...
+odbc / maxdb: dsn (data source name) to use	setup	nl	ODBC / MaxDB: DSN (data source name) die gebruikt moet worden
 ok	setup	nl	OK
 once the database is setup correctly	setup	nl	Zodra de database correct is ingesteld
 one month	setup	nl	één maand
@@ -315,16 +407,23 @@ or %1continue to the header admin%2	setup	nl	of %1Ga door naar de Header Admin%2
 or http://webdav.domain.com (webdav)	setup	nl	of  http://webdav.domein.nl (WebDAV)
 or we can attempt to create the database for you:	setup	nl	Of wij proberen de database voor uw aan te maken:
 or you can install a previous backup.	setup	nl	Of u kunt een vorige backup installeren.
-password needed for configuration	setup	nl	Wachtwoord dat vereist is voor configuratie
+password for smtp-authentication	setup	nl	Wachtwoord voor SMTP-authenticatie
+password needed for domain configuration.	setup	nl	Wachtwoord nodig voor domein configuratie.
 password of db user	setup	nl	Wachtwoord van de db gebruiker
 passwords did not match, please re-enter	setup	nl	Wachtwoord zijn ongelijk, vul ze nogmaals in
+path (not url!) to your egroupware installation.	setup	nl	Pad (geen URL!) naar uw eGroupWare installatie.
 path information	setup	nl	Pad informatie
+path of egroupware install directory (default auto-detected)	setup	nl	pad van de eGroupWare installatie directory (standaard wordt deze automatisch gedetecteerd)
 path to user and group files has to be outside of the webservers document-root!!!	setup	nl	Pad naar gebruikers- en groepsbestanden MOETEN BUITEN de webserver's document-root liggen!!!
-pear is needed by syncml or the ical import+export of calendar.	setup	nl	PEAR is vereist voor SyncML of de iCal import en export van de agenda.
-pear::log is needed by syncml.	setup	nl	PEAR::Log is vereist voor SyncML.
+path to various directories: have to exist and be writeable by the webserver	setup	nl	pad naar verschillende directories: moeten bestaan en schrijfbaar zijn voor de webserver
+pear (%1) is a php repository and is usually in a package called %2.	setup	nl	PEAR (%1) is een PHP repository en is nomaliter aanwezig in een package genaamd %2.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	nl	PEAR extensies zijn vereist voor veel eGroupWare toepassingen, PEAR zelf is de vereiste basis voor iedere extensie!
+pear%1 is needed by: %2.	setup	nl	PEAR %1 wordt vereist door: %2.
+pem certificate	setup	nl	PEM certificaat
 persistent connections	setup	nl	Persistente connecties
-php plus restore	setup	nl	PHP plus restore
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	nl	PHP plus restore geeft verreweg de beste performance aangezien het de eGW omgeving volledig in de sessie opslaat.
+php client	setup	nl	PHP client
+php proxy	setup	nl	PHP proxy
+php session handler enabled in php.ini	setup	nl	PHP session handler ingeschakeld in php.ini
 please check for sql scripts within the application's directory	setup	nl	Controleer a.u.b. op de aanwezigheid van SQL scripts in de programma directory
 please check read/write permissions on directories, or back up and use another option.	setup	nl	Controleer a.u.b. de lees/schrijfrechten op directories, of ga terug en gebruik een andere optie
 please configure egroupware for your environment	setup	nl	Configureer eGroupWare a.u.b. voor uw omgeving
@@ -339,6 +438,8 @@ pop/imap mail server hostname or ip address	setup	nl	POP/IMAP mail server hostna
 possible reasons	setup	nl	Mogelijke redenen
 possible solutions	setup	nl	Mogelijke oplossingen
 post-install dependency failure	setup	nl	Na-installatie afhankelijkheids fout
+postfix with ldap: [yes(user edit forwarding)]	setup	nl	Postfix met LDAP: [yes(user edit forwarding)]
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	nl	Postgres: Laat dit leeg om de gewenste unix domein sockets te gebruiken in plaats van een tcp/ip verbinding
 potential problem	setup	nl	Potentieel probleem
 preferences	setup	nl	Voorkeuren
 problem resolution	setup	nl	Probleem oplossing
@@ -349,7 +450,6 @@ re-enter password	setup	nl	Wachtwoord opnieuw invullen
 read translations from	setup	nl	Vertalingen lezen uit
 readable by the webserver	setup	nl	leesbaar door de webserver
 really uninstall all applications	setup	nl	WERKELIJK all toepassingen de-installeren
-recommended: filesystem	setup	nl	Aanbevolen: bestandssysteem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	nl	register_globals is ingeschakeld, eGroupWare heeft dit niet nodig en het is in het algemeen veiliger om dit uitgeschakeld te houden
 registered	setup	nl	geregistreerd
 rejected lines	setup	nl	Afgekeurde regels
@@ -365,9 +465,9 @@ restore finished	setup	nl	terugzetten is voltooid
 restore started, this might take a few minutes ...	setup	nl	terugzetten is gestart, dat kan een paar minuten duren...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	nl	Een backup terugzetten zal alle inhoud van uw database verwijderen/overschrijven. Weet u het zeker?
 return to setup	setup	nl	Ga terug naar installatie
+run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	nl	draai een database schema update (indien nodig): domain(all),[config user(admin)],password
 run installation tests	setup	nl	Voer de installatie testen uit
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	nl	safe_mode is ingeschakeld, dit is in het algemeen een goed zaak aangezien het uw installatie veiliger maakt.
-sample configuration not found. using built in defaults	setup	nl	Voorbeeld configuratie is niet gevonden, gebruikt ingebouwde standaarden
 save	setup	nl	Bewaren
 save this text as contents of your header.inc.php	setup	nl	Bewaar deze tekst als inhoud van uw header.inc.php
 schedule	setup	nl	agenderen
@@ -377,10 +477,8 @@ select one...	setup	nl	selecteer een...
 select the default applications to which your users will have access	setup	nl	Selecteer de standaard toepassingen die uw gebruikers mogen gebruiken
 select the desired action(s) from the available choices	setup	nl	Selecteer de gewenste actie(s) uit de beschikbare mogelijkheden
 select to download file	setup	nl	Kies voor het downloaden van bestand
-select where you want to store/retrieve file contents	setup	nl	Kies waar u de bestandsinhoud wilt opslaan/ophalen
-select where you want to store/retrieve filesystem information	setup	nl	Kies waar u de bestandssysteeminformatei wilt opslaan/ophalen
 select where you want to store/retrieve user accounts	setup	nl	Kies waar u de gebruikersaccounts wilt opslaan/ophalen
-select which group(s) will be exported (group membership will be maintained)	setup	nl	Kies welke groep(en) geexporteerd zal/zullen worden (groepslidmaatschap wordt behouden)
+select which group(s) will be exported	setup	nl	Kies welke groepen geexporteerd moeten worden
 select which group(s) will be imported (group membership will be maintained)	setup	nl	Kies welke groep(en) geimporteerd zal/zullen worden (groepslidmaatschap wordt behouden)
 select which group(s) will be modified (group membership will be maintained)	setup	nl	Kies welke groep(en) gewijzigd zal/zullen worden (groepslidmaatschap wordt behouden)
 select which languages you would like to use	setup	nl	Kies welke talen u wilt gebruiken
@@ -394,22 +492,31 @@ select which user(s) will have admin privileges	setup	nl	Kies welke gebruiker(s)
 select your old version	setup	nl	Kies uw oude versie
 selectbox	setup	nl	Keuzeveld
 server root	setup	nl	Server Root
-sessions type	setup	nl	Sessies type
+session handler class used.	setup	nl	Sessie handler klasse gebruikt.
+sessions handler	setup	nl	Sessies Handler
 set	setup	nl	stel in
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	nl	Stel dit in op "oud" voor versie < 2.4, in het andere geval op de exacte mcrypt versie die u gebruikt.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	nl	De systeemkarakterset instellen op UTF-8 (unicode) maakt het mogelijk dat er talen met verschillende karakterset door elkaar gebruikt worden.
 settings	setup	nl	Instellingen
 setup	setup	nl	Setup
-setup demo accounts in ldap	setup	nl	Setup demo accounts in LDAP
 setup main menu	setup	nl	Setup Hoofdmenu
 setup the database	setup	nl	Setup de database
 setup/config admin login	setup	nl	Setup/Configureer beheerders login
 show 'powered by' logo on	setup	nl	Toon "draait op" logo op
+sieve: host[,port(2000)]	setup	nl	Sieve: Host[,Port(2000)]
 size	setup	nl	grootte
+skip the installation tests (not recommended)	setup	nl	Sla de installatie tests over (niet aanbevolen)
+smtp server hostname or ip address	setup	nl	SMTP server hostnaam of IP adres
+smtp server port	setup	nl	SMTP server poort
 some or all of its tables are missing	setup	nl	Enkele of alle tabellen ontbreken
+sources deleted/missing	setup	nl	Bronbestanden verwijderd/ontbreken
 sql encryption type	setup	nl	SQL encryptie type voor wachtwoorden (standaard - md5)
+ssl validation:	setup	nl	SSL validatie:
 standard (login-name identical to egroupware user-name)	setup	nl	standaard (loginnaam gelijk aan de eGroupWare gebruikersnaam)
+standard mailserver settings (used for mail authentication too)	setup	nl	Standaard mailserver instellingen (worden ook gebruikt voor Mail authenticatie)
+standard, as defined above	setup	nl	Standaard, zoals hierboven gedefinieerd
 start the postmaster	setup	nl	Start de postmaster
+start updating languages %1 ...	setup	nl	Start het actualiseren van talen %1 ...
+start updating the database ...	setup	nl	Start het actualiseren van de database ...
 status	setup	nl	Status
 step %1 - admin account	setup	nl	Stap %1 - Beheerders account
 step %1 - advanced application management	setup	nl	Stap %1 - Geavanceerd toepassingen beheer
@@ -418,6 +525,11 @@ step %1 - db backup and restore	setup	nl	Stap %1 - DB backup en restore
 step %1 - language management	setup	nl	Stap %1 - Taal beheer
 step %1 - simple application management	setup	nl	Stap %1 - Eenvoudig toepassingen beheer
 succesfully uploaded file %1	setup	nl	bestand %1 met succes ge-upload
+successful connected to %1 database %2 on %3 using user %4.	setup	nl	Met succes verbonden aan %1 database %2 op %3 via gebruiker %4.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	nl	Met succes verbonden aan %1 op %3 en database %2 aangemaakt voor gebruiker %4.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	nl	Met succes verbonden aan LDAP server op %1 en creerde/controleerde vereiste structuur %2.
+successful connected to ldap server on %1 using dn %2.	setup	nl	Met succes verbonden aan LDAP server op %1 via DN %2.
+supported node types:	setup	nl	Ondersteunde knooppunt types:
 table change messages	setup	nl	Tabel wijzigingsberichten
 tables dropped	setup	nl	tabellen verwijderd
 tables installed, unless there are errors printed above	setup	nl	tabellen geinstalleerd, tenzij er hierboven fouten zijn gemeld
@@ -425,17 +537,23 @@ tables upgraded	setup	nl	tabellen ge-upgrade
 target version	setup	nl	Doel versie
 tcp port number of database server	setup	nl	TCP poortnummer van de database server
 text entry	setup	nl	Text invoer
+the %1 extension is needed from: %2.	setup	nl	De %1 extensie is nodig voor: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	nl	De %1 extensie is vereist indien u van plan bent om een %2 database te gebruiken.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	nl	De db_type in standaardwaarden (%1) wordt niet ondersteund door deze server, gebruikt het eerste ondersteunde type.
 the file	setup	nl	het bestand
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	nl	De eerste stap bij het installeren van eGroupWare is vaststellen dat uw omgeving de juiste instellingen heeft om het programma correct te kunnen uitvoeren.
+the following applications are not installed:	setup	nl	De volgende toepassingen zijn NIET geinstalleerd:
 the following applications need to be upgraded:	setup	nl	De volgende toepassingen moeten ge-upgrade worden:
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	nl	De IMAP extensie is vereist voor de twee email toepassingen (zelfs als u email alleen maar met het POP3 protocol gebruikt).
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	nl	De imagecreatefromjpeg functie wordt ondersteund door de GD extensie (gecompileerd met jpeg ondersteuning). Het is nodig of foto's van contactpersonen te uploaden.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	nl	De LDAP extensie is nodig indien u LDAP gebruikt als account of contact opslag, authenticatie tegen LDAP of Active Directory. Het is niet nodig voor een standaard SQL installatie.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	nl	De mbstring extensie is vereist voor volledige ondersteuning van unicode (UTF-8) of andere multibyte karaktersets.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	nl	De mbstring.func_overload = 7 is vereist voor volledige ondersteuning van unicode (UTF-8) of andere multibyte karaktersets.
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	nl	De PDO extensie plus een database specifieke driver is nodig voor het VFS (virtuele bestands systeem)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	nl	De session extensie is vereist om PHP sessies te kunnen gebruiken (db-sessies gebruiken dit niet)
+the session extension is required!	setup	nl	De session extensie is vereist!
 the table definition was correct, and the tables were installed	setup	nl	De tabeldefinitie was correct en de tabellen werden geinstalleerd
 the tables	setup	nl	de tabellen
+the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	nl	De gebruikersnamen/wachtwoorden zijn: demo/guest, demo2/guest and demo3/guest.
 there was a problem trying to connect to your ldap server. <br />	setup	nl	Er was een probleem bij het proberen te verbinden met uw LDAP server. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	nl	Er was een probleem bij het proberen te verbinden met uw LDAP server. <br />Controleer a.u.b. uw LDAP server configuratie
 this has to be outside the webservers document-root!!!	setup	nl	Dit moet buiten de webserver document-root liggen!!!
@@ -443,12 +561,12 @@ this might take a while, please wait ...	setup	nl	Dit kan een tijdje duren, gedu
 this program lets you backup your database, schedule a backup or restore it.	setup	nl	Dit programma laat u een backup van uw database maken, agendeer een backup of zet de database terug.
 this program will convert your database to a new system-charset.	setup	nl	Dit programma zal uw database converteren naar een nieuwe systeemkarakterset.
 this program will help you upgrade or install different languages for egroupware	setup	nl	Dit programma zal u helpen verschillende talen voor eGroupWare te upgraden of te installeren
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	nl	Deze sectie zal u helpen om gebruikers en groepen uit uw eGroupWare tabellen te exporteren in uw LDAP boomstructuur
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	nl	Deze sectie zal u helpen om gebruikers en groepen uit uw LDAP boomstructuur te exporteren in uw eGroupWare tabellen
-this section will help you setup your ldap accounts for use with egroupware	setup	nl	Deze sectie zal u helpen om uw LDAP accounts in te stellen voor gebruik met eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	nl	Dit zou ongeveer 30 bytes lang moeten zijn.<br />Noot: De standaard is willekeurig samengesteld.
 this stage is completed<br />	setup	nl	Deze fase is voltooid<br />
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	nl	Dit maakt een eerste gebruiker aan in eGroupWare of herstelt het wachtwoord en beheerders rechten van een bestaande gebruiker
 to a version it does not know about	setup	nl	naar een versie waar het niets vanaf weet
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	nl	om wachtwoord authentificatie toe te staan moet u de volgende regel toevoegen aan uw pg_hba.conf bestand (boven alle andere regels) EN postgres herstarten:
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	nl	Om de karakterset te wijzigen: maak een backup van uw database, de-installeer alle toepassingen en herinstalleer de backup met "convert backup to charset selected" aangevinkt.
 to setup 1 admin account and 3 demo accounts.	setup	nl	om 1 beheerders account en 3 demo accounts in te stellen.
 top	setup	nl	Boven
 translations added	setup	nl	Vertalingen toegevoegd
@@ -457,10 +575,11 @@ translations upgraded	setup	nl	Vertalingen ge-upgrade
 true	setup	nl	Waar
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	nl	Probeer uw PHP zo te configureren dat een van de hierboven genoemde DBMS-sen ondersteund wordt of installeer eGroupWare handmatig.
 two weeks	setup	nl	twee weken
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	nl	Helaas hebben sommige PHP/Apache pakketten hier problemen mee (Apache 'sterft' en u kunt niet meer inloggen).
 uninstall	setup	nl	deinstalleren
 uninstall all applications	setup	nl	Alle toepassingen deinstalleren
 uninstalled	setup	nl	gedeinstalleerd
+unknown option '%1' !!!	setup	nl	Onbekende optie '%1' !!!
+update finished.	setup	nl	Actualiseren voltooid.
 upgrade	setup	nl	Upgraden
 upgrade all	setup	nl	Alle upgraden
 upgraded	setup	nl	ge-upgrade
@@ -468,22 +587,35 @@ upgrading tables	setup	nl	Tabellen upgraden
 upload backup	setup	nl	backup verzenden
 uploads a backup and installs it on your db	setup	nl	verzendt de backup en installeert hem in uw DB
 uploads a backup to the backup-dir, from where you can restore it	setup	nl	verzendt een backup naar de backup directory vanwaar u de hem kunt terugzetten
+usage: %1 command [additional options]	setup	nl	Gebrui: %1 commando [extra opties]
+use --create-header to create the configuration file (--usage gives more options).	setup	nl	Gebruik --create-header om het configuratie bestand aan te maken (--usage toont meer opties).
+use --install to install egroupware.	setup	nl	Gebruik --install om eGroupWare te installeren.
+use --update to do so.	setup	nl	Gebruik --update om eGroupWare te actualiseren.
 use cookies to pass sessionid	setup	nl	Gebruik cookies om de sessie ID door te geven
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	nl	gebruik mcrypt to encrypt sessie-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
+use persistent db connections: {on(default) | off}	setup	nl	gebruik persistente database connecties: {on(default) | off}
 use pure html compliant code (not fully working yet)	setup	nl	Gebruik pure HMTL compatibele code (werkt nog niet helemaal)
+user	setup	nl	gebruiker
 user account prefix	setup	nl	Gebruikers account prefix
+user for smtp-authentication (leave it empty if no auth required)	setup	nl	Gebruiker voor SMTP-authenticatie (laat het leeg indien geen authenticatie nodig is)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	nl	Gebruikersnamen (komma gescheiden) welke VFS root toegang kunnen krijgen (afgezien van de installatie gebruiker)
 usernames are casesensitive	setup	nl	Gebruikersnamen zijn hoofdlettergevoelig
 users choice	setup	nl	Gebruikerskeuze
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	nl	Meestal nog meer irritant<br />Beheerders kunnen Admin gebruiken &gt;&gt; Beheer accounts of groepen om toegang tot verdere toepassingen te geven.
 utf-8 (unicode)	setup	nl	UTF-8 (Unicode)
+validation errors	setup	nl	Validatie fouten
 version	setup	nl	versie
 version mismatch	setup	nl	onjuiste versie
 view	setup	nl	Weergeven
+virtual filesystem	setup	nl	Virtueel bestandssysteem
 virtual mail manager (login-name includes domain)	setup	nl	Virtuele mail beheerder (loginnaam bevat het domein)
 warning!	setup	nl	Waarschuwing!
 we can proceed	setup	nl	We kunnen doorgaan
+we could not determine the version of %1, please make sure it is at least %2	setup	nl	We konden de versie van %1 niet bepalen, controleer svp dat het minstens %2 is
 we will automatically update your tables/records to %1	setup	nl	We zullen automatisch uw tabellen/records bijwerken naar %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	nl	We zullen nu een serie testen uitvoeren die een paar minuten in beslag kunnen nemen. Klik op de link hieronder om door te gaan.
 welcome to the egroupware installation	setup	nl	Welkom bij de eGroupWare installatieprocedure
-what type of sessions management do you want to use (php session management may perform better)?	setup	nl	Wat voor type sessies beheer wilt u gebruiken (PHP sessie beheer kan een betere performance geven)?
+where should egroupware store file content	setup	nl	Waar moet eGroupWare bestanden opslaan
 which database type do you want to use with egroupware?	setup	nl	Welk database type wilt u gebruiken met eGroupWare?
 world readable	setup	nl	world leesbaar
 world writable	setup	nl	world schrijfbaar
@@ -491,18 +623,20 @@ would you like egroupware to cache the phpgw info array ?	setup	nl	Wilt u dat eG
 would you like egroupware to check for a new version<br />when admins login ?	setup	nl	Wilt u dat eGroupWare controleert of er een nieuwe versie is<br />als beheerders inloggen ?
 would you like to show each application's upgrade status ?	setup	nl	Wilt u de upgrade status van iedere toepassing laten weergeven ?
 writable by the webserver	setup	nl	schijfbaar voor de webserver
-write config	setup	nl	Configuratie wegschrijven
+write	setup	nl	Schrijven
+wrong credentials to access the header.inc.php file!	setup	nl	Verkeerde gegevens om het header.inc.php bestand te benaderen!
 year	setup	nl	jaar
 yes	setup	nl	Ja
 yes, with lowercase usernames	setup	nl	Ja, met gebruikersnamen in kleine letters
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	nl	Het blijkt dat u een pre-beta versie van eGroupWare draait.<br />Deze versies worden niet meer ondersteund en er is ook geen upgrade pad hiervoor in de setup beschikbaar. U kunt mogelijk eerst upgraden naar versie 0.9.10 (de laatste versie die pre-beta upgrades biedt)<br />en daarna upgrade naar de huidige actuele versie.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	nl	Het blijkt dat u een oude versie van PHP draait.<br />Het wordt aanbevolen om naar een nieuwe versie te upgraden.<br />Oudere versies van PHP kunnen mogelijk eGroupWare niet correct laten draaien als eGroupWare al wil starten.<br /><br />Upgrade a.u.b. tot minimaal versie %1.
 you appear to be running version %1 of egroupware	setup	nl	U lijkt eGroupWare versie %1 te draaien
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	nl	U lijkt een oudere versie dan PHP 4.1.0 te gebruiken. eGroupWare vereist nu PHP 4.1.0 of nieuwer
 you appear to have %1 support.	setup	nl	U blijkt ondersteuning voor %1 te hebben.
-you appear to have php session support. enabling php sessions.	setup	nl	U blijkt PHP sessie ondersteuning te hebben. PHP sessies wordt ingeschakeld.
 you appear to have xml support enabled	setup	nl	XML ondersteuning lijkt te zijn geactiveerd.
 you are ready for this stage, but this stage is not yet written.<br />	setup	nl	U bent klaar voor dit stadium, maar dit stadium is nog niet weggeschreven.</br>
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	nl	U gebruikt PHP versie %1. eGroupWare vereist nu %2 of hoger, aanbevolen is PHP %3.
+you can install it by running:	setup	nl	U kunt het installeren door het uitvoeren van:
+you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	nl	U kunt de header gebruiker en wachtwoord gebruiker voor ieder domein. Indien het wachtwoord niet ingesteld is via de commandoregel wordt het uit de enviromentvariabele EGW_CLI_PASSWORD gehaald of opgehaald uit het gebruikersrecord.
 you didn't enter a config password for domain %1	setup	nl	U heeft geen configuratie wachtwoord ingevoerd voor domein %1.
 you didn't enter a config username for domain %1	setup	nl	U heeft geen configuratie gebruikersnaam ingevoerd voor domein %1.
 you didn't enter a header admin password	setup	nl	U heeft geen header beheerderwachtwoord ingevoerd.
@@ -511,22 +645,30 @@ you do not have any languages installed. please install one now <br />	setup	nl	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	nl	U heeft nog geen header.inc.php gemaakt! <br/> U kunt dit nu doen.
 you have successfully logged out	setup	nl	U bent correct uitgelogd.
 you must enter a username for the admin	setup	nl	U moet een gebruikersnaam geven voor de beheerder
-you need to add some domains to your header.inc.php.	setup	nl	U moet één of meerdere domeinen toevoegen aan uw header.inc.php.
+you need to add at least one egroupware domain / database instance.	setup	nl	U moet minstens 1 eGroupWare domein / database instantie toevoegen.
+you need to configure egroupware:	setup	nl	U moet eGroupWare configureren:
+you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	nl	U moet de bovenvermelde fouten herstellen voordat het configuratiebestand header.inc.php weggeschreven kan worden!
+you need to save the settings you made here first!	setup	nl	U moet de instellingen die u heeft aangemaakt eerst opslaan!
 you need to select your current charset!	setup	nl	U moet een huidige karakterset kiezen!
+you need to specify a password!	setup	nl	U moet een wachtwoord opgeven!
+you should either install the sources or uninstall it, to get rid of the tables	setup	nl	U moet de bronbestanden installeren of de-installeren om van de tabellen af te komen
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	nl	U moet of proberen de de-installeren en vervolgens opnieuw te installeren of u kunt  handmatige reparaties doen
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	nl	U moet het juiste schema in uw LDAP server laden - zie phpgwapi/doc/ldap/README
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	nl	U kunt niet inloggen in eGroupWare met gebruik making van PHP sessies: "session kon niet geverifieerd worden" !!!
 you're using an old configuration file format...	setup	nl	U gebruikt een verouderd bestandsformaat voor de configuratie
-you're using an old header.inc.php version...	setup	nl	U gebruikt een verouderde header.inc.php versie...
 your applications are current	setup	nl	Uw toepassingen zijn actueel
 your backup directory '%1' %2	setup	nl	Uw backup directory '%1' %2
 your database does not exist	setup	nl	U database bestaat niet!
 your database is not working!	setup	nl	U database werkt niet!
 your database is working, but you dont have any applications installed	setup	nl	U database werkt, maar u heeft nog geen toepassingen geïnstalleerd.
+your egroupware api is current	setup	nl	Uw eGroupWare API is actueel
 your files directory '%1' %2	setup	nl	Uw bestanden directory '%1' %2
 your header admin password is not set. please set it now!	setup	nl	Uw header-beheerderwachtwoord is niet ingesteld. Doe dit nu!
 your header.inc.php needs upgrading.	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken. <br />
+your installed version of %1 is %2, required is at least %3, please run:	setup	nl	De geinstalleerde versie van %1 is %2, vereist is minimaal %3, voer svp het volgende programma uit:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	nl	Uw PHP installatie heeft niet de juiste GD ondersteuning. U moet GD library versie 1.8 of hoger installeren om Gantt charts in de projectentoepassing te kunnen zien.
 your tables are current	setup	nl	Uw tabellen zijn actueel
-your tables will be dropped and you will lose data	setup	nl	U tabellen worden verwijderd en alle gegevens gaan verloren !!
+your tables will be dropped and you will lose data	setup	nl	Uw tabellen worden verwijderd en alle gegevens gaan verloren !!
 your temporary directory '%1' %2	setup	nl	Uw tijdelijke directory '%1' %2
+{db | php(default) | php-restore}	setup	nl	{db | php(default) | php-restore}
+{off(default) | on}	setup	nl	{off(default) | on}
