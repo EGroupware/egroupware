@@ -7,13 +7,13 @@
  * @package setup
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * setup command: install the tables
  */
-class setup_cmd_install extends setup_cmd 
+class setup_cmd_install extends setup_cmd
 {
 	/**
 	 * Constructor
@@ -50,7 +50,7 @@ class setup_cmd_install extends setup_cmd
 
 	/**
 	 * run the command: install the tables
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string serialized $GLOBALS defined in the header.inc.php
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
@@ -62,22 +62,33 @@ class setup_cmd_install extends setup_cmd
 
 		// instanciate setup object and check authorisation
 		$this->check_setup_auth($this->config_user,$this->config_passwd,$this->domain);
-		
+
 		$this->check_installed($this->domain,array(13,14,20),$this->verbose);
-		
+
 		// use uploaded backup, instead installing from scratch
 		if ($this->backup)
 		{
 			$db_backup =& new db_backup();
-	
+
 			if (!is_resource($f = $db_backup->fopen_backup($this->backup,true)))
 			{
-				throw new egw_exception_wrong_userinput(lang('Restore failed'),31);
+				throw new egw_exception_wrong_userinput(lang('Restore failed').' ('.$f.')',31);
 			}
-			//echo lang('Restore started, this might take a few minutes ...')."\n";
+			if ($this->verbose)
+			{
+				echo lang('Restore started, this might take a few minutes ...')."\n";
+			}
+			else
+			{
+				ob_start();	// restore echos the table structure
+			}
 			$db_backup->restore($f,$this->charset);
 			fclose($f);
 
+			if (!$this->verbose)
+			{
+				ob_end_clean();
+			}
 			return lang('Restore finished');
 		}
 		// regular (new) install
@@ -93,9 +104,9 @@ class setup_cmd_install extends setup_cmd
 
 		if ($this->verbose) echo lang('Installation started, this might take a few minutes ...')."\n";
 		$setup_info = self::$egw_setup->process->pass($setup_info,'new',false,True,$this->config);
-		
+
 		$this->restore_db();
-		
+
 		return lang('Installation finished');
 	}
 }
