@@ -25,8 +25,9 @@ class setup_cmd_install extends setup_cmd
 	 * @param string $charset='utf-8' charset for the install, default utf-8 now
 	 * @param boolean $verbose=false if true, echos out some status information during the run
 	 * @param array $config=array() configuration to preset the defaults during the install, eg. set the account_repository
+	 * @param string $lang='en'
 	 */
-	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$charset='utf-8',$verbose=false,$config=array())
+	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$charset='utf-8',$verbose=false,array $config=array(),$lang='en')
 	{
 		if (!is_array($domain))
 		{
@@ -38,6 +39,7 @@ class setup_cmd_install extends setup_cmd
 				'charset'       => $charset,
 				'verbose'       => $verbose,
 				'config'        => $config,
+				'lang'          => $lang,
 			);
 		}
 		elseif(!$domain['charset'])
@@ -101,6 +103,7 @@ class setup_cmd_install extends setup_cmd
 		// Set the DB's client charset if a system-charset is set
 		self::$egw_setup->system_charset = strtolower($this->charset);
 		self::$egw_setup->db->Link_ID->SetCharSet($this->charset);
+		$_POST['ConfigLang'] = $this->lang;
 
 		if ($this->verbose) echo lang('Installation started, this might take a few minutes ...')."\n";
 		$setup_info = self::$egw_setup->process->pass($setup_info,'new',false,True,$this->config);

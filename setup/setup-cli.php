@@ -186,14 +186,14 @@ function do_emailadmin()
 /**
  * Create an admin account
  *
- * @param string $arg domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
+ * @param string $arg domain(default),[config user(admin)],password,username,password,[first name],[last name],[email],[lang]
  */
 function do_admin($arg)
 {
-	list($domain,$user,$password,$admin,$pw,$first,$last,$email) = explode(',',$arg);
+	list($domain,$user,$password,$admin,$pw,$first,$last,$email,$lang) = explode(',',$arg);
 	_fetch_user_password($user,$password);
 
-	$cmd = new setup_cmd_admin($domain,$user,$password,$admin,$pw,$first,$last,$email);
+	$cmd = new setup_cmd_admin($domain,$user,$password,$admin,$pw,$first,$last,$email,array(),$lang);
 	echo $cmd->run()."\n";
 }
 
@@ -372,14 +372,14 @@ function _check_auth_config($arg,$stop,$set_lang=true)
 /**
  * Install eGroupWare
  *
- * @param string $args domain,[config user(admin)],password,[backup-file],[charset]
+ * @param string $args domain,[config user(admin)],password,[backup-file],[charset],[lang]
  */
 function do_install($args)
 {
-	list($domain,$user,$password,$backup,$charset) = explode(',',$args);
+	list($domain,$user,$password,$backup,$charset,$lang) = explode(',',$args);
 	_fetch_user_password($user,$password);
 
-	$cmd = new setup_cmd_install($domain,$user,$password,$backup,$charset,true);
+	$cmd = new setup_cmd_install($domain,$user,$password,$backup,$charset,true,array(),$lang);
 	echo $cmd->run()."\n";
 }
 

@@ -7,15 +7,15 @@
  * @package setup
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * setup command: create a first eGroupWare user / admin and our two standard groups: Default & Admins
- * 
+ *
  * @ToDo: get rid of the ugly setup_admin.php include
  */
-class setup_cmd_admin extends setup_cmd 
+class setup_cmd_admin extends setup_cmd
 {
 	/**
 	 * Constructor
@@ -29,9 +29,10 @@ class setup_cmd_admin extends setup_cmd
 	 * @param string $admin_lastname=null
 	 * @param string $admin_email=null
 	 * @param array $config=array() extra config for the account object: account_repository, ldap_*
+	 * @param string $lang='en'
 	 */
 	function __construct($domain,$config_user=null,$config_passwd=null,$admin_user=null,$admin_password=null,
-		$admin_firstname=null,$admin_lastname=null,$admin_email=null,array $config=array())
+		$admin_firstname=null,$admin_lastname=null,$admin_email=null,array $config=array(),$lang='en')
 	{
 		if (!is_array($domain))
 		{
@@ -45,6 +46,7 @@ class setup_cmd_admin extends setup_cmd
 				'admin_lastname'  => $admin_lastname,
 				'admin_email'     => $admin_email,
 				'config'          => $config,
+				'lang'            => $lang,
 			);
 		}
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
@@ -53,7 +55,7 @@ class setup_cmd_admin extends setup_cmd
 
 	/**
 	 * run the command: create eGW admin and standard groups
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
@@ -75,7 +77,8 @@ class setup_cmd_admin extends setup_cmd
 		$_POST['fname']    = $this->admin_firstname;
 		$_POST['lname']    = $this->admin_lastname;
 		$_POST['email']    = $this->admin_email;
-		
+		$_POST['ConfigLang'] = $this->lang;
+
 		$_POST['submit'] = true;
 		$error = include(dirname(__FILE__).'/../admin_account.php');
 

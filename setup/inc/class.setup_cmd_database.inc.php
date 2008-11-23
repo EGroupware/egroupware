@@ -236,7 +236,7 @@ class setup_cmd_database extends setup_cmd
 			}
 			if (strpos($this->$name,'$domain') !== false)
 			{
-				$this->$name = str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name);
+				$this->set_defaults[$name] = $this->$name = str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name);
 			}
 		}
 	}
