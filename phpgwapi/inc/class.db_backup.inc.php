@@ -209,6 +209,11 @@ class db_backup
 				// needed if mbstring.func_overload > 0, else eg. substr does not work with non ascii chars
 				@ini_set('mbstring.internal_encoding',$charset);
 
+				// check if we really need to convert the charset, as it's not perfect and can do some damage
+				if ($convert_to_system_charset && !strcasecmp($convert_to_system_charset,$charset))
+				{
+					$convert_to_system_charset = false;	// no conversation necessary
+				}
 				// set the DB's client encoding (for mysql only if api_version >= 1.0.1.019)
 				if ((!$convert_to_system_charset || $this->db->capabilities['client_encoding']) &&
 					(substr($this->db->Type,0,5) != 'mysql' || !is_object($GLOBALS['egw_setup']) ||
