@@ -62,7 +62,7 @@ foreach(array(
 	'ia' => 'Interlingua',
 	'ie' => 'Interlingue',
 	'ik' => 'Inupiak',
-	'in' => 'Indonesian',
+	'id' => 'Indonesian',
 	'is' => 'Icelandic',
 	'it' => 'Italian',
 	'iw' => 'Hebrew',
