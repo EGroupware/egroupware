@@ -730,7 +730,7 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 
 
 %changelog
-* Sun Nov 16 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.001
+* Mon Nov 24 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.001
 - eGroupware 1.6.001 final 1.6 release
 
 * Sun Nov 16 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc5
