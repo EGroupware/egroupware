@@ -1,0 +1,121 @@
+account '%1' not found !!!	emailadmin	hu	'%1' felhasználói azonosító nem található!
+add new email address:	emailadmin	hu	Új email cím hozzáadása:
+add profile	emailadmin	hu	Profil hozzáadása
+admin dn	emailadmin	hu	Admin dn
+admin password	emailadmin	hu	adminisztrátor jelszava
+admin username	emailadmin	hu	adminisztrátor neve
+advanced options	emailadmin	hu	haladó beállítások
+alternate email address	emailadmin	hu	alternatív emailcím
+any application	emailadmin	hu	Bármelyik modul
+any group	emailadmin	hu	Bármelyik csoport
+bad login name or password.	emailadmin	hu	Hibás belépési név vagy jelszó.
+bad or malformed request. server responded: %s	emailadmin	hu	Hibás kérés. Szerver válasza: %s
+bad request: %s	emailadmin	hu	Hibás kérés: %s
+can be used by application	emailadmin	hu	Ez a modul használhatja
+can be used by group	emailadmin	hu	Ez a csoport használhatja
+connection dropped by imap server.	emailadmin	hu	A kapcsolatot az IMAP szerver eldobta.
+could not complete request. reason given: %s	emailadmin	hu	Kérést nem lehet teljesíteni. Az ok: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	hu	Nem létesíthető titkos csatorna az IMAP szerverhez. %s : %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	hu	CRAM-MD5 vagy DIGEST-MD5 használatához az Auth_SASL csomagot telepíteni kell.
+cyrus imap server	emailadmin	hu	Cyrus IMAP-kiszolgáló
+cyrus imap server administration	emailadmin	hu	Cyrus IMAP-kiszolgáló adminisztrációja
+default	emailadmin	hu	Alapértelmezett
+deliver extern	emailadmin	hu	külső kézbesítés
+do not validate certificate	emailadmin	hu	ne ellenőrizze a tanúsítványt
+do you really want to delete this profile	emailadmin	hu	Valóban törölni kívánja ezt a profilt
+domainname	emailadmin	hu	tartománynév
+edit email settings	emailadmin	hu	email beállítások szerkesztése
+email account active	emailadmin	hu	email azonosító aktív
+email address	emailadmin	hu	email cím
+email settings	common	hu	Email beállítások
+emailadmin	emailadmin	hu	EmailAdmin
+enable cyrus imap server administration	emailadmin	hu	Cyrus IMAP-kiszolgáló adminisztrációjának engedélyezése
+enable sieve	emailadmin	hu	Sieve engedélyezése
+encrypted connection	emailadmin	hu	titkosított kapcsolat
+encryption settings	emailadmin	hu	Titkosítás beállításai
+enter your default mail domain (from: user@domain)	emailadmin	hu	Adja meg az alapértelmezett levelezési tartományt (a felhasználó@tartomány-ból)
+error connecting to imap server. %s : %s.	emailadmin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. %s : %s
+error connecting to imap server: [%s] %s.	emailadmin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. [%s ]: %s
+forward also to	emailadmin	hu	továbbítsd ide is
+forward email's to	emailadmin	hu	email továbbítása ide
+forward only	emailadmin	hu	továbbítás csak ide
+global options	emailadmin	hu	Globális opciók
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	hu	SSL vagy TLS használatához a PHP openssl kiterjesztését telepíteni kell.
+imap admin password	admin	hu	IMAP adminisztrátor jelszava
+imap admin user	admin	hu	IMAP adminisztrátor felhasználóneve
+imap c-client version < 2001	emailadmin	hu	IMAP C-Client verzió < 2001
+imap server closed the connection.	emailadmin	hu	Az IMAP szerver lezárta a kapcsolatot.
+imap server closed the connection. server responded: %s	emailadmin	hu	Az IMAP szerver lezárta a kapcsolatot: %s
+imap server hostname or ip address	emailadmin	hu	IMAP szerver hosztneve vagy IP címe
+imap server logintyp	emailadmin	hu	IMAP szerver bejelentkezési típusa
+imap server name	emailadmin	hu	IMAP szerver neve
+imap server port	emailadmin	hu	IMAP szerver portja
+imap/pop3 server name	emailadmin	hu	IMAP/POP3 szerver neve
+in mbyte	emailadmin	hu	MBájtban
+ldap basedn	emailadmin	hu	LDAP basedn
+ldap server	emailadmin	hu	LDAP szerver
+ldap server accounts dn	emailadmin	hu	LDAP szerver accounts DN
+ldap server admin dn	emailadmin	hu	LDAP szerver admin DN
+ldap server admin password	emailadmin	hu	LDAP szerver adminisztrátorának jelszava
+ldap server hostname or ip address	emailadmin	hu	LDAP szerver hosztneve vagy IP címe
+ldap settings	emailadmin	hu	LDAP beállítások
+leave empty for no quota	emailadmin	hu	hagyja üresen a kvóta figyelmen kívül hagyásához
+mail settings	admin	hu	Levelezési beállítások
+name of organisation	emailadmin	hu	Szervezet neve
+no alternate email address	emailadmin	hu	nincs alternatív email cím
+no encryption	emailadmin	hu	titkosítás  nélkül
+no forwarding email address	emailadmin	hu	nincs továbbküldési email cím
+no message returned.	emailadmin	hu	Nincs visszaadott üzenet.
+no supported imap authentication method could be found.	emailadmin	hu	Nem található támogatott IMAP hitelesítés.
+order	emailadmin	hu	Rendezés
+organisation	emailadmin	hu	Szervezet
+plesk can't rename users --> request ignored	emailadmin	hu	A Plesk nem tudja átnevezni a felhasználókat -> kérés figyelmen kívül hagyva
+plesk imap server (courier)	emailadmin	hu	Plesk IMAP Szerver (Courier)
+plesk mail script '%1' not found !!!	emailadmin	hu	Plesk levél szkript '%1' nem található!!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	hu	Plesk megköveteli, hogy a jelszó legalább 5 karakter legyen és ne tartalmazza a felhasználói nevet --> jelszó beállítása NEM történt meg!!!
+plesk smtp-server (qmail)	emailadmin	hu	Plesk SMTP-Szerver (Qmail)
+pop3 server hostname or ip address	emailadmin	hu	POP3 szerver hosztneve vagy IP címe
+pop3 server port	emailadmin	hu	POP3 szerver portja
+postfix with ldap	emailadmin	hu	Postfix LDAP-vel
+profile access rights	emailadmin	hu	profil elérési jogosultságok
+profile list	emailadmin	hu	Profil lista
+profile name	emailadmin	hu	Profilnév
+qmaildotmode	emailadmin	hu	qmaildotmode
+qouta size in mbyte	emailadmin	hu	kvóta mérete Megabájtban
+quota settings	emailadmin	hu	kvóta beállításai
+remove	emailadmin	hu	eltávolítás
+select type of imap server	emailadmin	hu	IMAP szerver típusának kiválasztása
+select type of imap/pop3 server	emailadmin	hu	Válassza ki az IMAP/POP3 szerver típusát
+select type of smtp server	emailadmin	hu	Válassza ki az SMTP szerver típusát
+server settings	emailadmin	hu	Szerver beállítások
+sieve server hostname or ip address	emailadmin	hu	Sieve szerver hosztneve vagy IP címe
+sieve server port	emailadmin	hu	Sieve szerver port
+sieve settings	emailadmin	hu	SIEVE beállítások
+smtp authentication	emailadmin	hu	SMTP azonosítás
+smtp options	emailadmin	hu	SMTP opciók
+smtp server name	emailadmin	hu	SMTP szerver neve
+smtp settings	emailadmin	hu	SMTP beállítások
+smtp-server hostname or ip address	emailadmin	hu	SMTP szerver hosztneve vagy IP címe
+smtp-server port	emailadmin	hu	SMTP szerver portja
+standard	emailadmin	hu	Szabványos
+standard imap server	emailadmin	hu	Szabványos IMAP-kiszolgáló
+standard pop3 server	emailadmin	hu	Szabványos POP3-kiszolgáló
+standard smtp-server	emailadmin	hu	Szabványos SMTP-kiszolgáló
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	hu	Az IMAP szerver úgy tűnik nem támogatja a kiválasztott hitelesítést. Lépjen kapcsolatba az adminisztrátorral.
+this php has no imap support compiled in!!	emailadmin	hu	A használt PHP verzió nem tartalmaz IMAP támogatást! (telepíteni kell)
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	hu	TLS kapcsolat használatához legalább PHP 5.1.0-val kell rendelkeznie.
+unexpected response from server to authenticate command.	emailadmin	hu	Váratlan válasz a szervertől az AUTHENTICATE parancsra.
+unexpected response from server to digest-md5 response.	emailadmin	hu	Váratlan válasz a szervertől a Digest-MD5 parancsra.
+unexpected response from server to login command.	emailadmin	hu	Váratlan válasz a szervertől a LOGIN parancsra.
+unknown imap response from the server. server responded: %s	emailadmin	hu	Váratlan válasz a szervertől: %s
+unsupported action '%1' !!!	emailadmin	hu	Nem támogatott művelet '%1' !!!
+update current email address:	emailadmin	hu	Jelenlegi email cím frissítése:
+use ldap defaults	emailadmin	hu	használja az LDAP alapbeállításokat
+use smtp auth	emailadmin	hu	SMTP hitelesítés használata
+use tls authentication	emailadmin	hu	TLS hitelesítés használata
+use tls encryption	emailadmin	hu	TLS kódolás használata
+user can edit forwarding address	emailadmin	hu	Felhasználó szerkesztheti a továbbításkor a címeket
+username (standard)	emailadmin	hu	felhasználó név (standard)
+username@domainname (virtual mail manager)	emailadmin	hu	felhasználónév@tartománynév (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	emailadmin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
+virtual mail manager	emailadmin	hu	Virtuális MAIL ManaGeR

@@ -1,0 +1,45 @@
+account '%1' not found !!!	emailadmin	et	Kontot '%1' ei leitud !!!
+add new email address:	emailadmin	et	Lisa uus email aadress
+add profile	emailadmin	et	Lisa Profiil
+admin password	emailadmin	et	admin parool
+admin username	emailadmin	et	admin kasutajanimi
+alternate email address	emailadmin	et	Alternatiivne email aadress
+bad login name or password.	emailadmin	et	Vale kasutajanimi või parool
+cyrus imap server	emailadmin	et	Cyrus IMAP Server
+cyrus imap server administration	emailadmin	et	Cyrus IMAP server administreerimine
+default	emailadmin	et	vaikimisi
+do not validate certificate	emailadmin	et	ära valideeri sertifikaati
+do you really want to delete this profile	emailadmin	et	Tahad tõesti kustutada seda Profiili
+domainname	emailadmin	et	Doomeninimi
+edit email settings	emailadmin	et	muuda emaili setinguid
+email account active	emailadmin	et	email konto aktiivne
+email address	emailadmin	et	email aadress
+email settings	common	et	Email setingud
+encrypted connection	emailadmin	et	krüpteeritud ühendus
+encryption settings	emailadmin	et	Krüpteerimise setingud
+enter your default mail domain (from: user@domain)	emailadmin	et	Sisesta oma vaikimisi mail doomen (kasutaja@doomen)
+global options	emailadmin	et	Globaalsed omadused
+imap admin password	admin	et	IMAP admin parool
+imap admin user	admin	et	IMAP admin kasutaja
+imap c-client version < 2001	emailadmin	et	IMAP C-Client Versioon < 2001
+imap server closed the connection.	emailadmin	et	IMAP server sulges ühenduse.
+imap server closed the connection. server responded: %s	emailadmin	et	IMAP Server sulges ühenduse. Server Vastas: %s
+imap server name	emailadmin	et	imap serveri nimi
+imap server port	emailadmin	et	IMAP serveri port
+imap/pop3 server name	emailadmin	et	IMAP/POP3 server nimi
+ldap settings	emailadmin	et	LDAP setingud
+mail settings	admin	et	Mail setingud
+no alternate email address	emailadmin	et	pole alternatiivset email aadressi
+no encryption	emailadmin	et	ilna krüpteeringutta
+organisation	emailadmin	et	Organisatsioon
+pop3 server port	emailadmin	et	POP3 serveri port
+remove	emailadmin	et	eemalda
+select type of imap server	emailadmin	et	vali IMAP serveri tüüp
+select type of imap/pop3 server	emailadmin	et	vali IMAP/POP3 serveri tüüp
+select type of smtp server	emailadmin	et	Vali SMTP serveri tüüp
+server settings	emailadmin	et	Serveri setingud
+sieve server port	emailadmin	et	Sieve serveri port
+sieve settings	emailadmin	et	Sieve setingud
+smtp server name	emailadmin	et	SMTP serveri nimi
+smtp settings	emailadmin	et	SMTP setingud
+smtp-server port	emailadmin	et	SMTP serveri port

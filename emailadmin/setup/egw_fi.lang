@@ -1,0 +1,117 @@
+account '%1' not found !!!	emailadmin	fi	Tiliä '%1' ei löytynyt !!!
+add new email address:	emailadmin	fi	Lisää uusi sähköpostiosoite
+add profile	emailadmin	fi	Lisää profiili
+admin dn	emailadmin	fi	admin dn
+admin password	emailadmin	fi	admin salasana
+admin username	emailadmin	fi	admin käyttäjätunnus
+advanced options	emailadmin	fi	lisäasetukset
+alternate email address	emailadmin	fi	vaihtoehtoinen sähköpostiosoite
+any application	emailadmin	fi	Mikä vain sovellus
+any group	emailadmin	fi	Mikä vain ryhmä
+bad login name or password.	emailadmin	fi	Väärä käyttäjätunnus tai salasana
+bad or malformed request. server responded: %s	emailadmin	fi	Väärä tai viallinen pyyntö. Serveri palauttaa: %s
+bad request: %s	emailadmin	fi	Väärä pyyntö: %s
+can be used by application	emailadmin	fi	Voidaan käyttää sovelluksessa
+can be used by group	emailadmin	fi	Voidaan käyttää ryhmällä
+connection dropped by imap server.	emailadmin	fi	Yhteys IMAP palvelimeen katkesi.
+could not complete request. reason given: %s	emailadmin	fi	Pyyntöä ei voitu toteuttaa. Syynä oli: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	fi	Turvattua yhteyttä IMAP palvelimeen ei voitu avata. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	fi	CRAM-MD5 tai DIGEST-MD5 käyttö edellyttää Auth_SASL paketin asentamista.
+cyrus imap server	emailadmin	fi	Cyrus IMAP -palvelin
+cyrus imap server administration	emailadmin	fi	Cyrus IMAP -palvelimen hallinta
+default	emailadmin	fi	oletus
+deliver extern	emailadmin	fi	deliver extern
+do you really want to delete this profile	emailadmin	fi	Haluatko varmasti poistaa tämän profiilin
+domainname	emailadmin	fi	verkkotunnus
+edit email settings	emailadmin	fi	muokkaa sähköpostin asetuksia
+email account active	emailadmin	fi	Sähköpostitunnus käytössä
+email address	emailadmin	fi	Sähköpostiosoite
+email settings	common	fi	Sähköpostin asetukset
+emailadmin	emailadmin	fi	Sähköpostin ylläpitäjä
+enable cyrus imap server administration	emailadmin	fi	ota Cyrus IMAP -palvelimen hallinta käyttöön
+enable sieve	emailadmin	fi	ota Sieve käyttöön
+encryption settings	emailadmin	fi	Encryptaus asetukset
+enter your default mail domain (from: user@domain)	emailadmin	fi	Anna oletusverkkotunnus (lähettäjä: käyttäjä@verkkotunnus)
+error connecting to imap server. %s : %s.	emailadmin	fi	Virhe yhdistettäessä IMAP palvelimeen. %s : %s.
+error connecting to imap server: [%s] %s.	emailadmin	fi	Virhe yhdistettäessä IMAP palvelimeen. [%s] %s.
+forward also to	emailadmin	fi	lähetä kopio myös osoitteeseen
+forward email's to	emailadmin	fi	lähetä edelleen osoitteeseen
+forward only	emailadmin	fi	lähetä edelleen vain
+global options	emailadmin	fi	Yleiset asetukset
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	fi	Jos käytät SSL tai TLS, sinulla pitää olla PHP openssl lisäosa ladattuna.
+imap admin password	admin	fi	IMAP admin salasana
+imap admin user	admin	fi	IMAP admin käyttäjätunnus
+imap c-client version < 2001	emailadmin	fi	IMAP C-Client versio < 2001
+imap server closed the connection.	emailadmin	fi	IMAP palvelin katkaisi yhteyden.
+imap server closed the connection. server responded: %s	emailadmin	fi	IMAP palvelin katkaisi yhteyden. Palvelin vastaa: %s
+imap server hostname or ip address	emailadmin	fi	IMAP -palvelimen nimi tai IP-osoite
+imap server logintyp	emailadmin	fi	IMAP -palvelimen käyttäjätunnistus
+imap server port	emailadmin	fi	IMAP -palvelimen portti
+imap/pop3 server name	emailadmin	fi	IMAP / POP3 -palvelimen nimi
+in mbyte	emailadmin	fi	megatavua
+ldap basedn	emailadmin	fi	LDAP basedn
+ldap server	emailadmin	fi	LDAP -palvelin
+ldap server accounts dn	emailadmin	fi	LDAP tunnusten DN
+ldap server admin dn	emailadmin	fi	LDAP ylläpidon DN
+ldap server admin password	emailadmin	fi	LDAP hallinnan salasana
+ldap server hostname or ip address	emailadmin	fi	LDAP -palvelimen nimi tai IP-osoite
+ldap settings	emailadmin	fi	LDAP -asetukset
+leave empty for no quota	emailadmin	fi	jätä tyhjäksi, jos ei rajoiteta
+mail settings	admin	fi	Sähköpostin asetukset
+name of organisation	emailadmin	fi	Yrityksen nimi
+no alternate email address	emailadmin	fi	ei vahtoehtoista osoitetta
+no encryption	emailadmin	fi	Ei enkryptausta
+no forwarding email address	emailadmin	fi	ei edelleenlähetyksen osoitetta
+no message returned.	emailadmin	fi	Viestiä ei palautettu
+no supported imap authentication method could be found.	emailadmin	fi	Tuettua IMAP tunnistustapaa ei löydetty.
+order	emailadmin	fi	Tilaa
+organisation	emailadmin	fi	Organisaatio
+plesk can't rename users --> request ignored	emailadmin	fi	Plesk ei voi nimetä käyttäjiä --> pyyntö hylätty
+plesk imap server (courier)	emailadmin	fi	Plesk IMAP palvelin (Courier)
+plesk mail script '%1' not found !!!	emailadmin	fi	Plesk sähköpostiskriptiä '%1' ei löydy !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	fi	Plesk:n salasanassa pitää olla vähintään 5 merkkiä, eikä se saa olla käyttäjätilin nimi --> salasanaa EI ole asetettu !!!
+plesk smtp-server (qmail)	emailadmin	fi	Plesk SMTP-palvelin (Qmail)
+pop3 server hostname or ip address	emailadmin	fi	POP3 -palvelimen nimi tai IP-osoite
+pop3 server port	emailadmin	fi	POP3 -palvelimen portti
+postfix with ldap	emailadmin	fi	Postfix ja LDAP
+profile access rights	emailadmin	fi	profiilin pääsy oikeudet
+profile list	emailadmin	fi	Lista profiileista
+profile name	emailadmin	fi	Profiilin nimi
+qmaildotmode	emailadmin	fi	qmaildotmode
+qouta size in mbyte	emailadmin	fi	tallennuskiintiö Mt
+quota settings	emailadmin	fi	tallennuskiintiö
+remove	emailadmin	fi	poista
+select type of imap/pop3 server	emailadmin	fi	Valitse IMAP / POP3 -palvelimen tyyppi
+select type of smtp server	emailadmin	fi	Valitse SMTP -palvelimen tyyppi
+server settings	emailadmin	fi	Palvelimen asetukset
+sieve server hostname or ip address	emailadmin	fi	Sieve -palvelimen nimi tai IP-osoite
+sieve server port	emailadmin	fi	Sieve -palvelimen portti
+sieve settings	emailadmin	fi	Sieven asetukset
+smtp authentication	emailadmin	fi	SMTP tunnistus
+smtp options	emailadmin	fi	SMTP asetukset
+smtp server name	emailadmin	fi	SMTP -palvelimen nimi
+smtp settings	emailadmin	fi	SMTP asetukset
+smtp-server hostname or ip address	emailadmin	fi	SMTP -palvelimen nimi tai IP-osoite
+smtp-server port	emailadmin	fi	SMTP -palvelimen portti
+standard	emailadmin	fi	Vakio
+standard imap server	emailadmin	fi	Vakio IMAP -palvelin
+standard pop3 server	emailadmin	fi	Vakio POP3 -palvelin
+standard smtp-server	emailadmin	fi	Vakio SMTP -palvelin
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	fi	IMAP palvelimelta ei löydy tukea valitulle tunnistus muodolle, ote yhteyttä järjestelmän pääkäyttäjään.
+this php has no imap support compiled in!!	emailadmin	fi	Tämä PHP ei sisällä IMAP tukea!!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	fi	Käyttääksesi TLS yhteyttä, sinulla pitää olla käytössä PHP 5.1.0 tai uudempi.
+unexpected response from server to authenticate command.	emailadmin	fi	Odottamaton vastaus palvelimen AUTHENTICATE komennolta.
+unexpected response from server to digest-md5 response.	emailadmin	fi	Odottamaton vastaus palvelimen Digest-MD5 vastauksesta.
+unexpected response from server to login command.	emailadmin	fi	Odottamaton vastaus palvelimen LOGIN komennolta.
+unknown imap response from the server. server responded: %s	emailadmin	fi	Tuntematon IMAP vastaus palvelimelta. Palvelin vastasi: %s
+unsupported action '%1' !!!	emailadmin	fi	Toiminto jota ei tueta '%1' !!!
+update current email address:	emailadmin	fi	Päivitä nykyinen sähköpostiosoite:
+use ldap defaults	emailadmin	fi	Käytä LDAP -oletuksia
+use smtp auth	emailadmin	fi	Käytä SMTP -käyttäjäntunnistusta
+use tls authentication	emailadmin	fi	Käytä TLS -käyttäjäntunnistusta
+use tls encryption	emailadmin	fi	Käytä TLS -salausta
+user can edit forwarding address	emailadmin	fi	Käyttäjä voi muokata eteenpäinlähetyksen osoitetta
+username (standard)	emailadmin	fi	käyttäjätunnus (standardi)
+username@domainname (virtual mail manager)	emailadmin	fi	käyttäjätunnus@palvelimennimi (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	emailadmin	fi	Käyttäjät voivat määritellä omat postilaatikkonsa
+virtual mail manager	emailadmin	fi	Virtual MAIL ManaGeR

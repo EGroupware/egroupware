@@ -1,0 +1,69 @@
+add profile	emailadmin	da	Tilføj Profil
+admin dn	emailadmin	da	admin dn
+admin password	emailadmin	da	admin adgangskode
+admin passwort	emailadmin	da	admin adgangskode
+admin username	emailadmin	da	admin brugernavn
+advanced options	emailadmin	da	avanceret indstillinger
+alternate email address	emailadmin	da	alternativ e-mail adresse
+cyrus imap server	emailadmin	da	Cyrus IMAP Server
+cyrus imap server administration	emailadmin	da	Cyrus IMAP server administration
+default	emailadmin	da	standart
+deliver extern	emailadmin	da	lever ekstern
+do you really want to delete this profile	emailadmin	da	Vil du virkelig slette denne profil
+domainname	emailadmin	da	domæne navn
+edit email settings	emailadmin	da	redigere e-mail indstillingerne
+email account active	emailadmin	da	e-mail konto aktiv
+email address	emailadmin	da	e-mail adresse
+enable cyrus imap server administration	emailadmin	da	aktivere Cyrus IMAP server administration
+enable sieve	emailadmin	da	aktiver Sieve
+enter your default mail domain (from: user@domain)	emailadmin	da	Indtast dit standart post domæne (fra: bruger@domæne)
+forward also to	emailadmin	da	videresend også til
+forward email's to	emailadmin	da	videresend e-mails til
+forward only	emailadmin	da	videresend kun
+imap admin password	admin	da	IMAP admin adgangskode
+imap admin user	admin	da	IMAP admin bruger
+imap c-client version < 2001	emailadmin	da	IMAP C-Klient Version < 2001
+imap server hostname or ip address	emailadmin	da	IMAP server domænenavn eller IP adresse
+imap server logintyp	emailadmin	da	IMAP server login type
+imap server port	emailadmin	da	IMAP server port
+imap/pop3 server name	emailadmin	da	IMAP/POP3 server navn
+in mbyte	emailadmin	da	i Megabytes
+ldap basedn	emailadmin	da	LDAP basedn
+ldap server	emailadmin	da	LDAP server
+ldap server accounts dn	emailadmin	da	LDAP server konto DN
+ldap server admin dn	emailadmin	da	LDAP server admin DN
+ldap server admin password	emailadmin	da	LDAP server admin adgangskode
+ldap server hostname or ip address	emailadmin	da	LDAP server domænenavn eller IP adresse
+ldap settings	emailadmin	da	LDAP indstillinger
+leave empty for no quota	emailadmin	da	efterlad tom hvis ingen citat
+mail settings	admin	da	Post indstillinger
+name of organisation	emailadmin	da	Navn på organisation
+no alternate email address	emailadmin	da	ingen alternativ e-mail adresse
+no forwarding email address	emailadmin	da	ingen viderestillet e-mail adresse
+pop3 server hostname or ip address	emailadmin	da	POP3 server domænenavn eller IP adresse
+pop3 server port	emailadmin	da	POP server port
+postfix with ldap	emailadmin	da	Postfix med LDAP
+profile list	emailadmin	da	Profil liste
+profile name	emailadmin	da	Profil navn
+qmaildotmode	emailadmin	da	qmaildotmode
+qouta size in mbyte	emailadmin	da	quota størrelse i Megabytes
+quota settings	emailadmin	da	quota indstillinger
+remove	emailadmin	da	fjern
+select type of imap/pop3 server	emailadmin	da	Vælg type IMAP/POP3 server
+select type of smtp server	emailadmin	da	Vælg time POP3 server
+sieve server hostname or ip address	emailadmin	da	Sieve server domænenavn eller IP adresse
+sieve server port	emailadmin	da	Sieve server port
+sieve settings	emailadmin	da	Sieve indstillinger
+smtp server name	emailadmin	da	SMTP server navn
+smtp-server hostname or ip address	emailadmin	da	SMTP server domænenavn eller IP adresse
+smtp-server port	emailadmin	da	SMTP server port
+standard	emailadmin	da	Standart
+standard imap server	emailadmin	da	Standart IMAP server
+standard pop3 server	emailadmin	da	Standart POP3 server
+standard smtp-server	emailadmin	da	Standart SMTP server
+use ldap defaults	emailadmin	da	brug LDAP standarter
+use smtp auth	emailadmin	da	Brug SMTP autorisation
+use tls authentication	emailadmin	da	Brug TLS autorisation
+use tls encryption	emailadmin	da	Brug TLS kryptering
+users can define their own emailaccounts	emailadmin	da	Brugere kan selv definere deres egne e-mail kontoer
+virtual mail manager	emailadmin	da	Virtuel post håndtering
