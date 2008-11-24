@@ -1,7 +1,7 @@
 %define packagename eGroupware
 %define egwdirname egroupware
 %define egwversion 1.6
-%define packaging rc5
+%define packaging 001
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -730,6 +730,9 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 
 
 %changelog
+* Sun Nov 16 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.001
+- eGroupware 1.6.001 final 1.6 release
+
 * Sun Nov 16 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc5
 - eGroupware 1.6.rc5 5. release candidate for 1.6 release
 

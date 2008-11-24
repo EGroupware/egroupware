@@ -26,9 +26,8 @@
 # Script changed 2005 Apr 15 by Ralf Becker and Wim Bonis
 # 2005 Sep 20 Ralf Becker: disabled fedora 2 build
 
-#SVNURL="http://svn.egroupware.org/egroupware/branches/1.6/"
-#SVNURL="http://svn.egroupware.org/egroupware/tags/1.6pre1/"
-SVNURL="http://svn.egroupware.org/egroupware/trunk/"
+SVNURL="http://svn.egroupware.org/egroupware/branches/1.6/"
+#SVNURL="http://svn.egroupware.org/egroupware/trunk/"
 
 SPECFILE="egroupware-1.6.spec"
 SOURCEFILES="egroupware_fedora.tar.bz2 egroupware_suse.tar.bz2 manageheader.php.patch class.uiasyncservice.inc.php.patch"
