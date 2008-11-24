@@ -602,3 +602,11 @@ function phpgwapi_upgrade1_5_016()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.017';
 }
+
+/**
+ * Final 1.6 release
+ */
+function phpgwapi_upgrade1_5_017()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.6.001';
+}
