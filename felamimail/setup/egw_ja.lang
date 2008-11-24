@@ -1,0 +1,71 @@
+add address	felamimail	ja	追加
+add to %1 	felamimail	ja	%1 追加
+additional info	felamimail	ja	追加情報
+as a subfolder of	felamimail	ja	親フォルダ
+attach:	felamimail	ja	添付ファイル
+attachments	felamimail	ja	添付ファイル
+bcc:	felamimail	ja	ＢＣＣ：
+body	felamimail	ja	本文
+cc:	felamimail	ja	ＣＣ：
+checkbox	felamimail	ja	チェックボックス
+checked messages	felamimail	ja	指定メッセージ
+color	felamimail	ja	色
+create folder	felamimail	ja	フォルダ作成
+Created folder successfully!	felamimail	ja	フォルダを作成しました。
+current folder	felamimail	ja	現在のフォルダ
+current folder:	felamimail	ja	現在のフォルダ
+date:	felamimail	ja	送信日付：
+delete folder	felamimail	ja	フォルダ削除
+deleted folder successfully!	felamimail	ja	フォルダを削除しました。
+delete selected	felamimail	ja	削除
+down	felamimail	ja	下
+download this as a file	felamimail	ja	このメッセージをダウンロード
+e-mail address	felamimail	ja	電子メール
+edit selected	felamimail	ja	訂正
+everywhere	felamimail	ja	すべて
+from:	felamimail	ja	差出人：
+identifying name	felamimail	ja	定義名
+index order	felamimail	ja	表示項目設定
+info	felamimail	ja	追加情報
+message list	felamimail	ja	メッセージ一覧
+message highlighting	felamimail	ja	メッセージ強調表示
+move	felamimail	ja	移動
+move & follow	felamimail	ja	移動と選択
+move selected to:	felamimail	ja	選択メッセージ移動先
+must be unique	felamimail	ja	重複しない値を入力
+new	felamimail	ja	新規作成
+new name:	felamimail	ja	新しいフォルダ名：
+nickname	felamimail	ja	ニックネーム
+no folders found	felamimail	ja	フォルダなし
+no folders were found to subscribe to!	felamimail	ja	表示可能なフォルダがありません。
+no folders were found to unsubscribe from!	felamimail	ja	非表示可能なフォルダがありません。
+no highlighting is defined	felamimail	ja	強調表示は未定義です。
+no messages found	felamimail	ja	メッセージが見つかりません。
+no messages were selected.	felamimail	ja	メッセージを選択してください。
+options	felamimail	ja	オプション
+original message	felamimail	ja	Original Message
+personal address book	felamimail	ja	個人アドレス帳
+personal information	felamimail	ja	個人情報
+refresh folder list	felamimail	ja	フォルダ再表示
+remove	felamimail	ja	削除
+rename a folder	felamimail	ja	フォルダ名の変更
+renamed successfully!	felamimail	ja	フォルダ名を変更しました。
+reply to	felamimail	ja	リプライ
+select all	felamimail	ja	全て選択
+signature	felamimail	ja	署名
+subscribe	felamimail	ja	表示
+subscribed successfully!	felamimail	ja	表示にしました。
+this contains personal information about yourself such as your name, your email address, etc.	felamimail	ja	電子メールアドレスや送信者名などの個人情報を設定します。
+to	felamimail	ja	ｔｏ
+to:	felamimail	ja	宛先：
+unsubscribe	felamimail	ja	非表示
+unsubscribed successfully!	felamimail	ja	非表示にしました。
+unselect all	felamimail	ja	全て選択解除
+up	felamimail	ja	上
+update address	felamimail	ja	アドレス更新
+use a signature?	felamimail	ja	署名を使用
+view full header	felamimail	ja	ヘッダ表示
+viewing full header	felamimail	ja	ヘッダ表示
+viewing message	felamimail	ja	表示数
+view messages	felamimail	ja	メッセージ表示
+viewing messages	felamimail	ja	表示数

@@ -1,0 +1,345 @@
+(no subject)	felamimail	ca	(Sense assumpte)
+(only cc/bcc)	felamimail	ca	(només Cc/Cco)
+(unknown sender)	felamimail	ca	(remitent desconegut)
+activate	felamimail	ca	Activar
+activate script	felamimail	ca	activar script
+add address	felamimail	ca	Afegir adreça
+add rule	felamimail	ca	Afegir regla
+add script	felamimail	ca	Afegir script
+add to %1	felamimail	ca	Afegir a %1
+add to address book	felamimail	ca	Afegir a la llibreta d'adreces
+add to addressbook	felamimail	ca	Afegir a la llibreta d'adreces
+additional info	felamimail	ca	Informació addicional
+address book	felamimail	ca	Llibreta d'adreces
+address book search	felamimail	ca	Cercar a la llibreta d'adreces
+after message body	felamimail	ca	Després del cos del missatge
+all address books	felamimail	ca	Totes les llibretes d'adreces
+all folders	felamimail	ca	Totes les carpetes
+all of	felamimail	ca	tots
+allways a new window	felamimail	ca	sempre en una finestra nova
+always show html emails	felamimail	ca	Mostra sempre els correus HTML
+any of	felamimail	ca	algun
+anyone	felamimail	ca	qualsevol
+as a subfolder of	felamimail	ca	com una subcarpeta de
+attachments	felamimail	ca	Adjunts
+auto refresh folder list	felamimail	ca	Autorefrescar la llista de carpetes
+back to folder	felamimail	ca	Tornar a la carpeta
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	ca	Basat en els criteris donats, els missatges que arribin poden tenir distints colors de fons a la llista de missatges. Això ajuda a distinguir fàcilment de qui són els missatges, especialment per a llistes de correu.
+bcc	felamimail	ca	Cco
+before headers	felamimail	ca	Abans de les capçaleres
+between headers and message body	felamimail	ca	Entre les capçaleres i el cos del missatge
+body part	felamimail	ca	Part del cos
+can't connect to inbox!!	felamimail	ca	no es pot connectar a la Safata d'Entrada!!
+cc	felamimail	ca	Cc
+change folder	felamimail	ca	Canviar carpeta
+check message against next rule also	felamimail	ca	aplica la següent regla a aquest missatge
+checkbox	felamimail	ca	Quadre de verificació
+click here to log back in.	felamimail	ca	Pitjeu aquí per tornar a iniciar sessió
+click here to return to %1	felamimail	ca	Pitjeu aquí per tornar a %1
+close all	felamimail	ca	tanca-ho tot
+close this page	felamimail	ca	tancar aquesta pàgina
+close window	felamimail	ca	Tancar finestra
+color	felamimail	ca	Color
+compose	felamimail	ca	Redactar
+compress folder	felamimail	ca	Comprimir carpeta
+configuration	felamimail	ca	Configuració
+contains	felamimail	ca	conté
+create	felamimail	ca	Crear
+create folder	felamimail	ca	Crear carpeta
+create sent	felamimail	ca	Crear carpeta d'enviats
+create subfolder	felamimail	ca	Crear subcarpeta
+create trash	felamimail	ca	Crear Paperera
+created folder successfully!	felamimail	ca	La carpeta s'ha creat correctament
+dark blue	felamimail	ca	Blau fosc
+dark cyan	felamimail	ca	Cyan fosc
+dark gray	felamimail	ca	Gris fosc
+dark green	felamimail	ca	Verd fosc
+dark magenta	felamimail	ca	Magenta fosc
+dark yellow	felamimail	ca	Groc fosc
+date(newest first)	felamimail	ca	Data (la més recent primer)
+date(oldest first)	felamimail	ca	Data (la més antiga primer)
+days	felamimail	ca	dies
+deactivate script	felamimail	ca	desactivar seqüència
+default sorting order	felamimail	ca	Mode d'ordenació predeterminat
+delete all	felamimail	ca	Esborrar tots
+delete folder	felamimail	ca	Esborrar carpeta
+delete script	felamimail	ca	esborra seqüència
+delete selected	felamimail	ca	Esborrar la selecció
+delete selected messages	felamimail	ca	Esborrar missatges seleccionats
+deleted	felamimail	ca	esborrat
+deleted folder successfully!	felamimail	ca	Carpeta esborrada correctament
+disable	felamimail	ca	Deshabilitar
+discard message	felamimail	ca	elimina el missatge
+display message in new window	felamimail	ca	Mostrar el missatge a una finestra nova
+display messages in multiple windows	felamimail	ca	mostra missatges en múltiples pantalles
+display of html emails	felamimail	ca	Mostrar els missatges HTML
+display only when no plain text is available	felamimail	ca	Mostrar només quan no hi ha text simple disponible
+display preferences	felamimail	ca	Preferències de visualització
+do it!	felamimail	ca	Fes-ho!
+do not use sent	felamimail	ca	No utilitzar Enviats
+do not use trash	felamimail	ca	No utilitzar Paperera
+do you really want to delete the '%1' folder?	felamimail	ca	Realment voleu esborrar la carpeta '%1'?
+does not contain	felamimail	ca	No conté
+does not match	felamimail	ca	No coincideix amb
+does not match regexp	felamimail	ca	No coincideix amb l'expressió
+don't use sent	felamimail	ca	No utilitzar Enviats
+don't use trash	felamimail	ca	No utilitzar Paperera
+down	felamimail	ca	avall
+download	felamimail	ca	baixar
+download this as a file	felamimail	ca	Baixar això com un fitxer
+e-mail	felamimail	ca	Correu electrònic
+e-mail address	felamimail	ca	Adreça de correu electrònic
+e-mail folders	felamimail	ca	Carpetes de correu electrònic
+edit email forwarding address	felamimail	ca	edita l'adreça de reenviar correu
+edit filter	felamimail	ca	Editar filtre
+edit rule	felamimail	ca	Afegir regla
+edit selected	felamimail	ca	Editar selecció
+edit vacation settings	felamimail	ca	edita configuració de vacances
+email address	felamimail	ca	Adreça de correu electrònic
+email forwarding address	felamimail	ca	adreça de reenviar correu
+email signature	felamimail	ca	Signatura de correu
+empty trash	felamimail	ca	Buidar paperera
+enable	felamimail	ca	Habilitar
+enter your default mail domain ( from: user@domain )	admin	ca	Introduïu el vostre domini de correu predeterminat (de usuari@domini)
+enter your imap mail server hostname or ip address	admin	ca	Introduïu el nom del servidor de correu IMAP o l'adreça IP
+enter your sieve server hostname or ip address	admin	ca	Introduïu el nom del servidor SIEVE o l'adreça IP
+enter your sieve server port	admin	ca	Introduïu el port del servidor SIEVE
+enter your smtp server hostname or ip address	admin	ca	Introduïu el nom del servidor SIEVE o l'adreça IP
+enter your smtp server port	admin	ca	Introduïu el port del servidor smtp
+error	felamimail	ca	ERROR
+error connecting to imap serv	felamimail	ca	Error en connectar al servidor IMAP
+error opening	felamimail	ca	Error en obrir
+every	felamimail	ca	cada
+every %1 days	felamimail	ca	cada %1 dies
+expunge	felamimail	ca	Suprimir
+felamimail	common	ca	FelaMiMail
+file into	felamimail	ca	Informació del fitxer
+files	felamimail	ca	Fitxers
+filter active	felamimail	ca	Filtre actiu
+filter name	felamimail	ca	Nom del filtre
+filter rules	common	ca	regles de filtratge
+first name	felamimail	ca	Nom de pila
+flagged	felamimail	ca	marcat
+flags	felamimail	ca	Marques
+folder acl	felamimail	ca	ACL de la carpeta
+folder name	felamimail	ca	Nom de la carpeta
+folder path	felamimail	ca	Ruta de la carpeta
+folder preferences	felamimail	ca	Preferències de la carpeta
+folder settings	felamimail	ca	Opcions de la carpeta
+folder status	felamimail	ca	Estat de la carpeta
+folderlist	felamimail	ca	Llista de carpetes
+foldername	felamimail	ca	Nom de la carpeta
+folders	felamimail	ca	Carpetes
+folders created successfully!	felamimail	ca	Les carpetes s'han creat correctament
+follow	felamimail	ca	seguir
+for mail to be send - not functional yet	felamimail	ca	Pel correu pendent d'enviar - encara no funciona
+for received mail	felamimail	ca	Pel correu rebut
+forward	felamimail	ca	Reenviar
+forward to address	felamimail	ca	reenvia a l'adreça
+found	felamimail	ca	Trobat
+fri	felamimail	ca	Dv
+from	felamimail	ca	De
+from(a->z)	felamimail	ca	De (A-> Z)
+from(z->a)	felamimail	ca	De (Z-> A)
+full name	felamimail	ca	Nom sencer
+greater than	felamimail	ca	major que
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	ca	Donau un cop d'ull a <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> per saber-ne més sobre Squirrelmail.<br>
+header lines	felamimail	ca	Línies de Capçalera
+hide header	felamimail	ca	Ocultar capçalera
+html	felamimail	ca	HTML
+icons and text	felamimail	ca	Icones i text
+icons only	felamimail	ca	Només icones
+identifying name	felamimail	ca	Nom identificatiu
+if	felamimail	ca	SI
+if from contains	felamimail	ca	si el remitent conté
+if mail header	felamimail	ca	si la capçalera del correu
+if message size	felamimail	ca	si la mida del missatge
+if subject contains	felamimail	ca	si l'assumpte conté
+if to contains	felamimail	ca	si el destinatari conté
+illegal folder name.  please select a different name.	felamimail	ca	Nom de carpeta il·legal. Si us plau, seleccioneu un nom distint
+imap	felamimail	ca	IMAP
+imap server	felamimail	ca	Servidor IMAP
+imap server address	felamimail	ca	Adreça del servidor IMAP
+imap server type	felamimail	ca	Tipus de servidor IMAP
+imaps authentication	felamimail	ca	Identificació IMAPS
+imaps encryption only	felamimail	ca	Xifrat IMAPS només
+in	felamimail	ca	a
+index order	felamimail	ca	Ordre de l'índex
+info	felamimail	ca	Informació
+invalid user name or password	felamimail	ca	L'usuari o la contrasenya no són vàlids
+javascript	felamimail	ca	JavaScript
+keep a copy of the message in your inbox	felamimail	ca	manté una còpia del missatge dins la safata d'entrada
+keep local copy of email	felamimail	ca	manté una còpia local del correu
+kilobytes	felamimail	ca	kilobytes
+language	felamimail	ca	Idioma
+last name	felamimail	ca	Cognoms
+left	felamimail	ca	Esquerra
+less	felamimail	ca	menys
+less than	felamimail	ca	menor que
+light gray	felamimail	ca	Gris clar
+list all	felamimail	ca	Llista-ho tot
+location of buttons when composing	felamimail	ca	Ubicació dels botons en redactar
+mail server login type	admin	ca	Tipus de sessió del servidor de correu
+mail settings	felamimail	ca	Configuració del correu
+mainmessage	felamimail	ca	missatge principal
+manage emailfilter / vacation	preferences	ca	Administra filtre d'Email / Vacances
+manage folders	common	ca	Administrar carpetes
+manage sieve	common	ca	Administrar scripts Sieve
+mark as deleted	felamimail	ca	Marcar com a esborrat
+mark messages as	felamimail	ca	Marcar missatges seleccionats com a
+mark selected as flagged	felamimail	ca	Marcar la selecció com a senyalat per a descarregar
+mark selected as read	felamimail	ca	Marcar la selecció com a llegit
+mark selected as unflagged	felamimail	ca	Marcar la selecció com a no senyalat per a descarregar
+mark selected as unread	felamimail	ca	Marcar la selecció com a no llegit
+match	felamimail	ca	Coincidència
+matches	felamimail	ca	coincideix
+matches regexp	felamimail	ca	coincideix amb l'expressió
+message highlighting	felamimail	ca	Resaltat del missatge
+message list	felamimail	ca	Llista de missatges
+messages	felamimail	ca	missatges
+mon	felamimail	ca	Dl
+move	felamimail	ca	moure
+move messages	felamimail	ca	moure missatges
+move selected to	felamimail	ca	moure els seleccionats a
+move to trash	felamimail	ca	Moure a la paperera
+moving messages to	felamimail	ca	movent missatges a
+name	felamimail	ca	Nom
+never display html emails	felamimail	ca	No mostrar mai els correus HTML
+new	common	ca	Nou
+new filter	felamimail	ca	Nou filtre
+next	felamimail	ca	Següent
+next message	felamimail	ca	Missatge següent
+no filter	felamimail	ca	Sense filtre
+no folders found	felamimail	ca	No s'han trobat carpetes
+no folders were found to subscribe to!	felamimail	ca	No s'han trobat carpetes on subscriure's
+no folders were found to unsubscribe from!	felamimail	ca	No s'han trobat carpetes de les que desubscriure's
+no highlighting is defined	felamimail	ca	No s'ha definit un resaltat
+no messages found...	felamimail	ca	no s'han trobat missatges...
+no messages were selected.	felamimail	ca	No s'han seleccionat missatges.
+no previous message	felamimail	ca	No hi ha missatge anterior
+no valid emailprofile selected!!	felamimail	ca	No s'ha seleccionat un perfil de correu vàlid!!
+none	felamimail	ca	cap
+on behalf of	felamimail	ca	en nom de
+one address is not valid	felamimail	ca	Una adreça no és vàlida
+only inbox	felamimail	ca	Només la Safata d'entrada
+only one window	felamimail	ca	només una finestra
+only unseen	felamimail	ca	Només els no vists
+open all	felamimail	ca	obre-ho tot
+options	felamimail	ca	Opcions
+organisation	felamimail	ca	Organització
+organization	felamimail	ca	Organització
+organization name	admin	ca	Nom de l'organització
+participants	felamimail	ca	Participants
+personal information	felamimail	ca	Informació personal
+please select a address	felamimail	ca	Si us plau, seleccioneu una adreça
+please select the number of days to wait between responses	felamimail	ca	Si us plau, seleccioneu el número de dies a esperar entre respostes
+please supply the message to send with auto-responses	felamimail	ca	Si us plau, indiqueu el missatge a enviar amb auto-respostes
+posting	felamimail	ca	enviar
+previous	felamimail	ca	Anterior
+previous message	felamimail	ca	Missatge anterior
+print it	felamimail	ca	Imprimir-lo
+print this page	felamimail	ca	Imprimir aquesta pàgina
+quicksearch	felamimail	ca	Cerca ràpida
+read	felamimail	ca	llegit
+reading	felamimail	ca	llegint
+recent	felamimail	ca	recent(s)
+refresh time in minutes	felamimail	ca	Temps de refresc en minuts
+remove	felamimail	ca	eliminar
+remove immediately	felamimail	ca	Eliminar inmediatament
+rename	felamimail	ca	Renomenar
+rename a folder	felamimail	ca	Renomenar una carpeta
+rename folder	felamimail	ca	Renomenar carpeta
+renamed successfully!	felamimail	ca	Renomenat correctament
+replied	felamimail	ca	respost
+reply	felamimail	ca	Respondre
+reply all	felamimail	ca	Respondre a tots
+reply to	felamimail	ca	Respondre A
+replyto	felamimail	ca	Respondre A
+respond	felamimail	ca	Respondre
+respond to mail sent to	felamimail	ca	Respondre al correu enviat a
+return	felamimail	ca	Tornar
+return to options page	felamimail	ca	Tornar a la pàgina d'opcions
+right	felamimail	ca	Dreta
+rule	felamimail	ca	Regla
+sat	felamimail	ca	Ds
+save	felamimail	ca	Desar
+save changes	felamimail	ca	desar canvis
+script name	felamimail	ca	nom de la seqüència
+script status	felamimail	ca	estat de la seqüència
+search	felamimail	ca	Cercar
+search for	felamimail	ca	Cercar
+select	felamimail	ca	Seleccionar
+select all	felamimail	ca	Seleccionar tot
+select emailprofile	felamimail	ca	Seleccionar perfil de correu
+select folder	felamimail	ca	Selecciona la carpeta
+select your mail server type	admin	ca	Seleccionar el tipus de servidor de correu
+send	felamimail	ca	Enviar
+send a reject message	felamimail	ca	envia un missatge de rebuig
+sent folder	felamimail	ca	Carpeta d'enviats
+show header	felamimail	ca	mostrar capçalera
+show new messages on main screen	felamimail	ca	Mostrar missatges nous a la pantalla principal
+sieve settings	admin	ca	Configuració de Sieve
+signature	felamimail	ca	Signatura
+simply click the target-folder	felamimail	ca	Senzillament, cliqueu sobre la carpeta destinació
+size	felamimail	ca	Mida
+size of editor window	felamimail	ca	Mida de la finestra de l'editor
+size(...->0)	felamimail	ca	Mida (...->0)
+size(0->...)	felamimail	ca	Mida (0->...)
+small view	felamimail	ca	Vista reduïda
+smtp settings	admin	ca	Opcions SMTP
+subject	felamimail	ca	Assumpte
+subject(a->z)	felamimail	ca	Assumpte (A->Z)
+subject(z->a)	felamimail	ca	Assumpte (Z->A)
+submit	felamimail	ca	Enviar
+subscribe	felamimail	ca	Subscriure's
+subscribed	felamimail	ca	Subscrit
+subscribed successfully!	felamimail	ca	Subscripció correcta
+sun	felamimail	ca	Dg
+table of contents	felamimail	ca	Taula de continguts
+text only	felamimail	ca	Només text
+the connection to the imap server failed!!	felamimail	ca	Ha fallat la connexió amb el servidor IMAP!
+then	felamimail	ca	ALESHORES
+this folder is empty	felamimail	ca	AQUESTA CARPETA ESTÀ BUIDA
+this php has no imap support compiled in!!	felamimail	ca	Aquesta instal·lació de PHP no té suport IMAP!
+thu	felamimail	ca	Dj
+to	felamimail	ca	Per a
+to mail sent to	felamimail	ca	al correu enviat a
+translation preferences	felamimail	ca	Preferències de la traducció
+translation server	felamimail	ca	Servidor de traduccions
+trash fold	felamimail	ca	Carpeta Paperera
+trash folder	felamimail	ca	Carpeta Paperera
+tue	felamimail	ca	Dt
+type	felamimail	ca	tipus
+unflagged	felamimail	ca	Sense senyalar
+unknown err	felamimail	ca	Error desconegut
+unknown error	felamimail	ca	Error desconegut
+unknown sender	felamimail	ca	Remitent desconegut
+unknown user or password incorrect.	felamimail	ca	Usuari desconegut o contrasenya incorrecta
+unread	common	ca	No llegit
+unseen	felamimail	ca	No vist
+unselect all	felamimail	ca	Deseleccionar tot
+unsubscribe	felamimail	ca	Desubscriure
+unsubscribed	felamimail	ca	No subscrit
+unsubscribed successfully!	felamimail	ca	Desubscripció correcta
+up	felamimail	ca	a dalt
+use <a href="%1">emailadmin</a> to create profiles	felamimail	ca	utilitzeu <a href="%1">EmailAdmin</a> per a crear perfils de correu
+use a signature	felamimail	ca	Utilitzar una signatura
+use a signature?	felamimail	ca	Utilitzar una signatura?
+use addresses	felamimail	ca	Utilitzar adreces
+use custom settings	felamimail	ca	Utilitzar opcions personalitzades
+use regular expressions	felamimail	ca	utilitza expressions regulars
+use smtp auth	admin	ca	Utilitzar identificació SMTP
+users can define their own emailaccounts	admin	ca	Els usuaris poden definir els seus propis comptes de correu
+vacation notice	common	ca	notificació de vacances
+view full header	felamimail	ca	Veure la capçalera sencera
+view message	felamimail	ca	Veure missatge
+viewing full header	felamimail	ca	Veient la capçalera sencera
+viewing message	felamimail	ca	Veient missatge
+viewing messages	felamimail	ca	Veient missatges
+wed	felamimail	ca	Dc
+when deleting messages	felamimail	ca	En esborrar missatges
+with message	felamimail	ca	amb missatge
+with message "%1"	felamimail	ca	amb missatge "%1"
+wrap incoming text at	felamimail	ca	Ajustar el text entrant a
+writing	felamimail	ca	escrivint
+wrote	felamimail	ca	ha escrit
