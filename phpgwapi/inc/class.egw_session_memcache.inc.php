@@ -106,7 +106,7 @@ class egw_session_memcache
 	 * According to a commentary on php.net (session_set_save_handler) this function has to return
 	 * a string, if the session-id is NOT found, not false. Returning false terminates the script
 	 * with a fatal error!
-	 * 
+	 *
 	 * @param string $id
 	 * @return string|boolean false on error, '' for not found session otherwise session data
 	 */
@@ -137,8 +137,13 @@ class egw_session_memcache
 	{
 		$lifetime = (int)ini_get('session.gc_maxlifetime');
 
+		if ($id == 'no-session')
+		{
+			return true;	// no need to save
+		}
 		// give anon sessions only a lifetime of 10min
-		if (is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->session_flags == 'A')
+		if (is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->session_flags == 'A' ||
+			$GLOBALS['egw_info']['flags']['currentapp'] == 'groupdav')
 		{
 			$lifetime = 600;
 		}
