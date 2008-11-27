@@ -377,7 +377,8 @@
 			$sentOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use Sent")),($accountData['active'] ? $folderList :array($icServer->sentfolder => $icServer->sentfolder)));
 			$draftOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use draft folder")),($accountData['active'] ? $folderList :array($icServer->draftfolder => $icServer->draftfolder)));
 			$templateOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use template folder")),($accountData['active'] ? $folderList :array($icServer->templatefolder => $icServer->templatefolder)));
-			$folderList = array_merge( array('' => lang('default').' '.lang("folder settings")),($accountData['active'] ? $folderList :$icServer->folderstoshowinhome));
+			$tomerge = ($accountData['active'] ? $folderList :$icServer->folderstoshowinhome);
+			$folderList = array_merge( array('' => lang('default').' '.lang("folder settings")),(is_array($tomerge)?$tomerge:array()));
 
 			$this->t->set_var('allowAccounts',($preferences->userDefinedAccounts ? 1 : 0));
 			$this->t->set_var('identity_selectbox', html::select('identity[signature]',$sigvalue,$allSignatures, true, "style='width: 250px;'"));

@@ -40,6 +40,7 @@
 		// message encodings
 		var $encoding = array("7bit", "8bit", "binary", "base64", "quoted-printable", "other");
 		static $displayCharset;
+		static $botranslation;
 		// set to true, if php is compiled with multi byte string support
 		var $mbAvailable = FALSE;
 
@@ -71,7 +72,7 @@
 
 			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
 			$this->sofelamimail	=& CreateObject('felamimail.sofelamimail');
-			$this->botranslation	=& CreateObject('phpgwapi.translation');
+			self::$botranslation	=& CreateObject('phpgwapi.translation');
 
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
 			if ($this->mailPreferences) {
@@ -365,7 +366,7 @@
 		*/
 		function decodeFolderName($_folderName)
 		{
-			return $this->botranslation->convert($_folderName, self::$displayCharset, 'UTF7-IMAP');
+			return self::$botranslation->convert($_folderName, self::$displayCharset, 'UTF7-IMAP');
 		}
 
 		function decodeMimePart($_mimeMessage, $_encoding, $_charset = '')
@@ -401,7 +402,7 @@
 				foreach((array)$elements as $element) {
 					if ($element->charset == 'default')
 						$element->charset = 'iso-8859-1';
-					$newString .= $this->botranslation->convert($element->text,$element->charset);
+					$newString .= self::$botranslation->convert($element->text,$element->charset);
 				}
 				return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
 			} elseif(function_exists(mb_decode_mimeheader)) {
@@ -593,7 +594,7 @@
 		*/
 		function encodeFolderName($_folderName)
 		{
-			return $this->botranslation->convert($_folderName, 'UTF7-IMAP', self::$displayCharset);
+			return self::$botranslation->convert($_folderName, 'UTF7-IMAP', self::$displayCharset);
 		}
 
 #		function encodeHeader($_string, $_encoding='q')
@@ -970,19 +971,7 @@
 			if($_partID != '') {
 				$structure = $this->_getSubStructure($structure, $_partID);
 			}
-
-			if(isset($structure->parameters['NAME'])) {
-				$filename	= $this->decode_header($structure->parameters['NAME']);
-			} elseif(isset($structure->dparameters['FILENAME'])) {
-				$filename	= $this->decode_header($structure->dparameters['FILENAME']);
-			} elseif(isset($structure->dparameters['FILENAME*'])) {
-				$filename       = $this->decode_header($structure->dparameters['FILENAME*']);
-			} elseif ( isset($structure->filename) && !empty($structure->filename) && $structure->filename != 'NIL') {
-				$filename   = $this->decode_header($structure->filename);
-			} else {
-				$filename	= lang("unknown").($structure->subType ? ".".$structure->subType : "");
-			}
-
+			$filename = self::getFileNameFromStructure($structure);
 			$attachment = $this->icServer->getBodyPart($_uid, $_partID, true);
 
 			switch ($structure->encoding) {
@@ -1042,19 +1031,7 @@
 			// parse message structure
 			$structure = $this->icServer->getStructure($_uid, true);
 			$structure = $this->_getSubStructure($structure, $partID);
-
-			if(isset($structure->parameters['NAME'])) {
-				$filename	= $this->decode_header($structure->parameters['NAME']);
-			} elseif(isset($structure->dparameters['FILENAME'])) {
-				$filename	= $this->decode_header($structure->dparameters['FILENAME']);
-			} elseif(isset($structure->dparameters['FILENAME*'])) {
-				$filename       = $this->decode_header($structure->dparameters['FILENAME*']);
-			} elseif( isset($structure->filename) && !empty($structure->filename) && $structure->filename != 'NIL') {
-				$filename   = $this->decode_header($structure->filename);
-			} else {
-				$filename	= lang("unknown").($structure->subType ? ".".$structure->subType : "");
-			}
-
+			$filename = self::getFileNameFromStructure($structure);
 			$attachment = $this->icServer->getBodyPart($_uid, $partID, true);
 
 			switch ($structure->encoding) {
@@ -1429,8 +1406,9 @@
 
 		function getMultipartMixed($_uid, $_structure, $_htmlMode)
 		{
+			if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
 			$bodyPart = array();
-
+			if (self::$debug) _debug_array($_structure);
 			foreach($_structure as $part) {
 				switch($part->type) {
 					case 'MULTIPART':
@@ -1470,6 +1448,10 @@
 					default:
 						// do nothing
 						// the part is a attachment
+						#$bodyPart[] = $this->getMessageBody($_uid, $_htmlMode, $part->partID, $part);
+						#if (!($part->type == 'TEXT' && ($part->subType == 'PLAIN' || $part->subType == 'HTML'))) {
+						#	$bodyPart[] = $this->getMessageAttachments($_uid, $part->partID, $part);
+						#}
 				}
 			}
 
@@ -1838,12 +1820,7 @@
 
 		function getMessageAttachments($_uid, $_partID='', $_structure='')
 		{
-			#if($_structure!='') {
-			#	if(is_object($_structure)) {
-			#		print "buh<br>";
-			#	}
-			#	_debug_array($_structure); exit;
-			#}
+			if (self::$debug) echo __METHOD__."$_uid, $_partID<br>";
 
 			if(is_object($_structure)) {
 				$structure = $_structure;
@@ -1855,12 +1832,10 @@
 				}
 			}
 
-			#print "<hr>";
-			#_debug_array($structure);
-
+			if (self::$debug) _debug_array($structure);
+			$attachments = array();
 			// this kind of messages contain only the attachment and no body
 			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'IMAGE') {
-				$attachments = array();
 
 				$newAttachment = array();
 				$newAttachment['size']		= $structure->bytes;
@@ -1870,17 +1845,7 @@
 				if(isset($structure->cid)) {
 					$newAttachment['cid']	= $structure->cid;
 				}
-				if(isset($structure->parameters['NAME'])) {
-					$newAttachment['name']	= $this->decode_header($structure->parameters['NAME']);
-				} elseif(isset($structure->dparameters['FILENAME'])) {
-					$newAttachment['name']	= $this->decode_header($structure->dparameters['FILENAME']);
-				} elseif(isset($structure->dparameters['FILENAME*'])) {
-					$newAttachment['name']  = $this->decode_header($structure->dparameters['FILENAME*']);
-				} elseif ( isset($structure->filename) && !empty($structure->filename) && $structure->filename != 'NIL') {
-					$newAttachment['name']   = $this->decode_header($structure->filename);
-				} else {
-					$newAttachment['name']	= lang("unknown").($structure->subType ? ".".$structure->subType : "");
-				}
+				$newAttachment['name'] = self::getFileNameFromStructure($structure);
 				# if the new attachment is a winmail.dat, we have to decode that first
 				if ( $newAttachment['name'] == 'winmail.dat' &&
 					( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
@@ -1891,17 +1856,17 @@
 				}
 				//$attachments[] = $newAttachment;
 
-				return $attachments;
+				#return $attachments;
 			}
 
 			// this kind of message can have no attachments
 			if($structure->type == 'TEXT' ||
 			   ($structure->type == 'MULTIPART' && $structure->subType == 'ALTERNATIVE' && !is_array($structure->subParts)) ||
 			   !is_array($structure->subParts)) {
-				return array();
+				if (count($attachments) == 0) return array();
 			}
 
-			$attachments = array();
+			#$attachments = array();
 
 			foreach($structure->subParts as $subPart) {
 				// skip all non attachment parts
@@ -1912,7 +1877,7 @@
 				{
 					if ($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE')
 					{
-						$attachments = $this->getMessageAttachments($_uid, '', $subPart);
+						$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart), $attachments);
 					}
 					continue;
 				}
@@ -1922,7 +1887,8 @@
 				   ($subPart->subType == 'RELATED' ||
 					$subPart->subType == 'MIXED' ||
 					$subPart->subType == 'SIGNED' ||
-					$subPart->subType == 'APPLEDOUBLE')) {
+					$subPart->subType == 'APPLEDOUBLE')) 
+				{
 				   	$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart), $attachments);
 				} else {
 					$newAttachment = array();
@@ -1933,17 +1899,7 @@
 					if(isset($subPart->cid)) {
 						$newAttachment['cid']	= $subPart->cid;
 					}
-					if(isset($subPart->parameters['NAME'])) {
-						$newAttachment['name']	= $this->decode_header($subPart->parameters['NAME']);
-					} elseif(isset($subPart->dparameters['FILENAME'])) {
-						$newAttachment['name']	= $this->decode_header($subPart->dparameters['FILENAME']);
-					} elseif(isset($subPart->dparameters['FILENAME*'])) {
-						$newAttachment['name']  = $this->decode_header($subPart->dparameters['FILENAME*']);
-					} elseif ( isset($subPart->filename) && !empty($subPart->filename) && $subPart->filename != 'NIL') {
-						$newAttachment['name']   = $this->decode_header($subPart->filename);
-					} else {
-						$newAttachment['name']	= lang("unknown").($subPart->subType ? ".".$subPart->subType : "");
-					}
+					$newAttachment['name'] = self::getFileNameFromStructure($subPart);
 					# if the new attachment is a winmail.dat, we have to decode that first
 					if ( $newAttachment['name'] == 'winmail.dat' &&
 						( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
@@ -1961,8 +1917,24 @@
 
 		}
 
+		static function getFileNameFromStructure(&$structure) 
+		{
+			if(isset($structure->parameters['NAME'])) {
+				return self::decode_header($structure->parameters['NAME']);
+			} elseif(isset($structure->dparameters['FILENAME'])) {
+				return self::decode_header($structure->dparameters['FILENAME']);
+			} elseif(isset($structure->dparameters['FILENAME*'])) {
+				return self::decode_header($structure->dparameters['FILENAME*']);
+			} elseif ( isset($structure->filename) && !empty($structure->filename) && $structure->filename != 'NIL') {
+				return self::decode_header($structure->filename);
+			} else {
+				return lang("unknown").($structure->subType ? ".".$structure->subType : "");
+			}
+		}
+
 		function getMessageBody($_uid, $_htmlOptions='', $_partID='', $_structure = '')
 		{
+			if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 			if($_htmlOptions != '') {
 				$this->htmlOptions = $_htmlOptions;
 			}
