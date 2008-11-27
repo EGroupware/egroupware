@@ -81,7 +81,7 @@ class contact_widget
 		{
 			case 'contact-fields':
 				$GLOBALS['egw']->translation->add_app('addressbook');
-				$this->contacts->contacts();
+				$this->contacts->__construct();
 				$cell['sel_options'] = $this->contacts->contact_fields;
 				foreach($this->contacts->customfields as $name => $data)
 				{
