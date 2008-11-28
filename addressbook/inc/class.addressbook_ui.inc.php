@@ -1964,7 +1964,7 @@ $readonlys['button[vcard]'] = true;
 				if (selbox.value == "infolog_add" && (ids = get_selected(selbox.form,"[rows][checked][]")) && !document.getElementById("exec[use_all]").checked) {
 					win=window.open("'.egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').'"+ids,"_blank","width=750,height=550,left=100,top=200");
 					win.focus();
-				} else if (this.value == "cat_add") {
+				} else if (selbox.value == "cat_add") {
 					win=window.open("'.egw::link('/etemplate/process_exec.php','menuaction=addressbook.addressbook_ui.cat_add').'","_blank","width=300,height=400,left=100,top=200");
 					win.focus();
 				} else {
