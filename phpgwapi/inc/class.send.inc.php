@@ -31,7 +31,7 @@
 	{
 		var $err    = array();
 		var $to_res = array();
-
+		var $debug  = false;
 		/**
 		* eGW specific initialisation of the PHPMailer: charset, language, smtp-host, ...
 		*
@@ -42,6 +42,7 @@
 		{
 			if ($this->Subject || $this->Body || count($this->to))
 			{
+				if ($this->debug) error_log(__METHOD__." ".print_r($this->Subject,true)." to be send");
 				return PHPMailer::Send();
 			}
 			$this->CharSet = $GLOBALS['egw']->translation->charset();
@@ -56,6 +57,7 @@
 
 			$bopreferences    =& CreateObject('felamimail.bopreferences');
 			if ($bopreferences) {
+				if ($this->debug) error_log(__METHOD__." using felamimail preferences for mailing.");
 				$preferences  = $bopreferences->getPreferences();
 				if ($preferences) {
 					$ogServer = $preferences->getOutgoingServer(0);
@@ -69,9 +71,13 @@
 							$this->Username = $username;
 							$this->Password = $ogServer->password;
 						}
+						if ($this->debug) error_log(__METHOD__." using Host ".print_r($this->Host,true)." to be send");
+						if ($this->debug) error_log(__METHOD__." using User ".print_r($this->Username,true)." to be send");
+						if ($this->debug) error_log(__METHOD__." using Sender ".print_r($this->Sender,true)." to be send");
 					}
 				}
 			} else {
+				if ($this->debug) error_log(__METHOD__." using global config to send");
 				$this->Host = $GLOBALS['egw_info']['server']['smtp_server']?$GLOBALS['egw_info']['server']['smtp_server']:'localhost';
 				$this->Port = $GLOBALS['egw_info']['server']['smtp_port']?$GLOBALS['egw_info']['server']['smtp_port']:25;
 				$this->SMTPAuth = !empty($GLOBALS['egw_info']['server']['smtp_auth_user']);
@@ -79,6 +85,9 @@
 				if (isset($senderadress) && !empty($senderadress)) $this->Sender = $senderadress;
 				$this->Username = $username;
 				$this->Password = $GLOBALS['egw_info']['server']['smtp_auth_passwd'];
+				if ($this->debug) error_log(__METHOD__." using Host ".print_r($this->Host,true)." to be send");
+				if ($this->debug) error_log(__METHOD__." using User ".print_r($this->Username,true)." to be send");
+				if ($this->debug) error_log(__METHOD__." using Sender ".print_r($this->Sender,true)." to be send");
 			}
 			$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
 		}
@@ -110,6 +119,7 @@
 		*/
 		function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
 		{
+			if ($this->debug) error_log(__METHOD__." to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender'");
 			//echo "<p>send::msg(,to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender','$content_type','$boundary')<pre>$body</pre>\n";
 			$this->ClearAll();	// reset everything to its default, we might be called more then once !!!
 
