@@ -267,7 +267,7 @@
 			}
 
 			// Expand lists
-			foreach($query as $key => $row) {
+			foreach($query as $key => &$row) {
 				if(strpos($row, ',')) {
 					$query[$key] = explode(',', $row);
 				}
@@ -275,6 +275,8 @@
 				// sometimes it sends 'null' (not null)
 				if($row == 'null') {
 					unset($query[$key]);
+				} elseif (strtolower($row) == 'false') {
+					$row = false;
 				}
 			}
 			$query['search'] = $value;
