@@ -513,6 +513,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		foreach($to_notify as $userid => $statusid)
 		{
+			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid");
 			if (!is_numeric($userid))
 			{
 				$res_info = $this->resource_info($userid);
@@ -595,11 +596,11 @@ class calendar_boupdate extends calendar_bo
 						$notification->send();
 					}
 					catch (Exception $exception) {
-						error_log('error while notifying user '.$userid.':'.$exception->getMessage());
+						error_log(__METHOD__.' error while notifying user '.$userid.':'.$exception->getMessage());
 						continue;
 					}
 				} else {
-					error_log('calendar: cannot send any notifications because notifications is not installed');
+					error_log(__METHOD__.' cannot send any notifications because notifications is not installed');
 				}
 			}
 		}
