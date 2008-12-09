@@ -69,7 +69,7 @@ class preferences
 	var $table = 'egw_preferences';
 
 	var $values,$vars;	// standard notify substitues, will be set by standard_substitues()
-	var $debug = false;
+	#var $debug = false;
 	/**
 	 * Standard constructor for setting $this->account_id
 	 */
