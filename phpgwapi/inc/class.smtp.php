@@ -126,8 +126,8 @@ class SMTP {
                            "errno" => $errno,
                            "errstr" => $errstr);
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": $errstr ($errno)" . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": $errstr ($errno)" . $this->CRLF);
       }
       return false;
     }
@@ -147,7 +147,7 @@ class SMTP {
     //   socket_set_timeout($this->smtp_conn, 0, 100000);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $announce;
+      error_log(__METHOD__."->". "SMTP -> FROM SERVER:" . $this->CRLF . $announce);
     }
 
     return true;
@@ -176,7 +176,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 220) {
@@ -185,7 +185,7 @@ class SMTP {
                "smtp_code" => $code,
                "smtp_msg"  => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] . ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] . ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -220,8 +220,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -238,8 +238,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -256,8 +256,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -277,8 +277,8 @@ class SMTP {
         // hmm this is an odd situation... the socket is
         // valid but we are not connected anymore
         if($this->do_debug >= 1) {
-            echo "SMTP -> NOTICE:" . $this->CRLF .
-                 "EOF caught while checking if connected";
+            error_log(__METHOD__."->". "SMTP -> NOTICE:" . $this->CRLF .
+                 "EOF caught while checking if connected");
         }
         $this->Close();
         return false;
@@ -343,7 +343,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->". "SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 354) {
@@ -352,8 +352,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -452,15 +452,15 @@ class SMTP {
 		        "smtp_msg" => "(nothing)");
 
 		if($this->do_debug >= 1) {
-		        echo "SMTP -> ERROR: " . $this->error["error"] .
-		        ": " . $rply . $this->CRLF;
+		        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+		        ": " . $rply . $this->CRLF);
 		}
 		return false;
 	}
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->". "SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -469,8 +469,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -508,7 +508,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -517,8 +517,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -583,7 +583,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER: " . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER: " . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -592,8 +592,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -638,7 +638,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->". "SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 211 && $code != 214) {
@@ -647,8 +647,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -686,7 +686,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->". "SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -695,8 +695,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -728,7 +728,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -737,8 +737,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -772,7 +772,7 @@ class SMTP {
     $byemsg = $this->get_lines();
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $byemsg;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $byemsg);
     }
 
     $rval = true;
@@ -786,8 +786,8 @@ class SMTP {
                  "smtp_rply" => substr($byemsg,4));
       $rval = false;
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $e["error"] . ": " .
-                 $byemsg . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $e["error"] . ": " .
+                 $byemsg . $this->CRLF);
       }
     }
 
@@ -825,7 +825,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->". "SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250 && $code != 251) {
@@ -834,8 +834,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -869,7 +869,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -878,8 +878,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -918,7 +918,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -927,8 +927,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -966,7 +966,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -975,8 +975,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -1014,7 +1014,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250) {
@@ -1023,8 +1023,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -1048,7 +1048,7 @@ class SMTP {
     $this->error = array("error" => "This method, TURN, of the SMTP ".
                                     "is not implemented");
     if($this->do_debug >= 1) {
-      echo "SMTP -> NOTICE: " . $this->error["error"] . $this->CRLF;
+      error_log(__METHOD__."->"."SMTP -> NOTICE: " . $this->error["error"] . $this->CRLF);
     }
     return false;
   }
@@ -1081,7 +1081,7 @@ class SMTP {
     $code = substr($rply,0,3);
 
     if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+      error_log(__METHOD__."->"."SMTP -> FROM SERVER:" . $this->CRLF . $rply);
     }
 
     if($code != 250 && $code != 251) {
@@ -1090,8 +1090,8 @@ class SMTP {
               "smtp_code" => $code,
               "smtp_msg" => substr($rply,4));
       if($this->do_debug >= 1) {
-        echo "SMTP -> ERROR: " . $this->error["error"] .
-                 ": " . $rply . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> ERROR: " . $this->error["error"] .
+                 ": " . $rply . $this->CRLF);
       }
       return false;
     }
@@ -1115,14 +1115,14 @@ class SMTP {
     $data = "";
     while($str = @fgets($this->smtp_conn,515)) {
       if($this->do_debug >= 4) {
-        echo "SMTP -> get_lines(): \$data was \"$data\"" .
-                 $this->CRLF;
-        echo "SMTP -> get_lines(): \$str is \"$str\"" .
-                 $this->CRLF;
+        error_log(__METHOD__."->"."SMTP -> get_lines(): \$data was \"$data\"" .
+                 $this->CRLF);
+        error_log(__METHOD__."->"."SMTP -> get_lines(): \$str is \"$str\"" .
+                 $this->CRLF);
       }
       $data .= $str;
       if($this->do_debug >= 4) {
-        echo "SMTP -> get_lines(): \$data is \"$data\"" . $this->CRLF;
+        error_log(__METHOD__."->". "SMTP -> get_lines(): \$data is \"$data\"" . $this->CRLF);
       }
       // if the 4th character is a space then we are done reading
       // so just break the loop
