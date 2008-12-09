@@ -739,7 +739,10 @@ class egw_session
 		$this->sessionid = $sessionid;
 		$this->kp3       = $kp3;
 
-		if (!$this->sessionid) return false;
+		if (!$this->sessionid) {
+			if (self::$errorlog_debug) error_log(__METHOD__."('$sessionid')_REQUEST[sessionid]='$_REQUEST[sessionid]' No session ID");
+			return false;
+		}
 
 		session_name(self::EGW_SESSION_NAME);
 		session_id($this->sessionid);
