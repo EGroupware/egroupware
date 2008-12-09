@@ -176,6 +176,7 @@ class preferences
 			'email'     => lang('email-address of the user, eg. "%1"',$this->values['email']),
 			'date'      => lang('todays date, eg. "%1"',$this->values['date']),
 		);
+		if ($this->debug) error_log(__METHOD__.print_r($this->vars,true));
 		// do the substituetion in the effective prefs (data)
 		//
 		foreach($this->data as $app => $data)
