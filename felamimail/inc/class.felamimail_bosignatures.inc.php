@@ -91,7 +91,7 @@
 				require_once('class.felamimail_signatures.inc.php');
 				$signature = new felamimail_signatures($_signatureID);
 				if($_unparsed === false) {
-					$signature->fm_signature = $GLOBALS['egw']->preferences->parse_notify($signature->fm_signature);
+					$signature->fm_signature = ($_unparsed === true ? $this->profileData->ea_default_signature : $GLOBALS['egw']->preferences->parse_notify($signature->fm_signature));
 				}
 				return $signature;
 			}

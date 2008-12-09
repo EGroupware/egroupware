@@ -150,7 +150,7 @@
 				$signatureID = (int)$_GET['signatureID'];
 		
 				$boSignatures = new felamimail_bosignatures();
-				$signatureData = $boSignatures->getSignature($signatureID);
+				$signatureData = $boSignatures->getSignature($signatureID,true);
 			}
 			
 			$this->display_app_header(false);
@@ -209,7 +209,7 @@
 			if($_POST['save'] || $_POST['apply']) {
 				// IMAP connection settings
 				$icServer =& CreateObject('emailadmin.defaultimap');
-				if(is_array($_POST['ic'])) {
+				if(is_array($_POST['ic']) && (int)$_POST['active']) {
 					foreach($_POST['ic'] as $key => $value) {
 						switch($key) {
 							case 'validatecert':
@@ -230,7 +230,7 @@
 				}
 				// SMTP connection settings
 				$ogServer =& CreateObject('emailadmin.defaultsmtp');
-				if(is_array($_POST['og'])) {
+				if(is_array($_POST['og']) && (int)$_POST['active']) {
 					foreach($_POST['og'] as $key => $value) {
 						$ogServer->$key = $value;
 					}
