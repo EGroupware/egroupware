@@ -275,7 +275,7 @@
 				// sometimes it sends 'null' (not null)
 				if($row == 'null') {
 					unset($query[$key]);
-				} elseif (strtolower($row) == 'false') {
+				} elseif (is_string($row) && strtolower($row) == 'false') {
 					$row = false;
 				}
 			}
