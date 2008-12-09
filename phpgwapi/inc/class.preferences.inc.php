@@ -69,7 +69,7 @@ class preferences
 	var $table = 'egw_preferences';
 
 	var $values,$vars;	// standard notify substitues, will be set by standard_substitues()
-
+	var $debug = false;
 	/**
 	 * Standard constructor for setting $this->account_id
 	 */
@@ -110,6 +110,7 @@ class preferences
 		}
 		foreach($vals as $key => $val)
 		{
+			if ($this->debug) error_log(__METHOD__." replacing \$\$$key\$\$ with $val  ");
 			$replace[] = '$$'.$key.'$$';
 			$with[]    = $val;
 		}
@@ -147,6 +148,7 @@ class preferences
 	 */
 	function standard_substitutes()
 	{
+		if ($this->debug) error_log(__METHOD__." is called ");
 		if (!is_array(@$GLOBALS['egw_info']['user']['preferences']))
 		{
 			$GLOBALS['egw_info']['user']['preferences'] = $this->data;	// else no lang()
