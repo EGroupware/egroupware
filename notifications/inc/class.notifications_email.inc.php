@@ -101,10 +101,10 @@ class notifications_email implements notifications_iface {
 		if(is_array($_attachments) && count($_attachments) > 0) {
 		  foreach($_attachments as $attachment) {
 			$this->mail->AddStringAttachment($attachment->string, $attachment->filename, $attachment->encoding, $attachment->type);
-		}
+		  }
 		}
 		if(!$error=$this->mail->Send()) {
-			throw new Exception("Failed sending notification message via email.$error");
+			throw new Exception("Failed sending notification message via email.$error".print_r($this->mail->ErrorInfo,true));
 		}
 	}
 

@@ -31,7 +31,8 @@
 	{
 		var $err    = array();
 		var $to_res = array();
-		var $debug  = false;
+		// switching on debug with a numeric value other than 0, switches debug in PHPMailer/SMTP Class on
+		var $debug  = false; // false;
 		/**
 		* eGW specific initialisation of the PHPMailer: charset, language, smtp-host, ...
 		*
@@ -45,6 +46,7 @@
 				if ($this->debug) error_log(__METHOD__." ".print_r($this->Subject,true)." to be send");
 				return PHPMailer::Send();
 			}
+			if ($this->debug && is_numeric($this->debug)) $this->SMTPDebug = $this->debug;
 			$this->CharSet = $GLOBALS['egw']->translation->charset();
 			list($lang,$nation) = explode('-',$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 			$lang_path = EGW_SERVER_ROOT.'/phpgwapi/setup/';
