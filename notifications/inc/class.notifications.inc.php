@@ -42,6 +42,13 @@ final class notifications {
 	 */
 	private $backends = array('popup', 'winpopup', 'email', 'sms');
 	
+	/**
+	 * backends to skip even if the user has chosen it
+	 * this could be set by the calling application
+	 * @var array
+	 */
+	private $skip_backends = array();
+	
 	/** 
 	 * pre-defined notificaton chains
 	 * @abstract
@@ -317,6 +324,17 @@ final class notifications {
 	}
 	
 	/**
+	 * Sets backends that should be skipped even if the user
+	 * defined them in its chain
+	 *
+	 * @param array $_skip_backends array with names of the backends to be skipped
+	 * e.g. array('popup', 'winpopup')
+	 */
+	public function set_skip_backends(array $_skip_backends) {
+		$this->skip_backends = $_skip_backends;
+	}
+	
+	/**
 	 * sends notifications
 	 */
 	public function send() {
@@ -373,9 +391,16 @@ final class notifications {
 					continue; //user disabled notifications
 				}
 
-				foreach($notification_chain as $notification_backend => $action) {
+				foreach($notification_chain as $backend => $action) {
 					try {
-						$notification_backend = self::_appname.'_'.$notification_backend;
+						// check if backend should be skipped
+						if( in_array($backend, $this->skip_backends) ) {
+							// log as error just for the case too much skipping prevents user from being notified
+							$backend_errors[] = $backend.' will be skipped (as defined by calling application)';
+							continue;
+						}
+						
+						$notification_backend = self::_appname.'_'.$backend;
 						if(!file_exists(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php')) {
 							throw new Exception('file for '.$notification_backend. ' does not exist');
 						}
@@ -393,18 +418,18 @@ final class notifications {
 						if($action == 'fail' || $action == 'continue') {
 							continue;
 						}
-						// all backends failed - give error message
-						if(!$user_notified) {
-							error_log('Error: notification of receiver '.$receiver->handle.' failed for the following reasons:');
-							foreach($backend_errors as $id=>$backend_error) {
-								error_log($backend_error);
-							}
-						}
 						break; // stop running through chain
 					}
 					// backend sucseeded
 					$user_notified = true;
 					if($action == 'stop' || $action == 'fail') { break; } // stop running through chain				
+				}
+				// check if the user has been notified at all
+				if(!$user_notified) {
+					error_log('Error: notification of receiver '.$receiver->handle.' failed for the following reasons:');
+					foreach($backend_errors as $id=>$backend_error) {
+						error_log($backend_error);
+					}
 				}
 			}
 			catch (Exception $exception_user) {
