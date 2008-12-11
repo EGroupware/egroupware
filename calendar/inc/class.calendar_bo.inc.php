@@ -1002,26 +1002,33 @@ class calendar_bo
 			// Check if the $user is one of the participants or has a read-grant from one of them
 			// in that case he has an implicite READ grant for that event
 			//
-			foreach($event['participants'] as $uid => $accept)
+			if ($event['participants'] && is_array($event['participants']))
 			{
-				if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
+				foreach($event['participants'] as $uid => $accept)
 				{
-					// if we are a participant, we have an implicite READ and PRIVAT grant
-					$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
-					break;
+					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
+					{
+						// if we are a participant, we have an implicite READ and PRIVAT grant
+						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
+						break;
+					}
+					elseif ($this->grants[$uid] & EGW_ACL_READ)
+					{
+						// if we have a READ grant from a participant, we dont give an implicit privat grant too
+						$grants |= EGW_ACL_READ;
+						// we cant break here, as we might be a participant too, and would miss the privat grant
+					}
+					elseif (!is_numeric($uid))
+					{
+						// if we have a resource as participant
+						$resource = $this->resource_info($uid);
+						$grants |= $resource['rights'];
+					}
 				}
-				elseif ($this->grants[$uid] & EGW_ACL_READ)
-				{
-					// if we have a READ grant from a participant, we dont give an implicit privat grant too
-					$grants |= EGW_ACL_READ;
-					// we cant break here, as we might be a participant too, and would miss the privat grant
-				}
-				elseif (!is_numeric($uid))
-				{
-					// if we have a resource as participant
-					$resource = $this->resource_info($uid);
-					$grants |= $resource['rights'];
-				}
+			}
+			else
+			{
+				error_log(__METHOD__." no participants for event:".print_r($event,true));
 			}
 		}
 
