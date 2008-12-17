@@ -9,6 +9,7 @@
  * Copyright (C) 2000, 2001 Joseph Engo, Bettina Gille
  * Copyright (C) 2002, 2003 Bettina Gille
  * Reworked 11/2005 by RalfBecker-AT-outdoor-training.de
+ * Reworked 12/2008 by RalfBecker-AT-outdoor-training.de to operate only on a catergory cache, no longer the db direct
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
  * @subpackage categories
@@ -18,19 +19,56 @@
 
 /**
  * class to manage categories in eGroupWare
+ * 
+ * Categories are read now once from the database into a static cache variable (by the static init_cache method).
+ * The egw object fills that cache ones per session, stores it in a private var, from which it restores it for each
+ * request of that session.
+ * 
+ * @ToDo The cache now contains a backlink from the parent to it's children. Use that link to simplyfy return_all_children
+ * 	and other functions needing to know if a cat has children. Be aware a user might not see all children, as they can
+ * 	belong to other users.
  */
 class categories
 {
+	/**
+	 * Account id this class is instanciated for (-1 for global cats)
+	 *
+	 * @var int
+	 */
 	var $account_id;
+	/**
+	 * Application this class is instancated for ('phpgw' for application global cats)
+	 *
+	 * @var string
+	 */
 	var $app_name;
 	/**
 	 * @var egw_db
 	 */
 	var $db;
+	/**
+	 * Total number of records of return_(sorted_)array (returning only a limited number of rows)
+	 *
+	 * @var int
+	 */
 	var $total_records;
+	/**
+	 * Grants from other users for account_id and app_name (init by return array)
+	 *
+	 * @var array
+	 */
 	var $grants;
-	var $table = 'egw_categories';
-	var $cache_id2cat_data = array();	// a little bit of caching for id2name and return_single
+	/**
+	 * Name of the categories table
+	 */
+	const TABLE = 'egw_categories';
+	/**
+	 * Cache holding all categories, set via init_cache() method
+	 *
+	 * @var array cat_id => array of data 
+	 */
+	private static $cache;
+	
 
 	/**
 	 * constructor for categories class
@@ -45,76 +83,28 @@ class categories
 		$this->account_id	= (int) get_account_id($accountid);
 		$this->app_name		= $app_name;
 		$this->db			= $GLOBALS['egw']->db;
-		####################################################
-		# resolving the group members/grants is very slow with ldap accounts backend
-		# let's skip it for the addressbook, if we are using the ldap accounts backend
-		####################################################
-		if($app_name == 'addressbook' && $GLOBALS['egw_info']['server']['account_repository'] == 'ldap') {
-			$this->grants = $GLOBALS['egw']->acl->get_grants($app_name, false);
-		} else {
-			$this->grants = $GLOBALS['egw']->acl->get_grants($app_name);
-		}
-	}
 
-	/**
-	 * return sql for predifined filters
-	 *
-	 * @param string $type eiterh subs, mains, appandmains, appandsubs, noglobal or noglobalapp
-	 * @return string with sql to add to the where clause
-	 */
-	function filter($type)
-	{
-		switch ($type)
+		if (is_null(self::$cache))	// sould not be necessary, as cache is load and restored by egw object
 		{
-			case 'subs':		$where = 'cat_parent != 0'; break;
-			case 'mains':		$where = 'cat_parent = 0'; break;
-			case 'appandmains':	$where = 'cat_appname='.$this->db->quote($this->app_name).' AND cat_parent = 0'; break;
-			case 'appandsubs':	$where = 'cat_appname='.$this->db->quote($this->app_name).' AND cat_parent != 0'; break;
-			case 'noglobal':	$where = 'cat_appname != '.$this->db->quote($this->app_name); break;
-			case 'noglobalapp':	$where = 'cat_appname='.$this->db->quote($this->app_name).' AND cat_owner != '.(int)$this->account_id; break;
-			default:			return False;
+			self::init_cache();
 		}
-		return $where;
-	}
-
-	/**
-	 * returns the total number of categories for app, subs or mains
-	 *
-	 * @param $for one of either 'app' 'subs' or 'mains'
-	 * @return integer count of categories
-	 */
-	function total($for = 'app')
-	{
-		switch($for)
-		{
-			case 'app':			$where = array('cat_appname' => $this->app_name); break;
-			case 'appandmains':	$where = array('cat_appname' => $this->app_name,'cat_parent' => 0); break;
-			case 'appandsubs':	$where = array('cat_appname' => $this->app_name,'cat_parent != 0'); break;
-			case 'subs':		$where = 'cat_parent != 0'; break;
-			case 'mains':		$where = 'cat_parent = 0'; break;
-			default:			return False;
-		}
-		return $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchSingle();
 	}
 
 	/**
 	 * return_all_children
 	 * returns array with id's of all children from $cat_id and $cat_id itself!
 	 *
-	 * @param $cat_id integer cat-id to search for
+	 * @param int|array $cat_id (array of) integer cat-id to search for
 	 * @return array of cat-id's
 	 */
 	function return_all_children($cat_id)
 	{
-		$all_children = array($cat_id);
+		$all_children = (array) $cat_id;
 
 		$children = $this->return_array('subs',0,False,'','','',True,$cat_id,-1,'id');
 		if (is_array($children) && count($children))
 		{
-			foreach($children as $child)
-			{
-				$all_children = array_merge($all_children,$this->return_all_children($child['id']));
-			}
+			$all_children = array_merge($all_children,$this->return_all_children($children));
 		}
 		//echo "<p>categories::return_all_children($cat_id)=(".implode(',',$all_children).")</p>\n";
 		return $all_children;
@@ -123,170 +113,164 @@ class categories
 	/**
 	 * return an array populated with categories
 	 *
-	 * @param string $type defaults to 'all'
-	 * @param int $start see $limit
-	 * @param boolean $limit if true limited query starting with $start
+	 * @param string $type='all' 'subs','mains','appandmains','appandsubs','noglobal','noglobalapp', defaults to 'all'
+	 * @param int $start=0 see $limit
+	 * @param boolean|int $limit if true limited query to maxmatches rows (starting with $start)
 	 * @param string $query='' query-pattern
-	 * @param string $sort='' sort order, either defaults to 'ASC'
-	 * @param string $order='' order by
+	 * @param string $sort='ASC' sort order, defaults to 'ASC'
+	 * @param string $order='' order by, default cat_main, cat_level, cat_name ASC
 	 * @param boolean $globals includes the global egroupware categories or not
-	 * @param int $parent_id=0 if > 0 return subcats or $parent_id
+	 * @param array|int $parent_id=null return only subcats of $parent_id(s)
 	 * @param int $lastmod = -1 if > 0 return only cats modified since then
 	 * @param string $column='' if column-name given only that column is returned, not the full array with all cat-data
-	 * @return array or cats
+	 * @param array $filter=null array with column-name (without cat_-prefix) => value pairs (! negates the value)
+	 * @return array of cat-arrays or $column values
 	 */
-	function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '', $lastmod = -1, $column = '')
+	function return_array($type='all', $start=0, $limit=true, $query='', $sort='ASC',$order='',$globals=false, $parent_id=null, $lastmod=-1, $column='', $filter=null)
 	{
-		if ($globals)
+		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,globals=$globals,parent=".array2string($parent_id).",$lastmod,$column) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
+
+		// load the grants
+		if ($this->account_id != -1 && is_null($this->grants))
 		{
-			$global_cats = " OR cat_appname='phpgw'";
+			// resolving the group members/grants is very slow with ldap accounts backend
+			// let's skip it for the addressbook, if we are using the ldap accounts backend
+			$this->grants = $GLOBALS['egw']->acl->get_grants($app_name, 
+				$app_name != 'addressbook' || $GLOBALS['egw_info']['server']['account_repository'] != 'ldap');
 		}
-
-		if (($filter = $this->filter($type))) $filter = ' AND '.$filter;
-
+		$cats = array();
+		foreach(self::$cache as $cat_id => $cat)
+		{
+			if ($filter) foreach($filter as $col => $val)
+			{
+				if (!is_array($val) && $val[0] === '!')
+				{
+					if ($cat[$col] == substr($val,1)) continue 2;	// 2 for BOTH foreach!
+				}
+				elseif (is_array($val))
+				{
+					if (!in_array($cat[$col],$val)) continue 2;
+				}
+				else
+				{
+					if ($cat[$col] != $val) continue 2;
+				}
+			}
+			// check if certain parent required
+			if ($parent_id && !in_array($cat['parent'],(array)$parent_id)) continue;
+			
+			// apply standard acl / grants: return only application global cats (if $globals) or 
+			if (!($globals && $cat['appname'] == 'phpgw' ||
+				  $cat['appname'] == $this->app_name && ($cat['owner'] == -1 || $cat['owner'] == $this->account_id ||
+				  	$this->account_id != -1 && $cat['access'] == 'public' && $this->grants && isset($this->grants[$cat['owner']]))))
+			{
+				continue;
+			}
+			// check if we have the correct type
+			switch ($type)
+			{
+				case 'subs':
+					if (!$cat['parent']) continue 2;	// 2 for switch AND foreach!
+					break;
+				case 'mains':
+					if ($cat['parent']) continue 2;
+					break;
+				case 'appandmains':
+					if ($cat['appname'] != $this->app_name || $cat['parent']) continue 2;
+					break;
+				case 'appandsubs':
+					if ($cat['appname'] != $this->app_name || !$cat['parent']) continue 2;
+					break;
+				case 'noglobal':
+					if ($cat['appname'] == $this->app_name) continue 2;
+					break;
+				case 'noglobalapp':
+					if ($cat['appname'] != $this->app_name || $cat['owner'] == (int)$this->account_id) continue 2;
+					break;
+			}
+			
+			// check name and description for $query
+			if ($query && stristr($cat['name'],$query) === false && stristr($cat['description'],$query) === false) continue;
+			
+			// check if last modified since
+			if ($lastmod > 0 && $cat['last_mod'] <= $lastmod) continue;
+			
+			$cats[] = $cat;
+		}
+		if (!($this->total_records = count($cats)))
+		{
+			//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,$globals,parent=$parent_id,$lastmod,$column) account_id=$this->account_id, appname=$this->app_name = FALSE");
+			return false;
+		}
 		if (!$sort) $sort = 'ASC';
-
-		if (!empty($order) && preg_match('/^[a-zA-Z_(), ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/',$sort)))
+		// order the entries if necessary (cache is already ordered in or default order: cat_main, cat_level, cat_name ASC)
+		if ($this->total_records > 1 && !empty($order) &&
+			preg_match('/^[a-zA-Z_(), ]+$/',$order) && preg_match('/^(ASC|DESC|asc|desc)$/',$sort))
 		{
-			$ordermethod = 'ORDER BY '.$order.' '.$sort;
+			if (strstr($order,'cat_data') !== false) $order = 'cat_data';	// sitemgr orders by round(cat_data)!
+			if (substr($order,0,4) == 'cat_') $order = substr($order,4);
+			$sign = strtoupper($sort) == 'DESC' ? '-' : '';
+			usort($cats,create_function('$a,$b',$func=(in_array($order,array('name','description','appname','app_name')) ?
+				"return ${sign}strcasecmp(\$a['$order'],\$b['$order']);" : "return $sign(int)\$a['$order'] - $sign(int)\$b['$order'];")));
 		}
-		else
+		// limit the number of returned rows
+		if ($limit)
 		{
-			$ordermethod = 'ORDER BY cat_main, cat_level, cat_name ASC';
+			if (!is_int($limit)) $limit = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			$cats = array_slice($cats,(int)$start,$limit);
 		}
-
-		if ($this->account_id == '-1')
+		// return only a certain column (why not return is as value?)
+		if ($column)
 		{
-			$grant_cats = ' cat_owner=-1 ';
-		}
-		else
-		{
-			if (is_array($this->grants))
+			foreach($cats as $k => $cat)
 			{
-				$grant_cats = ' (cat_owner=' . $this->account_id . " OR cat_owner=-1 OR cat_access='public' AND cat_owner IN (" . implode(',',array_keys($this->grants)) . ')) ';
-			}
-			else
-			{
-				$grant_cats = ' cat_owner=' . $this->account_id . ' OR cat_owner=-1 ';
-			}
-		}
-
-		if ($parent_id > 0)
-		{
-			$parent_filter = ' AND cat_parent=' . (int)$parent_id;
-		}
-
-		if ($query)
-		{
-			$query = $this->db->quote('%'.$query.'%');
-			$querymethod = " AND (cat_name LIKE $query OR cat_description LIKE $query) ";
-		}
-
-		if($lastmod > 0)
-		{
-			$querymethod .= ' AND last_mod > ' . (int)$lastmod;
-		}
-
-		$where = '(cat_appname=' . $this->db->quote($this->app_name) . ' AND ' . $grant_cats . $global_cats . ')'
-			. $parent_filter . $querymethod . $filter;
-
-		$this->total_records = $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchSingle();
-
-		if (!$this->total_records) return false;
-
-		foreach($this->db->select($this->table,'*',$where,__LINE__,__FILE__,$limit ? (int) $start : false,$ordermethod) as $cat)
-		{
-			$cat = egw_db::strip_array_keys($cat,'cat_');
-			$cat['app_name'] = $cat['appname'];
-			$this->cache_id2cat_data[$cat['id']] = $cat;
-
-			if ($column)
-			{
-				$cats[] = array($column => isset($cat[$column]) ? $cat[$column] : $cat['id']);
-			}
-			else
-			{
-				$cats[] = $cat;
+				$cats[$k] = $cat[$column];
 			}
 		}
+		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,$globals,parent=$parent_id,$lastmod,$column) account_id=$this->account_id, appname=$this->app_name = ".array2string($cats));
+		
+		reset($cats);	// some old code (eg. sitemgr) relies on the array-pointer!
 		return $cats;
 	}
 
 	/**
-	 * return a sorted array populated with categories
+	 * return a sorted array populated with categories (main sorting criteria is hierachy!)
 	 *
-	 * @param int $start see $limit
-	 * @param boolean $limit if true limited query starting with $start
+	 * @param int $start=0 see $limit
+	 * @param boolean|int $limit if true limited query to maxmatches rows (starting with $start)
 	 * @param string $query='' query-pattern
-	 * @param string $sort='' sort order, either defaults to 'ASC'
-	 * @param string $order='' order by
+	 * @param string $sort='ASC' sort order, either defaults to 'ASC'
+	 * @param string $order='cat_name' order by
 	 * @param boolean $globals includes the global egroupware categories or not
-	 * @param int $parent_id=0 if > 0 return subcats or $parent_id
+	 * @param array|int $parent_id=0 return only subcats of $parent_id(s)
 	 * @return array with cats
 	 */
-	function return_sorted_array($start,$limit=True,$query='',$sort='',$order='',$globals=False, $parent_id=0)
+	function return_sorted_array($start=0,$limit=True,$query='',$sort='ASC',$order='cat_name',$globals=False, $parent_id=0)
 	{
-		if ($globals)
-		{
-			$global_cats = " OR cat_appname='phpgw'";
-		}
+		if (!$sort)  $sort = 'ASC';
+		if (!$order) $order = 'cat_name';
 
-		if (!$sort) $sort = 'ASC';
-
-		if (!empty($order) && preg_match('/^[a-zA-Z_, ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/',$sort)))
-		{
-			$ordermethod = 'ORDER BY '.$order.' '.$sort;
-		}
-		else
-		{
-			$ordermethod = ' ORDER BY cat_name ASC';
-		}
-
-		if ($this->account_id == '-1')
-		{
-			$grant_cats = " cat_owner='-1' ";
-		}
-		else
-		{
-			if (is_array($this->grants))
-			{
-				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1' OR cat_access='public' AND cat_owner IN (" . implode(',',array_keys($this->grants)) . ")) ";
-			}
-			else
-			{
-				$grant_cats = " cat_owner='" . $this->account_id . "' OR cat_owner='-1' ";
-			}
-		}
-		$parent_select = ' AND cat_parent=' . (int)$parent_id;
-
-		if ($query)
-		{
-			$query = $this->db->quote('%'.$query.'%');
-			$querymethod = " AND (cat_name LIKE $query OR cat_description LIKE $query) ";
-		}
-
-		$where = '(cat_appname=' . $this->db->quote($this->app_name) . ' AND ' . $grant_cats . $global_cats . ')' . $querymethod;
+		//error_log(__METHOD__."($start,$limit,$query,$sort,$order,globals=$globals,parent=$parent_id) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 
 		$parents = $cats = array();
-		foreach($this->db->select($this->table,'*',$where . $parent_select,__LINE__,__FILE__,false,$ordermethod) as $cat)
+		if (!($cats = $this->return_array('all',0,false,$query,$sort,$order,$globals,(array)$parent_id)))
 		{
-			$cat = egw_db::strip_array_keys($cat,'cat_');
-			$cat['app_name'] = $cat['appname'];
-			$this->cache_id2cat_data[$cat['id']] = $cat;
-
-			$cats[] = $cat;
+			$cats = array();
+		}
+		foreach($cats as $cat)
+		{
 			$parents[] = $cat['id'];
 		}
 		while (count($parents))
 		{
 			$sub_select = ' AND cat_parent IN (' . implode(',',$parents) . ')';
-			$parents = $children = array();
-			foreach($this->db->select($this->table,'*',$where . $sub_select,__LINE__,__FILE__,false, $ordermethod) as $cat)
+			if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents)))
 			{
-				$cat = egw_db::strip_array_keys($cat,'cat_');
-				$cat['app_name'] = $cat['appname'];
-				$this->cache_id2cat_data[$cat['id']] = $cat;
-
+				break;
+			}
+			$parents = $children = array();
+			foreach($subs as $cat)
+			{
 				$parents[] = $cat['id'];
 				$children[$cat['parent']][] = $cat;
 			}
@@ -310,9 +294,11 @@ class categories
 		}
 		$this->total_records = count($cats);
 
+		// limit the number of returned rows
 		if ($limit)
 		{
-			return array_slice($cats,(int)$start,$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
+			if (!is_int($limit)) $limit = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			$cats = array_slice($cats,(int)$start,$limit);
 		}
 		return $cats;
 	}
@@ -323,20 +309,11 @@ class categories
 	 * We use a shared cache together with id2name
 	 *
 	 * @param int $id id of category
-	 * @return array/boolean array with one array of cat-data or false if cat not found
+	 * @return array|boolean array with one array of cat-data or false if cat not found
 	 */
-	function return_single($id = '')
+	static function return_single($id)
 	{
-		if (!isset($this->cache_id2cat_data[$id]))
-		{
-			if (($cat = $this->db->select($this->table,'*',array('cat_id' => $id),__LINE__,__FILE__)->fetch()))
-			{
-				$cat = egw_db::strip_array_keys($cat,'cat_');
-				$cat['app_name'] = $cat['appname'];
-			}
-			$this->cache_id2cat_data[$id] = $cat;
-		}
-		return $this->cache_id2cat_data[$id] ? array($this->cache_id2cat_data[$id]) : false;
+		return isset(self::$cache[$id]) ? array(self::$cache[$id]) : false;
 	}
 
 	/**
@@ -346,6 +323,7 @@ class categories
 	 * @param string $type='' subs or mains
 	 * @param int/array $selected - cat_id or array with cat_id values
 	 * @param boolean $globals True or False, includes the global egroupware categories or not
+	 * @deprecated use html class to create selectboxes
 	 * @return string populated with categories
 	 */
 	function formatted_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')
@@ -460,7 +438,7 @@ class categories
 			),
 			$values);
 
-		$this->db->insert($this->table,array(
+		$this->db->insert(self::TABLE,array(
 			'cat_parent'  => $values['parent'],
 			'cat_owner'   => $this->account_id,
 			'cat_access'  => $values['access'],
@@ -473,12 +451,15 @@ class categories
 			'last_mod'    => time(),
 		),(int)$values['id'] > 0 ? array('cat_id' =>  $values['id']) : array(),__LINE__,__FILE__);
 
-		$id = (int)$values['id'] > 0 ? (int)$values['id'] : $this->db->get_last_insert_id($this->table,'cat_id');
+		$id = (int)$values['id'] > 0 ? (int)$values['id'] : $this->db->get_last_insert_id(self::TABLE,'cat_id');
 
 		if (!(int)$values['parent'])
 		{
-			$this->db->update($this->table,array('cat_main' => $id),array('cat_id' => $id),__LINE__,__FILE__);
+			$this->db->update(self::TABLE,array('cat_main' => $id),array('cat_id' => $id),__LINE__,__FILE__);
 		}
+		// update cache accordingly
+		self::invalidate_cache($id);
+
 		return $id;
 	}
 
@@ -499,7 +480,7 @@ class categories
 			{
 				if ($cat['level'] == 1)
 				{
-					$this->db->update($this->table,array(
+					$this->db->update(self::TABLE,array(
 						'cat_level'  => 0,
 						'cat_parent' => 0,
 						'cat_main'   => $cat['id'],
@@ -518,7 +499,7 @@ class categories
 
 					if ($cat['parent'] == $cat_id) $update['cat_parent'] = $new_parent;
 
-					$this->db->update($this->table,$update,array(
+					$this->db->update(self::TABLE,$update,array(
 						'cat_id' => $cat['id'],
 						'cat_appname' => $this->app_name,
 					),__LINE__,__FILE__);
@@ -535,7 +516,10 @@ class categories
 		}
 		$where['cat_appname'] = $this->app_name;
 
-		$this->db->delete($this->table,$where,__LINE__,__FILE__);
+		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
+
+		// update cache accordingly
+		self::invalidate_cache($cat_id);
 	}
 
 	/**
@@ -565,7 +549,7 @@ class categories
 				$values['level'] = 0;
 			}
 		}
-		$this->db->update($this->table,array(
+		$this->db->update(self::TABLE,array(
 			'cat_name' => $values['name'],
 			'cat_description' => $values['descr'],
 			'cat_data' => $values['data'],
@@ -578,6 +562,9 @@ class categories
 			'cat_id' => $values['id'],
 			'cat_appname' => $this->app_name,
 		),__LINE__,__FILE__);
+
+		// update cache accordingly
+		self::invalidate_cache($values['id']);
 
 		return (int)$values['id'];
 	}
@@ -592,10 +579,10 @@ class categories
 	 * - cat's of other user
 	 *
 	 * @param string $cat_name cat-name
-	 * @param boolean $strip=false if true, strips 'X-' from category names added by some SyncML clients
+	 * @param boolean|string $strip=false if true, strips 'X-'  ($strip) from category names added by some SyncML clients
 	 * @return int cat-id or 0 if not found
 	 */
-	function name2id($cat_name,$strip=false)
+	function name2id($cat_name, $strip=false)
 	{
 		static $cache = array();	// a litle bit of caching
 
@@ -607,7 +594,7 @@ class categories
 		}
 
 		$cats = array($cat_name);
-		if (isset($strip) && strncmp($strip, $cat_name, strlen($strip)) == 0)
+		if ($strip && strncmp($strip, $cat_name, strlen($strip)) == 0)
 		{
 			$stripped_cat_name = substr($cat_name, strlen($strip));
 			if (isset($cache[$stripped_cat_name]))
@@ -618,17 +605,26 @@ class categories
 			$cats[] = $stripped_cat_name;
 		}
 
-
-		$cat = $this->db->select($this->table,array('cat_name','cat_id'),array(
-			'cat_name' => $cats,
-			'cat_appname' => array($this->app_name, 'phpgw'),
-		),__LINE__,__FILE__,0,
-		'ORDER BY cat_name<>'.$this->db->quote($cat_name).',(CASE cat_owner WHEN '.(int)$this->account_id." THEN 1 WHEN -1 THEN 2 ELSE 3 END),cat_appname='phpgw'",
-		false,1)->fetch();
-
-		if (!$cat) return 0;	// cat not found, dont cache it, as it might be created in this request
-
-		return $cache[$cat['cat_name']] = (int) $cat['cat_id'];
+		if (!($cats = $this->return_array('all',0,false,'','','',true,null,-1,'',array(
+			'name' => $cats,
+			'appname' => array($this->app_name, 'phpgw'),
+		))))
+		{
+			return 0;	// cat not found, dont cache it, as it might be created in this request
+		}
+		if (count($cats) > 1)
+		{
+			// if more the one cat matches we weight them by: exact name match; own, global, other users cat; appplication cats
+			foreach($cats as $k => $cat)
+			{
+				$cats[$k]['weight'] = 100 * ($cat['name'] == $cat_name) +
+					10 * ($cat['owner'] == $this->account_id ? 3 : ($cat['owner'] == -1 ? 2 : 1)) +
+					($cat['appname'] != 'phpgw');
+			}
+			// sort heighest weight to the top
+			usort($cats,create_function('$a,$b',"return \$b['weight'] - \$a['weight'];"));
+		}
+		return $cache[$cat['cat_name']] = (int) $cats[0]['id'];
 	}
 
 	/**
@@ -640,20 +636,19 @@ class categories
 	 * @param string $item='name requested information, 'path' = / delimited path of category names (incl. parents)
 	 * @return string information or '--' if not found or !$cat_id
 	 */
-	function id2name($cat_id=0, $item='name')
+	static function id2name($cat_id=0, $item='name')
 	{
 		if(!$cat_id) return '--';
-
-		if (!isset($this->cache_id2cat_data[$cat_id])) $this->return_single($cat_id);
-
 		if (!$item) $item = 'parent';
-
-		$cat = $this->cache_id2cat_data[$cat_id];
+		
+		if (is_null(self::$cache)) self::init_cache();
+		
+		$cat = self::$cache[$cat_id];
 		if ($item == 'path')
 		{
 			if ($cat['parent'])
 			{
-				return $this->id2name($cat['parent'],'path').' / '.$cat['name'];
+				return self::id2name($cat['parent'],'path').' / '.$cat['name'];
 			}
 			$item = 'name';
 		}
@@ -691,27 +686,27 @@ class categories
 	 */
 	function exists($type,$cat_name = '',$cat_id = 0,$parent = 0)
 	{
-		static $cache = array();	// a litle bit of caching
-
-		if (isset($cache[$type][$cat_name][$cat_id])) return $cache[$type][$cat_name][$cat_id];
-
-		$where = array($this->filter($type));
-
 		if ($cat_name)
 		{
-			$where['cat_name'] = $cat_name;
-
-			if ($cat_id) $where[] = 'cat_id != '.(int)$cat_id;
+			$filter['name'] = $cat_name;
+			if ($cat_id) $filter['id'] = '!'.(int)$cat_id;
 		}
 		elseif ($cat_id)
 		{
-			$where['cat_id'] = $cat_id;
+			$filter['id'] = $cat_id;
 		}
-		if ($parent) $where['cat_parent'] = $parent;
-
-		return $cache[$type][$cat_name][$cat_id] = $this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__)->fetchSingle();
+		if (!($cats = $this->return_array($type,0,false,'','','',true,$parent,-1,'id',$filter)))
+		{
+			$ret = false;
+		}
+		else
+		{
+			$ret = $cats[0];
+		}
+		//error_log(__METHOD__."($type,$cat_name,$cat_id,$parent) = ".$ret);
+		return $ret;
 	}
-
+	
 	/**
 	 * Change the owner of all cats owned by $owner to $to OR deletes them if !$to
 	 *
@@ -727,11 +722,65 @@ class categories
 
 		if ((int)$to)
 		{
-			$this->db->update($this->table,array('cat_owner' => $to),$where,__LINE__,__FILE__);
+			$this->db->update(self::TABLE,array('cat_owner' => $to),$where,__LINE__,__FILE__);
 		}
 		else
 		{
-			$this->db->delete($this->table,$where,__LINE__,__FILE__);
+			$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
 		}
+		// update cache accordingly
+		self::invalidate_cache();
+	}
+	
+	/**
+	 * Initialise or restore the categories cache
+	 * 
+	 * We use the default ordering of return_array to avoid doing it again there
+	 * 
+	 * @param array &$cache=null cache content to restore it (from the egw-object)
+	 */
+	public static function &init_cache(&$cache=null)
+	{
+		if (!is_null($cache))
+		{
+			//error_log(__METHOD__."() ".count($cache)." cats restored: ".function_backtrace());
+			return self::$cache =& $cache;
+		}
+		self::$cache = array();
+		// read all cats (cant use $this->db!)
+		foreach($GLOBALS['egw']->db->select(self::TABLE,'*',false,__LINE__,__FILE__,
+			false,'ORDER BY cat_main, cat_level, cat_name ASC') as $cat)
+		{
+			$cat = egw_db::strip_array_keys($cat,'cat_');
+			$cat['app_name'] = $cat['appname'];
+			// backlink children to their parent
+			if ($cat['parent'])
+			{
+				self::$cache[$cat['parent']]['children'][] = $cat['id'];
+			}
+			if (isset(self::$cache[$cat['id']]))
+			{
+				$cat['children'] = self::$cache[$cat['id']]['children'];
+				unset(self::$cache[$cat['id']]);	// otherwise the order gets messed up!
+			}
+			self::$cache[$cat['id']] = $cat;
+		}
+		//error_log(__METHOD__."() cache initialised: ".function_backtrace());
+		return self::$cache;
+	}
+	
+	/**
+	 * Invalidate the cache
+	 * 
+	 * Currently we dont care for $cat_id, as changing cats happens very infrequently and
+	 * also changes child categories (!)
+	 *
+	 * @param int $cat_id concerned id or null for all cats
+	 */
+	public static function invalidate_cache($cat_id=null)
+	{
+		self::init_cache();
+		// we need to invalidate the whole session cache, as it stores our cache
+		egw::invalidate_session_cache();
 	}
 }
