@@ -383,6 +383,7 @@ class calendar_uiforms extends calendar_ui
 			// fall through
 		case 'mail':
 		case 'save':
+		case 'print':
 		case 'apply':
 			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
 			{
@@ -394,6 +395,18 @@ class calendar_uiforms extends calendar_ui
 				$msg = lang('Permission denied');
 				break;
 			}
+
+			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
+			{
+				if ($button == 'print')	// just print without edit-rights is ok
+				{
+					$js = $this->custom_print($event,false);
+					break;
+				}
+				$msg = lang('Permission denied');
+				break;
+			}
+
 			if ($event['start'] > $event['end'])
 			{
 				$msg = lang('Error: Starttime has to be before the endtime !!!');
@@ -478,6 +491,11 @@ class calendar_uiforms extends calendar_ui
 					'menuaction' => $referer,
 					'msg' => $msg,
 				))).'\';';
+
+				if ($button == 'print')
+				{
+					$js = $this->custom_print($event,!$content['id'])."\n".$js;	// first open the new window and then update the view
+				}
 
 				if ($button == 'mail')
 				{
@@ -661,6 +679,24 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 * return javascript to open compose window to print the event
+	 *
+	 * @param array $event
+	 * @param boolean $added
+	 * @return string javascript window.open command
+	 */
+	function custom_print($event,$added)
+	{
+			$vars = array(
+			'menuaction'      => 'calendar.calendar_uiforms.edit',
+			'cal_id'      => $event['id'],
+			'print' => true,
+			);
+		return "window.open('".$GLOBALS['egw']->link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
+	}
+
+
+	/**
 	 * Edit a calendar event
 	 *
 	 * @param array $event=null Event to edit, if not $_GET['cal_id'] contains the event-id
@@ -675,7 +711,8 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function edit($event=null,$preserv=null,$msg='',$js = 'window.focus();',$link_to_id='')
 	{
-		$etpl =& CreateObject('etemplate.etemplate','calendar.edit');
+		$template = $_REQUEST['print'] ? 'calendar.print' : 'calendar.edit';
+		$etpl =& CreateObject('etemplate.etemplate',$template);
 		$sel_options = array(
 			'recur_type' => &$this->bo->recur_types,
 			'status'     => $this->bo->verbose_status,
@@ -683,6 +720,7 @@ class calendar_uiforms extends calendar_ui
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
+				'print' => array('label' => 'Print', 'title' => 'Print this event'),
 				'mail' => array('label' => 'Mail all participants', 'title' => 'compose a mail to all participants after the event is saved'),
 			),
 			'status_recurrence' => array('' => 'for this event', 'A' => 'for all future events'),
