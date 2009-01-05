@@ -233,13 +233,9 @@ function change(e, value) {
 	var base_id = id.substr(0, id.lastIndexOf('['));
 	if(document.getElementById(base_id + '[results]')) {
 		set_id = base_id + '[results]'; 
-		if(document.getElementById(set_id).style.display == 'block') {
-			// Tab and arrow keys don't trigger the search
-			if(e.keyCode == 9 
-				|| e.keyCode == 38 || e.keyCode == 40 
-				|| e.keyCode == 63232 || e.keyCode == 63233) {
-				return;
-			}
+		// Tab doesn't trigger the search
+		if(e.keyCode == 9 ) {
+			return;
 		}
 	} else {
 		set_id = base_id + '[search]';
