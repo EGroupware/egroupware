@@ -316,7 +316,7 @@
 					$response->addScript("add_ajax_result('$result_id', '${row['id_field']}', '" . $row['title'] . "', '$html');");
 					$count++;
 					if($count > $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) {
-						$response->addScript("add_ajax_result('$result_id', '', '" . lang("%1 more...", (count($result_list) - $count)) . "');");
+						$response->addScript("add_ajax_result('$result_id', '', '', '" . lang("%1 more...", (count($result_list) - $count)) . "');");
 						break;
 					}
 				}
