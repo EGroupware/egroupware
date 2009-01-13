@@ -70,7 +70,7 @@ class accounts_sql
 	 *
 	 * @var accounts
 	 */
-	private $fontend;
+	private $frontend;
 
 	/**
 	 * Constructor
@@ -378,6 +378,7 @@ class accounts_sql
 					break;
 			}
 		}
+		$criteria[] = "egw_addressbook.account_id is not null ";
 		$accounts = array();
 		if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
 		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,"account_lid,account_type,account_status,$this->table.account_id",
