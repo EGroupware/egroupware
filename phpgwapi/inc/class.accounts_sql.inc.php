@@ -70,7 +70,7 @@ class accounts_sql
 	 *
 	 * @var accounts
 	 */
-	private $fontend;
+	private $frontend;
 
 	/**
 	 * Constructor
