@@ -504,7 +504,8 @@ class timesheet_ui extends timesheet_bo
 			$rows = $ids;
 			return $this->total;	// no need to set other fields or $readonlys
 		}
-		$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
+		#$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
+		$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true);
 
 		unset($query['col_filter'][0]);
 
