@@ -6,7 +6,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @copyright 2002-9 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -592,9 +592,10 @@ class so_sql
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
 	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
+	 * @param boolean $only_return_query=false return $query of delete call to db object, but not run it (used by so_sql_cf!)
 	 * @return int affected rows, should be 1 if ok, 0 if an error
 	 */
-	function delete($keys=null)
+	function delete($keys=null,$only_return_query=false)
 	{
 		if ($this->autoinc_id && $keys && !is_array($keys))
 		{
@@ -622,6 +623,8 @@ class so_sql
 		{
 			$query[$db_col] = $data[$col];
 		}
+		if ($only_return_query) return $query;
+		
 		$this->db->delete($this->table_name,$query,__LINE__,__FILE__,$this->app);
 
 		return $this->db->affected_rows();
