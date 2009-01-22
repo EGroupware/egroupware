@@ -311,8 +311,10 @@
 					$data = ($query['nextmatch_template']) ? array(1=>$row) : $row;
 					$widget =& CreateObject('etemplate.etemplate', $query['template']);
 					$html = addslashes(str_replace("\n", '', $widget->show($data, '', $readonlys)));
-					$row['id_field'] = htmlspecialchars(addslashes($row[$query['id_field']]));
-					$row['title'] = htmlspecialchars(addslashes($row['title']));
+					
+					// If we use htmlspecialchars, it causes issues with mixed quotes.  addslashes() seems to handle it.
+					$row['id_field'] = addslashes($row[$query['id_field']]);
+					$row['title'] = addslashes($row['title']);
 					$response->addScript("add_ajax_result('$result_id', '${row['id_field']}', '" . $row['title'] . "', '$html');");
 					$count++;
 					if($count > $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) {
