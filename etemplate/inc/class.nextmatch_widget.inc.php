@@ -292,9 +292,10 @@ class nextmatch_widget
 			if ($n-5 <= $max && $max <= $n+5) $n = $max;
 			$row_options[$n] = $n;
 		}
-		if (!isset($row_options[$max]))
+		if (!isset($row_options[$max]) || !isset($row_options[$value['num_rows']]))
 		{
 			$row_options[$max] = $max;
+			$row_options[$value['num_rows']] = $value['num_rows'];
 			ksort($row_options);
 		}
 		$value['options-num_rows'] =& $row_options;
