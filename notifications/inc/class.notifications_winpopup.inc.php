@@ -68,7 +68,7 @@ class notifications_winpopup implements notifications_iface {
 	 *
 	 * @var string
 	 */
-	private $netbios_command = "/bin/echo [MESSAGE] >> /Users/jaytraxx/winpopup.out";
+	private $netbios_command = false;
 
 	/**
 	 * constructor of notifications_winpopup
