@@ -108,6 +108,10 @@ print_debug('sane environment','messageonly','api');
 /****************************************************************************\
 * Multi-Domain support                                                       *
 \****************************************************************************/
+
+// Work around bug in Safari Version 3.2.1 (5525.27.1) where cookie named domain is called Domain
+if($_REQUEST['Domain']) $_REQUEST['domain'] = $_REQUEST['Domain'];
+
 $GLOBALS['egw_info']['user']['domain'] = egw_session::search_instance(
 	isset($_POST['login']) ? $_POST['login'] : (isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : $_SERVER['REMOTE_USER']),
 	$_REQUEST['domain'],$GLOBALS['egw_info']['server']['default_domain'],$_SERVER['SERVER_NAME'],$GLOBALS['egw_domain']);
