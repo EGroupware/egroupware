@@ -409,7 +409,7 @@ class timesheet_ui extends timesheet_bo
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
 		$GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
 		$query = $query_in;	// keep the original query
-
+		#_debug_array($query['col_filter']);
 		// PM project filter for the PM integration
 		if ((string)$query['col_filter']['pm_id'] != '')
 		{
@@ -417,11 +417,17 @@ class timesheet_ui extends timesheet_bo
 			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
+		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] == '0') {
+			$query['col_filter']['ts_project'] = 0;
+			unset($query['col_filter']['ts_id']);
+		}
 		unset($query['col_filter']['pm_id']);
 
 		// filter for no project
-		if ((string)$query['col_filter']['ts_project'] == '0') $query['col_filter']['ts_project'] = null;
-
+		if ((string)$query['col_filter']['ts_project'] == '0') {
+			$query['col_filter']['ts_project'] = null;
+		}
+		#_debug_array($query['col_filter']);
 		if ((int)$query['filter2'] != (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'])
 		{
 			$GLOBALS['egw']->preferences->add(TIMESHEET_APP,'show_details',(int)$query['filter2']);
@@ -504,9 +510,24 @@ class timesheet_ui extends timesheet_bo
 			$rows = $ids;
 			return $this->total;	// no need to set other fields or $readonlys
 		}
-		#$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
-		$links = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true);
-
+		$links3 = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
+		#_debug_array($links);
+		//as the full array is expected, we must supply the missing but needed (since expected further down) information
+		if (is_array($links3)) {
+			foreach ($links3 as $likey => $liarray) {
+				#echo "$likey";_debug_array($liarray);echo"<br>";
+				if (is_array($liarray)) {
+					foreach ($liarray as $li2key => $lival) {
+						$links[$likey][$li2key]['id'] = $lival;
+						$links[$likey][$li2key]['app'] = 'projectmanager';
+					}
+				}
+			}
+			if (!is_array($links)) $links = array();
+		} else {
+			$links = array();
+		}
+		#_debug_array($links);
 		unset($query['col_filter'][0]);
 
 		// query cf's for the displayed rows
