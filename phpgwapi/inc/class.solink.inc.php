@@ -126,6 +126,7 @@ class solink
 		{
 			$only_app = substr($only_app,1);
 		}
+		#var_dump($not_only);echo "$only_app<br>";
 		$links = array();
 		foreach(self::$db->select(self::TABLE,'*',self::$db->expression(self::TABLE,'(',array(
 					'link_app1'	=> $app,
@@ -155,12 +156,13 @@ class solink
 		$linked_app = $left ? $row['link_app2'] : $row['link_app1'];
 		$linked_id  = $left ? $row['link_id2'] : $row['link_id1'];
 		$app_id = $left ? $row['link_id1'] : $row['link_id2'];
-
 		if ($only_app && $not_only == ($linked_app == $only_app) || !$GLOBALS['egw_info']['user']['apps'][$linked_app])
 		{
+			#echo "$linked_app == $only_app, ";var_dump($linked_app == $only_app);echo "	->dont return a link<br>";
 			return;
 		}
-		$links[$app_id][$row['link_id']] = $only_app && !$not_only ? $linked_id : array(
+		#echo "returning ".(($only_app && !$not_only) ? " linkid:".$linked_id : " full array with linkid $linked_id")."<br>";
+		$links[$app_id][$row['link_id']] = ($only_app && !$not_only) ? $linked_id : array(
 			'app'     => $linked_app,
 			'id'      => $linked_id,
 			'remark'  => $row['link_remark'],
