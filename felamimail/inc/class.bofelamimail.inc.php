@@ -1207,10 +1207,14 @@
 							continue;
 						}
 						$foldersNameSpace[$type]['subscribed'] = $subscribedMailboxes;
-						sort($foldersNameSpace[$type]['subscribed']);
+						if (is_array($foldersNameSpace[$type]['subscribed'])) sort($foldersNameSpace[$type]['subscribed']);
 						// fetch and sort all folders
-						$foldersNameSpace[$type]['all'] = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix']);
-						sort($foldersNameSpace[$type]['all']);
+						$allMailboxes = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix']);
+						if( PEAR::isError($allMailboxes) ) {
+							continue;
+						}
+						$foldersNameSpace[$type]['all'] = $allMailboxes;
+						if (is_array($foldersNameSpace[$type]['all'])) sort($foldersNameSpace[$type]['all']);
 					}
 				  }
 				}
@@ -1273,9 +1277,9 @@
 			foreach( array('personal', 'others', 'shared') as $type) {
 				if(isset($foldersNameSpace[$type])) {
 					if($_subscribedOnly) {
-						$listOfFolders = $foldersNameSpace[$type]['subscribed'];
+						if( !PEAR::isError($foldersNameSpace[$type]['subscribed']) ) $listOfFolders = $foldersNameSpace[$type]['subscribed'];
 					} else {
-						$listOfFolders = $foldersNameSpace[$type]['all'];
+						if( !PEAR::isError($foldersNameSpace[$type]['all'])) $listOfFolders = $foldersNameSpace[$type]['all'];
 					}
 					foreach((array)$listOfFolders as $folderName) {
 						if($_subscribedOnly && !in_array($folderName, $foldersNameSpace[$type]['all'])) {
