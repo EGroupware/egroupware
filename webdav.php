@@ -44,6 +44,12 @@ function check_access(&$account)
 
 // if we are called with a /apps/$app path, use that $app as currentapp, to not require filemanager rights for the links
 $parts = explode('/',$_SERVER['PATH_INFO']);
+//error_log("webdav: explode".print_r($parts,true));
+if(count($parts)== 1){
+	echo "Malformed Url: missing slash" ;
+	exit;
+}
+
 $app = count($parts) > 3 && $parts[1] == 'apps' ? $parts[2] : 'filemanager';
 
 $GLOBALS['egw_info'] = array(
@@ -63,3 +69,4 @@ $headertime = microtime(true);
 $webdav_server = new vfs_webdav_server();
 $webdav_server->ServeRequest();
 //error_log(sprintf("GroupDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
+

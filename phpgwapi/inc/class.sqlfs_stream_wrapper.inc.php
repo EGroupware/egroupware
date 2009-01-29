@@ -69,7 +69,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * 1 = only errors
 	 * 2 = all function calls and errors (contains passwords too!)
 	 */
-	const LOG_LEVEL = 1;
+	const LOG_LEVEL = 2;
 
 	/**
 	 * We do versioning AND store the content in the db, NOT YET IMPLEMENTED
@@ -222,7 +222,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			// create the hash-dirs, if they not yet exist
 			elseif(!file_exists($fs_dir=dirname(self::_fs_path($this->opened_fs_id))))
 			{
-				mkdir($fs_dir,0700,true);
+				$umaskbefore = umask();
+				if (self::LOG_LEVEL) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
+				self::mkdir_recursive($fs_dir,0700,true);
 			}
 		}
 		else
@@ -264,6 +266,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		// do we operate directly on the filesystem
 		if ($this->operation == self::STORE2FS)
 		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__." fopen (may create a directory? mkdir) ($this->opened_fs_id,$mode,$options)");
 			$this->opened_stream = fopen(self::_fs_path($this->opened_fs_id),$mode);
 		}
 		if ($mode[0] == 'a')	// append modes: a, a+
@@ -576,6 +579,18 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
+	 * due to problems with recursive directory creation, we have our own here
+	 */
+	function mkdir_recursive($pathname, $mode, $depth=0)
+	{
+		$maxdepth=10;
+		$depth2propagate = (int)$depth + 1;
+		if ($depth2propagate > $maxdepth) return is_dir($pathname);
+    	is_dir(dirname($pathname)) || self::mkdir_recursive(dirname($pathname), $mode, $depth2propagate);
+    	return is_dir($pathname) || @mkdir($pathname, $mode);
+	}
+
+	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
 	 *
 	 * It should attempt to create the directory specified by path.
@@ -589,7 +604,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static function mkdir ( $url, $mode, $options )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
-
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__." called from:".function_backtrace());
 		$path = parse_url($url,PHP_URL_PATH);
 
 		if (self::url_stat($path,STREAM_URL_STAT_QUIET))
@@ -611,6 +626,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		// if yes call ourself recursive with the parent directory
 		if (($options & STREAM_MKDIR_RECURSIVE) && $path != '/' && !$parent)
 		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__." creating parents: $parent_path, $mode");
 			if (!self::mkdir($parent_path,$mode,$options))
 			{
 				return false;
@@ -1291,6 +1307,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;	// parent not found, should never happen ...
 		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__." trying foreach with:".print_r($rows,true)."#");
 		foreach($rows as $fs_id => $row)
 		{
 			$parent = $row['fs_dir'] > 1 ? $parents[$row['fs_dir']] : '';

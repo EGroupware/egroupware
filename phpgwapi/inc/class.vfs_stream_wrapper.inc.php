@@ -587,6 +587,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_opendir ( $path, $options )
 	{
+		//error_log(__METHOD__." called with ".$path);
 		$this->opened_dir = $this->extra_dirs = null;
 		$this->extra_dir_ptr = 0;
 
@@ -596,16 +597,20 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (!($this->opened_dir = opendir($this->opened_dir_url)))
 		{
+			//error_log(__METHOD__." dir failed: ".$this->opened_dir);
 			return false;
 		}
 		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
-
+		#error_log(__METHOD__." check for ".$this->opened_dir_url);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = parse_url($this->opened_dir_url,PHP_URL_PATH);
+		#error_log(__METHOD__." basepath here: ".print_r($basepath,true));
 		foreach(self::$fstab as $mounted => $nul)
 		{
-			if (dirname($mounted) == $basepath && $mounted != '/')
+			#error_log(__METHOD__." dirname mounted: ".print_r(dirname($mounted),true));
+			if ((dirname($mounted) == $basepath || dirname($mounted)."/" == $basepath) && $mounted != '/')
 			{
+				#error_log(__METHOD__." mounted dir: ".print_r($mounted,true));
 				$this->extra_dirs[] = basename($mounted);
 			}
 		}
@@ -685,13 +690,16 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_readdir ( )
 	{
+		#error_log(__METHOD__." called.");
 		if ($this->extra_dirs && count($this->extra_dirs) > $this->extra_dir_ptr)
 		{
 			return $this->extra_dirs[$this->extra_dir_ptr++];
 		}
 		// only return children readable by the user, if dir is not writable
 		do {
+			//error_log(__METHOD__." called with:".$this->opened_dir_url);
 			$file = readdir($this->opened_dir);
+			//error_log(__METHOD__." got:".$file);
 		}
 		while($file !== false && (is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) ||	// dont return mountpoints twice
 			self::HIDE_UNREADABLES && !$this->opened_dir_writable &&

@@ -349,7 +349,7 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			if ($is_dir && (!isset($options['maxdepth']) || $options['maxdepth'] > 0) && ($dir = @opendir($path)))
 			{
-				while($file = readdir($dir))
+				while(($file = readdir($dir)) !== false)
 				{
 					if ($file == '.' || $file == '..') continue;	// ignore current and parent dir!
 
@@ -1125,7 +1125,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if (isset(self::$lock_cache[$path]))
 		{
-			error_log(__METHOD__."($path) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$path],true)));
+			//error_log(__METHOD__."($path) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$path],true)));
 			return self::$lock_cache[$path];
 		}
 		$where = 'lock_path='.self::$db->quote($path);
@@ -1146,7 +1146,7 @@ class egw_vfs extends vfs_stream_wrapper
 	        	'lock_token' => $result['token'],
 	        ),__LINE__,__FILE__);
 
-			//error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
+		//error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
 	        $result = false;
 		}
 		//error_log(__METHOD__."($path) returns ".($result?array2string($result):'false'));
