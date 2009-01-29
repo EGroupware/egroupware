@@ -200,7 +200,11 @@
 			case 'tabbox':
 				$labels = explode('|',$cell['label']);  unset($cell['label']);
 				$helps  = explode('|',$cell['help']);   unset($cell['help']);
-				$names  = explode('|',$cell['name']);   unset($cell['name']);
+				if (strpos($tab_names=$cell['name'],'=') !== false)
+				{
+					list($cell['name'],$tab_names) = explode('=',$cell['name']);
+				}
+				$names  = explode('|',$tab_names);
 				for ($n = 0; $n < count($labels); ++$n)
 				{
 					$tab =& new xmlnode('tab');

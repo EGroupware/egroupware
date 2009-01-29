@@ -4,22 +4,18 @@
 	 *
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 * @package etemplate
+	 * @subpackage extensions
 	 * @link http://www.egroupware.org
 	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
 	 * @version $Id$
 	 */
-
+	
 	/**
 	 * eTemplate Extension: widget that shows one row of tabs and an other row with the eTemplate of the selected tab
 	 *
 	 * See the example in 'etemplate.tab_widget.test'
 	 *
 	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
-	 *
-	 * @package etemplate
-	 * @subpackage extensions
-	 * @author RalfBecker-AT-outdoor-training.de
-	 * @license GPL
 	 */
 	class tab_widget
 	{
@@ -36,7 +32,7 @@
 		 * @var string
 		 */
 		var $human_name = 'Tabs';	// this is the name for the editor
-
+	
 		/**
 		 * Constructor of the extension
 		 *
@@ -45,7 +41,7 @@
 		function tab_widget($ui)
 		{
 		}
-
+	
 		/**
 		 * pre-processing of the extension
 		 *
@@ -62,15 +58,19 @@
 		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			//echo "<p>tab_widget::pre_process('$form_name',$value,,$extension_data)</p>\n";
-
+	
 			if (!$cell['onchange'])	// onchange allows to use the old behavior (submit for each new tab)
 			{
 				$dom_enabled = isset($GLOBALS['egw_info']['etemplate']['dom_enabled']) ? $GLOBALS['egw_info']['etemplate']['dom_enabled'] : true;
 			}
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
-			$names = explode('|',$cell['name']);
-
+			if (strpos($cell_name=$tab_names=$cell['name'],'=') !== false)
+			{
+				list($cell_name,$tab_names) = explode('=',$cell['name']);
+				$cell['name'] = $cell_name;
+			}
+			$names = explode('|',$tab_names);
 			// disable tab mentioned in readonlys
 			foreach(is_array($readonlys) ? $readonlys : array($readonlys => true) as $name => $disable)
 			{
@@ -85,7 +85,7 @@
 				}
 			}
 			$all_names = implode('|',$names);
-
+	
 			$tab_widget =& new etemplate('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
 	
@@ -109,7 +109,7 @@
 				$value = $selected_tab = $names[0];
 			}
 			$extension_data = $value;	// remember the active tab in the extension_data
-
+	
 			foreach($names as $k => $name)
 			{
 				if (strpos($name,'.') === false)
@@ -134,17 +134,17 @@
 				{
 					$tcell['type'] = 'button';
 					$tcell['onchange'] = '1';
-					$tcell['name'] = $cell['name'].'['.$name.']';
+					$tcell['name'] = $cell_name.'['.$name.']';
 				}
 				$tcell['label'] = $labels[$k];
 				$tcell['help'] = $helps[$k];
-
+	
 				$tab_widget->set_cell_attribute('tabs',1+$k,$tcell);
 			}
 			$tab_widget->set_cell_attribute('tabs','type','hbox');
 			$tab_widget->set_cell_attribute('tabs','size',count($names));
 			$tab_widget->set_cell_attribute('tabs','name','');
-
+	
 			if ($dom_enabled)
 			{
 				foreach($names as $n => $name)
@@ -156,7 +156,7 @@
 				$tab_widget->set_cell_attribute('body','type','deck');
 				$tab_widget->set_cell_attribute('body','size',count($names));
 				$tab_widget->set_cell_attribute('body','span',',tab_body');
-				$tab_widget->set_cell_attribute('body','name',$cell['name']);
+				$tab_widget->set_cell_attribute('body','name',$cell_name);
 			}
 			else
 			{
@@ -166,14 +166,14 @@
 				$tab_widget->set_cell_attribute('body','obj',$stab);
 			}
 			$tab_widget->set_cell_attribute('body','name',$selected_tab);
-
+	
 			$cell['type'] = 'template';
 			$cell['obj'] = &$tab_widget;
 			$cell['label'] = $cell['help'] = '';
-
+	
 			return False;	// NO extra Label
 		}
-
+	
 		/**
 		 * postprocessing method, called after the submission of the form
 		 *
@@ -194,7 +194,7 @@
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			//echo "<p>tab_widget::post_process($name): value_in = "; _debug_array($value_in);
-
+	
 			if (is_array($value_in))
 			{
 				foreach ($value_in as $tab => $button_pressed)

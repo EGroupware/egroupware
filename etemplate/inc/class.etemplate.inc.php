@@ -957,7 +957,12 @@ class etemplate extends boetemplate
 				$show_c,$show_row,$content['.c'],$content['.row'],$content));
 		}
 		$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-
+		// allow names like "tabs=one|two|three", which will be equal to just "tabs"
+		// eg. for tabs to use a name independent of the tabs contained
+		if (is_string($name) && strpos($name,'=') !== false)
+		{
+			list($name) = explode('=',$name);
+		}
 		$form_name = $this->form_name($cname,$name);
 
 		$value = $this->get_array($content,$name);
