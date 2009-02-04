@@ -153,7 +153,11 @@
 			$search =& $widget->get_widget_by_name('search');
 			if(($cell['readonly'] || $readonlys['search']) && $options['link']) {
 				$cell['readonly'] = false;
-				$readonlys['search'] = true;
+				if(!is_array($readonlys)) {
+					$readonlys = array('search' => true);
+				} else {
+					$readonlys['search'] = true;
+				}
 				$search['type'] = 'label';
 				$search['no_lang'] = 1;
 				$search['size'] = ',' . $options['link'];
