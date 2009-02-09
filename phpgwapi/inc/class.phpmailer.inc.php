@@ -1083,7 +1083,7 @@ class PHPMailer {
       $encoding = $this->Encoding;
     }
     $result .= $this->TextLine('--' . $boundary);
-    $result .= sprintf("Content-Type: %s; charset = \"%s\"", $contentType, $charSet);
+    $result .= sprintf("Content-Type: %s; charset=\"%s\"", $contentType, $charSet);
     $result .= $this->LE;
     $result .= $this->HeaderLine('Content-Transfer-Encoding', $encoding);
     $result .= $this->LE;
@@ -1204,7 +1204,7 @@ class PHPMailer {
 
       $mime[] = sprintf("--%s%s", $this->boundary[1], $this->LE);
 	  if($disposition == 'part') {
-	    $mime[] = sprintf("Content-Type: %s; charset =\"%s\"%s", $type, $this->CharSet, $this->LE);
+	    $mime[] = sprintf("Content-Type: %s; charset=\"%s\"%s", $type, $this->CharSet, $this->LE);
 	  } else {
 	    $mime[] = sprintf("Content-Type: %s; name=\"%s\"%s", $type, $name, $this->LE);
 	  }
