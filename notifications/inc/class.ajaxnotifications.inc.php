@@ -168,14 +168,21 @@ class ajaxnotifications {
 		$this->restore_session_data();
 		
 		$recent_messages = array();
+		$folder_status = array();
 		foreach($notify_folders as $id=>$notify_folder) {
+			if(!is_array($this->session_data['notified_mail_uids'][$notify_folder])) {
+				$this->session_data['notified_mail_uids'][$notify_folder] = array();
+			}
+			$folder_status[$notify_folder] = $bofelamimail->getFolderStatus($notify_folder);
 			$headers = $bofelamimail->getHeaders($notify_folder, 1, false, 0, true, array('status'=>'UNSEEN'));
 			if(is_array($headers['header']) && count($headers['header']) > 0) {
 				foreach($headers['header'] as $id=>$header) {
 					// check if unseen mail has already been notified
-				 	if(!in_array($header['uid'], $this->session_data['notified_mail_uids'])) {
+				 	if(!in_array($header['uid'], $this->session_data['notified_mail_uids'][$notify_folder])) {
 				 		// got a REAL recent message
 				 		$header['folder'] = $notify_folder;
+				 		$header['folder_display_name'] = $folder_status[$notify_folder]['displayName'];
+				 		$header['folder_base64'] =  base64_encode($notify_folder);
 				 		$recent_messages[] = $header;
 				 	}
 				}
@@ -183,30 +190,34 @@ class ajaxnotifications {
 		}
 		
 		if(count($recent_messages) > 0) {
-			// create notify messages and save notification status in user session
-			if(count($recent_messages) == 1) {
-				$notify_subject = lang("You've got a new mail");
-			} else {
-				$notify_subject = lang("You've got new mails");
-			}
-			$notify_message = '<table>';
+			// create notify message
+			$notification_subject = lang("You've got new mail");
+			$values = array();
+			$values[] = array(); // content array starts at index 1
 			foreach($recent_messages as $id=>$recent_message) {
-				$notify_message .=	'<tr>'
-									.'<td>'.$recent_message['folder'].'</td>'
-									.'<td>'.$recent_message['subject'].'</td>'
-									.'<td>'.$recent_message['sender_address'].'</td>'
-									.'</tr>';
+				$values[] =	array(
+					'mail_uid'				=> $recent_message['uid'],
+					'mail_folder' 			=> $recent_message['folder_display_name'],
+					'mail_folder_base64' 	=> $recent_message['folder_base64'],
+					'mail_subject'			=> $recent_message['subject'],
+					'mail_from'				=> !empty($recent_message['sender_name']) ? $recent_message['sender_name'] : $recent_message['sender_address'],
+					'mail_received'			=> $recent_message['date'],
+				);
 				// save notification status
-				$this->session_data['notified_mail_uids'][] = $recent_message['uid'];
+				$this->session_data['notified_mail_uids'][$recent_message['folder']][] = $recent_message['uid'];
 			}
-			$notify_message .= '</table>';
+			
+			// create etemplate
+			$tpl = new etemplate();
+			$tpl->read('notifications.checkmailbox');
+			$notification_message = $tpl->exec(false, $values, false, false, false, 1);
 			
 			// send notification
 			$notification = new notifications();
 			$notification->set_receivers(array($this->recipient->account_id));
-			$notification->set_message($notify_message);
+			$notification->set_message($notification_message);
 			$notification->set_sender($this->recipient->account_id);
-			$notification->set_subject($notify_subject);
+			$notification->set_subject($notification_subject);
 			$notification->set_skip_backends(array('email'));
 			$notification->send();
 		}
