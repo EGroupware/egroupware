@@ -1908,7 +1908,7 @@ class etemplate extends boetemplate
 	* @param string $type type of request
 	* @return int number of validation errors (the adjusted content is returned by the var-param &$content !)
 	*/
-	private function process_show(&$content,$to_process,$cname='', $type = 'regular')
+	function process_show(&$content,$to_process,$cname='', $type = 'regular')
 	{
 		if (!isset($content) || !is_array($content) || !is_array($to_process))
 		{
