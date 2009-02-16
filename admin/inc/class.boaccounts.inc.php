@@ -266,6 +266,10 @@
 			{
 				$accountPrefix = $GLOBALS['egw_info']['server']['account_prefix'];
 			}
+			if($accountPrefix)
+			{
+				$userData['account_lid'] = $accountPrefix . $userData['account_lid'];
+			}
 
 			$errors = $this->validate_user($userData);
 			if(@is_array($errors))

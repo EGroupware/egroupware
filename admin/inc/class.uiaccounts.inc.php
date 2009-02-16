@@ -562,7 +562,7 @@
 				}
 				$userData = array(
 					'account_type'          => 'u',
-					'account_lid'           => $accountPrefix . $_POST['account_lid'],
+					'account_lid'           => $_POST['account_lid'],
 					'account_firstname'     => $_POST['account_firstname'],
 					'account_lastname'      => $_POST['account_lastname'],
 					'account_passwd'        => $_POST['account_passwd'],
@@ -855,7 +855,7 @@
 					$email = $GLOBALS['egw']->common->email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
 				}
 				$userData = array(
-					'account_lid'           => $accountPrefix.$_POST['account_lid'],
+					'account_lid'           => $_POST['account_lid'],
 					'account_firstname'     => $_POST['account_firstname'],
 					'account_lastname'      => $_POST['account_lastname'],
 					'account_passwd'        => $_POST['account_passwd'],
