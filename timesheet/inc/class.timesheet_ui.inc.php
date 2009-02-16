@@ -409,6 +409,7 @@ class timesheet_ui extends timesheet_bo
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
 		$GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
 		$query = $query_in;	// keep the original query
+		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
 		#_debug_array($query['col_filter']);
 		// PM project filter for the PM integration
 		if ((string)$query['col_filter']['pm_id'] != '')
@@ -451,6 +452,9 @@ class timesheet_ui extends timesheet_bo
 		if ($query['col_filter']['ts_owner'])
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$GLOBALS['egw']->common->grab_owner_name($query['col_filter']['ts_owner']);
+			#if ($GLOBALS['egw']->accounts->get_type($query['col_filter']['ts_owner']) == 'g') $GLOBALS['egw_info']['flags']['app_header'] .= ' '. lang("and its members");
+			#_debug_array($GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
+			$query['col_filter']['ts_owner'] = array_merge(array($query['col_filter']['ts_owner']),$GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
 		}
 		else
 		{
@@ -609,13 +613,20 @@ class timesheet_ui extends timesheet_bo
 		if (!$have_cats || $query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
+		if (!$rows['no_owner_col'] && !strpos($query['selectcols'],'ts_owner')) $rows['no_owner_col'] = 1;
 		if ($query['filter'])
 		{
 			$rows += $this->summary;
 		}
 		$rows['pm_integration'] = $this->pm_integration;
-		$rows['ts_viewtype'] = $this->ts_viewtype == 'short';
-
+		$rows['ts_viewtype'] =  $rows['no_ts_quantity'] =  $rows['no_ts_unitprice'] =  $rows['no_ts_total'] = $this->ts_viewtype == 'short';
+		if (!$rows['ts_viewtype']) {
+			#_debug_array($query['selectcols']);
+			#ts_quantity,ts_unitprice,ts_total
+			if (strpos($query['selectcols'],'ts_quantity')===false) $rows['no_ts_quantity'] = 1;
+			if (strpos($query['selectcols'],'ts_unitprice')===false) $rows['no_ts_unitprice'] = 1;
+			if (strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
+		}
 		return $total;
 	}
 
