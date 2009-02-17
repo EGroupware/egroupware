@@ -70,7 +70,7 @@
 
 
 <!-- BEGIN appbox -->
-<!--[if lte IE 6.5]></div><iframe frameborder="0" framespacing="0"  class="iframeforselectbox"></iframe></div><![endif]-->
+<!--[if lte IE 6.5]></div><iframe frameborder="0" framespacing="0" src="{img_root}/dragarea_right.png" class="iframeforselectbox"></iframe></div><![endif]-->
 	<div id="divSubContainer">
 		<table width="100%" cellspacing="0" cellpadding="0">
 		<tr>
