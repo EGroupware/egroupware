@@ -537,17 +537,27 @@ class Net_IMAP extends Net_IMAPProtocol {
         } else {
           $ret=$this->cmdFetch($msg_id,"BODYSTRUCTURE");
         }
+		#_debug_array($ret);
         if (PEAR::isError($ret)) {
             return $ret;
         }
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $ret=$ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"][0];
+        $ret2=$ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"][0];
+		// sometimes we get an [COMMAND] => OK with $ret["PARSED"][0] and no $ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"]
+		if (is_array($ret) && empty($ret2)) {
+			foreach($ret["PARSED"] as $substruct) {
+				if ($substruct["COMMAND"] == "FETCH") {
+					$ret2=$substruct["EXT"]["BODYSTRUCTURE"][0];
+					break;
+				}
+			}
+		}
         $structure = array();
 
         $mimeParts = array();
-        $this->_parseStructureArray($ret, $mimeParts);
+        $this->_parseStructureArray($ret2, $mimeParts);
         #_debug_array($ret);
         return array_shift($mimeParts);
     }
@@ -1373,7 +1383,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      */
     function getMailboxes($reference = '', $restriction_search = 0, $returnAttributes=false)
     {
-
+		#echo (__METHOD__.$reference."#".$restriction_search.'#'.function_backtrace()."<br>");
         if ( is_bool($restriction_search) ){
             $restriction_search = (int) $restriction_search;
         }
@@ -1402,6 +1412,7 @@ class Net_IMAP extends Net_IMAPProtocol {
         if( PEAR::isError( $ret = $this->cmdList($reference, $mailbox) ) ){
             return $ret;
         }
+
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
@@ -1412,7 +1423,7 @@ class Net_IMAP extends Net_IMAPProtocol {
             //If the folder has the \NoSelect atribute we don't put in the list
             // it solves a bug in wu-imap that crash the IMAP server if we select that mailbox
                 if( isset($mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"]) ){
-                    #if( !in_array('\NoSelect',$mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"]) ){
+                    #if( !(in_array('\NoSelect',$mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"]) || in_array('\Noselect',$mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"])) ){
                         if( $returnAttributes){
                             $ret_aux[]=array(   'MAILBOX' => $mbox["EXT"]["LIST"]["MAILBOX_NAME"],
                                                 'ATTRIBUTES' => $mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"] ,
@@ -1442,7 +1453,7 @@ class Net_IMAP extends Net_IMAPProtocol {
     function mailboxExist($mailbox)
     {
         // true means do an exact match
-        if( PEAR::isError( $ret = $this->getMailboxes( $mailbox , true ) ) ){
+        if( PEAR::isError( $ret = $this->getMailboxes( $mailbox, 1, false ) ) ){
             return $ret;
         }
         if( count( $ret ) > 0 ){
@@ -1603,6 +1614,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      */
     function listsubscribedMailboxes($reference = ''  , $restriction_search = 0, $returnAttributes = false)
     {
+		#echo __METHOD__." called for ".$reference."#$restriction_search#<br>";
         if ( is_bool($restriction_search) ){
             $restriction_search = (int) $restriction_search;
         }
