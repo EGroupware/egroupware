@@ -288,7 +288,10 @@ class bo_resources
 		if(!is_array($res_id) && $res_id < 1) return;
 
 		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,name,useable');
-
+		if (!is_array($data)) {
+			error_log(__METHOD__." No Calendar Data found for Resource with id $res_id"); 
+			return array();
+		}
 		foreach($data as $num => $resource)
 		{
 			$data[$num]['rights'] = false;
@@ -446,10 +449,14 @@ class bo_resources
 			}
 		} else {
 			// we are not working for the calendar, we loop on the initial $data
-			foreach($data as $num => $resource)
-			{
-				$id=$resource['res_id'];
-				$list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+			if (is_array($data)) {
+				foreach($data as $num => $resource)
+				{
+					$id=$resource['res_id'];
+					$list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+				}
+			} else {
+				error_log(__METHOD__." No Data found for Resource with id ".$resource['res_id']);
 			}
 		}
 		return $list;
