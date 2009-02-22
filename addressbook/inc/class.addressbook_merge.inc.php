@@ -205,6 +205,11 @@ class addressbook_merge	// extends bo_merge
 			return false;
 		}
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
+		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
+		$countlables =count($countlables[0])+1;
+		preg_replace('/\$\$labelplacement\$\$/','',$Labelrepeat,1);
+		if ($countlables>1) $lableprint = true;
 		if (count($ids) > 1 && !$contentrepeat)
 		{
 			$err = lang('for more then one contact in a document use the tag pagerepeat!');
@@ -214,6 +219,7 @@ class addressbook_merge	// extends bo_merge
 		{
 			if ($contentrepeat)   $content = $contentrepeat;   //content to repeat
 			// generate replacements
+			if ($lableprint) $content = $Labelrepeat;
 			if (!($replacements = $this->contact_replacements($id)))
 			{
 				$err = lang('Contact not found!');
@@ -239,7 +245,6 @@ class addressbook_merge	// extends bo_merge
 			{
 				$content = preg_replace('/\$\$calendar\/[0-9]+\/[a-z_]+\$\$/','',$content);
 			}
-
 			$this->replacements = $replacements;
 			if (strpos($content,'$$IF'))
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
@@ -248,6 +253,31 @@ class addressbook_merge	// extends bo_merge
 
 			if ($contentrepeat) $contentrep[$id] = $content;
 		}
+
+
+		if ($Labelrepeat)
+
+		{
+			$countpage=0;
+			$count=0;
+			$contentrepeatpages[$countpage] = $Labelstart.$Labeltend;
+
+			foreach ($contentrep as $Label)
+			{
+				$count=$count+1;
+				if ($count % $countlables == 0)
+				{
+					$countpage=$countpage+1;
+					$contentrepeatpages[$countpage] = $Labelstart.$Labeltend;
+				}
+				$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/',$Label,$contentrepeatpages[$countpage],1);
+
+			}
+
+			$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/','',$contentrepeatpages[$countpage],-1);  //clean empty fields
+			return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
+		}
+
 		if ($contentrepeat)
 		{
 			return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
@@ -258,6 +288,8 @@ class addressbook_merge	// extends bo_merge
 
 	function replace_callback($param)
 	{
+		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
+		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
 		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
 		return $replace;
 	}
