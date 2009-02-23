@@ -458,24 +458,51 @@ Preferences tabs
 	padding-right: 15px;
 }
 
-/*
-	notification window
-*/
-#notificationwindow_message > table
-{
-	font-size: 95%;
+/* eGroupWare popup */
+#egwpopup {
+	background-color: #ffffff;
+	border: 1px solid #d3d3d3;
 }
 
-#notificationwindow_message hr
-{
+#egwpopup hr {
 	border: none;
-	border-top: 1px solid black;
+	border-top: 1px solid #d3d3d3;
 	height: 1px;
 }
 
-#notificationwindow_message .link
-{
+#egwpopup_header {
+	background-image: url(../images/gradient22.png);
+	height: 18px;
+	line-height: 18px;
+	margin: 0;
+	padding: 0;
+	font-size:12px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+	border-bottom: 1px solid #d3d3d3;
+}
+
+#egwpopup_message {
+	margin: 0;
+	padding: 7px;
+	overflow: auto;
+}
+
+#egwpopup_message > table {
+	font-size: 95%;
+}
+
+#egwpopup_message .link {
 	cursor: pointer;
+}
+
+#egwpopup_footer {
+	margin: 0;
+	padding: 7px;
+	border: none;
+	border-top: 1px solid #d3d3d3;
+	text-align: center;
 }
 
 .selectbg

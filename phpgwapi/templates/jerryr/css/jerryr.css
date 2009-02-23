@@ -392,6 +392,7 @@ body {
 	padding:9px;
 	padding-top: 0px;	/* CHANGED RALF */
 	border:solid 1px #17202b;
+	border-bottom-style:none;
 }
 
 #divLogo
@@ -641,31 +642,58 @@ body {
 	padding-right: 15px;
 }
 
-/*
-	notification window
-*/
-#notificationwindow_message > table
-{
-	font-size: 95%;
+/* eGroupWare popup */
+#egwpopup {
+	background-color: #fbf8f1;
+	border: 1px solid #17202b;
 }
 
-#notificationwindow_message hr
-{
+#egwpopup hr {
 	border: none;
-	border-top: 1px solid black;
+	border-top: 1px solid #17202b;
 	height: 1px;
 }
 
-#notificationwindow_message .link
-{
+#egwpopup_header {
+	background-image: url(../images/appTitleBar.png);
+	height: 18px;
+	line-height: 18px;
+	margin: 0;
+	padding: 0;
+	font-size:12px;
+	font-weight: bold;
+	color: #17202b;
+	text-align: center;
+	border-bottom: 1px solid #17202b;
+}
+
+#egwpopup_message {
+	margin: 0;
+	padding: 7px;
+	overflow: auto;
+}
+
+#egwpopup_message > table {
+	font-size: 95%;
+}
+
+#egwpopup_message .link {
 	cursor: pointer;
+}
+
+#egwpopup_footer {
+	margin: 0;
+	padding: 7px;
+	border: none;
+	border-top: 1px solid #17202b;
+	text-align: center;
 }
 
 .selectbg
 {
 	position:absolute;
 	z-index:10;
-	overflow:hidden;/
+	overflow:hidden;
 	width:250px;
 }
 .iframeforselectbox

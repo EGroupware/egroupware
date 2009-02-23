@@ -27,11 +27,11 @@
 }
 
 .textSidebox {
-	border-top: 1px solid lightgray;
+	border-top: 1px solid #d3d3d3;
 }
 
 .divSidebox table {
-	border: 1px solid lightgray;
+	border: 1px solid #d3d3d3;
 	border-top: none;
 }
 
@@ -46,7 +46,7 @@
 #divAppbox {
 	padding-left: 15px;
 	padding-right: 10px;
-	border: 1px solid lightgray;
+	border: 1px solid #d3d3d3;
 }
 
 #divMain {
@@ -66,7 +66,7 @@
 }
 #divUpperTabs li
 {
-	border: 1px solid lightgray;
+	border: 1px solid #d3d3d3;
 	border-top: none;
 }
 
@@ -121,7 +121,7 @@ a:link, a:visited, select, input, textarea {
 }
 
 .divLoginbox {
-	border: 1px solid lightgray;
+	border: 1px solid #d3d3d3;
 	border-top: none;
 }
 .divLoginbox td {

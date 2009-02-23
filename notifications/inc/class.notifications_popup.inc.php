@@ -116,7 +116,6 @@ class notifications_popup implements notifications_iface {
 		$message = 	$this->render_infos($_subject)
 					.html::hr()
 					.$_messages['html']
-					.html::hr()
 					.$this->render_links($_links);
 
 		$this->save( $message, $user_sessions );
@@ -174,7 +173,7 @@ class notifications_popup implements notifications_iface {
 
 		}
 		if(count($rendered_links) > 0) {
-			return html::bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
+			return html::hr().html::bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
 		}
 	}
 

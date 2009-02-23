@@ -10,41 +10,41 @@
 
 var notifymessages = new Array();
 
-function notificationwindow_init() {
-	window.setTimeout("notificationwindow_refresh();", 1000);
+function egwpopup_init() {
+	window.setTimeout("egwpopup_refresh();", 1000);
 }
 
-function notificationwindow_setTimeout() {
-	window.setTimeout("notificationwindow_refresh();", 60000);
+function egwpopup_setTimeout() {
+	window.setTimeout("egwpopup_refresh();", 60000);
 }
-function notificationwindow_refresh() {
+function egwpopup_refresh() {
 	xajax_doXMLHTTP("notifications.ajaxnotifications.check_mailbox");
-	xajax_doXMLHTTP("notifications.ajaxnotifications.get_popup_notifications");
-	notificationwindow_setTimeout();
+	xajax_doXMLHTTP("notifications.ajaxnotifications.get_egwpopup_notifications");
+	egwpopup_setTimeout();
 }
 
-function notificationwindow_display() {
-	var notificationwindow;
-	var notificationwindow_message;
+function egwpopup_display() {
+	var egwpopup;
+	var egwpopup_message;
 	var Browserwidth;
 	var Browserheight;
-	var notificationwindow_ok_button;
-	notificationwindow_ok_button = document.getElementById("notificationwindow_ok_button");
-	notificationwindow = document.getElementById("notificationwindow");
-	notificationwindow_message = document.getElementById("notificationwindow_message");
-	notificationwindow.style.display = "inline";
-	notificationwindow.style.position = "absolute";
-	notificationwindow.style.width = "500px";
+	var egwpopup_ok_button;
+	egwpopup_ok_button = document.getElementById("egwpopup_ok_button");
+	egwpopup = document.getElementById("egwpopup");
+	egwpopup_message = document.getElementById("egwpopup_message");
+	egwpopup.style.display = "inline";
+	egwpopup.style.position = "absolute";
+	egwpopup.style.width = "500px";
 	Browserwidth = (window.innerWidth || document.body.clientWidth || 640)
 	Browserheight = (window.innerHeight || document.body.clientHeight || 480)
-	notificationwindow.style.left = (Browserwidth/2 - 250) + "px";
-	notificationwindow.style.top = (Browserheight/4) + "px";
-	notificationwindow.style.height = "100%";
-	notificationwindow_message.innerHTML = notifymessages[0];
+	egwpopup.style.left = (Browserwidth/2 - 250) + "px";
+	egwpopup.style.top = (Browserheight/4) + "px";
+	egwpopup_message.style.maxHeight = (Browserheight/2) + "px";
+	egwpopup_message.innerHTML = notifymessages[0];
 	if(notifymessages.length-1 > 0 ) {
-		notificationwindow_ok_button.value = "OK (" + (notifymessages.length-1) + ")";
+		egwpopup_ok_button.value = "OK (" + (notifymessages.length-1) + ")";
 	} else {
-		notificationwindow_ok_button.value = "OK";
+		egwpopup_ok_button.value = "OK";
 	}
 
 }
@@ -59,17 +59,17 @@ function notificationbell_switch(mode) {
 	}
 }
 
-function notificationwindow_button_ok() {
-	var notificationwindow;
-	var notificationwindow_message;
-	notificationwindow = document.getElementById("notificationwindow");
-	notificationwindow_message = document.getElementById("notificationwindow_message");
+function egwpopup_button_ok() {
+	var egwpopup;
+	var egwpopup_message;
+	egwpopup = document.getElementById("egwpopup");
+	egwpopup_message = document.getElementById("egwpopup_message");
 	notifymessages.shift();
 	if(notifymessages.length > 0) {
-		notificationwindow_display();
+		egwpopup_display();
 	} else {
-		notificationwindow.style.display = "none";
-		notificationwindow_message.innerHTML = "";
+		egwpopup.style.display = "none";
+		egwpopup_message.innerHTML = "";
 		notificationbell_switch("inactive");
 	}
 }

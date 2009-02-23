@@ -717,22 +717,50 @@ body {
 	padding-right: 15px;
 }
 
-/*
-	notification window
-*/
-#notificationwindow_message > table
-{
-	font-size: 95%;
+/* eGroupWare popup */
+#egwpopup {
+	background-image: url(../images/bmback2.jpg);
+	background-color: #ffffff;
+	border: 1px solid #9f9f9f;
+	border-top-style: none;
 }
 
-#notificationwindow_message hr
-{
+#egwpopup hr {
 	border: none;
-	border-top: 1px solid black;
+	border-top: 1px solid #9f9f9f;
 	height: 1px;
 }
 
-#notificationwindow_message .link
-{
+#egwpopup_header {
+	background-image: url(../images/menuTitleMid-bm.png);
+	height: 24px;
+	line-height: 24px;
+	margin: 0;
+	padding: 0;
+	font-size:12px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+}
+
+#egwpopup_message {
+	margin: 0;
+	padding: 7px;
+	overflow: auto;
+}
+
+#egwpopup_message > table {
+	font-size: 95%;
+}
+
+#egwpopup_message .link {
 	cursor: pointer;
+}
+
+#egwpopup_footer {
+	margin: 0;
+	padding: 7px;
+	border: none;
+	border-top: 1px solid #9f9f9f;
+	text-align: center;
 }
