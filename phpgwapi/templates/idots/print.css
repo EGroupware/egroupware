@@ -1,6 +1,6 @@
 /*
 	The styles in this file are used for printing only!
-	
+
 	Additional UI Elements can be disabled for printing by adding their Id here or adding the noPrint class to them.
 */
 /* $Id$ */
@@ -67,3 +67,7 @@ a,a:link,a:visited,a:hover {
 body {
 	background-image: none;
 }
+
+/* MSIE needs these styles to repeat table header and footer part on each page */
+thead { display: table-header-group; }
+tfoot { display: table-footer-group; }

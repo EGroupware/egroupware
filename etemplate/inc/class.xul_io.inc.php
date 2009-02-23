@@ -35,7 +35,7 @@
 	{
 		/**
 		 * translate attr, common to all widgets
-		 * 
+		 *
 		 * @var array
 		 */
 		var $attr2xul = array(
@@ -49,7 +49,7 @@
 		);
 		/**
 		 * translate widget-names and widget-spec. attr., not set ones are identical
-		 * 
+		 *
 		 * @var array
 		 */
 		var $widget2xul = array(
@@ -104,7 +104,7 @@
 		);
 		/**
 		 * translate xul-widget names to our internal ones, not set ones are identical
-		 * 
+		 *
 		 * @var array
 		 */
 		var $xul2widget = array(
@@ -236,7 +236,7 @@
 				{
 					$attr_widget->set_attribute('type',$cell['type']);
 				}
-				break; 
+				break;
 			case 'groupbox':
 				if ($cell['label'])
 				{
@@ -328,7 +328,7 @@
 			{
 				$xul_row =& new xmlnode('row');
 				$this->set_attributes($xul_row,'class,valign',$opts["c$r"]);
-				$this->set_attributes($xul_row,'height,disabled',$opts["h$r"]);
+				$this->set_attributes($xul_row,'height,disabled,part',$opts["h$r"]);
 
 				$spanned = 0;
 				foreach($row as $c => $cell)
@@ -344,7 +344,7 @@
 						continue;	// spanned cells are not written
 					}
 					$this->add_widget($xul_row,$cell,$embeded_too);
-					
+
 					$spanned = $cell['span'] == 'all' ? 999 : $cell['span'];
 				}
 				$xul_rows->add_node($xul_row);
@@ -367,7 +367,7 @@
 			{
 				if (isset($embeded_too[$etempl->name]))
 				{
-					return;	// allready embeded 
+					return;	// allready embeded
 				}
 			}
 			else
@@ -375,14 +375,14 @@
 				$embeded_too = array();
 			}
 			$embeded_too[$etempl->name] = True;
-			
+
 			$template =& new xmlnode('template');
 			$template->set_attribute('id',$etempl->name);
 			$template->set_attribute('template',$etempl->template);
 			$template->set_attribute('lang',$etempl->lang);
 			$template->set_attribute('group',$etempl->group);
 			$template->set_attribute('version',$etempl->version);
-			
+
 			foreach($etempl->children as $child)
 			{
 				$this->add_widget($template,$child,$embeded_too);
@@ -400,7 +400,7 @@
 		 * create an XML representation of an eTemplate
 		 *
 		 * @param object $etempl eTemplate object to export
-		 * @return string the XML 
+		 * @return string the XML
 		 */
 		function export($etempl)
 		{
@@ -431,7 +431,7 @@
 		 * create an eTemplate from it's XML representation
 		 *
 		 * @param object &$etempl eTemplate object to set
-		 * @param string $data the XML 
+		 * @param string $data the XML
 		 * @return array/string array with names of imported templates or error-message
 		 */
 		function import(&$etempl,$data)
@@ -576,7 +576,8 @@
 						$nul = null; soetemplate::add_child($parent,$nul);	// null =& new row
 						$parent['data'][0]['c'.$parent['rows']] = $attr['class'] . ($attr['valign'] ? ','.$attr['valign'] : '');
 						$parent['data'][0]['h'.$parent['rows']] = $attr['height'] .
-							($attr['disabled'] ? ','.$attr['disabled'] : '');
+							($attr['disabled']||$attr['part'] ? ','.$attr['disabled'] : '').
+							($attr['part'] ? ','.$attr['part'] : '');
 						break;
 					case 'styles':
 						$etempl->style = trim($node['value']);
@@ -595,7 +596,7 @@
 							$tab_attr['help'] = implode('|',$tab_helps);
 							$tab_attr['span'] .= $tab_attr['class'] ? ','.$tab_attr['class'] : '';
 							unset($tab_attr['class']);
-							
+
 							soetemplate::add_child($parent,$tab_attr);
 							unset($tab_attr);
 						}
@@ -628,7 +629,7 @@
 							soetemplate::add_child($parent,$menulist_attr);
 							unset($menulist_attr);
 						}
-						break; 
+						break;
 					case 'vbox':
 					case 'hbox':
 					case 'deck':

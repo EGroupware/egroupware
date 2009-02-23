@@ -733,11 +733,24 @@ class html
 		return self::form(self::submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
 
+	const THEAD = 1;
+	const TFOOT = 2;
+	const TBODY = 3;
+	static $part2tag = array(
+		self::THEAD => 'thead',
+		self::TFOOT => 'tfoot',
+		self::TBODY => 'tbody',
+	);
+
 	/**
 	 * creates table from array of rows
 	 *
 	 * abstracts the html stuff for the table creation
 	 * Example: $rows = array (
+	 *  'h1' => array(	// optional header row(s)
+	 *  ),
+	 *  'f1' => array(	// optional footer row(s)
+	 *  ),
 	 *	'1'  => array(
 	 *		1 => 'cell1', '.1' => 'colspan=3',
 	 *		2 => 'cell2',
@@ -754,11 +767,19 @@ class html
 	{
 		$html = $no_table_tr ? '' : "<table $options>\n";
 
+		$part = 0;
 		foreach($rows as $key => $row)
 		{
 			if (!is_array($row))
 			{
 				continue;					// parameter
+			}
+			// get the current part from the optional 'h' or 'f' prefix of the key
+			$p = $key[0] == 'h' ? html::THEAD : ($key[0] == 'f' ? html::TFOOT : html::TBODY);
+			if ($part < $p && ($part || $p < self::TBODY))	// add only allowed and neccessary transitions
+			{
+				if ($part) $html .= '</'.self::$part2tag[$part].">\n";
+				$html .= '<'.self::$part2tag[$part=$p].">\n";
 			}
 			$html .= $no_table_tr && $key == 1 ? '' : "\t<tr ".$rows['.'.$key].">\n";
 
@@ -784,6 +805,10 @@ class html
 		if (!is_array($rows))
 		{
 			echo "<p>".function_backtrace()."</p>\n";
+		}
+		if ($part)	// close current part
+		{
+			$html .= "</".self::$part2tag[$part].">\n";
 		}
 		$html .= "</table>\n";
 

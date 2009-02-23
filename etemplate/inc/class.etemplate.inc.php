@@ -718,13 +718,15 @@ class etemplate extends boetemplate
 			else
 			{
 				$cols = &$data[$r_key];
-				list($height,$disabled) = explode(',',$opts["h$row"]);
+				$part = '';	// '' = body-prefix
+				list($height,$disabled,$part) = explode(',',$opts["h$row"]);
 				$class = /*TEST-RB$no_table_tr ? $tr_class :*/ $opts["c$row"];
 			}
 			if ($disabled != '' && $this->check_disabled($disabled,$content))
 			{
 				continue;	// row is disabled
 			}
+			if ($part) $row = $part[0].$row;	// add part prefix
 			$rows[".$row"] .= html::formatOptions($height,'height');
 			list($cl) = explode(',',$class);
 			if ($cl == '@' || $cl && strpos($cl,'$') !== false)

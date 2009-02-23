@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.editor.widget.generic" template="" lang="" group="0" version="1.0.1.002">
+	<template id="etemplate.editor.widget.generic" template="" lang="" group="0" version="1.3.001">
 		<grid>
 			<columns>
 				<column/>
@@ -38,7 +38,6 @@
 						<checkbox label="%s needed" align="center" id="needed" statustext="check if field has to be filled by user"/>
 						<checkbox label="%s readonly" align="center" id="readonly" statustext="check if content should only be displayed but not altered (the content is not send back then!)"/>
 						<checkbox label="%s disabled" align="center" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell"/>
-						<checkbox label="%s onChange" align="center" id="onchange" statustext="enable JavaScript onChange submit"/>
 					</hbox>
 				</row>
 				<row class="row" disabled="@type=label">
@@ -51,21 +50,30 @@
 				</row>
 				<row class="row">
 					<description options=",,,help" value="Help"/>
-					<textbox size="73" span="all" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+					<textbox size="71" span="all" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
 				</row>
-				<row class="row" disabled="!@type=button">
+				<row class="row" disabled="@type=label">
+					<description value="onChange"/>
+					<hbox span="all">
+						<menulist>
+							<menupopup id="onchange_type" statustext="Should the form be submitted or any custom javascript be executed"/>
+						</menulist>
+						<textbox size="50" span="all" id="onchange" statustext="custom javascript for onChange"/>
+					</hbox>
+				</row>
+				<row class="row">
 					<description options="onclick" value="onClick"/>
 					<hbox span="all">
 						<menulist>
 							<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
 						</menulist>
-						<textbox size="58" span="all" id="onclick" statustext="confirmation message or custom javascript (returning true or false)"/>
+						<textbox size="53" span="all" id="onclick" statustext="confirmation message or custom javascript (returning true or false)"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.editor.widget" template="" lang="" group="0" version="1.0.1.006">
+	<template id="etemplate.editor.widget" template="" lang="" group="0" version="1.7.001">
 		<grid>
 			<columns>
 				<column/>
@@ -114,11 +122,14 @@
 				<row disabled="!@grid_row">
 					<groupbox span="all" orient="horizontal">
 						<caption label="Grid row attributes"/>
-						<textbox size="5" label="Height" id="grid_row[height]" statustext="height of row (in % or pixel)"/>
-						<textbox size="10" label="Disabled" id="grid_row[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
-						<textbox size="10" label="Class" id="grid_row[class]" statustext="CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows"/>
+						<textbox size="3" label="Height" id="grid_row[height]" statustext="height of row (in % or pixel)"/>
+						<textbox size="8" label="Disabled" id="grid_row[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
+						<textbox size="8" label="Class" id="grid_row[class]" statustext="CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows"/>
 						<menulist>
 							<menupopup label="Valign" id="grid_row[valign]" statustext="vertical alignment of row"/>
+						</menulist>
+						<menulist>
+							<menupopup label="Part" id="grid_row[part]" statustext="part of the table (header and footer have to be before body!)"/>
 						</menulist>
 					</groupbox>
 				</row>

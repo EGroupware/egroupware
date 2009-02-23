@@ -40,6 +40,11 @@ class editor
 		'bottom' => 'Bottom',
 		'baseline' => 'Baseline',
 	);
+	var $parts = array(
+		'' => 'Body',
+		'header' => 'Header',
+		'footer' => 'Footer',
+	);
 	var $edit_menu = array(
 		'delete' => 'delete',
 		'cut' => 'cut',
@@ -1239,7 +1244,8 @@ class editor
 					{
 						list(,$row,$col) = $matches;
 						$parent['data'][0]['h'.$row] = $content['grid_row']['height'].
-							($content['grid_row']['disabled']?','.$content['grid_row']['disabled']:'');
+							($content['grid_row']['disabled']||$content['grid_row']['part']?','.$content['grid_row']['disabled']:'').
+							($content['grid_row']['part']?','.$content['grid_row']['part']:'');
 						$parent['data'][0]['c'.$row] = $content['grid_row']['class'].
 							($content['grid_row']['valign']?','.$content['grid_row']['valign']:'');
 						$parent['data'][0][$col] = $content['grid_column']['width'].
@@ -1300,12 +1306,17 @@ class editor
 			list(,$row,$col) = $matches;
 
 			$grid_row =& $content['grid_row'];
-			list($grid_row['height'],$grid_row['disabled']) = explode(',',$parent['data'][0]['h'.$row]);
+			list($grid_row['height'],$grid_row['disabled'],$grid_row['part']) = explode(',',$parent['data'][0]['h'.$row]);
 			list($grid_row['class'],$grid_row['valign']) = explode(',',$parent['data'][0]['c'.$row]);
 
 			$grid_column =& $content['grid_column'];
 			list($grid_column['width'],$grid_column['disabled']) = explode(',',$parent['data'][0][$col]);
 			//echo "<p>grid_row($row)=".print_r($grid_row,true).", grid_column($col)=".print_r($grid_column,true)."</p>\n";
+
+			list(,,$previous_part) = explode(',',$parent['data'][0]['h'.($row-1)]);
+			list(,,$next_part) = explode(',',$parent['data'][0]['h'.($row+1)]);
+			$allowed_parts = $this->get_allowed_parts($row,$previous_part,$next_part);
+			//echo "<p>$row: previous=$previous_part, current={$grid_row['part']}, next=$next_part".(!isset($allowed_parts[$grid_row['part']])?': current part is NOT allowed!!!':'')."</p>\n"; _debug_array($allowed_parts);
 		}
 		else
 		{
@@ -1352,6 +1363,7 @@ class editor
 				'type'       => array_merge($this->etemplate->types,$this->extensions),
 				'align'      => &$this->aligns,
 				'valign'     => &$this->valigns,
+				'part'       => $allowed_parts,
 				'edit_menu'  => &$this->edit_menu,
 				'box_menu'   => &$this->box_menu,
 				'row_menu'   => &$this->row_menu,
@@ -1360,6 +1372,38 @@ class editor
 				'onchange_type'=>&$this->onchange_types,
 				'options[6]' => &$this->overflows,
 			),'',$preserv,2);
+	}
+
+	/**
+	 * Get the allowed tables-part for a table rows based on row-number, previous and next part
+	 *
+	 * @param int $row (1-based!)
+	 * @param string $previous_part ''=body, 'h'=header, 'f'=footer
+	 * @param string $next_part see above
+	 * @return array
+	 */
+	private function get_allowed_parts($row,$previous_part,$next_part)
+	{
+		$allowed_parts = $this->parts;
+		switch((string)$previous_part)
+		{
+			case 'footer':
+				unset($allowed_parts['header']);
+				break;
+			case '':
+				if ($row > 1) $allowed_parts = array('' => $allowed_parts['']);
+				break;
+		}
+		switch($next_part)
+		{
+			case 'header':
+				$allowed_parts = array('header' => $allowed_parts['header']);
+				break;
+			case 'footer':
+				unset($allowed_parts['']);
+				break;
+		}
+		return $allowed_parts;
 	}
 
 	/**
