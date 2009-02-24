@@ -331,10 +331,6 @@ class nextmatch_widget
 			$tmpl->sel_options = array_merge($tmpl->sel_options,$rows['sel_options']);
 			unset($rows['sel_options']);
 		}
-		if (is_array($rows[0]))	// fixed 0 based arrays
-		{
-			array_unshift($rows,false);
-		}
 		$value['rows'] =& $rows;
 		unset($rows);
 
@@ -346,6 +342,13 @@ class nextmatch_widget
 		if (!is_object($value['template']))
 		{
 			$value['template'] =& new etemplate($value['template'],$tmpl->as_array());
+		}
+		if (is_array($value['rows'][0]))	// pad 0 based arrays with rows-1 false values
+		{
+			for($i = 1; $i < $value['template']->rows; $i++)
+			{
+				array_unshift($value['rows'],false);
+			}
 		}
 		$extension_data['template'] = $value['template']->name;	// used for the column-selection, and might be set in get_rows()
 		$extension_data['columnselection_pref'] = $value['columnselection_pref'];
