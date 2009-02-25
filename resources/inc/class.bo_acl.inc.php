@@ -72,8 +72,11 @@ class bo_acl
 	function get_cats($perm_type)
 	{
 		$cats = $this->egw_cats->return_sorted_array(0,false,'','','',true);
-		while (list(,$cat) = @each($cats))
-		{
+		#_debug_array($cats);
+		if (!is_array($cats)) $cats = array();
+		foreach($cats as $key=>$cat) {
+			#echo "key:$key"._debug_array($value)."<br>";
+			#_debug_array($cat)."hier<br>";
 			if($this->is_permitted($cat['id'],$perm_type))
 			{
 				for ($j=0,$s=''; $j < $cat['level']; $j++)
