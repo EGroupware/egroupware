@@ -301,7 +301,7 @@ class calendar_uiforms extends calendar_ui
 									#$msg = lang('The resource you selected is already overbooked:').$selectedres['name'];
 								} else {
 									// you are not allowed to book, or the resource is overbooked already
-									$msg = .lang('You are not allowed to book the resource selected:').$selectedres['name'];
+									$msg .= lang('You are not allowed to book the resource selected:').$selectedres['name'];
 									break;
 								}
 							}
