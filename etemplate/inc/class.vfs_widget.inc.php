@@ -157,6 +157,11 @@ class vfs_widget
 				break;
 
 			case 'vfs-mime':
+				if (!$value)
+				{
+					$cell = etemplate::empty_cell();
+					return true;
+				}
 				if (!is_array($value))
 				{
 					if ($value[0] == '/' || count(explode('/',$value)) != 2)
