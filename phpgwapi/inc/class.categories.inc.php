@@ -19,11 +19,11 @@
 
 /**
  * class to manage categories in eGroupWare
- * 
+ *
  * Categories are read now once from the database into a static cache variable (by the static init_cache method).
  * The egw object fills that cache ones per session, stores it in a private var, from which it restores it for each
  * request of that session.
- * 
+ *
  * @ToDo The cache now contains a backlink from the parent to it's children. Use that link to simplyfy return_all_children
  * 	and other functions needing to know if a cat has children. Be aware a user might not see all children, as they can
  * 	belong to other users.
@@ -65,10 +65,10 @@ class categories
 	/**
 	 * Cache holding all categories, set via init_cache() method
 	 *
-	 * @var array cat_id => array of data 
+	 * @var array cat_id => array of data
 	 */
 	private static $cache;
-	
+
 
 	/**
 	 * constructor for categories class
@@ -135,7 +135,7 @@ class categories
 		{
 			// resolving the group members/grants is very slow with ldap accounts backend
 			// let's skip it for the addressbook, if we are using the ldap accounts backend
-			$this->grants = $GLOBALS['egw']->acl->get_grants($app_name, 
+			$this->grants = $GLOBALS['egw']->acl->get_grants($app_name,
 				$app_name != 'addressbook' || $GLOBALS['egw_info']['server']['account_repository'] != 'ldap');
 		}
 		$cats = array();
@@ -158,8 +158,8 @@ class categories
 			}
 			// check if certain parent required
 			if ($parent_id && !in_array($cat['parent'],(array)$parent_id)) continue;
-			
-			// apply standard acl / grants: return only application global cats (if $globals) or 
+
+			// apply standard acl / grants: return only application global cats (if $globals) or
 			if (!($globals && $cat['appname'] == 'phpgw' ||
 				  $cat['appname'] == $this->app_name && ($cat['owner'] == -1 || $cat['owner'] == $this->account_id ||
 				  	$this->account_id != -1 && $cat['access'] == 'public' && $this->grants && isset($this->grants[$cat['owner']]))))
@@ -188,13 +188,13 @@ class categories
 					if ($cat['appname'] != $this->app_name || $cat['owner'] == (int)$this->account_id) continue 2;
 					break;
 			}
-			
+
 			// check name and description for $query
 			if ($query && stristr($cat['name'],$query) === false && stristr($cat['description'],$query) === false) continue;
-			
+
 			// check if last modified since
 			if ($lastmod > 0 && $cat['last_mod'] <= $lastmod) continue;
-			
+
 			$cats[] = $cat;
 		}
 		if (!($this->total_records = count($cats)))
@@ -228,7 +228,7 @@ class categories
 			}
 		}
 		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,$globals,parent=$parent_id,$lastmod,$column) account_id=$this->account_id, appname=$this->app_name = ".array2string($cats));
-		
+
 		reset($cats);	// some old code (eg. sitemgr) relies on the array-pointer!
 		return $cats;
 	}
@@ -300,6 +300,7 @@ class categories
 			if (!is_int($limit)) $limit = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			$cats = array_slice($cats,(int)$start,$limit);
 		}
+		reset($cats);	// some old code (eg. sitemgr) relies on the array-pointer!
 		return $cats;
 	}
 
@@ -640,9 +641,9 @@ class categories
 	{
 		if(!$cat_id) return '--';
 		if (!$item) $item = 'parent';
-		
+
 		if (is_null(self::$cache)) self::init_cache();
-		
+
 		$cat = self::$cache[$cat_id];
 		if ($item == 'path')
 		{
@@ -706,7 +707,7 @@ class categories
 		//error_log(__METHOD__."($type,$cat_name,$cat_id,$parent) = ".$ret);
 		return $ret;
 	}
-	
+
 	/**
 	 * Change the owner of all cats owned by $owner to $to OR deletes them if !$to
 	 *
@@ -731,12 +732,12 @@ class categories
 		// update cache accordingly
 		self::invalidate_cache();
 	}
-	
+
 	/**
 	 * Initialise or restore the categories cache
-	 * 
+	 *
 	 * We use the default ordering of return_array to avoid doing it again there
-	 * 
+	 *
 	 * @param array &$cache=null cache content to restore it (from the egw-object)
 	 */
 	public static function &init_cache(&$cache=null)
@@ -768,10 +769,10 @@ class categories
 		//error_log(__METHOD__."() cache initialised: ".function_backtrace());
 		return self::$cache;
 	}
-	
+
 	/**
 	 * Invalidate the cache
-	 * 
+	 *
 	 * Currently we dont care for $cat_id, as changing cats happens very infrequently and
 	 * also changes child categories (!)
 	 *
