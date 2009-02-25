@@ -63,6 +63,11 @@ class categories
 	 */
 	const TABLE = 'egw_categories';
 	/**
+	 * @deprecated use categoris::TABLE
+	 * @var string
+	 */
+	var $table = self::TABLE;
+	/**
 	 * Cache holding all categories, set via init_cache() method
 	 *
 	 * @var array cat_id => array of data
