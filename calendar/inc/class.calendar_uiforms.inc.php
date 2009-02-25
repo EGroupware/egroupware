@@ -285,8 +285,27 @@ class calendar_uiforms extends calendar_ui
 						// check if new entry is no contact or no account
 						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')))
 						{
-							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
+							if ($app == "resources" && $id) {
+								$bores =& CreateObject('resources.bo_resources');
+								$selectedres = $bores->read($id);
+								$cats = $bores->acl->get_cats(EGW_ACL_DIRECT_BOOKING);
+								if (is_array($cats) && $selectedres['bookable'] == 1 && 
+									$selectedres['cat_id'] && array_key_exists($selectedres['cat_id'],$cats))
+								{
+									if ($selectedres['quantity'] && $selectedres['quantity'] < $quantity) {
+										$msg .= lang('You requested more than available for the selected resource:').$selectedres['name']." ".lang('quantity').":".$selectedres['quantity']." < $quantity";
+										break;
+									}
+									// to do: Test for overbooking/maybe this is handled sufficient by the conflict handling of dates
+									#$msg = lang('The resource you selected is already overbooked:').$selectedres['name'];
+								} else {
+									// you are not allowed to book, or the resource is overbooked already
+									$msg = .lang('You are not allowed to book the resource selected:').$selectedres['name'];
+									break;
+								}
+							}
+							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 							if ($uid) $event['participants'][$uid] = $event['participant_types'][$type][$id] =
 								$status.((int) $quantity > 1 ? (int)$quantity : '');
 							break;
@@ -655,7 +674,7 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
-
+		#error_log(__METHOD__.print_r($event,true));
 		$boical = new calendar_ical();
 		$ics = $boical->exportVCal(array($event),'2.0','request',false);
 
@@ -1412,9 +1431,12 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function export($content=0,$return_error=false)
 	{
+        $boical = new calendar_ical();
+		#error_log(__METHOD__.print_r($content,true));
 		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
 		{
-			if (!($ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$cal_id,'2.0','PUBLISH',false)))
+			#if (!($ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$cal_id,'2.0','PUBLISH',false)))
+			if (!($ical =& $boical->exportVCal(array($cal_id),'2.0','PUBLISH',false)))
 			{
 				$msg = lang('Permission denied');
 
@@ -1443,7 +1465,8 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$events,'2.0'/*$content['version']*/,'PUBLISH',false);
+				$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
+				#$ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$events,'2.0'/*$content['version']*/,'PUBLISH',false);
 				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				$GLOBALS['egw']->common->egw_exit();
