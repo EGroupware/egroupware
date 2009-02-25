@@ -266,7 +266,6 @@
 					{
 						$this->add_etempl($templ,$embeded_too);
 					}
-					$cell['name'] = $templ->name;
 					unset($templ);
 				}
 				break;
