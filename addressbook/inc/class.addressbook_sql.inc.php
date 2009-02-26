@@ -31,6 +31,16 @@ class addressbook_sql extends so_sql
 	var $grants;
 
 	/**
+	 * join to show only active account (and not already expired ones)
+	 */
+	const ACOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
+	/**
+	 * filter to show only active account (and not already expired ones)
+	 * UNIX_TIMESTAMP(NOW()) gets replaced with value of time() in the code!
+	 */
+	const ACOUNT_ACTIVE_FILTER = '(account_expires IS NULL OR account_expires = -1 OR account_expires > UNIX_TIMESTAMP(NOW()))';
+
+	/**
 	 * internal name of the id, gets mapped to uid
 	 *
 	 * @var string
@@ -395,6 +405,12 @@ class addressbook_sql extends so_sql
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				$extra_cols[] = $matches[1];
 			}
+		}
+		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
+		if (!$owner && substr($this->account_repository,0,3) == 'sql' && strpos($join,$GLOBALS['egw']->accounts->backend->table) === false)
+		{
+			$join .= self::ACOUNT_ACTIVE_JOIN;
+			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 
