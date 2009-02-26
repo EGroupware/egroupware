@@ -1525,10 +1525,25 @@ class etemplate extends boetemplate
 				if (!$readonly)
 				{
 					if ((int) $cell_options) $options .= ' size="'.(int)$cell_options.'"';
-					$html .= html::input_hidden($path_name = str_replace($name,$name.'_path',$form_name),'.');
+					if (substr($name,-2) == '[]')
+					{
+						$GLOBALS['egw_info']['etemplate']['form_options'] .= ' enctype="multipart/form-data"';
+						if (strpos($options,'onChange="') !== false)
+						{
+							$options = preg_replace('/onChange="([^"]+)"/i','onChange="\\1; add_upload(this);"',$options);
+						}
+						else
+						{
+							$options .= ' onChange="add_upload(this);"';
+						}
+					}
+					else
+					{
+						$html .= html::input_hidden($path_name = str_replace($name,$name.'_path',$form_name),'.');
+						$GLOBALS['egw_info']['etemplate']['form_options'] .=
+							" enctype=\"multipart/form-data\" onsubmit=\"set_element2(this,'$path_name','$form_name')\"";
+					}
 					$html .= html::input($form_name,'','file',$options);
-					$GLOBALS['egw_info']['etemplate']['form_options'] =
-						"enctype=\"multipart/form-data\" onsubmit=\"set_element2(this,'$path_name','$form_name')\"";
 					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 				}
 				break;
@@ -2071,21 +2086,39 @@ class etemplate extends boetemplate
 					}
 					break;
 				case 'file':
+					if (($multiple = substr($form_name,-2) == '[]'))
+					{
+						$form_name = substr($form_name,0,-2);
+					}
 					$parts = explode('[',str_replace(']','',$form_name));
 					$name = array_shift($parts);
 					$index  = count($parts) ? '['.implode('][',$parts).']' : '';
 					$value = array();
-					foreach(array('tmp_name','type','size','name') as $part)
+					for($i=0; $i < 100; ++$i)
 					{
-						$value[$part] = is_array($_FILES[$name]) ? $this->get_array($_FILES[$name],$part.$index) : False;
+						$file = array();
+						foreach(array('tmp_name','type','size','name','error') as $part)
+						{
+							$file[$part] = $this->get_array($_FILES[$name],$part.$index.($multiple ? "[$i]" : ''));
+						}
+						if (!$multiple) $file['path'] = $this->get_array($content_in,substr($form_name,0,-1).'_path]');
+						$file['ip'] = get_var('REMOTE_ADDR',Array('SERVER'));
+						if ((string)$file['tmp_name'] === '' || function_exists('is_uploaded_file') && !is_uploaded_file($file['tmp_name']))
+						{
+							if ($multiple && ($file['tmp_name'] === '' || $file['error']))
+							{
+								continue;	// ignore empty upload box
+							}
+							break;
+						}
+						if (!$multiple)
+						{
+							$value = $file;
+							break;
+						}
+						$value[] = $file;
 					}
-					$value['path'] = $this->get_array($content_in,substr($form_name,0,-1).'_path]');
-					$value['ip'] = get_var('REMOTE_ADDR',Array('SERVER'));
-					if (function_exists('is_uploaded_file') && !is_uploaded_file($value['tmp_name']))
-					{
-						$value = array();	// to be on the save side
-					}
-					//_debug_array($value);
+					//echo $form_name; _debug_array($value);
 					// fall-throught
 				default:
 					$this->set_array($content,$form_name,$value);

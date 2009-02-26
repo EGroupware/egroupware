@@ -6,7 +6,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$ 
+ * @version $Id$
  */
 
 function submitit(form,name)
@@ -57,12 +57,12 @@ function activate_tab(tab,all_tabs,name)
 	var tabs = all_tabs.split('|');
 	var parts = tab.split('.');
 	var last_part = parts.length-1;
-	
+
 	for (n = 0; n < tabs.length; n++)
 	{
 		var t = tabs[n];
 
-		if (t.indexOf('.') < 0 && parts.length > 1) 
+		if (t.indexOf('.') < 0 && parts.length > 1)
 		{
 			parts[last_part] = t;
 			t = parts.join('.');
@@ -116,7 +116,7 @@ function selectbox_add_option(id,label,value,do_onchange)
 function toggle_all(form,name)
 {
 	var all_set = true;
-	
+
 	/* this is for use with a sub-grid. To use it pass "true" as third parameter */
 	if(toggle_all.arguments.length > 2 && toggle_all.arguments[2] == true)
 	{
@@ -276,4 +276,16 @@ function set_multiselection(name,values,reset)
 			checkbox.checked = value;
 		}
 	}
+}
+
+// add an other upload
+function add_upload(upload)
+{
+	var parent = upload.parentNode;
+	var newUpload = upload.cloneNode(true);
+	parent.insertBefore(newUpload,upload);
+	var br = document.createElement('br');
+	parent.insertBefore(br,upload);
+	upload.id += parent.childNodes.length;
+	upload.value = '';
 }
