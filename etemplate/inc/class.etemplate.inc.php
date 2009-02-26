@@ -2102,10 +2102,10 @@ class etemplate extends boetemplate
 							$file[$part] = $this->get_array($_FILES[$name],$part.$index.($multiple ? "[$i]" : ''));
 						}
 						if (!$multiple) $file['path'] = $this->get_array($content_in,substr($form_name,0,-1).'_path]');
-						$file['ip'] = get_var('REMOTE_ADDR',Array('SERVER'));
-						if ((string)$file['tmp_name'] === '' || function_exists('is_uploaded_file') && !is_uploaded_file($file['tmp_name']))
+						$file['ip'] = $_SERVER['REMOTE_ADDR'];
+						if ((string)$file['name'] === '' || $file['tmp_name'] && function_exists('is_uploaded_file') && !is_uploaded_file($file['tmp_name']))
 						{
-							if ($multiple && ($file['tmp_name'] === '' || $file['error']))
+							if ($multiple && ($file['name'] === '' || $file['error']))
 							{
 								continue;	// ignore empty upload box
 							}
