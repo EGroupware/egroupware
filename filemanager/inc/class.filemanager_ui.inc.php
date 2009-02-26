@@ -74,8 +74,6 @@ class filemanager_ui
 	{
 		$tpl = new etemplate('filemanager.index');
 
-		//_debug_array($content);
-
 		if (!is_array($content))
 		{
 			$content = array(
@@ -113,12 +111,9 @@ class filemanager_ui
 			}
 		}
 		// check if we have a failed upload AND upload_max_filesize >= post_max_size --> no $_POST array
-		if ($_GET['post_empty'] && self::km2int(ini_get('upload_max_filesize')) >= self::km2int(ini_get('post_max_size')) ||
-			// or size bigger as upload_max_filesize
-			$content['button']['upload'] && (!is_array($content['upload']) || !is_uploaded_file($content['upload']['tmp_name'])))
+		if ($_GET['post_empty'] && self::km2int(ini_get('upload_max_filesize')) >= self::km2int(ini_get('post_max_size')))
 		{
 			$msg = lang('Error uploading file!')."\n".self::max_upload_size_message();
-			unset($content['button']);
 		}
 		$content['nm']['msg'] = $msg;
 
@@ -179,17 +174,36 @@ class filemanager_ui
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
 					break;
 				case 'upload':
-					// strip '?', '/' and '#' from filenames, as they are forbidden for sqlfs / make problems
-					$to = egw_vfs::concat($content['nm']['path'],str_replace(array('?','/','#'),'',$content['upload']['name']));
-					if ($content['upload'] && is_uploaded_file($content['upload']['tmp_name']) &&
-						(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
-						copy($content['upload']['tmp_name'],egw_vfs::PREFIX.$to))
+					if (!$content['upload'])
 					{
-						$content['nm']['msg'] = lang('File successful uploaded.');
+						$content['nm']['msg'] = lang('You need to select some files first!');
+						break;
 					}
-					else
+					$upload_success = $upload_failure = array();
+					foreach(isset($content['upload'][0]) ? $content['upload'] : array($content['upload']) as $upload)
 					{
-						$content['nm']['msg'] = lang('Error uploading file!');
+						// strip '?', '/' and '#' from filenames, as they are forbidden for sqlfs / make problems
+						$to = egw_vfs::concat($content['nm']['path'],str_replace(array('?','/','#'),'',$upload['name']));
+						if ($upload && is_uploaded_file($upload['tmp_name']) &&
+							(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
+							copy($upload['tmp_name'],egw_vfs::PREFIX.$to))
+						{
+							$upload_success[] = $upload['name'];
+						}
+						else
+						{
+							$upload_failure[] = $upload['name'];
+						}
+					}
+					$content['nm']['msg'] = '';
+					if ($upload_success)
+					{
+						$content['nm']['msg'] = count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
+							lang('%1 successful uploaded.',implode(', ',$upload_success));
+					}
+					if ($upload_failure)
+					{
+						$content['nm']['msg'] .= ($upload_success ? "\n" : '').lang('Error uploading file!')."\n".self::max_upload_size_message();
 					}
 					break;
 			}
@@ -221,6 +235,45 @@ class filemanager_ui
 			''  => 'Files from subdirectories',
 		);
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
+	}
+
+	/**
+	 * Check if a file upload would overwrite an existing file and get a user confirmation in that case
+	 *
+	 * @param string $id id of the input
+	 * @param string $name name (incl. client-path) of the file to upload
+	 * @param string $dir current vfs directory
+	 * @return string xajax output
+	 */
+	static function ajax_check_upload_target($id,$name,$dir)
+	{
+		$response = new xajaxResponse();
+
+		//$response->addAlert(__METHOD__."('$id','$name','$dir')");
+
+		$name = explode('/',str_replace('\\','/',$name));	// in case of win clients
+		$name = array_pop($name);
+
+		// strip '?', '/' and '#' from filenames, as they are forbidden for sqlfs / make problems
+		$path = egw_vfs::concat($dir,str_replace(array('?','/','#'),'',$name));
+
+		if (egw_vfs::stat($path))
+		{
+			if (egw_vfs::is_dir($path))
+			{
+				$response->addAlert(lang("There's already a directory with that name!"));
+				$response->addScript("document.getElementById('$id').value='';");
+			}
+			else
+			{
+				$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',$path))."')) document.getElementById('$id').value='';");
+			}
+		}
+		else
+		{
+			// do nothing new file
+		}
+		return $response->getXML();
 	}
 
 	/**

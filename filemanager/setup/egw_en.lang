@@ -9,6 +9,7 @@
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
 %1 starts with '%2'	filemanager	en	%1 starts with '%2'
+%1 successful uploaded.	filemanager	en	%1 successful uploaded.
 %1 the following files into current directory	filemanager	en	%1 the following files into current directory
 %1 urls %2 to clipboard.	filemanager	en	%1 URLs %2 to clipboard.
 accessrights	filemanager	en	Accessrights
@@ -57,6 +58,7 @@ directory names cannot contain "%1"	filemanager	en	Directory names cannot contai
 directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
+do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
 download	filemanager	en	Download
 edit comments	filemanager	en	Edit comments
 edit settings	filemanager	en	Edit settings
@@ -146,6 +148,7 @@ start search	filemanager	en	start search
 superuser	filemanager	en	Superuser
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
+there's already a directory with that name!	filemanager	en	There's already a directory with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing file store again.
 total files	filemanager	en	Total Files

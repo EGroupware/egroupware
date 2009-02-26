@@ -9,6 +9,7 @@
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht.
 %1 files moved.	filemanager	de	%1 Dateien verschoben.
 %1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
+%1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen.
 %1 the following files into current directory	filemanager	de	Die foldenden Dateien in das aktuelle Verzeichnis %1
 %1 urls %2 to clipboard.	filemanager	de	%1 Adressen in die Zwischenablage %2.
 accessrights	filemanager	de	Zugangsberechtigungen
@@ -57,6 +58,7 @@ directory names cannot contain "%1"	filemanager	de	Verzeichnisnamen düefen kein
 directory not found or no permission to access it!	filemanager	de	Verzeichnis nicht gefunden oder keine Rechte darauf zuzugreifen!
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
 display of content	filemanager	de	Anzeigen des Inhaltes
+do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
 download	filemanager	de	Herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Einstellungen bearbeiten
@@ -146,6 +148,7 @@ start search	filemanager	de	Suche starten
 superuser	filemanager	de	Superuser
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr perönlicher Ordner. Die Vorgabe wird benutzt, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwending Zugriffsrechte fehlen.
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
+there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!
 there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
 to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
 total files	filemanager	de	Gesamtanzahl Dateien

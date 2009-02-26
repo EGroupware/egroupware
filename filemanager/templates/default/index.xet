@@ -53,7 +53,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.5.003">
+	<template id="filemanager.index" template="" lang="" group="0" version="1.6.001">
 		<grid width="100%">
 			<columns>
 				<column width="250"/>
@@ -81,7 +81,7 @@
 				</row>
 				<row>
 					<hbox>
-						<file id="upload" statustext="Select file to upload in current directory"/>
+						<file id="upload[]" statustext="Select file to upload in current directory" onchange="xajax_doXMLHTTP('filemanager_ui::ajax_check_upload_target',this.id,this.value,'{$cont[nm][path]}');"/>
 						<button label="Upload" id="button[upload]"/>
 					</hbox>
 					<hbox align="right">
