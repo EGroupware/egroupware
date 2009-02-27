@@ -532,6 +532,7 @@ class filemanager_ui
 			{
 				unset($row);	// fixes a weird problem with php5.1, does NOT happen with php5.2
 				$row =& $rows[$path2n[$path]];
+				if ( !is_array($props) ) continue;
 				foreach($props as $prop)
 				{
 					if (!$all_cfs && $prop['name'][0] == '#' && !in_array($prop['name'],$cols_to_show)) continue;
