@@ -46,7 +46,11 @@ function check_access(&$account)
 $parts = explode('/',$_SERVER['PATH_INFO']);
 //error_log("webdav: explode".print_r($parts,true));
 if(count($parts)== 1){
-	echo "Malformed Url: missing slash" ;
+	error_log(__METHOD__. "Malformed Url: missing slash:\n".$_SERVER['SERVER_NAME']."\n PATH_INFO:".$_SERVER['PATH_INFO'].
+		"\n REQUEST_URI".$_SERVER['REQUEST_URI']."\n ORIG_SCRIPT_NAME:".$_SERVER['ORIG_SCRIPT_NAME'].
+		"\n REMOTE_ADDR:".$_SERVER['REMOTE_ADDR']."\n PATH_INFO:".$_SERVER['PATH_INFO']."\n HTTP_USER_AGENT:".$_SERVER['HTTP_USER_AGENT']) ;
+	header("HTTP/1.1 501  Not implemented");
+	header("X-WebDAV-Status: 501  Not implemented", true);
 	exit;
 }
 
