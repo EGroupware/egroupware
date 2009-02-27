@@ -35,7 +35,7 @@ $GLOBALS['settings'] = array(
 		'name'   => 'egwpopup_verbosity',
 		'values' => $verbosity_values,
 		'help'   => 'How verbose should the eGroupware-Popup behave if a notification is sent to the user:<br />'
-					.'low: just display the notification bell in the topmenu - topmenu must be enabled !<br />'
+					.'low: just display the notification bell in the topmenu - topmenu must be enabled!<br />'
 					.'medium: bring notification window to front<br />'
 					.'high: bring notification window to front and let the browser do something to announce itself',
 		'xmlrpc' => True,

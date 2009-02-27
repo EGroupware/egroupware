@@ -11,7 +11,7 @@
 <!-- END header -->
 <!-- BEGIN body -->
    <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_eGroupware-Popup_backend}</b></td>
+    <td colspan="2">&nbsp;<b>{lang_eGroupWare-Popup_backend}</b></td>
    </tr>
    <tr bgcolor="{row_on}">
     <td>{lang_Enable_eGroupWare-Popup_backend}</td>
