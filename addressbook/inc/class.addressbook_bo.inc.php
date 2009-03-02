@@ -368,7 +368,8 @@ class addressbook_bo extends addressbook_so
 		{
 			static $fb_url;
 			if (!$fb_url && @is_dir(EGW_SERVER_ROOT.'/calendar/inc')) $fb_url = calendar_bo::freebusy_url('');
-			if ($fb_url) $data['freebusy_uri'] = $fb_url.urlencode($GLOBALS['egw']->accounts->id2name($data['account_id']));
+			if ($fb_url) $data['freebusy_uri'] = $fb_url.urlencode(
+				isset($data['account_lid']) ? $data['account_lid'] : $GLOBALS['egw']->accounts->id2name($data['account_id']));
 		}
 		return $data;
 	}
