@@ -29,10 +29,10 @@ function egwpopup_display() {
 	var Browserwidth;
 	var Browserheight;
 	var egwpopup_ok_button;
-	egwpopup_ok_button = document.getElementById("egwpopup_ok_button");
 	egwpopup = document.getElementById("egwpopup");
 	egwpopup_message = document.getElementById("egwpopup_message");
-	egwpopup.style.display = "inline";
+	egwpopup_ok_button = document.getElementById("egwpopup_ok_button");
+	egwpopup.style.display = "block";
 	egwpopup.style.position = "absolute";
 	egwpopup.style.width = "500px";
 	Browserwidth = (window.innerWidth || document.body.clientWidth || 640)
@@ -64,6 +64,7 @@ function egwpopup_button_ok() {
 	var egwpopup_message;
 	egwpopup = document.getElementById("egwpopup");
 	egwpopup_message = document.getElementById("egwpopup_message");
+	egwpopup_message.scrollTop = 0;
 	notifymessages.shift();
 	if(notifymessages.length > 0) {
 		egwpopup_display();
