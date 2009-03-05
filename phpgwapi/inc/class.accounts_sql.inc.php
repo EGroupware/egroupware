@@ -1,22 +1,22 @@
 <?php
 /**
  * API - accounts SQL backend
- * 
+ *
  * The SQL backend stores the group memberships via the ACL class (location 'phpgw_group')
- * 
- * The (positive) account_id's of groups are mapped in this class to negative numeric 
+ *
+ * The (positive) account_id's of groups are mapped in this class to negative numeric
  * account_id's, to conform with the way we handle groups in LDAP!
- * 
+ *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and
  * 	earlier to use the new DB functions
- * 
- * This class replaces the former accounts_sql class written by 
- * Joseph Engo <jengo@phpgroupware.org>, Dan Kuykendall <seek3r@phpgroupware.org> 
+ *
+ * This class replaces the former accounts_sql class written by
+ * Joseph Engo <jengo@phpgroupware.org>, Dan Kuykendall <seek3r@phpgroupware.org>
  * and Bettina Gille <ceb@phpgroupware.org>.
  * Copyright (C) 2000 - 2002 Joseph Engo
  * Copyright (C) 2003 Lars Kneschke, Bettina Gille
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
@@ -25,7 +25,7 @@
 
 /**
  * SQL Backend for accounts
- * 
+ *
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
@@ -51,7 +51,7 @@ class accounts_sql
 	 *
 	 * @var string
 	 */
-	var $contacts_table = 'egw_addressbook';			
+	var $contacts_table = 'egw_addressbook';
 	/**
 	 * Join with the accounts-table used in contacts::search
 	 *
@@ -94,7 +94,7 @@ class accounts_sql
 
 	/**
 	 * Reads the data of one account
-	 * 
+	 *
 	 * For performance reasons and because the contacts-object itself depends on the accounts-object,
 	 * we directly join with the contacts table for reading!
 	 *
@@ -104,7 +104,7 @@ class accounts_sql
 	function read($account_id)
 	{
 		if (!(int)$account_id) return false;
-		
+
 		$join = $extra_cols = '';
 		if ($account_id > 0)
 		{
@@ -145,7 +145,7 @@ class accounts_sql
 
 	/**
 	 * Saves / adds the data of one account
-	 * 
+	 *
 	 * If no account_id is set in data the account is added and the new id is set in $data.
 	 *
 	 * @param array $data array with account-data
@@ -156,12 +156,12 @@ class accounts_sql
 		//echo "<p>accounts_sql::save(".print_r($data,true).")</p>\n";
 		$to_write = $data;
 		unset($to_write['account_passwd']);
-		
+
 		// encrypt password if given or unset it if not
 		if ($data['account_passwd'])
 		{
 			// if password it's not already entcrypted, do so now
-			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']) && 
+			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']) &&
 				!preg_match('/^[0-9a-f]{32}$/',$data['account_passwd']))	// md5 hash
 			{
 				$data['account_passwd'] = $GLOBALS['egw']->auth->encrypt_sql($data['account_passwd']);
@@ -180,7 +180,7 @@ class accounts_sql
 
 			if (!in_array($to_write['account_type'],array('u','g')) ||
 				!$this->db->insert($this->table,$to_write,false,__LINE__,__FILE__)) return false;
-				
+
 			if (!(int)$data['account_id'])
 			{
 				$data['account_id'] = $this->db->get_last_insert_id($this->table,'account_id');
@@ -197,7 +197,7 @@ class accounts_sql
 		}
 		return $data['account_id'];
 	}
-	
+
 	/**
 	 * Delete one account, deletes also all acl-entries for that account
 	 *
@@ -207,7 +207,7 @@ class accounts_sql
 	function delete($account_id)
 	{
 		if (!(int)$account_id) return false;
-		
+
 		$contact_id = $this->id2name($account_id,'person_id');
 
 		if (!$this->db->delete($this->table,array('account_id' => abs($account_id)),__LINE__,__FILE__))
@@ -252,7 +252,7 @@ class accounts_sql
 	function set_memberships($groups,$account_id)
 	{
 		if (!(int)$account_id) return;
-		
+
 		$acl =& CreateObject('phpgwapi.acl',$account_id);
 		$acl->read_repository();
 		$acl->delete('phpgw_group',false);
@@ -287,7 +287,7 @@ class accounts_sql
 
 	/**
 	 * Set the members of a group
-	 * 
+	 *
 	 * @param array $members array with uidnumber or uid's
 	 * @param int $gid gidnumber of group to set
 	 */
@@ -295,7 +295,7 @@ class accounts_sql
 	{
 		//echo "<p align=right>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
 		$GLOBALS['egw']->acl->delete_repository('phpgw_group',$gid,false);
-		
+
 		if (is_array($members))
 		{
 			foreach($members as $id)
@@ -307,11 +307,11 @@ class accounts_sql
 
 	/**
 	 * Searches users and/or groups
-	 * 
+	 *
 	 * ToDo: implement a search like accounts::search
 	 *
 	 * @param string $_type='both', 'accounts', 'groups'
-	 * @param int $start=null 
+	 * @param int $start=null
 	 * @param string $sort='' ASC or DESC
 	 * @param string $order=''
 	 * @param string $query=''
@@ -329,7 +329,7 @@ class accounts_sql
 		);
 		if (isset($order2contact[$order])) $order = $order2contact[$order];
 		if ($sort) $order .= ' '.$sort;
-		
+
 		switch($_type)
 		{
 			case 'accounts':
@@ -379,13 +379,16 @@ class accounts_sql
 			}
 		}
 		$criteria[] = "egw_addressbook.account_id is not null ";
-		$accounts = array();
+
 		if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
-		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,"account_lid,account_type,account_status,$this->table.account_id",
+
+		$accounts = array();
+		foreach((array) $GLOBALS['egw']->contacts->search($criteria,"1,n_given,n_family,email,id,created,modified,$this->table.account_id AS account_id",
+			$order,"account_lid,account_type,account_status",
 			$wildcard,false,'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
-			$filter,$this->contacts_join)))
+			$filter,$this->contacts_join) as $contact)
 		{
-			foreach($contacts as $contact)
+			if ($contact)
 			{
 				$accounts[] = array(
 					'account_id'        => ($contact['account_type'] == 'g' ? -1 : 1) * $contact['account_id'],
@@ -412,7 +415,7 @@ class accounts_sql
 	 * Please note:
 	 * - if a group and an user have the same account_lid the group will be returned (LDAP only)
 	 * - if multiple user have the same email address, the returned user is undefined
-	 * 
+	 *
 	 * @param string $name value to convert
 	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type u = user, g = group, default null = try both
@@ -437,7 +440,7 @@ class accounts_sql
 			case 'person_id':
 				$table = $this->contacts_table;
 				$where['contact_id'] = $name;
-				break;	
+				break;
 			default:
 				$table = $this->table;
 				$cols .= ',account_type';
@@ -449,16 +452,16 @@ class accounts_sql
 		}
 		else
 		{
-			$where[] = 'account_id IS NOT NULL';	// otherwise contacts with eg. the same email hide the accounts!	
+			$where[] = 'account_id IS NOT NULL';	// otherwise contacts with eg. the same email hide the accounts!
 		}
 		if (!($row = $this->db->select($table,$cols,$where,__LINE__,__FILE__)->fetch())) return false;
-		
+
 		return ($row['account_type'] == 'g' ? -1 : 1) * $row['account_id'];
 	}
-	
+
 	/**
 	 * Convert an numeric account_id to any other value of that account (account_lid, account_email, ...)
-	 * 
+	 *
 	 * Uses the read method to fetch all data.
 	 *
 	 * @param int $account_id numerica account_id
@@ -487,7 +490,7 @@ class accounts_sql
 		),array(
 			'account_id' => abs($account_id),
 		),__LINE__,__FILE__);
-		
+
 		return $previous_login;
 	}
 }
