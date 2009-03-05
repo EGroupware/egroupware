@@ -668,7 +668,8 @@ class calendar_uiforms extends calendar_ui
 					$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 
 					$toadd = $firstname.' '.$lastname.' <'.$email.'>';
-					if (!in_array($toadd,$to)) $to[] = $toadd;
+					// dont add groupmembers if they already rejected the event, or are the current user
+					if (!in_array($toadd,$to) && ($event['participants'][$uid] !== 'R' && $uid != $this->user)) $to[] = $toadd;
 				}
 			}
 			elseif(($info = $this->bo->resource_info($uid)))
