@@ -647,6 +647,7 @@ class calendar_uiforms extends calendar_ui
 
 		foreach($event['participants'] as $uid => $status)
 		{
+			$toadd = '';
 			if ($status == 'R' || $uid == $this->user) continue;
 
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
@@ -655,7 +656,8 @@ class calendar_uiforms extends calendar_ui
 
 				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 
-				$to[] = $firstname.' '.$lastname.' <'.$email.'>';
+				$toadd = $firstname.' '.$lastname.' <'.$email.'>';
+				if (!in_array($toadd,$to)) $to[] = $toadd;
 			}
 			elseif ($uid < 0)
 			{
@@ -665,7 +667,8 @@ class calendar_uiforms extends calendar_ui
 
 					$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 
-					$to[] = $firstname.' '.$lastname.' <'.$email.'>';
+					$toadd = $firstname.' '.$lastname.' <'.$email.'>';
+					if (!in_array($toadd,$to)) $to[] = $toadd;
 				}
 			}
 			elseif(($info = $this->bo->resource_info($uid)))
