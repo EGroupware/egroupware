@@ -1006,7 +1006,13 @@ class Net_IMAPProtocol {
         $ret = $this->_genericCommand( 'CAPABILITY' );
 
         if(isset( $ret["PARSED"] ) ){
-            $ret["PARSED"]=$ret["PARSED"][0]["EXT"]["CAPABILITY"];
+			foreach($ret["PARSED"] as $substruct) {
+				if ($substruct["COMMAND"] == "CAPABILITY") {
+					$subrv=$substruct["EXT"]["CAPABILITY"];
+					break;
+				}
+			}
+            $ret["PARSED"]=$subrv;
             //fill the $this->_serverAuthMethods and $this->_serverSupportedCapabilities arrays
             foreach( $ret["PARSED"]["CAPABILITIES"] as $auth_method ){
                 if( strtoupper( substr( $auth_method , 0 ,5 ) ) == "AUTH=" )
@@ -2878,8 +2884,8 @@ class Net_IMAPProtocol {
                     $ext_arr=$this->_getEXTarray($str_aux);
                     //$ext_arr=array($token=>$this->_getEXTarray($str_aux));
                 }else{
-                    $ext_arr=$str_line;
-                    //$ext_arr=array($token=>$str_line);
+                    //$ext_arr=$str_line;
+                    $ext_arr=array($token=>$str_line);
                 }
                 $result_array =  $ext_arr;
                 return $result_array;

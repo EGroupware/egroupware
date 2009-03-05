@@ -840,10 +840,19 @@ class Net_IMAP extends Net_IMAPProtocol {
      */
     function _parseStructureCommonFields(&$_structure) 
     {
+		#error_log(__METHOD__.print_r($_structure,true)." ".function_backtrace());
         #print "Net_IMAP::_parseStructureTextArray _partID: $_partID<br>";
         $part = new stdClass;
         $part->type = strtoupper($_structure[0]);
-        $part->subType = strtoupper($_structure[1]);
+		//dovecot has no subtype for type attachment, and does not pass it as structure[2]
+        if (!is_array($_structure[1])) $part->subType = strtoupper($_structure[1]);
+		if(is_array($_structure[1])) {
+			foreach($_structure[1] as $key => $value) {
+				if($key%2 == 0) {
+					$part->parameters[strtoupper($_structure[1][$key])] = $_structure[1][$key+1];
+				}
+			}
+		}
         if(is_array($_structure[2])) {
           foreach($_structure[2] as $key => $value) {
             if($key%2 == 0) {
