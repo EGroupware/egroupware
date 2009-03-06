@@ -1376,7 +1376,8 @@ class infolog_ui
 			$bofelamimail->reopen($mailbox);
 
 			$headers = $bofelamimail->getMessageHeader($uid,$partid);
-			$bodyParts = $bofelamimail->getMessageBody($uid,'text/plain',$partid);
+			// dont force retrieval of the textpart, let felamimail preferences decide
+			$bodyParts = $bofelamimail->getMessageBody($uid,'',$partid);
 			$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
 
 			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $bofelamimail->decode_header($headers['TO']);
@@ -1389,6 +1390,13 @@ class infolog_ui
 			{
 				// add line breaks to $bodyParts
 				$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				if ($bodyParts[$i]['mimeType'] == 'text/html') {
+					// convert HTML to text, as we dont want HTML in infologs
+					$newBody = $bofelamimail->convertHTMLToText($newBody);
+					$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
+					$message .= $newBody;
+					continue;
+				}
 				$newBody = strip_tags($newBody);
 				$newBody  = explode("\n",$newBody);
 				// create it new, with good line breaks
@@ -1401,8 +1409,8 @@ class infolog_ui
 						// if you want to strip all empty lines uncomment the following
 						#continue;
 					}
-					$bodyAppend = $bofelamimail->wordwrap($value,75,"\n");
-					$message .= $bodyAppend;
+					$message .= $bofelamimail->wordwrap($value,75,"\n");
+					#$message .= $bodyAppend;
 				}
 			}
 
@@ -1422,7 +1430,6 @@ class infolog_ui
 					unset($attachments[$num]['attachment']);
 				}
 			}
-
 			return $this->edit($this->bo->import_mail(
 				$mailaddress,
 				$subject,
