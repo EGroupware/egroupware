@@ -43,7 +43,9 @@
  *   'link_label'   => // I  string label for the link button, default 'Link'
  *  // optional only for the link-add widget and link-entry widget
  *   'extra'        => // I  array with extra parameters, eg. array('cat_id' => 15), or string to add in onclick search for link-entry
- *   			//eg. ",values2url(this.form,'start,end,duration,participants,recur_type,whole_day')"
+ *   			       //eg. ",values2url(this.form,'start,end,duration,participants,recur_type,whole_day')"
+ *   'query'        => // I  preset for the query
+ *   'current'      => // I  currently select id
  *  // optional for link-string:
  *   'only_app'     => // I  string with appname, eg. 'projectmananager' to list only linked projects
  * );
@@ -384,14 +386,11 @@ class link_widget
 			$extension_data['default'] = $value;
 
 			// adding possibility to get a default selection on app select, use for resource in calendar edit.participant
-			if (isset($value) && is_array($value) && isset($value['default_sel']))
-			{
-				$selected=$value['default_sel'];
-			}
 			$value = array(
-				'app'        => isset($selected)? $selected : $app,
+				'app'        => is_array($value) && isset($value['default_sel']) ? $value['default_sel'] : $app,
 				'no_app_sel' => !!$extension_data['app'],
-				'id'         => $value,
+				'id'         => is_array($value) ? $value['current'] : $value,
+				'query'      => is_array($value) ? $value['query'] : '',
 			);
 			if ($options)	// limit the app-selectbox to the given apps
 			{
