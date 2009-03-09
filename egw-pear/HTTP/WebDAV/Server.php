@@ -145,7 +145,8 @@ class HTTP_WebDAV_Server
         // default uri is the complete request uri
         $uri = (@$this->_SERVER["HTTPS"] === "on" ? "https:" : "http:");
         // we cant use SCRIPT_NAME, because it fails, if there's any url rewriting
-        $uri.= '//'.$this->_SERVER['HTTP_HOST'].substr($this->_SERVER['REQUEST_URI'],0,-strlen($this->_SERVER["PATH_INFO"]));
+        //error_log("pathinfo:\n". $this->_urldecode($this->_SERVER['REQUEST_URI']).":\n".$this->_SERVER['PATH_INFO']);
+		$uri.= '//'.$this->_SERVER['HTTP_HOST'].substr($this->_urldecode($this->_SERVER['REQUEST_URI']),0,-strlen($this->_SERVER["PATH_INFO"]));
 
         $path_info = empty($this->_SERVER["PATH_INFO"]) ? "/" : $this->_SERVER["PATH_INFO"];
 
@@ -1975,7 +1976,8 @@ class HTTP_WebDAV_Server
         }
 
         // return generated response
-        return $activelocks;
+        //error_log(__METHOD__."\n".print_r($activelocks,true));
+		return $activelocks;
     }
 
     /**
@@ -2010,7 +2012,8 @@ class HTTP_WebDAV_Server
      */
     function _urlencode($url)
     {
-        return strtr($url, array(" "=>"%20",
+		//error_log( __METHOD__."\n" .print_r($url,true));
+		return strtr($url, array(" "=>"%20",
                                  "&"=>"%26",
                                  "<"=>"%3C",
                                  ">"=>"%3E",
@@ -2039,14 +2042,19 @@ class HTTP_WebDAV_Server
      */
     function _prop_encode($text)
     {
-        switch (strtolower($this->_prop_encoding)) {
-        case "utf-8":
-            return $text;
-        case "iso-8859-1":
-        case "iso-8859-15":
-        case "latin-1":
-        default:
-            return utf8_encode($text);
+		//error_log( __METHOD__."\n" .print_r($text,true));
+		//error_log("prop-encode:" . print_r($this->_prop_encoding,true));
+            
+		switch (strtolower($this->_prop_encoding)) {
+			case "utf-8":
+       			//error_log( __METHOD__."allready encoded\n" .print_r($text,true));
+				return $text;
+			case "iso-8859-1":
+			case "iso-8859-15":
+			case "latin-1":
+			default:
+				//error_log( __METHOD__."utf8 encode\n" .print_r(utf8_encode($text),true));
+				return utf8_encode($text);
         }
     }
 
@@ -2058,10 +2066,12 @@ class HTTP_WebDAV_Server
      */
     function _slashify($path)
     {
-        if ($path[strlen($path)-1] != '/') {
-            $path = $path."/";
-        }
-        return $path;
+		//error_log(__METHOD__." called with $path");
+		if ($path[$this->bytes($path)-1] != '/') {
+			//error_log(__METHOD__." added slash at the end of path");
+			$path = $path."/";
+		}
+		return $path;
     }
 
     /**
@@ -2072,8 +2082,10 @@ class HTTP_WebDAV_Server
      */
     function _unslashify($path)
     {
-        if ($path[strlen($path)-1] == '/') {
-            $path = substr($path, 0, strlen($path) -1);
+        //error_log(__METHOD__." called with $path");
+        if ($path[$this->bytes($path)-1] == '/') {
+            $path = substr($path, 0, -1);
+			//error_log(__METHOD__." removed slash at the end of path");
         }
         return $path;
     }
@@ -2087,7 +2099,9 @@ class HTTP_WebDAV_Server
      */
     function _mergePathes($parent, $child)
     {
-        if ($child{0} == '/') {
+		//error_log("merge called :\n$parent \n$child\n" . function_backtrace());
+		//error_log("merge :\n".print_r($this->_mergePathes($this->_SERVER["SCRIPT_NAME"], $this->path)true));
+		if ($child{0} == '/') {
             return $this->_unslashify($parent).$child;
         } else {
             return $this->_slashify($parent).$child;
