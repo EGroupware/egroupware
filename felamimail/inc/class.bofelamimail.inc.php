@@ -777,12 +777,35 @@
 
 		static function getCleanHTML(&$_html)
 		{
-
+			#echo $_html;exit;
 			$kses = new kses();
 			$kses->AddProtocol('cid');
 			// since check protocoll is called for every value associated to an attribute we have to add color and background-color to the valid protocolls
 			$kses->AddProtocol('color');
 			$kses->AddProtocol('background-color');
+			#$kses->AddHTML('html', array(
+			#		'xmlns' => array(),
+			#		'lang' => array(),
+			#	)
+			#);
+			#$kses->AddHTML('head');
+			#$kses->AddHTML('body', array(
+			#		'class' => array(),
+			#		'id' => array(),
+			#	)
+			#);
+			#$kses->AddHTML('meta', array(
+			#		'http-equiv' => array(),
+			#		'content' => array(),
+			#	)
+			#);
+			#$kses->AddHTML('link',array(
+			#		'rel' => array(), // ="stylesheet" 
+			#		'type' => array(), //="text/css" 
+			#		'href' => array(),
+			#		'media' => array(),
+			#	)
+			#);
 			$kses->AddHTML(
 				'p', array(
 					'align'	=> array('minlen' =>   1, 'maxlen' =>  10)
@@ -814,6 +837,7 @@
 			);
 			$kses->AddHTML(
 				"div",array(
+			#		'class' => array(),
 					'align' => array('maxlen' => 10)
 				)
 			);
@@ -953,6 +977,153 @@
 			self::replaceTagsCompletley($_html,'style');
 			// remove non printable chars
 			$_html = preg_replace('/([\000-\012])/','',$_html);
+		}
+
+		/**
+		* replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+		* always returns 1
+		*/
+		static function replaceEmailAdresses(&$text)
+		{
+			// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+			$text = preg_replace("/(<|&lt;)(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)/ie","'$2'", $text);
+			return 1;
+		}
+
+		static function convertHTMLToText($_html,$stripcrl=false) 
+		{
+			#error_log($_html);
+			#print '<hr>';
+			#print "<pre>"; print htmlspecialchars($_html); 
+			#print "</pre>";
+			#print "<hr>";
+			self::replaceTagsCompletley($_html,'style');
+			$Rules = array ('@<script[^>]*?>.*?</script>@si', // Strip out javascript
+				'@&(quot|#34);@i',                // Replace HTML entities
+				'@&(amp|#38);@i',                 //   Ampersand &
+				'@&(lt|#60);@i',                  //   Less Than <
+				'@&(gt|#62);@i',                  //   Greater Than >
+				'@&(nbsp|#160);@i',               //   Non Breaking Space
+				'@&(iexcl|#161);@i',              //   Inverted Exclamation point
+				'@&(cent|#162);@i',               //   Cent
+				'@&(pound|#163);@i',              //   Pound
+				'@&(copy|#169);@i',               //   Copyright
+				'@&(reg|#174);@i',                //   Registered
+			);
+			$Replace = array ('',
+				'"',
+				'+',
+				'<',
+				'>',
+				' ',
+				chr(161),
+				chr(162),
+				chr(163),
+				chr(169),
+				chr(174),
+			);
+			$_html = preg_replace($Rules, $Replace, $_html);
+			//   removing carriage return linefeeds
+			if ($stripcrl === true ) $_html = preg_replace('@(\r\n)@i',' ',$_html); 
+			$tags = array (
+				0 => '~<h[123][^>]*>\r*\n*~si',
+				1 => '~<h[456][^>]*>\r*\n*~si',
+				2 => '~<table[^>]*>\r*\n*~si',
+				3 => '~<tr[^>]*>\r*\n*~si',
+				4 => '~<li[^>]*>\r*\n*~si',
+				5 => '~<br[^>]*>\r*\n*~si',
+				6 => '~<br[^>]*>~si',
+				7 => '~<p[^>]*>\r*\n*~si',
+				8 => '~<div[^>]*>\r*\n*~si',
+				9 => '~<hr[^>]*>\r*\n*~si',
+				10 => '/<blockquote type="cite">/',
+			);
+			$Replace = array (
+				0 => "\r\n",
+				1 => "\r\n",
+				2 => "\r\n",
+				3 => "\r\n",
+				4 => "\r\n",
+				5 => "\r\n",
+				6 => "\r\n",
+				7 => "\r\n",
+				8 => "\r\n",
+				9 => "\r\n__________________________________________________\r\n",
+				10 => '#blockquote#type#cite#',
+			);
+    		$_html = preg_replace($tags,$Replace,$_html);
+    		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
+			$_html = preg_replace('~<img[^>]+>~s','',$_html);
+			//convert hrefs to description -> URL
+			$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
+    		$_html = preg_replace('~<[^>^@]+>~s','',$_html);
+			#$_html = strip_tags($_html);
+    		// reducing spaces
+    		$_html = preg_replace('~ +~s',' ',$_html);
+			// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
+    		#$_html = preg_replace('~^\s+~m','',$_html);
+    		#$_html = preg_replace('~\s+$~m','',$_html);
+			// restoring the preserved blockquote
+			$_html = preg_replace('~#blockquote#type#cite#~s','<blockquote type="cite">',$_html);
+
+			
+			$_html = html_entity_decode($_html, ENT_COMPAT, self::$displayCharset);
+			// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+			self::replaceEmailAdresses($_html);
+			#error_log($text);
+			$pos = strpos($_html, 'blockquote');
+			#error_log("convert HTML2Text");
+			if($pos === false) {
+				return $_html;
+			} else {
+				$indent = 0;
+				$indentString = '';
+				
+				$quoteParts = preg_split('/<blockquote type="cite">/', $_html, -1, PREG_SPLIT_OFFSET_CAPTURE);
+
+				foreach($quoteParts as $quotePart) {
+					if($quotePart[1] > 0) {
+						$indent++;
+						$indentString .= '>';
+					}
+					$quoteParts2 = preg_split('/<\/blockquote>/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
+				
+					foreach($quoteParts2 as $quotePart2) {
+						if($quotePart2[1] > 0) {
+							$indent--;
+							$indentString = substr($indentString, 0, $indent);
+						}
+
+						$quoteParts3 = explode("\r\n", $quotePart2[0]);
+
+						foreach($quoteParts3 as $quotePart3) {
+							$allowedLength = 76-strlen("\r\n$indentString");
+							if (strlen($quotePart3) > $allowedLength) {
+								$s=explode(" ", $quotePart3);
+								$quotePart3 = "";
+								$linecnt = 0;
+								foreach ($s as $k=>$v) {
+									$cnt = strlen($v);
+									// only break long words within the wordboundaries, 
+									if($cnt > $allowedLength) {
+										$v=wordwrap($v, $allowedLength, "\r\n$indentString", true);
+									}
+									// the rest should be broken at the start of the new word that exceeds the limit  
+									if ($linecnt+$cnt > $allowedLength) {
+										$v="\r\n$indentString$v";
+										$linecnt = 0;
+									} else {
+										$linecnt += $cnt;
+									}
+									if (strlen($v))  $quotePart3 .= (strlen($quotePart3) ? " " : "").$v;
+								}
+							}
+							$asciiTextBuff[] = $indentString . $quotePart3 ;
+						}
+					}
+				}
+				return implode("\r\n",$asciiTextBuff);
+			}
 		}
 
 		/**
