@@ -1392,7 +1392,7 @@ class infolog_ui
 				$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				if ($bodyParts[$i]['mimeType'] == 'text/html') {
 					// convert HTML to text, as we dont want HTML in infologs
-					$newBody = $bofelamimail->convertHTMLToText($newBody);
+					$newBody = $bofelamimail->convertHTMLToText($newBody,true);
 					$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
 					$message .= $newBody;
 					continue;
