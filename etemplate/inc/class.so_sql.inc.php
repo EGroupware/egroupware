@@ -624,7 +624,7 @@ class so_sql
 			$query[$db_col] = $data[$col];
 		}
 		if ($only_return_query) return $query;
-		
+
 		$this->db->delete($this->table_name,$query,__LINE__,__FILE__,$this->app);
 
 		return $this->db->affected_rows();
@@ -940,9 +940,10 @@ class so_sql
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @param mixed $only_keys=false, see search
+	 * @param string|array $extra_cols
 	 * @return int total number of rows
 	 */
-	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false)
+	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
 	{
 		if ((int) $this->debug >= 4)
 		{
@@ -956,8 +957,8 @@ class so_sql
 				$criteria[$col] = $query['search'];
 			}
 		}
-		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',
-			'','%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
+		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',$extra_cols,
+			'%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
 			$query['col_filter'],$join,$need_full_no_count);
 
 		if (!$rows) $rows = array();	// otherwise false returned from search would be returned as array(false)
