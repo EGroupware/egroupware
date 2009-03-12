@@ -361,6 +361,7 @@ class addressbook_so
 		$fields = array();
 		$filter[$this->distri_id]=$ids;
 		if (count($dl_allowed)) $filter[$this->distri_key]=$dl_allowed;
+		$this->distributionlist_view = str_replace(') d_view',' and '.$this->distri_id.' in ('.implode(',',$ids).')) d_view',$this->distributionlist_view);
 		foreach($this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__) as $row)
 		{
 			if ((isset($row[$this->distri_id])&&strlen($row[$this->distri_value])>0))
