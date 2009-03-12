@@ -231,7 +231,7 @@ class url_widget
 			$user = $GLOBALS['egw']->contacts->read('account:'.$GLOBALS['egw_info']['user']['account_id']);
 			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
 		}
-		$number = preg_replace('/[^0-9+]+/','',$number);	// remove number formatting chars messing up the links
+		$number = preg_replace('/[^0-9+]+/','',str_replace('&#9829;','',$number));	// remove number formatting chars messing up the links
 
 		return str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
 			$GLOBALS['egw_info']['server']['call_link']);
