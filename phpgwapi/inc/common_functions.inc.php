@@ -675,56 +675,57 @@ function &CreateObject($class)
 {
 	list($appname,$classname) = explode('.',$class);
 
-	if (!@include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
+	if (!class_exists($classname))
 	{
-		static $replace = array(
-			'datetime'    => 'egw_datetime',
-			'uitimesheet' => 'timesheet_ui',
-			'uiinfolog'   => 'infolog_ui',
-			'uiprojectmanager'  => 'projectmanager_ui',
-			'uiprojectelements' => 'projectmanager_elements_ui',
-			'uiroles'           => 'projectmanager_roles_ui',
-			'uimilestones'      => 'projectmanager_milestones_ui',
-			'uipricelist'       => 'projectmanager_pricelist_ui',
-		);
-		if (isset($replace[$classname]))
+		if (!file_exists(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
 		{
-			//throw new Exception(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
-			error_log(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
-			$classname = $replace[$classname];
-			include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+			static $replace = array(
+				'datetime'    => 'egw_datetime',
+				'uitimesheet' => 'timesheet_ui',
+				'uiinfolog'   => 'infolog_ui',
+				'uiprojectmanager'  => 'projectmanager_ui',
+				'uiprojectelements' => 'projectmanager_elements_ui',
+				'uiroles'           => 'projectmanager_roles_ui',
+				'uimilestones'      => 'projectmanager_milestones_ui',
+				'uipricelist'       => 'projectmanager_pricelist_ui',
+			);
+			if (isset($replace[$classname]))
+			{
+				//throw new Exception(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
+				error_log(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
+				$classname = $replace[$classname];
+			}
 		}
+		// this will stop php with a 500, if the class does not exist or there are errors in it (syntax error go into the error_log)
+		require_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 	}
-	if (class_exists($classname))
+	$args = func_get_args();
+	switch(count($args))
 	{
-		$args = func_get_args();
-		switch(count($args))
-		{
-			case 1:
-				$obj =& new $classname;
-				break;
-			case 2:
-				$obj =& new $classname($args[1]);
-				break;
-			case 3:
-				$obj =& new $classname($args[1],$args[2]);
-				break;
-			case 4:
-				$obj =& new $classname($args[1],$args[2],$args[3]);
-				break;
-			default:
-				$code = '$obj =& new ' . $classname . '(';
-				foreach($args as $n => $arg)
+		case 1:
+			$obj =& new $classname;
+			break;
+		case 2:
+			$obj =& new $classname($args[1]);
+			break;
+		case 3:
+			$obj =& new $classname($args[1],$args[2]);
+			break;
+		case 4:
+			$obj =& new $classname($args[1],$args[2],$args[3]);
+			break;
+		default:
+			$code = '$obj =& new ' . $classname . '(';
+			foreach($args as $n => $arg)
+			{
+				if ($n)
 				{
-					if ($n)
-					{
-						$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
-					}
+					$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
 				}
-				$code .= ');';
-				eval($code);
-				break;
-		}
+			}
+			$code .= ');';
+			eval($code);
+			break;
 	}
 	if (!is_object($obj))
 	{
