@@ -1,13 +1,13 @@
 <?php
 /**
  * API - accounts selection
- * 
+ *
  * @link http://www.egroupware.org
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> 
- * 
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ *
  * The original version of the acount-selection popup was written and
  * (c) 2003 by Bettina Gille [ceb@phpgroupware.org]
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage html
@@ -15,18 +15,10 @@
  * @version $Id$
  */
 
-include_once(EGW_API_INC . '/class.accounts.inc.php');
-
 /**
  * User Interface for account and/or group selection
- *
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> 
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package api
- * @subpackage html
- * @access public
  */
-class uiaccountsel extends accounts
+class uiaccountsel
 {
 	var $public_functions = array(
 		'popup' => True,
@@ -49,13 +41,13 @@ class uiaccountsel extends accounts
 	 *
 	 * @return uiaccountsel
 	 */
-	function uiaccountsel()
+	function __construct()
 	{
 		$this->accounts = $GLOBALS['egw']->accounts;
 
 		$this->account_selection = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 		// admin group should NOT get limited by none or groupmembers, we use primary_group instead
-		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) && 
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
 			($this->account_selection == 'none' || $this->account_selection == 'groupmembers'))
 		{
 			$this->account_selection = 'primary_group';
@@ -77,7 +69,7 @@ class uiaccountsel extends accounts
 	 * @param array/int $selected user-id or array of user-id's which are already selected
 	 * @param string $use 'accounts', 'groups', 'owngroups', 'both' or app-name for all accounts with run-rights.
 	 *	If an '+' is appended to the app-name, one can also select groups with run-rights for that app.
-	 * @param int $lines > 1 number of lines for multiselection, 0 for a single selection, 
+	 * @param int $lines > 1 number of lines for multiselection, 0 for a single selection,
 	 * 	< 0 or 1(=-4) single selection which can be switched to a multiselection by js abs($lines) is size
 	 *	(in that case accounts should be an int or contain only 1 user-id)
 	 * @param int/array $not user-id or array of user-id's not to display in selection, default False = display all
@@ -164,7 +156,7 @@ class uiaccountsel extends accounts
 				{
 					foreach($this->accounts->members($gid,true) as $member)
 					{
-						if (!in_array($member,$select)) $select[] = $member;			
+						if (!in_array($member,$select)) $select[] = $member;
 					}
 				}
 				if ($use == 'both')	// show all memberships
@@ -264,13 +256,13 @@ class uiaccountsel extends accounts
 			$select2 += $select;
 			$select =& $select2; unset($select2);
 		}
-		
+
 		if ($nohtml)
 		{
 			return array(
 				'selected' => $selected,
 				'participants' => $select
-			);	
+			);
 		}
 		//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
 		$html = html::select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
@@ -540,7 +532,7 @@ function addOption(id,label,value,do_onchange)
 			'lang_close' => lang('close'),
 			'close_action' => 'window.close();',
 		));
-		
+
 		if ($multiple >= 1)
 		{
 			$GLOBALS['egw']->template->set_var(array(
@@ -549,7 +541,7 @@ function addOption(id,label,value,do_onchange)
 				'close_action' => "oneLineSubmit('$element_id');",
 			));
 		}
-			
+
 
 		if ($multiple)
 		{
