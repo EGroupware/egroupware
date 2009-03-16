@@ -375,10 +375,13 @@ class calendar_so
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
-			foreach($this->db->select($this->user_table,'*',array(
-				'cal_id' => array_unique($ids),
-				'cal_recur_date' => $recur_dates,
-			),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
+			$utcal_id_view = " (select * from ".$this->user_table." where cal_id in (".implode(',',array_unique($ids)).")) utcalid ";
+			//$utrecurdate_view = " (select * from ".$this->user_table." where cal_recur_date in (".implode(',',array_unique($recur_dates)).")) utrecurdates ";
+			foreach($this->db->select($utcal_id_view,'*',array(
+					//'cal_id' => array_unique($ids),
+					'cal_recur_date' => $recur_dates,
+				),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC,'.self::STATUS_SORT,'calendar',$num_rows=0,$join='',
+				$this->db->get_table_definitions('calendar',$this->user_table)) as $row)	// DESC puts users before resources and contacts
 			{
 				$id = $row['cal_id'];
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
