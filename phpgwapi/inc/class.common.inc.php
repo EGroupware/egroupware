@@ -1,1807 +1,1617 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Commononly used functions                               *
-	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	* and Joseph Engo <jengo@phpgroupware.org>                                 *
-	* and Mark Peters <skeeter@phpgroupware.org>                               *
-	* and Lars Kneschke <lkneschke@linux-at-work.de>                           *
-	* Functions commonly used by eGroupWare developers                         *
-	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* Copyright (C) 2003 Lars Kneschke                                         *
-	* -------------------------------------------------------------------------*
-	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org                                                *
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
+/**
+ * eGroupWare API: Commononly used (static) functions
+ *
+ * This file written by Dan Kuykendall <seek3r@phpgroupware.org>
+ * and Joseph Engo <jengo@phpgroupware.org>
+ * and Mark Peters <skeeter@phpgroupware.org>
+ * and Lars Kneschke <lkneschke@linux-at-work.de>
+ * Functions commonly used by eGroupWare developers
+ * Copyright (C) 2000, 2001 Dan Kuykendall
+ * Copyright (C) 2003 Lars Kneschke
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @version $Id$
+ */
 
-	/* $Id$ */
-
-	$d1 = strtolower(@substr(EGW_API_INC,0,3));
-	$d2 = strtolower(@substr(EGW_SERVER_ROOT,0,3));
-	$d3 = strtolower(@substr(EGW_APP_INC,0,3));
-	if($d1 == 'htt' || $d1 == 'ftp' || $d2 == 'htt' || $d2 == 'ftp' || $d3 == 'htt' || $d3 == 'ftp')
-	{
-		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
-		exit;
-	}
-	unset($d1);unset($d2);unset($d3);
+/**
+ * common class containing commonly used static functions
+ */
+class common
+{
+	static $debug_info; // An array with debugging info from the API
+	static $found_files;
 
 	/**
-	 * common class that contains commonly used functions
+	 * Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
 	 *
+	 * This function checks for major version only.
+	 * @param $str1
+	 * @param $str2
 	 */
-	class common
+	static function cmp_version($str1,$str2,$debug=False)
 	{
-		var $debug_info; // An array with debugging info from the API
-		var $found_files;
+		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
+		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
+		if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
 
-		/**
-		 * Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
-		 *
-		 * This function checks for major version only.
-		 * @param $str1
-		 * @param $str2
-		 */
-		static function cmp_version($str1,$str2,$debug=False)
+		for($i=1;$i<5;$i++)
 		{
-			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
-			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
-			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
-
-			for($i=1;$i<5;$i++)
+			if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
+			if($regs2[$i] == $regs[$i])
 			{
-				if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
-				if($regs2[$i] == $regs[$i])
+				continue;
+			}
+			if($regs2[$i] > $regs[$i])
+			{
+				return 1;
+			}
+			elseif($regs2[$i] < $regs[$i])
+			{
+				return 0;
+			}
+		}
+	}
+
+	/**
+	 * Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
+	 *
+	 * This function checks all fields. cmp_version() checks release version only.
+	 * @param $str1
+	 * @param $str2
+	 */
+	static function cmp_version_long($str1,$str2,$debug=False)
+	{
+		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
+		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str2,$regs2);
+		if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
+
+		for($i=1;$i<6;$i++)
+		{
+			if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
+
+			if($regs2[$i] == $regs[$i])
+			{
+				if($debug) { echo ' are equal...'; }
+				continue;
+			}
+			if($regs2[$i] > $regs[$i])
+			{
+				if($debug) { echo ', and a > b'; }
+				return 1;
+			}
+			elseif($regs2[$i] < $regs[$i])
+			{
+				if($debug) { echo ', and a < b'; }
+				return 0;
+			}
+		}
+		if($debug) { echo ' - all equal.'; }
+	}
+
+	/**
+	* generate a unique id, which can be used for syncronisation
+	*
+	* @param string $_appName the appname
+	* @param string $_eventID the id of the content
+	* @return string the unique id
+	*/
+	static function generate_uid($_appName, $_eventID)
+	{
+		if(empty($_appName) || empty($_eventID)) return false;
+
+		$suffix = $GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'local';
+		$prefix = $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
+
+		return $prefix;
+	}
+
+	/**
+	* get the local content id from a global UID
+	*
+	* @param sting $_globalUid the global UID
+	* @return int local egw content id
+	*/
+	static function get_egwId($_globalUid)
+	{
+		if(empty($_globalUid)) return false;
+
+		$globalUidParts = explode('-',$_globalUid);
+		array_shift($globalUidParts);	// remove the app name
+		array_pop($globalUidParts);		// remove the install_id
+
+		return implode('-',$globalUidParts);	// return the rest, allowing to have dashs in the id, can happen with LDAP!
+	}
+
+	/**
+	 * return an array of installed languages
+	 *
+	 * @return $installedLanguages; an array containing the installed languages
+	 */
+	static function getInstalledLanguages()
+	{
+		$GLOBALS['egw']->db->query('SELECT DISTINCT lang FROM egw_lang');
+		while (@$GLOBALS['egw']->db->next_record())
+		{
+			$installedLanguages[$GLOBALS['egw']->db->f('lang')] = $GLOBALS['egw']->db->f('lang');
+		}
+
+		return $installedLanguages;
+	}
+
+	/**
+	 * get preferred language of the users
+	 *
+	 * Uses HTTP_ACCEPT_LANGUAGE (from the browser) and getInstalledLanguages to find out which languages are installed
+	 *
+	 * @return string
+	 */
+	static function getPreferredLanguage()
+	{
+		// create a array of languages the user is accepting
+		$userLanguages = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+		$supportedLanguages = self::getInstalledLanguages();
+
+		// find usersupported language
+		foreach($userLanguages as $key => $value)
+		{
+			// remove everything behind '-' example: de-de
+			$value = trim($value);
+			$pieces = explode('-', $value);
+			$value = $pieces[0];
+			# print 'current lang $value<br>';
+			if ($supportedLanguages[$value])
+			{
+				$retValue=$value;
+				break;
+			}
+		}
+
+		// no usersupported language found -> return english
+		if (empty($retValue))
+		{
+			$retValue='en';
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * escapes a string for use in searchfilters meant for ldap_search.
+	 *
+	 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
+	 * It's actually a PHP-Bug, that we have to escape space.
+	 * For all other Characters, refer to RFC2254.
+	 *
+	 * @deprecated use ldap::quote()
+	 * @param $string either a string to be escaped, or an array of values to be escaped
+	 * @return string
+	 */
+	static function ldap_addslashes($string='')
+	{
+		return ldap::quote($string);
+	}
+
+	/**
+	 * connect to the ldap server and return a handle
+	 *
+	 * @deprecated use ldap::ldapConnect()
+	 * @param $host ldap host
+	 * @param $dn ldap_root_dn
+	 * @param $passwd ldap_root_pw
+	 * @return resource
+	 */
+	static function ldapConnect($host='', $dn='', $passwd='')
+	{
+		// use Lars new ldap class
+		return $GLOBALS['egw']->ldap->ldapConnect($host,$dn,$passwd);
+	}
+
+	/**
+	 * function to stop running an app
+	 *
+	 * used to stop running an app in the middle of execution <br>
+	 * There may need to be some cleanup before hand
+	 * @param $call_footer boolean value to if true then call footer else exit
+	 */
+	static function egw_exit($call_footer = False)
+	{
+		if (!defined('EGW_EXIT'))
+		{
+			define('EGW_EXIT',True);
+
+			if ($call_footer)
+			{
+				self::egw_footer();
+			}
+		}
+		exit;
+	}
+
+	/**
+	 * return a random string of size $size
+	 *
+	 * @param $size int-size of random string to return
+	 */
+	static function randomstring($size)
+	{
+		$s = '';
+		srand((double)microtime()*1000000);
+		$random_char = array(
+			'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
+			'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+			'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
+			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+		);
+
+		for ($i=0; $i<$size; $i++)
+		{
+			$s .= $random_char[rand(1,61)];
+		}
+		return $s;
+	}
+
+	// Look at the note towards the top of this file (jengo)
+	static function filesystem_separator()
+	{
+		return filesystem_separator();
+	}
+
+	/**
+	 * This is used for reporting errors in a nice format.
+	 *
+	 * @param $error - array of errors
+	 */
+	static function error_list($errors,$text='Error')
+	{
+		if (!is_array($errors))
+		{
+			return False;
+		}
+
+		$html_error = '<table border="0" width="100%"><tr><td align="right"><b>' . lang($text)
+			. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
+		for ($i=1; $i<count($errors); $i++)
+		{
+			$html_error .= '<tr><td>&nbsp;</td><td align="left">' . $errors[$i] . '</td></tr>';
+		}
+		return $html_error . '</table>';
+	}
+
+	/**
+	 * @deprecated use ACL instead
+	 */
+	function check_owner($record,$link,$label,$extravars = '')
+	{
+		self::$debug_info[] = 'check_owner() is a depreciated function - use ACL instead';
+	}
+
+	/**
+	 * return the fullname of a user
+	 *
+	 * @param $lid='' account loginid
+	 * @param $firstname='' firstname
+	 * @param $lastname='' lastname
+	 * @param $accountid=0 id, to check if it's a user or group, otherwise the lid will be used
+	 */
+	static function display_fullname($lid = '', $firstname = '', $lastname = '',$accountid=0)
+	{
+		if (! $lid && ! $firstname && ! $lastname)
+		{
+			$lid       = $GLOBALS['egw_info']['user']['account_lid'];
+			$firstname = $GLOBALS['egw_info']['user']['firstname'];
+			$lastname  = $GLOBALS['egw_info']['user']['lastname'];
+		}
+		$is_group = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g';
+
+		if (empty($firstname)) $firstname = $lid;
+		if (empty($lastname) || $is_group)
+		{
+			$lastname  = $is_group ? lang('Group') : lang('User');
+		}
+		$display = $GLOBALS['egw_info']['user']['preferences']['common']['account_display'];
+
+		if ($firstname && $lastname)
+		{
+			$delimiter = ', ';
+		}
+		else
+		{
+			$delimiter = '';
+		}
+
+		$name = '';
+		switch($display)
+		{
+			case 'firstname':
+				$name = $firstname . ' ' . $lastname;
+				break;
+			case 'lastname':
+				$name = $lastname . $delimiter . $firstname;
+				break;
+			case 'username':
+				$name = $lid;
+				break;
+			case 'firstall':
+				$name = $firstname . ' ' . $lastname . ' ['.$lid.']';
+				break;
+			case 'lastall':
+				$name = $lastname . $delimiter . $firstname . ' ['.$lid.']';
+				break;
+			case 'all':
+				/* fall through */
+			default:
+				$name = '['.$lid.'] ' . $firstname . ' ' . $lastname;
+		}
+		return $name;
+	}
+
+	/**
+	 * grab the owner name
+	 *
+	 * @param $id account id
+	 */
+	static function grab_owner_name($accountid = '')
+	{
+		$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
+
+		return self::display_fullname($lid,$fname,$lname,$accountid);
+	}
+
+	/**
+	 * create tabs
+	 *
+	 * @param array $tabs an array repersenting the tabs you wish to display, each element
+	 * 		 * 		 * 	 in the array is an array of 3 elements, 'label' which is the
+	 * 		 * 		 * 	 text displaed on the tab (you should pass translated string,
+	 * 		 * 		 * 	 create_tabs will not do <code>lang()</code> for you), 'link'
+	 * 		 * 		 * 	 which is the uri, 'target', the frame name or '_blank' to show
+	 * 		 * 		 * 	 page in a new browser window.
+	 * @param mixed $selected the tab whos key is $selected will be displayed as current tab
+	 * @param $fontsize optional
+	 * @return string return html that displays the tabs
+	 */
+	static function create_tabs($tabs, $selected, $fontsize = '')
+	{
+		$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
+
+		/* This is a php3 workaround */
+		if(EGW_IMAGES_DIR == 'EGW_IMAGES_DIR')
+		{
+			$ir = ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi');
+		}
+		else
+		{
+			$ir = EGW_IMAGES_DIR;
+		}
+
+		if ($fontsize)
+		{
+			$fs  = '<font size="' . $fontsize . '">';
+			$fse = '</font>';
+		}
+
+		$i = 1;
+		while ($tab = each($tabs))
+		{
+			if ($tab[0] == $selected)
+			{
+				if ($i == 1)
 				{
-					continue;
+					$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start1.gif"></td>';
 				}
-				if($regs2[$i] > $regs[$i])
+
+				$output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
+					. $tab[1]['link'] . '" class="tablink" '.$tab[1]['target'].'>' . $fs . $tab[1]['label']
+					. $fse . '</a></b>&nbsp;</td>';
+				if ($i == count($tabs))
 				{
-					return 1;
+					$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
 				}
-				elseif($regs2[$i] < $regs[$i])
+				else
 				{
-					return 0;
+					$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
 				}
-			}
-		}
-
-		/**
-		 * Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
-		 *
-		 * This function checks all fields. cmp_version() checks release version only.
-		 * @param $str1
-		 * @param $str2
-		 */
-		static function cmp_version_long($str1,$str2,$debug=False)
-		{
-			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
-			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str2,$regs2);
-			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
-
-			for($i=1;$i<6;$i++)
-			{
-				if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
-
-				if($regs2[$i] == $regs[$i])
-				{
-					if($debug) { echo ' are equal...'; }
-					continue;
-				}
-				if($regs2[$i] > $regs[$i])
-				{
-					if($debug) { echo ', and a > b'; }
-					return 1;
-				}
-				elseif($regs2[$i] < $regs[$i])
-				{
-					if($debug) { echo ', and a < b'; }
-					return 0;
-				}
-			}
-			if($debug) { echo ' - all equal.'; }
-		}
-
-		/**
-		* generate a unique id, which can be used for syncronisation
-		*
-		* @param string $_appName the appname
-		* @param string $_eventID the id of the content
-		* @return string the unique id
-		*/
-		static function generate_uid($_appName, $_eventID)
-		{
-			if(empty($_appName) || empty($_eventID)) return false;
-
-			$suffix = $GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'local';
-			$prefix = $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
-
-			return $prefix;
-		}
-
-		/**
-		* get the local content id from a global UID
-		*
-		* @param sting $_globalUid the global UID
-		* @return int local egw content id
-		*/
-		static function get_egwId($_globalUid)
-		{
-			if(empty($_globalUid)) return false;
-
-			$globalUidParts = explode('-',$_globalUid);
-			array_shift($globalUidParts);	// remove the app name
-			array_pop($globalUidParts);		// remove the install_id
-
-			return implode('-',$globalUidParts);	// return the rest, allowing to have dashs in the id, can happen with LDAP!
-		}
-
-		/**
-		 * return an array of installed languages
-		 *
-		 * @return $installedLanguages; an array containing the installed languages
-		 */
-		static function getInstalledLanguages()
-		{
-			$GLOBALS['egw']->db->query('SELECT DISTINCT lang FROM egw_lang');
-			while (@$GLOBALS['egw']->db->next_record())
-			{
-				$installedLanguages[$GLOBALS['egw']->db->f('lang')] = $GLOBALS['egw']->db->f('lang');
-			}
-
-			return $installedLanguages;
-		}
-
-		/**
-		 * get preferred language of the users
-		 *
-		 * Uses HTTP_ACCEPT_LANGUAGE (from the browser) and getInstalledLanguages to find out which languages are installed
-		 *
-		 * @return string
-		 */
-		static function getPreferredLanguage()
-		{
-			// create a array of languages the user is accepting
-			$userLanguages = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
-			$supportedLanguages = self::getInstalledLanguages();
-
-			// find usersupported language
-			foreach($userLanguages as $key => $value)
-			{
-				// remove everything behind '-' example: de-de
-				$value = trim($value);
-				$pieces = explode('-', $value);
-				$value = $pieces[0];
-				# print 'current lang $value<br>';
-				if ($supportedLanguages[$value])
-				{
-					$retValue=$value;
-					break;
-				}
-			}
-
-			// no usersupported language found -> return english
-			if (empty($retValue))
-			{
-				$retValue='en';
-			}
-
-			return $retValue;
-		}
-
-		/**
-		 * escapes a string for use in searchfilters meant for ldap_search.
-		 *
-		 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
-		 * It's actually a PHP-Bug, that we have to escape space.
-		 * For all other Characters, refer to RFC2254.
-		 *
-		 * @deprecated use ldap::quote()
-		 * @param $string either a string to be escaped, or an array of values to be escaped
-		 * @return string
-		 */
-		static function ldap_addslashes($string='')
-		{
-			return ldap::quote($string);
-		}
-
-		/**
-		 * connect to the ldap server and return a handle
-		 *
-		 * @deprecated use ldap::ldapConnect()
-		 * @param $host ldap host
-		 * @param $dn ldap_root_dn
-		 * @param $passwd ldap_root_pw
-		 * @return resource
-		 */
-		static function ldapConnect($host='', $dn='', $passwd='')
-		{
-			// use Lars new ldap class
-			return $GLOBALS['egw']->ldap->ldapConnect($host,$dn,$passwd);
-		}
-
-		/**
-		 * function to stop running an app
-		 *
-		 * used to stop running an app in the middle of execution <br>
-		 * There may need to be some cleanup before hand
-		 * @param $call_footer boolean value to if true then call footer else exit
-		 */
-		function egw_exit($call_footer = False)
-		{
-			if (!defined('EGW_EXIT'))
-			{
-				define('EGW_EXIT',True);
-
-				if ($call_footer)
-				{
-					$this->egw_footer();
-				}
-			}
-			exit;
-		}
-
-		/**
-		 * return a random string of size $size
-		 *
-		 * @param $size int-size of random string to return
-		 */
-		static function randomstring($size)
-		{
-			$s = '';
-			srand((double)microtime()*1000000);
-			$random_char = array(
-				'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
-				'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-				'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
-				'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
-			);
-
-			for ($i=0; $i<$size; $i++)
-			{
-				$s .= $random_char[rand(1,61)];
-			}
-			return $s;
-		}
-
-		// Look at the note towards the top of this file (jengo)
-		function filesystem_separator()
-		{
-			return filesystem_separator();
-		}
-
-		/**
-		 * This is used for reporting errors in a nice format.
-		 *
-		 * @param $error - array of errors
-		 */
-		function error_list($errors,$text='Error')
-		{
-			if (! is_array($errors))
-			{
-				return False;
-			}
-
-			$html_error = '<table border="0" width="100%"><tr><td align="right"><b>' . lang($text)
-				. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
-			for ($i=1; $i<count($errors); $i++)
-			{
-				$html_error .= '<tr><td>&nbsp;</td><td align="left">' . $errors[$i] . '</td></tr>';
-			}
-			return $html_error . '</table>';
-		}
-
-		/**
-		 * @deprecated use ACL instead
-		 */
-		function check_owner($record,$link,$label,$extravars = '')
-		{
-			$this->debug_info[] = 'check_owner() is a depreciated function - use ACL instead';
-		}
-
-		/**
-		 * return the fullname of a user
-		 *
-		 * @param $lid='' account loginid
-		 * @param $firstname='' firstname
-		 * @param $lastname='' lastname
-		 * @param $accountid=0 id, to check if it's a user or group, otherwise the lid will be used
-		 */
-		function display_fullname($lid = '', $firstname = '', $lastname = '',$accountid=0)
-		{
-			if (! $lid && ! $firstname && ! $lastname)
-			{
-				$lid       = $GLOBALS['egw_info']['user']['account_lid'];
-				$firstname = $GLOBALS['egw_info']['user']['firstname'];
-				$lastname  = $GLOBALS['egw_info']['user']['lastname'];
-			}
-			$is_group = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g';
-
-			if (empty($firstname)) $firstname = $lid;
-			if (empty($lastname) || $is_group)
-			{
-				$lastname  = $is_group ? lang('Group') : lang('User');
-			}
-			$display = $GLOBALS['egw_info']['user']['preferences']['common']['account_display'];
-
-			if ($firstname && $lastname)
-			{
-				$delimiter = ', ';
 			}
 			else
 			{
-				$delimiter = '';
-			}
-
-			$name = '';
-			switch($display)
-			{
-				case 'firstname':
-					$name = $firstname . ' ' . $lastname;
-					break;
-				case 'lastname':
-					$name = $lastname . $delimiter . $firstname;
-					break;
-				case 'username':
-					$name = $lid;
-					break;
-				case 'firstall':
-					$name = $firstname . ' ' . $lastname . ' ['.$lid.']';
-					break;
-				case 'lastall':
-					$name = $lastname . $delimiter . $firstname . ' ['.$lid.']';
-					break;
-				case 'all':
-					/* fall through */
-				default:
-					$name = '['.$lid.'] ' . $firstname . ' ' . $lastname;
-			}
-			return $name;
-		}
-
-		/**
-		 * grab the owner name
-		 *
-		 * @param $id account id
-		 */
-		function grab_owner_name($accountid = '')
-		{
-			$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
-
-			return $this->display_fullname($lid,$fname,$lname,$accountid);
-		}
-
-		/**
-		 * create tabs
-		 *
-		 * @param array $tabs an array repersenting the tabs you wish to display, each element
-		 * 		 * 		 * 	 in the array is an array of 3 elements, 'label' which is the
-		 * 		 * 		 * 	 text displaed on the tab (you should pass translated string,
-		 * 		 * 		 * 	 create_tabs will not do <code>lang()</code> for you), 'link'
-		 * 		 * 		 * 	 which is the uri, 'target', the frame name or '_blank' to show
-		 * 		 * 		 * 	 page in a new browser window.
-		 * @param mixed $selected the tab whos key is $selected will be displayed as current tab
-		 * @param $fontsize optional
-		 * @return string return html that displays the tabs
-		 */
-		function create_tabs($tabs, $selected, $fontsize = '')
-		{
-			$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-
-			/* This is a php3 workaround */
-			if(EGW_IMAGES_DIR == 'EGW_IMAGES_DIR')
-			{
-				$ir = ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi');
-			}
-			else
-			{
-				$ir = EGW_IMAGES_DIR;
-			}
-
-			if ($fontsize)
-			{
-				$fs  = '<font size="' . $fontsize . '">';
-				$fse = '</font>';
-			}
-
-			$i = 1;
-			while ($tab = each($tabs))
-			{
-				if ($tab[0] == $selected)
+				if ($i == 1)
 				{
-					if ($i == 1)
-					{
-						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start1.gif"></td>';
-					}
-
-					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
-						. $tab[1]['link'] . '" class="tablink" '.$tab[1]['target'].'>' . $fs . $tab[1]['label']
-						. $fse . '</a></b>&nbsp;</td>';
-					if ($i == count($tabs))
+					$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
+				}
+				$output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
+					. $tab[1]['link'] . '" class="tablink" '.$tab[1]['target'].'>' . $fs . $tab[1]['label'] . $fse
+					. '</a></b>&nbsp;</td>';
+				if (($i + 1) == $selected)
+				{
+					$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
+				}
+				elseif ($i == $selected || $i != count($tabs))
+				{
+					$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepm.gif"></td>';
+				}
+				elseif ($i == count($tabs))
+				{
+					if ($i == $selected)
 					{
 						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
 					}
 					else
 					{
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end0.gif"></td>';
+					}
+				}
+				else
+				{
+					if ($i != count($tabs))
+					{
 						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
 					}
 				}
-				else
-				{
-					if ($i == 1)
-					{
-						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
-					}
-					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
-						. $tab[1]['link'] . '" class="tablink" '.$tab[1]['target'].'>' . $fs . $tab[1]['label'] . $fse
-						. '</a></b>&nbsp;</td>';
-					if (($i + 1) == $selected)
-					{
-						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
-					}
-					elseif ($i == $selected || $i != count($tabs))
-					{
-						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepm.gif"></td>';
-					}
-					elseif ($i == count($tabs))
-					{
-						if ($i == $selected)
-						{
-							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
-						}
-						else
-						{
-							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end0.gif"></td>';
-						}
-					}
-					else
-					{
-						if ($i != count($tabs))
-						{
-							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
-						}
-					}
-				}
-				$i++;
-				$output_text .= "\n";
 			}
-			$output_text .= "</table>\n";
-			return $output_text;
+			$i++;
+			$output_text .= "\n";
+		}
+		$output_text .= "</table>\n";
+		return $output_text;
+	}
+
+	/**
+	 * get directory of application
+	 *
+	 * $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 * @param $appname name of application
+	 */
+	static function get_app_dir($appname = '')
+	{
+		if ($appname == '')
+		{
+			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
+		}
+		if ($appname == 'logout' || $appname == 'login')
+		{
+			$appname = 'phpgwapi';
 		}
 
-		/**
-		 * get directory of application
-		 *
-		 * $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		 * @param $appname name of application
-		 */
-		function get_app_dir($appname = '')
+		$appdir         = EGW_INCLUDE_ROOT . '/'.$appname;
+		$appdir_default = EGW_SERVER_ROOT . '/'.$appname;
+
+		if (@is_dir($appdir))
 		{
-			if ($appname == '')
-			{
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-			}
-			if ($appname == 'logout' || $appname == 'login')
-			{
-				$appname = 'phpgwapi';
-			}
-
-			$appdir         = EGW_INCLUDE_ROOT . '/'.$appname;
-			$appdir_default = EGW_SERVER_ROOT . '/'.$appname;
-
-			if (@is_dir ($appdir))
-			{
-				return $appdir;
-			}
-			elseif (@is_dir ($appdir_default))
-			{
-				return $appdir_default;
-			}
-			else
-			{
-				return False;
-			}
+			return $appdir;
 		}
-
-		/**
-		 * get inc (include dir) of application
-		 *
-		 * $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		 * @param $appname name of application
-		 */
-		function get_inc_dir($appname = '')
+		elseif (@is_dir($appdir_default))
 		{
-			if (! $appname)
-			{
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-			}
-			if ($appname == 'logout' || $appname == 'login' || $appname == 'about')
-			{
-				$appname = 'phpgwapi';
-			}
-
-			$incdir         = EGW_INCLUDE_ROOT . '/' . $appname . '/inc';
-			$incdir_default = EGW_SERVER_ROOT . '/' . $appname . '/inc';
-
-			if (@is_dir ($incdir))
-			{
-				return $incdir;
-			}
-			elseif (@is_dir ($incdir_default))
-			{
-				return $incdir_default;
-			}
-			else
-			{
-				return False;
-			}
+			return $appdir_default;
 		}
-
-		/**
-		 * list themes available
-		 *
-		 * themes can either be css file like in HEAD (if the template has a css-dir and has css-files in is) \
-		 * 	or ordinary .14 themes-files
-		 */
-		function list_themes()
+		else
 		{
-			$tpl_dir = $this->get_tpl_dir('phpgwapi');
-
-			if ($dh = @opendir($tpl_dir . SEP . 'css'))
-			{
-				while ($file = readdir($dh))
-				{
-					if (eregi("\.css$", $file) && $file != 'phpgw.css')
-					{
-						$list[] = substr($file,0,strpos($file,'.'));
-					}
-				}
-                                closedir($dh);
-			}
-			if(!is_array($list))
-			{
-				$dh = opendir(EGW_SERVER_ROOT . '/phpgwapi/themes');
-				while ($file = readdir($dh))
-				{
-					if (eregi("\.theme$", $file))
-					{
-						$list[] = substr($file,0,strpos($file,'.'));
-					}
-				}
-				closedir($dh);
-			}
-			reset ($list);
-			return $list;
-		}
-
-		/**
-		* List available templates
-		*
-		* @returns array alphabetically sorted list of templates
-		*/
-		function list_templates()
-		{
-			$list = array();
-			$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
-			while (($entry=$d->read()))
-			{
-				if ($entry != '..' && file_exists(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/class.'.$entry.'_framework.inc.php'))
-				{
-					$list[$entry]['name'] = $entry;
-					if (file_exists ($f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php'))
-					{
-						include($f);
-						$list[$entry]['title'] = $GLOBALS['egw_info']['template'][$entry]['title'];
-					}
-					else
-					{
-						$list[$entry]['title'] = $entry;
-					}
-				}
-			}
-			$d->close();
-			ksort($list);
-
-			return $list;
-		}
-
-		/**
-		 * get template dir of an application
-		 *
-		 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		 * @static
-		 * @return string/boolean dir or false if no dir is found
-		 */
-		static function get_tpl_dir($appname = '')
-		{
-			if (!$appname)
-			{
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-			}
-			if ($appname == 'logout' || $appname == 'login')
-			{
-				$appname = 'phpgwapi';
-			}
-
-			if (!isset($GLOBALS['egw_info']['server']['template_set']) && isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))
-			{
-				$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
-			}
-
-			// Setting this for display of template choices in user preferences
-			if ($GLOBALS['egw_info']['server']['template_set'] == 'user_choice')
-			{
-				$GLOBALS['egw_info']['server']['usrtplchoice'] = 'user_choice';
-			}
-
-			if (($GLOBALS['egw_info']['server']['template_set'] == 'user_choice' ||
-				!isset($GLOBALS['egw_info']['server']['template_set'])) &&
-				isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))
-			{
-				$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
-			}
-			if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.
-				$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php'))
-			{
-				$GLOBALS['egw_info']['server']['template_set'] = 'idots';
-			}
-			$tpldir         = EGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['egw_info']['server']['template_set'];
-			$tpldir_default = EGW_SERVER_ROOT . '/' . $appname . '/templates/default';
-
-			if (@is_dir($tpldir))
-			{
-				return $tpldir;
-			}
-			elseif (@is_dir($tpldir_default))
-			{
-				return $tpldir_default;
-			}
-			else
-			{
-				return False;
-			}
-		}
-
-		/**
-		 * checks if image_dir exists and has more than just a navbar-icon
-		 *
-		 * this is just a workaround for idots, better to use find_image, which has a fallback \
-		 * 	on a per image basis to the default dir
-		 */
-		function is_image_dir($dir)
-		{
-			if (!@is_dir($dir))
-			{
-				return False;
-			}
-			if ($d = opendir($dir))
-			{
-				while ($f = readdir($d))
-				{
-					$ext = strtolower(strrchr($f,'.'));
-					if (($ext == '.gif' || $ext == '.png') && strpos($f,'navbar') === False)
-					{
-						closedir($d);
-						return True;
-					}
-				}
-				closedir($d);
-			}
 			return False;
 		}
+	}
 
-		/**
-		 * get image dir of an application
-		 *
-		 * @param $appname application name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		 */
-		function get_image_dir($appname = '')
+	/**
+	 * get inc (include dir) of application
+	 *
+	 * $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 * @param $appname name of application
+	 */
+	static function get_inc_dir($appname = '')
+	{
+		if (!$appname)
 		{
-			if ($appname == '')
-			{
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-			}
-			if (empty($GLOBALS['egw_info']['server']['template_set']))
-			{
-				$GLOBALS['egw_info']['server']['template_set'] = 'idots';
-			}
-
-			$imagedir            = EGW_SERVER_ROOT . '/' . $appname . '/templates/'
-				. $GLOBALS['egw_info']['server']['template_set'] . '/images';
-			$imagedir_default    = EGW_SERVER_ROOT . '/' . $appname . '/templates/idots/images';
-			$imagedir_olddefault = EGW_SERVER_ROOT . '/' . $appname . '/images';
-
-			if ($this->is_image_dir ($imagedir))
-			{
-				return $imagedir;
-			}
-			elseif ($this->is_image_dir ($imagedir_default))
-			{
-				return $imagedir_default;
-			}
-			elseif ($this->is_image_dir ($imagedir_olddefault))
-			{
-				return $imagedir_olddefault;
-			}
-			else
-			{
-				return False;
-			}
+			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
+		}
+		if ($appname == 'logout' || $appname == 'login' || $appname == 'about')
+		{
+			$appname = 'phpgwapi';
 		}
 
-		/**
-		 * get image path of an application
-		 *
-		 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		 */
-		function get_image_path($appname = '')
+		$incdir         = EGW_INCLUDE_ROOT . '/' . $appname . '/inc';
+		$incdir_default = EGW_SERVER_ROOT . '/' . $appname . '/inc';
+
+		if (@is_dir ($incdir))
 		{
-			if ($appname == '')
-			{
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-			}
-
-			if (empty($GLOBALS['egw_info']['server']['template_set']))
-			{
-				$GLOBALS['egw_info']['server']['template_set'] = 'idots';
-			}
-
-			$imagedir            = EGW_SERVER_ROOT . '/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/images';
-			$imagedir_default    = EGW_SERVER_ROOT . '/'.$appname.'/templates/idots/images';
-			$imagedir_olddefault = EGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
-
-			if ($this->is_image_dir ($imagedir))
-			{
-				return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/images';
-			}
-			elseif ($this->is_image_dir ($imagedir_default))
-			{
-				return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/idots/images';
-			}
-			elseif ($this->is_image_dir ($imagedir_olddefault))
-			{
-				return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/default/images';
-			}
-			else
-			{
-				return False;
-			}
+			return $incdir;
 		}
-
-		/**
-		 * Searches and image by a given search order (it maintains a cache of the existing images):
-		 * - image dir of the application for the given template
-		 * - image dir of the application for the default template
-		 * - image dir of the API for the given template
-		 * - image dir of the API for the default template
-		 *
-		 * @param string $appname
-		 * @param string $image
-		 * @return string url of the image
-		 */
-		function find_image($appname,$image)
+		elseif (@is_dir ($incdir_default))
 		{
-			$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
+			return $incdir_default;
+		}
+		else
+		{
+			return False;
+		}
+	}
 
-			if (!@is_array($this->found_files[$appname]))
+	/**
+	 * list themes available
+	 *
+	 * themes can either be css file like in HEAD (if the template has a css-dir and has css-files in is) \
+	 * 	or ordinary .14 themes-files
+	 */
+	function list_themes()
+	{
+		$tpl_dir = self::get_tpl_dir('phpgwapi');
+
+		if ($dh = @opendir($tpl_dir . SEP . 'css'))
+		{
+			while ($file = readdir($dh))
 			{
-				$imagedir_olddefault = '/'.$appname.'/templates/default/images';
-				$imagedir_default    = '/'.$appname.'/templates/idots/images';
-
-				if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_olddefault))
+				if (eregi("\.css$", $file) && $file != 'phpgw.css')
 				{
-					$d = dir(EGW_INCLUDE_ROOT.$imagedir_olddefault);
-					while (false != ($entry = $d->read()))
-					{
-						if ($entry != '.' && $entry != '..')
-						{
-							$this->found_files[$appname][$entry] = $imagedir_olddefault;
-						}
-					}
-					$d->close();
-				}
-
-				if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_default))
-				{
-					$d = dir(EGW_INCLUDE_ROOT.$imagedir_default);
-					while (false != ($entry = $d->read()))
-					{
-						if ($entry != '.' && $entry != '..')
-						{
-							$this->found_files[$appname][$entry] = $imagedir_default;
-						}
-					}
-					$d->close();
-				}
-
-				if (@is_dir(EGW_INCLUDE_ROOT.$imagedir))
-				{
-					$d = dir(EGW_INCLUDE_ROOT.$imagedir);
-					while (false != ($entry = $d->read()))
-					{
-						if ($entry != '.' && $entry != '..')
-						{
-							$this->found_files[$appname][$entry] = $imagedir;
-						}
-					}
-					$d->close();
+					$list[] = substr($file,0,strpos($file,'.'));
 				}
 			}
+                            closedir($dh);
+		}
+		if(!is_array($list))
+		{
+			$dh = opendir(EGW_SERVER_ROOT . '/phpgwapi/themes');
+			while ($file = readdir($dh))
+			{
+				if (eregi("\.theme$", $file))
+				{
+					$list[] = substr($file,0,strpos($file,'.'));
+				}
+			}
+			closedir($dh);
+		}
+		reset ($list);
+		return $list;
+	}
 
-			if (!$GLOBALS['egw_info']['server']['image_type'])
+	/**
+	* List available templates
+	*
+	* @returns array alphabetically sorted list of templates
+	*/
+	function list_templates()
+	{
+		$list = array();
+		$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
+		while (($entry=$d->read()))
+		{
+			if ($entry != '..' && file_exists(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/class.'.$entry.'_framework.inc.php'))
 			{
-				// priority: GIF->JPG->PNG
-				$img_type=array('.gif','.jpg','.png');
-			}
-			else
-			{
-				// priority: : PNG->JPG->GIF
-				$img_type=array('.png','.jpg','.gif');
-			}
-
-			// first look in the selected template dir
-			if(@$this->found_files[$appname][$image.$img_type[0]]==$imagedir)
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
-			}
-			elseif(@$this->found_files[$appname][$image.$img_type[1]]==$imagedir)
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
-			}
-			elseif(@$this->found_files[$appname][$image.$img_type[2]]==$imagedir)
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
-			}
-			// then look everywhere else
-			elseif(isset($this->found_files[$appname][$image.$img_type[0]]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
-			}
-			elseif(isset($this->found_files[$appname][$image.$img_type[1]]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
-			}
-			elseif(isset($this->found_files[$appname][$image.$img_type[2]]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
-			}
-			elseif(isset($this->found_files[$appname][$image]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$image].'/'.$image;
-			}
-			else
-			{
-				// searching the image in the api-dirs
-				if (!isset($this->found_files['phpgwapi']))
+				$list[$entry]['name'] = $entry;
+				if (file_exists ($f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php'))
 				{
-					$this->find_image('phpgwapi','');
-				}
-
-				if(isset($this->found_files['phpgwapi'][$image.$img_type[0]]))
-				{
-					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.$img_type[0]].'/'.$image.$img_type[0];
-				}
-				elseif(isset($this->found_files['phpgwapi'][$image.$img_type[1]]))
-				{
-					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.$img_type[1]].'/'.$image.$img_type[1];
-				}
-				elseif(isset($this->found_files['phpgwapi'][$image.$img_type[2]]))
-				{
-					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.$img_type[2]].'/'.$image.$img_type[2];
-				}
-				elseif(isset($this->found_files['phpgwapi'][$image]))
-				{
-					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image].'/'.$image;
+					include($f);
+					$list[$entry]['title'] = $GLOBALS['egw_info']['template'][$entry]['title'];
 				}
 				else
 				{
-					$imgfile = '';
+					$list[$entry]['title'] = $entry;
 				}
 			}
-			return $imgfile;
+		}
+		$d->close();
+		ksort($list);
+
+		return $list;
+	}
+
+	/**
+	 * get template dir of an application
+	 *
+	 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 * @static
+	 * @return string/boolean dir or false if no dir is found
+	 */
+	static function get_tpl_dir($appname = '')
+	{
+		if (!$appname)
+		{
+			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
+		}
+		if ($appname == 'logout' || $appname == 'login')
+		{
+			$appname = 'phpgwapi';
 		}
 
-		/**
-		 * Searches a appname, template and maybe language and type-specific image
-		 *
-		 * @param string $appname
-		 * @param string $image
-		 * @param string $ext
-		 * @param boolean $use_lang
-		 * @return string url of the image
-		 */
-		function image($appname,$image='',$ext='',$use_lang=True)
+		if (!isset($GLOBALS['egw_info']['server']['template_set']) && isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))
 		{
-			if (!is_array($image))
+			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
+
+		// Setting this for display of template choices in user preferences
+		if ($GLOBALS['egw_info']['server']['template_set'] == 'user_choice')
+		{
+			$GLOBALS['egw_info']['server']['usrtplchoice'] = 'user_choice';
+		}
+
+		if (($GLOBALS['egw_info']['server']['template_set'] == 'user_choice' ||
+			!isset($GLOBALS['egw_info']['server']['template_set'])) &&
+			isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
+		if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.
+			$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php'))
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = 'idots';
+		}
+		$tpldir         = EGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['egw_info']['server']['template_set'];
+		$tpldir_default = EGW_SERVER_ROOT . '/' . $appname . '/templates/default';
+
+		if (@is_dir($tpldir))
+		{
+			return $tpldir;
+		}
+		elseif (@is_dir($tpldir_default))
+		{
+			return $tpldir_default;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
+	/**
+	 * checks if image_dir exists and has more than just a navbar-icon
+	 *
+	 * this is just a workaround for idots, better to use find_image, which has a fallback \
+	 * 	on a per image basis to the default dir
+	 */
+	static function is_image_dir($dir)
+	{
+		if (!@is_dir($dir))
+		{
+			return False;
+		}
+		if ($d = opendir($dir))
+		{
+			while ($f = readdir($d))
 			{
-				if (empty($image))
+				$ext = strtolower(strrchr($f,'.'));
+				if (($ext == '.gif' || $ext == '.png') && strpos($f,'navbar') === False)
 				{
-					return '';
+					closedir($d);
+					return True;
 				}
-				$image = array($image);
 			}
-			if ($use_lang)
+			closedir($d);
+		}
+		return False;
+	}
+
+	/**
+	 * get image dir of an application
+	 *
+	 * @param $appname application name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 */
+	static function get_image_dir($appname = '')
+	{
+		if ($appname == '')
+		{
+			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
+		}
+		if (empty($GLOBALS['egw_info']['server']['template_set']))
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = 'idots';
+		}
+
+		$imagedir            = EGW_SERVER_ROOT . '/' . $appname . '/templates/'
+			. $GLOBALS['egw_info']['server']['template_set'] . '/images';
+		$imagedir_default    = EGW_SERVER_ROOT . '/' . $appname . '/templates/idots/images';
+		$imagedir_olddefault = EGW_SERVER_ROOT . '/' . $appname . '/images';
+
+		if (self::is_image_dir ($imagedir))
+		{
+			return $imagedir;
+		}
+		elseif (self::is_image_dir ($imagedir_default))
+		{
+			return $imagedir_default;
+		}
+		elseif (self::is_image_dir ($imagedir_olddefault))
+		{
+			return $imagedir_olddefault;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
+	/**
+	 * get image path of an application
+	 *
+	 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 */
+	static function get_image_path($appname = '')
+	{
+		if ($appname == '')
+		{
+			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
+		}
+
+		if (empty($GLOBALS['egw_info']['server']['template_set']))
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = 'idots';
+		}
+
+		$imagedir            = EGW_SERVER_ROOT . '/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/images';
+		$imagedir_default    = EGW_SERVER_ROOT . '/'.$appname.'/templates/idots/images';
+		$imagedir_olddefault = EGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
+
+		if (self::is_image_dir($imagedir))
+		{
+			return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/images';
+		}
+		elseif (self::is_image_dir($imagedir_default))
+		{
+			return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/idots/images';
+		}
+		elseif (self::is_image_dir($imagedir_olddefault))
+		{
+			return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/default/images';
+		}
+		return False;
+	}
+
+	/**
+	 * Searches and image by a given search order (it maintains a cache of the existing images):
+	 * - image dir of the application for the given template
+	 * - image dir of the application for the default template
+	 * - image dir of the API for the given template
+	 * - image dir of the API for the default template
+	 *
+	 * @param string $appname
+	 * @param string $image
+	 * @return string url of the image
+	 */
+	function find_image($appname,$image)
+	{
+		$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
+
+		if (!@is_array(self::$found_files[$appname]))
+		{
+			$imagedir_olddefault = '/'.$appname.'/templates/default/images';
+			$imagedir_default    = '/'.$appname.'/templates/idots/images';
+
+			if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_olddefault))
 			{
-				while (list(,$img) = each($image))
+				$d = dir(EGW_INCLUDE_ROOT.$imagedir_olddefault);
+				while (false != ($entry = $d->read()))
 				{
-					$lang_images[] = $img . '_' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-					$lang_images[] = $img;
+					if ($entry != '.' && $entry != '..')
+					{
+						self::$found_files[$appname][$entry] = $imagedir_olddefault;
+					}
 				}
-				$image = $lang_images;
+				$d->close();
 			}
-			while (empty($image_found) && list(,$img) = each($image))
+
+			if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_default))
 			{
-				if(isset($this->found_files[$appname][$img.$ext]))
+				$d = dir(EGW_INCLUDE_ROOT.$imagedir_default);
+				while (false != ($entry = $d->read()))
 				{
-					$image_found = $GLOBALS['egw_info']['server']['webserver_url'].$this->found_files[$appname][$img.$ext].'/'.$img.$ext;
+					if ($entry != '.' && $entry != '..')
+					{
+						self::$found_files[$appname][$entry] = $imagedir_default;
+					}
 				}
-				else
+				$d->close();
+			}
+
+			if (@is_dir(EGW_INCLUDE_ROOT.$imagedir))
+			{
+				$d = dir(EGW_INCLUDE_ROOT.$imagedir);
+				while (false != ($entry = $d->read()))
 				{
-					$image_found = $this->find_image($appname,$img.$ext);
+					if ($entry != '.' && $entry != '..')
+					{
+						self::$found_files[$appname][$entry] = $imagedir;
+					}
 				}
+				$d->close();
 			}
-			return $image_found;
 		}
 
-		/**
-		 * Searches an image of a given type, if not found also without type/extension
-		 *
-		 * @param string $appname
-		 * @param string $image
-		 * @param string $extension
-		 * @return string url of the image
-		 */
-		function image_on($appname,$image,$extension='_on')
+		if (!$GLOBALS['egw_info']['server']['image_type'])
 		{
-			if (($with_extension = $this->image($appname,$image,$extension)))
+			// priority: GIF->JPG->PNG
+			$img_type=array('.gif','.jpg','.png');
+		}
+		else
+		{
+			// priority: : PNG->JPG->GIF
+			$img_type=array('.png','.jpg','.gif');
+		}
+
+		// first look in the selected template dir
+		if(@self::$found_files[$appname][$image.$img_type[0]]==$imagedir)
+		{
+			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
+		}
+		elseif(@self::$found_files[$appname][$image.$img_type[1]]==$imagedir)
+		{
+			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
+		}
+		elseif(@self::$found_files[$appname][$image.$img_type[2]]==$imagedir)
+		{
+			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
+		}
+		// then look everywhere else
+		elseif(isset(self::$found_files[$appname][$image.$img_type[0]]))
+		{
+			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
+		}
+		elseif(isset(self::$found_files[$appname][$image.$img_type[1]]))
+		{
+			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
+		}
+		elseif(isset(self::$found_files[$appname][$image.$img_type[2]]))
+		{
+			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
+		}
+		elseif(isset(self::$found_files[$appname][$image]))
+		{
+			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image].'/'.$image;
+		}
+		else
+		{
+			// searching the image in the api-dirs
+			if (!isset(self::$found_files['phpgwapi']))
 			{
-				return $with_extension;
+				$this->find_image('phpgwapi','');
 			}
-			if(($without_extension = $this->image($appname,$image)))
+
+			if(isset(self::$found_files['phpgwapi'][$image.$img_type[0]]))
 			{
-				return $without_extension;
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[0]].'/'.$image.$img_type[0];
 			}
-			return '';
-		}
-
-		/**
-	 	 * prepare an array with variables used to render the navbar
-		 *
-		 * @deprecated inherit from egw_framework class in your template and use egw_framework::_navbar_vars()
-		 */
-		function navbar()
-		{
-			$GLOBALS['egw_info']['navbar'] = $GLOBALS['egw']->framework->_get_navbar_vars();
-		}
-
-		/**
-		 * load header.inc.php for an application
-		 *
-		 * @deprecated
-		 */
-		function app_header()
-		{
-			if (file_exists(EGW_APP_INC . '/header.inc.php'))
+			elseif(isset(self::$found_files['phpgwapi'][$image.$img_type[1]]))
 			{
-				include(EGW_APP_INC . '/header.inc.php');
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[1]].'/'.$image.$img_type[1];
 			}
-		}
-
-		/**
-		 * load the eGW header
-		 *
-		 * @deprecated use egw_framework::header(), $GLOBALS['egw']->framework->navbar() or better egw_framework::render($content)
-		 */
-		function egw_header()
-		{
-			echo $GLOBALS['egw']->framework->header();
-
-			if (!$GLOBALS['egw_info']['flags']['nonavbar'])
+			elseif(isset(self::$found_files['phpgwapi'][$image.$img_type[2]]))
 			{
-			   echo $GLOBALS['egw']->framework->navbar();
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[2]].'/'.$image.$img_type[2];
 			}
-		 }
-
-		/**
-		 * load the eGW footer
-		 *
-		 * @deprecated use egw_framework::footer() or egw_framework::render($content)
-		 */
-		function egw_footer()
-		{
-			if(is_object($GLOBALS['egw']->framework)) {
-				echo $GLOBALS['egw']->framework->footer();
-			}
-		}
-
-		/**
-		* Used by template headers for including CSS in the header
-		*
-		* @deprecated use framework::_get_css()
-		* @return string
-		*/
-		function get_css()
-		{
-			return $GLOBALS['egw']->framework->_get_css();
-		}
-
-		/**
-		* Used by the template headers for including javascript in the header
-		*
-		* @deprecated use framework::_get_js()
-		* @return string the javascript to be included
-		*/
-		function get_java_script()
-		{
-			return $GLOBALS['egw']->framework->_get_js();
-		}
-
-		/**
-		* Returns on(Un)Load attributes from js class
-		*
-		* @deprecated use framework::_get_js()
-		* @returns string body attributes
-		*/
-		function get_body_attribs()
-		{
-			return $GLOBALS['egw']->framework->_get_body_attribs();
-		}
-
-		function hex2bin($data)
-		{
-			$len = strlen($data);
-			return @pack('H' . $len, $data);
-		}
-
-		/**
-		 * encrypt data passed to the function
-		 *
-		 * @param $data data (string?) to be encrypted
-		 */
-		function encrypt($data)
-		{
-			return $GLOBALS['egw']->crypto->encrypt($data);
-		}
-
-		/**
-		 * decrypt $data
-		 *
-		 * @param $data data to be decrypted
-		 */
-		function decrypt($data)
-		{
-			return $GLOBALS['egw']->crypto->decrypt($data);
-		}
-
-		/**
-		 * legacy wrapper for newer auth class function, encrypt_password
-		 *
-		 * uses the encryption type set in setup and calls the appropriate encryption functions
-		 *
-		 * @deprecated use auth::encrypt_password()
-		 * @param $password password to encrypt
-		 */
-		function encrypt_password($password,$sql=False)
-		{
-			return auth::encrypt_password($password,$sql);
-		}
-
-		/**
-		 * find the current position of the app is the users portal_order preference
-		 *
-		 * @param $app application id to find current position - required
-		 * No discussion
-		 */
-		function find_portal_order($app)
-		{
-			if(!is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']))
+			elseif(isset(self::$found_files['phpgwapi'][$image]))
 			{
-				return -1;
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image].'/'.$image;
 			}
-			@reset($GLOBALS['egw_info']['user']['preferences']['portal_order']);
-			while(list($seq,$appid) = each($GLOBALS['egw_info']['user']['preferences']['portal_order']))
+			else
 			{
-				if($appid == $app)
-				{
-					@reset($GLOBALS['egw_info']['user']['preferences']['portal_order']);
-					return $seq;
-				}
+				$imgfile = '';
 			}
-			@reset($GLOBALS['egw_info']['user']['preferences']['portal_order']);
+		}
+		return $imgfile;
+	}
+
+	/**
+	 * Searches a appname, template and maybe language and type-specific image
+	 *
+	 * @param string $appname
+	 * @param string $image
+	 * @param string $ext
+	 * @param boolean $use_lang
+	 * @return string url of the image
+	 */
+	function image($appname,$image='',$ext='',$use_lang=True)
+	{
+		if (!is_array($image))
+		{
+			if (empty($image))
+			{
+				return '';
+			}
+			$image = array($image);
+		}
+		if ($use_lang)
+		{
+			while (list(,$img) = each($image))
+			{
+				$lang_images[] = $img . '_' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+				$lang_images[] = $img;
+			}
+			$image = $lang_images;
+		}
+		while (empty($image_found) && list(,$img) = each($image))
+		{
+			if(isset(self::$found_files[$appname][$img.$ext]))
+			{
+				$image_found = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$img.$ext].'/'.$img.$ext;
+			}
+			else
+			{
+				$image_found = $this->find_image($appname,$img.$ext);
+			}
+		}
+		return $image_found;
+	}
+
+	/**
+	 * Searches an image of a given type, if not found also without type/extension
+	 *
+	 * @param string $appname
+	 * @param string $image
+	 * @param string $extension
+	 * @return string url of the image
+	 */
+	function image_on($appname,$image,$extension='_on')
+	{
+		if (($with_extension = $this->image($appname,$image,$extension)))
+		{
+			return $with_extension;
+		}
+		if(($without_extension = $this->image($appname,$image)))
+		{
+			return $without_extension;
+		}
+		return '';
+	}
+
+	/**
+ 	 * prepare an array with variables used to render the navbar
+	 *
+	 * @deprecated inherit from egw_framework class in your template and use egw_framework::_navbar_vars()
+	 */
+	static function navbar()
+	{
+		$GLOBALS['egw_info']['navbar'] = $GLOBALS['egw']->framework->_get_navbar_vars();
+	}
+
+	/**
+	 * load header.inc.php for an application
+	 *
+	 * @deprecated
+	 */
+	static function app_header()
+	{
+		if (file_exists(EGW_APP_INC . '/header.inc.php'))
+		{
+			include(EGW_APP_INC . '/header.inc.php');
+		}
+	}
+
+	/**
+	 * load the eGW header
+	 *
+	 * @deprecated use egw_framework::header(), $GLOBALS['egw']->framework->navbar() or better egw_framework::render($content)
+	 */
+	static function egw_header()
+	{
+		echo $GLOBALS['egw']->framework->header();
+
+		if (!$GLOBALS['egw_info']['flags']['nonavbar'])
+		{
+		   echo $GLOBALS['egw']->framework->navbar();
+		}
+	 }
+
+	/**
+	 * load the eGW footer
+	 *
+	 * @deprecated use egw_framework::footer() or egw_framework::render($content)
+	 */
+	static function egw_footer()
+	{
+		if(is_object($GLOBALS['egw']->framework)) {
+			echo $GLOBALS['egw']->framework->footer();
+		}
+	}
+
+	/**
+	* Used by template headers for including CSS in the header
+	*
+	* @deprecated use framework::_get_css()
+	* @return string
+	*/
+	static function get_css()
+	{
+		return $GLOBALS['egw']->framework->_get_css();
+	}
+
+	/**
+	* Used by the template headers for including javascript in the header
+	*
+	* @deprecated use framework::_get_js()
+	* @return string the javascript to be included
+	*/
+	static function get_java_script()
+	{
+		return $GLOBALS['egw']->framework->_get_js();
+	}
+
+	/**
+	* Returns on(Un)Load attributes from js class
+	*
+	* @deprecated use framework::_get_js()
+	* @returns string body attributes
+	*/
+	static function get_body_attribs()
+	{
+		return $GLOBALS['egw']->framework->_get_body_attribs();
+	}
+
+	static function hex2bin($data)
+	{
+		$len = strlen($data);
+		return @pack('H' . $len, $data);
+	}
+
+	/**
+	 * encrypt data passed to the function
+	 *
+	 * @param $data data (string?) to be encrypted
+	 */
+	static function encrypt($data)
+	{
+		return $GLOBALS['egw']->crypto->encrypt($data);
+	}
+
+	/**
+	 * decrypt $data
+	 *
+	 * @param $data data to be decrypted
+	 */
+	static function decrypt($data)
+	{
+		return $GLOBALS['egw']->crypto->decrypt($data);
+	}
+
+	/**
+	 * legacy wrapper for newer auth class function, encrypt_password
+	 *
+	 * uses the encryption type set in setup and calls the appropriate encryption functions
+	 *
+	 * @deprecated use auth::encrypt_password()
+	 * @param $password password to encrypt
+	 */
+	static function encrypt_password($password,$sql=False)
+	{
+		return auth::encrypt_password($password,$sql);
+	}
+
+	/**
+	 * find the current position of the app is the users portal_order preference
+	 *
+	 * @param $app application id to find current position - required
+	 * No discussion
+	 */
+	function find_portal_order($app)
+	{
+		if(!is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']))
+		{
 			return -1;
 		}
-
-		/**
-		 * temp wrapper to new hooks class
-		 *
-		 */
-		function hook($location, $appname = '', $no_permission_check = False)
+		@reset($GLOBALS['egw_info']['user']['preferences']['portal_order']);
+		while(list($seq,$appid) = each($GLOBALS['egw_info']['user']['preferences']['portal_order']))
 		{
-			echo '$'."GLOBALS['phpgw']common->hook()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->process()".'. For now this will act as a wrapper<br>';
-			return $GLOBALS['egw']->hooks->process($location, $order, $no_permission_check);
-		}
-
-		/**
-		 * temp wrapper to new hooks class
-		 *
-		 */
-		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
-		function hook_single($location, $appname = '', $no_permission_check = False)
-		{
-			echo '$'."GLOBALS['phpgw']common->hook_single()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->single()".'. For now this will act as a wrapper<br>';
-			return $GLOBALS['egw']->hooks->single($location, $order, $no_permission_check);
-		}
-
-		/**
-		 * temp wrapper to new hooks class
-		 *
-		 */
-		function hook_count($location)
-		{
-			echo '$'."GLOBALS['phpgw']common->hook_count()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->count()".'. For now this will act as a wrapper<br>';
-			return $GLOBALS['egw']->hooks->count($location);
-		}
-
-		/* Wrapper to the session->appsession() */
-		function appsession($data = '##NOTHING##')
-		{
-			$this->debug_info[] = "\$GLOBALS['egw']->common->appsession() is a depreciated function"
-				. " - use \$GLOBALS['egw']->session->appsession() instead";
-
-			return $GLOBALS['egw']->session->appsession('default','',$data);
-		}
-
-		/**
-		 * return a formatted timestamp or current time
-		 *
-		 * @param int $t=0 timestamp, default current time
-		 * @param string $format='' timeformat, default '' = read from the user prefernces
-		 * @param boolean $adjust_to_usertime=true should datetime::tz_offset be added to $t or not, default true
-		 * @return string the formated date/time
-		 */
-		function show_date($t = 0, $format = '', $adjust_to_usertime=true)
-		{
-			if (!$t)
+			if($appid == $app)
 			{
-				$t = $GLOBALS['egw']->datetime->gmtnow;
+				@reset($GLOBALS['egw_info']['user']['preferences']['portal_order']);
+				return $seq;
 			}
+		}
+		@reset($GLOBALS['egw_info']['user']['preferences']['portal_order']);
+		return -1;
+	}
 
-			if ($adjust_to_usertime)
-			{
-				$t += $GLOBALS['egw']->datetime->tz_offset;
-			}
-
-			if (!$format)
-			{
-				$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' - ';
-				if ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
-				{
-					$format .= 'h:i a';
-				}
-				else
-				{
-					$format .= 'H:i';
-				}
-			}
-			return adodb_date($format,$t);
+	/**
+	 * return a formatted timestamp or current time
+	 *
+	 * @param int $t=0 timestamp, default current time
+	 * @param string $format='' timeformat, default '' = read from the user prefernces
+	 * @param boolean $adjust_to_usertime=true should datetime::tz_offset be added to $t or not, default true
+	 * @return string the formated date/time
+	 */
+	static function show_date($t = 0, $format = '', $adjust_to_usertime=true)
+	{
+		if (!$t)
+		{
+			$t = $GLOBALS['egw']->datetime->gmtnow;
 		}
 
-		/**
-		 * Format a date according to the user preferences
-		 *
-		 * @param string $yearstr year
-		 * @param string $monthstr month
-		 * @param string $day day
-		 * @param boolean $add_seperator=false add the separator specifed in the prefs or not, default no
-		 * @return string
-		 */
-		function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
+		if ($adjust_to_usertime)
 		{
-			$dateformat = strtolower($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
-			$sep = substr($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],1,1);
-
-			$dlarr[strpos($dateformat,'y')] = $yearstr;
-			$dlarr[strpos($dateformat,'m')] = $monthstr;
-			$dlarr[strpos($dateformat,'d')] = $daystr;
-			ksort($dlarr);
-
-			if ($add_seperator)
-			{
-				return implode($sep,$dlarr);
-			}
-			return implode(' ',$dlarr);
+			$t += $GLOBALS['egw']->datetime->tz_offset;
 		}
 
-		/**
-		 * format the time takes settings from user preferences
-		 *
-		 * @param int $hour hour
-		 * @param int $min minutes
-		 * @param int/string $sec='' defaults to ''
-		 * @return string formated time
-		 */
-		function formattime($hour,$min,$sec='')
+		if (!$format)
 		{
-			$h12 = $hour;
+			$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' - ';
 			if ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
 			{
-				if ($hour >= 12)
-				{
-					$ampm = ' pm';
-				}
-				else
-				{
-					$ampm = ' am';
-				}
-
-				$h12 %= 12;
-
-				if ($h12 == 0 && $hour)
-				{
-					$h12 = 12;
-				}
-				if ($h12 == 0 && !$hour)
-				{
-					$h12 = 0;
-				}
+				$format .= 'h:i a';
 			}
 			else
 			{
-				$h12 = $hour;
+				$format .= 'H:i';
 			}
-
-			if ($sec !== '')
-			{
-				$sec = ':'.$sec;
-			}
-
-			return $h12.':'.$min.$sec.$ampm;
 		}
+		return adodb_date($format,$t);
+	}
 
-		/**
-		 * Format an email address according to the system standard
-		 *
-		 * Convert all european special chars to ascii and fallback to the accountname, if nothing left eg. chiniese
-		 *
-		 * @param string $first firstname
-		 * @param string $last lastname
-		 * @param string $account account-name (lid)
-		 * @param string $domain=null domain-name or null to use eGW's default domain $GLOBALS['egw_info']['server']['mail_suffix]
-		 * @return string with email address
-		 */
-		function email_address($first,$last,$account,$domain=null)
+	/**
+	 * Format a date according to the user preferences
+	 *
+	 * @param string $yearstr year
+	 * @param string $monthstr month
+	 * @param string $day day
+	 * @param boolean $add_seperator=false add the separator specifed in the prefs or not, default no
+	 * @return string
+	 */
+	static function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
+	{
+		$dateformat = strtolower($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+		$sep = substr($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],1,1);
+
+		$dlarr[strpos($dateformat,'y')] = $yearstr;
+		$dlarr[strpos($dateformat,'m')] = $monthstr;
+		$dlarr[strpos($dateformat,'d')] = $daystr;
+		ksort($dlarr);
+
+		if ($add_seperator)
 		{
-			//echo "<p align=right>common::email_address('$first','$last','$account')";
-			// convert all european special chars to ascii, (c) RalfBecker-AT-egroupware.org ;-)
-			static $extra = array(
-				'&szlig;' => 'ss',
-				' ' => '',
-			);
-			foreach (array('first','last','account') as $name)
+			return implode($sep,$dlarr);
+		}
+		return implode(' ',$dlarr);
+	}
+
+	/**
+	 * format the time takes settings from user preferences
+	 *
+	 * @param int $hour hour
+	 * @param int $min minutes
+	 * @param int/string $sec='' defaults to ''
+	 * @return string formated time
+	 */
+	static function formattime($hour,$min,$sec='')
+	{
+		$h12 = $hour;
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
+		{
+			if ($hour >= 12)
 			{
-				$$name = htmlentities($$name,ENT_QUOTES,$GLOBALS['egw']->translation->charset());
-				$$name = str_replace(array_keys($extra),array_values($extra),$$name);
-				$$name = preg_replace('/&([aAuUoO])uml;/','\\1e',$$name);	// replace german umlauts with the letter plus one 'e'
-				$$name = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$$name);	// remove all types of acents
-				$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$$name);	// remove all other entities
-			}
-			//echo " --> ('$first', '$last', '$account')";
-			if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
-			{
-				$first = '';
-				$last = $account;
-			}
-			if (!$first || !$last)
-			{
-				$dot = $underscore = '';
+				$ampm = ' pm';
 			}
 			else
 			{
-				$dot = '.';
-				$underscore = '_';
-			}
-			if (!$domain) $domain = $GLOBALS['egw_info']['server']['mail_suffix'];
-
-			$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
-				array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
-				$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
-				($domain ? '@'.$domain : '');
-			//echo " = '$email'</p>\n";
-			return $email;
-		}
-
-		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
-		/**
-		 * uses code in /email class msg to obtain the appropriate password for email
-		 *
-		 * @param  (none - it will abtain the info it needs on its own)
-		 */
-		/*
-		function get_email_passwd_ex()
-		{
-			// ----  Create the email Message Class  if needed  -----
-			if (is_object($GLOBALS['egw']->msg))
-			{
-				$do_free_me = False;
-			}
-			else
-			{
-				$GLOBALS['egw']->msg =& CreateObject('email.mail_msg');
-				$do_free_me = True;
-			}
-			// use the Msg class to obtain the appropriate password
-			$tmp_prefs = $GLOBALS['egw']->preferences->read();
-			if (!isset($tmp_prefs['email']['passwd']))
-			{
-				$email_passwd = $GLOBALS['egw_info']['user']['passwd'];
-			}
-			else
-			{
-				$email_passwd = $GLOBALS['egw']->msg->decrypt_email_passwd($tmp_prefs['email']['passwd']);
-			}
-			// cleanup and return
-			if ($do_free_me)
-			{
-				unset ($GLOBALS['egw']->msg);
-			}
-			return $email_passwd;
-		}
-		*/
-
-		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
-		/**
-		 * create email preferences
-		 *
-		 * This is not the best place for it, but it needs to be shared between Aeromail and SM
-		 * @param $prefs
-		 * @param $account_id -optional defaults to : phpgw_info['user']['account_id']
-		 */
-		function create_emailpreferences($prefs='',$accountid='')
-		{
-			return $GLOBALS['egw']->preferences->create_email_preferences($accountid);
-			// ----  Create the email Message Class  if needed  -----
-			if (is_object($GLOBALS['egw']->msg))
-			{
-				$do_free_me = False;
-			}
-			else
-			{
-				$GLOBALS['egw']->msg =& CreateObject('email.mail_msg');
-				$do_free_me = True;
+				$ampm = ' am';
 			}
 
-			// this sets the preferences into the phpgw_info structure
-			$GLOBALS['egw']->msg->create_email_preferences();
+			$h12 %= 12;
 
-			// cleanup and return
-			if ($do_free_me)
+			if ($h12 == 0 && $hour)
 			{
-				unset ($GLOBALS['egw']->msg);
+				$h12 = 12;
+			}
+			if ($h12 == 0 && !$hour)
+			{
+				$h12 = 0;
 			}
 		}
-
-		/*
-		function create_emailpreferences($prefs,$accountid='')
+		else
 		{
-			$account_id = get_account_id($accountid);
+			$h12 = $hour;
+		}
 
-			// NEW EMAIL PASSWD METHOD (shared between SM and aeromail)
-			$prefs['email']['passwd'] = $this->get_email_passwd_ex();
+		if ($sec !== '')
+		{
+			$sec = ':'.$sec;
+		}
 
-			// Add default preferences info
-			if (!isset($prefs['email']['userid']))
+		return $h12.':'.$min.$sec.$ampm;
+	}
+
+	/**
+	 * Format an email address according to the system standard
+	 *
+	 * Convert all european special chars to ascii and fallback to the accountname, if nothing left eg. chiniese
+	 *
+	 * @param string $first firstname
+	 * @param string $last lastname
+	 * @param string $account account-name (lid)
+	 * @param string $domain=null domain-name or null to use eGW's default domain $GLOBALS['egw_info']['server']['mail_suffix]
+	 * @return string with email address
+	 */
+	static function email_address($first,$last,$account,$domain=null)
+	{
+		//echo "<p align=right>common::email_address('$first','$last','$account')";
+		// convert all european special chars to ascii, (c) RalfBecker-AT-egroupware.org ;-)
+		static $extra = array(
+			'&szlig;' => 'ss',
+			' ' => '',
+		);
+		foreach (array('first','last','account') as $name)
+		{
+			$$name = htmlentities($$name,ENT_QUOTES,$GLOBALS['egw']->translation->charset());
+			$$name = str_replace(array_keys($extra),array_values($extra),$$name);
+			$$name = preg_replace('/&([aAuUoO])uml;/','\\1e',$$name);	// replace german umlauts with the letter plus one 'e'
+			$$name = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$$name);	// remove all types of acents
+			$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$$name);	// remove all other entities
+		}
+		//echo " --> ('$first', '$last', '$account')";
+		if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
+		{
+			$first = '';
+			$last = $account;
+		}
+		if (!$first || !$last)
+		{
+			$dot = $underscore = '';
+		}
+		else
+		{
+			$dot = '.';
+			$underscore = '_';
+		}
+		if (!$domain) $domain = $GLOBALS['egw_info']['server']['mail_suffix'];
+
+		$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
+			array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
+			$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
+			($domain ? '@'.$domain : '');
+		//echo " = '$email'</p>\n";
+		return $email;
+	}
+
+	/**
+	 * create email preferences
+	 *
+	 * This is not the best place for it, but it needs to be shared between Aeromail and SM
+	 * @param $prefs
+	 * @param $account_id -optional defaults to : phpgw_info['user']['account_id']
+	 */
+	function create_emailpreferences($prefs='',$accountid='')
+	{
+		return $GLOBALS['egw']->preferences->create_email_preferences($accountid);
+		// ----  Create the email Message Class  if needed  -----
+		if (is_object($GLOBALS['egw']->msg))
+		{
+			$do_free_me = False;
+		}
+		else
+		{
+			$GLOBALS['egw']->msg =& CreateObject('email.mail_msg');
+			$do_free_me = True;
+		}
+
+		// this sets the preferences into the phpgw_info structure
+		$GLOBALS['egw']->msg->create_email_preferences();
+
+		// cleanup and return
+		if ($do_free_me)
+		{
+			unset ($GLOBALS['egw']->msg);
+		}
+	}
+
+	/**
+	 * ?
+	 *
+	 * This will be moved into the applications area
+	 */
+	static function check_code($code)
+	{
+		$s = '<br>';
+		switch ($code)
+		{
+			case 13:	$s .= lang('Your message has been sent');break;
+			case 14:	$s .= lang('New entry added sucessfully');break;
+			case 15:	$s .= lang('Entry updated sucessfully');	break;
+			case 16:	$s .= lang('Entry has been deleted sucessfully'); break;
+			case 18:	$s .= lang('Password has been updated');	break;
+			case 38:	$s .= lang('Password could not be changed');	break;
+			case 19:	$s .= lang('Session has been killed');	break;
+			case 27:	$s .= lang('Account has been updated');	break;
+			case 28:	$s .= lang('Account has been created');	break;
+			case 29:	$s .= lang('Account has been deleted');	break;
+			case 30:	$s .= lang('Your settings have been updated'); break;
+			case 31:	$s .= lang('Group has been added');	break;
+			case 32:	$s .= lang('Group has been deleted');	break;
+			case 33:	$s .= lang('Group has been updated');	break;
+			case 34:	$s .= lang('Account has been deleted') . '<p>'
+					. lang('Error deleting %1 %2 directory',lang('users'),' '.lang('private').' ')
+					. ',<br>' . lang('Please %1 by hand',lang('delete')) . '<br><br>'
+					. lang('To correct this error for the future you will need to properly set the')
+					. '<br>' . lang('permissions to the files/users directory')
+					. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
+					. $GLOBALS['egw_info']['server']['files_dir'] . '/users/');
+				break;
+			case 35:	$s .= lang('Account has been updated') . '<p>'
+					. lang('Error renaming %1 %2 directory',lang('users'),
+					' '.lang('private').' ')
+					. ',<br>' . lang('Please %1 by hand',
+					lang('rename')) . '<br><br>'
+					. lang('To correct this error for the future you will need to properly set the')
+					. '<br>' . lang('permissions to the files/users directory')
+					. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
+					. $GLOBALS['egw_info']['server']['files_dir'] . '/users/');
+				break;
+			case 36:	$s .= lang('Account has been created') . '<p>'
+					. lang('Error creating %1 %2 directory',lang('users'),
+					' '.lang('private').' ')
+					. ',<br>' . lang('Please %1 by hand',
+					lang('create')) . '<br><br>'
+					. lang('To correct this error for the future you will need to properly set the')
+					. '<br>' . lang('permissions to the files/users directory')
+					. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
+					. $GLOBALS['egw_info']['server']['files_dir'] . '/users/');
+				break;
+			case 37:	$s .= lang('Group has been added') . '<p>'
+					. lang('Error creating %1 %2 directory',lang('groups'),' ')
+					. ',<br>' . lang('Please %1 by hand',
+					lang('create')) . '<br><br>'
+					. lang('To correct this error for the future you will need to properly set the')
+					. '<br>' . lang('permissions to the files/users directory')
+					. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
+					. $GLOBALS['egw_info']['server']['files_dir'] . '/groups/');
+				break;
+			case 38:	$s .= lang('Group has been deleted') . '<p>'
+					. lang('Error deleting %1 %2 directory',lang('groups'),' ')
+					. ',<br>' . lang('Please %1 by hand',
+					lang('delete')) . '<br><br>'
+					. lang('To correct this error for the future you will need to properly set the')
+					. '<br>' . lang('permissions to the files/users directory')
+					. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
+					. $GLOBALS['egw_info']['server']['files_dir'] . '/groups/');
+				break;
+			case 39:	$s .= lang('Group has been updated') . '<p>'
+					. lang('Error renaming %1 %2 directory',lang('groups'),' ')
+					. ',<br>' . lang('Please %1 by hand',
+					lang('rename')) . '<br><br>'
+					. lang('To correct this error for the future you will need to properly set the')
+					. '<br>' . lang('permissions to the files/users directory')
+					. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
+					. $GLOBALS['egw_info']['server']['files_dir'] . '/groups/');
+				break;
+			case 40: $s .= lang('You have not entered a title').'.';
+				break;
+			case 41: $s .= lang('You have not entered a valid time of day').'.';
+				break;
+			case 42: $s .= lang('You have not entered a valid date').'.';
+				break;
+			case 43: $s .= lang('You have not entered participants').'.';
+				break;
+			default:	return '';
+		}
+		return $s;
+	}
+
+	/**
+	 * process error message
+	 *
+	 * @param $error error
+	 * @param $line line
+	 * @param $file file
+	 */
+	static function phpgw_error($error,$line = '', $file = '')
+	{
+		echo '<p><b>eGroupWare internal error:</b><p>'.$error;
+		if ($line)
+		{
+			echo 'Line: '.$line;
+		}
+		if ($file)
+		{
+			echo 'File: '.$file;
+		}
+		echo '<p>Your session has been halted.';
+		exit;
+	}
+
+	/**
+	 * create phpcode from array
+	 *
+	 * @param $array - array
+	 */
+	static function create_phpcode_from_array($array)
+	{
+		while (list($key, $val) = each($array))
+		{
+			if (is_array($val))
 			{
-				if ($GLOBALS['egw_info']['server']['mail_login_type'] == 'vmailmgr')
+				while (list($key2, $val2) = each($val))
 				{
-					$prefs['email']['userid'] = $GLOBALS['egw']->accounts->id2name($account_id)
-						. '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
-				}
-				else
-				{
-					$prefs['email']['userid'] = $GLOBALS['egw']->accounts->id2name($account_id);
-				}
-			}
-			// Set Server Mail Type if not defined
-			if (empty($GLOBALS['egw_info']['server']['mail_server_type']))
-			{
-				$GLOBALS['egw_info']['server']['mail_server_type'] = 'imap';
-			}
-
-			// OLD EMAIL PASSWD METHOD
-			if (!isset($prefs['email']['passwd']))
-			{
-				$prefs['email']['passwd'] = $GLOBALS['egw_info']['user']['passwd'];
-			}
-			else
-			{
-				$prefs['email']['passwd'] = $this->decrypt($prefs['email']['passwd']);
-			}
-			// NEW EMAIL PASSWD METHOD Located at the begining of this function
-
-			if (!isset($prefs['email']['address']))
-			{
-				$prefs['email']['address'] = $GLOBALS['egw']->accounts->id2name($account_id)
-					. '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
-			}
-			if (!isset($prefs['email']['mail_server']))
-			{
-				$prefs['email']['mail_server'] = $GLOBALS['egw_info']['server']['mail_server'];
-			}
-			if (!isset($prefs['email']['mail_server_type']))
-			{
-				$prefs['email']['mail_server_type'] = $GLOBALS['egw_info']['server']['mail_server_type'];
-			}
-			if (!isset($prefs['email']['imap_server_type']))
-			{
-				$prefs['email']['imap_server_type'] = $GLOBALS['egw_info']['server']['imap_server_type'];
-			}
-			// These sets the mail_port server variable
-			if ($prefs['email']['mail_server_type']=='imap')
-			{
-				$prefs['email']['mail_port'] = '143';
-			}
-			elseif ($prefs['email']['mail_server_type']=='pop3')
-			{
-				$prefs['email']['mail_port'] = '110';
-			}
-			elseif ($prefs['email']['mail_server_type']=='imaps')
-			{
-				$prefs['email']['mail_port'] = '993';
-			}
-			elseif ($prefs['email']['mail_server_type']=='pop3s')
-			{
-				$prefs['email']['mail_port'] = '995';
-			}
-			// This is going to be used to switch to the nntp class
-			if (isset($GLOBALS['egw_info']['flags']['newsmode']) &&
-				$GLOBALS['egw_info']['flags']['newsmode'])
-			{
-				$prefs['email']['mail_server_type'] = 'nntp';
-			}
-			// DEBUG
-			//echo "<br>prefs['email']['passwd']: " .$prefs['email']['passwd'] .'<br>';
-			return $prefs;
-		}
-		*/
-
-		// This will be moved into the applications area.
-		/**
-		 * ?
-		 *
-		 * This will be moved into the applications area
-		 */
-		function check_code($code)
-		{
-			$s = '<br>';
-			switch ($code)
-			{
-				case 13:	$s .= lang('Your message has been sent');break;
-				case 14:	$s .= lang('New entry added sucessfully');break;
-				case 15:	$s .= lang('Entry updated sucessfully');	break;
-				case 16:	$s .= lang('Entry has been deleted sucessfully'); break;
-				case 18:	$s .= lang('Password has been updated');	break;
-				case 38:	$s .= lang('Password could not be changed');	break;
-				case 19:	$s .= lang('Session has been killed');	break;
-				case 27:	$s .= lang('Account has been updated');	break;
-				case 28:	$s .= lang('Account has been created');	break;
-				case 29:	$s .= lang('Account has been deleted');	break;
-				case 30:	$s .= lang('Your settings have been updated'); break;
-				case 31:	$s .= lang('Group has been added');	break;
-				case 32:	$s .= lang('Group has been deleted');	break;
-				case 33:	$s .= lang('Group has been updated');	break;
-				case 34:	$s .= lang('Account has been deleted') . '<p>'
-						. lang('Error deleting %1 %2 directory',lang('users'),' '.lang('private').' ')
-						. ',<br>' . lang('Please %1 by hand',lang('delete')) . '<br><br>'
-						. lang('To correct this error for the future you will need to properly set the')
-						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['egw_info']['server']['files_dir'] . '/users/');
-					break;
-				case 35:	$s .= lang('Account has been updated') . '<p>'
-						. lang('Error renaming %1 %2 directory',lang('users'),
-						' '.lang('private').' ')
-						. ',<br>' . lang('Please %1 by hand',
-						lang('rename')) . '<br><br>'
-						. lang('To correct this error for the future you will need to properly set the')
-						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['egw_info']['server']['files_dir'] . '/users/');
-					break;
-				case 36:	$s .= lang('Account has been created') . '<p>'
-						. lang('Error creating %1 %2 directory',lang('users'),
-						' '.lang('private').' ')
-						. ',<br>' . lang('Please %1 by hand',
-						lang('create')) . '<br><br>'
-						. lang('To correct this error for the future you will need to properly set the')
-						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['egw_info']['server']['files_dir'] . '/users/');
-					break;
-				case 37:	$s .= lang('Group has been added') . '<p>'
-						. lang('Error creating %1 %2 directory',lang('groups'),' ')
-						. ',<br>' . lang('Please %1 by hand',
-						lang('create')) . '<br><br>'
-						. lang('To correct this error for the future you will need to properly set the')
-						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['egw_info']['server']['files_dir'] . '/groups/');
-					break;
-				case 38:	$s .= lang('Group has been deleted') . '<p>'
-						. lang('Error deleting %1 %2 directory',lang('groups'),' ')
-						. ',<br>' . lang('Please %1 by hand',
-						lang('delete')) . '<br><br>'
-						. lang('To correct this error for the future you will need to properly set the')
-						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['egw_info']['server']['files_dir'] . '/groups/');
-					break;
-				case 39:	$s .= lang('Group has been updated') . '<p>'
-						. lang('Error renaming %1 %2 directory',lang('groups'),' ')
-						. ',<br>' . lang('Please %1 by hand',
-						lang('rename')) . '<br><br>'
-						. lang('To correct this error for the future you will need to properly set the')
-						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['egw_info']['server']['files_dir'] . '/groups/');
-					break;
-				case 40: $s .= lang('You have not entered a title').'.';
-					break;
-				case 41: $s .= lang('You have not entered a valid time of day').'.';
-					break;
-				case 42: $s .= lang('You have not entered a valid date').'.';
-					break;
-				case 43: $s .= lang('You have not entered participants').'.';
-					break;
-				default:	return '';
-			}
-			return $s;
-		}
-		/**
-		 * process error message
-		 *
-		 * @param $error error
-		 * @param $line line
-		 * @param $file file
-		 */
-		function phpgw_error($error,$line = '', $file = '')
-		{
-			echo '<p><b>eGroupWare internal error:</b><p>'.$error;
-			if ($line)
-			{
-				echo 'Line: '.$line;
-			}
-			if ($file)
-			{
-				echo 'File: '.$file;
-			}
-			echo '<p>Your session has been halted.';
-			exit;
-		}
-
-		/**
-		 * create phpcode from array
-		 *
-		 * @param $array - array
-		 */
-		function create_phpcode_from_array($array)
-		{
-			while (list($key, $val) = each($array))
-			{
-				if (is_array($val))
-				{
-					while (list($key2, $val2) = each($val))
+					if (is_array($val2))
 					{
-						if (is_array($val2))
+						while (list($key3, $val3) = each ($val2))
 						{
-							while (list($key3, $val3) = each ($val2))
+							if (is_array($val3))
 							{
-								if (is_array($val3))
+								while (list($key4, $val4) = each ($val3))
 								{
-									while (list($key4, $val4) = each ($val3))
-									{
-										$s .= "\$GLOBALS['egw_info']['" . $key . "']['" . $key2 . "']['" . $key3 . "']['" .$key4 . "']='" . $val4 . "';";
-										$s .= "\n";
-									}
-								}
-								else
-								{
-									$s .= "\$GLOBALS['egw_info']['" . $key . "']['" . $key2 . "']['" . $key3 . "']='" . $val3 . "';";
+									$s .= "\$GLOBALS['egw_info']['" . $key . "']['" . $key2 . "']['" . $key3 . "']['" .$key4 . "']='" . $val4 . "';";
 									$s .= "\n";
 								}
 							}
-						}
-						else
-						{
-							$s .= "\$GLOBALS['egw_info']['" . $key ."']['" . $key2 . "']='" . $val2 . "';";
-							$s .= "\n";
-						}
-					}
-				}
-				else
-				{
-					$s .= "\$GLOBALS['egw_info']['" . $key . "']='" . $val . "';";
-					$s .= "\n";
-				}
-			}
-			return $s;
-		}
-
-		// This will return the full phpgw_info array, used for debugging
-		/**
-		 * return the full phpgw_info array for debugging
-		 *
-		 * @param array - array
-		 */
-		function debug_list_array_contents($array)
-		{
-			while (list($key, $val) = each($array))
-			{
-				if (is_array($val))
-				{
-					while (list($key2, $val2) = each($val))
-					{
-						if (is_array($val2))
-						{
-							while (list($key3, $val3) = each ($val2))
+							else
 							{
-								if (is_array($val3))
-								{
-									while (list($key4, $val4) = each ($val3))
-									{
-										echo $$array . "[$key][$key2][$key3][$key4]=$val4<br>";
-									}
-								}
-								else
-								{
-									echo $$array . "[$key][$key2][$key3]=$val3<br>";
-								}
+								$s .= "\$GLOBALS['egw_info']['" . $key . "']['" . $key2 . "']['" . $key3 . "']='" . $val3 . "';";
+								$s .= "\n";
 							}
 						}
-						else
-						{
-							echo $$array . "[$key][$key2]=$val2<br>";
-						}
+					}
+					else
+					{
+						$s .= "\$GLOBALS['egw_info']['" . $key ."']['" . $key2 . "']='" . $val2 . "';";
+						$s .= "\n";
 					}
 				}
-				else
+			}
+			else
+			{
+				$s .= "\$GLOBALS['egw_info']['" . $key . "']='" . $val . "';";
+				$s .= "\n";
+			}
+		}
+		return $s;
+	}
+
+	// This will return the full phpgw_info array, used for debugging
+	/**
+	 * return the full phpgw_info array for debugging
+	 *
+	 * @param array - array
+	 */
+	static function debug_list_array_contents($array)
+	{
+		while (list($key, $val) = each($array))
+		{
+			if (is_array($val))
+			{
+				while (list($key2, $val2) = each($val))
 				{
-					echo $$array . "[$key]=$val<br>";
+					if (is_array($val2))
+					{
+						while (list($key3, $val3) = each ($val2))
+						{
+							if (is_array($val3))
+							{
+								while (list($key4, $val4) = each ($val3))
+								{
+									echo $$array . "[$key][$key2][$key3][$key4]=$val4<br>";
+								}
+							}
+							else
+							{
+								echo $$array . "[$key][$key2][$key3]=$val3<br>";
+							}
+						}
+					}
+					else
+					{
+						echo $$array . "[$key][$key2]=$val2<br>";
+					}
 				}
 			}
-		}
-
-		// This will return a list of functions in the API
-		/**
-		 * return a list of functionsin the API
-		 *
-		 */
-		function debug_list_core_functions()
-		{
-			echo '<br><b>core functions</b><br>';
-			echo '<pre>';
-			chdir(EGW_INCLUDE_ROOT . '/phpgwapi');
-			system("grep -r '^[ \t]*function' *");
-			echo '</pre>';
-		}
-
-		var $nextid_table = 'egw_nextid';
-
-		/**
-		 * Return a value for the next id an app/class may need to insert values into LDAP
-		 *
-		 * @param string $appname app-name
-		 * @param int $min=0 if != 0 minimum id
-		 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
-		 * @return int/boolean the next id or false if $max given and exceeded
-		 */
-		function next_id($appname,$min=0,$max=0)
-		{
-			if (!$appname)
+			else
 			{
-				return -1;
+				echo $$array . "[$key]=$val<br>";
 			}
-
-			$GLOBALS['egw']->db->select($this->nextid_table,'id',array('appname' => $appname),__LINE__,__FILE__);
-			$id = $GLOBALS['egw']->db->next_record() ? $GLOBALS['egw']->db->f('id') : 0;
-
-			if ($max && $id >= $max)
-			{
-				return False;
-			}
-			++$id;
-
-			if($id < $min) $id = $min;
-
-			$GLOBALS['egw']->db->insert($this->nextid_table,array('id' => $id),array('appname' => $appname),__LINE__,__FILE__);
-
-			return (int)$id;
 		}
+	}
 
-		/**
-		 * Return a value for the last id entered, which an app may need to check values for LDAP
-		 *
-		 * @param string $appname app-name
-		 * @param int $min=0 if != 0 minimum id
-		 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
-		 * @return int current id in the next_id table for a particular app/class or -1 for no app and false if $max is exceeded.
-		 */
-		function last_id($appname,$min=0,$max=0)
+	// This will return a list of functions in the API
+	/**
+	 * return a list of functionsin the API
+	 *
+	 */
+	static function debug_list_core_functions()
+	{
+		echo '<br><b>core functions</b><br>';
+		echo '<pre>';
+		chdir(EGW_INCLUDE_ROOT . '/phpgwapi');
+		system("grep -r '^[ \t]*function' *");
+		echo '</pre>';
+	}
+
+	const NEXTID_TABLE = 'egw_nextid';
+
+	/**
+	 * Return a value for the next id an app/class may need to insert values into LDAP
+	 *
+	 * @param string $appname app-name
+	 * @param int $min=0 if != 0 minimum id
+	 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
+	 * @return int/boolean the next id or false if $max given and exceeded
+	 */
+	static function next_id($appname,$min=0,$max=0)
+	{
+		if (!$appname)
 		{
-			if (!$appname)
-			{
-				return -1;
-			}
-
-			$GLOBALS['egw']->db->select($this->nextid_table,'id',array('appname' => $appname),__LINE__,__FILE__);
-			$id = $GLOBALS['egw']->db->next_record() ? $GLOBALS['egw']->db->f('id') : 0;
-
-			if (!$id || $id < $min)
-			{
-				return $this->next_id($appname,$min,$max);
-			}
-			if ($max && $id > $max)
-			{
-				return False;
-			}
-			return (int)$id;
+			return -1;
 		}
 
-		/**
-		 * gets an eGW conformat referer from $_SERVER['HTTP_REFERER'], suitable for direct use in the link function
-		 *
-		 * @param string $default='' default to use if referer is not set by webserver or not determinable
-		 * @param string $referer='' referer string to use, default ('') use $_SERVER['HTTP_REFERER']
-		 * @return string
-		 */
-		function get_referer($default='',$referer='')
+		$id = (int) $GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchSingle();
+
+		if ($max && $id >= $max)
 		{
-			if (!$referer) $referer = $_SERVER['HTTP_REFERER'];
-
-			$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
-			if (empty($webserver_url) || $webserver_url{0} == '/')	// url is just a path
-			{
-				$referer = preg_replace('/^https?:\/\/[^\/]+/','',$referer);	// removing the domain part
-			}
-			if (strlen($webserver_url) > 1)
-			{
-				list(,$referer) = explode($webserver_url,$referer,2);
-			}
-			$referer = str_replace('/etemplate/process_exec.php','/index.php',$referer);
-
-			if (empty($referer)) $referer = $default;
-
-			return $referer;
+			return False;
 		}
+		++$id;
 
-		// some depricated functions for the migration
-		function phpgw_exit($call_footer = False)
+		if($id < $min) $id = $min;
+
+		$GLOBALS['egw']->db->insert(self::NEXTID_TABLE,array('id' => $id),array('appname' => $appname),__LINE__,__FILE__);
+
+		return (int)$id;
+	}
+
+	/**
+	 * Return a value for the last id entered, which an app may need to check values for LDAP
+	 *
+	 * @param string $appname app-name
+	 * @param int $min=0 if != 0 minimum id
+	 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
+	 * @return int current id in the next_id table for a particular app/class or -1 for no app and false if $max is exceeded.
+	 */
+	static function last_id($appname,$min=0,$max=0)
+	{
+		if (!$appname)
 		{
-			$this->egw_exit($call_footer);
+			return -1;
 		}
 
-		function phpgw_final()
-		{
-			$this->egw_final();
-		}
+		$id = (int)$GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchSingle();
 
-		function phpgw_header()
+		if (!$id || $id < $min)
 		{
-			$this->egw_header();
+			return self::next_id($appname,$min,$max);
 		}
+		if ($max && $id > $max)
+		{
+			return False;
+		}
+		return $id;
+	}
 
-		function phpgw_footer()
+	/**
+	 * gets an eGW conformat referer from $_SERVER['HTTP_REFERER'], suitable for direct use in the link function
+	 *
+	 * @param string $default='' default to use if referer is not set by webserver or not determinable
+	 * @param string $referer='' referer string to use, default ('') use $_SERVER['HTTP_REFERER']
+	 * @return string
+	 */
+	static function get_referer($default='',$referer='')
+	{
+		if (!$referer) $referer = $_SERVER['HTTP_REFERER'];
+
+		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
+		if (empty($webserver_url) || $webserver_url{0} == '/')	// url is just a path
 		{
-			$this->egw_footer();
+			$referer = preg_replace('/^https?:\/\/[^\/]+/','',$referer);	// removing the domain part
 		}
-	}//end common class
+		if (strlen($webserver_url) > 1)
+		{
+			list(,$referer) = explode($webserver_url,$referer,2);
+		}
+		$referer = str_replace('/etemplate/process_exec.php','/index.php',$referer);
+
+		if (empty($referer)) $referer = $default;
+
+		return $referer;
+	}
+
+	// some depricated functions for the migration
+	static function phpgw_exit($call_footer = False)
+	{
+		self::egw_exit($call_footer);
+	}
+
+	static function phpgw_final()
+	{
+		self::egw_final();
+	}
+
+	static function phpgw_header()
+	{
+		self::egw_header();
+	}
+
+	static function phpgw_footer()
+	{
+		self::egw_footer();
+	}
+}
