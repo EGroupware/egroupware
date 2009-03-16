@@ -9,7 +9,7 @@
 	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
 	 * @version $Id$
 	 */
-	
+
 	/**
 	 * eTemplate Extension: widget that shows one row of tabs and an other row with the eTemplate of the selected tab
 	 *
@@ -19,7 +19,7 @@
 	 */
 	class tab_widget
 	{
-		/** 
+		/**
 		 * exported methods of this class
 		 * @var array
 		 */
@@ -32,7 +32,7 @@
 		 * @var string
 		 */
 		var $human_name = 'Tabs';	// this is the name for the editor
-	
+
 		/**
 		 * Constructor of the extension
 		 *
@@ -41,7 +41,7 @@
 		function tab_widget($ui)
 		{
 		}
-	
+
 		/**
 		 * pre-processing of the extension
 		 *
@@ -49,7 +49,7 @@
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 		 * @param object &$tmpl reference to the template we belong too
@@ -58,10 +58,10 @@
 		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			//echo "<p>tab_widget::pre_process('$form_name',$value,,$extension_data)</p>\n";
-	
+
 			if (!$cell['onchange'])	// onchange allows to use the old behavior (submit for each new tab)
 			{
-				$dom_enabled = isset($GLOBALS['egw_info']['etemplate']['dom_enabled']) ? $GLOBALS['egw_info']['etemplate']['dom_enabled'] : true;
+				$dom_enabled = true;
 			}
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
@@ -85,10 +85,10 @@
 				}
 			}
 			$all_names = implode('|',$names);
-	
+
 			$tab_widget =& new etemplate('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
-	
+
 			if ($value && strpos($value,'.') === false)
 			{
 				$value = $tmpl->name . '.' . $value;
@@ -109,7 +109,7 @@
 				$value = $selected_tab = $names[0];
 			}
 			$extension_data = $value;	// remember the active tab in the extension_data
-	
+
 			foreach($names as $k => $name)
 			{
 				if (strpos($name,'.') === false)
@@ -138,13 +138,13 @@
 				}
 				$tcell['label'] = $labels[$k];
 				$tcell['help'] = $helps[$k];
-	
+
 				$tab_widget->set_cell_attribute('tabs',1+$k,$tcell);
 			}
 			$tab_widget->set_cell_attribute('tabs','type','hbox');
 			$tab_widget->set_cell_attribute('tabs','size',count($names));
 			$tab_widget->set_cell_attribute('tabs','name','');
-	
+
 			if ($dom_enabled)
 			{
 				foreach($names as $n => $name)
@@ -166,14 +166,14 @@
 				$tab_widget->set_cell_attribute('body','obj',$stab);
 			}
 			$tab_widget->set_cell_attribute('body','name',$selected_tab);
-	
+
 			$cell['type'] = 'template';
 			$cell['obj'] = &$tab_widget;
 			$cell['label'] = $cell['help'] = '';
-	
+
 			return False;	// NO extra Label
 		}
-	
+
 		/**
 		 * postprocessing method, called after the submission of the form
 		 *
@@ -194,7 +194,7 @@
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			//echo "<p>tab_widget::post_process($name): value_in = "; _debug_array($value_in);
-	
+
 			if (is_array($value_in))
 			{
 				foreach ($value_in as $tab => $button_pressed)
@@ -213,7 +213,7 @@
 			// if value not set (other button pressed), set the value we remembered in the extension_data
 			if (!$value)
 			{
-				$value = $extension_data;	
+				$value = $extension_data;
 			}
 			return True;
 		}

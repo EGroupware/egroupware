@@ -430,7 +430,7 @@ class editor
 				$additional = array();
 				if ($app == 'etemplate')
 				{
-					$additional = $this->etemplate->types + $this->extensions + $this->aligns + $this->valigns +
+					$additional = etemplate::$types + $this->extensions + $this->aligns + $this->valigns +
 						$this->edit_menu + $this->box_menu + $this->row_menu + $this->column_menu + $this->onclick_types + $this->onchange_types;
 				}
 				else	// try to call the writeLangFile function of the app's ui-layer
@@ -1360,7 +1360,7 @@ class editor
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 		$editor->exec('etemplate.editor.widget',$content,array(
-				'type'       => array_merge($this->etemplate->types,$this->extensions),
+				'type'       => array_merge(etemplate::$types,$this->extensions),
 				'align'      => &$this->aligns,
 				'valign'     => &$this->valigns,
 				'part'       => $allowed_parts,

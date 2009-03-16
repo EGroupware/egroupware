@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @copyright 2002-9 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
@@ -30,20 +30,20 @@
  */
 class soetemplate
 {
-	var $debug;		// =1 show some debug-messages, = 'app.name' show messages only for eTemplate 'app.name'
-	var $name;		// name of the template, e.g. 'infolog.edit'
-	var $template;	// '' = default (not 'default')
-	var $lang;		// '' if general template else language short, e.g. 'de'
-	var $group;		// 0 = not specific else groupId or if < 0  userId
-	var $version;	// like 0.9.13.001
-	var $style;		// embeded CSS style-sheet
-	var $children;	// array with children
-	var $data;		// depricated: first grid of the children
-	var $size;		// depricated: witdh,height,border of first grid
+	public $debug;		// =1 show some debug-messages, = 'app.name' show messages only for eTemplate 'app.name'
+	public $name;		// name of the template, e.g. 'infolog.edit'
+	public $template;	// '' = default (not 'default')
+	public $lang;		// '' if general template else language short, e.g. 'de'
+	public $group;		// 0 = not specific else groupId or if < 0  userId
+	public $version;	// like 0.9.13.001
+	public $style;		// embeded CSS style-sheet
+	public $children;	// array with children
+	public $data;		// depricated: first grid of the children
+	public $size;		// depricated: witdh,height,border of first grid
 	/**
 	 * private reference to the global db-object
 	 *
-	 * @var egw_db
+	 * @public egw_db
 	 */
 	private $db;
 	/**
@@ -68,7 +68,7 @@ class soetemplate
 	 * widgets that contain other widgets, eg. for tree_walk method
 	 * widget-type is the key, the value specifys how the children are stored.
 	 *
-	 * @var array
+	 * @public array
 	 */
 	static $widgets_with_children = array(
 		'template' => 'template',
@@ -94,9 +94,9 @@ class soetemplate
 	 * @param int $cols initial size of the template, default 1, only used if no name given !!!
 	 * @return soetemplate
 	 */
-	function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
+	function __construct($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 	{
-		if (is_object($GLOBALS['egw']->db))
+		if (isset($GLOBALS['egw']->db))
 		{
 			$this->db = $GLOBALS['egw']->db;
 		}
@@ -674,6 +674,8 @@ class soetemplate
 		$this->set_rows_cols();
 	}
 
+	static private $compress_array_recursion = array();
+
 	/**
 	 * all empty values and objects in the array got unset (to save space in the db )
 	 *
@@ -686,6 +688,8 @@ class soetemplate
 	 */
 	function compress_array($arr,$remove_objs=false)
 	{
+		static $recursion = array();
+
 		if (!is_array($arr))
 		{
 			return $arr;
@@ -702,7 +706,7 @@ class soetemplate
 			}
 			elseif (!$remove_objs && $key == 'obj' && is_object($val) && method_exists($val,'as_array') &&
 				// this test prevents an infinit recursion of templates calling itself, atm. etemplate.editor.new
-				$GLOBALS['egw_info']['etemplate']['as_array'][$this->name]++ < 2)
+				self::$compress_array_recursion[$this->name]++ < 2)
 			{
 				$arr['obj'] = $val->as_array(2);
 			}
@@ -1077,6 +1081,8 @@ class soetemplate
 		return lang("%1 new eTemplates imported for Application '%2'",$n,$app);
 	}
 
+	static private $import_tested = array();
+
 	/**
 	 * test if new template-import necessary for app and does the import
 	 *
@@ -1090,11 +1096,11 @@ class soetemplate
 	{
 		list($app) = explode('.',$app);
 
-		if (!$app || $GLOBALS['egw_info']['etemplate']['import_tested'][$app])
+		if (!$app || self::$import_tested[$app])
 		{
 			return '';	// ensure test is done only once per call and app
 		}
-		$GLOBALS['egw_info']['etemplate']['import_tested'][$app] = True;	// need to be done before new ...
+		self::$import_tested[$app] = True;	// need to be done before new ...
 
 		$path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php";
 

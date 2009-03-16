@@ -5,7 +5,7 @@
 * @link http://www.egroupware.org
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @author Ralf Becker <RalfBecker@outdoor-training.de>
-* @copyright 2002-8 by RalfBecker@outdoor-training.de
+* @copyright 2002-9 by RalfBecker@outdoor-training.de
 * @package etemplate
 * @subpackage api
 * @version $Id$
@@ -32,62 +32,96 @@ class etemplate extends boetemplate
 	* 1=calls to show and process_show, 2=content after process_show,
 	* 3=calls to show_cell and process_show_cell
 	*
-	* @var int/string
+	* @public int/string
 	*/
-	var $debug;
-	var $xslt = false;	/* do we run in the xslt framework (true) or the regular eGW one (false) */
-	var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
-	var $public_functions = array('process_exec' => True);
+	public $debug;
 	/**
 	* Inner width of browser window
 	*
-	* @var int
+	* @public int
 	*/
-	var $innerWidth;
+	public $innerWidth;
 	/**
 	* Reference to the content-param of the last call to show, for extensions to use
 	*
-	* @var array
+	* @public array
 	*/
-	var $content;
+	public $content;
 	/**
 	* Reference to the sel_options-param of the last call to show, for extensions to use
 	*
-	* @var array
+	* @public array
 	*/
-	var $sel_options;
+	public $sel_options;
 	/**
-	* Name of the currently processed etemplate, reference to $GLOBALS['egw_info']['etemplate']['name_form']
+	* Name of the form of the currently processed etemplate
 	*
-	* @var string
+	* @public string
 	*/
-	var $name_form;
+	static $name_form='eTemplate';
 	/**
-	* Used form-names in this request, reference to $GLOBALS['egw_info']['etemplate']['name_forms']
+	* Used form-names in this request
 	*
-	* @var array
+	* @public array
 	*/
-	var $name_forms;
+	static $name_forms=array();
 	/**
 	* Basename of the variables (content) in $_POST and id's, usually 'exec',
 	* if there's not more then one eTemplate on the page (then it will be exec, exec2, exec3, ...
 	*
-	* @var string
+	* @public string
 	*/
-	var $name_vars='exec';
+	static $name_vars='exec';
 	/**
 	* Are we running as sitemgr module or not
 	*
-	* @var boolean
+	* @public boolean
 	*/
-	var $sitemgr=false;
+	public $sitemgr=false;
 	/**
 	 * Javascript to be called, when a widget get's double-clicked (used only by the editor)
 	 * A '%p' gets replace with the colon ':' separated template-name, -version and path of the clicked widget.
 	 *
-	 * @var string
+	 * @public string
 	 */
-	var $onclick_handler;
+	public $onclick_handler;
+
+	/**
+	 * Extra options for forms, eg. enctype="multipart/form-data"
+	 *
+	 * @public string
+	 */
+	static protected $form_options = '';
+
+	/**
+	 * Validation errors from process_show and the extensions, should be set via etemplate::set_validation_error
+	 *
+	 * @public array form_name => message pairs
+	 */
+	static protected $validation_errors = array();
+
+	/**
+	 * Flag if the browser has javascript enabled
+	 *
+	 * @var boolean
+	 */
+	static public $java_script;
+
+	/**
+	 * Flag if exec() is called as part of a hook, replaces the 1.6 and earlier $GLOBALS['egw_info']['etemplate']['hooked'] global variable
+	 *
+	 * @var boolean
+	 */
+	static public $hooked;
+
+	/**
+	 * The following 3 static vars are used to allow eTemplate apps to hook into each other
+	 *
+	 * @var mixed
+	 */
+	static private $previous_content;
+	static private $hook_content;
+	static private $hook_app;
 
 	/**
 	* constructor of etemplate class, reads an eTemplate if $name is given
@@ -95,11 +129,9 @@ class etemplate extends boetemplate
 	* @param string $name of etemplate or array with name and other keys
 	* @param string/array $load_via with keys of other etemplate to load in order to get $name
 	*/
-	function etemplate($name='',$load_via='')
+	function __construct($name='',$load_via='')
 	{
-		$this->boetemplate($name,$load_via);
-
-		//$this->xslt = is_object($GLOBALS['egw']->xslttpl);
+		parent::__construct($name,$load_via);
 
 		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);
 
@@ -112,9 +144,6 @@ class etemplate extends boetemplate
 			$this->innerWidth = 1018;	// default width for an assumed screen-resolution of 1024x768
 		}
 		//echo "<p>_POST[innerWidth]='$_POST[innerWidth]', innerWidth=$this->innerWidth</p>\n";
-		$this->name_form =& $GLOBALS['egw_info']['etemplate']['name_form'];
-		$this->name_forms =& $GLOBALS['egw_info']['etemplate']['name_forms'];
-		if (!is_array($this->name_forms)) $this->name_forms = array();
 	}
 
 	/**
@@ -127,7 +156,7 @@ class etemplate extends boetemplate
 	*/
 	static function location($params='')
 	{
-		$GLOBALS['egw']->redirect_link(is_array($params) ? '/index.php' : $params,
+		egw::redirect_link(is_array($params) ? '/index.php' : $params,
 			is_array($params) ? $params : '');
 	}
 
@@ -157,7 +186,7 @@ class etemplate extends boetemplate
 	*/
 	function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$ignore_validation='',$changes='')
 	{
-		//echo "<br>globals[java_script] = '".$GLOBALS['egw_info']['etemplate']['java_script']."', this->java_script() = '".$this->java_script()."'\n";
+		//echo "<br>globals[java_script] = '".self::$java_script."', this->java_script() = '".$this->java_script()."'\n";
 		if (!$sel_options)
 		{
 			$sel_options = array();
@@ -182,59 +211,66 @@ class etemplate extends boetemplate
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 		}
-		$id = $this->appsession_id();
-		//echo "<p>unsetting existing egw_info[etemplate] which had keys=".implode(',',array_keys($GLOBALS['egw_info']['etemplate']))."</p>\n";
-		// initialise $GLOBALS['egw_info']['etemplate'], in case there are multiple eTemplates on a page
-		$GLOBALS['egw_info']['etemplate'] = array(
-			'name_forms' => $GLOBALS['egw_info']['etemplate']['name_forms'],
-			'validation_errors' => $GLOBALS['egw_info']['etemplate']['validation_errors'],
-			'hooked' => $GLOBALS['egw_info']['etemplate']['hooked'],
-			'content' => $GLOBALS['egw_info']['etemplate']['content'],
-			'hook_content' => $GLOBALS['egw_info']['etemplate']['hook_content'],
-			'hook_app' => $GLOBALS['egw_info']['etemplate']['hook_app'],
-			'extension_data' => $GLOBALS['egw_info']['etemplate']['extension_data'],
-		);
-		//echo "<p>hooked=".(int)!!$GLOBALS['egw_info']['etemplate']['hooked'].", content=".(int)!!$GLOBALS['egw_info']['etemplate']['content'].", hook_content=".(int)!!$GLOBALS['egw_info']['etemplate']['hook_content'].", hook_app={$GLOBALS['egw_info']['etemplate']['hook_app']}</p>\n";
-		$this->name_form =& $GLOBALS['egw_info']['etemplate']['name_form'];
-		$this->name_forms =& $GLOBALS['egw_info']['etemplate']['name_forms'];
-		if (!is_array($this->name_forms)) $this->name_forms = array();
-
 		// use different form-names to allows multiple eTemplates in one page, eg. addressbook-view
-		$this->name_form = 'eTemplate';
-		if (in_array($this->name_form,$this->name_forms))
+		self::$name_form = 'eTemplate';
+		if (in_array(self::$name_form,self::$name_forms))
 		{
-			$this->name_form .= 1+count($this->name_forms);
-			$this->name_vars .= 1+count($this->name_forms);
+			self::$name_form .= 1+count(self::$name_forms);
+			self::$name_vars .= 1+count(self::$name_forms);
 		}
-		$this->name_forms[] = $this->name_form;
+		self::$name_forms[] = self::$name_form;
 
-		$GLOBALS['egw_info']['etemplate']['output_mode'] = $output_mode;	// let extensions "know" they are run eg. in a popup
-		$GLOBALS['egw_info']['etemplate']['form_options'] = '';	// might be set in show
-		$GLOBALS['egw_info']['etemplate']['to_process'] = array();
+		self::$request = etemplate_request::read();
+		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
+		self::$request->readonlys = $readonlys;
+		self::$request->content = $content;
+		self::$request->changes = $changes;
+		self::$request->sel_options = $sel_options;
+		self::$request->preserv = $preserv;
+		self::$request->method = $method;
+		self::$request->ignore_validation = $ignore_validation;
+		self::$request->name_vars = self::$name_vars;
 
-		$html = html::form($this->include_java_script(1).
-				html::input_hidden(array(
-					'submit_button' => '',
-					'innerWidth'    => '',
-				),'',False).
-				$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,$this->name_vars),array(
-					'etemplate_exec_id' => $id
-				),$this->sitemgr ? '' : '/etemplate/process_exec.php?menuaction='.$method,
-				'',$this->name_form,$GLOBALS['egw_info']['etemplate']['form_options'].
-				// dont set the width of popups!
-				($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
-				//echo "to_process="; _debug_array($GLOBALS['egw_info']['etemplate']['to_process']);
+		$html = $this->include_java_script(1).
+				$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,self::$name_vars);
 
+		self::$request->java_script = self::$java_script;
+		self::$request->java_script_from_flags = $GLOBALS['egw_info']['flags']['java_script'];
+		self::$request->java_script_body_tags = $GLOBALS['egw']->js->body;
+		self::$request->java_script_files = $GLOBALS['egw']->js->files;
+		self::$request->include_xajax = $GLOBALS['egw_info']['flags']['include_xajax'];
+		if (!$this->sitemgr)
+		{
+			$hooked = isset(self::$previous_content) || !isset($GLOBALS['egw']->template) ?
+				self::$previous_content : $GLOBALS['egw']->template->get_var('phpgw_body');
+		}
+		self::$request->hooked = $hooked ? $hooked : self::$hook_content;
+		self::$request->hook_app = $hooked ? $GLOBALS['egw_info']['flags']['currentapp'] : self::$hook_app;
+		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
+		if (self::$request->output_mode == -1) self::$request->output_mode = 0;
+		self::$request->template = $this->as_array(2);
+
+		$html = html::form(html::input('etemplate_exec_id',self::$request->id(),'hidden',' id="etemplate_exec_id"').$html.
+			html::input_hidden(array(
+				'submit_button' => '',
+				'innerWidth'    => '',
+			),'',false),array(),$this->sitemgr ? '' : '/etemplate/process_exec.php?menuaction='.$method,
+			'',self::$name_form,self::$form_options.
+			// dont set the width of popups!
+			($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
+		//echo "to_process="; _debug_array(self::$request->to_process);
+
+		//echo '<p>'.__METHOD__."($method,...) etemplate[hooked]=".(int)self::$hooked.", etemplate[hook_app]='".self::$hook_app."', isset(etemplate[content])=".(int)isset(self::$previous_content)."</p>\n";
 		if ($this->sitemgr)
 		{
 			$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
 		}
-		elseif (!$this->xslt)
+		else
 		{
-			$hooked = isset($GLOBALS['egw_info']['etemplate']['content']) || !isset($GLOBALS['egw']->template) ?
-				$GLOBALS['egw_info']['etemplate']['content'] : $GLOBALS['egw']->template->get_var('phpgw_body');
+			// support the old global var, in case old apps like 1.6 infolog use it
+			if (isset($GLOBALS['egw_info']['etemplate']['hooked'])) self::$hooked = $GLOBALS['egw_info']['etemplate']['hooked'];
 
-			if (!@$GLOBALS['egw_info']['etemplate']['hooked'] && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
+			if (!@self::$hooked && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
 			{
 				$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
 
@@ -251,109 +287,47 @@ class etemplate extends boetemplate
 
 				$GLOBALS['egw']->common->egw_header();
 			}
-			elseif (!isset($GLOBALS['egw_info']['etemplate']['content']))
+			elseif (!isset(self::$previous_content))
 			{
 				$html = $this->include_java_script(2).$html;	// better than nothing
 			}
 			// saving the etemplate content for other hooked etemplate apps (atm. infolog hooked into addressbook)
-			$GLOBALS['egw_info']['etemplate']['content'] =& $html;
+			self::$previous_content =& $html;
 		}
-		else
-		{
-			$hooked = $GLOBALS['egw']->xslttpl->get_var('phpgw');
-			$hooked = $hooked['body_data'];
-			$GLOBALS['egw']->xslttpl->set_var('phpgw',array('java_script' => $GLOBALS['egw_info']['flags']['java_script'].$this->include_java_script(2)));
-		}
-		//echo "<p>uietemplate::exec($method,...) after show: sitemgr=$this->sitemgr, xslt=$this->xslt, hooked=$hooked, output_mode=$output_mode</p>\n";
+		//echo '<p>'.__METHOD__."($method,...) after show: sitemgr=$this->sitemgr, hooked=".(int)$hooked.", output_mode=$output_mode</p>\n";
 
 		if (!$this->sitemgr && (int) $output_mode != 1 && (int) $output_mode != -1)	// NOT returning html
 		{
-			if (!$this->xslt)
+			if (!@self::$hooked)
 			{
-				if (!@$GLOBALS['egw_info']['etemplate']['hooked'])
+				if((int) $output_mode != 2)
 				{
-					if((int) $output_mode != 2)
+					echo parse_navbar();
+				}
+				else
+				{
+					echo '<div id="popupMainDiv">'."\n";
+					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{
-						echo parse_navbar();
-					}
-					else
-					{
-						echo '<div id="popupMainDiv">'."\n";
-						if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
-						{
-							$manual =& new etemplate('etemplate.popup.manual');
-							echo $manual->show(array());
-							unset($manual);
-							echo '<style type="text/css">.ajax-loader { position: absolute; right: 27px; top: 24px; display: none; }</style>'."\n";
-							echo '<div class="ajax-loader">'.html::image('phpgwapi','ajax-loader') . '</div>';
-						}
+						$manual =& new etemplate('etemplate.popup.manual');
+						echo $manual->show(array());
+						unset($manual);
+						echo '<style type="text/css">.ajax-loader { position: absolute; right: 27px; top: 24px; display: none; }</style>'."\n";
+						echo '<div class="ajax-loader">'.html::image('phpgwapi','ajax-loader') . '</div>';
 					}
 				}
-				echo $GLOBALS['egw_info']['etemplate']['hook_content'].$html;
+			}
+			echo self::$hook_content.$html;
 
-				if (!$GLOBALS['egw_info']['etemplate']['hooked'] &&
-						(!isset($_GET['menuaction']) ||
-								strpos($_SERVER['PHP_SELF'],'process_exec.php')!==false))
-				{
-					if((int) $output_mode == 2)
-					{
-						echo "</div>\n";
-					}
-					$GLOBALS['egw']->common->egw_footer();
-				}
-			}
-			else
+			if (!self::$hooked && (!isset($_GET['menuaction']) || strpos($_SERVER['PHP_SELF'],'process_exec.php') !== false))
 			{
-				// need to add some logic here to support popups (output_mode==2) for xslt, but who cares ...
-				$GLOBALS['egw']->xslttpl->set_var('phpgw',array('body_data' => $html));
+				if((int) $output_mode == 2)
+				{
+					echo "</div>\n";
+				}
+				$GLOBALS['egw']->common->egw_footer();
 			}
 		}
-		$this->save_appsession($sess = $this->as_array(2) + array(
-			'readonlys' => $readonlys,
-			'content' => $content,
-			'changes' => $changes,
-			'sel_options' => $sel_options,
-			'preserv' => $preserv,
-			'extension_data' => $GLOBALS['egw_info']['etemplate']['extension_data'],
-			'to_process' => $GLOBALS['egw_info']['etemplate']['to_process'],
-			'java_script' => $GLOBALS['egw_info']['etemplate']['java_script'],
-			'java_script_from_flags' => $GLOBALS['egw_info']['flags']['java_script'],
-			'java_script_body_tags' => $GLOBALS['egw']->js->body,
-			'java_script_files' => $GLOBALS['egw']->js->files,
-			'include_xajax' => $GLOBALS['egw_info']['flags']['include_xajax'],
-			'dom_enabled' => $GLOBALS['egw_info']['etemplate']['dom_enabled'],
-			'hooked' => $hooked ? $hooked : $GLOBALS['egw_info']['etemplate']['hook_content'],
-			'hook_app' => $hooked ? $GLOBALS['egw_info']['flags']['currentapp'] : $GLOBALS['egw_info']['etemplate']['hook_app'],
-			'app_header' => $GLOBALS['egw_info']['flags']['app_header'],
-			'output_mode' => $output_mode != -1 ? $output_mode : 0,
-			'session_used' => 0,
-			'ignore_validation' => $ignore_validation,
-			'method' => $method,
-			'name_vars' => $this->name_vars,
-		),$id);
-		//echo "<p>hooked=".(int)!!$hooked.", content=".(int)!!$GLOBALS['egw_info']['etemplate']['content'].", hook_content=".(int)!!$GLOBALS['egw_info']['etemplate']['hook_content'].", hook_app={$GLOBALS['egw_info']['etemplate']['hook_app']}</p>\n";
-		//echo "<p>session: "; foreach($sess as $key => $val) echo "$key=$val, "; echo "</p>\n";
-		/*
-		echo "<p><b>total size session data = ".($total=strlen(serialize($sess)))."</b></p>\n";
-		echo "<p>shares bigger then 1.0% percent of it:</p>\n";
-		foreach($sess as $key => $val)
-		{
-			$len = strlen(is_array($val) ? serialize($val) : $val);
-			$len .= ' ('.sprintf('%2.1lf',($percent = 100.0 * $len / $total)).'%)';
-			if ($percent < 1.0) continue;
-			echo "<p><b>$key</b>: strlen(\$val)=$len</p>\n";
-			if (is_array($val) && $len > 2000)
-			{
-				foreach($val as $k => $v)
-				{
-					$l = strlen(is_array($v) ? serialize($v) : $v);
-					$l .= ' ('.sprintf('%2.1lf',($p = 100.0 * $l / $total)).'%)';
-					if ($p < 1.0) continue;
-					echo "<p>&nbsp;- {$key}[$k]: strlen(\$v)=$l</p>\n";
-				}
-			}
-		}
-		*/
 		if ($this->sitemgr || (int) $output_mode == 1 || (int) $output_mode == -1)	// return html
 		{
 			return $html;
@@ -364,16 +338,16 @@ class etemplate extends boetemplate
 	* Check if we have not ignored validation errors
 	*
 	* @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
-	* @param string $cname=null name-prefix, which need to be ignored, default $this->name_vars
+	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
 	* @return boolean true if there are not ignored validation errors, false otherwise
 	*/
 	function validation_errors($ignore_validation='',$cname=null)
 	{
-		if (is_null($cname)) $cname = $this->name_vars;
-		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array($GLOBALS['egw_info']['etemplate']['validation_errors']);
-		if (!$ignore_validation) return count($GLOBALS['egw_info']['etemplate']['validation_errors']) > 0;
+		if (is_null($cname)) $cname = self::$name_vars;
+		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
+		if (!$ignore_validation) return count(self::$validation_errors) > 0;
 
-		foreach($GLOBALS['egw_info']['etemplate']['validation_errors'] as $name => $error)
+		foreach(self::$validation_errors as $name => $error)
 		{
 			if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
 
@@ -408,43 +382,38 @@ class etemplate extends boetemplate
 		if(!$exec) $exec = $_POST;
 
 		//echo "process_exec: _POST ="; _debug_array($_POST);
-		$session_data = $this->get_appsession($etemplate_exec_id);
-		//echo "<p>process_exec: session_data ="; _debug_array($session_data);
-
-		if (!$etemplate_exec_id || !is_array($session_data) || count($session_data) < 10)
+		if (!$etemplate_exec_id || !(self::$request = etemplate_request::read($etemplate_exec_id)))
 		{
 			if ($this->sitemgr) return false;
 			//echo "uitemplate::process_exec() id='$_POST[etemplate_exec_id]' invalid session-data !!!"; _debug_array($_SESSION);
 			// this prevents an empty screen, if the sessiondata gets lost somehow
 			$this->location(array('menuaction' => $_GET['menuaction'],'post_empty' => (int)!$_POST));
 		}
-		$this->name_vars = $session_data['name_vars'];
+		self::$name_vars = self::$request->name_vars;
 		if (isset($submit_button) && !empty($submit_button))
 		{
-			$this->set_array($exec,$submit_button,'pressed');
+			self::set_array($exec,$submit_button,'pressed');
 		}
-		$content = $exec[$this->name_vars];
+		$content = $exec[self::$name_vars];
 		if (!is_array($content))
 		{
 			$content = array();
 		}
-		$this->init($session_data);
-		$GLOBALS['egw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
-		$GLOBALS['egw_info']['etemplate']['java_script'] = $session_data['java_script'] || $_POST['java_script'];
-		$GLOBALS['egw_info']['etemplate']['dom_enabled'] = $session_data['dom_enabled'] || $_POST['dom_enabled'];
-		//echo "globals[java_script] = '".$GLOBALS['egw_info']['etemplate']['java_script']."', session_data[java_script] = '".$session_data['java_script']."', _POST[java_script] = '".$_POST['java_script']."'\n";
+		$this->init(self::$request->template);
+		self::$java_script = self::$request->java_script || $_POST['java_script'];
+		//echo "globals[java_script] = '".self::$java_script."', session_data[java_script] = '".self::$request->java_script."', _POST[java_script] = '".$_POST['java_script']."'\n";
 		//echo "process_exec($this->name) content ="; _debug_array($content);
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'etemplate')
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 		}
-		$this->process_show($content,$session_data['to_process'],$this->name_vars,$type);
+		$this->process_show($content,self::$request->to_process,self::$name_vars,$type);
 
-		$GLOBALS['egw_info']['etemplate']['loop'] |= !$this->canceled && $this->button_pressed &&
-			$this->validation_errors($session_data['ignore_validation']);	// set by process_show
+		self::$loop |= !$this->canceled && $this->button_pressed &&
+			$this->validation_errors(self::$request->ignore_validation);	// set by process_show
 
 		// If a tab has an error on it, change to that tab
-		foreach($GLOBALS['egw_info']['etemplate']['validation_errors'] as $form_name => $msg)
+		foreach(self::$validation_errors as $form_name => $msg)
 		{
 			$name = $this->template_name($form_name);
 			if (!$this->get_widget_by_name($name))
@@ -466,55 +435,48 @@ class etemplate extends boetemplate
 		}
 
 		//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
-		//echo "process_exec($this->name) session_data[changes] ="; _debug_array($session_data['changes']);
-		$content = $this->complete_array_merge($session_data['changes'],$content);
+		//echo "process_exec($this->name) session_data[changes] ="; _debug_array(self::$request->changes']);
+		$content = $this->complete_array_merge(self::$request->changes,$content);
 		//echo "process_exec($this->name) merge(changes,content) ="; _debug_array($content);
 
-		if ($GLOBALS['egw_info']['etemplate']['loop'])
+		if (self::$loop)
 		{
-			if ($session_data['hooked'] != '')	// set previous phpgw_body if we are called as hook
+			if (self::$request->hooked != '')	// set previous phpgw_body if we are called as hook
 			{
-				if (!$this->xslt)
-				{
-					$GLOBALS['egw_info']['etemplate']['hook_content'] = $session_data['hooked'];
-					$GLOBALS['egw_info']['flags']['currentapp'] = $GLOBALS['egw_info']['etemplate']['hook_app'] = $session_data['hook_app'];
-				}
-				else
-				{
-					$GLOBALS['egw']->xslttpl->set_var('phpgw',array('body_data' => $session_data['hooked']));
-				}
+				self::$hook_content = self::$request->hooked;
+				$GLOBALS['egw_info']['flags']['currentapp'] = self::$hook_app = self::$request->hook_app;
 			}
-			if($session_data['include_xajax']) $GLOBALS['egw_info']['flags']['include_xajax'] = true;
+			if(self::$request->include_xajax) $GLOBALS['egw_info']['flags']['include_xajax'] = true;
 
-			if (!empty($session_data['app_header']))
+			if (!empty(self::$request->app_header))
 			{
-				$GLOBALS['egw_info']['flags']['app_header'] = $session_data['app_header'];
+				$GLOBALS['egw_info']['flags']['app_header'] = self::$request->app_header;
 			}
 
-			$GLOBALS['egw_info']['flags']['java_script'] .= $session_data['java_script_from_flags'];
-			if (!empty($session_data['java_script_body_tags']))
+			$GLOBALS['egw_info']['flags']['java_script'] .= self::$request->java_script_from_flags;
+			if (!empty(self::$request->java_script_body_tags))
 			{
-				foreach ($session_data['java_script_body_tags'] as $tag => $code)
+				foreach (self::$request->java_script_body_tags as $tag => $code)
 				{
 					//error_log($GLOBALS['egw']->js->body[$tag]);
 					$GLOBALS['egw']->js->body[$tag] .= $code;
 				}
 			}
-			if (is_array($session_data['java_script_files']))
+			if (is_array(self::$request->java_script_files))
 			{
-				$GLOBALS['egw']->js->files = !is_array($GLOBALS['egw']->js->files) ? $session_data['java_script_files'] :
-					$this->complete_array_merge($GLOBALS['egw']->js->files,$session_data['java_script_files']);
+				$GLOBALS['egw']->js->files = !is_array($GLOBALS['egw']->js->files) ? self::$request->java_script_files :
+					$this->complete_array_merge($GLOBALS['egw']->js->files,self::$request->java_script_files);
 			}
 
 			//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
-			return $this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
-				$session_data['readonlys'],$session_data['preserv'],$session_data['output_mode'],
-				$session_data['ignore_validation'],$content);
+			return $this->exec(self::$request->method,self::$request->content,self::$request->sel_options,
+				self::$request->readonlys,self::$request->preserv,self::$request->output_mode,
+				self::$request->ignore_validation,$content);
 		}
 		else
 		{
 			//echo "<p>process_exec($this->name): calling $session_data[method]</p>\n";
-			return ExecMethod($session_data['method'],$this->complete_array_merge($session_data['preserv'],$content));
+			return ExecMethod(self::$request->method,$this->complete_array_merge(self::$request->preserv,$content));
 		}
 	}
 
@@ -528,25 +490,28 @@ class etemplate extends boetemplate
 	function process_values2url()
 	{
 		//echo "process_exec: _GET ="; _debug_array($_GET);
-		$session_data = $this->get_appsession($_GET['etemplate_exec_id']);
-		//echo "<p>process_exec: session_data ="; _debug_array($session_data);
-
-		if (!$_GET['etemplate_exec_id'] || !is_array($session_data) || count($session_data) < 10)
+		if (!$_GET['etemplate_exec_id'] || !($request = etemplate_request::read($_GET['etemplate_exec_id'])))
 		{
 			return false;
 		}
-		$this->name_vars = $session_data['name_vars'];
-		$GLOBALS['egw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
+		self::$name_vars = $request->name_vars;
 
-		$content = $_GET[$this->name_vars];
+		$content = $_GET[self::$name_vars];
 		if (!is_array($content))
 		{
 			$content = array();
 		}
-		$this->process_show($content,$session_data['to_process'],$this->name_vars);
+		$this->process_show($content,$request->to_process,self::$name_vars);
 
-		return $this->complete_array_merge($session_data['preserv'],$content);
+		return $this->complete_array_merge($request->preserv,$content);
 	}
+
+	/**
+	 * Flag if the styles of a certain template are already included
+	 *
+	 * @var array template-name => boolean
+	 */
+	static private $styles_included = array();
 
 	/**
 	* creates HTML from an eTemplate
@@ -592,13 +557,13 @@ class etemplate extends boetemplate
 		{
 			$content = array();	// happens if incl. template has no content
 		}
-		// make the content availible as class-var for extensions
+		// make the content availible as class-public for extensions
 		$this->content =& $content;
 
 		$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n<div id=\"$this->name\">\n\n";
-		if (!$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name])
+		if (!self::$styles_included[$this->name])
 		{
-			$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name] = True;
+			self::$styles_included[$this->name] = True;
 			$html .= html::style($this->style)."\n\n";
 		}
 		$path = '/';
@@ -746,7 +711,7 @@ class etemplate extends boetemplate
 			{
 				$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on').substr($cl,3); // alternate color
 			}
-			$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
+			$cl = isset(self::$class_conf[$cl]) ? self::$class_conf[$cl] : $cl;
 			$rows[".$row"] .= html::formatOptions($cl,'class');
 			$rows[".$row"] .= html::formatOptions($class,',valign');
 			reset ($cols);
@@ -848,7 +813,7 @@ class etemplate extends boetemplate
 					}
 					$cl = $cl['class'];
 				}
-				$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
+				$cl = $this->expand_name(isset(self::$class_conf[$cl]) ? self::$class_conf[$cl] : $cl,
 					$c,$r,$show_c,$show_row,$content);
 				// else the class is set twice, in the table and the table-cell, which is not good for borders
 				if ($cl && $cell['type'] != 'template' && $cell['type'] != 'grid')
@@ -867,7 +832,7 @@ class etemplate extends boetemplate
 		}
 		$html = html::table($rows,html::formatOptions($options,'width,height,border,class,cellspacing,cellpadding').
 			html::formatOptions($grid['span'],',class').
-			html::formatOptions($grid['name']?$this->form_name($cname,$grid['name']):'','id'));
+			html::formatOptions($grid['name']?self::form_name($cname,$grid['name']):'','id'));
 
 		if (!empty($overflow)) {
 			if (is_numeric($height)) $height .= 'px';
@@ -926,6 +891,8 @@ class etemplate extends boetemplate
 		return $name;
 	}
 
+	static private $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
+
 	/**
 	* generates HTML for one widget (input-field / cell)
 	*
@@ -965,7 +932,7 @@ class etemplate extends boetemplate
 		{
 			list($name) = explode('=',$name);
 		}
-		$form_name = $this->form_name($cname,$name);
+		$form_name = self::form_name($cname,$name);
 
 		$value = $this->get_array($content,$name);
 
@@ -1000,7 +967,7 @@ class etemplate extends boetemplate
 		// the while loop allows to build extensions from other extensions
 		// please note: only the first extension's post_process function is called !!!
 		list($type,$sub_type) = explode('-',$cell['type']);
-		while ((!$this->types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
+		while ((!self::$types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
 		{
 			//echo "<p>pre_process($cell[name]/$cell[type])</p>\n";
 			if (strchr($cell['size'],'$') || $cell['size'][0] == '@')
@@ -1018,7 +985,7 @@ class etemplate extends boetemplate
 
 			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension
 
-			$this->set_array($content,$name,$value);
+			self::set_array($content,$name,$value);
 
 			if ($cell['type'] == $type.'-'.$sub_type) break;	// stop if no further type-change
 
@@ -1153,14 +1120,13 @@ class etemplate extends boetemplate
 
 					if (!$readonly)
 					{
-						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
-							'type'      => $cell['type'],
+						self::$request->set_to_process($form_name,$cell['type'],array(
 							'maxlength' => $cell_opts[1],
 							'needed'    => $cell['needed'],
 							'preg'      => $cell_opts[2],
 							'min'       => $min,	// int and float only
 							'max'       => $max,
-						);
+						));
 					}
 				}
 				unset($cell_opts);
@@ -1177,10 +1143,9 @@ class etemplate extends boetemplate
 				}
 				if (!$readonly)
 				{
-					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
-						'type'      => $cell['type'],
+					self::$request->set_to_process($form_name,$cell['type'],array(
 						'needed'    => $cell['needed'],
-					);
+					));
 				}
 				break;
 			case 'htmlarea':	// Multiline formatted Text Input, size: {simple|extended|advanced},height,width,toolbar-expanded,upload-path
@@ -1198,10 +1163,9 @@ class etemplate extends boetemplate
 					);
 					$html .= html::fckEditor($form_name,$value,$mode,$fckoptions,$height,$width,$baseref);
 
-					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
-						'type'      => $cell['type'],
+					self::$request->set_to_process($form_name,$cell['type'],array(
 						'needed'    => $cell['needed'],
-					);
+					));
 				}
 				else
 				{
@@ -1238,17 +1202,16 @@ class etemplate extends boetemplate
 					}
 					$html .= html::input($form_name,$set_val,'checkbox',$options);
 
-					if ($multiple) $form_name = $this->form_name($cname,substr($cell['name'],0,-2));
+					if ($multiple) $form_name = self::form_name($cname,substr($cell['name'],0,-2));
 
-					if (!isset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
+					if (!self::$request->isset_to_process($form_name))
 					{
-						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
-							'type'        => $cell['type'],
+						self::$request->set_to_process($form_name,$cell['type'],array(
 							'unset_value' => $unset_val,
 							'multiple'    => $multiple,
-						);
+						));
 					}
-					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name]['values'][] = $set_val;
+					self::$request->set_to_process_attribute($form_name,'values',$set_val,true);
 					if (!$multiple) unset($set_val);	// otherwise it will be added to the label
 				}
 				break;
@@ -1271,7 +1234,7 @@ class etemplate extends boetemplate
 				else
 				{
 					$html .= html::input($form_name,$set_val,'RADIO',$options);
-					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					self::$request->set_to_process($form_name,$cell['type']);
 				}
 				break;
 			case 'button':
@@ -1290,7 +1253,7 @@ class etemplate extends boetemplate
 				{
 					$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
 						(((string)$cell['onchange'] === '1' || $img) ?
-						"return submitit($this->name_form,'".addslashes($form_name)."');" : $cell['onchange']).'; return false;';
+						'return submitit('.self::$name_form.",'".addslashes($form_name)."');" : $cell['onchange']).'; return false;';
 
 					if (!html::$netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 					{
@@ -1319,10 +1282,10 @@ class etemplate extends boetemplate
 				$extra_label = False;
 				if (!$readonly && $type != 'buttononly')	// input button, are never submitted back!
 				{
-					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					self::$request->set_to_process($form_name,$cell['type']);
 					if ($name == 'cancel' || stripos($name,'[cancel]') !== false)
 					{
-						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = 'cancel';
+						self::$request->set_to_process($form_name,'cancel');
 					}
 				}
 				break;
@@ -1478,7 +1441,7 @@ class etemplate extends boetemplate
 						$html .= html::select($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
 							$cell['no_lang'],$options,$multiple);
 					}
-					if (!isset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
+					if (!self::$request->isset_to_process($form_name))
 					{
 						// fix for optgroup's
 						$options=array();
@@ -1495,12 +1458,11 @@ class etemplate extends boetemplate
 								}
 							}
 						}
-						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
-							'type'    => $cell['type'],
+						self::$request->set_to_process($form_name,$cell['type'],array(
 							'needed'  => $cell['needed'],
 							'allowed' => array_keys($options),
 							'multiple'=> $multiple,
-						);
+						));
 					}
 				}
 				break;
@@ -1527,7 +1489,7 @@ class etemplate extends boetemplate
 					if ((int) $cell_options) $options .= ' size="'.(int)$cell_options.'"';
 					if (substr($name,-2) == '[]')
 					{
-						$GLOBALS['egw_info']['etemplate']['form_options'] .= ' enctype="multipart/form-data"';
+						self::$form_options .= ' enctype="multipart/form-data"';
 						if (strpos($options,'onChange="') !== false)
 						{
 							$options = preg_replace('/onChange="([^"]+)"/i','onChange="\\1; add_upload(this);"',$options);
@@ -1540,11 +1502,10 @@ class etemplate extends boetemplate
 					else
 					{
 						$html .= html::input_hidden($path_name = str_replace($name,$name.'_path',$form_name),'.');
-						$GLOBALS['egw_info']['etemplate']['form_options'] .=
-							" enctype=\"multipart/form-data\" onsubmit=\"set_element2(this,'$path_name','$form_name')\"";
+						self::$form_options = " enctype=\"multipart/form-data\" onsubmit=\"set_element2(this,'$path_name','$form_name')\"";
 					}
 					$html .= html::input($form_name,'','file',$options);
-					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					self::$request->set_to_process($form_name,$cell['type']);
 				}
 				break;
 			case 'vbox':
@@ -1602,7 +1563,7 @@ class etemplate extends boetemplate
 							}
 							$cl = $cl['class'];
 						}
-						$box_item_class = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
+						$box_item_class = $this->expand_name(isset(self::$class_conf[$cl]) ? self::$class_conf[$cl] : $cl,
 							$show_c,$show_row,$content['.c'],$content['.row'],$content);
 						$rows[$box_row]['.'.$box_col] .= html::formatOptions($box_item_class,'class');
 					}
@@ -1661,7 +1622,7 @@ class etemplate extends boetemplate
 					$s_height = "height: $s_height".(substr($s_height,-1) != '%' ? 'px' : '').';';
 				}
 				$html = html::input_hidden($form_name,$value);
-				$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  $cell['type'];
+				self::$request->set_to_process($form_name,$cell['type']);
 
 				for ($n = 1; $n <= $cell_options; ++$n)
 				{
@@ -1687,25 +1648,14 @@ class etemplate extends boetemplate
 		// extension-processing need to be after all other and only with diff. name
 		if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))
 		{	// unset it first, if it is already set, to be after the other widgets of the ext.
-			$to_process = 'ext-'.$ext_type;
-			if (is_array($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
-			{
-				$to_process = $GLOBALS['egw_info']['etemplate']['to_process'][$form_name];
-				$to_process['type'] = 'ext-'.$ext_type;
-			}
-			unset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]);
-			$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $to_process;
+			$to_process = self::$request->get_to_process($form_name);
+			self::$request->unset_to_process($form_name);
+			self::$request->set_to_process($form_name,'ext-'.$ext_type,$to_process);
 		}
 		// save blur-value to strip it in process_exec
-		if (!empty($blur) && isset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
+		if (!empty($blur) && self::$request->isset_to_process($form_name))
 		{
-			if (!is_array($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
-			{
-				$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
-					'type' => $GLOBALS['egw_info']['etemplate']['to_process'][$form_name]
-				);
-			}
-			$GLOBALS['egw_info']['etemplate']['to_process'][$form_name]['blur'] = $blur;
+			self::$request->set_to_process_attribute($form_name,'blur',$blur);
 		}
 		if ($extra_label && ($label != '' || $html == ''))
 		{
@@ -1722,7 +1672,7 @@ class etemplate extends boetemplate
 			}
 			if ($label && !$readonly && ($accesskey || $label_for || $type != 'label' && $cell['name']))
 			{
-				$label = html::label($label,$label_for ? $this->form_name($cname,$label_for) :
+				$label = html::label($label,$label_for ? self::form_name($cname,$label_for) :
 					$form_name.($set_val?"[$set_val]":''),$accesskey);
 			}
 			if ($type == 'radio' || $type == 'checkbox' || $label && strpos($label,'%s')!==false)	// default for radio is label after the button
@@ -1755,9 +1705,9 @@ class etemplate extends boetemplate
 			return html::a_href($html,$extra_link,'',$options);
 		}
 		// if necessary show validation-error behind field
-		if (isset($GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name]))
+		if (isset(self::$validation_errors[$form_name]))
 		{
-			$html .= ' <span style="color: red; white-space: nowrap;">'.$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name].'</span>';
+			$html .= ' <span style="color: red; white-space: nowrap;">'.self::$validation_errors[$form_name].'</span>';
 		}
 		// generate an extra div, if we have an onclick handler and NO children or it's an extension
 		//echo "<p>$this->name($this->onclick_handler:$this->no_onclick:$this->onclick_proxy): $cell[type]/$cell[name]</p>\n";
@@ -1857,7 +1807,7 @@ class etemplate extends boetemplate
 
 			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches)) {
 				foreach($matches[1] as $n => $matche_name) {
-					$matches[1][$n] = '\''.$this->form_name($cname,$matche_name).'\'';
+					$matches[1][$n] = '\''.self::form_name($cname,$matche_name).'\'';
 				}
 				$on = str_replace($matches[0],$matches[1],$on);
 			}
@@ -1905,7 +1855,7 @@ class etemplate extends boetemplate
 		{
 			return stripslashes($var);
 		}
-		foreach($var as $key => $val)
+		foreach($public as $key => $val)
 		{
 			$var[$key] = is_array($val) ? self::array_stripslashes($val) : stripslashes($val);
 		}
@@ -1941,7 +1891,7 @@ class etemplate extends boetemplate
 		{
 			$content_in = etemplate::array_stripslashes($content_in);
 		}
-		$GLOBALS['egw_info']['etemplate']['validation_errors'] = array();
+		self::$validation_errors = array();
 		$this->canceled = $this->button_pressed = False;
 
 		foreach($to_process as $form_name => $type)
@@ -1964,7 +1914,7 @@ class etemplate extends boetemplate
 			{
 				$value = '';	// blur-values is equal to emtpy
 			}
-			//echo "<p>process_show($this->name) loop was {$GLOBALS['egw_info']['etemplate']['loop']}, $type: $form_name = '$value'</p>\n";
+			//echo "<p>process_show($this->name) loop was ".self::$loop.", $type: $form_name = '$value'</p>\n";
 			list($type,$sub) = explode('-',$type);
 			switch ($type)
 			{
@@ -1982,15 +1932,15 @@ class etemplate extends boetemplate
 					elseif (!etemplate::isset_array($content,$form_name))
 					{
 						//echo "<p>setting content[$form_name]='$_cont' because is was unset !!!</p>\n";
-						$this->set_array($content,$form_name,$_cont);
+						self::set_array($content,$form_name,$_cont);
 					}
 					if ($_cont === '' && $attr['needed'] && !$attr['blur'])
 					{
-						$this->set_validation_error($form_name,lang('Field must not be empty !!!'),'');
+						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 					}
 					break;
 				case 'htmlarea':
-					$this->set_array($content,$form_name,$value);
+					self::set_array($content,$form_name,$value);
 					break;
 				case 'int':
 				case 'float':
@@ -1999,7 +1949,7 @@ class etemplate extends boetemplate
 				case 'textarea':
 					if ($value === '' && $attr['needed'] && !$attr['blur'])
 					{
-						$this->set_validation_error($form_name,lang('Field must not be empty !!!'),'');
+						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 					}
 					if ((int) $attr['maxlength'] > 0 && strlen($value) > (int) $attr['maxlength'])
 					{
@@ -2010,13 +1960,13 @@ class etemplate extends boetemplate
 						switch($type)
 						{
 							case 'int':
-								$this->set_validation_error($form_name,lang("'%1' is not a valid integer !!!",$value),'');
+								self::set_validation_error($form_name,lang("'%1' is not a valid integer !!!",$value),'');
 								break;
 							case 'float':
-								$this->set_validation_error($form_name,lang("'%1' is not a valid floatingpoint number !!!",$value),'');
+								self::set_validation_error($form_name,lang("'%1' is not a valid floatingpoint number !!!",$value),'');
 								break;
 							default:
-								$this->set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value),'');
+								self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value),'');
 								break;
 						}
 					}
@@ -2028,30 +1978,30 @@ class etemplate extends boetemplate
 
 							if (!empty($attr['min']) && $value < $attr['min'])
 							{
-								$this->set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$attr['min']),'');
+								self::set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$attr['min']),'');
 								$value = $type == 'int' ? (int) $attr['min'] : (float) $attr['min'];
 							}
 							if (!empty($attr['max']) && $value > $attr['max'])
 							{
-								$this->set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$attr['max']),'');
+								self::set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$attr['max']),'');
 								$value = $type == 'int' ? (int) $attr['max'] : (float) $attr['max'];
 							}
 						}
 					}
-					$this->set_array($content,$form_name,$value);
+					self::set_array($content,$form_name,$value);
 					break;
 				case 'cancel':	// cancel button ==> dont care for validation errors
 					if ($value)
 					{
 						$this->canceled = True;
-						$this->set_array($content,$form_name,$value);
+						self::set_array($content,$form_name,$value);
 					}
 					break;
 				case 'button':
 					if ($value)
 					{
 						$this->button_pressed = True;
-						$this->set_array($content,$form_name,$value);
+						self::set_array($content,$form_name,$value);
 					}
 					break;
 				case 'select':
@@ -2061,7 +2011,7 @@ class etemplate extends boetemplate
 						{
 							if (!($attr['multiple'] && !$val) && !in_array($val,$attr['allowed']))
 							{
-								$this->set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",$attr['allowed'])),'');
+								self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",$attr['allowed'])),'');
 								$value = '';
 								break;
 							}
@@ -2070,19 +2020,19 @@ class etemplate extends boetemplate
 					if (is_array($value)) $value = implode(',',$value);
 					if ($value === '' && $attr['needed'])
 					{
-						$this->set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+						self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 					}
-					$this->set_array($content,$form_name,$value);
+					self::set_array($content,$form_name,$value);
 					break;
 				case 'checkbox':
 					if ($value === false)	// get_array() returns false for not set
 					{
-						$this->set_array($content,$form_name,$attr['multiple'] ? array() : $attr['unset_value']);	// need to be reported too
+						self::set_array($content,$form_name,$attr['multiple'] ? array() : $attr['unset_value']);	// need to be reported too
 					}
 					else
 					{
 						$value = array_intersect(is_array($value) ? $value : array($value),$attr['values']); // return only allowed values
-						$this->set_array($content,$form_name,$attr['multiple'] ? $value : $value[0]);
+						self::set_array($content,$form_name,$attr['multiple'] ? $value : $value[0]);
 					}
 					break;
 				case 'file':
@@ -2121,7 +2071,7 @@ class etemplate extends boetemplate
 					//echo $form_name; _debug_array($value);
 					// fall-throught
 				default:
-					$this->set_array($content,$form_name,$value);
+					self::set_array($content,$form_name,$value);
 					break;
 			}
 		}
@@ -2132,12 +2082,12 @@ class etemplate extends boetemplate
 		if (is_int($this->debug) && $this->debug >= 2 || $this->debug == $this->name && $this->name)
 		{
 			echo "<p>process_show($this->name) end: content ="; _debug_array($content);
-			if (count($GLOBALS['egw_info']['etemplate']['validation_errors']))
+			if (count(self::$validation_errors))
 			{
-				echo "<p>validation_errors = "; _debug_array($GLOBALS['egw_info']['etemplate']['validation_errors']);
+				echo "<p>validation_errors = "; _debug_array(self::$validation_errors);
 			}
 		}
-		return count($GLOBALS['egw_info']['etemplate']['validation_errors']);
+		return count(self::$validation_errors);
 	}
 
 	/**
@@ -2145,19 +2095,19 @@ class etemplate extends boetemplate
 	*
 	* @param string $name (complete) name of the widget causing the error
 	* @param string $error error-message already translated
-	* @param string $cname=null set it to '', if the name is already a form-name, defaults to $this->name_vars
+	* @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
 	*/
-	function set_validation_error($name,$error,$cname=null)
+	static function set_validation_error($name,$error,$cname=null)
 	{
-		if (is_null($cname)) $cname = $this->name_vars;
+		if (is_null($cname)) $cname = self::$name_vars;
 		//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
-		if ($cname) $name = $this->form_name($cname,$name);
+		if ($cname) $name = self::form_name($cname,$name);
 
-		if ($GLOBALS['egw_info']['etemplate']['validation_errors'][$name])
+		if (self::$validation_errors[$name])
 		{
-			$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] .= ', ';
+			self::$validation_errors[$name] .= ', ';
 		}
-		$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] .= $error;
+		self::$validation_errors[$name] .= $error;
 	}
 
 	/**
@@ -2169,15 +2119,11 @@ class etemplate extends boetemplate
 	*/
 	function java_script($consider_not_tested_as_enabled = True)
 	{
-		$ret = !!$GLOBALS['egw_info']['etemplate']['java_script'] ||
-			$consider_not_tested_as_enabled && !isset($GLOBALS['egw_info']['etemplate']['java_script']);
-		//echo "<p>java_script($consider_not_tested_as_enabled)='$ret', java_script='".$GLOBALS['egw_info']['etemplate']['java_script']."', isset(java_script)=".isset($GLOBALS['egw_info']['etemplate']['java_script'])."</p>\n";
+		$ret = !!self::$java_script ||
+			$consider_not_tested_as_enabled && !isset(self::$java_script);
+		//echo "<p>java_script($consider_not_tested_as_enabled)='$ret', java_script='".self::$java_script."', isset(java_script)=".isset(self::$java_script)."</p>\n";
 
 		return $ret;
-		return !!$GLOBALS['egw_info']['etemplate']['java_script'] ||
-			$consider_not_tested_as_enabled &&
-			(!isset($GLOBALS['egw_info']['etemplate']['java_script']) ||
-			$GLOBALS['egw_info']['etemplate']['java_script'].'' == '');
 	}
 
 	/**
@@ -2190,13 +2136,10 @@ class etemplate extends boetemplate
 	private function include_java_script($what = 3)
 	{
 		// this is to test if javascript is enabled
-		if ($what & 1 && !isset($GLOBALS['egw_info']['etemplate']['java_script']))
+		if ($what & 1 && !isset(self::$java_script))
 		{
 			$js = '<script language="javascript">
 document.write(\''.str_replace("\n",'',html::input_hidden('java_script','1')).'\');
-if (document.getElementById) {
-	document.write(\''.str_replace("\n",'',html::input_hidden('dom_enabled','1')).'\');
-}
 </script>
 ';
 		}
@@ -2209,4 +2152,4 @@ if (document.getElementById) {
 		}
 		return $js;
 	}
-};
+}

@@ -3,15 +3,13 @@
  * eGroupWare  eTemplate Extension - Nextmatch Widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @copyright 2002-9 by RalfBecker@outdoor-training.de
  * @package etemplate
  * @subpackage extensions
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @version $Id$
  */
-
-require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
 
 /**
  * eTemplate Extension: Widget that show only a certain number of data-rows and allows to modifiy the rows shown (scroll).
@@ -313,7 +311,7 @@ class nextmatch_widget
 		$rows = array();
 		if (!is_object($obj) || !method_exists($obj,$method))
 		{
-			$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
+			etemplate::set_validation_error($name,"nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!");
 		}
 		else
 		{
@@ -393,7 +391,7 @@ class nextmatch_widget
 				{
 					// make each letter internally behave like a button
 					$form_name = $name.'[searchletter]['.($key === 'all' ? $key : $letter).']';
-					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = 'button';
+					etemplate::$request->set_to_process($form_name,'button');
 
 					if (!$key) $letterbox =& $lettersearch[1];	// to re-use the first child
 					$letterbox = etemplate::empty_cell('label',$letter,array(
@@ -402,13 +400,13 @@ class nextmatch_widget
 							$key === 'all' && !$value['searchletter'] ? '_active' : ''),
 						'no_lang' => 2,
 						'align'   => $key == 'all' ? 'right' : '',
-						'onclick' => "return submitit($tmpl->name_form,'$form_name');",
+						'onclick' => 'return submitit('.etemplate::$name_form.",'$form_name');",
 					));
 					// if not the first (re-used) child, add it to the parent
 					if ($key) etemplate::add_child($lettersearch,$letterbox);
 					unset($letterbox);
 				}
-				//_debug_array($GLOBALS['egw_info']['etemplate']['to_process']);
+				//_debug_array(etemplate::$request->to_process);
 			}
 			if(isset($value['no_search'])) $value['no_start_search'] = $value['no_search'];
 			foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2', 'no_search' => 'search', 'no_start_search' => 'start_search' ) as $val_name => $cell_name)
@@ -896,7 +894,7 @@ class nextmatch_widget
 		}
 		if (!is_object($obj) || !method_exists($obj,$method))
 		{
-			$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
+			etemplate::set_validation_error($name,"nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!");
 			return false;
 		}
 		$this->charset = $this->charset_out = $GLOBALS['egw']->translation->charset();
@@ -922,7 +920,7 @@ class nextmatch_widget
 			}
 			if ($export_limit && (!is_numeric($export_limit) || $export_limit < $total))
 			{
-				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = lang('You are not allowed to export more then %1 entries!',$export_limit);
+				etemplate::set_validation_error($name,lang('You are not allowed to export more then %1 entries!',$export_limit));
 				return false;
 			}
 			if (!isset($value['no_csv_support'])) $value['no_csv_support'] = !is_array($value['csv_fields']);

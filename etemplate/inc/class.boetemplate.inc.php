@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @copyright 2002-9 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
@@ -12,13 +12,11 @@
  */
 
 /**
-	* Business Object for eTemplates, extending the Storage Object
-	*
-	* Not so much so far, as the most logic is still in the UI-class
-	*/
+ * Business Object for eTemplates, extending the Storage Object
+ */
 class boetemplate extends soetemplate
 {
-	var $types = array(
+	static public $types = array(
 		'label'	=> 'Label',			// Label $cell['label'] is (to be translated) textual content
 		'text'	=> 'Text',			// Textfield 1 Line (size = [length][,maxlength])
 		'int'	=> 'Integer',		// like text, but only numbers (size = [min][,max])
@@ -45,7 +43,22 @@ class boetemplate extends soetemplate
 		'deck'	=> 'Deck',			// a container of elements where only one is visible, size = # of elem.
 		'passwd' => 'Password'		// a text of type password
 	);
-	private static $garbage_collection_done;
+
+	/**
+	 * Flag if form validation requires to loop
+	 *
+	 * @var boolean
+	 */
+	static public $loop = false;
+
+	/**
+	 * Request object of the currecntly created request
+	 *
+	 * It's a static variable as etemplates can contain further etemplates (rendered by a different object)
+	 *
+	 * @var etemplate_request
+	 */
+	static public $request;
 
 	/**
 	 * constructor of class
@@ -55,9 +68,9 @@ class boetemplate extends soetemplate
 	 * @param string/array $name name of etemplate or array with name and other keys
 	 * @param string/array $load_via name or array with keys of other etemplate to load in order to get $name
 	 */
-	function boetemplate($name='',$load_via='')
+	function __construct($name='',$load_via='')
 	{
-		$this->soetemplate();
+		parent::__construct();
 
 		$tname = &$name;
 		if (is_array($name))
@@ -224,107 +237,6 @@ class boetemplate extends soetemplate
 	}
 
 	/**
-	 *  creates a new appsession-id via microtime()
-	 * @return string
-	 */
-	protected static function appsession_id()
-	{
-		list($msec,$sec) = explode(' ',microtime());
-		$time = 100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
-		$id = $GLOBALS['egw_info']['flags']['currentapp'] .':'. $time;
-		//echo "<p>microtime()=".microtime().", sec=$sec, msec=$msec, id=$id</p>\n";
-		return $id;
-	}
-
-	/**
-	 * saves content,readonlys,template-keys, ... via the appsession function
-	 *
-	 * As a user may open several windows with the same content/template wie generate a location-id from microtime
-	 * which is used as location for appsession to descriminate between the different windows. This location-id
-	 * is then saved as a hidden-var in the form. The above mentions session-id has nothing to do / is different
-	 * from the session-id which is constant for all windows opened in one session.
-	 *
-	 * @param array $data the data to save
-	 * @param string $id the id to use or '' to generate a new id
-	 * @return string location-id
-	 */
-	protected static function save_appsession($data,$id='')
-	{
-		if (!$id)
-		{
-			$id = self::appsession_id();
-		}
-		$GLOBALS['egw']->session->appsession($id,'etemplate',$data);
-
-		if (substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4' && !self::$garbage_collection_done)
-		{
-			return self::php_session_garbage_collection();
-		}
-		return $id;
-	}
-
-	/**
-	 * gets content,readonlys,template-keys, ... back from the appsession function
-	 *
-	 * @param string $id the location-id
-	 * @return array with session-data
-	 */
-	protected function get_appsession($id)
-	{
-		$data = egw_session::appsession($id,'etemplate');
-		//echo "boetemplate::get_appsession('$id')"; _debug_array($data);
-
-		self::php_session_garbage_collection($id);
-
-		return $data;
-	}
-
-	/**
-	 * a little bit of garbage collection for php4 sessions (their size is limited by memory_limit)
-	 *
-	 * With constant eTemplate use it can grow quite big and lead to unusable sessions (php terminates
-	 * before any output with "Allowed memory size of ... exhausted").
-	 * We delete now sessions once used after 10min and sessions never or multiple used after 60min.
-	 *
-	 * @param string $id_used id of session just read by get_appsession to increment the usage counter
-	 */
-	static private function php_session_garbage_collection($id_used='')
-	{
-		// now we are on php4 sessions and do a bit of garbage collection
-		$app_sessions =& $_SESSION[egw_session::EGW_APPSESSION_VAR]['etemplate'];
-		$session_used =& $app_sessions['session_used'];
-
-		if ($id_used)
-		{
-			//echo "session_used[$id_used]='".$session_used[$id_used]."'<br/>\n";
-			++$session_used[$id_used];	// count the number of times a session got used
-		}
-		self::$garbage_collection_done = true;
-
-		if (count($app_sessions) < 20) return $data;	// we dont need to care
-
-		list($msec,$sec) = explode(' ',microtime());
-		$now = 	100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
-
-		foreach(array_keys($app_sessions) as $id)
-		{
-			list($app,$time) = explode(':',$id);
-
-			if (!$time) continue;	// other data, no session
-
-			//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".egw_vfs::hsize(strlen(serialize($app_sessions[$id])))."<br>\n";
-
-			if ($session_used[$id] == 1 && $time < $now - 10*6000 || // session used and older then 10min
-				$time < $now - 30*6000)	// session not used and older then 30min
-			{
-				//echo "<p>boetemplate::php_session_garbage_collection('$id_used'): unsetting session '$id' (now=$now)</p>\n";
-				unset($app_sessions[$id]);
-				unset($session_used[$id]);
-			}
-		}
-	}
-
-	/**
 	 * gets an attribute in a named cell
 	 *
 	 * @param string $name cell-name
@@ -454,6 +366,13 @@ class boetemplate extends soetemplate
 	}
 
 	/**
+	 * Cache for extension objects
+	 *
+	 * @var array
+	 */
+	static private $extensions = array();
+
+	/**
 	 * trys to load the Extension / Widget-class from the app or etemplate
 	 *
 	 * @param string $name name of the extension, the classname should be class.${name}_widget.inc.php
@@ -482,12 +401,12 @@ class boetemplate extends soetemplate
 		if (!file_exists(EGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 		{
 			//echo "<p>boetemplate::loadExtension($type) extension not found</p>\n";
-			return $GLOBALS['egw_info']['etemplate']['extension'][$type] = False;
+			return self::$extensions[$type] = False;
 		}
-		$GLOBALS['egw_info']['etemplate']['extension'][$type] =& CreateObject($app.'.'.$class,$ui='html');
+		self::$extensions[$type] =& CreateObject($app.'.'.$class,$ui='html');
 
 		//echo "<p>boetemplate::loadExtension($type) extension found in App. $app</p>\n";
-		return $GLOBALS['egw_info']['etemplate']['extension'][$type]->human_name;
+		return self::$extensions[$type]->human_name;
 	}
 
 	/**
@@ -500,8 +419,8 @@ class boetemplate extends soetemplate
 	 */
 	protected function haveExtension($type,$function='')
 	{
-		return ($GLOBALS['egw_info']['etemplate']['extension'][$type] || $this->loadExtension($type,$ui)) &&
-						($function == '' || $GLOBALS['egw_info']['etemplate']['extension'][$type]->public_functions[$function]);
+		return (self::$extensions[$type] || $this->loadExtension($type,$ui)) &&
+						($function == '' || self::$extensions[$type]->public_functions[$function]);
 	}
 
 	/**
@@ -522,11 +441,11 @@ class boetemplate extends soetemplate
 		}
 		// only supply extension data for non-readonly widgets or if it's already set
 		// otherwise lists store >10k unnecessary data in each etemplate-session
-		if (!($cell['readonly'] || $readonlys && !is_array($readonlys)) || isset($GLOBALS['egw_info']['etemplate']['extension_data'][$name]))
+		if (!($cell['readonly'] || $readonlys && !is_array($readonlys)) || isset(self::$request->extension_data[$name]))
 		{
-			$extension_data =& $GLOBALS['egw_info']['etemplate']['extension_data'][$name];
+			$extension_data =& self::$request->extension_data[$name];
 		}
-		return $GLOBALS['egw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,$extension_data,$this);
+		return self::$extensions[$type]->pre_process($name,$value,$cell,$readonlys,$extension_data,$this);
 	}
 
 	/**
@@ -544,9 +463,9 @@ class boetemplate extends soetemplate
 		{
 			return True;
 		}
-		return $GLOBALS['egw_info']['etemplate']['extension'][$type]->post_process($name,$value,
-			$GLOBALS['egw_info']['etemplate']['extension_data'][$name],
-			$GLOBALS['egw_info']['etemplate']['loop'],$this,$value_in);
+		return self::$extensions[$type]->post_process($name,$value,
+			self::$request->extension_data[$name],
+			self::$loop,$this,$value_in);
 	}
 
 	/**
@@ -565,8 +484,8 @@ class boetemplate extends soetemplate
 		{
 			return False;
 		}
-		return $GLOBALS['egw_info']['etemplate']['extension'][$type]->render($cell,$name,$value,$readonly,
-			$GLOBALS['egw_info']['etemplate']['extension_data'][$name],$this);
+		return self::$extensions[$type]->render($cell,$name,$value,$readonly,
+			self::$request->extension_data[$name],$this);
 	}
 
 	/**
@@ -798,12 +717,19 @@ class boetemplate extends soetemplate
 	}
 
 	/**
-	 * stores the etemplate in the cache in phpgw_info
+	 * Cache for already read etemplates
+	 *
+	 * @var array
+	 */
+	private static $template_cache = array();
+
+	/**
+	 * stores the etemplate in the cache in egw_info
 	 */
 	private function store_in_cache()
 	{
 		//echo "<p>store_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-		$GLOBALS['egw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
+		self::$template_cache[$this->cache_name()] = $this->as_array(1);
 	}
 
 	/**
@@ -812,7 +738,7 @@ class boetemplate extends soetemplate
 	private function delete_in_cache()
 	{
 		//echo "<p>delete_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-		unset($GLOBALS['egw_info']['etemplate']['cache'][$this->cache_name()]);
+		unset(self::$template_cache[$this->cache_name()]);
 	}
 
 	/**
@@ -833,8 +759,8 @@ class boetemplate extends soetemplate
 			$version = $name['version'];
 			$name    = $name['name'];
 		}
-		if (!isset($GLOBALS['egw_info']['etemplate']['cache'][$cname]) ||
-				!empty($version) && $GLOBALS['egw_info']['etemplate']['cache'][$cname]['version'] != $version)
+		if (!isset(self::$template_cache[$cname]) ||
+				!empty($version) && self::$template_cache[$cname]['version'] != $version)
 		{
 			//echo " NOT found in cache</p>\n";
 			return False;
@@ -860,7 +786,7 @@ class boetemplate extends soetemplate
 		//if (is_array($name)) $version = $name['version']; echo "<p>read_from_cache(,,,version='$version'): ";
 		if ($cname = $this->in_cache($name,$template,$lang,$group))
 		{
-			$this->init($GLOBALS['egw_info']['etemplate']['cache'][$cname]);
+			$this->init(self::$template_cache[$cname]);
 
 			return True;
 		}
@@ -956,7 +882,6 @@ class boetemplate extends soetemplate
 	 */
 	static function _init_static()
 	{
-		self::$garbage_collection_done =& $GLOBALS['egw_info']['etemplate']['garbage_collection_done'];
 	}
 }
 boetemplate::_init_static();
@@ -997,3 +922,5 @@ if (!function_exists('set_cell_attribute_helper'))
 		}
 	}
 }
+// just in case someone still uses the old var
+$GLOBALS['egw_info']['flags']['etemplate']['loop'] =& boetemplate::$loop;

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @copyright 2002-9 by RalfBecker@outdoor-training.de
  * @package etemplate
  * @subpackage extensions
  * @version $Id$
@@ -231,10 +231,9 @@ class date_widget
 		}
 		if ($cell['needed'])
 		{
-			$GLOBALS['egw_info']['etemplate']['to_process'][$name] = array(
-				'type' => 'ext-'.$type,
+			etemplate::$request->set_to_process($name,'ext-'.$type,array(
 				'needed' => $cell['needed'],
-			);
+			));
 		}
 		$tpl =& new etemplate;
 		$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
@@ -539,7 +538,7 @@ class date_widget
 			}
 			elseif (!preg_match('/^-?[0-9]*[,.]?[0-9]*'.($extension_data['percent_allowed'] ? '%?' : '').'$/',$value_in))
 			{
-				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = lang("'%1' is not a valid floatingpoint number !!!",$value_in);
+				etemplate::set_validation_error($name,lang("'%1' is not a valid floatingpoint number !!!",$value_in));
 				return false;
 			}
 			else
@@ -613,8 +612,8 @@ class date_widget
 			// checking the date is a correct one
 			if (!checkdate($value['m'],$value['d'],$value['Y']))
 			{
-				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] .= lang("'%1' is not a valid date !!!",
-					$GLOBALS['egw']->common->dateformatorder($value['Y'],$value['m'],$value['d'],true));
+				etemplate::set_validation_error($name,lang("'%1' is not a valid date !!!",
+					common::dateformatorder($value['Y'],$value['m'],$value['d'],true)));
 			}
 			$data_format = $extension_data['data_format'];
 			if (empty($data_format))

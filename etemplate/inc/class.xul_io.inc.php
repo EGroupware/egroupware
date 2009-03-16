@@ -508,7 +508,7 @@
 									// save tmpl to the cache, as the file may contain more then one tmpl
 									$cname = ($etempl->template == '' ? 'default' : $etempl->template).'/'.$etempl->name.
 													 ($etempl->lang == '' ? '' : '.'.$etempl->lang);
-									$GLOBALS['egw_info']['etemplate']['cache'][$cname] = $etempl->as_array(1);
+									boetemplate::$template_cache[$cname] = $etempl->as_array(1);
 									if ($this->debug)
 									{
 										$etempl->echo_tmpl();

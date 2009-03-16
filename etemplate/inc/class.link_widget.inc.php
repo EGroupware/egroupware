@@ -7,6 +7,7 @@
  * @subpackage extensions
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright 2002-9 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -114,6 +115,7 @@ class link_widget
 			// readonly ==> omit the whole widget
 			$value = '';
 			$cell = $tmpl->empty_cell();
+			$extension_data = null;
 			return;
 		}
 		if (!is_array($value) && in_array($type,array('link-to','link-list','link-add')))
@@ -133,6 +135,7 @@ class link_widget
 		{
 		case 'link':
 			$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
+			$extension_data = null;
 			$cell['no_lang'] = 1;
 			$link = $target = $popup = '';
 			if (!is_array($value) && $value && isset($GLOBALS['egw_info']['apps'][$cell['size']]))
@@ -152,7 +155,7 @@ class link_widget
 					$link .= '&'.$var.'='.$val;
 				}
 				if (!($popup = egw_link::is_popup($value['app'],'view')) &&
-					$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
+					etemplate::$request->output_mode == 2)	// we are in a popup
 				{
 					$target = '_blank';
 				}
@@ -166,6 +169,7 @@ class link_widget
 			{
 				$cell = $tmpl->empty_cell();
 				$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
+				$extension_data = null;
 				return;
 			}
 			$cell['type'] = 'label';
@@ -208,7 +212,7 @@ class link_widget
 						list($w,$h) = explode('x',$popup);
 						$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
 					}
-					elseif ($GLOBALS['egw_info']['etemplate']['output_mode'] == 2 || 	// we are in a popup
+					elseif (etemplate::$request->output_mode == 2 || 	// we are in a popup
 						$link['app'] == egw_link::VFS_APPNAME)	// or it's a link to an attachment
 					{
 						$options = ' target="_blank"';
@@ -220,6 +224,7 @@ class link_widget
 			}
 			$cell['type'] = 'html';
 			$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
+			$extension_data = null;
 			$value = $str;
 			return True;
 
@@ -292,7 +297,7 @@ class link_widget
 				{
 					$value[$row]['view']  = egw_link::view($link['app'],$link['id'],$link);
 					if (!($value[$row]['popup'] = egw_link::is_popup($link['app'],'view')) &&
-						$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
+						etemplate::$request->output_mode == 2)	// we are in a popup
 					{
 						$value[$row]['target'] = '_blank';		// we create a new window as the linked page is no popup
 					}
@@ -656,12 +661,17 @@ class link_widget
 			$response->addScript($script);
 		}
 		// store new allowed id's in the eT request
-		if ($etemplate_exec_id && ($et_request = etemplate_request::read($etemplate_exec_id)))
+		if ($etemplate_exec_id && ($request = etemplate_request::read($etemplate_exec_id)))
 		{
-			$data = $et_request->get_to_process($id_res);
+			$data = $request->get_to_process($id_res);
 			//error_log($id_res.'='.array2string($data));
 			$data['allowed'] = $found ? array_keys($found) : array();
-			$et_request->set_to_process($id_res,$data);
+			$request->set_to_process($id_res,$data);
+			// update id, if request changed it (happens if the request data is stored direct in the form)
+			if ($etemplate_exec_id != ($new_id = $request->id()))
+			{
+				$response->addAssign('etemplate_exec_id','value',$new_id);
+			}
 		}
 		return $response->getXML();
 	}

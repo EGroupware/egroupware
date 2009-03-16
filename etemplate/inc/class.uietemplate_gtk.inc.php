@@ -24,7 +24,7 @@
 	 * @param $debug enables debug messages: 0=no, 1=calls to show and process_show, 2=content of process_show
 	 * @param                                3=calls to show_cell OR template- or cell-type name
 	 */
-	class etemplate extends boetemplate
+	class gtk_etemplate extends boetemplate
 	{
 		var $debug;//='etemplate.editor.edit'; // 1=calls to show and process_show, 2=content after process_show,
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
