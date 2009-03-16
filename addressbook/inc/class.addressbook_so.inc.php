@@ -65,7 +65,7 @@ class addressbook_so
 	 * @var string
 	 */
 	var $distributionlist_view ='(SELECT contact_id, egw_addressbook_lists.list_id as list_id, egw_addressbook_lists.list_name as list_name, egw_addressbook_lists.list_owner as list_owner FROM egw_addressbook_lists, egw_addressbook2list where egw_addressbook_lists.list_id=egw_addressbook2list.list_id) d_view ';
-
+	var $distributionlist_tabledef = array();
 	/**
 	* @var string
 	*/
@@ -259,6 +259,17 @@ class addressbook_so
 				$this->account_extra_search = array('uid');
 			}
 		}
+		if ($this->contact_repository == 'sql' || $this->contact_repository = 'sql-ldap') {
+			$tda2list = $this->db->get_table_definitions('phpgwapi','egw_addressbook2list');
+			$tdlists = $this->db->get_table_definitions('phpgwapi','egw_addressbook_lists');
+			$this->distributionlist_tabledef = array('fd' => array(
+					$this->distri_id => $tda2list['fd'][$this->distri_id],
+					$this->distri_owner => $tdlists['fd'][$this->distri_owner],
+        	    	$this->distri_key => $tdlists['fd'][$this->distri_key],
+					$this->distri_value => $tdlists['fd'][$this->distri_value],
+				), 'pk' => array(), 'fk' => array(), 'ix' => array(), 'uc' => array(),
+			);
+		}  
 		// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access,
 		// if he has not set the hide_accounts preference
 		// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
@@ -362,7 +373,22 @@ class addressbook_so
 		$filter[$this->distri_id]=$ids;
 		if (count($dl_allowed)) $filter[$this->distri_key]=$dl_allowed;
 		$this->distributionlist_view = str_replace(') d_view',' and '.$this->distri_id.' in ('.implode(',',$ids).')) d_view',$this->distributionlist_view);
-		foreach($this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__) as $row)
+		/*
+		#$ts= microtime(true);
+		$tda2list = $this->db->get_table_definitions('phpgwapi','egw_addressbook2list');
+		$tdlists = $this->db->get_table_definitions('phpgwapi','egw_addressbook_lists');
+		$this->distributionlist_tabledef = array('fd' => array(
+			$this->distri_id => $tda2list['fd'][$this->distri_id],
+			$this->distri_owner => $tdlists['fd'][$this->distri_owner],
+			$this->distri_key => $tdlists['fd'][$this->distri_key],
+			$this->distri_value => $tdlists['fd'][$this->distri_value],
+			), 'pk' => array(), 'fk' => array(), 'ix' => array(), 'uc' => array(),
+		);	
+		#echo microtime(true)-$ts."seks to get def<br>";
+		*/
+		#_debug_array($this->distributionlist_tabledef);
+		foreach($this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__,
+			false,'ORDER BY '.$this->distri_id,false,$num_rows=0,$join='',$this->distributionlist_tabledef) as $row)
 		{
 			if ((isset($row[$this->distri_id])&&strlen($row[$this->distri_value])>0))
 			{
