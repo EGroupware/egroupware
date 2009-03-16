@@ -1493,12 +1493,12 @@ class infolog_ui
 
 		$GLOBALS['egw']->translation->add_app('infolog');
 
-		$GLOBALS['egw_info']['etemplate']['hooked'] = True;
+		etemplate::$hooked = true;
 		$this->index(0,$app,$args[$view_id],array(
 			'menuaction' => $view,
 			isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]
 		),True);
-		unset($GLOBALS['egw_info']['etemplate']['hooked']);
+		etemplate::$hooked = false;
 	}
 
 	/**
