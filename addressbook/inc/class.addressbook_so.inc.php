@@ -365,29 +365,15 @@ class addressbook_so
 		}
 		foreach($ids as $key => $id)
 		{
-			if (!(int)$id) unset($ids[$key]);
+			if (!is_numeric($id)) unset($ids[$key]);
 		}
 		if (!$ids) return array();	// nothing to do, eg. all these contacts are in ldap
-
 		$fields = array();
 		$filter[$this->distri_id]=$ids;
 		if (count($dl_allowed)) $filter[$this->distri_key]=$dl_allowed;
-		$this->distributionlist_view = str_replace(') d_view',' and '.$this->distri_id.' in ('.implode(',',$ids).')) d_view',$this->distributionlist_view);
-		/*
-		#$ts= microtime(true);
-		$tda2list = $this->db->get_table_definitions('phpgwapi','egw_addressbook2list');
-		$tdlists = $this->db->get_table_definitions('phpgwapi','egw_addressbook_lists');
-		$this->distributionlist_tabledef = array('fd' => array(
-			$this->distri_id => $tda2list['fd'][$this->distri_id],
-			$this->distri_owner => $tdlists['fd'][$this->distri_owner],
-			$this->distri_key => $tdlists['fd'][$this->distri_key],
-			$this->distri_value => $tdlists['fd'][$this->distri_value],
-			), 'pk' => array(), 'fk' => array(), 'ix' => array(), 'uc' => array(),
-		);	
-		#echo microtime(true)-$ts."seks to get def<br>";
-		*/
+		$distri_view = str_replace(') d_view',' and '.$this->distri_id.' in ('.implode(',',$ids).')) d_view',$this->distributionlist_view);
 		#_debug_array($this->distributionlist_tabledef);
-		foreach($this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__,
+		foreach($this->db->select($distri_view,'*',$filter,__LINE__,__FILE__,
 			false,'ORDER BY '.$this->distri_id,false,$num_rows=0,$join='',$this->distributionlist_tabledef) as $row)
 		{
 			if ((isset($row[$this->distri_id])&&strlen($row[$this->distri_value])>0))
