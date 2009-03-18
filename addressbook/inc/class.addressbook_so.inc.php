@@ -373,7 +373,7 @@ class addressbook_so
 		if (count($dl_allowed)) $filter[$this->distri_key]=$dl_allowed;
 		$distri_view = str_replace(') d_view',' and '.$this->distri_id.' in ('.implode(',',$ids).')) d_view',$this->distributionlist_view);
 		#_debug_array($this->distributionlist_tabledef);
-		foreach($this->db->select($this->distributionlist_view,'*',$filter,__LINE__,__FILE__,
+		foreach($this->db->select($distri_view,'*',$filter,__LINE__,__FILE__,
 			false,'ORDER BY '.$this->distri_id,false,$num_rows=0,$join='',$this->distributionlist_tabledef) as $row)
 		{
 			if ((isset($row[$this->distri_id])&&strlen($row[$this->distri_value])>0))
