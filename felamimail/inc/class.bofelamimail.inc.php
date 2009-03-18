@@ -2617,7 +2617,7 @@
 				if ( preg_match('/\b'.$identity->emailAddress.'\b/',$headers['TO']) ) {
 					$send->From = $identity->emailAddress;
 					$send->FromName = $identity->realName;
-					error_log('Not Default '.$from);
+					error_log('Not Default '.$send->From);
 					break;
 				}
 				if($identity->default) {
