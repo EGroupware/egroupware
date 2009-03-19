@@ -725,11 +725,14 @@ class boetemplate extends soetemplate
 
 	/**
 	 * stores the etemplate in the cache in egw_info
+	 *
+	 * @param boetemplate $tpl=null required parameter for static use!
 	 */
-	private function store_in_cache()
+	public /*static*/ function store_in_cache(boetemplate $tpl=null)
 	{
-		//echo "<p>store_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-		self::$template_cache[$this->cache_name()] = $this->as_array(1);
+		if (is_null($tpl)) $tpl = $this;
+		//echo "<p>store_in_cache('$tpl->name','$tpl->template','$tpl->lang','$tpl->version')</p>\n";
+		self::$template_cache[$tpl->cache_name()] = $tpl->as_array(1);
 	}
 
 	/**
