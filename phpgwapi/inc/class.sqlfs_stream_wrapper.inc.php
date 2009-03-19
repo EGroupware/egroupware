@@ -29,7 +29,7 @@
  *
  * The stream wrapper interface is according to the docu on php.net
  *
- * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
+ * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  * @ToDo versioning
  */
 class sqlfs_stream_wrapper implements iface_stream_wrapper
@@ -38,6 +38,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */
 	const DIR_MIME_TYPE = 'httpd/unix-directory';
+	/**
+	 * Mime type for symlinks
+	 */
+	const SYMLINK_MIME_TYPE = 'application/x-symlink';
 	/**
 	 * Scheme / protocoll used for this stream-wrapper
 	 */
@@ -63,13 +67,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	const MODE_DIR =   040000;
 	/**
+	 * mode-bits, which have to be set for links
+	 */
+	const MODE_LINK = 0120000;
+	/**
 	 * How much should be logged to the apache error-log
 	 *
 	 * 0 = Nothing
 	 * 1 = only errors
 	 * 2 = all function calls and errors (contains passwords too!)
 	 */
-	const LOG_LEVEL = 2;
+	const LOG_LEVEL = 1;
 
 	/**
 	 * We do versioning AND store the content in the db, NOT YET IMPLEMENTED
@@ -495,7 +503,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		$path = parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,0)) || !egw_vfs::check_access(dirname($path),egw_vfs::WRITABLE))
+		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !egw_vfs::check_access(dirname($path),egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) (type=$type) permission denied!");
@@ -506,7 +514,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		if (($ret = $stmt->execute(array(':fs_id' => $stat['ino']))))
 		{
-			if (self::url2operation($url) == self::STORE2FS) unlink(self::_fs_path($stat['ino']));
+			if (self::url2operation($url) == self::STORE2FS && !($stat['mode'] & self::MODE_LINK))
+			{
+				unlink(self::_fs_path($stat['ino']));
+			}
 			// delete props
 			unset($stmt);
 			$stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=?');
@@ -1086,6 +1097,68 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		return true;
 	}
 
+	/**
+	 * This method is called in response to readlink().
+	 *
+	 * @param string $url
+	 * @return string|boolean content of the symlink or false if $url is no symlink (or not found)
+	 */
+	static function readlink($url)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url')");
+
+		$url_path = parse_url($url,PHP_URL_PATH);
+
+		if (!($lstat = self::url_stat($url_path,STREAM_URL_STAT_LINK)) || !($lstat['mode'] & self::MODE_LINK) ||
+			!($result = self::$pdo->query("SELECT fs_content FROM ".self::TABLE." WHERE fs_id=".(int)$lstat['ino'])))
+		{
+			return false;
+		}
+		return $result->fetchColumn();
+	}
+
+	/**
+	 * Method called for symlink()
+	 *
+	 * @param string $target
+	 * @param string $link
+	 * @return boolean true on success false on error
+	 */
+	static function symlink($target,$link)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$target','$link')");
+
+		if (self::url_stat($link,0) || !($dir = dirname($link)) ||
+			!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!stat('$link') || !is_writable('$dir'))");
+			return false;	// $link already exists or parent dir does not
+		}
+		$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_content'.
+			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_content)');
+		$values = array(
+			'fs_name' => basename($link),
+			'fs_dir'  => $dir_stat['ino'],
+			// we use the mode of the dir, so files in group dirs stay accessible by all members
+			'fs_mode' => ($dir_stat['mode'] & 0666),
+			// for the uid we use the uid of the dir if not 0=root or the current user otherwise
+			'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : egw_vfs::$user,
+			// we allways use the group of the dir
+			'fs_gid'  => $dir_stat['gid'],
+			'fs_created'  => self::_pdo_timestamp(time()),
+			'fs_modified' => self::_pdo_timestamp(time()),
+			'fs_creator'  => egw_vfs::$user,
+			'fs_mime'     => self::SYMLINK_MIME_TYPE,
+			'fs_size'     => bytes($target),
+			'fs_content'  => $target,
+		);
+		foreach($values as $name => &$val)
+		{
+			$stmt->bindParam(':'.$name,$val);
+		}
+		return !!$stmt->execute();
+	}
+
 	private static $extended_acl;
 
 	/**
@@ -1330,7 +1403,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			'ino'   => $info['fs_id'],
 			'name'  => $info['fs_name'],
 			'mode'  => $info['fs_mode'] |
-				($info['fs_mime'] == self::DIR_MIME_TYPE ? self::MODE_DIR : self::MODE_FILE),	// required by the stream wrapper
+				($info['fs_mime'] == self::DIR_MIME_TYPE ? self::MODE_DIR :
+				($info['fs_mime'] == self::SYMLINK_MIME_TYPE ? self::MODE_LINK : self::MODE_FILE)),	// required by the stream wrapper
 			'size'  => $info['fs_size'],
 			'uid'   => $info['fs_uid'],
 			'gid'   => $info['fs_gid'],

@@ -11,12 +11,12 @@
 /*
  * a few generic styles used in most eT apps
  */
-.redItalic,.message { 
-	color: red; 
-	font-style: italic; 
+.redItalic,.message {
+	color: red;
+	font-style: italic;
 }
-.gray { 
-	color: gray; 
+.gray {
+	color: gray;
 }
 .leftPad5 {
 	padding-left: 5px;
@@ -31,24 +31,24 @@
 }
 
 /*
- * Styles of the eT editor 
+ * Styles of the eT editor
  */
-.clickWidgetToEdit { 
-	cursor: pointer; 
-	display: inline; 
+.clickWidgetToEdit {
+	cursor: pointer;
+	display: inline;
 }
-.clickWidgetToEdit:hover { 
-	background-color: pink; 
+.clickWidgetToEdit:hover {
+	background-color: pink;
 }
 
 /*
- * Styles of the nextmatch widget 
+ * Styles of the nextmatch widget
  */
-.activ_sortcolumn { 
-	font-weight: bold; 
+.activ_sortcolumn {
+	font-weight: bold;
 }
-.inactiv_sortcolumn { 
-	font-weight: normal; 
+.inactiv_sortcolumn {
+	font-weight: normal;
 }
 .lettersearch,.lettersearch_active {
 	background-color: #D3DCE3;
@@ -80,30 +80,30 @@
 /*
  * Styles for the tab widget
  */
-.etemplate_tab,.etemplate_tab_active { 
-	border-style:solid; 
-	border-width:1px 1px 0px; 
-	border-color:black; 
-	padding:3px; 
-	padding-left: 6px; 
-	padding-right: 6px; 
-	width: 60px; 
+.etemplate_tab,.etemplate_tab_active {
+	border-style:solid;
+	border-width:1px 1px 0px;
+	border-color:black;
+	padding:3px;
+	padding-left: 6px;
+	padding-right: 6px;
+	width: 60px;
 	white-space: nowrap;
 }
-.etemplate_tab { 
-	cursor: pointer; 
+.etemplate_tab {
+	cursor: pointer;
 	background-color: #E8F0F0;
 }
-.etemplate_tab_active { 
-	border-width:2px 2px 0px; 
+.etemplate_tab_active {
+	border-width:2px 2px 0px;
 	background-color: #D3DCE3;
 }
-.tab_body { 
-	border: black solid 2px; 
+.tab_body {
+	border: black solid 2px;
 }
 
-.nextmatch_header { 
-	border: 1px solid black; 
+.nextmatch_header {
+	border: 1px solid black;
 }
 .nextmatch_header select {
 	width: 140px;
@@ -120,4 +120,24 @@
 }
 .vfsFilename {
 	white-space: nowrap;
+}
+/**
+ * mark a file (icon) as link
+ */
+.vfsIsLink img {
+	border-bottom: 4px solid darkgray;
+	border-right: 4px solid darkgray;
+}
+/**
+ * nicer would be, but it's not working ...
+ */
+.vfsIsLink img:after {
+	content: url(filemanager/templates/default/images/link.png);
+}
+/**
+ * mark a link (icon) as broken link
+ */
+.vfsIsBrokenLink img {
+	border-bottom: 4px solid red;
+	border-right: 4px solid red;
 }

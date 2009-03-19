@@ -169,7 +169,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * stat working on just the eGW VFS (alias of url_stat)
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
-	 * @return resource
+	 * @return array
 	 */
 	static function stat($path)
 	{
@@ -178,6 +178,25 @@ class egw_vfs extends vfs_stream_wrapper
 			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
 		}
 		if (($stat = self::url_stat($path,0)))
+		{
+			$stat = array_slice($stat,13);	// remove numerical indices 0-12
+		}
+		return $stat;
+	}
+
+	/**
+	 * lstat (not resolving symbolic links) working on just the eGW VFS (alias of url_stat)
+	 *
+	 * @param string $path filename with absolute path in the eGW VFS
+	 * @return array
+	 */
+	static function lstat($path)
+	{
+		if ($path[0] != '/')
+		{
+			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
+		}
+		if (($stat = self::url_stat($path,STREAM_URL_STAT_LINK)))
 		{
 			$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		}
@@ -195,6 +214,16 @@ class egw_vfs extends vfs_stream_wrapper
 		return $path[0] == '/' && is_dir(self::SCHEME.'://default'.$path);
 	}
 
+	/**
+	 * is_link() version working only inside the vfs
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	static function is_link($path)
+	{
+		return $path[0] == '/' && is_link(self::SCHEME.'://default'.$path);
+	}
 
 	/**
 	 * Mounts $url under $path in the vfs, called without parameter it returns the fstab
@@ -272,12 +301,12 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - empty,size => (+|-|)N
 	 * - cmin/mmin => (+|-|)N file/dir create/modified in the last N minutes
 	 * - ctime/mtime => (+|-|)N file/dir created/modified in the last N days
-	 * - depth => (+|-)N
 	 * - url => false(default),true allow (and return) full URL's instead of VFS pathes (only set it, if you know what you doing securitywise!)
 	 * - need_mime => false(default),true should we return the mime type
 	 * - order => name order rows by name column
 	 * - sort => (ASC|DESC) sort, default ASC
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
+	 * - follow => {true|false(default)} follow symlinks
 	 * @param string/array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param and stat the last!
@@ -338,7 +367,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			if (!$url) $path = egw_vfs::PREFIX . $path;
 
-			$is_dir = is_dir($path);
+			$is_dir = is_dir($path) && ($options['follow'] || !is_link($path));
 			if (!isset($options['remove']))
 			{
 				$options['remove'] = count($base) == 1 ? count(explode('/',$path))-3+(int)(substr($path,-1)!='/') : 0;
@@ -556,7 +585,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$url = self::PREFIX . $url;
 		}
-		if (is_dir($url))
+		if (is_dir($url) && !is_link($url))
 		{
 			return rmdir($url);
 		}
@@ -962,6 +991,8 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Concat a relative path to an url, taking into account, that the url might already end with a slash or the path starts with one or is empty
 	 *
+	 * Also normalizing the path, as the relative path can contain ../
+	 *
 	 * @param string $url base url or path, might end in a /
 	 * @param string $relative relative path to add to $url
 	 * @return string
@@ -970,7 +1001,37 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		list($url,$query) = explode('?',$url,2);
 		if (substr($url,-1) == '/') $url = substr($url,0,-1);
-		return ($relative === '' || $relative[0] == '/' ? $url.$relative : $url.'/'.$relative).($query ? '?'.$query : '');
+		$url = ($relative === '' || $relative[0] == '/' ? $url.$relative : $url.'/'.$relative);
+
+		// now normalize the path (remove "/something/..")
+		while (strpos($url,'..') !== false)
+		{
+			list($a,$b) = explode('..',$url,2);
+			$a = explode('/',$a);
+			array_pop($a);
+			array_pop($a);
+			$b = explode('/',$b);
+			if ($b[0] === '') array_shift($b);
+			$url = implode('/',array_merge($a,$b));
+		}
+		return $url.($query ? '?'.$query : '');
+	}
+
+	/**
+	 * Build an url from it's components (reverse of parse_url)
+	 *
+	 * @param array $url_parts values for keys 'scheme', 'host', 'user', 'pass', 'query', 'fragment' (all but 'path' are optional)
+	 * @return string
+	 */
+	static function build_url(array $url_parts)
+	{
+		$url = (!isset($url_parts['scheme'])?'':$url_parts['scheme'].'://'.
+			(!isset($url_parts['user'])?'':$url_parts['user'].(!isset($url_parts['pass'])?'':':'.$url_parts['pass']).'@').
+			$url_parts['host']).$url_parts['path'].
+			(!isset($url_parts['query'])?'':'?'.$url_parts['query']).
+			(!isset($url_parts['fragment'])?'':'?'.$url_parts['fragment']);
+		//error_log(__METHOD__.'('.array2string($url_parts).") = '".$url."'");
+		return $url;
 	}
 
 	/**

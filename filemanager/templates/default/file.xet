@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.file.general" template="" lang="" group="0" version="1.5.003">
+	<template id="filemanager.file.general" template="" lang="" group="0" version="1.7.001">
 		<grid width="450" height="300" spacing="10">
 			<columns>
 				<column width="80"/>
@@ -15,6 +15,10 @@
 				<row>
 					<hrule span="all"/>
 				</row>
+				<row disabled="!@is_link">
+					<description value="Link" options=",,,symlink"/>
+					<textbox class="fileName" id="symlink" readonly="true"/>
+				</row>
 				<row>
 					<description value="Type"/>
 					<description id="mime"/>
@@ -23,7 +27,7 @@
 					<description value="Directory"/>
 					<description id="dir"/>
 				</row>
-				<row>
+				<row disabled="@is_link">
 					<description value="Size"/>
 					<vfs-size id="size" options="1"/>
 				</row>
@@ -199,7 +203,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.file" template="" lang="" group="0" version="1.5.004">
+	<template id="filemanager.file" template="" lang="" group="0" version="1.7.001">
 		<grid>
 			<columns>
 				<column/>
@@ -209,7 +213,7 @@
 					<description span="all" class="redItalic" id="msg"/>
 				</row>
 				<row>
-					<tabbox span="all">
+					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Permissions" statustext=""/>

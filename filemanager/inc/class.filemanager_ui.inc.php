@@ -170,6 +170,20 @@ class filemanager_ui
 						$content['nm']['path'] = $old_path;
 					}
 					break;
+				case 'symlink':
+					$target = $content['nm']['path'];
+					$ses = $GLOBALS['egw']->session->appsession('index','filemanager');
+					$content['nm']['path'] = $ses['path'];
+					$link = egw_vfs::concat($content['nm']['path'],basename($target));
+					$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($content['nm']['path'],$target);
+					if (!egw_vfs::stat($abs_target))
+					{
+						$content['nm']['msg'] = lang('Link target %1 not found!',$abs_target);
+						break;
+					}
+					$content['nm']['msg'] = egw_vfs::symlink($target,$link) ?
+						lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',$target);
+					break;
 				case 'paste':
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
 					break;
@@ -223,6 +237,7 @@ class filemanager_ui
 
 		$readonlys['button[paste]'] = !$clipboard_files;
 		$readonlys['button[createdir]'] = !$dir_is_writable;
+		$readonlys['button[symlink]'] = !$dir_is_writable;
 		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
 
 		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['delete'] = lang('Delete');
@@ -357,7 +372,7 @@ class filemanager_ui
 				$dirs = $files = $errs = 0;
 				foreach(egw_vfs::find($selected,array('depth'=>true)) as $path)
 				{
-					if (($is_dir = egw_vfs::is_dir($path)) && egw_vfs::rmdir($path,0))
+					if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
 					{
 						++$dirs;
 					}
@@ -503,10 +518,9 @@ class filemanager_ui
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
 			'need_mime' => true,
 			'name_preg' => $namefilter,
+			'follow' => true,	// follow symlinks
 		),true) as $path => $row)
 		{
-			$row['icon'] = egw_vfs::mime_icon($row['mime']);
-
 			//echo $path; _debug_array($row);
 			$rows[++$n] = $row;
 			$path2n[$path] = $n;
@@ -552,13 +566,11 @@ class filemanager_ui
 	 */
 	function file(array $content=null,$msg='')
 	{
-		static $tabs = 'general|perms|eacl|preview|custom';
-
 		$tpl = new etemplate('filemanager.file');
 
 		if (!is_array($content))
 		{
-			if (!($stat = egw_vfs::stat($path = $_GET['path'])))
+			if (!($path = $_GET['path']) || !($stat = egw_vfs::lstat($path)))
 			{
 				$content['msg'] = lang('File or directory not found!');
 			}
@@ -576,9 +588,13 @@ class filemanager_ui
 				{
 					foreach($props as $prop) $content[$prop['name']] = $prop['val'];
 				}
+				if (($content['is_link'] = egw_vfs::is_link($path)))
+				{
+					$content['symlink'] = egw_vfs::readlink($path);
+				}
 			}
-			$content[$tabs] = $_GET['tabs'];
-			if (!($content['is_dir'] = egw_vfs::is_dir($path)))
+			$content['tabs'] = $_GET['tabs'];
+			if (!($content['is_dir'] = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)))
 			{
 				$content['perms']['executable'] = (int)!!($content['mode'] & 0111);
 				$mask = 6;
@@ -742,6 +758,10 @@ class filemanager_ui
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
 			if ($button == 'save')$GLOBALS['egw']->common->egw_exit();
 		}
+		if ($content['is_link'] && !egw_vfs::stat($path))
+		{
+			$msg .= ($msg ? "\n" : '').lang('Link target %1 not found!',$content['symlink']);
+		}
 		$content['link'] = $GLOBALS['egw']->link(egw_vfs::download_url($path));
 		$content['msg'] = $msg;
 
@@ -758,13 +778,14 @@ class filemanager_ui
 		}
 		$readonlys['name'] = $path == '/' || !egw_vfs::is_writable($content['dir']);
 		$readonlys['comment'] = !egw_vfs::is_writable($path);
+		$readonlys['tabs']['preview'] = $readonlys['tabs']['perms'] = $content['is_link'];
 
 		// if neither owner nor is writable --> disable save&apply
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = !$content['is_owner'] && !egw_vfs::is_writable($path);
 
 		if (!($cfs = config::get_customfields('filemanager')))
 		{
-			$readonlys[$tabs]['custom'] = true;
+			$readonlys['tabs']['custom'] = true;
 		}
 		elseif (!egw_vfs::is_writable($path))
 		{
@@ -773,10 +794,10 @@ class filemanager_ui
 				$readonlys['#'.$name] = true;
 			}
 		}
-		$readonlys[$tabs]['eacl'] = true;	// eacl off by default
+		$readonlys['tabs']['eacl'] = true;	// eacl off by default
 		if ($content['is_dir'])
 		{
-			$readonlys[$tabs]['preview'] = true;	// no preview tab for dirs
+			$readonlys['tabs']['preview'] = true;	// no preview tab for dirs
 			$sel_options['rights']=$sel_options['owner']=$sel_options['group']=$sel_options['other'] = array(
 				7 => lang('Display and modification of content'),
 				5 => lang('Display of content'),
@@ -784,7 +805,7 @@ class filemanager_ui
 			);
 			if(($content['eacl'] = egw_vfs::get_eacl($content['path'])) !== false)	// backend supports eacl
 			{
-				unset($readonlys[$tabs]['eacl']);	// --> switch the tab on again
+				unset($readonlys['tabs']['eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)
 				{
 					$eacl['path'] = parse_url($eacl['path'],PHP_URL_PATH);

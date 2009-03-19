@@ -49,6 +49,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @var mixed
 	 */
 	var $context;
+	/**
+	 * mode-bits, which have to be set for links
+	 */
+	const MODE_LINK = 0120000;
 
 	/**
 	 * Our fstab in the form mount-point => url
@@ -102,10 +106,32 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	private static $wrappers;
 
 	/**
+	 * Resolve the given path according to our fstab AND symlinks
+	 *
+	 * @param string $path
+	 * @param boolean $file_exists=true true if file needs to exists, false if not
+	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
+	 */
+	static function resolve_url_symlinks($path,$file_exists=true,$resolve_last_symlink=true)
+	{
+		if (!($stat = self::url_stat($path,$resolve_last_symlink?0:STREAM_URL_STAT_LINK)) && !$file_exists)
+		{
+			$ret = self::check_symlink_components($path,0,$url);
+			//error_log(__METHOD__."('$path',$file_exists) check_symlink_components()=$ret, url='$url'");
+		}
+		else
+		{
+			$url = $stat['url'];
+		}
+		//error_log(__METHOD__."($path,file_exists=$file_exists,resolve_last_symlink=$resolve_last_symlink) = '$url'");
+		return $url;
+	}
+
+	/**
 	 * Resolve the given path according to our fstab
 	 *
 	 * @param string $path
-	 * @return string/boolean false if the url cant be relsolved, should not happen if fstab has a root entry
+	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
 	static function resolve_url($path)
 	{
@@ -176,7 +202,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		$this->opened_stream = null;
 
-		if (!($url = self::resolve_url($path)))
+		if (!($url = self::resolve_url_symlinks($path,$mode[0]=='r')))
 		{
 			return false;
 		}
@@ -319,7 +345,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function unlink ( $path )
 	{
-		if (!($url = self::resolve_url($path)))
+		if (!($url = self::resolve_url_symlinks($path,true,false)))	// true,false file need to exist, but do not resolve last component
 		{
 			return false;
 		}
@@ -340,8 +366,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rename ( $path_from, $path_to )
 	{
-		if (!($url_from = self::resolve_url($path_from)) ||
-			!($url_to = self::resolve_url($path_to)))
+		if (!($url_from = self::resolve_url_symlinks($path_from,true,false)) ||
+			!($url_to = self::resolve_url_symlinks($path_to,false)))
 		{
 			return false;
 		}
@@ -361,7 +387,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function mkdir ( $path, $mode, $options )
 	{
-		if (!($url = self::resolve_url($path)))
+		if (!($url = self::resolve_url_symlinks($path,false)))	// false = directory does not need to exists
 		{
 			return false;
 		}
@@ -380,7 +406,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rmdir ( $path, $options )
 	{
-		if (!($url = self::resolve_url($path)))
+		if (!($url = self::resolve_url_symlinks($path)))
 		{
 			return false;
 		}
@@ -396,16 +422,17 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
 	 * @param boolean $fail_silent=false should only false be returned if function is not supported by the backend,
 	 * 	or should an E_USER_WARNING error be triggered (default)
+	 * @param int $path_param_key=0 key in params containing the path, default 0
 	 * @return mixed return value of backend or false if function does not exist on backend
 	 */
-	static protected function _call_on_backend($name,$params,$fail_silent=false)
+	static protected function _call_on_backend($name,$params,$fail_silent=false,$path_param_key=0)
 	{
-		$pathes = $params[0];
+		$pathes = $params[$path_param_key];
 
 		$scheme2urls = array();
 		foreach(is_array($pathes) ? $pathes : array($pathes) as $path)
 		{
-			if (!($url = self::resolve_url($path)))
+			if (!($url = self::resolve_url_symlinks($path,false,false)))
 			{
 				return false;
 			}
@@ -423,11 +450,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				}
 				if (!is_array($pathes))
 				{
-					$params[0] = $url;
+					$params[$path_param_key] = $url;
 
 					return call_user_func_array(array($scheme.'_stream_wrapper',$name),$params);
 				}
-				$params[0] = $urls;
+				$params[$path_param_key] = $urls;
 				if (!is_array($r = call_user_func_array(array($scheme.'_stream_wrapper',$name),$params)))
 				{
 					return $r;
@@ -445,29 +472,6 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		return $ret;
-
-		// old, non array aware code
-		if (!($url = self::resolve_url($params[0])))
-		{
-			return false;
-		}
-		if (($scheme = parse_url($url,PHP_URL_SCHEME)))
-		{
-			if (!class_exists($class = $scheme.'_stream_wrapper') || !method_exists($class,$name))
-			{
-				if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
-				return false;
-			}
-			$params[0] = $url;
-
-			return call_user_func_array(array($scheme.'_stream_wrapper',$name),$params);
-		}
-		// call the filesystem specific function
-		if (!function_exists($name))
-		{
-			return false;
-		}
-		return $name($url,$time);
 	}
 
 	/**
@@ -526,6 +530,33 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
+	 * Returns the target of a symbolic link
+	 *
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * @param string $path
+	 * @return string|boolean link-data or false if no link
+	 */
+	static function readlink($path)
+	{
+		return self::_call_on_backend('readlink',array($path));
+	}
+
+	/**
+	 * Creates a symbolic link
+	 *
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * @param string $target target of the link
+	 * @param string $link path of the link to create
+	 * @return boolean true on success, false on error
+	 */
+	static function symlink($target,$link)
+	{
+		return self::_call_on_backend('symlink',array($target,$link),false,1);	// 1=path is in $link!
+	}
+
+	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
 	 * The methods use the following ways to get the mime type (in that order)
@@ -539,7 +570,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function mime_content_type($path)
 	{
-		if (!($url = self::resolve_url($path)))
+		if (!($url = self::resolve_url_symlinks($path)))
 		{
 			return false;
 		}
@@ -591,10 +622,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_dir = $this->extra_dirs = null;
 		$this->extra_dir_ptr = 0;
 
-		if (!($this->opened_dir_url = self::resolve_url($path)))
+		if (!($this->opened_dir_url = self::resolve_url_symlinks($path)))
 		{
 			return false;
 		}
+
 		if (!($this->opened_dir = opendir($this->opened_dir_url)))
 		{
 			//error_log(__METHOD__." dir failed: ".$this->opened_dir);
@@ -641,9 +673,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
+	 * @param boolean $try_create_home=true should a user home-directory be created automatic, if it does not exist
+	 * @param boolean $check_symlink_components=true check if path contains symlinks in path components other then the last one
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags )
+	static function url_stat ( $path, $flags, $try_create_home=true, $check_symlink_components=true )
 	{
 		//error_log(__METHOD__."('$path',$flags)");
 
@@ -652,8 +686,30 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		//error_log(__METHOD__."('$path',$flags) calling stat($url)");
-		$stat = @stat($url);	// suppressed the stat failed warnings
+		if ($flags & STREAM_URL_STAT_LINK)
+		{
+			$stat = @lstat($url);	// suppressed the stat failed warnings
+		}
+		else
+		{
+			$stat = @stat($url);	// suppressed the stat failed warnings
 
+			if ($stat && ($stat['mode'] & self::MODE_LINK) &&  ($l=$lpath = self::readlink($url)))
+			{
+				if ($lpath[0] != '/')	// contact releative path
+				{
+					$url = egw_vfs::concat($url,'../'.$lpath);
+				}
+				else	// or replace absolute path in url
+				{
+					$url_parts = parse_url($url);
+					$url_parts['path'] = $lpath;
+					$url = egw_vfs::build_url($url_parts);
+				}
+				//error_log(__METHOD__."($path,$flags) symlink found and resolved to $url");
+				$stat = @stat($url);
+			}
+		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
 		if (!$stat && dirname(parse_url($path,PHP_URL_PATH)) == '/home' && ($id = $GLOBALS['egw']->accounts->name2id(basename($path))))
 		{
@@ -664,7 +720,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				'account_name' => basename($path),
 			);
 			call_user_func(array('vfs_home_hooks',$hook_data['location']),$hook_data);
-			$stat = @stat($url);
+			$stat = self::url_stat($path,$flags,false);
+		}
+		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
+		{
+			$stat = self::check_symlink_components($path,$flags,$urlx=$url);
+		}
+		elseif(is_array($stat) && !isset($stat['url']))
+		{
+			$stat['url'] = $url;
 		}
 		return $stat;
 
@@ -676,6 +740,52 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		return $stat;
+	}
+
+	/**
+	 * Check if path (which fails the stat call) contains symlinks in path-components other then the last one
+	 *
+	 * @param string $path
+	 * @param int $flags=0 see url_stat
+	 * @param string &$url=null already resolved path
+	 * @return array|boolean stat array or false if not found
+	 */
+	static private function check_symlink_components($path,$flags=0,&$url=null)
+	{
+		if (is_null($url) && !($url = self::resolve_url($path)))
+		{
+			return false;
+		}
+		//echo "<p>".__METHOD__."('$path',$flags,'$url'): ".function_backtrace(1)."</p>\n";
+		while (($rel_path = egw_vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
+		       ($url = egw_vfs::dirname($url)))
+		{
+			$stat = self::url_stat($url,0,false,false);
+			//echo "<p>rel_path='$rel_path', stat(url='$url')=".array2string($stat)."</p>\n";
+			if (($stat = self::url_stat($url,0,false,false)))
+			{
+				if (is_link($url) && ($lpath = self::readlink($url)))
+				{
+					//echo "<p>rel_path='$rel_path', url='$url': lpath='$lpath'\n";
+					if ($lpath[0] != '/')
+					{
+						$url = egw_vfs::concat($url,'../'.$lpath);
+					}
+					else
+					{
+						$url_parts = parse_url($url);
+						$url_parts['path'] = $lpath;
+						$url = egw_vfs::build_url($url_parts);
+					}
+					$url = egw_vfs::concat($url,$rel_path);
+					//echo "--> <b>url='$url'</b></p>\n";
+					return self::url_stat($url,$flags);
+				}
+				$url = egw_vfs::concat($url,$rel_path);
+				return null;
+			}
+		}
+		return false;	// $path does not exist
 	}
 
 	/**

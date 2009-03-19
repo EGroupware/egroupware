@@ -133,6 +133,24 @@ class vfs_widget
 					}
 					$value['c'.$n] = $component;
 					$path .= '/'.$component;
+					// replace id's in /apps again with human readable titles
+					$path_parts = explode('/',$path);
+					if ($path_parts[1] == 'apps')
+					{
+						switch(count($path_parts))
+						{
+							case 2:
+								$value['c'.$n] = lang('Applications');
+								break;
+							case 3:
+								$value['c'.$n] = lang($path_parts[2]);
+								break;
+							case 4:
+								$value['c'.$n] .= ': '.egw_link::title($path_parts[2],$path_parts[3]);
+								//$value['c'.$n] = egw_link::title($path_parts[2],$path_parts[3]);
+								break;
+						}
+					}
 					if (egw_vfs::check_access($path,egw_vfs::READABLE))	// show link only if we have access to the file or dir
 					{
 						if ($n < count($comps)-1 || $mime == egw_vfs::DIR_MIME_TYPE)
@@ -200,6 +218,16 @@ class vfs_widget
 				else
 				{
 					$value = egw_vfs::mime_icon($mime);
+				}
+				// mark symlinks (check if method exists, to allow etemplate to run on 1.6 API!)
+				if (method_exists('egw_vfs','is_link') && egw_vfs::is_link($path))
+				{
+					$broken = !egw_vfs::stat($path);
+					list($span,$class) = explode(',',$cell['span'],2);
+					$class .= ($class ? ' ' : '') . ($broken ? 'vfsIsBrokenLink' : 'vfsIsLink');
+					$cell['span'] = $span.','.$class;
+					$cell['label'] = ($broken ? lang('Broken link') : lang('Link')).': '.egw_vfs::readlink($path).
+						(!$broken ? ' ('.$cell['label'].')' : '');
 				}
 				break;
 

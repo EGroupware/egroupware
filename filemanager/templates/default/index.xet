@@ -53,7 +53,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.6.001">
+	<template id="filemanager.index" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column width="250"/>
@@ -73,6 +73,7 @@
 						<image src="buttonseparator"/>
 						<button image="edit" label="Edit settings" id="edit[{$cont[nm][path]}]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
 						<button id="button[createdir]" image="button_createdir" label="Create directory" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;"/>
+						<button image="link" label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;"/>
 						<button id="button[paste]" image="editpaste" statustext="$cont[paste_tooltip]"/>
 					</hbox>
 				</row>
