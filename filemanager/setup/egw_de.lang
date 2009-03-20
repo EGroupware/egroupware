@@ -37,6 +37,7 @@ could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
 could not move file because no destination directory is given	filemanager	de	Die Datei konnte nicht verschoben werden, da kein Zielverzeichnis angegeben ist.
 could not rename %1 to %2	filemanager	de	Konnte %1 nicht in %2 umbenennen
 could not save %1	filemanager	de	Konnte %1 nicht speichern
+create a link	filemanager	de	Verknüpfung anlegen
 create directory	filemanager	de	Verzeichnis anlegen
 create file	filemanager	de	Datei erstellen
 create folder	filemanager	de	Verzeichnis erstellen
@@ -67,6 +68,7 @@ enter setup user and password to get root rights	filemanager	de	Setup Benutzers 
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
+error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 executable	filemanager	de	Ausführbar
@@ -95,6 +97,7 @@ go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
 id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
+link target %1 not found!	filemanager	de	Verküpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
@@ -146,6 +149,7 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zei
 size	filemanager	de	Größe
 start search	filemanager	de	Suche starten
 superuser	filemanager	de	Superuser
+symlink to %1 created.	filemanager	de	Verknüpfung nach %1 angelegt.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr perönlicher Ordner. Die Vorgabe wird benutzt, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwending Zugriffsrechte fehlen.
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
 there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!

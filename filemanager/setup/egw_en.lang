@@ -37,6 +37,7 @@ could not move %1 to %2	filemanager	en	Could not move %1 to %2
 could not move file because no destination directory is given	filemanager	en	Could not move file because no destination directory is given
 could not rename %1 to %2	filemanager	en	Could not rename %1 to %2
 could not save %1	filemanager	en	Could not save %1
+create a link	filemanager	en	Create a link
 create directory	filemanager	en	Create directory
 create file	filemanager	en	Create File
 create folder	filemanager	en	Create Folder
@@ -67,6 +68,7 @@ enter setup user and password to get root rights	filemanager	en	Enter setup user
 enter the complete vfs path to specify a fast access link to a folder	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder
 enter the complete vfs path to specify your desired start folder.	filemanager	en	Enter the complete VFS path to specify your desired start folder.
 error adding the acl!	filemanager	en	Error adding the ACL!
+error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
 error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
 error uploading file!	filemanager	en	Error uploading file!
 executable	filemanager	en	Executable
@@ -95,6 +97,7 @@ go up	filemanager	en	go up
 id	filemanager	en	Id
 inherited	filemanager	en	Inherited
 link %1: %2	filemanager	en	Link %1: %2
+link target %1 not found!	filemanager	en	Link target %1 not found!
 location	filemanager	en	Location
 log out as superuser	filemanager	en	Log out as superuser
 max folderlinks	admin	en	max folderlinks
@@ -146,6 +149,7 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Sho
 size	filemanager	en	Size
 start search	filemanager	en	start search
 superuser	filemanager	en	Superuser
+symlink to %1 created.	filemanager	en	Symlink to %1 created.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
 there's already a directory with that name!	filemanager	en	There's already a directory with that name!
