@@ -87,7 +87,7 @@ function doXMLHTTP()
 
 	if (strpos($arg0,'::') !== false && strpos($arg0,'.') === false)	// static method name app_something::method
 	{
-		list($className,$functionName,$handler) = explode('::',$arg0);
+		@list($className,$functionName,$handler) = explode('::',$arg0);
 		list($appName) = explode('_',$className);
 	}
 	else
