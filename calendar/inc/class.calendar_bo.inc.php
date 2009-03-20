@@ -140,7 +140,7 @@ class calendar_bo
 	/**
 	 * Instance of the socal class
 	 *
-	 * @var socal
+	 * @var calendar_so
 	 */
 	var $so;
 	/**
