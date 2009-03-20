@@ -244,7 +244,7 @@ class calendar_groupdav extends groupdav_handler
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-						if (is_numeric($id = array_pop($parts))) $ids[] = $id;
+						if (is_numeric($id = basename(array_pop($parts),'.ics'))) $ids[] = $id;
 					}
 				}
 			}
