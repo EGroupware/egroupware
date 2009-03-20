@@ -100,7 +100,7 @@ class calendar_boupdate extends calendar_bo
 			// if no owner given, set user to owner
 			if (!$event['owner']) $event['owner'] = $this->user;
 			// set owner as participant if none is given
-			if (!$event['id'] && (!is_array($event['participants']) || !count($event['participants'])))
+			if (!is_array($event['participants']) || !count($event['participants']))
 			{
 				$event['participants'][$event['owner']] = 'U';
 			}
@@ -285,7 +285,7 @@ class calendar_boupdate extends calendar_bo
 	}
 
 	/**
-	 * Check for added, modified or deleted participants
+	 * Check for added, modified or deleted participants AND notify them
 	 *
 	 * @param array $new_event the updated event
 	 * @param array $old_event the event before the update
