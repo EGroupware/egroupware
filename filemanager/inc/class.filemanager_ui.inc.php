@@ -72,6 +72,8 @@ class filemanager_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
+		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+
 		$tpl = new etemplate('filemanager.index');
 
 		if (!is_array($content))
