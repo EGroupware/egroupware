@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="timesheet.editstatus" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%" height="450" overflow="auto">
+			<columns>
+				<column width="100"/>
+				<column/>
+				<column/>
+				<column width="30%"/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="msg" span="all" class="redItalic" align="center"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row>
+					<groupbox rows="1" cols="1">
+						<grid width="100%" height="300" overflow="auto">
+							<columns>
+								<column width="100"/>
+								<column/>
+								<column/>
+								<column width="30%"/>
+							</columns>
+							<rows>
+								<row class="row" valign="top">
+									<description value="Status"/>
+									<grid width="100%" height="280" overflow="auto" id="statis">
+										<columns>
+											<column/>
+											<column width="5%"/>
+										</columns>
+										<rows>
+											<row class="th">
+												<description value="Name"/>
+												<description value="Actions"/>
+											</row>
+											<row class="row">
+												<textbox size="80" maxlength="150" blur="--&gt; enter new name" id="${row}[name]"/>
+												<button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="return confirm('Delete this status');"/>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row>
+					<hbox span="2">
+						<button label="Save" id="button[save]"/>
+						<button id="button[apply]" label="Apply"/>
+						<button label="Cancel" id="button[cancel]"/>
+					</hbox>
+					<description/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -54,3 +54,16 @@ function timesheet_upgrade1_4()
 
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.6';
 }
+
+function timesheet_upgrade1_6()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_timesheet','ts_status',array(
+		'type' => 'int',
+		'precision' => '4'
+	));
+
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_timesheet','ts_status');
+
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.7.001';
+}
+

@@ -17,9 +17,9 @@ if (!defined('TIMESHEET_APP'))
 }
 
 $setup_info[TIMESHEET_APP]['name']      = TIMESHEET_APP;
-$setup_info[TIMESHEET_APP]['version']   = '1.6';
+$setup_info[TIMESHEET_APP]['version']   = '1.007';
 $setup_info[TIMESHEET_APP]['app_order'] = 5;
-$setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet', 'egw_timesheet_extra');
+$setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet','egw_timesheet_extra');
 $setup_info[TIMESHEET_APP]['enable']    = 1;
 
 $setup_info[TIMESHEET_APP]['author'] =

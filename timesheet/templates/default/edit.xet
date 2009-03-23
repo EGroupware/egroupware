@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.5.001">
+	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%" height="150">
 			<columns>
 				<column width="95"/>
@@ -43,6 +43,14 @@
 				<row class="row" disabled="@ts_viewtype">
 					<description options=",,,ts_quantity" value="Quantity"/>
 					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur" precision="3" span="all"/>
+				</row>
+				<row>
+					<description value="Status"/>
+					<menulist>
+						<menupopup id="ts_status" statustext="select a status of the timesheet" options="please select"/>
+					</menulist>
+					<description/>
+					<description/>
 				</row>
 			</rows>
 		</grid>
@@ -93,7 +101,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.5.001">
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -142,7 +150,7 @@
 					</grid>
 				</row>
 				<row>
-					<tabbox span="all">
+					<tabbox id="general|notes|links|customfields" span="all">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Notes" statustext=""/>

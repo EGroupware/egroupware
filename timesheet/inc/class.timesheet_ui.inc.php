@@ -16,9 +16,10 @@
 class timesheet_ui extends timesheet_bo
 {
 	var $public_functions = array(
-		'view' => true,
-		'edit' => true,
-		'index' => true,
+	'view' => true,
+	'edit' => true,
+	'index' => true,
+	'editstatus' => true,
 	);
 	/**
 	 * ProjectManager integration: 'none', 'full' or default null
@@ -78,14 +79,14 @@ class timesheet_ui extends timesheet_bo
 			else	// new entry
 			{
 				$this->data = array(
-					'ts_start' => $this->today,
-					'end_time' => $this->now - $this->today,
-					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
-					'cat_id'   => (int) $_REQUEST['cat_id'],
+				'ts_start' => $this->today,
+				'end_time' => $this->now - $this->today,
+				'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
+				'cat_id'   => (int) $_REQUEST['cat_id'],
 				);
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
-				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
+			(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
 		}
 		else
 		{
@@ -144,7 +145,7 @@ class timesheet_ui extends timesheet_bo
 					if (!$this->data['ts_title'])
 					{
 						$this->data['ts_title'] = $this->data['ts_title_blur'] ?
-							$this->data['ts_title_blur'] : $this->data['ts_project_blur'];
+						$this->data['ts_title_blur'] : $this->data['ts_project_blur'];
 
 						if (!$this->data['ts_title'])
 						{
@@ -180,8 +181,8 @@ class timesheet_ui extends timesheet_bo
 						}
 					}
 					$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',array(
-						'menuaction' => $referer,
-						'msg'        => $msg,
+					'menuaction' => $referer,
+					'msg'        => $msg,
 					))."';";
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
@@ -230,22 +231,22 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		$preserv = $this->data + array(
-			'view'    => $view,
-			'referer' => $referer,
-			'ts_title_blur' => $content['ts_title_blur'],
+		'view'    => $view,
+		'referer' => $referer,
+		'ts_title_blur' => $content['ts_title_blur'],
 		);
 		$content = array_merge($this->data,array(
-			'msg'  => $msg,
-			'view' => $view,
-			$tabs  => $content[$tabs],
-			'link_to' => array(
-				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
-				'to_app' => TIMESHEET_APP,
-			),
-			'js' => "<script>\n$js\n</script>\n",
-			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
-			'start_time' => $this->datetime2time($this->data['ts_start']),
-			'pm_integration' => $this->pm_integration,
+		'msg'  => $msg,
+		'view' => $view,
+		$tabs  => $content[$tabs],
+		'link_to' => array(
+		'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
+		'to_app' => TIMESHEET_APP,
+		),
+		'js' => "<script>\n$js\n</script>\n",
+		'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
+		'start_time' => $this->datetime2time($this->data['ts_start']),
+		'pm_integration' => $this->pm_integration,
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -300,11 +301,11 @@ class timesheet_ui extends timesheet_bo
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
 
 		$readonlys = array(
-			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
-			'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
-			'button[save]'     => $view,
-			'button[save_new]' => $view,
-			'button[apply]'    => $view,
+		'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
+		'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
+		'button[save]'     => $view,
+		'button[save_new]' => $view,
+		'button[apply]'    => $view,
 		);
 		if ($view)
 		{
@@ -320,7 +321,7 @@ class timesheet_ui extends timesheet_bo
 			$readonlys['ts_owner'] = true;
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.
-			($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
+		($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
 
 		// supress unknow widget 'projectmanager-*', if projectmanager is not installed or old
 		if (!@file_exists(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.projectmanager_widget.inc.php'))
@@ -336,7 +337,8 @@ class timesheet_ui extends timesheet_bo
 		if (!$this->customfields) $readonlys[$tabs]['customfields'] = true;	// suppress tab if there are not customfields
 
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,array(
-			'ts_owner' => $edit_grants,
+		'ts_owner'  => $edit_grants,
+		'ts_status' => $this->status_labels,
 		),$readonlys,$preserv,2);
 	}
 
@@ -410,6 +412,7 @@ class timesheet_ui extends timesheet_bo
 		$GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
 		$query = $query_in;	// keep the original query
 		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
+		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
 		#_debug_array($query['col_filter']);
 		// PM project filter for the PM integration
 		if ((string)$query['col_filter']['pm_id'] != '')
@@ -536,7 +539,7 @@ class timesheet_ui extends timesheet_bo
 
 		// query cf's for the displayed rows
 		if ($ids && $this->customfields &&
-			in_array('customfields',$cols_to_show=explode(',',$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['nextmatch-timesheet.index.rows'])))
+		in_array('customfields',$cols_to_show=explode(',',$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['nextmatch-timesheet.index.rows'])))
 		{
 			$cfs = $this->read_cfs($ids,$cols_to_show);
 		}
@@ -554,18 +557,18 @@ class timesheet_ui extends timesheet_bo
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
-						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.$GLOBALS['egw']->common->show_date($row['ts_start'],
-							$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
-						break;
+					$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.$GLOBALS['egw']->common->show_date($row['ts_start'],
+					$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
+					break;
 					case -1:	// week-sum
-						$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
-						break;
+					$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
+					break;
 					case -2:	// month-sum
-						$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
-						break;
+					$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
+					break;
 					case -3:	// year-sum
-						$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
-						break;
+					$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
+					break;
 				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
@@ -627,6 +630,7 @@ class timesheet_ui extends timesheet_bo
 			if (strpos($query['selectcols'],'ts_unitprice')===false) $rows['no_ts_unitprice'] = 1;
 			if (strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
 		}
+		$rows['no_ts_status'] = $query['no_status'];
 		return $total;
 	}
 
@@ -654,9 +658,31 @@ class timesheet_ui extends timesheet_bo
 				$msg = lang('Error deleting the entry!!!');
 			}
 		}
+
+		if ($content['action'] != '')
+		{
+			if (!count($content['nm']['rows']['checked']) && !$content['use_all'])
+			{
+
+				$msg = lang('You need to select some timesheets first');
+			}
+			else
+			{
+				if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
+				$success,$failed,$action_msg,$content['action'],$msg))
+				{
+					$msg .= lang('%1 timesheets(s) %2',$success,$action_msg);
+				}
+				elseif(is_null($msg))
+				{
+					$msg .= lang('%1 timesheets(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+				}
+			}
+		}
+
 		$content = array(
-			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
-			'msg' => $msg,
+		'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
+		'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
 		{
@@ -668,25 +694,37 @@ class timesheet_ui extends timesheet_bo
 			$date_filters['custom'] = 'custom';
 
 			$content['nm'] = array(
-				'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rows',
-				'options-filter' => $date_filters,
-				'options-filter2' => array('No details','Details'),
-				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
-				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
-				'header_left'    => 'timesheet.index.dates',
-				'header_right'   => 'timesheet.index.add',
-				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
-				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
+			'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rows',
+			'options-filter' => $date_filters,
+			'options-filter2' => array('No details','Details'),
+			'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
+			'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
+			'header_left'    => 'timesheet.index.dates',
+			'header_right'   => 'timesheet.index.add',
+			'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+			'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
 
 		$sel_options = array(
-			'ts_owner'   => $read_grants,
-			'pm_id'      => array(lang('No project')),
-			'cat_id'     => array(lang('None')),
+		'ts_owner'   => $read_grants,
+		'pm_id'      => array(lang('No project')),
+		'cat_id'     => array(lang('None')),
+		'ts_status'  => $this->status_labels,
 		);
+		$content['nm']['no_status'] = !$sel_options['ts_status'];
+
+		$status =array();
+		$sel_options['action'] ['delete']= lang('Delete Timesheet');
+		foreach ($this->status_labels as $status_id => $label_status)
+		{
+			$status['to_status_'.$status_id] = $label_status;
+		}
+		$sel_options['action'][lang('Modify the Status of the Timesheet')] = $status;
+		unset($status);
+
 		if ($this->pm_integration != 'full')
 		{
 			$projects =& $this->query_list('ts_project');
@@ -695,8 +733,152 @@ class timesheet_ui extends timesheet_bo
 		}
 		// dont show [Export] button if app is not availible to the user or we are on php4
 		$readonlys['export'] = !$GLOBALS['egw_info']['user']['apps']['importexport'] || (int) phpversion() < 5;
-
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.index',$content,$sel_options,$readonlys,$preserv);
+	}
+
+	/**
+	 * apply an action to multiple timesheets
+	 *
+	 * @param string/int $action 'status_to',set status to timeshhets
+	 * @param array $checked timesheet id's to use if !$use_all
+	 * @param boolean $use_all if true use all timesheets of the current selection (in the session)
+	 * @param int &$success number of succeded actions
+	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 timesheets 'deleted'
+	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
+	 * @return boolean true if all actions succeded, false otherwise
+	 */
+	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+	{
+		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
+		$success = $failed = 0;
+		if ($use_all)
+		{
+			// get the whole selection
+			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession($session_name,'timesheet');
+
+			if ($use_all)
+			{
+				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
+				$query['num_rows'] = -1;	// all
+				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+			}
+		}
+
+		if (substr($action,0,9) == 'to_status')
+		{
+			$to_status = (int)substr($action,10);
+			$action = 'to_status';
+		}
+
+		switch($action)
+		{
+			case 'delete':
+				$action_msg = lang('deleted');
+				foreach((array)$checked as $n => $id)
+				{
+					if ($this->delete($id))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+				}
+				break;
+			case 'to_status':
+				$action_msg =lang('changed status');
+				foreach((array)$checked as $n => $id)
+				{
+					if ($this->set_status($id,$to_status))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+				}
+				break;
+		}
+
+		return !$failed;
+	}
+
+	/**
+	 * function for setting individual Status
+	 *
+	 * @param conetnt
+	 * @param view
+	 */
+	function editstatus($content = null,$msg='')
+	{
+		// this function requires admin rights
+		$GLOBALS['egw_info']['flags']['admin_only'] = true;
+		$GLOBALS['egw']->check_app_rights();
+
+		if (is_array($content))
+		{
+			list($button) = @each($content['button']);
+
+			switch($button)
+			{
+				case 'delete':
+					break;
+				case 'cancel':
+					$GLOBALS['egw']->redirect_link('/index.php',array(
+					'menuaction' => 'timesheet.timesheet_ui.index',
+					'msg' => $msg,
+					));
+					break;
+				case 'apply':
+				case 'save':
+					foreach($content['statis'] as $cat)
+					{
+						$id = $cat['id'];
+						if (($cat ['name'] !== $this->status_labels[$id]) && ($cat ['name'] !== ''))
+						{
+							$this->status_labels[$id] = $cat['name'];
+							$need_update = true;
+						}
+					}
+					if ($need_update)
+					{
+						config::save_value('status_labels',$this->status_labels,TIMESHEET_APP);
+						$msg .= lang('Status updated.');
+					}
+			}
+		}
+		if (isset($content['button'])) unset ($content['button']);
+		if (isset($content['statis']['delete']))
+		{
+			list($id) = each($content['statis']['delete']);
+			if (isset($this->status_labels[$id]))
+			{
+				unset($this->status_labels[$id]);
+				config::save_value('status_labels',$this->status_labels,TIMESHEET_APP);
+				unset($this->status_labels[$id]);
+				$msg .= lang('Status deleted.');
+			}
+		}
+
+		$i = 1;
+		unset($content['statis']);
+		foreach($this->status_labels as $id => $label)
+		{
+			$content['statis'][$i]['name']= $label;
+			$content['statis'][$i]['id']= $id;
+			$i++;
+		}
+		$content['statis'][$i]['name'] = '';
+		$content['statis'][$i]['id'] = ++$id;
+
+		$content['msg'] = $msg;
+		$preserv = $content;
+
+		$etpl = new etemplate('timesheet.editstatus');
+		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,$readonlys,$preserv);
 	}
 
 	function js()
@@ -710,6 +892,15 @@ class timesheet_ui extends timesheet_bo
 				"Export",400,400);
 			return false;
 		}
+
+		function do_action(selbox)
+		{
+			if (selbox.value != "") {
+				selbox.form.submit();
+				selbox.value = "";
+			}
+		}
+
 		</script>';
 	}
 }

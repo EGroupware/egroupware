@@ -15,24 +15,25 @@
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.3.001">
 		<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 	</template>
-	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.5.002">
+	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column width="15%"/>
 				<column width="50%"/>
 				<column/>
 				<column/>
-				<column disabled="@ts_viewtype"/>
-				<column disabled="@ts_viewtype"/>
-				<column disabled="@ts_viewtype"/>
+				<column disabled="@no_ts_quantity"/>
+				<column disabled="@no_ts_unitprice"/>
+				<column disabled="@no_ts_total"/>
 				<column disabled="@no_owner_col"/>
+				<column disabled="@no_ts_status"/>
 				<column/>
 				<column/>
 			</columns>
 			<rows>
 				<row class="th">
 					<nextmatch-sortheader label="Date" id="ts_start"/>
-					<grid spacing="1" padding="1">
+					<grid spacing="0" padding="0">
 						<columns>
 							<column/>
 						</columns>
@@ -63,12 +64,16 @@
 						<textbox type="float" id="price" readonly="true" precision="2"/>
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1" class="$cont[ownerClass]"/>
+					<nextmatch-filterheader id="ts_status" onchange="1" options="All status"/>
 					<nextmatch-customfields id="customfields" readonly="true"/>
-					<description value="Actions" class="noPrint"/>
+					<hbox class="noPrint">
+						<description value="Actions" class="noPrint" align="right"/>
+						<button label="Check all" image="check" id="check_all" needed="1" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;"/>
+					</hbox>
 				</row>
 				<row class="$row_cont[class]">
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
-					<vbox>
+					<vbox options="0,0">
 						<link id="${row}[ts_link]" no_lang="1"/>
 						<description id="${row}[ts_title]" no_lang="1" class="$row_cont[titleClass]"/>
 						<description id="${row}[ts_description]" no_lang="1"/>
@@ -83,39 +88,54 @@
 					<menulist class="$cont[ownerClass]">
 						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
 					</menulist>
+					<menulist>
+						<menupopup id="${row}[ts_status]" readonly="true"/>
+					</menulist>
 					<customfields-list id="$row" readonly="true"/>
-					<hbox class="noPrint">
+					<hbox class="noPrint" align="right">
 						<button image="view" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" statustext="View this entry"/>
 						<button image="edit" label="Edit" id="edit[$row_cont[ts_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[ts_id]]" statustext="Delete this entry" onclick="return confirm('Delete this entry');"/>
+						<checkbox options="$row_cont[ts_id]" id="checked[]" statustext="Select multiple contacts for a further action"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.index" template="" lang="" group="0" version="1.5.002">
+	<template id="timesheet.index" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
+				<column/>
 				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
 					<description span="all" class="redItalic" no_lang="1" id="msg" align="center"/>
+					<description/>
 				</row>
 				<row disabled="1">
 					<hbox>
-						<template id="timesheet.index.dates"/>
-						<template id="timesheet.index.add" align="right"/>
+						<template id="dates"/>
+						<template id="add" align="right"/>
 					</hbox>
+					<description/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="timesheet.index.rows"/>
+					<nextmatch id="nm" options="timesheet.index.rows" span="all"/>
 				</row>
 				<row class="noPrint">
 					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+					<hbox align="right">
+						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
+						<menulist>
+							<menupopup onchange="do_action(this);" options="Select an action or timesheet you want to modify..." no_lang="1" id="action" statustext="Select an action or timesheet to modify"/>
+						</menulist>
+						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
+					</hbox>
 				</row>
 				<row disabled="1">
 					<button label="Export" onclick="timesheet_export(); return false;" id="export"/>
+					<description/>
 				</row>
 			</rows>
 		</grid>

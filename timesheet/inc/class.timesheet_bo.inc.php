@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -99,8 +99,18 @@ class timesheet_bo extends so_sql
 	 * @var array
 	 */
 	var $show_sums;
-
+	/**
+	 * Array with custom fileds
+	 *
+	 * @var array
+	 */
 	var $customfields=array();
+	/**
+	 * Array with status label
+	 *
+	 * @var array
+	 */
+	var $status_labels = array();
 
 	/**
 	 * Name of the timesheet table storing custom fields
@@ -114,6 +124,7 @@ class timesheet_bo extends so_sql
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
 		$this->customfields = config::get_customfields(TIMESHEET_APP);
+		if($this->config_data['status_labels']) $this->status_labels =&  $this->config_data['status_labels'];
 
 		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
 		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
@@ -485,6 +496,35 @@ class timesheet_bo extends so_sql
 			// delete all links to timesheet entry $ts_id
 			egw_link::unlink(0,TIMESHEET_APP,$ts_id);
 		}
+		return $ret;
+	}
+
+
+	/**
+	 * set a status for timesheet entry identified by $keys
+	 *
+	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
+	 * @param boolean $status
+	 * @return int affected rows, should be 1 if ok, 0 if an error
+	 */
+	function set_status($keys=null,$status)
+	{
+		$ret = true;
+		if (!is_array($keys) && (int) $keys)
+		{
+			$keys = array('ts_id' => (int) $keys);
+		}
+		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
+
+		if (!$this->check_acl(EGW_ACL_EDIT,$ts_id))
+		{
+			return false;
+		}
+
+		$this->read($keys,true,false);
+		$this->data['ts_status'] = $status;
+		if ($this->save($ts_id)!=0) $ret = false;
+
 		return $ret;
 	}
 
