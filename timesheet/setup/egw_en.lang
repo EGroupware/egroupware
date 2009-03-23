@@ -66,8 +66,7 @@ saves this entry and add a new one	timesheet	en	Saves this entry and add a new o
 select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
 select a status of the timesheet	timesheet	en	select a status of the timesheet
-select an action or timesheet to modify	timesheet	en	Select an action or timesheet to modify
-select an action or timesheet you want to modify...	timesheet	en	Select an action or timesheet you want to modify...
+select action	timesheet	en	Select action
 select multiple timeshhets for a further action	timesheet	en	Select multiple timeshhets for a further action
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum (eg. to sum up negative overtime)
 start	timesheet	en	Start

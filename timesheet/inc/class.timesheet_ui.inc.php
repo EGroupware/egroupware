@@ -537,12 +537,6 @@ class timesheet_ui extends timesheet_bo
 		#_debug_array($links);
 		unset($query['col_filter'][0]);
 
-		// query cf's for the displayed rows
-		if ($ids && $this->customfields &&
-		in_array('customfields',$cols_to_show=explode(',',$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['nextmatch-timesheet.index.rows'])))
-		{
-			$cfs = $this->read_cfs($ids,$cols_to_show);
-		}
 		$readonlys = array();
 		$have_cats = false;
 		foreach($rows as &$row)
@@ -575,10 +569,6 @@ class timesheet_ui extends timesheet_bo
 				$row['class'] = 'th';
 				$row['titleClass'] = 'titleSum';
 				continue;
-			}
-			elseif($cfs && isset($cfs[$row['ts_id']]))
-			{
-				$row += $cfs[$row['ts_id']];
 			}
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
 			{

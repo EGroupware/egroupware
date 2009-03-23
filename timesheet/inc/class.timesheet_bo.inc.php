@@ -22,7 +22,7 @@ if (!defined('TIMESHEET_APP'))
  *
  * @todo Implement sorting&filtering by and searching of custom fields
  */
-class timesheet_bo extends so_sql
+class timesheet_bo extends so_sql_cf
 {
 	/**
 	 * Timesheets config data
@@ -119,11 +119,10 @@ class timesheet_bo extends so_sql
 
 	function __construct()
 	{
-		parent::__construct(TIMESHEET_APP,'egw_timesheet',null,'',true);	// true = use global db object!
+		parent::__construct(TIMESHEET_APP,'egw_timesheet',self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
 
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
-		$this->customfields = config::get_customfields(TIMESHEET_APP);
 		if($this->config_data['status_labels']) $this->status_labels =&  $this->config_data['status_labels'];
 
 		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
@@ -178,7 +177,7 @@ class timesheet_bo extends so_sql
 		if (!is_array($data))
 		{
 			$save_data = $this->data;
-			$data = $this->read($data,true,false);	// no need to read cf's
+			$data = $this->read($data,true);
 			$this->data = $save_data;
 
 			if (!$data) return null; 	// entry not found
@@ -370,10 +369,9 @@ class timesheet_bo extends so_sql
 	 *
 	 * @param int $ts_id
 	 * @param boolean $ignore_acl=false should the acl be checked
-	 * @param boolean $read_cfs=true also read the custom fields
 	 * @return array/boolean array with timesheet entry, null if timesheet not found or false if no rights
 	 */
-	function read($ts_id,$ignore_acl=false,$read_cfs=true)
+	function read($ts_id,$ignore_acl=false)
 	{
 		//error_log(__METHOD__."($ts_id,$ignore_acl) ".function_backtrace());
 		if (!(int)$ts_id || (int)$ts_id != $this->data['ts_id'] && !parent::read($ts_id))
@@ -384,41 +382,7 @@ class timesheet_bo extends so_sql
 		{
 			return false;	// no read rights
 		}
-		if ($read_cfs && $this->customfields && ($cfs = $this->read_cfs($ts_id)))
-		{
-			$this->data += $cfs[$ts_id];
-		}
 		return $this->data;
-	}
-
-	/**
-	 * Read the cf's of the given ts_id's and evtl names
-	 *
-	 * @param int|array $ts_ids
-	 * @param array $names=null
-	 * @return array with ts_id => array(name => value) pairs
-	 */
-	function read_cfs($ts_ids,$names=null)
-	{
-		//error_log(__METHOD__."(".array2string($ts_ids).",".array2string($names).")");
-		if (!$this->customfields || !$ts_ids)
-		{
-			return array();
-		}
-		$where = array('ts_id' => $ts_ids);
-		if ($names)
-		{
-			foreach($names as $name)
-			{
-				if ($name[0] == '#') $where['ts_extra_name'][] = substr($name,1);
-			}
-		}
-		$cfs = array();
-		foreach($this->db->select(self::EXTRA_TABLE,'ts_id,ts_extra_name,ts_extra_value',$where,__LINE__,__FILE__,false,'',TIMESHEET_APP) as $row)
-		{
-			$cfs[$row['ts_id']]['#'.$row['ts_extra_name']] = $row['ts_extra_value'];
-		}
-		return $cfs;
 	}
 
 	/**
@@ -446,22 +410,6 @@ class timesheet_bo extends so_sql
 		}
 		if (!($err = parent::save()))
 		{
-			if ($this->customfields)	//saves data of custom fields in timesheet_extra
-			{
-				$this->db->delete(self::EXTRA_TABLE,array('ts_id' => $this->data['ts_id']),__LINE__,__FILE__,TIMESHEET_APP);
-
-				foreach($this->customfields as $name => $data)
-				{
-					if (isset($this->data['#'.$name]) && !empty($this->data['#'.$name]))
-					{
-						$this->db->insert(self::EXTRA_TABLE,array(
-							'ts_id' => $this->data['ts_id'],
-							'ts_extra_name' => $name,
-							'ts_extra_value' => $this->data['#'.$name],
-						),false,__LINE__,__FILE__,TIMESHEET_APP);
-					}
-				}
-			}
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
@@ -489,10 +437,6 @@ class timesheet_bo extends so_sql
 		}
 		if (($ret = parent::delete($keys)) && $ts_id)
 		{
-			if ($this->customfields)	//delete custom fields entries
-			{
-				$this->db->delete(self::EXTRA_TABLE,array('ts_id' => $ts_id),__LINE__,__FILE__,TIMESHEET_APP);
-			}
 			// delete all links to timesheet entry $ts_id
 			egw_link::unlink(0,TIMESHEET_APP,$ts_id);
 		}
@@ -521,7 +465,7 @@ class timesheet_bo extends so_sql
 			return false;
 		}
 
-		$this->read($keys,true,false);
+		$this->read($keys,true);
 		$this->data['ts_status'] = $status;
 		if ($this->save($ts_id)!=0) $ret = false;
 
@@ -595,7 +539,7 @@ class timesheet_bo extends so_sql
 	{
 		if (!is_array($entry))
 		{
-			$entry = $this->read( $entry,false,false );		// no need to read cfs
+			$entry = $this->read( $entry,false,false);
 		}
 		if (!$entry)
 		{

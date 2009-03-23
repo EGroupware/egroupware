@@ -65,7 +65,7 @@
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1" class="$cont[ownerClass]"/>
 					<nextmatch-filterheader id="ts_status" onchange="1" options="All status"/>
-					<nextmatch-customfields id="customfields" readonly="true"/>
+					<nextmatch-customfields id="customfields"/>
 					<hbox class="noPrint">
 						<description value="Actions" class="noPrint" align="right"/>
 						<button label="Check all" image="check" id="check_all" needed="1" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;"/>
@@ -96,7 +96,7 @@
 						<button image="view" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" statustext="View this entry"/>
 						<button image="edit" label="Edit" id="edit[$row_cont[ts_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[ts_id]]" statustext="Delete this entry" onclick="return confirm('Delete this entry');"/>
-						<checkbox options="$row_cont[ts_id]" id="checked[]" statustext="Select multiple contacts for a further action"/>
+						<checkbox options="$row_cont[ts_id]" id="checked[]" statustext="Select multiple timeshhets for a further action"/>
 					</hbox>
 				</row>
 			</rows>
@@ -126,9 +126,9 @@
 				<row class="noPrint">
 					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right">
-						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
+						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown timesheets!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown timesheets!!!"/>
 						<menulist>
-							<menupopup onchange="do_action(this);" options="Select an action or timesheet you want to modify..." no_lang="1" id="action" statustext="Select an action or timesheet to modify"/>
+							<menupopup onchange="do_action(this);" options="Select action" id="action" statustext="Select action"/>
 						</menulist>
 						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
 					</hbox>

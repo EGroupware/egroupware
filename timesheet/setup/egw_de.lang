@@ -66,8 +66,7 @@ saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fü
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
 select a status of the timesheet	timesheet	de	einen status auswählen
-select an action or timesheet to modify	timesheet	de	Eine Aktion auswählen
-select an action or timesheet you want to modify...	timesheet	de	Wählen Sie eine Aktion oder einen Stundenzettel aus, der geändert werden soll.
+select action	timesheet	de	Bitte eine Aktion auswählen
 select multiple timeshhets for a further action	timesheet	de	Wählen Sie mehrere Stundenzettel für einen weitere Aktion aus
 show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengensumme (z.B. um negative Überstunden zu summieren)
 start	timesheet	de	Start
