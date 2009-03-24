@@ -853,7 +853,10 @@ ORDER BY cal_user_type, cal_usre_id
 			TENTATIVE	=> 'T',
 			ACCEPTED	=> 'A'
 		);
-		if (!(int)$cal_id || !(int)$user_id) return false;
+		if (!(int)$cal_id || !(int)$user_id && $user_type != 'e')
+		{
+			return false;
+		}
 
 		if (is_numeric($status)) $status = $status_code_short[$status];
 
@@ -880,6 +883,8 @@ ORDER BY cal_user_type, cal_usre_id
 				'cal_status'     => $status,
 			),$where,__LINE__,__FILE__,'calendar');
 		}
+		$ret = $this->db->affected_rows();
+		error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret");
 		return $this->db->affected_rows();
 	}
 
