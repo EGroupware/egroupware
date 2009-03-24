@@ -655,8 +655,11 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false)
 		$size = hsize($stat['size']);
 		$mtime = date('Y-m-d H:i:s',$stat['mtime']);
 		$nlink = $stat['nlink'];
-
-		echo "$perms $nlink\t$uid\t$gid\t$size\t$mtime\t$bname\n";
+		if (($stat['mode'] & 0xA000) == 0xA000)
+		{
+			$symlink = " -> ".(class_exists('egw_vfs') ? egw_vfs::readlink($url) : readlink($url));
+		}
+		echo "$perms $nlink\t$uid\t$gid\t$size\t$mtime\t$bname$symlink\n";
 	}
 	else
 	{
@@ -788,7 +791,15 @@ function do_find($bases,$options)
  */
 function int2mode( $mode )
 {
-	if($mode & 0x1000)     // FIFO pipe
+	if(($mode & 0xA000) == 0xA000) // Symbolic Link
+	{
+		$sP = 'l';
+	}
+	elseif(($mode & 0xC000) == 0xC000) // Socket
+	{
+		$sP = 's';
+	}
+	elseif($mode & 0x1000)     // FIFO pipe
 	{
 		$sP = 'p';
 	}
@@ -807,14 +818,6 @@ function int2mode( $mode )
 	elseif($mode & 0x8000) // Regular
 	{
 		$sP = '-';
-	}
-	elseif($mode & 0xA000) // Symbolic Link
-	{
-		$sP = 'l';
-	}
-	elseif($mode & 0xC000) // Socket
-	{
-		$sP = 's';
 	}
 	else                         // UNKNOWN
 	{
