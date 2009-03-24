@@ -720,7 +720,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function get_eacl($path)
 	{
-		return self::_call_on_backend('get_eacl',array($path));
+		return self::_call_on_backend('get_eacl',array($path),true);	// true = fail silent (no PHP Warning)
 	}
 
 	/**
@@ -751,7 +751,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function propfind($path,$ns=self::DEFAULT_PROP_NAMESPACE)
 	{
-		return self::_call_on_backend('propfind',array($path,$ns));
+		return self::_call_on_backend('propfind',array($path,$ns),true);	// true = fail silent (no PHP Warning)
 	}
 
 	/**
@@ -833,7 +833,15 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function int2mode( $mode )
 	{
-		if($mode & 0x1000)     // FIFO pipe
+		if(($mode & self::MODE_LINK) == self::MODE_LINK) // Symbolic Link
+		{
+			$sP = 'l';
+		}
+		elseif(($mode & 0xC000) == 0xC000) // Socket
+		{
+			$sP = 's';
+		}
+		elseif($mode & 0x1000)     // FIFO pipe
 		{
 			$sP = 'p';
 		}
@@ -852,14 +860,6 @@ class egw_vfs extends vfs_stream_wrapper
 		elseif($mode & 0x8000) // Regular
 		{
 			$sP = '-';
-		}
-		elseif($mode & 0xA000) // Symbolic Link
-		{
-			$sP = 'l';
-		}
-		elseif($mode & 0xC000) // Socket
-		{
-			$sP = 's';
 		}
 		else                         // UNKNOWN
 		{
