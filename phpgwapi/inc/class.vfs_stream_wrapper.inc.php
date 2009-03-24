@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -16,15 +16,6 @@
  *
  * The new vfs stream wrapper uses a kind of fstab to mount different filesystems / stream wrapper types
  * together for eGW's virtual file system.
- *
- * @ToDo extended ACL with inheritance and specific rights for users or groups
- * 	Backends can implement them, in which case they get stored independent of the current mount-points.
- *  If the backend does not implement them, they get stored by the VFS under the final URL of the backend,
- *  to also allow mounts to change. The URL's to these extended attributes need to be renamed, when the
- *  file or an underlaying directory get's renamed. That's the task of the backend, if it chooses to
- *  implement extended ACL itself.
- * @ToDo storage for WebDAV properties
- * @ToDo implement the necessary function of WebDAV locks
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
@@ -53,6 +44,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * mode-bits, which have to be set for links
 	 */
 	const MODE_LINK = 0120000;
+
+	/**
+	 * How much should be logged to the apache error-log
+	 *
+	 * 0 = Nothing
+	 * 1 = only errors
+	 * 2 = all function calls and errors (contains passwords too!)
+	 */
+	const LOG_LEVEL = 1;
 
 	/**
 	 * Our fstab in the form mount-point => url
@@ -117,13 +117,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		if (!($stat = self::url_stat($path,$resolve_last_symlink?0:STREAM_URL_STAT_LINK)) && !$file_exists)
 		{
 			$ret = self::check_symlink_components($path,0,$url);
-			//error_log(__METHOD__."('$path',$file_exists) check_symlink_components()=$ret, url='$url'");
+			if (self::LOG_LEVEL > 1) $log = " (check_symlink_components('$path',0,'$url') = $ret)";
 		}
 		else
 		{
 			$url = $stat['url'];
 		}
-		//error_log(__METHOD__."($path,file_exists=$file_exists,resolve_last_symlink=$resolve_last_symlink) = '$url'");
+		// if the url resolves to a symlink to the vfs, resolve this vfs:// url direct
+		if ($url && parse_url($url,PHP_URL_SCHEME) == self::SCHEME)
+		{
+			$url = self::resolve_url(parse_url($url,PHP_URL_PATH));
+		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,file_exists=$file_exists,resolve_last_symlink=$resolve_last_symlink) = '$url'$log");
 		return $url;
 	}
 
@@ -140,6 +145,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		// we do some caching here
 		if (isset($cache[$path]))
 		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '{$cache[$path]}' (from cache)");
 			return $cache[$path];
 		}
 		// setting default user, passwd and domain, if it's not contained int the url
@@ -157,6 +163,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 		if (!empty($parts['scheme']) && $parts['scheme'] != self::SCHEME)
 		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '$path' (path is already an url)");
 			return $path;	// path is already a non-vfs url --> nothing to do
 		}
 		if (empty($parts['path'])) $parts['path'] = '/';
@@ -177,11 +184,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				if ($parts['query']) $url .= '?'.$parts['query'];
 				if ($parts['fragment']) $url .= '#'.$parts['fragment'];
 
-				//error_log(__METHOD__."($path) = $url");
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '$url'");
 				return $cache[$path] = $url;
 			}
 		}
-		//error_log(__METHOD__."($path) can't resolve path!\n");
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path') can't resolve path!\n");
 		trigger_error(__METHOD__."($path) can't resolve path!\n",E_USER_WARNING);
 		return false;
 	}
@@ -618,34 +625,30 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_opendir ( $path, $options )
 	{
-		//error_log(__METHOD__." called with ".$path);
 		$this->opened_dir = $this->extra_dirs = null;
 		$this->extra_dir_ptr = 0;
 
 		if (!($this->opened_dir_url = self::resolve_url_symlinks($path)))
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) resolve_url_symlinks() failed!");
 			return false;
 		}
-
 		if (!($this->opened_dir = opendir($this->opened_dir_url)))
 		{
-			//error_log(__METHOD__." dir failed: ".$this->opened_dir);
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
 		}
 		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
-		#error_log(__METHOD__." check for ".$this->opened_dir_url);
 		// check our fstab if we need to add some of the mountpoints
-		$basepath = parse_url($this->opened_dir_url,PHP_URL_PATH);
-		#error_log(__METHOD__." basepath here: ".print_r($basepath,true));
+		$basepath = parse_url($path,PHP_URL_PATH);
 		foreach(self::$fstab as $mounted => $nul)
 		{
-			#error_log(__METHOD__." dirname mounted: ".print_r(dirname($mounted),true));
-			if ((dirname($mounted) == $basepath || dirname($mounted)."/" == $basepath) && $mounted != '/')
+			if ((dirname($mounted) == $basepath || dirname($mounted).'/' == $basepath) && $mounted != '/')
 			{
-				#error_log(__METHOD__." mounted dir: ".print_r($mounted,true));
 				$this->extra_dirs[] = basename($mounted);
 			}
 		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $path,$options): opendir($this->opened_dir_url)=$this->opened_dir, extra_dirs=".array2string($this->extra_dirs).', '.function_backtrace());
 		return true;
 	}
 
@@ -679,13 +682,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function url_stat ( $path, $flags, $try_create_home=true, $check_symlink_components=true )
 	{
-		//error_log(__METHOD__."('$path',$flags)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
 
 		if (!($url = self::resolve_url($path)))
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
 			return false;
 		}
-		//error_log(__METHOD__."('$path',$flags) calling stat($url)");
 		if ($flags & STREAM_URL_STAT_LINK)
 		{
 			$stat = @lstat($url);	// suppressed the stat failed warnings
@@ -696,17 +699,12 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 			if ($stat && ($stat['mode'] & self::MODE_LINK) &&  ($l=$lpath = self::readlink($url)))
 			{
-				if ($lpath[0] != '/')	// contact releative path
+				if ($lpath[0] != '/')	// concat relative path
 				{
-					$url = egw_vfs::concat($url,'../'.$lpath);
+					$lpath = egw_vfs::concat(parse_url($path,PHP_URL_PATH),'../'.$lpath);
 				}
-				else	// or replace absolute path in url
-				{
-					$url_parts = parse_url($url);
-					$url_parts['path'] = $lpath;
-					$url = egw_vfs::build_url($url_parts);
-				}
-				//error_log(__METHOD__."($path,$flags) symlink found and resolved to $url");
+				$url = egw_vfs::PREFIX.$lpath;
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlink found and resolved to $url");
 				$stat = @stat($url);
 			}
 		}
@@ -754,37 +752,34 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (is_null($url) && !($url = self::resolve_url($path)))
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags,'$url') can NOT resolve path: ".function_backtrace(1));
 			return false;
 		}
-		//echo "<p>".__METHOD__."('$path',$flags,'$url'): ".function_backtrace(1)."</p>\n";
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url'): ".function_backtrace(1));
+
 		while (($rel_path = egw_vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
 		       ($url = egw_vfs::dirname($url)))
 		{
-			$stat = self::url_stat($url,0,false,false);
-			//echo "<p>rel_path='$rel_path', stat(url='$url')=".array2string($stat)."</p>\n";
 			if (($stat = self::url_stat($url,0,false,false)))
 			{
 				if (is_link($url) && ($lpath = self::readlink($url)))
 				{
-					//echo "<p>rel_path='$rel_path', url='$url': lpath='$lpath'\n";
+					if (self::LOG_LEVEL > 1) $log = "rel_path='$rel_path', url='$url': lpath='$lpath'";
+
 					if ($lpath[0] != '/')
 					{
-						$url = egw_vfs::concat($url,'../'.$lpath);
+						$lpath = egw_vfs::concat(parse_url($url,PHP_URL_PATH),'../'.$lpath);
 					}
-					else
-					{
-						$url_parts = parse_url($url);
-						$url_parts['path'] = $lpath;
-						$url = egw_vfs::build_url($url_parts);
-					}
-					$url = egw_vfs::concat($url,$rel_path);
-					//echo "--> <b>url='$url'</b></p>\n";
+					$url = egw_vfs::PREFIX.egw_vfs::concat($lpath,$rel_path);
+					if (self::LOG_LEVEL > 1) error_log("$log --> lpath='$lpath', url='$url'");
 					return self::url_stat($url,$flags);
 				}
 				$url = egw_vfs::concat($url,$rel_path);
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url') returning null");
 				return null;
 			}
 		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url') returning false");
 		return false;	// $path does not exist
 	}
 
@@ -800,21 +795,21 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_readdir ( )
 	{
-		#error_log(__METHOD__." called.");
 		if ($this->extra_dirs && count($this->extra_dirs) > $this->extra_dir_ptr)
 		{
-			return $this->extra_dirs[$this->extra_dir_ptr++];
+			$file = $this->extra_dirs[$this->extra_dir_ptr++];
 		}
-		// only return children readable by the user, if dir is not writable
-		do {
-			//error_log(__METHOD__." called with:".$this->opened_dir_url);
-			$file = readdir($this->opened_dir);
-			//error_log(__METHOD__." got:".$file);
+		else
+		{
+			// only return children readable by the user, if dir is not writable
+			do {
+				$file = readdir($this->opened_dir);
+			}
+			while($file !== false && (is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) ||	// dont return mountpoints twice
+				self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
+				!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE)));
 		}
-		while($file !== false && (is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) ||	// dont return mountpoints twice
-			self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
-			!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE)));
-
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $this->opened_dir ) = '$file'");
 		return $file;
 	}
 
