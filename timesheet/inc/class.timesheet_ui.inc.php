@@ -409,7 +409,7 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
-		$GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
+		if (!$id_only) $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
 		$query = $query_in;	// keep the original query
 		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
