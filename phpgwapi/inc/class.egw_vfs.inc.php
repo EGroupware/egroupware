@@ -1004,14 +1004,12 @@ class egw_vfs extends vfs_stream_wrapper
 		$url = ($relative === '' || $relative[0] == '/' ? $url.$relative : $url.'/'.$relative);
 
 		// now normalize the path (remove "/something/..")
-		while (strpos($url,'..') !== false)
+		while (strpos($url,'/../') !== false)
 		{
-			list($a,$b) = explode('..',$url,2);
+			list($a,$b) = explode('/../',$url,2);
 			$a = explode('/',$a);
 			array_pop($a);
-			array_pop($a);
 			$b = explode('/',$b);
-			if ($b[0] === '') array_shift($b);
 			$url = implode('/',array_merge($a,$b));
 		}
 		return $url.($query ? '?'.$query : '');
