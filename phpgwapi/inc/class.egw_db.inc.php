@@ -30,8 +30,8 @@
  *
  * c) foreach($db->select($table,'*',$where,__LINE__,__FILE__,false,'',$app) as $row)
  *
- * To fetch only single column (of the next row):
- *		$cnt = $db->query("SELECT COUNT(*) FROM ...")->fetchSingle();
+ * To fetch only a single column (of the next row):
+ *		$cnt = $db->query("SELECT COUNT(*) FROM ...")->fetchColumn($column_num=0);
  *
  * To fetch a next (single) row, you can use:
  *		$row = $db->query("SELECT COUNT(*) FROM ...")->fetch($fetchmod=null);
