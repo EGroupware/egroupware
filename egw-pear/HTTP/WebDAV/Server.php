@@ -1217,6 +1217,10 @@ class HTTP_WebDAV_Server
                     $options["content_language"] = $val;
                     break;
 
+                case 'HTTP_CONTENT_LENGTH':
+                    // defined on IIS and has the same value as CONTENT_LENGTH
+                    break;
+
                 case 'HTTP_CONTENT_LOCATION': // RFC 2616 14.14
                     /* The meaning of the Content-Location header in PUT
                      or POST requests is undefined; servers are free
@@ -1242,6 +1246,10 @@ class HTTP_WebDAV_Server
                     // TODO make sure the implementation supports partial PUT
                     // this has to be done in advance to avoid data being overwritten
                     // on implementations that do not support this ...
+                    break;
+
+                case 'HTTP_CONTENT_TYPE':
+                    // defined on IIS and has the same value as CONTENT_TYPE
                     break;
 
                 case 'HTTP_CONTENT_MD5':      // RFC 2616 14.15
@@ -2044,7 +2052,7 @@ class HTTP_WebDAV_Server
     {
 		//error_log( __METHOD__."\n" .print_r($text,true));
 		//error_log("prop-encode:" . print_r($this->_prop_encoding,true));
-            
+
 		switch (strtolower($this->_prop_encoding)) {
 			case "utf-8":
        			//error_log( __METHOD__."allready encoded\n" .print_r($text,true));
