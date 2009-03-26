@@ -2,7 +2,7 @@
 %define egwdirname egroupware
 %define egwversion 1.6
 %define packaging 001
-#%define epoch 1
+#define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
 	%define httpdconfd /etc/apache2/conf.d
@@ -37,7 +37,7 @@
 	%define httpdconfd /etc/httpd/conf.d
 	%define osversion %{?rhel_version}
 	%define source5 egroupware_fedora.tar.bz2
-	%define distribution Red Head %{?rhel_version}
+	%define distribution Red Hat %{?rhel_version}
 	%define php php
 	%define extra_requires httpd php-mysql php-xml
 	%define cron crontabs
@@ -99,6 +99,7 @@ Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
 Source3: %{packagename}-mydms-%{egwversion}.%{packaging}.tar.bz2
 Source4: %{packagename}-gallery-%{egwversion}.%{packaging}.tar.bz2
 Source5: %{?source5}
+Source6: %{name}-%{version}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
 Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
