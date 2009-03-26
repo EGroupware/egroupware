@@ -690,11 +690,11 @@ class nextmatch_widget
 	 * @param mixed &$value the extension returns here it's input, if there's any
 	 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
 	 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
-	 * @param object &$tmpl the eTemplate the widget belongs too
+	 * @param etemplate &$tmpl the eTemplate the widget belongs too
 	 * @param mixed &value_in the posted values (already striped of magic-quotes)
 	 * @return boolean true if $value has valid content, on false no content will be returned!
 	 */
-	function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
+	function post_process($name,&$value,&$extension_data,&$loop,etemplate &$tmpl,$value_in)
 	{
 		$nm_global =& self::get_nm_global($name,$extension_data['type']);
 
@@ -872,7 +872,7 @@ class nextmatch_widget
 	 * Export the list as csv file download
 	 *
 	 * @param array $value content of the nextmatch widget
-	 * @param boolean false=error, eg. get_rows callback does not exits, true=nothing to export, otherwise we do NOT return!
+	 * @return boolean false=error, eg. get_rows callback does not exits, true=nothing to export, otherwise we do NOT return!
 	 */
 	function _csv_export(&$value)
 	{
@@ -934,7 +934,7 @@ class nextmatch_widget
 			foreach($rows as $key => $row)
 			{
 				if (!is_numeric($key)) continue;	// not a real rows
-				fwrite($fp,$this->_csv_encode($row,$value['csv_fields'])."\n");
+				fwrite($fp,$this->_csv_encode($row,$value['csv_fields'],true,$rows['sel_options'])."\n");
 			}
 			$value['start'] += $value['num_rows'];
 
@@ -994,9 +994,10 @@ class nextmatch_widget
 	 * @param array $data
 	 * @param array $fields
 	 * @param boolean $use_type=true
+	 * @param array $extra_sel_options=null
 	 * @return string
 	 */
-	function _csv_encode($data,$fields,$use_type=true)
+	function _csv_encode($data,$fields,$use_type=true,$extra_sel_options=null)
 	{
 		static $date_format,$time_format;
 		if (is_null($date_format))
@@ -1004,12 +1005,14 @@ class nextmatch_widget
 			$time_format = $date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 			$time_format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:ia' : 'H:i');
 		}
+		$sel_options =& boetemplate::$request->sel_options;
+
 		$out = array();
 		foreach($fields as $field => $label)
 		{
 			$value = (array)$data[$field];
 
-			if ($use_type && is_array($label) && in_array($label['type'],array('select-account','select-cat','date-time','date')))
+			if ($use_type && is_array($label) && in_array($label['type'],array('select-account','select-cat','date-time','date','select','int','float')))
 			{
 				foreach($value as $key => $val)
 				{
@@ -1025,11 +1028,31 @@ class nextmatch_widget
 							}
 							break;
 						case 'date-time':
-							if ($val) $value[$key] = date($time_format,$val);
+							if ($val) $value[$key] = date($time_format,!is_numeric($val) ? strtotime($val) : $val);
 							break;
 						case 'date':
-							if ($val) $value[$key] = date($date_format,$val);
+							if ($val) $value[$key] = date($date_format,!is_numeric($val) ? strtotime($val) : $val);
 							break;
+						case 'select':
+							if (isset($sel_options[$field]))
+							{
+								if ($val) $value[$key] = lang($sel_options[$field][$val]);
+							}
+							elseif(is_array($extra_sel_options) && isset($extra_sel_options[$field]))
+							{
+								if ($val) $value[$key] = lang($extra_sel_options[$field][$val]);
+							}
+							break;
+						case 'int':		// size: [min],[max],[len],[precission/sprint format]
+						case 'float':
+							list(,,,$pre) = explode(',',$label['size']);
+							if (($label['type'] == 'float' || !is_numeric($pre)) && $val && $pre)
+							{
+								$val = str_replace(array(' ',','),array('','.'),$val);
+								$value[$key] = is_numeric($pre) ? round($value,$pre) : sprintf($pre,$value);
+							}
+						case 'float':
+
 					}
 				}
 			}
