@@ -782,6 +782,7 @@
 			$kses->AddProtocol('cid');
 			// since check protocoll is called for every value associated to an attribute we have to add color and background-color to the valid protocolls
 			$kses->AddProtocol('color');
+			$kses->AddProtocol('font-size');
 			$kses->AddProtocol('background-color');
 			#$kses->AddHTML('html', array(
 			#		'xmlns' => array(),

@@ -964,6 +964,20 @@
 				if(!empty($body)) {
 					$body .= '<hr style="border:dotted 1px silver;">';
 				}
+				// some characterreplacements, as they fail to translate
+				$sar = array(
+					'@(\x84|\x93|\x94)@',
+					'@(\x96|\x97)@',
+					'@(\x91|\x92)@',
+					'@(\x85)@',
+				);
+				$rar = array(
+					'"',
+					'-',
+					'\'',
+					'...',
+				);
+				if($singleBodyPart['mimeType'] == 'text/html' && strtoupper($singleBodyPart['charSet']) != 'UTF-8') $singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
 				#_debug_array($singleBodyPart['charSet']);
 				$singleBodyPart['body'] = $this->botranslation->convert(
 					$singleBodyPart['body'],
