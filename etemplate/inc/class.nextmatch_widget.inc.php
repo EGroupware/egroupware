@@ -1051,8 +1051,6 @@ class nextmatch_widget
 								$val = str_replace(array(' ',','),array('','.'),$val);
 								$value[$key] = is_numeric($pre) ? round($value,$pre) : sprintf($pre,$value);
 							}
-						case 'float':
-
 					}
 				}
 			}
