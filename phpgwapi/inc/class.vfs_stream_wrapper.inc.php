@@ -443,7 +443,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			{
 				return false;
 			}
-			$scheme2urls[(string)parse_url($url,PHP_URL_SCHEME)][] = $url;
+			$scheme2urls[(string)parse_url($url,PHP_URL_SCHEME)][$path] = $url;
 		}
 		$ret = array();
 		foreach($scheme2urls as $scheme => $urls)
@@ -466,7 +466,14 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				{
 					return $r;
 				}
-				$ret += $r;
+				// we need to re-translate the urls to pathes, as they can eg. contain symlinks
+				foreach($urls as $path => $url)
+				{
+					if (isset($r[$url]) || isset($r[$url=parse_url($url,PHP_URL_PATH)]))
+					{
+						$ret[$path] = $r[$url];
+					}
+				}
 			}
 			// call the filesystem specific function (dont allow to use arrays!)
 			elseif(!function_exists($name) || is_array($pathes))
@@ -726,7 +733,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
 		{
-			$stat = self::check_symlink_components($path,$flags,$urlx=$url);
+			$stat = self::check_symlink_components($path,$flags,$url);
 		}
 		elseif(is_array($stat) && !isset($stat['url']))
 		{
