@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -23,6 +23,13 @@
 class vfs_home_hooks
 {
 	/**
+	 * Should we log our calls to the error_log
+	 * 0 - no logging
+	 * 1 - log method calls
+	 */
+	const LOG_LEVEL = 0;
+
+	/**
 	 * Hook called after new accounts have been added
 	 *
 	 * @param array $data
@@ -31,12 +38,15 @@ class vfs_home_hooks
 	 */
 	static function addAccount($data)
 	{
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// create a user-dir
 		egw_vfs::$is_root = true;
-		egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0);
-		egw_vfs::chown($dir,$data['account_id']);
-		egw_vfs::chgrp($dir,0);
-		egw_vfs::chmod($dir,0700);	// only user has access
+		if (@egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0))
+		{
+			egw_vfs::chown($dir,$data['account_id']);
+			egw_vfs::chgrp($dir,0);
+			egw_vfs::chmod($dir,0700);	// only user has access
+		}
 		egw_vfs::$is_root = false;
 	}
 
@@ -50,6 +60,7 @@ class vfs_home_hooks
 	 */
 	static function editAccount($data)
 	{
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		if ($data['account_lid'] == $data['old_loginid']) return;	// nothing to do here
 
 		// rename the user-dir
@@ -68,6 +79,7 @@ class vfs_home_hooks
 	 */
 	static function deleteAccount($data)
 	{
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		egw_vfs::$is_root = true;
 		if ($data['new_owner'] && ($new_lid = $GLOBALS['egw']->accounts->id2name($data['new_owner'])))
 		{
@@ -94,12 +106,15 @@ class vfs_home_hooks
 	 */
 	static function addGroup($data)
 	{
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// create a group-dir
 		egw_vfs::$is_root = true;
-		egw_vfs::mkdir($dir='/home/'.$data['account_name'],070,0);
-		egw_vfs::chown($dir,0);
-		egw_vfs::chgrp($dir,$data['account_id']);
-		egw_vfs::chmod($dir,0070);	// only group has access
+		if (@egw_vfs::mkdir($dir='/home/'.$data['account_name'],070,0))
+		{
+			egw_vfs::chown($dir,0);
+			egw_vfs::chgrp($dir,$data['account_id']);
+			egw_vfs::chmod($dir,0070);	// only group has access
+		}
 		egw_vfs::$is_root = false;
 	}
 
@@ -113,6 +128,7 @@ class vfs_home_hooks
 	 */
 	static function editGroup($data)
 	{
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		if ($data['account_name'] == $data['old_name']) return;	// nothing to do here
 
 		// rename the group-dir
@@ -130,6 +146,7 @@ class vfs_home_hooks
 	 */
 	static function deleteGroup($data)
 	{
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// delete the group-directory
 		egw_vfs::$is_root = true;
 		egw_vfs::remove('/home/'.$data['account_name']);
