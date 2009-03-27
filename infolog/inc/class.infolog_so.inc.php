@@ -91,7 +91,7 @@ class infolog_so
 			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
 			$user_and_memberships[] = $this->user;
 		}
-		return $info['info_responsible'] && array_intersect(array($info['info_responsible']),$user_and_memberships);
+		return $info['info_responsible'] && array_intersect((array)$info['info_responsible'],$user_and_memberships);
 	}
 
 	/**
