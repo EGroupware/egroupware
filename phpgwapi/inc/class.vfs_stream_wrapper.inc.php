@@ -709,7 +709,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
-		if (!$stat && dirname(parse_url($path,PHP_URL_PATH)) == '/home' && ($id = $GLOBALS['egw']->accounts->name2id(basename($path))))
+		static $hook_data;	// we have to make sure to not call ourself recursivly (eg. mkdir will call stat to make sure the dir does not yet exist!)
+		if (!$stat && is_null($hook_data) && dirname(parse_url($path,PHP_URL_PATH)) == '/home' &&
+			($id = $GLOBALS['egw']->accounts->name2id(basename($path))) &&
+			$GLOBALS['egw']->accounts->id2name($id) == basename($path))	// make sure path has the right case!
 		{
 			$hook_data = array(
 				'location' => $GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'addgroup' : 'addaccount',
@@ -718,6 +721,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				'account_name' => basename($path),
 			);
 			call_user_func(array('vfs_home_hooks',$hook_data['location']),$hook_data);
+			$hook_data = null;
 			$stat = self::url_stat($path,$flags,false);
 		}
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
