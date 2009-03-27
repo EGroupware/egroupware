@@ -9,7 +9,7 @@
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2-mod_php5 php_any_db php5-dom
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom
 	%define cron cron
 %endif
 %if 0%{?fedora_version}
@@ -106,6 +106,8 @@ Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requi
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
 Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{infolog} %{packagename}-%{importexport} %{packagename}-%{manual} %{packagename}-%{news_admin} %{packagename}-%{notifications} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
 Obsoletes: %{packagename}-%{icalsrv}
+#otherwise build fails because of jar files in G2
+BuildRequires: unzip
 
 Prefix: /usr/share
 Buildarch: noarch
@@ -474,6 +476,7 @@ rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/xmlrpc
 rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/messenger
 rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/workflow
 rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/jinn
+rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/admin/inc/*.orig
 
 find $RPM_BUILD_ROOT%{prefix}/%{egwdirname} -name .svn | xargs rm -rf
 
@@ -549,6 +552,8 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 %attr(0644,root,root) /etc/cron.d/egroupware
 %config %attr(0644,root,root) %{httpdconfd}/egroupware.conf
 %if 0%{?suse_version}
+	%dir %attr(0755,root,root) /etc/apache2
+	%dir %attr(0755,root,root) %{httpdconfd}
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/files
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/backup
@@ -599,6 +604,8 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 %attr(0644,root,root) /etc/cron.d/egroupware
 %config %attr(0644,root,root) %{httpdconfd}/egroupware.conf
 %if 0%{?suse_version}
+	%dir %attr(0755,root,root) /etc/apache2
+	%dir %attr(0755,root,root) %{httpdconfd}
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/files
 	%dir %attr(0755,wwwrun,www) /var/lib/egroupware/default/backup
