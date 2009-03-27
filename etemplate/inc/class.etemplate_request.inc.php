@@ -86,7 +86,7 @@ class etemplate_request
 	 *
 	 * @var string
 	 */
-	static public $request_class;// = 'etemplate_request_session';
+	static public $request_class; // = 'etemplate_request_session';
 
 	/**
 	 * Factory method to get a new request object or the one for an existing request
@@ -119,7 +119,7 @@ class etemplate_request
 			// decrypt the data if available
 			if (self::init_crypt())
 			{
-				$id = trim(mdecrypt_generic(self::$mcrypt,$id));
+				$id = mdecrypt_generic(self::$mcrypt,$id);
 			}
 			// uncompress the data if available
 			if (self::$compression_level && function_exists('gzcompress'))
