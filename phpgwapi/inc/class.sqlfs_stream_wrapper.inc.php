@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -76,6 +76,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * 0 = Nothing
 	 * 1 = only errors
 	 * 2 = all function calls and errors (contains passwords too!)
+	 * 3 = log line numbers in sql statements
 	 */
 	const LOG_LEVEL = 1;
 
@@ -195,8 +196,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 			// new file --> create it in the DB
-			$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size'.
-				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size)');
+			$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size'.
+				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size)';
+			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+			$stmt = self::$pdo->prepare($query);
 			$values = array(
 				'fs_name' => basename($path),
 				'fs_dir'  => $dir_stat['ino'],
@@ -231,7 +234,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			elseif(!file_exists($fs_dir=dirname(self::_fs_path($this->opened_fs_id))))
 			{
 				$umaskbefore = umask();
-				if (self::LOG_LEVEL) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
 				self::mkdir_recursive($fs_dir,0700,true);
 			}
 		}
@@ -339,6 +342,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$ret = fclose($this->opened_stream) && $ret;
 
+		unset(self::$stat_cache[$this->opened_path]);
 		$this->opened_stream = $this->opened_path = $this->opened_mode = $this->opend_fs_id = null;
 		$this->operation = self::DEFAULT_OPERATION;
 
@@ -580,6 +584,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		unset(self::$stat_cache[$path_from]);
+		unset(self::$stat_cache[$path_to]);
 
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_id=:fs_id');
 		return $stmt->execute(array(
@@ -654,6 +659,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			return false;	// no permission or file does not exist
 		}
+		unset(self::$stat_cache[$path]);
 		$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
 		return  $stmt->execute(array(
@@ -751,6 +757,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			$stat = self::url_stat($path,0);
 		}
+		unset(self::$stat_cache[$path]);
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_modified=:fs_modified,fs_modifier=:fs_modifier WHERE fs_id=:fs_id');
 
 		return $stmt->execute(array(
@@ -905,7 +912,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		$this->opened_dir = array();
-		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE." WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
+		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.
+			",CASE fs_mime WHEN '".self::SYMLINK_MIME_TYPE."' THEN fs_content ELSE NULL END AS readlink FROM ".self::TABLE.
+			" WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
+		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -964,14 +974,16 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		// check if we already have the info from the last dir_open call, as the old vfs reads it anyway from the db
 		if (self::$stat_cache && isset(self::$stat_cache[$path]))
 		{
-			return self::_vfsinfo2stat(self::$stat_cache[$path]);
+			return self::$stat_cache[$path] ? self::_vfsinfo2stat(self::$stat_cache[$path]) : false;
 		}
 
 		if (!is_object(self::$pdo))
 		{
 			self::_pdo();
 		}
-		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_name=? AND fs_dir=';
+		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.
+			",CASE fs_mime WHEN '".self::SYMLINK_MIME_TYPE."' THEN fs_content ELSE NULL END AS readlink FROM ".self::TABLE.
+			' WHERE fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
 		$parts = explode('/',$path);
 
 		// if we have extendes acl access to the url, we dont need and can NOT include the sql for the readable check
@@ -987,7 +999,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			elseif ($n < count($parts)-1)
 			{
-				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name='.self::$pdo->quote($name);
+				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name);
 
 				// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
 				if (!egw_vfs::$is_root && !$eacl_access)
@@ -1003,17 +1015,20 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			else
 			{
-				$query = str_replace('fs_name=?','fs_name='.self::$pdo->quote($name),$base_query).'('.$query.')';
+				$query = str_replace('fs_name'.self::$case_sensitive_equal.'?','fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name),$base_query).'('.$query.')';
 			}
 		}
-		//$query = "/* sqlfs::url_stat($path) */ ".$query;
-		//echo "query=$query\n";
+		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
 		if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
 		{
-			self::_remove_password($url);
-			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags) file or directory not found!");
-			return false;
+			if (self::LOG_LEVEL > 1)
+			{
+				self::_remove_password($url);
+				error_log(__METHOD__."('$url',$flags) file or directory not found!");
+			}
+			// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
+			return self::$stat_cache[$path] = false;
 		}
 		self::$stat_cache[$path] = $info;
 
@@ -1100,21 +1115,18 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * This method is called in response to readlink().
 	 *
+	 * The readlink value is read by url_stat or dir_opendir and therefore cached in the stat-cache.
+	 *
 	 * @param string $url
 	 * @return string|boolean content of the symlink or false if $url is no symlink (or not found)
 	 */
-	static function readlink($url)
+	static function readlink($path)
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url')");
+		$link = !($lstat = self::url_stat($path,STREAM_URL_STAT_LINK)) || is_null($lstat['readlink']) ? false : $lstat['readlink'];
 
-		$url_path = parse_url($url,PHP_URL_PATH);
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = $link");
 
-		if (!($lstat = self::url_stat($url_path,STREAM_URL_STAT_LINK)) || !($lstat['mode'] & self::MODE_LINK) ||
-			!($result = self::$pdo->query("SELECT fs_content FROM ".self::TABLE." WHERE fs_id=".(int)$lstat['ino'])))
-		{
-			return false;
-		}
-		return $result->fetchColumn();
+		return $link;
 	}
 
 	/**
@@ -1134,16 +1146,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!stat('$link') || !is_writable('$dir'))");
 			return false;	// $link already exists or parent dir does not
 		}
-		$stmt = self::$pdo->prepare($query='INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_content'.
-			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_content)');
+		$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_content'.
+			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_content)';
+		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+		$stmt = self::$pdo->prepare($query);
 		$values = array(
 			'fs_name' => basename($link),
 			'fs_dir'  => $dir_stat['ino'],
-			// we use the mode of the dir, so files in group dirs stay accessible by all members
 			'fs_mode' => ($dir_stat['mode'] & 0666),
-			// for the uid we use the uid of the dir if not 0=root or the current user otherwise
 			'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : egw_vfs::$user,
-			// we allways use the group of the dir
 			'fs_gid'  => $dir_stat['gid'],
 			'fs_created'  => self::_pdo_timestamp(time()),
 			'fs_modified' => self::_pdo_timestamp(time()),
@@ -1156,6 +1167,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$stmt->bindParam(':'.$name,$val);
 		}
+		unset(self::$stat_cache[$link]);
+
 		return !!$stmt->execute();
 	}
 
@@ -1354,6 +1367,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (count($ids) > 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
 		$query = 'SELECT fs_id,fs_dir,fs_name FROM '.self::TABLE.' WHERE fs_id'.
 			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')');
+		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
 		if (!is_object(self::$pdo))
 		{
@@ -1411,14 +1425,21 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			'mtime' => strtotime($info['fs_modified']),
 			'ctime' => strtotime($info['fs_created']),
 			'nlink' => $info['fs_mime'] == self::DIR_MIME_TYPE ? 2 : 1,
-			// eGW addition to return the mime type
+			// eGW addition to return some extra values
 			'mime'  => $info['fs_mime'],
+			'readlink' => $info['readlink'],
 		);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($info[name]) = ".array2string($stat));
 		return $stat;
 	}
 
 	private static $pdo_type;
+	/**
+	 * Case sensitive comparison operator, for mysql we use ' COLLATE utf8_bin ='
+	 *
+	 * @var string
+	 */
+	public static $case_sensitive_equal = '=';
 
 	/**
 	 * Create pdo object / connection, as long as pdo is not generally used in eGW
@@ -1433,6 +1454,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			case 'mysqli':
 			case 'mysqlt':
+			case 'mysql':
+				self::$case_sensitive_equal = ' COLLATE utf8_bin =';
 				self::$pdo_type = 'mysql';
 				break;
 			default:
@@ -1531,7 +1554,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$GLOBALS['egw_info']['server']['files_dir'] = $GLOBALS['egw_setup']->db->select('egw_config','config_value',array(
 					'config_name' => 'files_dir',
 					'config_app' => 'phpgwapi',
-				),__LINE__,__FILE__)->fetchSingle();
+				),__LINE__,__FILE__)->fetchColumn();
 			}
 		}
 		if (!$GLOBALS['egw_info']['server']['files_dir'])
@@ -1673,7 +1696,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				if (!($stat = self::url_stat($id,0)))
 				{
-					if (self::LOG_LEVEL) error_log(__METHOD__."(".array2string($path_ids).",$depth,$ns) path '$id' not found!");
+					if (self::LOG_LEVEL) error_log(__METHOD__."(".array2string($path_ids).",$ns) path '$id' not found!");
 					return false;
 				}
 				$id = $stat['ino'];
@@ -1683,6 +1706,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$query = 'SELECT * FROM '.self::PROPS_TABLE.' WHERE (fs_id'.
 			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')').')'.
 			(!is_null($ns) ? ' AND prop_namespace=?' : '');
+		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
