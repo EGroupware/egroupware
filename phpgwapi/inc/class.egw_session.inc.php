@@ -510,7 +510,7 @@ class egw_session
 			session_regenerate_id(true);
 		}
 		$this->sessionid = $no_session ? 'no-session' : session_id();
-		$this->kp3       = $GLOBALS['egw']->common->randomstring(24);
+		$this->kp3       = common::randomstring(24);
 
 		unset($GLOBALS['egw_info']['server']['default_domain']); // we kill this for security reasons
 
@@ -1020,7 +1020,7 @@ class egw_session
 		}
 		else
 		{
-			if ($othervars) $extravars .= '&'.$othervars;
+			if ($othervars) $extravars .= ($extravars?'&':'').$othervars;
 		}
 
 		// parse extravars string into the vars array
