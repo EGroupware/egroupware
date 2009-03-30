@@ -528,7 +528,7 @@ class boetemplate extends soetemplate
 	{
 		if (!is_array($arr))
 		{
-			die('set_array() $arr is no array<br>'.function_backtrace());
+			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx','$val') \$arr is no array!");
 		}
 		$idxs = explode('[',str_replace(']','',$idx));
 		$pos = &$arr;
@@ -555,7 +555,7 @@ class boetemplate extends soetemplate
 	{
 		if (!is_array($arr))
 		{
-			die('set_array() $arr is no array<br>'.function_backtrace());
+			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx',$reference_into,$skip_empty) \$arr is no array!");
 		}
 		if (is_object($idx)) return false;	// given an error in php5.2
 
@@ -563,7 +563,7 @@ class boetemplate extends soetemplate
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{
-			if (!is_array($pos) && !$referenz_info)
+			if (!is_array($pos) && !$reference_info)
 			{
 				return False;
 			}
@@ -586,7 +586,7 @@ class boetemplate extends soetemplate
 	{
 		if (!is_array($arr))
 		{
-			die('set_array() $arr is no array<br>'.function_backtrace());
+			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx') \$arr is no array!");
 		}
 		$idxs = explode('[',str_replace(']','',$idx));
 		$last_idx = array_pop($idxs);
