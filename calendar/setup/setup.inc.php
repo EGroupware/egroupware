@@ -13,6 +13,7 @@ $setup_info['calendar']['name']    = 'calendar';
 $setup_info['calendar']['version'] = '1.6';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
+$setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index';
 
 $setup_info['calendar']['license']  = 'GPL';
 $setup_info['calendar']['description'] =

@@ -16,6 +16,7 @@ $setup_info['etemplate']['version']   = '1.6';
 $setup_info['etemplate']['app_order'] = 60;	// just behind the developers-tools
 $setup_info['etemplate']['tables']    = array('egw_etemplate');
 $setup_info['etemplate']['enable']    = 1;
+$setup_info['etemplate']['index']     = 'etemplate.editor.edit';
 
 $setup_info['etemplate']['author'] =
 	$setup_info['etemplate']['maintainer'] = array(

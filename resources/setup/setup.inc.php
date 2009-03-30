@@ -17,6 +17,7 @@ $setup_info['resources']['version']	= '1.6';
 $setup_info['resources']['app_order']	= 5;
 $setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 $setup_info['resources']['enable']	= 1;
+$setup_info['resources']['index']	= 'resources.ui_resources.index';
 
 $setup_info['resources']['author']	= 'Cornelius Weiss';
 $setup_info['resources']['license']	= 'GPL';
