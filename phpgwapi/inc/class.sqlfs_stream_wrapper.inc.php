@@ -215,11 +215,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				'fs_mime'     => 'application/octet-stream',	// required NOT NULL!
 				'fs_size'     => 0,
 			);
-			foreach($values as $name => &$val)
-			{
-				$stmt->bindParam(':'.$name,$val);
-			}
-			if (!$stmt->execute() || !($this->opened_fs_id = self::$pdo->lastInsertId('egw_sqlfs_fs_id_seq')))
+			if (!$stmt->execute($values) || !($this->opened_fs_id = self::$pdo->lastInsertId('egw_sqlfs_fs_id_seq')))
 			{
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) execute() failed: ".self::$pdo->errorInfo());
@@ -314,11 +310,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			// we need to update the mime-type, size and content (if STORE2DB)
 			$values = array(
-				':fs_size' => $this->stream_tell(),
+				'fs_size' => $this->stream_tell(),
 				// todo: analyse the file for the mime-type
-				':fs_mime' => $mime_magic->filename2mime($this->opened_path),
-				':fs_id'   => $this->opened_fs_id,
-				':fs_modifier' => egw_vfs::$user,
+				'fs_mime' => $mime_magic->filename2mime($this->opened_path),
+				'fs_id'   => $this->opened_fs_id,
+				'fs_modifier' => egw_vfs::$user,
 			);
 
 			if ($this->operation == self::STORE2FS)
@@ -329,13 +325,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=:fs_size,fs_mime=:fs_mime,fs_modifier=:fs_modifier,fs_content=:fs_content WHERE fs_id=:fs_id');
 				$this->stream_seek(0,SEEK_SET);	// rewind to the start
-				$stmt->bindParam(':fs_content', $this->opened_stream, PDO::PARAM_LOB);
+				$stmt->bindParam('fs_content', $this->opened_stream, PDO::PARAM_LOB);
 			}
-			foreach($values as $name => &$value)
-			{
-				$stmt->bindParam($name,$value);
-			}
-			if (!($ret = $stmt->execute()))
+			if (!($ret = $stmt->execute($values)))
 			{
 				error_log(__METHOD__."() execute() failed! errorInfo()=".array2string(self::$pdo->errorInfo()));
 			}
@@ -516,7 +508,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
 		unset(self::$stat_cache[$path]);
 
-		if (($ret = $stmt->execute(array(':fs_id' => $stat['ino']))))
+		if (($ret = $stmt->execute(array('fs_id' => $stat['ino']))))
 		{
 			if (self::url2operation($url) == self::STORE2FS && !($stat['mode'] & self::MODE_LINK))
 			{
@@ -588,9 +580,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_id=:fs_id');
 		return $stmt->execute(array(
-			':fs_dir'  => $to_dir_stat['ino'],
-			':fs_name' => basename($path_to),
-			':fs_id'   => $from_stat['ino'],
+			'fs_dir'  => $to_dir_stat['ino'],
+			'fs_name' => basename($path_to),
+			'fs_id'   => $from_stat['ino'],
 		));
 	}
 
@@ -663,16 +655,16 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
 		return  $stmt->execute(array(
-			':fs_name' => basename($path),
-			':fs_dir'  => $parent['ino'],
-			':fs_mode' => $parent['mode'],
-			':fs_uid'  => $parent['uid'],
-			':fs_gid'  => $parent['gid'],
-			':fs_size' => 0,
-			':fs_mime' => self::DIR_MIME_TYPE,
-			':fs_created'  => self::_pdo_timestamp(time()),
-			':fs_modified' => self::_pdo_timestamp(time()),
-			':fs_creator'  => egw_vfs::$user,
+			'fs_name' => basename($path),
+			'fs_dir'  => $parent['ino'],
+			'fs_mode' => $parent['mode'],
+			'fs_uid'  => $parent['uid'],
+			'fs_gid'  => $parent['gid'],
+			'fs_size' => 0,
+			'fs_mime' => self::DIR_MIME_TYPE,
+			'fs_created'  => self::_pdo_timestamp(time()),
+			'fs_modified' => self::_pdo_timestamp(time()),
+			'fs_creator'  => egw_vfs::$user,
 		));
 	}
 
@@ -761,9 +753,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_modified=:fs_modified,fs_modifier=:fs_modifier WHERE fs_id=:fs_id');
 
 		return $stmt->execute(array(
-			':fs_modified' => self::_pdo_timestamp($time ? $time : time()),
-			':fs_modifier' => egw_vfs::$user,
-			':fs_id' => $stat['ino'],
+			'fs_modified' => self::_pdo_timestamp($time ? $time : time()),
+			'fs_modifier' => egw_vfs::$user,
+			'fs_id' => $stat['ino'],
 		));
 	}
 
@@ -802,8 +794,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_uid=:fs_uid WHERE fs_id=:fs_id');
 
 		return $stmt->execute(array(
-			':fs_uid' => (int) $owner,
-			':fs_id' => $stat['ino'],
+			'fs_uid' => (int) $owner,
+			'fs_id' => $stat['ino'],
 		));
 	}
 
@@ -843,8 +835,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_gid=:fs_gid WHERE fs_id=:fs_id');
 
 		return $stmt->execute(array(
-			':fs_gid' => $owner,
-			':fs_id' => $stat['ino'],
+			'fs_gid' => $owner,
+			'fs_id' => $stat['ino'],
 		));
 	}
 
@@ -882,8 +874,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_mode=:fs_mode WHERE fs_id=:fs_id');
 
 		return $stmt->execute(array(
-			':fs_mode' => ((int) $mode) & 0777,		// we dont store the file and dir bits, give int overflow!
-			':fs_id' => $stat['ino'],
+			'fs_mode' => ((int) $mode) & 0777,		// we dont store the file and dir bits, give int overflow!
+			'fs_id' => $stat['ino'],
 		));
 	}
 
@@ -915,7 +907,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.
 			",CASE fs_mime WHEN '".self::SYMLINK_MIME_TYPE."' THEN fs_content ELSE NULL END AS readlink FROM ".self::TABLE.
 			" WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
-		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+		//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$options)".' */ '.$query;
 
 		$stmt = self::$pdo->prepare($query);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -1018,7 +1011,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$query = str_replace('fs_name'.self::$case_sensitive_equal.'?','fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name),$base_query).'('.$query.')';
 			}
 		}
-		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$flags,$eacl_access)".' */ '.$query;
+		//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
 		if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
 		{
@@ -1150,7 +1144,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_content)';
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		$stmt = self::$pdo->prepare($query);
-		$values = array(
+		unset(self::$stat_cache[$link]);
+
+		return !!$stmt->execute(array(
 			'fs_name' => basename($link),
 			'fs_dir'  => $dir_stat['ino'],
 			'fs_mode' => ($dir_stat['mode'] & 0666),
@@ -1162,14 +1158,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			'fs_mime'     => self::SYMLINK_MIME_TYPE,
 			'fs_size'     => bytes($target),
 			'fs_content'  => $target,
-		);
-		foreach($values as $name => &$val)
-		{
-			$stmt->bindParam(':'.$name,$val);
-		}
-		unset(self::$stat_cache[$link]);
-
-		return !!$stmt->execute();
+		));
 	}
 
 	private static $extended_acl;
@@ -1653,11 +1642,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				if (!isset($del_stmt))
 				{
 					$del_stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=:fs_id AND prop_namespace=:prop_namespace AND prop_name=:prop_name');
-					$del_stmt->bindParam(':fs_id',$id);
 				}
-				$del_stmt->bindParam(':prop_namespace',$prop['ns']);
-				$del_stmt->bindParam(':prop_name',$prop['name']);
-				$del_stmt->execute();
+				$del_stmt->execute(array(
+					'fs_id'          => $id,
+					'prop_namespace' => $prop['ns'],
+					'prop_name'      => $prop['name'],
+				));
 			}
 			if (isset($prop['val']))
 			{
@@ -1665,12 +1655,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				{
 					$ins_stmt = self::$pdo->prepare((self::$pdo_type == 'mysql' ? 'REPLACE' : 'INSERT').
 						' INTO '.self::PROPS_TABLE.' (fs_id,prop_namespace,prop_name,prop_value) VALUES (:fs_id,:prop_namespace,:prop_name,:prop_value)');
-					$ins_stmt->bindParam(':fs_id',$id);
 				}
-				$ins_stmt->bindParam(':prop_namespace',$prop['ns']);
-				$ins_stmt->bindParam(':prop_name',$prop['name']);
-				$ins_stmt->bindParam(':prop_value',$prop['val']);
-				if (!$ins_stmt->execute())
+				if (!$ins_stmt->execute(array(
+					'fs_id'          => $id,
+					'prop_namespace' => $prop['ns'],
+					'prop_name'      => $prop['name'],
+					'prop_value'     => $prop['val'],
+				)))
 				{
 					return false;
 				}
