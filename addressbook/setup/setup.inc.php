@@ -24,8 +24,10 @@ $setup_info['addressbook']['description'] =
 	 Addressbook is the eGroupWare default contact application. <br />
 	 It stores contact information via SQL or LDAP and provides contact services via the eGroupWare API.';
 
-$setup_info['addressbook']['maintainer'] = 'eGroupWare coreteam';
-$setup_info['addressbook']['maintainer_email'] = 'egroupware-developers@lists.sourceforge.net';
+$setup_info['addressbook']['maintainer'] = array(
+	'name'  => 'Ralf Becker',
+	'email' => 'ralfbecker@outdoor-training.de'
+);
 
 $setup_info['addressbook']['tables']  = array();	// addressbook tables are in the API!
 
