@@ -16,6 +16,11 @@ $setup_info['phpgwapi']['version']   = '1.7.001';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
+$setup_info['phpgwapi']['license'] = 'GPL';
+$setup_info['phpgwapi']['maintainer']	= $setup_info['phpgwapi']['author']	= array(
+	'name'  => 'eGroupWare coreteam',
+	'email' => 'egroupware-developers@lists.sourceforge.net',
+);
 
 /* The tables this app creates */
 $setup_info['phpgwapi']['tables'][]  = 'egw_config';
@@ -63,4 +68,10 @@ $setup_info['groupdav']['name']      = 'groupdav';
 $setup_info['groupdav']['version']   = '1.6';
 $setup_info['groupdav']['enable']    = 2;
 $setup_info['groupdav']['app_order'] = 1;
-
+$setup_info['groupdav']['icon']      = 'groupdav';
+$setup_info['groupdav']['icon_app']  = 'phpgwapi';
+$setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = array(
+	'name'  => 'Ralf Becker',
+	'email' => 'RalfBecker@outdoor-training.de'
+);
+$setup_info['groupdav']['license'] = 'GPL';
