@@ -2049,6 +2049,7 @@ class etemplate extends boetemplate
 						$file = array();
 						foreach(array('tmp_name','type','size','name','error') as $part)
 						{
+							if (!is_array($_FILES[$name])) break 2;	// happens eg. in forms set via xajax, which do not upload files
 							$file[$part] = $this->get_array($_FILES[$name],$part.$index.($multiple ? "[$i]" : ''));
 						}
 						if (!$multiple) $file['path'] = $this->get_array($content_in,substr($form_name,0,-1).'_path]');
