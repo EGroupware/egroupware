@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare: About informations
- * 
+ *
  * rewrite of the old PHPLib based about page
  * it now uses eTemplate
  *
@@ -57,7 +57,7 @@ class about
 			$type = 'application';
 			$detail = true;
 		}
-		
+
 		// template detail?
 		if (isset($_GET['template']) && $_GET['template'] != 'eGroupWare') {
 			$name = basename($_GET['template']);
@@ -69,8 +69,8 @@ class about
 		if (isset($_GET['nonavbar'])) {
 			$nonavbar = $_GET['nonavbar'];
 		}
-		
-		
+
+
 		if ($detail) {
 			$this->_detailView($name, $type, $nonavbar);
 		} else {
@@ -97,7 +97,9 @@ class about
 		// get informations about the applications
 		$apps = array();
 		$apps[] = ''; // first empty row for eTemplate
-		foreach ($GLOBALS['egw_info']['user']['apps'] as $app => $appinfo) {
+		foreach (isset($GLOBALS['egw_info']['user']['apps']['admin']) ?
+			$GLOBALS['egw_info']['apps'] : $GLOBALS['egw_info']['user']['apps'] as $app => $appinfo)
+		{
 			$info = $this->_getParsedAppInfo($app);
 			$apps[] = array(
 				'appImage'		=> '<img src="'.$info['image'].'" />',
@@ -135,7 +137,7 @@ class about
 				'langName'	=>	$translationinfo.' ('.$translation.')'
 				);
 		}
-		
+
 
 		// fill content array for eTemplate
 		$content = array(
@@ -247,8 +249,8 @@ class about
 	 * parse application informations from setup.inc.php file
 	 *
 	 * @param	string	$app	application name
-	 * @return	array	html formated informations about author(s), 
-	 *					maintainer(s), version, license of the 
+	 * @return	array	html formated informations about author(s),
+	 *					maintainer(s), version, license of the
 	 *					given application
 	 *
 	 * @access  private
@@ -256,30 +258,41 @@ class about
 	 */
 	function _getParsedAppInfo($app)
 	{
+		// we read all setup files once, as no every app has it's own file
+		static $setup_info;
+		if (is_null($setup_info))
+		{
+			foreach($GLOBALS['egw_info']['apps'] as $_app => $_data)
+			{
+				if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$_app.'/setup/setup.inc.php'))
+				{
+					include($file);
+				}
+			}
+		}
+		$app_info  = $GLOBALS['egw_info']['apps'][$app];
+
 		// define the return array
 		$ret = array(
-			'image'			=> $GLOBALS['egw']->common->image($app,array('navbar','nonav')),
+			'image'			=> $GLOBALS['egw']->common->image(isset($app_info['icon_app'])?$app_info['icon_app']:$app,
+				isset($app_info['icon'])?$app_info['icon']:array('navbar','nonav')),
 			'author'		=> '',
 			'maintainer'	=> '',
-			'version'		=> '',
+			'version'		=> $app_info['version'],
 			'license'		=> '',
 			'description'	=> '',
 			'note'			=> ''
 		);
-		
-		if (!file_exists(EGW_INCLUDE_ROOT . "/$app/setup/setup.inc.php")) {
-			return $ret;
-		}
-		
-		include(EGW_INCLUDE_ROOT . "/$app/setup/setup.inc.php");
-		
-		$ret['author'] = $this->_getHtmlPersonalInfo($setup_info[$app], 'author');
-		$ret['maintainer'] = $this->_getHtmlPersonalInfo($setup_info[$app], 'maintainer');
-		$ret['version'] = $setup_info[$app]['version'];
-		$ret['license'] = $setup_info[$app]['license'];
-		$ret['description'] = $setup_info[$app]['description'];
-		$ret['note'] = $setup_info[$app]['note'];
 
+		if (isset($setup_info[$app]))
+		{
+			$ret['author'] = $this->_getHtmlPersonalInfo($setup_info[$app], 'author');
+			$ret['maintainer'] = $this->_getHtmlPersonalInfo($setup_info[$app], 'maintainer');
+			if ($app_info['version'] != $setup_info[$app]['version']) $ret['version'] .= ' ('.$setup_info[$app]['version'].')';
+			$ret['license'] = $setup_info[$app]['license'];
+			$ret['description'] = $setup_info[$app]['description'];
+			$ret['note'] = $setup_info[$app]['note'];
+		}
 		return $ret;
 	}
 
@@ -287,7 +300,7 @@ class about
 	/**
 	 * helper to parse author and maintainer info from setup_info array
 	 *
-	 * @param	array	$setup_info	setup_info[$app] array 
+	 * @param	array	$setup_info	setup_info[$app] array
 	 *								($GLOBALS['egw_info']['template'][$template] array for template informations)
 	 * @param	string	$f			'author' or 'maintainer', default='author'
 	 * @return	string	html formated informations about author/maintainer
@@ -310,7 +323,7 @@ class about
 						if ($setup_info[$f.'_url']) {
 							$authors[0]['url'] = $setup_info[$f.'_url'];
 						}
-	
+
 				} else {
 						// author is array
 						if ($setup_info[$f]['name']) {
@@ -370,15 +383,21 @@ class about
 	{
 		// toupper known licenses
 		$knownLicenses = array(
-			'GPL'	=> 'http://www.gnu.org/copyleft/gpl.html'
-			);
-		
-		if (array_key_exists(strtoupper($license), $knownLicenses)) {
-			$license = '<a href="'.$knownLicenses[strtoupper($license)].'" target="_blank">'.$license.'</a>';
+			'GPL'	=> 'http://opensource.org/licenses/gpl-2.0.php',
+			'LGPL'	=> 'http://opensource.org/licenses/lgpl-2.1.php',
+			'GPL3'	=> 'http://opensource.org/licenses/gpl-3.0.php',
+			'LGPL3'	=> 'http://opensource.org/licenses/lgpl-3.0.php',
+			'PHP'   => 'http://opensource.org/licenses/php.php',
+		);
+
+		$name = is_array($license) ? $license['name'] : $license;
+		$url = is_array($license) && isset($license['url']) ? $license['url'] : '';
+
+		if (!$url && isset($knownLicenses[strtoupper($name)]))
+		{
+			$url = $knownLicenses[$name=strtoupper($name)];
 		}
 
-		return $license;
+		return !$url ? $name : '<a href="'.htmlspecialchars($url).'" target="_blank">'.htmlspecialchars($name).'</a>';
 	}
 }
-
-?>
