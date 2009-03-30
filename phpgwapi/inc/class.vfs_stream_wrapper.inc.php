@@ -136,9 +136,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * Resolve the given path according to our fstab
 	 *
 	 * @param string $path
+	 * @param boolean $do_symlink=true is a direct match allowed, default yes (must be false for a lstat or readlink!)
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url($path)
+	static function resolve_url($path,$do_symlink=true)
 	{
 		static $cache = array();
 
@@ -148,6 +149,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '{$cache[$path]}' (from cache)");
 			return $cache[$path];
 		}
+		// check if we can already resolve path (or a part of it) with a known symlinks
+		$path = self::symlinkCache_resolve($path,$do_symlink);
+
 		// setting default user, passwd and domain, if it's not contained int the url
 		static $defaults;
 		if (is_null($defaults))
@@ -356,6 +360,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		self::symlinkCache_remove($path);
 		return unlink($url);
 	}
 
@@ -378,6 +383,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		self::symlinkCache_remove($path_from);
 		return rename($url_from,$url_to);
 	}
 
@@ -417,6 +423,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		self::symlinkCache_remove($path);
 		return rmdir($url);
 	}
 
@@ -691,7 +698,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
 
-		if (!($url = self::resolve_url($path)))
+		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK))))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
 			return false;
@@ -704,7 +711,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$stat = @stat($url);	// suppressed the stat failed warnings
 
-			if ($stat && ($stat['mode'] & self::MODE_LINK) &&  ($l=$lpath = self::readlink($url)))
+			if ($stat && ($stat['mode'] & self::MODE_LINK) &&  ($lpath = self::readlink($url)))
 			{
 				if ($lpath[0] != '/')	// concat relative path
 				{
@@ -712,7 +719,12 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				}
 				$url = egw_vfs::PREFIX.$lpath;
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlink found and resolved to $url");
-				$stat = @stat($url);
+				// try reading the stat of the link
+				if ($stat = self::url_stat($lpath,STREAM_URL_STAT_QUIET))
+				{
+					if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
+					self::symlinkCache_add($path,$url);
+				}
 			}
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
@@ -734,6 +746,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
 		{
 			$stat = self::check_symlink_components($path,$flags,$url);
+			if ($stat) self::symlinkCache_add($path,$url);
 		}
 		elseif(is_array($stat) && !isset($stat['url']))
 		{
@@ -781,6 +794,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					{
 						$lpath = egw_vfs::concat(parse_url($url,PHP_URL_PATH),'../'.$lpath);
 					}
+					//self::symlinkCache_add($path,egw_vfs::PREFIX.$lpath);
 					$url = egw_vfs::PREFIX.egw_vfs::concat($lpath,$rel_path);
 					if (self::LOG_LEVEL > 1) error_log("$log --> lpath='$lpath', url='$url'");
 					return self::url_stat($url,$flags);
@@ -792,6 +806,78 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url') returning false");
 		return false;	// $path does not exist
+	}
+
+	/**
+	 * Cache of already resolved symlinks
+	 *
+	 * @var array with path => target
+	 */
+	private static $symlink_cache = array();
+
+	/**
+	 * Add a resolved symlink to cache
+	 *
+	 * @param string $path vfs path
+	 * @param string $target target path
+	 */
+	static protected function symlinkCache_add($path,$target)
+	{
+		if ($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
+		if (isset(self::$symlink_cache[$path])) return;	// nothing to do
+
+		if ($target[0] != '/') $target = parse_url($target,PHP_URL_PATH);
+
+		self::$symlink_cache[$path] = $target;
+
+		// sort longest path first
+		uksort(self::$symlink_cache,create_function('$b,$a','return strlen($a)-strlen($b);'));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$target) cache now ".array2string(self::$symlink_cache));
+	}
+
+	/**
+	 * Remove a resolved symlink from cache
+	 *
+	 * @param string $path vfs path
+	 */
+	static protected function symlinkCache_remove($path)
+	{
+		if ($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
+		unset(self::$symlink_cache[$path]);
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path) cache now ".array2string(self::$$symlink_cache));
+	}
+
+	/**
+	 * Resolve a path from our symlink cache
+	 *
+	 * The cache is sorted from longer to shorter pathes.
+	 *
+	 * @param string $path
+	 * @param boolean $do_symlink=true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @return string target or path, if path not found
+	 */
+	static protected function symlinkCache_resolve($path,$do_symlink=true)
+	{
+		if ($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
+		$strlen_path = strlen($path);
+
+		foreach(self::$symlink_cache as $p => $t)
+		{
+			if (($strlen_p = strlen($p)) > $strlen_path) continue;	// $path can NOT start with $p
+
+			if ($path == $p)
+			{
+				if ($do_symlink) $target = $t;
+				break;
+			}
+			elseif (substr($path,0,$strlen_p+1) == $p.'/')
+			{
+				$target = $t . substr($path,$strlen_p);
+				break;
+			}
+		}
+		if (self::LOG_LEVEL > 1 && isset($target)) error_log(__METHOD__."($path) = $target");
+		return isset($target) ? $target : $path;
 	}
 
 	/**
