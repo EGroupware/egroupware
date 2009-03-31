@@ -560,7 +560,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function readlink($path)
 	{
-		return self::_call_on_backend('readlink',array($path));
+		return self::_call_on_backend('readlink',array($path),true);	// true = fail silent, if backend does not support readlink
 	}
 
 	/**
@@ -858,7 +858,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function symlinkCache_resolve($path,$do_symlink=true)
 	{
-		if ($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
+		// remove vfs scheme, but no other schemes (eg. filesystem!)
+		if ($path[0] != '/' && parse_url($path,PHP_URL_SCHEME) == self::SCHEME)
+		{
+			$path = parse_url($path,PHP_URL_PATH);
+		}
 		$strlen_path = strlen($path);
 
 		foreach(self::$symlink_cache as $p => $t)
