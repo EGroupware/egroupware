@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -21,6 +21,9 @@
  * - user:  uid or user-name owning the path, default root
  * - group: gid or group-name owning the path, default root
  * - mode:  mode bit for the path, default 0005 (read and execute for nobody)
+ * - all:   false (default) = ignore files starting with a dot '.', true = show all files (. and .. are always ignored!)
+ * - exec:	false (default) = do NOT allow to upload or modify scripts, true = allow it (if docroot is mounted, this allows to run scripts!)
+ * 			scripts are considered every file having a script-extension (eg. .php, .pl, .py), defined with SCRIPT_EXTENSION_PREG constant
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
@@ -80,6 +83,13 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	private $opened_dir_url;
 
 	/**
+	 * Should dir show all files, or only the ones NOT starting with a dot (. and .. are never shown)
+	 *
+	 * @var boolean
+	 */
+	private $dir_show_all = false;
+
+	/**
 	 * How much should be logged to the apache error-log
 	 *
 	 * 0 = Nothing
@@ -87,6 +97,11 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 * 2 = all function calls and errors (contains passwords too!)
 	 */
 	const LOG_LEVEL = 1;
+
+	/**
+	 * Regular expression identifying scripts, to NOT allow updating them if exec mount option is NOT set
+	 */
+	const SCRIPT_EXTENSIONS_PREG = '/\.(php[0-9]*|pl|py)$/';
 
 	/**
 	 * This method is called immediately after your stream object is created.
@@ -129,10 +144,20 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			}
 			return false;
 		}
+		if ($mode != 'r' && self::deny_script($url))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) permission denied, file is a script!");
+			if (!($options & STREAM_URL_STAT_QUIET))
+			{
+				trigger_error(__METHOD__."($url,$mode,$options) permission denied, file is a script!",E_USER_WARNING);
+			}
+			return false;
+		}
 
 		// open the "real" file
-		if (!($this->opened_stream = fopen(parse_url($url,PHP_URL_PATH),$mode,$options)))
+		if (!($this->opened_stream = fopen($path=parse_url($url,PHP_URL_PATH),$mode,$options)))
 		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) fopen('$path','$mode',$options) returned false!");
 			return false;
 		}
 		$this->opened_stream_url = $url;
@@ -303,21 +328,27 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		// check access rights
 		if (!($from_stat = self::url_stat($url_from,0)) || !egw_vfs::check_access(egw_vfs::dirname($url_from),egw_vfs::WRITABLE))
 		{
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $from[path] permission denied!");
 			return false;	// no permission or file does not exist
 		}
+		$to_dir = egw_vfs::dirname($url_to);
 		if (!egw_vfs::check_access($to_dir,egw_vfs::WRITABLE,$to_dir_stat = self::url_stat($to_dir,0)))
 		{
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_to permission denied!");
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $to_dir permission denied!");
 			return false;	// no permission or parent-dir does not exist
+		}
+		if (self::deny_script($url_to))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to) permission denied, file is a script!");
+			return false;
 		}
 		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
 		// for our vfs too, we abort here with an error, like the filesystem one does
-		if (($to_stat = self::url_stat($path_to,0)) &&
+		if (($to_stat = self::url_stat($to['path'],0)) &&
 			($to_stat['mime'] === self::DIR_MIME_TYPE) !== ($from_stat['mime'] === self::DIR_MIME_TYPE))
 		{
 			$is_dir = $to_stat['mime'] === self::DIR_MIME_TYPE ? 'a' : 'no';
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) $path_to is $is_dir directory!");
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) $to[path] is $is_dir directory!");
 			return false;	// no permission or file does not exist
 		}
 		// if destination file already exists, delete it
@@ -459,16 +490,19 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_opendir ( $url, $options )
 	{
-		error_log(__METHOD__."($url,$options)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$options)");
 
 		$this->opened_dir = null;
 
 		$parts = parse_url($this->opened_dir_url = $url);
+		parse_str($parts['query'],$get);
+		$this->dir_show_all = (bool)$get['all'];
 
 		// ToDo: check access rights
 
 		if (!($this->opened_dir = opendir($parts['path'])))
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."($url,$options) opendir('$parts[path]') failed!");
 			return false;
 		}
 		return true;
@@ -504,7 +538,6 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	{
 		$parts = parse_url($url);
 
-		//error_log(__METHOD__."('$path',$flags) calling stat($url)");
 		$stat = @stat($parts['path']);	// suppressed the stat failed warnings
 
 		if ($stat)
@@ -513,12 +546,18 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			if (!self::parse_query($parts['query'],$uid,$gid,$mode))
 			{
 				return false;
+				if (self::LOG_LEVEL > 0) error_log(__METHOD__."($url,$flags) can NOT self::parse_query('$parts[query]')!");
 			}
 			$stat['uid'] = $stat[4] = $uid;
 			$stat['gid'] = $stat[5] = $gid;
 			$stat['mode'] = $stat[2] = $stat['mode'] & self::MODE_DIR ? self::MODE_DIR | $mode : self::MODE_FILE | ($mode & ~0111);
+			// write rights also depend on the write rights of the webserver
+			if (!is_writable($parts['path']))
+			{
+				$stat['mode'] = $stat[2] = $stat['mode'] & ~0222;
+			}
 		}
-		//echo __METHOD__."($url,$flags) path=$parts[path], mount_mode=".sprintf('0%o',$mode).", mode=".sprintf('0%o',$stat['mode']).'='.egw_vfs::int2mode($stat['mode'])."\n"; //print_r($stat);
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags) path=$parts[path], mount_mode=".sprintf('0%o',$mode).", mode=".sprintf('0%o',$stat['mode']).'='.egw_vfs::int2mode($stat['mode']));
 		return $stat;
 	}
 
@@ -534,7 +573,19 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_readdir ( )
 	{
-		return readdir($this->opened_dir);
+		do {
+			$file = readdir($this->opened_dir);
+
+			$ignore = !($file === false ||									// stop if no more dirs or
+				$file[0] != '.' ||											// file does NOT start with a dot '.' or
+				($this->dir_show_all && $file != '.' && $file != '..' ));	// file not . or .. or dir_show_all set
+			if (self::LOG_LEVEL > 1 && $ignore) error_log(__METHOD__.'() ignoring '.array2string($file));
+		}
+		while ($ignore);
+
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'() returning '.array2string($file));
+
+		return $file;
 	}
 
 	/**
@@ -559,11 +610,11 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_closedir ( )
 	{
-		$ret = closedir($this->opened_dir);
+		closedir($this->opened_dir);
 
 		$this->opened_dir = $this->extra_dirs = null;
 
-		return $ret;
+		return true;
 	}
 
 	/**
@@ -642,6 +693,26 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		}
 		//echo __METHOD__.'('.print_r($query,true).") uid=$uid, gid=$gid, mode=".sprintf('0%o',$mode)."\n";
 		return true;
+	}
+
+	/**
+	 * Check if url is a script (self::$script_extentions) and exec mount option is NOT set
+	 *
+	 * @param string $url
+	 * @return boolean true if $url is a script AND exec is NOT set, false otherwise
+	 */
+	static function deny_script($url)
+	{
+		$parts = parse_url($url);
+		parse_str($parts['query'],$get);
+
+		$deny = !$get['exec'] && preg_match(self::SCRIPT_EXTENSIONS_PREG,$parts['path']);
+
+		if (self::LOG_LEVEL > 1 || self::LOG_LEVEL > 0 && $deny)
+		{
+			error_log(__METHOD__."($url) returning ".array2string($deny));
+		}
+		return $deny;
 	}
 }
 
