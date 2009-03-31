@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -696,6 +696,17 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * Check if path is a script and write access would be denied by backend
+	 *
+	 * @param string $path
+	 * @return boolean true if $path is a script AND exec mount-option is NOT set, false otherwise
+	 */
+	static function deny_script($path)
+	{
+		return self::_call_on_backend('deny_script',array($path),true);
+	}
+
+	/**
 	 * Set or delete extended acl for a given path and owner (or delete  them if is_null($rights)
 	 *
 	 * Does NOT check if user has the rights to set the extended acl for the given url/path!
@@ -1012,7 +1023,7 @@ class egw_vfs extends vfs_stream_wrapper
 			$b = explode('/',$b);
 			$url = implode('/',array_merge($a,$b));
 		}
-		return $url.($query ? '?'.$query : '');
+		return $url.($query ? (strpos($url,'?')===false ? '?' : '&').$query : '');
 	}
 
 	/**

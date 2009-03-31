@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -274,7 +274,12 @@ class filemanager_ui
 		// strip '?', '/' and '#' from filenames, as they are forbidden for sqlfs / make problems
 		$path = egw_vfs::concat($dir,str_replace(array('?','/','#'),'',$name));
 
-		if (egw_vfs::stat($path))
+		if(egw_vfs::deny_script($path))
+		{
+			$response->addAlert(lang('You are NOT allowed to upload a script!'));
+			$response->addScript("document.getElementById('$id').value='';");
+		}
+		elseif (egw_vfs::stat($path))
 		{
 			if (egw_vfs::is_dir($path))
 			{
@@ -656,6 +661,10 @@ class filemanager_ui
 							else
 							{
 								$msg .= lang('Rename of %1 to %2 failed!',$path,$to).' ';
+								if (egw_vfs::deny_script($to))
+								{
+									$msg .= lang('You are NOT allowed to upload a script!').' ';
+								}
 							}
 						}
 						elseif ($name[0] == '#' || $name == 'comment')
