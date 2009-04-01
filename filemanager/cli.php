@@ -349,14 +349,6 @@ switch($cmd)
 					if (($scheme = parse_url($url,PHP_URL_SCHEME)))
 					{
 						load_wrapper($url);
-						if (class_exists($class = $scheme.'_stream_wrapper') && method_exists($class,'touch'))
-						{
-							$cmd = array($scheme.'_stream_wrapper',$cmd);
-						}
-						else
-						{
-							die("Can't $cmd for scheme $scheme!\n");
-						}
 					}
 					if ($recursive && class_exists('egw_vfs'))
 					{
@@ -429,7 +421,7 @@ switch($cmd)
 }
 
 /**
- * Load the necessary wrapper for an url
+ * Load the necessary wrapper for an url or die if it cant be loaded
  *
  * @param string $url
  */
@@ -451,17 +443,16 @@ function load_wrapper($url)
 				{
 					load_egw(parse_url($url,PHP_URL_USER),parse_url($url,PHP_URL_PASS),parse_url($url,PHP_URL_HOST));
 				}
-				// as eGW might not be loaded, we have to require the class exlicit
-				@include_once(EGW_API_INC.'/class.'.$scheme.'_stream_wrapper.inc.php');
+				// get eGW's __autoload() function
+				include_once(EGW_API_INC.'/common_functions.inc.php');
 
-				if (!class_exists($scheme.'_stream_wrapper'))
+				if (!class_exists(str_replace('.','_',$scheme).'_stream_wrapper'))
 				{
 					die("Unknown scheme '$scheme' in $url !!!\n\n");
 				}
 				break;
 		}
 	}
-	//print_r(stream_get_wrappers());
 }
 
 /**

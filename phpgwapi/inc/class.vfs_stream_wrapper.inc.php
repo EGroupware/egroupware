@@ -457,7 +457,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			if ($scheme)
 			{
-				if (!class_exists($class = $scheme.'_stream_wrapper') || !method_exists($class,$name))
+				if (!class_exists($class = self::scheme2class($scheme)) || !method_exists($class,$name))
 				{
 					if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
 					return false;
@@ -466,10 +466,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				{
 					$params[$path_param_key] = $url;
 
-					return call_user_func_array(array($scheme.'_stream_wrapper',$name),$params);
+					return call_user_func_array(array($class,$name),$params);
 				}
 				$params[$path_param_key] = $urls;
-				if (!is_array($r = call_user_func_array(array($scheme.'_stream_wrapper',$name),$params)))
+				if (!is_array($r = call_user_func_array(array($class,$name),$params)))
 				{
 					return $r;
 				}
@@ -602,9 +602,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		if (!$mime && ($scheme = parse_url($url,PHP_URL_SCHEME)))
 		{
 			// check it it's an eGW stream wrapper returning mime-type via url_stat
-			if (class_exists($class = $scheme.'_stream_wrapper') && ($mime_attr = @constant($class.'::STAT_RETURN_MIME_TYPE')))
+			if (class_exists($class = self::scheme2class($scheme)) && ($mime_attr = @constant($class.'::STAT_RETURN_MIME_TYPE')))
 			{
-				$stat = call_user_func(array($scheme.'_stream_wrapper','url_stat'),parse_url($url,PHP_URL_PATH),0);
+				$stat = call_user_func(array($class,'url_stat'),parse_url($url,PHP_URL_PATH),0);
 				if ($stat[$mime_attr])
 				{
 					$mime = $stat[$mime_attr];
@@ -965,7 +965,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					break;	// default file, always loaded
 				default:
 					// check if scheme is buildin in php or one of our own stream wrappers
-					if (in_array($scheme,stream_get_wrappers()) || class_exists($scheme.'_stream_wrapper'))
+					if (in_array($scheme,stream_get_wrappers()) || class_exists(self::scheme2class($scheme)))
 					{
 						self::$wrappers[] = $scheme;
 					}
@@ -991,6 +991,20 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			self::$wrappers = stream_get_wrappers();
 		}
 		return self::$wrappers;
+	}
+
+	/**
+	 * Get the class-name for a scheme
+	 *
+	 * A scheme is not allowed to contain an underscore, but allows a dot and a class names only allow or need underscores, but no dots
+	 * --> we replace dots in scheme with underscored to get the class-name
+	 *
+	 * @param string $scheme eg. vfs
+	 * @return string
+	 */
+	static function scheme2class($scheme)
+	{
+		return str_replace('.','_',$scheme).'_stream_wrapper';
 	}
 
 	static function init_static()
