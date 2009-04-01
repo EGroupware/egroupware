@@ -12,14 +12,14 @@
 
 /**
  * Generalized SQL Storage Object with build in custom field support
- * 
+ *
  * This class allows to display, search, order and filter by custom fields simply by replacing so_sql
- * by it and adding custom field widgets to the eTemplates of an applications. 
+ * by it and adding custom field widgets to the eTemplates of an applications.
  * It's inspired by the code from Klaus Leithoff, which does the same thing limited to addressbook.
  *
  * The schema of the custom fields table should be like (the lenght of the cf name is nowhere enfored and
  * varies throughout eGW from 40-255, the value column from varchar(255) to longtext!):
- * 
+ *
  * 'egw_app_extra' => array(
  * 	'fd' => array(
  * 		'prefix_id' => array('type' => 'int','precision' => '4','nullable' => False),
@@ -50,21 +50,21 @@ class so_sql_cf extends so_sql
 
 	/**
 	 * name of id column, defaults to the regular tables auto id
-	 * 
+	 *
 	 * @var string
 	 */
 	var $extra_id = '_id';
 
 	/**
 	 * Name of key (cf name) column or just a postfix added to the table prefix
-	 * 
+	 *
 	 * @var string
 	 */
 	var $extra_key = '_name';
 
 	/**
 	 * Name of value column or just a postfix added to the table prefix
-	 * 
+	 *
 	 * @var string
 	 */
 	var $extra_value = '_value';
@@ -72,17 +72,17 @@ class so_sql_cf extends so_sql
 	var $extra_join;
 	var $extra_join_order;
 	var $extra_join_filter;
-	
+
 	/**
 	 * Custom fields of $app, read by the constructor
-	 * 
+	 *
 	 * @var array
 	 */
 	var $customfields;
 
 	/**
 	 * constructor of the class
-	 * 
+	 *
 	 * Please note the different params compared to so_sql!
 	 *
 	 * @param string $app application name to load table schemas
@@ -102,10 +102,10 @@ class so_sql_cf extends so_sql
 	{
 		// calling the so_sql constructor
 		parent::__construct($app,$table,$db,$column_prefix,$no_clone);
-		
+
 		$this->extra_table = $extra_table;
 		if (!$this->extra_id) $this->extra_id = $this->autoinc_id;	// default to auto id of regular table
-		
+
 		// if names from columns of extra table are only postfixes (starting with _), prepend column prefix
 		if (!($prefix=$column_prefix))
 		{
@@ -136,7 +136,7 @@ class so_sql_cf extends so_sql
 		$this->extra_join = " LEFT JOIN $extra_table ON $table.$this->autoinc_id=$extra_table.$this->extra_id";
 		$this->extra_join_order = " LEFT JOIN $extra_table extra_order ON $table.$this->autoinc_id=extra_order.$this->extra_id";
 		$this->extra_join_filter = " JOIN $extra_table extra_filter ON $table.$this->autoinc_id=extra_filter.$this->extra_id";
-		
+
 		$this->customfields = config::get_customfields($app);
 	}
 
@@ -184,7 +184,7 @@ class so_sql_cf extends so_sql
 				$this->extra_id    => $data[$this->autoinc_id],
 				$this->extra_key   => $field,
 			);
-			
+
 			if((string) $data[self::CF_PREFIX.$field] === '')	// dont write empty values
 			{
 				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);	// just delete them, in case they were previously set
@@ -197,7 +197,7 @@ class so_sql_cf extends so_sql
 		}
 		return false;	// no error
 	}
-	
+
 	/**
 	 * merges in new values from the given new data-array
 	 *
@@ -223,7 +223,7 @@ class so_sql_cf extends so_sql
 
 	/**
 	 * reads row matched by key and puts all cols in the data array
-	 * 
+	 *
 	 * reimplented to also read the custom fields
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
@@ -259,7 +259,7 @@ class so_sql_cf extends so_sql
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
 		$ret = parent::save(null,$extra_where);
-		
+
 		if ($ret == 0 && $this->customfields)
 		{
 			$this->save_customfields($this->data);
@@ -300,9 +300,9 @@ class so_sql_cf extends so_sql
 
 	/**
 	 * query rows for the nextmatch widget
-	 * 
+	 *
 	 * Reimplemented to also read the custom fields (if enabled via $query['selectcols']).
-	 * 
+	 *
 	 * Please note: the name of the nextmatch-customfields has to be 'customfields'!
 	 *
 	 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter'
@@ -331,7 +331,7 @@ class so_sql_cf extends so_sql
 			$query['col_filter'],$join,$need_full_no_count);
 
 		if (!$rows) $rows = array();	// otherwise false returned from search would be returned as array(false)
-		
+
 		$selectcols = $query['selectcols'] ? explode(',',$query['selectcols']) : array();
 
 		if ($rows && $this->customfields && (!$selectcols || in_array('customfields',$selectcols)))
@@ -359,7 +359,7 @@ class so_sql_cf extends so_sql
 
 	/**
 	 * searches db for rows matching searchcriteria
-	 * 
+	 *
 	 * Reimplemented to search, order and filter by custom fields
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
@@ -383,19 +383,29 @@ class so_sql_cf extends so_sql
 		if ($criteria && is_array($criteria) && isset($criteria[$this->extra_value]))
 		{
 			$criteria[] = $this->extra_table.'.'.$this->extra_value . ' ' .
-				$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' . 
+				$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
 				$this->db->quote('%'.$criteria[$this->extra_value].'%');
 			unset($criteria[$this->extra_value]);
 			$join .= $this->extra_join;
+
+			// replace ambiguous auto-id with (an exact match of) table_name.autoid
+			if (isset($criteria[$this->autoinc_id]))
+			{
+				if ((int)$criteria[$this->autoinc_id])
+				{
+					$criteria[] = $this->table_name.'.'.$this->autoinc_id.'='.(int)$criteria[$this->autoinc_id];
+				}
+				unset($criteria[$this->autoinc_id]);
+			}
 		}
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
-		if (strpos($order_by,self::CF_PREFIX) !== false && 
+		if (strpos($order_by,self::CF_PREFIX) !== false &&
 			preg_match('/'.self::CF_PREFIX.'([^ ]+) (asc|desc)/i',$order_by,$matches))
 		{
 			$order_by = str_replace($matches[0],'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.$this->extra_value.' '.$matches[2],$order_by);
 			$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote($matches[1]);
 		}
-		
+
 		// check if we filter by a custom field
 		foreach($filter as $name => $val)
 		{
@@ -420,10 +430,10 @@ class so_sql_cf extends so_sql
 				unset($filter[$name]);
 			}
 		}
-		
+
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
-	
+
 	/**
 	 * Prevent someone calling the old php4 so_sql constructor
 	 */
