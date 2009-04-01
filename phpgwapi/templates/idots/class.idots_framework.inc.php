@@ -245,7 +245,7 @@ class idots_framework extends egw_framework
 
 		// hook after navbar
 		ob_start();
-		$GLOBALS['egw']->hooks->process('after_navbar');
+		$GLOBALS['egw']->hooks->process('after_navbar',null,true);
 		$content .= ob_get_contents();
 		ob_end_clean();
 
