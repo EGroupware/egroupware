@@ -12,8 +12,8 @@
 			.custom_hide { visibility: hidden; }
 		</styles>
 	</template>
-	<template id="timesheet.index.add" template="" lang="" group="0" version="1.3.001">
-		<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
+		<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 	</template>
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
