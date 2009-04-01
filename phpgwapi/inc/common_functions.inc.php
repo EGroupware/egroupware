@@ -33,12 +33,30 @@ function bytes($str)
 /**
  * Format array or other types as (one-line) string, eg. for error_log statements
  *
- * @param mixed $arr
+ * @param mixed $var variable to dump
  * @return string
  */
-function array2string($arr)
+function array2string($var)
 {
-	return str_replace(array("\n",'    '),'',print_r($arr,true));
+	switch (($type = gettype($var)))
+	{
+		case 'boolean':
+			return $var ? 'TRUE' : 'FALSE';
+		case 'string':
+			return "'$var'";
+		case 'integer':
+		case 'double':
+		case 'resource':
+			return $var;
+		case 'NULL':
+			return 'NULL';
+		case 'object':
+			$type = get_class($var);
+			// fall-through
+		case 'array':
+			return $type.str_replace(array("\n",'    ','array'),'',print_r($var,true));
+	}
+	return 'UNKNOWN TYPE!';
 }
 
 /**
