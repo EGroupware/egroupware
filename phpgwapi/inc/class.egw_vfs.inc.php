@@ -120,7 +120,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			throw new egw_exception_assertion_failed("Filename '$path' is not an absolute path!");
 		}
-		return fopen(self::SCHEME.'://default'.$path,$mode);
+		return fopen(self::PREFIX.$path,$mode);
 	}
 
 	/**
@@ -135,7 +135,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			throw new egw_exception_assertion_failed("Directory '$path' is not an absolute path!");
 		}
-		return opendir(self::SCHEME.'://default'.$path);
+		return opendir(self::PREFIX.$path);
 	}
 
 	/**
@@ -211,7 +211,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function is_dir($path)
 	{
-		return $path[0] == '/' && is_dir(self::SCHEME.'://default'.$path);
+		return $path[0] == '/' && is_dir(self::PREFIX.$path);
 	}
 
 	/**
@@ -222,7 +222,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function is_link($path)
 	{
-		return $path[0] == '/' && is_link(self::SCHEME.'://default'.$path);
+		return $path[0] == '/' && is_link(self::PREFIX.$path);
 	}
 
 	/**
@@ -238,18 +238,22 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if (is_null($url) || is_null($path))
 		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns '.array2string(self::$fstab));
 			return self::$fstab;
 		}
 		if (!self::$is_root)
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') permission denied, you are NOT root!');
 			return false;	// only root can mount
 		}
-		if (isset(self::$fstab[$path]))
+		if (isset(self::$fstab[$path]) && self::$fstab[$path] === $url)
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') already mounted.');
 			return true;	// already mounted
 		}
-		if (stat($url) === false && opendir($url) === false)
+		if (!file_exists($url) || opendir($url) === false)
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') url does NOT exist!');
 			return false;	// url does not exist
 		}
 		self::$fstab[$path] = $url;
@@ -259,6 +263,7 @@ class egw_vfs extends vfs_stream_wrapper
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
 
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful new mount).');
 		return true;
 	}
 
@@ -271,10 +276,12 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if (!self::$is_root)
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') permission denied, you are NOT root!');
 			return false;	// only root can mount
 		}
 		if (!isset(self::$fstab[$path]) && ($path = array_search($path,self::$fstab)) === false)
 		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') NOT mounted!');
 			return false;	// $path not mounted
 		}
 		unset(self::$fstab[$path]);
@@ -282,6 +289,7 @@ class egw_vfs extends vfs_stream_wrapper
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
 
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful unmount).');
 		return true;
 	}
 
