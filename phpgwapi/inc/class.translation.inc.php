@@ -855,4 +855,49 @@ class translation
 		
 		return $this->db->select($this->lang_table,'message_id',$where,__LINE__,__FILE__)->fetchSingle();
 	}
+
+	/**
+	 * Return the decoded string meeting some additional requirements for mailheaders
+	 *
+	 * @param string $_string -> part of an mailheader
+	 * @param string $displayCharset the charset parameter specifies the character set to represent the result by (if iconv_mime_decode is to be used)
+	 * @return string
+	 */
+	function decodeMailHeader($_string, $displayCharset)
+	{
+		//error_log(__FILE__.','.__METHOD__.':'."called");
+		if(function_exists(imap_mime_header_decode)) {
+			$newString = '';
+
+			$string = preg_replace('/\?=\s+=\?/', '?= =?', $_string);
+
+			$elements=imap_mime_header_decode($string);
+
+			foreach((array)$elements as $element) {
+				if ($element->charset == 'default')
+					$element->charset = 'iso-8859-1';
+				$newString .= self::convert($element->text,$element->charset);
+			}
+			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
+		} elseif(function_exists(mb_decode_mimeheader)) {
+			$string = $_string;
+			if(preg_match_all('/=\?.*\?Q\?.*\?=/iU', $string, $matches)) {
+				foreach($matches[0] as $match) {
+					$fixedMatch = str_replace('_', ' ', $match);
+					$string = str_replace($match, $fixedMatch, $string);
+				}
+				$string = str_replace('=?ISO8859-','=?ISO-8859-',$string);
+				$string = str_replace('=?windows-1258','=?ISO-8859-1',$string);
+			}
+			$string = mb_decode_mimeheader($string);
+			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
+		} elseif(function_exists(iconv_mime_decode)) {
+			// continue decoding also if an error occurs
+			$string = @iconv_mime_decode($_string, 2, $displayCharset);
+			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
+		}
+
+		// no decoding function available
+		return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$_string);
+	}
 }
