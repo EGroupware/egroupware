@@ -379,6 +379,10 @@ class so_sql_cf extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
+		if ($only_keys === false)
+		{
+			$only_keys = $this->table_name.'.*';
+		}
 		// check if we search in the custom fields
 		if ($criteria && is_array($criteria) && isset($criteria[$this->extra_value]))
 		{
@@ -407,30 +411,41 @@ class so_sql_cf extends so_sql
 		}
 
 		// check if we filter by a custom field
-		foreach($filter as $name => $val)
+		if (is_array($filter))
 		{
-			if (is_string($name) && $name[0] == self::CF_PREFIX)
+			foreach($filter as $name => $val)
 			{
-				if (!empty($val))	// empty -> dont filter
+				// replace ambiguous auto-id with (an exact match of) table_name.autoid
+				if ($name == $this->autoinc_id)
 				{
-					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
-						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote(substr($name,1)).
-						' AND extra_filter.'.$this->extra_value.'='.$this->db->quote($val));
-					++$extra_filter;
+					if ((int)$filter[$this->autoinc_id])
+					{
+						$filter[] = $this->table_name.'.'.$this->autoinc_id.'='.(int)$filter[$this->autoinc_id];
+					}
+					unset($filter[$this->autoinc_id]);
 				}
-				unset($filter[$name]);
-			}
-			elseif(is_int($name) && $val[0] == self::CF_PREFIX)	// lettersearch: #cfname LIKE 's%'
-			{
-				list($cf) = explode(' ',$val);
-				$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
-					' AND extra_filter.'.$this->extra_key.'='.$this->db->quote(substr($cf,1)).
-					' AND '.str_replace($cf,'extra_filter.'.$this->extra_value,$val));
-				++$extra_filter;
-				unset($filter[$name]);
+				elseif (is_string($name) && $name[0] == self::CF_PREFIX)
+				{
+					if (!empty($val))	// empty -> dont filter
+					{
+						$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
+							' AND extra_filter.'.$this->extra_key.'='.$this->db->quote(substr($name,1)).
+							' AND extra_filter.'.$this->extra_value.'='.$this->db->quote($val));
+						++$extra_filter;
+					}
+					unset($filter[$name]);
+				}
+				elseif(is_int($name) && $val[0] == self::CF_PREFIX)	// lettersearch: #cfname LIKE 's%'
+				{
+					list($cf) = explode(' ',$val);
+					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
+						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote(substr($cf,1)).
+						' AND '.str_replace($cf,'extra_filter.'.$this->extra_value,$val));
+					++$extra_filter;
+					unset($filter[$name]);
+				}
 			}
 		}
-
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 
