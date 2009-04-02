@@ -34,7 +34,7 @@ function check_access(&$account)
 	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 	foreach(array(
 		'davkit',	// Apple iCal
-		'bionicmessage.net',
+	//	'bionicmessage.net',
 		'zideone',
 		'lightning',
 	) as $test)
