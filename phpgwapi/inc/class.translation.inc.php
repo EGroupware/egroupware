@@ -863,9 +863,9 @@ class translation
 	 * @param string $displayCharset the charset parameter specifies the character set to represent the result by (if iconv_mime_decode is to be used)
 	 * @return string
 	 */
-	function decodeMailHeader($_string, $displayCharset)
+	function decodeMailHeader($_string, $displayCharset='utf-8')
 	{
-		//error_log(__FILE__.','.__METHOD__.':'."called");
+		error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
 		if(function_exists(imap_mime_header_decode)) {
 			$newString = '';
 
