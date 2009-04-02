@@ -81,11 +81,12 @@ abstract class groupdav_handler
 	 */
 	function __construct($app,$debug=null,$base_uri=null)
 	{
+	    //error_log(__METHOD__." called");
 		$this->app = $app;
-		if (!is_null($debug)) $this->debug = $debug;
+		#if (!is_null($debug)) $this->debug = $debug = 3;
 		$this->base_uri = is_null($base_uri) ? $base_uri : $_SERVER['SCRIPT_NAME'];
 		$this->agent = self::get_agent();
-
+		
 		$this->translation =& $GLOBALS['egw']->translation;
 		$this->egw_charset = $this->translation->charset();
 	}
@@ -171,7 +172,7 @@ abstract class groupdav_handler
 		}
 		if (!is_array($entry) || !isset($entry['id']) || !(isset($entry['modified']) || isset($entry['etag'])))
 		{
-			error_log(__METHOD__."(".array2string($entry).") Cant create etag!");
+		//	error_log(__METHOD__."(".array2string($entry).") Cant create etag!");
 			return false;
 		}
 		return '"'.$entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']).'"';
@@ -304,3 +305,4 @@ abstract class groupdav_handler
 		return $agent;
 	}
 }
+

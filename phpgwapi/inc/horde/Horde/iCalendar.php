@@ -48,20 +48,22 @@ class Horde_iCalendar {
     {
 #        require_once 'Horde/String.php';
         $type = strtolower($type);
-        $class = 'Horde_iCalendar_' . strtolower($type);
-		if (!class_exists($class)) {
-		  include_once dirname(__FILE__) . '/iCalendar/' . $type . '.php';
+        #error_log("called horde ical new comp". print_r($type,true) );
+		$class = 'Horde_iCalendar_' . strtolower($type);
+		if (!class_exists($class,false)) {
+			include_once dirname(__FILE__) . '/iCalendar/' . $type . '.php';
 		}
 		if (class_exists($class)) {
-            $component = &new $class();
-            if ($container !== false) {
-                $component->_container = &$container;
-            }
-            return $component;
-        } else {
-            // Should return an dummy x-unknown type class here.
-            return false;
-        }
+			#include_once dirname(__FILE__) . '/iCalendar/' . $type . '.php';
+			$component = &new $class();
+			if ($container !== false) {
+				$component->_container = &$container;
+			}
+			return $component;
+		} else {
+			// Should return an dummy x-unknown type class here.
+			return false;
+		}
     }
 
     /**
@@ -353,6 +355,7 @@ class Horde_iCalendar {
      */
     function exportvCalendar()
     {
+	#error_log(__METHOD__.": called");
         // Default values.
         $requiredAttributes['VERSION'] = '2.0';
         $requiredAttributes['PRODID'] = '-//The Horde Project//Horde_iCalendar Library, Horde 3.0-cvs //EN';
@@ -363,7 +366,10 @@ class Horde_iCalendar {
                 $this->setAttribute($name, $default_value);
             }
         }
-
+	//error_log(__METHOD__.":requiredAttributes->".print_r($requiredAttributes,true));
+	//njv:$buffcontent = ob_get_clean();
+	#error_log(__METHOD__.":".print_r($buffcontent,true));
+	#ob_end_clean();
         return $this->_exportvData('VCALENDAR') . $this->_newline;
     }
 
@@ -411,7 +417,8 @@ class Horde_iCalendar {
         if ($clear) {
             $this->clear();
         }
-        if (preg_match('/(BEGIN:' . $base . '\r?\n)([\W\w]*)(END:' . $base . '\r?\n?)/i', $text, $matches)) {
+        error_log(__FILE__ . __METHOD__ . ":\n".$text."\n xxxxxxxxx");
+	if (preg_match('/(BEGIN:' . $base . '\r?\n)([\W\w]*)(END:' . $base . '\r?\n?)/i', $text, $matches)) {
             $vCal = $matches[2];
         } else {
             // Text isn't enclosed in BEGIN:VCALENDAR
@@ -488,7 +495,12 @@ class Horde_iCalendar {
                 }
 
                 // Charset and encoding handling.
-                if ((isset($params['ENCODING'])
+                
+
+				// njv sanity todo: decode  text fields containing qp but not tagged
+					
+
+				if ((isset($params['ENCODING'])
                      && $params['ENCODING'] == 'QUOTED-PRINTABLE')
                     || isset($params['QUOTED-PRINTABLE'])) {
 
@@ -616,9 +628,10 @@ class Horde_iCalendar {
                     $value = trim($value);
                     // As of rfc 2426 2.4.2 semi-colon, comma, and
                     // colon must be escaped.
-                    $value = str_replace('\\n', $this->_newline, $value);
+                    // njv an "urban myth" a colon is tsafe and should not be escaped
+		    		$value = str_replace('\\n', $this->_newline, $value);
                     $value = str_replace('\\,', ',', $value);
-                    $value = str_replace('\\:', ':', $value);
+                    //njv:$value = str_replace('\\:', ':', $value);
 
                     // Split by unescaped semi-colons:
                     $values = preg_split('/(?<!\\\\);/',$value);
@@ -630,12 +643,19 @@ class Horde_iCalendar {
 
                 // String fields.
                 default:
-                    $value = trim($value);
-                    // As of rfc 2426 2.4.2 semi-colon, comma, and
+                    
+					$value = trim($value);
+                    
+					//sanity $value should not contain qp
+					if(preg_match('/^=[24]/',$value)){
+						error_log(__FILE__ .__METHOD__ ."?qp decoded : ". print_r($value , true));
+						quoted_printable_decode($value);
+					}
+					// As of rfc 2426 2.4.2 semi-colon, comma, and
                     // colon must be escaped.
                     $value = str_replace('\\n', $this->_newline, $value);
                     $value = str_replace('\\;', ';', $value);
-                    $value = str_replace('\\:', ':', $value);
+                    //njv:$value = str_replace('\\:', ':', $value);
 
                     // Split by unescaped commas:
                     $values = preg_split('/(?<!\\\\),/',$value);
@@ -784,7 +804,8 @@ class Horde_iCalendar {
 		#$value = str_replace($this->_newline, '\n', $value);
 		$value = str_replace(',', '\,', $value);
 		$value = str_replace(';', '\;', $value);
-		$value = str_replace(':', '\:', $value);
+		//njv:RFC 2445 says very definately NO!
+		//$value = str_replace(':', '\:', $value);
                 break;
 
             default:

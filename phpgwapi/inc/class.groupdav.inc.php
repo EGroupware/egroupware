@@ -145,6 +145,8 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user=$user, app=$app, id=$id: 404 not found!");
 			return '404 Not Found';
+
+
 		}
 		if ($this->debug > 1) error_log(__CLASS__."::$method: user=$user, app='$app', id=$id");
 
@@ -476,8 +478,9 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function _parse_path($path,&$id,&$app,&$user)
 	{
+		if ($this->debug) error_log(__METHOD__." called with ('$path') id=$id, app='$app', user=$user");
 		$parts = explode('/',$path);
-
+		if ($this->debug) error_log(__METHOD__." called parts: ".print_r($parts,true));
 		if (in_array($parts[1],array('principals','groups')))
 		{
 			$user = $GLOBALS['egw_info']['user']['account_id'];

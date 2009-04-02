@@ -64,6 +64,10 @@ class Horde_iCalendar_vcard extends Horde_iCalendar {
                 $this->setAttribute($name, $default_value);
             }
         }
+		//error_log(__METHOD__.":requiredAttributes->".print_r($requiredAttributes,true));
+		//njv:$buffcontent = ob_get_clean();
+		#error_log(__METHOD__.":".print_r($buffcontent,true));
+		#ob_end_clean();
 
         return $this->_exportvData('VCARD') . $this->_newline;
     }
