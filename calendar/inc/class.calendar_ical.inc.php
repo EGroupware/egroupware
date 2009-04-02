@@ -111,6 +111,7 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function &exportVCal($events,$version='1.0', $method='PUBLISH')
 	{
+	//	error_log(__FILE__ . __METHOD__ ."exportVCal is called ");
 		$egwSupportedFields = array(
 			'CLASS'			=> array('dbName' => 'public'),
 			'SUMMARY'		=> array('dbName' => 'title'),
@@ -225,8 +226,8 @@ class calendar_ical extends calendar_boupdate
     	    				break;
 
         				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-        					if ($event['owner'] != $this->user)
-        					//if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
+        					//if ($event['owner'] != $this->user)
+        					if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
         					{
 								$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 								$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
@@ -237,9 +238,33 @@ class calendar_ical extends calendar_boupdate
 
 						case 'DTEND':
 							// write start + end of whole day events as dates
+							//  $event['end'] += 12*3600;
+                            // we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
+                            //njv: This appears to be another urban myth misinterpretation 20090220
+
+							 /*
+                            DTSTART;VALUE=DATE:20090317 implies 000000Z
+                            DTEND;VALUE=DATE:20090317 implies 235959Z
+                            And DEFINES an ALLDAY event
+                            and as such is "inclusive"
+                            some clients(Lightning, Korganiser?) use "exclusive"
+                            Legacy: EGW held 235900 As DTEND allday, such entries in databases will exist
+                            EGW is internally correct on 235959 "inclusive"
+                            */
+							// Whats in DTSTART/DTEND	
+							//error_log(__FILE__ . __METHOD__. "\nDTSTART:". print_r($event['start'],true)."\nDTEND:".print_r($event['end'],true));
+							//Lets do it right first:
+ 							//If (YMD DTSTART == YMD DTEND) and (His DTSTART == 00:00:00 )and (His DTEND in 235900 or 235959) then we are oneday allday return YMD DTSTART DTEND
+							//if (YMD DTSTART <= YMD DTEND) and (HIS DTSTART == 00:00:00) (His DTEND in 235900 or 235959) then we are all day or allday multiday ending in an allday return DTG DTSTART and DTEND
+							//error_log(__FILE__ . __METHOD__ ." :$this->productManufacturer :$this->productName" ); 
+							// returns "GroupDAV" "kde"
+								
 							if (date('H:i:s',$event['start']) == '00:00:00' && in_array(date('H:i:s',$event['end']),array('23:59:59','23:59:00')))
 							{
-								$event['end'] += 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
+								//if kde or lightning increase dtend by 24 hours? 86400 secs
+								if($this->productName == "kde" || $this->productName == "lightning"){
+								$event['end'] += 86400;
+								}
 								foreach(array('start' => 'DTSTART','end' => 'DTEND') as $f => $t)
 								{
 									$arr = calendar_bo::date2array($event[$f]);
@@ -447,24 +472,34 @@ class calendar_ical extends calendar_boupdate
 					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),'UTF-8');
 					$paramData = (array) $GLOBALS['egw']->translation->convert(is_array($value) ? $parameters[$key][$valueID] : $parameters[$key],
 						$GLOBALS['egw']->translation->charset(),'UTF-8');
-					//echo "$key:$valueID: value=$valueData, param=".print_r($paramDate,true)."\n";
 					$vevent->setAttribute($key, $valueData, $paramData);
 					$options = array();
 					if ($paramData['CN']) $valueData .= $paramData['CN'];	// attendees or organizer CN can contain utf-8 content
-					if($key != 'RRULE' && preg_match('/([\000-\012\015\016\020-\037\075])/',$valueData))
-					{
-						$options['ENCODING'] = 'QUOTED-PRINTABLE';
+					
+					if($this->productManufacturer == 'file' || $this->productManufacturer == 'GroupDAV') {
+					} 
+					else
+					{							
+						if($key != 'RRULE' && preg_match('/([\000-\012\015\016\020-\037\075])/',$valueData))
+						{
+							error_log(__FILE__ . __METHOD__ . "QP key $key:  ".print_r($valueData,true));
+							$options['ENCODING'] = 'QUOTED-PRINTABLE';
+						}
 					}
-					if($this->productManufacturer != 'GroupDAV' && preg_match('/([\177-\377])/',$valueData))
+
+					if($this->productManufacturer != 'GroupDAV'  && preg_match('/([\177-\377])/',$valueData))
 					{
 						$options['CHARSET'] = 'UTF-8';
 					}
-					$vevent->setParameter($key, $options);
+				 	if(preg_match('/([\000-\012])/',$valueData))
+					{
+					error_log(__FILE__ . __METHOD__ ."Has invalid XML data :$valueData");	
+					}
+				$vevent->setParameter($key, $options);
 				}
 			}
 			$vcal->addComponent($vevent);
 		}
-		//_debug_array($vcal->exportvCalendar());
 
 		return $vcal->exportvCalendar();
 	}
@@ -481,7 +516,6 @@ class calendar_ical extends calendar_boupdate
 	{
 		// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
 		$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
-
 		$vcal = &new Horde_iCalendar;
 		if(!$vcal->parsevCalendar($_vcalData))
 		{
@@ -489,7 +523,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$version = $vcal->getAttribute('VERSION');
-
+		error_log(__FILE__ . __METHOD__ ."Called with :\n ". print_r($_vcalData,true));
 		if(!is_array($this->supportedFields))
 		{
 			$this->setSupportedFields();
@@ -520,6 +554,7 @@ class calendar_ical extends calendar_boupdate
 				// lets see what we can get from the vcard
 				foreach($component->_attributes as $attributes)
 				{
+					//error_log(__FILE__ . __METHOD__ .":" . print_r($attributes,true));
 					switch($attributes['name'])
 					{
 						case 'AALARM':
@@ -555,10 +590,33 @@ class calendar_ical extends calendar_boupdate
 							$vcardData['description']	= $attributes['value'];
 							break;
 						case 'DTEND':
-							$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
-							if(date('H:i:s',$dtend_ts) == '00:00:00') {
-								$dtend_ts -= 60;
+							/* 
+							DTSTART;VALUE=DATE:20090317 implies 000000Z
+                            DTEND;VALUE=DATE:20090317 implies 235959Z
+                            And DEFINES an ALLDAY event
+                            and as such is "inclusive"
+                            some clients(Lightning, Korganiser?) use "exclusive"
+                            Legacy: EGW held 235900 As DTEND allday, such entries in databases will exist
+                            EGW is internally correct on 235959 "inclusive"
+                            */
+							// We aren't allday
+							$allday = false;
+							// get and ensure the DTSTART/DTEND is a numeric Timestamp
+							$dtstart_ts  =	self::_get_attribute($component->_attributes,'DTSTART');
+							$dtstart_ts = is_numeric($dtstart_ts) ? $dtstart_ts : $this->date2ts($dtstart_ts);
+							$dtend_ts = self::_get_attribute($component->_attributes,'DTEND');
+							$dtend_ts = is_numeric($dtend_ts) ? $dtend_ts : $this->date2ts($dtend_ts);
+							//Plausibility Check and Convert Vcal/ical Allday to EGW Allday
+							if($dtstart_ts <= $dtend_ts && date('H:i:s',$dtend_ts) == '00:00:00'){ 
+							// We are a one day Allday event or Allday last day of a sequence
+							// dtend_ts += 23:59:59 +=86339 = EGW intern
+							$allday = true;
+							$dtend_ts += 86399;
 							}
+							 //if kde or lightning reduce dtend by 24 hours? 86400 secs
+                            if($allday && ($this->productName == "kde" || $this->productName == "lightning")){
+                            $dtend_ts -= 86400;
+                                }
 							$vcardData['end']		= $dtend_ts;
 							break;
 						case 'DTSTART':
@@ -784,7 +842,8 @@ class calendar_ical extends calendar_boupdate
 							}
  							break;
  						case 'ATTENDEE':
- 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) ||
+ 							error_log(__FILE__ . __METHOD__ . "case:ATTENDEE:" . print_r($attributes,true));
+							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) ||
  								preg_match('/<([@.a-z0-9_-]+)>/i',$attributes['value'],$matches))
 							{
 								$email = $matches[1];
@@ -838,12 +897,16 @@ class calendar_ical extends calendar_boupdate
  								if (!$email) $email = 'no-email@egroupware.org';	// set dummy email to store the CN
  								$uid = 'e'.($attributes['params']['CN'] ? $attributes['params']['CN'].' <'.$email.'>' : $email);
  							}
- 							$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
+ 							
+ 							error_log(__FILE__ . __METHOD__ . "\n ATTENDEE:" . print_r($attributes['value'],true));
+							$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
  									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] :
  									($uid == $event['owner'] ? 'A' : 'U');
- 							break;
+ 							
+							break;
  						case 'ORGANIZER':	// will be written direct to the event
- 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
+ 							error_log(__FILE__ . __METHOD__ . "\n ORGANIZER:" . print_r($attributes['value'],true));
+							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
  								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
  							{
  								$event['owner'] = $uid;
@@ -857,7 +920,7 @@ class calendar_ical extends calendar_boupdate
 							break;
 					}
 				}
-
+				//error_log(__FILE__ . __METHOD__ . "\n after case:" . print_r($event['participants'],true));
 				// check if the entry is a birthday
 				// this field is only set from NOKIA clients
 				$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
@@ -936,6 +999,7 @@ class calendar_ical extends calendar_boupdate
 				// participants OR the event no longer contains participants, add them back
 				if( $cal_id > 0 && (!isset($this->supportedFields['participants']) || !count($event['participants'])))
 				{
+					
 					if (($egw_event = $this->read($cal_id)))
 					{
 						$event['participants'] = $egw_event['participants'];
@@ -973,21 +1037,40 @@ class calendar_ical extends calendar_boupdate
 				}
 
 				#error_log('ALARMS');
-				#error_log(print_r($event, true));
+				//error_log(__FILE__ . __METHOD__ ."whats in event". print_r($event, true));
 
 				// if an etag is given, include it in the update
 				if (!is_null($etag))
 				{
 					$event['etag'] = $etag;
 				}
+				/*
+				We have for CREATE:
+				if vcal OWNER set then either this->user = OWNER or has add rights to owners Calendar
+				We have for UPDATE:
+				vcal OWNER = EGW owner
+				case: this->user = OWNER then all rights (C-ok,R-ok,U-?,D-ok)
+				*/
+				if($this->user == $event['owner']){
+				//error_log("\nuser:$this->user owner:". print_r($event['owner'],true));
+				}
+				/*
+				case: this->user = participant then only change own status
+				*/
+				if(array_key_exists($this->user,$event['participants'])){
+				//	error_log("\nuser:$this->user : ". print_r($egw_event,true)); 
+				}
+				$original_event = $event;
+				//error_log(__FILE__ . __METHOD__ . "\n after case:" . print_r($event['participants'],true));
 				if (!($Ok = $this->update($event, TRUE)))
 				{
 					// check if current user is an attendee and tried to change his status
+					//error_log(__FILE__ . __METHOD__ . "\n:in update" . print_r($egw_event,true));
 					if ($Ok === false && $cal_id && ($egw_event = $this->read($cal_id)) && isset($egw_event['participants'][$this->user]) &&
 						$egw_event['participants'][$this->user] !== $event['participants'][$this->user])
 					{
-						$this->set_status($egw_event,$this->user,
-							$status = $event['participants'][$this->user] ? $event['participants'][$this->user] : 'R');
+						//error_log(__FILE__ . __METHOD__ . "\n:set status" . print_r($egw_event,true));
+						$this->set_status($egw_event,$this->user,$status = $event['participants'][$this->user] ? $event['participants'][$this->user] : 'R');
 
 						$Ok = $cal_id;
 						continue;
@@ -997,7 +1080,8 @@ class calendar_ical extends calendar_boupdate
 				else
 				{
 					$eventID =& $Ok;
-
+					if(isset($egw_event) && $original_event['participants'] != $egw_event['participants'])$this->update_status($original_event,$egw_event);
+					
 					// handle the alarms
 					foreach ($component->getComponents() as $valarm)
 					{
@@ -1089,7 +1173,7 @@ class calendar_ical extends calendar_boupdate
 				// 	break;
 
 				default:
-					error_log('VALARM field:' .$vattr['name'] .':' . print_r($vattrval,true) . ' HAS NO CONVERSION YET');
+				//	error_log('VALARM field:' .$vattr['name'] .':' . print_r($vattrval,true) . ' HAS NO CONVERSION YET');
 			}
 		}
 		return $count;
@@ -1292,6 +1376,17 @@ class calendar_ical extends calendar_boupdate
 							$vcardData['description']	= $attributes['value'];
 							break;
 						case 'DTEND':
+						/* write start + end of whole day events as dates
+                            DTSTART;VALUE=DATE:20090317 implies 000000Z
+                            DTEND;VALUE=DATE:20090317 implies 235959Z
+                            And DEFINES an ALLDAY event
+                            and as such is "inclusive"
+                            some clients(Lightning, Korganiser?) need an "exclusive"
+                            Legacy: EGW held 235900 As DTEND allday, such entries in databases will exist
+                            EGW is internally correct on 235959 "inclusive"
+                            */
+                            //error_log(__FILE__ . __METHOD__. "DTEND:". print_r($attributes['value'],true));
+	
 							if(date('H:i:s',$attributes['value']) == '00:00:00')
 								$attributes['value']--;
 							$vcardData['end']		= $attributes['value'];
@@ -1612,4 +1707,37 @@ class calendar_ical extends calendar_boupdate
 
 		return $vcal->exportvCalendar();
 	}
+
+	function update_status($new_event,$old_event)
+   	{
+       	$modified = $added = $deleted = array();
+		//error_log(__FILE__ . __METHOD__ . "\nnew_event:" . print_r($new_event,true));
+        
+		// check the old list against the new list and write the changes
+		foreach($old_event['participants'] as $old_userid => $old_status)
+        {
+            if(isset($new_event['participants'][$old_userid])){
+				if($new_event['participants'][$old_userid] != $old_event['participants'][$old_userid]){
+                //$modified[$old_userid] = $new_event['participants'][$old_userid];
+					$this->set_status($old_event,$old_userid,$status = $new_event['participants'][$old_userid] ? $new_event['participants'][$old_userid] : 'R');
+        		}
+			}
+            else
+            {
+                // this doesn't get written from here at the moment
+				$deleted[$old_userid] = $old_status;
+            }
+        }
+        // Find new participants ... 
+        foreach($new_event['participants'] as $new_userid => $new_status)
+        {
+            if(!isset($old_event['participants'][$new_userid]))
+            {
+                // this doesn't get written from here at the moment
+				$added[$new_userid] = 'U';
+            }
+        }
+    }
+
+
 }
