@@ -11,6 +11,8 @@
  */
 
 require_once EGW_API_INC.'/horde/Horde/iCalendar.php';
+require_once EGW_API_INC.'/horde/Horde/iCalendar/vnote.php';
+require_once EGW_API_INC.'/horde/Horde/iCalendar/vtodo.php';
 
 /**
  * InfoLog: Create and parse iCal's
@@ -70,7 +72,7 @@ class infolog_ical extends infolog_bo
 		{
 			$vevent->setAttribute($field,$value);
 			$options = array();
-			if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
+			if($this->productManufacturer != 'GroupDAV' &&  preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
 			{
 				$options['ENCODING'] = 'QUOTED-PRINTABLE';
 			}
@@ -102,8 +104,10 @@ class infolog_ical extends infolog_bo
 			$cats = $this->get_categories(array($taskData['info_cat']));
 			$vevent->setAttribute('CATEGORIES', $cats[0]);
 		}
+		//error_log("\n\nexportvcal\n". print_r($vcal,true));
+		//error_log("\n\nexportvcal\n". print_r($vevent,true));
 		$vcal->addComponent($vevent);
-
+		error_log("\n\nexportvcal from infolog\n");
 		return $vcal->exportvCalendar();
 	}
 
@@ -356,7 +360,7 @@ class infolog_ical extends infolog_bo
 				else
 				{
 					// should better be imported as subject, but causes duplicates
-					// TODO: should be examined
+					// TODO: should be qexamined
 					$note['info_des'] = $txt;
 				}
 

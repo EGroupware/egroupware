@@ -439,6 +439,7 @@ class infolog_sif extends infolog_bo
 
 	function exportVTODO($_taskID, $_version)
 	{
+		error_log(__METHOD__."called : $_version ,$_taskID");
 		$taskData = $this->read($_taskID);
 
 		$taskData = $GLOBALS['egw']->translation->convert($taskData,$GLOBALS['egw']->translation->charset(),'UTF-8');
