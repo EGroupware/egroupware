@@ -1384,7 +1384,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;	// parent not found, should never happen ...
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__." trying foreach with:".print_r($rows,true)."#");
-		foreach($rows as $fs_id => $row)
+		foreach((array)$rows as $fs_id => $row)
 		{
 			$parent = $row['fs_dir'] > 1 ? $parents[$row['fs_dir']] : '';
 
