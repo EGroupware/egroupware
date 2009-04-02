@@ -36,7 +36,11 @@ class addressbook_groupdav extends groupdav_handler
 	 * @var string
 	 */
 	var $charset = 'utf-8';
-
+	/**
+	*Profiling
+	*/
+	var $starttime;
+	
 	/**
 	 * What attribute is used to construct the path, default id, can be uid too
 	 */
@@ -54,6 +58,7 @@ class addressbook_groupdav extends groupdav_handler
 		parent::__construct($app,$debug,$base_uri);
 
 		$this->bo =& new addressbook_bo();
+		//$this->starttime = microtime(true);	    
 	}
 
 	/**
@@ -79,6 +84,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
+		$this->starttime = microtime(true);	
 		$filter = array();
 		// show addressbook of a single user?
 		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
@@ -111,17 +117,24 @@ class addressbook_groupdav extends groupdav_handler
 		// we query etag and modified, as LDAP does not have the strong sql etag
 		if (($contacts =& $this->bo->search(array(),$address_data ? false : array('id','uid','etag','modified'),'contact_id','','',False,'AND',false,$filter)))
 		{
+			//$icount= 0;
 			foreach($contacts as $contact)
 			{
- 				$props = array(
+ 				
+			//$st = microtime(true);
+				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($contact)),
 					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/x-vcard'),
 					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $contact['modified']),
 				);
-			 	if ($address_data)
+			 	////error_log("groupdav-props\n".print_r($props,true));
+				if ($address_data)
 				{
+ 					//$sta = microtime(true);
 					$content = $handler->getVCard($contact,$this->charset,false);
+					//$en = microtime(true) - $sta;
+					//error_log("getVCard took : $en");
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content);
 				}
@@ -133,8 +146,15 @@ class addressbook_groupdav extends groupdav_handler
 	            	'path'  => self::get_path($contact),
 	            	'props' => $props,
 				);
+				
+			//$end = microtime(true) - $st;	
+			//$icount++;
+			//error_log("function propfind foreach : $end : $icount");
 			}
 		}
+
+		$endtime = microtime(true) - $this->starttime;
+		error_log(__FILE__ ."->". __METHOD__ ." elapsed time : $endtime"); 
 		return true;
 	}
 
@@ -224,7 +244,7 @@ class addressbook_groupdav extends groupdav_handler
 			return $contact;
 		}
 		$handler = self::_get_handler();
-		$options['data'] = $handler->getVCard($contact['id'],$this->charset);
+		$options['data'] = $handler->getVCard($contact['id'],$this->charset,false);
 		$options['mimetype'] = 'text/x-vcard; charset='.$this->charset;
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($contact));

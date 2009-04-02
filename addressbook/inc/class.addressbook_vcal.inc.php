@@ -65,18 +65,20 @@ class addressbook_vcal extends addressbook_bo
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
 		$vCard =& new Horde_iCalendar_vcard;
-
+		
 		if(!is_array($this->supportedFields)) {
 			$this->setSupportedFields();
 		}
 		$sysCharSet = $GLOBALS['egw']->translation->charset();
-
+		$called = microtime(true);
 		if(!($entry = $this->read($_id))) {
 			return false;
 		}
-
+		//error_log("entry before fixed:\n".print_r($entry,true));
+		
 		$this->fixup_contact($entry);
-
+		
+		
 		foreach($this->supportedFields as $vcardField => $databaseFields)
 		{
 			$values = array();
@@ -109,7 +111,7 @@ class addressbook_vcal extends addressbook_bo
 					case 'jpegphoto':
 						if(!empty($value))
 						{
-							//error_log("PHOTO='".$value."'");
+							error_log(__FILE__ ."\nThis vcard contains a JPEG\n '".$value."'");
 							$options['ENCODING'] = 'BASE64';
 							$options['TYPE'] = 'JPEG';
 							$value = base64_encode($value);
@@ -137,7 +139,8 @@ class addressbook_vcal extends addressbook_bo
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
 							}
-							elseif(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
+							// protect the CardDAV
+							elseif(($extra_charset_attribute && preg_match('/([\000-\012\015\016\020-\037\075])/',$value)))
 							{
 								$options['ENCODING'] = 'QUOTED-PRINTABLE';
 							}
@@ -150,6 +153,7 @@ class addressbook_vcal extends addressbook_bo
 				{
 					$value = "";
 				}
+				//if(preg_match('/([\000-\010])/',$value)) error_log(__FILE__."#".__METHOD__."\nThis value has 000-010: $value");
 
 				$values[] = $value;
 			}
@@ -164,9 +168,8 @@ class addressbook_vcal extends addressbook_bo
 			$vCard->setAttribute($vcardField, implode(';', $values));
 			$vCard->setParameter($vcardField, $options);
 		}
-
 		$result = $vCard->exportvCalendar();
-
+		//error_log(__FILE__ . __METHOD__ ."\nvcard:".print_r($result,true));
 		return $result;
 	}
 
@@ -212,7 +215,7 @@ class addressbook_vcal extends addressbook_bo
 		// store product manufacturer and name, to be able to use it elsewhere
 		$this->productManufacturer = strtolower($_productManufacturer);
 		$this->productName = strtolower($_productName);
-
+		//error_log("prodM- prodN".print_r($_productManufacturer,true).print_r($_productName,true));
 		/**
 		 * ToDo Lars:
 		 * + changes / renamed fields in 1.3+:
@@ -262,8 +265,9 @@ class addressbook_vcal extends addressbook_bo
 							'adr_two_postalcode','adr_two_countryname'),
 			'BDAY'		=> array('bday'),
 			'CATEGORIES'	=> array('cat_id'),
-			'EMAIL;INTERNET;WORK' => array('email'),
-			'EMAIL;INTERNET;HOME' => array('email_home'),
+			'EMAIL;INTERNET' => array('email'),//tp4 tp43
+			'EMAIL;INTERNET;HOME' => array('email_home'),//tp42 tp42
+			#'EMAIL;INTERNET;WORK' => array('#email_work'),//tp43 lost
 			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
 			'FN'		=> array('n_fn'),
 			'NOTE'		=> array('note'),
@@ -515,7 +519,7 @@ class addressbook_vcal extends addressbook_bo
 						break;
 
 					default:
-						error_log("Funambol product '$_productName', assuming same as thunderbird");
+						//error_log("Funambol product '$_productName', assuming same as thunderbird");
 						$this->supportedFields = $defaultFields[6];
 						break;
 				}
@@ -621,21 +625,20 @@ class addressbook_vcal extends addressbook_bo
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
 				$this->supportedFields = $defaultFields[1];
 				break;
-
-			case 'groupdav':		// all GroupDAV access goes through here
+			case 'groupdav':                // all GroupDAV access goes through here
 				switch($this->productName)
 				{
-					case 'kde':		// KDE Addressbook
-						$this->supportedFields = $defaultFields[8];
+					case 'kde':             // KDE Addressbook
+						$this->supportedFields = $defaultFields[1];
+						error_log(__FILE__ . ":groupdav kde 1");	
 						break;
 					default:
 						$this->supportedFields = $defaultFields[1];
 				}
-				break;
-
+				break;		
 			// the fallback for SyncML
 			default:
-				error_log("Client not found: '$_productManufacturer' '$_productName'");
+				error_log(__FILE__. __METHOD__ ."\nManufacturer-Product not found: '$_productManufacturer' '$_productName'");
 				$this->supportedFields = $defaultFields[0];
 				break;
 		}
@@ -645,6 +648,7 @@ class addressbook_vcal extends addressbook_bo
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 
+		//error_log("vcardin vtoe".print_r($_vcard, true));
 		if(!is_array($this->supportedFields))
 		{
 			$this->setSupportedFields();
@@ -698,8 +702,13 @@ class addressbook_vcal extends addressbook_bo
 		// we need also to take care about ADR for example. we do not
 		// support this. We support only ADR;WORK or ADR;HOME
 
+		// njv: As the order of tag occurence is undefined and tags 1... to  n are mapped to one addressbook 
+		//	fieldname and tags 1... to n may have conflicting content eg EMAIL is set but EMAIL;INTERNET is empty 
+		//  and both are mapped to "email" who wins? 
+		
 		foreach($rowNames as $rowName => $vcardKey)
 		{
+			//	error_log("eachrownane:".print_r($rowName,true));
 
 			switch($rowName)
 			{
@@ -740,11 +749,38 @@ class addressbook_vcal extends addressbook_bo
 					}
 					break;
 				case 'EMAIL':
-				case 'EMAIL;WORK':
 				case 'EMAIL;INTERNET':
+					$ckey = false;
+                                        foreach($this->supportedFields as $tag => $value)
+                                        {
+                                        if(in_array ('email', $value))
+                                            {
+                                            $ckey = $tag;
+                                            }
+                                        }
+                        //              error_log("key:$ckey:$vcardKey");
+
+                                        if( $ckey && !empty($vcardValues[$vcardKey]['value']))
+                                        {
+                        //                error_log("$akey : ".print_r($vcardKey,true));
+                                        $finalRowNames[$ckey] = $vcardKey;
+                                        }
+                                        break;
+
+				case 'EMAIL;WORK':
 					if(!isset($rowNames['EMAIL;INTERNET;WORK']))
 					{
-						$finalRowNames['EMAIL;INTERNET;WORK'] = $vcardKey;
+						if(in_array ('#email_work', $value))
+						{
+							$akey = $tag;
+						}
+					}
+					//		error_log("key:$akey:$vcardKey");
+					
+					if( $akey && !empty($vcardValues[$vcardKey]['value']))
+					{
+						//error_log("$akey : ".print_r($vcardKey,true));
+						$finalRowNames[$akey] = $vcardKey;
 					}
 					break;
 				case 'EMAIL;HOME':
@@ -752,17 +788,26 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$finalRowNames['EMAIL;INTERNET;HOME'] = $vcardKey;
 					}
+					
+					//	error_log("email_home-key: ".print_r($bkey, true));
+					
+					if($bkey && !empty($vcardValues[$vcardKey]['value']))
+					{
+						//	error_log("$bkey :".print_r($vcardKey,true));
+						$finalRowNames[$bkey] = $vcardKey;
+					}
 					break;
 
 				case 'VERSION':
 					break;
 
 				default:
+					//error_log("default row map".print_r($vcardKey,true));
 					$finalRowNames[$rowName] = $vcardKey;
 					break;
 			}
 		}
-		#error_log(print_r($finalRowNames, true));
+		//error_log("finalrownames".print_r($finalRowNames, true));
 
 		$contact = array();
 
@@ -797,7 +842,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'cat_id':
-								$contact[$fieldName] = implode(',',$this->find_or_add_categories(explode(',',$value)));
+								$contact[$fieldName] = implode(',',$this->find_or_add_categories(explode(',',$value),'private'));
 								break;
 
 							case 'note':
@@ -815,6 +860,7 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 		$this->fixup_contact($contact);
+		//error_log(__FILE__ . __METHOD__ . "\nContact:\n " .print_r($contact,true));
 		return $contact;
 	}
 
