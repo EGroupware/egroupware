@@ -1855,7 +1855,7 @@ class etemplate extends boetemplate
 		{
 			return stripslashes($var);
 		}
-		foreach($public as $key => $val)
+		foreach($var as $key => $val)
 		{
 			$var[$key] = is_array($val) ? self::array_stripslashes($val) : stripslashes($val);
 		}
