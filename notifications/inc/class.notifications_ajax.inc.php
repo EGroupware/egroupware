@@ -12,7 +12,7 @@
 /**
  * Ajax methods for notifications
  */
-class ajaxnotifications {
+class notifications_ajax {
 	/**
 	 * Appname
 	 */
@@ -80,7 +80,7 @@ class ajaxnotifications {
 	private $response;
 	
 	/**
-	 * constructor of ajaxnotifications
+	 * constructor
 	 *
 	 */
 	public function __construct() {
@@ -98,7 +98,7 @@ class ajaxnotifications {
 	}
 	
 	/**
-	 * destructor of ajaxnotifications
+	 * destructor
 	 *
 	 */
 	public function __destruct() {}

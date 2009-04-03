@@ -17,7 +17,7 @@
  * notification is written into self::_notification_table.
  * In the second stage a request from the client reads
  * out the table to look if there is a notificaton for this
- * client. The second stage is done in class.ajaxnotifications.inc.php
+ * client. The second stage is done in class.notifications_ajax.inc.php
  *
  * Todo:
  * - save the messages by uid instead of sessionid into the notification table, this

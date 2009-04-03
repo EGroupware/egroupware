@@ -18,7 +18,7 @@ function egwpopup_setTimeout() {
 	window.setTimeout("egwpopup_refresh();", 60000);
 }
 function egwpopup_refresh() {
-	xajax_doXMLHTTP("notifications.ajaxnotifications.get_notifications");
+	xajax_doXMLHTTP("notifications.notifications_ajax.get_notifications");
 	egwpopup_setTimeout();
 }
 
