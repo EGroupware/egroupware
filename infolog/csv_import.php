@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -36,7 +36,12 @@ else
 if ($_POST['cancel'])
 {
 	@unlink($csvfile);
-	$GLOBALS['egw']->redirect_link('/admin/index.php');
+	$GLOBALS['egw']->redirect_link('/infolog/index.php');
+}
+if (isset($_POST['charset']))
+{
+	// we have to set the local, to fix eg. utf-8 imports, as fgetcsv requires it!
+	common::setlocale(LC_CTYPE,$_POST['charset']);
 }
 $GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog - Import CSV-File');
 $GLOBALS['egw']->common->egw_header();
@@ -365,7 +370,7 @@ case 'import':
 	$GLOBALS['egw']->preferences->add('infolog','cvs_import',$defaults);
 	$GLOBALS['egw']->preferences->save_repository(True);
 
-	$log = "<table border=1>\n\t<tr><td>#</td>\n";
+	$log = '<table border="1" style="border: 1px dotted black; border-collapse: collapse;">'."\n\t<tr><td>#</td>\n";
 
 	foreach($info_fields as $csv_idx => $info)
 	{	// convert $trans[$csv_idx] into array of pattern => value
@@ -412,7 +417,7 @@ case 'import':
 
 		$log .= "\t</tr><tr><td>".($start+$anz)."</td>\n";
 
-		$values = array();
+		$values = $orig = array();
 		foreach($info_fields as $csv_idx => $info)
 		{
 			//echo "<p>$csv: $info".($trans[$csv] ? ': '.$trans[$csv] : '')."</p>";
@@ -446,9 +451,7 @@ case 'import':
 					}
 				}
 			}
-			$values[$info] = $val;
-
-			$log .= "\t\t<td>$val</td>\n";
+			$values[$info] = $orig[$info] = $val;
 		}
 		$empty = !count($values);
 
@@ -470,9 +473,13 @@ case 'import':
 		if (!isset($values['datemodified'])) $values['datemodified'] = $values['startdate'];
 
 		// convert user-names to user-id's
-		if (isset($values['owner']) && !is_numeric($values['owner']))
+		foreach(array('owner','modifier') as $user)
 		{
-			$values['owner'] = $GLOBALS['egw']->accounts->name2id($values['owner']);
+			if (isset($values[$user]) && !is_numeric($values[$user]))
+			{
+				if (preg_match('/\[([^\]]+)\]/',$values[$user],$matches)) $values[$user] = $matches[1];
+				$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user],'account_lid',$user=='owner'?null:'u');
+			}
 		}
 		if (isset($values['responsible']))
 		{
@@ -480,6 +487,7 @@ case 'import':
 			$values['responsible'] = array();
 			foreach(split('[,;]',$responsible) as $user)
 			{
+				if (preg_match('/\[([^\]]+)\]/',$user,$matches)) $user = $matches[1];
 				if ($user && !is_numeric($user)) $user = $GLOBALS['egw']->accounts->name2id($user);
 				if ($user) $values['responsible'][] = $user;
 			}
@@ -532,6 +540,12 @@ case 'import':
 					}
 				}
 			}
+		}
+		// display read and interpreted results, so the user can check it
+		foreach($info_fields as $name)
+		{
+			$log .= "\t\t<td>".($orig[$name] != $values[$name] ? htmlspecialchars($orig[$name]).' --> ' : '').
+				htmlspecialchars($values[$name])."</td>\n";
 		}
 	}
 	$log .= "\t</tr>\n</table>\n";
