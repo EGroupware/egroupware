@@ -865,7 +865,7 @@ class translation
 	 */
 	function decodeMailHeader($_string, $displayCharset='utf-8')
 	{
-		error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
+		//error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
 		if(function_exists(imap_mime_header_decode)) {
 			$newString = '';
 
