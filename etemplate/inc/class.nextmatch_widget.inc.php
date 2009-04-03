@@ -666,7 +666,7 @@ class nextmatch_widget
 			{
 				$cols[$widget['name']] = $label;
 			}
-			elseif (strpos($cols[$col],$label) === false)
+			elseif (empty($label) || strpos($cols[$col],$label) === false)
 			{
 				$cols[$col] .= ($cols[$col] ? ', ' : '').$label;
 				$cols['name2col'][$col] = $col;
