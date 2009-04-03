@@ -104,65 +104,39 @@ class ajaxnotifications {
 	public function __destruct() {}
 	
 	/**
-	 * Gets all egwpopup notification for calling user.
-	 * Requests and response is done via xajax
+	 * public AJAX trigger function to be called by the JavaScript client
+	 *
+	 * this function calls all other recurring AJAX notifications methods
+	 * to have ONE single recurring AJAX call per user
 	 * 
 	 * @return xajax response
 	 */
-	public function get_egwpopup_notifications() {
-		$session_id = $GLOBALS['egw_info']['user']['sessionid'];
-		$message = '';
-		$rs = $this->db->select(self::_notification_table, 
-			'*', array(
-				'account_id' => $this->recipient->account_id,
-				'session_id' => $session_id,
-			),
-			__LINE__,__FILE__,false,'',self::_appname);
-		if ($rs->NumRows() > 0)	{
-			foreach ($rs as $notification) {
-				$this->response->addScriptCall('append_notification_message',$notification['message']);
-			}
-			$myval=$this->db->delete(self::_notification_table,array(
-				'account_id' => $this->recipient->account_id,
-				'session_id' => $session_id,
-			),__LINE__,__FILE__,self::_appname);
-			
-			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
-				case 'low':
-					$this->response->addScript('notificationbell_switch("active");');
-					break;
-				case 'high':
-					$this->response->addAlert(lang('eGroupWare has notifications for you'));
-					$this->response->addScript('egwpopup_display();');
-					break;
-				case 'medium':
-				default:
-					$this->response->addScript('egwpopup_display();');
-					break;
-			}
-		}
+	public function get_notifications() {
+		$this->check_mailbox();
+		$this->get_egwpopup();
+		
 		return $this->response->getXML();
 	}
 	
 	/**
 	 * checks users mailbox and sends a notification if new mails have arrived
 	 * 
-	 * @return xajax response
+	 * @return boolean true or false
 	 */
-	public function check_mailbox() {
+	private function check_mailbox() {
 		if(!isset($this->preferences[self::_mailappname]['notify_folders'])) {
-			return $this->response->getXML(); //no pref set for notifying - exit
+			return true; //no pref set for notifying - exit
 		}
 		$notify_folders = explode(',', $this->preferences[self::_mailappname]['notify_folders']);
-		if (count($notify_folders) == 0) {
-			return $this->response->getXML(); //no folders configured for notifying - exit
+		if(count($notify_folders) == 0) {
+			return true; //no folders configured for notifying - exit
 		}
 		
 		$bofelamimail = new bofelamimail($GLOBALS['egw']->translation->charset());
 		if(!$bofelamimail->openConnection()) {
 			// TODO: This is ugly. Log a bit nicer!
 			error_log(self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox. Please check your prefs!');
-			return $this->response->getXML(); // cannot connect to mailbox
+			return false; // cannot connect to mailbox
 		}
 		
 		$this->restore_session_data();
@@ -223,7 +197,47 @@ class ajaxnotifications {
 		}
 		
 		$this->save_session_data();
-		return $this->response->getXML();
+		return true;
+	}
+	
+	/**
+	 * gets all egwpopup notifications for calling user
+	 * 
+	 * @return boolean true or false
+	 */
+	private function get_egwpopup() {
+		$session_id = $GLOBALS['egw_info']['user']['sessionid'];
+		$message = '';
+		$rs = $this->db->select(self::_notification_table, 
+			'*', array(
+				'account_id' => $this->recipient->account_id,
+				'session_id' => $session_id,
+			),
+			__LINE__,__FILE__,false,'',self::_appname);
+		if ($rs->NumRows() > 0)	{
+			foreach ($rs as $notification) {
+				$this->response->addScriptCall('append_notification_message',$notification['message']);
+			}
+			$myval=$this->db->delete(self::_notification_table,array(
+				'account_id' => $this->recipient->account_id,
+				'session_id' => $session_id,
+			),__LINE__,__FILE__,self::_appname);
+			
+			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
+				case 'low':
+					$this->response->addScript('notificationbell_switch("active");');
+					break;
+				case 'high':
+					$this->response->addAlert(lang('eGroupWare has notifications for you'));
+					$this->response->addScript('egwpopup_display();');
+					break;
+				case 'medium':
+				default:
+					$this->response->addScript('egwpopup_display();');
+					break;
+			}
+		}
+		return true;
 	}
 	
 	/**

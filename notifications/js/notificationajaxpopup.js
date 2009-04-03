@@ -4,7 +4,7 @@
  * @package notifications
  * @subpackage ajaxpoup
  * @link http://www.egroupware.org
- * @author Cornelius Weiss <nelius@cwtech.de>
+ * @author Cornelius Weiss <nelius@cwtech.de>, Christian Binder <christian@jaytraxx.de>
  * @version $Id$
  */
 
@@ -18,8 +18,7 @@ function egwpopup_setTimeout() {
 	window.setTimeout("egwpopup_refresh();", 60000);
 }
 function egwpopup_refresh() {
-	xajax_doXMLHTTP("notifications.ajaxnotifications.check_mailbox");
-	xajax_doXMLHTTP("notifications.ajaxnotifications.get_egwpopup_notifications");
+	xajax_doXMLHTTP("notifications.ajaxnotifications.get_notifications");
 	egwpopup_setTimeout();
 }
 
