@@ -54,7 +54,7 @@ function array2string($var)
 			$type = get_class($var);
 			// fall-through
 		case 'array':
-			return $type.str_replace(array("\n",'    ','array'),'',print_r($var,true));
+			return $type.str_replace(array("\n",'    ','Array'),'',print_r($var,true));
 	}
 	return 'UNKNOWN TYPE!';
 }
@@ -1426,6 +1426,8 @@ function egw_exception_handler(Exception $e)
 	// logging all exceptions to the error_log
 	error_log($headline.': '.$e->getMessage());
 	foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
+	error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+		($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 
 	// exception handler for cli (command line interface) clients, no html
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
