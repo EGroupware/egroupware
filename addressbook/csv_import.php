@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -33,6 +33,11 @@ if ($_POST['cancel'])
 {
 	@unlink($csvfile);
 	$GLOBALS['egw']->redirect_link('/addressbook/index.php');
+}
+if (isset($_POST['charset']))
+{
+	// we have to set the local, to fix eg. utf-8 imports, as fgetcsv requires it!
+	common::setlocale(LC_CTYPE,$_POST['charset']);
 }
 $GLOBALS['egw_info']['flags']['app_header'] = lang('Import CSV-File into Addressbook');
 $GLOBALS['egw']->common->egw_header();
@@ -266,7 +271,7 @@ switch($_POST['action'])
 		$GLOBALS['egw']->preferences->add('addressbook','cvs_import',$defaults);
 		$GLOBALS['egw']->preferences->save_repository(True);
 
-		$log = "<table border=1>\n\t<tr><td>#</td>\n";
+		$log = '<table border="1" style="border: 1px dotted black; border-collapse: collapse;">'."\n\t<tr><td>#</td>\n";
 
 		foreach($addr_fields as $csv_idx => $addr)
 		{	// convert $_POST['trans'][$csv_idx] into array of pattern => value
@@ -315,7 +320,7 @@ switch($_POST['action'])
 
 			$log .= "\t</tr><tr><td>".($start+$anz)."</td>\n";
 
-			$values = array();
+			$values = $orig = array();
 			foreach($addr_fields as $csv_idx => $addr)
 			{
 				//echo "<p>$csv: $addr".($_POST['trans'][$csv] ? ': '.$_POST['trans'][$csv] : '')."</p>";
@@ -360,9 +365,7 @@ switch($_POST['action'])
 						}
 					}
 				}
-				$values[$addr] = $val;
-
-				$log .= "\t\t<td>$val</td>\n";
+				$values[$addr] = $orig[$addr] = $val;
 			}
 			$empty = !count($values);
 			// convert the category name to an id
@@ -387,7 +390,8 @@ switch($_POST['action'])
 			{
 				if (isset($values[$user]) && !is_numeric($user))
 				{
-					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user]);
+					if (preg_match('/\[([^\]]+)\]/',$values[$user],$matches)) $values[$user] = $matches[1];
+					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user],'account_lid',$user=='owner'?null:'u');
 				}
 			}
 			if (!in_array('owner',$addr_fields) || !$values['owner'])
@@ -414,6 +418,12 @@ switch($_POST['action'])
 			{
 				$rvalue=$GLOBALS['egw']->contacts->save($values);
 				//echo "<p>adding: ".print_r($values,true)."</p>\n";
+			}
+			// display read and interpreted results, so the user can check it
+			foreach($addr_fields as $name)
+			{
+				$log .= "\t\t<td>".($orig[$name] != $values[$name] ? htmlspecialchars($orig[$name]).' --> ' : '').
+					htmlspecialchars($values[$name])."</td>\n";
 			}
 		}
 		$log .= "\t</tr>\n</table>\n";

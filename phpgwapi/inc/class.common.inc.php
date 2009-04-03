@@ -25,6 +25,47 @@ class common
 	static $found_files;
 
 	/**
+	 * Try to guess and set a locale supported by the server, with fallback to 'en_EN' and 'C'
+	 *
+	 * This method uses the language and nationalty set in the users common prefs.
+	 *
+	 * @param $category=LC_ALL category to set, see setlocal function
+	 * @param $charset=null default system charset
+	 * @return string the local (or best estimate) set
+	 */
+	static function setlocale($category=LC_ALL,$charset=null)
+	{
+		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
+
+		if (strlen($lang) == 2)
+		{
+			$country_from_lang = strtoupper($lang);
+		}
+		else
+		{
+			list($lang,$country_from_lang) = explode('-',$lang);
+			$country_from_lang = strtoupper($country_from_lang);
+		}
+		if (is_null($charset)) $charset = $GLOBALS['egw']->translation->charset();
+
+		foreach(array(
+			$lang.'_'.$country,
+			$lang.'_'.$country_from_lang,
+			$lang,
+			'en_EN',
+			'de_DE',	// this works with utf-8, en_EN@utf-8 does NOT!
+			'C',
+		) as $local)
+		{
+			if (($ret = setlocale($category,$local.'@'.$charset))) return $ret;
+			if (($ret = setlocale($category,$local))) return $ret;
+		}
+		error_log(__METHOD__."($category,$charset) lang=$lang, country=$country, country_from_lang=$country_from_lang: Could not set local!");
+		return false;	// should not happen, as the 'C' local should at least be available everywhere
+	}
+
+	/**
 	 * Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
 	 *
 	 * This function checks for major version only.

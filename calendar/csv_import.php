@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package calendar
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -32,7 +32,12 @@ else
 if ($_POST['cancel'])
 {
 	@unlink($csvfile);
-	$GLOBALS['egw']->redirect_link('/admin/index.php');
+	$GLOBALS['egw']->redirect_link('/calendar/index.php');
+}
+if (isset($_POST['charset']))
+{
+	// we have to set the local, to fix eg. utf-8 imports, as fgetcsv requires it!
+	common::setlocale(LC_CTYPE,$_POST['charset']);
 }
 $GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Import CSV-File');
 $cal = new calendar_boupdate(true);
@@ -171,6 +176,7 @@ case 'download':
 		'public'	=> 'Access: 1=public, 0=private',
 		'owner'		=> 'Owner: int(11) user-id/-name',
 		'modified'	=> 'Modification date',
+		'modifier'	=> 'Modification user',
 		'non_blocking' => '0=Event blocks time, 1=Event creates no conflicts',
 		'uid'       => 'Unique Id, allows multiple import to update identical entries',
 //		'recur_type'=> 'Type of recuring event',
@@ -325,16 +331,15 @@ case 'import':
 				$replaces .= ($replaces != '' ? $PSep : '') . $pattern . $ASep . $replace;
 			}
 			$trans[$csv_idx] = $values;
-		} /*else
-			unset( $trans[$csv_idx] );*/
-
+		}
 		$log .= "\t\t<td><b>$info</b></td>\n";
 	}
 	if (!in_array('public',$cal_fields))	// autocreate public access if not set by user
 	{
 		$log .= "\t\t<td><b>isPublic</b></td>\n";
+		$cal_fields[] = 'public';
 	}
-/*		if (!in_array('recur_type',$cal_fields))	// autocreate single event if not set by user
+/*	if (!in_array('recur_type',$cal_fields))	// autocreate single event if not set by user
 	{
 		$log .= "\t\t<td><b>recureing</b></td>\n";
 	}*/
@@ -358,7 +363,7 @@ case 'import':
 
 		$log .= "\t<tr>\n\t\t<td>".($start+$anz)."</td>\n";
 
-		$values = array();
+		$values = $orig = array();
 		foreach($cal_fields as $csv_idx => $info)
 		{
 			//echo "<p>$csv: $info".($trans[$csv] ? ': '.$trans[$csv] : '')."</p>";
@@ -392,27 +397,24 @@ case 'import':
 					}
 				}
 			}
-			$values[$info] = $val;
-
-			$log .= "\t\t<td>$val</td>\n";
+			$values[$info] = $orig[$info] = $val;
 		}
-		if (!in_array('public',$cal_fields))
+		if (!isset($values['public']))
 		{
 			$values['public'] = 1;	// public access if not set by user
-			$log .= "\t\t<td>".$values['public']."</td>\n";
 		}
-		if (!in_array('recur_type',$cal_fields))
+		if (!isset($values['recur_type']))
 		{
 			$values['recur_type'] = MCAL_RECUR_NONE;	// single event if not set by user
-//				$log .= "\t\t<td>".$values['recure_type']."</td>\n";
 		}
 
-		if(!$_POST['debug'] && count($values))	// dont import empty contacts
+		if(count($values))	// dont import empty contacts
 		{
 			//echo "values=<pre>".print_r($values,True)."</pre>\n";
-			if (!is_numeric($values['owner']))
+			foreach(array('owner','modifier') as $name)
 			{
-				$values['owner'] = $GLOBALS['egw']->accounts->name2id($values['owner']);
+				if (preg_match('/\[([^\]]+)\]/',$values[$name],$matches)) $values[$name] = $matches[1];
+				if (!is_numeric($values[$name])) $values[$name] = $GLOBALS['egw']->accounts->name2id($values[$name],'account_lid','u');
 			}
 			if (!$values['owner'] || !$GLOBALS['egw']->accounts->exists($values['owner']))
 			{
@@ -452,8 +454,9 @@ case 'import':
 				list($part,$status) = explode('=',$part_status);
 				$valid_status = array('U'=>'U','u'=>'U','A'=>'A','a'=>'A','R'=>'R','r'=>'R','T'=>'T','t'=>'T');
 				$status = isset($valid_status[$status]) ? $valid_status[$status] : 'U';
-				if ($GLOBALS['egw']->accounts->exists($part))
+				if (!is_numeric($part))
 				{
+					if (preg_match('/\[([^\]]+)\]/',$part,$matches)) $part = $matches[1];
 					$part = $GLOBALS['egw']->accounts->name2id($part);
 				}
 				if ($part && is_numeric($part))
@@ -484,9 +487,8 @@ case 'import':
 			}
 			$action = $values['id'] ? 'updating' : 'adding';
 			//echo $action.'<pre>'.print_r($values,True)."</pre>\n";
-			$cal_id = $cal->update($values,true,!$values['modified'],$is_admin);	// ignoring conflicts and ACL (for admins) on import
-
-			if ($cal_id)
+			if (!$_POST['debug'] &&
+				($cal_id = $cal->update($values,true,!$values['modified'],$is_admin)))	// ignoring conflicts and ACL (for admins) on import
 			{
 				foreach(array(
 					'addressbook:'.$values['addr_id'],
@@ -501,11 +503,20 @@ case 'import':
 					}
 				}
 			}
-			$log .= "\t\t".'<td align="center">'.($cal_id ? $action." cal_id=$cal_id" : 'Error '.$action)."</td>\n\t</tr>\n";
-		}
-		else
-		{
-			$log .= "\t\t".'<td align="center">only test</td>'."\n\t</tr>\n";
+			// display read and interpreted results, so the user can check it
+			foreach($cal_fields as $name)
+			{
+				$log .= "\t\t<td>".($orig[$name] != $values[$name] ? htmlspecialchars($orig[$name]).' --> ' : '').
+					htmlspecialchars($values[$name])."</td>\n";
+			}
+			if(!$_POST['debug'] && count($values))	// dont import empty contacts
+			{
+				$log .= "\t\t".'<td align="center">'.($cal_id ? $action." cal_id=$cal_id" : 'Error '.$action)."</td>\n\t</tr>\n";
+			}
+			else
+			{
+				$log .= "\t\t".'<td align="center">only test</td>'."\n\t</tr>\n";
+			}
 		}
 	}
 	$log .= "</table>\n";
