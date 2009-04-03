@@ -8,7 +8,7 @@
 %s please calculate the result	addressbook	en	%s please calculate the result
 (e.g. 1969)	addressbook	en	(e.g. 1969)
 (empty = use global limit, no = no export at all)	admin	en	(empty = use global limit, no = no export at all)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type <none> could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
 account repository	admin	en	Account repository
 accounts	addressbook	en	Accounts
@@ -35,6 +35,7 @@ address line 2	addressbook	en	Address Line 2
 address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
 addressbook csv export	addressbook	en	Addressbook CSV export
+addressbook field	addressbook	en	Addressbook Field
 addressbook menu	addressbook	en	Addressbook menu
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
@@ -113,6 +114,7 @@ country	common	en	Country
 create new links	addressbook	en	Create new links
 created	addressbook	en	Created
 credit	addressbook	en	Credit
+csv field	addressbook	en	CSV Field
 csv-fieldname	addressbook	en	CSV-Fieldname
 csv-filename	addressbook	en	CSV-Filename
 custom	addressbook	en	Custom
@@ -140,6 +142,7 @@ display contact	addressbook	en	Display Contact
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Displays a remider for birthdays on the startpage (page you get when you enter eGroupWare or click on the homepage icon).
 distribution list deleted	addressbook	en	Distribution list deleted
 distribution lists	addressbook	en	Distribution lists
+distribution lists, ...	addressbook	en	Distribution lists, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?
 do your really want to delete this contact?	addressbook	en	Do your really want to delete this contact?
 document '%1' does not exist or is not readable for you!	addressbook	en	Document '%1' does not exist or is not readable for you!
@@ -159,12 +162,13 @@ email & internet	addressbook	en	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses (comma separated) to send the contact data
 empty for all	addressbook	en	empty for all
 enable an extra private addressbook	addressbook	en	Enable an extra private addressbook
+enclosure	addressbook	en	Enclosure
 end	addressbook	en	End
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
 error deleting the contact !!!	addressbook	en	Error deleting the contact !!!
 error saving the contact !!!	addressbook	en	Error saving the contact !!!
 error: the entry has been updated since you opened it for editing!	addressbook	en	Error: the entry has been updated since you opened it for editing!
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms. You can also use a fieldname instead a fix value. Example: $$IFadr_one_countryname~DEUTSCHLAND~~adr_one_countryname$$
 existing links	addressbook	en	Existing links
 export	addressbook	en	export
 export as csv	addressbook	en	Export as CSV
@@ -176,6 +180,7 @@ export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from your Addressbook into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
 extra	addressbook	en	Extra
+extra private	addressbook	en	Extra private
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	failed to change %1 organisation member(s) (insufficent rights) !!!
 fax	addressbook	en	Fax
 fax number	common	en	Fax Number
@@ -186,6 +191,7 @@ fields for the csv export	addressbook	en	Fields for the CSV export
 fields the user is allowed to edit himself	admin	en	Fields the user is allowed to edit himself
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Fieldseparator
+fieldseperator	addressbook	en	Fieldseperator
 for more then one contact in a document use the tag pagerepeat!	addressbook	en	for more then one contact in a document use the tag pagerepeat!
 for read only ldap	admin	en	for read only LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
@@ -215,6 +221,7 @@ icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	if accounts are already in LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a directory (full vfs path) here, addressbook displays an action for each document. That action allows to download the specified document with the contact data inserted.
 if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. That icon allows to download the specified document with the contact data inserted.
+ignore first line	addressbook	en	Ignore first line
 import	addressbook	en	Import
 import contacts	addressbook	en	Import Contacts
 import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
@@ -228,9 +235,11 @@ import_instructions	addressbook	en	In Netscape, open the Addressbook and select 
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into your Addressbook from a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
+infolog	addressbook	en	InfoLog
 insert in document	addressbook	en	Insert in document
 insufficent rights to delete this list!	addressbook	en	Insufficent rights to delete this list!
 international	addressbook	en	International
+internet	addressbook	en	Internet
 label	addressbook	en	Label
 last date	addressbook	en	Last date
 last modified	addressbook	en	last modified
@@ -301,6 +310,7 @@ preferred email address to use in distribution lists	addressbook	en	Preferred em
 preferred phone	addressbook	en	preferred phone
 preferred type of email address to add for distribution lists	addressbook	en	preferred type of email address to add for distribution lists
 prefix	addressbook	en	Prefix
+private custom fields	addressbook	en	Private custom fields
 public key	addressbook	en	Public Key
 publish into groups:	addressbook	en	Publish into groups:
 read a list / search for entries.	addressbook	en	Read a list / search for entries.
@@ -309,6 +319,7 @@ read a single entry by passing the id and fieldlist.	addressbook	en	Read a singl
 read only	addressbook	en	read only
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
+region	addressbook	en	Region
 remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list
 removed from distribution list	addressbook	en	removed from distribution list
 repetition	addressbook	en	Repetition
@@ -322,6 +333,7 @@ select a view	addressbook	en	Select a view
 select addressbook type	addressbook	en	Select addressbook type
 select all	addressbook	en	Select all
 select an action or addressbook to move to	addressbook	en	Select an action or addressbook to move to
+select an action or addressbook to move to...	addressbook	en	Select an action or addressbook to move to...
 select migration type	admin	en	Select migration type
 select multiple contacts for a further action	addressbook	en	Select multiple contacts for a further action
 select phone number as prefered way of contact	addressbook	en	select phone number as prefered way of contact
@@ -329,12 +341,14 @@ select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
 selected contacts	addressbook	en	selected contacts
+seperator	addressbook	en	Seperator
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Should the columns photo and home address always be displayed, even if they are empty.
 show	addressbook	en	Show
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
 show the contacts of this organisation	addressbook	en	Show the contacts of this organisation
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup (WxH, eg.400x300, if a popup should be used)
+stadt	addressbook	en	Stadt
 start	admin	en	Start
 startrecord	addressbook	en	Startrecord
 state	common	en	State

@@ -35,6 +35,7 @@ address line 2	addressbook	de	Adresszeile 2
 address type	addressbook	de	Adresstyp
 addressbook	common	de	Adressbuch
 addressbook csv export	addressbook	de	Adressbuch CSV Export
+addressbook field	addressbook	de	Adressbuch Feld
 addressbook menu	addressbook	de	Adressbuch Menü
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in das der Kontakt gespeichert werden soll
@@ -113,6 +114,7 @@ country	common	de	Land
 create new links	addressbook	de	Neue Verknüpfung erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
+csv field	addressbook	de	CSV Feld
 csv-fieldname	addressbook	de	CSV-Feldname
 csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
@@ -140,6 +142,7 @@ display contact	addressbook	de	Kontakte Anzeigen
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie eGroupWare betreten oder auf das Startseiten Icon (Haus) klicken.
 distribution list deleted	addressbook	de	Verteiler gelöscht
 distribution lists	addressbook	de	Verteilerlisten
+distribution lists, ...	addressbook	de	Verteilerlisten,..
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	de	Wollen Sie ein privates Adressbuch, dass nicht von Benutzern einsehbar ist, denen Sie Zugriff auf Ihr persönliches Adressbuch gegeben haben?
 do your really want to delete this contact?	addressbook	de	Wollen sie diesen Kontakt wirklich löschen?
 document '%1' does not exist or is not readable for you!	addressbook	de	Dokument '%1' existiert nicht oder ist für Sie nicht lesbar!
@@ -164,7 +167,7 @@ enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
 error: the entry has been updated since you opened it for editing!	addressbook	de	Fehler: der Eintrag wurde geändert, seit Sie ihn zum Bearbeiten geöffnet haben!
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "$$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte"
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "$$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel(Land wird nur dann angezeit, denn es nicht DEUTSCHLAND ist: $$IFadr_one_countryname~DEUTSCHLAND~~adr_one_countryname$$
 existing links	addressbook	de	Bestehende Verknüpfungen
 export	addressbook	de	Export
 export as csv	addressbook	de	Exportieren als CSV
@@ -176,6 +179,7 @@ export selection	addressbook	de	Auswahl exportieren
 exported	addressbook	de	exportiert
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
 extra	addressbook	de	Extra
+extra private	addressbook	de	EXtra Privat
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte) !!!
 fax	addressbook	de	Telefax
 fax number	common	de	Telefaxnummer
@@ -186,6 +190,7 @@ fields for the csv export	addressbook	de	Felder für den CSV Export
 fields the user is allowed to edit himself	admin	de	Felder die der Benutzer selbst bearbeiten darf
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
+fieldseperator	addressbook	de	Feldtrenner
 for more then one contact in a document use the tag pagerepeat!	addressbook	de	Um mehr als eine Adresse in ein Dokument einzufügen, benutzen Sie das pagerepeat Tag in Ihrer Vorlage. Damit Können Sie Serienbriefe erstellen
 for read only ldap	admin	de	für nur lesendes LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	de	Wenn Sie Serienbriefe erzeugen wollen, dann benutzen Sie dieses Tag. Setzen Sie den Inhalt, der wiederholt werden soll (Anschriftstags und Briefinhalt) zwischen zwei pagerepeat Tags.
@@ -215,6 +220,7 @@ icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das Adressbuch einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein zusätzliches Dokumenten Icon. Diese Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
+ignore first line	addressbook	de	Erste Zeile ignorieren
 import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
 import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Adressbuch
@@ -228,9 +234,11 @@ import_instructions	addressbook	de	In Netscape, öffnen Sie das Adressbuch und w
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Importiert Kontakte aus einer CSV Datei in Ihr Adressbuch. CSV bedeutet Komma getrennte Werte. Sie können in dem Reiter Einstellungen auch ein anderes Trennzeichen wählen.
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
+infolog	addressbook	de	InfoLog
 insert in document	addressbook	de	Einfügen in Dokument
 insufficent rights to delete this list!	addressbook	de	Keine Rechte diese Liste zu löschen!
 international	addressbook	de	International
+internet	addressbook	de	Internet
 label	addressbook	de	Adressetikett
 last date	addressbook	de	Letzter Termin
 last modified	addressbook	de	Letzte Änderung
@@ -301,6 +309,7 @@ preferred email address to use in distribution lists	addressbook	de	Bevorzugte E
 preferred phone	addressbook	de	präferierte Telefonnummer
 preferred type of email address to add for distribution lists	addressbook	de	bevorzugter Typ der E-Mailadresse für Verteilerlisten
 prefix	addressbook	de	Anrede
+private custom fields	addressbook	de	Private Benutzerdefinierte Felder
 public key	addressbook	de	öffentlicher Schlüssel
 publish into groups:	addressbook	de	In folgende Gruppen veröffentlichen:
 read a list / search for entries.	addressbook	de	Lese die Liste / Suche nach Einträgen
@@ -309,6 +318,7 @@ read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen 
 read only	addressbook	de	nur lesend
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
+region	addressbook	de	Region
 remove selected contacts from distribution list	addressbook	de	Ausgewählte Kontakte vom Verteiler löschen
 removed from distribution list	addressbook	de	vom Verteiler gelöscht
 repetition	addressbook	de	Wiederholung
@@ -322,6 +332,7 @@ select a view	addressbook	de	Eine Ansicht auswählen
 select addressbook type	addressbook	de	Typ des Adressbuchs auswählen
 select all	addressbook	de	Alles auswählen
 select an action or addressbook to move to	addressbook	de	Befehl oder Adressbuch zum Verschieben auswählen
+select an action or addressbook to move to...	addressbook	de	Befehl oder Adressbuch zum Verschieben auswählen...
 select migration type	admin	de	Migrationstyp auswählen
 select multiple contacts for a further action	addressbook	de	Mehrere Adressen für weiteren Befehl auswählen
 select phone number as prefered way of contact	addressbook	de	Telefonnummer als präferierten Kontaktweg auswählen
@@ -329,12 +340,14 @@ select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
 select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern wollen
 selected contacts	addressbook	de	ausgewählte Kontakte
+seperator	addressbook	de	Feldtrenner
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	de	Sollen die Spalten Foto und Privatadresse immer angezeigt werden, auch wenn sie leer sind.
 show	addressbook	de	Anzeigen
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 show infolog entries for this organisation	addressbook	de	InfoLog Einträge dieser Organisation anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	de	Größe des Popup (WxH, zB. 400x300, falls ein Popup verwendet werden soll)
+stadt	addressbook	de	Stadt
 start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
