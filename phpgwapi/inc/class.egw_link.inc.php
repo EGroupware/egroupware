@@ -668,7 +668,7 @@ class egw_link extends solink
 	{
 		if ($app == self::VFS_APPNAME && !empty($id) && is_array($link))
 		{
-			return egw_vfs::download_url(parse_url(self::vfs_path($link['app2'],$link['id2'],$link['id']),PHP_URL_PATH));
+			return egw_vfs::download_url(self::vfs_path($link['app2'],$link['id2'],$link['id'],true));
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['view']) || !isset($reg['view_id']))
 		{
@@ -783,7 +783,7 @@ class egw_link extends solink
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
 			if (($Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,$file['name'])) &&
-				($stat = links_stream_wrapper::url_stat($fname,0))) && $comment)
+				($stat = egw_vfs::stat($fname,0))) && $comment)
 			{
 				egw_vfs::proppatch(parse_url($fname,PHP_URL_PATH),array(array('name'=>'comment','val'=>$comment)));	// set comment
 			}
@@ -849,12 +849,12 @@ class egw_link extends solink
 	 */
 	static function info_attached($app,$id,$filename)
 	{
-		$url = self::vfs_path($app,$id,$filename);
-		if (!($stat = links_stream_wrapper::url_stat($url,STREAM_URL_STAT_QUIET)))
+		$path = self::vfs_path($app,$id,$filename,true);
+		if (!($stat = egw_vfs::stat($path,STREAM_URL_STAT_QUIET)))
 		{
 			return false;
 		}
-		return self::fileinfo2link($stat,$url);
+		return self::fileinfo2link($stat,$path);
 	}
 
 	/**
@@ -873,7 +873,7 @@ class egw_link extends solink
 				return false;
 			}
 		}
-		list(,,,,$app,$id) = explode('/',$url);	// links://apps/$app/$id
+		list(,,$app,$id) = explode('/',$url[0] == '/' ? $url : parse_url($url,PHP_URL_PATH));	// /apps/$app/$id
 
 		return array(
 			'app'       => self::VFS_APPNAME,
@@ -898,13 +898,13 @@ class egw_link extends solink
 	 */
 	static function list_attached($app,$id)
 	{
-		$url = self::vfs_path($app,$id);
+		$path = self::vfs_path($app,$id,'',true);
 		//error_log(__METHOD__."($app,$id) url=$url");
 
 		if (!($extra = self::get_registry($app,'find_extra'))) $extra = array();
 
 		$attached = array();
-		if (($url2stats = egw_vfs::find($url,array('url'=>true,'need_mime'=>true,'type'=>'f')+$extra,true)))
+		if (($url2stats = egw_vfs::find($path,array('need_mime'=>true,'type'=>'f')+$extra,true)))
 		{
 			$props = egw_vfs::propfind(array_keys($url2stats));	// get the comments
 			foreach($url2stats as $url => &$fileinfo)
