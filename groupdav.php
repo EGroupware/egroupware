@@ -9,7 +9,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -25,25 +25,8 @@ $starttime = microtime(true);
  */
 function check_access(&$account)
 {
-	$account = array(
-		'login'  => $_SERVER['PHP_AUTH_USER'],
-		'passwd' => $_SERVER['PHP_AUTH_PW'],
-		'passwd_type' => 'text',
-	);
-	// no session for clients known to NOT use it (no cookie support)
-	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-	foreach(array(
-		'davkit',	// Apple iCal
-	//	'bionicmessage.net',
-		'zideone',
-		'lightning',
-	) as $test)
-	{
-		if (($no_session = strpos($agent,$test) !== false)) break;
-	}
-	//error_log("GroupDAV PHP_AUTH_USER={$_SERVER['PHP_AUTH_USER']}, HTTP_USER_AGENT={$_SERVER['HTTP_USER_AGENT']} --> no_session=".(int)$no_session);
-
-	if (!isset($_SERVER['PHP_AUTH_USER']) || !($sessionid = $GLOBALS['egw']->session->create($account,'','',$no_session)))
+	if (!isset($_SERVER['PHP_AUTH_USER']) ||
+		!($sessionid = $GLOBALS['egw']->session->create($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'],'text')))
 	{
 		header('WWW-Authenticate: Basic realm="'.groupdav::REALM.
 			// if the session class gives a reason why the login failed --> append it to the REALM

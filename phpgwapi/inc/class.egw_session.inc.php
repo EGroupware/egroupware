@@ -49,6 +49,11 @@ if (!defined('PHP_SHLIB_PREFIX'))
 class egw_session
 {
 	/**
+	 * Write debug messages about session verification and creation to the error_log
+	 */
+	const ERROR_LOG_DEBUG = false;
+
+	/**
 	 * key of eGW's session-data in $_SESSION
 	 */
 	const EGW_SESSION_VAR = 'egw_session';
@@ -152,13 +157,6 @@ class egw_session
 	private $egw_domains;
 
 	/**
-	 * Write debug messages about session verification and creation to the error_log
-	 *
-	 * @var boolean
-	 */
-	private static $errorlog_debug = false;
-
-	/**
 	 * $_SESSION at the time the constructor was called
 	 *
 	 * @var array
@@ -174,7 +172,7 @@ class egw_session
 	{
 		$this->required_files = $_SESSION[self::EGW_REQUIRED_FILES];
 
-		$this->sessionid = $_REQUEST[self::EGW_SESSION_NAME];
+		$this->sessionid = self::get_sessionid();
 		$this->kp3       = $_REQUEST['kp3'];
 
 		$this->egw_domains = $domain_names;
@@ -258,6 +256,7 @@ class egw_session
 	 */
 	function commit_session()
 	{
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$this->sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
 		self::encrypt($this->kp3);
 
 		session_write_close();
@@ -430,7 +429,7 @@ class egw_session
 			$this->passwd      = $passwd;
 			$this->passwd_type = $passwd_type;
 		}
-		if (self::$errorlog_debug) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check)");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check)");
 
 		self::split_login_domain($login,$this->account_lid,$this->account_domain);
 		// add domain to the login, if not already there
@@ -470,6 +469,7 @@ class egw_session
 			$GLOBALS['egw']->setup('',false);
 */
 		}
+		unset($GLOBALS['egw_info']['server']['default_domain']); // we kill this for security reasons
 
 		//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 		$user_ip = self::getuser_ip();
@@ -503,16 +503,25 @@ class egw_session
 
 		$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 		$GLOBALS['egw']->accounts->accounts($this->account_id);
-		session_start();
-		// set a new session-id, if not syncml (already done in Horde code and can NOT be changed)
-		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'syncml')
-		{
-			session_regenerate_id(true);
-		}
-		$this->sessionid = $no_session ? 'no-session' : session_id();
-		$this->kp3       = common::randomstring(24);
 
-		unset($GLOBALS['egw_info']['server']['default_domain']); // we kill this for security reasons
+		// for WebDAV and GroupDAV we use a pseudo sessionid created from md5(user:passwd)
+		// --> allows this stateless protocolls which use basic auth to use sessions!
+		if ($this->sessionid = self::get_sessionid(true))
+		{
+			$no_session = true;	// no need to set cookie
+			session_id($this->sessionid);
+		}
+		else
+		{
+			session_start();
+			// set a new session-id, if not syncml (already done in Horde code and can NOT be changed)
+			if (!$no_session && $GLOBALS['egw_info']['flags']['currentapp'] != 'syncml')
+			{
+				session_regenerate_id(true);
+			}
+			$this->sessionid = session_id();
+		}
+		$this->kp3       = common::randomstring(24);
 
 		$this->read_repositories();
 		if ($GLOBALS['egw']->accounts->is_expired($this->user))
@@ -589,7 +598,7 @@ class egw_session
 			self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
 		}
 		//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
-		if (self::$errorlog_debug) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
 
 		return $this->sessionid;
 	}
@@ -718,40 +727,77 @@ class egw_session
 	}
 
 	/**
+	 * Get the sessionid from Cookie, Get-Parameter or basic auth
+	 *
+	 * @param boolean $only_basic_auth=false return only a basic auth pseudo sessionid, default no
+	 * @return string
+	 */
+	static function get_sessionid($only_basic_auth=false)
+	{
+		// for WebDAV and GroupDAV we use a pseudo sessionid created from md5(user:passwd)
+		// --> allows this stateless protocolls which use basic auth to use sessions!
+		if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) &&
+			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
+		{
+			// we generate a pseudo-sessionid from the basic auth credentials
+			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST']);
+		}
+		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
+		{
+			$sessionid = $_REQUEST[self::EGW_SESSION_NAME];
+		}
+		else
+		{
+			$sessionid = false;
+		}
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.array2string($sessionid));
+		return $sessionid;
+	}
+
+	/**
 	 * Check to see if a session is still current and valid
 	 *
 	 * @param string $sessionid session id to be verfied
 	 * @param string $kp3 ?? to be verified
 	 * @return bool is the session valid?
 	 */
-	function verify($sessionid='',$kp3='')
+	function verify($sessionid=null,$kp3=null)
 	{
-		if (self::$errorlog_debug) error_log(__METHOD__."('$sessionid','$kp3') ".function_backtrace());
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid','$kp3') ".function_backtrace());
 
 		$fill_egw_info_and_repositories = !$GLOBALS['egw_info']['flags']['restored_from_session'];
 
 		if(!$sessionid)
 		{
-			$sessionid = $_REQUEST[self::EGW_SESSION_NAME];
+			$sessionid = self::get_sessionid();
 			$kp3       = $_REQUEST['kp3'];
 		}
 
 		$this->sessionid = $sessionid;
 		$this->kp3       = $kp3;
 
-		if (!$this->sessionid) {
-			if (self::$errorlog_debug) error_log(__METHOD__."('$sessionid')_REQUEST[sessionid]='$_REQUEST[sessionid]' No session ID");
+
+		if (!$this->sessionid)
+		{
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid')_REQUEST[sessionid]='$_REQUEST[sessionid]' No session ID");
 			return false;
 		}
 
 		session_name(self::EGW_SESSION_NAME);
 		session_id($this->sessionid);
 		session_start();
+
+		// check if we have a eGroupware session --> return false if not (but dont destroy it!)
+		if (is_null($_SESSION) || !isset($_SESSION[self::EGW_SESSION_VAR]))
+		{
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid') session does NOT exist!");
+			return false;
+		}
 		$session =& $_SESSION[self::EGW_SESSION_VAR];
 
 		if ($session['session_dla'] <= time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
 		{
-			if (self::$errorlog_debug) error_log(__METHOD__."('$sessionid') session timed out");
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid') session timed out!");
 			$this->destroy($sessionid,$kp3);
 			return false;
 		}
@@ -764,7 +810,7 @@ class egw_session
 		if($GLOBALS['egw_info']['user']['domain'] && $this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
 			throw new Exception("Wrong domain! '$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'");
-/*			if (self::$errorlog_debug) error_log(__METHOD__."('$sessionid','$kp3') account_domain='$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'=egw_info[user][domain]");
+/*			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid','$kp3') account_domain='$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'=egw_info[user][domain]");
 			$GLOBALS['egw']->ADOdb = null;
 			$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
 			// reset the db
@@ -787,7 +833,7 @@ class egw_session
 		$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
 		if (!$this->account_id)
 		{
-			if (self::$errorlog_debug) error_log("*** session::verify($sessionid) !accounts::name2id('$this->account_lid')");
+			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) !accounts::name2id('$this->account_lid')");
 			return false;
 		}
 
@@ -800,7 +846,7 @@ class egw_session
 
 		if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 		{
-			if (self::$errorlog_debug) error_log("*** session::verify($sessionid) accounts is expired");
+			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) accounts is expired");
 			if(is_object($GLOBALS['egw']->log))
 			{
 				$GLOBALS['egw']->log->message(array(
@@ -822,7 +868,7 @@ class egw_session
 		}
 		if ($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
-			if (self::$errorlog_debug) error_log("*** session::verify($sessionid) wrong domain");
+			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong domain");
 			if(is_object($GLOBALS['egw']->log))
 			{
 				$GLOBALS['egw']->log->message(array(
@@ -839,7 +885,7 @@ class egw_session
 
 		if ($GLOBALS['egw_info']['server']['sessions_checkip'])
 		{
-			if (self::$errorlog_debug) error_log("*** session::verify($sessionid) wrong IP");
+			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong IP");
 			if (strtoupper(substr(PHP_OS,0,3)) != 'WIN' && (!$GLOBALS['egw_info']['user']['session_ip'] ||
 				$GLOBALS['egw_info']['user']['session_ip'] != $this->getuser_ip()))
 			{
@@ -868,7 +914,7 @@ class egw_session
 		}
 		if (!$this->account_lid)
 		{
-			if (self::$errorlog_debug) error_log("*** session::verify($sessionid) !account_lid");
+			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) !account_lid");
 			if(is_object($GLOBALS['egw']->log))
 			{
 				// This needs some better wording
@@ -886,7 +932,7 @@ class egw_session
 		$_current_app=$GLOBALS['egw_info']['flags']['currentapp'];
 		if($this->session_flags=='A' && !$GLOBALS['egw_info']['user']['apps'][$_current_app])
 		{
-			if (self::$errorlog_debug) error_log("*** session::verify($sessionid) anon user entering not allowed app");
+			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) anon user entering not allowed app");
 			$this->destroy($sessionid,$kp3);
 
 			/* Overwrite Cookie with empty user. For 2 weeks */
@@ -898,7 +944,7 @@ class egw_session
 
 			return false;
 		}
-		if (self::$errorlog_debug) error_log("--> session::verify($sessionid) SUCCESS");
+		if (self::ERROR_LOG_DEBUG) error_log("--> session::verify($sessionid) SUCCESS");
 
 		return true;
 	}
@@ -918,7 +964,7 @@ class egw_session
 		}
 		$this->log_access($this->sessionid);	// log logout-time
 
-		if (self::$errorlog_debug) error_log(__METHOD__."($sessionid,$kp3) parent::destroy()=$ret");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($sessionid,$kp3) parent::destroy()=$ret");
 
 		$GLOBALS['egw']->hooks->process(array(
 			'location'  => 'session_destroyed',
@@ -928,7 +974,7 @@ class egw_session
 		// Only do the following, if where working with the current user
 		if (!$GLOBALS['egw_info']['user']['sessionid'] || $sessionid == $GLOBALS['egw_info']['user']['sessionid'])
 		{
-			if (self::$errorlog_debug) error_log(__METHOD__." ********* about to call session_destroy!");
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__." ********* about to call session_destroy!");
 			session_unset();
 			//echo '<p>'.__METHOD__.": session_destroy() returned ".(session_destroy() ? 'true' : 'false')."</p>\n";
 			@session_destroy();
@@ -1076,7 +1122,7 @@ class egw_session
 	{
 		if (isset($_SESSION[self::EGW_SESSION_ENCRYPTED]))
 		{
-			//error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return false;	// can no longer store something in the session, eg. because commit_session() was called
 		}
 		if (!$appname)
@@ -1101,7 +1147,7 @@ class egw_session
 			$_SESSION[self::EGW_APPSESSION_VAR][$appname][$location] =& $data;
 			$ret =& $_SESSION[self::EGW_APPSESSION_VAR][$appname][$location];
 		}
-		if (self::$errorlog_debug === 'appsession')
+		if (self::ERROR_LOG_DEBUG === 'appsession')
 		{
 			error_log(__METHOD__."($location,$appname,$data) === ".(is_scalar($ret) && strlen($ret) < 50 ?
 				(is_bool($ret) ? ($ret ? '(bool)true' : '(bool)false') : $ret) :
@@ -1148,7 +1194,7 @@ class egw_session
 		{
 			self::set_cookiedomain();
 		}
-		if (self::$errorlog_debug) error_log(__METHOD__."($cookiename,$cookievalue,$cookietime,$cookiepath,self::$cookie_domain)");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($cookiename,$cookievalue,$cookietime,$cookiepath,self::$cookie_domain)");
 
 		setcookie($cookiename,$cookievalue,$cookietime,is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain);
 	}
@@ -1269,6 +1315,7 @@ class egw_session
 
 		$_SESSION[self::EGW_SESSION_VAR]['session_dla'] = time();
 		$_SESSION[self::EGW_SESSION_VAR]['session_action'] = $action;
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() _SESSION['.self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
 	}
 
 	/**
@@ -1374,7 +1421,7 @@ class egw_session
 		{
 			self::$session_handler = $GLOBALS['egw_info']['server']['session_handler'];
 		}
-		//error_log(__METHOD__.'() session_handler='.self::$session_handler.', egw_info[server][session_handler]='.$GLOBALS['egw_info']['server']['session_handler']);
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() session_handler='.self::$session_handler.', egw_info[server][session_handler]='.$GLOBALS['egw_info']['server']['session_handler']);
 
 		if (method_exists(self::$session_handler,'init_session_handler'))
 		{
@@ -1382,11 +1429,16 @@ class egw_session
 		}
 		ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
 		session_name(self::EGW_SESSION_NAME);
-		if ($_REQUEST[egw_session::EGW_SESSION_NAME])
+		if (($sessionid = self::get_sessionid()))
 		{
-		 	session_id($_REQUEST[egw_session::EGW_SESSION_NAME]);
+		 	session_id($sessionid);
 			session_start();
-			egw_session::decrypt();
+			self::decrypt();
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
+		}
+		else
+		{
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() no active session!");
 		}
 	}
 
