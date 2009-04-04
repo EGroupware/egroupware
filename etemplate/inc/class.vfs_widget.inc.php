@@ -146,8 +146,7 @@ class vfs_widget
 								$value['c'.$n] = lang($path_parts[2]);
 								break;
 							case 4:
-								$value['c'.$n] .= ': '.egw_link::title($path_parts[2],$path_parts[3]);
-								//$value['c'.$n] = egw_link::title($path_parts[2],$path_parts[3]);
+								if (is_numeric($value['c'.$n])) $value['c'.$n] .= egw_link::title($path_parts[2],$path_parts[3]);
 								break;
 						}
 					}
