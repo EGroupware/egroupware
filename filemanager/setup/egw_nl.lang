@@ -129,7 +129,7 @@ renamed %1 to %2.	filemanager	nl	%1 hernoemd in %2
 replaced %1	filemanager	nl	%1 is vervangen
 rights	filemanager	nl	Rechten
 root access granted.	filemanager	nl	Root toegang verleend.
-root access stoped.	filemanager	nl	Root toegang ingetrokken.
+root access stopped.	filemanager	nl	Root toegang ingetrokken.
 save %1	filemanager	nl	Bewaar %1
 save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
 save changes	filemanager	nl	Wijzigingen bewaren
