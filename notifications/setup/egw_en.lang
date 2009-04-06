@@ -23,9 +23,11 @@ if set, embedded links get rendered special for external clients	notifications	e
 linked entries:	notifications	en	Linked entries:
 maximum sms messages per notification	admin	en	Maximum SMS messages per notification
 message from	notifications	en	Message from
+minutes	notifications	en	minutes
 notification	common	en	Notification
 notify me by	notifications	en	Notify me by
 optimize e-mails for external mail client	notifications	en	Optimize E-Mails for external mail client
+poll interval	notifications	en	Poll interval
 preferences for notification	notifications	en	Preferences for notification
 received	notifications	en	Received
 sms backend	admin	en	SMS backend

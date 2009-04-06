@@ -23,9 +23,11 @@ if set, embedded links get rendered special for external clients	notifications	d
 linked entries:	notifications	de	Verknüpfte Einträge:
 maximum sms messages per notification	admin	de	Maximale Anzahl an SMS Nachrichten pro Benachrichtigung
 message from	notifications	de	Nachricht von
+minutes	notifications	de	Minuten
 notification	common	de	Benachrichtigung
 notify me by	notifications	de	Benachrichtige mich per
 optimize e-mails for external mail client	notifications	de	Optimiere E-Mails für externe Mailclients
+poll interval	notifications	de	Abfrageintervall
 preferences for notification	notifications	de	Benachrichtigungs-Einstellungen
 received	notifications	de	Erhalten
 sms backend	admin	de	SMS Backend
