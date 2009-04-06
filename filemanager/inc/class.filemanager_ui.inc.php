@@ -102,7 +102,7 @@ class filemanager_ui
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 			if (isset($_GET['path']) && ($path = $_GET['path']))
 			{
-				if ($path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path,egw_vfs::READABLE))
+				if ($path[0] == '/' && egw_vfs::stat($path,true) && egw_vfs::is_dir($path) && egw_vfs::check_access($path,egw_vfs::READABLE))
 				{
 					$content['nm']['path'] = $path;
 				}
@@ -224,7 +224,7 @@ class filemanager_ui
 					break;
 			}
 		}
-		if (!egw_vfs::is_dir($content['nm']['path']))
+		if (!egw_vfs::stat($content['nm']['path'],true) || !egw_vfs::is_dir($content['nm']['path']))
 		{
 			$content['nm']['msg'] .= ' '.lang('Directory not found or no permission to access it!');
 		}
@@ -489,7 +489,7 @@ class filemanager_ui
 	{
 		$GLOBALS['egw']->session->appsession('index','filemanager',$query);
 
-		if (!egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
+		if (!egw_vfs::stat($query['path'],true) || !egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
 		{
 			// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
 			// an appropriate message

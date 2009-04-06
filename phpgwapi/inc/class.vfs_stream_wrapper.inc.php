@@ -690,11 +690,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
-	 * @param boolean $try_create_home=true should a user home-directory be created automatic, if it does not exist
+	 * @param boolean $try_create_home=false should a user home-directory be created automatic, if it does not exist
 	 * @param boolean $check_symlink_components=true check if path contains symlinks in path components other then the last one
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags, $try_create_home=true, $check_symlink_components=true )
+	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
 
@@ -728,8 +728,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
-		static $hook_data;	// we have to make sure to not call ourself recursivly (eg. mkdir will call stat to make sure the dir does not yet exist!)
-		if (!$stat && is_null($hook_data) && dirname(parse_url($path,PHP_URL_PATH)) == '/home' &&
+		if (!$stat && $try_create_home && dirname(parse_url($path,PHP_URL_PATH)) == '/home' &&
 			($id = $GLOBALS['egw']->accounts->name2id(basename($path))) &&
 			$GLOBALS['egw']->accounts->id2name($id) == basename($path))	// make sure path has the right case!
 		{

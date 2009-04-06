@@ -41,7 +41,7 @@ class vfs_home_hooks
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// create a user-dir
 		egw_vfs::$is_root = true;
-		if (@egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0))
+		if (egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0))
 		{
 			egw_vfs::chown($dir,$data['account_id']);
 			egw_vfs::chgrp($dir,0);
@@ -109,7 +109,7 @@ class vfs_home_hooks
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// create a group-dir
 		egw_vfs::$is_root = true;
-		if (@egw_vfs::mkdir($dir='/home/'.$data['account_name'],070,0))
+		if (egw_vfs::mkdir($dir='/home/'.$data['account_name'],0070,0))
 		{
 			egw_vfs::chown($dir,0);
 			egw_vfs::chgrp($dir,$data['account_id']);

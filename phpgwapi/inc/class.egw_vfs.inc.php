@@ -169,15 +169,16 @@ class egw_vfs extends vfs_stream_wrapper
 	 * stat working on just the eGW VFS (alias of url_stat)
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
+	 * @param boolean $try_create_home=false should a non-existing home-directory be automatically created
 	 * @return array
 	 */
-	static function stat($path)
+	static function stat($path,$try_create_home=false)
 	{
 		if ($path[0] != '/')
 		{
 			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
 		}
-		if (($stat = self::url_stat($path,0)))
+		if (($stat = self::url_stat($path,0,$try_create_home)))
 		{
 			$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		}
@@ -188,15 +189,16 @@ class egw_vfs extends vfs_stream_wrapper
 	 * lstat (not resolving symbolic links) working on just the eGW VFS (alias of url_stat)
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
+	 * @param boolean $try_create_home=false should a non-existing home-directory be automatically created
 	 * @return array
 	 */
-	static function lstat($path)
+	static function lstat($path,$try_create_home=false)
 	{
 		if ($path[0] != '/')
 		{
 			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
 		}
-		if (($stat = self::url_stat($path,STREAM_URL_STAT_LINK)))
+		if (($stat = self::url_stat($path,STREAM_URL_STAT_LINK,$try_create_home)))
 		{
 			$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		}
