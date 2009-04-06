@@ -630,7 +630,7 @@ class filemanager_ui
 			if ($button == 'sudo' || $content['sudo']['user'])
 			{
 				$msg = $this->sudo($content['sudo']['user'],$content['sudo']['passwd']) ? lang('Root access granted.') :
-					($content['sudo']['user'] ? lang('Wrong username or password!') : lang('Root access stoped.'));
+					($content['sudo']['user'] ? lang('Wrong username or password!') : lang('Root access stopped.'));
 				unset($content['sudo']);
 				$content['is_owner'] = egw_vfs::has_owner_rights($path);
 			}
