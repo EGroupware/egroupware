@@ -13,7 +13,7 @@
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_eGroupWare-Popup_backend}</b></td>
    </tr>
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Enable_eGroupWare-Popup_backend}</td>
     <td>
      <select name="newsettings[popup_enable]">
@@ -22,10 +22,20 @@
      </select>
     </td>
    </tr>
+   <tr class="row_off">
+    <td>{lang_Poll_interval}</td>
+    <td>
+     <select name="newsettings[popup_poll_interval]">
+      <option value="60"{selected_popup_poll_interval_60}>1 {lang_minute}</option>
+      <option value="120"{selected_popup_poll_interval_120}>2 {lang_minutes}</option>
+      <option value="300"{selected_popup_poll_interval_300}>5 {lang_minutes}</option>
+     </select>
+    </td>
+   </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Windows-Popup_backend}</b></td>
    </tr>
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Enable_Windows-Popup_backend}</td>
     <td>
      <select name="newsettings[winpopup_enable]">
@@ -37,7 +47,7 @@
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_SMS_backend}</b></td>
    </tr>
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Enable_SMS_backend}</td>
     <td>
      <select name="newsettings[sms_enable]">
@@ -46,13 +56,13 @@
      </select>
     </td>
    </tr> 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Maximum_SMS_messages_per_notification}</td>
     <td>
      <select name="newsettings[sms_maxmessages]">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
+      <option value="1"{selected_sms_maxmessages_1}>1</option>
+      <option value="2"{selected_sms_maxmessages_2}>2</option>
+      <option value="3"{selected_sms_maxmessages_3}>3</option>
      </select>
     </td>
    </tr>

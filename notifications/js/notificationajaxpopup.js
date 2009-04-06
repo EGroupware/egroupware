@@ -10,16 +10,16 @@
 
 var notifymessages = new Array();
 
-function egwpopup_init() {
-	window.setTimeout("egwpopup_refresh();", 1000);
+function egwpopup_init(_i) {
+	window.setTimeout("egwpopup_refresh(" + _i + ");", 1000);
 }
 
-function egwpopup_setTimeout() {
-	window.setTimeout("egwpopup_refresh();", 60000);
+function egwpopup_setTimeout(_i) {
+	window.setTimeout("egwpopup_refresh(" + _i + ");", _i*1000);
 }
-function egwpopup_refresh() {
+function egwpopup_refresh(_i) {
 	xajax_doXMLHTTP("notifications.notifications_ajax.get_notifications");
-	egwpopup_setTimeout();
+	egwpopup_setTimeout(_i);
 }
 
 function egwpopup_display() {

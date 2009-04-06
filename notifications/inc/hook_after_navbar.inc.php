@@ -15,9 +15,10 @@
 $notification_config = config::read('notifications');
 if ($notification_config['popup_enable']) {
 	$GLOBALS['egw']->translation->add_app('notifications');
+	$popup_poll_interval = empty($notification_config['popup_poll_interval']) ? 60 : $notification_config['popup_poll_interval'];
 	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js?'.
 		filemtime(EGW_SERVER_ROOT.'/notifications/js/notificationajaxpopup.js'). '" type="text/javascript"></script>';
-	echo '<script type="text/javascript">egwpopup_init();</script>';
+	echo '<script type="text/javascript">egwpopup_init("'.$popup_poll_interval.'");</script>';
 	echo '
 		<div id="egwpopup" style="display: none; z-index: 999;">
 			<div id="egwpopup_header">'.lang('Notification').'</div>
