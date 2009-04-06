@@ -535,8 +535,8 @@ class timesheet_ui extends timesheet_bo
 		unset($query['col_filter'][0]);
 
 		// query cf's for the displayed rows
-		if ($ids && $this->customfields &&
-			in_array('customfields',$cols_to_show=explode(',',$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['nextmatch-timesheet.index.rows'])))
+		if ($ids && $this->customfields && ($query_in['csv_export'] ||
+			in_array('customfields',$cols_to_show=explode(',',$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['nextmatch-timesheet.index.rows']))))
 		{
 			$cfs = $this->read_cfs($ids,$cols_to_show);
 		}
