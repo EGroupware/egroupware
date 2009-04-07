@@ -136,9 +136,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	protected $opened_fs_id;
 	/**
-	 * Directory vfs::ls() of dir opened with dir_opendir()
+	 * Cache containing stat-infos from previous url_stat calls AND dir_opendir calls
 	 *
-	 * This static var gets overwritten by each new dir_opendir, it helps to not read the entries twice.
+	 * It's values are the columns read from the DB (fs_*), not the ones returned by url_stat!
 	 *
 	 * @var array $path => info-array pairs
 	 */
@@ -180,11 +180,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
 
-		if (!($stat = self::url_stat($path,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
+		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' ||	// or file should not exist, but does
-				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))	// or we are not allowed to 																																			create it
+				!($dir_stat=self::url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
+				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat))	// or we are not allowed to 																																			create it
 			{
 				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
@@ -632,7 +633,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		// check if we should also create all non-existing path components and our parent does not exist,
 		// if yes call ourself recursive with the parent directory
-		if (($options & STREAM_MKDIR_RECURSIVE) && $path != '/' && !$parent)
+		if (($options & STREAM_MKDIR_RECURSIVE) && $parent_path != '/' && !$parent)
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__." creating parents: $parent_path, $mode");
 			if (!self::mkdir($parent_path,$mode,$options))
@@ -965,7 +966,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$path = substr($path,0,-1);
 		}
 		// check if we already have the info from the last dir_open call, as the old vfs reads it anyway from the db
-		if (self::$stat_cache && isset(self::$stat_cache[$path]))
+		if (self::$stat_cache && isset(self::$stat_cache[$path]) && (is_null($eacl_access) || self::$stat_cache[$path] !== false))
 		{
 			return self::$stat_cache[$path] ? self::_vfsinfo2stat(self::$stat_cache[$path]) : false;
 		}
