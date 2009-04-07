@@ -207,11 +207,16 @@ class vfs_widget
 					$class .= ($class ? ' ' : '') . 'vfsMimeIcon';
 					$cell['span'] = $span.','.$class;
 				}
-				elseif($path && $mime_main == 'image' && (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
+				elseif($path && $mime_main == 'image' && in_array($mime_sub,array('gif','jpeg','jpg','gif','bmp')) &&
+					(string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
 					(string)$GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] != '0' &&
 					// check the size of the image, as too big images get no icon, but a PHP Fatal error:  Allowed memory size exhausted
 					(!is_array($value) && ($stat = egw_vfs::stat($path)) ? $stat['size'] : $value['size']) < 600000)
 				{
+					if (substr($path,0,6) == '/apps/')
+					{
+						$path = parse_url(egw_vfs::resolve_url_symlinks($path),PHP_URL_PATH);
+					}
 					$value = $GLOBALS['egw']->link('/etemplate/thumbnail.php',array('path' => $path));
 				}
 				else
