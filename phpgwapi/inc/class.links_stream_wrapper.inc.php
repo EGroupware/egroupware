@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id: class.sqlfs_stream_wrapper.inc.php 24997 2008-03-02 21:44:15Z ralfbecker $
  */
 
@@ -28,7 +28,7 @@
  *
  * The stream wrapper interface is according to the docu on php.net
  *
- * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
+ * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
 class links_stream_wrapper extends sqlfs_stream_wrapper
 {
@@ -183,6 +183,28 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 		}
 		//error_log(__METHOD__."($path,$mode,$options) apps=$apps, app=$app, id=$id: returning $ret");
 		return $ret;
+	}
+
+	/**
+	 * This method is called immediately after your stream object is created.
+	 *
+	 * Reimplemented from sqlfs to ensure self::url_stat is called, to fill sqlfs stat cache with our eacl!
+	 *
+	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
+	 * @param string $mode mode used to open the file, as detailed for fopen()
+	 * @param int $options additional flags set by the streams API (or'ed together):
+	 * - STREAM_USE_PATH      If path is relative, search for the resource using the include_path.
+	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream.
+	 *                        If this flag is not set, you should not raise any errors.
+	 * @param string $opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
+	 * @return boolean true if the ressource was opened successful, otherwise false
+	 */
+	function stream_open ( $url, $mode, $options, &$opened_path )
+	{
+		// the following call is necessary to fill sqlfs_stream_wrapper::$stat_cache, WITH the extendes ACL!
+		self::url_stat($url,0);
+
+		return parent::stream_open($url,$mode,$options,$opened_path);
 	}
 }
 
