@@ -9,6 +9,12 @@
 * @version $Id$
 */
 
+// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
+if (get_magic_quotes_gpc() && $_GET)
+{
+	$_GET = etemplate::array_stripslashes($_GET);
+}
+
 if (isset($_GET['app']))
 {
 	$app = $_GET['app'];
@@ -27,30 +33,26 @@ $GLOBALS['egw_info']['flags'] = array(
 );
 include ('../header.inc.php');
 
-// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
-if (get_magic_quotes_gpc() && $_GET)
-{
-	$_GET = etemplate::array_stripslashes($_GET);
-}
-
 if (isset($_GET['path']))
 {
-	$g_srcfile = egw_vfs::PREFIX.$_GET['path'];
+	$g_srcfile = $_GET['path'];
 }
 else
 {
-	$g_srcfile = egw_link::vfs_path($_GET['app'],$_GET['id'],$_GET['file']);
+	$g_srcfile = egw_link::vfs_path($_GET['app'],$_GET['id'],$_GET['file'],true);
 }
+$g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw-thumbs'.$g_srcfile;
+$g_srcfile = egw_vfs::PREFIX.$g_srcfile;
+
 if (!file_exists($g_srcfile) || !egw_vfs::is_readable($g_srcfile))
 {
 	//error_log("file_exists('$g_srcfile')=".(int)file_exists($g_srcfile).", egw_vfs::is_readable('$g_srcfile')=".(int)egw_vfs::is_readable($g_srcfile));
 	header('404 Not found');
 	exit;
 }
-$g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw-thumbs'.parse_url($g_srcfile,PHP_URL_PATH);
 
 // Check for existing thumbnail
-if(filemtime($g_dstfile) >= filemtime($g_srcfile)) {
+if(file_exists($g_dstfile) && filemtime($g_dstfile) >= filemtime($g_srcfile)) {
 	header('Content-Type: image/png');
 	readfile($g_dstfile);
 	return;
