@@ -595,11 +595,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		if (is_dir($url))
-		{
-			$mime = self::DIR_MIME_TYPE;
-		}
-		if (!$mime && ($scheme = parse_url($url,PHP_URL_SCHEME)))
+		if (($scheme = parse_url($url,PHP_URL_SCHEME)))
 		{
 			// check it it's an eGW stream wrapper returning mime-type via url_stat
 			if (class_exists($class = self::scheme2class($scheme)) && ($mime_attr = @constant($class.'::STAT_RETURN_MIME_TYPE')))
@@ -610,6 +606,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					$mime = $stat[$mime_attr];
 				}
 			}
+		}
+		if (!$mime && is_dir($url))
+		{
+			$mime = self::DIR_MIME_TYPE;
 		}
 		// if we operate on the regular filesystem and the mime_content_type function is available --> use it
 		if (!$mime && !$scheme && function_exists('mime_content_type'))

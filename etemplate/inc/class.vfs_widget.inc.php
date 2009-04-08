@@ -152,7 +152,7 @@ class vfs_widget
 					}
 					if (egw_vfs::check_access($path,egw_vfs::READABLE))	// show link only if we have access to the file or dir
 					{
-						if ($n < count($comps)-1 || $mime == egw_vfs::DIR_MIME_TYPE)
+						if ($n < count($comps)-1 || $mime == egw_vfs::DIR_MIME_TYPE || egw_vfs::is_dir($path))
 						{
 							$value['l'.$n] = '/index.php?menuaction=filemanager.filemanager_ui.index&path='.urlencode($path);
 							$target = '';
