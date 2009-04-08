@@ -783,7 +783,7 @@ class egw_link extends solink
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
 			if (($Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,$file['name'])) &&
-				($stat = egw_vfs::stat($fname,0))) && $comment)
+				($stat = egw_vfs::url_stat($fname,0))) && $comment)
 			{
 				egw_vfs::proppatch(parse_url($fname,PHP_URL_PATH),array(array('name'=>'comment','val'=>$comment)));	// set comment
 			}
