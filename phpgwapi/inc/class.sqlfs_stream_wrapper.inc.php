@@ -202,7 +202,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 			$stmt = self::$pdo->prepare($query);
 			$values = array(
-				'fs_name' => basename($path),
+				'fs_name' => egw_vfs::basename($path),
 				'fs_dir'  => $dir_stat['ino'],
 				// we use the mode of the dir, so files in group dirs stay accessible by all members
 				'fs_mode' => $dir_stat['mode'] & 0666,
@@ -582,7 +582,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_id=:fs_id');
 		return $stmt->execute(array(
 			'fs_dir'  => $to_dir_stat['ino'],
-			'fs_name' => basename($path_to),
+			'fs_name' => egw_vfs::basename($path_to),
 			'fs_id'   => $from_stat['ino'],
 		));
 	}
@@ -655,8 +655,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset(self::$stat_cache[$path]);
 		$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
-		return  $stmt->execute(array(
-			'fs_name' => basename($path),
+		return $stmt->execute(array(
+			'fs_name' => egw_vfs::basename($path),
 			'fs_dir'  => $parent['ino'],
 			'fs_mode' => $parent['mode'],
 			'fs_uid'  => $parent['uid'],
@@ -1148,7 +1148,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset(self::$stat_cache[$link]);
 
 		return !!$stmt->execute(array(
-			'fs_name' => basename($link),
+			'fs_name' => egw_vfs::basename($link),
 			'fs_dir'  => $dir_stat['ino'],
 			'fs_mode' => ($dir_stat['mode'] & 0666),
 			'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : egw_vfs::$user,
