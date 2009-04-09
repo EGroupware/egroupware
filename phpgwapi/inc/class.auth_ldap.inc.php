@@ -1,10 +1,10 @@
 <?php
 /**
  * eGroupWare API - LDAP Authentication
- * 
+ *
  * @link http://www.egroupware.org
  * @author Lars Kneschke <lkneschke@linux-at-work.de>
- * @author Joseph Engo <jengo@phpgroupware.org> 
+ * @author Joseph Engo <jengo@phpgroupware.org>
  * Copyright (C) 2000, 2001 Joseph Engo
  * Copyright (C) 2002, 2003 Lars Kneschke
   * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
@@ -107,9 +107,9 @@ class auth_
 	/**
 	 * changes password in LDAP
 	 *
-	 * If $old_passwd is given, the password change is done binded as user and NOT with the 
+	 * If $old_passwd is given, the password change is done binded as user and NOT with the
 	 * "root" dn given in the configurations.
-	 * 
+	 *
 	 * @param string $old_passwd must be cleartext or empty to not to be checked
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
@@ -134,8 +134,10 @@ class auth_
 		$ds = $GLOBALS['egw']->common->ldapConnect();
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
 		$allValues = ldap_get_entries($ds, $sri);
-		
+
 		$entry['userpassword'] = auth::encrypt_password($new_passwd);
+		$entry['shadowLastChange'] = (time()-date('Z')) / (24*3600);
+
 		$dn = $allValues[0]['dn'];
 
 		if($old_passwd)	// if old password given (not called by admin) --> bind as that user to change the pw

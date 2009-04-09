@@ -488,7 +488,7 @@ class accounts_ldap
 			// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp (int UTC!) / (24*60*60)
 			'account_status'    => isset($data['shadowexpire']) && $data['shadowexpire'][0]*24*3600+$utc_diff < time() ? false : 'A',
 			'account_expires'   => isset($data['shadowexpire']) && $data['shadowexpire'][0] ? $data['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
-			'account_lastpasswd_change' => isset($data['shadowlastchange']) ? $data['shadowlastchange'][0]*24*3600 : null,
+			'account_lastpasswd_change' => isset($data['shadowlastchange']) ? $data['shadowlastchange'][0]*24*3600+$utc_diff : null,
 			// lastlogin and lastlogin from are not availible via the shadowAccount object class
 			// 'account_lastlogin' => $data['phpgwaccountlastlogin'][0],
 			// 'account_lastloginfrom' => $data['phpgwaccountlastloginfrom'][0],
@@ -548,6 +548,7 @@ class accounts_ldap
 		}
 		$to_write['cn']        = $data['account_fullname'] ? $data['account_fullname'] : $data['account_firstname'].' '.$data['account_lastname'];
 
+		$utc_diff = date('Z');
 		if (isset($data['account_passwd']) && $data['account_passwd'])
 		{
 			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']))	// if it's not already entcrypted, do so now
@@ -555,13 +556,13 @@ class accounts_ldap
 				$data['account_passwd'] = auth::encrypt_ldap($data['account_passwd']);
 			}
 			$to_write['userpassword'] = $data['account_passwd'];
+			$to_write['shadowLastChange'] = (time()-$utc_diff) / (24*3600);
 		}
 		// both status and expires are encoded in the single shadowexpire value in LDAP
 		// - if it's unset an account is enabled AND does never expire
 		// - if it's set to 0, the account is disabled
 		// - if it's set to > 0, it will or already has expired --> acount is active if it not yet expired
 		// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp (int UTC!) / (24*60*60)
-		$utc_diff = date('Z');
 		$shadowexpire = ($data['account_expires']-$utc_diff) / (24*3600);
 		$account_expire = $shadowexpire*3600*24+$utc_diff;
 		//echo "<p align=right>account_expires=".date('Y-m-d H:i',$data['account_expires'])." --> $shadowexpire --> ".date('Y-m-d H:i',$account_expire)."</p>\n";
@@ -714,7 +715,7 @@ class accounts_ldap
 				$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
 				// if we do not have a start, or want the members of a certain group, we want all, that way we dont want to or the uids
 				// since if we have a whole lot of members, it slows the query down
-				// if you work with very big groups, it may present a problem 
+				// if you work with very big groups, it may present a problem
 				if (is_numeric($start) || is_numeric($param['type'])) {
 					$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";
 				} else {
