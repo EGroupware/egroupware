@@ -1,0 +1,21 @@
+charset	utf-8
+
+regular (year=0):
+ID	Tahun Baru Masehi	1	1	0	0	1
+ID	Natal	25	12	0	0	1
+
+2007:
+ID	Waisak 2007	1	6	2007	0	0
+ID	1 Syawal 1428H	13	10	2007	0	0
+ID	2 Syawal 1428H	14	10	2007	0	0
+ID	Idul Adha 1428H	20	12	2007	0	1
+
+2008:
+ID	Cuti Bersama Idul Fitri 1429H	29	9	2008	0	0
+ID	Cuti Bersama Idul Fitri 1429H	30	9	2008	0	0
+ID	Idul Fitri 1419H	1	10	2008	0	0
+ID	Idul Fitri 1419H	2	10	2008	0	0
+ID	Cuti Bersama Idul Fitri 1429H	3	10	2008	0	0
+
+2009:
+ID	Tahun Baru Imlek 2560	26	1	2009	0	0

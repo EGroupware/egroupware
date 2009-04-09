@@ -1,0 +1,26 @@
+charset	utf-8
+
+regular (year=0):
+HU	Újév	1	1	0	0	0
+HU	Vízkereszt	6	1	0	0	0
+HU	Valentin nap	14	2	0	0	0
+HU	Nőnap	8	3	0	0	0
+HU	Munka ünnepe	1	5	0	0	0
+HU	Sznetivánéj	24	6	0	0	0
+HU	Szent István, az államalapítás ünnepe	20	8	0	0	0
+HU	Nemzeti ünnep	23	10	0	0	0
+HU	Mindenszentek napja	1	11	0	0	0
+HU	Halottak napja	2	11	0	0	0
+HU	Mikulás	6	12	0	0	0
+HU	Karácsony	25	12	0	0	0
+HU	Karácsony	26	12	0	0	0
+HU	Szilveszter	31	12	0	0	0
+
+1:
+HU	Anyák napja	0	5	1	0	0
+
+99:
+HU	Gyermeknap	0	5	99	0	0
+
+2008:
+HU	Nemzeti ünnep	15	3	2008	0	0
