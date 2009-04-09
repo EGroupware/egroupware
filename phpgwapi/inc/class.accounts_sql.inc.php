@@ -167,6 +167,7 @@ class accounts_sql
 				$data['account_passwd'] = $GLOBALS['egw']->auth->encrypt_sql($data['account_passwd']);
 			}
 			$to_write['account_pwd'] = $data['account_passwd'];
+			$to_write['account_lastpwd_change'] = time();
 		}
 		if (!(int)$data['account_id'] || !$this->id2name($data['account_id']))
 		{
