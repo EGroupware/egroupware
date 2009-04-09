@@ -148,6 +148,8 @@ class filemanager_ui
 					if ($content['nm']['path'] != '/')
 					{
 						$content['nm']['path'] = dirname($content['nm']['path']);
+						// switch recusive display off
+						if (!$content['nm']['filter']) $content['nm']['filter'] = '1';
 					}
 					break;
 				case 'home':
@@ -176,7 +178,7 @@ class filemanager_ui
 					$target = $content['nm']['path'];
 					$ses = $GLOBALS['egw']->session->appsession('index','filemanager');
 					$content['nm']['path'] = $ses['path'];
-					$link = egw_vfs::concat($content['nm']['path'],basename($target));
+					$link = egw_vfs::concat($content['nm']['path'],egw_vfs::basename($target));
 					$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($content['nm']['path'],$target);
 					if (!egw_vfs::stat($abs_target))
 					{
@@ -188,6 +190,9 @@ class filemanager_ui
 					break;
 				case 'paste':
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
+					break;
+				case 'linkpaste':
+					$content['nm']['msg'] = self::action('link_paste',$clipboard_files,$content['nm']['path']);
 					break;
 				case 'upload':
 					if (!$content['upload'])
@@ -234,10 +239,12 @@ class filemanager_ui
 		}
 		$content['paste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
 			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
+		$content['linkpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
+			lang('link')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
 		$content['upload_size'] = self::max_upload_size_message();
 		//_debug_array($content);
 
-		$readonlys['button[paste]'] = !$clipboard_files;
+		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$clipboard_files || !$dir_is_writable;
 		$readonlys['button[createdir]'] = !$dir_is_writable;
 		$readonlys['button[symlink]'] = !$dir_is_writable;
 		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
@@ -474,6 +481,26 @@ class filemanager_ui
 					return lang('%1 errors moving (%2 files moved)!',$errs,$files);
 				}
 				return lang('%1 files moved.',$files);
+
+			case 'link_paste':
+				foreach($selected as $path)
+				{
+					$to = egw_vfs::concat($dir,egw_vfs::basename($path));
+					if ($path != $to && egw_vfs::symlink($path,$to))
+					{
+						++$files;
+					}
+					else
+					{
+						++$errs;
+					}
+				}
+				$ret = lang('%1 elements linked.',$files);
+				if ($errs)
+				{
+					$ret = lang('%1 errors linking (%2)!',$errs,$ret);
+				}
+				return $ret." egw_vfs::symlink('$to','$path')";
 		}
 		return "Unknown action '$action'!";
 	}

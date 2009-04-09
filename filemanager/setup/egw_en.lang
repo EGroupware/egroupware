@@ -1,8 +1,10 @@
 %1 already exists as a file	filemanager	en	%1 already exists as a file
 %1 directories and %2 files copied.	filemanager	en	%1 directories and %2 files copied.
 %1 directories and %2 files deleted.	filemanager	en	%1 directories and %2 files deleted.
+%1 elements linked.	filemanager	en	%1 elements linked.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	en	%1 errors copying (%2 diretories and %3 files copied)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	en	%1 errors deleteting (%2 directories and %3 files deleted)!
+%1 errors linking (%2)!	filemanager	en	%1 errors linking (%2)!
 %1 errors moving (%2 files moved)!	filemanager	en	%1 errors moving (%2 files moved)!
 %1 failed, %2 succeded	filemanager	en	%1 failed, %2 succeded
 %1 files copied.	filemanager	en	%1 files copied.
@@ -27,6 +29,7 @@ comment	filemanager	en	Comment
 comments cannot contain "%1"	filemanager	en	Comments cannot contain "%1"
 copied	filemanager	en	copied
 copied %1 to %2	filemanager	en	Copied %1 to %2
+copy	filemanager	en	Copy
 copy to	filemanager	en	Copy to
 copy to clipboard	filemanager	en	Copy to clipboard
 could not copy %1 to %2	filemanager	en	Could not copy %1 to %2
@@ -96,6 +99,7 @@ go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	go up
 id	filemanager	en	Id
 inherited	filemanager	en	Inherited
+link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
 link target %1 not found!	filemanager	en	Link target %1 not found!
 location	filemanager	en	Location

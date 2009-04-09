@@ -1,8 +1,10 @@
 %1 already exists as a file	filemanager	de	%1 existiert schon als Datei
 %1 directories and %2 files copied.	filemanager	de	%1 Verzeichnisse und %2 Dateien kopiert.
 %1 directories and %2 files deleted.	filemanager	de	%1 Verzeichnisse und %2 Dateien gelöscht.
+%1 elements linked.	filemanager	de	%1 Elemente verküpft.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	de	%1 Fehler beim Kopieren (%2 Verzeichnisse und %3 Dateien kopiert)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	de	%1 Fehler beim Löschen (%2 Verzeichnisse und %3 Dateien gelöscht)!
+%1 errors linking (%2)!	filemanager	de	%1 Fehler beim Verküpfen (%2)!
 %1 errors moving (%2 files moved)!	filemanager	de	%1 Fehler beim Verschieben (%2 Dateien verschoben)!
 %1 failed, %2 succeded	filemanager	de	%1 fehlgeschlagen, %2 erfolgreich
 %1 files copied.	filemanager	de	%1 Dateien kopiert.
@@ -27,6 +29,7 @@ comment	filemanager	de	Kommentar
 comments cannot contain "%1"	filemanager	de	Kommentare dürfen "%1" nicht enthalten
 copied	filemanager	de	kopiert
 copied %1 to %2	filemanager	de	%1 nach %2 kopiert
+copy	filemanager	de	kopieren
 copy to	filemanager	de	Copieren nach
 copy to clipboard	filemanager	de	Kopieren in die Zwischenablage
 could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
@@ -96,6 +99,7 @@ go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
 id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
+link	filemanager	de	verküpfen
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
 link target %1 not found!	filemanager	de	Verküpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
@@ -106,7 +110,7 @@ mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	Verändert
 modified between	filemanager	de	verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterverzeichnisse und ihre Inhalte anwenden
-move	filemanager	de	Verschieben
+move	filemanager	de	verschieben
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
 no access	filemanager	de	Kein Zugriff

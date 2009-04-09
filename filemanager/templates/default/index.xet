@@ -47,7 +47,7 @@
 					<hbox align="right">
 						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
 						<button id="delete[$row_cont[path]]" image="delete" label="Delete" statustext="Delete this file or directory" onclick="return confirm('Delete this file or directory');" align="center"/>
-						<checkbox id="checked[]" align="right" options="$row_cont[path]"/>
+						<checkbox id="checked[]" align="right" options="&quot;$row_cont[path]&quot;"/>
 					</hbox>
 				</row>
 			</rows>
@@ -72,9 +72,10 @@
 						<button id="button[go]" image="key_enter" label="Go to"/>
 						<image src="buttonseparator"/>
 						<button image="edit" label="Edit settings" id="edit[{$cont[nm][path]}]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
-						<button id="button[createdir]" image="button_createdir" label="Create directory" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;"/>
-						<button image="link" label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;"/>
-						<button id="button[paste]" image="editpaste" statustext="$cont[paste_tooltip]"/>
+						<button id="button[createdir]" image="button_createdir" ro_image="createdir_disabled" label="Create directory" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;"/>
+						<button image="link" ro_image="link_disabled" label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;"/>
+						<button id="button[paste]" image="editpaste" ro_image="editpaste_disabled" statustext="$cont[paste_tooltip]"/>
+						<button id="button[linkpaste]" image="linkpaste" ro_image="linkpaste_disabled" statustext="$cont[linkpaste_tooltip]"/>
 					</hbox>
 				</row>
 				<row>
