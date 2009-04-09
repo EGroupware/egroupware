@@ -166,7 +166,7 @@ class boetemplate extends soetemplate
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
-			eval('$name = "'.addslashes($name).'";');
+			eval('$name = "'.str_replace('"','\\"',$name).'";');
 		}
 		if ($is_index_in_content)
 		{
