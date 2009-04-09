@@ -9,7 +9,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -30,7 +30,8 @@ function check_access(&$account)
 		'passwd' => $_SERVER['PHP_AUTH_PW'],
 		'passwd_type' => 'text',
 	);
-	if (!isset($_SERVER['PHP_AUTH_USER']) || !($sessionid = $GLOBALS['egw']->session->create($account)))
+	if (!isset($_SERVER['PHP_AUTH_USER']) ||
+		!($sessionid = $GLOBALS['egw']->session->create($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'],'text')))
 	{
 		header('WWW-Authenticate: Basic realm="'.vfs_webdav_server::REALM.
 			// if the session class gives a reason why the login failed --> append it to the REALM
@@ -45,7 +46,8 @@ function check_access(&$account)
 // if we are called with a /apps/$app path, use that $app as currentapp, to not require filemanager rights for the links
 $parts = explode('/',$_SERVER['PATH_INFO']);
 //error_log("webdav: explode".print_r($parts,true));
-if(count($parts)== 1){
+if(count($parts) == 1)
+{
 	error_log(__METHOD__. "Malformed Url: missing slash:\n".$_SERVER['SERVER_NAME']."\n PATH_INFO:".$_SERVER['PATH_INFO'].
 		"\n REQUEST_URI".$_SERVER['REQUEST_URI']."\n ORIG_SCRIPT_NAME:".$_SERVER['ORIG_SCRIPT_NAME'].
 		"\n REMOTE_ADDR:".$_SERVER['REMOTE_ADDR']."\n PATH_INFO:".$_SERVER['PATH_INFO']."\n HTTP_USER_AGENT:".$_SERVER['HTTP_USER_AGENT']) ;
@@ -72,5 +74,5 @@ $headertime = microtime(true);
 
 $webdav_server = new vfs_webdav_server();
 $webdav_server->ServeRequest();
-//error_log(sprintf("GroupDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
+//error_log(sprintf("WebDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
 
