@@ -1176,7 +1176,7 @@ class etemplate extends boetemplate
 				$set_val = 1; $unset_val = 0;
 				if (!empty($cell_options))
 				{
-					list($set_val,$unset_val,$ro_true,$ro_false) = explode(',',$cell_options);
+					list($set_val,$unset_val,$ro_true,$ro_false) = self::csv_split($cell_options);
 					if (!$set_val && !$unset_val) $set_val = 1;
 					$value = $value == $set_val;
 				}
@@ -1216,7 +1216,7 @@ class etemplate extends boetemplate
 				}
 				break;
 			case 'radio':		// size: value if checked, readonly set, readonly unset
-				list($set_val,$ro_true,$ro_false) = explode(',',$cell_options);
+				list($set_val,$ro_true,$ro_false) = self::csv_split($cell_options);
 				$set_val = $this->expand_name($set_val,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
 				if ($value == $set_val)

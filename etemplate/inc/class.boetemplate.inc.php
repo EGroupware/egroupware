@@ -166,7 +166,7 @@ class boetemplate extends soetemplate
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
-			eval('$name = "'.$name.'";');
+			eval('$name = "'.addslashes($name).'";');
 		}
 		if ($is_index_in_content)
 		{
@@ -682,6 +682,50 @@ class boetemplate extends soetemplate
 		);
 		$this->widget_tree_walk('get_widgets_by_type_helper', $extra);
 		return $extra['widgets'];
+	}
+
+	/**
+	 * Split a $delimiter-separated options string, which can contain parts with delimiters enclosed in $enclosure
+	 *
+	 * Examples:
+	 * - csv_split('"1,2,3",2,3') === array('1,2,3','2','3')
+	 * - csv_split('1,2,3',2) === array('1','2,3')
+	 * - csv_split('"1,2,3",2,3',2) === array('1,2,3','2,3')
+	 *
+	 * @param string $str
+	 * @param int $num=null in how many parts to split maximal, parts over this number end up (unseparated) in the last part
+	 * @param string $delimiter=','
+	 * @param string $enclosure='"'
+	 * @return array
+	 */
+	static function csv_split($str,$num=null,$delimiter=',',$enclosure='"')
+	{
+		if (strpos($str,$enclosure) === false)
+		{
+			return explode($delimiter,$str,$num);	// no need to run this more expensive code
+		}
+		$parts = explode($delimiter,$str);
+		for($n = 0; isset($parts[$n]); ++$n)
+		{
+			$part =& $parts[$n];
+			if ($part[0] === $enclosure)
+			{
+				while (isset($parts[$n+1]) && substr($part,-1) !== $enclosure)
+				{
+					$part .= $delimiter.$parts[++$n];
+					unset($parts[$n]);
+				}
+				$part = substr($part,1,-1);
+			}
+		}
+		$parts = array_values($parts);	// renumber the parts (in case we had to concat them)
+
+		if ($num > 0 && count($parts) > $num)
+		{
+			$parts[$num-1] = implode($delimiter,array_slice($parts,$num-1,count($parts)-$num+1));
+			$parts = array_slice($parts,0,$num);
+		}
+		return $parts;
 	}
 
 	/**
