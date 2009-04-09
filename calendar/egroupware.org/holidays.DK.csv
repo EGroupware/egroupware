@@ -1,35 +1,88 @@
-charset	iso-8859-1
-DK	Nyt�rsdag	1	1	0	0	0
-DK	Palmes�ndag	20	3	2005	0	0
-DK	Sk�rtorsdag	24	3	2005	0	0
-DK	Langfredag	25	3	2005	0	0
-DK	P�skedag	27	3	2005	0	0
-DK	2. P�skedag	28	3	2005	0	0
-DK	Palmes�ndag	1	4	2007	0	0
-DK	Sk�rtorsdag	5	4	2007	0	0
-DK	Langfredag	6	4	2007	0	0
-DK	P�skedag	8	4	2007	0	0
-DK	Palmes�ndag	9	4	2006	0	0
-DK	2. P�skedag	9	4	2007	0	0
-DK	Sk�rtorsdag	13	4	2006	0	0
-DK	Langfredag	14	4	2006	0	0
-DK	P�skedag	16	4	2006	0	0
-DK	2. P�skedag	17	4	2006	0	0
-DK	St. Bededag	22	4	2005	0	0
-DK	1. maj	1	5	0	0	0
-DK	St. Bededag	4	5	2007	0	0
-DK	Kristi Himmelfartsdag	5	5	2005	0	0
-DK	St. Bededag	12	5	2006	0	0
-DK	Pinsedag	15	5	2005	0	0
-DK	2. Pinsedag	16	5	2005	0	0
-DK	Kristi Himmelfartsdag	17	5	2007	0	0
-DK	Kristi Himmelfartsdag	25	5	2006	0	0
-DK	Pinsedag	27	5	2007	0	0
-DK	2. Pinsedag	28	5	2007	0	0
-DK	Pinsedag	4	6	2006	0	0
-DK	Grundlovsdag	5	6	0	0	0
-DK	2. Pinsedag	5	6	2006	0	0
+charset	utf-8
+
+regular:
+DK	Nytårsdag	1	1	0	0	0
+DK	1. Maj	1	5	0	0	0
 DK	Juleaften	24	12	0	0	0
 DK	Juledag	25	12	0	0	0
 DK	2. Juledag	26	12	0	0	0
-DK	Nyt�r	31	12	0	0	0
+DK	Nytår	31	12	0	0	0
+DK	Anden juledag	26	12	0	0	0
+
+2005:
+DK	Palmesøndag	20	3	2005	0	0
+DK	Skærtorsdag	24	3	2005	0	0
+DK	Langfredag	25	3	2005	0	0
+DK	Påskedag	27	3	2005	0	0
+DK	2. Påskedag	28	3	2005	0	0
+DK	St. Bededag	22	4	2005	0	0
+DK	Pinsedag	15	5	2005	0	0
+DK	2. Pinsedag	16	5	2005	0	0
+DK	Kristi Himmelfartsdag	5	5	2005	0	0
+DK	Grundlovsdag	5	6	0	0	0
+
+2006:
+DK	Palmesøndag	9	4	2006	0	0
+DK	Skærtorsdag	13	4	2006	0	0
+DK	Langfredag	14	4	2006	0	0
+DK	Påskedag	16	4	2006	0	0
+DK	2. Påskedag	17	4	2006	0	0
+DK	St. Bededag	12	5	2006	0	0
+DK	Kristi Himmelfartsdag	25	5	2006	0	0
+DK	Pinsedag	4	6	2006	0	0
+DK	2. Pinsedag	5	6	2006	0	0
+
+2007:
+DK	Palmesøndag	1	4	2007	0	0
+DK	Skærtorsdag	5	4	2007	0	0
+DK	Langfredag	6	4	2007	0	0
+DK	Påskedag	8	4	2007	0	0
+DK	2. Påskedag	9	4	2007	0	0
+DK	St. Bededag	4	5	2007	0	0
+DK	Kristi Himmelfartsdag	17	5	2007	0	0
+DK	Pinsedag	27	5	2007	0	0
+DK	2. Pinsedag	28	5	2007	0	0
+
+2009:
+DK	Palmesøndag	5	4	2009	0	0
+DK	Skærtorsdag	9	4	2009	0	0
+DK	Langfredag	10	4	2009	0	0
+DK	Påskedag	12	4	2009	0	0
+DK	Anden påskedag	13	4	2009	0	0
+DK	Store bededag	8	5	2009	0	0
+DK	Kristi himmelfartsdag	21	5	2009	0	0
+DK	Pinsedag	31	5	2009	0	0
+DK	Anden pinsedag	1	6	2009	0	0
+
+2010:
+DK	Palmesøndag	28	3	2010	0	0
+DK	Skærtorsdag	1	4	2010	0	0
+DK	Langfredag	2	4	2010	0	0
+DK	Påskedag	4	4	2010	0	0
+DK	Anden påskedag	5	4	2010	0	0
+DK	Store bededag	30	4	2010	0	0
+DK	Kristi himmelfartsdag	13	5	2010	0	0
+DK	Pinsedag	23	5	2010	0	0
+DK	Anden pinsedag	24	5	2010	0	0
+
+2011:
+DK	Palmesøndag	17	4	2011	0	0
+DK	Skærtorsdag	21	4	2011	0	0
+DK	Langfredag	22	4	2011	0	0
+DK	Påskedag	24	4	2011	0	0
+DK	Anden påskedag	25	4	2011	0	0
+DK	Store bededag	20	5	2011	0	0
+DK	Kristi himmelfartsdag	2	6	2011	0	0
+DK	Pinsedag	12	6	2011	0	0
+DK	Anden pinsedag	13	6	2011	0	0
+
+2012:
+DK	Palmesøndag	1	4	2012	0	0
+DK	Skærtorsdag	5	4	2012	0	0
+DK	Langfredag	6	4	2012	0	0
+DK	Påskedag	8	4	2012	0	0
+DK	Anden påskedag	9	4	2012	0	0
+DK	Store bededag	4	5	2012	0	0
+DK	Kristi himmelfartsdag	17	5	2012	0	0
+DK	Pinsedag	27	5	2012	0	0
+DK	Anden pinsedag	28	5	2012	0	0
