@@ -26,7 +26,7 @@
 			'delete_holiday'	=> True,
 			'delete_locale'	=> True,
 			'accept_holiday'	=> True,
-			
+
 			'read_entries'	=> True,
 			'read_entry'	=> True,
 			'add_entry'	=> True,
@@ -168,7 +168,7 @@
 				}
 				// sort holidays by year / occurence:
 				usort($holidays,'_holiday_cmp');
-				
+
 				$last_year = -1;
 				foreach($holidays as $holiday)
 				{
@@ -291,16 +291,23 @@
 					$lines = @file(EGW_SERVER_ROOT.'/calendar/egroupware.org/holidays.'.strtoupper($locale).'.csv');
 				}
 				else
+				{
 					$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale).'.csv');
-
+				}
 				if (!$lines)
 				{
 					return false;
 				}
-				$charset = split("[\t\n ]+",$lines[0]);		// give a bit flexibility in the syntax AND remove the lineend (\n)
-				if (strpos($charset[0],'charset') !== false && $charset[1])
+				// reading the holidayfile from egroupware.org via network::gethttpsocketfile contains all the headers!
+				foreach($lines as $n => $line)
 				{
-					$lines = $GLOBALS['egw']->translation->convert($lines,$charset[1]);
+					$fields = split("[\t\n ]+",$line);
+
+					if ($fields[0] == 'charset' && $fields[1])
+					{
+						$lines = $GLOBALS['egw']->translation->convert($lines,$fields[1]);
+						break;
+					}
 				}
 				$c_lines = count($lines);
 				foreach ($lines as $i => $line)
@@ -475,7 +482,7 @@
 
 				$dow_str = Array(lang('Sun'),lang('Mon'),lang('Tue'),lang('Wed'),lang('Thu'),lang('Fri'),lang('Sat'));
 				$dow = $dow_str[$holiday['dow']];
-				
+
 				$str = lang('%1 %2 in %3',$occ,$dow,$month);
 			}
 			else
