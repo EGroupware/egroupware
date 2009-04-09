@@ -556,7 +556,7 @@ class accounts_ldap
 				$data['account_passwd'] = auth::encrypt_ldap($data['account_passwd']);
 			}
 			$to_write['userpassword'] = $data['account_passwd'];
-			$to_write['shadowLastChange'] = (time()-$utc_diff) / (24*3600);
+			$to_write['shadowLastChange'] = round((time()-$utc_diff) / (24*3600));
 		}
 		// both status and expires are encoded in the single shadowexpire value in LDAP
 		// - if it's unset an account is enabled AND does never expire
