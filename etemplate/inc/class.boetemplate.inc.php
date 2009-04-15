@@ -702,7 +702,7 @@ class boetemplate extends soetemplate
 	{
 		if (strpos($str,$enclosure) === false)
 		{
-			return explode($delimiter,$str,$num);	// no need to run this more expensive code
+			return is_null($num) ? explode($delimiter,$str) : explode($delimiter,$str,$num);	// no need to run this more expensive code
 		}
 		$parts = explode($delimiter,$str);
 		for($n = 0; isset($parts[$n]); ++$n)
