@@ -1180,6 +1180,10 @@ class etemplate extends boetemplate
 					if (!$set_val && !$unset_val) $set_val = 1;
 					$value = $value == $set_val;
 				}
+				if (($multiple = substr($cell['name'],-2) == '[]') && !$readonly)
+				{
+					$readonly = $readonlys[substr($cell['name'],0,-1).$set_val.']'];
+				}
 				if ($readonly)
 				{
 					if (count(explode(',',$cell_options)) < 3)
@@ -1195,7 +1199,7 @@ class etemplate extends boetemplate
 				{
 					if ($value) $options .= ' checked="checked"';
 
-					if (($multiple = substr($cell['name'],-2) == '[]'))
+					if ($multiple)
 					{
 						// add the set_val to the id to make it unique
 						$options = str_replace('id="'.$form_name,'id="'.substr($form_name,0,-2)."[$set_val]",$options);
