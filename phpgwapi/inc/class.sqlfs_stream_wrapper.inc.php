@@ -1046,8 +1046,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			{
 				$memberships[] = abs($gid);	// sqlfs stores the gid's positiv
 			}
-			$sql_read_acl = '(fs_mode & 04 OR fs_mode & 0400 AND fs_uid='.(int)egw_vfs::$user.
-				' OR fs_mode & 040 AND fs_gid IN('.implode(',',$memberships).'))';
+			$sql_read_acl = '((fs_mode & 04)=04 OR (fs_mode & 0400)=0400 AND fs_uid='.(int)egw_vfs::$user.
+				' OR (fs_mode & 040)=040 AND fs_gid IN('.implode(',',$memberships).'))';
 		}
 		return $sql_read_acl;
 	}
