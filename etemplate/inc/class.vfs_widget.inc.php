@@ -70,7 +70,7 @@ class vfs_widget
 		$readonly = $cell['readonly'] || $readonlys;
 
 		// check if we have a path and not the raw value, in that case we have to do a stat first
-		if (in_array($type,array('vfs-size','vfs-mode','vfs-uid','vfs-gid')) && !is_numeric($value))
+		if (in_array($type,array('vfs-size','vfs-mode','vfs-uid','vfs-gid')) && !is_numeric($value) || $type == 'vfs' && !$value)
 		{
 			if (!$value || !($stat = egw_vfs::stat($value)))
 			{
@@ -123,16 +123,16 @@ class vfs_widget
 				$cell['name'] = '';
 				$cell['type'] = 'hbox';
 				$cell['size'] = '0,,0,0';
-				foreach($comps=explode('/',$name) as $n => $component)
+				foreach($name != '/' ? explode('/',$name) : array('') as $n => $component)
 				{
-					if ($n)
+					if ($n > (int)($path === '/'))
 					{
 						$sep = soetemplate::empty_cell('label','',array('label' => '/'));
 						soetemplate::add_child($cell,$sep);
 						unset($sep);
 					}
-					$value['c'.$n] = $component;
-					$path .= '/'.$component;
+					$value['c'.$n] = $component !== '' ? $component : '/';
+					$path .= ($path != '/' ? '/' : '').$component;
 					// replace id's in /apps again with human readable titles
 					$path_parts = explode('/',$path);
 					if ($path_parts[1] == 'apps')
@@ -163,14 +163,29 @@ class vfs_widget
 							$target = ',,,_blank';
 						}
 					}
-					$comp = etemplate::empty_cell('label',$cell_name.'[c'.$n.']',array(
-						'size'    => ',@'.$cell_name.'[l'.$n.']'.$target,
-						'no_lang' => true,
-						'span'    => ',vfsFilename'
-					));
+					if ($cell['onclick'])
+					{
+						$comp = etemplate::empty_cell('button',$cell_name.'[c'.$n.']',array(
+							'size'    => '1',
+							'no_lang' => true,
+							'span'    => ',vfsFilename',
+							'label'   => $value['c'.$n],
+							'onclick' => str_replace('$path',"'".addslashes($path)."'",$cell['onclick']),
+						));
+					}
+					else
+					{
+						$comp = etemplate::empty_cell('label',$cell_name.'[c'.$n.']',array(
+							'size'    => ',@'.$cell_name.'[l'.$n.']'.$target,
+							'no_lang' => true,
+							'span'    => ',vfsFilename',
+						));
+					}
 					etemplate::add_child($cell,$comp);
 					unset($comp);
 				}
+				unset($cell['onclick']);	// otherwise it's handled by the grid too
+				//_debug_array($comps); _debug_array($cell); _debug_array($value);
 				break;
 
 			case 'vfs-mime':
