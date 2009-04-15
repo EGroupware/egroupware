@@ -8,3 +8,13 @@
 .comment textarea { width: 100%; height: 35px; }
 .previewImage img { max-width: 430px; max-height: 275px; border: 1px solid black; }
 .previewText div { }
+
+/**
+ * Select file dialog
+ */
+.selectPath { font-weight: bold; }
+.selectName input { width: 100%; }
+.selectMime select { width: 100%; }
+.selectIcon img { height: 16px; }
+.displayNone input { display: none; }
+.selectFiles td div { border-style: groove; }

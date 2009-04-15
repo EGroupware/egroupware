@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.select" template="" lang="" group="0" version="1.7.001">
+		<grid width="600">
+			<columns>
+				<column width="32"/>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<button image="home" id="button[home]" align="center"/>
+					<grid width="100%">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<hbox>
+									<html id="js"/>
+									<button id="button[up]" image="goup"/>
+									<vfs id="path" onclick="path=document.getElementById(form::name('path')); path.value=$path; path.form.submit();" class="selectPath"/>
+									<textbox id="path" class="displayNone"/>
+								</hbox>
+							</row>
+							<row class="selectFiles">
+								<grid width="100%" height="400" overflow="auto" id="dir">
+									<columns>
+										<column width="20"/>
+										<column/>
+										<column width="1%" disabled="!@mode=open-multiple"/>
+									</columns>
+									<rows>
+										<row class="row">
+											<vfs-mime id="${row}[path]" class="selectIcon" align="center"/>
+											<vfs id="$row" onclick="$row_cont[onclick]"/>
+											<checkbox options="&quot;$row_cont[name]&quot;" id="selected[]" align="right"/>
+										</row>
+									</rows>
+								</grid>
+							</row>
+							<row disabled="@mode=open-multiple">
+								<textbox id="name" class="selectName" needed="1"/>
+							</row>
+							<row>
+								<menulist class="selectMime">
+									<menupopup options="All" id="mime"/>
+								</menulist>
+							</row>
+							<row>
+								<hbox align="right">
+									<button label="@label" id="button[ok]"/>
+									<buttononly id="button[cancel]" label="Cancel" onclick="window.close();"/>
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
