@@ -977,12 +977,13 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if ($url == '/' || $url[0] != '/' && parse_url($url,PHP_URL_PATH) == '/')
 		{
+			//error_log(__METHOD__."($url) returning FALSE: already in root!");
 			return false;
 		}
 		$parts = explode('/',$url);
 		if (substr($url,-1) == '/') array_pop($parts);
 		array_pop($parts);
-		if ($url[0] != '/' && count($parts) == 3)
+		if ($url[0] != '/' && count($parts) == 3 || count($parts) == 1 && $parts[0] === '')
 		{
 			array_push($parts,'');	// scheme://host is wrong (no path), has to be scheme://host/
 		}
