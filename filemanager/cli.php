@@ -603,7 +603,7 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false)
 	{
 		$bname = basename($bname);
 	}
-	if (!file_exists($url) || !($stat = stat($url)))
+	if (!file_exists($url) || !($stat = lstat($url)))
 	{
 		echo "$bname: no such file or directory!\n";
 	}
