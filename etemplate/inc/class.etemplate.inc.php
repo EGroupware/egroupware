@@ -1277,7 +1277,7 @@ class etemplate extends boetemplate
 					}
 					$html .= !$readonly ? html::submit_button($form_name,$label,$onclick,
 						strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app,$type == 'buttononly' ? 'button' : 'submit') :
-						html::image($app,$ro_img);
+						html::image($app,$ro_img,'',$options);
 				}
 				$extra_label = False;
 				if (!$readonly && $type != 'buttononly')	// input button, are never submitted back!
