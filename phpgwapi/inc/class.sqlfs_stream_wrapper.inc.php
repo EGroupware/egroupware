@@ -1447,7 +1447,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			case 'mysqli':
 			case 'mysqlt':
 			case 'mysql':
-				self::$case_sensitive_equal = ' COLLATE utf8_bin =';
+				self::$case_sensitive_equal = '= BINARY ';
 				self::$pdo_type = 'mysql';
 				break;
 			default:
