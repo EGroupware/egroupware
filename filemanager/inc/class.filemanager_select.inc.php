@@ -73,6 +73,7 @@ class filemanager_select
 			{
 				$content['path'] = egw_session::appsession('select_path','filemanger');
 			}
+			$content['name'] = (string)$_GET['name'];
 			$content['method'] = $_GET['method'];
 			$content['id']     = $_GET['id'];
 			$content['label'] = isset($_GET['label']) ? $_GET['label'] : lang('Open');
@@ -174,7 +175,6 @@ class filemanager_select
 			}
 			closedir($d);
 		}
-		$content['name'] = '';
 		$content['js'] = '<script type="text/javascript">
 function select_goto(to)
 {
