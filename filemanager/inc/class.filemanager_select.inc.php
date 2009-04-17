@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Filemanager - select file to open / save dialog
+ * eGroupWare - Filemanager - select file to open or save dialog
  *
  * @link http://www.egroupware.org
  * @package filemanager
@@ -10,6 +10,25 @@
  * @version $Id$
  */
 
+/**
+ * Select file to open or save dialog
+ *
+ * This dialog can be called from applications to open or store files from the VFS.
+ *
+ * There are the following ($_GET) parameters:
+ * - menuaction=filemanager.filemanager_select.select   (required)
+ * - mode=(open|open-multiple|saveas|select-dir)        (required)
+ * - method=app.class.method                            (required callback, gets called with id and selected file(s))
+ * - id=...                                             (optional parameter passed to callback)
+ * - path=...                                           (optional start path in VFS)
+ * - mime=...                                           (optional mime-type to limit display to given type)
+ * - label=...                                          (optional label for submit button, default "Open")
+ *
+ * The application calls this method in a popup with size: 640x580 px
+ * After the user selected one or more files (depending on the mode parameter), the "method" callback gets
+ * called on server (!) side. Parameters are the id plus the selected files as 1. and 2. parameter.
+ * The callback returns javascript to eg. update it's UI AND (!) to close the current popup ("window.close();").
+ */
 class filemanager_select
 {
 	/**
@@ -35,17 +54,10 @@ class filemanager_select
 	}
 
 	/**
-	 * Callback to fetch the rows for the nextmatch widget
+	 * File selector
 	 *
-	 * @param array $query
-	 * @param array &$rows
-	 * @param array &$readonlys
+	 * @param array $content
 	 */
-	function get_rows($query,&$rows,&$readonlys)
-	{
-
-	}
-
 	function select(array $content=null)
 	{
 		if (!is_array($content))
@@ -65,7 +77,22 @@ class filemanager_select
 			$content['method'] = $_GET['method'];
 			$content['id']     = $_GET['id'];
 			$content['label'] = isset($_GET['label']) ? $_GET['label'] : lang('Open');
-			$content['mime']   = $_GET['mime'];
+			if (($content['options-mime'] = isset($_GET['mime'])))
+			{
+				$content['options-mime'] = array();
+				foreach((array)$_GET['mime'] as $key => $value)
+				{
+					if (is_numeric($key))
+					{
+						$content['options-mime'][$value] = lang('%1 files',strtoupper(mime_magic::mime2ext($value))).' ('.$value.')';
+					}
+					else
+					{
+						$content['options-mime'][$key] = lang('%1 files',strtoupper($value)).' ('.$key.')';
+					}
+				}
+				list($content['mime']) = each($content['options-mime']);
+			}
 		}
 		else
 		{
@@ -112,6 +139,10 @@ class filemanager_select
 			{
 				$path = egw_vfs::concat($content['path'],$name);
 				$is_dir = egw_vfs::is_dir($path);
+				if ($content['mime'] && !$is_dir && egw_vfs::mime_content_type($path) != $content['mime'])
+				{
+					continue;	// does not match mime-filter --> ignore
+				}
 				$content['dir'][$n] = array(
 					'name' => $name,
 					'path' => $path,
@@ -159,6 +190,8 @@ function select_toggle(file)
 			'method' => $content['method'],
 			'id'     => $content['id'],
 			'label'  => $content['label'],
+			'mime'   => $content['mime'],
+			'options-mime' => $content['options-mime'],
 		),2);
 	}
 }

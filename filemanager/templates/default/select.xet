@@ -42,9 +42,9 @@
 							<row disabled="@mode=open-multiple">
 								<textbox id="name" class="selectName" needed="1"/>
 							</row>
-							<row>
+							<row disabled="!@options-mime">
 								<menulist class="selectMime">
-									<menupopup options="All" id="mime"/>
+									<menupopup options="All files" id="mime" onchange="1"/>
 								</menulist>
 							</row>
 							<row>

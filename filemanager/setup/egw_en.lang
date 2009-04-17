@@ -7,6 +7,7 @@
 %1 errors linking (%2)!	filemanager	en	%1 errors linking (%2)!
 %1 errors moving (%2 files moved)!	filemanager	en	%1 errors moving (%2 files moved)!
 %1 failed, %2 succeded	filemanager	en	%1 failed, %2 succeded
+%1 files	common	en	%1 files
 %1 files copied.	filemanager	en	%1 files copied.
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
@@ -18,8 +19,10 @@ accessrights	filemanager	en	Accessrights
 acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
+all files	common	en	All files
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	en	and all it's childeren
+applications	common	en	Applications
 basedirectory	filemanager	en	Basedirectory
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space

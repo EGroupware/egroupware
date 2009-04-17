@@ -7,6 +7,7 @@
 %1 errors linking (%2)!	filemanager	de	%1 Fehler beim Verküpfen (%2)!
 %1 errors moving (%2 files moved)!	filemanager	de	%1 Fehler beim Verschieben (%2 Dateien verschoben)!
 %1 failed, %2 succeded	filemanager	de	%1 fehlgeschlagen, %2 erfolgreich
+%1 files	common	de	%1 Dateien
 %1 files copied.	filemanager	de	%1 Dateien kopiert.
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht.
 %1 files moved.	filemanager	de	%1 Dateien verschoben.
@@ -18,8 +19,10 @@ accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugrifsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugrifsrecht gelöscht.
 actions	filemanager	de	Befehle
+all files	common	de	Alle Dateien
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellunge für Verzeichnisverweise
 and all it's childeren	filemanager	de	und alle seine Kinder
+applications	common	de	Anwendungen
 basedirectory	filemanager	de	Basisverzeichnis
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
