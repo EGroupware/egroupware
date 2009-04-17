@@ -69,10 +69,9 @@ class filemanager_select
 				throw new egw_exception_wrong_parameter("Wrong or unset required mode parameter!");
 			}
 			$content['path'] = $_GET['path'];
-			if (!isset($content['path']) && ($content['path'] = egw_session::appsession('select_path','filemanger')) === false ||
-				!egw_vfs::is_dir($content['path']))
+			if (!isset($content['path']))
 			{
-				$content['path'] = filemanager_ui::get_home_dir();
+				$content['path'] = egw_session::appsession('select_path','filemanger');
 			}
 			$content['method'] = $_GET['method'];
 			$content['id']     = $_GET['id'];
@@ -94,10 +93,10 @@ class filemanager_select
 				list($content['mime']) = each($content['options-mime']);
 			}
 		}
-		else
+		elseif(isset($content['button']))
 		{
-			//_debug_array($content); die('Stop');
-			if ($content['button']) list($button) = each($content['button']);
+			list($button) = each($content['button']);
+			unset($content['button']);
 			switch($button)
 			{
 				case 'up':
@@ -126,6 +125,23 @@ class filemanager_select
 					echo "<html>\n<head>\n<script type='text/javascript'>\n$js\n</script>\n</head>\n</html>\n";
 					$GLOBALS['egw']->common->egw_exit();
 			}
+		}
+		elseif(isset($content['apps']))
+		{
+			list($app) = each($content['apps']);
+			if ($app == 'home') $content['path'] = filemanager_ui::get_home_dir();
+		}
+		$content['apps'] = array_keys(self::get_apps());
+		array_unshift($content['apps'],false);	// index starting from 1
+
+		if (isset($app) && isset($content['apps'][$app]))
+		{
+			$content['path'] = '/apps/'.$content['apps'][$app];
+		}
+
+		if (!$content['path'] || !egw_vfs::is_dir($content['path']))
+		{
+			$content['path'] = filemanager_ui::get_home_dir();
 		}
 		if (!($d = egw_vfs::opendir($content['path'])))
 		{
@@ -193,5 +209,20 @@ function select_toggle(file)
 			'mime'   => $content['mime'],
 			'options-mime' => $content['options-mime'],
 		),2);
+	}
+
+	/**
+	 * Get a list off all apps having an application directory in VFS
+	 *
+	 * @return array
+	 */
+	static function get_apps()
+	{
+		$apps = egw_link::app_list('query');
+
+		unset($apps['mydms']);	// they do NOT support adding files to VFS
+		unset($apps['wiki']);
+
+		return $apps;
 	}
 }

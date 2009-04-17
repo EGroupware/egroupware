@@ -9,7 +9,19 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<button image="home" id="button[home]" align="center"/>
+					<grid id="apps">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row height="40">
+								<button image="home" id="home" align="center" label="Home"/>
+							</row>
+							<row height="40">
+								<button image="$row_cont/navbar" label="$row_cont" align="center" id="${row}"/>
+							</row>
+						</rows>
+					</grid>
 					<grid width="100%">
 						<columns>
 							<column/>
