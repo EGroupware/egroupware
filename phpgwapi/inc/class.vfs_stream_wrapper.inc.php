@@ -617,15 +617,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			$mime = mime_content_type($path);
 		}
 		// using eGW's own mime magic
-		// ToDo: rework mime_magic as all methods cound be static!
 		if (!$mime)
 		{
-			static $mime_magic;
-			if (is_null($mime_magic))
-			{
-				$mime_magic = new mime_magic();
-			}
-			$mime = $mime_magic->filename2mime(parse_url($url,PHP_URL_PATH));
+			$mime = mime_magic::filename2mime(parse_url($url,PHP_URL_PATH));
 		}
 		//error_log(__METHOD__."($path) mime=$mime");
 		return $mime;
@@ -855,7 +849,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param boolean $do_symlink=true is a direct match allowed, default yes (must be false for a lstat or readlink!)
 	 * @return string target or path, if path not found
 	 */
-	static protected function symlinkCache_resolve($path,$do_symlink=true)
+	static public function symlinkCache_resolve($path,$do_symlink=true)
 	{
 		// remove vfs scheme, but no other schemes (eg. filesystem!)
 		if ($path[0] != '/' && parse_url($path,PHP_URL_SCHEME) == self::SCHEME)

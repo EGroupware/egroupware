@@ -304,16 +304,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$this->stream_seek(0,SEEK_END);
 
-			static $mime_magic;
-			if (is_null($mime_magic))
-			{
-				$mime_magic = new mime_magic();
-			}
 			// we need to update the mime-type, size and content (if STORE2DB)
 			$values = array(
 				'fs_size' => $this->stream_tell(),
 				// todo: analyse the file for the mime-type
-				'fs_mime' => $mime_magic->filename2mime($this->opened_path),
+				'fs_mime' => mime_magic::filename2mime($this->opened_path),
 				'fs_id'   => $this->opened_fs_id,
 				'fs_modifier' => egw_vfs::$user,
 				'fs_modified' => self::_pdo_timestamp(time()),
