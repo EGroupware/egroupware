@@ -27,6 +27,27 @@
 class mime_magic
 {
 	/**
+	 * Get a user friendly label for a mime type: e.g. "PDF file (application/pdf)"
+	 *
+	 * @param string $mime
+	 * @return string
+	 */
+	public function mime2label($mime)
+	{
+		$mime = strtolower($mime);
+
+		if ($mime == egw_vfs::DIR_MIME_TYPE)
+		{
+			return lang('Directory');
+		}
+		elseif (!($ext = self::mime2ext($mime)))
+		{
+			return $mime;
+		}
+		return lang('%1 file',strtoupper($ext)).' ('.$mime.')';
+	}
+
+	/**
 	 * Convert a file extension to a MIME type
 	 *
 	 * This is the simplest MIME type guessing function - rough but fast.
@@ -92,6 +113,7 @@ class mime_magic
 	 */
 	public static function mime2ext($type)
 	{
+		$type = strtolower($type);
 		$key = array_search($type, self::$mime_extension_map);
 		if (empty($type) || $key === false)
 		{
@@ -294,7 +316,7 @@ class mime_magic
 		'odt'   => 'application/vnd.oasis.opendocument.text',
 		'odp'   => 'application/vnd.oasis.opendocument.presentation',
 		'ods'   => 'application/vnd.oasis.opendocument.spreadsheet',
-		'patch'	=> 'text/diff',
+		'patch'	=> 'text/x-diff',
 		'pbm'	=> 'image/x-portable-bitmap',
 		'pdb'	=> 'chemical/x-pdb',
 		'pdf'	=> 'application/pdf',

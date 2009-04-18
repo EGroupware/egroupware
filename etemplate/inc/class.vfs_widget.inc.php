@@ -212,14 +212,8 @@ class vfs_widget
 				}
 				//error_log(__METHOD__."() type=vfs-mime: value=".array2string($value).": mime=$mime, path=$path");
 				$cell['type'] = 'image';
-				if ($mime == egw_vfs::DIR_MIME_TYPE)
-				{
-					$cell['label'] = lang('Directory');
-				}
-				else
-				{
-					$cell['label'] = lang('%1 file',strtoupper(mime_magic::mime2ext($mime))).' ('.$mime.')';
-				}
+				$cell['label'] = mime_magic::mime2label($mime);
+
 				list($mime_main,$mime_sub) = explode('/',$mime);
 				if ($mime_main == 'egw')
 				{
