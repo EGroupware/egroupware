@@ -60,13 +60,21 @@ class idots_framework extends egw_framework
 	* @param string $template='idots' name of the template
 	* @return idots_framework
 	*/
-	function idots_framework($template='idots')
+	function __construct($template='idots')
 	{
 		$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 		$this->egw_framework($template);		// call the constructor of the extended class
 
 		$this->tplsav2 =& new tplsavant2();
 		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
+	}
+
+	/**
+	* @deprecated use __construct()
+	*/
+	function idots_framework($template='idots')
+	{
+		self::__construct($template);
 	}
 
 	/**
@@ -169,6 +177,10 @@ class idots_framework extends egw_framework
 			$this->sidebox('',$menu_title,$file);
 		}
 
+		// allow other apps to hook into sidebox menu of an app, hook-name: sidebox_$app
+		$GLOBALS['egw']->hooks->process('sidebox_'.$GLOBALS['egw_info']['flags']['currentapp'],
+			array($GLOBALS['egw_info']['flags']['currentapp']),true);	// true = call independent of app-permissions
+		// calling the old hook
 		$GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
 
 		if($this->sidebox_content)
@@ -182,7 +194,7 @@ class idots_framework extends egw_framework
 
 				$content .= $this->tpl->parse('out','sidebox_hide_footer');
 
-				$var['sideboxcolstart']='';
+				$var['sideboxcolstart'] = '';
 
 				$this->tpl->set_var($var);
 				$content .= $this->tpl->parse('out','appbox');
@@ -729,7 +741,7 @@ class idots_framework extends egw_framework
 			if(isset($item_link['icon']))
 			{
 				$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
-				$var['icon_or_star'] = $item_link['icon'] ? '<img style="margin:0px 2px 0px 2px" src="'.$GLOBALS['egw']->common->image($app,$item_link['icon']).'"/>' : False;
+				$var['icon_or_star'] = $item_link['icon'] ? '<img style="margin:0px 2px 0px 2px; height: 16px;" src="'.$GLOBALS['egw']->common->image($app,$item_link['icon']).'"/>' : False;
 			}
 			$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 			$var['item_link'] = $item_link['link'];
