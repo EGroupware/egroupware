@@ -51,7 +51,7 @@
 									</rows>
 								</grid>
 							</row>
-							<row disabled="@mode=open-multiple">
+							<row disabled="@mode=/(open-multiple|select-dir)/">
 								<textbox id="name" class="selectName" needed="1"/>
 							</row>
 							<row disabled="!@options-mime">
