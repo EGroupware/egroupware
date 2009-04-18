@@ -228,6 +228,17 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * file_exists() version working only inside the vfs
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	static function file_exists($path)
+	{
+		return $path[0] == '/' && file_exists(self::PREFIX.$path);
+	}
+
+	/**
 	 * Mounts $url under $path in the vfs, called without parameter it returns the fstab
 	 *
 	 * The fstab is stored in the eGW configuration and used for all eGW users.
