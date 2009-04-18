@@ -32,7 +32,7 @@ class mime_magic
 	 * @param string $mime
 	 * @return string
 	 */
-	public function mime2label($mime)
+	public static function mime2label($mime)
 	{
 		$mime = strtolower($mime);
 
