@@ -33,6 +33,9 @@ $GLOBALS['egw_info']['flags'] = array(
 );
 include ('../header.inc.php');
 
+// no need to keep the session open (it stops other parallel calls)
+$GLOBALS['egw']->session->commit_session();
+
 if (isset($_GET['path']))
 {
 	$g_srcfile = $_GET['path'];
