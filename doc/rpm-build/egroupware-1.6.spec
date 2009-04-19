@@ -29,7 +29,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Mandriva %{?mandriva_version}
 	%define php php
-	%define extra_requires apache2 php-mysql php-dom
+	%define extra_requires apache php-mysql php-dom
 	%define cron crontabs
 %endif
 %if 0%{?rhel_version}
