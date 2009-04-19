@@ -223,7 +223,7 @@ class vfs_widget
 					$class .= ($class ? ' ' : '') . 'vfsMimeIcon';
 					$cell['span'] = $span.','.$class;
 				}
-				elseif($path && $mime_main == 'image' && in_array($mime_sub,array('gif','jpeg','jpg','gif','bmp')) &&
+				elseif($path && $mime_main == 'image' && in_array($mime_sub,array('png','jpeg','jpg','gif','bmp')) &&
 					(string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
 					(string)$GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] != '0' &&
 					// check the size of the image, as too big images get no icon, but a PHP Fatal error:  Allowed memory size exhausted
