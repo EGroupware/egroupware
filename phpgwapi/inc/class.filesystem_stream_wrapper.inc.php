@@ -118,6 +118,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
 		$this->opened_stream = $this->opened_stream_url = null;
+		$read_only = str_replace('b','',$mode) == 'r';
 
 		// check access rights, based on the eGW mount perms
 		if (!($stat = self::url_stat($url,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
@@ -135,7 +136,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 		}
-		elseif ($mode != 'r' && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))	// we are not allowed to edit it
+		elseif (!$read_only && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))	// we are not allowed to edit it
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
 			if (!($options & STREAM_URL_STAT_QUIET))
@@ -144,7 +145,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			}
 			return false;
 		}
-		if ($mode != 'r' && self::deny_script($url))
+		if (!$read_only && self::deny_script($url))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) permission denied, file is a script!");
 			if (!($options & STREAM_URL_STAT_QUIET))
