@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -119,7 +119,7 @@ class calendar_ui
 	 * @var int $last last day of the shown view
 	 */
 	var $last;
-	
+
 	/**
 	 * @var array $states_to_save all states that will be saved to the user prefs
 	 */
@@ -252,16 +252,16 @@ class calendar_ui
 	function manage_states($set_states=NULL)
 	{
 		$states = $states_session = $GLOBALS['egw']->session->appsession('session_data','calendar');
-		
+
 		// retrieve saved states from prefs
 		if(!$states)
 		{
-			$states = unserialize($this->bo->cal_prefs['saved_states']);		
+			$states = unserialize($this->bo->cal_prefs['saved_states']);
 		}
-
+		// only look at _REQUEST, if we are in the calendar (prefs and admin show our sidebox menu too!)
 		if (is_null($set_states))
 		{
-			$set_states = $_REQUEST;
+			$set_states = substr($_GET['menuaction'],0,9) == 'calendar.' ? $_REQUEST : array();
 		}
 		if (!$states['date'] && $states['year'] && $states['month'] && $states['day'])
 		{
@@ -336,7 +336,7 @@ class calendar_ui
 			$states['view'] = $this->view = 'planner';
 		}
 		// set the actual view as return_to
-		if ($_GET['menuaction'] && $_GET['menuaction'])
+		if (isset($_GET['menuaction']))
 		{
 			list($app,$class,$func) = explode('.',$_GET['menuaction']);
 			if ($func == 'index')
@@ -455,7 +455,7 @@ class calendar_ui
 	{
 		if ($baseurl)	// we append the value to the baseurl
 		{
-			$baseurl .= strpos($baseurl,'?') === False ? '?' : '&';
+			if (substr($baseurl,-1) != '=') $baseurl .= strpos($baseurl,'?') === False ? '?' : '&';
 			$onchange="location='$baseurl'+this.value;";
 		}
 		else			// we add $name=value to the actual location
@@ -681,15 +681,21 @@ class calendar_ui
 			$link['week'],lang('show this week'),$link['month'],lang('show this month'));
 		$file[++$n] = array('text' => $jscalendar,'no_lang' => True,'link' => False,'icon' => False);
 
+		// set a baseurl for selectboxes, if we are not running inside calendar (eg. prefs or admin)
+		if (substr($_GET['menuaction'],0,9) != 'calendar.')
+		{
+			$baseurl = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiviews.index'));
+		}
 		// Category Selection
 		$file[++$n] = $this->_select_box('Category','cat_id',
 			'<option value="0">'.lang('All categories').'</option>'.
-		$this->cats->formatted_list('select','all',$this->cat_id,'True'));
+		$this->cats->formatted_list('select','all',$this->cat_id,'True'),$baseurl ? $baseurl.'&cat_id=' : '');
 
 		// Filter all or hideprivate
 		$file[] = $this->_select_box('Filter','filter',
 			'<option value="all"'.($this->filter=='all'?' selected="selected"':'').'>'.lang('No filter').'</option>'."\n".
-			'<option value="hideprivate"'.($this->filter=='hideprivate'?' selected="selected"':'').'>'.lang('Hide private infos').'</option>'."\n");
+			'<option value="hideprivate"'.($this->filter=='hideprivate'?' selected="selected"':'').'>'.lang('Hide private infos').'</option>'."\n",
+			$baseurl ? $baseurl.'&filter=' : '');
 
 		// Calendarselection: User or Group
 		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')
