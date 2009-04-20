@@ -38,7 +38,7 @@
  * The $app parameter should be either the app or the class name, which both are unique.
  *
  * The tree and instance wide cache uses a certain provider class, to store the data
- * eg. in memcached or if there's nothing else configured in the session.
+ * eg. in memcached or if there's nothing else configured in the filesystem (eGW's temp_dir).
  */
 class egw_cache
 {

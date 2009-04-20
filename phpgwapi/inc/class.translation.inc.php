@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Translations
- * 
+ *
  * @link http://www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org>
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
@@ -11,83 +11,87 @@
  * @version $Id$
  */
 
-// define the maximal length of a message_id, all message_ids have to be unique
-// in this length, our column is varchar 128
-if (!defined('MAX_MESSAGE_ID_LENGTH'))
-{
-	define('MAX_MESSAGE_ID_LENGTH',128);
-}
-// some constanst for pre php4.3
-if (!defined('PHP_SHLIB_SUFFIX'))
-{
-	define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
-}
-if (!defined('PHP_SHLIB_PREFIX'))
-{
-	define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
-}
-
-// Define prefix for langfiles (historically 'phpgw_')
-define('EGW_LANGFILE_PREFIX', 'egw_');
-define('PHPGW_LANGFILE_PREFIX', 'phpgw_');
-
 /**
  * eGroupWare API - Translations
+ *
+ * All methods of this class can now be called static.
+ *
+ * Translations are cached tree-wide via egw_cache class.
  */
 class translation
 {
-	var $userlang = 'en';
-	var $loaded_apps = array();
-	var $line_rejected = array();
-	var $lang_array = array();
-	var $lang_table = 'egw_lang';
-	var $languages_table = 'egw_languages';
-	var $config_table = 'egw_config';
 	/**
-	 * Instance of the db-class
-	 *
-	 * @var egw_db
-	 */
-	var $db;
-	/**
-	 * Mark untranslated strings with an asterisk (*), values '' or 'yes'
+	 * Language of current user, will be set by init()
 	 *
 	 * @var string
 	 */
-	var $markunstranslated;
+	static $userlang = 'en';
 
 	/**
-	 * Constructor, sets up a copy of the db-object, gets the system-charset and tries to load the mbstring extension
+	 * Already loaded translations by applicaton
+	 *
+	 * @var array $app => $lang pairs
 	 */
-	function translation($warnings = False)
-	{
-		for ($i = 1; $i <= 9; $i++) {
-			$this->placeholders[] = '%'.$i;
-		}
-		$this->db = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
+	static $loaded_apps = array();
 
-		if (!isset($GLOBALS['egw_setup'])) {
-			$this->system_charset = @$GLOBALS['egw_info']['server']['system_charset'];
-		} else {
-			$this->system_charset =& $GLOBALS['egw_setup']->system_charset;
-		}
+	/**
+	 * Loaded phrases
+	 *
+	 * @var array $message_id => $translation pairs
+	 */
+	static $lang_arr = array();
 
-		if (extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX)) {
-			$this->mbstring = true;
-			if(!empty($this->system_charset)) {
-				ini_set('mbstring.internal_encoding',$this->system_charset);
-			}
-			if (ini_get('mbstring.func_overload') < 7) {
-				if ($warnings) {
-					echo "<p>Warning: Please set <b>mbstring.func_overload = 7</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
-				}
-			}
-		} else {
-			if ($warnings) {
-				echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset, we are defaulting to <b>iconv</b> for now !!!</p>\n";
-			}
-		}
-	}
+	/**
+	 * Tables used by this class
+	 */
+	const LANG_TABLE = 'egw_lang';
+	const LANGUAGES_TABLE = 'egw_languages';
+
+	/**
+	 * Prefix of language files (historically 'phpgw_')
+	 */
+	const LANGFILE_PREFIX = 'egw_';
+	const OLD_LANGFILE_PREFIX = 'phpgw_';
+
+	/**
+	 * Maximal length of a message_id, all message_ids have to be unique in this length,
+	 * our column is varchar 128
+	 */
+	const MAX_MESSAGE_ID_LENGTH = 128;
+
+
+	/**
+	 * Reference to global db-class
+	 *
+	 * @var egw_db
+	 */
+	static $db;
+	/**
+	 * Mark untranslated strings with an asterisk (*)
+	 *
+	 * @var boolean
+	 */
+	static $markuntranslated=false;
+
+	/**
+	 * System charset
+	 *
+	 * @var string
+	 */
+	static $system_charset;
+
+	/**
+	 * Is the mbstring extension available
+	 *
+	 * @var boolean
+	 */
+	static $mbstring;
+	/**
+	 * Internal encoding / charset of mbstring (if loaded)
+	 *
+	 * @var string
+	 */
+	static $mbstring_internal_encoding;
 
 	/**
 	 * returns the charset to use (!$lang) or the charset of the lang-files or $lang
@@ -95,64 +99,85 @@ class translation
 	 * @param string/boolean $lang=False return charset of the active user-lang, or $lang if specified
 	 * @return string charset
 	 */
-	function charset($lang=False)
+	static function charset($lang=False)
 	{
+		static $charsets = array();
+
 		if ($lang)
 		{
-			if (!isset($this->charsets[$lang]))
+			if (!isset($charsets[$lang]))
 			{
-				if (!($this->charsets[$lang] = $this->db->select($this->lang_table,'content',array(
+				if (!($charsets[$lang] = self::$db->select(self::LANG_TABLE,'content',array(
 					'lang'		=> $lang,
 					'message_id'=> 'charset',
 					'app_name'	=> 'common',
-				),__LINE__,__FILE__)->fetchSingle()))
+				),__LINE__,__FILE__)->fetchColumn()))
 				{
-					$this->charsets[$lang] = 'iso-8859-1';
+					$charsets[$lang] = 'utf-8';
 				}
 			}
-			return $this->charsets[$lang];
+			return $charsets[$lang];
 		}
-		if ($this->system_charset)	// do we have a system-charset ==> return it
+		if (self::$system_charset)	// do we have a system-charset ==> return it
 		{
-			$charset = $this->system_charset;
+			$charset = self::$system_charset;
 		}
 		else
 		{
 			// if no translations are loaded (system-startup) use a default, else lang('charset')
-			$charset = !is_array(@$this->lang_arr) ? 'iso-8859-1' : strtolower($this->translate('charset'));
+			$charset = !self::$lang_arr ? 'utf-8' : strtolower(self::translate('charset'));
 		}
 		// we need to set our charset as mbstring.internal_encoding if mbstring.func_overlaod > 0
 		// else we get problems for a charset is different from the default utf-8
-		if (ini_get('mbstring.func_overload') && $this->mbstring_internal_encoding != $charset)
+		if (ini_get('mbstring.func_overload') && self::$mbstring_internal_encoding != $charset)
 		{
-			ini_set('mbstring.internal_encoding',$this->mbstring_internal_encoding = $charset);
-		}			
+			ini_set('mbstring.internal_encoding',self::$mbstring_internal_encoding = $charset);
+		}
 		return $charset;
 	}
 
 	/**
 	 * Initialises global lang-array and loads the 'common' and app-spec. translations
+	 *
+	 * @param boolean $load_translations=true should we also load translations for common and currentapp
 	 */
-	function init()
+	static function init($load_translations=true)
 	{
-		if (!is_array(@$this->lang_arr))
+		if (!isset(self::$db))
 		{
-			$this->lang_arr = array();
+			self::$db = isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 		}
+		if (!isset($GLOBALS['egw_setup']))
+		{
+			self::$system_charset = $GLOBALS['egw_info']['server']['system_charset'];
+		}
+		else
+		{
+			self::$system_charset =& $GLOBALS['egw_setup']->system_charset;
+		}
+		if ((self::$mbstring = check_load_extension('mbstring')))
+		{
+			if(!empty(self::$system_charset))
+			{
+				ini_set('mbstring.internal_encoding',self::$system_charset);
+			}
+		}
+		self::$markuntranslated = (boolean) $GLOBALS['egw_info']['server']['markuntranslated'];
 
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'])
+		if ($load_translations)
 		{
-			$this->userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'])
+			{
+				self::$userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			}
+			self::add_app('common');
+			if (!count(self::$lang_arr))
+			{
+				self::$userlang = 'en';
+				self::add_app('common');
+			}
+			self::add_app($GLOBALS['egw_info']['flags']['currentapp']);
 		}
-		$this->add_app('common');
-		if (!count($this->lang_arr))
-		{
-			$this->userlang = 'en';
-			$this->add_app('common');
-		}
-		$this->add_app($GLOBALS['egw_info']['flags']['currentapp']);
-		
-		$this->markunstranslated = $GLOBALS['egw_info']['server']['markuntranslated'];
 	}
 
 	/**
@@ -163,34 +188,36 @@ class translation
 	 * @param string $not_found='*' what to add to not found phrases, default '*'
 	 * @return string with translation
 	 */
-	function translate($key, $vars=false, $not_found='*' )
+	static function translate($key, $vars=false, $not_found='*' )
 	{
-		if (!is_array(@$this->lang_arr) || !count($this->lang_arr))
+		static $placeholders = array('%1','%2','%3','%4','%5','%6','%7','%8','%9','%10');
+
+		if (!self::$lang_arr)
 		{
-			$this->init();
+			self::init();
 		}
 		$ret = $key;				// save key if we dont find a translation
-		if ($not_found && $this->markunstranslated) $ret .= $not_found;
+		if ($not_found && self::$markuntranslated) $ret .= $not_found;
 
-		if (isset($this->lang_arr[$key]))
+		if (isset(self::$lang_arr[$key]))
 		{
-			$ret = $this->lang_arr[$key];
+			$ret = self::$lang_arr[$key];
 		}
 		else
 		{
-			$new_key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
+			$new_key = strtolower(trim(substr($key,0,self::MAX_MESSAGE_ID_LENGTH)));
 
-			if (isset($this->lang_arr[$new_key]))
+			if (isset(self::$lang_arr[$new_key]))
 			{
 				// we save the original key for performance
-				$ret = $this->lang_arr[$key] =& $this->lang_arr[$new_key];
+				$ret = self::$lang_arr[$key] =& self::$lang_arr[$new_key];
 			}
 		}
 		if (is_array($vars) && count($vars))
 		{
 			if (count($vars) > 1)
 			{
-				$ret = str_replace($this->placeholders,$vars,$ret);
+				$ret = str_replace($placeholders,$vars,$ret);
 			}
 			else
 			{
@@ -201,47 +228,77 @@ class translation
 	}
 
 	/**
-	 * adds translations for an application from the database to the lang-array
+	 * Adds translations for an application
+	 *
+	 * By default the translations are read from the tree-wide cache
 	 *
 	 * @param string $app name of the application to add (or 'common' for the general translations)
-	 * @param string/boolean $lang=false 2 or 5 char lang-code or false for the users language
+	 * @param string|boolean $lang=false 2 or 5 char lang-code or false for the users language
 	 */
-	function add_app($app,$lang=False)
+	static function add_app($app,$lang=False)
 	{
-		$lang = $lang ? $lang : $this->userlang;
+		$lang = $lang ? $lang : self::$userlang;
 
-		if (!isset($this->loaded_apps[$app]) || $this->loaded_apps[$app] != $lang)
+		if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang)
 		{
-			if ($app == 'setup') return $this->add_setup($lang);
+			//$start = microtime(true);
+			$loaded =& egw_cache::getTree(__CLASS__,$app.':'.$lang,array(__CLASS__,'load_app'),array($app,$lang));
 
-			foreach($this->db->select($this->lang_table,'message_id,content',array(
+			self::$lang_arr = self::$lang_arr ? array_merge(self::$lang_arr,$loaded) : $loaded;
+			self::$loaded_apps[$app] = $lang;
+			//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr).": ".function_backtrace());
+		}
+	}
+
+	/**
+	 * Loads translations for an application from the database or direct from the lang-file for setup
+	 *
+	 * Never use directly, use add_app(), which employes caching (it has to be public, to act as callback for the cache!).
+	 *
+	 * @param string $app name of the application to add (or 'common' for the general translations)
+	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
+	 * @return array the loaded strings
+	 */
+	static function &load_app($app,$lang)
+	{
+		//$start = microtime(true);
+		if ($app == 'setup')
+		{
+			$loaded =& self::load_setup($lang);
+		}
+		else
+		{
+			$loaded = array();
+			foreach(self::$db->select(self::LANG_TABLE,'message_id,content',array(
 				'lang'		=> $lang,
 				'app_name'	=> $app,
 			),__LINE__,__FILE__) as $row)
 			{
-				$this->lang_arr[strtolower ($row['message_id'])] = $row['content'];
+				$loaded[strtolower($row['message_id'])] = $row['content'];
 			}
-			$this->loaded_apps[$app] = $lang;
 		}
+		//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms");
+		return $loaded;
 	}
 
 	/**
 	 * Adds setup's translations, they are not in the DB!
 	 *
 	 * @param string $lang 2 or 5 char lang-code
+	 * @return array with loaded phrases
 	 */
-	function add_setup($lang)
+	protected static function &load_setup($lang)
 	{
 		foreach(array(
-			EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . $lang . '.lang',
-			EGW_SERVER_ROOT.'/setup/lang/' . PHPGW_LANGFILE_PREFIX . $lang . '.lang',
-			EGW_SERVER_ROOT.'/setup/lang/' . EGW_LANGFILE_PREFIX . 'en.lang',
-			EGW_SERVER_ROOT.'/setup/lang/' . PHPGW_LANGFILE_PREFIX . 'en.lang',
+			EGW_SERVER_ROOT.'/setup/lang/' . self::LANGFILE_PREFIX . $lang . '.lang',
+			EGW_SERVER_ROOT.'/setup/lang/' . self::OLD_LANGFILE_PREFIX . $lang . '.lang',
+			EGW_SERVER_ROOT.'/setup/lang/' . self::LANGFILE_PREFIX . 'en.lang',
+			EGW_SERVER_ROOT.'/setup/lang/' . self::OLD_LANGFILE_PREFIX . 'en.lang',
 		) as $fn)
 		{
-			if (file_exists($fn))
+			if (file_exists($fn) && ($fp = fopen($fn,'r')))
 			{
-				$fp = fopen($fn,'r');
+				$phrases = array();
 				while ($data = fgets($fp,8000))
 				{
 					// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
@@ -249,15 +306,11 @@ class translation
 					$phrases[strtolower(trim($message_id))] = str_replace("\n",'',$content);
 				}
 				fclose($fp);
-				
-				foreach($phrases as $message_id => $content)
-				{
-					$this->lang_arr[$message_id] = $this->convert($content,$phrases['charset']);
-				}
+
+				return self::convert($phrases,$phrases['charset']);
 			}
-			break;
 		}
-		$this->loaded_apps['setup'] = $lang;
+		return array(); // nothing found (should never happen, as the en translations always exist)
 	}
 
 	/**
@@ -265,7 +318,7 @@ class translation
 	 *
 	 * @var array
 	 */
-	var $langs;
+	static $langs;
 
 	/**
 	 * returns a list of installed langs
@@ -273,27 +326,27 @@ class translation
 	 * @param boolean $force_read=false force a re-read of the languages
 	 * @return array with lang-code => descriptiv lang-name pairs
 	 */
-	function get_installed_langs($force_read=false)
+	static function get_installed_langs($force_read=false)
 	{
-		if (!is_array($this->langs) || $force_read)
+		if (!is_array(self::$langs) || $force_read)
 		{
-			$this->langs = array();
-			foreach($this->db->select($this->lang_table,'DISTINCT lang,lang_name','lang = lang_id',__LINE__,__FILE__,
-				false,'',false,0,','.$this->languages_table) as $row)
+			self::$langs = array();
+			foreach(self::$db->select(self::LANG_TABLE,'DISTINCT lang,lang_name','lang = lang_id',__LINE__,__FILE__,
+				false,'',false,0,','.self::LANGUAGES_TABLE) as $row)
 			{
-				$this->langs[$row['lang']] = $row['lang_name'];
+				self::$langs[$row['lang']] = $row['lang_name'];
 			}
-			if (!$this->langs)
+			if (!self::$langs)
 			{
 				return false;
 			}
-			foreach($this->langs as $lang => $name)
+			foreach(self::$langs as $lang => $name)
 			{
-				$this->langs[$lang] = $this->translate($name,False,'');
+				self::$langs[$lang] = self::translate($name,False,'');
 			}
-			uasort($this->langs,'strcasecmp');
+			uasort(self::$langs,'strcasecmp');
 		}
-		return $this->langs;
+		return self::$langs;
 	}
 
 	/**
@@ -302,13 +355,13 @@ class translation
 	 * @param string $lang
 	 * @return string/false language or false if not found
 	 */
-	function lang2language($lang)
+	static function lang2language($lang)
 	{
-		if (isset($this->langs[$lang]))	// no need to query the DB
+		if (isset(self::$langs[$lang]))	// no need to query the DB
 		{
-			return $this->langs[$lang];
+			return self::$langs[$lang];
 		}
-		return $this->db->select($this->languages_table,'lang_name',array('lang_id' => $lang),__LINE__,__FILE__)->fetchSingle();
+		return self::$db->select(self::LANGUAGES_TABLE,'lang_name',array('lang_id' => $lang),__LINE__,__FILE__)->fetchColumn();
 	}
 
 	/**
@@ -316,9 +369,9 @@ class translation
 	 *
 	 * @return array with lang_id => lang_name pairs
 	 */
-	function list_langs()
+	static function list_langs()
 	{
-		$languages = $this->get_installed_langs();	// used translated installed languages
+		$languages = self::get_installed_langs();	// used translated installed languages
 
 		$availible = array();
 		$f = fopen(EGW_SERVER_ROOT.'/setup/lang/languages','rb');
@@ -329,9 +382,9 @@ class translation
 		}
 		fclose($f);
 		$availible = "('".implode("','",$availible)."')";
-		
+
 		// this shows first the installed, then the available and then the rest
-		foreach($this->db->select($this->languages_table,array(
+		foreach(self::$db->select(self::LANGUAGES_TABLE,array(
 			'lang_id','lang_name',
 			"CASE WHEN lang_id IN $availible THEN 1 ELSE 0 END AS availible",
 		),"lang_id NOT IN ('".implode("','",array_keys($languages))."')",__LINE__,__FILE__,false,' ORDER BY availible DESC,lang_name') as $row)
@@ -342,54 +395,28 @@ class translation
 	}
 
 	/**
-	 * Cached charsets
-	 *
-	 * @var array
-	 */
-	var $charsets;
-
-	/**
 	 * returns a list of installed charsets
 	 *
 	 * @return array with charset as key and comma-separated list of langs useing the charset as data
 	 */
-	function get_installed_charsets()
+	static function get_installed_charsets()
 	{
-		if (!is_array($this->charsets))
-		{
-			$this->get_installed_langs();
+		static $charsets;
 
-			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
-			$this->charsets = array();
-			foreach($this->db->select($this->lang_table,$distinct.' lang,lang_name,content AS charset',array(
-				'message_id' => 'charset',
-			),__LINE__,__FILE__,false,'',false,0,",$this->languages_table WHERE lang = lang_id") as $row)
-			{
-				$data = &$this->charsets[$charset = strtolower($row['charset'])];
-				$lang = $this->langs[$row['lang']].' ('.$row['lang'].')';
-				if ($distinct || strpos($data,$lang) === false)
-				{
-					$data .= ($data ? ', ' : $charset.': ').$lang;
-				}						
-			}
-			if (!$this->charsets)
-			{
-				return False;
-			}
-			// add the old charsets, to provide some alternatives to utf-8 while importing
-			foreach(array(
+		if (!isset($charsets))
+		{
+			$charsets = array(
+				'utf-8'      => lang('all languages'),
 				'iso-8859-1' => 'Western european',
 				'iso-8859-2' => 'Eastern european',
 				'iso-8859-7' => 'Greek',
 				'euc-jp'     => 'Japanese',
 				'euc-kr'     => 'Korean',
-				'koi8-r'     => 'Russian',				
-				'windows-1251' => 'Bulgarian') as $charset => $lang)
-			{
-				$this->charsets[$charset] .= (!isset($this->charsets[$charset]) ? $charset.': ' : ', ') . $lang;
-			}
+				'koi8-r'     => 'Russian',
+				'windows-1251' => 'Bulgarian',
+			);
 		}
-		return $this->charsets;
+		return $charsets;
 	}
 
 	/**
@@ -398,65 +425,63 @@ class translation
 	 * @param string/array $data string(s) to convert
 	 * @param string/boolean $from charset $data is in or False if it should be detected
 	 * @param string/boolean $to charset to convert to or False for the system-charset the converted string
+	 * @param boolean $check_to_from=true internal to bypass all charset replacements
 	 * @return string/array converted string(s) from $data
 	 */
-	function convert($data,$from=False,$to=False)
+	static function convert($data,$from=False,$to=False,$check_to_from=true)
 	{
+		if ($check_to_from)
+		{
+			if ($from) $from = strtolower($from);
+
+			if ($to) $to = strtolower($to);
+
+			if (!$from)
+			{
+				$from = self::$mbstring ? strtolower(mb_detect_encoding($data)) : 'iso-8859-1';
+				if($from == 'ascii')
+				{
+					$from = 'iso-8859-1';
+				}
+				//echo "<p>autodetected charset of '$data' = '$from'</p>\n";
+			}
+			/*
+				 php does not seem to support gb2312
+				 but seems to be able to decode it as EUC-CN
+			*/
+			switch($from)
+			{
+				case 'gb2312':
+				case 'gb18030':
+					$from = 'EUC-CN';
+					break;
+				case 'us-ascii':
+				case 'macroman':
+				case 'iso8859-1':
+				case 'windows-1258':
+				case 'windows-1252':
+					$from = 'iso-8859-1';
+					break;
+				case 'windows-1250':
+					$from = 'iso-8859-2';
+					break;
+			}
+			if (!$to)
+			{
+				$to = self::charset();
+			}
+			if ($from == $to || !$from || !$to || !$data)
+			{
+				return $data;
+			}
+		}
 		if (is_array($data))
 		{
 			foreach($data as $key => $str)
 			{
-				$ret[$key] = $this->convert($str,$from,$to);
+				$ret[$key] = self::convert($str,$from,$to,false);	// false = bypass the above checks, as they are already done
 			}
 			return $ret;
-		}
-
-		if ($from)
-		{
-			$from = strtolower($from);
-		}
-		if ($to)
-		{
-			$to = strtolower($to);
-		}
-
-		if (!$from)
-		{
-			$from = $this->mbstring ? strtolower(mb_detect_encoding($data)) : 'iso-8859-1';
-			if($from == 'ascii')
-			{
-				$from = 'iso-8859-1';
-			}
-			//echo "<p>autodetected charset of '$data' = '$from'</p>\n";
-		}
-		/*
-			 php does not seem to support gb2312
-			 but seems to be able to decode it as EUC-CN
-		*/
-		switch($from)
-		{
-			case 'gb2312':
-			case 'gb18030':
-				$from = 'EUC-CN';
-				break;
-			case 'us-ascii':
-			case 'macroman':
-			case 'iso8859-1':
-			case 'windows-1258':
-			case 'windows-1252':
-				$from = 'iso-8859-1';
-				break;
-			case 'windows-1250':
-				$from = 'iso-8859-2';
-				break;
-		}
-		if (!$to)
-		{
-			$to = $this->charset();
-		}
-		if ($from == $to || !$from || !$to || !$data)
-		{
-			return $data;
 		}
 		if ($from == 'iso-8859-1' && $to == 'utf-8')
 		{
@@ -466,22 +491,22 @@ class translation
 		{
 			return utf8_decode($data);
 		}
-		if ($this->mbstring && @mb_convert_encoding($data,$to,$from)!="")
+		if (self::$mbstring && ($data = mb_convert_encoding($data,$to,$from)) != '')
 		{
-			return @mb_convert_encoding($data,$to,$from);
+			return $data;
 		}
-		if(function_exists('iconv'))
+		if (function_exists('iconv'))
 		{
 			// iconv can not convert from/to utf7-imap
-			if ($to == 'utf7-imap' && function_exists(imap_utf7_encode)) 
+			if ($to == 'utf7-imap' && function_exists(imap_utf7_encode))
 			{
 				$convertedData = iconv($from, 'iso-8859-1', $data);
 				$convertedData = imap_utf7_encode($convertedData);
-				
+
 				return $convertedData;
 			}
 
-			if ($from == 'utf7-imap' && function_exists(imap_utf7_decode)) 
+			if ($from == 'utf7-imap' && function_exists(imap_utf7_decode))
 			{
 				$convertedData = imap_utf7_decode($data);
 				$convertedData = iconv('iso-8859-1', $to, $convertedData);
@@ -490,25 +515,29 @@ class translation
 			}
 
 			// the following is to workaround patch #962307
-			// if using EUC-CN, for iconv it strickly follow GB2312 and fail 
-			// in an email on the first Traditional/Japanese/Korean character, 
-			// but in reality when people send mails in GB2312, UMA mostly use 
+			// if using EUC-CN, for iconv it strickly follow GB2312 and fail
+			// in an email on the first Traditional/Japanese/Korean character,
+			// but in reality when people send mails in GB2312, UMA mostly use
 			// extended GB13000/GB18030 which allow T/Jap/Korean characters.
-			if($from=='EUC-CN') 
+			if($from == 'EUC-CN')
 			{
-				$from='gb18030';
+				$from = 'gb18030';
 			}
 
-			if (($convertedData = iconv($from,$to,$data))) 
+			if (($convertedData = iconv($from,$to,$data)))
 			{
 				return $convertedData;
 			}
 		}
-		#die("<p>Can't convert from charset '$from' to '$to' without the <b>mbstring extension</b> !!!</p>");
-
-		// this is not good, not convert did succed
 		return $data;
 	}
+
+	/**
+	 * rejected lines from install_langs()
+	 *
+	 * @var array
+	 */
+	static $line_rejected = array();
 
 	/**
 	 * installs translations for the selected langs into the database
@@ -517,16 +546,20 @@ class translation
 	 * @param string $upgrademethod='dumpold' 'dumpold' (recommended & fastest), 'addonlynew' languages, 'addmissing' phrases
 	 * @param string/boolean $only_app=false app-name to install only one app or default false for all
 	 */
-	function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
+	static function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
 	{
+		if (is_null(self::$db))
+		{
+			self::init(false);
+		}
 		@set_time_limit(0);	// we might need some time
 		//echo "<p>translation_sql::install_langs(".print_r($langs,true).",'$upgrademthod','$only_app')</p>\n";
 		if (!isset($GLOBALS['egw_info']['server']) && $upgrademethod != 'dumpold')
 		{
-			if (($ctimes = $this->db->select($this->config_table,'config_value',array(
+			if (($ctimes = self::$db->select(config::TABLE,'config_value',array(
 				'config_app'	=> 'phpgwapi',
 				'config_name'	=> 'lang_ctimes',
-			),__LINE__,__FILE__)->fetchSingle()))
+			),__LINE__,__FILE__)->fetchColumn()))
 			{
 				$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize(stripslashes($ctimes));
 			}
@@ -536,12 +569,12 @@ class translation
 		{
 			return;
 		}
-		$this->db->transaction_begin();
+		self::$db->transaction_begin();
 
 		if ($upgrademethod == 'dumpold')
 		{
 			// dont delete the custom main- & loginscreen messages every time
-			$this->db->delete($this->lang_table,array("app_name!='mainscreen'","app_name!='loginscreen'"),__LINE__,__FILE__);
+			self::$db->delete(self::LANG_TABLE,array("app_name!='mainscreen'","app_name!='loginscreen'"),__LINE__,__FILE__);
 			//echo '<br>Test: dumpold';
 			$GLOBALS['egw_info']['server']['lang_ctimes'] = array();
 		}
@@ -552,9 +585,9 @@ class translation
 			if ($upgrademethod == 'addonlynew')
 			{
 				//echo "<br>Test: addonlynew - select count(*) from egw_lang where lang='".$lang."'";
-				if (!$this->db->select($this->lang_table,'COUNT(*)',array(
+				if (!self::$db->select(self::LANG_TABLE,'COUNT(*)',array(
 					'lang' => $lang,
-				),__LINE__,__FILE__)->fetchSingle())
+				),__LINE__,__FILE__)->fetchColumn())
 				{
 					//echo '<br>Test: addonlynew - True';
 					$addlang = True;
@@ -566,7 +599,7 @@ class translation
 				if (!is_object($GLOBALS['egw_setup']))
 				{
 					$GLOBALS['egw_setup'] =& CreateObject('setup.setup');
-					$GLOBALS['egw_setup']->db = clone($this->db);
+					$GLOBALS['egw_setup']->db = clone(self::$db);
 				}
 				$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
 				$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
@@ -575,8 +608,8 @@ class translation
 				// Visit each app/setup dir, look for a egw_lang file
 				foreach($apps as $app)
 				{
-					$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . EGW_LANGFILE_PREFIX . strtolower($lang) . '.lang';
-					$old_appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . PHPGW_LANGFILE_PREFIX . strtolower($lang) . '.lang';
+					$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . self::LANGFILE_PREFIX . strtolower($lang) . '.lang';
+					$old_appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . self::OLD_LANGFILE_PREFIX . strtolower($lang) . '.lang';
 					//echo '<br>Checking in: ' . $app;
 					if($GLOBALS['egw_setup']->app_registered($app) && (file_exists($appfile) || file_exists($appfile=$old_appfile)))
 					{
@@ -591,12 +624,12 @@ class translation
 							{
 								$line_display = str_replace(array("\t","\n"),
 									array("<font color='red'><b>\\t</b></font>","<font color='red'><b>\\n</b></font>"), $line);
-								$this->line_rejected[] = array(
+								self::$line_rejected[] = array(
 									'appfile' => $appfile,
 									'line'    => $line_display,
 								);
 							}
-							$message_id = substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH);
+							$message_id = substr(strtolower(chop($message_id)),0,self::MAX_MESSAGE_ID_LENGTH);
 							$app_name = chop($app_name);
 							$raw[$app_name][$message_id] = $content;
 						}
@@ -604,29 +637,29 @@ class translation
 						{
 							$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['egw_info']['server']['lang_ctimes']);
 						}
-						$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] = filectime($appfile);
+						$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] = filemtime($appfile);
 					}
 				}
-				$charset = strtolower(@$raw['common']['charset'] ? $raw['common']['charset'] : $this->charset($lang));
-				//echo "<p>lang='$lang', charset='$charset', system_charset='$this->system_charset')</p>\n";
+				$charset = strtolower(@$raw['common']['charset'] ? $raw['common']['charset'] : self::charset($lang));
+				//echo "<p>lang='$lang', charset='$charset', system_charset='self::$system_charset')</p>\n";
 				//echo "<p>raw($lang)=<pre>".print_r($raw,True)."</pre>\n";
 				foreach($raw as $app_name => $ids)
 				{
 					foreach($ids as $message_id => $content)
 					{
-						if ($this->system_charset)
+						if (self::$system_charset)
 						{
-							$content = $this->convert($content,$charset,$this->system_charset);
+							$content = self::convert($content,$charset,self::$system_charset);
 						}
 						$addit = False;
 						//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
 						if ($upgrademethod == 'addmissing')
 						{
 							//echo '<br>Test: addmissing';
-							$rs = $this->db->select($this->lang_table,"content,CASE WHEN app_name IN ('common') THEN 1 ELSE 0 END AS in_api",array(
+							$rs = self::$db->select(self::LANG_TABLE,"content,CASE WHEN app_name IN ('common') THEN 1 ELSE 0 END AS in_api",array(
 								'message_id' 	=> $message_id,
 								'lang'			=> $lang,
-								$this->db->expression($this->lang_table,'(',array(
+								self::$db->expression(self::LANG_TABLE,'(',array(
 									'app_name' => $app_name
 								)," OR app_name='common') ORDER BY in_api DESC")),__LINE__,__FILE__);
 
@@ -646,7 +679,7 @@ class translation
 									$addit = $content != ($row2 ? $row2['content'] : $row['content']);
 									if ($addit)	// if we want to add/update it ==> delete it
 									{
-										$this->db->delete($this->lang_table,array(
+										self::$db->delete(self::LANG_TABLE,array(
 											'message_id'	=> $message_id,
 											'lang'			=> $lang,
 											'app_name'		=> $app_name,
@@ -661,7 +694,7 @@ class translation
 							if($message_id && $content)
 							{
 								// echo "<br>adding - insert into egw_lang values ('$message_id','$app_name','$lang','$content')";
-								$result = $this->db->insert($this->lang_table,array(
+								$result = self::$db->insert(self::LANG_TABLE,array(
 									'message_id'	=> $message_id,
 									'app_name'		=> $app_name,
 									'lang'			=> $lang,
@@ -675,10 +708,13 @@ class translation
 							}
 						}
 					}
+					// delete the cache
+					egw_cache::unsetTree(__CLASS__,$app_name.':'.$lang);
+					//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) deleted cache for app=$app_name and lang=$lang.");
 				}
 			}
 		}
-		$this->db->transaction_commit();
+		self::$db->transaction_commit();
 
 		// update the ctimes of the installed langsfiles for the autoloading of the lang-files
 		//
@@ -688,7 +724,7 @@ class translation
 	/**
 	 * re-loads all (!) langfiles if one langfile for the an app and the language of the user has changed
 	 */
-	function autoload_changed_langfiles()
+	static function autoload_changed_langfiles()
 	{
 		//echo "<h1>check_langs()</h1>\n";
 		if ($GLOBALS['egw_info']['server']['lang_ctimes'] && !is_array($GLOBALS['egw_info']['server']['lang_ctimes']))
@@ -702,8 +738,8 @@ class translation
 		$apps['phpgwapi'] = True;	// check the api too
 		foreach($apps as $app => $data)
 		{
-			$fname = EGW_SERVER_ROOT . "/$app/setup/" . EGW_LANGFILE_PREFIX . "$lang.lang";
-			$old_fname = EGW_SERVER_ROOT . "/$app/setup/" . PHPGW_LANGFILE_PREFIX . "$lang.lang";
+			$fname = EGW_SERVER_ROOT . "/$app/setup/" . self::LANGFILE_PREFIX . "$lang.lang";
+			$old_fname = EGW_SERVER_ROOT . "/$app/setup/" . self::OLD_LANGFILE_PREFIX . "$lang.lang";
 
 			if (file_exists($fname) || file_exists($fname = $old_fname))
 			{
@@ -717,9 +753,9 @@ class translation
 				if ($ctime != $ltime)
 				{
 					// update all langs
-					$installed = $this->get_installed_langs();
+					$installed = self::get_installed_langs();
 					//echo "<p>install_langs(".print_r($installed,True).")</p>\n";
-					$this->install_langs($installed ? array_keys($installed) : array());
+					self::install_langs($installed ? array_keys($installed) : array());
 					break;
 				}
 			}
@@ -734,17 +770,17 @@ class translation
 	 * @param boolean $DEBUG=false debug messages or not, default not
 	 * @return array with installed langs
 	 */
-	function get_langs($DEBUG=False)
+	static function get_langs($DEBUG=False)
 	{
 		if($DEBUG)
 		{
 			echo '<br>get_langs(): checking db...' . "\n";
 		}
-		if (!$this->langs)
+		if (!self::$langs)
 		{
-			$this->get_installed_langs();
+			self::get_installed_langs();
 		}
-		return $this->langs ? array_keys($this->langs) : array();
+		return self::$langs ? array_keys(self::$langs) : array();
 	}
 
 	/**
@@ -754,17 +790,17 @@ class translation
 	 * @param boolean $DEBUG=false debug messages or not, default not
 	 * @return boolean true if $appname had translations installed, false otherwise
 	 */
-	function drop_langs($appname,$DEBUG=False)
+	static function drop_langs($appname,$DEBUG=False)
 	{
 		if($DEBUG)
 		{
 			echo '<br>drop_langs(): Working on: ' . $appname;
 		}
-		if ($this->db->select($this->lang_table,'COUNT(*)',array(
+		if (self::$db->select(self::LANG_TABLE,'COUNT(*)',array(
 			'app_name' => $appname
-		),__LINE__,__FILE__)->fetchSingle())
+		),__LINE__,__FILE__)->fetchColumn())
 		{
-			$this->db->delete($this->lang_table,array(
+			self::$db->delete(self::LANG_TABLE,array(
 				'app_name' => $appname
 			),__LINE__,__FILE__);
 			return True;
@@ -779,9 +815,9 @@ class translation
 	 * @param boolean $DEBUG=false debug messages or not, default not
 	 * @param array/boolean $force_langs=false array with langs to install anyway (beside the allready installed ones), or false for none
 	 */
-	function add_langs($appname,$DEBUG=False,$force_langs=False)
+	static function add_langs($appname,$DEBUG=False,$force_langs=False)
 	{
-		$langs = $this->get_langs($DEBUG);
+		$langs = self::get_langs($DEBUG);
 		if(is_array($force_langs))
 		{
 			foreach($force_langs as $lang)
@@ -799,9 +835,9 @@ class translation
 			_debug_array($langs);
 		}
 
-		$this->install_langs($langs,'addmissing',$appname);
+		self::install_langs($langs,'addmissing',$appname);
 	}
-	
+
 	/**
 	 * insert/update one phrase in the lang-table
 	 *
@@ -810,9 +846,9 @@ class translation
 	 * @param string $message_id
 	 * @param string $content
 	 */
-	function write($lang,$app_name,$message_id,$content)
+	static function write($lang,$app_name,$message_id,$content)
 	{
-		$this->db->insert($this->lang_table,array(
+		self::$db->insert(self::LANG_TABLE,array(
 			'content' => $content,
 		),array(
 			'lang' => $lang,
@@ -829,15 +865,15 @@ class translation
 	 * @param string $message_id
 	 * @return string/boolean content or false if not found
 	 */
-	function read($lang,$app_name,$message_id)
+	static function read($lang,$app_name,$message_id)
 	{
-		return $this->db->select($this->lang_table,'content',array(
+		return self::$db->select(self::LANG_TABLE,'content',array(
 			'lang' => $lang,
 			'app_name' => $app_name,
 			'message_id' => $message_id,
-		),__LINE__,__FILE__)->fetchSingle();
+		),__LINE__,__FILE__)->fetchColumn();
 	}
-	
+
 	/**
 	 * Return the message_id of a given translation
 	 *
@@ -846,14 +882,14 @@ class translation
 	 * @param string $lang='' default check all langs
 	 * @return string
 	 */
-	function get_message_id($translation,$app=null,$lang=null)
+	static function get_message_id($translation,$app=null,$lang=null)
 	{
-		$like = $this->db->Type == 'pgsql' ? 'ILIKE' : 'LIKE';
-		$where = array('content '.$like.' '.$this->db->quote($translation));	// like to be case-insensitive
+		$like = self::$db->Type == 'pgsql' ? 'ILIKE' : 'LIKE';
+		$where = array('content '.$like.' '.self::$db->quote($translation));	// like to be case-insensitive
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
-		
-		return $this->db->select($this->lang_table,'message_id',$where,__LINE__,__FILE__)->fetchSingle();
+
+		return self::$db->select(self::LANG_TABLE,'message_id',$where,__LINE__,__FILE__)->fetchColumn();
 	}
 
 	/**
@@ -863,26 +899,32 @@ class translation
 	 * @param string $displayCharset the charset parameter specifies the character set to represent the result by (if iconv_mime_decode is to be used)
 	 * @return string
 	 */
-	function decodeMailHeader($_string, $displayCharset='utf-8')
+	static function decodeMailHeader($_string, $displayCharset='utf-8')
 	{
 		//error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
-		if(function_exists(imap_mime_header_decode)) {
+		if(function_exists(imap_mime_header_decode))
+		{
 			$newString = '';
 
 			$string = preg_replace('/\?=\s+=\?/', '?= =?', $_string);
 
 			$elements=imap_mime_header_decode($string);
 
-			foreach((array)$elements as $element) {
-				if ($element->charset == 'default')
-					$element->charset = 'iso-8859-1';
+			foreach((array)$elements as $element)
+			{
+				if ($element->charset == 'default') $element->charset = 'iso-8859-1';
+
 				$newString .= self::convert($element->text,$element->charset);
 			}
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
-		} elseif(function_exists(mb_decode_mimeheader)) {
+		}
+		elseif(function_exists(mb_decode_mimeheader))
+		{
 			$string = $_string;
-			if(preg_match_all('/=\?.*\?Q\?.*\?=/iU', $string, $matches)) {
-				foreach($matches[0] as $match) {
+			if(preg_match_all('/=\?.*\?Q\?.*\?=/iU', $string, $matches))
+			{
+				foreach($matches[0] as $match)
+				{
 					$fixedMatch = str_replace('_', ' ', $match);
 					$string = str_replace($match, $fixedMatch, $string);
 				}
@@ -891,7 +933,9 @@ class translation
 			}
 			$string = mb_decode_mimeheader($string);
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
-		} elseif(function_exists(iconv_mime_decode)) {
+		}
+		elseif(function_exists(iconv_mime_decode))
+		{
 			// continue decoding also if an error occurs
 			$string = @iconv_mime_decode($_string, 2, $displayCharset);
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);

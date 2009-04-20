@@ -60,6 +60,28 @@ function array2string($var)
 }
 
 /**
+ * Check if a given extension is loaded or load it if possible (requires sometimes disabled dl function)
+ *
+ * @param string $extension
+ * @param boolean $throw=false should we throw an exception, if $extension could not be loaded, default false = no
+ * @return boolean true if loaded now, false otherwise
+ */
+function check_load_extension($extension,$throw=false)
+{
+	if (!defined('PHP_SHLIB_PREFIX'))
+	{
+		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+	}
+	$loaded = extension_loaded($extension) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
+
+	if (!($loaded))
+	{
+		throw new Exception ("PHP extension '$ext' not loaded AND can NOT be loaded via dl('$dl')!");
+	}
+	return $loaded;
+}
+
+/**
  * @internal Not to be used directly. Should only be used by print_debug()
  */
 function print_debug_subarray($array)
@@ -1325,7 +1347,7 @@ if (!function_exists('lang'))	// setup declares an own version
 			$vars = func_get_args();
 			array_shift($vars);	// remove $key
 		}
-		return $GLOBALS['egw']->translation->translate($key,$vars);
+		return translation::translate($key,$vars);
 	}
 }
 
@@ -1348,9 +1370,7 @@ function try_lang($key,$vars=null)
 		$vars = func_get_args();
 		array_shift($vars);	// remove $key
 	}
-	return is_object($GLOBALS['egw'])  && isset($GLOBALS['egw']->translations) ?
-		$GLOBALS['egw']->translation->translate($key,$vars) :
-		str_replace($varnames,$vars,$key);
+	return class_exists(translations,false) ? translation::translate($key,$vars) : str_replace($varnames,$vars,$key);
 }
 
 /**

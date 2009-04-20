@@ -22,11 +22,9 @@ $GLOBALS['egw_setup']->loaddb();
 
 if (@$_POST['submit'])
 {
-	$GLOBALS['egw_setup']->translation->setup_translation_sql();
-	$GLOBALS['egw_setup']->translation->sql->install_langs(@$_POST['lang_selected'],@$_POST['upgrademethod']);
+	translation::install_langs(@$_POST['lang_selected'],@$_POST['upgrademethod']);
 
-
-	if( !$GLOBALS['egw_setup']->translation->sql->line_rejected )
+	if(!translation::$line_rejected )
 	{
 		Header('Location: index.php');
 		exit;
@@ -89,10 +87,10 @@ else
 }
 
 // Rejected Lines
-if($_POST['debug'] && count($GLOBALS['egw_setup']->translation->sql->line_rejected))
+if($_POST['debug'] && count(translation::$line_rejected))
 {
 	$str = '';
-	foreach($GLOBALS['egw_setup']->translation->sql->line_rejected as $badline)
+	foreach(translation::$line_rejected as $badline)
 	{
 		$_f_buffer = split("[/\\]", $badline['appfile']);
 		$str .= lang('Application: %1, File: %2, Line: "%3"','<b>'.$_f_buffer[count($_f_buffer)-3].'</b>',

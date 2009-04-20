@@ -49,7 +49,7 @@ class egw extends egw_minimal
 	 * @var common
 	 */
 	var $common;
-	
+
 	private $cat_cache;
 
 	/**
@@ -128,6 +128,7 @@ class egw extends egw_minimal
 		//$GLOBALS['egw_info']['server'] = config::read('phpgwapi'); would unserialize arrays
 
 		// setup the other subclasses
+		// translation class is here only for backward compatibility, as all it's methods can be called static now
 		$this->translation    = new translation();
 		$this->common         = new common();
 		$this->accounts       = accounts::getInstance();
@@ -154,7 +155,7 @@ class egw extends egw_minimal
 			$this->check_app_rights();
 
 			$this->load_optional_classes();
-			
+
 			$this->cat_cache =& categories::init_cache();
 		}
 		else	// set the defines for login, in case it's more then just login
@@ -182,7 +183,7 @@ class egw extends egw_minimal
 		register_shutdown_function(array($this, 'shutdown'));
 
 		$this->define_egw_constants();
-		
+
 		categories::init_cache($this->cat_cache);
 	}
 
@@ -200,7 +201,8 @@ class egw extends egw_minimal
 		{
 			$this->template->set_root(EGW_APP_TPL);
 		}
-		$this->translation->add_app($GLOBALS['egw_info']['flags']['currentapp']);
+		// init the translation class, necessary as own wakeup would run before our's
+		translation::init();
 
 		// verify the session
 		$GLOBALS['egw']->verify_session();
@@ -439,20 +441,20 @@ class egw extends egw_minimal
 	/**
 	 * Shortcut to translation class
 	 *
-	 * This function is a basic wrapper to translation->translate()
+	 * This function is a basic wrapper to translation::translate()
 	 *
 	 * @deprecated only used in the old timetracker
 	 * @param  string	The key for the phrase
-	 * @see	translation->translate()
+	 * @see	translation::translate()
 	 */
-	function lang($key,$args=null)
+	static function lang($key,$args=null)
 	{
 		if (!is_array($args))
 		{
 			$args = func_get_args();
 			array_shift($args);
 		}
-		return $this->translation->translate($key,$args);
+		return translation::translate($key,$args);
 	}
 
 	/**
