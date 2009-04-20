@@ -68,7 +68,7 @@ class egw_cache
 	 *
 	 * @var array
 	 */
-	static $default_provider = array('egw_cache_files');// array('egw_cache_memcache','localhost',11211);
+	static $default_provider = array('egw_cache_files');// array('egw_cache_memcache','localhost');
 
 	/**
 	 * Set some data in the cache
