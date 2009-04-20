@@ -103,7 +103,7 @@ class etemplate_request
 	{
 		if (is_null(self::$request_class))
 		{
-			self::$request_class = extension_loaded('mcrypt') && function_exists('gzcompress') &&
+			self::$request_class = check_load_extension('mcrypt') && function_exists('gzcompress') &&
 				self::init_crypt() ? __CLASS__ : 'etemplate_request_session';
 		}
 		if (self::$request_class != __CLASS__)
@@ -342,7 +342,7 @@ class etemplate_request
 			{
 				$key = $GLOBALS['egw_info']['server']['db_pass'].EGW_SERVER_ROOT;
 			}
-			if (!extension_loaded('mcrypt') && (!function_exists('dl') || !@dl(PHP_SHLIB_PREFIX.'mcrypt'.'.'.PHP_SHLIB_SUFFIX)))
+			if (!check_load_extension('mcrypt'))
 			{
 				error_log(__METHOD__."() required PHP extension mcrypt not loaded and can not be loaded, eTemplate requests get NOT encrypted!");
 				return false;

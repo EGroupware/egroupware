@@ -75,7 +75,6 @@ class setup_header
 
 		$GLOBALS['egw_info']['server']['show_domain_selectbox'] = false;
 		$GLOBALS['egw_info']['server']['db_persistent'] = True;
-		$GLOBALS['egw_info']['server']['sessions_type'] = !$this->check_load_extension('session') ? 'db' :'php4';
 		$GLOBALS['egw_info']['login_template_set'] = 'idots';
 		$GLOBALS['egw_info']['server']['mcrypt_enabled'] = False;
 		$GLOBALS['egw_info']['server']['versions']['mcrypt'] = '';
@@ -228,15 +227,6 @@ class setup_header
 		return $iv;
 	}
 
-	/**
-	 * checks if a named extension is loaded or loadable
-	 */
-	function check_load_extension($extension)
-	{
-		return extension_loaded($extension) ||
-			function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
-	}
-
 	function check_db_support(&$detected)
 	{
 		$supported_db = $detected = array();
@@ -254,7 +244,7 @@ class setup_header
 			$ext = array_shift($data);
 			$func_to_check = array_shift($data);
 			$name = isset($this->db_fullnames[$db]) ? $this->db_fullnames[$db] : strtoupper($db);
-			if ($this->check_load_extension($ext) || $func_to_check && function_exists($func_to_check))
+			if (check_load_extension($ext) || $func_to_check && function_exists($func_to_check))
 			{
 				$detected[] = lang('You appear to have %1 support.',$name);
 				$supported_db = array_merge($supported_db,$data);

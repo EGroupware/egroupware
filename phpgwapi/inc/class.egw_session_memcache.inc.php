@@ -70,10 +70,8 @@ class egw_session_memcache
 	 */
 	public static function open($save_path, $session_name)
 	{
-		if (!extension_loaded('memcache') && !dl(PHP_SHLIB_PREFIX.'memcache.'.PHP_SHLIB_SUFFIX))
-		{
-			throw new Exception("Required PHP extension 'memcache' not loaded AND can NOT be loaded!");
-		}
+		check_load_extension('memcache',true);	// true = throw exception if not loadable
+
 		self::$memcache = new Memcache;
 		foreach(explode(',',$save_path) as $path)
 		{

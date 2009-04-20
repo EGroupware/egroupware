@@ -176,7 +176,7 @@ $checks = array(
 		'func' => 'php_ini_check',
 		'value' => 7,
 		'warning' => '<div class="setup_info">' . lang('The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>",
-		'change' => extension_loaded('mbstring')  || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX) ? 'mbstring.func_overload = 7' : '',
+		'change' => check_load_extension('mbstring') ? 'mbstring.func_overload = 7' : '',
 	),
 	'ldap' => array(
 		'func' => 'extension_check',
@@ -422,7 +422,7 @@ function extension_check($name,$args)
 		return True;	// check only under windows
 	}
 	// we check for the existens of 'dl', as multithreaded webservers dont have it !!!
-	$available = extension_loaded($name) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
+	$available = check_load_extension($name);
 
 	echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.lang('Checking extension %1 is loaded or loadable',$name).': '.($available ? lang('True') : lang('False'))."</span></div>\n";
 

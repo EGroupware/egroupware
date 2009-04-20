@@ -1462,10 +1462,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			foreach(array('pdo','pdo_'.self::$pdo_type) as $ext)
 			{
-				if (!extension_loaded($ext) && function_exists('dl') && !dl($dl=PHP_SHLIB_PREFIX.$ext.'.'.PHP_SHLIB_SUFFIX))
-				{
-					throw new Exception ("PHP extension '$ext' not loaded AND can NOT be loaded via dl('$dl')!");
-				}
+				check_load_extension($ext,true);	// true = throw Exception
 			}
 			$pdo_available = true;
 		}

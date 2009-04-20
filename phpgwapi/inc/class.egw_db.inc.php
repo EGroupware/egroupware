@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -46,15 +46,6 @@
  *		}
  */
 
-// some constanst for pre php4.3
-if (!defined('PHP_SHLIB_SUFFIX'))
-{
-	define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
-}
-if (!defined('PHP_SHLIB_PREFIX'))
-{
-	define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
-}
 if(empty($GLOBALS['egw_info']['server']['db_type']))
 {
 	$GLOBALS['egw_info']['server']['db_type'] = 'mysql';
@@ -406,8 +397,7 @@ class egw_db
 					$this->Host != $GLOBALS['egw']->db->Host ||
 					$this->Port != $GLOBALS['egw']->db->Port)))
 			{
-				if (!extension_loaded($php_extension) && (!function_exists('dl') ||
-					!dl(PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX)))
+				if (!check_load_extension($php_extension))
 				{
 					$this->halt("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
 					return null;	// in case error-reporting = 'no'

@@ -20,16 +20,6 @@
  * @version $Id$
  */
 
-// some constants for pre php4.3
-if (!defined('PHP_SHLIB_SUFFIX'))
-{
-	define('PHP_SHLIB_SUFFIX',$is_windows ? 'dll' : 'so');
-}
-if (!defined('PHP_SHLIB_PREFIX'))
-{
-	define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
-}
-
 /**
  * eGW session handling
  *
@@ -381,7 +371,7 @@ class egw_session
 		}
 		if (is_null(self::$mcrypt))
 		{
-			if (!extension_loaded('mcrypt') && (!function_exists('dl') || !@dl(PHP_SHLIB_PREFIX.'mcrypt'.'.'.PHP_SHLIB_SUFFIX)))
+			if (!check_load_extension('mcrypt'))
 			{
 				error_log(__METHOD__."() required PHP extension mcrypt not loaded and can not be loaded, sessions get NOT encrypted!");
 				return false;
