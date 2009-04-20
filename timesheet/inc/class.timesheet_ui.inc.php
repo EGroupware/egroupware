@@ -606,7 +606,7 @@ class timesheet_ui extends timesheet_bo
 		if (!$have_cats || $query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
-		if (!$rows['no_owner_col'] && !strpos($query['selectcols'],'ts_owner')) $rows['no_owner_col'] = 1;
+		if (!$rows['no_owner_col'] && $query['selectcols'] && !strpos($query['selectcols'],'ts_owner')) $rows['no_owner_col'] = 1;
 		if ($query['filter'])
 		{
 			$rows += $this->summary;
@@ -616,9 +616,9 @@ class timesheet_ui extends timesheet_bo
 		if (!$rows['ts_viewtype']) {
 			#_debug_array($query['selectcols']);
 			#ts_quantity,ts_unitprice,ts_total
-			if (strpos($query['selectcols'],'ts_quantity')===false) $rows['no_ts_quantity'] = 1;
-			if (strpos($query['selectcols'],'ts_unitprice')===false) $rows['no_ts_unitprice'] = 1;
-			if (strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
+			if ($query['selectcols'] && strpos($query['selectcols'],'ts_quantity')===false) $rows['no_ts_quantity'] = 1;
+			if ($query['selectcols'] && strpos($query['selectcols'],'ts_unitprice')===false) $rows['no_ts_unitprice'] = 1;
+			if ($query['selectcols'] && strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
 		}
 		$rows['no_ts_status'] = $query['no_status'];
 		return $total;
@@ -697,7 +697,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
-
+		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows']) $content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
 		$sel_options = array(
 		'ts_owner'   => $read_grants,
 		'pm_id'      => array(lang('No project')),
