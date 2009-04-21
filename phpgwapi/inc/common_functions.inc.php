@@ -60,7 +60,7 @@ function array2string($var)
 }
 
 /**
- * Check if a given extension is loaded or load it if possible (requires sometimes disabled dl function)
+ * Check if a given extension is loaded or load it if possible (requires sometimes disabled or unavailable dl function)
  *
  * @param string $extension
  * @param boolean $throw=false should we throw an exception, if $extension could not be loaded, default false = no
@@ -72,11 +72,12 @@ function check_load_extension($extension,$throw=false)
 	{
 		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
 	}
+	// we check for the existens of 'dl', as multithreaded webservers dont have it and some hosters disable it !!!
 	$loaded = extension_loaded($extension) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
 
-	if (!($loaded))
+	if (!$loaded && $throw)
 	{
-		throw new Exception ("PHP extension '$ext' not loaded AND can NOT be loaded via dl('$dl')!");
+		throw new Exception ("PHP extension '$extension' not loaded AND can NOT be loaded via dl('$dl')!");
 	}
 	return $loaded;
 }
