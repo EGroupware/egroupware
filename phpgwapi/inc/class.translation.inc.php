@@ -330,6 +330,8 @@ class translation
 	{
 		if (!is_array(self::$langs) || $force_read)
 		{
+			if (is_null(self::$db)) self::init(false);
+
 			self::$langs = array();
 			foreach(self::$db->select(self::LANG_TABLE,'DISTINCT lang,lang_name','lang = lang_id',__LINE__,__FILE__,
 				false,'',false,0,','.self::LANGUAGES_TABLE) as $row)
@@ -548,10 +550,8 @@ class translation
 	 */
 	static function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
 	{
-		if (is_null(self::$db))
-		{
-			self::init(false);
-		}
+		if (is_null(self::$db)) self::init(false);
+
 		@set_time_limit(0);	// we might need some time
 		//echo "<p>translation_sql::install_langs(".print_r($langs,true).",'$upgrademthod','$only_app')</p>\n";
 		if (!isset($GLOBALS['egw_info']['server']) && $upgrademethod != 'dumpold')
@@ -796,6 +796,8 @@ class translation
 		{
 			echo '<br>drop_langs(): Working on: ' . $appname;
 		}
+		if (is_null(self::$db)) self::init(false);
+
 		if (self::$db->select(self::LANG_TABLE,'COUNT(*)',array(
 			'app_name' => $appname
 		),__LINE__,__FILE__)->fetchColumn())
