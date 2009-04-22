@@ -493,7 +493,7 @@ class translation
 		{
 			return utf8_decode($data);
 		}
-		if (self::$mbstring && ($data = mb_convert_encoding($data,$to,$from)) != '')
+		if (self::$mbstring && ($data = @mb_convert_encoding($data,$to,$from)) != '')
 		{
 			return $data;
 		}
