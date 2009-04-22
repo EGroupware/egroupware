@@ -1246,7 +1246,10 @@ class etemplate extends boetemplate
 			case 'cancel':	// cancel button
 				list($app) = explode('.',$this->name);
 				list($img,$ro_img) = explode(',',$cell_options);
-				if (strpos($img,'/') !== false) list($app,$img) = explode('/',$img,2);	// allow to specify app in image name
+				if ($img[0] != '/' && strpos($img,'/') !== false && count($img_parts = explode('/',$img)) == 2)
+				{
+					list($app,$img) = $img_parts;	// allow to specify app in image name (eg. img='addressbook/navbar')
+				}
 				$title = strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label);
 				if ($cell['onclick'] &&
 					($onclick = $this->expand_name($cell['onclick'],$show_c,$show_row,$content['.c'],$content['.row'],$content)))
