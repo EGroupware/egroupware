@@ -25,6 +25,9 @@
  * @version $Id$
  */
 
+// needed for check_load_extension (session-handler gets included before regular include via the header.inc.php)
+require_once(EGW_API_INC.'/common_functions.inc.php');
+
 /**
  * File based php sessions or all other build in handlers configures via session_module_name() or php.ini: session.save_handler
  *
