@@ -686,7 +686,7 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 		}
 		// check backend for extended acls (only if path given)
-		$ret = $path && self::_call_on_backend('check_extended_acl',array($path,$check),true);	// true = fail silent if backend does not support
+		$ret = $path && self::_call_on_backend('check_extended_acl',array(isset($stat['url'])?$stat['url']:$path,$check),true);	// true = fail silent if backend does not support
 
 		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) ".($ret ? 'backend extended acl granted access.' : 'no access!!!'));
 		return $ret;
@@ -949,7 +949,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			return 'etemplate/'.$icon;
 		}
-		return html::image('etemplate',$icon,lang($mime_type));
+		return html::image('etemplate',$icon,mime_magic::mime2label($mime_type));
 	}
 
 	/**
