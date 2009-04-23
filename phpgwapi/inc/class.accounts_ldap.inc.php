@@ -627,7 +627,7 @@ class accounts_ldap
 		// if it's a limited query, check if the unlimited query is cached
 		$start = $param['start'];
 		if (!($maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatchs = 15;
-		if (!($offset = $param['offset'])) $offset = $start + $maxmatchs;
+		if (!($offset = $param['offset'])) $offset = $maxmatchs;
 		unset($param['start']);
 		unset($param['offset']);
 		$unl_serial = serialize($param);
