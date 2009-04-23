@@ -110,6 +110,10 @@ class filemanager_ui
 				{
 					$msg .= lang('The requested path %1 is not available.',$path);
 				}
+				// reset lettersearch as it confuses users (they think the dir is empty)
+				$content['nm']['searchletter'] = false;
+				// switch recusive display off
+				if (!$content['nm']['filter']) $content['nm']['filter'] = '1';
 			}
 		}
 		// check if we have a failed upload AND upload_max_filesize >= post_max_size --> no $_POST array
