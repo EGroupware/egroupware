@@ -716,9 +716,12 @@ class accounts_ldap
 				// if we do not have a start, or want the members of a certain group, we want all, that way we dont want to or the uids
 				// since if we have a whole lot of members, it slows the query down
 				// if you work with very big groups, it may present a problem
-				if (is_numeric($start) || is_numeric($param['type'])) {
+				if (is_numeric($start) || is_numeric($param['type']))
+				{
 					$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";
-				} else {
+				}
+				else
+				{
 					$filter = "(" . "&(objectclass=posixaccount)" . $this->account_filter . ")";
 				}
 
@@ -759,7 +762,19 @@ class accounts_ldap
 				}
 				else
 				{
-					$filter = "(&(objectclass=posixgroup)(cn=*$query*))";
+					switch($param['query_type'])
+					{
+						case 'all':
+						default:
+							$query = '*'.$query;
+							// fall-through
+						case 'start':
+							$query .= '*';
+							// fall-through
+						case 'exact':
+							break;
+					}
+					$filter = "(&(objectclass=posixgroup)(cn=$query))";
 				}
 				$sri = ldap_search($this->ds, $this->group_context, $filter,array('cn','gidNumber'));
 				$allValues = ldap_get_entries($this->ds, $sri);
