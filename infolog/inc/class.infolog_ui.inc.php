@@ -65,7 +65,8 @@ class infolog_ui
 			'edit'      => 'edit.gif',      'edit_alt'      => 'Edit',
 			'addfile'   => 'addfile.gif',   'addfile_alt'   => 'Add a file',
 			'delete'    => 'delete.gif',    'delete_alt'    => 'Delete',
-			'close'     => 'done.gif',      'close_alt'     => 'Close' ),
+			'close'     => 'done.gif',      'close_alt'     => 'Close' ,
+			'close_all' => 'done_all.gif',  'close_all_alt' => 'Close' ),
 		'status' => array(
 			'billed'    => 'billed.gif',    'billed_alt'    => 'billed',
 			'done'      => 'done.gif',      'done_alt'      => 'done',
@@ -162,7 +163,10 @@ class infolog_ui
 			$info = $this->bo->read($info);
 		}
 		$id = $info['info_id'];
-		$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed';
+		$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed' || $info['info_status'] == 'cancelled'; //cancelled is regarded as a completed status as well in bo
+		// regard an infolog as done/billed/cancelled if its percentage is 100% when there is to status like the above for that type
+		if (!$done && !isset($this->bo->status[$info['info_type']]['done']) && !isset($this->bo->status[$info['info_type']]['billed']) &&
+			!isset($this->bo->status[$info['info_type']]['cancelled']) && (int)$info['info_percent']==100) $done = true ; 
 		$info['sub_class'] = $this->bo->enums['priority'][$info['info_priority']] . ($done ? '_done' : '');
 		if (!$done && $info['info_enddate'] < $this->bo->user_time_now)
 		{
@@ -171,13 +175,18 @@ class infolog_ui
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 		$info['info_percent'] = (int) $info['info_percent'].'%';
-
-		$readonlys["edit[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || // edit rights or more then standard responsible rights
-			$this->bo->is_responsible($info) && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')));
+		$editrights = $this->bo->check_access($info,EGW_ACL_EDIT);
+		$isresposible = $this->bo->is_responsible($info);
+		$readonlys["edit[$id]"] = !($editrights || // edit rights or more then standard responsible rights
+			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')));
 		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
-			!($this->bo->check_access($info,EGW_ACL_EDIT) || $this->bo->is_responsible($info)));
+			!($editrights || $isresposible));
+		$readonlys["close_all[$id]"] = ($done) || !$info['info_anz_subs'] || ($readonlys["edit_status[$id]"] =
+			!($editrights || $isresposible)); // this one is supressed, when you are not allowed to edit, or not responsible, or the entry is closed
+			// and has no children. If you want that this one is shown if there are children regardless of the status of the current or its childs,
+			// then modify ($done) to ($done && !$info['info_anz_subs'])
 		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] =
-			!$this->bo->check_access($info,EGW_ACL_EDIT) && !$this->bo->is_responsible($info) &&
+			!$editrights && !$isresposible &&
 			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
 		$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
 		$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
@@ -551,7 +560,9 @@ class infolog_ui
 						}
 						break;
 					case 'close':
-						$this->close($do_id,$called_as);
+						$closesingle=true;
+					case 'close_all':
+						$this->close($do_id,$called_as,$closesingle);
 						break;
 					case 'sp':
 						return $this->edit(0,'sp',$do_id,'',$called_as);
@@ -647,28 +658,43 @@ class infolog_ui
 	 * @param int|array $values=0 info_id (default _GET[info_id])
 	 * @param string $referer=''
 	 */
-	function close($values=0,$referer='')
+	function close($values=0,$referer='',$closesingle=false)
 	{
-		//echo "<p>".__METHOD__."($values,$referer)</p>\n";
+		//echo "<p>".__METHOD__."($values,$referer,$closeall)</p>\n";
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 		$referer = is_array($values) ? $values['referer'] : $referer;
 
 		if ($info_id)
 		{
+			$info = $this->bo->read($info_id);
+			#_debug_array($info);
+			$status = $info['info_status'];
+			// closed stati assumed array('done','billed','cancelled')
+			if (isset($this->bo->status[$info['info_type']]['done'])) {
+				$status ='done';
+			} elseif (isset($this->bo->status[$info['info_type']]['billed'])) {
+				$status ='billed';
+			} elseif (isset($this->bo->status[$info['info_type']]['cancelled'])) {
+				$status ='cancelled';
+			}
+			#_debug_array($status);
 			$values = array(
 				'info_id'     => $info_id,
-				'info_status' => 'done',
+				'info_type'   => $info['info_type'],
+				'info_status' => $status,
 				'info_percent'=> 100,
 				'info_datecompleted' => $this->bo->now_su,
 			);
 			$this->bo->write($values);
 
 			$query = array('action'=>'sp','action_id'=>$info_id);
-			foreach((array)$this->bo->search($query) as $info)
-			{
-				if ($info['info_id_parent'] == $info_id)	// search also returns linked entries!
+			if (!$closesingle) {
+				foreach((array)$this->bo->search($query) as $info)
 				{
-					$this->close($info['info_id'],$referer);	// we call ourselfs recursive to process subs from subs too
+					if ($info['info_id_parent'] == $info_id)	// search also returns linked entries!
+					{
+						$this->close($info['info_id'],$referer,$closeall);	// we call ourselfs recursive to process subs from subs too
+					}
 				}
 			}
 		}

@@ -522,9 +522,9 @@ class infolog_bo
 			{
 				$responsible =& $values['info_responsible'];
 			}
-			if (!($status_only = in_array($this->user, $responsible)))	// responsible has implicit right to change status
+			if (!($status_only = in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
 			{
-				$status_only = !!array_intersect($responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
+				$status_only = !!array_intersect((array)$responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
 			}
 			if (!$status_only && $values['info_status'] != 'deleted')
 			{
@@ -554,7 +554,23 @@ class infolog_bo
 			{
 				$values['info_datecompleted'] = $this->user_time_now;
 				$values['info_percent'] = '100%';
-				if (!in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = 'done';
+				$forcestatus = true;
+				$status = 'done';
+				if (isset($values['info_type']) && !in_array($values['info_status'],array('done','billed','cancelled'))) {
+					$forcestatus = false;
+					echo "set_completed:"; _debug_array($this->status[$values['info_type']]);
+					if (isset($this->status[$values['info_type']]['done'])) {
+						$forcestatus = true;
+						$status = 'done';
+					} elseif (isset($this->status[$values['info_type']]['billed'])) {
+						$forcestatus = true;
+						$status = 'billed';
+					} elseif (isset($this->status[$values['info_type']]['cancelled'])) {
+						$forcestatus = true;
+						$status = 'cancelled';
+					}
+				}
+				if ($forcestatus && !in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = $status;
 			}
 			$check_defaults = False;
 		}
@@ -571,7 +587,22 @@ class infolog_bo
 			}
 			if ((int)$values['info_percent'] == 100 && !in_array($values['info_status'],array('done','billed','cancelled')))
 			{
-				$values['info_status'] = 'done';
+				//echo "check_defaults:"; _debug_array($this->status[$values['info_type']]);
+				//$values['info_status'] = 'done';
+				$status = 'done';
+				if (isset($values['info_type'])) {
+					if (isset($this->status[$values['info_type']]['done'])) {
+                        $status = 'done';
+					} elseif (isset($this->status[$values['info_type']]['billed'])) {
+						$status = 'billed';
+					} elseif (isset($this->status[$values['info_type']]['cancelled'])) {
+						$status = 'cancelled';
+					} else {
+						// since the comlete stati above do not exist for that type, dont change it
+						$status = $values['info_status'];
+					}
+				}
+				$values['info_status'] = $status;
 			}
 			if ($values['info_responsible'] && $values['info_status'] == 'offer')
 			{
@@ -611,6 +642,7 @@ class infolog_bo
 		{
 			$values['info_modifier'] = $this->so->user;
 		}
+		//_debug_array($values);
 		$to_write = $values;
 		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
 		// convert user- to system-time
