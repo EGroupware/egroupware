@@ -254,7 +254,7 @@ class solangfile
 
 		$langarray = array();
 		$fd = EGW_SERVER_ROOT . SEP . $app . SEP . ($app == 'setup' ? 'lang' : 'setup');
-		$fn = $fd . SEP . EGW_LANGFILE_PREFIX . $userlang . '.lang';
+		$fn = $fd . SEP . translation::LANGFILE_PREFIX . $userlang . '.lang';
 
 		if (@is_writeable($fn) || is_writeable($fd))
 		{
@@ -262,8 +262,8 @@ class solangfile
 		}
 		if (!$target) $this->src_apps = array();
 
-		$from = $GLOBALS['egw']->translation->charset($userlang);
-		$to = $GLOBALS['egw']->translation->charset();
+		$from = translation::charset($userlang);
+		$to = translation::charset();
 		//echo "<p>solangfile::load_app('$app','$userlang') converting from charset('$userlang')='$from' to '$to'</p>\n";
 
 		if (file_exists($fn))
@@ -291,7 +291,7 @@ class solangfile
 						$this->src_apps[$app_name] = $app_name;
 					}
 					$langarray[$_mess_id]['content']    =
-						$GLOBALS['egw']->translation->convert(trim($content),$from,$to);
+						translation::convert(trim($content),$from,$to);
 				 }
 				 fclose($fp);
 			}
@@ -321,11 +321,11 @@ class solangfile
 
 	function write_file($app_name,$langarray,$userlang,$which='target')
 	{
-		$to = $GLOBALS['egw']->translation->charset($userlang);
-		$from = $GLOBALS['egw']->translation->charset();
+		$to = translation::charset($userlang);
+		$from = translation::charset();
 		//echo "<p>solangfile::write_file('$app_name',,'$userlang') converting from '$from' to charset('$userlang')='$to'</p>\n";
 
-		$fn = EGW_SERVER_ROOT . SEP . $app_name . SEP . ($app_name == 'setup' ? 'lang' : 'setup') . SEP . EGW_LANGFILE_PREFIX . $userlang . '.lang';
+		$fn = EGW_SERVER_ROOT . SEP . $app_name . SEP . ($app_name == 'setup' ? 'lang' : 'setup') . SEP . translation::LANGFILE_PREFIX . $userlang . '.lang';
 		if (file_exists($fn))
 		{
 			$backup = $fn . '.old';
@@ -335,7 +335,7 @@ class solangfile
 		$fp = fopen($fn,'wb');
 		while(list($mess_id,$data) = @each($langarray))
 		{
-			$data['content'] = $GLOBALS['egw']->translation->convert(trim($data['content']),$from,$to);
+			$data['content'] = translation::convert(trim($data['content']),$from,$to);
 
 			// dont write empty content
 			if (!empty($data['content']))
@@ -362,7 +362,7 @@ class solangfile
 		{
 			$userlangs = array($userslangs => $userlangs);
 		}
-		$GLOBALS['egw']->translation->install_langs($userlangs,'addmissing',$app_name);
+		translation::install_langs($userlangs,'addmissing',$app_name);
 
 		return lang('done');
 	}
