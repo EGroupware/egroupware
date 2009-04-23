@@ -125,7 +125,7 @@ class egw_cache
 					return null;
 				}
 				$data = $provider->get($keys=self::keys($level,$app,$location));
-				if (is_null($data))
+				if (is_null($data) && !is_null($callback))
 				{
 					//error_log(__METHOD__."($level,$app,$location,".array2string($callback).','.array2string($callback_params).",$expiration) calling calback to create data.");
 					$data = call_user_func_array($callback,$callback_params);
