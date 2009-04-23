@@ -242,7 +242,7 @@ class translation
 		if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang)
 		{
 			//$start = microtime(true);
-			$loaded =& egw_cache::getTree(__CLASS__,$app.':'.$lang,array(__CLASS__,'load_app'),array($app,$lang));
+			$loaded =& egw_cache::getTree(__CLASS__,$app.':'.$lang,__CLASS__.'::load_app',array($app,$lang));
 
 			self::$lang_arr = self::$lang_arr ? array_merge(self::$lang_arr,$loaded) : $loaded;
 			self::$loaded_apps[$app] = $lang;
@@ -287,7 +287,7 @@ class translation
 	 * @param string $lang 2 or 5 char lang-code
 	 * @return array with loaded phrases
 	 */
-	protected static function &load_setup($lang)
+	static protected function &load_setup($lang)
 	{
 		foreach(array(
 			EGW_SERVER_ROOT.'/setup/lang/' . self::LANGFILE_PREFIX . $lang . '.lang',
@@ -332,12 +332,9 @@ class translation
 		{
 			if (is_null(self::$db)) self::init(false);
 
-			self::$langs = array();
-			foreach(self::$db->select(self::LANG_TABLE,'DISTINCT lang,lang_name','lang = lang_id',__LINE__,__FILE__,
-				false,'',false,0,','.self::LANGUAGES_TABLE) as $row)
-			{
-				self::$langs[$row['lang']] = $row['lang_name'];
-			}
+			// we only cache the translation installed for the instance, not the return of this method, which is user-language dependent
+			self::$langs = egw_cache::getInstance(__CLASS__,'installed_langs',__CLASS__.'::read_installed_langs');
+
 			if (!self::$langs)
 			{
 				return false;
@@ -349,6 +346,24 @@ class translation
 			uasort(self::$langs,'strcasecmp');
 		}
 		return self::$langs;
+	}
+
+	/**
+	 * Read the installed languages from the db
+	 *
+	 * Never use directly, use get_installed_langs(), which employes caching (it has to be public, to act as callback for the cache!).
+	 *
+	 * @return array
+	 */
+	static function &read_installed_langs()
+	{
+		$langs = array();
+		foreach(self::$db->select(self::LANG_TABLE,'DISTINCT lang,lang_name','lang = lang_id',__LINE__,__FILE__,
+			false,'',false,0,','.self::LANGUAGES_TABLE) as $row)
+		{
+			$langs[$row['lang']] = $row['lang_name'];
+		}
+		return $langs;
 	}
 
 	/**
@@ -367,12 +382,17 @@ class translation
 	}
 
 	/**
-	 * List all languages, first the installed ones, then the availible ones and last the rest
+	 * List all languages, first the installed ones, then the available ones and last the rest
 	 *
+	 * @param boolean $force_read=false
 	 * @return array with lang_id => lang_name pairs
 	 */
-	static function list_langs()
+	static function list_langs($force_read=false)
 	{
+		if (!$force_read)
+		{
+			return egw_cache::getInstance(__CLASS__,'list_langs',__METHOD__,array(true));
+		}
 		$languages = self::get_installed_langs();	// used translated installed languages
 
 		$availible = array();
@@ -714,6 +734,10 @@ class translation
 				}
 			}
 		}
+		// delete the cache
+		egw_cache::unsetInstance(__CLASS__,'installed_langs');
+		egw_cache::unsetInstance(__CLASS__,'list_langs');
+
 		self::$db->transaction_commit();
 
 		// update the ctimes of the installed langsfiles for the autoloading of the lang-files
