@@ -454,7 +454,7 @@ please set your global preferences	common	de	Bitte editieren Sie Ihre globalen E
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung !
 please wait...	common	de	Bitte warten...
 poland	common	de	POLEN
-portugal	common	de	PORTUGA
+portugal	common	de	PORTUGAL
 postal	common	de	Postadresse
 powered by	common	de	Powered by
 powered by egroupware version %1	common	de	Powered by <a href="http://www.egroupware.org" target="_blank">eGroupWare</a> version %1
@@ -533,6 +533,7 @@ showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 sierra leone	common	de	SIERRA LEONE
 simple	common	de	Einfach
 singapore	common	de	SINGAPUR
+site configuration	common	de	Konfiguration der Anwendung
 slovakia	common	de	SLOVAKEI
 slovenia	common	de	SLOVENIEN
 solomon islands	common	de	SOLOMON INSELN
@@ -658,4 +659,3 @@ your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifizie
 your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
-site configuration	common	de	Konfiguration der Anwendung
