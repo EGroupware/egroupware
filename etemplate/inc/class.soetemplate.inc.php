@@ -959,7 +959,7 @@ class soetemplate
 		{
 			if (($keys['name'] != $last['name'] ||		// write only newest version
 					$keys['template'] != $last['template']) &&
-					strpos($keys['name'],'test') === false)
+					(strpos($keys['name'],'test') === false || $app == 'test'))
 			{
 				$tpl->read($keys);
 				$to_trans += $tpl->getToTranslate();
