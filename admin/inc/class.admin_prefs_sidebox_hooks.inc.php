@@ -35,11 +35,11 @@ class admin_prefs_sidebox_hooks
 	{
 		$appname = 'admin';
 		$location = is_array($args) ? $args['location'] : $args;
-				
+
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'admins')
 		{
-			
+
 			if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 			{
 				$file['Site Configuration']         = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
@@ -80,10 +80,10 @@ class admin_prefs_sidebox_hooks
 			{
 				$file['View Sessions'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
 			}
-			
+
 			if (! $GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
 			{
-				$file['View Access Log'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
+				$file['View Access Log'] = egw::link('/index.php','menuaction=admin.admin_accesslog.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('error_log_access',1,'admin'))
@@ -121,10 +121,10 @@ class admin_prefs_sidebox_hooks
 			{
 				display_sidebox($appname,lang('Admin'),$file);
 			}
-	
+
 		}
 	}
-	
+
 	/**
 	 * populates $GLOBALS['settings'] for the preferences
 	 */
@@ -134,7 +134,7 @@ class admin_prefs_sidebox_hooks
 
 		return true;	// otherwise prefs say it cant find the file ;-)
 	}
-	
+
 	/**
 	 * Check if reasonable default preferences are set and set them if not
 	 *

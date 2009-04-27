@@ -4,6 +4,7 @@
 %1 class not instanciated	admin	en	%1 class not instanciated
 %1 group %2	admin	en	%1 group %2
 %1 is no command!	admin	en	%1 is no command!
+%1 log entries deleted.	admin	en	%1 log entries deleted.
 %1 not found or not executable !!!	admin	en	%1 not found or not executable !!!
 %1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3
 %1 user %2	admin	en	%1 user %2
@@ -29,6 +30,7 @@ activate wysiwyg-editor	admin	en	activate WYSIWYG-editor
 add a category	admin	en	add a category
 add a group	admin	en	add a group
 add a new account.	admin	en	Add a new account.
+add a new remote instance	admin	en	Add a new remote instance
 add a subcategory	admin	en	add a subcategory
 add a user	admin	en	add a user
 add account	admin	en	Add account
@@ -69,6 +71,7 @@ applications	admin	en	Applications
 applications list	admin	en	Applications list
 applications run rights updated.	admin	en	Applications run rights updated.
 applies the changes	admin	en	applies the changes
+apply the changes	admin	en	Apply the changes
 are you sure you want to delete the application %1 ?	admin	en	Are you sure you want to delete the application %1 ?
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
 are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
@@ -94,6 +97,7 @@ bottom	admin	en	bottom
 calculate next run	admin	en	Calculate next run
 can change password	admin	en	Can change password
 cancel testjob!	admin	en	Cancel TestJob!
+cancel this scheduled command	admin	en	Cancel this scheduled command
 categories list	admin	en	Categories list
 category %1 has been saved !	admin	en	Category %1 has been saved !
 category list	admin	en	Category list
@@ -135,10 +139,12 @@ delete application	admin	en	Delete application
 delete category	admin	en	Delete category
 delete group	admin	en	Delete group
 delete peer server	admin	en	Delete peer server
+delete selected entries	admin	en	Delete selected entries
 delete the category	admin	en	delete the category
 delete the group	admin	en	delete the group
 delete this category	admin	en	delete this category
 delete this group	admin	en	delete this group
+delete this log entry	admin	en	Delete this log entry
 delete this user	admin	en	delete this user
 deletes this field	admin	en	deletes this field
 deliver extern	admin	en	deliver extern
@@ -220,6 +226,7 @@ enter your smtp server port	admin	en	Enter your SMTP server port
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set !!!
 error changing the password for % !!!	admin	en	Error changing the password for % !!!
 error changing the password for %1 !!!	admin	en	Error changing the password for %1 !!!
+error deleting log entry!	admin	en	Error deleting log entry!
 error saving	admin	en	Error saving
 error saving account!	admin	en	Error saving account!
 error saving the command!	admin	en	Error saving the command!
@@ -267,8 +274,10 @@ in mbyte	admin	en	in MByte
 inbound	admin	en	inbound
 initial	admin	en	Initial
 install crontab	admin	en	Install crontab
+install id	admin	en	Install ID
 installed applications	common	en	Installed applications
 installed crontab	admin	en	Installed crontab
+instance	admin	en	Instance
 interface	admin	en	Interface
 invalid formated date "%1"!	admin	en	Invalid formated date "%1"!
 invalid remote id or name "%1"!	admin	en	Invalid remote id or name "%1"!
@@ -293,17 +302,19 @@ ldap rootdn	admin	en	LDAP rootdn
 leave empty for no quota	admin	en	leave empty for no quota
 leave the category untouched and return back to the list	admin	en	leave the category untouched and return back to the list
 leave the group untouched and return back to the list	admin	en	Leave the group untouched and return back to the list
+leave without saveing the entry	admin	en	leave without saveing the entry
 leaves without saveing	admin	en	leaves without saveing
 length<br>rows	admin	en	Length<br>Rows
 list config settings	admin	en	List config settings
 list current sessions	admin	en	List current sessions
 list of current users	admin	en	list of current users
-login history	common	en	Login History
+login history	admin	en	Login History
 login message	admin	en	Login message
 login screen	admin	en	Login screen
 login shell	admin	en	Login shell
-login time	admin	en	Login Time
 loginid	admin	en	LoginID
+logintime	admin	en	Logintime
+logoutime	admin	en	Logoutime
 mail settings	admin	en	Mail settings
 main email-address	admin	en	Main Email-Address
 main screen message	admin	en	Main screen message
@@ -320,6 +331,7 @@ modified	admin	en	Modified
 month	admin	en	Month
 more secure	admin	en	more secure
 name must not be empty !!!	admin	en	Name must not be empty !!!
+name of the egroupware instance, eg. default	admin	en	Name of the eGroupWare instance, eg. default
 new group name	admin	en	New group name
 new name	admin	en	new name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
@@ -370,6 +382,7 @@ remote instance saved	admin	en	Remote instance saved
 remove	admin	en	remove
 remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group ?
+requested	admin	en	Requested
 return to admin mainscreen	admin	en	return to admin mainscreen
 return to view account	admin	en	Return to view account
 route all mails to	admin	en	Route all Mails to
@@ -377,11 +390,14 @@ run asynchronous services	admin	en	Run Asynchronous services
 save the category	admin	en	save the category
 save the category and return back to the list	admin	en	save the category and return back to the list
 saves the changes made and leaves	admin	en	saves the changes made and leaves
+saves this entry	admin	en	Saves this entry
+scheduled	admin	en	Scheduled
 search accounts	admin	en	Search accounts
 search categories	admin	en	Search categories
 search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers
 security	admin	en	Security
+select accounts for which the custom field should be visible	admin	en	Select accounts for which the custom field should be visible
 select group managers	admin	en	Select Group Managers
 select permissions this group will have	admin	en	Select permissions this group will have
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY
@@ -432,6 +448,7 @@ that server name has been used already !	admin	en	That server name has been used
 the api is current	admin	en	The API is current
 the api requires an upgrade	admin	en	The API requires an upgrade
 the groups must include the primary group	admin	en	The groups must include the primary group
+the install id of an instance can be found under admin > site configuration	admin	en	The install ID of an instance can be found under Admin > Site configuration
 the login and password can not be the same	admin	en	The login and password can not be the same
 the loginid can not be more then 8 characters	admin	en	The loginid can not be more then 8 characters
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
@@ -460,6 +477,7 @@ unknown account: %1 !!!	admin	en	Unknown account: %1 !!!
 unknown command %1!	admin	en	Unknown command %1!
 unknown option %1	admin	en	Unknown option %1
 updated	admin	en	updated
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the eGroupWare installation, eg. http://domain.com/egroupware
 use cookies to pass sessionid	admin	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code (not fully working yet)
 use theme	admin	en	Use theme

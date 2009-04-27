@@ -810,7 +810,7 @@
 				$GLOBALS['menuData'][] = array(
 					'description' => 'Login History',
 					'url'         => '/index.php',
-					'extradata'   => 'menuaction=admin.uiaccess_history.list_history'
+					'extradata'   => 'menuaction=admin.admin_accesslog.index'
 				);
 			}
 			// not sure if this realy belongs here, or only in edit_user
