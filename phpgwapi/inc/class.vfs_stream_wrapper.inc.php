@@ -692,6 +692,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
 
+		if (substr($path,-1) == '/') $path = substr($path,0,-1);	// remove trailing slashes, eg. added by webdav
+
 		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK))))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
