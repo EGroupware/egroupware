@@ -583,7 +583,7 @@ class infolog_bo
 			}
 			if (in_array($values['info_status'],array('done','billed')))
 			{
-				$values['info_percent'] == '100%';
+				$values['info_percent'] = '100';
 			}
 			if ((int)$values['info_percent'] == 100 && !in_array($values['info_status'],array('done','billed','cancelled')))
 			{
