@@ -973,6 +973,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function basename($path)
 	{
+		list($path,$query) = explode('?',$path);	// remove query
 		$parts = explode('/',$path);
 
 		return array_pop($parts);
@@ -986,6 +987,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function dirname($url)
 	{
+		list($url,$query) = explode('?',$url,2);	// strip the query first, as it can contain slashes
+
 		if ($url == '/' || $url[0] != '/' && parse_url($url,PHP_URL_PATH) == '/')
 		{
 			//error_log(__METHOD__."($url) returning FALSE: already in root!");
@@ -998,7 +1001,6 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			array_push($parts,'');	// scheme://host is wrong (no path), has to be scheme://host/
 		}
-		list(,$query) = explode('?',$url,2);
 		//error_log(__METHOD__."($url)=".implode('/',$parts).($query ? '?'.$query : ''));
 		return implode('/',$parts).($query ? '?'.$query : '');
 	}
