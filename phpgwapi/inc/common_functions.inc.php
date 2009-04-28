@@ -1388,15 +1388,14 @@ function __autoload($class)
 {
 	$components = explode('_',$class);
 	$app = array_shift($components);
-	$baseclass = $components[0];
 	// classes using the new naming schema app_class_name, eg. admin_cmd, but not app/inc/class.app.inc.php
 	if ($app != $class && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
 		// classes using the new naming schema app_class_name, eg. admin_cmd
-		file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$baseclass.'.inc.php') ||
+		isset($components[0]) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// eGW api classes using the old naming schema, eg. html
 		file_exists($file = EGW_API_INC.'/class.'.$class.'.inc.php') ||
 		// eGW api classes containing multiple classes in on file, eg. egw_exception
-		file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$baseclass.'.inc.php') ||
+		isset($components[0]) && file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// eGW eTemplate classes using the old naming schema, eg. etemplate
 		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
 		// classes of the current application using the old naming schema
@@ -1410,6 +1409,7 @@ function __autoload($class)
 	{
 		call_user_func($GLOBALS['egw_info']['flags']['autoload'],$class);
 	}
+/*  disabling search over all apps: classes should either conform to new naming schema or use explicit includes
 	elseif (is_array($GLOBALS['egw_info']['apps']))
 	{
 		foreach(array_keys($GLOBALS['egw_info']['apps']) as $app)
@@ -1421,6 +1421,7 @@ function __autoload($class)
 			}
 		}
 	}
+*/
 }
 
 /**
