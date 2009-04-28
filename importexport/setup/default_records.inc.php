@@ -19,10 +19,6 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.bodefinitions.inc.php');
 // This sets up $GLOBALS['egw']->accounts and $GLOBALS['egw']->db
 $GLOBALS['egw_setup']->setup_account_object();
 
-// Fetch translation object
-$GLOBALS['egw_setup']->translation->setup_translation_sql();
-if ( !is_object($GLOBALS['egw']->translation) ) $GLOBALS['egw']->translation = $GLOBALS['egw_setup']->translation->sql;
-
 // step through every source code intstalled app
 $egwdir = dir(EGW_INCLUDE_ROOT);
 while (false !== ($appdir = $egwdir->read())) {

@@ -23,17 +23,17 @@ class bodefinitions {
 
 	const _appname = 'importexport';
 	const _defintion_talbe = 'egw_importexport_definitions';
-	
+
 	/**
 	 * @var so_sql holds so_sql
 	 */
 	private $so_sql;
-	
+
 	/**
 	 * @var array hold definitions
 	 */
 	private $definitions;
-	
+
 	public function __construct($_query=false)
 	{
 		$this->so_sql = new so_sql(self::_appname, self::_defintion_talbe );
@@ -44,16 +44,16 @@ class bodefinitions {
 			}
 		}
 	}
-	
+
 	/**
 	 * gets array of definition ids
-	 * 
+	 *
 	 * @return array
 	 */
 	public function get_definitions() {
 		return $this->definitions;
 	}
-	
+
 	/**
 	 * deletes a defintion
 	 *
@@ -66,7 +66,7 @@ class bodefinitions {
 			unset($this->definitions[array_search($key,$this->definitions)]);
 		}
 	}
-	
+
 	/**
 	 * checkes if user if permitted to access given definition
 	 *
@@ -87,7 +87,7 @@ class bodefinitions {
 		$alluser = array_intersect($allowed_user,$this_membership_array);
 		return in_array($this_user_id,$alluser) ? true : false;
 	}
-	
+
 	/**
 	 * exports definitions
 	 *
@@ -97,31 +97,31 @@ class bodefinitions {
 	{
 		$export_data = array('metainfo' => array(
 			'type' => 'importexport definitions',
-			'charset' => $GLOBALS['egw']->translation->charset(),
+			'charset' => translation::charset(),
 			'entries' => count($keys),
 		));
-		
+
 		$export_data['definitions'] = array();
 		foreach ($keys as $definition_id) {
 			$definition = new definition( $definition_id );
 			$export_data['definitions'][$definition->name] = $definition->get_record_array();
-			$export_data['definitions'][$definition->name]['allowed_users'] = 
-				import_export_helper_functions::account_id2name( 
-					$export_data['definitions'][$definition->name]['allowed_users'] 
+			$export_data['definitions'][$definition->name]['allowed_users'] =
+				import_export_helper_functions::account_id2name(
+					$export_data['definitions'][$definition->name]['allowed_users']
 				);
-			$export_data['definitions'][$definition->name]['owner'] = 
-				import_export_helper_functions::account_id2name( 
-					$export_data['definitions'][$definition->name]['owner'] 
+			$export_data['definitions'][$definition->name]['owner'] =
+				import_export_helper_functions::account_id2name(
+					$export_data['definitions'][$definition->name]['owner']
 				);
 			unset($export_data['definitions'][$definition->name]['definition_id']);
 			unset($definition);
 		}
-		
-		
+
+
 		$xml = new arrayxml();
 		return $xml->array2xml($export_data, 'importExportDefinitions');
 	}
-	
+
 	/**
 	 * imports definitions from file
 	 *
@@ -131,38 +131,37 @@ class bodefinitions {
 	 */
 	public static function import( $_import_file )
 	{
-		$translation = CreateObject('phpgwapi.translation');
 		if ( !is_file( $_import_file ) ) {
 			throw new Exception("'$_import_file' does not exist or is not readable" );
 		}
-		
+
 		$data = arrayxml::xml2array( file_get_contents( $_import_file ) );
-		
+
 		$metainfo = $data['importExportDefinitions']['metainfo'];
 		$definitions = $data['importExportDefinitions']['definitions'];
 		unset ( $data );
-		
+
 		// convert charset into internal used charset
-		$definitions = $translation->convert( 
+		$definitions = translation::convert(
 			$definitions,
 			$metainfo['charset'],
-			$translation->charset()
+			translation::charset()
 		);
-		
+
 		// save definition(s) into internal table
 		foreach ( $definitions as $name => $definition_data )
 		{
 			// convert allowed_user
 			$definition_data['allowed_users'] = import_export_helper_functions::account_name2id( $definition_data['allowed_users'] );
 			$definition_data['owner'] = import_export_helper_functions::account_name2id( $definition_data['owner'] );
-		
+
 			$definition = new definition( $definition_data['name'] );
 			$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
-			
+
 			$definition->set_record( $definition_data );
 			$definition->save( $definition_id );
 		}
 	}
-	
+
 }
 
