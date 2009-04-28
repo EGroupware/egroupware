@@ -201,9 +201,9 @@ $checks = array(
 		'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 	),
 );
-if (extension_loaded('session') && ini_get('session.save_handler') == 'files')
+if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = session_save_path()))
 {
-	$checks[session_save_path()] = array(
+	$checks[$session_path] = array(
 		'func' => 'permission_check',
 		'is_writable' => true,
 		'msg' => lang("Checking if php.ini setting session.save_path='%1' is writable by the webserver",session_save_path()),
@@ -258,16 +258,6 @@ foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_c
 }
 if ($checks) $sorted_checks += $checks;
 $checks =& $sorted_checks;
-
-// some constants for pre php4.3
-if (!defined('PHP_SHLIB_SUFFIX'))
-{
-	define('PHP_SHLIB_SUFFIX',$is_windows ? 'dll' : 'so');
-}
-if (!defined('PHP_SHLIB_PREFIX'))
-{
-	define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
-}
 
 function php_version($name,$args)
 {
@@ -524,7 +514,7 @@ function permission_check($name,$args,$verbose=True)
 
 	// add a ../ for non-absolute pathes
 	$rel_name = $name;
-	if (substr($name,0,3) != '../' && $name{0} != '/' && $name{0} != '\\' && strpos($name,':') === false)
+	if ($name && substr($name,0,3) != '../' && $name[0] != '/' && $name[0] != '\\' && strpos($name,':') === false)
 	{
 		$name = '../'.$name;
 	}
