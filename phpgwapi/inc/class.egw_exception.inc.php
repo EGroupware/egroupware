@@ -147,12 +147,10 @@ class egw_exception_db extends egw_exception
 	 * Constructor
 	 *
 	 * @param string $msg=null message, default "Database error!"
-	 * @param unknown_type $code=100
+	 * @param int $code=100
 	 */
 	function __construct($msg=null,$code=100)
 	{
-		$this->query = $query;
-
 		if (is_null($msg)) $msg = lang('Database error!');
 
 		parent::__construct($msg,$code);
