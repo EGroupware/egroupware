@@ -8,7 +8,7 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>, Christian Binder <christian@jaytraxx.de>
  */
- 
+
 /**
  * Ajax methods for notifications
  */
@@ -17,52 +17,52 @@ class notifications_ajax {
 	 * Appname
 	 */
 	const _appname = 'notifications';
-	
+
 	/**
 	 * Mailappname
 	 */
 	const _mailappname = 'felamimail';
-	
+
 	/**
 	 * Notification table in SQL database
 	 */
 	const _notification_table = 'egw_notificationpopup';
-	
+
 	/**
 	 * holds account object for user to notify
 	 *
 	 * @var object
 	 */
 	private $recipient;
-	
+
 	/**
 	 * holds config object (sitewide application config)
 	 *
 	 * @var object
 	 */
 	private $config;
-	
+
 	/**
 	 * holds preferences array of user to notify
 	 *
 	 * @var array
 	 */
 	private $preferences;
-	
+
 	/**
 	 * reference to global db object
 	 *
 	 * @var db
 	 */
 	private $db;
-	
+
 	/**
 	 * holds the users session data
 	 *
 	 * @var array
 	 */
 	var $session_data;
-	
+
 	/**
 	 * holds the users session data defaults
 	 *
@@ -71,14 +71,14 @@ class notifications_ajax {
 	var $session_data_defaults = array(
 		'notified_mail_uids'	=> array(),
 	);
-	
+
 	/**
 	 * the xml response object
 	 *
 	 * @var response
 	 */
 	private $response;
-	
+
 	/**
 	 * constructor
 	 *
@@ -96,31 +96,31 @@ class notifications_ajax {
 
 		$this->db = $GLOBALS['egw']->db;
 	}
-	
+
 	/**
 	 * destructor
 	 *
 	 */
 	public function __destruct() {}
-	
+
 	/**
 	 * public AJAX trigger function to be called by the JavaScript client
 	 *
 	 * this function calls all other recurring AJAX notifications methods
 	 * to have ONE single recurring AJAX call per user
-	 * 
+	 *
 	 * @return xajax response
 	 */
 	public function get_notifications() {
 		$this->check_mailbox();
 		$this->get_egwpopup();
-		
+
 		return $this->response->getXML();
 	}
-	
+
 	/**
 	 * checks users mailbox and sends a notification if new mails have arrived
-	 * 
+	 *
 	 * @return boolean true or false
 	 */
 	private function check_mailbox() {
@@ -131,16 +131,18 @@ class notifications_ajax {
 		if(count($notify_folders) == 0) {
 			return true; //no folders configured for notifying - exit
 		}
-		
+		// explicit require bofelamimail, 'til it get a autoloading conform name
+		require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.bofelamimail.inc.php');
+
 		$bofelamimail = new bofelamimail($GLOBALS['egw']->translation->charset());
 		if(!$bofelamimail->openConnection()) {
 			// TODO: This is ugly. Log a bit nicer!
 			error_log(self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox. Please check your prefs!');
 			return false; // cannot connect to mailbox
 		}
-		
+
 		$this->restore_session_data();
-		
+
 		$recent_messages = array();
 		$folder_status = array();
 		foreach($notify_folders as $id=>$notify_folder) {
@@ -162,7 +164,7 @@ class notifications_ajax {
 				}
 			}
 		}
-		
+
 		if(count($recent_messages) > 0) {
 			// create notify message
 			$notification_subject = lang("You've got new mail");
@@ -180,12 +182,12 @@ class notifications_ajax {
 				// save notification status
 				$this->session_data['notified_mail_uids'][$recent_message['folder']][] = $recent_message['uid'];
 			}
-			
+
 			// create etemplate
 			$tpl = new etemplate();
 			$tpl->read('notifications.checkmailbox');
 			$notification_message = $tpl->exec(false, $values, false, false, false, 1);
-			
+
 			// send notification
 			$notification = new notifications();
 			$notification->set_receivers(array($this->recipient->account_id));
@@ -195,20 +197,20 @@ class notifications_ajax {
 			$notification->set_skip_backends(array('email'));
 			$notification->send();
 		}
-		
+
 		$this->save_session_data();
 		return true;
 	}
-	
+
 	/**
 	 * gets all egwpopup notifications for calling user
-	 * 
+	 *
 	 * @return boolean true or false
 	 */
 	private function get_egwpopup() {
 		$session_id = $GLOBALS['egw_info']['user']['sessionid'];
 		$message = '';
-		$rs = $this->db->select(self::_notification_table, 
+		$rs = $this->db->select(self::_notification_table,
 			'*', array(
 				'account_id' => $this->recipient->account_id,
 				'session_id' => $session_id,
@@ -222,7 +224,7 @@ class notifications_ajax {
 				'account_id' => $this->recipient->account_id,
 				'session_id' => $session_id,
 			),__LINE__,__FILE__,self::_appname);
-			
+
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
 				case 'low':
 					$this->response->addScript('notificationbell_switch("active");');
@@ -239,10 +241,10 @@ class notifications_ajax {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * restores the users session data for notifications
-	 * 
+	 *
 	 * @return boolean true
 	 */
 	private function restore_session_data() {
@@ -252,13 +254,13 @@ class notifications_ajax {
 		} else {
 			$this->session_data = $this->session_data_defaults;
 		}
-		
+
 		return true;
 	}
 
 	/**
 	 * saves the users session data for notifications
-	 * 
+	 *
 	 * @return boolean true
 	 */
 	private function save_session_data() {
