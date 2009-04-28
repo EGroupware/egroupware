@@ -10,6 +10,7 @@
  * @version $Id$
  */
 
+include_once('../../phpgwapi/inc/common_functions.inc.php');
 check_load_extension('gd',true);	// true = throw exception if not loadable
 
 foreach(array('width'=>-20,'height'=>40,'border'=>1,'color'=>'000080','bgcolor'=>'0000FF') as $name => $default)
