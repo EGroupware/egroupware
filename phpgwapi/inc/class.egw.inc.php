@@ -121,7 +121,7 @@ class egw extends egw_minimal
 		// load up the $GLOBALS['egw_info']['server'] array
 		foreach($this->db->select(config::TABLE,'*',array('config_app'  => 'phpgwapi'),__LINE__,__FILE__) as $row)
 		{
-			$GLOBALS['egw_info']['server'][$row['config_name']] = stripslashes($row['config_value']);
+			$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
 		}
 		//$GLOBALS['egw_info']['server'] = config::read('phpgwapi'); would unserialize arrays
 
