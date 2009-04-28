@@ -94,6 +94,13 @@ class translation
 	static $mbstring_internal_encoding;
 
 	/**
+	 * Application which translations have to be cached instance- and NOT tree-specific
+	 *
+	 * @var array
+	 */
+	static $instance_specific_translations = array('loginscreen','mainscreen');
+
+	/**
 	 * returns the charset to use (!$lang) or the charset of the lang-files or $lang
 	 *
 	 * @param string/boolean $lang=False return charset of the active user-lang, or $lang if specified
@@ -242,7 +249,9 @@ class translation
 		if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang)
 		{
 			//$start = microtime(true);
-			$loaded =& egw_cache::getTree(__CLASS__,$app.':'.$lang,__CLASS__.'::load_app',array($app,$lang));
+			// for loginscreen we have to use a instance specific cache!
+			$loaded =& egw_cache::getCache(in_array($app,self::$instance_specific_translations) ? egw_cache::INSTANCE : egw_cache::TREE,
+				__CLASS__,$app.':'.$lang,__CLASS__.'::load_app',array($app,$lang));
 
 			self::$lang_arr = self::$lang_arr ? array_merge(self::$lang_arr,$loaded) : $loaded;
 			self::$loaded_apps[$app] = $lang;
@@ -868,19 +877,22 @@ class translation
 	 * insert/update one phrase in the lang-table
 	 *
 	 * @param string $lang
-	 * @param string $app_name
+	 * @param string $app
 	 * @param string $message_id
 	 * @param string $content
 	 */
-	static function write($lang,$app_name,$message_id,$content)
+	static function write($lang,$app,$message_id,$content)
 	{
 		self::$db->insert(self::LANG_TABLE,array(
 			'content' => $content,
 		),array(
 			'lang' => $lang,
-			'app_name' => $app_name,
+			'app_name' => $app,
 			'message_id' => $message_id,
 		),__LINE__,__FILE__);
+
+		// invalidate the cache
+		egw_cache::unsetCache(in_array($app,self::$instance_specific_translations) ? egw_cache::INSTANCE : egw_cache::TREE,__CLASS__,$app.':'.$lang);
 	}
 
 	/**
