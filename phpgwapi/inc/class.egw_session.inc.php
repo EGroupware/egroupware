@@ -561,7 +561,7 @@ class egw_session
 				if ($reason)	// called hook requests to deny the session
 				{
 					$this->reason = $this->cd_reason = $reason;
-					$this->log_access($this->reason,$login,$user_ip,0		);		// log unsuccessfull login
+					$this->log_access($this->reason,$login,$user_ip,$this->account_id);		// log unsuccessfull login
 					return false;
 				}
 			}
