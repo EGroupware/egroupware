@@ -242,7 +242,7 @@ class egw_cache
 	 */
 	static public function unsetInstance($app,$location)
 	{
-		return self::getCache(self::INSTANCE,$app,$location);
+		return self::unsetCache(self::INSTANCE,$app,$location);
 	}
 
 	/**
@@ -434,6 +434,7 @@ class egw_cache
 			}
 			if (!$providers[$level]) error_log(__METHOD__."($level) no provider found ($reason)!");
 		}
+		//error_log(__METHOD__."($level) = ".array2string($providers[$level]).', cache_provider='.array2string($GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)]));
 		return $providers[$level];
 	}
 
@@ -457,6 +458,20 @@ class egw_cache
 					$bases[$level] = $level.'-'.str_replace(array(':','/','\\'),'-',EGW_SERVER_ROOT);
 					break;
 				case self::INSTANCE:
+					if(!isset($GLOBALS['egw_info']['server']['install_id']))
+					{
+						if (isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db))
+						{
+							$GLOBALS['egw_info']['server']['install_id'] = $GLOBALS['egw_setup']->db->select(config::TABLE,'config_value',array(
+								'config_app'	=> 'phpgwapi',
+								'config_name'	=> 'install_id',
+							),__LINE__,__FILE__)->fetchColumn();
+						}
+						if (!$GLOBALS['egw_info']['server']['install_id'])
+						{
+							throw new Exception (__METHOD__."($level,$app,$location) server/install_id is NOT set!");
+						}
+					}
 					$bases[$level] = $level.'-'.$GLOBALS['egw_info']['server']['install_id'];
 					break;
 			}
