@@ -357,7 +357,7 @@ class etemplate_request
 				mcrypt_create_iv ($iv_size, MCRYPT_RAND) : substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
 
 			$key_size = mcrypt_enc_get_key_size(self::$mcrypt);
-			if (strlen($key) > $key_size) $key = substr($key,0,$key_size);
+			if (strlen($key) > $key_size) $key = substr($key,0,$key_size-1);
 
 			if (mcrypt_generic_init(self::$mcrypt,$key, $iv) < 0)
 			{
