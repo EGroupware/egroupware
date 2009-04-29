@@ -186,9 +186,15 @@ class customfields_widget
 				)));
 			} elseif ($type == 'customfields-list') {
 				if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') {
-					etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
-						array('label'=>/*lang("custom fields").": ".*/$field['label'],'width'=>"16px",
-							'onclick'=>"return alert('".lang("custom fields").": ".$field['label']."');")));
+					switch ((string)$field['type'])
+					{
+						case 'checkbox':
+							if ($value[$this->prefix.$lname]==0) break;
+						default:
+							etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
+								array('label'=>/*lang("custom fields").": ".*/$field['label'],'width'=>"16px",
+									'onclick'=>"return alert('".lang("custom fields").": ".$field['label']."');")));
+					}
 				}
 			}
 
@@ -230,19 +236,25 @@ class customfields_widget
 					$row_class = 'th';
 					break;
 				case 'radio' :
+					$showthis = '#a#l#l#';
 					if (count($field['values']) == 1 && isset($field['values']['@']))
 					{
 						$field['values'] = $this->_get_options_from_file($field['values']['@']);
 					}
 					if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
-					$input =& etemplate::empty_cell('groupbox');
+					if ($readonly) {
+						$showthis = $value[$this->prefix.$lname];
+						$input =& etemplate::empty_cell('hbox');
+					} else {
+						$input =& etemplate::empty_cell('groupbox');
+					}
 					$m = 0;
 					foreach ($field['values'] as $key => $val)
 					{
 						$radio = etemplate::empty_cell('radio',$this->prefix.$lname);
 						$radio['label'] = $val;
 						$radio['size'] = $key;
-						etemplate::add_child($input,$radio);
+						if ($showthis == '#a#l#l#' || $showthis == $key) etemplate::add_child($input,$radio);
 						unset($radio);
 					}
 					break;
