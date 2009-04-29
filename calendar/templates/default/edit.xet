@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit.general" template="" lang="" group="0" version="1.5.002">
+	<template id="calendar.edit.general" template="" lang="" group="0" version="1.7.001">
 		<hbox options="0,0">
 			<grid width="100%" height="200">
 				<columns>
@@ -27,7 +27,7 @@
 					</row>
 					<row>
 						<description/>
-						<buttononly label="Freetime search" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.freetimesearch')+values2url(this.form,'start,end,duration,participants,recur_type,whole_day'),'ft_search','dependent=yes,width=700,height=500,scrollbars=yes,status=yes'); return false;" width="0" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan"/>
+						<buttononly label="Freetime search" onclick="ajax_submit(this.form,'calendar.calendar_uiforms.ajax_freetimesearch'); return false;" width="0" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan"/>
 					</row>
 					<row class="row">
 						<description options=",,,location" value="Location" width="0"/>
@@ -276,7 +276,7 @@
 					<textbox size="80" maxlength="255" id="title" span="all" needed="1"/>
 				</row>
 				<row>
-					<tabbox span="all">
+					<tabbox span="all" id="general|description|participants|recurrence|custom|links|alarms">
 						<tabs>
 							<tab label="General" statustext="Location, Start- and Endtimes, ..."/>
 							<tab label="Description" statustext="Full description"/>

@@ -290,7 +290,7 @@ class calendar_uiforms extends calendar_ui
 								$bores =& CreateObject('resources.bo_resources');
 								$selectedres = $bores->read($id);
 								$cats = $bores->acl->get_cats(EGW_ACL_DIRECT_BOOKING);
-								if (is_array($cats) && $selectedres['bookable'] == 1 && 
+								if (is_array($cats) && $selectedres['bookable'] == 1 &&
 									$selectedres['cat_id'] && array_key_exists($selectedres['cat_id'],$cats))
 								{
 									if ($selectedres['quantity'] && $selectedres['quantity'] < $quantity) {
@@ -1110,6 +1110,81 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 * Callback for freetimesearch button in edit
+	 *
+	 * It stores the data of the submitted form in the session under 'freetimesearch_args_'.$edit_content['id'],
+	 * for later retrival of the freetimesearch method, called by the returned window.open() command.
+	 *
+	 * @param array $edit_content
+	 * @return string with xajaxResponse
+	 */
+	function ajax_freetimesearch(array $edit_content)
+	{
+		$response = new xajaxResponse();
+		//$response->addAlert(__METHOD__.'('.array2string($content).')');
+
+		if (!(int)$edit_content['id'])
+		{
+			throw new egw_exception_wrong_parameter(__METHOD__.'() missing id in request!');
+		}
+		if ($edit_content['duration'])
+		{
+			$edit_content['end'] = $edit_content['start'] + $edit_content['duration'];
+		}
+		if ($edit_content['whole_day'])
+		{
+			$arr = $this->bo->date2array($edit_content['start']);
+			$arr['hour'] = $arr['minute'] = $arr['second'] = 0; unset($arr['raw']);
+			$edit_content['start'] = $this->bo->date2ts($arr);
+			$arr = $this->bo->date2array($edit_content['end']);
+			$arr['hour'] = 23; $arr['minute'] = $arr['second'] = 59; unset($arr['raw']);
+			$edit_content['end'] = $this->bo->date2ts($arr);
+		}
+		$content = array(
+			'start'    => $edit_content['start'],
+			'duration' => $edit_content['end'] - $edit_content['start'],
+			'end'      => $edit_content['end'],
+			'cal_id'   => $edit_content['id'],
+			'recur_type'   => $edit_content['recur_type'],
+			'participants' => array(),
+		);
+		foreach($edit_content['participants'] as $key => $data)
+		{
+			if (is_numeric($key) && !$edit_content['participants']['delete'][$data['uid']])
+			{
+				$content['participants'][] = $data['uid'];
+			}
+			elseif ($key == 'account' && !is_array($data) && $data)
+			{
+				$content['participants'][] = $data;
+			}
+		}
+		// default search parameters
+		$content['start_time'] = $edit_content['whole_day'] ? 0 : $this->cal_prefs['workdaystarts'];
+		$content['end_time'] = $this->cal_prefs['workdayends'];
+		if ($this->cal_prefs['workdayends']*HOUR_s < $this->cal_prefs['workdaystarts']*HOUR_s+$content['duration'])
+		{
+			$content['end_time'] = 0;	// no end-time limit, as duration would never fit
+		}
+		$content['weekdays'] = MCAL_M_WEEKDAYS;
+
+		$content['search_window'] = 7 * DAY_s;
+
+		// store content in session
+		egw_cache::setSession('calendar','freetimesearch_args_'.$edit_content['id'],$content);
+
+		//menuaction=calendar.calendar_uiforms.freetimesearch&values2url('start,end,duration,participants,recur_type,whole_day'),ft_search,700,500
+		$link = egw::link('/index.php',array(
+			'menuaction' => 'calendar.calendar_uiforms.freetimesearch',
+			'cal_id'     => $edit_content['id'],
+		));
+
+		$response->addScriptCall('egw_openWindowCentered2',$link,'ft_search',700,500);
+
+		return $response->getXML();
+	}
+
+	/**
 	 * Freetime search
 	 *
 	 * As the function is called in a popup via javascript, parametes get initialy transfered via the url
@@ -1124,7 +1199,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function freetimesearch($content = null)
 	{
-		$etpl =& CreateObject('etemplate.etemplate','calendar.freetimesearch');
+		$etpl = new etemplate('calendar.freetimesearch');
 
 		$sel_options['search_window'] = array(
 			7*DAY_s		=> lang('one week'),
@@ -1135,50 +1210,10 @@ class calendar_uiforms extends calendar_ui
 		);
 		if (!is_array($content))
 		{
-			$edit_content = $etpl->process_values2url();
+			// get content from session (and delete it immediatly)
+			$content = egw_cache::getSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
+			egw_cache::unsetSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
 
-			if ($edit_content['duration'])
-			{
-				$edit_content['end'] = $edit_content['start'] + $edit_content['duration'];
-			}
-			if ($edit_content['whole_day'])
-			{
-				$arr = $this->bo->date2array($edit_content['start']);
-				$arr['hour'] = $arr['minute'] = $arr['second'] = 0; unset($arr['raw']);
-				$edit_content['start'] = $this->bo->date2ts($arr);
-				$arr = $this->bo->date2array($edit_content['end']);
-				$arr['hour'] = 23; $arr['minute'] = $arr['second'] = 59; unset($arr['raw']);
-				$edit_content['end'] = $this->bo->date2ts($arr);
-			}
-			$content = array(
-				'start'    => $edit_content['start'],
-				'duration' => $edit_content['end'] - $edit_content['start'],
-				'end'      => $edit_content['end'],
-				'cal_id'   => $edit_content['id'],
-				'recur_type'   => $edit_content['recur_type'],
-				'participants' => array(),
-			);
-			foreach($edit_content['participants'] as $key => $data)
-			{
-				if (is_numeric($key) && !$edit_content['participants']['delete'][$data['uid']])
-				{
-					$content['participants'][] = $data['uid'];
-				}
-				elseif ($key == 'account' && $data)
-				{
-					$content['participants'][] = $data;
-				}
-			}
-			// default search parameters
-			$content['start_time'] = $edit_content['whole_day'] ? 0 : $this->cal_prefs['workdaystarts'];
-			$content['end_time'] = $this->cal_prefs['workdayends'];
-			if ($this->cal_prefs['workdayends']*HOUR_s < $this->cal_prefs['workdaystarts']*HOUR_s+$content['duration'])
-			{
-				$content['end_time'] = 0;	// no end-time limit, as duration would never fit
-			}
-			$content['weekdays'] = MCAL_M_WEEKDAYS;
-
-			$content['search_window'] = 7 * DAY_s;
 			// pick a searchwindow fitting the duration (search for a 10 day slot in a one week window never succeeds)
 			foreach($sel_options['search_window'] as $window => $label)
 			{
