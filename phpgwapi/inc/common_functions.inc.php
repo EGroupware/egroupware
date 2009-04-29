@@ -1388,8 +1388,8 @@ function __autoload($class)
 {
 	$components = explode('_',$class);
 	$app = array_shift($components);
-	// classes using the new naming schema app_class_name, eg. admin_cmd, but not app/inc/class.app.inc.php
-	if ($app != $class && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
+	// classes using the new naming schema app_class_name, eg. admin_cmd
+	if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
 		// classes using the new naming schema app_class_name, eg. admin_cmd
 		isset($components[0]) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// eGW api classes using the old naming schema, eg. html
