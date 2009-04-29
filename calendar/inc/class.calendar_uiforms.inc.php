@@ -1121,12 +1121,8 @@ class calendar_uiforms extends calendar_ui
 	function ajax_freetimesearch(array $edit_content)
 	{
 		$response = new xajaxResponse();
-		//$response->addAlert(__METHOD__.'('.array2string($content).')');
+		//$response->addAlert(__METHOD__.'('.array2string($edit_content).')');
 
-		if (!(int)$edit_content['id'])
-		{
-			throw new egw_exception_wrong_parameter(__METHOD__.'() missing id in request!');
-		}
 		if ($edit_content['duration'])
 		{
 			$edit_content['end'] = $edit_content['start'] + $edit_content['duration'];
@@ -1171,7 +1167,7 @@ class calendar_uiforms extends calendar_ui
 		$content['search_window'] = 7 * DAY_s;
 
 		// store content in session
-		egw_cache::setSession('calendar','freetimesearch_args_'.$edit_content['id'],$content);
+		egw_cache::setSession('calendar','freetimesearch_args_'.(int)$edit_content['id'],$content);
 
 		//menuaction=calendar.calendar_uiforms.freetimesearch&values2url('start,end,duration,participants,recur_type,whole_day'),ft_search,700,500
 		$link = egw::link('/index.php',array(
