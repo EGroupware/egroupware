@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package addressbook
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2006-9 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -104,11 +104,12 @@ class addressbook_hooks
 	}
 
 	/**
-	 * populates $GLOBALS['settings'] for the preferences
+	 * populates $settings for the preferences
 	 */
 	static function settings()
 	{
-		$GLOBALS['settings']['add_default'] = array(
+		$settings = array();
+		$settings['add_default'] = array(
 			'type'   => 'select',
 			'label'  => 'Default addressbook for adding contacts',
 			'name'   => 'add_default',
@@ -117,7 +118,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$GLOBALS['settings']['mainscreen_showbirthdays'] = array(
+		$settings['mainscreen_showbirthdays'] = array(
 			'type'   => 'select',
 			'label'  => 'Show birthday reminders on main screen',
 			'name'   => 'mainscreen_showbirthdays',
@@ -132,7 +133,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$GLOBALS['settings']['no_auto_hide'] = array(
+		$settings['no_auto_hide'] = array(
 			'type'   => 'check',
 			'label'  => 'Don\'t hide empty columns',
 			'name'   => 'no_auto_hide',
@@ -141,7 +142,7 @@ class addressbook_hooks
 			'admin'  => false,
 		);
 		// CSV Export
-		$GLOBALS['settings']['csv_fields'] = array(
+		$settings['csv_fields'] = array(
 			'type'   => 'select',
 			'label'  => 'Fields for the CSV export',
 			'name'   => 'csv_fields',
@@ -154,7 +155,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$GLOBALS['settings']['csv_charset'] = array(
+		$settings['csv_charset'] = array(
 			'type'   => 'select',
 			'label'  => 'Charset for the CSV export',
 			'name'   => 'csv_charset',
@@ -166,7 +167,7 @@ class addressbook_hooks
 
 		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 		{
-			$GLOBALS['settings']['private_addressbook'] = array(
+			$settings['private_addressbook'] = array(
 				'type'   => 'check',
 				'label'  => 'Enable an extra private addressbook',
 				'name'   => 'private_addressbook',
@@ -175,7 +176,7 @@ class addressbook_hooks
 				'admin'  => False,
 			);
 		}
-		$GLOBALS['settings']['link_title'] = array(
+		$settings['link_title'] = array(
 			'type'   => 'select',
 			'label'  => 'Link title for contacts show',
 			'name'   => 'link_title',
@@ -190,7 +191,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$GLOBALS['settings']['addr_format'] = array(
+		$settings['addr_format'] = array(
 			'type'   => 'select',
 			'label'  => 'Default address format',
 			'name'   => 'addr_format',
@@ -202,7 +203,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$GLOBALS['settings']['fileas_default'] = array(
+		$settings['fileas_default'] = array(
 			'type'   => 'select',
 			'label'  => 'Default file as format',
 			'name'   => 'fileas_default',
@@ -211,7 +212,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$GLOBALS['settings']['hide_accounts'] = array(
+		$settings['hide_accounts'] = array(
 			'type'   => 'check',
 			'label'  => 'Hide accounts from addressbook',
 			'name'   => 'hide_accounts',
@@ -219,7 +220,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$GLOBALS['settings']['distributionListPreferredMail'] = array(
+		$settings['distributionListPreferredMail'] = array(
 			'type'   => 'select',
 			'label'  => 'Preferred email address to use in distribution lists',
 			'name'   => 'distributionListPreferredMail',
@@ -235,7 +236,7 @@ class addressbook_hooks
 		{
 			$link = $GLOBALS['egw']->link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements');
 
-			$GLOBALS['settings']['default_document'] = array(
+			$settings['default_document'] = array(
 				'type'   => 'input',
 				'size'   => 60,
 				'label'  => 'Default document to insert contacts',
@@ -247,7 +248,7 @@ class addressbook_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			);
-			$GLOBALS['settings']['document_dir'] = array(
+			$settings['document_dir'] = array(
 				'type'   => 'input',
 				'size'   => 60,
 				'label'  => 'Directory with documents to insert contacts',
@@ -260,7 +261,7 @@ class addressbook_hooks
 				'admin'  => False,
 			);
 		}
-		return true;	// otherwise prefs say it cant find the file ;-)
+		return $settings;
 	}
 
 	/**
