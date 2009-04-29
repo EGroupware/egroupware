@@ -29,7 +29,6 @@ enable drag and drop functionality (experimental)	addressbook	sk	Povoliť funkci
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	sk	Povolí alebo zakáže funkcie ťahaj-a-pusť vo všetkých aplikáciách. Ak váš prehliadač nepodporuje ťahaj-a-pusť, automaticky sa zakáže. Táto funkcia je v súčasnosti iba na experimentálnej úrovni.
 enter your new password	preferences	sk	Zadajte vaše heslo
 enter your old password	preferences	sk	Zadajte staré heslo
-error: there was a problem finding the preference file for %1 in %2	preferences	sk	Chyba: Súbor predvolieb pre %1 v %2 sa nenašial
 failed to change password.  please contact your administrator.	preferences	sk	Nepodarilo sa zmeniť heslo. Prosím kontaktujte správcu systému.
 forced preferences	preferences	sk	Vynútené nastavenia
 help off	preferences	sk	Skryť Pomocníka

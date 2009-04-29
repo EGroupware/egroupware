@@ -20,7 +20,6 @@ description can not exceed 255 characters in length !	preferences	uk	Довжи�
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	uk	Ви використовуєте 24-х годинний формат часу, чи 12-и годинний з am/pm.
 edit custom fields	preferences	uk	Редагувати додаткові поля
 enter your new password	preferences	uk	Введіть новий пароль
-error: there was a problem finding the preference file for %1 in %2	preferences	uk	Помилка: Є проблеми з пошуком файлу параметрів для %1 в %2
 forced preferences	preferences	uk	Форсовані параметри
 help off	preferences	uk	Допомога
 hours	preferences	uk	години

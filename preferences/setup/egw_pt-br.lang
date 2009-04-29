@@ -32,7 +32,6 @@ enable drag and drop functionality (experimental)	addressbook	pt-br	Habilitar a 
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	pt-br	Habilitar ou desabilitar funções de arrastar e soltar em todos os aplicativos. Se o navegador não suportar tal funcionalidade, esta será desabilitada automaticamente. Esta função é experimental no momento.
 enter your new password	preferences	pt-br	Digite sua nova senha
 enter your old password	preferences	pt-br	Digite sua antiga senha
-error: there was a problem finding the preference file for %1 in %2	preferences	pt-br	Erro: Houve um problema ao tentar encontrar o arquivo de preferencias para %1 em %2
 failed to change password.  please contact your administrator.	preferences	pt-br	Erro ao moudar a senha. Por favor contate seu administrador.
 forced preferences	preferences	pt-br	Preferências obrigatórias
 help off	preferences	pt-br	Desligar ajuda

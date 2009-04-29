@@ -26,7 +26,6 @@ enable drag and drop functionality (experimental)	common	hu	Drag and Drop funkci
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	common	hu	Engedélyezi vagy tiltja a Drag and Drop funkciókat az összes alkalmazásban. Ha a böngésző nem támogatja a Drag and Drop-ot, akkor automatikusan le lesz tiltva. Ez a tulajdonság egyelőre haladó.
 enter your new password	preferences	hu	Új jelszó megadása
 enter your old password	preferences	hu	Régi jelszó megadása
-error: there was a problem finding the preference file for %1 in %2	preferences	hu	Hiba: Egy problémát találtam a %1-val kapcsolatvan a %2 beállítás fájlban.
 failed to change password.  please contact your administrator.	preferences	hu	Sikertelen jelszó változtatás. Lépjen kapcsolatba az adminisztrátorral.
 forced preferences	preferences	hu	Kényszerített Tulajdonságok
 help off	preferences	hu	Segítség kikapcsolása

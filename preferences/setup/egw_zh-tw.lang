@@ -24,7 +24,6 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	zh-tw	編輯自訂的欄位
 enter your new password	preferences	zh-tw	輸入您的新密碼
 enter your old password	preferences	zh-tw	輸入您的舊密碼
-error: there was a problem finding the preference file for %1 in %2	preferences	zh-tw	錯誤： 偏好設定在 %2 發生錯誤 %1
 failed to change password.  please contact your administrator.	preferences	zh-tw	密碼變更錯誤，請聯絡管理員
 forced preferences	preferences	zh-tw	強制修改偏好設定
 help off	preferences	zh-tw	關閉求助訊息

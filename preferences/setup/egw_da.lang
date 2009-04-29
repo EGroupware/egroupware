@@ -24,7 +24,6 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	da	Ret valgfrie felter
 enter your new password	preferences	da	Indtast din nye adgangskode
 enter your old password	preferences	da	Indtast din gamle adgangskode
-error: there was a problem finding the preference file for %1 in %2	preferences	da	Fejl: Der var et problem i at finde præferencerne for fil %1 i %2
 failed to change password.  please contact your administrator.	preferences	da	Det lykkedes ikke at ændre adgangskoden. Kontakt din administrator.
 forced preferences	preferences	da	Tvungne præferencer
 help off	preferences	da	Ingen Hjælp
