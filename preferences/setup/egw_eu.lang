@@ -24,7 +24,6 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	eu	Eremu pertsonalizatuak editatu
 enter your new password	preferences	eu	Zure pasahitz berria sartu
 enter your old password	preferences	eu	Zure pasahitz zaharra sartu
-error: there was a problem finding the preference file for %1 in %2	preferences	eu	Errorea: arazo bat egon da %1entzako hobespenen fitxategia bilatzerakoan %2an.
 failed to change password.  please contact your administrator.	preferences	eu	Akatsa pasahitza aldatzerakoan. Mesedez jarri zure administratzailearekin kontaktuan.
 forced preferences	preferences	eu	Behartutako hobespenak
 help off	preferences	eu	Laguntza desaktibatu

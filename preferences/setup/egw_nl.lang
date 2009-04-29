@@ -32,7 +32,6 @@ enable drag and drop functionality (experimental)	addressbook	nl	Schakel drag an
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	nl	Schakel drag and drop functies in alle toepassingen in of uit. Indien de browser drag and drop niet ondersteund wordt, wordt het vanzelf uitgeschakeld. Deze functie is op dit moment experimenteel.
 enter your new password	preferences	nl	Voer uw nieuwe wachtwoord in
 enter your old password	preferences	nl	Voer uw oude wachtwoord in
-error: there was a problem finding the preference file for %1 in %2	preferences	nl	Fout: Er is een fout opgetreden bij het zoeken naar het voorkeurenbestand voor %1 in %2.
 failed to change password.  please contact your administrator.	preferences	nl	Wachtwoord kan niet worden gewijzigd. Neem contact op met uw beheerder.
 forced preferences	preferences	nl	Geforceerde voorkeuren
 help off	preferences	nl	Help uitgeschakeld

@@ -32,7 +32,6 @@ enable drag and drop functionality (experimental)	addressbook	sl	Omogoči "povle
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	sl	Omogoči ali onemogoči "povleci in spusti" v vseh aplikacijah. Če brskalnik tega ne podpira, bo samodejno onemogočeno. Ta funkcionalnost je trenutno v testni fazi.
 enter your new password	preferences	sl	Vpišite novo geslo
 enter your old password	preferences	sl	Vpišite staro geslo
-error: there was a problem finding the preference file for %1 in %2	preferences	sl	Napaka: ne morem najti datoteke z nastavitvami za %1 v %2
 failed to change password.  please contact your administrator.	preferences	sl	Napaka pri spreminjanju gesla. Obvestite oskrbnika.
 forced preferences	preferences	sl	Vsiljene nastavitve
 help off	preferences	sl	Izključi pomoč

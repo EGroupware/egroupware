@@ -23,7 +23,6 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	fi	muokkaa omia kenttiä
 enter your new password	preferences	fi	Anna uusi salasana
 enter your old password	preferences	fi	Anna vanha salasana
-error: there was a problem finding the preference file for %1 in %2	preferences	fi	Virhe: Kohteelle %1 ei löytynyt asetustiedostoa kohteesta %2
 failed to change password.  please contact your administrator.	preferences	fi	Salasanan vaihto ei onnistunut. Ota yhteys pääkäyttäjään.
 forced preferences	preferences	fi	Pakotetut asetukset
 help off	preferences	fi	Piilota ohjeet

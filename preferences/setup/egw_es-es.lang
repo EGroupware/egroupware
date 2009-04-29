@@ -32,7 +32,6 @@ enable drag and drop functionality (experimental)	addressbook	es-es	Activar la f
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	es-es	Activa o desactiva las funciones de arrastrar y soltar en todas las aplicaciones. Si el navegador no soporta arrastrar y soltar, se desactivará automáticamente. Esta característica es experimental en este instante.
 enter your new password	preferences	es-es	Introduzca la contraseña nueva
 enter your old password	preferences	es-es	Introduzca la contraseña anterior
-error: there was a problem finding the preference file for %1 in %2	preferences	es-es	Error: hubo un problema al buscar el fichero de preferencias para %1 en %2
 failed to change password.  please contact your administrator.	preferences	es-es	Fallo al cambiar la contraseña. Por favor, póngase en contacto con su administrador.
 forced preferences	preferences	es-es	Preferencias forzadas
 help off	preferences	es-es	Desactivar ayuda

@@ -23,7 +23,6 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	ko	사용자정의 필드를 편집
 email signature	preferences	ko	E-Mail 서명
 enter your new password	preferences	ko	새로운 암호를 입력
-error: there was a problem finding the preference file for %1 in %2	preferences	ko	오류: 설정 파일 %2에서 %1을 찾는데 문제가 있습니다
 failed to change password.  please contact your administrator.	preferences	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
 forced preferences	preferences	ko	강제 환경설정
 help off	preferences	ko	도움말 끄기

@@ -32,7 +32,6 @@ enable drag and drop functionality (experimental)	preferences	zh	启用拖放功
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	zh	在所有应用程序中启用或禁用拖放功能。如果浏览器不支持拖放，它将自动禁用。这个特征目前是实验性的。
 enter your new password	preferences	zh	请输入您的新密码
 enter your old password	preferences	zh	请输入您的旧密码
-error: there was a problem finding the preference file for %1 in %2	preferences	zh	错误：在 %2 中为 %1 查找用户配置文件时出现问题。
 failed to change password.  please contact your administrator.	preferences	zh	更改密码失败。请联系系统管理员。
 forced preferences	preferences	zh	强制参数配置
 help off	preferences	zh	关闭提示信息

@@ -32,7 +32,6 @@ enable drag and drop functionality (experimental)	addressbook	en	Enable drag and
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically. This feature is experimental at the moment.
 enter your new password	preferences	en	Enter your new password
 enter your old password	preferences	en	Enter your old password
-error: there was a problem finding the preference file for %1 in %2	preferences	en	Error: There was a problem finding the preference file for %1 in %2
 failed to change password.  please contact your administrator.	preferences	en	Failed to change password.  Please contact your administrator.
 forced preferences	preferences	en	Forced Preferences
 help off	preferences	en	Help off

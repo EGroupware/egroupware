@@ -19,6 +19,12 @@
 		var $show_help;
 		var $has_help;
 		var $prefix = '';
+		/**
+		 * Instance of business object
+		 *
+		 * @var bosettings
+		 */
+		var $bo;
 
 		function uisettings()
 		{
@@ -190,13 +196,7 @@
 			$this->notifies = array();
 			if(!$this->bo->call_hook($_GET['appname']))
 			{
-				$this->t->set_block('preferences','form','formhandle');	// skip the form
-				$this->t->set_var('formhandle','');
-
-				$this->t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
-					$GLOBALS['egw_info']['apps'][$_GET['appname']]['title'],
-					EGW_SERVER_ROOT . SEP . $_GET['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'
-				));
+				throw new egw_exception_wrong_parameter("Could not find settings for application: ".$_GET['appname']);
 			}
 
 			foreach($this->bo->settings as $key => $valarray)

@@ -22,7 +22,6 @@ description can not exceed 255 characters in length !	preferences	iw	!התיאו
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	iw	.am/pm האם עדיף לך פורמט שעון בעל 24 שעות, או פורמט של 12 שעות בתוספת
 edit custom fields	preferences	iw	ערוך שדות מותאמות אישית
 enter your new password	preferences	iw	ציין את סיסמתך החדשה
-error: there was a problem finding the preference file for %1 in %2	preferences	iw	שגיאה: אירעה תקלה במציאת קובץ העדיפויות של %1 בתוך %2
 failed to change password.  please contact your administrator.	preferences	iw	.לא הצלחתי לשנות את הסיסמא. נא ליצור קשר עם מנהל המערכת
 forced preferences	preferences	iw	הגדרות בכוח
 help off	preferences	iw	עזרה כבויה

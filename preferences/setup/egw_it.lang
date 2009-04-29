@@ -24,7 +24,6 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
 enter your old password	preferences	it	Inserisci la tua vecchia password
-error: there was a problem finding the preference file for %1 in %2	preferences	it	Errore: c'è stato un problema nel trovare il file delle preferenze per %1 in %2
 failed to change password.  please contact your administrator.	preferences	it	Impossibile cambiare la password. Prego contatta l'amministratore.
 forced preferences	preferences	it	Preferenze Forzate
 help off	preferences	it	Nessun Aiuto

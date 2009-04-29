@@ -24,7 +24,6 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	sv	Ändra anpassade fält
 enter your new password	preferences	sv	Nytt lösenord
 enter your old password	preferences	sv	Gamla lösenordet
-error: there was a problem finding the preference file for %1 in %2	preferences	sv	Fel: Konfigurations fil för %1 i %2 saknas
 failed to change password.  please contact your administrator.	preferences	sv	Kunde inte ändra lösenordet. Vänligen kontakta administratör.
 forced preferences	preferences	sv	Tvingade inställningar
 help off	preferences	sv	Hjälp av
