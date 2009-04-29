@@ -137,7 +137,7 @@ class egw_cache_files implements egw_cache_provider
 	 */
 	private function filename(array $keys,$mkdir=false)
 	{
-		$fname = $this->base_path.'/'.implode('/',$keys);
+		$fname = $this->base_path.'/'.str_replace(':','-',implode('/',$keys));
 
 		if ($mkdir && !file_exists($dirname=dirname($fname)))
 		{
