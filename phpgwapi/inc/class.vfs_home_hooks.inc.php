@@ -89,10 +89,14 @@ class vfs_home_hooks
 			// make the new owner the owner of the dir and it's content
 			egw_vfs::find($new_dir,array(),array('egw_vfs','chown'),$data['new_owner']);
 		}
-		else
+		elseif(!empty($data['account_lid']) && $data['account_lid'] != '/')
 		{
 			// delete the user-directory
 			egw_vfs::remove('/home/'.$data['account_lid']);
+		}
+		else
+		{
+			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
 		}
 		egw_vfs::$is_root = false;
 	}
@@ -147,6 +151,11 @@ class vfs_home_hooks
 	static function deleteGroup($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
+
+		if(empty($data['account_name']) || $data['account_name'] == '/')
+		{
+			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($data).') account_name NOT set!');
+		}
 		// delete the group-directory
 		egw_vfs::$is_root = true;
 		egw_vfs::remove('/home/'.$data['account_name']);
