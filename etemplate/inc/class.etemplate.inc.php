@@ -439,7 +439,7 @@ class etemplate extends boetemplate
 		$content = $this->complete_array_merge(self::$request->changes,$content);
 		//echo "process_exec($this->name) merge(changes,content) ="; _debug_array($content);
 
-		if (self::$loop)
+		if (self::$loop && $type == 'regular')	// only loop for regular (not ajax_submit) requests
 		{
 			if (self::$request->hooked != '')	// set previous phpgw_body if we are called as hook
 			{
@@ -476,7 +476,8 @@ class etemplate extends boetemplate
 		else
 		{
 			//echo "<p>process_exec($this->name): calling $session_data[method]</p>\n";
-			return ExecMethod(self::$request->method,$this->complete_array_merge(self::$request->preserv,$content));
+			return ExecMethod($type == 'regular' ? self::$request->method : $_GET['menuaction'],
+				$this->complete_array_merge(self::$request->preserv,$content));
 		}
 	}
 
@@ -1879,11 +1880,11 @@ class etemplate extends boetemplate
 	* @internal
 	* @param array $content $_POST[$cname], on return the adjusted content
 	* @param array $to_process list of widgets/form-fields to process
-	* @param string $cname basename of our returnt content (same as in call to show)
-	* @param string $type type of request
+	* @param string $cname='' basename of our returnt content (same as in call to show)
+	* @param string $_type='regular' type of request
 	* @return int number of validation errors (the adjusted content is returned by the var-param &$content !)
 	*/
-	function process_show(&$content,$to_process,$cname='', $type = 'regular')
+	function process_show(&$content,$to_process,$cname='',$_type='regular')
 	{
 		if (!isset($content) || !is_array($content) || !is_array($to_process))
 		{
@@ -1916,7 +1917,7 @@ class etemplate extends boetemplate
 			$value = etemplate::get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
 			// The comment below does only aplay to normal posts, not for xajax. Files are not supported anyway by xajax atm.
 			// not checked checboxes are not returned in HTML and file is in $_FILES and not in $content_in
-			if($value === false && $type == 'xajaxResponse' /*!in_array($type,array('checkbox','file'))*/) continue;
+			if($value === false && $_type == 'xajaxResponse' /*!in_array($type,array('checkbox','file'))*/) continue;
 
 			if (isset($attr['blur']) && $attr['blur'] == $value)
 			{

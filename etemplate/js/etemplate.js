@@ -192,6 +192,14 @@ function values2url(form,names)
 	return url+'&etemplate_exec_id='+form['etemplate_exec_id'].value;
 }
 
+// submits the whole form via ajax to a given menuaction or the current one if '' passed
+function ajax_submit(form,menuaction)
+{
+	if(!menuaction) menuaction = form.action.replace(/.+menuaction=/,'');
+
+	xajax_doXMLHTTP(menuaction+'./etemplate/process_exec', xajax.getFormValues(form));
+}
+
 // sets value (v) of style property (p) for all given elements of type (t) and class (c)
 // eg. set_style_by_class('td','hide','visibility','visible')
 function set_style_by_class(t,c,p,v)
