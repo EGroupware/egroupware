@@ -102,6 +102,15 @@ class filemanager_ui
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 			if (isset($_GET['path']) && ($path = $_GET['path']))
 			{
+				switch($path)
+				{
+					case '..':
+						$path = egw_vfs::dirname($content['nm']['path']);
+						break;
+					case '~':
+						$path = self::get_home_dir();
+						break;
+				}
 				if ($path[0] == '/' && egw_vfs::stat($path,true) && egw_vfs::is_dir($path) && egw_vfs::check_access($path,egw_vfs::READABLE))
 				{
 					$content['nm']['path'] = $path;
@@ -530,6 +539,11 @@ class filemanager_ui
 			));
 		}
 		$rows = $dir_is_writable = array();
+		if ($query['searchletter'] && egw_vfs::stat($query['path'].'/'.$query['searchletter'].'*'))
+		{
+			$query['path'] .= '/'.$query['searchletter'].'*';
+			$query['searchletter'] = false;
+		}
 		if($query['searchletter'] && !empty($query['search']))
 		{
 			$namefilter = '/^'.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';

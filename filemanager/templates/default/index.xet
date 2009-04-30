@@ -53,7 +53,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.7.001">
+	<template id="filemanager.index" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%">
 			<columns>
 				<column width="250"/>
@@ -66,8 +66,8 @@
 				</row>
 				<row>
 					<hbox span="all">
-						<button image="goup" label="Up" id="button[up]"/>
-						<button id="button[home]" image="gohome" label="Go to your home directory"/>
+						<image label="Up" src="goup" options="filemanager.filemanager_ui.index&amp;path=.."/>
+						<image src="gohome" options="filemanager.filemanager_ui.index&amp;path=~" label="Go to your home directory"/>
 						<textbox id="nm[path]" size="80" label="Path" onchange="1" class="address"/>
 						<button id="button[go]" image="key_enter" label="Go to"/>
 						<image src="buttonseparator"/>
