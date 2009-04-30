@@ -113,7 +113,129 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		return '204 No Content';
 	}
 
-	/**
+    /**
+     * COPY method handler
+     *
+     * @param  array  general parameter passing array
+     * @return bool   true on success
+     */
+    function COPY($options, $del=false)
+    {
+        // TODO Property updates still broken (Litmus should detect this?)
+
+        if (!empty($this->_SERVER["CONTENT_LENGTH"])) { // no body parsing yet
+            return "415 Unsupported media type";
+        }
+
+        // no copying to different WebDAV Servers yet
+        if (isset($options["dest_url"])) {
+            return "502 bad gateway";
+        }
+
+        $source = $this->base .$options["path"];
+        if (!file_exists($source)) return "404 Not found";
+
+        $dest         = $this->base . $options["dest"];
+        $new          = !file_exists($dest);
+        $existing_col = false;
+
+        if (!$new) {
+            if ($del && is_dir($dest)) {
+                if (!$options["overwrite"]) {
+                    return "412 precondition failed";
+                }
+                $dest .= basename($source);
+                if (file_exists($dest)) {
+                    $options["dest"] .= basename($source);
+                } else {
+                    $new          = true;
+                    $existing_col = true;
+                }
+            }
+        }
+
+        if (!$new) {
+            if ($options["overwrite"]) {
+                $stat = $this->DELETE(array("path" => $options["dest"]));
+                if (($stat{0} != "2") && (substr($stat, 0, 3) != "404")) {
+                    return $stat;
+                }
+            } else {
+                return "412 precondition failed";
+            }
+        }
+
+        if (is_dir($source) && ($options["depth"] != "infinity")) {
+            // RFC 2518 Section 9.2, last paragraph
+            return "400 Bad request";
+        }
+
+        if ($del) {
+            if (!rename($source, $dest)) {
+                return "500 Internal server error";
+            }
+            $destpath = $this->_unslashify($options["dest"]);
+/*
+            if (is_dir($source)) {
+                $query = "UPDATE {$this->db_prefix}properties
+                                 SET path = REPLACE(path, '".$options["path"]."', '".$destpath."')
+                               WHERE path LIKE '".$this->_slashify($options["path"])."%'";
+                mysql_query($query);
+            }
+
+            $query = "UPDATE {$this->db_prefix}properties
+                             SET path = '".$destpath."'
+                           WHERE path = '".$options["path"]."'";
+            mysql_query($query);
+*/
+        } else {
+            if (is_dir($source)) {
+                $files = System::find($source);
+                $files = array_reverse($files);
+            } else {
+                $files = array($source);
+            }
+
+            if (!is_array($files) || empty($files)) {
+                return "500 Internal server error";
+            }
+
+
+            foreach ($files as $file) {
+                if (is_dir($file)) {
+                    $file = $this->_slashify($file);
+                }
+
+                $destfile = str_replace($source, $dest, $file);
+
+                if (is_dir($file)) {
+                    if (!is_dir($destfile)) {
+                        // TODO "mkdir -p" here? (only natively supported by PHP 5)
+                        if (!@mkdir($destfile)) {
+                            return "409 Conflict";
+                        }
+                    }
+                } else {
+                    if (!@copy($file, $destfile)) {
+                        return "409 Conflict";
+                    }
+                }
+            }
+
+/*
+           $query = "INSERT INTO {$this->db_prefix}properties
+                               SELECT *
+                                 FROM {$this->db_prefix}properties
+                                WHERE path = '".$options['path']."'";
+*/
+        }
+        // adding Location header as shown in example in rfc2518 section 8.9.5
+		header('Location: '.$this->base_uri.$options['dest']);
+
+        return ($new && !$existing_col) ? "201 Created" : "204 No Content";
+    }
+
+    /**
 	* Get properties for a single file/resource
 	*
 	* @param  string  resource path
