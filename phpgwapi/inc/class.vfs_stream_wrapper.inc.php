@@ -111,6 +111,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		static $cache = array();
 
+		// remove training slashes eg. added by WebDAV
+		while(substr($path,-1) == '/' && $path != '/')
+		{
+			$path = substr($path,0,-1);
+		}
 		// we do some caching here
 		if (isset($cache[$path]))
 		{
