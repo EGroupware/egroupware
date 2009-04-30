@@ -114,6 +114,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function resolve_url_symlinks($path,$file_exists=true,$resolve_last_symlink=true)
 	{
+		$path = self::get_path($path);
+
 		if (!($stat = self::url_stat($path,$resolve_last_symlink?0:STREAM_URL_STAT_LINK)) && !$file_exists)
 		{
 			$ret = self::check_symlink_components($path,0,$url);
@@ -142,6 +144,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	static function resolve_url($path,$do_symlink=true)
 	{
 		static $cache = array();
+
+		$path = self::get_path($path);
 
 		// we do some caching here
 		if (isset($cache[$path]))
@@ -384,7 +388,12 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		self::symlinkCache_remove($path_from);
-		return rename($url_from,$url_to);
+		$ret = rename($url_from,$url_to);
+		if (self::LOG_LEVEL > 1 || self::LOG_LEVEL && $ret)
+		{
+			error_log(__METHOD__."('$path_from','$path_to') url_from='$url_from', url_to='$url_to' returning ".array2string($ret));
+		}
+		return $ret;
 	}
 
 	/**
@@ -692,8 +701,6 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
 
-		if (substr($path,-1) == '/') $path = substr($path,0,-1);	// remove trailing slashes, eg. added by webdav
-
 		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK))))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
@@ -714,7 +721,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					$lpath = egw_vfs::concat(parse_url($path,PHP_URL_PATH),'../'.$lpath);
 				}
 				$url = egw_vfs::PREFIX.$lpath;
-				if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlink found and resolved to $url");
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
 				// try reading the stat of the link
 				if ($stat = self::url_stat($lpath,STREAM_URL_STAT_QUIET))
 				{
@@ -818,7 +825,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function symlinkCache_add($path,$target)
 	{
-		if ($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
+		$path = self::get_path($path,self::SCHEME);
+
 		if (isset(self::$symlink_cache[$path])) return;	// nothing to do
 
 		if ($target[0] != '/') $target = parse_url($target,PHP_URL_PATH);
@@ -837,9 +845,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function symlinkCache_remove($path)
 	{
-		if ($path[0] != '/') $path = parse_url($path,PHP_URL_PATH);
+		$path = self::get_path($path,self::SCHEME);
+
 		unset(self::$symlink_cache[$path]);
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path) cache now ".array2string(self::$$symlink_cache));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path) cache now ".array2string(self::$symlink_cache));
 	}
 
 	/**
@@ -854,10 +863,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	static public function symlinkCache_resolve($path,$do_symlink=true)
 	{
 		// remove vfs scheme, but no other schemes (eg. filesystem!)
-		if ($path[0] != '/' && parse_url($path,PHP_URL_SCHEME) == self::SCHEME)
-		{
-			$path = parse_url($path,PHP_URL_PATH);
-		}
+		$path = self::get_path($path,self::SCHEME);
+
 		$strlen_path = strlen($path);
 
 		foreach(self::$symlink_cache as $p => $t)
@@ -1002,6 +1009,31 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		return str_replace('.','_',$scheme).'_stream_wrapper';
 	}
 
+	/**
+	 * Getting the path from an url (or path) AND removing trailing slashes
+	 *
+	 * @param string $path url or path (might contain trailing slash from WebDAV!)
+	 * @param string $only_remove_scheme=null if given only that scheme get's removed
+	 * @return string path without training slash
+	 */
+	static protected function get_path($path,$only_remove_scheme=null)
+	{
+		if ($path[0] != '/' && (!$only_remove_scheme || parse_url($path,PHP_URL_SCHEME) == $only_remove_scheme))
+		{
+			$path = parse_url($path,PHP_URL_PATH);
+		}
+		// remove trailing slashes eg. added by WebDAV
+		while (substr($path,-1) == '/' && $path != '/')
+		{
+			$path = substr($path,0,-1);
+		}
+		return $path;
+	}
+
+	/**
+	 * Init our static properties and register this wrapper
+	 *
+	 */
 	static function init_static()
 	{
 		stream_register_wrapper(self::SCHEME,__CLASS__);
