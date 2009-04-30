@@ -730,7 +730,7 @@ class egw_session
 			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
-			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST']);
+			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT);
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
 		{
