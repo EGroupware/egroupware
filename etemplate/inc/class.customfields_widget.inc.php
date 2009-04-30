@@ -186,9 +186,15 @@ class customfields_widget
 				)));
 			} elseif ($type == 'customfields-list') {
 				if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') {
-					etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
-						array('label'=>/*lang("custom fields").": ".*/$field['label'],'width'=>"16px",
-							'onclick'=>"return alert('".lang("custom fields").": ".$field['label']."');")));
+					switch ((string)$field['type'])
+					{
+						case 'checkbox':
+							if ($value[$this->prefix.$lname]==0) break;
+						default:
+							etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
+								array('label'=>/*lang("custom fields").": ".*/$field['label'],'width'=>"16px",
+									'onclick'=>"return alert('".lang("custom fields").": ".$field['label']."');")));
+					}
 				}
 			}
 
@@ -217,29 +223,38 @@ class customfields_widget
 						$select =& $input; unset($input);
 						$input =& etemplate::empty_cell('hbox');
 						etemplate::add_child($input, $select); unset($select);
+						/* the following seem to double the select fields in advanced search.
 						etemplate::add_child($input, etemplate::empty_cell('select',$this->prefix.$lname,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
 							'no_lang'     => True
 						)));
+						*/
 					}
 					break;
 				case 'label' :
 					$row_class = 'th';
 					break;
 				case 'radio' :
+					$showthis = '#a#l#l#';
 					if (count($field['values']) == 1 && isset($field['values']['@']))
 					{
 						$field['values'] = $this->_get_options_from_file($field['values']['@']);
 					}
-					$input =& etemplate::empty_cell('groupbox');
+					if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
+					if ($readonly) {
+						$showthis = $value[$this->prefix.$lname];
+						$input =& etemplate::empty_cell('hbox');
+					} else {
+						$input =& etemplate::empty_cell('groupbox');
+					}
 					$m = 0;
 					foreach ($field['values'] as $key => $val)
 					{
 						$radio = etemplate::empty_cell('radio',$this->prefix.$lname);
 						$radio['label'] = $val;
 						$radio['size'] = $key;
-						etemplate::add_child($input,$radio);
+						if ($showthis == '#a#l#l#' || $showthis == $key) etemplate::add_child($input,$radio);
 						unset($radio);
 					}
 					break;
@@ -260,7 +275,7 @@ class customfields_widget
 							{
 								if (array_key_exists('readonly',$field['values']))
 								{
-									$tmparray['readonly']='readonly';
+									if(!$this->advanced_search) $tmparray['readonly']='readonly';
 								}
 							}
 							$input =& etemplate::empty_cell('text',$this->prefix.$lname,$tmparray);
@@ -272,7 +287,7 @@ class customfields_widget
 							);
 							if (is_array($field['values']) && array_key_exists('readonly',$field['values']))
 							{
-								$tmparray['readonly']='readonly';
+								if(!$this->advanced_search) $tmparray['readonly']='readonly';
 							}
 							$input =& etemplate::empty_cell('textarea',$this->prefix.$lname,$tmparray);
 						}
@@ -298,16 +313,19 @@ class customfields_widget
 					));
 					break;
 				case 'button':  // button(s) to execute javascript (label=onclick) or textinputs (empty label, readonly with neg. length)
+					// a button does not seem to be helpful in advanced search ???, 
+					if($this->advanced_search) break;
 					$input =& etemplate::empty_cell('hbox');
 					foreach($field['values'] as $label => $js)
 					{
 						if (!$label)    // display an readonly input
 						{
-							$widget =& etemplate::empty_cell('text',$this->prefix.$lname.$label,array(
+							$tmparray = array(
 								'size' => $field['len'] ? $field['len'] : 20,
 								'readonly' => $field['len'] < 0,
 								'onchange' => $js,
-							));
+							);
+							$widget =& etemplate::empty_cell('text',$this->prefix.$lname.$label,$tmparray);
 						}
 						else
 						{
