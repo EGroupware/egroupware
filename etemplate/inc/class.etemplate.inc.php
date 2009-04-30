@@ -1485,7 +1485,7 @@ class etemplate extends boetemplate
 				}
 				if (!$readonly)
 				{
-					list($extra_link,$extra_link_target,$imagemap,$extra_link_popup,$id) = explode(',',$cell['size']);
+					list($extra_link,$extra_link_target,$imagemap,$extra_link_popup,$id) = self::csv_split($cell['size']);
 				}
 				$html .= html::image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
 					'border="0"'.($imagemap?' usemap="#'.html::htmlspecialchars($imagemap).'"':'').
