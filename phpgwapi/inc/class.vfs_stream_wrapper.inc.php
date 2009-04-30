@@ -825,7 +825,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function symlinkCache_add($path,$target)
 	{
-		$path = self::get_path($path,self::SCHEME);
+		$path = self::get_path($path);
 
 		if (isset(self::$symlink_cache[$path])) return;	// nothing to do
 
@@ -845,7 +845,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function symlinkCache_remove($path)
 	{
-		$path = self::get_path($path,self::SCHEME);
+		$path = self::get_path($path);
 
 		unset(self::$symlink_cache[$path]);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path) cache now ".array2string(self::$symlink_cache));
@@ -863,7 +863,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	static public function symlinkCache_resolve($path,$do_symlink=true)
 	{
 		// remove vfs scheme, but no other schemes (eg. filesystem!)
-		$path = self::get_path($path,self::SCHEME);
+		$path = self::get_path($path);
 
 		$strlen_path = strlen($path);
 
@@ -1013,10 +1013,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * Getting the path from an url (or path) AND removing trailing slashes
 	 *
 	 * @param string $path url or path (might contain trailing slash from WebDAV!)
-	 * @param string $only_remove_scheme=null if given only that scheme get's removed
+	 * @param string $only_remove_scheme=self::SCHEME if given only that scheme get's removed
 	 * @return string path without training slash
 	 */
-	static protected function get_path($path,$only_remove_scheme=null)
+	static protected function get_path($path,$only_remove_scheme=self::SCHEME)
 	{
 		if ($path[0] != '/' && (!$only_remove_scheme || parse_url($path,PHP_URL_SCHEME) == $only_remove_scheme))
 		{
