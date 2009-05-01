@@ -989,6 +989,19 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			elseif ($n < count($parts)-1)
 			{
+				// MySQL 5.0 has a nesting limit for subqueries
+				// --> we replace the so far cumulated subqueries with their result
+				// no idea about the other DBMS, but this does NOT hurt ...
+				if ($n > 1 && !(($n-1) % 10) && !($query = self::$pdo->query($query)->fetchColumn()))
+				{
+					if (self::LOG_LEVEL > 1)
+					{
+						self::_remove_password($url);
+						error_log(__METHOD__."('$url',$flags) file or directory not found!");
+					}
+					// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
+					return self::$stat_cache[$path] = false;
+				}
 				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name);
 
 				// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
