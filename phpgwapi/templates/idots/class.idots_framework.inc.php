@@ -40,11 +40,17 @@ class idots_framework extends egw_framework
 	*/
 	var $tplsav2;
 	/**
+	* true if $this->header() was called
+	*
+	* @var boolean
+	*/
+	static $header_done = false;
+	/**
 	* true if $this->navbar() was called
 	*
 	* @var boolean
 	*/
-	var $navbar_done;
+	static $navbar_done = false;
 
 	/**
 	* Contains array with linked icons in the topmenu
@@ -84,6 +90,10 @@ class idots_framework extends egw_framework
 	*/
 	function header()
 	{
+		// make sure header is output only once
+		if (self::$header_done) return '';
+		self::$header_done = true;
+
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
 
@@ -113,7 +123,8 @@ class idots_framework extends egw_framework
 	*/
 	function navbar()
 	{
-		$this->navbar_done = true;
+		if (self::$navbar_done) return '';
+		self::$navbar_done = true;
 
 		// the navbar
 		$this->tpl->set_file(array('navbar' => 'navbar.tpl'));
@@ -679,7 +690,7 @@ class idots_framework extends egw_framework
 
 			// do the template sets footer, former parse_navbar_end function
 			// this closes the application area AND renders the closing body- and html-tag
-			if ($this->navbar_done)
+			if (self::$navbar_done)
 			{
 				$this->tpl->set_file(array('footer' => 'footer.tpl'));
 				$this->tpl->set_var($this->_get_footer());
