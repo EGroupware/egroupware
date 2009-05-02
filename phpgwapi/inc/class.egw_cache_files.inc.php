@@ -77,7 +77,7 @@ class egw_cache_files implements egw_cache_provider
 	 */
 	function set(array $keys,$data,$expiration=0)
 	{
-		if ($ret = file_put_contents($fname=$this->filename($keys,true),serialize($data),LOCK_EX) > 0)
+		if ($ret = @file_put_contents($fname=$this->filename($keys,true),serialize($data),LOCK_EX) > 0)
 		{
 			if ((int)$expiration > 0) file_put_contents($fname.self::EXPIRATION_EXTENSION,(string)$expiration);
 		}
@@ -137,11 +137,11 @@ class egw_cache_files implements egw_cache_provider
 	 */
 	private function filename(array $keys,$mkdir=false)
 	{
-		$fname = $this->base_path.'/'.str_replace(':','-',implode('/',$keys));
+		$fname = $this->base_path.'/'.str_replace(array(':','*'),'-',implode('/',$keys));
 
 		if ($mkdir && !file_exists($dirname=dirname($fname)))
 		{
-			mkdir($dirname,0700,true);
+			@mkdir($dirname,0700,true);
 		}
 		return $fname;
 	}
