@@ -570,7 +570,6 @@ class filemanager_ui
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
 			'need_mime' => true,
 			'name_preg' => $namefilter,
-			'follow' => true,	// follow symlinks
 		),true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);

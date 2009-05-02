@@ -388,11 +388,11 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			if (!$url) $path = egw_vfs::PREFIX . $path;
 
-			$is_dir = is_dir($path) && ($options['follow'] || !is_link($path));
 			if (!isset($options['remove']))
 			{
 				$options['remove'] = count($base) == 1 ? count(explode('/',$path))-3+(int)(substr($path,-1)!='/') : 0;
 			}
+			$is_dir = is_dir($path);
 			if ((int)$options['mindepth'] == 0 && (!$dirs_last || !$is_dir))
 			{
 				self::_check_add($options,$path,$result);
@@ -409,7 +409,8 @@ class egw_vfs extends vfs_stream_wrapper
 					{
 						self::_check_add($options,$file,$result);
 					}
-					if (is_dir($file) && (!isset($options['maxdepth']) || $options['maxdepth'] > 1))
+					// only descend into subdirs, if it's a real dir (no link to a dir) or we should follow symlinks
+					if (is_dir($file) && ($options['follow'] || !is_link($file)) && (!isset($options['maxdepth']) || $options['maxdepth'] > 1))
 					{
 						$opts = $options;
 						if ($opts['mindepth']) $opts['mindepth']--;
@@ -509,7 +510,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		$type = $options['type'];	// 'd' or 'f'
 
-		if ($type && ($type == 'd') !== is_dir($path))
+		if ($type && ($type == 'd') !== (is_dir($path) && !is_link($path)))
 		{
 			return;	// wrong type
 		}
@@ -525,7 +526,6 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$stat['mime'] = self::mime_content_type($path);
 		}
-
 		if (isset($options['name_preg']) && !preg_match($options['name_preg'],$stat['name']) ||
 			isset($options['path_preg']) && !preg_match($options['path_preg'],$path))
 		{
