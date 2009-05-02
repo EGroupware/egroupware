@@ -400,7 +400,7 @@ class translation
 	{
 		if (!$force_read)
 		{
-			return egw_cache::getInstance(__CLASS__,'list_langs',__METHOD__,array(true));
+			return egw_cache::getInstance(__CLASS__,'list_langs',array(__CLASS__,'list_langs'),array(true));
 		}
 		$languages = self::get_installed_langs();	// used translated installed languages
 
