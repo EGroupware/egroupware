@@ -510,13 +510,13 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		$type = $options['type'];	// 'd' or 'f'
 
-		if ($type && ($type == 'd') !== (is_dir($path) && !is_link($path)))
-		{
-			return;	// wrong type
-		}
-		if (!($stat = self::url_stat($path,0)))
+		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)))
 		{
 			return;	// not found, should not happen
+		}
+		if ($type && ($type == 'd') == !($stat['mode'] & sqlfs_stream_wrapper::MODE_DIR))	// != is_dir() which can be true for symlinks
+		{
+			return;	// wrong type
 		}
 		$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		$stat['path'] = parse_url($path,PHP_URL_PATH);
