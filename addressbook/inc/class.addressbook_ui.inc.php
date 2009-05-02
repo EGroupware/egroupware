@@ -1158,48 +1158,6 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
-	 * Get the availible addressbooks of the user
-	 *
-	 * @param int $required=EGW_ACL_READ required rights on the addressbook
-	 * @param string $extra_label first label if given (already translated)
-	 * @return array with owner => label pairs
-	 */
-	function get_addressbooks($required=EGW_ACL_READ,$extra_label=null)
-	{
-		//echo "uicontacts::get_addressbooks($required,$include_all) grants="; _debug_array($this->grants);
-
-		$addressbooks = array();
-		if ($extra_label) $addressbooks[''] = $extra_label;
-		$addressbooks[$this->user] = lang('Personal');
-		// add all group addressbooks the user has the necessary rights too
-		foreach($this->grants as $uid => $rights)
-		{
-			if (($rights & $required) && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
-			{
-				$addressbooks[$uid] = lang('Group %1',$GLOBALS['egw']->accounts->id2name($uid));
-			}
-		}
-		if (($this->grants[0] & $required) && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
-		{
-			$addressbooks[0] = lang('Accounts');
-		}
-		// add all other user addressbooks the user has the necessary rights too
-		foreach($this->grants as $uid => $rights)
-		{
-			if ($uid != $this->user && ($rights & $required) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
-			{
-				$addressbooks[$uid] = $GLOBALS['egw']->common->grab_owner_name($uid);
-			}
-		}
-		if ($this->private_addressbook)
-		{
-			$addressbooks[$this->user.'p'] = lang('Private');
-		}
-		//_debug_array($addressbooks);
-		return $addressbooks;
-	}
-
-	/**
 	* Edit a contact
 	*
 	* @param array $content=null submitted content

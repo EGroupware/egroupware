@@ -247,6 +247,48 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Get the availible addressbooks of the user
+	 *
+	 * @param int $required=EGW_ACL_READ required rights on the addressbook
+	 * @param string $extra_label first label if given (already translated)
+	 * @return array with owner => label pairs
+	 */
+	function get_addressbooks($required=EGW_ACL_READ,$extra_label=null)
+	{
+		//echo "uicontacts::get_addressbooks($required,$include_all) grants="; _debug_array($this->grants);
+
+		$addressbooks = array();
+		if ($extra_label) $addressbooks[''] = $extra_label;
+		$addressbooks[$this->user] = lang('Personal');
+		// add all group addressbooks the user has the necessary rights too
+		foreach($this->grants as $uid => $rights)
+		{
+			if (($rights & $required) && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
+			{
+				$addressbooks[$uid] = lang('Group %1',$GLOBALS['egw']->accounts->id2name($uid));
+			}
+		}
+		if (($this->grants[0] & $required) && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		{
+			$addressbooks[0] = lang('Accounts');
+		}
+		// add all other user addressbooks the user has the necessary rights too
+		foreach($this->grants as $uid => $rights)
+		{
+			if ($uid != $this->user && ($rights & $required) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
+			{
+				$addressbooks[$uid] = $GLOBALS['egw']->common->grab_owner_name($uid);
+			}
+		}
+		if ($this->private_addressbook)
+		{
+			$addressbooks[$this->user.'p'] = lang('Private');
+		}
+		//_debug_array($addressbooks);
+		return $addressbooks;
+	}
+
+	/**
 	 * calculate the file_as string from the contact and the file_as type
 	 *
 	 * @param array $contact
@@ -265,8 +307,8 @@ class addressbook_bo extends addressbook_so
 				$contact['n_fn'],$contact['org_name'],$contact['org_unit'],$contact['adr_one_locality']),$type);
 
 		// removing empty delimiters, caused by empty contact fields
-		$fileas = str_replace(array(', , : ',', : ',': , ',', , ',': : '),array(': ',': ',': ',', ',': '),$fileas);
-		while ($fileas{0} == ':' ||  $fileas{0} == ',') $fileas = substr($fileas,2);
+		$fileas = str_replace(array(', , : ',', : ',': , ',', , ',': : ',' ()'),array(': ',': ',': ',', ',': ',''),$fileas);
+		while ($fileas[0] == ':' ||  $fileas[0] == ',') $fileas = substr($fileas,2);
 		while (substr($fileas,-2) == ': ' || substr($fileas,-2) == ', ') $fileas = substr($fileas,0,-2);
 
 		//echo "<p align=right>bocontacts::fileas(,$type)='$fileas'</p>\n";
@@ -985,7 +1027,7 @@ class addressbook_bo extends addressbook_so
 		{
 			foreach($event['participants'] as $uid => $status)
 			{
-				if ($uid{0} != 'c' || ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected']))
+				if ($uid[0] != 'c' || ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected']))
 				{
 					continue;
 				}
