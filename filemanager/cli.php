@@ -9,6 +9,8 @@
  * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
+ *
+ * @todo --domain does NOT work with --user root_* for domains other then the first in header.inc.php
  */
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
@@ -603,7 +605,7 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false)
 	{
 		$bname = basename($bname);
 	}
-	if (!file_exists($url) || !($stat = lstat($url)))
+	if (!($stat = @lstat($url)))
 	{
 		echo "$bname: no such file or directory!\n";
 	}
