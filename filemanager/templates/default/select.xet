@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.select" template="" lang="" group="0" version="1.7.001">
+	<template id="filemanager.select" template="" lang="" group="0" version="1.7.002">
 		<grid width="600">
 			<columns>
 				<column width="32"/>
@@ -31,7 +31,9 @@
 								<hbox>
 									<html id="js"/>
 									<button id="button[up]" image="goup"/>
-									<vfs id="path" onclick="path=document.getElementById(form::name('path')); path.value=$path; path.form.submit();" class="selectPath"/>
+									<box class="selectPathContainer">
+										<vfs id="path" onclick="path=document.getElementById(form::name('path')); path.value=$path; path.form.submit();" class="selectPath"/>
+									</box>
 									<textbox id="path" class="displayNone"/>
 								</hbox>
 							</row>

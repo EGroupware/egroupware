@@ -13,6 +13,7 @@
  * Select file dialog
  */
 .selectPath { font-weight: bold; }
+.selectPathContainer { width: 480px; overflow: auto; }
 .selectName input { width: 100%; }
 .selectMime select { width: 100%; }
 .selectIcon img { height: 16px; }

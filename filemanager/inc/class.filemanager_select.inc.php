@@ -197,6 +197,8 @@ function select_toggle(file)
 }
 </script>
 ';
+		// scroll to end of path
+		$GLOBALS['egw']->js->set_onload("document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]').scrollIntoView();");
 		//_debug_array($content);
 		//_debug_array($readonlys);
 		egw_session::appsession('select_path','filemanger',$content['path']);
