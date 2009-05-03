@@ -134,7 +134,7 @@ class so_sql
 	 *
 	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
-	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
+	 * @param egw_db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
@@ -274,7 +274,7 @@ class so_sql
 	 * This default implementation only converts the timestamps mentioned in $this->timestampfs from server to user time.
 	 * You can reimplement it in a derived class
 	 *
-	 * @param array $data if given works on that array and returns result, else works on internal data-array
+	 * @param array $data=null if given works on that array and returns result, else works on internal data-array
 	 */
 	function db2data($data=null)
 	{
@@ -301,7 +301,7 @@ class so_sql
 	 * This default implementation only converts the timestamps mentioned in $this->timestampfs from user to server time.
 	 * You can reimplement it in a derived class
 	 *
-	 * @param array $data if given works on that array and returns result, else works on internal data-array
+	 * @param array $data=null if given works on that array and returns result, else works on internal data-array
 	 */
 	function data2db($data=null)
 	{
@@ -324,7 +324,7 @@ class so_sql
 	/**
 	 * initializes data with the content of key
 	 *
-	 * @param array $keys array with keys in form internalName => value
+	 * @param array $keys=array() array with keys in form internalName => value
 	 * @return array internal data after init
 	 */
 	function init($keys=array())
@@ -342,9 +342,9 @@ class so_sql
 	 * reads row matched by key and puts all cols in the data array
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
-	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $join sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
-	 * @return array/boolean data if row could be retrived else False
+	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 * @return array|boolean data if row could be retrived else False
 	 */
 	function read($keys,$extra_cols='',$join='')
 	{
@@ -452,7 +452,7 @@ class so_sql
 	/**
 	 * saves the content of data to the db
 	 *
-	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
+	 * @param array $keys=null if given $keys are copied to data before saveing => allows a save as
 	 * @param string|array $extra_where=null extra where clause, eg. to check an etag, returns true if no affected rows!
 	 * @return int|boolean 0 on success, or errno != 0 on error, or true if $extra_where is given and no rows affected
 	 */
@@ -591,7 +591,7 @@ class so_sql
 	/**
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
-	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
+	 * @param array $keys=null if given array with col => value pairs to characterise the rows to delete
 	 * @param boolean $only_return_query=false return $query of delete call to db object, but not run it (used by so_sql_cf!)
 	 * @return int affected rows, should be 1 if ok, 0 if an error
 	 */
@@ -637,11 +637,11 @@ class so_sql
 	 *
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
-	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or
+	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param boolean|string|array $only_keys=true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard='' appended befor and after each criteria
 	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
@@ -650,7 +650,7 @@ class so_sql
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
 	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
-	 * @return boolean/array of matching rows (the row is an array of the cols) or False
+	 * @return array|NULL array of matching rows (the row is an array of the cols) or NULL
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
@@ -870,15 +870,15 @@ class so_sql
 			$arr[] = $this->db2data($data);
 			$n++;
 		}
-		return $n ? $arr : False;
+		return $n ? $arr : null;
 	}
 
 	/**
 	 * extract the requested columns from $only_keys and $extra_cols param of a search
 	 *
 	 * @internal
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param boolean|string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @return array with columns as db-name => internal-name pairs
 	 */
 	function _get_columns($only_keys,$extra_cols)
@@ -940,7 +940,7 @@ class so_sql
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @param mixed $only_keys=false, see search
-	 * @param string|array $extra_cols
+	 * @param string|array $extra_cols=array()
 	 * @return int total number of rows
 	 */
 	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
@@ -969,7 +969,7 @@ class so_sql
 	/**
 	 * Check if values for unique keys and the primary keys are unique are unique
 	 *
-	 * @param array $data data-set to check, defaults to $this->data
+	 * @param array $data=null data-set to check, defaults to $this->data
 	 * @return int 0: all keys are unique, 1: first key not unique, 2: ...
 	 */
 	function not_unique($data=null)
