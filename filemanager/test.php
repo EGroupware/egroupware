@@ -15,8 +15,10 @@ $GLOBALS['egw_info']['flags'] = array(
 );
 include('../header.inc.php');
 
-$path = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
-
+if (!($path = egw_cache::getSession('filemanger','test')))
+{
+	$path = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
+}
 if (isset($_REQUEST['path'])) $path = $_REQUEST['path'];
 echo html::form("<p>Path: ".html::input('path',$path,'text','size="40"').
 	html::submit_button('',lang('Submit'))."</p>\n",array(),'','','','','GET');
@@ -27,6 +29,8 @@ if (isset($path) && !empty($path))
 	{
 		throw new egw_exception_wrong_userinput('Not an absolute path!');
 	}
+	egw_cache::setSession('filemanger','test',$path);
+
 	echo "<h2>";
 	foreach(explode('/',$path) as $n => $part)
 	{
@@ -54,7 +58,7 @@ if (isset($path) && !empty($path))
 			$files[] = $file;
 		}
 		closedir($d);
-		echo ($files ? '<ul><li>'.implode("</li>\n<li>",$files).'</ul>' : '<p>Empty directory</p>')."\n";
+		echo ($files ? '<ol><li>'.implode("</li>\n<li>",$files).'</ol>' : '<p>Empty directory</p>')."\n";
 	}
 
 	echo "<p><b>stat('$path')</b> took $time ms (mode = ".(isset($stat['mode'])?sprintf('%o',$stat['mode']).' = '.egw_vfs::int2mode($stat['mode']):'NULL').')';
