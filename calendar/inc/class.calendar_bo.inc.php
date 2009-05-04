@@ -1540,7 +1540,9 @@ class calendar_bo
 		return $cats;
 	}
 
-	/* This is called only by list_cals().  It was moved here to remove fatal error in php5 beta4 */
+	/**
+	 *  This is called only by list_cals().  It was moved here to remove fatal error in php5 beta4
+	 */
 	function _list_cals_add($id,&$users,&$groups)
 	{
 		$name = $GLOBALS['egw']->common->grab_owner_name($id);
@@ -1560,9 +1562,10 @@ class calendar_bo
 	}
 
 	/**
-	* generate list of user- / group-calendars for the selectbox in the header
-	* @return alphabeticaly sorted array with groups first and then users
-	*/
+	 * generate list of user- / group-calendars for the selectbox in the header
+	 *
+	 * @return array alphabeticaly sorted array with groups first and then users: $name => array('grantor'=>$id,'value'=>['g_'.]$id,'name'=>$name)
+	 */
 	function list_cals()
 	{
 		$users = $groups = array();

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -105,9 +105,9 @@ class calendar_so
 	 *
 	 * All times (start, end and modified) are returned as timesstamps in servertime!
 	 *
-	 * @param int/array/string $ids id or array of id's of the entries to read, or string with a single uid
+	 * @param int|array/string $ids id or array of id's of the entries to read, or string with a single uid
 	 * @param int $recur_date=0 if set read the next recurrance at or after the timestamp, default 0 = read the initital one
-	 * @return array/boolean array with id => data pairs or false if entry not found
+	 * @return array|boolean array with id => data pairs or false if entry not found
 	 */
 	function read($ids,$recur_date=0)
 	{
@@ -214,7 +214,7 @@ class calendar_so
 	/**
 	 * generate SQL to filter after a given category (evtl. incl. subcategories)
 	 *
-	 * @param array/int $cat_id cat-id or array of cat-ids, or !$cat_id for none
+	 * @param array|int $cat_id cat-id or array of cat-ids, or !$cat_id for none
 	 * @return string SQL to include in the query
 	 */
 	function cat_filter($cat_id)
@@ -247,23 +247,29 @@ class calendar_so
 	 *
 	 * @param int $start startdate of the search/list (servertime)
 	 * @param int $end enddate of the search/list (servertime)
-	 * @param int/array $users user-id or array of user-id's, !$users means all entries regardless of users
+	 * @param int|array $users user-id or array of user-id's, !$users means all entries regardless of users
 	 * @param int $cat_id=0 mixed category-id or array of cat-id's, default 0 = all
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
 	 * @param string $filter='' string filter-name, atm. all or hideprivate
 	 * @param string $query='' pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
-	 * @param int/bool $offset=False offset for a limited query or False (default)
+	 * @param int|boolean $offset=False offset for a limited query or False (default)
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @param string $order='cal_start' column-names plus optional DESC|ASC separted by comma
 	 * @param boolean $show_rejected=true should the search return rejected invitations
-	 * @return array of cal_ids, or false if error in the parameters
+	 * @param string|array $_cols=null what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date"
+	 *                     if specified an iterator for the rows is returned
+	 * @param string $append='' SQL to append to the query before $order, eg. for a GROUP BY clause
+	 * @return array|boolean|iterator of cal_id => event pairs, or false if error in the parameters, or iterator if !is_null($_cols)
 	 *
 	 * ToDo: search custom-fields too
 	 */
-	function &search($start,$end,$users,$cat_id=0,$filter='',$query='',$offset=False,$num_rows=0,$order = 'cal_start',$show_rejected=true)
+	function &search($start,$end,$users,$cat_id=0,$filter='',$query='',$offset=False,$num_rows=0,$order = 'cal_start',$show_rejected=true,
+		$_cols=null,$append='')
 	{
-		//echo '<p>socal::search('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.print_r($users,true).','.print_r($cat_id,true).",'$filter',".print_r($query,true).",$offset,$num_rows)</p>\n";
+		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append)</p>\n";
+
+		$cols = !is_null($_cols) ? $_cols : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
 
 		$where = array();
 		if (is_array($query))
@@ -281,7 +287,7 @@ class calendar_so
 		if ($users)
 		{
 			$users_by_type = array();
-			foreach(is_array($users) ? $users : array($users) as $user)
+			foreach((array)$users as $user)
 			{
 				if (is_numeric($user))
 				{
@@ -289,7 +295,7 @@ class calendar_so
 				}
 				elseif (is_numeric(substr($user,1)))
 				{
-					$users_by_type[$user{0}][] = (int) substr($user,1);
+					$users_by_type[$user[0]][] = (int) substr($user,1);
 				}
 			}
 			$to_or = array();
@@ -320,9 +326,10 @@ class calendar_so
 			$select = array(
 				'table' => $this->cal_table,
 				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id",
-				'cols'  => "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
+				'append'=> $append,
 			);
 			$selects = array($select,$select);
 			$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
@@ -351,10 +358,13 @@ class calendar_so
 					$where,__LINE__,__FILE__,false,'','calendar',0,
 					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
 			}
-			$rs = $this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').
-				"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
-				$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,'calendar',$num_rows,
+			$rs = $this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').$cols,
+				$where,__LINE__,__FILE__,$offset,$append.' ORDER BY '.$order,'calendar',$num_rows,
 				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
+		}
+		if (!is_null($_cols))
+		{
+			return $rs;	// if colums are specified we return the recordset / iterator
 		}
 		$events = $ids = $recur_dates = $recur_ids = array();
 		foreach($rs as $row)
@@ -473,7 +483,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param boolean &$set_recurrences on return: true if the recurrences need to be written, false otherwise
 	 * @param int $change_since=0 time from which on the repetitions should be changed, default 0=all
 	 * @param int &$etag etag=null etag to check or null, on return new etag
-	 * @return boolean/int false on error, 0 if etag does not match, cal_id otherwise
+	 * @return boolean|int false on error, 0 if etag does not match, cal_id otherwise
 	 */
 	function save($event,&$set_recurrences,$change_since=0,&$etag=null)
 	{
@@ -487,7 +497,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
 		foreach($event as $col => $val)
 		{
-			if ($col{0} != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm')
+			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm')
 			{
 				$event['cal_'.$col] = $val;
 				unset($event[$col]);
@@ -658,10 +668,10 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $cal_id
 	 * @param int $start new starttime
 	 * @param int $end new endtime
-	 * @param int/boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
+	 * @param int|boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
 	 * @param int $old_start=0 old starttime or (default) 0, to query it from the db
 	 * @param int $old_end=0 old starttime or (default) 0
-	 * @return int/boolean number of moved recurrences or false on error
+	 * @return int|boolean number of moved recurrences or false on error
 	 */
 	function move($cal_id,$start,$end,$change_since=0,$old_start=0,$old_end=0)
 	{
@@ -751,9 +761,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param int $cal_id
 	 * @param array $participants id => status pairs
-	 * @param int/boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
+	 * @param int|boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
 	 * @param int $recur_date=0 time of which repetitions should be updated, default 0=all
-	 * @return int/boolean number of updated recurrences or false on error
+	 * @return int|boolean number of updated recurrences or false on error
 	 */
 	function participants($cal_id,$participants,$change_since=0)
 	{
@@ -824,7 +834,7 @@ ORDER BY cal_user_type, cal_usre_id
 				foreach($recurrences as $recur_date)
 				{
 					$this->db->insert($this->user_table,array(
-						'cal_status'	  => $status !== true ? $status{0} : 'U',
+						'cal_status'	  => $status !== true ? $status[0] : 'U',
 						'cal_quantity'	  => substr($status,1) ? substr($status,1) : 1,
 					),array(
 						'cal_id'	      => $cal_id,
@@ -844,7 +854,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $cal_id
 	 * @param char $user_type 'u' regular user, 'r' resource, 'c' contact
 	 * @param int $user_id
-	 * @param int/char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
+	 * @param int|string $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date=0 date to change, or 0 = all since now
 	 * @return int number of changed recurrences
 	 */
@@ -915,7 +925,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 			$this->split_user($uid,$type,$id);
 			$this->db->insert($this->user_table,array(
-				'cal_status'	 => $status !== true ? $status{0} : 'U',
+				'cal_status'	 => $status !== true ? $status[0] : 'U',
 				'cal_quantity'	=> substr($status,1) ? substr($status,1) : 1,
 			),array(
 				'cal_id'		 => $cal_id,
