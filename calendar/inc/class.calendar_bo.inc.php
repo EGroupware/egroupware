@@ -280,8 +280,10 @@ class calendar_bo
 	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
-	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
-	 *	or false if there are no read-grants from _any_ of the requested users
+	 *  cols string|array columns to select, if set the recordset/iterator will be returned
+	 *  append string to append to the query, eg. GROUP BY
+	 * @return iterator|array|boolean array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
+	 *	or false if there are no read-grants from _any_ of the requested users or iterator/recordset if cols are given
 	 */
 	function &search($params)
 	{
@@ -373,7 +375,12 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
+			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
+
+		if (isset($params['cols']))
+		{
+			return $events;
+		}
 		$this->total = $this->so->total;
 		$this->db2data($events,isset($params['date_format']) ? $params['date_format'] : 'ts');
 
