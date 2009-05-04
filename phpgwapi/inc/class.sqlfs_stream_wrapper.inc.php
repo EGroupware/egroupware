@@ -992,7 +992,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				// MySQL 5.0 has a nesting limit for subqueries
 				// --> we replace the so far cumulated subqueries with their result
 				// no idea about the other DBMS, but this does NOT hurt ...
-				if ($n > 1 && !(($n-1) % 10) && !($query = self::$pdo->query($query)->fetchColumn()))
+				// setting the value to 7, after reports on the user list, thought MySQL 5.0.51 with MyISAM engine works up to 10
+				if ($n > 1 && !(($n-1) % 7) && !($query = self::$pdo->query($query)->fetchColumn()))
 				{
 					if (self::LOG_LEVEL > 1)
 					{
