@@ -311,7 +311,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string/array $base base of the search
 	 * @param array $options=null the following keys are allowed:
-	 * - type => {d|f} d=dirs, f=files, default both
+	 * - type => {d|f|F} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), default all
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
 	 * - dirsontop => {true(default)|false} allways return dirs before the files (two distinct blocks)
 	 * - mindepth,maxdepth minimal or maximal depth to be returned
@@ -337,7 +337,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		//error_log(__METHOD__."(".print_r($base,true).",".print_r($options,true).",".print_r($exec,true).",".print_r($exec_params,true).")\n");
 
-		$type = $options['type'];	// 'd' or 'f'
+		$type = $options['type'];	// 'd', 'f' or 'F'
 		$dirs_last = $options['depth'];	// put content of dirs before the dir itself
 		// show dirs on top by default, if no recursive listing (allways disabled if $type specified, as unnecessary)
 		$dirsontop = !$type && (isset($options['dirsontop']) ? (boolean)$options['dirsontop'] : isset($options['maxdepth'])&&$options['maxdepth']>0);
@@ -514,7 +514,8 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			return;	// not found, should not happen
 		}
-		if ($type && ($type == 'd') == !($stat['mode'] & sqlfs_stream_wrapper::MODE_DIR))	// != is_dir() which can be true for symlinks
+		if ($type && (($type == 'd') == !($stat['mode'] & sqlfs_stream_wrapper::MODE_DIR) ||	// != is_dir() which can be true for symlinks
+		    $type == 'F' && is_dir($path)))	// symlink to a directory
 		{
 			return;	// wrong type
 		}

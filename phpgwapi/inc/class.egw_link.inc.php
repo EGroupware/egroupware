@@ -904,7 +904,7 @@ class egw_link extends solink
 		if (!($extra = self::get_registry($app,'find_extra'))) $extra = array();
 
 		$attached = array();
-		if (($url2stats = egw_vfs::find($path,array('need_mime'=>true,'type'=>'f')+$extra,true)))
+		if (($url2stats = egw_vfs::find($path,array('need_mime'=>true,'type'=>'F')+$extra,true)))
 		{
 			$props = egw_vfs::propfind(array_keys($url2stats));	// get the comments
 			foreach($url2stats as $url => &$fileinfo)
