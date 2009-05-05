@@ -96,6 +96,31 @@ class infolog_bo
 	var $max_line_chars = 40;
 
 	/**
+	 * Available filters
+	 *
+	 * @var array filter => label pairs
+	 */
+	var $filters = array(
+		'none'                     => 'no Filter',
+		'done'                     => 'done',
+		'responsible'              => 'responsible',
+		'responsible-open-today'   => 'responsible open',
+		'responsible-open-overdue' => 'responsible overdue',
+		'responsible-upcoming'     => 'responsible upcoming',
+		'delegated'                => 'delegated',
+		'delegated-open-today'     => 'delegated open',
+		'delegated-open-overdue'   => 'delegated overdue',
+		'delegated-upcoming'       => 'delegated upcomming',
+		'own'                      => 'own',
+		'own-open-today'           => 'own open',
+		'own-open-overdue'         => 'own overdue',
+		'own-upcoming'             => 'own upcoming',
+		'open-today'               => 'open',
+		'open-overdue'             => 'overdue',
+		'upcoming'                 => 'upcoming',
+	);
+
+	/**
 	 * Constructor Infolog BO
 	 *
 	 * @param int $info_id

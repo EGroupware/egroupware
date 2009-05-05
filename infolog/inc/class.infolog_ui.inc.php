@@ -75,25 +75,7 @@ class infolog_ui
 			'ongoing'   => 'ongoing.gif',   'ongoing_alt'   => 'ongoing',
 			'offer'     => 'offer.gif',     'offer_alt'     => 'offer' )
 	);
-	var $filters = array(
-		'none'                     => 'no Filter',
-		'done'                     => 'done',
-		'responsible'              => 'responsible',
-		'responsible-open-today'   => 'responsible open',
-		'responsible-open-overdue' => 'responsible overdue',
-		'responsible-upcoming'     => 'responsible upcoming',
-		'delegated'                => 'delegated',
-		'delegated-open-today'     => 'delegated open',
-		'delegated-open-overdue'   => 'delegated overdue',
-		'delegated-upcoming'       => 'delegated upcomming',
-		'own'                      => 'own',
-		'own-open-today'           => 'own open',
-		'own-open-overdue'         => 'own overdue',
-		'own-upcoming'             => 'own upcoming',
-		'open-today'               => 'open',
-		'open-overdue'             => 'overdue',
-		'upcoming'                 => 'upcoming',
-	);
+	var $filters;
 	var $messages = array(
 		'edit'    => 'InfoLog - Edit',
 		'add'     => 'InfoLog - New',
@@ -124,6 +106,7 @@ class infolog_ui
 			$this->duration_format = str_replace(',','',$pm_config['duration_units']).','.$pm_config['hours_per_workday'];
 			unset($pm_config);
 		}
+		$this->filters =& $this->bo->filters;
 		/* these are just for testing of the notifications
 		for($i = -1; $i <= 3; ++$i)
 		{
@@ -166,7 +149,7 @@ class infolog_ui
 		$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed' || $info['info_status'] == 'cancelled'; //cancelled is regarded as a completed status as well in bo
 		// regard an infolog as done/billed/cancelled if its percentage is 100% when there is to status like the above for that type
 		if (!$done && !isset($this->bo->status[$info['info_type']]['done']) && !isset($this->bo->status[$info['info_type']]['billed']) &&
-			!isset($this->bo->status[$info['info_type']]['cancelled']) && (int)$info['info_percent']==100) $done = true ; 
+			!isset($this->bo->status[$info['info_type']]['cancelled']) && (int)$info['info_percent']==100) $done = true ;
 		$info['sub_class'] = $this->bo->enums['priority'][$info['info_priority']] . ($done ? '_done' : '');
 		if (!$done && $info['info_enddate'] < $this->bo->user_time_now)
 		{
