@@ -67,7 +67,7 @@ class calendar_so
 	var $extra_table,$repeats_table,$user_table,$dates_table,$all_tables;
 
 	/**
-	 * internal copy of the global db-object
+	 * reference to global db-object
 	 *
 	 * @var egw_db
 	 */
