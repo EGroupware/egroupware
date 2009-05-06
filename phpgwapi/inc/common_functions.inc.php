@@ -729,6 +729,7 @@ function &CreateObject($class)
 				'uiroles'           => 'projectmanager_roles_ui',
 				'uimilestones'      => 'projectmanager_milestones_ui',
 				'uipricelist'       => 'projectmanager_pricelist_ui',
+				'bowiki'            => 'wiki_bo',
 			);
 			if (isset($replace[$classname]))
 			{
@@ -736,6 +737,10 @@ function &CreateObject($class)
 				error_log(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
 				$classname = $replace[$classname];
 			}
+		}
+		if (!file_exists($f=EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
+		{
+			throw new egw_exception_assertion_failed(__FUNCTION__."($classname) file $f not found!");
 		}
 		// this will stop php with a 500, if the class does not exist or there are errors in it (syntax error go into the error_log)
 		require_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
@@ -1397,31 +1402,18 @@ function __autoload($class)
 		// eGW api classes containing multiple classes in on file, eg. egw_exception
 		isset($components[0]) && file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// eGW eTemplate classes using the old naming schema, eg. etemplate
-		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
+		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php'))// ||
 		// classes of the current application using the old naming schema
-		file_exists($file = EGW_INCLUDE_ROOT.'/'.$GLOBALS['egw_info']['flags']['currentapp'].'/inc/class.'.$class.'.inc.php'))
+//		file_exists($file = EGW_INCLUDE_ROOT.'/'.$GLOBALS['egw_info']['flags']['currentapp'].'/inc/class.'.$class.'.inc.php'))
 	{
 		//error_log("autoloaded class $class from $file");
 		include_once($file);
 	}
-	// allow apps to define onw autoload method
+	// allow apps to define an own autoload method
 	elseif (isset($GLOBALS['egw_info']['flags']['autoload']) && is_callable($GLOBALS['egw_info']['flags']['autoload']))
 	{
 		call_user_func($GLOBALS['egw_info']['flags']['autoload'],$class);
 	}
-/*  disabling search over all apps: classes should either conform to new naming schema or use explicit includes
-	elseif (is_array($GLOBALS['egw_info']['apps']))
-	{
-		foreach(array_keys($GLOBALS['egw_info']['apps']) as $app)
-		{
-			if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php'))
-			{
-				//error_log("autoloaded class $class from $file");
-				include_once($file);
-			}
-		}
-	}
-*/
 }
 
 /**
