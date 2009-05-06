@@ -79,14 +79,14 @@ class timesheet_ui extends timesheet_bo
 			else	// new entry
 			{
 				$this->data = array(
-				'ts_start' => $this->today,
-				'end_time' => $this->now - $this->today,
-				'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
-				'cat_id'   => (int) $_REQUEST['cat_id'],
+					'ts_start' => $this->today,
+					'end_time' => $this->now - $this->today,
+					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
+					'cat_id'   => (int) $_REQUEST['cat_id'],
 				);
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
-			(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
+				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
 		}
 		else
 		{
@@ -181,8 +181,8 @@ class timesheet_ui extends timesheet_bo
 						}
 					}
 					$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $referer,
-					'msg'        => $msg,
+						'menuaction' => $referer,
+						'msg'        => $msg,
 					))."';";
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
@@ -231,22 +231,22 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		$preserv = $this->data + array(
-		'view'    => $view,
-		'referer' => $referer,
-		'ts_title_blur' => $content['ts_title_blur'],
+			'view'    => $view,
+			'referer' => $referer,
+			'ts_title_blur' => $content['ts_title_blur'],
 		);
 		$content = array_merge($this->data,array(
-		'msg'  => $msg,
-		'view' => $view,
-		$tabs  => $content[$tabs],
-		'link_to' => array(
-		'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
-		'to_app' => TIMESHEET_APP,
-		),
-		'js' => "<script>\n$js\n</script>\n",
-		'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
-		'start_time' => $this->datetime2time($this->data['ts_start']),
-		'pm_integration' => $this->pm_integration,
+			'msg'  => $msg,
+			'view' => $view,
+			$tabs  => $content[$tabs],
+			'link_to' => array(
+				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
+				'to_app' => TIMESHEET_APP,
+			),
+			'js' => "<script>\n$js\n</script>\n",
+			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
+			'start_time' => $this->datetime2time($this->data['ts_start']),
+			'pm_integration' => $this->pm_integration,
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -301,11 +301,11 @@ class timesheet_ui extends timesheet_bo
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
 
 		$readonlys = array(
-		'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
-		'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
-		'button[save]'     => $view,
-		'button[save_new]' => $view,
-		'button[apply]'    => $view,
+			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
+			'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
+			'button[save]'     => $view,
+			'button[save_new]' => $view,
+			'button[apply]'    => $view,
 		);
 		if ($view)
 		{
@@ -321,7 +321,7 @@ class timesheet_ui extends timesheet_bo
 			$readonlys['ts_owner'] = true;
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.
-		($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
+			($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
 
 		// supress unknow widget 'projectmanager-*', if projectmanager is not installed or old
 		if (!@file_exists(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.projectmanager_widget.inc.php'))
@@ -337,8 +337,8 @@ class timesheet_ui extends timesheet_bo
 		if (!$this->customfields) $readonlys[$tabs]['customfields'] = true;	// suppress tab if there are not customfields
 
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,array(
-		'ts_owner'  => $edit_grants,
-		'ts_status' => $this->status_labels,
+			'ts_owner'  => $edit_grants,
+			'ts_status' => $this->status_labels,
 		),$readonlys,$preserv,2);
 	}
 
@@ -421,14 +421,16 @@ class timesheet_ui extends timesheet_bo
 			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
-		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] == '0') {
+		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] == '0')
+		{
 			$query['col_filter']['ts_project'] = 0;
 			unset($query['col_filter']['ts_id']);
 		}
 		unset($query['col_filter']['pm_id']);
 
 		// filter for no project
-		if ((string)$query['col_filter']['ts_project'] == '0') {
+		if ((string)$query['col_filter']['ts_project'] == '0')
+		{
 			$query['col_filter']['ts_project'] = null;
 		}
 		#_debug_array($query['col_filter']);
@@ -520,18 +522,24 @@ class timesheet_ui extends timesheet_bo
 		$links3 = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
 		#_debug_array($links);
 		//as the full array is expected, we must supply the missing but needed (since expected further down) information
-		if (is_array($links3)) {
-			foreach ($links3 as $likey => $liarray) {
+		if (is_array($links3))
+		{
+			foreach ($links3 as $likey => $liarray)
+			{
 				#echo "$likey";_debug_array($liarray);echo"<br>";
-				if (is_array($liarray)) {
-					foreach ($liarray as $li2key => $lival) {
+				if (is_array($liarray))
+				{
+					foreach ($liarray as $li2key => $lival)
+					{
 						$links[$likey][$li2key]['id'] = $lival;
 						$links[$likey][$li2key]['app'] = 'projectmanager';
 					}
 				}
 			}
 			if (!is_array($links)) $links = array();
-		} else {
+		}
+		else
+		{
 			$links = array();
 		}
 		#_debug_array($links);
@@ -551,18 +559,18 @@ class timesheet_ui extends timesheet_bo
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
-					$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.$GLOBALS['egw']->common->show_date($row['ts_start'],
-					$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
-					break;
+						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.$GLOBALS['egw']->common->show_date($row['ts_start'],
+						$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
+						break;
 					case -1:	// week-sum
-					$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
-					break;
+						$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
+						break;
 					case -2:	// month-sum
-					$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
-					break;
+						$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
+						break;
 					case -3:	// year-sum
-					$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
-					break;
+						$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
+						break;
 				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
@@ -613,7 +621,8 @@ class timesheet_ui extends timesheet_bo
 		}
 		$rows['pm_integration'] = $this->pm_integration;
 		$rows['ts_viewtype'] =  $rows['no_ts_quantity'] =  $rows['no_ts_unitprice'] =  $rows['no_ts_total'] = $this->ts_viewtype == 'short';
-		if (!$rows['ts_viewtype']) {
+		if (!$rows['ts_viewtype'])
+		{
 			#_debug_array($query['selectcols']);
 			#ts_quantity,ts_unitprice,ts_total
 			if ($query['selectcols'] && strpos($query['selectcols'],'ts_quantity')===false) $rows['no_ts_quantity'] = 1;
@@ -671,8 +680,8 @@ class timesheet_ui extends timesheet_bo
 		}
 
 		$content = array(
-		'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
-		'msg' => $msg,
+			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
+			'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
 		{
@@ -684,25 +693,25 @@ class timesheet_ui extends timesheet_bo
 			$date_filters['custom'] = 'custom';
 
 			$content['nm'] = array(
-			'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rows',
-			'options-filter' => $date_filters,
-			'options-filter2' => array('No details','Details'),
-			'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
-			'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
-			'header_left'    => 'timesheet.index.dates',
-			'header_right'   => 'timesheet.index.add',
-			'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
-			'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
+				'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rows',
+				'options-filter' => $date_filters,
+				'options-filter2' => array('No details','Details'),
+				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
+				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
+				'header_left'    => 'timesheet.index.dates',
+				'header_right'   => 'timesheet.index.add',
+				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
 		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows']) $content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
 		$sel_options = array(
-		'ts_owner'   => $read_grants,
-		'pm_id'      => array(lang('No project')),
-		'cat_id'     => array(lang('None')),
-		'ts_status'  => $this->status_labels,
+			'ts_owner'   => $read_grants,
+			'pm_id'      => array(lang('No project')),
+			'cat_id'     => array(lang('None')),
+			'ts_status'  => $this->status_labels,
 		);
 		$content['nm']['no_status'] = !$sel_options['ts_status'];
 
@@ -818,8 +827,8 @@ class timesheet_ui extends timesheet_bo
 					break;
 				case 'cancel':
 					$GLOBALS['egw']->redirect_link('/index.php',array(
-					'menuaction' => 'timesheet.timesheet_ui.index',
-					'msg' => $msg,
+						'menuaction' => 'timesheet.timesheet_ui.index',
+						'msg' => $msg,
 					));
 					break;
 				case 'apply':
