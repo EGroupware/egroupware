@@ -150,7 +150,7 @@ class timesheet_bo extends so_sql_cf
 		{
 			if ($grant & $required)
 			{
-				$result[$uid] = $GLOBALS['egw']->common->grab_owner_name($uid);
+				$result[$uid] = common::grab_owner_name($uid);
 			}
 		}
 		natcasesort($result);
@@ -294,8 +294,10 @@ class timesheet_bo extends so_sql_cf
 		{
 			$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 		}
-		$extra_cols[] = $total_sql.' AS ts_total';
-
+		if ($only_keys === false || $this->show_sums && strpos($order_by,'ts_start') !== false)
+		{
+			$extra_cols[] = $total_sql.' AS ts_total';
+		}
 		if (!isset($filter['ts_owner']) || !count($filter['ts_owner']))
 		{
 			$filter['ts_owner'] = array_keys($this->grants);
