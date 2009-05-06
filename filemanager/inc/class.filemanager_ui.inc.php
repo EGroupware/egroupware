@@ -100,6 +100,12 @@ class filemanager_ui
 				$content['nm']['path'] = self::get_home_dir();
 			}
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
+
+			// switch to projectmanager folders
+			if (isset($_GET['pm_id']))
+			{
+				$_GET['path'] = '/apps/projectmanager'.((int)$_GET['pm_id'] ? '/'.(int)$_GET['pm_id'] : '');
+			}
 			if (isset($_GET['path']) && ($path = $_GET['path']))
 			{
 				switch($path)
@@ -527,6 +533,11 @@ class filemanager_ui
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
+		// show projectmanager sidebox for projectmanager path
+		if (substr($query['path'],0,20) == '/apps/projectmanager' && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'projectmanager';
+		}
 		$GLOBALS['egw']->session->appsession('index','filemanager',$query);
 
 		if (!egw_vfs::stat($query['path'],true) || !egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
@@ -539,11 +550,6 @@ class filemanager_ui
 			));
 		}
 		$rows = $dir_is_writable = array();
-		if ($query['searchletter'] && egw_vfs::stat($query['path'].'/'.$query['searchletter'].'*'))
-		{
-			$query['path'] .= '/'.$query['searchletter'].'*';
-			$query['searchletter'] = false;
-		}
 		if($query['searchletter'] && !empty($query['search']))
 		{
 			$namefilter = '/^'.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
@@ -606,6 +612,21 @@ class filemanager_ui
 			}
 		}
 		//_debug_array($readonlys);
+		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'projectmanager')
+		{
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Projectmanager').' - '.lang('Filemanager');
+			// we need our app.css file
+			if (!file_exists(EGW_SERVER_ROOT.($css_file='/filemanager/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/app.css')))
+			{
+				$css_file = '/filemanager/templates/default/app.css';
+			}
+			$GLOBALS['egw_info']['flags']['css'] .= "\n\t\t</style>\n\t\t".'<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type="text/css" rel="StyleSheet" />'."\n\t\t<style>\n\t\t\t";
+		}
+		else
+		{
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Filemanager').': '.$query['path'];
+		}
 		return egw_vfs::$find_total;
 	}
 
