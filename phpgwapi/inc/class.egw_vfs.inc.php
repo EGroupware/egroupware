@@ -447,7 +447,10 @@ class egw_vfs extends vfs_stream_wrapper
 				case 'mode':
 				case 'ctime':
 				case 'mtime':
-					uasort($result,create_function('$a,$b',$c='return '.$dirsfirst.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);'));
+					$code = $dirsfirst.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);';
+					// always use name as second sort criteria
+					$code = '$cmp = '.$code.' return $cmp ? $cmp : strcasecmp($a[\'name\'],$b[\'name\']);';
+					uasort($result,create_function('$a,$b',$code));
 					break;
 
 				// sort alphanumerical
@@ -456,7 +459,17 @@ class egw_vfs extends vfs_stream_wrapper
 					// fall throught
 				case 'name':
 				case 'mime':
-					uasort($result,create_function('$a,$b',$c='return '.$dirsfirst.$sort.'strcasecmp($a[\''.$options['order'].'\'],$b[\''.$options['order'].'\']);'));
+					$code = $dirsfirst.$sort.'strcasecmp($a[\''.$options['order'].'\'],$b[\''.$options['order'].'\']);';
+					if ($options['order'] != 'name')
+					{
+						// always use name as second sort criteria
+						$code = '$cmp = '.$code.' return $cmp ? $cmp : strcasecmp($a[\'name\'],$b[\'name\']);';
+					}
+					else
+					{
+						$code = 'return '.$code;
+					}
+					uasort($result,create_function('$a,$b',$code));
 					break;
 			}
 			//echo "order='$options[order]', sort='$options[sort]' --> '$c'<br>\n";
