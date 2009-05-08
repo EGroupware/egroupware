@@ -951,9 +951,10 @@ class etemplate extends boetemplate
 		{
 			$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
-		if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && ($cell['type'] == 'button' || $cell['type'] == 'buttononly') &&  strpos($cell['size'],',')===false)
+		if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && in_array($cell['type'],array('button','buttononly','image')) &&  strpos($cell['size'],',')===false)
 		{
-			if ($this->rows == 1) {
+			if ($this->rows == 1)
+			{
 				return '';	// if only one row omit cell
 			}
 			$cell = $this->empty_cell('label','',array('span' => $cell['span'])); // show nothing (keep the css class!)
