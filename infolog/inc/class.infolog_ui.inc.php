@@ -420,6 +420,9 @@ class infolog_ui
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
 		}
+		// disable filemanager icon, if user has no access to it
+		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
+
 		return $query['total'];
 	}
 
@@ -629,6 +632,13 @@ class infolog_ui
 		else
 		{
 			$values['css'] = '<style type="text/css">@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/infolog/templates/default/app.css);'."</style>";
+		}
+		// add scrollbar to long describtion, if user choose so in his prefs
+		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
+		{
+			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  max-height: '.
+				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
+				'em; overflow: auto; }}</style>';
 		}
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,array(
 			'info_type'     => $this->bo->enums['type'],

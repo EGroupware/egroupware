@@ -13,8 +13,8 @@
 			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.5.004">
-		<grid>
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%" class="my_form">
 			<columns>
 				<column width="2%"/>
 				<column/>
@@ -123,16 +123,24 @@
 						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
 						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
 					</vbox>
-					<hbox class="noPrint">
-						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
-						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
-					</hbox>
+					<vbox class="noPrint">
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+							<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
+						</hbox>
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+							<button image="done_all" label="Close all" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
+							<description/>
+							<description/>
+						</hbox>
+						<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16" label="Filemanager"/>
+					</vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.5.004">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.002">
 		<grid>
 			<columns>
 				<column width="2%"/>
@@ -206,7 +214,9 @@
 							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
 							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
 						</hbox>
-						<description no_lang="1" id="${row}[info_des]" options=",,1"/>
+						<box class="infoDes">
+							<description no_lang="1" id="${row}[info_des]" options=",,1"/>
+						</box>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
 					<customfields-list class="customfields" id="$row"/>
@@ -247,15 +257,21 @@
 					</vbox>
 					<vbox options="0" align="center" class="noPrint" orient="0">
 						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
-						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
+						<button image="view" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
+						<button image="parent" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
 						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;cat_id=$row_cont[info_cat]&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
 					</vbox>
-					<hbox class="noPrint">
-						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
-						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
-					</hbox>
+					<vbox options="0" class="noPrint" orient="0">
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+							<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
+						</hbox>
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+							<button image="done_all" label="Close all" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
+						</hbox>
+						<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16" label="Filemanager"/>
+					</vbox>
 				</row>
 			</rows>
 		</grid>
@@ -275,8 +291,8 @@
 					<description/>
 				</row>
 				<row disabled="1">
-					<template id="infolog.index.header_left"/>
-					<template id="infolog.index.header_right"/>
+					<template id="header_left"/>
+					<template id="header_right"/>
 				</row>
 				<row disabled="!@main">
 					<template content="main" span="all" id="infolog.index.rows-noheader"/>

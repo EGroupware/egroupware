@@ -104,13 +104,13 @@
 					<description span="all" value="Custom status for typ" id="typ"/>
 				</row>
 				<row>
-					<template content="status" span="all" id="infolog.customfields.status"/>
+					<template content="status" span="all" id="status"/>
 				</row>
 				<row class="header">
 					<description span="all" value="Custom fields"/>
 				</row>
 				<row>
-					<template content="fields" span="all" id="infolog.customfields.fields"/>
+					<template content="fields" span="all" id="fields"/>
 				</row>
 				<row>
 					<hbox options="0,0" span="all">
@@ -123,7 +123,7 @@
 				<row>
 					<hbox span="all">
 						<button label="Save" id="button[save]" statustext="saves the changes made and leaves"/>
-						<button label="Apply" id="button[apply]" statustext="applies the changes"/>
+						<button label="Apply" id="button[apply]" statustext="apply the changes"/>
 						<button label="Cancel" id="button[cancel]" statustext="leaves without saveing"/>
 					</hbox>
 				</row>

@@ -56,6 +56,7 @@ cancel	infolog	de	Abbruch
 cancelled	infolog	de	abgesagt
 categories	infolog	de	Kategorien
 category	infolog	de	Kategorie
+change history	infolog	de	Änderungsverlauf
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, zB. ihn als erledigt markieren
 charset of file	infolog	de	Zeichensatz der Datei
 check to set startday	infolog	de	ankreutzen um Startdatum zu setzen
@@ -150,9 +151,12 @@ from	infolog	de	Von
 general	infolog	de	Allgemein
 group owner for	infolog	de	Gruppeneigentümer für
 high	infolog	de	hoch
+history	infolog	de	Historie
 history logging	infolog	de	Protokollierung der Historie
 history logging and deleting of items	infolog	de	Protokollierung der Historie und löschen von Einträgen
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wieviele Zeilen der Beschreibung sollen direkt sichbar sein. Zusätzliche Zeilen können über einen Scrollbar erreicht werden.
 id	infolog	de	Id
+id#	infolog	de	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allg. Einstellungen definiert).
 import	infolog	de	Import
@@ -175,10 +179,12 @@ invalid filename	infolog	de	Ungültiger Dateiname
 label<br>helptext	infolog	de	Beschriftung<br>Hilfetext
 last changed	infolog	de	letzte Änderung
 last modified	infolog	de	zuletzt geändert
+leave blank to get the used time calculated by timesheet entries	infolog	de	Leer lassen um die Zeit nach den Stundenzetteln zu bekommen
 leave it empty	infolog	de	leer lassen
 leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
-leaves without saveing	infolog	de	Abbroch ohne speichern
+leaves without saveing	infolog	de	Abbruch ohne speichern
 length<br>rows	infolog	de	Länge<br />Zeilen
+limit number of description lines (default 5, 0 for no limit)	infolog	de	Begrenze Anzahl Beschreibungszeilen (Vorgabe 5, 0 für keine Grenze)
 link	infolog	de	Verknüpfung
 links	infolog	de	Verknüpfungen
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
@@ -188,6 +194,7 @@ location	infolog	de	Ort
 longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
+modifierer	infolog	de	Geändert von
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
 name of new type to create	infolog	de	Name des neu anzulegenden Types
 never hide search and filters	infolog	de	Suche und Filter niemals ausblenden
@@ -245,6 +252,8 @@ priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
 project settings: price, times	infolog	de	Einstellungen zum Projekt: Preis, Zeiten
+re-planned	infolog	de	Umgeplant
+re-planned time	infolog	de	Umgeplante Zeit
 re:	infolog	de	Re:
 read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id lesen.
 read rights (default)	infolog	de	Leserechte (Vorgabe)
@@ -339,6 +348,7 @@ urgent	infolog	de	Dringend
 used time	infolog	de	benötigte Zeit
 valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
+valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
