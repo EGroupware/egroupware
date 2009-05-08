@@ -29,7 +29,7 @@
  *
  * The stream wrapper interface is according to the docu on php.net
  *
- * @link http://de.php.net/manual/de/function.stream-wrapper-register.php
+ * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  * @ToDo versioning
  */
 class sqlfs_stream_wrapper implements iface_stream_wrapper
@@ -961,7 +961,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			self::_pdo();
 		}
-		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.' WHERE fs_name=? AND fs_dir=';
+		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified FROM '.self::TABLE.
+			' WHERE fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
 		$parts = explode('/',$path);
 
 		// if we have extendes acl access to the url, we dont need and can NOT include the sql for the readable check
@@ -991,7 +992,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 					// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
 					return self::$stat_cache[$path] = false;
 				}
-				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name='.self::$pdo->quote($name);
+				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name);
 
 				// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
 				if (!egw_vfs::$is_root && !$eacl_access)
@@ -1007,7 +1008,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			else
 			{
-				$query = str_replace('fs_name=?','fs_name='.self::$pdo->quote($name),$base_query).'('.$query.')';
+				$query = str_replace('fs_name'.self::$case_sensitive_equal.'?','fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name),$base_query).'('.$query.')';
 			}
 		}
 		//$query = "/* sqlfs::url_stat($path) */ ".$query;
@@ -1364,6 +1365,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	private static $pdo_type;
 
 	/**
+	 * Case sensitive comparison operator, for mysql we use ' COLLATE utf8_bin ='
+	 *
+	 * @var string
+	 */
+	public static $case_sensitive_equal = '=';
+
+	/**
 	 * Create pdo object / connection, as long as pdo is not generally used in eGW
 	 *
 	 * @return PDO
@@ -1376,6 +1384,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			case 'mysqli':
 			case 'mysqlt':
+			case 'mysql':
+				self::$case_sensitive_equal = '= BINARY ';
 				self::$pdo_type = 'mysql';
 				break;
 			default:
