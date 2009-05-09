@@ -287,7 +287,7 @@ class addressbook_sql extends so_sql
 		{
 			foreach($criteria as $col => $val)
 			{
-				if ($col[0] == '#')	// search for a value in a certain custom field
+				if ($col[0] === '#')	// search for a value in a certain custom field
 				{
 					$valarray=array();
 					# val may be a list of values, constructed by multiple select fields, to be able to do the contains feature of adv-search
@@ -308,12 +308,12 @@ class addressbook_sql extends so_sql
 					}
 					$search_customfields = true;
 				}
-				elseif($col == 'cat_id')	// search in comma-sep. cat-column
+				elseif($col === 'cat_id')	// search in comma-sep. cat-column
 				{
 					$criteria = array_merge($criteria,$this->_cat_search($val));
 					unset($criteria[$col]);
 				}
-				elseif($col == 'contact_value')
+				elseif($col === 'contact_value')
 				{
 					if ($order_by[0] == '#')
 					{
@@ -400,10 +400,11 @@ class addressbook_sql extends so_sql
 				unset($criteria['owner']);
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
-			if ($this->db->Type != 'mysql' && preg_match("/(\w+<>'')/",$order_by,$matches))
+			if ($this->db->Type != 'mysql' && preg_match("/([a-zA-Z_.]+)<>''/",$order_by,$matches))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				$extra_cols[] = $matches[1];
+				$extra_cols[] = $matches[1]."<>''";
 			}
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
