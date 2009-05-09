@@ -1,6 +1,7 @@
 %1 added	addressbook	en	%1 added
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficent rights !!!
+%1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organisation member(s) changed
 %1 records imported	addressbook	en	%1 records imported
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
@@ -96,6 +97,7 @@ contact deleted	addressbook	en	Contact deleted
 contact fields to show	addressbook	en	Contact fields to show
 contact fields:	addressbook	en	Contact fields:
 contact id	addressbook	en	Contact ID
+contact maintenance	admin	en	Contact maintenance
 contact modified by %1 at %2	addressbook	en	Contact modified by %1 at %2
 contact not found!	addressbook	en	Contact not found!
 contact repository	admin	en	Contact repository
@@ -160,6 +162,7 @@ edit phonenumbers -	addressbook	en	Edit Phonenumbers -
 either the configured email addesses are wrong or the mail configuration.	addressbook	en	Either the configured email addesses are wrong or the mail configuration.
 email & internet	addressbook	en	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses (comma separated) to send the contact data
+empty	admin	en	Empty
 empty for all	addressbook	en	empty for all
 enable an extra private addressbook	addressbook	en	Enable an extra private addressbook
 enclosure	addressbook	en	Enclosure
@@ -342,6 +345,8 @@ select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
 selected contacts	addressbook	en	selected contacts
 seperator	addressbook	en	Seperator
+set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and file as field in contacts of all users (either all or only empty values)
+set only full name	addressbook	en	Set only full name
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Should the columns photo and home address always be displayed, even if they are empty.
 show	addressbook	en	Show
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen

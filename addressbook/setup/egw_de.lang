@@ -1,6 +1,7 @@
 %1 added	addressbook	de	%1 hinzugefügt
 %1 contact(s) %2	addressbook	de	%1 Kontakt(e) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht wegen fehlender Rechte !!!
+%1 contacts updated (%2 errors).	addressbook	de	%1 Kontakte aktualisiert (%2 Fehler).
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
 %1 records imported	addressbook	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import auschalten)
@@ -96,6 +97,7 @@ contact deleted	addressbook	de	Kontakt gelöscht
 contact fields to show	addressbook	de	Kontaktfelder die angezeigt werden sollen
 contact fields:	addressbook	de	Kontaktfelder:
 contact id	addressbook	de	Kontakt ID
+contact maintenance	admin	de	Kontakt Wartung
 contact modified by %1 at %2	addressbook	de	Kontakt geändert von %1 am %2
 contact not found!	addressbook	de	Kontakt nicht gefunden!
 contact repository	admin	de	Speicherort Kontakte
@@ -160,8 +162,10 @@ edit phonenumbers -	addressbook	de	Telefonnummern bearbeiten
 either the configured email addesses are wrong or the mail configuration.	addressbook	de	Entweder die konfigurierte Email Adresse ist falsch oder die Mail Konfiguration.
 email & internet	addressbook	de	E-Mail & Internet
 email addresses (comma separated) to send the contact data	addressbook	de	Email Adressen (Komma getrennt) zum Senden der Kontaktdaten
+empty	admin	de	leere
 empty for all	addressbook	de	leer für alle
 enable an extra private addressbook	addressbook	de	Privates Adressbuch einschalten
+enclosure	addressbook	de	Einschluss
 end	addressbook	de	Ende
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
@@ -341,6 +345,8 @@ select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern wollen
 selected contacts	addressbook	de	ausgewählte Kontakte
 seperator	addressbook	de	Feldtrenner
+set full name and file as field in contacts of all users (either all or only empty values)	admin	de	Setzt vollen Namen und eigene Sortierung in Kontakten aller Benutzer (entweder alle oder nur leere Werte)
+set only full name	addressbook	de	Nur vollen Namen setzen
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	de	Sollen die Spalten Foto und Privatadresse immer angezeigt werden, auch wenn sie leer sind.
 show	addressbook	de	Anzeigen
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen

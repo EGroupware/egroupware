@@ -1,6 +1,6 @@
 <?php
  /**
- * Addressbook - configuration
+ * eGroupware - Addressbook configuration
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -9,6 +9,12 @@
  * @version $Id$
  */
 
+/**
+ * Hook to query available contact repositories for addressbook config
+ *
+ * @param array $config
+ * @return string with options
+ */
 function contact_repositories($config)
 {
 	$repositories = array('sql' => 'SQL');
@@ -27,6 +33,26 @@ function contact_repositories($config)
 	return $options;
 }
 
+/**
+ * Hook to get available fileas types selectbox for addressbook config
+ *
+ * @param array $config
+ * @return string html
+ */
+function select_fileas($config)
+{
+	$bocontacts = new addressbook_bo();
+
+	return html::select('fileas','',array('' => lang('Set only full name'))+$bocontacts->fileas_options(),true);
+}
+
+
+/**
+ * Hook to get a multiselect box with all fieleds of onw-account-acl for addressbook config
+ *
+ * @param array $config
+ * @return string html
+ */
 function own_account_acl($config)
 {
 	$bocontacts = new addressbook_bo();
@@ -53,6 +79,12 @@ function own_account_acl($config)
 	return html::checkbox_multiselect('newsettings[own_account_acl]',$config['own_account_acl'],$fields,true,'',4);
 }
 
+/**
+ * Hook to get a multiselect box with all fields of org-fields-to-update for addressbook config
+ *
+ * @param array $config
+ * @return string html
+ */
 function org_fileds_to_update($config)
 {
 	$bocontacts = new addressbook_bo();

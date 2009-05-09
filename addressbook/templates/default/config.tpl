@@ -14,7 +14,7 @@
     <td colspan="2">&nbsp;<b>{lang_Telephony_integration}</b></td>
    </tr>
    <tr class="row_on">
-    <td>&nbsp;{lang_URL_to_link_telephone_numbers_to_(use_%1_=_number_to_call,_%u_=_account_name,_%t_=_account_phone)}:</td>
+    <td width="60%">&nbsp;{lang_URL_to_link_telephone_numbers_to_(use_%1_=_number_to_call,_%u_=_account_name,_%t_=_account_phone)}:</td>
     <td><input name="newsettings[call_link]" value="{value_call_link}" size="40"></td>
    </tr>
    <tr class="row_off">
@@ -66,6 +66,17 @@
     <td>&nbsp;<b>{lang_Security}</b>: {lang_How_many_contacts_should_non-admins_be_able_to_export}
     {lang_(empty_=_use_global_limit,_no_=_no_export_at_all)}:</td>
     <td><input name="newsettings[contact_export_limit]" value="{value_contact_export_limit}" size="5"></td>
+   </tr>
+   <tr class="th">
+    <td colspan="2">&nbsp;<b>{lang_Contact_maintenance}</b></td>
+   </tr>
+   <tr class="row_on">
+    <td>&nbsp;{lang_Set_full_name_and_file_as_field_in_contacts_of_all_users_(either_all_or_only_empty_values)}:</td>
+    <td>
+     {hook_select_fileas}
+     <input type="button" onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&all=1&type='+this.form.fileas.value;" value="{lang_All}" />
+     <input type="button" onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&type='+this.form.fileas.value;" value="{lang_Empty}" />
+    </td>
    </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Contact_repository}</b></td>

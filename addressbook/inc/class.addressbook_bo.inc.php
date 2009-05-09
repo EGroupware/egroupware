@@ -370,6 +370,70 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Set n_fileas (and n_fn) in contacts of all users  (called by Admin >> Addressbook >> Site configuration (Admin only)
+	 *
+	 * If $all all fileas fields will be set, if !$all only empty ones
+	 *
+	 * @param string $fileas_type '' or type of $this->fileas_types
+	 * @param int $all=false update all contacts or only ones with empty values
+	 * @param int &$errors=null on return number of errors
+	 * @return int|boolean number of contacts updated, false for wrong fileas type
+	 */
+	function set_all_fileas($fileas_type,$all=false,&$errors=null,$ignore_acl=false)
+	{
+		if ($type != '' && !in_array($type,$this->fileas_types))
+		{
+			return false;
+		}
+		if ($ignore_acl)
+		{
+			unset($this->somain->grants);	// to NOT limit search to contacts readable by current user
+		}
+		// to be able to work on huge contact repositories we read the contacts in chunks of 100
+		for($n = $updated = $errors = 0; ($contacts = parent::search($all ? array() : array(
+			'n_fileas IS NULL',
+			"n_fileas=''",
+			'n_fn IS NULL',
+			"n_fn=''",
+		),false,'','','',false,'OR',array($n*100,100))); ++$n)
+		{
+			foreach($contacts as $contact)
+			{
+				$old_fn     = $contact['n_fn'];
+				$old_fileas = $contact['n_fileas'];
+				$contact['n_fn'] = $this->fullname($contact);
+				// only update fileas if type is given AND (all should be updated or n_fileas is empty)
+				if ($fileas_type && ($all || empty($contact['n_fileas'])))
+				{
+					$contact['n_fileas'] = $this->fileas($contact,$fileas_type);
+				}
+				if ($old_fileas != $contact['n_fileas'] || $old_fn != $contact['n_fn'])
+				{
+					//echo "<p>('$old_fileas' != '{$contact['n_fileas']}' || '$old_fn' != '{$contact['n_fn']}')=".array2string($old_fileas != $contact['n_fileas'] || $old_fn != $contact['n_fn'])."</p>\n";
+					// only specify/write updated fields plus "keys"
+					$contact = array_intersect_key($contact,array(
+						'id' => true,
+						'owner' => true,
+						'private' => true,
+						'account_id' => true,
+						'uid' => true,
+					)+($old_fileas != $contact['n_fileas'] ? array('n_fileas' => true) : array())+($old_fn != $contact['n_fn'] ? array('n_fn' => true) : array()));
+					if ($this->save($contact,$ignore_acl))
+					{
+						$updated++;
+					}
+					else
+					{
+						$errors++;
+					}
+				}
+			}
+		}
+		return $updated;
+	}
+
+
+	/**
 	 * get full name from the name-parts
 	 *
 	 * @param array $contact

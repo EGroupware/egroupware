@@ -25,6 +25,7 @@ class addressbook_ui extends addressbook_bo
 		'photo'		=> True,
 		'emailpopup'=> True,
 		'migrate2ldap' => True,
+		'admin_set_fileas' => True,
 		'cat_add' => True,
 	);
 	/**
@@ -1934,6 +1935,10 @@ $readonlys['button[vcard]'] = true;
 </script>';
 	}
 
+	/**
+	 * Migrate contacts to or from LDAP (called by Admin >> Addressbook >> Site configuration (Admin only)
+	 *
+	 */
 	function migrate2ldap()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Migration to LDAP');
@@ -1948,6 +1953,32 @@ $readonlys['button[vcard]'] = true;
 		{
 			parent::migrate2ldap($_GET['type']);
 			echo '<p style="margin-top: 20px;"><b>'.lang('Migration finished')."</b></p>\n";
+		}
+		$GLOBALS['egw']->common->egw_footer();
+	}
+
+	/**
+	 * Set n_fileas (and n_fn) in contacts of all users  (called by Admin >> Addressbook >> Site configuration (Admin only)
+	 *
+	 * If $_GET[all] all fileas fields will be set, if !$_GET[all] only empty ones
+	 *
+	 */
+	function admin_set_fileas()
+	{
+		translation::add_app('admin');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
+		$GLOBALS['egw']->common->egw_header();
+		parse_navbar();
+
+		// check if user has admin rights AND if a valid fileas type is given (Security)
+		if (!$this->is_admin() || $_GET['type'] != '' && !in_array($_GET['type'],$this->fileas_types))
+		{
+			echo '<h1>'.lang('Permission denied !!!')."</h1>\n";
+		}
+		else
+		{
+			$updated = parent::set_all_fileas($_GET['type'],(boolean)$_GET['all'],$errors,true);	// true = ignore acl
+			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
 		$GLOBALS['egw']->common->egw_footer();
 	}
