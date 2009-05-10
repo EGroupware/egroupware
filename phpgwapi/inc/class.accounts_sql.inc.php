@@ -379,8 +379,6 @@ class accounts_sql
 					break;
 			}
 		}
-		$criteria[] = "egw_addressbook.account_id is not null ";
-
 		if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
 
 		$accounts = array();
