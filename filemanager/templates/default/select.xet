@@ -14,8 +14,8 @@
 							<column/>
 						</columns>
 						<rows>
-							<row height="40">
-								<button image="home" id="home" align="center" label="Home"/>
+							<row disabled="!@0">
+								<button image="favorites" label="Favorites" align="center" id="favorites"/>
 							</row>
 							<row height="40">
 								<button image="$row_cont/navbar" label="$row_cont" align="center" id="${row}"/>
@@ -30,7 +30,8 @@
 							<row>
 								<hbox>
 									<html id="js"/>
-									<button id="button[up]" image="goup"/>
+									<button id="button[up]" image="goup" label="Up"/>
+									<button id="button[home]" image="gohome" label="Go to your home directory"/>
 									<box class="selectPathContainer">
 										<vfs id="path" onclick="path=document.getElementById(form::name('path')); path.value=$path; path.form.submit();" class="selectPath"/>
 									</box>

@@ -16,8 +16,8 @@
 %1 the following files into current directory	filemanager	de	Die foldenden Dateien in das aktuelle Verzeichnis %1
 %1 urls %2 to clipboard.	filemanager	de	%1 Adressen in die Zwischenablage %2.
 accessrights	filemanager	de	Zugangsberechtigungen
-acl added.	filemanager	de	Zugrifsrecht hinzugefügt.
-acl deleted.	filemanager	de	Zugrifsrecht gelöscht.
+acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
+acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
 actions	filemanager	de	Befehle
 all files	common	de	Alle Dateien
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellunge für Verzeichnisverweise
