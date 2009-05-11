@@ -158,6 +158,7 @@ class filemanager_select
 			$content['dir'] = array('mode' => $content['mode']);
 			while (($name = readdir($d)))
 			{
+				if ($name[0] == '.' || $name == 'Thumbs.db') continue;	// ignore hidden files
 				$path = egw_vfs::concat($content['path'],$name);
 				$is_dir = egw_vfs::is_dir($path);
 				if ($content['mime'] && !$is_dir && egw_vfs::mime_content_type($path) != $content['mime'])
