@@ -328,6 +328,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - sort => (ASC|DESC) sort, default ASC
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
 	 * - follow => {true|false(default)} follow symlinks
+	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
 	 * @param string/array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param and stat the last!
@@ -402,6 +403,8 @@ class egw_vfs extends vfs_stream_wrapper
 				while(($file = readdir($dir)) !== false)
 				{
 					if ($file == '.' || $file == '..') continue;	// ignore current and parent dir!
+
+					if (($file[0] == '.' || $file == 'Thumbs.db') && !$options['hidden']) continue;	// ignore hidden files
 
 					$file = self::concat($path,$file);
 
