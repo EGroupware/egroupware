@@ -14,7 +14,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.007">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -30,7 +30,7 @@
 				<column disabled="@no_distribution_list"/>
 				<column/>
 				<column/>
-				<column width="90"/>
+				<column width="75"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -161,13 +161,18 @@
 							<menupopup type="select-account" id="${row}[modifier]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<hbox options="0" class="noPrint" orient="0">
-						<button id="document[$row_cont[id]]" image="new" label="Insert in document"/>
-						<image options="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]" label="View" src="view"/>
-						<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
-						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this contact" onclick="return confirm('Delete this contact');"/>
-						<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
-					</hbox>
+					<vbox options="0,0" class="noPrint">
+						<hbox options="0">
+							<image options="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]" label="View" src="view"/>
+							<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
+							<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this contact" onclick="return confirm('Delete this contact');"/>
+							<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
+						</hbox>
+						<hbox options="0">
+							<button id="document[$row_cont[id]]" image="new" label="Insert in document"/>
+							<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/addressbook/$row_cont[id]" class="image16" label="Filemanager"/>
+						</hbox>
+					</vbox>
 				</row>
 			</rows>
 		</grid>

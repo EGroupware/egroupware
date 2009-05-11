@@ -467,7 +467,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.5.006">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.7.001">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -498,7 +498,7 @@
 					</grid>
 				</row>
 				<row valign="top">
-					<tabbox>
+					<tabbox id="tabs">
 						<tabs>
 							<tab label="General" statustext="Name, Address"/>
 							<tab label="Categories" statustext="Categories"/>

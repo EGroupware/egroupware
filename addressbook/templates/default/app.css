@@ -78,3 +78,6 @@ fieldset.emailGroup {
   white-space: nowrap;
   line-height: 12px;
 }
+.image16 img {
+  height: 16px;
+}

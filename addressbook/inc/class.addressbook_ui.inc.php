@@ -5,7 +5,7 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -17,7 +17,7 @@
  */
 class addressbook_ui extends addressbook_bo
 {
-	var $public_functions = array(
+	public $public_functions = array(
 		'search'	=> True,
 		'edit'		=> True,
 		'view'		=> True,
@@ -33,22 +33,21 @@ class addressbook_ui extends addressbook_bo
 	 *
 	 * @var boolean
 	 */
-	var $private_addressbook = false;
-	var $org_views;
+	protected $private_addressbook = false;
+	protected $org_views;
 
 	/**
 	 * Addressbook configuration (stored as phpgwapi = general server config)
 	 *
 	 * @var array
 	 */
-	var $config;
-	/**
-	 * Name(s) of the tabs in the edit dialog
-	 *
-	 * @var string
-	 */
-	var $tabs = 'general|cats|home|details|links|distribution_list|custom|custom_private';
+	protected $config;
 
+	/**
+	 * Constructor
+	 *
+	 * @param string $contact_app
+	 */
 	function __construct($contact_app='addressbook')
 	{
 		parent::__construct($contact_app);
@@ -312,6 +311,8 @@ class addressbook_ui extends addressbook_bo
 				$sel_options['col_filter[tid]'][$tid] = $data['name'];
 			}
 		}
+		// disable filemanger icon if user has no access to filemanager
+		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
 
 		// get the availible org-views plus the label of the contacts view of one org
 		$sel_options['org_view'] = $this->org_views;
@@ -1397,10 +1398,10 @@ class addressbook_ui extends addressbook_bo
 			$readonlys[$field] = true;
 		}
 		// disable not needed tabs
-		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys[$this->tabs]['custom'] = !$this->customfields;
-		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
-		$readonlys[$this->tabs]['distribution_list'] = !$content['distrib_lists'];#false;
+		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
+		$readonlys['tabs']['custom'] = !$this->customfields;
+		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
@@ -1633,10 +1634,10 @@ $readonlys['button[vcard]'] = true;
 			$content['owner'] .= 'p';
 		}
 		// disable not needed tabs
-		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys[$this->tabs]['custom'] = !$this->customfields;
-		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
-		$readonlys[$this->tabs]['distribution_list'] = !$content['distrib_lists'];#false;
+		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
+		$readonlys['tabs']['custom'] = !$this->customfields;
+		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
 		// last and next calendar date
@@ -1759,11 +1760,11 @@ $readonlys['button[vcard]'] = true;
 		// this setting will enable (and show) the search and cancel buttons, setting this to true will hide the before mentioned buttons completely
 		$readonlys['button'] = false;
 		// disable not needed tabs
-		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys[$this->tabs]['custom'] = !$this->customfields;
-		$readonlys[$this->tabs]['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
-		$readonlys[$this->tabs]['links'] = true;
-		$readonlys[$this->tabs]['distribution_list'] = true;
+		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
+		$readonlys['tabs']['custom'] = !$this->customfields;
+		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		$readonlys['tabs']['links'] = true;
+		$readonlys['tabs']['distribution_list'] = true;
 		// setting hidebuttons for content will hide the 'normal' addressbook edit dialog buttons
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
