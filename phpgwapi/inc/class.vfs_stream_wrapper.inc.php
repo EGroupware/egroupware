@@ -748,7 +748,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
 		{
 			$stat = self::check_symlink_components($path,$flags,$url);
-			if ($stat) self::symlinkCache_add($path,$url);
+			if ($stat && isset($stat['url'])) self::symlinkCache_add($path,$stat['url']);
 		}
 		elseif(is_array($stat) && !isset($stat['url']))
 		{
