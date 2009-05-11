@@ -133,13 +133,17 @@ class filemanager_select
 			if ($app == 'home') $content['path'] = filemanager_ui::get_home_dir();
 		}
 		$content['apps'] = array_keys(self::get_apps());
-		array_unshift($content['apps'],false);	// index starting from 1
 
-		if (isset($app) && isset($content['apps'][$app]))
+		if (isset($app))
 		{
-			$content['path'] = '/apps/'.$content['apps'][$app];
+			$content['path'] = '/apps/'.(isset($content['apps'][$app]) ? $content['apps'][$app] : $app);
 		}
-
+		if ((substr($content['path'],0,strlen('/apps/favorites/')) == '/apps/favorites/' /*||	// favorites the imediatly resolved
+			egw_vfs::is_link($content['path'])*/) &&	// we could replace all symlinks with the link, to save space in the URL
+			$link = egw_vfs::readlink($content['path']))
+		{
+			$content['path'] = $link[0] == '/' ? $link : egw_vfs::concat($content['path'],'../'.$link);
+		}
 		if (!$content['path'] || !egw_vfs::is_dir($content['path']))
 		{
 			$content['path'] = filemanager_ui::get_home_dir();
@@ -199,7 +203,7 @@ function select_toggle(file)
 ';
 		// scroll to end of path
 		$GLOBALS['egw']->js->set_onload("document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]').scrollIntoView();");
-		//_debug_array($content);
+
 		//_debug_array($readonlys);
 		egw_session::appsession('select_path','filemanger',$content['path']);
 		$tpl = new etemplate('filemanager.select');
@@ -220,7 +224,9 @@ function select_toggle(file)
 	 */
 	static function get_apps()
 	{
-		$apps = egw_link::app_list('query');
+		$apps = array(false);	// index starting from 1
+		if (isset($GLOBALS['egw_info']['apps']['stylite'])) $apps = array('favorites' => lang('Favorites'));
+		$apps += egw_link::app_list('query');
 
 		unset($apps['mydms']);	// they do NOT support adding files to VFS
 		unset($apps['wiki']);
