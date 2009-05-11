@@ -1,7 +1,6 @@
 %1 email addresses inserted	common	en	%1 email addresses inserted
+%1 file	common	en	%1 file
 %1 is not executable by the webserver !!!	common	en	%1 is not executable by the webserver !!!
-%1 manual	common	en	%1 manual
-%1 start	common	en	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writeable by webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 (session restored in %1 seconds)	common	en	(session restored in %1 seconds)
@@ -48,6 +47,7 @@ albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 all	common	en	All
 all fields	common	en	all fields
+all languages	common	en	all languages
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
 american samoa	common	en	AMERICAN SAMOA
@@ -104,6 +104,7 @@ brazil	common	en	BRAZIL
 british indian ocean territory	common	en	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	en	BRUNEI DARUSSALAM
 bulgaria	common	en	BULGARIA
+bulgarian	common	en	Bulgarian
 burkina faso	common	en	BURKINA FASO
 burundi	common	en	BURUNDI
 calendar	common	en	Calendar
@@ -188,6 +189,7 @@ detail	common	en	Detail
 details	common	en	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
 direction left to right	common	en	Direction left to right
+directory	common	en	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the webserver or is not relative to the document root!
 disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png-image-bugfix
 disable slider effects	common	en	Disable slider effects
@@ -209,6 +211,7 @@ done	common	en	Done
 drag to move	jscalendar	en	Drag to move
 e-mail	common	en	E-Mail
 east timor	common	en	EAST TIMOR
+eastern european	common	en	Eastern european
 ecuador	common	en	ECUADOR
 edit	common	en	Edit
 edit %1 category for	common	en	Edit %1 category for
@@ -216,7 +219,6 @@ edit categories	common	en	Edit Categories
 edit category	common	en	Edit category
 egroupware	common	en	eGroupWare
 egroupware api version	common	en	eGroupWare API version
-egroupware api version %1	common	en	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
@@ -279,6 +281,7 @@ global public	common	en	Global Public
 go today	jscalendar	en	Go Today
 grant access	common	en	Grant Access
 greece	common	en	GREECE
+greek	common	en	Greek
 greenland	common	en	GREENLAND
 grenada	common	en	GRENADA
 group	common	en	Group
@@ -339,6 +342,7 @@ italy	common	en	ITALY
 jamaica	common	en	JAMAICA
 january	common	en	January
 japan	common	en	JAPAN
+japanese	common	en	Japanese
 jordan	common	en	JORDAN
 july	common	en	July
 jun	common	en	Jun
@@ -353,6 +357,7 @@ keywords	common	en	Keywords
 kiribati	common	en	KIRIBATI
 korea, democratic peoples republic of	common	en	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
 korea, republic of	common	en	KOREA, REPUBLIC OF
+korean	common	en	Korean
 kuwait	common	en	KUWAIT
 kyrgyzstan	common	en	KYRGYZSTAN
 language	common	en	Language
@@ -371,6 +376,7 @@ liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
 list	common	en	List
 list members	common	en	List members
@@ -499,7 +505,6 @@ password must have at least %1 characters	common	en	Password must have at least 
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 permission denied!	common	en	Permission denied!
 permissions to the files/users directory	common	en	permissions to the files/users directory
-permisson denied!	common	en	Permisson denied!
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
@@ -551,6 +556,7 @@ returns struct of users application access	common	en	Returns struct of users app
 reunion	common	en	REUNION
 right	common	en	Right
 romania	common	en	ROMANIA
+russian	common	en	Russian
 russian federation	common	en	RUSSIAN FEDERATION
 rwanda	common	en	RWANDA
 saint helena	common	en	SAINT HELENA
@@ -614,6 +620,7 @@ showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 sierra leone	common	en	SIERRA LEONE
 simple	common	en	Simple
 singapore	common	en	SINGAPORE
+site configuration	common	en	Site configuration
 slovakia	common	en	SLOVAKIA
 slovenia	common	en	SLOVENIA
 solomon islands	common	en	SOLOMON ISLANDS
@@ -703,7 +710,6 @@ use button to search for project	common	en	use Button to search for Project
 user	common	en	User
 user accounts	common	en	user accounts
 user groups	common	en	user groups
-user openinstance	common	en	User Openinstance
 username	common	en	Username
 users	common	en	users
 users choice	common	en	Users Choice
@@ -718,6 +724,7 @@ virgin islands, u.s.	common	en	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	en	WALLIS AND FUTUNA
 wednesday	common	en	Wednesday
 welcome	common	en	Welcome
+western european	common	en	Western european
 western sahara	common	en	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	en	What color should all the blank space on the desktop have
 what style would you like the image to have?	common	en	What style would you like the image to have?
@@ -755,4 +762,3 @@ your settings have been updated	common	en	Your settings have been Updated
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
 zoom	common	en	Zoom
-site configuration	common	en	Site configuration

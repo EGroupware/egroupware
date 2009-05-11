@@ -437,14 +437,14 @@ class translation
 		if (!isset($charsets))
 		{
 			$charsets = array(
-				'utf-8'      => lang('all languages'),
-				'iso-8859-1' => 'Western european',
-				'iso-8859-2' => 'Eastern european',
-				'iso-8859-7' => 'Greek',
-				'euc-jp'     => 'Japanese',
-				'euc-kr'     => 'Korean',
-				'koi8-r'     => 'Russian',
-				'windows-1251' => 'Bulgarian',
+				'utf-8'      => lang('all languages').' (utf-8)',
+				'iso-8859-1' => lang('Western european').' (iso-8859-1)',
+				'iso-8859-2' => lang('Eastern european').' (iso-8859-2)',
+				'iso-8859-7' => lang('Greek').' (iso-8859-7)',
+				'euc-jp'     => lang('Japanese').' (euc-jp)',
+				'euc-kr'     => lang('Korean').' (euc-kr)',
+				'koi8-r'     => lang('Russian').' (koi8-r)',
+				'windows-1251' => lang('Bulgarian').' (windows-1251)',
 			);
 		}
 		return $charsets;
