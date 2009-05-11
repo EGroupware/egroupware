@@ -119,9 +119,7 @@ switch($_POST['action'])
 		$GLOBALS['egw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
 		$GLOBALS['egw']->template->set_var('lang_charset',lang('Charset of file'));
 		$GLOBALS['egw']->template->set_var('select_charset',
-			html::select('charset','',
-			$GLOBALS['egw']->translation->get_installed_charsets()+
-			array('utf-8' => 'utf-8 (Unicode)'),True));
+			html::select('charset','',translation::get_installed_charsets(),True));
 		$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
 		$GLOBALS['egw']->template->set_var('submit',lang('Import'));
 		$GLOBALS['egw']->template->set_var('csvfile',$csvfile);
@@ -163,7 +161,7 @@ switch($_POST['action'])
 			$addr_name_options .= "<option value=\"$field\">".$GLOBALS['egw']->strip_html($name)."\n";
 		}
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
-		$csv_fields = $GLOBALS['egw']->translation->convert($csv_fields,$_POST['charset']);
+		$csv_fields = translation::convert($csv_fields,$_POST['charset']);
 		$csv_fields[] = 'no CSV 1'; // eg. for static assignments
 		$csv_fields[] = 'no CSV 2';
 		$csv_fields[] = 'no CSV 3';
@@ -251,7 +249,7 @@ switch($_POST['action'])
 		ini_set('auto_detect_line_endings',true);	// to allow to import files created eg. on a mac
 		$fp=fopen($csvfile,'r');
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
-		$csv_fields = $GLOBALS['egw']->translation->convert($csv_fields,$_POST['charset']);
+		$csv_fields = translation::convert($csv_fields,$_POST['charset']);
 		$csv_fields[] = 'no CSV 1'; // eg. for static assignments
 		$csv_fields[] = 'no CSV 2';
 		$csv_fields[] = 'no CSV 3';
@@ -316,7 +314,7 @@ switch($_POST['action'])
 			{
 				break;	// EOF
 			}
-			$fields = $GLOBALS['egw']->translation->convert($fields,$_POST['charset']);
+			$fields = translation::convert($fields,$_POST['charset']);
 
 			$log .= "\t</tr><tr><td>".($start+$anz)."</td>\n";
 
