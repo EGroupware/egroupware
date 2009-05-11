@@ -403,19 +403,39 @@ class filemanager_ui
 		{
 			case 'delete':
 				$dirs = $files = $errs = 0;
-				foreach(egw_vfs::find($selected,array('depth'=>true)) as $path)
+				// we first delete all selected links (and files)
+				// feeding the links to dirs to egw_vfs::find() deletes the content of the dirs, not just the link!
+				foreach($selected as $key => $path)
 				{
-					if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
+					if (!egw_vfs::is_dir($path) || egw_vfs::is_link($path))
 					{
-						++$dirs;
+						if (egw_vfs::unlink($path))
+						{
+							++$files;
+						}
+						else
+						{
+							++$errs;
+						}
+						unset($selected[$key]);
 					}
-					elseif (!$is_dir && egw_vfs::unlink($path))
+				}
+				if ($selected)	// somethings left to delete
+				{
+					foreach(egw_vfs::find($selected,array('depth'=>true)) as $path)
 					{
-						++$files;
-					}
-					else
-					{
-						++$errs;
+						if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
+						{
+							++$dirs;
+						}
+						elseif (!$is_dir && egw_vfs::unlink($path))
+						{
+							++$files;
+						}
+						else
+						{
+							++$errs;
+						}
 					}
 				}
 				if ($errs)
