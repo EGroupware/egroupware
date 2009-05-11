@@ -14,12 +14,13 @@
 		</hbox>
 	</template>
 	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%" class="my_form">
+		<grid>
 			<columns>
 				<column width="2%"/>
 				<column/>
 				<column disabled="@no_customfields"/>
 				<column width="120"/>
+				<column/>
 				<column disabled="@no_info_used_time_info_planned_time"/>
 				<column width="8%" disabled="@no_info_onwer_info_responsible"/>
 				<column width="12%" disabled="@no_info_datemodified"/>
@@ -58,6 +59,10 @@
 					<vbox>
 						<description value="Times"/>
 						<description class="planned" value="planned"/>
+					</vbox>
+					<vbox options="0,0">
+						<description value="Times"/>
+						<description class="planned" value="planned"/>
 						<description class="replanned" value="Re-planned"/>
 					</vbox>
 					<vbox>
@@ -91,13 +96,17 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
 					<vbox rows="3" cols="1">
+						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+					</vbox>
+					<vbox rows="3" cols="1" options="0,0">
 						<hbox options="1,0" id="l_used_time">
 							<image label="Times" src="timesheet"/>
 							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
 							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
 						</hbox>
 						<hbox options="1,0" id="lplanified">
-							<image label="planned time" src="k_alarm.png" readonly="true"/>
+							<image label="planned time" src="k_alarm.png"/>
 							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
 						</hbox>
 						<hbox options="1,0" id="replanified">
@@ -149,6 +158,7 @@
 				<column/>
 				<column width="120"/>
 				<column/>
+				<column/>
 				<column width="8%" disabled="@no_info_owner_info_responsible"/>
 				<column width="12%"/>
 				<column width="3%" disabled="@no_actions"/>
@@ -188,7 +198,11 @@
 						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
 						<nextmatch-sortheader id="info_datecompleted" label="Date completed"/>
 					</vbox>
-					<vbox rows="2" cols="1" options="2">
+					<vbox rows="2" cols="1">
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
+					</vbox>
+					<vbox rows="2" cols="1" options="0,0">
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
 						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
 						<nextmatch-sortheader id="info_replanned_time" class="replanned" label="Re-planned"/>
@@ -228,14 +242,18 @@
 						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
-					<vbox rows="3" cols="1">
+					<vbox rows="3" cols="1" options="0,0">
+						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+					</vbox>
+					<vbox rows="3" cols="1" options="0,0">
 						<hbox options="1,0" id="r_used_time">
 							<image label="Times" src="timesheet"/>
 							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
 							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
 						</hbox>
 						<hbox options="1,0" id="planified">
-							<image label="planned time" src="k_alarm.png" readonly="true"/>
+							<image label="planned time" src="k_alarm.png"/>
 							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
 						</hbox>
 						<hbox options="1,0" id="replanified">
@@ -276,7 +294,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.5.004">
+	<template id="infolog.index" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="90%"/>
