@@ -355,41 +355,22 @@ class translation
 	 */
 	function get_installed_charsets()
 	{
-		if (!is_array($this->charsets))
-		{
-			$this->get_installed_langs();
+                static $charsets;
 
-			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
-			$this->charsets = array();
-			foreach($this->db->select($this->lang_table,$distinct.' lang,lang_name,content AS charset',array(
-				'message_id' => 'charset',
-			),__LINE__,__FILE__,false,'',false,0,",$this->languages_table WHERE lang = lang_id") as $row)
-			{
-				$data = &$this->charsets[$charset = strtolower($row['charset'])];
-				$lang = $this->langs[$row['lang']].' ('.$row['lang'].')';
-				if ($distinct || strpos($data,$lang) === false)
-				{
-					$data .= ($data ? ', ' : $charset.': ').$lang;
-				}						
-			}
-			if (!$this->charsets)
-			{
-				return False;
-			}
-			// add the old charsets, to provide some alternatives to utf-8 while importing
-			foreach(array(
-				'iso-8859-1' => 'Western european',
-				'iso-8859-2' => 'Eastern european',
-				'iso-8859-7' => 'Greek',
-				'euc-jp'     => 'Japanese',
-				'euc-kr'     => 'Korean',
-				'koi8-r'     => 'Russian',				
-				'windows-1251' => 'Bulgarian') as $charset => $lang)
-			{
-				$this->charsets[$charset] .= (!isset($this->charsets[$charset]) ? $charset.': ' : ', ') . $lang;
-			}
+                if (!isset($charsets))
+                {
+                        $charsets = array(
+				'utf-8'      => lang('all languages').' (utf-8)',
+				'iso-8859-1' => lang('Western european').' (iso-8859-1)',
+				'iso-8859-2' => lang('Eastern european').' (iso-8859-2)',
+				'iso-8859-7' => lang('Greek').' (iso-8859-7)',
+				'euc-jp'     => lang('Japanese').' (euc-jp)',
+				'euc-kr'     => lang('Korean').' (euc-kr)',
+				'koi8-r'     => lang('Russian').' (koi8-r)',
+				'windows-1251' => lang('Bulgarian').' (windows-1251)',
+			);
 		}
-		return $this->charsets;
+		return $charsets;
 	}
 
 	/**
