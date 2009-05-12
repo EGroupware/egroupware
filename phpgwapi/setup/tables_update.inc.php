@@ -27,3 +27,16 @@ function phpgwapi_upgrade1_6_001()
 {
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.7.001';
 }
+
+function phpgwapi_upgrade1_7_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sqlfs','fs_link',array(
+		'type' => 'varchar',
+		'precision' => '255'
+	));
+	// moving symlinks from fs_content to fs_link
+	$GLOBALS['egw_setup']->oProc->query("UPDATE egw_sqlfs SET fs_link=fs_content,fs_content=NULL WHERE fs_mime='application/x-symlink'",__LINE__,__FILE__);
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.7.002';
+}
+

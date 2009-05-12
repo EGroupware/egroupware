@@ -901,9 +901,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		$this->opened_dir = array();
-		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.
-			",CASE fs_mime WHEN '".self::SYMLINK_MIME_TYPE."' THEN fs_content ELSE NULL END AS readlink FROM ".self::TABLE.
-			" WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
+		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_link'.
+			' FROM '.self::TABLE." WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
 		//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$options)".' */ '.$query;
 
@@ -971,9 +970,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			self::_pdo();
 		}
-		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.
-			",CASE fs_mime WHEN '".self::SYMLINK_MIME_TYPE."' THEN fs_content ELSE NULL END AS readlink FROM ".self::TABLE.
-			' WHERE fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
+		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_link'.
+			' FROM '.self::TABLE.' WHERE fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
 		$parts = explode('/',$path);
 
 		// if we have extendes acl access to the url, we dont need and can NOT include the sql for the readable check
@@ -1153,8 +1151,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!stat('$link') || !is_writable('$dir'))");
 			return false;	// $link already exists or parent dir does not
 		}
-		$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_content'.
-			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_content)';
+		$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_link'.
+			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_link)';
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		$stmt = self::$pdo->prepare($query);
 		unset(self::$stat_cache[$link]);
@@ -1170,7 +1168,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			'fs_creator'  => egw_vfs::$user,
 			'fs_mime'     => self::SYMLINK_MIME_TYPE,
 			'fs_size'     => bytes($target),
-			'fs_content'  => $target,
+			'fs_link'     => $target,
 		));
 	}
 
@@ -1429,7 +1427,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			'nlink' => $info['fs_mime'] == self::DIR_MIME_TYPE ? 2 : 1,
 			// eGW addition to return some extra values
 			'mime'  => $info['fs_mime'],
-			'readlink' => $info['readlink'],
+			'readlink' => $info['fs_link'],
 		);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($info[name]) = ".array2string($stat));
 		return $stat;

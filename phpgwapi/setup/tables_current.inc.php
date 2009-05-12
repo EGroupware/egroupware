@@ -446,7 +446,8 @@ $phpgw_baseline = array(
 			'fs_creator' => array('type' => 'int','precision' => '4','nullable' => False),
 			'fs_modifier' => array('type' => 'int','precision' => '4'),
 			'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),
-			'fs_content' => array('type' => 'blob')
+			'fs_content' => array('type' => 'blob'),
+			'fs_link' => array('type' => 'varchar','precision' => '255')
 		),
 		'pk' => array('fs_id'),
 		'fk' => array(),
