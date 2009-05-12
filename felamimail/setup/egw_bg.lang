@@ -1,0 +1,462 @@
+(no subject)	felamimail	bg	(без тема)
+(only cc/bcc)	felamimail	bg	(само копие/скрито копие)
+(separate multiple addresses by comma)	felamimail	bg	(разделете няколко адреса със запетая)
+(unknown sender)	felamimail	bg	(неизвестен подател)
+activate	felamimail	bg	Активиране
+activate script	felamimail	bg	активиране на скрипт
+activating by date requires a start- and end-date!	felamimail	bg	Активиране по дата изисква начална И крайна дата!
+add acl	felamimail	bg	добави списък за контрол на достъпа
+add address	felamimail	bg	Добави адрес
+add rule	felamimail	bg	Добави правило
+add script	felamimail	bg	Добави скрипт
+add to %1	felamimail	bg	Добави към %1
+add to address book	felamimail	bg	Добави към Адресния указател
+add to addressbook	felamimail	bg	добави към Адресния указател
+adding file to message. please wait!	felamimail	bg	Прилагане на файл към съобщението. Моля, почакайте!
+additional info	felamimail	bg	Допълнителна информация
+address book	felamimail	bg	Адресен указател
+address book search	felamimail	bg	Търсене в Адресния указател
+after message body	felamimail	bg	След тялото на съобщението
+all address books	felamimail	bg	Всички адресни указатели
+all folders	felamimail	bg	Всички папки
+all of	felamimail	bg	всички
+allow images from external sources in html emails	felamimail	bg	Показване на изображения от външни източници в HTML съобщения?
+allways a new window	felamimail	bg	винаги в нов прозорец
+always show html emails	felamimail	bg	Винаги показва HTML съобщения
+and	felamimail	bg	и
+any of	felamimail	bg	някой от
+any status	felamimail	bg	без значение
+anyone	felamimail	bg	всеки
+as a subfolder of	felamimail	bg	всички подпапки на
+attachments	felamimail	bg	Приложения
+authentication required	felamimail	bg	изисква се оторизация
+auto refresh folder list	felamimail	bg	Автоматично опресняване на списъка с папки
+back to folder	felamimail	bg	Обратно към папка
+bad login name or password.	felamimail	bg	Невалидно име или парола.
+bad or malformed request. server responded: %s	felamimail	bg	Некоректна заявка. Сървърът отговори: %s
+bad request: %s	felamimail	bg	Некоректна заявка: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	bg	Съгласно зададен критерий, фонът на входящите съобщения в списъка може да бъде различен. Това помага лесно да разграничите подателите, особено при пощенски списъци.
+bcc	felamimail	bg	Скрито копие
+before headers	felamimail	bg	Преди заглавната част
+between headers and message body	felamimail	bg	Между заглавната част и тялото на съобщението
+body part	felamimail	bg	част от тялото
+by date	felamimail	bg	по дата
+can not send message. no recipient defined!	felamimail	bg	съобщението не може да бъде изпратено - не е посочен получател!
+can't connect to inbox!!	felamimail	bg	неуспешна връзка с INBOX!!
+cc	felamimail	bg	копие
+change folder	felamimail	bg	Смяна на папка
+check message against next rule also	felamimail	bg	провери съобщението и съгласно следващото правило
+clear search	felamimail	bg	изтрий търсенето
+click here to log back in.	felamimail	bg	Кликнете тук за влизане отново.
+click here to return to %1	felamimail	bg	Кликнете тук за връщане към %1
+close all	felamimail	bg	затваряне на всичко
+close this page	felamimail	bg	затвори страницата
+close window	felamimail	bg	Затваряне на прозореца
+color	felamimail	bg	Цвят
+compose	felamimail	bg	Ново съобщение
+compose as new	felamimail	bg	създай като ново
+compress folder	felamimail	bg	Компресиране на папката
+condition	felamimail	bg	условие
+configuration	felamimail	bg	Конфигурация
+connection dropped by imap server.	felamimail	bg	Връзката е прекъсната от IMAP сървъра.
+contains	felamimail	bg	съдържа
+could not complete request. reason given: %s	felamimail	bg	Неуспешно изпълнение на заявката поради: %s
+could not import message:	felamimail	bg	Неуспешен импорт на съобщение:
+could not open secure connection to the imap server. %s : %s.	felamimail	bg	Неуспешно изграждане на криптирана връзка с IMAP сървъра. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	bg	CRAM-MD5 или DIGEST-MD5 изискват инсталиране на пакета Auth_SASL.
+create	felamimail	bg	Създаване
+create folder	felamimail	bg	Създаване на папка
+create sent	felamimail	bg	Създаване на "Изпратени"
+create subfolder	felamimail	bg	Създаване на подпапка
+create trash	felamimail	bg	Създаване на "Кошче"
+created folder successfully!	felamimail	bg	Папката е създадена успешно!
+dark blue	felamimail	bg	Тъмно син
+dark cyan	felamimail	bg	Тъмно синьозелен
+dark gray	felamimail	bg	Тъмно сив
+dark green	felamimail	bg	Тъмно зелен
+dark magenta	felamimail	bg	Тъмно пурпурен
+dark yellow	felamimail	bg	Тъмно жълт
+date(newest first)	felamimail	bg	По дата (първо най-новите)
+date(oldest first)	felamimail	bg	По дата (първо най-старите)
+days	felamimail	bg	дни
+deactivate script	felamimail	bg	деактивиране на скрипта
+default	felamimail	bg	по подразбиране
+default signature	felamimail	bg	подпис по подразбиране
+default sorting order	felamimail	bg	Подреждане по подразбиране
+delete all	felamimail	bg	изтриване на всички
+delete folder	felamimail	bg	Изтриване на Папка
+delete script	felamimail	bg	изтриване на скрипт
+delete selected	felamimail	bg	Изтрий избраните
+delete selected messages	felamimail	bg	изтрий избраните съобщения
+deleted	felamimail	bg	изтрито
+deleted folder successfully!	felamimail	bg	Папката е успешно изтрита!
+deleting messages	felamimail	bg	изтриване на съобщенията
+disable	felamimail	bg	Забранява
+discard	felamimail	bg	изоставяне
+discard message	felamimail	bg	изоставяне на съобщението
+display message in new window	felamimail	bg	Показване на съобщенията в нов прозорец
+display messages in multiple windows	felamimail	bg	показване на съобщенията в отделни прозорци
+display of html emails	felamimail	bg	Показване на HTML съобщения
+display only when no plain text is available	felamimail	bg	Показва само, когато няма текст
+display preferences	felamimail	bg	Настройки за изобразяване
+displaying html messages is disabled	felamimail	bg	Показването на HTML съобщения е забранено!
+do it!	felamimail	bg	действай!
+do not use sent	felamimail	bg	Не използвай "Изпратени"
+do not use trash	felamimail	bg	Не използвай "Кошче"
+do not validate certificate	felamimail	bg	не проверявай сертификати
+do you really want to delete the '%1' folder?	felamimail	bg	Наистина ли желаете да изтриете папка '%1'?
+do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	bg	Наистина ли желаете да изтриете избраните настройки на акаунт и съответната им самоличност?
+do you really want to delete the selected signatures?	felamimail	bg	Наистина ли желаете да изтриете избраните подписи?
+do you really want to move the selected messages to folder:	felamimail	bg	Наистина ли желаете да преместите избраните съобщения в папка
+do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	bg	Потвърждение преди преместване на избрани съобщения в друга папка?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	bg	Желаете ли да забраните управлението на папките (създаване, права на достъп И абонамент)?
+does not contain	felamimail	bg	не съдържа
+does not exist on imap server.	felamimail	bg	не съществува на IMAP сървъра.
+does not match	felamimail	bg	не съвпада с
+does not match regexp	felamimail	bg	не съвпада с рег. израз
+don't use draft folder	felamimail	bg	Не използвай "Чернови"
+don't use sent	felamimail	bg	Не използвай "Изпратени"
+don't use template folder	felamimail	bg	Не използвай папка "Шаблони"
+don't use trash	felamimail	bg	Не използвай "Кошче"
+dont strip any tags	felamimail	bg	не премахвай етикети
+down	felamimail	bg	надолу
+download	felamimail	bg	изтегляне
+download this as a file	felamimail	bg	Изтеглете го като файл
+draft folder	felamimail	bg	папка "Чернови"
+drafts	felamimail	bg	Чернови
+e-mail	felamimail	bg	E-Mail
+e-mail address	felamimail	bg	E-Mail адрес
+e-mail folders	felamimail	bg	E-Mail папки
+edit email forwarding address	felamimail	bg	редактиране на адреса за препращане на e-mail-а
+edit filter	felamimail	bg	Редактиране на филтър
+edit rule	felamimail	bg	редактиране на правило
+edit selected	felamimail	bg	Редактиране на избраните
+edit vacation settings	felamimail	bg	редактиране на настройките за "ваканция"
+editor type	felamimail	bg	Вид на редактора
+email address	felamimail	bg	E-Mail адрес
+email forwarding address	felamimail	bg	E-Mail адрес за препращане
+email notification update failed	felamimail	bg	Актуализацията на e-mail известието беше неуспешна.
+email signature	felamimail	bg	Подпис за E-Mail
+emailaddress	felamimail	bg	e-mail адрес
+empty trash	felamimail	bg	изпразване на кошчето
+enable	felamimail	bg	позволява
+encrypted connection	felamimail	bg	криптирана връзка
+enter your default mail domain ( from: user@domain )	admin	bg	Въведете e-mail домейн по подразбиране (От: user@domain)
+enter your imap mail server hostname or ip address	admin	bg	Въведете името или IP адреса на IMAP сървъра
+enter your sieve server hostname or ip address	admin	bg	Въведете името или IP адреса на SIEVE сървъра
+enter your sieve server port	admin	bg	Въведете порта на SIEVE сървъра
+enter your smtp server hostname or ip address	admin	bg	Въведете името или IP адреса на SMTP сървъра
+enter your smtp server port	admin	bg	Въведете порта на SMTP сървъра
+error	felamimail	bg	ГРЕШКА
+error connecting to imap serv	felamimail	bg	Грешка при връзка с IMAP сървъра
+error connecting to imap server. %s : %s.	felamimail	bg	Грешка при връзка с IMAP сървъра. %s : %s.
+error connecting to imap server: [%s] %s.	felamimail	bg	Грешка при връзка с IMAP сървъра: [%s] %s.
+error opening	felamimail	bg	Грешка при отваряне на
+error:	felamimail	bg	Грешка:
+error: could not save message as draft	felamimail	bg	Грешка: неуспешно запазване на съобщнието като Чернова
+every	felamimail	bg	всеки
+every %1 days	felamimail	bg	на всеки %1 дни
+expunge	felamimail	bg	Заличаване
+extended	felamimail	bg	разширен
+felamimail	common	bg	Електронна поща
+file into	felamimail	bg	файл в
+files	felamimail	bg	файлове
+filter active	felamimail	bg	филтърът е активен
+filter name	felamimail	bg	Име на филтъра
+filter rules	common	bg	правила на филтриране
+first name	felamimail	bg	Собствено име
+flagged	felamimail	bg	с флагче
+flags	felamimail	bg	Маркери
+folder	felamimail	bg	папка
+folder acl	felamimail	bg	списък за достъп до папката
+folder name	felamimail	bg	Име на папката
+folder path	felamimail	bg	Път до папката
+folder preferences	felamimail	bg	Настройки на папката
+folder settings	felamimail	bg	Настройки на папката
+folder status	felamimail	bg	Състояние на папката
+folderlist	felamimail	bg	Списък с папки
+foldername	felamimail	bg	Име на папката
+folders	felamimail	bg	Папки
+folders created successfully!	felamimail	bg	Папката е създадена успешно!
+follow	felamimail	bg	следва
+for mail to be send - not functional yet	felamimail	bg	За изпращане на съобщения - все още не функционира
+for received mail	felamimail	bg	За получени съобщения
+forward	felamimail	bg	Препращане
+forward as attachment	felamimail	bg	препращане като приложение
+forward inline	felamimail	bg	препращане в съобщението
+forward messages to	felamimail	bg	Препращане на съобщението до
+forward to	felamimail	bg	препрати до
+forward to address	felamimail	bg	препрати до адрес
+forwarding	felamimail	bg	Препращане
+found	felamimail	bg	Намерен(и)
+fri	felamimail	bg	Пет
+from	felamimail	bg	Подател
+from(a->z)	felamimail	bg	Подател (A->Z)
+from(z->a)	felamimail	bg	Подател (Z->A)
+full name	felamimail	bg	Име
+greater than	felamimail	bg	по-голямо от
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	bg	Посетете <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>, за да научите повече за Squirrelmail.<br>
+header lines	felamimail	bg	Заглавна част
+hide header	felamimail	bg	скрий заглавната част
+hostname / address	felamimail	bg	име на хост / адрес
+how to forward messages	felamimail	bg	как да се препращат съобщенията
+html	felamimail	bg	HTML
+icons and text	felamimail	bg	Икони и текст
+icons only	felamimail	bg	Само икони
+identity	felamimail	bg	самоличност
+if	felamimail	bg	АКО
+if from contains	felamimail	bg	ако "От:" съдържа
+if mail header	felamimail	bg	ако заглавната част
+if message size	felamimail	bg	ако размерът на съобщението
+if shown, which folders should appear on main screen	felamimail	bg	Кои папки да се появяват на главния екран?
+if subject contains	felamimail	bg	ако Темата съдържа
+if to contains	felamimail	bg	ако "До:" съдържа
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	bg	Ако използвате SSL или TLS, трябва да заредите OpenSSL разширението на PHP.
+illegal folder name.  please select a different name.	felamimail	bg	Невалидно име на папка. Моля, изберете друго име.
+imap	felamimail	bg	IMAP
+imap server	felamimail	bg	IMAP сървър
+imap server address	felamimail	bg	Адрес на IMAP сървъра
+imap server closed the connection.	felamimail	bg	IMAP сървъра прекрати връзката.
+imap server closed the connection. server responded: %s	felamimail	bg	IMAP сървъра прекрати връзката с отговор: %s
+imap server password	felamimail	bg	парола за IMAP сървъра
+imap server type	felamimail	bg	тип на IMAP сървъра
+imap server username	felamimail	bg	име на потребител за IMAP сървъра
+imaps authentication	felamimail	bg	IMAPS оторизация
+imaps encryption only	felamimail	bg	само IMAPS кодиране
+import	felamimail	bg	импорт
+import mail	felamimail	bg	Импорт на поща
+in	felamimail	bg	в
+inbox	felamimail	bg	Входящи
+incoming mail server(imap)	felamimail	bg	Сървър за входяща поща (IMAP)
+index order	felamimail	bg	Подреждане
+info	felamimail	bg	Информация
+invalid user name or password	felamimail	bg	Грешно име или парола
+javascript	felamimail	bg	JavaScript
+jumping to end	felamimail	bg	прескачане към края
+jumping to start	felamimail	bg	прескачане към началото
+junk	felamimail	bg	Нежелани
+keep a copy of the message in your inbox	felamimail	bg	запазване на копие от съобщението във Входящи
+keep local copy of email	felamimail	bg	запазване на локално копие на съобщенията
+kilobytes	felamimail	bg	килобайта
+language	felamimail	bg	Език
+last name	felamimail	bg	Фамилия
+left	felamimail	bg	Наляво
+less	felamimail	bg	по-малко
+less than	felamimail	bg	по-малко от
+light gray	felamimail	bg	Светлосив
+list all	felamimail	bg	Покажи всички
+loading	felamimail	bg	зареждане
+location of buttons when composing	felamimail	bg	Местоположение на бутоните при създаване/писане
+mail server login type	admin	bg	Тип на влизане (login) в Mail сървъра
+mail settings	felamimail	bg	Настройки на пощата
+mainmessage	felamimail	bg	главно съобщение
+manage email accounts and identities	common	bg	Управление на E-Mail акаунти и самоличности
+manage emailaccounts	common	bg	Управление на E-Mail акаунтите
+manage emailfilter / vacation	preferences	bg	Управление на E-Mail филтър / "Ваканция"
+manage folders	common	bg	Управление на папките
+manage sieve	common	bg	Управление на Sieve скриптовете
+manage signatures	felamimail	bg	Управление на подписите
+mark as deleted	felamimail	bg	Маркирай като изтрито
+mark messages as	felamimail	bg	Маркирай избраните съобщения като
+mark selected as flagged	felamimail	bg	Маркирай избраните с флагче
+mark selected as read	felamimail	bg	Маркирай избраните като Прочетени
+mark selected as unflagged	felamimail	bg	Маркирай избраните без флагче
+mark selected as unread	felamimail	bg	Маркирай избраните като Непрочетени
+match	felamimail	bg	Съвпада
+matches	felamimail	bg	съвпада с
+matches regexp	felamimail	bg	съвпада с рег. израз
+max uploadsize	felamimail	bg	максимален обем:
+message list	felamimail	bg	Списък със съобщения
+messages	felamimail	bg	съобщения
+mon	felamimail	bg	Пон
+move	felamimail	bg	премести
+move messages	felamimail	bg	премести съобщенията
+move selected to	felamimail	bg	премести избраните в
+move to trash	felamimail	bg	Премести в Кошчето
+moving messages to	felamimail	bg	преместване на съобщенията в
+name	felamimail	bg	Име
+never display html emails	felamimail	bg	Не показва HTML съобщения
+new	common	bg	Ново
+new filter	felamimail	bg	Нов филтър
+next	felamimail	bg	Следващо
+next message	felamimail	bg	следващо съобщение
+no active imap server found!!	felamimail	bg	Не е открит активен IMAP сървър!
+no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	bg	Не е посочен адрес ДО/Копие/Скрито копие и не е зададена папка за запазване на съобщението.
+no encryption	felamimail	bg	без криптиране
+no filter	felamimail	bg	Без филтър
+no folders found	felamimail	bg	Не са намерени папки
+no folders were found to subscribe to!	felamimail	bg	Не са намерени папки, за които да се абонирате!
+no folders were found to unsubscribe from!	felamimail	bg	Не са намерени папки, за които да отмените абонамент!
+no message returned.	felamimail	bg	Не са открити съобщения
+no messages found...	felamimail	bg	няма открити съобщения...
+no messages selected, or lost selection. changing to folder	felamimail	bg	Няма избрани съобщения или изборът е изгубен. Показване на папка
+no messages were selected.	felamimail	bg	Няма избрани съобщения
+no plain text part found	felamimail	bg	липсва текстова част
+no previous message	felamimail	bg	нама предишно съобщение
+no recipient address given!	felamimail	bg	Не е посочен адрес на получател!
+no signature	felamimail	bg	няма подпис
+no subject given!	felamimail	bg	Не е посочена Тема!
+no supported imap authentication method could be found.	felamimail	bg	Не се поддържа зададеният метод за IMAP оторизация.
+no valid emailprofile selected!!	felamimail	bg	Не е избран валиден E-Mail профил!
+none	felamimail	bg	няма
+on	felamimail	bg	на
+only inbox	felamimail	bg	Само Входящи
+only one window	felamimail	bg	само в един прозорец
+only unseen	felamimail	bg	Само не отворените
+open all	felamimail	bg	отвори всички
+options	felamimail	bg	Опции
+or	felamimail	bg	или
+organisation	felamimail	bg	организация
+organization	felamimail	bg	организация
+organization name	admin	bg	Име на организацията
+original message	felamimail	bg	оригинално съобщение
+outgoing mail server(smtp)	felamimail	bg	сървър за изходяща поща (SMTP)
+participants	felamimail	bg	Участници
+personal information	felamimail	bg	Лична информация
+please select a address	felamimail	bg	Моля, изберете адрес
+please select the number of days to wait between responses	felamimail	bg	Моля, изберете брой дни за изчакване между отговорите
+please supply the message to send with auto-responses	felamimail	bg	Моля, въведете съобщение за изпращане като Автоматичен отговор
+port	felamimail	bg	порт
+previous	felamimail	bg	Предишно
+previous message	felamimail	bg	предишно съобщение
+print it	felamimail	bg	отпечатване
+print this page	felamimail	bg	отпечатване на страницата
+printview	felamimail	bg	изглед за печат
+quicksearch	felamimail	bg	Бързо търсене
+read	felamimail	bg	прочетено
+reading	felamimail	bg	четене на
+receive notification	felamimail	bg	Обратна разписка
+refresh time in minutes	felamimail	bg	Време на опресняване в минути
+reject with	felamimail	bg	откажи с
+remove	felamimail	bg	премахване
+remove immediately	felamimail	bg	Премахни незабавно
+rename	felamimail	bg	Преименуване
+rename a folder	felamimail	bg	Преименуване на папка
+rename folder	felamimail	bg	Преименуване на папка
+renamed successfully!	felamimail	bg	Успешно преименувана!
+replied	felamimail	bg	изпратен отговор
+reply	felamimail	bg	Отговор
+reply all	felamimail	bg	Отговор до всички
+reply to	felamimail	bg	Отговор До
+replyto	felamimail	bg	Отговор До
+respond	felamimail	bg	В отговор на
+respond to mail sent to	felamimail	bg	В отговор на съобщение, изпратено до
+return	felamimail	bg	Връщане
+return to options page	felamimail	bg	Връщане към страницата с опциите
+right	felamimail	bg	Дясно
+row order style	felamimail	bg	Стил на изгледа
+rule	felamimail	bg	Правило
+sat	felamimail	bg	съб
+save	felamimail	bg	Запис
+save as draft	felamimail	bg	запис като чернова
+save as infolog	felamimail	bg	запис в Дневника
+save changes	felamimail	bg	запис на промените
+save message to disk	felamimail	bg	запис на съобщението на диска
+script name	felamimail	bg	име на скрипт
+script status	felamimail	bg	състояние на скрипт
+search	felamimail	bg	Търсене
+search for	felamimail	bg	Търси
+select	felamimail	bg	Избор
+select all	felamimail	bg	Избери всички
+select emailprofile	felamimail	bg	Избор на -Mail профил
+select folder	felamimail	bg	избери папка
+select your mail server type	admin	bg	Изберете тип на Mail сървъра
+send	felamimail	bg	Изпращане
+send a reject message	felamimail	bg	изпращане на съобщение за отказ
+sent	felamimail	bg	Изпратени
+sent folder	felamimail	bg	Папка "Изпратени"
+server supports mailfilter(sieve)	felamimail	bg	сървърът поддържа филтър за поща - sieve
+set as default	felamimail	bg	По подразбиране
+show header	felamimail	bg	покажи заглавната част
+show new messages on main screen	felamimail	bg	показване на новите съобщения на началния екран
+sieve script name	felamimail	bg	име на sieve скрипт
+sieve settings	admin	bg	Настройки на Sieve
+signatur	felamimail	bg	Подпис
+signature	felamimail	bg	Подпис
+simply click the target-folder	felamimail	bg	Кликнете на папката, в която да се копира/премести
+size	felamimail	bg	Размер
+size of editor window	felamimail	bg	Размер на прозореца на редактора
+size(...->0)	felamimail	bg	Размер (...->0)
+size(0->...)	felamimail	bg	Размер (0->...)
+skipping forward	felamimail	bg	прескачане напред
+skipping previous	felamimail	bg	прескачане назад
+small view	felamimail	bg	умален изглед
+smtp settings	admin	bg	SMTP настройки
+start new messages with mime type plain/text or html?	felamimail	bg	Започва нови съобщения като чист текст или HTML?
+subject	felamimail	bg	Тема
+subject(a->z)	felamimail	bg	Тема (A->Z)
+subject(z->a)	felamimail	bg	Тема (Z->A)
+submit	felamimail	bg	Предаване
+subscribe	felamimail	bg	Включи абонамент
+subscribed	felamimail	bg	Включен абонамент
+subscribed successfully!	felamimail	bg	Абонаментът е успешен!
+sun	felamimail	bg	Нед
+system signature	felamimail	bg	генериран от системата
+table of contents	felamimail	bg	Съдържание
+template folder	felamimail	bg	Папка "Шаблони"
+templates	felamimail	bg	Шаблони
+text only	felamimail	bg	Само текст
+text/plain	felamimail	bg	текст
+the connection to the imap server failed!!	felamimail	bg	Неуспешна връзка с IMAP сървъра!!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	bg	IMAP сървъра вероятно не поддържа избрания метод на оторизация. Моля, свържете се с Вашия системен Администратор!
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	bg	Подателят на съобщението е заявил обратна разписка. Желаете ли да му я изпратите?
+then	felamimail	bg	ТОГАВА
+this folder is empty	felamimail	bg	Папката е празна
+this php has no imap support compiled in!!	felamimail	bg	PHP няма включена поддръжка за IMAP!!!
+thu	felamimail	bg	Чет
+to	felamimail	bg	До
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	bg	За да използвате TLS е необходима версия на PHP 5.1.0 или по-висока.
+translation preferences	felamimail	bg	Настройки за превод
+translation server	felamimail	bg	Сървър за превод
+trash	felamimail	bg	Кошче
+trash fold	felamimail	bg	Папка "Кошче"
+trash folder	felamimail	bg	Папка "Кошче"
+tue	felamimail	bg	Вт
+type	felamimail	bg	тип
+unexpected response from server to authenticate command.	felamimail	bg	Неочакван отговор от сървъра на команда AUTHENTICATE.
+unexpected response from server to digest-md5 response.	felamimail	bg	Неочакван отговор от сървъра на Digest-MD5.
+unexpected response from server to login command.	felamimail	bg	Неочакван отговор от сървъра на команда LOGIN.
+unflagged	felamimail	bg	немаркирано
+unknown err	felamimail	bg	Неустановена грешка
+unknown error	felamimail	bg	Неустановена грешка
+unknown imap response from the server. server responded: %s	felamimail	bg	Неизвестен отговор от IMAP сървъра: %s
+unknown sender	felamimail	bg	Неизвестен Подател
+unknown user or password incorrect.	felamimail	bg	Несъществуващ потребител или грешна парола.
+unread	common	bg	Непрочетено
+unseen	felamimail	bg	Неотворено
+unselect all	felamimail	bg	Размаркира всички
+unsubscribe	felamimail	bg	Прекъсва абонамент
+unsubscribed	felamimail	bg	Прекъснат абонамент
+unsubscribed successfully!	felamimail	bg	Абонаментът е прекъснат успешно!
+up	felamimail	bg	нагоре
+updating message status	felamimail	bg	обновява състоянието на съобщението
+updating view	felamimail	bg	обновява изгледа
+use <a href="%1">emailadmin</a> to create profiles	felamimail	bg	използвайте <a href="%1">EmailAdmin</a> за създаване на профили
+use a signature	felamimail	bg	Включване на подпис
+use a signature?	felamimail	bg	Включване на подпис?
+use addresses	felamimail	bg	Включване на адреси
+use custom identities	felamimail	bg	самоличност по избор
+use custom settings	felamimail	bg	Настройки по избор
+use regular expressions	felamimail	bg	използвай регулярни изрази
+use smtp auth	admin	bg	използвай SMTP оторизация
+users can define their own emailaccounts	admin	bg	Потребителите могат да дефинират собствени E-Mail акаунти
+vacation notice	common	bg	ваканционна бележка
+vacation notice is active	felamimail	bg	Активирана е ваканционна бележка
+vacation start-date must be before the end-date!	felamimail	bg	Началото на ваканцията трябва да е ПРЕДИ края!
+validate certificate	felamimail	bg	валидиране на сертификат
+view full header	felamimail	bg	Покажи подробни заглавни части
+view header lines	felamimail	bg	Заглавна част (Header)
+view message	felamimail	bg	Покажи съобщението
+viewing full header	felamimail	bg	Заглавни части (Header)
+viewing message	felamimail	bg	Показване на съобщение
+viewing messages	felamimail	bg	Показани съобщения
+wed	felamimail	bg	Сря
+when deleting messages	felamimail	bg	При изтриване на съобщения
+which folders - in general - should not be automatically created, if not existing	felamimail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват.
+with message	felamimail	bg	със съобщение
+with message "%1"	felamimail	bg	със съобщение "%1"
+writing	felamimail	bg	писане
+wrote	felamimail	bg	написа
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	bg	Може да посочите %1 за началната дата и %2 за крайната.
+you have received a new message on the	felamimail	bg	Получено е ново съобщение на
+your message to %1 was displayed.	felamimail	bg	Вашето съобщение до %1 е отворено.

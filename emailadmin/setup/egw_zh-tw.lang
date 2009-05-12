@@ -1,0 +1,121 @@
+account '%1' not found !!!	emailadmin	zh-tw	找不到帳號 '%1'！
+add new email address:	emailadmin	zh-tw	新增信箱：
+add profile	emailadmin	zh-tw	新增資料
+admin dn	emailadmin	zh-tw	管理 dn
+admin password	emailadmin	zh-tw	管理密碼
+admin username	emailadmin	zh-tw	管理帳號
+advanced options	emailadmin	zh-tw	進階選項
+alternate email address	emailadmin	zh-tw	替代郵件位址
+any application	emailadmin	zh-tw	任何模組
+any group	emailadmin	zh-tw	任何群組
+bad login name or password.	emailadmin	zh-tw	帳號或密碼有誤。
+bad or malformed request. server responded: %s	emailadmin	zh-tw	錯誤的請求，伺服器回應： %s
+bad request: %s	emailadmin	zh-tw	錯誤的請求： %s
+can be used by application	emailadmin	zh-tw	可以取用資料的模組
+can be used by group	emailadmin	zh-tw	可以取用資料的群組
+connection dropped by imap server.	emailadmin	zh-tw	連線被 IMAP 伺服器中斷了
+could not complete request. reason given: %s	emailadmin	zh-tw	無法完成請求，理由： %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	zh-tw	無法開啟安全連線到 IMAP 伺服器。%s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	zh-tw	CRAM-MD5 或 DIGEST-MD5 需要先安裝 Auth_SASL 才能使用。
+cyrus imap server	emailadmin	zh-tw	Cyrus IMAP伺服器
+cyrus imap server administration	emailadmin	zh-tw	Cyrus IMAP伺服器管理
+default	emailadmin	zh-tw	預設
+deliver extern	emailadmin	zh-tw	傳送到外部
+do not validate certificate	emailadmin	zh-tw	沒有可用的執照
+do you really want to delete this profile	emailadmin	zh-tw	您確定要刪除這個資料
+domainname	emailadmin	zh-tw	網域名稱
+edit email settings	emailadmin	zh-tw	編輯郵件設定
+email account active	emailadmin	zh-tw	郵件帳號啟用
+email address	emailadmin	zh-tw	郵件位址
+email settings	common	zh-tw	郵件設定
+emailadmin	emailadmin	zh-tw	郵件管理
+enable cyrus imap server administration	emailadmin	zh-tw	啟用Cyrus IMAP伺服器管理
+enable sieve	emailadmin	zh-tw	啟用Sieve
+encrypted connection	emailadmin	zh-tw	加密連線
+encryption settings	emailadmin	zh-tw	加密設定
+enter your default mail domain (from: user@domain)	emailadmin	zh-tw	輸入您的預設郵件網域(小老鼠後面所有字：帳號@網域)
+error connecting to imap server. %s : %s.	emailadmin	zh-tw	連線到 IMAP 伺服器時發生錯誤。 %s : %s
+error connecting to imap server: [%s] %s.	emailadmin	zh-tw	連線到 IMAP 伺服器時發生錯誤。 [%s] %s
+forward also to	emailadmin	zh-tw	同時轉寄到
+forward email's to	emailadmin	zh-tw	轉寄信件到
+forward only	emailadmin	zh-tw	轉寄
+global options	emailadmin	zh-tw	全域選項
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	zh-tw	如果使用 SSL 或 TLS，您必須先載入 PHP openssl 外掛。
+imap admin password	admin	zh-tw	IMAP管理者密碼
+imap admin user	admin	zh-tw	IMAP管理者帳號
+imap c-client version < 2001	emailadmin	zh-tw	IMAP C-終端的版本小於2001
+imap server closed the connection.	emailadmin	zh-tw	IMAP伺服器關閉連線
+imap server closed the connection. server responded: %s	emailadmin	zh-tw	IMAP伺服器關閉連線，伺服器回應： %s
+imap server hostname or ip address	emailadmin	zh-tw	IMAP伺服器的主機名稱或是IP位址
+imap server logintyp	emailadmin	zh-tw	IMAP伺服器登入類型
+imap server name	emailadmin	zh-tw	IMAP伺服器名稱
+imap server port	emailadmin	zh-tw	IMAP伺服器連接埠
+imap/pop3 server name	emailadmin	zh-tw	IMAP/POP3伺服器名稱
+in mbyte	emailadmin	zh-tw	以MB顯示
+ldap basedn	emailadmin	zh-tw	LDAP basedn
+ldap server	emailadmin	zh-tw	LDAP 伺服器
+ldap server accounts dn	emailadmin	zh-tw	LDAP 伺服器帳號 DN
+ldap server admin dn	emailadmin	zh-tw	LDAP 伺服器管理者 DN
+ldap server admin password	emailadmin	zh-tw	LDAP 伺服器管理者密碼
+ldap server hostname or ip address	emailadmin	zh-tw	LDAP 伺服器主機名稱或是IP位址
+ldap settings	emailadmin	zh-tw	LDAP 設定
+leave empty for no quota	emailadmin	zh-tw	不填入任何資料表示無限制
+mail settings	admin	zh-tw	郵件設定
+name of organisation	emailadmin	zh-tw	組織名稱
+no alternate email address	emailadmin	zh-tw	沒有可替換的郵件位址
+no encryption	emailadmin	zh-tw	沒有加密
+no forwarding email address	emailadmin	zh-tw	沒有轉寄郵件位址
+no message returned.	emailadmin	zh-tw	沒有訊息回應。
+no supported imap authentication method could be found.	emailadmin	zh-tw	找不到可以支援的 IMAP 認證方式。
+order	emailadmin	zh-tw	順序
+organisation	emailadmin	zh-tw	組織
+plesk can't rename users --> request ignored	emailadmin	zh-tw	Plesk 無法修改使用者名稱 --> 忽略
+plesk imap server (courier)	emailadmin	zh-tw	Plesk IMAP 伺服器(Courier)
+plesk mail script '%1' not found !!!	emailadmin	zh-tw	找不到 Plesk 郵件指令 '%1' ！
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	zh-tw	Plesk 要求密碼至少必須有 5 個字元而且不能包含帳號名稱 --> 密碼沒有設定！
+plesk smtp-server (qmail)	emailadmin	zh-tw	Plesk SMTP伺服器 (Qmail)
+pop3 server hostname or ip address	emailadmin	zh-tw	POP3伺服器主機名稱或是IP位址
+pop3 server port	emailadmin	zh-tw	POP3伺服器連接埠
+postfix with ldap	emailadmin	zh-tw	使用LDAP與 Postfix
+profile access rights	emailadmin	zh-tw	存取資料權限
+profile list	emailadmin	zh-tw	資料清單
+profile name	emailadmin	zh-tw	資料名稱
+qmaildotmode	emailadmin	zh-tw	qmaildotmode
+qouta size in mbyte	emailadmin	zh-tw	配額(MB)
+quota settings	emailadmin	zh-tw	配額設定
+remove	emailadmin	zh-tw	移除
+select type of imap server	emailadmin	zh-tw	選擇IMAP伺服器類型
+select type of imap/pop3 server	emailadmin	zh-tw	選擇IMAP/POP3伺服器的格式
+select type of smtp server	emailadmin	zh-tw	選擇SMTP伺服器的格式
+server settings	emailadmin	zh-tw	伺服器設定
+sieve server hostname or ip address	emailadmin	zh-tw	Sieve伺服器主機名稱或是IP位址
+sieve server port	emailadmin	zh-tw	Sieve伺服器連接埠
+sieve settings	emailadmin	zh-tw	Sieve設定
+smtp authentication	emailadmin	zh-tw	SMTP 認證
+smtp options	emailadmin	zh-tw	SMTP 選項
+smtp server name	emailadmin	zh-tw	SMTP伺服器名稱
+smtp settings	emailadmin	zh-tw	SMTP 設定
+smtp-server hostname or ip address	emailadmin	zh-tw	SMTP伺服器主機名稱或是IP位址
+smtp-server port	emailadmin	zh-tw	SMTP伺服器連接埠
+standard	emailadmin	zh-tw	標準
+standard imap server	emailadmin	zh-tw	標準IMAP伺服器
+standard pop3 server	emailadmin	zh-tw	標準POP3伺服器
+standard smtp-server	emailadmin	zh-tw	標準SMTP伺服器
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	zh-tw	IMAP 伺服器不支援指定的認證方式，請聯絡您的系統管理員。
+this php has no imap support compiled in!!	emailadmin	zh-tw	您的PHP並未編譯為支援IMAP的狀態
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	zh-tw	要使用 TLS 連線，您必須執行在 PHP 5.1.0 或是更新版本。
+unexpected response from server to authenticate command.	emailadmin	zh-tw	AUTHENTICATE 指令讓伺服器傳回不如預期的回應。
+unexpected response from server to digest-md5 response.	emailadmin	zh-tw	伺服器傳回不如預期的 Digest-MD5 回應。
+unexpected response from server to login command.	emailadmin	zh-tw	伺服器傳回不如預期的 LOGIN 指令。
+unknown imap response from the server. server responded: %s	emailadmin	zh-tw	不知名的 IMAP 伺服器回應，回應內容： %s
+unsupported action '%1' !!!	emailadmin	zh-tw	不支援 '%1' 這個操作！
+update current email address:	emailadmin	zh-tw	更新目前信箱：
+use ldap defaults	emailadmin	zh-tw	使用LDAP預設值
+use smtp auth	emailadmin	zh-tw	使用SMTP認證
+use tls authentication	emailadmin	zh-tw	使用TLS認證
+use tls encryption	emailadmin	zh-tw	使用TLS加密
+user can edit forwarding address	emailadmin	zh-tw	使用者可以編輯自動轉寄信箱
+username (standard)	emailadmin	zh-tw	帳號（標準）
+username@domainname (virtual mail manager)	emailadmin	zh-tw	帳號@網域（虛擬郵件管理）
+users can define their own emailaccounts	emailadmin	zh-tw	使用者可以自行定義郵件帳號
+virtual mail manager	emailadmin	zh-tw	虛擬郵件管理者
