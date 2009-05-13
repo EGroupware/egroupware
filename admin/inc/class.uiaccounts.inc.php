@@ -1192,18 +1192,24 @@
 			}
 			reset($GLOBALS['egw_info']['apps']);
 			$sorted_apps = $GLOBALS['egw_info']['apps'];
-			@asort($sorted_apps);
-			@reset($sorted_apps);
-			while ($permission = each($sorted_apps))
+			foreach ($sorted_apps as $key => $values) {
+				$sortarray[$key] = strtolower($values['title']);
+			}
+			unset($key); unset($values);
+			@asort($sortarray);
+			@reset($sortarray);
+
+			foreach ($sortarray as $key => $value)
 			{
-				if ($permission[1]['enabled'] && $permission[1]['status'] != 3)
+				if ($sorted_apps[$key]['enabled'] && $sorted_apps[$key]['status'] != 3)
 				{
 					$perm_display[] = Array(
-						$permission[0],
-						$permission[1]['title']
+						$key,
+						$sorted_apps[$key]['title']
 					);
 				}
 			}
+			unset($key); unset($value);
 
 			$perm_html = '<td width="35%">'.lang('Application').'</td><td width="15%">'.lang('enabled').' / '.lang('ACL').'</td>';
 			$perm_html = '<tr class="th">'.
