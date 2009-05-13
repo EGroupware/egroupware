@@ -424,7 +424,9 @@ class categories
 	}
 
 	/**
-	 * add a category
+	 * Add a category
+	 *
+	 * Owner and appname are set from the values used to instanciate the class!
 	 *
 	 * @param array $value cat-data
 	 * @return int new cat-id
@@ -436,21 +438,13 @@ class categories
 			$values['level'] = $this->id2name($values['parent'],'level')+1;
 			$values['main'] = $this->id2name($values['parent'],'main');
 		}
-
-		$values = array_merge(
-			array(
-				'app_name'	=> $this->app_name,
-				'access'	=> 'public',
-			),
-			$values);
-
 		$this->db->insert(self::TABLE,array(
 			'cat_parent'  => $values['parent'],
 			'cat_owner'   => $this->account_id,
-			'cat_access'  => $values['access'],
-			'cat_appname' => $values['app_name'],
+			'cat_access'  => isset($values['access']) ? $values['access'] : 'public',
+			'cat_appname' => $this->app_name,
 			'cat_name'    => $values['name'],
-			'cat_description' => $values['descr'],
+			'cat_description' => isset($values['description']) ? $values['description'] : $values['descr'],	// support old name different from returned one
 			'cat_data'    => $values['data'],
 			'cat_main'    => $values['main'],
 			'cat_level'   => $values['level'],
@@ -459,7 +453,7 @@ class categories
 
 		$id = (int)$values['id'] > 0 ? (int)$values['id'] : $this->db->get_last_insert_id(self::TABLE,'cat_id');
 
-		if (!(int)$values['parent'])
+		if (!(int)$values['parent'] && $id != $values['main'])
 		{
 			$this->db->update(self::TABLE,array('cat_main' => $id),array('cat_id' => $id),__LINE__,__FILE__);
 		}
@@ -531,6 +525,8 @@ class categories
 	/**
 	 * edit / update a category
 	 *
+	 * Owner and appname are set from the values used to instanciate the class!
+	 *
 	 * @param array $values array with cat-data (it need to be complete, as everything get's written)
 	 * @return int cat-id
 	 */
@@ -557,7 +553,7 @@ class categories
 		}
 		$this->db->update(self::TABLE,array(
 			'cat_name' => $values['name'],
-			'cat_description' => $values['descr'],
+			'cat_description' => isset($values['description']) ? $values['description'] : $values['descr'],	// support old name different from the one read
 			'cat_data' => $values['data'],
 			'cat_parent' => $values['parent'],
 			'cat_access' => $values['access'],
