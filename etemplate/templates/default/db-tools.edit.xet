@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.db-tools.cols" template="" lang="" group="0" version="0.9.15.003">
+	<template id="etemplate.db-tools.cols" template="" lang="" group="0" version="1.7.001">
 		<grid>
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -29,9 +30,10 @@
 					<description value="Primary Key"/>
 					<description value="Unique"/>
 					<description value="Indexed"/>
+					<description value="Default"/>
+					<description value="Comment"/>
 					<description value="Indexoptions"/>
 					<description value="Foreign Key"/>
-					<description value="Default"/>
 					<button label="Add Column" align="center" id="add_column" statustext="Add a new column (after the existing ones)"/>
 				</row>
 				<row class="nmr">
@@ -46,9 +48,10 @@
 					<checkbox align="center" id="Row${row}[pk]" statustext="Primary key for the table, gets automaticaly indexed"/>
 					<checkbox align="center" id="Row${row}[uc]" statustext="DB ensures that every row has a unique value in that column"/>
 					<checkbox align="center" id="Row${row}[ix]" statustext="an indexed column speeds up querys using that column (cost space on the disk !!!)"/>
-					<textbox size="15" id="Row${row}[options]" statustext="DB-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col"/>
-					<textbox size="20" align="center" id="Row${row}[fk]" statustext="name of other table where column is a key from"/>
 					<textbox size="8" id="Row${row}[default]" statustext="enter '' for an empty default, nothing mean no default"/>
+					<textbox size="20" id="Row${row}[comment]"/>
+					<textbox size="8" id="Row${row}[options]" statustext="DB-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col"/>
+					<textbox size="8" align="center" id="Row${row}[fk]" statustext="name of other table where column is a key from"/>
 					<button label="Delete Column" align="center" id="delete[$row]" statustext="Deletes this column"/>
 				</row>
 			</rows>
@@ -113,7 +116,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.db-tools.edit" template="" lang="" group="0" version="0.9.15.002">
+	<template id="etemplate.db-tools.edit" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -125,6 +128,15 @@
 				<column/>
 			</columns>
 			<rows>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" id="msg"/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
 				<row>
 					<menulist>
 						<menupopup type="select-app" options="Select one ...,,all" label="Application" no_lang="1" id="app" onchange="1" statustext="Select an application, (*) = uninstalled"/>

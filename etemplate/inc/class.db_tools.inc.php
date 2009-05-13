@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @copyright 2002-9 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage tools
@@ -16,18 +16,47 @@
  */
 class db_tools
 {
-	var $public_functions = array
-	(
+	/**
+	 * Methods callable via menuaction
+	 *
+	 * @var array
+	 */
+	public $public_functions = array(
 		'edit'         => True,
 		'needs_save'   => True,
 	);
 
-	var $debug = 0;
-	var $editor;	// editor eTemplate
-	var $data;		// Table definitions
-	var $app;		// used app
-	var $table;		// used table
-	var $types = array(
+	/**
+	 * Debug Level: 0 = off, > 0 more diagnostics
+	 *
+	 * @var int
+	 */
+	protected $debug = 0;
+
+	/**
+	 * Table definitions
+	 *
+	 * @var array
+	 */
+	protected $data = array();
+	/**
+	 * Used app
+	 *
+	 * @var string
+	 */
+	protected $app;
+	/**
+	 * Used table
+	 *
+	 * @var string
+	 */
+	protected $table;
+	/**
+	 * Available colum types
+	 *
+	 * @var array
+	 */
+	protected $types = array(
 		'varchar'	=> 'varchar',
 		'int'		=> 'int',
 		'auto'		=> 'auto',
@@ -46,11 +75,8 @@ class db_tools
 	/**
 	 * constructor of class
 	 */
-	function db_tools()
+	function __construct()
 	{
-		$this->editor = new etemplate('etemplate.db-tools.edit');
-		$this->data = array();
-
 		if (!is_array($GLOBALS['egw_info']['apps']) || !count($GLOBALS['egw_info']['apps']))
 		{
 			ExecMethod('phpgwapi.applications.read_installed_apps');
@@ -61,8 +87,11 @@ class db_tools
 
 	/**
 	 * table editor (and the callback/submit-method too)
+	 *
+	 * @param array $content=null
+	 * @param string $msg=''
 	 */
-	function edit($content='',$msg = '')
+	function edit(array $content=null,$msg = '')
 	{
 		if (isset($_GET['app']))
 		{
@@ -209,7 +238,8 @@ class db_tools
 		{
 			echo 'editor.edit: content ='; _debug_array($content);
 		}
-		$this->editor->exec('etemplate.db_tools.edit',$content,$sel_options,$no_button,
+		$tpl = new etemplate('etemplate.db-tools.edit');
+		$tpl->exec('etemplate.db_tools.edit',$content,$sel_options,$no_button,
 			array('posted_table' => $this->table,'posted_app' => $this->app,'changes' => $this->changes));
 	}
 
@@ -456,7 +486,7 @@ class db_tools
 						case 'varchar': $col['precision'] = 255; break;
 					}
 				}
-				while (list($prop,$val) = each($col))
+				foreach($col as $prop => $val)
 				{
 					switch ($prop)
 					{
@@ -464,6 +494,7 @@ class db_tools
 						case 'type':	// selectbox ensures type is not empty
 						case 'precision':
 						case 'scale':
+						case 'comment':
 							if ($val != '')
 							{
 								$table['fd'][$name][$prop] = $prop=='default'&& $val=="''" ? '' : $val;
@@ -1004,16 +1035,15 @@ function $app"."_upgrade$old_version_()
 	 */
 	function normalize($table)
 	{
-		$all_props = array('type','precision','nullable','default');
-
 		foreach($table['fd'] as $col => $props)
 		{
 			$table['fd'][$col] = array(
-				'type' => ''.$props['type'],
+				'type' => (string)$props['type'],
 				'precision' => 0+$props['precision'],
 				'scale' => 0+$props['scale'],
 				'nullable' => !isset($props['nullable']) || !!$props['nullable'],
-				'default' => ''.$props['default']
+				'default' => (string)$props['default'],
+				'comment' => (string)$props['comment'],
 			);
 		}
 		return array(
