@@ -1078,4 +1078,24 @@ class so_sql
 		}
 		return $cache[$cache_key] =& $ret;
 	}
+
+	/**
+	 * Get comments for all columns or a specific one
+	 *
+	 * @param $column=null name of column or null for all (default)
+	 * @return array|string array with internal-name => comment pairs, or string with comment, if $column given
+	 */
+	public function get_comments($column=null)
+	{
+		static $comments;
+
+		if (is_null($comments))
+		{
+			foreach($this->db_cols as $db_col => $col)
+			{
+				$comments[$col] = $this->table_def['fd'][$db_col]['comment'];
+			}
+		}
+		return is_null($column) ? $comments : $comments[$column];
+	}
 }
