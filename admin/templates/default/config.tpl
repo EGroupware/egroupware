@@ -75,6 +75,11 @@
     </td>
    </tr>
 
+   <tr class="row_off">
+    <td>{lang_Enter_the_VFS-Path_where_additional_images,_icons_or_logos_can be_placed_(and_found_by_EGroupwares_applications)._The_path_MUST_start_with_/,and_be_readable_by_all_users}:</td>
+    <td><input name="newsettings[vfs_image_dir]" value="{value_vfs_image_dir}"></td>
+   </tr>
+
   <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_appearance}</b></td>
    </tr>
@@ -100,6 +105,11 @@
    </tr>
 
    <tr class="row_on">
+    <td>{lang_Enter_the_URL_or_filename_(in_your_templates_image_directory)_of_your_favicon_(the_little_icon_that_appears_in_the_browsers_tabs)}:</td>
+    <td><input name="newsettings[favicon_file]" value="{value_favicon_file}"></td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_Show_an_asterisk_(*)_to_mark_untranslated_strings}:</td>
     <td>
      <select name="newsettings[markuntranslated]">
@@ -109,14 +119,14 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_How_big_should_thumbnails_for_linked_images_be_(maximum_in_pixels)_?}:</td>
     <td>
      <input name="newsettings[link_list_thumbnail]" value="{value_link_list_thumbnail}" size="5">
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enable_the_spellcheck_in_the_ritch_text_editor_?}:</td>
     <td>
      <select name="newsettings[enabled_spellcheck]">
@@ -126,7 +136,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Complete_path_to_aspell_program}:</td>
     <td>
      <input name="newsettings[aspell_path]" value="{value_aspell_path}" size="40">

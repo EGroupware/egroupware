@@ -809,6 +809,7 @@ class common
 	function find_image($appname,$image)
 	{
 		$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
+		$vfs_imagedir = $GLOBALS['egw_info']['server']['vfs_image_dir'];
 
 		if (!@is_array(self::$found_files[$appname]))
 		{
@@ -853,6 +854,22 @@ class common
 				}
 				$d->close();
 			}
+
+			if (!isset(self::$found_files['vfs']) && egw_vfs::file_exists($vfs_imagedir) &&
+				egw_vfs::is_dir($vfs_imagedir) && ($d = egw_vfs::opendir($vfs_imagedir)))
+			{
+				while (($entry = readdir($d)) !== false)
+				{
+					if (!egw_vfs::is_dir($vfs_imagedir.'/'.$entry)) 
+					{
+						if (list($type,$subtype) = explode('/',egw_vfs::mime_content_type($vfs_imagedir.'/'.$entry)))// && $type == 'image')
+						{
+							if ($type == 'image' || $type == 'application') self::$found_files['vfs'][$entry] = $vfs_imagedir;
+						}
+					}
+				}
+				closedir($d);
+			}
 		}
 
 		if (!$GLOBALS['egw_info']['server']['image_type'])
@@ -865,64 +882,44 @@ class common
 			// priority: : PNG->JPG->GIF
 			$img_type=array('.png','.jpg','.gif');
 		}
+		$imgfile = '';
+		// first look in the instance specific image dir in vfs
+		foreach(array_merge($img_type,array('')) as $type)
+		{
+			// first look in the instance specific image dir in vfs
+			if(self::$found_files['vfs'][$image.$type]==$vfs_imagedir)
+			{
+				$imgfile = egw::link(egw_vfs::download_url(self::$found_files['vfs'][$image.$type].'/'.$image.$type));
+				break;
+			}
+			// then look in the selected template dir
+			if(self::$found_files[$appname][$image.$type]==$imagedir)
+			{
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
+				break;
+			}
+			//then look everywhere else
+			if (isset(self::$found_files[$appname][$image.$type]))
+			{
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
+				break;
+			}
+		}
 
-		// first look in the selected template dir
-		if(@self::$found_files[$appname][$image.$img_type[0]]==$imagedir)
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
-		}
-		elseif(@self::$found_files[$appname][$image.$img_type[1]]==$imagedir)
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
-		}
-		elseif(@self::$found_files[$appname][$image.$img_type[2]]==$imagedir)
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
-		}
-		// then look everywhere else
-		elseif(isset(self::$found_files[$appname][$image.$img_type[0]]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
-		}
-		elseif(isset(self::$found_files[$appname][$image.$img_type[1]]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
-		}
-		elseif(isset(self::$found_files[$appname][$image.$img_type[2]]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
-		}
-		elseif(isset(self::$found_files[$appname][$image]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image].'/'.$image;
-		}
-		else
+		if (empty($imgfile)) 
 		{
 			// searching the image in the api-dirs
 			if (!isset(self::$found_files['phpgwapi']))
 			{
 				$this->find_image('phpgwapi','');
 			}
-
-			if(isset(self::$found_files['phpgwapi'][$image.$img_type[0]]))
+			foreach(array_merge($img_type,array('')) as $type)
 			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[0]].'/'.$image.$img_type[0];
-			}
-			elseif(isset(self::$found_files['phpgwapi'][$image.$img_type[1]]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[1]].'/'.$image.$img_type[1];
-			}
-			elseif(isset(self::$found_files['phpgwapi'][$image.$img_type[2]]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[2]].'/'.$image.$img_type[2];
-			}
-			elseif(isset(self::$found_files['phpgwapi'][$image]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image].'/'.$image;
-			}
-			else
-			{
-				$imgfile = '';
+				if(isset(self::$found_files['phpgwapi'][$image.$type]))
+				{
+					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$type].'/'.$image.$type;
+					break;
+				}
 			}
 		}
 		return $imgfile;

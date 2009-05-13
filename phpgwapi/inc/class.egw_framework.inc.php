@@ -241,10 +241,20 @@ abstract class egw_framework
 		}
 
 		if($app!='wiki') $robots ='<meta name="robots" content="none" />';
+		if (substr($GLOBALS['egw_info']['server']['favicon_file'],0,4) == 'http')
+		{
+			$var['favicon_file'] = $GLOBALS['egw_info']['server']['favicon_file'];
+		}
+		else
+		{
+			$var['favicon_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['favicon_file']?$GLOBALS['egw_info']['server']['favicon_file']:'favicon.ico');
+		}
 
 		return $this->_get_css()+array(
-			'img_icon'      	=> EGW_IMAGES_DIR . '/favicon.ico',
-			'img_shortcut'  	=> EGW_IMAGES_DIR . '/favicon.ico',
+			#'img_icon'      	=> EGW_IMAGES_DIR . '/favicon.ico',
+			'img_icon'			=> $var['favicon_file'],
+			#'img_shortcut'  	=> EGW_IMAGES_DIR . '/favicon.ico',
+			'img_shortcut'		=> $var['favicon_file'],
 			'pngfix'        	=> $pngfix,
 			'slider_effects'	=> $slider_effects,
 			'simple_show_hide'	=> $simple_show_hide,
