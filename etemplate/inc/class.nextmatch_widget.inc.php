@@ -269,9 +269,22 @@ class nextmatch_widget
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 		if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
 
-		list($app,$class,$method) = explode('.',$value['get_rows']);
-		if ($app && $class)
+		// allow static callbacks
+		if(strpos($method=$value['get_rows'],'::') !== false)
 		{
+			//  workaround for php < 5.3: do NOT call it static, but allow application code to specify static callbacks
+			if (version_compare(PHP_VERSION,'5.3','<')) list($class,$method) = explode('::',$method);
+		}
+		else
+		{
+			list($app,$class,$method) = explode('.',$value['get_rows']);
+		}
+		if ($class)
+		{
+			if (!$app && !is_object($GLOBALS[$class]))
+			{
+				$GLOBALS[$class] = new $class();
+			}
 			if (is_object($GLOBALS[$class]))	// use existing instance (put there by a previous CreateObject)
 			{
 				$obj =& $GLOBALS[$class];
@@ -309,19 +322,30 @@ class nextmatch_widget
 			$value['options-selectcols'] = array();
 		}
 		$rows = array();
-		if (!is_object($obj) || !method_exists($obj,$method))
+		if(is_callable($method))	// php5.3+ call
 		{
-			etemplate::set_validation_error($name,"nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!");
+			$total = $extension_data['total'] = $value['total'] = $method($value['get_rows'],$value,$rows,$readonlys['rows']);
 		}
-		else
+		elseif(is_object($obj) && method_exists($obj,$method))
 		{
 			if (!is_array($readonlys)) $readonlys = array();
 			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
 		}
+		else
+		{
+			etemplate::set_validation_error($name,"nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!");
+		}
 		if ($method && $total && $value['start'] >= $total)
 		{
 			$value['start'] = 0;
-			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
+			if (is_object($obj))
+			{
+				$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
+			}
+			else
+			{
+				$total = $extension_data['total'] = $value['total'] = $method($value['get_rows'],$value,$rows,$readonlys['rows']);
+			}
 		}
 		// allow the get_rows function to override / set sel_options
 		if (isset($rows['sel_options']) && is_array($rows['sel_options']))
