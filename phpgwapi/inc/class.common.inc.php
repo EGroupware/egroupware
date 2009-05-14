@@ -806,7 +806,7 @@ class common
 	 * @param string $image
 	 * @return string url of the image
 	 */
-	function find_image($appname,$image)
+	static function find_image($appname,$image)
 	{
 		$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
 		$vfs_imagedir = $GLOBALS['egw_info']['server']['vfs_image_dir'];
@@ -860,7 +860,7 @@ class common
 			{
 				while (($entry = readdir($d)) !== false)
 				{
-					if (!egw_vfs::is_dir($vfs_imagedir.'/'.$entry)) 
+					if (!egw_vfs::is_dir($vfs_imagedir.'/'.$entry))
 					{
 						if (list($type,$subtype) = explode('/',egw_vfs::mime_content_type($vfs_imagedir.'/'.$entry)))// && $type == 'image')
 						{
@@ -871,23 +871,22 @@ class common
 				closedir($d);
 			}
 		}
-
 		if (!$GLOBALS['egw_info']['server']['image_type'])
 		{
 			// priority: GIF->JPG->PNG
-			$img_type=array('.gif','.jpg','.png');
+			$img_type = array('.gif','.jpg','.png','');
 		}
 		else
 		{
 			// priority: : PNG->JPG->GIF
-			$img_type=array('.png','.jpg','.gif');
+			$img_type = array('.png','.jpg','.gif','');
 		}
 		$imgfile = '';
 		// first look in the instance specific image dir in vfs
-		foreach(array_merge($img_type,array('')) as $type)
+		foreach($img_type as $type)
 		{
 			// first look in the instance specific image dir in vfs
-			if(self::$found_files['vfs'][$image.$type]==$vfs_imagedir)
+			if(isset(self::$found_files['vfs'][$image.$type]))
 			{
 				$imgfile = egw::link(egw_vfs::download_url(self::$found_files['vfs'][$image.$type].'/'.$image.$type));
 				break;
@@ -906,12 +905,12 @@ class common
 			}
 		}
 
-		if (empty($imgfile)) 
+		if (empty($imgfile))
 		{
 			// searching the image in the api-dirs
 			if (!isset(self::$found_files['phpgwapi']))
 			{
-				$this->find_image('phpgwapi','');
+				self::find_image('phpgwapi','');
 			}
 			foreach(array_merge($img_type,array('')) as $type)
 			{
@@ -922,6 +921,7 @@ class common
 				}
 			}
 		}
+		//echo "<p>".__METHOD__."($appname,$image) = $imgfile</p>\n";
 		return $imgfile;
 	}
 
@@ -934,7 +934,7 @@ class common
 	 * @param boolean $use_lang
 	 * @return string url of the image
 	 */
-	function image($appname,$image='',$ext='',$use_lang=True)
+	static function image($appname,$image='',$ext='',$use_lang=True)
 	{
 		if (!is_array($image))
 		{
@@ -942,28 +942,29 @@ class common
 			{
 				return '';
 			}
-			$image = array($image);
 		}
 		if ($use_lang)
 		{
-			while (list(,$img) = each($image))
+			foreach((array)$image as $img)
 			{
 				$lang_images[] = $img . '_' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 				$lang_images[] = $img;
 			}
 			$image = $lang_images;
 		}
-		while (empty($image_found) && list(,$img) = each($image))
+		foreach((array)$image as $img)
 		{
 			if(isset(self::$found_files[$appname][$img.$ext]))
 			{
-				$image_found = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$img.$ext].'/'.$img.$ext;
+				$image_found = self::$found_files[$appname][$img.$ext].'/'.$img.$ext;
 			}
 			else
 			{
-				$image_found = $this->find_image($appname,$img.$ext);
+				$image_found = self::find_image($appname,$img.$ext);
 			}
+			if ($image_found) break;
 		}
+		//echo "<p>".__METHOD__."($appname,".array2string($image).",$ext,$use_lang) = $image_found</p>\n";
 		return $image_found;
 	}
 
@@ -975,13 +976,13 @@ class common
 	 * @param string $extension
 	 * @return string url of the image
 	 */
-	function image_on($appname,$image,$extension='_on')
+	static function image_on($appname,$image,$extension='_on')
 	{
-		if (($with_extension = $this->image($appname,$image,$extension)))
+		if (($with_extension = self::image($appname,$image,$extension)))
 		{
 			return $with_extension;
 		}
-		if(($without_extension = $this->image($appname,$image)))
+		if(($without_extension = self::image($appname,$image)))
 		{
 			return $without_extension;
 		}
