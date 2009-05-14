@@ -30,21 +30,21 @@ class addressbook_hooks
 		{
 			$file = array(
 				array(
-					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit')).
-						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=850,height=440,scrollbars=yes,status=yes\');
+					'text' => '<a class="textSidebox" href="'.egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit')).
+						'" onclick="egw_openWindowCentered2(this.href,\'_blank\',850,440,\'yes\');
 						return false;">'.lang('Add').'</a>',
 					'no_lang' => true,
 					'link' => false
 				),
 				array(
-					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array(
+					'text' => '<a class="textSidebox" href="'.egw::link('/index.php',array(
 						'menuaction' => 'addressbook.addressbook_ui.search',)).
-						'" onclick="window.open(this.href,\'advanced_search\',\'dependent=yes,width=850,height=480,scrollbars=yes,status=yes\');
+						'" onclick="egw_openWindowCentered2(this.href,\'advanced_search\',850,480,\'yes\');
 						return false;">'.lang('Advanced search').'</a>',
 					'no_lang' => true,
 					'link' => false
 				),
-				'CSV-Import'      => $GLOBALS['egw']->link('/addressbook/csv_import.php')
+				'CSV-Import'      => egw::link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
 		}
@@ -52,9 +52,9 @@ class addressbook_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
 		{
 			$file = array(
-				'Preferences'     => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
-				'Grant Access'    => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
+				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
+				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' || $GLOBALS['egw_info']['server']['deny_user_grants_access'])
 			{
@@ -73,11 +73,11 @@ class addressbook_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Site configuration' => $GLOBALS['egw']->link('/index.php',array(
+				'Site configuration' => egw::link('/index.php',array(
 					'menuaction' => 'admin.uiconfig.index',
 					'appname'    => $appname,
 				)),
-				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
+				'Global Categories'  => egw::link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
 					'global_cats'=> True,
@@ -86,7 +86,7 @@ class addressbook_hooks
 			// custom fields are not availible in LDAP
 			if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 			{
-				$file['Custom fields'] = $GLOBALS['egw']->link('/index.php',array(
+				$file['Custom fields'] = egw::link('/index.php',array(
 					'menuaction' => 'admin.customfields.edit',
 					'appname'    => $appname,
 					'use_private'=> 1,
@@ -234,7 +234,7 @@ class addressbook_hooks
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
-			$link = $GLOBALS['egw']->link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements');
+			$link = egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements');
 
 			$settings['default_document'] = array(
 				'type'   => 'input',
@@ -275,7 +275,7 @@ class addressbook_hooks
 			'description' => 'Addressbook',
 			'url'         => '/index.php',
 			'extradata'   => 'menuaction=addressbook.addressbook_ui.edit',
-			'options'     => "onclick=\"window.open(this,'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;\"".
+			'options'     => "onclick=\"egw_openWindowCentered2(this,'_blank',850,440,'yes'); return false;\"".
 				' title="'.htmlspecialchars(lang('Edit extra account-data in the addressbook')).'"',
 		);
 	}
