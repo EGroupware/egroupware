@@ -150,7 +150,7 @@ class vfs_widget
 								break;
 						}
 					}
-					if (egw_vfs::check_access($path,egw_vfs::READABLE))	// show link only if we have access to the file or dir
+					if (egw_vfs::is_readable($path))	// show link only if we have access to the file or dir
 					{
 						if ($n < count($comps)-1 || $mime == egw_vfs::DIR_MIME_TYPE || egw_vfs::is_dir($path))
 						{
@@ -163,6 +163,7 @@ class vfs_widget
 							$target = ',,,_blank';
 						}
 					}
+
 					if ($cell['onclick'])
 					{
 						$comp = etemplate::empty_cell('button',$cell_name.'[c'.$n.']',array(
