@@ -54,7 +54,7 @@
     <td>
      <select name="newsettings[hide_birthdays]">
       <option value="">{lang_Yes}</option>
-      <option value="date_only"{selected_hide_birthdays_date_only}>{lang_Show_only_the_date,_not_the_year}</option>
+      <option value="dateonly"{selected_hide_birthdays_dateonly}>{lang_Show_only_the_date,_not_the_year}</option>
       <option value="yes"{selected_hide_birthdays_yes}>{lang_No}</option>
      </select>
     </td>
