@@ -578,12 +578,27 @@
 
 		function restoreSessionData()
 		{
+			$GLOBALS['egw_info']['flags']['autoload'] = array(__CLASS__,'autoload');
+			
 			//echo function_backtrace()."<br>";
 			//unserializing the sessiondata, since they are serialized for objects sake
 			$this->sessionData = (array) unserialize($GLOBALS['egw']->session->appsession('session_data','emailadmin'));
 			#$this->userSessionData = $GLOBALS['egw']->session->appsession('user_session_data','emailadmin');
 		}
-		
+
+		/**
+		* Autoload classes from emailadmin, 'til they get autoloading conform names
+		*
+		* @param string $class
+		*/
+		static function autoload($class)
+		{
+			if (file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+			{
+				include_once($file);
+			}
+		}
+
 		function saveSMTPForwarding($_accountID, $_forwardingAddress, $_keepLocalCopy)
 		{
 			if (is_object($this->smtpClass))
