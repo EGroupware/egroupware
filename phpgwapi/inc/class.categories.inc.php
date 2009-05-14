@@ -35,38 +35,38 @@ class categories
 	 *
 	 * @var int
 	 */
-	var $account_id;
+	public $account_id;
 	/**
 	 * Application this class is instancated for ('phpgw' for application global cats)
 	 *
 	 * @var string
 	 */
-	var $app_name;
+	public $app_name;
 	/**
 	 * @var egw_db
 	 */
-	var $db;
+	private $db;
 	/**
 	 * Total number of records of return_(sorted_)array (returning only a limited number of rows)
 	 *
 	 * @var int
 	 */
-	var $total_records;
+	public $total_records;
 	/**
 	 * Grants from other users for account_id and app_name (init by return array)
 	 *
 	 * @var array
 	 */
-	var $grants;
+	public $grants;
 	/**
 	 * Name of the categories table
 	 */
 	const TABLE = 'egw_categories';
 	/**
-	 * @deprecated use categoris::TABLE
+	 * @deprecated use categories::TABLE
 	 * @var string
 	 */
-	var $table = self::TABLE;
+	public $table = self::TABLE;
 	/**
 	 * Cache holding all categories, set via init_cache() method
 	 *
@@ -74,14 +74,13 @@ class categories
 	 */
 	private static $cache;
 
-
 	/**
 	 * constructor for categories class
 	 *
 	 * @param int/string $accountid='' account id or lid, default to current user
 	 * @param string $app_name='' app name defaults to current app
 	 */
-	function categories($accountid='',$app_name = '')
+	function __construct($accountid='',$app_name = '')
 	{
 		if (!$app_name) $app_name = $GLOBALS['egw_info']['flags']['currentapp'];
 
@@ -93,6 +92,16 @@ class categories
 		{
 			self::init_cache();
 		}
+	}
+
+	/**
+	 * php4 constructor
+	 *
+	 * @deprecated
+	 */
+	function categories($accountid='',$app_name='')
+	{
+		self::__construct($accountid,$app_name);
 	}
 
 	/**
@@ -268,7 +277,6 @@ class categories
 		}
 		while (count($parents))
 		{
-			$sub_select = ' AND cat_parent IN (' . implode(',',$parents) . ')';
 			if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents)))
 			{
 				break;
