@@ -170,7 +170,14 @@ class boetemplate extends soetemplate
 		}
 		if ($is_index_in_content)
 		{
-			$name = boetemplate::get_array($cont,substr($name,1));
+			if ($name[1] == '@')
+			{
+				$name = self::get_array(self::$request->content,substr($name,2));
+			}
+			else
+			{
+				$name = self::get_array($cont,substr($name,1));
+			}
 		}
 		return $name;
 	}
