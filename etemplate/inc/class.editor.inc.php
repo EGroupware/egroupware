@@ -509,6 +509,13 @@ class editor
 					unserialize(substr($vals["A$r"],0,-5)) : $vals["A$r"];
 			}
 		}
+		// check if bo class of $app exists and has a labels method --> add labels to content to display them in the editor
+		if(class_exists($app.'_bo') && method_exists($app.'_bo','labels'))
+		{
+			$new_content['labels'] = ExecMethod($acm=$app.'.'.$app.'_bo.labels');
+			$new_content['cont']['labels'] =& $new_content['labels'];
+			//echo $acm; _debug_array($new_content['labels']);
+		}
 		$preserv['olds'] = $vals;
 		$preserv['old_keys'] = $this->etemplate->as_array(-1);	// in case we do a save as
 
