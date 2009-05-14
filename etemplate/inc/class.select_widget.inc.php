@@ -152,7 +152,7 @@ class select_widget
 				$cell['no_lang'] = True;
 				break;
 
-			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app
+			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id
 				if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 				{
 					$cell['no_lang'] = True;
@@ -175,13 +175,13 @@ class select_widget
 				}
 				if (!$type3 || $type3 === $GLOBALS['egw']->categories->app_name)
 				{
-					$categories =& $GLOBALS['egw']->categories;
+					$categories = $GLOBALS['egw']->categories;
 				}
 				else	// we need to instanciate a new cat object for the correct application
 				{
-					$categories =& new categories('',$type3);
+					$categories = new categories('',$type3);
 				}
-				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)
+				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,$type4) as $cat)
 				{
 					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
@@ -189,14 +189,10 @@ class select_widget
 					{
 						$s .= ' &#9830;';
 					}
-					if (!$tmpl->xslt)
-					{
-						$cell['sel_options'][$cat['id']] = $s;	// 0.9.14 only
-					}
-					else
-					{
-						$cell['sel_options'][$cat['cat_id']] = $s;
-					}
+					$cell['sel_options'][$cat['id']] = empty($cat['description']) ? $s : array(
+						'label' => $s,
+						'title' => $cat['description'],
+					);
 				}
 				// preserv unavailible cats (eg. private user-cats)
 				if ($value && ($unavailible = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$cell['sel_options']))))
