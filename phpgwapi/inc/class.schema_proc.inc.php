@@ -1030,7 +1030,8 @@ class schema_proc
 					break;
 				case 'date':
 					$ado_col = 'D';
-					if ($col_data['default'] == 'current_date')
+					// allow to use now() beside current_date, as Postgres backups contain it and it's easier to remember anyway
+					if (in_array($col_data['default'],array('current_date','now()')))
 					{
 						$ado_col .= ' DEFDATE';
 						unset($col_data['default']);
@@ -1064,7 +1065,8 @@ class schema_proc
 					break;
 				case 'timestamp':
 					$ado_col = 'T';
-					if ($col_data['default'] == 'current_timestamp')
+					// allow to use now() beside current_timestamp, as Postgres backups contain it and it's easier to remember anyway
+					if (in_array($col_data['default'],array('current_timestamp','now()')))
 					{
 						$ado_col .= ' DEFTIMESTAMP';
 						unset($col_data['default']);
