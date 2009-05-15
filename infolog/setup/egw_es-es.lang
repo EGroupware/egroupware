@@ -41,7 +41,6 @@ add:	infolog	es-es	Añadir:
 all	infolog	es-es	Todos
 all links and attachments	infolog	es-es	todos los enlaces y ficheros adjuntos
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	es-es	permite establecer el estado de una entrada, p.e. poner una tarea pendiente cono finalizada si está terminada (los valores dependen del tipo de entrada)
-applies the changes	infolog	es-es	Aplica los cambios
 apply the changes	infolog	es-es	Aplicar los cambios
 archive	infolog	es-es	archivar
 are you shure you want to delete this entry ?	infolog	es-es	¿Está seguro de querer borrar esta entrada?
@@ -155,6 +154,7 @@ high	infolog	es-es	alta
 history	infolog	es-es	Historial
 history logging	infolog	es-es	Registro histórico
 history logging and deleting of items	infolog	es-es	Registro histórico y borrado de elementos
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	es-es	Cuántas líneas de descripción deben estar visibles directamente. Las líneas siguientes se ven mediante una barra de desplazamiento.
 id	infolog	es-es	Id
 id#	infolog	es-es	Id nº
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	es-es	Si un tipo tiene un propietario para el grupo, todas las entradas de ese tipo pertenecerán al grupo y NO al usuario que las creó.
@@ -184,6 +184,7 @@ leave it empty	infolog	es-es	dejar en blanco
 leave without saveing the entry	infolog	es-es	abandonar sin guardar la entrada
 leaves without saveing	infolog	es-es	abandonar sin guardar
 length<br>rows	infolog	es-es	Longitud<br>Filas
+limit number of description lines (default 5, 0 for no limit)	infolog	es-es	Limitar el número de líneas de la descripción (predeterminado: 5, 0 para ilimitadas)
 link	infolog	es-es	Enlace
 links	infolog	es-es	Enlaces
 links of this entry	infolog	es-es	Enlaces de la entrada
@@ -251,7 +252,6 @@ priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
 project settings: price, times	infolog	es-es	Configuración del proyecto: precio, tiempos
-projectmanager	infolog	es-es	Administrador de Proyectos
 re-planned	infolog	es-es	Replanificado
 re-planned time	infolog	es-es	Tiempo Replanificado
 re:	infolog	es-es	Re:
@@ -264,7 +264,7 @@ receive notifications about own items	infolog	es-es	Recibir notificaciones acerc
 receive notifications about starting entries you are responsible for	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan de las que usted es responsable
 receive notifications about starting entries you delegated	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan que usted ha delegado
 receive notifications as html-mails	infolog	es-es	Recibir notificaciones como correo html
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IPs locales<br>eg. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales<br>ej. ^192\.168\.1\.
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
 responsible	infolog	es-es	Responsable
@@ -345,8 +345,7 @@ upcoming	infolog	es-es	próxima
 urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 used time	infolog	es-es	tiempo utilizado
-valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el cliente<br>p. ej. \\seridor\recurso o e:\
-valid path on clientside<br>eg. servershare or e:	infolog	es-es	ruta válida en el cliente<br>p. ej. \\seridor\recurso o e:\
+valid path on clientside<br>eg. \\server\share or e:	infolog	es-es	ruta válida en el lado cliente<br>p. ej. \\servidor\recurso o e:\
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs

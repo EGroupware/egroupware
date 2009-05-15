@@ -4,6 +4,7 @@
 %1 class not instanciated	admin	es-es	La clase %1 no está instanciada
 %1 group %2	admin	es-es	%1 grupo %2
 %1 is no command!	admin	es-es	¡%1 no es un comando!
+%1 log entries deleted.	admin	es-es	Se han borrado %1 entradas del log.
 %1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
 %1 rights for %2 and applications %3	admin	es-es	Derechos de %1 para %2 y aplicaciones %3
 %1 user %2	admin	es-es	%1 usuario %2
@@ -29,6 +30,7 @@ activate wysiwyg-editor	admin	es-es	activar editor WYSIWYG
 add a category	admin	es-es	añadir una categoría
 add a group	admin	es-es	añadir un grupo
 add a new account.	admin	es-es	Añadir una nueva cuenta.
+add a new remote instance	admin	es-es	Añadir una instancia remota nueva
 add a subcategory	admin	es-es	añadir una subcategoría
 add a user	admin	es-es	añadir un usuario
 add account	admin	es-es	Añadir una cuenta
@@ -69,6 +71,7 @@ applications	admin	es-es	Aplicaciones
 applications list	admin	es-es	Lista de aplicaciones
 applications run rights updated.	admin	es-es	Se han actualizado los derechos de ejecución.
 applies the changes	admin	es-es	aplica los cambios
+apply the changes	admin	es-es	Aplicar los cambios
 are you sure you want to delete the application %1 ?	admin	es-es	¿Está seguro de que quiere borrar la aplicación %1 ?
 are you sure you want to delete this account ?	admin	es-es	¿Está seguro de que quiere borrar esta cuenta?
 are you sure you want to delete this application ?	admin	es-es	¿Está seguro de que quiere borrar esta aplicación?
@@ -94,6 +97,7 @@ bottom	admin	es-es	parte inferior
 calculate next run	admin	es-es	Calcular la siguiente ejecución
 can change password	admin	es-es	Puede cambiar la contraseña
 cancel testjob!	admin	es-es	Cancelar trabajo de prueba
+cancel this scheduled command	admin	es-es	Cancelar este comando programado
 categories list	admin	es-es	Lista de categorías
 category %1 has been saved !	admin	es-es	La categoría %1 ha sido guardada
 category list	admin	es-es	Lista de categorías
@@ -135,10 +139,12 @@ delete application	admin	es-es	Borrar aplicación
 delete category	admin	es-es	Borrar categoría
 delete group	admin	es-es	Borrar grupo
 delete peer server	admin	es-es	Borrar servidor 'peer'
+delete selected entries	admin	es-es	Borrar las entradas seleccionadas
 delete the category	admin	es-es	borrar la categoría
 delete the group	admin	es-es	borrar el grupo
 delete this category	admin	es-es	borrar esta categoría
 delete this group	admin	es-es	borrar este grupo
+delete this log entry	admin	es-es	Borrar esta entrada del log
 delete this user	admin	es-es	borrar este usuario
 deletes this field	admin	es-es	borra este campo
 deliver extern	admin	es-es	entrega externa
@@ -222,6 +228,7 @@ enter your smtp server port	admin	es-es	Introduzca el puerto del servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
 error changing the password for % !!!	admin	es-es	¡Error al cambiar la contraseña para %!
 error changing the password for %1 !!!	admin	es-es	¡Error al cambiar la contraseña para %1!
+error deleting log entry!	admin	es-es	¡Error al borrar la entrada del log!
 error saving	admin	es-es	Error al guardar
 error saving account!	admin	es-es	¡Error al guardar la cuenta!
 error saving the command!	admin	es-es	¡Error al guardar el comando!
@@ -269,8 +276,10 @@ in mbyte	admin	es-es	en Mbytes
 inbound	admin	es-es	entrantes
 initial	admin	es-es	Inicial
 install crontab	admin	es-es	Instalar crontab
+install id	admin	es-es	Instalar ID
 installed applications	common	es-es	Aplicaciones instaladas
 installed crontab	admin	es-es	Crontab instalado
+instance	admin	es-es	Instancia
 interface	admin	es-es	Interfaz
 invalid formated date "%1"!	admin	es-es	¡La fecha %1 no tiene un formato válido!
 invalid remote id or name "%1"!	admin	es-es	¡El nombre o id remoto %1 no es válido!
@@ -295,17 +304,19 @@ ldap rootdn	admin	es-es	rootdn LDAP
 leave empty for no quota	admin	es-es	dejar en blanco si no hay cuota
 leave the category untouched and return back to the list	admin	es-es	dejar la categoría intacta y volver a la lista
 leave the group untouched and return back to the list	admin	es-es	Dejar el grupo intacto y volver a la lista
+leave without saveing the entry	admin	es-es	salir sin guardar la entrada
 leaves without saveing	admin	es-es	sale sin guardar
 length<br>rows	admin	es-es	Longitud<br>Filas
 list config settings	admin	es-es	Lista de las opciones de configuración
 list current sessions	admin	es-es	Lista de las sesiones actuales
 list of current users	admin	es-es	Lista de usuarios actuales
-login history	common	es-es	Historial de accesos
+login history	admin	es-es	Historial de accesos
 login message	admin	es-es	Mensaje de inicio de sesión
 login screen	admin	es-es	Pantalla de inicio de sesión
 login shell	admin	es-es	Shell de inicio de sesión
-login time	admin	es-es	Hora de acceso
 loginid	admin	es-es	LoginID
+logintime	admin	es-es	Hora de inicio de sesión
+logoutime	admin	es-es	Hora de fin de sesión
 mail settings	admin	es-es	Configuración del correo electrónico
 main email-address	admin	es-es	Dirección de correo principal
 main screen message	admin	es-es	Mensaje de la pantalla principal
@@ -322,6 +333,7 @@ modified	admin	es-es	Modificado
 month	admin	es-es	Mes
 more secure	admin	es-es	más seguro
 name must not be empty !!!	admin	es-es	El nombre no debe estar vacío
+name of the egroupware instance, eg. default	admin	es-es	Nombre de la instancia de eGroupWare, p. ej., default
 new group name	admin	es-es	Nuevo nombre de grupo
 new name	admin	es-es	nuevo nombre
 new password [ leave blank for no change ]	admin	es-es	Nueva contraseña [ Dejar en blanco para no cambiar ]
@@ -372,6 +384,7 @@ remote instance saved	admin	es-es	Se ha guardado la instancia remota
 remove	admin	es-es	borrar
 remove all users from this group	admin	es-es	Borrar todos los usuarios de este grupo
 remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de este grupo?
+requested	admin	es-es	Requerido
 return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
 return to view account	admin	es-es	Volver a ver cuenta
 route all mails to	admin	es-es	dirigir todos los correos a
@@ -379,11 +392,14 @@ run asynchronous services	admin	es-es	Ejecutar servicios asíncronos
 save the category	admin	es-es	guardar la categoría
 save the category and return back to the list	admin	es-es	guardar la categoría y volver a la lista
 saves the changes made and leaves	admin	es-es	guarda los cambios y sale
+saves this entry	admin	es-es	Guarda esta entrada
+scheduled	admin	es-es	Programada
 search accounts	admin	es-es	Buscar cuentas
 search categories	admin	es-es	Buscar categorías
 search groups	admin	es-es	Buscar grupos
 search peer servers	admin	es-es	Buscar servidores 'peer'
 security	admin	es-es	Seguridad
+select accounts for which the custom field should be visible	admin	es-es	Seleccionar las cuentas para las que el campo personalizado debe estar visible
 select group managers	admin	es-es	Seleccionar administradores de grupo
 select permissions this group will have	admin	es-es	Seleccione los permisos que tendrá este grupo
 select the parent category. if this is a main category select no category	admin	es-es	Seleccione la categoría superior. Si ésta es una categoría principal seleccione SIN CATEGORIA
@@ -434,6 +450,7 @@ that server name has been used already !	admin	es-es	¡Ese nombre de servidor ya
 the api is current	admin	es-es	La API está al día
 the api requires an upgrade	admin	es-es	La API requiere ser actualizada
 the groups must include the primary group	admin	es-es	Los grupos deben incluir el grupo principal
+the install id of an instance can be found under admin > site configuration	admin	es-es	El ID de instalación de una instancia se puede encontrar en Administración -> Configuración del sitio
 the login and password can not be the same	admin	es-es	El usuario y la contraseña NO pueden ser iguales
 the loginid can not be more then 8 characters	admin	es-es	El nombre de usuario no puede superar 8 caracteres
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	es-es	el nombre usado internamente (<= 20 caracteres). Si se cambia, los datos ya no están disponibles.
@@ -462,6 +479,7 @@ unknown account: %1 !!!	admin	es-es	¡¡La cuenta es desconocida: %1!!
 unknown command %1!	admin	es-es	Comando desconocido: %1
 unknown option %1	admin	es-es	Opción desconocida: %1
 updated	admin	es-es	actualizado
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	es-es	La URL de la instalación de eGroupWare, p. ej. http://dominio.com/egroupware
 use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)
 use theme	admin	es-es	Usar tema

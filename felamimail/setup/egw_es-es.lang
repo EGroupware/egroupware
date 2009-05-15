@@ -1,3 +1,4 @@
+%1 is not writable by you!	felamimail	es-es	¡NO tiene permiso de escritura en %1!
 (no subject)	felamimail	es-es	(Sin asunto)
 (only cc/bcc)	felamimail	es-es	(sólo Cc/Cco)
 (separate multiple addresses by comma)	felamimail	es-es	(separar múltiples direcciones con comas)
@@ -152,6 +153,7 @@ error connecting to imap serv	felamimail	es-es	Error al conectar al servidor IMA
 error connecting to imap server. %s : %s.	felamimail	es-es	Error al conectar con el servidor IMAP: %s: %s
 error connecting to imap server: [%s] %s.	felamimail	es-es	Error al conectar con el servidor IMAP: [%s] %s
 error opening	felamimail	es-es	Error al abrir
+error saving %1!	felamimail	es-es	¡Error al guardar %1!
 error:	felamimail	es-es	Error:
 error: could not save message as draft	felamimail	es-es	Error: no se pudo salvar el mensaje como borrador
 every	felamimail	es-es	cada
@@ -355,6 +357,7 @@ row order style	felamimail	es-es	estilo de ordenar filas
 rule	felamimail	es-es	Regla
 sat	felamimail	es-es	Sab
 save	felamimail	es-es	Guardar
+save all	felamimail	es-es	Guardar todo
 save as draft	felamimail	es-es	guardar como borrador
 save as infolog	felamimail	es-es	guardar como registro de notas y tareas
 save changes	felamimail	es-es	guardar cambios

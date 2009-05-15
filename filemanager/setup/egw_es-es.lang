@@ -1,22 +1,28 @@
 %1 already exists as a file	filemanager	es-es	%1 ya existe como fichero
 %1 directories and %2 files copied.	filemanager	es-es	%1 directorios y %2 ficheros copiados.
 %1 directories and %2 files deleted.	filemanager	es-es	%1 directorios y %2 ficheros borrados.
+%1 elements linked.	filemanager	es-es	%1 elementos enlazados.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	es-es	%1 errores copiando (%2 directorios y %3 ficheros copiados)
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	es-es	%1 errores borrando (%2 directorios y %3 ficheros borrados)
+%1 errors linking (%2)!	filemanager	es-es	¡%1 errores al enlazar (%2)!
 %1 errors moving (%2 files moved)!	filemanager	es-es	%1 errores moviendo (%2 ficheros movidos)
 %1 failed, %2 succeded	filemanager	es-es	%1 fallaron, %2 correctos
+%1 files	common	es-es	%1 ficheros
 %1 files copied.	filemanager	es-es	%1 ficheros copiados.
 %1 files deleted.	filemanager	es-es	%1 ficheros borrados.
 %1 files moved.	filemanager	es-es	%1 ficheros movidos.
 %1 starts with '%2'	filemanager	es-es	%1 empieza por '%2'
+%1 successful uploaded.	filemanager	es-es	%1 subidos correctamente.
 %1 the following files into current directory	filemanager	es-es	%1 los siguientes ficheros en el directorio actual
 %1 urls %2 to clipboard.	filemanager	es-es	%1 URLs %2 al portapapeles
 accessrights	filemanager	es-es	Derechos de acceso
 acl added.	filemanager	es-es	Se ha añadido la ACL
 acl deleted.	filemanager	es-es	Se ha borrado la ACL
 actions	filemanager	es-es	Acciones
+all files	common	es-es	Todos los ficheros
 allow a maximum of the above configured folderlinks to be configured in settings	admin	es-es	permitir un máximo de los enlaces configurados arriba para configurarse en las preferencias
 and all it's childeren	filemanager	es-es	y todos los subdirectorios
+applications	common	es-es	Aplicaciones
 basedirectory	filemanager	es-es	Directorio base
 cancel editing %1 without saving	filemanager	es-es	Cancelar la edición %1 sin guardar
 cannot create directory because it begins or ends in a space	filemanager	es-es	No se puede crear el directorio porque empieza o acaba en un espacio
@@ -26,6 +32,7 @@ comment	filemanager	es-es	Comentario
 comments cannot contain "%1"	filemanager	es-es	Los comentarios no pueden contener "%1"
 copied	filemanager	es-es	copiado
 copied %1 to %2	filemanager	es-es	Se ha copiado "%1" a "%2"
+copy	filemanager	es-es	Copiar
 copy to	filemanager	es-es	Copiar a
 copy to clipboard	filemanager	es-es	Copiar al portapapeles
 could not copy %1 to %2	filemanager	es-es	No se pudo copiar "%1" a "%2"
@@ -36,6 +43,7 @@ could not move %1 to %2	filemanager	es-es	No se pudo mover %1 a %2
 could not move file because no destination directory is given	filemanager	es-es	No se pudo mover el fichero porque no se ha indicado un directorio de destino
 could not rename %1 to %2	filemanager	es-es	No se pudo renombrar %1 a %2
 could not save %1	filemanager	es-es	No se pudo guardar %1
+create a link	filemanager	es-es	Crear un enlace
 create directory	filemanager	es-es	Crear directorio
 create file	filemanager	es-es	Crear fichero
 create folder	filemanager	es-es	Crear directorio
@@ -57,6 +65,7 @@ directory names cannot contain "%1"	filemanager	es-es	Los nombres de directorio 
 directory not found or no permission to access it!	filemanager	es-es	No se encontró el directorio, o no tiene permiso para acceder a él
 display and modification of content	filemanager	es-es	Mostrar y modificar el contenido
 display of content	filemanager	es-es	Mostar el contenido
+do you want to overwrite the existing file %1?	filemanager	es-es	¿Desea sobreescribir el fichero existente %1?
 download	filemanager	es-es	Descargar
 edit comments	filemanager	es-es	Editar comentarios
 edit settings	filemanager	es-es	Editar configuración
@@ -65,6 +74,7 @@ enter setup user and password to get root rights	filemanager	es-es	Introduzca us
 enter the complete vfs path to specify a fast access link to a folder	filemanager	es-es	Introduzca la ruta VFS completa para especificar un acceso rápido a una carpeta
 enter the complete vfs path to specify your desired start folder.	filemanager	es-es	Introduzca la ruta VFS completa para especificar la carpeta de inicio deseada.
 error adding the acl!	filemanager	es-es	¡Error al añadir la ACL!
+error creating symlink to target %1!	filemanager	es-es	¡Error al crear el enlace simbólico al destino %1!
 error deleting the acl entry!	filemanager	es-es	¡Error al borrar la entrada de la ACL!
 error uploading file!	filemanager	es-es	¡Error al subir el fichero!
 executable	filemanager	es-es	Ejecutable
@@ -92,7 +102,9 @@ go to your home directory	filemanager	es-es	Ir al directorio personal
 go up	filemanager	es-es	Subir
 id	filemanager	es-es	Id
 inherited	filemanager	es-es	heredado
+link	filemanager	es-es	Enlace
 link %1: %2	filemanager	es-es	Enlace %1: %2
+link target %1 not found!	filemanager	es-es	¡No se ha encontrado el enlace de destino %1!
 location	filemanager	es-es	Ubicación
 log out as superuser	filemanager	es-es	Cerrar sesión como superusuario
 max folderlinks	admin	es-es	Número máximo de enlaces a carpetas
@@ -144,8 +156,10 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	es-es	
 size	filemanager	es-es	Tamaño
 start search	filemanager	es-es	comenzar la búsqueda
 superuser	filemanager	es-es	Superusuario
+symlink to %1 created.	filemanager	es-es	Se ha creado el enlace simbólico a %1.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	es-es	La carpeta predeterminada es su carpeta personal. Si se deja en blanco, no existe la ruta o no tiene los permisos necesarios, se usa la predeterminada.
 the requested path %1 is not available.	filemanager	es-es	La ruta solicitada %1 no está disponible.
+there's already a directory with that name!	filemanager	es-es	¡Ya existe un directorio con ese nombre!
 there's already a file with that name!	filemanager	es-es	¡Ya existe un fichero con ese nombre!
 to overwrite the existing file store again.	filemanager	es-es	Para sobreescribir el fichero existente, vuelva a guardar.
 total files	filemanager	es-es	Total ficheros
@@ -155,6 +169,7 @@ updated comment for %1	filemanager	es-es	Comentario actualizado para %1
 used space	filemanager	es-es	Espacio utilizado
 users and groups	filemanager	es-es	Usuarios y grupos
 wrong username or password!	filemanager	es-es	¡El usuario o contraseña son incorrectos!
+you are not allowed to upload a script!	filemanager	es-es	¡NO tiene permiso para subir un script!
 you do not have access to %1	filemanager	es-es	No tiene acceso a %1
 you need to select an owner!	filemanager	es-es	¡Necesita seleccionar un propietario!
 you need to select some files first!	filemanager	es-es	¡Necesita seleccionar antes algunos ficheros!
