@@ -1,7 +1,6 @@
 %1 email addresses inserted	common	es-es	Se han insertado %1 direcciones de correo
+%1 file	common	es-es	fichero %1
 %1 is not executable by the webserver !!!	common	es-es	%1 no tiene permiso de ejecución para el servidor web
-%1 manual	common	es-es	Manual de %1
-%1 start	common	es-es	inicio de %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2<br />o dar a %3 permiso de escritura para el servidor web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
 (session restored in %1 seconds)	common	es-es	(la sesión se ha restaurado en %1 segundos)
@@ -48,6 +47,7 @@ albania	common	es-es	ALBANIA
 algeria	common	es-es	ARGELIA
 all	common	es-es	Todos
 all fields	common	es-es	todos los campos
+all languages	common	es-es	todos los idiomas
 alphabet	common	es-es	a,b,c,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	es-es	Hola de estilo alternativa:
 american samoa	common	es-es	AMERICAN SAMOA
@@ -104,6 +104,7 @@ brazil	common	es-es	BRASIL
 british indian ocean territory	common	es-es	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	es-es	BRUNEI DARUSSALAM
 bulgaria	common	es-es	BULGARIA
+bulgarian	common	es-es	Búlgaro
 burkina faso	common	es-es	BURKINA FASO
 burundi	common	es-es	BURUNDI
 calendar	common	es-es	Calendario
@@ -188,6 +189,7 @@ detail	common	es-es	Detalle
 details	common	es-es	Detalles
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del script que corrige el bug de IE 5.5 y superiores para mostrar transparencias en imágenes PNG?
 direction left to right	common	es-es	Dirección de izquierda a derecha
+directory	common	es-es	Directorio
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	es-es	¡El directorio no existe, el servidor web no lo puede leer o no es relativo a la raíz de los documentos!
 disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de IE para ver imágenes PNG
 disable slider effects	common	es-es	Desactivar efectos deslizantes
@@ -209,6 +211,7 @@ done	common	es-es	Hecho
 drag to move	jscalendar	es-es	Arrastre para mover
 e-mail	common	es-es	Correo electrónico
 east timor	common	es-es	EAST TIMOR
+eastern european	common	es-es	Europeo del este
 ecuador	common	es-es	ECUADOR
 edit	common	es-es	Editar
 edit %1 category for	common	es-es	Editar %1 categoría para
@@ -216,7 +219,6 @@ edit categories	common	es-es	Editar categorías
 edit category	common	es-es	Editar categoría
 egroupware	common	es-es	eGroupWare
 egroupware api version	common	es-es	Versión de la API eGroupWare
-egroupware api version %1	common	es-es	Versión de la API de eGroupWare: %1
 egroupware: login blocked for user '%1', ip %2	common	es-es	eGroupWare: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGIPTO
 el salvador	common	es-es	EL SALVADOR
@@ -279,6 +281,7 @@ global public	common	es-es	Publico Global
 go today	jscalendar	es-es	Ir hoy
 grant access	common	es-es	Conceder acceso
 greece	common	es-es	GRECIA
+greek	common	es-es	Griego
 greenland	common	es-es	GREENLAND
 grenada	common	es-es	GRANADA
 group	common	es-es	Grupo
@@ -339,6 +342,7 @@ italy	common	es-es	ITALIA
 jamaica	common	es-es	JAMAICA
 january	common	es-es	Enero
 japan	common	es-es	JAPON
+japanese	common	es-es	Japonés
 jordan	common	es-es	JORDANIA
 july	common	es-es	Julio
 jun	common	es-es	Jun
@@ -351,8 +355,9 @@ kazakstan	common	es-es	KAZAKSTAN
 kenya	common	es-es	KENIA
 keywords	common	es-es	Palabras clave
 kiribati	common	es-es	KIRIBATI
-korea, democratic peoples republic of	common	es-es	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
-korea, republic of	common	es-es	KOREA, REPUBLIC OF
+korea, democratic peoples republic of	common	es-es	COREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	es-es	COREA, REPUBLICA DE
+korean	common	es-es	Coreano
 kuwait	common	es-es	KUWAIT
 kyrgyzstan	common	es-es	KYRGYZSTAN
 language	common	es-es	Idioma
@@ -371,6 +376,7 @@ liberia	common	es-es	LIBERIA
 libyan arab jamahiriya	common	es-es	LIBYAN ARAB JAMAHIRIYA
 license	common	es-es	Licencia
 liechtenstein	common	es-es	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv contienen ##last-check-run## de la tabla %3 ==> ignorado</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv no coinciden con el número de columnas de la tabla %3 ==> ignorado</b>
 list	common	es-es	Lista
 list members	common	es-es	Lista de miembros
@@ -499,7 +505,6 @@ password must have at least %1 characters	common	es-es	La contraseña debe tener
 path to user and group files has to be outside of the webservers document-root!!!	common	es-es	¡¡La ruta a los ficheros de usuario y grupos DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
 permission denied!	common	es-es	¡Permiso denegado!
 permissions to the files/users directory	common	es-es	permisos a los directorios de archivos/usuarios
-permisson denied!	common	es-es	¡Permiso denegado!
 personal	common	es-es	Personal
 peru	common	es-es	PERU
 philippines	common	es-es	FILIPINAS
@@ -551,6 +556,7 @@ returns struct of users application access	common	es-es	Devuelve la estructura d
 reunion	common	es-es	REUNION
 right	common	es-es	Derecha
 romania	common	es-es	RUMANIA
+russian	common	es-es	Ruso
 russian federation	common	es-es	FEDERACION RUSA
 rwanda	common	es-es	RUANDA
 saint helena	common	es-es	SANTA ELENA
@@ -614,6 +620,7 @@ showing %1 - %2 of %3	common	es-es	mostrando %1 - %2 de %3
 sierra leone	common	es-es	SIERRA LEONA
 simple	common	es-es	Simple
 singapore	common	es-es	SINGAPUR
+site configuration	common	es-es	Configuración del sitio
 slovakia	common	es-es	ESLOVAQUIA
 slovenia	common	es-es	ESLOVENIA
 solomon islands	common	es-es	SOLOMON ISLANDS
@@ -703,7 +710,6 @@ use button to search for project	common	es-es	use el botón para buscar por proy
 user	common	es-es	Usuario
 user accounts	common	es-es	Cuentas de usuario
 user groups	common	es-es	Grupos de usuario
-user openinstance	common	es-es	Instancias abiertas del usuario
 username	common	es-es	Nombre de usuario
 users	common	es-es	usuarios
 users choice	common	es-es	A elegir por el usuario
@@ -718,6 +724,7 @@ virgin islands, u.s.	common	es-es	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	es-es	WALLIS AND FUTUNA
 wednesday	common	es-es	Miércoles
 welcome	common	es-es	Página principal
+western european	common	es-es	Europeo occidental
 western sahara	common	es-es	SAHARA OCCIDENTAL
 what color should all the blank space on the desktop have	common	es-es	¿Qué color debe tener todo el espacio en blanco en el escritorio?
 what style would you like the image to have?	common	es-es	¿Qué estilo desea que tenga la imagen?
@@ -755,4 +762,3 @@ your settings have been updated	common	es-es	Sus preferencias fueron actualizada
 zambia	common	es-es	ZAMBIA
 zimbabwe	common	es-es	ZIMBAWE
 zoom	common	es-es	Escala
-site configuration	common	es-es	Configuración del sitio

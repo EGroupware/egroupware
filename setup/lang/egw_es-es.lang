@@ -68,7 +68,7 @@ are you sure?	setup	es-es	¿ESTA SEGURO?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	es-es	A petición suya, este script intentará crear la base de datos y asignar permisos al usuario de la base de datos para ella
 at your request, this script is going to attempt to install a previous backup	setup	es-es	A petición suya, este script va a intentar instalar una copia de seguridad anterior
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	es-es	A petición suya, este script va a intentar instalar las tablas principales y las aplicaciones de preferencias y administración.
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	es-es	A petición suya, este script intentará actualizar sus antiguas apliaciones a las versiones actuales
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	es-es	A petición suya, este script intentará actualizar sus antiguas aplicaciones a las versiones actuales
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	es-es	A petición suya, este script intentará actualizar sus tablas antiguas al nuevo formato
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	es-es	A petición suya, este script ejecutará la "malvada" acción de eliminar sus tablas actuales y volverlas a crear en el nuevo formato
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	es-es	A petición suya, este script ejecutará la "malvada" acción de desinstalar todas sus aplicaciones, lo que eliminará todas sus tablas y datos actuales
@@ -216,7 +216,7 @@ domain '%1' does not exist !!!	setup	es-es	¡¡El dominio '%1' NO existe!!
 domain name	setup	es-es	Nombre del dominio
 domain select box on login	setup	es-es	Cuadro de selección de dominio en el inicio de sesión
 domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	es-es	dominio (todos), [usuario de configuración (admin)], contraseña, [nombre de fichero (predeterminado: directorio_backup/db_backup-AAAAMMDDHHii)]
-domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	es-es	dominio (predeterminado), [usuario de configuración (admin)], contraseña, [copia de segurida a instalar], [juego de caracteres (el predeterminado depende del idioma)]
+domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	es-es	dominio (predeterminado), [usuario de configuración (admin)], contraseña, [copia de seguridad a instalar], [juego de caracteres (el predeterminado depende del idioma)]
 domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	es-es	dominio (predeterminado), [usuario de configuración (admin)], contraseña, [nombre=valor,...] establece valores de configuración junto a:
 domain-name	setup	es-es	nombre del dominio
 don't change, if you already stored files! you will loose them!	setup	es-es	¡No modificar si ya hay ficheros almacenados! ¡Los perderá!
@@ -342,7 +342,7 @@ ldap rootdn	setup	es-es	rootdn LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	es-es	Filtro de búsqueda LDAP para las cuentas. Predeterminado: "(uid=%user)", %domain=eGW-domain
 leave empty to keep current.	setup	es-es	Dejar en blanco para mantener el actual
 limit access	setup	es-es	Limitar aceso
-limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones, redes o máquinas (p. ej. 127.0.0.1,10.1.1,myhost.dnydns.org)
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones, redes o máquinas (p. ej. 127.0.0.1,10.1.1,myhost.dyndns.org)
 list availible values	setup	es-es	Listar valores disponibles
 list of availible translations	setup	es-es	Lista de traducciones disponibles
 login as user postgres, eg. by using su as root	setup	es-es	Iniciar sesión como usuario postgres, p. ej. usando su como root
@@ -431,7 +431,7 @@ please consult the %1.	setup	es-es	Por favor, consulte el %1
 please fix the above errors (%1) and warnings(%2)	setup	es-es	Por favor, corrija los errores de arriba (%1) y avisos (%2)
 please install	setup	es-es	Por favor, instale
 please login	setup	es-es	Por favor, inicie la sesión
-please login to egroupware and run the admin application for additional site configuration	setup	es-es	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para conifguración adicional del sitio
+please login to egroupware and run the admin application for additional site configuration	setup	es-es	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para configuración adicional del sitio
 please make the following change in your php.ini	setup	es-es	Por favor, haga el siguiente cambio en su php.ini
 please wait...	setup	es-es	Por favor, espere...
 pop/imap mail server hostname or ip address	setup	es-es	Nombre o dirección IP del servidor de correo POP/IMAP
