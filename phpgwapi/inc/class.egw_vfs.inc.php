@@ -124,7 +124,7 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
-	 * opendir working on just the eGW VFS
+	 * opendir working on just the eGW VFS: returns resource for readdir() etc.
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
 	 * @return resource
@@ -136,6 +136,37 @@ class egw_vfs extends vfs_stream_wrapper
 			throw new egw_exception_assertion_failed("Directory '$path' is not an absolute path!");
 		}
 		return opendir(self::PREFIX.$path);
+	}
+
+	/**
+	 * dir working on just the eGW VFS: returns directory object
+	 *
+	 * @param string $path filename with absolute path in the eGW VFS
+	 * @return Directory
+	 */
+	static function dir($path)
+	{
+		if ($path[0] != '/')
+		{
+			throw new egw_exception_assertion_failed("Directory '$path' is not an absolute path!");
+		}
+		return dir(self::PREFIX.$path);
+	}
+
+	/**
+	 * scandir working on just the eGW VFS: returns array with filenames as values
+	 *
+	 * @param string $path filename with absolute path in the eGW VFS
+	 * @param int $sorting_order=0 !$sorting_order (default) alphabetical in ascending order, $sorting_order alphabetical in descending order.
+	 * @return array
+	 */
+	static function scandir($path,$sorting_order=0)
+	{
+		if ($path[0] != '/')
+		{
+			throw new egw_exception_assertion_failed("Directory '$path' is not an absolute path!");
+		}
+		return scandir(self::PREFIX.$path,$sorting_order);
 	}
 
 	/**
