@@ -24,6 +24,7 @@ allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	de	und alle seine Kinder
 applications	common	de	Anwendungen
 basedirectory	filemanager	de	Basisverzeichnis
+can't open directory %1!	filemanager	de	Kann Verzeichnis %1 nicht öffnen!
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
 check all	filemanager	de	Alle auswählen
@@ -152,6 +153,7 @@ searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen
 show	filemanager	de	Zeige
+show hidden files	filemanager	de	Zeige versteckte Dateien
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenu?
 size	filemanager	de	Größe
 start search	filemanager	de	Suche starten

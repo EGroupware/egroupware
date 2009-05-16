@@ -275,6 +275,7 @@ class filemanager_ui
 		$sel_options['filter'] = array(
 			'1' => 'Current directory',
 			'2' => 'Directories sorted in',
+			'3' => 'Show hidden files',
 			''  => 'Files from subdirectories',
 		);
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
@@ -599,6 +600,7 @@ class filemanager_ui
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
 			'need_mime' => true,
 			'name_preg' => $namefilter,
+			'hidden' => $query['filter'] == 3,
 		),true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
