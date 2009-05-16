@@ -422,7 +422,10 @@ class filemanager_ui
 				}
 				if ($selected)	// somethings left to delete
 				{
-					foreach(egw_vfs::find($selected,array('depth'=>true)) as $path)
+					// now we use find to loop through all files and dirs: (selected only contains dirs now)
+					// - depth=true to get first the files and then the dir containing it
+					// - hidden=true to also return hidden files (eg. Thumbs.db), as we cant delete non-empty dirs
+					foreach(egw_vfs::find($selected,array('depth'=>true,'hidden'=>true)) as $path)
 					{
 						if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
 						{
