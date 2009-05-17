@@ -434,13 +434,13 @@ class boetemplate extends soetemplate
 	 * executes the pre_process-function of the extension $cell[type]
 	 *
 	 * @param string $type type of the extension
-	 * @param string $name form-name of this widget/field (used as a unique index into extension_data)
+	 * @param string &$name form-name of this widget/field (used as a unique index into extension_data)
 	 * @param mixed  &$value value of the extensions content(-array)
 	 * @param array &$cell table-cell on which the extension operates
 	 * @param array &$readonlys value of the extensions readonly-setting(-array)
 	 * @return mixed the return-value of the extensions preprocess function
 	 */
-	protected function extensionPreProcess($type,$name,&$value,&$cell,&$readonlys)
+	protected function extensionPreProcess($type,&$name,&$value,&$cell,&$readonlys)
 	{
 		if (!$this->haveExtension($type))
 		{
