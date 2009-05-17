@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="infolog.widget.infolog-value" template="" lang="" group="0" version="1.7.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row">
+					<description options=",,,type" value="Type"/>
+					<menulist>
+						<menupopup id="type" onchange="1" statustext="type of the field (select Label if field should be empty)"/>
+					</menulist>
+					<infolog-fields id="options[0]" statustext="Contact field to show" span="all" label="Field"/>
+				</row>
+				<row class="row">
+					<description value="Compare"/>
+					<textbox id="options[1]" statustext="show a X if content equals this compare value, otherwise show nothing"/>
+					<textbox size="40" span="all" label="Alternatives" id="options[2]" statustext="colon (:) separated list of field names to use if value is empty or to sum up"/>
+				</row>
+				<row class="row">
+					<description value="Contactfield"/>
+					<contact-fields id="options[3]"/>
+					<textbox span="2" label="Regular expression " id="options[4]" statustext="first argument for preg_replace"/>
+					<textbox span="2" label="Replacement" id="options[5]" statustext="second parameter for preg_replace"/>
+				</row>
+				<row class="row">
+					<description options=",,,label" value="Label"/>
+					<textbox id="label" statustext="displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)"/>
+					<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)" label="Span, Class" span="2"/>
+					<description value="Align" align="center"/>
+					<menulist>
+						<menupopup id="align" statustext="alignment of label and input-field in table-cell"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,name" value="Name"/>
+					<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
+					<checkbox label="%s disabled" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell" span="all"/>
+				</row>
+				<row class="row" disabled="!@type=button">
+					<description options="onclick" value="onClick"/>
+					<hbox options="0,0" span="all">
+						<menulist>
+							<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
+						</menulist>
+						<textbox size="53" span="all" class="leftPad5 inputFullWidth" id="onclick" statustext="confirmation message or custom javascript (returning true or false)" align="right"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
