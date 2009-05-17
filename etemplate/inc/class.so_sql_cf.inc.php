@@ -39,6 +39,9 @@
  */
 class so_sql_cf extends so_sql
 {
+	/**
+	 * Prefix used by the class
+	 */
 	const CF_PREFIX = '#';
 
 	/**
@@ -81,6 +84,13 @@ class so_sql_cf extends so_sql
 	var $customfields;
 
 	/**
+	 * Do we allow AND store multiple values for a cf (1:N) relations
+	 *
+	 * @var boolean
+	 */
+	var $allow_multiple_values = false;
+
+	/**
 	 * constructor of the class
 	 *
 	 * Please note the different params compared to so_sql!
@@ -94,15 +104,17 @@ class so_sql_cf extends so_sql
 	 * @param string $extra_id='_id' column name for cf id column (will be prefixed with colum prefix, if starting with _)
 	 * @param egw_db $db=null database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param boolean $no_clone=true can we avoid to clone the db-object, default yes (different from so_sql!)
+	 * @param boolean $allow_multiple_values=false should we allow AND store multiple values (1:N relations)
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
 	 */
 	function __construct($app,$table,$extra_table,$column_prefix='',
 		$extra_key='_name',$extra_value='_value',$extra_id='_id',
-		$db=null,$no_clone=true)
+		$db=null,$no_clone=true,$allow_multiple_values=false)
 	{
 		// calling the so_sql constructor
 		parent::__construct($app,$table,$db,$column_prefix,$no_clone);
 
+		$this->allow_multiple_values = $allow_multiple_values;
 		$this->extra_table = $extra_table;
 		if (!$this->extra_id) $this->extra_id = $this->autoinc_id;	// default to auto id of regular table
 
@@ -145,7 +157,7 @@ class so_sql_cf extends so_sql
 	 *
 	 * @param int|array $ids one ore more id's
 	 * @param array $field_names=null custom fields to read, default all
-	 * @return array id => self::CF_PREFIX.name => value
+	 * @return array id => $this->cf_field(name) => value
 	 */
 	function read_customfields($ids,$field_names=null)
 	{
@@ -157,15 +169,25 @@ class so_sql_cf extends so_sql
 		}
 		if (!$ids || !$field_names) return array();	// nothing to do
 
-		$fields = array();
+		$entries = array();
 		foreach($this->db->select($this->extra_table,'*',array(
 			$this->extra_id => $ids,
 			$this->extra_key => $field_names,
 		),__LINE__,__FILE__,false,'',$this->app) as $row)
 		{
-			$fields[$row[$this->extra_id]][self::CF_PREFIX.$row[$this->extra_key]] = $row[$this->extra_value];
+			$entry =& $entries[$row[$this->extra_id]];
+			$field = $this->get_cf_field($row[$this->extra_key]);
+
+			if ($this->allow_multiple_values && $this->is_multiple($row[$this->extra_key]))
+			{
+				$entry[$field][] = $row[$this->extra_value];
+			}
+			else
+			{
+				$entry[$field] = $row[$this->extra_value];
+			}
 		}
-		return $fields;
+		return $entries;
 	}
 
 	/**
@@ -176,23 +198,27 @@ class so_sql_cf extends so_sql
 	*/
 	function save_customfields($data)
 	{
-		foreach ((array)$this->customfields as $field => $options)
+		foreach ((array)$this->customfields as $name => $options)
 		{
-			if (!isset($data[self::CF_PREFIX.$field])) continue;
+			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
 
 			$where = array(
 				$this->extra_id    => $data[$this->autoinc_id],
-				$this->extra_key   => $field,
+				$this->extra_key   => $name,
 			);
+			$is_multiple = $this->is_multiple($name);
 
-			if((string) $data[self::CF_PREFIX.$field] === '')	// dont write empty values
+			if(empty($data[$field]) || $is_multiple)	// dont write empty values
 			{
 				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);	// just delete them, in case they were previously set
-				continue;
+				if (!$is_multiple) continue;
 			}
-			if (!$this->db->insert($this->extra_table,array($this->extra_value => $data[self::CF_PREFIX.$field]),$where,__LINE__,__FILE__,$this->app))
+			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : $data['field'] as $value)
 			{
-				return $this->db->Errno;
+				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value),$where,__LINE__,__FILE__,$this->app))
+				{
+					return $this->db->Errno;
+				}
 			}
 		}
 		return false;	// no error
@@ -213,9 +239,9 @@ class so_sql_cf extends so_sql
 		{
 			foreach($this->customfields as $name => $data)
 			{
-				if (isset($new[self::CF_PREFIX.$name]))
+				if (isset($new[$field = $this->get_cf_field($name)]))
 				{
-					$this->data[self::CF_PREFIX.$name] = $new[self::CF_PREFIX.$name];
+					$this->data[$field] = $new[$field];
 				}
 			}
 		}
@@ -344,7 +370,7 @@ class so_sql_cf extends so_sql
 			// check if only certain cf's to show
 			foreach($selectcols as $col)
 			{
-				if ($col[0] == self::CF_PREFIX) $fields[] = substr($col,1);
+				if ($this->is_cf($col)) $fields[] = $this->get_cf_name($col);
 			}
 			if (($cfs = $this->read_customfields(array_keys($id2keys),$fields)))
 			{
@@ -424,22 +450,22 @@ class so_sql_cf extends so_sql
 					}
 					unset($filter[$this->autoinc_id]);
 				}
-				elseif (is_string($name) && $name[0] == self::CF_PREFIX)
+				elseif (is_string($name) && $this->is_cf($name))
 				{
 					if (!empty($val))	// empty -> dont filter
 					{
 						$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
-							' AND extra_filter.'.$this->extra_key.'='.$this->db->quote(substr($name,1)).
+							' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($this->get_cf_name($name)).
 							' AND extra_filter.'.$this->extra_value.'='.$this->db->quote($val));
 						++$extra_filter;
 					}
 					unset($filter[$name]);
 				}
-				elseif(is_int($name) && $val[0] == self::CF_PREFIX)	// lettersearch: #cfname LIKE 's%'
+				elseif(is_int($name) && $this->is_cf($val))	// lettersearch: #cfname LIKE 's%'
 				{
 					list($cf) = explode(' ',$val);
 					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
-						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote(substr($cf,1)).
+						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($this->get_cf_name($cf)).
 						' AND '.str_replace($cf,'extra_filter.'.$this->extra_value,$val));
 					++$extra_filter;
 					unset($filter[$name]);
@@ -447,6 +473,51 @@ class so_sql_cf extends so_sql
 			}
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+	}
+
+	/**
+	 * Function to test if $field is a custom field: check for the prefix
+	 *
+	 * @param string $field
+	 * @return boolean true if $name is a custom field, false otherwise
+	 */
+	function is_cf($field)
+	{
+		return $field[0] == self::CF_PREFIX;
+	}
+
+	/**
+	 * Get name part from a custom field: remove the prefix
+	 *
+	 * @param string $field
+	 * @return string name without prefix
+	 */
+	function get_cf_name($field)
+	{
+		return substr($field,1);
+	}
+
+	/**
+	 * Get the field-name from the name of a custom field: prepend the prefix
+	 *
+	 * @param string $name
+	 * @return string prefix-name
+	 */
+	function get_cf_field($name)
+	{
+		return self::CF_PREFIX.$name;
+	}
+
+	/**
+	 * Check if cf is stored as 1:N relation in DB and array in memory
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	function is_multiple($name)
+	{
+		return $this->allow_multiple_values && in_array($this->customfields[$name]['type'],array('select','select-account')) &&
+			$this->customfields[$name]['rows'] > 1;
 	}
 
 	/**
