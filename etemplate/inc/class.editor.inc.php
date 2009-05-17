@@ -1341,7 +1341,9 @@ class editor
 		$type_tmpl =& new etemplate;
 
 		list($ext_type) = explode('-',$widget['type']);
-		if ($type_tmpl->read('etemplate.editor.widget.'.$widget['type']) ||
+		// allow to read template of app-specific widgets from their app: eg. "infolog-value" --> "infolog.widget.infolog-value"
+		if (isset($GLOBALS['egw_info']['apps'][$ext_type]) && $type_tmpl->read($ext_type.'.widget.'.$widget['type']) ||
+			$type_tmpl->read('etemplate.editor.widget.'.$widget['type']) ||
 			$type_tmpl->read('etemplate.editor.widget.'.$ext_type))
 		{
 			$editor->set_cell_attribute('etemplate.editor.widget.generic','obj',$type_tmpl);

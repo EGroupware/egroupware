@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.editor.widget.generic" template="" lang="" group="0" version="1.3.001">
-		<grid>
+	<template id="etemplate.editor.widget.generic" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="70"/>
 				<column/>
 				<column/>
 				<column/>
@@ -50,31 +50,35 @@
 				</row>
 				<row class="row">
 					<description options=",,,help" value="Help"/>
-					<textbox size="71" span="all" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+					<textbox size="71" span="all" class="inputFullWidth" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 				<row class="row" disabled="@type=label">
 					<description value="onChange"/>
-					<hbox span="all">
+					<hbox options="0,0" span="all">
 						<menulist>
 							<menupopup id="onchange_type" statustext="Should the form be submitted or any custom javascript be executed"/>
 						</menulist>
-						<textbox size="50" span="all" id="onchange" statustext="custom javascript for onChange"/>
+						<textbox size="50" span="all" class="leftPad5 inputFullWidth" id="onchange" statustext="custom javascript for onChange" align="right"/>
 					</hbox>
 				</row>
 				<row class="row">
 					<description options="onclick" value="onClick"/>
-					<hbox span="all">
+					<hbox options="0,0" span="all">
 						<menulist>
 							<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
 						</menulist>
-						<textbox size="53" span="all" id="onclick" statustext="confirmation message or custom javascript (returning true or false)"/>
+						<textbox size="53" span="all" class="leftPad5 inputFullWidth" id="onclick" statustext="confirmation message or custom javascript (returning true or false)" align="right"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="etemplate.editor.widget" template="" lang="" group="0" version="1.7.001">
-		<grid>
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
@@ -89,10 +93,10 @@
 							<menupopup options="Box..." id="box_menu" onchange="1" statustext="all operations save the template!"/>
 						</menulist>
 						<menulist>
-							<menupopup options="Row..." id="row_menu" onchange="1" statustext="all operations save the template!"/>
+							<menupopup options="Row..." id="row_menu" onchange="1" statustext="all operations save the template!" disabled="true"/>
 						</menulist>
 						<menulist>
-							<menupopup options="Column..." id="column_menu" onchange="1" statustext="all operations save the template!"/>
+							<menupopup options="Column..." id="column_menu" onchange="1" statustext="all operations save the template!" disabled="true"/>
 						</menulist>
 					</hbox>
 				</row>
