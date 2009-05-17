@@ -93,10 +93,10 @@
 							<menupopup options="Box..." id="box_menu" onchange="1" statustext="all operations save the template!"/>
 						</menulist>
 						<menulist>
-							<menupopup options="Row..." id="row_menu" onchange="1" statustext="all operations save the template!" disabled="true"/>
+							<menupopup options="Row..." id="row_menu" onchange="1" statustext="all operations save the template!"/>
 						</menulist>
 						<menulist>
-							<menupopup options="Column..." id="column_menu" onchange="1" statustext="all operations save the template!" disabled="true"/>
+							<menupopup options="Column..." id="column_menu" onchange="1" statustext="all operations save the template!"/>
 						</menulist>
 					</hbox>
 				</row>
@@ -126,15 +126,13 @@
 				<row disabled="!@grid_row">
 					<groupbox span="all" orient="horizontal">
 						<caption label="Grid row attributes"/>
-						<textbox size="3" label="Height" id="grid_row[height]" statustext="height of row (in % or pixel)"/>
-						<textbox size="8" label="Disabled" id="grid_row[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
-						<textbox size="8" label="Class" id="grid_row[class]" statustext="CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows"/>
+						<textbox size="5" label="Height" id="grid_row[height]" statustext="height of row (in % or pixel)"/>
+						<textbox size="10" label="Disabled" id="grid_row[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
+						<textbox size="10" label="Class" id="grid_row[class]" statustext="CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows"/>
 						<menulist>
 							<menupopup label="Valign" id="grid_row[valign]" statustext="vertical alignment of row"/>
 						</menulist>
-						<menulist>
-							<menupopup label="Part" id="grid_row[part]" statustext="part of the table (header and footer have to be before body!)"/>
-						</menulist>
+						<description/>
 					</groupbox>
 				</row>
 				<row disabled="!@grid_column">
