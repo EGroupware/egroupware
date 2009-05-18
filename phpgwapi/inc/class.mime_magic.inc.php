@@ -276,6 +276,7 @@ class mime_magic
 		'html'	=> 'text/html',
 		'ice'	=> 'x-conference/x-cooltalk',
 		'ics'	=> 'text/calendar',
+		'ico'	=> 'image/x-ico',
 		'ief'	=> 'image/ief',
 		'ifb'	=> 'text/calendar',
 		'iges'	=> 'model/iges',
