@@ -938,7 +938,7 @@ class common
 	{
 		static $cache;	// do some caching in the request
 
-		$image_found =& $cache[$appname.$image.$ext.$use_lang];
+		$image_found =& $cache[$appname.implode('-',(array)$image).$ext.$use_lang];
 
 		if (!isset($image_found))
 		{
