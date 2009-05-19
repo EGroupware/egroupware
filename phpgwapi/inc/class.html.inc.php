@@ -460,15 +460,20 @@ class html
 	* @param array  $_options (toolbar_expanded true/false)
 	* @param string $_height='400px'
 	* @param string $_width='100%'
-	* @param string $base_href='' if passed activates the browser for image at absolute path passed
+	* @param string $_base_href='' if passed activates the browser for image at absolute path passed
+	* @param boolean $_purify=true run $_content through htmlpurifier before handing it to fckEditor
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='')
+	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
+		$_height='400px', $_width='100%',$_base_href='',$_purify=true)
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
 			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';"');
 		}
+		// run content through htmlpurifier
+		if ($_purify && !empty($_content)) $_content = self::purify($_content);
+
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
 
 		$oFCKeditor = new FCKeditor($_name) ;
@@ -969,7 +974,7 @@ class html
 		{
 			$url = "/index.php?menuaction=$url";
 		}
-		if ($url{0} == '/')		// link relative to eGW
+		if ($url[0] == '/')		// link relative to eGW
 		{
 			$url = self::link($url,$vars);
 		}
@@ -1185,7 +1190,7 @@ class html
 			}
 		}
 		// evtl. remove leading delimiter
-		if ($_selected{0} == $delimiter) $_selected = substr($_selected,1);
+		if ($_selected[0] == $delimiter) $_selected = substr($_selected,1);
 		foreach($_folders as $path => $data)
 		{
 			if (!is_array($data))
@@ -1198,7 +1203,7 @@ class html
 				$image1 = $image2 = $image3 = "'".$data['image']."'";
 			}
 			// evtl. remove leading delimiter
-			if ($path{0} == $delimiter) $path = substr($path,1);
+			if ($path[0] == $delimiter) $path = substr($path,1);
 			$folderParts = explode($delimiter,$path);
 
 			//get rightmost folderpart
@@ -1254,6 +1259,8 @@ class html
 	static function purify($html,$config=null)
 	{
 		static $purifier;
+
+		if (empty($html)) return $html;	// no need to process further
 
 		if (is_null($purifier) || !is_null($config))
 		{

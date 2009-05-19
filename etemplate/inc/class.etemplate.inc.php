@@ -1157,8 +1157,6 @@ class etemplate extends boetemplate
 				{
 					$value = nl2br(html::htmlspecialchars($value));
 				}
-				$value = html::purify($value);
-
 				if (!$readonly)
 				{
 					$mode = $mode ? $mode : 'simple';
@@ -1167,6 +1165,7 @@ class etemplate extends boetemplate
 					$fckoptions = array(
 						'toolbar_expanded' => $toolbar,
 					);
+					// html::fckEditor runs everything through html::purify
 					$html .= html::fckEditor($form_name,$value,$mode,$fckoptions,$height,$width,$baseref);
 
 					self::$request->set_to_process($form_name,$cell['type'],array(
@@ -1175,7 +1174,7 @@ class etemplate extends boetemplate
 				}
 				else
 				{
-					$html .= html::div(html::activate_links($value),'style="overflow: auto; width='. $width. '; height='. $height. '"');
+					$html .= html::div(html::purify(html::activate_links($value)),'style="overflow: auto; width='. $width. '; height='. $height. '"');
 				}
 				break;
 			case 'checkbox':
