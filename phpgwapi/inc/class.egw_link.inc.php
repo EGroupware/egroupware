@@ -561,10 +561,12 @@ class egw_link extends solink
 			{
 				$title = $id;
 			}
+			/* disabling mime-type and size in link-title of attachments, as it clutters the UI
+			   and users dont need it most of the time. These details can allways be views in filemanager.
 			if (is_array($link))
 			{
 				$title .= ': '.$link['type'] . ' '.egw_vfs::hsize($link['size']);
-			}
+			}*/
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (file)</p>\n";
 			return $title;
 		}
