@@ -213,7 +213,7 @@ class so_sql_cf extends so_sql
 				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);	// just delete them, in case they were previously set
 				if (!$is_multiple) continue;
 			}
-			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : $data['field'] as $value)
+			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
 			{
 				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value),$where,__LINE__,__FILE__,$this->app))
 				{
