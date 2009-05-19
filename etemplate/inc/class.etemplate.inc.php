@@ -1153,8 +1153,10 @@ class etemplate extends boetemplate
 			case 'htmlarea':	// Multiline formatted Text Input, size: {simple|extended|advanced},height,width,toolbar-expanded,upload-path
 				list($mode,$height,$width,$toolbar,$baseref,$convertnl) = explode(',',$cell_options);
 
-				if ($convertnl == 1) $value = nl2br($value);
-
+				if ($convertnl)
+				{
+					$value = nl2br(html::htmlspecialchars($value));
+				}
 				if (!$readonly)
 				{
 					$mode = $mode ? $mode : 'simple';
