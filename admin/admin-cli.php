@@ -190,8 +190,8 @@ function usage($action=null,$ret=0)
 	$cmd = basename($_SERVER['argv'][0]);
 	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks]\n\n";
 
-	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...]\n";
-	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!\n";
+	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...][,homedirectory,loginshell]\n";
+	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships! homedirectory+loginshell are supported only for LDAP and must start with a slash!\n";
 	echo "--change-pw admin-account[@domain],admin-password,account,password\n";
 	echo "  Change/set the password for a given user\n";
 	echo "--delete-user admin-account[@domain],admin-password,account-to-delete[,account-to-move-data]\n";
@@ -279,7 +279,7 @@ function do_change_pw($args)
 /**
  * Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!
  *                    1:                     2:             3:                         4:         5:        6:       7:    8:                                         9:                                 10:                            11:                                  12
- * @param array $args admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{true(default)|false},anon-user{true|false(default)},primary-group{Default(default)|...}[,groups,...]
+ * @param array $args admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{true(default)|false},anon-user{true|false(default)},primary-group{Default(default)|...}[,groups,...][,homedirectory,loginshell]
  */
 function do_edit_user($args)
 {
@@ -287,7 +287,17 @@ function do_edit_user($args)
 	array_shift($args);	// admin-pw
 	list($account,$new_account_name) = explode('=',array_shift($args));	// account[=new-account-name]
 
-	$data = array(
+	$data = array();
+	// do we need to support ldap only attributes: homedirectory and loginshell
+	if (($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' ||
+		 empty($GLOBALS['egw_info']['server']['account_repository']) && $GLOBALS['egw_info']['server']['auth_type'] == 'ldap') &&
+		$GLOBALS['egw_info']['server']['ldap_extra_attributes'] && count($args) > 9 &&	// 9 = primary group
+		($last_arg = array_pop($dummy=$args)) && $last_arg[0] == '/')	// last argument start with a slash
+	{
+		$data['loginshell'] = array_pop($args);
+		$data['homedirectory'] = array_pop($args);
+	}
+	$data += array(
 		'account_lid' => $new_account_name,
 		'account_firstname' => array_shift($args),
 		'account_lastname' => array_shift($args),
