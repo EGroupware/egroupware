@@ -1244,5 +1244,35 @@ class html
 
 		return $html;
 	}
+
+	/**
+	 * Runs HTMLPurifier over supplied html to remove malicious code
+	 *
+	 * @param string $html
+	 * @param HTMLPurifier_Config $config=null
+	 */
+	static function purify($html,$config=null)
+	{
+		static $purifier;
+
+		if (is_null($purifier) || !is_null($config))
+		{
+			// add htmlpurifiers library to include_path
+			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.path.php');
+			// include most of the required files, for best performance with bytecode caches
+			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.includes.php');
+			// installs an autoloader for other files
+			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.autoload.php');
+
+			if (is_null($config))
+			{
+				$config = HTMLPurifier_Config::createDefault();
+				$config->set('Core', 'Encoding', self::$charset);
+				$config->set('Cache', 'SerializerPath', $GLOBALS['egw_info']['server']['temp_dir']);
+			}
+			$purifier = new HTMLPurifier($config);
+		}
+    	return $purifier->purify( $html );
+	}
 }
 html::_init_static();
