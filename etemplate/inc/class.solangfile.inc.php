@@ -87,6 +87,7 @@ class solangfile
 	function special_file($app,$fname,$langs_in)
 	{
 		//echo "<p>solangfile::special_file(app='$app',fname='$fname',langs_in='$langs_in')</p>\n";
+		$app_in = $app;
 		switch ($langs_in)
 		{
 		 	case 'config':
@@ -104,7 +105,34 @@ class solangfile
 		unset($GLOBALS['acl_manager']);
 
 		ob_start();		// suppress all output
-		include($fname);
+		// call the hooks and not the files direct, as it works for both files and method hooks
+		switch(basename($fname))
+		{
+			case 'hook_settings.inc.php':
+				$settings = $GLOBALS['egw']->hooks->single('settings',$app_in,true);
+				if (!is_array($settings) || !$settings)
+				{
+					$settings =& $GLOBALS['settings'];	// old method of setting GLOBALS[settings], instead returning the settings
+					unset($GLOBALS['settings']);
+				}
+				break;
+
+			case 'hook_admin.inc.php':
+				$GLOBALS['egw']->hooks->single('admin',$app_in,true);
+				break;
+
+			case 'hook_preferences.inc.php':
+				$GLOBALS['egw']->hooks->single('preferences',$app_in,true);
+				break;
+
+			case 'hook_acl_manager.inc.php':
+				$GLOBALS['egw']->hooks->single('acl_manager',$app_in,true);
+				break;
+
+			default:
+				include($fname);
+				break;
+		}
 		ob_end_clean();
 
 		if (isset($GLOBALS['acl_manager']))	// hook_acl_manager
@@ -138,7 +166,7 @@ class solangfile
 				$this->plist[$lang] = $app;
 			}
 		}
-		foreach($GLOBALS['settings'] as $data)
+		foreach((array)$settings as $data)
 		{
 			foreach(array('label','help') as $key)
 			{
@@ -162,6 +190,17 @@ class solangfile
 				if (($fn!='.')&&($fn!='..')&&($fn!='CVS') && $fn != '.svn')
 				{
 					$this->parse_php_app($app,$fd.$fn.SEP);
+				}
+				if ($fn == 'inc')
+				{
+					// make sure all hooks get called, even if they dont exist as hooks
+					foreach($this->files as $f => $type)
+					{
+						if (substr($f,0,5) == 'hook_' && !file_exists($f = $fd.'inc/'.$f))
+						{
+							$this->special_file($app,$f,$this->files[$type]);
+						}
+					}
 				}
 			}
 			elseif (is_readable($fd.$fn))
