@@ -1382,6 +1382,8 @@
 					if(is_array($singleNameSpace[0])) {
 						// fetch and sort the subscribed folders
 						$subscribedMailboxes = $this->icServer->listsubscribedMailboxes($foldersNameSpace[$type]['prefix']);
+						if (empty($subscribedMailboxes) && $type == 'shared') $subscribedMailboxes = $this->icServer->listsubscribedMailboxes('',0);
+
 						#echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
 						if( PEAR::isError($subscribedMailboxes) ) {
 							continue;
@@ -1394,18 +1396,21 @@
 							continue;
 						}
 						// fetch and sort all folders
+						#echo $type.'->'.$foldersNameSpace[$type]['prefix'].'->'.($type=='shared'?0:2)."<br>";
 						$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
+						if (empty($allMailboxesExt) && $type == 'shared')  $allMailboxesExt = $this->icServer->getMailboxes('',0,true);
 						if( PEAR::isError($allMailboxesExt) ) {
+							#echo __METHOD__;_debug_array($allMailboxesExt);
 							continue;
 						}
 						foreach ($allMailboxesExt as $mbx) {
 							#echo __METHOD__;_debug_array($mbx);
 							$allMailBoxesExtSorted[$mbx['MAILBOX']] = $mbx;
 						}
-						ksort($allMailBoxesExtSorted);
+						if (is_array($allMailBoxesExtSorted)) ksort($allMailBoxesExtSorted);
 						#_debug_array($allMailBoxesExtSorted);
 						$allMailboxes = array();
-						foreach ($allMailBoxesExtSorted as $mbx) {
+						foreach ((array)$allMailBoxesExtSorted as $mbx) {
 							#echo $mbx['MAILBOX']."<br>";
 							if (in_array('\HasChildren',$mbx["ATTRIBUTES"]) || in_array('\Haschildren',$mbx["ATTRIBUTES"])) {
 								unset($buff);
@@ -1502,7 +1507,7 @@
 						$folderObject->folderName	= $folderName;
 						$folderObject->shortFolderName	= $shortName;
 						if(!$_subscribedOnly) {
-							#echo $type."<br>";
+							#echo $folderName."->".$type."<br>";
 							#_debug_array($foldersNameSpace[$type]['subscribed']);
 							$folderObject->subscribed = in_array($folderName, $foldersNameSpace[$type]['subscribed']);
 						}
@@ -2592,10 +2597,12 @@
 			if (self::$debug) error_log("bofelamimail::".($_status?"":"un")."subscribe:".$_folderName);
 			if($_status === true) {
 				if ( PEAR::isError($this->icServer->subscribeMailbox($_folderName))) {
+					error_log("bofelamimail::".($_status?"":"un")."subscribe:".$_folderName." failed");
 					return false;
 				}
 			} else {
 				if ( PEAR::isError($this->icServer->unsubscribeMailbox($_folderName))) {
+					error_log("bofelamimail::".($_status?"":"un")."subscribe:".$_folderName." failed");
 					return false;
 				}
 			}
