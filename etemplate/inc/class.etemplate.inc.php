@@ -1157,6 +1157,8 @@ class etemplate extends boetemplate
 				{
 					$value = nl2br(html::htmlspecialchars($value));
 				}
+				$value = html::purify($value);
+
 				if (!$readonly)
 				{
 					$mode = $mode ? $mode : 'simple';
@@ -1952,7 +1954,7 @@ class etemplate extends boetemplate
 					}
 					break;
 				case 'htmlarea':
-					self::set_array($content,$form_name,$value);
+					self::set_array($content,$form_name,html::purify($value));
 					break;
 				case 'int':
 				case 'float':
