@@ -143,6 +143,7 @@ fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
 fullname of person to notify	calendar	de	Name der zu benachrichtigenden Person
 general	calendar	de	Allgemein
+global categories	calendar	de	Globale Kategorien
 global public and group public	calendar	de	Global öffentlich und Gruppen-öffentlich
 global public only	calendar	de	nur Global öffentlich
 group invitation	calendar	de	Gruppeneinladung
@@ -271,6 +272,7 @@ setting lock time calender	admin	de	Zeitintervall für Datensatzlock (default 1 
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	de	Sollen Einladungen welche von Ihnen abgelehnt wurden in Ihrem Kalender angezeigt werden?<br> Sie können diese Einladungen dann später akzeptieren (z. B. wenn Sie eine Terminkolission gelöst haben), wenn Sie in Ihrem Kalender noch vorhanden sind!
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten an denen sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	de	Sollten Ihre Free/Bussy Zeiten nicht so geschützt sein das diese Daten nur bestimmten Personen zugänglich gemacht werden können? Sie können dafür ein Passwort, abweichend fom eGroupware Passwort vergeben. Die freebusy Information sind im iCal Format und nur dann inkludiert, wenn Sie keine Zeit haben. Die Eventnamen oder  die Veranstaltungsorte werden nicht mit übertragen. Die URL zu den freebusy Information ist <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	de	Soll der Status (Zugesagt,Abgesagt ...)der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
 show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
@@ -293,6 +295,7 @@ submit to repository	calendar	de	Übertragen zu eGroupWare.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
+the resource you selected is already overbooked:	calendar	de	Die Ressource, die sie buchen wollen ist beeits überbucht.
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle späteren Einträge werden darunter dargestellt.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt.
@@ -341,6 +344,7 @@ work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
 yearly	calendar	de	Jährlich
 yearview	calendar	de	Jahresansicht
+you are not allowed to book the resource selected:	calendar	de	Sie sind nicht berechtigt die ausgewählte Ressource zu buchen.
 you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!
@@ -349,5 +353,6 @@ you have been disinvited from the meeting at %1	calendar	de	Sie wurden vom Termi
 you need to select an account, contact or resource first!	calendar	de	Sie müssen zuerst einen Benutzer, einen Kontakt oder eine Ressource auswählen!
 you need to select an ical file first	calendar	de	Sie müssen zuerst eine iCal Datei auswählen
 you need to set either a day or a occurence !!!	calendar	de	Sie müssen entweder einen Tag oder eine Wiederholung angeben !!!
+you requested more than available for the selected resource:	calendar	de	Sie versuchen mehr zu buchen, als zur Verfügung steht.
 your meeting scheduled for %1 has been canceled	calendar	de	Ihr Termin am %1 wurde abgesagt.
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	de	Ihr Termin am %1 wurde auf %2 verschoben.

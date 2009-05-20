@@ -143,6 +143,7 @@ fri	calendar	en	Fri
 full description	calendar	en	Full description
 fullname of person to notify	calendar	en	Fullname of person to notify
 general	calendar	en	General
+global categories	calendar	en	Global Categories
 global public and group public	calendar	en	global public and group public
 global public only	calendar	en	global public only
 group invitation	calendar	en	Group invitation
@@ -271,6 +272,7 @@ setting lock time calender	admin	en	Setting Datalock Time for Calendar (default 
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	en	Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	en	Should the planner display an empty row for users or categories without any appointment.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	en	Should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?
 show birthdays from addressbook	admin	en	Show birthdays from addressbook
@@ -293,6 +295,7 @@ submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	en	Test Import (show importable records <u>only</u> in browser)
+the resource you selected is already overbooked:	calendar	en	The resource you selected is already overbooked:
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	en	This defines the end of your dayview. Events after this time, are shown below the dayview.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	en	This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.
@@ -341,6 +344,7 @@ work day ends on	calendar	en	work day ends on
 work day starts on	calendar	en	work day starts on
 yearly	calendar	en	Yearly
 yearview	calendar	en	yearview
+you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:
 you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurence, not both !!!
 you can only set a year or a occurence !!!	calendar	en	You can only set a year or a occurence !!!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
@@ -349,5 +353,6 @@ you have been disinvited from the meeting at %1	calendar	en	You have been disinv
 you need to select an account, contact or resource first!	calendar	en	You need to select an account, contact or resource first!
 you need to select an ical file first	calendar	en	You need to select an iCal file first
 you need to set either a day or a occurence !!!	calendar	en	You need to set either a day or a occurence !!!
+you requested more than available for the selected resource:	calendar	en	You requested more than available for the selected resource:
 your meeting scheduled for %1 has been canceled	calendar	en	Your meeting scheduled for %1 has been canceled
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	en	Your meeting that had been scheduled for %1 has been rescheduled to %2
