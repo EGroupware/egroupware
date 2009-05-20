@@ -218,7 +218,9 @@ enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Se
 enter the title for your site	admin	de	Titel der eGroupWare-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	de	URL oder Dateiname (in phpgwapi/templates/default/images) Ihres Logos
+enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	de	Geben Sie eine URL oder einen Dateinamen (in Ihrem Templates Bilder Verzeichnis) für Ihrem Favoriten (das kleine Icon oben links im Browserfenster) an.
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben sie den VFS-Pfad an, indem sich noch mehr Bilder oder Icons abgelegt und von EGroupware Applikationen gefunden werden können. Der Pfad MUS mit einem / beginnen und von allen Benutzer lesbar sein.
 enter your default ftp server	admin	de	Standard-FTP-Server
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your http proxy server	admin	de	HTTP-Proxy-Server
@@ -314,6 +316,7 @@ login history	admin	de	Login-Kontrolle
 login message	admin	de	Meldung der Login-Seite
 login screen	admin	de	Login-Seite
 login shell	admin	de	Login-Komandointerpreter (Login-Shell)
+login time	admin	de	Login Zeit
 loginid	admin	de	Login-ID
 logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
