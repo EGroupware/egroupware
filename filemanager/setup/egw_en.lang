@@ -53,6 +53,7 @@ created %1,%2	filemanager	en	Created %1,%2
 created between	filemanager	en	created between
 created directory %1	filemanager	en	Created directory %1
 current directory	filemanager	en	Current directory
+custom fields	filemanager	en	Custom fields
 cut	filemanager	en	cut
 cut to clipboard	filemanager	en	Cut to clipboard
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.
@@ -73,6 +74,7 @@ edit settings	filemanager	en	Edit settings
 enter setup user and password	filemanager	en	Enter setup user and password
 enter setup user and password to get root rights	filemanager	en	Enter setup user and password to get root rights
 enter the complete vfs path to specify a fast access link to a folder	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder
+enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder (1).
 enter the complete vfs path to specify your desired start folder.	filemanager	en	Enter the complete VFS path to specify your desired start folder.
 error adding the acl!	filemanager	en	Error adding the ACL!
 error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
@@ -83,6 +85,7 @@ extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
 failed to create directory!	filemanager	en	Failed to create directory!
+favorites	filemanager	en	Favorites
 file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
@@ -122,6 +125,7 @@ no files in this directory.	filemanager	en	No files in this directory.
 no preview available	filemanager	en	No preview available
 no version history for this file/directory	filemanager	en	No version history for this file/directory
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content
+open	filemanager	en	Open
 operation	filemanager	en	Operation
 permission denied!	filemanager	en	Permission denied!
 permissions	filemanager	en	Permissions
@@ -130,6 +134,7 @@ please select a file to delete.	filemanager	en	Please select a file to delete.
 preview	filemanager	en	Preview
 preview %1	filemanager	en	Preview %1
 preview of %1	filemanager	en	Preview of %1
+projectmanager	filemanager	en	Projectmanager
 properties saved.	filemanager	en	Properties saved.
 quick jump to	filemanager	en	Quick jump to
 read & write access	filemanager	en	Read & write access
