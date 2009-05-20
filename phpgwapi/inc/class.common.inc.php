@@ -806,125 +806,122 @@ class common
 	 * @param string $image
 	 * @return string url of the image
 	 */
-	function find_image($appname,$image)
+	static function find_image($appname,$image)
 	{
 		$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
+		$vfs_imagedir = $GLOBALS['egw_info']['server']['vfs_image_dir'];
 
-		if (!@is_array(self::$found_files[$appname]))
+		if (!isset(self::$found_files[$appname]))
 		{
 			$imagedir_olddefault = '/'.$appname.'/templates/default/images';
 			$imagedir_default    = '/'.$appname.'/templates/idots/images';
 
-			if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_olddefault))
+			if (file_exists(EGW_INCLUDE_ROOT.$imagedir_olddefault) && ($d = dir(EGW_INCLUDE_ROOT.$imagedir_olddefault)))
 			{
-				$d = dir(EGW_INCLUDE_ROOT.$imagedir_olddefault);
-				while (false != ($entry = $d->read()))
+				while (($entry = $d->read()))
 				{
-					if ($entry != '.' && $entry != '..')
+					if ($entry[0] != '.')
 					{
 						self::$found_files[$appname][$entry] = $imagedir_olddefault;
 					}
 				}
 				$d->close();
 			}
-
-			if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_default))
+			if (file_exists(EGW_INCLUDE_ROOT.$imagedir_default) && ($d = dir(EGW_INCLUDE_ROOT.$imagedir_default)))
 			{
-				$d = dir(EGW_INCLUDE_ROOT.$imagedir_default);
-				while (false != ($entry = $d->read()))
+				while (($entry = $d->read()))
 				{
-					if ($entry != '.' && $entry != '..')
+					if ($entry[0] != '.')
 					{
 						self::$found_files[$appname][$entry] = $imagedir_default;
 					}
 				}
 				$d->close();
 			}
-
-			if (@is_dir(EGW_INCLUDE_ROOT.$imagedir))
+			if (file_exists(EGW_INCLUDE_ROOT.$imagedir) && ($d = dir(EGW_INCLUDE_ROOT.$imagedir)))
 			{
-				$d = dir(EGW_INCLUDE_ROOT.$imagedir);
-				while (false != ($entry = $d->read()))
+				while (($entry = $d->read()))
 				{
-					if ($entry != '.' && $entry != '..')
+					if ($entry[0] != '.')
 					{
 						self::$found_files[$appname][$entry] = $imagedir;
 					}
 				}
 				$d->close();
 			}
+			//echo $appname; _debug_array(self::$found_files[$appname]);
 		}
-
+		if (!isset(self::$found_files['vfs']))
+		{
+			self::$found_files['vfs'] = array();	// so it get's scaned only once
+			if (egw_vfs::file_exists($vfs_imagedir) &&
+				egw_vfs::is_dir($vfs_imagedir) && ($d = egw_vfs::opendir($vfs_imagedir)))
+			{
+				while (($entry = readdir($d)) !== false)
+				{
+					if (!egw_vfs::is_dir($vfs_imagedir.'/'.$entry))
+					{
+						if (list($type,$subtype) = explode('/',egw_vfs::mime_content_type($vfs_imagedir.'/'.$entry)) && $type == 'image')
+						{
+							self::$found_files['vfs'][$entry] = $vfs_imagedir;
+						}
+					}
+				}
+				closedir($d);
+				//echo 'vfs'; _debug_array(self::$found_files['vfs']);
+			}
+		}
 		if (!$GLOBALS['egw_info']['server']['image_type'])
 		{
 			// priority: GIF->JPG->PNG
-			$img_type=array('.gif','.jpg','.png');
+			$img_type = array('.gif','.jpg','.png','');
 		}
 		else
 		{
 			// priority: : PNG->JPG->GIF
-			$img_type=array('.png','.jpg','.gif');
+			$img_type = array('.png','.jpg','.gif','');
+		}
+		$imgfile = '';
+		// first look in the instance specific image dir in vfs
+		foreach($img_type as $type)
+		{
+			// first look in the instance specific image dir in vfs
+			if(isset(self::$found_files['vfs'][$image.$type]))
+			{
+				$imgfile = egw::link(egw_vfs::download_url(self::$found_files['vfs'][$image.$type].'/'.$image.$type));
+				break;
+			}
+			// then look in the selected template dir
+			if(self::$found_files[$appname][$image.$type] == $imagedir)
+			{
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
+				break;
+			}
+			//then look everywhere else
+			if (isset(self::$found_files[$appname][$image.$type]))
+			{
+				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
+				break;
+			}
 		}
 
-		// first look in the selected template dir
-		if(@self::$found_files[$appname][$image.$img_type[0]]==$imagedir)
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
-		}
-		elseif(@self::$found_files[$appname][$image.$img_type[1]]==$imagedir)
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
-		}
-		elseif(@self::$found_files[$appname][$image.$img_type[2]]==$imagedir)
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
-		}
-		// then look everywhere else
-		elseif(isset(self::$found_files[$appname][$image.$img_type[0]]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
-		}
-		elseif(isset(self::$found_files[$appname][$image.$img_type[1]]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
-		}
-		elseif(isset(self::$found_files[$appname][$image.$img_type[2]]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
-		}
-		elseif(isset(self::$found_files[$appname][$image]))
-		{
-			$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image].'/'.$image;
-		}
-		else
+		if (empty($imgfile))
 		{
 			// searching the image in the api-dirs
 			if (!isset(self::$found_files['phpgwapi']))
 			{
-				$this->find_image('phpgwapi','');
+				self::find_image('phpgwapi','');
 			}
-
-			if(isset(self::$found_files['phpgwapi'][$image.$img_type[0]]))
+			foreach($img_type as $type)
 			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[0]].'/'.$image.$img_type[0];
-			}
-			elseif(isset(self::$found_files['phpgwapi'][$image.$img_type[1]]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[1]].'/'.$image.$img_type[1];
-			}
-			elseif(isset(self::$found_files['phpgwapi'][$image.$img_type[2]]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$img_type[2]].'/'.$image.$img_type[2];
-			}
-			elseif(isset(self::$found_files['phpgwapi'][$image]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image].'/'.$image;
-			}
-			else
-			{
-				$imgfile = '';
+				if(isset(self::$found_files['phpgwapi'][$image.$type]))
+				{
+					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$type].'/'.$image.$type;
+					break;
+				}
 			}
 		}
+		//echo "<p>".__METHOD__."($appname,$image) = $imgfile</p>\n";
 		return $imgfile;
 	}
 
@@ -937,36 +934,37 @@ class common
 	 * @param boolean $use_lang
 	 * @return string url of the image
 	 */
-	function image($appname,$image='',$ext='',$use_lang=True)
+	static function image($appname,$image='',$ext='',$use_lang=True)
 	{
-		if (!is_array($image))
+		static $cache;	// do some caching in the request
+
+		$image_found =& $cache[$appname.implode('-',(array)$image).$ext.$use_lang];
+
+		if (!isset($image_found))
 		{
-			if (empty($image))
+			if (!is_array($image))
 			{
-				return '';
+				if (empty($image))
+				{
+					return '';
+				}
 			}
-			$image = array($image);
-		}
-		if ($use_lang)
-		{
-			while (list(,$img) = each($image))
+			if ($use_lang)
 			{
-				$lang_images[] = $img . '_' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-				$lang_images[] = $img;
+				foreach((array)$image as $img)
+				{
+					$lang_images[] = $img . '_' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+					$lang_images[] = $img;
+				}
+				$image = $lang_images;
 			}
-			$image = $lang_images;
-		}
-		while (empty($image_found) && list(,$img) = each($image))
-		{
-			if(isset(self::$found_files[$appname][$img.$ext]))
+			foreach((array)$image as $img)
 			{
-				$image_found = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$img.$ext].'/'.$img.$ext;
-			}
-			else
-			{
-				$image_found = $this->find_image($appname,$img.$ext);
+				if (($image_found = self::find_image($appname,$img.$ext))) break;
 			}
 		}
+		//else $cache_hit = ' *** CACHE ***';
+		//echo '<p>'.__METHOD__."($appname,".array2string($image).",$ext,$use_lang) = ".array2string($image_found)." $cache_hit</p>\n";
 		return $image_found;
 	}
 
@@ -978,13 +976,13 @@ class common
 	 * @param string $extension
 	 * @return string url of the image
 	 */
-	function image_on($appname,$image,$extension='_on')
+	static function image_on($appname,$image,$extension='_on')
 	{
-		if (($with_extension = $this->image($appname,$image,$extension)))
+		if (($with_extension = self::image($appname,$image,$extension)))
 		{
 			return $with_extension;
 		}
-		if(($without_extension = $this->image($appname,$image)))
+		if(($without_extension = self::image($appname,$image)))
 		{
 			return $without_extension;
 		}

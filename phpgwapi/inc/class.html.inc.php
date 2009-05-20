@@ -889,8 +889,9 @@ class html
 		{
 			$name = $GLOBALS['egw']->link('/index.php',$name);
 		}
-		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://')
+		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://' || stripos($name,'etemplate/thumbnail.php') )
 		{
+			if (!($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://')) $name = '/'.$name;
 			$url = $name;
 		}
 		else	// no URL, so try searching the image
@@ -912,7 +913,7 @@ class html
 				$path = EGW_SERVER_ROOT.$url;
 			}
 
-			if (is_null($path) || !@is_readable($path))
+			if (is_null($path) || (!@is_readable($path) && stripos($path,'webdav.php')===false))
 			{
 				// if the image-name is a percentage, use a progressbar
 				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
