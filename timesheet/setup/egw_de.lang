@@ -5,8 +5,10 @@ actions	timesheet	de	Aktionen
 all projects	timesheet	de	Alle Projekte
 both: allow to use projectmanager and free project-names	admin	de	Beides: verwende Projektmanager und freie Projektnamen
 by	timesheet	de	von
+comment by %1 at %2:	timesheet	de	Übertragen von %1 am %2
 create new links	timesheet	de	Neue Verknüpfung erstellen
 creating new entry	timesheet	de	neuen Eintrag anlegen
+custom fields	timesheet	de	Benutzerdefinierte Felder
 delete this entry	timesheet	de	Diesen Eintrag löschen
 edit this entry	timesheet	de	diesen Eintrag bearbeiten
 empty if identical to duration	timesheet	de	leer lassen wenn gleich Dauer
@@ -18,12 +20,14 @@ error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
 existing links	timesheet	de	Bestehende Verknüpfungen
 full: use only projectmanager	admin	de	Komplett: verwende nur Projektmanager
 general	timesheet	de	Allgemein
+global categories	timesheet	de	Globale Kategorien
 last modified	timesheet	de	Zuletzt geändert
 last month	timesheet	de	Letzten Monat
 last week	timesheet	de	Letzte Woche
 last year	timesheet	de	Letztes Jahr
 leave it empty for a full week	timesheet	de	Leer lassen für eine volle Woche
 links	timesheet	de	Verknüpfungen
+new ticket submitted by %1 at %2	timesheet	de	Neues Ticket erstellt von %1 am %2
 no details	timesheet	de	Keine Details
 no project	timesheet	de	Kein Projekt
 none: use only free project-names	admin	de	Keine: verwende nur freie Projektnamen
@@ -45,7 +49,9 @@ sum %1:	timesheet	de	Summe %1:
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Dieses Jahr
+ticket modified by %1 at %2	timesheet	de	Ticket geändert von %1 am %2
 timesheet	common	de	Stundenzettel
+tracker	timesheet	de	Verfolgungssystem
 unitprice	timesheet	de	Preis pro Einheit
 view this entry	timesheet	de	Diesen Eintrag anzeigen
 week	timesheet	de	Woche

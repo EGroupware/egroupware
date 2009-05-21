@@ -5,8 +5,10 @@ actions	timesheet	en	Actions
 all projects	timesheet	en	All projects
 both: allow to use projectmanager and free project-names	admin	en	Both: allow to use ProjectManager and free project-names
 by	timesheet	en	by
+comment by %1 at %2:	timesheet	en	Comment by %1 at %2:
 create new links	timesheet	en	Create new links
 creating new entry	timesheet	en	creating new entry
+custom fields	timesheet	en	Custom fields
 delete this entry	timesheet	en	Delete this entry
 edit this entry	timesheet	en	Edit this entry
 empty if identical to duration	timesheet	en	empty if identical to duration
@@ -21,12 +23,14 @@ exports entries from your timesheet into a csv file. csv means 'comma seperated 
 field must not be empty !!!	timesheet	en	Field must not be empty !!!
 full: use only projectmanager	admin	en	Full: use only ProjectManager
 general	timesheet	en	General
+global categories	timesheet	en	Global Categories
 last modified	timesheet	en	Last modified
 last month	timesheet	en	Last month
 last week	timesheet	en	Last week
 last year	timesheet	en	Last year
 leave it empty for a full week	timesheet	en	Leave it empty for a full week
 links	timesheet	en	Links
+new ticket submitted by %1 at %2	timesheet	en	New ticket submitted by %1 at %2
 no details	timesheet	en	no details
 no project	timesheet	en	No project
 none: use only free project-names	admin	en	None: use only free project-names
@@ -48,9 +52,11 @@ sum %1:	timesheet	en	Sum %1:
 this month	timesheet	en	This month
 this week	timesheet	en	This week
 this year	timesheet	en	This year
+ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
 timesheet	common	en	TimeSheet
 timesheet csv export	timesheet	en	Timesheet CSV export
 timesheet openoffice export	timesheet	en	Timesheet OpenOffice export
+tracker	timesheet	en	Tracker
 unitprice	timesheet	en	Unitprice
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week

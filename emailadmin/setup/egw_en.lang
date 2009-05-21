@@ -99,6 +99,7 @@ reset filter	emailadmin	en	reset filter
 select type of imap server	emailadmin	en	select type of IMAP server
 select type of imap/pop3 server	emailadmin	en	Select type of IMAP/POP3 server
 select type of smtp server	emailadmin	en	Select type of SMTP Server
+send using this email-address	emailadmin	en	send using this eMail-Address
 server settings	emailadmin	en	Server settings
 sieve server hostname or ip address	emailadmin	en	Sieve server hostname or ip address
 sieve server port	emailadmin	en	Sieve server port
