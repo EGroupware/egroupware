@@ -420,13 +420,15 @@ class etemplate extends boetemplate
 			{
 				foreach($this->get_widgets_by_type('tab') as $widget)
 				{
-					foreach(explode('|',$widget['name']) as $tab)
+					$tab_name = $tabs = $widget['name'];
+					if (strpos($tabs,'=') !== false) list($tab_name,$tabs) = explode('=',$tabs,2);
+					foreach(explode('|',$tabs) as $tab)
 					{
 						if (strpos('.',$tab) === false) $tab = $this->name.'.'.$tab;
 						$tab_tpl = new etemplate($tab);
 						if ($tab_tpl->get_widget_by_name($name))
 						{
-							$content[$widget['name']] = $tab;
+							$content[$tab_name] = $tab;
 							break 3;
 						}
 					}
