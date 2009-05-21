@@ -26,6 +26,13 @@ var current_app = 'etemplate';
 var ajax_select_timer_id = 0;
 var ajax_select_timeout = 300;
 
+// These keys will not trigger a search if the results box is currently displayed
+var no_search_keys = [
+	'9',		// Tab
+	'38', '63232', 	// Up
+	'40', '63233'	// Down
+];
+
 function ajax_select_widget_setup(widget_id, onchange, options, currentapp) {
 	current_app = currentapp;
 	if(onchange) {
@@ -93,10 +100,17 @@ function checkKey(e, value) {
 	/*
 	 * We check for Tab, Up and Down
 	 */
-	if (e.keyCode != '9' // Tab
-		&& e.keyCode != '38' && e.keyCode != '63232' 	// Up
-		&& e.keyCode != '40' && e.keyCode != '63233'	// Down
-	) return; // The user has not pressed anything we're interested in
+	var interested = false;
+	for(var i = 0; i < no_search_keys.length; i++) {
+		if(e.keyCode == no_search_keys[i]) {
+			interested = true;
+			break;
+		}
+	}
+	if (!interested) {
+		return; // The user has not pressed anything we're interested in
+	}
+
 	if(e.target) {
 		var target = e.target;
 	} else if (e.srcElement) {
@@ -116,6 +130,7 @@ function checkKey(e, value) {
 	if(results.childNodes.length > 0) {
 		e.cancelBubble = true;
 		if(e.stopPropegation) e.stopPropegation();
+		clearTimeout(ajax_select_timer_id);
 	} else {
 		return false;
 	}
@@ -231,12 +246,25 @@ function change(e, value) {
 	}
 
 	var base_id = id.substr(0, id.lastIndexOf('['));
+
 	if(document.getElementById(base_id + '[results]')) {
 		set_id = base_id + '[results]'; 
-		// Tab doesn't trigger the search
-		if(e.keyCode == 9 ) {
-			return;
+
+		/*
+		 * We check for Tab, Up and Down
+		 */
+		var interested = false;
+		for(var i = 0; i < no_search_keys.length; i++) {
+			if(e.keyCode == no_search_keys[i]) {
+				interested = true;
+				break;
+			}
 		}
+		if (interested && document.getElementById(set_id).style.display == 'block') {
+			clearTimeout(ajax_select_timer_id);
+			return; // Results are shown, allow keys to move the selection cursor
+		}
+
 	} else {
 		set_id = base_id + '[search]';
 	}
