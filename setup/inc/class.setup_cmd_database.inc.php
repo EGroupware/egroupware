@@ -93,6 +93,9 @@ class setup_cmd_database extends setup_cmd
 				case 'test_db':
 					$msg = $this->connect();
 					break;
+				case 'drop':
+					$msg = $this->drop();
+					break;
 				case 'create_db':
 				default:
 					$msg = $this->create();
@@ -185,6 +188,29 @@ class setup_cmd_database extends setup_cmd
 			throw new egw_exception_wrong_userinput(lang('%1 database %2 on %3 already contains the following tables:',
 				$this->db_type,$this->db_name,$this->db_host.($this->db_port?':'.$this->db_port:'')).' '.
 				implode(', ',$tables));
+		}
+		return $msg;
+	}
+
+	/**
+	 * Drop database and user
+	 *
+	 * @return string with success message
+	 * @throws egw_exception_wrong_userinput
+	 * @throws egw_db_exception if database not exist
+	 */
+	private function drop()
+	{
+		$this->connect($this->db_root,$this->db_root_pw,$this->db_meta);
+		$this->test_db->query('DROP DATABASE '.$this->test_db->name_quote($this->db_name),__LINE__,__FILE__);
+		$msg = lang('Datebase %1 droped.',$this->db_name);
+		try {
+			$this->test_db->query('DROP USER '.$this->test_db->quote($this->db_user).'@'.
+				$this->test_db->quote($this->db_grant_host?$this->db_grant_host:'%'),__LINE__,__FILE__);
+		}
+		catch (egw_db_exception $e) {
+			// we make this no fatal error, as the granthost might be something else ...
+			$msg .= ' '.lang('Error dropping User!');
 		}
 		return $msg;
 	}
