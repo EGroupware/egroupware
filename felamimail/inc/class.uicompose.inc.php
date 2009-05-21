@@ -252,6 +252,10 @@
 					<img src="'.$GLOBALS['egw']->common->image('filemanager','navbar').'" height="18">
 				</button>');
 			}
+			else
+			{
+				$this->t->set_var('vfs_attach_button','');
+			}
 			$linkData = array
 			(
 				'menuaction'	=> 'felamimail.uicompose.action',

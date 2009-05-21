@@ -692,6 +692,10 @@
 						}
 						$this->t->set_var('vfs_save',$vfs_save);
 					}
+					else
+					{
+						$this->t->set_var('vfs_save','');
+					}
 					$this->t->parse('attachment_rows','message_attachement_row',True);
 				}
 			} else {
@@ -1089,7 +1093,7 @@
 					// create links for ftp sites
 					#$newBody = preg_replace("/((ftp:\/\/)|(ftp\.))([\w\.,-.,\/.,\?.,\=.,&amp;]+)/i",
 					#	"<a href=\"ftp://$3$4\" target=\"_blank\"><font color=\"blue\">ftp://$3$4</font></a>", $newBody);
-					$newBody = html::activate_links($newBody);	
+					$newBody = html::activate_links($newBody);
 					// create links for email addresses
 					$this->parseEmail($newBody);
 					$newBody	= $this->highlightQuotes($newBody);
