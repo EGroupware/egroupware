@@ -29,6 +29,7 @@ any of	felamimail	de	mit einem
 any status	felamimail	de	Alle Stati
 anyone	felamimail	de	jeder
 as a subfolder of	felamimail	de	als Unterordner von
+attach	felamimail	de	Anhängen
 attachments	felamimail	de	Anlagen
 authentication required	felamimail	de	Anmeldung erforderlich
 auto refresh folder list	felamimail	de	Ordnerliste automatisch aktualisieren
@@ -60,7 +61,9 @@ compose as new	felamimail	de	als neue Nachricht verwenden
 compress folder	felamimail	de	Ordner komprimieren
 condition	felamimail	de	Bedingung
 configuration	felamimail	de	Konfiguration
+configure a valid imap server in emailadmin for the profile you are using.	felamimail	de	Konfigurieren Sie einen gültigen IMAP Server im emailadmin für das von Ihnen verwendete Profil
 connection dropped by imap server.	felamimail	de	Verbindung von IMAP Server beendet.
+contact not found!	felamimail	de	Kontakt nicht gefunden!
 contains	felamimail	de	enthält
 could not complete request. reason given: %s	felamimail	de	Konnte Anfrage nicht beenden. Grund: %s
 could not import message:	felamimail	de	Konnte diese Nachricht nicht importieren:
@@ -111,6 +114,11 @@ do you really want to delete the selected accountsettings and the assosiated ide
 do you really want to delete the selected signatures?	felamimail	de	Möchten Sie die ausgewählte Signatur wirklich löschen?
 do you really want to move the selected messages to folder:	felamimail	de	Wollen sie die ausgewählten Nachrichten in folgenden Ordner verschieben:
 do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	de	Wollen Sie vor dem verschieben von Mails in andere Ordner gefragt werden?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen einer Mailweiterleitung (via SIEVE) unterbinden.
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden.
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen von Benachrichtigungen per eMail (via SIEVE), wenn neue Nachrichten eintreffen, unterbinden.
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen einer Abwesendheitsnotiz (via SIEVE) unterbinden.
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	de	Möchten Sie die Verwaltung von Ordnern verhindern (anlegen, abonnieren,Zugriffsrechte)?
 does not contain	felamimail	de	enthält nicht
 does not exist on imap server.	felamimail	de	existiert nicht auf dem IMAP Server
 does not match	felamimail	de	trifft nicht zu
@@ -156,12 +164,14 @@ error opening	felamimail	de	Fehler beim Öffnen
 error saving %1!	felamimail	de	Fehler beim Speichern von %1!
 error:	felamimail	de	FEHLER:
 error: could not save message as draft	felamimail	de	FEHLER: Die Nachricht konnte nicht als Entwurf gespeichert werden.
+error: message could not be displayed.	felamimail	de	FEHLER: Die Nachricht kann nicht angezeigt werden.
 every	felamimail	de	alle
 every %1 days	felamimail	de	alle %1 Tage
 expunge	felamimail	de	Endgültig löschen
 extended	felamimail	de	Erweitert
 felamimail	common	de	eMail
 file into	felamimail	de	verschiebe nach
+filemanager	felamimail	de	Dateimanager
 files	felamimail	de	Dateien
 filter active	felamimail	de	Filter aktiv
 filter name	felamimail	de	Filtername
@@ -274,6 +284,7 @@ message list	felamimail	de	Nachrichtenliste
 messages	felamimail	de	Nachrichten
 mon	felamimail	de	Mo
 move	felamimail	de	verschieben
+move folder	felamimail	de	Ordner verschieben
 move messages	felamimail	de	Nachrichten verschieben
 move selected to	felamimail	de	verschieben nach
 move to trash	felamimail	de	in den Trash-Ordner verschieben
@@ -288,10 +299,12 @@ no active imap server found!!	felamimail	de	Kein aktiver IMAP Server gefunden!!
 no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	de	Keine Empfänger Adresse (To/CC/BCC ) angegeben und kein Ordner zur Ablage der Mail spezifiziert.
 no encryption	felamimail	de	keine Verschlüsselung
 no filter	felamimail	de	kein Filter
+no folders	felamimail	de	Keine Ordner
 no folders found	felamimail	de	Keine Ordner gefunden
 no folders were found to subscribe to!	felamimail	de	Keine Order gefunden, die bestellt werden können!
 no folders were found to unsubscribe from!	felamimail	de	Keine Order gefunden, die abbestellt werden können!
 no highlighting is defined	felamimail	de	keine Hervorhebung definiert
+no imap server host configured!!	felamimail	de	Kein IMAP Server (Host) konfiguriert!
 no message returned.	felamimail	de	Keine Nachrichten gefunden.
 no messages found...	felamimail	de	keine Nachrichten gefunden...
 no messages selected, or lost selection. changing to folder	felamimail	de	Es wurden keine Nachrichten ausgewählt, oder die Auswahl ging verloren. Wechsel zum Ordner
@@ -304,6 +317,8 @@ no subject given!	felamimail	de	Kein Betreff angegeben!
 no supported imap authentication method could be found.	felamimail	de	Keine unterstützte IMAP Authentifizierungsmethode gefunden.
 no valid emailprofile selected!!	felamimail	de	Sie haben kein gültiges E-Mail-Profil ausgewählt!
 none	felamimail	de	kein
+none, create all	felamimail	de	keine, erstellt alle
+notify when new mails arrive on these folders	felamimail	de	Benachrichtigung, wenn neue eMails in diesen Ordnern ankommen
 on	felamimail	de	am
 on behalf of	felamimail	de	im Auftrag von
 one address is not valid	felamimail	de	Eine Adresse ist ungültig
@@ -313,6 +328,7 @@ only unseen	felamimail	de	Nur nicht gesehene
 open all	felamimail	de	Öffne alle
 options	felamimail	de	Optionen
 or	felamimail	de	oder
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	de	oder konfigurieren Sie einen gültigen IMAP Server unter Verwendung von persönlichen Identitäten (Sidebox Menü).
 organisation	felamimail	de	Organisation
 organization	felamimail	de	Organisation
 organization name	admin	de	Name der Organisation
@@ -320,6 +336,7 @@ original message	felamimail	de	ursprüngliche Nachricht
 outgoing mail server(smtp)	felamimail	de	ausgehender Mailserver (SMTP)
 participants	felamimail	de	Teilnehmer
 personal information	felamimail	de	persönliche Informationen
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	de	Bitte fragen Sie Ihren Administrator um die IMAP Einstellungen für Sie zu korrigieren
 please select a address	felamimail	de	Bitte wählen Sie eine Adresse
 please select the number of days to wait between responses	felamimail	de	Bitte wählen wieviele Tage zwischen den Antworten gewartet werden soll
 please supply the message to send with auto-responses	felamimail	de	Bitte geben Sie eine Nachricht eine die mit der automatischen Antwort gesendet werden soll
@@ -412,6 +429,7 @@ the imap server does not appear to support the authentication method selected. p
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	de	Der Absender der Nachricht hat eine Antwort angefordert, welche Ihm anzeigt das Sie seine Nachricht gelesen haben. Wollen Sie diese Antwort senden?
 the mimeparser can not parse this message.	felamimail	de	Der MIME Parser versteht diese Nachricht nicht.
 then	felamimail	de	dann
+there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfiguriert
 this folder is empty	felamimail	de	DIESER ORDNER IST LEER
 this php has no imap support compiled in!!	felamimail	de	Dieses PHP hat keine IMAP Unterstützung!!
 thu	felamimail	de	Do
@@ -464,6 +482,8 @@ viewing message	felamimail	de	zeige Nachricht
 viewing messages	felamimail	de	zeige Nachrichten
 wed	felamimail	de	Mi
 when deleting messages	felamimail	de	wenn Nachrichten gelöscht werden
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche Mailordner, zusätzlich zum Gesendet Ordner, sollen im Gesendet-Ordner Anzeigeschema dargestellt werden.
+which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren
 with message	felamimail	de	mit folgender Nachricht
 with message "%1"	felamimail	de	mit der Nachricht "%1"
 wrap incoming text at	felamimail	de	Text umbrechen nach

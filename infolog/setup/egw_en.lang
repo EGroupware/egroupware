@@ -149,6 +149,7 @@ finish	infolog	en	finish
 for which types should this field be used	infolog	en	for which types should this field be used
 from	infolog	en	From
 general	infolog	en	General
+global categories	infolog	en	Global Categories
 group owner for	infolog	en	Group owner for
 high	infolog	en	high
 history	infolog	en	History

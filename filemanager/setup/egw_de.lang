@@ -13,7 +13,7 @@
 %1 files moved.	filemanager	de	%1 Dateien verschoben.
 %1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
 %1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen.
-%1 the following files into current directory	filemanager	de	Die foldenden Dateien in das aktuelle Verzeichnis %1
+%1 the following files into current directory	filemanager	de	Die folgenden Dateien in das aktuelle Verzeichnis %1
 %1 urls %2 to clipboard.	filemanager	de	%1 Adressen in die Zwischenablage %2.
 accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
@@ -53,6 +53,7 @@ created %1,%2	filemanager	de	Erstellt %1, %2
 created between	filemanager	de	erstellt zwischen
 created directory %1	filemanager	de	Verzeichis %1 erstellt
 current directory	filemanager	de	Aktuelles Verzeichnis
+custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe is NEIN. Der Verweis wird nicht angezeit, Sie können aber immer zu diesem Verzeichnis navigieren, oder Sie konfigurieren das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis.
@@ -73,6 +74,7 @@ edit settings	filemanager	de	Einstellungen bearbeiten
 enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Setup Benutzers und Passwort einzugeben um root Rechte zu bekommen
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
+enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	de	Geben Sie den kompletten Pfad ein, um einen Schnelle Zugangsverknüpfung zu einem Verzeichnis zu erzeugen (1)
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
@@ -83,6 +85,7 @@ extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte ACL
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
+favorites	filemanager	de	Favoriten
 file	filemanager	de	Datei
 file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte editieren Sie diese, oder löschen Sie sie.
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
@@ -122,6 +125,7 @@ no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis.
 no preview available	filemanager	de	Keine Vorschau verfügbar
 no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
+open	filemanager	de	Öffnen
 operation	filemanager	de	Vorgang
 permission denied!	filemanager	de	Zugriff verweigert!
 permissions	filemanager	de	Zugriffsrechte
@@ -130,6 +134,7 @@ please select a file to delete.	filemanager	de	Bitte wählen Sie eine Datei zum 
 preview	filemanager	de	Vorschau
 preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
+projectmanager	filemanager	de	Projektmanager
 properties saved.	filemanager	de	Eigenschaften gespeichert.
 quick jump to	filemanager	de	Springe zu
 read & write access	filemanager	de	Lese- und Schreibzugriff

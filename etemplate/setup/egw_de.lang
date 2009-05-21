@@ -3,6 +3,7 @@
 %1 etemplates for application '%2' dumped to '%3'	etemplate	de	%1 eTemplates für die Anwendung '%2' nach '%3' geschrieben
 %1 etemplates found	etemplate	de	%1 eTemplates gefunden
 %1 matches on search criteria	etemplate	de	%1 Treffer bei der Suche
+%1 more...	etemplate	de	%1 mehr...
 %1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplates importiert für die Anwendung '%2'
 %s disabled	etemplate	de	%s deaktiviert
 %s needed	etemplate	de	%s benötigt
@@ -10,9 +11,11 @@
 %s onchange	etemplate	de	%s onChange
 %s readonly	etemplate	de	%s Schreibschutz
 '%1' has an invalid format !!!	etemplate	de	'%1' hat ein ungültiges Format !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	de	'%1' ist keine php Datei in dem EGW Server Wurzelverzeichnis (%2)!
 '%1' is not a valid date !!!	etemplate	de	'%1' ist ein ungültiges Datum !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Kommazahl !!!
 '%1' is not a valid integer !!!	etemplate	de	'%1' ist keine gültige Ganzzahl !!!
+'%1' is not allowed ('%2')!	etemplate	de	'%1' ist NICHT erlaubt ('%2')!
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
 accesskey	etemplate	de	Tastaturkürzel
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	de	Ein Tastaturkürzel kann auch über ein & in der Beschriftung angegeben werden
@@ -225,10 +228,12 @@ linklist	etemplate	de	VerknüpfungListe
 linkstring	etemplate	de	VerknüpfungZeichenkette
 linkto	etemplate	de	VerknüpfungZu
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
+message ...	etemplate	de	Nachricht ...
 middle	etemplate	de	Mittig
 minute	etemplate	de	Minute
 minutes	etemplate	de	Minuten
 month	etemplate	de	Monat
+more than 1 match for '%1'	etemplate	de	Mehr als 1 trift für '%1' zu
 multicolumn indices	etemplate	de	Mehrspaltige Indices
 name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
@@ -248,6 +253,7 @@ nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
 no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
+no matches found	etemplate	de	Keine Treffer gefunden
 no row to swap with !!!	etemplate	de	Keine Zeile um damit zu tauschen !!!
 not null	etemplate	de	NOT NULL
 nothing	etemplate	de	nichts
@@ -284,6 +290,7 @@ read etemplate from database (for the keys above)	etemplate	de	ließt ein eTempl
 readonly	etemplate	de	nur lesen
 remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
+required	etemplate	de	Benötigt
 returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
 right	etemplate	de	Rechts
 row...	etemplate	de	Zeile...
@@ -403,3 +410,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	de	XML Datei zum Importieren
 xslt template	etemplate	de	XSLT Template
 year	etemplate	de	Jahr
+you are not allowed to export more then %1 entries!	etemplate	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
+you can respond by visiting:	etemplate	de	Sie können unter dem folgenden Verweis antworten:

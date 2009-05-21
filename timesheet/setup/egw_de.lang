@@ -14,9 +14,11 @@ both: allow to use projectmanager and free project-names	admin	de	Beides: verwen
 by	timesheet	de	von
 changed status	timesheet	de	Status geändert
 check all	timesheet	de	Alle selektieren
+comment by %1 at %2:	timesheet	de	Übertragen von %1 am %2
 create new links	timesheet	de	Neue Verknüpfung erstellen
 creates a new field	timesheet	de	neues Feld anlegen
 creating new entry	timesheet	de	neuen Eintrag anlegen
+custom fields	timesheet	de	Benutzerdefinierte Felder
 delete this entry	timesheet	de	Diesen Eintrag löschen
 delete this status	timesheet	de	Diesen Status löschen
 delete timesheet	timesheet	de	Stundenzettel löschen
@@ -39,6 +41,7 @@ exports entries from your timesheet into a csv file. csv means 'comma seperated 
 field must not be empty !!!	timesheet	de	Dieses Feld darf nicht leer sein!!!
 full: use only projectmanager	admin	de	Komplett: verwende nur Projektmanager
 general	timesheet	de	Allgemein
+global categories	timesheet	de	Globale Kategorien
 last modified	timesheet	de	Zuletzt geändert
 last month	timesheet	de	Letzten Monat
 last week	timesheet	de	Letzte Woche
@@ -49,6 +52,7 @@ length<br>rows	timesheet	de	Länge<br>Reihe
 links	timesheet	de	Verknüpfungen
 max length of the input [, length of the inputfield (optional)]	timesheet	de	maximale Länge der Eingabe[,Länge des Eingabefeldes (optional)]
 modify the status of the timesheet	timesheet	de	Status des Stundenzettels verändern
+new ticket submitted by %1 at %2	timesheet	de	Neues Ticket erstellt von %1 am %2
 no details	timesheet	de	Keine Details
 no project	timesheet	de	Kein Projekt
 none: use only free project-names	admin	de	Keine: verwende nur freie Projektnamen
@@ -80,12 +84,14 @@ the text displayed to the user	timesheet	de	der Text wird dem Benutzer angezeigt
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Dieses Jahr
+ticket modified by %1 at %2	timesheet	de	Ticket geändert von %1 am %2
 timesheet	common	de	Stundenzettel
 timesheet csv export	timesheet	de	Export des  Stundenzettels als CSV
 timesheet openoffice export	timesheet	de	Export des  Stundenzettels als Open Office
 timesheet status-%1 '%2' added.	timesheet	de	Stundenzettel Status %1 '%2' hinzugefügt.
 timesheet-%1 '%2' updated.	timesheet	de	Stundenzettel Status %1 '%2' geändert
 timesheet-%1 deleted.	timesheet	de	Stundenzettel %1 gelöscht
+tracker	timesheet	de	Verfolgungssystem
 unitprice	timesheet	de	Preis pro Einheit
 values for selectbox	timesheet	de	Werte der Auswahlbox
 view this entry	timesheet	de	Diesen Eintrag anzeigen

@@ -99,6 +99,7 @@ reset filter	emailadmin	de	Filter zurücksetzen
 select type of imap server	emailadmin	de	IMAP-Server Typ auswählen
 select type of imap/pop3 server	emailadmin	de	IMAP/POP3-Server Typ auswählen
 select type of smtp server	emailadmin	de	SMTP-Server Typ auswählen
+send using this email-address	emailadmin	de	zum Versenden wird diese E-Mail Adresse benutzt
 server settings	emailadmin	de	Server-Einstellungen
 sieve server hostname or ip address	emailadmin	de	Sieve-Server Hostname oder IP-Adresse
 sieve server port	emailadmin	de	Sieve-Server Port
