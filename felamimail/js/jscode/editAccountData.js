@@ -24,6 +24,11 @@ function onchange_active(_checkbox)
 			for(i=0; i<outgoingInputs.length; i++) {
 				outgoingInputs[i].disabled = false;
 			}
+			document.getElementById('ic[folderstoshowinhome]').disabled =false;
+			document.getElementById('ic[trashfolder]').disabled =false;
+			document.getElementById('ic[sentfolder]').disabled =false;
+			document.getElementById('ic[draftfolder]').disabled =false;
+			document.getElementById('ic[templatefolder]').disabled =false;
 		} else {
 			for(i=0; i<incomingInputs.length; i++) {
 				incomingInputs[i].disabled = true;
@@ -31,6 +36,11 @@ function onchange_active(_checkbox)
 			for(i=0; i<outgoingInputs.length; i++) {
 				outgoingInputs[i].disabled = true;
 			}
+			document.getElementById('ic[folderstoshowinhome]').disabled =true;
+			document.getElementById('ic[trashfolder]').disabled =true;
+			document.getElementById('ic[sentfolder]').disabled =true;
+			document.getElementById('ic[draftfolder]').disabled =true;
+			document.getElementById('ic[templatefolder]').disabled =true;
 		}
 
 		onchange_og_smtpauth(document.getElementById('og[smtpauth]'));
@@ -43,6 +53,11 @@ function onchange_active(_checkbox)
 		for(i=0; i<outgoingInputs.length; i++) {
 			outgoingInputs[i].disabled = true;
 		}
+		document.getElementById('ic[folderstoshowinhome]').disabled =true;
+		document.getElementById('ic[trashfolder]').disabled =true;
+		document.getElementById('ic[sentfolder]').disabled =true;
+		document.getElementById('ic[draftfolder]').disabled =true;
+		document.getElementById('ic[templatefolder]').disabled =true;
 	}
 }
 
