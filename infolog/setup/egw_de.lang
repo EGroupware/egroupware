@@ -41,8 +41,10 @@ add:	infolog	de	Hinzufügen:
 all	infolog	de	alle
 all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, zB. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
+alternatives	infolog	de	Alternativen
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
+are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den Infolog schliessen?
 are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
 attach a file	infolog	de	Datei anhängen
 attach file	infolog	de	Datei anhängen
@@ -64,6 +66,8 @@ check to specify custom contact	infolog	de	Ankreutzen um einen eigenen Kontakt a
 click here to create the link	infolog	de	hier klicken um die Verknüpfung zu erzeugen
 click here to start the search	infolog	de	hier klicken um die Suche zu starten
 close	infolog	de	Schließen
+close all	infolog	de	Alle schließen
+close this entry and all listed sub-entries	infolog	de	Diesen Eintrag und alle Untereintraäge schliessen
 comment	infolog	de	Kommentar
 completed	infolog	de	Erledigt
 configuration	infolog	de	Konfiguration
@@ -124,6 +128,7 @@ don't show infolog	infolog	de	InfoLog NICHT anzeigen
 done	infolog	de	erledigt
 download	infolog	de	Datei laden
 duration	infolog	de	Dauer
+e-mail:	infolog	de	E-Mail
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
 edit	infolog	de	Bearbeiten
 edit or create categories for ingolog	infolog	de	Kategorien für InfoLog bearbeiten oder neu anlegen
@@ -235,6 +240,7 @@ own open	infolog	de	eigene offen
 own overdue	infolog	de	eigene überfällig
 own upcoming	infolog	de	eigene zukünftig
 parent	infolog	de	Elterneintrag
+parent infolog	infolog	de	Übergeordneter Infolog
 path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!!!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
@@ -253,6 +259,7 @@ priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
 project settings: price, times	infolog	de	Einstellungen zum Projekt: Preis, Zeiten
+projectmanager	infolog	de	Projektmanager
 re-planned	infolog	de	Umgeplant
 re-planned time	infolog	de	Umgeplante Zeit
 re:	infolog	de	Re:
@@ -363,6 +370,8 @@ which implicit acl rights should the responsible get?	infolog	de	Welche implizit
 which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
 will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
+yes - close	infolog	de	Ja schließen
+yes - close including sub-entries	infolog	de	Ja- schließen inclusive Untereinträge
 yes - delete	infolog	de	Ja - Löschen
 yes - delete including sub-entries	infolog	de	Ja - Löschen einschließlich Untereinträge
 yes, noone can purge deleted items	infolog	de	Ja, niemand darf gelöschte Einträge bereinigen

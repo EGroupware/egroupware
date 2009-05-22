@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="infolog.edit.description" template="" lang="" group="0" version="1.0.1.002">
+	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
 		<grid width="100%" height="245" border="0">
 			<columns>
 				<column width="100"/>
@@ -54,24 +54,24 @@
 					<description span="all" value="General"/>
 				</row>
 				<row class="row">
-					<description value="Priority" options=",,,info_priority"/>
+					<description options=",,,info_priority" value="Priority"/>
 					<menulist>
 						<menupopup id="info_priority" statustext="select a priority for this task"/>
 					</menulist>
 				</row>
 				<row class="row">
 					<description options=",,,info_location" value="Location"/>
-					<textbox id="info_location" size="80" maxlength="255"/>
+					<textbox size="80" maxlength="255" id="info_location"/>
 				</row>
 				<row class="th">
 					<description span="all" value="Delegation"/>
 				</row>
 				<row class="row" valign="top">
-					<description value="Responsible" options=",,,info_responsible"/>
-					<listbox type="select-account" rows="10" options="both" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
+					<description options=",,,info_responsible" value="Responsible"/>
+					<listbox type="select-account" id="info_responsible" rows="10" options="both" statustext="select a responsible user: a person you want to delegate this task"/>
 				</row>
 				<row class="row" disabled="1">
-					<description value="Confirm" options=",,,info_confirm"/>
+					<description options=",,,info_confirm" value="Confirm"/>
 					<menulist>
 						<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both"/>
 					</menulist>
@@ -79,7 +79,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.project" template="" lang="" group="0" version="1.2.001">
+	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
@@ -104,8 +104,12 @@
 					<description options=",,,info_planned_time" value="planned time"/>
 					<date-duration id="info_planned_time" options=",$cont[duration_format]"/>
 				</row>
+				<row class="row">
+					<description options=",,,info_replanned_time" value="Re-planned time"/>
+					<date-duration id="info_replanned_time" options=",$cont[duration_format]"/>
+				</row>
 				<row class="row" valign="top" height="60%">
-					<description options=",,,info_used_time" value="used time"/>
+					<description options=",,,info_used_time" value="used time" statustext="Leave blank to get the used time calculated by timesheet entries"/>
 					<date-duration id="info_used_time"/>
 				</row>
 			</rows>
@@ -138,7 +142,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.5.001">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -164,9 +168,10 @@
 				</row>
 				<row class="row">
 					<description value="Category" options=",,,info_cat"/>
-					<menulist span="all">
+					<menulist>
 						<menupopup type="select-cat" options="None" id="info_cat" statustext="select a category for this entry"/>
 					</menulist>
+					<link-entry options="infolog" span="all" label="Parent Infolog" id="info_id_parent"/>
 				</row>
 				<row class="row">
 					<description value="Contact" options=",,,info_from"/>
@@ -185,7 +190,7 @@
 					<textbox size="80" maxlength="255" span="all" id="info_subject" statustext="a short subject for the entry"/>
 				</row>
 				<row valign="top" height="250">
-					<tabbox span="all">
+					<tabbox span="all" id="description|links|delegation|project|customfields|history">
 						<tabs>
 							<tab label="Description" statustext="longer textual description"/>
 							<tab label="Links" statustext="Links of this entry"/>

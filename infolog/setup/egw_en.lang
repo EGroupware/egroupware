@@ -41,8 +41,10 @@ add:	infolog	en	Add:
 all	infolog	en	All
 all links and attachments	infolog	en	all links and attachments
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-type)
+alternatives	infolog	en	Alternatives
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	archive
+are you shure you want to close this entry ?	infolog	en	Are you shure you want to close this entry ?
 are you shure you want to delete this entry ?	infolog	en	Are you sure you want to delete this entry ?
 attach a file	infolog	en	Attach a file
 attach file	infolog	en	Attach file
@@ -64,6 +66,8 @@ check to specify custom contact	infolog	en	Check to specify custom contact
 click here to create the link	infolog	en	click here to create the Link
 click here to start the search	infolog	en	click here to start the search
 close	infolog	en	Close
+close all	infolog	en	Close all
+close this entry and all listed sub-entries	infolog	en	Close this entry and all listed sub-entries
 comment	infolog	en	Comment
 completed	infolog	en	Completed
 configuration	infolog	en	Configuration
@@ -124,6 +128,7 @@ don't show infolog	infolog	en	DON'T show InfoLog
 done	infolog	en	done
 download	infolog	en	Download
 duration	infolog	en	Duration
+e-mail:	infolog	en	E-mail:
 each value is a line like <id>[=<label>]	infolog	en	each value is a line like <id>[=<label>]
 edit	infolog	en	Edit
 edit or create categories for ingolog	infolog	en	Edit or create categories for IngoLog
@@ -235,6 +240,7 @@ own open	infolog	en	own open
 own overdue	infolog	en	own overdue
 own upcoming	infolog	en	own upcoming
 parent	infolog	en	Parent
+parent infolog	infolog	en	Parent Infolog
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	path on (web-)serverside<br>eg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	infolog	en	pattern for search in Addressbook
@@ -253,6 +259,7 @@ priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
 project settings: price, times	infolog	en	Project settings: price, times
+projectmanager	infolog	en	Projectmanager
 re-planned	infolog	en	Re-planned
 re-planned time	infolog	en	Re-planned time
 re:	infolog	en	Re:
@@ -360,6 +367,8 @@ which implicit acl rights should the responsible get?	infolog	en	Which implicit 
 which types should the calendar show	infolog	en	Which types should the calendar show
 will-call	infolog	en	will call
 write (add or update) a record by passing its fields.	infolog	en	Write (add or update) a record by passing its fields.
+yes - close	infolog	en	Yes - Close
+yes - close including sub-entries	infolog	en	Yes - Close including sub-entries
 yes - delete	infolog	en	Yes - Delete
 yes - delete including sub-entries	infolog	en	Yes - Delete including sub-entries
 yes, noone can purge deleted items	infolog	en	Yes, noone can purge deleted items
