@@ -146,7 +146,6 @@
 			// read the data from session
 			// all values are empty for a new compose window
 			$sessionData = $this->bocompose->getSessionData();
-
 			if (is_array($_REQUEST['preset']))
 			{
 				#_debug_array($_REQUEST);
@@ -203,6 +202,9 @@
 			{
 				$presetSig = (strtolower($_REQUEST['signature']) == 'no' ? -2 : -1);
 			}
+			if ($sessionData['isDraft'] && !empty($sessionData['signatureID'])) $presetSig = (int)$sessionData['signatureID'];
+			$presetId = NULL;
+			if ($sessionData['isDraft'] && !empty($sessionData['identity'])) $presetId = (int)$sessionData['identity'];
 			$this->display_app_header();
 
 			$this->t->set_file(array("composeForm" => "composeForm.tpl"));
@@ -288,7 +290,7 @@
 					$sessionData['signatureID'] = $singleIdentity->signature;
 				}
 			}
-			$selectFrom = html::select('identity', $defaultIdentity, $identities, true, "style='width:100%;' onchange='changeIdentity(this);'");
+			$selectFrom = html::select('identity', ($presetId ? $presetId : $defaultIdentity), $identities, true, "style='width:100%;' onchange='changeIdentity(this);'");
 			$this->t->set_var('select_from', $selectFrom);
 
 			// navbar(, kind of)

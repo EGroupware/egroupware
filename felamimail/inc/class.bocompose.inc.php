@@ -840,6 +840,7 @@
 			$this->sessionData['folder']    = $_formData['folder'];
 			$this->sessionData['bcc']   = $_formData['bcc'];
 			$this->sessionData['signatureID'] = $_formData['signatureID'];
+			$this->sessionData['identity']  = $_formData['identity'];
 			foreach((array)$this->sessionData['bcc'] as $address) {
 				$address_array  = imap_rfc822_parse_adrlist($address,'');
 				foreach((array)$address_array as $addressObject) {
