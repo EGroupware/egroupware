@@ -870,7 +870,7 @@
 
 			$kses->AddHTML(
 				"a", array(
-					"href" 		=> array('maxlen' => 145, 'minlen' => 10),
+					"href" 		=> array('maxlen' => 348, 'minlen' => 10),
 					"name" 		=> array('minlen' => 2),
 					'target'	=> array('maxlen' => 10)
 				)
@@ -959,7 +959,7 @@
 
 			$kses->AddHTML(
 				'img',array(
-					"src"		=> array("minlen" =>   4, 'maxlen' =>  200, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
+					"src"		=> array("minlen" =>   4, 'maxlen' =>  384, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
 					"align"		=> array("minlen" =>   1),
 					"border"	=> array('maxlen' => 30),
 				)
@@ -1533,7 +1533,9 @@
 					$partHTML = $mimePart;
 				} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'RELATED' && is_array($mimePart->subParts)) {
 					// in a multipart alternative we treat the multipart/related as html part
-					$partHTML = array($mimePart);
+					#$partHTML = array($mimePart);
+					error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
+					$partHTML = $mimePart;
 				}
 			}
 
@@ -1584,8 +1586,10 @@
 		{
 			if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
 			$bodyPart = array();
-			if (self::$debug) _debug_array($_structure);
+			if (self::$debug) _debug_array($_structure); 
+			if (!is_array($_structure)) $_structure = array($_structure);
 			foreach($_structure as $part) {
+				if (self::$debug) echo $part->type."/".$part->subType."<br>";
 				switch($part->type) {
 					case 'MULTIPART':
 						switch($part->subType) {
@@ -1642,9 +1646,10 @@
 		function getTextPart($_uid, $_structure, $_htmlMode = '')
 		{
 			$bodyPart = array();
-
+			#_debug_array($_structure);
 			$partID = $_structure->partID;
 			$mimePartBody = $this->icServer->getBodyPart($_uid, $partID, true);
+			#_debug_array($mimePartBody);
 			#_debug_array(preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding)));
 			if($_structure->subType == 'HTML' && $_htmlMode != 'always_display'  && $_htmlMode != 'only_if_no_text') {
 				$bodyPart = array(
