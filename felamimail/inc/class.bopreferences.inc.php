@@ -176,7 +176,7 @@
 			if(!is_a($profileData, 'ea_preferences') || !is_a($profileData->ic_server[0], 'defaultimap')) {
 				return false;
 			}
-			if($profileData->userDefinedAccounts) {
+			if($profileData->userDefinedAccounts || $profileData->userDefinedIdentities) {
 				// get user defined accounts
 				$allAccountData = $this->getAllAccountData($profileData);
 				if ($allAccountData) {
@@ -196,7 +196,6 @@
 				$this->profileData = $this->sessionData['profileData'];
 			}
 			if(!is_a($this->profileData,'ea_preferences')) {
-
 				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
 				$profileData		= $this->boemailadmin->getUserProfile('felamimail');
 
@@ -223,6 +222,8 @@
 							$rememberID = $accountData['identity']->id;
 						}
 					}
+				}
+				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail']) {
 					$allUserIdentities = $this->getUserDefinedIdentities();
 					if (is_array($allUserIdentities)) {
 						$i=count($allUserIdentities);
