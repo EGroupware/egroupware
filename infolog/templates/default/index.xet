@@ -13,8 +13,8 @@
 			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.001">
-		<grid>
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%" class="my_form">
 			<columns>
 				<column width="2%"/>
 				<column/>
@@ -96,7 +96,10 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
 					<vbox rows="3" cols="1">
-						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+						<hbox readonly="true" options="1,0">
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						</hbox>
 						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
 					</vbox>
 					<vbox rows="3" cols="1" options="0,0">
@@ -149,7 +152,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.002">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.003">
 		<grid>
 			<columns>
 				<column width="2%"/>
@@ -243,7 +246,13 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
 					<vbox rows="3" cols="1" options="0,0">
-						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+						<hbox readonly="true">
+							<hbox readonly="true" options="1,0">
+								<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+								<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+							</hbox>
+							<description/>
+						</hbox>
 						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
 					</vbox>
 					<vbox rows="3" cols="1" options="0,0">
@@ -294,7 +303,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.7.001">
+	<template id="infolog.index" template="" lang="" group="0" version="1.7.003">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="90%"/>
