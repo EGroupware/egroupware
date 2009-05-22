@@ -381,12 +381,12 @@
 			$folderList = array_merge( array('' => lang('default').' '.lang("folder settings")),(is_array($tomerge)?$tomerge:array()));
 
 			$this->t->set_var('allowAccounts',($preferences->userDefinedAccounts ? 1 : 0));
-			$this->t->set_var('identity_selectbox', html::select('identity[signature]',$sigvalue,$allSignatures, true, "style='width: 250px;'"));
-			$this->t->set_var('folder_selectbox', html::select('ic[folderstoshowinhome]',$icServer->folderstoshowinhome,$folderList, true, "style='width: 250px;'",6));
-			$this->t->set_var('trash_selectbox', html::select('ic[trashfolder]',$icServer->trashfolder,$trashOptions, true, "style='width: 250px;'"));
-			$this->t->set_var('sent_selectbox', html::select('ic[sentfolder]',$icServer->sentfolder,$sentOptions, true, "style='width: 250px;'"));
-			$this->t->set_var('draft_selectbox', html::select('ic[draftfolder]',$icServer->draftfolder,$draftOptions, true, "style='width: 250px;'"));
-			$this->t->set_var('template_selectbox', html::select('ic[templatefolder]',$icServer->templatefolder,$templateOptions, true, "style='width: 250px;'"));
+			$this->t->set_var('identity_selectbox', html::select('identity[signature]',$sigvalue,$allSignatures, true, " id=\"identity[signature]\" style='width: 250px;'"));
+			$this->t->set_var('folder_selectbox', html::select('ic[folderstoshowinhome]',$icServer->folderstoshowinhome,$folderList, true, "id=\"ic[folderstoshowinhome]\" style='width: 250px;'",6));
+			$this->t->set_var('trash_selectbox', html::select('ic[trashfolder]',$icServer->trashfolder,$trashOptions, true, "id=\"ic[trashfolder]\" style='width: 250px;'"));
+			$this->t->set_var('sent_selectbox', html::select('ic[sentfolder]',$icServer->sentfolder,$sentOptions, true, "id=\"ic[sentfolder]\" style='width: 250px;'"));
+			$this->t->set_var('draft_selectbox', html::select('ic[draftfolder]',$icServer->draftfolder,$draftOptions, true, "id=\"ic[draftfolder]\" style='width: 250px;'"));
+			$this->t->set_var('template_selectbox', html::select('ic[templatefolder]',$icServer->templatefolder,$templateOptions, true, "id=\"ic[templatefolder]\" style='width: 250px;'"));
 			$linkData = array
 			(
 				'menuaction'    => 'felamimail.uipreferences.editAccountData'
