@@ -626,7 +626,7 @@ class date_widget
 			{
 				for ($n = 0,$str = ''; $n < strlen($data_format); ++$n)
 				{
-					if (strpos('YmdHi',$c = $data_format[$n]) !== false)
+					if (strpos('YmdHis',$c = $data_format[$n]) !== false)
 					{
 						$str .= sprintf($c=='Y'?'%04d':'%02d',$value[$c]);
 					}
