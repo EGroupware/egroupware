@@ -341,7 +341,7 @@
 			$boPreferences->deleteAccountData($accountData);
 			$preferences =& $boPreferences->getPreferences();
 			$allAccountData    = $boPreferences->getAllAccountData($preferences);
-			foreach ($allAccountData as $tmpkey => $accountData)
+			foreach ((array)$allAccountData as $tmpkey => $accountData)
 			{
 				$identity =& $accountData['identity'];
 				foreach($identity as $key => $value) {
