@@ -426,8 +426,14 @@ class boetemplate extends soetemplate
 	 */
 	protected function haveExtension($type,$function='')
 	{
-		return (self::$extensions[$type] || $this->loadExtension($type,$ui)) &&
-						($function == '' || self::$extensions[$type]->public_functions[$function]);
+		if (self::$extensions[$type] || $this->loadExtension($type,$ui))
+		{
+			if (empty($function)) return true;
+
+			return isset(self::$extensions[$type]->public_functions[$function]) ?
+				self::$extensions[$type]->public_functions[$function] : false;
+		}
+		return false;
 	}
 
 	/**
