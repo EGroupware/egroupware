@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -112,7 +112,8 @@ switch($action)
 		if (substr($action,0,2) == '--' && class_exists($class = str_replace('-','_',substr($action,2))) &&
 			is_subclass_of($class,'admin_cmd') && constant($class.'::SETUP_CLI_CALLABLE'))
 		{
-			$args = null;
+			$args = array();
+			$args['domain'] = array_shift($arguments);	// domain must be first argument, to ensure right domain get's selected in header-include
 			foreach($arguments as $arg)
 			{
 				list($name,$value) = explode('=',$arg,2);
@@ -120,7 +121,15 @@ switch($action)
 				{
 					throw new egw_exception_wrong_userinput(lang("Invalid argument '%1' !!!",$arg),90);
 				}
-				$args[$name] = $value;
+				if (substr($name,-1) == ']')	// allow 1-dim. arrays
+				{
+					list($name,$sub) = explode('[',substr($name,0,-1),2);
+					$args[$name][$sub] = $value;
+				}
+				else
+				{
+					$args[$name] = $value;
+				}
 			}
 			$cmd = new $class($args);
 			$msg = $cmd->run();
