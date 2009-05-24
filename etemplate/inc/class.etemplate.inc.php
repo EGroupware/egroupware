@@ -989,7 +989,6 @@ class etemplate extends boetemplate
 
 			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension
 
-			if (is_null($name)) $name = $cell['name'];
 			self::set_array($content,$name,$value);
 
 			if ($cell['type'] == $type.'-'.$sub_type) break;	// stop if no further type-change
@@ -1662,8 +1661,7 @@ class etemplate extends boetemplate
 				break;
 		}
 		// extension-processing need to be after all other and only with diff. name
-		if ($ext_type && !$readonly && ($have = $this->haveExtension($ext_type,'post_process')) &&
-			($have === true || isset($have[$cell['type']])))	// check if post-process should be used for all sub-types
+		if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))
 		{	// unset it first, if it is already set, to be after the other widgets of the ext.
 			$to_process = self::$request->get_to_process($form_name);
 			self::$request->unset_to_process($form_name);
