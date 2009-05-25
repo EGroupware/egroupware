@@ -62,6 +62,10 @@ class setup_cmd_update extends setup_cmd
 
 		$this->check_installed($this->domain,array(14),$this->verbose);
 
+		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4)
+		{
+			return lang('No update necessary, domain %1(%2) is up to date.',$this->domain,$GLOBALS['egw_domain'][$this->domain]['db_type']);
+		}
 		$setup_info = self::$egw_setup->detection->upgrade_exclude($setup_info);
 
 		self::_echo_message($this->verbose,lang('Start updating the database ...'));
