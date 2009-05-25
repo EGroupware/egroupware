@@ -16,6 +16,11 @@
 class setup_cmd_install extends setup_cmd
 {
 	/**
+	 * Allow to run this command via setup-cli
+	 */
+	const SETUP_CLI_CALLABLE = true;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $domain string with domain-name or array with all arguments

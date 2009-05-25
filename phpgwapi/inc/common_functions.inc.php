@@ -1433,6 +1433,10 @@ function egw_exception_handler(Exception $e)
 	{
 		$headline = try_lang('Database error');
 	}
+	elseif ($e instanceof egw_exception_wrong_userinput)
+	{
+		$headline = '';	// message contains the whole message, it's usually no real error but some input validation
+	}
 	else
 	{
 		$headline = try_lang('An error happend');
@@ -1446,8 +1450,8 @@ function egw_exception_handler(Exception $e)
 	// exception handler for cli (command line interface) clients, no html
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
 	{
-		echo $headline.': '.$e->getMessage()."\n";
-		echo $e->getTraceAsString()."\n";
+		echo ($headline ? $headline.': ' : '').$e->getMessage()."\n";
+		if (!($e instanceof egw_exception_wrong_userinput)) echo $e->getTraceAsString()."\n";
 		exit($e->getCode() ? $e->getCode() : 9999);		// allways give a non-zero exit code
 	}
 	// regular GUI exception
