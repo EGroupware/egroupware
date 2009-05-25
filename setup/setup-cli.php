@@ -22,6 +22,7 @@ elseif ($_SERVER['argc'] > 1)
 	$arguments = $_SERVER['argv'];
 	array_shift($arguments);
 	$action = array_shift($arguments);
+	list($_POST['FormDomain']) = explode(',',$arguments[0]);	// header include needs that to detects the right domain
 }
 else
 {
@@ -37,7 +38,6 @@ if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.
 	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
 }
 // setting up the $GLOBALS['egw_setup'] object AND including the header.inc.php if it exists
-$_POST['FormDomain'] = $arguments[0];
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'setup',
@@ -261,7 +261,8 @@ function do_update($arg)
 {
 	global $setup_info;
 
-	list($domain,,,$no_backup) = $options = explode(',',$arg);
+	list($domain,$user,$password,$backup) = explode(',',$arg);
+	_fetch_user_password($user,$password);
 
 	$domains = $GLOBALS['egw_domain'];
 	if ($domain && $domain != 'all')
@@ -270,8 +271,7 @@ function do_update($arg)
 	}
 	foreach($domains as $domain => $data)
 	{
-		$options[0] = $domain;
-		$arg = implode(',',$options);
+		$arg = "$domain,$user,$password,$backup";
 
 		_check_auth_config($arg,14);
 
@@ -281,18 +281,10 @@ function do_update($arg)
 		}
 		else
 		{
-			echo lang('Start updating the database ...')."\n";
-
 			do_backup($arg,true);
 
-			ob_start();
-			$GLOBALS['egw_setup']->process->init_process();	// we need a new schema-proc instance for each new domain
-			$GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',false);
-			$messages = ob_get_contents();
-			ob_end_clean();
-			if ($messages) echo strip_tags($messages)."\n";
-
-			echo lang('Update finished.')."\n";
+			$cmd = new setup_cmd_update($domain,$user,$password,$backup,true);
+			echo $cmd->run()."\n";
 		}
 	}
 }
