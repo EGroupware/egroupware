@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -22,6 +22,7 @@ elseif ($_SERVER['argc'] > 1)
 	$arguments = $_SERVER['argv'];
 	array_shift($arguments);
 	$action = array_shift($arguments);
+	list($_POST['FormDomain']) = explode(',',$arguments[0]);	// header include needs that to detects the right domain
 }
 else
 {
@@ -37,7 +38,6 @@ if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.
 	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
 }
 // setting up the $GLOBALS['egw_setup'] object AND including the header.inc.php if it exists
-$_POST['FormDomain'] = $arguments[0];
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'setup',
@@ -112,7 +112,8 @@ switch($action)
 		if (substr($action,0,2) == '--' && class_exists($class = str_replace('-','_',substr($action,2))) &&
 			is_subclass_of($class,'admin_cmd') && constant($class.'::SETUP_CLI_CALLABLE'))
 		{
-			$args = null;
+			$args = array();
+			$args['domain'] = array_shift($arguments);	// domain must be first argument, to ensure right domain get's selected in header-include
 			foreach($arguments as $arg)
 			{
 				list($name,$value) = explode('=',$arg,2);
@@ -120,7 +121,15 @@ switch($action)
 				{
 					throw new egw_exception_wrong_userinput(lang("Invalid argument '%1' !!!",$arg),90);
 				}
-				$args[$name] = $value;
+				if (substr($name,-1) == ']')	// allow 1-dim. arrays
+				{
+					list($name,$sub) = explode('[',substr($name,0,-1),2);
+					$args[$name][$sub] = $value;
+				}
+				else
+				{
+					$args[$name] = $value;
+				}
 			}
 			$cmd = new $class($args);
 			$msg = $cmd->run();
@@ -252,7 +261,8 @@ function do_update($arg)
 {
 	global $setup_info;
 
-	list($domain,,,$no_backup) = $options = explode(',',$arg);
+	list($domain,$user,$password,$backup) = explode(',',$arg);
+	_fetch_user_password($user,$password);
 
 	$domains = $GLOBALS['egw_domain'];
 	if ($domain && $domain != 'all')
@@ -261,8 +271,7 @@ function do_update($arg)
 	}
 	foreach($domains as $domain => $data)
 	{
-		$options[0] = $domain;
-		$arg = implode(',',$options);
+		$arg = "$domain,$user,$password,$backup";
 
 		_check_auth_config($arg,14);
 
@@ -272,18 +281,10 @@ function do_update($arg)
 		}
 		else
 		{
-			echo lang('Start updating the database ...')."\n";
-
 			do_backup($arg,true);
 
-			ob_start();
-			$GLOBALS['egw_setup']->process->init_process();	// we need a new schema-proc instance for each new domain
-			$GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',false);
-			$messages = ob_get_contents();
-			ob_end_clean();
-			if ($messages) echo strip_tags($messages)."\n";
-
-			echo lang('Update finished.')."\n";
+			$cmd = new setup_cmd_update($domain,$user,$password,$backup,true);
+			echo $cmd->run()."\n";
 		}
 	}
 }
