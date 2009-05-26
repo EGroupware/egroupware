@@ -48,7 +48,7 @@ class hooks
 	 *
 	 * @param object $db=null database class, if null we use $GLOBALS['egw']->db
 	 */
-	function hooks($db=null)
+	function __construct($db=null)
 	{
 		$this->db = $db ? $db : $GLOBALS['egw']->db;	// this is to allow setup to set the db
 
@@ -95,16 +95,14 @@ class hooks
 		/* Then add the rest */
 		if ($no_permission_check)
 		{
-			$apps = $GLOBALS['egw_info']['apps'];
+			$apps = array_keys($this->found_hooks);
 		}
-		else
+		elseif(is_array($GLOBALS['egw_info']['user']['apps']))
 		{
-			$apps = $GLOBALS['egw_info']['user']['apps'];
+			$apps = array_keys($GLOBALS['egw_info']['user']['apps']);
 		}
-		settype($apps,'array');
-		foreach($apps as $app)
+		foreach((array)$apps as $appname)
 		{
-			$appname = $app['name'];
 			if (!isset($results[$appname]))
 			{
 				$results[$appname] = $this->single($args,$appname,$no_permission_check);
@@ -203,7 +201,7 @@ class hooks
 	{
 		//if (!is_array($this->found_hooks))
 		//{
-			$this->hooks();
+			$this->__construct();
 		//}
 		return $this->found_hooks;
 	}
