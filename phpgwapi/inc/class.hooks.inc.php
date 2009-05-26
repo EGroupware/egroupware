@@ -46,7 +46,7 @@ class hooks
 	/**
 	 * constructor, reads and caches the complete hooks table
 	 *
-	 * @param object $db=null database class, if null we use $GLOBALS['egw']->db
+	 * @param egw_db $db=null database class, if null we use $GLOBALS['egw']->db
 	 */
 	function __construct($db=null)
 	{
@@ -57,6 +57,17 @@ class hooks
 			$this->found_hooks[$row['hook_appname']][$row['hook_location']] = $row['hook_filename'];
 		}
 		//_debug_array($this->found_hooks);
+	}
+
+	/**
+	 * php4 constructor
+	 *
+	 * @param egw_db $db
+	 * @deprecated use __construct()
+	 */
+	function hooks($db=null)
+	{
+		self::__construct();
 	}
 
 	/**
