@@ -269,6 +269,8 @@ class egw_cache
 	/**
 	 * Get some data from the cache for the whole source tree (all instances)
 	 *
+	 * Returns a reference to the var in the session!
+	 *
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param callback $callback=null callback to get/create the value, if it's not cache
@@ -276,7 +278,7 @@ class egw_cache
 	 * @param int $expiration=0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getSession($app,$location,$callback=null,array $callback_params=null,$expiration=0)
+	static public function &getSession($app,$location,$callback=null,array $callback_params=null,$expiration=0)
 	{
 		if (isset($_SESSION[egw_session::EGW_SESSION_ENCRYPTED]))
 		{
