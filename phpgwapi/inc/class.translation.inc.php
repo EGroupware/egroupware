@@ -496,6 +496,9 @@ class translation
 				case 'windows-1250':
 					$from = 'iso-8859-2';
 					break;
+				case 'windows-1257':
+					$from = 'iso-8859-13';
+					break;
 			}
 			if (!$to)
 			{
