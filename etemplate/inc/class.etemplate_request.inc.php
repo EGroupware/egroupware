@@ -283,6 +283,18 @@ class etemplate_request
 		return $this->data[$var];
 	}
 
+	
+	/**
+	 * magic function to see if a request-var has been set
+	 *
+	 * @param string $var
+	 * @return boolean
+	 */
+	public function __isset($var)
+	{
+		return array_key_exists($var, $this->data);
+	}
+
 	/**
 	 * Get the names / keys of existing variables
 	 *
