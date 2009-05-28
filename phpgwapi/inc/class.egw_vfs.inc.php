@@ -280,6 +280,15 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function mount($url=null,$path=null)
 	{
+		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
+		{
+			$api_config = config::read('phpgwapi');
+			if (isset($api_config['vfs_fstab']) && is_array($api_config['vfs_fstab']))
+			{
+				self::$fstab = $api_config['vfs_fstab'];
+			}
+			unset($api_config);
+		}
 		if (is_null($url) || is_null($path))
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns '.array2string(self::$fstab));
@@ -295,6 +304,8 @@ class egw_vfs extends vfs_stream_wrapper
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') already mounted.');
 			return true;	// already mounted
 		}
+		self::load_wrapper(parse_url($url,PHP_URL_SCHEME));
+
 		if (!file_exists($url) || opendir($url) === false)
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') url does NOT exist!');
