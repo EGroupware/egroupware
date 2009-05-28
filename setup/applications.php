@@ -127,7 +127,7 @@ if(@get_var('submit',Array('POST')))
 		{
 			$app_title = $setup_info[$appname]['title'] ? $setup_info[$appname]['title'] : $setup_info[$appname]['name'];
 			$terror = array();
-			$terror[] = $setup_info[$appname];
+			$terror[$appname] = $setup_info[$appname];
 
 			if ($setup_info[$appname]['tables'])
 			{
@@ -162,7 +162,7 @@ if(@get_var('submit',Array('POST')))
 		{
 			$app_title = $setup_info[$appname]['title'] ? $setup_info[$appname]['title'] : $setup_info[$appname]['name'];
 			$terror = array();
-			$terror[] = $setup_info[$appname];
+			$terror[$appname] = $setup_info[$appname];
 
 			if ($setup_info[$appname]['tables'])
 			{
@@ -173,6 +173,8 @@ if(@get_var('submit',Array('POST')))
 			}
 			else
 			{
+				// check default_records for apps without tables, they might need some initial work too
+				$terror = $GLOBALS['egw_setup']->process->default_records($terror,$DEBUG);
 				if ($GLOBALS['egw_setup']->app_registered($setup_info[$appname]['name']))
 				{
 					$GLOBALS['egw_setup']->update_app($setup_info[$appname]['name']);
@@ -199,7 +201,7 @@ if(@get_var('submit',Array('POST')))
 		{
 			$app_title = $setup_info[$appname]['title'] ? $setup_info[$appname]['title'] : $setup_info[$appname]['name'];
 			$terror = array();
-			$terror[] = $setup_info[$appname];
+			$terror[$appname] = $setup_info[$appname];
 
 			$GLOBALS['egw_setup']->process->upgrade($terror,$DEBUG);
 			if ($setup_info[$appname]['tables'])

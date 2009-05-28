@@ -6,12 +6,21 @@
  * @package setup
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
  * @author Miles Lott <milos@groupwhere.org>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+/**
+ * Class detecting the current installation status of EGroupware
+ */
 class setup_detection
 {
+	/**
+	 * Get available application versions and data from filesystem
+	 *
+	 * @return array $setup_info
+	 */
 	function get_versions()
 	{
 		$d = dir(EGW_SERVER_ROOT);
@@ -34,7 +43,13 @@ class setup_detection
 		return $setup_info;
 	}
 
-	function get_db_versions($setup_info='')
+	/**
+	 * Get versions of installed applications from database
+	 *
+	 * @param array $setup_info
+	 * @return array $setup_info
+	 */
+	function get_db_versions($setup_info=null)
 	{
 		$tname = Array();
 		$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
@@ -97,16 +112,17 @@ class setup_detection
 		return $setup_info;
 	}
 
-	/* app status values:
-	U	Upgrade required/available
-	R	upgrade in pRogress
-	C	upgrade Completed successfully
-	D	Dependency failure
-	P	Post-install dependency failure
-	F	upgrade Failed
-	V	Version mismatch at end of upgrade (Not used, proposed only)
-	M	Missing files at start of upgrade (Not used, proposed only)
-	*/
+	/**
+	 * Compare versions from filesystem and database and set status:
+	 * 	U	Upgrade required/available
+	 * 	R	upgrade in pRogress
+	 * 	C	upgrade Completed successfully
+	 * 	D	Dependency failure
+	 * 	P	Post-install dependency failure
+	 * 	F	upgrade Failed
+	 * 	V	Version mismatch at end of upgrade (Not used, proposed only)
+	 * 	M	Missing files at start of upgrade (Not used, proposed only)
+	 */
 	function compare_versions($setup_info)
 	{
 		foreach($setup_info as $key => $value)
@@ -208,10 +224,10 @@ class setup_detection
 		return $setup_info;
 	}
 
-	/*
-	 Called during the mass upgrade routine (Stage 1) to check for apps
-	 that wish to be excluded from this process.
-	*/
+	/**
+	 * Called during the mass upgrade routine (Stage 1) to check for apps
+	 * that wish to be excluded from this process.
+	 */
 	function upgrade_exclude($setup_info)
 	{
 		foreach($setup_info as $key => $value)
@@ -224,6 +240,11 @@ class setup_detection
 		return $setup_info;
 	}
 
+	/**
+	 * Check if header exists and is up to date
+	 *
+	 * @return int 1=no header.inc.php, 2=no header admin pw, 3=no instances, 4=need upgrade, 10=ok
+	 */
 	function check_header()
 	{
 		if(!file_exists('../header.inc.php'))
@@ -254,6 +275,12 @@ class setup_detection
 		return '10';
 	}
 
+	/**
+	 * Check if database exists
+	 *
+	 * @param array $setup_info
+	 * @return int 1=no database, 3=empty, 4=need upgrade, 10=complete
+	 */
 	function check_db($setup_info='')
 	{
 		$setup_info = $setup_info ? $setup_info : $GLOBALS['setup_info'];
