@@ -72,7 +72,8 @@
 			global $IP_RegExp_Match, $Host_RegExp_Match, $Email_RegExp_Match;
 			$IP_RegExp_Match = '\\[?[0-9]{1,3}(\\.[0-9]{1,3}){3}\\]?';
 			$Host_RegExp_Match = '('.$IP_RegExp_Match.'|[0-9a-z]([-.]?[0-9a-z])*\\.[a-z][a-z]+)';
-			$atext = '([a-z0-9!#$&%*+/=?^_`{|}~-]|&amp;)';
+			#$atext = '([a-z0-9!#$&%*+/=?^_`{|}~-]|&amp;)';
+			$atext = '([a-zA-Z0-9_\-\.])';
 			$dot_atom = $atext.'+(\.'.$atext.'+)*';
 			$Email_RegExp_Match = $dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match;
 
@@ -133,16 +134,54 @@
 
 			/* Replace each email address with a compose URL */
 			$lmail='';
+			if (is_array($addresses)) ksort($addresses);
 			foreach ($addresses as $text => $email) {
 				if ($lmail == $email) next($addresses);
 				#echo $text."#<br>";
 				#echo $email."#<br>";
 				$comp_uri = $this->makeComposeLink($email, $text);
-				$body = str_replace($text, $comp_uri, $body);
+				$body = preg_replace("/\s".$text."/sim", $comp_uri, $body);
 				$lmail=$email;
 			}
 
 			/* Return number of unique addresses found */
+			return count($addresses);
+		}
+		function parseHREF (&$body) {
+			#echo __METHOD__."called<br>";
+			$webserverURL   = $GLOBALS['egw_info']['server']['webserver_url'];
+			$alnum            = 'a-z0-9';
+			#$domain = "(http(s?):\/\/)*";
+			#$domain            .= "([$alnum]([-$alnum]*[$alnum]+)?)";
+			#$domain = "^(http|https|ftp)\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&%\$#\=~])*[^\.\,\)\(\s]$ ";
+			$domain = "(http(s?):\/\/)+([[:alpha:]][-[:alnum:]]*[[:alnum:]])(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])*(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])+";
+			#$dir = "(/[[:alpha:]][-[:alnum:]]*[[:alnum:]])*";
+			#$trailingslash  = "(\/?)";
+			#$page = "(/[[:alpha:]][-[:alnum:]]*\.[[:alpha:]]{3,5})?";
+			#$getstring = "(\?([[:alnum:]][-_%[:alnum:]]*=[-_%[:alnum:]]+)
+			#    (&([[:alnum:]][-_%[:alnum:]]*=[-_%[:alnum:]]+))*)?";
+			#$pattern = "^".$domain.$dir.$trailingslash.$page.$getstring."$";
+			$pattern = "\<a href=\"".$domain.".*?\"";
+			$sbody = $body;
+			while(@eregi($pattern, $sbody, $regs)) {
+				#_debug_array($regs);
+				$key=$regs[3].$regs[4].$regs[5];
+				$addresses[$key] = $regs[1].$regs[2].$regs[3].$regs[4].$regs[5];
+				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
+				$sbody = substr($sbody, $start);
+			}
+			$llink='';
+			#_debug_array($addresses);
+			if (is_array($addresses)) ksort($addresses);
+			foreach ((array)$addresses as $text => $link) {
+				if (empty($link)) continue;
+				if ($llink == $link) next($addresses);
+				#echo $text."#<br>";
+				#echo $link."#<br>\n";
+				$comp_uri = "<a href=\"$webserverURL/redirect.php?go=".$link;
+				$body = str_replace('<a href="'.$link, $comp_uri, $body);
+				$llink=$link;
+			}
 			return count($addresses);
 		}
 
@@ -961,7 +1000,11 @@
 			#_debug_array($bodyParts); exit;
 
 			foreach($bodyParts as $singleBodyPart) {
-				if (!isset($singleBodyPart['body'])) $singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart);
+				if (!isset($singleBodyPart['body'])) {
+					$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart);
+					$body .= $singleBodyPart['body'];
+					continue;
+				}
 				if(!empty($body)) {
 					$body .= '<hr style="border:dotted 1px silver;">';
 				}
@@ -971,12 +1014,14 @@
 					'@(\x96|\x97)@',
 					'@(\x91|\x92)@',
 					'@(\x85)@',
+					'@(\x86)@',
 				);
 				$rar = array(
 					'"',
 					'-',
 					'\'',
 					'...',
+					'+',
 				);
 				if($singleBodyPart['mimeType'] == 'text/html' && strtoupper($singleBodyPart['charSet']) != 'UTF-8') $singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
 				#_debug_array($singleBodyPart['charSet']);
@@ -996,18 +1041,6 @@
 					if (empty($newBody)) $newBody    = htmlentities($singleBodyPart['body'],ENT_QUOTES);
 					#$newBody	= $this->bofelamimail->wordwrap($newBody, 90, "\n");
 
-					// search http[s] links and make them as links available again
-					// to understand what's going on here, have a look at
-					// http://www.php.net/manual/en/function.preg-replace.php
-
-					// create links for websites
-					#$newBody = preg_replace("/((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,!&gt;,\%,@,\*,#,:,~,\+]+)/ie",
-					#	"'<a href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$3://$4$5'),ENT_QUOTES,\"$this->displayCharset\").
-					#	'\" target=\"_blank\"><font color=\"blue\">$2$4$5</font></a>'", $newBody);
-
-					// create links for ftp sites
-					#$newBody = preg_replace("/((ftp:\/\/)|(ftp\.))([\w\.,-.,\/.,\?.,\=.,&amp;]+)/i",
-					#	"<a href=\"ftp://$3$4\" target=\"_blank\"><font color=\"blue\">ftp://$3$4</font></a>", $newBody);
 					$newBody = html::activate_links($newBody);	
 					// create links for email addresses
 					$this->parseEmail($newBody);
@@ -1024,19 +1057,15 @@
 					$newBody	= $this->highlightQuotes($newBody);
 					#error_log(print_r($newBody,true));
 					bofelamimail::getCleanHTML($newBody);
+					// removes stuff between http and ?http
+					$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
+					$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
 					// create links for websites
-					#$newBody = preg_replace("/(?<!>|\/|\"|href='|href=\")((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)/ie",
-					#	"'<a href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$3://$4$5'),ENT_QUOTES,\"$this->displayCharset\").
-					#	'\" target=\"_blank\"><font color=\"blue\">$2$4$5</font></a>'", $newBody);
-
-					// create links for websites
-					#$newBody = preg_replace("/href=(\"|\')((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\(,\),\*,#,:,~,\+]+)(\"|\')/ie",
-					#	"'href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$4://$5$6'),ENT_QUOTES,\"$this->displayCharset\").'\" target=\"_blank\"'", $newBody);
 					$newBody = html::activate_links($newBody);
-					// create links for ftp sites
-					#$newBody = preg_replace("/href=(\"|\')((ftp:\/\/)|(ftp\.))([\w\.,-.,\/.,\?.,\=.,&amp;]+)(\"|\')/i",
-					#	"href=\"ftp://$4$5\" target=\"_blank\"", $newBody);
-
+					// redirect links for websites if you use no cookies
+					#if (!($GLOBALS['egw_info']['server']['usecookies'])) { //do it all the time, since it does mask the mailadresses in urls
+						$this->parseHREF($newBody);
+					#}
 					// create links for inline images
 					$linkData = array (
 						'menuaction'    => 'felamimail.uidisplay.displayImage',
