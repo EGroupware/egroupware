@@ -62,7 +62,7 @@
 			}
 			else
 			{
-				error_log(__METHOD__."($class) failed!");
+				#error_log(__METHOD__."($class) failed!");
 			}
 		}
 
