@@ -165,8 +165,8 @@
 			$sbody = $body;
 			while(@eregi($pattern, $sbody, $regs)) {
 				#_debug_array($regs);
-				$key=$regs[3].$regs[4].$regs[5];
-				$addresses[$key] = $regs[1].$regs[2].$regs[3].$regs[4].$regs[5];
+				$key=$regs[1].$regs[3].$regs[4].$regs[5];
+				$addresses[$key] = $regs[1].$regs[3].$regs[4].$regs[5];
 				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
 				$sbody = substr($sbody, $start);
 			}

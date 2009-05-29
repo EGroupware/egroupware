@@ -856,7 +856,8 @@
 				"style",array(
 					"type"	=> array('maxlen' => 20),
 					"color"	=> array('maxlen' => 20),
-					"background-color" => array('maxlen' => 20)
+					"background-color" => array('maxlen' => 20),
+					"background" => array('maxlen' => 5),
 				)
 			);
 
@@ -968,7 +969,9 @@
 			// no scripts allowed
 			// clean out comments
 			$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
-				'@<!--[\s\S]*?[ \t\n\r]*-->@'         // Strip multi-line comments including CDATA
+				'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
+				'@<head[^>]*?>.*?</head>@si',  // Strip out head tag
+				'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
 			);
 			$_html = preg_replace($search,"",$_html);
 
