@@ -58,12 +58,14 @@ class filemanager_hooks
 			}
 			display_sidebox(self::$appname,$title,$file);
 		}
-		self::preferences(self::$appname);
+		if ($GLOBALS['egw_info']['user']['apps']['preferences']) self::preferences(self::$appname);
 		if ($GLOBALS['egw_info']['user']['apps']['admin']) self::admin(self::$appname);
 	}
 
 	/**
 	 * Entries for filemanagers's admin menu
+	 *
+	 * @param string|array $location ='admin' hook name or params
 	 */
 	static function admin($location = 'admin')
 	{
@@ -81,6 +83,11 @@ class filemanager_hooks
 		}
 	}
 
+	/**
+	 * Entries for filemanagers's preferences menu
+	 *
+	 * @param string|array $location ='preferences' hook name or params
+	 */
 	static function preferences($location = 'preferences')
 	{
 		$file = array(
@@ -96,6 +103,11 @@ class filemanager_hooks
 		}
 	}
 
+	/**
+	 * Settings for preferences
+	 *
+	 * @return boolean true
+	 */
 	static function settings()
 	{
 		$config = config::read(self::$appname);
@@ -113,7 +125,7 @@ class filemanager_hooks
 			'yes' => lang('Yes')
 		);
 
-        $GLOBALS['settings'] = array(
+		$GLOBALS['settings'] = array(
 			'showbase'	=> array(
 				'type'		=> 'select',
 				'name'		=> 'showbase',
@@ -133,15 +145,6 @@ class filemanager_hooks
 				'xmlrpc'	=> True,
 				'amin'		=> False
 			),
-#            'show_upload_boxes' => array(
-#                'type'   => 'select',
-#                'label'  => 'Default number of upload fields to show',
-#                'name'   => 'show_upload_boxes',
-#                'values' => $upload_boxes,
-#                'help'   => 'How many upload slots should be available for uploading files? (The boxes are displayed at the bottom of the file listing)',
-#                'xmlrpc' => True,
-#                'admin'  => False
-#            ),
 		);
 		for ($i=1; $i <= self::$foldercount; $i++)
 		{
