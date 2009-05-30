@@ -595,7 +595,7 @@ class egw_db
 	 */
 	function from_bool($val)
 	{
-		return $val && $val{0} !== 'f';	// everthing other then 0 or f[alse] is returned as true
+		return $val && $val[0] !== 'f';	// everthing other then 0 or f[alse] is returned as true
 	}
 
 	/**
@@ -1235,8 +1235,8 @@ class egw_db
 			case 'mysql':
 				return "FROM_UNIXTIME($expr)";
 
-			case 'pgsql':	// we use date(,0) as we store server-time
-				return "(timestamp '".date('Y-m-d H:i:s',0)."' + ($expr) * interval '1 sec')";
+			case 'pgsql':
+				return "(timestamp with time zone 'epoch' + ($expr) * interval '1 sec')";
 
 			case 'mssql':	// we use date(,0) as we store server-time
 				return "DATEADD(second,($expr),'".date('Y-m-d H:i:s',0)."')";
