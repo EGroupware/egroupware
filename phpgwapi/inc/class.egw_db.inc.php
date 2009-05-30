@@ -1582,6 +1582,32 @@ class egw_db
 	}
 
 	/**
+	 * Get specified attribute (default comment) of a colum or whole definition (if $attribute === null)
+	 *
+	 * Can be used static, in which case the global db object is used ($GLOBALS['egw']->db) and $app should be specified
+	 *
+	 * @param string $column name of column
+	 * @param string $table name of table
+	 * @param string $app=null app name or NULL to use $this->app, set via egw_db::set_app()
+	 * @param string $attribute='comment' what field to return, NULL for array with all fields, default 'comment' to return the comment
+	 * @return string|array NULL if table or column or attribute not found
+	 */
+	/* static */ function get_column_attribute($column,$table,$app=null,$attribute='comment')
+	{
+		static $cached_columns,$cached_table;	// some caching
+
+		if ($cached_table !== $table || is_null($cached_columns))
+		{
+			$db = isset($this) ? $this : $GLOBALS['egw']->db;
+			$table_def = $db->get_table_definitions($app,$table);
+			$cached_columns = is_array($table_def) ? $table_def['fd'] : false;
+		}
+		if ($cached_columns === false) return null;
+
+		return is_null($attribute) ? $cached_columns[$column] : $cached_columns[$column][$attribute];
+	}
+
+	/**
 	* Insert a row of data into a table or updates it if $where is given, all data is quoted according to it's type
 	*
 	* @author RalfBecker<at>outdoor-training.de
