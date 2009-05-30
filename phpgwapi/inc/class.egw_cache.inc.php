@@ -444,9 +444,10 @@ class egw_cache
 	 * Get a system configuration, even if in setup and it's not read
 	 *
 	 * @param string $name
-	 * @return mixed
+	 * @param boolean $throw=true throw an exception, if we can't retriev the value
+	 * @return string|boolean string with config or false if not found and !$throw
 	 */
-	static protected function get_system_config($name)
+	static protected function get_system_config($name,$throw=true)
 	{
 		if(!isset($GLOBALS['egw_info']['server'][$name]))
 		{
@@ -457,7 +458,7 @@ class egw_cache
 					'config_name'	=> $name,
 				),__LINE__,__FILE__)->fetchColumn();
 			}
-			if (!$GLOBALS['egw_info']['server'][$name])
+			if (!$GLOBALS['egw_info']['server'][$name] && $throw)
 			{
 				throw new Exception (__METHOD__."($name) \$GLOBALS['egw_info']['server']['$name'] is NOT set!");
 			}
@@ -484,7 +485,7 @@ class egw_cache
 				case self::TREE:
 					$bases[$level] = $level.'-'.str_replace(array(':','/','\\'),'-',EGW_SERVER_ROOT);
 					// add charset to key, if not utf-8 (as everything we store depends on charset!)
-					if (($charset = self::get_system_config('system_charset')) && $charset != 'utf-8')
+					if (($charset = self::get_system_config('system_charset',false)) && $charset != 'utf-8')
 					{
 						$bases[$level] .= '-'.$charset;
 					}

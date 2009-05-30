@@ -207,16 +207,24 @@ class setup_process
 		$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
 		$current_config['site_title'] = 'eGroupWare';
-		$current_config['hostname']  = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : 'localhost';
+		$current_config['hostname']  = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 
 		// guessing the eGW url
-		$parts = explode('/',$_SERVER['PHP_SELF']);
-		array_pop($parts);	// remove config.php
-		array_pop($parts);	// remove setup
-		$current_config['webserver_url'] = implode('/',$parts);
-		$egroupwareDirName = end($parts);
-
-		if(!$is_windows) {
+		if (isset($_SERVER['HTTP_HOST']))
+		{
+			$parts = explode('/',$_SERVER['PHP_SELF']);
+			array_pop($parts);	// remove config.php
+			array_pop($parts);	// remove setup
+			$current_config['webserver_url'] = implode('/',$parts);
+			$egroupwareDirName = end($parts);
+		}
+		else	// eg. cli install --> use defaults
+		{
+			$current_config['webserver_url'] = '/egroupware';
+			$egroupwareDirName = 'egroupware';
+		}
+		if(!$is_windows) 
+		{
 			if(@is_dir('/tmp'))
 			{
 				$current_config['temp_dir'] = '/tmp';

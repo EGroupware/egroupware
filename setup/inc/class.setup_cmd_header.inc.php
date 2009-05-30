@@ -48,9 +48,8 @@ class setup_cmd_header extends setup_cmd
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
 		admin_cmd::__construct($sub_command);
 
-		// header is 2 levels lower then this command in setup/inc
-		$this->header_path = realpath(dirname(__FILE__).'/../../header.inc.php');
-
+		// header is 3 levels lower then this command in setup/inc
+		$this->header_path = dirname(dirname(dirname(__FILE__))).'/header.inc.php';
 		$this->setup_header =& new setup_header();
 	}
 
@@ -68,7 +67,7 @@ class setup_cmd_header extends setup_cmd
 		{
 			return true;	// can only check locally
 		}
-		if (!file_exists($this->header_path))
+		if (!file_exists($this->header_path) || filesize($this->header_path) < 200)	// redirect header in rpms is ~150 byte
 		{
 			if ($this->sub_command != 'create')
 			{
@@ -126,10 +125,11 @@ class setup_cmd_header extends setup_cmd
 		{
 			echo $header;	// for cli, we echo the header
 		}
-		if (file_exists($this->header_path) && is_writable($this->header_path) || is_writable(dirname($this->header_path)))
+		if (file_exists($this->header_path) && is_writable($this->header_path) || is_writable(dirname($this->header_path)) ||
+			function_exists('posix_getuid') && !posix_getuid())	// root has all rights
 		{
 			if (is_writable(dirname($this->header_path)) && file_exists($this->header_path)) unlink($this->header_path);
-			if (($f = fopen($this->header_path,'wb')) && fwrite($f,$header))
+			if (($f = fopen($this->header_path,'wb')) && ($w=fwrite($f,$header)))
 			{
 				fclose($f);
 				return lang('header.inc.php successful written.');

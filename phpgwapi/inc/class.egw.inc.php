@@ -555,7 +555,7 @@ class egw_minimal
 
 		if (!isset(self::$sub_objects[$name]) && !class_exists($name))
 		{
-			error_log(__METHOD__.": There's NO $name object! ".function_backtrace());
+			if ($name != 'ADOdb') error_log(__METHOD__.": There's NO $name object! ".function_backtrace());
 			return null;
 		}
 		switch($name)
