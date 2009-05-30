@@ -71,7 +71,7 @@ class addressbook_ui extends addressbook_bo
 		$this->config =& $GLOBALS['egw_info']['server'];
 
 		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
-		if (!$this->config['contact_export_limit'])
+		if ($this->config['contact_export_limit'])
 		{
 			$this->config['export_limit'] = $this->config['contact_export_limit'];
 		}
@@ -311,9 +311,6 @@ class addressbook_ui extends addressbook_bo
 				$sel_options['col_filter[tid]'][$tid] = $data['name'];
 			}
 		}
-		// disable filemanger icon if user has no access to filemanager
-		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
-
 		// get the availible org-views plus the label of the contacts view of one org
 		$sel_options['org_view'] = $this->org_views;
 		if (isset($org_view)) $content['nm']['org_view'] = $org_view;
@@ -1065,11 +1062,8 @@ class addressbook_ui extends addressbook_bo
 			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
 			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
 		}
-		if ($show_distributionlist) {
-			$readonlys['no_distrib_lists'] =true;
-		} else {
-			$readonlys['no_distrib_lists'] =false;
-		}
+		$readonlys['no_distrib_lists'] = (bool)$show_distributionlist;
+
 		if (!$this->prefs['no_auto_hide'])
 		{
 			// disable photo column, if view contains no photo(s)
@@ -1081,6 +1075,9 @@ class addressbook_ui extends addressbook_bo
 		}
 		// disable customfields column, if we have no customefield(s)
 		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
+
+		// disable filemanger icon if user has no access to filemanager
+		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
@@ -1102,7 +1099,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		if($query['advanced_search'])
 		{
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Advanced search');
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Advanced search');
 		}
 		if ($query['cat_id'])
 		{
