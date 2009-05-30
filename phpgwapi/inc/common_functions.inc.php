@@ -1441,21 +1441,24 @@ function egw_exception_handler(Exception $e)
 	{
 		$headline = try_lang('An error happend');
 	}
+	// exception handler for cli (command line interface) clients, no html, no logging
+	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
+	{
+		echo ($headline ? $headline.': ' : '').$e->getMessage()."\n";
+		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
+		{
+			echo $e->getTraceAsString()."\n";
+		}
+		exit($e->getCode() ? $e->getCode() : 9999);		// allways give a non-zero exit code
+	}
 	// logging all exceptions to the error_log
 	error_log($headline.': '.$e->getMessage());
 	foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
 	error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
 		($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 
-	// exception handler for cli (command line interface) clients, no html
-	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
-	{
-		echo ($headline ? $headline.': ' : '').$e->getMessage()."\n";
-		if (!($e instanceof egw_exception_wrong_userinput)) echo $e->getTraceAsString()."\n";
-		exit($e->getCode() ? $e->getCode() : 9999);		// allways give a non-zero exit code
-	}
 	// regular GUI exception
-	elseif (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']))
+	if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']))
 	{
 		$message = '<h3>'.$headline."</h3>\n".
 			'<pre><b>'.$e->getMessage()."</b>\n\n";

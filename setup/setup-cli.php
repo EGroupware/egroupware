@@ -22,7 +22,7 @@ elseif ($_SERVER['argc'] > 1)
 	$arguments = $_SERVER['argv'];
 	array_shift($arguments);
 	$action = array_shift($arguments);
-	list($_POST['FormDomain']) = explode(',',$arguments[0]);	// header include needs that to detects the right domain
+	if (isset($arguments[0])) list($_POST['FormDomain']) = explode(',',$arguments[0]);	// header include needs that to detects the right domain
 }
 else
 {

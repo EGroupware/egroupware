@@ -25,7 +25,7 @@ abstract class setup_cmd extends admin_cmd
 	/**
 	 * Should be called by every command usually requiring header admin rights
 	 *
-	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
+	 * @throws egw_exception_no_permission(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 */
 	protected function _check_header_access()
 	{
@@ -41,7 +41,7 @@ abstract class setup_cmd extends admin_cmd
 		if ($this->header_secret != $secret)
 		{
 			//echo "_check_header_access: header_secret='$this->header_secret' != '$secret'=_calc_header_secret({$GLOBALS['egw_info']['server']['header_admin_user']},{$GLOBALS['egw_info']['server']['header_admin_password']})\n";
-			throw new Exception (lang('Wrong credentials to access the header.inc.php file!'),2);
+			throw new egw_exception_no_permission(lang('Wrong credentials to access the header.inc.php file!'),2);
 		}
 
 	}
