@@ -441,6 +441,31 @@ class egw_cache
 	}
 
 	/**
+	 * Get a system configuration, even if in setup and it's not read
+	 *
+	 * @param string $name
+	 * @return mixed
+	 */
+	static protected function get_system_config($name)
+	{
+		if(!isset($GLOBALS['egw_info']['server'][$name]))
+		{
+			if (isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db))
+			{
+				$GLOBALS['egw_info']['server'][$name] = $GLOBALS['egw_setup']->db->select(config::TABLE,'config_value',array(
+					'config_app'	=> 'phpgwapi',
+					'config_name'	=> $name,
+				),__LINE__,__FILE__)->fetchColumn();
+			}
+			if (!$GLOBALS['egw_info']['server'][$name])
+			{
+				throw new Exception (__METHOD__."($name) \$GLOBALS['egw_info']['server']['$name'] is NOT set!");
+			}
+		}
+		return $GLOBALS['egw_info']['server'][$name];
+	}
+
+	/**
 	 * Get keys array from $level, $app and $location
 	 *
 	 * @param string $level egw_cache::(TREE|INSTANCE)
@@ -458,23 +483,14 @@ class egw_cache
 			{
 				case self::TREE:
 					$bases[$level] = $level.'-'.str_replace(array(':','/','\\'),'-',EGW_SERVER_ROOT);
+					// add charset to key, if not utf-8 (as everything we store depends on charset!)
+					if (($charset = self::get_system_config('system_charset')) && $charset != 'utf-8')
+					{
+						$bases[$level] .= '-'.$charset;
+					}
 					break;
 				case self::INSTANCE:
-					if(!isset($GLOBALS['egw_info']['server']['install_id']))
-					{
-						if (isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db))
-						{
-							$GLOBALS['egw_info']['server']['install_id'] = $GLOBALS['egw_setup']->db->select(config::TABLE,'config_value',array(
-								'config_app'	=> 'phpgwapi',
-								'config_name'	=> 'install_id',
-							),__LINE__,__FILE__)->fetchColumn();
-						}
-						if (!$GLOBALS['egw_info']['server']['install_id'])
-						{
-							throw new Exception (__METHOD__."($level,$app,$location) server/install_id is NOT set!");
-						}
-					}
-					$bases[$level] = $level.'-'.$GLOBALS['egw_info']['server']['install_id'];
+					$bases[$level] = $level.'-'.self::get_system_config('install_id');
 					break;
 			}
 		}
