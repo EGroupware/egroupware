@@ -49,7 +49,7 @@ $GLOBALS['egw_setup']->system_charset = $charset;
 
 if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 {
-	fail(98,lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version));
+	throw new egw_exception_wrong_userinput(lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version),98);
 }
 
 switch($action)
@@ -246,7 +246,7 @@ function do_backup($arg,$quite_check=false)
 			}
 			else	// backup failed ==> dont start the upgrade
 			{
-				fail(50,lang('Backup failed').': '.$f);
+				throw new egw_exception_wrong_userinput(lang('Backup failed').': '.$f,50);
 			}
 		}
 	}
@@ -561,12 +561,32 @@ function list_exit_codes()
 	error_reporting(error_reporting() & ~E_NOTICE);
 
 	$codes = array('Ok');
-	foreach(file(__FILE__) as $n => $line)
+	$setup_dir = EGW_SERVER_ROOT.'/setup/';
+	//$files = array('setup-cli.php');
+	foreach(scandir($setup_dir.'/inc') as $file)
 	{
-		if (preg_match('/fail\(([0-9]+),(.*)\);/',$line,$matches))
+		if (substr($file,0,strlen('class.setup_cmd')) == 'class.setup_cmd')
 		{
-			//echo "Line $n: $matches[1]: $matches[2]\n";
-			@eval('$codes['.$matches[1].'] = '.$matches[2].';');
+			$files[] = 'inc/'.$file;
+		}
+	}
+	foreach($files as $file)
+	{
+		$content = file_get_contents($setup_dir.'/'.$file);
+
+		if (preg_match_all('/throw new (egw_exception[a-z_]*)\((.*),([0-9]+)\);/m',$content,$matches))
+		{
+			//echo $file.":\n"; print_r($matches);
+			foreach($matches[3] as $key => $code)
+			{
+				//if (isset($codes[$code])) echo "$file redifines #$code: {$codes[$code]}\n";
+
+				$src = $matches[2][$key];
+				$src = preg_replace('/self::\$[a-z_>-]/i',"''",$src);	// gives fatal error otherwise
+				@eval($src='$codes['.$code.'] = '.$src.';');
+				//echo "- codes[$code] => '{$codes[$code]}'\n";
+			}
+			//echo $file.":\n"; print_r($codes);
 		}
 	}
 	ksort($codes,SORT_NUMERIC);
