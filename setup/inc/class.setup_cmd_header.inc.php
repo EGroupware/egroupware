@@ -50,6 +50,16 @@ class setup_cmd_header extends setup_cmd
 
 		// header is 3 levels lower then this command in setup/inc
 		$this->header_path = dirname(dirname(dirname(__FILE__))).'/header.inc.php';
+
+		// if header is a symlink --> work on it's target
+		if (is_link($this->header_path))
+		{
+			$this->header_path = readlink($this->header_path);
+			if ($this->header_path[0] != '/' && $this->header_path[1] != ':')
+			{
+				$this->header_path = dirname(dirname(dirname(__FILE__))).'/'.$this->header_path;
+			}
+		}
 		$this->setup_header =& new setup_header();
 	}
 
