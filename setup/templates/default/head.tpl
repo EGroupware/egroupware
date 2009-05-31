@@ -13,36 +13,6 @@
 		<link rel="icon" href="../phpgwapi/templates/default/images/favicon.ico" type="image/x-ico" />
 		<link rel="shortcut icon" href="../phpgwapi/templates/default/images/favicon.ico" />
 		<link href="../phpgwapi/templates/idots/css/idots.css" type="text/css" rel="stylesheet" />
-		<!--
-		{css}
-		-->
-
-		<style type="text/css">
-			<!--
-			.row_on { color: #000000; background-color: #eeeeee; }
-			.row_off { color: #000000; background-color: #e8f0f0; }
-			.th
-			{
-				color: #000000;
-				background-color: #cccccc;
-				font-weight:bold;
-				font-size:120%;
-			}
-
-			td
-			{
-				line-height:170%;
-			}
-
-			/* some styles specially for setup */
-			#tbl_manage_header td
-			{
-				vertical-align: top;
-				padding-bottom: 3px;
-				padding-left: 5px;
-			}
-			-->
-		</style>
 
 		<!--{java_script}-->
 
