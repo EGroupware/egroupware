@@ -161,26 +161,67 @@ else
 	// --> existing install --> update
 
 	// get user from header and replace password, as we dont know it
-	$header = file_get_contents($config['header']);
-	if (!preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_user'] = '")."([^']+)';/m",$header,$matches))
-	{
-		bail_out(1,$config['header']." is no regular EGroupware header.inc.php!");
-	}
-	$tmp_header= preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '")."([^']+)';/m",
-		"\$GLOBALS['egw_info']['server']['header_admin_password'] = '".$config['config_passwd']."';",$header);
-	file_put_contents($config['header'],$tmp_header);
+	$old_password = patch_header($config['header'],$config['config_user'],$config['config_passwd']);
+	// register a shutdown function to put old password back in any case
+	register_shutdown_function('patch_header',$config['header'],$config['config_user'],$old_password);
 
 	// update egroupware
 	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd']);
-	run_cmd($setup_update);
+	$ret = run_cmd($setup_update,$output,array(4,15));
 
-	// restore original header
-	file_put_contents($config['header'],$header);
+	switch($ret)
+	{
+		case 4:		// header needs an update
+			$header_update = $setup_cli.' --update-header '.escapeshellarg($config['config_passwd'].','.$config['config_user']);
+			run_cmd($header_update);
+			$ret = run_cmd($setup_update,$output,15);
+			if ($ret != 15) break;
+			// fall through
+		case 15:	// missing configuration (eg. mailserver)
+			if (!$verbose) echo implode("\n",(array)$output)."\n";
+			break;
 
-	echo "EGroupware successful updated\n";
+		case 0:
+			echo "\nEGroupware successful updated\n";
+			break;
+	}
+	exit($ret);
 }
 
-function run_cmd($cmd,array &$output=null)
+/**
+ * Patches a given password (for header admin) into the EGroupware header.inc.php and returns the old one
+ *
+ * @param string $filename
+ * @param string &$user username on return(!)
+ * @param string $password new password
+ * @return string old password
+ */
+function patch_header($filename,&$user,$password)
+{
+	$header = file_get_contents($filename);
+
+	if (!preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_user'] = '")."([^']+)';/m",$header,$umatches) ||
+		!preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '")."([^']*)';/m",$header,$pmatches))
+	{
+		bail_out(99,"$filename is no regular EGroupware header.inc.php!");
+	}
+	file_put_contents($filename,preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '")."([^']*)';/m",
+		"\$GLOBALS['egw_info']['server']['header_admin_password'] = '".$password."';",$header));
+
+	$user = $umatches[1];
+
+	return $pmatches[1];
+}
+
+/**
+ * Runs given shell command, exists with error-code after echoing the output of the failed command (if not already running verbose)
+ *
+ * @param string $cmd
+ * @param array &$output=null $output of command
+ * @param int|array $no_bailout=null exit code(s) to NOT bail out
+ * @return int exit code of $cmd
+ */
+function run_cmd($cmd,array &$output=null,$no_bailout=null)
 {
 	global $verbose;
 
@@ -194,9 +235,19 @@ function run_cmd($cmd,array &$output=null)
 		$output[] = $cmd;
 		exec($cmd,$output,$ret);
 	}
-	if ($ret) bail_out($ret,$verbose?null:$output);
+	if ($ret && !in_array($ret,(array)$no_bailout))
+	{
+		bail_out($ret,$verbose?null:$output);
+	}
+	return $ret;
 }
 
+/**
+ * Stop programm execution with a given exit code and optional extra message
+ *
+ * @param int $ret=1
+ * @param array|string $output line(s) to output before temination notice
+ */
 function bail_out($ret=1,$output=null)
 {
 	if ($output) echo implode("\n",(array)$output);
@@ -229,10 +280,15 @@ function randomstring($len=16)
 	return $str;
 }
 
+/**
+ * Give usage information and an optional error-message, before stoping program execution with exit-code 90 or 0
+ *
+ * @param string $error=null optional error-message
+ */
 function usage($error=null)
 {
 	global $prog,$config;
-	
+
 	echo "Usage: $prog [-h|--help] [-v|--verbose] [options, ...]\n\n";
 	echo "options and their defaults:\n";
 	foreach($config as $name => $default)
@@ -240,6 +296,10 @@ function usage($error=null)
 		if (in_array($name,array('config_passwd','db_pass','admin_passwd'))) $default = '<16 char random string>';
 		echo '--'.str_pad($name,20).$default."\n";
 	}
-	if ($error) echo "$error\n\n";
-	exit(1);
+	if ($error)
+	{
+		echo "$error\n\n";
+		exit(90);
+	}
+	exit(0);
 }
