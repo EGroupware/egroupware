@@ -32,6 +32,8 @@ $config = array(
 	'svn' => '/usr/bin/svn',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
+	'gpg' => '/usr/bin/gpg',
+	'packager' => 'packager@egroupware.org',
 	'skip' => array(),
 	'run' => array('checkout','copy','virusscan','create','sign')
 );
@@ -115,14 +117,14 @@ function do_sign()
 		return;
 	}
 	// signing it
-	if (!file_exists('/usr/bin/gpg'))
+	if (empty($config['gpg']) || !file_exists($config['gpg']))
 	{
-		echo "/usr/bin/gpg not found --> skipping signing sha1sum file!\n";
+		if (!empty($config['gpg'])) echo "{$config['gpg']} not found --> skipping signing sha1sum file!\n";
 		return;
 	}
 	echo "Signing sha1sum file:\n";
 	if (file_exists($sumsfile.'.asc')) unlink($sumsfile.'.asc');
-	$cmd = '/usr/bin/gpg --local-user packager@egroupware.org --clearsign '.$sumsfile;
+	$cmd = $config['gpg'].' --local-user '.$config['packager'].' --clearsign '.$sumsfile;
 	run_cmd($cmd);
 	unlink($sumsfile);	// delete the unsigned file
 }
@@ -146,6 +148,10 @@ function do_create()
 
 	if($config['extra'])
 	{
+		foreach($config['extra'] as $key => $module)
+		{
+			if (strpos($module,'/') !== false) $config['extra'][$key] = basename($module);
+		}
 		$exclude_extra = ' --exclude=egroupware/'.implode(' --exclude=egroupware/',$config['extra']);
 	}
 	foreach($config['types'] as $type)
@@ -260,7 +266,7 @@ function do_checkout()
 	if (file_exists($config['aliasdir']))
 	{
 		// check if correct branch
-		$cmd = 'LANG=C '.$svn.' info '.$config['aliasdir'];
+		$cmd = 'LANG=C '.$svn.' info';
 		exec($cmd,$output,$ret);
 		foreach($output as $line)
 		{
@@ -284,6 +290,12 @@ function do_checkout()
 	chdir($config['aliasdir']);
 	foreach($config['extra'] as $module)
 	{
+		if (strpos($module,'$') !== false)	// allow to use config vars like $svnbranch in module
+		{
+			$translate = array();
+			foreach($config as $name => $value) $translate['$'.$name] = $value;
+			$module = strtr($module,$translate);
+		}
 		$url = strpos($module,'://') === false ? $svnbranch.'/' : '';
 		$url .= $module;
 		$cmd = $svn.' co '.$url;
