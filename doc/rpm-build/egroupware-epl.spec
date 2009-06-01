@@ -20,13 +20,13 @@ Prefix: /usr/share
 	%define php php5
 	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom
 	%define cron cron
-	%define rpm_post_install /usr/bin/php5 %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir} --php /usr/bin/php5 --start_db /etc/init.d/mysql --autostart_db /sbin/chkconfig --level 3 mysql on --start_webserver /etc/init.d/apache2 --autostart_webserver /sbin/chkconfig --level 3 apache2 on
+	%define rpm_post_install /usr/bin/php5 %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir} --php /usr/bin/php5 --start_db /etc/init.d/mysql --autostart_db /sbin/chkconfig --level 3 mysql on --start_webserver /etc/init.d/apache2 --autostart_webserver /sbin/chkconfig --level 3 apache2 on
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
 	%define source5 egroupware_fedora.tar.bz2
 	%define cron crontabs
-	%define rpm_post_install /usr/bin/php %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir}
+	%define rpm_post_install /usr/bin/php %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %endif
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
