@@ -18,8 +18,8 @@ $config = array(
 	'php'         => '/usr/bin/php',
 	'source_dir'  => '/usr/share/egroupware',
 	'data_dir'    => '/var/lib/egroupware',
-	'header'      => '/var/lib/egroupware/header.inc.php',	// symlinked to source_dir by rpm
-	'setup-cli'   => '/usr/share/egroupware/setup/setup-cli.php',
+	'header'      => '$data_dir/header.inc.php',	// symlinked to source_dir by rpm
+	'setup-cli'   => '$source_dir/setup/setup-cli.php',
 	'domain'      => 'default',
 	'config_user' => 'admin',
 	'config_passwd'   => randomstring(),
@@ -42,8 +42,9 @@ $config = array(
 	'start_webserver' => '/etc/init.d/httpd',
 	'autostart_webserver' => '/sbin/chkconfig --level 3 httpd on',
 );
+
 // read language from LANG enviroment variable
-if (($lang = $_ENV['LANG']))
+if (($lang = isset($_ENV['LANG']) ? $_ENV['LANG'] : $_SERVER['LANG']))
 {
 	list($lang,$nat) = split('[_.]',$lang);
 	if (in_array($lang.'-'.strtolower($nat),array('es-es','pt-br','zh-tw')))
@@ -73,6 +74,16 @@ while(($arg = array_shift($argv)))
 	else
 	{
 		usage("Unknown argument '$arg'!");
+	}
+}
+
+$replace = array();
+foreach($config as $name => $value)
+{
+	$replace['$'.$name] = $value;
+	if (strpos($value,'$') !== false)
+	{
+		$config[$name] = strtr($value,$replace);
 	}
 }
 // basic config checks
