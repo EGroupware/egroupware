@@ -259,7 +259,8 @@ class addressbook_so
 				$this->account_extra_search = array('uid');
 			}
 		}
-		if ($this->contact_repository == 'sql' || $this->contact_repository = 'sql-ldap') {
+		if ($this->contact_repository == 'sql' || $this->contact_repository == 'sql-ldap')
+		{
 			$tda2list = $this->db->get_table_definitions('phpgwapi','egw_addressbook2list');
 			$tdlists = $this->db->get_table_definitions('phpgwapi','egw_addressbook_lists');
 			$this->distributionlist_tabledef = array('fd' => array(
@@ -269,7 +270,7 @@ class addressbook_so
 					$this->distri_value => $tdlists['fd'][$this->distri_value],
 				), 'pk' => array(), 'fk' => array(), 'ix' => array(), 'uc' => array(),
 			);
-		}  
+		}
 		// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access,
 		// if he has not set the hide_accounts preference
 		// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
