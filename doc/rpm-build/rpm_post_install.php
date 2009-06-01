@@ -38,9 +38,9 @@ $config = array(
 	'lang'        => 'en',	// languages for admin user and extra lang to install
 	'charset'     => 'utf-8',
 	'start_db'    => '/etc/init.d/mysqld',
-	'autostart_db' => '/sbin/chkconfig --level 3 mysqld on',
+	'autostart_db' => '/sbin/chkconfig --level 345 mysqld on',
 	'start_webserver' => '/etc/init.d/httpd',
-	'autostart_webserver' => '/sbin/chkconfig --level 3 httpd on',
+	'autostart_webserver' => '/sbin/chkconfig --level 345 httpd on',
 );
 
 // read language from LANG enviroment variable
@@ -53,6 +53,8 @@ if (($lang = isset($_ENV['LANG']) ? $_ENV['LANG'] : $_SERVER['LANG']))
 	}
 	$config['lang'] = $lang;
 }
+$config['source_dir'] = dirname(dirname(dirname(__FILE__)));
+
 // read config from command line
 $argv = $_SERVER['argv'];
 $prog = array_shift($argv);
@@ -66,6 +68,14 @@ while(($arg = array_shift($argv)))
 	elseif($arg == '-h' || $arg == '--help')
 	{
 		usage();
+	}
+	elseif($arg == '--suse')
+	{
+		$config['php'] = '/usr/bin/php5';
+		$config['start_db'] = '/etc/init.d/mysql';
+		$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
+		$config['start_webserver'] = '/etc/init.d/apache2';
+		$config['autostart_webserver'] = '/sbin/chkconfig --level 345 apach2 on';
 	}
 	elseif(substr($arg,0,2) == '--' && isset($config[$name=substr($arg,2)]))
 	{
@@ -300,7 +310,7 @@ function usage($error=null)
 {
 	global $prog,$config;
 
-	echo "Usage: $prog [-h|--help] [-v|--verbose] [options, ...]\n\n";
+	echo "Usage: $prog [-h|--help] [-v|--verbose] [--suse] [options, ...]\n\n";
 	echo "options and their defaults:\n";
 	foreach($config as $name => $default)
 	{
