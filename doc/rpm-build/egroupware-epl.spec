@@ -92,7 +92,7 @@ Requires: %{name}-syncml          = %{version}
 Requires: %{name}-timesheet       = %{version}
 Requires: %{name}-wiki            = %{version}
 Provides: %{egw_packagename}
-Obsoletes: %{egw_packagename} %{egw_packagename}-core %{egw_packagename}-addressbook %{egw_packagename}-bookmarks %{egw_packagename}-calendar %{egw_packagename}-developer_tools %{egw_packagename}-emailadmin %{egw_packagename}-felamimail %{egw_packagename}-filemanager %{egw_packagename}-infolog %{egw_packagename}-importexport %{egw_packagename}-manual %{egw_packagename}-news_admin %{egw_packagename}-notifications %{egw_packagename}-phpbrain %{egw_packagename}-polls %{egw_packagename}-projectmanager %{egw_packagename}-registration %{egw_packagename}-resources %{egw_packagename}-sambaadmin %{egw_packagename}-sitemgr %{egw_packagename}-syncml %{egw_packagename}-timesheet %{egw_packagename}-wiki
+Obsoletes: %{egw_packagename} %{egw_packagename}-egw-pear %{egw_packagename}-core %{egw_packagename}-addressbook %{egw_packagename}-bookmarks %{egw_packagename}-calendar %{egw_packagename}-developer_tools %{egw_packagename}-emailadmin %{egw_packagename}-felamimail %{egw_packagename}-filemanager %{egw_packagename}-infolog %{egw_packagename}-importexport %{egw_packagename}-manual %{egw_packagename}-news_admin %{egw_packagename}-notifications %{egw_packagename}-phpbrain %{egw_packagename}-polls %{egw_packagename}-projectmanager %{egw_packagename}-registration %{egw_packagename}-resources %{egw_packagename}-sambaadmin %{egw_packagename}-sitemgr %{egw_packagename}-syncml %{egw_packagename}-timesheet %{egw_packagename}-wiki
 %post
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
