@@ -82,6 +82,7 @@ Requires: %{name}-manual          = %{version}
 Requires: %{name}-news_admin      = %{version}
 Requires: %{name}-notifications   = %{version}
 Requires: %{name}-phpbrain        = %{version}
+Requires: %{name}-phpsysinfo      = %{version}
 Requires: %{name}-polls           = %{version}
 Requires: %{name}-projectmanager  = %{version}
 Requires: %{name}-registration    = %{version}
@@ -90,9 +91,36 @@ Requires: %{name}-sambaadmin      = %{version}
 Requires: %{name}-sitemgr         = %{version}
 Requires: %{name}-syncml          = %{version}
 Requires: %{name}-timesheet       = %{version}
+Requires: %{name}-tracker         = %{version}
 Requires: %{name}-wiki            = %{version}
 Provides: %{egw_packagename}
-Obsoletes: %{egw_packagename} %{egw_packagename}-egw-pear %{egw_packagename}-core %{egw_packagename}-addressbook %{egw_packagename}-bookmarks %{egw_packagename}-calendar %{egw_packagename}-developer_tools %{egw_packagename}-emailadmin %{egw_packagename}-felamimail %{egw_packagename}-filemanager %{egw_packagename}-infolog %{egw_packagename}-importexport %{egw_packagename}-manual %{egw_packagename}-news_admin %{egw_packagename}-notifications %{egw_packagename}-phpbrain %{egw_packagename}-polls %{egw_packagename}-projectmanager %{egw_packagename}-registration %{egw_packagename}-resources %{egw_packagename}-sambaadmin %{egw_packagename}-sitemgr %{egw_packagename}-syncml %{egw_packagename}-timesheet %{egw_packagename}-wiki
+Obsoletes: %{egw_packagename}
+Obsoletes: %{egw_packagename}-core
+Obsoletes: %{egw_packagename}-egw-pear
+Obsoletes: %{egw_packagename}-addressbook
+Obsoletes: %{egw_packagename}-bookmarks
+Obsoletes: %{egw_packagename}-calendar
+Obsoletes: %{egw_packagename}-developer_tools
+Obsoletes: %{egw_packagename}-emailadmin
+Obsoletes: %{egw_packagename}-felamimail
+Obsoletes: %{egw_packagename}-filemanager
+Obsoletes: %{egw_packagename}-infolog
+Obsoletes: %{egw_packagename}-importexport
+Obsoletes: %{egw_packagename}-manual
+Obsoletes: %{egw_packagename}-news_admin
+Obsoletes: %{egw_packagename}-notifications
+Obsoletes: %{egw_packagename}-phpbrain
+Obsoletes: %{egw_packagename}-phpsysinfo
+Obsoletes: %{egw_packagename}-polls
+Obsoletes: %{egw_packagename}-projectmanager
+Obsoletes: %{egw_packagename}-registration
+Obsoletes: %{egw_packagename}-resources
+Obsoletes: %{egw_packagename}-sambaadmin
+Obsoletes: %{egw_packagename}-sitemgr
+Obsoletes: %{egw_packagename}-syncml
+Obsoletes: %{egw_packagename}-timesheet
+Obsoletes: %{egw_packagename}-tracker
+Obsoletes: %{egw_packagename}-wiki
 %post
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
@@ -124,6 +152,8 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Provides: egw-core %{version}
+Obsoletes: %{egw_packagename}-core
+Obsoletes: %{egw_packagename}-addressbook
 %description core
 This package provides the EGroupware core applications.
 
@@ -134,6 +164,7 @@ Group: Web/Database
 Requires: %{php}-pear
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-egw-pear
 %description egw-pear
 egw-pear contains modified pear classes necessary for EGroupware
 
@@ -156,6 +187,7 @@ Summary: The EGroupware bookmarks application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-bookmarks
 %description bookmarks
 Manage your bookmarks with EGroupware. Has Netscape plugin.
 
@@ -165,6 +197,7 @@ Summary: The EGroupware calendar application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-calendar
 %description calendar
 Powerful calendar with meeting request system, Alarms, ICal and E-Mail support,
 and ACL security.
@@ -175,6 +208,7 @@ Summary: The EGroupware developer_tools application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-developer_tools
 %description developer_tools
 The TranslationTools allow to create and extend translations-files for EGroupware.
 They can search the sources for new / added phrases and show you the ones missing in your language.
@@ -186,6 +220,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
 Requires: %{name}-egw-pear = %{version}
+Obsoletes: %{egw_packagename}-emailadmin
 %description emailadmin
 EmailAdmin allow to maintain User email accounts
 
@@ -197,6 +232,7 @@ AutoReqProv: no
 Requires: egw-core = %{version}
 Requires: %{name}-emailadmin = %{version}
 Requires: %{name}-egw-pear = %{version}
+Obsoletes: %{egw_packagename}-felamimail
 %description felamimail
 The Email application for EGroupware.
 
@@ -207,6 +243,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
 Requires: %{name}-egw-pear = %{version}
+Obsoletes: %{egw_packagename}-filemanager
 %description filemanager
 This is the filemanager app for EGroupware.
 
@@ -216,6 +253,7 @@ Summary: The EGroupware gallery application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-gallery
 %description gallery
 An embedded Gallery2 for EGroupware.
 
@@ -225,6 +263,7 @@ Summary: The EGroupware infolog application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-infolog
 %description infolog
 This is the infolog app for EGroupware (Notes, ToDo, Phonelogs, CRM).
 
@@ -234,6 +273,7 @@ Summary: The EGroupware importexport application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-importexport
 %description importexport
 This is the importexport app for EGroupware. It includes a comandline client.
 
@@ -244,6 +284,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
 Requires: %{name}-wiki = %{version}
+Obsoletes: %{egw_packagename}-manual
 %description manual
 This is the manual app for EGroupware: online help system.
 
@@ -254,6 +295,8 @@ This is the manual app for EGroupware: online help system.
 #AutoReqProv: no
 #Requires: egw-core = %{version}
 #Requires: %{name}-egw-pear = %{version}
+#Provides: %{egw_packagename}-mydms
+#Obsoletes: %{egw_packagename}-mydms
 #%description mydms
 #This is a mydms port to EGroupware.
 
@@ -263,6 +306,7 @@ Summary: The EGroupware news_admin application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-news_admin
 %description news_admin
 This is the news_admin app for EGroupware.
 
@@ -272,6 +316,7 @@ Summary: The EGroupware notifications application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-notifications
 %description notifications
 This is the notifications app for EGroupware.
 
@@ -281,6 +326,7 @@ Summary: The EGroupware phpbrain application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-phpbrain
 %description phpbrain
 This is a knowledgebase for EGroupware.
 
@@ -290,6 +336,7 @@ Summary: The EGroupware phpsysinfo application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-phpsysinfo
 %description phpsysinfo
 This is the phpsysinfo app for EGroupware.
 
@@ -299,6 +346,7 @@ Summary: The EGroupware polls application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-polls
 %description polls
 This is the polls app for EGroupware.
 
@@ -308,6 +356,7 @@ Summary: The EGroupware projectmanager application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version},
+Obsoletes: %{egw_packagename}-projectmanager
 %description projectmanager
 The projectmanager is EGroupware's new project management application.
 It's fully integrated into EGroupware and use the data of InfoLog and Calendar.
@@ -319,6 +368,7 @@ Summary: The EGroupware registration application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-registration
 %description registration
 This is the registration app for EGroupware.
 
@@ -328,6 +378,7 @@ Summary: The EGroupware resources application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-resources
 %description resources
 resources is a resource booking sysmtem for EGroupware.
 Which integrates into the calendar.
@@ -338,6 +389,7 @@ Summary: The EGroupware sambaadmin application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-sambaadmin
 %description sambaadmin
 Manage LDAP based sambaacounts and workstations.
 
@@ -347,6 +399,7 @@ Summary: The EGroupware Sitemanager CMS application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-sitemgr
 %description sitemgr
 This is the Sitemanager CMS app for EGroupware.
 
@@ -369,6 +422,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
 Requires: %{name}-egw-pear = %{version}
+Obsoletes: %{egw_packagename}-syncml
 %description syncml
 This is the syncml app for EGroupware.
 
@@ -378,6 +432,7 @@ Summary: The EGroupware timesheet application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-timesheet
 %description timesheet
 Simple timesheet application, which allow to record and report
 the times and other expenses. It can be uses as well standalone
@@ -389,6 +444,7 @@ Summary: The EGroupware trouble ticket system application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-tracker
 %description tracker
 This is the trouble ticket system app for EGroupware.
 
@@ -398,6 +454,7 @@ Summary: The EGroupware wiki application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version},
+Obsoletes: %{egw_packagename}-wiki
 %description wiki
 This is the wiki app for EGroupware.
 
