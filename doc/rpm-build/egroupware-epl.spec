@@ -2,12 +2,12 @@ Name: egroupware-epl
 Version: 9.1.20090601
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
-Distribution: %{distribution}
 Group: Web/Database
 License: GPLv2 with exception of stylite module, which is proprietary
 URL: http://www.stylite.de/EPL
 Vendor: Stylite GmbH [http://www.stylite.de/]
 Packager: Ralf Becker <rb@stylite.de>
+Author: Ralf Becker <rb@stylite.de> and other developers from EGroupware project [www.egroupware.org]
 Prefix: /usr/share
 %define egwdir %{prefix}/egroupware
 %define egwdatadir /var/lib/egroupware
@@ -15,7 +15,7 @@ Prefix: /usr/share
 
 %if 0%{?suse_version}
 	%define httpdconfd /etc/apache2/conf.d
-	%define source5 egroupware_suse.tar.bz2
+	%define extratar egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
 	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom
@@ -24,7 +24,7 @@ Prefix: /usr/share
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
-	%define source5 egroupware_fedora.tar.bz2
+	%define extratar egroupware_fedora.tar.bz2
 	%define cron crontabs
 	%define rpm_post_install /usr/bin/php %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %endif
@@ -49,11 +49,13 @@ Prefix: /usr/share
 	%define extra_requires httpd php-mysql php-xml
 %endif
 
+Distribution: %{distribution}
+
 Source0: %{name}-%{version}.tar.bz2
 Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-gallery-%{version}.tar.bz2
-Source4: %{?source5}
+Source4: %{?extratar}
 Source5: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
@@ -155,7 +157,8 @@ Provides: egw-core %{version}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-addressbook
 %description core
-This package provides the EGroupware core applications.
+This package provides the EGroupware core applications
+(API, admin, etemplate, preferences and setup) plus addressbook.
 
 %package egw-pear
 Version: %{version}
@@ -175,6 +178,7 @@ egw-pear contains modified pear classes necessary for EGroupware
 #Group: Web/Database
 #AutoReqProv: no
 #Requires: egw-core = %{version}
+#Obsoletes: %{egw_packagename}-addressbook
 #%description addressbook
 #Contact manager with Vcard support.
 #Addressbook is the egroupware contact application.
@@ -464,7 +468,6 @@ This is the wiki app for EGroupware.
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
-%setup5 -T -D -a 5 -n %{egwdirname}
 %patch0 -p 0
 
 %build
@@ -477,7 +480,12 @@ cp -aRf egroupware/* $RPM_BUILD_ROOT%{egwdir}
 
 cd %{buildroot}%{egwdir}
 ln -s ../../..%{egwdatadir}/header.inc.php
-
+# create symlink for suse to get scripts with /usr/bin/php working
+%if 0%{?suse_version}
+	mkdir %{buildroot}/usr/bin
+	cd %{buildroot}/usr/bin
+	ln -s php5 php
+%endif
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
@@ -486,6 +494,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %dir %{egwdir}
 %dir %{egwdatadir}
+# symlink for suse to get scripts with /usr/bin/php working
+%if 0%{?suse_version}
+	/usr/bin/php
+%endif
 
 %files core
 %defattr(-,root,root)
