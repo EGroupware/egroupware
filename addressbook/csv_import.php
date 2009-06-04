@@ -271,6 +271,10 @@ switch($_POST['action'])
 
 		$log = '<table border="1" style="border: 1px dotted black; border-collapse: collapse;">'."\n\t<tr><td>#</td>\n";
 
+		if (!in_array('private',$addr_fields))	// autocreate public access if not set by user
+		{
+			$log .= "\t\t<td><b>private</b></td>\n";
+		}
 		foreach($addr_fields as $csv_idx => $addr)
 		{	// convert $_POST['trans'][$csv_idx] into array of pattern => value
 			// if (!$_POST['debug']) echo "<p>$csv_idx: ".$csv_fields[$csv_idx].": $addr".($_POST['trans'][$csv_idx] ? ': '.$_POST['trans'][$csv_idx] : '')."</p>";
@@ -295,10 +299,6 @@ switch($_POST['action'])
 				unset( $_POST['trans'][$csv_idx] );
 			}
 			$log .= "\t\t<td><b>$addr</b></td>\n";
-		}
-		if (!in_array('private',$addr_fields))	// autocreate public access if not set by user
-		{
-			$log .= "\t\t<td><b>private</b></td>\n";
 		}
 		$start = $_POST['start'] < 1 ? 1 : $_POST['start'];
 
