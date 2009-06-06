@@ -1,13 +1,12 @@
 Name: egroupware-epl
-Version: 9.1.20090601
+Version: 9.1.20090603
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
 License: GPLv2 with exception of stylite module, which is proprietary
 URL: http://www.stylite.de/EPL
-Vendor: Stylite GmbH [http://www.stylite.de/]
+Vendor: Stylite GmbH, http://www.stylite.de/
 Packager: Ralf Becker <rb@stylite.de>
-Author: Ralf Becker <rb@stylite.de> and other developers from EGroupware project [www.egroupware.org]
 Prefix: /usr/share
 %define egwdir %{prefix}/egroupware
 %define egwdatadir /var/lib/egroupware
@@ -68,6 +67,7 @@ AutoReqProv: no
 
 Requires: %{php} >= 5.1.2
 Requires: %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron}
+Requires: jpgraph-epl
 Requires: %{name}-core            = %{version}
 Requires: %{name}-egw-pear        = %{version}
 Requires: %{name}-stylite         = %{version}
