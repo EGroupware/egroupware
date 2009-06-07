@@ -746,6 +746,10 @@ class egw_session
 		{
 			$sessionid = $_REQUEST[self::EGW_SESSION_NAME];
 		}
+		elseif(!$only_basic_auth && isset($_COOKIE[self::EGW_SESSION_NAME]))
+		{
+			$sessionid = $_COOKIE[self::EGW_SESSION_NAME];
+		}
 		else
 		{
 			$sessionid = false;
