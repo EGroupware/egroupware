@@ -542,6 +542,15 @@
 			}
 			if($GLOBALS['type'] == 'user' && $GLOBALS['egw']->preferences->default[$_appname][$name])
 			{
+				// flatten values first (some selectbox values are given multi-dimensional)
+				foreach($values as $id => $val)
+				{
+					if (is_array($val))
+					{
+						unset($values[$id]);
+						$values += $val;
+					}
+				}
 				$defs = array();
 				foreach(explode(',',$GLOBALS['egw']->preferences->default[$_appname][$name]) as $def)
 				{
