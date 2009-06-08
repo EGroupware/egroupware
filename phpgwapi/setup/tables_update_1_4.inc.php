@@ -243,7 +243,7 @@ function phpgwapi_upgrade1_5_005()
 	$files_dir = $GLOBALS['egw_setup']->db->select('egw_config','config_value',array(
 		'config_name' => 'files_dir',
 		'config_app' => 'phpgwapi',
-	),__LINE__,__FILE__)->fetchSingle();
+	),__LINE__,__FILE__)->fetchColumn();
 
 	if ($files_dir && file_exists($files_dir) && file_exists($files_dir.'/infolog'))
 	{
@@ -281,7 +281,7 @@ function phpgwapi_upgrade1_5_006()
 	);
 	$filescenter_app = $GLOBALS['egw_setup']->db->select('egw_applications','*',array(
 		'app_name' => 'filescenter',
-	),__LINE__,__FILE__)->fetchSingle();
+	),__LINE__,__FILE__)->fetchColumn();
 
 	if (!$filescenter_app || !is_dir(EGW_INCLUDE_ROOT.'/filescenter'))
 	{

@@ -18,7 +18,7 @@ $conf = array(
 	'resource_path' => 'resources'
 );
 
-$savant =& new Savant2($conf);
+$savant = new Savant2($conf);
 
 // set up filters
 $savant->loadFilter('colorizeCode');

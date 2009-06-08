@@ -94,7 +94,7 @@
 			}
 
 			// get type prefix
-			if(ereg(":",$type))
+			if(preg_match('/'.":".'/',$type))
 			{
 				$this->type = substr(strrchr($type,':'),1,strlen(strrchr($type,':')));
 				$this->type_prefix = substr($type,0,strpos($type,':'));
@@ -198,7 +198,7 @@
 								$type = 'array';
 							}
 						}
-						elseif(!ereg("^[0-9]*$",$k) && in_array($k,array_keys($this->soapTypes)))
+						elseif(!preg_match('/'."^[0-9]*$".'/',$k) && in_array($k,array_keys($this->soapTypes)))
 						{
 							$type = $k;
 						}

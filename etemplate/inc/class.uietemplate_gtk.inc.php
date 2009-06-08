@@ -108,7 +108,7 @@
 			*/
 			if (!$GLOBALS['egw_info']['etemplate']['window'])
 			{
-				$window = &new GtkWindow();
+				$window = new GtkWindow();
 				$window->connect('destroy',array('etemplate','destroy'));
 				$window->connect('delete-event',array('etemplate','delete_event'));
 				$window->set_title('eGroupWareGTK: '.$GLOBALS['egw_info']['server']['site_title']);
@@ -125,7 +125,7 @@
 			$table->set_border_width(10);
 			$table->show();
 
-			$swindow = &new GtkScrolledWindow(null,null);
+			$swindow = new GtkScrolledWindow(null,null);
 			$swindow->set_policy(GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
 			$swindow->add_with_viewport($table);
 			$swindow->show();
@@ -287,7 +287,7 @@
 				'.row' => $show_row
 			);
 
-			$table = &new GtkTable($this->rows,$this->cols,False);
+			$table = new GtkTable($this->rows,$this->cols,False);
 			$table->set_row_spacings(2);
 			$table->set_col_spacings(5);
 			$table->show();
@@ -369,7 +369,7 @@
 								default:
 									$align = 0.0;
 							}
-							$align = &new GtkAlignment($align,$valign,$cell['type'] == 'hrule' ? 1.0 : 0.0,0.0);
+							$align = new GtkAlignment($align,$valign,$cell['type'] == 'hrule' ? 1.0 : 0.0,0.0);
 							$align->add($widget);
 						}
 						$table->attach($align ? $align : $widget, $c, $c+$colspan, $r, $r+1,GTK_FILL,GTK_FILL,0,0);
@@ -444,7 +444,7 @@
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
 			// building the form-field-name depending on prefix $cname and possibl. Array-subscript in name
-			if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
+			if (preg_match('/^([^[]*)(\\[.*\\])$/',$name,$regs))	// name contains array-index
 			{
 				$form_name = $cname == '' ? $name : $cname.'['.$regs[1].']'.$regs[2];
 				eval(str_replace(']',"']",str_replace('[',"['",'$value = $content['.$regs[1].']'.$regs[2].';')));
@@ -492,7 +492,7 @@
 
 					if ($value)
 					{
-						$widget = &new GtkLabel($value);
+						$widget = new GtkLabel($value);
 						if ($cell['align'] != 'center')
 						{
 							$widget->set_justify($cell['align'] == 'right' ? GTK_JUSTIFY_RIGHT : GTK_JUSTIFY_LEFT);
@@ -520,7 +520,7 @@
 						//$html .= $this->html->input($form_name,$value,'',$options.$this->html->formatOptions($cell['size'],'SIZE,MAXLENGTH'));
 					}
 					list($len,$max) = explode(',',$cell['size']);
-					$widget = &new GtkEntry();
+					$widget = new GtkEntry();
 					$widget->set_text($value);
 					if ($max)
 					{
@@ -534,15 +534,15 @@
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					//$html .= $this->html->textarea($form_name,$value,$options.$this->html->formatOptions($cell['size'],'ROWS,COLS'));
-					$widget = &new GtkText(null,null);
+					$widget = new GtkText(null,null);
 					$widget->insert_text($value,strlen($value));
 					$widget->set_editable(!$readonly);
 					break;
 /*				case 'date':
 					if ($cell['size'] != '')
 					{
-						$date = split('[/.-]',$value);
-						$mdy  = split('[/.-]',$cell['size']);
+						$date = preg_split('/[\\/.-]/',$value);
+						$mdy  = preg_split('/[\\/.-]/',$cell['size']);
 						for ($value=array(),$n = 0; $n < 3; ++$n)
 						{
 							switch($mdy[$n])
@@ -572,7 +572,7 @@
 						$options .= ' CHECKED';
 					}
 					//$html .= $this->html->input($form_name,'1','CHECKBOX',$options);
-					$widget = &new GtkCheckButton($right_label);
+					$widget = new GtkCheckButton($right_label);
 					$right_label = '';
 					$widget->set_active($value);
 					break;
@@ -584,23 +584,23 @@
 					//$html .= $this->html->input($form_name,$cell['size'],'RADIO',$options);
 					if (isset($this->buttongroup[$form_name]))
 					{
-						$widget = &new GtkRadioButton($this->buttongroup[$form_name],$right_label);
+						$widget = new GtkRadioButton($this->buttongroup[$form_name],$right_label);
 					}
 					else
 					{
-						$this->buttongroup[$form_name] = $widget = &new GtkRadioButton(null,$right_label);
+						$this->buttongroup[$form_name] = $widget = new GtkRadioButton(null,$right_label);
 					}
 					$right_label = '';
 					$widget->set_active($value == $cell['size']);
 					break;
 				case 'button':
 					//$html .= $this->html->submit_button($form_name,$cell['label'],'',strlen($cell['label']) <= 1 || $cell['no_lang'],$options);
-					$widget = &new GtkButton(strlen($cell['label']) > 1 ? lang($cell['label']) : $cell['label']);
+					$widget = new GtkButton(strlen($cell['label']) > 1 ? lang($cell['label']) : $cell['label']);
 					$widget->connect_object('clicked', array('etemplate', 'button_clicked'),&$var,$form_name);
 					break;
 				case 'hrule':
 					//$html .= $this->html->hr($cell['size']);
-					$widget = &new GtkHSeparator();
+					$widget = new GtkHSeparator();
 					break;
 				case 'template':	// size: index in content-array (if not full content is past further on)
 					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname) || $cell['size'] != '')
@@ -661,7 +661,7 @@
 							$maxlen = $len;
 						}
 					}
-					$widget = &new GtkCombo();
+					$widget = new GtkCombo();
 					$widget->set_popdown_strings($sel_options);
 					$entry = $widget->entry;
 					$entry->set_text($sel_options[$value]);
@@ -709,7 +709,7 @@
 					$pixbuf = &$GLOBALS['egw_info']['etemplate']['pixbufs'][$path];
 					if ($pixbuf)
 					{
-						$widget = &new GtkDrawingArea();
+						$widget = new GtkDrawingArea();
 						$widget->size($pixbuf->get_width(),$pixbuf->get_height());
 						$widget->connect('expose_event',array('etemplate','draw_image'),$pixbuf);
 					}
@@ -720,7 +720,7 @@
 					break;
 				default:
 					//$html .= '<i>unknown type</i>';
-					$widget = &new GtkLabel('unknown type: '.$cell['type']);
+					$widget = new GtkLabel('unknown type: '.$cell['type']);
 					$widget->set_justify(GTK_JUSTIFY_LEFT);
 					break;
 			}
@@ -738,14 +738,14 @@
 			{
 				if (!$widget && !$right_label)
 				{
-					$widget = &new GtkLabel($left_label);
+					$widget = new GtkLabel($left_label);
 				}
 				else
 				{
-					$hbox = &new GtkHBox(False,5);
+					$hbox = new GtkHBox(False,5);
 					if ($left_label)
 					{
-						$left = &new GtkLabel($left_label);
+						$left = new GtkLabel($left_label);
 						$left->show();
 						$hbox->add($left);
 					}
@@ -756,7 +756,7 @@
 					}
 					if ($right_label)
 					{
-						$right = &new GtkLabel($right_label);
+						$right = new GtkLabel($right_label);
 						$right->show();
 						$hbox->add($right);
 					}
@@ -766,7 +766,7 @@
 			{
 				if (!$this->tooltips)
 				{
-					$this->tooltips = &new GtkTooltips();
+					$this->tooltips = new GtkTooltips();
 				}
 				$this->tooltips->set_tip($widget,lang($cell['help']),$this->name.'/'.$form_name);
 			}

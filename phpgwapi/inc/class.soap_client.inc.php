@@ -53,12 +53,12 @@
 			$this->action = '';
 
 			// endpoint mangling
-			if(ereg("^http://",$path))
+			if(preg_match('/'."^http:\\/\\/".'/',$path))
 			{
 				$path = str_replace('http://','',$path);
 				$this->path = strstr($path,'/');
 				$this->debug("path = $this->path");
-				if(ereg(':',$path))
+				if(preg_match('/:/',$path))
 				{
 					$this->server = substr($path,0,strpos($path,':'));
 					$this->port = substr(strstr($path,':'),1);

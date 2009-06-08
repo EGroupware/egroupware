@@ -205,7 +205,7 @@
 					break;
 			}
 			// get element prefix
-			if(ereg(":",$name))
+			if(preg_match('/'.":".'/',$name))
 			{
 				$prefix = substr($name,0,strpos($name,':'));
 			}

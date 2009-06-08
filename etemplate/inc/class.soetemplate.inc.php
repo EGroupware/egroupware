@@ -953,7 +953,7 @@ class soetemplate
 
 		$tpls = $this->search($app);
 
-		$tpl =& new soetemplate;	// to not alter our own data
+		$tpl = new soetemplate;	// to not alter our own data
 
 		while (list(,$keys) = each($tpls))
 		{
@@ -1062,7 +1062,7 @@ class soetemplate
 		$templ_version=0;
 
 		include($path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
-		$templ =& new etemplate($app);
+		$templ = new etemplate($app);
 
 		foreach($templ_data as $data)
 		{
@@ -1106,7 +1106,7 @@ class soetemplate
 
 		if ($time = @filemtime($path))
 		{
-			$templ =& new soetemplate(".$app",'','##');
+			$templ = new soetemplate(".$app",'','##');
 			if ($templ->lang != '##' || $templ->modified < $time) // need to import
 			{
 				$ret = self::import_dump($app);
@@ -1288,7 +1288,7 @@ class soetemplate
 			case 'template':
 				if (!isset($widget['obj']) && $widget['name'][0] != '@')
 				{
-					$widget['obj'] =& new etemplate;
+					$widget['obj'] = new etemplate;
 					if (!$widget['obj']->read($widget['name'])) $widget['obj'] = false;
 				}
 				if (!is_object($widget['obj'])) break;	// cant descent into template

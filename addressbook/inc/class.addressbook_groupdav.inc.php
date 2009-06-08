@@ -57,7 +57,7 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		parent::__construct($app,$debug,$base_uri);
 
-		$this->bo =& new addressbook_bo();
+		$this->bo = new addressbook_bo();
 		//$this->starttime = microtime(true);	    
 	}
 
@@ -310,7 +310,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	private function _get_handler()
 	{
-		$handler =& new addressbook_vcal();
+		$handler = new addressbook_vcal();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;

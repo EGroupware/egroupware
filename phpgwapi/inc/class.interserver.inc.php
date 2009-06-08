@@ -81,7 +81,7 @@
 
 		function interserver($serverid='')
 		{
-			$url = eregi_replace('https*://[^/]*/','',$GLOBALS['egw_info']['server']['webserver_url']);
+			$url = preg_replace('/https*:\\/\\/[^\\/]*\\//i','',$GLOBALS['egw_info']['server']['webserver_url']);
 			$this->urlparts = array(
 				'xmlrpc' => $url.'/xmlrpc.php',
 				'soap'   => $url.'/soap.php'

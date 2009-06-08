@@ -309,7 +309,7 @@ class etemplate extends boetemplate
 					echo '<div id="popupMainDiv">'."\n";
 					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{
-						$manual =& new etemplate('etemplate.popup.manual');
+						$manual = new etemplate('etemplate.popup.manual');
 						echo $manual->show(array());
 						unset($manual);
 						echo '<style type="text/css">.ajax-loader { position: absolute; right: 27px; top: 24px; display: none; }</style>'."\n";
@@ -1331,7 +1331,7 @@ class etemplate extends boetemplate
 				$obj_read = 'already loaded';
 				if (is_array($cell['obj']))
 				{
-					$obj =& new etemplate();
+					$obj = new etemplate();
 					$obj->init($cell['obj']);
 					$cell['obj'] =& $obj;
 					unset($obj);
@@ -1344,12 +1344,12 @@ class etemplate extends boetemplate
 						$obj_read = is_object($cell['obj']) ? 'obj from content' : 'obj read, obj-name from content';
 						if (!is_object($cell['obj']))
 						{
-							$cell['obj'] =& new etemplate($cell['obj'],$this->as_array());
+							$cell['obj'] = new etemplate($cell['obj'],$this->as_array());
 						}
 					}
 					else
 					{  $obj_read = 'obj read';
-						$cell['obj'] =& new etemplate($name,$this->as_array());
+						$cell['obj'] = new etemplate($name,$this->as_array());
 					}
 				}
 				if (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type'])

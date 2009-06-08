@@ -651,7 +651,7 @@ abstract class egw_framework
 		{
 			require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
 
-			$xajax =& new xajax($GLOBALS['egw']->link('/xajax.php'), 'xajax_', $GLOBALS['egw']->translation->charset());
+			$xajax = new xajax($GLOBALS['egw']->link('/xajax.php'), 'xajax_', $GLOBALS['egw']->translation->charset());
 			$xajax->waitCursorOff();
 			$xajax->registerFunction("doXMLHTTP");
 

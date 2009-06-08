@@ -206,7 +206,7 @@ class Horde_RPC {
         }
         $class = 'Horde_RPC_' . $driver;
         if (class_exists($class)) {
-            $rpc = &new $class($params);
+            $rpc = new $class($params);
         } else {
             require_once 'PEAR.php';
             $rpc = PEAR::raiseError('Class definition of ' . $class . ' not found.');

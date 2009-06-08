@@ -152,7 +152,7 @@ function print_debug($message,$var = 'messageonly',$part = 'app', $level = 3)
 				/*
 				if (!!(DEBUG_OUTPUT & 32))
 				{
-					$obj_debug =& new COM('Some_COM_App.Class','localhost');
+					$obj_debug = new COM('Some_COM_App.Class','localhost');
 					if (is_object($obj_debug))
 					{
 						$DebugMessage_return = $obj_debug->DebugMessage($output);
@@ -376,9 +376,9 @@ function sanitize($string,$type)
 			}
 			break;
 		case 'ip':
-			if (eregi("^[0-9]{1,3}(\.[0-9]{1,3}){3}$",$string))
+			if (preg_match('/'."^[0-9]{1,3}(\.[0-9]{1,3}){3}$".'/i',$string))
 			{
-				$octets = split('\.',$string);
+				$octets = preg_split('/\./',$string);
 				for ($i=0; $i != count($octets); $i++)
 				{
 					if ($octets[$i] < 0 || $octets[$i] > 255)
@@ -397,7 +397,7 @@ function sanitize($string,$type)
 			}
 			break;
 		case 'email':
-			if (eregi("^([[:alnum:]_%+=.-]+)@([[:alnum:]_.-]+)\.([a-z]{2,3}|[0-9]{1,3})$",$string))
+			if (preg_match('/'."^([[:alnum:]_%+=.-]+)@([[:alnum:]_.-]+)\.([a-z]{2,3}|[0-9]{1,3})$".'/i',$string))
 			{
 				return True;
 			}
@@ -749,19 +749,19 @@ function &CreateObject($class)
 	switch(count($args))
 	{
 		case 1:
-			$obj =& new $classname;
+			$obj = new $classname;
 			break;
 		case 2:
-			$obj =& new $classname($args[1]);
+			$obj = new $classname($args[1]);
 			break;
 		case 3:
-			$obj =& new $classname($args[1],$args[2]);
+			$obj = new $classname($args[1],$args[2]);
 			break;
 		case 4:
-			$obj =& new $classname($args[1],$args[2],$args[3]);
+			$obj = new $classname($args[1],$args[2],$args[3]);
 			break;
 		default:
-			$code = '$obj =& new ' . $classname . '(';
+			$code = '$obj = new ' . $classname . '(';
 			foreach($args as $n => $arg)
 			{
 				if ($n)

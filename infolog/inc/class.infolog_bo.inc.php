@@ -236,7 +236,7 @@ class infolog_bo
 		$this->user_time_now = time() + $this->tz_offset_s;
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-		$this->so =& new infolog_so($this->grants);
+		$this->so = new infolog_so($this->grants);
 
 		if ($info_id)
 		{
@@ -516,7 +516,7 @@ class infolog_bo
 			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
 			if (!is_object($this->tracking))
 			{
-				$this->tracking =& new infolog_tracking($this);
+				$this->tracking = new infolog_tracking($this);
 			}
 			$this->tracking->track($deleted,$info,$this->user,true);
 		}
@@ -720,7 +720,7 @@ class infolog_bo
 			// send email notifications and do the history logging
 			if (!is_object($this->tracking))
 			{
-				$this->tracking =& new infolog_tracking($this);
+				$this->tracking = new infolog_tracking($this);
 			}
 			$this->tracking->track($values,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
 		}
@@ -1146,7 +1146,7 @@ class infolog_bo
 			$GLOBALS['egw']->acl->acl($user);
 			$GLOBALS['egw']->acl->read_repository();
 			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-			$this->so =& new infolog_so($this->grants);	// so caches it's filters
+			$this->so = new infolog_so($this->grants);	// so caches it's filters
 
 			$notified_info_ids = array();
 			foreach(array(

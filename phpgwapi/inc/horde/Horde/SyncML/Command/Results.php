@@ -184,7 +184,7 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 			#Horde::logMessage('SyncML: BIG TODO!!!!!!!!!!!!!!!!!! parse reply', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			$state = &$_SESSION['SyncML.state'];
 			
-			$status = &new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Results');
+			$status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Results');
 			$status->setCmdRef($this->_cmdID);
 			
 			$ref = ($state->getVersion() == 0) ? './devinf10' : './devinf11';

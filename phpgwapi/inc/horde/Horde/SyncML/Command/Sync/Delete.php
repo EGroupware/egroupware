@@ -19,7 +19,7 @@ class Horde_SyncML_Command_Sync_Delete extends Horde_SyncML_Command_Sync_SyncEle
 
     function output($currentCmdID, &$output)
     {
-        $status = &new Horde_SyncML_Command_Status($this->_status, 'Delete');
+        $status = new Horde_SyncML_Command_Status($this->_status, 'Delete');
         $status->setCmdRef($this->_cmdID);
 
         if (isset($this->_luid)) {

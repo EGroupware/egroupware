@@ -33,7 +33,7 @@
 			{
 				if (ereg('@',$value['session_lid']))
 				{
-					$t = split('@',$value['session_lid']);
+					$t = explode('@',$value['session_lid']);
 					$session_lid = $t[0];
 				}
 				else

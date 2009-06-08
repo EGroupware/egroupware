@@ -71,7 +71,7 @@ while(($arg = array_shift($argv)))
 				}
 				else
 				{
-					$config[$name] = array_unique(split('[ ,]+',$value));
+					$config[$name] = array_unique(preg_split('/[ ,]+/',$value));
 				}
 				break;
 

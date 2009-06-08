@@ -58,8 +58,8 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
      */
     function XML_WBXML_Encoder()
     {
-        $this->_dtdManager = &new XML_WBXML_DTDManager();
-        $this->_stringTable = &new XML_WBXML_HashTable();
+        $this->_dtdManager = new XML_WBXML_DTDManager();
+        $this->_stringTable = new XML_WBXML_HashTable();
     }
 
     /**
@@ -390,7 +390,7 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
             $this->_currentURI = $uri;
 
         } else {
-            $this->_subParser = &new XML_WBXML_Encoder(true);
+            $this->_subParser = new XML_WBXML_Encoder(true);
             $this->_subParserStack = 1;
         }
     }

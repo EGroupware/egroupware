@@ -15,7 +15,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 
 	if (!(int) $days) $days = 1;	// old pref
 
-	$contacts =& new addressbook_bo();
+	$contacts = new addressbook_bo();
 
 	$month_start = date('*-m-*',$contacts->now_su);
 	$bdays =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family');

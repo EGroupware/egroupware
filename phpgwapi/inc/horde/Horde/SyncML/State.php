@@ -554,7 +554,7 @@ class Horde_SyncML_State {
         $dt = &$this->getDataTree();
 
         // Set $locid.
-        $gid = &new DataTreeObject($this->_locName . $this->_sourceURI . $type . $guid);
+        $gid = new DataTreeObject($this->_locName . $this->_sourceURI . $type . $guid);
         $gid->set('type', $type);
         $gid->set('locid', $locid);
         $gid->set('ts', $ts);
@@ -567,7 +567,7 @@ class Horde_SyncML_State {
         $this->dieOnError($r, __FILE__, __LINE__);
 
         // Set $globaluid
-        $lid = &new DataTreeObject($this->_locName . $this->_sourceURI . $type . $locid);
+        $lid = new DataTreeObject($this->_locName . $this->_sourceURI . $type . $locid);
         $lid->set('globaluid', $guid);
         $r = $dt->add($lid);
         if (is_a($r, 'PEAR_Error')) {
@@ -926,7 +926,7 @@ class Horde_SyncML_State {
         $s = $this->_locName . $this->_sourceURI . 'deviceInfo';
 
         // Set $locid.
-        $info = &new DataTreeObject($s);
+        $info = new DataTreeObject($s);
         $info->set('ClientDeviceInfo', $this->_clientDeviceInfo);
         $r = $dt->add($info);
         if (is_a($r, 'PEAR_Error')) {
@@ -952,7 +952,7 @@ class Horde_SyncML_State {
             $s = $this->_locName . $this->_sourceURI . $type . 'syncSummary';
 
             // Set $locid.
-            $info = &new DataTreeObject($s);
+            $info = new DataTreeObject($s);
             $info->set('ClientAnchor', $this->_clientAnchorNext);
             $info->set('ServerAnchor', $this->_serverAnchorNext);
             $r = $dt->add($info);

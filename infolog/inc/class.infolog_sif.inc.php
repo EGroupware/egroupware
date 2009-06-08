@@ -129,7 +129,7 @@ class infolog_sif extends infolog_bo
 		switch($_sifType) {
 			case 'task':
 				$taskData	= array();
-				$vcal		= &new Horde_iCalendar;
+				$vcal		= new Horde_iCalendar;
 
 				$taskData['info_type'] = 'task';
 
@@ -201,7 +201,7 @@ class infolog_sif extends infolog_bo
 			case 'note':
 				$noteData = array();
 				$noteData['info_type'] = 'note';
-				$vcal		= &new Horde_iCalendar;
+				$vcal		= new Horde_iCalendar;
 
 				foreach($this->_extractedSIFData as $key => $value)
 				{
@@ -280,7 +280,7 @@ class infolog_sif extends infolog_bo
 			case 'task':
 				if($taskData = $this->read($_id)) {
 					$sysCharSet	= $GLOBALS['egw']->translation->charset();
-					$vcal		= &new Horde_iCalendar;
+					$vcal		= new Horde_iCalendar;
 
 					$sifTask = '<task>';
 
@@ -388,7 +388,7 @@ class infolog_sif extends infolog_bo
 			case 'note':
 				if($taskData = $this->read($_id)) {
 					$sysCharSet	= $GLOBALS['egw']->translation->charset();
-					$vcal		= &new Horde_iCalendar;
+					$vcal		= new Horde_iCalendar;
 
 					$sifNote = '<note>';
 
@@ -448,7 +448,7 @@ class infolog_sif extends infolog_bo
 
 		$taskGUID = $GLOBALS['phpgw']->common->generate_uid('infolog_task',$_taskID);
 
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('VERSION',$_version);
 		$vcal->setAttribute('METHOD','PUBLISH');
 
@@ -492,7 +492,7 @@ class infolog_sif extends infolog_bo
 	{
 		$botranslation  = CreateObject('phpgwapi.translation');
 
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		if(!$vcal->parsevCalendar($_vcalData))
 		{
 			return FALSE;

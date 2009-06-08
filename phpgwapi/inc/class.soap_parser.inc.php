@@ -134,15 +134,15 @@
 			$this->parent = $pos;
 
 			// set status
-			if(ereg(":Envelope$",$name))
+			if(preg_match('/'.":Envelope$".'/',$name))
 			{
 				$this->status = 'envelope';
 			}
-			elseif(ereg(":Header$",$name))
+			elseif(preg_match('/'.":Header$".'/',$name))
 			{
 				$this->status = 'header';
 			}
-			elseif(ereg(":Body$",$name))
+			elseif(preg_match('/'.":Body$".'/',$name))
 			{
 				$this->status = 'body';
 			// set method
@@ -150,7 +150,7 @@
 			elseif($this->status == 'body')
 			{
 				$this->status = 'method';
-				if(ereg(':',$name))
+				if(preg_match('/:/',$name))
 				{
 					$this->root_struct_name = substr(strrchr($name,':'),1);
 				}
@@ -169,7 +169,7 @@
 			// set attrs
 			$this->message[$pos]['attrs'] = $attrs;
 			// get namespace
-			if(ereg(":",$name))
+			if(preg_match('/'.":".'/',$name))
 			{
 				$namespace = substr($name,0,strpos($name,':'));
 				$this->message[$pos]['namespace'] = $namespace;
@@ -185,7 +185,7 @@
 			/* foreach($attrs as $key => $value) */
 			{
 				// if ns declarations, add to class level array of valid namespaces
-				if(ereg('xmlns:',$key))
+				if(preg_match('/xmlns:/',$key))
 				{
 					$namespaces[substr(strrchr($key,':'),1)] = $value;
 					if($name == $this->root_struct_name)
@@ -280,11 +280,11 @@
 			{
 				$this->status = 'body';
 			}
-			elseif(ereg(':Body',$name))
+			elseif(preg_match('/:Body/',$name))
 			{
 				$this->status = 'header';
 	 		}
-			elseif(ereg(':Header',$name))
+			elseif(preg_match('/:Header/',$name))
 			{
 				$this->status = 'envelope';
 			}

@@ -21,7 +21,7 @@ class Horde_SyncML_Command_Sync_Add extends Horde_SyncML_Command_Sync_SyncElemen
 
     function output($currentCmdID, &$output)
     {
-        $status = &new Horde_SyncML_Command_Status($this->_status, 'Add');
+        $status = new Horde_SyncML_Command_Status($this->_status, 'Add');
         $status->setCmdRef($this->_cmdID);
 
         if (isset($this->_luid)) {

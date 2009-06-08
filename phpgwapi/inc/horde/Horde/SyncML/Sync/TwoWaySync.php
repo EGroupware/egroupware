@@ -85,7 +85,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				if (!is_a($c, 'PEAR_Error')) {
 					// Item in history but not in database. Strange, but can happen.
 					Horde::logMessage("SyncML: change: $guid export content: $c", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-					$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+					$cmd = new Horde_SyncML_Command_Sync_ContentSyncElement();
 # LK					$cmd->setContent($state->convertServer2Client($c, $contentType));
 					$cmd->setContent($c);
 					$cmd->setSourceURI($guid);
@@ -133,7 +133,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 
 				Horde::logMessage("SyncML: delete: $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				// Create a Delete request for client.
-				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+				$cmd = new Horde_SyncML_Command_Sync_ContentSyncElement();
 				$cmd->setTargetURI($locid);
 				$cmd->setSourceURI($guid);
 				$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Delete');
@@ -187,7 +187,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				// Create an Add request for client.
 				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
 
-				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+				$cmd = new Horde_SyncML_Command_Sync_ContentSyncElement();
 				$c = $registry->call($hordeType . '/export',
 					array(
 						'guid'		=> $guid ,

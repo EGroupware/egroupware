@@ -36,7 +36,7 @@ class infolog_groupdav extends groupdav_handler
 		if (self::$debugInfo) error_log(__METHOD__." called ");
 		parent::__construct($app,$debug,$base_uri);
 		if (self::$debugInfo) error_log(__METHOD__." parent constructed with $app,$debug,$base_uri; initializing infolog_bo ");
-		$this->bo =& new infolog_bo();
+		$this->bo = new infolog_bo();
 	}
 
 	const PATH_ATTRIBUTE = 'info_id';
@@ -231,7 +231,7 @@ class infolog_groupdav extends groupdav_handler
 	private function _get_handler()
 	{
 		if (self::$debugInfo) error_log(__METHOD__." called ");
-		$handler =& new infolog_ical();
+		$handler = new infolog_ical();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;

@@ -211,7 +211,7 @@
 			}
 			elseif(is_string($msg))
 			{
-				$n =& new xmlrpcmsg('');
+				$n = new xmlrpcmsg('');
 				$n->payload = $msg;
 				$msg = $n;
 			}
@@ -668,17 +668,17 @@
 			$calls = array();
 			foreach($msgs as $msg)
 			{
-				$call['methodName'] =& new xmlrpcval($msg->method(),'string');
+				$call['methodName'] = new xmlrpcval($msg->method(),'string');
 				$numParams = $msg->getNumParams();
 				$params = array();
 				for($i = 0; $i < $numParams; $i++)
 				{
 					$params[$i] = $msg->getParam($i);
 				}
-				$call['params'] =& new xmlrpcval($params, 'array');
-				$calls[] =& new xmlrpcval($call, 'struct');
+				$call['params'] = new xmlrpcval($params, 'array');
+				$calls[] = new xmlrpcval($call, 'struct');
 			}
-			$multicall =& new xmlrpcmsg('system.multicall');
+			$multicall = new xmlrpcmsg('system.multicall');
 			$multicall->addParam(new xmlrpcval($calls, 'array'));
 
 			// Attempt RPC call
@@ -717,7 +717,7 @@
 							return false;		// Bad value
 						}
 						// Normal return value
-						$response[$i] =& new xmlrpcresp($val->arraymem(0));
+						$response[$i] = new xmlrpcresp($val->arraymem(0));
 						break;
 					case 'struct':
 						$code = $val->structmem('faultCode');
@@ -730,7 +730,7 @@
 						{
 							return false;
 						}
-						$response[$i] =& new xmlrpcresp(0, $code->scalarval(), $str->scalarval());
+						$response[$i] = new xmlrpcresp(0, $code->scalarval(), $str->scalarval());
 						break;
 					default:
 						return false;

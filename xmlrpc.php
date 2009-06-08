@@ -49,7 +49,7 @@
 			settype($headers,'array');
 			foreach($_SERVER as $h => $v)
 			{
-				if(ereg('HTTP_(.+)',$h,$hp))
+				if(preg_match('/HTTP_(.+)/',$h,$hp))
 				{
 					$headers[$hp[1]] = $v;
 				}
@@ -65,7 +65,7 @@
 	$server->setSimpleDate($isodate);
 	$auth_header = $headers['Authorization'] ? $headers['Authorization'] : $headers['authorization'];
 
-	if(eregi('Basic *([^ ]*)',$auth_header,$auth))
+	if(preg_match('/Basic *([^ ]*)/i',$auth_header,$auth))
 	{
 		list($sessionid,$kp3) = explode(':',base64_decode($auth[1]));
 		//echo "auth='$auth[1]', sessionid='$sessionid', kp3='$kp3'\n";

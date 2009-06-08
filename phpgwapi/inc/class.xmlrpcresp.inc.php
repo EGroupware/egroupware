@@ -40,7 +40,7 @@
 				// programmer error
 				// TODO
 				error_log("Invalid type '" . gettype($val) . "' (value: $val) passed to xmlrpcresp. Defaulting to empty value.");
-				$this->val =& new xmlrpcval();
+				$this->val = new xmlrpcval();
 			}
 			else
 			{

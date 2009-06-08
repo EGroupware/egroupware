@@ -84,7 +84,7 @@ class calendar_sif extends calendar_boupdate
 	}
 
 	function siftoegw($_sifdata) {
-		$vcal		= &new Horde_iCalendar;
+		$vcal		= new Horde_iCalendar;
 		$finalEvent	= array();
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 		$sifData	= base64_decode($_sifdata);
@@ -324,7 +324,7 @@ class calendar_sif extends calendar_boupdate
 
 		if($event = $this->read($_id,null,false,'server')) {
 			$sysCharSet	= $GLOBALS['egw']->translation->charset();
-			$vcal		= &new Horde_iCalendar;
+			$vcal		= new Horde_iCalendar;
 
 
 			$sifEvent = '<appointment>';

@@ -60,7 +60,7 @@ class setup_cmd_header extends setup_cmd
 				$this->header_path = dirname(dirname(dirname(__FILE__))).'/'.$this->header_path;
 			}
 		}
-		$this->setup_header =& new setup_header();
+		$this->setup_header = new setup_header();
 	}
 
 	/**
@@ -155,7 +155,7 @@ class setup_cmd_header extends setup_cmd
 	 * @param array $args=null
 	 * @return mixed
 	 */
-	protected function __call($method,array $args=null)
+	function __call($method,array $args=null)
 	{
 		if (method_exists($this->setup_header,$method))
 		{

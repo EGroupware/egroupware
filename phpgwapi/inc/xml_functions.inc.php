@@ -219,7 +219,7 @@
 		{
 			return $GLOBALS['xmlEntities'][strtolower($ent)];
 		}
-		if (ereg("^#([0-9]+)$", $ent, $regs))
+		if (preg_match('/'."^#([0-9]+)$".'/', $ent, $regs))
 		{
 			return chr($regs[1]);
 		}
@@ -465,7 +465,7 @@
 					error_log('XML-RPC: missing VALUE inside PARAM in received xml');
 					break;
 				case 'METHODNAME':
-					$GLOBALS['_xh'][$parser]['method']=ereg_replace("^[\n\r\t ]+", '', $GLOBALS['_xh'][$parser]['ac']);
+					$GLOBALS['_xh'][$parser]['method']=preg_replace('/'."^[\n\r\t ]+".'/', '', $GLOBALS['_xh'][$parser]['ac']);
 					break;
 				case 'PARAMS':
 				case 'FAULT':
@@ -482,7 +482,7 @@
 
 	function xmlrpc_cd($parser, $data)
 	{
-		//if(ereg("^[\n\r \t]+$", $data)) return;
+		//if(preg_match('/'."^[\n\r \t]+$".'/', $data)) return;
 		// print "adding [${data}]\n";
 
 		// skip processing if xml fault already detected
@@ -560,7 +560,7 @@
 	{
 		// return a time in the localtime, or UTC
 		$t = 0;
-		if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})",$idate, $regs))
+		if (preg_match('/'."([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})".'/',$idate, $regs))
 		{
 			if ($utc)
 			{
@@ -693,7 +693,7 @@
 	{
 		$methName = $m->getParam(0);
 		$methName = $methName->scalarval();
-		if (ereg("^system\.", $methName))
+		if (preg_match('/'."^system\.".'/', $methName))
 		{
 			$dmap = $GLOBALS['_xmlrpcs_dmap'];
 			$sysCall = 1;
@@ -740,7 +740,7 @@
 	{
 		$methName = $m->getParam(0);
 		$methName = $methName->scalarval();
-		if (ereg("^system\.", $methName))
+		if (preg_match('/'."^system\.".'/', $methName))
 		{
 			$dmap = $GLOBALS['_xmlrpcs_dmap'];
 			$sysCall=1;

@@ -385,7 +385,7 @@ else
 
 	foreach($_GET as $name => $value)
 	{
-		if(ereg('phpgw_',$name))
+		if(strpos($name,'phpgw_') !== false)
 		{
 			$extra_vars .= '&' . $name . '=' . urlencode($value);
 		}

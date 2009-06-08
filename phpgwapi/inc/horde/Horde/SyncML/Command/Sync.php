@@ -35,7 +35,7 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
 		
 		Horde::logMessage('SyncML: $this->_targetURI = ' . $this->_targetURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		
-		$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Sync');
+		$status = new Horde_SyncML_Command_Status(RESPONSE_OK, 'Sync');
 		
 		// $status->setState($state);
 		

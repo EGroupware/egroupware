@@ -46,7 +46,7 @@ class Horde_SyncML_Command_Map extends Horde_SyncML_Command {
 
         $state = $_SESSION['SyncML.state'];
 
-        $status = &new Horde_SyncML_Command_Status($state->isAuthorized() ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS, 'Map');
+        $status = new Horde_SyncML_Command_Status($state->isAuthorized() ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS, 'Map');
         $status->setCmdRef($this->_cmdID);
         if ($this->_sourceLocURI != null) {
             $status->setSourceRef($this->_sourceLocURI);

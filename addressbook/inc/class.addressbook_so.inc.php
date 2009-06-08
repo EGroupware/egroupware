@@ -217,7 +217,7 @@ class addressbook_so
 		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
 		{
 			$this->contact_repository = 'ldap';
-			$this->somain =& new addressbook_ldap();
+			$this->somain = new addressbook_ldap();
 
 			if ($this->user)	// not set eg. in setup
 			{
@@ -236,7 +236,7 @@ class addressbook_so
 			{
 				$this->contact_repository = 'sql-ldap';
 			}
-			$this->somain =& new addressbook_sql();
+			$this->somain = new addressbook_sql();
 
 			if ($this->user)	// not set eg. in setup
 			{

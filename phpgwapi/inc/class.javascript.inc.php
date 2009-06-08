@@ -309,7 +309,7 @@
 					$thyapi_comp = 'thyapi_comp_gecko.js';
 			}
 
-			$GLOBALS['egw_info']['flags']['java_script_globals']['jsapi']['imgDir'] = $GLOBALS['egw_info']['server']['webserver_url'].'/'.'phpgwapi/images';
+			$GLOBALS['egw_info']['flags']['java_script_globals']['jsapi']['imgDir'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images';
 			if (EGW_UNCOMPRESSED_THYAPI)
 			{
 				$jsCode  = "<!-- JS Global Variables and ThyAPI Insertion -->\n" .

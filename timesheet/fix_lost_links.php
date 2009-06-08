@@ -18,8 +18,8 @@ include('../header.inc.php');
 
 require_once(EGW_INCLUDE_ROOT.'/timesheet/inc/class.botimesheet.inc.php');
 
-$bots =& new botimesheet();
-$so_sql =& new so_sql('timesheet',$bots->table_name);
+$bots = new botimesheet();
+$so_sql = new so_sql('timesheet',$bots->table_name);
 
 // search timesheet which have a project-field identical to an exiting PM project, but no link to it
 $rows = $so_sql->search(false,'ts_id,ts_project,ts_title','','pm_id,link_id','',false,'AND',false,array('link_id IS NULL'),

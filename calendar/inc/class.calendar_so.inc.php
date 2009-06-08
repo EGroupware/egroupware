@@ -583,7 +583,7 @@ ORDER BY cal_user_type, cal_usre_id
 			if ($set_recurrences)
 			{
 				// delete all, but the lowest dates record
-				$min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchSingle();
+				$min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 
 				$this->db->delete($this->dates_table,array(
 					'cal_id' => $cal_id,
@@ -657,7 +657,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		if (is_null($etag))
 		{
-			$etag = $this->db->select($this->cal_table,'cal_etag',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetchSingle();
+			$etag = $this->db->select($this->cal_table,'cal_etag',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 		}
 		return $cal_id;
 	}

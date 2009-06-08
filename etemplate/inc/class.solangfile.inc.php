@@ -74,7 +74,7 @@ class solangfile
 		}
 		foreach($lines as $n => $line)
 		{
-			while (ereg('\{lang_([^}]+)\}(.*)',$line,$found))
+			while (preg_match('/\{lang_([^}]+)\}(.*)/',$line,$found))
 			{
 				$lang = str_replace('_',' ',$found[1]);
 				$this->plist[$lang] = $app;
@@ -256,7 +256,7 @@ class solangfile
 								}
 								$rest = substr($rest,$next+1);
 							}
-							if(!ereg("[ \t\n]*,[ \t\n]*(.*)$",$rest,$parts))
+							if(!preg_match('/'."[ \t\n]*,[ \t\n]*(.*)$".'/',$rest,$parts))
 							{
 								break;	// nothing found
 							}

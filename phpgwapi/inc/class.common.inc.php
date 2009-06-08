@@ -581,7 +581,7 @@ class common
 		{
 			while ($file = readdir($dh))
 			{
-				if (eregi("\.css$", $file) && $file != 'phpgw.css')
+				if (preg_match('/'."\.css$".'/i', $file) && $file != 'phpgw.css')
 				{
 					$list[] = substr($file,0,strpos($file,'.'));
 				}
@@ -593,7 +593,7 @@ class common
 			$dh = opendir(EGW_SERVER_ROOT . '/phpgwapi/themes');
 			while ($file = readdir($dh))
 			{
-				if (eregi("\.theme$", $file))
+				if (preg_match('/'."\.theme$".'/i', $file))
 				{
 					$list[] = substr($file,0,strpos($file,'.'));
 				}
@@ -1563,7 +1563,7 @@ class common
 			return -1;
 		}
 
-		$id = (int) $GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchSingle();
+		$id = (int) $GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchColumn();
 
 		if ($max && $id >= $max)
 		{
@@ -1593,7 +1593,7 @@ class common
 			return -1;
 		}
 
-		$id = (int)$GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchSingle();
+		$id = (int)$GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchColumn();
 
 		if (!$id || $id < $min)
 		{

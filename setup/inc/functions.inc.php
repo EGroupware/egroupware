@@ -83,7 +83,7 @@ function get_langs()
 	$f = fopen('./lang/languages','rb');
 	while($line = fgets($f,200))
 	{
-		list($x,$y) = split("\t",$line);
+		list($x,$y) = explode("\t",$line);
 		$languages[$x]['lang']  = trim($x);
 		$languages[$x]['descr'] = trim($y);
 		$languages[$x]['available'] = False;

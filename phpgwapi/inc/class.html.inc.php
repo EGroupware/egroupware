@@ -886,13 +886,13 @@ class html
 	 */
 	static function image( $app,$name,$title='',$options='' )
 	{
-		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
-		{
-			$name = egw_vfs::download_url(substr($name,4));
-		}
 		if (is_array($name))	// menuaction and other get-vars
 		{
 			$name = $GLOBALS['egw']->link('/index.php',$name);
+		}
+		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
+		{
+			$name = egw_vfs::download_url(substr($name,4));
 		}
 		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://' || stripos($name,'etemplate/thumbnail.php') )
 		{

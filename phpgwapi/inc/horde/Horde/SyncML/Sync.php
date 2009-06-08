@@ -42,27 +42,27 @@ class Horde_SyncML_Sync {
         switch ($alert) {
         case ALERT_TWO_WAY:
             include_once 'Horde/SyncML/Sync/TwoWaySync.php';
-            return $sync = &new Horde_SyncML_Sync_TwoWaySync();
+            return $sync = new Horde_SyncML_Sync_TwoWaySync();
 
         case ALERT_SLOW_SYNC:
             include_once 'Horde/SyncML/Sync/SlowSync.php';
-            return $sync = &new Horde_SyncML_Sync_SlowSync();
+            return $sync = new Horde_SyncML_Sync_SlowSync();
 
         case ALERT_ONE_WAY_FROM_CLIENT:
             include_once 'Horde/SyncML/Sync/OneWayFromClientSync.php';
-            return $sync = &new Horde_SyncML_Sync_OneWayFromClientSync();
+            return $sync = new Horde_SyncML_Sync_OneWayFromClientSync();
 
         case ALERT_REFRESH_FROM_CLIENT:
             include_once 'Horde/SyncML/Sync/RefreshFromClientSync.php';
-            return $sync = &new Horde_SyncML_Sync_RefreshFromClientSync();
+            return $sync = new Horde_SyncML_Sync_RefreshFromClientSync();
 
         case ALERT_ONE_WAY_FROM_SERVER:
             include_once 'Horde/SyncML/Sync/OneWayFromServerSync.php';
-            return $sync = &new Horde_SyncML_Sync_OneWayFromServerSync();
+            return $sync = new Horde_SyncML_Sync_OneWayFromServerSync();
 
         case ALERT_REFRESH_FROM_SERVER:
             include_once 'Horde/SyncML/Sync/RefreshFromServerSync.php';
-            return $sync = &new Horde_SyncML_Sync_RefreshFromServerSync();
+            return $sync = new Horde_SyncML_Sync_RefreshFromServerSync();
         }
 
         require_once 'PEAR.php';

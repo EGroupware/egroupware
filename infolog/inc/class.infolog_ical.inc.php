@@ -57,7 +57,7 @@ class infolog_ical extends infolog_bo
 
 		$taskGUID = $GLOBALS['egw']->common->generate_uid('infolog_task',$_taskID);
 
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('VERSION',$_version);
 		$vcal->setAttribute('METHOD',$_method);
 
@@ -164,7 +164,7 @@ class infolog_ical extends infolog_bo
 
 	function vtodotoegw($_vcalData,$_taskID=-1)
 	{
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		if(!$vcal->parsevCalendar($_vcalData))
 		{
 			return FALSE;
@@ -274,7 +274,7 @@ class infolog_ical extends infolog_bo
 
 			case 'text/x-vnote':
 				$noteGUID = $GLOBALS['egw']->common->generate_uid('infolog_note',$_noteID);
-				$vnote = &new Horde_iCalendar_vnote();
+				$vnote = new Horde_iCalendar_vnote();
 				$vNote->setAttribute('VERSION', '1.1');
 				$vnote->setAttribute('SUMMARY',$note['info_subject']);
 				$vnote->setAttribute('BODY',$note['info_des']);
@@ -368,7 +368,7 @@ class infolog_ical extends infolog_bo
 				break;
 
 			case 'text/x-vnote':
-				$vnote = &new Horde_iCalendar;
+				$vnote = new Horde_iCalendar;
 				if (!$vcal->parsevCalendar($_data))
 				{
 					return FALSE;

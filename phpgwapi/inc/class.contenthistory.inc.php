@@ -116,7 +116,7 @@ class contenthistory
 			'sync_contentid' => $_id,
 		);
 
-		if (($ts = $this->db->select(self::TABLE,$col,$where,__LINE__,__FILE__)->fetchSingle()))
+		if (($ts = $this->db->select(self::TABLE,$col,$where,__LINE__,__FILE__)->fetchColumn()))
 		{
 			$ts = $this->db->from_timestamp($ts);
 		}
@@ -155,7 +155,7 @@ class contenthistory
 					'sync_contentid'	=> $_id,
 				);
 
-				if (!$this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__)->fetchSingle())
+				if (!$this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__)->fetchColumn())
 				{
 					$this->db->insert(self::TABLE,$newData,array(),__LINE__,__FILE__);
 				}

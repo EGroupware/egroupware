@@ -146,7 +146,7 @@ class ajax_select_widget
 		$cell['type'] = 'template';
 		$cell['size'] = $cell['name'];
 		$value = array('value' => $current_value, 'search' => $title);
-		$widget =& new etemplate('etemplate.ajax_select_widget');
+		$widget = new etemplate('etemplate.ajax_select_widget');
 		$widget->no_onclick = True;
 
 		// Link if readonly & link is set

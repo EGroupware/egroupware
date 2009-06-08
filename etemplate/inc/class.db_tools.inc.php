@@ -330,7 +330,7 @@ class db_tools
 		$new_version[$minor] = sprintf('%03d',1+$new_version[$minor]);
 		$content['new_version'] = implode('.',$new_version);
 
-		$tmpl =& new etemplate('etemplate.db-tools.ask_save');
+		$tmpl = new etemplate('etemplate.db-tools.ask_save');
 
 		if (!file_exists(EGW_SERVER_ROOT."/$posted_app/setup/tables_current.inc.php"))
 		{
@@ -516,7 +516,7 @@ class db_tools
 									$opts = array();
 									foreach(explode(',',$col['options']) as $opt)
 									{
-										list($db,$opt) = split('[(:)]',$opt);
+										list($db,$opt) = preg_split('/[(:)]/',$opt);
 										$opts[$db] = is_numeric($opt) ? intval($opt) : $opt;
 									}
 									$table[$prop][] = array(

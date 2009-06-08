@@ -24,7 +24,7 @@ $conf = array(
 	'resource_path' => 'resources'
 );
 
-$savant =& new Savant2($conf);
+$savant = new Savant2($conf);
 
 echo "<h1>Paths to begin with</h1>\n";
 preprint($savant->getPath('resource'));

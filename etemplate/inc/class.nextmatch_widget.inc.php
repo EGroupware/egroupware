@@ -363,7 +363,7 @@ class nextmatch_widget
 		}
 		if (!is_object($value['template']))
 		{
-			$value['template'] =& new etemplate($value['template'],$tmpl->as_array());
+			$value['template'] = new etemplate($value['template'],$tmpl->as_array());
 		}
 		if (is_array($value['rows'][0]))	// pad 0 based arrays with rows-1 false values
 		{
@@ -386,7 +386,7 @@ class nextmatch_widget
 		{											// disable whole nextmatch line if no scrolling necessary
 			if ($value['header_left'] || $value['header_right'])
 			{
-				$nextmatch =& new etemplate('etemplate.nextmatch_widget.header_only');
+				$nextmatch = new etemplate('etemplate.nextmatch_widget.header_only');
 				$cell['size'] = $cell['name'];
 				$cell['obj'] = &$nextmatch;
 				$cell['name'] = $nextmatch->name;
@@ -400,7 +400,7 @@ class nextmatch_widget
 		}
 		else
 		{
-			$nextmatch =& new etemplate('etemplate.nextmatch_widget');
+			$nextmatch = new etemplate('etemplate.nextmatch_widget');
 			$nextmatch->read('etemplate.nextmatch_widget');
 			// keep the editor away from the generated tmpls
 			$nextmatch->no_onclick = true;
@@ -1129,7 +1129,7 @@ class nextmatch_widget
 		if ($app)
 		{
 			include_once(EGW_API_INC.'/class.config.inc.php');
-			$config =& new config($app);
+			$config = new config($app);
 			$config->read_repository();
 
 			$customfields = isset($config->config_data['customfields']) ? $config->config_data['customfields'] : $config->config_data['custom_fields'];

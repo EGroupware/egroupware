@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 
 require_once 'Savant2.php';
-$Savant2 =& new Savant2();
+$Savant2 = new Savant2();
 $Savant2->addPath('template', 'templates/');
 $Savant2->addPath('resource', 'resources/');
 

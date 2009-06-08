@@ -656,7 +656,7 @@ function adodb_get_gmt_diff()
 static $TZ;
 	if (isset($TZ)) return $TZ;
 	
-	$TZ = mktime(0,0,0,1,2,1970,0) - gmmktime(0,0,0,1,2,1970,0);
+	$TZ = mktime(0,0,0,1,2,1970) - gmmktime(0,0,0,1,2,1970);
 	return $TZ;
 }
 

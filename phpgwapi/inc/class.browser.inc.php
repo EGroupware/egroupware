@@ -39,30 +39,30 @@
 			/*
 				Determine browser and version
 			*/
-			if(ereg('MSIE ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			if(preg_match('/MSIE ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER = $log_version[1];
 				$this->BROWSER_AGENT = 'IE';
 			}
-			elseif(ereg('Opera ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
-				ereg('Opera/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			elseif(preg_match('/Opera ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version) ||
+				preg_match('/Opera\\/([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER   = $log_version[1];
 				$this->BROWSER_AGENT = 'OPERA';
 			}
-			elseif(eregi('iCab ([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version) ||
-				eregi('iCab/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version))
+			elseif(preg_match('/iCab ([0-9].[0-9a-zA-Z]{1,4})/i',$HTTP_USER_AGENT,$log_version) ||
+				preg_match('/iCab\\/([0-9].[0-9a-zA-Z]{1,4})/i',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER   = $log_version[1];
 				$this->BROWSER_AGENT = 'iCab';
 			} 
-			elseif(ereg('Gecko',$HTTP_USER_AGENT,$log_version))
+			elseif(strpos($HTTP_USER_AGENT,'Gecko') !== false)
 			{
 				$this->BROWSER_VER   = $log_version[1];
 				$this->BROWSER_AGENT = 'MOZILLA';
 			}
-			elseif(ereg('Konqueror/([0-9].[0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
-				ereg('Konqueror/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			elseif(preg_match('/Konqueror\\/([0-9].[0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version) ||
+				preg_match('/Konqueror\\/([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER=$log_version[1];
 				$this->BROWSER_AGENT='Konqueror';

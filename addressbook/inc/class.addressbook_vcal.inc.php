@@ -64,7 +64,7 @@ class addressbook_vcal extends addressbook_bo
 	{
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
-		$vCard =& new Horde_iCalendar_vcard;
+		$vCard = new Horde_iCalendar_vcard;
 		
 		if(!is_array($this->supportedFields)) {
 			$this->setSupportedFields();

@@ -240,7 +240,7 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 	function output($currentCmdID, &$output ) {
 		$state = &$_SESSION['SyncML.state'];
 		
-		$status = &new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Put');
+		$status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Put');
 		$status->setCmdRef($this->_cmdID);
 		
 		$ref = ($state->getVersion() == 0) ? './devinf10' : './devinf11';

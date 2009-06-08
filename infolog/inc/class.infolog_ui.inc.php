@@ -91,7 +91,7 @@ class infolog_ui
 	 */
 	function __construct()
 	{
-		$this->bo =& new infolog_bo();
+		$this->bo = new infolog_bo();
 
 		$this->tmpl = new etemplate();
 
@@ -302,7 +302,7 @@ class infolog_ui
 		unset($query['custom_fields']);
 		if ($query['col_filter']['info_type'])
 		{
-			$tpl =& new etemplate;
+			$tpl = new etemplate;
 			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
 			{
 				$query['template'] =& $tpl;

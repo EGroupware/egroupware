@@ -28,7 +28,7 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
 
         $ref = ($state->getVersion() == 0) ? './devinf10' : './devinf11';
 
-        $status = &new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Get');
+        $status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Get');
         $status->setCmdRef($this->_cmdID);
         $status->setTargetRef($ref);
         $currentCmdID = $status->output($currentCmdID, $output);

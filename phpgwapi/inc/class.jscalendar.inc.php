@@ -204,8 +204,8 @@ function monthClicked(calendar,monthstart) {
 		{
 			return False;
 		}
-		$fields = split('[./-]',$datestr);
-		foreach(split('[./-]',$this->dateformat) as $n => $field)
+		$fields = preg_split('/[.\\/-]/',$datestr);
+		foreach(preg_split('/[.\\/-]/',$this->dateformat) as $n => $field)
 		{
 			if ($field == 'M')
 			{

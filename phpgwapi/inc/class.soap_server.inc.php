@@ -81,13 +81,13 @@
 			if($headers_array["SOAPAction"])
 			{
 				$action = str_replace('"','',$headers_array["SOAPAction"]);
-				if(ereg("^urn:",$action))
+				if(preg_match('/'."^urn:".'/',$action))
 				{
 					$this->service = substr($action,4);
 				}
-				elseif(ereg(".php",$action))
+				elseif(preg_match('/'.".php".'/',$action))
 				{
-					$this->service = ereg_replace('"|/','',substr(strrchr($action,".php"),4,strlen(strrchr($action,"/"))));
+					$this->service = preg_replace('/"|\\//','',substr(strrchr($action,".php"),4,strlen(strrchr($action,"/"))));
 				}
 				$this->debug("got service: $this->service");
 			}
@@ -105,7 +105,7 @@
 			$this->debug("method name: $this->methodname");
 
 			// does method exist?
-			$test = ereg_replace("\.",'_',$this->methodname);
+			$test = preg_replace('/'."\.".'/','_',$this->methodname);
 			if(function_exists($test))
 			{
 				$method = $this->methodname = $test;
@@ -115,7 +115,7 @@
 			{
 				/* egroupware customization - createobject based on methodname */
 				list($app,$class,$method) = explode('.',$this->methodname);
-				if(ereg("^service",$app))
+				if(preg_match('/'."^service".'/',$app))
 				{
 					$args  = $class;
 					$class = 'service';

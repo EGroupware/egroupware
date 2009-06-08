@@ -35,7 +35,7 @@ class bocalendar
 
 	function __construct()
 	{
-		$this->cal =& new calendar_boupdate();
+		$this->cal = new calendar_boupdate();
 
 		if (is_object($GLOBALS['server']) && $GLOBALS['server']->simpledate)
 		{

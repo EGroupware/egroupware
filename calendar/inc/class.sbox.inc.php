@@ -265,7 +265,7 @@
 				"group" => "Group public"
 			);
 
-			if (ereg(",", $selected))
+			if (strpos($selected,",") !== false)
 			{
 				$selected = "group";
 			}

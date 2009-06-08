@@ -39,7 +39,7 @@ class timesheet_datasource extends datasource
 		// we use $GLOBALS['timesheet_bo'] as an already running instance is availible there
 		if (!is_object($GLOBALS['timesheet_bo']))
 		{
-			$GLOBALS['timesheet_bo'] =& new timesheet_bo();
+			$GLOBALS['timesheet_bo'] = new timesheet_bo();
 		}
 		if (!is_array($data_id))
 		{

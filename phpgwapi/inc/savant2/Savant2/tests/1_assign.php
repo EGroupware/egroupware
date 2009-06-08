@@ -12,7 +12,7 @@
 error_reporting(E_ALL);
 
 require_once 'Savant2.php';
-$savant =& new Savant2(array('template_path' => 'templates'));
+$savant = new Savant2(array('template_path' => 'templates'));
 
 echo "<h1>assign 0 (string, null)</h1>";
 $val = null;

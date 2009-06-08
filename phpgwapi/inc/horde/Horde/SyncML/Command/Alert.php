@@ -70,7 +70,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 
         // Handle unauthorized first.
         if (!$state->isAuthorized()) {
-            $status = &new Horde_SyncML_Command_Status(RESPONSE_INVALID_CREDENTIALS, 'Alert');
+            $status = new Horde_SyncML_Command_Status(RESPONSE_INVALID_CREDENTIALS, 'Alert');
             $status->setCmdRef($this->_cmdID);
             $currentCmdID = $status->output($currentCmdID, $output);
             return $currentCmdID;
@@ -127,7 +127,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 		    //$state->removeAllUID($this->_targetLocURI);
         	}
 
-        	$status = &new Horde_SyncML_Command_Status($code, 'Alert');
+        	$status = new Horde_SyncML_Command_Status($code, 'Alert');
         	$status->setCmdRef($this->_cmdID);
         	if ($this->_sourceLocURI != null) {
         	    $status->setSourceRef($this->_sourceLocURI);
@@ -241,7 +241,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	}
 
 	} elseif ($this->_alert == ALERT_NEXT_MESSAGE) {
-        	$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
+        	$status = new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
         	$status->setCmdRef($this->_cmdID);
         	if ($this->_targetLocURI != null) {
         	    $status->setTargetRef((isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI));
@@ -256,7 +256,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	$state->setAlert222Received(true);
 
 	} else {
-        	$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
+        	$status = new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
         	$status->setCmdRef($this->_cmdID);
         	if ($this->_sourceLocURI != null) {
         	    $status->setSourceRef($this->_sourceLocURI);

@@ -276,7 +276,7 @@ class editor
 		{
 			$content[$row] = $param;
 		}
-		$list_result =& new etemplate('etemplate.editor.list_result');
+		$list_result = new etemplate('etemplate.editor.list_result');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Search');
 		$list_result->exec('etemplate.editor.list_result',$content,'','',array(
 			'result' => $result,
@@ -465,7 +465,7 @@ class editor
 			'xml' => $xml ? '<pre>'.html::htmlspecialchars($xml)."</pre>\n" : '',
 		);
 
-		$editor =& new etemplate('etemplate.editor.new');
+		$editor = new etemplate('etemplate.editor.new');
 		if (!$msg && isset($content['values']) && !isset($content['vals']))
 		{
 			$r = 1;
@@ -1337,8 +1337,8 @@ class editor
 
 		$content['cell']['options'] = explode(',',$content['cell']['size']);
 
-		$editor =& new etemplate('etemplate.editor.widget');
-		$type_tmpl =& new etemplate;
+		$editor = new etemplate('etemplate.editor.widget');
+		$type_tmpl = new etemplate;
 
 		list($ext_type) = explode('-',$widget['type']);
 		// allow to read template of app-specific widgets from their app: eg. "infolog-value" --> "infolog.widget.infolog-value"
@@ -1488,7 +1488,7 @@ class editor
 			'java_script' => $js ? '<script>'.$js.'</script>' : '',
 			'msg' => $msg
 		);
-		$tmpl =& new etemplate('etemplate.editor.styles');
+		$tmpl = new etemplate('etemplate.editor.styles');
 
 		if ($content['from'])
 		{
@@ -1542,7 +1542,7 @@ class editor
 		$dir = @opendir(EGW_SERVER_ROOT.'/'.$app.'/inc');
 		while ($dir && ($file = readdir($dir)))
 		{
-			if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
+			if (preg_match('/class\\.([a-zA-Z0-9_]*)_widget.inc.php/',$file,$regs) &&
 				($regs[1] != 'xslt' || $this->etemplate->xslt) &&
 				($ext = $this->etemplate->loadExtension($regs[1].'.'.$app,$this->etemplate)))
 			{

@@ -47,7 +47,7 @@ class calendar_groupdav extends groupdav_handler
 	{
 		parent::__construct($app,$debug,$base_uri);
 
-		$this->bo =& new calendar_boupdate();
+		$this->bo = new calendar_boupdate();
 	}
 
 	const PATH_ATTRIBUTE = 'id';
@@ -425,7 +425,7 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	private function _get_handler()
 	{
-		$handler =& new calendar_ical();
+		$handler = new calendar_ical();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 		if ($this->debug > 1) error_log("ical Handler called:" . $this->agent);
 		return $handler;

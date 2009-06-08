@@ -113,9 +113,9 @@ class date_widget
 		}
 		elseif ($data_format != '')
 		{
-			$date = split('[- /.:,]',$value);
+			$date = preg_split('/[- \\/.:,]/',$value);
 			//echo "date=<pre>"; print_r($date); echo "</pre>";
-			$mdy  = split('[- /.:,]',$data_format);
+			$mdy  = preg_split('/[- \\/.:,]/',$data_format);
 
 			if (count($mdy) == 1)	// no seperators, eg. YmdHi
 			{
@@ -166,7 +166,7 @@ class date_widget
 			$value['H'] = $value['H'] % 12 ?  $value['H'] % 12 : 12;	// no leading 0 and 0h => 12am
 			$timeformat += array(5 => 'a');
 		}
-		$format = split('[/.-]',$this->dateformat);
+		$format = preg_split('/[\\/.-]/',$this->dateformat);
 
 		// no time also if $options&8 and readonly and time=0h0
 		if ($type != 'date' && !($readonly && ($options & 8) && $time_0h0))
@@ -235,7 +235,7 @@ class date_widget
 				'needed' => $cell['needed'],
 			));
 		}
-		$tpl =& new etemplate;
+		$tpl = new etemplate;
 		$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
 		// keep the editor away from the generated tmpls
 		$tpl->no_onclick = true;
@@ -410,7 +410,7 @@ class date_widget
 				'value' => $value,
 				'unit'  => $unit,
 			);
-			$tpl =& new etemplate;
+			$tpl = new etemplate;
 			$tpl->init('*** generated fields for duration','','',0,'',0,0);	// make an empty template
 			// keep the editor away from the generated tmpls
 			$tpl->no_onclick = true;

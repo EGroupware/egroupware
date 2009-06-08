@@ -679,7 +679,7 @@ class egw_session
 			'account_id = 0',
 			'ip'         => $ip,
 			"li > $block_time",
-		),__LINE__,__FILE__)->fetchSingle()) > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'])
+		),__LINE__,__FILE__)->fetchColumn()) > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'])
 		{
 			//echo "<p>login_blocked: ip='$ip' ".$this->db->f(0)." trys (".$GLOBALS['egw_info']['server']['num_unsuccessful_ip']." max.) since ".date('Y/m/d H:i',$block_time)."</p>\n";
 			$blocked = true;
@@ -688,7 +688,7 @@ class egw_session
 			'account_id = 0',
 			'(loginid = '.$GLOBALS['egw']->db->quote($login).' OR loginid LIKE '.$GLOBALS['egw']->db->quote($login.'@%').')',
 			"li > $block_time",
-		),__LINE__,__FILE__)->fetchSingle()) > $GLOBALS['egw_info']['server']['num_unsuccessful_id'])
+		),__LINE__,__FILE__)->fetchColumn()) > $GLOBALS['egw_info']['server']['num_unsuccessful_id'])
 		{
 			//echo "<p>login_blocked: login='$login' ".$this->db->f(0)." trys (".$GLOBALS['egw_info']['server']['num_unsuccessful_id']." max.) since ".date('Y/m/d H:i',$block_time)."</p>\n";
 			$blocked = true;

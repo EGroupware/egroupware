@@ -145,7 +145,7 @@ class calendar_ical extends calendar_boupdate
 			$palm_enddate_workaround=True;
 		}
 
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION',$version);
@@ -516,7 +516,7 @@ class calendar_ical extends calendar_boupdate
 	{
 		// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
 		$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		if(!$vcal->parsevCalendar($_vcalData))
 		{
 			return FALSE;
@@ -1331,7 +1331,7 @@ class calendar_ical extends calendar_boupdate
 		// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
 		$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
 
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		if(!$vcal->parsevCalendar($_vcalData))
 		{
 			return FALSE;
@@ -1662,7 +1662,7 @@ class calendar_ical extends calendar_boupdate
 	{
 		if (!$end) $end = $this->now_su + 100*DAY_s;	// default next 100 days
 
-		$vcal = &new Horde_iCalendar;
+		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION','2.0');

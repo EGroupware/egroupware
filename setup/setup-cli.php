@@ -433,7 +433,7 @@ function do_header($create,&$arguments)
  */
 function get_lang(&$charset)
 {
-	@list($lang,$nation,$charset) = split("[_.]",strtolower($_SERVER['LANG']));
+	@list($lang,$nation,$charset) = preg_split("/[_.]/",strtolower($_SERVER['LANG']));
 
 	foreach(file('lang/languages') as $line)
 	{

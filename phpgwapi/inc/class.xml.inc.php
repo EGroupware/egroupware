@@ -494,7 +494,7 @@ class XML
     function remove_node ( $node )
     {
         // Check whether the node is an attribute node.
-        if ( ereg("/attribute::", $node) )
+        if ( preg_match('/'."\\/attribute::".'/', $node) )
         {
             // Get the path to the attribute node's parent.
             $parent = $this->prestr($node, "/attribute::");
@@ -612,7 +612,7 @@ class XML
     function add_content ( $path, $value )
     {
         // Check whether it's an attribute node.
-        if ( ereg("/attribute::", $path) )
+        if ( preg_match('/'."\\/attribute::".'/', $path) )
         {
             // Get the path to the attribute node's parent.
             $parent = $this->prestr($path, "/attribute::");
@@ -649,7 +649,7 @@ class XML
     function set_content ( $path, $value )
     {
         // Check whether it's an attribute node.
-        if ( ereg("/attribute::", $path) )
+        if ( preg_match('/'."\\/attribute::".'/', $path) )
         {
             // Get the path to the attribute node's parent.
             $parent = $this->prestr($path, "/attribute::");
@@ -688,7 +688,7 @@ class XML
     function get_content ( $path )
     {
         // Check whether it's an attribute node.
-        if ( ereg("/attribute::", $path) )
+        if ( preg_match('/'."\\/attribute::".'/', $path) )
         {
             // Get the path to the attribute node's parent.
             $parent = $this->prestr($path, "/attribute::");
@@ -1053,7 +1053,7 @@ class XML
         );
         
         // Check whether there are predicates.
-        if ( ereg("\[", $step) )
+        if ( preg_match('/'."\[".'/', $step) )
         {
             // Get the predicates.
             $predicates = substr($step, strpos($step, "["));
@@ -1099,7 +1099,7 @@ class XML
                 $axis["axis"]      = "child";
                 $axis["node-test"] = "*";
             }
-            elseif ( ereg("\(", $step) )
+            elseif ( preg_match('/'."\(".'/', $step) )
             {
                 // Check whether it's a function.
                 if ( $this->is_function($this->prestr($step, "(")) )
@@ -1130,13 +1130,13 @@ class XML
                     $axis["node-test"] = $step;
                 }
             }
-            elseif ( eregi("^@", $step) )
+            elseif ( preg_match('/'."^@".'/i', $step) )
             {
                 // Use the attribute axis and select the attribute.
                 $axis["axis"]      = "attribute";
                 $axis["node-test"] = substr($step, 1);
             }
-            elseif ( eregi("\]$", $step) )
+            elseif ( preg_match('/'."\]$".'/i', $step) )
             {
                 // Use the child axis and select a position.
                 $axis["axis"]      = "child";
@@ -1154,7 +1154,7 @@ class XML
                 $axis["axis"]      = "parent";
                 $axis["node-test"] = "*";
             }
-            elseif ( ereg("^[a-zA-Z0-9\-_]+$", $step) )
+            elseif ( preg_match('/'."^[a-zA-Z0-9\-_]+$".'/', $step) )
             {
                 // Select the child axis and the child.
                 $axis["axis"]      = "child";
@@ -1496,7 +1496,7 @@ class XML
             foreach ( $this->functions as $function )
             {
                 // Check whether there's a - sign in the function name.
-                if ( ereg("-", $function) )
+                if ( preg_match('/'."-".'/', $function) )
                 {
                     // Get the position of the - in the function name.
                     $sign = strpos($function, "-");
@@ -1615,7 +1615,7 @@ class XML
         }
         
         // Check whether the predicate is a function.
-        if ( ereg("\(", $predicate) )
+        if ( preg_match('/'."\(".'/', $predicate) )
         {
             // Get the position of the first bracket.
             $start = strpos($predicate, "(");
@@ -1664,8 +1664,8 @@ class XML
         }
         
         // Check whether the predicate is just a digit.
-        if ( ereg("^[0-9]+(\.[0-9]+)?$", $predicate) ||
-            ereg("^\.[0-9]+$", $predicate) )
+        if ( preg_match('/'."^[0-9]+(\.[0-9]+)?$".'/', $predicate) ||
+            preg_match('/'."^\.[0-9]+$".'/', $predicate) )
         {
             // Return the value of the digit.
             return doubleval($predicate);
@@ -1718,7 +1718,7 @@ class XML
             foreach ( $predicates as $predicate )
             {
                 // Check whether the predicate is just an number.
-                if ( ereg("^[0-9]+$", $predicate) )
+                if ( preg_match('/'."^[0-9]+$".'/', $predicate) )
                 {
                     // Enhance the predicate.
                     $predicate .= "=position()";
@@ -1786,7 +1786,7 @@ class XML
     function check_node_test ( $context, $node_test )
     {
         // Check whether it's a function.
-        if ( ereg("\(", $node_test) )
+        if ( preg_match('/'."\(".'/', $node_test) )
         {
             // Get the type of function to use.
             $function = $this->prestr($node_test, "(");
@@ -1862,7 +1862,7 @@ class XML
             // Add this node to the node-set.
             return true;
         }
-        elseif ( ereg("^[a-zA-Z0-9\-_]+", $node_test) )
+        elseif ( preg_match('/'."^[a-zA-Z0-9\-_]+".'/', $node_test) )
         {
             // Check whether the node-test can be fulfilled.
             if ( $this->nodes[$context]["name"] == $node_test )
@@ -2592,8 +2592,8 @@ class XML
     function handle_function_string ( $node, $arguments )
     {
         // Check what type of parameter is given
-        if ( ereg("^[0-9]+(\.[0-9]+)?$", $arguments) ||
-            ereg("^\.[0-9]+$", $arguments) )
+        if ( preg_match('/'."^[0-9]+(\.[0-9]+)?$".'/', $arguments) ||
+            preg_match('/'."^\.[0-9]+$".'/', $arguments) )
         {
             // Convert the digits to a number.
             $number = doubleval($arguments);
@@ -2701,7 +2701,7 @@ class XML
         $second = $this->evaluate_predicate($node, $second);
             
         // Check whether the first string starts with the second one.
-        if ( ereg("^".$second, $first) )
+        if ( preg_match('/'."^".$second.'/', $first) )
         {
             // Return true.
             return true;
@@ -2935,8 +2935,8 @@ class XML
         $arguments = trim($arguments);
         
         // Check what type of parameter is given
-        if ( ereg("^[0-9]+(\.[0-9]+)?$", $arguments) ||
-            ereg("^\.[0-9]+$", $arguments) )
+        if ( preg_match('/'."^[0-9]+(\.[0-9]+)?$".'/', $arguments) ||
+            preg_match('/'."^\.[0-9]+$".'/', $arguments) )
         {
             // Convert the digits to a number.
             $number = doubleval($arguments);
@@ -3128,8 +3128,8 @@ class XML
     function handle_function_number ( $node, $arguments )
     {
         // Check the type of argument.
-        if ( ereg("^[0-9]+(\.[0-9]+)?$", $arguments) ||
-            ereg("^\.[0-9]+$", $arguments) )
+        if ( preg_match('/'."^[0-9]+(\.[0-9]+)?$".'/', $arguments) ||
+            preg_match('/'."^\.[0-9]+$".'/', $arguments) )
         {
             // Return the argument as a number.
             return doubleval($arguments);
@@ -3367,7 +3367,7 @@ class XML
 			}
 			
 			// Replace the last separator.
-			$command = eregi_replace(", $", ");", $command);
+			$command = preg_replace('/'.", $".'/i', ");", $command);
 			
 			// Execute the command.
 			eval($command);

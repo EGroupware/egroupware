@@ -92,7 +92,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	if ($ts = $GLOBALS['egw']->db->select('egw_contentmap', 'map_timestamp', array(
     		'map_id'	=> $mapID,
     		'map_guid'	=> $guid,
-    	), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle())
+    	), __LINE__, __FILE__, false, '', 'syncml')->fetchColumn())
 	    {
     		#Horde::logMessage('SyncML: getChangeTS changets is ' . $GLOBALS['egw']->db->from_timestamp($ts), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			return $GLOBALS['egw']->db->from_timestamp($ts);
@@ -112,7 +112,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		if(($deviceID = $GLOBALS['egw']->db->select('egw_syncmldeviceowner', 'owner_devid',array (
 			'owner_locname'		=> $this->_locName,
 			'owner_deviceid'	=> $this->_sourceURI,
-		), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
+		), __LINE__, __FILE__, false, '', 'syncml')->fetchColumn()))
 		{
 			$cols = array(
 				'dev_dtdversion',
@@ -190,7 +190,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     		'map_id'		=> $mapID,
     		'map_locuid'	=> $locid,
     		'map_expired'	=> 0,
-    	), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle();
+    	), __LINE__, __FILE__, false, '', 'syncml')->fetchColumn();
     }
 
     /**
@@ -208,7 +208,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	if (($locuid = $GLOBALS['egw']->db->select('egw_contentmap', 'map_locuid', array(
     		'map_id'	=> $mapID,
     		'map_guid'	=> $guid
-    	), __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
+    	), __LINE__, __FILE__, false, '', 'syncml')->fetchColumn()))
     	{
 	   		Horde::logMessage('SyncML: found LocID: '.$locuid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	}
@@ -337,7 +337,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			'map_locuid'	=> $locid
 		);
 
-		if (!($guid = $GLOBALS['egw']->db->select('egw_contentmap', 'map_guid', $where, __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
+		if (!($guid = $GLOBALS['egw']->db->select('egw_contentmap', 'map_guid', $where, __LINE__, __FILE__, false, '', 'syncml')->fetchColumn()))
 		{
 			Horde::logMessage("SyncML: state->removeUID(type=$type,locid=$locid) : nothing to remove", __FILE__, __LINE__, PEAR_LOG_INFO);
 			return false;
@@ -437,7 +437,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			'dev_fwversion'		=> $firmwareVersion,
 		);
 
-		if (($deviceID = $GLOBALS['egw']->db->select('egw_syncmldevinfo', 'dev_id', $where, __LINE__, __FILE__, false, '', 'syncml')->fetchSingle()))
+		if (($deviceID = $GLOBALS['egw']->db->select('egw_syncmldevinfo', 'dev_id', $where, __LINE__, __FILE__, false, '', 'syncml')->fetchColumn()))
 		{
 			$data = array (
 				'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),

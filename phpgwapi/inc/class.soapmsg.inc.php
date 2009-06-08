@@ -111,12 +111,12 @@
 			$this->debug("Entering parseResponse()");
 			//$this->debug(" w/ data $data");
 			// strip headers here
-			//$clean_data = ereg_replace("\r\n","\n", $data);
-			if(ereg("^.*\r\n\r\n<",$data))
+			//$clean_data = preg_replace('/'."\r\n".'/',"\n", $data);
+			if(preg_match('/'."^.*\r\n\r\n<".'/',$data))
 			{
 				$this->debug("found proper seperation of headers and document");
 				$this->debug("getting rid of headers, stringlen: ".strlen($data));
-				$clean_data = ereg_replace("^.*\r\n\r\n<","<", $data);
+				$clean_data = preg_replace('/'."^.*\r\n\r\n<".'/',"<", $data);
 				$this->debug("cleaned data, stringlen: ".strlen($clean_data));
 			}
 			else
@@ -134,7 +134,7 @@
 			}
 	/*
 			// if response is a proper http response, and is not a 200
-			if(ereg("^HTTP",$clean_data) && !ereg("200$", $clean_data))
+			if(preg_match('/'."^HTTP".'/',$clean_data) && !preg_match('/'."200$".'/', $clean_data))
 			{
 				// get error data
 				$errstr = substr($clean_data, 0, strpos($clean_data, "\n")-1);

@@ -436,7 +436,7 @@ class acl
 			'acl_location' => $location,
 			'acl_account'  => $account_id,
 			'acl_appname'  => $appname,
-		),__LINE__,__FILE__)->fetchSingle();
+		),__LINE__,__FILE__)->fetchColumn();
 	}
 	
 	/**

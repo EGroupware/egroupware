@@ -254,7 +254,7 @@ class link_widget
 				// modify add_app default to the action used as value
 				if (isset($value['add_app']) && $app == $value['add_app']) $value['add_app'] = $action;
 			}
-			$tpl =& new etemplate('etemplate.link_widget.add');
+			$tpl = new etemplate('etemplate.link_widget.add');
 			break;
 
 		case 'link-to':
@@ -288,7 +288,7 @@ class link_widget
 				return True;
 			}
 			$value['link_list_format'] = $GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'];
-			$tpl =& new etemplate('etemplate.link_widget.list');
+			$tpl = new etemplate('etemplate.link_widget.list');
 			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
@@ -324,7 +324,7 @@ class link_widget
 
 		case 'link-entry':
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-			$tpl =& new etemplate('etemplate.link_widget.entry');
+			$tpl = new etemplate('etemplate.link_widget.entry');
 			$options = $cell['size'] ? explode(',',$cell['size']) : array();
 			$app = $extension_data['app'] = $options[0];
 			// handle extra args for onclick like: values2url(this.form,'start,end,duration,participants,recur_type,whole_day')+'&exec[event_id]=

@@ -481,7 +481,7 @@ class accounts_sql
 	 */
 	function update_lastlogin($account_id, $ip)
 	{
-		$previous_login = $this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__)->fetchSingle();
+		$previous_login = $this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__)->fetchColumn();
 
 		$this->db->update($this->table,array(
 			'account_lastloginfrom' => $ip,

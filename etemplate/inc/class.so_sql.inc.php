@@ -841,7 +841,7 @@ class so_sql
 				}
 				elseif (!$need_full_no_count && (!$join || stripos($join,'LEFT JOIN')!==false))
 				{
-					$this->total = $this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',$this->app,0,$join)->fetchSingle();
+					$this->total = $this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',$this->app,0,$join)->fetchColumn();
 				}
 				else	// cant do a count, have to run the query without limit
 				{
@@ -857,7 +857,7 @@ class so_sql
 
 		if ($mysql_calc_rows)
 		{
-			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchSingle();
+			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
 		}
 		$arr = array();
 		if ($rs) foreach($rs as $row)

@@ -61,7 +61,7 @@
 			}
 			$fname = $parms['file'];
 			$line  = $parms['line'];
-			if (eregi('([DIWEF])-([[:alnum:]]*)\, (.*)',$etext,$match))
+			if (preg_match('/([DIWEF])-([[:alnum:]]*)\, (.*)/i',$etext,$match))
 			{
 				$this->severity = strtoupper($match[1]);
 				$this->code     = $match[2];

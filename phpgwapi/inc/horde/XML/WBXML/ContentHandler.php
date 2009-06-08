@@ -32,7 +32,7 @@ class XML_WBXML_ContentHandler {
 
     function XML_WBXML_ContentHandler()
     {
-        $this->_currentUri = &new XML_WBXML_LifoQueue();
+        $this->_currentUri = new XML_WBXML_LifoQueue();
     }
 
     function raiseError($error)

@@ -936,7 +936,7 @@ class addressbook_ldap
 			return $this->_error(__LINE__);	// baseDN does NOT exist and we cant/wont create it
 		}
 		// create a admin connection to add the needed DN
-		$adminLDAP =& new ldap;
+		$adminLDAP = new ldap;
 		$adminDS = $adminLDAP->ldapConnect();
 
 		list(,$ou) = explode(',',$baseDN);

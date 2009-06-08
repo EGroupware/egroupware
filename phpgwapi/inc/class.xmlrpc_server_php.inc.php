@@ -238,8 +238,8 @@
 			}
 			$_type = (is_integer($_res) ? 'int' : gettype($_res));
 
-			if ($_type == 'string' && (ereg('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res) ||
-				ereg('^[0-9]{4}[0-9]{2}[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res)))
+			if ($_type == 'string' && (preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$/',$_res) ||
+				preg_match('/^[0-9]{4}[0-9]{2}[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$/',$_res)))
 			{
 				$_type = 'dateTime.iso8601';
 			}
@@ -312,7 +312,7 @@
 				$_methName = $GLOBALS['_xh'][$parser]['method'];
 				$this->last_method = $methName;
 
-				if(ereg("^system\.", $methName))
+				if(preg_match('/'."^system\.".'/', $methName))
 				{
 					$dmap = $GLOBALS['_xmlrpcs_dmap'];
 					$sysCall=1;
@@ -346,7 +346,7 @@
 						$service  = $tmp[1];
 						$class    = $tmp[0];
 
-						if(ereg('^service',$method))
+						if(preg_match('/^service/',$method))
 						{
 							$t = 'phpgwapi.' . $class . '.exec';
 							$dmap = ExecMethod($t,array($service,'list_methods','xmlrpc'));
@@ -420,7 +420,7 @@
 								// decode from utf-8 to our charset
 								$this->req_array = $GLOBALS['egw']->translation->convert($this->req_array,'utf-8');
 								//_debug_array($this->req_array);
-								if (ereg('^service',$method))
+								if (preg_match('/^service/',$method))
 								{
 									$res = ExecMethod('phpgwapi.service.exec',array($service,$methName,$this->req_array));
 								}

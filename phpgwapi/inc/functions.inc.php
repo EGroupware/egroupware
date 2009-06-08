@@ -18,7 +18,10 @@
  */
 
 error_reporting(E_ALL & ~E_NOTICE);
-magic_quotes_runtime(false);
+if (function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime())
+{
+	set_magic_quotes_runtime(false);
+}
 
 $egw_min_php_version = '5.1';
 if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_php_version) < 0)

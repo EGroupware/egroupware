@@ -301,7 +301,7 @@
 				// reading the holidayfile from egroupware.org via network::gethttpsocketfile contains all the headers!
 				foreach($lines as $n => $line)
 				{
-					$fields = split("[\t\n ]+",$line);
+					$fields = preg_split("/[\t\n ]+/",$line);
 
 					if ($fields[0] == 'charset' && $fields[1])
 					{

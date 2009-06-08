@@ -357,7 +357,7 @@ class infolog_hooks
 		if ($data['prefs']['notify_due_delegated'] || $data['prefs']['notify_due_responsible'] ||
 			$data['prefs']['notify_start_delegated'] || $data['prefs']['notify_start_responsible'])
 		{
-			$async =& new asyncservice();
+			$async = new asyncservice();
 
 			if (!$async->read('infolog-async-notification'))
 			{

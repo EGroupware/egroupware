@@ -174,8 +174,8 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
             // Create a new state if one does not already exist.
             Horde::logMessage('SyncML['. session_id() .']: create new session state variable', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-# LK        $_SESSION['SyncML.state'] = &new Horde_SyncML_State($sourceURI, $locName, $sessionID);
-            $_SESSION['SyncML.state'] = &new EGW_SyncML_State($sourceURI, $locName, $sessionID);
+# LK        $_SESSION['SyncML.state'] = new Horde_SyncML_State($sourceURI, $locName, $sessionID);
+            $_SESSION['SyncML.state'] = new EGW_SyncML_State($sourceURI, $locName, $sessionID);
         }
         #if($_SESSION['SyncML.state']->_isAuthorized)
         #	Horde::logMessage('SyncML['. session_id() .']: is session authorized', __FILE__, __LINE__, PEAR_LOG_DEBUG);
@@ -269,7 +269,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
                 $this->_credData = base64_decode($this->_credData);
                 //}
 
-                $tmp = split(':', $this->_credData, 2);
+                $tmp = explode(':', $this->_credData, 2);
                 // set only if not set by LocName already
                 if(!isset($this->_locName))
                 {
@@ -463,13 +463,13 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 	    if($state->getLocName())
 	    {
             	// Right our status about the header.
-            	$status = &new Horde_SyncML_Command_Status(($state->isAuthorized()) ?
+            	$status = new Horde_SyncML_Command_Status(($state->isAuthorized()) ?
                                                        RESPONSE_AUTHENTICATION_ACCEPTED : RESPONSE_INVALID_CREDENTIALS, 'SyncHdr');
             }
             else
             {
             	// Request credentials if not sent so far
-            	$status = &new Horde_SyncML_Command_Status(RESPONSE_MISSING_CREDENTIALS, 'SyncHdr');
+            	$status = new Horde_SyncML_Command_Status(RESPONSE_MISSING_CREDENTIALS, 'SyncHdr');
             }
 
             $status->setSourceRef($state->getSourceURI());
@@ -533,14 +533,14 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 				// we do still have some data to send OR
 				// we should reply to the Sync command
 				if($state->getSyncStatus() >= CLIENT_SYNC_ACKNOWLEDGED && $state->getSyncStatus() < SERVER_SYNC_FINNISHED) {
-					$sync = &new Horde_SyncML_Command_Sync();
+					$sync = new Horde_SyncML_Command_Sync();
 					$this->_currentCmdID = $sync->syncToClient($this->_currentCmdID, $this->_output);
 				}
 
 				// send the Final tag if possible
 				#if($state->getSyncStatus() != SERVER_SYNC_DATA_PENDING && $state->getSyncStatus() != CLIENT_SYNC_STARTED) {
 				if($state->getSyncStatus() >= SERVER_SYNC_FINNISHED || $state->_sendFinal) {
-					$final = &new Horde_SyncML_Command_Final();
+					$final = new Horde_SyncML_Command_Final();
 					$this->_currentCmdID = $final->output($this->_currentCmdID, $this->_output);
 				}
 

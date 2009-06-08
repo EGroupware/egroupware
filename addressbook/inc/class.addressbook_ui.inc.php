@@ -421,7 +421,7 @@ class addressbook_ui extends addressbook_bo
 		$query['filter2'] = (int)$list;
 		$this->action($email_type,array(),true,$success,$failed,$action_msg,$query,$msg);
 
-		$response =& new xajaxResponse();
+		$response = new xajaxResponse();
 
 		if ($success) $response->addScript($GLOBALS['egw']->js->body['onLoad']);
 
@@ -1497,7 +1497,7 @@ class addressbook_ui extends addressbook_bo
 			'n_suffix' => $n_suffix,
 			'org_name' => $org_name,
 		);
-		$response =& new xajaxResponse();
+		$response = new xajaxResponse();
 		$response->addScript("setOptions('".addslashes(implode("\b",$this->fileas_options($names)))."');");
 
 		return $response->getXML();
@@ -2003,7 +2003,7 @@ $readonlys['button[vcard]'] = true;
 			return lang("Document '%1' does not exist or is not readable for you!",$document);
 		}
 		require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_merge.inc.php');
-		$document_merge =& new addressbook_merge();
+		$document_merge = new addressbook_merge();
 
 		return $document_merge->download($document,$ids);
 	}

@@ -52,12 +52,12 @@
 		{
 			$arr = array();
 
-			if (ereg('^([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})$',$isodate,$arr))
+			if (preg_match('/^([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})$/',$isodate,$arr))
 			{
 				// $isodate is simple ISO8601, remove the difference between split and ereg
 				array_shift($arr);
 			}
-			elseif (($arr = split('[-:T]',$isodate)) && count($arr) == 6)
+			elseif (($arr = preg_split('/[-:T]/',$isodate)) && count($arr) == 6)
 			{
 				// $isodate is extended ISO8601, do nothing
 			}

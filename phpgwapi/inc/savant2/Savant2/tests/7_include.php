@@ -17,7 +17,7 @@ $conf = array(
 	'resource_path' => 'resources'
 );
 
-$savant =& new Savant2($conf);
+$savant = new Savant2($conf);
 
 $array = array(
 	'key0' => 'val0',

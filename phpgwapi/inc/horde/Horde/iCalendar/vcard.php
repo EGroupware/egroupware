@@ -123,7 +123,7 @@ class Horde_iCalendar_vcard extends Horde_iCalendar {
 
         static $rfc822;
         if (is_null($rfc822)) {
-            $rfc822 = &new Mail_RFC822();
+            $rfc822 = new Mail_RFC822();
         }
 
         $rfc822->validateMailbox($address);

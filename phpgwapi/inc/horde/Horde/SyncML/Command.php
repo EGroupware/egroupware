@@ -30,7 +30,7 @@ class Horde_SyncML_Command {
         include_once 'Horde/SyncML/Command/' . $command . '.php';
         $class = 'Horde_SyncML_Command_' . $command;
         if (class_exists($class)) {
-            return $cmd = &new $class($params);
+            return $cmd = new $class($params);
         } else {
             Horde::logMessage('SyncML: Class definition of ' . $class . ' not found.', __FILE__, __LINE__, PEAR_LOG_ERR);
             require_once 'PEAR.php';

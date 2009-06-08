@@ -50,7 +50,7 @@ class admin_cmd_change_pw extends admin_cmd
 		
 		if ($check_only) return true;
 		
-		$auth =& new auth;
+		$auth = new auth;
 		
 		if (!$auth->change_password(null, $this->password, $account_id))
 		{

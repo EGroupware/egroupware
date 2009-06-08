@@ -81,7 +81,7 @@ class tree_widget
 				}
 				else	// we need to instanciate a new cat object for the correct application
 				{
-					$categories =& new categories('',$type3);
+					$categories = new categories('',$type3);
 				}
 				$cat2path=array();
 				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)

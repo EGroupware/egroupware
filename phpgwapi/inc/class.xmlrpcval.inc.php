@@ -84,7 +84,7 @@
 				case 2:
 					// we're adding a scalar value to an array here
 					//$ar=$this->me['array'];
-					//$ar[]=&new xmlrpcval($val, $type);
+					//$ar[]= new xmlrpcval($val, $type);
 					//$this->me['array']=$ar;
 					// Faster (?) avoid all the costly array-copy-by-val done here...
 					$this->me['array'][]=& CreateObject('phpgwapi.xmlrpcval',$val, $type);

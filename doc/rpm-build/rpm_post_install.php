@@ -46,7 +46,7 @@ $config = array(
 // read language from LANG enviroment variable
 if (($lang = isset($_ENV['LANG']) ? $_ENV['LANG'] : $_SERVER['LANG']))
 {
-	list($lang,$nat) = split('[_.]',$lang);
+	list($lang,$nat) = preg_split('/[_.]/',$lang);
 	if (in_array($lang.'-'.strtolower($nat),array('es-es','pt-br','zh-tw')))
 	{
 		$lang .= '-'.strtolower($nat);

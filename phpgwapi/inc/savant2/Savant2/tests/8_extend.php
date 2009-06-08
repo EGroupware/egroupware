@@ -17,7 +17,7 @@ $conf = array(
 	'resource_path' => 'resources'
 );
 
-$savant =& new Savant2($conf);
+$savant = new Savant2($conf);
 
 $savant->display('extend.tpl.php');
 

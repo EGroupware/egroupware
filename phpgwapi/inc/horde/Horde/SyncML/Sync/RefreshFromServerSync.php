@@ -36,7 +36,7 @@ class Horde_SyncML_Sync_RefreshFromServerSync extends Horde_SyncML_Sync_TwoWaySy
 				}
 				
 				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
-				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+				$cmd = new Horde_SyncML_Command_Sync_ContentSyncElement();
 				$c = $registry->call($hordeType . '/export', array('guid' => $guid, 'contentType' => $contentType));
 				Horde::logMessage("SyncML: slowsync add $guid to client ". print_r($c, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				if (!is_a($c, 'PEAR_Error')) {

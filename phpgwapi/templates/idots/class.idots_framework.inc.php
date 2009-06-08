@@ -71,7 +71,7 @@ class idots_framework extends egw_framework
 		$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 		$this->egw_framework($template);		// call the constructor of the extended class
 
-		$this->tplsav2 =& new tplsavant2();
+		$this->tplsav2 = new tplsavant2();
 		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
 	}
 
@@ -103,7 +103,7 @@ class idots_framework extends egw_framework
 
 		// the instanciation of the template has to be here and not in the constructor,
 		// as the old Template class has problems if restored from the session (php-restore)
-		$this->tpl =& new Template(EGW_TEMPLATE_DIR);
+		$this->tpl = new Template(EGW_TEMPLATE_DIR);
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
 
@@ -282,7 +282,7 @@ class idots_framework extends egw_framework
 	*/
 	function login_screen($extra_vars)
 	{
-		$tmpl =& new Template($GLOBALS['egw_info']['server']['template_dir']);
+		$tmpl = new Template($GLOBALS['egw_info']['server']['template_dir']);
 
 		$tmpl->set_file(array('login_form' => 'login.tpl'));
 
@@ -433,7 +433,7 @@ class idots_framework extends egw_framework
 	*/
 	function denylogin_screen()
 	{
-		$tmpl =& new Template($GLOBALS['egw_info']['server']['template_dir']);
+		$tmpl = new Template($GLOBALS['egw_info']['server']['template_dir']);
 
 		$tmpl->set_file(array(
 			'login_form' => 'login_denylogin.tpl'

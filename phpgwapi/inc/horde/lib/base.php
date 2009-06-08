@@ -48,7 +48,7 @@ $conf = &$GLOBALS['conf'];
 
 /* Set up the menu. */
 #require_once 'Horde/Menu.php';
-#$menu = &new Menu();
+#$menu = new Menu();
 
 // Compress output
 #Horde::compressOutput();

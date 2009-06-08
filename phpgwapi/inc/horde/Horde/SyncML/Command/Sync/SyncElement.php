@@ -34,7 +34,7 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 		
 		if (class_exists($class)) {
 			#Horde::logMessage('SyncML: Class definition of ' . $class . ' found in SyncElement::factory.', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			return $element = &new $class($params);
+			return $element = new $class($params);
 		} else {
 			Horde::logMessage('SyncML: Class definition of ' . $class . ' not found in SyncElement::factory.', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			require_once 'PEAR.php';
