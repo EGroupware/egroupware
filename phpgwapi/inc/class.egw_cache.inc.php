@@ -106,11 +106,11 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=null array with parameters for the callback
+	 * @param array $callback_params=array() array with parameters for the callback
 	 * @param int $expiration=0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getCache($level,$app,$location,$callback=null,array $callback_params=null,$expiration=0)
+	static public function getCache($level,$app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		switch($level)
 		{
@@ -183,11 +183,11 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=null array with parameters for the callback
+	 * @param array $callback_params=array() array with parameters for the callback
 	 * @param int $expiration=0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getTree($app,$location,$callback=null,array $callback_params=null,$expiration=0)
+	static public function getTree($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		return self::getCache(self::TREE,$app,$location,$callback,$callback_params,$expiration);
 	}
@@ -224,11 +224,11 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=null array with parameters for the callback
+	 * @param array $callback_params=array() array with parameters for the callback
 	 * @param int $expiration=0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getInstance($app,$location,$callback=null,array $callback_params=null,$expiration=0)
+	static public function getInstance($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		return self::getCache(self::INSTANCE,$app,$location,$callback,$callback_params,$expiration);
 	}
@@ -274,11 +274,11 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=null array with parameters for the callback
+	 * @param array $callback_params=array() array with parameters for the callback
 	 * @param int $expiration=0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function &getSession($app,$location,$callback=null,array $callback_params=null,$expiration=0)
+	static public function &getSession($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		if (isset($_SESSION[egw_session::EGW_SESSION_ENCRYPTED]))
 		{
@@ -344,11 +344,11 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=null array with parameters for the callback
+	 * @param array $callback_params=array() array with parameters for the callback
 	 * @param int $expiration=0 expiration time is NOT used for REQUEST!
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getRequest($app,$location,$callback=null,array $callback_params=null,$expiration=0)
+	static public function getRequest($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		if (!isset(self::$request_cache[$app][$location]) && !is_null($callback))
 		{
