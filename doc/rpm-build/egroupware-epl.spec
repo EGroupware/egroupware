@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090603
+Version: 9.1.20090609
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -23,7 +23,7 @@ Prefix: /usr/share
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
-	%define extratar egroupware_fedora.tar.bz2
+	%define extratar egroupware_rh.tar.bz2
 	%define cron crontabs
 	%define rpm_post_install /usr/bin/php %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %endif
