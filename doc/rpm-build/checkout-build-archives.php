@@ -240,7 +240,7 @@ function do_copy()
 	chdir($config['egw_buildroot'].'/'.$config['aliasdir']);
 	$cmd = '/bin/chmod -R a-x,u=rwX,g=rX,o=rX .';
 	run_cmd($cmd);
-	$cmd = '/bin/chmod +x */*cli.php phpgwapi/cron/*.php svn-helper.php';
+	$cmd = '/bin/chmod +x */*cli.php phpgwapi/cron/*.php svn-helper.php doc/rpm-build/*.php';
 	run_cmd($cmd);
 }
 
