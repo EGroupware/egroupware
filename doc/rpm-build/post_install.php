@@ -41,6 +41,7 @@ $config = array(
 	'autostart_db' => '/sbin/chkconfig --level 345 mysqld on',
 	'start_webserver' => '/etc/init.d/httpd',
 	'autostart_webserver' => '/sbin/chkconfig --level 345 httpd on',
+	'distro'      => 'rh',
 );
 
 // read language from LANG enviroment variable
@@ -54,6 +55,42 @@ if (($lang = isset($_ENV['LANG']) ? $_ENV['LANG'] : $_SERVER['LANG']))
 	$config['lang'] = $lang;
 }
 $config['source_dir'] = dirname(dirname(dirname(__FILE__)));
+
+/**
+ * Set distribution spezific defaults
+ *
+ * @param string $distro=null default autodetect
+ */
+function set_distro_defaults($distro=null)
+{
+	global $config;
+	if (is_null($distro))
+	{
+		$distro = file_exists('/etc/SuSE-release') ? 'suse' : (file_exists('/etc/debian_version') ? 'debian' : 'rh');
+	}
+	switch (($config['distro'] = $distro))
+	{
+		case 'suse':
+			$config['php'] = '/usr/bin/php5';
+			$config['start_db'] = '/etc/init.d/mysql';
+			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
+			$config['start_webserver'] = '/etc/init.d/apache2';
+			$config['autostart_webserver'] = '/sbin/chkconfig --level 345 apache2 on';
+			break;
+		case 'debian':
+			$config['start_db'] = '/etc/init.d/mysql';
+			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
+			$config['start_webserver'] = '/etc/init.d/apache2';
+			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
+			break;
+		default:
+			$config['distro'] = 'rh';
+			// fall through
+		case 'rh':	// nothing to do, defaults are already set
+			break;
+	}
+}
+set_distro_defaults();
 
 // read config from command line
 $argv = $_SERVER['argv'];
@@ -71,11 +108,11 @@ while(($arg = array_shift($argv)))
 	}
 	elseif($arg == '--suse')
 	{
-		$config['php'] = '/usr/bin/php5';
-		$config['start_db'] = '/etc/init.d/mysql';
-		$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
-		$config['start_webserver'] = '/etc/init.d/apache2';
-		$config['autostart_webserver'] = '/sbin/chkconfig --level 345 apach2 on';
+		set_distro_defaults('suse');
+	}
+	elseif($arg == '--distro')
+	{
+		set_distro_defaults(array_shift($argv));
 	}
 	elseif(substr($arg,0,2) == '--' && isset($config[$name=substr($arg,2)]))
 	{
@@ -310,7 +347,7 @@ function usage($error=null)
 {
 	global $prog,$config;
 
-	echo "Usage: $prog [-h|--help] [-v|--verbose] [--suse] [options, ...]\n\n";
+	echo "Usage: $prog [-h|--help] [-v|--verbose] [--distro=(suse|rh|debian)] [options, ...]\n\n";
 	echo "options and their defaults:\n";
 	foreach($config as $name => $default)
 	{
