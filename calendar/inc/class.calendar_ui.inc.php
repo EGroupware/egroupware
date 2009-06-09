@@ -188,13 +188,13 @@ class calendar_ui
 				foreach($GLOBALS['egw']->accounts->member($owner) as $member)
 				{
 					$member = $member['account_id'];
-					if (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$member))
+					if (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$member))
 					{
 						$no_access_group[$member] = $this->bo->participant_name($member);
 					}
 				}
 			}
-			elseif (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$owner))
+			elseif (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$owner))
 			{
 				$no_access[$owner] = $this->bo->participant_name($owner);
 			}

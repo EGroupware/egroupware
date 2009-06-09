@@ -65,6 +65,7 @@ csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV-Fieldname
 csv-filename	calendar	en	CSV-Filename
 custom fields	common	en	Custom fields
+custom_2	common	en	freebussy
 daily	calendar	en	Daily
 days	calendar	en	days
 days of the week for a weekly repeated event	calendar	en	Days of the week for a weekly repeated event
@@ -137,6 +138,7 @@ format of event updates	calendar	en	Format of event updates
 forward half a month	calendar	en	forward half a month
 forward one month	calendar	en	forward one month
 four days view	calendar	en	Four days view
+freebusy	common	en	Free/Busy
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri

@@ -24,6 +24,7 @@ define('WEEK_s',7*DAY_s);
  * Used be the addressbook.
  */
 define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
+define('EGW_ACL_FREEBUSY',EGW_ACL_CUSTOM_2);
 
 /**
  * Required (!) include, as we use the MCAL_* constants, BEFORE instanciating (and therefore autoloading) the class
@@ -95,34 +96,34 @@ class calendar_bo
 	 * @var array $verbose_status translated 1-char status values to a verbose name, run through lang() by the constructor
 	 */
 	var $verbose_status = array(
-		'A' => 'Accepted',
-		'R' => 'Rejected',
-		'T' => 'Tentative',
-		'U' => 'No Response',
-		'G' => 'Group invitation',
+	'A' => 'Accepted',
+	'R' => 'Rejected',
+	'T' => 'Tentative',
+	'U' => 'No Response',
+	'G' => 'Group invitation',
 	);
 	/**
 	 * @var array recur_types translates MCAL recur-types to verbose labels
 	 */
 	var $recur_types = Array(
-		MCAL_RECUR_NONE         => 'None',
-		MCAL_RECUR_DAILY        => 'Daily',
-		MCAL_RECUR_WEEKLY       => 'Weekly',
-		MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
-		MCAL_RECUR_MONTHLY_MDAY => 'Monthly (by date)',
-		MCAL_RECUR_YEARLY       => 'Yearly'
+	MCAL_RECUR_NONE         => 'None',
+	MCAL_RECUR_DAILY        => 'Daily',
+	MCAL_RECUR_WEEKLY       => 'Weekly',
+	MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
+	MCAL_RECUR_MONTHLY_MDAY => 'Monthly (by date)',
+	MCAL_RECUR_YEARLY       => 'Yearly'
 	);
 	/**
 	 * @var array recur_days translates MCAL recur-days to verbose labels
 	 */
 	var $recur_days = array(
-		MCAL_M_MONDAY    => 'Monday',
-		MCAL_M_TUESDAY   => 'Tuesday',
-		MCAL_M_WEDNESDAY => 'Wednesday',
-		MCAL_M_THURSDAY  => 'Thursday',
-		MCAL_M_FRIDAY    => 'Friday',
-		MCAL_M_SATURDAY  => 'Saturday',
-		MCAL_M_SUNDAY    => 'Sunday',
+	MCAL_M_MONDAY    => 'Monday',
+	MCAL_M_TUESDAY   => 'Tuesday',
+	MCAL_M_WEDNESDAY => 'Wednesday',
+	MCAL_M_THURSDAY  => 'Thursday',
+	MCAL_M_FRIDAY    => 'Friday',
+	MCAL_M_SATURDAY  => 'Saturday',
+	MCAL_M_SUNDAY    => 'Sunday',
 	);
 	/**
 	 * @var array $resources registered scheduling resources of the calendar (gets chached in the session for performance reasons)
@@ -186,9 +187,9 @@ class calendar_bo
 				}
 			}
 			$this->resources['e'] = array(
-				'type' => 'e',
-				'info' => __CLASS__.'::email_info',
-				'app'  => 'email',
+			'type' => 'e',
+			'info' => __CLASS__.'::email_info',
+			'app'  => 'email',
 			);
 			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
 		}
@@ -218,10 +219,10 @@ class calendar_bo
 				$email = $matches[2];
 			}
 			$data[] = array(
-				'res_id' => $id,
-				'email' => $email,
-				'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
-				'name' => $name,
+			'res_id' => $id,
+			'email' => $email,
+			'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
+			'name' => $name,
 			);
 		}
 		//echo "<p>email_info(".print_r($ids,true).")="; _debug_array($data);
@@ -240,7 +241,7 @@ class calendar_bo
 		foreach($event['participants'] as $uid => $status)
 		{
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'g' &&
-				($members = $GLOBALS['egw']->accounts->member($uid)))
+			($members = $GLOBALS['egw']->accounts->member($uid)))
 			{
 				foreach($members as $member)
 				{
@@ -290,7 +291,7 @@ class calendar_bo
 		$params_in = $params;
 
 		if (!isset($params['users']) || !$params['users'] ||
-			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
+		count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
 		{
 			// for a search use all account you have read grants from
 			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;
@@ -303,7 +304,7 @@ class calendar_bo
 		$users = array();
 		foreach($params['users'] as $user)
 		{
-			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$user))
+			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?
 				{
@@ -327,7 +328,7 @@ class calendar_bo
 					{
 						// use only members which gave the user a read-grant
 						if (!in_array($member['account_id'],$users) &&
-							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$member['account_id'])))
+						($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY,0,$member['account_id'])))
 						{
 							$users[] = $member['account_id'];
 						}
@@ -371,11 +372,11 @@ class calendar_bo
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
 		{
 			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, show_rejected=%11)',
-				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
+			True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
+		$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
 
 		if (isset($params['cols']))
 		{
@@ -485,14 +486,14 @@ class calendar_bo
 	function clear_private_infos(&$event,$allowed_participants = array())
 	{
 		$event = array(
-			'id'    => $event['id'],
-			'start' => $event['start'],
-			'end'   => $event['end'],
-			'title' => lang('private'),
-			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
-			'public'=> 0,
- 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
- 			'non_blocking' => $event['non_blocking'],
+		'id'    => $event['id'],
+		'start' => $event['start'],
+		'end'   => $event['end'],
+		'title' => lang('private'),
+		'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
+		'public'=> 0,
+		'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
+		'non_blocking' => $event['non_blocking'],
 		);
 	}
 
@@ -656,8 +657,8 @@ class calendar_bo
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
-				self::$cached_event_date_format != $date_format ||
-				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || self::$cached_event['start'] < $date))
+			self::$cached_event_date_format != $date_format ||
+			self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || self::$cached_event['start'] < $date))
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
 
@@ -764,7 +765,7 @@ class calendar_bo
 			if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
 			{
 				$this->debug_message('bocal::insert_all_repetions(...,%1) checking recur_exceptions[%2] and event[recur_exceptions]=%3 ==> %4',False,
-					$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
+				$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
 			}
 			if ($have_exception)
 			{
@@ -848,7 +849,7 @@ class calendar_bo
 					}
 
 					if (($GLOBALS['egw']->datetime->day_of_week($event_start_arr['year'],$event_start_arr['month'],$event_start_arr['day']) == $GLOBALS['egw']->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
-						(ceil($event_start_arr['day']/7) == ceil($search_date_day/7)))
+					(ceil($event_start_arr['day']/7) == ceil($search_date_day/7)))
 					{
 						$this->add_adjusted_event($events,$event,$search_date_ymd);
 					}
@@ -928,11 +929,11 @@ class calendar_bo
 			if (is_numeric($uid))
 			{
 				$info = array(
-					'res_id'    => $uid,
-					'email' => $GLOBALS['egw']->accounts->id2name($uid,'account_email'),
-					'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
-									$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
-					'type'  => $GLOBALS['egw']->accounts->get_type($uid),
+				'res_id'    => $uid,
+				'email' => $GLOBALS['egw']->accounts->id2name($uid,'account_email'),
+				'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
+				$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
+				'type'  => $GLOBALS['egw']->accounts->get_type($uid),
 				);
 			}
 			else
@@ -977,7 +978,6 @@ class calendar_bo
 		if ($other && !is_numeric($other))
 		{
 			$resource = $this->resource_info($other);
-
 			return $needed & $resource['rights'];
 		}
 		if (is_int($event) && $event == 0)
@@ -1003,7 +1003,6 @@ class calendar_bo
 		}
 		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$grants = $this->grants[$owner];
-
 		if (is_array($event) && $needed == EGW_ACL_READ)
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
@@ -1016,7 +1015,7 @@ class calendar_bo
 					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite READ and PRIVAT grant
-						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
+						$grants |= EGW_ACL_READ;
 						break;
 					}
 					elseif ($this->grants[$uid] & EGW_ACL_READ)
@@ -1038,7 +1037,6 @@ class calendar_bo
 				error_log(__METHOD__." no participants for event:".print_r($event,true));
 			}
 		}
-
 		if ($GLOBALS['egw']->accounts->get_type($owner) == 'g' && $needed == EGW_ACL_ADD)
 		{
 			$access = False;	// a group can't be the owner of an event
@@ -1070,54 +1068,54 @@ class calendar_bo
 		switch(gettype($date))
 		{
 			case 'string':	// YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss[Z|[+-]hh:mm] string
-				if (is_numeric($date) && $date > 21000000)
+			if (is_numeric($date) && $date > 21000000)
+			{
+				$date = (int) $date;	// this is already as timestamp
+				break;
+			}
+			// evaluate evtl. added timezone
+			if (strlen($date) > 12)
+			{
+				if (substr($date,-1) == 'Z')
 				{
-					$date = (int) $date;	// this is already as timestamp
-					break;
+					$time_offset = date('Z');
 				}
-				// evaluate evtl. added timezone
-				if (strlen($date) > 12)
+				elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
 				{
-					if (substr($date,-1) == 'Z')
-					{
-						$time_offset = date('Z');
-					}
-					elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
-					{
-						$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
-					}
+					$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
 				}
-				// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
-				$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
-				$date = array(
-					'year'   => (int) substr($date,0,4),
-					'month'  => (int) substr($date,4,2),
-					'day'    => (int) substr($date,6,2),
-					'hour'   => (int) substr($date,8,2),
-					'minute' => (int) substr($date,10,2),
-					'second' => (int) substr($date,12,2),
-				);
-				// fall-through
+			}
+			// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
+			$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
+			$date = array(
+			'year'   => (int) substr($date,0,4),
+			'month'  => (int) substr($date,4,2),
+			'day'    => (int) substr($date,6,2),
+			'hour'   => (int) substr($date,8,2),
+			'minute' => (int) substr($date,10,2),
+			'second' => (int) substr($date,12,2),
+			);
+			// fall-through
 			case 'array':	// day, month and year keys
-				if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
-				{
-					$date = $date['raw'];
-					break;
-				}
-				if (!isset($date['year']) && isset($date['full']))
-				{
-					$date['year']  = (int) substr($date['full'],0,4);
-					$date['month'] = (int) substr($date['full'],4,2);
-					$date['day']   = (int) substr($date['full'],6,2);
-				}
-				$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
-					(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
+			if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
+			{
+				$date = $date['raw'];
 				break;
+			}
+			if (!isset($date['year']) && isset($date['full']))
+			{
+				$date['year']  = (int) substr($date['full'],0,4);
+				$date['month'] = (int) substr($date['full'],4,2);
+				$date['day']   = (int) substr($date['full'],6,2);
+			}
+			$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
+			(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
+			break;
 			case 'integer':		// already a timestamp
-				break;
+			break;
 			default:		// eg. boolean, means now in user-time (!)
-				$date = $this->now_su;
-				break;
+			$date = $this->now_su;
+			break;
 		}
 		if ($time_offset)
 		{
@@ -1262,12 +1260,13 @@ class calendar_bo
 	function debug_message($msg,$backtrace=True)
 	{
 		static $acl2string = array(
-			0               => 'ACL-UNKNOWN',
-			EGW_ACL_READ    => 'ACL_READ',
-			EGW_ACL_ADD     => 'ACL_ADD',
-			EGW_ACL_EDIT    => 'ACL_EDIT',
-			EGW_ACL_DELETE  => 'ACL_DELETE',
-			EGW_ACL_PRIVATE => 'ACL_PRIVATE',
+		0               => 'ACL-UNKNOWN',
+		EGW_ACL_READ    => 'ACL_READ',
+		EGW_ACL_ADD     => 'ACL_ADD',
+		EGW_ACL_EDIT    => 'ACL_EDIT',
+		EGW_ACL_DELETE  => 'ACL_DELETE',
+		EGW_ACL_PRIVATE => 'ACL_PRIVATE',
+		EGW_ACL_FREEBUSY => 'ACL_FREEBUSY',
 		);
 		for($i = 2; $i < func_num_args(); ++$i)
 		{
@@ -1331,7 +1330,7 @@ class calendar_bo
 		$timefmt = $this->common_prefs['timeformat'] == 12 ? 'h:i a' : 'H:i';
 
 		$month_before_day = strtolower($datefmt[0]) == 'm' ||
-			strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
+		strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
 
 		if ($display_day)
 		{
@@ -1485,21 +1484,21 @@ class calendar_bo
 				switch($status)
 				{
 					case 'A':	// accepted
-						$status = html::image('calendar','agt_action_success',$this->verbose_status[$status]);
-						break;
+					$status = html::image('calendar','agt_action_success',$this->verbose_status[$status]);
+					break;
 					case 'R':	// rejected
-						$status = html::image('calendar','agt_action_fail',$this->verbose_status[$status]);
-						break;
+					$status = html::image('calendar','agt_action_fail',$this->verbose_status[$status]);
+					break;
 					case 'T':	// tentative
-						$status = html::image('calendar','tentative',$this->verbose_status[$status]);
-						break;
+					$status = html::image('calendar','tentative',$this->verbose_status[$status]);
+					break;
 					case 'U':	// no response = unknown
-						$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
-						break;
+					$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
+					break;
 					case 'G':	// group invitation
-						// Todo: Image, seems not to be used
-						$status = '('.$this->verbose_status[$status].')';
-						break;
+					// Todo: Image, seems not to be used
+					$status = '('.$this->verbose_status[$status].')';
+					break;
 				}
 			}
 			else
@@ -1562,9 +1561,9 @@ class calendar_bo
 			$arr = &$users;
 		}
 		$arr[$name] = Array(
-			'grantor' => $id,
-			'value'   => ($type == 'g' ? 'g_' : '') . $id,
-			'name'    => $name
+		'grantor' => $id,
+		'value'   => ($type == 'g' ? 'g_' : '') . $id,
+		'name'    => $name
 		);
 	}
 
@@ -1696,12 +1695,12 @@ class calendar_bo
 						list($m,$d,$y) = explode('/',$pers['bday']);
 						if ($y > $year) continue; 	// not yet born
 						$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
-							'day'       => $d,
-							'month'     => $m,
-							'occurence' => 0,
-							'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
-								$pers['n_family'].($y && !$GLOBALS['egw_info']['server']['hide_birthdays'] ? ' ('.$y.')' : ''),
-							'birthyear' => $y,	// this can be used to identify birthdays from holidays
+						'day'       => $d,
+						'month'     => $m,
+						'occurence' => 0,
+						'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
+						$pers['n_family'].($y && !$GLOBALS['egw_info']['server']['hide_birthdays'] ? ' ('.$y.')' : ''),
+						'birthyear' => $y,	// this can be used to identify birthdays from holidays
 						);
 					}
 				}
@@ -1788,28 +1787,28 @@ class calendar_bo
 		}
 		$subject = lang('Calendar Event') . ' - $$action$$: $$startdate$$ $$title$$'."\n";
 		$defaults = array(
-			'defaultcalendar' => 'week',
-			'mainscreen_showevents' => '0',
-			'summary'         => 'no',
-			'receive_updates' => 'no',
-			'update_format'   => 'extended',
-			'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
-			'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
-			'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
-			'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
-			'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
-			'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
-			'show_rejected'   => '0',
-			'display_status'  => '1',
-			'weekdaystarts'   => 'Monday',
-			'workdaystarts'   => '9',
-			'workdayends'     => '17',
-			'interval'        => '30',
-			'defaultlength'   => '60',
-			'planner_start_with_group' => $planner_start_with_group,
-			'defaultfilter'   => 'all',
-			'default_private' => '0',
-			'defaultresource_sel' => 'resources',
+		'defaultcalendar' => 'week',
+		'mainscreen_showevents' => '0',
+		'summary'         => 'no',
+		'receive_updates' => 'no',
+		'update_format'   => 'extended',
+		'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
+		'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
+		'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
+		'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
+		'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
+		'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
+		'show_rejected'   => '0',
+		'display_status'  => '1',
+		'weekdaystarts'   => 'Monday',
+		'workdaystarts'   => '9',
+		'workdayends'     => '17',
+		'interval'        => '30',
+		'defaultlength'   => '60',
+		'planner_start_with_group' => $planner_start_with_group,
+		'defaultfilter'   => 'all',
+		'default_private' => '0',
+		'defaultresource_sel' => 'resources',
 		);
 		foreach($defaults as $var => $default)
 		{
@@ -1837,8 +1836,8 @@ class calendar_bo
 		if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
 
 		return (!$GLOBALS['egw_info']['server']['webserver_url'] || $GLOBALS['egw_info']['server']['webserver_url'][0] == '/' ?
-			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
-			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
-			($pw ? '&password='.urlencode($pw) : '');
+		($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
+		$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
+		($pw ? '&password='.urlencode($pw) : '');
 	}
 }
