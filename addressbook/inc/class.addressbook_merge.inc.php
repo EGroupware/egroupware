@@ -67,7 +67,7 @@ class addressbook_merge	// extends bo_merge
 					if ($value)
 					{
 						list($y,$m,$d) = explode('-',$value);
-						$contact[$name] = $GLOBALS['egw']->common->dateformatorder($y,$m,$d,true);
+						$value = $GLOBALS['egw']->common->dateformatorder($y,$m,$d,true);
 					}
 					break;
 				case 'owner': case 'creator': case 'modifier':
