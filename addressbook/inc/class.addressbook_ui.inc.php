@@ -776,7 +776,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
-		if ($do_email && $GLOBALS['egw_info']['etemplate']['loop'] && is_object($GLOBALS['egw']->js))
+		if ($do_email && etemplate::$loop && is_object($GLOBALS['egw']->js))
 		{	// remove previous addEmail() calls, otherwise they will be run again
 			$GLOBALS['egw']->js->body['onLoad'] = preg_replace('/addEmail\([^)]+\);/','',$GLOBALS['egw']->js->body['onLoad']);
 		}
