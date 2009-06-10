@@ -1701,9 +1701,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$id = $stat['ino'];
 			}
 		}
-		if (count($ids) > 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
+		if (count($ids) >= 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
 		$query = 'SELECT * FROM '.self::PROPS_TABLE.' WHERE (fs_id'.
-			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')').')'.
+			(count($ids) == 1 ? '='.(int)implode('',$ids) : ' IN ('.implode(',',$ids).')').')'.
 			(!is_null($ns) ? ' AND prop_namespace=?' : '');
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
