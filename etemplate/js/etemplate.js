@@ -295,5 +295,6 @@ function add_upload(upload)
 	var br = document.createElement('br');
 	parent.insertBefore(br,upload);
 	upload.id += parent.childNodes.length;
-	upload.value = '';
+	newUpload.value = '';
+	parent.insertBefore(upload,newUpload);
 }
