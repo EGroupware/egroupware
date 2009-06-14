@@ -18,10 +18,12 @@ Prefix: /usr/share
 	%define distribution SUSE Linux %{?suse_version}
 	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom at
 	%define cron cron
+	%define cronline "*/5 * * * *     wwwrun  /usr/bin/php5 -q /usr/share/egroupware/phpgwapi/cron/asyncwrapper.php >/dev/null 2>&1"
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
 	%define cron crontabs
+	%define cronline "*/5 * * * *     apache  /usr/bin/php -q /usr/share/egroupware/phpgwapi/cron/asyncwrapper.php >/dev/null 2>&1"
 %endif
 %define install_log /root/%{name}-install.log
 %define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
@@ -483,7 +485,9 @@ mkdir -p $RPM_BUILD_ROOT%{egwdir}
 mkdir -p $RPM_BUILD_ROOT%{httpdconfd}
 cp egroupware/doc/rpm-build/apache.conf $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
 mkdir -p $RPM_BUILD_ROOT/etc/cron.d
-cp egroupware/doc/rpm-build/egroupware.cron $RPM_BUILD_ROOT/etc/cron.d/egroupware
+echo "MAILTO=root" > $RPM_BUILD_ROOT/etc/cron.d/egroupware
+echo "# run eGroupware's async services for all domains" >> $RPM_BUILD_ROOT/etc/cron.d/egroupware
+echo "%{cronline}" >> $RPM_BUILD_ROOT/etc/cron.d/egroupware
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/files
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/backup
 cp egroupware/doc/rpm-build/header.inc.php $RPM_BUILD_ROOT%{egwdatadir}

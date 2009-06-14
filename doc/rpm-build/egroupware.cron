@@ -1,3 +1,0 @@
-MAILTO=root
-# run eGroupware's async services for all domains
-*/5 * * * *	apache	/usr/bin/php -q /usr/share/egroupware/phpgwapi/cron/asyncwrapper.php >/dev/null 2>&1
