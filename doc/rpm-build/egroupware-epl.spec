@@ -483,7 +483,7 @@ mkdir -p $RPM_BUILD_ROOT%{egwdir}
 mkdir -p $RPM_BUILD_ROOT%{httpdconfd}
 cp egroupware/doc/rpm-build/apache.conf $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
 mkdir -p $RPM_BUILD_ROOT/etc/cron.d
-cp egroupware/doc/rpm-build/egroupware.cron $RPM_BUILD_ROOT/etc/cron.d
+cp egroupware/doc/rpm-build/egroupware.cron $RPM_BUILD_ROOT/etc/cron.d/egroupware
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/files
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/backup
 cp egroupware/doc/rpm-build/header.inc.php $RPM_BUILD_ROOT%{egwdatadir}
@@ -539,7 +539,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/phpgwapi
 %{egwdir}/preferences
 %{egwdir}/setup
-%attr(0644,root,root) /etc/cron.d/egroupware.cron
+%attr(0644,root,root) /etc/cron.d/egroupware
 %config %attr(0644,root,root) %{httpdconfd}/egroupware.conf
 %if 0%{?suse_version}
 	%dir %attr(0755,root,root) /etc/apache2
