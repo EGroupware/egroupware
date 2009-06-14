@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090609
+Version: 9.1.20090614
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -13,16 +13,14 @@ Prefix: /usr/share
 %define egw_packagename eGroupware
 
 %if 0%{?suse_version}
-	%define httpdconfd /etc/apache2/conf.d
-	%define extratar egroupware_suse.tar.bz2
-	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom
+	%define httpdconfd /etc/apache2/conf.d
+	%define distribution SUSE Linux %{?suse_version}
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom at
 	%define cron cron
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
-	%define extratar egroupware_rh.tar.bz2
 	%define cron crontabs
 %endif
 %define install_log /root/%{name}-install.log
@@ -52,15 +50,12 @@ Distribution: %{distribution}
 
 Source0: %{name}_%{version}.orig.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
-Source2: %{name}-stylite-%{version}.tar.bz2
-Source3: %{name}-gallery-%{version}.tar.bz2
-Source4: %{?extratar}
-Source5: %{name}-rpmlintrc
+Source2: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
 
 #otherwise build fails because of jar files in G2
-BuildRequires: unzip
+BuildRequires: unzip at
 
 Buildarch: noarch
 AutoReqProv: no
@@ -129,8 +124,17 @@ Obsoletes: %{egw_packagename}-wiki
 	setsebool -P httpd_can_network_connect=1
 %endif
 /bin/date >> %{install_log}
-%{post_install} 2>&1 | tee -a %{install_log}
-echo EGroupware install log saved to %{install_log}
+#%if 0%{?suse_version}
+# SUSE's zypper or yast have problems with dependency tree, they fail to install egroupware-epl as last package
+# this hack fixes the problem, by waiting some time before starting post_install
+#	%define install_delay 1
+#	echo "EGroupware installation will start in %{install_delay} minute(s)"
+#	[ -x /etc/init.d/atd ] || /etc/init.d/atd start
+#	echo "%{post_install} 2>&1 >> %{install_log}" | /usr/bin/at now +%{install_delay} minute
+#%else
+	%{post_install} 2>&1 | tee -a %{install_log}
+#%endif
+echo "EGroupware install log saved to %{install_log}"
 
 %description
 EGroupware is a web-based groupware suite written in PHP.
@@ -465,9 +469,6 @@ This is the wiki app for EGroupware.
 %prep
 %setup0 -c -n %{egwdirname}
 %setup1 -T -D -a 1 -n %{egwdirname}
-%setup2 -T -D -a 2 -n %{egwdirname}
-%setup3 -T -D -a 3 -n %{egwdirname}
-%setup4 -T -D -a 4 -n %{egwdirname}
 %patch0 -p 0
 
 %build
@@ -475,9 +476,14 @@ This is the wiki app for EGroupware.
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT%{egwdir}
-cp -aRf etc var $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT%{httpdconfd}
+cp egroupware/doc/rpm-build/apache.conf $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
+mkdir -p $RPM_BUILD_ROOT/etc/cron.d
+cp egroupware/doc/rpm-build/egroupware.cron $RPM_BUILD_ROOT/etc/cron.d
+mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/files
+mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/backup
+cp egroupware/doc/rpm-build/header.inc.php $RPM_BUILD_ROOT%{egwdatadir}
 cp -aRf egroupware/* $RPM_BUILD_ROOT%{egwdir}
-
 cd %{buildroot}%{egwdir}
 ln -s ../../..%{egwdatadir}/header.inc.php
 # create symlink for suse to get scripts with /usr/bin/php working
@@ -530,23 +536,19 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/phpgwapi
 %{egwdir}/preferences
 %{egwdir}/setup
-%attr(0644,root,root) /etc/cron.d/egroupware
+%attr(0644,root,root) /etc/cron.d/egroupware.cron
 %config %attr(0644,root,root) %{httpdconfd}/egroupware.conf
 %if 0%{?suse_version}
 	%dir %attr(0755,root,root) /etc/apache2
 	%dir %attr(0755,root,root) %{httpdconfd}
+	%dir %attr(0755,wwwrun,www) %{egwdatadir}
 	%dir %attr(0755,wwwrun,www) %{egwdatadir}/default
 	%dir %attr(0755,wwwrun,www) %{egwdatadir}/default/files
 	%dir %attr(0755,wwwrun,www) %{egwdatadir}/default/backup
 	%config %attr(0640,wwwrun,www) %{egwdatadir}/header.inc.php
 %endif
-%if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
-	%dir %attr(0755,apache,apache) %{egwdatadir}/default
-	%dir %attr(0755,apache,apache) %{egwdatadir}/default/files
-	%dir %attr(0755,apache,apache) %{egwdatadir}/default/backup
-	%config %attr(0640,apache,apache) %{egwdatadir}/header.inc.php
-%endif
-%if 0%{?mandriva_version}
+%if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version} || 0%{?mandriva_version}
+	%dir %attr(0755,apache,apache) %{egwdatadir}
 	%dir %attr(0755,apache,apache) %{egwdatadir}/default
 	%dir %attr(0755,apache,apache) %{egwdatadir}/default/files
 	%dir %attr(0755,apache,apache) %{egwdatadir}/default/backup
