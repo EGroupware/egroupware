@@ -137,6 +137,10 @@ else
 	// give admin access to default apps, not yet set for the default group
 	function insert_default_prefs($accountid)
 	{
+		$lang = get_var('ConfigLang',Array('POST','COOKIE'),'en');
+		list(,$country) = explode('-',$lang);
+		if (empty($country)) $country = $lang;
+
 		$defaultprefs = array(
 			'common' => array(
 				'maxmatchs'     => 15,
@@ -144,11 +148,12 @@ else
 				'theme'         => 'idots',
 				'navbar_format' => 'icons',
 				'tz_offset'     => 0,
-				'dateformat'    => 'Y/m/d',
+				'dateformat'    => $lang == 'en' ? 'Y/m/d' : 'd.m.Y',
 				'timeformat'    => '24',
-				'lang'          => get_var('ConfigLang',Array('POST','COOKIE'),'en'),
+				'lang'          => $lang,
+				'country'       => strtoupper($country),
 				'default_app'   => 'calendar',
-				'currency'      => '$',
+				'currency'      => $lang == 'en' ? '$' : 'EUR',
 				'show_help'     => True,
 				'max_icons'		=> 12,
 			),
