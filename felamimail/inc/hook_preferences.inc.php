@@ -28,14 +28,15 @@
 	if(empty($mailPreferences->preferences['prefpreventmanagefolders']) || $mailPreferences->preferences['prefpreventmanagefolders'] == 0) {
 		$file['Manage Folders'] = $GLOBALS['egw']->link('/index.php','menuaction=felamimail.uipreferences.listFolder');
 	}
-	$icServer = $mailPreferences->getIncomingServer(0);
+	if (is_object($mailPreferences))
+	{
+		$icServer = $mailPreferences->getIncomingServer(0);
 
-	if($icServer->enableSieve) {
-		$file['filter rules'] = $GLOBALS['egw']->link('/index.php', 'menuaction=felamimail.uisieve.listRules');
-		$file['vacation notice'] = $GLOBALS['egw']->link('/index.php','menuaction=felamimail.uisieve.editVacation');
+		if($icServer->enableSieve) {
+			$file['filter rules'] = $GLOBALS['egw']->link('/index.php', 'menuaction=felamimail.uisieve.listRules');
+			$file['vacation notice'] = $GLOBALS['egw']->link('/index.php','menuaction=felamimail.uisieve.editVacation');
+		}
 	}
-	
 	//Do not modify below this line
 	display_section($appname,$title,$file);
 }
-?>
