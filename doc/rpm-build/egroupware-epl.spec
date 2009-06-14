@@ -50,7 +50,9 @@ Distribution: %{distribution}
 
 Source0: %{name}_%{version}.orig.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
-Source2: %{name}-rpmlintrc
+Source2: %{name}-stylite-%{version}.tar.bz2
+Source3: %{name}-gallery-%{version}.tar.bz2
+Source4: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
 
@@ -469,6 +471,8 @@ This is the wiki app for EGroupware.
 %prep
 %setup0 -c -n %{egwdirname}
 %setup1 -T -D -a 1 -n %{egwdirname}
+%setup2 -T -D -a 2 -n %{egwdirname}
+%setup3 -T -D -a 3 -n %{egwdirname}
 %patch0 -p 0
 
 %build
@@ -508,7 +512,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files core
 %defattr(-,root,root)
 %dir %{egwdir}
-%dir %{egwdatadir}
 %{egwdir}/about.php
 %{egwdir}/anon_wrapper.php
 %{egwdir}/header.inc.php
