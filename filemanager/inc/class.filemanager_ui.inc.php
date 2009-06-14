@@ -729,7 +729,9 @@ class filemanager_ui
 				$props = array();
 				foreach($content['old'] as $name => $old_value)
 				{
-					if (isset($content[$name]) && $old_value != $content[$name])
+					if (isset($content[$name]) && ($old_value != $content[$name] ||
+						// do not check for modification, if modify_subs is checked!
+						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) && $name != 'uid' || egw_vfs::$is_root)
 					{
 						if ($name == 'name')
 						{
@@ -791,12 +793,12 @@ class filemanager_ui
 								}
 								if ($ok && !$failed)
 								{
-									$msg .= lang('Permissions of %1 changed.',$path.' '.lang('and all it\'s childeren'));
+									if(!$perm_changed++) $msg .= lang('Permissions of %1 changed.',$path.' '.lang('and all it\'s childeren'));
 									$content['old'][$name] = $content[$name];
 								}
 								elseif($failed)
 								{
-									$msg .= lang('Failed to change permissions of %1!',$path.lang('and all it\'s childeren').
+									if(!$perm_failed++) $msg .= lang('Failed to change permissions of %1!',$path.lang('and all it\'s childeren').
 										($ok ? ' ('.lang('%1 failed, %2 succeded',$failed,$ok).')' : ''));
 								}
 							}
