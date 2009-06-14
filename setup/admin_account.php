@@ -151,6 +151,7 @@ else
 				'dateformat'    => $lang == 'en' ? 'Y/m/d' : 'd.m.Y',
 				'timeformat'    => '24',
 				'lang'          => $lang,
+				'spellchecker_lang' => $lang,
 				'country'       => strtoupper($country),
 				'default_app'   => 'calendar',
 				'currency'      => $lang == 'en' ? '$' : 'EUR',
