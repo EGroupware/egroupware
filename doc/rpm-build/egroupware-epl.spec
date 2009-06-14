@@ -19,14 +19,14 @@ Prefix: /usr/share
 	%define php php5
 	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom
 	%define cron cron
-	%define rpm_post_install /usr/bin/php5 %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir} --suse
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
 	%define extratar egroupware_rh.tar.bz2
 	%define cron crontabs
-	%define rpm_post_install /usr/bin/php %{egwdir}/doc/rpm-build/rpm_post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %endif
+%define install_log /root/%{name}-install.log
+%define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
@@ -50,7 +50,7 @@ Prefix: /usr/share
 
 Distribution: %{distribution}
 
-Source0: %{name}-%{version}.tar.bz2
+Source0: %{name}_%{version}.orig.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-gallery-%{version}.tar.bz2
@@ -128,8 +128,8 @@ Obsoletes: %{egw_packagename}-wiki
 	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
 	setsebool -P httpd_can_network_connect=1
 %endif
-%define install_log /root/%{name}-%{version}-install.log
-%{rpm_post_install} 2>&1 | tee -a %{install_log}
+/bin/date >> %{install_log}
+%{post_install} 2>&1 | tee -a %{install_log}
 echo EGroupware install log saved to %{install_log}
 
 %description
