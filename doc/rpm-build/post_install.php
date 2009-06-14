@@ -193,6 +193,10 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 			system($config['start_webserver'].' start');
 			system($config['autostart_webserver']);
 		}
+		else
+		{
+			system($config['start_webserver'].' reload');
+		}
 	}
 	echo "\n";
 	echo "EGroupware successful installed\n";
