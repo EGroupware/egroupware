@@ -18,12 +18,14 @@ Prefix: /usr/share
 	%define distribution SUSE Linux %{?suse_version}
 	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom at
 	%define cron cron
-	%define cronline "*/5 * * * *     wwwrun  /usr/bin/php5 -q /usr/share/egroupware/phpgwapi/cron/asyncwrapper.php >/dev/null 2>&1"
+	%define apache_user wwwrun
+	%define apache_group www
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
 	%define cron crontabs
-	%define cronline "*/5 * * * *     apache  /usr/bin/php -q /usr/share/egroupware/phpgwapi/cron/asyncwrapper.php >/dev/null 2>&1"
+	%define apache_user apache
+	%define apache_group apache
 %endif
 %define install_log /root/%{name}-install.log
 %define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
@@ -59,7 +61,7 @@ Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
 
 #otherwise build fails because of jar files in G2
-BuildRequires: unzip at
+BuildRequires: unzip at sed
 
 Buildarch: noarch
 AutoReqProv: no
@@ -485,9 +487,7 @@ mkdir -p $RPM_BUILD_ROOT%{egwdir}
 mkdir -p $RPM_BUILD_ROOT%{httpdconfd}
 cp egroupware/doc/rpm-build/apache.conf $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
 mkdir -p $RPM_BUILD_ROOT/etc/cron.d
-echo "MAILTO=root" > $RPM_BUILD_ROOT/etc/cron.d/egroupware
-echo "# run eGroupware's async services for all domains" >> $RPM_BUILD_ROOT/etc/cron.d/egroupware
-echo "%{cronline}" >> $RPM_BUILD_ROOT/etc/cron.d/egroupware
+sed 's/apache/%{apache_user}/' egroupware/doc/rpm-build/egroupware.cron > $RPM_BUILD_ROOT/etc/cron.d/egroupware
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/files
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/backup
 cp egroupware/doc/rpm-build/header.inc.php $RPM_BUILD_ROOT%{egwdatadir}
@@ -548,19 +548,12 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %if 0%{?suse_version}
 	%dir %attr(0755,root,root) /etc/apache2
 	%dir %attr(0755,root,root) %{httpdconfd}
-	%dir %attr(0755,wwwrun,www) %{egwdatadir}
-	%dir %attr(0755,wwwrun,www) %{egwdatadir}/default
-	%dir %attr(0755,wwwrun,www) %{egwdatadir}/default/files
-	%dir %attr(0755,wwwrun,www) %{egwdatadir}/default/backup
-	%config %attr(0640,wwwrun,www) %{egwdatadir}/header.inc.php
 %endif
-%if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version} || 0%{?mandriva_version}
-	%dir %attr(0755,apache,apache) %{egwdatadir}
-	%dir %attr(0755,apache,apache) %{egwdatadir}/default
-	%dir %attr(0755,apache,apache) %{egwdatadir}/default/files
-	%dir %attr(0755,apache,apache) %{egwdatadir}/default/backup
-	%config %attr(0640,apache,apache) %{egwdatadir}/header.inc.php
-%endif
+%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}
+%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}/default
+%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}/default/files
+%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}/default/backup
+%config %attr(0640,%{apache_user},%{apache_group}) %{egwdatadir}/header.inc.php
 
 # addressbook is part of core now, as it contains required classes for accounts
 #%files addressbook
