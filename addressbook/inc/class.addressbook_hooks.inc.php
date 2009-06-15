@@ -117,21 +117,24 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$GLOBALS['settings']['mainscreen_showbirthdays'] = array(
-			'type'   => 'select',
-			'label'  => 'Show birthday reminders on main screen',
-			'name'   => 'mainscreen_showbirthdays',
-			'help'   => 'Displays a remider for birthdays on the startpage (page you get when you enter eGroupWare or click on the homepage icon).',
-			'values' => array(
-				0 => lang('No'),
-				1 => lang('Yes, for today and tomorrow'),
-				3 => lang('Yes, for the next three days'),
-				7 => lang('Yes, for the next week'),
-				14=> lang('Yes, for the next two weeks'),
-			),
-			'xmlrpc' => True,
-			'admin'  => False,
-		);
+		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
+		{
+			$settings['mainscreen_showbirthdays'] = array(
+				'type'   => 'select',
+				'label'  => 'Show birthday reminders on main screen',
+				'name'   => 'mainscreen_showbirthdays',
+				'help'   => 'Displays a remider for birthdays on the startpage (page you get when you enter eGroupWare or click on the homepage icon).',
+				'values' => array(
+					0 => lang('No'),
+					1 => lang('Yes, for today and tomorrow'),
+					3 => lang('Yes, for the next three days'),
+					7 => lang('Yes, for the next week'),
+					14=> lang('Yes, for the next two weeks'),
+				),
+				'xmlrpc' => True,
+				'admin'  => False,
+			);
+		}
 		$GLOBALS['settings']['no_auto_hide'] = array(
 			'type'   => 'check',
 			'label'  => 'Don\'t hide empty columns',
