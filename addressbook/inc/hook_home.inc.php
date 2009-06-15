@@ -9,7 +9,8 @@
  */
 
 if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
-	($days = $GLOBALS['egw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays']))
+	($days = $GLOBALS['egw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays']) &&
+	$GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
 {
 	echo "\n<!-- Birthday info -->\n";
 
@@ -74,6 +75,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 							break;
 						default:
 							list($y,$m,$d) = explode('-',$contact['bday']);
+							if ($GLOBALS['egw_info']['server']['hide_birthdays'] == 'dateonly') $y = '';
 							$text = lang("In %1 days (%2) is %3's birthday.",$n,
 								$GLOBALS['egw']->common->dateformatorder($y,$m,$d,true),
 								$contact['n_given'].' '.$contact['n_family']);
