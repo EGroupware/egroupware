@@ -15,13 +15,14 @@
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%">
+		<grid>
 			<columns>
 				<column/>
 				<column/>
 				<column disabled="@no_role"/>
 				<column/>
 				<column width="60" disabled="@no_photo"/>
+				<column/>
 				<column/>
 				<column disabled="@no_home"/>
 				<column/>
@@ -67,6 +68,7 @@
 					<nextmatch-header label="role" id="role"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<nextmatch-header label="Photo" id="photo"/>
+					<nextmatch-header id="bday" label="Birthday"/>
 					<vbox options="0,0">
 						<nextmatch-header label="Business address" id="business"/>
 						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
@@ -113,6 +115,7 @@
 						<menupopup type="select-cat" options="1" id="${row}[cat_id]" readonly="true"/>
 					</menulist>
 					<image src="${row}[photo]"/>
+					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
 					<vbox options="0,0">
 						<description id="${row}[adr_one_countryname]" no_lang="1"/>
 						<hbox options="0,0" orient="0">
@@ -177,7 +180,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.index" template="" lang="" group="0" version="1.5.002">
+	<template id="addressbook.index" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column/>
