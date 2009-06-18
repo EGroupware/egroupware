@@ -831,14 +831,27 @@ class calendar_uiforms extends calendar_ui
 					$sel_options['status']['G'] = lang('Select one');
 					foreach($members as $member)
 					{
-						if (!isset($participants[$member]) && $this->bo->check_perms(EGW_ACL_EDIT,0,$member))
+						if (!isset($participants[$member]))
 						{
-							$preserv['participants'][$row] = $content['participants'][$row] = array(
-								'app'      => 'Group invitation',
-								'uid'      => $member,
-								'status'   => 'G',
-							);
-							$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
+							//IF Readaccess you can also invite participants, but you can only change the status, if you have edit rights
+							if ($this->bo->check_perms(EGW_ACL_READ,0,$member) && !$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
+							{
+								$preserv['participants'][$row] = $content['participants'][$row] = array(
+									'app'      => 'Group invitation',
+									'uid'      => $member,
+									'status'   => $status[0],
+								);
+								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] =$readonlys[$row]['status']= true;
+							}
+							elseif ($this->bo->check_perms(EGW_ACL_EDIT,0,$member))
+							{
+								$preserv['participants'][$row] = $content['participants'][$row] = array(
+									'app'      => 'Group invitation',
+									'uid'      => $member,
+									'status'   => 'G',
+								);
+								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
+							}
 							$content['participants'][$row++]['title'] = $GLOBALS['egw']->common->grab_owner_name($member);
 						}
 					}
