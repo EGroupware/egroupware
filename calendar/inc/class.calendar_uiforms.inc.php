@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -892,25 +892,20 @@ class calendar_uiforms extends calendar_ui
 					$sel_options['status']['G'] = lang('Select one');
 					foreach($members as $member)
 					{
-						if (!isset($participants[$member]))
+						if (!isset($participants[$member]) && $this->bo->check_perms(EGW_ACL_READ,0,$member))
 						{
-							//IF Readaccess you can also invite participants, but you can only change the status, if you have edit rights
-							if ($this->bo->check_perms(EGW_ACL_READ,0,$member) && !$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
+							$preserv['participants'][$row] = $content['participants'][$row] = array(
+								'app'      => 'Group invitation',
+								'uid'      => $member,
+								'status'   => 'G',
+							);
+							// read access is enought to invite participants, but you edit rights to change status
+							if (!$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
 							{
-								$preserv['participants'][$row] = $content['participants'][$row] = array(
-									'app'      => 'Group invitation',
-									'uid'      => $member,
-									'status'   => $status[0],
-								);
 								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] =$readonlys[$row]['status']= true;
 							}
-							elseif ($this->bo->check_perms(EGW_ACL_EDIT,0,$member))
+							else
 							{
-								$preserv['participants'][$row] = $content['participants'][$row] = array(
-									'app'      => 'Group invitation',
-									'uid'      => $member,
-									'status'   => 'G',
-								);
 								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
 							}
 							$content['participants'][$row++]['title'] = $GLOBALS['egw']->common->grab_owner_name($member);
