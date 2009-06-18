@@ -20,7 +20,7 @@ Prefix: /usr/share
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
-	%define pear_dir \/usr\/share\/php5\/PEAR
+	%define pear_dir \\/usr\\/share\\/php5\\/PEAR
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
@@ -28,7 +28,7 @@ Prefix: /usr/share
 	%define apache_user apache
 	%define apache_group apache
 	# we define here both locations: RHEL default and Zend Server CE
-	%define pear_dir \/usr\/local\/zend\/share\/pear:\/usr\/share\/pear
+	%define pear_dir \\/usr\\/local\\/zend\\/share\\/pear:\\/usr\\/share\\/pear
 %endif
 %define install_log /root/%{name}-install.log
 %define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
@@ -510,7 +510,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files
 %defattr(-,root,root)
 %dir %{egwdir}
-%dir %{egwdatadir}
+%dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}
 # symlink for suse to get scripts with /usr/bin/php working
 %if 0%{?suse_version}
 	/usr/bin/php
@@ -552,10 +552,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 	%dir %attr(0755,root,root) /etc/apache2
 	%dir %attr(0755,root,root) %{httpdconfd}
 %endif
-%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}
-%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}/default
-%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}/default/files
-%dir %attr(0755,%{apache_user},%{apache_group}) %{egwdatadir}/default/backup
+%dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}
+%dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default
+%dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/files
+%dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/backup
 %config %attr(0640,%{apache_user},%{apache_group}) %{egwdatadir}/header.inc.php
 
 # addressbook is part of core now, as it contains required classes for accounts
