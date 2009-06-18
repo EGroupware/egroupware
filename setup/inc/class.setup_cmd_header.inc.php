@@ -138,7 +138,10 @@ class setup_cmd_header extends setup_cmd
 		if (file_exists($this->header_path) && is_writable($this->header_path) || is_writable(dirname($this->header_path)) ||
 			function_exists('posix_getuid') && !posix_getuid())	// root has all rights
 		{
-			if (is_writable(dirname($this->header_path)) && file_exists($this->header_path)) unlink($this->header_path);
+			if (posix_getuid() && is_writable(dirname($this->header_path)) && file_exists($this->header_path))
+			{
+				unlink($this->header_path);
+			}
 			if (($f = fopen($this->header_path,'wb')) && ($w=fwrite($f,$header)))
 			{
 				fclose($f);
