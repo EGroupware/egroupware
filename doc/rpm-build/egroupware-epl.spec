@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090614
+Version: 9.1.20090618
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -16,16 +16,19 @@ Prefix: /usr/share
 	%define php php5
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom at
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix at
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
+	%define pear_dir \/usr\/share\/php5\/PEAR
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
 	%define cron crontabs
 	%define apache_user apache
 	%define apache_group apache
+	# we define here both locations: RHEL default and Zend Server CE
+	%define pear_dir \/usr\/local\/zend\/share\/pear:\/usr\/share\/pear
 %endif
 %define install_log /root/%{name}-install.log
 %define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
@@ -67,7 +70,7 @@ Buildarch: noarch
 AutoReqProv: no
 
 Requires: %{php} >= 5.1.2
-Requires: %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron}
+Requires: %{php}-mbstring %{php}-imap %{php}-gd %{php}-mcrypt %{php}-pear %{extra_requires} %{cron}
 Requires: jpgraph-epl
 Requires: %{name}-core            = %{version}
 Requires: %{name}-egw-pear        = %{version}
@@ -485,7 +488,7 @@ This is the wiki app for EGroupware.
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT%{egwdir}
 mkdir -p $RPM_BUILD_ROOT%{httpdconfd}
-cp egroupware/doc/rpm-build/apache.conf $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
+sed 's/\/usr\/share\/pear/%{pear_dir}/' egroupware/doc/rpm-build/apache.conf > $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
 mkdir -p $RPM_BUILD_ROOT/etc/cron.d
 sed 's/apache/%{apache_user}/' egroupware/doc/rpm-build/egroupware.cron > $RPM_BUILD_ROOT/etc/cron.d/egroupware
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/files
@@ -673,5 +676,8 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
+* Mon Jun 1 2009 Ralf Becker <rb@stylite.de> 9.1.20090618
+- EGroupware EPL release 9.1 diverse bugfixes
+
 * Mon Jun 1 2009 Ralf Becker <rb@stylite.de> 9.1.20090601
 - EGroupware EPL release 9.1 preview
