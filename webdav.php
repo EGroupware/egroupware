@@ -72,6 +72,9 @@ include(dirname(__FILE__).'/header.inc.php');
 
 $headertime = microtime(true);
 
+// switch of output buffering (switched on in header), as otherwise we run against memory_limit, for big files
+ob_end_flush();
+
 $webdav_server = new vfs_webdav_server();
 $webdav_server->ServeRequest();
 //error_log(sprintf("WebDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
