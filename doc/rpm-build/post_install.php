@@ -145,7 +145,6 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// --> new install
 
 	// create header
-	@unlink($config['header']);	// remove redirect header, setup-cli stalls otherwise
 	$setup_header = $setup_cli.' --create-header '.escapeshellarg($config['config_passwd'].','.$config['config_user']).
 		' --domain '.escapeshellarg($config['domain'].','.$config['db_name'].','.$config['db_user'].','.$config['db_pass'].
 			','.$config['db_type'].','.$config['db_host'].','.$config['db_port']);
