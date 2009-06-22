@@ -253,7 +253,7 @@ class translation
 			$loaded =& egw_cache::getCache(in_array($app,self::$instance_specific_translations) ? egw_cache::INSTANCE : egw_cache::TREE,
 				__CLASS__,$app.':'.$lang,array(__CLASS__,'load_app'),array($app,$lang));
 
-			self::$lang_arr = self::$lang_arr ? array_merge(self::$lang_arr,$loaded) : $loaded;
+			self::$lang_arr += $loaded;	// use += instead of array_merge, as we have phrases with numerical index, which get renumbered by array_merge
 			self::$loaded_apps[$app] = $lang;
 			//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr).": ".function_backtrace());
 		}
