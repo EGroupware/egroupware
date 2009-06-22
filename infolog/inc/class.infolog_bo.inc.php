@@ -853,7 +853,12 @@ class infolog_bo
 		{
 			foreach ($_attachments as $attachment)
 			{
-				if(is_readable($attachment['tmp_name']))
+				$is_vfs = false;
+				if (parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs' && egw_vfs::is_readable($attachment['tmp_name']))
+				{
+					$is_vfs = true;
+				}
+				if(is_readable($attachment['tmp_name']) || $is_vfs)
 				{
 					egw_link::link('infolog',$info['link_to']['to_id'],'file',$attachment);
 				}
