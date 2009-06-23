@@ -1193,6 +1193,7 @@ class etemplate extends boetemplate
 					$fckoptions = array(
 						'toolbar_expanded' => $toolbar,
 					);
+					// html::fckEditor runs everything through html::purify
 					$html .= html::fckEditor($form_name,$value,$mode,$fckoptions,$height,$width,$baseref);
 
 					$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
@@ -1202,7 +1203,7 @@ class etemplate extends boetemplate
 				}
 				else
 				{
-					$html .= html::div(html::activate_links($value),'style="overflow: auto; width='. $width. '; height='. $height. '"');
+					$html .= html::div(html::purify(html::activate_links($value)),'style="overflow: auto; width='. $width. '; height='. $height. '"');
 				}
 				break;
 			case 'checkbox':
@@ -1972,7 +1973,7 @@ class etemplate extends boetemplate
 					}
 					break;
 				case 'htmlarea':
-					$this->set_array($content,$form_name,$value);
+					self::set_array($content,$form_name,html::purify($value));
 					break;
 				case 'int':
 				case 'float':
