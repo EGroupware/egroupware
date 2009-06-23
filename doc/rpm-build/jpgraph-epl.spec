@@ -1,10 +1,10 @@
 Name: jpgraph-epl
-Version: 2.3.4
+Version: 2.4p
 Release:
 Summary: Object-Oriented Graph creating library for PHP
 Group: Development/Languages
-License: QPL 1.0 (Qt Free Licensee)
-URL: http://www.aditus.nu/jpgraph/
+License: JpGraph Professional Bulk License
+URL: http://www.aditus.nu/jpgraph/proversion.php
 Vendor: Stylite GmbH, http://www.stylite.de/
 Packager: Ralf Becker <rb@stylite.de>
 Prefix: /usr/share
@@ -35,6 +35,8 @@ very fine grained control. The library assigns context sensitive default
 values for most of the parameters which minimizes the learning curve.
 The features are there when you need them - not as an obstacle to overcome!
 
+This JpGraph Libary is licensed to Stylite GmbH to be distributed with EGroupaware EPL.
+
 %prep
 %setup -c -n jpgraph-%{version}
 
@@ -43,6 +45,9 @@ The features are there when you need them - not as an obstacle to overcome!
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT%{prefix}/jpgraph
+rm -rf jpgraph-%{version}/stripped-src
+rm -rf jpgraph-%{version}/phpExpress-src
+find jpgraph-%{version} -name "*~" -exec rm {} \;
 cp -aRf jpgraph-%{version}/* $RPM_BUILD_ROOT%{prefix}/jpgraph
 
 %clean
@@ -53,5 +58,7 @@ cp -aRf jpgraph-%{version}/* $RPM_BUILD_ROOT%{prefix}/jpgraph
 %{prefix}/jpgraph
 
 %changelog
+* Mon Jun 22 2009 Ralf Becker <rb@stylite.de> 2.4p
+  Aditus Professional Version: 2.4p (1 Mar 2009)
 * Sat Jun 6 2009 Ralf Becker <rb@stylite.de> 2.3.4
   Aditus Version: 2.3.4 (31 Jan 2009)
