@@ -861,7 +861,8 @@ class common
 				{
 					if (!egw_vfs::is_dir($vfs_imagedir.'/'.$entry))
 					{
-						if (list($type,$subtype) = explode('/',egw_vfs::mime_content_type($vfs_imagedir.'/'.$entry)) && $type == 'image')
+						list($type,$subtype) = explode('/',egw_vfs::mime_content_type($vfs_imagedir.'/'.$entry));
+						if ($type == 'image')
 						{
 							self::$found_files['vfs'][$entry] = $vfs_imagedir;
 						}
