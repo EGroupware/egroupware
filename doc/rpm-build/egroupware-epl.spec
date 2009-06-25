@@ -55,7 +55,7 @@ Prefix: /usr/share
 
 Distribution: %{distribution}
 
-Source0: %{name}_%{version}.orig.tar.gz
+Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-gallery-%{version}.tar.bz2
