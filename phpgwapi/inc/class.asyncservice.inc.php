@@ -97,16 +97,19 @@ class asyncservice
 	 * 	for every 5mins in the time from 9am to 5pm. All not set units before the smallest one set,
 	 * 	are taken into account as every possible value, all after as the smallest possible value.
 	 * @param boolean $debug if True some debug-messages about syntax-errors in $times are echoed
+	 * @param int $now Use this time to calculate then next run from.  Defaults to time().
 	 * @return int a unix timestamp of the next execution time or False if no more executions
 	 */
-	function next_run($times,$debug=False)
+	function next_run($times,$debug=False, $now = null)
 	{
 		if ($this->debug)
 		{
-			echo "<p>next_run("; print_r($times); echo ",'$debug')</p>\n";
+			echo "<p>next_run("; print_r($times); echo ",'$debug', " . date('Y-m-d H:i', $now) . ")</p>\n";
 			$debug = True;	// enable syntax-error messages too
 		}
-		$now = time();
+		if(is_null($now)) {
+			$now = time();
+		}
 
 		// $times is unix timestamp => if it's not expired return it, else False
 		//
@@ -257,7 +260,7 @@ class asyncservice
 
 			foreach($units as $u => $date_pattern)
 			{
-				$unit_now = $u != 'dow' ? (int)date($date_pattern) :
+				$unit_now = $u != 'dow' ? (int)date($date_pattern, $now) :
 					(int)date($date_pattern,mktime(12,0,0,$found['month'],$found['day'],$found['year']));
 
 				if (isset($found[$u]))
