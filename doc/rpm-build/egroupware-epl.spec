@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090618
+Version: 9.1.20090626
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -61,6 +61,7 @@ Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-gallery-%{version}.tar.bz2
 Source4: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
+#Patch1: xxxxx.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
 
 #otherwise build fails because of jar files in G2
@@ -69,9 +70,6 @@ BuildRequires: unzip at sed
 Buildarch: noarch
 AutoReqProv: no
 
-Requires: %{php} >= 5.1.2
-Requires: %{php}-mbstring %{php}-imap %{php}-gd %{php}-mcrypt %{php}-pear %{extra_requires} %{cron}
-Requires: jpgraph-epl
 Requires: %{name}-core            = %{version}
 Requires: %{name}-egw-pear        = %{version}
 Requires: %{name}-stylite         = %{version}
@@ -133,16 +131,7 @@ Obsoletes: %{egw_packagename}-wiki
 	setsebool -P httpd_can_network_connect=1
 %endif
 /bin/date >> %{install_log}
-#%if 0%{?suse_version}
-# SUSE's zypper or yast have problems with dependency tree, they fail to install egroupware-epl as last package
-# this hack fixes the problem, by waiting some time before starting post_install
-#	%define install_delay 1
-#	echo "EGroupware installation will start in %{install_delay} minute(s)"
-#	[ -x /etc/init.d/atd ] || /etc/init.d/atd start
-#	echo "%{post_install} 2>&1 >> %{install_log}" | /usr/bin/at now +%{install_delay} minute
-#%else
-	%{post_install} 2>&1 | tee -a %{install_log}
-#%endif
+%{post_install} 2>&1 | tee -a %{install_log}
 echo "EGroupware install log saved to %{install_log}"
 
 %description
@@ -166,6 +155,8 @@ Further contributed applications are available as separate packages.
 %package core
 Summary: The EGroupware core
 Group: Web/Database
+Requires: %{php} >= 5.1.2
+Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{extra_requires} %{cron}
 Provides: egw-core %{version}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-addressbook
@@ -236,6 +227,7 @@ Summary: The EGroupware emailadmin application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version}
+Requires: %{php}-imap
 Requires: %{name}-egw-pear = %{version}
 Obsoletes: %{egw_packagename}-emailadmin
 %description emailadmin
@@ -373,6 +365,7 @@ Summary: The EGroupware projectmanager application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core = %{version},
+Requires: jpgraph-epl
 Obsoletes: %{egw_packagename}-projectmanager
 %description projectmanager
 The projectmanager is EGroupware's new project management application.
@@ -481,6 +474,7 @@ This is the wiki app for EGroupware.
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
 %patch0 -p 0
+#%patch1 -p 0
 
 %build
 
@@ -511,10 +505,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %dir %{egwdir}
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}
-# symlink for suse to get scripts with /usr/bin/php working
-%if 0%{?suse_version}
-	/usr/bin/php
-%endif
 
 %files core
 %defattr(-,root,root)
@@ -551,6 +541,8 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %if 0%{?suse_version}
 	%dir %attr(0755,root,root) /etc/apache2
 	%dir %attr(0755,root,root) %{httpdconfd}
+	# symlink for suse to get scripts with /usr/bin/php working
+	/usr/bin/php
 %endif
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default
@@ -676,6 +668,11 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
+* Mon Jun 1 2009 Ralf Becker <rb@stylite.de> 9.1.20090626
+- fixed circular dependency on suse (/usr/bin/php --> /usr/bin/php5 symlink)
+- moved all php dependencies to egroupware-epl-core or the module needing it
+- EGroupware EPL release 9.1 diverse bugfixes
+
 * Mon Jun 1 2009 Ralf Becker <rb@stylite.de> 9.1.20090618
 - EGroupware EPL release 9.1 diverse bugfixes
 
