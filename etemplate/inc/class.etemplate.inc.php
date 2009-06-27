@@ -1687,8 +1687,15 @@ class etemplate extends boetemplate
 			}
 			if ($label && !$readonly && ($accesskey || $label_for || $type != 'label' && $cell['name']))
 			{
-				$label = html::label($label,$label_for ? self::form_name($cname,$label_for) :
-					$form_name.($set_val?"[$set_val]":''),$accesskey);
+				if ($label_for)		// if label_for starts with a '#', it is already an id - no need to create default id from it
+				{
+					$label_for = $label_for[0] == '#' ? substr($label_for,1) : self::form_name($cname,$label_for);
+				}
+				else
+				{
+					$label_for = $form_name.($set_val?"[$set_val]":'');
+				}
+				$label = html::label($label,$label_for,$accesskey);
 			}
 			if ($type == 'radio' || $type == 'checkbox' || $label && strpos($label,'%s')!==false)	// default for radio is label after the button
 			{
