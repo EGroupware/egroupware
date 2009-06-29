@@ -65,7 +65,7 @@ class addressbook_vcal extends addressbook_bo
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
 		$vCard = new Horde_iCalendar_vcard;
-		
+
 		if(!is_array($this->supportedFields)) {
 			$this->setSupportedFields();
 		}
@@ -75,10 +75,10 @@ class addressbook_vcal extends addressbook_bo
 			return false;
 		}
 		//error_log("entry before fixed:\n".print_r($entry,true));
-		
+
 		$this->fixup_contact($entry);
-		
-		
+
+
 		foreach($this->supportedFields as $vcardField => $databaseFields)
 		{
 			$values = array();
@@ -630,12 +630,12 @@ class addressbook_vcal extends addressbook_bo
 				{
 					case 'kde':             // KDE Addressbook
 						$this->supportedFields = $defaultFields[1];
-						error_log(__FILE__ . ":groupdav kde 1");	
+						error_log(__FILE__ . ":groupdav kde 1");
 						break;
 					default:
 						$this->supportedFields = $defaultFields[1];
 				}
-				break;		
+				break;
 			// the fallback for SyncML
 			default:
 				error_log(__FILE__. __METHOD__ ."\nManufacturer-Product not found: '$_productManufacturer' '$_productName'");
@@ -702,16 +702,29 @@ class addressbook_vcal extends addressbook_bo
 		// we need also to take care about ADR for example. we do not
 		// support this. We support only ADR;WORK or ADR;HOME
 
-		// njv: As the order of tag occurence is undefined and tags 1... to  n are mapped to one addressbook 
-		//	fieldname and tags 1... to n may have conflicting content eg EMAIL is set but EMAIL;INTERNET is empty 
-		//  and both are mapped to "email" who wins? 
-		
+		// njv: As the order of tag occurence is undefined and tags 1... to  n are mapped to one addressbook
+		//	fieldname and tags 1... to n may have conflicting content eg EMAIL is set but EMAIL;INTERNET is empty
+		//  and both are mapped to "email" who wins?
+
 		foreach($rowNames as $rowName => $vcardKey)
 		{
 			//	error_log("eachrownane:".print_r($rowName,true));
 
 			switch($rowName)
 			{
+				case 'TEL;VOICE;HOME':
+				case 'TEL;VOICE;WORK':	// check if we have a mapping without VOICE
+					$replace = str_replace('VOICE;','',$rowName);
+					if (!isset($rowNames[$replace]) && array_key_exists($replace, $this->supportedFields))
+					{
+						$finalRowNames[$replace] = $vcardKey;	// if yes use that
+					}
+					else
+					{
+						$finalRowNames[$rowName] = $vcardKey;	// else use existing mapping
+					}
+					break;
+
 				case 'ADR':
 				case 'TEL':
 				case 'URL':
@@ -776,7 +789,7 @@ class addressbook_vcal extends addressbook_bo
 						}
 					}
 					//		error_log("key:$akey:$vcardKey");
-					
+
 					if( $akey && !empty($vcardValues[$vcardKey]['value']))
 					{
 						//error_log("$akey : ".print_r($vcardKey,true));
@@ -788,9 +801,9 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$finalRowNames['EMAIL;INTERNET;HOME'] = $vcardKey;
 					}
-					
+
 					//	error_log("email_home-key: ".print_r($bkey, true));
-					
+
 					if($bkey && !empty($vcardValues[$vcardKey]['value']))
 					{
 						//	error_log("$bkey :".print_r($vcardKey,true));
