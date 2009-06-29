@@ -109,14 +109,42 @@ class addressbook_merge	// extends bo_merge
 			}
 			if ($name != 'photo') $replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
 		}
-		// set all not yet set custom fields, as empty cf's are not stored!
-		foreach(array_keys($this->contacts->customfields) as $name)
+		// set custom fields
+		foreach($this->contacts->customfields as $name => $field)
 		{
-			$name = '$$#'.$name.'$$';
-			if (!isset($replacements[$name]))
+			$name = '#'.$name;
+			$value = (string)$contact[$name];
+			switch($field['type'])
 			{
-				$replacements[$name] = '';
+				case 'select-account':
+					if ($value) $value = common::grab_owner_name($value);
+					break;
+
+				case 'select':
+					if (count($field['values']) == 1 && isset($field['values']['@']))
+					{
+						$field['values'] = customfields_widget::_get_options_from_file($field['values']['@']);
+					}
+					$values = array();
+					foreach($field['rows'] > 1 ? explode(',',$value) : (array) $value as $value)
+					{
+						$values[] = $field['values'][$value];
+					}
+					$value = implode(', ',$values);
+					break;
+
+				case 'date':
+				case 'date-time':
+					if ($value)
+					{
+						$format = $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
+						$date = array_combine(preg_split('/[\\/. :-]/',$format),preg_split('/[\\/. :-]/',$value));
+						$value = common::dateformatorder($date['Y'],$date['m'],$date['d'],true);
+						if (isset($date['H'])) $value .= ' '.common::formattime($date['H'],$date['i']);
+					}
+					break;
 			}
+			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
 		}
 		return $replacements;
 	}
