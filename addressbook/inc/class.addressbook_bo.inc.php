@@ -963,7 +963,7 @@ class addressbook_bo extends addressbook_so
 	 */
 	function read_calendar($ids,$extra_title=true)
 	{
-		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return null;
+		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return array();
 
 		$uids = array();
 		foreach($ids as $id)
