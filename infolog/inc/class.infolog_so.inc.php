@@ -821,10 +821,11 @@ class infolog_so
 
 				$ids[$info['info_id']] = $info;
 			}
-			if ($ids && ($query['custom_fields'] && strchr($query['selectcols'],'#') !== false || $query['csv_export']))
+			// if no specific custom field is selected, show/query all custom fields
+			if ($ids && ($query['custom_fields'] || $query['csv_export']))
 			{
 				$where = array('info_id' => array_keys($ids));
-				if (!$query['csv_export'])
+				if (!($query['csv_export'] || strchr($query['selectcols'],'#') === false))
 				{
 					$where['info_extra_name'] = array();
 					foreach(explode(',',$query['selectcols']) as $col)
