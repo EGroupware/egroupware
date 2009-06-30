@@ -477,7 +477,7 @@ class link_widget
 					// this was the line before the default opt, not sure it works well in all case
 					$value = $extension_data['app'] ? $value_in['id'] : $value['app'].':'.$value_in['id'];
 				}
-				return !!$value_in['id'];
+				return true;
 
 			case 'link-apps':
 				if (!$value_in && $extension_data['needed'])
