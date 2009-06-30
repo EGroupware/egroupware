@@ -647,7 +647,7 @@
 
 		function flagMessages($_flag, $_messageUID)
 		{
-			#error_log("felamimail::bocompose::flagMessages");
+			//error_log(__METHOD__."->".print_r($_messageUID,true).":".$_flag);
 			if(!is_array($_messageUID)) {
 				#return false;
 				$_messageUID=array($_messageUID);
