@@ -576,6 +576,17 @@ class nextmatch_widget
 				unset($header);
 			}
 		}
+		// do we have more then 5 cf's to display --> limit header height to 5 lines plus vertical scrollbar
+		$num = !$allowed ? count($this->cfs) : count($allowed);
+		if ($num > 5)
+		{
+			$vbox = $cell;
+			$cell = etemplate::empty_cell('box','',array(
+				'size' => '0,,0,0',
+				'span' => ',cf_header_height_limit',
+			));
+			etemplate::add_child($cell,$vbox);
+		}
 		return false;	// no extra label
 	}
 

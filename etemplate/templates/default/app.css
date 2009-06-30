@@ -144,3 +144,12 @@
 	border-bottom: 4px solid red;
 	border-right: 4px solid red;
 }
+
+/**
+ * class for big (more then 5 lines) custom field nextmatch header
+ */
+.cf_header_height_limit {
+	max-height: 6.75em;
+	overflow: auto;
+	padding-right: 15px;
+}
