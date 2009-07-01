@@ -163,7 +163,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @var string;
 	 */
-	static public $extra_columns = '';//',fs_link';
+	static public $extra_columns = ',fs_link';
 
 	/**
 	 * This method is called immediately after your stream object is created.
