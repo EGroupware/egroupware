@@ -157,6 +157,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	protected $opened_dir;
 
 	/**
+	 * Extra columns added since the intitial introduction of sqlfs
+	 *
+	 * Can be set to empty, so get queries running on old versions of sqlfs, eg. for schema updates
+	 *
+	 * @var string;
+	 */
+	static public $extra_columns = '';//',fs_link';
+
+	/**
 	 * This method is called immediately after your stream object is created.
 	 *
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
@@ -901,7 +910,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		$this->opened_dir = array();
-		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_link'.
+		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.self::$extra_columns.
 			' FROM '.self::TABLE." WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
 		//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$options)".' */ '.$query;
@@ -970,7 +979,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			self::_pdo();
 		}
-		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_link'.
+		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.self::$extra_columns.
 			' FROM '.self::TABLE.' WHERE fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
 		$parts = explode('/',$path);
 
@@ -1479,7 +1488,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$pdo_available = true;
 		}
 		try {
-			self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password);
+			self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password,array(
+				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+			));
 		} catch(Exception $e) {
 
 			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
