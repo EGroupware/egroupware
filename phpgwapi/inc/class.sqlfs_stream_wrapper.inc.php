@@ -969,6 +969,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$path = substr($path,0,-1);
 		}
+		if (empty($path))
+		{
+			return false;	// is invalid and gives sql error
+		}
 		// check if we already have the info from the last dir_open call, as the old vfs reads it anyway from the db
 		if (self::$stat_cache && isset(self::$stat_cache[$path]) && (is_null($eacl_access) || self::$stat_cache[$path] !== false))
 		{
