@@ -209,6 +209,8 @@
 			$uiWidgets	=& CreateObject('felamimail.uiwidgets');
 			// (regis) seems to be necessary to reopen...
 			$this->bofelamimail->reopen($this->mailbox);
+			// retrieve the flags of the message, before touching it.
+			if (!empty($this->uid)) $flags = $this->bofelamimail->getFlags($this->uid);
 			#print "$this->mailbox, $this->uid, $partID<br>";
 			$headers	= $this->bofelamimail->getMessageHeader($this->uid, $partID);
 			if (PEAR::isError($headers)) {
@@ -232,8 +234,8 @@
 			#_debug_array($bodyParts); exit;
 			#_debug_array($this->uid);
 			#_debug_array($this->bofelamimail->getFlags($this->uid)); #exit;
-			// flag the message as read/seen
-			if (!empty($this->uid)) $this->bofelamimail->flagMessages('read', $this->uid);
+			// flag the message as read/seen (if not already flagged)
+			if (!empty($this->uid) && strpos( array2string($flags),'Seen')===false) $this->bofelamimail->flagMessages('read', $this->uid);
 
 			$nextMessage	= $this->bofelamimail->getNextMessage($this->mailbox, $this->uid);
 
@@ -276,7 +278,8 @@
 				$this->t->set_file(array("displayMsg" => "view_message_printable.tpl"));
 				$this->t->set_var('charset',$GLOBALS['egw']->translation->charset());
 			}
-			if ( $sent_not != "" && $this->bofelamimail->getNotifyFlags($this->uid) === null ) {
+			// only notify when requested, notify flag (MDNSent/MDNnotSent) not set, and message not already seen (some servers do not support the MDNSent/MDNnotSent flag)
+			if ( $sent_not != "" && $this->bofelamimail->getNotifyFlags($this->uid) === null && strpos( array2string($flags),'Seen')===false) {
 				$this->t->set_var('sentNotify','sendNotify("'.$this->uid.'");');
 				$this->t->set_var('lang_sendnotify',lang('The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?'));
 			} else {

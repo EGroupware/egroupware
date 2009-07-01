@@ -397,8 +397,15 @@
 		*/
 		function flagMessages($_flag, $_messageList)
 		{
-			if($this->_debug) error_log("ajaxfelamimail::flagMessages");
-			$this->bofelamimail->flagMessages($_flag, $_messageList);
+			if($this->_debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageList,true));
+			if (!empty($_messageList['msg']))
+			{
+				$this->bofelamimail->flagMessages($_flag, $_messageList['msg']);
+			}
+			else
+			{
+				if($this->_debug) error_log(__METHOD__."-> No messages selected.");
+			}
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
