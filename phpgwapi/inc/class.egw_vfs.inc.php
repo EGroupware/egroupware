@@ -568,7 +568,15 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		$type = $options['type'];	// 'd' or 'f'
 
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)))
+		if ($options['url'])
+		{
+			$stat = lstat($path);
+		}
+		else
+		{
+			$stat = self::url_stat($path,STREAM_URL_STAT_LINK);
+		}
+		if (!$stat)
 		{
 			return;	// not found, should not happen
 		}

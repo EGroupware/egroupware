@@ -434,6 +434,7 @@ function phpgwapi_upgrade1_5_011()
 	if ($GLOBALS['DEBUG'] && isset($_SERVER['HTTP_HOST'])) echo "<pre style='text-align: left;'>\n";
 	egw_vfs::$is_root = true;
 	egw_vfs::load_wrapper('sqlfs');
+	sqlfs_stream_wrapper::$extra_columns = '';	// no fs_link column, as it gets created in 1.7.002
 	egw_vfs::find('sqlfs://default/',array(
 		'url'  => true,
 		'depth' => true,
