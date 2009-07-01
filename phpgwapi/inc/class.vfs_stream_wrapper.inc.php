@@ -1018,14 +1018,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function get_path($path,$only_remove_scheme=self::SCHEME)
 	{
-		if ($path[0] != '/' && (!$only_remove_scheme || parse_url($path,PHP_URL_SCHEME) == $only_remove_scheme))
+		$url_parts = parse_url($path);
+		if ($path[0] != '/' && (!$only_remove_scheme || $url_parts['scheme'] == $only_remove_scheme))
 		{
-			$path = parse_url($path,PHP_URL_PATH);
+			$path = $url_parts['path'];
 		}
 		// remove trailing slashes eg. added by WebDAV
-		while (substr($path,-1) == '/' && $path != '/')
+		if ($url_parts['path'] != '/')
 		{
-			$path = substr($path,0,-1);
+			while (substr($path,-1) == '/' && $path != '/')
+			{
+				$path = substr($path,0,-1);
+			}
 		}
 		return $path;
 	}
