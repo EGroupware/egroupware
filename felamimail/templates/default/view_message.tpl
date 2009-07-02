@@ -31,7 +31,7 @@ self.focus();
         {navbar}
 </div>
 <div id="subjectDIV" style="border: 0px solid green; margin:0px; padding:0px; left:0px;">
-	<span style="padding-left:2px; font-size: 110%;">{subject_data}</span>
+	<span id="subjectDATA" style="padding-left:2px; font-size: 110%;">{subject_data}</span>
 </div>
 <div id="headerDIV">
 	{header}
