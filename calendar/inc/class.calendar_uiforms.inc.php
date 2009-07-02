@@ -286,7 +286,7 @@ class calendar_uiforms extends calendar_ui
 						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')))
 						{
 							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
-							if ($app == "resources" && $id) {
+							if ($app == "resources" && !empty($id)) {
 								$bores =& CreateObject('resources.bo_resources');
 								$selectedres = $bores->read($id);
 								$cats = $bores->acl->get_cats(EGW_ACL_DIRECT_BOOKING);
@@ -305,9 +305,15 @@ class calendar_uiforms extends calendar_ui
 									break;
 								}
 							}
-							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
-							if ($uid) $event['participants'][$uid] = $event['participant_types'][$type][$id] =
-								$status.((int) $quantity > 1 ? (int)$quantity : '');
+							if ($uid && $id) 
+							{
+								$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
+								$event['participants'][$uid] = $event['participant_types'][$type][$id] = $status.((int) $quantity > 1 ? (int)$quantity : '');
+							}
+							else
+							{
+								unset($quantity);
+							}
 							break;
 						}
 						// fall-through for accounts entered as contact
