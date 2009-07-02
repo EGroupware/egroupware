@@ -36,6 +36,16 @@ function initAll()
 		fm_resizeBodyDIV();
 		window.onresize = fm_resizeBodyDIV;
 	}
+	updateTitle();
+}
+
+function updateTitle() {
+	var _text = document.getElementById('subjectDATA').firstChild.nodeValue;
+    if(_text.length>40) {
+        _text = _text.substring(0,40) + '...';
+    }
+
+    document.title = _text;
 }
 
 function toggleHeaderSize() {

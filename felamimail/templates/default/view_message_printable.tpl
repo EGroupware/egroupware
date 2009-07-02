@@ -1,4 +1,13 @@
 <!-- BEGIN message_main -->
+<script language="JavaScript1.2">
+function updateTitle() {
+    var _text = document.getElementById('subjectDATA').title;
+    if(_text.length>40) {
+        _text = _text.substring(0,40) + '...';
+    }
+    document.title = _text;
+}
+</script>
 <STYLE type="text/css">
         .subjectBold {
         	font-size: 110%;
@@ -19,7 +28,7 @@
 
 <tr style="background: white;">
 	<td colspnan="2" style="font-weight:bold; text-align: center; font-size: 120%;">
-		<a class="{row_css_class}" name="subject_url" href="{url_read_message}" target="{read_message_windowName}" title="{full_subject_data}">{subject_data}</a>
+		<a id="subjectDATA" class="{row_css_class}" name="subject_url" href="{url_read_message}" target="{read_message_windowName}" title="{full_subject_data}">{subject_data}</a>
 	</td>
 </tr>
 </table>

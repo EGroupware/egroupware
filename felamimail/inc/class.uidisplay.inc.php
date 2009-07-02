@@ -837,7 +837,7 @@
 			}
 
 			if(($_GET['menuaction'] == 'felamimail.uidisplay.printMessage') || (!empty($printing) && $printing == 1)) {
-				$GLOBALS['egw']->js->set_onload('javascript:window.print()');
+				$GLOBALS['egw']->js->set_onload('javascript:updateTitle();javascript:window.print()');
 			}
 
 			if($_GET['menuaction'] == 'felamimail.uidisplay.printMessage' || (!empty($printing) && $printing == 1) ||

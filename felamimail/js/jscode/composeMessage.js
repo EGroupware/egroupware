@@ -41,6 +41,8 @@ function initAll()
 {
 	//tab.init();
 	//alert(document.onkeydown);
+	var titletext = document.getElementById('fm_compose_subject').value;
+	if (titletext.length>0) updateTitle(titletext);
 }
 
 function addEmail(to,email)
