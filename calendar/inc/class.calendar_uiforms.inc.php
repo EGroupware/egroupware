@@ -285,10 +285,35 @@ class calendar_uiforms extends calendar_ui
 						// check if new entry is no contact or no account
 						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')))
 						{
-							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
-							if ($uid) $event['participants'][$uid] = $event['participant_types'][$type][$id] =
-								$status.((int) $quantity > 1 ? (int)$quantity : '');
+							if ($app == "resources" && !empty($id)) {
+								$bores =& CreateObject('resources.bo_resources');
+								$selectedres = $bores->read($id);
+								$cats = $bores->acl->get_cats(EGW_ACL_DIRECT_BOOKING);
+								if (is_array($cats) && $selectedres['bookable'] == 1 &&
+									$selectedres['cat_id'] && array_key_exists($selectedres['cat_id'],$cats))
+								{
+									if ($selectedres['quantity'] && $selectedres['quantity'] < $quantity) {
+										$msg .= lang('You requested more than available for the selected resource:').$selectedres['name']." ".lang('quantity').":".$selectedres['quantity']." < $quantity";
+										break;
+									}
+									// to do: Test for overbooking/maybe this is handled sufficient by the conflict handling of dates
+									#$msg = lang('The resource you selected is already overbooked:').$selectedres['name'];
+								} else {
+									// you are not allowed to book, or the resource is overbooked already
+									$msg .= lang('You are not allowed to book the resource selected:').$selectedres['name'];
+									break;
+								}
+							}
+							if ($uid && $id) 
+							{
+								$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
+								$event['participants'][$uid] = $event['participant_types'][$type][$id] = $status.((int) $quantity > 1 ? (int)$quantity : '');
+							}
+							else
+							{
+								unset($quantity);
+							}
 							break;
 						}
 						// fall-through for accounts entered as contact
