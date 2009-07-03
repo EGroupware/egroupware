@@ -211,6 +211,12 @@ class etemplate extends boetemplate
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 		}
+		// check if application of template has a app.js file --> load it
+		list($app) = explode('.',$this->name);
+		if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
+		{
+			$GLOBALS['egw']->js->validate_file('.','app',$app,false);
+		}
 		// use different form-names to allows multiple eTemplates in one page, eg. addressbook-view
 		self::$name_form = 'eTemplate';
 		if (in_array(self::$name_form,self::$name_forms))

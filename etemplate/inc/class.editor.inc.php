@@ -499,6 +499,11 @@ class editor
 			{
 				$new_content['onclick'] .= html::style('@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/'.$app.'/templates/default/app.css);');
 			}
+			// check if application of template has a app.js file --> load it
+			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
+			{
+				$GLOBALS['egw']->js->validate_file('.','app',$app,false);
+			}
 			$editor->data[$editor->rows]['A']['obj'] = &$this->etemplate;
 			$vals = $content['vals'];
 			$olds = $content['olds'];
