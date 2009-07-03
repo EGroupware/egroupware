@@ -1,7 +1,7 @@
 <?php
 /**
  * eGW API - content history class
- * 
+ *
  * @link http://www.egroupware.org
  * @author Lars Kneschke [lkneschke@linux-at-work.de]
  * @copyright Lars Kneschke 2005
@@ -30,7 +30,7 @@ class contenthistory
 	{
 		$this->db = $GLOBALS['egw']->db;
 	}
-	
+
 	/**
 	 * mark mapping as expired
 	 *
@@ -39,7 +39,7 @@ class contenthistory
 	 *
 	 * @param string $_appName the appname example: infolog_notes
 	 * @param int $_id the internal egwapp content id
-	 * @return bool 
+	 * @return bool
 	 */
 	function expireMapping($_appName, $_id)
 	{
@@ -47,7 +47,7 @@ class contenthistory
 				'map_expired'		=> 1,
 			),array (
 				'map_guid'		=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
-			),__LINE__,__FILE__);
+			),__LINE__,__FILE__,'syncml');
 	}
 
 	/**
@@ -57,13 +57,13 @@ class contenthistory
 	 *
 	 * @param string$_appName the appname example: infolog_notes
 	 * @param string $_action can be modify, add or delete
-	 * @param string $_ts timestamp where to start searching from 
+	 * @param string $_ts timestamp where to start searching from
 	 * @return array containing contentIds with changes
 	 */
 	function getHistory($_appName, $_action, $_ts)
 	{
 		$where = array('sync_appname' => $_appName);
-		
+
 		switch($_action)
 		{
 			case 'modify':
@@ -84,10 +84,10 @@ class contenthistory
 		{
 			$idList[] = $row['sync_contentid'];
 		}
-		
+
 		return $idList;
 	}
-	
+
 	/**
 	 * when got a entry last added/modified/deleted
 	 *
@@ -122,14 +122,14 @@ class contenthistory
 		}
 		return $ts;
 	}
-	
+
 	/**
 	 * update a timestamp for action
 	 *
 	 * @param string $_appName the appname example: infolog_notes
 	 * @param int $_id the app internal content id
 	 * @param string $_action can be modify, add or delete
-	 * @param string $_ts timestamp where to start searching from 
+	 * @param string $_ts timestamp where to start searching from
 	 * @return boolean returns allways true
 	 */
 	function updateTimeStamp($_appName, $_id, $_action, $_ts)
@@ -146,7 +146,7 @@ class contenthistory
 			case 'add':
 				$this->db->insert(self::TABLE,$newData,array(),__LINE__,__FILE__);
 				break;
-				
+
 			case 'modify':
 			case 'delete':
 				// first check that this entry got ever added to database already
