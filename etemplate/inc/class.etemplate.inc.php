@@ -843,9 +843,11 @@ class etemplate extends boetemplate
 			html::formatOptions($grid['span'],',class').
 			html::formatOptions($grid['name']?self::form_name($cname,$grid['name']):'','id'));
 
-		if (!empty($overflow)) {
+		if (!empty($overflow))
+		{
 			if (is_numeric($height)) $height .= 'px';
 			if (is_numeric($width)) $width .= 'px';
+			if ($width == '100%') $overflow .= '; overflow-x: hidden';	// no horizontal scrollbar
 			$div_style=' style="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow;\"";
 			$html = html::div($html,$div_style);
 		}
