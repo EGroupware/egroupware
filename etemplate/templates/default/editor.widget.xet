@@ -132,7 +132,9 @@
 						<menulist>
 							<menupopup label="Valign" id="grid_row[valign]" statustext="vertical alignment of row"/>
 						</menulist>
-						<description/>
+						<menulist>
+							<menupopup label="Part" id="grid_row[part]" statustext="part of the table (header and footer have to be before body!)"/>
+						</menulist>
 					</groupbox>
 				</row>
 				<row disabled="!@grid_column">
