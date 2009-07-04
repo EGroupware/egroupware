@@ -3,6 +3,7 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficent rights !!!
 %1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organisation member(s) changed
+%1 not implemented for %2!	addressbook	en	%1 not implemented for %2!
 %1 records imported	addressbook	en	%1 records imported
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
 %1 starts with '%2'	addressbook	en	%1 starts with '%2'
@@ -361,6 +362,7 @@ street	common	en	Street
 subject for email	addressbook	en	Subject for email
 successfully imported %1 records into your addressbook.	addressbook	en	Successfully imported %1 record(s) into your addressbook.
 suffix	addressbook	en	Suffix
+tag to mark positions for address labels	addressbook	en	Tag to mark positions for address labels
 tel home	addressbook	en	tel home
 telephony integration	admin	en	Telephony integration
 test import (show importable records <u>only</u> in browser)	addressbook	en	Test Import (show importable records <u>only</u> in browser)
@@ -390,6 +392,7 @@ use an extra category tab?	addressbook	en	Use an extra category tab?
 use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields?
 use country list	addressbook	en	Use Country List
 use setup for a full account-migration	admin	en	use setup for a full account-migration
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used for links and for the own sorting of the list	addressbook	en	used for links and for the own sorting of the list
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.

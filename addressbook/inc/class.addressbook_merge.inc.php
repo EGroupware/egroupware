@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -36,6 +36,40 @@ class addressbook_merge	// extends bo_merge
 	function __construct()
 	{
 		$this->contacts = new addressbook_bo();
+	}
+
+	/**
+	 * Return if merge-print is implemented for given mime-type (and/or extension)
+	 *
+	 * @param string $mimetype eg. text/plain
+	 * @param string $extension only checked for applications/msword and .rtf
+	 */
+	static function is_implemented($mimetype,$extension=null)
+	{
+		switch ($mimetype)
+		{
+			case 'application/msword':
+				if (strtolower($extension) != '.rtf') break;
+			case 'application/rtf':
+				return true;	// rtf files
+			case 'application/vnd.oasis.opendocument.text':
+				if (!check_load_extension('zip')) break;
+				return true;	// open office write xml files
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+				if (!check_load_extension('zip')) break;
+				return true;	// ms word xml format
+			default:
+				if (substr($mimetype,0,5) == 'text/')
+				{
+					return true;	// text files
+				}
+				break;
+		}
+		return false;
+
+		// As browsers not always return correct mime types, one could use a negative list instead
+		//return !($mimetype == egw_vfs::DIR_MIME_TYPE || substr($mimetype,0,6) == 'image/');
 	}
 
 	/**
@@ -220,14 +254,15 @@ class addressbook_merge	// extends bo_merge
 	/**
 	 * Merges a given document with contact data
 	 *
-	 * @param string $document vfs-path of document
+	 * @param string $document path/url of document
 	 * @param array $ids array with contact id(s)
 	 * @param string &$err error-message on error
+	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
 	 * @return string/boolean merged document or false on error
 	 */
-	function merge($document,$ids,&$err)
+	function &merge($document,$ids,&$err,$mimetype)
 	{
-		if (!($content = file_get_contents(egw_vfs::PREFIX.$document)))
+		if (!($content = file_get_contents($document)))
 		{
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
@@ -235,9 +270,9 @@ class addressbook_merge	// extends bo_merge
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
 		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
 		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
-		$countlables =count($countlables[0])+1;
+		$countlables = count($countlables[0])+1;
 		preg_replace('/\$\$labelplacement\$\$/','',$Labelrepeat,1);
-		if ($countlables>1) $lableprint = true;
+		if ($countlables > 1) $lableprint = true;
 		if (count($ids) > 1 && !$contentrepeat)
 		{
 			$err = lang('for more then one contact in a document use the tag pagerepeat!');
@@ -278,13 +313,9 @@ class addressbook_merge	// extends bo_merge
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
 				$content = preg_replace_callback('/\$\$IF ([0-9a-z_-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
 			}
-
 			if ($contentrepeat) $contentrep[$id] = $content;
 		}
-
-
 		if ($Labelrepeat)
-
 		{
 			$countpage=0;
 			$count=0;
@@ -299,21 +330,55 @@ class addressbook_merge	// extends bo_merge
 					$contentrepeatpages[$countpage] = $Labelstart.$Labeltend;
 				}
 				$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/',$Label,$contentrepeatpages[$countpage],1);
-
 			}
-
 			$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/','',$contentrepeatpages[$countpage],-1);  //clean empty fields
-			return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
+
+			switch($mimetype)
+			{
+				case 'application/msword':
+					if (strtolower(substr($document,-4)) != '.rtf') break;	// no binary word documents
+				case 'application/rtf':
+					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
+				case 'application/vnd.oasis.opendocument.text':
+					// todo OO writer files
+					break;
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+					// todo ms word xml files
+					break;
+			}
+			$err = lang('%1 not implemented for %2!','$$labelplacement$$',$mimetype);
+			return false;
 		}
 
 		if ($contentrepeat)
 		{
-			return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
+			switch($mimetype)
+			{
+				case 'application/msword':
+					if (strtolower(substr($document,-4)) != '.rtf') break;	// no binary word documents
+				case 'application/rtf':
+					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
+				case 'application/vnd.oasis.opendocument.text':
+					// todo OO writer files
+					break;
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+					// todo ms word xml files
+					break;
+			}
+			$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
+			return false;
 		}
 		return $content;
 	}
 
-
+	/**
+	 * Callback for preg_replace to process $$IF
+	 *
+	 * @param array $param
+	 * @return string
+	 */
 	function replace_callback($param)
 	{
 		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
@@ -331,14 +396,45 @@ class addressbook_merge	// extends bo_merge
 	 */
 	function download($document,$ids)
 	{
-		if (!($merged = $this->merge($document,$ids,$err)))
+		$content_url = egw_vfs::PREFIX.$document;
+		switch (($mime_type = egw_vfs::mime_content_type($document)))
+		{
+			case 'application/vnd.oasis.opendocument.text':
+				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.odt').'-').'.odt';
+				copy($content_url,$archive);
+				$content_url = 'zip://'.$archive.'#'.($content_file = 'content.xml');
+				break;
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.dotx').'-').'.dotx';
+				copy($content_url,$archive);
+				$content_url = 'zip://'.$archive.'#'.($content_file = 'word/document.xml');
+				break;
+		}
+		if (!($merged =& $this->merge($content_url,$ids,$err,$mime_type)))
 		{
 			return $err;
 		}
-		$mime_type = egw_vfs::mime_content_type($document);
-		ExecMethod2('phpgwapi.browser.content_header',basename($document),$mime_type);
-		echo $merged;
-
+		if (isset($archive))
+		{
+			$zip = new ZipArchive;
+			if ($zip->open($archive,ZIPARCHIVE::CHECKCONS) !== true) throw new Exception("!ZipArchive::open('$archive',ZIPARCHIVE::OVERWRITE)");
+			if ($zip->addFromString($content_file,$merged) !== true) throw new Exception("!ZipArchive::addFromString('$content_file',\$merged)");
+			if ($zip->close() !== true) throw new Exception("!ZipArchive::close()");
+			unset($zip);
+			unset($merged);
+			if (file_exists('/usr/bin/zip'))	// fix broken zip archives generated by current php
+			{
+				exec('/usr/bin/zip -F '.escapeshellarg($archive));
+			}
+			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mime_type);
+			readfile($archive,'r');
+		}
+		else
+		{
+			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mime_type);
+			echo $merged;
+		}
 		$GLOBALS['egw']->common->egw_exit();
 	}
 
@@ -371,17 +467,26 @@ class addressbook_merge	// extends bo_merge
 			$n++;
 		}
 
+		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
+		foreach($this->contacts->customfields as $name => $field)
+		{
+			echo '<tr><td>$$#'.$name.'$$</td><td colspan="3">'.$field['label']."</td></tr>\n";
+		}
+
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),
 			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
+			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
+			'labelplacement' => lang('Tag to mark positions for address labels'),
 			'IF fieldname' => lang('Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
 			) as $name => $label)
 		{
 			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
 		}
+
 		$GLOBALS['egw']->translation->add_app('calendar');
 		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')." # = 1, 2, ..., 20, -1</h3></td></tr>";
 		foreach(array(

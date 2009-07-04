@@ -2025,11 +2025,7 @@ $readonlys['button[vcard]'] = true;
 				foreach($files as $file)
 				{
 					// return only the mime-types we support
-					if (!($file['mime'] == 'application/rtf' ||
-						$file['mime'] == 'application/msword' && !strcasecmp(substr($file['name'],-4),'.rtf') ||
-						substr($file['mime'],0,5) == 'text/')) continue;
-					// As browsers not always return the right mime_type, you could use a negative list instead
-					//if ($file['mime'] == egw_vfs::DIR_MIME_TYPE  || substr($file['mime'],0,6) == 'image/') continue;
+					if (!addressbook_merge::is_implemented($file['mime'],substr($file['name'],-4))) continue;
 
 					$actions['document-'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
 				}
