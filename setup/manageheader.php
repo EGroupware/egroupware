@@ -168,7 +168,12 @@ function check_header_form()
 	// setting the domain settings from the posted content
 	foreach($_POST['domains'] as $key => $domain)
 	{
-		if ($_POST['deletedomain'][$key]) continue;	// domain deleted
+		if ($_POST['deletedomain'][$key]) 
+		{
+			// Need to actually remove the domain.  Drop the DB manually.
+			unset($GLOBALS['egw_domain'][$domain]);
+			continue;
+		}
 
 		foreach($_POST['setting_'.$key] as $name => $value)
 		{
