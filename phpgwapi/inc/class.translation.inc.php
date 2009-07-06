@@ -251,13 +251,7 @@ class translation
 			// for loginscreen we have to use a instance specific cache!
 			$loaded =& egw_cache::getCache(in_array($app,self::$instance_specific_translations) ? egw_cache::INSTANCE : egw_cache::TREE,
 				__CLASS__,$app.':'.$lang,array(__CLASS__,'load_app'),array($app,$lang));
-			foreach(array_keys($loaded) as $key) 
-			{
-				// as array_merge does renumber, and the padding of the loaded langs to the existing langs does lead to strange phenomenons 
-				// regarding the mainscreen_message, we do that the old fashioned way.
-				if (!empty($loaded[$key])) self::$lang_arr[$key] = $loaded[$key];
-			}
-			//self::$lang_arr += $loaded;	// use += instead of array_merge, as we have phrases with numerical index, which get renumbered by array_merge
+			self::$lang_arr += $loaded;	// use += instead of array_merge, as we have phrases with numerical index, which get renumbered by array_merge
 			self::$loaded_apps[$app] = $lang;
 			//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr).": ".function_backtrace());
 		}
