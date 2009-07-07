@@ -1,3 +1,10 @@
+2009/07/09 (KlausLeithoff)
+after merging the vendor branch into the current release, remove _samples Directory, and unneeded connectors
+-change to phpgwapi/js/fckeditor
+svn remove --force _samples
+-change to phpgwapi/js/fckeditor/editor/filemanager/connectors
+svn remove --force asp aspx cfm lasso perl py
+
 2008/10/09 (KlausLeithoff)
 -To use Speller Pages just set the following configuration in fckconfig.js or in your own Configuration File:
  FCKConfig.SpellChecker = 'SpellerPages' ;
