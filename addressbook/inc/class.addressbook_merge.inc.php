@@ -51,6 +51,7 @@ class addressbook_merge	// extends bo_merge
 			case 'application/msword':
 				if (strtolower($extension) != '.rtf') break;
 			case 'application/rtf':
+			case 'text/rtf':
 				return true;	// rtf files
 			case 'application/vnd.oasis.opendocument.text':
 				if (!check_load_extension('zip')) break;
@@ -338,6 +339,7 @@ class addressbook_merge	// extends bo_merge
 				case 'application/msword':
 					if (strtolower(substr($document,-4)) != '.rtf') break;	// no binary word documents
 				case 'application/rtf':
+				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
 					// todo OO writer files
@@ -358,6 +360,7 @@ class addressbook_merge	// extends bo_merge
 				case 'application/msword':
 					if (strtolower(substr($document,-4)) != '.rtf') break;	// no binary word documents
 				case 'application/rtf':
+				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
 					// todo OO writer files
