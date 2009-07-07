@@ -4,6 +4,8 @@ after merging the vendor branch into the current release, remove _samples Direct
 svn remove --force _samples
 -change to phpgwapi/js/fckeditor/editor/filemanager/connectors
 svn remove --force asp aspx cfm lasso perl py
+-remove baseconfigs for unneeded connectors
+svn delete fckeditor.afp fckeditor.asp fckeditor.cfc fckeditor.cfm fckeditor.lasso fckeditor.pl fckeditor.py
 
 2008/10/09 (KlausLeithoff)
 -To use Speller Pages just set the following configuration in fckconfig.js or in your own Configuration File:
