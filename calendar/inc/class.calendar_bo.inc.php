@@ -241,7 +241,7 @@ class calendar_bo
 		foreach($event['participants'] as $uid => $status)
 		{
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'g' &&
-			($members = $GLOBALS['egw']->accounts->member($uid)))
+				($members = $GLOBALS['egw']->accounts->member($uid)))
 			{
 				foreach($members as $member)
 				{
@@ -291,7 +291,7 @@ class calendar_bo
 		$params_in = $params;
 
 		if (!isset($params['users']) || !$params['users'] ||
-		count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
+			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
 		{
 			// for a search use all account you have read grants from
 			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;
@@ -328,7 +328,7 @@ class calendar_bo
 					{
 						// use only members which gave the user a read-grant
 						if (!in_array($member['account_id'],$users) &&
-						($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY,0,$member['account_id'])))
+							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY,0,$member['account_id'])))
 						{
 							$users[] = $member['account_id'];
 						}
@@ -372,7 +372,7 @@ class calendar_bo
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
 		{
 			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, show_rejected=%11)',
-			True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
+				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
@@ -765,7 +765,7 @@ class calendar_bo
 			if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
 			{
 				$this->debug_message('bocal::insert_all_repetions(...,%1) checking recur_exceptions[%2] and event[recur_exceptions]=%3 ==> %4',False,
-				$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
+					$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
 			}
 			if ($have_exception)
 			{
@@ -849,7 +849,7 @@ class calendar_bo
 					}
 
 					if (($GLOBALS['egw']->datetime->day_of_week($event_start_arr['year'],$event_start_arr['month'],$event_start_arr['day']) == $GLOBALS['egw']->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
-					(ceil($event_start_arr['day']/7) == ceil($search_date_day/7)))
+						(ceil($event_start_arr['day']/7) == ceil($search_date_day/7)))
 					{
 						$this->add_adjusted_event($events,$event,$search_date_ymd);
 					}
@@ -928,12 +928,12 @@ class calendar_bo
 		{
 			if (is_numeric($uid))
 			{
-				$info = array(
-				'res_id'    => $uid,
-				'email' => $GLOBALS['egw']->accounts->id2name($uid,'account_email'),
-				'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
-				$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
-				'type'  => $GLOBALS['egw']->accounts->get_type($uid),
+					$info = array(
+					'res_id'    => $uid,
+					'email' => $GLOBALS['egw']->accounts->id2name($uid,'account_email'),
+					'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
+					$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
+					'type'  => $GLOBALS['egw']->accounts->get_type($uid),
 				);
 			}
 			else
@@ -1088,12 +1088,12 @@ class calendar_bo
 			// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
 			$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
 			$date = array(
-			'year'   => (int) substr($date,0,4),
-			'month'  => (int) substr($date,4,2),
-			'day'    => (int) substr($date,6,2),
-			'hour'   => (int) substr($date,8,2),
-			'minute' => (int) substr($date,10,2),
-			'second' => (int) substr($date,12,2),
+				'year'   => (int) substr($date,0,4),
+				'month'  => (int) substr($date,4,2),
+				'day'    => (int) substr($date,6,2),
+				'hour'   => (int) substr($date,8,2),
+				'minute' => (int) substr($date,10,2),
+				'second' => (int) substr($date,12,2),
 			);
 			// fall-through
 			case 'array':	// day, month and year keys
@@ -1330,7 +1330,7 @@ class calendar_bo
 		$timefmt = $this->common_prefs['timeformat'] == 12 ? 'h:i a' : 'H:i';
 
 		$month_before_day = strtolower($datefmt[0]) == 'm' ||
-		strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
+			strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
 
 		if ($display_day)
 		{
