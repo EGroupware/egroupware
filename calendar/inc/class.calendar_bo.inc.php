@@ -96,34 +96,34 @@ class calendar_bo
 	 * @var array $verbose_status translated 1-char status values to a verbose name, run through lang() by the constructor
 	 */
 	var $verbose_status = array(
-	'A' => 'Accepted',
-	'R' => 'Rejected',
-	'T' => 'Tentative',
-	'U' => 'No Response',
-	'G' => 'Group invitation',
+		'A' => 'Accepted',
+		'R' => 'Rejected',
+		'T' => 'Tentative',
+		'U' => 'No Response',
+		'G' => 'Group invitation',
 	);
 	/**
 	 * @var array recur_types translates MCAL recur-types to verbose labels
 	 */
 	var $recur_types = Array(
-	MCAL_RECUR_NONE         => 'None',
-	MCAL_RECUR_DAILY        => 'Daily',
-	MCAL_RECUR_WEEKLY       => 'Weekly',
-	MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
-	MCAL_RECUR_MONTHLY_MDAY => 'Monthly (by date)',
-	MCAL_RECUR_YEARLY       => 'Yearly'
+		MCAL_RECUR_NONE         => 'None',
+		MCAL_RECUR_DAILY        => 'Daily',
+		MCAL_RECUR_WEEKLY       => 'Weekly',
+		MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
+		MCAL_RECUR_MONTHLY_MDAY => 'Monthly (by date)',
+		MCAL_RECUR_YEARLY       => 'Yearly'
 	);
 	/**
 	 * @var array recur_days translates MCAL recur-days to verbose labels
 	 */
 	var $recur_days = array(
-	MCAL_M_MONDAY    => 'Monday',
-	MCAL_M_TUESDAY   => 'Tuesday',
-	MCAL_M_WEDNESDAY => 'Wednesday',
-	MCAL_M_THURSDAY  => 'Thursday',
-	MCAL_M_FRIDAY    => 'Friday',
-	MCAL_M_SATURDAY  => 'Saturday',
-	MCAL_M_SUNDAY    => 'Sunday',
+		MCAL_M_MONDAY    => 'Monday',
+		MCAL_M_TUESDAY   => 'Tuesday',
+		MCAL_M_WEDNESDAY => 'Wednesday',
+		MCAL_M_THURSDAY  => 'Thursday',
+		MCAL_M_FRIDAY    => 'Friday',
+		MCAL_M_SATURDAY  => 'Saturday',
+		MCAL_M_SUNDAY    => 'Sunday',
 	);
 	/**
 	 * @var array $resources registered scheduling resources of the calendar (gets chached in the session for performance reasons)
@@ -187,9 +187,9 @@ class calendar_bo
 				}
 			}
 			$this->resources['e'] = array(
-			'type' => 'e',
-			'info' => __CLASS__.'::email_info',
-			'app'  => 'email',
+				'type' => 'e',
+				'info' => __CLASS__.'::email_info',
+				'app'  => 'email',
 			);
 			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
 		}
@@ -219,10 +219,10 @@ class calendar_bo
 				$email = $matches[2];
 			}
 			$data[] = array(
-			'res_id' => $id,
-			'email' => $email,
-			'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
-			'name' => $name,
+				'res_id' => $id,
+				'email' => $email,
+				'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
+				'name' => $name,
 			);
 		}
 		//echo "<p>email_info(".print_r($ids,true).")="; _debug_array($data);
@@ -486,14 +486,14 @@ class calendar_bo
 	function clear_private_infos(&$event,$allowed_participants = array())
 	{
 		$event = array(
-		'id'    => $event['id'],
-		'start' => $event['start'],
-		'end'   => $event['end'],
-		'title' => lang('private'),
-		'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
-		'public'=> 0,
-		'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
-		'non_blocking' => $event['non_blocking'],
+			'id'    => $event['id'],
+			'start' => $event['start'],
+			'end'   => $event['end'],
+			'title' => lang('private'),
+			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
+			'public'=> 0,
+			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
+			'non_blocking' => $event['non_blocking'],
 		);
 	}
 
@@ -1260,13 +1260,13 @@ class calendar_bo
 	function debug_message($msg,$backtrace=True)
 	{
 		static $acl2string = array(
-		0               => 'ACL-UNKNOWN',
-		EGW_ACL_READ    => 'ACL_READ',
-		EGW_ACL_ADD     => 'ACL_ADD',
-		EGW_ACL_EDIT    => 'ACL_EDIT',
-		EGW_ACL_DELETE  => 'ACL_DELETE',
-		EGW_ACL_PRIVATE => 'ACL_PRIVATE',
-		EGW_ACL_FREEBUSY => 'ACL_FREEBUSY',
+			0               => 'ACL-UNKNOWN',
+			EGW_ACL_READ    => 'ACL_READ',
+			EGW_ACL_ADD     => 'ACL_ADD',
+			EGW_ACL_EDIT    => 'ACL_EDIT',
+			EGW_ACL_DELETE  => 'ACL_DELETE',
+			EGW_ACL_PRIVATE => 'ACL_PRIVATE',
+			EGW_ACL_FREEBUSY => 'ACL_FREEBUSY',
 		);
 		for($i = 2; $i < func_num_args(); ++$i)
 		{
@@ -1484,21 +1484,21 @@ class calendar_bo
 				switch($status)
 				{
 					case 'A':	// accepted
-					$status = html::image('calendar','agt_action_success',$this->verbose_status[$status]);
-					break;
+						$status = html::image('calendar','agt_action_success',$this->verbose_status[$status]);
+						break;
 					case 'R':	// rejected
-					$status = html::image('calendar','agt_action_fail',$this->verbose_status[$status]);
-					break;
+						$status = html::image('calendar','agt_action_fail',$this->verbose_status[$status]);
+						break;
 					case 'T':	// tentative
-					$status = html::image('calendar','tentative',$this->verbose_status[$status]);
-					break;
+						$status = html::image('calendar','tentative',$this->verbose_status[$status]);
+						break;
 					case 'U':	// no response = unknown
-					$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
-					break;
+						$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
+						break;
 					case 'G':	// group invitation
-					// Todo: Image, seems not to be used
-					$status = '('.$this->verbose_status[$status].')';
-					break;
+						// Todo: Image, seems not to be used
+						$status = '('.$this->verbose_status[$status].')';
+						break;
 				}
 			}
 			else
@@ -1561,9 +1561,9 @@ class calendar_bo
 			$arr = &$users;
 		}
 		$arr[$name] = Array(
-		'grantor' => $id,
-		'value'   => ($type == 'g' ? 'g_' : '') . $id,
-		'name'    => $name
+			'grantor' => $id,
+			'value'   => ($type == 'g' ? 'g_' : '') . $id,
+			'name'    => $name
 		);
 	}
 
@@ -1695,12 +1695,12 @@ class calendar_bo
 						list($m,$d,$y) = explode('/',$pers['bday']);
 						if ($y > $year) continue; 	// not yet born
 						$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
-						'day'       => $d,
-						'month'     => $m,
-						'occurence' => 0,
-						'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
-						$pers['n_family'].($y && !$GLOBALS['egw_info']['server']['hide_birthdays'] ? ' ('.$y.')' : ''),
-						'birthyear' => $y,	// this can be used to identify birthdays from holidays
+							'day'       => $d,
+							'month'     => $m,
+							'occurence' => 0,
+							'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
+								$pers['n_family'].($y && !$GLOBALS['egw_info']['server']['hide_birthdays'] ? ' ('.$y.')' : ''),
+							'birthyear' => $y,	// this can be used to identify birthdays from holidays
 						);
 					}
 				}
@@ -1787,28 +1787,28 @@ class calendar_bo
 		}
 		$subject = lang('Calendar Event') . ' - $$action$$: $$startdate$$ $$title$$'."\n";
 		$defaults = array(
-		'defaultcalendar' => 'week',
-		'mainscreen_showevents' => '0',
-		'summary'         => 'no',
-		'receive_updates' => 'no',
-		'update_format'   => 'extended',
-		'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
-		'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
-		'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
-		'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
-		'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
-		'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
-		'show_rejected'   => '0',
-		'display_status'  => '1',
-		'weekdaystarts'   => 'Monday',
-		'workdaystarts'   => '9',
-		'workdayends'     => '17',
-		'interval'        => '30',
-		'defaultlength'   => '60',
-		'planner_start_with_group' => $planner_start_with_group,
-		'defaultfilter'   => 'all',
-		'default_private' => '0',
-		'defaultresource_sel' => 'resources',
+			'defaultcalendar' => 'week',
+			'mainscreen_showevents' => '0',
+			'summary'         => 'no',
+			'receive_updates' => 'no',
+			'update_format'   => 'extended',
+			'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
+			'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
+			'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
+			'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
+			'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
+			'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
+			'show_rejected'   => '0',
+			'display_status'  => '1',
+			'weekdaystarts'   => 'Monday',
+			'workdaystarts'   => '9',
+			'workdayends'     => '17',
+			'interval'        => '30',
+			'defaultlength'   => '60',
+			'planner_start_with_group' => $planner_start_with_group,
+			'defaultfilter'   => 'all',
+			'default_private' => '0',
+			'defaultresource_sel' => 'resources',
 		);
 		foreach($defaults as $var => $default)
 		{
@@ -1836,8 +1836,8 @@ class calendar_bo
 		if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
 
 		return (!$GLOBALS['egw_info']['server']['webserver_url'] || $GLOBALS['egw_info']['server']['webserver_url'][0] == '/' ?
-		($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
-		$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
-		($pw ? '&password='.urlencode($pw) : '');
+			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
+			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
+			($pw ? '&password='.urlencode($pw) : '');
 	}
 }
