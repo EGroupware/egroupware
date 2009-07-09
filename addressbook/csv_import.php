@@ -454,7 +454,11 @@ switch($_POST['action'])
 			}
 			if (!in_array('owner',$addr_fields) || !$values['owner'])
 			{
-				$values['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+				// use default addressbook for new contacts (user preferences), if no owner specified
+				if(!($values['owner'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default']))
+				{
+					$values['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+				}
 			}
 			if (!in_array('id',$addr_fields))
 			{
