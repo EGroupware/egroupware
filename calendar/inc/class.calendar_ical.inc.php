@@ -829,7 +829,7 @@ class calendar_ical extends calendar_boupdate
  								continue;	// participants without email AND CN --> ignore it
  							}
 							elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',$searcharray,
-								array('id','account_id','n_fn'),'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC','','',false,'OR')))
+								array('id','egw_addressbook.account_id as account_id','n_fn'),'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC','','',false,'OR')))
 							{
 								$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
 							}
