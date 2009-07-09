@@ -452,7 +452,7 @@ switch($_POST['action'])
 					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user],'account_lid',$user=='owner'?null:'u');
 				}
 			}
-			if (!in_array('owner',$addr_fields) || !$values['owner'])
+			if (!isset($values['owner']) || isset($values['owner']) && !$values['owner'])
 			{
 				// use default addressbook for new contacts (user preferences), if no owner specified
 				if(!($values['owner'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default']))
