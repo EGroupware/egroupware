@@ -309,7 +309,7 @@ class calendar_ui
 					}
 				}
 				// for the uiforms class (eg. edit), dont store the (new) owner, as it might change the view
-				if (substr($_GET['menuaction'],0,16) == 'calendar.calendar_uiforms')
+				if (substr($_GET['menuaction'],0,25) == 'calendar.calendar_uiforms')
 				{
 					$this->owner = $set_states[$state];
 					continue;
