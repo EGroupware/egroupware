@@ -478,6 +478,8 @@ class infolog_ui
 				$action = $session['action'];
 				$action_id = $session['action_id'];
 				$action_title = $session['action_title'];
+				// no action -> try to restore the previous colfilter 
+				$colfilter = $session['col_filter'];
 				unset($session);
 			}
 		}
@@ -581,6 +583,7 @@ class infolog_ui
 
 		$this->tmpl->read('infolog.index');
 
+		if ($colfilter) $values['nm']['col_filter'] = $persist['col_filter'] = $colfilter;
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
 		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
