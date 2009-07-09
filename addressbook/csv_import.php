@@ -42,7 +42,7 @@ if (isset($_POST['charset']))
 $GLOBALS['egw_info']['flags']['app_header'] = lang('Import CSV-File into Addressbook');
 $GLOBALS['egw']->common->egw_header();
 
-$GLOBALS['egw']->contacts = new contacts();
+$bocontacts = new addressbook_bo();
 
 //$GLOBALS['egw']->template->set_unknowns('keep');
 $GLOBALS['egw']->template->set_file(array('import' => 'csv_import.tpl'));
@@ -64,24 +64,30 @@ $VPre = '|#'; // Value-Prefix, is expanded to \ for ereg_replace
 $CPre = '|['; $CPreReg = '\|\['; // |{csv-fieldname} is expanded to the value of the csv-field
 $CPos = ']';  $CPosReg = '\]';	// if used together with @ (replacement is eval-ed) value gets autom. quoted
 
-// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
+/**
+ * Find contact with at least n_family AND (n_given OR org_name) have to match
+ *
+ * @param string $n_family
+ * @param string $n_given
+ * @param string $org_name
+ * @return int|boolean contact id or false if no match
+ */
 function addr_id($n_family,$n_given,$org_name)
 {
-	$addrs = $GLOBALS['egw']->contacts->search(array('n_family'=>$n_family,'n_given'=>$n_given,'org_name'=>$org_name));
+	global $bocontacts;
+	$addrs = $bocontacts->search(array('n_family'=>$n_family,'n_given'=>$n_given,'org_name'=>$org_name));
 	if(!count($addrs))
 	{
-		$addrs = $GLOBALS['egw']->contacts->search(array('n_family'=>$n_family,'n_given'=>$n_given));
+		$addrs = $bocontacts->search(array('n_family'=>$n_family,'n_given'=>$n_given));
 	}
 	if(!count($addrs))
 	{
-		$addrs = $GLOBALS['egw']->contacts->search(array('n_family'=>$n_family,'org_name'=>$org_name));
+		$addrs = $bocontacts->search(array('n_family'=>$n_family,'org_name'=>$org_name));
 	}
-
 	if(count($addrs))
 	{
 		return $addrs[0]['id'];
 	}
-
 	return False;
 }
 
@@ -131,6 +137,8 @@ switch($_POST['action'])
 	case 'continue':
 	case 'download':
 		$defaults = $GLOBALS['egw_info']['user']['preferences']['addressbook']['cvs_import'];
+		if (!($unique_id = $GLOBALS['egw_info']['user']['preferences']['addressbook']['cvs_import_unique_id'])) $unique_id = 'id';
+		if (!($unique_id2 = $GLOBALS['egw_info']['user']['preferences']['addressbook']['cvs_import_unique_id2'])) $unique_id2 = 'uid';
 		if(!is_array($defaults))
 		{
 			$defaults = array();
@@ -144,16 +152,17 @@ switch($_POST['action'])
 		$GLOBALS['egw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
 		$GLOBALS['egw']->template->parse('fheaderhandle','fheader');
 
-		$addr_names = $GLOBALS['egw']->contacts->contact_fields;
+		$addr_names = $bocontacts->contact_fields;
 		$addr_names['cat_id']  .= ': id or name, comma separated list';
 		$addr_names['private'] .= ': 0 = public, 1 = private';
 		$addr_names['owner']   .= ': id or account name of user or group, defaults to importing user';
 		$addr_names['bday']    .= ': YYYY-mm-dd';
+		$addr_names['uid']      = lang('Unique ID (UID)');
 		unset($addr_names['jpegphoto']);	// cant cvs import that
 
-		foreach($GLOBALS['egw']->contacts->customfields as $name => $data)
+		foreach($bocontacts->customfields as $name => $data)
 		{
-			$addr_names['#'.$name] = $data['label'];
+			$cfs['#'.$name] = $addr_names['#'.$name] = $data['label'];
 		}
 		$addr_name_options = "<option value=\"\">none\n";
 		foreach($addr_names as $field => $name)
@@ -182,6 +191,17 @@ switch($_POST['action'])
 			}
 			$GLOBALS['egw']->template->parse('fieldshandle','fields',True);
 		}
+		$GLOBALS['egw']->template->set_var('lang_unique_id',lang('Unique ID<br />(to update existing records)'));
+		$GLOBALS['egw']->template->set_var('unique_id',html::select('unique_id',$unique_id,array(
+			'id' => $addr_names['id'],
+			'uid' => $addr_names['uid'],
+		)+$cfs)."\n".html::select('unique_id2',$unique_id2,array(
+			'*none*'   => lang('No fallback'),
+			'id' => $addr_names['id'],
+			'uid' => $addr_names['uid'],
+			'addr_id' => lang('two of: %1',$addr_names['org_name'].', '.$addr_names['n_family'].', '.$addr_names['n_given']),
+		)+$cfs));
+
 		$GLOBALS['egw']->template->set_var('lang_start',lang('Startrecord'));
 		$GLOBALS['egw']->template->set_var('start',get_var('start',array('POST'),1));
 		$msg = ($safe_mode = ini_get('safe_mode') == 'On') ? lang('to many might exceed your execution-time-limit'):
@@ -205,7 +225,7 @@ switch($_POST['action'])
 			"usefull for the last pair, as they are worked from left to right.<p>".
 			"First example: <b>1${ASep}private${PSep}public</b><br>".
 			"This will translate a '1' in the CSV field to 'privat' and everything else to 'public'.<p>".
-			"Patterns as well as the replacement can be regular expressions (the replacement is done via ereg_replace). ".
+			"Patterns as well as the replacement can be regular expressions (the replacement is done via preg_replace). ".
 			"If, after all replacements, the value starts with an '@' the whole value is eval()'ed, so you ".
 			"may use all php, phpgw plus your own functions. This is quiet powerfull, but <u>circumvents all ACL</u>. ".
 			"Therefor this feature is only availible to Adminstrators.<p>".
@@ -243,7 +263,9 @@ switch($_POST['action'])
 			'max'     => $_POST['max'],
 			'debug'   => $_POST['debug'],
 			'addr_fields' => $_POST['addr_fields'],
-			'trans'   => $_POST['trans']
+			'trans'   => $_POST['trans'],
+			'unique_id' => $_POST['unique_id'],
+			'unique_id2' => $_POST['unique_id2'],
 		));
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);	// to allow to import files created eg. on a mac
@@ -267,10 +289,16 @@ switch($_POST['action'])
 		}
 		$GLOBALS['egw']->preferences->read_repository();
 		$GLOBALS['egw']->preferences->add('addressbook','cvs_import',$defaults);
+		$GLOBALS['egw']->preferences->add('addressbook','cvs_import_unique_id',$unique_id = $_POST['unique_id']);
+		$GLOBALS['egw']->preferences->add('addressbook','cvs_import_unique_id2',$unique_id2 = $_POST['unique_id2']);
 		$GLOBALS['egw']->preferences->save_repository(True);
 
 		$log = '<table border="1" style="border: 1px dotted black; border-collapse: collapse;">'."\n\t<tr><td>#</td>\n";
 
+		if (!in_array('id',$addr_fields))	// autocreate public access if not set by user
+		{
+			$log .= "\t\t<td><b>ID</b></td>\n";
+		}
 		if (!in_array('private',$addr_fields))	// autocreate public access if not set by user
 		{
 			$log .= "\t\t<td><b>private</b></td>\n";
@@ -328,14 +356,14 @@ switch($_POST['action'])
 					$trans_csv = $_POST['trans'][$csv_idx];
 					while(list($pattern,$replace) = each($trans_csv))
 					{
-						if(ereg((string) $pattern,$val))
+						if(preg_match('/'.(string) $pattern.'/',$val))
 						{
 							// echo "<p>csv_idx='$csv_idx',info='$addr',trans_csv=".print_r($trans_csv).",preg_replace('/$pattern/','$replace','$val') = ";
 							$val = preg_replace('/'.(string) $pattern.'/',str_replace($VPre,'\\',$replace),(string) $val);
 							// echo "'$val'</p>";
 
 							$reg = $CPreReg.'([a-zA-Z_0-9]+)'.$CPosReg;
-							while(ereg($reg,$val,$vars))
+							while(preg_match('/'.(string) $reg.'/',$val,$vars))
 							{	// expand all CSV fields
 								$val = str_replace($CPre . $vars[1] . $CPos, $val[0] == '@' ? "'"
 									. addslashes($fields[array_search($vars[1], $csv_fields)])
@@ -374,19 +402,51 @@ switch($_POST['action'])
 			// convert dates to timestamps
 			foreach(array('created','modified') as $date)
 			{
-				if (isset($values[$date]) && !is_numeric($date))
+				if (isset($values[$date]) && !is_numeric($values[$date]))
 				{
 					// convert german DD.MM.YYYY format into ISO YYYY-MM-DD format
 					$values[$date] = preg_replace('/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/','\3-\2-\1',$values[$date]);
 					// remove fractures of seconds if present at the end of the string
-					if (ereg('(.*)\.[0-9]+',$values[$date],$parts)) $values[$date] = $parts[1];
+					if (preg_match('/(.*)\.[0-9]+/',$values[$date],$parts)) $values[$date] = $parts[1];
 					$values[$date] = strtotime($values[$date]);
 				}
+			}
+			// check unique ids
+			$existing = false;
+			if (!empty($values[$unique_id]))
+			{
+				if ($unique_id == 'id')
+				{
+					$existing = $bocontacts->read($values[$unique_id]);
+				}
+				else
+				{
+					list($existing) = $bocontacts->search(array($unique_id => $values[$unique_id]),false);
+				}
+			}
+			if (!$existing && (!empty($values[$unique_id2]) ||
+				$unique_id2 == 'addr_id' && (!empty($values['org_name'])+!empty($values['n_family'])+!empty($values['n_given'])) >= 2))
+			{
+				if ($unique_id2 == 'id' || $unique_id2 == 'addr_id' &&
+					($values[$unique_id2] = addr_id($values['n_family'],$values['n_given'],$values['org_name'])))
+				{
+					$existing = $bocontacts->read($values[$unique_id2]);
+				}
+				elseif ($unique_id2 != 'addr_id')
+				{
+					list($existing) = $bocontacts->search(array($unique_id2 => $values[$unique_id2]),false);
+				}
+			}
+			//echo "<p>unique_id=$unique_id='{$values[$unique_id]}', unique_id2=$unique_id2='{$values[$unique_id2]}' --> ".array2string($existing)."</p>\n";
+			if ($existing)
+			{
+				unset($values['id']);	// to NOT overrite the found one
+				$values = array_merge($existing,$values);
 			}
 			// convert user-names to user-id's
 			foreach(array('owner','modifier','creator') as $user)
 			{
-				if (isset($values[$user]) && !is_numeric($user))
+				if (isset($values[$user]) && !is_numeric($values[$user]))
 				{
 					if (preg_match('/\[([^\]]+)\]/',$values[$user],$matches)) $values[$user] = $matches[1];
 					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user],'account_lid',$user=='owner'?null:'u');
@@ -395,6 +455,10 @@ switch($_POST['action'])
 			if (!in_array('owner',$addr_fields) || !$values['owner'])
 			{
 				$values['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			}
+			if (!in_array('id',$addr_fields))
+			{
+				$log .= "\t\t<td>".$values['id']."</td>\n";
 			}
 			if (!in_array('private',$addr_fields))
 			{
@@ -414,7 +478,7 @@ switch($_POST['action'])
 			}
 			if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 			{
-				$rvalue=$GLOBALS['egw']->contacts->save($values);
+				$rvalue=$bocontacts->save($values);
 				//echo "<p>adding: ".print_r($values,true)."</p>\n";
 			}
 			// display read and interpreted results, so the user can check it

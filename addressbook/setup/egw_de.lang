@@ -287,6 +287,7 @@ new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %
 new window opened to edit infolog for your selection	addressbook	de	Es wird ein neues Fenster zum erstellen des Infolog Eintrags geöffnet
 next date	addressbook	de	Nächster Termin
 no categories selected	addressbook	de	keine Kategorien ausgewählt
+no fallback	addressbook	de	Kein Ausweichlösung
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
@@ -382,7 +383,10 @@ to many might exceed your execution-time-limit	addressbook	de	zu viel können ih
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 translation	addressbook	de	Übersetzung
+two of: %1	addressbook	de	Zwei von: %1
 type	addressbook	de	Typ
+unique id (uid)	addressbook	de	Eindeutige ID (UID)
+unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 update fields by edited organisations?	admin	de	Welche Felder sollen  beim Bearbeiten von Organisationen aktualisiert werden?
 updated	addressbook	de	Aktualisiert
