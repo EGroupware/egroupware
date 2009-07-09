@@ -287,6 +287,7 @@ new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at 
 new window opened to edit infolog for your selection	addressbook	en	New window opened to edit Infolog for your selection
 next date	addressbook	en	Next date
 no categories selected	addressbook	en	no categories selected
+no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
@@ -382,7 +383,10 @@ to many might exceed your execution-time-limit	addressbook	en	to many might exce
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
 translation	addressbook	en	Translation
+two of: %1	addressbook	en	two of: %1
 type	addressbook	en	Type
+unique id (uid)	addressbook	en	Unique ID (UID)
+unique id<br />(to update existing records)	addressbook	en	Unique ID<br />(to update existing records)
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 update fields by edited organisations?	admin	en	Update Fields by edited organisations?
 updated	addressbook	en	Updated
