@@ -98,7 +98,7 @@ function cat_id($cats)
 		return '';
 	}
 	$ids = array();
-	foreach(split(' *[,;] *',$cats) as $cat)
+	foreach(preg_split('/ *[,;] */',$cats) as $cat)
 	{
 		if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
 		{
@@ -295,9 +295,13 @@ switch($_POST['action'])
 
 		$log = '<table border="1" style="border: 1px dotted black; border-collapse: collapse;">'."\n\t<tr><td>#</td>\n";
 
-		if (!in_array('id',$addr_fields))	// autocreate public access if not set by user
+		if (!in_array('id',$addr_fields))		// allways show ID
 		{
 			$log .= "\t\t<td><b>ID</b></td>\n";
+		}
+		if (!in_array('owner',$addr_fields))	// allways show addressbook
+		{
+			$log .= "\t\t<td><b>".lang('Addressbook')."</b></td>\n";
 		}
 		if (!in_array('private',$addr_fields))	// autocreate public access if not set by user
 		{
@@ -358,8 +362,8 @@ switch($_POST['action'])
 					{
 						if(preg_match('/'.(string) $pattern.'/',$val))
 						{
-							// echo "<p>csv_idx='$csv_idx',info='$addr',trans_csv=".print_r($trans_csv).",ereg_replace('$pattern','$replace','$val') = ";
-							$val = ereg_replace((string) $pattern,str_replace($VPre,'\\',$replace),(string) $val);
+							// echo "<p>csv_idx='$csv_idx',info='$addr',trans_csv=".print_r($trans_csv).",preg_replace('/$pattern/','$replace','$val') = ";
+							$val = preg_replace('/'.(string) $pattern.'/',str_replace($VPre,'\\',$replace),(string) $val);
 							// echo "'$val'</p>";
 
 							$reg = $CPreReg.'([a-zA-Z_0-9]+)'.$CPosReg;
@@ -405,7 +409,7 @@ switch($_POST['action'])
 				if (isset($values[$date]) && !is_numeric($values[$date]))
 				{
 					// convert german DD.MM.YYYY format into ISO YYYY-MM-DD format
-					$values[$date] = ereg_replace('([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})','\3-\2-\1',$values[$date]);
+					$values[$date] = preg_replace('/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/','\3-\2-\1',$values[$date]);
 					// remove fractures of seconds if present at the end of the string
 					if (preg_match('/(.*)\.[0-9]+/',$values[$date],$parts)) $values[$date] = $parts[1];
 					$values[$date] = strtotime($values[$date]);
@@ -452,13 +456,21 @@ switch($_POST['action'])
 					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user],'account_lid',$user=='owner'?null:'u');
 				}
 			}
-			if (!in_array('owner',$addr_fields) || !$values['owner'])
+			if (!isset($values['owner']) || isset($values['owner']) && (string)$values['owner'] === '')
 			{
-				$values['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+				// use default addressbook for new contacts (user preferences), if no owner specified
+				if(!($values['owner'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default']))
+				{
+					$values['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+				}
 			}
 			if (!in_array('id',$addr_fields))
 			{
 				$log .= "\t\t<td>".$values['id']."</td>\n";
+			}
+			if (!in_array('owner',$addr_fields))
+			{
+				$log .= "\t\t<td>".$values['owner']."</td>\n";
 			}
 			if (!in_array('private',$addr_fields))
 			{
