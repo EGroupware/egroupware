@@ -295,9 +295,13 @@ switch($_POST['action'])
 
 		$log = '<table border="1" style="border: 1px dotted black; border-collapse: collapse;">'."\n\t<tr><td>#</td>\n";
 
-		if (!in_array('id',$addr_fields))	// autocreate public access if not set by user
+		if (!in_array('id',$addr_fields))		// allways show ID
 		{
 			$log .= "\t\t<td><b>ID</b></td>\n";
+		}
+		if (!in_array('owner',$addr_fields))	// allways show addressbook
+		{
+			$log .= "\t\t<td><b>".lang('Addressbook')."</b></td>\n";
 		}
 		if (!in_array('private',$addr_fields))	// autocreate public access if not set by user
 		{
@@ -452,7 +456,7 @@ switch($_POST['action'])
 					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user],'account_lid',$user=='owner'?null:'u');
 				}
 			}
-			if (!isset($values['owner']) || isset($values['owner']) && !$values['owner'])
+			if (!isset($values['owner']) || isset($values['owner']) && (string)$values['owner'] === '')
 			{
 				// use default addressbook for new contacts (user preferences), if no owner specified
 				if(!($values['owner'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default']))
@@ -463,6 +467,10 @@ switch($_POST['action'])
 			if (!in_array('id',$addr_fields))
 			{
 				$log .= "\t\t<td>".$values['id']."</td>\n";
+			}
+			if (!in_array('owner',$addr_fields))
+			{
+				$log .= "\t\t<td>".$values['owner']."</td>\n";
 			}
 			if (!in_array('private',$addr_fields))
 			{
