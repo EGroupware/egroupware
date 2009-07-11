@@ -33,6 +33,7 @@ alignment of label and input-field in table-cell	etemplate	en	alignment of label
 alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table-cell
 all days	etemplate	en	all days
 all operations save the template!	etemplate	en	all operations save the template!
+allowed file type: %1	etemplate	en	Allowed file type: %1
 am	etemplate	en	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
@@ -146,6 +147,9 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	en	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
 entry saved	etemplate	en	Entry saved
+error copying uploaded file to vfs!	etemplate	en	Error copying uploaded file to vfs!
+error create parent directory %1!	etemplate	en	Error create parent directory %1!
+error deleting %1!	etemplate	en	Error deleting %1!
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: webserver is not allowed to write into '%1' !!!
 error: while saving !!!	etemplate	en	Error: while saving !!!
@@ -164,7 +168,9 @@ extensions loaded:	etemplate	en	Extensions loaded:
 field	etemplate	en	Field
 field must not be empty !!!	etemplate	en	Field must not be empty !!!
 file	etemplate	en	File
+file '%1' not found!	etemplate	en	File '%1' not found!
 file contains more than one etemplate, last one is shown !!!	etemplate	en	File contains more than one eTemplate, last one is shown !!!
+file is of wrong type (%1 != %2)!	etemplate	en	File is of wrong type (%1 != %2)!
 file writen	etemplate	en	File writen
 fileupload	etemplate	en	FileUpload
 first	etemplate	en	First

@@ -21,6 +21,10 @@
  * - vfs-mime aka File icon:	    mime type icon or thumbnail (if configured AND enabled in the user-prefs)
  * - vfs-uid  aka File owner:       Owner of file, or 'root' if none
  * - vfs-gid  aka File group:       Group of file, or 'root' if none
+ * - vfs-upload aka VFS file:       displays either download and delete (x) links or a file upload
+ *   value is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer
+ *   if empty($id) / new entry, file is created in a hidden temporary directory in users home directory
+ *   and calling app is responsible to move content of that dir to entry directory, after entry is saved
  *
  * All widgets accept as value a full path.
  * vfs-mime and vfs itself also allow an array with values like stat (incl. 'path'!) as value.
@@ -36,6 +40,7 @@ class vfs_widget
 	 */
 	var $public_functions = array(
 		'pre_process' => True,
+		'post_process' => true,		// post_process is only used for vfs-upload (all other widgets set $cell['readlonly']!)
 	);
 	/**
 	 * availible extensions and there names for the editor
@@ -49,6 +54,7 @@ class vfs_widget
 		'vfs-mime' => 'File icon',		// mime type icon or thumbnail
 		'vfs-uid'  => 'File owner',		// Owner of file, or 'root' if none
 		'vfs-gid'  => 'File group',		// Group of file, or 'root' if none
+		'vfs-upload' => 'VFS file',		// displays either download and delete (x) links or a file upload
 	);
 
 	/**
@@ -67,7 +73,7 @@ class vfs_widget
 	function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
 		$type = $cell['type'];
-		$readonly = $cell['readonly'] || $readonlys;
+		if ($type != 'vfs-upload') $cell['readonly'] = true;	// to not call post-process
 
 		// check if we have a path and not the raw value, in that case we have to do a stat first
 		if (in_array($type,array('vfs-size','vfs-mode','vfs-uid','vfs-gid')) && !is_numeric($value) || $type == 'vfs' && !$value)
@@ -83,6 +89,83 @@ class vfs_widget
 
 		switch($type)
 		{
+			case 'vfs-upload':	// option: allowed mime types (regular expression) if limited
+				if(empty($value)) $value = $cell['name'];	// if no value via content array, use widget name
+				$extension_data = array('value' => $value, 'mimetype' => $cell['size'], 'type' => $type);
+				if ($value[0] != '/')
+				{
+					list($app,$id,$relpath) = explode(':',$value,3);
+					if (empty($id))
+					{
+						static $tmppath = array();	// static var, so all vfs-uploads get created in the same temporary dir
+						if (!isset($tmppath[$app])) $tmppath[$app] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.'.$app.'_'.md5(time().session_id());
+						$value = $tmppath[$app];
+					}
+					else
+					{
+						$value = egw_link::vfs_path($app,$id,'',true);
+					}
+					if (!empty($relpath)) $value .= '/'.$relpath;
+				}
+				$path = $extension_data['path'] = $value;
+				$dir = egw_vfs::dirname($path);
+				static $files = array();	// static var, to scan each directory only once
+				if (!isset($files[$dir])) $files[$dir] = egw_vfs::file_exists($dir) ? egw_vfs::scandir($dir) : array();
+				$basename = egw_vfs::basename($path);
+				$basename_len = strlen($basename);
+				foreach($files[$dir] as $file)
+				{
+					if (substr($file,0,$basename_len) == $basename)
+					{
+						$file_exists = true;
+						break;
+					}
+				}
+				if ($file_exists)	// display download link and delete icon
+				{
+					$path = $extension_data['path'] = $dir.'/'.$file;
+					$value = empty($cell['label']) ? $file : lang($cell['label']);	// display (translated) Label or filename (if label empty)
+
+					$vfs_link = etemplate::empty_cell('label',$cell['name'],array(
+						'size' => ','.egw_vfs::download_url($path).',,,,,'.$path,
+					));
+					// if dir is writable, add delete link
+					if (egw_vfs::is_writable($dir))
+					{
+						$cell = etemplate::empty_cell('hbox','',array('size' => ',,0,0'));
+						etemplate::add_child($cell,$vfs_link);
+						$delete_icon = etemplate::empty_cell('button',$path,array(
+							'label' => 'delete',
+							'size'  => 'delete',	// icon
+							'onclick' => "return confirm('Delete this file');",
+							'span' => ',leftPad5',
+						));
+						etemplate::add_child($cell,$delete_icon);
+					}
+					else
+					{
+						$cell = $vfs_link;
+					}
+				}
+				else	// file does NOT exists --> display file upload
+				{
+					$cell['type'] = 'file';
+					// if no explicit help message set and we only allow certain file types --> show them
+					if (empty($cell['help']) && $cell['size'])
+					{
+						if (($type = mime_magic::mime2ext($cell['size'])))
+						{
+							$type = '*.'.strtoupper($type);
+						}
+						else
+						{
+							$type = $cell['size'];
+						}
+						$cell['help'] = lang('Allowed file type: %1',$type);
+					}
+				}
+				break;
+
 			case 'vfs-size':	// option: add size in bytes in brackets
 				$value = egw_vfs::hsize($size = is_numeric($value) ? $value : $stat['size']);
 				if ($cell['size']) $value .= ' ('.$size.')';
@@ -255,6 +338,91 @@ class vfs_widget
 			default:
 				$value = 'Not yet implemented';
 		}
+
+		return true;
+	}
+
+	/**
+	 * postprocessing method, called after the submission of the form
+	 *
+	 * It has to copy the allowed/valid data from $value_in to $value, otherwise the widget
+	 * will return no data (if it has a preprocessing method). The framework insures that
+	 * the post-processing of all contained widget has been done before.
+	 *
+	 * Only used by vfs-upload so far
+	 *
+	 * @param string $name form-name of the widget
+	 * @param mixed &$value the extension returns here it's input, if there's any
+	 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
+	 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
+	 * @param object &$tmpl the eTemplate the widget belongs too
+	 * @param mixed &value_in the posted values (already striped of magic-quotes)
+	 * @return boolean true if $value has valid content, on false no content will be returned!
+	 */
+	function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
+	{
+		if (!$extension_data || $extension_data['type'] != 'vfs-upload')
+		{
+			return false;
+		}
+		//echo '<p>'.__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in)."</p>\n";
+
+		// check if delete icon clicked
+		if ($_POST['submit_button'] == str_replace($extension_data['value'],$extension_data['path'],$name))
+		{
+			if (!egw_vfs::remove($extension_data['path']))
+			{
+				etemplate::set_validation_error($name,lang('Error deleting %1!',$extension_data['path']));
+			}
+			$loop = true;
+			return false;
+		}
+
+		// handle file upload
+		$name = preg_replace('/^exec\[([^]]+)\](.*)$/','\\1\\2',$name);	// remove exec prefix
+
+		$filename = etemplate::get_array($_FILES['exec']['name'],$name);
+		if (empty($filename))
+		{
+			return false;	// no file attached
+		}
+		$tmp_name = etemplate::get_array($_FILES['exec']['tmp_name'],$name);
+		$error = etemplate::get_array($_FILES['exec']['error'],$name);
+		if ($error || empty($tmp_name) || function_exists('is_uploaded_file') && !is_uploaded_file($tmp_name) || !file_exists($tmp_name))
+		{
+			return false;
+		}
+		// check if type matches required mime-type, if specified
+		if (!empty($extension_data['mimetype']))
+		{
+			$type = etemplate::get_array($_FILES['exec']['type'],$name);
+			$is_preg = $extension_data['mimetype'][0] == '/' || $extension_data['mimetype'] != preg_quote($extension_data['mimetype']);
+			//echo "<p>preg_quote('{$extension_data['mimetype']}')='".preg_quote($extension_data['mimetype'])."' --> is_preg=".array2string($is_preg)."</p>\n";
+			if (!$is_preg && strcasecmp($extension_data['mimetype'],$type) ||
+				$is_preg && !preg_match($extension_data['mimetype'][0]=='/'?$extension_data['mimetype']:'/'.$extension_data['mimetype'].'/',$type))
+			{
+				etemplate::set_validation_error($name,lang('File is of wrong type (%1 != %2)!',$type,$extension_data['mimetype']));
+				return false;
+			}
+		}
+		$path = $extension_data['path'];
+		// add extension to path
+		$parts = explode('.',$filename);
+		if (($extension = array_pop($parts)) && mime_magic::ext2mime($extension))	// really an extension --> add it to path
+		{
+			$path .= '.'.$extension;
+		}
+		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
+		{
+			etemplate::set_validation_error($name,lang('Error create parent directory %1!',$dir));
+			return false;
+		}
+		if (!copy($tmp_name,egw_vfs::PREFIX.$path))
+		{
+			etemplate::set_validation_error($name,lang('Error copying uploaded file to vfs!'));
+			return false;
+		}
+		$value = $path;	// return path of file, important if only a temporary location is used
 
 		return true;
 	}

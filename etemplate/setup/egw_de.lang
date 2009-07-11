@@ -33,6 +33,7 @@ alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Be
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
 all days	etemplate	de	alle Tage
 all operations save the template!	etemplate	de	alle Operation speichern das Template!
+allowed file type: %1	etemplate	de	Erlaubter Dateityp: %1
 am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 application	etemplate	de	Anwendung
@@ -146,6 +147,9 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 entry saved	etemplate	de	Eintrag gespeichert
+error copying uploaded file to vfs!	etemplate	de	Fehler beim Kopieren der hochgeladenen Datei ins VFS!
+error create parent directory %1!	etemplate	de	Fehler beim Anlegen des Elternverzeichnisses %1!
+error deleting %1!	etemplate	de	Fehler beim Löschen von %1!
 error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
 error: while saving !!!	etemplate	de	Fehler: beim Speichern !!!
@@ -164,7 +168,9 @@ extensions loaded:	etemplate	de	Erweiterungen geladen:
 field	etemplate	de	Feld
 field must not be empty !!!	etemplate	de	Das Feld darf nicht leer sein !!!
 file	etemplate	de	Datei
+file '%1' not found!	etemplate	de	Datei '%1' nicht gefunden!
 file contains more than one etemplate, last one is shown !!!	etemplate	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
+file is of wrong type (%1 != %2)!	etemplate	de	Datei hat ungültigen Typ (%1 != %2)!
 file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
