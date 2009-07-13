@@ -72,6 +72,7 @@ class vfs_widget
 	 */
 	function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
+		//echo "<p>".__METHOD__."($form_name,$value,".array2string($cell).",...)</p>\n";
 		$type = $cell['type'];
 		if ($type != 'vfs-upload') $cell['readonly'] = true;	// to not call post-process
 
@@ -89,8 +90,11 @@ class vfs_widget
 
 		switch($type)
 		{
-			case 'vfs-upload':	// option: allowed mime types (regular expression) if limited
-				if(empty($value)) $value = $cell['name'];	// if no value via content array, use widget name
+			case 'vfs-upload':		// option: allowed mime types (regular expression) if limited
+				if (empty($value) && preg_match('/^exec.*\[([^]]+)\]$/',$form_name,$matches))	// if no value via content array, use widget name
+				{
+					$value = $matches[1].$matches[2];
+				}
 				$extension_data = array('value' => $value, 'mimetype' => $cell['size'], 'type' => $type);
 				if ($value[0] != '/')
 				{
