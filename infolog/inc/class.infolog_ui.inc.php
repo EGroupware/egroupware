@@ -91,7 +91,8 @@ class infolog_ui
 	 */
 	function __construct()
 	{
-		$this->bo =& new infolog_bo();
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') $GLOBALS['egw']->translation->add_app('infolog');
+		$this->bo = new infolog_bo();
 
 		$this->tmpl = new etemplate();
 
@@ -312,7 +313,7 @@ class infolog_ui
 		}
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
-        $details = $query['filter2'] == 'all';
+		$details = $query['filter2'] == 'all';
 		$columselection = $this->prefs['nextmatch-infolog.index.rows'.($details?'-details':'')];
 		//_debug_array($columselection);
 		if ($columselection)
@@ -1367,8 +1368,6 @@ class infolog_ui
 
 		if (!empty($_to_emailAddress))
 		{
-			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
-			$GLOBALS['egw']->translation->add_app($GLOBALS['egw_info']['flags']['currentapp']);
 			echo '<script>window.resizeTo(750,550);</script>';
 
 			if (is_array($_attachments))
