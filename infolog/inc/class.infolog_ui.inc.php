@@ -1368,6 +1368,7 @@ class infolog_ui
 
 		if (!empty($_to_emailAddress))
 		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
 			echo '<script>window.resizeTo(750,550);</script>';
 
 			if (is_array($_attachments))
