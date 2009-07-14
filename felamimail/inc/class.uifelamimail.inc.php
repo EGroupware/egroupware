@@ -525,11 +525,16 @@
 				$this->bosieve		=& CreateObject('felamimail.bosieve',$imapServer);
 				$this->bosieve->retrieveRules($this->bosieve->scriptName);
 				$vacation = $this->bosieve->getVacation($this->bosieve->scriptName);
+				//_debug_array($vacation);
+				//    [status] => can be: on, off, by_date
+				//    [end_date] => 1247522400 (timestamp, use showdate for visualisation)
+				//    [start_date] => 1247176800 (timestamp, use showdate for visualisation)
 			}
-			if(is_array($vacation) && $vacation['status'] == 'on')
+			if(is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
 			{
+				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 				$this->t->set_var('vacation_warning',
-					html::image('phpgwapi','dialog_warning',false,'style="vertical-align: middle; width: 16px;"').lang('Vacation notice is active'));
+					html::image('phpgwapi','dialog_warning',false,'style="vertical-align: middle; width: 16px;"').lang('Vacation notice is active').($vacation['status']=='by_date'? ' '.common::show_date($vacation['start_date'],$dtfrmt,true).'->'.common::show_date($vacation['end_date'],$dtfrmt,true):''));
 			}
 			else
 			{
