@@ -791,6 +791,49 @@ class HTTP_WebDAV_Server
                             break;
                         }
                     } else {
+                        // allow multiple values and attributes, required eg. for caldav:supported-calendar-component-set
+                        if ($prop['ns'] && is_array($prop['val'])) {
+                    		if (!isset($ns_hash[$prop['ns']])) {
+                                $ns_name = "ns".(count($ns_hash) + 1);
+                                $ns_hash[$prop['ns']] = $ns_name;
+                    		}
+                  			$vals = $extra_ns = '';
+                    		foreach($prop['val'] as $subprop)
+                    		{
+		                            if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
+									// register property namespace if not known yet
+                            		if (!isset($ns_hash[$subprop['ns']])) {
+		                                $ns_name = "ns".(count($ns_hash) + 1);
+		                                $ns_hash[$subprop['ns']] = $ns_name;
+                            		} else {
+                            			$ns_name = $ns_hash[$subprop['ns']];
+                            		}
+	                            	if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
+		                                $extra_ns .= $extra;
+	                            	}
+	                            	$ns_name .= ':';
+	                            } elseif ($subprop['ns'] == 'DAV:') {
+	                            	$ns_name = 'D:';
+	                            } else {
+	                            	$ns_name = '';
+	                            }
+	                            $vals .= "<$ns_name$subprop[name]";
+	                            if (is_array($subprop['val']))	// val contains only attributes, no value
+	                            {
+	                            	foreach($subprop['val'] as $attr => $val)
+	                            	{
+	                            		$vals .= ' '.$attr.'="'.htmlspecialchars($val).'"';
+	                            	}
+	                            	$vals .= '/>';
+	                            }
+	                            else
+	                            {
+	                            	$vals .= '>'.htmlspecialchars($subprop['val'])."</$ns_name$subprop[name]>";
+	                            }
+                   		    }
+                    		echo "     <".$ns_hash[$prop['ns']].":$prop[name]$extra_ns>$vals</".$ns_hash[$prop['ns']].":$prop[name]>\n";
+                        }
+                        else
                         // properties from namespaces != "DAV:" or without any namespace
                         if ($prop["ns"]) {
                             echo "     <" . $ns_hash[$prop["ns"]] . ":$prop[name]>"

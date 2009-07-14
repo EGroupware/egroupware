@@ -128,6 +128,7 @@ class calendar_groupdav extends groupdav_handler
 	            			'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
+					HTTP_WebDAV_Server::mkprop('resourcetype',''),	// iPhone requires that attribute!
 				);
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
@@ -175,7 +176,7 @@ class calendar_groupdav extends groupdav_handler
 				{
 					case 'comp-filter':
 						if ($this->debug > 1) error_log(__METHOD__."($path,...) comp-filter='{$filter['attrs']['name']}'");
-						
+
 						switch($filter['attrs']['name'])
 						{
 							case 'VTODO':
@@ -253,7 +254,7 @@ class calendar_groupdav extends groupdav_handler
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-		
+
 						if (is_numeric($id = basename(array_pop($parts),'.ics'))) $ids[] = $id;
 					}
 				}
@@ -262,7 +263,7 @@ class calendar_groupdav extends groupdav_handler
 			{
 				$cal_filters['query'][] = 'egw_cal.cal_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 			}
-			
+
 			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($path,,,$user,$id) calendar-multiget: ids=".implode(',',$ids));
 		}
 		return true;
@@ -302,10 +303,10 @@ class calendar_groupdav extends groupdav_handler
 		if($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 		$return_no_access=true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$event = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
-		
+
 		if (!is_null($event) && !is_array($event))
 		{
-		
+
 		if($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
 			return $event;
 		}
@@ -362,7 +363,7 @@ class calendar_groupdav extends groupdav_handler
 	function read($id)
 	{
 		//$cal_read = $this->bo->read($id,null,false,'server');//njv: do we actually get anything
-		if ($this->debug > 1) error_log("bo-ical read  :$id:");//njv: 
+		if ($this->debug > 1) error_log("bo-ical read  :$id:");//njv:
 		return $this->bo->read($id,null,false,'server');
 	}
 
@@ -414,6 +415,11 @@ class calendar_groupdav extends groupdav_handler
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/');
 		// email of the current user, see caldav-sheduling draft
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$GLOBALS['egw_info']['user']['email']);
+		// supported components, currently only VEVENT
+		$props[] =	$sc = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
+//			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),	// not yet supported
+		));
 
 		return $props;
 	}
