@@ -112,29 +112,16 @@ class vfs_widget
 					if (!empty($relpath)) $value .= '/'.$relpath;
 				}
 				$path = $extension_data['path'] = $value;
-				$dir = egw_vfs::dirname($path);
-				static $files = array();	// static var, to scan each directory only once
-				if (!isset($files[$dir])) $files[$dir] = egw_vfs::file_exists($dir) ? egw_vfs::scandir($dir) : array();
-				$basename = egw_vfs::basename($path);
-				$basename_len = strlen($basename);
-				foreach($files[$dir] as $file)
+				if (self::file_exists($path))	// display download link and delete icon
 				{
-					if (substr($file,0,$basename_len) == $basename)
-					{
-						$file_exists = true;
-						break;
-					}
-				}
-				if ($file_exists)	// display download link and delete icon
-				{
-					$path = $extension_data['path'] = $dir.'/'.$file;
-					$value = empty($cell['label']) ? $file : lang($cell['label']);	// display (translated) Label or filename (if label empty)
+					$extension_data['path'] = $path;
+					$value = empty($cell['label']) ? basename($path) : lang($cell['label']);	// display (translated) Label or filename (if label empty)
 
 					$vfs_link = etemplate::empty_cell('label',$cell['name'],array(
 						'size' => ','.egw_vfs::download_url($path).',,,,,'.$path,
 					));
 					// if dir is writable, add delete link
-					if (egw_vfs::is_writable($dir))
+					if (egw_vfs::is_writable(egw_vfs::dirname($path)))
 					{
 						$cell = etemplate::empty_cell('hbox','',array('size' => ',,0,0'));
 						etemplate::add_child($cell,$vfs_link);
@@ -344,6 +331,38 @@ class vfs_widget
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check if vfs file exists *without* using the extension
+	 *
+	 * If you rename a file, you have to clear the cache ($clear_after=true)!
+	 *
+	 * @param string &$path on call path without extension, if existing on return full path incl. extension
+	 * @param boolean $clear_after=null clear file-cache after (true) or before (false), default dont clear
+	 * @return
+	 */
+	static function file_exists(&$path,$clear_after=null)
+	{
+		static $files = array();	// static var, to scan each directory only once
+		$dir = egw_vfs::dirname($path);
+		if ($clear_after === false) unset($files[$dir]);
+		if (!isset($files[$dir])) $files[$dir] = egw_vfs::file_exists($dir) ? egw_vfs::scandir($dir) : array();
+
+		$basename = egw_vfs::basename($path);
+		$basename_len = strlen($basename);
+		$found = false;
+		foreach($files[$dir] as $file)
+		{
+			if (substr($file,0,$basename_len) == $basename)
+			{
+				$path = $dir.'/'.$file;
+				$found = true;
+			}
+		}
+		if ($clear_after === true) unset($files[$dir]);
+		//echo "<p>".__METHOD__."($path) returning ".array2string($found)."</p>\n";
+		return $found;
 	}
 
 	/**
