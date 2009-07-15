@@ -3,16 +3,17 @@
 include_once 'XML/WBXML/DTD.php';
 
 /**
- * $Horde: framework/XML_WBXML/WBXML/DTD/SyncMLDevInf.php,v 1.11 2006/01/01 21:10:26 jan Exp $
- *
- * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
- *
  * From Binary XML Content Format Specification Version 1.3, 25 July 2001
  * found at http://www.wapforum.org
  *
- * See the enclosed file COPYING for license information (LGPL).  If you
+ * $Horde: framework/XML_WBXML/WBXML/DTD/SyncMLDevInf.php,v 1.4.12.8 2008/01/02 11:31:03 jan Exp $
+ *
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
+ * @author  Anthony Mills <amills@pyramid6.com>
  * @package XML_WBXML
  */
 class XML_WBXML_DTD_SyncMLDevInf extends XML_WBXML_DTD {
@@ -25,6 +26,8 @@ class XML_WBXML_DTD_SyncMLDevInf extends XML_WBXML_DTD {
          * grep '\"[^\"]*\", *0x.., 0x.. },' wbxml_tables.c
          * | sed -e 's#^.*\"\([^\"]*\)\", *\(0x..\), \(0x..\) },.*$#        \$this->setTag\(\3, \"\1\"\); // \2#g'
          */
+
+	#Horde::logMessage("XML_WBXML_DTD_SyncMLDevInf version=" . $this->version, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
         $this->setTag(0x05, "CTCap"); // 0x00
         $this->setTag(0x06, "CTType"); // 0x00
@@ -64,13 +67,25 @@ class XML_WBXML_DTD_SyncMLDevInf extends XML_WBXML_DTD {
         $this->setTag(0x28, "UTC"); // 0x00
         $this->setTag(0x29, "SupportNumberOfChanges"); // 0x00
         $this->setTag(0x2a, "SupportLargeObjs"); // 0x00
+        $this->setTag(0x2b, "Property"); // 0x00
+        $this->setTag(0x2c, "PropParam"); // 0x00
+        $this->setTag(0x2d, "MaxOccur"); // 0x00
+        $this->setTag(0x2e, "NoTruncate"); // 0x00
+        $this->setTag(0x30, "Filter-Rx"); // 0x00
+        $this->setTag(0x31, "FilterCap"); // 0x00
+        $this->setTag(0x32, "FilterKeyword"); // 0x00
+        $this->setTag(0x33, "FieldLevel"); // 0x00
+        $this->setTag(0x34, "SupportHierarchicalSync"); // 0x00
 
-        if ($this->version == 0) {
-            $this->setCodePage(0, '-//SYNCML//DTD DevInf 1.0//EN', 'syncml:devinf');
-            $this->setURI('syncml:devinf');
-        } else {
-            $this->setCodePage(0, '-//SYNCML//DTD DevInf 1.1//EN', 'syncml:devinf1.1');
+        if ($this->version == 1) {
+            $this->setCodePage(0, DPI_DTD_DEVINF_1_1, 'syncml:devinf1.1');
             $this->setURI('syncml:devinf1.1');
+        } elseif ($this->version == 2) {
+            $this->setCodePage(0, DPI_DTD_DEVINF_1_2, 'syncml:devinf1.2');
+            $this->setURI('syncml:devinf1.2');
+        } else {
+            $this->setCodePage(0, DPI_DTD_DEVINF_1_0, 'syncml:devinf1.0');
+            $this->setURI('syncml:devinf1.0');
         }
     }
 

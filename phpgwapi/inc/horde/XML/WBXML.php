@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Constants are from Binary XML Content Format Specification Version
- * 1.3, 25 July 2001 found at http://www.wapforum.org
+ * Constants are from Binary XML Content Format Specification Version 1.3, 25
+ * July 2001 found at http://www.wapforum.org
  */
 
 /**
@@ -49,8 +49,16 @@ define('DPI_DTD_WML_1_3', '-//WAPFORUM//DTD WML 1.3//EN');
 define('DPI_DTD_PROV_1_0', '-//WAPFORUM//DTD PROV 1.0//EN');
 define('DPI_DTD_WTA_WML_1_2', '-//WAPFORUM//DTD WTA-WML 1.2//EN');
 define('DPI_DTD_CHANNEL_1_2', '-//WAPFORUM//DTD CHANNEL 1.2//EN');
+
+define('DPI_DTD_SYNCML_1_0', '-//SYNCML//DTD SyncML 1.0//EN');
+define('DPI_DTD_DEVINF_1_0', '-//SYNCML//DTD DevInf 1.0//EN');
+define('DPI_DTD_METINF_1_0', '-//SYNCML//DTD MetInf 1.0//EN');
 define('DPI_DTD_SYNCML_1_1', '-//SYNCML//DTD SyncML 1.1//EN');
 define('DPI_DTD_DEVINF_1_1', '-//SYNCML//DTD DevInf 1.1//EN');
+define('DPI_DTD_METINF_1_1', '-//SYNCML//DTD MetInf 1.1//EN');
+define('DPI_DTD_SYNCML_1_2', '-//SYNCML//DTD SyncML 1.2//EN');
+define('DPI_DTD_DEVINF_1_2', '-//SYNCML//DTD DevInf 1.2//EN');
+define('DPI_DTD_METINF_1_2', '-//SYNCML//DTD MetInf 1.2//EN');
 
 /**
  * Only default character encodings from J2SE are currently supported.
@@ -63,13 +71,14 @@ define('CHARSET_UTF_16LE', 'UTF-16LE');
 define('CHARSET_UTF_16', 'UTF-16');
 
 /**
- * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
+ * $Horde: framework/XML_WBXML/WBXML.php,v 1.13.12.11 2008/01/02 11:31:02 jan Exp $
  *
- * See the enclosed file COPYING for license information (LGPL).  If you
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
- * $Horde: framework/XML_WBXML/WBXML.php,v 1.18 2006/01/01 21:10:25 jan Exp $
- *
+ * @author  Anthony Mills <amills@pyramid6.com>
  * @package XML_WBXML
  */
 class XML_WBXML {
@@ -173,8 +182,17 @@ class XML_WBXML {
                            // Not all SyncML clients know this, so we
                            // should use the string table.
                            // 0xFD1 => DPI_DTD_SYNCML_1_1,
-                           4051 => DPI_DTD_SYNCML_1_1,
-                           4052 => DPI_DTD_DEVINF_1_1,
+                           // These codes are taken from libwbxml wbxml_tables.h:
+                           4049 => DPI_DTD_SYNCML_1_0, // 0x0fd1
+                           4050 => DPI_DTD_DEVINF_1_0, // 0x0fd2
+                           4051 => DPI_DTD_SYNCML_1_1, // 0x0fd3
+                           4052 => DPI_DTD_DEVINF_1_1, // 0x0fd4
+                           4609 => DPI_DTD_SYNCML_1_2, // 0x1201
+                           //@todo: verify this:
+                           4611 => DPI_DTD_DEVINF_1_2  // 0x1203
+// taken from libxml but might be wrong:
+//                           4610 => DPI_DTD_DEVINF_1_2, // 0x1202
+//                           4611 => DPI_DTD_METINF_1_2  // 0x1203
                            );
         return isset($DPIString[$i]) ? $DPIString[$i] : null;
     }
@@ -197,8 +215,18 @@ class XML_WBXML {
                         DPI_DTD_WTA_WML_1_2 => 12,
                         DPI_DTD_CHANNEL_1_2 => 13,
 
-                        // Not all SyncML clients know this, so we
+                        // Not all SyncML clients know this, so maybe we
                         // should use the string table.
+                           // These codes are taken from libwbxml wbxml_tables.h:
+                        DPI_DTD_SYNCML_1_0 => 4049,
+                        DPI_DTD_DEVINF_1_0 => 4050,
+                        DPI_DTD_SYNCML_1_1 => 4051,
+                        DPI_DTD_DEVINF_1_1 => 4052,
+                        DPI_DTD_SYNCML_1_2 => 4609, // 0x1201
+//                        DPI_DTD_DEVINF_1_2 => 4610, // 0x1202
+//                        DPI_DTD_METINF_1_2 => 4611  // 0x1203
+                        //@todo: verify this
+                        DPI_DTD_DEVINF_1_2 => 4611  // 0x1203
                         // DPI_DTD_SYNCML_1_1 => 0xFD1,
                         // DPI_DTD_DEVINF_1_1 => 0xFD2,
                         );

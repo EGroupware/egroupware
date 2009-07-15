@@ -1,104 +1,149 @@
 <?php
 /**
+ * eGroupWare - iCalendar based on Horde 3
+ *
  * Class representing iCalendar files.
  *
- * $Horde: framework/iCalendar/iCalendar.php,v 1.53 2004/09/24 03:34:43 chuck Exp $
  *
- * Copyright 2003-2004 Mike Cochrane <mike@graftonhall.co.nz>
+ * Using the PEAR Log class (which need to be installed!)
  *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Mike Cochrane <mike@graftonhall.co.nz>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_iCalendar
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Mike Cochrane <mike@graftonhall.co.nz>
+ * @author Joerg Lehrke <jlehrke@noc.de>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
+
+/**
+ * Class representing iCalendar files.
  */
 class Horde_iCalendar {
 
     /**
      * The parent (containing) iCalendar object.
      *
-     * @var object Horde_iCalendar $_container
+     * @var Horde_iCalendar
      */
     var $_container = false;
 
+    /**
+     * The name/value pairs of attributes for this object (UID,
+     * DTSTART, etc.). Which are present depends on the object and on
+     * what kind of component it is.
+     *
+     * @var array
+     */
     var $_attributes = array();
 
+    /**
+     * Any children (contained) iCalendar components of this object.
+     *
+     * @var array
+     */
     var $_components = array();
 
     /**
-     * According to RFC 2425, we should always use CRLF-terminated
-     * lines.
+     * According to RFC 2425, we should always use CRLF-terminated lines.
      *
-     * @var string $_newline
+     * @var string
      */
     var $_newline = "\r\n";
 
     /**
-     * Return a reference to a new component.
+     * iCalendar format version (different behavior for 1.0 and 2.0
+     * especially with recurring events).
      *
-     * @param string $type       The type of component to return
-     * @param object $container  A container that this component
-     *                           will be associated with.
-     *
-     * @return object  Reference to a Horde_iCalendar_* object as specified.
+     * @var string
      */
-    function &newComponent($type, &$container)
+    var $_version;
+
+    function Horde_iCalendar($version = '2.0')
     {
-#        require_once 'Horde/String.php';
-        $type = strtolower($type);
-        #error_log("called horde ical new comp". print_r($type,true) );
-		$class = 'Horde_iCalendar_' . strtolower($type);
-		if (!class_exists($class,false)) {
-			include_once dirname(__FILE__) . '/iCalendar/' . $type . '.php';
-		}
-		if (class_exists($class)) {
-			#include_once dirname(__FILE__) . '/iCalendar/' . $type . '.php';
-			$component = new $class();
-			if ($container !== false) {
-				$component->_container = &$container;
-			}
-			return $component;
-		} else {
-			// Should return an dummy x-unknown type class here.
-			return false;
-		}
+        $this->_version = $version;
+        $this->setAttribute('VERSION', $version);
     }
 
     /**
-     * Set the value of an attribute.
+     * Return a reference to a new component.
      *
-     * @param string  $name   The name of the attribute.
-     * @param string  $value  The value of the attribute.
-     * @param array   $params (optional) Array containing any addition
-     *                        parameters for this attribute.
-     * @param boolean $append (optional) True to append the attribute, False
-     *                        to replace the first matching attribute found.
-     * @param array $values   (optional) array representation of $value.
-     *                        For comma/semicolon seperated lists of values.
-     *                        If not set use $value as single array element.
+     * @param string          $type       The type of component to return
+     * @param Horde_iCalendar $container  A container that this component
+     *                                    will be associated with.
+     *
+     * @return object  Reference to a Horde_iCalendar_* object as specified.
+     *
+     * @static
      */
-    function setAttribute($name, $value, $params = array(), $append = true, $values = false)
+    function &newComponent($type, &$container)
     {
-        $found = $append;
+        $type = String::lower($type);
+        $class = 'Horde_iCalendar_' . $type;
+        if (!class_exists($class)) {
+            include 'Horde/iCalendar/' . $type . '.php';
+        }
+        if (class_exists($class)) {
+            $component = new $class();
+            if ($container !== false) {
+                $component->_container = &$container;
+                // Use version of container, not default set by component
+                // constructor.
+                $component->_version = $container->_version;
+            }
+        } else {
+            // Should return an dummy x-unknown type class here.
+            $component = false;
+        }
+
+        return $component;
+    }
+
+    /**
+     * Sets the value of an attribute.
+     *
+     * @param string $name     The name of the attribute.
+     * @param string $value    The value of the attribute.
+     * @param array $params    Array containing any addition parameters for
+     *                         this attribute.
+     * @param boolean $append  True to append the attribute, False to replace
+     *                         the first matching attribute found.
+     * @param array $values    Array representation of $value.  For
+     *                         comma/semicolon seperated lists of values.  If
+     *                         not set use $value as single array element.
+     */
+    function setAttribute($name, $value, $params = array(), $append = true,
+                          $values = false)
+    {
+        // Make sure we update the internal format version if
+        // setAttribute('VERSION', ...) is called.
+        if ($name == 'VERSION') {
+            $this->_version = $value;
+            if ($this->_container !== false) {
+                $this->_container->_version = $value;
+            }
+        }
+
         if (!$values) {
             $values = array($value);
         }
-        $keys = array_keys($this->_attributes);
-        foreach ($keys as $key) {
-            if ($found) break;
-            if ($this->_attributes[$key]['name'] == $name) {
-                $this->_attributes[$key]['params'] = $params;
-                $this->_attributes[$key]['value'] = $value;
-                $this->_attributes[$key]['values'] = $values;
-                $found = true;
+        $found = false;
+        if (!$append) {
+            foreach (array_keys($this->_attributes) as $key) {
+                if ($this->_attributes[$key]['name'] == String::upper($name)) {
+                    $this->_attributes[$key]['params'] = $params;
+                    $this->_attributes[$key]['value'] = $value;
+                    $this->_attributes[$key]['values'] = $values;
+                    $found = true;
+                    break;
+                }
             }
         }
 
         if ($append || !$found) {
             $this->_attributes[] = array(
-                'name'      => $name,
+                'name'      => String::upper($name),
                 'params'    => $params,
                 'value'     => $value,
                 'values'    => $values
@@ -110,18 +155,18 @@ class Horde_iCalendar {
      * Sets parameter(s) for an (already existing) attribute.  The
      * parameter set is merged into the existing set.
      *
-     * @param string $name    The name of the attribute.
-     * @param array  $params  Array containing any additional
-     *                        parameters for this attribute.
+     * @param string $name   The name of the attribute.
+     * @param array $params  Array containing any additional parameters for
+     *                       this attribute.
      * @return boolean  True on success, false if no attribute $name exists.
      */
-    function setParameter($name, $params)
+    function setParameter($name, $params = array())
     {
         $keys = array_keys($this->_attributes);
         foreach ($keys as $key) {
             if ($this->_attributes[$key]['name'] == $name) {
                 $this->_attributes[$key]['params'] =
-                    array_merge((array)$this->_attributes[$key]['params'] , $params);
+                    array_merge($this->_attributes[$key]['params'], $params);
                 return true;
             }
         }
@@ -132,9 +177,9 @@ class Horde_iCalendar {
     /**
      * Get the value of an attribute.
      *
-     * @param string  $name    The name of the attribute.
-     * @param boolean $params  Return the parameters for this attribute
-     *                         instead of its value.
+     * @param string $name     The name of the attribute.
+     * @param boolean $params  Return the parameters for this attribute instead
+     *                         of its value.
      *
      * @return mixed (object)  PEAR_Error if the attribute does not exist.
      *               (string)  The value of the attribute.
@@ -153,7 +198,7 @@ class Horde_iCalendar {
                 }
             }
         }
-        if (count($result) == 0) {
+        if (!count($result)) {
             require_once 'PEAR.php';
             return PEAR::raiseError('Attribute "' . $name . '" Not Found');
         } if (count($result) == 1 && !$params) {
@@ -171,7 +216,7 @@ class Horde_iCalendar {
      *  b) (unsecapd) comma seperated lists.
      *
      * So for a vcard like "KEY:a,b\nKEY:c" getAttributesValues('KEY')
-     * will return array('a','b','c').
+     * will return array('a', 'b', 'c').
      *
      * @param string  $name    The name of the attribute.
      * @return mixed (object)  PEAR_Error if the attribute does not exist.
@@ -195,9 +240,9 @@ class Horde_iCalendar {
      * Returns the value of an attribute, or a specified default value
      * if the attribute does not exist.
      *
-     * @param string $name     The name of the attribute.
-     * @param mixed  $default  (optional) What to return if the attribute
-     *                         specified by $name does not exist.
+     * @param string $name    The name of the attribute.
+     * @param mixed $default  What to return if the attribute specified by
+     *                        $name does not exist.
      *
      * @return mixed (string) The value of $name.
      *               (mixed)  $default if $name does not exist.
@@ -211,7 +256,7 @@ class Horde_iCalendar {
     /**
      * Remove all occurences of an attribute.
      *
-     * @param string  $name   The name of the attribute.
+     * @param string $name  The name of the attribute.
      */
     function removeAttribute($name)
     {
@@ -226,9 +271,10 @@ class Horde_iCalendar {
     /**
      * Get attributes for all tags or for a given tag.
      *
-     * @param string  $tag   (optional) return attributes for this tag.
-     *                       or all attributes if not given
-     * @return array  Array containing all the attributes and their types.
+     * @param string $tag  Return attributes for this tag, or all attributes if
+     *                     not given.
+     *
+     * @return array  An array containing all the attributes and their types.
      */
     function getAllAttributes($tag = false)
     {
@@ -247,7 +293,7 @@ class Horde_iCalendar {
     /**
      * Add a vCalendar component (eg vEvent, vTimezone, etc.).
      *
-     * @param object Horde_iCalendar $component  Component (subclass) to add.
+     * @param Horde_iCalendar $component  Component (subclass) to add.
      */
     function addComponent($component)
     {
@@ -265,6 +311,11 @@ class Horde_iCalendar {
     function getComponents()
     {
         return $this->_components;
+    }
+
+    function getType()
+    {
+        return 'vcalendar';
     }
 
     /**
@@ -316,20 +367,18 @@ class Horde_iCalendar {
     }
 
     /**
-     * Locates the first child component of the specified class, and
-     * returns a reference to this component.
+     * Locates the first child component of the specified class, and returns a
+     * reference to it.
      *
      * @param string $type  The type of component to find.
      *
-     * @return mixed (boolean) False if no subcomponent of the specified
-     *                         class exists.
-     *               (Horde_iCalendar_*) A reference to the requested component.
+     * @return boolean|Horde_iCalendar_*  False if no subcomponent of the
+     *                                    specified class exists or a reference
+     *                                    to the requested component.
      */
     function &findComponent($childclass)
     {
-#        require_once 'Horde/String.php';
-#        $childclass = 'Horde_iCalendar_' . String::lower($childclass);
-        $childclass = 'Horde_iCalendar_' . strtolower($childclass);
+        $childclass = 'Horde_iCalendar_' . String::lower($childclass);
         $keys = array_keys($this->_components);
         foreach ($keys as $key) {
             if (is_a($this->_components[$key], $childclass)) {
@@ -337,12 +386,47 @@ class Horde_iCalendar {
             }
         }
 
-        return false;
+        $component = false;
+        return $component;
     }
 
     /**
-     * Clears the iCalendar object (resets the components and
-     * attributes arrays).
+     * Locates the first matching child component of the specified class, and
+     * returns a reference to it.
+     *
+     * @param string $childclass  The type of component to find.
+     * @param string $attribute   This attribute must be set in the component
+     *                            for it to match.
+     * @param string $value       Optional value that $attribute must match.
+     *
+     * @return boolean|Horde_iCalendar_*  False if no matching subcomponent of
+     *                                    the specified class exists, or a
+     *                                    reference to the requested component.
+     */
+    function &findComponentByAttribute($childclass, $attribute, $value = null)
+    {
+        $childclass = 'Horde_iCalendar_' . String::lower($childclass);
+        $keys = array_keys($this->_components);
+        foreach ($keys as $key) {
+            if (is_a($this->_components[$key], $childclass)) {
+                $attr = $this->_components[$key]->getAttribute($attribute);
+                if (is_a($attr, 'PEAR_Error')) {
+                    continue;
+                }
+                if ($value !== null && $value != $attr) {
+                    continue;
+                }
+                return $this->_components[$key];
+            }
+        }
+
+        $component = false;
+        return $component;
+    }
+
+    /**
+     * Clears the iCalendar object (resets the components and attributes
+     * arrays).
      */
     function clear()
     {
@@ -351,14 +435,38 @@ class Horde_iCalendar {
     }
 
     /**
+     * Checks if entry is vcalendar 1.0, vcard 2.1 or vnote 1.1.
+     *
+     * These 'old' formats are defined by www.imc.org. The 'new' (non-old)
+     * formats icalendar 2.0 and vcard 3.0 are defined in rfc2426 and rfc2445
+     * respectively.
+     *
+     * @since Horde 3.1.2
+     */
+    function isOldFormat()
+    {
+	$retval = true;
+	switch ($this->getType()) {
+		case 'vcard':
+            		$retval = ($this->_version < 3);
+			break;
+		case 'vNote':
+            		$retval = ($this->_version < 2);
+			break;
+		default:
+			$retval = ($this->_version < 2);
+			break;
+	}
+        return $retval;
+    }
+
+    /**
      * Export as vCalendar format.
      */
     function exportvCalendar()
     {
-	#error_log(__METHOD__.": called");
         // Default values.
-        $requiredAttributes['VERSION'] = '2.0';
-        $requiredAttributes['PRODID'] = '-//The Horde Project//Horde_iCalendar Library, Horde 3.0-cvs //EN';
+        $requiredAttributes['PRODID'] = '-//The Horde Project//Horde_iCalendar Library' . (defined('HORDE_VERSION') ? ', Horde ' . constant('HORDE_VERSION') : '') . '//EN';
         $requiredAttributes['METHOD'] = 'PUBLISH';
 
         foreach ($requiredAttributes as $name => $default_value) {
@@ -366,17 +474,14 @@ class Horde_iCalendar {
                 $this->setAttribute($name, $default_value);
             }
         }
-	//error_log(__METHOD__.":requiredAttributes->".print_r($requiredAttributes,true));
-	//njv:$buffcontent = ob_get_clean();
-	#error_log(__METHOD__.":".print_r($buffcontent,true));
-	#ob_end_clean();
-        return $this->_exportvData('VCALENDAR') . $this->_newline;
+
+        return $this->_exportvData('VCALENDAR');
     }
 
     /**
      * Export this entry as a hash array with tag names as keys.
      *
-     * @param boolean (optional) $paramsInKeys
+     * @param boolean $paramsInKeys
      *                If false, the operation can be quite lossy as the
      *                parameters are ignored when building the array keys.
      *                So if you export a vcard with
@@ -403,85 +508,112 @@ class Horde_iCalendar {
     }
 
     /**
-     * Parse a string containing vCalendar data.
+     * Parses a string containing vCalendar data.
      *
-     * @param string  $text  The data to parse.
-     * @param string  $base  The type of the base object.
-     * @param string  $charset (optional) The encoding charset for $text. Defaults to utf-8
-     * @param boolean $clear (optional) True to clear() the iCal object before parsing.
+     * @todo This method doesn't work well at all, if $base is VCARD.
+     *
+     * @param string $text     The data to parse.
+     * @param string $base     The type of the base object.
+     * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
+     * @param boolean $clear   If true clears the iCal object before parsing.
      *
      * @return boolean  True on successful import, false otherwise.
      */
-    function parsevCalendar($text, $base = 'VCALENDAR', $charset = 'utf-8', $clear = true)
+    function parsevCalendar($text, $base = 'VCALENDAR', $charset = null,
+                            $clear = true)
     {
         if ($clear) {
             $this->clear();
         }
-        error_log(__FILE__ . __METHOD__ . ":\n".$text."\n xxxxxxxxx");
-	if (preg_match('/(BEGIN:' . $base . '\r?\n)([\W\w]*)(END:' . $base . '\r?\n?)/i', $text, $matches)) {
-            $vCal = $matches[2];
+
+        if (preg_match('/^BEGIN:' . $base . '(.*)^END:' . $base . '/ism', $text, $matches)) {
+            $container = true;
+            $vCal = $matches[1];
         } else {
             // Text isn't enclosed in BEGIN:VCALENDAR
             // .. END:VCALENDAR. We'll try to parse it anyway.
+            $container = false;
             $vCal = $text;
         }
 
+        if (preg_match('/^VERSION:(\d\.\d)\s*$/ism', $vCal, $matches)) {
+            // define the version asap
+            #Horde::logMessage("iCalendar VERSION:" . $matches[1], __FILE__, __LINE__, PEAR_LOG_DEBUG);
+            $this->setAttribute('VERSION', $matches[1]);
+        }
+
+	// Preserve a trailing CR
+        $vCal = trim($vCal) . "\n";
+
         // All subcomponents.
         $matches = null;
-        if (preg_match_all('/BEGIN:([\S]*)(\r\n|\r|\n)([\W\w]*)END:\1(\r\n|\r|\n)/U', $vCal, $matches)) {
+        if (preg_match_all('/^BEGIN:(.*)(\r\n|\r|\n)(.*)^END:\1/Uims', $vCal, $matches)) {
+            // vTimezone components are processed first. They are
+            // needed to process vEvents that may use a TZID.
             foreach ($matches[0] as $key => $data) {
-                $type = $matches[1][$key];
-                $component = &Horde_iCalendar::newComponent(trim($type), $this);
+                $type = trim($matches[1][$key]);
+                if ($type != 'VTIMEZONE') {
+                    continue;
+                }
+                $component = &Horde_iCalendar::newComponent($type, $this);
                 if ($component === false) {
                     return PEAR::raiseError("Unable to create object for type $type");
                 }
-                $component->parsevCalendar($data);
+                $component->parsevCalendar($data, $type, $charset);
 
                 $this->addComponent($component);
 
                 // Remove from the vCalendar data.
                 $vCal = str_replace($data, '', $vCal);
             }
+
+            // Now process the non-vTimezone components.
+            foreach ($matches[0] as $key => $data) {
+                $type = trim($matches[1][$key]);
+                if ($type == 'VTIMEZONE') {
+                    continue;
+                }
+                $component = &Horde_iCalendar::newComponent($type, $this);
+                if ($component === false) {
+                    return PEAR::raiseError("Unable to create object for type $type");
+                }
+                $component->parsevCalendar($data, $type, $charset);
+
+                $this->addComponent($component);
+
+                // Remove from the vCalendar data.
+                $vCal = str_replace($data, '', $vCal);
+            }
+        } elseif (!$container) {
+            return false;
+        }
+
+        // Unfold "quoted printable" folded lines like:
+        //  BODY;ENCODING=QUOTED-PRINTABLE:=
+        //  another=20line=
+        //  last=20line
+        while (preg_match_all('/^([^:]+;\s*((ENCODING=)?QUOTED-PRINTABLE|ENCODING=[Q|q])(.*=\r?\n)+(.*[^=])?\r?\n)/mU', $vCal, $matches)) {
+            foreach ($matches[1] as $s) {
+                $r = preg_replace('/=\r?\n[ \t]*/', '', $s);
+                $vCal = str_replace($s, $r, $vCal);
+            }
         }
 
         // Unfold any folded lines.
-        #$vCal = preg_replace ('/(\r|\n)+ /', ' ', $vCal);
-
-        // Unfold "quoted printable" folded lines like:
-        //  BODY;ENCODING=QUOTED-PRINTABLE:=
-        //  another=20line=
-        //  last=20line
-#        Horde::logMessage("SymcML: match 1", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#        if (preg_match_all('/^([^:]+;\s*ENCODING=QUOTED-PRINTABLE(.*=[\r\n|\r|\n])+(.*[^=])[\r\n|\r|\n])/mU', $vCal, $matches)) {
-##        if (preg_match_all('/^(BODY;ENCODING=QUOTED-PRINTABLE(.*=\r\n)+(.*)?\r?\n)/mU', $vCal, $matches)) {
-#	    Horde::logMessage("SymcML: match 2", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#            foreach ($matches[1] as $s) {
-#	        Horde::logMessage("SymcML: match 3 $s", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#                $r = preg_replace('/=[\r\n|\r|\n]/', '', $s);
-#	        Horde::logMessage("SymcML: match 4 $r", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#                $vCal = str_replace($s, $r, $vCal);
-#            }
-#        }
-
-        // Unfold "quoted printable" folded lines like:
-        //  BODY;ENCODING=QUOTED-PRINTABLE:=
-        //  another=20line=
-        //  last=20line
-        #if (preg_match_all('/^([^:]+;\s*ENCODING=QUOTED-PRINTABLE(.*=*\s))/mU', $vCal, $matches)) {
-	#    $matches = preg_split('/=+\s/',$vCal);
-	#    $vCal = implode('',$matches);
-        #}
-        if (preg_match_all('/^([^:]+;\s*ENCODING=QUOTED-PRINTABLE(.*=*\s))/mU', $vCal, $matches)) {
-	    $matches = preg_split('/=(\r\n|\r|\n)/',$vCal);
-	    $vCal = implode('',$matches);
+        if ($this->isOldFormat()) {
+        	$vCal = preg_replace('/[\r\n]+([ \t])/', '\1', $vCal);
+        } else {
+        	$vCal = preg_replace('/[\r\n]+[ \t]/', '', $vCal);
         }
 
-        // Parse the remaining attributes.
+		$isDate = false;
 
-        if (preg_match_all('/(.*):([^\r\n]*)[\r\n]+/', $vCal, $matches)) {
+        // Parse the remaining attributes.
+        if (preg_match_all('/^((?:[^":]+|(?:"[^"]*")+)*):([^\r\n]*)\r?$/m', $vCal, $matches)) {
             foreach ($matches[0] as $attribute) {
-                preg_match('/([^;^:]*)((;[^:]*)?):([^\r\n]*)[\r\n]*/', $attribute, $parts);
-                $tag = $parts[1];
+                preg_match('/([^;^:]*)((;(?:[^":]+|(?:"[^"]*")+)*)?):([^\r\n]*)[\r\n]*/', $attribute, $parts);
+                $tag = trim(String::upper($parts[1]));
                 $value = $parts[4];
                 $params = array();
 
@@ -489,64 +621,91 @@ class Horde_iCalendar {
                 if (!empty($parts[2])) {
                     preg_match_all('/;(([^;=]*)(=([^;]*))?)/', $parts[2], $param_parts);
                     foreach ($param_parts[2] as $key => $paramName) {
+                        $paramName = String::upper($paramName);
                         $paramValue = $param_parts[4][$key];
+                        if ($paramName == 'TYPE') {
+                            $paramValue = preg_split('/(?<!\\\\),/', $paramValue);
+                            if (count($paramValue) == 1) {
+                                $paramValue = $paramValue[0];
+                            }
+                        }
                         $params[$paramName] = $paramValue;
                     }
                 }
 
                 // Charset and encoding handling.
-                
-
-				// njv sanity todo: decode  text fields containing qp but not tagged
-					
-
-				if ((isset($params['ENCODING'])
-                     && $params['ENCODING'] == 'QUOTED-PRINTABLE')
-                    || isset($params['QUOTED-PRINTABLE'])) {
-
-                    $value = quoted_printable_decode($value);
-                }
-
-                if (isset($params['CHARSET'])) {
-                    $value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
+		if (isset($params['QUOTED-PRINTABLE'])) {
+			$params['ENCODING'] = 'QUOTED-PRINTABLE';
+		}
+		if (isset($params['BASE64'])) {
+			$params['ENCODING'] = 'BASE64';
+		}
+                if (isset($params['ENCODING'])) {
+		     switch (String::upper($params['ENCODING'])) {
+                           case 'Q':
+                           case 'QUOTED-PRINTABLE':
+                                 $value = quoted_printable_decode($value);
+                                 if (isset($params['CHARSET'])) {
+									$value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
+                                 } else {
+									$value = $GLOBALS['egw']->translation->convert($value,
+										empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
+                                 }
+                                 break;
+                           case 'B':
+                           case 'BASE64':
+                                 $value = base64_decode($value);
+                                 break;
+                        }
+                } elseif (isset($params['CHARSET'])) {
+					$value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
                 } else {
-                    // As per RFC 2279, assume UTF8 if we don't have
-                    // an explicit charset parameter.
-                    $value = $GLOBALS['egw']->translation->convert($value, 'utf-8');
+                    // As per RFC 2279, assume UTF8 if we don't have an
+                    // explicit charset parameter.
+					$value = $GLOBALS['egw']->translation->convert($value,
+						empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
                 }
+
+                // Get timezone info for date fields from $params.
+                $tzid = isset($params['TZID']) ? trim($params['TZID'], '\"') : false;
 
                 switch ($tag) {
+		case 'VERSION': // already processed
+			break;
                 // Date fields.
-                case 'DTSTAMP':
                 case 'COMPLETED':
                 case 'CREATED':
                 case 'LAST-MODIFIED':
-                case 'BDAY':
-                case 'DTEND':
-                case 'DTSTART':
-                case 'DUE':
-                case 'RECURRENCE-ID':
-                    $this->setAttribute($tag, $this->_parseDateTime($value), $params);
+                    $this->setAttribute($tag, $this->_parseDateTime($value, $tzid), $params);
                     break;
 
-                case 'RDATE':
-                    if (isset($params['VALUE'])) {
-                        if ($params['VALUE'] == 'DATE') {
-                            $this->setAttribute($tag, $this->_parseDate($value), $params);
-                        } elseif ($params['VALUE'] == 'PERIOD') {
-                            $this->setAttribute($tag, $this->_parsePeriod($value), $params);
-                        } else {
-                            $this->setAttribute($tag, $this->_parseDateTime($value), $params);
-                        }
+                case 'BDAY':
+                case 'X-SYNCJE-ANNIVERSARY':
+                    $this->setAttribute($tag, $value, $params, true, $this->_parseDate($value));
+                    break;
+
+                case 'DTEND':
+                case 'DTSTART':
+                case 'DTSTAMP':
+                case 'DUE':
+                case 'AALARM':
+                case 'DALARM':
+                case 'RECURRENCE-ID':
+                    // types like AALARM may contain additional data after a ;
+                    // ignore these.
+                    $ts = explode(';', $value);
+                    if (isset($params['VALUE']) && $params['VALUE'] == 'DATE') {
+                    	$isDate = true;
+                        $this->setAttribute($tag, $this->_parseDateTime($ts[0], $tzid), $params, true, $this->_parseDate($ts[0]));
                     } else {
-                        $this->setAttribute($tag, $this->_parseDateTime($value), $params);
+                        $this->setAttribute($tag, $this->_parseDateTime($ts[0], $tzid), $params);
                     }
                     break;
 
                 case 'TRIGGER':
                     if (isset($params['VALUE'])) {
                         if ($params['VALUE'] == 'DATE-TIME') {
-                            $this->setAttribute($tag, $this->_parseDateTime($value), $params);
+                            $this->setAttribute($tag, $this->_parseDateTime($value, $tzid), $params);
                         } else {
                             $this->setAttribute($tag, $this->_parseDuration($value), $params);
                         }
@@ -555,24 +714,21 @@ class Horde_iCalendar {
                     }
                     break;
 
-                // Comma and semicolon seperated dates.
+                // Comma or semicolon seperated dates.
                 case 'EXDATE':
-                    $values = array();
-                    $dates = array();
-                    preg_match_all('/[,;]([^,;]*)/', ';' . $value, $values);
+                case 'RDATE':
+	                $dates = array();
+		            preg_match_all('/[;,]([^;,]*)/', ';' . $value, $values);
 
                     foreach ($values[1] as $value) {
-                        if (isset($params['VALUE'])) {
-                            if ($params['VALUE'] == 'DATE-TIME') {
-                                $dates[] = $this->_parseDateTime($value);
-                            } elseif ($params['VALUE'] == 'DATE') {
-                                $dates[] = $this->_parseDate($value);
-                            }
-                        } else {
-                            $dates[] = $this->_parseDateTime($value);
-                        }
+	                    if ((isset($params['VALUE'])
+			                    && $params['VALUE'] == 'DATE') || (!isset($params['VALUE']) && $isDate)) {
+		                    $dates[] = $this->_parseDate($value);
+	                    } else {
+		                    $dates[] = $this->_parseDateTime($value, $tzid);
+	                    }
                     }
-                    $this->setAttribute($tag, $dates, $params);
+                    $this->setAttribute($tag, isset($dates[0]) ? $dates[0] : null, $params, true, $dates);
                     break;
 
                 // Duration fields.
@@ -582,14 +738,13 @@ class Horde_iCalendar {
 
                 // Period of time fields.
                 case 'FREEBUSY':
-                    $values = array();
                     $periods = array();
-                    preg_match_all('/[,;]([^,;]*)/', ';' . $value, $values);
+                    preg_match_all('/,([^,]*)/', ',' . $value, $values);
                     foreach ($values[1] as $value) {
                         $periods[] = $this->_parsePeriod($value);
                     }
 
-                    $this->setAttribute($tag, $periods, $params);
+                    $this->setAttribute($tag, isset($periods[0]) ? $periods[0] : null, $params, true, $periods);
                     break;
 
                 // UTC offset fields.
@@ -608,61 +763,96 @@ class Horde_iCalendar {
 
                 // Geo fields.
                 case 'GEO':
-                    $floats = explode(';', $value);
-                    $value['latitude'] = floatval($floats[0]);
-                    $value['longitude'] = floatval($floats[1]);
+                    if ($this->isOldFormat()) {
+                        $floats = explode(',', $value);
+                        $value = array('latitude' => floatval($floats[1]),
+                                       'longitude' => floatval($floats[0]));
+                    } else {
+                        $floats = explode(';', $value);
+                        $value = array('latitude' => floatval($floats[0]),
+                                       'longitude' => floatval($floats[1]));
+                    }
                     $this->setAttribute($tag, $value, $params);
                     break;
 
-                // Recursion fields.
-                case 'EXRULE':
-                case 'RRULE':
-                    $this->setAttribute($tag, trim($value), $params);
+                // Recursion fields. # add more flexibility
+                #case 'EXRULE':
+                #case 'RRULE':
+                #    $this->setAttribute($tag, trim($value), $params);
+                #    break;
+
+		// Binary fields.
+		case 'PHOTO':
+                    $this->setAttribute($tag, $value, $params);
                     break;
 
-                // ADR an N are lists seperated by unescaped semi-colons.
+                // ADR, ORG and N are lists seperated by unescaped semicolons
+                // with a specific number of slots.
                 case 'ADR':
                 case 'N':
                 case 'ORG':
-
                     $value = trim($value);
-                    // As of rfc 2426 2.4.2 semi-colon, comma, and
-                    // colon must be escaped.
-                    // njv an "urban myth" a colon is tsafe and should not be escaped
-		    		$value = str_replace('\\n', $this->_newline, $value);
-                    $value = str_replace('\\,', ',', $value);
-                    //njv:$value = str_replace('\\:', ':', $value);
+                    // As of rfc 2426 2.4.2 semicolon, comma, and colon must
+                    // be escaped (comma is unescaped after splitting below).
+                    $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
+                                         array("\n", "\n", ';', ':'),
+                                         $value);
 
-                    // Split by unescaped semi-colons:
-                    $values = preg_split('/(?<!\\\\);/',$value);
+                    // Split by unescaped semicolons:
+                    $values = preg_split('/(?<!\\\\);/', $value);
                     $value = str_replace('\\;', ';', $value);
                     $values = str_replace('\\;', ';', $values);
+                    $value = str_replace('\\,', ',', $value);
+                    $values = str_replace('\\,', ',', $values);
                     $this->setAttribute($tag, trim($value), $params, true, $values);
+                    break;
 
+                // CATEGORIES is a lists seperated by unescaped commas
+                // with a unspecific number of slots.
+                case 'CATEGORIES':
+                    $value = trim($value);
+                    // As of rfc 2426 2.4.2 semicolon, comma, and colon must
+                    // be escaped (semicolon is unescaped after splitting below).
+                    $value = str_replace(array('\\n', '\\N', '\\,', '\\:'),
+                                         array("\n", "\n", ',', ':'),
+                                         $value);
+
+                    // Split by unescaped commas:
+                    $values = preg_split('/(?<!\\\\),/', $value);
+                    $value = str_replace('\\;', ';', $value);
+                    $values = str_replace('\\;', ';', $values);
+                    $value = str_replace('\\,', ',', $value);
+                    $values = str_replace('\\,', ',', $values);
+                    $this->setAttribute($tag, trim($value), $params, true, $values);
                     break;
 
                 // String fields.
                 default:
-                    
-					$value = trim($value);
-                    
-					//sanity $value should not contain qp
-					if(preg_match('/^=[24]/',$value)){
-						error_log(__FILE__ .__METHOD__ ."?qp decoded : ". print_r($value , true));
-						quoted_printable_decode($value);
-					}
-					// As of rfc 2426 2.4.2 semi-colon, comma, and
-                    // colon must be escaped.
-                    $value = str_replace('\\n', $this->_newline, $value);
-                    $value = str_replace('\\;', ';', $value);
-                    //njv:$value = str_replace('\\:', ':', $value);
+                    if ($this->isOldFormat()) {
+                        // vCalendar 1.0 and vCard 2.1 only escape semicolons
+                        // and use unescaped semicolons to create lists.
+                        $value = trim($value);
+                        // Split by unescaped semicolons:
+                        $values = preg_split('/(?<!\\\\);/', $value);
+                        $value = str_replace('\\;', ';', $value);
+                        $values = str_replace('\\;', ';', $values);
+                        $this->setAttribute($tag, trim($value), $params, true, $values);
+                    } else {
+                        $value = trim($value);
+                        // As of rfc 2426 2.4.2 semicolon, comma, and colon
+                        // must be escaped (comma is unescaped after splitting
+                        // below).
+                        $value = str_replace(array('\\n', '\\N', '\\;', '\\:', '\\\\'),
+                                             array("\n", "\n", ';', ':', '\\'),
+                                             $value);
 
-                    // Split by unescaped commas:
-                    $values = preg_split('/(?<!\\\\),/',$value);
-                    $value = str_replace('\\,', ',', $value);
-                    $values = str_replace('\\,', ',', $values);
+                        // Split by unescaped commas.
+                        $values = preg_split('/(?<!\\\\),/', $value);
+                        $value = str_replace('\\,', ',', $value);
+                        $values = str_replace('\\,', ',', $values);
 
-                    $this->setAttribute($tag, trim($value), $params, true, $values);
+                        $this->setAttribute($tag, trim($value), $params, true, $values);
+                    }
                     break;
                 }
             }
@@ -674,20 +864,21 @@ class Horde_iCalendar {
     /**
      * Export this component in vCal format.
      *
-     * @param string $base  (optional) The type of the base object.
+     * @param string $base  The type of the base object.
      *
      * @return string  vCal format data.
      */
     function _exportvData($base = 'VCALENDAR')
     {
-        $result  = 'BEGIN:' . strtoupper($base) . $this->_newline;
+        $result = 'BEGIN:' . String::upper($base) . $this->_newline;
 
-        // Ensure that version is the first attribute.
-        $v = $this->getAttributeDefault('VERSION', false);
-        if ($v) {
-            $result .= 'VERSION:' . $v. $this->_newline;
+        // VERSION is not allowed for entries enclosed in VCALENDAR/ICALENDAR,
+        // as it is part of the enclosing VCALENDAR/ICALENDAR. See rfc2445
+        if ($base !== 'VEVENT' && $base !== 'VTODO' && $base !== 'VALARM' &&
+            $base !== 'VJOURNAL' && $base !== 'VFREEBUSY') {
+            // Ensure that version is the first attribute.
+            $result .= 'VERSION:' . $this->_version . $this->_newline;
         }
-
         foreach ($this->_attributes as $attribute) {
             $name = $attribute['name'];
             if ($name == 'VERSION') {
@@ -695,12 +886,25 @@ class Horde_iCalendar {
                 continue;
             }
 
-            $params = $attribute['params'];
             $params_str = '';
-
-            if (count($params)) {
+            $params = $attribute['params'];
+            if ($params) {
                 foreach ($params as $param_name => $param_value) {
-                    $params_str .= ";$param_name=$param_value";
+                    /* Skip CHARSET for iCalendar 2.0 data, not allowed. */
+                    if ($param_name == 'CHARSET' && !$this->isOldFormat()) {
+                        continue;
+                    }
+                    /* Skip VALUE=DATE for vCalendar 1.0 data, not allowed. */
+                    if ($this->isOldFormat() &&
+                        $param_name == 'VALUE' && $param_value == 'DATE') {
+                        continue;
+                    }
+
+                    if ($param_value === null) {
+                        $params_str .= ";$param_name";
+                    } else {
+                        $params_str .= ";$param_name=$param_value";
+                    }
                 }
             }
 
@@ -708,7 +912,6 @@ class Horde_iCalendar {
 
             switch ($name) {
             // Date fields.
-            case 'DTSTAMP':
             case 'COMPLETED':
             case 'CREATED':
             case 'DCREATED':
@@ -718,11 +921,25 @@ class Horde_iCalendar {
 
             case 'DTEND':
             case 'DTSTART':
+            case 'DTSTAMP':
             case 'DUE':
+            case 'AALARM':
+            case 'DALARM':
             case 'RECURRENCE-ID':
                 if (isset($params['VALUE'])) {
                     if ($params['VALUE'] == 'DATE') {
-                        $value = $this->_exportDate($value);
+                        // VCALENDAR 1.0 uses T000000 - T235959 for all day events:
+                        if ($this->isOldFormat() && $name == 'DTEND') {
+                            $d = new Horde_Date($value);
+                            $value = new Horde_Date(array(
+                                'year' => $d->year,
+                                'month' => $d->month,
+                                'mday' => $d->mday - 1));
+                            $value->correct();
+                            $value = $this->_exportDate($value, '235959');
+                        } else {
+                            $value = $this->_exportDate($value, '000000');
+                        }
                     } else {
                         $value = $this->_exportDateTime($value);
                     }
@@ -731,17 +948,38 @@ class Horde_iCalendar {
                 }
                 break;
 
+            // Comma or semicolon seperated dates.
+            case 'EXDATE':
             case 'RDATE':
-                if (isset($params['VALUE'])) {
-                    if ($params['VALUE'] == 'DATE') {
-                        $value = $this->_exportDate($value);
-                    } elseif ($params['VALUE'] == 'PERIOD') {
-                        $value = $this->_exportPeriod($value);
+	            if (is_array($attribute['values'])) {
+		            $values = $attribute['values'];
+	            } elseif (!empty($value)) {
+	            	if ($this->isOldFormat()) {
+		            	$values = explode(';', $value);
+	            	} else {
+	            		$values = explode(',', $value);
+	            	}
+	            } else {
+		            break;
+	            }
+                $dates = array();
+                foreach ($values as $date) {
+                    if (isset($params['VALUE'])) {
+                        if ($params['VALUE'] == 'DATE') {
+                            $dates[] = $this->_exportDate($date, '000000');
+                        } elseif ($params['VALUE'] == 'PERIOD') {
+                            $dates[] = $this->_exportPeriod($date);
+                        } else {
+                            $dates[] = $this->_exportDateTime($date);
+                        }
                     } else {
-                        $value = $this->_exportDateTime($value);
+                        $dates[] = $this->_exportDateTime($date);
                     }
+                }
+                if ($this->isOldFormat()) {
+	                $value = implode(';', $dates);
                 } else {
-                    $value = $this->_exportDateTime($value);
+	                $value = implode(',', $dates);
                 }
                 break;
 
@@ -788,58 +1026,119 @@ class Horde_iCalendar {
 
             // Geo fields.
             case 'GEO':
-                $value = $value['latitude'] . ',' . $value['longitude'];
+                if ($this->isOldFormat()) {
+                    $value = $value['longitude'] . ',' . $value['latitude'];
+                } else {
+                    $value = $value['latitude'] . ';' . $value['longitude'];
+                }
                 break;
 
             // Recurrence fields.
+            case 'EXRULE':
             case 'RRULE':
                 break;
-            case 'EXRULE':
 
-	    //Text Fields
-	    case 'SUMMARY':
-	    case 'DESCRIPTION':
-	    case 'COMMENT':
-		$value = str_replace('\\', '\\\\', $value);
-		#$value = str_replace($this->_newline, '\n', $value);
-		$value = str_replace(',', '\,', $value);
-		$value = str_replace(';', '\;', $value);
-		//njv:RFC 2445 says very definately NO!
-		//$value = str_replace(':', '\:', $value);
+            case 'PHOTO':
                 break;
 
             default:
+                if ($this->isOldFormat()) {
+                    if (is_array($attribute['values']) &&
+                        count($attribute['values']) > 1) {
+                        $values = $attribute['values'];
+                        if ($name == 'N' || $name == 'ADR' || $name == 'ORG') {
+                            $glue = ';';
+                        } else {
+                            $glue = ',';
+                        }
+                        $values = str_replace(';', '\\;', $values);
+                        $value = implode($glue, $values);
+                    } else {
+                        /* vcard 2.1 and vcalendar 1.0 escape only
+                         * semicolons */
+                        $value = str_replace(';', '\\;', $value);
+                    }
+                    // Text containing newlines or ASCII >= 127 must be BASE64
+                    // or QUOTED-PRINTABLE encoded. Currently we use
+                    // QUOTED-PRINTABLE as default.
+                    if (preg_match("/[^\x20-\x7F]/", $value) &&
+                        empty($params['ENCODING']))  {
+                        $params['ENCODING'] = 'QUOTED-PRINTABLE';
+                        $params_str .= ';ENCODING=QUOTED-PRINTABLE';
+                        // Add CHARSET as well. At least the synthesis client
+                        // gets confused otherwise
+                        if (empty($params['CHARSET'])) {
+                            $params['CHARSET'] = NLS::getCharset();
+                            $params_str .= ';CHARSET=' . $params['CHARSET'];
+                        }
+                    }
+                } else {
+                    if (is_array($attribute['values']) &&
+                        count($attribute['values'])) {
+                        $values = $attribute['values'];
+                        if ($name == 'N' || $name == 'ADR' || $name == 'ORG') {
+                            $glue = ';';
+                        } else {
+                            $glue = ',';
+                        }
+                        // As of rfc 2426 2.5 semicolon and comma must be
+                        // escaped.
+                        $values = str_replace(array('\\', ';', ','),
+                                              array('\\\\', '\\;', '\\,'),
+                                              $values);
+                        $value = implode($glue, $values);
+                    } else {
+                        // As of rfc 2426 2.5 semicolon and comma must be
+                        // escaped.
+                        $value = str_replace(array('\\', ';', ','),
+                                             array('\\\\', '\\;', '\\,'),
+                                             $value);
+                    }
+                    $value = preg_replace('/\r?\n/', "\n", $value);
+                }
                 break;
             }
 
-            if (!empty($params['ENCODING']) &&
-                $params['ENCODING'] == 'QUOTED-PRINTABLE' && strlen(trim($value)) > 0) {
-                $value = str_replace("\r", '', $value);
-#                $result .= "$name$params_str:=" . $this->_newline
-#                    . $this->_quotedPrintableEncode($value)
-#                    . $this->_newline;
-                $result .= "$name$params_str:"
-                    . $this->_quotedPrintableEncode($value)
-                    . $this->_newline;
+            if (!empty($params['ENCODING']) && strlen(trim($value))) {
+                switch($params['ENCODING']) {
+                      case 'Q':
+                      case 'QUOTED-PRINTABLE':
+                            $value = str_replace("\r", '', $value);
+                            $result .= $name . $params_str . ':'
+                                    . str_replace('=0A', '=0D=0A',
+                                          $this->_quotedPrintableEncode($value))
+                                    . $this->_newline;
+                            break;
+                      case 'B':
+                      case 'BASE64':
+		            		$attr_string = $name . $params_str . ":" . $this->_newline . ' ' . $this->_base64Encode($value);
+                            $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
+                                                      true, 'utf-8', true);
+                            $result .= $attr_string . $this->_newline;
+                            if ($this->isOldFormat()) {
+                            	$result .= $this->_newline; // Append an empty line
+                            }
+                            break;
+                }
             } else {
-                $attr_string = "$name$params_str:$value";
-
-                $result .= $this->_foldLine($attr_string) . $this->_newline;
-				if (!empty($params['ENCODING']) && $params['ENCODING'] == 'BASE64' &&
-					strlen(trim($value)) > 0)
-				{
-					$result .= $this->_newline;
-				}
+                $value = str_replace(array("\r", "\n"), array('', '\\n'), $value);
+                $attr_string = $name . $params_str;
+                if (!empty($value)) {
+                	$attr_string .= ':' . $value;
+                }
+                if (!$this->isOldFormat()) {
+                    $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
+                                                    true, 'utf-8', true);
+                }
+                $result .= $attr_string . $this->_newline;
             }
         }
 
-        foreach ($this->getComponents() as $component) {
-            $result .= $component->exportvCalendar() . $this->_newline;
+        foreach ($this->_components as $component) {
+            $result .= $component->exportvCalendar();
         }
 
-        $result .= 'END:' . $base;
-
-        return $result;
+        return $result . 'END:' . $base . $this->_newline;
     }
 
     /**
@@ -849,7 +1148,7 @@ class Horde_iCalendar {
     {
         $offset = array();
         if (preg_match('/(\+|-)([0-9]{2})([0-9]{2})([0-9]{2})?/', $text, $timeParts)) {
-            $offset['ahead']  = (boolean)($timeParts[1] == '+');
+            $offset['ahead']  = (bool)($timeParts[1] == '+');
             $offset['hour']   = intval($timeParts[2]);
             $offset['minute'] = intval($timeParts[3]);
             if (isset($timeParts[4])) {
@@ -908,35 +1207,97 @@ class Horde_iCalendar {
     }
 
     /**
-     * Parse a DateTime field into a unix timestamp.
+     * Grok the TZID and return an offset in seconds from UTC for this
+     * date and time.
      */
-    function _parseDateTime($text)
+    function _parseTZID($date, $time, $tzid)
+    {
+        $vtimezone = $this->_container->findComponentByAttribute('vtimezone', 'TZID', $tzid);
+        if (!$vtimezone) {
+            return false;
+        }
+
+        $change_times = array();
+        foreach ($vtimezone->getComponents() as $o) {
+            $t = $vtimezone->parseChild($o, $date['year']);
+            if ($t !== false) {
+                $change_times[] = $t;
+            }
+        }
+
+        if (!$change_times) {
+            return false;
+        }
+
+        sort($change_times);
+
+        // Time is arbitrarily based on UTC for comparison.
+        $t = @gmmktime($time['hour'], $time['minute'], $time['second'],
+                       $date['month'], $date['mday'], $date['year']);
+
+        if ($t < $change_times[0]['time']) {
+            return $change_times[0]['from'];
+        }
+
+        for ($i = 0, $n = count($change_times); $i < $n - 1; $i++) {
+            if (($t >= $change_times[$i]['time']) &&
+                ($t < $change_times[$i + 1]['time'])) {
+                return $change_times[$i]['to'];
+            }
+        }
+
+        if ($t >= $change_times[$n - 1]['time']) {
+            return $change_times[$n - 1]['to'];
+        }
+
+        return false;
+    }
+
+    /**
+     * Parses a DateTime field and returns a unix timestamp. If the
+     * field cannot be parsed then the original text is returned
+     * unmodified.
+     *
+     * @todo This function should be moved to Horde_Date and made public.
+     */
+    function _parseDateTime($text, $tzid = false)
     {
         $dateParts = explode('T', $text);
         if (count($dateParts) != 2 && !empty($text)) {
             // Not a datetime field but may be just a date field.
-            if (!$date = $this->_parseDate($text)) {
-                return $date;
+            if (!preg_match('/^(\d{4})-?(\d{2})-?(\d{2})$/', $text, $match)) {
+                // Or not
+                return $text;
             }
-            return @mktime(0, 0, 0, $date['month'], $date['mday'], $date['year']);
+            $newtext = $text.'T000000';
+            $dateParts = explode('T', $newtext);
         }
 
-        if (!$date = $this->_parseDate($dateParts[0])) {
-            return $date;
+        if (!$date = Horde_iCalendar::_parseDate($dateParts[0])) {
+            return $text;
         }
-        if (!$time = $this->_parseTime($dateParts[1])) {
-            return $time;
+        if (!$time = Horde_iCalendar::_parseTime($dateParts[1])) {
+            return $text;
         }
 
-		//error_log("parseDateTime: ".$text." => ".print_r($time, true));
-
-        if ($time['zone'] == 'UTC') {
-            return @gmmktime($time['hour'], $time['minute'], $time['second'],
-                             $date['month'], $date['mday'], $date['year']);
+        // Get timezone info for date fields from $tzid and container.
+        $tzoffset = ($time['zone'] == 'Local' && $tzid && is_a($this->_container, 'Horde_iCalendar'))
+            ? $this->_parseTZID($date, $time, $tzid) : false;
+        if ($time['zone'] == 'UTC' || $tzoffset !== false) {
+            $result = @gmmktime($time['hour'], $time['minute'], $time['second'],
+                                $date['month'], $date['mday'], $date['year']);
+            if ($tzoffset) {
+                $result -= $tzoffset;
+            }
         } else {
-            return @mktime($time['hour'], $time['minute'], $time['second'],
-                           $date['month'], $date['mday'], $date['year']);
+            // We don't know the timezone so assume local timezone.
+            // FIXME: shouldn't this be based on the user's timezone
+            // preference rather than the server's timezone?
+            $result = @mktime($time['hour'], $time['minute'], $time['second'],
+                              $date['month'], $date['mday'], $date['year']);
         }
+
+        return ($result !== false) ? $result : $text;
     }
 
     /**
@@ -944,10 +1305,10 @@ class Horde_iCalendar {
      */
     function _exportDateTime($value)
     {
-        $temp = array();
-        if (!is_object($value) || is_array($value)) {
-            $TZOffset  = 3600 * substr(date('O',$value), 0, 3);
-            $TZOffset += 60 * substr(date('O',$value), 3, 2);
+        if (is_numeric($value)) {
+            $temp = array();
+            $tz = date('O', $value);
+            $TZOffset = (3600 * substr($tz, 0, 3)) + (60 * substr(date('O', $value), 3, 2));
             $value -= $TZOffset;
 
             $temp['zone']   = 'UTC';
@@ -957,47 +1318,18 @@ class Horde_iCalendar {
             $temp['hour']   = date('G', $value);
             $temp['minute'] = date('i', $value);
             $temp['second'] = date('s', $value);
-        } else {
-            $dateOb = (object)$value;
-
-            $TZOffset = date('O',mktime($dateOb->hour,$dateOb->min,$dateOb->sec,$dateOb->month,$dateOb->mday,$dateOb->year));
-
-            // Minutes.
-            $TZOffsetMin = substr($TZOffset, 0, 1) . substr($TZOffset, 3, 2);
-            $thisMin = $dateOb->min - $TZOffsetMin;
-
-            // Hours.
-            $TZOffsetHour = substr($TZOffset, 0, 3);
-            $thisHour = $dateOb->hour - $TZOffsetHour;
-
-            if ($thisMin < 0) {
-                $thisHour -= 1;
-                $thisMin += 60;
-            }
-
-            if ($thisHour < 0) {
-                require_once 'Date/Calc.php';
-                $prevday = Date_Calc::prevDay($dateOb->mday, $dateOb->month, $dateOb->year);
-                $dateOb->mday  = substr($prevday, 6, 2);
-                $dateOb->month = substr($prevday, 4, 2);
-                $dateOb->year  = substr($prevday, 0, 4);
-                $thisHour += 24;
-            }
-
-            $temp['zone']   = 'UTC';
-            $temp['year']   = $dateOb->year;
-            $temp['month']  = $dateOb->month;
-            $temp['mday']   = $dateOb->mday;
-            $temp['hour']   = $thisHour;
-            $temp['minute'] = $dateOb->min;
-            $temp['second'] = $dateOb->sec;
+            return Horde_iCalendar::_exportDate($temp) . 'T' . Horde_iCalendar::_exportTime($temp);
+        } else if (is_object($value) || is_array($value)) {
+            $dateOb = new Horde_Date($value);
+            return Horde_iCalendar::_exportDateTime($dateOb->timestamp());
         }
-
-        return Horde_iCalendar::_exportDate($temp) . 'T' . Horde_iCalendar::_exportTime($temp);
+        return $value; // nothing to do with us, let's not touch it
     }
 
     /**
-     * Parse a Time field.
+     * Parses a Time field.
+     *
+     * @static
      */
     function _parseTime($text)
     {
@@ -1017,7 +1349,7 @@ class Horde_iCalendar {
     }
 
     /**
-     * Export a Time field.
+     * Exports a Time field.
      */
     function _exportTime($value)
     {
@@ -1030,33 +1362,44 @@ class Horde_iCalendar {
     }
 
     /**
-     * Parse a Date field.
+     * Parses a Date field.
+     *
+     * @static
      */
     function _parseDate($text)
     {
-		if (strlen($text) == 10)
-		{
-			$text = str_replace('-','',$text);
-		}
-        if (strlen($text) != 8)
-		{
+        $parts = explode('T', $text);
+        if (count($parts) == 2) {
+            $text = $parts[0];
+        }
+
+        if (!preg_match('/^(\d{4})-?(\d{2})-?(\d{2})$/', $text, $match)) {
             return false;
         }
 
-        $date['year']  = intval(substr($text, 0, 4));
-        $date['month'] = intval(substr($text, 4, 2));
-        $date['mday']  = intval(substr($text, 6, 2));
-
-        return $date;
+        return array('year' => $match[1],
+                     'month' => $match[2],
+                     'mday' => $match[3]);
     }
 
     /**
-     * Export a Date field.
+     * Exports a date field.
+     *
+     * @param object|array $value  Date object or hash.
+     * @param string $autoconvert  If set, use this as time part to export the
+     *                             date as datetime when exporting to Vcalendar
+     *                             1.0. Examples: '000000' or '235959'
      */
-    function _exportDate($value)
+    function _exportDate($value, $autoconvert = false)
     {
-        return sprintf('%04d%02d%02d',
-                       $value['year'], $value['month'], $value['mday']);
+        if (is_object($value)) {
+            $value = array('year' => $value->year, 'month' => $value->month, 'mday' => $value->mday);
+        }
+        if ($autoconvert !== false && $this->isOldFormat()) {
+            return sprintf('%04d%02d%02dT%s', $value['year'], $value['month'], $value['mday'], $autoconvert);
+        } else {
+            return sprintf('%04d%02d%02d', $value['year'], $value['month'], $value['mday']);
+        }
     }
 
     /**
@@ -1145,310 +1488,77 @@ class Horde_iCalendar {
         return $duration;
     }
 
-    /**
-     * Return the folded version of a line.
-	 * JVL rewritten to fold on any ; or: or = if present before column 75
-	 * this is still rfc2445 section 4.1 compliant
-     */
-    function _foldLine($line)
-    {
-        $line = preg_replace("/\r\n|\n|\r/", '\n', $line);
-        if (strlen($line) > 75) {
-            $foldedline = '';
-            while (!empty($line)) {
-			  $maxLine = substr($line, 0, 75);
-			  $cutPoint = 1+max(is_numeric($p1 = strrpos($maxLine,';')) ? $p1 : -1,
-					    is_numeric($p1 = strrpos($maxLine,':')) ? $p1 : -1,
-					    is_numeric($p1 = strrpos($maxLine,'=')) ? $p1 : -1);
-			  if ($cutPoint <  1)  // nothing found, then fold complete maxLine
-				$cutPoint = 75;
-			  // now fold [0..(cutPoint-1)]
-			  $foldedline .= (empty($foldedline))
-				?   substr($line, 0, $cutPoint)
-				:  $this->_newline . ' ' . substr($line, 0, $cutPoint);
 
-			  $line = (strlen($line) <= $cutPoint)
-				? ''
-				: substr($line, $cutPoint);
-
-			  if (strlen($line) < 75) {
-				$foldedline .=  $this->_newline . ' ' . $line;
-				$line = '';
-			  }
-
-            }
-            return $foldedline;
-        }
-        return $line;
-    }
-
-    /**
-     * Convert an 8bit string to a quoted-printable string according
+   /**
+     * Convert an 8bit string to a base64 string
      * to RFC2045, section 6.7.
-     *
-     * Uses imap_8bit if available.
      *
      * @param  string $input  The string to be encoded.
      *
-     * @return string         The quoted-printable encoded string.
+     * @return string         The base64 encoded string.
+     */
+    function _base64Encode($input = '')
+    {
+        return base64_encode($input);
+    }
+
+
+    /**
+     * Converts an 8bit string to a quoted-printable string according to RFC
+     * 2045, section 6.7.
+     *
+     * imap_8bit() does not apply all necessary rules.
+     *
+     * @param string $input  The string to be encoded.
+     *
+     * @return string  The quoted-printable encoded string.
      */
     function _quotedPrintableEncode($input = '')
     {
-    	return $this->EncodeQP($input);
-
-	#$input = preg_replace('!(\r\n|\r|\n)!',"\n",$input);
-
-        // If imap_8bit() is available, use it.
-        if (function_exists('imap_8bit')) {
-            $retValue = imap_8bit($input);
-	    #$retValue = preg_replace('/=0A/',"=0D=0A=\r\n",$retValue);
-	    return $retValue;
-        }
-
-        // Rather dumb replacment: just encode everything.
-        $hex = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                     'A', 'B', 'C', 'D', 'E', 'F');
-
-        $output = '';
+        $output = $line = '';
         $len = strlen($input);
+
         for ($i = 0; $i < $len; ++$i) {
-            $c = substr($input, $i, 1);
-            $dec = ord($c);
-            $output .= '=' . $hex[floor($dec / 16)] . $hex[floor($dec % 16)];
-            if (($i + 1) % 25 == 0) {
-                $output .= "=\r\n";
+            $ord = ord($input[$i]);
+            // Encode non-printable characters (rule 2).
+            if ($ord == 9 ||
+                ($ord >= 32 && $ord <= 60) ||
+                ($ord >= 62 && $ord <= 126)) {
+                $chunk = $input[$i];
+            } else {
+                // Quoted printable encoding (rule 1).
+                $chunk = '=' . String::upper(sprintf('%02X', $ord));
+            }
+            $line .= $chunk;
+            // Wrap long lines (rule 5)
+            if (strlen($line) + 1 > 76) {
+                $line = String::wordwrap($line, 75, "=\r\n", true, 'us-ascii', true);
+                $newline = strrchr($line, "\r\n");
+                if ($newline !== false) {
+                    $output .= substr($line, 0, -strlen($newline) + 2);
+                    $line = substr($newline, 2);
+                } else {
+                    $output .= $line;
+                }
+                continue;
+            }
+            // Wrap at line breaks for better readability (rule 4).
+            if (substr($line, -3) == '=0A') {
+                $output .= $line . "=\r\n ";
+                $line = '';
             }
         }
+        $output .= $line;
+
+        // Trailing whitespace must be encoded (rule 3).
+        $lastpos = strlen($output) - 1;
+        if ($output[$lastpos] == chr(9) ||
+            $output[$lastpos] == chr(32)) {
+            $output[$lastpos] = '=';
+            $output .= String::upper(sprintf('%02X', ord($output[$lastpos])));
+        }
+
         return $output;
-    }
-    var $LE              = "\r\n";
-
-    /**
-     * Encode string to quoted-printable.
-     * @access private
-     * @return string
-     */
-    function EncodeQP_old ($str) {
-        $encoded = $this->FixEOL($str);
-        #$encoded = $str;
-        #if (substr($encoded, -(strlen($this->LE))) != $this->LE)
-        #    $encoded .= $this->LE;
-
-        // Replace every high ascii, control and = characters
-        #$encoded = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e',
-        #          "'='.sprintf('%02X', ord('\\1'))", $encoded);
-        $encoded = preg_replace('/([\000-\012\015\016\020-\037\075\177-\377])/e',
-                  "'='.sprintf('%02X', ord('\\1'))", $encoded);
-        // Replace every spaces and tabs when it's the last character on a line
-        #$encoded = preg_replace("/([\011\040])".$this->LE."/e",
-        #          "'='.sprintf('%02X', ord('\\1')).'".$this->LE."'", $encoded);
-        $encoded = preg_replace("/([\011\040])".$this->LE."/e",
-                  "'='.sprintf('%02X', ord('\\1')).'".$this->LE."'", $encoded);
-
-        // Maximum line length of 76 characters before CRLF (74 + space + '=')
-        $encoded = $this->WrapText($encoded, 74, true);
-
-        return $encoded;
-    }
-
-    /**
-     * Wraps message for use with mailers that do not
-     * automatically perform wrapping and for quoted-printable.
-     * Original written by philippe.
-     * @access private
-     * @return string
-     */
-    function WrapText_old($message, $length, $qp_mode = false) {
-        $soft_break = ($qp_mode) ? "=\r\n" : $this->LE;
-
-        #$message = $this->FixEOL($message);
-        if (substr($message, -1) == $this->LE)
-            $message = substr($message, 0, -1);
-
-        $line = explode("=0D=0A", $message);
-        $message = "";
-        for ($i=0 ;$i < count($line); $i++)
-        {
-          $line_part = explode(" ", $line[$i]);
-          $buf = "";
-          for ($e = 0; $e<count($line_part); $e++)
-          {
-              $word = $line_part[$e];
-              if ($qp_mode and (strlen($word) > $length))
-              {
-                $space_left = $length - strlen($buf) - 1;
-                if ($e != 0)
-                {
-                    if ($space_left > 20)
-                    {
-                        $len = $space_left;
-                        if (substr($word, $len - 1, 1) == "=")
-                          $len--;
-                        elseif (substr($word, $len - 2, 1) == "=")
-                          $len -= 2;
-                        $part = substr($word, 0, $len);
-                        $word = substr($word, $len);
-                        $buf .= " " . $part;
-                        $message .= $buf . sprintf("=%s", $this->LE);
-                    }
-                    else
-                    {
-                        $message .= $buf . $soft_break;
-                    }
-                    $buf = "";
-                }
-                while (strlen($word) > 0)
-                {
-                    $len = $length;
-                    if (substr($word, $len - 1, 1) == "=")
-                        $len--;
-                    elseif (substr($word, $len - 2, 1) == "=")
-                        $len -= 2;
-                    $part = substr($word, 0, $len);
-                    $word = substr($word, $len);
-
-                    if (strlen($word) > 0)
-                        $message .= $part . sprintf("=%s", $this->LE);
-                    else
-                        $buf = $part;
-                }
-              }
-              else
-              {
-                $buf_o = $buf;
-                $buf .= ($e == 0) ? $word : (" " . $word);
-
-                if (strlen($buf) > $length and $buf_o != "")
-                {
-                    $message .= $buf_o . $soft_break;
-                    $buf = $word;
-                }
-              }
-          }
-          $message .= $buf;
-          if((count($line)-1) > $i)
-          	$message .= "=0D=0A=\r\n";
-        }
-
-        return $message;
-    }
-    /**
-     * Changes every end of line from CR or LF to CRLF.
-     * @access private
-     * @return string
-     */
-    function FixEOL($str) {
-      	$str = str_replace("\r\n", "\n", $str);
-        $str = str_replace("\r", "\n", $str);
-        $str = str_replace("\n", $this->LE, $str);
-        return $str;
-    }
-
-    /**
-     * Encode string to quoted-printable.
-     * @access private
-     * @return string
-     */
-    function EncodeQP ($str) {
-        $encoded = $this->FixEOL($str);
-        # see bug report http://sourceforge.net/tracker/index.php?func=detail&aid=1536674&group_id=78745&atid=554338
-        #if (substr($encoded, -(strlen($this->LE))) != $this->LE)
-        #    $encoded .= $this->LE;
-
-        // Replace every high ascii, control and = characters
-        #$encoded = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e',
-        #          "'='.sprintf('%02X', ord('\\1'))", $encoded);
-        $encoded = preg_replace('/([\000-\012\015\016\020-\037\075\177-\377])/e',
-                  "'='.sprintf('%02X', ord('\\1'))", $encoded);
-        // Replace every spaces and tabs when it's the last character on a line
-        $encoded = preg_replace("/([\011\040])".$this->LE."/e",
-                  "'='.sprintf('%02X', ord('\\1')).'".$this->LE."'", $encoded);
-
-        // Maximum line length of 76 characters before CRLF (74 + space + '=')
-        #$encoded = $this->WrapText($encoded, 74, true);
-
-        return $encoded;
-    }
-
-    /**
-     * Wraps message for use with mailers that do not
-     * automatically perform wrapping and for quoted-printable.
-     * Original written by philippe.
-     * @access private
-     * @return string
-     */
-    function WrapText($message, $length, $qp_mode = false) {
-        $soft_break = ($qp_mode) ? sprintf(" =%s", $this->LE) : $this->LE;
-        $soft_break = "..=";
-
-        $message = $this->FixEOL($message);
-        if (substr($message, -1) == $this->LE)
-            $message = substr($message, 0, -1);
-
-        $line = explode($this->LE, $message);
-        $message = "";
-        for ($i=0 ;$i < count($line); $i++)
-        {
-          $line_part = explode(" ", $line[$i]);
-          $buf = "";
-          for ($e = 0; $e<count($line_part); $e++)
-          {
-              $word = $line_part[$e];
-              if ($qp_mode and (strlen($word) > $length))
-              {
-                $space_left = $length - strlen($buf) - 1;
-                if ($e != 0)
-                {
-                    if ($space_left > 20)
-                    {
-                        $len = $space_left;
-                        if (substr($word, $len - 1, 1) == "=")
-                          $len--;
-                        elseif (substr($word, $len - 2, 1) == "=")
-                          $len -= 2;
-                        $part = substr($word, 0, $len);
-                        $word = substr($word, $len);
-                        $buf .= " " . $part;
-                        $message .= $buf . sprintf("=%s", $this->LE);
-                    }
-                    else
-                    {
-                        $message .= $buf . $soft_break;
-                    }
-                    $buf = "";
-                }
-                while (strlen($word) > 0)
-                {
-                    $len = $length;
-                    if (substr($word, $len - 1, 1) == "=")
-                        $len--;
-                    elseif (substr($word, $len - 2, 1) == "=")
-                        $len -= 2;
-                    $part = substr($word, 0, $len);
-                    $word = substr($word, $len);
-
-                    if (strlen($word) > 0)
-                        $message .= $part . sprintf("=%s", $this->LE);
-                    else
-                        $buf = $part;
-                }
-              }
-              else
-              {
-                $buf_o = $buf;
-                $buf .= ($e == 0) ? $word : (" " . $word);
-
-                if (strlen($buf) > $length and $buf_o != "")
-                {
-                    $message .= $buf_o . $soft_break;
-                    $buf = $word;
-                }
-              }
-          }
-          $message .= $buf . $this->LE;
-        }
-
-        return $message;
     }
 
 }

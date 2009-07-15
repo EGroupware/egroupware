@@ -2,7 +2,6 @@
 
 require_once EGW_API_INC.'/horde/Horde/iCalendar.php';
 
-
 // The following were shamelessly yoinked from Contact_Vcard_Build
 // Part numbers for N components.
 define('VCARD_N_FAMILY',     0);
@@ -27,27 +26,26 @@ define('VCARD_GEO_LON',      1);
 /**
  * Class representing vCard entries.
  *
- * $Horde: framework/iCalendar/iCalendar/vcard.php,v 1.2 2004/08/18 03:16:24 chuck Exp $
+ * $Horde: framework/iCalendar/iCalendar/vcard.php,v 1.3.10.16 2008/09/22 04:16:30 chuck Exp $
  *
- * Copyright 2003-2004 Karsten Fourmont (karsten@horde.org)
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
  * @author  Karsten Fourmont <karsten@horde.org>
- * @version $Revision$
  * @package Horde_iCalendar
  */
 class Horde_iCalendar_vcard extends Horde_iCalendar {
 
+    function Horde_iCalendar_vcard($version = '2.1')
+    {
+        return parent::Horde_iCalendar($version);
+    }
+
     function getType()
     {
         return 'vcard';
-    }
-
-    function parsevCalendar($data)
-    {
-        return parent::parsevCalendar($data, 'vcard');
     }
 
     /**
@@ -56,20 +54,19 @@ class Horde_iCalendar_vcard extends Horde_iCalendar {
      */
     function exportvCalendar()
     {
-        #$requiredAttributes['BODY'] = '';
-        $requiredAttributes['VERSION'] = '2.1';
+        $requiredAttributes['VERSION'] = $this->_version;
+        $requiredAttributes['N'] = ';;;;;;';
+        if ($this->_version == '3.0') {
+            $requiredAttributes['FN'] = '';
+        }
 
         foreach ($requiredAttributes as $name => $default_value) {
-            if (is_a($this->getattribute($name), 'PEAR_Error')) {
+            if (is_a($this->getAttribute($name), 'PEAR_Error')) {
                 $this->setAttribute($name, $default_value);
             }
         }
-		//error_log(__METHOD__.":requiredAttributes->".print_r($requiredAttributes,true));
-		//njv:$buffcontent = ob_get_clean();
-		#error_log(__METHOD__.":".print_r($buffcontent,true));
-		#ob_end_clean();
 
-        return $this->_exportvData('VCARD') . $this->_newline;
+        return $this->_exportvData('VCARD');
     }
 
     /**
@@ -80,8 +77,7 @@ class Horde_iCalendar_vcard extends Horde_iCalendar {
      * to
      *   "Professor Dagobert T Duck Sen"
      *
-     * @return string  Full name of vcard "N" tag
-     *                 or null if no N tag.
+     * @return string  Full name of vcard "N" tag or null if no N tag.
      */
     function printableName()
     {
@@ -89,6 +85,8 @@ class Horde_iCalendar_vcard extends Horde_iCalendar {
         if (is_a($name_parts, 'PEAR_Error')) {
             return null;
         }
+
+        $name_arr = array();
 
         if (!empty($name_parts[VCARD_N_PREFIX])) {
             $name_arr[] = $name_parts[VCARD_N_PREFIX];
@@ -118,6 +116,11 @@ class Horde_iCalendar_vcard extends Horde_iCalendar {
      */
     function getBareEmail($address)
     {
+        // Empty values are still empty.
+        if (!$address) {
+            return $address;
+        }
+
         require_once 'Mail/RFC822.php';
         require_once 'Horde/MIME.php';
 
@@ -126,8 +129,9 @@ class Horde_iCalendar_vcard extends Horde_iCalendar {
             $rfc822 = new Mail_RFC822();
         }
 
-        $rfc822->validateMailbox($address);
-
+        if (!$rfc822->validateMailbox($address)) {
+            return $address;
+        }
         return MIME::rfc822WriteAddress($address->mailbox, $address->host);
     }
 

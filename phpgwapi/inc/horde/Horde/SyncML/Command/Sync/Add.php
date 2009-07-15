@@ -1,20 +1,20 @@
 <?php
-
+/**
+ * eGroupWare - SyncML based on Horde 3
+ *
+ *
+ * Using the PEAR Log class (which need to be installed!)
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Anthony Mills <amills@pyramid6.com>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
 include_once 'Horde/SyncML/Command/Sync/SyncElement.php';
 
-/**
- * $Horde: framework/SyncML/SyncML/Command/Sync/Add.php,v 1.10 2004/07/02 19:24:44 chuck Exp $
- *
- * Copyright 2003-2004 Anthony Mills <amills@pyramid6.com>
- *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Anthony Mills <amills@pyramid6.com>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
- */
 class Horde_SyncML_Command_Sync_Add extends Horde_SyncML_Command_Sync_SyncElement {
 
     var $_status = RESPONSE_ITEM_ADDED;
@@ -24,9 +24,10 @@ class Horde_SyncML_Command_Sync_Add extends Horde_SyncML_Command_Sync_SyncElemen
         $status = new Horde_SyncML_Command_Status($this->_status, 'Add');
         $status->setCmdRef($this->_cmdID);
 
-        if (isset($this->_luid)) {
-            $status->setSourceRef($this->_luid);
+        if (!empty($this->_items)) {
+            $status->setSyncItems($this->_items);
         }
+
         return $status->output($currentCmdID, $output);
     }
 

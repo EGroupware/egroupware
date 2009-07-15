@@ -2,15 +2,14 @@
 /**
  * Class representing vEvents.
  *
- * $Horde: framework/iCalendar/iCalendar/vevent.php,v 1.31 2004/08/18 03:16:24 chuck Exp $
+ * $Horde: framework/iCalendar/iCalendar/vevent.php,v 1.31.10.15 2008/07/03 08:42:58 jan Exp $
  *
- * Copyright 2003-2004 Mike Cochrane <mike@graftonhall.co.nz>
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
  * @author  Mike Cochrane <mike@graftonhall.co.nz>
- * @version $Revision$
  * @since   Horde 3.0
  * @package Horde_iCalendar
  */
@@ -21,32 +20,28 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
         return 'vEvent';
     }
 
-    function parsevCalendar($data)
-    {
-        parent::parsevCalendar($data, 'VEVENT');
-    }
-
     function exportvCalendar()
     {
         // Default values.
         $requiredAttributes = array();
         $requiredAttributes['DTSTAMP'] = time();
-        #$requiredAttributes['ORGANIZER'] = 'Unknown Organizer';
-        $requiredAttributes['UID'] = $this->_exportDateTime(time()) . '@' . $_SERVER['SERVER_NAME'];
+        $requiredAttributes['UID'] = $this->_exportDateTime(time())
+            . substr(str_pad(base_convert(microtime(), 10, 36), 16, uniqid(mt_rand()), STR_PAD_LEFT), -16)
+            . '@' . (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost');
 
         $method = !empty($this->_container) ?
             $this->_container->getAttribute('METHOD') : 'PUBLISH';
 
         switch ($method) {
         case 'PUBLISH':
-            $requiredAttributes['DTSTART']  = time();
-            $requiredAttributes['SUMMARY']  = '';
+            $requiredAttributes['DTSTART'] = time();
+            $requiredAttributes['SUMMARY'] = '';
             break;
 
         case 'REQUEST':
             $requiredAttributes['ATTENDEE'] = '';
-            $requiredAttributes['DTSTART']  = time();
-            $requiredAttributes['SUMMARY']  = '';
+            $requiredAttributes['DTSTART'] = time();
+            $requiredAttributes['SUMMARY'] = '';
             break;
 
         case 'REPLY':
@@ -54,9 +49,9 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
             break;
 
         case 'ADD':
-            $requiredAttributes['DTSTART']  = time();
+            $requiredAttributes['DTSTART'] = time();
             $requiredAttributes['SEQUENCE'] = 1;
-            $requiredAttributes['SUMMARY']  = '';
+            $requiredAttributes['SUMMARY'] = '';
             break;
 
         case 'CANCEL':
@@ -88,7 +83,8 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
     function updateAttendee($email, $status, $fullname = '')
     {
         foreach ($this->_attributes as $key => $attribute) {
-            if ($attribute['name'] == 'ATTENDEE' && $attribute['value'] == 'MAILTO:' . $email) {
+            if ($attribute['name'] == 'ATTENDEE' &&
+                $attribute['value'] == 'mailto:' . $email) {
                 $this->_attributes[$key]['params']['PARTSTAT'] = $status;
                 if (!empty($fullname)) {
                     $this->_attributes[$key]['params']['CN'] = $fullname;
@@ -101,7 +97,7 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
         if (!empty($fullname)) {
             $params['CN'] = $fullname;
         }
-        $this->setAttribute('ATTENDEE', 'MAILTO:' . $email, $params);
+        $this->setAttribute('ATTENDEE', 'mailto:' . $email, $params);
     }
 
     /**
@@ -113,7 +109,7 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
     {
         $organizer = $this->getAttribute('ORGANIZER', true);
         if (is_a($organizer, 'PEAR_Error')) {
-            return null;
+            return _("An unknown person");
         }
 
         if (isset($organizer[0]['CN'])) {
@@ -128,7 +124,7 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
     /**
      * Update this event with details from another event.
      *
-     * @param object Horde_iCalendar_vEvent $vevent  The vEvent with latest details.
+     * @param Horde_iCalendar_vEvent $vevent  The vEvent with latest details.
      */
     function updateFromvEvent($vevent)
     {
@@ -137,7 +133,9 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
             $currentValue = $this->getAttribute($newAttribute['name']);
             if (is_a($currentValue, 'PEAR_error')) {
                 // Already exists so just add it.
-                $this->setAttribute($newAttribute['name'], $newAttribute['value'], $newAttribute['params']);
+                $this->setAttribute($newAttribute['name'],
+                                    $newAttribute['value'],
+                                    $newAttribute['params']);
             } else {
                 // Already exists so locate and modify.
                 $found = false;
@@ -178,19 +176,21 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
      * Update just the attendess of event with details from another
      * event.
      *
-     * @param object Horde_iCalendar_vEvent $vevent  The vEvent with latest details
+     * @param Horde_iCalendar_vEvent $vevent  The vEvent with latest details
      */
     function updateAttendeesFromvEvent($vevent)
     {
         $newAttributes = $vevent->getAllAttributes();
         foreach ($newAttributes as $newAttribute) {
-            if (!$newAttribute['name'] == 'ATTENDEE') {
+            if ($newAttribute['name'] != 'ATTENDEE') {
                 continue;
             }
             $currentValue = $this->getAttribute($newAttribute['name']);
             if (is_a($currentValue, 'PEAR_error')) {
                 // Already exists so just add it.
-                $this->setAttribute($newAttribute['name'], $newAttribute['value'], $newAttribute['params']);
+                $this->setAttribute($newAttribute['name'],
+                                    $newAttribute['value'],
+                                    $newAttribute['params']);
             } else {
                 // Already exists so locate and modify.
                 $found = false;

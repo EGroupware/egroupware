@@ -6,16 +6,17 @@ include_once 'XML/WBXML/DTDManager.php';
 include_once 'Horde/String.php';
 
 /**
- * $Horde: framework/XML_WBXML/WBXML/Encoder.php,v 1.39 2006/01/01 21:10:25 jan Exp $
+ * From Binary XML Content Format Specification Version 1.3, 25 July 2001
+ * found at http://www.wapforum.org
  *
- * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
+ * $Horde: framework/XML_WBXML/WBXML/Encoder.php,v 1.25.10.17 2008/08/26 15:41:21 jan Exp $
  *
- * See the enclosed file COPYING for license information (LGPL).  If you
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
- * From Binary XML Content Format Specification Version 1.3, 25 July
- * 2001 found at http://www.wapforum.org
- *
+ * @author  Anthony Mills <amills@pyramid6.com>
  * @package XML_WBXML
  */
 class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
@@ -38,7 +39,7 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     var $_subParser = null;
     var $_subParserStack = 0;
-    
+
     /**
      * The XML parser.
      *
@@ -97,7 +98,10 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
     function writeHeader($uri)
     {
         $this->_dtd = &$this->_dtdManager->getInstanceURI($uri);
-
+        if (!$this->_dtd) {
+            // TODO: proper error handling
+            die('Unable to find dtd for ' . $uri);
+        }
         $dpiString = $this->_dtd->getDPI();
 
         // Set Version Number from Section 5.4
@@ -132,7 +136,11 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function writeDocumentPublicIdentifier($dpiString, &$strings)
     {
-        $i = XML_WBXML::getDPIInt($dpiString);
+        $i = 0;
+
+        // The OMA test suite doesn't like DPI as integer code.
+        // So don't try lookup and always send full DPI string.
+        // $i = XML_WBXML::getDPIInt($dpiString);
 
         if ($i == 0) {
             $strings[0] = $dpiString;
@@ -191,7 +199,7 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function _getBytes($string, $cs)
     {
-        $string = String::convertCharset($string, $cs, 'utf-8');
+	$string = String::convertCharset($string, $cs, 'utf-8');
         $nbytes = strlen($string);
 
         $bytes = array();
@@ -210,8 +218,10 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
         return array($uri, $name);
     }
 
-    function startElement($uri, $name, $attributes)
+    function startElement($uri, $name, $attributes = array())
     {
+	#Horde::logMessage("WBXML Encoder $uri, " . ($this->_hasWrittenHeader ? 'true' : 'false'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
         if ($this->_subParser == null) {
             if (!$this->_hasWrittenHeader) {
                 $this->writeHeader($uri);
@@ -222,11 +232,11 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
             if ($this->_subParser == null) {
                 $this->writeTag($name, $attributes, true, $this->_charset);
             } else {
-                $this->_subParser->startElement($uri,$name, $attributes);
+                $this->_subParser->startElement($uri, $name, $attributes);
             }
         } else {
             $this->_subParserStack++;
-            $this->_subParser->startElement($uri,$name,$attributes);
+            $this->_subParser->startElement($uri, $name, $attributes);
         }
     }
 
@@ -237,12 +247,12 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
         $this->startElement($uri, $name, $attributes);
     }
 
-    function opaque($bytes)
+    function opaque($o)
     {
         if ($this->_subParser == null) {
             $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_OPAQUE);
-            XML_WBXML::intToMBUInt32($this->_output, count($bytes));
-            $this->_output .= $bytes;
+            XML_WBXML::intToMBUInt32($this->_output, strlen($o));
+            $this->_output .= $o;
         }
     }
 
@@ -274,7 +284,6 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function writeTag($name, $attrs, $hasContent, $cs)
     {
-
         if ($attrs != null && !count($attrs)) {
             $attrs = null;
         }
@@ -309,7 +318,7 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
             }
         }
 
-        if ($attrs != null && is_array($attrs) && count($attrs) > 0 ) {
+        if ($attrs != null && is_array($attrs) && count($attrs) > 0) {
             $this->writeAttributes($attrs, $cs);
         }
     }
@@ -376,11 +385,16 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function changecodepage($uri)
     {
-        // @todo: this is a hack!
-        // what's the reason for this hack???? Lars
-        if ($uri != 'syncml:devinf' && $uri != 'syncml:metinf' && $uri != 'syncml:syncml1.0' && !preg_match('/1\.1$/', $uri)) {
+        if ($this->_dtd->getVersion() == 2 && !preg_match('/1\.2$/', $uri)) {
+            $uri .= '1.2';
+        }
+        if ($this->_dtd->getVersion() == 1 && !preg_match('/1\.1$/', $uri)) {
             $uri .= '1.1';
         }
+        if ($this->_dtd->getVersion() == 0 && !preg_match('/1\.0$/', $uri)) {
+            $uri .= '1.0';
+        }
+
         $cp = $this->_dtd->toCodePageURI($uri);
         if (strlen($cp)) {
             $this->_dtd = &$this->_dtdManager->getInstanceURI($uri);

@@ -1,23 +1,30 @@
 <?php
-
-include_once 'Horde/SyncML/Command.php';
-
 /**
+ * eGroupWare - SyncML based on Horde 3
+ *
  * The Horde_SyncML_Command_Final class.
  *
- * $Horde: framework/SyncML/SyncML/Command/Final.php,v 1.10 2004/05/26 17:41:30 chuck Exp $
  *
- * Copyright 2003-2004 Anthony Mills <amills@pyramid6.com>
+ * Using the PEAR Log class (which need to be installed!)
  *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Anthony Mills <amills@pyramid6.com>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Anthony Mills <amills@pyramid6.com>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
  */
+include_once 'Horde/SyncML/Command.php';
+
 class Horde_SyncML_Command_Final extends Horde_SyncML_Command {
+
+    /**
+     * Name of the command.
+     *
+     * @var string
+     */
+    var $_cmdName = 'Final';
 
     function output($currentCmdID, &$output)
     {

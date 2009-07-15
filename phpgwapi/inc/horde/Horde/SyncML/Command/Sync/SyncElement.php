@@ -1,37 +1,40 @@
 <?php
-
+/**
+ * eGroupWare - SyncML based on Horde 3
+ *
+ *
+ * Using the PEAR Log class (which need to be installed!)
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Anthony Mills <amills@pyramid6.com>
+ * @author Joerg Lehrke <jlehrke@noc.de>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
 include_once 'Horde/SyncML/Command.php';
 
-/**
- * $Horde: framework/SyncML/SyncML/Command/Sync/SyncElement.php,v 1.11 2004/07/02 19:24:44 chuck Exp $
- *
- * Copyright 2003-2004 Anthony Mills <amills@pyramid6.com>
- * Copyright 2005-2006 Lars Kneschke <l.kneschke@metaways.de>
- *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Anthony Mills <amills@pyramid6.com>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
- */
 class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 
 	var $_luid;
 	var $_guid;
-	var $_isSource;
-	var $_content;
+	var $_contentSize;
 	var $_contentType;
+	var $_contentFormat;
 	var $_status = RESPONSE_OK;
-	var $_items;
-	
+	var $_curItem;
+	var $_items = array();
+	var $_moreData = false;
+        var $_command = false;
+
 	function &factory($command, $params = null) {
 		include_once 'Horde/SyncML/Command/Sync/SyncElementItem.php';
 		@include_once 'Horde/SyncML/Command/Sync/' . $command . '.php';
-		
+
 		$class = 'Horde_SyncML_Command_Sync_' . $command;
-		
+
 		if (class_exists($class)) {
 			#Horde::logMessage('SyncML: Class definition of ' . $class . ' found in SyncElement::factory.', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			return $element = new $class($params);
@@ -44,78 +47,122 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 
 	function startElement($uri, $element, $attrs) {
 		parent::startElement($uri, $element, $attrs);
-		
-		switch ($this->_xmlStack) {
-			case 3:
-				if ($element == 'Source') {
-					$this->_isSource = true;
+		$state = &$_SESSION['SyncML.state'];
+
+		switch (count($this->_stack)) {
+			case 1:
+				$this->_command = $element;
+				break;
+			case 2:
+				if ($element == 'Item') {
+					if (isset($state->curSyncItem)) {
+						// Copy from state in case of <MoreData>.
+						$this->_curItem = &$state->curSyncItem;
+						if (isset($this->_luid) &&
+							($this->_luid != $this->_curItem->_luid)) {
+							Horde::logMessage('SyncML: moreData mismatch for LocURI ' .
+								$this->_curItem->_luid . ' (' . $this->_luid . ')', __FILE__, __LINE__, PEAR_LOG_ERROR);
+						} else {
+							Horde::logMessage('SyncML: moreData item found for LocURI ' . $this->_curItem->_luid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+						}
+						unset($state->curSyncItem);
+					} else {
+						$this->_curItem = new Horde_SyncML_Command_Sync_SyncElementItem();
+					}
+					$this->_moreData = false;
 				}
 				break;
 		}
 	}
-	
+
 	function endElement($uri, $element) {
+		$state = &$_SESSION['SyncML.state'];
 		$search = array('/ *\n/','/ *$/m');
 		$replace = array('','');
-		
-		switch ($this->_xmlStack) {
+
+		switch (count($this->_stack)) {
 			case 1:
+				$this->_command = false;
 				// Need to add sync elements to the Sync method?
 				#error_log('total # of items: '.count($this->_items));
 				#error_log(print_r($this->_items[10], true));
 				break;
 			case 2;
 				if($element == 'Item') {
-					$item = new Horde_SyncML_Command_Sync_SyncElementItem();
-
 					if($this->_luid) {
-						$item->setLocURI($this->_luid);
-						$item->setContent($this->_content);
-						$item->setContentType($this->_contentType);
-					
+						$this->_curItem->setLocURI($this->_luid);
+						$this->_curItem->setContentType($this->_contentType);
+						$this->_curItem->setContentFormat($this->_contentFormat);
+						$this->_curItem->setCommand($this->_command);
+
 						if($this->_contentSize)
-							$item->setContentType($this->_contentSize);
-						if($this->_moreData)
-							$item->setMoreData($this->_moreData);
-							
-						$this->_items[$this->_luid] = $item;
+							$this->_curItem->setContentSize($this->_contentSize);
+						if($this->_moreData) {
+							$state->curSyncItem = &$this->_curItem;
+							Horde::logMessage('SyncML: moreData item saved for LocURI ' . $this->_curItem->_luid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+						} else {
+							if (strtolower($this->_curItem->getContentFormat()) == 'b64') {
+								$content = $this->_curItem->getContent();
+								$content =  ($content ? base64_decode($content) : '');
+								$this->_curItem->setContent($content);
+								#Horde::logMessage('SyncML: BASE64 encoded item for LocURI '
+								#	. $this->_curItem->_luid . ":\n $content", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+							}
+							$this->_items[$this->_luid] = $this->_curItem;
+						}
 					}
-					
-					unset($this->_content);
 					unset($this->_contentSize);
 					unset($this->_luid);
 				}
 				break;
 			case 3:
-				if ($element == 'Source') {
-					$this->_isSource = false;
-				} elseif ($element == 'Data') {
-					$this->_content = $this->_chars;
-				} elseif ($element == 'MoreData') {
-					$this->_moreData = TRUE;
-				} elseif ($element == 'Type') {
-					if(empty($this->_contentType))
-						$this->_contentType = trim($this->_chars);
+				switch ($element) {
+					case 'Data':
+						$this->_curItem->_content .= $this->_chars;
+						break;
+					case 'MoreData':
+						$this->_moreData = true;
+						break;
+					case 'Type':
+						if(empty($this->_contentType)) {
+							$this->_contentType = trim($this->_chars);
+						}
+						break;
+					case 'Format':
+						$this->_contentFormat = strtolower(trim($this->_chars));
+						break;
+					case 'Size':
+						$this->_contentSize = $this->_chars;
+						break;
 				}
 				break;
-			
+
 			case 4:
-				if ($element == 'LocURI' && $this->_isSource) {
-					$this->_luid = trim($this->_chars);
-				} elseif ($element == 'Type') {
-					$this->_contentType = trim($this->_chars);
-				} elseif ($element == 'Size') {
-					$this->_contentSize = trim($this->_chars);
+				switch ($element) {
+					case 'LocURI':
+						if ($this->_stack[2] == 'Source') {
+							$this->_luid = trim($this->_chars);
+						}
+						break;
+					case 'Type':
+						$this->_contentType = trim($this->_chars);
+						break;
+					case 'Format':
+						$this->_contentFormat = strtolower(trim($this->_chars));
+						break;
+					case 'Size':
+						$this->_contentSize = trim($this->_chars);
+						break;
 				}
 				break;
 		}
-		
+
 		parent::endElement($uri, $element);
 	}
-	
-	function getSyncElementItems() {
-		return (array)$this->_items;
-	}
+
+    function getSyncElementItems() {
+         return (array)$this->_items;
+    }
 
     function getLocURI()
     {
@@ -149,14 +196,17 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 
     function getContent()
     {
-        return $this->_content;
+	if ($this->_curItem) {
+        	return $this->_curItem->getcontent();
+	}
+	return false;
     }
 
-    function setContent($content)
+    function hasMoreData()
     {
-        $this->_content = $content;
+        return $this->_moreData;
     }
-    
+
     function setStatus($_status)
     {
     	$this->_status = $_status;

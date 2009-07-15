@@ -5,27 +5,27 @@ require_once EGW_API_INC.'/horde/Horde/iCalendar.php';
 /**
  * Class representing vNotes.
  *
- * $Horde: framework/iCalendar/iCalendar/vnote.php,v 1.2 2004/08/13 19:11:35 karsten Exp $
+ * $Horde: framework/iCalendar/iCalendar/vnote.php,v 1.3.10.9 2008/07/03 08:42:58 jan Exp $
  *
- * Copyright 2003-2004 Mike Cochrane <mike@graftonhall.co.nz>
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
+ * @author  Mike Cochrane <mike@graftonhall.co.nz>
  * @author  Karsten Fourmont <fourmont@gmx.de>
- * @version $Revision$
  * @package Horde_iCalendar
  */
 class Horde_iCalendar_vnote extends Horde_iCalendar {
 
+    function Horde_iCalendar_vnote($version = '1.1')
+    {
+        return parent::Horde_iCalendar($version);
+    }
+
     function getType()
     {
         return 'vNote';
-    }
-
-    function parsevCalendar($data)
-    {
-        return parent::parsevCalendar($data, 'VNOTE');
     }
 
     /**
@@ -43,7 +43,7 @@ class Horde_iCalendar_vnote extends Horde_iCalendar {
             }
         }
 
-        return $this->_exportvData('VNOTE') . $this->_newline;
+        return $this->_exportvData('VNOTE');
     }
 
 }

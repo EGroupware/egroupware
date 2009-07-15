@@ -2,15 +2,14 @@
 /**
  * Class representing vTodos.
  *
- * $Horde: framework/iCalendar/iCalendar/vtodo.php,v 1.13 2004/08/13 19:11:35 karsten Exp $
+ * $Horde: framework/iCalendar/iCalendar/vtodo.php,v 1.13.10.8 2008/07/03 08:42:58 jan Exp $
  *
- * Copyright 2003-2004 Mike Cochrane <mike@graftonhall.co.nz>
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
  * @author  Mike Cochrane <mike@graftonhall.co.nz>
- * @version $Revision$
  * @since   Horde 3.0
  * @package Horde_iCalendar
  */
@@ -19,11 +18,6 @@ class Horde_iCalendar_vtodo extends Horde_iCalendar {
     function getType()
     {
         return 'vTodo';
-    }
-
-    function parsevCalendar($data)
-    {
-        parent::parsevCalendar($data, 'VTODO');
     }
 
     function exportvCalendar()

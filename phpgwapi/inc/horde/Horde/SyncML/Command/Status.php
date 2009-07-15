@@ -1,37 +1,76 @@
 <?php
-
+/**
+ * eGroupWare - SyncML based on Horde 3
+ *
+ *
+ * Using the PEAR Log class (which need to be installed!)
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Anthony Mills <amills@pyramid6.com>
+ * @author Joerg Lehrke <jlehrke@noc.de>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
 include_once 'Horde/SyncML/State.php';
 include_once 'Horde/SyncML/Command.php';
 
-/**
- * $Horde: framework/SyncML/SyncML/Command/Status.php,v 1.15 2004/07/02 19:24:44 chuck Exp $
- *
- * Copyright 2003-2004 Anthony Mills <amills@pyramid6.com>
- *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Anthony Mills <amills@pyramid6.com>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
- */
 class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
 
+   /**
+     * Name of the command.
+     *
+     * @var string
+     */
+    var $_cmdName = 'Status';
+
+    /**
+     * The Response code of the command sent to the client, that this
+     * Status response refers to.
+     *
+     * @var integer
+     */
     var $_response;
 
+    /**
+     * The command ID (CmdID) of the command sent to the client, that this
+     * Status response refers to.
+     *
+     * @var integer
+     */
     var $_cmdRef;
 
     /**
-     * Must be present.
+     * The command (Add, Replace, etc) sent to the client, that this Status
+     * response refers to.
+     *
+     * @var string
      */
     var $_cmd;
 
     /**
-     * Must if not null (what does this mean?).
+     * The server ID of the sent object, that this Status response refers to.
+     *
+     * This element is optional. If specified, Status response refers to a
+     * single Item in the command sent to the client. It refers to all Items in
+     * the sent command otherwise.
+     *
+     * @var string
      */
     var $_sourceRef;
 
+
+    /**
+     * The client ID of the sent object, that this Status response refers to.
+     *
+     * This element is optional. If specified, Status response refers to a
+     * single Item in the command sent to the client. It refers to all Items in
+     * the sent command otherwise.
+     *
+     * @var string
+     */
     var $_targetRef;
 
     var $_chalMetaFormat;
@@ -48,6 +87,15 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
 
     var $_itemSourceLocURI;
 
+    var $_syncItems;
+
+   /**
+     * Constructor.
+     *
+     * @param integer $response   The response code.
+     * @param string  $cmd        The command sent to the client,
+     *                             that this Status response refers to.
+     */
     function Horde_SyncML_Command_Status($response = null, $cmd = null)
     {
         if ($response != null) {
@@ -61,12 +109,11 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
 
     function output($currentCmdID, &$output)
     {
+        $state = &$_SESSION['SyncML.state'];
+
         $attrs = array();
 
-        $state = $_SESSION['SyncML.state'];
-
         if ($this->_cmd != null) {
-            $attrs = array();
             $output->startElement($state->getURI(), 'Status', $attrs);
 
             $output->startElement($state->getURI(), 'CmdID', $attrs);
@@ -174,61 +221,41 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
                 $output->endElement($state->getURI(), 'Item');
             }
 
-            if (isset($this->_itemTargetLocURI) && isset($this->_itemSourceLocURI)) {
-                $output->startElement($state->getURI(), 'Item', $attrs);
+			if (isset($this->_syncItems)) {
+				// Support multible items per command
+				foreach ($this->_syncItems as $locURI => &$syncItem) {
+					$output->startElement($state->getURI(), 'Item', $attrs);
+					$output->startElement($state->getURI(), 'Source', $attrs);
+					$output->startElement($state->getURI(), 'LocURI', $attrs);
+					$output->characters($locURI);
+					$output->endElement($state->getURI(), 'LocURI');
+					$output->endElement($state->getURI(), 'Source');
+					$output->endElement($state->getURI(), 'Item');
+				}
+			} elseif (isset($this->_itemTargetLocURI) || isset($this->_itemSourceLocURI)) {
+				$output->startElement($state->getURI(), 'Item', $attrs);
 
-                $output->startElement($state->getURI(), 'Target', $attrs);
-                $output->startElement($state->getURI(), 'LocURI', $attrs);
-                $output->characters($this->_itemTargetLocURI);
-                $output->endElement($state->getURI(), 'LocURI');
-                $output->endElement($state->getURI(), 'Target');
-
-                $output->startElement($state->getURI(), 'Source', $attrs);
-                $output->startElement($state->getURI(), 'LocURI', $attrs);
-                $output->characters($this->_itemSourceLocURI);
-                $output->endElement($state->getURI(), 'LocURI');
-                $output->endElement($state->getURI(), 'Source');
-
-                $output->endElement($state->getURI(), 'Item');
-            }
+				if (isset($this->_itemTargetLocURI)) {
+					$output->startElement($state->getURI(), 'Target', $attrs);
+					$output->startElement($state->getURI(), 'LocURI', $attrs);
+					$output->characters($this->_itemTargetLocURI);
+					$output->endElement($state->getURI(), 'LocURI');
+					$output->endElement($state->getURI(), 'Target');
+				}
+				if (isset($this->_itemSourceLocURI)) {
+					$output->startElement($state->getURI(), 'Source', $attrs);
+					$output->startElement($state->getURI(), 'LocURI', $attrs);
+					$output->characters($this->_itemSourceLocURI);
+					$output->endElement($state->getURI(), 'LocURI');
+					$output->endElement($state->getURI(), 'Source');
+				}
+				$output->endElement($state->getURI(), 'Item');
+			}
 
             $output->endElement($state->getURI(), 'Status');
 
             $currentCmdID++;
-            
-            // moredata pending request them
-/*            if($this->_response == RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED) {
-		$output->startElement($state->getURI(), 'Alert', $attrs);
 
-		$output->startElement($state->getURI(), 'CmdID', $attrs);
-		$chars = $currentCmdID;
-		$output->characters($chars);
-		$output->endElement($state->getURI(), 'CmdID');
-
-		$output->startElement($state->getURI(), 'Data', $attrs);
-		$output->characters(ALERT_NEXT_MESSAGE);
-		$output->endElement($state->getURI(), 'Data');
-		
-		if (isset($this->_itemTargetLocURI) && isset($this->_itemSourceLocURI)) {
-			$output->startElement($state->getURI(), 'Item', $attrs);
-			
-			$output->startElement($state->getURI(), 'Target', $attrs);
-			$output->startElement($state->getURI(), 'LocURI', $attrs);
-			$output->characters($this->_itemTargetLocURI);
-			$output->endElement($state->getURI(), 'LocURI');
-			$output->endElement($state->getURI(), 'Target');
-			
-			$output->startElement($state->getURI(), 'Source', $attrs);
-			$output->startElement($state->getURI(), 'LocURI', $attrs);
-			$output->characters($this->_itemSourceLocURI);
-			$output->endElement($state->getURI(), 'LocURI');
-			$output->endElement($state->getURI(), 'Source');
-		}
-
-		$output->endElement($state->getURI(), 'Alert');		
-
-		$currentCmdID++;
-            } */
         }
 
         return $currentCmdID;
@@ -322,5 +349,15 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
     function setItemTargetLocURI($itemTargetLocURI)
     {
         $this->_itemTargetLocURI = $itemTargetLocURI;
+    }
+
+    /**
+     * Setter for the the list of handled SyncItems
+     *
+     * @param array $syncItems  The Items of the command
+     */
+    function setSyncItems(&$syncItems)
+    {
+        $this->_syncItems = $syncItems;
     }
 }

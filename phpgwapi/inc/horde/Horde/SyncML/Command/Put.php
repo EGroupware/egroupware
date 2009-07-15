@@ -1,22 +1,30 @@
 <?php
-
+/**
+ * eGroupWare - SyncML based on Horde 3
+ *
+ *
+ * Using the PEAR Log class (which need to be installed!)
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Anthony Mills <amills@pyramid6.com>
+ * @author Joerg Lehrke <jlehrke@noc.de>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
 include_once 'Horde/SyncML/State.php';
 include_once 'Horde/SyncML/Command.php';
 
-/**
- * $Horde: framework/SyncML/SyncML/Command/Put.php,v 1.12 2004/07/02 19:24:44 chuck Exp $
- *
- * Copyright 2003-2004 Anthony Mills <amills@pyramid6.com>
- *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Anthony Mills <amills@pyramid6.com>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
- */
 class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
+
+    /**
+     * Name of the command.
+     *
+     * @var string
+     */
+    var $_cmdName = 'Put';
 
     /**
      * @var string $_manufacturer
@@ -37,68 +45,75 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
     var $_oem;
 
     /**
+     * @var array $_deviceInfo
+     */
+
+    var $_deviceInfo;
+
+    /**
      * @var string $_softwareVersion
      */
 
     var $_softwareVersion;
 
 	function endElement($uri, $element) {
-		switch ($this->_xmlStack) {
+		switch (count($this->_stack)) {
 			case 5:
-				switch($element) {
+				switch ($element) {
 					case 'DataStore':
-						$this->_deviceInfo['dataStore'][$this->_sourceReference] = array(
+						$this->_deviceInfo['dataStore'][$this->_sourceReference] = array (
 							'maxGUIDSize'		=> $this->_maxGUIDSize,
 							'rxPreference'		=> $this->_rxPreference,
 							'txPreference'		=> $this->_txPreference,
 							'syncCapabilities'	=> $this->_syncCapabilities,
+							'properties'		=> $this->_properties,
 						);
 						break;
-					
+
 					case 'DevID':
 						$this->_deviceInfo['deviceID'] 		= trim($this->_chars);
 						break;
-					
+
 					case 'DevTyp':
 						$this->_deviceInfo['deviceType']	= trim($this->_chars);
 						break;
-					
+
 					case 'FwV':
 						$this->_deviceInfo['firmwareVersion']	= trim($this->_chars);
 						break;
-						
+
 					case 'HwV':
 						$this->_deviceInfo['hardwareVersion']	= trim($this->_chars);
 						break;
-					
+
 					case 'Man':
 						$this->_deviceInfo['manufacturer']	= trim($this->_chars);
 						break;
-					
+
 					case 'Mod':
 						$this->_deviceInfo['model']		= trim($this->_chars);
 						break;
-					
+
 					case 'OEM':
 						$this->_deviceInfo['oem']		= trim($this->_chars);
 						break;
-					
+
 					case 'SwV':
 						$this->_deviceInfo['softwareVersion']	= trim($this->_chars);
 						break;
-					
+
 					case 'SupportLargeObjs':
 						$this->_deviceInfo['supportLargeObjs']	= true;
 						break;
-					
+
 					case 'SupportNumberOfChanges':
 						$this->_deviceInfo['supportNumberOfChanges'] = true;
 						break;
-					
+
 					case 'UTC':
 						$this->_deviceInfo['UTC']		= true;
 						break;
-						
+
 					case 'VerDTD':
 						$this->_deviceInfo['DTDVersion']	= trim($this->_chars);
 						break;
@@ -109,18 +124,18 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 					case 'MaxGUIDSize':
 						$this->_maxGUIDSize = trim($this->_chars);
 						break;
-					
+
 					case 'Rx-Pref':
 						$this->_rxPreference = array(
 							'contentType'		=> $this->_contentType,
 							'contentVersion'	=> $this->_contentVersion,
 						);
 						break;
-						
+
 					case 'SourceRef':
 						$this->_sourceReference = trim($this->_chars);
 						break;
-					
+
 					case 'Tx-Pref':
 						$this->_txPreference = array(
 							'contentType'		=> $this->_contentType,
@@ -129,7 +144,7 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 						break;
 				}
 				break;
-				
+
 			case 7:
 				switch($element) {
 					case 'CTType':
@@ -178,87 +193,165 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 							}
 						}
 						break;
-					
+
 					case 'SyncType':
 						$this->_syncCapabilities[] = trim($this->_chars);
 						break;
-						
+
 					case 'VerCT':
 						$this->_contentVersion = trim($this->_chars);
 						break;
+
+					case 'Property':
+						if (isset($this->_PropName)) {
+							$this->_properties[$this->_contentType][$this->_contentVersion][$this->_PropName] = array(
+								'Size'		=>	$this->_PropSize,
+								'NoTruncate'	=>	$this->_PropNoTruncate,
+							);
+						}
+						break;
 				}
 				break;
+
+			case 8:
+				switch($element) {
+					case 'PropName':
+						$this->_PropName = trim($this->_chars);
+						break;
+
+					case 'Size':
+						$this->_PropSize = trim($this->_chars);
+						break;
+
+					case 'NoTruncate':
+						$this->_PropNoTruncate = true;
+						break;
+				}
+				beak;
 		}
-			
+
 		parent::endElement($uri, $element);
 	}
-    
+
 	function finalizeDeviceInfo()
 	{
 		// get some more information about the device from out of band data
 
 		$ua = $_SERVER['HTTP_USER_AGENT'];
 
-		if (preg_match("/^\s*Funambol (.*) (\d+\.\d+\.\d+)\s*$/i", $ua, $matches))
-		{
-			if (!isset($this->_deviceInfo['manufacturer']))
-				$this->_deviceInfo['manufacturer'] = 'Funambol';
-			if (!isset($this->_deviceInfo['model']))
-				$this->_deviceInfo['model'] = 'Funambol ' . trim($matches[1]);
-			if (!isset($this->_deviceInfo['softwareVersion']))
-				$this->_deviceInfo['softwareVersion'] = $matches[2];
+		if (preg_match("/^\s*Funambol (.*) [^\d]*(\d+\.?\d*)[\.|\d]*\s*$/i", $ua, $matches)) {
+			// Funambol uses the hardware Manufacturer we don't care about
+			$this->_deviceInfo['manufacturer'] = 'Funambol';
+			$this->_deviceInfo['model'] = trim($matches[1]);
+			$this->_deviceInfo['softwareVersion'] = floatval($matches[2]);
 
-			if (!isset($this->_deviceInfo['deviceType']))
-			{
-				switch (strtolower(trim($matches[1])))
-				{
-					case 'outlook plug-in':
-					default:
-						$this->_deviceInfo['deviceType'] = 'workstation';
-						break;
+			if (!isset($this->_deviceInfo['deviceType'])) {
+				switch (strtolower(trim($matches[1]))) {
 					case 'pocket pc plug-in':
 						$this->_deviceInfo['deviceType'] = 'windowsmobile';
 						break;
+					case 'outlook plug-in':
+					default:
+						$this->_deviceInfo['deviceType'] = 'workstation';
+					break;
 				}
 			}
 		}
 
-		$devid = $this->_deviceInfo['deviceID'];
-		switch (strtolower($devid))
-		{
+		switch (strtolower($this->_deviceInfo['deviceID'])) {
 			case 'fmz-thunderbird-plugin':
-				if (empty($this->_devinceInfo['manufacturer']))
+				if (empty($this->_devinceInfo['manufacturer'])) {
 					$this->_deviceInfo['manufacturer'] = 'Funambol';
-				if (empty($this->_devinceInfo['model']))
+				}
+				if (empty($this->_devinceInfo['model'])) {
 					$this->_deviceInfo['model'] = 'ThunderBird';
-				if (empty($this->_devinceInfo['softwareVersion']))
-					$this->_deviceInfo['softwareVersion']	= '0.3';
+				}
+				if (empty($this->_devinceInfo['softwareVersion'])) {
+					$this->_deviceInfo['softwareVersion']	= '3.0';
+				}
+				break;
+		}
+
+		if (preg_match('/Funambol.*/i', $this->_deviceInfo['manufacturer'])) {
+			$this->_deviceInfo['supportLargeObjs'] = true;
+		}
+
+		switch (strtolower($this->_deviceInfo['manufacturer'])) {
+			case 'sonyericsson':
+			case 'sony ericsson':
+				if (strtolower($this->_deviceInfo['model']) == 'w890i') {
+					$this->_deviceInfo['supportLargeObjs'] = false;
+				}
+				break;
+			case 'synthesis ag':
+				foreach ($this->_deviceInfo['dataStore'] as &$ctype) {
+					$ctype['maxGUIDSize'] = 255;
+				}
 				break;
 		}
 	}
-	
+
 	function output($currentCmdID, &$output ) {
 		$state = &$_SESSION['SyncML.state'];
-		
-		$status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Put');
+
+		$status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), $this->_cmdName);
 		$status->setCmdRef($this->_cmdID);
-		
-		$ref = ($state->getVersion() == 0) ? './devinf10' : './devinf11';
-		
+
+        if ($state->getVersion() == 2) {
+		    $ref = './devinf12';
+        } elseif ($state->getVersion() == 1) {
+		    $ref = './devinf11';
+        } else {
+		    $ref = './devinf10';
+        }
+
 		$status->setSourceRef($ref);
-		
+
 		if($state->isAuthorized()) {
 			$this->finalizeDeviceInfo();
+
 			if(count((array)$this->_deviceInfo) > 0) {
-				$state->setClientDeviceInfo($this->_deviceInfo);
+				$devInfo = $state->getClientDeviceInfo();
+				if (is_array($devInfo['dataStore'])
+					&& $devInfo['softwareVersion'] == $this->_deviceInfo['softwareVersion']) {
+					// merge with existing information
+					$devInfo['dataStore'] =
+						array_merge($devInfo['dataStore'],
+							$this->_deviceInfo['dataStore']);
+				} else {
+					// new device
+					$devInfo = $this->_deviceInfo;
+				}
+	            #Horde::logMessage("SyncML: Put DeviceInfo:\n" . print_r($this->_deviceInfo, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				$state->setClientDeviceInfo($devInfo);
 				$state->writeClientDeviceInfo();
 			}
 		}
-		
+
 		return $status->output($currentCmdID, $output);
 	}
 
 	function startElement($uri, $element, $attrs) {
+	       	#Horde::logMessage("SyncML: startElement[" . count($this->_stack) . "] $uri $element", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		switch (count($this->_stack)) {
+			case 4:
+				switch ($element) {
+					case 'DataStore':
+						$this->_properties = array();
+						break;
+				}
+				break;
+
+			case 6:
+				switch ($element) {
+					case 'Property':
+						unset($this->_PropName);
+						$this->_PropSize = -1;
+						$this->_PropNoTruncate = false;
+						break;
+				}
+				break;
+		}
 		parent::startElement($uri, $element, $attrs);
 	}
 

@@ -1,43 +1,60 @@
 <?php
-
-include_once 'Horde/SyncML/State.php';
-include_once 'Horde/SyncML/Command.php';
-
 /**
+ * eGroupWare - SyncML based on Horde 3
+ *
  * The Horde_SyncML_Map class provides a SyncML implementation of
  * the Map command as defined in SyncML Representation Protocol,
  * version 1.0.1 5.5.8.
  *
- * $Horde: framework/SyncML/SyncML/Command/Map.php,v 1.1 2004/07/02 19:24:44 chuck Exp $
  *
- * Copyright 2004 Karsten Fourmont <fourmont@gmx.de>
+ * Using the PEAR Log class (which need to be installed!)
  *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
  * @author  Karsten Fourmont <fourmont@gmx.de>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
  */
+include_once 'Horde/SyncML/State.php';
+include_once 'Horde/SyncML/Command.php';
+
 class Horde_SyncML_Command_Map extends Horde_SyncML_Command {
 
     /**
-     * @var string $_sourceURI
+     * Name of the command.
+     *
+     * @var string
+     */
+    var $_cmdName = 'Map';
+
+   /**
+     * Source database of the Map command.
+     *
+     * @var string
      */
     var $_sourceLocURI;
 
     /**
-     * @var string $_targetURI
+     * Target database of the Map command.
+     *
+     * @var string
      */
     var $_targetLocURI;
 
     /**
-     * Use in xml tag.
+     * Recipient map item specifier.
+     *
+     * @var string
      */
-    var $_isInSource;
-
     var $_mapTarget;
+
+    /**
+     * Originator map item specifier.
+     *
+     * @var string
+     */
     var $_mapSource;
 
     function output($currentCmdID, &$output)
@@ -60,76 +77,25 @@ class Horde_SyncML_Command_Map extends Horde_SyncML_Command {
         return $currentCmdID;
     }
 
-    /**
-     * Setter for property sourceURI.
-     *
-     * @param string $sourceURI  New value of property sourceURI.
-     */
-    function setSourceLocURI($sourceURI)
-    {
-        $this->_sourceURI = $sourceURI;
-    }
-
-    function getTargetLocURI()
-    {
-        return $this->_targetURI;
-    }
-
-    /**
-     * Setter for property targetURI.
-     *
-     * @param string $targetURI  New value of property targetURI.
-     */
-    function setTargetURI($targetURI)
-    {
-        $this->_targetURI = $targetURI;
-    }
-
     function startElement($uri, $element, $attrs)
     {
         parent::startElement($uri, $element, $attrs);
 
-        switch ($this->_xmlStack) {
-        case 2:
-            if ($element == 'Target') {
-                $this->_isInSource = false;
-            }
-            if ($element == 'Source') {
-                $this->_isInSource = true;
-            }
-            if ($element == 'MapItem') {
-                unset($this->_mapTarget);
-                unset($this->_mapSource);
-            }
-            break;
-
-        case 3:
-            if ($element == 'Target') {
-                $this->_isInSource = false;
-            }
-            if ($element == 'Source') {
-                $this->_isInSource = true;
-            }
-            break;
+        if (count($this->_stack) == 2 &&
+            $element == 'MapItem') {
+            unset($this->_mapTarget);
+            unset($this->_mapSource);
         }
     }
 
     function endElement($uri, $element)
     {
-        switch ($this->_xmlStack) {
-        case 1:
-            $state = $_SESSION['SyncML.state'];
-            $sync = $state->getSync($this->_targetLocURI);
 
-            if (!$sync) {
-            }
+        $state = &$_SESSION['SyncML.state'];
 
-            $_SESSION['SyncML.state'] = $state;
-            break;
-
+        switch (count($this->_stack)) {
         case 2:
             if ($element == 'MapItem') {
-                $state = $_SESSION['SyncML.state'];
                 $sync = $state->getSync($this->_targetLocURI);
                 if (!$state->isAuthorized()) {
                     Horde::logMessage('SyncML: Not Authorized in the middle of MapItem!', __FILE__, __LINE__, PEAR_LOG_ERR);
@@ -149,26 +115,20 @@ class Horde_SyncML_Command_Map extends Horde_SyncML_Command {
 
         case 3:
             if ($element == 'LocURI') {
-                if ($this->_isInSource) {
+                if ($this->_stack[1] == 'Source') {
                     $this->_sourceLocURI = trim($this->_chars);
-                } else {
+                } elseif ($this->_stack[1] == 'Target') {
                     $targetLocURIData = explode('?/',trim($this->_chars));
-
-		    $this->_targetLocURI = $targetLocURIData[0];
-		    
-		    if(isset($targetLocURIData[1]))
-		    {
-		    	$this->_targetLocURIParameters = $targetLocURIData[1];
-		    }
+		    		$this->_targetLocURI = $targetLocURIData[0];
                 }
             }
             break;
 
         case 4:
             if ($element == 'LocURI') {
-                if ($this->_isInSource) {
+                if ($this->_stack[2] == 'Source') {
                     $this->_mapSource = trim($this->_chars);
-                } else {
+                } elseif ($this->_stack[2] == 'Target') {
                     $this->_mapTarget = trim($this->_chars);
                 }
             }

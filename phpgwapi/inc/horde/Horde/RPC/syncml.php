@@ -113,8 +113,8 @@ class Horde_RPC_syncml extends Horde_RPC {
          * that came up for later debugging. */
         $errorLogging = ob_get_clean();
         if (!empty($errorLogging)) {
-            #Horde::logMessage('SyncML: caught output=' .
-            #                  $errorLogging, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+            Horde::logMessage('SyncML: caught output=' .
+                              $errorLogging, __FILE__, __LINE__, PEAR_LOG_DEBUG);
         }
 
         return $response;

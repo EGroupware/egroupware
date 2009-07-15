@@ -39,7 +39,7 @@ class contenthistory
 	 *
 	 * @param string $_appName the appname example: infolog_notes
 	 * @param int $_id the internal egwapp content id
-	 * @return bool
+	 * @return boolean
 	 */
 	function expireMapping($_appName, $_id)
 	{
@@ -163,7 +163,7 @@ class contenthistory
 				// now update the time stamp
 				$newData = array (
 					'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
-					$_action == 'modify' ? 'sync_modified' : 'sync_deleted' => $_ts ,
+					$_action == 'delete' ? 'sync_deleted' : 'sync_modified' => $this->db->to_timestamp($_ts),
 				);
 				$this->db->update(self::TABLE, $newData, $where,__LINE__,__FILE__);
 				break;

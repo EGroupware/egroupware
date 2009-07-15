@@ -5,16 +5,17 @@ include_once 'XML/WBXML/DTDManager.php';
 include_once 'XML/WBXML/ContentHandler.php';
 
 /**
- * $Horde: framework/XML_WBXML/WBXML/Decoder.php,v 1.36 2006/01/01 21:10:25 jan Exp $
+ * From Binary XML Content Format Specification Version 1.3, 25 July 2001
+ * found at http://www.wapforum.org
  *
- * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
+ * $Horde: framework/XML_WBXML/WBXML/Decoder.php,v 1.22.10.11 2008/01/02 11:31:02 jan Exp $
  *
- * See the enclosed file COPYING for license information (LGPL).  If you
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
- * From Binary XML Content Format Specification Version 1.3, 25 July
- * 2001 found at http://www.wapforum.org
- *
+ * @author  Anthony Mills <amills@pyramid6.com>
  * @package XML_WBXML
  */
 class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
@@ -84,7 +85,8 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
      *
      * @param XML_WBXML_ContentHandler $ch The contentHandler
      */
-    function setContentHandler(&$ch) {
+    function setContentHandler(&$ch)
+    {
         $this->_ch = &$ch;
     }
     /**
@@ -96,7 +98,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
     {
         $value =  $input{$this->_strpos++};
         $value =  ord($value);
-        
+
         return $value;
     }
 
@@ -133,12 +135,8 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
      */
     function decode($wbxml)
     {
-	// fix for Nokia Series 60 which seem to send empty data block sometimes
-	if(strlen($wbxml) == 0) {
-        	return true;
-	}
-	
         $this->_error = false; // reset state
+
         $this->_strpos = 0;
 
         if (empty($this->_ch)) {
@@ -149,6 +147,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         // version = u_int8
         // currently 1, 2 or 3
         $this->_wbxmlVersion = $this->getVersionNumber($wbxml);
+        #Horde::logMessage("WBXML[" . $this->_strpos . "] version " . $this->_wbxmlVersion, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
         // Get Document Public Idetifier from Section 5.5
         // publicid = mb_u_int32 | (zero index)
@@ -156,9 +155,11 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         // Containing the value zero (0)
         // The actual DPI is determined after the String Table is read.
         $dpiStruct = $this->getDocumentPublicIdentifier($wbxml);
+
         // Get Charset from 5.6
         // charset = mb_u_int32
         $this->_charset = $this->getCharset($wbxml);
+        #Horde::logMessage("WBXML[" . $this->_strpos . "] charset " . $this->_charset, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
         // Get String Table from 5.7
         // strb1 = length *byte
@@ -166,8 +167,8 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
 
         // Get Document Public Idetifier from Section 5.5.
         $this->_dpi = $this->getDocumentPublicIdentifierImpl($dpiStruct['dpiType'],
-                                                             $dpiStruct['dpiNumber'],
-                                                             $this->_stringTable);
+                                                             $dpiStruct['dpiNumber']);
+                                                             #$this->_stringTable);
 
         // Now the real fun begins.
         // From Sections 5.2 and 5.8
@@ -180,8 +181,8 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         $this->_tagDTD = $this->_dtdManager->getInstance($this->_dpi);
 
         if (!$this->_tagDTD) {
-            return $this->raiseError('No DTD found for ' 
-                             . $this->_dpi . '/' 
+            return $this->raiseError('No DTD found for '
+                             . $this->_dpi . '/'
                              . $dpiStruct['dpiNumber']);
         }
 
@@ -204,6 +205,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
     function getDocumentPublicIdentifier($input)
     {
         $i = XML_WBXML::MBUInt32ToInt($input, $this->_strpos);
+	
         if ($i == 0) {
             return array('dpiType' => 2,
                          'dpiNumber' => $this->getByte($input));
@@ -218,6 +220,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         if ($dpiType == 1) {
             return XML_WBXML::getDPIString($dpiNumber);
         } else {
+            #Horde::logMessage("WBXML string table $dpiNumber:\n" . print_r($this->_stringTable, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
             return $this->getStringTableEntry($dpiNumber);
         }
     }
@@ -235,7 +238,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
     }
 
     /**
-     * Retrieves the string table. 
+     * Retrieves the string table.
      * The string table consists of an mb_u_int32 length
      * and then length bytes forming the table.
      * References to the string table refer to the
@@ -254,10 +257,10 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
     {
         if ($index >= strlen($this->_stringTable)) {
             $this->_error =
-                $this->_ch->raiseError('Invalid offset ' . $index
-                                     . ' value encountered around position '
-                                     . $this->_strpos
-                                     . '. Broken wbxml?');
+                $this->raiseError('Invalid offset ' . $index
+                                  . ' value encountered around position '
+                                  . $this->_strpos
+                                  . '. Broken wbxml?');
             return '';
         }
 
@@ -270,17 +273,17 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         if (ord($ch) == 0) {
             return ''; // don't return '#'
         }
- 
+
         while (ord($ch) != 0) {
             $str[$i++] = $ch;
             if ($index >= strlen($this->_stringTable)) {
-                break;    
+                break;
             }
             $ch = $this->_stringTable[$index++];
         }
         // print "string table entry: $str\n";
         return $str;
-        
+
     }
 
     function _decode($input)
@@ -288,7 +291,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         $token = $this->getByte($input);
         $str = '';
 
-        #print "position: " . $this->_strpos . " token: " . $token . " str10: " . substr($input, $this->_strpos, 10) . "\n"; // @todo: remove debug output
+        // print "position: " . $this->_strpos . " token: " . $token . " str10: " . substr($input, $this->_strpos, 10) . "\n"; // @todo: remove debug output
 
         switch ($token) {
         case XML_WBXML_GLOBAL_TOKEN_STR_I:
@@ -370,34 +373,36 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         case XML_WBXML_GLOBAL_TOKEN_OPAQUE:
             // Section 5.8.4.6
             $size = XML_WBXML::MBUInt32ToInt($input, $this->_strpos);
-            // print "opaque of size $size\n"; // @todo remove debug
-            $b = $this->_substr($input, $this->_strpos, $size);
-            #$b = mb_substr($input, $this->_strpos, $size, 'ISO-8859-1');
-            $this->_strpos += $size;
+            if ($size > 0) {
+                #Horde::logMessage("WBXML opaque document size=$size, next=" . ord($input{$this->_strpos}), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+                $b = $this->_substr($input, $this->_strpos, $size);
+                // print "opaque of size $size: ($b)\n"; // @todo remove debug
+                $this->_strpos += $size;
+                // opaque data inside a <data> element may or may not be
+                // a nested wbxml document (for example devinf data).
+                // We find out by checking the first byte of the data: if it's
+                // 1, 2 or 3 we expect it to be the version number of a wbxml
+                // document and thus start a new wbxml decoder instance on it.
 
-            // opaque data inside a <data> element may or may not be
-            // a nested wbxml document (for example devinf data).
-            // We find out by checking the first byte of the data: if it's
-            // 1, 2 or 3 we expect it to be the version number of a wbxml
-            // document and thus start a new wbxml decoder instance on it.
-
-            if ($this->_isData && ord($b) <= 10) {
-                $decoder = new XML_WBXML_Decoder(true);
-                $decoder->setContentHandler($this->_ch);
-                $s = $decoder->decode($b);
-        //                /* // @todo: FIXME currently we can't decode Nokia
-                // DevInf data. So ignore error for the time beeing.
-        if (is_a($s, 'PEAR_Error')) {
-                    $this->_error = $s;
-                    return;
+                if ($this->_isData && ord($b) < 10) {
+            	    #Horde::logMessage("WBXML opaque document size=$size, \$b[0]=" . ord($b), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+                    $decoder = new XML_WBXML_Decoder(true);
+                    $decoder->setContentHandler($this->_ch);
+                    $s = $decoder->decode($b);
+            //                /* // @todo: FIXME currently we can't decode Nokia
+                    // DevInf data. So ignore error for the time beeing.
+                    if (is_a($s, 'PEAR_Error')) {
+                        $this->_error = $s;
+                        return;
+                    }
+                    // */
+                    // $this->_ch->characters($s);
+                } else {
+                    /* normal opaque behaviour: just copy the raw data: */
+                    // print "opaque handled as string=$b\n"; // @todo remove debug
+                    $this->_ch->characters($b);
                 }
-                // */
-                // $this->_ch->characters($s);
-            } else {
-                /* normal opaque behaviour: just copy the raw data: */
-                $this->_ch->characters( $b);
             }
-
             // old approach to deal with opaque data inside ContentHandler:
             // FIXME Opaque is used by SYNCML.  Opaque data that depends on the context
             // if (contentHandler instanceof OpaqueContentHandler) {
@@ -650,7 +655,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
      */
     function termstr($input)
     {
-        $str = '#'; // must start with nonempty string to allow array access 
+        $str = '#'; // must start with nonempty string to allow array access
         $i = 0;
         $ch = $input[$this->_strpos++];
         if (ord($ch) == 0) {
@@ -679,6 +684,5 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
          }
          return $ret;
      }
-
 }
 

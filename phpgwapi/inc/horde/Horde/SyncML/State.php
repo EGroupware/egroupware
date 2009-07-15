@@ -1,4 +1,18 @@
 <?php
+/**
+ * eGroupWare - SyncML based on Horde 3
+ *
+ *
+ * Using the PEAR Log class (which need to be installed!)
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Joerg Lehrke <jlehrke@noc.de>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
 
 define('ALERT_DISPLAY', 100);
 
@@ -20,6 +34,10 @@ define('ALERT_REFRESH_FROM_SERVER_BY_SERVER', 210);
 define('ALERT_RESULT_ALERT', 221);
 define('ALERT_NEXT_MESSAGE', 222);
 define('ALERT_NO_END_OF_DATA', 223);
+
+// Not (really) implemented.
+define('ALERT_SUSPEND',        224); // New in SyncML 1.2
+define('ALERT_RESUME',         225); // New in SyncML 1.2
 
 define('MIME_SYNCML_XML', 'application/vnd.syncml+xml');
 define('MIME_SYNCML_WBXML', 'application/vnd.syncml+wbxml');
@@ -107,7 +125,7 @@ define('RESPONSE_COMMAND_FAILED', 500);
 // define('RESPONSE_COMMAND_FAILED', 505);
 // define('RESPONSE_COMMAND_FAILED', 506);
 // define('RESPONSE_COMMAND_FAILED', 507);
-// define('RESPONSE_COMMAND_FAILED', 508);
+define('RESPONSE_REFRESH_REQUIRED', 508);
 // define('RESPONSE_COMMAND_FAILED', 509);
 // define('RESPONSE_COMMAND_FAILED', 510);
 // define('RESPONSE_COMMAND_FAILED', 511);
@@ -117,12 +135,15 @@ define('RESPONSE_COMMAND_FAILED', 500);
 // define('RESPONSE_COMMAND_FAILED', 515);
 define('RESPONSE_ATOMIC_ROLL_BACK_FAILED', 516);
 
-define('NAME_SPACE_URI_SYNCML', 'syncml:syncml1.0');
+define('NAME_SPACE_URI_SYNCML_1_0', 'syncml:syncml1.0');
 define('NAME_SPACE_URI_SYNCML_1_1', 'syncml:syncml1.1');
-define('NAME_SPACE_URI_METINF', 'syncml:metinf');
+define('NAME_SPACE_URI_SYNCML_1_2', 'syncml:syncml1.2');
+define('NAME_SPACE_URI_METINF_1_0', 'syncml:metinf1.0');
 define('NAME_SPACE_URI_METINF_1_1', 'syncml:metinf1.1');
-define('NAME_SPACE_URI_DEVINF', 'syncml:devinf');
+define('NAME_SPACE_URI_METINF_1_2', 'syncml:metinf1.2');
+define('NAME_SPACE_URI_DEVINF_1_0', 'syncml:devinf1.0');
 define('NAME_SPACE_URI_DEVINF_1_1', 'syncml:devinf1.1');
+define('NAME_SPACE_URI_DEVINF_1_2', 'syncml:devinf1.2');
 
 define('CLIENT_SYNC_STARTED',		1);
 define('CLIENT_SYNC_FINNISHED',		2);
@@ -131,8 +152,18 @@ define('SERVER_SYNC_DATA_PENDING',	4);
 define('SERVER_SYNC_FINNISHED',		5);
 define('SERVER_SYNC_ACKNOWLEDGED',	6);
 
+// conflict management
+define('CONFLICT_CLIENT_WINNING',		0);
+define('CONFLICT_SERVER_WINNING',		1);
+define('CONFLICT_MERGE_DATA',			2);
+define('CONFLICT_RESOLVED_WITH_DUPLICATE',	3);
+define('CONFLICT_CLIENT_CHANGES_IGNORED',	4);
+define('CONFLICT_CLIENT_REFRESH_ENFORCED',	5);
+
 define('MAX_DATA',			19);
-define('MAX_ENTRIES',			10);
+define('MAX_ENTRIES',			10); // default
+define('MAX_GUID_SIZE',			64);
+define('MIN_MSG_LEFT',		       200); // Overhead
 
 /**
  * The Horde_SyncML_State class provides a SyncML state object.
@@ -148,6 +179,7 @@ define('MAX_ENTRIES',			10);
  * @version $Revision$
  * @since   Horde 3.0
  * @package Horde_SyncML
+ * @modified Joerg Lehrke <jlehrke@noc.de> 2009/01/20, support all syn types
  */
 class Horde_SyncML_State {
 
@@ -156,6 +188,10 @@ class Horde_SyncML_State {
 	var $_verProto;
 
 	var $_msgID;
+
+	var $_maxMsgSize;
+
+	var $_maxGUIDSize;
 
 	var $_targetURI;
 
@@ -169,6 +205,8 @@ class Horde_SyncML_State {
 
 	var $_isAuthorized;
 
+	var $_AuthConfirmed;
+
 	var $_uri;
 
 	var $_uriMeta;
@@ -181,7 +219,7 @@ class Horde_SyncML_State {
 
 	var $_serverAnchorNext = array(); // written to db after successful sync
 
-	var $_clientDeviceInfo = array();
+	var $_clientDeviceInfo;
 
 	// array list of changed items, which need to be synced to the client
 	var $_changedItems;
@@ -192,8 +230,11 @@ class Horde_SyncML_State {
 	// array list of added items, which need to be synced to the client
 	var $_addedItems;
 
-	// bool flag that we need to more data
-	var $_syncStatus;
+	// array list of items, which need to be refreshed at the client
+	var $_conflictItems;
+
+	// current session status
+	var $_syncStatus = 0;
 
 	var $_log = array();
 
@@ -209,6 +250,22 @@ class Horde_SyncML_State {
 	var $_uidMappings	= array();
 
     /**
+     * Current sync element sent from client.
+     *
+     * Stored in state if one element is split into multiple message packets.
+     *
+     * @var SyncML_SyncElement
+     */
+    var $curSyncItem;
+
+    /**
+     * Number of sync elements sent to client within current message.
+     *
+     * @var _numberOfElements
+     */
+    var $_numberOfElements;
+
+    /**
      * Creates a new instance of Horde_SyncML_State.
      */
     function Horde_SyncML_State($sourceURI, $locName, $sessionID, $password = false)
@@ -220,7 +277,8 @@ class Horde_SyncML_State {
             $this->setPassword($password);
         }
 
-        $this->isAuthorized = false;
+        $this->_isAuthorized = false;
+        $this->_isAuthConfirmed = false;
     }
 
     /**
@@ -234,7 +292,7 @@ class Horde_SyncML_State {
      * retrieve the real egw uid for a given send uid
      */
     function getUIDMapping($_sentEgwUid) {
-    	if(isset($this->_uidMappings[$_sentEgwUid])) {
+    	if(strlen("$_sentEgwUid") && isset($this->_uidMappings[$_sentEgwUid])) {
     		return $this->_uidMappings[$_sentEgwUid];
 	}
 
@@ -311,6 +369,16 @@ class Horde_SyncML_State {
     	return false;
     }
 
+    function &getConflictItems($_type)
+    {
+    	if(isset($this->_conflictItems[$_type]))
+    	{
+    		return $this->_conflictItems[$_type];
+    	}
+
+    	return false;
+    }
+
     function getMoreDataPending()
     {
     	return $this->_moreDataPending;
@@ -319,6 +387,14 @@ class Horde_SyncML_State {
     function getMsgID()
     {
         return $this->_msgID;
+    }
+
+    function getMaxMsgSizeClient()
+    {
+	if (isset($this->_maxMsgSize)) {
+        	return $this->_maxMsgSize;
+	}
+	return false;
     }
 
     function setWBXML($wbxml)
@@ -341,6 +417,11 @@ class Horde_SyncML_State {
     	$this->_addedItems[$_type] = $_addedItems;
     }
 
+    function pushAddedItem($_type, $_addedItems)
+    {
+    	$this->_addedItems[$_type] = $_addedItems;
+    }
+
     function setChangedItems($_type, $_changedItems)
     {
     	$this->_changedItems[$_type] = $_changedItems;
@@ -356,9 +437,14 @@ class Horde_SyncML_State {
     	$this->_deletedItems[$_type] = $_deletedItems;
     }
 
-    function setMoreDataPending($_state)
+    function addConflictItem($_type, $_conflict)
     {
-    	$this->_moreDataPending = $_state;
+    	$this->_conflictItems[$_type][] = $_conflict;
+    }
+
+    function clearConflictItems($_type)
+    {
+    	$this->_conflictItems[$_type] = array();
     }
 
     /**
@@ -368,6 +454,15 @@ class Horde_SyncML_State {
     function setMsgID($msgID)
     {
         $this->_msgID = $msgID;
+    }
+
+    /**
+     * Setter for property maxMsgSize.
+     * @param size New value of property maxMsgSize.
+     */
+    function setMaxMsgSize($size)
+    {
+        $this->_maxMsgSize = $size;
     }
 
     /**
@@ -408,15 +503,20 @@ class Horde_SyncML_State {
     {
         $this->_version = $version;
 
-        if ($version == 0) {
-            $this->_uri = NAME_SPACE_URI_SYNCML;
-            $this->_uriMeta = NAME_SPACE_URI_METINF;
-            $this->_uriDevInf = NAME_SPACE_URI_DEVINF;
-        } else {
+        if ($version == 2) {
+            $this->_uri = NAME_SPACE_URI_SYNCML_1_2;
+            $this->_uriMeta = NAME_SPACE_URI_METINF_1_2;
+            $this->_uriDevInf = NAME_SPACE_URI_DEVINF_1_2;
+        } elseif ($version == 1) {
             $this->_uri = NAME_SPACE_URI_SYNCML_1_1;
             $this->_uriMeta = NAME_SPACE_URI_METINF_1_1;
             $this->_uriDevInf = NAME_SPACE_URI_DEVINF_1_1;
-        }
+        } else {
+            $this->_uri = NAME_SPACE_URI_SYNCML_1_0;
+            $this->_uriMeta = NAME_SPACE_URI_METINF_1_0;
+            $this->_uriDevInf = NAME_SPACE_URI_DEVINF_1_0;
+	}
+
     }
 
     function setSessionID($sessionID)
@@ -457,6 +557,16 @@ class Horde_SyncML_State {
         return $this->_isAuthorized;
     }
 
+    function isAuthConfirmed()
+    {
+    	return $this->_AuthConfirmed;
+    }
+
+    function AuthConfirmed()
+    {
+    	$this->_AuthConfirmed = true;
+    }
+
     function clearSync($target)
     {
     	unset($this->_syncs[$target]);
@@ -486,6 +596,9 @@ class Horde_SyncML_State {
     		$targets[] = $target;
     	}
 
+    	// Make sure we keep the order
+    	sort($targets);
+
     	return $targets;
     }
 
@@ -502,6 +615,7 @@ class Horde_SyncML_State {
             return '';
         }
     }
+
     function getURIMeta()
     {
         return $this->_uriMeta;
@@ -548,8 +662,9 @@ class Horde_SyncML_State {
      * this->_locName . $this->_sourceURI . $type . $locid so you can
      * have different syncs with different devices.  If an entry
      * already exists, it is overwritten.
+     * Expired entries can be deleted at the next session start.
      */
-    function setUID($type, $locid, $guid, $ts=0)
+    function setUID($type, $locid, $guid, $ts=0, $expired=0)
     {
         $dt = &$this->getDataTree();
 
@@ -558,6 +673,7 @@ class Horde_SyncML_State {
         $gid->set('type', $type);
         $gid->set('locid', $locid);
         $gid->set('ts', $ts);
+        $gid->set('expired', $expired);
 
         $r = $dt->add($gid);
         if (is_a($r, 'PEAR_Error')) {
@@ -657,54 +773,41 @@ class Horde_SyncML_State {
 	*/
 	function adjustContentType($type, $target = null)
 	{
-		$ctype;
-		if (is_array($type))
-		{
+		if (is_array($type)) {
 			$ctype = $type['ContentType'];
 			$res = $type;
-		}
-		else
-		{
+		} else {
 			$ctype = $type;
 			$res = array();
 			$res['ContentType'] = $ctype;
 		}
 
-        $deviceInfo = $this->getClientDeviceInfo();
+		$deviceInfo = $this->getClientDeviceInfo();
+		$manufacturer = isset($deviceInfo['manufacturer']) ? strtolower($deviceInfo['manufacturer']) : 'unknown';
+		switch ($manufacturer) {
+			case 'funambol':
+				switch (strtolower($deviceInfo['model'])) {
+					case 'thunderbird':
+					case 'mozilla plugin':
+						$res['mayFragment'] = 1;
+						break;
+					default:
+						if (isset($deviceInfo['softwareVersion'])
+							&& $deviceInfo['softwareVersion'] < 4.0) {
+							$res['mayFragment'] = 0;
+						} else {
+							$res['mayFragment'] = 1;
+						}
+						break;
+				}
+				break;
+			default:
+				$res['mayFragment'] = 1;
+				break;
+		}
 
-        if (isset($deviceInfo['manufacturer']))
-        {
-            switch (strtolower($deviceInfo['manufacturer']))
-            {
-                case 'funambol':
-                    if (strtolower($deviceInfo['model']) == 'thunderbird')
-                    {
-                        $res['mayFragment'] = 1;
-                    }
-
-                    if (isset($deviceInfo['softwareVersion'])
-                        && $deviceInfo['softwareVersion']{0} == '3')
-                    {
-						// anything beyond 6.0 supports fragmentation
-                        $res['mayFragment'] = 0;
-                    }
-                    else
-                    {
-                        $res['mayFragment'] = 1;
-                    }
-                    break;
-            }
-        }
-
-        if (!isset($res['mayFragment']))
-        {
-            $res['mayFragment'] = 1;
-        }
-
-
-		// the funambol specific types need to be encoded in base 64
-		switch(strtolower($ctype))
-		{
+		// the funambol specific types need to be encoded in base64
+		switch (strtolower($ctype)) {
 			case 'text/x-s4j-sifc':
 			case 'text/x-s4j-sife':
 			case 'text/x-s4j-sift':
@@ -712,17 +815,15 @@ class Horde_SyncML_State {
 				$res['ContentFormat'] = 'b64';
 				break;
 		}
-
 		return $res;
 	}
 
 	function getPreferedContentType($type)
 	{
 		$_type = str_replace('./','',$type);
-		switch(strtolower($_type))
-		{
+		switch (strtolower($_type)) {
 			case 'contacts':
-				return 'text/x-vcard';
+				return 'text/vcard';
 				break;
 
 			case 'notes':
@@ -730,9 +831,10 @@ class Horde_SyncML_State {
 				break;
 
 			case 'calendar':
+			case 'events':
 			case 'tasks':
 			case 'caltasks':
-				return 'text/x-vcalendar';
+				return 'text/calendar';
 				break;
 
 			case 'sifcalendar':
@@ -778,6 +880,7 @@ class Horde_SyncML_State {
 				return 'tasks';
 				break;
 
+			case 'events':
 			case 'calendar':
 				return 'calendar';
 				break;
@@ -816,7 +919,6 @@ class Horde_SyncML_State {
 	}
 
 	/**
-	/**
 	* Returns the preferred contenttype of the client for the given
 	* sync data type (database).
 	*
@@ -826,12 +928,33 @@ class Horde_SyncML_State {
 	function getPreferedContentTypeClient($_sourceLocURI, $_targetLocURI = null) {
 		$deviceInfo = $this->getClientDeviceInfo();
 
-		if(isset($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType']))
-		{
-			return $this->adjustContentType($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType'], $_targetLocURI);
+		if(isset($deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize']['contentType'])) {
+			$this->_maxGUIDSize = $deviceInfo['dataStore'][$this->_sourceURI]['maxGUIDSize']['contentType'];
 		}
 
-		Horde::logMessage('SyncML: sourceLocURI ' . $_sourceLocURI .' not found', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		if(isset($deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType']))
+		{
+			$ctype = $deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentType'];
+			$cvers = $deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentVersion'];
+			$cfrmt = $deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentFormat'];
+			$cprops = $deviceInfo['dataStore'][$_sourceLocURI]['properties'][$ctype][$cvers];
+			if (isset($deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize'])) {
+				// get UID properties from maxGUIDSize
+				$cprops['UID']['Size'] = $deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize'];
+				$cprops['UID']['NoTruncate'] = true;
+			}
+			$clientPrefs = array(
+				'ContentType'	=>	$ctype,
+				'ContentFormat'	=>	$cfrmt,
+				'mayFragment'	=>	1,
+				'Properties'	=>	$cprops,
+				);
+			#Horde::logMessage('SyncML: sourceLocURI ' . $_sourceLocURI . " clientPrefs:\n"
+			#	. print_r($clientPrefs, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			return $this->adjustContentType($clientPrefs, $_targetLocURI);
+		}
+
+		Horde::logMessage('SyncML: sourceLocURI ' . $_sourceLocURI . " not found:\n" . print_r($deviceInfo, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		if ($_targetLocURI != null)
 		{
@@ -839,6 +962,19 @@ class Horde_SyncML_State {
 		}
 
 		return PEAR::raiseError(_('sourceLocURI not found'));
+	}
+
+	/**
+	* Returns the MaxGUIDSize of the client
+	*/
+
+	function getMaxGUIDSizeClient() {
+		$maxGUIDSize = MAX_GUID_SIZE;
+
+		if (isset($this->_maxGUIDSize)) {
+			$maxGUIDSize = $this->_maxGUIDSize;
+		}
+		return $maxGUIDSize;
 	}
 
     function setClientAnchorNext($type, $a)
@@ -900,6 +1036,11 @@ class Horde_SyncML_State {
      */
     function getClientDeviceInfo()
     {
+    	if (isset($this->_clientDeviceInfo) && is_array($this->_clientDeviceInfo)) {
+    		// use cached information
+    		return $this->_clientDeviceInfo;
+    	}
+
         $dt = &$this->getDataTree();
 
         $id = $dt->getId($this->_locName . $this->_sourceURI . 'deviceInfo');
@@ -907,7 +1048,7 @@ class Horde_SyncML_State {
             return false;
         }
 
-	$info = $dt->getObjectById($id);
+		$info = $dt->getObjectById($id);
 
         return $info->get('ClientDeviceInfo');
     }
@@ -1070,4 +1211,23 @@ class Horde_SyncML_State {
 		$this->_receivedAlert222 = (bool)$_status;
 	}
 
+	function incNumberOfElements() {
+		$this->_numberOfElements++;
+	}
+
+	function clearNumberOfElements() {
+		$this->_numberOfElements = 0;
+	}
+
+	function getNumberOfElements() {
+		if (isset($this->_numberOfElements)) {
+			return $this->_numberOfElements;
+		} else {
+			return false;
+		}
+	}
+
+	function maxNumberOfElements() {
+		unset($this->_numberOfElements);
+	}
 }

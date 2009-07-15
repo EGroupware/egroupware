@@ -1,32 +1,37 @@
 <?php
-
+/**
+ * eGroupWare - SyncML based on Horde 3
+ *
+ *
+ * Using the PEAR Log class (which need to be installed!)
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Anthony Mills <amills@pyramid6.com>
+ * @author Karsten Fourmont <fourmont@gmx.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
 include_once 'Horde/SyncML/State.php';
 include_once 'Horde/SyncML/Command.php';
 include_once 'Horde/SyncML/Command/Results.php';
 
-/**
- * The Horde_SyncML_Command_Get class.
- *
- * $Horde: framework/SyncML/SyncML/Command/Get.php,v 1.14 2004/07/02 19:24:44 chuck Exp $
- *
- * Copyright 2003-2004 Anthony Mills <amills@pyramid6.com>
- *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Anthony Mills <amills@pyramid6.com>
- * @author  Karsten Fourmont <fourmont@gmx.de>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
- */
 class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
 
     function output($currentCmdID, &$output)
     {
         $state = $_SESSION['SyncML.state'];
 
-        $ref = ($state->getVersion() == 0) ? './devinf10' : './devinf11';
+        if ($state->getVersion() == 2) {
+            $ref = './devinf12';
+        } elseif ($state->getVersion() == 1) {
+            $ref = './devinf11';
+        } else {
+            $ref = './devinf10';
+        }
 
         $status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Get');
         $status->setCmdRef($this->_cmdID);
@@ -74,7 +79,13 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
 
             $output->startElement($state->getURIDevInf() , 'DevInf', $attrs);
             $output->startElement($state->getURIDevInf() , 'VerDTD', $attrs);
-            $output->characters(($state->getVersion() == 0) ? '1.0' : '1.1');
+            if ($state->getVersion() == 2) {
+		$output->characters('1.2');
+            } elseif($state->getVersion() == 1) {
+		$output->characters('1.1');
+            } else {
+		$output->characters('1.0');
+            }
             $output->endElement($state->getURIDevInf() , 'VerDTD', $attrs);
             $output->startElement($state->getURIDevInf() , 'Man', $attrs);
             $output->characters('www.egroupware.org');
@@ -85,12 +96,22 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
             $output->startElement($state->getURIDevInf() , 'DevTyp', $attrs);
             $output->characters('server');
             $output->endElement($state->getURIDevInf() , 'DevTyp', $attrs);
+            $output->startElement($state->getURIDevInf() , 'UTC', $attrs);
+            $output->endElement($state->getURIDevInf() , 'UTC', $attrs);
+            $output->startElement($state->getURIDevInf() , 'SupportNumberOfChanges', $attrs);
+            $output->endElement($state->getURIDevInf() , 'SupportNumberOfChanges', $attrs);
+            $output->startElement($state->getURIDevInf() , 'SupportLargeObjs', $attrs);
+            $output->endElement($state->getURIDevInf() , 'SupportLargeObjs', $attrs);
             $this->_writeDataStore('./notes', 'text/x-vnote', '1.1', $output,
                                    array('text/plain' => '1.0'));
-            $this->_writeDataStore('./contacts', 'text/x-vcard', '2.1', $output);
-            $this->_writeDataStore('./tasks', 'text/x-vcalendar', '1.0', $output);
-            $this->_writeDataStore('./calendar', 'text/x-vcalendar', '1.0', $output);
-            $this->_writeDataStore('./caltasks', 'text/x-vcalendar', '1.0', $output);
+            $this->_writeDataStore('./contacts', 'text/vcard', '3.0', $output,
+                                   array('text/x-vcard' => '2.1'));
+            $this->_writeDataStore('./tasks', 'text/calendar', '2.0', $output,
+                                   array('text/x-vcalendar' => '1.0'));
+            $this->_writeDataStore('./calendar', 'text/calendar', '2.0', $output,
+                                   array('text/x-vcalendar' => '1.0'));
+            $this->_writeDataStore('./caltasks', 'text/calendar', '2.0', $output,
+                                   array('text/x-vcalendar' => '1.0'));
             $output->endElement($state->getURIDevInf() , 'DevInf', $attrs);
 
             $output->endElement($state->getURI(), 'Data');
@@ -111,7 +132,7 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
      * @param string $version: data for &lt;(R|T)x-Pref&gt;&lt;VerCT&gt;
      * @param string &$output contenthandler that will received the output.
      * @param array $additionaltypes: array of additional types for Tx and Rx;
-     *              format array('text/vcard' => '2.0')
+     *              format array('text/vcard' => '3.0')
      */
     function _writeDataStore($sourceref, $mimetype, $version, &$output,
                              $additionaltypes = false)
@@ -124,6 +145,9 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
         $output->startElement($state->getURIDevInf() , 'SourceRef', $attrs);
         $output->characters($sourceref);
         $output->endElement($state->getURIDevInf() , 'SourceRef', $attrs);
+        $output->startElement($state->getURIDevInf() , 'MaxGUIDSize', $attrs);
+        $output->characters(255);
+        $output->endElement($state->getURIDevInf() , 'MaxGUIDSize', $attrs);
 
         $output->startElement($state->getURIDevInf() , 'Rx-Pref', $attrs);
         $output->startElement($state->getURIDevInf() , 'CTType', $attrs);
@@ -170,12 +194,13 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
         }
 
         $output->startElement($state->getURIDevInf() , 'SyncCap', $attrs);
-        $output->startElement($state->getURIDevInf() , 'SyncType', $attrs);
-        $output->characters('1');
-        $output->endElement($state->getURIDevInf() , 'SyncType', $attrs);
-        $output->startElement($state->getURIDevInf() , 'SyncType', $attrs);
-        $output->characters('2');
-        $output->endElement($state->getURIDevInf() , 'SyncType', $attrs);
+		// We support all sync Types from 1-6: two way, slow, refresh|update
+        // from client|server
+        for ($i = 1; $i <= 6; ++$i) {
+            $output->startElement($state->getURIDevInf(), 'SyncType', $attrs);
+            $output->characters($i);
+            $output->endElement($state->getURIDevInf(), 'SyncType', $attrs);
+        }
         $output->endElement($state->getURIDevInf() , 'SyncCap', $attrs);
         $output->endElement($state->getURIDevInf() , 'DataStore', $attrs);
     }

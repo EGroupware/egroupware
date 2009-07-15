@@ -1,15 +1,16 @@
 <?php
 /**
- * $Horde: framework/XML_WBXML/WBXML/ContentHandler.php,v 1.15 2006/01/01 21:10:25 jan Exp $
- *
- * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
- *
- * See the enclosed file COPYING for license information (LGPL).  If you did
- * not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
  * From Binary XML Content Format Specification Version 1.3, 25 July 2001
  * found at http://www.wapforum.org
  *
+ * $Horde: framework/XML_WBXML/WBXML/ContentHandler.php,v 1.9.10.11 2008/08/26 15:41:13 jan Exp $
+ *
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file COPYING for license information (LGPL). If you
+ * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
+ *
+ * @author  Anthony Mills <amills@pyramid6.com>
  * @package XML_WBXML
  */
 class XML_WBXML_ContentHandler {
@@ -35,9 +36,13 @@ class XML_WBXML_ContentHandler {
         $this->_currentUri = new XML_WBXML_LifoQueue();
     }
 
+    /**
+     */
     function raiseError($error)
     {
-        include_once 'PEAR.php';
+        if (!class_exists('PEAR')) {
+            require 'PEAR.php';
+        }
         return PEAR::raiseError($error);
     }
 
@@ -71,7 +76,7 @@ class XML_WBXML_ContentHandler {
         return strlen($this->_output);
     }
 
-    function startElement($uri, $element, $attrs)
+    function startElement($uri, $element, $attrs = array())
     {
         $this->_output .= '<' . $element;
 
@@ -104,12 +109,7 @@ class XML_WBXML_ContentHandler {
 
     function opaque($o)
     {
-        // I can check the first chanracter and see if it is WBXML.
-        if (ord($o[0]) < 10) {
-            // Should decode this, I really need a call back function.
-        } else {
-            $this->_output .= $o;
-        }
+        $this->_output .= $o;
     }
 
     function setOpaqueHandler($opaqueHandler)
@@ -120,6 +120,15 @@ class XML_WBXML_ContentHandler {
     function removeOpaqueHandler()
     {
         unset($this->_opaqueHandler);
+    }
+
+    function createSubHandler()
+    {
+        $name = get_class($this); // clone current class
+        $sh = new $name();
+        $sh->setCharset($this->getCharsetStr());
+        $sh->setVersion($this->getVersion());
+        return $sh;
     }
 
 }
