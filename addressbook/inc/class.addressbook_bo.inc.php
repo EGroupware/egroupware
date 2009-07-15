@@ -5,6 +5,7 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @package addressbook
  * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
@@ -441,8 +442,13 @@ class addressbook_bo extends addressbook_so
 	 */
 	function fullname($contact)
 	{
+		if (empty($contact['n_family']) && empty($contact['n_given'])) {
+			$cpart = array('org_name');
+		} else {
+			$cpart = array('n_prefix','n_given','n_middle','n_family','n_suffix');
+		}
 		$parts = array();
-		foreach(array('n_prefix','n_given','n_middle','n_family','n_suffix') as $n)
+		foreach($cpart as $n)
 		{
 			if ($contact[$n]) $parts[] = $contact[$n];
 		}
@@ -611,8 +617,7 @@ class addressbook_bo extends addressbook_so
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
 		// set full name and fileas from the content
-		if (isset($contact['n_family']) && isset($contact['n_given']))
-		{
+		if (!isset($contact['n_fn'])) {
 			$contact['n_fn'] = $this->fullname($contact);
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
@@ -1432,7 +1437,7 @@ class addressbook_bo extends addressbook_so
 				{
 					$cat_name = substr($cat_name, 2);
 				}
-				$cat_id = $this->categories->add(array('name' => $cat_name,'descr' => $cat_name));
+				$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
 			}
 
 			if ($cat_id)
@@ -1474,15 +1479,273 @@ class addressbook_bo extends addressbook_so
 
 	function fixup_contact(&$contact)
 	{
-		if (!isset($contact['n_fn']) || empty($contact['n_fn']))
+		if (empty($contact['n_fn']))
 		{
 			$contact['n_fn'] = $this->fullname($contact);
 		}
 
-		if (!isset($contact['n_fileas']) || empty($contact['n_fileas']))
+		if (empty($contact['n_fileas']))
 		{
 			$contact['n_fileas'] = $this->fileas($contact);
 		}
+	}
+
+	function all_empty(&$_contact, &$fields)
+	{
+		$retval = true;
+		foreach ($fields as $field) {
+			if (isset($_contact[$field]) && !empty($_contact[$field])) {
+				$retval = false;
+				break;
+			}
+		}
+		return $retval;
+	}
+
+
+	/**
+	 * Try to find a matching db entry
+	 *
+	 * @param array $contact   the contact data we try to find
+	 * @param boolean $relax=false if asked to relax, we only match against some key fields
+	 * @return the contact_id of the matching entry or false (if none matches)
+	 */
+	function find_contact($contact, $relax=false)
+	{
+		if ($contact['id'] && ($found = $this->read($contact['id'])))
+		{
+			// We only do a simple consistency check
+			if ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
+					&& (empty($found['n_given']) || $found['n_given'] == $contact['n_given'])
+					&& (empty($found['org_name']) || $found['org_name'] == $contact['org_name']))
+			{
+				return $found['id'];
+			}
+		}
+		unset($contact['id']);
+
+		$columns_to_search = array('contact_id',
+					   'n_family', 'n_given', 'n_middle', 'n_prefix', 'n_suffix',
+						'bday', 'org_name', 'org_unit', 'title', 'role',
+						'email', 'email_home', 'url', 'url_home');
+		$tolerance_fields = array('contact_id',
+					  'n_middle', 'n_prefix', 'n_suffix',
+					  'org_unit', 'role',
+					  'bday',
+					  'email', 'email_home',
+					  'url', 'url_home');
+		$addr_one_fields = array('adr_one_street', 'adr_one_street2',
+					 'adr_one_locality', 'adr_one_region',
+					 'adr_one_postalcode', 'adr_one_countryname');
+		$addr_two_fields = array('adr_two_street', 'adr_two_street2',
+					 'adr_two_locality', 'adr_two_region',
+					 'adr_two_postalcode', 'adr_two_countryname');
+		$no_addr_one = array();
+		$no_addr_two = array();
+
+		$backend =& $this->get_backend();
+
+		// define filter for empty address one
+		foreach ($addr_one_fields as $field)
+		{
+			if (!($db_col = array_search($field, $backend->db_cols)))
+			{
+				$db_col = $field;
+			}
+			$no_addr_one[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+		}
+
+		// define filter for empty address two
+		foreach ($addr_two_fields as $field)
+		{
+			if (!($db_col = array_search($field, $backend->db_cols)))
+			{
+				$db_col = $field;
+			}
+			$no_addr_two[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+		}
+
+		$result = false;
+
+		$criteria = array();
+		$empty_columns = array();
+		foreach ($columns_to_search as $field)
+		{
+			if (!isset($contact[$field]) || empty($contact[$field])) {
+				// Not every device supports all fields
+				if (!in_array($field, $tolerance_fields))
+				{
+					if (!($db_col = array_search($field, $backend->db_cols)))
+					{
+						$db_col = $field;
+					}
+					$empty_columns[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+				}
+			}
+			else
+			{
+				if (!$relax || !in_array($field, $tolerance_fields))
+				{
+					$criteria[$field] = $contact[$field];
+				}
+			}
+		}
+
+		$filter = $empty_columns;
+
+		if (!$relax)
+		{
+			// We use addresses only for strong matching
+
+			if ($this->all_empty($contact, $addr_one_fields))
+			{
+				$filter = $filter + $no_addr_one;
+			}
+			else
+			{
+				foreach ($addr_one_fields as $field)
+				{
+					if (!isset($contact[$field]) || empty($contact[$field]))
+					{
+						if (!($db_col = array_search($field, $backend->db_cols)))
+						{
+							$db_col = $field;
+						}
+						$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+					}
+					else
+					{
+						$criteria[$field] = $contact[$field];
+					}
+				}
+			}
+
+			if ($this->all_empty($contact, $addr_two_fields))
+			{
+				$filter = $filter + $no_addr_two;
+			}
+			else
+			{
+				foreach ($addr_two_fields as $field)
+				{
+					if (!isset($contact[$field]) || empty($contact[$field]))
+					{
+						if (!($db_col = array_search($field, $backend->db_cols)))
+						{
+							$db_col = $field;
+						}
+						$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+					}
+					else
+					{
+						$criteria[$field] = $contact[$field];
+					}
+				}
+			}
+		}
+
+		Horde::logMessage("Addressbook find step 1:\n" . print_r($criteria, true) .
+				  "filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
+		// first try full match
+		if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+		{
+			$result =  $foundContacts[0]['id'];
+		}
+
+		// No need for more searches for relaxed matching
+		if (!$relax && !$result && !$this->all_empty($contact, $addr_one_fields)
+				&& $this->all_empty($contact, $addr_two_fields))
+		{
+			// try given address and ignore the second one in EGW
+			$filter = array_diff($filter, $no_addr_two);
+
+			Horde::logMessage("Addressbook find step 2:\n" . print_r($criteria, true) .
+				"filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+			{
+				$result =  $foundContacts[0]['id'];
+			}
+			else
+			{
+				// try address as home address -- some devices don't qualify addresses
+				$filter = $empty_columns;
+				foreach ($addr_two_fields as $key => $field)
+				{
+					if (isset($criteria[$addr_one_fields[$key]]))
+					{
+						$criteria[$field] = $criteria[$addr_one_fields[$key]];
+						unset($criteria[$addr_one_fields[$key]]);
+					}
+					else
+					{
+						if (!($db_col = array_search($field,$backend->db_cols)))
+						{
+							$db_col = $field;
+						}
+						$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+					}
+				}
+
+				$filter = $filter + $no_addr_one;
+
+				Horde::logMessage("Addressbook find step 3:\n" . print_r($criteria, true) .
+					"filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+				{
+					$result =  $foundContacts[0]['id'];
+				}
+			}
+		}
+		elseif (!$relax && !$result)
+		{ // No more searches for relaxed matching, try again after address swap
+
+			$filter = $empty_columns;
+
+			foreach ($addr_one_fields as $key => $field)
+			{
+				$_temp_set = false;
+				if (isset($criteria[$field]))
+				{
+					$_temp = $criteria[$field];
+					$_temp_set = true;
+					unset($criteria[$field]);
+				}
+				if (isset($criteria[$addr_two_fields[$key]]))
+				{
+					$criteria[$field] = $criteria[$addr_two_fields[$key]];
+					unset($criteria[$addr_two_fields[$key]]);
+				}
+				else
+				{
+					if (!($db_col = array_search($field,$backend->db_cols)))
+					{
+						$db_col = $field;
+					}
+					$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+				}
+				if ($_temp_set)
+				{
+					$criteria[$addr_two_fields[$key]] = $_temp;
+				}
+				else
+				{
+					if (!($db_col = array_search($addr_two_fields[$key],$backend->db_cols)))
+					{
+						$db_col = $field;
+					}
+					$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+				}
+			}
+
+			Horde::logMessage("Addressbook find step 4:\n" . print_r($criteria, true) .
+					  "filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if(($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+			{
+				$result =  $foundContacts[0]['id'];
+			}
+		}
+		return $result;
 	}
 
 }

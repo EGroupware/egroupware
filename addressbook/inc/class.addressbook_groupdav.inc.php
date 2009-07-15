@@ -310,7 +310,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	private function _get_handler()
 	{
-		$handler = new addressbook_vcal();
+		$handler = new addressbook_vcal('addressbook','text/vcard');
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;
