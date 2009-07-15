@@ -4,6 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Lars Kneschke <lkneschke@egroupware.org>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
  * @subpackage export
@@ -21,6 +22,7 @@ class calendar_sif extends calendar_boupdate
 		'Start'				=> 'start',
 		'End'				=> 'end',
 		'AllDayEvent'			=> 'alldayevent',
+		'Attendees'			=> '',
 		'BillingInformation'		=> '',
 		'Body'				=> 'description',
 		'BusyStatus'			=> '',
@@ -33,6 +35,11 @@ class calendar_sif extends calendar_boupdate
 		'Mileage'			=> '',
 		'ReminderMinutesBeforeStart'	=> 'reminderstart',
 		'ReminderSet'			=> 'reminderset',
+		'ReminderSoundFile'		=> '',
+		'ReminderOptions'		=> '',
+		'ReminderInterval'		=> '',
+		'ReminderRepeatCount'		=> '',
+		'Exceptions'			=> '',
 		'ReplyTime'			=> '',
 		'Sensitivity'			=> 'public',
 		'Subject'			=> 'title',
@@ -51,6 +58,11 @@ class calendar_sif extends calendar_boupdate
 	// the calendar event array
 	var $event;
 
+	// device specific settings
+	var $productName = 'mozilla plugin';
+	var $productSoftwareVersion = '0.3';
+	var $uidExtension = false;
+
 	// constants for recurence type
 	const olRecursDaily	= 0;
 	const olRecursWeekly	= 1;
@@ -67,6 +79,10 @@ class calendar_sif extends calendar_boupdate
 	const olThursday = 16;
 	const olFriday = 32;
 	const olSaturday = 64;
+
+	// standard headers
+	const xml_decl = '<?xml version="1.0" encoding="UTF-8"?>';
+	const SIF_decl = '<SIFVersion>1.1</SIFVersion>';
 
 	function startElement($_parser, $_tag, $_attributes) {
 	}
@@ -87,14 +103,13 @@ class calendar_sif extends calendar_boupdate
 		$vcal		= new Horde_iCalendar;
 		$finalEvent	= array();
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
-		$sifData	= base64_decode($_sifdata);
 		#error_log($sifData);
 
-		$tmpfname = tempnam('/tmp/sync/contents','sife_');
+		#$tmpfname = tempnam('/tmp/sync/contents','sife_');
 
-		$handle = fopen($tmpfname, "w");
-		fwrite($handle, $sifData);
-		fclose($handle);
+		#$handle = fopen($tmpfname, "w");
+		#fwrite($handle, $sifData);
+		#fclose($handle);
 
 		$this->xml_parser = xml_parser_create('UTF-8');
 		xml_set_object($this->xml_parser, $this);
@@ -111,11 +126,13 @@ class calendar_sif extends calendar_boupdate
 		#error_log(print_r($this->event, true));
 
 		foreach($this->event as $key => $value) {
+			$value = preg_replace('/<\!\[CDATA\[(.+)\]\]>/Usim', '$1', $value);
 			$value = $GLOBALS['egw']->translation->convert($value, 'utf-8', $sysCharSet);
 			#error_log("$key => $value");
 			switch($key) {
 				case 'alldayevent':
 					if($value == 1) {
+						$finalEvent['whole_day'] = true;
 						$startParts = explode('-',$this->event['start']);
 						$finalEvent['start'] = mktime(0, 0, 0, $startParts[1], $startParts[2], $startParts[0]);
 						$endParts = explode('-',$this->event['end']);
@@ -191,6 +208,11 @@ class calendar_sif extends calendar_boupdate
 					// do nothing, get's handled in isrecuring clause
 					break;
 
+				case 'description':
+					if (preg_match('/\s*\[UID:(.+)?\]/Usm', $value, $matches)) {
+						$finalEvent['uid'] = $matches[1];
+					}
+
 				default:
 					$finalEvent[$key] = $value;
 					break;
@@ -205,69 +227,32 @@ class calendar_sif extends calendar_boupdate
 		return $finalEvent;
 	}
 
-	function search($_sifdata, $contentID=null) {
-		if(!$event = $this->siftoegw($_sifdata)) {
-			return false;
-		}
+	function search($_sifdata, $contentID=null, $relax=false)
+	{
+		$result = false;
 
-		$query = array(
-			'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
-			'cal_end='.$this->date2ts($event['end'],true),
-		);
-		
-		if ($contentID) {
-			$query[] = 'egw_cal.cal_id='.(int)$contentID;
-		}
-		
-		#foreach(array('title','location','priority','public','non_blocking') as $name) {
-		foreach(array('title','location','public','non_blocking') as $name) {
-			if (isset($event[$name])) $query['cal_'.$name] = $event[$name];
-		}
-
-		if($foundEvents = parent::search(array(
-			'user'  => $this->user,
-			'query' => $query,
-		))) {
-			if(is_array($foundEvents)) {
-				$event = array_shift($foundEvents);
-				return $event['id'];
+		if($event = $this->siftoegw($_sifdata))
+		{
+			if ($contentID) {
+				$event['id'] = $contentID;
 			}
+			$result = $this->find_event($event, $relax);
 		}
-		return false;
-
-		$search['start'] = $event['start'];
-		$search['end']	= $event['end'];
-
-		unset($event['description']);
-		unset($event['start']);
-		unset($event['end']);
-
-		foreach($event as $key => $value) {
-			if (substr($key,0,6) != 'recur_' && substr($key,0,5) != 'alarm') {
-				$search['query']['cal_'.$key] = $value;
-			} else {
-				#$search['query'][$key] = $value;
-			}
-		}
-
-		if($foundEvents = parent::search($search)) {
-			if(is_array($foundEvents)) {
-				$event = array_shift($foundEvents);
-				return $event['id'];
-			}
-		}
-
-		return false;
+		return $result;
 	}
 
 	/**
 	* @return int contact id
 	* @param string	$_vcard		the vcard
 	* @param int	$_abID		the internal addressbook id
+	* @param boolean $merge=false	merge data with existing entry
 	* @desc import a vard into addressbook
 	*/
-	function addSIF($_sifdata, $_calID)
+	function addSIF($_sifdata, $_calID, $merge=false)
 	{
+		$state = &$_SESSION['SyncML.state'];
+		$deviceInfo = $state->getClientDeviceInfo();
+
 		$calID = false;
 
 		#error_log('ABID: '.$_abID);
@@ -282,10 +267,16 @@ class calendar_sif extends calendar_boupdate
 			unset($event['alarm']);
 		}
 
-		if($_calID > 0)
-		{
+		if($_calID > 0)	{
 			// update entry
 			$event['id'] = $_calID;
+		} else {
+			if (isset($event['whole_day']) && $event['whole_day']
+				&& isset ($deviceInfo) && is_array($deviceInfo)
+				&& isset($deviceInfo['nonBlockingAllday'])
+				&& $deviceInfo['nonBlockingAllday']) {
+				$event['non_blocking'] = '1';
+			}
 		}
 
 		if($eventID = $this->update($event, TRUE)) {
@@ -308,14 +299,15 @@ class calendar_sif extends calendar_boupdate
 	}
 
 	/**
-	* return a vcard
+	* return a sife
 	*
-	* @param int	$_id		the id of the contact
-	* @param int	$_vcardProfile	profile id for mapping from vcard values to egw addressbook
+	* @param int	$_id		the id of the event
 	* @return string containing the vcard
 	*/
 	function getSIF($_id)
 	{
+		$sysCharSet	= $GLOBALS['egw']->translation->charset();
+
 		$fields = array_unique(array_values($this->sifMapping));
 		sort($fields);
 
@@ -323,11 +315,17 @@ class calendar_sif extends calendar_boupdate
 		#error_log("FOUND EVENT: ". print_r($event, true));
 
 		if($event = $this->read($_id,null,false,'server')) {
-			$sysCharSet	= $GLOBALS['egw']->translation->charset();
-			$vcal		= new Horde_iCalendar;
+
+			if ($this->uidExtension) {
+				if (!preg_match('/\[UID:.+\]/m', $event['description'])) {
+					$event['description'] .= "\n[UID:" . $event['uid'] . "]";
+				}
+			}
+
+			$vcal		= &new Horde_iCalendar('1.0');
 
 
-			$sifEvent = '<appointment>';
+			$sifEvent = self::xml_decl . "\n<appointment>" . self::SIF_decl;
 
 			foreach($this->sifMapping as $sifField => $egwField)
 			{
@@ -340,14 +338,6 @@ class calendar_sif extends calendar_boupdate
 
 				switch($sifField)
 				{
-					case 'Categories':
-						if(!empty($value)) {
-							$value = implode('; ', $this->get_categories(explode(',',$value)));
-							$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
-						}
-						$sifEvent .= "<$sifField>$value</$sifField>";
-						break;
-
 					case 'Importance':
 						$value = $value-1;
 						$sifEvent .= "<$sifField>$value</$sifField>";
@@ -437,6 +427,48 @@ class calendar_sif extends calendar_boupdate
 									$sifEvent .= '<Occurrences>'. $occurrences .'</Occurrences>';
 								}
 								break;
+							case MCAL_RECUR_MONTHLY_MDAY:
+								$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
+								$recurStartDate = mktime(0,0,0,date('m',$event['start']), date('d', $event['start']), date('Y', $event['start']));
+
+								$sifEvent .= "<$sifField>1</$sifField>";
+								$sifEvent .= '<RecurrenceType>'. self::olRecursMonthly .'</RecurrenceType>';
+								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
+								$sifEvent .= '<PatternStartDate>'. $vcal->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+								if($event['recur_enddate'] == 0) {
+									$sifEvent .= '<NoEndDate>1</NoEndDate>';
+								} else {
+									$recurEndDate = mktime(24, 0, 0, date('m',$event['recur_enddate']), date('d', $event['recur_enddate']), date('Y', $event['recur_enddate']));
+
+									$sifEvent .= '<NoEndDate>0</NoEndDate>';
+									$sifEvent .= '<PatternEndDate>'. $vcal->_exportDateTime($recurEndDate) .'</PatternEndDate>';
+								}
+								break;
+							case MCAL_RECUR_MONTHLY_WDAY:
+								$weekMaskMap = array('Sun' => self::olSunday, 'Mon' => self::olMonday, 'Tue' => self::olTuesday,
+													 'Wed' => self::olWednesday, 'Thu' => self::olThursday, 'Fri' => self::olFriday,
+													 'Sat' => self::olSaturday);
+								$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
+								$recurStartDate = mktime(0,0,0,date('m',$event['start']), date('d', $event['start']), date('Y', $event['start']));
+
+								$sifEvent .= "<$sifField>1</$sifField>";
+								$sifEvent .= '<RecurrenceType>'. self::olRecursMonthNth .'</RecurrenceType>';
+								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
+								$sifEvent .= '<PatternStartDate>'. $vcal->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+								$sifEvent .= '<Instance>' . (1 + (int) ((date('d',$event['start'])-1) / 7)) . '</Instance>';
+								if($event['recur_enddate'] == 0) {
+									$sifEvent .= '<NoEndDate>1</NoEndDate>';
+									$sifEvent .= '<DayOfWeekMask>' . $weekMaskMap[date('D',$event['start'])] . '</DayOfWeekMask>';
+								} else {
+									$recurEndDate = mktime(24, 0, 0, date('m',$event['recur_enddate']), date('d', $event['recur_enddate']), date('Y', $event['recur_enddate']));
+
+									$sifEvent .= '<NoEndDate>0</NoEndDate>';
+									$sifEvent .= '<PatternEndDate>'. $vcal->_exportDateTime($recurEndDate) .'</PatternEndDate>';
+									$sifEvent .= '<DayOfWeekMask>' . $weekMaskMap[date('D',$event['start'])] . '</DayOfWeekMask>';
+								}
+								break;
+							case MCAL_RECUR_YEARLY:
+								break;
 						}
 						break;
 
@@ -456,9 +488,10 @@ class calendar_sif extends calendar_boupdate
 						break;
 
 					case 'Start':
-						if($event['end'] - $event['start'] == 86399 && date('Y-m-d', $event['end']) == date('Y-m-d', $event['start'])) {
+						if ($this->isWholeDay($event)) {
 							$value = date('Y-m-d', $event['start']);
 							$sifEvent .= "<Start>$value</Start>";
+							$vaule = date('Y-m-d', $event['end']);
 							$sifEvent .= "<End>$value</End>";
 							$sifEvent .= "<AllDayEvent>1</AllDayEvent>";
 						} else {
@@ -487,14 +520,23 @@ class calendar_sif extends calendar_boupdate
 						}
 						break;
 
+					case 'Categories':
+						if(!empty($value)) {
+							$value = implode('; ', $this->get_categories(explode(',',$value)));
+							$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+						} else {
+							break;
+						}
+
 					default:
+						$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
 						$sifEvent .= "<$sifField>$value</$sifField>";
 						break;
 				}
 			}
 			$sifEvent .= '</appointment>';
 
-			return base64_encode($sifEvent);
+			return $sifEvent;
 		}
 
 		if($this->xmlrpc)
@@ -504,4 +546,31 @@ class calendar_sif extends calendar_boupdate
 		return False;
 	}
 
+	/**
+	* Set the supported fields
+	*
+	* Currently we only store name and version, manucfacturer is always Funambol
+	*
+	* @param string $_productName
+	* @param string $_productSoftwareVersion
+	*/
+	function setSupportedFields($_productName='', $_productSoftwareVersion='')
+	{
+		$state = &$_SESSION['SyncML.state'];
+		$deviceInfo = $state->getClientDeviceInfo();
+
+		if(isset($deviceInfo) && is_array($deviceInfo)) {
+			if(isset($deviceInfo['uidExtension']) &&
+				$deviceInfo['uidExtension']){
+					$this->uidExtension = true;
+				}
+		}
+		// store product name and version, to be able to use it elsewhere
+		if ($_productName) {
+			$this->productName = strtolower($_productName);
+			if (preg_match('/^[^\d]*(\d+\.?\d*)[\.|\d]*$/', $_productSoftwareVersion, $matches)) {
+				$this->productSoftwareVersion = $matches[1];
+			}
+		}
+	}
 }

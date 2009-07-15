@@ -5,6 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -134,6 +135,7 @@ class calendar_bo
 	 */
 	protected static $cached_event = array();
 	protected static $cached_event_date_format = false;
+	protected static $cached_event_date = 0;
 	/**
 	 * @var array $cached_holidays holidays plus birthdays (gets cached in the session for performance reasons)
 	 */
@@ -570,9 +572,17 @@ class calendar_bo
 
 		$events = array();
 		$this->insert_all_repetitions($event,$start,$this->date2ts($this->config['horizont'],true),$events,null);
-
+		$days = $this->so->get_recurrence_exceptions($event);
+		$days = is_array($days) ? $days : array();
+		//error_log('set_recurrences: days' . print_r($days, true) );
 		foreach($events as $event)
 		{
+			//error_log('set_recurrences: start = ' . $event['start'] );
+			if (in_array($event['start'], $days))
+			{
+				// we don't change the stati of recurrence exceptions
+				$event['participants'] = array();
+			}
 			$this->so->recurrence($event['id'],$this->date2ts($event['start'],true),$this->date2ts($event['end'],true),$event['participants']);
 		}
 	}
@@ -657,8 +667,8 @@ class calendar_bo
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
-			self::$cached_event_date_format != $date_format ||
-			self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || self::$cached_event['start'] < $date))
+				self::$cached_event_date_format != $date_format ||
+				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && self::$cached_event_date != $date || (!$date || self::$cached_event['start'] < $date))
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
 
@@ -674,6 +684,7 @@ class calendar_bo
 					{
 						self::$cached_event = array_shift($events);
 						self::$cached_event_date_format = $date_format;
+						self::$cached_event_date = $date;
 						$return =& self::$cached_event;
 					}
 				}
@@ -752,6 +763,8 @@ class calendar_bo
 		for($ts = $start_ts; $ts < $end_ts; $ts += DAY_s)
 		{
 			$search_date_ymd = (int)$this->date2string($ts);
+
+			//error_log('insert_all_repetitions search_date = ' . $search_date_ymd . ' => ' . print_r($recur_exceptions, true));
 
 			$have_exception = !is_null($recur_exceptions) && isset($recur_exceptions[$search_date_ymd]);
 
@@ -928,7 +941,7 @@ class calendar_bo
 		{
 			if (is_numeric($uid))
 			{
-					$info = array(
+				$info = array(
 					'res_id'    => $uid,
 					'email' => $GLOBALS['egw']->accounts->id2name($uid,'account_email'),
 					'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
@@ -1839,5 +1852,21 @@ class calendar_bo
 			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
 			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
 			($pw ? '&password='.urlencode($pw) : '');
+	}
+
+	/**
+	 * Check if the event is the whole day
+	 *
+	 * @param event
+	 * @return boolean true for whole day events
+	 */
+	function isWholeDay($event)
+	{
+		// check if the event is the whole day
+			$start = $this->date2array($event['start']);
+			$end = $this->date2array($event['end']);
+			$result = (!$start['hour'] && !$start['minute']
+				&& $end['hour'] == 23 && $end['minute'] == 59);
+			return $result;
 	}
 }

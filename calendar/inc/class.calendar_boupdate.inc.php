@@ -5,6 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -73,7 +74,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param array &$event event-array, on return some values might be changed due to set defaults
 	 * @param boolean $ignore_conflicts=false just ignore conflicts or do a conflict check and return the conflicting events
 	 * @param boolean $touch_modified=true touch modificatin time and set modifing user, default true=yes
-	 * @param boolean $ignore_acl=flase should we ignore the acl
+	 * @param boolean $ignore_acl=false should we ignore the acl
 	 * @return mixed on success: int $cal_id > 0, on error false or array with conflicting events (only if $check_conflicts)
 	 * 		Please note: the events are not garantied to be readable by the user (no read grant or private)!
 	 */
@@ -256,7 +257,7 @@ class calendar_boupdate extends calendar_bo
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
 
-		if (!($cal_id = $this->save($event)))
+		if (!($cal_id = $this->save($event, $ignore_acl)))
 		{
 			return $cal_id;
 		}
@@ -572,7 +573,7 @@ class calendar_boupdate extends calendar_bo
 						break;
 
 					case  'ical':
-						$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method,false);
+						$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method);
 						if ($method == 'REQUEST')
 						{
 							$attachment = array(	'string' => $ics,
@@ -666,15 +667,16 @@ class calendar_boupdate extends calendar_bo
 	 * This methode converts from user to server time and handles the insertion of users and dates of repeating events
 	 *
 	 * @param array $event
+	 * @param boolean $ignore_acl=false should we ignore the acl
 	 * @return int/boolean $cal_id > 0 or false on error (eg. permission denied)
 	 */
-	function save($event)
+	function save($event, $ignore_acl=false)
 	{
 		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$etag)");
 		// check if user has the permission to update / create the event
-		if ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
+		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
 			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']) &&
-			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
+			!$this->check_perms(EGW_ACL_ADD,0,$event['owner'])))
 		{
 			return false;
 		}
@@ -705,10 +707,11 @@ class calendar_boupdate extends calendar_bo
 				$event['alarm'][$id]['time'] = $this->date2ts($alarm['time'],true);
 			}
 		}
-		if (($cal_id = $this->so->save($event,$set_recurrences,NULL,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
+		$set_recurrences = false;
+		if (($cal_id = $this->so->save($event,$set_recurrences,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$save_event['id'] = $cal_id;
-			$this->set_recurrences($save_event);
+			$this->set_recurrences($save_event, 0);
 		}
 		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
 
@@ -749,13 +752,14 @@ class calendar_boupdate extends calendar_bo
 	 * @param string/int $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
 	 * @param int/char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date=0 date to change, or 0 = all since now
+	 * @param boolean $ignore_acl=false do not check the permisions for the $uid, if true
 	 * @return int number of changed recurrences
 	 */
-	function set_status($event,$uid,$status,$recur_date=0)
+	function set_status($event,$uid,$status,$recur_date=0, $ignore_acl=false)
 	{
 		$cal_id = is_array($event) ? $event['id'] : $event;
 		//echo "<p>bocalupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
-		if (!$cal_id || !$this->check_status_perms($uid,$event))
+		if (!$cal_id || (!$ignore_acl && !$this->check_status_perms($uid,$event)))
 		{
 			return false;
 		}
@@ -1006,7 +1010,9 @@ class calendar_boupdate extends calendar_bo
 		}
 		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
 
-		return $this->so->save_alarm($cal_id,$alarm);
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+
+		return $this->so->save_alarm($cal_id,$alarm, $this->now_su);
 	}
 
 	/**
@@ -1023,7 +1029,10 @@ class calendar_boupdate extends calendar_bo
 		{
 			return false;	// no rights to delete the alarm
 		}
-		return $this->so->delete_alarm($id);
+
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+
+		return $this->so->delete_alarm($id, $this->now_su);
 	}
 
 	var $categories;
@@ -1046,7 +1055,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					$cat_name = substr($cat_name, 2);
 				}
-				$cat_id = $this->categories->add(array('name' => $cat_name,'descr' => $cat_name));
+				$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
 			}
 
 			if ($cat_id)
@@ -1085,5 +1094,96 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		return $cat_list;
+	}
+
+	/**
+	 * Try to find a matching db entry
+	 *
+	 * @param array $event	the vCalendar data we try to find
+	 * @param boolean $relax=false if asked to relax, we only match against some key fields
+	 * @return the calendar_id of the matching entry or false (if none matches)
+	 */
+	function find_event($event, $relax=false)
+	{
+		if ($event['uid'] && ($uidmatch = $this->read($event['uid'])))
+		{
+			if ($event['reference']
+				&& ($egw_event = $this->read($uidmatch['id'], $event['reference'])))
+			{
+				// Do we work with a "status only" exception here?
+				$match = true;
+				foreach (array('start','end','title','description','priority',
+						'location','public','non_blocking') as $name)
+				{
+					if (isset($event[$name])
+						&& $event[$name] != $egw_event[$name])
+					{
+						$match = false;
+						break;
+					}
+				}
+				if ($match)
+				{
+					//return ($uidmatch['id'] . ':' . $event['reference']);
+					foreach ($event['participants'] as $attendee => $status)
+					{
+						if (!isset($egw_event['participants'][$attendee])
+							|| $egw_event['participants'][$attendee] != $status)
+						{
+							$match = false;
+							break;
+						}
+						else
+						{
+							unset($egw_event['participants'][$attendee]);
+						}
+					}
+					if ($match && !empty($egw_event['participants'])) $match = false;
+				}
+				if ($match)	return ($uidmatch['id'] . ':' . $event['reference']);
+
+				return false; // We need to create a new "status only" exception
+			}
+			else
+			{
+				return $uidmatch['id'];
+			}
+		}
+
+		if ($event['id'] && ($found = $this->read($event['id'])))
+		{
+			// We only do a simple consistency check
+			if ($found['title'] == $event['title']
+				&& $found['start'] == $event['start']
+				&& $found['end'] == $event['end'])
+				{
+					return $found['id'];
+				}
+		}
+		unset($event['id']);
+
+		$query = array(
+			'cal_start='.$event['start'],
+			'cal_end='.$event['end'],
+		);
+
+		#foreach(array('title','location','priority','public','non_blocking','category') as $name) {
+		foreach (array('title','location','public','non_blocking','category') as $name)
+		{
+			if (!empty($event[$name])) $query['cal_'.$name] = $event[$name];
+		}
+
+		if($foundEvents = parent::search(array(
+			//'user'  => $this->user,
+			'query' => $query,
+		)))
+		{
+			if(is_array($foundEvents))
+			{
+				$event = array_shift($foundEvents);
+				return $event['id'];
+			}
+		}
+		return false;
 	}
 }
