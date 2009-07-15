@@ -654,6 +654,7 @@ class infolog_ui
 	 *
 	 * @param int|array $values=0 info_id (default _GET[info_id])
 	 * @param string $referer=''
+	 * @param boolean $closesingle=false
 	 */
 	function close($values=0,$referer='',$closesingle=false)
 	{
@@ -973,6 +974,7 @@ class infolog_ui
 				}
 				$parent = $this->bo->so->data;
 				$content['info_id'] = $info_id = 0;
+				$content['info_uid'] = ''; // ensure that we have our own UID
 				$content['info_owner'] = $this->user;
 				$content['info_id_parent'] = $parent['info_id'];
 				/*
@@ -1432,7 +1434,6 @@ class infolog_ui
 						#continue;
 					}
 					$message .= $bofelamimail->wordwrap($value,75,"\n");
-					#$message .= $bodyAppend;
 				}
 			}
 

@@ -186,6 +186,7 @@ class infolog_tracking extends bo_tracking
 	 */
 	function get_details($data)
 	{
+		$header_done = false;
 		$responsible = array();
 		if ($data['info_responsible'])
 		{

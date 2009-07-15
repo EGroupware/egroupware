@@ -344,6 +344,12 @@ class infolog_so
 	 */
 	function read($info_id)		// did _not_ ensure ACL
 	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		} else {
+			$minimum_uid_length = 8;
+		}
+
 		//echo "<p>read($info_id) ".function_backtrace()."</p>\n";
 		if ($info_id && ((int)$info_id == $this->data['info_id'] || $info_id == $this->data['info_uid']))
 		{
@@ -355,6 +361,14 @@ class infolog_so
 		{
 			$this->init( );
 			return False;
+		}
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
+		// entry without uid --> create one based on our info_id and save it
+
+			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
+			$this->db->update($this->info_table,
+				array('info_uid' => $this->data['info_uid']),
+				array('info_id' => $this->data['info_id']), __LINE__,__FILE__);
 		}
 		if (!is_array($this->data['info_responsible']))
 		{
@@ -499,6 +513,12 @@ class infolog_so
 	 */
 	function write($values,$check_modified=0)  // did _not_ ensure ACL
 	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		} else {
+			$minimum_uid_length = 8;
+		}
+
 		//echo "soinfolog::write(,$check_modified) values="; _debug_array($values);
 		$info_id = (int) $values['info_id'];
 
@@ -540,12 +560,17 @@ class infolog_so
 			$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
 			$info_id = $this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
 
-			if (!$this->data['info_uid'])		// new entry without uid --> create one based on our info_id and save it
-			{
-				$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog',$info_id);
-				$this->db->update($this->info_table,array('info_uid'=>$this->data['info_uid']),array('info_id'=>$info_id),__LINE__,__FILE__);
-			}
 		}
+
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
+			// entry without uid --> create one based on our info_id and save it
+
+			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
+			$this->db->update($this->info_table,
+				array('info_uid' => $this->data['info_uid']),
+				array('info_id' => $info_id), __LINE__,__FILE__);
+		}
+
 		//echo "<p>soinfolog.write values= "; _debug_array($values);
 
 		// write customfields now
@@ -775,6 +800,7 @@ class infolog_so
 		if ($action == '' || $action == 'sp' || count($links))
 		{
 			$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid $sql_query) $link_extra";
+			#error_log("infolog.so.search:\n" . print_r($sql_query, true));
 
 			if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
 			{

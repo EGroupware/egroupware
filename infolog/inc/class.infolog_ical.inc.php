@@ -4,15 +4,14 @@
  *
  * @link http://www.egroupware.org
  * @author Lars Kneschke <lkneschke@egroupware.org>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
  * @subpackage syncml
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
-require_once EGW_API_INC.'/horde/Horde/iCalendar.php';
-require_once EGW_API_INC.'/horde/Horde/iCalendar/vnote.php';
-require_once EGW_API_INC.'/horde/Horde/iCalendar/vtodo.php';
+require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
  * InfoLog: Create and parse iCal's
@@ -20,17 +19,24 @@ require_once EGW_API_INC.'/horde/Horde/iCalendar/vtodo.php';
  */
 class infolog_ical extends infolog_bo
 {
+	/**
+	 * @var array conversion of the priority egw => ical
+	 */
 	var $egw_priority2vcal_priority = array(
-		0	=> 3,
-		1	=> 2,
-		2	=> 1,
-		3	=> 1,
+		0 => 9,         // low
+		1 => 5,         // normal
+		2 => 3,         // high
+		3 => 1,         // urgent
 	);
 
+	/**
+	 * @var array conversion of the priority ical => egw
+	 */
 	var $vcal_priority2egw_priority = array(
-		1       => 2,
-		2       => 1,
-		3       => 0,
+		9 => 0, 8 => 0, 7 => 0,		// low
+		6 => 1, 5 => 1, 4 => 1, 0 => 1, // normal
+		3 => 2, 2 => 2,			// high
+		1 => 3,				// urgent
 	);
 
 	/**
@@ -40,6 +46,32 @@ class infolog_ical extends infolog_bo
 	 */
 	var $productManufacturer = 'file';
 	var $productName = '';
+
+	/**
+	* Shall we use the UID extensions of the description field?
+	*
+	* @var boolean
+	*/
+	var $uidExtension = false;
+
+	/**
+	 * Client CTCap Properties
+	 *
+	 * @var array
+	 */
+	var $clientProperties;
+
+	/**
+	 * Constructor
+	 *
+	 * @param array $_clientProperties		client properties
+	 */
+	function __construct(&$_clientProperties = array())
+	{
+		parent::__construct();
+
+		$this->clientProperties = $_clientProperties;
+	}
 
 	/**
 	 * Exports one InfoLog tast to an iCalendar VTODO
@@ -53,9 +85,36 @@ class infolog_ical extends infolog_bo
 	{
 		$taskData = $this->read($_taskID);
 
-		$taskData = $GLOBALS['egw']->translation->convert($taskData, $GLOBALS['egw']->translation->charset(), 'UTF-8');
+		if ($taskData['info_id_parent'])
+		{
+			$parent = $this->read($taskData['info_id_parent']);
+			$taskData['info_id_parent'] = $parent['info_uid'];
+		}
+		else
+		{
+			$taskData['info_id_parent'] = '';
+		}
 
-		$taskGUID = $GLOBALS['egw']->common->generate_uid('infolog_task',$_taskID);
+		if ($this->uidExtension)
+		{
+			if (!preg_match('/\[UID:.+\]/m', $taskData['info_des']))
+			{
+				$taskData['info_des'] .= "\n[UID:" . $taskData['info_uid'] . "]";
+				if ($taskData['info_id_parent'] != '')
+				{
+					$taskData['info_des'] .= "\n[PARENT_UID:" . $taskData['info_id_parent'] . "]";
+				}
+			}
+		}
+
+		if (!empty($taskData['info_cat']))
+		{
+			$cats = $this->get_categories(array($taskData['info_cat']));
+			$taskData['info_cat'] = $cats[0];
+		}
+
+		$taskData = $GLOBALS['egw']->translation->convert($taskData,
+			$GLOBALS['egw']->translation->charset(), 'UTF-8');
 
 		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('VERSION',$_version);
@@ -63,35 +122,91 @@ class infolog_ical extends infolog_bo
 
 		$vevent = Horde_iCalendar::newComponent('VTODO',$vcal);
 
-		// set fields that may contain non-ascii chars and encode them if necessary
-		foreach(array(
-			'SUMMARY'     => $taskData['info_subject'],
-			'DESCRIPTION' => $taskData['info_des'],
-			'LOCATION'    => $taskData['info_location'],
-		) as $field => $value)
+		if (!isset($this->clientProperties['SUMMARY']['Size']))
 		{
-			$vevent->setAttribute($field,$value);
-			$options = array();
-			if($this->productManufacturer != 'GroupDAV' &&  preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
+			// make SUMMARY a required field
+			$this->clientProperties['SUMMARY']['Size'] = 0xFFFF;
+			$this->clientProperties['SUMMARY']['NoTruncate'] = false;
+		}
+		// set fields that may contain non-ascii chars and encode them if necessary
+		foreach (array(
+					'SUMMARY'     => $taskData['info_subject'],
+					'DESCRIPTION' => $taskData['info_des'],
+					'LOCATION'    => $taskData['info_location'],
+					'RELATED-TO'  => $taskData['info_id_parent'],
+					'UID'		  => $taskData['info_uid'],
+					'CATEGORIES'  => $taskData['info_cat'],
+				) as $field => $value)
+		{
+			if (isset($this->clientProperties[$field]['Size']))
 			{
-				$options['ENCODING'] = 'QUOTED-PRINTABLE';
+				$size = $this->clientProperties[$field]['Size'];
+				$noTruncate = $this->clientProperties[$field]['NoTruncate'];
+				#Horde::logMessage("VTODO $field Size: $size, NoTruncate: " .
+				#	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			}
-			if($this->productManufacturer != 'GroupDAV' && preg_match('/([\177-\377])/',$value))
+			else
+			{
+				$size = -1;
+				$noTruncate = false;
+			}
+			$cursize = strlen($value);
+			if (($size > 0) && $cursize > $size)
+			{
+				if ($noTruncate)
+				{
+					Horde::logMessage("VTODO $field omitted due to maximum size $size",
+						__FILE__, __LINE__, PEAR_LOG_WARNING);
+					continue; // skip field
+				}
+				// truncate the value to size
+				$value = substr($value, 0, $size -1);
+				#Horde::logMessage("VTODO $field truncated to maximum size $size",
+				#	__FILE__, __LINE__, PEAR_LOG_INFO);
+			}
+
+			if (empty($value) && ($size < 0 || $noTruncate)) continue;
+
+			if ($field == 'RELATED-TO')
+			{
+				$options = array('RELTYPE' => 'PARENT');
+			}
+			else
+			{
+				$options = array();
+			}
+
+			/*if(preg_match('/([\000-\012\015\016\020-\037\075])/', $value)) {
+				$options['ENCODING'] = 'QUOTED-PRINTABLE';
+			}*/
+			if ($this->productManufacturer != 'groupdav'
+				&& preg_match('/([\177-\377])/',$value))
 			{
 				$options['CHARSET'] = 'UTF-8';
 			}
-			if ($options) $vevent->setParameter($field, $options);
+			$vevent->setAttribute($field, $value, $options);
 		}
-		if($taskData['info_startdate'])
+
+		if ($taskData['info_startdate'])
+		{
 			$vevent->setAttribute('DTSTART',$taskData['info_startdate']);
-		if($taskData['info_enddate'])
-			$vevent->setAttribute('DUE',$taskData['info_enddate']);
-		if($taskData['info_datecompleted'])
+		}
+
+		if ($taskData['info_enddate'])
+		{
+			$parts = @getdate($taskData['info_enddate']);
+			$value = @mktime(12, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
+			$vevent->setAttribute('DUE', $value);
+		}
+
+		if ($taskData['info_datecompleted'])
+		{
 			$vevent->setAttribute('COMPLETED',$taskData['info_datecompleted']);
+		}
+
 		$vevent->setAttribute('DTSTAMP',time());
 		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'add'));
 		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'modify'));
-		$vevent->setAttribute('UID',$taskData['info_uid']);
 		$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 		$vevent->setAttribute('STATUS',$this->status2vtodo($taskData['info_status']));
 		// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
@@ -99,16 +214,12 @@ class infolog_ical extends infolog_bo
 		$vevent->setAttribute('PERCENT-COMPLETE',$taskData['info_percent']);
 		$vevent->setAttribute('PRIORITY',$this->egw_priority2vcal_priority[$taskData['info_priority']]);
 
-		if (!empty($taskData['info_cat']))
-		{
-			$cats = $this->get_categories(array($taskData['info_cat']));
-			$vevent->setAttribute('CATEGORIES', $cats[0]);
-		}
-		//error_log("\n\nexportvcal\n". print_r($vcal,true));
-		//error_log("\n\nexportvcal\n". print_r($vevent,true));
+
 		$vcal->addComponent($vevent);
-		error_log("\n\nexportvcal from infolog\n");
-		return $vcal->exportvCalendar();
+
+		$retval = $vcal->exportvCalendar();
+		Horde::logMessage("exportVTODO:\n" . print_r($retval, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		return $retval;
 	}
 
 	/**
@@ -116,104 +227,143 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param string $_vcalData
 	 * @param int $_taskID=-1 info_id, default -1 = new entry
+	 * @param boolean $merge=false	merge data with existing entry
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVTODO(&$_vcalData, $_taskID=-1)
+	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false)
 	{
-		if(!$taskData = $this->vtodotoegw($_vcalData,$_taskID))
-		{
-			return false;
-		}
+		if (!$taskData = $this->vtodotoegw($_vcalData,$_taskID)) return false;
+
 		// we suppose that a not set status in a vtodo means that the task did not started yet
-		if(empty($taskData['info_status']))
+		if (empty($taskData['info_status']))
 		{
 			$taskData['info_status'] = 'not-started';
 		}
+
+		if (empty($taskData['info_datecompleted']))
+		{
+			$taskData['info_datecompleted'] = 0;
+		}
+
 		return $this->write($taskData);
 	}
 
-	function searchVTODO($_vcalData, $contentID=null)
-	{
-		if(!$egwData = $this->vtodotoegw($_vcalData)) {
-			return false;
-		}
-    
-		$myfilter = array('col_filter' => array('info_uid'=>$egwData['info_uid'])) ;
-		if ($egwData['info_uid'] && ($found=parent::search($myfilter)) && ($uidmatch = array_shift($found)))
+	/**
+	 * Search a matching infolog entry for the VTODO data
+	 *
+	 * @param string $_vcalData		VTODO
+	 * @param int $contentID=null 	infolog_id (or null, if unkown)
+	 * @param boolean $relax=false 	if true, a weaker match algorithm is used
+	 * @return infolog_id of a matching entry or false, if nothing was found
+	 */
+	function searchVTODO($_vcalData, $contentID=null, $relax=false) {
+		$result = false;
+
+		if (($egwData = $this->vtodotoegw($_vcalData)))
 		{
-			return $uidmatch['info_id'];
-		};
-		unset($egwData['info_uid']);
-    		
-		if ($contentID) {
-			$egwData['info_id'] = $contentID;
-		}
-
-		#unset($egwData['info_priority']);
-
-		$filter = array('col_filter' => $egwData);
-		if($foundItems = $this->search($filter)) {
-			if(count($foundItems) > 0) {
-				$itemIDs = array_keys($foundItems);
-				return $itemIDs[0];
+			if ($contentID)
+			{
+				$egwData['info_id'] = $contentID;
 			}
+			$result = $this->findVTODO($egwData, $relax);
 		}
-
-		return false;
+		return $result;
 	}
 
-	function vtodotoegw($_vcalData,$_taskID=-1)
+	/**
+	 * Convert VTODO into a eGW infolog entry
+	 *
+	 * @param string $_vcalData 	VTODO data
+	 * @param int $_taskID=-1		infolog_id of the entry
+	 * @return array infolog entry or false on error
+	 */
+	function vtodotoegw($_vcalData, $_taskID=-1)
 	{
 		$vcal = new Horde_iCalendar;
-		if(!$vcal->parsevCalendar($_vcalData))
+		if (!($vcal->parsevCalendar($_vcalData))) return false;
+
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
-			return FALSE;
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		}
+		else
+		{
+			$minimum_uid_length = 8;
 		}
 
 		$components = $vcal->getComponents();
 
-		if(count($components) > 0)
+		foreach ($components as $component)
 		{
-			$component = $components[0];
-			if(is_a($component, 'Horde_iCalendar_vtodo'))
+			if (is_a($component, 'Horde_iCalendar_vtodo'))
 			{
 				$taskData = array();
-				if($_taskID > 0)
+				$taskData['info_type'] = 'task';
+
+				if ($_taskID > 0)
 				{
 					$taskData['info_id'] = $_taskID;
 				}
-				foreach($component->_attributes as $attributes)
+				foreach ($component->_attributes as $attributes)
 				{
-					switch($attributes['name'])
+					//$attributes['value'] = trim($attributes['value']);
+					if (empty($attributes['value'])) continue;
+					switch ($attributes['name'])
 					{
 						case 'CLASS':
-							$taskData['info_access']		= strtolower($attributes['value']);
+							$taskData['info_access'] = strtolower($attributes['value']);
 							break;
+
 						case 'DESCRIPTION':
-							$taskData['info_des']			= $attributes['value'];
+							$value = $attributes['value'];
+							if (preg_match('/\s*\[UID:(.+)?\]/Usm', $value, $matches))
+							{
+								if (!isset($taskData['info_uid'])
+										&& strlen($matches[1]) >= $minimum_uid_length)
+								{
+									$taskData['info_uid'] = $matches[1];
+								}
+								//$value = str_replace($matches[0], '', $value);
+							}
+							if (preg_match('/\s*\[PARENT_UID:(.+)?\]/Usm', $value, $matches))
+							{
+								if (!isset($taskData['info_id_parent'])
+										&& strlen($matches[1]) >= $minimum_uid_length)
+								{
+									$taskData['info_id_parent'] = $this->getParentID($matches[1]);
+								}
+								//$value = str_replace($matches[0], '', $value);
+							}
+							$taskData['info_des'] = $value;
 							break;
+
 						case 'LOCATION':
-							$taskData['info_location']		= $attributes['value'];
+							$taskData['info_location'] = $attributes['value'];
 							break;
+
 						case 'DUE':
-							$taskData['info_enddate']		= $attributes['value'];
+							// eGroupWare uses date only
+							$parts = @getdate($attributes['value']);
+							$value = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
+							$taskData['info_enddate'] = $value;
 							break;
+
 						case 'COMPLETED':
 							$taskData['info_datecompleted']	= $attributes['value'];
 							break;
+
 						case 'DTSTART':
-							$taskData['info_startdate']		= $attributes['value'];
+							$taskData['info_startdate']	= $attributes['value'];
 							break;
+
 						case 'PRIORITY':
-							if (1 <= $attributes['value'] && $attributes['value'] <= 3)
-							{
-								$taskData['info_priority']	= $this->vcal_priority2egw_priority[$attributes['value']];
-							}
-							else
-							{
-								$taskData['info_priority']	= 1;	// default = normal
+							if (1 <= $attributes['value'] && $attributes['value'] <= 3)	{
+								$taskData['info_priority'] = $this->vcal_priority2egw_priority[$attributes['value']];
+							} else {
+								$taskData['info_priority'] = 1;	// default = normal
 							}
 							break;
+
 						case 'STATUS':
 							// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
 							foreach($component->_attributes as $attr)
@@ -223,28 +373,26 @@ class infolog_ical extends infolog_bo
 							$taskData['info_status'] = $this->vtodo2status($attributes['value'],
 								$attr['name'] == 'X-INFOLOG-STATUS' ? $attr['value'] : null);
 							break;
+
 						case 'SUMMARY':
-							$taskData['info_subject']		= $attributes['value'];
+							$taskData['info_subject'] = $attributes['value'];
+							break;
+
+						case 'RELATED-TO':
+							$taskData['info_id_parent'] = $this->getParentID($attributes['value']);
 							break;
 
 						case 'CATEGORIES':
 							$cats = $this->find_or_add_categories(explode(',', $attributes['value']));
 							$taskData['info_cat'] = $cats[0];
 							break;
+
 						case 'UID':
-							$taskData['info_uid'] = $attributes['value'];
-							if ($_taskID <= 0 && !empty($attributes['value']) && ($uid_task = $this->read($attributes['value'])))
-							{
-								$taskData['info_id'] = $uid_task['id'];
-								unset($uid_task);
+							if (strlen($attributes['value']) >= $minimum_uid_length) {
+								$taskData['info_uid'] = $attributes['value'];
 							}
-							// not use weak uids that might come from syncml clients
-							if (isset($event['uid']) && (strlen($event['uid']) < 20 || is_numeric($event['uid'])))
-							{
-								unset ($event['uid']);
-							}	
-							
 							break;
+
 						case 'PERCENT-COMPLETE':
 							$taskData['info_percent'] = (int) $attributes['value'];
 							break;
@@ -254,18 +402,28 @@ class infolog_ical extends infolog_bo
 				# do NOT convert here
 				#$taskData = $GLOBALS['egw']->translation->convert($taskData, 'UTF-8');
 
+				Horde::logMessage("vtodotoegw:\n" . print_r($taskData, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
 				return $taskData;
 			}
 		}
-		return FALSE;
+		return false;
 	}
 
+	/**
+	 * Export an infolog entry as VNOTE
+	 *
+	 * @param int $_noteID		the infolog_id of the entry
+	 * @param string $_type		content type (e.g. text/plain)
+	 * @return string VNOTE representation of the infolog entry
+	 */
 	function exportVNOTE($_noteID, $_type)
 	{
 		$note = $this->read($_noteID);
-		$note = $GLOBALS['egw']->translation->convert($note, $GLOBALS['egw']->translation->charset(), 'UTF-8');
+		$note = $GLOBALS['egw']->translation->convert($note,
+			$GLOBALS['egw']->translation->charset(), 'UTF-8');
 
-		switch($_type)
+		switch	($_type)
 		{
 			case 'text/plain':
 				$txt = $note['info_subject']."\n\n".$note['info_des'];
@@ -273,27 +431,40 @@ class infolog_ical extends infolog_bo
 				break;
 
 			case 'text/x-vnote':
-				$noteGUID = $GLOBALS['egw']->common->generate_uid('infolog_note',$_noteID);
 				$vnote = new Horde_iCalendar_vnote();
+				$options = array('CHARSET' => 'UTF-8');
 				$vNote->setAttribute('VERSION', '1.1');
-				$vnote->setAttribute('SUMMARY',$note['info_subject']);
-				$vnote->setAttribute('BODY',$note['info_des']);
-				if($note['info_startdate'])
+				foreach (array(	'SUMMARY'	=> $note['info_subject'],
+								'BODY' 		=> $note['info_des'],
+							) as $field => $value)
+				{
+					$vnote->setAttribute($field, $value);
+					if ($this->productManufacturer != 'groupdav'
+						&& preg_match('/([\177-\377])/', $value))
+					{
+						$vevent->setParameter($field, $options);
+					}
+				}
+				if ($note['info_startdate'])
+				{
 					$vnote->setAttribute('DCREATED',$note['info_startdate']);
+				}
 				$vnote->setAttribute('DCREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'add'));
 				$vnote->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'modify'));
+
 				if (!empty($note['info_cat']))
 				{
 					$cats = $this->get_categories(array($note['info_cat']));
-					$vnote->setAttribute('CATEGORIES', $cats[0]);
+					$value = $cats[0];
+					$vnote->setAttribute('CATEGORIES', $value);
+					if ($this->productManufacturer != 'groupdav'
+						&& preg_match('/([\177-\377])/', $value))
+					{
+						$vevent->setParameter('CATEGORIES', $options);
+					}
 				}
 
-				#$vnote->setAttribute('UID',$noteGUID);
 				#$vnote->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
-
-				#$options = array('CHARSET' => 'UTF-8','ENCODING' => 'QUOTED-PRINTABLE');
-				#$vnote->setParameter('SUMMARY', $options);
-				#$vnote->setParameter('DESCRIPTION', $options);
 
 				return $vnote->exportvCalendar();
 				break;
@@ -301,38 +472,60 @@ class infolog_ical extends infolog_bo
 		return false;
 	}
 
-	function importVNOTE(&$_vcalData, $_type, $_noteID = -1)
+	/**
+	 * Import a VNOTE component of an iCal
+	 *
+	 * @param string $_vcalData
+	 * @param string $_type		content type (eg.g text/plain)
+	 * @param int $_taskID=-1 info_id, default -1 = new entry
+	 * @param boolean $merge=false	merge data with existing entry
+	 * @return int|boolean integer info_id or false on error
+	 */
+	function importVNOTE(&$_vcalData, $_type, $_noteID = -1, $merge=false)
 	{
-		if(!$note = $this->vnotetoegw($_vcalData, $_type))
-		{
-			return false;
-		}
+		if (!($note = $this->vnotetoegw($_vcalData, $_type))) return false;
 
-		if($_noteID > 0)
-		{
-			$note['info_id'] = $_noteID;
-		}
+		if($_noteID > 0) $note['info_id'] = $_noteID;
 
-		if(empty($note['info_status'])) {
-			$note['info_status'] = 'done';
-		}
+		if (empty($note['info_status'])) $note['info_status'] = 'done';
 
 		#_debug_array($taskData);exit;
 		return $this->write($note);
 	}
 
+	/**
+	 * Search a matching infolog entry for the VNOTE data
+	 *
+	 * @param string $_vcalData		VNOTE
+	 * @param int $contentID=null 	infolog_id (or null, if unkown)
+	 * @return infolog_id of a matching entry or false, if nothing was found
+	 */
 	function searchVNOTE($_vcalData, $_type, $contentID=null)
 	{
-		if(!$note = $this->vnotetoegw($_vcalData,$_type)) {
-			return false;
-		}
-		if ($contentID) {
-			$note['info_id'] = $contentID;
+		if (!($note = $this->vnotetoegw($_vcalData,$_type))) return false;
+
+		if ($contentID)	$note['info_id'] = $contentID;
+
+		unset($note['info_startdate']);
+
+		$filter = array();
+
+		if (!empty($note['info_des']))
+		{
+			$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $note['info_des']));
+			unset($note['info_des']);
+			if (strlen($description))
+			{
+				$filter['search'] = $description;
+			}
 		}
 
-		$filter = array('col_filter' => $note);
-		if($foundItems = $this->search($filter)) {
-			if(count($foundItems) > 0) {
+		$filter['col_filter'] = $note;
+
+		if (($foundItems = $this->search($filter)))
+		{
+			if (count($foundItems) > 0)
+			{
 				$itemIDs = array_keys($foundItems);
 				return $itemIDs[0];
 			}
@@ -341,9 +534,16 @@ class infolog_ical extends infolog_bo
 		return false;
 	}
 
+	/**
+	 * Convert VTODO into a eGW infolog entry
+	 *
+	 * @param string $_data 	VNOTE data
+	 * @param string $_type		content type (eg.g text/plain)
+	 * @return array infolog entry or false on error
+	 */
 	function vnotetoegw($_data, $_type)
 	{
-		switch($_type)
+		switch ($_type)
 		{
 			case 'text/plain':
 				$note = array();
@@ -360,7 +560,7 @@ class infolog_ical extends infolog_bo
 				else
 				{
 					// should better be imported as subject, but causes duplicates
-					// TODO: should be qexamined
+					// TODO: should be examined
 					$note['info_des'] = $txt;
 				}
 
@@ -369,34 +569,31 @@ class infolog_ical extends infolog_bo
 
 			case 'text/x-vnote':
 				$vnote = new Horde_iCalendar;
-				if (!$vcal->parsevCalendar($_data))
-				{
-					return FALSE;
-				}
+				if (!$vcal->parsevCalendar($_data))	return false;
+
 				$components = $vnote->getComponent();
-				if(count($components) > 0)
+				foreach ($components as $component)
 				{
-					$component = $components[0];
-					if(is_a($component, 'Horde_iCalendar_vnote'))
+					if (is_a($component, 'Horde_iCalendar_vnote'))
 					{
 						$note = array();
 						$note['info_type'] = 'note';
 
-						foreach($component->_attributes as $attribute)
+						foreach ($component->_attributes as $attribute)
 						{
 							switch ($attribute['name'])
 							{
 								case 'BODY':
 									$note['info_des'] = $attribute['value'];
 									break;
+
 								case 'SUMMARY':
 									$note['info_subject'] = $attribute['value'];
 									break;
+
 								case 'CATEGORIES':
-									{
-										$cats = $this->find_or_add_categories(explode(',', $attribute['value']));
-										$note['info_cat'] = $cats[0];
-									}
+									$cats = $this->find_or_add_categories(explode(',', $attribute['value']));
+									$note['info_cat'] = $cats[0];
 									break;
 							}
 						}
@@ -404,7 +601,7 @@ class infolog_ical extends infolog_bo
 					return $note;
 				}
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -415,11 +612,41 @@ class infolog_ical extends infolog_bo
 	 * @param string $_productManufacturer
 	 * @param string $_productName
 	 */
-	function setSupportedFields($_productManufacturer='file', $_productName='')
+	function setSupportedFields($_productManufacturer='', $_productName='')
 	{
-		// save them vor later use
-		$this->productManufacturer = $_productManufacturer;
-		$this->productName = $_productName;
+		$state = &$_SESSION['SyncML.state'];
+		if (isset($state))
+		{
+			$deviceInfo = $state->getClientDeviceInfo();
+		}
+
+		// store product manufacturer and name, to be able to use it elsewhere
+		if ($_productManufacturer)
+		{
+			$this->productManufacturer = strtolower($_productManufacturer);
+			$this->productName = strtolower($_productName);
+		}
+
+		if (isset($deviceInfo) && is_array($deviceInfo))
+		{
+			if (!isset($this->productManufacturer)
+				|| $this->productManufacturer == ''
+				|| $this->productManufacturer == 'file')
+			{
+				$this->productManufacturer = strtolower($deviceInfo['manufacturer']);
+			}
+			if (!isset($this->productName) || $this->productName == '')
+			{
+				$this->productName = strtolower($deviceInfo['model']);
+			}
+			if (isset($deviceInfo['uidExtension'])
+				&& $deviceInfo['uidExtension'])
+			{
+					$this->uidExtension = true;
+			}
+		}
+
+		Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', ' . $this->productName .')', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
 	}
 }
-

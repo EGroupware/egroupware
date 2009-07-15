@@ -331,6 +331,7 @@ class infolog_hooks
 	private static function all_cats()
 	{
 		$categories = new categories('','infolog');
+		$accountId = $GLOBALS['egw_info']['user']['account_id'];
 
 		foreach((array)$categories->return_sorted_array(0,False,'','','',true) as $cat)
 		{
@@ -339,6 +340,14 @@ class infolog_hooks
 			if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 			{
 				$s .= ' &#9830;';
+			}
+			elseif ($cat['owner'] != $accountId)
+			{
+				$s .= '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+			}
+			elseif ($cat['access'] == 'private')
+			{
+				$s .= ' &#9829;';
 			}
 			$sel_options[$cat['id']] = $s;	// 0.9.14 only
 		}
