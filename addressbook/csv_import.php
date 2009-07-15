@@ -159,7 +159,7 @@ switch($_POST['action'])
 		$addr_names['bday']    .= ': YYYY-mm-dd';
 		$addr_names['uid']      = lang('Unique ID (UID)');
 		unset($addr_names['jpegphoto']);	// cant cvs import that
-
+		$cfs = array();
 		foreach($bocontacts->customfields as $name => $data)
 		{
 			$cfs['#'.$name] = $addr_names['#'.$name] = $data['label'];
