@@ -1113,7 +1113,7 @@ class etemplate extends boetemplate
 				if (($type == 'float' || !is_numeric($pre)) && $value && $pre)
 				{
 					$value = str_replace(array(' ',','),array('','.'),$value);
-					$value = is_numeric($pre) ? round($value,$pre) : sprintf($pre,$value);
+					$value = is_numeric($pre) ? number_format($value,$pre,'.','') : sprintf($pre,$value);
 				}
 				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 				// fall-through
