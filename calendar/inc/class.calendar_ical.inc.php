@@ -912,13 +912,16 @@ class calendar_ical extends calendar_boupdate
 						if (($egw_event = $this->read($event['uid']))
 							&& $egw_event['recur_type'] != MCAL_RECUR_NONE)
 						{
-							$unchanged = true;
+							// Same start and duration is obligatory for status only
+							$old_duration = $egw_event['end'] - $egw_event['start'];
+							$new_duration = $event['end'] - $event['start'];
+							$unchanged = ($event['start'] == $recur_date && $old_duration == $new_duration);
 							foreach (array('uid','owner','title','description',
 								'location','priority','public','special','non_blocking') as $key)
 							{
 								//Horde::logMessage('importVCAL test ' .$key . ': '. $egw_event[$key] . ' == ' .$event[$key],
 								//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-								if (!empty($event[$key]) //|| !empty($egw_event[$key]))
+								if (!$unchanged && !empty($event[$key]) //|| !empty($egw_event[$key]))
 									&& $egw_event[$key] != $event[$key])
 								{
 									$unchanged = false;
@@ -930,7 +933,6 @@ class calendar_ical extends calendar_boupdate
 								Horde::logMessage('importVCAL event unchanged',
 									__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-								// We can handle this without an exception entry
 								$recur_exceptions = array();
 								foreach ($egw_event['recur_exception'] as $recur_exception)
 								{
@@ -941,9 +943,10 @@ class calendar_ical extends calendar_boupdate
 										$recur_exceptions[] = $recur_exception;
 									}
 								}
+								$egw_event['recur_exception'] = $recur_exceptions;
 								//Horde::logMessage("importVCAL exceptions\n" . print_r($recur_exceptions, true),
 								//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-								$egw_event['recur_exception'] = $recur_exceptions;
+
 								$this->update($egw_event, true);
 
 								// update the stati from the exception
