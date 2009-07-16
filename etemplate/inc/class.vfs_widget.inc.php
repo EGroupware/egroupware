@@ -25,6 +25,7 @@
  *   value is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer
  *   if empty($id) / new entry, file is created in a hidden temporary directory in users home directory
  *   and calling app is responsible to move content of that dir to entry directory, after entry is saved
+ *   option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
  *
  * All widgets accept as value a full path.
  * vfs-mime and vfs itself also allow an array with values like stat (incl. 'path'!) as value.
@@ -90,7 +91,7 @@ class vfs_widget
 
 		switch($type)
 		{
-			case 'vfs-upload':		// option: allowed mime types (regular expression) if limited
+			case 'vfs-upload':		// option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
 				if (empty($value) && preg_match('/^exec.*\[([^]]+)\]$/',$form_name,$matches))	// if no value via content array, use widget name
 				{
 					$value = $matches[1].$matches[2];
@@ -104,6 +105,7 @@ class vfs_widget
 						static $tmppath = array();	// static var, so all vfs-uploads get created in the same temporary dir
 						if (!isset($tmppath[$app])) $tmppath[$app] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.'.$app.'_'.md5(time().session_id());
 						$value = $tmppath[$app];
+						unset($cell['onchange']);	// no onchange, if we have to use a temporary dir
 					}
 					else
 					{
@@ -419,10 +421,8 @@ class vfs_widget
 		if (!empty($extension_data['mimetype']))
 		{
 			$type = etemplate::get_array($_FILES['exec']['type'],$name);
-			$is_preg = $extension_data['mimetype'][0] == '/' || $extension_data['mimetype'] != preg_quote($extension_data['mimetype']);
-			//echo "<p>preg_quote('{$extension_data['mimetype']}')='".preg_quote($extension_data['mimetype'])."' --> is_preg=".array2string($is_preg)."</p>\n";
-			if (!$is_preg && strcasecmp($extension_data['mimetype'],$type) ||
-				$is_preg && !preg_match($extension_data['mimetype'][0]=='/'?$extension_data['mimetype']:'/'.$extension_data['mimetype'].'/',$type))
+			$is_preg = $extension_data['mimetype'][0] == '/';
+			if (!$is_preg && strcasecmp($extension_data['mimetype'],$type) || $is_preg && !preg_match($extension_data['mimetype'],$type))
 			{
 				etemplate::set_validation_error($name,lang('File is of wrong type (%1 != %2)!',$type,$extension_data['mimetype']));
 				return false;
