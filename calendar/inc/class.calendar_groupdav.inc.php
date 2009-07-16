@@ -125,6 +125,7 @@ class calendar_groupdav extends groupdav_handler
 	            			'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
+					HTTP_WebDAV_Server::mkprop('resourcetype',''),	// iPhone requires that attribute!
 				);
 				if ($calendar_data)
 				{
@@ -395,6 +396,11 @@ class calendar_groupdav extends groupdav_handler
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/');
 		// email of the current user, see caldav-sheduling draft
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$GLOBALS['egw_info']['user']['email']);
+		// supported components, currently only VEVENT
+		$props[] =	$sc = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
+//			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),	// not yet supported
+		));
 
 		return $props;
 	}
