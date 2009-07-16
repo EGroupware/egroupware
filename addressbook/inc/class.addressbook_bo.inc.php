@@ -1468,9 +1468,9 @@ class addressbook_bo extends addressbook_so
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_data = $this->categories->return_single($cat_id))
+			if ($cat_id && ($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
-				$cat_list[] = $cat_data[0]['name'];
+				$cat_list[] = $cat_name;
 			}
 		}
 

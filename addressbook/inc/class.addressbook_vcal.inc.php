@@ -231,9 +231,8 @@ class addressbook_vcal extends addressbook_bo
 						break;
 
 					case 'cat_id':
-						if (!empty($value))
+						if (!empty($value) && ($values = $this->get_categories($value)))
 						{
-							$values = &$this->get_categories($value);
 							$values = (array) $GLOBALS['egw']->translation->convert($values, $sysCharSet, $_charset);
 							$value = implode(',', $values); // just for the CHARSET recognition
 							if(($extra_charset_attribute || $this->productName == 'kde')
