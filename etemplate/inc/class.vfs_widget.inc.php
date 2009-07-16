@@ -22,10 +22,11 @@
  * - vfs-uid  aka File owner:       Owner of file, or 'root' if none
  * - vfs-gid  aka File group:       Group of file, or 'root' if none
  * - vfs-upload aka VFS file:       displays either download and delete (x) links or a file upload
- *   value is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer
- *   if empty($id) / new entry, file is created in a hidden temporary directory in users home directory
- *   and calling app is responsible to move content of that dir to entry directory, after entry is saved
- *   option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
+ *   + value is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer
+ *   + if empty($id) / new entry, file is created in a hidden temporary directory in users home directory
+ *     and calling app is responsible to move content of that dir to entry directory, after entry is saved
+ *   + option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
+ *   + if path ends in a slash, multiple files can be uploaded, their original filename is kept then
  *
  * All widgets accept as value a full path.
  * vfs-mime and vfs itself also allow an array with values like stat (incl. 'path'!) as value.
@@ -94,7 +95,7 @@ class vfs_widget
 			case 'vfs-upload':		// option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
 				if (empty($value) && preg_match('/^exec.*\[([^]]+)\]$/',$form_name,$matches))	// if no value via content array, use widget name
 				{
-					$value = $matches[1].$matches[2];
+					$value = $matches[1];
 				}
 				$extension_data = array('value' => $value, 'mimetype' => $cell['size'], 'type' => $type);
 				if ($value[0] != '/')
@@ -114,31 +115,10 @@ class vfs_widget
 					if (!empty($relpath)) $value .= '/'.$relpath;
 				}
 				$path = $extension_data['path'] = $value;
-				if (self::file_exists($path))	// display download link and delete icon
+				if (substr($path,-1) != '/' && self::file_exists($path) && !egw_vfs::is_dir($path))	// display download link and delete icon
 				{
 					$extension_data['path'] = $path;
-					$value = empty($cell['label']) ? basename($path) : lang($cell['label']);	// display (translated) Label or filename (if label empty)
-
-					$vfs_link = etemplate::empty_cell('label',$cell['name'],array(
-						'size' => ','.egw_vfs::download_url($path).',,,,,'.$path,
-					));
-					// if dir is writable, add delete link
-					if (egw_vfs::is_writable(egw_vfs::dirname($path)))
-					{
-						$cell = etemplate::empty_cell('hbox','',array('size' => ',,0,0'));
-						etemplate::add_child($cell,$vfs_link);
-						$delete_icon = etemplate::empty_cell('button',$path,array(
-							'label' => 'delete',
-							'size'  => 'delete',	// icon
-							'onclick' => "return confirm('Delete this file');",
-							'span' => ',leftPad5',
-						));
-						etemplate::add_child($cell,$delete_icon);
-					}
-					else
-					{
-						$cell = $vfs_link;
-					}
+					$cell = $this->file_widget($value,$path,$cell['name'],$cell['label']);
 				}
 				else	// file does NOT exists --> display file upload
 				{
@@ -156,6 +136,24 @@ class vfs_widget
 						}
 						$cell['help'] = lang('Allowed file type: %1',$type);
 					}
+				}
+				// check if directory (trailing slash) is given --> upload of multiple files
+				if (substr($path,-1) == '/' && egw_vfs::file_exists($path) && ($files = egw_vfs::scandir($path)))
+				{
+					//echo $path; _debug_array($files);
+					$upload = $cell;
+					$cell = etemplate::empty_cell('box','',array('size' => ',,0,0'));
+					$extension_data['files'] = $files;
+					$value = array();
+					foreach($files as $file)
+					{
+						$file = $path.$file;
+						$basename = basename($file);
+						unset($widget);
+						$widget = $this->file_widget($value[$basename],$file,$upload['name']."[$basename]");
+						etemplate::add_child($cell,$widget);
+					}
+					etemplate::add_child($cell,$upload);
 				}
 				break;
 
@@ -331,8 +329,43 @@ class vfs_widget
 			default:
 				$value = 'Not yet implemented';
 		}
-
 		return true;
+	}
+
+	/**
+	 * Create widget with download and delete (only if dir is writable) link
+	 *
+	 * @param mixed &$value
+	 * @param string $path vfs path of download
+	 * @param string $name name of widget
+	 * @param string $label=null label, if not set basename($path) is used
+	 * @return array
+	 */
+	static function file_widget(&$value,$path,$name,$label=null)
+	{
+		$value = empty($label) ? basename($path) : lang($label);	// display (translated) Label or filename (if label empty)
+
+		$vfs_link = etemplate::empty_cell('label',$name,array(
+			'size' => ','.egw_vfs::download_url($path).',,,_blank,,'.$path,
+		));
+		// if dir is writable, add delete link
+		if (egw_vfs::is_writable(egw_vfs::dirname($path)))
+		{
+			$cell = etemplate::empty_cell('hbox','',array('size' => ',,0,0'));
+			etemplate::add_child($cell,$vfs_link);
+			$delete_icon = etemplate::empty_cell('button',$path,array(
+				'label' => 'delete',
+				'size'  => 'delete',	// icon
+				'onclick' => "return confirm('Delete this file');",
+				'span' => ',leftPad5',
+			));
+			etemplate::add_child($cell,$delete_icon);
+		}
+		else
+		{
+			$cell = $vfs_link;
+		}
+		return $cell;
 	}
 
 	/**
@@ -393,9 +426,24 @@ class vfs_widget
 		//echo '<p>'.__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in)."</p>\n";
 
 		// check if delete icon clicked
-		if ($_POST['submit_button'] == str_replace($extension_data['value'],$extension_data['path'],$name))
+		if ($_POST['submit_button'] == ($fname = str_replace($extension_data['value'],$extension_data['path'],$name)) ||
+			substr($extension_data['path'],-1) == '/' && substr($_POST['submit_button'],0,strlen($fname)-1) == substr($fname,0,-1))
 		{
-			if (!egw_vfs::remove($extension_data['path']))
+			if (substr($extension_data['path'],-1) == '/')	// multiple files?
+			{
+				foreach($extension_data['files'] as $file)	// check of each single file, to not allow deleting of arbitrary files
+				{
+					if ($_POST['submit_button'] == substr($fname,0,-1).$file.']')
+					{
+						if (!egw_vfs::unlink($extension_data['path'].$file))
+						{
+							etemplate::set_validation_error($name,lang('Error deleting %1!',$extension_data['path'].$file));
+						}
+						break;
+					}
+				}
+			}
+			elseif (!egw_vfs::unlink($extension_data['path']))
 			{
 				etemplate::set_validation_error($name,lang('Error deleting %1!',$extension_data['path']));
 			}
@@ -429,11 +477,18 @@ class vfs_widget
 			}
 		}
 		$path = $extension_data['path'];
-		// add extension to path
-		$parts = explode('.',$filename);
-		if (($extension = array_pop($parts)) && mime_magic::ext2mime($extension))	// really an extension --> add it to path
+		if (substr($path,-1) != '/')
 		{
-			$path .= '.'.$extension;
+			// add extension to path
+			$parts = explode('.',$filename);
+			if (($extension = array_pop($parts)) && mime_magic::ext2mime($extension))	// really an extension --> add it to path
+			{
+				$path .= '.'.$extension;
+			}
+		}
+		else	// multiple upload with dir given (trailing slash)
+		{
+			$path .= $filename;
 		}
 		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
 		{
