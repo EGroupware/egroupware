@@ -586,7 +586,7 @@ ORDER BY cal_user_type, cal_usre_id
 		if (isset($event['recur_type']))
 		{
 			// save the original start
-			$min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchSingle();
+			$min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']) && count($event['recur_exception']))
 			{
@@ -607,7 +607,7 @@ ORDER BY cal_user_type, cal_usre_id
 				    $event['recur_type'] != $old_recur['recur_type'] || $event['recur_data'] != $old_recur['recur_data'] ||
 					(int)$event['recur_interval'] != (int)$old_recur['recur_interval'] || $event['recur_enddate'] != $old_recur['recur_enddate'] ||
 					count(array_diff($old_exceptions,$event['recur_exception']));	// exception deleted or added
-				$max = (int) $this->db->select($this->dates_table,'MAX(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchSingle();
+				$max = (int) $this->db->select($this->dates_table,'MAX(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 			} else {
 				$max = 0;
 			}
