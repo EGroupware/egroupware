@@ -606,11 +606,9 @@ ORDER BY cal_user_type, cal_usre_id
 				$set_recurrences = (isset($event['cal_start']) && (int)$min != (int) $event['cal_start']) ||
 				    $event['recur_type'] != $old_recur['recur_type'] || $event['recur_data'] != $old_recur['recur_data'] ||
 					(int)$event['recur_interval'] != (int)$old_recur['recur_interval'] || $event['recur_enddate'] != $old_recur['recur_enddate'] ||
-					count(array_diff($old_exceptions,$event['recur_exception']));	// exception deleted or added
-				$max = (int) $this->db->select($this->dates_table,'MAX(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
-			} else {
-				$max = 0;
+					count(array_diff($old_exceptions,$event['recur_exception']));	// exception deleted (jaytraxx: handling this better follows soon)
 			}
+			
 			$event['recur_exception'] = empty($event['recur_exception']) ? null : implode(',',$event['recur_exception']);
 			unset($event[0]);	// unset the 'etag=etag+1', as it's not in the repeats table
 			if($event['recur_type'] != MCAL_RECUR_NONE)
@@ -623,21 +621,16 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			if ($set_recurrences)
 			{
-				if ((int)$min != (int)$event['cal_start'])
-				{
-					// We need to reset all recurrences
-					$max = -1;
-				}
 				// delete all, but the lowest dates record
 				$this->db->delete($this->dates_table,array(
 					'cal_id' => $cal_id,
 					'cal_start > '.(int)$min,
 				),__LINE__,__FILE__,'calendar');
 
-				// delete all user-records, with recur-date > old enddate
+				// delete all user-records, with recur-date != 0
 				$this->db->delete($this->user_table,array(
 					'cal_id' => $cal_id,
-					'cal_recur_date > '.(int)$max,
+					'cal_recur_date != 0',
 				),__LINE__,__FILE__,'calendar');
 			}
 		}
@@ -753,7 +746,7 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			// move the recur-date of the participants
 			$this->db->query("UPDATE $this->user_table SET cal_recur_date=cal_recur_date+$move_start WHERE $where AND cal_recur_date ".
-				((int)$change_since ? '>= '.(int)$change_since : '!= 0') + " ORDER BY cal_recur_date DESC",__LINE__,__FILE__);
+				((int)$change_since ? '>= '.(int)$change_since : '!= 0') . " ORDER BY cal_recur_date DESC",__LINE__,__FILE__);
 		}
 		if ($move_start || $move_end)
 		{
@@ -830,7 +823,6 @@ ORDER BY cal_user_type, cal_usre_id
 		if ($change_since !== false)	// existing entries only
 		{
 			// delete not longer set participants
-			$where[0] = 'cal_recur_date=0';
 			$deleted = array();
 			foreach($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id,cal_quantity',$where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
@@ -848,7 +840,6 @@ ORDER BY cal_user_type, cal_usre_id
 					unset($participants[$uid]);	// we don't touch them
 				}
 			}
-			unset($where[0]);
 
 			if (count($deleted))
 			{
