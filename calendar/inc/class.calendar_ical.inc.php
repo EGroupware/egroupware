@@ -568,9 +568,12 @@ class calendar_ical extends calendar_boupdate
 							}
 							elseif ($event['reference'])
 							{
-								if ($this->isWholeDay($event))
+								// $event['reference'] is a calendar_id, not a timestamp
+								$revent = $this->read($event['reference']);
+
+								if ($this->isWholeDay($revent))
 								{
-									$arr = $this->date2array($event['reference']);
+									$arr = $this->date2array($revent['start']);
 									$vevent->setAttribute('RECURRENCE-ID', array(
 										'year' => $arr['year'],
 										'month' => $arr['month'],
@@ -582,13 +585,14 @@ class calendar_ical extends calendar_boupdate
 								{
 									if ($servertime)
 									{
-										$attributes['RECURRENCE-ID'] = date('Ymd\THis', $event['reference']);
+										$attributes['RECURRENCE-ID'] = date('Ymd\THis', $revent['start']);
 									}
 									else
 									{
-										$attributes['RECURRENCE-ID'] = $event['reference'];
+										$attributes['RECURRENCE-ID'] = $revent['start'];
 									}
 								}
+								unset($revent);
 							}
 							break;
 
