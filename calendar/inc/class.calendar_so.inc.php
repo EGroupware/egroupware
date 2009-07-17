@@ -585,12 +585,15 @@ ORDER BY cal_user_type, cal_usre_id
 		// write information about recuring event, if recur_type is present in the array
 		if (isset($event['recur_type']))
 		{
-			// save the original start
-			$min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
+			// fetch information about the currently saved (old) event
+			$old_min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
+			$old_duration = (int) $this->db->select($this->dates_table,'MIN(cal_end)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn() - $old_min;
+			$old_repeats = $this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
+			$old_exceptions = $old_repeats['recur_exception'] ? explode(',',$old_repeats['recur_exception']) : array();
 
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']) && count($event['recur_exception']))
 			{
-				// delete the execeptions from the user and dates table, it could be the first time
+				// added and existing exceptions: delete the execeptions from the user and dates table, it could be the first time
 				$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
 				$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
 			}
@@ -598,15 +601,32 @@ ORDER BY cal_user_type, cal_usre_id
 			{
 				$event['recur_exception'] = array();
 			}
+
+			// deleted exceptions: re-insert recurrences into the user and dates table
+			if(count($deleted_exceptions = array_diff($old_exceptions,$event['recur_exception'])))
+			{
+				foreach($deleted_exceptions as $id => $deleted_exception)
+				{
+					// rebuild participants for the re-inserted recurrence
+					$participants = array();
+					$participants_only = $this->get_participants($cal_id); // participants without states
+					foreach($participants_only as $id => $participant_only)
+					{
+						$states = $this->get_recurrences($cal_id, $participant_only['uid']);
+						$participants[$participant_only['uid']] = $states[0]; // insert main status as default
+					}
+					$this->recurrence($cal_id, $deleted_exception, $deleted_exception + $old_duration, $participants);
+				}
+			}
+
 			if (!$set_recurrences)
 			{
 				// check if the recurrence-information changed
-				$old_recur = $this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
-				$old_exceptions = $old_recur['recur_exception'] ? explode(',',$old_recur['recur_exception']) : array();
-				$set_recurrences = (isset($event['cal_start']) && (int)$min != (int) $event['cal_start']) ||
-				    $event['recur_type'] != $old_recur['recur_type'] || $event['recur_data'] != $old_recur['recur_data'] ||
-					(int)$event['recur_interval'] != (int)$old_recur['recur_interval'] || $event['recur_enddate'] != $old_recur['recur_enddate'] ||
-					count(array_diff($old_exceptions,$event['recur_exception']));	// exception deleted (jaytraxx: handling this better follows soon)
+				$set_recurrences = (isset($event['cal_start']) && (int)$old_min != (int) $event['cal_start']) ||
+				    $event['recur_type'] != $old_repeats['recur_type'] || $event['recur_data'] != $old_repeats['recur_data'] ||
+					(int)$event['recur_interval'] != (int)$old_repeats['recur_interval'] ||
+					$event['recur_enddate'] != $old_repeats['recur_enddate'];
+				 // ToDo jaytraxx: manually handle recur_enddate change without recurrences rebuild
 			}
 			
 			$event['recur_exception'] = empty($event['recur_exception']) ? null : implode(',',$event['recur_exception']);
@@ -624,7 +644,7 @@ ORDER BY cal_user_type, cal_usre_id
 				// delete all, but the lowest dates record
 				$this->db->delete($this->dates_table,array(
 					'cal_id' => $cal_id,
-					'cal_start > '.(int)$min,
+					'cal_start > '.(int)$old_min,
 				),__LINE__,__FILE__,'calendar');
 
 				// delete all user-records, with recur-date != 0
