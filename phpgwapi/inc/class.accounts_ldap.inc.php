@@ -1081,7 +1081,7 @@ class accounts_ldap
 		{
 			$account_id = (int) $GLOBALS['egw']->common->next_id($type,$min,$max);
 		}
-		while ($account_id && $this->frontend->exists($sign * $account_id));	// check need to include the sign!
+		while ($account_id && ($this->frontend->exists($sign * $account_id) || $this->frontend->exists(-1 * $sign * $account_id)));	// check need to include the sign!
 
 		if	(!$account_id || $this->frontend->config['account_max_id'] &&
 			$account_id > $this->frontend->config['account_max_id'])
