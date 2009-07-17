@@ -137,7 +137,8 @@ class calendar_ical extends calendar_boupdate
 	 *
 	 * @param array $_clientProperties		client properties
 	 */
-	function __construct(&$_clientProperties = array()) {
+	function __construct(&$_clientProperties = array())
+	{
 		parent::__construct();
 
 		$this->clientProperties = $_clientProperties;
@@ -161,7 +162,7 @@ class calendar_ical extends calendar_boupdate
 		$egwSupportedFields = array(
 			'CLASS'			=> array('dbName' => 'public'),
 			'SUMMARY'		=> array('dbName' => 'title'),
-			'DESCRIPTION'	=> array('dbName' => 'description'),
+			'DESCRIPTION'		=> array('dbName' => 'description'),
 			'LOCATION'		=> array('dbName' => 'location'),
 			'DTSTART'		=> array('dbName' => 'start'),
 			'DTEND'			=> array('dbName' => 'end'),
@@ -171,9 +172,9 @@ class calendar_ical extends calendar_boupdate
 			'EXDATE'		=> array('dbName' => 'recur_exception'),
 			'PRIORITY'		=> array('dbName' => 'priority'),
 			'TRANSP'		=> array('dbName' => 'non_blocking'),
-			'CATEGORIES'	=> array('dbName' => 'category'),
+			'CATEGORIES'		=> array('dbName' => 'category'),
 			'UID'			=> array('dbName' => 'uid'),
-			'RECURRENCE-ID' => array('dbName' => 'reference'),
+			'RECURRENCE-ID' 	=> array('dbName' => 'reference'),
 		);
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
@@ -456,33 +457,37 @@ class calendar_ical extends calendar_boupdate
 						case 'EXDATE':
 							if ($event['recur_type'] == MCAL_RECUR_NONE) break;
 							$days = array();
-							$participants = $this->so->get_participants($event['id'], 0);
-
-							// Check if the stati for all participants are identical for all recurrences
-							foreach ($participants as $uid => $attendee)
+							// dont use "virtual" exceptions created by participant status for GroupDAV or file export
+							if (!in_array($this->productManufacturer,array('file','groupdav')))
 							{
-								switch ($attendee['type'])
+								$participants = $this->so->get_participants($event['id'], 0);
+
+								// Check if the stati for all participants are identical for all recurrences
+								foreach ($participants as $uid => $attendee)
 								{
-									case 'u':	// account
-									case 'c':	// contact
-									case 'e':	// email address
-										$recurrences = $this->so->get_recurrences($event['id'], $uid);
-										foreach ($recurrences as $rdate => $recur_status)
-										{
-											if ($rdate && $recur_status != $recurrences[0])
+									switch ($attendee['type'])
+									{
+										case 'u':	// account
+										case 'c':	// contact
+										case 'e':	// email address
+											$recurrences = $this->so->get_recurrences($event['id'], $uid);
+											foreach ($recurrences as $rdate => $recur_status)
 											{
-												// Every distinct status results in an exception
-												$days[] = $rdate;
+												if ($rdate && $recur_status != $recurrences[0])
+												{
+													// Every distinct status results in an exception
+													$days[] = $rdate;
+												}
 											}
-										}
-										break;
-									default: // We don't handle the rest
-										break;
+											break;
+										default: // We don't handle the rest
+											break;
+									}
 								}
 							}
 							if (is_array($event['recur_exception']))
 							{
-								$days = $days + $event['recur_exception'];
+								$days = array_merge($days,$event['recur_exception']);	// can NOT use +, as it overwrites numeric indexes
 							}
 							if (!empty($days))
 							{
@@ -569,11 +574,24 @@ class calendar_ical extends calendar_boupdate
 							elseif ($event['reference'])
 							{
 								// $event['reference'] is a calendar_id, not a timestamp
-								$revent = $this->read($event['reference']);
+								if (!($revent = $this->read($event['reference']))) break;	// referenced event does not exist
+
+								// find recur_exception closest to $event['start'],
+								// as our db-model does NOT store for which recurrence the exception is
+								$exception_start = $exception_diff = null;
+								foreach($revent['recur_exception'] as $exception)
+								{
+									if (!isset($exception_start) || $exception_diff > abs($exception-$event['start']))
+									{
+										$exception_start = $exception;
+										$exception_diff = abs($exception-$event['start']);
+									}
+								}
+								if (!isset($exception_start)) break;	// referenced event has no exception
 
 								if ($this->isWholeDay($revent))
 								{
-									$arr = $this->date2array($revent['start']);
+									$arr = $this->date2array($exception_start);
 									$vevent->setAttribute('RECURRENCE-ID', array(
 										'year' => $arr['year'],
 										'month' => $arr['month'],
@@ -585,11 +603,11 @@ class calendar_ical extends calendar_boupdate
 								{
 									if ($servertime)
 									{
-										$attributes['RECURRENCE-ID'] = date('Ymd\THis', $revent['start']);
+										$attributes['RECURRENCE-ID'] = date('Ymd\THis', $exception_start);
 									}
 									else
 									{
-										$attributes['RECURRENCE-ID'] = $revent['start'];
+										$attributes['RECURRENCE-ID'] = $exception_start;
 									}
 								}
 								unset($revent);
@@ -778,6 +796,7 @@ class calendar_ical extends calendar_boupdate
 		$Ok = false;	// returning false, if file contains no components
 
 		$vcal = new Horde_iCalendar;
+		error_log(__LINE__.__METHOD__.__FILE__.print_r($_vcalData,true));
 		if (!$vcal->parsevCalendar($_vcalData))
 		{
 			return $Ok;
@@ -822,7 +841,7 @@ class calendar_ical extends calendar_boupdate
 
  				if ($event['recur_type'] != MCAL_RECUR_NONE)
  				{
- 					// No RECCURENCE-ID for series events
+ 					// No RECURRENCE-ID for series events
  					$event['reference'] = 0;
  				}
 
@@ -1528,7 +1547,9 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['end']		= $dtend_ts;
 					break;
 				case 'RECURRENCE-ID':
-					$vcardData['reference']	= $attributes['value'];
+					// event['reference'] is a cal_id, not a date!
+					// setting it to a date makes no sense, not setting it keeps an existing correct reference
+					//$vcardData['reference']	= $attributes['value'];
 					break;
 				case 'LOCATION':
 					$vcardData['location']	= $attributes['value'];
