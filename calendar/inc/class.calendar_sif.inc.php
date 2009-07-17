@@ -322,7 +322,7 @@ class calendar_sif extends calendar_boupdate
 				}
 			}
 
-			$vcal		= &new Horde_iCalendar('1.0');
+			$vcal		= new Horde_iCalendar('1.0');
 
 
 			$sifEvent = self::xml_decl . "\n<appointment>" . self::SIF_decl;
