@@ -759,8 +759,14 @@ class addressbook_ui extends addressbook_bo
 		$do_email = $query['do_email'];
 		$what = $query['sitemgr_display'] ? $query['sitemgr_display'] : ($do_email ? 'email' : 'index');
 
-		$old_state = $GLOBALS['egw']->session->appsession($what,'addressbook',$query);
-
+		if (!$id_only)
+		{
+			$old_state = $GLOBALS['egw']->session->appsession($what,'addressbook',$query);
+		}
+		else
+		{
+			$old_state = $GLOBALS['egw']->session->appsession($what,'addressbook');
+		}
 		if (!isset($this->org_views[(string) $query['org_view']]))   // we dont have an org view, unset the according col_filters
 		{
 			if (isset($query['col_filter']['org_name'])) unset($query['col_filter']['org_name']);
