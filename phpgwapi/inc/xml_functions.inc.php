@@ -191,12 +191,12 @@
 	* into their equivalent 'charset entity'. Charset entities enumerated this way
 	* are independent of the charset encoding used to transmit them, and all XML
 	* parsers are bound to understand them.
-	* 
+	*
 	* @author Eugene Pivnev
 	*/
 	function xmlrpc_encode_entities($data)
 	{
-		return htmlspecialchars($data,ENT_QUOTES,$GLOBALS['egw']->translation->system_charset ? 
+		return htmlspecialchars($data,ENT_QUOTES,$GLOBALS['egw']->translation->system_charset ?
 			$GLOBALS['egw']->translation->system_charset : 'latin1');
 	}
 
@@ -789,7 +789,7 @@
 
 		if($server_name)
 		{
-			list($sessionid,$kp3) = $GLOBALS['egw']->session->create_server($username.'@'.$server_name,$password,"text");
+			list($sessionid,$kp3) = $GLOBALS['egw']->session->create($username.'@'.$server_name,$password,"text");
 		}
 		else
 		{
