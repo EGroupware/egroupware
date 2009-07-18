@@ -1062,12 +1062,12 @@ class Horde_iCalendar {
                     // or QUOTED-PRINTABLE encoded. Currently we use
                     // QUOTED-PRINTABLE as default.
                     if (preg_match("/[^\x20-\x7F]/", $value) &&
-                        empty($params['ENCODING']))  {
+                        !isset($params['ENCODING']))  {
                         $params['ENCODING'] = 'QUOTED-PRINTABLE';
                         $params_str .= ';ENCODING=QUOTED-PRINTABLE';
                         // Add CHARSET as well. At least the synthesis client
                         // gets confused otherwise
-                        if (empty($params['CHARSET'])) {
+                        if (!isset($params['CHARSET'])) {
                             $params['CHARSET'] = NLS::getCharset();
                             $params_str .= ';CHARSET=' . $params['CHARSET'];
                         }
