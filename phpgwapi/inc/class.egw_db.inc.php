@@ -958,7 +958,17 @@ class egw_db
 		{
 			return False;
 		}
-		return $strip ? self::strip_array_keys($this->Record,$strip) : $this->Record;
+		$result = array();
+		foreach($this->Record as $column => $value)
+		{
+			if (!is_numeric($column))
+			{
+				if ($strip) $column = str_replace($strip,'',$column);
+
+				$result[$column] = $value;
+			}
+		}
+		return $result;
 	}
 
 	/**
