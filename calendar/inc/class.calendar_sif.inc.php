@@ -101,6 +101,7 @@ class calendar_sif extends calendar_boupdate
 
 	function siftoegw($_sifdata) {
 		$vcal		= new Horde_iCalendar;
+		$this->event = array();
 		$finalEvent	= array();
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 		#error_log($sifData);
