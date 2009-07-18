@@ -1014,24 +1014,15 @@ class addressbook_vcal extends addressbook_bo
 		#error_log(print_r($vcardValues, true));
 		Horde::logMessage("vCalAddressbook vcardtoegw: " . print_r($vcardValues, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-		$email = 0;
+		$email = 1;
 		$tel = 1;
 		$cell = 1;
-		$url = 0;
+		$url = 1;
 		$pref_tel = false;
 
 		foreach($vcardValues as $key => $vcardRow)
 		{
 			$rowName  = strtoupper($vcardRow['name']);
-			switch ($rowName)
-			{
-				case 'EMAIL':
-					$email++;
-					break;
-				case 'URL':
-					$url++;
-					break;
-			}
 			if ($vcardRow['value'] == ''  && implode('', $vcardRow['values']) == '')
 			{
 				unset($vcardRow);
@@ -1095,7 +1086,7 @@ class addressbook_vcal extends addressbook_bo
 						break;
 						//case 'INTERNET':
 					case 'PREF':
-						if (strtoupper($vcardRow['name']) == 'TEL')
+						if (strtoupper($vcardRow['name']) == 'TEL' && !$pref_tel)
 						{
 							$pref_tel = $key;
 						}
@@ -1114,13 +1105,18 @@ class addressbook_vcal extends addressbook_bo
 						$rowName = 'TEL;CAR';
 						break;
 					default:
+						if (strpos($pname, 'X-FUNAMBOL-') === 0)
+						{
+							// Propriatary Funambol extension will be ignored
+							$rowName .= ';' . $pname;
+						}
 						break;
 				}
 			}
 
 			if($rowName == 'EMAIL')
 			{
-				$rowName .= ';X-egw-Ref' . $email;
+				$rowName .= ';X-egw-Ref' . $email++;
 			}
 
 			if(($rowName == 'TEL;CELL') ||
@@ -1137,7 +1133,7 @@ class addressbook_vcal extends addressbook_bo
 
 			if($rowName == 'URL')
 			{
-				$rowName = 'URL;X-egw-Ref' . $url;
+				$rowName = 'URL;X-egw-Ref' . $url++;
 			}
 
 			$rowNames[$rowName] = $key;
