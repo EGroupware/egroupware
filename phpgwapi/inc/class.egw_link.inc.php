@@ -827,12 +827,12 @@ class egw_link extends solink
 		}
 		if (self::DEBUG)
 		{
-			echo "<p>egw_link::delete_attached('$app','$id','$fname') url=$url</p>\n";
+			echo '<p>'.__METHOD__."('$app','$id','$fname') url=$url</p>\n";
 		}
-		if (($Ok = egw_vfs::remove($url,true)) && ((int)$app > 0 || $fname))
+		if (($Ok = !file_exists($url) || egw_vfs::remove($url,true)) && ((int)$app > 0 || $fname))
 		{
 			// try removing the dir, in case it's empty
-			@rmdir(egw_vfs::dirname($url));
+			@egw_vfs::rmdir(egw_vfs::dirname($url));
 		}
 		if (!is_null($current_is_root))
 		{
