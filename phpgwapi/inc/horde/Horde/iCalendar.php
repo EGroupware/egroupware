@@ -891,8 +891,11 @@ class Horde_iCalendar {
             if ($params) {
                 foreach ($params as $param_name => $param_value) {
                     /* Skip CHARSET for iCalendar 2.0 data, not allowed. */
-                    if ($param_name == 'CHARSET' && !$this->isOldFormat()) {
+                    if ($param_name == 'CHARSET' && (!$this->isOldFormat() || empty($param_value))) {
                         continue;
+                    }
+                    if ($param_name == 'ENCODING' && empty($param_value)) {
+                    	continue;
                     }
                     /* Skip VALUE=DATE for vCalendar 1.0 data, not allowed. */
                     if ($this->isOldFormat() &&
