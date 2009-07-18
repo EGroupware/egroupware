@@ -695,10 +695,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			!egw_vfs::check_access($parent,egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url);
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$options) (type=$type) permission denied!");
+			$err_msg = __METHOD__."($url,$options) ".(!$stat ? 'not found!' :
+				($stat['mime'] != self::DIR_MIME_TYPE ? 'not a directory!' : 'permission denied!'));
+			if (self::LOG_LEVEL) error_log($err_msg);
 			if (!($options & STREAM_URL_STAT_QUIET))
 			{
-				trigger_error(__METHOD__."('$url',$options) (type=$type) permission denied!",E_USER_WARNING);
+				trigger_error($err_msg,E_USER_WARNING);
 			}
 			return false;	// no permission or file does not exist
 		}
