@@ -222,7 +222,7 @@ class calendar_so
 		$sql = '';
 		if ($cat_id)
 		{
-			if (!is_array($cat_ids) && !@$GLOBALS['egw_info']['user']['preferences']['common']['cats_no_subs'])
+			if (!is_array($cat_id) && !@$GLOBALS['egw_info']['user']['preferences']['common']['cats_no_subs'])
 			{
 				$cats = $GLOBALS['egw']->categories->return_all_children($cat_id);
 			}
