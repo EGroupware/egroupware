@@ -34,6 +34,19 @@ else
 	exit;
 }
 
+/*
+ * Destroy any existing anonymous session.
+ * Copied from logout.php. Maybe make it a common function?
+ */
+if(isset($GLOBALS['sitemgr_info']) && $GLOBALS['egw_info']['user']['userid'] == $GLOBALS['sitemgr_info']['anonymous_user'])
+{
+	if($GLOBALS['egw']->session->verify())
+	{
+		$GLOBALS['egw']->hooks->process('logout');
+		$GLOBALS['egw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
+	}
+}
+
 // CAS :
 if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
 {
