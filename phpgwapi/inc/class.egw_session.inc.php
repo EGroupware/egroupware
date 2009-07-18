@@ -481,7 +481,6 @@ class egw_session
 			}
 			return false;
 		}
-
 		if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
 		{
 			if ($GLOBALS['egw_info']['server']['auto_create_acct'] == 'lowercase')
@@ -489,6 +488,12 @@ class egw_session
 				$this->account_lid = strtolower($this->account_lid);
 			}
 			$this->account_id = $GLOBALS['egw']->accounts->auto_add($this->account_lid, $passwd);
+		}
+		// fix maybe wrong case in username, it makes problems eg. in filemanager (name of homedir)
+		if ($this->account_lid != ($lid = $GLOBALS['egw']->accounts->id2name($this->account_id)))
+		{
+			$this->account_lid = $lid;
+			$this->login = $lid.substr($this->login,strlen($lid));
 		}
 
 		$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
