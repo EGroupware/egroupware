@@ -93,7 +93,7 @@ if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
 
 	$login = phpCAS::getUser();
 	$password = phpCAS::retrievePT("imap://".$GLOBALS['egw_info']['server']['mail_server'],$err_code,$output);
-	$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$password,'text','u');
+	$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$password,'text');
 
 	/* set auth_cookie */
 	$GLOBALS['egw']->redirect_link($forward,$extra_vars);
