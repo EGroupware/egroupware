@@ -128,6 +128,9 @@ class addressbook_vcal extends addressbook_bo
 		}
 		$sysCharSet = $GLOBALS['egw']->translation->charset();
 
+		// KAddressbook always requires non-ascii chars to be qprint encoded.
+		if ($this->productName == 'kde') $extra_charset_attribute = true;
+
 		if (!($entry = $this->read($_id)))
 		{
 			return false;
@@ -235,14 +238,17 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$values = (array) $GLOBALS['egw']->translation->convert($values, $sysCharSet, $_charset);
 							$value = implode(',', $values); // just for the CHARSET recognition
-							if(($extra_charset_attribute || $this->productName == 'kde')
-									&& preg_match('/([\177-\377])/',$value))
+							if ($extra_charset_attribute && preg_match('/([\177-\377])/', $value))
 							{
 								$options['CHARSET'] = $_charset;
 								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
 								if ($this->productName == 'kde')
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								}
+								else
+								{
+									$options['ENCODING'] = '';
 								}
 							}
  							$hasdata++;
@@ -254,8 +260,9 @@ class addressbook_vcal extends addressbook_bo
 						{
 							if ($noTruncate)
 							{
-								Horde::logMessage("vCalAddressbook $vcardField omitted due to maximum size $size",
-										__FILE__, __LINE__, PEAR_LOG_WARNING);
+								error_log(__FILE__ . __LINE__ . __METHOD__ . " vCalAddressbook $vcardField omitted due to maximum size $size");
+								// Horde::logMessage("vCalAddressbook $vcardField omitted due to maximum size $size",
+								//		__FILE__, __LINE__, PEAR_LOG_WARNING);
 								continue;
 							}
 							// truncate the value to size
@@ -269,8 +276,9 @@ class addressbook_vcal extends addressbook_bo
 							{
 								$value = '';
 							}
-							Horde::logMessage("vCalAddressbook $vcardField truncated to maximum size $size",
-									__FILE__, __LINE__, PEAR_LOG_INFO);
+							error_log(__FILE__ . __LINE__ . __METHOD__ . " vCalAddressbook $vcardField truncated to maximum size $size");
+							//Horde::logMessage("vCalAddressbook $vcardField truncated to maximum size $size",
+							//		__FILE__, __LINE__, PEAR_LOG_INFO);
 						}
 						if (!empty($value) // required field
 							|| in_array($vcardField,array('FN','ORG','N'))
@@ -278,20 +286,32 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet, $_charset);
 							$values[] = $value;
-							if(($extra_charset_attribute || $this->productName == 'kde')
-									&& preg_match('/([\177-\377])/',$value))
+							if ($extra_charset_attribute)
 							{
-								$options['CHARSET'] = $_charset;
-								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
-								if ($this->productName == 'kde')
+								if (preg_match('/([\177-\377])/', $value))
+								{
+									$options['CHARSET'] = $_charset;
+									// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
+									if ($this->productName == 'kde')
+									{
+										$options['ENCODING'] = 'QUOTED-PRINTABLE';
+									}
+									else
+									{
+										$options['ENCODING'] = '';
+									}
+								}
+								// protect the CardDAV
+								if (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
 							}
-							// protect the CardDAV
-							elseif (($extra_charset_attribute && preg_match('/([\000-\012\015\016\020-\037\075])/',$value)))
+							else
 							{
-								$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								// avoid that these options are inserted from horde code
+								$options['CHARSET'] = '';
+								$options['ENCODING'] = '';
 							}
 							if ($vcardField == 'TEL' && $entry['tel_prefer'] &&
 								($databaseField == $entry['tel_prefer']))
@@ -325,7 +345,10 @@ class addressbook_vcal extends addressbook_bo
 
 		$result = $vCard->exportvCalendar();
 
-		Horde::logMessage("vCalAddressbook getVCard:\n" . print_r($result, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+        error_log(__FILE__ . __LINE__ . __METHOD__ . ':'
+        	. str_replace(array("\n",'    '),'',print_r($result,true)));
+		// Horde::logMessage("vCalAddressbook getVCard:\n" . print_r($result, true),
+			// __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		return $result;
 	}
@@ -722,6 +745,35 @@ class addressbook_vcal extends addressbook_bo
 			//'PHOTO'		=> array('jpegphoto'),
 		);
 
+		$defaultFields[14] = array(	// Funambol Outlook Sync Client
+			'ADR;WORK'      => array('','','adr_one_street','adr_one_locality','adr_one_region',
+									'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'      => array('','','adr_two_street','adr_two_locality','adr_two_region',
+									'adr_two_postalcode','adr_two_countryname'),
+			'BDAY'		=> array('bday'),
+			'CATEGORIES'	=> array('cat_id'),
+			'EMAIL;INTERNET'         => array('email'),
+			'EMAIL;INTERNET;HOME'    => array('email_home'),
+			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+			'FN'			=> array('n_fn'),
+			'NOTE'          => array('note'),
+			'ORG'           => array('org_name','org_unit','room'),
+			'ROLE'			=> array('role'),
+			'CLASS'			=> array('private'),
+			'NICKNAME'		=> array('label'),
+			'TEL;CELL'      => array('tel_cell'),
+			'TEL;HOME;FAX'  => array('tel_fax_home'),
+			'TEL;WORK;FAX'  => array('tel_fax'),
+			'TEL;VOICE;HOME' => array('tel_home'),
+			'TEL;VOICE;WORK' => array('tel_work'),
+			'TEL;PAGER'     => array('tel_pager'),
+			'TEL;CAR;VOICE'	=> array('tel_car'),
+			'TITLE'         => array('title'),
+			'URL'      		=> array('url'),
+			'URL;HOME'		=> array('url_home'),
+			'PHOTO'			=> array('jpegphoto'),
+		);
+
 		//error_log("Client: $_productManufacturer $_productName");
 		switch ($this->productManufacturer)
 		{
@@ -738,6 +790,10 @@ class addressbook_vcal extends addressbook_bo
 					case 'blackberry plug-in':
 					case 'iphone':
 						$this->supportedFields = $defaultFields[11];
+						break;
+
+					case 'outlook sync client v.':
+						$this->supportedFields = $defaultFields[14];
 						break;
 
 					default:
@@ -770,6 +826,7 @@ class addressbook_vcal extends addressbook_bo
 					case 'e51':
 					case 'e90':
 					case 'e71':
+					case 'n95':
 						$this->supportedFields = $defaultFields[9];
 						break;
 					case '9300':
@@ -900,6 +957,7 @@ class addressbook_vcal extends addressbook_bo
 								'adr_two_postalcode','adr_two_countryname'),
 			'BDAY'			=> array('bday'),
 			'X-CLASS'		=> array('private'),
+			'CLASS'			=> array('private'),
 			'CATEGORIES'	=> array('cat_id'),
 			'EMAIL;WORK'	=> array('email'),
 			'EMAIL;HOME'	=> array('email_home'),
@@ -907,7 +965,7 @@ class addressbook_vcal extends addressbook_bo
 								'n_prefix','n_suffix'),
 			'FN'			=> array('n_fn'),
 			'NOTE'			=> array('note'),
-			'ORG'			=> array('org_name','org_unit'),
+			'ORG'			=> array('org_name','org_unit','room'),
 			'TEL;CELL;WORK'	=> array('tel_cell'),
 			'TEL;CELL;HOME'	=> array('tel_cell_private'),
 			'TEL;CAR'		=> array('tel_car'),
