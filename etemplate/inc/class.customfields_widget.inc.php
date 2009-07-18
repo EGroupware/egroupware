@@ -166,234 +166,236 @@ class customfields_widget
 		$n = 1;
 		foreach($fields as $lname => $field)
 		{
-		   if (!(array_search($lname,$fields_with_vals)===false))
-		   {
-			if ($stop_at_field && $lname == $stop_at_field) break;	// no further row necessary
+			if (array_search($lname,$fields_with_vals) !== false)
+			{
+				if ($stop_at_field && $lname == $stop_at_field) break;	// no further row necessary
 
-			// check if the customfield get's displayed for type $value, we can have multiple comma-separated types now
-			if (!empty($type2) && !empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false)
-			{
-				continue;	// not for our content type
-			}
-			$new_row = null; etemplate::add_child($cell,$new_row);
-			if ($type != 'customfields-list' && $type == 'customfields')
-			{
-				$row_class = 'row';
-				etemplate::add_child($cell,$label =& etemplate::empty_cell('label','',array(
-					'label' => $field['label'],
-					'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0,
-					'span' => $field['type'] === 'label' ? '2' : '',
-				)));
-			} elseif ($type == 'customfields-list') {
-				if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') {
-					switch ((string)$field['type'])
-					{
-						case 'checkbox':
-							if ($value[$this->prefix.$lname]==0) break;
-						default:
-							etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
-								array('label'=>/*lang("custom fields").": ".*/$field['label'],'width'=>"16px",
-									'onclick'=>"return alert('".lang("custom fields").": ".$field['label']."');")));
-					}
+				// check if the customfield get's displayed for type $value, we can have multiple comma-separated types now
+				if (!empty($type2) && !empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false)
+				{
+					continue;	// not for our content type
 				}
-			}
-
-			switch ((string)$field['type'])
-			{
-				case 'select' :
-					if (count($field['values']) == 1 && isset($field['values']['@']))
+				$new_row = null; etemplate::add_child($cell,$new_row);
+				if ($type != 'customfields-list' && $type == 'customfields')
+				{
+					$row_class = 'row';
+					etemplate::add_child($cell,$label =& etemplate::empty_cell('label','',array(
+						'label' => $field['label'],
+						'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0,
+						'span' => $field['type'] === 'label' ? '2' : '',
+					)));
+				}
+				elseif ($type == 'customfields-list')
+				{
+					if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '')
 					{
-						$field['values'] = $this->_get_options_from_file($field['values']['@']);
-					}
-					if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
-					foreach($field['values'] as $key => $val)
-					{
-						if (substr($val = lang($val),-1) != '*')
+						switch ((string)$field['type'])
 						{
-							$field['values'][$key] = $val;
+							case 'checkbox':
+								if ($value[$this->prefix.$lname]==0) break;
+							default:
+								etemplate::add_child($cell,$input =& etemplate::empty_cell('image','info.png',
+									array('label'=> $field['label'],'width'=>"16px")));
 						}
 					}
-					$input =& etemplate::empty_cell('select',$this->prefix.$lname,array(
-						'sel_options' => $field['values'],
-						'size'        => $field['rows'],
-						'no_lang'     => True,
-					));
-					if($this->advanced_search)
-					{
-						$select =& $input; unset($input);
-						$input =& etemplate::empty_cell('hbox');
-						etemplate::add_child($input, $select); unset($select);
-						/* the following seem to double the select fields in advanced search.
-						etemplate::add_child($input, etemplate::empty_cell('select',$this->prefix.$lname,array(
+				}
+
+				switch ((string)$field['type'])
+				{
+					case 'select' :
+						if (count($field['values']) == 1 && isset($field['values']['@']))
+						{
+							$field['values'] = $this->_get_options_from_file($field['values']['@']);
+						}
+						if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
+						foreach($field['values'] as $key => $val)
+						{
+							if (substr($val = lang($val),-1) != '*')
+							{
+								$field['values'][$key] = $val;
+							}
+						}
+						$input =& etemplate::empty_cell('select',$this->prefix.$lname,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
-							'no_lang'     => True
-						)));
-						*/
-					}
-					break;
-				case 'label' :
-					$row_class = 'th';
-					break;
-				case 'radio' :
-					$showthis = '#a#l#l#';
-					if (count($field['values']) == 1 && isset($field['values']['@']))
-					{
-						$field['values'] = $this->_get_options_from_file($field['values']['@']);
-					}
-					if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
-					if ($readonly) {
-						$showthis = $value[$this->prefix.$lname];
-						$input =& etemplate::empty_cell('hbox');
-					} else {
-						$input =& etemplate::empty_cell('groupbox');
-					}
-					$m = 0;
-					foreach ($field['values'] as $key => $val)
-					{
-						$radio = etemplate::empty_cell('radio',$this->prefix.$lname);
-						$radio['label'] = $val;
-						$radio['size'] = $key;
-						if ($showthis == '#a#l#l#' || $showthis == $key) etemplate::add_child($input,$radio);
-						unset($radio);
-					}
-					break;
-				case 'text' :
-				case 'textarea' :
-				case '' :	// not set
-					$field['len'] = $field['len'] ? $field['len'] : 20;
-					if ($type != 'customfields-list')
-					{
-						if($field['rows'] <= 1)
-						{//text
-							list($max,$shown) = explode(',',$field['len']);
-							$tmparray=array(
-								'size' => intval($shown > 0 ? $shown : $max).','.intval($max),
-								'maxlength'=>intval($max),
-							);
-							if (is_array($field['values']))
-							{
-								if (array_key_exists('readonly',$field['values']))
+							'no_lang'     => True,
+						));
+						if($this->advanced_search)
+						{
+							$select =& $input; unset($input);
+							$input =& etemplate::empty_cell('hbox');
+							etemplate::add_child($input, $select); unset($select);
+							/* the following seem to double the select fields in advanced search.
+							etemplate::add_child($input, etemplate::empty_cell('select',$this->prefix.$lname,array(
+								'sel_options' => $field['values'],
+								'size'        => $field['rows'],
+								'no_lang'     => True
+							)));
+							*/
+						}
+						break;
+					case 'label' :
+						$row_class = 'th';
+						break;
+					case 'radio' :
+						$showthis = '#a#l#l#';
+						if (count($field['values']) == 1 && isset($field['values']['@']))
+						{
+							$field['values'] = $this->_get_options_from_file($field['values']['@']);
+						}
+						if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
+						if ($readonly)
+						{
+							$showthis = $value[$this->prefix.$lname];
+							$input =& etemplate::empty_cell('hbox');
+						}
+						else
+						{
+							$input =& etemplate::empty_cell('groupbox');
+						}
+						$m = 0;
+						foreach ($field['values'] as $key => $val)
+						{
+							$radio = etemplate::empty_cell('radio',$this->prefix.$lname);
+							$radio['label'] = $val;
+							$radio['size'] = $key;
+							if ($showthis == '#a#l#l#' || $showthis == $key) etemplate::add_child($input,$radio);
+							unset($radio);
+						}
+						break;
+					case 'text' :
+					case 'textarea' :
+					case '' :	// not set
+						$field['len'] = $field['len'] ? $field['len'] : 20;
+						if ($type != 'customfields-list')
+						{
+							if($field['rows'] <= 1)
+							{//text
+								list($max,$shown) = explode(',',$field['len']);
+								$tmparray=array(
+									'size' => intval($shown > 0 ? $shown : $max).','.intval($max),
+									'maxlength'=>intval($max),
+								);
+								if (is_array($field['values']))
+								{
+									if (array_key_exists('readonly',$field['values']))
+									{
+										if(!$this->advanced_search) $tmparray['readonly']='readonly';
+									}
+								}
+								$input =& etemplate::empty_cell('text',$this->prefix.$lname,$tmparray);
+							}
+							else
+							{//textarea
+								$tmparray=array(
+									'size' => $field['rows'].($field['len'] >0 ? ','.(int)$field['len'] : '')
+								);
+								if (is_array($field['values']) && array_key_exists('readonly',$field['values']))
 								{
 									if(!$this->advanced_search) $tmparray['readonly']='readonly';
 								}
+								$input =& etemplate::empty_cell('textarea',$this->prefix.$lname,$tmparray);
 							}
-							$input =& etemplate::empty_cell('text',$this->prefix.$lname,$tmparray);
 						}
 						else
-						{//textarea
-							$tmparray=array(
-								'size' => $field['rows'].($field['len'] >0 ? ','.(int)$field['len'] : '')
-							);
-							if (is_array($field['values']) && array_key_exists('readonly',$field['values']))
+						{
+							$input =& etemplate::empty_cell('label',$this->prefix.$lname);
+						}
+						break;
+					case 'date':
+					case 'date-time':
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
+							'size' => $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s'),
+						));
+						break;
+					case 'select-account':
+						list($opts) = explode('=',$field['values'][0]);
+						$input =& etemplate::empty_cell('select-account',$this->prefix.$lname,array(
+							'size' => ($field['rows']>1?$field['rows']:lang('None')).','.$opts,
+						));
+						break;
+					case 'button':  // button(s) to execute javascript (label=onclick) or textinputs (empty label, readonly with neg. length)
+						// a button does not seem to be helpful in advanced search ???,
+						if($this->advanced_search) break;
+						$input =& etemplate::empty_cell('hbox');
+						foreach($field['values'] as $label => $js)
+						{
+							if (!$label)    // display an readonly input
 							{
-								if(!$this->advanced_search) $tmparray['readonly']='readonly';
+								$tmparray = array(
+									'size' => $field['len'] ? $field['len'] : 20,
+									'readonly' => $field['len'] < 0,
+									'onchange' => $js,
+								);
+								$widget =& etemplate::empty_cell('text',$this->prefix.$lname.$label,$tmparray);
 							}
-							$input =& etemplate::empty_cell('textarea',$this->prefix.$lname,$tmparray);
+							else
+							{
+								if ($readonly) continue;        // dont display buttons if we're readonly
+								$widget =& etemplate::empty_cell('buttononly',$this->prefix.$lname.$label,array(
+									'label' => $label ? $label : lang('Submit'),
+									'onclick' => $js,
+									'no_lang' => True
+								));
+							}
+							etemplate::add_child($input,$widget);
+							unset($widget);
 						}
-					} else {
-						$input =& etemplate::empty_cell('label',$this->prefix.$lname,
-							array(
-								'onclick'=>"return alert('".lang("custom fields").": ".
-									$lname."=>".htmlentities(str_replace("\r","",str_replace("\n"," ",$value[$this->prefix.$lname]))) ."');",
-							)
-						);
-					}
-					break;
-				case 'date':
-				case 'date-time':
-					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
-						'size' => $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s'),
-					));
-					break;
-				case 'select-account':
-					list($opts) = explode('=',$field['values'][0]);
-					$input =& etemplate::empty_cell('select-account',$this->prefix.$lname,array(
-						'size' => ($field['rows']>1?$field['rows']:lang('None')).','.$opts,
-					));
-					break;
-				case 'button':  // button(s) to execute javascript (label=onclick) or textinputs (empty label, readonly with neg. length)
-					// a button does not seem to be helpful in advanced search ???, 
-					if($this->advanced_search) break;
-					$input =& etemplate::empty_cell('hbox');
-					foreach($field['values'] as $label => $js)
+						break;
+					case 'url-email':
+						list($max,$shown,$validation_type,$default) = explode(',',$field['len'],4);
+						if (empty($max)) $max =128;
+						if (empty($shown)) $shown = 28;
+						if (empty($validation_type)) $validation_type = 1;
+						$field['len'] = implode(',',array($shown, $max, $validation_type, $default));
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
+							'size' => $field['len']
+						));
+						break;
+					case 'url':
+					case 'url-phone':
+						list($max,$shown,$validation_type) = explode(',',$field['len'],3);
+						if (empty($max)) $max =128;
+						if (empty($shown)) $shown = 28;
+						$field['len']=implode(',',array( $shown, $max, $validation_type));
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
+							 'size' => $field['len']
+						));
+						break;
+					// other etemplate types, which are used just as is
+					case 'checkbox' :
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname);
+						break;
+					case 'link-entry':
+					default :	// link-entry to given app
+						$input =& etemplate::empty_cell('link-entry',$this->prefix.$lname,array(
+							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
+						));
+				}
+				$cell['data'][0]['c'.$n++] = $row_class.',top';
+
+				if (!is_null($input))
+				{
+					if ($readonly) $input['readonly'] = true;
+
+					if ($cell['needed']) $input['needed'] = $cell['needed'];
+
+					if (!empty($field['help']) && $row_class != 'th')
 					{
-						if (!$label)    // display an readonly input
-						{
-							$tmparray = array(
-								'size' => $field['len'] ? $field['len'] : 20,
-								'readonly' => $field['len'] < 0,
-								'onchange' => $js,
-							);
-							$widget =& etemplate::empty_cell('text',$this->prefix.$lname.$label,$tmparray);
-						}
-						else
-						{
-							if ($readonly) continue;        // dont display buttons if we're readonly
-							$widget =& etemplate::empty_cell('buttononly',$this->prefix.$lname.$label,array(
-								'label' => $label ? $label : lang('Submit'),
-								'onclick' => $js,
-								'no_lang' => True
-							));
-						}
-						etemplate::add_child($input,$widget);
-						unset($widget);
+						$input['help'] = $field['help'];
+						$input['no_lang'] = substr(lang($help),-1) == '*' ? 2 : 0;
 					}
-					break;
-				case 'url-email':
-					list($max,$shown,$validation_type,$default) = explode(',',$field['len'],4);
-					if (empty($max)) $max =128;
-					if (empty($shown)) $shown = 28;
-					if (empty($validation_type)) $validation_type = 1;
-					$field['len'] = implode(',',array($shown, $max, $validation_type, $default));
-					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
-						'size' => $field['len']
-					));
-					break;
-				case 'url':
-				case 'url-phone':
-					list($max,$shown,$validation_type) = explode(',',$field['len'],3);
-					if (empty($max)) $max =128;
-					if (empty($shown)) $shown = 28;
-					$field['len']=implode(',',array( $shown, $max, $validation_type));
-					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
-						 'size' => $field['len']
-					));
-					break;
-				// other etemplate types, which are used just as is
-				case 'checkbox' :
-					$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname);
-					break;
-				case 'link-entry':
-				default :	// link-entry to given app
-					$input =& etemplate::empty_cell('link-entry',$this->prefix.$lname,array(
-						'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
-					));
-			}
-			$cell['data'][0]['c'.$n++] = $row_class.',top';
-
-			if (!is_null($input))
-			{
-				if ($readonly) $input['readonly'] = true;
-
-				if ($cell['needed']) $input['needed'] = $cell['needed'];
-
-				if (!empty($field['help']) && $row_class != 'th')
-				{
-					$input['help'] = $field['help'];
-					$input['no_lang'] = substr(lang($help),-1) == '*' ? 2 : 0;
+					if ($singlefield)	// a single field, can & need to be returned instead of the cell (no grid)
+					{
+						$cell = $input;
+						if ($type == 'customfields') $cell['label'] = $field['label'];
+						return true;
+					}
+					etemplate::add_child($cell,$input);
+					unset($input);
 				}
-				if ($singlefield)	// a single field, can & need to be returned instead of the cell (no grid)
-				{
-					$cell = $input;
-					if ($type == 'customfields') $cell['label'] = $field['label'];
-					return true;
-				}
-				etemplate::add_child($cell,$input);
-				unset($input);
+				unset($label);
 			}
-			unset($label);
-		   }
 		}
 		if ($type != 'customfields-list')
 		{
