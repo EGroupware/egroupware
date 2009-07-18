@@ -134,9 +134,18 @@ class calendar_sif extends calendar_boupdate
 					if($value == 1) {
 						$finalEvent['whole_day'] = true;
 						$startParts = explode('-',$this->event['start']);
-						$finalEvent['start'] = mktime(0, 0, 0, $startParts[1], $startParts[2], $startParts[0]);
+						$finalEvent['start']['hour'] = $finalEvent['start']['minute'] = $finalEvent['start']['second'] = 0;
+						$finalEvent['start']['year'] = $startParts[0];
+						$finalEvent['start']['month'] = $startParts[1];
+						$finalEvent['start']['day'] = $startParts[2];
+						$finalEvent['start'] = $this->date2ts($finalEvent['start']);
 						$endParts = explode('-',$this->event['end']);
-						$finalEvent['end'] = mktime(23, 59, 59, $endParts[1], $endParts[2], $endParts[0]);
+						$finalEvent['end']['hour'] = 23; $finalEvent['end']['minute'] = $finalEvent['end']['second'] = 59;
+						$finalEvent['end']['hour'] = $finalEvent['start']['minute'] = $finalEvent['start']['second'] = 0;
+						$finalEvent['end']['year'] = $endParts[0];
+						$finalEvent['end']['month'] = $endParts[1];
+						$finalEvent['end']['day'] = $endParts[2];
+						$finalEvent['end'] = $this->date2ts($finalEvent['end']);
 					}
 					break;
 
