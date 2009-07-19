@@ -951,40 +951,40 @@ class addressbook_vcal extends addressbook_bo
 
 
 		$databaseFields = array(
-			'ADR;WORK'		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-								'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'		=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-								'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'			=> array('bday'),
-			'X-CLASS'		=> array('private'),
-			'CLASS'			=> array('private'),
-			'CATEGORIES'	=> array('cat_id'),
-			'EMAIL;WORK'	=> array('email'),
-			'EMAIL;HOME'	=> array('email_home'),
-			'N'				=> array('n_family','n_given','n_middle',
-								'n_prefix','n_suffix'),
-			'FN'			=> array('n_fn'),
-			'NOTE'			=> array('note'),
-			'ORG'			=> array('org_name','org_unit','room'),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;CELL;HOME'	=> array('tel_cell_private'),
-			'TEL;CAR'		=> array('tel_car'),
-			'TEL;OTHER'		=> array('tel_other'),
-			'TEL;WORK'		=> array('tel_work'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;HOME'		=> array('tel_home'),
-			'TEL;FAX;HOME'	=> array('tel_fax_home'),
-			'TEL;PAGER'		=> array('tel_pager'),
-			'TITLE'			=> array('title'),
-			'URL;WORK'		=> array('url'),
-			'URL;HOME'		=> array('url_home'),
-			'ROLE'			=> array('role'),
-			'NICKNAME'		=> array('label'),
-			'FBURL'			=> array('freebusy_uri'),
-			'PHOTO'			=> array('jpegphoto'),
-			'X-ASSISTANT'	=> array('assistent'),
+			'ADR;WORK'			=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+									'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'			=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+									'adr_two_postalcode','adr_two_countryname'),
+			'BDAY'				=> array('bday'),
+			'X-CLASS'			=> array('private'),
+			'CLASS'				=> array('private'),
+			'CATEGORIES'		=> array('cat_id'),
+			'EMAIL;WORK'		=> array('email'),
+			'EMAIL;HOME'		=> array('email_home'),
+			'N'					=> array('n_family','n_given','n_middle',
+									'n_prefix','n_suffix'),
+			'FN'				=> array('n_fn'),
+			'NOTE'				=> array('note'),
+			'ORG'				=> array('org_name','org_unit','room'),
+			'TEL;CELL;WORK'		=> array('tel_cell'),
+			'TEL;CELL;HOME'		=> array('tel_cell_private'),
+			'TEL;CAR'			=> array('tel_car'),
+			'TEL;OTHER;VOICE'	=> array('tel_other'),
+			'TEL;VOICE;WORK'	=> array('tel_work'),
+			'TEL;FAX;WORK'		=> array('tel_fax'),
+			'TEL;HOME;VOICE'	=> array('tel_home'),
+			'TEL;FAX;HOME'		=> array('tel_fax_home'),
+			'TEL;PAGER'			=> array('tel_pager'),
+			'TITLE'				=> array('title'),
+			'URL;WORK'			=> array('url'),
+			'URL;HOME'			=> array('url_home'),
+			'ROLE'				=> array('role'),
+			'NICKNAME'			=> array('label'),
+			'FBURL'				=> array('freebusy_uri'),
+			'PHOTO'				=> array('jpegphoto'),
+			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
-			'UID'			=> array('uid'),
+			'UID'				=> array('uid'),
 		);
 
 		Horde::logMessage("vCalAddressbook vcardtoegw:\n$_vcard", __FILE__, __LINE__, PEAR_LOG_DEBUG);
@@ -1154,11 +1154,13 @@ class addressbook_vcal extends addressbook_bo
 			switch($rowName)
 			{
 				case 'ADR':
-					if (!isset($rowNames[$rowName . ';WORK']))
+					if (!isset($rowNames[$rowName . ';WORK'])
+							&& !isset($finalRowNames[$rowName . ';WORK']))
 					{
 						$finalRowNames[$rowName . ';WORK'] = $vcardKey;
 					}
-					elseif (!isset($rowNames[$rowName . ';HOME']))
+					elseif (!isset($rowNames[$rowName . ';HOME'])
+							&& !isset($finalRowNames[$rowName . ';HOME']))
 					{
 						$finalRowNames[$rowName . ';HOME'] = $vcardKey;
 					}
@@ -1171,38 +1173,53 @@ class addressbook_vcal extends addressbook_bo
 					}
 					elseif (!isset($rowNames['TEL;FAX;HOME'])
 						&& !isset($finalRowNames['TEL;FAX;HOME']))
-						{
+					{
 						$finalRowNames['TEL;FAX;HOME'] = $vcardKey;
-						}
+					}
 					break;
-				case 'TEL;VOICE;WORK':
-					$finalRowNames['TEL;WORK'] = $vcardKey;
+				case 'TEL;WORK':
+					if (!isset($rowNames['TEL;VOICE;WORK'])
+							&& !isset($finalRowNames['TEL;VOICE;WORK']))
+					{
+						$finalRowNames['TEL;VOICE;WORK'] = $vcardKey;
+					}
 					break;
-				case 'TEL;HOME;VOICE':
-					$finalRowNames['TEL;HOME'] = $vcardKey;
+				case 'TEL;HOME':
+					if (!isset($rowNames['TEL;HOME;VOICE'])
+							&& !isset($finalRowNames['TEL;HOME;VOICE']))
+					{
+						$finalRowNames['TEL;HOME;VOICE'] = $vcardKey;
+					}
 					break;
-				case 'TEL;OTHER;VOICE':
-					$finalRowNames['TEL;OTHER'] = $vcardKey;
+				case 'TEL;OTHER':
+				    if (!isset($rowNames['TEL;OTHER;VOICE'])
+							&& !isset($finalRowNames['TEL;OTHER;VOICE']))
+					{
+						$finalRowNames['TEL;OTHER;VOICE'] = $vcardKey;
+					}
 					break;
 				case 'TEL;CAR;VOICE':
 				case 'TEL;CAR;CELL':
 				case 'TEL;CAR;CELL;VOICE':
-					$finalRowNames['TEL;CAR'] = $vcardKey;
+					if (!isset($finalRowNames['TEL;CAR']))
+					{
+						$finalRowNames['TEL;CAR'] = $vcardKey;
+					}
 					break;
 				case 'TEL;X-egw-Ref1':
 					if (!isset($rowNames['TEL;VOICE;WORK'])
 							&& !isset($rowNames['TEL;WORK'])
-							&& !isset($finalRowNames['TEL;WORK']))
+							&& !isset($finalRowNames['TEL;VOICE;WORK']))
 					{
-						$finalRowNames['TEL;WORK'] = $vcardKey;
+						$finalRowNames['TEL;VOICE;WORK'] = $vcardKey;
 						break;
 					}
 				case 'TEL;X-egw-Ref2':
 					if (!isset($rowNames['TEL;HOME;VOICE'])
 							&& !isset($rowNames['TEL;HOME'])
-							&& !isset($finalRowNames['TEL;HOME']))
+							&& !isset($finalRowNames['TEL;HOME;VOICE']))
 					{
-						$finalRowNames['TEL;HOME'] = $vcardKey;
+						$finalRowNames['TEL;HOME;VOICE'] = $vcardKey;
 					}
 					break;
 				case 'TEL;CELL;X-egw-Ref1':
