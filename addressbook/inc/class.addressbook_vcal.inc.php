@@ -1280,7 +1280,10 @@ class addressbook_vcal extends addressbook_bo
 					$finalRowNames['X-ASSISTANT'] = $vcardKey;
 					break;
 				default:
-					$finalRowNames[$rowName] = $vcardKey;
+					if (!isset($finalRowNames[$rowName]))
+					{
+						$finalRowNames[$rowName] = $vcardKey;
+					}
 				break;
 			}
 		}
