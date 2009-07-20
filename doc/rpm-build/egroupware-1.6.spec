@@ -1,7 +1,7 @@
 %define packagename eGroupware
 %define egwdirname egroupware
 %define egwversion 1.6
-%define packaging 001
+%define packaging 002
 #define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -9,7 +9,7 @@
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix php5-openssl
 	%define cron cron
 %endif
 %if 0%{?fedora_version}
@@ -738,6 +738,15 @@ ln -s ../../../var/lib/egroupware/header.inc.php
 
 
 %changelog
+* Mon Jul 20 2009 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.002
+- eGroupware 1.6.002 security and bugfix release
+- fixes 3 security problems:
+  + FCKeditor (remote file upload)
+  + tracker (XSS problem)
+  + knowledgebase (SQL injection)
+- added HTML Purifier as preventive measure for FCKeditor content
+- tons of bugfixes since initial 1.6.001 release
+
 * Mon Nov 24 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.001
 - eGroupware 1.6.001 final 1.6 release
 
