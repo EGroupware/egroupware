@@ -17,12 +17,12 @@ if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-c
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-epl',
-	'version' => '9.1',					// '1.6'
+	'version' => '9.1',				// '1.6'
 	'packaging' => date('Ymd'),			// '001'
 	'egwdir' => 'egroupware',
 	'svndir' => '/tmp/build_root/epl_buildroot-svn',
 	'egw_buildroot' => '/tmp/build_root/epl_buildroot',
-	'sourcedir' => '~/rpm/SOURCES',
+	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-9.1',
 	'svnbase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
 	'egwbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'svnbranch' => 'branches/Stylite-EPL-9.1',	// 'branches/1.6' or 'tags/1.6.001'
@@ -34,7 +34,7 @@ $config = array(
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
-	'packager' => 'packager@egroupware.org',
+	'packager' => 'build@stylite.de',
 	'skip' => array(),
 	'run' => array('checkout','copy','virusscan','create','sign')
 );
