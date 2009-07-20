@@ -617,7 +617,7 @@ class addressbook_bo extends addressbook_so
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
 		// set full name and fileas from the content
-		if (!isset($contact['n_fn'])) {
+		if (!isset($contact['n_fn']) || $contact['n_fn'] != $this->fullname($contact)) {
 			$contact['n_fn'] = $this->fullname($contact);
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
