@@ -99,9 +99,8 @@ class calendar_sif extends calendar_boupdate
 		$this->sifData .= $_data;
 	}
 
-	function siftoegw($_sifdata) {
+	function siftoegw($sifData) {
 		$vcal		= new Horde_iCalendar;
-		$this->event = array();
 		$finalEvent	= array();
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 		#error_log($sifData);
@@ -142,7 +141,6 @@ class calendar_sif extends calendar_boupdate
 						$finalEvent['start'] = $this->date2ts($finalEvent['start']);
 						$endParts = explode('-',$this->event['end']);
 						$finalEvent['end']['hour'] = 23; $finalEvent['end']['minute'] = $finalEvent['end']['second'] = 59;
-						$finalEvent['end']['hour'] = $finalEvent['start']['minute'] = $finalEvent['start']['second'] = 0;
 						$finalEvent['end']['year'] = $endParts[0];
 						$finalEvent['end']['month'] = $endParts[1];
 						$finalEvent['end']['day'] = $endParts[2];
