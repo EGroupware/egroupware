@@ -260,6 +260,8 @@ class addressbook_ui extends addressbook_bo
 				'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
 			);
 		}
+		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
+		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
 		$sel_options['action'] += array(
 			'merge'  => lang('Merge into first or account, deletes all other!'),
 			'cat_add' => lang('Add or delete Categoies'), // add a categirie to multible addresses
@@ -317,6 +319,7 @@ class addressbook_ui extends addressbook_bo
 		if (!isset($sel_options['org_view'][(string) $content['nm']['org_view']]))
 		{
 			$org_name = array();
+			if (strpos($content['nm']['org_view'],'*AND*')!== false) $content['nm']['org_view'] = str_replace('*AND*','&',$content['nm']['org_view']);
 			foreach(explode('|||',$content['nm']['org_view']) as $part)
 			{
 				list(,$name) = explode(':',$part,2);
@@ -396,6 +399,7 @@ class addressbook_ui extends addressbook_bo
 		if (count($checked) > 1)	// use a nicely formatted org-name as title in infolog
 		{
 			$parts = array();
+			if (strpos($org,'*AND*')!== false) $org = str_replace('*AND*','&',$org);
 			foreach(explode('|||',$org) as $part)
 			{
 				list(,$part) = explode(':',$part,2);
@@ -881,6 +885,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			if ($query['org_view'])	// view the contacts of one organisation only
 			{
+				if (strpos($query['org_view'],'*AND*')!== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);

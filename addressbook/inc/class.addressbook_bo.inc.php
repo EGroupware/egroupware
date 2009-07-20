@@ -721,7 +721,7 @@ class addressbook_bo extends addressbook_so
 	function read_org($org_id)
 	{
 		if (!$org_id) return false;
-
+		if (strpos($org_id,'*AND*')!== false) $org_id = str_replace('*AND*','&',$org_id);
 		$org = array();
 		foreach(explode('|||',$org_id) as $part)
 		{

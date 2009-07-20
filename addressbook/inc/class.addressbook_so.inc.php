@@ -678,6 +678,7 @@ class addressbook_so
 
 		foreach($rows as $n => $row)
 		{
+			if (strpos($row['org_name'],'&')!==false) $row['org_name'] = str_replace('&','*AND*',$row['org_name']); //echo "Ampersand found<br>";
 			$rows[$n]['id'] = 'org_name:'.$row['org_name'];
 			foreach(array(
 				'org_unit' => lang('departments'),
@@ -690,6 +691,7 @@ class addressbook_so
 				}
 				else
 				{
+					if (strpos($row[$by],'&')!==false) $row[$by] = str_replace('&','*AND*',$row[$by]); //echo "Ampersand found<br>";
 					$rows[$n]['id'] .= '|||'.$by.':'.$row[$by];
 				}
 			}
