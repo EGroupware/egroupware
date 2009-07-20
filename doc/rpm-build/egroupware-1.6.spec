@@ -99,7 +99,7 @@ Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
 Source3: %{packagename}-mydms-%{egwversion}.%{packaging}.tar.bz2
 Source4: %{packagename}-gallery-%{egwversion}.%{packaging}.tar.bz2
 Source5: %{?source5}
-Source6: %{name}-%{version}-rpmlintrc
+Source6: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
 Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
