@@ -45,7 +45,13 @@ class addressbook_vcal extends addressbook_bo
 	 * @var array
 	 */
 	var $clientProperties;
-
+	/**
+	* Set Logging
+	*
+	* @var string
+	*/
+	var $log = 0;
+	var $logfile="/tmp/log-addressbook";
 	/**
 	* Constructor
 	*
@@ -56,7 +62,8 @@ class addressbook_vcal extends addressbook_bo
 	function __construct($contact_app='addressbook', $_contentType='text/x-vcard', &$_clientProperties = array())
 	{
 		parent::__construct($contact_app);
-		#Horde::logMessage("vCalAddressbook Constructor for $_contentType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		if($this->log)$this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-addressbook";
+		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($_contentType)."\n",3,$this->logfile);
 		switch($_contentType)
 		{
 			case 'text/vcard':
