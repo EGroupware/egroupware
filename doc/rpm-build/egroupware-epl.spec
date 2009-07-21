@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090626
+Version: 9.1.20090629
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -16,7 +16,7 @@ Prefix: /usr/share
 	%define php php5
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix at
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix php5-openssl
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
@@ -668,12 +668,15 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
-* Mon Jun 1 2009 Ralf Becker <rb@stylite.de> 9.1.20090626
+* Mon Jun 29 2009 Ralf Becker <rb@stylite.de> 9.1.20090629
+- EGroupware EPL release 9.1 diverse bugfixes
+
+* Fri Jun 26 2009 Ralf Becker <rb@stylite.de> 9.1.20090626
 - fixed circular dependency on suse (/usr/bin/php --> /usr/bin/php5 symlink)
 - moved all php dependencies to egroupware-epl-core or the module needing it
 - EGroupware EPL release 9.1 diverse bugfixes
 
-* Mon Jun 1 2009 Ralf Becker <rb@stylite.de> 9.1.20090618
+* Thu Jun 18 2009 Ralf Becker <rb@stylite.de> 9.1.20090618
 - EGroupware EPL release 9.1 diverse bugfixes
 
 * Mon Jun 1 2009 Ralf Becker <rb@stylite.de> 9.1.20090601
