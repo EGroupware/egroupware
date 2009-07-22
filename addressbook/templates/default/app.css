@@ -10,8 +10,10 @@
   width: 100%; 
   font-weight: bold;
 }
-.photo img {
+.photo img, .iphoto img {
   width: 60px;
+}
+.photo img {
   cursor: hand;
 }
 .uploadphoto{ 

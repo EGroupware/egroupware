@@ -14,8 +14,8 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.7.001">
-		<grid>
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.7.002">
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
@@ -114,7 +114,7 @@
 					<menulist>
 						<menupopup type="select-cat" options="1" id="${row}[cat_id]" readonly="true"/>
 					</menulist>
-					<image src="${row}[photo]"/>
+					<image src="${row}[photo]" class="iphoto"/>
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
 					<vbox options="0,0">
 						<description id="${row}[adr_one_countryname]" no_lang="1"/>
