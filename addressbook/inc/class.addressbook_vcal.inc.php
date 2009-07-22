@@ -1043,8 +1043,10 @@ class addressbook_vcal extends addressbook_bo
 				$pname = strtoupper($pname);
 				$vcardRow['uparams'][$pname] = $params;
 			}
-			ksort($vcardRow['uparams']);
 
+
+			// expand 3.0 TYPE paramters to 2.1 qualifiers
+			$vcardRow['tparams'] = array();
 			foreach ($vcardRow['uparams'] as $pname => $params)
 			{
 				switch ($pname)
@@ -1057,7 +1059,6 @@ class addressbook_vcal extends addressbook_bo
 							{
 								$rowTypes[] = strtoupper($param);
 							}
-							sort($rowTypes);
 						}
 						else
 						{
@@ -1067,33 +1068,42 @@ class addressbook_vcal extends addressbook_bo
 						{
 							switch ($type)
 							{
+
+								case 'OTHER':
+								case 'WORK':
+								case 'HOME':
+									$vcardRow['tparams'][$type] = '';
+									break;
+								case 'CELL':
 								case 'PAGER':
 								case 'FAX':
 								case 'VOICE':
-								case 'OTHER':
-								case 'CELL':
-								case 'WORK':
-								case 'HOME':
-									$rowName .= ';' . $type;
-									break;
+								case 'CAR':
 								case 'PREF':
+								case 'X-CUSTOMLABEL-CAR':
 									if ($vcardRow['name'] == 'TEL')
 									{
-										$pref_tel = $key;
+										$vcardRow['tparams'][$type] = '';
 									}
-									break;
-								case 'CAR':
-								case 'X-CUSTOMLABEL-CAR':
-									$rowName = 'TEL;CAR';
-									break;
 								default:
 									break;
 							}
 						}
 						break;
-						//case 'INTERNET':
+					default:
+						break;
+				}
+			}
+
+			$vcardRow['uparams'] += $vcardRow['tparams'];
+			ksort($vcardRow['uparams']);
+
+			foreach ($vcardRow['uparams'] as $pname => $params)
+			{
+				switch ($pname)
+				{
 					case 'PREF':
-						if (strtoupper($vcardRow['name']) == 'TEL' && !$pref_tel)
+						if ($rowName == 'TEL' && !$pref_tel)
 						{
 							$pref_tel = $key;
 						}
@@ -1109,7 +1119,10 @@ class addressbook_vcal extends addressbook_bo
 						break;
 					case 'CAR':
 					case 'X-CUSTOMLABEL-CAR':
-						$rowName = 'TEL;CAR';
+						if ($rowName == 'TEL')
+						{
+							$rowName = 'TEL;CAR';
+						}
 						break;
 					default:
 						if (strpos($pname, 'X-FUNAMBOL-') === 0)
@@ -1143,11 +1156,11 @@ class addressbook_vcal extends addressbook_bo
 				$rowName = 'URL;X-egw-Ref' . $url++;
 			}
 
-			$rowNames[$rowName] = $key;
+			$rowNames[$key] = $rowName;
 		}
 
 
-		#error_log(print_r($rowNames, true));
+		//error_log(print_r($rowNames, true));
 
         // All rowNames of the vCard are now concatenated with their qualifiers.
         // If qualifiers are missing we apply a default strategy.
@@ -1156,50 +1169,52 @@ class addressbook_vcal extends addressbook_bo
 
 		$finalRowNames = array();
 
-		foreach ($rowNames as $rowName => $vcardKey)
+		foreach ($rowNames as $vcardKey => $rowName)
 		{
 			switch($rowName)
 			{
+				case 'VERSION':
+					break;
 				case 'ADR':
-					if (!isset($rowNames[$rowName . ';WORK'])
-							&& !isset($finalRowNames[$rowName . ';WORK']))
+					if (!in_array('ADR;WORK', $rowNames)
+							&& !isset($finalRowNames['ADR;WORK']))
 					{
-						$finalRowNames[$rowName . ';WORK'] = $vcardKey;
+						$finalRowNames['ADR;WORK'] = $vcardKey;
 					}
-					elseif (!isset($rowNames[$rowName . ';HOME'])
-							&& !isset($finalRowNames[$rowName . ';HOME']))
+					elseif (!in_array('ADR;HOME', $rowNames)
+							&& !isset($finalRowNames['ADR;HOME']))
 					{
-						$finalRowNames[$rowName . ';HOME'] = $vcardKey;
+						$finalRowNames['ADR;HOME'] = $vcardKey;
 					}
 					break;
 				case 'TEL;FAX':
-					if (!isset($rowNames['TEL;FAX;WORK'])
+					if (!in_array('TEL;FAX;WORK', $rowNames)
 							&& !isset($finalRowNames['TEL;FAX;WORK']))
 					{
 						$finalRowNames['TEL;FAX;WORK'] = $vcardKey;
 					}
-					elseif (!isset($rowNames['TEL;FAX;HOME'])
+					elseif (!in_array('TEL;FAX;HOME', $rowNames)
 						&& !isset($finalRowNames['TEL;FAX;HOME']))
 					{
 						$finalRowNames['TEL;FAX;HOME'] = $vcardKey;
 					}
 					break;
 				case 'TEL;WORK':
-					if (!isset($rowNames['TEL;VOICE;WORK'])
+					if (!in_array('TEL;VOICE;WORK', $rowNames)
 							&& !isset($finalRowNames['TEL;VOICE;WORK']))
 					{
 						$finalRowNames['TEL;VOICE;WORK'] = $vcardKey;
 					}
 					break;
 				case 'TEL;HOME':
-					if (!isset($rowNames['TEL;HOME;VOICE'])
+					if (!in_array('TEL;HOME;VOICE', $rowNames)
 							&& !isset($finalRowNames['TEL;HOME;VOICE']))
 					{
 						$finalRowNames['TEL;HOME;VOICE'] = $vcardKey;
 					}
 					break;
 				case 'TEL;OTHER':
-				    if (!isset($rowNames['TEL;OTHER;VOICE'])
+				    if (!in_array('TEL;OTHER;VOICE', $rowNames)
 							&& !isset($finalRowNames['TEL;OTHER;VOICE']))
 					{
 						$finalRowNames['TEL;OTHER;VOICE'] = $vcardKey;
@@ -1214,77 +1229,78 @@ class addressbook_vcal extends addressbook_bo
 					}
 					break;
 				case 'TEL;X-egw-Ref1':
-					if (!isset($rowNames['TEL;VOICE;WORK'])
-							&& !isset($rowNames['TEL;WORK'])
+					if (!in_array('TEL;VOICE;WORK', $rowNames)
+							&& !in_array('TEL;WORK', $rowNames)
 							&& !isset($finalRowNames['TEL;VOICE;WORK']))
 					{
 						$finalRowNames['TEL;VOICE;WORK'] = $vcardKey;
 						break;
 					}
 				case 'TEL;X-egw-Ref2':
-					if (!isset($rowNames['TEL;HOME;VOICE'])
-							&& !isset($rowNames['TEL;HOME'])
+					if (!in_array('TEL;HOME;VOICE', $rowNames)
+							&& !in_array('TEL;HOME', $rowNames)
 							&& !isset($finalRowNames['TEL;HOME;VOICE']))
 					{
 						$finalRowNames['TEL;HOME;VOICE'] = $vcardKey;
 					}
 					break;
 				case 'TEL;CELL;X-egw-Ref1':
-					if (!isset($rowNames['TEL;CELL;WORK'])
+					if (!in_array('TEL;CELL;WORK', $rowNames)
 							&& !isset($finalRowNames['TEL;CELL;WORK']))
 					{
 						$finalRowNames['TEL;CELL;WORK'] = $vcardKey;
 						break;
 					}
 				case 'TEL;CELL;X-egw-Ref2':
-					if (!isset($rowNames['TEL;CELL;HOME'])
+					if (!in_array('TEL;CELL;HOME', $rowNames)
 							&& !isset($finalRowNames['TEL;CELL;HOME']))
 					{
 						$finalRowNames['TEL;CELL;HOME'] = $vcardKey;
 						break;
 					}
 				case 'TEL;CELL;X-egw-Ref3':
-					if (!isset($rowNames['TEL;CAR'])
-							&& !isset($rowNames['TEL;CAR;VOICE'])
-							&& !isset($rowNames['TEL;CAR;CELL'])
-							&& !isset($rowNames['TEL;CAR;CELL;VOICE'])
+					if (!in_array($rowNames['TEL;CAR'])
+							&& !in_array('TEL;CAR;VOICE', $rowNames)
+							&& !in_array('TEL;CAR;CELL', $rowNames)
+							&& !in_array('TEL;CAR;CELL;VOICE', $rowNames)
 							&& !isset($finalRowNames['TEL;CAR']))
 					{
 						$finalRowNames['TEL;CAR'] = $vcardKey;
 					}
 					break;
 				case 'EMAIL;X-egw-Ref1':
-					if (!isset($rowNames['EMAIL;WORK']) &&
+					if (!in_array('EMAIL;WORK', $rowNames) &&
 							!isset($finalRowNames['EMAIL;WORK']))
 					{
 						$finalRowNames['EMAIL;WORK'] = $vcardKey;
 						break;
 					}
 				case 'EMAIL;X-egw-Ref2':
-					if (!isset($rowNames['EMAIL;HOME']) &&
+					if (!in_array('EMAIL;HOME', $rowNames) &&
 							!isset($finalRowNames['EMAIL;HOME']))
 					{
 						$finalRowNames['EMAIL;HOME'] = $vcardKey;
 					}
 					break;
 				case 'URL;X-egw-Ref1':
-					if (!isset($rowNames['URL;WORK']) &&
+					if (!in_array('URL;WORK', $rowNames) &&
 							!isset($finalRowNames['URL;WORK']))
 					{
 						$finalRowNames['URL;WORK'] = $vcardKey;
 						break;
 					}
 				case 'URL;X-egw-Ref2':
-					if (!isset($rowNames['URL;HOME']) &&
+					if (!in_array('URL;HOME', $rowNames) &&
 							!isset($finalRowNames['URL;HOME']))
 					{
 						$finalRowNames['URL;HOME'] = $vcardKey;
 					}
 					break;
-				case 'VERSION':
-					break;
 				case 'X-EVOLUTION-ASSISTANT':
-					$finalRowNames['X-ASSISTANT'] = $vcardKey;
+					if (!isset($finalRowNames['X-ASSISTANT']))
+					{
+						$finalRowNames['X-ASSISTANT'] = $vcardKey;
+					}
 					break;
 				default:
 					if (!isset($finalRowNames[$rowName]))
@@ -1295,9 +1311,7 @@ class addressbook_vcal extends addressbook_bo
 			}
 		}
 
-		#error_log(print_r($finalRowNames, true));
-		#Horde::logMessage("vCalAddressbook vcardtoegw finalRowNames: " . print_r($finalRowNames, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
+		//error_log(print_r($finalRowNames, true));
 
 		$contact = array();
 
