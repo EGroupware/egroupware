@@ -69,13 +69,12 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.3.003">
+	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.3.004">
 		<grid width="100%" height="200" overflow="auto" id="participants">
 			<columns>
 				<column width="95"/>
 				<column/>
 				<column/>
-				<column disabled="@hide_status_recurrence"/>
 				<column/>
 				<column/>
 			</columns>
@@ -89,7 +88,6 @@
 						<link-entry id="resource" options="@cal_resources"/>
 					</vbox>
 					<int options="1,,3" id="quantity"/>
-					<description/>
 					<button label="Add" id="add"/>
 					<description/>
 				</row>
@@ -97,7 +95,6 @@
 					<description value="Type"/>
 					<description value="Participants"/>
 					<description value="Quantity"/>
-					<description value="All future"/>
 					<description value="Status"/>
 					<description value="Actions"/>
 				</row>
@@ -105,7 +102,6 @@
 					<description id="${row}[app]"/>
 					<description rows="1" cols="2" id="${row}[title]" no_lang="1"/>
 					<int id="${row}[quantity]" options="1,,3"/>
-					<checkbox id="${row}[status_recurrence]" align="center"/>
 					<menulist>
 						<menupopup id="${row}[status]" no_lang="1" onchange="1"/>
 					</menulist>

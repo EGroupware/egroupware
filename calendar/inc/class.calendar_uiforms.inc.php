@@ -326,7 +326,7 @@ class calendar_uiforms extends calendar_ui
 						break;
 
 					default:		// existing participant row
-						foreach(array('uid','status','status_recurrence','quantity') as $name)
+						foreach(array('uid','status','quantity') as $name)
 						{
 							$$name = $data[$name];
 						}
@@ -348,7 +348,7 @@ class calendar_uiforms extends calendar_ui
 							}
 							if ($data['old_status'] != $status)
 							{
-								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE && !$status_recurrence ? $content['participants']['status_date'] : 0))
+								if ($this->bo->set_status($event['id'],$uid,$status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status
 									$msg = lang('Status changed');
@@ -637,7 +637,12 @@ class calendar_uiforms extends calendar_ui
 		{
 			unset($event[$name]);
 		}
-		return lang('Exception created - you can now edit or delete it');
+		if($this->bo->check_perms(EGW_ACL_EDIT,$event))
+		{
+			return lang('Exception created - you can now edit or delete it');
+		} else {
+			return lang('You can now edit your participation status on this single recurrence');
+		}
 	}
 
 	/**
@@ -752,7 +757,6 @@ class calendar_uiforms extends calendar_ui
 				'print' => array('label' => 'Print', 'title' => 'Print this event'),
 				'mail' => array('label' => 'Mail all participants', 'title' => 'compose a mail to all participants after the event is saved'),
 			),
-			'status_recurrence' => array('' => 'for this event', 'A' => 'for all future events'),
 		);
 		unset($sel_options['status']['G']);
 		if (!is_array($event))
@@ -876,7 +880,7 @@ class calendar_uiforms extends calendar_ui
 					'quantity' => substr($status,1),
 				);
 				$readonlys[$row.'[quantity]'] = $type == 'u' || !isset($this->bo->resources[$type]['max_quantity']);
-				$readonlys[$row.'[status]'] = $readonlys[$row.'[status_recurrence]'] = !$this->bo->check_status_perms($uid,$event);
+				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 				// todo: make the participants available as links with email as title
 				if ($name == 'accounts')
@@ -940,7 +944,6 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
-		$content['participants']['hide_status_recurrence'] = $event['recur_type'] == MCAL_RECUR_NONE;
 		$preserv = array_merge($preserv,$content);
 
 		if ($event['alarm'])
@@ -1050,8 +1053,10 @@ class calendar_uiforms extends calendar_ui
 		//echo "preserv="; _debug_array($preserv);
  		//echo "readonlys="; _debug_array($readonlys);
  		//echo "sel_options="; _debug_array($sel_options);
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . (!$event['id'] ? lang('Add') : ($view ? lang('View') :
-			($content['edit_single'] ? lang('Create exception') : ($content['recur_type'] ? lang('Edit series') : lang('Edit')))));
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - '
+			. (!$event['id'] ? lang('Add')
+				: ($view ? ($content['edit_single'] ? lang('View exception') : ($content['recur_type'] ? lang('View series') : lang('View')))
+					: ($content['edit_single'] ? lang('Create exception') : ($content['recur_type'] ? lang('Edit series') : lang('Edit')))));
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n$js\n</script>\n";
 
 		$content['cancel_needs_refresh'] = (bool)$_GET['cancel_needs_refresh'];
