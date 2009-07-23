@@ -378,7 +378,7 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-		$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
+			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
 
 		if (isset($params['cols']))
 		{
@@ -599,7 +599,7 @@ class calendar_bo
 		foreach($events as $id => $event)
 		{
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
-			foreach(array('start','end','modified','recur_enddate') as $ts)
+			foreach(array('start','end','modified','created','recur_enddate','recurrence') as $ts)
 			{
 				if (empty($event[$ts])) continue;
 

@@ -305,7 +305,7 @@ class calendar_uiforms extends calendar_ui
 									break;
 								}
 							}
-							if ($uid && $id) 
+							if ($uid && $id)
 							{
 								$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 								$event['participants'][$uid] = $event['participant_types'][$type][$id] = $status.((int) $quantity > 1 ? (int)$quantity : '');
@@ -374,6 +374,8 @@ class calendar_uiforms extends calendar_ui
 		$preserv = array(
 			'view'        => $view,
 			'edit_single' => $content['edit_single'],
+			'reference'   => $content['reference'],
+			'recurrence'  => $content['recurrence'],
 			'actual_date' => $content['actual_date'],
 			'referer'     => $referer,
 			'no_popup'    => $content['no_popup'],
@@ -391,6 +393,7 @@ class calendar_uiforms extends calendar_ui
 			unset($event['uid']);
 			unset($event['alarm']);
 			unset($event['reference']);
+			unset($event['recurrence']);
 			unset($event['recur_exception']);
 			unset($event['edit_single']);	// in case it has been set
 			unset($event['modified']);
@@ -460,8 +463,8 @@ class calendar_uiforms extends calendar_ui
 			if ($content['edit_single'])	// we edited a single event from a series
 			{
 				$event['reference'] = $event['id'];
+				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
-				unset($event['uid']);
 				$conflicts = $this->bo->update($event,$ignore_conflicts);
 				if (!is_array($conflicts) && $conflicts)
 				{
@@ -491,7 +494,7 @@ class calendar_uiforms extends calendar_ui
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
-			elseif ($conflicts ===0)
+			elseif ($conflicts === 0)
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
@@ -501,9 +504,8 @@ class calendar_uiforms extends calendar_ui
 									'referer'    => $referer,
 									))).'">','</a>');
 				$noerror=false;
-
 			}
-			elseif ($conflicts>0)
+			elseif ($conflicts > 0)
 			{
 				$msg .= ($msg ? ', ' : '') . lang('Event saved');
 
@@ -631,6 +633,8 @@ class calendar_uiforms extends calendar_ui
 	function _create_exception(&$event,&$preserv)
 	{
 		$event['end'] += $preserv['actual_date'] - $event['start'];
+		$event['recurrence'] = $preserv['recurrence'] = $event['start'];
+		$event['reference'] = $preserv['reference'] = $event['id'];
 		$event['start'] = $preserv['edit_single'] = $preserv['actual_date'];
 		$event['recur_type'] = MCAL_RECUR_NONE;
 		foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
@@ -640,9 +644,8 @@ class calendar_uiforms extends calendar_ui
 		if($this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
 			return lang('Exception created - you can now edit or delete it');
-		} else {
-			return lang('You can now edit your participation status on this single recurrence');
 		}
+		return lang('You can now edit your participation status on this single recurrence');
 	}
 
 	/**

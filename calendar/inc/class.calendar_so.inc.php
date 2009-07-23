@@ -6,7 +6,7 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -505,9 +505,12 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function save($event,&$set_recurrences,$change_since=0,&$etag=null)
 	{
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
-		} else {
+		}
+		else
+		{
 			$minimum_uid_length = 8;
 		}
 
@@ -566,18 +569,18 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			$etag = 0;
 			// new events need to have at least one participant, default to the owner
-			if (!isset($event['cal_participants'])) {
+			if (!isset($event['cal_participants']))
+			{
 				$event['cal_participants'] = array($event['cal_owner'] => 'A');
 			}
-			if (!isset($event['cal_participants'][$event['cal_owner']])) {
+			if (!isset($event['cal_participants'][$event['cal_owner']]))
+			{
 				$event['cal_participants'][$event['cal_owner']] = 'A';
 			}
 		}
-		if (!isset($event['cal_uid']) || strlen($event['cal_uid']) < $minimum_uid_length
-				|| ($event['cal_reference'] && strpos($event['cal_uid'],
-							'cal-'.$event['calreference'].'-') !== false)) {
+		if (!isset($event['cal_uid']) || strlen($event['cal_uid']) < $minimum_uid_length)
+		{
 			// event (without uid), not strong enough uid
-			// or new created referencing event => create new uid
 			$event['cal_uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$cal_id);
 			$this->db->update($this->cal_table, array('cal_uid' => $event['cal_uid']),
 				array('cal_id' => $event['cal_id']),__LINE__,__FILE__,'calendar');
@@ -628,7 +631,7 @@ ORDER BY cal_user_type, cal_usre_id
 					$event['recur_enddate'] != $old_repeats['recur_enddate'];
 				 // ToDo jaytraxx: manually handle recur_enddate change without recurrences rebuild
 			}
-			
+
 			$event['recur_exception'] = empty($event['recur_exception']) ? null : implode(',',$event['recur_exception']);
 			unset($event[0]);	// unset the 'etag=etag+1', as it's not in the repeats table
 			if($event['recur_type'] != MCAL_RECUR_NONE)

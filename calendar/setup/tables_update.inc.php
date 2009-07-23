@@ -1629,3 +1629,65 @@ function calendar_upgrade1_5_002()
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.6';
 }
+
+
+function calendar_upgrade1_6()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_creator',array(
+		'type' => 'int',
+		'precision' => '4',
+		'comment' => 'creating user'
+	));
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_creator=cal_owner',__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_creator',array(
+		'type' => 'int',
+		'precision' => '4',
+		'nullable' => False,
+		'comment' => 'creating user'
+	));
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_created',array(
+		'type' => 'int',
+		'precision' => '8',
+		'comment' => 'creation time of event'
+	));
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_created=cal_modified',__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_created',array(
+		'type' => 'int',
+		'precision' => '8',
+		'nullable' => False,
+		'comment' => 'creation time of event'
+	));
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_recurrence',array(
+		'type' => 'int',
+		'precision' => '8',
+		'nullable' => False,
+		'default' => '0',
+		'comment' => 'cal_start of original recurrence for exception'
+	));
+	// search series of exception for nearest exception and add that as cal_recurrence
+	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id,cal_start,recur_exception FROM egw_cal
+		JOIN egw_cal_dates ON egw_cal.cal_id=egw_cal_dates.cal_id
+		JOIN egw_cal_repeats ON cal_reference=egw_cal_repeats.cal_id
+		WHERE cal_reference != 0 AND recur_exception IS NOT NULL',__LINE__,__FILE__) as $row)
+	{
+		$recurrence = null;
+		foreach(explode(',',$row['recur_exception']) as $ts)
+		{
+			if (is_null($recurrence) || abs($ts-$row['cal_start']) < $diff)
+			{
+				$recurrence = $ts;
+				$diff = abs($ts-$row['cal_start']);
+			}
+		}
+		if ($recurrence)
+		{
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_recurrence='.(int)$recurrence.
+				' WHERE cal_id='.(int)$row['cal_id']);
+		}
+	}
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.001';
+}
+

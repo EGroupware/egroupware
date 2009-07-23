@@ -6,7 +6,7 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -253,6 +253,11 @@ class calendar_boupdate extends calendar_bo
 			// if no participants are set, set them from the old event, as we might need them to update recuring events
 			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
 			//echo "old $event[id]="; _debug_array($old_event);
+		}
+		else
+		{
+			$event['created'] = $this->now_su;
+			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
 		}
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
@@ -686,7 +691,7 @@ class calendar_boupdate extends calendar_bo
 
 		$save_event = $event;
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
-		foreach(array('start','end','modified','recur_enddate') as $ts)
+		foreach(array('start','end','modified','created','recur_enddate','recurrence') as $ts)
 		{
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
@@ -814,6 +819,10 @@ class calendar_boupdate extends calendar_bo
 			unset($event['start']);
 			unset($event['end']);
 			$this->save($event);	// updates the content-history
+		}
+		if ($event['reference'])
+		{
+			// evtl. delete recur_exception $event['recurrence'] from event with cal_id=$event['reference']
 		}
 		return true;
 	}

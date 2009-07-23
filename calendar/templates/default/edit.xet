@@ -3,7 +3,7 @@
 <overlay>
 	<template id="calendar.edit.general" template="" lang="" group="0" version="1.7.001">
 		<hbox options="0,0">
-			<grid width="100%" height="200">
+			<grid width="100%" height="210">
 				<columns>
 					<column width="95"/>
 					<column/>
@@ -56,7 +56,7 @@
 		</hbox>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="200">
+		<grid width="100%" height="210">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -70,7 +70,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.3.004">
-		<grid width="100%" height="200" overflow="auto" id="participants">
+		<grid width="100%" height="210" overflow="auto" id="participants">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -110,8 +110,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.3.002">
-		<grid width="100%" height="200">
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%" height="210">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -119,8 +119,17 @@
 				<column width="50%"/>
 			</columns>
 			<rows>
+				<row class="row" disabled="!@reference">
+					<description value="Exception"/>
+					<date-time class="gray" readonly="true" id="recurrence"/>
+					<description class="gray" id="reference"/>
+					<description class="gray" id="uid"/>
+				</row>
 				<row class="th" height="12">
-					<description span="all" value="Repeating Event Information"/>
+					<description span="all" class="gray" value="Repeating Event Information"/>
+					<description value="be back soon ;-)"/>
+					<description/>
+					<description/>
 				</row>
 				<row class="row" height="12">
 					<description options=",,,recur_type" value="Repeat type"/>
@@ -160,7 +169,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.custom" template="" lang="" group="0" version="1.4.001">
-		<grid width="100%" height="200" overflow="auto">
+		<grid width="100%" height="210" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -172,7 +181,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="200" overflow="auto">
+		<grid width="100%" height="210" overflow="auto">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -194,7 +203,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.alarms" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="200" overflow="auto">
+		<grid width="100%" height="210" overflow="auto">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -254,16 +263,18 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.3.005">
+	<template id="calendar.edit" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
 				<column width="300"/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
 					<html span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
+					<description/>
 					<description/>
 					<description/>
 				</row>
@@ -298,15 +309,13 @@
 					<menulist>
 						<menupopup type="select-account" id="owner" readonly="true"/>
 					</menulist>
-					<hbox align="right">
-						<date-time label="Updated" id="modified" readonly="true" no_lang="1"/>
-						<menulist>
-							<menupopup type="select-account" label="by" id="modifier" readonly="true"/>
-						</menulist>
-					</hbox>
+					<date-time label="Updated" id="modified" readonly="true" no_lang="1" align="right" class="noBreak"/>
+					<menulist class="noBreak">
+						<menupopup type="select-account" label="by" id="modifier" readonly="true" align="right"/>
+					</menulist>
 				</row>
 				<row>
-					<hbox span="2">
+					<hbox span="3">
 						<button label="Save" id="button[save]" statustext="saves the changes made"/>
 						<button id="button[apply]" label="Apply" statustext="apply the changes"/>
 						<button id="button[cancel]" label="Cancel" statustext="Close the window" onclick="window.close();"/>
@@ -320,6 +329,7 @@
 		</grid>
 		<styles>
 			.end_hide { visibility: visible; white-space: nowrap; margin-left: 10px; }
+.noBreak { white-space: nowrap; }
 		</styles>
 	</template>
 </overlay>

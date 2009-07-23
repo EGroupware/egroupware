@@ -13,20 +13,23 @@ $phpgw_baseline = array(
 	'egw_cal' => array(
 		'fd' => array(
 			'cal_id' => array('type' => 'auto','nullable' => False),
-			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
-			'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False),
-			'cal_category' => array('type' => 'varchar','precision' => '30'),
-			'cal_modified' => array('type' => 'int','precision' => '8'),
+			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
+			'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'event owner / calendar'),
+			'cal_category' => array('type' => 'varchar','precision' => '30','comment' => 'category id'),
+			'cal_modified' => array('type' => 'int','precision' => '8','comment' => 'ts of last modification'),
 			'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
-			'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1'),
+			'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1','comment' => '1=public, 0=private event'),
 			'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
 			'cal_description' => array('type' => 'text'),
 			'cal_location' => array('type' => 'varchar','precision' => '255'),
-			'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
-			'cal_modifier' => array('type' => 'int','precision' => '4'),
-			'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0'),
+			'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'cal_id of series for exception'),
+			'cal_modifier' => array('type' => 'int','precision' => '4','comment' => 'user who last modified event'),
+			'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0','comment' => '1 for non-blocking events'),
 			'cal_special' => array('type' => 'int','precision' => '2','default' => '0'),
-			'cal_etag' => array('type' => 'int','precision' => '4','default' => '0')
+			'cal_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag for optimistic locking'),
+			'cal_creator' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'creating user'),
+			'cal_created' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'creation time of event'),
+			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception')
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
@@ -56,7 +59,7 @@ $phpgw_baseline = array(
 			'recur_enddate' => array('type' => 'int','precision' => '8'),
 			'recur_interval' => array('type' => 'int','precision' => '2','default' => '1'),
 			'recur_data' => array('type' => 'int','precision' => '2','default' => '1'),
-			'recur_exception' => array('type' => 'text')
+			'recur_exception' => array('type' => 'text','comment' => 'comma-separated start timestamps of exceptions')
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
