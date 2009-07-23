@@ -85,6 +85,18 @@ class etemplate extends boetemplate
 	 * @public string
 	 */
 	public $onclick_handler;
+	/**
+	 * Does template processes onclick itself, or forwards it to a proxy
+	 *
+	 * @var boolean
+	 */
+	public $no_onclick = false;
+	/**
+	 * handler to call for onclick
+	 *
+	 * @var string
+	 */
+	public $onclick_proxy;
 
 	/**
 	 * Extra options for forms, eg. enctype="multipart/form-data"
@@ -211,12 +223,6 @@ class etemplate extends boetemplate
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 		}
-		// check if application of template has a app.js file --> load it
-		list($app) = explode('.',$this->name);
-		if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
-		{
-			$GLOBALS['egw']->js->validate_file('.','app',$app,false);
-		}
 		// use different form-names to allows multiple eTemplates in one page, eg. addressbook-view
 		self::$name_form = 'eTemplate';
 		if (in_array(self::$name_form,self::$name_forms))
@@ -245,6 +251,14 @@ class etemplate extends boetemplate
 		self::$request->java_script_body_tags = $GLOBALS['egw']->js->body;
 		self::$request->java_script_files = $GLOBALS['egw']->js->files;
 		self::$request->include_xajax = $GLOBALS['egw_info']['flags']['include_xajax'];
+
+		// check if application of template has a app.js file --> load it
+		list($app) = explode('.',$this->name);
+		if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
+		{
+			$GLOBALS['egw']->js->validate_file('.','app',$app,false);
+		}
+
 		if (!$this->sitemgr)
 		{
 			$hooked = isset(self::$previous_content) || !isset($GLOBALS['egw']->template) ?
@@ -264,7 +278,7 @@ class etemplate extends boetemplate
 			'',self::$name_form,self::$form_options.
 			// dont set the width of popups!
 			($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
-		//echo "to_process="; _debug_array(self::$request->to_process);
+			//echo "to_process="; _debug_array(self::$request->to_process);
 
 		//echo '<p>'.__METHOD__."($method,...) etemplate[hooked]=".(int)self::$hooked.", etemplate[hook_app]='".self::$hook_app."', isset(etemplate[content])=".(int)isset(self::$previous_content)."</p>\n";
 		if ($this->sitemgr)
@@ -483,7 +497,7 @@ class etemplate extends boetemplate
 		}
 		else
 		{
-			//echo "<p>process_exec($this->name): calling $session_data[method]</p>\n";
+			//echo "<p>process_exec($this->name): calling ".($type == 'regular' ? self::$request->method : $_GET['menuaction'])."</p>\n";
 			return ExecMethod($type == 'regular' ? self::$request->method : $_GET['menuaction'],
 				$this->complete_array_merge(self::$request->preserv,$content));
 		}
@@ -694,9 +708,9 @@ class etemplate extends boetemplate
 				$cols = &$data[$r_key];
 				$part = '';	// '' = body-prefix
 				list($height,$disabled,$part) = explode(',',$opts["h$row"]);
-				$class = /*TEST-RB$no_table_tr ? $tr_class :*/ $opts["c$row"];
+				$class = $opts["c$row"];
 			}
-			if ($disabled != '' && $this->check_disabled($disabled,$content))
+			if ($disabled != '' && $this->check_disabled($disabled,$content,$r))
 			{
 				continue;	// row is disabled
 			}
@@ -764,12 +778,7 @@ class etemplate extends boetemplate
 						}
 					}
 				}
-				/*TEST-RB
-				if ($cell['type'] == 'template' && $cell['onchange'])
-				{
-					$cell['tr_class'] = $cl;
-				}*/
-				if ($col_disabled != '' && $this->check_disabled($col_disabled,$content))
+				if ($col_disabled != '' && $this->check_disabled($col_disabled,$content,$r,$c))
 				{
 					continue;	// col is disabled
 				}
@@ -1079,8 +1088,7 @@ class etemplate extends boetemplate
 		switch ($type)
 		{
 			case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
-				if (is_array($value))
-					break;
+				if (is_array($value)) break;
 				list($style,$extra_link,$activate_links,$label_for,$extra_link_target,$extra_link_popup,$extra_link_title) = explode(',',$cell_options,7);
 				$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 				$value = nl2br(html::htmlspecialchars($value));
@@ -1616,6 +1624,7 @@ class etemplate extends boetemplate
 				}
 				elseif (!$orient)
 				{
+					if (strpos($html,'class="'.$class)) $class = '';	// dont add class a 2. time
 					$html = html::div($html,html::formatOptions(array(
 							$cell['height'],
 							$cell['width'],

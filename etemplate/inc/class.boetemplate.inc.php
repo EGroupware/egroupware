@@ -95,30 +95,27 @@ class boetemplate extends soetemplate
 	 *
 	 * @param string $disabled expression to check, eg. "!@var" for !$content['var']
 	 * @param array $content the content-array in the context of the grid
+	 * @param int $row=null to be able to use $row or $row_content in value of checks
+	 * @param int $c=null to be able to use $row or $row_content in value of checks
 	 * @return boolean true if the row/col is disabled or false if not
 	 */
-	protected function check_disabled($disabled,$content)
+	protected function check_disabled($disabled,$content,$row=null,$c=null)
 	{
 		if ($this->onclick_handler && !$this->no_onclick)
 		{
 			return false;	// we have an onclick handler
 		}
-		//return False;
 		if ($not = $disabled[0] == '!')
 		{
 			$disabled = substr($disabled,1);
 		}
 		list($val,$check_val) = $vals = explode('=',$disabled);
 
-		if ($val[0] == '@')
-		{
-			$val = $this->get_array($content,substr($val,1));
-		}
-		if ($check_val[0] == '@')
-		{
-			$check_val = $this->get_array($content,substr($check_val,1));
-		}
-		$result = count($vals) == 1 ? $val != '' : ($check_val{0} == '/' ? preg_match($check_val,$val) : $val == $check_val);
+		// use expand_name to be able to use @ or $
+		$val = $this->expand_name($val,$c,$row,'','',$content);
+		$check_val = $this->expand_name($check_val,$c,$row,'','',$content);
+
+		$result = count($vals) == 1 ? $val != '' : ($check_val[0] == '/' ? preg_match($check_val,$val) : $val == $check_val);
 		if ($not) $result = !$result;
 		//echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
 		return $result;
@@ -625,7 +622,7 @@ class boetemplate extends soetemplate
 			foreach($new as $k => $v)
 			{
 				if (!is_array($v) || !isset($old[$k]) || 	// no array or a new array
-					isset($v[0]) && isset($v[count($v)-1]))	// or no associative array, eg. selecting multiple accounts
+					isset($v[0]) && !is_array($v[0]) && isset($v[count($v)-1]))	// or no associative array, eg. selecting multiple accounts
 				{
 					$old[$k] = $v;
 				}
