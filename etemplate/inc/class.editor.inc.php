@@ -466,7 +466,7 @@ class editor
 		);
 
 		$editor = new etemplate('etemplate.editor.new');
-		if (!$msg && isset($content['values']) && !isset($content['vals']))
+		if (isset($content['values']) && !isset($content['vals']))
 		{
 			$r = 1;
 			foreach((array)$content['cont'] as $key => $val)
