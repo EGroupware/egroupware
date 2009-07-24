@@ -37,22 +37,30 @@ class jscalendar
 	 * @param string $path='jscalendar'
 	 * @return jscalendar
 	 */
-	function __construct($do_header=True,$path='jscalendar',$scriptreturn=false)
+	function __construct($do_header=True,$path='jscalendar')
 	{
 		$this->jscalendar_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/'.$path;
 		$this->dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
-		$js=
+		if ($do_header && (strpos($GLOBALS['egw_info']['flags']['java_script'],'jscalendar')===false))
+		{
+			$GLOBALS['egw_info']['flags']['java_script'] .= $this->get_javascript();
+		}
+	}
+
+	/**
+	 * return javascript needed for jscalendar
+	 *
+	 * @return string
+	 */
+	function get_javascript()
+	{
+		return
 '<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />
 <script type="text/javascript" src="'.$this->jscalendar_url.'/calendar.js"></script>
 <script type="text/javascript" src="'.$GLOBALS['egw']->link('/phpgwapi/inc/jscalendar-setup.php',
 	array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],array('lang'=>1,'dateformat'=>1))).'"></script>
 ';
-		if ($do_header && (strpos($GLOBALS['egw_info']['flags']['java_script'],'jscalendar')===false))
-		{
-			$GLOBALS['egw_info']['flags']['java_script'] .=$js;
-		}
-		if ($scriptreturn==true) return $js;  //if the header is already send to the Browser
 	}
 
 	/**
@@ -140,7 +148,7 @@ Calendar.setup(
 	 */
 	function flat($url,$date=null,$weekUrl='',$weekTTip='',$monthUrl='',$monthTTip='',$id='calendar-container')
 	{
-		$javascript=$this->jscalendar(false,'jscalendar',true);
+		$javascript = $this->get_javascript();
 		if ($date)	// string if format YYYYmmdd or timestamp
 		{
 			$date = is_int($date) ? adodb_date('m/d/Y',$date) :
