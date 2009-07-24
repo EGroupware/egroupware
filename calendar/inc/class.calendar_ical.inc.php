@@ -133,6 +133,16 @@ class calendar_ical extends calendar_boupdate
 	var $vCalendar;
 
 	/**
+         * Set Logging
+         *
+         * @var
+	 * off = 0;
+         */
+	var $log = 0;
+	var $logfile="/tmp/log-vcal";
+
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $_clientProperties		client properties
@@ -140,7 +150,7 @@ class calendar_ical extends calendar_boupdate
 	function __construct(&$_clientProperties = array())
 	{
 		parent::__construct();
-
+		if($this->log)$this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_iCalendar;
 	}
@@ -158,7 +168,6 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0)
 	{
-		// error_log(__FILE__ . __METHOD__ ."exportVCal is called ");
 		$egwSupportedFields = array(
 			'CLASS'			=> array('dbName' => 'public'),
 			'SUMMARY'		=> array('dbName' => 'title'),
@@ -712,13 +721,11 @@ class calendar_ical extends calendar_boupdate
 
 					// skip over alarms that don't have the minimum required info
 					if (!$alarmData['offset'] && !$alarmData['time']) {
-						error_log("Couldn't add VALARM (no alarm time info)");
 						continue;
 					}
 
 					// RFC requires DESCRIPTION for DISPLAY
 					if (!$event['title'] && !$description) {
-						error_log("Couldn't add VALARM (no description)");
 						continue;
 					}
 
@@ -765,17 +772,15 @@ class calendar_ical extends calendar_boupdate
 					}
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
-						error_log(__FILE__ . __METHOD__ ."Has invalid XML data :$valueData");
 					}
 					$vevent->setParameter($key, $options);
 				}
 			}
 			$vcal->addComponent($vevent);
 		}
-		//_debug_array($vcal->exportvCalendar());
 
 		$retval = $vcal->exportvCalendar();
-                Horde::logMessage("exportVCAL:\n" . print_r($retval, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+                if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($retval)."\n",3,$this->logfile);
 		return $retval;
 
 	}
@@ -794,9 +799,9 @@ class calendar_ical extends calendar_boupdate
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
 	{
 		$Ok = false;	// returning false, if file contains no components
+		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($_vcalData)."\n",3,$this->logfile);
 
 		$vcal = new Horde_iCalendar;
-		error_log(__LINE__.__METHOD__.__FILE__.print_r($_vcalData,true));
 		if (!$vcal->parsevCalendar($_vcalData))
 		{
 			return $Ok;
@@ -1058,9 +1063,12 @@ class calendar_ical extends calendar_boupdate
 				}
 
 				$original_event = $event;
+				if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($original_event)."\n",3,$this->logfile);
 
 				if (!($Ok = $this->update($event, true)))
 				{
+					if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($Ok)."\n",3,$this->logfile);
+
 					if ($Ok === false && $cal_id > 0 && ($egw_event = $this->read($cal_id)))
 					{
 						$unchanged = true;
@@ -1101,6 +1109,8 @@ class calendar_ical extends calendar_boupdate
 				else
 				{
 					$eventID = &$Ok;
+					if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($eventID)."\n",3,$this->logfile);
+
 					/* if(isset($egw_event)
 						&& $original_event['participants'] != $egw_event['participants'])
 					{
@@ -1148,8 +1158,8 @@ class calendar_ical extends calendar_boupdate
 				$cal_id = -1;
 			}
 			$egw_event = $this->read($eventID);
-            Horde::logMessage("importVCAL:\n" . print_r($egw_event, true),
-            	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($egw_event)."\n",3,$this->logfile);
+
 		}
 		return $Ok;
 	}
@@ -2103,8 +2113,6 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function update_status($new_event, $old_event , $recur_date)
    	{
-		//error_log(__FILE__ . __METHOD__ . "\nold_event:" . print_r($old_event, true)
-		//			. "\nnew_event:" . print_r($new_event, true));
 
 		// check the old list against the new list
 		foreach ($old_event['participants'] as $userid => $status)
@@ -2120,7 +2128,6 @@ class calendar_ical extends calendar_boupdate
         // write the changes
         foreach ($new_event['participants'] as $userid => $status)
         {
-        	//error_log(__FILE__ . __METHOD__ . "\n$userid => $status:");
 			$this->set_status($old_event, $userid, $status, $recur_date, true);
         }
     }
