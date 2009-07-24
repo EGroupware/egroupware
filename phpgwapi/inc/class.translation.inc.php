@@ -251,7 +251,10 @@ class translation
 			// for loginscreen we have to use a instance specific cache!
 			$loaded =& egw_cache::getCache(in_array($app,self::$instance_specific_translations) ? egw_cache::INSTANCE : egw_cache::TREE,
 				__CLASS__,$app.':'.$lang,array(__CLASS__,'load_app'),array($app,$lang));
-			self::$lang_arr += $loaded;	// use += instead of array_merge, as we have phrases with numerical index, which get renumbered by array_merge
+
+			// we have to use array_merge! (+= does not overwrite common translations with different ones in an app)
+			// array_merge messes up translations of numbers, which make no sense and should be avoided anyway.
+			self::$lang_arr = array_merge(self::$lang_arr,$loaded);
 			self::$loaded_apps[$app] = $lang;
 			//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr).": ".function_backtrace());
 		}
@@ -738,9 +741,10 @@ class translation
 							}
 						}
 					}
-					// delete the cache
-					egw_cache::unsetTree(__CLASS__,$app_name.':'.$lang);
-					//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) deleted cache for app=$app_name and lang=$lang.");
+					// update the tree-level cache, as we can not effectivly unset it in a multiuser enviroment,
+					// as users from other - not yet updated - instances update it again with an old version!
+					egw_cache::setTree(__CLASS__,$app_name.':'.$lang,self::load_app($app,$lang));
+					//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) updating tree-level cache for app=$app_name and lang=$lang.");
 				}
 			}
 		}
