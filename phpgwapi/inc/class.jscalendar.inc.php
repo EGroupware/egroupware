@@ -5,6 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage html
  * @version $Id$
  */
 
@@ -12,10 +14,6 @@
  * Wrapper for the jsCalendar
  *
  * The constructor loads the necessary javascript-files.
- *
- * @package api
- * @subpackage html
- * @access public
  */
 class jscalendar
 {
@@ -39,7 +37,7 @@ class jscalendar
 	 * @param string $path='jscalendar'
 	 * @return jscalendar
 	 */
-	function jscalendar($do_header=True,$path='jscalendar',$scriptreturn=false)
+	function __construct($do_header=True,$path='jscalendar',$scriptreturn=false)
 	{
 		$this->jscalendar_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/'.$path;
 		$this->dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
@@ -108,7 +106,7 @@ class jscalendar
 		if ($jsreturn)
 		{
 			$return_array = array(
-				'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/><img id="'.$name.'-trigger" src="'.$GLOBALS['egw']->common->find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>',
+				'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/><img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>',
 				'js'   => 'Calendar.setup({inputField : "'.$name.'",button: "'.$name.'-trigger"	});'
 				);
 
@@ -117,7 +115,7 @@ class jscalendar
 		return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
 <script type="text/javascript">
-document.writeln(\'<img id="'.$name.'-trigger" src="'.$GLOBALS['egw']->common->find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
+document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
 Calendar.setup(
 {
 	inputField  : "'.$name.'",
@@ -253,22 +251,5 @@ function monthClicked(calendar,monthstart) {
 		//echo "<p>jscalendar::input2date('$datestr','$raw',$day','$month','$year') = "; print_r($ret); echo "</p>\n";
 
 		return $ret;
-	}
-}
-
-if (!function_exists('array_intersect_key'))	// php5.1 function
-{
-	function array_intersect_key($array1,$array2)
-	{
-		$intersection = $keys = array();
-		foreach(func_get_args() as $arr)
-		{
-			$keys[] = array_keys((array)$arr);
-		}
-		foreach(call_user_func_array('array_intersect',$keys) as $key)
-		{
-			$intersection[$key] = $array1[$key];
-		}
-		return $intersection;
 	}
 }
