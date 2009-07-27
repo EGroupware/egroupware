@@ -49,9 +49,10 @@ class addressbook_vcal extends addressbook_bo
 	* Set Logging
 	*
 	* @var string
+	* off = 0;
 	*/
 	var $log = 0;
-	var $logfile="/tmp/log-addressbook";
+	var $logfile="/tmp/log-vcard";
 	/**
 	* Constructor
 	*
@@ -62,7 +63,7 @@ class addressbook_vcal extends addressbook_bo
 	function __construct($contact_app='addressbook', $_contentType='text/x-vcard', &$_clientProperties = array())
 	{
 		parent::__construct($contact_app);
-		if($this->log)$this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-addressbook";
+		if($this->log)$this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcard";
 		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($_contentType)."\n",3,$this->logfile);
 		switch($_contentType)
 		{
@@ -75,7 +76,6 @@ class addressbook_vcal extends addressbook_bo
 		}
 		$this->clientProperties = $_clientProperties;
 	}
-
 	/**
 	* import a vard into addressbook
 	*
@@ -351,12 +351,8 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 		$result = $vCard->exportvCalendar();
-
-        error_log(__FILE__ . __LINE__ . __METHOD__ . ':'
-        	. str_replace(array("\n",'    '),'',print_r($result,true)));
-		// Horde::logMessage("vCalAddressbook getVCard:\n" . print_r($result, true),
-			// __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
+		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
+                if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($result)."\n",3,$this->logfile);
 		return $result;
 	}
 
@@ -404,8 +400,8 @@ class addressbook_vcal extends addressbook_bo
 			}
 		}
 
-		Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', ' . $this->productName .')',
-			__FILE__, __LINE__, PEAR_LOG_DEBUG);
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', ' . $this->productName .')',
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		/**
 		 * ToDo Lars:
@@ -994,7 +990,7 @@ class addressbook_vcal extends addressbook_bo
 			'UID'				=> array('uid'),
 		);
 
-		Horde::logMessage("vCalAddressbook vcardtoegw:\n$_vcard", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		//Horde::logMessage("vCalAddressbook vcardtoegw:\n$_vcard", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
@@ -1019,7 +1015,7 @@ class addressbook_vcal extends addressbook_bo
 		#print "<pre>$_vcard</pre>";
 
 		#error_log(print_r($vcardValues, true));
-		Horde::logMessage("vCalAddressbook vcardtoegw: " . print_r($vcardValues, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		//Horde::logMessage("vCalAddressbook vcardtoegw: " . print_r($vcardValues, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$email = 1;
 		$tel = 1;
@@ -1160,12 +1156,16 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 
+
+               if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($rowNames)."\n",3,$this->logfile);
+             
+	       // All rowNames of the vCard are now concatenated with their qualifiers.
+               // If qualifiers are missing we apply a default strategy.
+               // E.g. ADR will be either ADR;WORK, if no ADR;WORK is given,
+               // or else ADR;HOME, if not available elsewhere.
+
 		//error_log(print_r($rowNames, true));
 
-        // All rowNames of the vCard are now concatenated with their qualifiers.
-        // If qualifiers are missing we apply a default strategy.
-        // E.g. ADR will be either ADR;WORK, if no ADR;WORK is given,
-        // or else ADR;HOME, if not available elsewhere.
 
 		$finalRowNames = array();
 
@@ -1311,7 +1311,11 @@ class addressbook_vcal extends addressbook_bo
 			}
 		}
 
+
+		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($finalRowNames)."\n",3,$this->logfile);
+
 		//error_log(print_r($finalRowNames, true));
+
 
 		$contact = array();
 
@@ -1372,8 +1376,8 @@ class addressbook_vcal extends addressbook_bo
 
 		$this->fixup_contact($contact);
 
-		Horde::logMessage("vCalAddressbook vcardtoegw: " . print_r($contact, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
+		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
+		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($contact)."\n",3,$this->logfile);
 		return $contact;
 	}
 
