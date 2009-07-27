@@ -287,7 +287,7 @@ class translation
 				$loaded[strtolower($row['message_id'])] = $row['content'];
 			}
 		}
-		//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms");
+		//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms to load ".count($loaded)." phrases");
 		return $loaded;
 	}
 
@@ -597,23 +597,22 @@ class translation
 				$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize(stripslashes($ctimes));
 			}
 		}
-
 		if (!is_array($langs) || !count($langs))
 		{
-			return;
-		}
-		self::$db->transaction_begin();
-
-		if ($upgrademethod == 'dumpold')
-		{
-			// dont delete the custom main- & loginscreen messages every time
-			self::$db->delete(self::LANG_TABLE,array("app_name!='mainscreen'","app_name!='loginscreen'"),__LINE__,__FILE__);
-			//echo '<br>Test: dumpold';
-			$GLOBALS['egw_info']['server']['lang_ctimes'] = array();
+			return;	// nothing to do
 		}
 		foreach($langs as $lang)
 		{
-			//echo '<br>Working on: ' . $lang;
+			// run the update of each lang in a transaction
+			self::$db->transaction_begin();
+
+			if ($upgrademethod == 'dumpold')
+			{
+				// dont delete the custom main- & loginscreen messages every time
+				self::$db->delete(self::LANG_TABLE,array("app_name!='mainscreen'","app_name!='loginscreen'",'lang' => $lang),__LINE__,__FILE__);
+				//echo '<br>Test: dumpold';
+				$GLOBALS['egw_info']['server']['lang_ctimes'][$lang] = array();
+			}
 			$addlang = False;
 			if ($upgrademethod == 'addonlynew')
 			{
@@ -670,7 +669,7 @@ class translation
 						{
 							$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['egw_info']['server']['lang_ctimes']);
 						}
-						$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] = filemtime($appfile);
+						$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] = filectime($appfile);
 					}
 				}
 				$charset = strtolower(@$raw['common']['charset'] ? $raw['common']['charset'] : self::charset($lang));
@@ -741,21 +740,28 @@ class translation
 							}
 						}
 					}
-					// update the tree-level cache, as we can not effectivly unset it in a multiuser enviroment,
-					// as users from other - not yet updated - instances update it again with an old version!
-					egw_cache::setTree(__CLASS__,$app_name.':'.$lang,self::load_app($app,$lang));
-					//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) updating tree-level cache for app=$app_name and lang=$lang.");
 				}
+			}
+			// commit now the update of $lang, before we fill the cache again
+			self::$db->transaction_commit();
+
+			$apps = array_keys($raw);
+			unset($raw);
+
+			foreach($apps as $app_name)
+			{
+				// update the tree-level cache, as we can not effectivly unset it in a multiuser enviroment,
+				// as users from other - not yet updated - instances update it again with an old version!
+				egw_cache::setTree(__CLASS__,$app_name.':'.$lang,($phrases=&self::load_app($app_name,$lang)));
+				//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) updating tree-level cache for app=$app_name and lang=$lang: ".count($phrases)." phrases");
 			}
 		}
 		// delete the cache
 		egw_cache::unsetInstance(__CLASS__,'installed_langs');
 		egw_cache::unsetInstance(__CLASS__,'list_langs');
 
-		self::$db->transaction_commit();
-
 		// update the ctimes of the installed langsfiles for the autoloading of the lang-files
-		//
+		//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) storing lang_ctimes=".array2string($GLOBALS['egw_info']['server']['lang_ctimes']));
 		config::save_value('lang_ctimes',$GLOBALS['egw_info']['server']['lang_ctimes'],'phpgwapi');
 	}
 
@@ -769,7 +775,7 @@ class translation
 		{
 			$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['egw_info']['server']['lang_ctimes']);
 		}
-		//_debug_array($GLOBALS['egw_info']['server']['lang_ctimes']);
+		//error_log(__METHOD__."(): ling_ctimes=".array2string($GLOBALS['egw_info']['server']['lang_ctimes']));
 
 		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		$apps = $GLOBALS['egw_info']['user']['apps'];
@@ -781,19 +787,13 @@ class translation
 
 			if (file_exists($fname) || file_exists($fname = $old_fname))
 			{
-				$ctime = filectime($fname);
-				/* This is done to avoid string offset error at least in php5 */
-				$tmp = $GLOBALS['egw_info']['server']['lang_ctimes'][$lang];
-				$ltime = (int)$tmp[$app];
-				unset($tmp);
-				//echo "checking lang='$lang', app='$app', ctime='$ctime', ltime='$ltime'<br>\n";
-
-				if ($ctime != $ltime)
+				if (!isset($GLOBALS['egw_info']['server']['lang_ctimes'][$lang]) ||
+					$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] != filectime($fname))
 				{
 					// update all langs
 					$installed = self::get_installed_langs();
-					//echo "<p>install_langs(".print_r($installed,True).")</p>\n";
-					self::install_langs($installed ? array_keys($installed) : array());
+					//error_log(__METHOD__."(): self::install_langs(".array2string($installed).')');
+					self::install_langs($installed ? array_keys($installed) : array('en'));
 					break;
 				}
 			}
