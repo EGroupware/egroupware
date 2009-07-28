@@ -169,21 +169,21 @@ class calendar_ical extends calendar_boupdate
 	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0)
 	{
 		$egwSupportedFields = array(
-			'CLASS'			=> array('dbName' => 'public'),
-			'SUMMARY'		=> array('dbName' => 'title'),
-			'DESCRIPTION'		=> array('dbName' => 'description'),
-			'LOCATION'		=> array('dbName' => 'location'),
-			'DTSTART'		=> array('dbName' => 'start'),
-			'DTEND'			=> array('dbName' => 'end'),
-			'ORGANIZER'		=> array('dbName' => 'owner'),
-			'ATTENDEE'		=> array('dbName' => 'participants'),
-			'RRULE'			=> array('dbName' => 'recur_type'),
-			'EXDATE'		=> array('dbName' => 'recur_exception'),
-			'PRIORITY'		=> array('dbName' => 'priority'),
-			'TRANSP'		=> array('dbName' => 'non_blocking'),
-			'CATEGORIES'		=> array('dbName' => 'category'),
-			'UID'			=> array('dbName' => 'uid'),
-			'RECURRENCE-ID' 	=> array('dbName' => 'reference'),
+			'CLASS'			=> 'public',
+			'SUMMARY'		=> 'title',
+			'DESCRIPTION'	=> 'description',
+			'LOCATION'		=> 'location',
+			'DTSTART'		=> 'start',
+			'DTEND'			=> 'end',
+			'ORGANIZER'		=> 'owner',
+			'ATTENDEE'		=> 'participants',
+			'RRULE'			=> 'recur_type',
+			'EXDATE'		=> 'recur_exception',
+			'PRIORITY'		=> 'priority',
+			'TRANSP'		=> 'non_blocking',
+			'CATEGORIES'	=> 'category',
+			'UID'			=> 'uid',
+			'RECURRENCE-ID' => 'recurrence',
 		);
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
@@ -209,7 +209,7 @@ class calendar_ical extends calendar_boupdate
 
 		if (!is_array($events)) $events = array($events);
 
-		while ($event = array_pop($events))
+		while (($event = array_pop($events)))
 		{
 			if (!is_array($event)
 				&& !($event = $this->read($event, $recur_date, false, $date_format)))
@@ -258,138 +258,188 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			foreach($egwSupportedFields as $icalFieldName => $egwFieldInfo)
+			foreach($egwSupportedFields as $icalFieldName => $egwFieldName)
 			{
-				if ($this->supportedFields[$egwFieldInfo['dbName']])
+				$values[$icalFieldName] = array();
+				switch($icalFieldName)
 				{
-					$values[$icalFieldName] = array();
-					switch($icalFieldName)
-					{
-						case 'ATTENDEE':
-							//if (count($event['participants']) == 1 && isset($event['participants'][$this->user])) break;
-							foreach((array)$event['participants'] as $uid => $status)
+					case 'ATTENDEE':
+						//if (count($event['participants']) == 1 && isset($event['participants'][$this->user])) break;
+						foreach((array)$event['participants'] as $uid => $status)
+						{
+							if (!($info = $this->resource_info($uid))) continue;
+							if ($uid == $event['owner']) continue; // Organizer
+							// RB: MAILTO href contains only the email-address, NO cn!
+							$attributes['ATTENDEE'][]	= $info['email'] ? 'MAILTO:'.$info['email'] : '';
+							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT} NOT used by eGW atm.
+							$role = $uid == $event['owner'] ? 'CHAIR' : 'REQ-PARTICIPANT';
+							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
+							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
+							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
+							$status = $this->status_egw2ical[$status];
+							// CUTYPE={INDIVIDUAL|GROUP|RESOURCE|ROOM|UNKNOWN}
+							switch ($info['type'])
 							{
-								if (!($info = $this->resource_info($uid))) continue;
-								if ($uid == $event['owner']) continue; // Organizer
-								// RB: MAILTO href contains only the email-address, NO cn!
-								$attributes['ATTENDEE'][]	= $info['email'] ? 'MAILTO:'.$info['email'] : '';
-								// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT} NOT used by eGW atm.
-								$role = $uid == $event['owner'] ? 'CHAIR' : 'REQ-PARTICIPANT';
-								// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
-								$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
-								// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
-								$status = $this->status_egw2ical[$status];
-								// CUTYPE={INDIVIDUAL|GROUP|RESOURCE|ROOM|UNKNOWN}
-								switch ($info['type'])
-								{
-									case 'g':
-										$cutype = 'GROUP';
-										break;
-									case 'r':
-										$cutype = 'RESOURCE';
-										break;
-									case 'u':	// account
-									case 'c':	// contact
-									case 'e':	// email address
-										$cutype = 'INDIVIDUAL';
-										break;
-									default:
-										$cutype = 'UNKNOWN';
-										break;
-								};
-								$parameters['ATTENDEE'][] = array(
-									'CN'       => '"'.($info['cn'] ? $info['cn'] : $info['name']).'"',
-									'ROLE'     => $role,
-									'PARTSTAT' => $status,
-									'CUTYPE'   => $cutype,
-									'RSVP'     => $rsvp,
-								)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array());
+								case 'g':
+									$cutype = 'GROUP';
+									break;
+								case 'r':
+									$cutype = 'RESOURCE';
+									break;
+								case 'u':	// account
+								case 'c':	// contact
+								case 'e':	// email address
+									$cutype = 'INDIVIDUAL';
+									break;
+								default:
+									$cutype = 'UNKNOWN';
+									break;
+							};
+							$parameters['ATTENDEE'][] = array(
+								'CN'       => '"'.($info['cn'] ? $info['cn'] : $info['name']).'"',
+								'ROLE'     => $role,
+								'PARTSTAT' => $status,
+								'CUTYPE'   => $cutype,
+								'RSVP'     => $rsvp,
+							)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array());
+						}
+						break;
+
+        				case 'CLASS':
+        					$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
+	    					break;
+
+    				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
+    					//if ($event['owner'] != $this->user)
+    					//if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
+    					//{
+							$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+							$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
+							$parameters['ORGANIZER']['CN'] = '"'.trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
+								$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')).'"';
+    					//}
+						break;
+
+					case 'DTSTART':
+						if ($servertime)
+						{
+							$attributes['DTSTART'] = date('Ymd\THis', $event['start']);
+						}
+						else
+						{
+							$attributes['DTSTART'] = $event['start'];
+						}
+						break;
+
+					case 'DTEND':
+						// write start + end of whole day events as dates
+						if ($this->isWholeDay($event))
+						{
+							$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
+							foreach(array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
+							{
+								$arr = $this->date2array($event[$f]);
+								$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
+									array('VALUE' => 'DATE'));
 							}
-							break;
-
-            				case 'CLASS':
-            					$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
-    	    					break;
-
-        				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-        					//if ($event['owner'] != $this->user)
-        					//if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
-        					//{
-								$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-								$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
-								$parameters['ORGANIZER']['CN'] = '"'.trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
-									$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')).'"';
-        					//}
-							break;
-
-						case 'DTSTART':
+							unset($attributes['DTSTART']);
+						}
+						else
+						{
 							if ($servertime)
 							{
-								$attributes['DTSTART'] = date('Ymd\THis', $event['start']);
+								$attributes['DTEND'] = date('Ymd\THis', $event['end']);
 							}
 							else
 							{
-								$attributes['DTSTART'] = $event['start'];
+								$attributes['DTEND'] = $event['end'];
 							}
-							break;
+						}
+						break;
 
-						case 'DTEND':
-							// write start + end of whole day events as dates
-							if ($this->isWholeDay($event))
+					case 'RRULE':
+						if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
+						if ($version == '1.0') {
+							$interval = ($event['recur_interval'] > 1) ? $event['recur_interval'] : 1;
+							$rrule = array('FREQ' => $this->recur_egw2ical_1_0[$event['recur_type']].$interval);
+							switch ($event['recur_type'])
 							{
-								$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
-								foreach(array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
-								{
-									$arr = $this->date2array($event[$f]);
-									$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
-										array('VALUE' => 'DATE'));
-								}
-								unset($attributes['DTSTART']);
+								case MCAL_RECUR_WEEKLY:
+									$days = array();
+									foreach($this->recur_days_1_0 as $id => $day)
+									{
+										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
+									}
+									$rrule['BYDAY'] = implode(' ',$days);
+									$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+									break;
+
+								case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+									break;
+
+									case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+										$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).'+ '.
+											strtoupper(substr(date('l',$event['start']),0,2));
+									$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+									break;
 							}
-							else
+
+							if ($event['recur_enddate'])
 							{
+								$recur_enddate = (int)$event['recur_enddate'];
+								$recur_enddate += 24 * 60 * 60 - 1;
 								if ($servertime)
 								{
-									$attributes['DTEND'] = date('Ymd\THis', $event['end']);
+									$rrule['UNTIL'] = date('Ymd\THis', $recur_enddate);
 								}
 								else
 								{
-									$attributes['DTEND'] = $event['end'];
+									$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 								}
 							}
-							break;
+							else
+							{
+								$rrule['UNTIL'] = '#0';
+							}
 
-						case 'RRULE':
-							if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
-							if ($version == '1.0') {
-								$interval = ($event['recur_interval'] > 1) ? $event['recur_interval'] : 1;
-								$rrule = array('FREQ' => $this->recur_egw2ical_1_0[$event['recur_type']].$interval);
-								switch ($event['recur_type'])
+							$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
+						} else {
+							$rrule = array('FREQ' => $this->recur_egw2ical_2_0[$event['recur_type']]);
+							switch ($event['recur_type'])
+							{
+								case MCAL_RECUR_WEEKLY:
+									$days = array();
+									foreach($this->recur_days as $id => $day)
+									{
+										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
+									}
+									$rrule['BYDAY'] = implode(',',$days);
+									break;
+
+								case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+									$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
+									break;
+
+									case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+										$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
+											strtoupper(substr(date('l',$event['start']),0,2));
+									break;
+							}
+							if ($event['recur_interval'] > 1)
+							{
+								$rrule['INTERVAL'] = $event['recur_interval'];
+							}
+							if ($event['recur_enddate'])
+							{
+								// We use end of day in vCal
+								$recur_enddate = (int)$event['recur_enddate'];
+								$recur_enddate += 24 * 60 * 60 - 1;
+								if ($this->isWholeDay($event))
 								{
-									case MCAL_RECUR_WEEKLY:
-										$days = array();
-										foreach($this->recur_days_1_0 as $id => $day)
-										{
-											if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
-										}
-										$rrule['BYDAY'] = implode(' ',$days);
-										$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
-										break;
-
-									case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
-										break;
-
-										case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
-											$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).'+ '.
-												strtoupper(substr(date('l',$event['start']),0,2));
-										$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
-										break;
+									$rrule['UNTIL'] = date('Ymd', $recur_enddate);
 								}
-
-								if ($event['recur_enddate'])
+								else
 								{
-									$recur_enddate = (int)$event['recur_enddate'];
-									$recur_enddate += 24 * 60 * 60 - 1;
 									if ($servertime)
 									{
 										$rrule['UNTIL'] = date('Ymd\THis', $recur_enddate);
@@ -399,258 +449,192 @@ class calendar_ical extends calendar_boupdate
 										$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 									}
 								}
-								else
-								{
-									$rrule['UNTIL'] = '#0';
-								}
-
-								$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
-							} else {
-								$rrule = array('FREQ' => $this->recur_egw2ical_2_0[$event['recur_type']]);
-								switch ($event['recur_type'])
-								{
-									case MCAL_RECUR_WEEKLY:
-										$days = array();
-										foreach($this->recur_days as $id => $day)
-										{
-											if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
-										}
-										$rrule['BYDAY'] = implode(',',$days);
-										break;
-
-									case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
-										$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
-										break;
-
-										case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
-											$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
-												strtoupper(substr(date('l',$event['start']),0,2));
-										break;
-								}
-								if ($event['recur_interval'] > 1)
-								{
-									$rrule['INTERVAL'] = $event['recur_interval'];
-								}
-								if ($event['recur_enddate'])
-								{
-									// We use end of day in vCal
-									$recur_enddate = (int)$event['recur_enddate'];
-									$recur_enddate += 24 * 60 * 60 - 1;
-									if ($this->isWholeDay($event))
-									{
-										$rrule['UNTIL'] = date('Ymd', $recur_enddate);
-									}
-									else
-									{
-										if ($servertime)
-										{
-											$rrule['UNTIL'] = date('Ymd\THis', $recur_enddate);
-										}
-										else
-										{
-											$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
-										}
-									}
-								}
-								// no idea how to get the Horde parser to produce a standard conformant
-								// RRULE:FREQ=... (note the double colon after RRULE, we cant use the $parameter array)
-								// so we create one value manual ;-)
-								foreach($rrule as $name => $value)
-								{
-									$attributes['RRULE'][] = $name . '=' . $value;
-								}
-								$attributes['RRULE'] = implode(';',$attributes['RRULE']);
 							}
-							break;
-
-						case 'EXDATE':
-							if ($event['recur_type'] == MCAL_RECUR_NONE) break;
-							$days = array();
-							// dont use "virtual" exceptions created by participant status for GroupDAV or file export
-							if (!in_array($this->productManufacturer,array('file','groupdav')))
+							// no idea how to get the Horde parser to produce a standard conformant
+							// RRULE:FREQ=... (note the double colon after RRULE, we cant use the $parameter array)
+							// so we create one value manual ;-)
+							foreach($rrule as $name => $value)
 							{
-								$participants = $this->so->get_participants($event['id'], 0);
+								$attributes['RRULE'][] = $name . '=' . $value;
+							}
+							$attributes['RRULE'] = implode(';',$attributes['RRULE']);
+						}
+						break;
 
-								// Check if the stati for all participants are identical for all recurrences
-								foreach ($participants as $uid => $attendee)
+					case 'EXDATE':
+						if ($event['recur_type'] == MCAL_RECUR_NONE) break;
+						$days = array();
+						// dont use "virtual" exceptions created by participant status for GroupDAV or file export
+						if (!in_array($this->productManufacturer,array('file','groupdav')))
+						{
+							$participants = $this->so->get_participants($event['id'], 0);
+
+							// Check if the stati for all participants are identical for all recurrences
+							foreach ($participants as $uid => $attendee)
+							{
+								switch ($attendee['type'])
 								{
-									switch ($attendee['type'])
-									{
-										case 'u':	// account
-										case 'c':	// contact
-										case 'e':	// email address
-											$recurrences = $this->so->get_recurrences($event['id'], $uid);
-											foreach ($recurrences as $rdate => $recur_status)
+									case 'u':	// account
+									case 'c':	// contact
+									case 'e':	// email address
+										$recurrences = $this->so->get_recurrences($event['id'], $uid);
+										foreach ($recurrences as $rdate => $recur_status)
+										{
+											if ($rdate && $recur_status != $recurrences[0])
 											{
-												if ($rdate && $recur_status != $recurrences[0])
-												{
-													// Every distinct status results in an exception
-													$days[] = $rdate;
-												}
+												// Every distinct status results in an exception
+												$days[] = $rdate;
 											}
-											break;
-										default: // We don't handle the rest
-											break;
-									}
+										}
+										break;
+									default: // We don't handle the rest
+										break;
 								}
 							}
-							if (is_array($event['recur_exception']))
+						}
+						if (is_array($event['recur_exception']))
+						{
+							$days = array_merge($days,$event['recur_exception']);	// can NOT use +, as it overwrites numeric indexes
+						}
+						if (!empty($days))
+						{
+							$days = array_unique($days);
+							sort($days);
+							// use 'DATE' instead of 'DATE-TIME' on whole day events
+							if ($this->isWholeDay($event))
 							{
-								$days = array_merge($days,$event['recur_exception']);	// can NOT use +, as it overwrites numeric indexes
-							}
-							if (!empty($days))
-							{
-								$days = array_unique($days);
-								sort($days);
-								// use 'DATE' instead of 'DATE-TIME' on whole day events
-								if ($this->isWholeDay($event))
+								$value_type = 'DATE';
+								foreach($days as $id => $timestamp)
 								{
-									$value_type = 'DATE';
+									$arr = $this->date2array($timestamp);
+									$days[$id] = array(
+										'year'  => $arr['year'],
+										'month' => $arr['month'],
+										'mday'  => $arr['day'],
+									);
+								}
+							}
+							else
+							{
+								$value_type = 'DATE-TIME';
+								if ($servertime)
+								{
 									foreach($days as $id => $timestamp)
 									{
-										$arr = $this->date2array($timestamp);
-										$days[$id] = array(
-											'year'  => $arr['year'],
-											'month' => $arr['month'],
-											'mday'  => $arr['day'],
-										);
-									}
-								}
-								else
-								{
-									$value_type = 'DATE-TIME';
-									if ($servertime)
-									{
-										foreach($days as $id => $timestamp)
-										{
-											$days[$id] = date('Ymd\THis', $timestamp);
+										$days[$id] = date('Ymd\THis', $timestamp);
 
-										}
-									}
-								}
-								$attributes['EXDATE'] = '';
-								$values['EXDATE'] = $days;
-								$parameters['EXDATE']['VALUE'] = $value_type;
-							}
-							break;
-
-						case 'PRIORITY':
- 							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
- 							break;
-
- 						case 'TRANSP':
-							if ($version == '1.0') {
-								$attributes['TRANSP'] = ($event['non_blocking'] ? 1 : 0);
-							} else {
-								$attributes['TRANSP'] = ($event['non_blocking'] ? 'TRANSPARENT' : 'OPAQUE');
-							}
-							break;
-
-						case 'CATEGORIES':
-							if ($event['category'])
-							{
-								$attributes['CATEGORIES'] = '';
-								$values['CATEGORIES'] = $this->get_categories($event['category']);
-							}
-							break;
-
-						case 'RECURRENCE-ID':
-							if ($recur_date)
-							{
-								// We handle a status only exception
-								if ($this->isWholeDay($event))
-								{
-									$arr = $this->date2array($recur_date);
-									$vevent->setAttribute('RECURRENCE-ID', array(
-										'year' => $arr['year'],
-										'month' => $arr['month'],
-										'mday' => $arr['day']),
-										array('VALUE' => 'DATE')
-									);
-								}
-								else
-								{
-									if ($servertime)
-									{
-										$attributes['RECURRENCE-ID'] = date('Ymd\THis', $recur_date);
-									}
-									else
-									{
-										$attributes['RECURRENCE-ID'] = $recur_date;
 									}
 								}
 							}
-							elseif ($event['reference'])
-							{
-								// $event['reference'] is a calendar_id, not a timestamp
-								if (!($revent = $this->read($event['reference']))) break;	// referenced event does not exist
-
-								// find recur_exception closest to $event['start'],
-								// as our db-model does NOT store for which recurrence the exception is
-								$exception_start = $exception_diff = null;
-								foreach($revent['recur_exception'] as $exception)
-								{
-									if (!isset($exception_start) || $exception_diff > abs($exception-$event['start']))
-									{
-										$exception_start = $exception;
-										$exception_diff = abs($exception-$event['start']);
-									}
-								}
-								if (!isset($exception_start)) break;	// referenced event has no exception
-
-								if ($this->isWholeDay($revent))
-								{
-									$arr = $this->date2array($exception_start);
-									$vevent->setAttribute('RECURRENCE-ID', array(
-										'year' => $arr['year'],
-										'month' => $arr['month'],
-										'mday' => $arr['day']),
-										array('VALUE' => 'DATE')
-									);
-								}
-								else
-								{
-									if ($servertime)
-									{
-										$attributes['RECURRENCE-ID'] = date('Ymd\THis', $exception_start);
-									}
-									else
-									{
-										$attributes['RECURRENCE-ID'] = $exception_start;
-									}
-								}
-								unset($revent);
-							}
-							break;
-
-						default:
-							if (isset($this->clientProperties[$icalFieldName]['Size'])) {
-								$size = $this->clientProperties[$icalFieldName]['Size'];
-								$noTruncate = $this->clientProperties[$icalFieldName]['NoTruncate'];
-								#Horde::logMessage("vCalendar $icalFieldName Size: $size, NoTruncate: " .
-								#	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-							} else {
-								$size = -1;
-								$noTruncate = false;
-							}
-							$value = $event[$egwFieldInfo['dbName']];
-							$cursize = strlen($value);
-							if (($size > 0) && $cursize > $size) {
-								if ($noTruncate) {
-									Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
-										__FILE__, __LINE__, PEAR_LOG_WARNING);
-									continue; // skip field
-								}
-								// truncate the value to size
-								$value = substr($value, 0, $size - 1);
-								Horde::logMessage("vCalendar $icalFieldName truncated to maximum size $size",
-									__FILE__, __LINE__, PEAR_LOG_INFO);
-							}
-							if (!empty($value) || ($size >= 0 && !$noTruncate)) {
-								$attributes[$icalFieldName] = $value;
-							}
+							$attributes['EXDATE'] = '';
+							$values['EXDATE'] = $days;
+							$parameters['EXDATE']['VALUE'] = $value_type;
+						}
 						break;
-					}
+
+					case 'PRIORITY':
+							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
+							break;
+
+						case 'TRANSP':
+						if ($version == '1.0') {
+							$attributes['TRANSP'] = ($event['non_blocking'] ? 1 : 0);
+						} else {
+							$attributes['TRANSP'] = ($event['non_blocking'] ? 'TRANSPARENT' : 'OPAQUE');
+						}
+						break;
+
+					case 'CATEGORIES':
+						if ($event['category'])
+						{
+							$attributes['CATEGORIES'] = '';
+							$values['CATEGORIES'] = $this->get_categories($event['category']);
+						}
+						break;
+
+					case 'RECURRENCE-ID':
+						if ($recur_date)
+						{
+							// We handle a status only exception
+							if ($this->isWholeDay($event))
+							{
+								$arr = $this->date2array($recur_date);
+								$vevent->setAttribute('RECURRENCE-ID', array(
+									'year' => $arr['year'],
+									'month' => $arr['month'],
+									'mday' => $arr['day']),
+									array('VALUE' => 'DATE')
+								);
+							}
+							else
+							{
+								if ($servertime)
+								{
+									$attributes['RECURRENCE-ID'] = date('Ymd\THis', $recur_date);
+								}
+								else
+								{
+									$attributes['RECURRENCE-ID'] = $recur_date;
+								}
+							}
+						}
+						elseif ($event['recurrence'] && $event['reference'])
+						{
+							// $event['reference'] is a calendar_id, not a timestamp
+							if (!($revent = $this->read($event['reference']))) break;	// referenced event does not exist
+
+							if ($this->isWholeDay($revent))
+							{
+								$arr = $this->date2array($exception_start);
+								$vevent->setAttribute('RECURRENCE-ID', array(
+									'year' => $arr['year'],
+									'month' => $arr['month'],
+									'mday' => $arr['day']),
+									array('VALUE' => 'DATE')
+								);
+							}
+							else
+							{
+								if ($servertime)
+								{
+									$attributes['RECURRENCE-ID'] = date('Ymd\THis', $event['recurrence']);
+								}
+								else
+								{
+									$attributes['RECURRENCE-ID'] = $event['recurrence'];
+								}
+							}
+							unset($revent);
+						}
+						break;
+
+					default:
+						if (isset($this->clientProperties[$icalFieldName]['Size'])) {
+							$size = $this->clientProperties[$icalFieldName]['Size'];
+							$noTruncate = $this->clientProperties[$icalFieldName]['NoTruncate'];
+							#Horde::logMessage("vCalendar $icalFieldName Size: $size, NoTruncate: " .
+							#	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+						} else {
+							$size = -1;
+							$noTruncate = false;
+						}
+						$value = $event[$egwFieldName];
+						$cursize = strlen($value);
+						if (($size > 0) && $cursize > $size) {
+							if ($noTruncate) {
+								Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
+									__FILE__, __LINE__, PEAR_LOG_WARNING);
+								continue; // skip field
+							}
+							// truncate the value to size
+							$value = substr($value, 0, $size - 1);
+							Horde::logMessage("vCalendar $icalFieldName truncated to maximum size $size",
+								__FILE__, __LINE__, PEAR_LOG_INFO);
+						}
+						if (!empty($value) || ($size >= 0 && !$noTruncate)) {
+							$attributes[$icalFieldName] = $value;
+						}
+					break;
 				}
 			}
 
@@ -1557,9 +1541,11 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['end']		= $dtend_ts;
 					break;
 				case 'RECURRENCE-ID':
-					// event['reference'] is a cal_id, not a date!
-					// setting it to a date makes no sense, not setting it keeps an existing correct reference
-					//$vcardData['reference']	= $attributes['value'];
+					// ToDo or check:
+					// - do we need to set reference (cal_id of orginal series)
+					// - do we need to add that recurrence as recure exception to the original series
+					// --> original series should be found by searching for a series with same UID (backend)
+					$vcardData['recurrence'] = $attributes['value'];
 					break;
 				case 'LOCATION':
 					$vcardData['location']	= $attributes['value'];
@@ -1884,9 +1870,9 @@ class calendar_ical extends calendar_boupdate
 					}
 					elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',$searcharray,
 						array('id','egw_addressbook.account_id as account_id','n_fn'),'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC','','',false,'OR')))
-						{
+					{
 						$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
-						}
+					}
 					else
 					{
 						if (!$email)
@@ -2071,12 +2057,12 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 		$fbdata = parent::search(array(
-					'start' => $this->now_su,
-					'end'   => $end,
-					'users' => $user,
-					'date_format' => 'server',
-					'show_rejected' => false,
-				));
+			'start' => $this->now_su,
+			'end'   => $end,
+			'users' => $user,
+			'date_format' => 'server',
+			'show_rejected' => false,
+		));
 		if (is_array($fbdata))
 		{
 			foreach ($fbdata as $event)
@@ -2131,5 +2117,4 @@ class calendar_ical extends calendar_boupdate
 			$this->set_status($old_event, $userid, $status, $recur_date, true);
         }
     }
-
 }
