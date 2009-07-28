@@ -2349,8 +2349,8 @@ class Net_IMAPProtocol {
 	 */
 	function _advanceOverStr($str,&$pos,$len,$startDelim ='(', $stopDelim = ')' )
 	{
+		#error_log(__METHOD__. $len . "#".$str."\n");
 		if ($str[$pos] !== '"') return false;	// start condition failed
-		
 		$pos++;	
 		$delimCount=0;
 		while($str[$pos] !== '"' && $pos < $len) {
@@ -2362,8 +2362,15 @@ class Net_IMAPProtocol {
 			if ($str[$pos] === $startDelim) $delimCount++;
 			if ($str[$pos] === $stopDelim) $delimCount--;
 			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  ($str[$pos+1] === $stopDelim && $delimCount<=0))) {
-				$pos--;	// stopDelimited need to be parsed outside!
-				return false;
+				$numOfQuotes = substr_count($str,'"');
+				$numOfMaskedQuotes = substr_count($str,'\"');
+				if ((($numOfQuotes - $numOfMaskedQuotes) % 2 ) == 0) {
+					// quotes are balanced, so its unlikely that we meet a stop condition here as strings may contain )(
+					error_log(__METHOD__. "->Length: $len; NumOfQuotes: $numOfQuotes - NumofMaskedQuotes:$numOfMaskedQuotes #".$str."\n");
+				} else {
+					$pos--;	// stopDelimited need to be parsed outside!
+					return false;
+				}
 			}
 			if ($str[$pos] === '\\') $pos++;	// all escaped chars are overread (eg. \\,  \", \x)
 			$pos++;
@@ -2739,7 +2746,6 @@ class Net_IMAPProtocol {
             quota_resource  ::= atom SP number SP number
             quota_response  ::= "QUOTA" SP astring SP quota_list
             */
-
             $mailbox = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
             $ret_aux = array('MAILBOX'=>$this->utf_7_decode($mailbox));
 
@@ -2799,6 +2805,21 @@ class Net_IMAPProtocol {
                 $mmax = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
                 return array($token=>array("MUSED"=> $mused, "MMAX" => $mmax));
         break;
+	case "LEVEL" :
+		$lused = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
+		$lmax = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
+		return array($token=>array("LUSED"=> $lused, "LMAX" => $lmax));
+		break;
+	case "MAILBOX" :
+		$mbused = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
+		$mbmax = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
+		return array(); //throw away this information as this info seems quite useless with a QUOTA Response, AND we use the KEYWORD otherwise
+		break;
+	case "EXPIRATION" :
+		$expused = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
+		$expmax = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
+		return array(); //throw away this information as this info seems quite useless
+		break; 
         case "FETCH" :
                 $this->_parseSpace( $str  ,__LINE__  ,__FILE__ );
                 // Get the parsed pathenthesis
