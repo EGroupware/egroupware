@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090629
+Version: 9.1.20090720
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -16,7 +16,7 @@ Prefix: /usr/share
 	%define php php5
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix php5-openssl
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix php5-openssl php5-zip
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
@@ -65,7 +65,7 @@ Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
 
 #otherwise build fails because of jar files in G2
-BuildRequires: unzip at sed
+BuildRequires: unzip sed
 
 Buildarch: noarch
 AutoReqProv: no
@@ -156,7 +156,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.1.2
-Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{extra_requires} %{cron}
+Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{extra_requires} %{cron} zip
 Provides: egw-core %{version}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-addressbook
@@ -668,6 +668,15 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
+* Mon Jul 20 2009 Ralf Becker <RalfBecker@outdoor-training.de> 9.1.20090720
+- eGroupware EPL 9.1 security and bugfix release
+- fixes 3 security problems:
+  + FCKeditor (remote file upload)
+  + tracker (XSS problem)
+  + knowledgebase (SQL injection)
+- added HTML Purifier as preventive measure for FCKeditor content
+- many bugfixes
+
 * Mon Jun 29 2009 Ralf Becker <rb@stylite.de> 9.1.20090629
 - EGroupware EPL release 9.1 diverse bugfixes
 
