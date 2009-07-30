@@ -2362,8 +2362,15 @@ class Net_IMAPProtocol {
 			if ($str[$pos] === $startDelim) $delimCount++;
 			if ($str[$pos] === $stopDelim) $delimCount--;
 			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  ($str[$pos+1] === $stopDelim && $delimCount<=0))) {
-				$pos--;	// stopDelimited need to be parsed outside!
-				return false;
+				$numOfQuotes = substr_count($str,'"');
+				$numOfMaskedQuotes = substr_count($str,'\"');
+				if ((($numOfQuotes - $numOfMaskedQuotes) % 2 ) == 0) {
+					// quotes are balanced, so its unlikely that we meet a stop condition here as strings may contain )(
+					error_log(__METHOD__. "->Length: $len; NumOfQuotes: $numOfQuotes - NumofMaskedQuotes:$numOfMaskedQuotes #".$str."\n");
+				} else {
+					$pos--;	// stopDelimited need to be parsed outside!
+					return false;
+				}
 			}
 			if ($str[$pos] === '\\') $pos++;	// all escaped chars are overread (eg. \\,  \", \x)
 			$pos++;
