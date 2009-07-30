@@ -2124,8 +2124,8 @@
 			if (self::$debug) _debug_array($structure);
 			$attachments = array();
 			// this kind of messages contain only the attachment and no body
-			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'IMAGE') {
-
+			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'IMAGE') 
+			{
 				$newAttachment = array();
 				$newAttachment['size']		= $structure->bytes;
 				$newAttachment['mimeType']	= $structure->type .'/'. $structure->subType;
@@ -2149,9 +2149,10 @@
 			}
 
 			// this kind of message can have no attachments
-			if($structure->type == 'TEXT' ||
+			if(($structure->type == 'TEXT' && !($structure->disposition == 'INLINE' && $structure->dparameters['FILENAME'])) ||
 			   ($structure->type == 'MULTIPART' && $structure->subType == 'ALTERNATIVE' && !is_array($structure->subParts)) ||
-			   !is_array($structure->subParts)) {
+			   !is_array($structure->subParts)) 
+			{
 				if (count($attachments) == 0) return array();
 			}
 
@@ -2159,10 +2160,11 @@
 
 			foreach($structure->subParts as $subPart) {
 				// skip all non attachment parts
-				if(($subPart->type == 'TEXT' && ($subPart->subType == 'PLAIN' || $subPart->subType == 'HTML') && $subPart->disposition != 'ATTACHMENT') ||
-				   ($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE') ||
-				   ($subPart->type == 'MULTIPART' && $subPart->subType == 'APPLEFILE') ||
-				   ($subPart->type == 'MESSAGE' && $subPart->subType == 'delivery-status'))
+				if(($subPart->type == 'TEXT' && ($subPart->subType == 'PLAIN' || $subPart->subType == 'HTML') && ($subPart->disposition != 'ATTACHMENT' &&
+					!($subPart->disposition == 'INLINE' && $subPart->dparameters['FILENAME']))) ||
+					($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE') ||
+					($subPart->type == 'MULTIPART' && $subPart->subType == 'APPLEFILE') ||
+					($subPart->type == 'MESSAGE' && $subPart->subType == 'delivery-status'))
 				{
 					if ($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE')
 					{
