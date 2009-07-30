@@ -260,7 +260,8 @@
 									break;
 								case 'ea_default_signature':
 									$testVal = $toMerge['ea_default_signature'];
-									bofelamimail::getCleanHTML($testVal);
+									//bofelamimail::getCleanHTML($testVal);
+									$testVal = html::purify($testVal);
 									if (strlen($testVal)>10 || $testVal != '<br>' || $testVal != '<br />') $mergeInTo[$key]=$toMerge[$key];
 									break;
 								default:
