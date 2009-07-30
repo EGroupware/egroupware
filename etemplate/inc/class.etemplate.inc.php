@@ -1078,7 +1078,16 @@ class etemplate extends boetemplate
 			}
 			if ($cell['onchange'] && !($cell['type'] == 'button' || $cell['type'] == 'buttononly'))
 			{
-				$options .= ' onChange="'.($cell['onchange'] == '1' ? 'this.form.submit();' : $this->js_pseudo_funcs($cell['onchange'],$cname)).'"';
+				$onchange = $cell['onchange'] == '1' ? 'this.form.submit();' : $this->js_pseudo_funcs($cell['onchange'],$cname);
+				// rewriting onchange for checkboxes for IE to an onclick
+				if ($cell['type'] == 'checkbox' && html::$user_agent == 'msie')
+				{
+					$options .= ' onClick="'.$onchange.'; return true;"';
+				}
+				else
+				{
+					$options .= ' onChange="'.$onchange.'"';
+				}
 			}
 		}
 		if ($form_name != '')
