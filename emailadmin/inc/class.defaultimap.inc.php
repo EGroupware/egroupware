@@ -184,7 +184,7 @@
 		function disconnect()
 		{
 			parent::disconnect();
-			$this->_isConnected = false;
+			$this->_connected = false;
 		}
 		
 		/**
