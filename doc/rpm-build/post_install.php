@@ -47,7 +47,7 @@ $config = array(
 // read language from LANG enviroment variable
 if (($lang = isset($_ENV['LANG']) ? $_ENV['LANG'] : $_SERVER['LANG']))
 {
-	list($lang,$nat) = preg_split('/[_.]/',$lang);
+	@list($lang,$nat) = preg_split('/[_.]/',$lang);
 	if (in_array($lang.'-'.strtolower($nat),array('es-es','pt-br','zh-tw')))
 	{
 		$lang .= '-'.strtolower($nat);
@@ -178,6 +178,10 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 			' --files-dir '.escapeshellarg($config['data_dir'].'/files').' --backup-dir '.escapeshellarg($config['data_dir'].'/backup');
 		run_cmd($setup_config);
 	}
+	// create dummy mailserver config, as fmail otherwise gives fatal error otherwise
+	$setup_mailserver = $setup_cli.' --config '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd']).
+		' --mailserver localhost,imap --smtpserver localhost,25';
+	run_cmd($setup_config);
 
 	// create first user
 	$setup_admin = $setup_cli.' --admin '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd'].','.
