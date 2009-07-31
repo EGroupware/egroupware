@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090720
+Version: 9.1.20090731
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -27,8 +27,7 @@ Prefix: /usr/share
 	%define cron crontabs
 	%define apache_user apache
 	%define apache_group apache
-	# we define here both locations: RHEL default and Zend Server CE
-	%define pear_dir \\/usr\\/local\\/zend\\/share\\/pear:\\/usr\\/share\\/pear
+	%define pear_dir \\/usr\\/share\\/pear
 %endif
 %define install_log /root/%{name}-install.log
 %define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
@@ -668,6 +667,11 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
+* Fri Jul 31 2009 Ralf Becker <RalfBecker@outdoor-training.de> 9.1.20090731
+- IE Bugfixes onChange on checkboxes not working
+- bugfixes in mail handling and sitemgr's navigation module
+- fixed problems in translation cache and automatic loading of translations
+
 * Mon Jul 20 2009 Ralf Becker <RalfBecker@outdoor-training.de> 9.1.20090720
 - eGroupware EPL 9.1 security and bugfix release
 - fixes 3 security problems:
