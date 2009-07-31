@@ -49,7 +49,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution CentOS %{?centos_version}
 	%define php php
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-process
 	%define cron crontabs
 %endif
 
