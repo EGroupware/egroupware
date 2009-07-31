@@ -34,7 +34,7 @@ Prefix: /usr/share
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-process
 %endif
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
@@ -44,7 +44,7 @@ Prefix: /usr/share
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
 	%define distribution Red Hat %{?rhel_version}
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-process
 %endif
 %if 0%{?centos_version}
 	%define osversion %{?centos_version}
@@ -667,12 +667,12 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
-* Fri Jul 31 2009 Ralf Becker <RalfBecker@outdoor-training.de> 9.1.20090731
+* Fri Jul 31 2009 Ralf Becker <rb@stylite.de> 9.1.20090731
 - IE Bugfixes onChange on checkboxes not working
 - bugfixes in mail handling and sitemgr's navigation module
 - fixed problems in translation cache and automatic loading of translations
 
-* Mon Jul 20 2009 Ralf Becker <RalfBecker@outdoor-training.de> 9.1.20090720
+* Mon Jul 20 2009 Ralf Becker <rb@stylite.de> 9.1.20090720
 - eGroupware EPL 9.1 security and bugfix release
 - fixes 3 security problems:
   + FCKeditor (remote file upload)
