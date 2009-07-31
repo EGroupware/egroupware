@@ -19,7 +19,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Fedora Core %{?fedora_version}
 	%define php php
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-process
 	%define cron crontabs
 %endif
 %if 0%{?mandriva_version}
@@ -39,7 +39,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Red Hat %{?rhel_version}
 	%define php php
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-process
 	%define cron crontabs
 %endif
 %if 0%{?centos_version}
