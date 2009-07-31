@@ -49,7 +49,7 @@ Prefix: /usr/share
 %if 0%{?centos_version}
 	%define osversion %{?centos_version}
 	%define distribution CentOS %{?centos_version}
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-process
 %endif
 
 Distribution: %{distribution}
