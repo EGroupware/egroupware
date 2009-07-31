@@ -10,9 +10,19 @@
  * @version $Id$
  */
 
+$app = 'home'; // home can be granted to anyone. Can't be phpgwapi, nor jscalendar (no own directory)
+if (isset($_GET['app']))
+{
+	$app = $_GET['app'];
+}
+elseif (isset($_POST['app']))
+{
+	$app = $_POST['app'];
+}
+
 $GLOBALS['egw_info'] = array(
-	'flags' => Array(
-		'currentapp'  => 'home',		// can't be phpgwapi, nor jscalendar (no own directory)
+	'flags' => array(
+		'currentapp'  => $app,
 		'noheader'    => True,
 		'nonavbar'    => True,
 		'noappheader' => True,

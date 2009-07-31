@@ -5,9 +5,9 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
  * @package api
  * @subpackage html
- * @version $Id$
  */
 
 /**
@@ -42,6 +42,15 @@ class jscalendar
 		$this->jscalendar_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/'.$path;
 		$this->dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
+		$args = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],array('lang'=>1,'dateformat'=>1));
+		if (isset($GLOBALS['egw_info']['flags']['currentapp']))
+		{
+			$args['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
+		}
+		else
+		{
+			$args['app'] = 'home'; // home can be granted to anyone.
+		}
 		if ($do_header && (strpos($GLOBALS['egw_info']['flags']['java_script'],'jscalendar')===false))
 		{
 			$GLOBALS['egw_info']['flags']['java_script'] .= $this->get_javascript();
@@ -58,8 +67,7 @@ class jscalendar
 		return
 '<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />
 <script type="text/javascript" src="'.$this->jscalendar_url.'/calendar.js"></script>
-<script type="text/javascript" src="'.$GLOBALS['egw']->link('/phpgwapi/inc/jscalendar-setup.php',
-	array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],array('lang'=>1,'dateformat'=>1))).'"></script>
+<script type="text/javascript" src="'.$GLOBALS['egw']->link('/phpgwapi/inc/jscalendar-setup.php',$args).'"></script>
 ';
 	}
 
@@ -114,16 +122,16 @@ class jscalendar
 		if ($jsreturn)
 		{
 			$return_array = array(
-				'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/><img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>',
+				'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/><img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>',
 				'js'   => 'Calendar.setup({inputField : "'.$name.'",button: "'.$name.'-trigger"	});'
-				);
+			);
 
 			return $return_array;
 		}
 		return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
 <script type="text/javascript">
-document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
+document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
 Calendar.setup(
 {
 	inputField  : "'.$name.'",
