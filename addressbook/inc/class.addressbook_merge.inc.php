@@ -269,6 +269,17 @@ class addressbook_merge	// extends bo_merge
 			return false;
 		}
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1) {
+			//for odt files we have to slpitt the content and add a style for page break to  the style area
+			list($contentstart,$contentrepeat,$contentend) = preg_split('/office:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "<"
+			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
+			//nedd to add page-break style to the style list
+			list($stylestart,$stylerepeat,$styleend) = preg_split('/<\/office:automatic-styles>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
+			$contentstart = $stylestart.'<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
+			$contentstart .= '<office:body>';
+			$contentend = '</office:body></office:document-content>';
+		}
 		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
 		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
 		$countlables = count($countlables[0])+1;
@@ -363,7 +374,7 @@ class addressbook_merge	// extends bo_merge
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
-					// todo OO writer files
+					return $contentstart.implode('',$contentrep).$contentend;
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
