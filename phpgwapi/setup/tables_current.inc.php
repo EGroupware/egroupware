@@ -441,7 +441,7 @@ $phpgw_baseline = array(
 			'fs_gid' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 			'fs_created' => array('type' => 'timestamp','precision' => '8','nullable' => False),
 			'fs_modified' => array('type' => 'timestamp','precision' => '8','nullable' => False),
-			'fs_mime' => array('type' => 'varchar','precision' => '64','nullable' => False),
+			'fs_mime' => array('type' => 'varchar','precision' => '96','nullable' => False),
 			'fs_size' => array('type' => 'int','precision' => '8','nullable' => False),
 			'fs_creator' => array('type' => 'int','precision' => '4','nullable' => False),
 			'fs_modifier' => array('type' => 'int','precision' => '4'),

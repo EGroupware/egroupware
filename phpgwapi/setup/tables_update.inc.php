@@ -45,3 +45,15 @@ function phpgwapi_upgrade1_7_001()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.7.002';
 }
 
+
+function phpgwapi_upgrade1_7_002()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sqlfs','fs_mime',array(
+		'type' => 'varchar',
+		'precision' => '96',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.7.003';
+}
+
