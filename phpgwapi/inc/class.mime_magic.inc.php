@@ -255,6 +255,7 @@ class mime_magic
 		'dll'	=> 'application/octet-stream',
 		'dms'	=> 'application/octet-stream',
 		'doc'	=> 'application/msword',
+		'docx'	=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',	// msword xml format
 		'dot'	=> 'application/msword',//added by skwashd
 		'dvi'	=> 'application/x-dvi',
 		'dxr'	=> 'application/x-director',
