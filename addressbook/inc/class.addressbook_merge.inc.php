@@ -265,14 +265,21 @@ class addressbook_merge	// extends bo_merge
 	 * @param array $ids array with contact id(s)
 	 * @param string &$err error-message on error
 	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
+	 * @param array $fix=null regular expression => replacement pairs eg. to fix garbled placeholders
 	 * @return string/boolean merged document or false on error
 	 */
-	function &merge($document,$ids,&$err,$mimetype)
+	function &merge($document,$ids,&$err,$mimetype,array $fix=null)
 	{
 		if (!($content = file_get_contents($document)))
 		{
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
+		}
+		// fix garbled placeholders
+		if ($fix && is_array($fix))
+		{
+			$content = preg_replace(array_keys($fix),array_values($fix),$content);
+			//die("<pre>".htmlspecialchars($content)."</pre>\n");
 		}
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
 		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1)
@@ -281,7 +288,7 @@ class addressbook_merge	// extends bo_merge
 			list($contentstart,$contentrepeat,$contentend) = preg_split('/office:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
 			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "<"
 			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
-			//nedd to add page-break style to the style list
+			// need to add page-break style to the style list
 			list($stylestart,$stylerepeat,$styleend) = preg_split('/<\/office:automatic-styles>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
 			$contentstart = $stylestart.'<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
 			$contentstart .= '<office:body>';
@@ -431,9 +438,17 @@ class addressbook_merge	// extends bo_merge
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.dotx').'-').'.dotx';
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'word/document.xml');
+				$fix = array(		// regular expression to fix garbled placeholders
+					'/'.preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>','/').'([a-z0-9_]+)'.
+						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$$\\1$$',
+					'/'.preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:rPr><w:lang w:val="','/').
+						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>','/').'([a-z0-9_]+)'.
+						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:rPr><w:lang w:val="','/').
+						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>$$','/').'/i' => '$$\\2$$',
+				);
 				break;
 		}
-		if (!($merged =& $this->merge($content_url,$ids,$err,$mime_type)))
+		if (!($merged =& $this->merge($content_url,$ids,$err,$mime_type,$fix)))
 		{
 			return $err;
 		}
