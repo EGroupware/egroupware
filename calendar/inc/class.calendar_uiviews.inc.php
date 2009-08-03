@@ -116,6 +116,12 @@ class calendar_uiviews extends calendar_ui
 	var $wholeDayPosCounter=1;
 
 	/**
+	 * Switch to disable private data and possibility to view and edit events
+	 * in case of a public view (sitemgr)
+	 */
+	var $allowEdit = true;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $set_states=null to manualy set / change one of the states, default NULL = use $_REQUEST
@@ -344,7 +350,10 @@ class calendar_uiviews extends calendar_ui
 				'date' => $this->bo->date2string($week_start),
 			);
 			$title = lang('Wk').' '.adodb_date('W',$week_start);
-			$title = html::a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
+			if ($this->allowEdit)
+			{
+				$title = html::a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
+			}
 
 			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
@@ -933,16 +942,33 @@ class calendar_uiviews extends calendar_ui
 
 		if ($short_title === true)
 		{
-			$title = html::a_href($title,$day_view,'',
-				!isset($this->holidays[$day_ymd])?' title="'.lang('Dayview').'"':'');
+			if ($this->allowEdit)
+			{
+				$title = html::a_href($title,$day_view,'',
+					!isset($this->holidays[$day_ymd])?' title="'.lang('Dayview').'"':'');
+			}
 		}
 		elseif ($short_title === false)
 		{
 			// add arrows to go to the previous and next day (dayview only)
 			$day_view['date'] = $this->bo->date2string($ts -= 12*HOUR_s);
-			$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
+			if ($this->allowEdit)
+			{
+				$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
+			}
+			else
+			{
+				$title = $day_view.' &nbsp; '.$title;
+			}
 			$day_view['date'] = $this->bo->date2string($ts += 48*HOUR_s);
-			$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+			if ($this->allowEdit)
+			{
+				$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+			}
+			else
+			{
+				$title .= ' &nbsp; '.$day_view;
+			}
 		}
 		$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.($holidays ? ' title="'.$holidays.'"':'').'>'.
 			$title."</div>\n";
@@ -978,8 +1004,12 @@ class calendar_uiviews extends calendar_ui
 				$droppableID='drop_'.$droppableDateTime.'_O'.$owner;
 
 				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
-					'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";
-
+					'%;" class="calAddEvent"';
+				if ($this->allowEdit)
+				{
+					$html .= ' onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"';
+				}
+				$html .= '></div>'."\n";
 				if(is_object($this->dragdrop) && $dropPermission)
 				{
 					$this->dragdrop->addDroppable(
@@ -1147,21 +1177,24 @@ class calendar_uiviews extends calendar_ui
 
 		// seperate each participant types
 		$part_array = array();
-		foreach($this->bo->participants($event) as $part_key => $participant)
-		{
-			if(is_numeric($part_key))
-			{
-				$part_array[lang('Participants')][$part_key] = $participant;
-			}
-			elseif(isset($this->bo->resources[$part_key{0}]))
-			{
-				 $part_array[((isset($this->bo->resources[$part_key{0}]['participants_header'])) ? $this->bo->resources[$part_key{0}]['participants_header'] : lang($this->bo->resources[$part_key{0}]['app']))][$part_key] = $participant;
-			}
-		}
-		foreach($part_array as $part_group => $participant)
-		{
-			$participants .= $this->add_nonempty($participant,$part_group,True,False);
-		}
+		if ($this->allowEdit)
+ 		{
+			foreach($this->bo->participants($event) as $part_key => $participant)
+ 			{
+				if(is_numeric($part_key))
+				{
+					$part_array[lang('Participants')][$part_key] = $participant;
+				}
+				elseif(isset($this->bo->resources[$part_key{0}]))
+				{
+					 $part_array[((isset($this->bo->resources[$part_key{0}]['participants_header'])) ? $this->bo->resources[$part_key{0}]['participants_header'] : lang($this->bo->resources[$part_key{0}]['app']))][$part_key] = $participant;
+				}
+ 			}
+			foreach($part_array as $part_group => $participant)
+ 			{
+				$participants .= $this->add_nonempty($participant,$part_group,True,False);
+ 			}
+ 		}
 		// as we only deal with percentual widht, we consider only the full dayview (1 colum) as NOT small
 		$small = $this->view != 'day' || $width < 50;
 		// $small = $width <= $small_trigger_width
@@ -1231,12 +1264,11 @@ class calendar_uiviews extends calendar_ui
 		{
 			$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
 			$view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
-			$popup = $is_private ? '' : ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
-
+			$popup = ($is_private || ! $this->allowEdit) ? '' : ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
 		}
 		else
 		{
-			$popup = $is_private ? '' : ' onclick="'.$this->popup($view_link).'; return false;"';
+			$popup = ($is_private || ! $this->allowEdit) ? '' : ' onclick="'.$this->popup($view_link).'; return false;"';
 		}
 		//_debug_array($event);
 		//echo $event['id']."?<br>";
