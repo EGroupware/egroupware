@@ -133,12 +133,11 @@ class calendar_ical extends calendar_boupdate
 	var $vCalendar;
 
 	/**
-         * Set Logging
-         *
-         * @var
-	 * off = 0;
-         */
-	var $log = 0;
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
 	var $logfile="/tmp/log-vcal";
 
 
@@ -150,7 +149,7 @@ class calendar_ical extends calendar_boupdate
 	function __construct(&$_clientProperties = array())
 	{
 		parent::__construct();
-		if($this->log)$this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
+		if($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_iCalendar;
 	}
@@ -238,8 +237,8 @@ class calendar_ical extends calendar_boupdate
 			$event['end']	= $event['end'] + $DSTCorrection;
 			*/
 
-			if ($this->productManufacturer != 'file'
-				&& $this->uidExtension) {
+			if ($this->productManufacturer != 'file' && $this->uidExtension)
+			{
 				// Append UID to DESCRIPTION
 				if (!preg_match('/\[UID:.+\]/m', $event['description'])) {
 					$event['description'] .= "\n[UID:" . $event['uid'] . "]";
@@ -271,8 +270,15 @@ class calendar_ical extends calendar_boupdate
 							if ($uid == $event['owner']) continue; // Organizer
 							// RB: MAILTO href contains only the email-address, NO cn!
 							$attributes['ATTENDEE'][]	= $info['email'] ? 'MAILTO:'.$info['email'] : '';
-							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT} NOT used by eGW atm.
-							$role = $uid == $event['owner'] ? 'CHAIR' : 'REQ-PARTICIPANT';
+							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
+							$role = 'REQ-PARTICIPANT';
+							$quantity = '';
+							if (strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
+							{
+								if ((int)$matches[1] > 1) $quantity = (int)$matches[1];
+								if ($matches[2]) $role = $matches[2];
+								$status = $status[0];
+							}
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
@@ -301,13 +307,14 @@ class calendar_ical extends calendar_boupdate
 								'PARTSTAT' => $status,
 								'CUTYPE'   => $cutype,
 								'RSVP'     => $rsvp,
-							)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array());
+							)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array())+
+							($quantity ? array('X-EGROUPWARE-QUANTITY' => $quantity) : array());
 						}
 						break;
 
-        				case 'CLASS':
-        					$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
-	    					break;
+					case 'CLASS':
+						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
+						break;
 
     				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
     					//if ($event['owner'] != $this->user)
@@ -1847,8 +1854,8 @@ class calendar_ical extends calendar_boupdate
 						$searcharray['n_fn'] = $cn;
 					}
 					if (($uid = $attributes['params']['X-EGROUPWARE-UID'])
-							&& ($info = $this->resource_info($uid))
-							&& (!$email || $info['email'] == $email))
+						&& ($info = $this->resource_info($uid))
+						&& (!$email || $info['email'] == $email))
 					{
 						// we use the (checked) X-EGROUPWARE-UID
 					}
@@ -1896,6 +1903,9 @@ class calendar_ical extends calendar_boupdate
 							{
 								$event['participants'][$uid] = ($uid == $event['owner'] ? 'A' : 'U');
 							}
+							// add quantiy and ROLE
+							if ((int)$attributes['params']['X-EGROUPWARE-QUANTITY'] > 1) $event['participants'][$uid] .= (int)$attributes['params']['X-EGROUPWARE-QUANTITY'];
+							if ($attributes['params']['ROLE']) $event['participants'][$uid] .= $attributes['params']['ROLE'];
 							break;
 						case 'ORGANIZER':
 							if (is_numeric($uid))
