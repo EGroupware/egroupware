@@ -243,8 +243,7 @@ class module_calendar_month extends Module
 					adodb_date('m',$start),
 					adodb_date('d',$start));
 		$last = (int) ($first +
-				(60 * 60 * 24 * 7 * $weeks) +
-				(60 * 60 * 24 * 7 * $dateOffset));
+				(60 * 60 * 24 * 7 * $weeks));
 
 		if ($arguments['showTitle'])
 		{

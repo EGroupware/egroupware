@@ -286,8 +286,7 @@ class module_calendar_list extends Module
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
 		$last = (int) ($first +
-				(60 * 60 * 24 * 7 * $weeks) +
-				(60 * 60 * 24 * 7 * $dateOffset));
+				(60 * 60 * 24 * 7 * $weeks));
 
 		if ($arguments['showTitle'])
 		{
