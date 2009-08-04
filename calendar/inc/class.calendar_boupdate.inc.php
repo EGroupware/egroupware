@@ -11,7 +11,7 @@
  * @version $Id$
  */
 
-// types of messsages send by bocalupdate::send_update
+// types of messsages send by calendar_boupdate::send_update
 define('MSG_DELETED',0);
 define('MSG_MODIFIED',1);
 define('MSG_ADDED',2);
@@ -52,7 +52,7 @@ class calendar_boupdate extends calendar_bo
 	var $debug;
 
 	/**
-	 * @var string/boolean $log_file filename to enable the login or false for no update-logging
+	 * @var string|boolean $log_file filename to enable the login or false for no update-logging
 	 */
 	var $log_file = false;
 
@@ -61,11 +61,11 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function __construct()
 	{
-		if ($this->debug > 0) $this->debug_message('bocalupdate::bocalupdate() started',True);
+		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() started',True);
 
 		parent::__construct();	// calling the parent constructor
 
-		if ($this->debug > 0) $this->debug_message('bocalupdate::bocalupdate() finished',True);
+		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() finished',True);
 	}
 
 	/**
@@ -83,7 +83,7 @@ class calendar_boupdate extends calendar_bo
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if ($this->debug > 1 || $this->debug == 'update')
 		{
-			$this->debug_message('bocalupdate::update(%1,ignore_conflict=%2,touch_modified=%3,ignore_acl=%4)',
+			$this->debug_message('calendar_boupdate::update(%1,ignore_conflict=%2,touch_modified=%3,ignore_acl=%4)',
 				false,$event,$ignore_conflicts,$touch_modified,$ignore_acl);
 		}
 		// check some minimum requirements:
@@ -153,7 +153,7 @@ class calendar_boupdate extends calendar_bo
 			));
 			if ($this->debug > 2 || $this->debug == 'update')
 			{
-				$this->debug_message('bocalupdate::update() checking for potential overlapping events for users %1 from %2 to %3',false,$users,$event['start'],$event['end']);
+				$this->debug_message('calendar_boupdate::update() checking for potential overlapping events for users %1 from %2 to %3',false,$users,$event['start'],$event['end']);
 			}
 			$max_quantity = $possible_quantity_conflicts = $conflicts = array();
 			foreach((array) $overlapping_events as $k => $overlap)
@@ -166,7 +166,7 @@ class calendar_boupdate extends calendar_bo
 				}
 				if ($this->debug > 3 || $this->debug == 'update')
 				{
-					$this->debug_message('bocalupdate::update() checking overlapping event %1',false,$overlap);
+					$this->debug_message('calendar_boupdate::update() checking overlapping event %1',false,$overlap);
 				}
 				// check if the overlap is with a rejected participant or within the allowed quantity
 				$common_parts = array_intersect($users,array_keys($overlap['participants']));
@@ -199,7 +199,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					if ($this->debug > 3 || $this->debug == 'update')
 					{
-						$this->debug_message('bocalupdate::update() conflicts with the following participants found %1',false,$common_parts);
+						$this->debug_message('calendar_boupdate::update() conflicts with the following participants found %1',false,$common_parts);
 					}
 					$conflicts[$overlap['id'].'-'.$this->date2ts($overlap['start'])] =& $overlapping_events[$k];
 				}
@@ -235,7 +235,7 @@ class calendar_boupdate extends calendar_bo
 				}
 				if ($this->debug > 2 || $this->debug == 'update')
 				{
-					$this->debug_message('bocalupdate::update() %1 conflicts found %2',false,count($conflicts),$conflicts);
+					$this->debug_message('calendar_boupdate::update() %1 conflicts found %2',false,count($conflicts),$conflicts);
 				}
 				return $conflicts;
 			}
@@ -300,7 +300,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		$modified = $added = $deleted = array();
 
-		//echo "<p>bocalupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
+		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
 
 		// Find modified and deleted participants ...
 		foreach($old_event['participants'] as $old_userid => $old_status)
@@ -322,7 +322,7 @@ class calendar_boupdate extends calendar_bo
 				$added[$new_userid] = 'U';
 			}
 		}
-		//echo "<p>bocalupdate::check4update() added=".print_r($added,true).", modified=".print_r($modified,true).", deleted=".print_r($deleted,true)."</p>\n";
+		//echo "<p>calendar_boupdate::check4update() added=".print_r($added,true).", modified=".print_r($modified,true).", deleted=".print_r($deleted,true)."</p>\n";
 		if(count($added) || count($modified) || count($deleted))
 		{
 			if(count($added))
@@ -393,7 +393,7 @@ class calendar_boupdate extends calendar_bo
 			case 'no':
 				break;
 		}
-		//echo "<p>bocalupdate::update_requested(user=$userid,pref=".$part_prefs['calendar']['receive_updates'] .",msg_type=$msg_type,".($old_event?$old_event['title']:'False').",".($old_event?$old_event['title']:'False').") = $want_update</p>\n";
+		//echo "<p>calendar_boupdate::update_requested(user=$userid,pref=".$part_prefs['calendar']['receive_updates'] .",msg_type=$msg_type,".($old_event?$old_event['title']:'False').",".($old_event?$old_event['title']:'False').") = $want_update</p>\n";
 		return $want_update > 0;
 	}
 
@@ -533,7 +533,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			if($userid != $GLOBALS['egw_info']['user']['account_id'] ||  $msg_type == MSG_ALARM)
 			{
-				$preferences =& CreateObject('phpgwapi.preferences',$userid);
+				$preferences = CreateObject('phpgwapi.preferences',$userid);
 				$part_prefs = $preferences->read_repository();
 
 				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event))
@@ -667,13 +667,13 @@ class calendar_boupdate extends calendar_bo
 	}
 
 	/**
-	 * saves an event to the database, does NOT do any notifications, see bocalupdate::update for that
+	 * saves an event to the database, does NOT do any notifications, see calendar_boupdate::update for that
 	 *
 	 * This methode converts from user to server time and handles the insertion of users and dates of repeating events
 	 *
 	 * @param array $event
 	 * @param boolean $ignore_acl=false should we ignore the acl
-	 * @return int/boolean $cal_id > 0 or false on error (eg. permission denied)
+	 * @return int|boolean $cal_id > 0 or false on error (eg. permission denied)
 	 */
 	function save($event, $ignore_acl=false)
 	{
@@ -728,8 +728,8 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * For contacts we use edit rights of the owner of the event (aka. edit rights of the event).
 	 *
-	 * @param int/string $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
-	 * @param array/int $event event array or id of the event
+	 * @param int|string $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
+	 * @param array|int $event event array or id of the event
 	 * @return boolean
 	 */
 	function check_status_perms($uid,$event)
@@ -753,9 +753,9 @@ class calendar_boupdate extends calendar_bo
 	/**
 	 * set the status of one participant for a given recurrence or for all recurrences since now (includes recur_date=0)
 	 *
-	 * @param int/array $event event-array or id of the event
-	 * @param string/int $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
-	 * @param int/char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
+	 * @param int|array $event event-array or id of the event
+	 * @param string|int $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
+	 * @param int|char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date=0 date to change, or 0 = all since now
 	 * @param boolean $ignore_acl=false do not check the permisions for the $uid, if true
 	 * @return int number of changed recurrences
@@ -763,7 +763,7 @@ class calendar_boupdate extends calendar_bo
 	function set_status($event,$uid,$status,$recur_date=0, $ignore_acl=false)
 	{
 		$cal_id = is_array($event) ? $event['id'] : $event;
-		//echo "<p>bocalupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
+		//echo "<p>calendar_boupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
 		if (!$cal_id || (!$ignore_acl && !$this->check_status_perms($uid,$event)))
 		{
 			return false;
@@ -1050,7 +1050,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
+			$this->categories = CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
 		}
 
 		$cat_id_list = array();
@@ -1085,7 +1085,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
+			$this->categories = CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
 		}
 
 		if (!is_array($cat_id_list))

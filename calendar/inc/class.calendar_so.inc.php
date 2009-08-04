@@ -14,7 +14,7 @@
 /**
  * some necessary defines used by the calendar
  */
-if(extension_loaded('mcal') == False)
+if(!extension_loaded('mcal'))
 {
 	define('MCAL_RECUR_NONE',0);
 	define('MCAL_RECUR_DAILY',1);
@@ -162,8 +162,10 @@ class calendar_so
 		}
 		if (!$events) return false;
 
-		foreach ($events as $event) {
-			if (!isset($event['uid']) || strlen($event['uid']) < $minimum_uid_length) {
+		foreach ($events as &$event)
+		{
+			if (!isset($event['uid']) || strlen($event['uid']) < $minimum_uid_length)
+			{
 				// event (without uid), not strong enough uid => create new uid
 				$event['uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$event['id']);
 				$this->db->update($this->cal_table, array('cal_uid' => $event['uid']),
@@ -197,7 +199,9 @@ class calendar_so
 				// prefix the id with the type
 				$user_id = $row['cal_user_type'].$row['cal_user_id'];
 				// and append quantity
-				$row['cal_status'] .= $row['cal_quantity'] == 1 ? '' : $row['cal_quantity'];
+				if ($row['cal_quantity'] > 1) $row['cal_status'] .= $row['cal_quantity'];
+				// append role to status, if != 'REQ-PARTICIPANT'
+				if ($row['cal_role'] != 'REQ-PARTICIPANT') $row['cal_status'] .= $row['cal_role'];
 			}
 			else
 			{
@@ -403,7 +407,7 @@ class calendar_so
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
-			$utcal_id_view = " (select * from ".$this->user_table." where cal_id in (".implode(',',array_unique($ids)).")) utcalid ";
+			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',array_unique($ids)).")) utcalid ";
 			//$utrecurdate_view = " (select * from ".$this->user_table." where cal_recur_date in (".implode(',',array_unique($recur_dates)).")) utrecurdates ";
 			foreach($this->db->select($utcal_id_view,'*',array(
 					//'cal_id' => array_unique($ids),
@@ -416,6 +420,10 @@ class calendar_so
 
 				if (!isset($events[$id])) continue;		// not needed first entry of recuring event
 
+				// add quantity
+				if ($row['cal_quantity'] > 1) $row['cal_status'] .= $row['cal_quantity'];
+				// append role to status, if != 'REQ-PARTICIPANT'
+				if ($row['cal_role'] != 'REQ-PARTICIPANT') $row['cal_status'] .= $row['cal_role'];
 				$events[$id]['participants'][$this->combine_user($row['cal_user_type'],$row['cal_user_id'])] = $row['cal_status'];
 			}
 /*			custom fields are not shown in the regular views, so we can ignore them here for the moment
@@ -821,7 +829,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * updates the participants of an event, taken into account the evtl. recurrences of the event(!)
 	 *
 	 * @param int $cal_id
-	 * @param array $participants id => status pairs
+	 * @param array $participants uid => status pairs
 	 * @param int|boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
 	 * @return int|boolean number of updated recurrences or false on error
 	 */
@@ -905,12 +913,18 @@ ORDER BY cal_user_type, cal_usre_id
 
 				$id = null;
 				$this->split_user($uid,$type,$id);
+				$set = array(
+					'cal_status'	  => $status !== true ? $status[0] : 'U',
+					'cal_quantity'	  => substr($status,1) > 1 ? (int)substr($status,1) : 1,
+				);
+				// update role if set, it's apended to status and quantity
+				if (strlen($status) > 1 && preg_match('/^.[0-9]*(.*)$/',$status,$matches))
+				{
+					$set['cal_role'] = $matches[1];
+				}
 				foreach($recurrences as $recur_date)
 				{
-					$this->db->insert($this->user_table,array(
-						'cal_status'	  => $status !== true ? $status[0] : 'U',
-						'cal_quantity'	  => substr($status,1) ? substr($status,1) : 1,
-					),array(
+					$this->db->insert($this->user_table,$set,array(
 						'cal_id'	      => $cal_id,
 						'cal_recur_date'  => $recur_date,
 						'cal_user_type'   => $type,
@@ -930,9 +944,10 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $user_id
 	 * @param int|char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date=0 date to change, or 0 = all since now
+	 * @param string $role=null role to set if !is_null($role)
 	 * @return int number of changed recurrences
 	 */
-	function set_status($cal_id,$user_type,$user_id,$status,$recur_date=0)
+	function set_status($cal_id,$user_type,$user_id,$status,$recur_date=0,$role=null)
 	{
 		static $status_code_short = array(
 			REJECTED 	=> 'R',
@@ -966,13 +981,13 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		else
 		{
-			$this->db->insert($this->user_table,array(
-				'cal_status'     => $status,
-			),$where,__LINE__,__FILE__,'calendar');
+			$set = array('cal_status' => $status);
+			if (!is_null($role)) $set['cal_role'] = $role;
+			$this->db->insert($this->user_table,$set,$where,__LINE__,__FILE__,'calendar');
 		}
 		$ret = $this->db->affected_rows();
 		//error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret");
-		return $this->db->affected_rows();
+		return $ret;
 	}
 
 	/**

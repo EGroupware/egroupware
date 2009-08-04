@@ -247,7 +247,7 @@ class calendar_ui
 	 *	- filter: the used filter: all or hideprivate
 	 *	- sortby: category or user of planner
 	 *	- view: the actual view, where dialogs should return to or which they refresh
-	 * @param set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
+	 * @param array $set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
 	 */
 	function manage_states($set_states=NULL)
 	{
@@ -390,7 +390,7 @@ class calendar_ui
 	/**
 	* gets the icons displayed for a given event
 	*
-	* @param $event array
+	* @param array $event
 	* @return array of 'img' / 'title' pairs
 	*/
 	function event_icons($event)
@@ -509,8 +509,8 @@ class calendar_ui
 	function popup($link,$target='_blank',$width=750,$height=410,$Link_confirm_abort='',$Link_confirm_text='')
  	{
 		//Handle Exception for Calandar
-		if (($Link_confirm_abort) && ($Link_confirm_text))
-			{
+		if ($Link_confirm_abort && $Link_confirm_text)
+		{
 			$returnvalue = 'javascript:var check=confirm(\''.$Link_confirm_text.'\');';
 			$returnvalue .=' if (check==true) {';
 			// open confirm =0kay
@@ -524,14 +524,9 @@ class calendar_ui
 			$returnvalue .= '}';
 
 			return $returnvalue;
-			}
-
-		else {
-
-			return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-
 		}
+		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
+			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
  	}
 
 	/**

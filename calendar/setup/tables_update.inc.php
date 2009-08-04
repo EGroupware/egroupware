@@ -1691,3 +1691,15 @@ function calendar_upgrade1_6()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.001';
 }
 
+
+function calendar_upgrade1_7_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal_user','cal_role',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'default' => 'REQ-PARTICIPANT'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.002';
+}
+

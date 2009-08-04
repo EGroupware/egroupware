@@ -73,7 +73,8 @@ $phpgw_baseline = array(
 			'cal_user_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u'),
 			'cal_user_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
 			'cal_status' => array('type' => 'char','precision' => '1','default' => 'A'),
-			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1')
+			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1'),
+			'cal_role' => array('type' => 'varchar','precision' => '64','default' => 'REQ-PARTICIPANT')
 		),
 		'pk' => array('cal_id','cal_recur_date','cal_user_type','cal_user_id'),
 		'fk' => array(),

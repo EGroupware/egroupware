@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -161,7 +161,7 @@ class calendar_uiviews extends calendar_ui
 			$this->dragdrop = new dragdrop();
 			// if the object would auto-disable itself unset object
 			// to avoid unneccesary dragdrop calls later
-			if(!$this->dragdrop->validateBrowser()) { $this->dragdrop = false; }
+			if(!$this->dragdrop->validateBrowser()) $this->dragdrop = false;
 		}
 	}
 
@@ -1128,7 +1128,7 @@ class calendar_uiviews extends calendar_ui
 	{
 		if ($this->debug > 1 || $this->debug==='eventWidget') $this->bo->debug_message('uiviews::eventWidget(%1,width=%2)',False,$event,$width);
 
-		if($this->use_time_grid && $event['whole_day_on_top']) { $block='event_widget_wholeday_on_top'; }
+		if($this->use_time_grid && $event['whole_day_on_top']) $block = 'event_widget_wholeday_on_top';
 
 		static $tpl = False;
 		if (!$tpl)
@@ -1185,9 +1185,9 @@ class calendar_uiviews extends calendar_ui
 				{
 					$part_array[lang('Participants')][$part_key] = $participant;
 				}
-				elseif(isset($this->bo->resources[$part_key{0}]))
+				elseif(isset($this->bo->resources[$part_key[0]]))
 				{
-					 $part_array[((isset($this->bo->resources[$part_key{0}]['participants_header'])) ? $this->bo->resources[$part_key{0}]['participants_header'] : lang($this->bo->resources[$part_key{0}]['app']))][$part_key] = $participant;
+					 $part_array[((isset($this->bo->resources[$part_key[0]]['participants_header'])) ? $this->bo->resources[$part_key[0]]['participants_header'] : lang($this->bo->resources[$part_key[0]]['app']))][$part_key] = $participant;
 				}
  			}
 			foreach($part_array as $part_group => $participant)

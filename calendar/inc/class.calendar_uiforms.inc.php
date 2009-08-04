@@ -287,7 +287,7 @@ class calendar_uiforms extends calendar_ui
 						{
 							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
 							if ($app == "resources" && !empty($id)) {
-								$bores =& CreateObject('resources.bo_resources');
+								$bores = CreateObject('resources.bo_resources');
 								$selectedres = $bores->read($id);
 								$cats = $bores->acl->get_cats(EGW_ACL_DIRECT_BOOKING);
 								if (is_array($cats) && $selectedres['bookable'] == 1 &&
@@ -749,7 +749,7 @@ class calendar_uiforms extends calendar_ui
 	function edit($event=null,$preserv=null,$msg='',$js = 'window.focus();',$link_to_id='')
 	{
 		$template = $_REQUEST['print'] ? 'calendar.print' : 'calendar.edit';
-		$etpl =& CreateObject('etemplate.etemplate',$template);
+		$etpl = CreateObject('etemplate.etemplate',$template);
 		$sel_options = array(
 			'recur_type' => &$this->bo->recur_types,
 			'status'     => $this->bo->verbose_status,
@@ -1106,7 +1106,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function conflicts($event,$conflicts,$preserv)
 	{
-		$etpl =& CreateObject('etemplate.etemplate','calendar.conflicts');
+		$etpl = CreateObject('etemplate.etemplate','calendar.conflicts');
 
 		foreach($conflicts as $k => $conflict)
 		{
@@ -1482,7 +1482,7 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Export events as vCalendar version 2.0 files (iCal)
 	 *
-	 * @param int/array $content=0 numeric cal_id or submitted content from etempalte::exec
+	 * @param int|array $content=0 numeric cal_id or submitted content from etempalte::exec
 	 * @param boolean $return_error=false should an error-msg be returned or a regular page with it generated (default)
 	 * @return string error-msg if $return_error
 	 */
@@ -1543,7 +1543,7 @@ class calendar_uiforms extends calendar_ui
 		$content['msg'] = $msg;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
-		$etpl =& CreateObject('etemplate.etemplate','calendar.export');
+		$etpl = CreateObject('etemplate.etemplate','calendar.export');
 
 		$etpl->exec('calendar.calendar_uiforms.export',$content);
 	}
@@ -1577,7 +1577,7 @@ class calendar_uiforms extends calendar_ui
 			'msg' => $msg,
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Import');
-		$etpl =& CreateObject('etemplate.etemplate','calendar.import');
+		$etpl = CreateObject('etemplate.etemplate','calendar.import');
 
 		$etpl->exec('calendar.calendar_uiforms.import',$content);
 	}
