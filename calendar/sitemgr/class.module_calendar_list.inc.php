@@ -277,20 +277,25 @@ class module_calendar_list extends Module
 
 		if (($arguments['acceptDateParam']) && (get_var('date',array('POST','GET'))))
 		{
-			$first = (int) (strtotime(get_var('date',array('POST','GET'))) +
+			$start = (int) (strtotime(get_var('date',array('POST','GET'))) +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
 		else
 		{
-			$first = (int) ($this->bo->now_su +
+			$start = (int) ($this->bo->now_su +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
+		$first = $this->ui->datetime->get_weekday_start(
+			adodb_date('Y',$start),
+			adodb_date('m',$start),
+			adodb_date('d',$start));
+
 		$last = (int) ($first +
 				(60 * 60 * 24 * 7 * $weeks));
 
 		if ($arguments['showTitle'])
 		{
-			$html .= '<div id="divAppboxHeader">'.$GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Listview').": ";
+			$html .= '<div id="divAppboxHeader">'.$GLOBALS['egw_info']['apps']['calendar']['title'].' - ';
 			$html .= lang('After %1',$this->bo->long_date($first));
 			$html .= "</div>";
 		}

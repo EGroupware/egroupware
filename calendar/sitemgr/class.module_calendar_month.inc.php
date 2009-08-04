@@ -74,6 +74,12 @@ class module_calendar_month extends Module
 				'type' => 'textfield',
 				'label' => lang('Search string for the events'),
 			),
+			'numEntries' => array(
+				'type' => 'textfield',
+				'label' => lang('Max. Number of entries to show (leave empty for no restriction)'),
+				'default' => '',
+				'params' => array('size' => 1),
+			),
 			'users' => array(
 				'type' => 'select',
 				'options' => array(),
@@ -274,6 +280,10 @@ class module_calendar_month extends Module
 		{
 			$search_params['users'] = $arguments['users'];
 		}
+		if ($arguments['numEntries'])
+		{
+			$search_params['num_rows'] = (int) $arguments['numEntries'];
+		}
 		$rows = $this->bo->search($search_params);
 		if ($arguments['showWeeks'])
 		{
@@ -306,7 +316,7 @@ class module_calendar_month extends Module
 			{
 				$GLOBALS['egw']->template = new Template;
 			}
-			$html .= $this->ui->timeGridWidget($this->ui->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
+			$html .= $this->ui->timeGridWidget($this->ui->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $last);
 		}
 		// Initialize Tooltips
 		$html .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js"></script>'."\n";
