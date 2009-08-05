@@ -9,7 +9,7 @@
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
 	%define php php5
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix php5-openssl
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl
 	%define cron cron
 %endif
 %if 0%{?fedora_version}
@@ -19,7 +19,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Fedora Core %{?fedora_version}
 	%define php php
-	%define extra_requires httpd php-mysql php-xml php-process
+	%define extra_requires httpd php-mysql php-xml
 	%define cron crontabs
 %endif
 %if 0%{?mandriva_version}
@@ -39,7 +39,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Red Hat %{?rhel_version}
 	%define php php
-	%define extra_requires httpd php-mysql php-xml php-process
+	%define extra_requires httpd php-mysql php-xml
 	%define cron crontabs
 %endif
 %if 0%{?centos_version}
@@ -49,7 +49,7 @@
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution CentOS %{?centos_version}
 	%define php php
-	%define extra_requires httpd php-mysql php-xml php-process
+	%define extra_requires httpd php-mysql php-xml
 	%define cron crontabs
 %endif
 
@@ -102,7 +102,7 @@ Source5: %{?source5}
 Source6: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
+Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{php}-posix %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
 Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{infolog} %{packagename}-%{importexport} %{packagename}-%{manual} %{packagename}-%{news_admin} %{packagename}-%{notifications} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
 Obsoletes: %{packagename}-%{icalsrv}
