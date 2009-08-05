@@ -261,7 +261,7 @@ class module_calendar_month extends Module
 		// set the search parameters
 		$search_params = Array
 		(
-			'offset' => 0,
+			'offset' => 0, // should be false if you want no restrictions on the number of results
 			'order' => 'cal_start ASC',
 			'start' => $first,
 			'end' => $last,
@@ -283,6 +283,10 @@ class module_calendar_month extends Module
 		if ($arguments['numEntries'])
 		{
 			$search_params['num_rows'] = (int) $arguments['numEntries'];
+		}
+		else
+		{
+			$search_params['offset'] = false;
 		}
 		$rows = $this->bo->search($search_params);
 		if ($arguments['showWeeks'])
