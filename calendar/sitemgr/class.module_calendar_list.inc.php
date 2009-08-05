@@ -135,12 +135,17 @@ class module_calendar_list extends Module
 				'label' => lang('Should the number of weeks be shown on top of the calendar (only if offset = 0)'),
 				'default' => false,
 			),
+			'useWeekStart' => array(
+				'type' => 'checkbox',
+				'label' => lang('Use weekday start'),
+				'default' => false,
+			),
 			'acceptDateParam' => array(
 				'type' => 'checkbox',
 				'label' => lang('Shall the date parameter be accepted (e.g. from calendar module)?'),
 				'default' => false,
 			),
-			);
+		);
 		$this->title = lang('Calendar - List');
 		$this->description = lang("This module displays calendar events as a list.");
 	}
@@ -277,18 +282,21 @@ class module_calendar_list extends Module
 
 		if (($arguments['acceptDateParam']) && (get_var('date',array('POST','GET'))))
 		{
-			$start = (int) (strtotime(get_var('date',array('POST','GET'))) +
+			$first = $start = (int) (strtotime(get_var('date',array('POST','GET'))) +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
 		else
 		{
-			$start = (int) ($this->bo->now_su +
+			$first = $start = (int) ($this->bo->now_su +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
-		$first = $this->ui->datetime->get_weekday_start(
-			adodb_date('Y',$start),
-			adodb_date('m',$start),
-			adodb_date('d',$start));
+		if ($arguments['useWeekStart']) 
+		{
+			$first = $this->ui->datetime->get_weekday_start(
+				adodb_date('Y',$start),
+				adodb_date('m',$start),
+				adodb_date('d',$start));
+		}
 
 		$last = (int) ($first +
 				(60 * 60 * 24 * 7 * $weeks));
