@@ -46,6 +46,12 @@ class addressbook_merge	// extends bo_merge
 	 */
 	static function is_implemented($mimetype,$extension=null)
 	{
+		static $zip_available;
+		if (is_null($zip_available))
+		{
+			$zip_available = check_load_extension('zip') &&
+				class_exists('ZipArchive');	// some PHP has zip extension, but no ZipArchive (eg. RHEL5!)
+		}
 		switch ($mimetype)
 		{
 			case 'application/msword':
@@ -54,11 +60,11 @@ class addressbook_merge	// extends bo_merge
 			case 'text/rtf':
 				return true;	// rtf files
 			case 'application/vnd.oasis.opendocument.text':
-				if (!check_load_extension('zip')) break;
+				if (!$zip_available) break;
 				return true;	// open office write xml files
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
-				if (!check_load_extension('zip')) break;
+				if (!$zip_available) break;
 				return true;	// ms word xml format
 			default:
 				if (substr($mimetype,0,5) == 'text/')
@@ -259,16 +265,35 @@ class addressbook_merge	// extends bo_merge
 	 * @param array $ids array with contact id(s)
 	 * @param string &$err error-message on error
 	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
+	 * @param array $fix=null regular expression => replacement pairs eg. to fix garbled placeholders
 	 * @return string/boolean merged document or false on error
 	 */
-	function &merge($document,$ids,&$err,$mimetype)
+	function &merge($document,$ids,&$err,$mimetype,array $fix=null)
 	{
 		if (!($content = file_get_contents($document)))
 		{
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
 		}
+		// fix garbled placeholders
+		if ($fix && is_array($fix))
+		{
+			$content = preg_replace(array_keys($fix),array_values($fix),$content);
+			//die("<pre>".htmlspecialchars($content)."</pre>\n");
+		}
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1)
+		{
+			//for odt files we have to slpit the content and add a style for page break to  the style area
+			list($contentstart,$contentrepeat,$contentend) = preg_split('/office:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "<"
+			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
+			// need to add page-break style to the style list
+			list($stylestart,$stylerepeat,$styleend) = preg_split('/<\/office:automatic-styles>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
+			$contentstart = $stylestart.'<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
+			$contentstart .= '<office:body>';
+			$contentend = '</office:body></office:document-content>';
+		}
 		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
 		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
 		$countlables = count($countlables[0])+1;
@@ -363,7 +388,7 @@ class addressbook_merge	// extends bo_merge
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
-					// todo OO writer files
+					return $contentstart.implode('',$contentrep).$contentend;
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
@@ -407,14 +432,23 @@ class addressbook_merge	// extends bo_merge
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'content.xml');
 				break;
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+				$mime_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.dotx').'-').'.dotx';
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'word/document.xml');
+				$fix = array(		// regular expression to fix garbled placeholders
+					'/'.preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>','/').'([a-z0-9_]+)'.
+						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$$\\1$$',
+					'/'.preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:rPr><w:lang w:val="','/').
+						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>','/').'([a-z0-9_]+)'.
+						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:rPr><w:lang w:val="','/').
+						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>$$','/').'/i' => '$$\\2$$',
+				);
 				break;
 		}
-		if (!($merged =& $this->merge($content_url,$ids,$err,$mime_type)))
+		if (!($merged =& $this->merge($content_url,$ids,$err,$mime_type,$fix)))
 		{
 			return $err;
 		}
@@ -426,7 +460,7 @@ class addressbook_merge	// extends bo_merge
 			if ($zip->close() !== true) throw new Exception("!ZipArchive::close()");
 			unset($zip);
 			unset($merged);
-			if (file_exists('/usr/bin/zip'))	// fix broken zip archives generated by current php
+			if (file_exists('/usr/bin/zip') && version_compare(PHP_VERSION,'5.3.1','<'))	// fix broken zip archives generated by current php
 			{
 				exec('/usr/bin/zip -F '.escapeshellarg($archive));
 			}
