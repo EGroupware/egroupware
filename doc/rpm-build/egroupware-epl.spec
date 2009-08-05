@@ -16,7 +16,7 @@ Prefix: /usr/share
 	%define php php5
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-posix php5-openssl php5-zip
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
@@ -34,7 +34,7 @@ Prefix: /usr/share
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
-	%define extra_requires httpd php-mysql php-xml php-process
+	%define extra_requires httpd php-mysql php-xml
 %endif
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
@@ -44,12 +44,12 @@ Prefix: /usr/share
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
 	%define distribution Red Hat %{?rhel_version}
-	%define extra_requires httpd php-mysql php-xml php-process
+	%define extra_requires httpd php-mysql php-xml
 %endif
 %if 0%{?centos_version}
 	%define osversion %{?centos_version}
 	%define distribution CentOS %{?centos_version}
-	%define extra_requires httpd php-mysql php-xml php-process
+	%define extra_requires httpd php-mysql php-xml
 %endif
 
 Distribution: %{distribution}
@@ -155,7 +155,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.1.2
-Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{extra_requires} %{cron} zip
+Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{extra_requires} %{cron} zip
 Provides: egw-core %{version}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-addressbook
