@@ -277,8 +277,8 @@ class module_calendar_list extends Module
 		$this->ui->allowEdit = false;
 		$this->ui->use_time_grid = isset($arguments['grid']) ? $arguments['grid'] : false;
 
-		$weeks = $arguments['numWeeks'] ? (float) $arguments['numWeeks'] : 4;
-		$dateOffset = $arguments['offset'] ? (float) $arguments['offset'] : 0;
+		$weeks = $arguments['numWeeks'] ? (int) $arguments['numWeeks'] : 4;
+		$dateOffset = $arguments['offset'] ? (int) $arguments['offset'] : 0;
 
 		if (($arguments['acceptDateParam']) && (get_var('date',array('POST','GET'))))
 		{
@@ -311,7 +311,7 @@ class module_calendar_list extends Module
 		// set the search parameters
 		$search_params = Array
 		(
-			'offset' => $arguments['entryOffset'] ? (int) $arguments['entryOffset'] : 0,
+			'offset' => $arguments['entryOffset'] ? (int) $arguments['entryOffset'] : false,
 			'order' => 'cal_start ASC',
 			'start' => $first,
 			'end' => $last,
@@ -332,8 +332,10 @@ class module_calendar_list extends Module
 		if ($arguments['numEntries'])
 		{
 			$search_params['num_rows'] = (int) $arguments['numEntries'];
+			$search_params['offset'] =  $arguments['entryOffset'] ? (int) $arguments['entryOffset'] :0;
 		}
 		$rows = array();
+
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
 			$event['date'] = $this->bo->date2string($event['start']);
@@ -341,11 +343,11 @@ class module_calendar_list extends Module
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
 			$rows[] = $event;
 		}
-		if (($arguments['showWeeks']) && ($arguments['offset'] == 0))
+		if (($arguments['showWeeks']) && ((int)$arguments['offset'] == 0))
 		{
 			$html .= "<div>".lang('Next')." ".lang('%1 weeks', $weeks).":</div>\n";
 		}
-		if ($this->bo->total == 0)
+		if (($search_params['offset'] && $this->bo->total == 0) || count($rows)==0)
 		{
 			$html .= "<div>".lang("no events found")."</div>";
 		}
