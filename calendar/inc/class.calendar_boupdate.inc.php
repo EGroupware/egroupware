@@ -103,12 +103,12 @@ class calendar_boupdate extends calendar_bo
 			// set owner as participant if none is given
 			if (!is_array($event['participants']) || !count($event['participants']))
 			{
-				$event['participants'][$event['owner']] = 'U';
+				$event['participants'] = array($event['owner'] => 'U');
 			}
 			// set the status of the current user to 'A' = accepted
-			if (isset($event['participants'][$this->user]) &&  $event['participants'][$this->user] != 'A')
+			if (isset($event['participants'][$this->user]) &&  $event['participants'][$this->user][0] != 'A')
 			{
-				$event['participants'][$this->user] = 'A';
+				$event['participants'][$this->user][0] = 'A';
 			}
 		}
 		// check if user has the permission to update / create the event
@@ -792,14 +792,15 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param int $cal_id id of the event to delete
 	 * @param int $recur_date=0 if a single event from a series should be deleted, its date
+	 * @param boolean $ignore_acl=false true for no ACL check, default do ACL check
 	 * @return boolean true on success, false on error (usually permission denied)
 	 */
-	function delete($cal_id,$recur_date=0)
+	function delete($cal_id,$recur_date=0,$ignore_acl=false)
 	{
 		$event = $this->read($cal_id,$recur_date);
 
 		if (!($event = $this->read($cal_id,$recur_date)) ||
-			!$this->check_perms(EGW_ACL_DELETE,$event))
+			!$ignore_acl && !$this->check_perms(EGW_ACL_DELETE,$event))
 		{
 			return false;
 		}

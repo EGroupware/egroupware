@@ -271,14 +271,7 @@ class calendar_ical extends calendar_boupdate
 							// RB: MAILTO href contains only the email-address, NO cn!
 							$attributes['ATTENDEE'][]	= $info['email'] ? 'MAILTO:'.$info['email'] : '';
 							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
-							$role = 'REQ-PARTICIPANT';
-							$quantity = '';
-							if (strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
-							{
-								if ((int)$matches[1] > 1) $quantity = (int)$matches[1];
-								if ($matches[2]) $role = $matches[2];
-								$status = $status[0];
-							}
+							calendar_so::split_status($status,$quantity,$role);
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
@@ -308,7 +301,7 @@ class calendar_ical extends calendar_boupdate
 								'CUTYPE'   => $cutype,
 								'RSVP'     => $rsvp,
 							)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array())+
-							($quantity ? array('X-EGROUPWARE-QUANTITY' => $quantity) : array());
+							($quantity > 1 ? array('X-EGROUPWARE-QUANTITY' => $quantity) : array());
 						}
 						break;
 
@@ -1893,19 +1886,18 @@ class calendar_ical extends calendar_boupdate
 						case 'ATTENDEE':
 							if (isset($attributes['params']['PARTSTAT']))
 							{
-								$event['participants'][$uid] = $this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])];
+								$status = $this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])];
 							}
 							elseif (isset($attributes['params']['STATUS']))
 							{
-								$event['participants'][$uid] = $this->status_ical2egw[strtoupper($attributes['params']['STATUS'])];
+								$status = $this->status_ical2egw[strtoupper($attributes['params']['STATUS'])];
 							}
 							else
 							{
-								$event['participants'][$uid] = ($uid == $event['owner'] ? 'A' : 'U');
+								$status = ($uid == $event['owner'] ? 'A' : 'U');
 							}
-							// add quantiy and ROLE
-							if ((int)$attributes['params']['X-EGROUPWARE-QUANTITY'] > 1) $event['participants'][$uid] .= (int)$attributes['params']['X-EGROUPWARE-QUANTITY'];
-							if ($attributes['params']['ROLE']) $event['participants'][$uid] .= $attributes['params']['ROLE'];
+							// add quantity and role
+							$event['participants'][$uid] = calendar_so::combine_status($status,$attributes['params']['X-EGROUPWARE-QUANTITY'],$attributes['params']['ROLE']);
 							break;
 						case 'ORGANIZER':
 							if (is_numeric($uid))
@@ -1916,6 +1908,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								$event['owner'] = $this->user;
 							}
+							// RalfBecker: this is not allways true, owner can choose to NOT participate in EGroupware
 							$event['participants'][$uid] = 'A';
 							break;
 					}

@@ -1081,54 +1081,54 @@ class calendar_bo
 		switch(gettype($date))
 		{
 			case 'string':	// YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss[Z|[+-]hh:mm] string
-			if (is_numeric($date) && $date > 21000000)
-			{
-				$date = (int) $date;	// this is already as timestamp
-				break;
-			}
-			// evaluate evtl. added timezone
-			if (strlen($date) > 12)
-			{
-				if (substr($date,-1) == 'Z')
+				if (is_numeric($date) && $date > 21000000)
 				{
-					$time_offset = date('Z');
+					$date = (int) $date;	// this is already as timestamp
+					break;
 				}
-				elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
+				// evaluate evtl. added timezone
+				if (strlen($date) > 12)
 				{
-					$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
+					if (substr($date,-1) == 'Z')
+					{
+						$time_offset = date('Z');
+					}
+					elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
+					{
+						$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
+					}
 				}
-			}
-			// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
-			$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
-			$date = array(
-				'year'   => (int) substr($date,0,4),
-				'month'  => (int) substr($date,4,2),
-				'day'    => (int) substr($date,6,2),
-				'hour'   => (int) substr($date,8,2),
-				'minute' => (int) substr($date,10,2),
-				'second' => (int) substr($date,12,2),
-			);
-			// fall-through
+				// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
+				$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
+				$date = array(
+					'year'   => (int) substr($date,0,4),
+					'month'  => (int) substr($date,4,2),
+					'day'    => (int) substr($date,6,2),
+					'hour'   => (int) substr($date,8,2),
+					'minute' => (int) substr($date,10,2),
+					'second' => (int) substr($date,12,2),
+				);
+				// fall-through
 			case 'array':	// day, month and year keys
-			if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
-			{
-				$date = $date['raw'];
+				if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
+				{
+					$date = $date['raw'];
+					break;
+				}
+				if (!isset($date['year']) && isset($date['full']))
+				{
+					$date['year']  = (int) substr($date['full'],0,4);
+					$date['month'] = (int) substr($date['full'],4,2);
+					$date['day']   = (int) substr($date['full'],6,2);
+				}
+				$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
+				(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
 				break;
-			}
-			if (!isset($date['year']) && isset($date['full']))
-			{
-				$date['year']  = (int) substr($date['full'],0,4);
-				$date['month'] = (int) substr($date['full'],4,2);
-				$date['day']   = (int) substr($date['full'],6,2);
-			}
-			$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
-			(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
-			break;
 			case 'integer':		// already a timestamp
-			break;
+				break;
 			default:		// eg. boolean, means now in user-time (!)
-			$date = $this->now_su;
-			break;
+				$date = $this->now_su;
+				break;
 		}
 		if ($time_offset)
 		{
@@ -1490,13 +1490,7 @@ class calendar_bo
 		$names = array();
 		foreach($event['participants'] as $id => $status)
 		{
-			$quantity = $role = '';
-			if (strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
-			{
-				if ((int)$matches[1] > 1) $quantity = (int)$matches[1];
-				$role = $matches[2];
-			}
-			$status = $status[0];
+			calendar_so::split_status($status,$quantity,$role);
 
 			if ($status == 'G' && !$show_group_invitation) continue;	// dont show group-invitation
 
@@ -1526,8 +1520,22 @@ class calendar_bo
 			{
 				$status = '('.$this->verbose_status[$status].')';
 			}
-			$names[$id] = $this->participant_name($id).($quantity ? ' ('.$quantity.')' : '').
-				' '.$status.($role ? ' '.lang(str_replace('X-','',$role)) : '');
+			$names[$id] = $this->participant_name($id).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
+
+			// add role, if not a regular participant
+			if ($role != 'REQ-PARTICIPANT')
+			{
+				// allow to use cats as roles (beside regular iCal ones)
+				if (substr($role,0,6) == 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0)
+				{
+					$role = $GLOBALS['egw']->categories->id2name($cat_id);
+				}
+				else
+				{
+					$role = lang(str_replace('X-','',$role));
+				}
+				$names[$id] .= ' '.$role;
+			}
 		}
 		return $names;
 	}

@@ -112,9 +112,12 @@ class calendar_so
 	 */
 	function read($ids,$recur_date=0)
 	{
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
-		} else {
+		}
+		else
+		{
 			$minimum_uid_length = 8;
 		}
 
@@ -193,22 +196,12 @@ class calendar_so
 			'cal_recur_date' => $recur_date,
 		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
-			// if the type is not an ordinary user (eg. contact or resource)...
-			if ($row['cal_user_type'] && $row['cal_user_type'] != 'u')
-			{
-				// prefix the id with the type
-				$user_id = $row['cal_user_type'].$row['cal_user_id'];
-				// and append quantity
-				if ($row['cal_quantity'] > 1) $row['cal_status'] .= $row['cal_quantity'];
-				// append role to status, if != 'REQ-PARTICIPANT'
-				if ($row['cal_role'] != 'REQ-PARTICIPANT') $row['cal_status'] .= $row['cal_role'];
-			}
-			else
-			{
-				$user_id = (int) $row['cal_user_id'];
-			}
-			$events[$row['cal_id']]['participants'][$user_id] = $row['cal_status'];
-			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][$row['cal_user_id']] = $row['cal_status'];
+			// combine all participant data in uid and status values
+			$uid    = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+			$status = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
+
+			$events[$row['cal_id']]['participants'][$uid] = $status;
+			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][$row['cal_user_id']] = $status;
 		}
 
 		// custom fields
@@ -420,11 +413,9 @@ class calendar_so
 
 				if (!isset($events[$id])) continue;		// not needed first entry of recuring event
 
-				// add quantity
-				if ($row['cal_quantity'] > 1) $row['cal_status'] .= $row['cal_quantity'];
-				// append role to status, if != 'REQ-PARTICIPANT'
-				if ($row['cal_role'] != 'REQ-PARTICIPANT') $row['cal_status'] .= $row['cal_role'];
-				$events[$id]['participants'][$this->combine_user($row['cal_user_type'],$row['cal_user_id'])] = $row['cal_status'];
+				// combine all participant data in uid and status values
+				$events[$id]['participants'][self::combine_user($row['cal_user_type'],$row['cal_user_id'])] =
+					self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
 			}
 /*			custom fields are not shown in the regular views, so we can ignore them here for the moment
 			foreach($this->db->select($this->extra_table,'*',array('cal_id'=>$ids),__LINE__,__FILE__,false,'','calendar') as $row)
@@ -522,7 +513,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$minimum_uid_length = 8;
 		}
 
-		//echo "<p>socal::save(,$change_since) event="; _debug_array($event);
+		//echo '<p>'.__METHOD__."(,$change_since) event="; _debug_array($event);
 		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$set_recurrences,$change_since,$etag)");
 
 		$cal_id = (int) $event['id'];
@@ -555,13 +546,6 @@ ORDER BY cal_user_type, cal_usre_id
 				return 0;	// wrong etag, someone else updated the entry
 			}
 			if (!is_null($etag)) ++$etag;
-			//  events need to have at least one participant, default to the owner
-			if (!isset($event['cal_participants'])) {
-				$event['cal_participants'] = array($event['cal_owner'] => 'A');
-			}
-			if (!isset($event['cal_participants'][$event['cal_owner']])) {
-				$event['cal_participants'][$event['cal_owner']] = 'A';
-			}
 		}
 		else
 		{
@@ -576,15 +560,6 @@ ORDER BY cal_user_type, cal_usre_id
 				return false;
 			}
 			$etag = 0;
-			// new events need to have at least one participant, default to the owner
-			if (!isset($event['cal_participants']))
-			{
-				$event['cal_participants'] = array($event['cal_owner'] => 'A');
-			}
-			if (!isset($event['cal_participants'][$event['cal_owner']]))
-			{
-				$event['cal_participants'][$event['cal_owner']] = 'A';
-			}
 		}
 		if (!isset($event['cal_uid']) || strlen($event['cal_uid']) < $minimum_uid_length)
 		{
@@ -795,7 +770,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param string|int $user_id id
 	 * @return string|int combined id
 	 */
-	function combine_user($user_type,$user_id)
+	static function combine_user($user_type,$user_id)
 	{
 		if (!$user_type || $user_type == 'u')
 		{
@@ -811,7 +786,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param string &$user_type 1-char type: 'u' = user, ...
 	 * @param string|int &$user_id id
 	 */
-	function split_user($uid,&$user_type,&$user_id)
+	static function split_user($uid,&$user_type,&$user_id)
 	{
 		if (is_numeric($uid))
 		{
@@ -826,6 +801,42 @@ ORDER BY cal_user_type, cal_usre_id
 	}
 
 	/**
+	 * Combine status, quantity and role into one value
+	 *
+	 * @param string $status
+	 * @param int $quantity
+	 * @param string $role
+	 * @return string
+	 */
+	static function combine_status($status,$quantity,$role)
+	{
+		if ((int)$quantity > 1) $status .= (int)$quantity;
+		if ($role != 'REQ-PARTICIPANT') $status .= $role;
+
+		return $status;
+	}
+
+	/**
+	 * splits the combined status, quantity and role
+	 *
+	 * @param string &$status I: combined value, O: status letter: U, T, A, R
+	 * @param int &$quantity only O: quantity
+	 * @param string &$role only O: role
+	 */
+	static function split_status(&$status,&$quantity,&$role)
+	{
+		$quantity = 1;
+		$role = 'REQ-PARTICIPANT';
+
+		if (strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
+		{
+			if ((int)$matches[1] > 0) $quantity = (int)$matches[1];
+			$role = $matches[2];
+			$status = $status[0];
+		}
+	}
+
+	/**
 	 * updates the participants of an event, taken into account the evtl. recurrences of the event(!)
 	 *
 	 * @param int $cal_id
@@ -835,12 +846,12 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function participants($cal_id,$participants,$change_since=0)
 	{
-		//echo "<p>socal::participants($cal_id,".print_r($participants,true).",$change_since)</p>\n";
+		//echo '<p>'.__METHOD__."($cal_id,".print_r($participants,true).",$change_since)</p>\n";
 
 		// remove group-invitations, they are NOT stored in the db
 		foreach($participants as $uid => $status)
 		{
-			if ($status == 'G')
+			if ($status[0] == 'G')
 			{
 				unset($participants[$uid]);
 			}
@@ -902,7 +913,7 @@ ORDER BY cal_user_type, cal_usre_id
 				// existing participants must not be updated
 				foreach($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id',$where,__LINE__,__FILE__,false,'','calendar') as $row)
 				{
-					$existing_participants[] = $this->combine_user($row['cal_user_type'],$row['cal_user_id']);
+					$existing_participants[] = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
 				}
 			}
 			if (!count($recurrences)) $recurrences[] = 0;	// insert the default one
@@ -912,16 +923,13 @@ ORDER BY cal_user_type, cal_usre_id
 				if (in_array($uid,$existing_participants)) continue; // don't update existing participants
 
 				$id = null;
-				$this->split_user($uid,$type,$id);
+				self::split_user($uid,$type,$id);
+				self::split_status($status,$quantity,$role);
 				$set = array(
-					'cal_status'	  => $status !== true ? $status[0] : 'U',
-					'cal_quantity'	  => substr($status,1) > 1 ? (int)substr($status,1) : 1,
+					'cal_status'	  => $status,
+					'cal_quantity'	  => $quantity,
+					'cal_role'        => $role,
 				);
-				// update role if set, it's apended to status and quantity
-				if (strlen($status) > 1 && preg_match('/^.[0-9]*(.*)$/',$status,$matches))
-				{
-					$set['cal_role'] = $matches[1];
-				}
 				foreach($recurrences as $recur_date)
 				{
 					$this->db->insert($this->user_table,$set,array(
@@ -1147,8 +1155,9 @@ ORDER BY cal_user_type, cal_usre_id
 		$datetime = $GLOBALS['egw']->datetime;
 		$now = ($now_su ? $now_su : time() + $datetime->this->tz_offset);
 		$modifier = $GLOBALS['egw_info']['user']['account_id'];
-                $this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
+		$this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
 			array('cal_id' => $cal_id), __LINE__, __FILE__, 'calendar');
+
 		return $id;
 	}
 
@@ -1180,11 +1189,12 @@ ORDER BY cal_user_type, cal_usre_id
 	{
 		// update the modification information of the related event
 		list(,$cal_id) = explode(':',$id);
-		if ($cal_id) {
+		if ($cal_id)
+		{
 			$datetime = $GLOBALS['egw']->datetime;
 			$now = ($now_su ? $now_su : time() + $datetime->this->tz_offset);
 			$modifier = $GLOBALS['egw_info']['user']['account_id'];
-                	$this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
+			$this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
 				array('cal_id' => $cal_id), __LINE__, __FILE__, 'calendar');
 		}
 		return $this->async->cancel_timer($id);
@@ -1384,5 +1394,4 @@ ORDER BY cal_user_type, cal_usre_id
 		sort($days);
 		return $days;
 	}
-
 }
