@@ -197,7 +197,7 @@
 	function xmlrpc_encode_entities($data)
 	{
 		return htmlspecialchars($data,ENT_QUOTES,$GLOBALS['egw']->translation->system_charset ?
-			$GLOBALS['egw']->translation->system_charset : 'latin1');
+			$GLOBALS['egw']->translation->system_charset : 'UTF-8');
 	}
 
 	if (!function_exists('htmlspecialchars_decode'))	// php < 5.1
