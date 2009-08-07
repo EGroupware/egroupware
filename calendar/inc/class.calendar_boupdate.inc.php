@@ -131,7 +131,8 @@ class calendar_boupdate extends calendar_bo
 			$quantity = $users = array();
 			foreach($event['participants'] as $uid => $status)
 			{
-				if ($status[0] == 'R') continue;	// ignore rejected participants
+				calendar_so::split_status($status,$q,$r);
+				if ($status == 'R') continue;	// ignore rejected participants
 
 				if ($uid < 0)	// group, check it's members too
 				{
@@ -141,7 +142,7 @@ class calendar_boupdate extends calendar_bo
 				$users[] = $uid;
 				if (in_array($uid[0],$types_with_quantity))
 				{
-					$quantity[$uid] = max(1,(int) substr($status,2));
+					$quantity[$uid] = $q;
 				}
 			}
 			$overlapping_events =& $this->search(array(
@@ -677,7 +678,8 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function save($event, $ignore_acl=false)
 	{
-		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$etag)");
+		//echo '<p>'.__METHOD__.'('.array2string($event).",$ignore_acl)</p>\n";
+		//error_log(__METHOD__.'('.array2string($event).",$etag)");
 		// check if user has the permission to update / create the event
 		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
 			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']) &&

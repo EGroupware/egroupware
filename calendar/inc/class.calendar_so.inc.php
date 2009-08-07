@@ -513,8 +513,8 @@ ORDER BY cal_user_type, cal_usre_id
 			$minimum_uid_length = 8;
 		}
 
-		//echo '<p>'.__METHOD__."(,$change_since) event="; _debug_array($event);
-		//error_log(__METHOD__."(".str_replace(array("\n",'    '),'',print_r($event,true)).",$set_recurrences,$change_since,$etag)");
+		//echo '<p>'.__METHOD__.'('.array2string($event).",$change_since) event="; _debug_array($event);
+		//error_log(__METHOD__.'('.array2string($event).",$set_recurrences,$change_since,$etag)");
 
 		$cal_id = (int) $event['id'];
 		unset($event['id']);
@@ -911,17 +911,19 @@ ORDER BY cal_user_type, cal_usre_id
 				}
 
 				// existing participants must not be updated
-				foreach($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id',$where,__LINE__,__FILE__,false,'','calendar') as $row)
+				foreach($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id,cal_quantity,cal_role',$where,__LINE__,__FILE__,false,'','calendar') as $row)
 				{
-					$existing_participants[] = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+					$existing_participants[self::combine_user($row['cal_user_type'],$row['cal_user_id'])] = self::combine_status('',$row['cal_quantity'],$row['cal_role']);
 				}
 			}
 			if (!count($recurrences)) $recurrences[] = 0;	// insert the default one
 
 			foreach($participants as $uid => $status)
 			{
-				if (in_array($uid,$existing_participants)) continue; // don't update existing participants
-
+				if (isset($existing_participants[$uid]) && substr($status,1) == $existing_participants[$uid])
+				{
+					continue;	// dont update existing participants, if quantity or role is not changed
+				}
 				$id = null;
 				self::split_user($uid,$type,$id);
 				self::split_status($status,$quantity,$role);
