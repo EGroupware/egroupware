@@ -451,7 +451,7 @@ class calendar_ical extends calendar_boupdate
 					$vevent->setAttribute($key, $valueData, $paramData);
 					$options = array();
 					if ($paramData['CN']) $valueData .= $paramData['CN'];	// attendees or organizer CN can contain utf-8 content
-					if($key != 'RRULE' && preg_match('/([\000-\012\015\016\020-\037\075])/',$valueData))
+					if($this->productManufacturer != 'GroupDAV' && $key != 'RRULE' && preg_match('/([\000-\012\015\016\020-\037\075])/',$valueData))
 					{
 						$options['ENCODING'] = 'QUOTED-PRINTABLE';
 					}
