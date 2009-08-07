@@ -70,7 +70,7 @@ class infolog_ical extends infolog_bo
 		{
 			$vevent->setAttribute($field,$value);
 			$options = array();
-			if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
+			if($this->productManufacturer != 'GroupDAV' && preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
 			{
 				$options['ENCODING'] = 'QUOTED-PRINTABLE';
 			}
@@ -133,14 +133,14 @@ class infolog_ical extends infolog_bo
 		if(!$egwData = $this->vtodotoegw($_vcalData)) {
 			return false;
 		}
-    
+
 		$myfilter = array('col_filter' => array('info_uid'=>$egwData['info_uid'])) ;
 		if ($egwData['info_uid'] && ($found=parent::search($myfilter)) && ($uidmatch = array_shift($found)))
 		{
 			return $uidmatch['info_id'];
 		};
 		unset($egwData['info_uid']);
-    		
+
 		if ($contentID) {
 			$egwData['info_id'] = $contentID;
 		}
@@ -238,8 +238,8 @@ class infolog_ical extends infolog_bo
 							if (isset($event['uid']) && (strlen($event['uid']) < 20 || is_numeric($event['uid'])))
 							{
 								unset ($event['uid']);
-							}	
-							
+							}
+
 							break;
 						case 'PERCENT-COMPLETE':
 							$taskData['info_percent'] = (int) $attributes['value'];
