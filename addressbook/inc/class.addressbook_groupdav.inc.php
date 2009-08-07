@@ -40,7 +40,7 @@ class addressbook_groupdav extends groupdav_handler
 	*Profiling
 	*/
 	var $starttime;
-	
+
 	/**
 	 * What attribute is used to construct the path, default id, can be uid too
 	 */
@@ -58,7 +58,7 @@ class addressbook_groupdav extends groupdav_handler
 		parent::__construct($app,$debug,$base_uri);
 
 		$this->bo =& new addressbook_bo();
-		//$this->starttime = microtime(true);	    
+		//$this->starttime = microtime(true);
 	}
 
 	/**
@@ -84,7 +84,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		$this->starttime = microtime(true);	
+		$this->starttime = microtime(true);
 		$filter = array();
 		// show addressbook of a single user?
 		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
@@ -120,7 +120,7 @@ class addressbook_groupdav extends groupdav_handler
 			//$icount= 0;
 			foreach($contacts as $contact)
 			{
- 				
+
 			//$st = microtime(true);
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($contact)),
@@ -146,15 +146,15 @@ class addressbook_groupdav extends groupdav_handler
 	            	'path'  => self::get_path($contact),
 	            	'props' => $props,
 				);
-				
-			//$end = microtime(true) - $st;	
+
+			//$end = microtime(true) - $st;
 			//$icount++;
 			//error_log("function propfind foreach : $end : $icount");
 			}
 		}
 
 		$endtime = microtime(true) - $this->starttime;
-		error_log(__FILE__ ."->". __METHOD__ ." elapsed time : $endtime"); 
+		error_log(__FILE__ ."->". __METHOD__ ." elapsed time : $endtime");
 		return true;
 	}
 
@@ -344,7 +344,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read(is_numeric($id) ? $id : array('uid' => $id));
+		return $this->bo->read(self::PATH_ATTRIBUTE == 'id' ? $id : array(self::PATH_ATTRIBUTE => $id));
 	}
 
 	/**
