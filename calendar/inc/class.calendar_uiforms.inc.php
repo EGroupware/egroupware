@@ -633,8 +633,8 @@ class calendar_uiforms extends calendar_ui
 	function _create_exception(&$event,&$preserv)
 	{
 		$event['end'] += $preserv['actual_date'] - $event['start'];
-		$event['recurrence'] = $preserv['recurrence'] = $event['start'];
 		$event['reference'] = $preserv['reference'] = $event['id'];
+		$event['recurrence'] = $preserv['recurrence'] = $preserv['actual_date'];
 		$event['start'] = $preserv['edit_single'] = $preserv['actual_date'];
 		$event['recur_type'] = MCAL_RECUR_NONE;
 		foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
