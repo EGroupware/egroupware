@@ -344,7 +344,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read(self::PATH_ATTRIBUTE == 'id' ? $id : array('uid' => $id));
+		return $this->bo->read(self::PATH_ATTRIBUTE == 'id' ? $id : array(self::PATH_ATTRIBUTE => $id));
 	}
 
 	/**
