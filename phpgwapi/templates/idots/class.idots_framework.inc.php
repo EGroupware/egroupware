@@ -214,8 +214,6 @@ class idots_framework extends egw_framework
 			}
 			else
 			{
-				$GLOBALS['phpgw']->preferences->read_repository();
-
 				$prefs = array();
 
 				if ($GLOBALS['egw_info']['user']['preferences']['common'])
