@@ -752,7 +752,7 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			// move the recur-date of the participants
 			$this->db->query("UPDATE $this->user_table SET cal_recur_date=cal_recur_date+$move_start WHERE $where AND cal_recur_date ".
-				((int)$change_since ? '>= '.(int)$change_since : '!= 0') . " ORDER BY cal_recur_date DESC",__LINE__,__FILE__);
+				((int)$change_since ? '>= '.(int)$change_since : '!= 0'),__LINE__,__FILE__);
 		}
 		if ($move_start || $move_end)
 		{
