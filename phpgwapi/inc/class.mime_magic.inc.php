@@ -235,7 +235,8 @@ class mime_magic
 		'bcpio'	=> 'application/x-bcpio',
 		'bin'	=> 'application/octet-stream',
 		'bmp'	=> 'image/bmp',
-		'c'	=> 'text/plain', // or 'text/x-csrc', //added by skwashd
+		'txt'	=> 'text/plain',	// ralfbecker: moving txt above all other text plain types, to get text/plain displayed as "TXT file"
+		'c'	    => 'text/plain', // or 'text/x-csrc', //added by skwashd
 		'c++'	=> 'text/plain', // or 'text/x-c++src', //added by skwashd
 		'cc'	=> 'text/plain', // or 'text/x-c++src', //added by skwashd
 		'cs'	=> 'text/plain', //added by skwashd - for C# src
@@ -386,7 +387,6 @@ class mime_magic
 		'tiff'	=> 'image/tiff',
 		'tr'	=> 'application/x-troff',
 		'tsv'	=> 'text/tab-separated-values',
-		'txt'	=> 'text/plain',
 		'ustar'	=> 'application/x-ustar',
 		'vbs'	=> 'text/plain', //added by skwashd - for obvious reasons
 		'vcd'	=> 'application/x-cdlink',
