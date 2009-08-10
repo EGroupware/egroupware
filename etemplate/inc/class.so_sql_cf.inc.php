@@ -77,6 +77,13 @@ class so_sql_cf extends so_sql
 	var $extra_join_filter;
 
 	/**
+	 * Does extra table has a unique index (over id and name)
+	 *
+	 * @var boolean
+	 */
+	var $extra_has_unique_index;
+
+	/**
 	 * Custom fields of $app, read by the constructor
 	 *
 	 * @var array
@@ -144,6 +151,9 @@ class so_sql_cf extends so_sql
 				throw new egw_exception_wrong_parameter("$col column $extra_table.{$this->$col} is NOT defined!");
 			}
 		}
+		// check if our extra table has a unique index (if not we have to delete the old values, as replacing does not work!)
+		$this->extra_has_unique_index = $extra_defs['pk'] || $extra_defs['uc'];
+
 		// setting up our extra joins, now we know table and column names
 		$this->extra_join = " LEFT JOIN $extra_table ON $table.$this->autoinc_id=$extra_table.$this->extra_id";
 		$this->extra_join_order = " LEFT JOIN $extra_table extra_order ON $table.$this->autoinc_id=extra_order.$this->extra_id";
@@ -208,10 +218,11 @@ class so_sql_cf extends so_sql
 			);
 			$is_multiple = $this->is_multiple($name);
 
-			if(empty($data[$field]) || $is_multiple)	// dont write empty values
+			// we explicitly need to delete fields, if value is empty or field allows multiple values or we have no unique index
+			if(empty($data[$field]) || $is_multiple || !$this->extra_has_unique_index)
 			{
-				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);	// just delete them, in case they were previously set
-				if (!$is_multiple) continue;
+				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
+				if (empty($data[$field])) continue;	// nothing else to do for empty values
 			}
 			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
 			{
