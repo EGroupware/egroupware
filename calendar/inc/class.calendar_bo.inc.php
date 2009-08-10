@@ -16,10 +16,6 @@ if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_mes
 	define('ACL_TYPE_IDENTIFER','***ACL***');
 }
 
-define('HOUR_s',60*60);
-define('DAY_s',24*HOUR_s);
-define('WEEK_s',7*DAY_s);
-
 /**
  * Gives read access to the calendar, but all events the user is not participating are private!
  * Used by addressbook.

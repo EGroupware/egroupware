@@ -44,6 +44,10 @@ define('NO_RESPONSE',1);
 define('TENTATIVE',2);
 define('ACCEPTED',3);
 
+define('HOUR_s',60*60);
+define('DAY_s',24*HOUR_s);
+define('WEEK_s',7*DAY_s);
+
 /**
  * Class to store all calendar data (storage object)
  *
@@ -498,11 +502,12 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param array $event
 	 * @param boolean &$set_recurrences on return: true if the recurrences need to be written, false otherwise
+	 * @param int &$set_recurrences_start=0 on return: time from which on the recurrences should be rebuilt, default 0=all
 	 * @param int $change_since=0 time from which on the repetitions should be changed, default 0=all
 	 * @param int &$etag etag=null etag to check or null, on return new etag
 	 * @return boolean|int false on error, 0 if etag does not match, cal_id otherwise
 	 */
-	function save($event,&$set_recurrences,$change_since=0,&$etag=null)
+	function save($event,&$set_recurrences,&$set_recurrences_start=0,$change_since=0,&$etag=null)
 	{
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -577,56 +582,19 @@ ORDER BY cal_user_type, cal_usre_id
 			$old_repeats = $this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
 			$old_exceptions = $old_repeats['recur_exception'] ? explode(',',$old_repeats['recur_exception']) : array();
 
-			if (isset($event['recur_exception']) && is_array($event['recur_exception']) && count($event['recur_exception']))
-			{
-				// added and existing exceptions: delete the execeptions from the user and dates table, it could be the first time
-				$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
-				$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
-			}
-			else
-			{
-				$event['recur_exception'] = array();
-			}
+			$event['recur_exception'] = is_array($event['recur_exception']) ? $event['recur_exception'] : array();
 
-			// deleted exceptions: re-insert recurrences into the user and dates table
-			if(count($deleted_exceptions = array_diff($old_exceptions,$event['recur_exception'])))
-			{
-				foreach($deleted_exceptions as $id => $deleted_exception)
-				{
-					// rebuild participants for the re-inserted recurrence
-					$participants = array();
-					$participants_only = $this->get_participants($cal_id); // participants without states
-					foreach($participants_only as $id => $participant_only)
-					{
-						$states = $this->get_recurrences($cal_id, $participant_only['uid']);
-						$participants[$participant_only['uid']] = $states[0]; // insert main status as default
-					}
-					$this->recurrence($cal_id, $deleted_exception, $deleted_exception + $old_duration, $participants);
-				}
-			}
-
+			// re-check: did so much recurrence data change that we have to rebuild it from scratch?
 			if (!$set_recurrences)
 			{
-				// check if the recurrence-information changed
 				$set_recurrences = (isset($event['cal_start']) && (int)$old_min != (int) $event['cal_start']) ||
 				    $event['recur_type'] != $old_repeats['recur_type'] || $event['recur_data'] != $old_repeats['recur_data'] ||
-					(int)$event['recur_interval'] != (int)$old_repeats['recur_interval'] ||
-					$event['recur_enddate'] != $old_repeats['recur_enddate'];
-				 // ToDo jaytraxx: manually handle recur_enddate change without recurrences rebuild
+					(int)$event['recur_interval'] != (int)$old_repeats['recur_interval'];
 			}
 
-			$event['recur_exception'] = empty($event['recur_exception']) ? null : implode(',',$event['recur_exception']);
-			unset($event[0]);	// unset the 'etag=etag+1', as it's not in the repeats table
-			if($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
-			}
-			else
-			{
-				$this->db->delete($this->repeats_table,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
-			}
 			if ($set_recurrences)
 			{
+				// too much recurrence data has changed, we have to do a rebuild from scratch
 				// delete all, but the lowest dates record
 				$this->db->delete($this->dates_table,array(
 					'cal_id' => $cal_id,
@@ -638,6 +606,68 @@ ORDER BY cal_user_type, cal_usre_id
 					'cal_id' => $cal_id,
 					'cal_recur_date != 0',
 				),__LINE__,__FILE__,'calendar');
+			}
+			else
+			{
+				// we adjust some possibly changed recurrences manually
+				// deleted exceptions: re-insert recurrences into the user and dates table
+				if(count($deleted_exceptions = array_diff($old_exceptions,$event['recur_exception'])))
+				{
+					foreach($deleted_exceptions as $id => $deleted_exception)
+					{
+						// rebuild participants for the re-inserted recurrence
+						$participants = array();
+						$participants_only = $this->get_participants($cal_id); // participants without states
+						foreach($participants_only as $id => $participant_only)
+						{
+							$states = $this->get_recurrences($cal_id, $participant_only['uid']);
+							$participants[$participant_only['uid']] = $states[0]; // insert main status as default
+						}
+						$this->recurrence($cal_id, $deleted_exception, $deleted_exception + $old_duration, $participants);
+					}
+				}
+
+				// check if recurrence enddate was adjusted
+				if(isset($event['recur_enddate']))
+				{
+					// recurrences need to be truncated
+					if((int)$event['recur_enddate'] > 0 &&
+						((int)$old_repeats['recur_enddate'] == 0 || (int)$old_repeats['recur_enddate'] > (int)$event['recur_enddate'])
+					)
+					{
+						$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date > '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
+						$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start > '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
+					}
+
+					// recurrences need to be expanded
+					if(((int)$event['recur_enddate'] == 0 && (int)$old_repeats['recur_enddate'] > 0)
+						|| ((int)$event['recur_enddate'] > 0 && (int)$old_repeats['recur_enddate'] > 0 && (int)$old_repeats['recur_enddate'] < (int)$event['recur_enddate'])
+					)
+					{
+						$set_recurrences = true;
+						$set_recurrences_start = ($old_repeats['recur_enddate'] + 1*DAY_s);
+					}
+				}
+
+				// truncate recurrences by given exceptions
+				if (count($event['recur_exception']))
+				{
+					// added and existing exceptions: delete the execeptions from the user and dates table, it could be the first time
+					$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
+					$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
+				}
+			}
+
+			// write the repeats table
+			$event['recur_exception'] = empty($event['recur_exception']) ? null : implode(',',$event['recur_exception']);
+			unset($event[0]);	// unset the 'etag=etag+1', as it's not in the repeats table
+			if($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
+			}
+			else
+			{
+				$this->db->delete($this->repeats_table,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 			}
 		}
 		// update start- and endtime if present in the event-array, evtl. we need to move all recurrences

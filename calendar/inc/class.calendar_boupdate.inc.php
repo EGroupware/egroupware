@@ -715,10 +715,13 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		$set_recurrences = false;
-		if (($cal_id = $this->so->save($event,$set_recurrences,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
+		$set_recurrences_start = 0;
+		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$save_event['id'] = $cal_id;
-			$this->set_recurrences($save_event, 0);
+			// unset participants to enforce the default stati for all added recurrences
+			unset($save_event['participants']);
+			$this->set_recurrences($save_event, $set_recurrences_start);
 		}
 		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
 
