@@ -293,9 +293,12 @@ class so_sql_cf extends so_sql
 	 */
 	function save($keys=null,$extra_where=null)
 	{
-		if (is_array($keys) && count($keys)) $this->data_merge($keys);
-
-		$ret = parent::save(null,$extra_where);
+		if (is_array($keys) && count($keys) && !isset($keys[0]))	// allow to use an etag, eg array('etag=etag+1')
+		{
+			$this->data_merge($keys);
+			$keys = null;
+		}
+		$ret = parent::save($keys,$extra_where);
 
 		if ($ret == 0 && $this->customfields)
 		{
