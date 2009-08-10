@@ -1395,6 +1395,24 @@
 							$foldersNameSpace[$type]['all'] = (is_array($foldersNameSpace[$type]['subscribed']) ? $foldersNameSpace[$type]['subscribed'] :array());
 							continue;
 						}
+						// only check for Folder in FolderMaintenance for Performance Reasons
+						if(!$_subscribedOnly) {
+							foreach ((array)$foldersNameSpace[$type]['subscribed'] as $folderName)
+							{
+								//echo __METHOD__."Checking $folderName for existence<br>";
+								if (!self::folderExists($folderName)) {
+									echo("eMail Folder $folderName failed to exist; should be unsubscribed; Trying ...");
+									error_log(__METHOD__."-> $folderName failed to be here; should be unsubscribed");
+									if (self::subscribe($folderName, false))
+									{
+										echo " success."."<br>" ;
+									} else {
+										echo " failed."."<br>";
+									}
+								}
+							}
+						}
+
 						// fetch and sort all folders
 						#echo $type.'->'.$foldersNameSpace[$type]['prefix'].'->'.($type=='shared'?0:2)."<br>";
 						$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
@@ -1497,17 +1515,6 @@
 						//echo "<br>FolderToCheck:$folderName<br>";
 						if($_subscribedOnly && !in_array($folderName, $foldersNameSpace[$type]['all'])) {
 							#echo "$folderName failed to be here <br>";
-							continue;
-						}
-						if (!self::folderExists($folderName)) {
-							echo("eMail Folder $folderName failed to exist; should be unsubscribed; Trying ...");
-							error_log(__METHOD__."-> $folderName failed to be here; should be unsubscribed");
-							if (self::subscribe($folderName, false)) 
-							{
-								echo " success."."<br>" ;
-							} else {
-								echo " failed."."<br>";
-							}
 							continue;
 						}
 						$folderParts = explode($delimiter, $folderName);
