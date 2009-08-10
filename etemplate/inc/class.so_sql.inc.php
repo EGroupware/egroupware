@@ -238,6 +238,22 @@ class so_sql
 	}
 
 	/**
+	 * Add all timestamp fields to $this->timestamps to get automatically converted to usertime
+	 *
+	 */
+	function convert_all_timestamps()
+	{
+		$check_already_included = !empty($this->timestamps);
+		foreach($this->table_def['fd'] as $name => $data)
+		{
+			if ($data['type'] == 'timestamp' && (!$check_already_included || !in_array($name,$this->timestamps)))
+			{
+				$this->timestamps[] = $name;
+			}
+		}
+	}
+
+	/**
 	 * merges in new values from the given new data-array
 	 *
 	 * @param $new array in form col => new_value with values to set
@@ -286,7 +302,17 @@ class so_sql
 		{
 			foreach($this->timestamps as $name)
 			{
-				if (isset($data[$name]) && $data[$name]) $data[$name] += $this->tz_offset_s;
+				if (isset($data[$name]) && $data[$name])
+				{
+					if (!is_numeric($data[$name]))
+					{
+						$data[$name] = date('Y-m-d H:i:s',strtotime($data[$name]) + $this->tz_offset_s);
+					}
+					else
+					{
+						$data[$name] += $this->tz_offset_s;
+					}
+				}
 			}
 		}
 		// do the necessare changes here
@@ -313,7 +339,17 @@ class so_sql
 		{
 			foreach($this->timestamps as $name)
 			{
-				if (isset($data[$name]) && $data[$name]) $data[$name] -= $this->tz_offset_s;
+				if (isset($data[$name]) && $data[$name])
+				{
+					if (is_numeric($data[$name]))	// we check for numeric, as timestamps are allowed (get converted by egw_db::quote)
+					{
+						$data[$name] -= $this->tz_offset_s;
+					}
+					else
+					{
+						$data[$name] = date('Y-m-d H:i:s',strtotime($data[$name]) - $this->tz_offset_s);
+					}
+				}
 			}
 		}
 		// do the necessary changes here
