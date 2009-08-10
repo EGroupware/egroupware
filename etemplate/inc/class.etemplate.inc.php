@@ -1167,6 +1167,9 @@ class etemplate extends boetemplate
 				}
 				else
 				{
+					// if textarea is readonly, but form_name is already used by an other widget, dont use it
+					// browser would only send the content of the readonly (and therefore unchanged) field
+					if ($readonly && self::$request->isset_to_process($form_name)) $form_name = '';
 					$html .= html::textarea($form_name,$value,
 						$options.html::formatOptions($cell_options,'ROWS,COLS'));
 				}
