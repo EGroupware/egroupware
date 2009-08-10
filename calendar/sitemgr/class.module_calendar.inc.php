@@ -9,13 +9,18 @@
 *  option) any later version.                                              *
 \**************************************************************************/
 
-/* $Id: class.module_calendar.inc.php 19554 2005-11-02 14:37:42Z ralfbecker $ */
+/* $Id: class.module_calendar.inc.php,v 1.4 2008-12-29 19:01:26 hjtappe Exp $ */
 
 class module_calendar extends Module 
 {
 	function module_calendar()  
 	{
-		$this->arguments = array();
+		$this->arguments = array(
+			'redirect' => array(
+				'type' => 'textfield',
+				'label' => lang('Specify where URL of the day links to'),
+			),
+		);
 
 		$this->title = lang('Calendar');
 		$this->description = lang('This module displays the current month');
@@ -23,6 +28,12 @@ class module_calendar extends Module
 
 	function get_content(&$arguments,$properties)
 	{
-		return $GLOBALS['egw']->jscalendar->flat('#');
+		if (!is_object($GLOBALS['egw']->jscalendar))
+		{
+			$GLOBALS['egw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
+		}
+		$date = (int) (strtotime(get_var('date',array('POST','GET'))));
+		$redirect = $arguments['redirect'] ? $arguments['redirect'] : '#';
+		return $GLOBALS['egw']->jscalendar->flat($redirect,$date);
 	}
 }
