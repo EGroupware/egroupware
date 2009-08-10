@@ -467,9 +467,20 @@ class so_sql_cf extends so_sql
 				{
 					if (!empty($val))	// empty -> dont filter
 					{
-						$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
+						if ($val[0] === '!')	// negative filter
+						{
+							$sql_filter = 'extra_filter.'.$this->extra_value.'!='.$this->db->quote(substr($val,1));
+						}
+						else	// using egw_db::expression to allow to use array() with possible values or NULL
+						{
+							$sql_filter = str_replace($this->extra_value,'extra_filter.'.
+								$this->extra_value,$this->db->expression($this->extra_table,array($this->extra_value => $val)));
+						}
+						// need to use a LEFT JOIN for negative search or to allow NULL values
+						$need_left_join = $val[0] === '!' || strpos($sql_filter,'IS NULL') !== false ? ' LEFT ' : '';
+						$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$need_left_join.$this->extra_join_filter.
 							' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($this->get_cf_name($name)).
-							' AND extra_filter.'.$this->extra_value.'='.$this->db->quote($val));
+							' AND '.$sql_filter);
 						++$extra_filter;
 					}
 					unset($filter[$name]);
