@@ -1494,9 +1494,20 @@
 						if( !PEAR::isError($foldersNameSpace[$type]['all'])) $listOfFolders = $foldersNameSpace[$type]['all'];
 					}
 					foreach((array)$listOfFolders as $folderName) {
-						#echo "<br>FolderToCheck:$folderName<br>";
+						//echo "<br>FolderToCheck:$folderName<br>";
 						if($_subscribedOnly && !in_array($folderName, $foldersNameSpace[$type]['all'])) {
 							#echo "$folderName failed to be here <br>";
+							continue;
+						}
+						if (!self::folderExists($folderName)) {
+							echo("eMail Folder $folderName failed to exist; should be unsubscribed; Trying ...");
+							error_log(__METHOD__."-> $folderName failed to be here; should be unsubscribed");
+							if (self::subscribe($folderName, false)) 
+							{
+								echo " success."."<br>" ;
+							} else {
+								echo " failed."."<br>";
+							}
 							continue;
 						}
 						$folderParts = explode($delimiter, $folderName);
