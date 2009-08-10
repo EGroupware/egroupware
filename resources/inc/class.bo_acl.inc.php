@@ -30,6 +30,13 @@ class bo_acl
 	var $debug;
 	var $use_session = False;
 
+	/**
+	 * Instance of categories class for resources
+	 *
+	 * @var categories
+	 */
+	var $egw_cats;
+
 	function bo_acl($session=False)
 	{
 		define('EGW_ACL_CAT_ADMIN',64);
@@ -37,7 +44,7 @@ class bo_acl
 		define('EGW_ACL_CALREAD',256);
 
 		$this->permissions = $GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw_info']['user']['account_id'],'resources',true);
-		$this->egw_cats =& CreateObject('phpgwapi.categories','','resources');
+		$this->egw_cats = new categories('','resources');
 		$this->debug = False;
 
 		//all this is only needed when called from uiacl.
@@ -66,12 +73,13 @@ class bo_acl
 	*
 	* @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	* @param int $perm_type one of EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
+	* @param int $parent_id=0 cat_id of parent to return only children of that category
 	* @return array cat_id => cat_name
 	* TODO mark subcats and so on!
 	*/
-	function get_cats($perm_type)
+	function get_cats($perm_type,$parent_id=0)
 	{
-		$cats = $this->egw_cats->return_sorted_array(0,false,'','','',true);
+		$cats = $this->egw_cats->return_sorted_array(0,false,'','','',true,$parent_id);
 		#_debug_array($cats);
 		if (!is_array($cats)) $cats = array();
 		foreach($cats as $key=>$cat) {

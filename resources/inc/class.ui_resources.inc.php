@@ -449,6 +449,8 @@ class ui_resources
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
 		$content['nm']['rows']['js_id'] = 1;
+		$content['nm']['no_columnselection'] = true;
+		$content['nm']['csv_fields']         = false;
 
 		$sel_options = array();
 		$no_button = array();

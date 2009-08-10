@@ -35,12 +35,7 @@ class so_resources extends so_sql
 	 */
 	function get_value($key,$res_id)
 	{
-		if($this->db->select($this->table_name,$key,array('res_id' => $res_id),__LINE__,__FILE__))
-		{
-			$value = $this->db->row(row);
-			return $value[$key];
-		}
-		return false;
+		return $this->db->select($this->table_name,$key,array('res_id' => $res_id),__LINE__,__FILE__)->fetchColumn();
 	}
 
 	/**

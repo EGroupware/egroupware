@@ -57,7 +57,15 @@ class bo_resources
  		$filter = array('accessory_of' => $accessory_of);
 		if ($query['filter'])
 		{
-			$filter = $filter + array('cat_id' => $query['filter']);
+			if (($children = $this->acl->get_cats(EGW_ACL_READ,$query['filter'])))
+			{
+				$filter['cat_id'] = array_keys($children);
+				$filter['cat_id'][] = $query['filter'];
+			}
+			else
+			{
+				$filter['cat_id'] = $query['filter'];
+			}
 		}
 		else
 		{
@@ -289,7 +297,7 @@ class bo_resources
 
 		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,name,useable');
 		if (!is_array($data)) {
-			error_log(__METHOD__." No Calendar Data found for Resource with id $res_id"); 
+			error_log(__METHOD__." No Calendar Data found for Resource with id $res_id");
 			return array();
 		}
 		foreach($data as $num => $resource)
