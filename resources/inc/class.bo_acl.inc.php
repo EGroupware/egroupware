@@ -16,10 +16,10 @@
 class bo_acl
 {
 	/**
-	* @var $permissions Holds alls permissions for resources of user 
+	* @var $permissions Holds alls permissions for resources of user
 	*/
 	var $permissions;
-	
+
 	var $acl;
 	var $start = 0;
 	var $query = '';
@@ -39,7 +39,7 @@ class bo_acl
 		$this->permissions = $GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw_info']['user']['account_id'],'resources',true);
 		$this->egw_cats =& CreateObject('phpgwapi.categories','','resources');
 		$this->debug = False;
-		
+
 		//all this is only needed when called from uiacl.
 		if($session)
 		{
@@ -79,28 +79,20 @@ class bo_acl
 			#_debug_array($cat)."hier<br>";
 			if($this->is_permitted($cat['id'],$perm_type))
 			{
-				for ($j=0,$s=''; $j < $cat['level']; $j++)
+				$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
+				if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 				{
-					$s .= '&nbsp;';
-				}
-				$s .= $GLOBALS['egw']->strip_html($cat['name']);
-				if ($cat['app_name'] == 'phpgw')
-				{
-					$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
-				}
-				if ($cat['owner'] == '-1')
-				{
-					$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($cat['app_name']) . '&gt;';
+					$s .= ' &#9830;';
 				}
 				$perm_cats[$cat['id']] = $s;
 			}
 		}
 		return $perm_cats;
 	}
-	
-	
+
+
 	/**
-	* gets name of category 
+	* gets name of category
 	*
 	* @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
 	* @param int $cat_id
@@ -110,7 +102,7 @@ class bo_acl
 	{
 		return $this->egw_cats->id2name($cat_id);
 	}
-	
+
 	/**
 	* gets userid of admin for given category
 	*
@@ -130,7 +122,7 @@ class bo_acl
 		}
 		return lang('none');
 	}
-	
+
 	/**
 	* cheks one of the following rights for current user:
 	*
@@ -144,7 +136,7 @@ class bo_acl
 	{
 		return $this->permissions['L'.$cat_id] & $right;
 	}
-	
+
 	/**
 	* gets all rights from all user for given cat
 	*
@@ -203,7 +195,7 @@ class bo_acl
 			$rights = in_array($account_id,$calbookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING | EGW_ACL_CALREAD) : $rights;
 			$rights = in_array($account_id,$admincat) ? ($rights = 511) : $rights;
 			if ($rights)
-			{                           
+			{
 				$GLOBALS['egw']->acl->add_repository('resources','L'.$cat_id,$account_id,$rights);
 			}
 		}
