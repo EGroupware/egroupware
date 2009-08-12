@@ -61,6 +61,7 @@ class filemanager_ui
 				in_array($user,split(', *',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
 				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
 		}
+		//echo "<p>".__METHOD__."('$user','$password') user_pw_hash(...)='".egw_session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
 		return egw_session::appsession('is_root','filemanager',egw_vfs::$is_root = $is_root);
 	}
 
@@ -365,6 +366,14 @@ class filemanager_ui
 		switch($action)
 		{
 			case 'delete':
+				// some precaution to never allow to (recursivly) remove /, /apps or /home
+				foreach((array)$selected as $path)
+				{
+					if (preg_match('/^\/?(home|apps|)\/*$/',$path))
+					{
+						return lang("Cautiously rejecting to remove folder '$path'!");
+					}
+				}
 				$dirs = $files = $errs = 0;
 				foreach(egw_vfs::find($selected,array('depth'=>true)) as $path)
 				{
