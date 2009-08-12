@@ -61,6 +61,7 @@ class filemanager_ui
 				in_array($user,split(', *',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
 				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
 		}
+		//echo "<p>".__METHOD__."('$user','$password') user_pw_hash(...)='".egw_session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
 		return egw_session::appsession('is_root','filemanager',egw_vfs::$is_root = $is_root);
 	}
 
@@ -423,6 +424,14 @@ class filemanager_ui
 				}
 				if ($selected)	// somethings left to delete
 				{
+					// some precaution to never allow to (recursivly) remove /, /apps or /home
+					foreach((array)$selected as $path)
+					{
+						if (preg_match('/^\/?(home|apps|)\/*$/',$path))
+						{
+							return lang("Cautiously rejecting to remove folder '$path'!");
+						}
+					}
 					// now we use find to loop through all files and dirs: (selected only contains dirs now)
 					// - depth=true to get first the files and then the dir containing it
 					// - hidden=true to also return hidden files (eg. Thumbs.db), as we cant delete non-empty dirs

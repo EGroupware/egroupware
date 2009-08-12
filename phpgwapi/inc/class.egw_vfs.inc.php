@@ -657,8 +657,16 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function remove($urls,$allow_urls=false)
 	{
-		//error_log(__METHOD__.'('.print_r($urls).')');
-		return self::find($urls,array('depth'=>true,'url'=>$allow_urls),array(__CLASS__,'_rm_rmdir'));
+		//error_log(__METHOD__.'('.array2string($urls).')');
+		// some precaution to never allow to (recursivly) remove /, /apps or /home
+		foreach((array)$urls as $url)
+		{
+			if (preg_match('/^\/?(home|apps|)\/*$/',parse_url($url,PHP_URL_PATH)))
+			{
+				throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($urls).") Cautiously rejecting to remove folder '$url'!");
+			}
+		}
+		return self::find($urls,array('depth'=>true,'url'=>$allow_urls,'hidden'=>true),array(__CLASS__,'_rm_rmdir'));
 	}
 
 	/**
