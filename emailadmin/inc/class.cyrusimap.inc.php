@@ -87,7 +87,7 @@
 				return false;
 			}
 
-			$mailboxString = $nameSpaces['others'][0]['name'] . $_username . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
+			$mailboxString = $nameSpaces['others'][0]['name'] . strtolower($_username) . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
 			
 			if($this->loginType == 'vmailmgr') {
 				$mailboxString .= '@'.$this->domainName;
