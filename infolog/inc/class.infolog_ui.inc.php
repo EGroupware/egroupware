@@ -1375,17 +1375,35 @@ class infolog_ui
 
 			if (is_array($_attachments))
 			{
+				//_debug_array($_attachments);
 				foreach ($_attachments as $attachment)
 				{
-					$attachments[] = array(
-						'name' => $attachment['name'],
-						'mimeType' => $attachment['type'],
-						'tmp_name' => $attachment['file'],
-						'size' => $attachment['size'],
-					);
+					if ($attachment['type'] == 'MESSAGE/RFC822')
+					{
+						$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+						$bopreferences =& CreateObject('felamimail.bopreferences');
+						$bofelamimail->openConnection();
+						$bofelamimail->reopen($attachment['folder']);
+
+						$mailcontent = self::get_mailcontent(&$bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
+						//_debug_array($mailcontent['attachments']);
+						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
+						{
+							$attachments[] = $tmpval;
+						}
+					} 
+					else
+					{
+						$attachments[] = array(
+							'name' => $attachment['name'],
+							'mimeType' => $attachment['type'],
+							'tmp_name' => $attachment['file'],
+							'size' => $attachment['size'],
+						);
+					}
 				}
 			}
-
+			//_debug_array($attachments);
 			$body = strip_tags($_body);
 			$this->edit($this->bo->import_mail(
 				implode(',',$_to_emailAddress),$_subject,$body,$attachments,''
@@ -1399,6 +1417,28 @@ class infolog_ui
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
+			$mailcontent = self::get_mailcontent(&$bofelamimail,$uid,$partid,$mailbox);
+
+			return $this->edit($this->bo->import_mail(
+				$mailcontent['mailaddress'],
+				$mailcontent['subject'],
+				$mailcontent['message'],
+				$mailcontent['attachments'],
+				strtotime($mailcontent['headers']['DATE'])
+			));
+		}
+		$GLOBALS['egw']->common->egw_header();
+		echo "<script> window.close(); alert('Error: no mail (Mailbox / UID) given!');</script>";
+		$GLOBALS['egw']->common->egw_exit();
+		exit;
+	}
+
+	/**
+	 * fetches the actual mailcontent
+	 */
+	static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='')
+	{
+			//echo __METHOD__." called for $uid,$partid <br>";
 			$headers = $bofelamimail->getMessageHeader($uid,$partid);
 			// dont force retrieval of the textpart, let felamimail preferences decide
 			$bodyParts = $bofelamimail->getMessageBody($uid,'',$partid);
@@ -1436,35 +1476,72 @@ class infolog_ui
 					$message .= $bofelamimail->wordwrap($value,75,"\n");
 				}
 			}
-
+			//_debug_array($attachments);
 			if (is_array($attachments))
 			{
 				foreach ($attachments as $num => $attachment)
 				{
-					$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($uid, $attachment['partID']));
-					if (isset($attachments[$num]['charset'])) {
-						$GLOBALS['egw']->translation->convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
+					if ($attachment['mimeType'] == 'MESSAGE/RFC822') 
+					{
+						//_debug_array($bofelamimail->getMessageHeader($uid, $attachment['partID']));
+						//_debug_array($bofelamimail->getMessageBody($uid,'', $attachment['partID']));
+						//_debug_array($bofelamimail->getMessageAttachments($uid, $attachment['partID']));
+						$mailcontent = self::get_mailcontent(&$bofelamimail,$uid,$attachment['partID']);
+						$headdata ='';
+						if ($mailcontent['headers'])
+						{
+							if ($mailcontent['headers']['SUBJECT']) $headdata = lang('subject').': '.$mailcontent['headers']['SUBJECT']."\n";
+							if ($mailcontent['headers']['FROM']) $headdata .= lang('from').': '.$mailcontent['headers']['FROM']."\n";
+							if ($mailcontent['headers']['SENDER']) $headdata .= lang('sender').': '.$mailcontent['headers']['SENDER']."\n";
+							if ($mailcontent['headers']['TO']) $headdata .= lang('to').': '.$mailcontent['headers']['TO']."\n";
+							if ($mailcontent['headers']['CC']) $headdata .= lang('cc').': '.$mailcontent['headers']['CC']."\n";
+							if ($mailcontent['headers']['DATE']) $headdata .= lang('date').': '.$mailcontent['headers']['DATE']."\n";
+							if ($mailcontent['headers']['PRIORITY'] && $mailcontent['headers']['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$mailcontent['headers']['PRIORITY']."\n";
+							if ($mailcontent['headers']['IMPORTANCE'] && $mailcontent['headers']['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$mailcontent['headers']['IMPORTANCE']."\n";
+							//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\n";
+							if (!empty($headdata)) $headdata .= "--------------------------------------------------------\n";
+						}
+						if ($mailcontent['message']) 
+						{
+							$tempname =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+							$attachedMessages[] = array(
+								'type' => 'TEXT/PLAIN',
+								'name' => $mailcontent['subject'].'.txt',
+								'tmp_name' => $tempname,
+							);
+							$tmpfile = fopen($tempname,'w');
+							fwrite($tmpfile,$headdata.$mailcontent['message']);
+							fclose($tmpfile);
+						}
+						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
+						{
+							$attachedMessages[] = $tmpval;
+						}
+						unset($attachments[$num]);
 					}
-					$attachments[$num]['type'] = $attachments[$num]['mimeType'];
-					$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-					$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
-					fwrite($tmpfile,$attachments[$num]['attachment']);
-					fclose($tmpfile);
-					unset($attachments[$num]['attachment']);
+					else
+					{
+						$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($uid, $attachment['partID']));
+						if (isset($attachments[$num]['charset'])) {
+							$GLOBALS['egw']->translation->convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
+						}
+						$attachments[$num]['type'] = $attachments[$num]['mimeType'];
+						$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+						$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
+						fwrite($tmpfile,$attachments[$num]['attachment']);
+						fclose($tmpfile);
+						unset($attachments[$num]['attachment']);
+					}
 				}
+				if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
 			}
-			return $this->edit($this->bo->import_mail(
-				$mailaddress,
-				$subject,
-				$message,
-				$attachments,
-				strtotime($headers['DATE'])
-			));
-		}
-		$GLOBALS['egw']->common->egw_header();
-		echo "<script> window.close(); alert('Error: no mail (Mailbox / UID) given!');</script>";
-		$GLOBALS['egw']->common->egw_exit();
-		exit;
+			return array(
+					'mailaddress'=>$mailaddress,
+					'subject'=>$subject,
+					'message'=>$message,
+					'attachments'=>$attachments,
+					'headers'=>$headers,
+					);
 	}
 
 	/**
