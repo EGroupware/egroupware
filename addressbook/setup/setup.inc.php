@@ -63,5 +63,9 @@ $setup_info['projectmanager']['check_install'] = array(
 		'func' => 'function_check',
 		'warning' => "The imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). It's needed to upload photos for contacts.",
 	),
+	'zip' => array(
+		'func' => 'extension_check',
+		'warning' => lang('The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.'),
+	),
 );
 
