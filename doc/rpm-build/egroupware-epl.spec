@@ -16,7 +16,7 @@ Prefix: /usr/share
 	%define php php5
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
