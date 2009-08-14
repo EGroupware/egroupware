@@ -200,6 +200,14 @@ $checks = array(
 		'is_world_readable' => False,
 		'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 	),
+	'ctype' => array(
+		'func' => 'extension_check',
+		'error' => lang("The ctype extension is needed by HTMLpurifier to check content of FCKeditor agains Cross Site Skripting."),
+	),
+	'mcrypt' => array(
+		'func' => 'extension_check',
+		'warning' => lang('The mcrypt extension is used, to store eTemplate form state on the client, which is the prefered way to store it.'),
+	),
 );
 if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = session_save_path()))
 {
