@@ -200,6 +200,10 @@ $checks = array(
 		'is_world_readable' => False,
 		'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 	),
+	'ctype' => array(
+		'func' => 'extension_check',
+		'error' => lang("The ctype extension is needed by HTMLpurifier to check content of FCKeditor agains Cross Site Skripting."),
+	),
 );
 if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = session_save_path()))
 {
