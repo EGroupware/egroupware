@@ -190,8 +190,12 @@ class etemplate extends boetemplate
 	* @param array $readonlys with field-names as keys for fields with should be readonly
 	* 		(eg. to implement ACL grants on field-level or to remove buttons not applicable)
 	* @param array $preserv with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
-	* @param int $output_mode 0 = echo incl. navbar, 1 = return html, 2 = echo without navbar (eg. for popups)
+	* @param int $output_mode
+	*	 0 = echo incl. navbar
+	*	 1 = return html
 	*	-1 = first time return html, after use 0 (echo html incl. navbar), eg. for home
+	*	 2 = echo without navbar (eg. for popups)
+	*	 3 = return eGW independent html site
 	* @param string $ignore_validation if not empty regular expression for validation-errors to ignore
 	* @param array $changes change made in the last call if looping, only used internaly by process_exec
 	* @return string html for $output_mode == 1, else nothing
@@ -231,7 +235,7 @@ class etemplate extends boetemplate
 			self::$name_vars .= 1+count(self::$name_forms);
 		}
 		self::$name_forms[] = self::$name_form;
-
+		
 		self::$request = etemplate_request::read();
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->readonlys = $readonlys;
@@ -243,6 +247,14 @@ class etemplate extends boetemplate
 		self::$request->ignore_validation = $ignore_validation;
 		self::$request->name_vars = self::$name_vars;
 
+		if((int) $output_mode == 3)
+		{
+			self::$styles_included[$this->name] = True;
+			return "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>\n"
+				."<html>\n<head>\n".html::style($this->style)."\n</head>\n"
+				."<body>\n".$this->show($content)."\n</body>\n</html>";
+		}
+		
 		$html = $this->include_java_script(1).
 				$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,self::$name_vars);
 
