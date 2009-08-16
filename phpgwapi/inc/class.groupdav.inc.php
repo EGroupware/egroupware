@@ -158,7 +158,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$files['files'][] = array(
 				'path'  => '/',
 				'props' => array(
-					self::mkprop('displayname','eGroupWare'),
+					self::mkprop('displayname','EGroupware (Cal|Card|Group)DAV server'),
 					self::mkprop('resourcetype','collection'),
 					// adding the calendar extra property (calendar-home-set, etc.) here, allows apple iCal to "autodetect" the URL
 					self::mkprop(groupdav::CALDAV,'calendar-home-set',$this->base_uri.'/calendar/'),
@@ -291,7 +291,7 @@ class groupdav extends HTTP_WebDAV_Server
 	/**
 	 * GET method handler
 	 *
-	 * @param  array  parameter passing array
+	 * @param  array $options parameter passing array
 	 * @return bool   true on success
 	 */
 	function GET(&$options)
@@ -300,13 +300,163 @@ class groupdav extends HTTP_WebDAV_Server
 
 		if (!$this->_parse_path($options['path'],$id,$app,$user))
 		{
+			return $this->autoindex($options);
+
+			error_log(__METHOD__."(".array2string($options).") 404 Not Found");
 			return '404 Not Found';
 		}
 		if (($handler = self::app_handler($app)))
 		{
 			return $handler->get($options,$id);
 		}
+		error_log(__METHOD__."(".array2string($options).") 501 Not Implemented");
 		return '501 Not Implemented';
+	}
+
+	/**
+	 * Display an automatic index (listing and properties) for a collection
+	 *
+	 * @param array $options parameter passing array, index "path" contains requested path
+	 */
+	protected function autoindex($options)
+	{
+		$propfind_options = array(
+			'path'  => $options['path'],
+			'depth' => 1,
+		);
+		$files = array();
+		if (($ret = $this->PROPFIND($propfind_options,$files)) !== true)
+		{
+			return $ret;	// no collection
+		}
+		header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
+		echo "<html>\n<head>\n\t<title>".'EGroupware (Cal|Card|Group)DAV server '.htmlspecialchars($options['path'])."</title>\n";
+		echo "\t<meta http-equiv='content-type' content='text/html; charset=utf-8' />\n";
+		echo "\t<style type='text/css'>\n.th { background-color: #e0e0e0; }\n.row_on { background-color: #F1F1F1; }\n".
+			".row_off { background-color: #ffffff; }\ntd { padding-left: 5px; }\nth { padding-left: 5px; text-align: left; }\n\t</style>\n";
+		echo "</head>\n<body>\n";
+
+		echo '<h1>(Cal|Card|Group)DAV ';
+		$path = '/groupdav.php';
+		foreach(explode('/',substr($options['path'],0,-1)) as $n => $name)
+		{
+			$path .= ($n != 1 ? '/' : '').$name;
+			echo html::a_href(htmlspecialchars($name.'/'),$path.($n ? '/' : ''));
+		}
+		echo "</h1>\n";
+		$collection_props = self::props2array($files['files'][0]['props']);
+		echo '<h3>'.lang('Collection listing').': '.htmlspecialchars($collection_props['DAV:displayname'])."</h3>\n";
+		//_debug_array($files['files']);
+
+		if (count($files['files']) <= 1)
+		{
+			echo '<p>'.lang('Collection empty.')."</p>\n";
+		}
+		else
+		{
+			echo "<table>\n\t<tr class='th'><th>".lang('Name')."</th><th>".lang('Size')."</th><th>".lang('Last modified')."</th><th>".
+				lang('ETag')."</th><th>".lang('Content type')."</th><th>".lang('Resource type')."</th></tr>\n";
+
+			foreach($files['files'] as $n => $file)
+			{
+				if (!$n) continue;	// own entry --> displaying properies later
+
+				$props = self::props2array($file['props']);
+				//echo $file['path']; _debug_array($props);
+				$class = $class == 'row_on' ? 'row_off' : 'row_on';
+				if (substr($file['path'],-1) == '/')
+				{
+					$name = basename(substr($file['path'],0,-1)).'/';
+				}
+				else
+				{
+					$name = basename($file['path']);
+				}
+				echo "\t<tr class='$class'>\n\t\t<td>".html::a_href(htmlspecialchars($name),'/groupdav.php'.$file['path'])."</td>\n";
+				echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
+				echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
+				echo "\t\t<td>".$props['DAV:getetag']."</td>\n";
+				echo "\t\t<td>".htmlspecialchars($props['DAV:getcontenttype'])."</td>\n";
+				echo "\t\t<td>".self::prop_value($props['DAV:resourcetype'])."</td>\n\t</tr>\n";
+			}
+			echo "</table>\n";
+		}
+		echo '<h3>'.lang('Properties')."</h3>\n";
+		echo "<table>\n\t<tr class='th'><th>".lang('Namespace')."</th><th>".lang('Name')."</th><th>".lang('Value')."</th></tr>\n";
+		foreach($collection_props as $name => $value)
+		{
+			$class = $class == 'row_on' ? 'row_off' : 'row_on';
+			$ns = explode(':',$name);
+			$name = array_pop($ns);
+			$ns = implode(':',$ns);
+			echo "\t<tr class='$class'>\n\t\t<td>".htmlspecialchars($ns)."</td><td>".htmlspecialchars($name)."</td>\n";
+			echo "\t\t<td>".self::prop_value($value)."</td>\n\t</tr>\n";
+		}
+		echo "</table>\n";
+
+		echo "</body>\n</html>\n";
+
+		common::egw_exit();
+	}
+
+	/**
+	 * Format a property value for output
+	 *
+	 * @param mixed $value
+	 * @return string
+	 */
+	protected static function prop_value($value)
+	{
+		if (is_array($value))
+		{
+			if (isset($value[0]['ns']))
+			{
+				$value = self::props2array($value);
+			}
+			$value = htmlspecialchars(array2string($value));
+		}
+		elseif (preg_match('/^https?:\/\//',$value))
+		{
+			$value = html::a_href($value,$value);
+		}
+		else
+		{
+			$value = htmlspecialchars($value);
+		}
+		return $value;
+	}
+
+	/**
+	 * Return numeric indexed array with values for keys 'ns', 'name' and 'val' as array 'ns:name' => 'val'
+	 *
+	 * @param array $props
+	 * @return array
+	 */
+	protected static function props2array(array $props)
+	{
+		$arr = array();
+		foreach($props as $prop)
+		{
+			switch($prop['ns'])
+			{
+				case 'DAV:';
+					$ns = 'DAV';
+					break;
+				case self::CALDAV:
+					$ns = 'CalDAV';
+					break;
+				case self::CARDDAV:
+					$ns = 'CardDAV';
+					break;
+				case self::GROUPDAV:
+					$ns = 'GroupDAV';
+					break;
+				default:
+					$ns = $prop['ns'];
+			}
+			$arr[$ns.':'.$prop['name']] = $prop['val'];
+		}
+		return $arr;
 	}
 
 	/**
@@ -480,14 +630,6 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__METHOD__." called with ('$path') id=$id, app='$app', user=$user");
 		$parts = explode('/',$path);
-		if ($this->debug) error_log(__METHOD__." called parts: ".print_r($parts,true));
-		if (in_array($parts[1],array('principals','groups')))
-		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-			list(,$app,$id) = $parts;
-			return true;
-		}
-
 		list($id) = explode('.',array_pop($parts));		// remove evtl. .ics extension
 
 		$app = array_pop($parts);
