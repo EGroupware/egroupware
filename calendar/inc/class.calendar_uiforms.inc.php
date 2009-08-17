@@ -353,13 +353,13 @@ class calendar_uiforms extends calendar_ui
 									// refreshing the calendar-view with the changed participant-status
 									if($event['recur_type'] != MCAL_RECUR_NONE)
 									{
-										$msg = lang('Status of all occurrences changed');
+										$msg = lang('Status for all future scheduled days changed');
 									}
 									else
 									{
 										if(isset($content['edit_single']))
 										{
-											$msg = lang('Status of this occurrence changed');
+											$msg = lang('Status for this particular day changed');
 											// prevent accidentally creating a real exception afterwards
 											$view = true;
 											$hide_delete = true;
@@ -661,9 +661,9 @@ class calendar_uiforms extends calendar_ui
 		}
 		if($this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
-			return lang('Exception created - you can now edit or delete it');
+			return lang('Save event as exception - Delete single occurrence - Edit status or alarms for this particular day');
 		}
-		return lang('You can now edit your participation status on this single occurrence');
+		return lang('Edit status or alarms for this particular day');
 	}
 
 	/**
