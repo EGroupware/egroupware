@@ -351,7 +351,14 @@ class calendar_uiforms extends calendar_ui
 								if ($this->bo->set_status($event['id'],$uid,$status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status
-									$msg = lang('Status changed');
+									if($event['recur_type'] != MCAL_RECUR_NONE)
+									{
+										$msg = lang('Status of all occurrences changed');
+									}
+									else
+									{
+										$msg = isset($content['edit_single']) ? lang('Status of this occurrence changed') : lang('Status changed');
+									}
 									if (!$preserv['no_popup'])
 									{
 										$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
@@ -645,7 +652,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			return lang('Exception created - you can now edit or delete it');
 		}
-		return lang('You can now edit your participation status on this single recurrence');
+		return lang('You can now edit your participation status on this single occurrence');
 	}
 
 	/**
@@ -791,12 +798,17 @@ class calendar_uiforms extends calendar_ui
 				$preserv['actual_date'] = $event['start'];		// remember the date clicked
 				if ($event['recur_type'] != MCAL_RECUR_NONE)
 				{
-					$participants = array('participants' => $event['participants'], 'participant_types' => $event['participant_types']); // preserv participants of this event
-					$event = array_merge($this->bo->read($cal_id,0,true), $participants);	// recuring event --> read the series + concatenate with participants of the selected recurrence
 					// check if we should create an exception
 					if ($_GET['exception'])
 					{
+						// exception: preserv participants of this event and merge it with the 0-recurrence
+						$participants = array('participants' => $event['participants'],'participant_types' => $event['participant_types']);
+						$event = array_merge($this->bo->read($cal_id,0,true),$participants);
 						$msg = $this->_create_exception($event,$preserv);
+					}
+					else
+					{
+						$event = $this->bo->read($cal_id,0,true); // read the 0-recurrence
 					}
 				}
 			}
@@ -912,7 +924,7 @@ class calendar_uiforms extends calendar_ui
 								'uid'      => $member,
 								'status'   => 'G',
 							);
-							// read access is enought to invite participants, but you edit rights to change status
+							// read access is enough to invite participants, but you need edit rights to change status
 							if (!$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
 							{
 								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] =$readonlys[$row]['status']= true;
