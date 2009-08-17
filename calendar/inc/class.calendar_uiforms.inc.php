@@ -357,7 +357,17 @@ class calendar_uiforms extends calendar_ui
 									}
 									else
 									{
-										$msg = isset($content['edit_single']) ? lang('Status of this occurrence changed') : lang('Status changed');
+										if(isset($content['edit_single']))
+										{
+											$msg = lang('Status of this occurrence changed');
+											// prevent accidentally creating a real exception afterwards
+											$view = true;
+											$hide_delete = true;
+										}
+										else
+										{
+											$msg = lang('Status changed');
+										}
 									}
 									if (!$preserv['no_popup'])
 									{
@@ -379,14 +389,15 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		$preserv = array(
-			'view'        => $view,
-			'edit_single' => $content['edit_single'],
-			'reference'   => $content['reference'],
-			'recurrence'  => $content['recurrence'],
-			'actual_date' => $content['actual_date'],
-			'referer'     => $referer,
-			'no_popup'    => $content['no_popup'],
-			$this->tabs   => $content[$this->tabs],
+			'view'			=> $view,
+			'hide_delete'	=> $hide_delete,
+			'edit_single'	=> $content['edit_single'],
+			'reference'		=> $content['reference'],
+			'recurrence'	=> $content['recurrence'],
+			'actual_date'	=> $content['actual_date'],
+			'referer'		=> $referer,
+			'no_popup'		=> $content['no_popup'],
+			$this->tabs		=> $content[$this->tabs],
 		);
 		$noerror=true;
 		switch((string)$button)
@@ -746,6 +757,7 @@ class calendar_uiforms extends calendar_ui
 	 * @param array $event=null Event to edit, if not $_GET['cal_id'] contains the event-id
 	 * @param array $perserv=null following keys:
 	 *	view boolean view-mode, if no edit-access we automatic fallback to view-mode
+	 *	hide_delete boolean hide delete button
 	 *	referer string menuaction of the referer
 	 *	no_popup boolean use a popup or not
 	 *	edit_single int timestamp of single event edited, unset/null otherwise
@@ -896,7 +908,7 @@ class calendar_uiforms extends calendar_ui
 				);
 				$readonlys[$row.'[quantity]'] = $type == 'u' || !isset($this->bo->resources[$type]['max_quantity']);
 				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
-				$readonlys["delete[$uid]"] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
+				$readonlys["delete[$uid]"] = $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 				// todo: make the participants available as links with email as title
 				if ($name == 'accounts')
 				{
@@ -1038,7 +1050,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content['exception_label'] = $this->bo->long_date($preserv['actual_date']);
 		}
-		$readonlys['button[delete]'] = !$event['id'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
+		$readonlys['button[delete]'] = !$event['id'] || $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
 		if (!$event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{
