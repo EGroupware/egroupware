@@ -97,7 +97,7 @@ class timesheet_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
 		{
 			$file = array(
-//				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
+				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
 				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
 				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
@@ -139,6 +139,18 @@ class timesheet_hooks
 	static function settings()
 	{
 		self::check_set_default_prefs();
+
+		$timesheet = new timesheet_bo();  //nedd Status from timesheet
+
+		$GLOBALS['settings']['predefined_status'] = array(
+			'type'   => 'select',
+			'label'  => 'Status of created timesheets',
+			'name'   => 'predefined_status',
+			'values' => $timesheet->status_labels,
+			'help'   => 'Select the predefined status, whan creating a new timesheet ',
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
 
 		return true;	// otherwise prefs say it cant find the file ;-)
 	}

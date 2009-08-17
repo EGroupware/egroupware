@@ -72,11 +72,13 @@ select a project	timesheet	de	Projekt auswählen
 select a status of the timesheet	timesheet	de	einen status auswählen
 select action	timesheet	de	Bitte eine Aktion auswählen
 select multiple timeshhets for a further action	timesheet	de	Wählen Sie mehrere Stundenzettel für einen weitere Aktion aus
+select the predefined status, whan creating a new timesheet	timesheet	de	Wählen Sie einen Status als Vorgabe für neu zu erstellende Stundenzettel aus
 show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengensumme (z.B. um negative Überstunden zu summieren)
 start	timesheet	de	Start
 starttime	timesheet	de	Startzeit
 starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen !!!
 status deleted.	timesheet	de	Status gelöscht
+status of created timesheets	timesheet	de	Status für neue Stundenzettel
 status updated.	timesheet	de	Status geändert
 sum %1:	timesheet	de	Summe %1:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	de	Dieser Name wird nur intern benutzt (<= 20 Zeichen), Änderungen führen dazu, das bestehende Daten nicht mehr angezeigt werden können.

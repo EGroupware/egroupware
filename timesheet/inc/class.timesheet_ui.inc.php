@@ -247,6 +247,7 @@ class timesheet_ui extends timesheet_bo
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
 			'start_time' => $this->datetime2time($this->data['ts_start']),
 			'pm_integration' => $this->pm_integration,
+			'ts_status' => ($preserv['ts_status'] !='')? $preserv['ts_status'] : $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)

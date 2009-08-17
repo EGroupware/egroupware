@@ -72,11 +72,13 @@ select a project	timesheet	en	Select a project
 select a status of the timesheet	timesheet	en	select a status of the timesheet
 select action	timesheet	en	Select action
 select multiple timeshhets for a further action	timesheet	en	Select multiple timeshhets for a further action
+select the predefined status, whan creating a new timesheet	timesheet	en	Select the predefined status, whan creating a new timesheet
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum (eg. to sum up negative overtime)
 start	timesheet	en	Start
 starttime	timesheet	en	Starttime
 starttime has to be before endtime !!!	timesheet	en	Starttime has to be before endtime !!!
 status deleted.	timesheet	en	Status deleted.
+status of created timesheets	timesheet	en	Status of created timesheets
 status updated.	timesheet	en	Status updated.
 sum %1:	timesheet	en	Sum %1:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
