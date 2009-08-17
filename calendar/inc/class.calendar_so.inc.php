@@ -868,16 +868,19 @@ ORDER BY cal_user_type, cal_usre_id
 
 	/**
 	 * updates the participants of an event, taken into account the evtl. recurrences of the event(!)
+	 * this method just adds new participants or removes not longer set participants
+	 * this method does never overwrite existing entries (except for delete)
 	 *
 	 * @param int $cal_id
 	 * @param array $participants uid => status pairs
-	 * @param int|boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
+	 * @param int|boolean $change_since=0, false=new entry, 0=all, > 0 time from which on the repetitions should be changed
+	 * @param boolean $add_only=false
+	 *		false = add AND delete participants if needed (full list of participants required in $participants)
+	 *		true = only add participants if needed, no participant will be deleted (participants to check/add required in $participants)
 	 * @return int|boolean number of updated recurrences or false on error
 	 */
-	function participants($cal_id,$participants,$change_since=0)
+	function participants($cal_id,$participants,$change_since=0,$add_only=false)
 	{
-		//echo '<p>'.__METHOD__."($cal_id,".print_r($participants,true).",$change_since)</p>\n";
-
 		// remove group-invitations, they are NOT stored in the db
 		foreach($participants as $uid => $status)
 		{
@@ -892,28 +895,38 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
 		}
-		if ($change_since !== false)	// existing entries only
+		
+		if ($change_since !== false)	// update existing entries
 		{
-			// delete not longer set participants
-			$deleted = array();
-			foreach($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id,cal_quantity',$where,
-				__LINE__,__FILE__,false,'','calendar') as $row)
+			$existing_entries = $this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id',$where,__LINE__,__FILE__,false,'','calendar');
+
+			// create a full list of participants which already exist in the db
+			$old_participants = array();
+			foreach($existing_entries as $row)
 			{
-				$uid = $this->combine_user($row['cal_user_type'],$row['cal_user_id']);
-				if (!isset($participants[$uid]))	// delete group-invitations
+				$old_participants[self::combine_user($row['cal_user_type'],$row['cal_user_id'])] = true;
+			}
+
+			// tag participants which should be deleted
+			if($add_only === false)
+			{
+				$deleted = array();
+				foreach($existing_entries as $row)
 				{
-					$deleted[$row['cal_user_type']][] = $row['cal_user_id'];
-				}
-				elseif((($row['cal_user_type'] == 'r') &&
-					// quantity of resource unchanged
-					($row['cal_quantity'] == (substr($participants[$uid],1) ? substr($participants[$uid],1) : 1))) ||
-					($row['cal_status'] == $participants[$uid]))
-				{
-					unset($participants[$uid]);	// we don't touch them
+					$uid = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+					// delete not longer set participants
+					if (!isset($participants[$uid]))
+					{
+						$deleted[$row['cal_user_type']][] = $row['cal_user_id'];
+					}
 				}
 			}
 
-			if (count($deleted))
+			// only keep added participants for further steps - we do not touch existing ones
+			$participants = array_diff_key($participants,$old_participants);
+
+			// delete participants tagged for delete
+			if ($add_only === false && count($deleted))
 			{
 				$to_or = array();
 				$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
@@ -927,33 +940,23 @@ ORDER BY cal_user_type, cal_usre_id
 				$this->db->delete($this->user_table,$where + array('('.implode(' OR ',$to_or).')'),__LINE__,__FILE__,'calendar');
 			}
 		}
-		if (count($participants))	// these are ALL participants now - we exclude the existing ones later
+		
+		if (count($participants))	// participants which need to be added
 		{
 			// find all recurrences, as they all need the new parts to be added
 			$recurrences = array();
-			$existing_participants = array();
-
-			if ($change_since !== false)	// existing entries only
+			if ($change_since !== false)	// existing entries
 			{
 				foreach($this->db->select($this->user_table,'DISTINCT cal_recur_date',$where,__LINE__,__FILE__,false,'','calendar') as $row)
 				{
 					$recurrences[] = $row['cal_recur_date'];
 				}
-
-				// existing participants must not be updated
-				foreach($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id,cal_quantity,cal_role',$where,__LINE__,__FILE__,false,'','calendar') as $row)
-				{
-					$existing_participants[self::combine_user($row['cal_user_type'],$row['cal_user_id'])] = self::combine_status('',$row['cal_quantity'],$row['cal_role']);
-				}
 			}
 			if (!count($recurrences)) $recurrences[] = 0;	// insert the default one
 
+			// update participants
 			foreach($participants as $uid => $status)
 			{
-				if (isset($existing_participants[$uid]) && substr($status,1) == $existing_participants[$uid])
-				{
-					continue;	// dont update existing participants, if quantity or role is not changed
-				}
 				$id = null;
 				self::split_user($uid,$type,$id);
 				self::split_status($status,$quantity,$role);
@@ -1015,6 +1018,11 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.time().')';
 		}
+
+		// check if the user has any status database entries and create the default set if needed
+		// a status update before having the necessary entries happens on e.g. group invitations
+		$this->participants($cal_id,array(self::combine_user($user_type,$user_id) => 'U'),0,true);
+
 		if ($status == 'G')		// remove group invitations, as we dont store them in the db
 		{
 			$this->db->delete($this->user_table,$where,__LINE__,__FILE__,'calendar');
