@@ -287,10 +287,22 @@ class so_sql
 	 * changes the data from the db-format to your work-format
 	 *
 	 * It gets called everytime when data is read from the db.
-	 * This default implementation only converts the timestamps mentioned in $this->timestampfs from server to user time.
-	 * You can reimplement it in a derived class
+	 * This default implementation only converts the timestamps mentioned in $this->timestamps from server to user time.
+	 * You can reimplement it in a derived class like this:
+	 *
+	 * function db2data($data=null)
+	 * {
+	 * 		if (($intern = !is_array($data)))
+	 * 		{
+	 * 			$data =& $this->data;
+	 * 		}
+	 * 		// do your own modifications here
+	 *
+	 * 		return parent::db2data($intern ? null : $data);	// important to use null, if $intern!
+	 * }
 	 *
 	 * @param array $data=null if given works on that array and returns result, else works on internal data-array
+	 * @return array
 	 */
 	function db2data($data=null)
 	{
@@ -315,8 +327,6 @@ class so_sql
 				}
 			}
 		}
-		// do the necessare changes here
-
 		return $data;
 	}
 
@@ -325,13 +335,25 @@ class so_sql
 	 *
 	 * It gets called everytime when data gets writen into db or on keys for db-searches.
 	 * This default implementation only converts the timestamps mentioned in $this->timestampfs from user to server time.
-	 * You can reimplement it in a derived class
+	 * You can reimplement it in a derived class like this:
+	 *
+	 * function data2db($data=null)
+	 * {
+	 * 		if (($intern = !is_array($data)))
+	 * 		{
+	 * 			$data =& $this->data;
+	 * 		}
+	 * 		// do your own modifications here
+	 *
+	 * 		return parent::data2db($intern ? null : $data);	// important to use null, if $intern!
+	 * }
 	 *
 	 * @param array $data=null if given works on that array and returns result, else works on internal data-array
+	 * @return array
 	 */
 	function data2db($data=null)
 	{
-		if ($intern = !is_array($data))
+		if (!is_array($data))
 		{
 			$data = &$this->data;
 		}
@@ -352,8 +374,6 @@ class so_sql
 				}
 			}
 		}
-		// do the necessary changes here
-
 		return $data;
 	}
 
