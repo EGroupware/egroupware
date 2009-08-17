@@ -434,6 +434,11 @@ class timesheet_ui extends timesheet_bo
 		{
 			$query['col_filter']['ts_project'] = null;
 		}
+		// filter for no status
+		if ((string)$query['col_filter']['ts_status'] == '0')
+		{
+			$query['col_filter']['ts_status'] = null;
+		}
 		#_debug_array($query['col_filter']);
 		if ((int)$query['filter2'] != (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'])
 		{
@@ -712,7 +717,7 @@ class timesheet_ui extends timesheet_bo
 			'ts_owner'   => $read_grants,
 			'pm_id'      => array(lang('No project')),
 			'cat_id'     => array(lang('None')),
-			'ts_status'  => $this->status_labels,
+			'ts_status'  => $this->status_labels+array(lang('No status')),
 		);
 		$content['nm']['no_status'] = !$sel_options['ts_status'];
 

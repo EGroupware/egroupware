@@ -55,6 +55,7 @@ modify the status of the timesheet	timesheet	en	Modify the Status of the Timeshe
 new ticket submitted by %1 at %2	timesheet	en	New ticket submitted by %1 at %2
 no details	timesheet	en	no details
 no project	timesheet	en	No project
+no status	timesheet	en	No status
 none: use only free project-names	admin	en	None: use only free project-names
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	number of row for a multiline inputfield or line of a multi-select-box
 or endtime	timesheet	en	or Endtime
