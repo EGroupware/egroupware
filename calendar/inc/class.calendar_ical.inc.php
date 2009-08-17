@@ -161,7 +161,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param int/array $events (array of) cal_id or array of the events
 	 * @param string $version='1.0' could be '2.0' too
 	 * @param string $method='PUBLISH'
-	 * @param int $recur_date=0	if set export the next recurrance at or after the timestamp,
+	 * @param int $recur_date=0	if set export the next recurrence at or after the timestamp,
 	 *                          	default 0 => export whole series (or events, if not recurring)
 	 * @return string/boolean string with iCal or false on error (eg. no permission to read the event)
 	 */
@@ -807,7 +807,6 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($component, 'Horde_iCalendar_vevent'))
 			{
-
 				$event = $this->vevent2egw($component, $version, $this->supportedFields);
 
 				if ($cal_id > 0) {
@@ -903,7 +902,7 @@ class calendar_ical extends calendar_boupdate
 				{
 					// new event
 					$cal_id = -1;
-					$recur_date = $event['reference'];
+					$recur_date = $event['recurrence'];
 				}
 
 				if (empty($event['uid']) && $cal_id > 0 &&
@@ -1287,7 +1286,7 @@ class calendar_ical extends calendar_boupdate
 			'category'			=> 'category',
 			'non_blocking'		=> 'non_blocking',
 			'uid'				=> 'uid',
-			'reference'			=> 'reference',
+			'recurrence'		=> 'recurrence',
 		);
 
 		$defaultFields['evolution'] = $defaultFields['basic'] + array(
@@ -1303,7 +1302,7 @@ class calendar_ical extends calendar_boupdate
 			'category'			=> 'category',
 			'non_blocking'		=> 'non_blocking',
 			'uid'				=> 'uid',
-			'reference'			=> 'reference',
+			'recurrence'		=> 'recurrence',
 		);
 
 
