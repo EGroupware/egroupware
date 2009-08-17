@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.list.rows" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column width="40%"/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<nextmatch-sortheader label="Start" id="cal_start"/>
+						<nextmatch-sortheader id="cal_end" label="End"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Title" id="cal_title"/>
+						<nextmatch-sortheader label="Description" id="cal_description"/>
+					</vbox>
+					<nextmatch-sortheader label="Title" id="cal_title"/>
+					<nextmatch-sortheader label="Description" id="cal_description"/>
+					<nextmatch-sortheader label="Recurrence" id="recure"/>
+					<nextmatch-header label="Project" id="pm_id"/>
+					<nextmatch-header label="Category" id="cat_id"/>
+					<vbox>
+						<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
+						<nextmatch-sortheader id="cal_location" label="Location"/>
+					</vbox>
+					<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
+					<nextmatch-sortheader id="cal_location" label="Location"/>
+					<nextmatch-accountfilter options="All" id="participant" label="Participants"/>
+					<hbox label="Actions" class="noPrint">
+						<description value="Actions" statustext="Check all" class="noPrint"/>
+						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
+					</hbox>
+				</row>
+				<row class="row" valign="top">
+					<vbox id="start">
+						<date-time id="${row}[start]" readonly="true" options=",$cont[format]" class="noWrap"/>
+						<date-time id="${row}[end]" readonly="true" options=",$cont[format]" class="noWrap"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[title]" readonly="true" no_lang="1" options="b"/>
+						<description id="${row}[description]" no_lang="1"/>
+						<description id="${row}[recure]" no_lang="1"/>
+					</vbox>
+					<description id="${row}[title]"/>
+					<description id="${row}[description]" no_lang="1"/>
+					<description id="${row}[recure]"/>
+					<link-string options="calendar,projectmanager" id="${row}[id]"/>
+					<menulist>
+						<menupopup type="select-cat" id="${row}[category]" readonly="true"/>
+					</menulist>
+					<vbox>
+						<menulist class="noWrap">
+							<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+						</menulist>
+						<description id="${row}[location]" no_lang="1"/>
+					</vbox>
+					<menulist class="noWrap">
+						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+					</menulist>
+					<description id="${row}[location]" no_lang="1"/>
+					<html id="${row}[parts]" readonly="true" no_lang="1"/>
+					<hbox class="noPrint">
+						<button image="view" label="View" id="view[$row_cont[id]]" statustext="View this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
+						<button image="edit" label="Edit" id="edit[$row_cont[id]]" statustext="Edit this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
+						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this event" onclick="return confirm('Delete this event');"/>
+						<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
