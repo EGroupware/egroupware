@@ -193,6 +193,10 @@ class schema_proc
 		// creating unique indices/constrains
 		foreach ($aTableDef['uc'] as $name => $mFields)
 		{
+			if (empty($mFields))
+			{
+				continue;	// cant create an index without fields (was observed in broken backups)
+			}
 			if ($this->_in_index($mFields,array($aTableDef['pk'])))
 			{
 				continue;	// is already created as primary key
@@ -210,6 +214,10 @@ class schema_proc
 		// creation indices
 		foreach ($aTableDef['ix'] as $name => $mFields)
 		{
+			if (empty($mFields))
+			{
+				continue;	// cant create an index without fields (was observed in broken backups)
+			}
 			if ($this->_in_index($mFields,array($aTableDef['pk'])) ||
 				$this->_in_index($mFields,$aTableDef['uc']))
 			{
