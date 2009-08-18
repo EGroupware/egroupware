@@ -47,7 +47,7 @@
 			{
 				$_POST['newsettings'] = $this->array_stripslashes($_POST['newsettings']);
 			}
-			
+
 			switch($_GET['appname'])
 			{
 				case 'admin':
@@ -234,9 +234,13 @@
 							$t->set_var($value,'');
 						}
 						break;
+					case 'call':	// eg. call_class::method or call_app.class.method
+						$newval = str_replace(' ','_',$newval);
+						$t->set_var($value,ExecMethod($newval,$c->config_data));
+						break;
 					default:
-					$t->set_var($value,'');
-					break;
+						$t->set_var($value,'');
+						break;
 				}
 			}
 
@@ -249,8 +253,8 @@
 
 		/**
 		 * applies stripslashes recursivly on each element of an array
-		 * 
-		 * @param array &$var 
+		 *
+		 * @param array &$var
 		 * @return array
 		 */
 		function array_stripslashes($var)
