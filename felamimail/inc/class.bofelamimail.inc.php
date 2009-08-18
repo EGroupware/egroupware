@@ -40,7 +40,8 @@
 		// message encodings
 		var $encoding = array("7bit", "8bit", "binary", "base64", "quoted-printable", "other");
 		static $displayCharset;
-		static $botranslation;
+		var $bopreferences;
+		var $mailPreferences;
 		// set to true, if php is compiled with multi byte string support
 		var $mbAvailable = FALSE;
 
@@ -84,17 +85,24 @@
 			}
 		}
 
-		function bofelamimail($_displayCharset='iso-8859-1')
+		function bofelamimail($_displayCharset='iso-8859-1',$_restoreSession=true)
 		{
-			$this->restoreSessionData();
+			if ($_restoreSession) 
+			{
+				//error_log(__METHOD__." Session restore ".function_backtrace());
+				$this->restoreSessionData();
+			}
+			else
+			{
+				$this->forcePrefReload();
+			}
 
 			// FIXME: this->foldername seems to be unused
 			//$this->foldername	= $this->sessionData['mailbox'];
 			$this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
 
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
-			$this->sofelamimail	=& CreateObject('felamimail.sofelamimail');
-			self::$botranslation	=& CreateObject('phpgwapi.translation');
+			$this->bopreferences	=& CreateObject('felamimail.bopreferences',$_restoreSession);
+			//$this->sofelamimail	=& new sofelamimail;
 
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
 			if ($this->mailPreferences) {
@@ -171,6 +179,13 @@
 				$this->mbAvailable = TRUE;
 			}
 
+		}
+
+		function forcePrefReload()
+		{
+			// unset the fm_preferences session object, to force the reload/rebuild
+			$GLOBALS['egw']->session->appsession('fm_preferences','felamimail',serialize(array()));
+			$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(array()));
 		}
 
 		function setACL($_folderName, $_accountName, $_acl)
@@ -388,7 +403,7 @@
 		*/
 		function decodeFolderName($_folderName)
 		{
-			return self::$botranslation->convert($_folderName, self::$displayCharset, 'UTF7-IMAP');
+			return $GLOBALS['egw']->translation->convert($_folderName, self::$displayCharset, 'UTF7-IMAP');
 		}
 
 		function decodeMimePart($_mimeMessage, $_encoding, $_charset = '')
@@ -414,7 +429,7 @@
 
 		function decode_header($_string)
 		{
-			return self::$botranslation->decodeMailHeader($_string,self::$displayCharset);
+			return $GLOBALS['egw']->translation->decodeMailHeader($_string,self::$displayCharset);
 		}
 
 		function decode_subject($_string)
@@ -589,7 +604,7 @@
 		*/
 		function encodeFolderName($_folderName)
 		{
-			return self::$botranslation->convert($_folderName, 'UTF7-IMAP', self::$displayCharset);
+			return $GLOBALS['egw']->translation->convert($_folderName, 'UTF7-IMAP', self::$displayCharset);
 		}
 
 #		function encodeHeader($_string, $_encoding='q')

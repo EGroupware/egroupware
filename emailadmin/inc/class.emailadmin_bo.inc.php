@@ -214,7 +214,16 @@
 				),
 			); 
 			
-			if ($_restoreSesssion &&  !(is_array($this->sessionData) && (count($this->sessionData)>0))  ) $this->restoreSessionData();
+			if ($_restoreSesssion &&  !(is_array($this->sessionData) && (count($this->sessionData)>0))  ) 
+			{
+				$this->restoreSessionData();
+			}
+			if ($_restoreSesssion===false && (is_array($this->sessionData) && (count($this->sessionData)>0))  )
+			{
+				// make sure session data will be created new
+				$this->sessionData = array();
+				self::saveSessionData();
+			}
 			#_debug_array($this->sessionData);	
 			if($_profileID >= 0)
 			{
@@ -582,7 +591,7 @@
 			
 			//echo function_backtrace()."<br>";
 			//unserializing the sessiondata, since they are serialized for objects sake
-			//$this->sessionData = (array) unserialize($GLOBALS['egw']->session->appsession('session_data','emailadmin'));
+			$this->sessionData = (array) unserialize($GLOBALS['egw']->session->appsession('session_data','emailadmin'));
 		}
 
 		/**

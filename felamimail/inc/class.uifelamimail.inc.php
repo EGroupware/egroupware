@@ -39,18 +39,20 @@
 		// the object storing the data about the incoming imap server
 		var $icServerID=0;
 		var $connectionStatus = false;
-		
+		var $bofelamimail;
+		var $bofilter;
+		var $bopreferences;
+	
 		function uifelamimail()
 		{
 			$this->timeCounter = microtime(true);
 
 			$this->displayCharset	= $GLOBALS['egw']->translation->charset();
-			$this->bofelamimail     =& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$this->bofelamimail     =& CreateObject('felamimail.bofelamimail',$this->displayCharset,false);
 
-			$this->bofilter		=& CreateObject('felamimail.bofilter');
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
+			$this->bofilter		=& CreateObject('felamimail.bofilter',false);
+			$this->bopreferences	=& $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
 			$this->preferences	= $this->bopreferences->getPreferences();
-			$this->botranslation	=& CreateObject('phpgwapi.translation');
 
 			$this->bofelamimail->saveSessionData();
 
@@ -447,8 +449,8 @@
 		function viewMainScreen()
 		{
 			#printf ("this->uifelamimail->viewMainScreen() start: %s<br>",date("H:i:s",mktime()));
-			$bopreferences		=& CreateObject('felamimail.bopreferences');
-			$bofilter		=& CreateObject('felamimail.bofilter');
+			$bopreferences		=& $this->bopreferences;
+			$bofilter		=& $this->bofilter;
 			$uiwidgets		=& CreateObject('felamimail.uiwidgets');
 
 			$preferences		=& $bopreferences->getPreferences();

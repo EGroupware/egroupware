@@ -147,6 +147,14 @@
 			// construtor for Net_IMAP stuff
 			$this->Net_IMAPProtocol();
 		}
+
+		/**
+		 * Magic method to re-connect with the imapserver, if the object get's restored from the session
+		 */
+		function __wakeup()
+		{
+			#$this->openConnection($this->isAdminConnection);   // we need to re-connect
+		}
 		
 		/**
 		 * adds a account on the imap server

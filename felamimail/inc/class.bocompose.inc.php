@@ -22,15 +22,19 @@
 
 		var $attachments;	// Array of attachments
 		var $preferences;	// the prefenrences(emailserver, username, ...)
+		var $preferencesArray;
+		var $bofelamimail;
+		var $bopreferences;
+		var $bosignatures;
+		var $displayCharset;
 
 		function bocompose($_composeID = '', $_charSet = 'iso-8859-1')
 		{
 			$this->displayCharset	= strtolower($_charSet);
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
 			$this->bosignatures	=& CreateObject('felamimail.felamimail_bosignatures');
-			$this->bofelamimail	=& CreateObject('felamimail.bofelamimail',$_charSet);
+			$this->bofelamimail	=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$this->bopreferences =& $this->bofelamimail->bopreferences;
 			$this->preferences	= $this->bopreferences->getPreferences();
-			$this->botranslation	=& CreateObject('phpgwapi.translation');
 			$this->preferencesArray =& $GLOBALS['egw_info']['user']['preferences']['felamimail'];
 			//force the default for the forwarding -> asmail
 			if (is_array($this->preferencesArray)) {
@@ -219,7 +223,7 @@
 		{
 			$this->sessionData['to'] = array();
 
-			$bofelamimail =& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail =& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($_folder);
 
@@ -330,7 +334,7 @@
 						#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body']);
 						$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 					}
-					$bodyParts[$i]['body'] = $this->botranslation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 					$this->sessionData['body'] .= "<br>". $bodyParts[$i]['body'] ;
 				}
@@ -342,7 +346,7 @@
 					if($i>0) {
 						$this->sessionData['body'] .= "<hr>";
 					}
-					$bodyParts[$i]['body'] = $this->botranslation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 					$this->sessionData['body'] .= "\r\n". $bodyParts[$i]['body'] ;
 				}
@@ -377,7 +381,7 @@
 			if  ($this->preferencesArray['message_forwarding'] == 'inline') {
 				$this->getReplyData('forward', $_icServer, $_folder, $_uid, $_partID);
 			}
-			$bofelamimail    =& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail    =& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($_folder);
 
@@ -434,7 +438,7 @@
 		{
 			$foundAddresses = array();
 
-			$bofelamimail    =& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail    =& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($_folder);
 
@@ -584,7 +588,7 @@
 						#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body'])."<br>";
 						$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 					}
-					$this->sessionData['body'] .= "<br>".self::_getCleanHTML($this->botranslation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+					$this->sessionData['body'] .= "<br>".self::_getCleanHTML($GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
 					#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
 				}
@@ -606,7 +610,7 @@
 					}
 
 					// add line breaks to $bodyParts
-					$newBody	= $this->botranslation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+					$newBody	= $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
 					$newBody        = explode("\n",$newBody);
@@ -681,7 +685,7 @@
 
 		function createMessage(&$_mailObject, $_formData, $_identity, $_signature = false)
 		{
-			$bofelamimail	=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail	=& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
 			$userLang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 			$langFile = EGW_SERVER_ROOT."/phpgwapi/setup/phpmailer.lang-$userLang.php";
 			if(file_exists($langFile)) {
@@ -829,7 +833,7 @@
 
 		function saveAsDraft($_formData)
 		{
-			$bofelamimail	=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail	=& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
 			$mail		=& CreateObject('phpgwapi.phpmailer');
 			$identity	= $this->preferences->getIdentity((int)$this->sessionData['identity']);
 			$flags = '\\Seen \\Draft';
@@ -885,7 +889,7 @@
 
 		function send($_formData)
 		{
-			$bofelamimail	=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail	=& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
 			$mail 		=& CreateObject('phpgwapi.phpmailer');
 			$messageIsDraft	=  false;
 
@@ -981,7 +985,7 @@
 			#error_log("Number of Folders to move copy the message to:".count($folder));
 			if ((count($folder) > 0) || (isset($this->sessionData['uid']) && isset($this->sessionData['messageFolder']))
                 || (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
-				$bofelamimail =& CreateObject('felamimail.bofelamimail');
+				$bofelamimail =& $this->bofelamimail; //CreateObject('felamimail.bofelamimail');
 				$bofelamimail->openConnection();
 				//$bofelamimail->reopen($this->sessionData['messageFolder']);
 				#error_log("(re)opened Connection");

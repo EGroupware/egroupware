@@ -36,6 +36,7 @@
 			'replyto'	=> 'replyto',
 			'folder'	=> 'folder'
 		);
+		var $bofelamimail;
 
 		function uicompose()
 		{
@@ -555,7 +556,7 @@
 			$GLOBALS['egw']->js->validate_file('jscode','composeMessage','felamimail');
 			$GLOBALS['egw']->common->egw_header();
 
-			$bofelamimail		=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail		=& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
 			$uiwidgets		=& CreateObject('felamimail.uiwidgets');
 			$connectionStatus	= $bofelamimail->openConnection();
 

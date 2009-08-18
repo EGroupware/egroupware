@@ -174,6 +174,9 @@
 			if (($data = $this->db->row(true))) {
 				$globalDefaults = $this->getProfile($data['ea_profile_id'], $this->db_cols);
 				$anyValues++;
+			} else {
+				error_log("emailadmin::emailadmin_so->getUserProfile, no Default configured");
+				$globalDefaults = array();
 			}
 			// retrieve application settings if set
 			if (strlen($_appName)>0) {

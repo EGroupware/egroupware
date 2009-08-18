@@ -53,6 +53,8 @@
 
 		// the permanent id of the message
 		var $uid;
+		var $bofelamimail;
+		var $bopreferences;
 
 		function uidisplay()
 		{
@@ -79,8 +81,7 @@
 			$this->t 		=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->displayCharset   = $GLOBALS['egw']->translation->charset();
 			$this->bofelamimail	=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
-			$this->botranslation	=& CreateObject('phpgwapi.translation');
+			$this->bopreferences	=& $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
 
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
 
@@ -1069,7 +1070,7 @@
 					'...',
 				);
 				if($singleBodyPart['mimeType'] == 'text/html' && strtoupper($singleBodyPart['charSet']) != 'UTF-8') $singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
-				$singleBodyPart['body'] = $this->botranslation->convert(
+				$singleBodyPart['body'] = $GLOBALS['egw']->translation->convert(
 					$singleBodyPart['body'],
 					strtolower($singleBodyPart['charSet'])
 				);

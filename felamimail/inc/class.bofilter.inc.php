@@ -21,18 +21,18 @@
 			'flagMessages'		=> True
 		);
 
-		function bofilter()
+		function bofilter($_restoreSession=true)
 		{
 			$this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
 			
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
-			$this->sofelamimail	=& CreateObject('felamimail.sofelamimail');
+			$this->bopreferences	=& CreateObject('felamimail.bopreferences',$_restoreSession);
+			//$this->sofelamimail	=& CreateObject('felamimail.sofelamimail');
 			$this->sofilter		=& CreateObject('felamimail.sofilter');
 			
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
 			$this->sessionData['activeFilter'] = "-1";
 			
-			$this->restoreSessionData();
+			if ($_restoreSession) $this->restoreSessionData();
 			
 			if(!is_array($this->sessionData['filter'])) {
 				$this->sessionData['filter'][0]['filterName'] = lang('Quicksearch');

@@ -25,12 +25,23 @@
 		// stores the users profile
 		var $profileData;
 		var $sessionData;
+		var $boemailadmin;
 
-		function bopreferences()
+		function bopreferences($_restoreSession = true)
 		{
+			//error_log(__METHOD__." called ".print_r($_restoreSession,true).function_backtrace());
 			parent::sopreferences();
-			$this->boemailadmin = new emailadmin_bo();
-			if ( !(is_array($this->sessionData) && (count($this->sessionData)>0))  ) $this->restoreSessionData();
+			$this->boemailadmin = new emailadmin_bo(-1,$_restoreSession);
+			if ($_restoreSession && !(is_array($this->sessionData) && (count($this->sessionData)>0))  ) $this->restoreSessionData();
+			if ($_restoreSession===false && (is_array($this->sessionData) && (count($this->sessionData)>0))  ) 
+			{
+				//error_log(__METHOD__." Unset Session ".function_backtrace());
+				//make sure session data will be reset
+				$this->sessionData = array();
+				$this->profileData = array();
+				self::saveSessionData();
+			}
+			//error_log(__METHOD__.print_r($this->sessionData,true));
 			if (isset($this->sessionData['profileData']) && is_a($this->sessionData['profileData'],'ea_preferences')) {
 				$this->profileData = $this->sessionData['profileData'];
 			}
@@ -38,6 +49,7 @@
 
 		function restoreSessionData()
 		{
+			//error_log(__METHOD__." Session restore ".function_backtrace());
 			// set an own autoload function, search emailadmin for missing classes
 			$GLOBALS['egw_info']['flags']['autoload'] = array(__CLASS__,'autoload');
 
