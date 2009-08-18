@@ -25,13 +25,16 @@ $starttime = microtime(true);
  */
 function check_access(&$account)
 {
-	$account = array(
-		'login'  => $_SERVER['PHP_AUTH_USER'],
-		'passwd' => $_SERVER['PHP_AUTH_PW'],
-		'passwd_type' => 'text',
-	);
-	if (!isset($_SERVER['PHP_AUTH_USER']) ||
-		!($sessionid = $GLOBALS['egw']->session->create($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'],'text')))
+	if (isset($_SERVER['PHP_AUTH_USER']))
+	{
+		$user = $_SERVER['PHP_AUTH_USER'];
+		$pass = $_SERVER['PHP_AUTH_PW'];
+	}
+	elseif(isset($_GET['auth']))
+	{
+		list($user,$pass) = explode(':',base64_decode($_GET['auth']),2);
+	}
+	if (!isset($user) || !($sessionid = $GLOBALS['egw']->session->create($user,$pass,'text')))
 	{
 		header('WWW-Authenticate: Basic realm="'.vfs_webdav_server::REALM.
 			// if the session class gives a reason why the login failed --> append it to the REALM
@@ -87,9 +90,8 @@ catch (egw_exception_no_permission_app $e)
 		throw $e;
 	}
 }
-$headertime = microtime(true);
+//$headertime = microtime(true);
 
 $webdav_server = new vfs_webdav_server();
 $webdav_server->ServeRequest();
 //error_log(sprintf("WebDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
-
