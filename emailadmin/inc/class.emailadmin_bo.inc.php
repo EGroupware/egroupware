@@ -463,9 +463,9 @@
 		function getUserProfile($_appName='', $_groups='')
 		{
 			if (!(is_array($this->sessionData) && (count($this->sessionData)>0))) $this->restoreSessionData();
-			if (is_array($this->sessionData) && count($this->sessionData)>0 && $this->sessionData['eapreferences']) {
+			if (is_array($this->sessionData) && count($this->sessionData)>0 && $this->sessionData['ea_preferences']) {
 				#error_log("sessionData Restored for UserProfile<br>");
-				return $this->sessionData['eapreferences']; 
+				return $this->sessionData['ea_preferences']; 
 			}
 			$appName	= ($_appName != '' ? $_appName : $GLOBALS['egw_info']['flags']['currentapp']);
 			if(!is_array($_groups)) {
@@ -547,7 +547,7 @@
 				$eaPreferences->userDefinedIdentities     = ($data['userDefinedIdentities'] == 'yes');
 				$eaPreferences->ea_user_defined_signatures	= ($data['ea_user_defined_signatures'] == 'yes');
 				$eaPreferences->ea_default_signature		= $data['ea_default_signature'];
-				$this->sessionData['eapreferences'] = $eaPreferences;
+				$this->sessionData['ea_preferences'] = $eaPreferences;
 				$this->saveSessionData();
 				return $eaPreferences;
 			}
@@ -582,8 +582,7 @@
 			
 			//echo function_backtrace()."<br>";
 			//unserializing the sessiondata, since they are serialized for objects sake
-			$this->sessionData = (array) unserialize($GLOBALS['egw']->session->appsession('session_data','emailadmin'));
-			#$this->userSessionData = $GLOBALS['egw']->session->appsession('user_session_data','emailadmin');
+			//$this->sessionData = (array) unserialize($GLOBALS['egw']->session->appsession('session_data','emailadmin'));
 		}
 
 		/**
