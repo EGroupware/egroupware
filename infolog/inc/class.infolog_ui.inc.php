@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -479,7 +479,7 @@ class infolog_ui
 				$action = $session['action'];
 				$action_id = $session['action_id'];
 				$action_title = $session['action_title'];
-				// no action -> try to restore the previous colfilter 
+				// no action -> try to restore the previous colfilter
 				$colfilter = $session['col_filter'];
 				unset($session);
 			}
@@ -1385,13 +1385,13 @@ class infolog_ui
 						$bofelamimail->openConnection();
 						$bofelamimail->reopen($attachment['folder']);
 
-						$mailcontent = self::get_mailcontent(&$bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
+						$mailcontent = self::get_mailcontent($bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
 						//_debug_array($mailcontent['attachments']);
 						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
 						{
 							$attachments[] = $tmpval;
 						}
-					} 
+					}
 					else
 					{
 						$attachments[] = array(
@@ -1417,7 +1417,7 @@ class infolog_ui
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
-			$mailcontent = self::get_mailcontent(&$bofelamimail,$uid,$partid,$mailbox);
+			$mailcontent = self::get_mailcontent($bofelamimail,$uid,$partid,$mailbox);
 
 			return $this->edit($this->bo->import_mail(
 				$mailcontent['mailaddress'],
@@ -1481,12 +1481,12 @@ class infolog_ui
 			{
 				foreach ($attachments as $num => $attachment)
 				{
-					if ($attachment['mimeType'] == 'MESSAGE/RFC822') 
+					if ($attachment['mimeType'] == 'MESSAGE/RFC822')
 					{
 						//_debug_array($bofelamimail->getMessageHeader($uid, $attachment['partID']));
 						//_debug_array($bofelamimail->getMessageBody($uid,'', $attachment['partID']));
 						//_debug_array($bofelamimail->getMessageAttachments($uid, $attachment['partID']));
-						$mailcontent = self::get_mailcontent(&$bofelamimail,$uid,$attachment['partID']);
+						$mailcontent = self::get_mailcontent($bofelamimail,$uid,$attachment['partID']);
 						$headdata ='';
 						if ($mailcontent['headers'])
 						{
@@ -1501,7 +1501,7 @@ class infolog_ui
 							//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\n";
 							if (!empty($headdata)) $headdata .= "--------------------------------------------------------\n";
 						}
-						if ($mailcontent['message']) 
+						if ($mailcontent['message'])
 						{
 							$tempname =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 							$attachedMessages[] = array(
