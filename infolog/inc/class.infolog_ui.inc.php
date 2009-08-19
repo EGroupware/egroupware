@@ -1282,9 +1282,10 @@ class infolog_ui
 
 			if ($_POST['responsible_edit'])
 			{
-				$extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
-				config::save_value('responsible_edit',$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra),'infolog');
+				$extra = array_intersect((array)$_POST['responsible_edit'],array_keys($fields));
+				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 			}
+			config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
 			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
 			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
 		}
