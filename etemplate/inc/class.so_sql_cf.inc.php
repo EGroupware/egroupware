@@ -359,20 +359,7 @@ class so_sql_cf extends so_sql
 	 */
 	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false)
 	{
-		$criteria = array();
-		if ($query['search'])
-		{
-			foreach($this->db_cols as $col)	// we search all cols
-			{
-				$criteria[$col] = $query['search'];
-			}
-			$criteria[$this->extra_value] = $query['search'];
-		}
-		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',
-			'','%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
-			$query['col_filter'],$join,$need_full_no_count);
-
-		if (!$rows) $rows = array();	// otherwise false returned from search would be returned as array(false)
+		parent::get_rows($query,$rows,$readonlys,$join,$need_full_no_count,$only_keys);
 
 		$selectcols = $query['selectcols'] ? explode(',',$query['selectcols']) : array();
 
@@ -404,7 +391,7 @@ class so_sql_cf extends so_sql
 	 *
 	 * Reimplemented to search, order and filter by custom fields
 	 *
-	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param array|string $criteria array of key and data cols, OR string with search pattern (incl. * or ? as wildcards)
 	 * @param boolean|string/array $only_keys=true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
@@ -425,19 +412,30 @@ class so_sql_cf extends so_sql
 		{
 			$only_keys = $this->table_name.'.*';
 		}
-		// check if we search in the custom fields
-		if ($criteria && is_array($criteria) && isset($criteria[$this->extra_value]))
+		// if string given as criteria --> search in all (or $this->columns_to_search) columns including custom fields
+		if ($criteria && is_string($criteria))
 		{
-			$criteria[] = $this->extra_table.'.'.$this->extra_value . ' ' .
-				$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
-				$this->db->quote('%'.$criteria[$this->extra_value].'%');
-			unset($criteria[$this->extra_value]);
-			$join .= $this->extra_join;
-
+			$criteria = $this->search2criteria($criteria,$wildcard,$op,$this->extra_value);
+		}
+		if ($criteria && is_array($criteria))
+		{
+			// check if we search in the custom fields
+			if (isset($criteria[$this->extra_value]))
+			{
+				if (($negate = $criteria[$this->extra_value][0] === '!'))
+				{
+					$criteria[$this->extra_value] = substr($criteria[$this->extra_value],1);
+				}
+				$criteria[] = $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
+					$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
+					$this->db->quote($wildcard.$criteria[$this->extra_value].$wildcard);
+				unset($criteria[$this->extra_value]);
+				$join .= $this->extra_join;
+			}
 			// replace ambiguous auto-id with (an exact match of) table_name.autoid
 			if (isset($criteria[$this->autoinc_id]))
 			{
-				if ((int)$criteria[$this->autoinc_id])
+				if (is_numeric($criteria[$this->autoinc_id]))
 				{
 					$criteria[] = $this->table_name.'.'.$this->autoinc_id.'='.(int)$criteria[$this->autoinc_id];
 				}
@@ -499,6 +497,8 @@ class so_sql_cf extends so_sql
 				}
 			}
 		}
+		if (!empty($join) && !is_array($only_keys)) $only_keys = 'DISTINCT '.$only_keys;	// otherwise join returns rows more then once
+
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 

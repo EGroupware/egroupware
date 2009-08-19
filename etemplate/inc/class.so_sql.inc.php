@@ -22,6 +22,7 @@
  * @subpackage api
  * @author RalfBecker-AT-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @todo modify search() to return an interator instead of an array
  */
 class so_sql
 {
@@ -126,6 +127,14 @@ class so_sql
 	 * @var int
 	 */
 	var $now;
+	/**
+	 * Which columns should be searched, if a non-empty string is passed to criteria parameter of search()
+	 *
+	 * If not set (by extending class), all data columns will be searched.
+	 *
+	 * @var array
+	 */
+	var $columns_to_search;
 
 	/**
 	 * constructor of the class
@@ -316,13 +325,13 @@ class so_sql
 			{
 				if (isset($data[$name]) && $data[$name])
 				{
-					if (!is_numeric($data[$name]))
-					{
-						$data[$name] = date('Y-m-d H:i:s',strtotime($data[$name]) + $this->tz_offset_s);
-					}
-					else
+					if (is_numeric($data[$name]))
 					{
 						$data[$name] += $this->tz_offset_s;
+					}
+					elseif (($ts = strtotime($data[$name])) !== false)
+					{
+						$data[$name] = date('Y-m-d H:i:s',$ts + $this->tz_offset_s);
 					}
 				}
 			}
@@ -367,9 +376,9 @@ class so_sql
 					{
 						$data[$name] -= $this->tz_offset_s;
 					}
-					else
+					elseif (($ts = strtotime($data[$name])) !== false)
 					{
-						$data[$name] = date('Y-m-d H:i:s',strtotime($data[$name]) - $this->tz_offset_s);
+						$data[$name] = date('Y-m-d H:i:s',$ts - $this->tz_offset_s);
 					}
 				}
 			}
@@ -693,7 +702,7 @@ class so_sql
 	 *
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
-	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param array|string $criteria array of key and data cols, OR string with search pattern (incl. * or ? as wildcards)
 	 * @param boolean|string|array $only_keys=true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
@@ -706,12 +715,18 @@ class so_sql
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
 	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @todo return an interator instead of an array
 	 * @return array|NULL array of matching rows (the row is an array of the cols) or NULL
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		if ((int) $this->debug >= 4) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
+		// if extending class or instanciator set columns to search, convert string criteria to array
+		if ($criteria && !is_array($criteria))
+		{
+			$criteria = $this->search2criteria($criteria,$wildcard,$op);
+		}
 		if (!is_array($criteria))
 		{
 			$query = $criteria;
@@ -744,10 +759,12 @@ class so_sql
 						}
 						foreach(explode(' ',$criteria[$col]) as $crit)
 						{
-							$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).($negate ? ') ' : '');
+							$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.
+								$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).
+								($negate ? ') ' : '');
 						}
 					}
-					elseif (strpos($db_col,'.')!==false)	// we have a table-name specified
+					elseif (strpos($db_col,'.') !== false)	// we have a table-name specified
 					{
 						list($table,$only_col) = explode('.',$db_col);
 
@@ -915,6 +932,7 @@ class so_sql
 		{
 			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
 		}
+		// ToDo: Implement that as an iterator, as $rs is also an interator and we could return one instead of an array
 		$arr = array();
 		if ($rs) foreach($rs as $row)
 		{
@@ -927,6 +945,39 @@ class so_sql
 			$n++;
 		}
 		return $n ? $arr : null;
+	}
+
+	/**
+	 * Return criteria array for a given search pattern
+	 *
+	 * @param string $pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
+	 * @param string &$wildcard='' on return wildcard char to use, if pattern does not already contain wildcards!
+	 * @param string &$op='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
+	 * @param string $extra_col=null extra column to search
+	 * @return array or column => value pairs
+	 */
+	protected function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null)
+	{
+		if (empty($pattern) || is_array($pattern)) return $pattern;
+
+		// prepend and append extra wildcard %, if pattern does NOT already contain wildcards
+		if (strpos($pattern,'*') === false && strpos($pattern,'?') === false)
+		{
+			$wildcard = '%';	// if pattern contains no wildcards, add them before AND after the pattern
+		}
+		else
+		{
+			$wildcard = '';		// no extra wildcard, if pattern already contains some
+		}
+		if ($pattern[0] != '!') $op = 'OR';
+		$criteria = array();
+		foreach(is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search as $col)
+		{
+			$criteria[$col] = $pattern;
+		}
+		if ($extra_col) $criteria[$extra_col] = $pattern;
+
+		return $criteria;
 	}
 
 	/**
@@ -1006,15 +1057,14 @@ class so_sql
 			echo "<p>so_sql::get_rows(".print_r($query,true).",,)</p>\n";
 		}
 		$criteria = array();
+		$op = 'AND';
 		if ($query['search'])
 		{
-			foreach($this->db_cols as $col)	// we search all cols
-			{
-				$criteria[$col] = $query['search'];
-			}
+			$wildcard = '%';
+			$criteria = is_null($this->columns_to_search) ? $this->search2criteria($query['search'],$wildcard,$op) : $query['search'];
 		}
 		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',$extra_cols,
-			'%',false,'OR',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
+			$wildcard,false,$op,$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
 			$query['col_filter'],$join,$need_full_no_count);
 
 		if (!$rows) $rows = array();	// otherwise false returned from search would be returned as array(false)
