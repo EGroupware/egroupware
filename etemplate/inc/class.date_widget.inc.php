@@ -53,6 +53,13 @@ class date_widget
 	var $timeformat;	// 12 or 24
 
 	/**
+	 * Reference to global jscalencar object
+	 *
+	 * @var jscalendar
+	 */
+	var $jscal;
+
+	/**
 	 * Constructor of the extension
 	 *
 	 * @param string $ui '' for html
@@ -61,7 +68,7 @@ class date_widget
 	{
 		if ($ui == 'html')
 		{
-			$this->jscal =& $GLOBALS['egw']->jscalendar;
+			$this->jscal = $GLOBALS['egw']->jscalendar;
 		}
 		$this->timeformat = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
 		$this->dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
