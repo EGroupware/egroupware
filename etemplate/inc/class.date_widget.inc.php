@@ -17,7 +17,7 @@
  * Contains the following widgets: Date, Date+Time, Time, Hour, Duration
  *
  * Supported attributes: format[,options]
- *  format: ''=timestamp, or eg. 'Y-m-d H:i' for 2002-12-31 23:59
+ *  format: '' = timestamps or automatic conversation, or eg. 'Y-m-d H:i:s' for 2002-12-31 23:59:59
  *  options: &1 = year is int-input not selectbox, &2 = show a [Today] button, (html-UI always uses jscal and dont care for &1+&2)
  *           &4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps),
  *           &8 = dont show time for readonly and type date-time if time is 0:00,
@@ -106,6 +106,11 @@ class date_widget
 				'type'			=> $type,
 				'data_format'	=> $data_format,
 			);
+		}
+		// automatic convert db timestamps to unix timestamps, our db class does the reverse on writing them
+		if ($value && !$data_format && !is_numeric($value) && ($v = strtotime($value)))
+		{
+			$value = $v;
 		}
 		// for date-(time|hour)only widgets we distinct between between 0 and ''/null timestamps
 		if (!$value && ($type != 'date-timeonly' && $type != 'date-houronly' || (string)$value === ''))
