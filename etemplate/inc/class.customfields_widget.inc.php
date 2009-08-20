@@ -83,7 +83,7 @@ class customfields_widget
 	var $advanced_search;
 
 
-	function customfields_widget($ui,$appname=null)
+	function __construct($ui,$appname=null)
 	{
 		$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
 		$this->customfields = config::get_customfields($this->appname);
@@ -93,10 +93,11 @@ class customfields_widget
 
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
-		if ($this->appname == 'etemplate' || !$this->customfields)	// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
+		list($app) = explode('.',$tmpl->name);
+		if ($this->appname == 'etemplate' || !$this->customfields || 	// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
+			($app && $app != $this->appname) ) // app changed
 		{
-			list($app) = explode('.',$tmpl->name);
-			if ($app && $app != $this->appname) $this->customfields_widget(null,$app);
+			self::__construct(null,$app);
 		}
 		list($type2,$use_private) = explode(',',$cell['size']);
 		$fields_with_vals=array();
