@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package etemplate
  * @subpackage api
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -22,6 +22,51 @@
  *	3. implement the required methods: get_config, get_details
  *	4. optionally re-implement: get_title, get_subject, get_body, get_attachments, get_link, get_notification_link, get_message
  * They are all documented in this file via phpDocumentor comments.
+ *
+ * Translate field-name to history status field:
+ * As history status was only char(2) prior to EGroupware 1.6, a mapping was necessary.
+ * Now it's varchar(64) and a mapping makes no sense for new applications, just list
+ * all fields to log as key AND value!
+ *
+ * History login supports now 1:N relations on a base record. To use that you need:
+ * - to have the 1:N relation as array of arrays with the values of that releation, eg:
+ * $data = array(
+ * 	'id' => 123,
+ *  'title' => 'Something',
+ *  'date'  => '2009-08-21 14:42:00',
+ * 	'participants' => array(
+ * 		array('account_id' => 15, 'name' => 'User Hugo', 'status' => 'A', 'quantity' => 1),
+ * 		array('account_id' => 17, 'name' => 'User Bert', 'status' => 'U', 'quantity' => 3),
+ *  ),
+ * );
+ * - set field2history as follows
+ * $field2history = array(
+ * 	'id' => 'id',
+ *  'title' => 'title',
+ *  'participants' => array('uid','status','quantity'),
+ * );
+ * - set content for history log widget:
+ * $content['history'] = array(
+ * 	'id' => 123,
+ *  'app' => 'calendar',
+ *  'status-widgets' => array(
+ * 		'title' => 'label',	// no need to set, as default is label
+ * 		'date'  => 'datetime',
+ * 		'participants' = array(
+ * 			'select-account',
+ * 			array('U' => 'Unknown', 'A' => 'Accepted', 'R' => 'Rejected'),
+ * 			'integer',
+ * 		),
+ *  ),
+ * );
+ * - set lables for history:
+ * $sel_options['status'] = array(
+ * 	'title' => 'Title',
+ *  'date'  => 'Starttime',
+ *  'participants' => 'Participants: User, Status, Quantity',	// a single label!
+ * );
+ *
+ * The above is also an example for using regular history login in EGroupware (by skipping the 'participants' key).
  */
 abstract class bo_tracking
 {
@@ -57,7 +102,7 @@ abstract class bo_tracking
 	 */
 	var $check2pref;
 	/**
-	 * Translate field-name to 2-char history status
+	 * Translate field-name to history status field (see comment in class header)
 	 *
 	 * @var array
 	 */
@@ -126,6 +171,12 @@ abstract class bo_tracking
 	var $html_content_allow = false;
 
 	/**
+	 * Separator for 1:N relations
+	 *
+	 */
+	const ONE2N_SEPERATOR = '~|~';
+
+	/**
 	 * Constructor
 	 *
 	 * @return bo_tracking
@@ -153,7 +204,7 @@ abstract class bo_tracking
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @return mixed
 	 */
-	function get_config($name,$data,$old=null)
+	protected function get_config($name,$data,$old=null)
 	{
 		return null;
 	}
@@ -165,9 +216,10 @@ abstract class bo_tracking
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param int $user=null user who made the changes, default to current user
 	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
-	 * @return int/boolean false on error, integer number of changes logged or true for new entries ($old == null)
+	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
-	function track($data,$old=null,$user=null,$deleted=null)
+	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null)
 	{
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
@@ -175,7 +227,7 @@ abstract class bo_tracking
 
 		if ($old && $this->field2history)
 		{
-			$changes = $this->save_history($data,$old,$deleted);
+			$changes = $this->save_history($data,$old,$deleted,$changed_fields);
 		}
 		// do not run do_notifications if we have no changes
 		if ($changes && !$this->do_notifications($data,$old,$deleted))
@@ -192,26 +244,110 @@ abstract class bo_tracking
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @return int number of log-entries made
 	 */
-	function save_history($data,$old,$deleted=null)
+	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
 	{
-		$changes = 0;
-		foreach($this->field2history as $name => $status)
+		if (is_null($changed_fields))
 		{
-			if ($old[$name] != $data[$name] && !(!$old[$name] && !$data[$name]))
+			$changed_fields = self::changed_fields($data,$old);
+		}
+		if (!$changed_fields) return 0;
+
+		if (!is_object($this->historylog) || $this->historylog->user != $this->user)
+		{
+			$this->historylog = new historylog($this->app,$this->user);
+		}
+		foreach($changed_fields as $name)
+		{
+			$status = $this->field2history[$name];
+			if (is_array($status))	// 1:N relation --> remove common rows
 			{
-				if (!is_object($this->historylog) || $this->historylog->user != $this->user)
+				self::compact_1_N_relation($data[$name],$status);
+				self::compact_1_N_relation($old[$name],$status);
+				$added = array_diff($data[$name],$old[$name]);
+				$removed = array_diff($old[$name],$data[$name]);
+				$n = max(array(count($added),count($removed)));
+				for($i = 0; $i < $n; ++$i)
 				{
-					$this->historylog = new historylog($this->app,$this->user);
+					$this->historylog->add($name,$data[$this->id_field],$added[$i],$removed[$i]);
 				}
+			}
+			else
+			{
 				$this->historylog->add($status,$data[$this->id_field],
 					is_array($data[$name]) ? implode(',',$data[$name]) : $data[$name],
 					is_array($old[$name]) ? implode(',',$old[$name]) : $old[$name]);
-				++$changes;
 			}
 		}
-		return $changes;
+		return count($changed_fields);
+	}
+
+	/**
+	 * Compute changes between new and old data
+	 *
+	 * Can be used to check if saving the data is really necessary or user just pressed save
+	 *
+	 * @param array $data
+	 * @param array $old=null
+	 * @return array of keys with different values in $data and $old
+	 */
+	public function changed_fields(array $data,array $old=null)
+	{
+		if (is_null($old)) return array_keys($data);
+
+		$changed_fields = array();
+		foreach($this->field2history as $name => $status)
+		{
+			if (is_array($status))	// 1:N relation
+			{
+				self::compact_1_N_relation($data[$name],$status);
+				self::compact_1_N_relation($old[$name],$status);
+			}
+			if ($old[$name] != $data[$name] && !(!$old[$name] && !$data[$name]))
+			{
+				// normalize arrays, we do NOT care for the order of multiselections
+				if (is_array($data[$name]) || is_array($old[$name]))
+				{
+					if (!is_array($data[$name])) $data[$name] = explode(',',$data[$name]);
+					if (!is_array($old[$name])) $old[$name] = explode(',',$old[$name]);
+					if (count($data[$name]) == count($old[$name]))
+					{
+						sort($data[$name]);
+						sort($old[$name]);
+						if ($data[$name] == $old[$name]) continue;
+					}
+				}
+				$changed_fields[] = $name;
+			}
+		}
+		return $changed_fields;
+	}
+
+	/**
+	 * Compact (spezified) fields of a 1:N relation into an array of strings
+	 *
+	 * @param array $rows rows of the 1:N relation
+	 * @param array $cols field names as values
+	 */
+	private static function compact_1_N_relation(array &$rows,array $cols)
+	{
+		if (empty($rows)) $rows = array();
+
+		if (!is_array($rows))
+		{
+			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($rows).','.array2string($cols).') $rows is NO array!');
+		}
+		foreach($rows as $key => &$row)
+		{
+			$values = array();
+			foreach($cols as $col)
+			{
+				$values[] = $row[$col];
+			}
+			$row = implode(self::ONE2N_SEPERATOR,$values);
+		}
 	}
 
 	/**
@@ -223,7 +359,7 @@ abstract class bo_tracking
 	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return boolean true on success, false on error (error messages are in $this->errors)
 	 */
-	function do_notifications($data,$old,$deleted=null)
+	protected function do_notifications($data,$old,$deleted=null)
 	{
 		$this->errors = $email_sent = array();
 
@@ -322,7 +458,7 @@ abstract class bo_tracking
 	 * @param boolean $assignment_changed=true the assignment of the user $user_or_lang changed
 	 * @return boolean true on success or false on error (error-message is in $this->errors)
 	 */
-	function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true)
+	protected function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true)
 	{
 		//error_log("bo_trackering::send_notification(,,'$email',$user_or_lang,$check)");
 		if (!$email) return false;
@@ -393,9 +529,10 @@ abstract class bo_tracking
 	 *
 	 * @param int $timestamp
 	 * @param boolean $do_time=true true=allways (default), false=never print the time, null=print time if != 00:00
+	 * @todo implement timezone handling via 'tz' pref
 	 * @return string
 	 */
-	function datetime($timestamp,$do_time=true)
+	protected function datetime($timestamp,$do_time=true)
 	{
 		if (is_null($do_time))
 		{
@@ -420,7 +557,7 @@ abstract class bo_tracking
 	 * @param bool $prefer_id returns the userid rather than email
 	 * @return string or userid
 	 */
-	function get_sender($data,$old,$prefer_id=false)
+	protected function get_sender($data,$old,$prefer_id=false)
 	{
 		$sender = $this->get_config('sender',$data,$old);
 		//echo "<p>bo_tracking::get_sender() get_config('sender',...)='".htmlspecialchars($sender)."'</p>\n";
@@ -451,7 +588,7 @@ abstract class bo_tracking
 	 * @param array $old
 	 * @return string
 	 */
-	function get_title($data,$old)
+	protected function get_title($data,$old)
 	{
 		return egw_link::title($this->app,$data[$this->id_field]);
 	}
@@ -465,7 +602,7 @@ abstract class bo_tracking
 	 * @param array $old
 	 * @return string
 	 */
-	function get_subject($data,$old)
+	protected function get_subject($data,$old)
 	{
 		return egw_link::title($this->app,$data[$this->id_field]);
 	}
@@ -479,7 +616,7 @@ abstract class bo_tracking
 	 * @param array $old
 	 * @return string
 	 */
-	function get_message($data,$old)
+	protected function get_message($data,$old)
 	{
 		return '';
 	}
@@ -494,7 +631,7 @@ abstract class bo_tracking
 	 * @param string $allow_popup=false if true return array(link,popup-size) incl. session info an evtl. partial url (no host-part)
 	 * @return string/array string with link (!$allow_popup) or array(link,popup-size), popup size is something like '640x480'
 	 */
-	function get_link($data,$old,$allow_popup=false)
+	protected function get_link($data,$old,$allow_popup=false)
 	{
 		if (($link = $this->get_config('link',$data,$old)))
 		{
@@ -534,7 +671,7 @@ abstract class bo_tracking
 	 * @param array $old
 	 * @return array with link
 	 */
-	function get_notification_link($data,$old)
+	protected function get_notification_link($data,$old)
 	{
 		if($view = egw_link::view($this->app,$data[$this->id_field])) {
 			return array(	'text' 	=> $this->get_title($data,$old),
@@ -554,7 +691,7 @@ abstract class bo_tracking
      * @param boolean $integrate_link to have links embedded inside the body
      * @return string
      */
-    function get_body($html_email,$data,$old,$integrate_link = true)
+    protected function get_body($html_email,$data,$old,$integrate_link = true)
     {
         $body = '';
         if ($html_email)
@@ -600,7 +737,7 @@ abstract class bo_tracking
 	 * @param string $link=null
 	 * @return string
 	 */
-	function format_line($html_mail,$type,$modified,$line,$link=null)
+	protected function format_line($html_mail,$type,$modified,$line,$link=null)
 	{
 		$content = '';
 
@@ -680,7 +817,7 @@ abstract class bo_tracking
 	 * @param array $old
 	 * @return array with values for either 'content' or 'path' and optionally 'mimetype', 'filename' and 'encoding'
 	 */
-	function get_attachments($data,$old)
+	protected function get_attachments($data,$old)
 	{
 	 	return array();
 	}

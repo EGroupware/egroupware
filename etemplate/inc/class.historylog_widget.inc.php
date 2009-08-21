@@ -20,6 +20,10 @@
  *  - 'status-widgets' array with status-values as key and widget names or array with select-options as value,
  *       all not set stati are displayed via a label-widget - just as text
  * You can set $sel_options['status'] to translate the status-values to meaningful labels.
+ * If status is already used for a field, you can also set options to an other name, eg. 'labels' or 'fields'
+ *
+ * If you have a 1:N relation the 'status-widget' entry should be an array with widget types as values (corresponding
+ * to order and fields used in bo_tracking's field2history array).
  *
  * @package etemplate
  * @subpackage extensions
@@ -41,18 +45,50 @@ class historylog_widget
 //		'historylog-helper' => '',
 	);
 
+	/**
+	 * pre-processing of the history logging extension
+	 *
+	 * @param string $name form-name of the control
+	 * @param mixed &$value value / existing content, can be modified
+	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
+	 * @param array &$readonlys names of widgets as key, to be made readonly
+	 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+	 * @param object &$tmpl reference to the template we belong too
+	 * @return boolean true if extra label is allowed, false otherwise
+	 */
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
-		$status_widgets =& $GLOBALS['egw_info']['flags']['etemplate']['historylog-helper'];
+		static $status_widgets;
 
 		if ($cell['type'] == 'historylog-helper')
 		{
-			//echo $value.'/'.$cell['size']; _debug_array($status_widgets);
-			$cell = array('type' => isset($status_widgets[$cell['size']]) ? $status_widgets[$cell['size']] : 'label','readonly' => true);
-			if (is_array($cell['type']))
+			if (empty($value) && (string)$value !== '0')
 			{
-				$cell['sel_options'] = $cell['type'];
-				$cell['type'] = 'select';
+				$cell = etemplate::empty_cell();
+				return true;
+			}
+			//echo $value.'/'.$cell['size']; _debug_array($status_widgets);
+			$type = isset($status_widgets[$cell['size']]) ? $status_widgets[$cell['size']] : 'label';
+			$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true));
+			if (is_array($type))
+			{
+				if (isset($type[0]))	// numeric indexed array --> multiple values of 1:N releation
+				{
+					$cell['type'] = 'vbox';
+					$cell['size'] = '0,,0,0';
+					$value = explode(bo_tracking::ONE2N_SEPERATOR,$value);
+					foreach($type as $n => $t)
+					{
+						$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true));
+						etemplate::add_child($cell,$child);
+						unset($child);
+					}
+				}
+				else
+				{
+					$cell['sel_options'] = $cell['type'];
+					$cell['type'] = 'select';
+				}
 			}
 			if ($cell['type'] == 'label') $cell['no_lang'] = 'true';
 			return true;
@@ -80,14 +116,26 @@ class historylog_widget
 		$tpl->new_cell(1,'label','New value');
 		$tpl->new_cell(1,'label','Old value');
 
+		$status = 'status';
+		// allow to set a diffent name for status (field-name), eg. because status is already used for something else
+		if (!empty($cell['size']) && isset($tmpl->sel_options[$cell['size']]))
+		{
+			$status = $cell['size'];
+			foreach($value as &$row)
+			{
+				$row[$status] = $row['status'];
+			}
+		}
 		if ($value)	// autorepeated data-row only if there is data
 		{
 			$tpl->new_cell(2,'date-time','','${row}[user_ts]',array('readonly' => true));
 			$tpl->new_cell(2,'select-account','','${row}[owner]',array('readonly' => true));
+
+
 			// if $sel_options[status] is set, use them and a readonly selectbox
-			if (isset($tmpl->sel_options['status']))
+			if (isset($tmpl->sel_options[$status]))
 			{
-				$tpl->new_cell(2,'select','','${row}[status]',array('readonly' => true));
+				$tpl->new_cell(2,'select','','${row}['.$status.']',array('readonly' => true));
 			}
 			else
 			{
