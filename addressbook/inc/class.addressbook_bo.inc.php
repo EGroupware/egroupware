@@ -250,7 +250,8 @@ class addressbook_bo extends addressbook_so
 	/**
 	 * Get the availible addressbooks of the user
 	 *
-	 * @param int $required=EGW_ACL_READ required rights on the addressbook
+	 * @param int $required=EGW_ACL_READ required rights on the addressbook or multiple rights or'ed together,
+	 * 	to return only addressbooks fullfilling all the given rights
 	 * @param string $extra_label first label if given (already translated)
 	 * @return array with owner => label pairs
 	 */
@@ -264,19 +265,19 @@ class addressbook_bo extends addressbook_so
 		// add all group addressbooks the user has the necessary rights too
 		foreach($this->grants as $uid => $rights)
 		{
-			if (($rights & $required) && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
+			if (($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 			{
 				$addressbooks[$uid] = lang('Group %1',$GLOBALS['egw']->accounts->id2name($uid));
 			}
 		}
-		if (($this->grants[0] & $required) && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if (($this->grants[0] & $required) == $required && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
 		{
 			$addressbooks[0] = lang('Accounts');
 		}
 		// add all other user addressbooks the user has the necessary rights too
 		foreach($this->grants as $uid => $rights)
 		{
-			if ($uid != $this->user && ($rights & $required) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
+			if ($uid != $this->user && ($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
 				$addressbooks[$uid] = $GLOBALS['egw']->common->grab_owner_name($uid);
 			}
