@@ -82,6 +82,9 @@ class accounts_ldap
 		'user' => array(
 			'top','person','organizationalperson','inetorgperson','posixaccount','shadowaccount'
 		),
+		'user-if-supported' => array(	// these classes get added, only if the server supports them
+			'mozillaabpersonalpha','mozillaorgperson','evolutionperson'
+		),
 		'group' => array(
 			'top','posixgroup','groupofnames'
 		)
@@ -146,7 +149,7 @@ class accounts_ldap
 	 * Reads the data of one account
 	 *
 	 * @param int $account_id numeric account-id
-	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
+	 * @return array|boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
 	function read($account_id)
 	{
@@ -165,7 +168,7 @@ class accounts_ldap
 	 * If no account_id is set in data the account is added and the new id is set in $data.
 	 *
 	 * @param array $data array with account-data
-	 * @return int/boolean the account_id or false on error
+	 * @return int|boolean the account_id or false on error
 	 */
 	function save(&$data)
 	{
@@ -236,6 +239,16 @@ class accounts_ldap
 			if (!is_array($to_write['objectclass']))
 			{
 				$to_write['objectclass'] = $old ? $old['objectclass'] : array();
+			}
+			if (!$old)	// for new accounts add additional addressbook object classes, if supported by server
+			{			// as setting them later might loose eg. password, if we are not allowed to read them
+				foreach($this->requiredObjectClasses['user-if-supported'] as $additional)
+				{
+					if ($this->ldapServerInfo->supportsObjectClass($additional))
+					{
+						$to_write['objectclass'][] = $additional;
+					}
+				}
 			}
 			$to_write['objectclass'] = array_values(array_unique(array_merge($to_write['objectclass'],
 				$this->requiredObjectClasses[$is_group ? 'group' : 'user'])));
@@ -410,7 +423,7 @@ class accounts_ldap
 	 *
 	 * @internal
 	 * @param int $account_id numeric account-id (< 0 as it's for a group)
-	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
+	 * @return array|boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
 	function _read_group($account_id)
 	{
@@ -454,7 +467,7 @@ class accounts_ldap
 	 *
 	 * @internal
 	 * @param int $account_id numeric account-id
-	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
+	 * @return array|boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
 	function _read_user($account_id)
 	{
@@ -842,7 +855,7 @@ class accounts_ldap
 	 * @param string $name value to convert
 	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type u = user, g = group, default null = try both
-	 * @return int/false numeric account_id or false on error ($name not found)
+	 * @return int|false numeric account_id or false on error ($name not found)
 	 */
 	function name2id($name,$which='account_lid',$account_type=null)
 	{
@@ -920,7 +933,7 @@ class accounts_ldap
 	 * Query memberships of a given account
 	 *
 	 * @param int $account_id
-	 * @return array/boolean array with account_id => account_lid pairs or false if account not found
+	 * @return array|boolean array with account_id => account_lid pairs or false if account not found
 	 */
 	function memberships($account_id)
 	{
@@ -1059,7 +1072,7 @@ class accounts_ldap
 	 *
 	 * @internal
 	 * @param $string $account_type='u' (optional, default to 'u')
-	 * @return int/boolean integer account_id (negative for groups) or false if none is free anymore
+	 * @return int|boolean integer account_id (negative for groups) or false if none is free anymore
 	 */
 	function _get_nextid($account_type='u')
 	{
