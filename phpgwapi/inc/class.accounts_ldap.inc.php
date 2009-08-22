@@ -2,18 +2,6 @@
 /**
  * API - accounts LDAP backend
  *
- * The LDAP backend of the accounts class now stores accounts, groups and the memberships completly in LDAP.
- * It does NO longer use the ACL class/table for group membership information.
- * Nor does it use the phpgwAcounts schema (part of that information is stored via shadowAccount now).
- *
- * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class AND
- * matches the LDAP search filter specified in setup >> configuration.
- * A group is recogniced by eGW, if it's in the group_context tree AND has the posixGroup object class.
- * The group members are stored as memberuid's.
- *
- * The (positive) group-id's (gidnumber) of LDAP groups are mapped in this class to negative numeric
- * account_id's to not conflict with the user-id's, as both share in eGW internaly the same numberspace!
- *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006
  *
@@ -31,6 +19,18 @@
 
 /**
  * LDAP Backend for accounts
+ *
+ * The LDAP backend of the accounts class now stores accounts, groups and the memberships completly in LDAP.
+ * It does NO longer use the ACL class/table for group membership information.
+ * Nor does it use the phpgwAcounts schema (part of that information is stored via shadowAccount now).
+ *
+ * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class AND
+ * matches the LDAP search filter specified in setup >> configuration.
+ * A group is recogniced by eGW, if it's in the group_context tree AND has the posixGroup object class.
+ * The group members are stored as memberuid's.
+ *
+ * The (positive) group-id's (gidnumber) of LDAP groups are mapped in this class to negative numeric
+ * account_id's to not conflict with the user-id's, as both share in eGW internaly the same numberspace!
  *
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -82,6 +82,9 @@ class accounts_ldap
 		'user' => array(
 			'top','person','organizationalperson','inetorgperson','posixaccount','shadowaccount'
 		),
+		'user-if-supported' => array(	// these classes get added, only if the server supports them
+			'mozillaabpersonalpha','mozillaorgperson','evolutionperson'
+		),
 		'group' => array(
 			'top','posixgroup','groupofnames'
 		)
@@ -96,12 +99,6 @@ class accounts_ldap
 		'dbmailuser' => 'mailforwardingaddress',
 		'qmailuser' => 'mailforwardingaddress',
 	);
-	/**
-	 * reference to the translation class
-	 *
-	 * @var translation
-	 */
-	var $translation;
 
 	/**
 	 * Reference to our frontend
@@ -134,8 +131,6 @@ class accounts_ldap
 		$this->ds = $this->ldap->ldapConnect($this->frontend->config['ldap_host'],
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
 
-		$this->translation = $GLOBALS['egw']->translation;
-
 		$this->user_context  = $this->frontend->config['ldap_context'];
 		$this->account_filter = $this->frontend->config['ldap_search_filter'];
 		$this->group_context = $this->frontend->config['ldap_group_context'] ?
@@ -146,7 +141,7 @@ class accounts_ldap
 	 * Reads the data of one account
 	 *
 	 * @param int $account_id numeric account-id
-	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
+	 * @return array|boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
 	function read($account_id)
 	{
@@ -165,18 +160,29 @@ class accounts_ldap
 	 * If no account_id is set in data the account is added and the new id is set in $data.
 	 *
 	 * @param array $data array with account-data
-	 * @return int/boolean the account_id or false on error
+	 * @return int|boolean the account_id or false on error
 	 */
 	function save(&$data)
 	{
 		$is_group = $data['account_id'] < 0 || $data['account_type'] === 'g';
 
-		$data_utf8 = $this->translation->convert($data,$this->translation->charset(),'utf-8');
+		$data_utf8 = translation::convert($data,translation::charset(),'utf-8');
 		$members = $data['account_members'];
 
 		if (!is_object($this->ldapServerInfo))
 		{
 			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
+		}
+		if (isset($this->requiredObjectClasses['user-if-supported']))
+		{
+			foreach($this->requiredObjectClasses['user-if-supported'] as $additional)
+			{
+				if ($this->ldapServerInfo->supportsObjectClass($additional))
+				{
+					$this->requiredObjectClasses['user'][] = $additional;
+				}
+			}
+			unset($this->requiredObjectClasses['user-if-supported']);	// to run this check only once
 		}
 		// common code for users and groups
 		// checks if accout_lid (dn) has been changed or required objectclass'es are missing
@@ -410,9 +416,9 @@ class accounts_ldap
 	 *
 	 * @internal
 	 * @param int $account_id numeric account-id (< 0 as it's for a group)
-	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
+	 * @return array|boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
-	function _read_group($account_id)
+	protected function _read_group($account_id)
 	{
 		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
 			array('dn','gidnumber','cn','objectclass','mail'));
@@ -422,7 +428,7 @@ class accounts_ldap
 		{
 			return false;	// group not found
 		}
-		$data = $this->translation->convert($data[0],'utf-8');
+		$data = translation::convert($data[0],'utf-8');
 
 		$group = array(
 			'account_dn'        => $data['dn'],
@@ -454,9 +460,9 @@ class accounts_ldap
 	 *
 	 * @internal
 	 * @param int $account_id numeric account-id
-	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
+	 * @return array|boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
-	function _read_user($account_id)
+	protected function _read_user($account_id)
 	{
 		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.'))',
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword',
@@ -467,7 +473,7 @@ class accounts_ldap
 		{
 			return false;	// user not found
 		}
-		$data = $this->translation->convert($data[0],'utf-8');
+		$data = translation::convert($data[0],'utf-8');
 
 		$utc_diff = date('Z');
 		$user = array(
@@ -513,7 +519,7 @@ class accounts_ldap
 	 * @param array $data array with account-data in utf-8
 	 * @return array merged data
 	 */
-	function _merge_group($to_write,$data)
+	protected function _merge_group($to_write,$data)
 	{
 		$to_write['gidnumber'] = abs($data['account_id']);
 		$to_write['cn'] = $data['account_lid'];
@@ -530,7 +536,7 @@ class accounts_ldap
 	 * @param boolean $new_entry
 	 * @return array merged data
 	 */
-	function _merge_user($to_write,$data,$new_entry)
+	protected function _merge_user($to_write,$data,$new_entry)
 	{
 		//echo "<p>accounts_ldap::_merge_user(".print_r($to_write,true).','.print_r($data,true).",$new_entry)</p>\n";
 
@@ -822,7 +828,7 @@ class accounts_ldap
 	 * @param string $date YYYYmmddHHiiss
 	 * @return int
 	 */
-	function accounts_ldap2ts($date)
+	protected function accounts_ldap2ts($date)
 	{
 		if (isset($date) && strlen($date)>0)
 		{
@@ -842,11 +848,11 @@ class accounts_ldap
 	 * @param string $name value to convert
 	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type u = user, g = group, default null = try both
-	 * @return int/false numeric account_id or false on error ($name not found)
+	 * @return int|false numeric account_id or false on error ($name not found)
 	 */
 	function name2id($name,$which='account_lid',$account_type=null)
 	{
-		$name = ldap::quote($this->translation->convert($name,$this->translation->charset(),'utf-8'));
+		$name = ldap::quote(translation::convert($name,translation::charset(),'utf-8'));
 
 		if ($which == 'account_lid' && $account_type !== 'u') // groups only support account_lid
 		{
@@ -920,7 +926,7 @@ class accounts_ldap
 	 * Query memberships of a given account
 	 *
 	 * @param int $account_id
-	 * @return array/boolean array with account_id => account_lid pairs or false if account not found
+	 * @return array|boolean array with account_id => account_lid pairs or false if account not found
 	 */
 	function memberships($account_id)
 	{
@@ -1059,9 +1065,9 @@ class accounts_ldap
 	 *
 	 * @internal
 	 * @param $string $account_type='u' (optional, default to 'u')
-	 * @return int/boolean integer account_id (negative for groups) or false if none is free anymore
+	 * @return int|boolean integer account_id (negative for groups) or false if none is free anymore
 	 */
-	function _get_nextid($account_type='u')
+	protected function _get_nextid($account_type='u')
 	{
 		$min = $this->frontend->config['account_min_id'] ? $this->frontend->config['account_min_id'] : 0;
 		$max = $this->frontend->config['account_max_id'] ? $this->frontend->config['account_max_id'] : 0;
