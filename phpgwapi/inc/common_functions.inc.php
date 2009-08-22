@@ -51,10 +51,8 @@ function array2string($var)
 		case 'NULL':
 			return 'NULL';
 		case 'object':
-			$type = get_class($var);
-			// fall-through
 		case 'array':
-			return $type.str_replace(array("\n",'    ','Array'),'',print_r($var,true));
+			return str_replace(array("\n",'    '/*,'Array'*/),'',print_r($var,true));
 	}
 	return 'UNKNOWN TYPE!';
 }

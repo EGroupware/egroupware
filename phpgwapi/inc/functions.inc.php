@@ -55,11 +55,8 @@ if (!isset($GLOBALS['egw_info']['flags']['currentapp']))
 
 require_once(EGW_API_INC.'/common_functions.inc.php');
 
-// init eGW's sessions-handler
-egw_session::init_handler();
-
-// check if we can restore the eGW enviroment from the php-session
-if ($_REQUEST[egw_session::EGW_SESSION_NAME])
+// init eGW's sessions-handler and check if we can restore the eGW enviroment from the php-session
+if (egw_session::init_handler())
 {
 	if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 	{
@@ -112,12 +109,9 @@ print_debug('sane environment','messageonly','api');
 * Multi-Domain support                                                       *
 \****************************************************************************/
 
-// Work around bug in Safari Version 3.2.1 (5525.27.1) where cookie named domain is called Domain
-if($_REQUEST['Domain']) $_REQUEST['domain'] = $_REQUEST['Domain'];
-
 $GLOBALS['egw_info']['user']['domain'] = egw_session::search_instance(
 	isset($_POST['login']) ? $_POST['login'] : (isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : $_SERVER['REMOTE_USER']),
-	$_REQUEST['domain'],$GLOBALS['egw_info']['server']['default_domain'],$_SERVER['SERVER_NAME'],$GLOBALS['egw_domain']);
+	egw_session::get_request('domain'),$GLOBALS['egw_info']['server']['default_domain'],$_SERVER['SERVER_NAME'],$GLOBALS['egw_domain']);
 
 $GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_host'];
 $GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_port'];

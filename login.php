@@ -314,7 +314,7 @@ else
 
 			if(!$GLOBALS['egw_info']['server']['disable_autoload_langfiles'])
 			{
-				$GLOBALS['egw']->translation->autoload_changed_langfiles();
+				translation::autoload_changed_langfiles();
 			}
 			$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
 			if (!$forward)
