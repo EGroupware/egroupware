@@ -145,7 +145,7 @@ function doXMLHTTP()
 	$ajaxClass =& CreateObject($appName.'.'.$className);
 	$argList = $GLOBALS['egw']->translation->convert($argList, 'utf-8');
 
-	return call_user_func_array(array(&$ajaxClass, $functionName), $argList );
+	return call_user_func_array(array(&$ajaxClass, $functionName), (array)$argList );
 }
 
 $xajax = new xajax($_SERVER['PHP_SELF']);
