@@ -173,17 +173,6 @@ class accounts_ldap
 		{
 			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
 		}
-		if (isset($this->requiredObjectClasses['user-if-supported']))
-		{
-			foreach($this->requiredObjectClasses['user-if-supported'] as $additional)
-			{
-				if ($this->ldapServerInfo->supportsObjectClass($additional))
-				{
-					$this->requiredObjectClasses['user'][] = $additional;
-				}
-			}
-			unset($this->requiredObjectClasses['user-if-supported']);	// to run this check only once
-		}
 		// common code for users and groups
 		// checks if accout_lid (dn) has been changed or required objectclass'es are missing
 		if ($data_utf8['account_id'] && $data_utf8['account_lid'])
@@ -242,6 +231,16 @@ class accounts_ldap
 			if (!is_array($to_write['objectclass']))
 			{
 				$to_write['objectclass'] = $old ? $old['objectclass'] : array();
+			}
+			if (!$old)	// for new accounts add additional addressbook object classes, if supported by server
+			{			// as setting them later might loose eg. password, if we are not allowed to read them
+				foreach($this->requiredObjectClasses['user-if-supported'] as $additional)
+				{
+					if ($this->ldapServerInfo->supportsObjectClass($additional))
+					{
+						$to_write['objectclass'][] = $additional;
+					}
+				}
 			}
 			$to_write['objectclass'] = array_values(array_unique(array_merge($to_write['objectclass'],
 				$this->requiredObjectClasses[$is_group ? 'group' : 'user'])));
