@@ -1544,6 +1544,11 @@ class addressbook_bo extends addressbook_so
 		$no_addr_one = array();
 		$no_addr_two = array();
 
+		if (!empty($contact['owner']))
+		{
+			$columns_to_search += array('owner');
+		}
+
 		$backend =& $this->get_backend();
 
 		// define filter for empty address one
