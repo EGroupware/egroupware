@@ -163,7 +163,7 @@ class egw_session
 		$this->required_files = $_SESSION[self::EGW_REQUIRED_FILES];
 
 		$this->sessionid = self::get_sessionid();
-		$this->kp3       = $_REQUEST['kp3'];
+		$this->kp3       = self::get_request('kp3');
 
 		$this->egw_domains = $domain_names;
 
@@ -336,7 +336,7 @@ class egw_session
 	 */
 	static function decrypt()
 	{
-		if ($_SESSION[self::EGW_SESSION_ENCRYPTED] && self::init_crypt($_REQUEST['kp3']))
+		if ($_SESSION[self::EGW_SESSION_ENCRYPTED] && self::init_crypt(self::get_request('kp3')))
 		{
 			foreach(self::$egw_session_vars as $name)
 			{
@@ -754,6 +754,23 @@ class egw_session
 	}
 
 	/**
+	 * Get request or cookie variable with higher precedence to $_REQUEST then $_COOKIE
+	 *
+	 * In php < 5.3 that's identical to $_REQUEST[$name], but php5.3+ does no longer register cookied in $_REQUEST by default
+	 *
+	 * As a workaround for a bug in Safari Version 3.2.1 (5525.27.1), where cookie first letter get's upcased, we check that too.
+	 *
+	 * @param string $name eg. 'kp3' or domain
+	 * @return mixed null if it's neither set in $_REQUEST or $_COOKIE
+	 */
+	static function get_request($name)
+	{
+		return isset($_REQUEST[$name]) ? $_REQUEST[$name] :
+			(isset($_COOKIE[$name]) ? $_COOKIE[$name] :
+			(isset($_COOKIE[$name=ucfirst($name)]) ? $_COOKIE[$name] : null));
+	}
+
+	/**
 	 * Check to see if a session is still current and valid
 	 *
 	 * @param string $sessionid session id to be verfied
@@ -769,7 +786,7 @@ class egw_session
 		if(!$sessionid)
 		{
 			$sessionid = self::get_sessionid();
-			$kp3       = $_REQUEST['kp3'];
+			$kp3       = self::get_request('kp3');
 		}
 
 		$this->sessionid = $sessionid;
@@ -778,7 +795,7 @@ class egw_session
 
 		if (!$this->sessionid)
 		{
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid')_REQUEST[sessionid]='$_REQUEST[sessionid]' No session ID");
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid') get_sessionid()='".self::get_sessionid()."' No session ID");
 			return false;
 		}
 
@@ -1237,7 +1254,7 @@ class egw_session
 	 * Search the instance matching the request
 	 *
 	 * @param string $login on login $_POST['login'], $_SERVER['PHP_AUTH_USER'] or $_SERVER['REMOTE_USER']
-	 * @param string $domain_requested usually $_REQUEST['domain']
+	 * @param string $domain_requested usually self::get_request('domain')
 	 * @param string &$default_domain usually $default_domain get's set eg. by sitemgr
 	 * @param string $server_name usually $_SERVER['SERVER_NAME']
 	 * @param array $domains=null defaults to $GLOBALS['egw_domain'] from the header
@@ -1431,14 +1448,14 @@ class egw_session
 		if (($sessionid = self::get_sessionid()))
 		{
 		 	session_id($sessionid);
-			session_start();
+			$ok = session_start();
 			self::decrypt();
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
+			return $ok;
 		}
-		else
-		{
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() no active session!");
-		}
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() no active session!");
+
+		return false;
 	}
 
 	/**
