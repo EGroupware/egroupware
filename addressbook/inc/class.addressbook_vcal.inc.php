@@ -34,6 +34,39 @@ class addressbook_vcal extends addressbook_bo
 	 */
 	var $productName;
 	/**
+	 * supported fields for vCard file and groupdav import/export
+	 *
+	 * @var array
+	 */
+	var $supportedFields = array(	// all entries, nexthaus corporation, groupdav, ...
+			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+							'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+							'adr_two_postalcode','adr_two_countryname'),
+			'BDAY'		=> array('bday'),
+			'CATEGORIES'	=> array('cat_id'),
+			'EMAIL;INTERNET;WORK' => array('email'),
+			'EMAIL;INTERNET;HOME' => array('email_home'),
+			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+			'FN'		=> array('n_fn'),
+			'NOTE'		=> array('note'),
+			'ORG'		=> array('org_name','org_unit'),
+			'TEL;CELL;WORK'	=> array('tel_cell'),
+			'TEL;CELL;HOME'	=> array('tel_cell_private'),
+			'TEL;FAX;WORK'	=> array('tel_fax'),
+			'TEL;FAX;HOME'	=> array('tel_fax_home'),
+			'TEL;HOME'	=> array('tel_home'),
+			'TEL;PAGER;WORK' => array('tel_pager'),
+			'TEL;WORK'	=> array('tel_work'),
+			'TITLE'		=> array('title'),
+			'URL;WORK'	=> array('url'),
+			'ROLE'		=> array('role'),
+			'URL;HOME'	=> array('url_home'),
+			'FBURL'		=> array('freebusy_uri'),
+			'PHOTO'		=> array('jpegphoto'),
+			'UID'       => array('uid'),
+		);
+	/**
 	 * VCard version
 	 *
 	 * @var string
@@ -129,10 +162,6 @@ class addressbook_vcal extends addressbook_bo
 
 		$vCard = new Horde_iCalendar_vcard($this->version);
 
-		if (!is_array($this->supportedFields))
-		{
-			$this->setSupportedFields();
-		}
 		$sysCharSet = $GLOBALS['egw']->translation->charset();
 
 		// KAddressbook always requires non-ascii chars to be qprint encoded.
@@ -371,580 +400,13 @@ class addressbook_vcal extends addressbook_bo
 		return $result;
 	}
 
-	function setSupportedFields($_productManufacturer='', $_productName='')
+	function setSupportedFields($_productManufacturer='file', $_productName='', $_supportedFields = null)
 	{
-		$state = &$_SESSION['SyncML.state'];
-		if (isset($state))
-		{
-			$deviceInfo = $state->getClientDeviceInfo();
-		}
 
-		// store product manufacturer and name, to be able to use it elsewhere
-		if ($_productManufacturer)
-		{
-			$this->productManufacturer = strtolower($_productManufacturer);
-			$this->productName = strtolower($_productName);
-		}
+		$this->productManufacturer = strtolower($_productManufacturer);
+		$this->productName = strtolower($_productName);
 
-		if(isset($deviceInfo) && is_array($deviceInfo))
-		{
-			if(!isset($this->productManufacturer) ||
-				$this->productManufacturer == '' ||
-				$this->productManufacturer == 'file')
-			{
-				$this->productManufacturer = strtolower($deviceInfo['manufacturer']);
-			}
-			if(!isset($this->productName) || $this->productName == '')
-			{
-				$this->productName = strtolower($deviceInfo['model']);
-			}
-		}
-
-		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', ' . $this->productName .')',
-		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-		/**
-		 * ToDo Lars:
-		 * + changes / renamed fields in 1.3+:
-		 *   - access           --> private (already done by Ralf)
-		 *   - tel_msg          --> tel_assistent
-		 *   - tel_modem        --> tel_fax_home
-		 *   - tel_isdn         --> tel_cell_private
-		 *   - tel_voice/ophone --> tel_other
-		 *   - address2         --> adr_one_street2
-		 *   - address3         --> adr_two_street2
-		 *   - freebusy_url     --> freebusy_uri (i instead l !)
-		 *   - fn               --> n_fn
-		 *   - last_mod         --> modified
-		 * + new fields in 1.3+:
-		 *   - n_fileas
-		 *   - role
-		 *   - assistent
-		 *   - room
-		 *   - calendar_uri
-		 *   - url_home
-		 *   - created
-		 *   - creator (preset with owner)
-		 *   - modifier
-		 *   - jpegphoto
-		 */
-		$defaultFields[0] = array(	// multisync
-			'ADR' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'CATEGORIES' 	=> array('cat_id'),
-			'CLASS'		=> array('private'),
-			'EMAIL'		=> array('email'),
-			'N'		=> array('n_family','n_given','','',''),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name',''),
-			'TEL;CELL'	=> array('tel_cell'),
-			'TEL;FAX'	=> array('tel_fax'),
-			'TEL;HOME'	=> array('tel_home'),
-			'TEL;WORK'	=> array('tel_work'),
-			'TITLE'		=> array('title'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[1] = array(	// all entries, nexthaus corporation, groupdav, ...
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'		=> array('bday'),
-			'CATEGORIES'	=> array('cat_id'),
-			'EMAIL;INTERNET;WORK' => array('email'),
-			'EMAIL;INTERNET;HOME' => array('email_home'),
-			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name','org_unit'),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;CELL;HOME'	=> array('tel_cell_private'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;FAX;HOME'	=> array('tel_fax_home'),
-			'TEL;HOME'	=> array('tel_home'),
-			'TEL;PAGER;WORK' => array('tel_pager'),
-			'TEL;WORK'	=> array('tel_work'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'ROLE'		=> array('role'),
-			'URL;HOME'	=> array('url_home'),
-			'FBURL'		=> array('freebusy_uri'),
-			'PHOTO'		=> array('jpegphoto'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[2] = array(	// sony ericson
-			'ADR;HOME' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'BDAY'		=> array('bday'),
-			'CATEGORIES' 	=> array('cat_id'),
-			'CLASS'		=> array('private'),
-			'EMAIL'		=> array('email'),
-			'N'		=> array('n_family','n_given','','',''),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name',''),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;HOME'	=> array('tel_home'),
-			'TEL;WORK'	=> array('tel_work'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[3] = array(	// siemens
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'		=> array('bday'),
-			'EMAIL;INTERNET;WORK' => array('email'),
-			'EMAIL;INTERNET;HOME' => array('email_home'),
-			'N'		=> array('n_family','n_given','','',''),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name'), // only one company field is supported
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;HOME'	=> array('tel_home'),
-			'TEL;PAGER;WORK' => array('tel_pager'),
-			'TEL;WORK'	=> array('tel_work'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[4] = array(	// nokia 6600
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY;TYPE=BASIC'		=> array('bday'),
-			'EMAIL;INTERNET;WORK' => array('email'),
-			'EMAIL;INTERNET;HOME' => array('email_home'),
-			'N'		=> array('n_family','n_given','','',''),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name',''),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;CELL;HOME'	=> array('tel_cell_private'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;FAX;HOME'	=> array('tel_fax_home'),
-			'TEL;HOME'	=> array('tel_home'),
-			'TEL;PAGER;WORK' => array('tel_pager'),
-			'TEL;WORK'	=> array('tel_work'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'URL;HOME'	=> array('url_home'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[5] = array(	// nokia e61
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY;TYPE=BASIC'		=> array('bday'),
-			'EMAIL;INTERNET;WORK' => array('email'),
-			'EMAIL;INTERNET;HOME' => array('email_home'),
-			'N'		=> array('n_family','n_given','','n_prefix','n_suffix'),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name',''),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;CELL;HOME'	=> array('tel_cell_private'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;FAX;HOME'	=> array('tel_fax_home'),
-			'TEL;HOME'	=> array('tel_home'),
-			'TEL;PAGER;WORK' => array('tel_pager'),
-			'TEL;WORK'	=> array('tel_work'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'URL;HOME'	=> array('url_home'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[6] = array(	// funambol: fmz-thunderbird-plugin
-			'ADR;WORK'      => array('','','adr_one_street','adr_one_locality','adr_one_region',
-									'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'      => array('','','adr_two_street','adr_two_locality','adr_two_region',
-									'adr_two_postalcode','adr_two_countryname'),
-			'EMAIL'         => array('email'),
-			'EMAIL;HOME'    => array('email_home'),
-			'N'             => array('n_family','n_given','','',''),
-			'FN'		=> array('n_fn'),
-			'NOTE'          => array('note'),
-			'ORG'           => array('org_name','org_unit'),
-			'TEL;CELL'      => array('tel_cell'),
-			'TEL;HOME;FAX'  => array('tel_fax'),
-			'TEL;HOME;VOICE' => array('tel_home'),
-			'TEL;PAGER'     => array('tel_pager'),
-			'TEL;WORK;VOICE' => array('tel_work'),
-			'TITLE'         => array('title'),
-			'URL;WORK'      => array('url'),
-			'URL'           => array('url_home'),
-		);
-
-		$defaultFields[7] = array(	// SyncEvolution
-			'N'=>		array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'TITLE'		=> array('title'),
-			'ROLE'		=> array('role'),
-			'ORG'		=> array('org_name','org_unit','room'),
-			'ADR;WORK'	=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region', 'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region', 'adr_two_postalcode','adr_two_countryname'),
-			'TEL;WORK;VOICE'	=> array('tel_work'),
-			'TEL;HOME;VOICE'	=> array('tel_home'),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;FAX;HOME'	=> array('tel_fax_home'),
-			'TEL;PAGER;WORK' => array('tel_pager'),
-			'TEL;CAR'	=> array('tel_car'),
-			'TEL;VOICE'	=> array('tel_other'),
-			'EMAIL;INTERNET;WORK'	=> array('email'),
-			'EMAIL;INTERNET;HOME'	=> array('email_home'),
-			'URL;WORK'		=> array('url'),
-			'BDAY'		=> array('bday'),
-			'CATEGORIES'	=> array('cat_id'),
-			'NOTE'		=> array('note'),
-			'X-EVOLUTION-ASSISTANT'		=> array('assistent'),
-			'PHOTO'		=> array('jpegphoto'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[8] = array_merge($defaultFields[1],array(	// KDE Addressbook, only changes from all=1
-			'ORG' => array('org_name'),
-			'X-KADDRESSBOOK-X-Department' => array('org_unit'),
-		));
-
-		$defaultFields[9] = array(	// nokia e90
-			'ADR;WORK'	=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY;TYPE=BASIC'		=> array('bday'),
-			'X-CLASS'	=> array('private'),
-			'EMAIL;INTERNET;WORK' => array('email'),
-			'EMAIL;INTERNET;HOME' => array('email_home'),
-			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name','org_unit'),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;CELL;HOME'	=> array('tel_cell_private'),
-			'TEL;FAX;WORK'	=> array('tel_fax'),
-			'TEL;FAX;HOME'	=> array('tel_fax_home'),
-			'TEL;CAR'	=> array('tel_car'),
-			'TEL;PAGER;WORK' => array('tel_pager'),
-			'TEL;VOICE;WORK' => array('tel_work'),
-			'TEL;VOICE;HOME' => array('tel_home'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'URL;HOME'	=> array('url_home'),
-			'X-ASSISTANT'		=> array('assistent'),
-			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
-			'PHOTO'		=> array('jpegphoto'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[10] = array(	// nokia 9300
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'		=> array('bday'),
-			'EMAIL;INTERNET' => array('email'),
-			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name','org_unit'),
-			'TEL;CELL'	=> array('tel_cell'),
-			'TEL;WORK;FAX'	=> array('tel_fax'),
-			'TEL;FAX'	=> array('tel_fax_home'),
-			'TEL;PAGER' => array('tel_pager'),
-			'TEL;WORK;VOICE' => array('tel_work'),
-			'TEL;HOME;VOICE' => array('tel_home'),
-			'TITLE'		=> array('contact_role'),
-			'URL'	=> array('url'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[11] = array(	// funambol: iphone, blackberry, wm pocket pc
-			'ADR;WORK'      => array('','','adr_one_street','adr_one_locality','adr_one_region',
-									'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'      => array('','','adr_two_street','adr_two_locality','adr_two_region',
-									'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'		=> array('bday'),
-			'CATEGORIES'	=> array('cat_id'),
-			'EMAIL;INTERNET;WORK'         => array('email'),
-			'EMAIL;INTERNET;HOME'    => array('email_home'),
-			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'FN'		=> array('n_fn'),
-			'NOTE'          => array('note'),
-			'ORG'           => array('org_name','org_unit'),
-			'TEL;CELL'      => array('tel_cell'),
-			'TEL;FAX;HOME'  => array('tel_fax_home'),
-			'TEL;FAX;WORK'  => array('tel_fax'),
-			'TEL;VOICE;HOME' => array('tel_home'),
-			'TEL;VOICE;WORK' => array('tel_work'),
-			'TEL;PAGER'     => array('tel_pager'),
-			'TEL;CAR'	=> array('tel_car'),
-			'TITLE'         => array('title'),
-			'URL;WORK'      => array('url'),
-			'URL;HOME'	=> array('url_home'),
-			'PHOTO'		=> array('jpegphoto'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[12] = array(	// Synthesis 4 iPhone
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'		=> array('bday'),
-			'CATEGORIES'	=> array('cat_id'),
-			'EMAIL;WORK;INTERNET' => array('email'),
-			'EMAIL;HOME;INTERNET' => array('email_home'),
-			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'FN'		=> array('n_fn'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name','org_unit'),
-			'TEL;VOICE;CELL'	=> array('tel_cell'),
-			'TEL;WORK;FAX'		=> array('tel_fax'),
-			'TEL;HOME;FAX'		=> array('tel_fax_home'),
-			'TEL;WORK;VOICE'	=> array('tel_work'),
-			'TEL;HOME;VOICE'	=> array('tel_home'),
-			'TEL;PAGER'		=> array('tel_pager'),
-			'TEL;X-CustomLabel-car'	=> array('tel_car'),
-			'TITLE'		=> array('title'),
-			'URL;WORK'	=> array('url'),
-			'ROLE'		=> array('role'),
-			'URL;HOME'	=> array('url_home'),
-			'PHOTO'		=> array('jpegphoto'),
-			'UID'       => array('uid'),
-		);
-
-		$defaultFields[13] = array(	// sonyericsson
-			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-							'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-							'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'		=> array('bday'),
-			'EMAIL;WORK'	=> array('email'),
-			'EMAIL;HOME'	=> array('email_home'),
-			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'NOTE'		=> array('note'),
-			'ORG'		=> array('org_name',''),
-			'TEL;CELL;WORK'	=> array('tel_cell'),
-			'TEL;CELL;HOME'	=> array('tel_cell_private'),
-			'TEL;FAX'	=> array('tel_fax'),
-			'TEL;HOME'	=> array('tel_home'),
-			'TEL;WORK'	=> array('tel_work'),
-			'TITLE'		=> array('title'),
-			'URL'		=> array('url'),
-			'UID'       => array('uid'),
-			//'PHOTO'		=> array('jpegphoto'),
-		);
-
-		$defaultFields[14] = array(	// Funambol Outlook Sync Client
-			'ADR;WORK'      => array('','','adr_one_street','adr_one_locality','adr_one_region',
-									'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'      => array('','','adr_two_street','adr_two_locality','adr_two_region',
-									'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'		=> array('bday'),
-			'CATEGORIES'	=> array('cat_id'),
-			'EMAIL;INTERNET'         => array('email'),
-			'EMAIL;INTERNET;HOME'    => array('email_home'),
-			'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-			'FN'			=> array('n_fn'),
-			'NOTE'          => array('note'),
-			'ORG'           => array('org_name','org_unit','room'),
-			'ROLE'			=> array('role'),
-			'CLASS'			=> array('private'),
-			'NICKNAME'		=> array('label'),
-			'TEL;CELL'      => array('tel_cell'),
-			'TEL;HOME;FAX'  => array('tel_fax_home'),
-			'TEL;WORK;FAX'  => array('tel_fax'),
-			'TEL;VOICE;HOME' => array('tel_home'),
-			'TEL;VOICE;WORK' => array('tel_work'),
-			'TEL;PAGER'     => array('tel_pager'),
-			'TEL;CAR;VOICE'	=> array('tel_car'),
-			'TITLE'         => array('title'),
-			'URL'      		=> array('url'),
-			'URL;HOME'		=> array('url_home'),
-			'PHOTO'			=> array('jpegphoto'),
-		);
-
-		//error_log("Client: $_productManufacturer $_productName");
-		switch ($this->productManufacturer)
-		{
-			case 'funambol':
-			case 'funambol inc.':
-				switch ($this->productName)
-				{
-					case 'thunderbird':
-					case 'mozilla plugin':
-						$this->supportedFields = $defaultFields[6];
-						break;
-
-					case 'pocket pc plug-in':
-					case 'blackberry plug-in':
-					case 'iphone':
-						$this->supportedFields = $defaultFields[11];
-						break;
-
-					case 'outlook sync client v.':
-						$this->supportedFields = $defaultFields[14];
-						break;
-
-					default:
-						error_log("Funambol product '$this->productName', assuming same as thunderbird");
-						$this->supportedFields = $defaultFields[6];
-						break;
-				}
-				break;
-
-			case 'nexthaus corporation':
-			case 'nexthaus corp':
-				switch ($this->productName)
-				{
-					case 'syncje outlook edition':
-						$this->supportedFields = $defaultFields[1];
-						break;
-					default:
-						error_log("Nexthaus product '$this->productName', assuming same as 'syncje outlook'");
-						$this->supportedFields = $defaultFields[1];
-						break;
-				}
-				break;
-
-			case 'nokia':
-				switch ($this->productName)
-				{
-					case 'e61':
-						$this->supportedFields = $defaultFields[5];
-						break;
-					case 'e51':
-					case 'e90':
-					case 'e71':
-					case 'n95':
-						$this->supportedFields = $defaultFields[9];
-						break;
-					case '9300':
-						$this->supportedFields = $defaultFields[10];
-						break;
-					case '6600':
-						$this->supportedFields = $defaultFields[4];
-						break;
-					case 'nokia 6131':
-						$this->supportedFields = $defaultFields[4];
-						break;
-					default:
-						error_log("Unknown Nokia phone 'this->$productName', assuming same as '6600'");
-						$this->supportedFields = $defaultFields[4];
-						break;
-				}
-				break;
-
-
-			// multisync does not provide anymore information then the manufacturer
-			// we suppose multisync with evolution
-			case 'the multisync project':
-				switch ($this->productName)
-				{
-					default:
-						$this->supportedFields = $defaultFields[0];
-						break;
-				}
-				break;
-
-			case 'siemens':
-				switch ($this->productName)
-				{
-					case 'sx1':
-						$this->supportedFields = $defaultFields[3];
-						break;
-					default:
-						error_log("Unknown Siemens phone '$this->productName', assuming same as 'sx1'");
-						$this->supportedFields = $defaultFields[3];
-						break;
-				}
-				break;
-
-			case 'sonyericsson':
-			case 'sony ericsson':
-				switch ($this->productName)
-				{
-					case 'p910i':
-					case 'd750i':
-						$this->supportedFields = $defaultFields[2];
-						break;
-					case 'w760i':
-					case 'w890i':
-						$this->supportedFields = $defaultFields[13];
-						break;
-					default:
-						if ($this->productName[0] == 'w')
-						{
-							error_log("unknown Sony Ericsson phone '$this->productName', assuming same as 'W760i'");
-							$this->supportedFields = $defaultFields[13];
-						}
-						else
-						{
-							error_log("unknown Sony Ericsson phone '$this->productName', assuming same as 'D750i'");
-							$this->supportedFields = $defaultFields[2];
-						}
-						break;
-				}
-				break;
-
-			case 'synthesis ag':
-				switch ($this->productName)
-				{
-					case 'sysync client pocketpc pro':
-					case 'sysync client pocketpc std':
-						$this->supportedFields = $defaultFields[1];
-						$this->supportedFields['TEL;CELL;CAR;VOICE'] = array('tel_car');
-						break;
-					case 'sysync client iphone contacts':
-					case 'sysync client iphone contacts+todoz':
-						$this->supportedFields = $defaultFields[12];
-						break;
-					default:
-						error_log("Synthesis connector '$this->productName', using default fields");
-						$this->supportedFields = $defaultFields[0];
-						break;
-				}
-				break;
-
-			case 'patrick ohly':	// SyncEvolution
-				$this->supportedFields = $defaultFields[7];
-				break;
-
-			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
-				$this->supportedFields = $defaultFields[1];
-				break;
-
-			case 'groupdav':		// all GroupDAV access goes through here
-				switch ($this->productName)
-				{
-					case 'kde':             // KDE Addressbook
-						$this->supportedFields = $defaultFields[1];
-						error_log(__FILE__ . ":groupdav kde 1");
-						break;
-					default:
-						$this->supportedFields = $defaultFields[1];
-				}
-				break;
-
-			// the fallback for SyncML
-			default:
-				error_log(__FILE__ . __METHOD__ ."\nClient not found:'" . $this->productManufacturer . "' '" . $this->productName . "'");
-				$this->supportedFields = $defaultFields[0];
-				break;
-		}
+		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
 	}
 
 	function vcardtoegw($_vcard)
@@ -1158,7 +620,7 @@ class addressbook_vcal extends addressbook_bo
 
 
                if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($rowNames)."\n",3,$this->logfile);
-             
+
 	       // All rowNames of the vCard are now concatenated with their qualifiers.
                // If qualifiers are missing we apply a default strategy.
                // E.g. ADR will be either ADR;WORK, if no ADR;WORK is given,
@@ -1259,7 +721,7 @@ class addressbook_vcal extends addressbook_bo
 						break;
 					}
 				case 'TEL;CELL;X-egw-Ref3':
-					if (!in_array($rowNames['TEL;CAR'])
+					if (!in_array('TEL;CAR', $rowNames)
 							&& !in_array('TEL;CAR;VOICE', $rowNames)
 							&& !in_array('TEL;CAR;CELL', $rowNames)
 							&& !in_array('TEL;CAR;CELL;VOICE', $rowNames)
@@ -1374,10 +836,15 @@ class addressbook_vcal extends addressbook_bo
 			}
 		}
 
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
+		{
+			$contact['owner'] = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+		}
+
 		$this->fixup_contact($contact);
 
-		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
-		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($contact)."\n",3,$this->logfile);
+		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
+		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($contact)."\n",3,$this->logfile);
 		return $contact;
 	}
 
