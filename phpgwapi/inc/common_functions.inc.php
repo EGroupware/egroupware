@@ -688,6 +688,7 @@ function &CreateObject($class)
 				'uiroles'           => 'projectmanager_roles_ui',
 				'uimilestones'      => 'projectmanager_milestones_ui',
 				'uipricelist'       => 'projectmanager_pricelist_ui',
+				'uicontacts'        => 'addressbook_ui',
 			);
 			if (isset($replace[$classname]))
 			{
