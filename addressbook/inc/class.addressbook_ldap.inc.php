@@ -290,7 +290,8 @@ class addressbook_ldap
 		}
 		else
 		{
-			$contact_id = ldap::quote(is_array($contact_id) ? $contact_id['id'] : $contact_id);
+			$contact_id = ldap::quote(!is_array($contact_id) ? $contact_id :
+				(isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid']));
 			$filter = "(|(entryUUID=$contact_id)(uid=$contact_id))";
 		}
 		$rows = $this->_searchLDAP($GLOBALS['egw_info']['server']['ldap_contact_context'],
