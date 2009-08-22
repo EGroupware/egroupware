@@ -21,8 +21,8 @@ $GLOBALS['egw_info'] = array(
 );
 include('./header.inc.php');
 
-$GLOBALS['sessionid'] = get_var('sessionid',array('GET','COOKIE'));
-$GLOBALS['kp3']       = get_var('kp3',array('GET','COOKIE'));
+$GLOBALS['sessionid'] = egw_session::get_sessionid('sessionid');
+$GLOBALS['kp3']       = egw_session::get_request('kp3');
 
 $verified = $GLOBALS['egw']->session->verify();
 
