@@ -585,7 +585,7 @@ class calendar_ical extends calendar_boupdate
 
 							if ($this->isWholeDay($revent))
 							{
-								$arr = $this->date2array($exception_start);
+								$arr = $this->date2array($event['recurrence']);
 								$vevent->setAttribute('RECURRENCE-ID', array(
 									'year' => $arr['year'],
 									'month' => $arr['month'],
@@ -684,8 +684,10 @@ class calendar_ical extends calendar_boupdate
 			{
 				$attributes['DTSTAMP'] = time();
 			}
-			foreach($event['alarm'] as $alarmID => $alarmData) {
-				if ($version == '1.0') {
+			foreach($event['alarm'] as $alarmID => $alarmData)
+			{
+				if ($version == '1.0')
+				{
 					if ($servertime)
 					{
 						$attributes['DALARM'] = date('Ymd\THis', $alarmData['time']);
@@ -698,26 +700,27 @@ class calendar_ical extends calendar_boupdate
 					}
 					// lets take only the first alarm
 					break;
-				} else {
+				}
+				else
+				{
 					// VCalendar 2.0 / RFC 2445
 
 					$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $event['description']));
 
 					// skip over alarms that don't have the minimum required info
-					if (!$alarmData['offset'] && !$alarmData['time']) {
-						continue;
-					}
+					if (!$alarmData['offset'] && !$alarmData['time']) continue;
 
 					// RFC requires DESCRIPTION for DISPLAY
-					if (!$event['title'] && !$description) {
-						continue;
-					}
+					if (!$event['title'] && !$description) continue;
 
 					$valarm = Horde_iCalendar::newComponent('VALARM',$vevent);
-					if ($alarmData['offset']) {
+					if ($alarmData['offset'])
+					{
 						$valarm->setAttribute('TRIGGER', -$alarmData['offset'],
 								array('VALUE' => 'DURATION', 'RELATED' => 'START'));
-					} else {
+					}
+					else
+					{
 						if ($servertime)
 						{
 							$value = date('Ymd\THis', $alarmData['time']);
@@ -735,8 +738,10 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			foreach($attributes as $key => $value) {
-				foreach(is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData) {
+			foreach($attributes as $key => $value)
+			{
+				foreach(is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
+				{
 					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),'UTF-8');
                     $paramData = (array) $GLOBALS['egw']->translation->convert(is_array($value) ?
                     		$parameters[$key][$valueID] : $parameters[$key],
@@ -756,6 +761,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
+						if($this->log)error_log(__LINE__.__METHOD__.__FILE__." Has invalid XML data: $valueData",3,$this->logfile);
 					}
 					$vevent->setParameter($key, $options);
 				}
@@ -764,7 +770,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$retval = $vcal->exportvCalendar();
-                if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($retval)."\n",3,$this->logfile);
+ 		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($retval)."\n",3,$this->logfile);
 		return $retval;
 
 	}
@@ -830,10 +836,10 @@ class calendar_ical extends calendar_boupdate
  				if ($event['recur_type'] != MCAL_RECUR_NONE)
  				{
  					// No RECURRENCE-ID for series events
- 					$event['reference'] = 0;
+ 					$event['reference'] = $event['recurrence'] = 0;
  				}
 
-				if ($cal_id > 0 && ($egw_event = $this->read($cal_id, $recur_date)))
+				if (!$recur_date && $cal_id > 0 && ($egw_event = $this->read($cal_id)))
 				{
 					// overwrite with server data for merge
 					if ($merge)
@@ -965,7 +971,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									$this->update_status($event, $egw_event, $recur_date);
 								}
-								elseif (isset($egw_event['participants'][$this->user]))
+								elseif (isset($event['participants'][$this->user]) || isset($egw_event['participants'][$this->user]))
 								{
 									// check if current user is an attendee and tried to change his status
 									$this->set_status($egw_event, $this->user,
@@ -979,7 +985,9 @@ class calendar_ical extends calendar_boupdate
 								// We need to create an new exception
 								$egw_event['recur_exception'] = array_unique(array_merge($egw_event['recur_exception'], array($recur_date)));
 								$this->update($egw_event, true);
+								$event['reference'] = $egw_event['id'];
 								$event['category'] = $egw_event['category'];
+								unset($event['id']);
 								$cal_id = -1;
 							}
 						}
@@ -1072,7 +1080,7 @@ class calendar_ical extends calendar_boupdate
 							}
 						}
 						// check if current user is an attendee and tried to change his status
-						if (isset($egw_event['participants'][$this->user]))
+						if (isset($egw_event['participants'][$this->user]) || isset($egw_event['participants'][$this->user]))
 						{
 							$this->set_status($egw_event, $this->user,
 								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recur_date);
@@ -1544,6 +1552,7 @@ class calendar_ical extends calendar_boupdate
 					// - do we need to set reference (cal_id of orginal series)
 					// - do we need to add that recurrence as recure exception to the original series
 					// --> original series should be found by searching for a series with same UID (backend)
+					// Joerg's answers: All this is handled within importVCal() for SyncML.
 					$vcardData['recurrence'] = $attributes['value'];
 					break;
 				case 'LOCATION':
@@ -1723,9 +1732,8 @@ class calendar_ical extends calendar_boupdate
 								if($recurenceMatches[2] != '#0') {
 									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 								}
-							} else {
-								break;
-							}
+							} else break;
+
 							// fall-through
 						case 'YEARLY':	// 2.0
 							$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
@@ -1807,6 +1815,18 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'ATTENDEE':
 				case 'ORGANIZER':	// will be written direct to the event
+					if (isset($attributes['params']['PARTSTAT']))
+				    {
+				    	$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
+				    }
+				    if (isset($attributes['params']['STATUS']))
+					{
+						$status = $this->status_ical2egw[strtoupper($attributes['params']['STATUS'])];
+					}
+					else
+					{
+						$status = 0;
+					}
 					$cn = '';
 					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches)) {
@@ -1851,10 +1871,24 @@ class calendar_ical extends calendar_boupdate
 					{
 						// we use the (checked) X-EGROUPWARE-UID
 					}
-					/*elseif($attributes['params']['CUTYPE'] == 'RESOURCE')
-					 {
 
-					 }*/
+					//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
+					elseif (preg_match('/(.*) Group/', $searcharray['n_fn'], $matches)
+							&& $status && $status != 'U')
+					{
+						if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
+						{
+							//Horde::logMessage("vevent2egw: group participant $uid",
+       	    				//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
+							$members = $GLOBALS['egw']->accounts->members($uid, true);
+							if (in_array($this->user, $members))
+							{
+								//Horde::logMessage("vevent2egw: set status to " . $status,
+       	    					//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+								$event['participants'][$this->user] = $status;
+							}
+						}
+					}
 					elseif ($attributes['value'] == 'Unknown')
 					{
 						$uid = $GLOBALS['egw_info']['user']['account_id'];
@@ -1883,17 +1917,13 @@ class calendar_ical extends calendar_boupdate
 					switch($attributes['name'])
 					{
 						case 'ATTENDEE':
-							if (isset($attributes['params']['PARTSTAT']))
+							if ($status)
 							{
-								$status = $this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])];
-							}
-							elseif (isset($attributes['params']['STATUS']))
-							{
-								$status = $this->status_ical2egw[strtoupper($attributes['params']['STATUS'])];
+								$event['participants'][$uid] = $status;
 							}
 							else
 							{
-								$status = ($uid == $event['owner'] ? 'A' : 'U');
+								$event['participants'][$uid] = ($uid == $event['owner'] ? 'A' : 'U');
 							}
 							// add quantity and role
 							$event['participants'][$uid] = calendar_so::combine_status($status,$attributes['params']['X-EGROUPWARE-QUANTITY'],$attributes['params']['ROLE']);

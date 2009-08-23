@@ -1122,8 +1122,8 @@ class calendar_boupdate extends calendar_bo
 	{
 		if ($event['uid'] && ($uidmatch = $this->read($event['uid'])))
 		{
-			if ($event['reference']
-				&& ($egw_event = $this->read($uidmatch['id'], $event['reference'])))
+			if ($event['recurrence']
+				&& ($egw_event = $this->read($uidmatch['id'], $event['recurrence'])))
 			{
 				// Do we work with a "status only" exception here?
 				$match = true;
@@ -1155,7 +1155,7 @@ class calendar_boupdate extends calendar_bo
 					}
 					if ($match && !empty($egw_event['participants'])) $match = false;
 				}
-				if ($match)	return ($uidmatch['id'] . ':' . $event['reference']);
+				if ($match)	return ($uidmatch['id'] . ':' . $event['recurrence']);
 
 				return false; // We need to create a new "status only" exception
 			}
