@@ -1080,7 +1080,7 @@ class calendar_ical extends calendar_boupdate
 							}
 						}
 						// check if current user is an attendee and tried to change his status
-						if (isset($egw_event['participants'][$this->user]) || isset($egw_event['participants'][$this->user]))
+						if (isset($event['participants'][$this->user]) || isset($egw_event['participants'][$this->user]))
 						{
 							$this->set_status($egw_event, $this->user,
 								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recur_date);
