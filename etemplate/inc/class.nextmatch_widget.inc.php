@@ -607,21 +607,14 @@ class nextmatch_widget
 		$cols['__content__'] =& $content;
 		$tmpl->widget_tree_walk(array($this,'_cols_from_tpl_walker'),$cols);
 		unset($cols['__content__']);
-		$name2col = is_array($cols['name2col']) ? $cols['name2col'] : array(); unset($cols['name2col']);
+		$col2names = is_array($cols['col2names']) ? $cols['col2names'] : array(); unset($cols['col2names']);
+		//_debug_array($col2names);
 		//_debug_array($cols);
 		foreach($cols as $name => $label)
 		{
 			if (!$label) unset($cols[$name]);
 		}
 		//_debug_array($cols);
-		//_debug_array($name2col);
-		// now we check if a column of the grid has more then one header
-		$col2names = array();
-		foreach($name2col as $name => $col)
-		{
-			if ($name != $col) $col2names[$col][] = $name;
-		}
-		//_debug_array($col2names);
 		$cols2 = $cols;
 		$cols = array();
 		foreach($cols2 as $name => $label)
@@ -704,10 +697,9 @@ class nextmatch_widget
 			elseif (empty($label) || strpos($cols[$col],$label) === false)
 			{
 				$cols[$col] .= ($cols[$col] ? ', ' : '').$label;
-				$cols['name2col'][$col] = $col;
 			}
 		}
-		$cols['name2col'][$widget['name']] = $col;
+		$cols['col2names'][$col][] = $widget['name'];
 
 		//echo "<p>$path: $widget[name] $label</p>\n";
 	}
