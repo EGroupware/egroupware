@@ -168,6 +168,7 @@ class vfs_widget
 				list($span,$class) = explode(',',$cell['span'],2);
 				$class .= ($class ? ' ' : '') . 'vfsMode';
 				$cell['span'] = $span.','.$class;
+				$cell['no_lang'] = true;
 				break;
 
 			case 'vfs-uid':
