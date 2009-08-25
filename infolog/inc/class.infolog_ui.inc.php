@@ -187,7 +187,6 @@ class infolog_ui
 		$readonlys["timesheet[$id]"] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
-
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
 			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
 			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id']))))
@@ -353,8 +352,8 @@ class infolog_ui
 			$query['columnselection_pref'] = 'infolog.index.rows';
 			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
-		// set old show_times pref, that get_info calculates the cumulated time of the timesheets
-		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time_info_replanned_time') !== false;
+		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
+		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
 
 		// query all links and sub counts in one go
 		if ($infos && !$query['csv_export'])
