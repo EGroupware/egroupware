@@ -13,7 +13,8 @@
  * @version $Id$
  */
 $notification_config = config::read('notifications');
-if ($notification_config['popup_enable']) {
+if ($notification_config['popup_enable'] && $GLOBALS['egw_info']['user']['apps']['notifications'])
+{
 	$GLOBALS['egw']->translation->add_app('notifications');
 	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js'. '" type="text/javascript"></script>';
 	echo '<script type="text/javascript">notificationwindow_init();</script>';
