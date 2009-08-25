@@ -1407,7 +1407,7 @@ function egw_exception_handler(Exception $e)
 	}
 	else
 	{
-		$headline = try_lang('An error happend');
+		$headline = try_lang('An error happened');
 	}
 	// logging all exceptions to the error_log
 	error_log($headline.': '.$e->getMessage());
