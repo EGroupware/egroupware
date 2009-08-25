@@ -435,9 +435,10 @@ class so_sql_cf extends so_sql
 			// replace ambiguous auto-id with (an exact match of) table_name.autoid
 			if (isset($criteria[$this->autoinc_id]))
 			{
-				if (is_numeric($criteria[$this->autoinc_id]))
+				if ($criteria[$this->autoinc_id])
 				{
-					$criteria[] = $this->table_name.'.'.$this->autoinc_id.'='.(int)$criteria[$this->autoinc_id];
+					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',
+						array($this->autoinc_id => $criteria[$this->autoinc_id]));
 				}
 				unset($criteria[$this->autoinc_id]);
 			}
