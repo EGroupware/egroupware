@@ -690,11 +690,7 @@ class nextmatch_widget
 		{
 			$label = substr($label,-3) == '...' ? lang(substr($label,0,-3)) : lang($label);
 
-			if (!$sub)
-			{
-				$cols[$widget['name']] = $label;
-			}
-			elseif (empty($label) || strpos($cols[$col],$label) === false)
+			if (empty($label) || strpos($cols[$col],$label) === false)
 			{
 				$cols[$col] .= ($cols[$col] ? ', ' : '').$label;
 			}
