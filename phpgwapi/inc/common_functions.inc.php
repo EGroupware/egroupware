@@ -1437,7 +1437,7 @@ function egw_exception_handler(Exception $e)
 	}
 	else
 	{
-		$headline = try_lang('An error happend');
+		$headline = try_lang('An error happened');
 	}
 	// exception handler for cli (command line interface) clients, no html, no logging
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
