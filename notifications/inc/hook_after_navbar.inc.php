@@ -13,7 +13,8 @@
  * @version $Id$
  */
 $notification_config = config::read('notifications');
-if ($notification_config['popup_enable']) {
+if ($notification_config['popup_enable'] && $GLOBALS['egw_info']['user']['apps']['notifications'])
+{
 	$GLOBALS['egw']->translation->add_app('notifications');
 	$popup_poll_interval = empty($notification_config['popup_poll_interval']) ? 60 : $notification_config['popup_poll_interval'];
 	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js?'.
