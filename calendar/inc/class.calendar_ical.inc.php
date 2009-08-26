@@ -797,14 +797,6 @@ class calendar_ical extends calendar_boupdate
 			return $Ok;
 		}
 
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
-			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
-		}
-		else
-		{
-			$minimum_uid_length = 8;
-		}
-
 		$version = $vcal->getAttribute('VERSION');
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
