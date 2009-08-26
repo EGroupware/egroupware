@@ -11,7 +11,7 @@ php_flag register_globals Off
 php_flag magic_quotes_gpc Off
 php_flag magic_quotes_runtime Off
 # settings for the file upload, you might increase them further
-php_value upload_max_filesize 16M
+#php_value upload_max_filesize 16M
 # session handling: now the check for expired sessions is done on every 10th session creation
 php_flag session.use_trans_sid Off
 php_value session.gc_probability 1
