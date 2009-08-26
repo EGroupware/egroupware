@@ -105,6 +105,8 @@ class addressbook_hooks
 
 	/**
 	 * populates $settings for the preferences
+	 *
+	 * @return array
 	 */
 	static function settings()
 	{
