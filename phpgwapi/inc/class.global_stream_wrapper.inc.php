@@ -25,10 +25,11 @@ class global_stream_wrapper
 {
     private $pos;
     private $stream;
+    private $name;
 
     public function stream_open($path, $mode, $options, &$opened_path)
     {
-        $this->stream = &$GLOBALS[parse_url($path,PHP_URL_HOST)];
+        $this->stream = &$GLOBALS[$this->name=parse_url($path,PHP_URL_HOST)];
         $this->pos = 0;
         if (!is_string($this->stream)) return false;
         return true;
@@ -75,6 +76,25 @@ class global_stream_wrapper
         $ret = ($newPos >=0 && $newPos <=$l);
         if ($ret) $this->pos=$newPos;
         return $ret;
+    }
+
+    public function stream_stat()
+    {
+    	if (!isset($this->stream))
+    	{
+    		return false;
+    	}
+    	return array(
+			'ino'   => md5($this->name),
+			'name'  => $this->name,
+			'mode'  => 0100000,
+			'size'  => bytes($this->stream),
+			'uid'   => 0,
+			'gid'   => 0,
+			'mtime' => 0,
+			'ctime' => 0,
+			'nlink' => 1,
+		);
     }
 
 	/**
