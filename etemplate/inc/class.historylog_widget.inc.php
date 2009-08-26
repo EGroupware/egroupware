@@ -69,7 +69,12 @@ class historylog_widget
 			}
 			//echo $value.'/'.$cell['size']; _debug_array($status_widgets);
 			$type = isset($status_widgets[$cell['size']]) ? $status_widgets[$cell['size']] : 'label';
-			$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true));
+			$options = '';
+			if (!is_array($type) && strpos($type,':') !== false)
+			{
+				list($type,$options) = explode(':',$type,2);
+			}
+			$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
 			if (is_array($type))
 			{
 				if (isset($type[0]))	// numeric indexed array --> multiple values of 1:N releation
