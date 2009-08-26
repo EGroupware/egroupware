@@ -135,6 +135,7 @@ renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
 renamed %1 to %2.	filemanager	de	%1 nach %2 umbenannt.
 replaced %1	filemanager	de	%1 ersetzt
 rights	filemanager	de	Rechte
+root	filemanager	de	root
 root access granted.	filemanager	de	Root Zugriff gewährt.
 root access stopped.	filemanager	de	Root Zugriff gestoppt.
 save %1	filemanager	de	%1 speichern
@@ -164,6 +165,7 @@ used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
+you can only grant additional rights, you can not take rights away!	filemanager	de	Sie könnnen nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1
 you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!

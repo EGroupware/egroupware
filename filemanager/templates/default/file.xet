@@ -118,7 +118,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.5.001">
+	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.7.001">
 		<grid width="450" height="300" spacing="10">
 			<columns>
 				<column/>
@@ -162,7 +162,7 @@
 						<menupopup type="select-account" options="select one,both" id="eacl[owner]" label="Owner"/>
 					</menulist>
 					<menulist class="eaclRights">
-						<menupopup id="eacl[rights]" label="Rights"/>
+						<menupopup id="eacl[rights]" label="Rights" statustext="You can only grant additional rights, you can NOT take rights away!"/>
 					</menulist>
 					<button label="Add" id="button[eacl]"/>
 				</row>
