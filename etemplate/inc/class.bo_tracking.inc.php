@@ -691,7 +691,7 @@ abstract class bo_tracking
      * @param boolean $integrate_link to have links embedded inside the body
      * @return string
      */
-    protected function get_body($html_email,$data,$old,$integrate_link = true)
+    public function get_body($html_email,$data,$old,$integrate_link = true)
     {
         $body = '';
         if ($html_email)
