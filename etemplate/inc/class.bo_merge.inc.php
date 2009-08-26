@@ -110,7 +110,7 @@ abstract class bo_merge
 	 * @param string $prefix='' prefix like eg. 'user'
 	 * @return array
 	 */
-	protected function contact_replacements($contact,$prefix='')
+	public function contact_replacements($contact,$prefix='')
 	{
 		if (!is_array($contact))
 		{
