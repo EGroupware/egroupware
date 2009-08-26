@@ -988,6 +988,11 @@ class HTTP_WebDAV_Server
                 if (!isset($options['mimetype'])) {
                     $options['mimetype'] = "application/octet-stream";
                 }
+		// switching off zlib.output_compression for zip archives, as the double compression makes problems eg. with lighttpd
+		if ($options['mimetype'] == 'application/zip')
+		{
+			ini_set('zlib.output_compression',0);
+		}
                 header("Content-type: $options[mimetype]");
 
                 if (isset($options['mtime'])) {
