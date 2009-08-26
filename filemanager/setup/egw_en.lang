@@ -146,6 +146,7 @@ renamed %1 to %2	filemanager	en	Renamed %1 to %2
 renamed %1 to %2.	filemanager	en	Renamed %1 to %2.
 replaced %1	filemanager	en	Replaced %1
 rights	filemanager	en	Rights
+root	filemanager	en	root
 root access granted.	filemanager	en	Root access granted.
 root access stopped.	filemanager	en	Root access stopped.
 save %1	filemanager	en	Save %1
@@ -177,6 +178,7 @@ used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
 wrong username or password!	filemanager	en	Wrong username or password!
 you are not allowed to upload a script!	filemanager	en	You are NOT allowed to upload a script!
+you can only grant additional rights, you can not take rights away!	filemanager	en	You can only grant additional rights, you can NOT take rights away!
 you do not have access to %1	filemanager	en	You do not have access to %1
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
