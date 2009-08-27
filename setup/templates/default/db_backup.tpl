@@ -59,6 +59,27 @@
 		 {upload}
 		</td>
 	</tr>
+	<tr bgcolor="#e6e6ee">
+		<td>
+			{lang_backup_cleanup}
+		</td>
+		<td align="right">
+		 {lang_backup_mincount} {backup_mincount}
+		</td>
+	</tr>
+	<tr bgcolor="#e6e6e6">
+		<td>
+			 {lang_backup_files_info}
+		</td>
+		<td align="right">
+			{lang_backup_files} {backup_files}
+		</td>
+	</tr>
+	<tr bgcolor="#e6e6ee">
+		<td colspan="2" align="right">
+			{backup_save_settings}
+		</td>
+	</tr>
 	<tr bgcolor="#e6e6e6">
 		<td colspan="2">
 			<table style="border: 1px solid black; border-collapse: collapse;" border="1" width="100%">

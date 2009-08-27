@@ -36,14 +36,15 @@ if ($_POST['download'])
 {
 	list($file) = each($_POST['download']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
-
+	ob_end_clean();
 	$browser = CreateObject('phpgwapi.browser');
 	$browser->content_header(basename($file));
-	fpassthru($f = fopen($file,'rb'));
+	$f = fopen($file,'rb');
+	fpassthru($f);
 	fclose($f);
 	exit;
 }
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',
@@ -70,6 +71,35 @@ else
 	$GLOBALS['egw']->common->phpgw_header();
 	parse_navbar();
 }
+// save backup housekeeping settings
+if ($_POST['save_backup_settings'])
+{
+	$matches = array();
+	preg_match('/^[1-9][0-9]*$/', $_POST['backup_mincount'], $matches);
+	$minCount = $matches[0];
+	$filesBackup =false;
+	if ($_POST['backup_files']==='backup_files') $filesBackup = true;
+	if (empty($minCount))
+	{
+		$setup_tpl->set_var('error_msg',htmlspecialchars(lang("'%1' must be integer", lang("backup min count"))));
+	}
+	else
+	{
+		$configValues = array(
+			'backup_mincount'=>$minCount,
+			'backup_files' =>$filesBackup,
+		);
+		$db_backup->saveConfig($configValues);
+
+		$cleaned_files = array();
+		/* Remove old backups. */
+		$db_backup->housekeeping(&$cleaned_files);
+		foreach ($cleaned_files as $file)
+		{
+			echo '<div align="center">'.lang('entry has been deleted sucessfully').': '.$file."</div>\n";
+		}
+	}
+}
 // create a backup now
 if($_POST['backup'])
 {
@@ -77,8 +107,17 @@ if($_POST['backup'])
 	{
 		echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 		$db_backup->backup($f);
-		fclose($f);
+		if(is_resource($f))
+			fclose($f);
 		$setup_tpl->set_var('error_msg',lang('backup finished'));
+
+		/* Remove old backups. */
+		$cleaned_files = array();
+		$db_backup->housekeeping(&$cleaned_files);
+		foreach ($cleaned_files as $file)
+		{
+			echo '<div align="center">'.lang('entry has been deleted sucessfully').': '.$file."</div>\n";
+		}
 	}
 	else
 	{
@@ -88,6 +127,9 @@ if($_POST['backup'])
 $setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" title="'.htmlspecialchars(lang("back's up your DB now, this might take a few minutes")).'" value="'.htmlspecialchars(lang('backup now')).'" />');
 $setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 	'<input type="submit" name="upload" value="'.htmlspecialchars(lang('upload backup')).'" title="'.htmlspecialchars(lang("uploads a backup to the backup-dir, from where you can restore it")).'" />');
+$setup_tpl->set_var('backup_mincount','<input type="text" name="backup_mincount" value="'.$db_backup->backup_mincount.'" size="3" maxlength="3"/>');
+$setup_tpl->set_var('backup_files','<input type="checkbox" name="backup_files" value="backup_files"'.((bool)$db_backup->backup_files ? 'checked':'').'/>');
+$setup_tpl->set_var('backup_save_settings','<input type="submit" name="save_backup_settings" value="'.htmlspecialchars(lang('save')).'" />');
 
 if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
 	is_uploaded_file($_FILES['uploaded']['tmp_name']))
@@ -116,6 +158,9 @@ if ($_POST['rename'])
 	$new_name = $_POST['new_name'][$file];
 	if (!empty($new_name))
 	{
+		list($ending) = array_reverse(explode('.', $file));
+		list($new_ending, $has_ending) = array_reverse(explode('.', $new_name));
+		if(!$has_ending || $new_ending != $ending) $new_name .= '.'.$ending;
 		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 		$ext = preg_match('/(\.gz|\.bz2)+$/i',$file,$matches) ? $matches[1] : '';
 		$new_file = $db_backup->backup_dir.'/'.preg_replace('/(\.gz|\.bz2)+$/i','',basename($new_name)).$ext;
@@ -131,8 +176,7 @@ if ($_POST['restore'])
 	if (is_resource($f = $db_backup->fopen_backup($file,true)))
 	{
 		echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
-		$db_backup->restore($f);
-		fclose($f);
+		$db_backup->restore($f, FALSE, $file);
 		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file));
 	}
 	else
@@ -214,6 +258,10 @@ $setup_tpl->set_var(array(
 	'lang_next_run'			=> lang('next run'),
 	'lang_actions'			=> lang('actions'),
 	'lang_backup_sets'		=> lang('backup sets'),
+	'lang_backup_cleanup'	=> lang('backup housekeeping'),
+	'lang_backup_mincount'	=> lang('min backup count'),
+	'lang_backup_files_info'  => lang('backup files (needs ZipArchive)'),
+	'lang_backup_files'  => lang('check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)'),
 	'lang_filename'			=> lang('filename'),
 	'lang_date'				=> lang('created'),
 	'lang_size'				=> lang('size'),

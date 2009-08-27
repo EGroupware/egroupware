@@ -351,6 +351,8 @@ class setup_cmd_config extends setup_cmd
 		// some extra defaults for non-cli operation
 		$defaults['files_dir'] = '/var/lib/egroupware/$domain/files';
 		$defaults['backup_dir'] = '/var/lib/egroupware/$domain/backup';
+		$defaults['backup_mincount'] = 0;
+		$defaults['backup_files'] = false;
 		$defaults['temp_dir'] = '/tmp';
 		$defaults['webserver_url'] = '/egroupware';
 		$defaults['smtp_server'] = $defaults['mail_server'] = 'localhost';

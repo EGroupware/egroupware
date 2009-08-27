@@ -389,6 +389,24 @@ class setup_detection
 				),__LINE__,__FILE__);
 			}
 		}
+		if (isset($config['backup_mincount']))
+		{
+			$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+				'config_value' => $config['backup_mincount'],
+				),array(
+				'config_app'  => 'phpgwapi',
+				'config_name' => 'backup_mincount',
+			),__LINE__,__FILE__);
+		}
+		if (isset($config['backup_files']))
+		{
+			$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+				'config_value' => (int)$config['backup_files'],
+				),array(
+				'config_app'  => 'phpgwapi',
+				'config_name' => 'backup_files',
+			),__LINE__,__FILE__);
+		};
 		if (!$this->check_dir($config['backup_dir'],$error_msg,true))
 		{
 			$config_errors[] = lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
