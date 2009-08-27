@@ -52,7 +52,7 @@
 		*/
 		function uiwidgets()
 		{
-			$template =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+			$template = CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->template = $template;
 			$this->template->set_file(array("body" => 'uiwidgets.tpl'));
 			$this->charset = $GLOBALS['egw']->translation->charset();
@@ -109,7 +109,7 @@
 			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
 
 			// careful! "d = new..." MUST be on a new line!!!
-			$folder_tree_new  = '<link rel="STYLESHEET" type="text/css" href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css">';
+			$folder_tree_new  = '<div><link rel="STYLESHEET" type="text/css" href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css">';
 			$folder_tree_new .= "<script type='text/javascript'>";
 			$folder_tree_new .= "tree=new dhtmlXTreeObject('$_divName','100%','100%',0);";
 			$folder_tree_new .= "tree.setImagePath('$folderImageDir/dhtmlxtree/');";
@@ -190,7 +190,7 @@
 			$selected = @htmlspecialchars($_selected, ENT_QUOTES, $this->charset);
 			#$selected = base64_encode($_selected);
 
-			$folder_tree_new.= "tree.closeAllItems(0);tree.openItem('$selected');</script>";
+			$folder_tree_new.= "tree.closeAllItems(0);tree.openItem('$selected');</script></div>";
 
 			return $folder_tree_new;
 		}
@@ -248,7 +248,7 @@
 		// $_rowStyle felamimail or outlook
 		function messageTable($_headers, $_folderType, $_folderName, $_readInNewWindow, $_rowStyle='felamimail')
 		{
-			$this->t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+			$this->t = CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->t->set_file(array("body" => 'mainscreen.tpl'));
 			$this->t->set_block('body','header_row_felamimail');
 			$this->t->set_block('body','header_row_outlook');
@@ -613,7 +613,7 @@
 
 		function quotaDisplay($_usage, $_limit)
 		{
-			$this->t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+			$this->t = CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->t->set_file(array("body" => 'mainscreen.tpl'));
 			$this->t->set_block('body','quota_block');
 
