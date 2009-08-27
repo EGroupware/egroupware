@@ -428,7 +428,7 @@ class setup
 		}
 		$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
 		$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
-
+		error_log(__METHOD__.'-> checking IP failed:'.print_r($remoteip,true));
 		return False;
 	}
 
