@@ -278,6 +278,7 @@ class translation
 		}
 		else
 		{
+			if (is_null(self::$db)) self::init(false);
 			$loaded = array();
 			foreach(self::$db->select(self::LANG_TABLE,'message_id,content',array(
 				'lang'		=> $lang,
