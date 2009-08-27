@@ -49,7 +49,7 @@ function user_pass_from_argv(&$account)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename(__FILE__);
-	echo "Usage:\t$cmd ls [-r|--recursive|-l|--long] URL [URL2 ...]\n";
+	echo "Usage:\t$cmd ls [-r|--recursive|-l|--long|-i|--inode] URL [URL2 ...]\n";
 	echo "\t$cmd cat URL [URL2 ...]\n";
 	echo "\t$cmd cp [-r|--recursive] [-p|--perms] URL-from URL-to\n";
 	echo "\t$cmd cp [-r|--recursive] [-p|--perms] URL-from [URL-from2 ...] URL-to-directory\n";
@@ -72,7 +72,7 @@ function usage($action=null,$ret=0)
 
 	exit;
 }
-$long = $numeric = $recursive = $perms = $all = false;
+$long = $numeric = $recursive = $perms = $all = $inode = false;
 $argv = $_SERVER['argv'];
 $cmd = basename(array_shift($argv),'.php');
 if ($argv[0][0] != '-' && $argv[0][0] != '/' && strpos($argv[0],'://') === false)
@@ -134,6 +134,10 @@ while(!is_null($option = array_shift($argv)))
 
 		case '-r': case '--recursive':
 			$recursive = true;
+			break;
+
+		case '-i': case '--inode':
+			$inode = true;
 			break;
 
 		case '-p': case '--parents': case '--perms':
@@ -371,7 +375,7 @@ switch($cmd)
 					{
 						load_wrapper($url);
 						array_unshift($argv,$url);
-						egw_vfs::find($argv,array('url'=>true,),'do_stat',array($long,$numeric,true));
+						egw_vfs::find($argv,array('url'=>true,),'do_stat',array($long,$numeric,true,$inode));
 						$argv = array();
 					}
 					elseif (is_dir($url) && ($dir = opendir($url)))
@@ -392,7 +396,7 @@ switch($cmd)
 						}
 						while(($file = readdir($dir)) !== false)
 						{
-							do_stat($url.'/'.$file.$query,$long,$numeric);
+							do_stat($url.'/'.$file.$query,$long,$numeric,false,$inode);
 						}
 						closedir($dir);
 					}
@@ -414,7 +418,7 @@ switch($cmd)
 					}
 					else
 					{
-						do_stat($url,$long,$numeric);
+						do_stat($url,$long,$numeric,false,$inode);
 					}
 					if (!$long && $cmd == 'ls') echo "\n";
 					break;
@@ -595,8 +599,10 @@ function do_eacl(array $argv)
  * @param string $url
  * @param boolean $long=false true=long listing with owner,group,size,perms, default false only filename
  * @param boolean $numeric=false true=give numeric uid&gid, else resolve the id to a name
+ * @param boolean $full_path=false true=give full path instead of just filename
+ * @param boolean $inode=false true=display inode (sqlfs id)
  */
-function do_stat($url,$long=false,$numeric=false,$full_path=false)
+function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 {
 	//echo "do_stat($url,$long,$numeric,$full_path)\n";
 	$bname = parse_url($url,PHP_URL_PATH);
@@ -651,6 +657,10 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false)
 		if (($stat['mode'] & 0xA000) == 0xA000)
 		{
 			$symlink = " -> ".(class_exists('egw_vfs') ? egw_vfs::readlink($url) : readlink($url));
+		}
+		if ($inode)
+		{
+			echo $stat['ino']."\t";
 		}
 		echo "$perms $nlink\t$uid\t$gid\t$size\t$mtime\t$bname$symlink\n";
 	}
