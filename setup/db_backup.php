@@ -81,16 +81,16 @@ if ($_POST['save_backup_settings'])
 	if ($_POST['backup_files']==='backup_files') $filesBackup = true;
 	if (empty($minCount))
 	{
+		$minCount = 0;
 		$setup_tpl->set_var('error_msg',htmlspecialchars(lang("'%1' must be integer", lang("backup min count"))));
 	}
-	else
-	{
-		$configValues = array(
+	$configValues = array(
 			'backup_mincount'=>$minCount,
 			'backup_files' =>$filesBackup,
-		);
-		$db_backup->saveConfig($configValues);
-
+	);
+	$db_backup->saveConfig($configValues);
+	if (is_int($minCount) && $minCount>0)
+	{
 		$cleaned_files = array();
 		/* Remove old backups. */
 		$db_backup->housekeeping(&$cleaned_files);
