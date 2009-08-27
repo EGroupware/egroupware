@@ -64,7 +64,7 @@ class addressbook_vcal extends addressbook_bo
 	{
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
-		$vCard =& new Horde_iCalendar_vcard;
+		$vCard = new Horde_iCalendar_vcard;
 
 		if(!is_array($this->supportedFields)) {
 			$this->setSupportedFields();
@@ -111,7 +111,7 @@ class addressbook_vcal extends addressbook_bo
 					case 'jpegphoto':
 						if(!empty($value))
 						{
-							error_log(__FILE__ ."\nThis vcard contains a JPEG\n '".$value."'");
+						//error_log(__FILE__ ."\nThis vcard contains a JPEG\n '".$value."'");
 							$options['ENCODING'] = 'BASE64';
 							$options['TYPE'] = 'JPEG';
 							$value = base64_encode($value);
@@ -169,7 +169,7 @@ class addressbook_vcal extends addressbook_bo
 			$vCard->setParameter($vcardField, $options);
 		}
 		$result = $vCard->exportvCalendar();
-		//error_log(__FILE__ . __METHOD__ ."\nvcard:".print_r($result,true));
+		//error_log(__LINE__.__FILE__ . __METHOD__ ."\export vcard:".print_r($result,true));
 		return $result;
 	}
 
@@ -781,15 +781,23 @@ class addressbook_vcal extends addressbook_bo
                                         break;
 
 				case 'EMAIL;WORK':
-					if(!isset($rowNames['EMAIL;INTERNET;WORK']))
+					$akey = false;
+					foreach($this->supportedFields as $tag => $value)
 					{
-						if(in_array ('#email_work', $value))
+						if(in_array ('email', $value))
 						{
 							$akey = $tag;
 						}
+						if(!isset($rowNames['EMAIL;INTERNET;WORK']))
+						{
+							//error_log(__METHOD__.print_r($rowName,true).'#'.print_r($vcardKey,true));
+							if(is_array($value) && in_array ('#email_work', $value))
+							{
+								$akey = $tag;
+							}
+						}
+						//		error_log("key:$akey:$vcardKey");
 					}
-					//		error_log("key:$akey:$vcardKey");
-
 					if( $akey && !empty($vcardValues[$vcardKey]['value']))
 					{
 						//error_log("$akey : ".print_r($vcardKey,true));
@@ -873,7 +881,7 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 		$this->fixup_contact($contact);
-		//error_log(__FILE__ . __METHOD__ . "\nContact:\n " .print_r($contact,true));
+		//error_log(__LINE__.__FILE__ . __METHOD__ . "\nContact:\n " .print_r($contact,true));
 		return $contact;
 	}
 
