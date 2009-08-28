@@ -93,7 +93,7 @@ if ($_POST['save_backup_settings'])
 	{
 		$cleaned_files = array();
 		/* Remove old backups. */
-		$db_backup->housekeeping(&$cleaned_files);
+		$db_backup->housekeeping($cleaned_files);
 		foreach ($cleaned_files as $file)
 		{
 			echo '<div align="center">'.lang('entry has been deleted sucessfully').': '.$file."</div>\n";
@@ -113,7 +113,7 @@ if($_POST['backup'])
 
 		/* Remove old backups. */
 		$cleaned_files = array();
-		$db_backup->housekeeping(&$cleaned_files);
+		$db_backup->housekeeping($cleaned_files);
 		foreach ($cleaned_files as $file)
 		{
 			echo '<div align="center">'.lang('entry has been deleted sucessfully').': '.$file."</div>\n";
