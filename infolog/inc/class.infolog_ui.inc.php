@@ -1380,8 +1380,8 @@ class infolog_ui
 				{
 					if ($attachment['type'] == 'MESSAGE/RFC822')
 					{
-						$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-						$bopreferences =& CreateObject('felamimail.bopreferences');
+						$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+						$bopreferences = CreateObject('felamimail.bopreferences');
 						$bofelamimail->openConnection();
 						$bofelamimail->reopen($attachment['folder']);
 
@@ -1412,8 +1412,8 @@ class infolog_ui
 		}
 		elseif ($uid && $mailbox)
 		{
-			$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			$bopreferences =& CreateObject('felamimail.bopreferences');
+			$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			$bopreferences = CreateObject('felamimail.bopreferences');
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
