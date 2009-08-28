@@ -318,7 +318,7 @@ class so_sql_cf extends so_sql
 	 */
 	function delete($keys=null,$only_return_ids=false)
 	{
-		if ($this->customfields || $only_return_query)
+		if ($this->customfields || $only_return_ids)
 		{
 			$query = parent::delete($keys,true);
 			// check if query contains more then the id's
@@ -334,7 +334,7 @@ class so_sql_cf extends so_sql
 			{
 				$ids = $query[$this->autoinc_id];
 			}
-			if ($only_return_query) return $ids;
+			if ($only_return_ids) return $ids;
 			$this->db->delete($this->extra_table,array($this->extra_id => $ids),__LINE__,__FILE__);
 		}
 		return parent::delete($keys);
