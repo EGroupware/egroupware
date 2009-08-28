@@ -359,7 +359,7 @@ abstract class bo_tracking
 	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return boolean true on success, false on error (error messages are in $this->errors)
 	 */
-	protected function do_notifications($data,$old,$deleted=null)
+	public function do_notifications($data,$old,$deleted=null)
 	{
 		$this->errors = $email_sent = array();
 
