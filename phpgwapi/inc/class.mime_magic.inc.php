@@ -415,6 +415,7 @@ class mime_magic
 		'xht'	=> 'application/xhtml+xml',
 		'xhtml'	=> 'application/xhtml+xml',
 		'xls'	=> 'application/vnd.ms-excel',
+		'xlsx'	=> 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',	// excel xml format
 		'xlt'	=> 'application/vnd.ms-excel',
 		'xml'	=> 'application/xml',
 		'xpm'	=> 'image/x-xpixmap',

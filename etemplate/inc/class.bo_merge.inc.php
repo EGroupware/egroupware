@@ -87,8 +87,10 @@ abstract class bo_merge
 			case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
 				if (!$zip_available) break;
 				return true;	// open office write xml files
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007 xml format
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':	// ms excel 2007 xml format
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 				if (!$zip_available) break;
 				return true;	// ms word xml format
 			default:
@@ -315,7 +317,7 @@ abstract class bo_merge
 			// remove not existing replacements (eg. from calendar array)
 			if (strpos($content,'$$') !== null)
 			{
-				$content = preg_replace('/\$\$[a-z0-9_]+\$\$/i','',$content);
+				$content = preg_replace('/\$\$[a-z0-9_\/]+\$\$/i','',$content);
 			}
 			if ($contentrepeat) $contentrep[$id] = $content;
 		}
@@ -350,6 +352,8 @@ abstract class bo_merge
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 					// todo ms word xml files
 					break;
 			}
@@ -372,6 +376,8 @@ abstract class bo_merge
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 					// todo ms word xml files
 					break;
 			}
@@ -428,6 +434,13 @@ abstract class bo_merge
 						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:rPr><w:lang w:val="','/').
 						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>$$','/').'/i' => '$$\\2$$',
 				);
+				break;
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
+				$mime_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.xlsx').'-').'.xlsx';
+				copy($content_url,$archive);
+				$content_url = 'zip://'.$archive.'#'.($content_file = 'xl/sharedStrings.xml');
 				break;
 		}
 		if (!($merged =& $this->merge($content_url,$ids,$err,$mime_type,$fix)))
