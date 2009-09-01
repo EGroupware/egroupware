@@ -83,7 +83,8 @@ abstract class bo_merge
 			case 'application/rtf':
 			case 'text/rtf':
 				return true;	// rtf files
-			case 'application/vnd.oasis.opendocument.text':
+			case 'application/vnd.oasis.opendocument.text':	// oo text
+			case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
 				if (!$zip_available) break;
 				return true;	// open office write xml files
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
@@ -284,7 +285,7 @@ abstract class bo_merge
 			if ($lableprint) $content = $Labelrepeat;
 
 			// generate replacements
-			if (!($replacements = $this->get_replacements($id)))
+			if (!($replacements = $this->get_replacements($id,$content)))
 			{
 				$err = lang('Entry not found!');
 				return false;
@@ -344,6 +345,7 @@ abstract class bo_merge
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
+				case 'application/vnd.oasis.opendocument.spreadsheet':
 					// todo OO writer files
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
@@ -365,6 +367,7 @@ abstract class bo_merge
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
+				case 'application/vnd.oasis.opendocument.spreadsheet':
 					return $contentstart.implode('',$contentrep).$contentend;
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
@@ -405,7 +408,9 @@ abstract class bo_merge
 		switch (($mime_type = egw_vfs::mime_content_type($document)))
 		{
 			case 'application/vnd.oasis.opendocument.text':
-				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.odt').'-').'.odt';
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+				$ext = $mime_type == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
+				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,$ext).'-').$ext;
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'content.xml');
 				break;
