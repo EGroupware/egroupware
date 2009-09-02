@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090731
+Version: 9.1.20090902
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -58,7 +58,8 @@ Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-gallery-%{version}.tar.bz2
-Source4: %{name}-rpmlintrc
+Source4: %{name}-phpfreechat-%{version}.tar.bz2
+Source5: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 #Patch1: xxxxx.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
@@ -338,6 +339,16 @@ Obsoletes: %{egw_packagename}-phpbrain
 %description phpbrain
 This is a knowledgebase for EGroupware.
 
+%package phpfreechat
+Version: %{version}
+Summary: The EGroupware chat application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}
+Obsoletes: %{egw_packagename}-phpfreechat
+%description phpfreechat
+Chat with other EGroupware users. A port of phpFreeChat for EGroupware.
+
 %package phpsysinfo
 Version: %{version}
 Summary: The EGroupware phpsysinfo application
@@ -472,6 +483,7 @@ This is the wiki app for EGroupware.
 %setup1 -T -D -a 1 -n %{egwdirname}
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
+%setup4 -T -D -a 4 -n %{egwdirname}
 %patch0 -p 0
 #%patch1 -p 0
 
@@ -614,6 +626,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %{egwdir}/phpbrain
 
+%files phpfreechat
+%defattr(-,root,root)
+%{egwdir}/phpfreechat
+
 %files phpsysinfo
 %defattr(-,root,root)
 %{egwdir}/phpsysinfo
@@ -667,6 +683,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
+* Wed Sep 02 2009 Ralf Becker <rb@stylite.de> 9.1.20090902
+- divers bugfixes
+- added phpFreeChat application
+
 * Fri Jul 31 2009 Ralf Becker <rb@stylite.de> 9.1.20090731
 - IE Bugfixes onChange on checkboxes not working
 - bugfixes in mail handling and sitemgr's navigation module
