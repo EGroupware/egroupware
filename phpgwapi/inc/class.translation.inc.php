@@ -988,4 +988,178 @@ class translation
 		// no decoding function available
 		return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$_string);
 	}
+
+	/**
+	* replace emailaddresses enclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+	* always returns 1
+	*/
+	static function replaceEmailAdresses(&$text)
+	{
+		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+		$text = preg_replace("/(<|&lt;)(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)/ie","'$2'", $text);
+		return 1;
+	}
+
+	/*
+	 * strip tags out of the message completely with their content
+	 * param $_body is the text to be processed
+	 * param $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
+	 *            without the enclosing brackets
+	 * param $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
+	 */
+	static function replaceTagsCompletley(&$_body,$tag,$endtag='')
+	{
+		if ($tag) $tag = strtolower($tag);
+		if ($endtag == '' || empty($endtag) || !isset($endtag))
+		{
+		        $endtag = $tag;
+		} else {
+		        $endtag = strtolower($endtag);
+		}
+		// strip tags out of the message completely with their content
+		$taglen=strlen($tag);
+		$endtaglen=strlen($endtag);
+		if ($_body) {
+			$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'>~sim','',$_body);
+			// remove left over tags, unfinished ones, and so on
+			$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+		}
+	}
+
+	static function convertHTMLToText($_html,$displayCharset=false,$stripcrl=false)
+	{
+		if ($displayCharset === false) $displayCharset = self::$system_charset;
+		#error_log($_html);
+		#print '<hr>';
+		#print "<pre>"; print htmlspecialchars($_html);
+		#print "</pre>";
+		#print "<hr>";
+		self::replaceTagsCompletley($_html,'style');
+		$Rules = array ('@<script[^>]*?>.*?</script>@si', // Strip out javascript
+			'@&(quot|#34);@i',                // Replace HTML entities
+			'@&(amp|#38);@i',                 //   Ampersand &
+			'@&(lt|#60);@i',                  //   Less Than <
+			'@&(gt|#62);@i',                  //   Greater Than >
+			'@&(nbsp|#160);@i',               //   Non Breaking Space
+			'@&(iexcl|#161);@i',              //   Inverted Exclamation point
+			'@&(cent|#162);@i',               //   Cent
+			'@&(pound|#163);@i',              //   Pound
+			'@&(copy|#169);@i',               //   Copyright
+			'@&(reg|#174);@i',                //   Registered
+		);
+		$Replace = array ('',
+			'"',
+			'+',
+			'<',
+			'>',
+			' ',
+			chr(161),
+			chr(162),
+			chr(163),
+			chr(169),
+			chr(174),
+		);
+		$_html = preg_replace($Rules, $Replace, $_html);
+		//   removing carriage return linefeeds
+		if ($stripcrl === true ) $_html = preg_replace('@(\r\n)@i',' ',$_html);
+		$tags = array (
+			0 => '~<h[123][^>]*>\r*\n*~si',
+			1 => '~<h[456][^>]*>\r*\n*~si',
+			2 => '~<table[^>]*>\r*\n*~si',
+			3 => '~<tr[^>]*>\r*\n*~si',
+			4 => '~<li[^>]*>\r*\n*~si',
+			5 => '~<br[^>]*>\r*\n*~si',
+			6 => '~<br[^>]*>~si',
+			7 => '~<p[^>]*>\r*\n*~si',
+			8 => '~<div[^>]*>\r*\n*~si',
+			9 => '~<hr[^>]*>\r*\n*~si',
+			10 => '/<blockquote type="cite">/',
+		);
+		$Replace = array (
+			0 => "\r\n",
+			1 => "\r\n",
+			2 => "\r\n",
+			3 => "\r\n",
+			4 => "\r\n",
+			5 => "\r\n",
+			6 => "\r\n",
+			7 => "\r\n",
+			8 => "\r\n",
+			9 => "\r\n__________________________________________________\r\n",
+			10 => '#blockquote#type#cite#',
+		);
+		$_html = preg_replace($tags,$Replace,$_html);
+		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
+		$_html = preg_replace('~<img[^>]+>~s','',$_html);
+		//convert hrefs to description -> URL
+		$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
+		$_html = preg_replace('~<[^>^@]+>~s','',$_html);
+		#$_html = strip_tags($_html);
+		// reducing spaces
+		$_html = preg_replace('~ +~s',' ',$_html);
+		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
+		#$_html = preg_replace('~^\s+~m','',$_html);
+		#$_html = preg_replace('~\s+$~m','',$_html);
+		// restoring the preserved blockquote
+		$_html = preg_replace('~#blockquote#type#cite#~s','<blockquote type="cite">',$_html);
+
+
+		$_html = html_entity_decode($_html, ENT_COMPAT, $displayCharset);
+		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+		self::replaceEmailAdresses($_html);
+		#error_log($text);
+		$pos = strpos($_html, 'blockquote');
+		#error_log("convert HTML2Text");
+		if($pos === false) {
+			return $_html;
+		} else {
+			$indent = 0;
+			$indentString = '';
+
+			$quoteParts = preg_split('/<blockquote type="cite">/', $_html, -1, PREG_SPLIT_OFFSET_CAPTURE);
+
+			foreach($quoteParts as $quotePart) {
+				if($quotePart[1] > 0) {
+					$indent++;
+					$indentString .= '>';
+				}
+				$quoteParts2 = preg_split('/<\/blockquote>/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
+
+				foreach($quoteParts2 as $quotePart2) {
+					if($quotePart2[1] > 0) {
+						$indent--;
+						$indentString = substr($indentString, 0, $indent);
+					}
+
+					$quoteParts3 = explode("\r\n", $quotePart2[0]);
+
+					foreach($quoteParts3 as $quotePart3) {
+						$allowedLength = 76-strlen("\r\n$indentString");
+						if (strlen($quotePart3) > $allowedLength) {
+							$s=explode(" ", $quotePart3);
+							$quotePart3 = "";
+							$linecnt = 0;
+							foreach ($s as $k=>$v) {
+								$cnt = strlen($v);
+								// only break long words within the wordboundaries,
+								if($cnt > $allowedLength) {
+									$v=wordwrap($v, $allowedLength, "\r\n$indentString", true);
+								}
+								// the rest should be broken at the start of the new word that exceeds the limit
+								if ($linecnt+$cnt > $allowedLength) {
+									$v="\r\n$indentString$v";
+									$linecnt = 0;
+								} else {
+									$linecnt += $cnt;
+								}
+								if (strlen($v))  $quotePart3 .= (strlen($quotePart3) ? " " : "").$v;
+							}
+						}
+						$asciiTextBuff[] = $indentString . $quotePart3 ;
+					}
+				}
+			}
+			return implode("\r\n",$asciiTextBuff);
+		}
+	}
 }
