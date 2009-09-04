@@ -610,7 +610,7 @@ class infolog_bo
 			{
 				$values['info_percent'] = 100;
 			}
-			if ((int)$values['info_percent'] == 100 && !in_array($values['info_status'],array('done','billed','cancelled')))
+			if ((int)$values['info_percent'] == 100 && !in_array($values['info_status'],array('done','billed','cancelled','archive')))
 			{
 				//echo "check_defaults:"; _debug_array($this->status[$values['info_type']]);
 				//$values['info_status'] = 'done';
