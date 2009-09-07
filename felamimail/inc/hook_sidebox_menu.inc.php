@@ -91,7 +91,7 @@
 		}
 
 		if(empty($preferences->preferences['prefpreventmanagefolders']) || $preferences->preferences['prefpreventmanagefolders'] == 0) {		
-			$file['Manage Folders']	= $GLOBALS['egw']->link('/index.php','menuaction=felamimail.uipreferences.listFolder');
+			$file['Manage Folders']	= $GLOBALS['egw']->link('/index.php',array('menuaction'=>'felamimail.uipreferences.listFolder'));
 		}
 
 		$icServer = $preferences->getIncomingServer(0);
