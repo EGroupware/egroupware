@@ -78,10 +78,10 @@
 			$dot_atom = $atext.'+(\.'.$atext.'+)*';
 			$Email_RegExp_Match = $dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match;
 
-			$this->t 		=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+			$this->t 		= CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->displayCharset   = $GLOBALS['egw']->translation->charset();
-			$this->bofelamimail	=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
-			$this->bopreferences	=& $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
+			$this->bofelamimail	= CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$this->bopreferences	= $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
 
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
 
