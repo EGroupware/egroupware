@@ -109,7 +109,7 @@
 			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
 
 			// careful! "d = new..." MUST be on a new line!!!
-			$folder_tree_new  = '<div><link rel="STYLESHEET" type="text/css" href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css">';
+			$folder_tree_new  = '<link rel="STYLESHEET" type="text/css" href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css">';
 			$folder_tree_new .= "<script type='text/javascript'>";
 			$folder_tree_new .= "tree=new dhtmlXTreeObject('$_divName','100%','100%',0);";
 			$folder_tree_new .= "tree.setImagePath('$folderImageDir/dhtmlxtree/');";
@@ -190,7 +190,7 @@
 			$selected = @htmlspecialchars($_selected, ENT_QUOTES, $this->charset);
 			#$selected = base64_encode($_selected);
 
-			$folder_tree_new.= "tree.closeAllItems(0);tree.openItem('$selected');</script></div>";
+			$folder_tree_new.= "tree.closeAllItems(0);tree.openItem('$selected');</script>";
 
 			return $folder_tree_new;
 		}
