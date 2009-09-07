@@ -38,9 +38,9 @@
 			$this->t = $GLOBALS['egw']->template;
 			$this->charset = $GLOBALS['egw']->translation->charset();
 
-			$this->bofelamimail	=& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
-			$this->uiwidgets	=& CreateObject('felamimail.uiwidgets');
+			$this->bofelamimail	= CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			$this->bopreferences	= $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
+			$this->uiwidgets	= CreateObject('felamimail.uiwidgets');
 			$this->bofelamimail->openConnection();
 			
 			
@@ -104,7 +104,7 @@
 		
 		function editForwardingAddress()
 		{
-			if (!isset($this->bofelamimail)) $this->bofelamimail	=& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			if (!isset($this->bofelamimail)) $this->bofelamimail	= CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
 			$mailPrefs	= $this->bofelamimail->getMailPreferences();
 			$ogServer	= $mailPrefs->getOutgoingServer(0);
 			
@@ -199,7 +199,8 @@
 		
 		function editAccountData()
 		{
-			if (!isset($this->bopreferences)) $this->bopreferences	=& CreateObject('felamimail.bopreferences');
+			if (!isset($this->bofelamimail)) $this->bofelamimail    = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			if (!isset($this->bopreferences)) $this->bopreferences	= $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
 			$preferences =& $this->bopreferences->getPreferences();
 			
 			if(!($preferences->userDefinedAccounts || $preferences->userDefinedIdentities)) {
@@ -229,7 +230,7 @@
 					$icServer = NULL;
 				}
 				// SMTP connection settings
-				$ogServer =& CreateObject('emailadmin.defaultsmtp');
+				$ogServer = CreateObject('emailadmin.defaultsmtp');
 				if(is_array($_POST['og']) && (int)$_POST['active']) {
 					foreach($_POST['og'] as $key => $value) {
 						$ogServer->$key = $value;
@@ -239,7 +240,7 @@
 				}
 
 				// identity settings
-				$identity =& CreateObject('emailadmin.ea_identity');
+				$identity = CreateObject('emailadmin.ea_identity');
 				if(is_array($_POST['identity'])) {
 					foreach($_POST['identity'] as $key => $value) {
 						$identity->$key = $value;
@@ -267,7 +268,7 @@
 			}
 
 			$folderList = array();
-			if (!isset($this->bofelamimail) || (int)$_POST['active']) $this->bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			if (!isset($this->bofelamimail) || (int)$_POST['active']) $this->bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
 			if($this->bofelamimail->openConnection()) {
 				$folderObjects = $this->bofelamimail->getFolderObjects();
 				foreach($folderObjects as $folderName => $folderInfo) {
@@ -399,7 +400,8 @@
 		
 		function listFolder()
 		{
-			if (!isset($this->bopreferences)) $this->bopreferences  =& CreateObject('felamimail.bopreferences');
+			if (!isset($this->bofelamimail)) $this->bofelamimail    = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			if (!isset($this->bopreferences)) $this->bopreferences  = $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
 			$preferences =& $this->bopreferences->getPreferences();
 			if(!(empty($preferences->preferences['prefpreventmanagefolders']) || $preferences->preferences['prefpreventmanagefolders'] == 0)) {
 				die('you are not allowed to be here');
@@ -624,7 +626,7 @@
 		function listAccountData()
 		{
 			$this->display_app_header(TRUE);
-			if (!isset($this->bopreferences)) $this->bopreferences  =& CreateObject('felamimail.bopreferences');
+			if (!isset($this->bopreferences)) $this->bopreferences  = CreateObject('felamimail.bopreferences');
 			$preferences =& $this->bopreferences->getPreferences();
 			$allAccountData    = $this->bopreferences->getAllAccountData($preferences);
 			if ($allAccountData) {
@@ -678,8 +680,8 @@
 		function listSelectFolder()
 		{
 			$this->display_app_header(False);
-			if (!isset($this->bofelamimail)) $this->bofelamimail    =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			if (!isset($this->uiwidgets)) $this->uiwidgets          =& CreateObject('felamimail.uiwidgets');
+			if (!isset($this->bofelamimail)) $this->bofelamimail    = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			if (!isset($this->uiwidgets)) $this->uiwidgets          = CreateObject('felamimail.uiwidgets');
 			$this->bofelamimail->openConnection();
 			$mailPrefs  = $this->bofelamimail->getMailPreferences();
 			$icServer = $mailPrefs->getIncomingServer(0);
