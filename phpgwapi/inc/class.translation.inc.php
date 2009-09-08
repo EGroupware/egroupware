@@ -953,13 +953,21 @@ class translation
 			$string = preg_replace('/\?=\s+=\?/', '?= =?', $_string);
 
 			$elements=imap_mime_header_decode($string);
-
+			$convertAtEnd = false;
 			foreach((array)$elements as $element)
 			{
 				if ($element->charset == 'default') $element->charset = 'iso-8859-1';
-
-				$newString .= self::convert($element->text,$element->charset);
+				if ($element->charset != 'x-unknown')
+				{
+					$newString .= self::convert($element->text,$element->charset);
+				}
+				else
+				{
+					$newString .= $element->text;
+					$convertAtEnd = true;
+				}
 			}
+			if ($convertAtEnd) $newString = self::decodeMailHeader($newString,$displayCharset); 
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
 		}
 		elseif(function_exists(mb_decode_mimeheader))
