@@ -42,6 +42,8 @@ field must not be empty !!!	timesheet	en	Field must not be empty !!!
 full: use only projectmanager	admin	en	Full: use only ProjectManager
 general	timesheet	en	General
 global categories	timesheet	en	Global Categories
+history	timesheet	en	History
+id	timesheet	en	ID
 last modified	timesheet	en	Last modified
 last month	timesheet	en	Last month
 last week	timesheet	en	Last week
@@ -58,8 +60,10 @@ no project	timesheet	en	No project
 no status	timesheet	en	No status
 none: use only free project-names	admin	en	None: use only free project-names
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	number of row for a multiline inputfield or line of a multi-select-box
+only admin	timesheet	en	Only Admin
 or endtime	timesheet	en	or Endtime
 order	timesheet	en	Order
+parent	timesheet	en	Parent
 permission denied!!!	timesheet	en	Permission denied!!!
 price	timesheet	en	Price
 projectmanager integration	admin	en	ProjectManager integration
@@ -72,6 +76,7 @@ select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
 select a status of the timesheet	timesheet	en	select a status of the timesheet
 select action	timesheet	en	Select action
+select infolog	timesheet	en	select Infolog
 select multiple timeshhets for a further action	timesheet	en	Select multiple timeshhets for a further action
 select the predefined status, whan creating a new timesheet	timesheet	en	Select the predefined status, whan creating a new timesheet
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum (eg. to sum up negative overtime)

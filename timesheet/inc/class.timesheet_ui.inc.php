@@ -60,7 +60,6 @@ class timesheet_ui extends timesheet_bo
 	{
 		$tabs = 'general|notes|links|customfields';
 		$etpl = new etemplate('timesheet.edit');
-
 		if (!is_array($content))
 		{
 			if ($view || (int)$_GET['ts_id'])
@@ -87,6 +86,15 @@ class timesheet_ui extends timesheet_bo
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
 				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
+			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) && $this->data['ts_status'])
+			{
+				if ($this->status_labels_config[$this->data['ts_status']]['admin'])
+				{
+					$view = true;  //only admin can edit with this status
+					$only_admin_edit = true;
+					$msg = lang('only Admin can edit this status');
+				}
+			}
 		}
 		else
 		{
@@ -117,7 +125,7 @@ class timesheet_ui extends timesheet_bo
 			switch($button)
 			{
 				case 'edit':
-					if ($this->check_acl(EGW_ACL_EDIT)) $view = false;
+					if ($this->check_acl(EGW_ACL_EDIT) && $only_admin_edit) $view = false;
 					break;
 
 				case 'save':
@@ -300,7 +308,6 @@ class timesheet_ui extends timesheet_bo
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
-
 		$readonlys = array(
 			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
 			'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
@@ -440,6 +447,17 @@ class timesheet_ui extends timesheet_bo
 			$query['col_filter']['ts_status'] = null;
 		}
 		#_debug_array($query['col_filter']);
+		if (isset($this->status_labels_substatus[$query['col_filter']['ts_status']]))
+		{
+			$query['col_filter']['ts_status'] = $this->status_labels_substatus[$query['col_filter']['ts_status']];
+			foreach ($query['col_filter']['ts_status'] as $status_id)
+			{
+				if (isset($this->status_labels_substatus['2level'][$status_id]))
+				{
+					$query['col_filter']['ts_status'] = array_merge($query['col_filter']['ts_status'],$this->status_labels_substatus[$status_id]);
+				}
+			}
+		}
 		if ((int)$query['filter2'] != (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'])
 		{
 			$GLOBALS['egw']->preferences->add(TIMESHEET_APP,'show_details',(int)$query['filter2']);
@@ -650,7 +668,6 @@ class timesheet_ui extends timesheet_bo
 		$etpl = new etemplate('timesheet.index');
 
 		if ($_GET['msg']) $msg = $_GET['msg'];
-
 		if ($content['nm']['rows']['delete'])
 		{
 			list($ts_id) = each($content['nm']['rows']['delete']);
@@ -663,7 +680,6 @@ class timesheet_ui extends timesheet_bo
 				$msg = lang('Error deleting the entry!!!');
 			}
 		}
-
 		if ($content['action'] != '')
 		{
 			if (!count($content['nm']['rows']['checked']) && !$content['use_all'])
@@ -842,15 +858,19 @@ class timesheet_ui extends timesheet_bo
 					foreach($content['statis'] as $cat)
 					{
 						$id = $cat['id'];
-						if (($cat ['name'] !== $this->status_labels[$id]) && ($cat ['name'] !== ''))
+						if (($cat ['name'] !== $this->status_labels_config[$id]) && ($cat ['name'] !== '') || ($cat ['parent'] !== $this->status_labels_config[$id]['parent']) && ($cat ['parent'] !== ''))
 						{
 							$this->status_labels[$id] = $cat['name'];
+							$this->status_labels_config[$id] = array(
+							'name'   => $cat['name'],
+							'parent' => $cat['parent'],
+							'admin'  => $cat['admin']);
 							$need_update = true;
 						}
 					}
 					if ($need_update)
 					{
-						config::save_value('status_labels',$this->status_labels,TIMESHEET_APP);
+						config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
 						$msg .= lang('Status updated.');
 					}
 			}
@@ -859,10 +879,10 @@ class timesheet_ui extends timesheet_bo
 		if (isset($content['statis']['delete']))
 		{
 			list($id) = each($content['statis']['delete']);
-			if (isset($this->status_labels[$id]))
+			if (isset($this->status_labels_config[$id]))
 			{
-				unset($this->status_labels[$id]);
-				config::save_value('status_labels',$this->status_labels,TIMESHEET_APP);
+				unset($this->status_labels_config[$id]);
+				config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
 				unset($this->status_labels[$id]);
 				$msg .= lang('Status deleted.');
 			}
@@ -870,18 +890,22 @@ class timesheet_ui extends timesheet_bo
 
 		$i = 1;
 		unset($content['statis']);
-		foreach($this->status_labels as $id => $label)
+		foreach($this->status_labels_config as $id => $label)
 		{
-			$content['statis'][$i]['name']= $label;
+			$content['statis'][$i]['name']= $label['name'];
 			$content['statis'][$i]['id']= $id;
+			$content['statis'][$i]['parent']= $label['parent'];
+			$content['statis'][$i]['admin']= $label['admin'];
 			$i++;
 		}
 		$content['statis'][$i]['name'] = '';
+		$content['statis'][$i]['parent'];
+		$content['statis'][$i]['admin'] = '';
 		$content['statis'][$i]['id'] = ++$id;
 
 		$content['msg'] = $msg;
 		$preserv = $content;
-
+		$sel_options['parent'] = $this->status_labels;
 		$etpl = new etemplate('timesheet.editstatus');
 		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,$readonlys,$preserv);
 	}

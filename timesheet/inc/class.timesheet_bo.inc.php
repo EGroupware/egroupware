@@ -111,7 +111,16 @@ class timesheet_bo extends so_sql_cf
 	 * @var array
 	 */
 	var $status_labels = array();
-
+	/**
+	 * Array with status label configuration
+	 *
+	 * @var array
+	 */
+	var $status_labels_config = array();
+	/**
+	 * Array with substatus of label configuration
+	 */
+	var $status_labels_substatus = array();
 	/**
 	 * Name of the timesheet table storing custom fields
 	 */
@@ -123,8 +132,48 @@ class timesheet_bo extends so_sql_cf
 
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
-		if($this->config_data['status_labels']) $this->status_labels =&  $this->config_data['status_labels'];
-
+		if($this->config_data['status_labels'])
+		{
+			$this->status_labels =&  $this->config_data['status_labels'];
+			if (!is_array($this->status_labels)) $this->status_labels= array($this->status_labels);
+			foreach ($this->status_labels as $status_id => $label)
+			{
+				if (!is_array($label))
+				{	//old values, bevor parent status
+					$name = $label;
+					$label=array();
+					$label['name'] = $name;
+					$label['parent'] = '';
+				}
+				$sort_labels[$status_id][] = $label['name'];
+				$this->status_labels_config[$status_id] = $label;
+				if ($label['parent']!='')
+				{
+					$sort = $label['parent']?$label['parent']:$status_id;
+					$sort_labels[$sort][$status_id]= $label['name'];
+					$this->status_labels_substatus[$sort][$status_id] = $status_id;
+					if (!isset($this->status_labels_substatus[$sort][$sort]))
+					{
+						$this->status_labels_substatus[$sort][$sort]= $sort;
+					}
+				}
+			}
+			unset($this->status_labels);
+			foreach ($sort_labels as $status_id => $label_sub)
+			{
+				if (!isset($this->status_labels[$status_id])) $this->status_labels[$status_id] = $this->status_labels_config[$status_id]['name'];
+				foreach ($sort_labels[$status_id] as $sub_status_id => $sub_label)
+				{
+					if (isset($this->status_labels_config[$sub_status_id]))
+					{
+						$level = '&nbsp;&nbsp;';
+						if (isset($this->status_labels_substatus[$sub_status_id])) $this->status_labels_substatus['2level'][$sub_status_id] = $sub_status_id ;
+						if (isset($this->status_labels_substatus['2level'][$status_id])) $level = '&nbsp;&nbsp;&nbsp;&nbsp;';
+						$this->status_labels[$sub_status_id]= $level.$this->status_labels_config[$sub_status_id]['name'];
+					}
+				}
+			}
+		}
 		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
 		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
 		$this->today = mktime(0,0,0,date('m',$this->now),date('d',$this->now),date('Y',$this->now));

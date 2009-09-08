@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="timesheet.editstatus" template="" lang="" group="0" version="1.7.001">
+	<template id="timesheet.editstatus" template="" lang="" group="0" version="1.7.004">
 		<grid width="100%" height="450" overflow="auto">
 			<columns>
 				<column width="100"/>
@@ -31,15 +31,26 @@
 									<grid width="100%" height="280" overflow="auto" id="statis">
 										<columns>
 											<column/>
+											<column/>
+											<column/>
+											<column/>
 											<column width="5%"/>
 										</columns>
 										<rows>
 											<row class="th">
+												<description value="ID"/>
 												<description value="Name"/>
+												<description value="Parent"/>
+												<description value="Only Admin"/>
 												<description value="Actions"/>
 											</row>
 											<row class="row">
+												<description id="${row}[id]"/>
 												<textbox size="80" maxlength="150" blur="--&gt; enter new name" id="${row}[name]"/>
+												<menulist>
+													<menupopup id="${row}[parent]" options="please select"/>
+												</menulist>
+												<checkbox id="${row}[admin]" statustext="Only Admin can change this Status"/>
 												<button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="return confirm('Delete this status');"/>
 											</row>
 										</rows>
