@@ -398,12 +398,20 @@
 				$string = preg_replace('/\?=\s+=\?/', '?= =?', $_string);
 
 				$elements=imap_mime_header_decode($string);
-
+				$convertAtEnd = false;
 				foreach((array)$elements as $element) {
-					if ($element->charset == 'default')
-						$element->charset = 'iso-8859-1';
-					$newString .= self::$botranslation->convert($element->text,$element->charset);
+					if ($element->charset == 'default') $element->charset = 'iso-8859-1';
+					if ($element->charset != 'x-unknown')
+					{
+						$newString .= self::$botranslation->convert($element->text,$element->charset);
+					}
+					else
+					{
+						$newString .= $element->text;
+						$convertAtEnd = true;
+					}
 				}
+				if ($convertAtEnd) $newString = $this->decode_header($newString,self::$displayCharset);
 				return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
 			} elseif(function_exists(mb_decode_mimeheader)) {
 				$string = $_string;
