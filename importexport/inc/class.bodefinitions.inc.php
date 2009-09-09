@@ -53,7 +53,10 @@ class bodefinitions {
 	public function get_definitions() {
 		return $this->definitions;
 	}
-
+	public function read($definition_id) {
+            $definition = new definition( $definition_id['name'] );
+            return $definition->get_record_array();
+	}
 	/**
 	 * deletes a defintion
 	 *
