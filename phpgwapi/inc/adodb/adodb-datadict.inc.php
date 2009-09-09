@@ -239,9 +239,9 @@ class ADODB_DataDict {
 		}
 		
 		// if name contains special characters, quote it
-		$regex = ($allowBrackets) ? $this->nameRegexBrackets : $this->nameRegex;
+		/*$regex = ($allowBrackets) ? $this->nameRegexBrackets : $this->nameRegex;
 		
-		if ( !preg_match('/^[' . $regex . ']+$/', $name) ) {
+		if ( !preg_match('/^[' . $regex . ']+$/', $name) )*/ {
 			return $quote . $name . $quote;
 		}
 		
