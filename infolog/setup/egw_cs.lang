@@ -36,11 +36,12 @@ add a new sub-task, -note, -call to this entry	infolog	cs	Přidat novou pod-úlo
 add a new todo	infolog	cs	Přidat nový úkol
 add file	infolog	cs	Přidat soubor
 add sub	infolog	cs	přidat podpoložku
-add timesheet entry	infolog	cs	Přidat záznam do harmonogramu
+add timesheet entry	infolog	cs	Přidat pracovní výkaz
 add:	infolog	cs	Přidat:
 all	infolog	cs	Vše
 all links and attachments	infolog	cs	všechny odkazy a přílohy
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	cs	umožňuje nastavit stav záznamu, např. úkol jako dokončený, když je dořešen (hodnota závisí na typu záznamu)
+applies the changes	infolog	cs	provede změny
 apply the changes	infolog	cs	Použít změny
 archive	infolog	cs	archiv
 are you shure you want to delete this entry ?	infolog	cs	Určitě chcete smazat tento záznam?
@@ -56,6 +57,7 @@ cancel	infolog	cs	Zrušit
 cancelled	infolog	cs	zrušeno
 categories	infolog	cs	Kategorie
 category	infolog	cs	Kategorie
+change history	infolog	cs	Změnit historii
 change the status of an entry, eg. close it	infolog	cs	Změnit stav záznamu, např. jej uzavřít
 charset of file	infolog	cs	Znaková sada souboru
 check to set startday	infolog	cs	Zaškrtněte pro nastavení počátečního dne
@@ -150,6 +152,7 @@ from	infolog	cs	Od
 general	infolog	cs	Obecné
 group owner for	infolog	cs	Skupinový vlastník pro
 high	infolog	cs	Vysoká
+history	infolog	cs	Historie
 history logging	infolog	cs	Protokolování historie
 history logging and deleting of items	infolog	cs	Protokolování historie a mazání položek
 id	infolog	cs	Id
@@ -176,6 +179,7 @@ invalid filename	infolog	cs	Neplatné jméno souboru
 label<br>helptext	infolog	cs	Označení<br>Text nápovědy
 last changed	infolog	cs	Naposledy změněno
 last modified	infolog	cs	Naposledy změněno
+leave blank to get the used time calculated by timesheet entries	infolog	cs	Ponechte prázdné, pro výpočet spotřebovaného času na základě pracovních výkazů
 leave it empty	infolog	cs	ponechat prázdné
 leave without saveing the entry	infolog	cs	ukončit bez uložení záznamu
 leaves without saveing	infolog	cs	ukončí bez ukládání
@@ -247,6 +251,9 @@ priority	infolog	cs	Priorita
 private	infolog	cs	Soukromé
 project	infolog	cs	Projekt
 project settings: price, times	infolog	cs	Nastavení projektu: cena, čas
+projectmanager	infolog	cs	Správce projektů
+re-planned	infolog	cs	Přeplánováno
+re-planned time	infolog	cs	Přeplánovaný čas
 re:	infolog	cs	Re:
 read one record by passing its id.	infolog	cs	Načíst jeden záznam zadáním jeho id.
 read rights (default)	infolog	cs	práva ke čtení (výchozí)
@@ -257,7 +264,7 @@ receive notifications about own items	infolog	cs	Přijímat upozornění na vlas
 receive notifications about starting entries you are responsible for	infolog	cs	Přijímat upozornění na začínající záznamy, za které jste odpovědný/á
 receive notifications about starting entries you delegated	infolog	cs	Přijímat upozornění na začínající záznamy, které jste delegoval(a)
 receive notifications as html-mails	infolog	cs	Přijímat upozornění jako html e-maily
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	cs	regulární výraz pro lokální IP adresy<br>např. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	cs	regulární výraz pro lokální IP adresy<br>např.^192\.168\.1\.
 remark	infolog	cs	Poznámka
 remove this link (not the entry itself)	infolog	cs	Odstranit tento odkaz (ne celý záznam)
 responsible	infolog	cs	odpovědný
@@ -338,7 +345,8 @@ upcoming	infolog	cs	nadcházející
 urgency	infolog	cs	naléhavost
 urgent	infolog	cs	Naléhavé
 used time	infolog	cs	spotřebovaný čas
-valid path on clientside<br>eg. \servershare or e:	infolog	cs	platná cesta na klientské straně<br>např. \\Server\Sdílení nebo e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	cs	platná cesta na straně klienta<br>např. \\Server\Sdileni nebo e:\
+valid path on clientside<br>eg. servershare or e:	infolog	cs	platná cesta na klientské straně<br>např. \\Server\Sdílení nebo e:\
 values for selectbox	infolog	cs	Hodnoty pro rozbalovací nabídku
 view all subs of this entry	infolog	cs	Zobrazit všechny podpoložky záznamu
 view other subs	infolog	cs	zobrazit ostatní podpoložky

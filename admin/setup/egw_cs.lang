@@ -384,7 +384,7 @@ search peer servers	admin	cs	Prohledat peer servery
 security	admin	cs	Zabezpečení
 select group managers	admin	cs	Vybrat skupinové správce
 select permissions this group will have	admin	cs	Vybrat oprávnění pro tuto skupinu
-select the parent category. if this is a main category select no category	admin	cs	Vyberte rodičovskou kategorii. Poukud se jedna o hlavní kategorii, zvolte NO CATEGORY
+select the parent category. if this is a main category select no category	admin	cs	Vyberte rodičovskou kategorii. Pokud se jedná o hlavní kategorii, zvolte NO CATEGORY
 select users for inclusion	admin	cs	Vyberte uživatele k zařazení
 select where you want to store/retrieve filesystem information	admin	cs	Vyberte kam/odkud chcete ukládat/načítat informace o souborovém systému
 select where you want to store/retrieve user accounts	admin	cs	Vyberte kam/odkud chcete ukládat/načítat informace o uživatelských účtech
@@ -397,6 +397,7 @@ server type(mode)	admin	cs	Typ (režim) serveru
 server url	admin	cs	URL serveru
 server username	admin	cs	Uživatelské jméno serveru
 set preference values.	admin	cs	Nastavit preferované hodnoty.
+should exceptions contain a trace (including function arguments)	admin	cs	Mají výjimky obsahovat i trasování (včetně argumentů funkcí)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	cs	Má přihlašovací stránka zobrazovat rozbalovací nabídku s výběrem jazyka (užitečné pro demo stránky)?
 show 'powered by' logo on	admin	cs	Zobrazovat logo 'založeno na' na
 show access log	admin	cs	Zobrazit přístupový protokol

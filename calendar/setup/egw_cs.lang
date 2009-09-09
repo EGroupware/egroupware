@@ -52,6 +52,7 @@ canceled	calendar	cs	Stornováno
 charset of file	calendar	cs	Znaková sada souboru
 close the window	calendar	cs	Zavřít okno
 compose a mail to all participants after the event is saved	calendar	cs	napsat dopis všem účastníkům po uložení události
+conflict	calendar	cs	Konflikt
 copy of:	calendar	cs	Kopie (čeho):
 copy this event	calendar	cs	Kopírovat tuto událost
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	cs	Zkopírujte Vaše změny do clipboardu, %1znovu načtěte záznam%2 a proveďte sloučení změn.
@@ -73,12 +74,15 @@ default appointment length (in minutes)	calendar	cs	Výchozí délka událostí 
 default calendar filter	calendar	cs	Výchozí filtr kalendáře
 default calendar view	calendar	cs	Výchozí pohled kalendáře
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	cs	Výchozí délka nově vytvořených událostí. Zadává se v minutách, např. 60 pro 1 hodinu.
+default type of resources application selected in the calendar particpants research form.	calendar	cs	Která aplikace má být v kalendáři přednastavena jako výchozí typ zdroje při výběru účastníků
+default type of resources selection	calendar	cs	Výchozí volba při výběru zdroje
 default week view	calendar	cs	Výchozí týdenní pohled
 delete series	calendar	cs	Smazat řady
 delete this alarm	calendar	cs	Smazat tuto připomínku
 delete this event	calendar	cs	Smazat tuto událost
 delete this exception	calendar	cs	Smazat tuto vyjímku
 delete this series of recuring events	calendar	cs	Smazat tyto řady opakujících se událostí
+deny ressources reservation for private events	calendar	cs	Zakázat rezervaci zdrojů pro soukromé události
 disinvited	calendar	cs	Zrušená pozvánka
 display status of events	calendar	cs	Zobrazit stav událostí
 displayed view	calendar	cs	zobrazený pohled
@@ -105,6 +109,7 @@ ends	calendar	cs	končí
 error adding the alarm	calendar	cs	Chyba při přidávání připomínky
 error: importing the ical	calendar	cs	Chyba při importu iCal
 error: no participants selected !!!	calendar	cs	Chyba: nebyli vybráni žádní účastníci !!!
+error: ressources reservation in private events is not allowed!!!	calendar	cs	Chyba: rezervace zdrojů pro soukromé události není povolena !!!
 error: saving the event !!!	calendar	cs	Chyba pri ukládání události !!!
 error: starttime has to be before the endtime !!!	calendar	cs	Chyba: počáteční čas musí předcházet koncovému času !!!
 error: the entry has been updated since you opened it for editing!	calendar	cs	Chyba: během Vaší editace byl záznam zaktualizován!
@@ -248,6 +253,8 @@ repetition	calendar	cs	Opakování
 repetitiondetails (or empty)	calendar	cs	Detaily opakování (nebo ponechte prázdné)
 reset	calendar	cs	Vynulovat
 resources	calendar	cs	Zdroje
+resources except conflicting ones	calendar	cs	Zdroje kromě konfliktních
+resources with conflict detection	calendar	cs	Zdroje s detekcí konfliktu
 rule	calendar	cs	Pravidlo
 sat	calendar	cs	So
 saves the changes made	calendar	cs	uloží provedené změny

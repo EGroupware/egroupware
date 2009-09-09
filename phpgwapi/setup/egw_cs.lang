@@ -670,7 +670,7 @@ toggle first day of week	jscalendar	cs	Přepnout první den v týdnu
 togo	common	cs	TOGO
 tokelau	common	cs	TOKELAU
 tonga	common	cs	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	cs	Přiliš mnoho núspěšných pokusů o přihlášení: %1 pro uživatele '%2', %3 pro IP %4
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	cs	Příliš mnoho neúspěšných pokusů o přihlášení: %1 pro uživatele '%2', %3 pro IP %4
 top	common	cs	Záhlaví
 total	common	cs	Celkem
 transparant bg for the icons?	common	cs	Transparentní pozadí pro ikony?

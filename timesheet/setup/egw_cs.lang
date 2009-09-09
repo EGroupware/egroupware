@@ -17,7 +17,7 @@ error deleting the entry!!!	timesheet	cs	Chyba při mazání záznamu!!!
 error saving the entry!!!	timesheet	cs	Chyba při ukládání záznamu!!!
 existing links	timesheet	cs	Stávající odkazy
 export to openoffice spreadsheet	timesheet	cs	Exportovat do formátu tabulky OpenOffice
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho harmonogramu do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho Pracovního výkazu do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
 field must not be empty !!!	timesheet	cs	Položka nesmí být prázdná !!!
 full: use only projectmanager	admin	cs	Plné: použít jen Správce projektů
 general	timesheet	cs	Obecné
@@ -48,9 +48,9 @@ sum %1:	timesheet	cs	Součet %1:
 this month	timesheet	cs	Tento měsíc
 this week	timesheet	cs	Tento týden
 this year	timesheet	cs	Tento rok
-timesheet	common	cs	Harmonogram
-timesheet csv export	timesheet	cs	Export harmonogramu do CSV
-timesheet openoffice export	timesheet	cs	Export harmonogramu do OpenOffice
+timesheet	common	cs	Pracovní výkaz
+timesheet csv export	timesheet	cs	Export pracovního výkazu do CSV
+timesheet openoffice export	timesheet	cs	Export pracovního výkazu do OpenOffice
 unitprice	timesheet	cs	Jednotková cena
 view this entry	timesheet	cs	Zobrazit tento záznam
 week	timesheet	cs	Týden
