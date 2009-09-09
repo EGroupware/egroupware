@@ -1,116 +1,164 @@
 %1 already exists as a file	filemanager	it	%1 esiste già come file
-application	filemanager	it	Applicazione
-back to file manager	filemanager	it	Indietro a File manager
+%1 directories and %2 files copied.	filemanager	it	%1 cartella e %2 files copiati.
+%1 directories and %2 files deleted.	filemanager	it	%1 cartella e %2 files cancellati.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	it	%1 Errore in copia (%2 cartella e %3 files copiati)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	it	%1 Errore in cancellazione (%2 cartella e %3 files cancellati)!
+%1 errors moving (%2 files moved)!	filemanager	it	% Errore in spostamento (%2 files mossi)!
+%1 failed, %2 succeded	filemanager	it	%1 Fallito, %2 a buon fine
+%1 files copied.	filemanager	it	%1 file copiato.
+%1 files deleted.	filemanager	it	%1 file cancellato.
+%1 files moved.	filemanager	it	%1 file mosso.
+%1 starts with '%2'	filemanager	it	%1 inizia con %2
+%1 the following files into current directory	filemanager	it	%1 il file seguente nella cartella attuale
+%1 urls %2 to clipboard.	filemanager	it	% URLs %2 nella clipboard.
+accessrights	filemanager	it	Accesso consentito
+acl added.	filemanager	it	ACL aggiunta
+acl deleted.	filemanager	it	ACL cancellata
+actions	filemanager	it	Azioni
+allow a maximum of the above configured folderlinks to be configured in settings	admin	it	consentito al max link per le cartelle settato nella configurazione di sistema
+and all it's childeren	filemanager	it	e tutte le cartelle sottostanti
+basedirectory	filemanager	it	Cartella radice
 cancel editing %1 without saving	filemanager	it	Annulla modifiche di %1 senza salvare
 cannot create directory because it begins or ends in a space	filemanager	it	Non posso creare la directory perché inizia o finisce con uno spazio
-cannot replace %1 because it is a directory	filemanager	it	Non posso sotituire %1 perché è una directory
-command sucessfully run	filemanager	it	Comando eseguito con successo
+check all	filemanager	it	Seleziona tutti
+clear search	filemanager	it	Deseleziona tutti
 comment	filemanager	it	Commento
 comments cannot contain "%1"	filemanager	it	I commenti non possono contenere "%1"
+copied	filemanager	it	Copiato
 copied %1 to %2	filemanager	it	Ho copiato %1 in %2
 copy to	filemanager	it	Copia In
-copy to:	filemanager	it	Copia in:
+copy to clipboard	filemanager	it	Copiato nella ClipBoard
 could not copy %1 to %2	filemanager	it	Non posso copiare %1 in %2
 could not copy file because no destination directory is given	filemanager	it	Non posso copiare il file perché non è indicata la directory di destinazione
 could not create %1	filemanager	it	Non posso creare %1
-could not create directory %1	filemanager	it	Non posso creare la directory %1
 could not delete %1	filemanager	it	Non posso eliminare %1
 could not move %1 to %2	filemanager	it	Non posso spostare %1 in %2
 could not move file because no destination directory is given	filemanager	it	Non posso spostare il file perché non è indicata la directory di destinazione
 could not rename %1 to %2	filemanager	it	Non posso rinominare %1 in %2
 could not save %1	filemanager	it	Non posso salvare %1
+create directory	filemanager	it	Crea Cartella
 create file	filemanager	it	Crea File
 create folder	filemanager	it	Crea Cartella
 created	filemanager	it	Creato
-created %1	filemanager	it	Creato %1
 created %1,%2	filemanager	it	Creato %1, %2
-created by	filemanager	it	Creato da
+created between	filemanager	it	Creato (between?)
 created directory %1	filemanager	it	Creata la directory %1
-date	filemanager	it	Data
-default number of upload fields to show	filemanager	it	Numero predefinito di campi di caricamento da mostrare
-delete	filemanager	it	Elimina
+current directory	filemanager	it	Cartella attuale
+cut	filemanager	it	Taglia
+cut to clipboard	filemanager	it	Taglia in ClipBoard
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	it	Il settaggio di default e NO. Il link non sara' visualizzato, ma avra' la possibilita di accedere a questa cartella/file o configurare questa particolare locazione come cartella di partenza o link a una cartella.
+delete this file or directory	filemanager	it	Cancella questo file o cartella
 deleted %1	filemanager	it	Eliminato %1
+directories sorted in	filemanager	it	Ordine cartelle in
 directory	filemanager	it	Directory
 directory %1 already exists	filemanager	it	La directory %1 esiste già
 directory %1 does not exist	filemanager	it	La directory %1 non esiste
 directory names cannot contain "%1"	filemanager	it	I nomi di directory non possono contenere "%1"
-display attributes	filemanager	it	Visualizza attributi
+directory not found or no permission to access it!	filemanager	it	Cartella non trovata o non ha i permessi per l'accesso
+display and modification of content	filemanager	it	Visualizza o modifica il contenuto
+display of content	filemanager	it	Visualizza il contenuto
 download	filemanager	it	Download
-edit	filemanager	it	Modifica
 edit comments	filemanager	it	Modifica commenti
-error running command	filemanager	it	Errore nell'esecuzione del comando
-execute	filemanager	it	Esegui
-failed to create directory	filemanager	it	Creazione directory fallita
-fake base dir did not exist, egroupware created a new one.	filemanager	it	La finta Directory base non esisteva, eGroupWare ne ha creata una nuova.
+edit settings	filemanager	it	Modifica configurazione
+enter setup user and password	filemanager	it	Inserisci User e Password
+enter setup user and password to get root rights	filemanager	it	Inserisci User e Password per ottenere i privilegi di Amministratore
+enter the complete vfs path to specify a fast access link to a folder	filemanager	it	Inserisci il completo VFS per avere l'accesso veloce alla cartella
+enter the complete vfs path to specify your desired start folder.	filemanager	it	Inserisci il completo VFS per specificare la catella di partenza
+error adding the acl!	filemanager	it	Errore in aggiunta di una ACL!
+error deleting the acl entry!	filemanager	it	Errore in cancellazione di una ACL!
+error uploading file!	filemanager	it	Errore in caricamento (upload) di un file!
+executable	filemanager	it	Eseguibile
+extended access control list	filemanager	it	Lista di Controllo Estesa
+extended acl	filemanager	it	ACL Estesa
+failed to change permissions of %1!	filemanager	it	Errore nel cambio permessi al %1!
+failed to create directory!	filemanager	it	Errore nella creazione della cartella
 file	filemanager	it	File
 file %1 already exists. please edit it or delete it first.	filemanager	it	Il file %1 esiste già. Per favore, prima modificalo o cancellalo.
 file %1 could not be created.	filemanager	it	Il file %1 non può essere creato.
-file name	filemanager	it	Nome del File
+file %1 may be too big. contact your systemadministrator for further info	filemanager	it	File %1 potrebbe essere troppo grande (in Mb) Conttati il System Administrator per informazioni
+file deleted.	filemanager	it	File cancellato
 file names cannot contain "%1"	filemanager	it	I nomi dei File non possono contenere "%1"
-file names cannot contain \ or /	filemanager	it	I nomi dei File non possono contenere \ o /
-file names cannot contain \\ or /	filemanager	it	I nomi dei File non possono contenere \ o /
+file or directory not found!	filemanager	it	File o Cartella non trovati
+file successful uploaded.	filemanager	it	File caricato (upload) correttamente
 filemanager	common	it	Filemanager
-filemanager preferences	filemanager	it	Preferenze Filemanager
-files	filemanager	it	File
+filemanager configuration	admin	it	Configurazione del FileManager
+files from subdirectories	filemanager	it	Files dalla SottoCartella
 files in this directory	filemanager	it	File in questa directory
-folder	filemanager	it	Cartella
 folder up	filemanager	it	Cartella superiore
+general	filemanager	it	Generale
 go home	filemanager	it	Vai alla Home
 go to	filemanager	it	Vai A
-go to %1	filemanager	it	Vai a %1
 go to your home directory	filemanager	it	Vai alla tua directory Home
-go to:	filemanager	it	Vai a:
 go up	filemanager	it	Vai su
-home	filemanager	it	Home
+id	filemanager	it	Id
+inherited	filemanager	it	Ereditato
+link %1: %2	filemanager	it	Link %1: %2
 location	filemanager	it	Locazione
-locked	filemanager	it	Bloccato
+log out as superuser	filemanager	it	Log Out SuperUser
+max folderlinks	admin	it	Massimo numero di link alle cartelle
+maximum size for uploads	filemanager	it	Massima grandezza per il caricamento (UpLoad)
 mime type	filemanager	it	Tipo MIME
 modified	filemanager	it	Modificato
-modified by	filemanager	it	Modificato da
+modified between	filemanager	it	Modificato tra
+modify all subdirectories and their content	filemanager	it	Modifica tutte le sottocartelle e il loro contenuto
+move	filemanager	it	Sposta
 move to	filemanager	it	Sposta in
-move to:	filemanager	it	Sposta in:
 moved %1 to %2	filemanager	it	Ho spostato %1 in %2
+no access	filemanager	it	No access
 no files in this directory.	filemanager	it	Nessun File in questa directory.
+no preview available	filemanager	it	Il preview non e' disponibile
 no version history for this file/directory	filemanager	it	Nessuna cronologia versioni per questo file/directory
+only owner can rename or delete the content	filemanager	it	Solamente il creatore puo' rinominare o cancellare il contenuto
 operation	filemanager	it	Operazione
-other settings	filemanager	it	Altre impostazioni
-owner	filemanager	it	Proprietario
+permission denied!	filemanager	it	Permesso Negato!
+permissions	filemanager	it	Permesso
+permissions of %1 changed.	filemanager	it	Permesso di %1 cambiato
 please select a file to delete.	filemanager	it	Selezion un File da eliminare.
+preview	filemanager	it	Anteprima
 preview %1	filemanager	it	Anteprima %1
 preview of %1	filemanager	it	Anteprima di %1
+properties saved.	filemanager	it	Proprieta salvate
 quick jump to	filemanager	it	Salta a
+read & write access	filemanager	it	Accesso in Lettura e Scrittura
+read access only	filemanager	it	Accesso a sola lettura
 reload	filemanager	it	ricarica
-rename	filemanager	it	Rinomina
+rename of %1 to %2 failed!	filemanager	it	Rinomina di %1 in %2 fallita!
+rename, change permissions or ownership	filemanager	it	Rinomina-cambia i permessi o la proprieta del file
 renamed %1 to %2	filemanager	it	Ho rinominato %1 in %2
+renamed %1 to %2.	filemanager	it	Ho rinominato %1 in %2
 replaced %1	filemanager	it	Sostituito %1
+rights	filemanager	it	Permesso
+root access granted.	filemanager	it	Accesso consentito come Root
+root access stoped.	filemanager	it	Accesso nefato come Root
 save %1	filemanager	it	Salva %1
 save %1, and go back to file listing	filemanager	it	Salva %1 e torna alla lista dei file
-save all	filemanager	it	Salva tutto
 save changes	filemanager	it	Salva le modifiche
 saved %1	filemanager	it	Ho salvato %1
+saving properties failed!	filemanager	it	Salvataggio delle proprieta fallito!
+search for '%1'	filemanager	it	Ricerca per '%'
+searchstring	filemanager	it	Ricerca in corso...
+select action...	filemanager	it	Selezionare un azione...
+select file to upload in current directory	filemanager	it	Selezionare un file da caricare nella cartella attuale
 show	filemanager	it	Mostra
-show ..	filemanager	it	Mostra ..
-show .files	filemanager	it	Mostra .files
-show command line (experimental. dangerous.)	filemanager	it	Mostra linea di comando (SPERIMENTALE. PERICOLOSO.)
-show help	filemanager	it	Mostra Aiuto
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	it	Mostra il link della cartella radice(/) nel menu
 size	filemanager	it	Dimensione
-sort by:	filemanager	it	Ordina per:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	it	Il futuro Filemanager, ora ESCLUSIVAMENTE A SCOPO DI TEST, per favore invia rapporti di bug.
+start search	filemanager	it	Inizio ricerca
+superuser	filemanager	it	SuperUser
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	it	La cartella predefinita di partenza e' la sua Cartella personale. E' usata di default se non completa il campo, se non esiste il percorso o se non ha i necessari permessi di accesso.
+the requested path %1 is not available.	filemanager	it	Il percorso %1 non esiste o non e' consentito
+there's already a file with that name!	filemanager	it	Esiste gia' un file con questo nome!
+to overwrite the existing file store again.	filemanager	it	Per sovrascrivere un file esistente salvarlo nuovemente
 total files	filemanager	it	File totali
-unknown mime-type defaults to text/plain when viewing	filemanager	it	I tipi MIME sconosciuti vengono visualizzati come testo semplice
 unused space	filemanager	it	Spazio inutilizzato
 up	filemanager	it	Su
-update	filemanager	it	Aggiorna
 updated comment for %1	filemanager	it	Ho aggiornato i commenti per %1
-upload	filemanager	it	Carica
-upload fields	filemanager	it	campi caricamento
-upload files	filemanager	it	Carica File
-use new experimental filemanager?	filemanager	it	Utilizza il nuovo Filemanager sperimentale?
 used space	filemanager	it	Spazio utilizzato
-users	filemanager	it	Utenti
-version	filemanager	it	Versione
-view documents in new window	filemanager	it	Visualizza i documenti in una nuova finestra
-view documents on server (if available)	filemanager	it	Visualizza i documenti sul server (se disponibile)
-who	filemanager	it	Chi
+users and groups	filemanager	it	Utenti e Gruppi
+wrong username or password!	filemanager	it	User Name o Password errate!
 you do not have access to %1	filemanager	it	Non hai accesso a %1
+you need to select an owner!	filemanager	it	Selezionare un proprietario!
+you need to select some files first!	filemanager	it	Selezionare prima un file!
+you will be redirected to your home directory.	filemanager	it	Verra' ridirezionato alla sua Cartella Radice
+you will be redirected to your start folder.	filemanager	it	Verra' ridirezionato alla sua Cartella di Partenza
 your home dir did not exist, egroupware created a new one.	filemanager	it	La tua Directory Home non esisteva, eGroupWare ne ha creata una nuova.
+your home directory	filemanager	it	La sua cartella Home
