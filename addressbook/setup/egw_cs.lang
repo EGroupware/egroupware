@@ -7,6 +7,7 @@
 %1 starts with '%2'	addressbook	cs	%1 začíná s '%2'
 %s please calculate the result	addressbook	cs	%s prosím spočítejte výsledek
 (e.g. 1969)	addressbook	cs	(např. 1969)
+(empty = use global limit, no = no export at all)	admin	cs	(prázdné = použít globální limit, ne = žádný export)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	cs	<b>Žádný konverzní typ <none> nebyl nalezen.</b> Vyberte si prosím konverzní typ ze seznamu
 @-eval() is only availible to admins!!!	addressbook	cs	@-eval() je přístupná jen administrátorům!!!
 account repository	admin	cs	Databáze účtů
@@ -122,7 +123,9 @@ default	addressbook	cs	výchozí
 default address format	addressbook	cs	Výchozí formát adresy
 default addressbook for adding contacts	addressbook	cs	Výchozí adresář pro přidávání kontaktů
 default document to insert contacts	addressbook	cs	Výchozí dokument pro vložení kontaktů
+default file as format	addressbook	cs	Výchozí zakládání ve formátu
 default filter	addressbook	cs	Výchozí filtr
+default format for fileas, eg. for new entries.	addressbook	cs	Výchozí formát založení do evidence, např. u nových záznamů.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	cs	Definuje, které e-mailové adresy (pracovní nebo domácí), použít jako výchozí v distribučních seznamech.
 delete a single entry by passing the id.	addressbook	cs	Vymazat záznam vložením ID.
 delete selected distribution list!	addressbook	cs	Smazat vybraný distribuční seznam!
@@ -207,7 +210,7 @@ home phone	addressbook	cs	Domov - telefon
 home state	addressbook	cs	Domov - stát
 home street	addressbook	cs	Domov - ulice
 home zip code	addressbook	cs	Domov - PSČ
-how many contacts should non-admins be able to export (empty = no limit)	admin	cs	Kolik kontaktů mohou exportovat uživatelé bez administrátorských práv (prázdné = bez omezení)
+how many contacts should non-admins be able to export	admin	cs	Kolik kontaktů budou moci exportovat uživatelé bez oprávnění administrátora
 icon	addressbook	cs	Ikona
 if accounts are already in ldap	admin	cs	pokud jsou účty již v LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	cs	Pokud zde uvedete adresář (celou cestu ve virtuálním systému souborů), aplikace zobrazí akci pro každý dokument. Tato akce pak umožní stáhnout vybraný dokument s vloženými údaji kontaktu.
@@ -337,7 +340,7 @@ startrecord	addressbook	cs	První záznam
 state	common	cs	Stát
 street	common	cs	Ulice
 subject for email	addressbook	cs	Předmět e-mailu
-successfully imported %1 records into your addressbook.	addressbook	cs	Úspěšně importováno %1 zaznamů do Vačeho adresáře.
+successfully imported %1 records into your addressbook.	addressbook	cs	Úspěšně importováno %1 záznamů do Vašeho adresáře.
 suffix	addressbook	cs	Za příjmením
 tel home	addressbook	cs	telefon domů
 telephony integration	admin	cs	Integrace telefonie

@@ -32,6 +32,7 @@ enable drag and drop functionality (experimental)	addressbook	cs	Povolit funkcio
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	cs	Povoluje nebo zakazuje funkce táhni a pusť ve všech aplikacích. Pokud webový prohlížeč ovládání způsobem táhni a pusť nepodporuje, bude automaticky zakázáno. Tato vlastnost je v současnosti v experimentálním stádiu.
 enter your new password	preferences	cs	Zadejte Vaše nové heslo
 enter your old password	preferences	cs	Zadejte Vaše staré heslo
+error: there was a problem finding the preference file for %1 in %2	preferences	cs	Chyba: Nepodařilo se nalézt soubor s předvolbami pro %1 v %2
 failed to change password.  please contact your administrator.	preferences	cs	Nepodařilo se změnit heslo. Kontaktujte prosím Vašeho administrátora.
 forced preferences	preferences	cs	Vynucené předvolby
 help off	preferences	cs	Vypnout nápovědu
