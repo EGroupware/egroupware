@@ -101,7 +101,19 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.7.001">
+	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%" height="250" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<historylog id="history"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -150,18 +162,20 @@
 					</grid>
 				</row>
 				<row>
-					<tabbox id="general|notes|links|customfields" span="all">
+					<tabbox id="general|notes|links|customfields|history" span="all">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Notes" statustext=""/>
 							<tab label="Links" statustext=""/>
 							<tab label="Custom Fields" statustext=""/>
+							<tab label="History" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="timesheet.edit.general"/>
 							<template id="timesheet.edit.notes"/>
 							<template id="timesheet.edit.links"/>
 							<template id="timesheet.edit.customfields"/>
+							<template id="timesheet.edit.history"/>
 						</tabpanels>
 					</tabbox>
 				</row>

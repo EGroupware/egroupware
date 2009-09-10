@@ -58,7 +58,7 @@ class timesheet_ui extends timesheet_bo
 
 	function edit($content = null,$view = false)
 	{
-		$tabs = 'general|notes|links|customfields';
+		$tabs = 'general|notes|links|customfields|history';
 		$etpl = new etemplate('timesheet.edit');
 		if (!is_array($content))
 		{
@@ -305,6 +305,21 @@ class timesheet_ui extends timesheet_bo
 		{
 			$preserv['ts_project'] = $preserv['ts_project_blur'];
 		}
+		$content['history'] = array(
+				'id'  => $this->data['ts_id'],
+				'app' => 'timesheet',
+				'status-widgets' => array(
+					'Sta' => $this->status_labels,
+					'Mod' => 'select-account',
+					'Dur' => 'date-time',
+					'Cat' => 'select-cat',
+				),
+		);
+		foreach($this->field2history as $field => $status)
+		{
+			$sel_options['status'][$status] = $this->field2label[$field];
+		}
+
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
@@ -315,6 +330,7 @@ class timesheet_ui extends timesheet_bo
 			'button[save_new]' => $view,
 			'button[apply]'    => $view,
 		);
+
 		if ($view)
 		{
 			foreach(array_merge(array_keys($this->data),array('pm_id','pl_id','link_to')) as $key)
@@ -328,6 +344,8 @@ class timesheet_ui extends timesheet_bo
 		{
 			$readonlys['ts_owner'] = true;
 		}
+		$sel_options['ts_owner']  = $edit_grants;
+		$sel_options['ts_status']  = $this->status_labels;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.
 			($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
 
@@ -343,11 +361,9 @@ class timesheet_ui extends timesheet_bo
 			$content['ts_viewtype'] = $readonlys[$tabs]['notes'] = true;
 		}
 		if (!$this->customfields) $readonlys[$tabs]['customfields'] = true;	// suppress tab if there are not customfields
+		if (!$this->data['ts_id']) $readonlys[$tabs]['history']    = true;   //suppress history for the first loading without ID
 
-		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,array(
-			'ts_owner'  => $edit_grants,
-			'ts_status' => $this->status_labels,
-		),$readonlys,$preserv,2);
+		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**
@@ -736,7 +752,6 @@ class timesheet_ui extends timesheet_bo
 			'ts_status'  => $this->status_labels+array(lang('No status')),
 		);
 		$content['nm']['no_status'] = !$sel_options['ts_status'];
-
 		$status =array();
 		$sel_options['action'] ['delete']= lang('Delete Timesheet');
 		foreach ($this->status_labels as $status_id => $label_status)
