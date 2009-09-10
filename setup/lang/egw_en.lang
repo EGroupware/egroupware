@@ -290,7 +290,7 @@ hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
 host information	setup	en	Host information
 host,[smtp port],[smtp user],[smtp password]	setup	en	host,[smtp port],[smtp user],[smtp password]
-host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	en	host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	en	host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login|email = use email of user (Standard Maildomain should be set)}]
 host/ip domain controler	setup	en	Host/IP Domain controler
 hostname/ip of database server	setup	en	Hostname/IP of database server
 hour (0-24)	setup	en	hour (0-24)
