@@ -231,8 +231,8 @@
 			
 				$this->profileData	= $this->getProfile($_profileID);
 			
-				$this->imapClass	=& CreateObject('emailadmin.'.$this->IMAPServerType[$this->profileData['imapType']]['classname']);
-				$this->smtpClass	=& CreateObject('emailadmin.'.$this->SMTPServerType[$this->profileData['smtpType']]['classname']);
+				$this->imapClass	= CreateObject('emailadmin.'.$this->IMAPServerType[$this->profileData['imapType']]['classname']);
+				$this->smtpClass	= CreateObject('emailadmin.'.$this->SMTPServerType[$this->profileData['smtpType']]['classname']);
 			}
 		}
 		
@@ -312,7 +312,7 @@
 			$profileData	= $this->getProfile($_profileID);
 			
 			#$smtpClass	= $this->SMTPServerType[$profileData['smtpType']]['classname'];
-			$smtpClass	=& CreateObject('emailadmin.'.$this->SMTPServerType[$profileData['smtpType']]['classname']);
+			$smtpClass	= CreateObject('emailadmin.'.$this->SMTPServerType[$profileData['smtpType']]['classname']);
 
 			#return empty($smtpClass) ? False : ExecMethod("emailadmin.$smtpClass.getAccountEmailAddress",$_accountName,3,$profileData);
 			return is_object($smtpClass) ?  $smtpClass->getAccountEmailAddress($_accountName) : False;
@@ -336,7 +336,7 @@
 #			if(!is_object($this->imapClass))
 #			{
 #				$profileData		= $this->getProfile($_profileID);
-#				$this->imapClass	=& CreateObject('emailadmin.cyrusimap',$profileData);
+#				$this->imapClass	= CreateObject('emailadmin.cyrusimap',$profileData);
 #			}
 #			
 #			return $this->imapClass;
@@ -491,13 +491,13 @@
 			}
 
 			if($data = $this->soemailadmin->getUserProfile($appName, $groups,$GLOBALS['egw_info']['user']['account_id'])) {
-			
-				$eaPreferences =& CreateObject('emailadmin.ea_preferences');
+
+				$eaPreferences = CreateObject('emailadmin.ea_preferences');
 
 				// fetch the IMAP / incomming server data
 				$icClass = isset($this->IMAPServerType[$data['imapType']]) ? $this->IMAPServerType[$data['imapType']]['classname'] : 'defaultimap';
 
-				$icServer =& CreateObject('emailadmin.'.$icClass);
+				$icServer = CreateObject('emailadmin.'.$icClass);
 				$icServer->encryption	= ($data['imapTLSEncryption'] == 'yes' ? 1 : (int)$data['imapTLSEncryption']);
 				$icServer->host		= $data['imapServer'];
 				$icServer->port 	= $data['imapPort'];
@@ -522,7 +522,7 @@
 
 				// fetch the SMTP / outgoing server data
 				$ogClass = isset($this->SMTPServerType[$data['smtpType']]) ? $this->SMTPServerType[$data['smtpType']]['classname'] : 'defaultsmtp';
-				$ogServer =& CreateObject('emailadmin.'.$ogClass);
+				$ogServer = CreateObject('emailadmin.'.$ogClass,$icServer->domainName);
 				$ogServer->host		= $data['smtpServer'];
 				$ogServer->port		= $data['smtpPort'];
 				$ogServer->editForwardingAddress = ($data['editforwardingaddress'] == 'yes');
@@ -531,7 +531,14 @@
 					if(!empty($data['ea_smtp_auth_username'])) {
 						$ogServer->username 	= $data['ea_smtp_auth_username'];
 					} else {
-						$ogServer->username 	= $GLOBALS['egw_info']['user']['account_lid'];
+						// if we use special logintypes for IMAP, we assume this to be used for SMTP too
+						if ($imapAuthType == 'email' || $icServer->loginType == 'email') {
+							$ogServer->username     = $GLOBALS['egw_info']['user']['account_email'];
+						} elseif ($icServer->loginType == 'vmailmgr') {
+							$ogServer->username     = $GLOBALS['egw_info']['user']['account_lid'].'@'.$icServer->domainName;
+						} else {						
+							$ogServer->username 	= $GLOBALS['egw_info']['user']['account_lid'];
+						}
 					}
 					if(!empty($data['ea_smtp_auth_password'])) {
 						$ogServer->password     = $data['ea_smtp_auth_password'];
@@ -539,11 +546,12 @@
 						$ogServer->password     = $GLOBALS['egw_info']['user']['passwd'];
 					}
 				}
+
 				$eaPreferences->setOutgoingServer($ogServer);
 
 				foreach($ogServer->getAccountEmailAddress($GLOBALS['egw_info']['user']['account_lid']) as $emailAddresses)
 				{
-					$identity =& CreateObject('emailadmin.ea_identity');
+					$identity = CreateObject('emailadmin.ea_identity');
 					$identity->emailAddress	= $emailAddresses['address'];
 					$identity->realName	= $emailAddresses['name'];
 					$identity->default	= ($emailAddresses['type'] == 'default');
@@ -611,7 +619,7 @@
 		{
 			if (is_object($this->smtpClass))
 			{
-				#$smtpClass = &CreateObject('emailadmin.'.$this->smtpClass,$this->profileID);
+				#$smtpClass = CreateObject('emailadmin.'.$this->smtpClass,$this->profileID);
 				#$smtpClass->saveSMTPForwarding($_accountID, $_forwardingAddress, $_keepLocalCopy);
 				$this->smtpClass->saveSMTPForwarding($_accountID, $_forwardingAddress, $_keepLocalCopy);
 			}
@@ -752,7 +760,7 @@
 				}
 				if (count($new_config))
 				{
-					$config =& CreateObject('phpgwapi.config','phpgwapi');
+					$config = CreateObject('phpgwapi.config','phpgwapi');
 
 					foreach($new_config as $name => $value)
 					{

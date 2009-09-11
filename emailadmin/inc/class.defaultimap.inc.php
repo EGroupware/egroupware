@@ -79,7 +79,7 @@
 		 *
 		 * @var string
 		 */
-		var $domainname = false;
+		var $domainName = false;
 
 		/**
 		 * validate ssl certificate
@@ -301,6 +301,29 @@
 		}
 
 		/**
+		 * get the effective Username for the Mailbox, as it is depending on the loginType
+		 * @param string $_username
+		 * @return string the effective username to be used to access the Mailbox
+		 */
+		function getMailBoxUserName($_username)
+		{
+			if ($this->loginType == 'email')
+			{
+				$_username = $_username;
+				$accountemail = $GLOBALS['egw']->accounts->read($GLOBALS['egw']->accounts->name2id($_username,'account_email'));
+				if (!empty($accountemail))
+				{
+					list($username,$domain) = explode('@',$accountemail,2);
+					if (strtolower($domain) == strtolower($this->domainName) && !empty($username))
+					{
+						$_username = $username;
+					}
+				}
+			}
+			return $_username;
+		}
+
+		/**
 		 * Create mailbox string from given mailbox-name and user-name
 		 *
 		 * @param string $_folderName='' 
@@ -314,13 +337,12 @@
 				return false;
 			}
 			
-			$username = $_username;
-
-			if($this->loginType == 'vmailmgr') {
-				$username .= '@'. $this->domainName;
+			$_username = $this->getMailBoxUserName($_username);
+			if($this->loginType == 'vmailmgr' || $this->loginType == 'email') {
+				$_username .= '@'. $this->domainName;
 			}
 
-			$mailboxString = $nameSpaces['others'][0]['name'] . $username . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
+			$mailboxString = $nameSpaces['others'][0]['name'] . $_username . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
 			
 			return $mailboxString;
 		}
@@ -401,6 +423,7 @@
 		 */
 		function getQuotaByUser($_username) 
 		{
+			$_username = $this->getMailBoxUserName($_username);
 			$mailboxName = $this->getUserMailboxString($_username);
 			$storageQuota = $this->getStorageQuota($mailboxName); 
 
@@ -421,7 +444,7 @@
 		function getUserData($_username) 
 		{
 			$this->openConnection(true);
-
+			$_username = $this->getMailBoxUserName($_username);
 			$userData = array();
 
 			if($quota = $this->getQuotaByUser($_username)) {
