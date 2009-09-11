@@ -131,12 +131,14 @@ class setup_cmd_config extends setup_cmd
 		'--backup-dir' => 'backup_dir',
 		'--temp-dir'   => 'temp_dir',
 		'--webserver-url' => 'webserver_url',
-		'--mailserver' => array(	//server,{IMAP|IMAPS|POP|POPS},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]
+		'--mailserver' => array(	//server,{IMAP|IMAPS|POP|POPS},[domain],[{standard(default)|vmailmgr = add domain for mailserver login|email = use email of user (Standard Maildomain should be set)}]
 			'mail_server',
 			array('name' => 'mail_server_type','allowed' => array('imap','imaps','pop3','pop3s'),'default'=>'imap'),
 			'mail_suffix',
 			array('name' => 'mail_login_type','allowed'  => array(
-				'username (standard)' => 'standard','username@domain (virtual mail manager)' => 'vmailmgr',
+				'username (standard)' => 'standard',
+				'username@domain (virtual mail manager)' => 'vmailmgr',
+				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
 		),
 		'--cyrus' => array(

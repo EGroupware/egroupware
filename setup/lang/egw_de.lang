@@ -285,7 +285,7 @@ hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
 host information	setup	de	Host Informationen
 host,[smtp port],[smtp user],[smtp password]	setup	de	Host,[SMTP Port],[SMTP Benutzer],[SMTP Passwort]
-host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	de	Host,{imap | pop3 | imaps | pop3s},[Domain],[{standard(Vorgabe)|vmailmgr = Domain für Mailserver Anmeldung anhängen}]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	de	Host,{imap | pop3 | imaps | pop3s},[Domain],[{standard(Vorgabe)|vmailmgr = Domain für Mailserver Anmeldung anhängen|email = eMail Adresse der Benutzer (Default MailDomain sollte gesetzt sein)}]
 host/ip domain controler	setup	de	Hostname / IP des Domain Controler
 hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
 hour (0-24)	setup	de	Stunde (0-24)
