@@ -1,12 +1,19 @@
 %1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
 %1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
 %1 acl records of not (longer) existing accounts deleted.	admin	fr	%1 droits d'accès de comptes inexistants supprimés.
+%1 class not instanciated	admin	fr	%1 classe pas instancié
+%1 group %2	admin	fr	%1 groupe %2
+%1 is no command!	admin	fr	%1 n'est pas une commande!
 %1 not found or not executable !!!	admin	fr	%1 introuvable ou pas exécutable !!!
+%1 rights for %2 and applications %3	admin	fr	%1 droits pour %2 and applications %3
+%1 user %2	admin	fr	%1 user %2
 (default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)
 (stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	(Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !!!)
 -  type	admin	fr	- type
 accesslog and bruteforce defense	admin	fr	Protection contre les attaques accès aux logs et attaque systématique
+account %1 %2	admin	fr	Compte %1 %2
+account '%1' deleted.	admin	fr	Compte %1 supprimé.
 account active	admin	fr	Compte actif
 account has been created	common	fr	Le compte a été créé
 account has been deleted	common	fr	Le compte a été supprimé
@@ -14,6 +21,7 @@ account has been updated	common	fr	Le compte a été mis à jour
 account list	admin	fr	Liste des comptes
 account permissions	admin	fr	Permissions de compte
 account preferences	admin	fr	Préférences de compte
+account-id's have to be integers!	admin	fr	les ID de compte sont des entiers.
 acl manager	admin	fr	Gestionnaire des droits d'accès
 acl rights	common	fr	Droits d'accès
 action	admin	fr	Action
@@ -36,6 +44,7 @@ add sub-category	admin	fr	Ajouter une sous-catégorie
 admin email	admin	fr	Email de l'administrateur
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fr	Adresses EMail (séparées par des virgules) des administrateurs à prévenir à propos du blocage (vide pour aucune notification)
 admin name	admin	fr	Nom de l'administrateur
+admin queue and history	admin	fr	file d'attente et historique
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
 advanced options	admin	fr	options avançées
@@ -56,6 +65,7 @@ application name	admin	fr	Nom d'application
 application title	admin	fr	Titre d'application
 applications	admin	fr	Applications
 applications list	admin	fr	Liste de applications
+applications run rights updated.	admin	fr	Application met à jour les droits.
 applies the changes	admin	fr	appliquer les changements
 are you sure you want to delete the application %1 ?	admin	fr	Etes-vous sûr de vouloir supprimer l'application %1 ?
 are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir supprimer ce compte ?
@@ -85,15 +95,22 @@ cancel testjob!	admin	fr	Annuler le Travail de test!
 categories list	admin	fr	Liste des catégories
 category %1 has been saved !	admin	fr	La catégorie %1 a été enregistrée !
 category list	admin	fr	Liste de catégories
+change account_id	admin	fr	Changer l'account_id
 change acl rights	admin	fr	modifier les droits d'accès (ACL)
 change config settings	admin	fr	Modifier les paramètres de configuration
 change main screen message	admin	fr	Changer le message de l'écran principal
+change password for %1	admin	fr	Changer le mot de passe.
 check ip address of all sessions	admin	fr	Vérifier l'adresse IP de toutes les sessions
 check items to <b>%1</b> to %2 for %3	admin	fr	Vérifier les objets vers <b>%1</b> à %2 pour %3
 click to select a color	admin	fr	Cliquez pour sélectionner une couleur
 color	admin	fr	Couleur
+command scheduled to run at %1	admin	fr	Commande planifier pour démarrer à %1
+complete path to aspell program	admin	fr	Chemin complet pour le programme aspell
+could not remote execute the command	admin	fr	Ne peut pas exécuter la commande
 country selection	admin	fr	Sélection du pays
 create group	admin	fr	Créer un groupe
+created	admin	fr	Créé
+created with id #%1	admin	fr	Créé avec l'id #%1
 creates a new field	admin	fr	Créer un nouveau champ
 crontab only (recomended)	admin	fr	crontab seulement (recommandé)
 custom fields	admin	fr	Champs personnalisés
@@ -107,6 +124,7 @@ default file system space per user	admin	fr	Espace disque par utilisateur (par d
 default file system space per user/group ?	admin	fr	Espace disque par utilisateur/groupe (par défaut) ?
 deinstall crontab	admin	fr	Désinstaller le crontab
 delete account	admin	fr	Supprimer le compte
+delete account %1	admin	fr	Supprimer le compte %1
 delete all records	admin	fr	Supprimer tous les enregistrements
 delete application	admin	fr	Supprimer l'application
 delete category	admin	fr	Supprimer catégorie
@@ -144,6 +162,7 @@ do not delete the category and return back to the list	admin	fr	Ne PAS supprimer
 do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi supprimer toutes les sous-catégories globales ?
 do you want to delete all global subcategories ?	admin	fr	Voulez-vous supprimer toutes les sous-catégories globales ?
 do you want to move all global subcategories one level down ?	admin	fr	Voulez-vous déplacer toutes les sous-catégories globales un niveau plus bas ?
+document root (default)	admin	fr	Document racine (défaut)
 each value is a line like <id>[=<label>]	admin	fr	Chaque valeur est une ligne comme <id>[=<label>]
 each value is a line like id[=label]	admin	fr	Chaque valeur est une ligne comme id[=<label>]
 edit account	admin	fr	Modifier le compte
@@ -162,10 +181,12 @@ edit this group	admin	fr	Modifier ce groupe
 edit this user	admin	fr	Modifier cet utilisateur
 edit user	admin	fr	Modifier l'utilisateur
 edit user account	admin	fr	Modifier le compte de l'utilisateur
+egroupware directory	admin	fr	Répertoire Egroupware
 email account active	admin	fr	compte de messagerie actif
 email address	admin	fr	adresse email
 enable debug-messages	admin	fr	Activer les messages de déboguage
 enable the soap service	admin	fr	Activer le service soap
+enable the spellcheck in the ritch text editor ?	admin	fr	Active le correcteur orthographique dans l'éditeur riche
 enable the xmlrpc service	admin	fr	Activer le service xmlrp
 enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
 enabled - popup window	admin	fr	Activé - Fenêtre popup
@@ -193,12 +214,19 @@ enter your http proxy server port	admin	fr	Entrez le port de votre serveur proxy
 enter your smtp server hostname or ip address	admin	fr	Entrez votre nom de serveur SMTP ou adresse IP
 enter your smtp server port	admin	fr	Entrez le port de votre serveur SMTP
 error canceling timer, maybe there's none set !!!	admin	fr	Erreur en annulant le timer, peut-être qu'il n'y en a aucun de défini !!!
+error changing the password for % !!!	admin	fr	Erreur en changeant le mot de passe pour  %1 !!!!
+error changing the password for %1 !!!	admin	fr	Erreur en changeant le mot de passe pour  %1 !!!!
+error saving	admin	fr	Erreur d'enregistrement
+error saving account!	admin	fr	Erreur  d'enregistrement du compte !
+error saving the command!	admin	fr	Erreur  d'enregistrement de la commande !
+error saving to db:	admin	fr	Erreur  d'enregistrement  dans la db:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fr	Erreur en créant le timer, erreur de syntaxe ou peut-être il y en a déjà un qui tourne !!!
 error! no appname found	admin	fr	Erreur : pas de nom d'application trouvé !
 error: %1 not found or other error !!!	admin	fr	Erreur: %1 introuvable ou autre erreur !!!
 expires	admin	fr	Expire
 explanation of ldapman	admin	fr	Ce module a été testé avec POSTFIX, LDAP, Courier-IMAP et nécessite les schémas CORE et QMAIL (OID7914). Des informations supplémentaires pour configurer ce système sont disponibles dans le fichier README.ldap du répertoire ADMIN.
 fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
+false	admin	fr	Faux
 field '%1' already exists !!!	admin	fr	Le Champ '%1'  existe déjà !
 file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
@@ -210,6 +238,7 @@ forward also to	admin	fr	Transférer également à
 forward emails to	admin	fr	Transférer le emails à
 forward only	admin	fr	Transférer seulement à
 global categories	common	fr	Catégories globales
+grant	admin	fr	Donnez
 group ?	admin	fr	Groupe ?
 group has been added	common	fr	Le groupe a été ajouté
 group has been deleted	common	fr	Le groupe a été effacé
@@ -235,6 +264,7 @@ install crontab	admin	fr	Installer le crontab
 installed applications	common	fr	Applications installées
 installed crontab	admin	fr	Crontab installée
 interface	admin	fr	Interface
+invalid formated date "%1"!	admin	fr	Format de date invalide %1 !
 ip	admin	fr	IP
 jobs	admin	fr	Travaux
 kill	admin	fr	Tuer
@@ -278,7 +308,9 @@ method	admin	fr	Méthode
 minimum account id (e.g. 500 or 100, etc.)	admin	fr	Numéro de compte minimum (p.e. 500 ou 100, etc.)
 minute	admin	fr	Minute
 mode	admin	fr	Mode
+modified	admin	fr	Modifié
 month	admin	fr	Mois
+more secure	admin	fr	Plus sûr
 name must not be empty !!!	admin	fr	Le nom ne doit pas être vide !
 new group name	admin	fr	Nouveau nom de groupe
 new name	admin	fr	Nouveau nom
@@ -299,6 +331,7 @@ order	admin	fr	Ordre
 outbound	admin	fr	sortant
 passthrough	admin	fr	passage
 password for smtp-authentication	admin	fr	Mot de passe pour l'authentification SMTP
+password updated	admin	fr	mot de passe mis à jour
 path information	admin	fr	Information sur le chemin
 peer server list	admin	fr	Liste des serveurs (peer servers)
 peer servers	admin	fr	Serveurs pairs
@@ -400,6 +433,7 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration po
 times	admin	fr	Heures
 top	admin	fr	Haut
 total records	admin	fr	Enregistrements totaux
+true	admin	fr	Vrai
 trust level	admin	fr	Niveau de confiance
 trust relationship	admin	fr	Relation de confiance
 type '%1' already exists !!!	admin	fr	Le type '%1'  existe déjà !
