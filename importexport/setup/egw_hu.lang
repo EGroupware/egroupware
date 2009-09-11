@@ -1,0 +1,22 @@
+allowed users	importexport	hu	Engedélyezett felhasználók
+automatically created by importexport	importexport	hu	Az importexport által automatikusan létrehozva
+choose a name for this definition	importexport	hu	Válasszon egy nevet a definíciónak
+choose a plugin	importexport	hu	Válasszon egy bedolgozó modult
+choose an application	importexport	hu	Válasszon egy alkalmazást
+delete all selected definitions	importexport	hu	az összes kiválasztott definíció törlése
+expert options	importexport	hu	Haladó beállítások
+export	importexport	hu	Export
+export all selected definitions	importexport	hu	az összes kiválasztott definíció exportálása
+finish	importexport	hu	befejez
+general	importexport	hu	Általános
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	hu	Definíciók importálása (Figyelem: Az azonos nevű definíciók felül fognak íródni!!!)
+importexport wizard finished successfully!	importexport	hu	Az importexport varázsló sikeresen lefutott!
+next	importexport	hu	következő
+preview	importexport	hu	Előnézet
+previous	importexport	hu	előző
+save as definition	importexport	hu	Mentés definícióként
+select definition	importexport	hu	Definíció kiválasztása
+select plugin	importexport	hu	Bedolgozó modul kiválasztása
+some nice text	importexport	hu	némi csinos szöveg
+which useres are allowed for this definition	importexport	hu	Mely felhasználók számára engedélyezett ez a definíció
+you need to select an app and format first!	importexport	hu	Először egy alkalmazást és formátumot kell kiválasztania!

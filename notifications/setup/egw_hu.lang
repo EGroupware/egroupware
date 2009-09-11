@@ -1,0 +1,23 @@
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	hu	Válasszon ki egy értesítési láncot. Az értesítést a lánc által biztosított háttérszolgáltatás fogja elküldeni.</br>Megjegyzés: Ha egy értesítési lánc kikapcsolvt állapotot mutat (disabled), akkor az ön adminisztrátora nem engedélyezte egy vagy több háttérszolgáltatás működését az adott láncban, így az értesítést email-ként fogja megkapni.
+common chains	notifications	hu	Általános lánc
+disabled chains	notifications	hu	Kikapcsolt láncok
+don't notify me via popups in egroupware	notifications	hu	Ne értesíts eGroupWare felugró értesítővel
+egroupware has notifications for you	notifications	hu	Értesítő érkezett az eGroupWare-ből
+egroupware-popup backend	admin	hu	eGroupWare felugró értesítő
+egroupware-popup verbosity	notifications	hu	eGroupWare felugró értesítő részletesség
+enable egroupware-popup backend	admin	hu	eGroupWare felugró értesítő háttérszolgáltatás engedélyezése
+enable sms backend	admin	hu	SMS értesítő engedélyezése
+enable windows-popup backend	admin	hu	Felugró ablak értesítő háttérszolgáltatás engedélyezése
+enabled chains	notifications	hu	Engedélyezett láncok
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	hu	Milyen részletességű üzenetben értesítse a felhasználót:<br />alacsony: egy villogó gomb jelenik meg e felső menüsorban - a felső menüsort engedélyezni kell, ha ki lenne kapcsolva!<br />közepes: az értesítő ablakot az előtérbe hozza<br />magas: az értesítő ablakot előtérbe hozza és engedélyezi, hogy a böngésző is felhívja magára a figyelmet
+if set, embedded links get rendered special for external clients	notifications	hu	Ha beállításra kerül, akkor a hivatkozások külső email kliensek számára is értelmezhető lesz
+linked entries:	notifications	hu	Hivatkozott bejegyzések:
+maximum sms messages per notification	admin	hu	Maximum SMS üzenet értesítésenként
+message from	notifications	hu	Üzenet feladója
+notification	common	hu	Értesítés
+notify me by	notifications	hu	Értesíts a következő módon
+optimize e-mails for external mail client	notifications	hu	Optimalizálja az email-t külső email kliensek számára
+preferences for notification	notifications	hu	Értesítés tulajdonságok
+sms backend	admin	hu	SMS értesítés
+this egroupware notification has been sent to you by mail because your	notifications	hu	Ez az eGroupWare értesítő email-ként érkezett, mert az ön
+windows-popup backend	admin	hu	Felugró ablak értesítő

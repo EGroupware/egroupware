@@ -1,11 +1,14 @@
 %1 added	addressbook	hu	%1 hozzáadva
 %1 contact(s) %2	addressbook	hu	%1 kapcsolat %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	hu	%1 kapcsolat %2, %3, mivel nem rendelkezik megfelelő jogosultsággal!
+%1 fields in %2 other organisation member(s) changed	addressbook	hu	%1 mézők itt %2 más szervezet tagjai megváltoztak (%1 fields in %2 other organisation member(s) changed)
 %1 records imported	addressbook	hu	%1 bejegyzés importálva
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	hu	%1 bejegyzés beolvasva (nincs importálva, importáláshoz %2vissza%3 kell lépni és meg kell szüntetni a 'Test Import' opciót)
 %1 starts with '%2'	addressbook	hu	%1 elindult '%2'-vel
 %s please calculate the result	addressbook	hu	%s kérem számolja ki az eredményt
+%s please calculate the result and increase it by ten	addressbook	hu	%s kérem számolja ki az eredményt és ADJON HOZZÁ MÉG 10-ET!
 (e.g. 1969)	addressbook	hu	(pl.: 1969)
+(empty = use global limit, no = no export at all)	admin	hu	(üres = globális korlát használata, no = nem exportálható)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	hu	<b>Nem találtam konverzió típust <none>.</b>Konverzió típus választása szükséges.
 @-eval() is only availible to admins!!!	addressbook	hu	@-eval() csak adminisztrátoroknak érhető el!!!
 account repository	admin	hu	Felhasználói hozzáférések tárháza
@@ -14,13 +17,18 @@ actions	addressbook	hu	Műveletek
 add %1	addressbook	hu	%1 hozzáadása
 add a contact to this organisation	addressbook	hu	Kapcsolat hozzáadása ehhez a szervezethez
 add a new contact	addressbook	hu	Új kapcsolat hozzáadása
+add a new infolog	addressbook	hu	Új Infolog hozzáadása
 add a new list	addressbook	hu	Új lista hozzáadása
 add a single entry by passing the fields.	addressbook	hu	Egy bejegyzés hozzáadása a mezők átadásával
 add business email of whole distribution list?	addressbook	hu	Üzleti email cím hozzáadása a teljes disztribúciós listához?
 add custom field	addressbook	hu	Egyéni mező hozzáadása
+add emails of whole distribution list?	addressbook	hu	A disztribúciós lista összes email címét hozzáadja?
+add or delete categoies	addressbook	hu	Kategória hozzáadása vagy törlése
 add to distribution list:	addressbook	hu	Disztribúciós listához hozzáadás:
+added	addressbook	hu	hozzáadva
 added by synchronisation	addressbook	hu	szinkronizáció által hozzáadva
 added to distribution list	addressbook	hu	disztribúciós listához hozzáadva
+additional information about using ldap as contact repository	admin	hu	További információk a Kapcsolatok LDAP-ban történő tárolásához
 address book	common	hu	Címjegyzék
 address book - vcard in	addressbook	hu	Címjegyzék - VCard formában
 address book - view	addressbook	hu	Címjegyzék - nézet
@@ -28,12 +36,15 @@ address line 2	addressbook	hu	Címsor 2
 address type	addressbook	hu	Címtípus
 addressbook	common	hu	Címjegyzék
 addressbook csv export	addressbook	hu	Címjegyzék exportja CVS formátumban
+addressbook field	addressbook	hu	Címjegyzék mező
 addressbook menu	addressbook	hu	Címjegyzék menü
 addressbook preferences	addressbook	hu	Címjegyzék tulajdonságok
 addressbook the contact should be saved to	addressbook	hu	Kapcsolat mentése a következő címjegyzékbe
+addressbook the contact should be shown	addressbook	hu	Kapcsolat megjelenítése a következő címjegyzékben
 addressbook-fieldname	addressbook	hu	Címjegyzék-Mezőnév
 addvcard	addressbook	hu	VCard hozzáadása
 advanced search	addressbook	hu	Kiterjesztett keresés
+adószám	addressbook	hu	Adószám
 all contacts	addressbook	hu	Összes kapcsolat
 allow users to maintain their own account-data	admin	hu	Felhasználók kezelhetik saját felhasználói fiók adataikat
 alt. csv import	addressbook	hu	Alternatív CSV Import
@@ -62,7 +73,11 @@ calendar fields:	addressbook	hu	Naptár mezők:
 calendar uri	addressbook	hu	Naptár URI
 can be changed via setup >> configuration	admin	hu	Megváltoztatható a Beállítások->Konfiguráció
 car phone	addressbook	hu	Autó telefon
+categorie	addressbook	hu	kategória
+categorie added	addressbook	hu	kategória hozzáadva
+categorie delete	addressbook	hu	kategória törölve
 categories, notes, ...	addressbook	hu	Kategóriák, Feljegyzések, ...
+category tree	admin	hu	Kategória fa
 cell phone	addressbook	hu	Mobiltelefon
 change all organisation members	addressbook	hu	változtassa meg a szervezet összes tagját
 charset for the csv export	addressbook	hu	Karakterkódolás a CSV exporthoz
@@ -90,15 +105,18 @@ contact saved	addressbook	hu	Kapcsolat elmentve
 contact settings	admin	hu	Kapcsolat beállítások
 contactform	addressbook	hu	Kapcsolat felvételi űrlap
 contacts and account contact-data to ldap	admin	hu	kapcsolatok és felhasználók kapcsolat adatait LDAP-ba
+contacts and account contact-data to sql	admin	hu	kapcsolatok és felhasználók kapcsolat adatait SQL adatbázisba
 contacts to ldap	admin	hu	kapcsolatok LDAP-ba
 contacts to ldap, account contact-data to sql	admin	hu	kapcsolatok LDAP-ba, felhasználók kapcsolat adatai SQL-be
 contains	addressbook	hu	tartalmaz
 copied by %1, from record #%2.	addressbook	hu	%1 másolta a #%2 bejegyzéstől
 copy a contact and edit the copy	addressbook	hu	Kapcsolat másolása és a másolat szerkesztése
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	hu	Másolja a módosításait a vágólapra, %1töltse be újra a bejegyzést%2 és fűzze össze őket.
 country	common	hu	Ország
 create new links	addressbook	hu	Új hivatkozás létrehozása
 created	addressbook	hu	Létrehozva
 credit	addressbook	hu	Hitel
+csv field	addressbook	hu	CSV Mező
 csv-fieldname	addressbook	hu	CSV-Mezőnév
 csv-filename	addressbook	hu	CSV-Fájlnév
 custom	addressbook	hu	Egyedi
@@ -109,7 +127,10 @@ default	addressbook	hu	alapértelmezett
 default address format	addressbook	hu	Alapértelmezett cím formátum
 default addressbook for adding contacts	addressbook	hu	Alapértelmezett címjegyzék a hozzáadott kapcsolatokhoz
 default document to insert contacts	addressbook	hu	Alapértelmezett dokumentum, amit hozzáadunk a kapcsolathoz
+default file as format	addressbook	hu	Alapértelmezett fájlformátum
 default filter	addressbook	hu	Alapértelmezett Szűrő
+default format for fileas, eg. for new entries.	addressbook	hu	Alapértelmezett fájlformátum, pl. új bejegyzésekhez
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	hu	Állítsa be, hogy a disztribúciós lista melyik email címet használja elsődlegesen (üzleti vagy otthoni email cím).
 delete a single entry by passing the id.	addressbook	hu	Töröl egy bejegyzést az azonosító megadásával.
 delete selected distribution list!	addressbook	hu	Kiválasztott disztribúciós lista törlése!
 delete this contact	addressbook	hu	Kapcsolat törlése
@@ -119,9 +140,11 @@ deletes the photo	addressbook	hu	Fotó törlése
 department	common	hu	Iroda
 departments	addressbook	hu	Osztályok
 directory with documents to insert contacts	addressbook	hu	Kapcsolatokhoz adható dokumentumok könyvtára
+display contact	addressbook	hu	Kapcsolat megjelenítése
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	hu	Születésnapi emlékeztető megjelenítése a kezdőoldalon.
 distribution list deleted	addressbook	hu	Disztribúciós lista törölve
 distribution lists	addressbook	hu	Disztribúciós listák
+distribution lists, ...	addressbook	hu	Disztribúciós listák,...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	hu	Akar egy magán címjegyzéket, melyet nem láthatnak azok a felhasználók sem, akiknek olvasási jogot adott a személyes címjegyzékéhez? (Privát a személyes címjegyzékben.)
 do your really want to delete this contact?	addressbook	hu	Biztosan törölni kívánja ezt a kapcsolatot?
 document '%1' does not exist or is not readable for you!	addressbook	hu	A(z) '%1' dokumentum nem létezik, vagy nincs hozzá olvasási joga!
@@ -141,10 +164,13 @@ email & internet	addressbook	hu	Email és Internet
 email addresses (comma separated) to send the contact data	addressbook	hu	Email címek (vesszővel elválasztva) akiknek a kapcsolat adatait elküldjük
 empty for all	addressbook	hu	minden ürítése
 enable an extra private addressbook	addressbook	hu	Engedélyezzük egy extra magán címjegyzéket
+enclosure	addressbook	hu	Melléklet
 end	addressbook	hu	Befejezés
 enter the path to the exported file here	addressbook	hu	Exportált állomány elérési útjának megadása
 error deleting the contact !!!	addressbook	hu	Hiba a kapcsolat törlésekor !!!
 error saving the contact !!!	addressbook	hu	Hiba a kapcsolat mentésekor !!!
+error: the entry has been updated since you opened it for editing!	addressbook	hu	Hiba: a bejegyzést valaki frissítette, mióta ön megnyitotta szerkesztésre!
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	hu	Példa: $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - az "n_prefix" mezőben keresi az "Mr" értéket, ha talál, akkor a megszólítás Hello Mr., egyébként Hello Ms.
 existing links	addressbook	hu	Meglévő hivatkozások
 export	addressbook	hu	exportál
 export as csv	addressbook	hu	Export CSV formában
@@ -156,7 +182,8 @@ export selection	addressbook	hu	Kijelölés exportálása
 exported	addressbook	hu	exportálva
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	hu	Kapcsolatok exportálása a Címjegyzékből CSV formátumban. CSV jelentése 'Comma Separated Values'. Az opcióknál kiválasztható más elválasztó karakter is, nem csak a vessző.
 extra	addressbook	hu	Extra
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	hu	%1
+extra private	addressbook	hu	Extra privát
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	hu	%1 szervezet tagját nem lehet megváltoztatni (jogosultság hiányában)!!!
 fax	addressbook	hu	Fax
 fax number	common	hu	Fax Szám
 field %1 has been added !	addressbook	hu	%1 mező hozzáadva!
@@ -166,7 +193,10 @@ fields for the csv export	addressbook	hu	Mezők a CSV exporthoz
 fields the user is allowed to edit himself	admin	hu	Mezők, melyeket a felhasználó saját maga szerkeszthet
 fields to show in address list	addressbook	hu	Címjegyzékben megjelenő mezők
 fieldseparator	addressbook	hu	Mező elválasztó
+fieldseperator	addressbook	hu	Mező elválasztó
+for more then one contact in a document use the tag pagerepeat!	addressbook	hu	több mint egy kapcsolat használata esetén egy dokumentumban, használja a pagerepeat tag-et!
 for read only ldap	admin	hu	csak olvasható LDAP-hoz
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	hu	Körlevél készítéshez használja ezt a tag-et. Az ismétlésre szánt tartalmat rakja két tag közé.
 freebusy uri	addressbook	hu	Szabad-foglalt URI
 full name	addressbook	hu	Teljes Neve
 general	addressbook	hu	Általános
@@ -183,11 +213,19 @@ home address, birthday, ...	addressbook	hu	Otthoni cím, születésnap, ...
 home city	addressbook	hu	Otthoni város
 home country	addressbook	hu	Otthoni ország
 home email	addressbook	hu	Otthoni email
+home email if given, else work email	addressbook	hu	Otthoni email cím, ha megadták, egyébként munkahelyi email cím
 home phone	addressbook	hu	Otthoni telefon
 home state	addressbook	hu	Otthoni megye
 home street	addressbook	hu	Otthoni utca
 home zip code	addressbook	hu	Otthoni postai irányítószám
+how many contacts should non-admins be able to export	admin	hu	Hány darab kapcsolatot exportálhatnam a nem adminisztrátor felhasználók
 icon	addressbook	hu	Ikon
+if accounts are already in ldap	admin	hu	ha a felhasználók az LDAP-ban már léteznek
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	hu	Ha itt megad egy könytárat (teljes VFS útvonal), a Címjegyzék műveletet jelenít meg az összes dokumentumhoz. Ez a művelet lehetővé teszi, hogy a megadott dokumentum letöltésekor a Kapcsolat adatai beillesztésre kerüljenek a dokumentumba.
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted. the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (<a href="/office/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">full list of placeholder names</a>). at the moment the following document-types are supported:*.rtf, *.txt	addressbook	hu	Ha itt megad egy könytárat (teljes VFS útvonal), a Címjegyzék műveletet jelenít meg az összes dokumentumhoz. Ez a művelet lehetővé teszi, hogy a megadott dokumentum letöltésekor a Kapcsolat adatai beillesztésre kerüljenek a dokumentumba. A dokumentum tartalmazhat mezőneveket (pl. $$n_fn$$ ), amelyek be lesznek helyettesítve a kapcsolat adataira. Jelenleg a következő dokumentum típusok támogatottak: *.rtf, *.txt
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	hu	Ha itt megad egy dokumentumot (teljes VFS útvonal), a Címjegyzék megjelenít egy extra dokeumentum ikont az összes Kapcsolathoz. Ez az ikon lehetővé teszi, hogy a megadott dokumentum letöltésekor a Kapcsolat adatai beillesztésre kerüljenek a dokumentumba.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted. the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (<a href="/office/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">full list of placeholder names</a>). at the moment the following document-types are supported:*.rtf, *.txt	addressbook	hu	Ha itt megad egy dokumentumot (teljes VFS útvonal), a Címjegyzék megjelenít egy extra dokeumentum ikont az összes Kapcsolathoz. Ez az ikon lehetővé teszi, hogy a megadott dokumentum letöltésekor a Kapcsolat adatai beillesztésre kerüljenek a dokumentumba (pl. $$n_fn$$ ). Jelenleg a következő dokumentum típusok támogatottak: *.rtf, *.txt
+ignore first line	addressbook	hu	Hagyja figyelmen kívül az első sort
 import	addressbook	hu	Import
 import contacts	addressbook	hu	Kapcsolat importálás
 import csv-file into addressbook	addressbook	hu	CVS-Állomány importálása a Címjegyzékbe
@@ -198,11 +236,18 @@ import from outlook	addressbook	hu	Importálás Outlookból
 import multiple vcard	addressbook	hu	Több vCard importálása
 import next set	addressbook	hu	Következő beállítás importálása
 import_instructions	addressbook	hu	Netscape esetében meg kell nyitni a Címjegyzéket és ki kell választani az <b>Export</b> menüpontot a <b>File</b> menüből. LDIF formátumban történik az exportálás.<p>Outlook esetében a <b>File</b> menüből ki kell választani az <b>Import and export...</b> menüpontot. vCard formátumban történik az exportálás.
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	hu	Kapcsolatok importálása a Címjegyzékbe CSV fájlból. CSV jelentése: "Comma Separated Values", azaz vesszővel elválasztott értékek. További elválasztó karaktereket lehet kiválasztani a Tab opcióknál.
 in %1 days (%2) is %3's birthday.	addressbook	hu	%3 születésnapja %1 napon belül eljön (%2).
 income	addressbook	hu	Jövedelem
+infolog	addressbook	hu	InfoLog
+insert in document	addressbook	hu	Dokumentumba illesztés
 insufficent rights to delete this list!	addressbook	hu	Nincs megfelelő jogosultsága törölni ezt a listát!
 international	addressbook	hu	Nemzetközi
+internet	addressbook	hu	Internet
+kötelező	addressbook	hu	Kötelező
+kötelező, mobil is lehet	addressbook	hu	Kötelező, mobil is lehet
 label	addressbook	hu	Címke
+last date	addressbook	hu	Utolsó dátum
 last modified	addressbook	hu	utoljára módosítva
 last modified by	addressbook	hu	utoljára módosította
 ldap context for contacts	admin	hu	LDAP összefüggés a kapcsolatokhoz
@@ -219,8 +264,11 @@ list created	addressbook	hu	Lista létrehozva
 list creation failed, no rights!	addressbook	hu	Lista létrehozása nem sikerült, nincs jogosultsága!
 load sample file	addressbook	hu	Minta fájl betöltése
 load vcard	addressbook	hu	vCard betöltése
+location	addressbook	hu	Hely
 locations	addressbook	hu	helyek
+manage mapping	addressbook	hu	Leképezések kezelése
 mark records as private	addressbook	hu	Bejegyzés megjelölése magánként
+merge into first or account, deletes all other!	addressbook	hu	Legelsőhöz vagy felhasználóhoz fűzés, összes többi törlése!
 merged	addressbook	hu	hozzáfűzve
 message after submitting the form	addressbook	hu	Űrlap kitöltése utáni üzenet
 message phone	addressbook	hu	Üzenet telefon
@@ -235,8 +283,12 @@ move to addressbook:	addressbook	hu	Címjegyzékbe mozgat:
 moved	addressbook	hu	átmozgatva
 multiple vcard	addressbook	hu	Több vCard
 name for the distribution list	addressbook	hu	Disztribúciós lista neve
+name of current user, all other contact fields are valid too	addressbook	hu	Aktuális felhasználó neve, az összes többi kapcsolat mező szintén érvényes
 name, address	addressbook	hu	Név, Cím
 new contact submitted by %1 at %2	addressbook	hu	Új kapcsolat elküldve %1 által ekkor: %2
+new window opened to edit infolog for your selection	addressbook	hu	A kiválasztott Infolog szerkesztése külön ablakban nyílt meg
+next date	addressbook	hu	Következő dátum
+no categories selected	addressbook	hu	nincsenek kategóriák kiválasztva
 no vcard	addressbook	hu	Nem VCard
 number	addressbook	hu	Szám
 number of records to read (%1)	addressbook	hu	Bejegyzések száma olvasáshoz (%1)
@@ -247,18 +299,24 @@ organisations by departments	addressbook	hu	Szervezetek osztályok szerint
 organisations by location	addressbook	hu	Szervezetek helyek szerint
 other number	addressbook	hu	Más telefonszám
 other phone	addressbook	hu	Egyéb telefon
+own sorting	addressbook	hu	saját sorrend
 pager	common	hu	Személyhívó
 parcel	addressbook	hu	Csomó
+participants	addressbook	hu	Résztvevők
 permission denied !!!	addressbook	hu	Hozzáférés megtagadva!
 phone number	common	hu	Telefonszám
 phone numbers	common	hu	Telefonszámok
 photo	addressbook	hu	Fotó
 please enter a name for that field !	addressbook	hu	Kérem adjon meg egy nevet ebbe a mezőbe!
 please select only one category	addressbook	hu	Kérem csak egy kategóriát válasszon
+please update the templatename in your customfields section!	addressbook	hu	Kérem adja meg a sablon nevét az ön Egyedi mezők szekciójában!
 postal	common	hu	Postai
 pref	addressbook	hu	előtag
-preferred phone	addressbook	hu	preferált telefon
+preferred email address to use in distribution lists	addressbook	hu	Elsődleges email cím a disztribúciós listában való használathoz
+preferred phone	addressbook	hu	elsődleges telefon
+preferred type of email address to add for distribution lists	addressbook	hu	elsődleges email típus, amit a disztribúciós listához adunk
 prefix	addressbook	hu	Előtag
+private custom fields	addressbook	hu	Privát egyedi mezők
 public key	addressbook	hu	Nyilvános kulcs
 publish into groups:	addressbook	hu	Megjelenítés a Csoportokban:
 read a list / search for entries.	addressbook	hu	Bejegyzések listája/keresése.
@@ -267,8 +325,12 @@ read a single entry by passing the id and fieldlist.	addressbook	hu	Egyedi bejeg
 read only	addressbook	hu	csak olvasható
 record access	addressbook	hu	Rekord hozzáférés
 record owner	addressbook	hu	Rekord tulajdonos
+region	addressbook	hu	Régió
 remove selected contacts from distribution list	addressbook	hu	Kijelölt kapcsolatok eltávolítása a disztribúciós listáról
 removed from distribution list	addressbook	hu	Eltávolítva a disztribúciós listából
+repetition	addressbook	hu	Ismétlődés
+replacements for inserting contacts into documents	addressbook	hu	Behelyettesítések a Kapcsolatok dokumentumba történő illesztéséhez
+required field	addressbook	hu	kötelező mező
 required fields *	addressbook	hu	kötelező mezők
 role	addressbook	hu	Szerep
 room	addressbook	hu	Szoba
@@ -278,6 +340,7 @@ select a view	addressbook	hu	Nézet választása
 select addressbook type	addressbook	hu	Válassza ki a Címjegyzék típusát
 select all	addressbook	hu	Minden kiválasztása
 select an action or addressbook to move to	addressbook	hu	Válasszon ki egy műveletet, vagy címjegyzéket, ahová mozgassuk
+select an action or addressbook to move to...	addressbook	hu	Válasszon ki egy műveletet, vagy címjegyzéket, ahová mozgassuk
 select migration type	admin	hu	Válassza ki a migráció típusát
 select multiple contacts for a further action	addressbook	hu	Válasszon ki több kapcsolatot a további művelethez
 select phone number as prefered way of contact	addressbook	hu	az előnyben részesített telefonszám a kapcsolatfelvételhez
@@ -285,12 +348,14 @@ select the type of conversion	addressbook	hu	Konverzió típus kiválasztása
 select the type of conversion:	addressbook	hu	Konverzió típus kiválasztása:
 select where you want to store / retrieve contacts	admin	hu	Válassza ki, hol szeretné tárolni, honnan kérdezné le a kapcsolatait
 selected contacts	addressbook	hu	kiválasztott kapcsolatok
+seperator	addressbook	hu	Elválasztó
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	hu	A fotó és az otthoni cím oszlopok mindig megjelenítésre kerüljenek, még akkor is, ha üresek?
 show	addressbook	hu	Mutat
 show birthday reminders on main screen	addressbook	hu	Születésnapi emlékeztetők megjelenítése a főképernyőn
 show infolog entries for this organisation	addressbook	hu	Jelenítse meg ehhez a szervezethez tartozó InfoLog bejegyzéseket
 show the contacts of this organisation	addressbook	hu	Jelenítse meg az ehhez a szervezethez tartozó kapcsolatokat
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	hu	A felugró ablak mérete (SzélességXMagasság, pl. 400x300, ha a felugró ablak van használatban)
+stadt	addressbook	hu	Város
 start	admin	hu	Indít
 startrecord	addressbook	hu	Kezdő bejegyzés
 state	common	hu	Állam (US)
@@ -298,6 +363,7 @@ street	common	hu	Utca
 subject for email	addressbook	hu	Az email Tárgya
 successfully imported %1 records into your addressbook.	addressbook	hu	%1 sikeresen importált bejegyzés a címjegyzékbe.
 suffix	addressbook	hu	Utótag
+tax number	addressbook	hu	Adószám
 tel home	addressbook	hu	Otthoni telefon
 telephony integration	admin	hu	Telefon integráció
 test import (show importable records <u>only</u> in browser)	addressbook	hu	Test Import (<u>csupán</u> az importálható bejegyzések mutatása a böngészőben)
@@ -305,29 +371,46 @@ thank you for contacting us.	addressbook	hu	Köszönjük, hogy kapcsolatba lépe
 that field name has been used already !	addressbook	hu	A mezőnév már használatban van!
 the anonymous user has probably no add rights for this addressbook.	addressbook	hu	Az anonymous felhasználó alighanem nem rendelkezik hozzáadási jogosultsággal ehhez a címjegyzékhez.
 the anonymous user needs add rights for it!	addressbook	hu	Az anonymous felhasználónak hozzáadási jogosultsága kell legyen!
+the anonymous user needs read it!	addressbook	hu	Az anonymous felhasználónak olvasási joggal kell rendelkeznie!
+the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	hu	A dokumentum tartalmazhat olyan speciális szekvenciát (hasonlóan ehhez: $$n_fn$$), melyek lecserélésre kerülnek a Kapcsolat adataival (%1Teljes lista a behelyettesítő szekvenciákról%2).
 there was an error saving your data :-(	addressbook	hu	Hiba történt az adatainak a mentése közben.
-this person's first name was not in the address book.	addressbook	hu	Ennek a személynek a vezetékneve nem szerepelt a címjegyzékben.
-this person's last name was not in the address book.	addressbook	hu	Ennek a személynek a keresztneve nem szerepelt a címjegyzékben.
+this module displays a contactform, that stores direct into the addressbook.	addressbook	hu	Ez a modul egy Kapcsolatfelvételi űrlapot jelenít meg, ami a bevitt kapcsolati adatokat a Címjegyzékbe tárolja el.
+this module displays block from a adddressbook group.	addressbook	hu	Ez a modul megjelenít egy blokkot egy Címjegyzék csoportból.
+this person's first name was not in the address book.	addressbook	hu	Ennek a személynek a keresztneve nem szerepelt a címjegyzékben.
+this person's last name was not in the address book.	addressbook	hu	Ennek a személynek a vezetékneve nem szerepelt a címjegyzékben.
 timezone	addressbook	hu	Időzóna
 to many might exceed your execution-time-limit	addressbook	hu	Futtatási idő limit túllépés
 today is %1's birthday!	common	hu	Ma van %1 születésnapja!
 tomorrow is %1's birthday.	common	hu	Holnap van %1 születésnapja.
 translation	addressbook	hu	Fordítás
 type	addressbook	hu	Típus
-update a single entry by passing the fields.	addressbook	hu	Egy egyedüli bejegyzés frissítése a mezök beírásával.
+update a single entry by passing the fields.	addressbook	hu	Egy bejegyzés frissítése a mezők átadásával.
+update fields by edited organisations?	admin	hu	Frissítsük a mezőket a szerkesztett társaság adatai alapján?
+updated	addressbook	hu	Frissítve
 upload or delete the photo	addressbook	hu	Fotó feltöltése vagy törlése
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	hu	URL a telefonszám hivatkozásokhoz (használja ezeke: %1 = hívott telefonszáma, %u = felhasználói azonosítónév, %t = felhasználó telefonszáma)
 use an extra category tab?	addressbook	hu	Használjunk egy extra kategória fület?
+use an extra tab for private custom fields?	admin	hu	Használjunk egy extra fület a privát egyedi mezők kezeléséhez?
 use country list	addressbook	hu	Ország lista használata
+use setup for a full account-migration	admin	hu	használja a Beállításokat a teljes felhasználói fiók migrációhoz
+used for links and for the own sorting of the list	addressbook	hu	hivatkozások és saját sorrendű listákhoz használatos
 vcard	common	hu	vCard
-vcards require a first name entry.	addressbook	hu	A vCard igényel egy vezetéknév bejegyzést.
-vcards require a last name entry.	addressbook	hu	A vCard igényel egy keresztnév bejegyzést.
+vcards require a first name entry.	addressbook	hu	A vCard igényel egy keresztnév bejegyzést.
+vcards require a last name entry.	addressbook	hu	A vCard igényel egy vezetéknév bejegyzést.
 verification	addressbook	hu	Hitelesítés
 view linked infolog entries	addressbook	hu	Kapcsolat InfoLog bejegyzések megtekintése
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	hu	Figyelem!! Az LDAP csak akkor érvényes, ha felhasználói azonosítók tárolására NEM használjuk a kapcsolatokat!
 warning: all contacts found will be deleted!	addressbook	hu	FIGYELMEZTETÉS: Az összes fellelhető kapcsolat törlődni fog!
 warning: template "%1" not found, using default template instead.	addressbook	hu	FIGYELMEZTETÉS: %1 sablon nem található, helyette az alapértelmezettet használjuk.
 weekday	addressbook	hu	Hétköznap
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	hu	Más alkalmazásokban mi jelenjen meg a Címjegyzékből. Az üres értékek kimaradnak. Újra be kell jelentkeznie, hogy a változtatások érvényre jussanak.
+where to add the email address	addressbook	hu	hová adjuk hozzá az email címet
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	hu	Melyik cím formátumot használja a Címjegyzék a különböző országok esetén, amikor az országban alkalmazott formátum nem ismert. Ha mégis ismert, akkor az a formátum kerül használatra, függetlenül az itt kiválasztott beállítástól.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	hu	Melyik címjegyzék kerüljön kiválasztásra abban az esetben, ha egy Kapcsolatot ad hozzá ÉS nincs jogosultsága kapcsolatot hozzáadni az aktuális címjegyzékhez.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	hu	Milyen karakterkódolás kerüljön kiválasztásra CSV export esetében. A rendszer alapértelmezetten az eGroupWare telepítésekor meghatározott kódolást használja (valószínűleg utf8).
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	hu	Melyik mezők kerüljenek exportálásra. Az 'Összes' az összes tárolt mezőt jelenti, beleértve az egyedi mezőket is. Az Üzleti vagy Otthoni cím esetében csak a név, cégnév és a kiválasztott cím kerül exportálásra.
 whole query	addressbook	hu	teljes lekérdezés
+work email if given, else home email	addressbook	hu	Üzleti email, ha meg van adva, egyébként az otthoni email cím
 work phone	addressbook	hu	Munkahelyi telefon
 write (update or add) a single entry by passing the fields.	addressbook	hu	Egy bejegyzés írása (frissítése vagy hozzáadása) a mezők átadásával.
 wrong - try again ...	addressbook	hu	Rossz - próbálja újra...
@@ -339,6 +422,7 @@ you are not permitted to delete contact %1	addressbook	hu	Nem jogosult a %1 kapc
 you are not permittet to delete this contact	addressbook	hu	Nem jogosult ennek a kapcsolatnak a törlésére
 you are not permittet to edit this contact	addressbook	hu	Nem jogosult ennek a kapcsolatnak a módosítására
 you are not permittet to view this contact	addressbook	hu	Nem jogosult ennek a kapcsolatnak a megjelenítésére
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	hu	Ha a felhasználói adatokat LDAP-ban tárolja, akkor a Kapcsolatokat is LDAP-ban kell tárolnia! Így járás!
 you can respond by visiting:	addressbook	hu	Megtekintéshez látogasson el ide:
 you must select a vcard. (*.vcf)	addressbook	hu	vCard (*.vcf) választása szükséges.
 you must select at least 1 column to display	addressbook	hu	Legalább egy oszlop kiválasztása szükséges a megjelenítéshez.

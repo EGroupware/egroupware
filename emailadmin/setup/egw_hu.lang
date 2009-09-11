@@ -8,11 +8,15 @@ advanced options	emailadmin	hu	haladó beállítások
 alternate email address	emailadmin	hu	alternatív emailcím
 any application	emailadmin	hu	Bármelyik modul
 any group	emailadmin	hu	Bármelyik csoport
+any user	emailadmin	hu	bármelyik felhasználó
+back to admin/grouplist	emailadmin	hu	Vissza az Admin/Csoport listához
+back to admin/userlist	emailadmin	hu	Vissza az Admin/Felhasználói listához
 bad login name or password.	emailadmin	hu	Hibás belépési név vagy jelszó.
 bad or malformed request. server responded: %s	emailadmin	hu	Hibás kérés. Szerver válasza: %s
 bad request: %s	emailadmin	hu	Hibás kérés: %s
 can be used by application	emailadmin	hu	Ez a modul használhatja
 can be used by group	emailadmin	hu	Ez a csoport használhatja
+can be used by user	emailadmin	hu	felhasználó használhatja
 connection dropped by imap server.	emailadmin	hu	A kapcsolatot az IMAP szerver eldobta.
 could not complete request. reason given: %s	emailadmin	hu	Kérést nem lehet teljesíteni. Az ok: %s
 could not open secure connection to the imap server. %s : %s.	emailadmin	hu	Nem létesíthető titkos csatorna az IMAP szerverhez. %s : %s
@@ -23,12 +27,15 @@ default	emailadmin	hu	Alapértelmezett
 deliver extern	emailadmin	hu	külső kézbesítés
 do not validate certificate	emailadmin	hu	ne ellenőrizze a tanúsítványt
 do you really want to delete this profile	emailadmin	hu	Valóban törölni kívánja ezt a profilt
+do you really want to reset the filter for the profile listing	emailadmin	hu	Valóban alapállapotba akarja hozni a Profil lista szűrőjét
 domainname	emailadmin	hu	tartománynév
 edit email settings	emailadmin	hu	email beállítások szerkesztése
 email account active	emailadmin	hu	email azonosító aktív
 email address	emailadmin	hu	email cím
 email settings	common	hu	Email beállítások
 emailadmin	emailadmin	hu	EmailAdmin
+emailadmin: group assigned profile	common	hu	eMailAdmin: Csoporthoz rendelt profil
+emailadmin: user assigned profile	common	hu	eMailAdmin: Felhasználóhoz rendelt profil
 enable cyrus imap server administration	emailadmin	hu	Cyrus IMAP-kiszolgáló adminisztrációjának engedélyezése
 enable sieve	emailadmin	hu	Sieve engedélyezése
 encrypted connection	emailadmin	hu	titkosított kapcsolat
@@ -36,6 +43,8 @@ encryption settings	emailadmin	hu	Titkosítás beállításai
 enter your default mail domain (from: user@domain)	emailadmin	hu	Adja meg az alapértelmezett levelezési tartományt (a felhasználó@tartomány-ból)
 error connecting to imap server. %s : %s.	emailadmin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. %s : %s
 error connecting to imap server: [%s] %s.	emailadmin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. [%s ]: %s
+filtered by account	emailadmin	hu	Felhasználói fiók szerint szűrve
+filtered by group	emailadmin	hu	Csoport szerint szűrve
 forward also to	emailadmin	hu	továbbítsd ide is
 forward email's to	emailadmin	hu	email továbbítása ide
 forward only	emailadmin	hu	továbbítás csak ide
@@ -52,6 +61,7 @@ imap server name	emailadmin	hu	IMAP szerver neve
 imap server port	emailadmin	hu	IMAP szerver portja
 imap/pop3 server name	emailadmin	hu	IMAP/POP3 szerver neve
 in mbyte	emailadmin	hu	MBájtban
+inactive	emailadmin	hu	inaktív
 ldap basedn	emailadmin	hu	LDAP basedn
 ldap server	emailadmin	hu	LDAP szerver
 ldap server accounts dn	emailadmin	hu	LDAP szerver accounts DN
@@ -78,15 +88,18 @@ pop3 server hostname or ip address	emailadmin	hu	POP3 szerver hosztneve vagy IP 
 pop3 server port	emailadmin	hu	POP3 szerver portja
 postfix with ldap	emailadmin	hu	Postfix LDAP-vel
 profile access rights	emailadmin	hu	profil elérési jogosultságok
+profile is active	emailadmin	hu	a profil aktív
 profile list	emailadmin	hu	Profil lista
 profile name	emailadmin	hu	Profilnév
 qmaildotmode	emailadmin	hu	qmaildotmode
 qouta size in mbyte	emailadmin	hu	kvóta mérete Megabájtban
 quota settings	emailadmin	hu	kvóta beállításai
 remove	emailadmin	hu	eltávolítás
+reset filter	emailadmin	hu	szűrő alapállapotban állítása
 select type of imap server	emailadmin	hu	IMAP szerver típusának kiválasztása
 select type of imap/pop3 server	emailadmin	hu	Válassza ki az IMAP/POP3 szerver típusát
 select type of smtp server	emailadmin	hu	Válassza ki az SMTP szerver típusát
+send using this email-address	emailadmin	hu	küldés ennek az email címnek a használatával
 server settings	emailadmin	hu	Szerver beállítások
 sieve server hostname or ip address	emailadmin	hu	Sieve szerver hosztneve vagy IP címe
 sieve server port	emailadmin	hu	Sieve szerver port
@@ -111,11 +124,16 @@ unknown imap response from the server. server responded: %s	emailadmin	hu	Várat
 unsupported action '%1' !!!	emailadmin	hu	Nem támogatott művelet '%1' !!!
 update current email address:	emailadmin	hu	Jelenlegi email cím frissítése:
 use ldap defaults	emailadmin	hu	használja az LDAP alapbeállításokat
+use predefined username and password defined below	emailadmin	hu	Előre beállított felhasználónév és jelszó használata az alábbiakban beállítottak szerint
 use smtp auth	emailadmin	hu	SMTP hitelesítés használata
 use tls authentication	emailadmin	hu	TLS hitelesítés használata
 use tls encryption	emailadmin	hu	TLS kódolás használata
 user can edit forwarding address	emailadmin	hu	Felhasználó szerkesztheti a továbbításkor a címeket
 username (standard)	emailadmin	hu	felhasználó név (standard)
+username/password defined by admin	emailadmin	hu	Az adminisztrátor által beállított Felhasználónév/Jelszó
 username@domainname (virtual mail manager)	emailadmin	hu	felhasználónév@tartománynév (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	emailadmin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
+users can define their own identities	emailadmin	hu	a felhasználók beállíthatják a saját fiókjaikat
+users can define their own signatures	emailadmin	hu	a felhasználók beállíthatják a saját aláírásaikat
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	hu	Az irodán kívüli (vakáció) értesítés kezdő és vég dátumainak használatához egy adminisztrátori fiók beállítása szükséges!
 virtual mail manager	emailadmin	hu	Virtuális MAIL ManaGeR
