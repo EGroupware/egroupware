@@ -293,7 +293,7 @@ class editor
 	{
 		if ($this->debug)
 		{
-			echo "<p>etemplate.editor.show: content="; _debug_array($content);
+			echo "<p>etemplate.editor.edit: content="; _debug_array($content);
 		}
 		if (!is_array($content)) $content = array();
 		$preserv = array();
