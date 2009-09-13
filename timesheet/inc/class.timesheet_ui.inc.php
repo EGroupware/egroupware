@@ -309,17 +309,15 @@ class timesheet_ui extends timesheet_bo
 				'id'  => $this->data['ts_id'],
 				'app' => 'timesheet',
 				'status-widgets' => array(
-					'Sta' => $this->status_labels,
-					'Mod' => 'select-account',
-					'Dur' => 'date-time',
-					'Cat' => 'select-cat',
+					'ts_status' => $this->status_labels,
+					'ts_modifier' => 'select-account',
+					'cat_id' => 'select-cat',
 				),
 		);
 		foreach($this->field2history as $field => $status)
 		{
 			$sel_options['status'][$status] = $this->field2label[$field];
 		}
-
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
