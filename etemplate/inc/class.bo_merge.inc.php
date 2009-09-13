@@ -271,6 +271,15 @@ abstract class bo_merge
 			$contentstart .= '<office:body>';
 			$contentend = '</office:body></office:document-content>';
 		}
+		if ($mimetype == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' && count($ids) > 1)
+		{
+			//for Word 2007 XML files we have to slpit the content and add a style for page break to  the style area
+			list($contentstart,$contentrepeat,$contentend) = preg_split('/w:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "</"
+			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
+			$contentstart .= '<w:body>';
+			$contentend = '</w:body></w:document>';
+		}
 		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
 		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
 		$countlables = count($countlables[0])+1;
@@ -354,6 +363,7 @@ abstract class bo_merge
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
+					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
 					// todo ms word xml files
 					break;
 			}
@@ -378,7 +388,7 @@ abstract class bo_merge
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
-					// todo ms word xml files
+					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
 					break;
 			}
 			$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
@@ -433,6 +443,10 @@ abstract class bo_merge
 						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>','/').'([a-z0-9_]+)'.
 						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:rPr><w:lang w:val="','/').
 						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>$$','/').'/i' => '$$\\2$$',
+					'/'.preg_quote('$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>','/').'([a-z0-9_]+)'.
+						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$\\1$',
+					'/'.preg_quote('$ $</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>','/').'([a-z0-9_]+)'.
+						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$ $\\1$ $',
 				);
 				break;
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
