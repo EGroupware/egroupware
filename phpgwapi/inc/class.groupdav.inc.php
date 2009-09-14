@@ -90,6 +90,16 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug > 2) error_log('groupdav: $_SERVER='.array2string($_SERVER));
 
+		// identify clients, which do NOT support path AND full url in <D:href> of PROPFIND request
+		switch(groupdav_handler::get_agent())
+		{
+			case 'kde':	// KAddressbook (at least in 3.5 can NOT subscribe / does NOT find addressbook)
+				$this->client_require_href_as_url = true;
+				break;
+			case 'davkit':	// iCal app in OS X 10.6 created wrong request, if full url given
+				$this->client_require_href_as_url = false;
+				break;
+		}
 		parent::HTTP_WebDAV_Server();
 
 		$this->translation =& $GLOBALS['egw']->translation;
