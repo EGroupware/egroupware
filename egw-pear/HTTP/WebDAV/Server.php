@@ -51,6 +51,14 @@ class HTTP_WebDAV_Server
      */
     var $base_uri;
 
+    /**
+     * Set if client requires <D:href> to be a url (true) or a path (false).
+     * RFC 4918 allows both: http://www.webdav.org/specs/rfc4918.html#ELEMENT_href
+     * But some clients can NOT deal with one or the other!
+     *
+     * @var boolean
+     */
+    var $client_require_href_as_url;
 
     /**
      * URI path for this request
@@ -142,11 +150,15 @@ class HTTP_WebDAV_Server
             return;
         }
 
-        // default uri is the complete request uri
-        $uri = (@$this->_SERVER["HTTPS"] === "on" ? "https:" : "http:");
+        // default is currently to use just the path, extending class can set $this->client_require_href_as_url depending on user-agent
+        if ($this->client_require_href_as_url)
+        {
+	        // default uri is the complete request uri
+	        $uri = (@$this->_SERVER["HTTPS"] === "on" ? "https:" : "http:") . '//'.$this->_SERVER['HTTP_HOST'];
+        }
         // we cant use SCRIPT_NAME, because it fails, if there's any url rewriting
         //error_log("pathinfo:\n". $this->_urldecode($this->_SERVER['REQUEST_URI']).":\n".$this->_SERVER['PATH_INFO']);
-		$uri.= '//'.$this->_SERVER['HTTP_HOST'].substr($this->_urldecode($this->_SERVER['REQUEST_URI']),0,-strlen($this->_SERVER["PATH_INFO"]));
+        $uri .= substr($this->_urldecode($this->_SERVER['REQUEST_URI']),0,-strlen($this->_SERVER["PATH_INFO"]));
 
         $path_info = empty($this->_SERVER["PATH_INFO"]) ? "/" : $this->_SERVER["PATH_INFO"];
 
@@ -971,7 +983,7 @@ class HTTP_WebDAV_Server
      * GET method handler
      *
      * @param void
-     * @returns void
+     * @return void
      */
     function http_GET()
     {
