@@ -83,7 +83,7 @@ class db_backup
 	 * @var boolean
 	 */
 	var $backup_files = false ;
- 
+
 	/**
 	 * Constructor
 	 */
@@ -300,12 +300,12 @@ class db_backup
 	 */
 	function saveConfig($config_values)
 	{
-		if (!is_array($config_values)) 
+		if (!is_array($config_values))
 		{
 			error_log(__METHOD__." unable to save backup config values, wrong type of parameter passed.");
 			return false;
 		}
-		//_debug_array($config_values);	
+		//_debug_array($config_values);
 		$minCount = $config_values['backup_mincount'];
 		$backupFiles = (int)$config_values['backup_files'];
 		/* minCount */
@@ -357,10 +357,10 @@ class db_backup
 		// we may have to clean up old backup - left overs
 		if (is_dir($dir.'/database_backup'))
 		{
-			remove_dir_content($dir.'/database_backup/');
+			self::remove_dir_content($dir.'/database_backup/');
 			rmdir($dir.'/database_backup');
 		}
- 
+
 		$list = array();
 		$name = "";
 		$zip = NULL;
@@ -372,7 +372,7 @@ class db_backup
 			{
 				return "Cant open '$filename' for reading<br>";
 			}
-			$this->remove_dir_content($dir);  // removes the files-dir
+			self::remove_dir_content($dir);  // removes the files-dir
 			$zip->extractTo($dir);
 			$_f = $f;
 			$list = $this->get_file_list($dir.'/database_backup/');
@@ -425,7 +425,7 @@ class db_backup
 				$this->schemas = unserialize(trim(substr($line,8)));
 				foreach($this->schemas as $table_name => $schema)
 				{
-					echo "<pre>$table_name => ".$this->write_array($schema,1)."</pre>\n";
+					echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
 					$this->schema_proc->CreateTable($table_name,$schema);
 				}
 				// make the schemas availible for the db-class
@@ -436,7 +436,7 @@ class db_backup
 			{
 				$table = substr($line,7);
 
-				$cols = $this->csv_split($line=fgets($f)); ++$n;
+				$cols = self::csv_split($line=fgets($f)); ++$n;
 
 				if (feof($f)) break;
 				continue;
@@ -459,13 +459,13 @@ class db_backup
 			if ($table)	// do we already reached the data part
 			{
 				$import = true;
-				$data = $this->csv_split($line,$cols);
+				$data = self::csv_split($line,$cols);
 				if ($table == 'egw_async' && in_array('##last-check-run##',$data)) {
 					echo '<p>'.lang("Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
 					echo 'data=<pre>'.print_r($data,true)."</pre>\n";
 					$import = false;
 				}
-				if (in_array($table,$this->exclude_tables)) 
+				if (in_array($table,$this->exclude_tables))
 				{
 					echo '<p><b>'.lang("Table %1 is excluded from backup and restore. Data will not be restored.",$table)."</b></p>\n";
 					$import = false; // dont restore data of excluded tables
@@ -519,19 +519,19 @@ class db_backup
 		}
 		$this->db->transaction_commit();
 	}
-	
+
 	/**
 	 * Removes a dir, no matter whether it is empty or full
 	 *
 	 * @param strin $dir
 	 */
-	function remove_dir_content($dir)
+	private static function remove_dir_content($dir)
 	{
 		$list = scandir($dir);
 		while($file = $list[0])
 		{
 			if(is_dir($file) && $file != '.' && $file != '..')
-			    $this->remove_dir_content($dir.'/'.$file);
+			    self::remove_dir_content($dir.'/'.$file);
 			if(is_file($file) && $file != '.' && $file != '..')
 			    unlink($dir.'/'.$file);
 			array_shift($list);
@@ -541,8 +541,12 @@ class db_backup
 
 	/**
 	 * Split one line of a csv file into an array and does all unescaping
+	 *
+	 * @param string $line line to split
+	 * @param array $keys=null keys to use or null to use numeric ones
+	 * @return array
 	 */
-	private function csv_split($line,$keys=False)
+	public static function csv_split($line,$keys=null)
 	{
 		$fields = explode(',',trim($line));
 
@@ -582,7 +586,7 @@ class db_backup
 	/**
 	 * escape data for csv
 	 */
-	private function escape_data(&$data,$col,$defs)
+	public static function escape_data(&$data,$col,$defs)
 	{
 		if (is_null($data))
 		{
@@ -621,7 +625,7 @@ class db_backup
 		// we may have to clean up old backup - left overs
 		if (is_dir($dir.'/database_backup'))
 		{
-			remove_dir_content($dir.'/database_backup/');
+			self::remove_dir_content($dir.'/database_backup/');
 			rmdir($dir.'/database_backup');
 		}
 
@@ -700,13 +704,13 @@ class db_backup
 			//echo substr($file,strlen($dir)+1).'<br>';
 			//echo $file.'<br>';
 			$zip->addFile($file,substr($file,strlen($dir)+1));//,substr($file);
-			if(($count++) == 100) { // the file descriptor limit 
+			if(($count++) == 100) { // the file descriptor limit
 				$zip->close();
 				if($zip = new ZipArchive()) {
 					$zip->open($filename);
 					$count =0;
 				}
-			}  
+			}
 		}
 		$zip->close();
 		fclose($f);
@@ -784,7 +788,7 @@ class db_backup
 			}
 		}
 		$def = "\t\$phpgw_baseline = ";
-		$def .= $this->write_array($this->schemas,1);
+		$def .= self::write_array($this->schemas,1);
 		$def .= ";\n";
 
 		if ($f)
@@ -807,7 +811,7 @@ class db_backup
 	 *
 	 * copied from etemplate/inc/class.db_tools.inc.php
 	 */
-	private function write_array($arr,$depth,$parent='')
+	private static function write_array($arr,$depth,$parent='')
 	{
 		if (in_array($parent,array('pk','fk','ix','uc')))
 		{
@@ -833,7 +837,7 @@ class db_backup
 			}
 			if (is_array($val))
 			{
-				$def .= $this->write_array($val,$parent == 'fd' ? 0 : $depth,$key);
+				$def .= self::write_array($val,$parent == 'fd' ? 0 : $depth,$key);
 			}
 			else
 			{
