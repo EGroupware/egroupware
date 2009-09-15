@@ -623,6 +623,7 @@
 						<option value="standard" {selected_imapLoginType_standard}>{lang_standard}</option>
 						<option value="vmailmgr" {selected_imapLoginType_vmailmgr}>{lang_vmailmgr}</option>
 						<option value="admin" {selected_imapLoginType_admin}>{lang_defined_by_admin}</option>
+						<option value="email" {selected_imapLoginType_email}>{lang_email}</option>
 					</select>
 				</td>
 
