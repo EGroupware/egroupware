@@ -232,7 +232,7 @@
 							switch ($key) {
 								case 'imapLoginType':
 									// if the logintype is admin, it will be added to the default value
-									if ($toMerge[$key] =='admin') {
+									if ($toMerge[$key] =='admin' || $toMerge[$key] =='email') {
 										// take the first value found by explode, which is assumed the default value
 										list($mergeInTo[$key],$rest) = explode('#',$mergeInTo[$key],2);
 										$mergeInTo[$key] = $mergeInTo[$key].'#'.$toMerge[$key];

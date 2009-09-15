@@ -518,6 +518,9 @@
 					if (!empty($data['imapAuthUsername'])) $icServer->username = $icServer->loginName = $data['imapAuthUsername'];
 					if (!empty($data['imapAuthPassword'])) $icServer->password = $data['imapAuthPassword'];
 				}
+				if ($imapAuthType == 'email' || $icServer->loginType == 'email') {
+					$icServer->username = $icServer->loginName = $GLOBALS['egw_info']['user']['account_email'];
+				}
 				$eaPreferences->setIncomingServer($icServer);
 
 				// fetch the SMTP / outgoing server data

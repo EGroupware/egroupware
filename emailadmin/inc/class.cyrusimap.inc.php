@@ -89,7 +89,7 @@
 			$_username = $this->getMailBoxUserName($_username);
 			$mailboxString = $nameSpaces['others'][0]['name'] . strtolower($_username) . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
 			
-			if($this->loginType == 'vmailmgr') {
+			if($this->loginType == 'vmailmgr' || $this->loginType == 'email') {
 				$mailboxString .= '@'.$this->domainName;
 			}
 

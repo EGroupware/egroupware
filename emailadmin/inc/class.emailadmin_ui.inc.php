@@ -646,7 +646,6 @@
 		{
 			# skeleton
 			# $this->t->set_var('',lang(''));
-			
 			$this->t->set_var('lang_server_name',lang('server name'));
 			$this->t->set_var('lang_server_description',lang('description'));
 			$this->t->set_var('lang_edit',lang('edit'));
@@ -718,6 +717,7 @@
 			$this->t->set_var('lang_profile_isactive',lang('profile is active'));
 			$this->t->set_var('lang_defined_by_admin',lang('Username/Password defined by admin'));
 			$this->t->set_var('lang_Use_IMAP_auth', lang('Use predefined username and password defined below'));
+			$this->t->set_var('lang_email',lang('use Users eMail-Address (as seen in Useraccount)'));
 			$this->t->set_var('',lang(''));
 			# $this->t->set_var('',lang(''));
 			
