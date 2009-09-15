@@ -232,7 +232,7 @@ class accounts_ldap
 			{
 				$to_write['objectclass'] = $old ? $old['objectclass'] : array();
 			}
-			if (!$old)	// for new accounts add additional addressbook object classes, if supported by server
+			if (!$old && !$is_group)	// for new accounts add additional addressbook object classes, if supported by server
 			{			// as setting them later might loose eg. password, if we are not allowed to read them
 				foreach($this->requiredObjectClasses['user-if-supported'] as $additional)
 				{
