@@ -310,13 +310,15 @@
 			if ($this->loginType == 'email')
 			{
 				$_username = $_username;
-				$accountemail = $GLOBALS['egw']->accounts->read($GLOBALS['egw']->accounts->name2id($_username,'account_email'));
+				$accountID = $GLOBALS['egw']->accounts->name2id($_username);
+				$accountemail = $GLOBALS['egw']->accounts->id2name($accountID,'account_email');
+				//$accountemail = $GLOBALS['egw']->accounts->read($GLOBALS['egw']->accounts->name2id($_username,'account_email'));
 				if (!empty($accountemail))
 				{
-					list($username,$domain) = explode('@',$accountemail,2);
-					if (strtolower($domain) == strtolower($this->domainName) && !empty($username))
+					list($lusername,$domain) = explode('@',$accountemail,2);
+					if (strtolower($domain) == strtolower($this->domainName) && !empty($lusername))
 					{
-						$_username = $username;
+						$_username = $lusername;
 					}
 				}
 			}
@@ -423,8 +425,8 @@
 		 */
 		function getQuotaByUser($_username) 
 		{
-			$_username = $this->getMailBoxUserName($_username);
 			$mailboxName = $this->getUserMailboxString($_username);
+			//error_log(__METHOD__.$mailboxName);
 			$storageQuota = $this->getStorageQuota($mailboxName); 
 
 			if(is_array($storageQuota) && isset($storageQuota['QMAX'])) {
@@ -444,7 +446,6 @@
 		function getUserData($_username) 
 		{
 			$this->openConnection(true);
-			$_username = $this->getMailBoxUserName($_username);
 			$userData = array();
 
 			if($quota = $this->getQuotaByUser($_username)) {
