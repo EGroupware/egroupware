@@ -25,7 +25,7 @@ delete selected resources	resources	fr	Supprimer les ressources selectionnées
 delete this entry	resources	fr	Supprimer cette entrée
 description (short)	resources	fr	Description (courte)
 direct booking permissions	resources	fr	Permissions directes de réservation
-don't use vfs (this will need a symlink --> see readme)	resources	fr	N'employez vfs (ceci nécessitera un lien symbolique --> voir README)
+don't use vfs (this will need a symlink --> see readme)	resources	fr	N'employez pas vfs (ceci nécessitera un lien symbolique --> voir README)
 edit this entry	resources	fr	Modifier cette entrée
 existing links	resources	fr	Liens existants
 general	resources	fr	Générale
@@ -95,6 +95,7 @@ web-site for this resource	resources	fr	Site web de cette ressource
 where to find this resource?	resources	fr	Ou trouver cette ressource?
 which category does this resource belong to?	resources	fr	À quelle catégorie cette ressource appartient-elle?
 write permissions	resources	fr	Permissions d'écriture
+you are not permitted to delete this reource!	resources	fr	Vous n'êtes pas autorisés à supprimer cette ressource!
 you are not permitted to edit this reource!	resources	fr	Vous n'êtes pas autorisés à modifier cette ressource!
 you are not permitted to get information about this resource!	resources	fr	Vous n'êtes pas autorisés à obtenir des informations sur cette ressource!
 you chose more resources than available	resources	fr	Vous avez choisi plus de ressources que disponibles
