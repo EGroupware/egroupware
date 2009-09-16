@@ -656,9 +656,9 @@ class so_sql
 	/**
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
-	 * @param array $keys=null if given array with col => value pairs to characterise the rows to delete
+	 * @param array|int $keys=null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
 	 * @param boolean $only_return_query=false return $query of delete call to db object, but not run it (used by so_sql_cf!)
-	 * @return int affected rows, should be 1 if ok, 0 if an error
+	 * @return int|array affected rows, should be 1 if ok, 0 if an error or array with id's if $only_return_ids
 	 */
 	function delete($keys=null,$only_return_query=false)
 	{

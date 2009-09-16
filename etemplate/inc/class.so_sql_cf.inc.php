@@ -312,9 +312,9 @@ class so_sql_cf extends so_sql
 	 *
 	 * reimplented to also delete the custom fields
 	 *
-	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
+	 * @param array|int $keys=null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
 	 * @param boolean $only_return_ids=false return $ids of delete call to db object, but not run it (can be used by extending classes!)
-	 * @return int affected rows, should be 1 if ok, 0 if an error
+	 * @return int|array affected rows, should be 1 if ok, 0 if an error or array with id's if $only_return_ids
 	 */
 	function delete($keys=null,$only_return_ids=false)
 	{
@@ -332,7 +332,7 @@ class so_sql_cf extends so_sql
 			}
 			else
 			{
-				$ids = $query[$this->autoinc_id];
+				$ids = (array)$query[$this->autoinc_id];
 			}
 			if ($only_return_ids) return $ids;
 			$this->db->delete($this->extra_table,array($this->extra_id => $ids),__LINE__,__FILE__);
