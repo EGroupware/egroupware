@@ -235,7 +235,7 @@ class etemplate extends boetemplate
 			self::$name_vars .= 1+count(self::$name_forms);
 		}
 		self::$name_forms[] = self::$name_form;
-		
+
 		self::$request = etemplate_request::read();
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->readonlys = $readonlys;
@@ -254,7 +254,7 @@ class etemplate extends boetemplate
 				."<html>\n<head>\n".html::style($this->style)."\n</head>\n"
 				."<body>\n".$this->show($content)."\n</body>\n</html>";
 		}
-		
+
 		$html = $this->include_java_script(1).
 				$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,self::$name_vars);
 
@@ -970,7 +970,7 @@ class etemplate extends boetemplate
 
 		$options = '';
 		if ($readonly = $cell['readonly'] && $readonlys[$name] !== false || 	// allow to overwrite readonly settings of a cell
-			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'] ||
+			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'] && (!is_string($name) || $readonlys[$name] !== false) ||
 			!empty($name) && is_string($name) && ($p = strrpos($name,'[')) !== false && ($parent=substr($name,0,$p)) && $readonlys[$parent])	// allow also set parent readonly (instead each child)
 		{
 			$options .= ' readonly="readonly"';
