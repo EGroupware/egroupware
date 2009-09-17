@@ -452,6 +452,8 @@ class addressbook_vcal extends addressbook_bo
 			'UID'				=> array('uid'),
 		);
 
+		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($_vcard)."\n",3,$this->logfile);
+
 		//Horde::logMessage("vCalAddressbook vcardtoegw:\n$_vcard", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
@@ -539,6 +541,7 @@ class addressbook_vcal extends addressbook_bo
 								case 'CAR':
 								case 'PREF':
 								case 'X-CUSTOMLABEL-CAR':
+								case 'X-CUSTOMLABEL-IPHONE':
 									if ($vcardRow['name'] == 'TEL')
 									{
 										$vcardRow['tparams'][$type] = '';
@@ -580,6 +583,12 @@ class addressbook_vcal extends addressbook_bo
 						if ($rowName == 'TEL')
 						{
 							$rowName = 'TEL;CAR';
+						}
+						break;
+					case 'X-CUSTOMLABEL-IPHONE':
+						if ($rowName == 'TEL')
+						{
+							$rowName = 'TEL;CELL;HOME';
 						}
 						break;
 					default:
