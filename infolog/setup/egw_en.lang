@@ -40,6 +40,7 @@ add timesheet entry	infolog	en	Add timesheet entry
 add:	infolog	en	Add:
 all	infolog	en	All
 all links and attachments	infolog	en	all links and attachments
+all projects	infolog	en	All projects
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-type)
 alternatives	infolog	en	Alternatives
 apply the changes	infolog	en	Apply the changes
@@ -214,6 +215,7 @@ no details	infolog	en	no details
 no entries found, try again ...	infolog	en	no entries found, try again ...
 no filter	infolog	en	no Filter
 no links or attachments	infolog	en	no links or attachments
+no project	infolog	en	No project
 nonactive	infolog	en	nonactive
 none	infolog	en	None
 normal	infolog	en	normal

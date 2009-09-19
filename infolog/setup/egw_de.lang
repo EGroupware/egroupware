@@ -40,6 +40,7 @@ add timesheet entry	infolog	de	Stundenzettel Eintrag hinzfügen
 add:	infolog	de	Hinzufügen:
 all	infolog	de	alle
 all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
+all projects	infolog	de	Alle Projekte
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, zB. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
 alternatives	infolog	de	Alternativen
 apply the changes	infolog	de	Übernimmt die Änderungen
@@ -214,6 +215,7 @@ no details	infolog	de	Keine Details
 no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
 no filter	infolog	de	kein Filter
 no links or attachments	infolog	de	keine Verknüpfungen oder Anhänge
+no project	infolog	de	Kein Projekt
 nonactive	infolog	de	Nicht aktiv
 none	infolog	de	keine
 normal	infolog	de	normal

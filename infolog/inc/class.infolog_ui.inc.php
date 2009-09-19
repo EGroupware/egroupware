@@ -297,6 +297,22 @@ class infolog_ui
 		{
 			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
 		}
+		if ($query['col_filter']['pm_id'])
+		//search for projects (project manager filter)
+		if ((string)$query['col_filter']['pm_id'] != '')
+		{
+			$query['col_filter']['info_id'] = $this->bo->get_pm_infolog_links($query['col_filter']['pm_id']);
+			if (!$query['col_filter']['info_id']) $query['col_filter']['info_id'][] = 0;
+			$project = $query['col_filter']['pm_id'];
+			unset($query['col_filter']['pm_id']);
+		}
+		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] == '0')
+		{
+			$no_projects = true;  //to select later the infologs without any projects
+			$project = $query['col_filter']['pm_id'];
+			unset($query['col_filter']['info_id']);
+		}
+		unset($query['col_filter']['pm_id']);
 		// check if we have a custom, type-specific template
 		unset($query['template']);
 		unset($query['custom_fields']);
@@ -368,8 +384,17 @@ class infolog_ui
 					unset($info['info_des']);
 				}
 			}
-			$rows[] = $info;
+			if (!$no_projects)           //searchfilter for projects
+			{
+				$rows[] = $info;
+			}
+			else
+			{
+				if (!$info['pm_id']) $rows[] = $info;  //ony if we have no projects linked
+			}
 		}
+		if ($no_projects) $query['total'] = count($rows);
+		unset($no_projects);
 		unset($links);
 
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
@@ -422,7 +447,7 @@ class infolog_ui
 		}
 		// disable filemanager icon, if user has no access to it
 		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
-
+		$query['col_filter']['pm_id'] = $project;  //add project back to the colfilter
 		return $query['total'];
 	}
 
@@ -643,9 +668,11 @@ class infolog_ui
 				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
 				'em; overflow: auto; }}</style>';
 		}
-		return $this->tmpl->exec('infolog.infolog_ui.index',$values,array(
-			'info_type'     => $this->bo->enums['type'],
-		),$readonlys,$persist,$return_html ? -1 : 0);
+		$sel_options = array(
+		'info_type'     => $this->bo->enums['type'],
+		'pm_id'      => array(lang('No project')),
+		);
+		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
 	}
 
 	/**
