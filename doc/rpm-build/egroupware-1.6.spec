@@ -102,7 +102,7 @@ Source5: %{?source5}
 Source6: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{php}-posix %{extra_requires} %{cron} %{packagename}-egw-pear = %{egwversion}.%{packaging}
+Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{php}-posix %{extra_requires} %{cron} %{packagename}-egw-pear >= %{egwversion}.%{packaging}
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
 Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{infolog} %{packagename}-%{importexport} %{packagename}-%{manual} %{packagename}-%{news_admin} %{packagename}-%{notifications} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
 Obsoletes: %{packagename}-%{icalsrv}
@@ -133,7 +133,7 @@ Further contributed applications are avalible in single packages.
 %package core
 Summary: The eGroupware contrib package
 Group: Web/Database
-Provides: egw-core
+Provides: egw-core egw-%{etemplate}
 Conflicts: %{packagename}
 %description core
 This package provides the eGroupware core applications.
@@ -149,7 +149,7 @@ Summary: The eGroupware %{addressbook} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 Provides: egw-%{addressbook}
 %description %{addressbook}
 Contact manager with Vcard support.
@@ -162,7 +162,7 @@ Version: %{egwversion}.%{packaging}
 Summary: The eGroupware %{bookmarks} application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{bookmarks}
 Manage your bookmarks with eGroupware. Has Netscape plugin.
 
@@ -172,7 +172,7 @@ Summary: The eGroupware %{calendar} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{calendar}
 Powerful calendar with meeting request system, Alarms, ICal and E-Mail support,
 and ACL security.
@@ -183,7 +183,7 @@ Summary: The eGroupware %{developer_tools} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{developer_tools}
 The TranslationTools allow to create and extend translations-files for eGroupware.
 They can search the sources for new / added phrases and show you the ones missing in your language.
@@ -195,7 +195,7 @@ Group: Web/Database
 Requires: %{php}-pear
 #Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description egw-pear
 egw-pear contains modified pear classes necessary for eGroupware
 
@@ -205,7 +205,7 @@ Summary: The eGroupware %{emailadmin} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, %{packagename}-egw-pear = %{egwversion}.%{packaging}, php-openssl
+Requires: egw-core >= %{egwversion}.%{packaging}, %{packagename}-egw-pear >= %{egwversion}.%{packaging}, php-openssl
 %description %{emailadmin}
 EmailAdmin allow to maintain User email accounts
 
@@ -215,7 +215,7 @@ Summary: The eGroupware Webmail application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, %{packagename}-%{emailadmin} = %{egwversion}.%{packaging}, %{packagename}-egw-pear = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}, %{packagename}-%{emailadmin} >= %{egwversion}.%{packaging}, %{packagename}-egw-pear >= %{egwversion}.%{packaging}
 %description %{felamimail}
 The Email application for eGroupware.
 
@@ -225,7 +225,7 @@ Summary: The eGroupware %{filemanager} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, egw-pear = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}, egw-pear >= %{egwversion}.%{packaging}
 %description %{filemanager}
 This is the %{filemanager} app for eGroupware.
 
@@ -235,7 +235,7 @@ Summary: The eGroupware %{gallery} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, egw-pear = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}, egw-pear >= %{egwversion}.%{packaging}
 %description %{gallery}
 An embedded Gallery2 for eGroupware.
 
@@ -244,7 +244,7 @@ Version: %{egwversion}.%{packaging}
 Summary: The eGroupware %{icalsrv} application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{icalsrv}
 This is the old %{icalsrv} app for eGroupware.
 It is NOT necessary for GroupDAV, CalDAV or CardDAV,
@@ -256,7 +256,7 @@ Summary: The eGroupware %{infolog} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, egw-%{etemplate} = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{infolog}
 This is the %{infolog} app for eGroupware (Notes, ToDo, Phonelogs, CRM).
 
@@ -266,7 +266,7 @@ Summary: The eGroupware %{importexport} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, egw-%{etemplate} = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{importexport}
 This is the %{importexport} app for eGroupware. It includes a comandline client.
 
@@ -275,7 +275,7 @@ This is the %{importexport} app for eGroupware. It includes a comandline client.
 #Summary: The eGroupware %{jinn} application
 #Group: Web/Database
 #AutoReqProv: no
-#Requires: egw-core = %{egwversion}.%{packaging}
+#Requires: egw-core >= %{egwversion}.%{packaging}
 #%description %{jinn}
 #The %{jinn} app is a multi-site, multi-database, multi-user/-group, database driven Content Management System written in and for the eGroupware Framework.
 
@@ -285,7 +285,7 @@ Summary: The eGroupware %{manual} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{manual}
 This is the %{manual} app for eGroupware: online help system.
 
@@ -295,7 +295,7 @@ Summary: The eGroupware %{mydms} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, egw-pear = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}, egw-pear >= %{egwversion}.%{packaging}
 %description %{mydms}
 This is a %{mydms} port to eGroupware.
 
@@ -305,7 +305,7 @@ Summary: The eGroupware %{news_admin} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{news_admin}
 This is the %{news_admin} app for eGroupware.
 
@@ -315,7 +315,7 @@ Summary: The eGroupware %{notifications} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{notifications}
 This is the %{notifications} app for eGroupware.
 
@@ -325,7 +325,7 @@ Summary: The eGroupware %{phpbrain} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, %{packagename}-%{addressbook} = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}, %{packagename}-%{addressbook} >= %{egwversion}.%{packaging}
 %description %{phpbrain}
 This is the %{phpbrain} app for eGroupware.
 
@@ -335,7 +335,7 @@ Summary: The eGroupware %{phpsysinfo} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{phpsysinfo}
 This is the %{phpsysinfo} app for eGroupware.
 
@@ -344,7 +344,7 @@ Version: %{egwversion}.%{packaging}
 Summary: The eGroupware %{polls} application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{polls}
 This is the %{polls} app for eGroupware.
 
@@ -354,7 +354,7 @@ Summary: The eGroupware %{projectmanager} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging},
+Requires: egw-core >= %{egwversion}.%{packaging},
 %description %{projectmanager}
 The %{projectmanager} is eGroupware's new project management application.
 It's fully integrated into eGroupware and use the data of InfoLog and Calendar.
@@ -366,7 +366,7 @@ Summary: The eGroupware %{registration} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{registration}
 This is the %{registration} app for eGroupware.
 
@@ -376,7 +376,7 @@ Summary: The eGroupware %{resources} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{resources}
 %{resources} is a resource booking sysmtem for eGroupware.
 Which integrates into the calendar.
@@ -387,7 +387,7 @@ Summary: The eGroupware %{sambaadmin} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{sambaadmin}
 Manage LDAP based sambaacounts and workstations.
 
@@ -397,7 +397,7 @@ Summary: The eGroupware Sitemanager CMS application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{sitemgr}
 This is the Sitemanager CMS app for eGroupware.
 
@@ -407,7 +407,7 @@ Summary: The eGroupware %{syncml} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}, php >= 5.0.0
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{syncml}
 This is the %{syncml} app for eGroupware.
 
@@ -417,7 +417,7 @@ Summary: The eGroupware timesheet application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{timesheet}
 Simple timesheet application, which allow to record and report
 the times and other expenses. It can be uses as well standalone
@@ -428,7 +428,7 @@ Version: %{egwversion}.%{packaging}
 Summary: The eGroupware trouble ticket system application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging}
+Requires: egw-core >= %{egwversion}.%{packaging}
 %description %{tracker}
 This is the trouble ticket system app for eGroupware.
 
@@ -438,7 +438,7 @@ Summary: The eGroupware %{wiki} application
 Group: Web/Database
 Conflicts: %{packagename}
 AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging},
+Requires: egw-core >= %{egwversion}.%{packaging},
 %description %{wiki}
 This is the %{wiki} app for eGroupware.
 
@@ -447,7 +447,7 @@ This is the %{wiki} app for eGroupware.
 #Summary: The eGroupware %{workflow} application
 #Group: Web/Database
 #AutoReqProv: no
-#Requires: egw-core = %{egwversion}.%{packaging},
+#Requires: egw-core >= %{egwversion}.%{packaging},
 #%description %{workflow}
 #This is the %{workflow} app for eGroupware.
 
