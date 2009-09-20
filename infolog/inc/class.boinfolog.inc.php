@@ -139,13 +139,17 @@ class boinfolog extends infolog_bo
 	 */
 	function delete($data)
 	{
-		if (is_array($info_id))
+		if (is_array($data))
 		{
-			$delete_children = $info_id['delete_children'];
-			$new_parent = $info_id['new_parent'];
-			$info_id = (int)(isset($info_id[0]) ? $info_id[0] : (isset($info_id['info_id']) ? $info_id['info_id'] : $info_id['info_id']));
+			$delete_children = $data['delete_children'];
+			$new_parent = $data['new_parent'];
+			$info_id = (int)(isset($data[0]) ? $data[0] : $data['info_id']);
+			$status = parent::delete($info_id,$delete_children,$new_parent);
 		}
-		$status = parent::delete($info_id,$delete_children,$new_parent);
+		else
+		{
+			$status = parent::delete($data);
+		}
 
 		if ($status === false)
 		{
