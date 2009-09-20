@@ -109,7 +109,7 @@ class resources_hooks
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
 			'add_popup'  => '800x600',
-			'find_extra' => array('name_preg' => '/^(?!.picture.jpg)$/'),	// remove pictures from regular attachment list
+			'find_extra' => array('name_preg' => '/^(?(?=^.picture.jpg$)|.+)$/'),	// remove pictures from regular attachment list
 		);
 	}
 
