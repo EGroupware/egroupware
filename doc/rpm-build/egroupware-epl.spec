@@ -59,7 +59,8 @@ Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-gallery-%{version}.tar.bz2
 Source4: %{name}-phpfreechat-%{version}.tar.bz2
-Source5: %{name}-rpmlintrc
+Source5: phpfreechat_data_public.tar.gz
+Source6: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 #Patch1: xxxxx.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
@@ -488,6 +489,7 @@ This is the wiki app for EGroupware.
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
+%setup5 -T -D -a 5 -n %{egwdirname}
 %patch0 -p 0
 #%patch1 -p 0
 
