@@ -328,10 +328,10 @@ class Horde_SyncML_Sync {
 				$merge = false;
 				if ($guid)
 				{
-					Horde::logMessage('SyncML: locuri'. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					Horde::logMessage('SyncML: locuri '. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 					if (($sync_conflicts > CONFLICT_RESOLVED_WITH_DUPLICATE) || in_array($guid, $changes))
 					{
-						Horde::logMessage('SyncML: CONFLICT for locuri'. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_WARNING);
+						Horde::logMessage('SyncML: CONFLICT for locuri '. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_WARNING);
 						switch ($sync_conflicts)
 						{
 							case CONFLICT_CLIENT_WINNING:
