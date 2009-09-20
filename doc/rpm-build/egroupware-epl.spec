@@ -98,7 +98,6 @@ Requires: %{name}-syncml          >= %{version}
 Requires: %{name}-timesheet       >= %{version}
 Requires: %{name}-tracker         >= %{version}
 Requires: %{name}-wiki            >= %{version}
-Provides: %{egw_packagename}
 Obsoletes: %{egw_packagename}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-egw-pear
@@ -161,7 +160,6 @@ Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{ext
 Provides: egw-core %{version}
 Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
-Provides: %{packagename} %{version}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-addressbook
 %description core
