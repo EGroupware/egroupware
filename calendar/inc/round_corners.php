@@ -27,7 +27,7 @@ imagecolortransparent($image, $white);
 foreach(array('color','bgcolor') as $name)
 {
 	preg_match('/^#?([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$/',$$name,$rgb) or
-		die("Wrong value '".$$name."' for $name, should be something like #80FFFF' !!!");
+		die("Wrong value '".htmlspecialchars($$name)."' for $name, should be something like #80FFFF' !!!");
 
 	$$name = imagecolorallocate($image,hexdec($rgb[1]),hexdec($rgb[2]),hexdec($rgb[3]));
 }

@@ -21,7 +21,7 @@ foreach(array('width'=>1,'height'=>1,'color1'=>'000080','color2'=>'ffffff') as $
 foreach(array('color1','color2') as $name)
 {
 	preg_match('/^#?([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$/',$$name,$rgb) or
-		die("Wrong value '".$$name."' for $name, should be something like #80FFFF' !!!");
+		die("Wrong value '".htmlspecialchars($$name)."' for $name, should be something like #80FFFF' !!!");
 
 	$$name = array('r'=>hexdec($rgb[1]),'g'=>hexdec($rgb[2]),'b'=>hexdec($rgb[3]));
 }
