@@ -145,8 +145,8 @@
 				$control_array = Array(
 					'up',
 					'down',
-					/*'question',
 					'close',
+					/*'question',
 					'edit'*/
 				);
 				@reset($control_array);

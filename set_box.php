@@ -92,9 +92,12 @@
 			}
 			move_boxes($curr_position,$new_order,$offset,$max_count,0);
 			break;
+		case 'close':
+			$GLOBALS['egw']->preferences->add($GLOBALS['egw']->applications->id2name($_GET['app']), 'homepage_display', 0);
+			$GLOBALS['egw']->preferences->save_repository();
+			break;
 		case 'edit':
 		case 'question':
-		case 'close':
 		default:
 	}
 
