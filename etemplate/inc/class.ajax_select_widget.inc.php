@@ -250,7 +250,19 @@ class ajax_select_widget
 			}
 			return $return;
 		} else {
-			$value = $value_in['value'];
+			if (stripos($extension_data['options']['id_field'], ";")) {
+				$expected_fields = array_flip(explode(";", $extension_data['options']['id_field']));
+				$fields_n_values = explode(";", $value_in['value']);
+				foreach ($fields_n_values as $field_n_value) {
+					list($myfield, $myvalue) = explode(":", $field_n_value);
+					if (array_key_exists($myfield, $expected_fields)) {
+						$value_in[$myfield] = $myvalue;
+					}
+				}
+				$value = $value_in;
+			} else {
+				$value = $value_in['value'];
+			}
 			return true;
 		}
 	}
@@ -303,19 +315,38 @@ class ajax_select_widget
 				if(!is_array($row)) {
 					continue;
 				}
-				if($query['id_field'] && $query['get_title']) {
-					if($row[$query['id_field']]) {
-						$row['title'] = ExecMethod($query['get_title'], $row[$query['id_field']]);
+				
+				//check for multiple id's
+				//this if control statement is to determine if there are multiple ids in the ID FIELD of the Ajax Widget
+				if(stristr($query['id_field'], ';') !=  FALSE) {
+					$id_field_keys = explode(';', $query['id_field']);
+					if($query['get_title']) {
+						//the title will always be created using the first ID FIELD
+						if($row[$id_field_keys[0]]) {
+							$row['title'] = ExecMethod($query['get_title'], $row[$id_field_keys[0]]);
+						}
 					}
+					foreach($id_field_keys as $value) {
+						$id_field_keys_values[] = $value.':'.$row[$value];
+					}		
+					$row['id_field'] = implode(';',$id_field_keys_values); 
+					unset($id_field_keys_values);
+				} else{				
+					if($query['id_field'] && $query['get_title']) {
+                                        	if($row[$query['id_field']]) {
+                                                	$row['title'] = ExecMethod($query['get_title'], $row[$query['id_field']]);
+                                        	}
+					}
+					// If we use htmlspecialchars, it causes issues with mixed quotes.  addslashes() seems to handle it.
+					$row['id_field'] = $row[$query['id_field']];
 				}
+				$row['id_field'] = addslashes($row['id_field']);
 
 				$data = ($query['nextmatch_template']) ? array(1=>$row) : $row;
 				$widget =& CreateObject('etemplate.etemplate', $query['template']);
 				$html = addslashes(str_replace("\n", '', $widget->show($data, '', $readonlys)));
-
-				// If we use htmlspecialchars, it causes issues with mixed quotes.  addslashes() seems to handle it.
-				$row['id_field'] = addslashes($row[$query['id_field']]);
 				$row['title'] = addslashes($row['title']);
+				
 				$response->addScript("add_ajax_result('$result_id', '${row['id_field']}', '" . $row['title'] . "', '$html');");
 				$count++;
 				if($count > $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) {
