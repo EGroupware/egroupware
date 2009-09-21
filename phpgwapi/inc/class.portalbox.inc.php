@@ -123,6 +123,10 @@
 		{
 			if($control != '' && $control_param != '')
 			{
+				if($control == 'close' && $GLOBALS['egw']->preferences->forced[$GLOBALS['egw']->applications->id2name($control_param['app'])]['homepage_display']) {
+					// User is forced to have this box on their home page, hide the close button
+					return;
+				}
 				$this->setvar($control,$GLOBALS['phpgw']->link($control_param['url'],'app='.$control_param['app'].'&control='.$control));
 			}
 		}
