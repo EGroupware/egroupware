@@ -1,73 +1,72 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare                                                               *
-  * http://www.egroupware.org                                                *
-  * Written by Mark Peters <skeeter@phpgroupware.org>                        *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-	/* $Id$ */
+/**
+ * Calendar - Accepting holiday files on egroupware.org
+ *
+ * @link http://www.egroupware.org
+ * @author Mark Peters <skeeter@phpgroupware.org>
+ * @package calendar
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-	$send_back_to = str_replace('submit','admin',$_SERVER['HTTP_REFERER']);
-	if(!$_POST['locale'])
+die('This file is only used on http://www.egroupware.org/ and therefore disabled on local installations!');
+
+if(empty($_POST['locale']) || !preg_match('/^[A-Z]{2}$/',$_POST['locale']))
+{
+	die('Missing or wrong value for required _POST[local]!');
+}
+$send_back_to = str_replace('submit','admin',$_SERVER['HTTP_REFERER']);
+
+function _holiday_cmp($a,$b)
+{
+	if (($year_diff = ($a['occurence'] <= 0 ? 0 : $a['occurence']) - ($b['occurence'] <= 0 ? 0 : $b['occurence'])))
 	{
-		Header('Location: '.$send_back_to);
+		return $year_diff;
 	}
+	return $a['month'] - $b['month'] ? $a['month'] - $b['month'] : $a['day'] - $b['day'];
+}
 
-	function _holiday_cmp($a,$b)
+$send_back_to = str_replace('&locale='.$_POST['locale'],'',$send_back_to);
+$file = './holidays.'.$_POST['locale'].'.csv';
+if(!file_exists($file) || filesize($file) < 300)	// treat very small files as not existent
+{
+	if (count($_POST['name']))
 	{
-		if (($year_diff = ($a['occurence'] <= 0 ? 0 : $a['occurence']) - ($b['occurence'] <= 0 ? 0 : $b['occurence'])))
+		$fp = fopen($file,'w');
+		if ($_POST['charset']) fwrite($fp,"charset\t".$_POST['charset']."\n");
+
+		$holidays = array();
+		foreach($_POST['name'] as $i => $name)
 		{
-			return $year_diff;
+			$holidays[] = array(
+				'locale' => $_POST['locale'],
+				'name'   => str_replace('\\','',$name),
+				'day'    => $_POST['day'][$i],
+				'month'  => $_POST['month'][$i],
+				'occurence' => $_POST['occurence'][$i],
+				'dow'    => $_POST['dow'][$i],
+				'observance_rule' => $_POST['observance'][$i],
+			);
 		}
-		return $a['month'] - $b['month'] ? $a['month'] - $b['month'] : $a['day'] - $b['day'];
-	}
+		// sort holidays by year / occurence:
+		usort($holidays,'_holiday_cmp');
 
-	$send_back_to = str_replace('&locale='.$_POST['locale'],'',$send_back_to);
-	$file = './holidays.'.$_POST['locale'].'.csv';
-	if(!file_exists($file) || filesize($file) < 300)	// treat very small files as not existent
-	{
-		if (count($_POST['name']))
+		$last_year = -1;
+		foreach($holidays as $holiday)
 		{
-			$fp = fopen($file,'w');
-			if ($_POST['charset']) fwrite($fp,"charset\t".$_POST['charset']."\n");
-
-			$holidays = array();
-			foreach($_POST['name'] as $i => $name)
+			$year = $holiday['occurence'] <= 0 ? 0 : $holiday['occurence'];
+			if ($year != $last_year)
 			{
-				$holidays[] = array(
-					'locale' => $_POST['locale'],
-					'name'   => str_replace('\\','',$name),
-					'day'    => $_POST['day'][$i],
-					'month'  => $_POST['month'][$i],
-					'occurence' => $_POST['occurence'][$i],
-					'dow'    => $_POST['dow'][$i],
-					'observance_rule' => $_POST['observance'][$i],
-				);
+				fwrite($fp,"\n".($year ? $year : 'regular (year=0)').":\n");
+				$last_year = $year;
 			}
-			// sort holidays by year / occurence:
-			usort($holidays,'_holiday_cmp');
-			
-			$last_year = -1;
-			foreach($holidays as $holiday)
-			{
-				$year = $holiday['occurence'] <= 0 ? 0 : $holiday['occurence'];
-				if ($year != $last_year)
-				{
-					fwrite($fp,"\n".($year ? $year : 'regular (year=0)').":\n");
-					$last_year = $year;
-				}
-				fwrite($fp,"$holiday[locale]\t$holiday[name]\t$holiday[day]\t$holiday[month]\t$holiday[occurence]\t$holiday[dow]\t$holiday[observance_rule]\n");
-			}
-			fclose($fp);
+			fwrite($fp,"$holiday[locale]\t$holiday[name]\t$holiday[day]\t$holiday[month]\t$holiday[occurence]\t$holiday[dow]\t$holiday[observance_rule]\n");
 		}
-		Header('Location: '.$send_back_to);
+		fclose($fp);
 	}
-	else
-	{
+	Header('Location: '.$send_back_to);
+	exit;
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -84,6 +83,3 @@
 	<p>To get back to your own eGroupWare-install <a href="<?php echo $send_back_to; ?>">click here</a>.</p>
 </body>
 </html>
-<?php
-	}
-?>
