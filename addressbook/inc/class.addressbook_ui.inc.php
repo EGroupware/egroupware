@@ -986,7 +986,7 @@ class addressbook_ui extends addressbook_bo
 		$order = $query['order'];
 
 		$readonlys = array();
-		$photos = $homeaddress = $roles = false;
+		$photos = $homeaddress = $roles = $notes = false;
 		foreach($rows as $n => $val)
 		{
 			$row =& $rows[$n];
@@ -1040,6 +1040,7 @@ class addressbook_ui extends addressbook_bo
 
 				if ($row['photo']) $photos = true;
 				if ($row['role']) $roles = true;
+				if ($row['note']) $notes = true;
 				if (isset($customfields[$row['id']]))
 				{
 					foreach($this->customfields as $name => $data)
@@ -1083,6 +1084,8 @@ class addressbook_ui extends addressbook_bo
 			if (!$homeaddress) $rows['no_home'] = true;
 			// disable roles column
 			if (!$roles) $rows['no_role'] = true;
+			// disable note column
+			if (!$notes) $rows['no_note'] = true;
 		}
 		// disable customfields column, if we have no customefield(s)
 		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
