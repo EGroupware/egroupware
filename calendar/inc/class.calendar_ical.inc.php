@@ -782,369 +782,317 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $cal_id=-1 must be -1 for new entries!
 	 * @param string $etag=null if an etag is given, it has to match the current etag or the import will fail
 	 * @param boolean $merge=false	merge data with existing entry
-	 * @param int $recur_date=0 if set, import the recurrance at this timestamp,
+	 * @param int $recur_date=0 if set, import the recurrence at this timestamp,
 	 *                          default 0 => import whole series (or events, if not recurring)
 	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
 	{
-		$Ok = false;	// returning false, if file contains no components
 		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($_vcalData)."\n",3,$this->logfile);
 
-		$vcal = new Horde_iCalendar;
-		if (!$vcal->parsevCalendar($_vcalData))
+		if(!$events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date))
 		{
-			return $Ok;
+			return false;
 		}
-
-		$version = $vcal->getAttribute('VERSION');
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		foreach ($vcal->getComponents() as $component)
+		foreach ($events as $event)
 		{
-			if (is_a($component, 'Horde_iCalendar_vevent'))
+			$updated_id = false;
+			$event_info = $this->get_event_info($event);
+
+			// common adjustments for new events
+			if(!isset($event['id']))
 			{
-				$event = $this->vevent2egw($component, $version, $this->supportedFields);
-
-				if ($cal_id > 0) {
-					$event['id'] = $cal_id;
-				}
-
-				if ($this->productManufacturer == '' && $this->productName == ''
-					&& !empty($event['recur_enddate']))
+				// set non blocking all day depending on the user setting
+				if($this->isWholeDay($event) && $this->nonBlockingAllday)
 				{
-					// syncevolution needs an adjusted recur_enddate
-					$event['recur_enddate'] = (int)$event['recur_enddate'] + 86400;
+					$event['non_blocking'] = 1;
 				}
 
- 				if ($cal_id < 0 && (!isset($this->supportedFields['participants']) ||
- 					!isset($event['participants'][$GLOBALS['egw_info']['user']['account_id']])))
+				// check if an owner is set and the current user has add rights
+				// for that owners calendar; if not set the current user
+				if(!isset($event['owner'])
+					|| !$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
+				{
+					$event['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+				}
+				
+				// add ourself to new events as participant
+				if(!isset($this->supportedFields['participants'])
+					||!isset($event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
  				{
- 					// add ourself to new events as participant
 					$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'A';
  				}
+			}
 
- 				if ($event['recur_type'] != MCAL_RECUR_NONE)
- 				{
- 					// No RECURRENCE-ID for series events
- 					$event['reference'] = $event['recurrence'] = 0;
- 				}
-
-				if (!$recur_date && $cal_id > 0 && ($egw_event = $this->read($cal_id)))
+			// common adjustments for existing events
+			if (isset($event['id']) && is_array($event_info['stored_event']))
+			{
+				if ($merge)
 				{
 					// overwrite with server data for merge
-					if ($merge)
+					foreach ($event_info['stored_event'] as $key => $value)
 					{
-						if ($egw_event['recur_type'] != MCAL_RECUR_NONE && $recur_date)
+						switch ($key)
 						{
-							// update only the stati of the exception
-							if ($this->check_perms(EGW_ACL_EDIT, $cal_id))
-							{
-								$this->update_status($event, $egw_event, $recur_date);
-							}
-							$Ok = $cal_id . ':' . $recur_date;
-							continue; // nothing more to do
-						}
-						foreach ($egw_event as $key => $value)
-						{
-							switch ($key)
-							{
-								case 'participants_types':
-									continue;
+							case 'participants_types':
+								continue;
 
 								case 'participants':
-									foreach ($egw_event['participants'] as $uid => $status)
+								foreach ($event_info['stored_event']['participants'] as $uid => $status)
+								{
+									// Is a participant and no longer present in the event?
+									if (!isset($event['participants'][$uid]))
 									{
-										// Is a participant and no longer present in the event?
-										if (!isset($event['participants'][$uid]))
-										{
-											// Add it back in
-											$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
-										}
+										// Add it back in
+										$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
 									}
-									break;
+								}
+								break;
 
 								default:
-									if (!empty($value))
-									{
-										$event[$key] = $value;
-									}
-							}
+								if (!empty($value))
+								{
+									$event[$key] = $value;
+								}
 						}
-					}
-					else // not merge
-					{
-						if (!isset($this->supportedFields['participants']) || !count($event['participants']))
-						{
-							// If this is an updated meeting, and the client doesn't support
-							// participants OR the event no longer contains participants, add them back
-							$event['participants'] = $egw_event['participants'];
-							$event['participant_types'] = $egw_event['participant_types'];
-						}
-
-						foreach ($egw_event['participants'] as $uid => $status)
-						{
-							// Is it a resource and no longer present in the event?
-							if ( $uid[0] == 'r' && !isset($event['participants'][$uid]) )
-							{
-								// Add it back in
-								$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
-							}
-						}
-						// avoid that iCal changes the organizer, which is not allowed
-						$event['owner'] = $egw_event['owner'];
 					}
 				}
 				else
 				{
-					// new event
-					$cal_id = -1;
-					$recur_date = $event['recurrence'];
-				}
-
-				if (empty($event['uid']) && $cal_id > 0 &&
-					($egw_event = $this->read($cal_id)))
-				{
-					$event['uid'] = $egw_event['uid'];
-				}
-
-				if ($event['recur_type'] == MCAL_RECUR_NONE
-						&& !empty($event['uid']) && $recur_date)
-				{
-					// We handle a recurrence exception
-					$recur_exceptions = $this->so->get_related($event['uid']);
-					$recur_id = array_search($recur_date, $recur_exceptions);
-					if ($recur_id === false || !($egw_event = $this->read($recur_id)))
+			 		// no merge
+					if (!isset($this->supportedFields['participants']) || !count($event['participants']))
 					{
-						// We found no real exception, let't try "status only"
-						if (($egw_event = $this->read($event['uid']))
-							&& $egw_event['recur_type'] != MCAL_RECUR_NONE)
+						// If this is an updated meeting, and the client doesn't support
+						// participants OR the event no longer contains participants, add them back
+						$event['participants'] = $event_info['stored_event']['participants'];
+						$event['participant_types'] = $event_info['stored_event']['participant_types'];
+					}
+
+					foreach ($event_info['stored_event']['participants'] as $uid => $status)
+					{
+						// Is it a resource and no longer present in the event?
+						if ( $uid[0] == 'r' && !isset($event['participants'][$uid]) )
 						{
-							// Same start and duration is obligatory for status only
-							$old_duration = $egw_event['end'] - $egw_event['start'];
-							$new_duration = $event['end'] - $event['start'];
-							$unchanged = ($event['start'] == $recur_date && $old_duration == $new_duration);
-							foreach (array('uid','owner','title','description',
-								'location','priority','public','special','non_blocking') as $key)
+							// Add it back in
+							$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
+						}
+					}
+					// avoid that iCal changes the organizer, which is not allowed
+					$event['owner'] = $event_info['stored_event']['owner'];
+				}
+			}
+
+			// save event depending on the given event type
+			switch($event_info['type'])
+			{
+				case 'SINGLE':
+					Horde::logMessage('importVCAL event SINGLE',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					
+					// update the event
+					if($event_info['acl_edit'])
+					{
+						$event_to_store = $event; // prevent $event from being changed by the update method
+						$updated_id = $this->update($event_to_store, true);
+						unset($event_to_store);
+					}
+					break;
+						
+				case 'SERIES-MASTER':
+					Horde::logMessage('importVCAL event SERIES-MASTER',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					
+					// remove all known "status only" exceptions and update the event
+					if($event_info['acl_edit'])
+					{
+						$days = $this->so->get_recurrence_exceptions($event);
+						if(is_array($days))
+						{
+							$recur_exceptions = array();
+							foreach($event['recur_exception'] as $recur_exception)
 							{
-								//Horde::logMessage('importVCAL test ' .$key . ': '. $egw_event[$key] . ' == ' .$event[$key],
-								//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-								if (!$unchanged && !empty($event[$key]) //|| !empty($egw_event[$key]))
-									&& $egw_event[$key] != $event[$key])
+								if(!in_array($recur_exception, $days))
 								{
-									$unchanged = false;
-									break;
+									$recur_exceptions[] = $recur_exception;
 								}
 							}
-							if ($unchanged)
-							{
-								Horde::logMessage('importVCAL event unchanged',
-									__FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-								$recur_exceptions = array();
-								foreach ($egw_event['recur_exception'] as $recur_exception)
-								{
-									//Horde::logMessage('importVCAL exception ' .$recur_exception,
-									//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-									if ($recur_exception != $recur_date)
-									{
-										$recur_exceptions[] = $recur_exception;
-									}
-								}
-								$egw_event['recur_exception'] = $recur_exceptions;
-								//Horde::logMessage("importVCAL exceptions\n" . print_r($recur_exceptions, true),
-								//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-								$this->update($egw_event, true);
-
-								// update the stati from the exception
-								if ($this->check_perms(EGW_ACL_EDIT, $egw_event['id']))
-								{
-									$this->update_status($event, $egw_event, $recur_date);
-								}
-								elseif (isset($event['participants'][$this->user]) || isset($egw_event['participants'][$this->user]))
-								{
-									// check if current user is an attendee and tried to change his status
-									$this->set_status($egw_event, $this->user,
-										($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recur_date, true);
-								}
-								$Ok = $egw_event['id'] . ':' . $recur_date;
-								continue; // nothing more to do
-							}
-							else
-							{
-								// We need to create an new exception
-								$egw_event['recur_exception'] = array_unique(array_merge($egw_event['recur_exception'], array($recur_date)));
-								$this->update($egw_event, true);
-								$event['reference'] = $egw_event['id'];
-								$event['category'] = $egw_event['category'];
-								unset($event['id']);
-								$cal_id = -1;
-							}
+							$event['recur_exception'] = $recur_exceptions;
+						}
+						
+						$event_to_store = $event; // prevent $event from being changed by the update method
+						$updated_id = $this->update($event_to_store, true);
+						unset($event_to_store);
+					}
+					break;
+						
+				case 'SERIES-EXCEPTION':
+					Horde::logMessage('importVCAL event SERIES-EXCEPTION',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+						
+					// update event
+					if($event_info['acl_edit'])
+					{
+						if(isset($event_info['stored_event']['id']))
+						{
+							// We update an existing exception
+							$event['id'] = $event_info['stored_event']['id'];
+							$event['category'] = $event_info['stored_event']['category'];
 						}
 						else
 						{
-							// The series event was not found
-							$cal_id = -1;
+							// We create a new exception
+							unset($event['id']);
+							$event_info['master_event']['recur_exception'] = array_unique(array_merge($event_info['master_event']['recur_exception'], array($event['recurrence'])));
+							$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
+							$this->update($event_to_store, true);
+							unset($event_to_store);
+							$event['reference'] = $event_info['master_event']['id'];
+							$event['category'] = $event_info['master_event']['category'];
 						}
+						
+						$event_to_store = $event; // prevent $event from being changed by update method
+						$updated_id = $this->update($event_to_store, true);
+						unset($event_to_store);
 					}
-					else
+					break;
+			
+				case 'SERIES-EXCEPTION-STATUS':
+					Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+			
+					if($event_info['acl_edit'])
 					{
-						// We update an existing exception
-						$cal_id = $egw_event['id'];
-						$event['id'] = $egw_event['id'];
-						$event['category'] = $egw_event['category'];
-					}
-				}
-				else
-				{
-					// We handle a single event or the series master
-					$days = $this->so->get_recurrence_exceptions($event);
-					if (is_array($days))
-					{
-						Horde::logMessage("importVCAL event\n" . print_r($event, true),
-							__FILE__, __LINE__, PEAR_LOG_DEBUG);
-						Horde::logMessage("importVCAL days\n" . print_r($days, true),
-							__FILE__, __LINE__, PEAR_LOG_DEBUG);
-						// remove all known "stati only" exceptions
+						// truncate the status only exception from the series master
 						$recur_exceptions = array();
-						foreach ($event['recur_exception'] as $recur_exception)
+						foreach ($event_info['master_event']['recur_exception'] as $recur_exception)
 						{
-							if (!in_array($recur_exception, $days))
+							if ($recur_exception != $event['recurrence'])
 							{
 								$recur_exceptions[] = $recur_exception;
 							}
 						}
-						Horde::logMessage("importVCAL exceptions\n" . print_r($recur_exceptions, true),
-							__FILE__, __LINE__, PEAR_LOG_DEBUG);
-						$event['recur_exception'] = $recur_exceptions;
+						$event_info['master_event']['recur_exception'] = $recur_exceptions;
+						
+						// save the series master with the adjusted exceptions
+						$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
+						$updated_id = $this->update($event_to_store, true);
+						unset($event_to_store);
 					}
-				}
-
-				if ($cal_id <= 0)
-				{
-					// new entry
-					if ($this->isWholeDay($event) && $this->nonBlockingAllday)
+					
+					break;
+			}
+			
+			// read stored event into info array for fresh stored (new) events
+			if(!is_array($event_info['stored_event']) && $updated_id > 0)
+			{
+				$event_info['stored_event'] = $this->read($updated_id);
+			}
+			
+			// update status depending on the given event type
+			switch($event_info['type'])
+			{
+				case 'SINGLE':
+				case 'SERIES-MASTER':
+				case 'SERIES-EXCEPTION':
+					if(is_array($event_info['stored_event'])) // status update requires a stored event
 					{
-						$event['non_blocking'] = 1;
-					}
-
-					if (!isset($event['owner'])
-							|| !$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
-					{
-						// check for new events if an owner is set and the current user has add rights
-						// for that owners calendar; if not set the current user
-						$event['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-					}
-				}
-
-				// if an etag is given, include it in the update
-				if (!is_null($etag))
-				{
-					$event['etag'] = $etag;
-				}
-
-				$original_event = $event;
-				if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($original_event)."\n",3,$this->logfile);
-
-				if (!($Ok = $this->update($event, true)))
-				{
-					if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($Ok)."\n",3,$this->logfile);
-
-					if ($Ok === false && $cal_id > 0 && ($egw_event = $this->read($cal_id)))
-					{
-						$unchanged = true;
-						if ($event['recur_type'] != MCAL_RECUR_NONE)
+						if($event_info['acl_edit'])
 						{
-							// Check if a recurring event "status only" exception is created by the client
-							foreach (array('uid','owner','title','description',
-								'location','priority','public','special','non_blocking') as $key)
+							// update all participants if we have the right to do that
+							$this->update_status($event, $event_info['stored_event']);
+						}
+						elseif(isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
+						{
+							// update the users status only
+							$this->set_status($event_info['stored_event']['id'], $this->user,
+								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), 0, true);
+						}
+					}
+					break;
+			
+				case 'SERIES-EXCEPTION-STATUS':
+					if(is_array($event_info['stored_event'])) // status update requires a stored master event
+					{
+						if($event_info['acl_edit'])
+						{
+							// update all participants if we have the right to do that
+							$this->update_status($event, $event_info['stored_event'], $event['recurrence']);
+						}
+						elseif(isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
+						{
+							// update the users status only
+							$this->set_status($event_info['master_event']['id'], $this->user,
+								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $event['recurrence'], true);
+						}
+					}
+					break;
+			}
+			
+			// update alarms depending on the given event type
+			switch($event_info['type'])
+			{
+				case 'SINGLE':
+				case 'SERIES-MASTER':
+				case 'SERIES-EXCEPTION':
+					if(is_array($event_info['stored_event'])) // alarm update requires a stored event
+					{
+						// delete old alarms
+						if(count($event['alarm']) > 0
+						|| (isset($this->supportedFields['alarms']) && count($event['alarm']) == 0))
+						{
+							foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
 							{
-								//Horde::logMessage('importVCAL test ' .$key . ': '. $egw_event[$key] . ' == ' .$event[$key],
-								//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-								if (!empty($event[$key]) //|| !empty($egw_event[$key]))
-										&& $egw_event[$key] != $event[$key])
-								{
-									$unchanged = false;
-									break;
-								}
+								$this->delete_alarm($alarm_id);
 							}
 						}
-						// check if current user is an attendee and tried to change his status
-						if (isset($event['participants'][$this->user]) || isset($egw_event['participants'][$this->user]))
+
+						// save given alarms
+						if(count($event['alarm']) > 0)
 						{
-							$this->set_status($egw_event, $this->user,
-								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recur_date);
-
-							$Ok = $cal_id;
-							continue;
-						}
-
-						if ($unchanged)
-						{
-							$Ok = $cal_id;
-							continue;
-						}
-					}
-					break;	// stop with the first error
-				}
-				else
-				{
-					$eventID = &$Ok;
-					if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($eventID)."\n",3,$this->logfile);
-
-					/* if(isset($egw_event)
-						&& $original_event['participants'] != $egw_event['participants'])
-					{
-						$this->update_status($original_event, $egw_event, $recur_date);
-					} */
-
-					$alarms = $event['alarm'];
-
-					// handle the alarms
-					foreach ($component->getComponents() as $valarm)
-					{
-						if (is_a($valarm, 'Horde_iCalendar_valarm'))
-						{
-							$this->valarm2egw($alarms, $valarm);
+							foreach ($event['alarm'] as $alarm)
+							{
+								if(!isset($alarm['offset']) && isset($alarm['time']))
+								{
+									$alarm['offset'] = $event['start'] - $alarm['time'];
+								}
+								if(!isset($alarm['time']) && isset($alarm['offset']))
+								{
+									$alarm['time'] = $event['start'] - $alarm['offset'];
+								}
+								$alarm['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+								$alarm['all'] = true;
+								$this->save_alarm($event_info['stored_event']['id'], $alarm);
+							}
 						}
 					}
-
-					if (count($alarms) > 0
-						|| (isset($this->supportedFields['alarms'])
-							&& count($alarms) == 0))
-					{
-						// delete the old alarms
-						$updatedEvent = $this->read($eventID);
-						foreach ($updatedEvent['alarm'] as $alarmID => $alarmData)
-						{
-							$this->delete_alarm($alarmID);
-						}
-					}
-
-					foreach ($alarms as $alarm)
-					{
-						if (!isset($alarm['offset']))
-						{
-							$alarm['offset'] = $event['start'] - $alarm['time'];
-						}
-						if (!isset($alarm['time']))
-						{
-							$alarm['time'] = $event['start'] - $alarm['offset'];
-						}
-						$alarm['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-						$alarm['all'] = true;
-						$this->save_alarm($eventID, $alarm);
-					}
-				}
-				$cal_id = -1;
+					break;
+			
+				case 'SERIES-EXCEPTION-STATUS':
+					// nothing to do here
+					break;
 			}
-			$egw_event = $this->read($eventID);
-			if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($egw_event)."\n",3,$this->logfile);
 
+			// choose which id to return to the client
+			switch($event_info['type'])
+			{
+				case 'SINGLE':
+				case 'SERIES-MASTER':
+				case 'SERIES-EXCEPTION':
+					$return_id = is_array($event_info['stored_event']) ? $event_info['stored_event']['id'] : false;
+					break;
+			
+				case 'SERIES-EXCEPTION-STATUS':
+					$return_id = is_array($event_info['master_event']) ? $event_info['master_event']['id'] . ':' . $event['recurrence'] : false;
+					break;
+			}
+
+			if($this->log)
+			{
+				$egw_event = $this->read($event['id']);
+				error_log(__LINE__.__METHOD__.__FILE__.array2string($egw_event)."\n",3,$this->logfile);
+			}
 		}
-		return $Ok;
+
+		return $return_id;
 	}
 
 	/**
@@ -1422,51 +1370,74 @@ class calendar_ical extends calendar_boupdate
 		}
 	}
 
-	function icaltoegw($_vcalData, $cal_id=-1)
+	function icaltoegw($_vcalData, $cal_id=-1, $etag=null, $recur_date=0)
 	{
-		$event = false;	// returning false, if file contains no components
+		$events = array();
 
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData)) return false;
-
 		$version = $vcal->getAttribute('VERSION');
-
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
 		foreach ($vcal->getComponents() as $component)
 		{
 			if (is_a($component, 'Horde_iCalendar_vevent'))
 			{
-				// We expect only a single VEVENT
-				$event = $this->vevent2egw($component, $version, $this->supportedFields);
-				if ($event)
+				if ($event = $this->vevent2egw($component, $version, $this->supportedFields))
 				{
-					if ($cal_id > 0) {
-						$event['id'] = $cal_id;
-					}
-					else
-					{
-						if($this->isWholeDay($event)
-							&& $this->nonBlockingAllday)
-						{
-							$event['non_blocking'] = 1;
-						}
-					}
+					//common adjustments
 					if ($this->productManufacturer == '' && $this->productName == ''
 						&& !empty($event['recur_enddate']))
 					{
 						// syncevolution needs an adjusted recur_enddate
 						$event['recur_enddate'] = (int)$event['recur_enddate'] + 86400;
 					}
+ 					if ($event['recur_type'] != MCAL_RECUR_NONE)
+ 					{
+ 						// No reference or RECURRENCE-ID for the series master
+ 						$event['reference'] = $event['recurrence'] = 0;
+ 					}
+ 					
+ 					// handle the alarms
+ 					$alarms = $event['alarm'];
+					foreach ($component->getComponents() as $valarm)
+					{
+						if (is_a($valarm, 'Horde_iCalendar_valarm'))
+						{
+							$this->valarm2egw($alarms, $valarm);
+						}
+					}
+					$event['alarm'] = $alarms;
+					
+					$events[] = $event;
 				}
-				return $event;
 			}
 		}
-		return false;
+		
+		// decide what to return
+		if(count($events) == 1)
+		{
+			$event = array_shift($events);
+			if($cal_id > 0) $event['id'] = $cal_id;
+			if(!is_null($etag)) $event['etag'] = $etag;
+			if($recur_date) $event['recurrence'] = $recur_date;
+			
+			return array($event);
+		}
+		else if($count($events) == 0 || $cal_id > 0 || !is_null($etag) || $recur_date)
+		{
+			// no events to return
+			// or not allowed N:1 relation with params just meant for a single event
+			return false;
+		}
+		else
+		{
+			return $events;
+		}
 	}
 
 	/**
-	 * Parse an VEVENT
+	 * Parse a VEVENT
 	 *
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
@@ -2018,16 +1989,16 @@ class calendar_ical extends calendar_boupdate
 
 	function search($_vcalData, $contentID=null, $relax=false)
 	{
-		$result = false;
-
-		if($event = $this->icaltoegw($_vcalData))
+		if($events = $this->icaltoegw($_vcalData,!is_null($contentID) ? $contentID : -1))
 		{
-			if ($contentID) {
-				$event['id'] = $contentID;
-			}
-			$result = $this->find_event($event, $relax);
+			// this function only supports searching a single event
+			if(count($events) == 1)
+			{
+				$event = array_shift($events);
+				return $this->find_event($event, $relax);
+			}		
 		}
-		return $result;
+		return false;
 	}
 
 	/**
@@ -2121,12 +2092,11 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $old_event event-array with the old stati
 	 * @param int $recur_date=0 date to change, or 0 = all since now
 	 */
-	function update_status($new_event, $old_event , $recur_date)
-   	{
-
+	function update_status($new_event, $old_event , $recur_date=0)
+   {
 		// check the old list against the new list
 		foreach ($old_event['participants'] as $userid => $status)
-        {
+  		{
             if(!isset($new_event['participants'][$userid])){
             	// Attendee will be deleted this way
             	$new_event['participants'][$userid] = 'G';
@@ -2134,11 +2104,96 @@ class calendar_ical extends calendar_boupdate
             	// Same status -- nothing to do.
             	unset($new_event['participants'][$userid]);
             }
-        }
-        // write the changes
-        foreach ($new_event['participants'] as $userid => $status)
-        {
+		}
+      // write the changes
+      foreach ($new_event['participants'] as $userid => $status)
+      {
 			$this->set_status($old_event, $userid, $status, $recur_date, true);
-        }
+   	}
+    }
+    
+    /**
+     * classifies an incoming event from the eGW point-of-view
+     * 
+     * exceptions: unlike other calendar apps eGW does not create an event exception
+     * if just the participant state changes - therefore we have to distinguish between
+     * real exceptions and status only exceptions
+     * 
+     * @param array $event the event to check
+     * 
+     * @return array
+     * 	type =>
+     * 		SINGLE a single event
+     * 		SERIES-MASTER the series master
+     * 		SERIES-EXCEPTION event is a real exception
+	  * 		SERIES-EXCEPTION-STATUS event is a status only exception
+	  * 	stored_event => if event already exists in the database array with event data or false
+	  * 	master_event => if event is of type SERIES-EXCEPTION or SERIES-EXCEPTION-STATUS the corresponding series master event array
+     */
+    private function get_event_info($event)
+    {
+			$type = 'SINGLE'; // default
+			$return_master = false; //default
+			
+			if($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$type = 'SERIES-MASTER';
+			}
+			else
+			{
+				// SINGLE, SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
+				if(empty($event['uid']) && $event['id'] > 0 && ($stored_event = $this->read($event['id'])))
+				{
+					$event['uid'] = $stored_event['uid']; // restore the UID if it was not delivered
+				}
+
+				if(isset($event['uid'])
+					&& $event['recurrence']
+					&& ($master_event = $this->read($event['uid']))
+					&& isset($master_event['recur_type'])
+					&& $master_event['recur_type'] != MCAL_RECUR_NONE
+				)
+				{
+					// SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
+					$return_master = true; // we have a valid master and can return it
+					
+					if(isset($event['id']) && $master_event['id'] != $event['id'])
+					{
+						$type = 'SERIES-EXCEPTION'; //event is already a real exception
+					}
+					else
+					{
+						$type = 'SERIES-EXCEPTION-STATUS'; // default if we cannot find a proof for a fundamental change
+						$recurrence_event = $this->read($master_event['id'],$event['recurrence']);
+						// check for changed data
+						foreach (array('start','end','uid','owner','title','description',
+							'location','priority','public','special','non_blocking') as $key)
+						{
+							if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
+							{
+								$type = 'SERIES-EXCEPTION';
+								break;
+							}
+						}
+					}
+				}
+				else
+				{
+					// SINGLE
+					$type = 'SINGLE';
+				}
+			}
+			
+			if(isset($event['id']))
+			{
+				$stored_event = $this->read($event['id']);
+			}
+			
+			return array(
+				'type' => $type,
+				'acl_edit' => is_array($stored_event) ? $this->check_perms(EGW_ACL_EDIT, $stored_event) : true,
+				'stored_event' => is_array($stored_event) ? $stored_event : false,
+				'master_event' => $return_master ? $master_event : false,
+			);
     }
 }
