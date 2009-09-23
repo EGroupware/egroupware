@@ -602,7 +602,7 @@ class addressbook_so
 				$cols = $this->account_cols_to_search;
 			}
 			// search the customfields only if some exist, but only for sql!
-			if (get_class($backend) == 'socontacts_sql' && $this->customfields)
+			if (get_class($backend) == 'addressbook_sql' && $this->customfields)
 			{
 				$cols[] = $this->extra_value;
 			}
