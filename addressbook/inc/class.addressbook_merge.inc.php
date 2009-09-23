@@ -339,6 +339,19 @@ class addressbook_merge	// extends bo_merge
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
 				$content = preg_replace_callback('/\$\$IF ([0-9a-z_-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
 			}
+			if (strpos($content,'$$NELF'))
+			{	//Example: $$NEPBR org_unit$$ sets a LF and value of org_unit, only if there is a value
+				$this->replacements =& $replacements;
+				$content = preg_replace_callback('/\$\$NELF ([0-9a-z_-]+)\$\$/imU',Array($this,'replace_callback'),$content);
+				unset($this->replacements);
+			}
+			if (strpos($content,'$$NENVLF'))
+			{	//Example: $$NEPBRNV org_unit$$ sets only a LF if there is a value for org_units, but did not add any value
+				$this->replacements =& $replacements;
+				$content = preg_replace_callback('/\$\$NENVLF ([0-9a-z_-]+)\$\$/imU',Array($this,'replace_callback'),$content);
+				unset($this->replacements);
+			}
+
 			if ($contentrepeat) $contentrep[$id] = $content;
 		}
 		if ($Labelrepeat)
@@ -412,6 +425,16 @@ class addressbook_merge	// extends bo_merge
 		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
 		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
 		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
+		$LF = '}\par \pard\plain{';  //RTF Only
+		if (strpos($param[0],'$$NELF') === 0)
+		{	//sets a Pagebreak and value, only if the field has a value
+			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF.$this->replacements['$$'.$param[1].'$$'];
+		}
+		if (strpos($param[0],'$$NENVLF') === 0)
+		{	//sets a Pagebreak without any value, only if the field has a value
+			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF;
+		}
+
 		return $replace;
 	}
 
@@ -519,6 +542,8 @@ class addressbook_merge	// extends bo_merge
 			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
 			'labelplacement' => lang('Tag to mark positions for address labels'),
 			'IF fieldname' => lang('Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
+			'IFNELF' => lang('Example $$NELF role$$ - if field role is not empty, you will get a new line with the value of field role'),
+			'IFNENVLF' => lang('Example $$NELFNV role$$ - if field role is not empty, set a LF without any value of the field'),
 			) as $name => $label)
 		{
 			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
