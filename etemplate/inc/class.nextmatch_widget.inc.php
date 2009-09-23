@@ -240,7 +240,9 @@ class nextmatch_widget
 				return True;
 
 			case 'nextmatch-customfields':
-				return $this->_pre_process_cf_header($cell,$tmpl);
+				$extra_label = $this->_pre_process_cf_header($cell,$tmpl, $value, $nm_global);
+				$extension_data['old_value'] = $value;
+				return $extra_label;
 		}
 		// does NOT work with php5.2.6 ...
 		if (version_compare(PHP_VERSION,'5.2.6','>='))
@@ -532,7 +534,7 @@ class nextmatch_widget
 	 *
 	 * @param array &$cell
 	 */
-	private function _pre_process_cf_header(array &$cell,etemplate $tmpl)
+	private function _pre_process_cf_header(array &$cell,etemplate $tmpl, &$value, $nm_global)
 	{
 		//echo __CLASS__.'::'.__METHOD__."() selectcols=$this->selectcols\n";
 		if (is_null($this->cfs))
@@ -541,6 +543,10 @@ class nextmatch_widget
 
 			$this->cfs = config::get_customfields($app);
 		}
+
+		// Needed for custom fields linking to other apps
+		$cell_name = $cell['name'];
+
 		$cell['type'] = 'vbox';
 		$cell['name'] = '';
 		$cell['size'] = '0,,0,0';
@@ -564,6 +570,28 @@ class nextmatch_widget
 						'no_lang'     => True,
 						'readonly'    => $cell['readonly'],
 					));
+				}
+				elseif($GLOBALS['egw_info']['apps'][$field['type']]) 
+				{
+					$header =& etemplate::empty_cell('link-entry', $cell_name . '['.self::CF_PREFIX.$name .']', array(
+						'label'		=>	$field['label'],
+						'size'		=>	$field['type'],
+						'readonly'	=>	$cell['readonly'],
+						'onchange'	=>	1
+					));
+					etemplate::add_child($cell,$header);
+					unset($header);
+
+					if(!$nm_global['col_filter'][self::CF_PREFIX.$name]) {
+						$header =& etemplate::empty_cell('label', '');
+					} else {
+						// Add a button so they can clear this filter
+						$header =& etemplate::empty_cell('button', $cell_name . '[' . self::CF_PREFIX . $name . '_clear]', array(
+							'label'		=>	'search',
+							'size'		=>	'delete'
+						));
+					}
+					$value[self::CF_PREFIX.$name] = $field['type'] . ':' . $nm_global['col_filter'][self::CF_PREFIX.$name];
 				}
 				else
 				{
@@ -736,6 +764,9 @@ class nextmatch_widget
 				}
 				return False;	// dont report value back, as it's in the wrong location (rows)
 
+			case 'nextmatch-customfields':
+				return $this->_post_process_cf_header($value, $extension_data, $tmpl, $value_in, $nm_global);
+
 			default:
 			case 'select-account':		// used by nextmatch-accountfilter
 			case 'nextmatch-filterheader':
@@ -885,6 +916,33 @@ class nextmatch_widget
 			$this->_csv_export($extension_data);
 		}
 		return True;
+	}
+
+	/**
+	 * Postprocess for the custom fields header to do filtering on custom fields that are links to other applications
+	 *
+	 * @param array &$cell
+	 */
+	private function _post_process_cf_header(&$value, $extension_data, $tmpl, $value_in, &$nm_global)
+	{
+		if (is_null($this->cfs))
+		{
+			list($app) = explode('.',$tmpl->name);
+			$this->cfs = config::get_customfields($app);
+		}
+		foreach($this->cfs as $name => $field) {
+			if($GLOBALS['egw_info']['apps'][$field['type']]) {
+				if($value_in[self::CF_PREFIX.$name.'_clear']) {
+					$value_in[self::CF_PREFIX.$name] = array();
+				}
+				if ((string)$value_in[self::CF_PREFIX.$name] != (string)$extension_data['old_value'][self::CF_PREFIX.$name])
+				{
+					$nm_global['filter'][self::CF_PREFIX.$name] = $value_in[self::CF_PREFIX.$name]['id'];
+				}
+				$value = $value_in;
+			}
+		}
+		return true;
 	}
 
 	var $separator = ';';
