@@ -130,6 +130,7 @@ class addressbook_so
 	var $sql_cols_not_to_search = array(
 		'jpegphoto','owner','tid','private','id','cat_id','etag',
 		'modified','modifier','creator','created','tz','account_id',
+		'uid',
 	);
 	/**
 	 * columns to search, if we search for a single pattern
@@ -602,8 +603,7 @@ class addressbook_so
 				$cols = $this->account_cols_to_search;
 			}
 			// search the customfields only if some exist, but only for sql!
-			$classBackend = get_class($backend);
-			if (($classBackend == 'socontacts_sql' || $classBackend == 'addressbook_sql') && $this->customfields)
+			if (get_class($backend) == 'addressbook_sql' && $this->customfields)
 			{
 				$cols[] = $this->extra_value;
 			}
