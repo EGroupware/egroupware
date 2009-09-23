@@ -176,13 +176,13 @@ class Horde_SyncML_Sync {
 		$locName = $state->getLocName();
 		$sourceURI = $state->getSourceURI();
 		$hordeType = $state->getHordeType($type);
-		$refts = $state->getServerAnchorLast($type);
+		$serverAnchorLast = $state->getServerAnchorLast($type);
 		$state->setTargetURI($type);
 		$changes = array();
 		// First we get all changes done after the previous sync start
 		foreach ($registry->call($hordeType. '/listBy',
 			array('action' => 'modify',
-					'timestamp' => $refts,
+					'timestamp' => $serverAnchorLast,
 					'type' => $type,
 					'filter' => $this->_filterExpression)) as $change) {
 			// now we have to remove the ones
@@ -386,7 +386,7 @@ class Horde_SyncML_Sync {
 						// Entry exists: replace/merge with current one.
 						$ok = $registry->call($hordeType . '/replace',
 							array($guid, $state->convertClient2Server($syncItem->getContent(),
-							$contentType), $contentType, $merge));
+							$contentType), $contentType, $type, $merge));
 						if (!is_a($ok, 'PEAR_Error') && $ok != false)
 						{
 							$ts = $state->getSyncTSforAction($guid, 'modify');

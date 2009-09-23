@@ -311,7 +311,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 					return $currentCmdID;
 				}
 
-				$guid_ts = $state->getSyncTSforAction($guid, 'add');
+				$guid_ts = $state->getSyncTSforAction($guid, 'modify');
 				$sync_ts = $state->getChangeTS($syncType, $guid);
 				Horde :: logMessage("SyncML: timestamp add $guid guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				if ($sync_ts && $sync_ts == $guid_ts) {
