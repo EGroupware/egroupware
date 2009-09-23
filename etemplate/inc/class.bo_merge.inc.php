@@ -316,11 +316,22 @@ abstract class bo_merge
 				$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$this->contacts->prefs['csv_charset']);
 			}
 			$content = str_replace(array_keys($replacements),array_values($replacements),$content);
-
 			if (strpos($content,'$$IF'))
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
 				$this->replacements =& $replacements;
 				$content = preg_replace_callback('/\$\$IF ([0-9a-z_-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
+				unset($this->replacements);
+			}
+			if (strpos($content,'$$NELF'))
+			{	//Example: $$NEPBR org_unit$$ sets a LF and value of org_unit, only if there is a value
+				$this->replacements =& $replacements;
+				$content = preg_replace_callback('/\$\$NELF ([0-9a-z_-]+)\$\$/imU',Array($this,'replace_callback'),$content);
+				unset($this->replacements);
+			}
+			if (strpos($content,'$$NENVLF'))
+			{	//Example: $$NEPBRNV org_unit$$ sets only a LF if there is a value for org_units, but did not add any value
+				$this->replacements =& $replacements;
+				$content = preg_replace_callback('/\$\$NENVLF ([0-9a-z_-]+)\$\$/imU',Array($this,'replace_callback'),$content);
 				unset($this->replacements);
 			}
 			// remove not existing replacements (eg. from calendar array)
@@ -408,6 +419,15 @@ abstract class bo_merge
 		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
 		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
 		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
+		$LF = '}\par \pard\plain{';  //RTF Only
+		if (strpos($param[0],'$$NELF') === 0)
+		{	//sets a Pagebreak and value, only if the field has a value
+			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF.$this->replacements['$$'.$param[1].'$$'];
+		}
+		if (strpos($param[0],'$$NENVLF') === 0)
+		{	//sets a Pagebreak without any value, only if the field has a value
+			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF;
+		}
 		return $replace;
 	}
 
