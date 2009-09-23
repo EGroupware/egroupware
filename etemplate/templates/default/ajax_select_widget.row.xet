@@ -5,11 +5,9 @@
 		<grid>
 			<columns>
 				<column/>
-				<column/>
 			</columns>
 			<rows>
 				<row>
-					<description no_lang="1" id="id_field"/>
 					<description no_lang="1" id="title"/>
 				</row>
 			</rows>
