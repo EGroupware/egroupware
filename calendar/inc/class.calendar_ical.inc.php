@@ -686,6 +686,12 @@ class calendar_ical extends calendar_boupdate
 			}
 			foreach($event['alarm'] as $alarmID => $alarmData)
 			{
+				// skip alarms being set for all users or alarms owned by other users
+				if($alarmData['all'] == true || $alarmData['owner'] != $GLOBALS['egw_info']['user']['account_id'])
+				{
+					continue;
+				}
+				
 				if ($version == '1.0')
 				{
 					if ($servertime)
@@ -1028,20 +1034,25 @@ class calendar_ical extends calendar_boupdate
 			}
 			
 			// update alarms depending on the given event type
-			switch($event_info['type'])
+			if(isset($this->supportedFields['alarm']) 
+				&& is_array($event_info['stored_event']) // alarm update requires a stored event
+			)
 			{
-				case 'SINGLE':
-				case 'SERIES-MASTER':
-				case 'SERIES-EXCEPTION':
-					if(is_array($event_info['stored_event'])) // alarm update requires a stored event
-					{
+				switch($event_info['type'])
+				{
+					case 'SINGLE':
+					case 'SERIES-MASTER':
+					case 'SERIES-EXCEPTION':
 						// delete old alarms
-						if(count($event['alarm']) > 0
-						|| (isset($this->supportedFields['alarms']) && count($event['alarm']) == 0))
+						if(count($event_info['stored_event']['alarm']) > 0)
 						{
 							foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
 							{
-								$this->delete_alarm($alarm_id);
+								// only touch own alarms
+								if($alarm_data['all'] == false && $alarm_data['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+								{
+									$this->delete_alarm($alarm_id);
+								}
 							}
 						}
 
@@ -1059,16 +1070,16 @@ class calendar_ical extends calendar_boupdate
 									$alarm['time'] = $event['start'] - $alarm['offset'];
 								}
 								$alarm['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-								$alarm['all'] = true;
+								$alarm['all'] = false;
 								$this->save_alarm($event_info['stored_event']['id'], $alarm);
 							}
 						}
-					}
-					break;
+						break;
 			
-				case 'SERIES-EXCEPTION-STATUS':
-					// nothing to do here
-					break;
+					case 'SERIES-EXCEPTION-STATUS':
+						// nothing to do here
+						break;
+				}
 			}
 
 			// choose which id to return to the client
@@ -1091,7 +1102,7 @@ class calendar_ical extends calendar_boupdate
 				error_log(__LINE__.__METHOD__.__FILE__.array2string($egw_event)."\n",3,$this->logfile);
 			}
 		}
-
+		
 		return $return_id;
 	}
 
