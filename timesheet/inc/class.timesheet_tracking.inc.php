@@ -13,7 +13,7 @@
 /**
  * Timesheet - tracking object for the tracker
  */
-class timesheet_tracking extends timesheet_bo
+class timesheet_tracking extends bo_tracking
 {
 	/**
 	 * Application we are tracking (required!)
@@ -65,12 +65,14 @@ class timesheet_tracking extends timesheet_bo
 	 * @param timesheet_bo $botimesheet
 	 * @return timesheet_tracking
 	 */
-	function __construct(&$botimesheet)
+	function __construct($bo)
 	{
 		parent::__construct();	// calling the constructor of the extended class
 
-		$this->timesheet =& $botimesheet;
-		$this->field2history =& $botimesheet->field2history;
+		$this->bo = $bo;
+
+		$this->field2history = $this->bo->field2history;
+
 	}
 
 	/**
