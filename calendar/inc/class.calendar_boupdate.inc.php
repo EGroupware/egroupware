@@ -1120,44 +1120,71 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function find_event($event, $relax=false)
 	{
+		$query = array(
+			'cal_start='.$event['start'],
+			'cal_end='.$event['end'],
+		);
+
+		foreach (array('title', 'location',
+				 'public', 'non_blocking', 'category') as $key)
+		{
+			if (!empty($event[$key])) $query['cal_'.$key] = $event[$key];
+		}
+
 		if ($event['uid'] && ($uidmatch = $this->read($event['uid'])))
 		{
-			if ($event['recurrence']
-				&& ($egw_event = $this->read($uidmatch['id'], $event['recurrence'])))
+			if ($event['recurrence'])
 			{
-				// Do we work with a "status only" exception here?
-				$match = true;
-				foreach (array('start','end','title','description','priority',
-						'location','public','non_blocking') as $name)
+				// Let's try to find a real exception first
+				$query['cal_uid'] = $event['uid'];
+				$query['cal_recurrence'] = $event['recurrence'];
+
+				if($foundEvents = parent::search(array(
+					'query' => $query,
+				)))
 				{
-					if (isset($event[$name])
-						&& $event[$name] != $egw_event[$name])
+					if(is_array($foundEvents))
 					{
-						$match = false;
-						break;
+						$event = array_shift($foundEvents);
+						return $event['id'];
 					}
 				}
-				if ($match)
+				// Let's try the "status only" (pseudo) exceptions now
+				if (($egw_event = $this->read($uidmatch['id'], $event['recurrence'])))
 				{
-					//return ($uidmatch['id'] . ':' . $event['reference']);
-					foreach ($event['participants'] as $attendee => $status)
+					// Do we work with a pseudo exception here?
+					$match = true;
+					foreach (array('start', 'end', 'title', 'description', 'priority',
+						'location', 'public', 'non_blocking') as $key)
 					{
-						if (!isset($egw_event['participants'][$attendee])
-							|| $egw_event['participants'][$attendee] != $status)
+						if (isset($event[$key])
+								&& $event[$key] != $egw_event[$key])
 						{
 							$match = false;
 							break;
 						}
-						else
-						{
-							unset($egw_event['participants'][$attendee]);
-						}
 					}
-					if ($match && !empty($egw_event['participants'])) $match = false;
-				}
-				if ($match)	return ($uidmatch['id'] . ':' . $event['recurrence']);
+					if ($match && is_array($event['participants']))
+					{
+						foreach ($event['participants'] as $attendee => $status)
+						{
+							if (!isset($egw_event['participants'][$attendee])
+									|| $egw_event['participants'][$attendee] != $status)
+							{
+								$match = false;
+								break;
+							}
+							else
+							{
+								unset($egw_event['participants'][$attendee]);
+							}
+						}
+						if ($match && !empty($egw_event['participants'])) $match = false;
+					}
+					if ($match)	return ($uidmatch['id'] . ':' . $event['recurrence']);
 
-				return false; // We need to create a new "status only" exception
+					return false; // We need to create a new pseudo exception
+				}
 			}
 			else
 			{
@@ -1177,19 +1204,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		unset($event['id']);
 
-		$query = array(
-			'cal_start='.$event['start'],
-			'cal_end='.$event['end'],
-		);
-
-		#foreach(array('title','location','priority','public','non_blocking','category') as $name) {
-		foreach (array('title','location','public','non_blocking','category') as $name)
-		{
-			if (!empty($event[$name])) $query['cal_'.$name] = $event[$name];
-		}
-
 		if($foundEvents = parent::search(array(
-			//'user'  => $this->user,
 			'query' => $query,
 		)))
 		{
