@@ -58,7 +58,6 @@ class timesheet_ui extends timesheet_bo
 
 	function edit($content = null,$view = false)
 	{
-		$tabs = 'general|notes|links|customfields|history';
 		$etpl = new etemplate('timesheet.edit');
 		if (!is_array($content))
 		{
@@ -118,7 +117,7 @@ class timesheet_ui extends timesheet_bo
 			$view = $content['view'];
 			$referer = $content['referer'];
 			$this->data = $content;
-			foreach(array('button','view','referer',$tabs,'start_time') as $key)
+			foreach(array('button','view','referer','tabs','start_time') as $key)
 			{
 				unset($this->data[$key]);
 			}
@@ -246,7 +245,7 @@ class timesheet_ui extends timesheet_bo
 		$content = array_merge($this->data,array(
 			'msg'  => $msg,
 			'view' => $view,
-			$tabs  => $content[$tabs],
+			'tabs'  => $content['tabs'],
 			'link_to' => array(
 				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
 				'to_app' => TIMESHEET_APP,
@@ -356,10 +355,10 @@ class timesheet_ui extends timesheet_bo
 
 		if($this->ts_viewtype == 'short')
 		{
-			$content['ts_viewtype'] = $readonlys[$tabs]['notes'] = true;
+			$content['ts_viewtype'] = $readonlys['tabs']['notes'] = true;
 		}
-		if (!$this->customfields) $readonlys[$tabs]['customfields'] = true;	// suppress tab if there are not customfields
-		if (!$this->data['ts_id']) $readonlys[$tabs]['history']    = true;   //suppress history for the first loading without ID
+		if (!$this->customfields) $readonlys['tabs']['customfields'] = true;	// suppress tab if there are not customfields
+		if (!$this->data['ts_id']) $readonlys['tabs']['history']    = true;   //suppress history for the first loading without ID
 
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,$sel_options,$readonlys,$preserv,2);
 	}

@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%" height="150">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column width="95"/>
 				<column width="120"/>
@@ -56,7 +56,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="150">
+		<grid width="100%" height="450" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -68,7 +68,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
-		<grid width="100%" height="150" overflow="auto">
+		<grid width="100%" height="150">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -90,7 +90,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="150" overflow="auto">
+		<grid width="100%" height="150">
 			<columns>
 				<column/>
 			</columns>
@@ -102,7 +102,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%" height="250" overflow="auto">
+		<grid width="100%" height="150" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -113,7 +113,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.7.002">
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.7.003">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -162,7 +162,7 @@
 					</grid>
 				</row>
 				<row>
-					<tabbox id="general|notes|links|customfields|history" span="all">
+					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Notes" statustext=""/>
