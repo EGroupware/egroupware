@@ -41,6 +41,12 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * @var array
 	 */
+	var $user;
+	/**
+	 * current user
+	 *
+	 * @var int
+	 */
 	var $timestamps = array(
 		'ts_start','ts_modified'
 	);
@@ -114,6 +120,62 @@ class timesheet_bo extends so_sql_cf
 
 	/**
 	 * Name of the timesheet table storing custom fields
+	 */
+	var $historylog;
+	/**
+	 * Instance of the timesheet_tracking object
+	 *
+	 * @var timesheet_tracking
+	 */
+	var $field2label = array(
+		'ts_project'     => 'Project',
+		'ts_title'     	 => 'Title',
+		'cat_id'         => 'Category',
+		'ts_description' => 'Description',
+		'ts_start'       => 'Start',
+		'ts_duration'    => 'Duration',
+		'ts_quantity'    => 'Quantity',
+		'ts_unitprice'   => 'Unitprice',
+		'ts_owner'       => 'Owner',
+		'ts_modifier'    => 'Modifier',
+		'ts_status'      => 'Status',
+		'pm_id'		     => 'Projectid',
+		// pseudo fields used in edit
+		//'link_to'        => 'Attachments & Links',
+		'customfields'   => 'Custom fields',
+	);
+	/**
+	 * Translates field / acl-names to labels
+	 *
+	 * @var array
+	 */
+	var $field2history = array(
+	    'ts_project'     => 'Pro',
+		'ts_title'     	 => 'Tit',
+		'cat_id'         => 'Cat',
+		'ts_description' => 'Des',
+		'ts_start'       => 'Sta',
+		'ts_duration'    => 'Dur',
+		'ts_quantity'    => 'Qua',
+		'ts_unitprice'   => 'Uni',
+		'ts_owner'       => 'Own',
+		'ts_modifier'    => 'Mid',
+		'ts_status'      => 'Sta',
+		'pm_id'		     => 'Pri',
+		// pseudo fields used in edit
+		//'link_to'        => 'Att',
+		'customfields'   => '#c',
+	);
+	/**
+	 * Translate field-name to 2-char history status
+	 *
+	 * @var array
+	 */
+	var $tracking;
+	/**
+	 * Names of all config vars
+	 *
+	 * @var array
 	 */
 	const EXTRA_TABLE = 'egw_timesheet_extra';
 
@@ -409,12 +471,54 @@ class timesheet_bo extends so_sql_cf
 		{
 			$this->data['ts_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
 			$this->data['ts_modified'] = $this->now;
+			$this->user = $this->data['ts_modifier'];
 		}
+
+		// check if we have a real modification
+			// read the old record
+			$new =& $this->data;
+			unset($this->data);
+			$this->read($new['ts_id']);
+			$old =& $this->data;
+			$this->data =& $new;
+			$changed[] = array();
+			if (isset($old)) foreach($old as $name => $value)
+			{
+				if (isset($new[$name]) && $new[$name] != $value) $changed[] = $name;
+			}
+			if (!$changed)
+			{
+				return false;
+			}
+
+			if (!is_object($this->tracking))
+			{
+				$this->tracking = new timesheet_tracking($this);
+
+				$this->tracking->html_content_allow = true;
+			}
+			if ($this->customfields)
+			{
+				$data_custom = $old_custom = array();
+				foreach($this->customfields as $name => $custom)
+				{
+					if (isset($this->data['#'.$name]) && (string)$this->data['#'.$name]!=='') $data_custom[] = $custom['label'].': '.$this->data['#'.$name];
+					if (isset($old['#'.$name]) && (string)$old['#'.$name]!=='') $old_custom[] = $custom['label'].': '.$old['#'.$name];
+				}
+				$this->data['customfields'] = implode("\n",$data_custom);
+				$old['customfields'] = implode("\n",$old_custom);
+			}
+			if (!$this->tracking->track($this->data,$old,$this->user))
+			{
+				return implode(', ',$this->tracking->errors);
+			}
 		if (!($err = parent::save()))
 		{
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
+
+
 		return $err;
 	}
 
@@ -665,4 +769,118 @@ class timesheet_bo extends so_sql_cf
 		}
 		return array();
 	}
+	/**
+	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
+	 *
+	 * @param array $data current entry
+	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param int $user=null user who made the changes, default to current user
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
+	 */
+	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null)
+	{
+		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
+
+		$changes = true;
+		if ($old && $this->field2history)
+		{
+			$changes = $this->save_history($data,$old,$deleted,$changed_fields);
+		}
+
+		return $changes;
+	}
+
+	/**
+	 * Save changes to the history log
+	 *
+	 * @internal use only track($data,$old)
+	 * @param array $data current entry
+	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @return int number of log-entries made
+	 */
+	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
+	{
+		if (is_null($changed_fields))
+		{
+			$changed_fields = self::changed_fields($data,$old);
+		}
+		if (!$changed_fields) return 0;
+
+		if (!is_object($this->historylog) || $this->historylog->user != $this->user)
+		{
+			$this->historylog = new historylog($this->app,$this->user);
+		}
+		foreach($changed_fields as $name)
+		{
+			$status = $this->field2history[$name];
+			if (is_array($status))	// 1:N relation --> remove common rows
+			{
+				self::compact_1_N_relation($data[$name],$status);
+				self::compact_1_N_relation($old[$name],$status);
+				$added = array_diff($data[$name],$old[$name]);
+				$removed = array_diff($old[$name],$data[$name]);
+				$n = max(array(count($added),count($removed)));
+				for($i = 0; $i < $n; ++$i)
+				{
+					$this->historylog->add($name,$data[$this->id_field],$added[$i],$removed[$i]);
+				}
+			}
+			else
+			{
+				$this->historylog->add($status,$data[$this->id_field],
+					is_array($data[$name]) ? implode(',',$data[$name]) : $data[$name],
+					is_array($old[$name]) ? implode(',',$old[$name]) : $old[$name]);
+			}
+		}
+
+		return count($changed_fields);
+	}
+
+/**
+	 * Compute changes between new and old data
+	 *
+	 * Can be used to check if saving the data is really necessary or user just pressed save
+	 *
+	 * @param array $data
+	 * @param array $old=null
+	 * @return array of keys with different values in $data and $old
+	 */
+	public function changed_fields(array $data,array $old=null)
+	{
+		if (is_null($old)) return array_keys($data);
+
+		$changed_fields = array();
+		foreach($this->field2history as $name => $status)
+		{
+			if (is_array($status))	// 1:N relation
+			{
+				self::compact_1_N_relation($data[$name],$status);
+				self::compact_1_N_relation($old[$name],$status);
+			}
+			if ($old[$name] != $data[$name] && !(!$old[$name] && !$data[$name]))
+			{
+				// normalize arrays, we do NOT care for the order of multiselections
+				if (is_array($data[$name]) || is_array($old[$name]))
+				{
+					if (!is_array($data[$name])) $data[$name] = explode(',',$data[$name]);
+					if (!is_array($old[$name])) $old[$name] = explode(',',$old[$name]);
+					if (count($data[$name]) == count($old[$name]))
+					{
+						sort($data[$name]);
+						sort($old[$name]);
+						if ($data[$name] == $old[$name]) continue;
+					}
+				}
+				$changed_fields[] = $name;
+			}
+		}
+		return $changed_fields;
+	}
+
+
+
 }
