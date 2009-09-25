@@ -224,7 +224,7 @@ class nextmatch_widget
 			case 'nextmatch-filterheader':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
 				if (!$type) $type = 'select';
 				$cell['type'] = $type;
-				if (!$cell['size'])
+				if (!$cell['size'] && $type != 'link-entry')	// link-entry without option shows application selection!
 				{
 					$cell['size'] = 'All';
 				}
@@ -571,7 +571,7 @@ class nextmatch_widget
 						'readonly'    => $cell['readonly'],
 					));
 				}
-				elseif($GLOBALS['egw_info']['apps'][$field['type']]) 
+				elseif($GLOBALS['egw_info']['apps'][$field['type']])
 				{
 					$header =& etemplate::empty_cell('link-entry', $cell_name . '['.self::CF_PREFIX.$name .']', array(
 						'label'		=>	$field['label'],
@@ -767,6 +767,16 @@ class nextmatch_widget
 			case 'nextmatch-customfields':
 				return $this->_post_process_cf_header($value, $extension_data, $tmpl, $value_in, $nm_global);
 
+			case 'link-entry':	// allways return app:id, if an entry got selected, otherwise null
+				if (is_array($value_in) && !empty($value_in['id']))
+				{
+					$value_in = (isset($value_in['app']) ? $value_in['app'] : $extension_data['app']).':'.$value_in['id'];
+				}
+				else
+				{
+					$value_in = null;
+				}
+				// fall through
 			default:
 			case 'select-account':		// used by nextmatch-accountfilter
 			case 'nextmatch-filterheader':

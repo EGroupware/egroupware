@@ -81,6 +81,12 @@ class link_widget
 	var $debug = False;
 
 	/**
+	 * Flag that ajax_search needs to add onchange line
+	 *
+	 */
+	const AJAX_NEED_ONCHANGE = 987;
+
+	/**
 	 * Constructor of the extension
 	 *
 	 * @param string $ui '' for html
@@ -367,6 +373,7 @@ class link_widget
 				}
 				if ($titles)
 				{
+					if ($cell['onchange']) $titles[0] = lang('Show all / cancel filter');
 					$titles[''] = lang('new search').' ...';
 					$selectbox =& $tpl->get_widget_by_name('id');
 					$selectbox['sel_options'] = $titles;
@@ -396,6 +403,8 @@ class link_widget
 				'no_app_sel' => !!$extension_data['app'],
 				'id'         => is_array($value) ? $value['current'] : $value,
 				'query'      => is_array($value) ? $value['query'] : '',
+				'blur'       => count($options) == 1 ? lang($app) : lang('Search'),
+				'extra'      => $cell['onchange'] ? ','.self::AJAX_NEED_ONCHANGE : null,	// store flang for ajax_search, to display extra_line required by onchange
 			);
 			if ($options)	// limit the app-selectbox to the given apps
 			{
@@ -615,15 +624,19 @@ class link_widget
 			// securize entries as they were html encoded and so not checked on the first pass
 			_check_script_tag($extra_array,'extra_array');
 		}
+		if ($pattern == lang('Search') || $pattern == lang($app)) $pattern = '';
 		if (empty($extra_array))
 		{
-			$search = ($pattern == lang('Search'))? '' : $pattern;
+			$search = $pattern;
 		}
 		else
 		{
-			$extra_array['search']=($pattern == lang('Search'))? '' : $pattern;
+			$extra_array['search']= $pattern;
 			$search = $extra_array;
 		}
+		// open request
+		if ($etemplate_exec_id) $request = etemplate_request::read($etemplate_exec_id);
+
 		$response = new xajaxResponse();
 		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search )" );
 		//$args = func_get_args(); error_log(__METHOD__."('".implode("','",$args)."')");
@@ -636,6 +649,12 @@ class link_widget
 		else
 		{
 			$script = "var select = document.getElementById('$id_res');\nselect.options.length=0;\n";
+
+			// check if we need to add extra line to produce an onchange to submit the form
+			if (($data = $request->get_to_process($id_input)) && $data['maxlength'] == self::AJAX_NEED_ONCHANGE)
+			{
+				$script .= "opt = select.options[select.options.length] = new Option('".addslashes(lang('%1 entries found, select one ...',count($found)))."',' ');\n";
+			}
 			foreach($found as $id => $option)
 			{
 				if (!is_array($option)) $option = array('label' => $option);
@@ -661,7 +680,7 @@ class link_widget
 			$response->addScript($script);
 		}
 		// store new allowed id's in the eT request
-		if ($etemplate_exec_id && ($request = etemplate_request::read($etemplate_exec_id)))
+		if ($request)
 		{
 			$data = $request->get_to_process($id_res);
 			//error_log($id_res.'='.array2string($data));

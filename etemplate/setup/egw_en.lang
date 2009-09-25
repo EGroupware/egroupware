@@ -1,4 +1,5 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	en	%1 (%2 new) Messages writen for Application '%3' and Languages '%4'
+%1 entries found, select one ...	etemplate	en	%1 entries found, select one ...
 %1 etemplates deleted	etemplate	en	%1 eTemplates deleted
 %1 etemplates for application '%2' dumped to '%3'	etemplate	en	%1 eTemplates for Application '%2' dumped to '%3'
 %1 etemplates found	etemplate	en	%1 eTemplates found
@@ -346,6 +347,7 @@ sets today as date	etemplate	en	sets today as date
 should the form be submitted or any custom javascript be executed	etemplate	en	Should the form be submitted or any custom javascript be executed
 show	etemplate	en	Show
 show (no save)	etemplate	en	Show (no save)
+show all / cancel filter	etemplate	en	Show all / cancel filter
 show values	etemplate	en	Show Values
 showing	etemplate	en	showing
 shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing

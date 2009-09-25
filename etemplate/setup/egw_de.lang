@@ -1,4 +1,5 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
+%1 entries found, select one ...	etemplate	de	%1 Einträge gefunden, einen auswählen ...
 %1 etemplates deleted	etemplate	de	%1 eTemplates gelöscht
 %1 etemplates for application '%2' dumped to '%3'	etemplate	de	%1 eTemplates für die Anwendung '%2' nach '%3' geschrieben
 %1 etemplates found	etemplate	de	%1 eTemplates gefunden
@@ -346,6 +347,7 @@ sets today as date	etemplate	de	setzt heutiges Datum
 should the form be submitted or any custom javascript be executed	etemplate	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
 show	etemplate	de	Anzeigen
 show (no save)	etemplate	de	Anzeigen (nicht speichern)
+show all / cancel filter	etemplate	de	Alle anzeigen / Filter aufheben
 show values	etemplate	de	Werte anzeigen
 showing	etemplate	de	zeigt
 shows / allows you to enter values into the etemplate for testing	etemplate	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
