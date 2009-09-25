@@ -93,7 +93,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	hu	létrehozás dátuma
 dates, status, access	infolog	hu	Dátumok, Státusz, Elérés
 days	infolog	hu	napok
-default categorie for new infolog entries	infolog	hu	Alapértelmezett kategória új infolog bejegyzés számára
+default category for new infolog entries	infolog	hu	Alapértelmezett kategória új infolog bejegyzés számára
 default filter for infolog	infolog	hu	Infolog alapértelmezett szűrője
 default status for a new log entry	infolog	hu	Alapértelmezett státusz egy új napló bejegyzésnek
 delegated	infolog	hu	megbízva

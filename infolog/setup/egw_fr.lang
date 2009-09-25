@@ -93,7 +93,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	fr	Date de création
 dates, status, access	infolog	fr	Dates, Statut, Accès
 days	infolog	fr	Jours
-default categorie for new infolog entries	infolog	fr	Catégorie par défaut pour les nouvelles tâches
+default category for new infolog entries	infolog	fr	Catégorie par défaut pour les nouvelles tâches
 default filter for infolog	infolog	fr	Filtre par défaut pour le Gestionnaire de tâches
 default status for a new log entry	infolog	fr	statut par défaut pour une nouvelle tâche
 delegated	infolog	fr	délégué

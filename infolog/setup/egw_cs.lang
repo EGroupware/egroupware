@@ -93,7 +93,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	cs	Datum vytvoření
 dates, status, access	infolog	cs	Datumy, Stavy, Přístupy
 days	infolog	cs	dnů
-default categorie for new infolog entries	infolog	cs	Výchozí kategorie pro nové záznamy v InfoLogu
+default category for new infolog entries	infolog	cs	Výchozí kategorie pro nové záznamy v InfoLogu
 default filter for infolog	infolog	cs	Výchozí filtr pro InfoLog
 default status for a new log entry	infolog	cs	výchozí stav pro nový záznam
 delegated	infolog	cs	delegované

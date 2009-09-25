@@ -81,7 +81,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	el	ορίστηκε συνάντηση
 dates, status, access	infolog	el	Συναντήσεις, Κατάσταση,Είσοδος
 days	infolog	el	ημέρες
-default categorie for new infolog entries	infolog	el	Προκαθορισμένη κατηγορία για νέες καταχωρήσεις στο InfoLog
+default category for new infolog entries	infolog	el	Προκαθορισμένη κατηγορία για νέες καταχωρήσεις στο InfoLog
 default filter for infolog	infolog	el	Προκαθορισμένο Φίλτρο για  το InfoLog
 default status for a new log entry	infolog	el	προκαθορισμένη κατάσταση για νέες καταχωρήσεις
 delegated	infolog	el	εξουσιοδοτήθηκε

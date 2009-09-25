@@ -91,7 +91,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	pt-br	data da criação
 dates, status, access	infolog	pt-br	Datas, Status, Acessos
 days	infolog	pt-br	dias
-default categorie for new infolog entries	infolog	pt-br	Categoria padrão para novos registros Tarefas
+default category for new infolog entries	infolog	pt-br	Categoria padrão para novos registros Tarefas
 default filter for infolog	infolog	pt-br	Filtro padrao
 default status for a new log entry	infolog	pt-br	status padrão para um novo registro
 delegated	infolog	pt-br	designado

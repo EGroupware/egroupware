@@ -91,7 +91,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	ru	дата создания
 dates, status, access	infolog	ru	Даты, Состояние, Доступ
 days	infolog	ru	дни
-default categorie for new infolog entries	infolog	ru	Категория по умолчанию для новых записей ИнфоЖурнала
+default category for new infolog entries	infolog	ru	Категория по умолчанию для новых записей ИнфоЖурнала
 default filter for infolog	infolog	ru	Фильтр по Умолчанию для ИнфоЖурнала
 default status for a new log entry	infolog	ru	статус по умолчанию для новой записи журнала
 delegated	infolog	ru	назначеные
