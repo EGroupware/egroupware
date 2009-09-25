@@ -91,7 +91,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	sk	Dátum vytvorenia
 dates, status, access	infolog	sk	Dátum, Stav, Prístup
 days	infolog	sk	dní
-default categorie for new infolog entries	infolog	sk	Predvolená kategória pre nové záznamy Záznamníka
+default category for new infolog entries	infolog	sk	Predvolená kategória pre nové záznamy Záznamníka
 default filter for infolog	infolog	sk	Predvolený filter pre Záznamník
 default status for a new log entry	infolog	sk	Predvolený stav pre nový záznam
 delegated	infolog	sk	delegované

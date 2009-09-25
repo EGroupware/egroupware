@@ -92,7 +92,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	es-es	fecha de creación
 dates, status, access	infolog	es-es	Fechas, estado, acceso
 days	infolog	es-es	días
-default categorie for new infolog entries	infolog	es-es	Categoría predeterminada para nuevas entradas del Registro
+default category for new infolog entries	infolog	es-es	Categoría predeterminada para nuevas entradas del Registro
 default filter for infolog	infolog	es-es	Filtro predeterminado para el Registro
 default status for a new log entry	infolog	es-es	Estado predeterminado para una entrada nueva en el registro
 delegated	infolog	es-es	delegado

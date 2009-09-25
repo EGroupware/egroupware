@@ -93,7 +93,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	nl	datum aangemaakt
 dates, status, access	infolog	nl	Data, Status, Toegang
 days	infolog	nl	dagen
-default categorie for new infolog entries	infolog	nl	Standaard categorie voor nieuwe InfoLog invoer
+default category for new infolog entries	infolog	nl	Standaard categorie voor nieuwe InfoLog invoer
 default filter for infolog	infolog	nl	Standaard filter voor InfoLog
 default status for a new log entry	infolog	nl	Standaard status voor een nieuwe infolog
 delegated	infolog	nl	gedelegeerd

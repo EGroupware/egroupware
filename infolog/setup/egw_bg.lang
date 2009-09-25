@@ -90,7 +90,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	bg	дата на създаване
 dates, status, access	infolog	bg	Дати, Статус, Достъп
 days	infolog	bg	дни
-default categorie for new infolog entries	infolog	bg	Категория по подразбиране за нови записи в Дневника
+default category for new infolog entries	infolog	bg	Категория по подразбиране за нови записи в Дневника
 default filter for infolog	infolog	bg	Филтър по подразбиране в Дневника
 default status for a new log entry	infolog	bg	Сатус по подразбиране на новите записи
 delegated	infolog	bg	делегиран
