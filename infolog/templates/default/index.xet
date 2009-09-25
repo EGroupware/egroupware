@@ -14,7 +14,7 @@
 		</hbox>
 	</template>
 	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.003">
-		<grid width="100%" class="my_form">
+		<grid>
 			<columns>
 				<column width="2%"/>
 				<column/>
@@ -152,7 +152,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.003">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.004">
 		<grid>
 			<columns>
 				<column width="2%"/>
@@ -181,7 +181,7 @@
 						</columns>
 						<rows>
 							<row>
-								<description/>
+								<nextmatch-customfilter options="link-entry" id="linked" onchange="1"/>
 								<nextmatch-sortheader label="Priority" align="right" id="info_priority" options="DESC" class="noPrint"/>
 							</row>
 							<row>

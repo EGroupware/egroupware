@@ -1413,26 +1413,4 @@ class infolog_bo
 		}
 		return false;
 	}
-	/**
-	 * returns array with relation link_id and info_id (necessary for project-selection)
-	 *
-	 * @param int $pm_id ID of selected project
-	 * @return array containing link_id and info_id
-	 */
-	function get_pm_infolog_links($pm_id=0)
-	{
-		if($pm_id && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
-		{
-			$pm_ids = ExecMethod('projectmanager.projectmanager_bo.children',$pm_id);
-			$pm_ids[] = $pm_id;
-			$links = solink::get_links('projectmanager',$pm_ids,'infolog');	// solink::get_links not egw_links::get_links!
-			if ($links)
-			{
-				$links = array_unique(call_user_func_array('array_merge',$links));
-			}
-			return $links;
-		}
-		return array();
-	}
-
 }

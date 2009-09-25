@@ -297,22 +297,21 @@ class infolog_ui
 		{
 			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
 		}
-		if ($query['col_filter']['pm_id'])
-		//search for projects (project manager filter)
-		if ((string)$query['col_filter']['pm_id'] != '')
+		// handle linked filter (show only entries linked to a certain other entry)
+		unset($query['col_filter']['info_id']);
+		if ($query['col_filter']['linked'])
 		{
-			$query['col_filter']['info_id'] = $this->bo->get_pm_infolog_links($query['col_filter']['pm_id']);
-			if (!$query['col_filter']['info_id']) $query['col_filter']['info_id'][] = 0;
-			$project = $query['col_filter']['pm_id'];
-			unset($query['col_filter']['pm_id']);
+			list($app,$id) = explode(':',$query['col_filter']['linked']);
+			if (!($links = egw_link::get_links($app,$id,'infolog')))
+			{
+				$rows = array();	// no infologs linked to project --> no rows to return
+				return 0;
+			}
+			$query['col_filter']['info_id'] = array_values(array_unique($links));
+			$linked = $query['col_filter']['linked'];
 		}
-		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] == '0')
-		{
-			$no_projects = true;  //to select later the infologs without any projects
-			$project = $query['col_filter']['pm_id'];
-			unset($query['col_filter']['info_id']);
-		}
-		unset($query['col_filter']['pm_id']);
+		unset($query['col_filter']['linked']);
+
 		// check if we have a custom, type-specific template
 		unset($query['template']);
 		unset($query['custom_fields']);
@@ -384,17 +383,8 @@ class infolog_ui
 					unset($info['info_des']);
 				}
 			}
-			if (!$no_projects)           //searchfilter for projects
-			{
-				$rows[] = $info;
-			}
-			else
-			{
-				if (!$info['pm_id']) $rows[] = $info;  //ony if we have no projects linked
-			}
+			$rows[] = $info;
 		}
-		if ($no_projects) $query['total'] = count($rows);
-		unset($no_projects);
 		unset($links);
 
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
@@ -447,7 +437,9 @@ class infolog_ui
 		}
 		// disable filemanager icon, if user has no access to it
 		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
-		$query['col_filter']['pm_id'] = $project;  //add project back to the colfilter
+
+		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
+
 		return $query['total'];
 	}
 
