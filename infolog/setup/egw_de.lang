@@ -91,7 +91,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	de	Erstellt am
 dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
-default categorie for new infolog entries	infolog	de	Vorgabe Kategorie für neue InfoLog Einträge
+default category for new infolog entries	infolog	de	Vorgabe Kategorie für neue InfoLog Einträge
 default filter for infolog	infolog	de	Standard-Filter für InfoLog
 default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
 delegated	infolog	de	delegiert

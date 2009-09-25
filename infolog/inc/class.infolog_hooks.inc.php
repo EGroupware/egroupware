@@ -230,7 +230,7 @@ class infolog_hooks
 			),
 			'cat_add_default' => array(
 				'type'   => 'select',
-				'label'  => 'Default categorie for new Infolog entries',
+				'label'  => 'Default category for new Infolog entries',
 				'name'   => 'cat_add_default',
 				'values' => self::all_cats(),
 				'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',

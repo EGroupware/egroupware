@@ -93,7 +93,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	en	date created
 dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
-default categorie for new infolog entries	infolog	en	Default categorie for new Infolog entries
+default category for new infolog entries	infolog	en	Default category for new Infolog entries
 default filter for infolog	infolog	en	Default Filter for InfoLog
 default status for a new log entry	infolog	en	default status for a new log entry
 delegated	infolog	en	delegated
