@@ -97,7 +97,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	de	Erstellt am
 dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
-default categorie for new infolog entries	infolog	de	Vorgabe Kategorie für neue InfoLog Einträge
+default category for new infolog entries	infolog	de	Vorgabe Kategorie für neue InfoLog Einträge
 default filter for infolog	infolog	de	Standard-Filter für InfoLog
 default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
 delegated	infolog	de	delegiert
@@ -168,6 +168,7 @@ if a type has a group owner, all entries of that type will be owned by the given
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allg. Einstellungen definiert).
 import	infolog	de	Import
 import next set	infolog	de	Nächsten Satz importieren
+importance	infolog	de	Wichtigkeit
 info log	common	de	InfoLog
 infolog	common	de	InfoLog
 infolog - delete	infolog	de	InfoLog - Löschen
@@ -236,6 +237,7 @@ only the links	infolog	de	nur die Verknüpfungen
 open	infolog	de	offen
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüfung
 order	infolog	de	Reihenfolge
+organization	infolog	de	Organisation
 overdue	infolog	de	überfällig
 own	infolog	de	eigene
 own open	infolog	de	eigene offen
@@ -302,6 +304,7 @@ select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
 select to filter by owner	infolog	de	Besiter zum Filtern auswählen
 select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
+sender	infolog	de	Absender
 sets the status of this entry and its subs to done	infolog	de	Setzt den Status dieses Eintrags und seiner Untereinträge auf erledigt
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.

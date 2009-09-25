@@ -97,7 +97,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	en	date created
 dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
-default categorie for new infolog entries	infolog	en	Default categorie for new Infolog entries
+default category for new infolog entries	infolog	en	Default category for new Infolog entries
 default filter for infolog	infolog	en	Default Filter for InfoLog
 default status for a new log entry	infolog	en	default status for a new log entry
 delegated	infolog	en	delegated
@@ -168,6 +168,7 @@ if a type has a group owner, all entries of that type will be owned by the given
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).
 import	infolog	en	Import
 import next set	infolog	en	import next set
+importance	infolog	en	Importance
 info log	common	en	InfoLog
 infolog	common	en	InfoLog
 infolog - delete	infolog	en	Info Log - Delete
@@ -236,6 +237,7 @@ only the links	infolog	en	only the links
 open	infolog	en	open
 optional note to the link	infolog	en	optional note to the Link
 order	infolog	en	Order
+organization	infolog	en	Organization
 overdue	infolog	en	overdue
 own	infolog	en	own
 own open	infolog	en	own open
@@ -301,6 +303,7 @@ select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
 select to filter by owner	infolog	en	select to filter by owner
 select to filter by responsible	infolog	en	select to filter by responsible
+sender	infolog	en	Sender
 sets the status of this entry and its subs to done	infolog	en	Sets the status of this entry and its subs to done
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
