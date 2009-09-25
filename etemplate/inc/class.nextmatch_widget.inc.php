@@ -582,15 +582,7 @@ class nextmatch_widget
 					etemplate::add_child($cell,$header);
 					unset($header);
 
-					if(!$nm_global['col_filter'][self::CF_PREFIX.$name]) {
-						$header =& etemplate::empty_cell('label', '');
-					} else {
-						// Add a button so they can clear this filter
-						$header =& etemplate::empty_cell('button', $cell_name . '[' . self::CF_PREFIX . $name . '_clear]', array(
-							'label'		=>	'search',
-							'size'		=>	'delete'
-						));
-					}
+					$header =& etemplate::empty_cell('label', '');
 					$value[self::CF_PREFIX.$name] = $field['type'] . ':' . $nm_global['col_filter'][self::CF_PREFIX.$name];
 				}
 				else
@@ -942,9 +934,6 @@ class nextmatch_widget
 		}
 		foreach($this->cfs as $name => $field) {
 			if($GLOBALS['egw_info']['apps'][$field['type']]) {
-				if($value_in[self::CF_PREFIX.$name.'_clear']) {
-					$value_in[self::CF_PREFIX.$name] = array();
-				}
 				if ((string)$value_in[self::CF_PREFIX.$name] != (string)$extension_data['old_value'][self::CF_PREFIX.$name])
 				{
 					$nm_global['filter'][self::CF_PREFIX.$name] = $value_in[self::CF_PREFIX.$name]['id'];
