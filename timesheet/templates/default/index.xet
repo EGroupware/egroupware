@@ -15,7 +15,7 @@
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
 		<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 	</template>
-	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.7.001">
+	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.7.003">
 		<grid width="100%">
 			<columns>
 				<column width="15%"/>
@@ -43,6 +43,9 @@
 							</row>
 							<row disabled="!@pm_integration=full">
 								<nextmatch-customfilter options="projectmanager-select,All projects" id="pm_id" onchange="1"/>
+							</row>
+							<row>
+								<nextmatch-customfilter options="link-entry" onchange="1" id="linked"/>
 							</row>
 							<row>
 								<nextmatch-sortheader label="Title" id="ts_title"/>
@@ -102,7 +105,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.index" template="" lang="" group="0" version="1.7.001">
+	<template id="timesheet.index" template="" lang="" group="0" version="1.7.003">
 		<grid width="100%">
 			<columns>
 				<column/>

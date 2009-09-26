@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -432,13 +432,13 @@ class timesheet_ui extends timesheet_bo
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
 		if (!$id_only) $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
 		$query = $query_in;	// keep the original query
+
 		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
 		#_debug_array($query['col_filter']);
 		// PM project filter for the PM integration
 		if ((string)$query['col_filter']['pm_id'] != '')
 		{
-			//$query['col_filter']['ts_id'] = egw_link::get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
 			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
@@ -448,6 +448,28 @@ class timesheet_ui extends timesheet_bo
 			unset($query['col_filter']['ts_id']);
 		}
 		unset($query['col_filter']['pm_id']);
+
+		// handle linked filter (show only entries linked to a certain other entry)
+		if ($query['col_filter']['linked'])
+		{
+			list($app,$id) = explode(':',$query['col_filter']['linked']);
+			if (!($links = egw_link::get_links($app,$id,'timesheet')))
+			{
+				$rows = array();	// no infologs linked to project --> no rows to return
+				return 0;
+			}
+			if (!$query['col_filter']['ts_id'])
+			{
+				$query['col_filter']['ts_id'] = array_values(array_unique($links));
+			}
+			// allow to combine with other filters using ts_id --> intersect ids
+			elseif (!($query['col_filter']['ts_id'] = array_intersect((array)$query['col_filter']['ts_id'],array_values(array_unique($links)))))
+			{
+				$rows = array();	// no infologs linked to project --> no rows to return
+				return 0;
+			}
+		}
+		unset($query['col_filter']['linked']);
 
 		// filter for no project
 		if ((string)$query['col_filter']['ts_project'] == '0')
