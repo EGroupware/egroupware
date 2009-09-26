@@ -461,7 +461,9 @@ class so_sql_cf extends so_sql
 				{
 					if ((int)$filter[$this->autoinc_id])
 					{
-						$filter[] = $this->table_name.'.'.$this->autoinc_id.'='.(int)$filter[$this->autoinc_id];
+						$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
+							$this->autoinc_id => $filter[$this->autoinc_id],
+						));
 					}
 					unset($filter[$this->autoinc_id]);
 				}
