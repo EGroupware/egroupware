@@ -189,19 +189,15 @@ class infolog_ical extends infolog_bo
 
 		if ($taskData['info_startdate'])
 		{
-			$vevent->setAttribute('DTSTART',$taskData['info_startdate']);
+			self::setDateOrTime($vevent,'DTSTART',$taskData['info_startdate']);
 		}
-
 		if ($taskData['info_enddate'])
 		{
-			$parts = @getdate($taskData['info_enddate']);
-			$value = @mktime(12, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
-			$vevent->setAttribute('DUE', $value);
+			self::setDateOrTime($vevent,'DUE',$taskData['info_enddate']);
 		}
-
 		if ($taskData['info_datecompleted'])
 		{
-			$vevent->setAttribute('COMPLETED',$taskData['info_datecompleted']);
+			self::setDateOrTime($vevent,'COMPLETED',$taskData['info_datecompleted']);
 		}
 
 		$vevent->setAttribute('DTSTAMP',time());
@@ -220,6 +216,30 @@ class infolog_ical extends infolog_bo
 		$retval = $vcal->exportvCalendar();
 		Horde::logMessage("exportVTODO:\n" . print_r($retval, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $retval;
+	}
+
+	/**
+	 * Check if use set a date or date+time and export it as such
+	 *
+	 * @param Horde_iCalendar_* $vevent
+	 * @param string $attr attribute name
+	 * @param int $value timestamp
+	 */
+	static function setDateOrTime($vevent,$attr,$value)
+	{
+		// check if use set only a date --> export it as such
+		if (date('H:i',$value) == '00:00')
+		{
+			$vevent->setAttribute($attr,array(
+				'year'  => date('Y',$value),
+				'month' => date('m',$value),
+				'mday'  => date('d',$value),
+			),array('VALUE' => 'DATE'));
+		}
+		else
+		{
+			$vevent->setAttribute($attr,$value);
+		}
 	}
 
 	/**
