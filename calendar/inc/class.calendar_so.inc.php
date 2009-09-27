@@ -685,10 +685,10 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			if ($name[0] == '#')
 			{
-				if (strlen($value))
+				if ($value)
 				{
 					$this->db->insert($this->extra_table,array(
-						'cal_extra_value'	=> $value,
+						'cal_extra_value'	=> is_array($value) ? implode(',',$value) : $value,
 					),array(
 						'cal_id'			=> $cal_id,
 						'cal_extra_name'	=> substr($name,1),
@@ -895,7 +895,7 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
 		}
-		
+
 		if ($change_since !== false)	// update existing entries
 		{
 			$existing_entries = $this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id',$where,__LINE__,__FILE__,false,'','calendar');
@@ -940,7 +940,7 @@ ORDER BY cal_user_type, cal_usre_id
 				$this->db->delete($this->user_table,$where + array('('.implode(' OR ',$to_or).')'),__LINE__,__FILE__,'calendar');
 			}
 		}
-		
+
 		if (count($participants))	// participants which need to be added
 		{
 			// find all recurrences, as they all need the new parts to be added
