@@ -611,10 +611,10 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			if ($name[0] == '#')
 			{
-				if (strlen($value))
+				if ($value)
 				{
 					$this->db->insert($this->extra_table,array(
-						'cal_extra_value'	=> $value,
+						'cal_extra_value'	=> is_array($value) ? implode(',',$value) : $value,
 					),array(
 						'cal_id'			=> $cal_id,
 						'cal_extra_name'	=> substr($name,1),
