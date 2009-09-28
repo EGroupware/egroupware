@@ -107,6 +107,11 @@ class module_addressbook_contactform extends sitemgr_module
 				'params' => array('size' => 40),
 				'default' => 'addressbook.contactform',
 			),
+			'arg7' => array(
+				'type' => 'checkbox',
+				'label' => lang('Send emailcopy to receiver'),
+				'params' => array('size' => 1),
+			),
 		);
 		return parent::get_user_interface();
 	}
