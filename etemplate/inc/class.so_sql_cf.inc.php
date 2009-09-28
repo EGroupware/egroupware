@@ -355,11 +355,12 @@ class so_sql_cf extends so_sql
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @param mixed $only_keys=false, see search
+	 * @param string|array $extra_cols=array()
 	 * @return int total number of rows
 	 */
-	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false)
+	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
 	{
-		parent::get_rows($query,$rows,$readonlys,$join,$need_full_no_count,$only_keys);
+		parent::get_rows($query,$rows,$readonlys,$join,$need_full_no_count,$only_keys,$extra_cols);
 
 		$selectcols = $query['selectcols'] ? explode(',',$query['selectcols']) : array();
 
