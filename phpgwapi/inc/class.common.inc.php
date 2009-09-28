@@ -381,10 +381,13 @@ class common
 			case 'lastall':
 				$name = $lastname . $delimiter . $firstname . ' ['.$lid.']';
 				break;
+			case 'allfirst':
+				$name = '['.$lid.'] ' . $firstname . ' ' . $lastname;
+				break;
 			case 'all':
 				/* fall through */
 			default:
-				$name = '['.$lid.'] ' . $firstname . ' ' . $lastname;
+				$name = '['.$lid.'] ' . $lastname . $delimiter . $firstname;
 		}
 		return $name;
 	}

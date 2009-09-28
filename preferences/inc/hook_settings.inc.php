@@ -110,6 +110,7 @@
 		'username'  => lang('username'),
 		'firstall'  => lang('Firstname').' '.lang('Lastname').' ['.lang('username').']',
 		'lastall'   => lang('Lastname').', '.lang('Firstname').' ['.lang('username').']',
+		'allfirst'  => '['.lang('username').'] '.lang('Firstname'). ' '.lang('Lastname'),
 		'all'       => '['.lang('username').'] '.lang('Lastname').', '.lang('Firstname')
 	);
 
