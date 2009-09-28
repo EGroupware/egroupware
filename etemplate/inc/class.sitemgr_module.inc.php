@@ -36,11 +36,11 @@ class sitemgr_module extends Module // the Module class get automatic included b
 	 * @param array $properties
 	 * @return string the html content
 	 */
-	function get_content(&$arguments,$properties) 
+	function get_content(&$arguments,$properties)
 	{
 		list($app) = explode('.',$this->etemplate_method);
 		$GLOBALS['egw']->translation->add_app($app);
-		
+
 		$extra = "<style type=\"text/css\">\n<!--\n@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
 			"/etemplate/templates/default/app.css);\n";
 
@@ -56,6 +56,6 @@ class sitemgr_module extends Module // the Module class get automatic included b
 		{
 			$ret = ExecMethod('etemplate.etemplate.process_exec');
 		}
-		return $extra.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments['arg1'],$arguments['arg2'],$arguments['arg3'],$arguments['arg4'],$arguments['arg5'],$arguments['arg6']));
+		return $extra.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments['arg1'],$arguments['arg2'],$arguments['arg3'],$arguments['arg4'],$arguments['arg5'],$arguments['arg6'],$arguments['arg7']));
 	}
 }
