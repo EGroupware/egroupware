@@ -82,12 +82,20 @@ class infolog_ical extends infolog_bo
 			}
 			if ($options) $vevent->setParameter($field, $options);
 		}
-		if($taskData['info_startdate'])
-			$vevent->setAttribute('DTSTART',$taskData['info_startdate']);
-		if($taskData['info_enddate'])
-			$vevent->setAttribute('DUE',$taskData['info_enddate']);
-		if($taskData['info_datecompleted'])
-			$vevent->setAttribute('COMPLETED',$taskData['info_datecompleted']);
+
+		if ($taskData['info_startdate'])
+		{
+			self::setDateOrTime($vevent,'DTSTART',$taskData['info_startdate']);
+		}
+		if ($taskData['info_enddate'])
+		{
+			self::setDateOrTime($vevent,'DUE',$taskData['info_enddate']);
+		}
+		if ($taskData['info_datecompleted'])
+		{
+			self::setDateOrTime($vevent,'COMPLETED',$taskData['info_datecompleted']);
+		}
+
 		$vevent->setAttribute('DTSTAMP',time());
 		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'add'));
 		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'modify'));
@@ -109,6 +117,30 @@ class infolog_ical extends infolog_bo
 		$vcal->addComponent($vevent);
 		error_log("\n\nexportvcal from infolog\n");
 		return $vcal->exportvCalendar();
+	}
+
+	/**
+	 * Check if use set a date or date+time and export it as such
+	 *
+	 * @param Horde_iCalendar_* $vevent
+	 * @param string $attr attribute name
+	 * @param int $value timestamp
+	 */
+	static function setDateOrTime($vevent,$attr,$value)
+	{
+		// check if use set only a date --> export it as such
+		if (date('H:i',$value) == '00:00')
+		{
+			$vevent->setAttribute($attr,array(
+				'year'  => date('Y',$value),
+				'month' => date('m',$value),
+				'mday'  => date('d',$value),
+			),array('VALUE' => 'DATE'));
+		}
+		else
+		{
+			$vevent->setAttribute($attr,$value);
+		}
 	}
 
 	/**
@@ -171,10 +203,8 @@ class infolog_ical extends infolog_bo
 		}
 
 		$components = $vcal->getComponents();
-
-		if(count($components) > 0)
+		foreach($components as $component)
 		{
-			$component = $components[0];
 			if(is_a($component, 'Horde_iCalendar_vtodo'))
 			{
 				$taskData = array();
