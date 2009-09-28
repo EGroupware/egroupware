@@ -435,11 +435,18 @@ class timesheet_ui extends timesheet_bo
 
 		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
-		#_debug_array($query['col_filter']);
+		//_debug_array($query['col_filter']);
+		//echo "PM Integration:".$this->pm_integration.'<br>';
 		// PM project filter for the PM integration
-		if ((string)$query['col_filter']['pm_id'] != '')
+		if ($this->pm_integration == 'full')
 		{
+			unset($query['col_filter']['ts_project']);
+		}
+		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] != '0')
+		{
+			//$query['col_filter']['ts_id'] = egw_link::get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
 			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
+			if (empty($query['col_filter']['ts_id'])) $query['col_filter']['ts_id'] = -1;	
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
 		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] == '0')
