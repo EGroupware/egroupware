@@ -477,7 +477,7 @@ class nextmatch_widget
 					$value['selectcols'] = array_keys($value['options-selectcols']);
 					if (isset($value['default_cols']))
 					{
-						if ($value['default_cols']{0} == '!')
+						if ($value['default_cols'][0] == '!')
 						{
 							$value['selectcols'] = array_diff($value['selectcols'],explode(',',substr($value['default_cols'],1)));
 						}
@@ -698,11 +698,14 @@ class nextmatch_widget
 			if (in_array($subtype,array('customfilter','sortheader'))) $subtype = array_shift($options);
 
 			$label = $options[0];
+
+			// some widgets have label as second option (column name with _ as first), not a perfect detection ...
+			if (strpos($label,'_') !== false && !empty($options[1])) $label = $options[1];
 		}
 		list(,,$col,$sub) = explode('/',$path);
 		$row = (int)$col;
 		$col = substr($col,$row > 9 ? 2 : 1);
-		if (($label{0} == '@' || strchr($lable,'$') !== false) && is_array($cols['__content__']))
+		if (($label[0] == '@' || strchr($lable,'$') !== false) && is_array($cols['__content__']))
 		{
 			$label = etemplate::expand_name($label,$col,$row,'','',$cols['__content__']);
 		}
