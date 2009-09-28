@@ -48,6 +48,7 @@ class select_widget
 		'select-number'   => 'Select Number',
 		'select-app'      => 'Select Application',
 		'select-lang'     => 'Select Language',
+		'select-bool'     => 'Select yes or no',
 	);
 	/**
 	 * @var array
@@ -123,6 +124,10 @@ class select_widget
 
 			case 'select-priority':
 				$cell['sel_options'] = array('','low','normal','high');
+				break;
+
+			case 'select-bool':	// equal to checkbox, can be used with nextmatch-customfilter to filter a boolean column
+				$cell['sel_options'] = array(0 => 'no',1 => 'yes');
 				break;
 
 			case 'select-access':
