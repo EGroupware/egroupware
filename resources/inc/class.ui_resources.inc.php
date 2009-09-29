@@ -331,10 +331,6 @@ class ui_resources
 	 */
 	function select($content='')
 	{
-		if (!is_object($GLOBALS['phpgw']->js))
-		{
-			$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
-		}
 		$GLOBALS['phpgw']->js->set_onload("copyOptions('exec[resources][selectbox]');");
 
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
@@ -438,20 +434,23 @@ class ui_resources
 				window.close();
 			}</script>";
 
-		$content['nm']['header_left'] = 'resources.resource_select.header';
-		$content['nm']['show_bookable'] = true;
-		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
-		$content['nm']['no_filter'] 	= False;
-		$content['nm']['filter_label']	= 'Category';
-		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
-		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
-		$content['nm']['no_filter2']	= true;
-		$content['nm']['filter_no_lang'] = true;
-		$content['nm']['no_cat']	= true;
-		$content['nm']['rows']['js_id'] = 1;
-		$content['nm']['no_columnselection'] = true;
-		$content['nm']['csv_fields']         = false;
-
+		if (!is_array($content))
+		{
+			$content['nm'] = array(
+				'header_left'   => 'resources.resource_select.header',
+				'show_bookable' => true,
+				'get_rows' 	    => 'resources.bo_resources.get_rows',
+				'filter_label'	=> 'Category',
+				'filter_help'	=> lang('Select a category'),
+				'options-filter'=> array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ),
+				'no_filter2'	=> true,
+				'filter_no_lang'=> true,
+				'no_cat'	    => true,
+				'rows'          => array('js_id' => 1),
+				'csv_fields'    => false,
+				'default_cols'  => 'name,cat_id,quantity',	// I  columns to use if there's no user or default pref
+			);
+		}
 		$sel_options = array();
 		$no_button = array();
 		$this->tmpl->read('resources.resource_select');

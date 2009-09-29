@@ -2,3 +2,5 @@
 .tdAppbox {width: 100%;}
 .big {font-weight: bold;}
 .sel select {width: 100%;}
+.selTable { float: left; width: 80%; }
+.selSelection { float: right; width: 20%; }

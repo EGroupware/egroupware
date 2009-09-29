@@ -49,7 +49,6 @@ class bo_resources
 	function get_rows($query,&$rows,&$readonlys)
 	{
 		if ($this->debug) _debug_array($query);
-		$query['search'] = $query['search'] ? $query['search'] : '*';
 		$criteria = array('name' => $query['search'], 'short_description' => $query['search'], 'inventory_number' => $query['search']);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 

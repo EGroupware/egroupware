@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="resources.resource_select.row" template="" lang="" group="0" version="1.7.002">
+		<grid width="100%" class="selTable">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column width="3%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="Name" id="name"/>
+					<nextmatch-sortheader label="Category" id="cat_id"/>
+					<nextmatch-sortheader label="Description" id="short_description"/>
+					<nextmatch-sortheader label="Location" id="location"/>
+					<nextmatch-sortheader label="Storage information" id="storage_info"/>
+					<nextmatch-header label="Quantity" id="quantity"/>
+					<description/>
+				</row>
+				<row class="row">
+					<description id="${row}[name]" no_lang="1"/>
+					<menulist>
+						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
+					</menulist>
+					<description id="${row}[short_description]"/>
+					<description id="${row}[location]"/>
+					<description id="${row}[storage_info]"/>
+					<hbox no_lang="1" rows="1" cols="3" options="0,0">
+						<int options="1,,2" id="${row}[default_qty]"/>
+						<int label="of" class="leftPad5" id="${row}[useable]" readonly="true"/>
+					</hbox>
+					<button image="select" onclick="addOption('$row_cont[name]',$row_cont[res_id],this.id,$row_cont[useable]); return false;" needed="1" label="select resource" id="${row}"/>
+				</row>
+			</rows>
+		</grid>
+		<vbox rows="3" cols="1" align="right" class="selSelection">
+			<hbox align="center" rows="1" cols="1" class="th">
+				<description value="Selection" class="big"/>
+				<button image="delete" label="clear selection" onclick="removeSelectedOptions(); return false;" needed="1" align="right"/>
+			</hbox>
+			<listbox rows="13+" id="selectbox" span="0" class="sel" no_lang="1"/>
+			<button label="Close" align="center" onclick="oneLineSubmit();window.close();"/>
+		</vbox>
+	</template>
+	<template id="resources.resource_select" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<nextmatch options="resources.resource_select.row" id="nm"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
