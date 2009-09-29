@@ -286,7 +286,7 @@ class bo_resources
 	/**
 	 * returns info about resource for calender
 	 * @author Cornelius Weiss<egw@von-und-zu-weiss.de>
-	 * @param int/array $res_id single id or array $num => $res_id
+	 * @param int|array $res_id single id or array $num => $res_id
 	 * @return array
 	 */
 	function get_calendar_info($res_id)
@@ -294,22 +294,27 @@ class bo_resources
 		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true).")</p>\n";
 		if(!is_array($res_id) && $res_id < 1) return;
 
-		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,name,useable');
-		if (!is_array($data)) {
+		$data = $this->so->search(array('res_id' => $res_id),self::TITLE_COLS.',useable');
+		if (!is_array($data))
+		{
 			error_log(__METHOD__." No Calendar Data found for Resource with id $res_id");
 			return array();
 		}
-		foreach($data as $num => $resource)
+		foreach($data as $num => &$resource)
 		{
-			$data[$num]['rights'] = false;
+			$resource['rights'] = false;
 			foreach($this->cal_right_transform as $res_right => $cal_right)
 			{
 				if($this->acl->is_permitted($resource['cat_id'],$res_right))
 				{
-					$data[$num]['rights'] = $cal_right;
+					$resource['rights'] = $cal_right;
 				}
 			}
-			$data[$num]['responsible'] = $this->acl->get_cat_admin($resource['cat_id']);
+			$resource['responsible'] = $this->acl->get_cat_admin($resource['cat_id']);
+
+			// preseed the cache
+			egw_link::set_cache('resources',$resource['res_id'],$t=$this->link_title($resource));
+			echo "<p>egw_link::set_cache('resources',$resource'res_id','$t')</p>\n";
 		}
 		return $data;
 	}
@@ -468,10 +473,12 @@ class bo_resources
 		}
 		return $list;
 	}
+
 	/**
-	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * get title for an infolog entry identified by $res_id
 	 *
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+	 * @param int|array $resource
 	 * @return string/boolean string with title, null if resource does not exist or false if no perms to view it
 	 */
 	function link_title( $resource )
@@ -480,9 +487,44 @@ class bo_resources
 		{
 			if (!($resource  = $this->so->read(array('res_id' => $resource)))) return null;
 		}
-		if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_READ)) return false;
+		if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_READ)) return false;
 
 		return $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+	}
+
+	/**
+	 * Columns displayed in title (or required for ACL)
+	 *
+	 */
+	const TITLE_COLS = 'res_id,name,short_description,cat_id';
+
+	/**
+	 * get title for multiple contacts identified by $ids
+	 *
+	 * Is called as hook to participate in the linking.
+	 *
+	 * @param array $ids array with resource-id's
+	 * @return array with titles, see link_title
+	 */
+	function link_titles(array $ids)
+	{
+		$titles = array();
+		if (($resources =& $this->search(array('res_id' => $ids),self::TITLE_COLS)))
+		{
+			foreach($resources as $resource)
+			{
+				$titles[$resource['res_id']] = $this->link_title($resource);
+			}
+		}
+		// we assume all not returned contacts are not readable for the user (as we report all deleted contacts to egw_link)
+		foreach($ids as $id)
+		{
+			if (!isset($titles[$id]))
+			{
+				$titles[$id] = false;
+			}
+		}
+		return $titles;
 	}
 
 	/**
