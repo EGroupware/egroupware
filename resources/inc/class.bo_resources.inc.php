@@ -314,7 +314,6 @@ class bo_resources
 
 			// preseed the cache
 			egw_link::set_cache('resources',$resource['res_id'],$t=$this->link_title($resource));
-			echo "<p>egw_link::set_cache('resources',$resource'res_id','$t')</p>\n";
 		}
 		return $data;
 	}
