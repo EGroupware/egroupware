@@ -26,9 +26,10 @@ class addressbook_contactform
 	 * @param string $email=null comma-separated email addresses
 	 * @param string $tpl_name=null custom etemplate to use
 	 * @param string $subject=null subject for email
+	 * @param string $copytoreceiver=false send a copy of notification to receiver
 	 * @return string html content
 	 */
-	function display($content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null)
+	function display($content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false)
 	{
 		#error_log( "<p>addressbook_contactform::display(".print_r($content,true).",$addressbook,".print_r($fields,true).",$msg,$tpl_name)</p>\n");
 		if (empty($tpl_name) && !empty($content['tpl_form_name'])) $tpl_name =$content['tpl_form_name'];
@@ -105,6 +106,7 @@ class addressbook_contactform
 			$preserv['is_contactform'] = true;
 			$preserv['email_contactform'] = $email;
 			$preserv['subject_contactform'] = $subject;
+			$preserv['email_copytoreceiver'] = $copytoreceiver;
 			#if (!$fields) $fields = array('org_name','n_fn','email','tel_work','url','note','captcha');
 			$custom = 1;
 			foreach($fields as $name)
