@@ -907,8 +907,15 @@ class soetemplate
 	*/'."\n\n\$templ_version=1;\n\n");
 
 		$n = 0;
-		foreach($this->db->select(self::TABLE,'*','et_name LIKE '.$this->db->quote($app.'%'),__LINE__, __FILE__,false,'',egw_db::FETCH_ASSOC) as $row)
+		$exported = array();
+		foreach($this->db->select(self::TABLE,'*','et_name LIKE '.$this->db->quote($app.'%'),__LINE__, __FILE__,false,'ORDER BY et_name,et_version DESC','etemplate',0,'',false,egw_db::FETCH_ASSOC) as $row)
 		{
+			if (isset($exported[$row['et_name']]) && $exported[$row['et_name']] === (string)$row['et_template'])
+			{
+				continue;	// only export highest version (we sort by version DESC!)
+			}
+			$exported[$row['et_name']] = (string)$row['et_template'];
+
 			$str = '$templ_data[] = array(';
 			foreach (self::$db_cols as $db_col => $name)
 			{
