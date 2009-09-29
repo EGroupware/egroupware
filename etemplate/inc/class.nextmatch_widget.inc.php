@@ -760,8 +760,8 @@ class nextmatch_widget
 				return False;	// dont report value back, as it's in the wrong location (rows)
 
 			case 'nextmatch-customfields':
-				return $this->_post_process_cf_header($value, $extension_data, $tmpl, $value_in, $nm_global);
-
+				$this->_post_process_cf_header($value, $extension_data, $tmpl, $value_in, $nm_global);
+				return False;   // dont report value back, as it's in the wrong location (rows)
 			case 'link-entry':	// allways return app:id, if an entry got selected, otherwise null
 				if (is_array($value_in) && !empty($value_in['id']))
 				{
@@ -962,6 +962,7 @@ class nextmatch_widget
 		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+			//if (isset($value['export_limit'])) $export_limit = $value['export_limit']; 
 		}
 		list($app,$class,$method) = explode('.',$value['get_rows']);
 		if ($app && $class)
