@@ -93,7 +93,7 @@ class addressbook_tracking extends bo_tracking
 				if ($data['is_contactform'])
 				{
 					$copy = preg_split('/, ?/',$data['email_contactform']);
-					if  ($data['email_copytoresiver']) $copy[] = $data['email'];
+					if  ($data['email_copytoreceiver']) $copy[] = $data['email'];
 					return $copy;
 				}
 				break;
