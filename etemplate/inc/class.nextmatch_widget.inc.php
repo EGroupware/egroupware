@@ -944,7 +944,6 @@ class nextmatch_widget
 				$value = $value_in;
 			}
 		}
-		return true;
 	}
 
 	var $separator = ';';
