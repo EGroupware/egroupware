@@ -697,7 +697,7 @@ class egw_link extends solink
 	 *
 	 * @param string $app app-name
 	 * @param string $action='view' name of the action, atm. 'view' or 'add'
-	 * @return boolean/string false if no popup is used or $app is not registered, otherwise string with the prefered popup size (eg. '640x400)
+	 * @return boolean|string false if no popup is used or $app is not registered, otherwise string with the prefered popup size (eg. '640x400)
 	 */
 	static function is_popup($app,$action='view')
 	{
@@ -709,7 +709,7 @@ class egw_link extends solink
 	 *
 	 * @param string $app app-name
 	 * @param string $name name / key in the registry, eg. 'view'
-	 * @return boolean/string false if $app is not registered, otherwise string with the value for $name
+	 * @return boolean|string false if $app is not registered, otherwise string with the value for $name
 	 */
 	static function get_registry($app,$name)
 	{
@@ -801,7 +801,7 @@ class egw_link extends solink
 	 * @param int/string $app > 0: file_id of an attchemnt or $app/$id entry which linked to
 	 * @param string $id='' id in app
 	 * @param string $fname='' filename
-	 * @return boolean/array false on error ($app or $id not found), array with path as key and boolean result of delete
+	 * @return boolean|array false on error ($app or $id not found), array with path as key and boolean result of delete
 	 */
 	static function delete_attached($app,$id='',$fname='')
 	{
@@ -1035,7 +1035,7 @@ class egw_link extends solink
 	public static function set_cache($app,$id,$title,$file_access=null)
 	{
 		//error_log(__METHOD__."($app,$id,$title,$file_access)");
-		if (!is_null($file_access))
+		if (!is_null($title))
 		{
 			$cache =& self::get_cache($app,$id);
 			$cache = $title;
