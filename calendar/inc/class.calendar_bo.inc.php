@@ -264,7 +264,7 @@ class calendar_bo
 	 *	users  mixed integer user-id or array of user-id's to use, defaults to the current user
 	 *	cat_id mixed category-id or array of cat-id's, defaults to all if unset, 0 or False
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
-	 *	filter string filter-name, atm. 'all' or 'hideprivate'
+	 *	filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
@@ -276,7 +276,6 @@ class calendar_bo
 	 *		otherwise the original recuring event (with the first start- + enddate) is returned
 	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
 	 *  order column-names plus optional DESC|ASC separted by comma
-	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
 	 *  cols string|array columns to select, if set the recordset/iterator will be returned
@@ -287,6 +286,17 @@ class calendar_bo
 	function &search($params)
 	{
 		$params_in = $params;
+
+		unset($params['sql_filter']);	// dont allow to set it via UI or xmlrpc
+
+		// check if any resource wants to hook into
+		foreach($this->resources as $app => $data)
+		{
+			if (isset($data['search_filter']))
+			{
+				$params = ExecMethod($data['search_filter'],$params);
+			}
+		}
 
 		if (!isset($params['users']) || !$params['users'] ||
 			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
@@ -366,15 +376,14 @@ class calendar_bo
 		$cat_id = isset($params['cat_id']) ? $params['cat_id'] : 0;
 		$filter = isset($params['filter']) ? $params['filter'] : 'all';
 		$offset = isset($params['offset']) && $params['offset'] !== false ? (int) $params['offset'] : false;
-		$show_rejected = isset($params['show_rejected']) ? $params['show_rejected'] : $this->cal_prefs['show_rejected'] || $params['query'];
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
 		{
-			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, show_rejected=%11)',
-				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
+			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, sql_filter=%11)',
+				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter']);
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
+			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter'],$params['cols'],$params['append']);
 
 		if (isset($params['cols']))
 		{
@@ -385,8 +394,8 @@ class calendar_bo
 
 		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
 		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
-		$remove_rejected_by_user = !$show_rejected && count($params['users']) == 1 ? $params['users'][0] : false;
-		//echo "<p align=right>remove_rejected_by_user=$remove_rejected_by_user, show_rejected=$show_rejected, params[users]=".print_r($param['users'])."</p>\n";
+		$remove_rejected_by_user = !in_array($filter,array('all','rejected')) && count($params['users']) == 1 ? $params['users'][0] : false;
+		//echo "<p align=right>remove_rejected_by_user=$remove_rejected_by_user, filter=$filter, params[users]=".print_r($param['users'])."</p>\n";
 		foreach($events as $id => $event)
 		{
 			if ($remove_rejected_by_user && $event['participants'][$remove_rejected_by_user] == 'R')

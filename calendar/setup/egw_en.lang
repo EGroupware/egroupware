@@ -25,6 +25,7 @@ all categories	calendar	en	All categories
 all day	calendar	en	all day
 all events	calendar	en	All events
 all future	calendar	en	All future
+all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
 allows to edit the event again	calendar	en	Allows to edit the event again
 apply the changes	calendar	en	apply the changes
@@ -177,6 +178,7 @@ import csv-file	common	en	Import CSV-File
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
 interval	calendar	en	Interval
 invalid email-address "%1" for user %2	calendar	en	Invalid email-address "%1" for user %2
+invitations	calendar	en	Invitations
 last	calendar	en	Last
 lastname of person to notify	calendar	en	Lastname of person to notify
 length of the time interval	calendar	en	Length of the time interval
@@ -204,6 +206,7 @@ no matches found	calendar	en	no matches found
 no response	calendar	en	No response
 non blocking	calendar	en	non blocking
 not	calendar	en	not
+not rejected	calendar	en	Not rejected
 notification messages for added events	calendar	en	Notification messages for added events
 notification messages for canceled events	calendar	en	Notification messages for canceled events
 notification messages for disinvited participants	calendar	en	Notification messages for disinvited participants
@@ -226,6 +229,7 @@ one year	calendar	en	one year
 only the initial date of that recuring event is checked!	calendar	en	Only the initial date of that recuring event is checked!
 open todo's:	calendar	en	open ToDo's:
 overlap holiday	calendar	en	overlap holiday
+owner too	calendar	en	Owner too
 participants	calendar	en	Participants
 participants disinvited from an event	calendar	en	Participants disinvited from an event
 participants, resources, ...	calendar	en	Participants, Resources, ...
@@ -271,7 +275,6 @@ selected range	calendar	en	Selected range
 set a year only for one-time / non-regular holidays.	calendar	en	Set a Year only for one-time / non-regular holidays.
 set new events to private	calendar	en	Set new events to private
 setting lock time calender	admin	en	Setting Datalock Time for Calendar (default 1 sec.)
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	en	Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
@@ -280,7 +283,6 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show birthdays from addressbook	admin	en	Show birthdays from addressbook
 show default view on main screen	calendar	en	show default view on main screen
 show empty rows in planner	calendar	en	Show empty rows in Planner
-show invitations you rejected	calendar	en	Show invitations you rejected
 show list of upcoming events	calendar	en	show list of upcoming events
 show only the date, not the year	admin	en	Show only the date, not the year
 show this month	calendar	en	show this month

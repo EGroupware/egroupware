@@ -123,7 +123,7 @@ class calendar_ui
 	/**
 	 * @var array $states_to_save all states that will be saved to the user prefs
 	 */
-	var $states_to_save = array('owner');
+	var $states_to_save = array('owner','filter');
 
 	/**
 	 * Constructor
@@ -687,10 +687,21 @@ class calendar_ui
 		$this->cats->formatted_list('select','all',$this->cat_id,'True'),$baseurl ? $baseurl.'&cat_id=' : '');
 
 		// Filter all or hideprivate
-		$file[] = $this->_select_box('Filter','filter',
-			'<option value="all"'.($this->filter=='all'?' selected="selected"':'').'>'.lang('No filter').'</option>'."\n".
-			'<option value="hideprivate"'.($this->filter=='hideprivate'?' selected="selected"':'').'>'.lang('Hide private infos').'</option>'."\n",
-			$baseurl ? $baseurl.'&filter=' : '');
+		$options = '';
+		foreach(array(
+			'default'     => lang('Not rejected'),
+			'accepted'    => lang('Accepted'),
+			'unknown'     => lang('Invitations'),
+			'tentative'   => lang('Tentative'),
+			'rejected'    => lang('Rejected'),
+			'owner'       => lang('Owner too'),
+			'all'         => lang('All incl. rejected'),
+			'hideprivate' => lang('Hide private infos'),
+		) as $value => $label)
+		{
+			$options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').'>'.$label.'</options>'."\n";
+		}
+		$file[] = $this->_select_box('Filter','filter',$options,$baseurl ? $baseurl.'&filter=' : '');
 
 		// Calendarselection: User or Group
 		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')

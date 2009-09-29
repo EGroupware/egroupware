@@ -269,13 +269,13 @@ class calendar_so
 	 * @param int|array $users user-id or array of user-id's, !$users means all entries regardless of users
 	 * @param int $cat_id=0 mixed category-id or array of cat-id's, default 0 = all
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
-	 * @param string $filter='' string filter-name, atm. all or hideprivate
+	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or hideprivate (handled elsewhere!)
 	 * @param string $query='' pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 * @param int|boolean $offset=False offset for a limited query or False (default)
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @param string $order='cal_start' column-names plus optional DESC|ASC separted by comma
-	 * @param boolean $show_rejected=true should the search return rejected invitations
+	 * @param string $sql_filter='' sql to be and'ed into query (fully quoted)
 	 * @param string|array $_cols=null what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date"
 	 *                     if specified an iterator for the rows is returned
 	 * @param string $append='' SQL to append to the query before $order, eg. for a GROUP BY clause
@@ -283,13 +283,17 @@ class calendar_so
 	 *
 	 * ToDo: search custom-fields too
 	 */
-	function &search($start,$end,$users,$cat_id=0,$filter='',$query='',$offset=False,$num_rows=0,$order='cal_start',$show_rejected=true,$_cols=null,$append='')
+	function &search($start,$end,$users,$cat_id=0,$filter='all',$query='',$offset=False,$num_rows=0,$order='cal_start',$sql_filter='',$_cols=null,$append='')
 	{
 		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append)</p>\n";
 
 		$cols = !is_null($_cols) ? $_cols : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
 
 		$where = array();
+		if (!empty($sql_filter) && is_string($sql_filter))
+		{
+			$where[] = $sql_filter;
+		}
 		if (is_array($query))
 		{
 			$where = $query;
@@ -324,10 +328,31 @@ class calendar_so
 					'cal_user_type' => $type,
 					'cal_user_id'   => $ids,
 				));
+				if ($type == 'u' && $filter == 'owner')
+				{
+					$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
+					$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+				}
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 
-			if (!$show_rejected) $where[] = "cal_status != 'R'";
+			switch($filter)
+			{
+				case 'unknown':
+					$where[] = "cal_status='U'"; break;
+				case 'accepted':
+					$where[] = "cal_status='A'"; break;
+				case 'tentative':
+					$where[] = "cal_status='T'"; break;
+				case 'rejected':
+					$where[] = "cal_status='R'"; break;
+				case 'all':
+					break;
+				default:
+					//if (!$show_rejected)	// not longer used
+					$where[] = "cal_status != 'R'";
+					break;
+			}
 		}
 		if ($cat_id)
 		{

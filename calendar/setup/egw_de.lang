@@ -25,6 +25,7 @@ all categories	calendar	de	Alle Kategorien
 all day	calendar	de	ganztägig
 all events	calendar	de	Alle Termine
 all future	calendar	de	Alle zukünftigen
+all incl. rejected	calendar	de	Alle einschl. abgesagte
 all participants	calendar	de	Alle Teilnehmer
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 apply the changes	calendar	de	Übernimmt die Änderungen
@@ -177,6 +178,7 @@ import csv-file	common	de	CSV-Datei importieren
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	de	Importieren von Terminen von einer CSV Datei. CSV bedeutet: Komma separierte Werte. Sie können in den Optionen des Import ebenso einen anderen Separator (Tab) wählen.
 interval	calendar	de	Intervall
 invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1" für Benutzer %2
+invitations	calendar	de	Einladungen
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervals
@@ -204,6 +206,7 @@ no matches found	calendar	de	Keine Treffer gefunden
 no response	calendar	de	Keine Antwort
 non blocking	calendar	de	nicht blockierend
 not	calendar	de	nicht
+not rejected	calendar	de	Nicht abgesagt
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
 notification messages for disinvited participants	calendar	de	Benachrichtigung für ausgeladene Teilnehmer
@@ -226,6 +229,7 @@ one year	calendar	de	ein Jahr
 only the initial date of that recuring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
 open todo's:	calendar	de	unerledigte Aufgaben:
 overlap holiday	calendar	de	überlappender Feiertag
+owner too	calendar	de	Auch Besitzer
 participants	calendar	de	Teilnehmer
 participants disinvited from an event	calendar	de	Ausgeladene Teilnehmer eines Termins
 participants, resources, ...	calendar	de	Teilnehmer, Ressourcen
@@ -271,7 +275,6 @@ selected range	calendar	de	Ausgewählter Zeitraum
 set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige/unregelmäßige Feiertage das Jahr angeben.
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
 setting lock time calender	admin	de	Zeitintervall für Datensatzlock (default 1 sec.)
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	de	Sollen Einladungen welche von Ihnen abgelehnt wurden in Ihrem Kalender angezeigt werden?<br> Sie können diese Einladungen dann später akzeptieren (z. B. wenn Sie eine Terminkolission gelöst haben), wenn Sie in Ihrem Kalender noch vorhanden sind!
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten an denen sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	de	Sollten Ihre Free/Bussy Zeiten nicht so geschützt sein das diese Daten nur bestimmten Personen zugänglich gemacht werden können? Sie können dafür ein Passwort, abweichend fom eGroupware Passwort vergeben. Die freebusy Information sind im iCal Format und nur dann inkludiert, wenn Sie keine Zeit haben. Die Eventnamen oder  die Veranstaltungsorte werden nicht mit übertragen. Die URL zu den freebusy Information ist <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
@@ -280,7 +283,6 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
 show default view on main screen	calendar	de	Standardansicht auf der Startseite anzeigen
 show empty rows in planner	calendar	de	Zeige leere Zeilen im Planer
-show invitations you rejected	calendar	de	Zeige Einladungen welche abgelehnt wurden an
 show list of upcoming events	calendar	de	Zeige eine Liste der kommenden Termine
 show only the date, not the year	admin	de	Zeige nur das Datum nicht das Jahr
 show this month	calendar	de	Diesen Monat anzeigen
