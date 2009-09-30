@@ -181,7 +181,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// create dummy mailserver config, as fmail otherwise gives fatal error otherwise
 	$setup_mailserver = $setup_cli.' --config '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd']).
 		' --mailserver localhost,imap --smtpserver localhost,25';
-	run_cmd($setup_config);
+	run_cmd($setup_mailserver);
 
 	// create first user
 	$setup_admin = $setup_cli.' --admin '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd'].','.
